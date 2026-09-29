@@ -10,10 +10,36 @@ travel with their feature; broad tooling and additional editions follow later.
 C3/C4/C5/C6 expansion. The [active plan](character-game-feel-plan.md) retains its
 compatibility, artwork and release requirements.
 
+## Production review deferred; implementation continues
+
+The latest explicit user instruction defers production review. It does not grant
+production approval or waive basic correctness and artifact integrity. Continue
+A/B/C source slices in parallel inside existing PR757/761; do not wait for visual
+admission, device/human sessions or release availability. Keep those checks on the
+remaining list as **deferred, not passed**. The canonical publisher owns one
+cumulative release after protected integration; no version is allocated here.
+
+The current implementation batch is deliberately narrow:
+
+- **A2/A3:** readable Team field details when dense canvas cue placement cannot
+  fit, using the existing Pause/Help reader and a secondary outside-board action.
+- **B:** practice and player guidance for the optional scout/sentry and
+  pursuit/interception roles already in a selected mission; preserve its rules,
+  craft and no-award practice boundary.
+- **C/C6:** optional selected-versus-retained-parent artwork comparison with
+  native-pixel inspection and exact identity/byte preservation.
+
+These three bounded source slices are now implemented and checked. Team passes
+163/163 adjacent renderer/host checks; encounter Guide passes 69/69 focused
+checks; artwork comparison passes 28/28. Browser UI verified dense Team reader
+entry/reflow and retained-parent artwork inspection. The [batch16 receipt](verification/actor-batch-16/README.md)
+records source behavior, corrected fixture failures and limitations. These results
+do not complete A/B/C or grant production/public acceptance.
+
 ## Public and queued
 
-- Latest observed main is `1af848b1edb8d0d7435deccca02a31627aed6bfa`;
-  its change after `64c8b9d8` is soundtrack documentation only.
+- Latest observed main is `321408a3cfd75ae230d760f39fb692503652601a`
+  after PR791. This does not requalify the older actor branch.
   Public `release.json` declares **v0.142.3**, source
   `b5ab06e12542f72e33c45b973ba693a5e1509c1c`, distribution prefix
   `37eca33f…`. This is an observed public release identity; the canonical
@@ -22,8 +48,8 @@ compatibility, artwork and release requirements.
   evidence keeps its original scope and does not qualify these newer bytes.
   Do not allocate versions or start another publisher from this branch.
 - [PR761](https://github.com/mekhovov/revealline/pull/761) is a draft source batch,
-  not a public release. Batch15 is pushed at
-  `c332a45cb38af3d62b2b73fbd37087d93389c8c0`, with 127 focused checks,
+  not a public release. The pre-batch head is
+  `626cafc7d252375a8cc928e094aff74bb0c5456a`. Retained batch15 has 127 focused checks,
   all-seven playable roster review, retained class setup and exact optional
   candidate loading. It is a **v0.150.0 scheduled input**; its source version is
   unbumped and production admission remains pending. See its scoped evidence below.
@@ -120,15 +146,31 @@ pass separately and overlap the host cohort; do not total them as unique tests.
 Production review, public acceptance, hardware and broader zoom checks remain
 open. See [the updated Team evidence](https://github.com/mekhovov/revealline/blob/codex/team-more-navigation/docs/verification/team-hud-wrap-20260929/README.md).
 
+The subsequent compact Team correction is pushed in PR757 at
+`f067823fe8e2f76d061bd45d17b11787fe376a23`: **157/157** focused checks,
+bounded cue placement/cache, explicit overflow diagnostics, and native Ukrainian
+Large/Plain downed/Pause/Help/rotation observations. The current batch adds the player-facing overflow route with one-action paused
+reading and a stable per-attempt action. Its 163-case adjacent cohort and bounded
+568×320 / 390×844 browser observations cover that implementation.
+See [cue-layout evidence](https://github.com/mekhovov/revealline/blob/f067823fe8e2f76d061bd45d17b11787fe376a23/docs/verification/team-cue-layout-20260929/README.md).
+
+PR761's exact Effects20 predecessor reader passes **32/32** focused checks at
+`626cafc7d252375a8cc928e094aff74bb0c5456a`. It accepts only the two immutable
+roots and their authenticated ancestry; audio is excluded. This corrects the
+preparation gap described by the older 27-case record, and is not a 59-slot
+production approval. See [reader evidence](verification/actor-a1-current-main-20260929/predecessor-reader.md).
+
 ## Remaining work and planning ranges
 
 Ranges are effort after each item starts, not publication promises. Necessary
 prerequisites and independent review may run concurrently. Reconciliation,
-failed gates and publisher availability add delivery time.
+failed gates and publisher availability add delivery time. Deferred production
+review has no completion ETA until that work resumes; it does not delay the
+implementation slices above.
 
 | Order                                | Work and player benefit                                                                                  | Completion boundary                                                                                                                                                                       | Effort range                                                                                      |
 | ------------------------------------ | -------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------- |
-| **A1 — first**                       | Deliver already implemented character/control corrections so players actually receive the improvements   | Reconcile the smallest renderer slice; review 59 renderer/equipment successors while keeping approved imagery and app/audio unchanged; final build, immutable publication and public play | Exact port prepared; 1–2 days for integrated visual/admission checks, plus publisher queue        |
+| **A1 — prepared; review deferred**   | Deliver already implemented character/control corrections so players actually receive the improvements   | Reconcile the smallest renderer slice; review 59 renderer/equipment successors while keeping approved imagery and app/audio unchanged; final build, immutable publication and public play | Exact port prepared; admission/release timing deferred; it does not block B/C source work         |
 | **A2 — current characters**          | Convincing player/common-enemy bodies, propellers, scale, facing and reactions across Solo/Versus/Team   | Current roster/state review and reviewed native-body adoption; retained originals and core behavior unchanged                                                                             | 3–5 days for remaining C3 scope; existing fixes do not need to wait for the whole roster          |
 | **A3 — reliable play**               | Deliver the prepared Team fixes and reflow the demonstrated narrow Ukrainian HUD/ability labels          | Fresh input, retained recovery, exact return, readable status and full board/control bounds; reuse PR757 and existing inputs                                                              | This correction is source-tested and browser-reviewed; integrated production/release gates remain |
 | **B — encounter variety**            | Optional pursuit/interception/patrol/sentry encounters teach distinct decisions and readable counterplay | Finish Field Guide/cross-mode guidance, full missions/combinations, difficulty/fairness/replay qualification; preserve original editions                                                  | 3–5 days                                                                                          |
@@ -165,16 +207,16 @@ is A2 preparation, not completion of A or the deferred C2 human study.
    not delivery. One owner must reconcile it onto the publisher's chosen current
    main and qualify the exact integrated source. Public v0.142.3 identity alone
    does not settle the publisher's pending acceptance/audit.
-2. **Production review:** the retained 6-pass/2-fail guard stops at Team and is
+2. **Deferred production review (not an implementation blocker):** the retained 6-pass/2-fail guard stops at Team and is
    not a complete mismatch inventory. The historical full-worker audit identifies
    **67 slots**: motion 7, effects 10, Team 37, equipment 5 and separately reviewed
    audio 8; UI/screens matched at that checkpoint. The minimal A1 renderer slice
    targets **59 slots** if current-main app/audio sources remain unchanged.
    Keep approved PNGs and the independent fpv62 actor lease; native candidates
    and their eventual adoption stay separate. Recalculate on the integrated
-   source, including parallel Team changes. Current production100's effects20
-   predecessor is newer than batch14's pinned 27 September bulk record, so the
-   helper needs explicit current-predecessor support before production wiring.
+   source, including parallel Team changes. The current Effects20
+   predecessor is now supported by the exact immutable reader and its 32-case
+   cohort; production wiring/admission remains deferred.
    Preserve main's newer effects routing, every production100 predecessor and
    the worker's historical fpv93 evidence. The matcher must complement original
    Team recipe/default/image and equipment PNG guards, never replace them.
@@ -184,9 +226,9 @@ is A2 preparation, not completion of A or the deferred C2 human study.
 3. **Artwork quality:** generated cultural scenes remain candidates. Native
    export and valid hashes establish preparation, not consistent pixel clusters,
    museum accuracy, composition over gameplay, permission or production approval.
-4. **Local capacity:** the latest observation is **603,074,560 bytes free**, below
-   the publisher's 1,275,068,416-byte reserve. Earlier 7.1GiB and ~110MB observations
-   are historical. Small source/evidence handoffs continue; no local build,
+4. **Local capacity:** the latest observation is approximately **2.5GiB free**, above
+   the publisher's 1,275,068,416-byte reserve but volatile. Earlier 603MB, 7.1GiB
+   and ~110MB observations are historical. Small source/evidence handoffs continue; no local build,
    large download or release materialization is started here. Recheck before
    heavy work and preserve all existing evidence and user files. No cleanup or
    reserve reduction is claimed.

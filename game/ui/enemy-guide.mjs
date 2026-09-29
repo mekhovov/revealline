@@ -7,6 +7,7 @@ import {
   createEnemyGuideScenario,
 } from '../enemy-guide.mjs';
 import { ENEMY_THEMES } from '../enemy-catalog.mjs';
+import { isEncounterGuideTopic, encounterGuideAvailability } from '../encounter-guide.mjs';
 import { prepareScenario } from '../imports.mjs';
 import { createActorPresentation, drawPresentedActor } from './actor-presentation.mjs';
 import { createEnemyBodyAssets } from './enemy-body-assets.mjs';
@@ -24,6 +25,10 @@ export function attachEnemyGuide({
   getThemeId = () => 'fpv',
   getPresentation = () => null,
   getTurnPolicy = () => 'immediate',
+  getLevel = () => null,
+  getRunOptions = () => undefined,
+  getMissionTheme = () => null,
+  resolveEncounterPracticeURL = () => null,
   createBodyAssets = createEnemyBodyAssets,
   loadImpactScenario = async () => {
     const response = await fetch(
@@ -67,14 +72,15 @@ export function attachEnemyGuide({
     return el;
   };
   const select = (id, label, items) => {
-    const wrap = node('label', null, label),
+    const wrap = node('label'),
+      caption = node('span', null, label),
       el = node('select', id);
     for (const [value, text] of items) {
       const option = node('option', null, text);
       option.value = value;
       el.append(option);
     }
-    wrap.append(el);
+    wrap.append(caption, el);
     return { wrap, el };
   };
   const dialog = node('dialog', 'dialog');
@@ -177,23 +183,47 @@ export function attachEnemyGuide({
     return enemyGuideEntry(topic.el.value, appearance.el.value);
   }
   function refresh() {
-    const record = entry();
+    const record = entry(),
+      encounter = isEncounterGuideTopic(record.id),
+      availability = encounter ? encounterGuideAvailability(record.id, getLevel()) : null;
+    canvas.hidden = encounter;
     localizedText(previewNote, () =>
-      record.id === 'line-impact'
-        ? t('interface:lineImpactDiagramPracticeUsesActualTiming')
-        : t('interface:enlargedIllustrationCenterDotMarksContact'),
+      encounter
+        ? t('interface:encounterGuide.previewNote')
+        : record.id === 'line-impact'
+          ? t('interface:lineImpactDiagramPracticeUsesActualTiming')
+          : t('interface:enlargedIllustrationCenterDotMarksContact'),
     );
     canvas.setAttribute('aria-label', previewNote.textContent);
-    localizedText(heading, () => record.label);
-    localizedText(form, () => record.form);
-    localizedText(spot, () => `Spot: ${record.spot}`);
-    localizedText(risk, () => `Risk: ${record.risk}`);
-    localizedText(action, () => `Try: ${record.try}`);
-    localizedText(note, () => record.note);
+    localizedText(heading, () => entry().label);
+    localizedText(form, () => entry().form);
+    localizedText(spot, () =>
+      encounter
+        ? t('interface:encounterGuide.spot', { text: entry().spot })
+        : `Spot: ${entry().spot}`,
+    );
+    localizedText(risk, () =>
+      encounter
+        ? t('interface:encounterGuide.risk', { text: entry().risk })
+        : `Risk: ${entry().risk}`,
+    );
+    localizedText(action, () =>
+      encounter ? t('interface:encounterGuide.try', { text: entry().try }) : `Try: ${entry().try}`,
+    );
+    localizedText(note, () => entry().note);
     exercise.wrap.hidden = record.id !== 'line-impact';
-    localizedText(instructions, () => enemyGuidePracticeInstructions(record.id, exercise.el.value));
+    localizedText(instructions, () =>
+      [
+        enemyGuidePracticeInstructions(record.id, exercise.el.value),
+        availability ? t(`interface:encounterGuide.${availability.reason}`) : '',
+      ]
+        .filter(Boolean)
+        .join(' '),
+    );
     for (const el of [topic.el, appearance.el, exercise.el, previous, next, play])
       el.disabled = busy;
+    appearance.el.disabled = busy || encounter;
+    play.disabled = busy || (encounter && !availability.available);
     localizedText(play, () =>
       busy ? t('interface:preparingPractice') : t('interface:playPractice'),
     );
@@ -270,26 +300,63 @@ export function attachEnemyGuide({
     const ticket = ++generation,
       selected = topic.el.value,
       selectedTheme = appearance.el.value,
-      turnPolicy = getTurnPolicy();
+      turnPolicy = getTurnPolicy(),
+      encounter = isEncounterGuideTopic(selected),
+      levelOwner = encounter ? getLevel() : null;
     const controller = new AbortController();
     launchController = controller;
     busy = true;
     localizedText(status, () => t('interface:preparingAnIsolatedLesson'));
     refresh();
-    const current = () => !disposed && dialog.open && ticket === generation;
+    const current = () =>
+      !disposed &&
+      dialog.open &&
+      ticket === generation &&
+      (!encounter || getLevel() === levelOwner);
     try {
+      // Own exact level/setup/theme before the first asynchronous preparation.
+      // Replacing the loaded mission retires this launch; caller edits cannot
+      // rewrite the already validated candidate.
+      const candidate = encounter
+        ? createEnemyGuideScenario({
+            topic: selected,
+            themeId: selectedTheme,
+            turnPolicy,
+            themes,
+            encounterLevel: levelOwner,
+            encounterTheme: getMissionTheme(),
+            runOptions: getRunOptions(),
+          })
+        : null;
       const impactScenario = selected === 'line-impact' ? await loadImpactScenario() : null;
       if (!current()) return false;
       const prepared = await prepareScenario(
-        createEnemyGuideScenario({
-          topic: selected,
-          themeId: selectedTheme,
-          turnPolicy,
-          themes,
-          impactScenario,
-        }),
+        candidate ??
+          createEnemyGuideScenario({
+            topic: selected,
+            themeId: selectedTheme,
+            turnPolicy,
+            themes,
+            impactScenario,
+          }),
       );
       if (!current()) return false;
+      const returnURL = bridge.launchURL(),
+        resolvedURL = encounter
+          ? resolveEncounterPracticeURL({
+              scenario: prepared.scenario,
+              returnURL,
+            })
+          : null,
+        url = resolvedURL ?? returnURL;
+      if (resolvedURL !== null && typeof resolvedURL !== 'string')
+        throw new TypeError(t('interface:practiceMustRemainOnTheSameOrigin'));
+      const checkedURL = new URL(url, host.location.href);
+      if (
+        !['http:', 'https:'].includes(checkedURL.protocol) ||
+        checkedURL.origin !== new URL(host.location.href).origin
+      )
+        throw new TypeError(t('interface:practiceMustRemainOnTheSameOrigin'));
       parentSuspended = true;
       suspendedTicket = ticket;
       await onPractice({ signal: controller.signal, isCurrent: current });
@@ -297,10 +364,11 @@ export function attachEnemyGuide({
         if (suspendedTicket === ticket) stopPractice();
         return false;
       }
-      previousHandoff = host.sessionStorage.getItem(HANDOFF);
-      ownedHandoff = JSON.stringify(prepared.scenario);
-      host.sessionStorage.setItem(HANDOFF, ownedHandoff);
-      const url = bridge.launchURL();
+      if (resolvedURL === null) {
+        previousHandoff = host.sessionStorage.getItem(HANDOFF);
+        ownedHandoff = JSON.stringify(prepared.scenario);
+        host.sessionStorage.setItem(HANDOFF, ownedHandoff);
+      }
       active = true;
       content.hidden = true;
       practice.hidden = false;
@@ -362,7 +430,13 @@ export function attachEnemyGuide({
   }
   // A host snapshot change selects artwork for the existing sampled pose only.
   function refreshPresentation() {
-    if (!previewVisible() || !previewPose || topic.el.value === 'line-impact') return;
+    if (
+      !previewVisible() ||
+      !previewPose ||
+      topic.el.value === 'line-impact' ||
+      isEncounterGuideTopic(topic.el.value)
+    )
+      return;
     updatePreviewAssets();
     paintPreview();
   }
@@ -403,7 +477,7 @@ export function attachEnemyGuide({
     artworkStatus.hidden = !artworkStatus.textContent;
   }
   function update(dt = 0, { paused = false, reduced = false } = {}) {
-    if (!previewVisible()) {
+    if (!previewVisible() || isEncounterGuideTopic(topic.el.value)) {
       releasePreview();
       return;
     }

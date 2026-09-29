@@ -1,7 +1,11 @@
 import { loadCompanyStartup } from './ui/company-startup.mjs';
 import { editionDepartureDestinationAllowed } from './editions/departure-destination.mjs';
 import { mountEditionSoloUI } from './ui/edition-solo.mjs';
-import { createEditionPracticeScenario } from './ui/edition-controller-practice.mjs';
+import {
+  createEditionPracticeScenario,
+  editionGuidePracticeURL,
+  readEditionGuideSeed,
+} from './ui/edition-controller-practice.mjs';
 import { projectEditionGuideScenario } from './editions/selected-presentation.mjs';
 import { installedPresentation, invalidateInstalledMigration } from './installed-app.mjs';
 import { createGameWakeLock } from './ui/game-wake-lock.mjs';
@@ -476,6 +480,10 @@ try {
           difficulty: params.get('difficulty') ?? 'standard',
         })
       : JSON.parse(raw);
+    if (runtimeContent) {
+      const guideSeed = readEditionGuideSeed(params);
+      if (guideSeed !== null) requested.settings.seed = guideSeed;
+    }
     const prepared = await prepareScenario(requested, { classRecipes: classRegistry });
     scenario = prepared.scenario;
   }
@@ -2768,6 +2776,24 @@ try {
     getPresentation: () => presentationSnapshot,
     getThemeId: () => theme.id,
     getTurnPolicy: () => turnPolicy,
+    getLevel: () => run?.level,
+    getRunOptions: () =>
+      run
+        ? {
+            seed: run.seed,
+            classId: run.classId,
+            classRecipes: run.classRecipes,
+          }
+        : undefined,
+    getMissionTheme: () => theme,
+    resolveEncounterPracticeURL: ({ scenario, returnURL }) =>
+      runtimeContent
+        ? editionGuidePracticeURL(runtimeContent, {
+            scenario,
+            returnURL,
+            difficulty: activeEntry.difficulty || 'standard',
+          })
+        : null,
     loadImpactScenario: async () => {
       const source = await getJSON('content/scenarios/line-impact-demo.json');
       return runtimeContent

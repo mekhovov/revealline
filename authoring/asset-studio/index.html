@@ -383,7 +383,62 @@
       <p id="artwork-status" role="status" data-i18n="tools:studio.artwork.choosePacket">
         Choose a packet. Reference links are never fetched automatically.
       </p>
-      <div id="artwork-preview" class="artwork-source-preview"></div>
+      <div class="artwork-collection-controls">
+        <label
+          ><span data-i18n="tools:studio.artwork.inspectionView">Image view</span>
+          <select id="artwork-view" disabled>
+            <option value="fit" data-i18n="tools:studio.artwork.fitView">Fit whole image</option>
+            <option value="native" data-i18n="tools:studio.artwork.nativeView">
+              Native pixels · scroll
+            </option>
+          </select>
+        </label>
+        <button
+          id="artwork-compare"
+          type="button"
+          aria-pressed="false"
+          aria-controls="artwork-parent"
+          disabled
+          data-i18n="tools:studio.artwork.compareParent"
+        >
+          Compare retained parent
+        </button>
+      </div>
+      <p data-i18n="tools:studio.artwork.comparisonHelp">
+        Compare the selected file with its declared retained parent. Native pixels shows one image
+        pixel per CSS pixel in a scrollable frame; device scaling may differ. This is artwork
+        inspection, not a mission or approval.
+      </p>
+      <p id="artwork-comparison-status" role="status"></p>
+      <div id="artwork-review" class="artwork-review-grid" data-view="fit">
+        <figure>
+          <figcaption id="artwork-selected-caption"></figcaption>
+          <div
+            id="artwork-preview"
+            class="artwork-source-preview"
+            role="region"
+            aria-labelledby="artwork-selected-caption"
+            aria-label="Scrollable artwork preview"
+            data-i18n-aria-label="tools:studio.artwork.nativeFrame"
+            tabindex="-1"
+          ></div>
+          <p id="artwork-selected-facts" class="artwork-source-provenance"></p>
+        </figure>
+        <figure id="artwork-parent" hidden>
+          <figcaption id="artwork-parent-caption"></figcaption>
+          <div
+            id="artwork-parent-preview"
+            class="artwork-source-preview"
+            role="region"
+            aria-labelledby="artwork-parent-caption"
+            aria-label="Scrollable artwork preview"
+            data-i18n-aria-label="tools:studio.artwork.nativeFrame"
+            tabindex="-1"
+          ></div>
+          <p id="artwork-parent-facts" class="artwork-source-provenance"></p>
+          <p id="artwork-parent-rights" class="artwork-source-provenance"></p>
+        </figure>
+      </div>
       <div id="artwork-provenance" class="artwork-source-provenance"></div>
       <div id="artwork-download" hidden></div>
     </details>

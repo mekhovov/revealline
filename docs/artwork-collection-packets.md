@@ -193,6 +193,34 @@ use nearest-neighbor display sampling; photographic declarations use normal imag
 sampling. Neither modifies source bytes or proves native-grid quality. Rights,
 creator, source use, original facts, derivative parent and prompt remain visible.
 
+**Compare retained parent** adds one optional preview of the selected artwork's
+immediate `provenance.derivative.parent`. Both captions identify the exact artwork,
+collection revision, dimensions, declared medium, bytes and SHA-256; the parent
+also exposes its creator and rights declaration. It does not guess parents from
+basenames, related subjects or matching media. A photograph and a pixel candidate
+are compared only when the packet explicitly declares that relationship. An
+original without a parent has a clear unavailable state. The revision 7 community
+packet therefore compares its revised Poltava wide candidate to the retained
+revision 6 source, rather than silently choosing the earlier Poltava illustration.
+
+Both views use **Fit whole image** or **Native pixels · scroll**. Native display
+removes CSS downscaling in a bounded scrolling viewport; one source pixel maps to
+one CSS pixel, not necessarily one physical display pixel. Each frame is keyboard
+focusable in this mode. Mode changes reuse the already displayed images, do not
+decode the whole collection, and perform no Canvas operation. This is an image
+inspection surface; it does not render a mission, simulate visibility or certify
+cultural details or native-grid quality.
+
+Parent loading has a 15-second limit. Only a currently owned, dimension-matching
+decode may enter the parent viewport. Selection replacement, a newer import,
+cancellation and departure retire pending parent work; a late callback cannot
+show the previous parent. Failure leaves the accepted collection and selected
+source unchanged. A verified, already displayed parent can remain while an import
+is pending; successful import rebuilds the relationship from the new packet.
+Comparison state and display mode are not serialized: export preserves the same
+collection declarations and all retained bytes, without introducing bindings,
+approval fields or a new schema version.
+
 Import and export expose progress and cancellation. Failed or stale imports retain
 the previously accepted collection. Temporary decode URLs are revoked on success,
 failure or cancellation; displayed image and download URLs are released on
@@ -201,5 +229,9 @@ decoded preview until **Show source** is chosen. There is no remote source fetch
 save-data write, campaign change or approval promotion.
 
 Implementation: `authoring/asset-studio/artwork-collection.mjs`,
-`artwork-derivative.mjs` and `artwork-panel.mjs`. Focused verification:
-`node --test game/test/artwork-collection.test.mjs`.
+`artwork-derivative.mjs`, `artwork-comparison.mjs` and `artwork-panel.mjs`.
+Focused verification:
+`node --test game/test/artwork-collection.test.mjs game/test/artwork-derivative.test.mjs game/test/artwork-comparison.test.mjs`.
+Mounted host tests exercise the actual panel and exact localized identities,
+export preservation, stale completion and departure. Those injected decode tests
+do not constitute a native-browser raster or visual approval.
