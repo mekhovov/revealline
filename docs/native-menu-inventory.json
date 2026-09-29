@@ -434,14 +434,16 @@
     {
       "name": "Company Studio",
       "route": "/authoring/company-studio/",
-      "verification": "pending exact-candidate browser qualification; historical observations do not establish current acceptance",
-      "historicalVerification": "keyboard and virtual-controller browser workflow passed; physical controller not tested"
+      "verification": "Current 70309f09f source passes 86 focused tests (30 actual-entry host cases): captured Cancel-default source operations, stale read/error rejection, exact memory-only export reopening, seven reachable step destinations and explicit long-text readers. Aggregate virtual runs remain partial (3/4, then 2/4) after foreground loss; input guards were not weakened. The first two actual source exports pass complete 126-source/26-retained-original validation, CLI round-trip and independent exact bytes. Native keyboard edit/error/repair/export and exact Cancel/Replace reopening passed without pointer reset; both actual native source packets pass independent exact reconstruction and full production validation. The full aggregate virtual handoff remains unqualified. Package admission 0e04b5aa5 and final e159efd44 each pass 14 fresh in-memory edition compiles and 868 exact captured paths; this does not establish installed-offline or published delivery. No persistent Save/reload or verified compiled-artifact review is claimed.",
+      "historicalVerification": "keyboard and virtual-controller browser workflow passed; physical controller not tested",
+      "evidence": "docs/verification/company-studio-input-2026-09-29.md"
     },
     {
       "name": "Company transfer practice",
       "route": "/authoring/company-studio/playtest.html",
-      "verification": "pending exact-candidate browser qualification; historical observations do not establish current acceptance",
-      "historicalVerification": "keyboard and virtual-controller browser workflow passed; physical controller not tested"
+      "verification": "Current 70309f09f local wrapper plus e159efd44 effective-disabled navigation adds explicit brief/evidence/feedback readers and stable Open/Restart/Commit focus using the unchanged shared workbench and input owner. Actual-entry automated cases pass within the 86-test Company cohort, including invalid/complete/read-only state, task-only export, restart and pagehide clearing. A separate native keyboard segment passed blank/missing-evidence rejection, feedback/evidence reading and Back, select cancellation, correct completion/readonly fields, Restart/Close, real Studio return and blank practice reentry, plus task-only export without pointer reset. The native task artifact passes exact production validation. Fresh independent virtual practice passes 1/1 at e159efd44: blank/wrong answers, all reader entry/Back paths, select cancellation, readonly completion, Restart, Close, real Studio return/reset, blank practice reentry and final task export. Its actual task matches the native task and production answer-free bytes; all eight actual files across six partial/native/separate-practice groups pass independent validation. The final-source e159efd44 native repeat also passed brief/evidence/feedback reading, blank/wrong/correct choices, inherited-disabled field skipping, Restart and real return/reentry without a pointer reset; its eighth task artifact passes strict UTF-8 and exact production-byte validation. All virtual reading regions had zero overflow; scrolling is not qualified. The shared fix passes 254 overlapping focused checks. The earlier aggregate virtual fixture remains partial after foreground loss before this stage. Answers and completion remain page-local, with no campaign progress or persistent Save. Physical/native/offline and published acceptance remain separate.",
+      "historicalVerification": "keyboard and virtual-controller browser workflow passed; physical controller not tested",
+      "evidence": "docs/verification/company-studio-input-2026-09-29.md"
     },
     {
       "name": "Content Production",

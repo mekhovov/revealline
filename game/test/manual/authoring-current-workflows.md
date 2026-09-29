@@ -526,3 +526,88 @@ This bounded case does not qualify a complete page reload, OS file import,
 candidate-library selection, every actor/objective/structure editor, tracing or
 media recovery, Team exports, full gameplay, physical controllers, native
 platforms or publication. No compiled candidate is treated as a human playtest.
+
+## Company Studio and separate transfer practice
+
+Use the dedicated origin:
+`http://127.0.0.1:8993/game/test/manual/authoring-controller.html?tool=companyStudioCurrent`.
+The case runs in English against registered Company Studio source. This editor
+has no persistent project Save: applied source and unapplied JSON/form buffers
+exist only in the open tab. It does not create a new company or compile an
+edition in the browser. Existing local/session storage entries are compared
+before and after; the fixture makes no storage writes or IndexedDB operations.
+
+The shared pad cancels source selection, an edition choice, company-name text
+and the numeric edition revision. It then appends ` qa` to the selected company
+name and increments only that edition's revision, explicitly applies Identity,
+and checks the entire catalog against those exact intended changes. Artwork
+role and campaign choice drafts are canceled. The artwork provenance reader
+and compiler-command reader use their actual bounded regions; Back must restore
+the exact Read button. Measurements record whether a region actually overflowed;
+all-visible text is not counted as a scrolling qualification.
+
+The theme editor first cancels a text draft, then commits a malformed suffix.
+Apply must reject it without silently replacing the raw text or accepted
+catalog. Export must refuse all unapplied JSON. Removing that exact suffix and
+explicitly applying it restores the original source. All seven setup steps
+must focus their actual first editing/action controls. Learning explicitly
+selects a lesson-backed included campaign because the initial adventure
+campaign has no lesson file.
+
+The Whole-game preview step cancels compiler-report source selection and
+requires compiled preview and manual artwork observations to remain unavailable
+without a verified report. The registered source-reference URL is inspected but
+not opened or described as an applied-draft preview. Full compiled preview,
+artifact verification, manual observation export and publisher approval remain
+separate gates requiring actual prepared artifacts; this case creates none.
+
+Two explicit Download source draft actions must yield identical complete
+`revealline-company-source-draft.v1` packets. Each passes production
+`validateStudioDraft` and `validateStudioHistory`. The fixture compares every
+declared JSON source with the actual workspace, retaining original text and
+whitespace for immutable historical presentations. It then dirties both a JSON
+buffer and an identity form. Reopen last exported draft must finish preparation
+and present its Cancel-default replacement confirmation. Back must preserve
+both pending edits and applied source. A second explicit Reopen followed by
+Replace current draft must restore the exact validated exported packet and
+Identity focus before the second identical export. This qualifies the explicit
+in-memory reopen action; it is neither a durable Save nor an OS file import.
+Busy I/O cancellation is covered separately by deferred host tests unless a
+browser receipt explicitly observes it.
+
+After the exports, the real transfer-practice link opens the separate local
+fictional workshop task. The pad reads the brief, commits blank answers and
+reads the resulting missing-evidence feedback, inspects and reads both records,
+cancels a field choice, commits incorrect answers and then corrects them to
+six reusable cases by 4 November. Completion remains local practice. Restart
+must clear all answers and inspected-record flags. Export task cards must equal
+production `companyPlaytestTask` exactly and include no expected answers,
+coaching feedback or participant result. Before that final export, Close clears
+the response; following the real Company Studio link must open its original
+registered source with no last-export snapshot. The real practice link then
+reopens blank answers, and a second Close restores task selection. This proves
+the documented tab-local lifetime without requiring input after the download.
+
+The independently runnable
+`http://127.0.0.1:8993/game/test/manual/authoring-controller.html?tool=companyPracticeCurrent`
+starts on the actual transfer-practice URL and executes the same shared practice
+helper. Its single complete receipt covers all practice checks, Studio return,
+reopen and the final task-card export. It does not qualify the aggregate Studio
+journey. Export is its last application input; subsequent checks only inspect
+bytes and storage. A browser or OS download that takes foreground ownership is
+never followed by fixture refocusing. If the aggregate loses foreground between
+source exports and later input, retain that failed aggregate receipt and its
+completed stages separately rather than combining partial runs into a pass.
+
+In-page Blob receipts do not prove an operating-system file was written. Before
+running native or virtual journeys, inventory existing matching Downloads and
+preserve them. Independently validate only newly observed source/task files.
+The external validator reconstructs the entire expected source packet from the
+recorded committed catalog and all declared source files plus the exact observed
+identity edits. It requires every original source object and retained historical
+text, production draft/history validation, in-memory `companyDraftFiles` import
+and canonical roundtrip, exact byte hashes across each repeated pair, and exact
+answer-free production task-card bytes. It does not materialize a workspace or
+copy or decode binary media. Native keys, actual OS import, every campaign/editor,
+full gameplay, human learning, physical controllers, native platforms, offline
+delivery and publication need their own receipts.
