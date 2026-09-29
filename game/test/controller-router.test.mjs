@@ -249,6 +249,30 @@ test('a long-held Steam Deck A remains one Confirm and rearms after stable neutr
   assert.equal(f.sample('menu', 5141).ui.confirm, true);
 });
 
+test('the default release window is Steam Deck-specific while explicit timing stays portable', () => {
+  const shortTap = (options = {}, secondButton = 2, id = 'Controller') => {
+    const device = pad(0, id);
+    const router = createControllerRouter({
+      autoJoin: true,
+      eventTarget: null,
+      readPads: () => [device],
+      ...options,
+    });
+    router.sample({ scope: 'menu', timeMs: 0 });
+    device.buttons[0].pressed = true;
+    assert.equal(router.sample({ scope: 'menu', timeMs: 10 }).ui.confirm, true);
+    device.buttons[0].pressed = false;
+    router.sample({ scope: 'menu', timeMs: 30 });
+    device.buttons[secondButton].pressed = true;
+    return router.sample({ scope: 'menu', timeMs: 46 }).ui.confirm;
+  };
+
+  assert.equal(shortTap({ navigationAliases: true }, 2, 'Steam Deck Controller'), false);
+  assert.equal(shortTap({ navigationAliases: true }), true);
+  assert.equal(shortTap({}, 0), true);
+  assert.equal(shortTap({ confirmReleaseMs: 120 }, 0), false);
+});
+
 test('UI repeat uses elapsed time, resets on reversal, and produces no catch-up burst', () => {
   const f = fixture();
   f.join();
