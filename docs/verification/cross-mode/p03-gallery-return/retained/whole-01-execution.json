@@ -1,9 +1,0 @@
-{
-  "argv": [
-    "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node",
-    "--test",
-    "game/test/gallery-return-host.test.mjs"
-  ],
-  "exit": 1,
-  "seconds": 15.471449666889384
-}
