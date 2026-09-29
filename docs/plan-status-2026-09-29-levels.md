@@ -346,8 +346,9 @@ Levels has pushed the independently reviewed Team preparation repair in
 commit **`b25b29edf4a9ec8628b9d52333d8c683155ae0ec`** on
 `codex/team-import-hunter-tuning`, based on main `321408a3`. It is handed to the
 UX owner for adoption into **existing PR #757**, not a separate queued feature PR.
-At this checkpoint adoption and composed-source checks are pending; do not call
-the separate branch released or assume its tests cover the integrated host.
+That adoption is now complete as `b5d8bddd2eb6b49b66bc2b4847dfc289e196eea5`,
+without runtime edits. PR #757 is freshly verified at
+**`29f899e23ac556dd623a02df401adbea151fc087`**, still an open draft and not released.
 
 Valid Team v6/v7 Hunter imports were accepted but could not Start because the
 current gp4 adapter added an `encounter` override forbidden by those editions.
@@ -366,8 +367,8 @@ preserves the six original failures and subsequent Expert witness-fixture
 corrections. The PR #757 target adapter/foundations and eight dependencies match
 the patch baseline exactly; broader PR/main conflicts still require reconciliation.
 
-Separately, PR #757 is verified at **`04b49041ac06fcc073782751ea56acd5fa8c8030`**,
-an open draft. Its Team trail-impact Help slice records **25/25** checks: six new
+The earlier PR #757 head **`04b49041ac06fcc073782751ea56acd5fa8c8030`**
+contains a Team trail-impact Help slice recording **25/25** checks: six new
 guidance/host cases, eight existing briefing-host and eleven impact-core cases.
 This is a different cohort from the 25 tuning checks and overlaps older Team
 coverage; do not add it to the earlier 163-case total. The nine Help-manifest
@@ -375,6 +376,17 @@ entries match exact-head bytes/hashes. Local Help observations use keeper-only
 accepted imports and preserve the separate Hunter-Start failure diagnosis; they
 do not pre-accept the new tuning fix or a composed release. Core/schema/tuning
 and gameplay timing were unchanged by that Help commit.
+
+The subsequent [composed-source receipt](https://github.com/mekhovov/revealline/blob/29f899e23ac556dd623a02df401adbea151fc087/docs/verification/team-hunter-composition-20260929/README.md)
+passes **54/54**, zero failures, skips or cancellations, in 3.63 seconds. Four
+additional actual application-host cases cover EN/UK × v6/v7 with original
+Hunters retained: ordinary import → prepared Start → playing → Pause → Help →
+reader → Back. Time remains paused and Resume is deliberate. The total includes
+25 tuning/compatibility, ten guidance/host, eight existing briefing-host and
+eleven impact-core cases; do not add overlapping earlier totals. The imported
+Hunter source blocker is **resolved**, including the composed host path. This is
+not a native browser, physical-device, full-import or public acceptance claim.
+PR #757's broader accepted-main conflicts remain separate integration work.
 
 PR #761 is now verified at **`9fa28512476bcef326113b8f73adf2ec40be272c`**, also an
 open draft. Current-board Versus Help reads the actual two admitted runs,
