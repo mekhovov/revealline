@@ -33,6 +33,15 @@ Validation for this update:
   with the real browser before that check passed.
 - The optional package build test passes. Localization validates 11,464 messages
   and 8,643 references across English and Ukrainian. Scoped lint passes.
+- Full bundled build passes: 2,217 manifest files. ZIP SHA-256:
+  `3cb16ee1552aad7015ccad5cc510218fd635d93925a87e5b26f71c9dd736c03a`.
+  All 41 policy runtime dependencies are in `offline-cache.json`; simulator
+  entry/app, both renderer modules and navigation helper match source and manifest
+  hashes inside the ZIP. The initial packaging attempt ran out of disk space;
+  the retry passed after removing only the previous generated expanded copy,
+  retaining its ZIP/checksum until successful replacement.
+- All 13 files changed between the original main baseline and latest main are
+  preserved byte-for-byte from main after rebasing.
 - Browser verification: Ukrainian main menu → FPV simulator → Back to game
   returns to `/game/?journey=legacy`; simulator and return labels are visible.
 
