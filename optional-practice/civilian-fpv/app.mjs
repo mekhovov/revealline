@@ -10,6 +10,7 @@ import { FLIGHT_COURSES } from './catalogue.mjs';
 import { FLIGHT_DEMONSTRATIONS } from './demonstrations.mjs';
 import {
   createFlightProfileStore,
+  defaultRadioProfile,
   DEFAULT_RESPONSE,
   FLIGHT_CONTROLS,
   neutralFlightInput,
@@ -528,7 +529,9 @@ export function mountFlightApp({
     input.select($('input-source').value);
     if (input.owner() === 'radio' && !radio.status().profile) {
       try {
-        const saved = createFlightProfileStore({ storage: win.localStorage }).snapshot().radio;
+        const saved =
+          createFlightProfileStore({ storage: win.localStorage }).snapshot().radio ??
+          defaultRadioProfile();
         const matches = saved?.verified
           ? radio
               .devices()
