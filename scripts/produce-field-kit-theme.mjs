@@ -150,7 +150,7 @@ export function fieldKitEquipmentQuality(
       stage: 'reviewed',
       evidence: [
         ...(cumulativeContinued ? [cumulativeNativeEvidence('equipment')] : []),
-        ...(bulkContinued
+        ...(bulkContinued || cumulativeContinued
           ? [
               `Exact current five-image consumer continuation: ${BULK_PRESENTATION_REVIEW_PATH} sha256:${BULK_PRESENTATION_REVIEW_SHA256}`,
             ]
