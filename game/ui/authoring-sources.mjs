@@ -1,5 +1,5 @@
 import { setMenuIcon } from './native-menu-icons.mjs';
-import { authoringLabel, authoringText } from './authoring-copy.mjs';
+import { authoringAttribute, authoringLabel, authoringText } from './authoring-copy.mjs';
 
 const MAX_SOURCE_BYTES = 32 * 1024 * 1024;
 const candidates = [
@@ -54,7 +54,7 @@ export function createAuthoringSourcePicker({
   const recent = [],
     dialog = doc.createElement('dialog');
   dialog.className = 'authoring-source-dialog';
-  dialog.setAttribute('aria-label', authoringText('chooseSource'));
+  authoringAttribute(dialog, 'aria-label', 'chooseSource');
   doc.body.append(dialog);
   let sheet = null;
   if (!doc.querySelector('link[data-authoring-input-style]')) {
@@ -104,17 +104,18 @@ export function createAuthoringSourcePicker({
     authoringLabel(title, 'chooseSource');
     const status = doc.createElement('p');
     status.setAttribute('role', 'status');
-    const button = (label, action, parent = dialog) => {
+    const button = (label, action, key) => {
       const value = doc.createElement('button');
       value.type = 'button';
-      setMenuIcon(value, label === authoringText('close') ? 'back' : 'collection');
-      value.textContent = label;
+      setMenuIcon(value, key === 'close' ? 'back' : 'collection');
+      if (key) authoringLabel(value, key);
+      else value.textContent = label;
       value.onclick = action;
-      parent.append(value);
+      dialog.append(value);
       return value;
     };
     dialog.append(title, status);
-    button(authoringText('close'), close);
+    button(null, close, 'close');
     const choose = async (source) => {
       controller?.abort();
       const operation = new AbortController();
@@ -143,7 +144,7 @@ export function createAuthoringSourcePicker({
       const heading = doc.createElement('h3');
       authoringLabel(heading, key);
       dialog.append(heading);
-      rows.forEach((source) => button(source.label, () => choose(source)));
+      rows.forEach((source) => button(source.label, () => choose(source), source.key));
     };
     addSection(
       'samples',
@@ -190,15 +191,19 @@ export function createAuthoringSourcePicker({
       })
       .slice(0, 64);
     addSection('existing', assets);
-    button(authoringText('disk'), () => {
-      close();
-      try {
-        if (typeof input.showPicker === 'function') input.showPicker();
-        else input.click();
-      } catch {
-        /* Browser-owned picker needs a native keyboard/touch activation. */
-      }
-    });
+    button(
+      null,
+      () => {
+        close();
+        try {
+          if (typeof input.showPicker === 'function') input.showPicker();
+          else input.click();
+        } catch {
+          /* Browser-owned picker needs a native keyboard/touch activation. */
+        }
+      },
+      'disk',
+    );
     const help = doc.createElement('p');
     authoringLabel(help, 'diskHelp');
     dialog.append(help);

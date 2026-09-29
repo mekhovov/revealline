@@ -54,6 +54,7 @@ test('actual workshop reviews without writes, explicitly restores all originals,
   const store = h.store(),
     before = await store.read();
   h.choose(bundle);
+  h.$('review-originals').focus();
   assert.equal(await h.$('review-originals').onclick(), true);
   assert.deepEqual(await store.read(), before);
   assert.match(
@@ -86,6 +87,7 @@ test('actual workshop reviews without writes, explicitly restores all originals,
   assert.equal(h.paints.at(-1).asset.sha256, image.asset.sha256);
   let clicks = 0;
   h.$('download-originals').addEventListener('click', () => ++clicks);
+  h.$('prepare-originals').focus();
   assert.equal(await h.$('prepare-originals').onclick(), true);
   const link = h.$('download-originals');
   assert.equal(clicks, 0);
@@ -320,6 +322,7 @@ test('actual controller router reaches download/review/restore and held Confirm 
   frame(1);
   press(0, false);
   frame(2);
+  h.$('prepare-originals').focus();
   await h.$('prepare-originals').onclick();
   let downloads = 0;
   h.$('download-originals').addEventListener('click', () => ++downloads);

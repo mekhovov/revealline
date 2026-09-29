@@ -1,4 +1,4 @@
-import { getLocale, localizedText } from '../i18n/index.mjs';
+import { getLocale, localizedAttribute, localizedText } from '../i18n/index.mjs';
 
 const copy = {
   navigation: ['Editor navigation', 'Навігація редактора'],
@@ -55,3 +55,5 @@ const copy = {
 
 export const authoringText = (key) => copy[key]?.[getLocale() === 'uk' ? 1 : 0] ?? key;
 export const authoringLabel = (node, key) => localizedText(node, () => authoringText(key));
+export const authoringAttribute = (node, attribute, key) =>
+  localizedAttribute(node, attribute, () => authoringText(key));
