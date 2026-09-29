@@ -5126,5 +5126,7 @@
   "encounterGuide.spot": "Ознака: {{text}}",
   "encounterGuide.risk": "Ризик: {{text}}",
   "encounterGuide.try": "Спробуйте: {{text}}",
+  "encounterHelp.title": "Загрози місії",
+  "encounterHelp.unavailable": "Підказки щодо загроз недоступні: правила цих полів не вдалося перевірити.",
   "worldIdsCommaSeparated": "Світи (через кому: retro, fpv, ukraine)"
 }

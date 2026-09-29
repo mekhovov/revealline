@@ -5020,5 +5020,7 @@
   "encounterGuide.spot": "Spot: {{text}}",
   "encounterGuide.risk": "Risk: {{text}}",
   "encounterGuide.try": "Try: {{text}}",
+  "encounterHelp.title": "Mission threats",
+  "encounterHelp.unavailable": "Threat guidance is unavailable because these board rules could not be validated.",
   "worldIdsCommaSeparated": "Worlds (comma separated: retro, fpv, ukraine)"
 }

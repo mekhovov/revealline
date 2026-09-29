@@ -364,3 +364,7 @@ Field details action for compact cue overflow, preserving the existing paused
 reader and explicit Resume. Focused correctness, no-awards ownership, exact
 artifact bytes and basic browser interaction are checked. Production adoption,
 whole-content quality, device qualification and C2 remain deferred or unfinished.
+
+Implementation continuation: [batch17](verification/actor-batch-17/README.md) adds
+current-board Versus Help, Team-specific impact advice and exact artwork handoff.
+Production review remains deferred; A/B/C acceptance and C2-last are unchanged.

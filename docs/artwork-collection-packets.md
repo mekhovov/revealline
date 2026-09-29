@@ -235,3 +235,14 @@ Focused verification:
 Mounted host tests exercise the actual panel and exact localized identities,
 export preservation, stale completion and departure. Those injected decode tests
 do not constitute a native-browser raster or visual approval.
+
+## Exact single-file handoff
+
+After selecting a verified original or derivative, **Download selected verified
+file** prepares that exact PNG/JPEG/WebP for an existing creator's image picker.
+It checks bytes and decoded dimensions again; it does not crop, resize, encode,
+choose a mission or approve content. Retain the full .rlart packet for provenance.
+A declared filename must match its format. Cancellation, selection or replacement
+cannot offer an old file. A download request is not proof of disk delivery; the
+visible fallback link remains available if the browser needs a deliberate click.
+The receiving creator still owns target mapping, fitting and any new output hash.

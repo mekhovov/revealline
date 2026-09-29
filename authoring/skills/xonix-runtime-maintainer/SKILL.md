@@ -1675,3 +1675,12 @@ Allowlist event urgency by exact emitted type, never by prefix. The ordinary
 opener's existing pause may refresh only `savedAt`; reading and Back must preserve
 checkpoint, replay, continuation, focus and Pause. Practice stays write-free.
 See the updated optional encounter maintenance contract and batch13 evidence.
+
+### Current-board encounter Help
+
+Couch guidance reads accepted run.level values at Help entry, never uncommitted
+setup selectors. Preserve per-seat applicability and actual mode semantics. Use
+existing paused reading/return ownership; no per-frame rebuild or live telemetry
+announcements. A missing prepared match is not invalid content. Team two-front
+trail advice requires its explicit runtime edition; Legacy relay guidance stays
+unchanged. Keep reproduced baseline test defects separate from feature passes.
