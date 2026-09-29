@@ -758,6 +758,7 @@ export function bootCoop({
     if (tools.hidden) {
       $('coop-help').open = false;
     }
+    if (tools.hidden || paused) $('coop-more').open = false;
     showTouch();
   }
   function back() {
@@ -1518,6 +1519,7 @@ export function bootCoop({
     painter.paint(run, {
       reduced: displayPreferences.snapshot().effectiveReducedEffects,
       textFace: displayPreferences.snapshot().textFace,
+      textSize: displayPreferences.snapshot().textSize,
       picture: acceptedPicture?.binding ?? null,
       actorAppearance: acceptedPicture?.actorAppearance ?? null,
       pictureLevel: attemptTuning.get(run)?.pictureLevel ?? run.level,

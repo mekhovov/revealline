@@ -13,6 +13,7 @@ import { soloPage, memoryStorage, settle } from './helpers/solo-dom.mjs';
 import { couchPage, mountCouch } from './helpers/couch-host.mjs';
 import { Document, Events } from './helpers/couch-dom.mjs';
 import { FIXED_DT } from '../coop/core.mjs';
+import { installActorAppearanceTransport } from './helpers/actor-appearance-transport.mjs';
 
 const campaign = JSON.parse(await readFile(new URL('../content/campaign.json', import.meta.url)));
 const teamHTML = await readFile(new URL('../couch/relay-rescue.html', import.meta.url), 'utf8');
@@ -111,13 +112,14 @@ async function teamPage(t, store, { systemReduced = false } = {}) {
       if (descriptor) Object.defineProperty(globalThis, key, descriptor);
       else delete globalThis[key];
   });
-  const artwork = installCoopPresentation({
-    doc,
-    win,
-    install(key, descriptor) {
-      originals.set(key, Object.getOwnPropertyDescriptor(globalThis, key));
-      Object.defineProperty(globalThis, key, { configurable: true, ...descriptor });
-    },
+  function install(key, descriptor) {
+    if (!originals.has(key)) originals.set(key, Object.getOwnPropertyDescriptor(globalThis, key));
+    Object.defineProperty(globalThis, key, { configurable: true, ...descriptor });
+  }
+  const artwork = installCoopPresentation({ doc, win, install });
+  installActorAppearanceTransport({
+    install,
+    baseURL: new URL('../presentation/compiled/', globals.location.href),
   });
   await import(`../couch/relay-rescue.mjs?display-host=${++sequence}`);
   await waitForTeamPicture(
@@ -142,6 +144,7 @@ async function teamPage(t, store, { systemReduced = false } = {}) {
     media,
     geometry: () => calls.map(({ method, args }) => ({ method, args })),
     fonts: () => calls.filter((c) => c.method === 'fillText').map((c) => c.font),
+    labels: () => calls.filter((call) => call.method === 'fillText'),
   };
 }
 
@@ -225,15 +228,32 @@ test('Solo to Team to Versus and back restores one display record without Couch 
     page.$('coop-pause').click();
     page.tick();
     const geometry = page.geometry(),
+      labels = page.labels(),
       clock = page.$('coop-clock').textContent;
     page.$('coop-settings-open').click();
     page.$('coop-settings-tab-display').focus();
     for (const id of ['coop-text-face', 'coop-text-size', 'coop-reduced']) reaches(page, id);
     change(page, 'coop-text-face', 'pixel');
-    change(page, 'coop-text-size', 'standard');
     page.tick(120);
     assert.deepEqual(page.geometry(), geometry);
     assert.ok(page.fonts().some((font) => font.includes(page.artwork.snapshot.fonts.numeric)));
+    change(page, 'coop-text-size', 'standard');
+    page.tick(120);
+    assert.notDeepEqual(page.geometry(), geometry, 'Large changes canvas label geometry');
+    const images = (commands) => commands.filter((command) => command.method === 'drawImage');
+    assert.deepEqual(
+      images(page.geometry()),
+      images(geometry),
+      'The accepted picture and actor frames stay exact',
+    );
+    for (const id of ['1', '2']) {
+      const size = (values) =>
+        Number(values.find((call) => call.args[0] === id).font.match(/([\d.]+)px/)[1]);
+      assert.ok(
+        Math.abs(size(labels) - size(page.labels()) * (4 / 3)) < 1e-9,
+        'The real host forwards Large to player numerals',
+      );
+    }
     assert.equal(page.$('coop-clock').textContent, clock);
     assert.equal(page.$('coop-overlay-title').textContent, 'Both players paused');
     assert.equal(store.getItem(profileKey), profile);

@@ -1,6 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
+import { createHash } from 'node:crypto';
 import { createCoop } from '../coop/core.mjs';
 import { FIRST_CONNECTION } from '../coop/first-connection.mjs';
 import { createCoopPainter } from '../couch/coop-view.mjs';
@@ -338,4 +339,149 @@ test('complete CSS cue plates avoid both pilot heads and remain in the 362 by181
   const scale = coopCueScale(362);
   assert.equal(scale.font(0.66, 14) * scale.cell, 14);
   assert.equal(scale.font(0.57, 12) * scale.cell, 12);
+});
+
+test('Large scales Team canvas type after its CSS-size clamp without changing cell geometry', () => {
+  for (const width of [292, 362, 1152]) {
+    const standard = coopCueScale(width),
+      large = coopCueScale(width, 72, 'large');
+    assert.equal(standard.cell, large.cell);
+    assert.equal(standard.width, large.width);
+    for (const [cells, minimum] of [
+      [0.57, 12],
+      [0.66, 14],
+      [2, 12],
+    ])
+      assert.equal(large.font(cells, minimum), standard.font(cells, minimum) * (4 / 3));
+  }
+  assert.throws(() => coopCueScale(362, 72, 'tiny'), /Unsupported text size/);
+});
+
+function labelStudy(width = 362, options = {}) {
+  const run = createCoop(FIRST_CONNECTION),
+    v = surface(width),
+    painter = createCoopPainter(v.canvas);
+  run.players[0].status = 'downed';
+  run.players[1].graceUntil = 10;
+  const hunter = run.enemies.find((enemy) => enemy.type === 'hunter');
+  Object.assign(hunter, { phase: 'warning', target: 0, targetPoint: { x: 25, y: 10 } });
+  const before = structuredClone(run);
+  painter.setPresentation(snapshot);
+  painter.paint(run, options);
+  assert.deepEqual(run, before, 'Text preferences must not alter the authoritative run');
+  return { run, ...v };
+}
+
+test('Standard Team commands retain the pre-Large-preference baseline', () => {
+  const baseline = {
+    pixel: '0c396f52408c0e8de8a052974b1c9b4d52c805bded20259bb55570b23cf214d4',
+    plain: '2bf0c9bd9b797d11960ceef870006d11ef14739d267ddc4789caa0b2d6012c0b',
+  };
+  for (const textFace of ['pixel', 'plain']) {
+    const options = { textFace, reduced: true };
+    const omitted = labelStudy(362, options),
+      explicit = labelStudy(362, { ...options, textSize: 'standard' });
+    assert.deepEqual(explicit.calls, omitted.calls);
+    assert.equal(
+      createHash('sha256').update(JSON.stringify(omitted.calls)).digest('hex'),
+      baseline[textFace],
+    );
+  }
+});
+
+test('Large enlarges actual player, downed and warning labels while preserving prepared bodies and contacts', () => {
+  for (const width of [292, 362, 1152])
+    for (const textFace of ['plain', 'pixel']) {
+      const standard = labelStudy(width, { textFace, reduced: true }),
+        large = labelStudy(width, { textFace, textSize: 'large', reduced: true });
+      const labels = (view) => view.calls.filter((call) => call.name === 'fillText');
+      for (const text of ['1', '2', '+', 'LOCK 1']) {
+        const before = labels(standard).find((call) => call.args[0] === text),
+          after = labels(large).find((call) => call.args[0] === text);
+        assert.ok(before && after, `${width}px must retain ${text}`);
+        const size = (call) => Number(call.state.font.match(/([\d.]+)px/)[1]);
+        assert.ok(
+          Math.abs(size(after) - size(before) * (4 / 3)) < 1e-9,
+          `${text} must honor Large`,
+        );
+      }
+      const bodies = (view) => view.calls.filter((call) => call.name === 'drawImage');
+      assert.deepEqual(
+        bodies(large),
+        bodies(standard),
+        'Image transforms and source frames stay exact',
+      );
+      const cell = width / large.run.width;
+      const heads = large.run.players.map((player) => ({
+        left: player.x * cell - player.radius * cell - 2,
+        right: player.x * cell + player.radius * cell + 2,
+        top: player.y * cell - player.radius * cell - 2,
+        bottom: player.y * cell + player.radius * cell + 2,
+      }));
+      const clearHeads = (rect) => {
+        assert.ok(
+          rect.left >= 0 && rect.top >= 0 && rect.right <= width && rect.bottom <= width / 2,
+          JSON.stringify({ width, rect }),
+        );
+        for (const head of heads)
+          assert.equal(
+            rect.left < head.right &&
+              rect.right > head.left &&
+              rect.top < head.bottom &&
+              rect.bottom > head.top,
+            false,
+            'Large label must not cover a real pilot head',
+          );
+      };
+      for (const call of large.calls.filter(
+        (entry) => entry.name === 'fillRect' && entry.state.fillStyle === '#07111c',
+      )) {
+        const rect = bounds(call, call.args);
+        for (const key of ['left', 'right', 'top', 'bottom']) rect[key] *= width / 1152;
+        if (rect.bottom - rect.top >= 16 - 1e-9) clearHeads(rect);
+      }
+      for (const id of ['1', '2']) {
+        const label = labels(large).find((call) => call.args[0] === id),
+          x = label.args[1] * cell,
+          y = label.args[2] * cell,
+          radius = (id === '1' ? 10 : 12) * (4 / 3);
+        clearHeads({ left: x - radius, right: x + radius, top: y - radius, bottom: y + radius });
+      }
+      for (const player of large.run.players) {
+        const contacts = (view) =>
+          view.calls.filter(
+            (call) =>
+              call.name === 'arc' &&
+              call.args[0] === player.x &&
+              call.args[1] === player.y &&
+              call.args[2] === player.radius,
+          );
+        assert.ok(contacts(large).length > 0);
+        assert.deepEqual(
+          contacts(large),
+          contacts(standard),
+          'Contact radius and foreground commands stay exact',
+        );
+      }
+    }
+});
+
+test('crowded Team labels keep their measured size instead of covering a pilot or shrinking text', () => {
+  const request = { x: 30, y: 20, width: 40, height: 24, arenaWidth: 60, arenaHeight: 40 };
+  assert.equal(placeCoopCue({ ...request, width: 61 }), null);
+  assert.equal(
+    placeCoopCue({ ...request, heads: [{ left: 0, top: 0, right: 60, bottom: 40 }] }),
+    null,
+  );
+});
+
+test('invalid canvas text size fails before drawing or mutating the Team run', () => {
+  const run = createCoop(FIRST_CONNECTION),
+    before = structuredClone(run),
+    v = surface();
+  const painter = createCoopPainter(v.canvas);
+  painter.setPresentation(snapshot);
+  assert.throws(() => painter.paint(run, { textSize: 'tiny' }), /Unsupported text size/);
+  assert.deepEqual(v.calls, []);
+  assert.deepEqual(run, before);
 });
