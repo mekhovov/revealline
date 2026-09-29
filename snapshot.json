@@ -1,0 +1,241 @@
+{
+  "format": "revealline-recovery-fragment-v1",
+  "capturedAt": "2026-09-29T15:10:12.292840+00:00",
+  "worktree": "<home>/work/my_projects/go_test/.cache/worktrees/p05-team-large-v621",
+  "branch": "refs/heads/codex/p05-team-large-v621",
+  "head": "ef1430174dfd35a9df441233988b8737d0401851",
+  "excluded": [],
+  "changes": [
+    {
+      "status": " M",
+      "path": "authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "object": "a0a13dba51da5544118b8e319f129227ba1828f1",
+      "sha256": "8635bafc97d1282818ff121c394da68ead0a8da06d94235971d7412baf2f2e73",
+      "bytes": 227988,
+      "mode": "100644"
+    },
+    {
+      "status": " M",
+      "path": "docs/team-actor-presentation.md",
+      "object": "d3f0ab85051803dc47aed7ccc45a3cf0600b3e88",
+      "sha256": "3ff3f43f6ddab151b53934e89702885395d0760804c11f7c699548cd2eb9cba4",
+      "bytes": 16650,
+      "mode": "100644"
+    },
+    {
+      "status": " M",
+      "path": "game/couch/coop-actor-layout.mjs",
+      "object": "9b854c4d004e2ea7246e9ebe2082bbb055ccf23e",
+      "sha256": "b3129272fc8e2c48ab13c904ed396436b8d8834fbae03f0938f4825a2d1d902d",
+      "bytes": 9600,
+      "mode": "100644"
+    },
+    {
+      "status": " M",
+      "path": "game/couch/coop-view.mjs",
+      "object": "ddfaf13f6cb15a625aa97524d32a465e39f7a33d",
+      "sha256": "8dd1082815d4ab7c95387781cea3bdc16652b52ccf3418031e5da92e74330b76",
+      "bytes": 27603,
+      "mode": "100644"
+    },
+    {
+      "status": " M",
+      "path": "game/couch/relay-rescue.css",
+      "object": "3986e5dd739076f46d98039f59f69cbe616daa2a",
+      "sha256": "1f31ff90c006e035272ae8c440cdc89443752fc70d3d63eccd9021991b2d4b3a",
+      "bytes": 23703,
+      "mode": "100644"
+    },
+    {
+      "status": " M",
+      "path": "game/couch/relay-rescue.html",
+      "object": "3a49f4b04e494bb1a229563712247f6ad478f146",
+      "sha256": "c329457334e10e9dee3ecdd86c3a6b2abf1ddc185671641529d062504b6f611e",
+      "bytes": 26668,
+      "mode": "100644"
+    },
+    {
+      "status": " M",
+      "path": "game/couch/relay-rescue.mjs",
+      "object": "e7b20a2c8745e778305bceec31901cf89d107d50",
+      "sha256": "9568debf58df54170a43ce282d09b8640037ace6667b952c3227ab47f9d77f3e",
+      "bytes": 70230,
+      "mode": "100644"
+    },
+    {
+      "status": " M",
+      "path": "game/test/coop-actor-layout.test.mjs",
+      "object": "36dbf4d80a6bf0342cbfd516f205d17e85cd2798",
+      "sha256": "99b5d74db7c40821d88593e12702535b5f8e476746de01355eca3657e8371917",
+      "bytes": 25729,
+      "mode": "100644"
+    },
+    {
+      "status": " M",
+      "path": "game/test/display-preferences-host.test.mjs",
+      "object": "61197db74eb89be022f87ce4df52fe90dd74520a",
+      "sha256": "e0128029b5fdcacc7f6e288e19f4b860729b8c21e4b7a42460ed6dc28d7b6a10",
+      "bytes": 17677,
+      "mode": "100644"
+    },
+    {
+      "status": " M",
+      "path": "game/test/helpers/coop-host.mjs",
+      "object": "bda5ee411b421c98e564a7b75a3848715ce30827",
+      "sha256": "45570282905ef17a30fe1d8f0804c86b7d4ff6167f3f3c807e9c034c3a578dc4",
+      "bytes": 12614,
+      "mode": "100644"
+    },
+    {
+      "status": "??",
+      "path": "game/couch/coop-cue-semantics.mjs",
+      "object": "b692c842f56ae247ecd35052f957e71dd170a6d5",
+      "sha256": "61b08cfc0b27d00dbc84733297a773059208ac0db2ad0061265fc2def8452ad3",
+      "bytes": 2471,
+      "mode": "100644"
+    },
+    {
+      "status": "??",
+      "path": "game/couch/coop-cue-symbols.mjs",
+      "object": "64aa84d2a7d18644a5bf5c7c4d838a535fdefd4a",
+      "sha256": "bf22c1467d13b6d6c4f758aa8910d438ba0c627acb3a3639c245a9cfc7e4865f",
+      "bytes": 6084,
+      "mode": "100644"
+    },
+    {
+      "status": "??",
+      "path": "game/couch/coop-objectives.css",
+      "object": "013ef55b6555429ff287b41c31282ceb316f9e5a",
+      "sha256": "3d15e4b306a78444298740df02fcb19509cebc05773d4e43234242c39a13bbb9",
+      "bytes": 2528,
+      "mode": "100644"
+    },
+    {
+      "status": "??",
+      "path": "game/couch/coop-objectives.mjs",
+      "object": "2d80c1a6cb6e3eee3e818d3ca9df03d0c2ce3113",
+      "sha256": "6423bb3a62ccaaaca5d188dc141b400b1a3c7fb8457a2045758ff1e0ea0adf4e",
+      "bytes": 14375,
+      "mode": "100644"
+    },
+    {
+      "status": "??",
+      "path": "game/test/coop-cue-semantics.test.mjs",
+      "object": "ca979d20dd8816a0560b8f8851eb0eb35438c3a1",
+      "sha256": "6b38b7a0c1cd34e7914b791c50274ba778a703d8b27c3d2677b2df178466a281",
+      "bytes": 7580,
+      "mode": "100644"
+    },
+    {
+      "status": "??",
+      "path": "game/test/coop-cue-symbols.test.mjs",
+      "object": "b7eb0bf914ecf99eb29129fe3ed201848bb0caf9",
+      "sha256": "a41f3ce2ea2221448677f1d475ad334c441c30584211ff97f2172346901139e1",
+      "bytes": 10944,
+      "mode": "100644"
+    },
+    {
+      "status": "??",
+      "path": "game/test/coop-large-objective-identity.test.mjs",
+      "object": "eb77c8b30e636ba4d05e17d1bd60812c2c0a63b9",
+      "sha256": "a26e622a950ad51e4355bf685711c843ff1c1819face9a22551c34e3a2c9897f",
+      "bytes": 28196,
+      "mode": "100644"
+    },
+    {
+      "status": "??",
+      "path": "game/test/coop-large-text-host.test.mjs",
+      "object": "dae221422f293852f2ae93ca2a179c5227c41fce",
+      "sha256": "779313dbe50df98b0edcc9cd3dc184b1b228119c7b42f3377a8f10d1012e83bb",
+      "bytes": 11095,
+      "mode": "100644"
+    },
+    {
+      "status": "??",
+      "path": "game/test/coop-objectives-host.test.mjs",
+      "object": "fa8a643c5677042a2d5b0ad023734e8ff4a2c399",
+      "sha256": "9513a8d8636039945a244dc97171a10870a3188980e34f6cf26f534854bcf7cb",
+      "bytes": 17108,
+      "mode": "100644"
+    },
+    {
+      "status": "??",
+      "path": "game/test/coop-objectives.test.mjs",
+      "object": "9a65e7ba614f7d1834478ea4796aa7e52331aeff",
+      "sha256": "d6eeea1dbd0d71d521f7f4d41a30dad1f3793c1a60c0736d23e04728114579d9",
+      "bytes": 5526,
+      "mode": "100644"
+    },
+    {
+      "status": "??",
+      "path": "game/test/coop-threat-summary-host.test.mjs",
+      "object": "6471a4fb4fba2fd902a797c65bb1d59f462a42ad",
+      "sha256": "1c6849de40d475c5a261c18884f1bb5bd4be7cb859ea37b97d2f72f4b373184b",
+      "bytes": 10943,
+      "mode": "100644"
+    }
+  ],
+  "indexEntries": [
+    {
+      "path": "authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "mode": "100644",
+      "object": "8948eb3a222119fe12e7554a45c2d2d75ef93430",
+      "stage": 0
+    },
+    {
+      "path": "docs/team-actor-presentation.md",
+      "mode": "100644",
+      "object": "42120063e8d9d0be245b7796772f0a445d30c7fe",
+      "stage": 0
+    },
+    {
+      "path": "game/couch/coop-actor-layout.mjs",
+      "mode": "100644",
+      "object": "78e7c365173042bf82435bcf3a9b7f95d949a307",
+      "stage": 0
+    },
+    {
+      "path": "game/couch/coop-view.mjs",
+      "mode": "100644",
+      "object": "162320b9abf93fc050d07bf412d842dc54556ae0",
+      "stage": 0
+    },
+    {
+      "path": "game/couch/relay-rescue.css",
+      "mode": "100644",
+      "object": "f1bb33a69232d83d031555897f7791f586904714",
+      "stage": 0
+    },
+    {
+      "path": "game/couch/relay-rescue.html",
+      "mode": "100644",
+      "object": "3723dc22f6d15a462068642773d5df4111216979",
+      "stage": 0
+    },
+    {
+      "path": "game/couch/relay-rescue.mjs",
+      "mode": "100644",
+      "object": "af68fbfbb830176927a5078b156919d713782ffd",
+      "stage": 0
+    },
+    {
+      "path": "game/test/coop-actor-layout.test.mjs",
+      "mode": "100644",
+      "object": "5d8f420abb4de15c5ddb476b759b45f59b688e70",
+      "stage": 0
+    },
+    {
+      "path": "game/test/display-preferences-host.test.mjs",
+      "mode": "100644",
+      "object": "b52469389d05ede9a6885ecd862a0af18208b48e",
+      "stage": 0
+    },
+    {
+      "path": "game/test/helpers/coop-host.mjs",
+      "mode": "100644",
+      "object": "6aca98365d6581ab7f1513c02788663447ccb4e4",
+      "stage": 0
+    }
+  ],
+  "purpose": "Recovery only. These bytes are not release admission. Missing files, conflict stages and obsolete generated outputs are preserved as observations, not deletion or merge instructions."
+}
