@@ -1,0 +1,44 @@
+{
+  "reviewedAt": "2026-09-29T15:29:04.770733+00:00",
+  "manifestSha256": "60bfc3833c44bab66f6f7e0c3de432d597a54ed2b979e26baea7d4857c088b1a",
+  "manifestSummary": {
+    "registered": 3,
+    "snapshotCount": 2,
+    "dependencyOnly": 0,
+    "dirtyPaths": 17
+  },
+  "snapshotCommitsVerified": 2,
+  "parents": [
+    {
+      "commit": "dca895c3cd43ba92a808f183dbda1d32e81912d2",
+      "parents": [
+        "752df72d66c1a1bbbebb95e9db72fe8de0e1f332"
+      ],
+      "expected": "752df72d66c1a1bbbebb95e9db72fe8de0e1f332"
+    },
+    {
+      "commit": "861db8934f611349f5f41447a290607bca26ba3e",
+      "parents": [
+        "39bb06ceaf2c6c769a0308daa090ed5550250141"
+      ],
+      "expected": "39bb06ceaf2c6c769a0308daa090ed5550250141"
+    }
+  ],
+  "workingFilesVerified": 17,
+  "indexEntriesVerified": 10,
+  "workingUniqueBlobsRehashed": 17,
+  "allUniqueBlobsRehashed": 27,
+  "allUniqueBytesVerified": 3051880,
+  "workingFileExtensions": {
+    ".md": 4,
+    ".mjs": 13
+  },
+  "nonTextBlobs": [],
+  "credentialSignatureFindings": [],
+  "errors": [],
+  "limits": [
+    "Read-only captured-object verification; no owner state or refs mutated.",
+    "No source correctness/product tests or release admission implied.",
+    "High-confidence plaintext credential scan is not exhaustive; no credential values printed."
+  ]
+}

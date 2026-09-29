@@ -1,0 +1,9 @@
+{
+  "capturedThrough": "2026-09-29T15:27:54.400408+00:00",
+  "initialSnapshotCount": 53,
+  "additionalSnapshotCount": 2,
+  "stashCount": 7,
+  "historicalFrontierTips": 240,
+  "scope": "Git source, nondependency working files and index stages observed during the audit. Owners may create later edits. No further active-owner capture after this cutoff.",
+  "notReleaseSource": true
+}
