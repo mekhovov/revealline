@@ -15,6 +15,7 @@ function host(t) {
   const create = document.createElement.bind(document);
   document.createElement = (tag) => {
     const element = create(tag);
+    element.before = (sibling) => element.parentNode.insertBefore(sibling, element);
     Object.defineProperty(element, 'innerHTML', {
       set(value) {
         this._markup = String(value);
@@ -26,6 +27,19 @@ function host(t) {
     element.getContext = () => new Proxy({}, { get: () => () => {} });
     return element;
   };
+  Object.assign(window, {
+    getComputedStyle: document.defaultView.getComputedStyle,
+    location: new URL('http://localhost:8767/authoring/design-atlas/'),
+    MutationObserver: class {
+      observe() {}
+      disconnect() {}
+    },
+    requestAnimationFrame: () => 1,
+    cancelAnimationFrame() {},
+  });
+  document.defaultView = window;
+  document.parentNode = window;
+  t.after(() => window.emit('pagehide', { persisted: false }));
   const $ = (id) => {
     if (!nodes.has(id)) {
       const element = document.createElement('div');
@@ -116,6 +130,10 @@ test('atlas font, optional reference and clipboard waits remain independently sc
     fonts = deferred(),
     reference = deferred(),
     clipboard = deferred();
+  const details = h.document.createElement('details'),
+    summary = h.document.createElement('summary');
+  h.document.body.append(details);
+  details.append(summary, h.$('prompt-example-text'));
   h.document.fonts = { load: () => fonts.promise };
   const link = h.document.createElement('a');
   link.setAttribute('data-local-reference', 'local.png');

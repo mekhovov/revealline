@@ -10,6 +10,9 @@ import {
 } from '../../game/i18n/index.mjs';
 globalThis.RevealLineToolLaunch?.attached();
 import { createOperationStatus } from '../../game/ui/operation-status.mjs';
+import { attachAtlasInput } from './atlas-input.mjs';
+import { attachAtlasBriefDownload } from './atlas-brief-download.mjs';
+let atlasInput = null;
 // Original review mockups only. This module never imports the game or writes player storage.
 const $ = (selector) => document.querySelector(selector);
 
@@ -247,6 +250,7 @@ let currentScreen = 'title';
 let currentState = 'returning';
 
 function renderScreen() {
+  atlasInput?.invalidate();
   const screen = screens[currentScreen];
   $('#screen-preview').innerHTML = screen.render(currentState);
   bindCopies($('#screen-preview'));
@@ -266,6 +270,7 @@ function renderScreen() {
       value2: render(screen.states.find(([id]) => id === currentState)[1]),
     }),
   );
+  atlasInput?.refresh();
 }
 
 function chooseScreen(name, state) {
@@ -316,6 +321,7 @@ const viewportLabel = (view) =>
 document.querySelectorAll('[data-viewport]').forEach((button) => {
   if (button.tagName !== 'BUTTON') return;
   button.addEventListener('click', () => {
+    atlasInput?.invalidate();
     const view = button.dataset.viewport;
     $('#screen-stage').dataset.viewport = view;
     document
@@ -595,6 +601,7 @@ const inventory = [
 ];
 
 function renderInventory() {
+  atlasInput?.invalidate();
   const filter = $('#inventory-filter').value;
   const rows = inventory.filter(([group]) => filter === 'all' || group === filter);
   $('#screen-matrix-body').innerHTML = rows
@@ -711,5 +718,7 @@ async function revealLocalReferences() {
 
 chooseScreen('title');
 renderInventory();
+atlasInput = attachAtlasInput();
+attachAtlasBriefDownload();
 checkFonts();
 revealLocalReferences();

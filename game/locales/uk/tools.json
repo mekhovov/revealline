@@ -957,6 +957,7 @@
   "reviewAnIllustrativeAiAssetBrief": "Переглянути приклад завдання для ресурсу ШІ",
   "proposedExampleProductionPromptsMustDeriveTheirExactGeometryAnd": "Запропонований приклад; виробничі запити мають отримувати точну геометрію й назви файлів із вибраного слота реєстру.",
   "copyExampleBrief": "Скопіювати приклад завдання",
+  "downloadExampleBrief": "Завантажити приклад завдання",
   "committedBaselineFe9961eV0430": "ЗАФІКСОВАНА БАЗОВА ВЕРСІЯ / FE9961E · V0.43.0",
   "theStartingPointPreserved": "Збережена відправна точка.",
   "actualScreenshotsFromTheReviewedSourceIsolatedFromRedesignEdits": "Справжні знімки екрана з перевіреного вихідного коду, відокремлені від змін редизайну. Ескізи редизайну вище є пропозиціями. Зміна розміру настільного браузера засвідчує компонування, а не перевірку на фізичному пристрої.",
