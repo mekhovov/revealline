@@ -24,7 +24,7 @@ import { prepareTeamAnchors, drawTeamAnchor } from './coop-anchor-presentation.m
 import { canvasTextFonts } from '../text-face.mjs';
 import { drawTrailImpactFront } from '../ui/actor-presentation.mjs';
 import { createCoopActorPresentation } from './coop-actor-presentation.mjs';
-import { coopCueScale, placeCoopCue } from './coop-actor-layout.mjs';
+import { coopCueScale, layoutCoopCues, placeCoopCue } from './coop-actor-layout.mjs';
 import {
   createCoopCaptureFeedback,
   drawCoopActiveTrail,
@@ -120,6 +120,8 @@ export function createCoopPainter(canvas) {
   const outcomes = createTeamOutcomeFeedback(),
     captures = createCoopCaptureFeedback();
   let presentation = null,
+    cueLayout = null,
+    cueLayoutCache = null,
     look = null,
     wall = null,
     anchors = Object.freeze({}),
@@ -182,6 +184,8 @@ export function createCoopPainter(canvas) {
     emitterFrames = nextEmitterFrames;
     rescueFrames = nextRescueFrames;
     outcomeFrames = nextOutcomes;
+    cueLayout = null;
+    cueLayoutCache = null;
   }
   function paint(
     run,
@@ -255,6 +259,7 @@ export function createCoopPainter(canvas) {
           `Team picture must retain its complete ${pictureWidth}×${pictureHeight} decoded frame.`,
         );
     }
+    cueLayout = null;
     actors = nextActors;
     actorPresentation = selectedActors;
     actorAppearanceStyle = actorAppearance?.style ?? null;
@@ -275,6 +280,10 @@ export function createCoopPainter(canvas) {
     });
     const unit = canvas.width / run.width;
     const cssCell = cueScale.cell,
+      compactCues = cueScale.width < 320,
+      cueRequests = [],
+      cuePaint = [],
+      optionalCues = [],
       occupied = [],
       heads = run.players.map((player) => {
         const radius = player.radius * cssCell + 2;
@@ -285,19 +294,53 @@ export function createCoopPainter(canvas) {
           bottom: player.y * cssCell + radius,
         };
       });
-    const place = (x, y, width, height) => {
-      const rect = placeCoopCue({
+    // Functional contact points and locked destinations take precedence over
+    // compact text. Body art may overlap a plate; collision geometry may not.
+    if (compactCues)
+      for (const enemy of run.enemies) {
+        if (enemy.active === false) continue;
+        const radius = enemy.radius * cssCell + 2;
+        heads.push({
+          left: enemy.x * cssCell - radius,
+          right: enemy.x * cssCell + radius,
+          top: enemy.y * cssCell - radius,
+          bottom: enemy.y * cssCell + radius,
+        });
+        if (enemy.type === 'hunter' && enemy.phase === 'warning' && enemy.targetPoint) {
+          const radius = 0.8 * cssCell;
+          heads.push({
+            left: enemy.targetPoint.x * cssCell - radius,
+            right: enemy.targetPoint.x * cssCell + radius,
+            top: enemy.targetPoint.y * cssCell - radius,
+            bottom: enemy.targetPoint.y * cssCell + radius,
+          });
+        }
+      }
+    const place = (x, y, width, height, priority = 1, optional = false) => {
+      const request = {
         x: x * cssCell,
         y: y * cssCell,
         width,
         height,
-        arenaWidth: cueScale.width,
-        arenaHeight: run.height * cssCell,
-        heads,
-        occupied,
-      });
+        priority,
+      };
+      const rect =
+        compactCues && optional
+          ? null
+          : placeCoopCue({
+              ...request,
+              arenaWidth: cueScale.width,
+              arenaHeight: run.height * cssCell,
+              heads,
+              occupied,
+            });
       if (rect) occupied.push(rect);
-      return rect;
+      // The holder is also retained when the greedy placement failed. A later
+      // complete group packing can recover that cue without losing its draw.
+      const position = { rect };
+      if (compactCues)
+        (optional ? optionalCues : cueRequests).push({ ...request, original: rect, position });
+      return position;
     };
     ctx.save();
     try {
@@ -391,18 +434,31 @@ export function createCoopPainter(canvas) {
         body(kind, id)
           ? Math.max(minimum, actors.frame(kind, id).diameter / 32 + cueScale.px(9) / cssCell)
           : minimum;
-      function cue(text, x, y, size, font, backed = false, color = '#f1f7ed', minimum = 12) {
+      function cue(
+        text,
+        x,
+        y,
+        size,
+        font,
+        backed = false,
+        color = '#f1f7ed',
+        minimum = 12,
+        priority = 1,
+      ) {
         ctx.save();
         size = cueScale.font(size, minimum, 18);
-        ctx.font = `600 ${size}px ${font}`;
+        const labelFont = `600 ${size}px ${font}`;
+        ctx.font = labelFont;
         ctx.textAlign = 'center';
         ctx.textBaseline = 'middle';
         const measured = ctx.measureText(text)?.width;
         const width =
           (Number.isFinite(measured) ? measured : size * text.length * 0.7) * cssCell +
           cueScale.px(6);
-        const rect = place(x, y, width, size * cssCell * 1.4);
-        if (rect) {
+        const position = place(x, y, width, size * cssCell * 1.4, priority);
+        const draw = () => {
+          const rect = position.rect;
+          if (!rect) return;
           if (backed) {
             ctx.fillStyle = '#07111c';
             ctx.fillRect(
@@ -414,7 +470,17 @@ export function createCoopPainter(canvas) {
           }
           ctx.fillStyle = color;
           ctx.fillText(text, rect.x / cssCell, rect.y / cssCell);
-        }
+        };
+        if (compactCues)
+          cuePaint.push(() => {
+            ctx.save();
+            ctx.font = labelFont;
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            draw();
+            ctx.restore();
+          });
+        else draw();
         ctx.restore();
       }
       function pilotBadge(player, pilotBody) {
@@ -425,65 +491,80 @@ export function createCoopPainter(canvas) {
           shape = cueScale.px(player.id === 0 ? 20 : 24),
           downed = player.status === 'downed',
           width = shape + (downed ? cueScale.px(10) : 0),
-          rect = place(
+          position = place(
             x,
             y - (frame ? frame.diameter / 32 : 0.7) - (shape / 2 + cueScale.px(3)) / cssCell,
             width,
             shape,
+            3,
           );
-        if (!rect) return;
-        const cx = (rect.left + shape / 2) / cssCell,
-          cy = rect.y / cssCell,
-          radius = shape / 2 / cssCell;
-        ctx.save();
-        ctx.fillStyle = '#07111c';
-        ctx.strokeStyle = colors[player.id];
-        ctx.lineWidth = 1.5 / cssCell;
-        if (!downed && player.graceUntil > run.time) ctx.setLineDash([2 / cssCell, 2 / cssCell]);
-        ctx.beginPath();
-        if (player.id === 0) ctx.arc(cx, cy, radius, 0, Math.PI * 2);
-        else {
-          ctx.moveTo(cx, cy - radius);
-          ctx.lineTo(cx + radius, cy);
-          ctx.lineTo(cx, cy + radius);
-          ctx.lineTo(cx - radius, cy);
-          ctx.closePath();
-        }
-        ctx.fill();
-        ctx.stroke();
-        ctx.setLineDash([]);
-        ctx.font = `600 ${cueScale.font(0.66, 14, 18)}px ${fonts.numeric}`;
-        ctx.textAlign = 'center';
-        ctx.textBaseline = 'middle';
-        ctx.fillStyle = '#f1f7ed';
-        ctx.fillText(String(player.id + 1), cx, cy);
-        if (downed) {
+        if (!compactCues && !position.rect) return;
+        const drawTether = () => {
+          if (pilotBody && offset && (offset.x !== 0 || offset.y !== 0)) {
+            // Dashed cosmetic tether ends at the true cutting head; it is not a trail.
+            ctx.strokeStyle = '#07111c';
+            ctx.lineWidth = 3 / cssCell;
+            ctx.beginPath();
+            ctx.moveTo(player.x, player.y);
+            ctx.lineTo(x, y);
+            ctx.stroke();
+            ctx.strokeStyle = '#f1f7ed';
+            ctx.lineWidth = 1 / cssCell;
+            ctx.setLineDash([2 / cssCell, 2 / cssCell]);
+            ctx.stroke();
+            ctx.setLineDash([]);
+          }
+        };
+        const drawBadge = () => {
+          const rect = position.rect;
+          if (!rect) return;
+          const cx = (rect.left + shape / 2) / cssCell,
+            cy = rect.y / cssCell,
+            radius = shape / 2 / cssCell;
+          ctx.save();
           ctx.fillStyle = '#07111c';
-          ctx.fillRect(
-            (rect.right - cueScale.px(10)) / cssCell,
-            (rect.y - cueScale.px(8)) / cssCell,
-            cueScale.px(10) / cssCell,
-            cueScale.px(16) / cssCell,
-          );
-          ctx.fillStyle = '#f1f7ed';
-          ctx.font = `600 ${cueScale.px(12) / cssCell}px ${fonts.numeric}`;
-          ctx.fillText('+', (rect.right - cueScale.px(5)) / cssCell, cy);
-        }
-        if (pilotBody && offset && (offset.x !== 0 || offset.y !== 0)) {
-          // Dashed cosmetic tether ends at the true cutting head; it is not a trail.
-          ctx.strokeStyle = '#07111c';
-          ctx.lineWidth = 3 / cssCell;
+          ctx.strokeStyle = colors[player.id];
+          ctx.lineWidth = 1.5 / cssCell;
+          if (!downed && player.graceUntil > run.time) ctx.setLineDash([2 / cssCell, 2 / cssCell]);
           ctx.beginPath();
-          ctx.moveTo(player.x, player.y);
-          ctx.lineTo(x, y);
-          ctx.stroke();
-          ctx.strokeStyle = '#f1f7ed';
-          ctx.lineWidth = 1 / cssCell;
-          ctx.setLineDash([2 / cssCell, 2 / cssCell]);
+          if (player.id === 0) ctx.arc(cx, cy, radius, 0, Math.PI * 2);
+          else {
+            ctx.moveTo(cx, cy - radius);
+            ctx.lineTo(cx + radius, cy);
+            ctx.lineTo(cx, cy + radius);
+            ctx.lineTo(cx - radius, cy);
+            ctx.closePath();
+          }
+          ctx.fill();
           ctx.stroke();
           ctx.setLineDash([]);
+          ctx.font = `600 ${cueScale.font(0.66, 14, 18)}px ${fonts.numeric}`;
+          ctx.textAlign = 'center';
+          ctx.textBaseline = 'middle';
+          ctx.fillStyle = '#f1f7ed';
+          ctx.fillText(String(player.id + 1), cx, cy);
+          if (downed) {
+            ctx.fillStyle = '#07111c';
+            ctx.fillRect(
+              (rect.right - cueScale.px(10)) / cssCell,
+              (rect.y - cueScale.px(8)) / cssCell,
+              cueScale.px(10) / cssCell,
+              cueScale.px(16) / cssCell,
+            );
+            ctx.fillStyle = '#f1f7ed';
+            ctx.font = `600 ${cueScale.px(12) / cssCell}px ${fonts.numeric}`;
+            ctx.fillText('+', (rect.right - cueScale.px(5)) / cssCell, cy);
+          }
+          if (!compactCues) drawTether();
+          ctx.restore();
+        };
+        if (compactCues) cuePaint.push(drawBadge);
+        else drawBadge();
+        if (compactCues) {
+          ctx.save();
+          drawTether();
+          ctx.restore();
         }
-        ctx.restore();
         const rescue = rescueFrames['team.rescue.progress']
           ? teamRescueProgress(run, player)
           : null;
@@ -493,12 +574,13 @@ export function createCoopPainter(canvas) {
               ? `RESCUE ${rescue.target + 1} · ${Math.floor(rescue.progress * 100)}%`
               : `RESCUE ${frame.rescueTarget + 1}`,
             x,
-            (rect.bottom + cueScale.px(12)) / cssCell,
+            ((position.rect?.bottom ?? y * cssCell) + cueScale.px(12)) / cssCell,
             0.66,
             fonts.ui,
             true,
             '#f1f7ed',
             14,
+            3,
           );
       }
       for (const stronghold of run.strongholds || []) {
@@ -570,13 +652,15 @@ export function createCoopPainter(canvas) {
         ctx.font = `600 0.65px ${fonts.ui}`;
         ctx.textAlign = 'center';
         cue(
-          `LOCK ${enemy.target + 1}`,
+          `LOCK ${enemy.target + 1}${compactCues && enemy.speedScale < 1 && enemy.slowUntil > run.time ? ' ↓' : ''}`,
           enemy.x,
           Math.max(0.6, enemy.y - clearance('enemy', enemy.id, 1.1)),
           0.65,
           fonts.ui,
           body('enemy', enemy.id),
           '#ffd279',
+          12,
+          3,
         );
       }
       for (const [i, spawn] of run.level.spawns.entries()) {
@@ -701,17 +785,22 @@ export function createCoopPainter(canvas) {
           ctx.fillStyle = '#521f2a';
           ctx.fillRect(-0.1, -0.1, 0.2, 0.2);
         }
-        if (enemy.type === 'hunter' && enemy.phase !== 'warning') {
+        const slowed = enemy.speedScale < 1 && enemy.slowUntil > run.time;
+        // On compact boards, an active state replaces the redundant idle role
+        // caption. Charge/lock/recovery keep their full caption with the Help-
+        // labelled slowdown glyph; the existing dashed slow ring also remains.
+        const idleSlowed = compactCues && slowed && enemy.phase === 'patrol';
+        if (enemy.type === 'hunter' && enemy.phase !== 'warning' && !idleSlowed) {
           ctx.fillStyle = '#eee7c8';
           ctx.font = `600 0.57px ${fonts.ui}`;
           ctx.textAlign = 'center';
           ctx.restore();
           cue(
-            enemy.phase === 'commit'
+            (enemy.phase === 'commit'
               ? t('interface:charge')
               : enemy.phase === 'recovery'
                 ? t('interface:recover')
-                : t('interface:hunter'),
+                : t('interface:hunter')) + (compactCues && slowed ? ' ↓' : ''),
             enemy.x,
             Math.max(0.6, enemy.y - clearance('enemy', enemy.id, 1.05)),
             0.57,
@@ -741,18 +830,19 @@ export function createCoopPainter(canvas) {
           ctx.translate(enemy.x, enemy.y);
         }
         // Authoritative active time keeps this cue visible through pause and reduced effects.
-        if (enemy.speedScale < 1 && enemy.slowUntil > run.time) {
+        if (slowed) {
           const slowedColor = drawTeamSlowed(ctx, supportFrames, palette);
           ctx.restore();
-          cue(
-            t('interface:slowed'),
-            enemy.x,
-            Math.min(run.height - 0.6, enemy.y + clearance('enemy', enemy.id, 1.25)),
-            0.6,
-            fonts.ui,
-            enemyBody,
-            slowedColor,
-          );
+          if (!(compactCues && enemy.type === 'hunter' && enemy.phase !== 'patrol'))
+            cue(
+              t('interface:slowed'),
+              enemy.x,
+              Math.min(run.height - 0.6, enemy.y + clearance('enemy', enemy.id, 1.25)),
+              0.6,
+              fonts.ui,
+              enemyBody,
+              slowedColor,
+            );
           ctx.save();
           ctx.translate(enemy.x, enemy.y);
         }
@@ -775,36 +865,90 @@ export function createCoopPainter(canvas) {
         ctx.font = `600 ${size}px ${fonts.ui}`;
         const width =
           (ctx.measureText(label)?.width ?? size * label.length * 0.7) * cssCell + cueScale.px(38);
-        const rect = place(
+        const position = place(
           run.width / 2,
           cueScale.px(18 + index * 34) / cssCell,
           width,
           cueScale.px(28),
+          0,
+          true,
         );
-        if (!rect) continue;
-        drawTeamOutcomeBadge(
-          ctx,
-          outcomeFrames[outcome.slot],
-          rect,
-          cssCell,
-          colors,
-          reduced,
-          run.time - outcome.time,
-        );
-        ctx.save();
-        ctx.fillStyle = '#07111c';
-        ctx.fillRect(
-          (rect.left + cueScale.px(28)) / cssCell,
-          rect.top / cssCell,
-          (rect.width - cueScale.px(28)) / cssCell,
-          rect.height / cssCell,
-        );
-        ctx.fillStyle = palette?.ink ?? '#f3f0db';
-        ctx.textAlign = 'left';
-        ctx.textBaseline = 'middle';
-        ctx.fillText(label, (rect.left + cueScale.px(32)) / cssCell, rect.y / cssCell);
-        ctx.restore();
+        if (!compactCues && !position.rect) continue;
+        const outcomeFont = ctx.font;
+        const drawOutcome = () => {
+          const rect = position.rect;
+          if (!rect) return;
+          drawTeamOutcomeBadge(
+            ctx,
+            outcomeFrames[outcome.slot],
+            rect,
+            cssCell,
+            colors,
+            reduced,
+            run.time - outcome.time,
+          );
+          ctx.save();
+          ctx.fillStyle = '#07111c';
+          ctx.fillRect(
+            (rect.left + cueScale.px(28)) / cssCell,
+            rect.top / cssCell,
+            (rect.width - cueScale.px(28)) / cssCell,
+            rect.height / cssCell,
+          );
+          ctx.fillStyle = palette?.ink ?? '#f3f0db';
+          ctx.font = outcomeFont;
+          ctx.textAlign = 'left';
+          ctx.textBaseline = 'middle';
+          ctx.fillText(label, (rect.left + cueScale.px(32)) / cssCell, rect.y / cssCell);
+          ctx.restore();
+        };
+        if (compactCues) cuePaint.push(drawOutcome);
+        else drawOutcome();
       }
+      if (compactCues) {
+        const geometry = { arenaWidth: cueScale.width, arenaHeight: run.height * cssCell, heads },
+          measurements = cueRequests.map(({ position: _position, ...request }) => request),
+          key = JSON.stringify([geometry, measurements]),
+          cached = cueLayoutCache?.key === key;
+        const layout = cached ? cueLayoutCache.layout : layoutCoopCues(measurements, geometry);
+        if (!cached) cueLayoutCache = { key, layout };
+        // Apply a complete packing atomically. Partial placement must not move
+        // one warning underneath another still using its visible fallback.
+        if (!layout.unplaced.length)
+          cueRequests.forEach((request, index) => {
+            request.position.rect = layout.placements[index];
+          });
+        const required = cueRequests.map((request) => request.position.rect).filter(Boolean);
+        // Celebration banners are optional. They never enter the required cue
+        // packing and may occupy only space left by functional labels/contacts.
+        for (const request of optionalCues) {
+          const rect = placeCoopCue({ ...request, ...geometry, occupied: required });
+          if (
+            rect &&
+            !required.some(
+              (other) =>
+                rect.left < other.right &&
+                rect.right > other.left &&
+                rect.top < other.bottom &&
+                rect.bottom > other.top,
+            )
+          ) {
+            request.position.rect = rect;
+            required.push(rect);
+          }
+        }
+        cueLayout = Object.freeze({
+          requested: cueRequests.length,
+          painted: cueRequests.filter((request) => request.position.rect).length,
+          unplaced: Object.freeze([...layout.unplaced]),
+          exhausted: layout.exhausted,
+          strategy: layout.unplaced.length ? 'visible-fallback' : 'packed',
+          cached,
+          optionalOmitted: optionalCues.filter((request) => !request.position.rect).length,
+          compact: true,
+        });
+        for (const draw of cuePaint) draw();
+      } else cueLayoutCache = null;
       for (const impact of run.impacts || []) {
         const x = Number.isFinite(impact.x) ? impact.x : (impact.cellIndex % run.width) + 0.5;
         const y = Number.isFinite(impact.y)
@@ -840,6 +984,9 @@ export function createCoopPainter(canvas) {
     actorFrame: (kind, id) => actors.frame(kind, id),
     get presentation() {
       return presentation;
+    },
+    get cueLayout() {
+      return cueLayout;
     },
   };
 }

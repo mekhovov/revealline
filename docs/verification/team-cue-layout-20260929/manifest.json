@@ -1,0 +1,138 @@
+{
+  "format": "revealline.team-cue-layout-evidence.v1",
+  "sourceParent": "1a406a2c0a33b1ba75cc61318ee91f8bcf3504a0",
+  "observedMain": "321408a3cfd75ae230d760f39fb692503652601a",
+  "scope": "source correction; not a production/publishing approval",
+  "sources": [
+    {
+      "path": "game/couch/coop-actor-layout.mjs",
+      "bytes": 11782,
+      "sha256": "230bbd56731a9fc9f682c92158acca83b133dfb2a9ec4a2bc0f40bcfc855dd78"
+    },
+    {
+      "path": "game/couch/coop-view.mjs",
+      "bytes": 37854,
+      "sha256": "517d4dc040272019f4e5d98094094e0428eabda5c2919995212567a712afa297"
+    },
+    {
+      "path": "game/couch/relay-rescue.html",
+      "bytes": 51211,
+      "sha256": "aca2658ee98263a03890786b976250def68c41427f750bac1126670504407af2"
+    },
+    {
+      "path": "game/test/coop-actor-layout.test.mjs",
+      "bytes": 38630,
+      "sha256": "79feb25d77b39988c96d2625020087576c7dfbb8cd95679fe55ba5d43e77f63d"
+    },
+    {
+      "path": "game/test/coop-cue-group-layout.test.mjs",
+      "bytes": 3935,
+      "sha256": "731d3384018f8be93af7b091d246d378d840a36fd4ba5b330727223c0e549d0d"
+    },
+    {
+      "path": "authoring/prompts/team-responsive-layout.md",
+      "bytes": 2018,
+      "sha256": "89a71e74bda4da3b83aa2c9bbf30b8e5b26c7efe0f8c843ddc6009ba8b997b2d"
+    },
+    {
+      "path": "docs/player-first-team-more-navigation.md",
+      "bytes": 6460,
+      "sha256": "26af00215b3b29ca00056430d29eea38929b9d8bfdb9ab42bbbb5af3a59de0ea"
+    }
+  ],
+  "artifacts": [
+    {
+      "path": "docs/verification/team-cue-layout-20260929/README.md",
+      "bytes": 6221,
+      "sha256": "e35aabc67fc27d3a054d6a3ba8e18564c84485759c99d3d7c6f465a48472764d"
+    },
+    {
+      "path": "docs/verification/team-cue-layout-20260929/commands.txt",
+      "bytes": 557,
+      "sha256": "89e71f3721a5549842e8e08b19ba7a765b0382939d4769d8840d121f628440f0"
+    },
+    {
+      "path": "docs/verification/team-cue-layout-20260929/focused-final.tap",
+      "bytes": 38011,
+      "sha256": "9b86a6ea5ecc3c0de24c6380a5900437ac0b03b940d16409c732daa438ea7f6a"
+    },
+    {
+      "path": "docs/verification/team-cue-layout-20260929/help-uk.txt",
+      "bytes": 10964,
+      "sha256": "1ce68c3d25ecbe421936555a840adee06a0febd06b0a63133d96be876061874b"
+    },
+    {
+      "path": "docs/verification/team-cue-layout-20260929/idle-only-policy-red.tap",
+      "bytes": 34415,
+      "sha256": "3a66e83145829e11c6de116392532db388ea0a4f238f6986154510e247630c2b"
+    },
+    {
+      "path": "docs/verification/team-cue-layout-20260929/original-red.tap",
+      "bytes": 16186,
+      "sha256": "340b1f41d0de61d5255d4f5813f3c41e5798941f1f42a050f9c87dd8187efd66"
+    },
+    {
+      "path": "docs/verification/team-cue-layout-20260929/relay-downed-390-uk-large.json",
+      "bytes": 2792,
+      "sha256": "c8f66b2195ff7c69b5a56fd7b9818e9c5343d7a11a92c7e4c41d52507f5e8822"
+    },
+    {
+      "path": "docs/verification/team-cue-layout-20260929/relay-downed-390-uk-large.png",
+      "bytes": 46489,
+      "sha256": "e312c2553122453e0c9e0d9f89c255d8f7c260977983ff019b1024b8f32331ea"
+    },
+    {
+      "path": "docs/verification/team-cue-layout-20260929/relay-downed-568-uk-large.json",
+      "bytes": 2778,
+      "sha256": "6053fbab7e7fb9985e822a707564c24fbe95917b5ca146f01b3d0cf3cdc43e78"
+    },
+    {
+      "path": "docs/verification/team-cue-layout-20260929/relay-downed-568-uk-large.png",
+      "bytes": 38528,
+      "sha256": "dff528e123cc1875f261dab95e05a2542a4978986b95f959c0b5b07a792aa6e6"
+    },
+    {
+      "path": "docs/verification/team-cue-layout-20260929/relay-patrol-568-uk-large.json",
+      "bytes": 2785,
+      "sha256": "3c74a644907eb1dc110e2c234dabcc7e7f6de7ec70bb9b4b457c8a8b32d44cb3"
+    },
+    {
+      "path": "docs/verification/team-cue-layout-20260929/relay-patrol-568-uk-large.png",
+      "bytes": 37245,
+      "sha256": "cfb8bcb58f107da34dab28a3f3f1e1dfe4bda233329cccf4f4d92d20a47fc3ff"
+    },
+    {
+      "path": "docs/verification/team-cue-layout-20260929/unconsolidated-states-red.tap",
+      "bytes": 22381,
+      "sha256": "9254e9f5616db434f754e258d0eb575cde1f5dd52d5f1989c490e228844b9d54"
+    }
+  ],
+  "qualification": {
+    "focused": {
+      "tests": 157,
+      "pass": 157,
+      "fail": 0,
+      "skipped": 0,
+      "files": 13
+    },
+    "nativeBrowserViewports": [
+      [
+        568,
+        320
+      ],
+      [
+        390,
+        844
+      ]
+    ],
+    "physicalDevices": false,
+    "publicRelease": false,
+    "fullSuite": "WAIVED_NOT_PASSED",
+    "remaining": [
+      "dense imported-map overflow",
+      "motion performance and broad native state coverage",
+      "current production successor admission",
+      "public final source/bytes/play"
+    ]
+  }
+}
