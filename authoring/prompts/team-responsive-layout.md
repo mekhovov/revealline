@@ -12,3 +12,8 @@ separate from loss/rescue status. Verify all entries on a schema-valid dense imp
 then confirm ordinary clear boards add no extra action. See docs/team-cue-overflow.md.
 Production/device review may be deferred explicitly; these source tests do not
 turn visible-fallback canvas overlap into an approved layout.
+
+When updating threat Help, select copy from the admitted Team edition. Explain
+both travelling fronts only for impact editions; keep Legacy relay/hunter advice
+exact. Verify active Start before Pause/reader assertions, both EN/UK and reversed
+specialist assignments. No Help update may introduce fields into level recipes.
