@@ -288,6 +288,22 @@ and the registered mission's standard gameplay identity before opening the brows
 | `victory-ideas-first-win.v1`    | `victory-drones`  | Ideas into Understanding — Observe Before Explaining |
 | `ukraine-threads-first-win.v1`  | `ukraine-culture` | Threads Across Ukraine — Read the Cloth              |
 
+The optional `browser` field accepts `"chrome"` (the unchanged default) or
+`"firefox"`. Firefox is available only for functional showcase mode, using the
+matching already-installed revision from the supplied Playwright package. The
+runner records the browser version, executable hash and Playwright package/browser
+metadata, and checks the expected revision before opening a page. It does not
+install a browser or fall back to another engine. These pins identify the primary
+executable and launcher metadata, not every file in the browser installation.
+Firefox observations have a distinct settings identity and supply no Chrome/CDP
+performance or retained-memory evidence.
+
+Startup now records bounded public boot status in `boot.json`. An explicit failed
+or file-protocol state stops the run immediately; an unresolved boot retains its
+existing sixty-second deadline. Diagnostic errors preserve the original failure.
+Cleanup deadlines remain unchanged and a failed cleanup keeps the observation
+failed even when all functional phases passed.
+
 Use a new plan and output directory for each edition/attempt. The complete plan
 shape is below; replace every angle-bracket placeholder with the frozen descriptor
 or an honest operator statement before running. Placeholder hashes are deliberately

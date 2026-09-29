@@ -535,8 +535,8 @@ not a human or physical-radio test.
 2. Qualify the exact merged-main source, produce and independently inspect the full
    default archive, and admit the complete selected hosting graph under its cap.
    Candidate projections and selected-package checks do not substitute for this.
-   The current branch's audio/UI review is closed by the scoped continuation and
-   immutable production102 below. Recheck the final integrated fingerprints and
+   The branch's audio/UI review is closed by scoped continuations through
+   immutable production103 below. Recheck the final integrated fingerprints and
    append reviewed successors if integration changes those inputs; unchanged
    asset payloads alone never approve different runtime behavior.
 3. Complete final-source performance/request and retained-resource review, retaining
@@ -818,3 +818,80 @@ Social/Victory cleanup succeed. No timeout, launch option, simulation or public
 release gate was relaxed. Final integrated CI, matched performance/retention,
 complete default/hosting admission and coordinated publication/rollback remain
 Phase 7 work; human and physical-device evidence remains deferred.
+
+### Firefox startup and historical Gentle attempts
+
+The completed [`336a7b58b` candidate CI receipt](verification/evidence/candidate-ci-capacity-336a7b58b.json)
+records **1,131 company checks and 179 optional-practice checks passing**, with
+separate publishing/authoring groups also green. Eighteen editions reproduce twice
+in CI. The 22-member capacity metadata packet was downloaded and independently
+validated; the two optional packages were downloaded and re-admitted from their
+original ZIP members. Edition archive bodies were not all downloaded locally.
+These results belong to that exact commit, before the Firefox correction below.
+The known additive publication projections remain 501,860,432 bytes for the six
+priority editions plus both optional packages, 654,948,170 for the other twelve
+plus both packages, and 1,150,863,303 for all eighteen plus both packages. Reviews,
+evidence and other draft assets remain additional; no complete-budget claim is made.
+
+Functional showcase observation now supports an explicitly selected, already
+installed Firefox build. Its launcher/package/version pins and separate settings
+identity do not supply Chrome performance evidence. Public boot failures retain
+bounded visible diagnostics, while the existing boot/cleanup deadlines remain
+unchanged. The old frozen Ukraine archive fails in Firefox146 with “Reward gameplay
+binding differs from the selected mission”; its owned browser/context/page/server
+all close successfully. The failed result remains retained.
+
+The cause is native two-component `Math.hypot` rounding in initial Gentle enemy
+normalization: 33 of the 108 Ukraine mission/difficulty identities differ by one
+floating-point bit between Firefox and the published Node/V8 calculation. Fresh
+v4 tuning now spells out that published arithmetic order. Historical v1–v3 dispatch,
+core simulation, content identities and reward definitions remain unchanged. A
+single-module overlay restores all 108 published identities and all six campaign/
+43 reward bootstrap bindings in Node, Chrome and Firefox; that diagnostic is not a
+frozen-artifact or full simulation-portability qualification.
+
+An independently reproduced old Firefox gp4 attempt still verifies its replay but
+would fail source matching after the fresh-normalization change alone. Restoration
+therefore reconstructs both the published calculation and this runtime's historical
+native gp4 calculation, accepting only an exact whole-level match from the installed
+source. Replay/options/class validation, original picture pins, admin exclusion and
+learning evidence remain enforced. New attempts and compiled reward bindings use
+the published calculation. This preserves same-runtime native gp4 history; it does
+not claim cross-engine portability for every older floating-point replay.
+
+The real Ukraine Studio chain now edits guided lesson metadata, retains exact
+source/media pins through authoring export/import and compilation, wins two ordinary
+missions through the shared host, recovers from a wrong decision, records the
+correct Ukrainian learning interaction once, and reopens its discovery in
+Collection. Both Studio playthrough tests pass. This is a modeled DOM/raster host
+check; interrupted workbench reload, player-backup transfer, human comprehension
+and physical devices are outside that evidence.
+
+The [compatibility receipt](verification/evidence/gameplay-tuning-firefox-compatibility-2026-09-29.json)
+records **88/88** focused checks, including historical and
+current tuning, replay/collision fixtures, generic/continuous/company sessions,
+performance validation, and normal/admin Collection behavior. A real Solo host
+restores the original Firefox diagnostic save, wins through ordinary input and
+saves the authored picture without changing the recorded simulation. The combined
+Studio and observer rerun passes **38/38** after the runtime correction.
+
+Because the app is an explicitly reviewed audio input, the minimal Collection
+compatibility change receives a separate scoped software continuation. Production
+103 [checkpoint](verification/evidence/discovery-production103-checkpoint-2026-09-29.json)
+appends eight audio54 successors; UI24 and every earlier record/payload remain
+unchanged. The independently pinned production102 oracle comes from committed
+`336a7b58b`, before the new writer. The finite Team association advances to103 and
+explicitly retains102, while unknown104, unreviewed98 and source-stage101 remain
+rejected. The exact association row limit increases to44; byte budgets do not change.
+This source review does not approve human listening, artwork, physical devices or
+publication.
+
+The production-history/source cohort passes **40/40** checks, and the normal
+producer reproduces103 exactly. Its archive is 8,492,839 bytes with 2670 assets,
+104 themes and 132 original payloads totaling 4,009,342 bytes. The compiled Studio
+payload remains below its existing 5 MiB limit. Focused source eligibility passes;
+clean-source candidate and complete default/hosted admission remain separate.
+
+The current/retained Team association and result cohort passes **158/158** checks,
+including exact102 restoration and actual starts for every supported retained
+revision. Unknown104 remains rejected before media reads.

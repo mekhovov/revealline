@@ -273,6 +273,7 @@ import { createGalleryDifficultyResolver } from './gallery-difficulty.mjs';
 import {
   applyGameplayTuning,
   createGameplayTuningController,
+  matchRecordedGameplayTuning,
   recoverGameplayTuning,
 } from './gameplay-tuning.mjs';
 import { mountGameplayTuning } from './ui/gameplay-tuning.mjs';
@@ -9801,15 +9802,12 @@ try {
               const tuning = recoverGameplayTuning(run.level);
               if (tuning) {
                 const authored = campaign.levels.find((level) => level.id === run.levelId);
-                if (
-                  tuning.adminOverride ||
-                  canonicalJSON(applyGameplayTuning(authored, tuning)) !== canonicalJSON(run.level)
-                )
+                if (tuning.adminOverride || !matchRecordedGameplayTuning(authored, run.level))
                   throw new Error(
                     t('interface:thisPlaytestDoesNotQualifyForAuthoredCollectionProgress'),
                   );
                 // Normal pressure clears retain the original picture/collection owner.
-                // Exact reconstruction above admits only this versioned adapter;
+                // Exact reconstruction also preserves restored native gp4 runs;
                 // arbitrary replay revisions never reach the authored award path.
                 result.revision = authored.revision;
               }

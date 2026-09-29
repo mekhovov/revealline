@@ -180,7 +180,7 @@ const REVIEWED_RECIPE_INPUTS = {
     ],
   },
   audio: {
-    sha256: 'a7780c46c20f2603e41f8d7c728d3d13c3efdb6e799a3e5d429ae236bf15d20c',
+    sha256: '94c62d025dd9a8764baec87514d25083e0026caa7ed9c9cf5f71497ef447e1be',
     evidence: [
       'Scoped discovery audio software continuation: docs/verification/discovery-audio-continuation-2026-09-29/review.json sha256:edeecf9fbafdabd7e4fdb653be58baf8deaa3483a6ee426552d611d2fff768ea; exact50 ordered inputs sha256:a7780c46c20f2603e41f8d7c728d3d13c3efdb6e799a3e5d429ae236bf15d20c. Accepted campaign fallback, explicit exact-original recording export, shared reward master/gain ownership and isolated preview preferences retain the eight existing recipe identities and original payloads. The 22 added behavior and media-validation inputs reopen this group when changed. Exact production100/audio52 predecessor oracle sha256:cf19ad831cc0347f4f84c2ac310a1168354858e75f40991b35ffec18ea58d0b7 is retained. This is software continuation only; composition, listening, physical-device, frozen/public and release acceptance remain separate.',
       'Scoped v0.142.3 Steam Deck Confirm audio continuation: docs/verification/v0.142.3-steamdeck-confirm-audio-continuation/review.json sha256:a059520f6ce0c394c3425355c711b641b4b23f9321e11c7d384317e7f814798c; exact28 inputs sha256:39fe40240f0475e471a52772060899d3e329e4d54d6b2bb6679e76dc745ee9a4. Only game/app.mjs changes, coordinating native and Gamepad Confirm ownership and opt-in local diagnostics; all audio implementation, eight existing procedural recipes, routing and payloads remain unchanged. Exact v0.142.2 production99/audio51 predecessor fixture sha256:528361f4e7823a23b02b261ca1de0c9b3157d1a17cbba643e4ff7e67073bc0a7 is retained. Final qualification, frozen/public, listening and physical Steam Deck acceptance remain separate.',
@@ -197,7 +197,7 @@ const REVIEWED_RECIPE_INPUTS = {
       'v0.141.0 managed-media continuation: docs/verification/v0.141.0-managed-media-audio-continuation/review.json sha256:16f3eb26f28eae82f6529c8a872438c216a05d7a905e0fee0b3d6b0e9601e998; twenty-four ordered audio inputs sha256:77370fe6fc7a8d376865b05d8ba2020b8683b3922c20cc3dfad260d0a0251f79. Only managed-media-store.mjs and media-storage-record.mjs changed after the prior exact review, adding bounded cross-domain byte accounting and exact reviewed still-byte detachment while preserving audio routing, recipes, rows, blobs, playback and soundtrack bytes.',
       'v0.132.5 locale-refresh continuation: docs/verification/v0.132.5-presentation-continuation/review.json sha256:fbc818dcfbbfd2cf1985017417959c82741162842cd3c7293f5be67fc594ef35; twenty-four ordered audio inputs sha256:301e68a4898cf7d9140abee266195401a69cfca0db2301a12409ec252c882ec9. Only game/app.mjs changed after the prior exact review, asking the shared shell to refresh localized Home copy while preserving audio routing, recipes and bytes.',
       'Scoped v0.132.1 Steam Deck controller continuation: docs/verification/v0.132.1-steamdeck-audio-continuation/review.json sha256:b715c81fa1f86a562d5c195ffc025727fc009d1de6cfe03c403db75fdfbf8d70; twenty-five ordered audio inputs sha256:417ceb75d58709373e1abdb047c26224db06721bd58b3ff8302152c33d2f735a. Only game/app.mjs changed among those inputs, adding a controller Confirm lifecycle filter before menu dispatch while preserving audio routing and bytes.',
-      'The prior offline ownership and v0.131 English/Ukrainian reviews remain incorporated. All 8 selected roles retain the same procedural recipes; playback state, volume values, local-only selection, resumable download, shared-byte removal, rights, cancellation and imported-media preservation are unchanged. No recording, composition, musical suitability, Ukrainian authenticity, full-track listening, physical-device, frozen-build or public game approval. Historical reviews and original payloads remain immutable; any audio dependency or review-byte change reopens this group.',
+      'Scoped gp4 restore audio software continuation: docs/verification/discovery-gp4-restore-audio-continuation-2026-09-29/review.json sha256:27c3663b72c1ccf1b78b2bf641952ff5d011e10520f0044d981f5c8166741b0d; exact50 ordered inputs sha256:94c62d025dd9a8764baec87514d25083e0026caa7ed9c9cf5f71497ef447e1be. Only the app Collection eligibility guard changes to exact recorded-level matching; administrative rejection, audio call sites, recipes, routing, media ownership and payloads are unchanged. Independent production102 oracle sha256:88f08a4ed55e2d7a26e491828d808d1a2c6784ab5e811acce7537009a68ad315 retains every predecessor. Gameplay restoration and frozen-browser qualification remain separate. The prior offline ownership and v0.131 English/Ukrainian reviews remain incorporated. All 8 selected roles retain the same procedural recipes; playback state, volume values, local-only selection, resumable download, shared-byte removal, rights, cancellation and imported-media preservation are unchanged. No recording, composition, musical suitability, Ukrainian authenticity, full-track listening, physical-device, frozen-build or public game approval. Historical reviews and original payloads remain immutable; any audio dependency or review-byte change reopens this group.',
     ],
   },
   motion: {
@@ -412,6 +412,19 @@ export function verifyFieldKitDiscoveryWebPUIContinuationReview(
   );
 }
 
+export function verifyFieldKitGP4RestoreAudioContinuationReview(
+  currentBytes,
+  priorReviewBytes,
+  production102OracleBytes,
+) {
+  return (
+    hash(currentBytes) === '27c3663b72c1ccf1b78b2bf641952ff5d011e10520f0044d981f5c8166741b0d' &&
+    hash(priorReviewBytes) === 'edeecf9fbafdabd7e4fdb653be58baf8deaa3483a6ee426552d611d2fff768ea' &&
+    hash(production102OracleBytes) ===
+      '88f08a4ed55e2d7a26e491828d808d1a2c6784ab5e811acce7537009a68ad315'
+  );
+}
+
 /** Explicit dependency fingerprints; a helper change must reopen its review group. */
 export async function fieldKitRecipeSources(read) {
   return Object.fromEntries(
@@ -572,6 +585,18 @@ export async function createFieldKitProduction({ projectRoot = root } = {}) {
   )
     throw new Error(
       'Discovery WebP UI continuation review or production101 predecessor oracle bytes changed; production approval must reopen.',
+    );
+  if (
+    !verifyFieldKitGP4RestoreAudioContinuationReview(
+      await read(
+        'docs/verification/discovery-gp4-restore-audio-continuation-2026-09-29/review.json',
+      ),
+      await read('docs/verification/discovery-audio-continuation-2026-09-29/review.json'),
+      await read('game/test/fixtures/production-discovery-reviewed-ui-fpv102.json'),
+    )
+  )
+    throw new Error(
+      'GP4 restore audio continuation review or production102 predecessor oracle bytes changed; production approval must reopen.',
     );
   const assets = [],
     bindings = {},
