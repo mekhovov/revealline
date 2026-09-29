@@ -9143,7 +9143,11 @@ try {
     try {
       for (const [index, event] of events.entries()) {
         flightInformation.observeEvent(ticket, index, () => {
-          sound.event(event);
+          if (index === 0)
+            sound.events(events, run, theme, {
+              bodyId: flightActorLease?.pin().style === 'fpv' ? `fpv-${run.activeClassId}` : bodyId,
+              actorStyle: flightActorLease?.pin().style,
+            });
           if (event.type === 'class.switched') {
             updateLoadout();
             setTheme();
@@ -9479,6 +9483,11 @@ try {
             stopCourseGuidance();
           }
         stepRun(run, command, FIXED_DT);
+        sound.feedback(true, theme, run, {
+          bodyId: flightActorLease?.pin().style === 'fpv' ? `fpv-${run.activeClassId}` : bodyId,
+          actorStyle: flightActorLease?.pin().style,
+          command,
+        });
         if (
           runMessageCue === 'secured-stopped' &&
           run.status === 'running' &&
@@ -9756,6 +9765,10 @@ try {
       show('skip-celebration', false);
       overlay('won');
     }
+    sound.feedback(!paused && started, theme, run, {
+      bodyId: flightActorLease?.pin().style === 'fpv' ? `fpv-${run.activeClassId}` : bodyId,
+      actorStyle: flightActorLease?.pin().style,
+    });
     storyDialog.syncSettings();
     if (soundtrackPlayer) {
       const context = soundtrackContext();

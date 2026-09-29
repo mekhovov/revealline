@@ -1,3 +1,5 @@
+import { FeedbackDirector } from './feedback-director.mjs';
+import { readMenuAudio } from './menu-audio.mjs';
 import { t } from '../i18n/index.mjs';
 import { createPublishedCues } from './published-audio.mjs';
 import {
@@ -57,6 +59,8 @@ export class Soundscape {
     if (typeof persistentMusic !== 'boolean')
       throw new TypeError('persistentMusic must be a boolean');
     this.enabled = false;
+    this.menuSettings = readMenuAudio();
+    this.feedbackDirector = new FeedbackDirector(this);
     this.persistentMusic = persistentMusic;
     this.context = null;
     this.contextFactory = contextFactory;
@@ -82,6 +86,10 @@ export class Soundscape {
     this.audioMaster = { muted: false, volume: 1 };
     this.releaseAudioMaster = audioMaster?.subscribe((state) => {
       this.audioMaster = state;
+      if (state.muted) {
+        this.stopVoices('sfx');
+        this.stopVoices('menu');
+      }
       this.applyVolumes();
     });
   }
@@ -90,7 +98,11 @@ export class Soundscape {
     this.publishedAudio = readAudio ? createPublishedCues({ sound: this, readAudio }) : null;
   }
   publishedCue(name) {
-    return this.publishedAudio?.play(name, { ui: true }) ?? false;
+    if (!this.menuSettings.enabled || this.menuSettings.volume === 0) return false;
+    return (
+      this.publishedAudio?.play(name, { ui: true }) ||
+      !!this.feedbackDirector.play(name, { ui: true, gain: 0.5, priority: 1 })
+    );
   }
   getSettings() {
     return { ...this.settings, trackId: this.track.id };
@@ -270,6 +282,8 @@ export class Soundscape {
     this.master = context.createGain();
     this.musicBus = context.createGain();
     this.sfxBus = context.createGain();
+    this.menuBus = context.createGain();
+    this.menuBus.connect(this.master);
     this.musicBus.connect(this.master);
     this.sfxBus.connect(this.master);
     if (context.createWaveShaper) {
@@ -309,6 +323,11 @@ export class Soundscape {
   applyVolumes() {
     if (!this.context) return;
     const time = this.context.currentTime;
+    this.menuBus?.gain.setTargetAtTime(
+      this.menuSettings.enabled ? this.menuSettings.volume : 0,
+      time,
+      0.015,
+    );
     for (const [node, key] of [
       [this.master, 'master'],
       [this.musicBus, 'music'],
@@ -327,6 +346,7 @@ export class Soundscape {
     // Must happen before context creation/resume in the same user activation.
     requestPlaybackAudioSession();
     if (!this.setup()) return false;
+    this.feedbackDirector.prepare();
     if (this.persistentMusic && this.enabled && !this.paused && this.context.state === 'running') {
       this.gameplayPaused = false;
       return true;
@@ -419,6 +439,7 @@ export class Soundscape {
     }
   }
   reset() {
+    this.feedbackDirector.reset();
     this.cancelPreview();
     this.stopVoices(this.persistentMusic ? 'sfx' : null);
     if (!this.persistentMusic) this.cursor = null;
@@ -432,6 +453,7 @@ export class Soundscape {
     if (this.disposed) return;
     this.disposed = true;
     this.releaseAudioMaster?.();
+    this.feedbackDirector.close();
     this.setPublishedAudio(null);
     this.cancelPreview();
     ++this.transition;
@@ -445,6 +467,7 @@ export class Soundscape {
       this.sfxDrive,
       this.musicBus,
       this.sfxBus,
+      this.menuBus,
       this.master,
       this.compressor,
     ])
@@ -557,6 +580,14 @@ export class Soundscape {
       },
       (this.context?.currentTime || 0) + offset,
     );
+  }
+  feedback(active, theme, run, options = {}) {
+    if (active && run?.status === 'running' && this.enabled && !this.paused)
+      this.gameplayPaused = false;
+    this.feedbackDirector.update(active, theme, run, options);
+  }
+  events(events, run, theme, options = {}) {
+    this.feedbackDirector.events(events, run, theme, options);
   }
   event(value, details = {}) {
     const event = typeof value === 'string' ? { ...details, type: value } : value;

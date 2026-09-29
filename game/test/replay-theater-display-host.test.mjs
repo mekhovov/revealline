@@ -1,3 +1,5 @@
+import { AUDIO_PREFERENCES_KEY } from '../audio-preferences.mjs';
+import { MENU_AUDIO_KEY } from '../ui/menu-audio.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
@@ -307,8 +309,16 @@ function raw(page) {
   return JSON.parse(page.data.get(DISPLAY_PREFERENCES_KEY));
 }
 function noPlayerAccess(page) {
-  assert.ok(page.reads.every((key) => key === DISPLAY_PREFERENCES_KEY));
-  assert.ok(page.writes.every(({ key }) => key === DISPLAY_PREFERENCES_KEY));
+  assert.ok(
+    page.reads.every((key) =>
+      [DISPLAY_PREFERENCES_KEY, AUDIO_PREFERENCES_KEY, MENU_AUDIO_KEY].includes(key),
+    ),
+  );
+  assert.ok(
+    page.writes.every(({ key }) =>
+      [DISPLAY_PREFERENCES_KEY, AUDIO_PREFERENCES_KEY, MENU_AUDIO_KEY].includes(key),
+    ),
+  );
   assert.equal(page.data.get('revealline.library.dev.v1'), 'untouched player profile');
   assert.equal(page.data.get('revealline.suspended.dev.v1'), 'untouched saved flight');
 }

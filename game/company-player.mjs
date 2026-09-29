@@ -1,3 +1,4 @@
+import { attachPublishedAudio } from './ui/published-audio.mjs';
 import { loadEditionBootstrap } from './editions/bootstrap.mjs';
 import { verifyEditionAssets } from './editions/assets.mjs';
 import { resolveEditionContext } from './edition-context.mjs';
@@ -268,6 +269,11 @@ async function main() {
     },
   });
   const sound = new Soundscape({ audioMaster });
+  const menuAudio = attachPublishedAudio({
+    sound,
+    ready: Promise.resolve(null),
+    getHost: () => null,
+  });
   if (theme.soundtrack) sound.setTrack(theme.soundtrack);
   let current = null,
     pendingSession = null,
@@ -422,6 +428,7 @@ async function main() {
   }
   function resume() {
     if (!current || preparing || ['won', 'lost'].includes(current.run.status)) return;
+    if (sound.enabled) void sound.resume();
     input.clear();
     paused = false;
     accumulator = 0;
@@ -1094,10 +1101,11 @@ async function main() {
           if (current.run.status === 'respawning')
             command = { direction: null, boost: false, action: false, pickup: false };
           stepRun(current.run, command, FIXED_DT);
+          sound.feedback(true, current.theme, current.run, { command });
           recordInput(current.recorder, command);
           current.evidenceObserver?.observe(current.run);
           accumulator -= FIXED_DT;
-          for (const event of current.run.events) sound.event(event.type, event);
+          sound.events(current.run.events, current.run, current.theme);
           if (current.run.events.some((e) => e.type === 'capture.stopped')) {
             input.clear();
             command = { direction: null, boost: false, action: false, pickup: false };
@@ -1117,6 +1125,7 @@ async function main() {
         displayCSSWidth: canvas.clientWidth,
         textFace: 'plain',
       });
+      sound.feedback(isPlaying(), current.theme, current.run);
       sound.update(isPlaying(), current.theme, current.run);
       refresh();
       if (now - autosave > 5000) {
@@ -1127,7 +1136,10 @@ async function main() {
     frame = requestAnimationFrame(update);
   }
   document.addEventListener('visibilitychange', () => {
-    if (document.hidden) pause();
+    if (document.hidden) {
+      pause();
+      sound.suspend();
+    }
   });
   window.addEventListener('pagehide', (event) => {
     pause();
@@ -1137,6 +1149,7 @@ async function main() {
     input.destroy();
     current?.picture?.release();
     host.preparer.dispose();
+    menuAudio.close();
     sound.dispose?.();
     displayPreferences.dispose();
     touchPreferences.destroy();

@@ -948,22 +948,45 @@ export function drawTrailImpactFront(
   ctx.restore();
 }
 
-export function drawCapturePulse(ctx, effect, columns, cells, palette, reduced = false) {
-  if (reduced || effect.age < 0 || effect.age >= 0.65 || !Array.isArray(effect.indices)) return;
+export function drawCapturePulse(
+  ctx,
+  effect,
+  columns,
+  cells,
+  palette,
+  reduced = false,
+  family = 'fpv',
+) {
+  const duration = effect.revealDuration ?? 0.65;
+  if (reduced || effect.age < 0 || effect.age >= duration || !Array.isArray(effect.indices)) return;
   ctx.save();
-  const age = effect.age / 0.65;
+  const age = effect.age / duration;
   const claimed = new Set(effect.indices.slice(0, 2592));
+  const xs = [...claimed].map((index) => index % columns);
+  const ys = [...claimed].map((index) => Math.floor(index / columns));
+  const minX = Math.min(...xs),
+    minY = Math.min(...ys);
+  const spanX = Math.max(1, Math.max(...xs) - minX),
+    spanY = Math.max(1, Math.max(...ys) - minY);
   for (const index of claimed) {
     if (!Number.isInteger(index) || index < 0 || index >= cells.length || cells[index] !== 1)
       continue;
     const x = index % columns,
       y = Math.floor(index / columns),
-      phase = (x / columns + y / (cells.length / columns)) / 2;
-    const alpha = Math.max(0, 1 - Math.abs(age - phase) * 5) * (1 - age) * 0.2;
+      phase = claimed.size === 1 ? 0.35 : 0.15 + ((x - minX) / spanX + (y - minY) / spanY) * 0.25;
+    const alpha = Math.max(0, 1 - Math.abs(age - phase) * 2.5) * (1 - age) * 0.2;
     if (alpha < 0.015) continue;
     ctx.globalAlpha = alpha;
     ctx.fillStyle = palette.accent;
-    ctx.fillRect(x * CELL, y * CELL, CELL, CELL);
+    if (family === 'atlas') {
+      ctx.fillRect(x * CELL + 3, y * CELL + 7, CELL - 6, 2);
+      ctx.fillRect(x * CELL + 7, y * CELL + 3, 2, CELL - 6);
+    } else if (family === 'navi') {
+      ctx.fillRect(x * CELL + 2, y * CELL + 3, CELL - 4, 2);
+      ctx.fillRect(x * CELL + 2, y * CELL + 8, CELL - 7, 2);
+    } else if (family === 'retro') {
+      ctx.fillRect(x * CELL + 3, y * CELL + 3, CELL - 6, CELL - 6);
+    } else ctx.fillRect(x * CELL, y * CELL, CELL, CELL);
     // A crisp edge gives the short reveal a readable perimeter. Every pixel
     // remains inside a newly claimed, still-safe cell; no arena-wide flash.
     ctx.fillStyle = PRESENTATION_INK;
