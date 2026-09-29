@@ -884,7 +884,7 @@ test('private folder quick add reviews, saves, plays and exports one exact-byte 
 
   await app.click('export-bundle');
   await app.click('download-prepared');
-  assert.equal(app.downloads.at(-1).filename, 'RevealLine-soundtrack.rlsound');
+  assert.equal(app.downloads.at(-1).filename, 'fpv-line-soundtrack.rlsound');
   const portable = await importSoundtrackBundle(app.downloads.at(-1).blob, {
     probeMedia: structuralProbe,
     catalogue: SOUNDTRACK_CATALOGUE,
@@ -1049,7 +1049,7 @@ test('binary download and replacement draft preserve exact original audio; Undo 
   await app.click('export-bundle');
   assert.equal(app.downloads.length, 0, 'Preparation never calls the injected download adapter.');
   await app.click('download-prepared');
-  assert.equal(app.downloads[0].filename, 'RevealLine-soundtrack.rlsound');
+  assert.equal(app.downloads[0].filename, 'fpv-line-soundtrack.rlsound');
   const bundle = app.downloads[0].blob;
   const checked = await importSoundtrackBundle(bundle, { probeMedia: structuralProbe });
   assert.deepEqual(
@@ -1375,8 +1375,8 @@ test('preparing a visible native link is read-only and retains exact saved bytes
   app.click('download-prepared');
   app.click('download-prepared');
   assert.deepEqual(app.doc.nativeDownloads, [
-    { href: url, filename: 'RevealLine-soundtrack.rlsound' },
-    { href: url, filename: 'RevealLine-soundtrack.rlsound' },
+    { href: url, filename: 'fpv-line-soundtrack.rlsound' },
+    { href: url, filename: 'fpv-line-soundtrack.rlsound' },
   ]);
   assert.equal(app.urls.size, 1, 'Retry reuses one bounded Blob and handle.');
   assert.equal(app.revoked.length, 0, 'The browser may consume its link asynchronously.');
@@ -1512,7 +1512,7 @@ test('native adapter receives prepared bytes synchronously on explicit activatio
   await retry;
   assert.equal(requests.length, 2);
   assert.equal(requests[0].blob, requests[1].blob);
-  assert.equal(requests[1].filename, 'RevealLine-soundtrack.rlsound');
+  assert.equal(requests[1].filename, 'fpv-line-soundtrack.rlsound');
   assert.match(app.node('status').textContent, /request handed to the host/);
   assert.equal((await app.store.read()).generation, 1);
 });

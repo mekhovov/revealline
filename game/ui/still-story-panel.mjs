@@ -621,7 +621,7 @@ export function createStillStoryPanel({
         downloadBlob = blob;
         url = null;
         download.href = downloadURL;
-        download.download = 'RevealLine-stories.rlstory';
+        download.download = 'fpv-line-stories.rlstory';
         download.hidden = false;
         setStatus(`Story backup prepared (${blob.size} bytes). Choose Download story originals.`);
         download.focus();
@@ -641,7 +641,7 @@ export function createStillStoryPanel({
       const own = downloadBlob,
         id = serial;
       try {
-        const result = requestDownload({ blob: own, filename: 'RevealLine-stories.rlstory' });
+        const result = requestDownload({ blob: own, filename: 'fpv-line-stories.rlstory' });
         Promise.resolve(result).catch((error) => {
           if (!disposed && id === serial) setStatus(`Download request failed: ${message(error)}`);
         });

@@ -1,0 +1,88 @@
+{
+  "format": "fpv-line-identity-sources.v1",
+  "name": "FPV / LINE",
+  "created": "2026-09-29",
+  "creator": "Built-in image_gen",
+  "promptSource": "authoring/library/fpv-line-identity/prompts.json",
+  "wordmark": {
+    "path": "game/ui/art/identity/fpv-line/wordmark.png",
+    "bytes": 485216,
+    "sha256": "1a0e6083ddc1147f20b374178c68618c4fc2ea1cb915664178f371ec055cc298",
+    "width": 2172,
+    "height": 724,
+    "treatment": "Generated transparent wordmark copied unchanged; layout cropping is CSS only."
+  },
+  "icon": {
+    "path": "game/ui/art/identity/fpv-line/icon-master.png",
+    "original": "authoring/library/fpv-line-identity/icon-original.png",
+    "bytes": 926563,
+    "sha256": "978ac6d8f979558f1f9341d4f92823e92b639d4cf9d8281fdd45f792e3c3682f",
+    "width": 1254,
+    "height": 1254,
+    "treatment": "Generated opaque square master retained unchanged."
+  },
+  "installRecipe": "game/ui/art/identity/fpv-line/install-icons.json",
+  "nativeRecipe": "scripts/native-art.mjs",
+  "nativeFiles": [
+    {
+      "path": "platforms/ios/native/App/App/Assets.xcassets/AppIcon.appiconset/AppIcon-512@2x.png",
+      "bytes": 590173,
+      "sha256": "7cb5ce542c1aa2142c3693a8cdb604711472b041e79a8477e34f8b3434d911c2"
+    },
+    {
+      "path": "platforms/ios/native/App/App/Assets.xcassets/Splash.imageset/splash-2732x2732-2.png",
+      "bytes": 1190122,
+      "sha256": "e45b5733dc10e109c764ebc64d8ccb37e23c3e1a059502aa54d5c405c37432c2"
+    },
+    {
+      "path": "platforms/ios/native/App/App/Assets.xcassets/Splash.imageset/splash-2732x2732-1.png",
+      "bytes": 1190122,
+      "sha256": "e45b5733dc10e109c764ebc64d8ccb37e23c3e1a059502aa54d5c405c37432c2"
+    },
+    {
+      "path": "platforms/ios/native/App/App/Assets.xcassets/Splash.imageset/splash-2732x2732.png",
+      "bytes": 1190122,
+      "sha256": "e45b5733dc10e109c764ebc64d8ccb37e23c3e1a059502aa54d5c405c37432c2"
+    },
+    {
+      "path": "platforms/desktop/assets/revealline.icns",
+      "bytes": 753383,
+      "sha256": "d1acc9de77da1772d6f88160407c3a74b76253703591c27bfd46e9dc8fcdbff3"
+    }
+  ],
+  "notes": [
+    "Required install sizes and native containers are deterministic packaging derivatives, with 6-bit RGB channel optimization only for the 512px install image to preserve the 128 KiB launcher file cap. Maximum source-sample channel error is 2/255.",
+    "Full master bounds are preserved. Wordmark/master originals and technical application/storage identities are unchanged.",
+    "This new default-game identity does not replace partner/company logos."
+  ],
+  "maskableAudit": {
+    "method": "For every pixel with max(R,G,B)>100, measure its centre radius from the image centre; compare with a circle whose radius is40% of image width. Background texture below the threshold is excluded.",
+    "source": "https://web.dev/articles/maskable-icon",
+    "results": [
+      {
+        "file": "icon-master.png",
+        "width": 1254,
+        "brightPixels": 192027,
+        "outsideSafeCircle": 0,
+        "maximumRadius": 482.28881388645124,
+        "safeRadius": 501.6
+      },
+      {
+        "file": "icon-192.png",
+        "width": 192,
+        "brightPixels": 4559,
+        "outsideSafeCircle": 0,
+        "maximumRadius": 74.24621202458749,
+        "safeRadius": 76.8
+      },
+      {
+        "file": "icon-512.png",
+        "width": 512,
+        "brightPixels": 32028,
+        "outsideSafeCircle": 0,
+        "maximumRadius": 196.7904977380768,
+        "safeRadius": 204.8
+      }
+    ]
+  }
+}

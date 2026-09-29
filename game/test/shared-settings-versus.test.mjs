@@ -19,30 +19,35 @@ test('Versus Settings uses native categories, consumes tab keys once and returns
   f.$('race-options').click();
   assert.equal(f.doc.activeElement.id, 'race-settings-tab-display');
   press(f, 'Tab');
-  assert.equal(f.doc.activeElement.id, 'race-text-face');
+  assert.equal(f.doc.activeElement.id, 'race-menu-palette');
   press(f, 'Tab', { shiftKey: true });
   assert.equal(f.doc.activeElement.id, 'race-settings-tab-display');
   assert.equal(f.$('race-settings-tab-display').getAttribute('aria-selected'), 'true');
-  // Arrow navigation may focus an inactive category without selecting it.
-  // Subsequent sequential keys continue from that actual DOM position.
+  // The native vertical rail selects one category per keyboard arrow. Its
+  // sequential traversal enters that category's visible controls.
   press(f, 'ArrowDown');
-  assert.equal(f.doc.activeElement.id, 'race-settings-tab-data');
-  assert.equal(f.doc.activeElement.tabIndex, -1);
+  assert.equal(f.doc.activeElement.id, 'race-settings-tab-accessibility');
+  assert.equal(f.doc.activeElement.tabIndex, 0);
+  assert.equal(f.$('race-settings-panel-accessibility').inert, false);
   press(f, 'Tab');
   assert.equal(f.doc.activeElement.id, 'race-text-face');
   press(f, 'Tab', { shiftKey: true });
   press(f, 'ArrowUp');
+  assert.equal(f.doc.activeElement.id, 'race-settings-tab-display');
+  press(f, 'ArrowUp');
   assert.equal(f.doc.activeElement.id, 'race-settings-tab-audio');
-  assert.equal(f.doc.activeElement.tabIndex, -1);
+  assert.equal(f.doc.activeElement.tabIndex, 0);
   press(f, 'Tab', { shiftKey: true });
   assert.equal(f.doc.activeElement.id, 'race-options-back');
+  f.$('race-settings-tab-display').click();
+  f.$('race-options-back').focus();
   assert.equal(f.$('race-journey-reactions-retry').hidden, false);
   // Storage recovery and the visible reaction preference belong to the same
   // native Tab cycle as the other Display controls, in both directions.
   for (const id of [
     'race-journey-reactions-retry',
     'race-journey-reactions-enabled',
-    'race-reduced',
+    'race-menu-ornaments',
   ]) {
     press(f, 'Tab', { shiftKey: true });
     assert.equal(f.doc.activeElement.id, id);
@@ -57,19 +62,19 @@ test('Versus Settings uses native categories, consumes tab keys once and returns
   }
   press(f, 'Tab');
   assert.equal(f.doc.activeElement.id, 'race-settings-tab-display');
-  press(f, 'ArrowLeft');
+  press(f, 'ArrowUp');
   assert.equal(f.doc.activeElement.id, 'race-settings-tab-audio');
   assert.equal(f.$('race-settings-panel-audio').hidden, false);
   assert.equal(f.$('race-settings-panel-display').inert, true);
   press(f, 'Home');
-  assert.equal(f.doc.activeElement.id, 'race-settings-tab-controls');
+  assert.equal(f.doc.activeElement.id, 'race-settings-tab-gameplay');
   press(f, 'End');
-  assert.equal(f.doc.activeElement.id, 'race-settings-tab-data');
+  assert.equal(f.doc.activeElement.id, 'race-settings-tab-extras');
   press(f, 'Escape');
   assert.equal(f.doc.activeElement.id, 'race-options');
   assert.equal(f.$('race-options-panel').inert, true);
   f.$('race-options').click();
-  assert.equal(f.doc.activeElement.id, 'race-settings-tab-data');
+  assert.equal(f.doc.activeElement.id, 'race-settings-tab-extras');
   assert.equal(f.state(), 'ready');
   assert.deepEqual(f.checkpoint(), before);
 });
@@ -84,6 +89,7 @@ test('paused Versus keeps both runs and requires explicit Resume after appearanc
   f.frame(0);
   const paused = f.checkpoint();
   f.$('race-options').click();
+  f.$('race-settings-tab-accessibility').click();
   f.$('race-text-size').value = 'large';
   f.$('race-text-size').emit('change');
   f.$('race-settings-tab-controls').click();

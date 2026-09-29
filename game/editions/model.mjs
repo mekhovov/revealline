@@ -1,4 +1,5 @@
 import { boundedJSON, exactKeys, required, stableId } from '../data-json.mjs';
+import { editionIdentityId } from '../edition-context.mjs';
 
 export const EDITION_FORMATS = Object.freeze({
   brand: 'revealline-brand-pack.v1',
@@ -482,7 +483,7 @@ export function validateEditionRuntimeCatalog(source) {
 export function resolveEditionSelection(source, { editionId, campaignId } = {}) {
   const catalog = validateEditionRuntimeCatalog(source);
   const edition = catalog.editions.find(
-    (item) => item.id === (editionId ?? catalog.defaultEditionId),
+    (item) => item.id === editionIdentityId(editionId ?? catalog.defaultEditionId),
   );
   required(edition, 'This edition is not included in this build.');
   const campaigns = edition.campaignIds.map((id) =>

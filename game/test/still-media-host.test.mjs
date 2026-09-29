@@ -281,7 +281,7 @@ test('v1 MP3 bytes remain exact through shared v5 upgrade and explicit native ba
   const blob = h.urls.get(h.$('still-host-download-audio').href);
   assert.deepEqual(Buffer.from(await blob.arrayBuffer()), Buffer.from(await before.arrayBuffer()));
   assert.equal(h.doc.activeElement, h.$('still-host-download-audio'));
-  assert.equal(h.$('still-host-download-audio').download, 'RevealLine-soundtrack.rlsound');
+  assert.equal(h.$('still-host-download-audio').download, 'fpv-line-soundtrack.rlsound');
   h.$('still-host-download-audio').click();
   assert.match(h.$('still-host-status').textContent, /Download requested/);
   h.$('still-host-close').onclick();

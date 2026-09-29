@@ -40,10 +40,10 @@ function targets(value, owner, byPath) {
 function walk(value, visit) {
   if (!value || typeof value !== 'object') return;
   visit(value);
-  for (const child of Object.values(value)) {
-    if (Array.isArray(child)) child.forEach((item) => walk(item, visit));
-    else if (child && typeof child === 'object') walk(child, visit);
-  }
+  // Visit arrays themselves too: JSON resource lists can contain strings
+  // directly, such as frozen replay variants, rather than descriptor objects.
+  for (const child of Object.values(value))
+    if (child && typeof child === 'object') walk(child, visit);
 }
 
 /** Derive each mode's runtime closure from its entry points and shared production
