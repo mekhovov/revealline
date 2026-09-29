@@ -2782,3 +2782,170 @@ test('Motion accepted collection notices translate without repeating mutations o
     setLocale(previous, { persist: false });
   }
 });
+
+function motionNavigation(t, h) {
+  let time = 0;
+  h.doc.parentNode = h.host;
+  h.host.getComputedStyle = (element) => ({
+    display: element.style.display || 'block',
+    visibility: element.style.visibility || 'visible',
+  });
+  const guard = attachControllerConfirmGuard({ document: h.doc, now: () => time });
+  const navigation = attachControllerNavigation({
+    document: h.doc,
+    keyboard: true,
+    getScope: () => 'authoring',
+    getRoot: () => h.doc.body,
+    resolveEditor: resolveAuthoringEditor,
+    ownsKeyboardEvent: (event) => !!event.target.closest('[data-controller-editor]'),
+    activateControl: guard.activate,
+  });
+  t.after(() => {
+    navigation.destroy();
+    guard.destroy();
+  });
+  return {
+    navigation,
+    confirm(button) {
+      time += 2000;
+      button.focus();
+      guard.begin(button);
+      navigation.beginConfirm();
+      navigation.commitConfirm();
+      guard.finish();
+    },
+  };
+}
+
+test('Motion menu arrow navigation and consumed keys never steer, act or pause the arena', async (t) => {
+  const h = await harness(t);
+  await h.ready();
+  motionNavigation(t, h);
+  const link = h.doc.querySelector('a[href]');
+  link.focus();
+  const arrow = link.emit('keydown', { code: 'ArrowRight', key: 'ArrowRight' });
+  assert.equal(arrow.defaultPrevented, true, 'The real menu navigator consumed this direction');
+  assert.notEqual(h.doc.activeElement, link, 'Menu focus actually moved');
+  assert.equal(h.$('autoplay').checked, true, 'A menu direction must not become arena intent');
+  const ability = h.$('ability-readout').textContent;
+  for (const code of ['KeyE', 'KeyR']) {
+    link.focus();
+    link.emit('keydown', { code, key: code.slice(-1).toLowerCase() });
+    assert.equal(h.$('ability-readout').textContent, ability);
+  }
+  for (const code of ['ArrowLeft', 'KeyE', 'KeyR', 'Escape', 'Space', 'ShiftLeft']) {
+    h.$('arena').focus();
+    h.host.emit('keydown', { target: h.$('arena'), code, defaultPrevented: true });
+  }
+  assert.equal(h.$('autoplay').checked, true);
+  assert.equal(
+    h.$('play-pause').textContent,
+    'Pause',
+    'Consumed Escape must not pause a live study',
+  );
+  assert.equal(h.$('ability-readout').textContent, ability);
+  assert.equal(h.$('boost').getAttribute('aria-pressed'), 'false');
+  assert.equal(h.$('slow').getAttribute('aria-pressed'), 'false');
+});
+
+test('Motion native shortcuts require foreground arena focus, retain ability controls and release held modifiers outside it', async (t) => {
+  const h = await harness(t);
+  await h.ready();
+  const arena = h.$('arena'),
+    other = h.$('cruise-speed');
+  other.focus();
+  h.host.emit('keydown', { target: arena, code: 'ArrowLeft' });
+  assert.equal(
+    h.$('autoplay').checked,
+    true,
+    'A stale arena target cannot borrow another focus owner',
+  );
+  arena.focus();
+  h.doc.focused = false;
+  h.host.emit('keydown', { target: arena, code: 'ArrowLeft' });
+  h.doc.focused = true;
+  h.doc.hidden = true;
+  h.host.emit('keydown', { target: arena, code: 'ArrowLeft' });
+  h.doc.hidden = false;
+  h.host.emit('keydown', { target: arena, code: 'ArrowLeft', ctrlKey: true });
+  assert.equal(h.$('autoplay').checked, true);
+  h.key('KeyE');
+  assert.match(h.$('ability-readout').textContent, /1 note visible/);
+  h.key('ArrowRight');
+  assert.equal(h.$('autoplay').checked, false);
+  assert.equal(h.doc.querySelector('[data-direction="right"]').classList.contains('is-held'), true);
+  h.key('ShiftLeft');
+  h.key('Space');
+  h.tick(100);
+  h.tick(200);
+  assert.equal(h.$('boost').getAttribute('aria-pressed'), 'true');
+  assert.equal(h.$('slow').getAttribute('aria-pressed'), 'true');
+  other.focus();
+  h.host.emit('keyup', { target: other, code: 'ShiftLeft' });
+  h.host.emit('keyup', { target: other, code: 'Space' });
+  h.tick(300);
+  assert.equal(h.$('boost').getAttribute('aria-pressed'), 'false');
+  assert.equal(h.$('slow').getAttribute('aria-pressed'), 'false');
+  h.key('Escape');
+  assert.equal(h.$('play-pause').textContent, 'Play');
+  assert.equal(h.frames.size, 0);
+  h.key('ArrowUp');
+  assert.equal(h.frames.size, 0, 'Direction while paused is not Play intent');
+  h.$('play-pause').click();
+  h.$('ability-pickup').emit('keydown', { code: 'Enter', key: 'Enter' });
+  assert.equal(
+    h.$('play-pause').textContent,
+    'Pause',
+    'Explicit native action buttons retain their own handlers',
+  );
+  const down = h.doc.querySelector('[data-direction="down"]');
+  down.focus();
+  down.emit('keydown', { code: 'Enter', key: 'Enter' });
+  assert.equal(down.classList.contains('is-held'), true);
+  down.emit('keyup', { code: 'Enter', key: 'Enter' });
+  assert.equal(h.frames.size, 1, 'Native direction release retains intentional travel');
+});
+
+test('Motion four direction buttons accept real guarded controller activation and a paused click never resumes or latches', async (t) => {
+  const h = await harness(t);
+  await h.ready();
+  const input = motionNavigation(t, h);
+  for (const direction of ['up', 'left', 'down', 'right']) {
+    const button = h.doc.querySelector(`[data-direction="${direction}"]`);
+    input.confirm(button);
+    assert.equal(h.$('autoplay').checked, false);
+    assert.equal(button.classList.contains('is-held'), true);
+    assert.equal(
+      h.doc
+        .querySelectorAll('[data-direction]')
+        .filter((node) => node.classList.contains('is-held')).length,
+      1,
+    );
+  }
+  input.confirm(h.$('play-pause'));
+  assert.equal(h.frames.size, 0);
+  const left = h.doc.querySelector('[data-direction="left"]');
+  input.confirm(left);
+  assert.equal(h.frames.size, 0);
+  assert.equal(h.$('play-pause').textContent, 'Play');
+  assert.equal(
+    left.classList.contains('is-held'),
+    false,
+    'Paused activation does not change deliberate direction',
+  );
+  input.confirm(h.$('play-pause'));
+  input.confirm(left);
+  assert.equal(
+    left.classList.contains('is-held'),
+    true,
+    'The paused pulse released its source so the next explicit activation works',
+  );
+  assert.equal(h.frames.size, 1);
+  for (const id of ['boost', 'slow']) {
+    input.confirm(h.$(id));
+    assert.equal(h.$(id).getAttribute('aria-pressed'), 'true');
+    input.navigation.clear();
+    assert.equal(h.$(id).getAttribute('aria-pressed'), 'false');
+    assert.equal(h.frames.size, 1, 'Releasing a held modifier does not change Play intent');
+  }
+});
