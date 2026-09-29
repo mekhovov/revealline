@@ -1,17 +1,6 @@
-name: Publish selected frozen game
+name: Validate frozen release publication
 
 on:
-  push:
-    branches: [main]
-    paths:
-      - "publishing/pages-controller/**"
-      - "!publishing/pages-controller/delivery/**"
-      - "!publishing/pages-controller/evidence/**"
-      - "!publishing/pages-controller/source-qualification.mjs"
-      - "!publishing/pages-controller/release-train-boundary.mjs"
-      - "!publishing/pages-controller/release-train-boundary.test.mjs"
-      - "!publishing/pages-controller/*.test.mjs"
-      - "!publishing/pages-controller/test_*.py"
   pull_request:
     branches: [main]
     paths:
@@ -20,31 +9,23 @@ on:
       - "scripts/pages-archive.mjs"
       - "scripts/pages-current-entry.mjs"
       - "publishing/edition-promotion.mjs"
+      - "publishing/optional-package-*.mjs"
       - "publishing/edition-admission.mjs"
       - "publishing/edition-zip.mjs"
       - "game/edition-context.mjs"
-  workflow_dispatch:
-    inputs:
-      release_tag:
-        description: Exact latest stable tag already selected by the reviewed controller
-        required: false
-        type: string
 
 permissions:
   contents: read
 
-# Production publications stay serialized. Superseded PR previews are disposable.
+# This workflow validates the retained frozen-release machinery without writing
+# production Pages. The production root is owned solely by deploy-main-pages.yml.
 concurrency:
-  group: frozen-pages-${{ github.event_name == 'pull_request' && format('pr-{0}', github.event.pull_request.number) || 'production' }}
-  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
-  queue: ${{ github.event_name == 'pull_request' && 'single' || 'max' }}
-
-env:
-  REQUESTED_RELEASE: ${{ inputs.release_tag || '' }}
+  group: frozen-pages-pr-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+  queue: single
 
 jobs:
   assemble:
-    if: github.event_name == 'pull_request' || github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     steps:
       - name: Check out publishing controller and immutable tags
@@ -58,6 +39,9 @@ jobs:
             /.github/workflows/qualify-release-source.yml
             /publishing/pages-controller/
             /publishing/edition-promotion.mjs
+            /publishing/optional-package-promotion.mjs
+            /publishing/optional-package-admission.mjs
+            /publishing/optional-package-policy.mjs
             /publishing/edition-admission.mjs
             /publishing/edition-zip.mjs
             /game/edition-context.mjs
@@ -134,113 +118,3 @@ jobs:
           name: frozen-pages-receipts
           path: .cache/frozen-pages/*-receipt.json
           if-no-files-found: warn
-
-      - name: Upload verified Pages artifact
-        if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
-        uses: actions/upload-pages-artifact@fc324d3547104276b827a68afc52ff2a11cc49c9 # v5.0.0
-        with:
-          path: .cache/frozen-pages/artifact
-          include-hidden-files: true
-
-  deploy:
-    if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
-    needs: assemble
-    runs-on: ubuntu-latest
-    outputs:
-      page_url: ${{ steps.deployment.outputs.page_url }}
-    permissions:
-      contents: read
-      pages: write
-      id-token: write
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    steps:
-      - name: Check out the same publishing selector before deployment
-        uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
-        with:
-          ref: ${{ github.sha }}
-          fetch-depth: 1
-          sparse-checkout: |
-            /publishing/pages-controller/release-policy.mjs
-            /publishing/pages-controller/metadata.mjs
-            /publishing/pages-controller/publication.json
-            /scripts/pages-archive.mjs
-          sparse-checkout-cone-mode: false
-
-      - name: Set up publishing policy runtime
-        uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v5
-        with:
-          package-manager-cache: false
-          node-version: 22.22.2
-
-      - name: Recheck latest stable selection after any deployment wait
-        env:
-          GH_TOKEN: ${{ github.token }}
-        run: node publishing/pages-controller/release-policy.mjs verify
-
-      - name: Deploy verified frozen edition to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@368f82528645a54fb793d4d04e342629a3f51346 # v5.0.1
-
-  audit-public-bytes:
-    if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
-    needs: [assemble, deploy]
-    runs-on: ubuntu-latest
-    timeout-minutes: 45
-    permissions:
-      contents: read
-      actions: read
-    steps:
-      - name: Check out the bounded public-byte auditor
-        uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
-        with:
-          ref: ${{ github.sha }}
-          fetch-depth: 1
-          filter: blob:none
-          persist-credentials: false
-          sparse-checkout: |
-            /publishing/pages-controller/public-byte-audit.mjs
-          sparse-checkout-cone-mode: false
-
-      - name: Set up public-audit runtime
-        uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v5
-        with:
-          package-manager-cache: false
-          node-version: 22.22.2
-
-      - name: Download the exact assembly receipt from this run
-        uses: actions/download-artifact@37930b1c2abaa49bbe596cd826c3c89aef350131 # v7
-        with:
-          name: frozen-pages-receipts
-          path: receipts
-
-      - name: Stream and verify every deployed public byte
-        env:
-          PUBLIC_ROOT: ${{ needs.deploy.outputs.page_url }}
-        run: |
-          set -euo pipefail
-          receipt="$(find receipts -type f -name artifact-receipt.json -print -quit)"
-          test -n "$receipt"
-          node publishing/pages-controller/public-byte-audit.mjs \
-            "$receipt" public-byte-audit.json "$PUBLIC_ROOT" 12
-
-      - name: Retain the immutable public-byte receipt
-        uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6
-        with:
-          name: public-byte-audit-${{ github.sha }}
-          path: public-byte-audit.json
-          compression-level: 0
-          retention-days: 30
-          if-no-files-found: error
-
-      - name: Record exact public verification
-        run: |
-          printf '%s\n' \
-            '### Exact public-byte audit' \
-            '' \
-            "Public root: \`${{ needs.deploy.outputs.page_url }}\`" \
-            "Files: \`$(jq -r .files public-byte-audit.json)\`" \
-            "Bytes: \`$(jq -r .bytes public-byte-audit.json)\`" \
-            "Requests: \`$(jq -r .attempts public-byte-audit.json)\`" \
-            "Retries: \`$(jq -r .retries public-byte-audit.json)\`." >> "$GITHUB_STEP_SUMMARY"

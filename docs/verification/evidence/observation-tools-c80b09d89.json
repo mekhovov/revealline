@@ -1,0 +1,80 @@
+{
+  "format": "revealline-observation-tools-checks.v1",
+  "source": {
+    "revision": "c80b09d89797f730a27752e65e615e5e663a0ef7",
+    "tree": "3a4b6f1a71029f5faa0a5c225df4b066a43b7a14"
+  },
+  "qualified": false,
+  "scope": "Node observer/analyzer behavior tests; not new browser capture or release admission.",
+  "environment": {
+    "node": "v20.19.5"
+  },
+  "selectedInputPins": [
+    {
+      "path": "scripts/observe-discovery-runtime.mjs",
+      "bytes": 33454,
+      "sha256": "6ede86010537b9559602de82476925c6d86da6d0ecc2952b111c5174a28af6ff"
+    },
+    {
+      "path": "scripts/test-observe-discovery-runtime.mjs",
+      "bytes": 23716,
+      "sha256": "d226115d212ce33fb593128b3d03921023d2cde5d0504aef7712ba0cb46f6fda"
+    },
+    {
+      "path": "scripts/test-discovery-observer.mjs",
+      "bytes": 22346,
+      "sha256": "1783f79350aa2973dc2832a914c9c9f62e6b9ac497341da95bd91358f90672bf"
+    },
+    {
+      "path": "scripts/analyze-fpv-heap.mjs",
+      "bytes": 9820,
+      "sha256": "4e1bc4fd0932cec11fdf5e7083a779a277f6c9b58590dae4a7e6cd99b18ae25a"
+    },
+    {
+      "path": "scripts/test-analyze-fpv-heap.mjs",
+      "bytes": 4539,
+      "sha256": "a76ec4bb4a49dfbacce9b7920b6d70a764693e404c4c675abe625a0f835a93be"
+    },
+    {
+      "path": "scripts/analyze-discovery-heap.mjs",
+      "bytes": 13204,
+      "sha256": "0b9dd7a6867bb7ea461578b5e24ce8424c40a8851972a29944438206cc3f3c8b"
+    },
+    {
+      "path": "scripts/test-analyze-discovery-heap.mjs",
+      "bytes": 9662,
+      "sha256": "7f55b209aac5af2f501341c64853476af58a93073076e1e2b65a512e9d761518"
+    },
+    {
+      "path": "scripts/observe-fpv-completion.mjs",
+      "bytes": 31165,
+      "sha256": "0ffe6ec19713ea6f226ff5854229e6bcd99f557adcf1cdc0e62dab8805a824ee"
+    },
+    {
+      "path": "scripts/test-observe-fpv-completion.mjs",
+      "bytes": 12847,
+      "sha256": "05ed8b155b9f93b66b8404ebdea40d84f456f89c0ae178a9586f78cf0822abaf"
+    }
+  ],
+  "selectedPinsAreFullDependencyClosure": false,
+  "tests": {
+    "tests": 55,
+    "pass": 55,
+    "fail": 0,
+    "cancelled": 0,
+    "skipped": 0
+  },
+  "log": {
+    "name": "phase7-final-observer-batch-tests.log",
+    "bytes": 13244,
+    "sha256": "b5d30599f2107960ea7e71752364f50369437c8eaab0229cf856ae766348f6f2",
+    "rawKeptLocal": true
+  },
+  "independentReview": "Final failure-diagnostic and cleanup diff reviewed; focused observer suite also rerun independently. No remaining concrete defect reported.",
+  "limitations": [
+    "No browser/heap observation rerun for the cleanup follow-up.",
+    "Timeouts bound waits, do not cancel pending external operations, and cannot certify resource closure.",
+    "The original retained-capture hang cause remains unproven.",
+    "Four production/review failures at2ba974146 remain a separate release gate; see production-review-gap-2ba974146.json."
+  ]
+}

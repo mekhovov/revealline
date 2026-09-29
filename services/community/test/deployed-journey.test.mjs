@@ -9,9 +9,11 @@ import { createTokenAuthenticator } from '../src/auth.mjs';
 import { MemoryBlobStore } from '../src/blob-store.mjs';
 import {
   DEPLOYED_ACCEPTANCE_FORMAT,
+  DEPLOYED_BROWSER_MODERATION_FORMAT,
   DESTRUCTIVE_OPT_IN,
   runDeployedCommunityJourney,
   validateDeployedJourneyConfig,
+  verifyDeployedBrowserModeration,
 } from '../src/deployed-journey.mjs';
 import { MemoryCommunityRepository } from '../src/memory-repository.mjs';
 import { createCreatorPackageValidator } from '../src/validator.mjs';
@@ -80,6 +82,10 @@ test('configuration requires explicit destructive opt-in, a unique namespace and
   assert.throws(
     () => validateDeployedJourneyConfig(config({ expectedRelease: null })),
     /expected release version and source revision/u,
+  );
+  assert.throws(
+    () => validateDeployedJourneyConfig(config({ moderationMode: 'manual' })),
+    /moderation acceptance mode/iu,
   );
   const accepted = validateDeployedJourneyConfig(config());
   assert.equal(accepted.baseURL, 'https://community.example.test/');
@@ -267,6 +273,110 @@ test('deployed journey publishes, polls, isolates owners, downloads exact bytes 
     assert.equal(serialized.includes(secret), false);
 });
 
+test('browser moderation mode seeds one exact report and verifies the operator action', async (t) => {
+  let wallTime = Date.parse('2026-09-28T03:00:00.000Z');
+  const repository = new MemoryCommunityRepository({ clock: () => new Date(wallTime) });
+  const blobStore = new MemoryBlobStore();
+  const app = buildCommunityApp({
+    repository,
+    blobStore,
+    authenticator: createTokenAuthenticator({
+      'creator-a-secret': 'creator/a',
+      'creator-b-secret': 'creator/b',
+      'admin-secret': { subject: 'administrator/acceptance', roles: ['admin'] },
+    }),
+    maxPackageBytes: 16 * 1024 * 1024,
+    releaseIdentity: expectedRelease,
+  });
+  await app.ready();
+  t.after(() => app.close());
+  const fetchImpl = fetchThroughFastify(app);
+  let workerRuns = 0;
+  const sleep = async (milliseconds) => {
+    wallTime += milliseconds;
+    workerRuns += 1;
+    await processNextValidationJob({
+      repository,
+      blobStore,
+      workerId: `browser-moderation-${workerRuns}`,
+      validatePackage: createCreatorPackageValidator(),
+    });
+  };
+
+  const seed = await runDeployedCommunityJourney(config({ moderationMode: 'browser' }), {
+    fetchImpl,
+    now: () => wallTime,
+    sleep,
+    randomUUID: () => '87654321-1234-4abc-8def-123456789abc',
+  });
+  assert.equal(seed.status, 'awaiting-browser');
+  assert.equal(seed.moderation.reportStatus, 'open');
+  assert.equal(seed.moderation.editionStatus, 'published');
+  assert.equal(seed.moderation.browserPath, '/game/community/moderation.html');
+  assert.ok(await repository.getPublishedEdition(seed.editionId));
+
+  await assert.rejects(
+    verifyDeployedBrowserModeration(
+      {
+        baseURL: config().baseURL,
+        expectedRelease,
+        admin: bearer('admin-secret'),
+        seedReceipt: seed,
+        requestTimeoutMs: 1_000,
+      },
+      { fetchImpl, now: () => wallTime },
+    ),
+    (error) => error.stage === 'moderation' && error.receipt.failedStage === 'moderation',
+  );
+
+  const preview = await fetchImpl(
+    new URL(`v1/catalog/${seed.editionId}/preview`, config().baseURL),
+  );
+  assert.equal(preview.status, 200);
+  assert.equal(preview.headers.get('content-type'), 'image/png');
+  const reason = 'Browser operator accepted the removal rehearsal.';
+  const unlisted = await fetchImpl(
+    new URL(`v1/admin/catalog/${seed.editionId}/unlist`, config().baseURL),
+    {
+      method: 'POST',
+      headers: { ...bearer('admin-secret'), 'content-type': 'application/json' },
+      body: JSON.stringify({ reason }),
+    },
+  );
+  assert.equal(unlisted.status, 200);
+  const resolved = await fetchImpl(
+    new URL(`v1/admin/reports/${seed.moderation.reportId}/resolve`, config().baseURL),
+    {
+      method: 'POST',
+      headers: { ...bearer('admin-secret'), 'content-type': 'application/json' },
+      body: JSON.stringify({ resolution: reason }),
+    },
+  );
+  assert.equal(resolved.status, 200);
+
+  const receipt = await verifyDeployedBrowserModeration(
+    {
+      baseURL: config().baseURL,
+      expectedRelease,
+      admin: bearer('admin-secret'),
+      seedReceipt: seed,
+      requestTimeoutMs: 1_000,
+    },
+    { fetchImpl, now: () => wallTime },
+  );
+  assert.equal(receipt.format, DEPLOYED_BROWSER_MODERATION_FORMAT);
+  assert.equal(receipt.status, 'passed');
+  assert.equal(receipt.seedRunId, seed.runId);
+  assert.deepEqual(receipt.moderation, {
+    reportId: seed.moderation.reportId,
+    reportStatus: 'resolved',
+    editionId: seed.editionId,
+    editionStatus: 'unlisted',
+  });
+  assert.equal(await repository.getPublishedEdition(seed.editionId), null);
+  assert.equal(JSON.stringify(receipt).includes('admin-secret'), false);
+});
+
 test('failure emits a bounded redacted receipt and never runs after missing opt-in', async () => {
   let calls = 0;
   await assert.rejects(
@@ -414,6 +524,33 @@ test('CLI refuses to replace an existing acceptance receipt', async (t) => {
   const output = `${result.stdout}\n${result.stderr}`;
   for (const secret of ['cli-creator-a-secret', 'cli-creator-b-secret', 'cli-admin-secret'])
     assert.equal(output.includes(secret), false);
+});
+
+test('browser moderation verifier CLI reserves a redacted failure receipt', async (t) => {
+  const directory = await mkdtemp(path.join(os.tmpdir(), 'revealline-browser-moderation-'));
+  t.after(() => rm(directory, { recursive: true, force: true }));
+  const receiptPath = path.join(directory, 'receipt.json');
+  const result = spawnSync(process.execPath, ['src/deployed-browser-moderation-runner.mjs'], {
+    cwd: new URL('..', import.meta.url),
+    encoding: 'utf8',
+    env: {
+      ...process.env,
+      COMMUNITY_BROWSER_MODERATION_BASE_URL: 'https://community.example.test/',
+      COMMUNITY_BROWSER_MODERATION_EXPECTED_VERSION: expectedRelease.version,
+      COMMUNITY_BROWSER_MODERATION_EXPECTED_SOURCE_REVISION: expectedRelease.sourceRevision,
+      COMMUNITY_BROWSER_MODERATION_ADMIN_AUTHORIZATION: 'Bearer browser-admin-secret',
+      COMMUNITY_BROWSER_MODERATION_SEED_RECEIPT: path.join(directory, 'missing-seed.json'),
+      COMMUNITY_BROWSER_MODERATION_RECEIPT: receiptPath,
+    },
+  });
+  assert.equal(result.status, 1);
+  assert.equal(`${result.stdout}\n${result.stderr}`.includes('browser-admin-secret'), false);
+  assert.deepEqual(JSON.parse(await readFile(receiptPath, 'utf8')), {
+    format: DEPLOYED_BROWSER_MODERATION_FORMAT,
+    status: 'failed',
+    failedStage: 'configuration',
+    errorCode: 'invalid_acceptance_configuration',
+  });
 });
 
 test('owner isolation requires the exact owner-scoped not-found response', async (t) => {
