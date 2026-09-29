@@ -5,10 +5,14 @@ import path from 'node:path';
 import { tmpdir } from 'node:os';
 import { createHash } from 'node:crypto';
 import { pathToFileURL } from 'node:url';
+import { runInNewContext } from 'node:vm';
 import { createEditionZip } from '../publishing/edition-zip.mjs';
 import { PREVIEW_SECURITY_HEADERS } from './game-cli.mjs';
 import {
   validateDiscoveryRuntimePlan,
+  prepareDiscoveryBrowser,
+  readDiscoveryBootState,
+  waitForDiscoveryBoot,
   verifyDiscoveryRuntimeArtifact,
   serveDiscoveryRuntime,
   observeDiscoveryRuntime,
@@ -346,7 +350,8 @@ test('actual observation failure reaches bounded cleanup when its renderer diagn
     playwrightModule,
     `export const primary = new Error('Actual caller route failed');
 export const calls = [];
-export const chromium = { launch: async () => ({
+export const chromium = { launch: async (options) => { calls.push(['launch', options]); return ({
+  version: () => '154.0.8037.57',
   close: async () => { calls.push('browser closed'); },
   newContext: async () => ({
     close: async () => { calls.push('context closed'); },
@@ -357,7 +362,7 @@ export const chromium = { launch: async () => ({
     evaluate: () => { calls.push('renderer read'); return new Promise(() => {}); },
     screenshot: async () => { calls.push('screenshot'); throw Error('Screenshot unavailable'); }
   }) })
-}) };`,
+}); } };`,
   );
   const fake = await import(pathToFileURL(playwrightModule).href);
   await assert.rejects(
@@ -382,6 +387,13 @@ export const chromium = { launch: async () => ({
   assert.equal(failure.error, fake.primary.stack);
   assert.equal(failure.identity.sourceRevision, input.plan.artifact.sourceRevision);
   const observation = JSON.parse(await readFile(path.join(output, 'case.json')));
+  assert.deepEqual(fake.calls[0], ['launch', { channel: 'chrome', headless: true }]);
+  assert.equal(observation.browser.selection, 'chrome');
+  assert.equal(
+    observation.binding.settingsIdentity,
+    'en;standard;immediate;scout;full;muted;menu-neon;hybrid;fpv-learning-marker;fpv-meet-aircraft-theme;grid-off;reactions-on;1280x633@1;trace-timings',
+  );
+  assert.equal(failure.browser.actualBrowserVersion, '154.0.8037.57');
   await assert.rejects(fetch(observation.origin + '/game/app.mjs'));
   await assert.rejects(readFile(path.join(output, 'complete.json')), { code: 'ENOENT' });
 });
@@ -500,9 +512,250 @@ test('plans select only the reviewed public-control protocol and bounded indepen
     { ...plan, quietWindow: '' },
     { ...plan, serverPort: -1 },
     { ...plan, headerPolicy: 'relaxed-csp' },
+    { ...plan, browser: 'firefox' },
+    { ...plan, browser: 'unreviewed-engine' },
     { ...plan, artifact: { ...plan.artifact, sourceRevision: 'unknown' } },
   ])
     assert.throws(() => validateDiscoveryRuntimePlan(invalid));
+});
+
+async function firefoxFixture(
+  folder,
+  { actualVersion = '146.0.1', launchFailure = false, bootFailure = false } = {},
+) {
+  const core = path.join(folder, 'node_modules/playwright-core'),
+    revision = path.join(folder, 'browsers/firefox-1509'),
+    executable = path.join(revision, 'firefox'),
+    module = path.join(folder, 'playwright-fixture.mjs');
+  await mkdir(core, { recursive: true });
+  await mkdir(revision, { recursive: true });
+  await writeFile(
+    path.join(core, 'package.json'),
+    JSON.stringify({ name: 'playwright-core', version: '1.58.2' }),
+  );
+  await writeFile(
+    path.join(core, 'browsers.json'),
+    JSON.stringify({
+      browsers: [{ name: 'firefox', revision: '1509', browserVersion: '146.0.1' }],
+    }),
+  );
+  await writeFile(path.join(revision, 'INSTALLATION_COMPLETE'), '');
+  await writeFile(executable, 'Synthetic executable fixture; never executed.\n', { mode: 0o700 });
+  await writeFile(
+    module,
+    `export const calls = [];
+export const primary = new Error('Synthetic public navigation failure');
+export const chromium = { launch: async () => { calls.push('chrome fallback'); throw Error('Forbidden fallback'); } };
+export const firefox = {
+  name: () => 'firefox', executablePath: () => ${JSON.stringify(executable)},
+  launch: async options => {
+    calls.push(['launch', options]);
+    if (${launchFailure}) throw primary;
+    return { version: () => ${JSON.stringify(actualVersion)}, close: async () => { calls.push('browser closed'); },
+      newContext: async () => ({ close: async () => { calls.push('context closed'); },
+        newPage: async () => ({ close: async () => { calls.push('page closed'); },
+          setDefaultTimeout() {}, on() {}, addInitScript: async () => {},
+          goto: async () => { if (!${bootFailure}) throw primary; },
+          waitForFunction: async (predicate, argument, options) => { calls.push(['boot wait', options]); },
+          evaluate: async fn => fn.name === 'readDiscoveryBootState' ? ({state:'failed', detail:'Reward gameplay binding differs from the selected mission.'}) : null,
+          screenshot: async () => {} }) }) };
+  }
+};`,
+  );
+  return { module, executable, core, api: await import(pathToFileURL(module).href) };
+}
+
+test('declared Firefox requires its installed matching runtime and cannot select tracing or launch flags', async (t) => {
+  const folder = await mkdtemp(path.join(tmpdir(), 'discovery-firefox-selection-'));
+  t.after(() => rm(folder, { recursive: true, force: true }));
+  const source = await firefoxFixture(folder),
+    input = fixture({ protocolId: 'ukraine-threads-first-win.v1' }),
+    plan = { ...input.plan, browser: 'firefox' };
+  for (const mode of ['timings', 'timeline', 'cpu'])
+    assert.throws(() =>
+      validateDiscoveryRuntimePlan({ ...fixture().plan, mode, browser: 'firefox' }),
+    );
+  for (const override of [
+    { browser: 'chromium' },
+    { browser: { name: 'firefox' } },
+    { executablePath: source.executable },
+    { args: ['--disable-web-security'] },
+  ])
+    assert.throws(() => validateDiscoveryRuntimePlan({ ...plan, ...override }));
+  const prepared = await prepareDiscoveryBrowser(plan, source.module);
+  assert.deepEqual(prepared.launchOptions, { headless: true });
+  assert.equal(prepared.evidence.runtime.revision, '1509');
+  assert.equal(prepared.evidence.runtime.expectedBrowserVersion, '146.0.1');
+  assert.equal(
+    prepared.evidence.runtime.executable.sha256,
+    hash(await readFile(source.executable)),
+  );
+  assert.equal(prepared.evidence.module.sha256, hash(await readFile(source.module)));
+  assert.deepEqual(source.api.calls, []);
+  const originalPlan = fixture().plan,
+    oldDefault = await prepareDiscoveryBrowser(originalPlan, source.module),
+    explicitChrome = await prepareDiscoveryBrowser(
+      { ...originalPlan, browser: 'chrome' },
+      source.module,
+    );
+  assert.deepEqual(oldDefault.evidence, explicitChrome.evidence);
+  assert.deepEqual(oldDefault.launchOptions, { channel: 'chrome', headless: true });
+  await writeFile(
+    path.join(source.core, 'browsers.json'),
+    JSON.stringify({
+      browsers: [{ name: 'firefox', revision: '1510', browserVersion: '146.0.1' }],
+    }),
+  );
+  await assert.rejects(prepareDiscoveryBrowser(plan, source.module), /bundled revision/);
+  await writeFile(
+    path.join(source.core, 'browsers.json'),
+    JSON.stringify({
+      browsers: [{ name: 'firefox', revision: '1509', browserVersion: '146.0.1' }],
+    }),
+  );
+  await rm(source.executable);
+  await assert.rejects(prepareDiscoveryBrowser(plan, source.module), { code: 'ENOENT' });
+  assert.deepEqual(source.api.calls, []);
+});
+
+test('actual Firefox caller records declared provenance, fails closed and cleans all owned resources', async (t) => {
+  for (const options of [
+    {},
+    { actualVersion: '999.0' },
+    { launchFailure: true },
+    { bootFailure: true },
+  ]) {
+    await t.test(JSON.stringify(options), async (t) => {
+      const folder = await mkdtemp(path.join(tmpdir(), 'discovery-firefox-caller-'));
+      t.after(() => rm(folder, { recursive: true, force: true }));
+      const source = await firefoxFixture(folder, options),
+        input = fixture({ protocolId: 'ukraine-threads-first-win.v1' }),
+        plan = { ...input.plan, browser: 'firefox' },
+        planFile = path.join(folder, 'plan.json'),
+        output = path.join(folder, 'attempt');
+      await writeFile(planFile, JSON.stringify(plan));
+      await writeFile(path.join(folder, 'distribution.zip'), input.archive);
+      await writeFile(path.join(folder, 'manifest.json'), input.manifest);
+      await assert.rejects(
+        observeDiscoveryRuntime({ planFile, playwrightModule: source.module, output }),
+        (error) =>
+          options.actualVersion
+            ? /browser version differs/.test(error.message)
+            : options.bootFailure
+              ? /Game boot failed: Reward gameplay binding differs/.test(error.message)
+              : error === source.api.primary,
+      );
+      assert.deepEqual(source.api.calls[0], ['launch', { headless: true }]);
+      assert.equal(source.api.calls.includes('chrome fallback'), false);
+      const observed = JSON.parse(await readFile(path.join(output, 'case.json'))),
+        failure = JSON.parse(await readFile(path.join(output, 'failure.json'))),
+        cleanup = JSON.parse(await readFile(path.join(output, 'cleanup.json')));
+      assert.match(observed.binding.settingsIdentity, /;browser-firefox@146\.0\.1$/);
+      assert.equal(observed.browser.runtime.revision, '1509');
+      assert.equal(failure.browser.selection, 'firefox');
+      assert.equal(cleanup.completed, true); // Cleanup succeeded; the observation still failed.
+      assert.equal(cleanup.primaryError, failure.error);
+      if (options.bootFailure) {
+        assert.deepEqual(
+          source.api.calls.find((x) => Array.isArray(x) && x[0] === 'boot wait'),
+          ['boot wait', { timeout: 60000 }],
+        );
+        assert.equal(
+          failure.boot.detail,
+          'Reward gameplay binding differs from the selected mission.',
+        );
+        assert.equal(JSON.parse(await readFile(path.join(output, 'boot.json'))).state, 'failed');
+      }
+      assert.equal(cleanup.operations.find((x) => x.name === 'server').closed, true);
+      if (!options.launchFailure) {
+        assert.equal(cleanup.operations.find((x) => x.name === 'browser').closed, true);
+        assert.equal(failure.browser.actualBrowserVersion, options.actualVersion ?? '146.0.1');
+      }
+      if (!options.actualVersion && !options.launchFailure)
+        assert.deepEqual(source.api.calls.slice(-3), [
+          'page closed',
+          'context closed',
+          'browser closed',
+        ]);
+      await assert.rejects(fetch(observed.origin + '/game/app.mjs'));
+      await assert.rejects(readFile(path.join(output, 'complete.json')), { code: 'ENOENT' });
+    });
+  }
+});
+
+test('public boot diagnostics stop on explicit failure, preserve pending timeout, and bound visible copy', async () => {
+  for (const terminal of ['ready', 'failed', 'file', 'loading']) {
+    const saved = new Map(),
+      pending = new Error('Original 60000ms startup timeout'),
+      doc = {
+        documentElement: { dataset: { bootState: 'loading' }, lang: 'uk' },
+        getElementById: (id) => ({
+          textContent:
+            id === 'boot-detail'
+              ? 'Binding failure. '.repeat(1000)
+              : 'Visible launch copy. '.repeat(1000),
+          hidden: false,
+        }),
+      },
+      evaluate = (fn) => runInNewContext(`(${fn.toString()})()`, { document: doc }),
+      page = {
+        waitForFunction: async (predicate, argument, options) => {
+          assert.deepEqual(options, { timeout: 60000 });
+          assert.equal(evaluate(predicate), false);
+          doc.documentElement.dataset.bootState = terminal;
+          if (terminal === 'loading') throw pending;
+          assert.equal(evaluate(predicate), true);
+        },
+        evaluate,
+      },
+      operation = waitForDiscoveryBoot({
+        page,
+        save: async (name, value) => saved.set(name, value),
+      });
+    if (terminal === 'ready') await operation;
+    else
+      await assert.rejects(operation, (error) => {
+        assert.equal(error.boot.state, terminal);
+        if (terminal === 'loading') assert.equal(error, pending);
+        else assert.match(error.message, /^Game boot (failed|file): Binding failure/);
+        return true;
+      });
+    const boot = saved.get('boot.json');
+    assert.equal(boot.qualified, false);
+    assert.equal(boot.detail.length, 320);
+    assert.equal(boot.status.length, 2048);
+    assert.equal(boot.title.length, 256);
+    assert.equal(boot.locale, 'uk');
+    assert.deepEqual(Object.keys(boot), [
+      'qualified',
+      'state',
+      'locale',
+      'title',
+      'status',
+      'detail',
+      'screenHidden',
+      'detailHidden',
+    ]);
+    assert.equal(evaluate(readDiscoveryBootState).state, terminal);
+  }
+});
+
+test('boot diagnostic save failure retains the original public startup error and bounded snapshot', async () => {
+  const boot = { state: 'failed', detail: 'Exact public failure.' };
+  await assert.rejects(
+    waitForDiscoveryBoot({
+      page: { waitForFunction: async () => {}, evaluate: async () => boot },
+      save: async () => {
+        throw Error('Evidence disk full');
+      },
+    }),
+    (error) => {
+      assert.equal(error.message, 'Game boot failed: Exact public failure.');
+      assert.deepEqual(error.boot, boot);
+      assert.equal(error.bootEvidenceError, 'Evidence disk full');
+      return true;
+    },
+  );
 });
 
 test('observation verifies exact ZIP/manifest members and source bindings without extraction', () => {

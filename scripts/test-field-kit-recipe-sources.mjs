@@ -6,6 +6,7 @@ import {
   verifyFieldKitSteamDeckAudioContinuationReview,
   verifyFieldKitDiscoveryAudioContinuationReview,
   verifyFieldKitDiscoveryWebPUIContinuationReview,
+  verifyFieldKitGP4RestoreAudioContinuationReview,
   verifyFieldKitAudioStyleMenuCorrectionReview,
   verifyFieldKitAudioStyleMenuReview,
   verifyFieldKitPlayerReadinessAudioReview,
@@ -533,4 +534,28 @@ test('discovery WebP UI continuation pins its review and immutable source-stage 
     }
   }
   assert.equal(verifyFieldKitDiscoveryWebPUIContinuationReview(...originals.toReversed()), false);
+});
+
+test('gp4 restore audio continuation pins the scoped review and complete production102 predecessor', async () => {
+  const paths = [
+    'docs/verification/discovery-gp4-restore-audio-continuation-2026-09-29/review.json',
+    'docs/verification/discovery-audio-continuation-2026-09-29/review.json',
+    'game/test/fixtures/production-discovery-reviewed-ui-fpv102.json',
+  ];
+  const originals = await Promise.all(
+    paths.map((name) => readFile(new URL('../' + name, import.meta.url))),
+  );
+  assert.equal(verifyFieldKitGP4RestoreAudioContinuationReview(...originals), true);
+  for (const index of originals.keys()) {
+    for (const changed of [Buffer.alloc(0), Buffer.concat([originals[index], Buffer.from(' ')])]) {
+      const candidate = [...originals];
+      candidate[index] = changed;
+      assert.equal(
+        verifyFieldKitGP4RestoreAudioContinuationReview(...candidate),
+        false,
+        paths[index],
+      );
+    }
+  }
+  assert.equal(verifyFieldKitGP4RestoreAudioContinuationReview(...originals.toReversed()), false);
 });

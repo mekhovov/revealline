@@ -1,4 +1,6 @@
-import { readFile, writeFile, mkdir, stat, open } from 'node:fs/promises';
+import { readFile, writeFile, mkdir, stat, open, access } from 'node:fs/promises';
+import { constants, createReadStream } from 'node:fs';
+import { createRequire } from 'node:module';
 import path from 'node:path';
 import http from 'node:http';
 import { fileURLToPath, pathToFileURL } from 'node:url';
@@ -144,6 +146,7 @@ export function validateDiscoveryRuntimePlan(input) {
       'cycles',
       'serverPort',
       'headerPolicy',
+      'browser',
       'artifact',
     ],
     'observation plan',
@@ -161,6 +164,8 @@ export function validateDiscoveryRuntimePlan(input) {
     (plan.mode === 'showcase' && (plan.cycles !== 0 || plan.headerPolicy !== 'packaged-preview')) ||
     (plan.headerPolicy !== undefined &&
       !['minimal', 'packaged-preview'].includes(plan.headerPolicy)) ||
+    (plan.browser !== undefined && !['chrome', 'firefox'].includes(plan.browser)) ||
+    (plan.browser === 'firefox' && plan.mode !== 'showcase') ||
     (plan.serverPort !== undefined &&
       (!Number.isInteger(plan.serverPort) || plan.serverPort < 0 || plan.serverPort > 65535))
   )
@@ -189,6 +194,75 @@ export function validateDiscoveryRuntimePlan(input) {
   )
     fail('Missing exact supported edition/source binding.');
   return plan;
+}
+
+/** Select only declared Playwright engines; never install, change flags or fall back. */
+export async function prepareDiscoveryBrowser(planInput, playwrightModule) {
+  const plan = validateDiscoveryRuntimePlan(planInput),
+    selection = plan.browser ?? 'chrome',
+    modulePath = path.resolve(playwrightModule),
+    moduleBytes = await readBounded(modulePath, 8 * 1024 * 1024),
+    engines = await import(pathToFileURL(modulePath).href),
+    browserType = engines[selection === 'chrome' ? 'chromium' : 'firefox'],
+    launchOptions =
+      selection === 'chrome' ? { channel: 'chrome', headless: true } : { headless: true },
+    evidence = {
+      selection,
+      engine: selection === 'chrome' ? 'chromium' : 'firefox',
+      launchOptions,
+      module: { bytes: moduleBytes.length, sha256: digest(moduleBytes) },
+    };
+  if (typeof browserType?.launch !== 'function') fail(`Missing declared ${selection} engine.`);
+  if (selection === 'firefox') {
+    const packagePath = createRequire(modulePath).resolve('playwright-core/package.json'),
+      packageBytes = await readBounded(packagePath, 65536),
+      packageData = JSON.parse(packageBytes),
+      browsersBytes = await readBounded(
+        path.join(path.dirname(packagePath), 'browsers.json'),
+        65536,
+      ),
+      descriptor = JSON.parse(browsersBytes).browsers?.find((item) => item.name === 'firefox');
+    if (
+      packageData.name !== 'playwright-core' ||
+      !text(packageData.version, 64) ||
+      !/^\d{1,8}$/.test(descriptor?.revision ?? '') ||
+      !text(descriptor?.browserVersion, 64) ||
+      browserType.name?.() !== 'firefox' ||
+      typeof browserType.executablePath !== 'function'
+    )
+      fail('The declared Firefox engine requires its matching Playwright browser manifest.');
+    const executable = browserType.executablePath(),
+      segments = path.resolve(executable).split(path.sep),
+      revisionIndex = segments.lastIndexOf(`firefox-${descriptor.revision}`);
+    if (revisionIndex < 0) fail('Firefox executable differs from the declared bundled revision.');
+    await access(executable, constants.X_OK);
+    await access(
+      path.join(segments.slice(0, revisionIndex + 1).join(path.sep), 'INSTALLATION_COMPLETE'),
+    );
+    const before = await stat(executable);
+    if (!before.isFile() || before.size < 1 || before.size > 512 * 1024 * 1024)
+      fail('Firefox executable is unavailable or exceeds the evidence bound.');
+    const hash = createHash('sha256');
+    for await (const chunk of createReadStream(executable)) hash.update(chunk);
+    const after = await stat(executable);
+    if (before.size !== after.size || before.mtimeMs !== after.mtimeMs)
+      fail('Firefox executable changed during inspection.');
+    evidence.runtime = {
+      playwrightCoreVersion: packageData.version,
+      package: { bytes: packageBytes.length, sha256: digest(packageBytes) },
+      browsers: { bytes: browsersBytes.length, sha256: digest(browsersBytes) },
+      revision: descriptor.revision,
+      expectedBrowserVersion: descriptor.browserVersion,
+      executable: {
+        name: path.basename(executable),
+        bytes: before.size,
+        sha256: hash.digest('hex'),
+      },
+      scope:
+        'Primary executable and supplied Playwright metadata only; not a full browser bundle inventory.',
+    };
+  }
+  return { browserType, launchOptions, evidence };
 }
 
 /** Exact playable-byte verification only; this does not replace release/source admission. */
@@ -413,6 +487,56 @@ async function cleanupDeadline(action, timeoutMs, label) {
   } finally {
     clearTimeout(timer);
   }
+}
+
+/** Only public launch-screen state; never inspect profiles or engine internals. */
+export function readDiscoveryBootState() {
+  const doc = globalThis.document,
+    value = (id, limit) => (doc.getElementById(id)?.textContent ?? '').slice(0, limit);
+  return {
+    state: (doc.documentElement.dataset.bootState ?? '').slice(0, 32),
+    locale: (doc.documentElement.lang ?? '').slice(0, 64),
+    title: value('boot-title', 256),
+    status: value('boot-status', 2048),
+    detail: value('boot-detail', 320),
+    screenHidden: doc.getElementById('boot-screen')?.hidden ?? null,
+    detailHidden: doc.getElementById('boot-detail')?.hidden ?? null,
+  };
+}
+
+export async function waitForDiscoveryBoot({ page, save }) {
+  let failure = null;
+  try {
+    await page.waitForFunction(
+      () =>
+        ['ready', 'failed', 'file'].includes(globalThis.document.documentElement.dataset.bootState),
+      {},
+      { timeout: 60000 },
+    );
+  } catch (error) {
+    failure = error;
+  }
+  try {
+    const boot = await cleanupDeadline(
+      () => page.evaluate(readDiscoveryBootState),
+      10000,
+      'boot diagnostics',
+    );
+    if (!failure && boot.state !== 'ready')
+      failure = new Error(
+        `Game boot ${boot.state || 'unavailable'}: ${boot.detail || boot.status || boot.title}`,
+      );
+    if (failure) failure.boot = boot;
+    await cleanupDeadline(
+      () => save('boot.json', { qualified: false, ...boot }),
+      10000,
+      'boot evidence',
+    );
+  } catch (error) {
+    if (!failure) failure = error;
+    else failure.bootEvidenceError = String(error.message).slice(0, 1024);
+  }
+  if (failure) throw failure;
 }
 
 /** Failure diagnostics are optional evidence, never a reason to skip owned
@@ -861,11 +985,7 @@ export async function observeDiscoveryShowcase({
   await page.goto(`${origin}/game/index.html?edition=${protocol.editionId}`, {
     waitUntil: 'domcontentloaded',
   });
-  await page.waitForFunction(
-    () => globalThis.document.documentElement.dataset.bootState === 'ready',
-    {},
-    { timeout: 60000 },
-  );
+  await waitForDiscoveryBoot({ page, save });
   await page.bringToFront();
   const initial = await record('showcase fresh page');
   await screenshot('showcase-fresh-page');
@@ -1001,6 +1121,7 @@ export async function observeDiscoveryRuntime({
     cdp,
     tracing = false,
     identity = null,
+    browserEvidence = null,
     completion = null,
     primaryError = null,
     diagnosticFailures = [];
@@ -1161,6 +1282,9 @@ export async function observeDiscoveryRuntime({
     }
     const protocol = runtimeProtocol(plan);
     const traced = ['timeline', 'cpu'].includes(plan.mode);
+    const preparedBrowser = await prepareDiscoveryBrowser(plan, playwrightModule);
+    browserEvidence = preparedBrowser.evidence;
+    await save('browser-selection.json', { qualified: false, ...browserEvidence });
     const binding =
       plan.mode === 'showcase'
         ? {
@@ -1185,12 +1309,17 @@ export async function observeDiscoveryRuntime({
             sourceKind: 'compiled-artifact',
             sourceIdentity: plan.artifact.archiveSha256,
           };
+    // Old Chrome plans retain their exact comparison identity. A separately
+    // declared engine cannot be silently mixed with their timing observations.
+    if (browserEvidence.selection !== 'chrome')
+      binding.settingsIdentity += `;browser-${browserEvidence.selection}@${browserEvidence.runtime.expectedBrowserVersion}`;
     await save('case.json', {
       format: 'revealline-matched-arcade-case.v1',
       qualified: false,
       plan,
       identity,
       binding,
+      browser: browserEvidence,
       instrumentation,
       startedAt: new Date().toISOString(),
       origin: server.origin,
@@ -1208,8 +1337,15 @@ export async function observeDiscoveryRuntime({
           ? 'Exact playable archive and explicit public controls under the existing packaged-preview security/cache headers. The packaged-preview soundtrack origins are retained; this is not deployed public-origin/CSP or warm-cache qualification. Source-publication eligibility, human/device review and release qualification are separate.'
           : 'Exact playable archive and explicit public controls on a minimal loopback server; production CSP/cache-header behavior is not reproduced. Source-publication eligibility, human/device review and release qualification are separate.',
     });
-    const { chromium } = await import(pathToFileURL(path.resolve(playwrightModule)).href);
-    browser = await chromium.launch({ channel: 'chrome', headless: true });
+    browser = await preparedBrowser.browserType.launch(preparedBrowser.launchOptions);
+    browserEvidence = { ...browserEvidence, actualBrowserVersion: browser.version() };
+    await save('browser.json', { qualified: false, ...browserEvidence });
+    if (
+      !text(browserEvidence.actualBrowserVersion, 128) ||
+      (browserEvidence.selection === 'firefox' &&
+        browserEvidence.actualBrowserVersion !== browserEvidence.runtime.expectedBrowserVersion)
+    )
+      fail('Launched browser version differs from the declared runtime.');
     context = await browser.newContext({
       viewport: { width: 1280, height: 633 },
       deviceScaleFactor: 1,
@@ -1287,11 +1423,7 @@ export async function observeDiscoveryRuntime({
       await page.goto(`${server.origin}/game/index.html?edition=${PROTOCOL.editionId}`, {
         waitUntil: 'domcontentloaded',
       });
-      await page.waitForFunction(
-        () => globalThis.document.documentElement.dataset.bootState === 'ready',
-        {},
-        { timeout: 60000 },
-      );
+      await waitForDiscoveryBoot({ page, save });
       await page.bringToFront();
       const initial = await record('fresh page');
       await screenshot('fresh-page');
@@ -1427,6 +1559,7 @@ export async function observeDiscoveryRuntime({
       completed: true,
       finishedAt: new Date().toISOString(),
       identity,
+      browser: browserEvidence,
       events,
       errors,
       ...(showcase
@@ -1456,7 +1589,10 @@ export async function observeDiscoveryRuntime({
       failure: {
         qualified: false,
         error: error.stack,
+        ...(error.boot ? { boot: error.boot } : {}),
+        ...(error.bootEvidenceError ? { bootEvidenceError: error.bootEvidenceError } : {}),
         identity,
+        browser: browserEvidence,
         events,
         errors,
         at: new Date().toISOString(),

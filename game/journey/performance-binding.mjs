@@ -1,6 +1,6 @@
 import { canonicalJSON } from '../data-json.mjs';
 import { CLASSES } from '../core/index.mjs';
-import { applyGameplayTuning, recoverGameplayTuning } from '../gameplay-tuning.mjs';
+import { matchRecordedGameplayTuning, recoverGameplayTuning } from '../gameplay-tuning.mjs';
 import { createContentExecutionCatalog } from '../content-design/execution.mjs';
 import { journeyMissionId } from './catalog.mjs';
 import { resolveEditionSelection } from '../editions/model.mjs';
@@ -12,7 +12,7 @@ const matches = (record, state, level, classes = CLASSES) => {
     return false;
   return (
     canonicalJSON(state.classRecipes) === canonicalJSON(classes) &&
-    canonicalJSON(state.level) === canonicalJSON(applyGameplayTuning(level, tuning))
+    matchRecordedGameplayTuning(level, state.level) !== null
   );
 };
 const sourceMatches = (source, record, state) => {

@@ -3,6 +3,7 @@ import { createRecorder, exportReplay, snapshotReplay, verifyReplayAsync } from 
 import { verifyLearningAttempt } from './company-campaigns/learning.mjs';
 import { verifyLearningEvidence } from './company-campaigns/evidence.mjs';
 import { resolveEditionAssets } from './editions/model.mjs';
+import { matchRecordedGameplayTuning, recoverGameplayTuning } from './gameplay-tuning.mjs';
 
 export const COMPANY_SESSION_FORMAT = 'revealline-company-session.v1';
 export function companySimulationIdentity(run) {
@@ -118,16 +119,22 @@ export async function restoreCompanySession(
     { signal },
   );
   try {
+    const preparedTuning = recoverGameplayTuning(prepared.run.level);
+    const sameLevel =
+      canonicalJSON(prepared.run.level) === canonicalJSON(replay.level) ||
+      (preparedTuning !== null &&
+        prepared.manifest?.level &&
+        canonicalJSON(preparedTuning) === canonicalJSON(recoverGameplayTuning(replay.level)) &&
+        matchRecordedGameplayTuning(prepared.manifest.level, replay.level) !== null);
     required(
-      canonicalJSON(prepared.run.level) === canonicalJSON(replay.level) &&
-        canonicalJSON(prepared.recorder.options) === canonicalJSON(replay.options),
+      sameLevel && canonicalJSON(prepared.recorder.options) === canonicalJSON(replay.options),
       'The saved simulation differs from this authored mission.',
     );
     const lesson = lessonFor(prepared.run.levelId);
     // Check inexpensive pins before replaying the core and every learning anchor.
     saved.learning = validateCompanyRunLearning(saved.learning, {
       lesson,
-      run: { ...prepared.run, tick: replay.ticks },
+      run: { ...prepared.run, level: replay.level, tick: replay.ticks },
     });
     const verified = lesson
       ? await verifyLearningEvidence({ lesson, attempt: saved.learning, replay, signal })
