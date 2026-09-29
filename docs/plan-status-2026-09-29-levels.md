@@ -162,41 +162,50 @@ is still pending. Source preservation and passing tests are not production-art
 approval. Keep priorities A (characters/reliable play), B (encounter variety), C
 (a finished Ukrainian/FPV cohort), with formal C2 human game-feel study last.
 
+The subsequent PR #761 head
+`626cafc7d252375a8cc928e094aff74bb0c5456a` is also verified. It adds the exact
+Effects20 predecessor reader, with 32 focused checks reported by its owner.
+This does not admit the 59-slot production successor or close A1 renderer review.
+
 Teaching acknowledgement/schema work is still under design review, not included
 by copying an old host or silently reinterpreting v1 progress.
 
-### Next A2: prevent compact canvas cue overlap without hiding state
+### A2: bounded compact cue correction implemented; broader acceptance open
 
-The UX review reports overlapping Ukrainian Hunter role labels in the final
-`relay-downed-568-uk-large.png`: the complete board is 212×106 CSS pixels.
-The shield remains visible. This is not evidence of an active LOCK warning
-failure. A3 outer HUD/control work remains source-verified; it does not establish
-whole-canvas visual acceptance.
+The earlier 568×320 Ukrainian/Large screenshot had overlapping Hunter labels
+on its complete 212×106 CSS board; the shield remained visible. It was not
+evidence of an active LOCK warning failure. The sparse greedy placement could
+miss usable space, while a null placement could omit a cue.
 
-Source inspection of PR #757 at `1a406a2c` confirms the mechanism:
-`game/couch/coop-actor-layout.mjs` hard-excludes actor heads but only penalizes
-occupied cue plates. Its bounded ring/corner search can miss a non-overlapping
-placement. `game/couch/coop-view.mjs` omits a cue when placement returns null, so
-simply rejecting every plate collision would risk hiding required state.
+PR #757 is now verified at
+`f067823fe8e2f76d061bd45d17b11787fe376a23`. Below 320 CSS board pixels, its
+bounded group packing retains clear placements and excludes actual player/enemy
+contacts and locked targets without shrinking type. Atomic fallback and explicit
+unplaced diagnostics expose impossible packing instead of claiming success.
+The compact information contract consolidates redundant idle Hunter text into
+the full translated Slowed caption; active danger captions retain their wording
+plus the Help-labelled slowdown arrow and existing dashed ring. Wider captions
+are unchanged. Simulation and authored maps are unchanged.
 
-The next bounded correction should:
+The pushed [cue-layout evidence](https://github.com/mekhovov/revealline/blob/f067823fe8e2f76d061bd45d17b11787fe376a23/docs/verification/team-cue-layout-20260929/README.md)
+records a final complete 157/157 renderer/host cohort, including actual-painter
+text multiplicity, envelope separation, contacts/locked targets, minimum sizes,
+state combinations and cache behavior. Recorder widths are deterministic, not
+native font measurements. Native local Start/loss/downed/Pause/Help/rotation/Resume
+at 568×320 and 390×844 verifies observed EN/UK presentation frames, not continuous
+all-state packing or physical devices. Levels verified the head and read the
+evidence; it did not repeat those runs. Retained raw-log whitespace remains an
+explicit evidence exception, not a clean all-file whitespace claim.
 
-- Preserve existing clear placements and add deterministic edge candidates or
-  bounded nearby repacking; keep layout work predictable.
-- Retain 12px Standard and 16px Large labels instead of shrinking text to hide
-  the issue. Account for every required cue with a readable visible overflow
-  treatment when on-board packing is genuinely impossible.
-- Exercise the actual painter recorder at a 212px board width with Ukrainian
-  text, both Hunters, anchors/shield, and downed/warning/commit/recovery/slowed
-  state cases. Assert pairwise plate intersections and expected label counts,
-  not only label bounds or a helper-only result.
-- Reopen Team/equipment production closure against the final renderer, then
-  verify the real small-board result. Preserve prior approvals as history.
-
-This is a recorded read-only finding, not a new implementation or test pass.
-Focused effort estimate: 0.5–2 engineering days plus final production/public
-qualification. Coordinate with the existing Team/A2 owner; do not open a
-competing renderer PR or add scope after its release batch is frozen.
+**Do not close all A2.** Remaining work includes a readable external cue rail or
+equivalent overflow policy for saturated custom maps, moving-frame cost and full
+native-state/locale coverage, 200% zoom, physical controllers/touch, and reviewed
+Team/equipment production closure followed by frozen public verification.
+Unplaced diagnostics alone are not a player-facing overflow solution; prior
+overlap/null fallback can remain in impossible cases. The earlier 0.5–2-day
+estimate covered the now-implemented bounded correction, not these broader
+gates. Re-estimate the overflow slice after its presentation policy is selected.
+Keep A3 outer HUD acceptance distinct and preserve historical approvals.
 
 Prefer these reviewed small slices in the existing v0.150.0 batch, with logical
 commits and focused regressions, rather than one new release per fix. Once a
