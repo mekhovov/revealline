@@ -14,9 +14,17 @@ do not expose cross-company discovery or a company switcher.
 | Coupa                                         | `game/communities/coupa/`                     | `coupa-all`             | `coupa`        |
 | DroneAid Community Relay — Portugal / Germany | `game/communities/droneaid-community/`        | `droneaid-community`    | `droneaid`     |
 
-The directory includes every public brand, using each brand's aggregate edition, plus the
-main game. Individual company campaigns stay in that company's existing selector. The two
-DroneAid communities have distinct content and saved identities and remain separate.
+The directory groups the three public brand records into two communities, DroneAid and
+Coupa, alongside the main game. The single DroneAid card contains both entry points above:
+six Netherlands campaigns (36 missions) and Community Relay (3 missions). Coupa contains
+five campaigns (30 missions). The 14 public edition selectors cover these 12 distinct
+campaigns; aggregate selectors do not represent additional communities. No other public
+company community is currently bundled. Main-game worlds and creator examples are content,
+not separate community entries; live creator-service publications are a separate inventory.
+
+This grouping is for directory discovery. Both DroneAid collections retain their own
+gameplay selectors, saved identities, progress and artwork receipts. All existing links stay
+valid, with no migration or cross-brand switcher added inside the game.
 
 Friendly entry pages keep the clean URL visible. They load the same packaged `game/index.html`
 host, rebasing its resources to that host without an iframe or a `<base>` exception to CSP.

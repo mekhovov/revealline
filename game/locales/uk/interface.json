@@ -5304,8 +5304,8 @@
   "communityDirectory.heading": "Знайдіть свою спільноту.",
   "communityDirectory.intro": "Почніть з основної гри або відкрийте власний світ і кампанії своєї спільноти.",
   "communityDirectory.droneaidCategory": "БУДУЙТЕ / ЄДНАЙТЕСЯ / ПІДТРИМУЙТЕ",
-  "communityDirectory.droneaidDescription": "Пригоди у FPV-майстерні, натхненні DroneAid Netherlands та її підтримкою України.",
-  "communityDirectory.openDroneaid": "Грати в DroneAid",
+  "communityDirectory.droneaidDescription": "Пригоди у FPV-майстерні та спільні справи — від Нідерландів до Португалії й Німеччини.",
+  "communityDirectory.openDroneaid": "Грати в кампанії Нідерландів",
   "communityDirectory.coupaCategory": "ДОСЛІДЖУЙТЕ / ЄДНАЙТЕСЯ / ЗРОСТАЙТЕ",
   "communityDirectory.coupaDescription": "Досліджуйте Coupa Village в ілюстрованих кампаніях про спільну працю, культуру та ідеї.",
   "communityDirectory.openCoupa": "Грати в Coupa",
@@ -5319,5 +5319,6 @@
   "communityDirectory.relayCategory": "ПОРТУГАЛІЯ / НІМЕЧЧИНА",
   "communityDirectory.relayDescription": "Пригоди у спільній майстерні, натхненні DroneAid у Португалії та Німеччині. Створюйте маленькі зв’язки заради спільної мети.",
   "communityDirectory.openRelay": "Грати в Community Relay",
-  "communityDirectory.openDirectory": "Відкрити спільноти"
+  "communityDirectory.openDirectory": "Відкрити спільноти",
+  "communityDirectory.relayRegion": "Португалія / Німеччина"
 }

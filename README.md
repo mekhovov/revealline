@@ -13,12 +13,16 @@ The remaining production targets include broader map progression, every map/them
 Open the [communities directory](https://mekhovov.github.io/revealline/game/communities/)
 to choose the main game or any public community outside the game:
 
-| Community                                     | Shareable entry                                                                                    |
-| --------------------------------------------- | -------------------------------------------------------------------------------------------------- |
-| FPV / LINE — main game                        | [Play](https://mekhovov.github.io/revealline/game/)                                                |
-| DroneAid Netherlands                          | [Play DroneAid](https://mekhovov.github.io/revealline/game/communities/droneaid/)                  |
-| Coupa                                         | [Play Coupa](https://mekhovov.github.io/revealline/game/communities/coupa/)                        |
-| DroneAid Community Relay — Portugal / Germany | [Play Community Relay](https://mekhovov.github.io/revealline/game/communities/droneaid-community/) |
+| Community | Shareable entry |
+| --- | --- |
+| FPV / LINE — main game | [Play](https://mekhovov.github.io/revealline/game/) |
+| DroneAid | [Netherlands campaigns](https://mekhovov.github.io/revealline/game/communities/droneaid/) · [Community Relay — Portugal / Germany](https://mekhovov.github.io/revealline/game/communities/droneaid-community/) |
+| Coupa | [Play Coupa](https://mekhovov.github.io/revealline/game/communities/coupa/) |
+
+DroneAid appears once, with both collections available: six Netherlands campaigns and
+Community Relay (39 missions combined). Coupa contains five campaigns (30 missions).
+These are all currently bundled communities; main-game worlds and creator examples are
+not separate company communities. Both DroneAid collections keep their existing saved progress.
 
 The [source directory](game/communities/index.html) works locally at `/game/communities/`.
 Addresses without the final slash also work on the local HTTP server and GitHub Pages.

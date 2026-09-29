@@ -8,10 +8,12 @@ import { managedIndexedDB } from './helpers/managed-idb.mjs';
 import { PNGImage } from './helpers/png-image.mjs';
 import { authoritativeCheckpoint } from '../replay.mjs';
 import { COMMUNITY_ROUTES } from '../community-routes.mjs';
+import { WORKSHOP_TOOLS, workshopReturnLinks } from '../ui/workshop-return.mjs';
 
 const sourceRoot = new URL('../../', import.meta.url);
 const bytes = new Map();
 function friendlyPage(t, href, options = {}) {
+  const { browserSetup, ...pageOptions } = options;
   const url = new URL(href);
   const site = url.pathname.slice(0, url.pathname.indexOf('/game/') + 1);
   const requests = [];
@@ -20,13 +22,15 @@ function friendlyPage(t, href, options = {}) {
     search: url.search,
     journeyIndexedDB: managedIndexedDB().indexedDB,
     pictures: { Image: PNGImage },
-    browserSetup({ globals }) {
+    browserSetup(context) {
+      const { globals } = context;
       Object.assign(globals.location, {
         href: url.href,
         pathname: url.pathname,
         search: url.search,
         origin: url.origin,
       });
+      browserSetup?.(context);
     },
     async fetchResponse(value) {
       const request = new URL(value, `${url.origin}${site}game/index.html`);
@@ -50,9 +54,76 @@ function friendlyPage(t, href, options = {}) {
         return new Response('', { status: 404 });
       }
     },
-    ...options,
+    ...pageOptions,
   }).then((page) => ({ page, requests }));
 }
+
+test('actual friendly More and Workshop links compose at the canonical game root', async (t) => {
+  for (const [slug, query, base, editionId] of [
+    ['coupa', '', 'http://localhost/', 'coupa-all'],
+    ['droneaid', '', 'http://localhost/revealline/', 'droneaid-nl-community'],
+    [
+      'coupa',
+      '?edition=coupa-culture&journey=legacy#details',
+      'http://localhost/revealline/releases/v0.142.3/site/',
+      'coupa-culture',
+    ],
+  ])
+    await t.test(`${slug}${query}`, async (t) => {
+      const href = `${base}game/communities/${slug}/${query}`;
+      const { page } = await friendlyPage(t, href, {
+        browserSetup({ document }) {
+          // Native anchors reflect href assignments into their attributes. The
+          // second production mount reads those attributes after the first mount.
+          for (const link of document.querySelectorAll('a'))
+            Object.defineProperty(link, 'href', {
+              configurable: true,
+              get() {
+                return new URL(this.getAttribute('href') ?? '', href).href;
+              },
+              set(value) {
+                this.setAttribute('href', value);
+              },
+            });
+        },
+      });
+      const checkpoint = authoritativeCheckpoint(page.rendered.run);
+      const saved = [...page.storage.map];
+      page.$('shell-workshop').click();
+      assert.equal(page.$('shell-workshop-dialog').open, true);
+      const disclosure = page.$('shell-workshop-dialog').querySelector('details');
+      // Model the native disclosure default; its links use the actual host mounts.
+      disclosure.open = true;
+      for (const { id, path, opener } of WORKSHOP_TOOLS) {
+        const link = page.$(opener);
+        assert.ok(page.$('shell-workshop-dialog').contains(link));
+        assert.equal(link.hidden, false);
+        const target = new URL(link.href);
+        if (['controller-lab', 'replay-theater'].includes(id)) {
+          assert.equal(target.origin + target.pathname, `${base}${path}`);
+          assert.deepEqual([...target.searchParams].sort(), [
+            ['edition', editionId],
+            ['journey', editionId],
+          ]);
+          const returned = new URL(workshopReturnLinks(target.href, id).game);
+          assert.equal(returned.origin + returned.pathname, `${base}game/`);
+          assert.equal(returned.searchParams.get('edition'), editionId);
+          assert.equal(returned.searchParams.get('journey'), editionId);
+        } else {
+          assert.equal(target.href, `https://mekhovov.github.io/revealline/${path}`);
+          assert.equal(link.target, '_blank');
+          assert.equal(link.rel, 'noopener noreferrer');
+        }
+        assert.equal(target.hash, '');
+      }
+      page.frame(0);
+      assert.equal(page.win.location.href, href);
+      assert.equal(page.doc.body.dataset.editionId, editionId);
+      assert.deepEqual(authoritativeCheckpoint(page.rendered.run), checkpoint);
+      assert.deepEqual([...page.storage.map], saved);
+      assert.deepEqual(page.errors, []);
+    });
+});
 
 test('real friendly communities run in the common host with their own artwork, saves and controls', async (t) => {
   const cases = [

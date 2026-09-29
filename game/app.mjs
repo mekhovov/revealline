@@ -11512,7 +11512,7 @@ try {
       });
     };
   }
-  const workshopContext = new URL(location.href);
+  const workshopContext = gameDocumentURL(location.href);
   workshopContext.searchParams.set(
     'journey',
     authoredRoute?.id ?? (journeyEnabled ? '1' : 'legacy'),

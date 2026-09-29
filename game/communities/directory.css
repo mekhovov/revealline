@@ -73,9 +73,7 @@ h1 {
 }
 .community-card--main {
   --accent: #ffdb63;
-}
-.community-card--relay {
-  --accent: #96d4ad;
+  grid-column: 1 / -1;
 }
 .community-card--coupa {
   --accent: #79cfff;
@@ -122,6 +120,44 @@ h1 {
 }
 .community-entry:hover {
   filter: brightness(1.12);
+}
+.community-collections {
+  display: grid;
+  gap: 0.8rem;
+  margin-top: auto;
+}
+.community-collections .community-entry {
+  margin-top: 0;
+}
+.community-entry small {
+  display: block;
+  margin-top: 0.15rem;
+  font-size: 0.75rem;
+  font-weight: 500;
+}
+@media (min-width: 651px) {
+  .community-card--main {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    column-gap: 2rem;
+  }
+  .community-card--main .card-identity {
+    grid-column: 1 / -1;
+  }
+  .community-card--main h2 {
+    margin-top: 1.2rem;
+  }
+  .community-card--main p {
+    grid-column: 1;
+    margin-bottom: 0;
+  }
+  .community-card--main .community-entry {
+    grid-column: 2;
+    grid-row: 2 / 4;
+    align-self: center;
+    margin-top: 0;
+    max-width: 15rem;
+  }
 }
 a:focus-visible {
   outline: 3px solid #fff;

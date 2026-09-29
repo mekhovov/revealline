@@ -91,6 +91,28 @@ test('directory exposes the main game and every public brand through relative cl
   }
 });
 
+test('DroneAid collections share one community card without losing either entry point', async () => {
+  const nodes = descendants(parse(await readDirectory()));
+  const cards = nodes.filter((node) => node.tagName === 'article');
+  const heading = (card) =>
+    descendants(card)
+      .filter((node) => node.tagName === 'h2')
+      .flatMap(descendants)
+      .map((node) => node.value ?? '')
+      .join('')
+      .trim();
+  assert.deepEqual(cards.map(heading), ['FPV / LINE', 'DroneAid', 'Coupa']);
+  const entries = (card) =>
+    descendants(card)
+      .filter((node) => node.tagName === 'a')
+      .map((node) => attribute(node, 'href'));
+  assert.deepEqual(entries(cards.find((card) => heading(card) === 'DroneAid')), [
+    './droneaid/',
+    './droneaid-community/',
+  ]);
+  assert.deepEqual(entries(cards.find((card) => heading(card) === 'Coupa')), ['./coupa/']);
+});
+
 test('old directory bookmarks preserve query and hash while forwarding to the plural path', async () => {
   const script = await fs.readFile(new URL('../community/redirect.mjs', import.meta.url), 'utf8');
   for (const base of [
