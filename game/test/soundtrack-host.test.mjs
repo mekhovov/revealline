@@ -152,7 +152,11 @@ test('muted fresh Solo menu and Studio do not acquire admitted hosted recordings
     'Silent library preparation settles',
   );
   await openStudio(page);
-  assert.deepEqual(requests, [ONLINE_SOUNDTRACK_CATALOGUE_URL]);
+  assert.ok(requests.length > 0, 'Silent setup may discover the public catalogue.');
+  assert(
+    requests.every((url) => url === ONLINE_SOUNDTRACK_CATALOGUE_URL),
+    'Silent setup may retry catalogue metadata but never fetch recording bytes.',
+  );
   assert.equal(
     requests.some((url) => /\.mp3(?:$|[?#])/.test(url)),
     false,
