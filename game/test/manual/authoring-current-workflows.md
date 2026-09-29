@@ -20,6 +20,46 @@ or activate anything, and replaces its listeners when Run is used again. This
 distinguishes late child-window boot focus from queued keys delivered after the
 parent has already reclaimed focus.
 
+## Enemy Workshop
+
+Open `/game/test/manual/authoring-controller.html?tool=enemyCurrent` and run.
+The production router receives ordinary virtual standard-pad pulses, including
+the workshop's initial join edge. The case selects the registered eroder role,
+changes its skin/detail style/availability, cancels a select draft, and tests the
+multiline Catalog choices JSON editor. Cancel retains the original text;
+invalid JSON is rejected without changing the catalog or local storage. Show
+current choices restores authoritative JSON. Validate and import changes only
+the draft; Apply authoring choices is the separate persistent Save action.
+
+The case saves exact edited choices, reloads them after a further change,
+closes/reopens the dialog, explicitly prepares and enters the real practice
+game, and selects its authenticated Return to workshop action. The final real
+JSON export passes `validateEnemyCatalogDraft` and must match the saved choices.
+The receipt includes byte length and SHA-256. At the end, explicit **fixture
+cleanup** restores the exact pre-run Enemy localStorage and Playground
+sessionStorage bytes, including key absence. Cleanup is not controller input
+or evidence of an editor command; no player save or other draft key is touched.
+
+Enemy Workshop authors registered role availability and visual presentation.
+It does not author new behavior or geometry; the role descriptions are fixed.
+Content Studio and Mission Playground remain the tools for those edits.
+
+For native keyboard add `&keyboard=1` and Run. No virtual pad is installed.
+Open workshop if startup leaves it closed. Export original choices before a
+manual Save if an existing catalog matters. Use Tab/Shift+Tab with native
+select keys to choose a role, Presentation, and Detail treatment. Disable and
+reenable the role and verify Try selected role follows availability. Open
+Catalog choices JSON, Show current choices, and append an invalid character in
+the native textarea. Validate and import must reject it; Show current choices
+must restore the unchanged catalog. Apply valid JSON, separately Apply authoring
+choices, change a select and Reload saved choices. Close/reopen, Try selected
+role, Enter preview, then select Return to workshop in the child briefing or
+pause menu. Verify the same choices and parent focus. Export and retain the
+actual downloaded `.json`; validate its bytes with `validateEnemyCatalogDraft`.
+Native text editing uses the browser's textarea rather than the controller
+on-screen keyboard. OS file-picker import, physical-controller input, and
+device gameplay remain separate qualification boundaries.
+
 ## Asset Studio
 
 Open `/game/test/manual/authoring-controller.html?tool=assetCurrent`, activate

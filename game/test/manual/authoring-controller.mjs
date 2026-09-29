@@ -495,7 +495,7 @@ document.getElementById('run').onclick = async () => {
     await until(() => target(css, label));
     const element = target(css, label),
       started = performance.now();
-    const seen = new Set();
+    const seen = new Map();
     for (let step = 0; step < 1500 && doc.activeElement !== element; step++) {
       const active = doc.activeElement;
       if (performance.now() - started > 30000)
@@ -534,11 +534,14 @@ document.getElementById('run').onclick = async () => {
               : 'up',
         );
       } else {
-        if (seen.has(active))
+        // A child-focus/lifecycle handoff may consume one direction while the
+        // real router waits for neutral. Permit one retry, not an endless loop
+        // or a fixture focus override; persistent cycles remain a failure.
+        if ((seen.get(active) || 0) >= 2)
           throw new Error(
             `Controller cannot reach ${css} (${label || ''}) from ${active.id || active.textContent?.slice(0, 40)}`,
           );
-        seen.add(active);
+        seen.set(active, (seen.get(active) || 0) + 1);
         await pulse(active.compareDocumentPosition(element) & 2 ? 'up' : 'down');
       }
     }
@@ -552,7 +555,8 @@ document.getElementById('run').onclick = async () => {
   };
   try {
     await wait(150);
-    if (['enemy', 'video', 'still'].includes(selector.value)) await pulse('confirm'); // Existing workshop hosts consume their join edge.
+    if (['enemy', 'enemyCurrent', 'video', 'still'].includes(selector.value))
+      await pulse('confirm'); // Existing workshop hosts consume their join edge.
     await wait(100);
     const p = {
       doc,
@@ -561,6 +565,19 @@ document.getElementById('run').onclick = async () => {
       choose,
       downloads,
       wait: until,
+      async returnPreview(frameSelector, returnSelector) {
+        const preview = doc.querySelector(frameSelector);
+        await until(() => preview.contentDocument?.querySelector(returnSelector), 30000);
+        const child = preview.contentDocument,
+          back = child.querySelector(returnSelector);
+        installPad(preview.contentWindow);
+        for (let i = 0; i < 4 && !visible(back); i++) await pulse('back');
+        await until(() => visible(back));
+        for (let i = 0; i < 100 && child.activeElement !== back; i++) await pulse('down');
+        if (child.activeElement !== back) throw new Error('Secure preview Return unreachable');
+        await pulse('confirm');
+        await until(() => preview.hidden);
+      },
       async expand(css) {
         if (!doc.querySelector(css).open) await choose(`${css} > summary`);
       },
@@ -618,6 +635,16 @@ document.getElementById('run').onclick = async () => {
         tool: name,
         error: error.message,
         focused: doc.activeElement?.outerHTML?.slice(0, 600),
+        ownership: {
+          foreground: doc.hasFocus(),
+          hidden: doc.hidden,
+          dialogs: [...doc.querySelectorAll('dialog[open]')].map((dialog) => dialog.id),
+          child: [...doc.querySelectorAll('iframe')].map((child) => ({
+            id: child.id,
+            hidden: child.hidden,
+            active: child.contentDocument?.activeElement?.id,
+          })),
+        },
         rows,
       },
       null,

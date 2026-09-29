@@ -5209,5 +5209,8 @@
   "creatorMenu.leaveTitle": "Leave this campaign?",
   "creatorMenu.leaveBody": "Your last saved attempt stays in this campaign. Unsaved play may be lost. Cancel keeps it paused; export the attempt from Settings to keep a separate copy.",
   "returnToControllerPractice": "Return to Controller practice",
-  "creatorMenu.mode": "Game mode"
+  "creatorMenu.mode": "Game mode",
+  "enemyCatalog.json": "Catalog choices JSON",
+  "enemyCatalog.showCurrent": "Show current choices",
+  "enemyCatalog.validateImport": "Validate and import into draft"
 }
