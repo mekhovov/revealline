@@ -61,6 +61,7 @@ test('earned First Connection focuses Next and one explicit action prepares and 
   assert.equal(f.$('coop-menu').hidden, false);
   assert.equal(f.$('coop-play').hidden, true);
   assert.equal(f.doc.activeElement.id, 'coop-start');
+  f.disclose('coop-help');
   assertYardBriefing(f, { visible: true });
 });
 
