@@ -4,7 +4,10 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
+import { Script, createContext } from 'node:vm';
 import { soloPage, SoloElement, memoryStorage, settle } from './helpers/solo-dom.mjs';
+import { Document, Events } from './helpers/couch-dom.mjs';
+import { COMBAT_ACTOR_CATALOG, PRESSURE_DIFFICULTY_CATALOG } from '../content-design/catalogs.mjs';
 import { authoritativeCheckpoint } from '../replay.mjs';
 import {
   emptyLibrary,
@@ -390,6 +393,394 @@ function childReturn(page, { frame, token }, overrides = {}) {
     ...overrides,
   });
 }
+
+function readinessClock(t) {
+  let now = Date.now(),
+    sequence = 0;
+  const callbacks = new Map();
+  t.mock.method(Date, 'now', () => now);
+  t.mock.method(globalThis, 'setInterval', (callback, delay) => {
+    const id = ++sequence;
+    callbacks.set(id, { callback, delay });
+    return id;
+  });
+  t.mock.method(globalThis, 'clearInterval', (id) => callbacks.delete(id));
+  return {
+    callbacks,
+    tick(ms = 250) {
+      now += ms;
+      for (const { callback, delay } of [...callbacks.values()]) if (delay === 250) callback();
+    },
+  };
+}
+
+// Run the real classic boot script in the child's separate realm. It starts
+// loading, then reports its actual missing-renderer failure when mounted.
+// The parent app, Guide and controller router remain the ordinary host.
+function bootChild(frame) {
+  const document = new Document(),
+    events = new Events();
+  document.URL = frame.src;
+  document.readyState = 'loading';
+  document.documentElement.dataset.bootState = 'loading';
+  document.currentScript = { src: new URL('boot.mjs', frame.src).href };
+  const make = (tag, id, parent = document.body) => {
+    const element = document.createElement(tag);
+    element.id = id;
+    parent.append(element);
+    return element;
+  };
+  const screen = make('section', 'boot-screen');
+  for (const id of ['boot-title', 'boot-status', 'boot-detail']) make('p', id, screen);
+  make('a', 'boot-retry', screen);
+  make('a', 'boot-online', screen);
+  make('details', 'boot-local', screen);
+  const context = createContext({
+    document,
+    URL,
+    location: new URL(frame.src),
+    setTimeout: () => 1,
+    clearTimeout() {},
+    requestAnimationFrame: () => 1,
+    cancelAnimationFrame() {},
+    addEventListener: events.addEventListener.bind(events),
+    removeEventListener: events.removeEventListener.bind(events),
+  });
+  new Script(readFileSync(new URL('../boot.mjs', import.meta.url), 'utf8')).runInContext(context);
+  frame.contentDocument = document;
+  return { document, fail: () => document.emit('DOMContentLoaded') };
+}
+
+test('confirmed pre-ready practice failure returns controller focus without consuming a held Confirm or changing the exact setup', async (t) => {
+  const fixture = await editionProviderFixture();
+  fixture.source.actorCatalogId = COMBAT_ACTOR_CATALOG.id;
+  fixture.source.difficultyCatalogId = PRESSURE_DIFFICULTY_CATALOG.id;
+  fixture.source.missions[0].combat = { version: 'mission-combat.v1', enabled: true };
+  fixture.source.missions[0].actors.push({
+    id: 'practice-sentry',
+    role: 'optional-sentry',
+    tier: 'measured',
+    x: 30.5,
+    y: 12.5,
+    heading: [1, 0],
+  });
+  const compiled = compileContentProject(fixture.source);
+  fixture.data.campaign.levels = compiled.missions.map(
+    (mission) => resolveMission(compiled, mission.id, { difficulty: 'standard' }).level,
+  );
+  const clock = readinessClock(t),
+    preview = memoryStorage({ [handoffKey]: 'retained authoring preview' }),
+    page = await setup(t, {
+      search: '?edition=sample-public',
+      fetchResponse: fixture.fetcher,
+      previewStorage: preview,
+    });
+  page.$('start-button').click();
+  await settle(() => page.doc.body.dataset.flightState === 'running');
+  ticks(page, 12);
+  page.$('pause-button').click();
+  page.frame(0);
+  const checkpoint = authoritativeCheckpoint(page.rendered.run),
+    saved = [...page.storage.map],
+    writes = page.storage.writes.length;
+  openGuide(page);
+  page.change('enemy-guide-topic', 'optional-sentry');
+  const controls = padBoundary(page, t),
+    lesson = await launch(page),
+    child = bootChild(lesson.frame),
+    url = lesson.frame.src,
+    handoff = preview.getItem(handoffKey);
+  assert.equal(new URL(url).searchParams.get('edition-mission'), page.rendered.run.levelId);
+  assert.equal(new URL(url).searchParams.get('guide-seed'), String(page.rendered.run.seed));
+  assert.equal(handoff, 'retained authoring preview');
+  controls.set(0, true);
+  const reads = page.padReads;
+  controls.frame();
+  clock.tick(21000);
+  assert.equal(page.doc.activeElement, lesson.frame, 'slow loading retains child input ownership');
+  assert.equal(page.padReads, reads, 'the parent does not sample a loading child controller');
+  child.fail();
+  const detail = child.document.getElementById('boot-detail').textContent;
+  assert.match(detail, /renderer is unavailable/);
+  assert.equal(child.document.documentElement.dataset.bootState, 'failed');
+  clock.tick();
+  assert.equal(
+    page.doc.activeElement.id,
+    'enemy-guide-return',
+    'confirmed failure exposes native Return to the controller',
+  );
+  assert.match(page.$('enemy-guide-status').textContent, /Practice could not start/);
+  assert.equal(child.document.getElementById('boot-detail').textContent, detail);
+  assert.equal(lesson.frame.src, url, 'failure detail stays open until deliberate Return');
+  assert.equal(preview.getItem(handoffKey), handoff);
+  for (let i = 0; i < 8; i++) controls.frame();
+  assert.equal(lesson.frame.hidden, false, 'held Confirm cannot dismiss failed practice');
+  controls.set(0, false);
+  for (let i = 0; i < 8; i++) controls.frame();
+  controls.pulse(0);
+  assert.equal(lesson.frame.hidden, true, 'fresh Confirm activates the existing Return');
+  assert.equal(preview.getItem(handoffKey), 'retained authoring preview');
+  assert.equal(page.doc.activeElement.id, 'enemy-guide-play');
+  assert.deepEqual(authoritativeCheckpoint(page.rendered.run), checkpoint);
+  assert.equal(page.rendered.paused, true);
+  assert.deepEqual([...page.storage.map], saved);
+  assert.equal(page.storage.writes.length, writes);
+  // Retire the shared native/controller echo guard before a separate action.
+  for (let i = 0; i < 80; i++) controls.frame();
+  const retry = await launch(page);
+  assert.notEqual(retry.token, lesson.token);
+  const retained = new URL(url),
+    relaunched = new URL(retry.frame.src);
+  for (const query of [retained, relaunched]) query.searchParams.delete('enemy-workshop-session');
+  assert.equal(relaunched.href, retained.href, 'only the return-bridge token changes on relaunch');
+  assert.equal(
+    preview.getItem(handoffKey),
+    handoff,
+    'deliberate relaunch retains the exact lesson',
+  );
+  childReturn(page, retry);
+  assert.deepEqual(page.errors, []);
+});
+
+test('visible-window blur defers confirmed practice failure focus until a fresh active return', async (t) => {
+  const clock = readinessClock(t),
+    preview = memoryStorage({ [handoffKey]: 'keep the prior preview' }),
+    page = await setup(t, { previewStorage: preview });
+  const checkpoint = await liveCut(page);
+  openGuide(page);
+  const controls = padBoundary(page, t),
+    lesson = await launch(page),
+    child = bootChild(lesson.frame),
+    handoff = preview.getItem(handoffKey);
+  controls.set(0, true);
+  controls.frame();
+  page.doc.focused = false;
+  page.win.emit('blur');
+  assert.equal(page.doc.hidden, false, 'a visible window can be inactive');
+  child.fail();
+  clock.tick();
+  assert.match(page.$('enemy-guide-status').textContent, /Practice could not start/);
+  assert.equal(
+    page.doc.activeElement.id,
+    lesson.frame.id,
+    'confirmed failure must not focus an inactive window',
+  );
+  assert.equal(clock.callbacks.size, 0, 'failure is observed once while its focus handoff waits');
+  page.doc.focused = true;
+  page.win.emit('focus');
+  assert.equal(
+    page.doc.activeElement.id,
+    'enemy-guide-return',
+    'the same failed child recovers on active return',
+  );
+  for (let i = 0; i < 8; i++) controls.frame();
+  assert.equal(lesson.frame.hidden, false, 'held Confirm across blur and recovery cannot Return');
+  assert.equal(preview.getItem(handoffKey), handoff);
+  controls.set(0, false);
+  for (let i = 0; i < 8; i++) controls.frame();
+  controls.pulse(0);
+  assert.equal(lesson.frame.hidden, true);
+  assert.equal(preview.getItem(handoffKey), 'keep the prior preview');
+  assert.deepEqual(authoritativeCheckpoint(page.rendered.run), checkpoint);
+  assert.equal(page.rendered.paused, true);
+  assert.deepEqual(page.errors, []);
+});
+
+for (const event of ['pageshow', 'visibilitychange'])
+  test(`an observed practice failure retains its deferred Return across ${event}`, async (t) => {
+    const clock = readinessClock(t),
+      page = await setup(t);
+    await liveCut(page);
+    openGuide(page);
+    const lesson = await launch(page),
+      child = bootChild(lesson.frame);
+    page.doc.focused = false;
+    child.fail();
+    clock.tick();
+    assert.equal(page.doc.activeElement.id, lesson.frame.id);
+    if (event === 'pageshow') page.win.emit('pagehide', { persisted: true });
+    else {
+      page.doc.hidden = true;
+      page.doc.emit('visibilitychange');
+    }
+    page.doc.focused = true;
+    page.doc.hidden = false;
+    if (event === 'pageshow') page.win.emit(event, { persisted: true });
+    else page.doc.emit(event);
+    assert.equal(page.doc.activeElement.id, 'enemy-guide-return');
+    assert.equal(lesson.frame.hidden, false);
+    assert.equal(clock.callbacks.size, 0, 'the observed failure needs no continuing poll');
+    assert.deepEqual(page.errors, []);
+  });
+
+for (const changed of [
+  'newer-focus',
+  'url',
+  'window',
+  'document',
+  'inaccessible',
+  'return-and-relaunch',
+  'closed',
+  'disposed',
+])
+  test(`deferred practice Return is retired by ${changed}`, async (t) => {
+    const clock = readinessClock(t),
+      page = await setup(t);
+    await liveCut(page);
+    openGuide(page);
+    const lesson = await launch(page),
+      child = bootChild(lesson.frame);
+    page.doc.focused = false;
+    child.fail();
+    clock.tick();
+    assert.equal(page.doc.activeElement.id, lesson.frame.id);
+    if (changed === 'newer-focus') {
+      page.$('enemy-guide-return').focus();
+      lesson.frame.focus();
+    }
+    if (changed === 'url') child.document.URL += '&changed=1';
+    if (changed === 'window') lesson.frame.contentWindow = {};
+    if (changed === 'document') bootChild(lesson.frame).fail();
+    if (changed === 'inaccessible')
+      Object.defineProperty(lesson.frame, 'contentDocument', {
+        configurable: true,
+        get() {
+          throw new Error('Cross-origin child');
+        },
+      });
+    if (changed === 'return-and-relaunch') {
+      childReturn(page, lesson);
+      await launch(page);
+    }
+    if (changed === 'closed') page.$('enemy-guide-dialog').close();
+    if (changed === 'disposed') page.win.emit('pagehide', { persisted: false });
+    const focus = page.doc.activeElement.id,
+      status = page.$('enemy-guide-status')?.textContent;
+    page.doc.focused = true;
+    page.win.emit('focus');
+    page.win.emit('focus');
+    assert.equal(page.doc.activeElement.id, focus);
+    assert.equal(page.$('enemy-guide-status')?.textContent, status);
+    if (changed !== 'disposed') page.$('enemy-guide-return').click();
+    assert.equal(clock.callbacks.size, 0);
+    assert.deepEqual(page.errors, []);
+  });
+
+test('practice readiness resumes after cached departure and never transfers focus in a hidden page', async (t) => {
+  const clock = readinessClock(t),
+    page = await setup(t);
+  const checkpoint = await liveCut(page);
+  openGuide(page);
+  const lesson = await launch(page),
+    child = bootChild(lesson.frame);
+  const queued = [...clock.callbacks.values()]
+    .filter(({ delay }) => delay === 250)
+    .map(({ callback }) => callback);
+  assert.equal(queued.length, 1);
+  page.win.emit('pagehide', { persisted: true });
+  assert.equal(clock.callbacks.size, 0, 'departure retires the timer');
+  child.fail();
+  for (const callback of queued) callback();
+  assert.equal(page.doc.activeElement, lesson.frame);
+  page.doc.hidden = true;
+  page.win.emit('pageshow', { persisted: true });
+  clock.tick(30000);
+  assert.equal(page.doc.activeElement, lesson.frame, 'background restoration cannot take focus');
+  assert.equal(clock.callbacks.size, 0);
+  page.doc.hidden = false;
+  page.doc.emit('visibilitychange');
+  assert.equal(clock.callbacks.size, 1, 'the same unsettled child is observed on return');
+  clock.tick();
+  assert.equal(page.doc.activeElement.id, 'enemy-guide-return');
+  assert.equal(clock.callbacks.size, 0, 'confirmed failure settles once');
+  page.frame(0);
+  assert.deepEqual(authoritativeCheckpoint(page.rendered.run), checkpoint);
+  assert.equal(page.rendered.paused, true);
+  assert.deepEqual(page.errors, []);
+});
+
+test('practice readiness preserves user focus and settles at ready without observing later failures', async (t) => {
+  const locale = getLocale();
+  t.after(() => setLocale(locale, { persist: false }));
+  const clock = readinessClock(t),
+    page = await setup(t);
+  await liveCut(page);
+  openGuide(page);
+  const first = await launch(page),
+    child = bootChild(first.frame);
+  const other = page.doc.createElement('button');
+  other.textContent = 'Independent parent control';
+  page.$('enemy-guide-practice').append(other);
+  other.focus();
+  child.fail();
+  clock.tick();
+  assert.equal(page.doc.activeElement, other, 'failure does not steal a newer focus choice');
+  for (const language of ['uk', 'en']) {
+    setLocale(language, { persist: false });
+    assert.match(
+      page.$('enemy-guide-status').textContent,
+      language === 'uk'
+        ? /Тренування не запустилося.*Кампанія залишається на паузі/
+        : /Practice could not start.*campaign remains paused/,
+    );
+    assert.doesNotMatch(page.$('enemy-guide-status').textContent, /enemyGuide\.|\{\{/);
+    assert.equal(page.doc.activeElement, other);
+  }
+  childReturn(page, first);
+  const next = await launch(page),
+    ready = bootChild(next.frame);
+  ready.document.documentElement.dataset.bootState = 'ready';
+  clock.tick();
+  assert.equal(clock.callbacks.size, 0, 'ready practice owns its recovery controls');
+  ready.fail();
+  page.win.emit('pagehide', { persisted: true });
+  page.win.emit('pageshow', { persisted: true });
+  clock.tick();
+  assert.equal(page.doc.activeElement, next.frame);
+  assert.equal(clock.callbacks.size, 0, 'return does not reopen a settled readiness monitor');
+  assert.match(page.$('enemy-guide-status').textContent, /Practice only/);
+});
+
+for (const retired of [
+  'different-url',
+  'different-window',
+  'return-and-relaunch',
+  'closed',
+  'disposed',
+])
+  test(`practice readiness rejects ${retired} without stale focus or status`, async (t) => {
+    const clock = readinessClock(t),
+      page = await setup(t);
+    await liveCut(page);
+    openGuide(page);
+    const lesson = await launch(page),
+      child = bootChild(lesson.frame);
+    const queued = [...clock.callbacks.values()]
+      .filter(({ delay }) => delay === 250)
+      .map(({ callback }) => callback);
+    assert.equal(queued.length, 1);
+    if (retired === 'different-url') child.document.URL = `${lesson.frame.src}&foreign=1`;
+    if (retired === 'different-window') lesson.frame.contentWindow = {};
+    if (retired === 'return-and-relaunch') {
+      childReturn(page, lesson);
+      await launch(page);
+      // The old document can remain observable briefly during navigation.
+      assert.notEqual(lesson.frame.src, child.document.URL);
+    }
+    if (retired === 'closed') page.$('enemy-guide-dialog').close();
+    if (retired === 'disposed') page.win.emit('pagehide', { persisted: false });
+    const focus = page.doc.activeElement,
+      status = page.$('enemy-guide-status')?.textContent;
+    child.fail();
+    for (const callback of queued) callback();
+    clock.tick();
+    assert.equal(page.doc.activeElement, focus);
+    assert.equal(page.$('enemy-guide-status')?.textContent, status);
+    if (['different-window', 'closed', 'disposed'].includes(retired))
+      assert.equal(clock.callbacks.size, 0, 'invalid or retired owner stops observation');
+    if (retired !== 'disposed') page.$('enemy-guide-return').click();
+    assert.equal(clock.callbacks.size, 0, 'Return retires unresolved foreign-document observation');
+  });
 
 test('live Guide locale changes translate ordinary rows and practice without replacing the paused parent or child', async (t) => {
   const locale = getLocale();

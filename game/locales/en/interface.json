@@ -1,4 +1,5 @@
 {
+  "enemyGuide.practiceBootFailed": "Practice could not start. Return to the field guide to try again. Your campaign remains paused.",
   "revealLineControllerPractice": "FPV / LINE — Controller practice",
   "revealLine": "◩ FPV / LINE",
   "controllerPractice": "CONTROLLER PRACTICE",
