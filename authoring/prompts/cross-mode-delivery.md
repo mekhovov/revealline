@@ -323,3 +323,25 @@ its frame and open link, with editor/session data unchanged. Reuse current Journ
 no save migration, database deletion or mission/art generation is in this feature.
 Report source, PR, public version/link, actual input/viewports and evidence limits;
 never infer publication or complete human/device qualification from a host pass.
+
+Team readability and recovery: “Start both existing arenas using Standard then
+Large/Plain text. Compare prepared bodies and true contacts, and inspect enlarged
+player numerals, downed plus, Hunter/core/anchor labels over light/dark art. Keep
+both touch pads and the full board at 1280×800, 390×844, 844×390 and 568×320 CSS;
+record Ukrainian HUD/ability overflow separately. Pause a genuinely downed player,
+visit Settings, change language, return and explicitly Resume: preserve the exact
+world and restore current cause/rescue guidance. Complete rescue or Retry and
+require old guidance to disappear. Empty Support must not count as demonstrated
+success; an actual slow or interception does. Use fresh controller Confirm after
+join, preserve compatibility-echo rejection, and distinguish source tests, browser,
+hardware, production review and public acceptance.”
+
+Team narrow-state qualification: “At 568×320 and 390×844 with Large/Plain text,
+start a real Team stronghold, lose a reserve, then leave one player downed with
+zero reserves. Keep both pads, Boost/Support, the complete board, objective and
+rescue status in view. Switch language through Settings and explicitly Resume;
+full free-rescue/cause instructions remain correct while compact labels fit.
+Measure every action and save settled screenshots. Repeat a coverage arena and
+normal text. Preserve empty-Support rejection and test a genuine moving-enemy
+slow on the winning step; a stationary marker is not a successful demonstration.
+Report source, browser, hardware and public acceptance separately.”

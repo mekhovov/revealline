@@ -1,0 +1,10 @@
+Browser tab: 35, Title: "Рятувальний ретранслятор · RevealLine", URL: "http://127.0.0.1:52260/game/couch/relay-rescue.html?journey=legacy".
+1 AXWebArea Рятувальний ретранслятор · RevealLine, URL: 127.0.0.1:52260/game/couch/relay-rescue.html?journey=legacy
+	2 container Скасувати цю командну спробу?, ID: coop-discard-dialog
+		3 heading Скасувати цю командну спробу?, Value: 2, ID: coop-discard-title
+			4 text Скасувати цю командну спробу?
+		5 text Ця незавершена спроба не збережена; її скасування видалить поточне захоплення території, але не попередні завершення місій. «Залишитися» зберігає обох гравців на паузі. Спільне продовження залишається окремою дією. «Відкинути й змінити налаштування» очищує цю спробу, не починаючи іншої.
+		6 button Залишитися, ID: coop-discard-stay
+		7 button Відкинути й змінити налаштування, ID: coop-discard-confirm
+
+The focused UI element is 6 button Залишитися, ID: coop-discard-stay
