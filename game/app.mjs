@@ -11830,6 +11830,10 @@ try {
     menu: (commands) => {
       controllerNavigation.handle({ ...commands, confirm: false });
     },
+    nativeConfirmOwned: (event) => {
+      controllerConfirmLifecycle.beforeNativeActivation(event, { activated: true });
+      return controllerConfirmGuard.owned();
+    },
     canWrite: () => writer.writable && persistenceReady && !backupBusy,
     settingsKey: `revealline.demo.${channel}.v1`,
     setCollect: (enabled) => demoLibrary.setEnabled(enabled),

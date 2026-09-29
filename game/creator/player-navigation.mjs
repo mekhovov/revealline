@@ -28,7 +28,9 @@ export function attachCreatorPlayerNavigation({
     document: doc,
     now,
     confirmPressed: () => getScope() !== 'flight' && router.menuConfirmPressed(),
-    beforeNativeActivation: (event) => lifecycle?.beforeNativeActivation(event),
+    beforeNativeActivation: (event) => {
+      if (getScope() !== 'flight') lifecycle?.beforeNativeActivation(event);
+    },
   });
   const topDialog = () => [...doc.querySelectorAll('dialog[open]')].at(-1);
   const scope = () =>
@@ -79,21 +81,21 @@ export function attachCreatorPlayerNavigation({
       scope: scope(),
       root: topDialog() || doc.body,
       focused: doc.activeElement,
-      active: getScope() !== 'flight' && !doc.hidden && doc.hasFocus?.() !== false && !disposed,
+      active:
+        !disposed &&
+        getScope() !== 'flight' &&
+        !doc.hidden &&
+        doc.hasFocus?.() !== false &&
+        doc.activeElement?.tagName !== 'IFRAME',
     }),
-    navigation: {
-      beginConfirm: (target) => navigation?.beginConfirm(target),
-      commitConfirm: () => navigation?.commitConfirm(),
-      cancelConfirm: () => navigation?.cancelConfirm(),
-      confirmCurrent: () => navigation?.confirmCurrent(),
-    },
+    navigation,
     guard,
     now,
   });
   function refresh({ focus = false } = {}) {
     if (disposed) return;
     router.clear();
-    lifecycle.cancel('player-state', { hard: true });
+    lifecycle?.cancel('player-state');
     navigation?.clear();
     navigation?.sync();
     lastScope = scope();
@@ -116,7 +118,8 @@ export function attachCreatorPlayerNavigation({
     const frame = router.sample({ scope: currentScope, timeMs });
     if (frame.status.code === 'joined') navigation.engage();
     lifecycle.sample(frame.confirmSnapshot);
-    navigation.handle({ ...frame.ui, confirm: false });
+    // Confirm has one release-committed owner; dispatch all other router edges once.
+    if (scope() === currentScope) navigation.handle({ ...frame.ui, confirm: false });
   }
   const clear = () => refresh();
   win.addEventListener('blur', clear);
@@ -128,10 +131,10 @@ export function attachCreatorPlayerNavigation({
       if (disposed) return;
       disposed = true;
       sources.destroy();
+      lifecycle.destroy();
       navigation.destroy();
       guard.destroy();
       router.destroy();
-      lifecycle.destroy();
       win.removeEventListener('blur', clear);
       doc.removeEventListener('visibilitychange', clear);
     },

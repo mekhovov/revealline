@@ -32,6 +32,7 @@ export function attachDemoHost({
   onFreshStart,
   clearInput,
   menu,
+  nativeConfirmOwned = () => false,
   canWrite = () => false,
   settingsKey,
   storage = globalThis.localStorage,
@@ -514,6 +515,7 @@ export function attachDemoHost({
     back: () => close(),
     pause: interrupt,
     menu,
+    nativeConfirmOwned,
     steer: (direction) => {
       if (practice && armed) {
         practice.steer(direction);
