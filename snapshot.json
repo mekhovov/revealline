@@ -1,0 +1,20 @@
+{
+  "format": "revealline-recovery-fragment-v1",
+  "capturedAt": "2026-09-29T15:08:34.926960+00:00",
+  "worktree": "<home>/.codex/worktrees/cultural-routes-v15/go_test",
+  "branch": "refs/heads/codex/pressure-route-alternates",
+  "head": "b3b3b06dee2d69489635cc243c9a41bbe9ec4e17",
+  "excluded": [],
+  "changes": [
+    {
+      "status": "??",
+      "path": "docs/plan-status-2026-09-29-levels.md",
+      "object": "743824c8e2e07b55f912639355661564a1a9dd36",
+      "sha256": "2cdf288c18ba530f7c69a23569f18a6ef32f5724854dfbe39201eb852deb25b6",
+      "bytes": 45832,
+      "mode": "100644"
+    }
+  ],
+  "indexEntries": [],
+  "purpose": "Recovery only. These bytes are not release admission. Missing files, conflict stages and obsolete generated outputs are preserved as observations, not deletion or merge instructions."
+}
