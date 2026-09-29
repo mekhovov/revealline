@@ -1,7 +1,0 @@
-# Archive22: add v0.61.0 while retaining v0.60.9
-
-Root accepted infrastructure `b9cf5426cd148915196640bfb0bd958ec8e40ed8`, deployment `6517736260`, on 2026-09-18 after the complete **1,393-file / 626,457,828-byte** public audit passed without failures, retries or skips. All 697 previous canonical rows remain exact; the archive landing index is the sole changed prior path.
-
-The [root acceptance](root-acceptance.json) binds [row reconciliation](row-review.json), the [full inventory](expected-inventory.json), [HTTP report](http-report.json), and actual native [v0.61.0 play](native-v0610-observation.json) plus [v0.60.9 route retention](native-v0609-retention-observation.json). The native journey includes a win, View picture, Results and direct Retry. It does not establish physical controller/touch, offline persistence, audible playback, save isolation or completion of a parent game phase.
-
-[Originals](originals.zip) and their [index](originals-index.json) retain the complete small audit/intake/preparation records, including the failed first archive attempt that fetched only v0.60.9. The earlier native observation's pending-audit field and earlier pending proposals remain original historical bytes; the later root acceptance closes the stated retention scope. The [derived browser admission](browser-admission.json) changes no original observation. Previous evidence under [initial-v0609](../initial-v0609/README.md) is preserved unchanged.

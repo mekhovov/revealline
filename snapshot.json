@@ -1,0 +1,20 @@
+{
+  "format": "revealline-recovery-fragment-v1",
+  "capturedAt": "2026-09-29T15:10:19.077873+00:00",
+  "worktree": "<home>/work/my_projects/go_test/.cache/worktrees/pages-v0870-20260923",
+  "branch": "refs/heads/codex/pages-v0870-20260923",
+  "head": "ae6c4f4571e29d275500c0b485e84a39dbbdc39f",
+  "excluded": [],
+  "changes": [
+    {
+      "status": "??",
+      "path": ".gstack/deploy-reports/2026-09-23-pr282-deploy.md",
+      "object": "4cf46d9aebc1a18cd1c684eb55522be94bda00d3",
+      "sha256": "35f94fdcb8bef3d8a1c2c842212f04918e9a22f74610843a2e3485b1299278c7",
+      "bytes": 2876,
+      "mode": "100644"
+    }
+  ],
+  "indexEntries": [],
+  "purpose": "Recovery only. These bytes are not release admission. Missing files, conflict stages and obsolete generated outputs are preserved as observations, not deletion or merge instructions."
+}
