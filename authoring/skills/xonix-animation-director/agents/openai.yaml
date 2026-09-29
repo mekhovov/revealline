@@ -1,4 +1,0 @@
-interface:
-  display_name: "Xonix Animation Director"
-  short_description: "Direct modular game animation and verify playback"
-  default_prompt: "Use $xonix-animation-director to plan replaceable movement, rotor, trail, terrain, UI and sound cues without changing gameplay geometry."
