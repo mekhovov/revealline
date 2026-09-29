@@ -5212,5 +5212,19 @@
   "creatorMenu.mode": "Game mode",
   "enemyCatalog.json": "Catalog choices JSON",
   "enemyCatalog.showCurrent": "Show current choices",
-  "enemyCatalog.validateImport": "Validate and import into draft"
+  "enemyCatalog.validateImport": "Validate and import into draft",
+  "creator.teamStudio.installedHeading": "Installed Team packages",
+  "creator.teamStudio.installedHelp": "Reopen verified runtime pictures, videos and public package fields. Original picture sources, descriptions and crop settings are not stored.",
+  "creator.teamStudio.refreshInstalled": "Show installed packages",
+  "creator.teamStudio.openInstalled": "Open {{name}} · {{edition}}",
+  "creator.teamStudio.noInstalled": "No Team packages are installed on this device.",
+  "creator.teamStudio.noInstalledMedia": "This older gameplay-only package has no stored pictures to reopen here.",
+  "creator.teamStudio.reopened": "Opened {{name}} from its installed runtime package. Prepare a fresh review before approving or exporting.",
+  "creator.teamStudio.retainedMediaHelp": "The installed runtime picture and any video are retained. Choose a new file to replace them. Picture fit and description require a new source; original sources and crop settings are unavailable.",
+  "creator.teamStudio.portableSummary": "{{size}} MiB portable package · {{assets}} exact media assets. Installation storage is unavailable; you can still review, approve and download.",
+  "creator.teamStudio.playHelp": "In Team, choose Select Mission, then find {{name}} in Custom missions. This link opens Team without selecting or starting a mission.",
+  "creator.teamStudio.templates.coverage.name": "Mirrored crossing",
+  "creator.teamStudio.templates.coverage.objective": "Both pilots close meaningful cuts until shared coverage is reached.",
+  "creator.teamStudio.templates.stronghold.name": "Relay pincer",
+  "creator.teamStudio.templates.stronghold.objective": "Each pilot banks an anchor before both close the exposed relay core."
 }

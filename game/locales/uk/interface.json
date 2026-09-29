@@ -5322,5 +5322,19 @@
   "creatorMenu.mode": "Режим гри",
   "enemyCatalog.json": "JSON налаштувань каталогу",
   "enemyCatalog.showCurrent": "Показати поточні налаштування",
-  "enemyCatalog.validateImport": "Перевірити й імпортувати в чернетку"
+  "enemyCatalog.validateImport": "Перевірити й імпортувати в чернетку",
+  "creator.teamStudio.installedHeading": "Встановлені командні пакети",
+  "creator.teamStudio.installedHelp": "Відкрийте перевірені ігрові зображення, відео та загальнодоступні поля пакета. Оригінали зображень, їхні описи й налаштування кадрування не зберігаються.",
+  "creator.teamStudio.refreshInstalled": "Показати встановлені пакети",
+  "creator.teamStudio.openInstalled": "Відкрити {{name}} · {{edition}}",
+  "creator.teamStudio.noInstalled": "На цьому пристрої немає встановлених командних пакетів.",
+  "creator.teamStudio.noInstalledMedia": "У цьому старішому пакеті лише ігрові дані; збережених зображень для відкриття тут немає.",
+  "creator.teamStudio.reopened": "Відкрито {{name}} зі встановленого ігрового пакета. Підготуйте нову перевірку перед схваленням або експортом.",
+  "creator.teamStudio.retainedMediaHelp": "Збережено встановлене ігрове зображення та відео, якщо воно є. Виберіть новий файл, щоб замінити їх. Для зміни кадрування й опису зображення потрібен новий файл; оригінали та налаштування кадрування недоступні.",
+  "creator.teamStudio.portableSummary": "Переносний пакет {{size}} МіБ · точних медіаресурсів: {{assets}}. Сховище встановлення недоступне; можна переглянути, схвалити й завантажити пакет.",
+  "creator.teamStudio.playHelp": "У командному режимі виберіть «Вибрати місію», потім знайдіть {{name}} серед власних місій. Це посилання відкриває командний режим без вибору чи запуску місії.",
+  "creator.teamStudio.templates.coverage.name": "Дзеркальна переправа",
+  "creator.teamStudio.templates.coverage.objective": "Обидва пілоти замикають ділянки, доки не досягнуть спільної цілі покриття.",
+  "creator.teamStudio.templates.stronghold.name": "Охоплення ретранслятора",
+  "creator.teamStudio.templates.stronghold.objective": "Кожен пілот закріплює опорну точку, а потім разом вони замикають відкритий центр ретранслятора."
 }
