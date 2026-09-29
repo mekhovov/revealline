@@ -96,9 +96,9 @@ function pageBoundary() {
       pending.forEach(([, callback]) => callback(now));
     }
   };
-  const button = (index, pressed) => {
+  const button = (index, pressed, sampled = true) => {
     pad.buttons[index] = { pressed, value: pressed ? 1 : 0 };
-    frame();
+    if (sampled) frame();
   };
   const tap = (index) => {
     button(index, true);
@@ -181,6 +181,15 @@ test('custom menu owns controls and recovery dialogs, then yields all pad reads 
   frame();
   assert.equal(page.reads(), reads, 'the gameplay adapter is the sole flight sampler');
   assert.equal(page.key('ArrowDown').defaultPrevented, false);
+  assert.equal(
+    page.key('Enter').defaultPrevented,
+    true,
+    'the just-released Start gesture still drains native echoes',
+  );
+  page.key('Enter', false);
+  frame(1300);
+  assert.equal(page.key('Enter').defaultPrevented, false);
+  assert.equal(page.reads(), reads, 'native flight keys do not probe menu Confirm');
   scope = 'creator-menu';
   host.refresh({ focus: true });
   page.button(0, true);
@@ -218,6 +227,37 @@ test('custom menu owns controls and recovery dialogs, then yields all pad reads 
   assert.equal(doc.getElementById('creator-player-sources'), null);
   frame();
   assert.equal(page.reads(), beforeHidden);
+});
+
+test('creator menu captures a native Confirm tap between frames without a duplicate release action', () => {
+  const page = pageBoundary(),
+    { doc, win, $ } = page;
+  let clicks = 0;
+  $('start').disabled = false;
+  $('start').onclick = () => clicks++;
+  const host = attachCreatorPlayerNavigation({
+    document: doc,
+    window: win,
+    getScope: () => 'creator-menu',
+    getDefaultFocus: () => $('start'),
+  });
+  page.startFrames((now) => host.update(now));
+  try {
+    page.connect();
+    page.button(0, true, false);
+    const down = $('start').emit('keydown', { key: 'Enter', isTrusted: true });
+    assert.equal(down.defaultPrevented, true);
+    assert.equal(clicks, 0);
+    page.button(0, false, false);
+    const up = $('start').emit('keyup', { key: 'Enter', isTrusted: true });
+    assert.equal(up.defaultPrevented, true);
+    assert.equal(clicks, 1, 'native release commits the captured target before the next frame');
+    $('start').emit('click', { isTrusted: true });
+    page.frame();
+    assert.equal(clicks, 1, 'compatibility click and following frame cannot commit again');
+  } finally {
+    host.destroy();
+  }
 });
 
 class Locks {

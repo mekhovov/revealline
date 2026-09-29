@@ -101,6 +101,7 @@ function fixture(
     deferred = false,
     fromMenu = false,
     uiOwned = false,
+    nativeConfirmOwned,
   } = {},
 ) {
   const win = new Target(),
@@ -131,6 +132,7 @@ function fixture(
     practice: () => state.phase === 'practice',
     busy: () => state.phase === 'loading',
     ownsUI: () => state.uiOwned,
+    nativeConfirmOwned,
     getBindings: () => bindings,
     getTouchSettings: () => ({ mode }),
     tapMode: () => tapMode,
@@ -450,6 +452,25 @@ for (const [code, key] of [
       assert.deepEqual(f.state.directions, []);
     });
 }
+
+test('Back reports only an actual fresh unmodified native activation to the Confirm owner', (t) => {
+  const probes = [],
+    f = fixture(t, {
+      phase: 'watching',
+      nativeConfirmOwned: (event) => {
+        probes.push(event);
+        return false;
+      },
+    }),
+    button = new Target(new Target(f.root, { demoUi: '' }), { demoExit: '' }, 'BUTTON');
+  button.key('keydown', 'Enter', { repeat: true });
+  assert.equal(f.state.backs, 0, 'an already-held key cannot exit');
+  assert.equal(probes.length, 0, 'an ignored repeat cannot become a native winner');
+  button.key('keyup', 'Enter');
+  button.key('keydown', 'Enter', { shiftKey: true });
+  assert.equal(f.state.backs, 1, 'modified keyboard behavior remains native');
+  assert.equal(probes.length, 0, 'modified keys are not controller Confirm echoes');
+});
 
 test('teardown removes keyboard, pointer and lifecycle observers', (t) => {
   const f = fixture(t);
