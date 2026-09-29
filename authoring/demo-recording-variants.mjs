@@ -29,10 +29,16 @@ verifyButton.addEventListener('click', async () => {
       library: { list: async () => [] },
       WorkerClass: null,
     });
-    if (sources.length !== 6) throw new Error(`Expected six sources, found ${sources.length}.`);
+    const catalog = await fetch('../game/demo-data/catalog.json').then((response) =>
+      response.json(),
+    );
+    if (!Array.isArray(catalog.clips) || catalog.clips.length === 0)
+      throw new Error('The demo catalogue contains no recordings to verify.');
+    if (sources.length !== catalog.clips.length)
+      throw new Error(`Expected ${catalog.clips.length} sources, found ${sources.length}.`);
     const results = [];
     for (const source of sources) {
-      status.textContent = `Preparing and playing shipped ${source.id} (${results.length + 1}/6)…`;
+      status.textContent = `Preparing and playing shipped ${source.id} (${results.length + 1}/${sources.length})…`;
       const player = await source.create({});
       try {
         player.play();
@@ -50,7 +56,7 @@ verifyButton.addEventListener('click', async () => {
         player.dispose();
       }
     }
-    status.textContent = `PASS: all six shipped source adapters strictly prepared and completed exact playback in this browser.\n${results.join('\n')}`;
+    status.textContent = `PASS: all ${sources.length} shipped source adapters strictly prepared and completed exact playback in this browser.\n${results.join('\n')}`;
   } catch (error) {
     status.textContent = `ERROR: ${error.stack}`;
   } finally {
@@ -65,6 +71,8 @@ runButton.addEventListener('click', async () => {
     const catalog = await fetch('../game/demo-data/catalog.json').then((response) =>
       response.json(),
     );
+    if (!Array.isArray(catalog.clips) || catalog.clips.length === 0)
+      throw new Error('The demo catalogue contains no recordings to author.');
     const clips = [];
     for (const clip of catalog.clips) {
       status.textContent = `Recording ${clip.id} (${clips.length + 1}/${catalog.clips.length})…`;

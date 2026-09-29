@@ -1,8 +1,10 @@
 #!/usr/bin/env node
-/** Human-authored bent capture routes on unchanged installed campaign levels.
- * Default verifies committed assets. --write creates new files, never overwrites. */
+/** Authored bent capture routes on unchanged installed campaign levels.
+ * Default verifies assets. --write creates a catalogue; --extend adds scenes
+ * and frozen variants without replacing any existing recording or input trace. */
 import assert from 'node:assert/strict';
-import { readFile, mkdir, writeFile } from 'node:fs/promises';
+import { readFile, mkdir, writeFile, rename, unlink } from 'node:fs/promises';
+import { randomUUID } from 'node:crypto';
 import { fileURLToPath } from 'node:url';
 import { resolve } from 'node:path';
 import { createRun, stepRun, FIXED_DT } from '../game/core/index.mjs';
@@ -96,6 +98,59 @@ const clips = [
     policy: 'grid-center',
     tags: ['capture', 'bent-cut', 'border-patrol'],
   },
+  {
+    id: 'stone-lanes-detour',
+    seed: 1,
+    level: 3,
+    route: [
+      [24, 16, 47, 0],
+      [16, 8, 0, 0],
+      [40, 20, 0, 48],
+    ],
+    policy: 'immediate',
+    tags: ['capture', 'bent-cut', 'walls', 'relay'],
+  },
+  {
+    id: 'hidden-frequency-search',
+    seed: 1,
+    level: 5,
+    route: [
+      [24, 12, 47, 0],
+      [24, 28, 47, 48],
+      [16, 8, 0, 0],
+      [8, 20, 47, 0],
+      [16, 34, 0, 120],
+    ],
+    policy: 'immediate',
+    tags: ['capture', 'bent-cut', 'scan', 'hidden-relay'],
+  },
+  {
+    id: 'the-crossing-windows',
+    seed: 1,
+    level: 6,
+    route: [
+      [24, 12, 47, 0],
+      [32, 16, 0, 0],
+      [8, 34, 0, 0],
+      [40, 24, 0, 0],
+    ],
+    policy: 'immediate',
+    tags: ['capture', 'bent-cut', 'lane-warning'],
+  },
+  {
+    id: 'signal-garden-route',
+    seed: 1,
+    level: 8,
+    route: [
+      [16, 20, 0, 0],
+      [32, 20, 0, 0],
+      [40, 8, 47, 0],
+      [32, 28, 47, 120],
+      [24, 28, 0, 48],
+    ],
+    policy: 'immediate',
+    tags: ['capture', 'bent-cut', 'signal-zone', 'hidden-relay'],
+  },
 ];
 
 export async function buildDemoRecordings() {
@@ -116,12 +171,14 @@ export async function buildDemoRecordings() {
       recorder = createRecorder(level, options, 'authored-attract-route.v1');
     let closedCuts = 0,
       bends = 0;
+    const events = {};
     function input(command, ticks = 1) {
       for (let tick = 0; tick < ticks && run.status === 'running'; tick++) {
         assert.ok(run.tick < 120 * 90, 'Demo route exceeded its duration budget.');
         stepRun(run, command, FIXED_DT);
         recordInput(recorder, command);
         closedCuts += run.events.filter((event) => event.type === 'cut.closed').length;
+        for (const event of run.events) events[event.type] = (events[event.type] ?? 0) + 1;
         assert.equal(run.lives, 3, `${clip.id}: authored route lost a life.`);
       }
     }
@@ -138,10 +195,10 @@ export async function buildDemoRecordings() {
         input({ direction });
       }
     }
-    for (const [start, depth, end] of plans[clip.plan]) {
+    for (const [start, depth, end, wait = clip.wait] of clip.route ?? plans[clip.plan]) {
       if (run.status !== 'running') break;
       input({ action: true });
-      input({}, clip.wait);
+      input({}, wait);
       move('x', start);
       move('y', depth);
       move('x', end);
@@ -162,54 +219,115 @@ export async function buildDemoRecordings() {
           .map((variant) => variant.replayURL),
         tags: clip.tags,
       },
-      metrics: { closedCuts, bends },
+      metrics: { closedCuts, bends, events },
     };
   });
+}
+
+const fileOperations = { readFile, writeFile, mkdir, rename, unlink };
+const jsonText = (document) => `${JSON.stringify(document, null, 2)}\n`;
+
+/** Commit metadata only after all immutable files are ready. Failed writes never
+ * truncate the previous catalogue/manifest; an exact new-file orphan is retryable. */
+export async function commitDemoMetadata(url, document, io = fileOperations) {
+  const temporary = new URL(`${url.href}.tmp-${randomUUID()}`);
+  try {
+    await io.writeFile(temporary, jsonText(document), { flag: 'wx' });
+    await io.rename(temporary, url);
+  } finally {
+    await io.unlink(temporary).catch((error) => {
+      if (error.code !== 'ENOENT') throw error;
+    });
+  }
+}
+
+export async function writeDemoRecordings(
+  generated,
+  { mode = 'verify', gameRoot = new URL('game/', root), io = fileOperations } = {},
+) {
+  assert.ok(['verify', 'write', 'extend'].includes(mode));
+  const catalogURL = new URL('demo-data/catalog.json', gameRoot);
+  const catalog = {
+    format: DEMO_CATALOG_VERSION,
+    clips: generated.map(({ descriptor }) => descriptor),
+  };
+  const historical = new Set();
+  if (mode === 'extend') {
+    const previous = JSON.parse(await io.readFile(catalogURL, 'utf8'));
+    assert.equal(previous.format, DEMO_CATALOG_VERSION);
+    for (const [index, clip] of previous.clips.entries()) {
+      historical.add(clip.id);
+      const next = generated[index]?.descriptor;
+      assert.ok(next, 'Extending cannot remove or reorder existing scenes.');
+      const { replayVariants: before = [], ...oldIdentity } = clip;
+      const { replayVariants: after = [], ...newIdentity } = next;
+      assert.deepEqual(newIdentity, oldIdentity, 'Extending cannot replace a reviewed scene.');
+      assert.deepEqual(after.slice(0, before.length), before, 'Extending cannot replace variants.');
+    }
+  }
+  if (mode === 'write') {
+    await io.mkdir(new URL('demo-data/', gameRoot), { recursive: true });
+    for (const { replay, descriptor } of generated)
+      await io.writeFile(new URL(descriptor.replayURL, gameRoot), jsonText(replay), { flag: 'wx' });
+    await io.writeFile(catalogURL, jsonText(catalog), { flag: 'wx' });
+    return;
+  }
+  const additions = [];
+  // Validate every old and new file before creating any additions.
+  for (const { replay, descriptor } of generated) {
+    const url = new URL(descriptor.replayURL, gameRoot);
+    let original;
+    try {
+      const text = await io.readFile(url, 'utf8');
+      if (mode === 'extend' && !historical.has(descriptor.id))
+        assert.equal(
+          text,
+          jsonText(replay),
+          'An unregistered recording must exactly match the pending addition.',
+        );
+      original = JSON.parse(text);
+    } catch (error) {
+      if (mode !== 'extend' || error.code !== 'ENOENT') throw error;
+      assert.ok(!historical.has(descriptor.id), `Missing historical recording: ${descriptor.id}.`);
+      additions.push([url, replay]);
+      original = replay;
+    }
+    assert.equal(demoInputTraceIdentity(original), demoInputTraceIdentity(replay));
+    const alternatives = [
+      original,
+      ...(await Promise.all(
+        (descriptor.replayVariants ?? []).map(async (url) =>
+          JSON.parse(await io.readFile(new URL(url, gameRoot), 'utf8')),
+        ),
+      )),
+    ];
+    for (const candidate of alternatives)
+      assert.equal(demoInputTraceIdentity(candidate), descriptor.inputTraceIdentity);
+    assert.ok(
+      alternatives.some((candidate) => verifyReplay(candidate).match),
+      `${url.pathname}: no frozen recording exactly matches this runtime.`,
+    );
+  }
+  if (mode === 'extend') {
+    for (const [url, replay] of additions)
+      await io.writeFile(url, jsonText(replay), { flag: 'wx' });
+    await commitDemoMetadata(catalogURL, catalog, io);
+  } else
+    assert.deepEqual(
+      JSON.parse(await io.readFile(catalogURL, 'utf8')),
+      catalog,
+      `${catalogURL.pathname}: demo data is stale.`,
+    );
 }
 
 async function main() {
   const args = process.argv.slice(2);
   assert.ok(
-    args.length === 0 || (args.length === 1 && args[0] === '--write'),
-    'Use no arguments to verify or --write to create new files.',
+    args.length === 0 || (args.length === 1 && ['--write', '--extend'].includes(args[0])),
+    'Use no arguments to verify, --write to create, or --extend to append scenes.',
   );
   const generated = await buildDemoRecordings();
-  const files = [
-    ...generated.map(({ replay, descriptor }) => [
-      new URL(`game/${descriptor.replayURL.slice(2)}`, root),
-      replay,
-    ]),
-    [
-      new URL('game/demo-data/catalog.json', root),
-      { format: DEMO_CATALOG_VERSION, clips: generated.map(({ descriptor }) => descriptor) },
-    ],
-  ];
-  if (args[0] === '--write') await mkdir(new URL('game/demo-data/', root), { recursive: true });
-  for (const [path, document] of files) {
-    if (args[0] === '--write')
-      await writeFile(path, `${JSON.stringify(document, null, 2)}\n`, { flag: 'wx' });
-    else if (document.segments) {
-      const original = JSON.parse(await readFile(path, 'utf8'));
-      assert.equal(demoInputTraceIdentity(original), demoInputTraceIdentity(document));
-      const descriptor = generated.find(({ replay }) => replay === document).descriptor;
-      const alternatives = await Promise.all(
-        [descriptor.replayURL, ...descriptor.replayVariants].map(async (url) =>
-          JSON.parse(await readFile(new URL(`game/${url.slice(2)}`, root), 'utf8')),
-        ),
-      );
-      for (const candidate of alternatives)
-        assert.equal(demoInputTraceIdentity(candidate), descriptor.inputTraceIdentity);
-      assert.ok(
-        alternatives.some((candidate) => verifyReplay(candidate).match),
-        `${path.pathname}: no frozen recording exactly matches this runtime.`,
-      );
-    } else
-      assert.deepEqual(
-        JSON.parse(await readFile(path, 'utf8')),
-        document,
-        `${path.pathname}: demo data is stale.`,
-      );
-  }
+  await writeDemoRecordings(generated, { mode: args[0]?.slice(2) ?? 'verify' });
   process.stdout.write(
     `Verified ${generated.length} authored recordings across ${new Set(generated.map(({ replay }) => replay.level.id)).size} unchanged campaign levels.\n`,
   );

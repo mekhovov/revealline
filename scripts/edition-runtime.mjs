@@ -1,6 +1,23 @@
 import path from 'node:path';
+import { readFileSync } from 'node:fs';
 import { parse } from 'acorn';
+import { validateDemoCatalog } from '../game/demo-catalog.mjs';
 import { MENU_SCENES, resolveMenuScene } from '../game/ui/menu-scene-catalog.mjs';
+
+/** Resolve only the reviewed catalogue's bounded local recording paths. Keep
+ * this build inventory derived from the same data the runtime will select. */
+export function editionDemoResources(source) {
+  const catalog = validateDemoCatalog(source);
+  return [
+    'game/demo-data/catalog.json',
+    'game/demo-data/variant-provenance.json',
+    ...new Set(
+      catalog.clips.flatMap(({ replayURL, replayVariants = [] }) =>
+        [replayURL, ...replayVariants].map((relative) => `game/${relative.slice(2)}`),
+      ),
+    ),
+  ];
+}
 
 function sceneAssets(scene) {
   return [scene.landscape, scene.portrait, scene.wordmark]
@@ -69,21 +86,9 @@ export const EDITION_RUNTIME_RESOURCES = Object.freeze({
   'game/index.html': EDITION_RUNTIME_PAGES,
   'game/app.mjs': ['game/content/scenarios/line-impact-demo.json'],
   'game/demo-bot-player.mjs': ['game/demo-bot-worker.mjs'],
-  'game/demo-catalog.mjs': [
-    'game/demo-data/catalog.json',
-    'game/demo-data/variant-provenance.json',
-    ...[
-      'first-signal-left',
-      'first-signal-right',
-      'relay-orchard-loop',
-      'relay-orchard-stairs',
-      'crosswind-openings',
-      'night-patrol-loop',
-    ].flatMap((id) => [
-      `game/demo-data/${id}.replay.json`,
-      `game/demo-data/${id}.chromium-macos.replay.json`,
-    ]),
-  ],
+  'game/demo-catalog.mjs': editionDemoResources(
+    readFileSync(new URL('../game/demo-data/catalog.json', import.meta.url), 'utf8'),
+  ),
   'game/ui/native-menus.mjs': ['game/ui/native-menu.css'],
   'game/ui/controller-field-editor.mjs': ['game/ui/controller-field-editor.css'],
   'game/ui/soundtrack-panel.mjs': ['game/ui/soundtrack-panel.css'],

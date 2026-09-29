@@ -146,7 +146,7 @@ test('build rewrites native root paths, preserves extras and includes boot bytes
     }
   };
   const demoCatalog = JSON.parse(await fs.readFile(new URL('demo-data/catalog.json', sourceRoot)));
-  assert.equal(demoCatalog.clips.length, 6);
+  assert.equal(demoCatalog.clips.length, 10);
   const demoFiles = [
     ...demoRuntimeFiles,
     'game/demo-data/catalog.json',
