@@ -1,0 +1,1090 @@
+[
+  {
+    "brandId": "ukraine-culture",
+    "campaignId": "ukraine-everyday-culture",
+    "format": "revealline-completion-reward.v1",
+    "id": "ukraine-everyday-culture-01-discovery",
+    "locales": {
+      "en": {
+        "teaser": "Добрий день and дякую can start a small exchange.",
+        "title": "A Door Opens with Words"
+      },
+      "uk": {
+        "teaser": "«Добрий день» і «дякую» можуть почати коротку розмову.",
+        "title": "Двері відчиняються словами"
+      }
+    },
+    "payloads": [
+      {
+        "asset": {
+          "assetId": "ukraine-everyday-culture-01-reveal-v1",
+          "sha256": "8f4ed7543e43144de4fcf3766ea375df0c09eb143a2466c19038c40a25f23eac"
+        },
+        "id": "ukraine-everyday-culture-01-image",
+        "locales": {
+          "en": {
+            "alt": "Original illustrated welcoming library with an open coral door, a book ready to exchange and two blank greeting panels on a wooden desk.",
+            "title": "A Door Opens with Words"
+          },
+          "uk": {
+            "alt": "Оригінальна ілюстрована гостинна бібліотека з відчиненими кораловими дверима, книжкою для обміну й двома порожніми панелями привітання на дерев’яному столі.",
+            "title": "Двері відчиняються словами"
+          }
+        },
+        "type": "image"
+      },
+      {
+        "id": "ukraine-everyday-culture-01-knowledge",
+        "locales": {
+          "en": {
+            "paragraphs": [
+              "Ukraine.ua’s phrase guide gives добрий день as a greeting and дякую as thanks. These small expressions offer a starting point for an exchange in Ukrainian.",
+              "In our fictional library, greet the host, receive a book and thank them. Read the Cyrillic words at your own pace. A written transliteration can help a beginner get started, while listening to a speaker remains useful for learning pronunciation."
+            ],
+            "sources": [
+              {
+                "title": "Ukraine.ua — Ukrainian greeting and thanks phrases",
+                "url": "https://promote.ukraine.ua/wp-content/uploads/2021/07/Instruktsiya-z-realizatsii-kampanii-Visit-Urkaine-in-Summer-kopiya.pdf"
+              }
+            ],
+            "title": "A Door Opens with Words"
+          },
+          "uk": {
+            "paragraphs": [
+              "Порадник висловів Ukraine.ua подає «добрий день» як привітання, а «дякую» — як подяку. Ці короткі вислови допомагають почати розмову українською.",
+              "У вигаданій бібліотеці привітайте господаря, отримайте книжку та подякуйте. Читайте слова кирилицею у власному темпі. Транслітерація може допомогти початківцю, а слухання мовця лишається корисним для вивчення вимови."
+            ],
+            "sources": [
+              {
+                "title": "Ukraine.ua — Ukrainian greeting and thanks phrases",
+                "url": "https://promote.ukraine.ua/wp-content/uploads/2021/07/Instruktsiya-z-realizatsii-kampanii-Visit-Urkaine-in-Summer-kopiya.pdf"
+              }
+            ],
+            "title": "Двері відчиняються словами"
+          }
+        },
+        "profiles": {
+          "beginners": {
+            "en": {
+              "paragraphs": [
+                "Match greeting and thanks to two moments in the book exchange. Keep the Cyrillic words visible; a transliteration is an aid, not a replacement for listening."
+              ],
+              "title": "Make a distinction: A Door Opens with Words"
+            },
+            "uk": {
+              "paragraphs": [
+                "Поєднайте привітання й подяку з двома моментами обміну книжкою. Збережіть видимими кириличні слова; транслітерація — допомога, а не заміна слухання."
+              ],
+              "title": "Розрізнімо: Двері відчиняються словами"
+            }
+          },
+          "families": {
+            "en": {
+              "paragraphs": [
+                "Take turns welcoming someone with “добрий день” and thanking them with “дякую” in the imagined library. Read slowly and help each other."
+              ],
+              "title": "Look together: A Door Opens with Words"
+            },
+            "uk": {
+              "paragraphs": [
+                "По черзі привітайте когось словами «добрий день» і подякуйте словом «дякую» в уявній бібліотеці. Читайте повільно й допомагайте одне одному."
+              ],
+              "title": "Погляньмо разом: Двері відчиняються словами"
+            }
+          },
+          "hobbyists": {
+            "en": {
+              "paragraphs": [
+                "Prepare a short welcoming exchange using the cited phrase guide. Identify what written text can support and what pronunciation practice would need from a speaker."
+              ],
+              "title": "Explore the evidence: A Door Opens with Words"
+            },
+            "uk": {
+              "paragraphs": [
+                "Підготуйте коротке вітання за цитованим розмовником. Визначте, що підтримує письмовий текст, а для чого у вимові потрібне слухання мовця."
+              ],
+              "title": "Дослідімо докази: Двері відчиняються словами"
+            }
+          }
+        },
+        "type": "knowledge"
+      }
+    ],
+    "requirements": {
+      "learning": [],
+      "mastery": [],
+      "missions": [
+        {
+          "bindings": [
+            { "difficulty": "gentle", "gameplayId": "98bc3c7a6447f8c7" },
+            { "difficulty": "standard", "gameplayId": "4e0a1c5150bff17c" },
+            { "difficulty": "expert", "gameplayId": "9d8c9eba4b6d1f81" }
+          ],
+          "missionId": "ukraine-everyday-culture-01"
+        }
+      ]
+    },
+    "revision": "4",
+    "scope": { "id": "ukraine-everyday-culture-01", "kind": "mission" },
+    "teaserImage": {
+      "asset": {
+        "assetId": "ukraine-everyday-culture-key-v1",
+        "sha256": "3a073c5217136f23e3d9671aa4a4053ce18bef1331d9e8a6f0b8143870ca312f"
+      },
+      "locales": {
+        "en": {
+          "alt": "A welcoming fictional kitchen story table with a steaming red soup bowl, pottery, two blank recipe cards and an open place for another guest."
+        },
+        "uk": {
+          "alt": "Привітний уявний кухонний стіл історій із мискою гарячого червоного супу, керамікою, двома чистими картками рецептів і місцем для ще одного гостя."
+        }
+      }
+    }
+  },
+  {
+    "brandId": "ukraine-culture",
+    "campaignId": "ukraine-everyday-culture",
+    "format": "revealline-completion-reward.v1",
+    "id": "ukraine-everyday-culture-02-discovery",
+    "locales": {
+      "en": {
+        "teaser": "A pair of dots is part of a distinct Ukrainian letter.",
+        "title": "Look Closely at Ї"
+      },
+      "uk": {
+        "teaser": "Дві крапки є частиною окремої української літери.",
+        "title": "Придивіться до Ї"
+      }
+    },
+    "payloads": [
+      {
+        "asset": {
+          "assetId": "ukraine-everyday-culture-02-reveal-v1",
+          "sha256": "7c1377b4e36f4e28daa99bcfda585768ceef275df8f64e51d283e0b2673c4ab6"
+        },
+        "id": "ukraine-everyday-culture-02-image",
+        "locales": {
+          "en": {
+            "alt": "Original illustrated letter-study room with separate ivory І and Ї sculptures, two clearly visible dots above Ї, blank cards and a magnifier.",
+            "title": "Look Closely at Ї"
+          },
+          "uk": {
+            "alt": "Оригінальна ілюстрована кімната дослідження літер з окремими світлими скульптурами І та Ї, двома виразними крапками над Ї, порожніми картками й лупою.",
+            "title": "Придивіться до Ї"
+          }
+        },
+        "type": "image"
+      },
+      {
+        "id": "ukraine-everyday-culture-02-knowledge",
+        "locales": {
+          "en": {
+            "paragraphs": [
+              "The Ukrainian Institute’s alphabet guide lists І and Ї as distinct letters. Its pronunciation guide associates Ї with a “yi” sound rather than treating it as a decorated І.",
+              "Compare the word Україна with a version that has lost the two dots. A small graphic change can change a letter. In our fictional caption workshop, preserve the actual characters, increase text size when needed and keep decorative patterns away from the words."
+            ],
+            "sources": [
+              {
+                "title": "Ukrainian Institute — Ukrainian alphabet and pronunciation guide",
+                "url": "https://ui.org.ua/wp-content/uploads/2025/07/decolonisation-in-museums_part-1.pdf"
+              }
+            ],
+            "title": "Look Closely at Ї"
+          },
+          "uk": {
+            "paragraphs": [
+              "Абетковий посібник Українського інституту подає І та Ї як різні літери. Пояснення вимови пов’язує Ї зі сполученням звуків «йі», а не з оздобленою І.",
+              "Порівняйте слово «Україна» з версією, у якій зникли дві крапки. Мала графічна зміна може змінити літеру. У вигаданій майстерні підписів зберігайте справжні символи, за потреби збільшуйте текст і тримайте декоративні візерунки подалі від слів."
+            ],
+            "sources": [
+              {
+                "title": "Ukrainian Institute — Ukrainian alphabet and pronunciation guide",
+                "url": "https://ui.org.ua/wp-content/uploads/2025/07/decolonisation-in-museums_part-1.pdf"
+              }
+            ],
+            "title": "Придивіться до Ї"
+          }
+        },
+        "profiles": {
+          "beginners": {
+            "en": {
+              "paragraphs": [
+                "Treat І and Ї as distinct characters. Enlarge the text if helpful and explain why decoration or a lost pair of dots can change what is read."
+              ],
+              "title": "Make a distinction: Look Closely at Ї"
+            },
+            "uk": {
+              "paragraphs": [
+                "Сприймайте І та Ї як різні символи. За потреби збільште текст і поясніть, як декор чи втрата двох крапок змінює прочитане."
+              ],
+              "title": "Розрізнімо: Придивіться до Ї"
+            }
+          },
+          "families": {
+            "en": {
+              "paragraphs": [
+                "Find the two dots of Ї together. Compare І and Ї, then locate Ї in “Україна” without changing the actual letters."
+              ],
+              "title": "Look together: Look Closely at Ї"
+            },
+            "uk": {
+              "paragraphs": [
+                "Разом знайдіть дві крапки над Ї. Порівняйте І та Ї, а потім знайдіть Ї у слові «Україна», не змінюючи справжніх літер."
+              ],
+              "title": "Погляньмо разом: Придивіться до Ї"
+            }
+          },
+          "hobbyists": {
+            "en": {
+              "paragraphs": [
+                "Compare a decorative caption with a readable version preserving “Україна.” Which visual choices improve access without changing the characters or claiming pronunciation from an image?"
+              ],
+              "title": "Explore the evidence: Look Closely at Ї"
+            },
+            "uk": {
+              "paragraphs": [
+                "Порівняйте декоративний підпис із читабельним, що зберігає «Україна». Які візуальні рішення поліпшують доступ, не змінюючи символів і не виводячи вимову із зображення?"
+              ],
+              "title": "Дослідімо докази: Придивіться до Ї"
+            }
+          }
+        },
+        "type": "knowledge"
+      }
+    ],
+    "requirements": {
+      "learning": [],
+      "mastery": [],
+      "missions": [
+        {
+          "bindings": [
+            { "difficulty": "gentle", "gameplayId": "e05db5055a812af4" },
+            { "difficulty": "standard", "gameplayId": "207b06f0180e8ea4" },
+            { "difficulty": "expert", "gameplayId": "71b67fa0651e7c69" }
+          ],
+          "missionId": "ukraine-everyday-culture-02"
+        }
+      ]
+    },
+    "revision": "4",
+    "scope": { "id": "ukraine-everyday-culture-02", "kind": "mission" },
+    "teaserImage": {
+      "asset": {
+        "assetId": "ukraine-everyday-culture-key-v1",
+        "sha256": "3a073c5217136f23e3d9671aa4a4053ce18bef1331d9e8a6f0b8143870ca312f"
+      },
+      "locales": {
+        "en": {
+          "alt": "A welcoming fictional kitchen story table with a steaming red soup bowl, pottery, two blank recipe cards and an open place for another guest."
+        },
+        "uk": {
+          "alt": "Привітний уявний кухонний стіл історій із мискою гарячого червоного супу, керамікою, двома чистими картками рецептів і місцем для ще одного гостя."
+        }
+      }
+    }
+  },
+  {
+    "brandId": "ukraine-culture",
+    "campaignId": "ukraine-everyday-culture",
+    "format": "revealline-completion-reward.v1",
+    "id": "ukraine-everyday-culture-03-discovery",
+    "locales": {
+      "en": {
+        "teaser": "The borscht record includes cooking, sharing and passing knowledge on.",
+        "title": "A Dish and Its People"
+      },
+      "uk": {
+        "teaser": "Запис про борщ поєднує приготування, частування та передачу знань.",
+        "title": "Страва та її люди"
+      }
+    },
+    "payloads": [
+      {
+        "asset": {
+          "assetId": "ukraine-everyday-culture-03-reveal-v1",
+          "sha256": "5ebb4aaca19d026d0a610d712149395848bb9e3ace016e7432f2485e8b311623"
+        },
+        "id": "ukraine-everyday-culture-03-image",
+        "locales": {
+          "en": {
+            "alt": "Original illustrated kitchen-story exhibit with a red vegetable-soup bowl, possible ingredient baskets and three separate blank recipe-context cards.",
+            "title": "A Dish and Its People"
+          },
+          "uk": {
+            "alt": "Оригінальна ілюстрована виставка кухонних історій із мискою червоного овочевого супу, кошиками можливих складників та трьома окремими порожніми картками контексту рецепта.",
+            "title": "Страва та її люди"
+          }
+        },
+        "type": "image"
+      },
+      {
+        "id": "ukraine-everyday-culture-03-knowledge",
+        "locales": {
+          "en": {
+            "paragraphs": [
+              "UNESCO inscribed the culture of Ukrainian borscht cooking on the Urgent Safeguarding List in 2022. The record describes a cooking and social practice passed on in families and communities.",
+              "Our fictional recipe card has room for ingredients, who shared the recipe and when the dish is made. Which of those details would disappear from an ingredient-only list? Keep the person’s own account instead of assuming all households cook or serve a dish in the same way."
+            ],
+            "sources": [
+              {
+                "title": "UNESCO — Culture of Ukrainian borscht cooking",
+                "url": "https://ich.unesco.org/en/USL/culture-of-ukrainian-borscht-cooking-01852"
+              }
+            ],
+            "title": "A Dish and Its People"
+          },
+          "uk": {
+            "paragraphs": [
+              "ЮНЕСКО внесло культуру приготування українського борщу до Списку термінової охорони 2022 року. Запис описує кулінарну й соціальну практику, яку передають у родинах та спільнотах.",
+              "У вигаданій картці рецепта є місце для складників, імені того, хто поділився рецептом, та нагоди приготування. Що зникне зі списку лише інгредієнтів? Збережіть власну розповідь людини, не припускаючи, що всі родини готують або подають страву однаково."
+            ],
+            "sources": [
+              {
+                "title": "UNESCO — Culture of Ukrainian borscht cooking",
+                "url": "https://ich.unesco.org/en/USL/culture-of-ukrainian-borscht-cooking-01852"
+              }
+            ],
+            "title": "Страва та її люди"
+          }
+        },
+        "profiles": {
+          "beginners": {
+            "en": {
+              "paragraphs": [
+                "Separate a recipe’s ingredient list from its social context. The record concerns a cooking practice passed on by people, not one required household recipe."
+              ],
+              "title": "Make a distinction: A Dish and Its People"
+            },
+            "uk": {
+              "paragraphs": [
+                "Розрізніть перелік складників і соціальний контекст рецепта. Запис стосується практики, яку передають люди, а не одного обов’язкового родинного рецепта."
+              ],
+              "title": "Розрізнімо: Страва та її люди"
+            }
+          },
+          "families": {
+            "en": {
+              "paragraphs": [
+                "Imagine a recipe card with an ingredient, a person and an occasion. Which story would disappear if only the ingredients stayed?"
+              ],
+              "title": "Look together: A Dish and Its People"
+            },
+            "uk": {
+              "paragraphs": [
+                "Уявіть картку рецепта зі складником, людиною й нагодою. Яка історія зникне, якщо залишити лише складники?"
+              ],
+              "title": "Погляньмо разом: Страва та її люди"
+            }
+          },
+          "hobbyists": {
+            "en": {
+              "paragraphs": [
+                "Draft a respectful fictional recipe-story card that preserves who shared it and when it is used. Mark invented examples clearly and leave room for different accounts."
+              ],
+              "title": "Explore the evidence: A Dish and Its People"
+            },
+            "uk": {
+              "paragraphs": [
+                "Складіть уважну вигадану картку кулінарної історії: хто поділився рецептом і коли його використовує. Чітко позначте вигадані приклади й залиште місце різним розповідям."
+              ],
+              "title": "Дослідімо докази: Страва та її люди"
+            }
+          }
+        },
+        "type": "knowledge"
+      }
+    ],
+    "requirements": {
+      "learning": [],
+      "mastery": [],
+      "missions": [
+        {
+          "bindings": [
+            { "difficulty": "gentle", "gameplayId": "f1fef64a706ea53a" },
+            { "difficulty": "standard", "gameplayId": "8b5bab276d602b0f" },
+            { "difficulty": "expert", "gameplayId": "f91368c89ba659c4" }
+          ],
+          "missionId": "ukraine-everyday-culture-03"
+        }
+      ]
+    },
+    "revision": "4",
+    "scope": { "id": "ukraine-everyday-culture-03", "kind": "mission" },
+    "teaserImage": {
+      "asset": {
+        "assetId": "ukraine-everyday-culture-key-v1",
+        "sha256": "3a073c5217136f23e3d9671aa4a4053ce18bef1331d9e8a6f0b8143870ca312f"
+      },
+      "locales": {
+        "en": {
+          "alt": "A welcoming fictional kitchen story table with a steaming red soup bowl, pottery, two blank recipe cards and an open place for another guest."
+        },
+        "uk": {
+          "alt": "Привітний уявний кухонний стіл історій із мискою гарячого червоного супу, керамікою, двома чистими картками рецептів і місцем для ще одного гостя."
+        }
+      }
+    }
+  },
+  {
+    "brandId": "ukraine-culture",
+    "campaignId": "ukraine-everyday-culture",
+    "format": "revealline-completion-reward.v1",
+    "id": "ukraine-everyday-culture-04-discovery",
+    "locales": {
+      "en": {
+        "teaser": "An everyday ceramic vessel can become a carefully recorded museum object.",
+        "title": "A Bowl with a Record"
+      },
+      "uk": {
+        "teaser": "Повсякденна керамічна посудина може стати ретельно описаним музейним предметом.",
+        "title": "Миска з описом"
+      }
+    },
+    "payloads": [
+      {
+        "asset": {
+          "assetId": "ukraine-everyday-culture-04-reveal-v1",
+          "sha256": "b1f860501106e80dd47b46b856bc50a7735d84adc95ae9de5b4ffc37eb58bf6e"
+        },
+        "id": "ukraine-everyday-culture-04-image",
+        "locales": {
+          "en": {
+            "alt": "Original illustrated ceramics reading room with a generic terracotta bowl, unnumbered measuring guides and a separate enlarged blank source card.",
+            "title": "A Bowl with a Record"
+          },
+          "uk": {
+            "alt": "Оригінальна ілюстрована керамічна читальня з умовною теракотовою мискою, вимірювальними напрямними без чисел та окремою великою порожньою карткою джерела.",
+            "title": "Миска з описом"
+          }
+        },
+        "type": "image"
+      },
+      {
+        "id": "ukraine-everyday-culture-04-knowledge",
+        "locales": {
+          "en": {
+            "paragraphs": [
+              "The Museum Fund of Ukraine records a twentieth-century makitra in Novoarkhanhelsk’s local-history museum. Its entry names pottery ceramic, firing, dimensions and a hand-made vessel with coloured decoration.",
+              "Our fictional object card separates recorded measurements from imagined use. Look at a bowl-like silhouette and ask what its label actually establishes. A museum record can leave a maker unknown; an attractive story should not fill that gap with an invented person."
+            ],
+            "sources": [
+              {
+                "title": "Museum Fund of Ukraine — Makitra, Novoarkhanhelsk museum",
+                "url": "https://museum.mincult.gov.ua/collections/279349"
+              }
+            ],
+            "title": "A Bowl with a Record"
+          },
+          "uk": {
+            "paragraphs": [
+              "Музейний фонд України описує макітру XX століття з Новоархангельського краєзнавчого музею. Запис називає гончарну кераміку, випал, розміри та ручне виготовлення посудини з кольоровим оздобленням.",
+              "Вигадана картка предмета відокремлює записані розміри від уявного використання. Подивіться на силует миски та запитайте, що саме підтверджує підпис. Музейний запис може не називати автора; цікава історія не має заповнювати прогалину вигаданою людиною."
+            ],
+            "sources": [
+              {
+                "title": "Museum Fund of Ukraine — Makitra, Novoarkhanhelsk museum",
+                "url": "https://museum.mincult.gov.ua/collections/279349"
+              }
+            ],
+            "title": "Миска з описом"
+          }
+        },
+        "profiles": {
+          "beginners": {
+            "en": {
+              "paragraphs": [
+                "Keep recorded material and measurements separate from imagined use or maker. The game’s bowl is a new illustration, not the museum’s actual makitra."
+              ],
+              "title": "Make a distinction: A Bowl with a Record"
+            },
+            "uk": {
+              "paragraphs": [
+                "Розрізніть записані матеріал і розміри та уявне використання чи авторство. Миска гри — нова ілюстрація, а не справжня музейна макітра."
+              ],
+              "title": "Розрізнімо: Миска з описом"
+            }
+          },
+          "families": {
+            "en": {
+              "paragraphs": [
+                "Look at the bowl illustration and its separate record description. Name one thing you see and one thing you must learn from the record."
+              ],
+              "title": "Look together: A Bowl with a Record"
+            },
+            "uk": {
+              "paragraphs": [
+                "Погляньте на ілюстрацію миски й окремий опис запису. Назвіть те, що бачите, і те, що можна дізнатися лише із запису."
+              ],
+              "title": "Погляньмо разом: Миска з описом"
+            }
+          },
+          "hobbyists": {
+            "en": {
+              "paragraphs": [
+                "Write a compact object label from the museum record and identify its gaps. Which attractive story would exceed the evidence, and how would you keep that uncertainty visible?"
+              ],
+              "title": "Explore the evidence: A Bowl with a Record"
+            },
+            "uk": {
+              "paragraphs": [
+                "Складіть стислий підпис за музейним записом і визначте прогалини. Яка приваблива історія перевищує докази та як зберегти невизначеність видимою?"
+              ],
+              "title": "Дослідімо докази: Миска з описом"
+            }
+          }
+        },
+        "type": "knowledge"
+      }
+    ],
+    "requirements": {
+      "learning": [],
+      "mastery": [],
+      "missions": [
+        {
+          "bindings": [
+            { "difficulty": "gentle", "gameplayId": "2260a9c8cd555896" },
+            { "difficulty": "standard", "gameplayId": "454268122da72851" },
+            { "difficulty": "expert", "gameplayId": "9ecc55eb2c7ad8f0" }
+          ],
+          "missionId": "ukraine-everyday-culture-04"
+        }
+      ]
+    },
+    "revision": "4",
+    "scope": { "id": "ukraine-everyday-culture-04", "kind": "mission" },
+    "teaserImage": {
+      "asset": {
+        "assetId": "ukraine-everyday-culture-key-v1",
+        "sha256": "3a073c5217136f23e3d9671aa4a4053ce18bef1331d9e8a6f0b8143870ca312f"
+      },
+      "locales": {
+        "en": {
+          "alt": "A welcoming fictional kitchen story table with a steaming red soup bowl, pottery, two blank recipe cards and an open place for another guest."
+        },
+        "uk": {
+          "alt": "Привітний уявний кухонний стіл історій із мискою гарячого червоного супу, керамікою, двома чистими картками рецептів і місцем для ще одного гостя."
+        }
+      }
+    }
+  },
+  {
+    "brandId": "ukraine-culture",
+    "campaignId": "ukraine-everyday-culture",
+    "format": "revealline-completion-reward.v1",
+    "id": "ukraine-everyday-culture-05-discovery",
+    "locales": {
+      "en": {
+        "teaser": "Variation can be part of a shared cooking tradition.",
+        "title": "Two Recipe Cards"
+      },
+      "uk": {
+        "teaser": "Відмінності можуть бути частиною спільної кулінарної традиції.",
+        "title": "Дві картки рецептів"
+      }
+    },
+    "payloads": [
+      {
+        "asset": {
+          "assetId": "ukraine-everyday-culture-05-reveal-v1",
+          "sha256": "f140d676d3f01fce4a2e2cd50d80277456b51454f5fc404cd3c566686f655810"
+        },
+        "id": "ukraine-everyday-culture-05-image",
+        "locales": {
+          "en": {
+            "alt": "Original illustrated two-table recipe exhibit comparing a simple weekday setting with a wider celebration setting, each with its own blank context card.",
+            "title": "Two Recipe Cards"
+          },
+          "uk": {
+            "alt": "Оригінальна ілюстрована виставка двох столів, що зіставляє просте щоденне сервірування зі святковим, кожне з власною порожньою карткою контексту.",
+            "title": "Дві картки рецептів"
+          }
+        },
+        "type": "image"
+      },
+      {
+        "id": "ukraine-everyday-culture-05-knowledge",
+        "locales": {
+          "en": {
+            "paragraphs": [
+              "UNESCO’s borscht account describes a practice with varied ingredients and ways of preparation. Its significance includes hospitality, family and community settings, not only one fixed recipe.",
+              "Compare two invented cards: one says “our weekday version,” the other “our celebration version.” Ask their authors what changes and why. Preserve those explanations as examples. The task rewards an explainable comparison; it does not rank someone’s belonging by what they eat."
+            ],
+            "sources": [
+              {
+                "title": "UNESCO — Culture of Ukrainian borscht cooking",
+                "url": "https://ich.unesco.org/en/USL/culture-of-ukrainian-borscht-cooking-01852"
+              }
+            ],
+            "title": "Two Recipe Cards"
+          },
+          "uk": {
+            "paragraphs": [
+              "Розповідь ЮНЕСКО про борщ описує практику з різними складниками та способами приготування. Її значення охоплює гостинність, родинні й громадські обставини, а не лише один сталий рецепт.",
+              "Порівняйте дві вигадані картки: «наш буденний варіант» і «наш святковий варіант». Запитайте авторів, що змінюється й чому. Збережіть пояснення як приклади. Вправа заохочує зрозуміле порівняння, а не оцінює належність людини за її їжею."
+            ],
+            "sources": [
+              {
+                "title": "UNESCO — Culture of Ukrainian borscht cooking",
+                "url": "https://ich.unesco.org/en/USL/culture-of-ukrainian-borscht-cooking-01852"
+              }
+            ],
+            "title": "Дві картки рецептів"
+          }
+        },
+        "profiles": {
+          "beginners": {
+            "en": {
+              "paragraphs": [
+                "Describe a difference in occasion or practice without deciding which household is more authentic. Keep the two cards as examples, not universal rules."
+              ],
+              "title": "Make a distinction: Two Recipe Cards"
+            },
+            "uk": {
+              "paragraphs": [
+                "Опишіть різницю нагоди чи практики без визначення «автентичнішої» родини. Збережіть картки як приклади, а не універсальні правила."
+              ],
+              "title": "Розрізнімо: Дві картки рецептів"
+            }
+          },
+          "families": {
+            "en": {
+              "paragraphs": [
+                "Compare an invented weekday recipe card with a celebration card. Ask what their imagined authors would want to explain about the difference."
+              ],
+              "title": "Look together: Two Recipe Cards"
+            },
+            "uk": {
+              "paragraphs": [
+                "Порівняйте вигадані картки щоденного й святкового рецепта. Запитайте, що їхні уявні автори хотіли б пояснити про відмінність."
+              ],
+              "title": "Погляньмо разом: Дві картки рецептів"
+            }
+          },
+          "hobbyists": {
+            "en": {
+              "paragraphs": [
+                "Transfer the comparison to a different fictional food story. What source or person’s account would be needed before making a broader cultural claim?"
+              ],
+              "title": "Explore the evidence: Two Recipe Cards"
+            },
+            "uk": {
+              "paragraphs": [
+                "Перенесіть порівняння на іншу вигадану кулінарну історію. Яке джерело чи особиста розповідь потрібні перед ширшим культурним твердженням?"
+              ],
+              "title": "Дослідімо докази: Дві картки рецептів"
+            }
+          }
+        },
+        "type": "knowledge"
+      }
+    ],
+    "requirements": {
+      "learning": [],
+      "mastery": [],
+      "missions": [
+        {
+          "bindings": [
+            { "difficulty": "gentle", "gameplayId": "d9d42afa1a5a662e" },
+            { "difficulty": "standard", "gameplayId": "b0a3a2dd272341ac" },
+            { "difficulty": "expert", "gameplayId": "18fea0decb27d82a" }
+          ],
+          "missionId": "ukraine-everyday-culture-05"
+        }
+      ]
+    },
+    "revision": "4",
+    "scope": { "id": "ukraine-everyday-culture-05", "kind": "mission" },
+    "teaserImage": {
+      "asset": {
+        "assetId": "ukraine-everyday-culture-key-v1",
+        "sha256": "3a073c5217136f23e3d9671aa4a4053ce18bef1331d9e8a6f0b8143870ca312f"
+      },
+      "locales": {
+        "en": {
+          "alt": "A welcoming fictional kitchen story table with a steaming red soup bowl, pottery, two blank recipe cards and an open place for another guest."
+        },
+        "uk": {
+          "alt": "Привітний уявний кухонний стіл історій із мискою гарячого червоного супу, керамікою, двома чистими картками рецептів і місцем для ще одного гостя."
+        }
+      }
+    }
+  },
+  {
+    "brandId": "ukraine-culture",
+    "campaignId": "ukraine-everyday-culture",
+    "format": "revealline-completion-reward.v1",
+    "id": "ukraine-everyday-culture-06-discovery",
+    "locales": {
+      "en": {
+        "teaser": "A useful cultural collection can invite questions instead of closing them.",
+        "title": "Make Room for Another Story"
+      },
+      "uk": {
+        "teaser": "Корисна культурна колекція запрошує запитання, а не закриває їх.",
+        "title": "Залиште місце для ще однієї історії"
+      }
+    },
+    "payloads": [
+      {
+        "asset": {
+          "assetId": "ukraine-everyday-culture-06-reveal-v1",
+          "sha256": "9c67d5162dc5be14ffb1b56c81ee76e8d3f6468ebdfc90fa179db2cca0d2f3a8"
+        },
+        "id": "ukraine-everyday-culture-06-image",
+        "locales": {
+          "en": {
+            "alt": "Original illustrated welcome-book finale with six small discovery pictures, an empty contribution card and a spare chair in a warm fictional reading room.",
+            "title": "Make Room for Another Story"
+          },
+          "uk": {
+            "alt": "Оригінальна ілюстрована фінальна книга гостинності з шістьма невеликими зображеннями відкриттів, порожньою карткою для внеску та вільним стільцем у теплій вигаданій читальні.",
+            "title": "Залиште місце для ще однієї історії"
+          }
+        },
+        "type": "image"
+      },
+      {
+        "id": "ukraine-everyday-culture-06-knowledge",
+        "locales": {
+          "en": {
+            "paragraphs": [
+              "Your discoveries now connect everyday words, readable letters, cooking practices and a documented household object. The linked Ukrainian Institute guide offers a route for continuing to read names and words with care.",
+              "Finish our fictional welcome book with one new question and an empty contribution card. Explain which details came from a source and which you invented for the scene. Sharing the collection can open a conversation; completing it does not give anyone authority to speak for every Ukrainian."
+            ],
+            "sources": [
+              {
+                "title": "Ukrainian Institute — Ukrainian alphabet and pronunciation guide",
+                "url": "https://ui.org.ua/wp-content/uploads/2025/07/decolonisation-in-museums_part-1.pdf"
+              }
+            ],
+            "title": "Make Room for Another Story"
+          },
+          "uk": {
+            "paragraphs": [
+              "Ваші відкриття поєднують щоденні слова, читабельні літери, кулінарні практики та документований побутовий предмет. Посібник Українського інституту за посиланням допомагає продовжувати уважно читати імена й слова.",
+              "Завершіть вигадану книгу гостинності новим запитанням і порожньою карткою для внеску. Поясніть, що взято з джерела, а що ви вигадали для сцени. Поширення колекції починає розмову; її завершення не надає права говорити від імені всіх українців."
+            ],
+            "sources": [
+              {
+                "title": "Ukrainian Institute — Ukrainian alphabet and pronunciation guide",
+                "url": "https://ui.org.ua/wp-content/uploads/2025/07/decolonisation-in-museums_part-1.pdf"
+              }
+            ],
+            "title": "Залиште місце для ще однієї історії"
+          }
+        },
+        "profiles": {
+          "beginners": {
+            "en": {
+              "paragraphs": [
+                "Review words, letters, cooking context and the object record. Separate source-supported details from the game’s invented scenes before sharing the collection."
+              ],
+              "title": "Make a distinction: Make Room for Another Story"
+            },
+            "uk": {
+              "paragraphs": [
+                "Перегляньте слова, літери, кулінарний контекст і запис предмета. Перед поширенням розрізніть підтверджені джерелами подробиці й вигадані сцени гри."
+              ],
+              "title": "Розрізнімо: Залиште місце для ще однієї історії"
+            }
+          },
+          "families": {
+            "en": {
+              "paragraphs": [
+                "Add an imagined blank contribution card to the welcome book. Tell each other one new question you would invite another person to answer."
+              ],
+              "title": "Look together: Make Room for Another Story"
+            },
+            "uk": {
+              "paragraphs": [
+                "Додайте уявну порожню картку внеску до книги гостинності. Розкажіть одне одному нове запитання, на яке запросите відповісти іншу людину."
+              ],
+              "title": "Погляньмо разом: Залиште місце для ще однієї історії"
+            }
+          },
+          "hobbyists": {
+            "en": {
+              "paragraphs": [
+                "Curate a welcome-book page that states its sources, limits and next question. Explain why completing the collection invites more voices rather than authorising one account for everyone."
+              ],
+              "title": "Explore the evidence: Make Room for Another Story"
+            },
+            "uk": {
+              "paragraphs": [
+                "Складіть сторінку книги гостинності з джерелами, межами й наступним запитанням. Поясніть, чому завершена колекція запрошує нові голоси, а не уповноважує одну розповідь за всіх."
+              ],
+              "title": "Дослідімо докази: Залиште місце для ще однієї історії"
+            }
+          }
+        },
+        "type": "knowledge"
+      }
+    ],
+    "requirements": {
+      "learning": [],
+      "mastery": [],
+      "missions": [
+        {
+          "bindings": [
+            { "difficulty": "gentle", "gameplayId": "65e7932e8e624ea7" },
+            { "difficulty": "standard", "gameplayId": "301ff7a49b5e101a" },
+            { "difficulty": "expert", "gameplayId": "6860cc380b2d7dfa" }
+          ],
+          "missionId": "ukraine-everyday-culture-06"
+        }
+      ]
+    },
+    "revision": "4",
+    "scope": { "id": "ukraine-everyday-culture-06", "kind": "mission" },
+    "teaserImage": {
+      "asset": {
+        "assetId": "ukraine-everyday-culture-key-v1",
+        "sha256": "3a073c5217136f23e3d9671aa4a4053ce18bef1331d9e8a6f0b8143870ca312f"
+      },
+      "locales": {
+        "en": {
+          "alt": "A welcoming fictional kitchen story table with a steaming red soup bowl, pottery, two blank recipe cards and an open place for another guest."
+        },
+        "uk": {
+          "alt": "Привітний уявний кухонний стіл історій із мискою гарячого червоного супу, керамікою, двома чистими картками рецептів і місцем для ще одного гостя."
+        }
+      }
+    }
+  },
+  {
+    "brandId": "ukraine-culture",
+    "campaignId": "ukraine-everyday-culture",
+    "format": "revealline-completion-reward.v1",
+    "id": "ukraine-everyday-culture-finale",
+    "locales": {
+      "en": {
+        "teaser": "Win all six distinct missions to complete this discovery exhibit.",
+        "title": "A Welcome Book of Everyday Stories"
+      },
+      "uk": {
+        "teaser": "Переможіть у всіх шести різних місіях, щоб завершити виставку відкриттів.",
+        "title": "Книга привітань і щоденних історій"
+      }
+    },
+    "payloads": [
+      {
+        "id": "ukraine-everyday-culture-guide",
+        "locales": {
+          "en": {
+            "paragraphs": [
+              "Combine a greeting, a carefully read letter, a cooking tradition, a documented vessel, a recipe’s context and an invitation into a small welcome book. Name your examples and leave room for other people’s experiences. Everyday culture changes through use; no six cards can stand for every household."
+            ],
+            "sources": [
+              {
+                "title": "Ukrainian Institute — Ukrainian alphabet and pronunciation guide",
+                "url": "https://ui.org.ua/wp-content/uploads/2025/07/decolonisation-in-museums_part-1.pdf"
+              }
+            ],
+            "title": "A Welcome Book of Everyday Stories"
+          },
+          "uk": {
+            "paragraphs": [
+              "Поєднайте привітання, уважно прочитану літеру, кулінарну традицію, опис посудини, контекст рецепта та запрошення в малу книгу гостинності. Називайте свої приклади й залишайте місце для досвіду інших. Повсякденна культура змінюється в користуванні; шість карток не можуть представляти кожну родину."
+            ],
+            "sources": [
+              {
+                "title": "Ukrainian Institute — Ukrainian alphabet and pronunciation guide",
+                "url": "https://ui.org.ua/wp-content/uploads/2025/07/decolonisation-in-museums_part-1.pdf"
+              }
+            ],
+            "title": "Книга привітань і щоденних історій"
+          }
+        },
+        "type": "knowledge"
+      },
+      {
+        "asset": {
+          "assetId": "ukraine-everyday-culture-01-reveal-v1",
+          "sha256": "8f4ed7543e43144de4fcf3766ea375df0c09eb143a2466c19038c40a25f23eac"
+        },
+        "id": "ukraine-everyday-culture-01-image",
+        "locales": {
+          "en": {
+            "alt": "Original illustrated welcoming library with an open coral door, a book ready to exchange and two blank greeting panels on a wooden desk.",
+            "title": "A Door Opens with Words"
+          },
+          "uk": {
+            "alt": "Оригінальна ілюстрована гостинна бібліотека з відчиненими кораловими дверима, книжкою для обміну й двома порожніми панелями привітання на дерев’яному столі.",
+            "title": "Двері відчиняються словами"
+          }
+        },
+        "type": "image"
+      },
+      {
+        "asset": {
+          "assetId": "ukraine-everyday-culture-02-reveal-v1",
+          "sha256": "7c1377b4e36f4e28daa99bcfda585768ceef275df8f64e51d283e0b2673c4ab6"
+        },
+        "id": "ukraine-everyday-culture-02-image",
+        "locales": {
+          "en": {
+            "alt": "Original illustrated letter-study room with separate ivory І and Ї sculptures, two clearly visible dots above Ї, blank cards and a magnifier.",
+            "title": "Look Closely at Ї"
+          },
+          "uk": {
+            "alt": "Оригінальна ілюстрована кімната дослідження літер з окремими світлими скульптурами І та Ї, двома виразними крапками над Ї, порожніми картками й лупою.",
+            "title": "Придивіться до Ї"
+          }
+        },
+        "type": "image"
+      },
+      {
+        "asset": {
+          "assetId": "ukraine-everyday-culture-03-reveal-v1",
+          "sha256": "5ebb4aaca19d026d0a610d712149395848bb9e3ace016e7432f2485e8b311623"
+        },
+        "id": "ukraine-everyday-culture-03-image",
+        "locales": {
+          "en": {
+            "alt": "Original illustrated kitchen-story exhibit with a red vegetable-soup bowl, possible ingredient baskets and three separate blank recipe-context cards.",
+            "title": "A Dish and Its People"
+          },
+          "uk": {
+            "alt": "Оригінальна ілюстрована виставка кухонних історій із мискою червоного овочевого супу, кошиками можливих складників та трьома окремими порожніми картками контексту рецепта.",
+            "title": "Страва та її люди"
+          }
+        },
+        "type": "image"
+      },
+      {
+        "asset": {
+          "assetId": "ukraine-everyday-culture-04-reveal-v1",
+          "sha256": "b1f860501106e80dd47b46b856bc50a7735d84adc95ae9de5b4ffc37eb58bf6e"
+        },
+        "id": "ukraine-everyday-culture-04-image",
+        "locales": {
+          "en": {
+            "alt": "Original illustrated ceramics reading room with a generic terracotta bowl, unnumbered measuring guides and a separate enlarged blank source card.",
+            "title": "A Bowl with a Record"
+          },
+          "uk": {
+            "alt": "Оригінальна ілюстрована керамічна читальня з умовною теракотовою мискою, вимірювальними напрямними без чисел та окремою великою порожньою карткою джерела.",
+            "title": "Миска з описом"
+          }
+        },
+        "type": "image"
+      },
+      {
+        "asset": {
+          "assetId": "ukraine-everyday-culture-05-reveal-v1",
+          "sha256": "f140d676d3f01fce4a2e2cd50d80277456b51454f5fc404cd3c566686f655810"
+        },
+        "id": "ukraine-everyday-culture-05-image",
+        "locales": {
+          "en": {
+            "alt": "Original illustrated two-table recipe exhibit comparing a simple weekday setting with a wider celebration setting, each with its own blank context card.",
+            "title": "Two Recipe Cards"
+          },
+          "uk": {
+            "alt": "Оригінальна ілюстрована виставка двох столів, що зіставляє просте щоденне сервірування зі святковим, кожне з власною порожньою карткою контексту.",
+            "title": "Дві картки рецептів"
+          }
+        },
+        "type": "image"
+      },
+      {
+        "asset": {
+          "assetId": "ukraine-everyday-culture-06-reveal-v1",
+          "sha256": "9c67d5162dc5be14ffb1b56c81ee76e8d3f6468ebdfc90fa179db2cca0d2f3a8"
+        },
+        "id": "ukraine-everyday-culture-06-image",
+        "locales": {
+          "en": {
+            "alt": "Original illustrated welcome-book finale with six small discovery pictures, an empty contribution card and a spare chair in a warm fictional reading room.",
+            "title": "Make Room for Another Story"
+          },
+          "uk": {
+            "alt": "Оригінальна ілюстрована фінальна книга гостинності з шістьма невеликими зображеннями відкриттів, порожньою карткою для внеску та вільним стільцем у теплій вигаданій читальні.",
+            "title": "Залиште місце для ще однієї історії"
+          }
+        },
+        "type": "image"
+      },
+      {
+        "id": "ukraine-everyday-culture-official-source",
+        "locales": {
+          "en": { "title": "Explore the official source" },
+          "uk": { "title": "Відкрити офіційне джерело" }
+        },
+        "qr": true,
+        "type": "url",
+        "url": "https://ui.org.ua/wp-content/uploads/2025/07/decolonisation-in-museums_part-1.pdf"
+      }
+    ],
+    "requirements": {
+      "learning": [],
+      "mastery": [],
+      "missions": [
+        {
+          "bindings": [
+            { "difficulty": "gentle", "gameplayId": "98bc3c7a6447f8c7" },
+            { "difficulty": "standard", "gameplayId": "4e0a1c5150bff17c" },
+            { "difficulty": "expert", "gameplayId": "9d8c9eba4b6d1f81" }
+          ],
+          "missionId": "ukraine-everyday-culture-01"
+        },
+        {
+          "bindings": [
+            { "difficulty": "gentle", "gameplayId": "e05db5055a812af4" },
+            { "difficulty": "standard", "gameplayId": "207b06f0180e8ea4" },
+            { "difficulty": "expert", "gameplayId": "71b67fa0651e7c69" }
+          ],
+          "missionId": "ukraine-everyday-culture-02"
+        },
+        {
+          "bindings": [
+            { "difficulty": "gentle", "gameplayId": "f1fef64a706ea53a" },
+            { "difficulty": "standard", "gameplayId": "8b5bab276d602b0f" },
+            { "difficulty": "expert", "gameplayId": "f91368c89ba659c4" }
+          ],
+          "missionId": "ukraine-everyday-culture-03"
+        },
+        {
+          "bindings": [
+            { "difficulty": "gentle", "gameplayId": "2260a9c8cd555896" },
+            { "difficulty": "standard", "gameplayId": "454268122da72851" },
+            { "difficulty": "expert", "gameplayId": "9ecc55eb2c7ad8f0" }
+          ],
+          "missionId": "ukraine-everyday-culture-04"
+        },
+        {
+          "bindings": [
+            { "difficulty": "gentle", "gameplayId": "d9d42afa1a5a662e" },
+            { "difficulty": "standard", "gameplayId": "b0a3a2dd272341ac" },
+            { "difficulty": "expert", "gameplayId": "18fea0decb27d82a" }
+          ],
+          "missionId": "ukraine-everyday-culture-05"
+        },
+        {
+          "bindings": [
+            { "difficulty": "gentle", "gameplayId": "65e7932e8e624ea7" },
+            { "difficulty": "standard", "gameplayId": "301ff7a49b5e101a" },
+            { "difficulty": "expert", "gameplayId": "6860cc380b2d7dfa" }
+          ],
+          "missionId": "ukraine-everyday-culture-06"
+        }
+      ]
+    },
+    "revision": "4",
+    "scope": { "id": "ukraine-everyday-culture", "kind": "campaign" },
+    "teaserImage": {
+      "asset": {
+        "assetId": "ukraine-everyday-culture-key-v1",
+        "sha256": "3a073c5217136f23e3d9671aa4a4053ce18bef1331d9e8a6f0b8143870ca312f"
+      },
+      "locales": {
+        "en": {
+          "alt": "A welcoming fictional kitchen story table with a steaming red soup bowl, pottery, two blank recipe cards and an open place for another guest."
+        },
+        "uk": {
+          "alt": "Привітний уявний кухонний стіл історій із мискою гарячого червоного супу, керамікою, двома чистими картками рецептів і місцем для ще одного гостя."
+        }
+      }
+    }
+  }
+]
