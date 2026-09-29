@@ -1,0 +1,328 @@
+{
+  "version": "revealline-coop-pack.v1",
+  "ruleset": "revealline-coop.v3",
+  "id": "dense-cue-review",
+  "revision": 2,
+  "name": "Dense cue review",
+  "levels": [
+    {
+      "version": "revealline-coop-level.v1",
+      "id": "dense-cue-arena",
+      "revision": 2,
+      "name": "Dense cue arena",
+      "width": 72,
+      "height": 36,
+      "spawns": [
+        {
+          "x": 0.5,
+          "y": 18.5
+        },
+        {
+          "x": 71.5,
+          "y": 18.5
+        }
+      ],
+      "walls": [],
+      "safeRects": [],
+      "enemies": [
+        {
+          "id": "hunter-01",
+          "type": "hunter",
+          "x": 5.5,
+          "y": 9.5,
+          "vx": 0.1,
+          "vy": 0.1,
+          "radius": 0.3
+        },
+        {
+          "id": "hunter-02",
+          "type": "hunter",
+          "x": 13.5,
+          "y": 9.5,
+          "vx": 0.1,
+          "vy": 0.1,
+          "radius": 0.3
+        },
+        {
+          "id": "hunter-03",
+          "type": "hunter",
+          "x": 21.5,
+          "y": 9.5,
+          "vx": 0.1,
+          "vy": 0.1,
+          "radius": 0.3
+        },
+        {
+          "id": "hunter-04",
+          "type": "hunter",
+          "x": 29.5,
+          "y": 9.5,
+          "vx": 0.1,
+          "vy": 0.1,
+          "radius": 0.3
+        },
+        {
+          "id": "hunter-05",
+          "type": "hunter",
+          "x": 37.5,
+          "y": 9.5,
+          "vx": 0.1,
+          "vy": 0.1,
+          "radius": 0.3
+        },
+        {
+          "id": "hunter-06",
+          "type": "hunter",
+          "x": 45.5,
+          "y": 9.5,
+          "vx": 0.1,
+          "vy": 0.1,
+          "radius": 0.3
+        },
+        {
+          "id": "hunter-07",
+          "type": "hunter",
+          "x": 53.5,
+          "y": 9.5,
+          "vx": 0.1,
+          "vy": 0.1,
+          "radius": 0.3
+        },
+        {
+          "id": "hunter-08",
+          "type": "hunter",
+          "x": 61.5,
+          "y": 9.5,
+          "vx": 0.1,
+          "vy": 0.1,
+          "radius": 0.3
+        },
+        {
+          "id": "hunter-09",
+          "type": "hunter",
+          "x": 5.5,
+          "y": 25.5,
+          "vx": 0.1,
+          "vy": 0.1,
+          "radius": 0.3
+        },
+        {
+          "id": "hunter-10",
+          "type": "hunter",
+          "x": 13.5,
+          "y": 25.5,
+          "vx": 0.1,
+          "vy": 0.1,
+          "radius": 0.3
+        },
+        {
+          "id": "hunter-11",
+          "type": "hunter",
+          "x": 21.5,
+          "y": 25.5,
+          "vx": 0.1,
+          "vy": 0.1,
+          "radius": 0.3
+        },
+        {
+          "id": "hunter-12",
+          "type": "hunter",
+          "x": 29.5,
+          "y": 25.5,
+          "vx": 0.1,
+          "vy": 0.1,
+          "radius": 0.3
+        },
+        {
+          "id": "hunter-13",
+          "type": "hunter",
+          "x": 37.5,
+          "y": 25.5,
+          "vx": 0.1,
+          "vy": 0.1,
+          "radius": 0.3
+        },
+        {
+          "id": "hunter-14",
+          "type": "hunter",
+          "x": 45.5,
+          "y": 25.5,
+          "vx": 0.1,
+          "vy": 0.1,
+          "radius": 0.3
+        },
+        {
+          "id": "hunter-15",
+          "type": "hunter",
+          "x": 53.5,
+          "y": 25.5,
+          "vx": 0.1,
+          "vy": 0.1,
+          "radius": 0.3
+        },
+        {
+          "id": "hunter-16",
+          "type": "hunter",
+          "x": 61.5,
+          "y": 25.5,
+          "vx": 0.1,
+          "vy": 0.1,
+          "radius": 0.3
+        }
+      ],
+      "strongholds": [
+        {
+          "id": "relay-1",
+          "core": {
+            "x": 4.5,
+            "y": 17.5
+          },
+          "anchors": [
+            {
+              "x": 3.5,
+              "y": 15.5
+            },
+            {
+              "x": 5.5,
+              "y": 15.5
+            }
+          ]
+        },
+        {
+          "id": "relay-2",
+          "core": {
+            "x": 12.5,
+            "y": 17.5
+          },
+          "anchors": [
+            {
+              "x": 11.5,
+              "y": 15.5
+            },
+            {
+              "x": 13.5,
+              "y": 15.5
+            }
+          ]
+        },
+        {
+          "id": "relay-3",
+          "core": {
+            "x": 20.5,
+            "y": 17.5
+          },
+          "anchors": [
+            {
+              "x": 19.5,
+              "y": 15.5
+            },
+            {
+              "x": 21.5,
+              "y": 15.5
+            }
+          ]
+        },
+        {
+          "id": "relay-4",
+          "core": {
+            "x": 28.5,
+            "y": 17.5
+          },
+          "anchors": [
+            {
+              "x": 27.5,
+              "y": 15.5
+            },
+            {
+              "x": 29.5,
+              "y": 15.5
+            }
+          ]
+        },
+        {
+          "id": "relay-5",
+          "core": {
+            "x": 36.5,
+            "y": 17.5
+          },
+          "anchors": [
+            {
+              "x": 35.5,
+              "y": 15.5
+            },
+            {
+              "x": 37.5,
+              "y": 15.5
+            }
+          ]
+        },
+        {
+          "id": "relay-6",
+          "core": {
+            "x": 44.5,
+            "y": 17.5
+          },
+          "anchors": [
+            {
+              "x": 43.5,
+              "y": 15.5
+            },
+            {
+              "x": 45.5,
+              "y": 15.5
+            }
+          ]
+        },
+        {
+          "id": "relay-7",
+          "core": {
+            "x": 52.5,
+            "y": 17.5
+          },
+          "anchors": [
+            {
+              "x": 51.5,
+              "y": 15.5
+            },
+            {
+              "x": 53.5,
+              "y": 15.5
+            }
+          ]
+        },
+        {
+          "id": "relay-8",
+          "core": {
+            "x": 60.5,
+            "y": 17.5
+          },
+          "anchors": [
+            {
+              "x": 59.5,
+              "y": 15.5
+            },
+            {
+              "x": 61.5,
+              "y": 15.5
+            }
+          ]
+        }
+      ],
+      "goal": {
+        "coverage": 0.65
+      },
+      "rules": {
+        "moveSpeed": 8,
+        "boostMultiplier": 1.5
+      },
+      "encounter": {
+        "hunterWakeStep": 0.45,
+        "hunterRecovery": 1.4,
+        "hunterRange": 28,
+        "hunterAttackSpeed": 10.5,
+        "hunterCommitMax": 2.4,
+        "emitterCooldown": 3
+      }
+    }
+  ]
+}

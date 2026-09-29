@@ -1,0 +1,12 @@
+{
+  "before": {
+    "count": 26,
+    "focus": "coop-help-reading",
+    "rows": "1 Sunflower: safe ground · Support ready\n2 Skyline: safe ground · Support ready\nHUNTER 1: Patrolling\nHUNTER 2: Patrolling\nHUNTER 3: Patrolling\nHUNTER 4: Patrolling\nHUNTER 5: Patrolling\nHUNTER 6: Patrolling\nHUNTER 7: Patrolling\nHUNTER 8: Patrolling\nHUNTER 9: Patrolling\nHUNTER 10: Patrolling\nHUNTER 11: Patrolling\nHUNTER 12: Patrolling\nHUNTER 13: Patrolling\nHUNTER 14: Patrolling\nHUNTER 15: Patrolling\nHUNTER 16: Patrolling\nRelay 1: SHIELD · A: CAPTURE · B: CAPTURE\nRelay 2: SHIELD · A: CAPTURE · B: CAPTURE\nRelay 3: SHIELD · A: CAPTURE · B: CAPTURE\nRelay 4: SHIELD · A: CAPTURE · B: CAPTURE\nRelay 5: SHIELD · A: CAPTURE · B: CAPTURE\nRelay 6: SHIELD · A: CAPTURE · B: CAPTURE\nRelay 7: SHIELD · A: CAPTURE · B: CAPTURE\nRelay 8: SHIELD · A: CAPTURE · B: CAPTURE"
+  },
+  "after": {
+    "count": 26,
+    "focus": "coop-help-reading",
+    "rows": "1 Sunflower: safe ground · Support ready\n2 Skyline: safe ground · Support ready\nHUNTER 1: Patrolling\nHUNTER 2: Patrolling\nHUNTER 3: Patrolling\nHUNTER 4: Patrolling\nHUNTER 5: Patrolling\nHUNTER 6: Patrolling\nHUNTER 7: Patrolling\nHUNTER 8: Patrolling\nHUNTER 9: Patrolling\nHUNTER 10: Patrolling\nHUNTER 11: Patrolling\nHUNTER 12: Patrolling\nHUNTER 13: Patrolling\nHUNTER 14: Patrolling\nHUNTER 15: Patrolling\nHUNTER 16: Patrolling\nRelay 1: SHIELD · A: CAPTURE · B: CAPTURE\nRelay 2: SHIELD · A: CAPTURE · B: CAPTURE\nRelay 3: SHIELD · A: CAPTURE · B: CAPTURE\nRelay 4: SHIELD · A: CAPTURE · B: CAPTURE\nRelay 5: SHIELD · A: CAPTURE · B: CAPTURE\nRelay 6: SHIELD · A: CAPTURE · B: CAPTURE\nRelay 7: SHIELD · A: CAPTURE · B: CAPTURE\nRelay 8: SHIELD · A: CAPTURE · B: CAPTURE"
+  }
+}
