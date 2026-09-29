@@ -1,0 +1,59 @@
+{
+  "format": "revealline-recovery-fragment-v1",
+  "capturedAt": "2026-09-29T15:09:02.349373+00:00",
+  "worktree": "<home>/.codex/worktrees/team-picture-v01322/go_test",
+  "branch": "refs/heads/codex/pages-v01322-selector",
+  "head": "4da146a92e9af1a27078664d374cefb7e961f1b9",
+  "excluded": [],
+  "changes": [
+    {
+      "status": " M",
+      "path": "publishing/pages-controller/catalog.json",
+      "object": "719562eec363e1c464df6747d2742efbbbf0fed8",
+      "sha256": "08c5f4dea9c3214b4e0c1daed888e1417f8d2699162f576ad5c194e8e2fe81a5",
+      "bytes": 73998,
+      "mode": "100644"
+    },
+    {
+      "status": "??",
+      "path": "publishing/pages-controller/evidence/current-v01322/source-qualification.json",
+      "object": "dd9751780fe340a29812a53b75a919c855177d12",
+      "sha256": "cbaa6a3ccee655ffa511f215fee5f3417d47629586cc6b84b35609fb74c59a57",
+      "bytes": 14730,
+      "mode": "100644"
+    },
+    {
+      "status": "??",
+      "path": "publishing/pages-controller/metadata/v0.132.2/distribution.zip.sha256",
+      "object": "b60c9689794f9e5961084030ec3afcfdc39349f9",
+      "sha256": "a0d0294b29e8ed490edd94d089d5ef5e862d901a3bca57b4e78089b83bbee25c",
+      "bytes": 83,
+      "mode": "100644"
+    },
+    {
+      "status": "??",
+      "path": "publishing/pages-controller/metadata/v0.132.2/manifest.json",
+      "object": "d3f829a1f044091cb5d541d370e872c260ae6fcc",
+      "sha256": "99fc673684ebb26b5cfa93abcf378842f05df56faf17883c3d75ad32348254cd",
+      "bytes": 234858,
+      "mode": "100644"
+    },
+    {
+      "status": "??",
+      "path": "publishing/pages-controller/metadata/v0.132.2/release.json",
+      "object": "9d854752e39741855013ffc4a34aca2d046a04b9",
+      "sha256": "7f97bc33adfffb80cc63afac64dab171c30c887b0fb0a67801678ba8b8462100",
+      "bytes": 468,
+      "mode": "100644"
+    }
+  ],
+  "indexEntries": [
+    {
+      "path": "publishing/pages-controller/catalog.json",
+      "mode": "100644",
+      "object": "8de419d0b6df2b2c3a0c70838262802491214e60",
+      "stage": 0
+    }
+  ],
+  "purpose": "Recovery only. These bytes are not release admission. Missing files, conflict stages and obsolete generated outputs are preserved as observations, not deletion or merge instructions."
+}
