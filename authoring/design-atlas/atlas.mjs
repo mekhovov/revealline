@@ -627,8 +627,17 @@ $('#copy-prompt').addEventListener('click', async () => {
       message: localizedMessage('tools:copyingTheExampleBrief'),
       isCurrent: () => generation === copyGeneration,
     });
+  let deadline;
   try {
-    await navigator.clipboard.writeText($('#prompt-example-text').textContent);
+    // Start within native activation, but bound only our status wait. The OS
+    // write cannot be canceled; a late settlement must not publish success.
+    const write = navigator.clipboard.writeText($('#prompt-example-text').textContent);
+    await Promise.race([
+      write,
+      new Promise((_, reject) => {
+        deadline = setTimeout(() => reject(new Error('Clipboard status timed out')), 2000);
+      }),
+    ]);
     lease.finish({ message: localizedMessage('tools:exampleBriefCopied') });
   } catch {
     if (generation !== copyGeneration) return;
@@ -651,6 +660,8 @@ $('#copy-prompt').addEventListener('click', async () => {
         message: localizedMessage('tools:copyWasUnavailableSelectTheExampleBriefAndUseYour'),
         state: 'error',
       });
+  } finally {
+    clearTimeout(deadline);
   }
 });
 

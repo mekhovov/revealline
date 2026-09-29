@@ -735,3 +735,173 @@ test('unavailable object URL support leaves Copy usable and exposes no invalid d
   assert.equal(h.writes[0], h.$('prompt-example-text').textContent);
   assert.equal(h.$('copy-status').dataset.state, 'ready');
 });
+
+function copyClock(t) {
+  const originalTimeout = globalThis.setTimeout,
+    originalClear = globalThis.clearTimeout,
+    timers = new Map(),
+    scheduled = [],
+    cleared = [];
+  let now = 0,
+    serial = 0;
+  globalThis.setTimeout = (callback, delay) => {
+    const id = ++serial;
+    timers.set(id, { callback, at: now + delay });
+    scheduled.push({ id, delay });
+    return id;
+  };
+  globalThis.clearTimeout = (id) => {
+    timers.delete(id);
+    cleared.push(id);
+  };
+  t.after(() => {
+    globalThis.setTimeout = originalTimeout;
+    globalThis.clearTimeout = originalClear;
+  });
+  return {
+    timers,
+    scheduled,
+    cleared,
+    advance(milliseconds) {
+      now += milliseconds;
+      for (const [id, timer] of [...timers].sort((a, b) => a[1].at - b[1].at)) {
+        if (timer.at > now) continue;
+        timers.delete(id);
+        timer.callback();
+      }
+    },
+  };
+}
+
+test('Copy invokes the native clipboard synchronously and clears its two-second deadline on early success', async (t) => {
+  const pending = deferred();
+  let clock,
+    started = false;
+  const h = await fixture(t, {
+    clipboard: () => {
+      started = true;
+      assert.equal(
+        clock.scheduled.length,
+        0,
+        'Native write must precede scheduling the status timeout.',
+      );
+      return pending.promise;
+    },
+  });
+  clock = copyClock(t);
+  h.$('copy-prompt').focus();
+  h.$('copy-prompt').click();
+  assert.equal(started, true);
+  assert.deepEqual(
+    clock.scheduled.map((row) => row.delay),
+    [2000],
+  );
+  assert.equal(h.$('copy-status').dataset.state, 'busy');
+  pending.resolve();
+  await settle();
+  assert.equal(h.$('copy-status').dataset.state, 'ready');
+  assert.equal(clock.timers.size, 0);
+  assert.deepEqual(clock.cleared, [1]);
+  clock.advance(2000);
+  await settle();
+  assert.equal(h.$('copy-status').dataset.state, 'ready');
+  assert.deepEqual(h.selected, []);
+});
+
+for (const late of ['resolve', 'reject'])
+  test(`a pending Copy becomes owned fallback at two seconds; late clipboard ${late} cannot publish success`, async (t) => {
+    const pending = deferred(),
+      h = await fixture(t, { clipboard: () => pending.promise }),
+      clock = copyClock(t);
+    h.$('copy-prompt').focus();
+    h.$('copy-prompt').click();
+    clock.advance(1999);
+    await settle();
+    assert.equal(h.$('copy-status').dataset.state, 'busy');
+    assert.deepEqual(h.selected, []);
+    clock.advance(1);
+    await settle();
+    assert.equal(h.$('copy-status').dataset.state, 'error');
+    assert.match(h.$('copy-status').textContent, /Brief selected/);
+    assert.deepEqual(h.selected, [h.$('prompt-example-text')]);
+    assert.equal(h.doc.activeElement, h.$('copy-prompt'));
+    assert.equal(clock.timers.size, 0);
+    const fallback = h.$('copy-status').textContent;
+    h.$('screen-select').focus();
+    if (late === 'resolve') pending.resolve();
+    else pending.reject(new Error('Late operating-system rejection'));
+    await settle();
+    assert.equal(h.$('copy-status').textContent, fallback);
+    assert.equal(h.$('copy-status').dataset.state, 'error');
+    assert.equal(h.doc.activeElement, h.$('screen-select'));
+    assert.equal(h.selected.length, 1);
+  });
+
+for (const destination of ['newer', 'hidden', 'unfocused'])
+  test(`Copy timeout preserves ${destination} ownership and does not select text`, async (t) => {
+    const pending = deferred(),
+      h = await fixture(t, { clipboard: () => pending.promise }),
+      clock = copyClock(t);
+    h.$('copy-prompt').focus();
+    h.$('copy-prompt').click();
+    if (destination === 'newer') h.$('inventory-filter').focus();
+    if (destination === 'hidden') h.doc.hidden = true;
+    if (destination === 'unfocused') h.doc.focused = false;
+    const focus = h.doc.activeElement;
+    clock.advance(2000);
+    await settle();
+    assert.equal(h.$('copy-status').dataset.state, 'error');
+    assert.match(h.$('copy-status').textContent, /Copy was unavailable/);
+    assert.equal(h.doc.activeElement, focus);
+    assert.deepEqual(h.selected, []);
+    assert.equal(clock.timers.size, 0);
+    pending.resolve();
+    await settle();
+    assert.equal(h.$('copy-status').dataset.state, 'error');
+    assert.equal(h.doc.activeElement, focus);
+    assert.deepEqual(h.selected, []);
+  });
+
+test('older Copy timeout and late rejection cannot replace a newer pending or successful Copy', async (t) => {
+  const first = deferred(),
+    second = deferred();
+  let call = 0;
+  const h = await fixture(t, { clipboard: () => (++call === 1 ? first : second).promise }),
+    clock = copyClock(t);
+  h.$('copy-prompt').focus();
+  h.$('copy-prompt').click();
+  clock.advance(1000);
+  h.$('copy-prompt').click();
+  clock.advance(1000);
+  await settle();
+  assert.equal(h.$('copy-status').dataset.state, 'busy');
+  assert.deepEqual(h.selected, []);
+  assert.equal(clock.timers.size, 1);
+  second.resolve();
+  await settle();
+  assert.equal(h.$('copy-status').dataset.state, 'ready');
+  assert.equal(clock.timers.size, 0);
+  first.reject(new Error('Old operation rejected after its timeout'));
+  await settle();
+  clock.advance(1000);
+  await settle();
+  assert.equal(h.$('copy-status').dataset.state, 'ready');
+  assert.match(h.$('copy-status').textContent, /Example brief copied/);
+  assert.deepEqual(h.selected, []);
+});
+
+test('synchronous clipboard denial uses the existing owned fallback without leaving a deadline', async (t) => {
+  const h = await fixture(t, {
+      clipboard: () => {
+        throw new Error('Clipboard denied synchronously');
+      },
+    }),
+    clock = copyClock(t);
+  h.$('copy-prompt').focus();
+  h.$('copy-prompt').click();
+  await settle();
+  assert.equal(h.$('copy-status').dataset.state, 'error');
+  assert.deepEqual(h.selected, [h.$('prompt-example-text')]);
+  assert.deepEqual(clock.scheduled, []);
+  assert.equal(clock.timers.size, 0);
+});
