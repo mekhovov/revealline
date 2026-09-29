@@ -5,6 +5,7 @@ import { fileURLToPath, pathToFileURL } from 'node:url';
 import { createHash } from 'node:crypto';
 import { inspectEditionZip } from '../publishing/edition-zip.mjs';
 import { runDiscoveryCycles } from './observe-discovery-cycles.mjs';
+import { PREVIEW_SECURITY_HEADERS } from './game-cli.mjs';
 
 const SHA = /^[a-f0-9]{64}$/;
 const COMMIT = /^[a-f0-9]{40,64}$/;
@@ -60,6 +61,7 @@ export function validateDiscoveryRuntimePlan(input) {
       'mode',
       'cycles',
       'serverPort',
+      'headerPolicy',
       'artifact',
     ],
     'observation plan',
@@ -72,6 +74,8 @@ export function validateDiscoveryRuntimePlan(input) {
     !text(plan.quietWindow, 2048) ||
     !MODES.includes(plan.mode) ||
     ![0, 20].includes(plan.cycles) ||
+    (plan.headerPolicy !== undefined &&
+      !['minimal', 'packaged-preview'].includes(plan.headerPolicy)) ||
     (plan.serverPort !== undefined &&
       (!Number.isInteger(plan.serverPort) || plan.serverPort < 0 || plan.serverPort > 65535))
   )
@@ -185,7 +189,18 @@ export function verifyDiscoveryRuntimeArtifact(planInput, { archive, manifest: m
 }
 
 /** Serves only verified members and separately pinned passive instrumentation. */
-export async function serveDiscoveryRuntime(files, observer, { port = 0, reviewModel } = {}) {
+export async function serveDiscoveryRuntime(
+  files,
+  observer,
+  { port = 0, reviewModel, headerPolicy = 'minimal' } = {},
+) {
+  if (!['minimal', 'packaged-preview'].includes(headerPolicy))
+    fail('Unknown observation header policy.');
+  const headers = Object.freeze(
+    headerPolicy === 'packaged-preview'
+      ? { ...PREVIEW_SECURITY_HEADERS }
+      : { 'Cache-Control': 'no-store', 'X-Content-Type-Options': 'nosniff' },
+  );
   const owned = new Map([...files].map(([name, bytes]) => [name, Buffer.from(bytes)]));
   if (owned.has(OBSERVER) || owned.has(REVIEW_MODEL))
     fail('Player archive collides with observation instrumentation.');
@@ -213,15 +228,14 @@ export async function serveDiscoveryRuntime(files, observer, { port = 0, reviewM
       name = url.pathname.slice(1),
       bytes = owned.get(name);
     if (!['GET', 'HEAD'].includes(request.method) || !bytes) {
-      response.writeHead(404);
+      response.writeHead(404, headers);
       response.end();
       return;
     }
     response.writeHead(200, {
       'Content-Type': mime[path.extname(name)] ?? 'application/octet-stream',
       'Content-Length': bytes.length,
-      'Cache-Control': 'no-store',
-      'X-Content-Type-Options': 'nosniff',
+      ...headers,
     });
     response.end(request.method === 'HEAD' ? undefined : bytes);
   });
@@ -231,6 +245,8 @@ export async function serveDiscoveryRuntime(files, observer, { port = 0, reviewM
   });
   return {
     origin: `http://127.0.0.1:${server.address().port}`,
+    headers,
+    headerPolicy,
     close: () =>
       new Promise((resolve, reject) =>
         server.close((error) => (error ? reject(error) : resolve())),
@@ -423,6 +439,7 @@ export async function observeDiscoveryRuntime({ planFile, playwrightModule, outp
       'scripts/observe-discovery-cycles.mjs',
       'publishing/edition-zip.mjs',
       'scripts/observe-discovery-runtime.mjs',
+      'scripts/game-cli.mjs',
     ];
     const instrumentation = [];
     let observer, reviewModel;
@@ -439,6 +456,7 @@ export async function observeDiscoveryRuntime({ planFile, playwrightModule, outp
     server = await serveDiscoveryRuntime(checked.files, observer, {
       port: plan.serverPort ?? 0,
       reviewModel,
+      headerPolicy: plan.headerPolicy ?? 'minimal',
     });
     for (const name of [
       'manifest.json',
@@ -461,6 +479,9 @@ export async function observeDiscoveryRuntime({ planFile, playwrightModule, outp
           )
       )
         fail(`Served bytes differ: ${name}`);
+      for (const [header, value] of Object.entries(server.headers))
+        if (response.headers.get(header) !== value)
+          fail(`Served header differs: ${name}: ${header}`);
     }
     const traced = plan.mode !== 'timings';
     const binding = {
@@ -471,7 +492,7 @@ export async function observeDiscoveryRuntime({ planFile, playwrightModule, outp
       inputProtocol: traced
         ? 'Automated keyboard Frame01; normal restart; down1800/down3200/right1400/up6000; first-win trace; no engine/progress injection'
         : 'Automated keyboard Frame01;20s active stationary;normal restart;down1800/down3200/right1400/up6000;20s first-win result;no engine/progress injection',
-      settingsIdentity: `en;standard;immediate;scout;full;muted;menu-neon;hybrid;fpv-learning-marker;fpv-meet-aircraft-theme;grid-off;reactions-on;1280x633@1;trace-${plan.mode}`,
+      settingsIdentity: `en;standard;immediate;scout;full;muted;menu-neon;hybrid;fpv-learning-marker;fpv-meet-aircraft-theme;grid-off;reactions-on;1280x633@1;trace-${plan.mode}${server.headerPolicy === 'minimal' ? '' : ';headers-packaged-preview'}`,
       sourceKind: 'compiled-artifact',
       sourceIdentity: plan.artifact.archiveSha256,
     };
@@ -485,13 +506,18 @@ export async function observeDiscoveryRuntime({ planFile, playwrightModule, outp
       startedAt: new Date().toISOString(),
       origin: server.origin,
       serverHeaders: {
-        cacheControl: 'no-store',
+        policy: server.headerPolicy,
+        values: server.headers,
+        cacheControl: server.headers['Cache-Control'],
         contentType: 'explicit extension MIME mapping',
         xContentTypeOptions: 'nosniff',
         productionCSP: false,
+        packagedPreviewCSP: server.headerPolicy === 'packaged-preview',
       },
       scope:
-        'Exact playable archive and explicit public controls on a minimal loopback server; production CSP/cache-header behavior is not reproduced. Source-publication eligibility, human/device review and release qualification are separate.',
+        server.headerPolicy === 'packaged-preview'
+          ? 'Exact playable archive and explicit public controls under the existing packaged-preview security/cache headers. The loopback soundtrack exception is retained; this is not deployed public-origin/CSP or warm-cache qualification. Source-publication eligibility, human/device review and release qualification are separate.'
+          : 'Exact playable archive and explicit public controls on a minimal loopback server; production CSP/cache-header behavior is not reproduced. Source-publication eligibility, human/device review and release qualification are separate.',
     });
     const { chromium } = await import(pathToFileURL(path.resolve(playwrightModule)).href);
     browser = await chromium.launch({ channel: 'chrome', headless: true });
@@ -504,6 +530,22 @@ export async function observeDiscoveryRuntime({ planFile, playwrightModule, outp
     page = await context.newPage();
     page.setDefaultTimeout(20000);
     page.on('pageerror', (error) => errors.push(error.message));
+    await page.addInitScript(() => {
+      globalThis.__discoveryPolicy = { violations: [], overflow: false };
+      globalThis.document.addEventListener('securitypolicyviolation', (event) => {
+        const record = globalThis.__discoveryPolicy;
+        if (record.violations.length >= 128) {
+          record.overflow = true;
+          return;
+        }
+        record.violations.push({
+          at: globalThis.performance.now(),
+          directive: event.effectiveDirective,
+          blockedURI: event.blockedURI,
+          disposition: event.disposition,
+        });
+      });
+    });
     const attach = () =>
       page.evaluate(async (value) => {
         globalThis.discoveryObservation?.dispose();
@@ -667,6 +709,10 @@ export async function observeDiscoveryRuntime({ planFile, playwrightModule, outp
           fail('Unsupported public observer command.');
         },
       });
+    const policy = await page.evaluate(() => globalThis.__discoveryPolicy);
+    await save('security-policy.json', policy);
+    if (policy.overflow || policy.violations.length)
+      fail('Browser reported security-policy violations; retain the raw observation.');
     if (errors.length) fail('Browser reported application errors; retain the raw observation.');
     completion = {
       qualified: false,
@@ -693,6 +739,10 @@ export async function observeDiscoveryRuntime({ planFile, playwrightModule, outp
       at: new Date().toISOString(),
     });
     if (page) {
+      await save(
+        'security-policy-on-failure.json',
+        await page.evaluate(() => globalThis.__discoveryPolicy ?? null).catch(() => null),
+      );
       await screenshot('failure').catch(() => {});
       await save(
         'observer-on-failure.json',
