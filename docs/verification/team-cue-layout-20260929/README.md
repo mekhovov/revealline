@@ -58,7 +58,10 @@ Initial failed runs are retained as failed evidence. The two-slowed expectations
 changed only for the explicitly described information consolidation; all geometry,
 font, contact, multiplicity and active-state assertions remain strict.
 
-Scoped syntax, ESLint, Prettier and `git diff --check` pass. Independent source
+Scoped syntax, ESLint, Prettier and source-only whitespace checks pass. Raw TAP
+and accessibility captures retain original trailing spaces; the unfiltered staged
+whitespace check reports those evidence lines. They are preserved verbatim, not
+reported as a clean all-file check. Independent source
 review found no blocker in this bounded correction; it explicitly left the limits
 below open. No full build or long-suite result is claimed.
 

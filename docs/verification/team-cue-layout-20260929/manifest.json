@@ -43,8 +43,8 @@
   "artifacts": [
     {
       "path": "docs/verification/team-cue-layout-20260929/README.md",
-      "bytes": 6221,
-      "sha256": "e35aabc67fc27d3a054d6a3ba8e18564c84485759c99d3d7c6f465a48472764d"
+      "bytes": 6438,
+      "sha256": "ac6f7d8b8869f3c2f74770f1a74569085aa0a0cd247a11c65bcd9b50b10effdc"
     },
     {
       "path": "docs/verification/team-cue-layout-20260929/commands.txt",
