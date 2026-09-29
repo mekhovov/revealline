@@ -12,7 +12,8 @@ compatibility, artwork and release requirements.
 
 ## Public and queued
 
-- Latest observed main is `64c8b9d81604984363666abadae236d9f2f76f7f`.
+- Latest observed main is `1af848b1edb8d0d7435deccca02a31627aed6bfa`;
+  its change after `64c8b9d8` is soundtrack documentation only.
   Public `release.json` declares **v0.142.3**, source
   `b5ab06e12542f72e33c45b973ba693a5e1509c1c`, distribution prefix
   `37eca33f…`. This is an observed public release identity; the canonical
@@ -28,7 +29,7 @@ compatibility, artwork and release requirements.
   unbumped and production admission remains pending. See its scoped evidence below.
   It conflicts with newer main and needs publisher-owned reconciliation.
   Do not rebase the shared worker branch or allocate a competing version.
-- Parallel [PR757](https://github.com/mekhovov/revealline/pull/757) is reconciled on
+- Parallel [PR757](https://github.com/mekhovov/revealline/pull/757)'s earlier batch was reconciled on
   `6a67d6dbfe01d5e1f3842b5a79dd5d5ddeefcfd8`: More collapses, Large canvas
   labels remain readable, resumed downed pilots receive rescue advice, and
   Support becomes learned only after an actual effect. Combined checks pass
@@ -37,8 +38,8 @@ compatibility, artwork and release requirements.
   by using a fresh controller press; all behavior assertions remain. Browser
   review covers 1280×800, 390×844, 844×390 and 568×320 CSS, both existing arenas,
   Large/Plain and EN/UK. The board/target bounds pass in those observations, but
-  Ukrainian HUD/ability wrapping at narrow sizes remains an explicit next A3
-  defect. Team/equipment source closures reopen; production/public acceptance
+  Ukrainian HUD/ability wrapping was retained as the next A3 defect and is now
+  corrected in the update below. Team/equipment source closures reopen; production/public acceptance
   remains pending. See the [batch evidence](https://github.com/mekhovov/revealline/blob/codex/team-more-navigation/docs/verification/team-readability-20260929/README.md).
 - [PR786](https://github.com/mekhovov/revealline/pull/786) preserves 158 sources
   across 162 additions as another v0.150.0 input; those additions are not live.
@@ -46,6 +47,9 @@ compatibility, artwork and release requirements.
   tooling on hold, with no CI activation.
 - Compatible features continue in one PR, with separate evidence and reversible
   commits. The fixed publisher batch is not expanded while it qualifies.
+- Current milestone metadata schedules v0.142.4 mission selection, v0.143.0
+  soundtrack work, then the v0.150.0 aggregate. The former v0.144–v0.149 inputs
+  are already included in v0.142.3; they are not six additional waiting releases.
 
 ## Completed work to preserve
 
@@ -103,13 +107,18 @@ contains the patch, exact inputs, complete logs, initial harness failures and
 reproduction instructions. Remaining A1 work is integrated visual review and
 59-slot production admission, then the canonical release gates.
 
-A3's next Team layout correction is being verified in PR757's isolated lineage
-on current main. It replaces fixed HUD heights with measured text rows, separates
-steering-pad size from long action-label width, and preserves 44px targets.
-An adjacent terminal fixture was corrected to slow a moving enemy on the winning
-step: empty Support remains unlearned. The complete terminal file passes 9/9.
-Source, native layout, production and public evidence remain separate; the final
-PR757 receipt records the accepted viewport matrix and unresolved edge cases.
+A3's Team layout correction now passes the complete 99/99 host cohort in PR757's
+isolated lineage on `64c8b9d8`. Intrinsic HUD rows and separate steering/action
+widths retain 44px targets. Real zero-reserve Ukrainian play exposed a second
+overflow, corrected with two compact labels while preserving full rescue
+instructions. Native checks cover 390×844, 568×320, 844×390 and 1280×800, both
+existing arenas, Large/Plain, Standard/theme text, recovery and downed states.
+The Support fixture now slows a real moving enemy on the winning step; empty
+Support remains unlearned. A further native language-switch defect is corrected
+by resolving departure captions live. Its six tests and 20 existing guard tests
+pass separately and overlap the host cohort; do not total them as unique tests.
+Production review, public acceptance, hardware and broader zoom checks remain
+open. See [the updated Team evidence](https://github.com/mekhovov/revealline/blob/codex/team-more-navigation/docs/verification/team-hud-wrap-20260929/README.md).
 
 ## Remaining work and planning ranges
 
@@ -121,7 +130,7 @@ failed gates and publisher availability add delivery time.
 | ------------------------------------ | -------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------- |
 | **A1 — first**                       | Deliver already implemented character/control corrections so players actually receive the improvements   | Reconcile the smallest renderer slice; review 59 renderer/equipment successors while keeping approved imagery and app/audio unchanged; final build, immutable publication and public play | Exact port prepared; 1–2 days for integrated visual/admission checks, plus publisher queue        |
 | **A2 — current characters**          | Convincing player/common-enemy bodies, propellers, scale, facing and reactions across Solo/Versus/Team   | Current roster/state review and reviewed native-body adoption; retained originals and core behavior unchanged                                                                             | 3–5 days for remaining C3 scope; existing fixes do not need to wait for the whole roster          |
-| **A3 — reliable play**               | Deliver the prepared Team fixes and reflow the demonstrated narrow Ukrainian HUD/ability labels          | Fresh input, retained recovery, exact return, readable status and full board/control bounds; reuse PR757 and existing inputs                                                              | Team wrapping correction implemented and under native verification; then integrated release gates |
+| **A3 — reliable play**               | Deliver the prepared Team fixes and reflow the demonstrated narrow Ukrainian HUD/ability labels          | Fresh input, retained recovery, exact return, readable status and full board/control bounds; reuse PR757 and existing inputs                                                              | This correction is source-tested and browser-reviewed; integrated production/release gates remain |
 | **B — encounter variety**            | Optional pursuit/interception/patrol/sentry encounters teach distinct decisions and readable counterplay | Finish Field Guide/cross-mode guidance, full missions/combinations, difficulty/fairness/replay qualification; preserve original editions                                                  | 3–5 days                                                                                          |
 | **C — one finished cohort**          | Complete a coherent Ukrainian/FPV artwork set that players can actually select and play                  | Native pixel/cultural/contrast review, exact approved mission bindings, retained ownership and complete preview/runtime presentation                                                      | 2–4 days for the first accepted cohort                                                            |
 | **Supporting C0/C1/C6**              | Only the rig, source coverage and Studio changes required to deliver A/B/C                               | Bounded geometry, state, history, resource and real import/edit/export checks alongside the consuming feature                                                                             | Included per slice; broader C6 2–3 days later                                                     |
@@ -175,12 +184,12 @@ is A2 preparation, not completion of A or the deferred C2 human study.
 3. **Artwork quality:** generated cultural scenes remain candidates. Native
    export and valid hashes establish preparation, not consistent pixel clusters,
    museum accuracy, composition over gameplay, permission or production approval.
-4. **Local capacity:** a fresh 29 September `df -h .` observation reports **7.1GiB
-   available**, above the publisher's previously recorded 1,275,068,416-byte
-   reserve. The earlier batch15 low of ~110MB remains historical evidence, not a
-   current capacity blocker. Recheck before heavy builds, downloads or release
-   materialization; this space observation is not publisher admission. Preserve
-   all existing evidence and user files.
+4. **Local capacity:** the latest observation is **603,074,560 bytes free**, below
+   the publisher's 1,275,068,416-byte reserve. Earlier 7.1GiB and ~110MB observations
+   are historical. Small source/evidence handoffs continue; no local build,
+   large download or release materialization is started here. Recheck before
+   heavy work and preserve all existing evidence and user files. No cleanup or
+   reserve reduction is claimed.
 5. **Evidence limits:** long suites are waived under the committed temporary
    policy, not passed. Browser keyboard/layout and modeled controllers are not
    physical touch/controller, listening, whole-game offline or human fairness checks.
