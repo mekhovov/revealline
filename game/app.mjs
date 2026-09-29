@@ -127,6 +127,7 @@ import { onNativeInactive, nativePlatform } from './platform.mjs';
 import { createRun, stepRun, getSummary, CLASSES, FIXED_DT } from './core/index.mjs';
 import { inspectCaptureSnapshot } from './core/capture-regions.mjs';
 import { BoardPainter, boardPaintSizeForRun, boardPaintSizeForLevel } from './ui/render.mjs';
+import { createPracticeRenderFailure } from './ui/practice-render-failure.mjs';
 import { encounterView } from './ui/encounter-view.mjs';
 import { foundationCompatibleView as classicView } from './ui/foundation-view.mjs';
 import { terrainTransitionCaption } from './ui/terrain-feedback.mjs';
@@ -529,6 +530,21 @@ try {
   // Switching source maps inside an authored preview must not turn the same
   // session into an awarding game, even when the configured scenario is cleared.
   const practiceSession = !!scenario;
+  const practiceRenderFailure = createPracticeRenderFailure({
+    enabled: practiceSession,
+    document,
+    stop: () => {
+      paused = true;
+      document.body.dataset.flightState = 'paused';
+      clearInput();
+      input.destroy();
+      controllerNavigation.destroy();
+      controllerConfirmGuard.destroy();
+      controllerPreview?.clear();
+      gameWakeLock.setActive(false);
+      suspendAudio();
+    },
+  });
   const journeyRequest = resolveJourneyRequest(params, {
     mode: 'solo',
     auxiliary: practiceSession,
@@ -2724,6 +2740,7 @@ try {
     touchEnabled: () => library.preferences.screenControls !== 'off',
     tapMode: () => $('tap-steering').checked,
     active: () =>
+      !practiceRenderFailure.failed &&
       started &&
       !paused &&
       !courseBlocked() &&
@@ -8307,6 +8324,7 @@ try {
     );
   }
   function overlay(kind, { preserveFocus = false } = {}) {
+    if (practiceRenderFailure.failed) return;
     // Repeated suspension may repaint Pause, but does not own a new focus
     // choice. An inactive child must not pull focus back from its parent.
     const repeatedPause =
@@ -9281,6 +9299,7 @@ try {
     preparedAttempt = null,
     retainAttemptAppearance = false,
   } = {}) {
+    if (practiceRenderFailure.failed) return false;
     if (courseEntry || (courseSession && ['leaving', 'ended'].includes(coursePhase))) return;
     if (preparedAttempt) {
       const current = () =>
@@ -9597,6 +9616,7 @@ try {
     return true;
   }
   function resume({ alignCourseBoard = true, contentSwitchTicket = null } = {}) {
+    if (practiceRenderFailure.failed) return;
     // A queued activation may arrive after blur even when the picture is cached.
     // Use actual foreground state: a fresh Resume need not wait for another frame.
     if (document.hidden || !document.hasFocus()) return;
@@ -9790,6 +9810,7 @@ try {
     if (defeatRemaining <= 1e-9) finishDefeatPresentation();
   }
   function pause(force, { preserveWorld = false } = {}) {
+    if (practiceRenderFailure.failed) return;
     cancelPictureStart({ preserveRecovery: true, preserveWorld });
     if (courseBlocked()) {
       clearInput();
@@ -9840,6 +9861,7 @@ try {
     refreshHUD();
   }
   function refreshHUD() {
+    if (practiceRenderFailure.failed) return;
     profileRecovery?.refresh();
     refreshJourneySkip();
     const reactionMission = journeySkipMission();
@@ -11357,40 +11379,45 @@ try {
       this.game.canvas.setAttribute('aria-hidden', 'true');
     }
     update(now, delta) {
+      if (practiceRenderFailure.failed) return;
       if (globalThis.RevealLineBoot && document.documentElement.dataset.bootState !== 'ready')
         return;
-      const dt = clamp(delta / 1000, 0, 1);
-      update(dt);
-      // The modal owns its visible board. Keep the covered ordinary renderer
-      // and its presentation clock untouched until the demo hands back control.
-      if (demoHost?.active) return;
-      editionUI?.refresh();
-      const { width, height } = boardPaintSizeForRun(run);
-      if (width !== this.boardSize.width || height !== this.boardSize.height) {
-        this.boardTexture.setSize(width, height);
-        this.boardImage.setSizeToFrame();
-        this.scale.resize(width, height);
-        this.cameras.main.setSize(width, height);
-        this.boardSize = { width, height };
-        document.documentElement.style.setProperty('--board-ratio', `${width} / ${height}`);
-        document.documentElement.style.setProperty('--board-aspect', String(width / height));
+      try {
+        const dt = clamp(delta / 1000, 0, 1);
+        update(dt);
+        // The modal owns its visible board. Keep the covered ordinary renderer
+        // and its presentation clock untouched until the demo hands back control.
+        if (demoHost?.active) return;
+        editionUI?.refresh();
+        const { width, height } = boardPaintSizeForRun(run);
+        if (width !== this.boardSize.width || height !== this.boardSize.height) {
+          this.boardTexture.setSize(width, height);
+          this.boardImage.setSizeToFrame();
+          this.scale.resize(width, height);
+          this.cameras.main.setSize(width, height);
+          this.boardSize = { width, height };
+          document.documentElement.style.setProperty('--board-ratio', `${width} / ${height}`);
+          document.documentElement.style.setProperty('--board-aspect', String(width / height));
+        }
+        painter.draw(this.boardTexture.context, run, Math.min(dt, 0.1), {
+          actorAppearance: flightActorLease
+            ? { style: flightActorLease.pin().style, snapshot: flightActorLease.snapshot }
+            : null,
+          textFace: displayPreferences.snapshot().textFace,
+          // The texture is detached; only the displayed Phaser canvas has a CSS size.
+          displayCSSWidth: this.game.canvas.clientWidth,
+          paused,
+          reduced: displayPreferences.snapshot().effectiveReducedEffects,
+          fullReveal: run.status === 'won',
+          showGrid: scenario?.presentation?.showGrid || library.preferences.showGrid,
+          backdrop: flightPictures?.current(),
+          celebrationPaused: document.hidden || dialogOpen(),
+          defeatEffectsRunning: defeatEffectsRunning(),
+        });
+        advanceDefeatPresentation(Math.min(dt, 0.1));
+      } catch (error) {
+        if (!practiceRenderFailure.fail(error)) throw error;
       }
-      painter.draw(this.boardTexture.context, run, Math.min(dt, 0.1), {
-        actorAppearance: flightActorLease
-          ? { style: flightActorLease.pin().style, snapshot: flightActorLease.snapshot }
-          : null,
-        textFace: displayPreferences.snapshot().textFace,
-        // The texture is detached; only the displayed Phaser canvas has a CSS size.
-        displayCSSWidth: this.game.canvas.clientWidth,
-        paused,
-        reduced: displayPreferences.snapshot().effectiveReducedEffects,
-        fullReveal: run.status === 'won',
-        showGrid: scenario?.presentation?.showGrid || library.preferences.showGrid,
-        backdrop: flightPictures?.current(),
-        celebrationPaused: document.hidden || dialogOpen(),
-        defeatEffectsRunning: defeatEffectsRunning(),
-      });
-      advanceDefeatPresentation(Math.min(dt, 0.1));
     }
   }
   new Phaser.Game({
