@@ -215,7 +215,9 @@ test('a rehashed manifest cannot conceal a changed listed runtime member', () =>
 test('server owns immutable copies, serves only checked members, and closes cleanly', async (t) => {
   const input = fixture(),
     { files } = verifyDiscoveryRuntimeArtifact(input.plan, input);
-  const server = await serveDiscoveryRuntime(files, Buffer.from('export const passive = true;'));
+  const server = await serveDiscoveryRuntime(files, Buffer.from('export const passive = true;'), {
+    reviewModel: Buffer.from('export const model = true;'),
+  });
   t.after(() => server.close());
   files.get('game/app.mjs').fill(0);
   const response = await fetch(server.origin + '/game/app.mjs');
@@ -258,4 +260,64 @@ test('failed preparation retains declared source pins and never overwrites prior
   );
   assert.deepEqual(await readFile(path.join(output, 'failure.json')), failure);
   await mkdir(path.join(folder, 'preexisting'));
+});
+
+test('passive observer serves its exact static module closure and rejects archive collisions', async (t) => {
+  const { files } = fixture();
+  const names = [
+    'docs/verification/discovery-observer.mjs',
+    'docs/verification/company-review-model.mjs',
+  ];
+  const originals = new Map(
+    await Promise.all(
+      names.map(async (name) => [name, await readFile(new URL('../' + name, import.meta.url))]),
+    ),
+  );
+  const server = await serveDiscoveryRuntime(files, originals.get(names[0]), {
+    reviewModel: originals.get(names[1]),
+  });
+  t.after(() => server.close());
+  const pending = [names[0]],
+    seen = new Set();
+  while (pending.length) {
+    const name = pending.shift();
+    if (seen.has(name)) continue;
+    seen.add(name);
+    assert.ok(
+      originals.has(name),
+      'Every static passive dependency must be explicitly pinned: ' + name,
+    );
+    const response = await fetch(server.origin + '/' + name);
+    assert.equal(response.status, 200, name);
+    assert.equal(response.headers.get('content-type'), 'text/javascript');
+    const bytes = Buffer.from(await response.arrayBuffer());
+    assert.deepEqual(bytes, originals.get(name));
+    const imports = [
+      ...bytes.toString().matchAll(/(?:import|export)\s+(?:[^;]*?\s+from\s*)?['"]([^'"]+)['"]/g),
+    ];
+    for (const [, specifier] of imports) {
+      assert.ok(specifier.startsWith('.'), 'No implicit external observer dependency.');
+      pending.push(new URL(specifier, server.origin + '/' + name).pathname.slice(1));
+    }
+  }
+  assert.deepEqual([...seen].sort(), names.sort());
+  assert.equal(
+    (await fetch(server.origin + '/docs/verification/discovery-comparison.mjs')).status,
+    404,
+    'The Node-only comparator is not silently added to browser dependencies.',
+  );
+  await assert.rejects(
+    serveDiscoveryRuntime(files, originals.get(names[0])),
+    /Missing pinned passive observer dependency/,
+  );
+  for (const name of names) {
+    const colliding = new Map(files);
+    colliding.set(name, Buffer.from('unrelated edition member'));
+    await assert.rejects(
+      serveDiscoveryRuntime(colliding, originals.get(names[0]), {
+        reviewModel: originals.get(names[1]),
+      }),
+      /collides/,
+    );
+  }
 });
