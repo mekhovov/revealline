@@ -1,0 +1,167 @@
+# Demo mode
+
+Demo mode presents normal gameplay on installed levels, with recorded routes, a small qualified live-autoplay pool, contextual tips, and an explicit invitation to play. It runs through the ordinary simulation and renderer. It does not change level rules, grant progress, or replace a suspended flight while watching.
+
+This guide describes the working implementation ported onto main `a10fcbf8a` (v0.142.1). See the [verification record](verification/demo-mode-2026-09-28.md) for measured results and remaining release gates.
+
+## Player behavior
+
+- **Watch demo** starts immediately. The native-menu layout exposes it under **Settings → Help & Extras**; the classic layout keeps it on the home screen. Automatic entry waits for 60 seconds of uninterrupted idle time on the eligible home screen. Activity, another dialog, an active flight, a transfer, hidden page, or lost focus prevents that entry.
+- Automatic entry defaults on, except when reduced effects are already enabled. Settings can disable it. Automatic collection of personal recordings defaults off and is a separate setting.
+- Scenes identify **Recorded play** or **Live autoplay**, name the real level, and show captured area, lives, elapsed time, and tips. Tips follow actual gameplay events and remain readable for at least six seconds before replacement. A completed scene remains for four seconds before random rotation. The shuffled pool repeats while watching, avoiding the same level consecutively when alternatives exist. **Next level** starts its next scene immediately.
+- A fresh gameplay direction/action from keyboard, controller or board touch takes over into independent practice automatically. Its first intent is applied once after the displayed checkpoint is verified. Held inputs, reconnection, drift and inputs during preparation do not start practice. UI buttons keep their normal actions. **Want to play? Choose how** opens the explicit start menu; **Back** / Escape returns to home.
+- **Play from beginning** prepares that installed level at ordinary Ready when mission access permits it; it never presses Start. An unfinished ordinary flight follows the existing checked save/readback and **Stay / Replace** rules. Failed saving keeps the original flight behind replacement review until the player explicitly decides. A locked level instead starts an isolated fresh practice attempt with the same demonstrated tuned simulation.
+- **Take over · practice** reconstructs the precise displayed simulation tick, including an unfinished cut, equipment, encounter state, and recovery timing. The new practice run owns its state; neither the recorded run nor the preserved ordinary run advances with it. The manual takeover button is disabled on terminal scenes; fresh gameplay input there starts a fresh practice run with the exact demonstrated level/options.
+- Automatic takeover preserves the initiating intent; a manual takeover starts with neutral physical input and waits for a fresh direction. The additional practice controls appear immediately. It supports the applicable keyboard, touch/swipe and controller actions, and hangar craft selection. Practice has no score, picture, unlock, saved-flight or demo-cache writes, and no export control. **Return to demo** discards it.
+- An already-started spectator demo keeps its playback intent when the tab is hidden or the browser loses focus. Rotation and enabled music continue while the browser allows execution. **Pause demo** freezes the demonstration until explicit continuation; returning focus never cancels that choice. Opening an artist/source link does not interrupt spectator playback.
+- Practice and ordinary gameplay retain pause-on-blur, hidden-page and native-inactivity protection. Controller loss and excessive practice frame gaps also pause practice. A pending Fresh/takeover operation is cancelled on foreground loss. Background watching never samples gameplay controls or starts a new practice run.
+
+The demo fills the viewport, with safe-area padding and a responsive board/control layout. **Enter fullscreen** additionally requests browser fullscreen where supported; unsupported browsers retain the viewport-filling layout. Closing the demo exits only fullscreen that it owns.
+
+## Demo audio and background playback
+
+The compact audio row provides **Sound on/off**, **Play/Pause music**, **Next song**, the current song title and artist, and an **Artist / source** link when valid metadata supplies one. These are controls for the existing shared music player, not a separate demo soundtrack. **Next song** and **Pause music** do not change the demonstration; **Next level** and **Pause demo** do not change music intent. Skipping a song while music is paused keeps music paused. Sound on opens the shared mute gate without undoing an explicit music pause.
+
+**Audio options** expands volume, music style, **Play style**, and **Music only / Music + game sounds**. The style selector is a draft until **Play style** is pressed. It uses the existing automatic, genre, fusion and mix choices; selecting a style preserves downloaded-only, recording-permission and mix-genre preferences. Mute, volume and music selection use the same preferences as ordinary play. Music + game sounds is a separate demo setting, off by default, and adds effects from the demonstrated simulation. Entering a demo does not unmute sound or manufacture a new listening intent.
+
+Scene changes update automatic music matching at the next track boundary so each level does not cut the current song short. A newer music Pause, Next or demo close supersedes an unfinished style-play request. If its atomic preference save already completed, the saved choice remains authoritative without forcing playback. Audio buttons, sliders, selectors and source links own their UI input and do not trigger practice takeover. Global music shortcuts retain their existing single owner and conflict rules. If file playback is unavailable, master sound controls remain usable while unsupported music actions are disabled.
+
+The spectator clock advances independently of canvas painting and pumps music even while **Pause demo** is active. Hidden pages skip painting and use bounded simulation slices; delayed callbacks cannot generate unlimited catch-up work or a burst of old game effects. Resuming from a browser freeze rebases the clock. Leaving or unloading the page stops the demo and releases its resources.
+
+Background execution is best effort. Browsers can throttle timers, stop animation frames, discard tabs, or suspend a page; mobile operating systems can suspend the whole application. File audio and procedural music have different scheduling needs, and procedural music may have gaps if its scheduler cannot run. The implementation preserves the player's intent across these conditions; it does not promise uninterrupted playback through an OS freeze, screen lock or page unload. Idle automatic entry still requires the eligible foreground home screen. The existing native security configuration is unchanged.
+
+## Handoffs and artwork
+
+The current source pool contains Legacy campaign missions. When opened from the default Journey host, an accessible **Play from beginning** uses the ordinary guarded mission-library departure to the exact Legacy destination. The receiving host prepares its picture and stays at Ready; it does not adopt a Legacy run inside Journey or grant access to locked content. On the Legacy host the same preparation happens in place. The ordinary departure/replacement review still owns saving, cancellation and the preserved flight.
+
+Unearned artwork appears through a weak analog-video signal, including during takeover practice and after a demo victory. A fixed softened, horizontally displaced image retains faint scene shapes and muted broad colors. About one-third of the source's broad chroma survives the dimming; fine detail never supplies that color. A fingerprint of the exact picture seeds its own interference, and the snow amplitude is 68% of the original treatment. Receiver noise is predominantly black and white: fine snow, short correlated horizontal streaks and localized dropout bands. Only that noise evolves, at 12 updates per second; it never presents a cleaner image or changes the concealed geometry. Pausing freezes time and reduced effects uses a static frame. Clear artwork requires the exact earned picture assignment; earning an older assignment does not reveal its replacement. All interference is restricted to the picture layer, leaving terrain, trails, hazards and craft sharp. Missing or unreadable pictures remain neutral; failed preparation is cached until the image/readiness changes.
+
+The current spatial reference is **actual recorded FPV flight frames and measured receiver-noise residuals**, visually inspected in [AnalogDepth, figures 1 and 3](https://arxiv.org/html/2609.24312v1#S3.F3). The real residual includes fine monochrome texture and sharp horizontal impulse clusters that independent Gaussian noise does not reproduce. This implementation procedurally approximates those features; it does not include copied footage or claim a calibrated receiver simulation. Whole-frame flicker and full-frame rolling are deliberately omitted to keep gameplay readable. Faint recognizability remains intentional. [Picture variety and jammer verification](verification/signal-picture-2026-09-29.md) records the latest rendering checks; [continuous-demo verification](verification/demo-analog-continuous-2026-09-28.md) records the playback and handoff checks; [the previous signal verification](verification/demo-picture-signal-2026-09-28.md) describes the earlier frozen colored treatment.
+
+## Ordinary radio-jammer reception
+
+Normal play now reuses the same monochrome snow and clustered horizontal impulses when the core reports that the craft is inside an active signal zone. Intensity follows the resolved slowdown and blocked controls. Merely seeing a red emitter zone does not degrade reception; Fiber resistance, leaving the zone, or actual emitter suppression immediately restores the original image. Victory, defeat and full-picture/gallery viewing are clear.
+
+Timed lane emitters and relay sentinels also disturb reception: the warning phase uses light interference (0.24), the active sweep uses stronger interference (0.8), and rest/open/transition phases are clear. These follow the actual simulation phases, including the paused classic actor clock. Freeze, stun, a missing source or a defeated sentinel suppress the effect. Fiber resistance still applies to area jammers; it does not grant immunity to lane attacks. Concurrent sources use their strongest intensity rather than adding noise.
+
+The effect desaturates and disturbs only the revealed picture. Covered cells remain opaque, and the existing red zone boundaries, terrain, live cut, enemies and craft are painted sharply afterward. It does not change movement, collisions, rewards or saves. Pause freezes the effect; reduced effects uses one static frame at lower intensity. Each painter owns one bounded 512-pixel cache, released when its look/level changes or it is disposed. An unreadable ordinary image retains its original rendering; unearned demo images continue to use their separate fail-closed concealment policy.
+
+## Actual content coverage
+
+The base campaign supplies six bundled recordings on four unchanged maps, available without installing an optional pack. These are **human-authored input routes**, generated and verified through the real core; they are not recordings of human play sessions. All use Scout with the current default Standard `gameplay-pressure.v4` recipe, retain all three lives, win, and contain four or five closed cuts and eight or ten bends. Installed authored maps remain the picture/fresh-start owners; the recordings embed their exact tuned simulation. Durations below are rounded for readability; the catalogue retains exact values.
+
+| Clip ID                | Real level                  | Steering    | Duration | Showcase                                      |
+| ---------------------- | --------------------------- | ----------- | -------- | --------------------------------------------- |
+| `first-signal-left`    | First Signal (`signal-01`)  | Immediate   | 30.683 s | Left-side bent cuts and return to safe ground |
+| `first-signal-right`   | First Signal (`signal-01`)  | Grid center | 31.908 s | Mirrored right-side capture route             |
+| `relay-orchard-loop`   | Relay Orchard (`signal-02`) | Immediate   | 45.475 s | Bent loop through the relay layout            |
+| `relay-orchard-stairs` | Relay Orchard (`signal-02`) | Grid center | 45.675 s | Staggered expanding capture route             |
+| `crosswind-openings`   | Crosswind (`signal-03`)     | Immediate   | 46.700 s | Repeated openings around multiple enemies     |
+| `night-patrol-loop`    | Night Patrol (`signal-05`)  | Grid center | 46.683 s | Bent capture with border patrol pressure      |
+
+Bundled recordings keep their authored steering policy. The six seeds, in table order, are 35, 5, 331, 322, 287 and 376. Live autoplay uses the current steering policy and is qualified only for the current default Standard tuning of these R5 map/roster identities:
+
+| Map              | Level ID           | Live variants                            |
+| ---------------- | ------------------ | ---------------------------------------- |
+| Orchard Crossing | `orchard-crossing` | Seeds 1, 2 and 3; both steering policies |
+| Courtyard Exits  | `courtyard-exits`  | Seeds 1, 2 and 3; both steering policies |
+
+Installing the corresponding R5 content gives six live source descriptors in addition to the six bundled clips. An installed themed owner may use the same qualified geometry, but remains a separate campaign identity in rotation. Gentle variants, revised geometry, and different rosters do not inherit bot qualification. **Night Crossfire is not bot-qualified.** Night Patrol in the table above is a different base-campaign map.
+
+Other installed levels are eligible only when a compatible, qualifying personal recording exists in the local demo cache. This implementation does not autoplay every installed level. It never installs or downloads a pack to expand coverage, and it ignores recordings whose owner, level revision, map or class roster no longer matches installed content.
+
+The live bot searches a bounded set of straight and bent capture routes, simulates candidate input sequences in a Worker, and executes normal directional input in the live run. It does not write captured cells or manufacture wins. Planning has a deadline and finite work budget. A useful partial scene can finish at a verified safe boundary when no safe next route fits that budget; after the completion dwell, the director selects a reviewed replay without quarantining the bot. A Worker or playback fault quarantines that source for the session and also falls back specifically to a replay. If no usable replay survives, playback becomes unavailable instead of chaining more bots. Missing Worker support excludes live sources. The director starts with an approachable recording and avoids immediately repeating the same campaign/level when alternatives exist.
+
+## Exact playback across runtimes
+
+The current core deliberately hashes authoritative floating-point state exactly. Its `field-course.v2` enemy bounces use native trigonometric functions, which can produce different last-bit results across runtimes. The six original Node arm64 recordings all rejected strict verification in the observed Chromium 154 macOS browser: only their final enemy section differed; levels, input traces, summaries and every other authoritative section agreed. This is consistent with the existing [cross-runtime route findings](company-editions-validation.md). No physics revision, rounding, tolerance, checkpoint replacement or weaker replay reader was introduced.
+
+Each clip therefore ships two **independently recorded, frozen ordinary replay files**. The additional browser variants were produced by executing the original exact input traces with the normal recorder in Chromium, exporting the resulting state, and independently verifying those exports in the same browser. [The provenance manifest](../game/demo-data/variant-provenance.json) records the runtime, timestamp, math witnesses, source hashes and variant hashes. Twelve assets represent six scenes; they do not double the rotation pool.
+
+The catalogue pins `inputTraceIdentity` over the exact replay version, ruleset, level, options, input segments, tick count and release markers. It allows at most three distinct bundled alternative URLs. Preparation tries the original and then its frozen variants, accepting only a complete ordinary strict replay verification. Invalid identity, schema, fetch or cancellation errors stop preparation; they cannot be bypassed by another variant. If none reproduces exactly on the current runtime, that scene is unavailable and the director applies its ordinary fallback. The scheme establishes the recorded Node/Chromium observations; it does not claim universal replay portability or qualify untested Safari/native versions. Personal recordings retain the ordinary strict verification rule and do not receive manufactured alternatives.
+
+## Personal recording cache
+
+**Keep for demo** on a completed ordinary run saves that run explicitly. It does not enable **Use my successful runs in demos**. The latter opt-in setting enables future automatic collection; disabling it stops collection while previously saved eligible recordings remain available. **Clear my demo recordings** removes the personal cache without touching ordinary progress, suspended flights, or bundled clips.
+
+The disposable cache is local to the device/origin, in the separate IndexedDB database `revealline-demo-recordings-v1`. It stores at most **12 recordings / 32 MiB**, deduplicates exact owner/run recordings, and evicts the oldest when necessary. It is not part of the ordinary session store or portable player backup. Demo preferences use the channel-specific `revealline.demo.${channel}.v1` settings key. Storage denial, quota failure, cancellation or corruption leaves ordinary game data untouched and preserves the bundled fallback.
+
+Admission requires a completed, non-practice win that passes full replay verification and still matches installed content. For tuned runs the cache recovers the recorded recipe, reconstructs it from the installed authored original, and compares the entire simulation identity; recipe metadata alone is insufficient. Admin overrides are excluded. Historical untuned recordings remain eligible only when they still exactly match an installed original. The movement heuristic requires 8–180 seconds, at least four direction changes, at least three directions, at most 25% neutral-input ticks, no neutral-input sequence over three seconds, and at most one life lost. These are recorded-input criteria, not a measured guarantee of enjoyable viewing. A selected recording is verified again when playback prepares.
+
+## Implementation interfaces
+
+| Module                                    | Responsibility and principal interface                                                                                                                                                                                                                                                                                               |
+| ----------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `game/demo-catalog.mjs`                   | Bounded `loadDemoCatalog`, `resolveDemoCatalog(catalog, entries)`, `demoIdentity`, `demoReplayMatchesEntry`, and `loadDemoRecording(clip, { fetch, signal })`. Catalogue descriptors pin campaign owner, authored level revision/identity, exact simulation `recordingIdentity`, provenance, tags and a bundled relative replay URL. |
+| `game/demo-sources.mjs`                   | `loadDemoSources({ entries, library, turnPolicy, signal, fetch, WorkerClass })` resolves only the supplied installed execution catalogue. Returns lazy scene descriptors with `create({ signal })`; preparation and catalog fetches are cancellable.                                                                                 |
+| `game/demo-director.mjs`                  | Owns rotation, one current player, cancellation generations, failure quarantine and disposal. The host owns the result dwell and presentation.                                                                                                                                                                                       |
+| `game/replay-player.mjs`                  | Existing verified playback plus `forkForPractice({ signal, onProgress })`, owned `exportRecording()`, and idempotent `dispose()`. A fork reconstructs a private recorded prefix, checks its exact authoritative checkpoint, and rejects playback changes, mutation, terminal state, disposal or cancellation.                        |
+| `game/demo-bot*.mjs`                      | Qualified map checks, bounded planner, Worker transport and ordinary-input live player. The player provides the same `state`, `phase`, `play`, `pause`, `advance`, `forkForPractice`, `exportRecording` and `dispose` capabilities.                                                                                                  |
+| `game/demo-library.mjs`                   | `createDemoLibrary({ storage, enabled, now })` exposes `setEnabled`, `keep`, `list`, `clear`, `dispose`. `keep(replay, { entry, practice: false, manual, signal })` separates one-off retention from automatic opt-in. Storage is lazy and injectable for tests.                                                                     |
+| `game/demo-experience.mjs`                | Idle eligibility clock, event captions, settings defaults and the ephemeral practice runner. No progression or persistence adapter is available to practice.                                                                                                                                                                         |
+| `game/ui/demo-host.mjs`, `demo-input.mjs` | Modal lifecycle, focus and first-gesture boundaries, settings, handoffs, rendering and shared controller sampling. `app.mjs` owns ordinary session preservation and permission to enter a normal level.                                                                                                                              |
+| `game/ui/demo-clock.mjs`                  | One spectator clock coordinates foreground frames, hidden-page timers, bounded simulation recovery, visible paint and independent audio updates. Practice retains the ordinary foreground frame boundary.                                                                                                                            |
+| `game/ui/demo-audio.mjs`                  | An injected view over the shared transport and preferences: audio controls, safe credit links, style draft, demo effects mode and stale-operation feedback protection. It owns no player or global shortcuts.                                                                                                                        |
+| `game/ui/soundtrack-player.mjs`           | Existing shared transport. `setContext(value, { deferUntilNextTrack: true })` defers demo context changes to a track boundary; the default behavior for existing callers is unchanged.                                                                                                                                               |
+| `game/ui/demo-picture.mjs`                | Exact earned-picture visibility and media ownership. The renderer applies the bounded blurred picture layer.                                                                                                                                                                                                                         |
+| `game/mission-library/handoff.mjs`        | Existing guarded cross-host mission identity, plus a finite Legacy-only Ready intent. The receiving host still checks mission access and prepares the exact destination without automatic Start.                                                                                                                                     |
+
+`source.level` and `source.identity` remain the installed authored map for picture ownership and normal Fresh routing. `recordingIdentity` pins the tuned simulation independently. Bot factories receive that tuned simulation; no tuned level replaces the source picture owner. Locked Fresh practice creates its new run from the recording's exact level and options. A replay fork returns `{ run, origin }`, where origin identifies its source, level, tick and ruleset. The replay controller stays paused and unchanged. The practice adapter releases held input on the new run only. Exact reconstruction preserves input-release markers at RLE boundaries; it does not depend on a shallow copy or serialize/restore a suspended game.
+
+The ordinary build collects the `game/` tree, excluding tests, so the catalogue, twelve frozen replay assets, provenance manifest and Worker module ship in source and distribution builds. Dynamic asset inclusion and offline byte/hash inventory have regression tests. New clips must be added with compatible installed identities and real verified recordings; widening the bot whitelist requires new map/roster qualification rather than an ID-only match.
+
+## Commands and automated coverage
+
+From the repository root:
+
+```sh
+# Reproduce six exact input traces and verify a frozen variant on this runtime.
+node scripts/build-demo-recordings.mjs
+
+# Targeted demo, existing replay-player and shared music transport tests.
+node --test game/test/demo-*.test.mjs game/test/replay-player.test.mjs game/test/soundtrack-player.test.mjs
+
+# Tiny build fixture: actual demo modules, all twelve assets and offline hashes.
+node --test game/test/boot-build.test.mjs
+
+# Accelerated simulation soak with real Node Worker threads.
+node --expose-gc scripts/soak-demo.mjs --simulation-seconds 7200 --report .cache/demo-soak-report.json
+
+# Repository checks and ordinary distributable.
+npm test
+npm run lint
+npm run validate
+npm run build
+
+# Inspect the source or the generated distribution.
+node scripts/game-cli.mjs serve --port 8768
+node scripts/game-cli.mjs serve --root dist --port 8769
+```
+
+Run the accelerated soak without a concurrent CPU-heavy suite: the production planning watchdog deliberately drops sources that cannot finish within its deadline. The soak records tested source hashes and fails if those files change during qualification. Its simulation duration is not elapsed wall time.
+
+The current local [accelerated report](verification/demo-atmosphere-2026-09-29/accelerated-soak.json) records 7,251.975 simulated seconds across 179 scenes in 209.095 elapsed seconds. This is accelerated Node simulation with real Worker threads, not a two-hour rendered browser run or evidence that a hidden browser will execute continuously. Exact source scope and browser/audio observations belong in the verification record.
+
+`build-demo-recordings.mjs --write` creates new files only and refuses to overwrite committed assets. The default verification command is the appropriate routine check.
+
+To author an additional runtime variant, serve the repository and open `/authoring/demo-recording-variants.html`. **Run and verify six recordings** executes only the committed traces, then independently strictly verifies each new ordinary recording. **Export verified bundle** downloads the reviewable result with original mismatch diagnostics. **Verify all shipped scene adapters** tests the actual `loadDemoSources` candidate selection and completes every selected recording to its exact final checkpoint, without authoring anything. The existing browser family was imported once with `node scripts/import-demo-runtime-variants.mjs <reviewed-bundle.json>`; that importer compares every input/identity/summary and all non-enemy sections, and uses exclusive creation so it cannot overwrite the original or existing variant evidence. A new browser family requires an explicit reviewed extension to the provenance/URL set, followed by strict browser playback and offline-inventory verification.
+
+| Test area                                            | Coverage                                                                                                                                                                                                                                   |
+| ---------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `demo-recordings` and `replay-player`                | All six authored wins; source identity; exact fork across four core branches and both steering policies; release markers, live cut, equipment bank, support field, Impact recovery and staged encounter phases; cancellation and disposal. |
+| `demo-library`                                       | Manual/automatic distinction, practice/incomplete/tampered/stale rejection, quality admission, dedupe, bounded eviction, snapshots, opt-out during verification, missing storage and failed writes.                                        |
+| `demo-sources`                                       | Real installed catalogue, lazy six-replay/six-bot pool, duplicate map IDs under distinct owners, unavailable Worker, cancellation, wrong fetched recording, local cache and dynamic build assets.                                          |
+| `demo-bot` and `demo-director`                       | Qualified seeds/maps, ordinary-input captures and checkpoints, real Worker lifecycle/watchdog, safe exhaustion and mandatory replay fallback, source rotation, genuine failure quarantine, stale preparation and lifecycle suspension.     |
+| `demo-experience`, `demo-host`, `demo-picture`       | Idle/settings/captions, real app handoffs and save preservation, consumed interruption, focus/cancellation, controls, locked-level practice, exact earned image access, blur and resource disposal.                                        |
+| `demo-clock`, `demo-background`                      | A single scheduler, hidden-page advancement, explicit pause, bounded recovery, freeze/resume and cleanup under controlled clocks; accelerated simulation does not qualify OS scheduling.                                                   |
+| `demo-audio`, `demo-audio-host`, `soundtrack-player` | Shared transport and preferences, safe credits, unavailable playback, deferred context, style restrictions, independent demo/music pause, and newer Pause/Next/close winning over pending style actions.                                   |
+
+## Release gates still required
+
+Automated deterministic wins establish legal playback and state continuity. They do not establish attraction, understanding, comfort, rendering performance, or physical-device behavior.
+
+1. **Three unfamiliar human viewers:** observe without prior instruction, then try the game. Record whether they understand leaving safe ground, bending and reconnecting a cut, exposed-line danger, pause/hand-off choices, and the difference between practice and normal progress. Ask which scenes held attention and where they became confused. Use those observations to revise pacing and tips.
+2. **At least two wall-clock hours on the intended browser/native targets:** exercise actual rendered rotation, foreground/background watching with enabled audio, independent demo/music Pause, explicit continuation, source failure and practice/return. Include browser freeze/recovery and actual song boundaries. Measure resource growth, frame pacing and battery/thermal behavior where relevant. Record exact build, OS, browser/runtime and device; the accelerated Node soak does not satisfy this gate.
+3. **Physical input and native lifecycle:** verify keyboard, touch and real controllers where supported, remapped controls, Hold/Toggle behavior, disconnect/reconnect, OS background/foreground and safe return to the preserved flight. Software fixtures and viewport emulation do not qualify hardware.
+
+Keep these results tied to the exact source/build being released. Final distribution/offline checks, broad repository results and browser observations belong in the verification record; pending gates must remain explicit.

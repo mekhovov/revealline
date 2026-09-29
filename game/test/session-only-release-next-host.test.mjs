@@ -210,10 +210,7 @@ test('session-only Next prepares a new exact original without persistent writes'
   page.$('prepare-session-originals').click();
   await settle(() => !page.$('download-session-originals').hidden);
   assert.match(page.$('download-session-originals').href, /^blob:/);
-  assert.equal(
-    page.$('download-session-originals').download,
-    'RevealLine-session-originals.rlmedia',
-  );
+  assert.equal(page.$('download-session-originals').download, 'fpv-line-session-originals.rlmedia');
   assert.match(page.$('save-status').textContent, /originals verified/);
   const exported = await (await fetchBlob(page.$('download-session-originals').href)).blob();
   const imported = await importMediaBundle(exported, {

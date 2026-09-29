@@ -1,9 +1,6 @@
-import { t, localizedText, localizedMessage, localizedAttribute } from '../i18n/index.mjs';
-const MODES = Object.freeze([
-  ['solo', localizedMessage('interface:solo2'), localizedMessage('interface:onePlayer')],
-  ['versus', localizedMessage('interface:versus2'), localizedMessage('interface:twoRivalBoards')],
-  ['team', localizedMessage('interface:team'), localizedMessage('interface:oneSharedArena')],
-]);
+import { t, localizedText, localizedAttribute } from '../i18n/index.mjs';
+import { setMenuIcon } from './native-menu-icons.mjs';
+const MODES = Object.freeze([['solo'], ['versus'], ['team']]);
 
 /** Shared presentation only. Existing anchors keep their hrefs and listeners. */
 export function mountModeChoices({ root, current, actions, separateTeam = false }) {
@@ -14,22 +11,25 @@ export function mountModeChoices({ root, current, actions, separateTeam = false 
     if (id !== current && actions?.[id]?.tagName !== 'A')
       throw new Error(`The existing ${id} mode link is required.`);
   }
-  const choices = MODES.map(([id, title, detail]) => {
+  const choices = MODES.map(([id]) => {
     const selected = id === current;
-    const element = selected ? document.createElement('span') : actions[id];
+    const element = selected ? document.createElement('button') : actions[id];
+    if (selected) {
+      element.type = 'button';
+      element.id = `${current}-current-mode`;
+    }
+    element.removeAttribute('data-i18n');
     const label = document.createElement('strong');
-    localizedText(label, () => title);
-    const description = document.createElement('span');
-    description.className = 'game-mode-description';
-    localizedText(description, () =>
-      separateTeam && id === 'team' ? t('interface:separateTeamArenas') : detail,
-    );
-    element.replaceChildren(label, description);
+    localizedText(label, () => t(`interface:nativeMenu.${id}`));
+    element.replaceChildren(label);
+    setMenuIcon(element, id);
     element.dataset.gameMode = id;
     if (selected) element.setAttribute('aria-current', 'page');
     return element;
   });
   root.classList.add('game-mode-choice');
+  root.dataset.menuLayout = 'horizontal';
+  root.dataset.menuScope = 'modes';
   localizedAttribute(root, 'aria-label', () => t('common:game.mode'));
   root.replaceChildren(...choices);
 }

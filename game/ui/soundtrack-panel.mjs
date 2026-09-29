@@ -1422,7 +1422,7 @@ export function attachSoundtrackPanel({
           if (disposed) return;
           preparedBackup = {
             blob,
-            filename: 'RevealLine-soundtrack.rlsound',
+            filename: 'fpv-line-soundtrack.rlsound',
             generation: saved.generation,
             recoveryLibrary: saved.library,
             url: typeof download === 'function' ? null : URLImpl.createObjectURL(blob),
@@ -1481,7 +1481,7 @@ export function attachSoundtrackPanel({
         invalidateBackup();
         preparedBackup = {
           blob,
-          filename: 'RevealLine-album.rlsound',
+          filename: 'fpv-line-album.rlsound',
           generation: saved.generation,
           share: true,
           recoveryLibrary: library,
@@ -2473,7 +2473,7 @@ export function attachSoundtrackPanel({
     trackTitle.element.value = track?.title ?? '';
     trackArtist.element.value = track?.artist ?? '';
     rightsKind.element.value = track?.rights?.kind ?? 'original';
-    rightsCredit.element.value = track?.rights?.credit ?? 'RevealLine';
+    rightsCredit.element.value = track?.rights?.credit ?? 'FPV / LINE';
     rightsLicense.element.value = track?.rights?.license ?? '';
     rightsSource.element.value = track?.rights?.source ?? '';
     const tags = track?.tags ?? draft.tags?.[track?.id];

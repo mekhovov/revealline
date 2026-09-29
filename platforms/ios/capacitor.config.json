@@ -1,6 +1,6 @@
 {
   "appId": "local.revealline.playtest",
-  "appName": "Reveal Line",
+  "appName": "FPV / LINE",
   "webDir": "www",
   "backgroundColor": "#091324",
   "loggingBehavior": "debug",

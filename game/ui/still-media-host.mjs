@@ -14,6 +14,7 @@ import { attachStillMediaPanel } from './still-media-panel.mjs';
 import { createStillMediaPreview } from './still-media-preview.mjs';
 import { createControllerRouter } from './controller-router.mjs';
 import { attachControllerNavigation } from './controller-navigation.mjs';
+import { createAuthoringSourcePicker, attachAuthoringSourceButtons } from './authoring-sources.mjs';
 
 export async function readStillWorkshopChannel({ signal, fetchImpl = globalThis.fetch } = {}) {
   const check = () => {
@@ -111,19 +112,46 @@ export function attachStillMediaHost({
     else feedback.begin({ message }).finish({ message, state });
   }
   setStatus(t('interface:chooseOpenLocalMediaToReadThisEditionSPictures'));
-  const router = createControllerRouter({ eventTarget: win, ...(readPads ? { readPads } : {}) });
+  const router = createControllerRouter({
+    eventTarget: win,
+    navigationAliases: true,
+    ...(readPads ? { readPads } : {}),
+  });
+  let sourcePicker = null,
+    stopSourceButtons = null;
+  const scope = () =>
+    sourcePicker?.dialog.open
+      ? 'still-media-sources'
+      : panel?.dialog.open
+        ? 'still-media'
+        : 'still-media-page';
   const navigation = attachControllerNavigation({
     document: doc,
     keyboard: true,
-    getScope: () => (panel?.dialog.open ? 'still-media' : 'still-media-page'),
-    getRoot: () => (panel?.dialog.open ? panel.dialog : doc),
+    getScope: scope,
+    getRoot: () =>
+      sourcePicker?.dialog.open ? sourcePicker.dialog : panel?.dialog.open ? panel.dialog : doc,
     getDefaultFocus: () => (panel?.dialog.open ? $('still-media-reload') : $('still-host-open')),
-    onBack: () => panel?.back(),
+    onBack: () => (sourcePicker?.dialog.open ? sourcePicker.close() : panel?.back()),
+    activateFileInput: (input) => sourcePicker?.open(input),
     onNativeInput: () => router.clear(),
     onHint: (text) => {
       setStatus(text);
     },
   });
+  if (doc.head && typeof win.MutationObserver === 'function') {
+    sourcePicker = createAuthoringSourcePicker({
+      document: doc,
+      window: win,
+      onOpen: () => navigation.sync(),
+      onClose: () => router.clear(),
+    });
+    stopSourceButtons = attachAuthoringSourceButtons({
+      document: doc,
+      window: win,
+      picker: sourcePicker,
+    });
+  }
   const readyMessage = () =>
     `Real local media opened for ${channel ?? sourceChannel}. Picture assignments are ready for fresh flights in this edition.`;
   const explain = (error) =>
@@ -305,7 +333,7 @@ export function attachStillMediaHost({
       audioNotice = notice;
       const link = $('still-host-download-audio');
       link.href = audioURL;
-      link.download = 'RevealLine-soundtrack.rlsound';
+      link.download = 'fpv-line-soundtrack.rlsound';
       link.hidden = false;
       setStatus(
         [
@@ -350,7 +378,7 @@ export function attachStillMediaHost({
     else
       navigation.handle(
         router.sample({
-          scope: panel?.dialog.open ? 'still-media' : 'still-media-page',
+          scope: scope(),
           timeMs: now,
         }).ui,
       );
@@ -384,6 +412,8 @@ export function attachStillMediaHost({
     feedback.dispose();
     win.cancelAnimationFrame(frame);
     navigation.destroy();
+    stopSourceButtons?.();
+    sourcePicker?.destroy();
     router.destroy();
     win.removeEventListener('blur', blur);
     win.removeEventListener('pagehide', hide);
