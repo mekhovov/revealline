@@ -61,6 +61,7 @@ export class FeedbackDirector {
       rate = 1,
       delay = 0,
       radio = false,
+      movement = false,
     } = {},
   ) {
     const cueFamily = name.replace(/-[12]$/, '');
@@ -83,6 +84,12 @@ export class FeedbackDirector {
       !c ||
       c.state !== 'running' ||
       (!ui && s.gameplayPaused)
+    )
+      return null;
+    if (
+      movement &&
+      s.movementSettings &&
+      (!s.movementSettings.enabled || s.movementSettings.volume === 0)
     )
       return null;
     if (ui && !s.menuSettings.enabled) return null;
@@ -126,8 +133,13 @@ export class FeedbackDirector {
     if (panner) {
       volume.connect(panner);
       panner.pan.setValueAtTime(pan, c.currentTime);
-      panner.connect(radio ? s.radioBus : ui ? s.menuBus : s.sfxBus);
-    } else volume.connect(radio ? s.radioBus : ui ? s.menuBus : s.sfxBus);
+      panner.connect(
+        movement ? (s.movementBus ?? s.sfxBus) : radio ? s.radioBus : ui ? s.menuBus : s.sfxBus,
+      );
+    } else
+      volume.connect(
+        movement ? (s.movementBus ?? s.sfxBus) : radio ? s.radioBus : ui ? s.menuBus : s.sfxBus,
+      );
     let ended = false,
       retiring = false;
     const voice = {
@@ -136,6 +148,7 @@ export class FeedbackDirector {
       bus: ui ? 'menu' : 'sfx',
       feedback: true,
       radio,
+      movement,
       priority,
       board,
       source,
@@ -321,6 +334,7 @@ export class FeedbackDirector {
       if (d >= (state.loops.has(key) ? 0.8 : 0.74)) continue;
       candidates.push({
         key,
+        movement: true,
         rate: movementRate(actor.bodyId ?? '', actor.type),
         name: movementFor(
           actor.bodyId ?? '',
@@ -362,6 +376,7 @@ export class FeedbackDirector {
       if (moving)
         candidates.push({
           key,
+          movement: true,
           name: movementFor(
             options.bodyId ??
               player.bodyId ??
@@ -441,7 +456,13 @@ export class FeedbackDirector {
     }
     // At most two decorative sources per Versus board, four globally.
     const quota = options.mode === 'versus' ? 2 : 4;
-    const ranked = candidates.sort((a, b) => b.gain - a.gain);
+    const ranked = candidates
+      .filter(
+        (item) =>
+          !item.movement ||
+          (sound.movementSettings?.enabled !== false && sound.movementSettings?.volume !== 0),
+      )
+      .sort((a, b) => b.gain - a.gain);
     // Reserve the moving body and one nearby enemy before decorative zones.
     const selected = ranked.filter((a) => a.key.startsWith('player:')).slice(0, quota - 1);
     const nearestEnemy = ranked.find((a) => a.key.startsWith('enemy:'));

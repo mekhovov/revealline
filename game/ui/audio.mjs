@@ -1,3 +1,4 @@
+import { readMovementAudio } from './movement-audio.mjs';
 import { FeedbackDirector } from './feedback-director.mjs';
 import { readRadioAudio } from './radio-audio.mjs';
 import { readMenuAudio } from './menu-audio.mjs';
@@ -52,7 +53,7 @@ export function releasePlaybackAudioSession(audioSession = globalThis.navigator?
   }
 }
 
-/** One shared context, three gain buses, original oscillator/noise instruments.
+/** One shared context, independently controlled gain buses, original oscillator/noise instruments.
  * Only toggle/enable/resume create or resume audio; update never bypasses a gesture.
  */
 export class Soundscape {
@@ -62,6 +63,7 @@ export class Soundscape {
     this.enabled = false;
     this.menuSettings = readMenuAudio();
     this.radioSettings = readRadioAudio();
+    this.movementSettings = readMovementAudio();
     this.feedbackDirector = new FeedbackDirector(this);
     this.persistentMusic = persistentMusic;
     this.context = null;
@@ -285,6 +287,8 @@ export class Soundscape {
     this.musicBus = context.createGain();
     this.sfxBus = context.createGain();
     this.menuBus = context.createGain();
+    this.movementBus = context.createGain();
+    this.movementBus.connect(this.sfxBus);
     this.radioBus = context.createGain();
     this.radioBus.connect(this.sfxBus);
     this.menuBus.connect(this.master);
@@ -327,6 +331,13 @@ export class Soundscape {
   applyVolumes() {
     if (!this.context) return;
     const time = this.context.currentTime;
+    this.movementBus?.gain.setTargetAtTime(
+      this.movementSettings.enabled ? this.movementSettings.volume : 0,
+      time,
+      0.027,
+    );
+    if (!this.movementSettings.enabled || this.movementSettings.volume === 0)
+      for (const voice of [...this.voices]) if (voice.movement) voice.stop();
     this.radioBus?.gain.setTargetAtTime(
       this.radioSettings.enabled ? this.radioSettings.volume : 0,
       time,
@@ -480,6 +491,7 @@ export class Soundscape {
       this.sfxBus,
       this.menuBus,
       this.radioBus,
+      this.movementBus,
       this.master,
       this.compressor,
     ])

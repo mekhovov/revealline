@@ -8,7 +8,7 @@ Recorded ingredients are from Kenney's [Impact Sounds](https://kenney.nl/assets/
 
 Run `python3 authoring/audio/revealline-v1/produce.py` with ffmpeg installed, then format `game/audio/effects/bank.mjs` with the repository's Prettier. `recipes.json` records source, trim duration and source package; `produce.py` records filtering, fades, harmonics, timing and deterministic seeds. The manifest contains the byte length and SHA-256 of every distributed asset. Original signatures have different intervals and durations for warning, start, retry, revival, loss, victory, neutralization and reactivation. Recorded material contacts have three variations. Loop lengths and harmonic periods are integral; granular noise tails meet at zero.
 
-52 mono PCM runtime assets, 1,453,856 bytes in total; approximately 4.16 MiB decoded at 48 kHz (excluding separately supplied source originals). All are local/offline distribution assets. No runtime third-party requests. The existing immutable build inventory owns offline caching and exact-build hashes.
+52 mono PCM runtime assets, 2,575,136 bytes in total; approximately 7.36 MiB decoded at 48 kHz (excluding separately supplied source originals). All are local/offline distribution assets. No runtime third-party requests. The existing immutable build inventory owns offline caching and exact-build hashes.
 
 ## Audition
 
@@ -31,3 +31,11 @@ Following [Bjørn Jacobsen's repetition and frequency-control guidance](https://
 Movement assets now have audible midrange harmonics, calibrated RMS and independent near gains; a moving player and one nearby enemy receive reserved slots. Distance attenuation and urgent-warning policy remain unchanged. The audition page now actually moves its player, offers five body textures and displays the active movement sources. The earlier stationary player could not demonstrate movement sound.
 
 File measurements and browser source ownership are verified separately from subjective comfort. `comfort-file-inspection.json` supersedes earlier bank measurements. A physical sustained-listening approval is still required.
+
+## Optional, softer movement layer
+
+A second user listening pass found the louder tonal loops tiring. Replace all six continuous textures with low-pass-filtered broadband motion, roughly four seconds long with an 80 ms overlap at the seam. This removes the pitched fundamentals, bright harmonic stacks and 13 Hz modulation; filtering differentiates the bodies. Actor loops target −25 dBFS RMS, fine-grained environmental textures −29 dBFS. The separate movement bus defaults to 50%, so the actor layer is about 9–10 dB quieter than the preceding audition at otherwise identical settings.
+
+Settings → Audio now includes Movement sounds and Movement volume (English/Ukrainian), persisted separately in `revealline.movement-audio.v1`. Disabling it cancels existing player/enemy loops immediately, rejects new movement voices, and leaves warnings, impacts, rewards, radio and environmental zones under their existing controls. It never changes simulation movement. The audition controls are session-only and do not write game preferences.
+
+Research: [Bjørn Jacobsen on repetition/frequency fatigue](https://www.asoundeffect.com/game-audio-immersion/) and [Audiokinetic variation guidance](https://www.audiokinetic.com/en/public-library/2024.1.4_8780/?id=creating_random_container&source=Help). These informed the direction; they are not proof that a specific user will find the result comfortable. `movement-file-inspection.json` supersedes the six earlier loop measurements.

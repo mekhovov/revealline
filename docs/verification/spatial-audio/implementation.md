@@ -73,3 +73,10 @@ Release remains held for unresolved full-suite qualification and subjective/devi
 - Stop the superseded broad diagnostic run after source changes; no exact-source full-suite pass is claimed. Broader Team Next fixture tests also expose unresolved cancellation/preparation waits. Keep the release gate open.
 
 - Current packaging build passed: 1,833 files; 52 runtime WAVs plus bank, radio sources, provenance and license total 57 effects entries in the core cache. Built effects/modules match current source; license HTML has the standard offline installer prefix. See `comfort-build.json`. Lint, formatting and content/presentation validation passed. This remains local packaging evidence with `sourceRevision: null`.
+
+## Optional movement layer — second listening revision
+
+- User feedback rejected the louder tonal movement mix. Replace six short pitched/pulsing loops with soft filtered broadband textures, 3.92 seconds each with an 80 ms seam overlap. Actor sources target −25 dBFS RMS; grain/flow target −29 dBFS. At the new 50% movement bus default, actor playback is roughly 9–10 dB below the preceding audition. No subjective comfort approval is inferred.
+- Add independent persisted Movement sounds and Movement volume controls in Settings → Audio (`revealline.movement-audio.v1`, enabled at 50%). Stop existing actor voices on opt-out/zero, reject new ones, resume eligible moving bodies on opt-in; preserve foreground cues, environmental textures and gameplay behavior.
+- 119 focused tests pass, including movement mute, mixer independence, storage defaults, replay read isolation, lifecycle and voice limits. Browser observations: both actor sources retire/reappear on toggle, all 52 files decode, disabled/25% persisted across reload while menu/radio remained enabled/35%. Restored movement enabled/50% afterward; paused music restored. Ukrainian controls visible in `movement-settings.png`.
+- Current bank is 2,575,136 bytes (~2.46 MiB transfer, ~7.36 MiB decoded at 48 kHz). `movement-file-inspection.json` supersedes prior loop measurements. Earlier build receipts remain historical until the current packaging check is recorded.

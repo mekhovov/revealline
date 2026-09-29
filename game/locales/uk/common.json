@@ -251,5 +251,7 @@
   "menuSounds": "Звуки меню",
   "menuVolume": "Гучність меню",
   "radioSounds": "Радіоповідомлення FPV",
-  "radioVolume": "Гучність радіо"
+  "radioVolume": "Гучність радіо",
+  "movementSounds": "Звуки руху",
+  "movementVolume": "Гучність руху"
 }

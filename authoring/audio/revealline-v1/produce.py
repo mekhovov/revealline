@@ -37,17 +37,19 @@ for name,(pack,source,duration) in recipes.items():
 # periodic envelope. Every source is original; no melody is copied from music.
 for name in ['motor','rotor','wings','wheels','grain','flow','warning','start','retry','loss','respawn','win','reveal-small','reveal-medium','reveal-large','neutralized','reactivated']:
     loop=name in ['motor','rotor','wings','wheels','grain','flow']
-    duration=1 if loop else {'win':1.35,'loss':.6,'warning':.42,'reveal-small':.2,'reveal-medium':.4,'reveal-large':.65}.get(name,.45)
+    duration=4 if loop else {'win':1.35,'loss':.6,'warning':.42,'reveal-small':.2,'reveal-medium':.4,'reveal-large':.65}.get(name,.45)
     sr=32000;n=int(duration*sr); rng=random.Random(724); data=[]; smooth=0
     for i in range(n):
         t=i/sr;u=i/n
         env=1 if loop else min(1,t/.008)*max(0,1-u)**1.7
         smooth=.87*smooth+.13*rng.uniform(-1,1)
         if loop:
-            freq={'motor':90,'rotor':65,'wheels':46,'grain':170,'flow':210,'wings':36}[name]
-            pulse=.6+.4*math.sin(2*math.pi*(5 if name=='wings' else 13)*t)
-            value=(math.sin(2*math.pi*freq*t)+.45*math.sin(2*math.pi*freq*3*t)+.28*math.sin(2*math.pi*freq*5*t)+.15*math.sin(2*math.pi*freq*8*t))*.065*pulse
-            if name in ['grain','flow','wings']: value+=smooth*.17*math.sin(math.pi*u)**2
+            # Soft broadband motion rather than a sustained musical note or 13 Hz buzz.
+            # A warm-up period reaches steady filter state; the tail is crossfaded below.
+            cutoff={'motor':900,'rotor':1250,'wheels':650,'grain':1100,'flow':700,'wings':850}[name]
+            alpha=1-math.exp(-2*math.pi*cutoff/sr)
+            filtered=alpha*rng.uniform(-1,1)+(1-alpha)*(data[-1] if data else 0)
+            value=filtered
         elif name.startswith('reveal-'):
             # A soft brushed seal, with breadth rather than a repeating musical fanfare.
             sweep=math.sin(math.pi*u)**1.5
@@ -64,6 +66,13 @@ for name in ['motor','rotor','wings','wheels','grain','flow','warning','start','
                     value+=(math.sin(2*math.pi*f*dt)+.2*math.sin(2*math.pi*f*(2.37 if name=='warning' else 2.01)*dt))*math.exp(-dt*(17 if name=='warning' else 12))*min(1,dt/.004)*.095
             value+=smooth*.045*math.exp(-t*16)
         data.append(max(-.8,min(.8,value*env)))
+    if loop:
+        # Equal-power-free linear overlap: no amplitude bump or gap at the seam.
+        overlap=int(.08*sr)
+        for k in range(overlap):
+            blend=k/overlap
+            data[k]=data[n-overlap+k]*(1-blend)+data[k]*blend
+        data=data[:-overlap]; n=len(data)
     dest=OUT/(name+'.wav')
     with wave.open(str(dest),'wb') as w:
         w.setparams((1,2,sr,n,'NONE','not compressed'));w.writeframes(struct.pack('<'+'h'*n,*[int(v*32767) for v in data]))
@@ -98,7 +107,7 @@ for locale in ['en','uk']:
 for name,entry in bank.items():
     family=name.split('-')[0]
     target={'focus':-36,'confirm':-32,'cancel':-33,'paper':-35,'pickup':-31,'closure':-34,'switch':-32,'contact':-29,'reveal':-37}.get(family)
-    if entry['loop']: target=-21 if name in ['motor','rotor','wheels','wings'] else -26
+    if entry['loop']: target=-25 if name in ['motor','rotor','wheels','wings'] else -29
     if target is None: continue
     dest=OUT/entry['file']
     with wave.open(str(dest),'rb') as w:

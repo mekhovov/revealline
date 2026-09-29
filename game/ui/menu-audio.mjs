@@ -1,3 +1,4 @@
+import { MOVEMENT_AUDIO_KEY } from './movement-audio.mjs';
 import { RADIO_AUDIO_KEY } from './radio-audio.mjs';
 import { t, localizedText } from '../i18n/index.mjs';
 export const MENU_AUDIO_KEY = 'revealline.menu-audio.v1';
@@ -42,7 +43,17 @@ export function attachMenuAudioSettings(sound, doc = globalThis.document) {
     'radioSounds',
     'radioVolume',
   );
+  const movement = attachPreference(
+    sound,
+    doc,
+    'movement',
+    'movementSettings',
+    MOVEMENT_AUDIO_KEY,
+    'movementSounds',
+    'movementVolume',
+  );
   return () => {
+    movement();
     menu();
     radio();
   };
