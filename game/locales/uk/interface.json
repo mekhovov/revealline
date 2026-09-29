@@ -5376,5 +5376,10 @@
   "creator.teamStudio.templates.coverage.objective": "Обидва пілоти замикають ділянки, доки не досягнуть спільної цілі покриття.",
   "creator.teamStudio.templates.stronghold.name": "Охоплення ретранслятора",
   "creator.teamStudio.templates.stronghold.objective": "Кожен пілот закріплює опорну точку, а потім разом вони замикають відкритий центр ретранслятора.",
+  "team.cueOverflowNotice": "Деяким написам на полі бракує місця. Відкрийте «Подробиці поля», щоб призупинити гру та прочитати їх.",
+  "team.cuePatrol": "Патрулює",
+  "team.cueDrifter": "Патрульний ворог",
+  "team.cueRelay": "Вузол {{number}}",
+  "team.cueLockedPlayer": "Ціль зафіксовано: {{player}}",
   "worldIdsCommaSeparated": "Світи (через кому: retro, fpv, ukraine)"
 }

@@ -668,6 +668,48 @@ progress::-webkit-progress-value {
   overflow: hidden;
   background: var(--fk-bg);
 }
+#coop-cue-overflow {
+  inline-size: 100%;
+  min-inline-size: 0;
+  max-inline-size: 32rem;
+  margin-inline: auto;
+}
+#coop-cue-overflow #coop-field-details {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  inline-size: 100%;
+  min-block-size: 44px;
+  min-inline-size: 44px;
+  padding: 2px 4px;
+  font-size: var(--handheld-label, 14px);
+  line-height: 1.1;
+}
+#coop-cue-summary {
+  display: block;
+  inline-size: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-weight: normal;
+}
+#coop-pause-core #coop-cue-summary {
+  display: none;
+}
+#coop-field-details-list {
+  padding-inline-start: 1.4em;
+  overflow-wrap: anywhere;
+}
+#coop-field-details-list li + li {
+  margin-block-start: 0.6em;
+}
+.coop-cue-announcement {
+  position: absolute;
+  inline-size: 1px;
+  block-size: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+}
 canvas {
   display: block;
   width: 100%;
