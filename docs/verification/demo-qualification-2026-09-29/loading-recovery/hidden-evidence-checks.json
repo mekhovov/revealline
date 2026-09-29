@@ -1,0 +1,18 @@
+{
+  "checkedDocuments": [
+    "docs/verification/demo-qualification-2026-09-29/README.md",
+    "docs/verification/demo-qualification-2026-09-29/loading-recovery/README.md",
+    "docs/verification/demo-qualification-2026-09-29/loading-recovery/browser-observation-handoff.md",
+    "docs/verification/demo-qualification-2026-09-29/loading-recovery/hidden-observation-review.md"
+  ],
+  "relativeLinksVerified": 63,
+  "exactCheckpointSHA256": "9f55f436e35c9e8bdb643c25db3dade178f681fdcac162a6aa9f7f580dca1f77",
+  "checkpointBytes": 988624,
+  "samples": 429,
+  "hiddenSamples": 69,
+  "incompletePreserved": true,
+  "candidateLogHashVerified": true,
+  "catalogEditionsVerified": 14,
+  "runtimeAndHarnessChangesSinceFrozenSource": [],
+  "testOnlyChangesSinceFrozenSource": ["game/test/demo-director.test.mjs"]
+}
