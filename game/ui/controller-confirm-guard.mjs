@@ -167,7 +167,8 @@ export function attachControllerConfirmGuard({
     suppressUntil = -Infinity;
     tailTarget = null;
     nativeActivation = null;
-    activationDepth = 0;
+    // A click handler can synchronously blur the page or open a child frame.
+    // Its call-stack depth still unwinds in activate(), even after input resets.
   };
   const blur = () => reset('blur');
   const visibility = () => reset('visibility');

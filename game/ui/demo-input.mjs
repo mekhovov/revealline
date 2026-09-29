@@ -24,6 +24,7 @@ export function attachDemoInput({
   pause,
   menu,
   ownsUI = () => false,
+  nativeConfirmOwned = () => false,
   onActivity = () => {},
   onHangar = () => {},
 }) {
@@ -107,6 +108,9 @@ export function attachDemoInput({
         event.target?.closest?.('[data-demo-exit]') &&
         (takeoverAvailable() || busy())
       ) {
+        // Window capture precedes the document guard. Let its shared Confirm
+        // owner consume controller echoes, including a press not yet seen by RAF.
+        if (fresh && !event.shiftKey && nativeConfirmOwned(event)) return;
         consume(event);
         if (fresh) {
           suppressedExitKeys.add(code);
@@ -190,6 +194,7 @@ export function attachDemoInput({
       onActivity();
       if (event.button > 0) return;
       if ((takeoverAvailable() || busy()) && event.target?.closest?.('[data-demo-exit]')) {
+        if (nativeConfirmOwned(event)) return;
         suppressedPointers.add(pointerId);
         consume(event);
         back();
