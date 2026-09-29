@@ -44,8 +44,25 @@ Team edition-specific two-front impact guidance (25/25), and exact selected
 artwork file handoff (38/38). See [batch17](verification/actor-batch-17/README.md).
 The native Studio handoff retained the expected downloaded image hash. Broader
 Versus input tests include reproduced baseline failures, not a blanket pass.
-The valid imported Team hunter Start incompatibility is owned separately by the
-Levels coordinator; these guidance changes do not alter schemas or rules.
+The valid imported Team Hunter Start incompatibility is now corrected in
+PR757 at `29f899e23ac556dd623a02df401adbea151fc087`, adopting the Levels
+coordinator's narrow fix. Its composed **54/54** cohort includes actual EN/UK
+v6/v7 import → Start → Pause → Help → Back, warned attacks across all presets,
+strict schema rejection, frozen output preservation and installed reconstruction.
+These overlap previous counts. See [composition evidence](https://github.com/mekhovov/revealline/blob/29f899e23ac556dd623a02df401adbea151fc087/docs/verification/team-hunter-composition-20260929/README.md).
+The startup source blocker is resolved; publisher integration, production review
+and public qualification remain separate.
+
+## Latest source correction
+
+[Batch18](verification/actor-batch-18/README.md) prevents Field Guide crashes and
+unsupported practice launches in custom-theme editions. Illustration and practice
+availability are explicit; current-mission edition practice, ordinary lessons,
+exact paused state and retained artwork remain intact. Hidden-page image readiness
+is reconciled on return. **73/73** focused checks pass with independent source
+review and actual shipped EN/UK text verification. The original failing paths are
+preserved. This closes the bounded Guide capability defect, not all B teaching or
+production acceptance. No new artwork or approval is adopted.
 
 ## Public and queued
 

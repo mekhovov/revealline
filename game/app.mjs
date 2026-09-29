@@ -2773,6 +2773,7 @@ try {
   });
   enemyGuide = attachEnemyGuide({
     themes: guideThemes,
+    catalogPracticeAvailable: !runtimeContent,
     getPresentation: () => presentationSnapshot,
     getThemeId: () => theme.id,
     getTurnPolicy: () => turnPolicy,

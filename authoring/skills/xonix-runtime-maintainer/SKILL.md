@@ -1684,3 +1684,22 @@ existing paused reading/return ownership; no per-frame rebuild or live telemetry
 announcements. A missing prepared match is not invalid content. Team two-front
 trail advice requires its explicit runtime edition; Legacy relay guidance stays
 unchanged. Keep reproduced baseline test defects separate from feature passes.
+
+### Edition Field Guide capabilities
+
+An edition may reconstruct only admitted missions. Set the explicit catalog
+practice capability false where generic role/impact lessons cannot enter that
+loader; keep their readable guidance with localized explanation, and preserve
+supported current-mission practice through its exact edition adapter. Guard the
+activation handler before preparation or handoff writes, not only the button.
+Missing canonical palettes cannot be dereferenced or trigger unrelated artwork
+loads; use a valid selected compiled role or an unavailable illustration state.
+Preserve ordinary hosts' captured canonical catalog and restored-pack behavior.
+
+Regression prompt: “Open the guide in custom-theme source and compiled editions,
+change roles/appearances with a working canvas, attempt catalog/impact practice,
+and verify no child or storage changes. Then launch a supported current-mission
+lesson, return to the unchanged paused parent, and repeat in an ordinary restored
+pack. Check both languages, Close/Back and fresh controller input.” Source tests
+and honest unavailable states do not establish new edition lesson support or
+production/device acceptance.
