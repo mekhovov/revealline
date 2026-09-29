@@ -102,11 +102,7 @@ export function attachDemoInput({
       const activation = ['Enter', 'NumpadEnter', 'Space'].includes(code);
       // Back lives inside the same UI wrapper as ordinary controls. Own its
       // exit gesture before yielding so a held key cannot reactivate Home.
-      if (
-        activation &&
-        event.target?.closest?.('[data-demo-exit]') &&
-        (takeoverAvailable() || busy())
-      ) {
+      if (activation && event.target?.closest?.('[data-demo-exit]')) {
         consume(event);
         if (fresh) {
           suppressedExitKeys.add(code);

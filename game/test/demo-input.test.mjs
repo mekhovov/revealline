@@ -425,7 +425,7 @@ for (const [code, key] of [
   ['NumpadEnter', 'Enter'],
   ['Space', ' '],
 ]) {
-  for (const phase of ['watching', 'loading'])
+  for (const phase of ['watching', 'loading', 'practice'])
     test(`Back inside Demo UI exits ${phase} on ${code} and consumes repeats, release and click after focus moves Home`, async (t) => {
       const f = fixture(t, { phase }),
         header = new Target(f.root, { demoUi: '' }),

@@ -72,6 +72,7 @@ const ambientRuntimeFiles = [
   'game/ui/menu-scenes.css',
   'game/ui/art/menu-scenes/analog-noise-atlas.png',
   'game/ui/art/menu-scenes/droneaid-main-background.png',
+  'game/ui/art/menu-scenes/droneaid-main-background.webp',
   'game/ui/art/menu-scenes/droneaid-wordmark-light.svg',
 ];
 
