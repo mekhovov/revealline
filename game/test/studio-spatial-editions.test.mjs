@@ -35,7 +35,7 @@ test('recent registered editions are searchable without changing the selected dr
   try {
     assert.deepEqual(
       STUDIO_SPATIAL_REVIEW_IDS,
-      Array.from({ length: 12 }, (_, n) => `whole-spatial-v${n + 26}`),
+      Array.from({ length: 13 }, (_, n) => `whole-spatial-v${n + 26}`),
     );
     assert.equal(f.$('whole-variety-edition').value, 'apex-cultural-routes-1');
     f.$('source').value = '{"unapplied":"draft"}';
@@ -66,18 +66,18 @@ test('review links track exact selected edition and locale without rebuilding co
   try {
     const selector = f.$('whole-variety-edition');
     const options = [...selector.options];
-    selector.value = 'whole-spatial-v37';
+    selector.value = 'whole-spatial-v38';
     selector.emit('change');
     selector.focus();
     for (const locale of ['uk', 'en']) {
       setLocale(locale, { persist: false });
       assert.equal(f.$('spatial-review-links').hidden, false);
-      assert.equal(f.$('spatial-review-solo').href, '../?journey=whole-spatial-v37');
-      assert.equal(f.$('spatial-review-versus').href, '../couch/?journey=whole-spatial-v37');
-      assert.match(f.$('spatial-review-solo').getAttribute('aria-label'), /whole-spatial-v37/);
+      assert.equal(f.$('spatial-review-solo').href, '../?journey=whole-spatial-v38');
+      assert.equal(f.$('spatial-review-versus').href, '../couch/?journey=whole-spatial-v38');
+      assert.match(f.$('spatial-review-solo').getAttribute('aria-label'), /whole-spatial-v38/);
       assert.deepEqual([...selector.options], options);
       assert.equal(f.document.activeElement, selector);
-      assert.equal(selector.value, 'whole-spatial-v37');
+      assert.equal(selector.value, 'whole-spatial-v38');
     }
     selector.value = 'apex-cultural-routes-1';
     selector.emit('change');

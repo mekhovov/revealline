@@ -48,11 +48,23 @@ export function createAuthoredJourneyRouteDefinition(
     createCurrentRemixPressureCandidates,
     createContestedWallTriptychCandidates,
     createPressureCorridorTriptychCandidates,
+    createCoolingLoopErosionCandidates,
     createUkrainianOrnamentJourney,
     createUkrainianOrnamentAtlasJourney,
   },
 ) {
   if (!isAuthoredJourneyRouteId(id)) return null;
+  if (id === 'whole-spatial-v38')
+    return freezeDesign({
+      id,
+      label: 'Whole Journey Cooling loop earned-return pressure · balance pending',
+      sessionKey: 'revealline.suspended.journey-whole-spatial.v38',
+      profileKey: 'journey-whole-spatial-v38',
+      source: createCoolingLoopErosionCandidates({ artwork: true }),
+      corePackIds: [...WHOLE_JOURNEY_CORE_PACK_IDS],
+      optionalCampaignIds: ['ornament-crossings', 'workshop-routing'],
+      preserveOriginalThemes: true,
+    });
   if (id === 'whole-spatial-v37')
     return freezeDesign({
       id,
