@@ -234,6 +234,57 @@ export function attachStillMediaHost({
     $('still-host-export-audio').disabled = true;
     router.clear();
   }
+  function captureAudioFocus(opener, signal) {
+    const empty = (target) => !target || target === doc.body || target === doc.documentElement,
+      removers = [];
+    let current = foreground() && scope() === 'still-media-page' && doc.activeElement === opener;
+    const cancel = () => {
+      current = false;
+      for (const remove of removers.splice(0)) remove();
+    };
+    const listen = (target, type, callback) => {
+      target.addEventListener(type, callback, true);
+      removers.push(() => target.removeEventListener(type, callback, true));
+    };
+    if (current) {
+      listen(doc, 'focusin', (event) => {
+        if (!empty(event.target) && event.target !== opener) cancel();
+      });
+      for (const type of ['pointerdown', 'keydown'])
+        listen(doc, type, (event) => {
+          if (!opener.contains(event.target)) cancel();
+        });
+      listen(doc, 'beforetoggle', (event) => {
+        if (event.target?.tagName === 'DIALOG' && event.newState === 'open') cancel();
+      });
+      listen(doc, 'visibilitychange', () => {
+        if (doc.hidden) cancel();
+      });
+      listen(win, 'blur', (event) => {
+        if (event.target === win) cancel();
+      });
+      listen(win, 'pagehide', cancel);
+      listen(signal, 'abort', cancel);
+    }
+    return {
+      cancel,
+      restore(target) {
+        const allowed =
+          current &&
+          !signal.aborted &&
+          foreground() &&
+          scope() === 'still-media-page' &&
+          !doc.querySelector('dialog[open]') &&
+          (empty(doc.activeElement) || doc.activeElement === opener) &&
+          target?.isConnected &&
+          !target.disabled &&
+          !target.closest('[hidden],[inert]') &&
+          target.getClientRects().length;
+        cancel();
+        if (allowed) target.focus();
+      },
+    };
+  }
   async function open() {
     if (disposed || opening) return false;
     if (!['http:', 'https:'].includes(win.location.protocol)) {
@@ -326,9 +377,14 @@ export function attachStillMediaHost({
   async function prepareAudio() {
     if (!audio || audioTask || disposed) return false;
     discardAudio();
-    const own = new AbortController();
+    const own = new AbortController(),
+      opener = $('still-host-export-audio'),
+      focus = captureAudioFocus(opener, own.signal),
+      ownerAudio = audio,
+      ticket = openSerial;
+    let completed = false;
     audioTask = own;
-    $('still-host-export-audio').disabled = true;
+    opener.disabled = true;
     const lease = feedback.begin({
       message: t('interface:readingSavedMusicAndCheckingBackupPermissions'),
       stage: 'reading',
@@ -382,16 +438,23 @@ export function attachStillMediaHost({
           .join(' '),
       );
       lease.finish({ message: status.textContent });
-      link.focus();
+      completed = true;
       return true;
     } catch (error) {
       if (!disposed && audioTask === own) lease.finish({ message: explain(error), state: 'error' });
       return false;
     } finally {
-      if (activity === lease) activity = null;
-      if (audioTask === own) {
-        audioTask = null;
-        $('still-host-export-audio').disabled = !audio;
+      try {
+        if (activity === lease) activity = null;
+        if (audioTask === own) {
+          audioTask = null;
+          opener.disabled = !audio;
+          // Re-enabling can itself start a newer operation or close this owner.
+          if (!disposed && audio === ownerAudio && openSerial === ticket && audioTask === null)
+            focus.restore(completed ? $('still-host-download-audio') : opener);
+        }
+      } finally {
+        focus.cancel();
       }
     }
   }
@@ -441,7 +504,10 @@ export function attachStillMediaHost({
     if (!event.persisted) dispose();
   };
   const show = (event) => {
-    if (event.persisted && !disposed) frame = win.requestAnimationFrame(poll);
+    if (event.persisted && !disposed) {
+      $('still-host-export-audio').disabled = !audio || Boolean(audioTask);
+      frame = win.requestAnimationFrame(poll);
+    }
   };
   function dispose() {
     if (disposed) return;
