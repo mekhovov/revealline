@@ -299,6 +299,37 @@ test('actual Studio rejects invalid source without enabling Apply or changing th
   assert.equal(h.doc.activeElement, h.$('validate'));
 });
 
+test('successful saved inspection clears an earlier source error while preserving the applied draft and checkpoint', async (t) => {
+  const h = await fixture(t, { controller: true });
+  await h.click('save');
+  const backend = createContentDraftBackend(h.memory);
+  const saved = await backend.read('studio-host-fixture');
+  h.edit({ ...saved.project, name: 'Later applied draft awaiting save' });
+  await h.click('validate');
+  await h.click('apply');
+  h.edit('{"invalid":');
+  await h.click('validate');
+  assert.equal(h.$('status').dataset.error, 'true');
+  const previousError = h.$('status').textContent;
+
+  h.focus('load');
+  await h.pulse(0);
+  assert.equal(h.$('studio-source-discard').open, true);
+  h.focus('studio-source-discard-confirm');
+  await h.pulse(0);
+
+  assert.equal(h.$('studio-source-discard').open, false);
+  assert.equal(h.$('status').dataset.error, 'false');
+  assert.notEqual(h.$('status').textContent, previousError);
+  assert.equal(h.$('status').textContent, h.$('validation').textContent);
+  assert.match(h.$('status').textContent, /inspected/i);
+  assert.equal(h.$('apply').disabled, false);
+  assert.deepEqual(JSON.parse(h.$('source').value), saved.project);
+  assert.equal(h.$('project-name').textContent, 'Later applied draft awaiting save');
+  assert.deepEqual(await backend.read(saved.project.id), saved);
+  assert.equal(h.doc.activeElement.id, 'load');
+});
+
 test('actual Studio Apply keeps a reachable owner after it disables the consumed action', async (t) => {
   const h = await fixture(t);
   const edited = JSON.parse(h.$('source').value);
