@@ -247,5 +247,7 @@
   "counts.videos_one": "{{count}} відео",
   "counts.videos_few": "{{count}} відео",
   "counts.videos_many": "{{count}} відео",
-  "counts.videos_other": "{{count}} відео"
+  "counts.videos_other": "{{count}} відео",
+  "menuSounds": "Звуки меню",
+  "menuVolume": "Гучність меню"
 }

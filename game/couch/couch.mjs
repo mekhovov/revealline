@@ -1,3 +1,4 @@
+import { boardPlacement } from '../ui/feedback-cues.mjs';
 import {
   gameplayTuningDescription,
   gameplayStatusLabel,
@@ -356,6 +357,7 @@ try {
   const authoredRoute = await loadAuthoredJourneyRoute(
     resolveJourneyRequest(new URL(location.href).searchParams, {
       mode: 'versus',
+      actorStyle: actorAppearance?.style,
     }),
     { fullSource: true },
   );
@@ -404,6 +406,7 @@ try {
   }
   const librarySourceReturn = readMissionLibraryReturn(new URL(location.href).searchParams, {
     mode: 'versus',
+    actorStyle: actorAppearance?.style,
   });
   let journeyProfile = null,
     displayedProgressProfile = null,
@@ -492,6 +495,7 @@ try {
       document,
       button: $('race-journey-pictures'),
       mode: 'versus',
+      actorStyle: actorAppearance?.style,
       editionId: authoredRoute.id,
       catalog: candidateJourney.catalog,
       profile: journeyProfile,
@@ -964,6 +968,7 @@ try {
     if (candidateJourney?.owns(row)) {
       actorJourneyIdentity ??= createJourneyVisualThemeIdentityAdapter(authoredRoute.source, {
         mode: 'versus',
+        actorStyle: actorAppearance?.style,
       });
       content = await (
         await actorJourneyIdentity
@@ -976,6 +981,7 @@ try {
             editionId: authoredRoute.id,
             contentThemeId: recipe.theme.id,
             mode: 'versus',
+            actorStyle: actorAppearance?.style,
           },
         },
         { signal },
@@ -1318,6 +1324,7 @@ try {
       journeyProfile.record({
         type: 'select',
         mode: 'versus',
+        actorStyle: actorAppearance?.style,
         missionId: entry.mission.id,
       });
     paintRound(roundRecipe);
@@ -1699,6 +1706,7 @@ try {
         journeyProfile.record({
           type: 'select',
           mode: 'versus',
+          actorStyle: actorAppearance?.style,
           missionId: attempt.recipe.entry.mission.id,
         });
       localizedText($('race-start'), () =>
@@ -2231,6 +2239,7 @@ try {
         journeyProfile.record({
           type: 'skip',
           mode: 'versus',
+          actorStyle: actorAppearance?.style,
           missionId: skipped.id,
         });
     };
@@ -2498,6 +2507,7 @@ try {
               )
             : retainedLibraryMission(library, {
                 mode: 'versus',
+                actorStyle: actorAppearance?.style,
                 levelId: entry.level.id,
                 campaignKey: classicRulesCampaignIdentity({
                   campaignKey: entry.musicCampaignKey,
@@ -2523,6 +2533,7 @@ try {
       });
       const prepared = await library.prepare(next, {
         mode: 'versus',
+        actorStyle: actorAppearance?.style,
         signal: operation.controller.signal,
       });
       if (!current() || prepared.state === 'cancelled') return;
@@ -2537,6 +2548,7 @@ try {
       if (!context.isCurrent() || operation.controller.signal.aborted) return;
       const started = await library.launch(next, {
         mode: 'versus',
+        actorStyle: actorAppearance?.style,
         ...context,
         continuousNext: true,
       });
@@ -3047,6 +3059,7 @@ try {
           combineJourneyLibrarySources([
             {
               mode: 'versus',
+              actorStyle: actorAppearance?.style,
               source: journeyLibrarySource({
                 editionId: route.id,
                 edition: route.id === DEFAULT_JOURNEY_ROUTES.versus ? 'New Journey' : route.label,
@@ -3257,6 +3270,7 @@ try {
         library: result.library,
         profile,
         mode: 'versus',
+        actorStyle: actorAppearance?.style,
         getCurrentId: () => {
           if (currentLibrarySelection?.match === match) return currentLibrarySelection.id;
           const entry = roundRecipe.entry;
@@ -3272,6 +3286,7 @@ try {
           try {
             return retainedLibraryMission(result.library, {
               mode: 'versus',
+              actorStyle: actorAppearance?.style,
               levelId: entry.level.id,
               campaignKey: classicRulesCampaignIdentity({
                 campaignKey: entry.musicCampaignKey,
@@ -3706,6 +3721,7 @@ try {
     journeyReactions.present({
       owned: !!candidateJourney?.owns(roundRecipe?.entry),
       mode: 'versus',
+      actorStyle: actorAppearance?.style,
       outcome:
         match.status === 'finished' && completedBoards
           ? completedBoards === 2
@@ -4156,6 +4172,15 @@ try {
                 : command,
           );
           stepDuel(match, commands);
+          match.runs.forEach((run, i) =>
+            sound.feedback(true, theme, run, {
+              board: i,
+              mode: 'versus',
+              actorStyle: actorAppearance?.style,
+              command: commands[i],
+              placement: boardPlacement(contexts[i].canvas),
+            }),
+          );
           neutralResumeTick = false;
           for (let i = 0; i < 2; i++)
             if (
@@ -4168,7 +4193,12 @@ try {
           for (let i = 0; i < 2; i++)
             if (match.runs[i].tick !== before[i]) {
               painters[i].effectsFor(match.runs[i].events, match.runs[i]);
-              for (const event of match.runs[i].events) sound.event(event);
+              sound.events(match.runs[i].events, match.runs[i], theme, {
+                board: i,
+                mode: 'versus',
+                actorStyle: actorAppearance?.style,
+                placement: boardPlacement(contexts[i].canvas),
+              });
               const run = match.runs[i],
                 caption = foundationReturnCaption(run);
               if (caption)
@@ -4185,6 +4215,18 @@ try {
       }
     }
     if (match.status === 'finished' && !finished) {
+      sound.events(
+        [
+          {
+            type: 'run.completed',
+            tick: Math.max(...match.runs.map((run) => run.tick)),
+            status: 'won',
+          },
+        ],
+        match,
+        theme,
+        { board: 'duel-result' },
+      );
       finished = true;
       clear();
       if (match.winner !== null) won[match.winner]++;
@@ -4205,6 +4247,7 @@ try {
           completion = {
             type: 'complete',
             mode: 'versus',
+            actorStyle: actorAppearance?.style,
             missionId: roundRecipe.entry.mission.id,
             runId,
             difficulty: roundRecipe.entry.difficulty,
@@ -4213,6 +4256,7 @@ try {
               ? {
                   picture: {
                     mode: 'versus',
+                    actorStyle: actorAppearance?.style,
                     editionId: authoredRoute.id,
                     missionId: roundRecipe.entry.mission.id,
                     campaignKey: roundRecipe.entry.musicCampaignKey,
@@ -4263,6 +4307,7 @@ try {
           completion = {
             type: 'complete',
             mode: 'versus',
+            actorStyle: actorAppearance?.style,
             missionId,
             runId,
             difficulty: roundRecipe.entry.difficulty,
@@ -4271,6 +4316,7 @@ try {
               ? {
                   picture: {
                     mode: 'versus',
+                    actorStyle: actorAppearance?.style,
                     editionId: creatorOwner.prepared.editionId,
                     missionId,
                     campaignKey: roundRecipe.entry.musicCampaignKey,
@@ -4431,6 +4477,14 @@ try {
         actorAppearance,
       });
     }
+    match.runs.forEach((run, i) =>
+      sound.feedback(match.status === 'running', theme, run, {
+        board: i,
+        mode: 'versus',
+        actorStyle: actorAppearance?.style,
+        placement: boardPlacement(contexts[i].canvas),
+      }),
+    );
     (music || sound).update(
       match.status === 'running',
       theme,
@@ -4481,6 +4535,7 @@ try {
           // its original opening lease, never download or choose a substitute.
           await owner.library.prepare(row, {
             mode: 'versus',
+            actorStyle: actorAppearance?.style,
             signal: incomingController.signal,
           });
           if (epoch !== libraryOpenEpoch || !opening.current() || !context.isCurrent())
@@ -4495,6 +4550,7 @@ try {
         } else {
           const started = await owner.library.launch(row, {
             mode: 'versus',
+            actorStyle: actorAppearance?.style,
             ...context,
           });
           if (started === false && epoch === libraryOpenEpoch && context.isCurrent()) {

@@ -217,5 +217,7 @@
   "counts.images_one": "{{count}} image",
   "counts.images_other": "{{count}} images",
   "counts.videos_one": "{{count}} video",
-  "counts.videos_other": "{{count}} videos"
+  "counts.videos_other": "{{count}} videos",
+  "menuSounds": "Menu sounds",
+  "menuVolume": "Menu volume"
 }

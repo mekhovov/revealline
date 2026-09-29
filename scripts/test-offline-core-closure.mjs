@@ -74,3 +74,21 @@ test('catalogue references never pull selected chapter or soundtrack bytes back 
   for (const name of excluded) assert(!result.retained.has(name));
   assert.equal(result.optional.length, 0);
 });
+
+test('essential WAV recipes are followed from the bank without pulling optional music into core', () => {
+  const files = entries({
+    'game/index.html': '<script type="module" src="ui/audio.mjs"></script>',
+    'game/ui/audio.mjs': 'import { BANK } from "../audio/effects/bank.mjs";',
+    'game/audio/effects/bank.mjs':
+      'export const BANK = { warning: { file: "warning.wav" }, contact: { file: "contact.wav" } };',
+    'game/audio/effects/warning.wav': 'essential warning PCM',
+    'game/audio/effects/contact.wav': 'essential contact PCM',
+    'game/audio/music/optional.mp3': 'optional music',
+    'authoring/audio/original.wav': 'source recording, never shipped in core',
+  });
+  const result = selectOfflineCore(files, new Set());
+  assert.ok(result.retained.has('game/audio/effects/warning.wav'));
+  assert.ok(result.retained.has('game/audio/effects/contact.wav'));
+  assert.ok(!result.retained.has('game/audio/music/optional.mp3'));
+  assert.ok(!result.retained.has('authoring/audio/original.wav'));
+});
