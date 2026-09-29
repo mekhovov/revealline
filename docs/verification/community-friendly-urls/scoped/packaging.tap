@@ -1,0 +1,150 @@
+TAP version 13
+# Subtest: desktop staging preserves verified asset/manifest bytes and never rewrites the released source
+ok 1 - desktop staging preserves verified asset/manifest bytes and never rewrites the released source
+  ---
+  duration_ms: 145.847417
+  ...
+# Subtest: public community routes and shared loader retain exact native inventory ownership under the existing CSP
+ok 2 - public community routes and shared loader retain exact native inventory ownership under the existing CSP
+  ---
+  duration_ms: 395.554625
+  ...
+# Subtest: current-sized native inventories stage and load without dropping localization files
+ok 3 - current-sized native inventories stage and load without dropping localization files
+  ---
+  duration_ms: 3738.965916
+  ...
+# Subtest: iOS adds the explicit bridge and records both source and resulting inventory identities
+ok 4 - iOS adds the explicit bridge and records both source and resulting inventory identities
+  ---
+  duration_ms: 28.517417
+  ...
+# Subtest: iOS policy derives from public headers, excludes unsupported meta directives and precedes bootstrap
+ok 5 - iOS policy derives from public headers, excludes unsupported meta directives and precedes bootstrap
+  ---
+  duration_ms: 0.349959
+  ...
+# Subtest: compatible existing policy is preserved and relocated once; conflicts, duplicates and malformed heads reject
+ok 6 - compatible existing policy is preserved and relocated once; conflicts, duplicates and malformed heads reject
+  ---
+  duration_ms: 0.480917
+  ...
+# Subtest: a conflicting first-party HTML policy cannot replace an existing verified iOS stage
+ok 7 - a conflicting first-party HTML policy cannot replace an existing verified iOS stage
+  ---
+  duration_ms: 30.555166
+  ...
+# Subtest: iOS diagnostics copy exactly four bounded files into the native inventory without altering source
+ok 8 - iOS diagnostics copy exactly four bounded files into the native inventory without altering source
+  ---
+  duration_ms: 42.366416
+  ...
+# Subtest: diagnostics reject wrong platform, missing/oversized files and symlinks before replacing output
+ok 9 - diagnostics reject wrong platform, missing/oversized files and symlinks before replacing output
+  ---
+  duration_ms: 44.47775
+  ...
+# Subtest: traversal, duplicate, reserved and invalid inventory records are rejected before creating output
+ok 10 - traversal, duplicate, reserved and invalid inventory records are rejected before creating output
+  ---
+  duration_ms: 25.300583
+  ...
+# Subtest: missing and tampered assets cannot replace a previously verified native stage
+ok 11 - missing and tampered assets cannot replace a previously verified native stage
+  ---
+  duration_ms: 20.081
+  ...
+# Subtest: bounded stat guards reject oversized manifest, actual asset and bridge before reading their data
+ok 12 - bounded stat guards reject oversized manifest, actual asset and bridge before reading their data
+  ---
+  duration_ms: 10.073458
+  ...
+# Subtest: source/output overlap and existing unowned output are preserved
+ok 13 - source/output overlap and existing unowned output are preserved
+  ---
+  duration_ms: 25.327958
+  ...
+# Subtest: verified owned stages can be replaced explicitly, but tampered or augmented stages cannot
+ok 14 - verified owned stages can be replaced explicitly, but tampered or augmented stages cannot
+  ---
+  duration_ms: 78.603917
+  ...
+# Subtest: missing/empty/conflicting iOS bridge and cross-platform replacement preserve existing output
+ok 15 - missing/empty/conflicting iOS bridge and cross-platform replacement preserve existing output
+  ---
+  duration_ms: 41.603958
+  ...
+# Subtest: all source/bridge/output symbolic links are rejected without creating directories through them
+ok 16 - all source/bridge/output symbolic links are rejected without creating directories through them
+  ---
+  duration_ms: 12.374125
+  ...
+# Subtest: native marker version/origin/source identity and untracked symlinks are checked on verification
+ok 17 - native marker version/origin/source identity and untracked symlinks are checked on verification
+  ---
+  duration_ms: 48.846
+  ...
+# Subtest: CLI reports errors without creating output and verifies a valid staged directory
+ok 18 - CLI reports errors without creating output and verifies a valid staged directory
+  ---
+  duration_ms: 814.291459
+  ...
+# Subtest: Solo startup graph retains boot styles and production assets while mode hosts stay separate
+ok 19 - Solo startup graph retains boot styles and production assets while mode hosts stay separate
+  ---
+  duration_ms: 20.092
+  ...
+# Subtest: catalogue references never pull selected chapter or soundtrack bytes back into core
+ok 20 - catalogue references never pull selected chapter or soundtrack bytes back into core
+  ---
+  duration_ms: 0.519125
+  ...
+# Subtest: public community entries own their shared loader offline without opting into creator tools or company artwork
+ok 21 - public community entries own their shared loader offline without opting into creator tools or company artwork
+  ---
+  duration_ms: 2.953708
+  ...
+# Subtest: public community aliases preserve clean nested routes, saved links and frozen entry bytes
+ok 22 - public community aliases preserve clean nested routes, saved links and frozen entry bytes
+  ---
+  duration_ms: 138.617708
+  ...
+# Subtest: localized aliases resolve locale assets within the same immutable release at every depth
+ok 23 - localized aliases resolve locale assets within the same immutable release at every depth
+  ---
+  duration_ms: 54.639416
+  ...
+# Subtest: all current HTML aliases preserve queries/fragments with auditable source and output hashes
+ok 24 - all current HTML aliases preserve queries/fragments with auditable source and output hashes
+  ---
+  duration_ms: 71.282417
+  ...
+# Subtest: root retirement navigates only explicit HTML routes and never claims clients or touches saved/cache data
+ok 25 - root retirement navigates only explicit HTML routes and never claims clients or touches saved/cache data
+  ---
+  duration_ms: 39.147792
+  ...
+# Subtest: retirement rejects a different registration scope without unregistering it
+ok 26 - retirement rejects a different registration scope without unregistering it
+  ---
+  duration_ms: 31.741291
+  ...
+# Subtest: identical alias and worker bytes route localhost and project prefixes without crossing origins
+ok 27 - identical alias and worker bytes route localhost and project prefixes without crossing origins
+  ---
+  duration_ms: 29.739583
+  ...
+# Subtest: actual launcher and runtime links stay versioned; About history uses the generated root catalog
+ok 28 - actual launcher and runtime links stay versioned; About history uses the generated root catalog
+  ---
+  duration_ms: 133.312084
+  ...
+1..28
+# tests 28
+# suites 0
+# pass 28
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 6273.799209

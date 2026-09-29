@@ -1,0 +1,172 @@
+TAP version 13
+# Subtest: default channels retain their exact spellings; same-release company profiles and app IDs differ
+ok 1 - default channels retain their exact spellings; same-release company profiles and app IDs differ
+  ---
+  duration_ms: 0.931417
+  type: 'test'
+  ...
+# Subtest: transfer discovers earlier same-edition profiles; read-only recovery protects other editions
+ok 2 - transfer discovers earlier same-edition profiles; read-only recovery protects other editions
+  ---
+  duration_ms: 1.404292
+  type: 'test'
+  ...
+# Subtest: same-release installed editions have independent state and writer locks
+ok 3 - same-release installed editions have independent state and writer locks
+  ---
+  duration_ms: 1.934792
+  type: 'test'
+  ...
+# Subtest: branded updates require source review and retain both profiles through rollback
+ok 4 - branded updates require source review and retain both profiles through rollback
+  ---
+  duration_ms: 5.200084
+  type: 'test'
+  ...
+# Subtest: an authenticated catalogue switch selects an edition within its company without retaining old artwork
+ok 5 - an authenticated catalogue switch selects an edition within its company without retaining old artwork
+  ---
+  duration_ms: 0.541667
+  type: 'test'
+  ...
+# Subtest: a declared edition in another company cannot be a main-game departure destination
+ok 6 - a declared edition in another company cannot be a main-game departure destination
+  ---
+  duration_ms: 0.071541
+  type: 'test'
+  ...
+# Subtest: an authenticated artwork switch selects its retained presentation
+ok 7 - an authenticated artwork switch selects its retained presentation
+  ---
+  duration_ms: 0.924083
+  type: 'test'
+  ...
+# Subtest: a retained presentation can return to the current presentation
+ok 8 - a retained presentation can return to the current presentation
+  ---
+  duration_ms: 0.198458
+  type: 'test'
+  ...
+# Subtest: foreign, credentialed, altered and unregistered destinations fail closed
+ok 9 - foreign, credentialed, altered and unregistered destinations fail closed
+  ---
+  duration_ms: 0.752167
+  type: 'test'
+  ...
+# Subtest: ambiguous mixed requests and wrong departure kinds fail closed
+ok 10 - ambiguous mixed requests and wrong departure kinds fail closed
+  ---
+  duration_ms: 0.167084
+  type: 'test'
+  ...
+# Subtest: the actual host boundary accepts edition and retained artwork changes without default downloads
+ok 11 - the actual host boundary accepts edition and retained artwork changes without default downloads
+  ---
+  duration_ms: 1.019583
+  type: 'test'
+  ...
+# Subtest: the actual host boundary rejects cancelled and stale departures
+ok 12 - the actual host boundary rejects cancelled and stale departures
+  ---
+  duration_ms: 1.673625
+  type: 'test'
+  ...
+# Subtest: the actual host boundary rejects invalid destinations before successful ownership completion
+ok 13 - the actual host boundary rejects invalid destinations before successful ownership completion
+  ---
+  duration_ms: 0.534083
+  type: 'test'
+  ...
+# Subtest: the actual host boundary rejects a declared destination owned by another company
+ok 14 - the actual host boundary rejects a declared destination owned by another company
+  ---
+  duration_ms: 0.22775
+  type: 'test'
+  ...
+# Subtest: menu defers reveal-only bytes but retains their full receipt and exact acquisition checks
+ok 15 - menu defers reveal-only bytes but retains their full receipt and exact acquisition checks
+  ---
+  duration_ms: 281.610167
+  type: 'test'
+  ...
+# Subtest: mission picture reused as brand hero remains an eagerly verified dependency
+ok 16 - mission picture reused as brand hero remains an eagerly verified dependency
+  ---
+  duration_ms: 130.706542
+  type: 'test'
+  ...
+# Subtest: mission picture reused as edition root remains an eagerly verified dependency
+ok 17 - mission picture reused as edition root remains an eagerly verified dependency
+  ---
+  duration_ms: 122.876542
+  type: 'test'
+  ...
+# Subtest: mission picture reused as actor body remains an eagerly verified dependency
+ok 18 - mission picture reused as actor body remains an eagerly verified dependency
+  ---
+  duration_ms: 124.138125
+  type: 'test'
+  ...
+# Subtest: mission picture reused as dependency remains an eagerly verified dependency
+ok 19 - mission picture reused as dependency remains an eagerly verified dependency
+  ---
+  duration_ms: 124.789333
+  type: 'test'
+  ...
+# Subtest: deferred artwork still obeys the full budget, publication rules and exact catalog membership
+ok 20 - deferred artwork still obeys the full budget, publication rules and exact catalog membership
+  ---
+  duration_ms: 83.477
+  type: 'test'
+  ...
+# Subtest: ordinary Solo uses its current startup path without any edition fetch
+ok 21 - ordinary Solo uses its current startup path without any edition fetch
+  ---
+  duration_ms: 0.203041
+  type: 'test'
+  ...
+# Subtest: artwork URLs stay inside the selected company receipt while retained originals remain available
+ok 22 - artwork URLs stay inside the selected company receipt while retained originals remain available
+  ---
+  duration_ms: 191.819167
+  type: 'test'
+  ...
+# Subtest: edition content injects owned boot data and preserves audience and old saves
+ok 23 - edition content injects owned boot data and preserves audience and old saves
+  ---
+  duration_ms: 69.844666
+  type: 'test'
+  ...
+# Subtest: compiled audience cannot be escaped by a query before network or activation
+ok 24 - compiled audience cannot be escaped by a query before network or activation
+  ---
+  duration_ms: 0.608083
+  type: 'test'
+  ...
+# Subtest: presentation receipt is origin-independent and changes with selected palette or actor recipes
+ok 25 - presentation receipt is origin-independent and changes with selected palette or actor recipes
+  ---
+  duration_ms: 143.603542
+  type: 'test'
+  ...
+# Subtest: generic company entry resolves the registry default rather than a company name in code
+ok 26 - generic company entry resolves the registry default rather than a company name in code
+  ---
+  duration_ms: 48.083458
+  type: 'test'
+  ...
+# Subtest: compatibility entry retains mission, input preferences and fragment on the common document
+ok 27 - compatibility entry retains mission, input preferences and fragment on the common document
+  ---
+  duration_ms: 0.340541
+  type: 'test'
+  ...
+1..27
+# tests 27
+# suites 0
+# pass 27
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 1608.439875

@@ -1,0 +1,110 @@
+TAP version 13
+# Subtest: public company directory can display and navigate without a community backend
+ok 1 - public company directory can display and navigate without a community backend
+  ---
+  duration_ms: 11.654125
+  ...
+# Subtest: company launch links stay in the same local or frozen distribution at every supported depth
+ok 2 - company launch links stay in the same local or frozen distribution at every supported depth
+  ---
+  duration_ms: 6.125958
+  ...
+# Subtest: the separate community store retains its service configuration and existing account/catalog host
+ok 3 - the separate community store retains its service configuration and existing account/catalog host
+  ---
+  duration_ms: 6.116084
+  ...
+# Subtest: creator and moderator return links retain the separate service marketplace
+ok 4 - creator and moderator return links retain the separate service marketplace
+  ---
+  duration_ms: 8.391166
+  ...
+# Subtest: static directory resources and preserved store entry are covered by the source distribution
+ok 5 - static directory resources and preserved store entry are covered by the source distribution
+  ---
+  duration_ms: 7.522959
+  ...
+# Subtest: Pages aliases retain both entry routes and preserve frozen directory/store bytes
+ok 6 - Pages aliases retain both entry routes and preserve frozen directory/store bytes
+  ---
+  duration_ms: 16.570417
+  ...
+# Subtest: generated public pages use complete messages and retain original attribution links
+ok 7 - generated public pages use complete messages and retain original attribution links
+  ---
+  duration_ms: 17.29625
+  ...
+# Subtest: community guide rich messages match their direct DOM slots in every locale
+ok 8 - community guide rich messages match their direct DOM slots in every locale
+  ---
+  duration_ms: 10.558833
+  ...
+# Subtest: root launch rewriting keeps every localization asset inside the distribution
+ok 9 - root launch rewriting keeps every localization asset inside the distribution
+  ---
+  duration_ms: 1.785083
+  ...
+# Subtest: historical distributions without localization never request missing new runtime files
+ok 10 - historical distributions without localization never request missing new runtime files
+  ---
+  duration_ms: 0.346208
+  ...
+# Subtest: maintained sprite review pages localize static and generated presentation text
+ok 11 - maintained sprite review pages localize static and generated presentation text
+  ---
+  duration_ms: 37.076666
+  ...
+# Subtest: offline download and launcher routes provide live language controls and bilingual fallbacks
+ok 12 - offline download and launcher routes provide live language controls and bilingual fallbacks
+  ---
+  duration_ms: 3.443875
+  ...
+# Subtest: offline runtime-owned captions have one live binding owner
+ok 13 - offline runtime-owned captions have one live binding owner
+  ---
+  duration_ms: 3.622125
+  ...
+# Subtest: company entry and public directory localize independently of the main game menu
+ok 14 - company entry and public directory localize independently of the main game menu
+  ---
+  duration_ms: 27.832042
+  ...
+# Subtest: localized aliases resolve locale assets within the same immutable release at every depth
+ok 15 - localized aliases resolve locale assets within the same immutable release at every depth
+  ---
+  duration_ms: 45.257792
+  ...
+# Subtest: all current HTML aliases preserve queries/fragments with auditable source and output hashes
+ok 16 - all current HTML aliases preserve queries/fragments with auditable source and output hashes
+  ---
+  duration_ms: 34.126875
+  ...
+# Subtest: root retirement navigates only explicit HTML routes and never claims clients or touches saved/cache data
+ok 17 - root retirement navigates only explicit HTML routes and never claims clients or touches saved/cache data
+  ---
+  duration_ms: 31.502167
+  ...
+# Subtest: retirement rejects a different registration scope without unregistering it
+ok 18 - retirement rejects a different registration scope without unregistering it
+  ---
+  duration_ms: 13.309958
+  ...
+# Subtest: identical alias and worker bytes route localhost and project prefixes without crossing origins
+ok 19 - identical alias and worker bytes route localhost and project prefixes without crossing origins
+  ---
+  duration_ms: 29.243833
+  ...
+# Subtest: actual launcher and runtime links stay versioned; About history uses the generated root catalog
+ok 20 - actual launcher and runtime links stay versioned; About history uses the generated root catalog
+  ---
+  duration_ms: 31.900791
+  ...
+1..20
+# tests 20
+# suites 0
+# pass 20
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 677.959625

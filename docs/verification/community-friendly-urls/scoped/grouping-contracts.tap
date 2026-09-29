@@ -1,0 +1,90 @@
+TAP version 13
+# Subtest: public company directory can display and navigate without a community backend
+ok 1 - public company directory can display and navigate without a community backend
+  ---
+  duration_ms: 16.305708
+  ...
+# Subtest: directory exposes the main game and every public brand through relative clean routes
+ok 2 - directory exposes the main game and every public brand through relative clean routes
+  ---
+  duration_ms: 12.088834
+  ...
+# Subtest: DroneAid collections share one community card without losing either entry point
+ok 3 - DroneAid collections share one community card without losing either entry point
+  ---
+  duration_ms: 3.34875
+  ...
+# Subtest: old directory bookmarks preserve query and hash while forwarding to the plural path
+ok 4 - old directory bookmarks preserve query and hash while forwarding to the plural path
+  ---
+  duration_ms: 1.896625
+  ...
+# Subtest: the separate community store retains its service configuration and existing account/catalog host
+ok 5 - the separate community store retains its service configuration and existing account/catalog host
+  ---
+  duration_ms: 3.776083
+  ...
+# Subtest: creator and moderator return links retain the separate service marketplace
+ok 6 - creator and moderator return links retain the separate service marketplace
+  ---
+  duration_ms: 5.274583
+  ...
+# Subtest: static directory resources and preserved store entry are covered by the source distribution
+ok 7 - static directory resources and preserved store entry are covered by the source distribution
+  ---
+  duration_ms: 14.011292
+  ...
+# Subtest: Pages aliases retain both entry routes and preserve frozen directory/store bytes
+ok 8 - Pages aliases retain both entry routes and preserve frozen directory/store bytes
+  ---
+  duration_ms: 17.121333
+  ...
+# Subtest: generated public pages use complete messages and retain original attribution links
+ok 9 - generated public pages use complete messages and retain original attribution links
+  ---
+  duration_ms: 14.959792
+  ...
+# Subtest: community guide rich messages match their direct DOM slots in every locale
+ok 10 - community guide rich messages match their direct DOM slots in every locale
+  ---
+  duration_ms: 11.608834
+  ...
+# Subtest: root launch rewriting keeps every localization asset inside the distribution
+ok 11 - root launch rewriting keeps every localization asset inside the distribution
+  ---
+  duration_ms: 1.859625
+  ...
+# Subtest: historical distributions without localization never request missing new runtime files
+ok 12 - historical distributions without localization never request missing new runtime files
+  ---
+  duration_ms: 0.649375
+  ...
+# Subtest: maintained sprite review pages localize static and generated presentation text
+ok 13 - maintained sprite review pages localize static and generated presentation text
+  ---
+  duration_ms: 32.727708
+  ...
+# Subtest: offline download and launcher routes provide live language controls and bilingual fallbacks
+ok 14 - offline download and launcher routes provide live language controls and bilingual fallbacks
+  ---
+  duration_ms: 2.515625
+  ...
+# Subtest: offline runtime-owned captions have one live binding owner
+ok 15 - offline runtime-owned captions have one live binding owner
+  ---
+  duration_ms: 9.063625
+  ...
+# Subtest: company entry and public directory localize independently of the main game menu
+ok 16 - company entry and public directory localize independently of the main game menu
+  ---
+  duration_ms: 22.899
+  ...
+1..16
+# tests 16
+# suites 0
+# pass 16
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 437.872167

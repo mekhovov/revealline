@@ -1,0 +1,13 @@
+# Retained historical excerpt after an ownership migration. Exact originals are preserved separately. This excerpt is not the original complete record or a release qualification.
+
+TAP version 13
+# Subtest: the actual friendly host rejects a cross-company selector before content reads or flight setup
+ok 2 - the actual friendly host rejects a cross-company selector before content reads or flight setup
+  ---
+  duration_ms: 16.861125
+  ...
+# Subtest: the actual friendly field guide opens and closes without changing company progress
+ok 3 - the actual friendly field guide opens and closes without changing company progress
+  ---
+  duration_ms: 2432.76225
+  ...

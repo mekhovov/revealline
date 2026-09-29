@@ -1,3 +1,5 @@
+> Retained historical excerpt after an ownership migration. Exact originals are preserved separately. This excerpt is not the original complete record or a release qualification.
+
 # RevealLine
 
 A configurable, Xonix-inspired browser game: leave safe ground, draw a vulnerable cut, close it and reveal a picture. Four visual worlds share the same engine: Ukrainian FPV Front, Ukrainian heritage, 1990s arcade and fictional spend management.
@@ -7,6 +9,30 @@ A configurable, Xonix-inspired browser game: leave safe ground, draw a vulnerabl
 The game includes local scores, replay-backed saved flights, a picture collection, optional chapter installation, a separate two-player couch race, configurable enemies/equipment, MP3 libraries and playlists, and both Immediate and Grid + buffer turning. Releasing a direction keeps the craft moving. In revised Arcade chapters, closing a cut stops it; a fresh direction starts the next move. Enemy contact with an unfinished line creates a travelling impact, leaving a chance to reconnect before it reaches the craft. Older editions retain their own rules.
 
 The remaining production targets include broader map progression, every map/theme illustration, more story rewards, character presentation sets, finished auditioned music and physical-device qualification. The [feedback review](docs/feedback-and-next-steps.md) separates delivered changes from those remaining checks. Automated routes establish reproducibility and legal outcomes, not human enjoyment or hardware certification.
+
+## Company communities
+
+Open the [communities directory](https://mekhovov.github.io/revealline/game/communities/)
+to choose the main game or any public community outside the game:
+
+| Community | Shareable entry |
+| --- | --- |
+| FPV / LINE — main game | [Play](https://mekhovov.github.io/revealline/game/) |
+| DroneAid | [Netherlands campaigns](https://mekhovov.github.io/revealline/game/communities/droneaid/) · [Community Relay — Portugal / Germany](https://mekhovov.github.io/revealline/game/communities/droneaid-community/) |
+
+DroneAid appears once, with both collections available: six Netherlands campaigns and
+These are all currently bundled communities; main-game worlds and creator examples are
+not separate company communities. Both DroneAid collections keep their existing saved progress.
+
+The [source directory](game/communities/index.html) works locally at `/game/communities/`.
+Addresses without the final slash also work on the local HTTP server and GitHub Pages.
+Older `/game/community/` bookmarks forward to the new directory, and `?edition=` game
+links remain compatible. Company games offer only their own company's campaigns; no game
+menu exposes a company switcher or directory link. Existing saved flights and progress
+keep their original edition identities. See [community routing and isolation](docs/company-communities.md).
+
+These routes are prepared in source. Stable public links update on the next promoted release;
+older versioned snapshots keep their archived pages.
 
 ## Run locally
 
