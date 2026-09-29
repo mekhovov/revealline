@@ -109,14 +109,10 @@ export function createControllerSession({
         }),
       });
     }
-    const connected = new Set(
-      [...devices.values()]
-        .filter((d) => d.index < 1024)
-        .map((d) => radioIdentity(deviceDescriptor(d.pad))),
-    );
+    const configured = new Set(entries.map((entry) => radioIdentity(entry.profiles[0].device)));
     const occupied = new Set(entries.flatMap((e) => e.seats).filter((seat) => seat !== null));
     for (const prior of saved.entries()) {
-      if (connected.has(radioIdentity(prior.profiles[0].device))) continue;
+      if (configured.has(radioIdentity(prior.profiles[0].device))) continue;
       entries.push({
         profiles: prior.profiles,
         seats: prior.seats.map((seat) => (occupied.has(seat) ? null : seat)),

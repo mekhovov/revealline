@@ -52,6 +52,7 @@ export const OPTIONAL_PACKAGE_POLICIES = Object.freeze({
       'style.css',
       'app.webmanifest',
       'README.md',
+      'radio-controls.mjs',
       'radio-profile.mjs',
       'radio-runtime.mjs',
       'radio-setup.mjs',
