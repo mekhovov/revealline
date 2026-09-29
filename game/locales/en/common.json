@@ -221,5 +221,7 @@
   "menuSounds": "Menu sounds",
   "menuVolume": "Menu volume",
   "radioSounds": "FPV radio announcements",
-  "radioVolume": "Radio volume"
+  "radioVolume": "Radio volume",
+  "movementSounds": "Movement sounds",
+  "movementVolume": "Movement volume"
 }

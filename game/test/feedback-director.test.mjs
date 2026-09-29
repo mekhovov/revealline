@@ -1,3 +1,4 @@
+import { readMovementAudio } from '../ui/movement-audio.mjs';
 import { readRadioAudio } from '../ui/radio-audio.mjs';
 import { audioHarness } from './helpers/soundtrack-audio.mjs';
 import test from 'node:test';
@@ -469,4 +470,45 @@ test('a capture transaction uses its reveal seal without stacking a separate clo
   );
   assert.ok([...sound.voices].some((v) => v.name === 'reveal-small'));
   assert.ok(![...sound.voices].some((v) => v.name === 'closure'));
+});
+
+test('movement opt-out retires both actor loops while warnings, rewards and radio remain enabled', () => {
+  const { director, sound } = harness();
+  sound.movementSettings = { enabled: true, volume: 0.5 };
+  const state = run();
+  director.update(true, { family: 'fpv' }, state, { silentStart: true });
+  state.tick++;
+  state.player.x++;
+  state.enemies[0].x++;
+  director.update(true, { family: 'fpv' }, state, { silentStart: true });
+  assert.equal([...sound.voices].filter((v) => v.movement && !v.ended).length, 2);
+  sound.movementSettings.enabled = false;
+  director.update(true, { family: 'fpv' }, state, { silentStart: true });
+  assert.equal([...sound.voices].filter((v) => v.movement && !v.ended).length, 0);
+  assert.ok(director.play('warning', { priority: 5 }));
+  assert.ok(director.play('pickup'));
+  assert.equal(director.play('rotor', { loop: true, movement: true }), null);
+});
+
+test('movement settings keep session defaults on storage failure and use a separate mixer bus', () => {
+  assert.deepEqual(readMovementAudio({ getItem: () => '{bad' }), { enabled: true, volume: 0.5 });
+  assert.deepEqual(readMovementAudio({ getItem: () => '{"enabled":false,"volume":0.2}' }), {
+    enabled: false,
+    volume: 0.2,
+  });
+  const { soundscape: s, context } = audioHarness();
+  s.setup();
+  s.enabled = true;
+  context.state = 'running';
+  s.feedbackDirector.buffers.set('rotor', { duration: 4 });
+  const voice = s.feedbackDirector.play('rotor', { loop: true, movement: true });
+  assert.ok(voice);
+  s.movementSettings.volume = 0.2;
+  s.applyVolumes();
+  assert.equal(s.movementBus.gain.value, 0.2);
+  assert.equal(s.menuBus.gain.value, 0.35);
+  s.movementSettings.enabled = false;
+  s.applyVolumes();
+  assert.ok(voice.ended);
+  assert.equal(s.movementBus.gain.value, 0);
 });
