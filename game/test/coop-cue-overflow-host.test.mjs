@@ -141,6 +141,11 @@ test('actual imported maximum-density arena exposes all entries and one press en
     'coop-help-reading',
     'A retired attempt cannot reopen its reader',
   );
+  const setupFocus = f.doc.activeElement;
+  assert.doesNotThrow(() => setLocale('uk', { persist: false }));
+  assert.doesNotThrow(() => setLocale('en', { persist: false }));
+  assert.equal(f.doc.activeElement, setupFocus);
+  assert.equal(f.$('coop-field-details-section').hidden, true);
 });
 
 test('fresh controller Confirm enters overflow details once and Back preserves the paused attempt', async (t) => {
