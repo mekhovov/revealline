@@ -12,16 +12,17 @@ compatibility, artwork and release requirements.
 
 ## Public and queued
 
-- Fresh main is `67f6dc7df5cef6489a810411a878c307c81f1ae8`. The canonical publisher
+- Latest observed main is `afb19ebd06db336d32dfe4660c43aa0f6711dca5`. The canonical publisher
   reports **v0.142.2 deployed**, PR774 merged, and a hosted byte audit of
   **2,240 files / zero failures**. Public player-behavior acceptance remains
   pending; this source-development check does not repeat or broaden that evidence.
 - A separate v0.142.3 PR exists but has not been adopted by the canonical publisher.
   Do not allocate versions or start another publisher from this branch.
 - [PR761](https://github.com/mekhovov/revealline/pull/761) is a draft source batch,
-  not a public release. Batch 13 is pushed at
-  `396ad4cf901b3fb99951ff02beff57f9bad19f52`, including batch 12,
-  paused optional-patrol guidance and a complete production-review map.
+  not a public release. Batch14 is pushed at
+  `eabfb0e7172b57cdd58f1e46b6e36f75e047d1a6`; batch15 continues on that
+  same owned branch with all-seven playable roster review, retained class setup
+  and exact optional candidate loading. See its scoped evidence below.
   It conflicts with newer main and needs publisher-owned reconciliation.
   Do not rebase the shared worker branch or allocate a competing version.
 - Compatible features continue in one PR, with separate evidence and reversible
@@ -100,6 +101,14 @@ entries is not proof of the separate 132-new-mission production target, all bala
 configurations or full physical-device qualification. No new bulk mission production
 is added to this bounded actor batch.
 
+Batch15 now closes the tool limitation that only Scout could reach the real
+board: all seven V6 bodies are selectable in the existing three missions, with
+actual class setup and retained Retry. Its127 focused checks and bounded native
+loading/Carrier play/layout observations are [recorded here](verification/actor-batch-15/README.md).
+The inactive Boost control was corrected from the missions’ actual Arcade policy.
+Native-body approval, full-state review and production admission remain open; this
+is A2 preparation, not completion of A or the deferred C2 human study.
+
 ## Blockers and concerns
 
 1. **Release integration:** PR761 is conflicting and unversioned as a publisher
@@ -118,7 +127,7 @@ is added to this bounded actor batch.
 3. **Artwork quality:** generated cultural scenes remain candidates. Native
    export and valid hashes establish preparation, not consistent pixel clusters,
    museum accuracy, composition over gameplay, permission or production approval.
-4. **Local capacity:** this check found 1,199,255,552 bytes available, below the
+4. **Local capacity:** available space fell as low as ~110MB during batch15, below the
    publisher's 1,275,068,416-byte reserve. Small source/doc edits and bounded checks
    may continue; no new builds, asset downloads or release materialization until
    a fresh check has enough space. Preserve all existing evidence and user files.

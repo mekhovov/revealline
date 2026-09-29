@@ -48,6 +48,7 @@ export async function prepareBenchmarkScene(
   {
     catalog,
     presets,
+    classId = 'scout',
     signal,
     onStep = () => {},
     onComparisonStatus = () => {},
@@ -76,6 +77,14 @@ export async function prepareBenchmarkScene(
   };
   try {
     signal.throwIfAborted();
+    session = createBenchmarkSession(entry.manifest, {
+      classId,
+      onStep(events, run) {
+        for (const painter of painters) painter.effectsFor(events, run);
+        onStep(events, run);
+      },
+    });
+    signal.throwIfAborted();
     const theme = await loadTheme({ themeId: entry.manifest.presentation.themeId, signal });
     signal.throwIfAborted();
     picture = await acquirePicture(entry.manifest.background, { signal });
@@ -91,14 +100,13 @@ export async function prepareBenchmarkScene(
     );
     signal.throwIfAborted();
     for (let index = 0; index < 2; index++) painters.push(makePainter());
-    await waitForLook(painters, theme, theme.classBodies?.scout ?? theme.player, signal);
+    await waitForLook(
+      painters,
+      theme,
+      theme.classBodies?.[session.setup.classId] ?? theme.player,
+      signal,
+    );
     signal.throwIfAborted();
-    session = createBenchmarkSession(entry.manifest, {
-      onStep(events, run) {
-        for (const painter of painters) painter.effectsFor(events, run);
-        onStep(events, run);
-      },
-    });
     comparison = createSceneComparison({
       actors,
       session,

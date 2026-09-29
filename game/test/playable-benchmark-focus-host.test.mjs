@@ -1,3 +1,4 @@
+import { arcadeActionCapabilities } from '../core/arcade-actions.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
@@ -31,9 +32,12 @@ const hostSource = imports
   .replaceAll('import.meta.url', JSON.stringify(appURL.href));
 const flush = () => new Promise((resolve) => setImmediate(resolve));
 const deferred = () => {
-  let resolve;
-  const promise = new Promise((yes) => (resolve = yes));
-  return { promise, resolve };
+  let resolve, reject;
+  const promise = new Promise((yes, no) => {
+    resolve = yes;
+    reject = no;
+  });
+  return { promise, resolve, reject };
 };
 
 // Model only native focusability and closed-details behavior. This is not a
@@ -106,6 +110,7 @@ async function harness(t) {
   function scene(entry, options) {
     const session = {
       setup: Object.freeze({
+        classId: options.classId ?? 'scout',
         sourceSimulationIdentity: entry.manifest.simulationIdentity,
         sourceRevision: 'authored-1',
         runtimeLevelIdentity: `${entry.id}-effective`,
@@ -140,7 +145,7 @@ async function harness(t) {
       actors,
       session,
       onStatus: options.onComparisonStatus,
-      acquire: () => {
+      acquire: (_snapshot, options) => {
         const request = deferred();
         const result = {
           snapshot: {},
@@ -152,7 +157,7 @@ async function harness(t) {
         };
         // The real comparison owner may dispose this even after cancellation.
         result.release = result.release.bind(result);
-        candidates.push({ ...request, result });
+        candidates.push({ ...request, result, options });
         return request.promise;
       },
     });
@@ -179,6 +184,7 @@ async function harness(t) {
     return result;
   }
   const dependencies = {
+    arcadeActionCapabilities,
     loadBenchmarkCatalog: async () => catalog,
     createBenchmarkSelection,
     prepareBenchmarkScene: (entry, options) => {
@@ -608,4 +614,140 @@ test('slow decoding preserves loading status; only active play gets a long-frame
   assert.equal(h.scenes[0].session.playing, false);
   assert.equal(h.$('loading').textContent, 'Paused after a long frame. Resume when ready.');
   assert.equal(h.$('start').disabled, false);
+});
+
+test('craft changes retain accepted V6 and return focus on cancellation or failure', async (t) => {
+  const h = await harness(t);
+  await h.accept();
+  assert.equal(h.requests[0].options.classId, 'scout');
+  assert.equal(h.$('comparison-body').value, 'approved');
+  h.setup.open = true;
+  h.$('craft').value = 'carrier';
+  h.$('craft').emit('change');
+  assert.equal(h.requests.at(-1).options.classId, 'carrier');
+  await h.accept();
+  const accepted = h.scenes.at(-1);
+  h.$('comparison-body').value = 'v6-detailed';
+  h.$('comparison-body').emit('change');
+  const candidate = h.candidates.at(-1);
+  assert.equal(candidate.options.classId, 'carrier');
+  assert.equal(candidate.options.construction, 'reference-v6');
+  candidate.resolve(candidate.result);
+  await flush();
+  assert.equal(accepted.comparison.body, 'v6-detailed');
+  const initial = accepted.session.setup;
+  for (const action of ['cancel', 'failure']) {
+    h.$('craft').value = 'fiber';
+    h.$('craft').focus();
+    h.$('craft').emit('change');
+    const request = h.requests.at(-1);
+    assert.equal(request.options.classId, 'fiber');
+    assert.equal(accepted.session.playing, false);
+    assert.equal(accepted.disposals, 0);
+    if (action === 'cancel') {
+      h.cancel();
+      assert.equal(h.document.activeElement, h.$('craft'));
+      assert.equal(request.options.signal.aborted, true);
+      await h.accept(request);
+      assert.equal(request.result.disposals, 1);
+    } else {
+      request.reject(new Error('Selected craft image unavailable.'));
+      await flush();
+      assert.match(h.$('loading').textContent, /Selected craft image unavailable/);
+    }
+    assert.equal(h.$('craft').value, 'carrier');
+    assert.equal(h.$('mission').value, 'first');
+    assert.equal(accepted.session.setup, initial);
+    assert.equal(accepted.comparison.body, 'v6-detailed');
+    assert.equal(candidate.result.releases, 0);
+    assert.equal(accepted.disposals, 0);
+  }
+  h.$('retry').emit('pointerdown', { button: 0, pointerId: 7, isPrimary: true });
+  h.$('retry').emit('pointerup', { pointerId: 7 });
+  h.$('retry').emit('click', { detail: 1 });
+  assert.equal(accepted.session.setup, initial);
+  assert.equal(accepted.comparison.body, 'v6-detailed');
+  assert.equal(h.requests.length, 4, 'Retry does not prepare another class or picture.');
+});
+
+test('rapid craft selection adopts only the newest class and disposes late older scenes', async (t) => {
+  const h = await harness(t);
+  await h.accept();
+  h.setup.open = true;
+  const original = h.scenes[0];
+  h.$('craft').value = 'bomber';
+  h.$('craft').emit('change');
+  const first = h.requests.at(-1);
+  h.$('craft').value = 'trapper';
+  h.$('craft').emit('change');
+  const second = h.requests.at(-1);
+  assert.equal(first.options.signal.aborted, true);
+  await h.accept(first);
+  assert.equal(first.result.disposals, 1);
+  assert.equal(original.disposals, 0);
+  assert.equal(h.$('craft').value, 'trapper');
+  assert.equal(h.$('start').disabled, true);
+  await h.accept(second);
+  assert.equal(original.disposals, 1);
+  assert.equal(second.result.disposals, 0);
+  assert.equal(h.$('craft').value, 'trapper');
+  assert.equal(h.metrics().classId, 'trapper');
+  assert.equal(h.$('comparison-body').value, 'approved');
+  assert.equal(h.$('start').disabled, false);
+  assert.equal(
+    second.result.session.playing,
+    false,
+    'Preparation never starts play automatically.',
+  );
+});
+
+test('non-Scout host rejects old studies and exposes V6 without fetching the wrong craft', async (t) => {
+  const h = await harness(t);
+  await h.accept();
+  h.setup.open = true;
+  h.$('craft').value = 'impact';
+  h.$('craft').emit('change');
+  await h.accept();
+  for (const option of h.$('comparison-body').querySelectorAll('option'))
+    assert.equal(option.disabled, /^v[345]-/.test(option.value));
+  h.$('comparison-body').value = 'v5-auto';
+  h.$('comparison-body').emit('change');
+  await flush();
+  assert.match(h.$('loading').textContent, /Scout only/);
+  assert.equal(h.candidates.length, 0);
+  assert.equal(h.$('comparison-body').value, 'approved');
+  h.$('comparison-body').value = 'v6-compact';
+  h.$('comparison-body').emit('change');
+  const pending = h.candidates[0];
+  assert.equal(pending.options.classId, 'impact');
+  pending.resolve(pending.result);
+  await flush();
+  assert.match(h.$('comparison-label').textContent, /V6 impact.*32 px/);
+  h.$('craft').value = 'scout';
+  h.$('craft').emit('change');
+  await h.accept();
+  assert.equal(pending.result.releases, 1);
+  for (const option of h.$('comparison-body').querySelectorAll('option'))
+    assert.equal(option.disabled, false, 'Scout keeps the earlier comparisons.');
+});
+
+test('visible review controls follow the accepted mission action policy', async (t) => {
+  const h = await harness(t);
+  h.requests[0].result.session.run.level.classic = {
+    arcadeActions: { version: 'arcade-actions.v1' },
+  };
+  await h.accept();
+  assert.equal(h.$('boost-button').hidden, true);
+  assert.doesNotMatch(h.$('instructions').textContent, /boost/i);
+  assert.match(h.$('craft-rules').textContent, /disabled by their rules/);
+  h.setup.open = true;
+  h.$('craft').value = 'carrier';
+  h.$('craft').emit('change');
+  await h.accept();
+  assert.equal(
+    h.$('boost-button').hidden,
+    false,
+    'A legacy level without the policy retains Boost.',
+  );
+  assert.match(h.$('instructions').textContent, /Shift boost/);
 });
