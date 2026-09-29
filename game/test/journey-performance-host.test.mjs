@@ -4,7 +4,11 @@ import { soloPage, settle, memoryStorage } from './helpers/solo-dom.mjs';
 import { managedIndexedDB } from './helpers/managed-idb.mjs';
 import { editionProviderFixture } from './helpers/edition-provider-fixture.mjs';
 import { compileContentProject, resolveMission } from '../content-design/project.mjs';
-import { FIXED_DT } from '../core/index.mjs';
+import { FIXED_DT, stepRun } from '../core/index.mjs';
+import { authoritativeCheckpoint } from '../replay.mjs';
+
+const PHYSICS_TICKS_PER_FRAME = 4;
+const MOVEMENT_TICK_BUDGET = 1800;
 
 async function fixture(t) {
   const f = await editionProviderFixture(),
@@ -32,21 +36,45 @@ async function fixture(t) {
   return page;
 }
 function win(page, idle = 0) {
-  for (let index = 0; index < idle; index++) page.frame(FIXED_DT * 1000);
+  const reference = structuredClone(page.rendered.run);
+  const initialTick = reference.tick;
+  // Draw at 30 Hz while the real host still steps its 120 Hz simulation. Keep
+  // budgets in physics ticks: grouping renders must not extend the legal route.
+  for (let remaining = idle; remaining > 0; ) {
+    const ticks = Math.min(PHYSICS_TICKS_PER_FRAME, remaining);
+    page.frame(ticks * FIXED_DT * 1000);
+    remaining -= ticks;
+  }
+  assert.equal(page.rendered.run.tick - initialTick, idle);
   page.key('ArrowDown');
-  for (let i = 0; i < 1800 && page.rendered.run.status === 'running'; i++)
-    page.frame(FIXED_DT * 1000);
+  for (
+    let remaining = MOVEMENT_TICK_BUDGET;
+    remaining > 0 && page.rendered.run.status === 'running';
+
+  ) {
+    const ticks = Math.min(PHYSICS_TICKS_PER_FRAME, remaining);
+    page.frame(ticks * FIXED_DT * 1000);
+    remaining -= ticks;
+  }
   page.key('ArrowDown', false);
   page.frame(0);
   assert.equal(page.rendered.run.status, 'won');
+  assert(page.rendered.run.tick - initialTick <= idle + MOVEMENT_TICK_BUDGET);
+
+  // Independently step the same starting state and inputs one physics tick at a
+  // time. The grouped host must reach the identical authoritative checkpoint;
+  // the existing durable-result assertions also require accepted replay proof.
+  for (let tick = 0; tick < idle; tick++) stepRun(reference, {}, FIXED_DT);
+  for (let tick = 0; tick < MOVEMENT_TICK_BUDGET && reference.status === 'running'; tick++)
+    stepRun(reference, { direction: 'down' }, FIXED_DT);
+  assert.deepEqual(authoritativeCheckpoint(page.rendered.run), authoritativeCheckpoint(reference));
 }
 
 test(
   'real Solo Journey result compares its second verified win and keeps Retry immediately available',
-  // This drives real frames, IndexedDB and replay verification. The earlier
-  // 360-idle-frame fixture took 27.4s alone and 32.6s in the full parallel suite.
-  // Sixty frames still prove a measurable faster retry without sixfold idle UI
-  // work; retain a bounded 60s host ceiling for concurrent qualification jobs.
+  // Keep the 60s bound: CI's per-tick rendering took 62.1s for these two wins.
+  // Sixty idle physics ticks still prove a measurable faster retry, with real
+  // host inputs, IndexedDB and replay verification rather than injected wins.
   { timeout: 60000 },
   async (t) => {
     const page = await fixture(t);

@@ -19,6 +19,31 @@ import { createHash } from 'node:crypto';
 import { canonicalJSON } from '../data-json.mjs';
 import { compilePresentation } from '../../scripts/compile-presentation.mjs';
 
+const DISCOVERY_AUDIO_INPUTS = [
+  'journey/campaign-feedback.mjs',
+  'rewards/audio-original.mjs',
+  'rewards/media-format.mjs',
+  'ui/edition-solo.mjs',
+  'ui/edition-rewards.mjs',
+  'ui/reward-media.mjs',
+  'ui/reward-audio-group.mjs',
+  'rewards/audio-groups.mjs',
+  'studio-preview-session.mjs',
+  'audio-preferences.mjs',
+  'ui/story-dialog.mjs',
+  'ui/victory-story.mjs',
+  'ui/music.mjs',
+  'data-json.mjs',
+  'mp3.mjs',
+  'media-audio.mjs',
+  'video-poster.mjs',
+  'rewards/model.mjs',
+  'rewards/media.mjs',
+  'editions/assets.mjs',
+  'editions/model.mjs',
+  'editions/retained-presentation.mjs',
+];
+
 async function reconstructPinnedProduction(oracle, candidate) {
   const sha = (bytes) => createHash('sha256').update(bytes).digest('hex');
   const source = structuredClone(oracle.metadata);
@@ -415,7 +440,7 @@ test('production refuses silent slot contract mutation and can explicitly return
   );
 });
 
-async function authenticatedCurrentReview(relative, expectedSHA256, groups) {
+async function authenticatedReviewRecord(relative, expectedSHA256) {
   const digest = (bytes) => createHash('sha256').update(bytes).digest('hex');
   const read = (relative) => fs.readFile(new URL('../../' + relative, import.meta.url));
   const bytes = await read(relative);
@@ -431,6 +456,13 @@ async function authenticatedCurrentReview(relative, expectedSHA256, groups) {
         prior.sha256,
         'immutable predecessor ' + prior.path,
       );
+  return review;
+}
+
+async function authenticatedCurrentReview(relative, expectedSHA256, groups) {
+  const digest = (bytes) => createHash('sha256').update(bytes).digest('hex');
+  const read = (name) => fs.readFile(new URL('../../' + name, import.meta.url));
+  const review = await authenticatedReviewRecord(relative, expectedSHA256);
   const sources = {};
   for (const group of groups) {
     const fingerprint = review.fingerprints?.[group] ?? review.fingerprint;
@@ -538,9 +570,8 @@ test('shared-host UI and managed-media audio bind only reviewed current inputs',
   const continuationHash = createHash('sha256')
     .update(await fs.readFile(new URL(`../../${continuationPath}`, import.meta.url)))
     .digest('hex');
-  const currentReviewPath =
-    'docs/verification/v0.142.3-steamdeck-confirm-audio-continuation/review.json';
-  const currentReviewSHA256 = 'a059520f6ce0c394c3425355c711b641b4b23f9321e11c7d384317e7f814798c';
+  const currentReviewPath = 'docs/verification/discovery-audio-continuation-2026-09-29/review.json';
+  const currentReviewSHA256 = 'edeecf9fbafdabd7e4fdb653be58baf8deaa3483a6ee426552d611d2fff768ea';
   const current = await authenticatedCurrentReview(currentReviewPath, currentReviewSHA256, [
     'audio',
   ]);
@@ -548,13 +579,13 @@ test('shared-host UI and managed-media audio bind only reviewed current inputs',
     'docs/verification/v0.141.8-steamdeck-confirm-presentation-continuation/review.json';
   const mainUIReviewSHA256 = '15b9ef304ba6e8ec6c2120e4e766fe630af327f2a54325bd0e9043ba875e9867';
   const mainUI = await authenticatedCurrentReview(mainUIReviewPath, mainUIReviewSHA256, ['ui']);
-  const correctionReview = JSON.parse(
-    await fs.readFile(
-      new URL(
-        '../../' + current.review.priorReviews.audioStyleMenuCorrection.path,
-        import.meta.url,
-      ),
-    ),
+  const steamDeckReview = await authenticatedReviewRecord(
+    current.review.priorReviews.steamDeckAudio.path,
+    current.review.priorReviews.steamDeckAudio.sha256,
+  );
+  const correctionReview = await authenticatedReviewRecord(
+    steamDeckReview.priorReviews.audioStyleMenuCorrection.path,
+    steamDeckReview.priorReviews.audioStyleMenuCorrection.sha256,
   );
   assert.equal(
     correctionReview.priorReviews.independentCorrection.sha256,
@@ -750,6 +781,7 @@ test('changed recipe inputs reopen only their own reviewed group', async (t) => 
     'ui/soundtrack-panel.mjs',
     'managed-media-store.mjs',
     'media-storage-record.mjs',
+    ...DISCOVERY_AUDIO_INPUTS,
   ];
   const inputs = new Map([
     ['ui/operation-status.css', 'ui'],
@@ -762,13 +794,14 @@ test('changed recipe inputs reopen only their own reviewed group', async (t) => 
   ]);
   // Game-relative keys cover both model and UI helpers. Only copied ordinary
   // fixture files may be changed; links to the real project are read-only inputs.
-  await fs.mkdir(path.join(fixture, 'game', 'ui'), { recursive: true });
-  await fs.mkdir(path.join(fixture, 'game', 'content'), { recursive: true });
+  const copiedDirectories = ['ui', 'content', 'journey', 'rewards', 'editions'];
+  for (const directory of copiedDirectories)
+    await fs.mkdir(path.join(fixture, 'game', directory), { recursive: true });
   for (const entry of ['authoring', 'site', 'scripts', 'docs'])
     await fs.symlink(path.join(root, entry), path.join(fixture, entry));
-  for (const directory of ['', 'ui', 'content'])
+  for (const directory of ['', ...copiedDirectories])
     for (const entry of await fs.readdir(path.join(root, 'game', directory))) {
-      if (!directory && ['ui', 'content'].includes(entry)) continue;
+      if (!directory && copiedDirectories.includes(entry)) continue;
       const input = directory ? `${directory}/${entry}` : entry;
       const source = path.join(root, 'game', input);
       const target = path.join(fixture, 'game', input);
@@ -1304,7 +1337,7 @@ test('Steam Deck continuation preserves exact theme99 and appends only eight aud
       'utf8',
     ),
   );
-  const current = await importThemeBundle(
+  const latest = await importThemeBundle(
     new Blob([
       await fs.readFile(
         new URL('../../authoring/library/fpv-field-kit/production.rltheme', import.meta.url),
@@ -1312,6 +1345,10 @@ test('Steam Deck continuation preserves exact theme99 and appends only eight aud
     ]),
     { decodeImage: null },
   );
+  const currentOracle = JSON.parse(
+    await fs.readFile(new URL('./fixtures/production-v01423-6a67-fpv100.json', import.meta.url)),
+  );
+  const current = await reconstructPinnedProduction(currentOracle, latest);
   const prior = await reconstructPinnedProduction(oracle, current);
   assert.equal(prior.document.revision, 99);
   assert.equal(prior.document.assets.length, 2598);
@@ -1328,11 +1365,21 @@ test('Steam Deck continuation preserves exact theme99 and appends only eight aud
       `unchanged payload ${hash}`,
     );
 
-  const review = await authenticatedCurrentReview(
+  // Historical input files can evolve. Authenticate the exact immutable review
+  // and reconstruct its production100 output from the independent Git oracle.
+  const historicalReview = await authenticatedReviewRecord(
     'docs/verification/v0.142.3-steamdeck-confirm-audio-continuation/review.json',
     'a059520f6ce0c394c3425355c711b641b4b23f9321e11c7d384317e7f814798c',
-    ['audio'],
   );
+  const review = {
+    review: historicalReview,
+    sources: {
+      audio:
+        historicalReview.fingerprints.audio.inputs.map((input) => input.path).join('; ') +
+        ' sha256:' +
+        historicalReview.fingerprints.audio.currentSHA256,
+    },
+  };
   const before = resolvePresentation(prior.document);
   const after = resolvePresentation(current.document);
   for (const [slot, asset] of Object.entries(before.assets))
@@ -1397,5 +1444,179 @@ test('Steam Deck continuation preserves exact theme99 and appends only eight aud
       .map((binding) => `${binding.id}@${binding.revision}`)
       .sort(),
     added.map((asset) => `${asset.id}@${asset.revision}`).sort(),
+  );
+});
+
+test('discovery checkpoint preserves production100 and appends eight reviewed audio53 plus24 source UI23 successors', async () => {
+  const oracleBytes = await fs.readFile(
+    new URL('./fixtures/production-v01423-6a67-fpv100.json', import.meta.url),
+  );
+  assert.equal(
+    createHash('sha256').update(oracleBytes).digest('hex'),
+    'cf19ad831cc0347f4f84c2ac310a1168354858e75f40991b35ffec18ea58d0b7',
+  );
+  const oracle = JSON.parse(oracleBytes);
+  const current = await importThemeBundle(
+    new Blob([
+      await fs.readFile(
+        new URL('../../authoring/library/fpv-field-kit/production.rltheme', import.meta.url),
+      ),
+    ]),
+    { decodeImage: null },
+  );
+  const prior = await reconstructPinnedProduction(oracle, current);
+  assert.equal(prior.document.revision, 100);
+  assert.equal(prior.document.assets.length, 2606);
+  assert.equal(prior.document.themes.length, 101);
+  assert.equal(current.document.revision, 101);
+  assert.equal(current.document.assets.length, 2638);
+  assert.equal(current.document.themes.length, 102);
+  validateThemeBundle(current.document, { previous: prior.document, expectedRevision: 100 });
+  assert.equal(current.assets.size, prior.assets.size);
+  for (const [hash, blob] of prior.assets)
+    assert.deepEqual(
+      Buffer.from(await current.assets.get(hash).arrayBuffer()),
+      Buffer.from(await blob.arrayBuffer()),
+      `unchanged payload ${hash}`,
+    );
+
+  const reviewPath = 'docs/verification/discovery-audio-continuation-2026-09-29/review.json';
+  const review = await authenticatedCurrentReview(
+    reviewPath,
+    'edeecf9fbafdabd7e4fdb653be58baf8deaa3483a6ee426552d611d2fff768ea',
+    ['audio'],
+  );
+  const fingerprint = review.review.fingerprints.audio;
+  assert.equal(fingerprint.orderedInputs, 50);
+  assert.equal(
+    fingerprint.priorSHA256,
+    '39fe40240f0475e471a52772060899d3e329e4d54d6b2bb6679e76dc745ee9a4',
+  );
+  assert.deepEqual(fingerprint.changedInputs, [
+    'game/app.mjs',
+    'game/ui/audio.mjs',
+    'game/ui/soundtrack-panel.mjs',
+  ]);
+  assert.deepEqual(
+    fingerprint.addedInputs,
+    DISCOVERY_AUDIO_INPUTS.map((name) => 'game/' + name),
+  );
+  assert.deepEqual(
+    fingerprint.inputs.slice(28).map((input) => input.path),
+    fingerprint.addedInputs,
+  );
+  const predecessor = await authenticatedReviewRecord(
+    review.review.priorReviews.steamDeckAudio.path,
+    review.review.priorReviews.steamDeckAudio.sha256,
+  );
+  assert.deepEqual(
+    fingerprint.inputs.slice(0, 28).map((input) => input.path),
+    predecessor.fingerprints.audio.inputs.map((input) => input.path),
+  );
+  for (const input of fingerprint.inputs.slice(0, 28)) {
+    const previous = predecessor.fingerprints.audio.inputs.find(
+      (value) => value.path === input.path,
+    );
+    assert.equal(
+      input.sha256 !== previous.sha256,
+      fingerprint.changedInputs.includes(input.path),
+      input.path,
+    );
+  }
+  const before = resolvePresentation(prior.document),
+    after = resolvePresentation(current.document);
+  for (const [slot, asset] of Object.entries(before.assets))
+    if (!slot.startsWith('audio.') && !slot.startsWith('ui.'))
+      assert.deepEqual(after.assets[slot], asset, slot);
+  const added = current.document.assets.slice(prior.document.assets.length);
+  assert.equal(added.length, 32);
+  const audioAdded = added.filter((asset) => asset.id.startsWith('audio.'));
+  const uiAdded = added.filter((asset) => asset.id.startsWith('ui.'));
+  assert.equal(audioAdded.length, 8);
+  assert.equal(uiAdded.length, 24);
+  assert.deepEqual(
+    audioAdded.map((asset) => asset.id).sort(),
+    review.review.scope.slots.toSorted(),
+  );
+  for (const asset of audioAdded) {
+    const previous = Object.values(before.assets).find((candidate) => candidate.id === asset.id);
+    assert.equal(asset.revision, 53);
+    assert.equal(previous.revision, 52);
+    assert.deepEqual(asset.provenance.parent, { id: previous.id, revision: previous.revision });
+    assert.deepEqual(asset.recipe, previous.recipe);
+    assert.deepEqual(asset.file, previous.file);
+    assert.equal(asset.quality.stage, 'reviewed');
+    assert.equal(asset.provenance.source, review.sources.audio);
+    assert.equal(previous.quality.evidence.length, 16);
+    assert.equal(asset.quality.evidence.length, 16);
+    const pinnedReviews = previous.quality.evidence.filter((evidence) =>
+      evidence.includes('review.json sha256:'),
+    );
+    assert.equal(pinnedReviews.length, 14);
+    for (const evidence of pinnedReviews) assert(asset.quality.evidence.includes(evidence));
+    // Only the two generic scope paragraphs may be consolidated in the new
+    // successor. The independently reconstructed production100 keeps them exact.
+    const priorScope = previous.quality.evidence.filter(
+      (evidence) => !pinnedReviews.includes(evidence),
+    );
+    assert.equal(priorScope.length, 2);
+    assert(asset.quality.evidence.includes(priorScope.join(' ')));
+    assert(
+      asset.quality.evidence.some((evidence) =>
+        evidence.includes(
+          reviewPath + ' sha256:edeecf9fbafdabd7e4fdb653be58baf8deaa3483a6ee426552d611d2fff768ea',
+        ),
+      ),
+    );
+  }
+  // The initial audio-only continuation also exposes the unreviewed WebP
+  // import extension. Retain that source-stage checkpoint rather than silently
+  // treating the former UI approval as applying to new host bytes.
+  const uiReview = await authenticatedReviewRecord(
+    'docs/verification/v0.141.8-steamdeck-confirm-presentation-continuation/review.json',
+    '15b9ef304ba6e8ec6c2120e4e766fe630af327f2a54325bd0e9043ba875e9867',
+  );
+  const uiInputs = uiReview.fingerprints.ui.inputs;
+  const uiBodies = await Promise.all(
+    uiInputs.map((input) => fs.readFile(new URL('../../' + input.path, import.meta.url))),
+  );
+  const changedUIInputs = uiInputs.filter(
+    (input, index) => createHash('sha256').update(uiBodies[index]).digest('hex') !== input.sha256,
+  );
+  assert.deepEqual(
+    changedUIInputs.map((input) => input.path),
+    ['game/presentation/host.mjs'],
+  );
+  const uiSource =
+    uiInputs.map((input) => input.path).join('; ') +
+    ' sha256:' +
+    createHash('sha256').update(Buffer.concat(uiBodies)).digest('hex');
+  for (const asset of uiAdded) {
+    const previous = Object.values(before.assets).find((candidate) => candidate.id === asset.id);
+    assert.equal(previous.revision, 22);
+    assert.equal(asset.revision, 23);
+    assert.deepEqual(asset.provenance.parent, { id: previous.id, revision: previous.revision });
+    assert.deepEqual(asset.recipe, previous.recipe);
+    assert.deepEqual(asset.file, previous.file);
+    assert.equal(previous.quality.stage, 'reviewed');
+    assert.equal(asset.quality.stage, 'source');
+    assert.equal(asset.provenance.source, uiSource);
+  }
+  const theme = current.document.themes.at(-1);
+  assert.equal(theme.id, 'fpv');
+  assert.equal(theme.revision, 101);
+  assert.deepEqual(theme.parent, { id: 'fpv', revision: 100 });
+  assert.deepEqual(theme.tokens, {});
+  assert.deepEqual(
+    Object.values(theme.bindings)
+      .map((binding) => `${binding.id}@${binding.revision}`)
+      .sort(),
+    added.map((asset) => `${asset.id}@${asset.revision}`).sort(),
+  );
+  const tampered = structuredClone(current.document);
+  tampered.assets[0].description += ' changed';
+  assert.throws(
+    () => validateThemeBundle(tampered, { previous: prior.document }),
+    /Immutable assets history changed/,
   );
 });

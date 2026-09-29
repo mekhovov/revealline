@@ -14,6 +14,10 @@ import {
   observeDiscoveryRuntime,
   finishDiscoveryObservation,
   recordDiscoveryFailureEvidence,
+  DISCOVERY_SHOWCASE_PROTOCOLS,
+  executeDiscoveryShowcaseRoute,
+  validateDiscoveryShowcaseState,
+  validateDiscoveryShowcaseCopy,
 } from './observe-discovery-runtime.mjs';
 
 const hash = (bytes) => createHash('sha256').update(bytes).digest('hex');
@@ -317,23 +321,46 @@ export const chromium = { launch: async () => ({
   await assert.rejects(fetch(observation.origin + '/game/app.mjs'));
   await assert.rejects(readFile(path.join(output, 'complete.json')), { code: 'ENOENT' });
 });
-function fixture({ gameplayId = '7feffc97157784af', extra = false } = {}) {
-  const rewardPath = 'game/content/company-campaigns/fpv-meet-aircraft.rewards.json';
+function fixture({ gameplayId, extra = false, protocolId } = {}) {
+  const showcase = DISCOVERY_SHOWCASE_PROTOCOLS[protocolId];
+  const editionId = showcase?.editionId ?? 'fpv-learning';
+  const missionId = showcase?.missionId ?? 'fpv-meet-aircraft-01';
+  gameplayId ??= showcase?.gameplayId ?? '7feffc97157784af';
+  const rewardPath =
+    showcase?.rewardPath ?? 'game/content/company-campaigns/fpv-meet-aircraft.rewards.json';
   const files = new Map([
     ['game/index.html', Buffer.from('<title>Read-only archive test</title>')],
     ['game/company.html', Buffer.from('<title>Entry</title>')],
     ['game/app.mjs', Buffer.from('export const fixture = true;')],
-    ['edition-catalog.json', Buffer.from('{"edition":"fpv-learning"}')],
+    ['edition-catalog.json', Buffer.from(JSON.stringify({ edition: editionId }))],
     [
       rewardPath,
       Buffer.from(
         JSON.stringify([
           {
-            scope: { kind: 'mission', id: 'fpv-meet-aircraft-01' },
+            ...(showcase
+              ? {
+                  id: showcase.rewardId,
+                  locales: {
+                    en: { title: 'Example discovery' },
+                    uk: { title: 'Приклад відкриття' },
+                  },
+                  payloads: [
+                    {
+                      type: 'knowledge',
+                      locales: {
+                        en: { paragraphs: ['Read the fictional example.'] },
+                        uk: { paragraphs: ['Прочитайте вигаданий приклад.'] },
+                      },
+                    },
+                  ],
+                }
+              : {}),
+            scope: { kind: 'mission', id: missionId },
             requirements: {
               missions: [
                 {
-                  missionId: 'fpv-meet-aircraft-01',
+                  missionId,
                   bindings: [{ gameplayId, difficulty: 'standard' }],
                 },
               ],
@@ -346,7 +373,7 @@ function fixture({ gameplayId = '7feffc97157784af', extra = false } = {}) {
   const manifest = Buffer.from(
     JSON.stringify({
       format: 'revealline-edition-manifest.v1',
-      editionId: 'fpv-learning',
+      editionId,
       entry: 'game/company.html',
       sourceRevision: 'a'.repeat(40),
       sourceTree: 'b'.repeat(40),
@@ -366,10 +393,11 @@ function fixture({ gameplayId = '7feffc97157784af', extra = false } = {}) {
   const plan = {
     format: 'revealline-discovery-runtime-plan.v1',
     caseId: 'fixture-a',
-    protocol: 'fpv-frame-first-win.v1',
+    protocol: protocolId ?? 'fpv-frame-first-win.v1',
     deviceLabel: 'Synthetic unit-test metadata; no browser measurement',
     quietWindow: 'Unit tests only.',
-    mode: 'timings',
+    mode: showcase ? 'showcase' : 'timings',
+    ...(showcase ? { headerPolicy: 'packaged-preview' } : {}),
     cycles: 0,
     artifact: {
       archive: 'distribution.zip',
@@ -378,7 +406,7 @@ function fixture({ gameplayId = '7feffc97157784af', extra = false } = {}) {
       manifestSha256: hash(manifest),
       sourceRevision: 'a'.repeat(40),
       sourceTree: 'b'.repeat(40),
-      editionId: 'fpv-learning',
+      editionId,
     },
   };
   return { plan, archive, manifest, files };
@@ -593,5 +621,239 @@ test('passive observer serves its exact static module closure and rejects archiv
       }),
       /collides/,
     );
+  }
+});
+
+function showcaseState(protocol, { locale = 'en', won = false, next = false } = {}) {
+  return {
+    body: { editionId: protocol.editionId, flightState: won ? 'won' : 'running' },
+    locale,
+    overlay: { kind: won ? 'won' : 'ready', hidden: !won },
+    selection: Object.fromEntries(
+      Object.entries({
+        'difficulty-select': 'standard',
+        'turn-select': 'immediate',
+        'class-select': 'scout',
+        'level-select': next ? protocol.nextMissionId : protocol.missionId,
+        'body-select': protocol.actorSetId,
+        'theme-select': protocol.themeId,
+        'terrain-select': 'hybrid',
+      }).map(([id, value]) => [
+        id,
+        {
+          value,
+          ...(id === 'level-select'
+            ? {
+                label: `${next ? '02' : '01'} · ${next ? (locale === 'uk' ? protocol.nextNameUK : protocol.nextNameEN) : locale === 'uk' ? protocol.missionNameUK : protocol.missionName}`,
+              }
+            : {}),
+        },
+      ]),
+    ),
+  };
+}
+
+test('showcase registry is immutable, source-bound and separate from the original timing protocol', () => {
+  assert.equal(Object.keys(DISCOVERY_SHOWCASE_PROTOCOLS).length, 3);
+  for (const protocol of Object.values(DISCOVERY_SHOWCASE_PROTOCOLS)) {
+    const input = fixture({ protocolId: protocol.id });
+    const plan = validateDiscoveryRuntimePlan(input.plan);
+    const checked = verifyDiscoveryRuntimeArtifact(plan, input);
+    assert.equal(checked.identity.gameplayId, protocol.gameplayId);
+    assert.equal(checked.identity.editionId, protocol.editionId);
+    assert.equal(plan.mode, 'showcase');
+    assert.match(protocol.routeStatus, /experimental/);
+    assert.ok(Object.isFrozen(protocol));
+    assert.ok(Object.isFrozen(protocol.route));
+    assert.ok(protocol.route.every(Object.isFrozen));
+    for (const override of [
+      { mode: 'timings' },
+      { mode: 'timeline' },
+      { cycles: 20 },
+      { headerPolicy: 'minimal' },
+      { headerPolicy: undefined },
+      { route: [['ArrowRight', 1]] },
+      { artifact: { ...plan.artifact, editionId: 'fpv-learning' } },
+    ])
+      assert.throws(() => validateDiscoveryRuntimePlan({ ...plan, ...override }));
+    const wrong = fixture({ protocolId: protocol.id, gameplayId: 'changed-rules' });
+    assert.throws(
+      () => verifyDiscoveryRuntimeArtifact(wrong.plan, wrong),
+      /reviewed gameplay binding/,
+    );
+  }
+  const old = fixture();
+  assert.throws(() => validateDiscoveryRuntimePlan({ ...old.plan, mode: 'showcase' }));
+  assert.equal(
+    verifyDiscoveryRuntimeArtifact(old.plan, old).identity.gameplayId,
+    '7feffc97157784af',
+  );
+});
+
+test('showcase state admission requires exact edition, mission, rules, art and localized mission labels', () => {
+  for (const protocol of Object.values(DISCOVERY_SHOWCASE_PROTOCOLS)) {
+    for (const locale of ['en', 'uk']) {
+      const state = showcaseState(protocol, { locale });
+      assert.equal(validateDiscoveryShowcaseState(state, protocol.id, { locale }), state);
+      for (const field of [
+        'difficulty-select',
+        'turn-select',
+        'class-select',
+        'level-select',
+        'body-select',
+        'theme-select',
+        'terrain-select',
+      ]) {
+        const changed = structuredClone(state);
+        changed.selection[field].value = 'unrelated';
+        assert.throws(
+          () => validateDiscoveryShowcaseState(changed, protocol.id, { locale }),
+          /exact mission/,
+        );
+      }
+      for (const change of [
+        (state) => (state.body.editionId = 'foreign-edition'),
+        (state) => (state.locale = 'foreign-locale'),
+        (state) => (state.selection['level-select'].label = 'Untranslated or wrong mission'),
+      ]) {
+        const changed = structuredClone(state);
+        change(changed);
+        assert.throws(
+          () => validateDiscoveryShowcaseState(changed, protocol.id, { locale }),
+          /exact mission/,
+        );
+      }
+    }
+    for (const locale of ['en', 'uk']) {
+      const next = showcaseState(protocol, { locale, next: true });
+      assert.equal(validateDiscoveryShowcaseState(next, protocol.id, { locale, next: true }), next);
+      assert.throws(() => validateDiscoveryShowcaseState(next, protocol.id, { locale }));
+    }
+  }
+});
+
+test('showcase routes preserve a bounded failed attempt and never convert an offline witness into a win', async () => {
+  for (const protocol of Object.values(DISCOVERY_SHOWCASE_PROTOCOLS)) {
+    const presses = [],
+      saved = new Map();
+    await assert.rejects(
+      executeDiscoveryShowcaseRoute({
+        protocolId: protocol.id,
+        attempt: 1,
+        read: async () => showcaseState(protocol),
+        press: async (...args) => presses.push(args),
+        save: async (name, value) => saved.set(name, value),
+      }),
+      /did not produce an ordinary win/,
+    );
+    assert.deepEqual(presses, protocol.route);
+    const receipt = saved.get('showcase-attempt-1.json');
+    assert.equal(receipt.won, false);
+    assert.equal(receipt.states.length, protocol.route.length + 1);
+    assert.match(receipt.inputSource, /no engine\/progress/);
+  }
+});
+
+test('showcase route stops at an actual visible win and rejects a hidden/stale or foreign result', async () => {
+  const protocol = DISCOVERY_SHOWCASE_PROTOCOLS['victory-ideas-first-win.v1'];
+  for (const end of [
+    'won',
+    'hidden-won',
+    'lost',
+    'wrong-mission',
+    'foreign-result',
+    'foreign-edition',
+  ]) {
+    let presses = 0;
+    const saved = new Map();
+    const run = executeDiscoveryShowcaseRoute({
+      protocolId: protocol.id,
+      attempt: 2,
+      read: async () => {
+        const state = showcaseState(protocol, { won: presses > 0 });
+        if (presses) {
+          if (end === 'hidden-won') state.overlay.hidden = true;
+          if (end === 'lost') state.overlay.kind = 'lost';
+          if (end === 'foreign-result') state.selection['level-select'].value = 'foreign-mission';
+          if (end === 'foreign-edition') state.body.editionId = 'foreign-edition';
+          if (end === 'wrong-mission') {
+            state.overlay = { kind: 'ready', hidden: true };
+            state.body.flightState = 'running';
+            state.selection['level-select'].value = 'another-mission';
+          }
+        }
+        return state;
+      },
+      press: async () => presses++,
+      save: async (name, value) => saved.set(name, value),
+    });
+    if (end === 'won') await run;
+    else await assert.rejects(run);
+    assert.equal(presses, 1, 'There is no automatic retry or progression injection.');
+    assert.equal(saved.get('showcase-attempt-2.json').won, end === 'won');
+  }
+});
+
+test('showcase pins and localized public selector labels match the authored selected campaign closure', async () => {
+  for (const protocol of Object.values(DISCOVERY_SHOWCASE_PROTOCOLS)) {
+    const rewards = JSON.parse(
+      await readFile(new URL(`../${protocol.rewardPath}`, import.meta.url)),
+    );
+    const reward = rewards.find((row) => row.id === protocol.rewardId);
+    assert.equal(reward.scope.id, protocol.missionId);
+    assert.ok(
+      reward.requirements.missions.some(
+        (row) =>
+          row.missionId === protocol.missionId &&
+          row.bindings.some(
+            (binding) =>
+              binding.gameplayId === protocol.gameplayId && binding.difficulty === 'standard',
+          ),
+      ),
+    );
+    const localization = JSON.parse(
+      await readFile(
+        new URL(
+          `../game/content/company-campaigns/${protocol.campaignId}.localization.json`,
+          import.meta.url,
+        ),
+      ),
+    );
+    const first = localization.records.find((row) => row.id === protocol.missionId).fields.name;
+    const next = localization.records.find((row) => row.id === protocol.nextMissionId).fields.name;
+    assert.equal(first.en, protocol.missionName);
+    assert.equal(first.uk, protocol.missionNameUK);
+    assert.equal(next.en, protocol.nextNameEN);
+    assert.equal(next.uk, protocol.nextNameUK);
+  }
+});
+
+test('showcase locale checks reject stale reward titles or untranslated knowledge from the exact admitted copy', () => {
+  const input = fixture({ protocolId: 'social-community-first-win.v1' });
+  const { showcaseCopy } = verifyDiscoveryRuntimeArtifact(input.plan, input);
+  assert.notEqual(showcaseCopy.en.title, showcaseCopy.uk.title);
+  assert.notEqual(showcaseCopy.en.paragraph, showcaseCopy.uk.paragraph);
+  for (const locale of ['en', 'uk']) {
+    const observed = { title: showcaseCopy[locale].title, knowledgeMatched: true };
+    assert.equal(validateDiscoveryShowcaseCopy(showcaseCopy, observed, locale), observed);
+    assert.throws(
+      () =>
+        validateDiscoveryShowcaseCopy(
+          showcaseCopy,
+          { ...observed, title: showcaseCopy[locale === 'en' ? 'uk' : 'en'].title },
+          locale,
+        ),
+      /exact earned locale/,
+    );
+    assert.throws(
+      () =>
+        validateDiscoveryShowcaseCopy(
+          showcaseCopy,
+          { ...observed, knowledgeMatched: false },
+          locale,
+        ),
+      /exact earned locale/,
+    );
+    assert.throws(() => validateDiscoveryShowcaseCopy({}, observed, locale), /exact earned locale/);
   }
 });

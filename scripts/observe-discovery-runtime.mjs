@@ -21,7 +21,7 @@ const REVIEW_MODEL = 'docs/verification/company-review-model.mjs';
 const TIMELINE =
   'toplevel,devtools.timeline,disabled-by-default-devtools.timeline,blink.user_timing';
 const CPU = `${TIMELINE},disabled-by-default-devtools.timeline.frame,disabled-by-default-devtools.timeline.stack,v8.execute,disabled-by-default-v8.cpu_profiler,disabled-by-default-v8.cpu_profiler.hires,disabled-by-default-v8.runtime_stats,blink,latencyInfo,renderer.scheduler`;
-const MODES = ['timings', 'timeline', 'cpu'];
+const MODES = ['timings', 'timeline', 'cpu', 'showcase'];
 const PROTOCOL = Object.freeze({
   id: 'fpv-frame-first-win.v1',
   editionId: 'fpv-learning',
@@ -35,6 +35,82 @@ const PROTOCOL = Object.freeze({
     ['ArrowUp', 6000],
   ],
 });
+
+// Offline route witnesses are candidates for public keyboard rehearsal, not
+// guaranteed wall-clock wins. No runtime engine or player profile is imported.
+export const DISCOVERY_SHOWCASE_PROTOCOLS = Object.freeze(
+  Object.fromEntries(
+    [
+      {
+        id: 'social-community-first-win.v1',
+        editionId: 'social-drone-ua',
+        campaignId: 'social-drone-community-connections',
+        gameplayId: '8a95643f8c0683aa',
+        missionName: 'One Shared Brief',
+        missionNameUK: 'Спільний задум',
+        nextNameEN: 'Count What Is Here',
+        nextNameUK: 'Порахуйте наявне',
+        ticks: [
+          ['ArrowRight', 692],
+          ['ArrowDown', 475],
+          ['ArrowLeft', 162],
+          ['ArrowUp', 469],
+        ],
+      },
+      {
+        id: 'victory-ideas-first-win.v1',
+        editionId: 'victory-drones',
+        campaignId: 'victory-drones-ideas-understanding',
+        gameplayId: '8d8dce4d47fd5912',
+        missionName: 'Observe Before Explaining',
+        missionNameUK: 'Спостерігайте перед поясненням',
+        nextNameEN: 'Forces Come in Pairs',
+        nextNameUK: 'Сили взаємодії',
+        ticks: [
+          ['ArrowRight', 489],
+          ['ArrowDown', 469],
+          ['ArrowDown', 7],
+          ['ArrowLeft', 150],
+          ['ArrowUp', 469],
+          ['ArrowDown', 468],
+          ['ArrowLeft', 434],
+          ['ArrowUp', 468],
+        ],
+      },
+      {
+        id: 'ukraine-threads-first-win.v1',
+        editionId: 'ukraine-culture',
+        campaignId: 'ukraine-threads',
+        gameplayId: 'aae83c4cf5bee1df',
+        missionName: 'Read the Cloth',
+        missionNameUK: 'Прочитайте тканину',
+        nextNameEN: 'Stitch Paths',
+        nextNameUK: 'Шляхи стібків',
+        ticks: [
+          ['ArrowRight', 163],
+          ['ArrowDown', 469],
+        ],
+      },
+    ].map(({ ticks, ...item }) => [
+      item.id,
+      Object.freeze({
+        ...item,
+        missionId: `${item.campaignId}-01`,
+        nextMissionId: `${item.campaignId}-02`,
+        rewardId: `${item.campaignId}-01-discovery`,
+        rewardPath: `game/content/company-campaigns/${item.campaignId}.rewards.json`,
+        actorSetId: `${item.editionId}-marker`,
+        themeId: `${item.campaignId}-theme`,
+        routeStatus: 'experimental-public-keyboard-candidate',
+        route: Object.freeze(
+          ticks.map(([key, count]) => Object.freeze([key, (count * 1000) / 120])),
+        ),
+      }),
+    ]),
+  ),
+);
+const runtimeProtocol = (plan) =>
+  plan.mode === 'showcase' ? DISCOVERY_SHOWCASE_PROTOCOLS[plan.protocol] : PROTOCOL;
 
 function keys(value, allowed, label) {
   if (
@@ -69,11 +145,14 @@ export function validateDiscoveryRuntimePlan(input) {
   if (
     plan.format !== 'revealline-discovery-runtime-plan.v1' ||
     !/^[a-z0-9-]{1,64}$/.test(plan.caseId ?? '') ||
-    plan.protocol !== PROTOCOL.id ||
+    !(plan.mode === 'showcase'
+      ? Object.hasOwn(DISCOVERY_SHOWCASE_PROTOCOLS, plan.protocol)
+      : plan.protocol === PROTOCOL.id) ||
     !text(plan.deviceLabel) ||
     !text(plan.quietWindow, 2048) ||
     !MODES.includes(plan.mode) ||
     ![0, 20].includes(plan.cycles) ||
+    (plan.mode === 'showcase' && (plan.cycles !== 0 || plan.headerPolicy !== 'packaged-preview')) ||
     (plan.headerPolicy !== undefined &&
       !['minimal', 'packaged-preview'].includes(plan.headerPolicy)) ||
     (plan.serverPort !== undefined &&
@@ -100,7 +179,7 @@ export function validateDiscoveryRuntimePlan(input) {
   if (
     !COMMIT.test(plan.artifact.sourceRevision) ||
     !COMMIT.test(plan.artifact.sourceTree) ||
-    plan.artifact.editionId !== PROTOCOL.editionId
+    plan.artifact.editionId !== runtimeProtocol(plan).editionId
   )
     fail('Missing exact supported edition/source binding.');
   return plan;
@@ -109,7 +188,8 @@ export function validateDiscoveryRuntimePlan(input) {
 /** Exact playable-byte verification only; this does not replace release/source admission. */
 export function verifyDiscoveryRuntimeArtifact(planInput, { archive, manifest: manifestBytes }) {
   const plan = validateDiscoveryRuntimePlan(planInput),
-    wanted = plan.artifact;
+    wanted = plan.artifact,
+    protocol = runtimeProtocol(plan);
   if (
     !(archive instanceof Uint8Array) ||
     archive.byteLength > 256 * 1024 * 1024 ||
@@ -150,28 +230,45 @@ export function verifyDiscoveryRuntimeArtifact(planInput, { archive, manifest: m
   )
     fail('Missing selected playable closure.');
   const rewards = JSON.parse(
-    new TextDecoder('utf-8', { fatal: true }).decode(files.get(PROTOCOL.rewardPath)),
+    new TextDecoder('utf-8', { fatal: true }).decode(files.get(protocol.rewardPath)),
   );
   const definition = rewards.find(
-    (item) => item.scope?.kind === 'mission' && item.scope.id === PROTOCOL.missionId,
+    (item) => item.scope?.kind === 'mission' && item.scope.id === protocol.missionId,
   );
   if (
+    (plan.mode === 'showcase' && definition?.id !== protocol.rewardId) ||
     !definition?.requirements?.missions?.some(
       (mission) =>
-        mission.missionId === PROTOCOL.missionId &&
+        mission.missionId === protocol.missionId &&
         mission.bindings?.some(
           (binding) =>
-            binding.gameplayId === PROTOCOL.gameplayId && binding.difficulty === 'standard',
+            binding.gameplayId === protocol.gameplayId && binding.difficulty === 'standard',
         ),
     )
   )
     fail(
       'The reviewed gameplay binding is absent; review a new protocol instead of relabelling it.',
     );
+  const showcaseCopy =
+    plan.mode === 'showcase'
+      ? Object.fromEntries(
+          ['en', 'uk'].map((locale) => {
+            const title = definition.locales?.[locale]?.title;
+            const paragraph = definition.payloads?.find((item) => item.type === 'knowledge')
+              ?.locales?.[locale]?.paragraphs?.[0];
+            if (!text(title, 256) || !text(paragraph, 4096))
+              fail(
+                'The exact showcase reward needs bounded English and Ukrainian title/knowledge copy.',
+              );
+            return [locale, { title, paragraph }];
+          }),
+        )
+      : null;
   return {
     plan,
     files,
     manifest,
+    ...(showcaseCopy ? { showcaseCopy } : {}),
     identity: {
       sourceRevision: wanted.sourceRevision,
       sourceTree: wanted.sourceTree,
@@ -181,7 +278,7 @@ export function verifyDiscoveryRuntimeArtifact(planInput, { archive, manifest: m
       runtimeFiles: files.size,
       runtimeBytes: [...files.values()].reduce((sum, item) => sum + item.byteLength, 0),
       contentSha256: manifest.contentSha256,
-      gameplayId: PROTOCOL.gameplayId,
+      gameplayId: protocol.gameplayId,
       gameplayBindingAuthority:
         'Exact admitted authored reward requirement, not an independent engine recomputation.',
     },
@@ -438,6 +535,312 @@ export async function finishDiscoveryObservation({
   await save('complete.json', { ...complete, cleanup });
 }
 
+/** Each route is a bounded experimental public-input attempt. The caller must
+ * retain its outcome even when the offline witness does not become a browser win. */
+export async function executeDiscoveryShowcaseRoute({ protocolId, read, press, save, attempt }) {
+  const protocol = DISCOVERY_SHOWCASE_PROTOCOLS[protocolId];
+  if (!protocol || ![1, 2].includes(attempt))
+    fail('Choose a registered showcase and attempt 1 or 2.');
+  const states = [];
+  const capture = async (label) => {
+    const state = await read(label);
+    states.push(state);
+    return state;
+  };
+  let state = await capture(`showcase attempt ${attempt} start`);
+  const isWon = () =>
+    state.overlay.kind === 'won' &&
+    state.overlay.hidden === false &&
+    state.body.editionId === protocol.editionId &&
+    state.selection['level-select'].value === protocol.missionId;
+  try {
+    if (state.overlay.hidden !== true || state.body.flightState !== 'running')
+      fail('A showcase attempt must start in ordinary running gameplay.');
+    for (const [key, wait] of protocol.route) {
+      if (state.overlay.hidden !== true || state.body.flightState !== 'running') break;
+      if (state.selection['level-select'].value !== protocol.missionId)
+        fail('The showcase mission changed during its public-input attempt.');
+      await press(key, wait);
+      state = await capture(`showcase attempt ${attempt} ${key}`);
+      if (isWon()) break;
+    }
+    if (!isWon()) fail('Experimental showcase route did not produce an ordinary win.');
+    return state;
+  } finally {
+    await save(`showcase-attempt-${attempt}.json`, {
+      protocolId,
+      routeStatus: protocol.routeStatus,
+      attempt,
+      won: isWon(),
+      states,
+      inputSource:
+        'Playwright browser keyboard press and wall-clock waits; no engine/progress calls',
+    });
+  }
+}
+
+export function validateDiscoveryShowcaseState(
+  state,
+  protocolId,
+  { locale = 'en', next = false } = {},
+) {
+  const protocol = DISCOVERY_SHOWCASE_PROTOCOLS[protocolId];
+  if (!protocol || !['en', 'uk'].includes(locale)) fail('Unknown showcase state binding.');
+  const selected = state.selection;
+  if (
+    state.body.editionId !== protocol.editionId ||
+    state.locale !== locale ||
+    selected['difficulty-select'].value !== 'standard' ||
+    selected['turn-select'].value !== 'immediate' ||
+    selected['class-select'].value !== 'scout' ||
+    selected['level-select'].value !== (next ? protocol.nextMissionId : protocol.missionId) ||
+    selected['body-select'].value !== protocol.actorSetId ||
+    selected['theme-select'].value !== protocol.themeId ||
+    selected['terrain-select'].value !== 'hybrid' ||
+    selected['level-select'].label !==
+      `${next ? '02' : '01'} · ${next ? (locale === 'uk' ? protocol.nextNameUK : protocol.nextNameEN) : locale === 'uk' ? protocol.missionNameUK : protocol.missionName}`
+  )
+    fail('Observed showcase controls differ from the exact mission/locale protocol.');
+  return state;
+}
+
+export function validateDiscoveryShowcaseCopy(expected, observed, locale) {
+  if (
+    !['en', 'uk'].includes(locale) ||
+    !expected?.[locale] ||
+    observed.title !== expected[locale].title ||
+    observed.knowledgeMatched !== true
+  )
+    fail('The visible discovery copy differs from its exact earned locale.');
+  return observed;
+}
+
+/** Functional showcase navigation is intentionally separate from timing samples.
+ * DOM evaluation below reads surfaces only; all choices use native public controls. */
+export async function observeDiscoveryShowcase({
+  page,
+  protocolId,
+  showcaseCopy,
+  origin,
+  record,
+  screenshot,
+  save,
+  running,
+  key,
+}) {
+  const protocol = DISCOVERY_SHOWCASE_PROTOCOLS[protocolId];
+  if (!protocol) fail('Unknown showcase protocol.');
+  const resultButton = `[data-reward-id="${protocol.rewardId}"][data-reward-surface="result"]`;
+  const collectionButton = `[data-reward-id="${protocol.rewardId}"][data-reward-surface="collection"]`;
+  const phases = [];
+  const snapshot = async (label) => {
+    const surface = await page.evaluate(async () => {
+      const doc = globalThis.document;
+      const { discoveryCycleSurface } = await import('/docs/verification/discovery-observer.mjs');
+      return {
+        ...discoveryCycleSurface(doc),
+        locale: doc.documentElement.lang,
+        width: globalThis.innerWidth,
+        height: globalThis.innerHeight,
+        focus: {
+          id: doc.activeElement?.id,
+          rewardId: doc.activeElement?.dataset.rewardId,
+          surface: doc.activeElement?.dataset.rewardSurface,
+        },
+        save: { ...doc.getElementById('completion-reward-save-status')?.dataset },
+        trust: globalThis.__discoveryShowcaseInputs,
+      };
+    });
+    phases.push({ label, ...surface });
+    await save(`showcase-surface-${phases.length}.json`, phases.at(-1));
+    return surface;
+  };
+  const click = async (selector) => {
+    await page.locator(selector).scrollIntoViewIfNeeded();
+    await page.locator(selector).click();
+  };
+  const viewer = async (selector, label, locale) => {
+    await click(selector);
+    await page.waitForFunction(
+      () => {
+        const dialog = globalThis.document.getElementById('completion-reward-dialog');
+        return (
+          dialog?.open &&
+          [...dialog.querySelectorAll('img')].some((img) => img.complete && img.naturalWidth > 0)
+        );
+      },
+      {},
+      { timeout: 20000 },
+    );
+    const observedCopy = await page.evaluate(
+      (paragraph) => ({
+        title: globalThis.document.getElementById('completion-reward-title')?.textContent,
+        knowledgeMatched:
+          globalThis.document
+            .getElementById('completion-reward-dialog')
+            ?.textContent.includes(paragraph) === true,
+      }),
+      showcaseCopy[locale].paragraph,
+    );
+    await save(`${label}-copy.json`, {
+      locale,
+      ...observedCopy,
+      expectedTitle: showcaseCopy[locale].title,
+      expectedParagraphSha256: digest(Buffer.from(showcaseCopy[locale].paragraph)),
+    });
+    validateDiscoveryShowcaseCopy(showcaseCopy, observedCopy, locale);
+    const surface = await snapshot(label);
+    if (
+      !surface.state.rewardViewer ||
+      surface.locale !== locale ||
+      !surface.decodedVisibleImages ||
+      surface.brokenVisibleImages ||
+      !surface.closeViewer.visible
+    )
+      fail('Showcase discovery is not visibly decoded with an accessible Back control.');
+    await screenshot(label);
+    await click('#completion-reward-dialog > button');
+    await page.waitForFunction(
+      () => !globalThis.document.getElementById('completion-reward-dialog')?.open,
+    );
+    const closed = await snapshot(`${label}-closed`);
+    if (
+      closed.focus.rewardId !== protocol.rewardId ||
+      closed.focus.surface !== (selector === resultButton ? 'result' : 'collection')
+    )
+      fail('Closing the discovery did not restore its public opener focus.');
+  };
+  const collection = async (label, locale) => {
+    await click('#collection-button');
+    await page.locator('#collection-dialog').waitFor({ state: 'visible' });
+    await page.locator('#completion-reward-exhibit-select').selectOption(protocol.campaignId);
+    await page.waitForFunction(
+      (rewardId) =>
+        globalThis.document.querySelector(
+          `#completion-reward-shelf article[data-reward-id="${rewardId}"]`,
+        )?.dataset.earned === 'true',
+      protocol.rewardId,
+    );
+    const progress = await page.evaluate(
+      (rewardId) => ({
+        earned: globalThis.document.querySelector(
+          `#completion-reward-shelf article[data-reward-id="${rewardId}"]`,
+        )?.dataset.earned,
+        finales: [
+          ...globalThis.document.querySelectorAll(
+            '#completion-reward-shelf article[data-scope="campaign"]',
+          ),
+        ].map((node) => ({ id: node.dataset.rewardId, earned: node.dataset.earned })),
+      }),
+      protocol.rewardId,
+    );
+    await save(`${label}-progress.json`, progress);
+    if (
+      progress.earned !== 'true' ||
+      !progress.finales.length ||
+      progress.finales.some((row) => row.earned !== 'false')
+    )
+      fail('The first mission discovery or still-locked campaign promise is inaccurate.');
+    await viewer(collectionButton, label, locale);
+    await click('#collection-back');
+    await page.waitForFunction(
+      () => !globalThis.document.getElementById('collection-dialog')?.open,
+    );
+  };
+  await page.goto(`${origin}/game/index.html?edition=${protocol.editionId}`, {
+    waitUntil: 'domcontentloaded',
+  });
+  await page.waitForFunction(
+    () => globalThis.document.documentElement.dataset.bootState === 'ready',
+    {},
+    { timeout: 60000 },
+  );
+  await page.bringToFront();
+  const initial = await record('showcase fresh page');
+  await screenshot('showcase-fresh-page');
+  if (initial.muted === 'true') await click('#shell-sound');
+  // Additive passive trusted-input accounting. It cannot dispatch or accept a win.
+  await page.evaluate(() => {
+    const inputs = { count: 0, untrusted: 0 };
+    const observe = (event) => {
+      inputs.count++;
+      if (!event.isTrusted) inputs.untrusted++;
+    };
+    globalThis.__discoveryShowcaseInputs = inputs;
+    globalThis.document.addEventListener('keydown', observe, true);
+    globalThis.__discoveryWinCleanup = () =>
+      globalThis.document.removeEventListener('keydown', observe, true);
+  });
+  await click('#shell-play');
+  await page.locator('#journey-chooser').waitFor({ state: 'visible' });
+  await page.locator('#journey-search').fill(protocol.missionName);
+  const card = page.locator(`button.journey-card[data-mission-id$="/${protocol.missionId}"]`);
+  if ((await card.count()) !== 1)
+    fail('Exact showcase mission is not uniquely available in the public chooser.');
+  await card.scrollIntoViewIfNeeded();
+  await card.focus();
+  await page.keyboard.press('Enter');
+  await running();
+  validateDiscoveryShowcaseState(await record('showcase chosen mission'), protocolId);
+  // Ordinary restart gives the declared candidate route a fresh attempt.
+  await click('#pause-button');
+  await click('#overlay-restart');
+  await click('#restart-confirm');
+  await running();
+  await executeDiscoveryShowcaseRoute({ protocolId, read: record, press: key, save, attempt: 1 });
+  await page.locator(resultButton).waitFor({ state: 'visible' });
+  await snapshot('english-desktop-first-win');
+  await screenshot('english-desktop-first-win');
+  await viewer(resultButton, 'english-desktop-discovery', 'en');
+  await collection('english-desktop-collection', 'en');
+  await click('#shell-settings');
+  await page.locator('#settings-dialog [data-language-select]').selectOption('uk');
+  await click('[data-close="settings-dialog"]');
+  await page.waitForFunction(() => globalThis.document.documentElement.lang === 'uk');
+  await page.setViewportSize({ width: 390, height: 844 });
+  validateDiscoveryShowcaseState(await record('ukrainian portrait result'), protocolId, {
+    locale: 'uk',
+  });
+  await screenshot('ukrainian-portrait-result');
+  await viewer(resultButton, 'ukrainian-portrait-discovery', 'uk');
+  await collection('ukrainian-portrait-collection', 'uk');
+  await click('#retry-button');
+  await running();
+  validateDiscoveryShowcaseState(await record('single-action retry'), protocolId, { locale: 'uk' });
+  await executeDiscoveryShowcaseRoute({ protocolId, read: record, press: key, save, attempt: 2 });
+  await page.locator(resultButton).waitFor({ state: 'visible' });
+  await snapshot('ukrainian-portrait-repeat-win');
+  await click('#next-button');
+  await running();
+  validateDiscoveryShowcaseState(await record('single-action next'), protocolId, {
+    locale: 'uk',
+    next: true,
+  });
+  await click('#pause-button'); // Leave neutral gameplay input before final evidence/cleanup.
+  await screenshot('ukrainian-portrait-next-paused');
+  const last = await snapshot('ukrainian-portrait-next-paused');
+  if (!last.trust.count || last.trust.untrusted)
+    fail('Only trusted browser keyboard input is allowed.');
+  const report = {
+    format: 'revealline-discovery-showcase-observation.v1',
+    qualified: false,
+    completed: true,
+    protocolId,
+    routeStatus: protocol.routeStatus,
+    ordinaryWins: 2,
+    distinctMissionsWon: 1,
+    phases,
+    limitations: [
+      'English desktop first win and Ukrainian portrait revisit/repeat win are one earned session, not independent fresh-profile qualifications.',
+      'Functional public controls only; no performance, human, touch, physical controller or device qualification.',
+      'Only the first showcase mission and its discovery are exercised; later application and six-win finale are not completed here.',
+      'Offline route witnesses remain experimental browser candidates; a successful observation does not guarantee future wall-clock routes.',
+    ],
+  };
+  await save('showcase.json', report);
+  return report;
+}
+
 /** External Playwright is an explicit validation dependency, never a game dependency. */
 export async function observeDiscoveryRuntime({
   planFile,
@@ -619,19 +1022,32 @@ export async function observeDiscoveryRuntime({
         if (response.headers.get(header) !== value)
           fail(`Served header differs: ${name}: ${header}`);
     }
-    const traced = plan.mode !== 'timings';
-    const binding = {
-      label: plan.caseId,
-      deviceLabel: plan.deviceLabel,
-      editionId: PROTOCOL.editionId,
-      gameplayId: PROTOCOL.gameplayId,
-      inputProtocol: traced
-        ? 'Automated keyboard Frame01; normal restart; down1800/down3200/right1400/up6000; first-win trace; no engine/progress injection'
-        : 'Automated keyboard Frame01;20s active stationary;normal restart;down1800/down3200/right1400/up6000;20s first-win result;no engine/progress injection',
-      settingsIdentity: `en;standard;immediate;scout;full;muted;menu-neon;hybrid;fpv-learning-marker;fpv-meet-aircraft-theme;grid-off;reactions-on;1280x633@1;trace-${plan.mode}${server.headerPolicy === 'minimal' ? '' : ';headers-packaged-preview'}`,
-      sourceKind: 'compiled-artifact',
-      sourceIdentity: plan.artifact.archiveSha256,
-    };
+    const protocol = runtimeProtocol(plan);
+    const traced = ['timeline', 'cpu'].includes(plan.mode);
+    const binding =
+      plan.mode === 'showcase'
+        ? {
+            label: plan.caseId,
+            deviceLabel: plan.deviceLabel,
+            editionId: protocol.editionId,
+            gameplayId: protocol.gameplayId,
+            inputProtocol: `${protocol.id};public chooser;experimental keyboard route;EN desktop win;UK portrait revisit/retry/next;no progress injection`,
+            settingsIdentity: `en1280x633@1;uk390x844@1;standard;immediate;scout;${protocol.actorSetId};${protocol.themeId};headers-packaged-preview;functional-only`,
+            sourceKind: 'compiled-artifact',
+            sourceIdentity: plan.artifact.archiveSha256,
+          }
+        : {
+            label: plan.caseId,
+            deviceLabel: plan.deviceLabel,
+            editionId: PROTOCOL.editionId,
+            gameplayId: PROTOCOL.gameplayId,
+            inputProtocol: traced
+              ? 'Automated keyboard Frame01; normal restart; down1800/down3200/right1400/up6000; first-win trace; no engine/progress injection'
+              : 'Automated keyboard Frame01;20s active stationary;normal restart;down1800/down3200/right1400/up6000;20s first-win result;no engine/progress injection',
+            settingsIdentity: `en;standard;immediate;scout;full;muted;menu-neon;hybrid;fpv-learning-marker;fpv-meet-aircraft-theme;grid-off;reactions-on;1280x633@1;trace-${plan.mode}${server.headerPolicy === 'minimal' ? '' : ';headers-packaged-preview'}`,
+            sourceKind: 'compiled-artifact',
+            sourceIdentity: plan.artifact.archiveSha256,
+          };
     await save('case.json', {
       format: 'revealline-matched-arcade-case.v1',
       qualified: false,
@@ -652,7 +1068,7 @@ export async function observeDiscoveryRuntime({
       },
       scope:
         server.headerPolicy === 'packaged-preview'
-          ? 'Exact playable archive and explicit public controls under the existing packaged-preview security/cache headers. The loopback soundtrack exception is retained; this is not deployed public-origin/CSP or warm-cache qualification. Source-publication eligibility, human/device review and release qualification are separate.'
+          ? 'Exact playable archive and explicit public controls under the existing packaged-preview security/cache headers. The packaged-preview soundtrack origins are retained; this is not deployed public-origin/CSP or warm-cache qualification. Source-publication eligibility, human/device review and release qualification are separate.'
           : 'Exact playable archive and explicit public controls on a minimal loopback server; production CSP/cache-header behavior is not reproduced. Source-publication eligibility, human/device review and release qualification are separate.',
     });
     const { chromium } = await import(pathToFileURL(path.resolve(playwrightModule)).href);
@@ -716,135 +1132,153 @@ export async function observeDiscoveryRuntime({
       if (observed.outcome !== 'observed') fail(`${name} sample rejected: ${observed.outcome}`);
       return observed;
     };
-    await page.goto(`${server.origin}/game/index.html?edition=${PROTOCOL.editionId}`, {
-      waitUntil: 'domcontentloaded',
-    });
-    await page.waitForFunction(
-      () => globalThis.document.documentElement.dataset.bootState === 'ready',
-      {},
-      { timeout: 60000 },
-    );
-    await page.bringToFront();
-    const initial = await record('fresh page');
-    await screenshot('fresh-page');
-    if (initial.muted === 'true') await page.locator('#shell-sound').click();
-    await page.locator('#shell-featured').click();
-    await running();
-    await page.waitForTimeout(300);
-    const settings = await record('active settings');
-    if (
-      settings.selection['difficulty-select'].value !== 'standard' ||
-      settings.selection['turn-select'].value !== 'immediate' ||
-      settings.selection['class-select'].value !== 'scout' ||
-      settings.selection['level-select'].value !== PROTOCOL.missionId ||
-      settings.selection['body-select'].value !== 'fpv-learning-marker' ||
-      settings.selection['theme-select'].value !== 'fpv-meet-aircraft-theme' ||
-      settings.selection['terrain-select'].value !== 'hybrid' ||
-      settings.body.editionId !== PROTOCOL.editionId ||
-      settings.body.menuPalette !== 'neon' ||
-      settings.locale !== 'en' ||
-      settings.viewport.width !== 1280 ||
-      settings.viewport.height !== 633 ||
-      settings.viewport.dpr !== 1 ||
-      settings.body.effects !== 'full' ||
-      settings.muted !== 'false' ||
-      settings.grid !== false ||
-      settings.reactions !== true
-    )
-      fail('Observed controls differ from the reviewed protocol.');
-    if (!traced) {
-      await attach();
-      await sample('active-play');
-      await sampleReport('active');
-    }
-    await page.locator('#pause-button').click();
-    await page.locator('#overlay-restart').click();
-    await page.locator('#restart-confirm').click();
-    await running();
-    for (const [name, wait] of PROTOCOL.route.slice(0, -1)) await key(name, wait);
-    if ((await record('before final cut')).overlay.kind === 'won')
-      fail('Won before the declared transition.');
-    await attach();
-    await sample('result-reveal');
-    if (traced) {
-      cdp = await context.newCDPSession(page);
-      await cdp.send('Tracing.start', {
-        categories: plan.mode === 'cpu' ? CPU : TIMELINE,
-        transferMode: 'ReturnAsStream',
+    let showcase = null;
+    if (plan.mode === 'showcase') {
+      showcase = await observeDiscoveryShowcase({
+        page,
+        protocolId: plan.protocol,
+        showcaseCopy: checked.showcaseCopy,
+        origin: server.origin,
+        record,
+        screenshot,
+        save,
+        running,
+        key,
       });
-      tracing = true;
-    }
-    await page.evaluate(() => {
-      const doc = globalThis.document,
-        overlay = doc.getElementById('game-overlay'),
-        perf = globalThis.performance;
-      const record = {
-        started: perf.now(),
-        visible: null,
-        ended: null,
-        keys: [],
-        untrustedDOMInputs: 0,
-      };
-      const key = (event) => {
-        record.keys.push({ key: event.key, time: perf.now(), trusted: event.isTrusted });
-        if (!event.isTrusted) record.untrustedDOMInputs++;
-      };
-      const observer = new globalThis.MutationObserver(() => {
-        if (record.visible !== null || !['won', 'campaign-complete'].includes(overlay.dataset.kind))
-          return;
-        record.visible = perf.now();
-        record.kind = overlay.dataset.kind;
-        perf.mark('discovery-first-win:visible');
-        globalThis.setTimeout(() => {
-          record.ended = perf.now();
-          perf.mark('discovery-first-win:end');
+    } else {
+      await page.goto(`${server.origin}/game/index.html?edition=${PROTOCOL.editionId}`, {
+        waitUntil: 'domcontentloaded',
+      });
+      await page.waitForFunction(
+        () => globalThis.document.documentElement.dataset.bootState === 'ready',
+        {},
+        { timeout: 60000 },
+      );
+      await page.bringToFront();
+      const initial = await record('fresh page');
+      await screenshot('fresh-page');
+      if (initial.muted === 'true') await page.locator('#shell-sound').click();
+      await page.locator('#shell-featured').click();
+      await running();
+      await page.waitForTimeout(300);
+      const settings = await record('active settings');
+      if (
+        settings.selection['difficulty-select'].value !== 'standard' ||
+        settings.selection['turn-select'].value !== 'immediate' ||
+        settings.selection['class-select'].value !== 'scout' ||
+        settings.selection['level-select'].value !== PROTOCOL.missionId ||
+        settings.selection['body-select'].value !== 'fpv-learning-marker' ||
+        settings.selection['theme-select'].value !== 'fpv-meet-aircraft-theme' ||
+        settings.selection['terrain-select'].value !== 'hybrid' ||
+        settings.body.editionId !== PROTOCOL.editionId ||
+        settings.body.menuPalette !== 'neon' ||
+        settings.locale !== 'en' ||
+        settings.viewport.width !== 1280 ||
+        settings.viewport.height !== 633 ||
+        settings.viewport.dpr !== 1 ||
+        settings.body.effects !== 'full' ||
+        settings.muted !== 'false' ||
+        settings.grid !== false ||
+        settings.reactions !== true
+      )
+        fail('Observed controls differ from the reviewed protocol.');
+      if (!traced) {
+        await attach();
+        await sample('active-play');
+        await sampleReport('active');
+      }
+      await page.locator('#pause-button').click();
+      await page.locator('#overlay-restart').click();
+      await page.locator('#restart-confirm').click();
+      await running();
+      for (const [name, wait] of PROTOCOL.route.slice(0, -1)) await key(name, wait);
+      if ((await record('before final cut')).overlay.kind === 'won')
+        fail('Won before the declared transition.');
+      await attach();
+      await sample('result-reveal');
+      if (traced) {
+        cdp = await context.newCDPSession(page);
+        await cdp.send('Tracing.start', {
+          categories: plan.mode === 'cpu' ? CPU : TIMELINE,
+          transferMode: 'ReturnAsStream',
+        });
+        tracing = true;
+      }
+      await page.evaluate(() => {
+        const doc = globalThis.document,
+          overlay = doc.getElementById('game-overlay'),
+          perf = globalThis.performance;
+        const record = {
+          started: perf.now(),
+          visible: null,
+          ended: null,
+          keys: [],
+          untrustedDOMInputs: 0,
+        };
+        const key = (event) => {
+          record.keys.push({ key: event.key, time: perf.now(), trusted: event.isTrusted });
+          if (!event.isTrusted) record.untrustedDOMInputs++;
+        };
+        const observer = new globalThis.MutationObserver(() => {
+          if (
+            record.visible !== null ||
+            !['won', 'campaign-complete'].includes(overlay.dataset.kind)
+          )
+            return;
+          record.visible = perf.now();
+          record.kind = overlay.dataset.kind;
+          perf.mark('discovery-first-win:visible');
+          globalThis.setTimeout(() => {
+            record.ended = perf.now();
+            perf.mark('discovery-first-win:end');
+            observer.disconnect();
+            doc.removeEventListener('keydown', key, true);
+          }, 2000);
+        });
+        doc.addEventListener('keydown', key, true);
+        observer.observe(overlay, {
+          attributes: true,
+          attributeFilter: ['data-kind', 'hidden', 'class'],
+        });
+        globalThis.__discoveryFirstWin = record;
+        globalThis.__discoveryWinCleanup = () => {
           observer.disconnect();
           doc.removeEventListener('keydown', key, true);
-        }, 2000);
+        };
+        perf.mark('discovery-first-win:start');
       });
-      doc.addEventListener('keydown', key, true);
-      observer.observe(overlay, {
-        attributes: true,
-        attributeFilter: ['data-kind', 'hidden', 'class'],
-      });
-      globalThis.__discoveryFirstWin = record;
-      globalThis.__discoveryWinCleanup = () => {
-        observer.disconnect();
-        doc.removeEventListener('keydown', key, true);
-      };
-      perf.mark('discovery-first-win:start');
-    });
-    await key(...PROTOCOL.route.at(-1));
-    await sampleReport('result');
-    const won = await page.evaluate(() => globalThis.__discoveryFirstWin);
-    await save('first-win-record.json', won);
-    if (!won.visible || !won.ended || won.kind !== 'won' || won.untrustedDOMInputs)
-      fail('A normal first win and its complete measurement window were not observed.');
-    await stopTrace();
-    if (traced)
-      await save('first-win-options.json', {
-        sourceBinding: {
-          sourceRevision: identity.sourceRevision,
-          distributionSha256: identity.distribution.sha256,
-          editionId: PROTOCOL.editionId,
-        },
-        window: { start: 'discovery-first-win:start', end: 'discovery-first-win:end' },
-        checkpointMarkers: ['discovery-first-win:visible'],
-      });
-    await screenshot('first-result');
-    if (plan.cycles)
-      await runDiscoveryCycles({
-        session: plan.caseId,
-        binding,
-        cycles: plan.cycles,
-        output: path.join(output, 'cycles-20.json'),
-        invoke: async (args) => {
-          if (args[0] === 'eval') return page.evaluate(args[1]);
-          if (args[0] === 'click') return page.locator(args[1]).click();
-          if (args[0] === 'scrollintoview') return page.locator(args[1]).scrollIntoViewIfNeeded();
-          fail('Unsupported public observer command.');
-        },
-      });
+      await key(...PROTOCOL.route.at(-1));
+      await sampleReport('result');
+      const won = await page.evaluate(() => globalThis.__discoveryFirstWin);
+      await save('first-win-record.json', won);
+      if (!won.visible || !won.ended || won.kind !== 'won' || won.untrustedDOMInputs)
+        fail('A normal first win and its complete measurement window were not observed.');
+      await stopTrace();
+      if (traced)
+        await save('first-win-options.json', {
+          sourceBinding: {
+            sourceRevision: identity.sourceRevision,
+            distributionSha256: identity.distribution.sha256,
+            editionId: PROTOCOL.editionId,
+          },
+          window: { start: 'discovery-first-win:start', end: 'discovery-first-win:end' },
+          checkpointMarkers: ['discovery-first-win:visible'],
+        });
+      await screenshot('first-result');
+      if (plan.cycles)
+        await runDiscoveryCycles({
+          session: plan.caseId,
+          binding,
+          cycles: plan.cycles,
+          output: path.join(output, 'cycles-20.json'),
+          invoke: async (args) => {
+            if (args[0] === 'eval') return page.evaluate(args[1]);
+            if (args[0] === 'click') return page.locator(args[1]).click();
+            if (args[0] === 'scrollintoview') return page.locator(args[1]).scrollIntoViewIfNeeded();
+            fail('Unsupported public observer command.');
+          },
+        });
+    }
     const policy = await page.evaluate(() => globalThis.__discoveryPolicy);
     await save('security-policy.json', policy);
     if (policy.overflow || policy.violations.length)
@@ -857,7 +1291,16 @@ export async function observeDiscoveryRuntime({
       identity,
       events,
       errors,
-      limitations: [
+      ...(showcase
+        ? {
+            showcase: {
+              protocolId: plan.protocol,
+              ordinaryWins: showcase.ordinaryWins,
+              distinctMissionsWon: showcase.distinctMissionsWon,
+            },
+          }
+        : {}),
+      limitations: showcase?.limitations ?? [
         'One fixed reviewed mission/device protocol only.',
         'CPU profiling is separate from unprofiled p95 comparisons and adds overhead.',
         'Cycles count connected resources, not detached retainers or decoder memory.',
