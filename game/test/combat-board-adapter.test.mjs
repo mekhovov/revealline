@@ -9,24 +9,38 @@ import { createHash } from 'node:crypto';
 import { createRun, stepRun, FIXED_DT } from '../core/index.mjs';
 import { authoritativeCheckpoint } from '../replay.mjs';
 import { combatView } from '../ui/combat-view.mjs';
+import { BoardPainter } from '../ui/render.mjs';
 import { combatLevel, combat, ticks } from './helpers/combat-fixture.mjs';
+import { createStarterProject } from '../content-design/starter.mjs';
+import {
+  prepareCombatAuthoring,
+  setMissionCombatEnabled,
+} from '../content-design/combat-authoring.mjs';
+import { compileContentProject, resolveMission } from '../content-design/project.mjs';
 
-// Held intake verification only: actual shared renderer and host files are never edited.
+// Retain immutable held-artifact evidence; integration tests import the actual
+// BoardPainter directly. Generated baselines never replace the checked-out file.
 const root = fileURLToPath(new URL('../../', import.meta.url));
 const moduleURL = new URL('../ui/render.mjs', import.meta.url);
 const patchPath = fileURLToPath(
   new URL('../../docs/patches/combat-board-e9434d03.patch', import.meta.url),
 );
 const baseBlob = 'f93317fa0d48d862ecffa29d4cd3b854d04a35b9';
+const locatorBlob = '37b1bfcb14f2e3c20ad5f3fd588f78cdb51ee8d4';
 const git = (args, options = {}) =>
   execFileSync('git', ['--no-lazy-fetch', '--no-optional-locks', ...args], {
     cwd: root,
     encoding: 'utf8',
+    stdio: 'pipe',
     ...options,
   });
 // Exact e9434d03 renderer fixture: fresh/shallow CI needs no unrelated Git object.
 const pinned = readFileSync(
   new URL('./fixtures/combat-board-render-e9434d03.txt', import.meta.url),
+  'utf8',
+);
+const pinnedLocator = readFileSync(
+  new URL('./fixtures/combat-board-player-locator-e9434d03.txt', import.meta.url),
   'utf8',
 );
 const blobFor = (source) =>
@@ -46,7 +60,7 @@ const theme = {
 };
 const image = (id, width = 32, height = width) => ({ id, width, height });
 const scratch = [];
-let OriginalPainter, PatchedPainter, CurrentPatchedPainter, patchedPinned, patchedCurrent;
+let OriginalPainter, PatchedPainter, UnadoptedPainter, patchedPinned;
 let oldDocument, canvases;
 
 function applyTo(source) {
@@ -68,11 +82,40 @@ function applyTo(source) {
   return result;
 }
 
+function removeFromCurrent() {
+  const directory = mkdtempSync(join(tmpdir(), 'combat-board-baseline-'));
+  scratch.push(directory);
+  const target = join(directory, 'game/ui/render.mjs');
+  mkdirSync(join(directory, 'game/ui'), { recursive: true });
+  writeFileSync(target, current);
+  // The actual renderer has newer comments/options inside the old context.
+  // Match the exact added lines without requiring obsolete surrounding lines.
+  git(['apply', '--reverse', '-C0', '--check', patchPath], { cwd: directory });
+  git(['apply', '--reverse', '-C0', patchPath], { cwd: directory });
+  const reversed = readFileSync(target, 'utf8');
+  // The current host has an explicit disposal lifecycle absent from the
+  // historical patch. Remove only that one additive reset from this test copy.
+  assert.equal(reversed.split('    this.combatPresentation.reset();\n').length, 2);
+  const source = reversed.replace('    this.combatPresentation.reset();\n', '');
+  assert(!source.includes('combatView'));
+  assert(!source.includes('combatPresentation'));
+  return source;
+}
+
 async function renderer(source, label) {
+  // The historical renderer's exact locator dependency was later retired.
+  // Keep that source test-only; never restore or substitute a production cue.
+  const locatorURL = `data:text/javascript;base64,${Buffer.from(
+    pinnedLocator.replace(
+      "'./actor-presentation.mjs'",
+      JSON.stringify(new URL('./actor-presentation.mjs', moduleURL).href),
+    ),
+  ).toString('base64')}`;
   const resolved = source
     .replace(
       /from (['"])(\.{1,2}\/[^'"]+)\1/g,
-      (_, quote, specifier) => `from ${quote}${new URL(specifier, moduleURL).href}${quote}`,
+      (_, quote, specifier) =>
+        `from ${quote}${specifier === './player-locator.mjs' ? locatorURL : new URL(specifier, moduleURL).href}${quote}`,
     )
     .replaceAll('import.meta.url', JSON.stringify(moduleURL.href));
   return (
@@ -111,12 +154,12 @@ function surface(width = 1152) {
 
 before(async () => {
   assert.equal(blobFor(pinned), baseBlob);
+  assert.equal(blobFor(pinnedLocator), locatorBlob);
   patchedPinned = applyTo(pinned);
-  patchedCurrent = applyTo(current);
-  [OriginalPainter, PatchedPainter, CurrentPatchedPainter] = await Promise.all([
+  [OriginalPainter, PatchedPainter, UnadoptedPainter] = await Promise.all([
     renderer(pinned, 'pinned original'),
     renderer(patchedPinned, 'pinned held patch'),
-    renderer(patchedCurrent, 'current held patch'),
+    renderer(removeFromCurrent(), 'current without additive combat layers'),
   ]);
   oldDocument = globalThis.document;
   canvases = [];
@@ -138,7 +181,7 @@ after(() => {
   for (const directory of scratch) rmSync(directory, { recursive: true, force: true });
 });
 
-function painter(Class = PatchedPainter) {
+function painter(Class = BoardPainter) {
   const result = new Class(presets);
   result.theme = theme;
   result.bodyId = 'neutral-marker';
@@ -163,7 +206,35 @@ function sample(kind, count, { freezeAt = null, capture = false } = {}) {
   ticks(run, count, 'right');
   return run;
 }
-function render(run, { Class = PatchedPainter, width = 1152, dt = 0, ...options } = {}) {
+function combinedLevel(role) {
+  const source = createStarterProject('combined-renderer-study');
+  source.actorCatalogId = 'journey-actors-v9';
+  source.difficultyCatalogId = 'journey-difficulty-v2';
+  source.missions[0].actors = [
+    {
+      id: 'keeper',
+      role,
+      tier: 'measured',
+      x: 40.5,
+      y: 12.5,
+      heading: [-1, -1],
+    },
+  ];
+  const prepared = prepareCombatAuthoring(source, 'nearby-shore');
+  prepared.missions[0].actors.push({
+    id: 'optional-sentry',
+    role: 'optional-sentry',
+    tier: 'measured',
+    x: 44.5,
+    y: 10.5,
+    heading: [-1, 0],
+  });
+  return resolveMission(
+    compileContentProject(setMissionCombatEnabled(prepared, 'nearby-shore', true)),
+    'nearby-shore',
+  ).level;
+}
+function render(run, { Class = BoardPainter, width = 1152, dt = 0, ...options } = {}) {
   const board = painter(Class),
     canvas = surface(width);
   board.draw(canvas.ctx, run, dt, {
@@ -198,7 +269,7 @@ function paintSnapshot(board) {
   });
 }
 
-test('held patch pins its exact base, applies to both renderers and preserves all unrelated newer bytes', (t) => {
+test('immutable held patch pins its base while the actual renderer retains newer adapters', (t) => {
   assert.match(patch, new RegExp(baseBlob));
   assert.equal(patch.match(/^diff --git /gm).length, 1);
   assert.equal(
@@ -212,12 +283,15 @@ test('held patch pins its exact base, applies to both renderers and preserves al
     'drawRelayGates(ctx, relays, p, CELL);',
     'drawRelayTriggers(ctx, relays, CELL);',
     'if (!fullReveal) drawDirectionalFields(ctx, directionalView(state), CELL);',
-    "['xonix-core.v6', 'xonix-core.v7', 'xonix-core.v8', 'xonix-core.v9'].includes(state.ruleset)",
+    'const { width: columns, height: rows } = geometryForRun(state);',
   ]) {
     assert(current.includes(text));
-    assert(patchedCurrent.includes(text));
   }
-  assert.equal(readFileSync(moduleURL, 'utf8'), current, 'Actual shared renderer stays untouched.');
+  assert.equal(
+    readFileSync(moduleURL, 'utf8'),
+    current,
+    'Tests never rewrite the actual renderer.',
+  );
   const blob = blobFor(patchedPinned);
   assert(patch.includes(`index ${baseBlob}..${blob} 100644`));
   t.diagnostic(
@@ -225,7 +299,7 @@ test('held patch pins its exact base, applies to both renderers and preserves al
   );
 });
 
-test('absent and disabled combat preserve pinned historical command streams and authority exactly', () => {
+test('absent and disabled combat preserve both historical and current command streams and authority exactly', () => {
   for (const enabled of [null, false]) {
     const level = combatLevel();
     if (enabled === null) delete level.classic.combatPatrols;
@@ -233,16 +307,44 @@ test('absent and disabled combat preserve pinned historical command streams and 
     const run = createRun(level);
     ticks(run, 300, 'right');
     for (const fullReveal of [false, true])
-      for (const width of [294, 1152]) {
-        const checkpoint = authoritativeCheckpoint(run);
-        const original = render(run, { Class: OriginalPainter, width, fullReveal });
-        const patched = render(run, { width, fullReveal });
-        assert.deepEqual(patched.calls, original.calls);
-        assert.deepEqual(paintSnapshot(patched.board), paintSnapshot(original.board));
-        assert.deepEqual(authoritativeCheckpoint(run), checkpoint);
-        assert.equal(spriteDraws(patched.calls).length, 0);
-      }
+      for (const width of [294, 1152])
+        for (const [Original, Adopted] of [
+          [OriginalPainter, PatchedPainter],
+          [UnadoptedPainter, BoardPainter],
+        ]) {
+          const checkpoint = authoritativeCheckpoint(run);
+          const original = render(run, { Class: Original, width, fullReveal });
+          const patched = render(run, { Class: Adopted, width, fullReveal });
+          assert.deepEqual(patched.calls, original.calls);
+          assert.deepEqual(paintSnapshot(patched.board), paintSnapshot(original.board));
+          assert.deepEqual(authoritativeCheckpoint(run), checkpoint);
+          assert.equal(spriteDraws(patched.calls).length, 0);
+        }
   }
+});
+
+test('absent and disabled combat leave current pursuit/interception warnings byte-for-command unchanged', () => {
+  for (const role of ['trail-pursuer', 'heading-interceptor'])
+    for (const enabled of [null, false]) {
+      const level = structuredClone(combinedLevel(role));
+      if (enabled === null) delete level.classic.combatPatrols;
+      else level.classic.combatPatrols.enabled = false;
+      const run = createRun(level, { seed: 1, classId: 'scout', turnPolicy: 'immediate' });
+      ticks(run, 480);
+      ticks(run, 140, 'right');
+      ticks(run, 80, 'down');
+      assert.equal(run.enemies[0].classic.pressure.phase, 'warning');
+      const before = authoritativeCheckpoint(run);
+      for (const reduced of [false, true])
+        for (const width of [294, 1152]) {
+          const original = render(run, { Class: UnadoptedPainter, reduced, width });
+          const adopted = render(run, { reduced, width });
+          assert.deepEqual(adopted.calls, original.calls);
+          assert.deepEqual(paintSnapshot(adopted.board), paintSnapshot(original.board));
+          assert.equal(spriteDraws(adopted.calls).length, 0);
+        }
+      assert.deepEqual(authoritativeCheckpoint(run), before);
+    }
 });
 
 test('malformed active combat throws before canvas, caches, animation or painter state changes', () => {
@@ -329,11 +431,138 @@ test('actual warning bodies and rays sit below the live trail, ordinary keepers 
   assert.deepEqual(authoritativeCheckpoint(run), before);
 });
 
+for (const role of ['trail-pursuer', 'heading-interceptor'])
+  for (const turnPolicy of ['immediate', 'grid-center'])
+    test(`actual painter layers ${role}/${turnPolicy} with sentry warning, shot and real capture cancellation`, () => {
+      const level = combinedLevel(role),
+        run = createRun(level, { seed: 1, classId: 'scout', turnPolicy });
+      ticks(run, 480);
+      ticks(run, 140, 'right');
+      ticks(run, 80, 'down');
+      assert.equal(run.enemies[0].classic.pressure.phase, 'warning');
+      assert.equal(combatView(run).actors[0].phase, 'warning');
+      assert(run.trailSegments.length > 0);
+      for (const reduced of [false, true])
+        for (const width of [294, 1152]) {
+          const before = authoritativeCheckpoint(run),
+            { board, calls } = render(run, { reduced, width });
+          assert.equal(board.constructor, BoardPainter);
+          const unit = 1152 / width;
+          const body = commandIndex(calls, (c) => spriteDraws([c]).length === 1);
+          const pressure = commandIndex(
+            calls,
+            (c) =>
+              c.op === 'stroke' &&
+              Math.abs(c.lineDash[0] - 3 * unit) < 1e-7 &&
+              Math.abs(c.lineDash[1] - 5 * unit) < 1e-7,
+          );
+          const warning = commandIndex(
+            calls,
+            (c) =>
+              c.op === 'stroke' &&
+              Math.abs(c.lineDash[0] - 4 * unit) < 1e-7 &&
+              Math.abs(c.lineDash[1] - 3 * unit) < 1e-7,
+          );
+          const trail = commandIndex(
+            calls,
+            (c) =>
+              c.op === 'stroke' &&
+              c.strokeStyle === theme.palette.accent &&
+              c.lineDash.length === 0,
+          );
+          const keeper = commandIndex(
+            calls,
+            (c) => c.op === 'drawImage' && c.args[0].id === 'keeper',
+          );
+          const player = commandIndex(
+            calls,
+            (c) => c.op === 'drawImage' && c.args[0].id === 'player',
+          );
+          assert(body < pressure && pressure < warning && warning < trail);
+          assert(trail < keeper && keeper < player);
+          assert.equal(calls[warning].globalAlpha, 1);
+          const paused = surface(width);
+          board.draw(paused.ctx, run, 5, { paused: true, reduced, displayCSSWidth: width });
+          assert.deepEqual(paused.calls, calls, 'Repeated paused draws retain both locked cues.');
+          assert.deepEqual(authoritativeCheckpoint(run), before);
+        }
+
+      const events = ticks(run, 160, 'down'),
+        view = combatView(run);
+      assert(events.some((event) => event.type === 'pressure.committed'));
+      assert(events.some((event) => event.type === 'combat.fired'));
+      assert.equal(run.enemies[0].classic.pressure.phase, 'committed');
+      assert.equal(view.actors[0].phase, 'recovery');
+      assert.equal(view.projectiles.length, 1);
+      for (const reduced of [false, true])
+        for (const width of [294, 1152]) {
+          const before = authoritativeCheckpoint(run),
+            { calls } = render(run, { reduced, width });
+          const shot = view.projectiles[0],
+            unit = 1152 / width;
+          const keeper = commandIndex(
+            calls,
+            (c) => c.op === 'drawImage' && c.args[0].id === 'keeper',
+          );
+          const diamond = commandIndex(
+            calls,
+            (c) => c.op === 'moveTo' && atPoint(c.args, shot.x * 16, shot.y * 16 - 4 * unit),
+          );
+          const player = commandIndex(
+            calls,
+            (c) => c.op === 'drawImage' && c.args[0].id === 'player',
+          );
+          assert(keeper < diamond && diamond < player);
+          assert(
+            !calls.some(
+              (c) =>
+                c.op === 'stroke' &&
+                Math.abs(c.lineDash[0] - 4 * unit) < 1e-7 &&
+                Math.abs(c.lineDash[1] - 3 * unit) < 1e-7,
+            ),
+            'A fired shot no longer carries its old locked warning ray.',
+          );
+          assert.deepEqual(authoritativeCheckpoint(run), before);
+        }
+
+      const safe = createRun(level, { seed: 1, classId: 'scout', turnPolicy });
+      ticks(safe, 480);
+      ticks(safe, 170, 'down');
+      assert.equal(safe.enemies[0].classic.pressure.phase, 'committed');
+      assert.equal(combatView(safe).actors[0].phase, 'warning');
+      const board = render(safe).board;
+      const captureEvents = ticks(safe, 4, 'down');
+      assert(captureEvents.some((event) => event.type === 'cells.claimed'));
+      for (const [type, reason] of [
+        ['pressure.cancelled', 'trail-closed'],
+        ['combat.cancelled', 'capture'],
+      ])
+        assert(captureEvents.some((event) => event.type === type && event.reason === reason));
+      assert.equal(safe.enemies[0].classic.pressure.target, null);
+      assert.equal(combatView(safe).actors[0].phase, 'cooldown');
+      assert.equal(combatView(safe).projectiles.length, 0);
+      const before = authoritativeCheckpoint(safe),
+        closed = surface();
+      board.draw(closed.ctx, safe, 0, { paused: true, reduced: true });
+      assert(
+        !closed.calls.some(
+          (c) =>
+            c.op === 'stroke' &&
+            ((c.lineDash[0] === 4 && c.lineDash[1] === 3) ||
+              (c.lineDash[0] === 3 && c.lineDash[1] === 5)),
+        ),
+        'Neither attack retains a stale warning after the real return.',
+      );
+      assert.equal(spriteDraws(closed.calls).length, 1, 'Capture cancellation keeps the survivor.');
+      assert.equal(safe.lives, 3);
+      assert.deepEqual(authoritativeCheckpoint(safe), before);
+    });
+
 test('actual fired projectiles draw above keepers and below the craft with a readable diamond', () => {
   const run = sample('sentry', 380),
     view = combatView(run);
   assert.equal(view.projectiles.length, 1);
-  for (const Class of [PatchedPainter, CurrentPatchedPainter]) {
+  for (const Class of [PatchedPainter, BoardPainter]) {
     const { calls } = render(run, { Class });
     const projectile = view.projectiles[0];
     const keeper = commandIndex(calls, (c) => c.op === 'drawImage' && c.args[0].id === 'keeper');
@@ -540,4 +769,31 @@ test('one painter reuses a bounded sprite cache and resets it on setLevel and se
     canvases.filter((canvas) => canvas.width === 16).length - before <= 2,
     'Only the two additional walking poses are allocated for this role/palette.',
   );
+});
+
+test('disposing the actual painter retires its bounded combat cache and prevents late drawing', () => {
+  const run = sample('scout', 24),
+    board = painter(),
+    first = surface();
+  board.draw(first.ctx, run, 0, { paused: true, reduced: true });
+  assert.equal(spriteDraws(first.calls).length, 1);
+  const owned = board.combatPresentation;
+  let resets = 0;
+  board.combatPresentation = {
+    ...owned,
+    reset() {
+      resets++;
+      owned.reset();
+    },
+  };
+  const before = authoritativeCheckpoint(run);
+  board.dispose();
+  assert.equal(resets, 1);
+  assert.equal(board.theme, null);
+  const late = surface(),
+    allocations = canvases.length;
+  board.draw(late.ctx, run, 10, { paused: false, reduced: false });
+  assert.deepEqual(late.calls, []);
+  assert.equal(canvases.length, allocations);
+  assert.deepEqual(authoritativeCheckpoint(run), before);
 });
