@@ -51,14 +51,15 @@ neither the preparation algorithm nor an authored second actor was edited.
 The committed tests prepare fresh real runtime states and use legal commands,
 without editing cells, actor positions, health or terminal status during a run.
 
-| Evidence                                            | What it establishes                                                                                                    | Limit                                                    |
-| --------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------- |
-| Copy-on-write checks, pictured and greybox projects | Only Cooling loop's authored eroder/design and owning revision metadata change                                         | Does not prove fun                                       |
-| Effective preparation on all three presets          | Same speeds, rules, geometry, counts and Solo/Versus levels; explicit Expert placement consequence                     | Default admin settings only                              |
-| 24 first-return cases                               | Up/left returns on three presets, both steering modes, seeds 1/917; zero loss, stopped craft and protected foundations | First returns, not complete routes                       |
-| Two longer Standard routes                          | Northern-landings/both-banks and western-bank-first approaches remain lossless; real warning → earned-return erosion   | Immediate steering, seed 1                               |
-| One full Standard clear                             | 13 cuts, 81.410867% at tick 5,503, all three lives retained; both banks neutralized and all foundations linked         | One route/preset/control/seed, not whole-mission balance |
-| Deterministic replay and actual paired boards       | Recorded inputs reproduce the checked outcomes; independent Versus boards receive equal conditions                     | Not physical multiplayer testing                         |
+| Evidence                                            | What it establishes                                                                                                    | Limit                                                |
+| --------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------- |
+| Copy-on-write checks, pictured and greybox projects | Only Cooling loop's authored eroder/design and owning revision metadata change                                         | Does not prove fun                                   |
+| Effective preparation on all three presets          | Same speeds, rules, geometry, counts and Solo/Versus levels; explicit Expert placement consequence                     | Default admin settings only                          |
+| 24 first-return cases                               | Up/left returns on three presets, both steering modes, seeds 1/917; zero loss, stopped craft and protected foundations | First returns, not complete routes                   |
+| Two longer Standard routes                          | Northern-landings/both-banks and western-bank-first approaches remain lossless; real warning → earned-return erosion   | Immediate steering, seed 1                           |
+| Northern full Standard clear                        | 13 cuts, 81.410867% at tick 5,503, all three lives retained; both banks neutralized and all foundations linked         | One preset/control/seed, not whole-mission balance   |
+| Bank-first full Standard clear                      | 15 cuts, 81.649190% at tick 8,189, all three lives retained; western bank neutralized and all foundations linked       | Eastern bank remains unclaimed; not optional mastery |
+| Deterministic replay and actual paired boards       | Recorded inputs reproduce the checked outcomes; independent Versus boards receive equal conditions                     | Not physical multiplayer testing                     |
 
 The longer partial routes observe three removals at ticks 1,615, 2,653 and 3,723
 at `(17, 26)`, `(17, 27)` and `(18, 27)`. Each has a 60-tick warning. These are
@@ -73,14 +74,23 @@ permanent foundations remain intact and no bonus is collected. This demonstrates
 a complete feasible route within the intended ordinary duration, not a guarantee
 that human attempts have that duration or that every approach is safe.
 
-The recipes are retained in
-`game/test/cooling-loop-erosion-routes.test.mjs`. The second opening is not yet a
-second complete clear. Neither repair necessity, optimality, mastery recognition,
-quota-tail quality nor enjoyment is established by the scripted route.
+The second, bank-first continuation clears in about **68.24 simulated seconds**
+with eight warnings and eight removed cells, checkpoint `b8aab03a29e67318`.
+It finishes with 1,713/2,098 cells and all foundations linked, but leaves the
+40 eastern-bank lethal cells unclaimed. This is a valid ordinary win, **not**
+both-bank optional mastery. The two approaches make different bank/landing choices;
+they are not two mirrored versions of the same input.
+
+The recipes are retained in `game/test/cooling-loop-erosion-routes.test.mjs`.
+Neither repair necessity, optimality, mastery recognition, quota-tail quality nor
+enjoyment is established by these two scripted routes.
 
 ### Focused execution receipt — 29 September 2026
 
-- New candidate/route files: **33/33 passed**, zero skipped (4.38 seconds).
+- Initial candidate/route files: **33/33 passed**, zero skipped (4.38 seconds).
+- Final supplemented cohort: **36/36 passed**, zero skipped (5.27 seconds),
+  including the second Cooling loop clear plus Pressure ladder and Switchback
+  exchange full-route regressions. The latter two missions are unchanged.
 - Selected route-loader/history/Studio cases: **11 passed, 96 name-filter skips**,
   zero failures (6.68 seconds). This is not a full historical-suite rerun.
 - Changed JavaScript ESLint, changed-file Prettier and `git diff --check` pass.
@@ -95,6 +105,7 @@ Reproduce the main focused cohorts:
 
 ```sh
 node --test game/test/cooling-loop-erosion-candidates.test.mjs game/test/cooling-loop-erosion-routes.test.mjs
+node --test game/test/cooling-loop-erosion-candidates.test.mjs game/test/cooling-loop-erosion-routes.test.mjs game/test/pressure-corridor-complete-routes.test.mjs
 node --test --test-name-pattern='v3[78]|Cooling loop|all literal|recent registered|review links' game/test/content-route-loader.test.mjs game/test/spatial-candidate-edition-history.test.mjs game/test/studio-spatial-editions.test.mjs
 ```
 
@@ -134,7 +145,7 @@ Keep focused correctness, lint/format, source review and required build/provenan
 immutable hashes, archive preservation and basic availability checks. The user's
 production-testing deferral is not an approval record.
 
-Remaining: a second complete strategy; broader seeds/presets/control-style clears;
+Remaining: broader seeds/presets/control-style clears;
 useful repair/escape choices and post-bank pressure review; actual host input,
 device/accessibility/performance and human fairness/enjoyment qualification.
 Production and human qualification remain explicitly deferred. This source slice
