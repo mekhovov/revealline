@@ -186,7 +186,7 @@ export class FeedbackDirector {
     source.onended = voice.stop;
     s.voices.add(voice);
     // Re-enter a periodic texture at its global phase, without an attack restart.
-    source.start(c.currentTime + delay, loop ? c.currentTime % buffer.duration : 0);
+    source.start(c.currentTime + delay, loop ? (c.currentTime * rate) % buffer.duration : 0);
     if (!loop) source.stop(c.currentTime + delay + buffer.duration / rate + 0.01);
     return voice;
   }
@@ -267,9 +267,12 @@ export class FeedbackDirector {
     const board = options.board ?? 'solo';
     let state = this.boards.get(board);
     if (!state || state.run !== run || run?.tick < state.tick) {
-      if (state) for (const v of [...this.sound.voices]) if (v.radio && v.board === board) v.stop();
-      if (state && run?.tick < state.tick) this.seen.delete(run);
-      if (state) for (const v of state.loops.values()) v.stop();
+      if (state) {
+        this.stopBoard(board);
+        if (run?.tick < state.tick) this.seen.delete(run);
+        for (const key of this.recent.keys())
+          if (key.startsWith(`${board}:`)) this.recent.delete(key);
+      }
       state = { run, tick: run?.tick, loops: new Map(), previous: new Map(), started: false };
       this.boards.set(board, state);
     }
@@ -285,6 +288,7 @@ export class FeedbackDirector {
       sound.gameplayPaused ||
       sound.audioMaster.muted
     ) {
+      if (!active && run?.status === 'running') this.stopBoard(board);
       for (const v of [...sound.voices]) if (v.radio && v.board === board) v.stop();
       for (const v of state.loops.values()) v.stop();
       state.loops.clear();
@@ -497,6 +501,10 @@ export class FeedbackDirector {
       }
       voice?.set(item.gain, item.pan, item.rate);
     }
+  }
+  stopBoard(board) {
+    for (const voice of [...this.sound.voices])
+      if (voice.feedback && voice.board === board && voice.bus !== 'menu') voice.stop();
   }
   reset() {
     for (const voice of [...this.sound.voices])
