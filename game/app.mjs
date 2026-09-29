@@ -12958,7 +12958,19 @@ try {
     }),
     loadSources: ({ signal }) =>
       loadDemoSources({ entries: executionEntries(), library: demoLibrary, turnPolicy, signal }),
-    readMedia: pictureMedia,
+    readMedia: async (options) =>
+      createSessionPictureView(await pictureMedia(options), sessionPictures),
+    getJourneyPictureContext: ({ entry, level }) => {
+      if (!candidateHost?.owns(entry)) return null;
+      const index = entry.campaign.levels.findIndex((item) => item.id === level.id);
+      return {
+        editionId: authoredRoute.id,
+        missionId: candidateHost.mission(entry, index)?.id,
+        entries: candidateHost.entries,
+        profile: journeyProfile.snapshot(),
+        pictures: journeyProfile.pictures(),
+      };
+    },
     canOpen: () =>
       !preparationOperation &&
       !pictureResume &&
