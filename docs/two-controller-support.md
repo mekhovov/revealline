@@ -144,3 +144,19 @@ and airborne pickup remain intact. All 40 desktop/iOS wrapper tests pass.
 These automated checks do not claim a real two-radio, mixed-device, Bluetooth,
 dongle, mobile, Steam Deck or packaged-native run. Further physical testing was
 skipped on the user's instruction.
+
+- Final expanded controller/navigation/Solo regression: **587 passed**.
+- Additional real Team-host shared/two-radio/mixed-device scenarios: **3 passed**.
+- Desktop/iOS wrapper regression: **40 passed**. Scoped lint and diff checks passed.
+- Updated local web build: version **0.142.4**, **1,777 files**. This development
+  build records no source revision in its manifest. Controller payloads were
+  compared byte-for-byte with the working source and ZIP contents.
+- ZIP SHA-256: `d91d0cd5bda8985dba6e064f3c0de492a9a7503dc450c68a9d19729f7e97916c`.
+- Desktop stage and full inventory verification passed: **741,866,937 bytes**;
+  source/stage manifest SHA-256
+  `3a5230cf498b9223ac50538c1768779d7c7ea2247504737e2a899f7c31331053`.
+  Temporary staging was removed after verification; the web build and ZIP remain
+  in `dist/`. No packaged native runtime or new iOS device qualification is claimed.
+- The earlier iOS staging blocker (missing explicit head in the sprite review
+  HTML) remains outside these radio changes; the existing platform limitation
+  above remains applicable.
