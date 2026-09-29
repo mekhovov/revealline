@@ -14,12 +14,12 @@ Fullscreen has one browser-state owner per document, so the landing and Settings
 
 ## Routes and capability matrix
 
-| Host             | Current route                   | Additional supported entry                           | Mode      | Branding / scene                            |
-| ---------------- | ------------------------------- | ---------------------------------------------------- | --------- | ------------------------------------------- |
-| Solo             | `/game/`                        | `?journey=legacy`, mission-library/custom handoffs   | Solo      | FPV / LINE; selected theme or FPV fallback  |
-| Versus           | `/game/couch/`                  | `?journey=legacy`, supported imported Versus content | Versus    | FPV / LINE; selected theme; opposing actors |
-| Team             | `/game/couch/relay-rescue.html` | `?journey=legacy`, Team creator/import handoffs      | Team      | FPV / LINE; accepted theme; linked actors   |
-| Company editions | `/game/?edition=<slug>`         | `/editions/<slug>/app/`; legacy company launcher     | Solo only | Edition title/logo; explicit edition scene  |
+| Host             | Current route                   | Additional supported entry                           | Mode      | Branding / scene                                           |
+| ---------------- | ------------------------------- | ---------------------------------------------------- | --------- | ---------------------------------------------------------- |
+| Solo             | `/game/`                        | `?journey=legacy`, mission-library/custom handoffs   | Solo      | FPV / LINE; selected theme or FPV fallback                 |
+| Versus           | `/game/couch/`                  | `?journey=legacy`, supported imported Versus content | Versus    | FPV / LINE; selected theme; mode actor composition pending |
+| Team             | `/game/couch/relay-rescue.html` | `?journey=legacy`, Team creator/import handoffs      | Team      | FPV / LINE; accepted theme; mode actor composition pending |
+| Company editions | `/game/?edition=<slug>`         | `/editions/<slug>/app/`; legacy company launcher     | Solo only | Edition title/logo; explicit edition scene                 |
 
 Current title and logo behavior is documented in [FPV / LINE branding](fpv-line-branding.md); DroneAid uses the public slug `droneaid` while retaining its saved internal identity.
 
@@ -58,7 +58,9 @@ See `menu-scenes.md` for all 18 profiles, composition source/provenance, active 
 
 ## Delivery status
 
-Phases 1–6 are implemented in active source: the inventory and destination map; shared landing/Settings; directional navigation and field editing; fonts/icons; 18 scene profiles; and shared creator input adapters. The authoring inventory includes 16 active tools and 16 owned reference pages. Custom-content player menus and default/company offline launchers use the same input infrastructure.
+The main implementation exists for all six source phases, but their exit criteria are not all complete. The inventory, shared landing/Settings, fonts/icons, 18 scene profiles and creator adapters are present. The inventory lists 15 existing tools, one pending Demo tool dependency and 16 owned reference pages. Scene profiles still share their base artwork across supported modes; the requested actor arrangements need a separate artwork batch. Full creator workflow acceptance on the reconciled branch and physical-device checks remain open.
+
+Use the [phase and release-batch ledger](native-menu-plan-status.md) for the current item-level status and next work. Historical screenshots and export receipts remain useful evidence for their recorded snapshot, not proof for a later PR head.
 
 Phase 7 local web/edition/native staging and verification results are recorded in the evidence report. Physical-controller, mobile performance, native Xcode/device and published-build acceptance must remain separate from local browser and modeled-input evidence. Release snapshots and public selectors remain under the established release coordinator.
 
