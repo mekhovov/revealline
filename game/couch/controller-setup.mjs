@@ -72,7 +72,14 @@ export function mountControllerSetup({
   assignment.hidden = solo;
   const join1 = button('join1', () => session.assign(Number(devices.value), 0), assignment);
   const join2 = button('join2', () => session.assign(Number(devices.value), 1), assignment);
-  button('swap', () => session.swap(), assignment);
+  button(
+    'swap',
+    () => {
+      session.swap();
+      message = '';
+    },
+    assignment,
+  );
   button('release1', () => session.release(0), assignment);
   button('release2', () => session.release(1), assignment);
   button('menu1', () => session.menu(0), assignment);
@@ -86,7 +93,7 @@ export function mountControllerSetup({
   const tx15Shared = button('tx15Shared', () => {
     const index = Number(devices.value),
       pad = session.raw(index);
-    if (session.split(index, [tx15StickProfile(pad), tx15StickProfile(pad, 'left')]))
+    if (session.split(index, [tx15StickProfile(pad, 'left'), tx15StickProfile(pad)]))
       message = tr('tx15SplitApplied');
   });
   tx15Shared.hidden = solo;

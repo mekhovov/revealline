@@ -92,7 +92,7 @@ USB/Bluetooth/dongle support means the host exposes the device as a Gamepad. Uns
 
 The tested TX15 USB layout now has explicit movement presets in Controls.
 **TX15: movement — right stick up/down/left/right** applies to regular Solo or
-one couch player. **Share TX15: P1 right stick, P2 left stick** deliberately
+one couch player. **Share TX15: P1 left stick, P2 right stick** deliberately
 assigns two independent logical seats from one physical radio in either couch
 host (Versus or Team). Centre both sticks before play, including the
 non-centring left vertical stick. This left-stick movement recipe is separate
@@ -124,3 +124,5 @@ being omitted by object spread in shared snapshots. Explicit field copying
 fixes this; a native-like prototype-field regression now covers it. The real
 TX15 now retains Player 1/right-stick and Player 2/left-stick assignments in
 Team. Physical movement confirmation is still pending.
+
+The user confirmed both sticks independently work in Team. At their request, the default shared assignment now matches screen sides: Player 1/left uses the left stick, and Player 2/right uses the right stick. Solo continues to use the right stick. Two physical radios and a radio/gamepad mixture remain hardware qualification checks.

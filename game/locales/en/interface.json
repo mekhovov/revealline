@@ -5274,7 +5274,7 @@
   "multiplayerControllers.soloUnmapped": "Configure to use in Solo",
   "multiplayerControllers.soloSeparateProfiles": "Solo radio mappings are stored separately from multiplayer profiles, standard gamepad bindings and FPV calibration.",
   "multiplayerControllers.tx15Right": "TX15: movement — right stick up/down/left/right",
-  "multiplayerControllers.tx15Shared": "Share TX15: P1 right stick, P2 left stick",
+  "multiplayerControllers.tx15Shared": "Share TX15: P1 left stick, P2 right stick",
   "multiplayerControllers.tx15Applied": "TX15 movement applied. Centre the right stick; actions remain on keyboard/touch or can be mapped in Configure.",
-  "multiplayerControllers.tx15SplitApplied": "P1: right stick up/down/left/right. P2: left stick up/down/left/right. Centre BOTH sticks, including the non-centring left vertical stick. Actions remain on keyboard/touch; Configure each player for separate switches."
+  "multiplayerControllers.tx15SplitApplied": "P1: left stick up/down/left/right. P2: right stick up/down/left/right. Centre BOTH sticks, including the non-centring left vertical stick. Actions remain on keyboard/touch; Configure each player for separate switches."
 }
