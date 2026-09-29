@@ -5,6 +5,89 @@ Preserve earlier dated plans as history. The original **Journey P00–P15** and
 the broader **whole-game P00–P18** are different programmes, not interchangeable
 phase numbers.
 
+## Local-to-GitHub reconciliation — 29 September, 15:10 UTC
+
+The user now requests all local changes reviewed, pushed or explicitly
+reconciled, and assigned to an existing/new release PR. This section supersedes
+the older queue snapshots below; their source and test receipts remain history.
+**Pushed, integrated, release-targeted and publicly delivered are separate states.**
+
+### Completed source handoff
+
+- Cooling loop's [PR #793](https://github.com/mekhovov/revealline/pull/793) is
+  **closed by consolidation, not merged/published separately**. Its exact
+  `de5aeaac2f601ed3703b40071c9c4e09a7ec7724` tip is an ancestor of the native
+  aggregate [PR #795](https://github.com/mekhovov/revealline/pull/795), observed
+  at `81df80dda259ba8e1cef5378af1cec91260eb51e`.
+- The complete five-path alternate-route follow-on `b3b3b06dee2d69489635cc243c9a41bbe9ec4e17`
+  is already byte-identical in #795 and the combined
+  [PR #796](https://github.com/mekhovov/revealline/pull/796). Adoption uses
+  `c2dcc28dac06ed08f54f9c6cb1f7b70e216fb0f3` plus file-ending normalization
+  `5a5d4458b19d49a33904f8e4295c1aa67bfcf285`; direct donor ancestry is not
+  required for this proved five-file match. Do not reapply or open a duplicate PR.
+- #795 and #796 target the existing **v0.150.0 — Unified native experience**
+  milestone. #796 preserves #795's selected base while adding the spatial-audio
+  source from [PR #794](https://github.com/mekhovov/revealline/pull/794), whose
+  exact `337ded7926168c465229253242c4c93c8be3955b` head is retained as an
+  ancestor. #794 now has the same release-input milestone and retains its hold.
+- The primary checkout is clean at pushed #783 head
+  `0cc7337a8e490d73ad9d7718fb5b208aaf7da924`. This is preservation/reference
+  source, not permission to merge every overlapping historical snapshot.
+- The Levels source branch is clean and exactly matches its advertised remote
+  `b3b3b06de` head. Its sole untracked plan mirror was already stored byte-for-byte
+  in [PR #780](https://github.com/mekhovov/revealline/pull/780); this checkpoint
+  continues through that same evidence PR, not a gameplay or version change.
+
+### Remaining source reconciliation
+
+- **Actor continuation #761:** its latest pushed batch22 and the owner's active
+  batch23 are not blanket-adopted by #796. Keep the existing owner PR and
+  v0.150.0 target; obtain the final push receipt before closing the local audit.
+- **Native menu/Company continuation #782:** `82f9e6ff20941e0b2837438e73eecdd79fad61d6`
+  remains pushed and targeted, with current qualification/harness additions not
+  present in the sampled aggregate. Reconcile these in the existing owner lane.
+- **Radio/controller family:** fresh advertised refs at 15:08:39 UTC confirm
+  `radio-integration` at `6d19567cc0440ce6e052a89ffecdf0c7f6fcddb9`,
+  `discovery-rewards` at `cd1ceff06` and `two-controller-support` at `600fe30d`
+  are now pushed. Earlier local-only findings are superseded. The integrated
+  family is now in draft [PR #797](https://github.com/mekhovov/revealline/pull/797)
+  at the exact `6d19567c` head, targeted to the existing v0.150.0 milestone.
+  Source integration and qualification remain separate from this completed
+  push/PR assignment; do not create three duplicate PRs.
+- **Historical residue:** the 15:06:07–15:06:21 UTC scan covered 267 registered
+  worktrees: 155 clean, 111 dirty, one missing/prunable and no status errors.
+  Of the dirty checkouts, 58 contain only untracked dependencies and five only
+  local helper/deploy reports. The remaining 48 include source, evidence,
+  conflicts and staged deletion states; they are not 48 unreleased features.
+  The separate working-file inventory does not prove index/conflict-stage or
+  later concurrent-edit preservation. Do not claim everything pushed until
+  these inventories and active-owner receipts are reconciled.
+- The localization owner confirms **no valid unpublished localization batch**.
+  The old `english-ukrainian-localization` checkout contains zero-byte/truncated
+  files and missing controls, not intended feature edits; the six artifacts in
+  `v0131-localization-finish` are stale and their intended source work is already
+  on main. Preserve these checkouts; do not publish their corruption/deletions.
+
+### Release blockers and honest delivery boundary
+
+The sampled #796 head `c99fbbac348691bb91bd16a7e1e281f5a9e2b69b` records a
+**failed production build**, not a successful release: its offline payload is
+1,296 files / **94,521,304 bytes**, above the existing **64 MiB** cap. The owning
+integration lane must resolve that budget without silently raising the limit,
+then satisfy exact-source delivery-integrity gates. This audit does not rerun
+production tests, approve artwork, change workflows or allocate a new version.
+
+Only the deployed-community maintenance PRs #736/#745 lacked milestones in
+the 14-open-PR snapshot. They depend on a selected host and explicit
+administrator actions, and must not be folded into routine Pages publication.
+Earlier #738/#747/#779 labels and milestone reservations need coordinator-led
+scope reconciliation; historical targets do not justify duplicate releases.
+
+Latest observed GitHub release metadata remains **v0.142.3**. This source audit
+is not renewed public acceptance of that release or evidence that v0.150.0 has
+shipped. Production/device/human testing remains deferred, not passed. One
+publisher owns merge, immutable release, archive and Pages mutations.
+
 ## Latest direction: production testing deferred
 
 The user's subsequent instruction is: **defer production testing and proceed
