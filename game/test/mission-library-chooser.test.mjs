@@ -298,6 +298,8 @@ function resizeFixture() {
     media = Object.assign(new Events(), { matches: false });
   let nextFrame = 0;
   const view = Object.assign(new Events(), doc.defaultView, {
+    innerWidth: 1280,
+    innerHeight: 800,
     matchMedia: () => media,
     requestAnimationFrame(callback) {
       frames.set(++nextFrame, callback);
@@ -323,10 +325,17 @@ function resizeFixture() {
       frames.clear();
       for (const callback of callbacks) callback();
     },
+    rotate(width, height) {
+      view.innerWidth = width;
+      view.innerHeight = height;
+      media.matches = width <= 600 || height <= 720;
+      media.emit('change', { matches: media.matches });
+      view.emit('resize');
+    },
   };
 }
 
-test('viewport reflow keeps the focused mission visible without moving focus or taking input ownership', () => {
+test('viewport reflow preserves the visible anchor without scrolling the focused mission into view', () => {
   const f = resizeFixture(),
     card = f.$('journey-cards').children[1];
   card.focus();
@@ -338,13 +347,47 @@ test('viewport reflow keeps the focused mission visible without moving focus or 
   f.view.emit('resize');
   assert.equal(f.frames.size, 1, 'Repeated layout signals coalesce into one frame.');
   f.frame();
-  assert.equal(card.scrolled, before + 1);
+  assert.equal(card.scrolled ?? 0, before);
   assert.equal(f.doc.activeElement, card);
   assert.equal(f.chooser.state().selectedId, card.dataset.missionId);
-  assert.equal(focusEvents, 0, 'Reflow scrolls without another focus event.');
+  assert.equal(focusEvents, 0, 'Reflow preserves position without another focus event.');
   f.chooser.destroy();
   assert.equal(f.view.listeners.get('resize')?.size, 0);
   assert.equal(f.view.listeners.get('blur')?.size, 0);
+});
+
+test('phone viewport and rotation matrix retains the exact top mission, offset and focus', () => {
+  const f = resizeFixture(),
+    list = f.$('journey-cards'),
+    card = list.children[0];
+  list._rect = { x: 0, y: 100, width: 320, height: 240 };
+  card._rect = { x: 0, y: 112, width: 150, height: 155 };
+  list.scrollTop = 96;
+  card.focus();
+  list.emit('scroll');
+  const beforeFocusScroll = card.scrolled ?? 0;
+  let expectedScroll = list.scrollTop;
+  for (const [width, height] of [
+    [320, 568],
+    [375, 667],
+    [568, 320],
+    [1280, 800],
+    [375, 667],
+  ]) {
+    card._rect.y += 7;
+    expectedScroll += 7;
+    f.rotate(width, height);
+    assert.equal(f.frames.size, 1, `${width}×${height} coalesces layout work.`);
+    f.frame();
+    assert.equal(list.scrollTop, expectedScroll, `${width}×${height} restores the pixel offset.`);
+    // A real scroll moves the card back to the captured visual offset. Mirror
+    // that geometry in the lightweight DOM before the next rotation.
+    card._rect.y -= 7;
+    assert.equal(f.doc.activeElement, card, `${width}×${height} keeps exact card focus.`);
+    assert.equal(f.$('journey-cards').children[0], card);
+    assert.equal(card.scrolled ?? 0, beforeFocusScroll, 'Rotation never invokes focus scrolling.');
+  }
+  f.chooser.destroy();
 });
 
 for (const action of ['search', 'another card', 'hidden', 'blur', 'close', 'destroy'])
@@ -376,13 +419,15 @@ for (const action of ['search', 'another card', 'hidden', 'blur', 'close', 'dest
     if (action !== 'destroy') f.chooser.destroy();
   });
 
-test('viewport changes do not scroll missions while Search, a closed chooser or background owns the page', () => {
+test('viewport changes preserve an anchor without scrolling a card into view or acting when hidden', () => {
   const f = resizeFixture(),
     card = f.doc.activeElement,
     before = card.scrolled ?? 0;
   f.$('journey-search').focus();
   f.view.emit('resize');
-  assert.equal(f.frames.size, 0);
+  assert.equal(f.frames.size, 1);
+  f.frame();
+  assert.equal(card.scrolled ?? 0, before);
   card.focus();
   f.doc.hidden = true;
   f.view.emit('resize');
@@ -609,7 +654,8 @@ test('one flat selector defaults to All/current mode, textual collections, campa
   assert.match(cards[1].textContent, /Earlier edition.*Classic/);
   assert.match(cards[2].textContent, /Player edition.*Custom/);
   assert(!cards[1].textContent.includes('Band'), 'Classic must not invent Journey difficulty.');
-  assert.match(cards[1].textContent, /65% coverage.*3 lives.*Play/);
+  assert.match(cards[1].textContent, /65% coverage.*3 lives/);
+  assert(!cards[1].textContent.includes('Play'));
   $('journey-mode').value = 'team';
   $('journey-mode').emit('change');
   assert.equal($('journey-cards').children.length, 1);
@@ -689,7 +735,7 @@ test('campaign rail preserves its exact keyboard focus and scroll across source 
   chooser.destroy();
 });
 
-test('campaign shortcut leaves an advanced campaign filter and restores the complete gallery', () => {
+test('campaign controls jump within the complete gallery without filtering other campaigns', () => {
   const source = owner({
     entries: [
       { ...row('first'), campaignTitle: 'First light' },
@@ -705,10 +751,10 @@ test('campaign shortcut leaves an advanced campaign filter and restores the comp
     second = library.missions[1];
   $('journey-campaign').value = second.campaignKey;
   $('journey-campaign').emit('change');
-  assert.equal($('journey-cards').children.length, 1);
-  assert.equal($('journey-cards').children[0].dataset.missionId, second.id);
+  assert.equal($('journey-cards').children.length, 2);
+  assert.equal(doc.activeElement.dataset.missionId, second.id);
   $('journey-campaign-rail').children[0].click();
-  assert.equal($('journey-campaign').value, '');
+  assert.equal($('journey-campaign').value, first.campaignKey);
   assert.equal($('journey-cards').children.length, 2);
   assert.equal(doc.activeElement.dataset.missionId, first.id);
   chooser.destroy();
@@ -726,15 +772,47 @@ test('mission cards expose structured current, completion and availability state
             record: { asset: { width: 2, height: 1 } },
           }
         : { state: 'unfinished' },
+    progressState: (entry) =>
+      entry.id === 'earned'
+        ? { state: 'completed', bestStars: 2 }
+        : { state: 'new', bestStars: null },
   });
   const rows = createMissionLibrary([source]).missions;
   const { $, chooser } = setup([source], { getCurrentId: () => rows[0].id });
   const [current, earned, download] = $('journey-cards').children;
   assert.equal(current.dataset.current, 'true');
-  assert.equal(current.dataset.completionState, 'unfinished');
-  assert.equal(earned.dataset.completionState, 'earned');
+  assert.equal(current.dataset.completionState, 'new');
+  assert.equal(earned.dataset.completionState, 'completed');
+  assert.equal(earned.dataset.bestStars, '2');
   assert.equal(download.dataset.availabilityState, 'download');
   assert.match(download.querySelector('.journey-card-action').textContent, /Download & play/);
+  chooser.destroy();
+});
+
+test('unknown star grades preserve owner edition warnings and unavailable picture explanations', () => {
+  const warning =
+    'Earlier edition cleared on standard · no clear recorded for this selected edition';
+  const source = owner({
+    entries: [row('earlier'), row('unknown'), row('picture')],
+    progressState: () => ({ state: 'completed', bestStars: null }),
+    progress: (entry) => (entry.id === 'earlier' ? warning : ''),
+    completion: (entry) =>
+      entry.id === 'picture' ? { state: 'unavailable', reason: 'Picture is not available.' } : null,
+  });
+  const { $, chooser } = setup([source]);
+  const [earlier, unknown, picture] = $('journey-cards').children;
+  assert.equal(earlier.querySelector('.journey-card-progress').textContent, warning);
+  assert(earlier.getAttribute('aria-label').includes(warning));
+  assert.match(
+    unknown.querySelector('.journey-card-progress').textContent,
+    /Completed.*stars not recorded/i,
+  );
+  assert.equal(
+    picture.querySelector('.journey-card-progress').textContent,
+    'Picture is not available.',
+  );
+  assert.equal(earlier.dataset.completionState, 'completed');
+  assert.equal(earlier.dataset.bestStars, '');
   chooser.destroy();
 });
 
@@ -786,7 +864,7 @@ test('Journey text refreshes with preset while keeping bounded visible previews 
   chooser.destroy();
 });
 
-test('late lazy previews keep the already-focused mission visible', () => {
+test('late lazy previews use reserved card space without moving the focused mission', () => {
   const doc = new Document(),
     frames = [],
     observed = [];
@@ -851,10 +929,9 @@ test('late lazy previews keep the already-focused mission visible', () => {
   assert.equal(focused.dataset.missionId, library.missions[1].id);
   assert.equal(new Set(observed).size, 2);
   intersection([{ target: observed[0], isIntersecting: true }]);
-  assert.equal(frames.length, 1, 'Preview layout schedules one bounded focus correction.');
-  frames.shift()();
+  assert.equal(frames.length, 0, 'Reserved preview space needs no focus correction.');
   assert.equal(doc.activeElement, focused);
-  assert.equal(focused.scrolled, before + 1);
+  assert.equal(focused.scrolled, before);
   chooser.destroy();
 });
 
@@ -1028,7 +1105,7 @@ test('failed Download & play retries inline and launches once without losing the
   assert.equal(card.disabled, false);
   card.click();
   await tick();
-  assert.match(card.textContent, /Play/);
+  assert(!card.textContent.includes('Play'));
   assert.equal(attempt, 2);
   assert.equal(launches, 1);
   assert.equal($('journey-collection').value, 'Classic');
@@ -1372,7 +1449,7 @@ for (const action of ['mode', 'campaign', 'collection', 'search', 'reveal'])
       control.emit(action === 'search' ? 'input' : 'change');
     }
     library.register(pending);
-    assert.equal($('journey-campaign').value, '');
+    assert.equal($('journey-campaign').value, action === 'campaign' ? '' : '');
     assert.equal(chooser.state().campaign, '');
     assert.equal($('journey-cards').children.length, 2);
     chooser.destroy();
@@ -1387,7 +1464,7 @@ test('a new search keeps an already-visible explicitly selected campaign', () =>
   $('journey-search').emit('input');
   assert.equal($('journey-campaign').value, campaign);
   assert.equal(chooser.state().campaign, campaign);
-  assert.equal($('journey-cards').children.length, 1);
+  assert.equal($('journey-cards').children.length, 2);
   chooser.destroy();
 });
 
@@ -1577,7 +1654,7 @@ test('exact source refresh replaces stale row authority but preserves focused di
   chooser.destroy();
 });
 
-test('switching mode during Solo preparation still offers ready Versus Play after a Solo failure', async () => {
+test('switching mode during Solo preparation keeps the ready Versus card after a Solo failure', async () => {
   let reject;
   const { $, chooser } = setup([
     owner({
@@ -1593,11 +1670,11 @@ test('switching mode during Solo preparation still offers ready Versus Play afte
   await tick();
   $('journey-mode').value = 'versus';
   $('journey-mode').emit('change');
-  assert.match($('journey-cards').children[0].textContent, /Play/);
+  assert(!$('journey-cards').children[0].textContent.includes('Play'));
   reject(new Error('Solo unavailable'));
   await tick();
   const card = $('journey-cards').children[0];
-  assert.match(card.textContent, /Play/);
+  assert(!card.textContent.includes('Play'));
   assert(!card.textContent.includes('Unavailable'));
   assert(!$('journey-chooser-status').textContent.includes('Solo unavailable'));
   assert.equal(card.disabled, false);

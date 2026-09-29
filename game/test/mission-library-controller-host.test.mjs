@@ -444,8 +444,16 @@ for (const mode of ['solo', 'versus', 'team'])
       );
       assert.equal(priorV9.length, 3, 'The normal selector retains the three prior v9 cards.');
     }
-    assert.equal(card.querySelector('.journey-card-action').textContent, 'Play');
+    assert.equal(card.tagName, 'BUTTON');
+    assert.equal(card.type, 'button');
     assert.equal(card.disabled, false);
+    assert.equal(card.dataset.availabilityState, 'ready');
+    const missionName = card.querySelector('.journey-card-title').textContent;
+    assert.ok(missionName.length > 0, 'The ready mission has a readable name.');
+    assert.ok(
+      card.getAttribute('aria-label').includes(missionName),
+      'Its accessible name identifies the mission.',
+    );
     reach(card);
     assert.deepEqual(snapshot(), before, 'Browsing must not start or advance a mission.');
     pulse(1);

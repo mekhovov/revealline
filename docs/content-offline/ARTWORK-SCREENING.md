@@ -1,6 +1,6 @@
 # Artwork screening and review gate
 
-[Open the contact sheets](artwork-screening.html). The supplementary report reads the complete ownership inventory and unchanged source originals. It adds exact decoded-pixel rotation/reflection detection and reproducible nearest neighbours. It does not change current missions, original bytes, saved pictures, rights records or published releases.
+[Open the base contact sheets](artwork-screening.html) or the [combined base/company contact sheets](company-artwork-screening.html). The supplementary reports read their pinned ownership inventories and unchanged source originals. It adds exact decoded-pixel rotation/reflection detection and reproducible nearest neighbours. It does not change current missions, original bytes, saved pictures, rights records or published releases.
 
 The baseline contains known cross-owner copies. Ordinary generation and `--check` record them without failing existing-content publication. They are unresolved findings, not an exception granted to new artwork.
 
@@ -30,6 +30,41 @@ node --test game/test/artwork-screening.test.mjs
 ```
 
 Generation checks each original's bytes and decoded pixel hash against the inventory. A source change first requires regenerating the complete inventory. `--check` then verifies the JSON, HTML and every thumbnail byte without writing files. No approval is produced automatically.
+
+## Company editions and cross-game comparisons
+
+The combined report adds the 106 current/historical company originals to the 175
+base originals. Its 281-source inventory has 241 current originals and 583 nearest
+pairs, including 215 pairs involving company artwork. The existing 160 exact
+current base-game groups remain unresolved. No company-involving exact
+rotation/reflection groups or threshold-labelled suspected pairs were found;
+**visual review remains pending**, including the nearest neighbours below.
+
+Current company chapter and all-chapters listings collapse to one canonical
+mission/mode owner. Their save profiles remain independent in the company
+inventory. Historical presentation instances retain their exact identities and
+are excluded from current-owner violations. Links lead back to the appropriate
+base or company inventory. Decorative RGBA logos/body assets and procedural
+backgrounds remain outside the RGB8 original-picture comparison.
+
+```sh
+node scripts/company-artwork-screening.mjs --write
+node scripts/company-artwork-screening.mjs --check
+node --test scripts/test-company-artwork-screening.mjs game/test/artwork-screening.test.mjs
+```
+
+The composer rejects a company inventory pinned to a different base inventory,
+conflicting shared-image metadata, duplicate instances, or bundle views that
+claim one owner while disagreeing on artwork, gameplay or theme. Reports pin both
+source inventories and the composer implementation, in addition to the existing
+decoder and comparison algorithm. The base-only report remains unchanged.
+
+Use the same strict-new options below with `company-artwork-screening.mjs` and an
+explicit prior **combined** report to gate company replacements. Its visual review
+receipt binds the composed `inventorySha256`. Combining inventories does not
+transfer previous visual approvals to newly introduced company assignments.
+Generated 96-pixel thumbnails are tooling only; this batch does not add originals
+to gameplay downloads or claim a download-size reduction.
 
 ## Gate new or reassigned artwork
 

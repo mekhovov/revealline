@@ -3348,6 +3348,14 @@ export function bootCoop({
         })}${receipt.reward ? ` · ${t('interface:pictureEarned')}` : ''}`
       : t('interface:missionLibrary.team.notClearedInstalledEdition');
   }
+  function installedProgressState(row) {
+    const clears = installedTeamProgress.get(row.installedEditionId)?.clears;
+    return {
+      state: Object.hasOwn(clears ?? {}, row.levelId) ? 'completed' : 'new',
+      // Installed Team v1 receipts record exact clears, but no star grade.
+      bestStars: null,
+    };
+  }
   async function launchInstalledTeamRow(edition, row, context) {
     if (
       !installedTeamStore ||
@@ -3424,6 +3432,7 @@ export function bootCoop({
               isCurrent: (row) =>
                 installedTeamEditions.get(edition.editionId) === edition && rows.includes(row),
               progress: installedProgressText,
+              progressState: installedProgressState,
               launch: (row, context) => launchInstalledTeamRow(edition, row, context),
             }),
             (row) => row,
