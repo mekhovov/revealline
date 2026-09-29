@@ -83,6 +83,7 @@ export function teamArenaLibrarySource({
   collection = 'Classic',
   isCurrent = (row) => rows.includes(row),
   progress = () => '',
+  progressState = () => ({ state: 'new', bestStars: null }),
   launch,
 }) {
   const editionLabel = () => (typeof edition === 'function' ? edition() : edition);
@@ -128,11 +129,14 @@ export function teamArenaLibrarySource({
     collection,
     entries: rows,
     describe: (row) => {
-      const canonicalLevelKey = canonicalMissionLevelKey({
-        packId: row.pack.id,
-        campaignId: row.pack.id,
-        levelId: row.levelId,
-      });
+      const canonicalLevelKey =
+        sourceId === TEAM_LIBRARY_CLASSIC_SOURCE && collection === 'Classic'
+          ? canonicalMissionLevelKey({
+              packId: row.pack.id,
+              campaignId: row.pack.id,
+              levelId: row.levelId,
+            })
+          : undefined;
       return {
         id: row.levelId,
         revision: row.pack.revision,
@@ -155,6 +159,7 @@ export function teamArenaLibrarySource({
             reason: t('interface:missionLibrary.team.packUnavailableThisVisit'),
           },
     progress: (row) => (current(row) ? progress(row) : ''),
+    progressState: (row) => (current(row) ? progressState(row) : { state: 'new', bestStars: null }),
     launch(row, context) {
       if (!current(row)) throw new Error(t('errors:missionLibrary.teamPackSelectionChanged'));
       return launch(row, context);

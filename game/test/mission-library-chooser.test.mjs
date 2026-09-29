@@ -789,6 +789,33 @@ test('mission cards expose structured current, completion and availability state
   chooser.destroy();
 });
 
+test('unknown star grades preserve owner edition warnings and unavailable picture explanations', () => {
+  const warning =
+    'Earlier edition cleared on standard · no clear recorded for this selected edition';
+  const source = owner({
+    entries: [row('earlier'), row('unknown'), row('picture')],
+    progressState: () => ({ state: 'completed', bestStars: null }),
+    progress: (entry) => (entry.id === 'earlier' ? warning : ''),
+    completion: (entry) =>
+      entry.id === 'picture' ? { state: 'unavailable', reason: 'Picture is not available.' } : null,
+  });
+  const { $, chooser } = setup([source]);
+  const [earlier, unknown, picture] = $('journey-cards').children;
+  assert.equal(earlier.querySelector('.journey-card-progress').textContent, warning);
+  assert(earlier.getAttribute('aria-label').includes(warning));
+  assert.match(
+    unknown.querySelector('.journey-card-progress').textContent,
+    /Completed.*stars not recorded/i,
+  );
+  assert.equal(
+    picture.querySelector('.journey-card-progress').textContent,
+    'Picture is not available.',
+  );
+  assert.equal(earlier.dataset.completionState, 'completed');
+  assert.equal(earlier.dataset.bestStars, '');
+  chooser.destroy();
+});
+
 test('restoring a cancelled host transition retains the real opener and return label', () => {
   const { doc, $, chooser } = setup([owner()]);
   const origin = doc.createElement('button');

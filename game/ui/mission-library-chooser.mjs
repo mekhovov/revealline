@@ -722,11 +722,12 @@ export function attachMissionLibraryChooser({
       card.button.dataset.current = String(row.id === getCurrentId());
       card.campaignHeading.hidden = previousCampaign === row.campaignKey;
       localizedText(card.progress, () =>
-        progressState.state === 'completed' && progressState.bestStars === null
-          ? t('interface:missionLibrary.completedStarsUnknown')
-          : card.completion?.state === 'unavailable'
-            ? card.completion.reason
-            : library.progress(row, modeFilter.value),
+        card.completion?.state === 'unavailable'
+          ? card.completion.reason
+          : library.progress(row, modeFilter.value) ||
+            (progressState.state === 'completed' && progressState.bestStars === null
+              ? t('interface:missionLibrary.completedStarsUnknown')
+              : ''),
       );
       card.progress.hidden = !card.progress.textContent;
       localizedText(card.action, () =>
@@ -753,7 +754,11 @@ export function attachMissionLibraryChooser({
             : progressState.state === 'skipped'
               ? t('interface:skippedTryAgain')
               : t('interface:missionLibrary.notCompleted');
-        return `${card.number.textContent} · ${displayName(row)} · ${display().campaignTitle} · ${card.campaignPosition.textContent} · ${progressLabel}`;
+        const ownerProgress =
+          progressState.state === 'completed' && progressState.bestStars === null
+            ? library.progress(row, modeFilter.value)
+            : '';
+        return `${card.number.textContent} · ${displayName(row)} · ${display().campaignTitle} · ${card.campaignPosition.textContent} · ${progressLabel}${ownerProgress ? ` · ${ownerProgress}` : ''}`;
       });
       card.button.disabled = availability.state === 'unavailable' && !availability.retry;
       card.button.setAttribute('aria-busy', String(availability.state === 'preparing'));
