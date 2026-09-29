@@ -451,7 +451,9 @@ try {
   localizedText($('version'), () => versionLabel);
   localizedText($('landing-version'), () => t('gameplay:version', { value1: versionLabel }));
   const params = new URLSearchParams(location.search);
+  let controllerTraceRoot = () => document.body;
   const controllerConfirmTrace = attachControllerConfirmTrace({
+    getHost: () => controllerTraceRoot(),
     enabled: params.get('controllerTrace') === '1',
     version: versionLabel,
   });
@@ -2279,6 +2281,7 @@ try {
   }
   const controller = createControllerRouter({
     autoJoin: true,
+    diagnostics: () => controllerConfirmTrace.enabled,
     navigationAliases: true,
     bindings: library.preferences.controllerBindings,
     boostMode: library.preferences.controllerBoostMode,
@@ -2286,9 +2289,28 @@ try {
   });
   const controllerConfirmGuard = attachControllerConfirmGuard({
     confirmPressed: () => controller.menuConfirmPressed(),
+    beforeNativeActivation: (event) => controllerConfirmLifecycle.beforeNativeActivation(event),
     onTrace: controllerConfirmTrace.record,
   });
   const controllerConfirmLifecycle = createControllerConfirmLifecycle({
+    readConfirm: (options) => controller.readMenuConfirm(options),
+    getContext: () => ({
+      scope: controllerScope(),
+      root: controllerMenuRoot(),
+      focused: document.activeElement,
+      active:
+        !!controllerNavigation &&
+        !document.hidden &&
+        document.hasFocus() &&
+        !enemyGuide?.ownsPracticeFocus(),
+    }),
+    navigation: {
+      beginConfirm: (target) => controllerNavigation?.beginConfirm(target),
+      commitConfirm: () => controllerNavigation?.commitConfirm(),
+      cancelConfirm: () => controllerNavigation?.cancelConfirm(),
+      confirmCurrent: () => controllerNavigation?.confirmCurrent(),
+    },
+    guard: controllerConfirmGuard,
     onTrace: controllerConfirmTrace.record,
   });
   let controllerLabels = controllerBindingLabels(library.preferences.controllerBindings),
@@ -2310,6 +2332,12 @@ try {
       dialog.id === 'settings-dialog' && !top ? $('shell-menu') : null,
   });
   const controllerDialog = modalNavigation.topDialog;
+  controllerTraceRoot = () => controllerDialog() || document.body;
+  const controllerTraceToggle = $('controller-trace-enabled');
+  controllerTraceToggle.checked = controllerConfirmTrace.enabled;
+  controllerTraceToggle.addEventListener('change', () => {
+    controllerConfirmTrace.setEnabled(controllerTraceToggle.checked);
+  });
   function controllerMenuHint() {
     const b = controllerLabels.menu;
     return t('gameplay:stickDPadNavigateConfirmBackResume', {
@@ -2638,6 +2666,7 @@ try {
     }),
     accept: controllerMenuAccepts,
     onNativeInput: (event) => {
+      controllerConfirmLifecycle.nativeInput(event);
       setInputModality(nextInputModality(document.body.dataset.inputMode, event));
       if (controllerScope() !== 'flight') controller.clear();
     },
@@ -2886,6 +2915,7 @@ try {
       pictureManager?.close();
       controllerReading.destroy();
       controllerNavigation.destroy();
+      controllerConfirmLifecycle.destroy();
       controllerConfirmGuard.destroy();
       controllerConfirmTrace.destroy();
       gameShell?.destroy();
@@ -3034,8 +3064,7 @@ try {
     pendingPickup = false;
     pendingSwitch = null;
     controller.clear();
-    controllerConfirmLifecycle.reset('input-clear');
-    controllerConfirmGuard.cancel('input-clear');
+    controllerConfirmLifecycle.cancel('input-clear');
     controllerFrame = null;
     if (!preserveNavigation) controllerNavigation?.clear();
     if (resetDirection) input.clear();
@@ -9304,16 +9333,14 @@ try {
     }
     enemyGuide?.update(elapsed, { reduced: displayPreferences.snapshot().effectiveReducedEffects });
     refreshInputPresentation();
+    controllerConfirmTrace.syncHost();
     const scope = controllerScope();
     const controllerTime = performance.now();
-    controllerFrame = controllerConfirmLifecycle.filter(
-      controller.sample({
-        scope,
-        timeMs: controllerTime,
-        toggleBoostEligible: run?.status === 'running',
-      }),
-      { timeMs: controllerTime, scope },
-    );
+    controllerFrame = controller.sample({
+      scope,
+      timeMs: controllerTime,
+      toggleBoostEligible: run?.status === 'running',
+    });
     refreshControllerBoostCue();
     const { status, assigned, disconnected } = controllerFrame;
     const flightModality = JSON.stringify(controllerFrame.flight);
@@ -9346,19 +9373,11 @@ try {
       if (assigned && scope !== 'flight') controllerNavigation.engage();
     }
     if (status.code === 'joined' && scope !== 'flight') controllerNavigation.engage();
-    const confirmCommand = controllerFrame.ui;
-    if (confirmCommand.confirmStart) {
-      const target = controllerNavigation.handle(confirmCommand);
-      if (target)
-        controllerConfirmGuard.begin(target, {
-          buttons: controllerFrame.confirmTransaction?.buttons || controllerFrame.confirmButtons,
-          gamepadTimestamp: controllerFrame.gamepadTimestamp,
-        });
-      else controllerConfirmLifecycle.reset('unavailable-target');
-    } else if (confirmCommand.confirmCancel) {
-      controllerNavigation.handle(confirmCommand);
-      controllerConfirmGuard.cancel('lifecycle-cancel');
-    }
+    const sampledFrame = controllerFrame;
+    controllerConfirmLifecycle.sample(sampledFrame.confirmSnapshot);
+    // Confirm alone is owned by the coordinator. Native-event probes never
+    // consume the remaining router edges, which are dispatched once here.
+    const confirmCommand = { ...sampledFrame.ui, confirm: false };
     if (disconnected) {
       clearInput();
       pause(true);
@@ -9368,13 +9387,7 @@ try {
         ),
       );
     } else {
-      if (!confirmCommand.confirmStart && !confirmCommand.confirmCancel) {
-        const committed = controllerNavigation.handle(confirmCommand);
-        if (confirmCommand.confirmCommit) {
-          if (committed) controllerConfirmGuard.finish('release');
-          else controllerConfirmGuard.cancel('invalid-target');
-        }
-      }
+      if (controllerScope() === scope) controllerNavigation.handle(confirmCommand);
       const flight = controllerFrame?.flight ?? {};
       const capabilities = arcadeActionCapabilities(run?.level);
       if (scope === 'flight' && (flight.stop || (flight.action && !capabilities.manualAbility))) {

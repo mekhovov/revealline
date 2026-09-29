@@ -2,97 +2,296 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { createControllerConfirmLifecycle } from '../ui/controller-confirm-lifecycle.mjs';
 
-const frame = ({
-  confirm = false,
-  buttons = [],
-  code = 'connected',
-  disconnected = false,
-  timestamp = 0,
-} = {}) => ({
-  assigned: disconnected ? null : { index: 0 },
-  confirmHeld: buttons.length > 0,
-  confirmButtons: buttons,
-  gamepadTimestamp: timestamp,
-  disconnected,
-  status: { code },
-  ui: { direction: null, confirm, back: false, menu: false },
-});
-const at = (timeMs, scope = 'menu') => ({ timeMs, scope });
+function harness() {
+  let time = 0,
+    snapshot;
+  const target = { id: 'sound' },
+    nextTarget = { id: 'settings-close' },
+    root = {};
+  target.closest = () => target;
+  nextTarget.closest = () => nextTarget;
+  const current = { scope: 'menu', root, active: true };
+  const calls = [],
+    entries = [];
+  let valid = true,
+    captured = null,
+    owned = false;
+  const guard = {
+    begin(element, metadata) {
+      owned = true;
+      calls.push(['begin', element, metadata]);
+    },
+    finish(reason) {
+      owned = false;
+      calls.push(['finish', reason]);
+    },
+    cancel(reason) {
+      owned = false;
+      calls.push(['cancel', reason]);
+    },
+    owned: () => owned,
+  };
+  const navigation = {
+    beginConfirm(element = target) {
+      captured = element;
+      calls.push(['capture', element]);
+      return valid ? element : null;
+    },
+    commitConfirm() {
+      calls.push(['commit', captured]);
+      captured = null;
+    },
+    cancelConfirm() {
+      captured = null;
+    },
+    confirmCurrent: () => valid && captured !== null,
+  };
+  const lifecycle = createControllerConfirmLifecycle({
+    document: { activeElement: target },
+    readConfirm: () => snapshot,
+    getContext: () => current,
+    navigation,
+    guard,
+    now: () => time,
+    onTrace: (entry) => entries.push(entry),
+  });
+  const state = (buttons = [], extras = {}) => {
+    snapshot = {
+      assigned: { index: 0, generation: 1 },
+      buttons,
+      timestamp: time,
+      eligible: true,
+      neutral: buttons.length === 0,
+      ...extras,
+    };
+    return snapshot;
+  };
+  state();
+  return {
+    lifecycle,
+    target,
+    nextTarget,
+    current,
+    calls,
+    entries,
+    state,
+    at: (value) => {
+      time = value;
+    },
+    valid: (value) => {
+      valid = value;
+    },
+    sample: (buttons = [], extras = {}) => lifecycle.sample(state(buttons, extras)),
+    native: (type, element = target) =>
+      lifecycle.beforeNativeActivation({ type, target: element, isTrusted: true }),
+    commits: () => calls.filter(([name]) => name === 'commit'),
+  };
+}
 
-test('a short tap captures on press and commits once on release', () => {
-  const lifecycle = createControllerConfirmLifecycle();
-  const down = lifecycle.filter(frame({ confirm: true, buttons: [0], timestamp: 10 }), at(0));
-  assert.equal(down.ui.confirm, false);
-  assert.equal(down.ui.confirmStart, true);
-  assert.equal(lifecycle.owned(), true);
-  const held = lifecycle.filter(frame({ buttons: [0], timestamp: 20 }), at(16));
-  assert.equal(held.ui.confirmCommit, false);
-  const up = lifecycle.filter(frame({ timestamp: 30 }), at(32));
-  assert.equal(up.ui.confirmCommit, true);
-  assert.deepEqual(up.confirmTransaction.buttons, [0]);
-  assert.equal(lifecycle.owned(), false);
-  assert.equal(lifecycle.filter(frame(), at(48)).ui.confirmCommit, false);
+test('native probes capture and release a whole tap between render frames', () => {
+  const h = harness();
+  h.state([0]);
+  h.native('keydown');
+  assert.equal(h.lifecycle.phase(), 'controller');
+  assert.equal(h.commits().length, 0);
+  h.at(40);
+  h.state([]);
+  h.native('keyup');
+  assert.equal(h.commits().length, 1);
+  assert.equal(h.commits()[0][1], h.target);
+  h.sample();
+  assert.equal(h.commits().length, 1);
 });
 
-test('a five-second hold cannot commit before physical release', () => {
-  const lifecycle = createControllerConfirmLifecycle();
-  lifecycle.filter(frame({ confirm: true, buttons: [0] }), at(0));
-  assert.equal(lifecycle.filter(frame({ buttons: [0] }), at(5000)).ui.confirmCommit, false);
-  assert.equal(lifecycle.owned(), true);
-  assert.equal(lifecycle.filter(frame(), at(5016)).ui.confirmCommit, true);
+test('a five-second hold and overlapping aliases release as one gesture', () => {
+  const h = harness();
+  h.sample([0]);
+  h.at(10);
+  h.sample([0, 2]);
+  h.at(5000);
+  h.sample([2]);
+  assert.equal(h.commits().length, 0);
+  h.at(5010);
+  h.sample();
+  assert.equal(h.commits().length, 1);
 });
 
-test('overlapping South and West aliases stay one transaction', () => {
-  const lifecycle = createControllerConfirmLifecycle();
-  assert.equal(
-    lifecycle.filter(frame({ confirm: true, buttons: [0] }), at(0)).ui.confirmStart,
-    true,
-  );
-  lifecycle.filter(frame({ buttons: [0, 2] }), at(20));
-  lifecycle.filter(frame({ buttons: [2] }), at(40));
-  const release = lifecycle.filter(frame(), at(60));
-  assert.equal(release.ui.confirmCommit, true);
-  assert.deepEqual(release.confirmTransaction.buttons, [0, 2]);
+test('cross-alias echoes drain while deliberate original-button repeats are accepted', () => {
+  const h = harness();
+  h.sample([0]);
+  h.at(20);
+  h.sample();
+  h.at(900);
+  h.sample([2]);
+  assert.equal(h.lifecycle.phase(), 'alias');
+  h.at(920);
+  h.sample();
+  assert.equal(h.commits().length, 1);
+  h.at(940);
+  h.sample([0]);
+  h.at(960);
+  h.sample();
+  assert.equal(h.commits().length, 2);
+  h.at(2300);
+  h.sample([2]);
+  h.sample();
+  assert.equal(h.commits().length, 3);
 });
 
-test('a delayed cross-alias pulse is suppressed while same-source repeat is accepted', () => {
-  const lifecycle = createControllerConfirmLifecycle();
-  lifecycle.filter(frame({ confirm: true, buttons: [0] }), at(0));
-  lifecycle.filter(frame(), at(20));
-  const alias = lifecycle.filter(frame({ confirm: true, buttons: [2] }), at(900));
-  assert.equal(alias.ui.confirmStart, false);
-  assert.equal(lifecycle.owned(), true);
-  lifecycle.filter(frame(), at(920));
-  const repeat = lifecycle.filter(frame({ confirm: true, buttons: [0] }), at(940));
-  assert.equal(repeat.ui.confirmStart, true);
-  assert.equal(lifecycle.filter(frame(), at(960)).ui.confirmCommit, true);
-  const laterAlias = lifecycle.filter(frame({ confirm: true, buttons: [2] }), at(2300));
-  assert.equal(laterAlias.ui.confirmStart, true);
+test('native winner survives router clear, changed scope, removed target and a long hold', () => {
+  const h = harness();
+  h.native('pointerdown');
+  h.state([], { eligible: false });
+  h.native('click');
+  h.lifecycle.cancel('input-clear');
+  h.current.scope = 'other-menu';
+  h.current.root = {};
+  h.valid(false);
+  h.at(30);
+  h.sample([0], { eligible: false });
+  assert.equal(h.lifecycle.phase(), 'native');
+  h.at(5030);
+  h.sample([0], { eligible: false });
+  h.sample([], { eligible: false });
+  assert.equal(h.commits().length, 0);
+  assert.equal(h.calls.filter(([name]) => name === 'capture').length, 0);
+  assert.equal(h.lifecycle.owned(), false);
 });
 
-test('scope changes and disconnect cancel without committing', () => {
-  const lifecycle = createControllerConfirmLifecycle();
-  lifecycle.filter(frame({ confirm: true, buttons: [0] }), at(0, 'ready'));
-  assert.equal(lifecycle.filter(frame({ buttons: [0] }), at(20, 'paused')).ui.confirmCancel, true);
-  assert.equal(lifecycle.filter(frame(), at(40, 'paused')).ui.confirmCommit, false);
-  lifecycle.filter(frame({ confirm: true, buttons: [0] }), at(60, 'paused'));
-  assert.equal(
-    lifecycle.filter(frame({ disconnected: true }), at(80, 'paused')).ui.confirmCancel,
-    true,
-  );
-  assert.equal(lifecycle.owned(), false);
+test('native click refreshes its lead window without replacing the original menu target', () => {
+  const h = harness();
+  h.native('keydown');
+  h.state([], { eligible: false });
+  h.at(200);
+  h.native('click');
+  h.lifecycle.cancel('input-clear');
+  h.current.scope = 'settings';
+  h.current.root = {};
+  h.current.focused = h.nextTarget;
+  h.at(300);
+  h.sample([0]);
+  assert.equal(h.lifecycle.phase(), 'native');
+  assert.equal(h.calls.find(([name]) => name === 'begin')[1], h.target);
+  assert.equal(h.calls.filter(([name]) => name === 'capture').length, 0);
+  h.at(5300);
+  h.sample([0]);
+  h.at(5310);
+  h.sample();
+  assert.equal(h.commits().length, 0, 'the native menu transition remains the only activation');
+  assert.equal(h.lifecycle.owned(), false);
+
+  const expired = harness();
+  expired.native('keydown');
+  expired.at(200);
+  expired.native('click');
+  expired.at(451);
+  expired.sample([0]);
+  expired.sample();
+  assert.equal(expired.commits().length, 1, 'the click still has only the existing 250 ms window');
 });
 
-test('custom Confirm index is retained in the transaction', () => {
-  const lifecycle = createControllerConfirmLifecycle();
-  lifecycle.filter(frame({ confirm: true, buttons: [7], timestamp: 123 }), at(0));
-  const release = lifecycle.filter(frame({ timestamp: 150 }), at(16));
-  assert.equal(release.ui.confirmCommit, true);
-  assert.equal(release.confirmTransaction.originalButton, 7);
-  assert.equal(release.confirmTransaction.gamepadTimestamp, 123);
+test('delayed Gamepad adopts the original target before the native click', () => {
+  const h = harness();
+  h.native('pointerdown');
+  h.at(10);
+  h.sample([7], { eligible: false });
+  assert.equal(h.calls.find(([name]) => name === 'capture')[1], h.target);
+  h.sample();
+  assert.equal(h.commits().length, 1);
 });
 
-test('invalid alias timing is rejected', () => {
+test('expired and unrelated native candidates do not win activation', () => {
+  const h = harness();
+  h.native('pointerdown');
+  h.state([], { eligible: false });
+  h.native('click', h.nextTarget);
+  h.at(30);
+  h.sample([0], { eligible: false });
+  h.sample();
+  assert.equal(h.commits().length, 1, 'unrelated click cannot mark original candidate activated');
+  const expired = harness();
+  expired.native('click');
+  expired.at(251);
+  expired.sample([0]);
+  expired.sample();
+  assert.equal(expired.commits().length, 1);
+});
+
+test('scope change and target removal cancel but own the entire remaining hold', () => {
+  for (const change of [
+    (h) => {
+      h.current.scope = 'other';
+    },
+    (h) => h.valid(false),
+  ]) {
+    const h = harness();
+    h.sample([0]);
+    change(h);
+    h.at(100);
+    h.sample([0]);
+    assert.equal(h.lifecycle.phase(), 'cancelled');
+    h.at(5100);
+    h.sample([0]);
+    assert.equal(h.lifecycle.owned(), true);
+    h.sample();
+    assert.equal(h.lifecycle.owned(), false);
+    assert.equal(h.commits().length, 0);
+  }
+});
+
+test('hard loss, replacement and inactive document cannot commit stale holds or candidates', () => {
+  const cases = [
+    (h) => h.sample([], { assigned: null }),
+    (h) => {
+      h.current.active = false;
+      h.sample([0]);
+    },
+    (h) => h.sample([0], { assigned: { index: 0, generation: 2 }, eligible: false }),
+    (h) => h.lifecycle.cancel('blur', { hard: true }),
+  ];
+  for (const change of cases) {
+    const h = harness();
+    h.sample([0]);
+    change(h);
+    h.sample();
+    assert.equal(h.commits().length, 0);
+    assert.equal(h.lifecycle.owned(), false);
+  }
+});
+
+test('neutral native input remains unowned; blocked controller cannot invent a press', () => {
+  const h = harness();
+  h.native('keydown');
+  h.native('click');
+  assert.equal(h.lifecycle.owned(), false);
+  h.at(300);
+  h.sample([0], { eligible: false });
+  assert.equal(h.lifecycle.owned(), false);
+  assert.equal(h.commits().length, 0);
+});
+
+test('invalid alias timing and trace callbacks are rejected', () => {
   for (const aliasEchoWindowMs of [-1, 5001, NaN])
     assert.throws(() => createControllerConfirmLifecycle({ aliasEchoWindowMs }), RangeError);
+  assert.throws(() => createControllerConfirmLifecycle({ onTrace: true }), TypeError);
+});
+
+test('native winner survives its own same-scope focus change but yields to separate controller navigation', () => {
+  const h = harness();
+  h.current.focused = h.target;
+  h.native('click');
+  h.current.focused = h.nextTarget;
+  h.at(30);
+  h.sample([0], { eligible: false });
+  h.at(5000);
+  h.sample();
+  assert.equal(h.commits().length, 0);
+  const separate = harness();
+  separate.native('click');
+  separate.sample([], { neutral: false, eligible: false });
+  separate.sample();
+  separate.at(50);
+  separate.sample([0]);
+  separate.sample();
+  assert.equal(separate.commits().length, 1);
 });

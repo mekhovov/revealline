@@ -2,11 +2,28 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { settle, soloPage } from './helpers/solo-dom.mjs';
 
+function nativeConfirmDown(target) {
+  const down = target.emit('keydown', {
+    key: 'Enter',
+    code: 'Enter',
+    repeat: false,
+    isTrusted: true,
+  });
+  if (!down.defaultPrevented && target.tagName === 'BUTTON')
+    target.emit('click', {
+      button: -1,
+      pointerId: -1,
+      pointerType: '',
+      detail: 0,
+      isTrusted: true,
+    });
+  return down;
+}
+
 function nativeConfirm(page) {
   const target = page.doc.activeElement,
-    down = target.emit('keydown', { key: 'Enter', code: 'Enter', repeat: false });
-  if (!down.defaultPrevented && target.tagName === 'BUTTON') target.click();
-  target.emit('keyup', { key: 'Enter', code: 'Enter' });
+    down = nativeConfirmDown(target);
+  target.emit('keyup', { key: 'Enter', code: 'Enter', isTrusted: true });
   return down;
 }
 
@@ -294,8 +311,15 @@ test('every primary Pause action ignores a touch-derived A release echo', async 
         target.onclick = (...args) => (pending = originalHandler.apply(target, args));
       target.focus();
       pad.buttons[0] = { pressed: true, value: 1 };
+      assert.equal(
+        nativeConfirmDown(target).defaultPrevented,
+        true,
+        `${entry.name} captures native Enter before its first A frame`,
+      );
+      assert.equal(entry.applied(page), false, `${entry.name} waits for A release`);
       page.frame();
       pad.buttons[0] = { pressed: false, value: 0 };
+      target.emit('keyup', { key: 'Enter', code: 'Enter', isTrusted: true });
       page.frame();
       const pointer = {
         button: 0,
@@ -314,7 +338,7 @@ test('every primary Pause action ignores a touch-derived A release echo', async 
         assert(pending instanceof Promise, 'Missions exposes its owned opening operation');
         await pending;
       }
-      await settle(() => entry.applied(page), `${entry.name} applies on A press`);
+      await settle(() => entry.applied(page), `${entry.name} applies on A release`);
       assert.equal(entry.applied(page), true, `${entry.name} remains applied after A release`);
       assert.deepEqual(page.errors, []);
     });
@@ -340,8 +364,11 @@ test('every primary Pause action ignores a touch-derived A release echo', async 
       before = target.getAttribute('aria-pressed');
     target.focus();
     pad.buttons[0] = { pressed: true, value: 1 };
+    assert.equal(nativeConfirmDown(target).defaultPrevented, true);
+    assert.equal(target.getAttribute('aria-pressed'), before, 'Sound waits for A release');
     page.frame();
     pad.buttons[0] = { pressed: false, value: 0 };
+    target.emit('keyup', { key: 'Enter', code: 'Enter', isTrusted: true });
     page.frame();
     const applied = target.getAttribute('aria-pressed');
     assert.notEqual(applied, before);

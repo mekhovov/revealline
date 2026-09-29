@@ -5296,5 +5296,7 @@
   "controller.confirmTrace.waiting": "Очікуємо натискання «Підтвердити»…",
   "team.previewPictureButton": "Переглянути «{{mission}}»",
   "team.picturePreviewTitle": "{{mission}} · Перегляд зображення",
-  "downloads.ownershipUnreadable": "Не вдалося прочитати дані про належність завантажень. Нічого не видалено; наявні файли гри та збереження залишено."
+  "downloads.ownershipUnreadable": "Не вдалося прочитати дані про належність завантажень. Нічого не видалено; наявні файли гри та збереження залишено.",
+  "controller.confirmTrace.toggle": "Показати тимчасову діагностику контролера",
+  "controller.confirmTrace.sessionOnly": "Лише для цього сеансу. Дані введення не зберігаються й не надсилаються."
 }

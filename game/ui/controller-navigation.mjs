@@ -656,15 +656,28 @@ export function attachControllerNavigation({
       return hint(t('interface:useKeyboardOrTouchForTextDatesAndFilePickers'));
     activateControl(element);
   }
-  function beginConfirm() {
-    if (sync() || scope === 'flight') return null;
+  function beginConfirm(capturedTarget = null) {
+    sync();
+    if (scope === 'flight') return null;
     engaged = true;
-    const element = reading?.region || editing?.element || ensureFocus();
+    const element = capturedTarget || reading?.region || editing?.element || ensureFocus();
     if (!element || !visible(element)) return null;
     cancelConfirm();
     confirmTransaction = { element, scope, root, reading, editing };
     element.setAttribute('data-controller-pressed', 'true');
     return element;
+  }
+  function confirmCurrent() {
+    return (
+      !!confirmTransaction &&
+      scope === getScope() &&
+      root === getRoot() &&
+      confirmTransaction.scope === scope &&
+      confirmTransaction.root === root &&
+      visible(confirmTransaction.element) &&
+      (doc.activeElement === confirmTransaction.element ||
+        confirmTransaction.element.contains?.(doc.activeElement))
+    );
   }
   function commitConfirm() {
     const transaction = confirmTransaction;
@@ -942,6 +955,7 @@ export function attachControllerNavigation({
   return {
     handle,
     beginConfirm,
+    confirmCurrent,
     commitConfirm,
     cancelConfirm,
     sync,
