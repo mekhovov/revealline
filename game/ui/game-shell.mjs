@@ -8,6 +8,7 @@ import { mountModeChoices } from './mode-choice.mjs';
 import { WORKSHOP_TOOLS } from './workshop-return.mjs';
 import { releaseExplorerHref } from '../release-explorer.mjs';
 import { guardInstallOfflineBlur } from './install-offline-panel.mjs';
+import { mountOptionalPracticePanel } from './optional-practice-panel.mjs';
 
 /** Game navigation owns presentation only; the host owns pause, save and start. */
 export function attachGameShell({
@@ -51,6 +52,19 @@ export function attachGameShell({
   const modalNavigation = getTopDialog ? null : attachModalNavigation({ document: doc });
   const topDialog = getTopDialog ?? modalNavigation.topDialog;
   const surfaces = attachFieldKitSurfaces({ document: doc });
+  const optionalPractice = !isolated
+    ? mountOptionalPracticePanel({
+        document: doc,
+        container: workshop?.querySelector('.more-destinations'),
+        pause,
+        href: doc.defaultView?.location?.href ?? globalThis.location?.href,
+      })
+    : null;
+  const homePractice = $('shell-home-practice');
+  if (homePractice && optionalPractice?.open) {
+    homePractice.hidden = false;
+    homePractice.onclick = () => optionalPractice.open(homePractice);
+  }
   const releaseExplorer = $('shell-release-explorer');
   if (releaseExplorer)
     releaseExplorer.setAttribute(
@@ -786,6 +800,11 @@ export function attachGameShell({
       doc.removeEventListener('keydown', keydown);
       modalNavigation?.destroy();
       surfaces.destroy();
+      optionalPractice?.dispose();
+      if (homePractice) {
+        homePractice.onclick = null;
+        homePractice.hidden = true;
+      }
       preparationObserver?.disconnect();
     },
   };

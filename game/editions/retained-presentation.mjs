@@ -18,6 +18,8 @@ const pathsFor = (catalog) =>
     ...catalog.campaigns.flatMap((campaign) => [
       campaign.sourcePath,
       ...(campaign.lessonPath ? [campaign.lessonPath] : []),
+      ...(campaign.rewardPath ? [campaign.rewardPath] : []),
+      ...(campaign.localizationPath ? [campaign.localizationPath] : []),
     ]),
   ]);
 
@@ -33,6 +35,19 @@ export async function editionPresentationSha256(bootstrap) {
     editionId: bootstrap.selection.edition.id,
     themes: projected.themes,
     presets: bootstrap.boot.presets,
+    ...(bootstrap.selection.campaigns.some((campaign) => campaign.heroAssetId)
+      ? {
+          campaignHeroes: bootstrap.selection.campaigns
+            .filter((campaign) => campaign.heroAssetId)
+            .map((campaign) => ({ campaignId: campaign.id, heroAssetId: campaign.heroAssetId }))
+            .sort((a, b) =>
+              a.campaignId < b.campaignId ? -1 : a.campaignId > b.campaignId ? 1 : 0,
+            ),
+        }
+      : {}),
+    // Preserve historical identities when no reward sidecar was authored.
+    ...(bootstrap.rewards ? { rewards: bootstrap.rewards } : {}),
+    ...(bootstrap.localizations ? { localizations: bootstrap.localizations } : {}),
     assets: resolveEditionAssets(bootstrap.catalog, {
       editionId: bootstrap.selection.edition.id,
     })
@@ -64,6 +79,9 @@ export async function captureEditionPresentation(bootstrap) {
   selection.campaigns.forEach((campaign, index) => {
     files.set(campaign.sourcePath, bootstrap.sources[index]);
     if (campaign.lessonPath) files.set(campaign.lessonPath, bootstrap.lessons[campaign.id]);
+    if (campaign.rewardPath) files.set(campaign.rewardPath, bootstrap.rewards[campaign.id]);
+    if (campaign.localizationPath)
+      files.set(campaign.localizationPath, bootstrap.localizations[campaign.id]);
   });
   for (const [name, path] of Object.entries(edition.boot))
     files.set(path, name === 'themes' ? projected.themes : bootstrap.boot[name]);
@@ -106,8 +124,8 @@ export async function validateRetainedPresentation(source, { edition } = {}) {
       snapshot.editionId === edition.id &&
       !retained.presentationHistory?.length &&
       ['brandId', 'audience', 'publication'].every((key) => retained[key] === edition[key]) &&
-      canonicalJSON([...retained.campaignIds].sort()) ===
-        canonicalJSON([...edition.campaignIds].sort()) &&
+      retained.campaignIds.length > 0 &&
+      retained.campaignIds.every((id) => edition.campaignIds.includes(id)) &&
       canonicalJSON([...retained.modes].sort()) === canonicalJSON([...edition.modes].sort()) &&
       catalog.campaigns.length === retained.campaignIds.length,
     'Retained presentation differs from the selected audience.',

@@ -7,7 +7,7 @@ import {
   createJourneyProfileStore,
   emptyJourneyProfile,
   validateJourneyProfile,
-  JOURNEY_STARS_BACKUP_VERSION,
+  JOURNEY_COMBINED_BACKUP_VERSION,
 } from '../journey/profile.mjs';
 import { emptyJourneyStars, validateJourneyStars } from '../journey/stars.mjs';
 import { journeyLibrarySource } from '../mission-library/journey-source.mjs';
@@ -104,7 +104,7 @@ test('failed star write rolls back the v1 clear; session stars remain exportable
   assert.deepEqual(await previous.createJourneyBackend(disk).read(), emptyJourneyProfile());
   assert.equal(disk.contents().get('profiles').has('journey:stars.v1'), false);
   const backup = JSON.parse(current.export());
-  assert.equal(backup.format, JOURNEY_STARS_BACKUP_VERSION);
+  assert.equal(backup.format, JOURNEY_COMBINED_BACKUP_VERSION);
   assert.equal(backup.stars.best.solo['mission-1'], 2);
   assert.deepEqual(previous.validateJourneyProfile(backup.profile), backup.profile);
   disk.failAnyPutAt = null;
@@ -120,7 +120,7 @@ test('versioned star backups round trip while old backups retain their format an
   await source.flush();
   const exported = source.export(),
     parsed = JSON.parse(exported);
-  assert.equal(parsed.format, 'revealline-journey-backup.v4');
+  assert.equal(parsed.format, 'revealline-journey-backup.v5');
   assert.deepEqual(previous.validateJourneyProfile(parsed.profile), parsed.profile);
   const oldStore = previous.createJourneyProfileStore({
     backend: previous.createJourneyBackend({

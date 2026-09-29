@@ -1,0 +1,155 @@
+/** Explicit opt-in package admission. New packages need a reviewed policy entry;
+ * an uploaded archive cannot widen its own executable dependency allowance. */
+export const OPTIONAL_PACKAGE_POLICIES = Object.freeze({
+  'civilian-flight': Object.freeze({
+    root: 'optional-practice/civilian-flight/',
+    entry: 'optional-practice/civilian-flight/index.html',
+    limits: Object.freeze({ files: 64, bytes: 8 * 1024 * 1024 }),
+    localFiles: Object.freeze([
+      'index.html',
+      'app.mjs',
+      'model.mjs',
+      'input.mjs',
+      'catalogue.mjs',
+      'copy.mjs',
+      'offline.mjs',
+      'style.css',
+      'app.webmanifest',
+      'README.md',
+    ]),
+    sharedFiles: Object.freeze([
+      'optional-practice/install-context.mjs',
+      'game/data-json.mjs',
+      'game/key-bindings.mjs',
+      'game/i18n/index.mjs',
+      'game/i18n/bootstrap.mjs',
+      'game/i18n/catalogs.mjs',
+      'game/vendor/i18next-26.4.2.min.js',
+      'game/vendor/I18NEXT-LICENSE.txt',
+    ]),
+    template: 'optional-practice/civilian-flight/worker-template.mjs',
+    launcherTemplate: 'optional-practice/launcher-template.mjs',
+    localeInputs: Object.freeze(['game/locales/en/errors.json', 'game/locales/uk/errors.json']),
+    licenses: Object.freeze([
+      {
+        dependency: 'i18next',
+        version: '26.4.2',
+        license: 'MIT',
+        path: 'game/vendor/I18NEXT-LICENSE.txt',
+      },
+    ]),
+  }),
+  'civilian-fpv': Object.freeze({
+    root: 'optional-practice/civilian-fpv/',
+    entry: 'optional-practice/civilian-fpv/index.html',
+    limits: Object.freeze({ files: 64, bytes: 8 * 1024 * 1024 }),
+    localFiles: Object.freeze([
+      'index.html',
+      'app.mjs',
+      'renderer.mjs',
+      'input.mjs',
+      'copy.mjs',
+      'style.css',
+      'app.webmanifest',
+      'README.md',
+      'radio-controls.mjs',
+      'radio-profile.mjs',
+      'radio-runtime.mjs',
+      'radio-setup.mjs',
+      'math.mjs',
+      'rotation-table.mjs',
+      'model.mjs',
+      'catalogue.mjs',
+      'demonstrations.mjs',
+      'attempts.mjs',
+      'notebook.mjs',
+      'studio.mjs',
+      'offline.mjs',
+      'vendor/three.core.js',
+      'vendor/three.module.js',
+      'vendor/LICENSE.txt',
+    ]),
+    sharedFiles: Object.freeze([
+      'optional-practice/install-context.mjs',
+      'game/data-json.mjs',
+      'game/key-bindings.mjs',
+      'game/i18n/index.mjs',
+      'game/i18n/bootstrap.mjs',
+      'game/i18n/catalogs.mjs',
+      'game/vendor/i18next-26.4.2.min.js',
+      'game/vendor/I18NEXT-LICENSE.txt',
+      'game/profile-storage.mjs',
+      'game/profile-database.mjs',
+      'game/rewards/store.mjs',
+      'game/rewards/model.mjs',
+      'game/rewards/audio-groups.mjs',
+      'game/rewards/exploration.mjs',
+      'game/rewards/learning-profiles.mjs',
+      'game/ui/reward-knowledge.mjs',
+    ]),
+    template: 'optional-practice/worker-template.mjs',
+    launcherTemplate: 'optional-practice/launcher-template.mjs',
+    localeInputs: Object.freeze([
+      'game/locales/en/errors.json',
+      'game/locales/uk/errors.json',
+      'game/locales/en/interface.json',
+      'game/locales/uk/interface.json',
+    ]),
+    localeKeys: Object.freeze({ interface: Object.freeze(['learningProfiles.choose']) }),
+    // Official npm tarball integrity verified before selecting these exact files.
+    // Only these reviewed bytes may include dormant native network-loader code.
+    vendorPins: Object.freeze([
+      Object.freeze({
+        path: 'optional-practice/civilian-fpv/vendor/three.core.js',
+        bytes: 1458113,
+        sha256: '9edde002b066a9a05676a6127f67735b62baf399bdea529f2f7e31657da769e6',
+      }),
+      Object.freeze({
+        path: 'optional-practice/civilian-fpv/vendor/three.module.js',
+        bytes: 662772,
+        sha256: '9052042d676cb0fdc1ddfefe193053f34b7ac0513a616fdac4535d49987812ea',
+      }),
+      Object.freeze({
+        path: 'optional-practice/civilian-fpv/vendor/LICENSE.txt',
+        bytes: 1081,
+        sha256: '8b378ebe60e2fe500158cb0ac71cb5e8b7d92953c2abcc63a0eb90499653b5bc',
+      }),
+    ]),
+    licenses: Object.freeze([
+      {
+        dependency: 'i18next',
+        version: '26.4.2',
+        license: 'MIT',
+        path: 'game/vendor/I18NEXT-LICENSE.txt',
+      },
+      {
+        dependency: 'three',
+        version: '0.186.1',
+        license: 'MIT',
+        path: 'optional-practice/civilian-fpv/vendor/LICENSE.txt',
+        source: 'https://registry.npmjs.org/three/-/three-0.186.1.tgz',
+        integrity:
+          'sha512-blFeqb49wRCSGUGj7gtpfnSGHy2lwDk94RhUmS1c/hTby70kvChbWpkJ4Pm1390LqzzvTmzgXKHPEafJwCb8jA==',
+      },
+    ]),
+  }),
+});
+export function optionalRuntimePaths(policy, { launcher = false } = {}) {
+  return [
+    ...(launcher
+      ? [
+          'index.html',
+          'app.mjs',
+          'context.mjs',
+          'app.webmanifest',
+          'worker.js',
+          'icons/icon-192.png',
+          'icons/icon-512.png',
+        ].map((name) => 'launcher/' + name)
+      : []),
+    ...policy.localFiles.map((name) => policy.root + name),
+    ...policy.sharedFiles,
+    ...[192, 512].map((size) => `${policy.root}icons/icon-${size}.png`),
+    `${policy.root}worker.js`,
+  ].sort();
+}

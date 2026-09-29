@@ -75,7 +75,7 @@ test('whole-game preview verifies the report, every artifact byte and exact sele
     ...f.input,
     fetcher: fetchFiles(f.result.files, requests),
   });
-  assert.equal(verified.url.href, 'http://localhost/preview/game/company.html');
+  assert.equal(verified.url.href, 'http://localhost/preview/game/company.html?studio-preview=1');
   assert.equal(verified.verifiedFiles, f.result.files.size);
   assert.equal(requests.length, f.result.files.size);
   assert(
@@ -227,7 +227,11 @@ test('focused Coupa and Netherlands previews accept canonical theme projection b
       ...(edition.presentationHistory ?? []).map((record) => record.path),
       ...catalog.campaigns
         .filter((row) => edition.campaignIds.includes(row.id))
-        .flatMap((row) => [row.sourcePath, ...(row.lessonPath ? [row.lessonPath] : [])]),
+        .flatMap((row) => [
+          row.sourcePath,
+          ...(row.lessonPath ? [row.lessonPath] : []),
+          ...(row.rewardPath ? [row.rewardPath] : []),
+        ]),
     ];
     for (const path of paths) {
       const text = await readFile(new URL(`../../${path}`, import.meta.url), 'utf8');

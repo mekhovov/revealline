@@ -1,0 +1,115 @@
+{
+  "format": "revealline-portable-flight-wrapper-check.v1",
+  "qualified": false,
+  "passed": true,
+  "sourceStable": true,
+  "scope": "Exact numeric golden fixture agreement after a shared byte-validation optimization. No radio hardware, performance, human learning or release qualification.",
+  "source": {
+    "kind": "working-tree",
+    "baseRevision": "440cdb749179837fba358a0d46d94d1ab18e6afe",
+    "baseTree": "4bd5e63f6d66fddd354cce8ac66c3c838ebf5653",
+    "uncommittedInputs": ["game/data-json.mjs", "scripts/verify-fpv-portability.mjs"],
+    "note": "Exact eight runtime/fixture source pins are authoritative. This is not a frozen build or a claim that the full worktree is clean."
+  },
+  "createdAt": "2026-09-28T23:22:02.387Z",
+  "runtimes": [
+    {
+      "runtime": "node",
+      "version": "v20.19.5",
+      "matched": true,
+      "fixtureCount": 26
+    },
+    {
+      "runtime": "chromium",
+      "version": "154.0.8037.57",
+      "matched": true,
+      "fixtureCount": 26
+    },
+    {
+      "runtime": "firefox",
+      "version": "146.0.1",
+      "matched": true,
+      "fixtureCount": 26
+    },
+    {
+      "runtime": "webkit",
+      "version": "26.0",
+      "matched": true,
+      "fixtureCount": 26
+    }
+  ],
+  "sourcePins": [
+    {
+      "path": "optional-practice/civilian-fpv/model.mjs",
+      "sha256": "922a2c819ddb6a26af90addf9fa866aceda700af9ad7eba755f416d9ac576060"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/math.mjs",
+      "sha256": "555c8b6ea170b46992133507d2a3d867f06185bca060239cab7db9c9b87f9f98"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/rotation-table.mjs",
+      "sha256": "2ddab304ac99a2e70fc7e84fc6c27eedb49f1f3dac976baed680effa659cef41"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/radio-profile.mjs",
+      "sha256": "a9f2f829a05062e6b1fa712eaec445edc106320c0abef5eb48e106695bd3ce0e"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/catalogue.mjs",
+      "sha256": "98338353d17eb585414538c9905040752fd5cd6699c48b17fa1706832b750997"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/demonstrations.mjs",
+      "sha256": "92bb4365c46d94f5c1fea9808ec4e24fb9014d35640ee488959c4e0f4b6c5cfa"
+    },
+    {
+      "path": "game/data-json.mjs",
+      "sha256": "9ce33d6173f3cba8587ed7a7f1924c66e9d9c86ffa59b37a743764ea0b01f7bd"
+    },
+    {
+      "path": "game/test/helpers/fpv-portability.mjs",
+      "sha256": "5d240e8cd065ef1c01f0bada60e984d7a9335fb0d94ec220bc214f34a2ebdfe0"
+    }
+  ],
+  "servedSourceVerification": {
+    "before": true,
+    "after": true,
+    "sameAsNodeSource": true,
+    "receipt": {
+      "bytes": 1752,
+      "sha256": "ccca837085bf3c24eeb3706cf79f649ae205de160996f06319319d3be15b046e"
+    }
+  },
+  "validationReport": {
+    "bytes": 29864,
+    "sha256": "7e3da1e3e8f5d3ce2439f9543c23a19e7040d2958a91f8399fc7f3e283d63324"
+  },
+  "runner": {
+    "bytes": 3986,
+    "sha256": "ffde55ea7857c7891e33d616b38711afcad3888b9625fec9e8290a7d491dbc2b"
+  },
+  "testTool": {
+    "package": "1.58.2",
+    "driver": {
+      "bytes": 704,
+      "sha256": "a0f5715ea22354f922791a9c53dc012d5d5c067ff9cc4cd35ffb7cd272071a9f"
+    },
+    "installation": "Only Firefox/WebKit and Playwright-required FFmpeg were installed into a task-owned temporary browser directory. Chromium used the installed Chrome channel. Normal profiles and the user browser cache were untouched.",
+    "browserFilesApproximateBytes": 560988160
+  },
+  "reproduce": {
+    "command": "PLAYWRIGHT_BROWSERS_PATH=<task-owned-browser-directory> node scripts/verify-fpv-portability.mjs <existing-playwright-module> <local-served-checkout-origin> <new-output.json>",
+    "goldensChanged": false
+  },
+  "cleanup": {
+    "allRunnerBrowsersClosed": true,
+    "ownedServerStopped": true
+  },
+  "limitations": [
+    "This validates 24 demonstrations plus two 3,000-tick stress sequences, not physical USB radio behavior.",
+    "The unchanged checked-in golden identities, intermediate checkpoints and final summaries matched in all four engines.",
+    "Full browser behavior and release artifact admission remain separate gates."
+  ],
+  "evidenceRoot": ".cache/phase7-910502531/flight-portability-wrapper"
+}

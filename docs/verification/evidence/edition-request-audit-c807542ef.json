@@ -1,0 +1,191 @@
+{
+  "format": "revealline-public-header-network-followup.v1",
+  "qualified": false,
+  "source": {
+    "sourceRevision": "c807542ef4840ce739beb7af86424488f7508772",
+    "sourceTree": "6be6aa62a151a6d32638f46f8fa08aad1b9cbaaf",
+    "editionId": "fpv-learning",
+    "distribution": {
+      "sha256": "693c78f220ada0897252572b3058253a9de4dcfd3185d66c741af9e41eb5838c",
+      "bytes": 33282781
+    },
+    "manifest": {
+      "sha256": "6b1500aa2204080f74e377856189034e1fcebfdcc48ae6492a4aafe7d016b43c",
+      "bytes": 93740
+    },
+    "runtimeFiles": 688,
+    "runtimeBytes": 33183009,
+    "contentSha256": "77f862035392266e8c3e9f1b03d3c89d3b4755e3947431b6792a19ac8b2329b7",
+    "gameplayId": "7feffc97157784af",
+    "gameplayBindingAuthority": "Exact admitted authored reward requirement, not an independent engine recomputation."
+  },
+  "startedAt": "2026-09-29T00:22:12.481Z",
+  "finishedAt": "2026-09-29T00:22:20.071Z",
+  "browser": "154.0.8037.57",
+  "purpose": "One fresh untimed network-classification observation. It does not amend or identify requests in the earlier capture.",
+  "method": {
+    "freshContext": true,
+    "viewport": {
+      "width": 1280,
+      "height": 633
+    },
+    "dpr": 1,
+    "headers": "Exact PUBLIC_SECURITY_HEADERS applied by a loopback proxy",
+    "requestsObserved": 551,
+    "requestBound": 2000,
+    "observationEnds": "750 ms after edition-ready state and passive module imports",
+    "networkLogging": "CDP Network events plus console locations, enabled before navigation; bounded initiator stacks. No runtime or progress mutation.",
+    "timingComparison": false
+  },
+  "observations": {
+    "documentStatus": 200,
+    "exactPublicHeadersMatched": true,
+    "editionReady": true,
+    "passiveImportExports": [
+      "DISCOVERY_OBSERVATION_FORMAT",
+      "discoveryCycleSurface",
+      "discoverySurfaceSnapshot",
+      "discoverySurfaceState",
+      "observeDiscovery"
+    ],
+    "pageErrors": [],
+    "failedAdmittedRuntimeRequests": 0,
+    "helperPassed": false,
+    "helperError": "Public policy violation observed"
+  },
+  "requestClassifications": [
+    {
+      "url": "http://127.0.0.1:50366/favicon.ico",
+      "path": "favicon.ico",
+      "status": 404,
+      "resourceType": "Other",
+      "initiator": {
+        "type": "other"
+      },
+      "archiveListed": false,
+      "classification": "Browser-originated nonmember favicon request",
+      "basis": "Captured resource type/initiator and exact archive membership. Exact game/index.html declares no icon link; this is an inference about the browser default request, not a selected-runtime dependency."
+    },
+    {
+      "url": "http://127.0.0.1:50366/game/content/packs/index.json",
+      "path": "game/content/packs/index.json",
+      "status": 404,
+      "resourceType": "Fetch",
+      "initiator": {
+        "functionName": "attachLibraryPanel",
+        "path": "game/ui/library-panel.mjs",
+        "line": 1375
+      },
+      "archiveListed": false,
+      "classification": "Unconditional optional example-library catalogue fetch absent from this selected edition",
+      "basis": "The library-panel source catches unavailable catalogue responses into localized feedback. The compiler does not admit this file. This is not a deliberately successful404 probe, nor an omitted selected mission image.",
+      "additionalObservation": "Same request also produced ERR_ABORTED/canceled after404; retained without treating it as a second resource."
+    },
+    {
+      "url": "https://mekhovov.github.io/revealline-soundtracks/catalogue.json",
+      "status": null,
+      "resourceType": null,
+      "archiveListed": false,
+      "classification": "Optional external catalogue blocked by public self-only policy on the loopback test origin",
+      "basis": "Captured console URL/location plus exact fetch callsite. The build source separately defines preview headers that admit this archive path locally; public hosting is documented as sharing the archive origin.",
+      "evidence": "Two CSP console messages at game/online-soundtrack-catalogue.mjs:593; no matching CDP Network failure event was emitted in the retained log.",
+      "impact": "This helper reports failure. It does not establish a deployed public-origin CSP defect or verify remote catalogue availability."
+    }
+  ],
+  "priorCapture": {
+    "path": ".cache/phase7-c807542ef/arcade-selector/public-headers-preflight-v2.json",
+    "sha256": "fd15142c1a9bdac904df27a31f9a6eeb6042cc9f1ec359196117570018ee1bc1",
+    "bytes": 3570,
+    "unclassified404Messages": 2,
+    "unchanged": true,
+    "limitation": "The earlier capture recorded neither failed URLs nor initiators. Similar current messages cannot retroactively identify those two requests. Its shorter ready/import observation also cannot exclude later CSP activity."
+  },
+  "sources": [
+    {
+      "path": "game/ui/library-panel.mjs",
+      "sha256": "1e383e1a977a38bb8c7e7f143c16537e33e1bdfa7d7850b2a9fac6a8c2389cf3",
+      "bytes": 77637,
+      "lines": [1371, 1400],
+      "authority": "Exact selected archive member, verified against manifest",
+      "meaning": "Unconditional optional example-pack catalogue fetch; non-OK response throws and is caught into localized example-load feedback."
+    },
+    {
+      "path": "game/ui/soundtrack-panel.mjs",
+      "sha256": "bb6fb735eeb9400ef6629837cf2999ace2414b7cc2d03323725f9ff5a4384a2d",
+      "bytes": 132224,
+      "lines": [3491, 3496],
+      "authority": "Exact selected archive member, verified against manifest",
+      "meaning": "Settings panel construction starts the optional online soundtrack catalogue load."
+    },
+    {
+      "path": "game/ui/soundtrack-panel.mjs",
+      "sha256": "bb6fb735eeb9400ef6629837cf2999ace2414b7cc2d03323725f9ff5a4384a2d",
+      "bytes": 132224,
+      "lines": [2079, 2096],
+      "authority": "Exact selected archive member, verified against manifest",
+      "meaning": "Online catalogue failure is caught, renders localized unavailable status, and permits retry."
+    },
+    {
+      "path": "game/online-soundtrack-catalogue.mjs",
+      "sha256": "11d7fe13b71a9400f4f89b4deec16e2cbf39700fc30b598745565142d74bcda9",
+      "bytes": 23469,
+      "lines": [582, 599],
+      "authority": "Exact selected archive member, verified against manifest",
+      "meaning": "Fetch is restricted to the declared online catalogue URL with omitted credentials."
+    },
+    {
+      "path": "scripts/game-cli.mjs",
+      "sha256": "a2df6cf4bfb0bca120782ade485c468dadad835825e1135bf81eb5b4c71d5754",
+      "bytes": 79589,
+      "lines": [23, 43],
+      "authority": "Frozen build source; not a player member",
+      "meaning": "Public self-only headers differ from loopback preview headers; source comment states public Pages and the archive share an origin."
+    },
+    {
+      "path": "scripts/edition-runtime.mjs",
+      "sha256": "627a1ba5ef36d557bb7b049d7b8bb41bf4174182ce190148c89254af7b2afbfb",
+      "bytes": 4817,
+      "lines": [18, 34],
+      "authority": "Frozen build source; not a player member",
+      "meaning": "Explicit selected runtime-resource closure omits the example-pack catalogue."
+    }
+  ],
+  "cleanup": [
+    {
+      "name": "browser",
+      "closed": true
+    },
+    {
+      "name": "proxy",
+      "closed": true
+    },
+    {
+      "name": "archive server",
+      "closed": true
+    }
+  ],
+  "limits": [
+    "No complete-session network audit, soundtrack download, installation, performance, physical-device or release qualification.",
+    "No admitted runtime request failed during this observation; that is not a proof of every possible later asset request.",
+    "The self-only public policy was exercised on loopback. Deployed same-origin public behavior was not reproduced.",
+    "Optional example-library404 remains an avoidable UI/network request in selected editions, with a caught fallback; no product fix was attempted.",
+    "All earlier successes, failures and raw files remain unchanged."
+  ],
+  "retainedFiles": [
+    {
+      "path": ".cache/phase7-c807542ef/arcade-selector/public-headers-network-followup/public-headers-network-preflight.mjs",
+      "sha256": "716b9d6b5d4d001df0b4bcfa63d79cb16037d72f71f38ad228efdf195692bc8c",
+      "bytes": 7681
+    },
+    {
+      "path": ".cache/phase7-c807542ef/arcade-selector/public-headers-network-followup/public-headers-network-plan.json",
+      "sha256": "4143a0506df183800aeb2431880b66d6d17c10af4c91f134e99998dbce42f156",
+      "bytes": 459
+    },
+    {
+      "path": ".cache/phase7-c807542ef/arcade-selector/public-headers-network-followup/public-headers-network-preflight.json",
+      "sha256": "fdb1a2437fe5f143d41565e12e870e33c82b8de9db0aa8702a7bdb38f11bf14b",
+      "bytes": 8337
+    }
+  ]
+}
