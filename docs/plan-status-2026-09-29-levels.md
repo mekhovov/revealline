@@ -64,6 +64,12 @@ Both are pushed/open drafts, not merged or released. The exact source receipts,
 remaining caveats and non-overlapping test counts are recorded below; no Levels
 runtime files were modified to adopt or duplicate those owners' work.
 
+The subsequent bounded source work fixes **Start for accepted imported Team
+v6/v7 missions with Hunters**, and extends Team/Versus Help and retained-artwork
+file access. Exact receipts and integration limits appear in the latest follow-up
+below. These are source-complete slices, not another released version; production
+testing remains deferred and is not the reason they are awaiting integration.
+
 ## Delivery boundary
 
 - GitHub lists **v0.142.3** as published, from the main continuation based on
@@ -334,26 +340,85 @@ Prefer these reviewed small slices in the existing v0.150.0 batch, with logical
 commits and focused regressions, rather than one new release per fix. Once a
 batch is frozen, stop adding scope; prepare later work independently.
 
+### Latest follow-up: imported Team Start, cross-mode Help and artwork files
+
+Levels has pushed the independently reviewed Team preparation repair in
+commit **`b25b29edf4a9ec8628b9d52333d8c683155ae0ec`** on
+`codex/team-import-hunter-tuning`, based on main `321408a3`. It is handed to the
+UX owner for adoption into **existing PR #757**, not a separate queued feature PR.
+At this checkpoint adoption and composed-source checks are pending; do not call
+the separate branch released or assume its tests cover the integrated host.
+
+Valid Team v6/v7 Hunter imports were accepted but could not Start because the
+current gp4 adapter added an `encounter` override forbidden by those editions.
+The narrow repair uses the existing edition capability and retains their native
+committed attack speed **8**, without weakening validation, removing Hunters or
+changing frozen adapters. Previously successful v1–v4 output goldens remain
+unchanged. Tuning the v6/v7 committed attack speed would require a separate,
+explicitly versioned extension; this compatibility fix does not claim that work.
+
+The two new files pass **25/25 focused cases**, zero skips, with exact importer
+Start and warned attacks across both editions/all presets, frozen byte/behavior
+guards and real installed-attempt reconstruction after 210 engine ticks. Scoped
+lint/format and independent review pass. This is not IndexedDB/browser Resume
+acceptance. The [repair record](https://github.com/mekhovov/revealline/blob/b25b29edf4a9ec8628b9d52333d8c683155ae0ec/docs/verification/team-import-hunter-tuning-2026-09-29.md)
+preserves the six original failures and subsequent Expert witness-fixture
+corrections. The PR #757 target adapter/foundations and eight dependencies match
+the patch baseline exactly; broader PR/main conflicts still require reconciliation.
+
+Separately, PR #757 is verified at **`04b49041ac06fcc073782751ea56acd5fa8c8030`**,
+an open draft. Its Team trail-impact Help slice records **25/25** checks: six new
+guidance/host cases, eight existing briefing-host and eleven impact-core cases.
+This is a different cohort from the 25 tuning checks and overlaps older Team
+coverage; do not add it to the earlier 163-case total. The nine Help-manifest
+entries match exact-head bytes/hashes. Local Help observations use keeper-only
+accepted imports and preserve the separate Hunter-Start failure diagnosis; they
+do not pre-accept the new tuning fix or a composed release. Core/schema/tuning
+and gameplay timing were unchanged by that Help commit.
+
+PR #761 is now verified at **`9fa28512476bcef326113b8f73adf2ec40be272c`**, also an
+open draft. Current-board Versus Help reads the actual two admitted runs,
+including seat-specific optional roles, and preserves live-locale focus/lifecycle.
+Its retained-artwork handoff re-verifies the selected exact image and provides
+its original bytes, MIME and safe filename without modifying `.rlart` provenance.
+Recorded cohorts pass **17/17 Versus** and **38/38 artwork** with zero skips.
+The local Studio receipt records a saved Poltava PNG of 1,756,938 bytes and
+SHA-256 `aaafaaca7ad1ee916ceeb04338690178a10314d6b735fcbe63fd565ec672ac30`.
+Both browser download-event waits timed out despite the saved file and visible
+fallback; this is not broad browser download certification. Levels inspected
+the source/receipts, not a new native session or external saved-file rehash.
+
+Two adjacent input diagnostics remain recorded rather than hidden: mirrored-keyup
+in `couch-shell` (24/25), and the ID-only Help harness observing race-start instead
+of race-help-reading on both candidate and pinned-parent diagnostic. A stopped
+25-second process is not a passing run. Owners must resolve or isolate these
+integration concerns. Neither PR is merged/released; skipped stage jobs and a
+successful title check are not product verification. Remaining required delivery
+work is accepted-main reconciliation, composed-source correctness, build/provenance,
+immutable freeze/archive and basic availability. Extended production, artwork,
+device, performance and human qualification remain deferred, not passed.
+
 ## Remaining priority and effort
 
 These are focused engineering estimates excluding serialized release time,
 hardware availability and human review; they are not promised delivery dates.
 
-| Priority       | Work                                                                                     | Why it matters                                                                                                                    | Focused effort                                                               |
-| -------------- | ---------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------- |
-| 1              | Finish the already-prepared selector/audio/native/community batches                      | Turns completed source work into player-visible improvements and resolves navigation/recovery defects                             | Per owning queue; do not restart completed qualification                     |
-| 2              | Integrate Team Resume/Support/More/Large and dense-field reader                          | Players need accurate rescue instructions and readable two-player state, including impossible compact canvas packing              | Bounded source complete; publisher integration, production testing deferred  |
-| 3              | Complete strategic-route evidence for the existing v37 trio and Cooling loop v38         | Four complete routes now exist; alternate Pressure/Relay strategies and broader full-route coverage remain open                   | 1–3 engineering days remaining for the bounded evidence/repair slice         |
-| 4              | Review a new default spatial edition                                                     | New geometry cannot improve normal play while remaining opt-in; require useful complete routes, not just a larger version number  | Re-estimate after the v37 route review and human feedback                    |
-| 5              | Team teaching acknowledgement and remaining Studio/HUD donor ports                       | Avoid consumed-before-seen teaching, false Support completion and stale historical-host imports                                   | 0.5–2 days per bounded successor, after schema/ownership review              |
-| 6              | Whole-Journey pacing, actor/state readability and final reference dispositions           | Distinct fair challenges matter more than repeating easy geometry or increasing speed globally                                    | 3–7 days per polished 3–5-mission slice; broader review remains multi-week   |
-| Deferred       | Production, accessibility/performance and two-player/device/human qualification          | Finds failures that mocks, byte audits and single-player routes cannot establish; does not block source work under latest request | 2–5 days per bounded qualification stream plus hardware/players when resumed |
-| Separate gates | Creator/community external services, soundtrack listening/rights and original production | These require real environments, rights and human quality review                                                                  | Owner estimates; not closed by source preservation or automated passes       |
+| Priority       | Work                                                                                     | Why it matters                                                                                                                        | Focused effort                                                                           |
+| -------------- | ---------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------- |
+| 1              | Finish the already-prepared selector/audio/native/community batches                      | Turns completed source work into player-visible improvements and resolves navigation/recovery defects                                 | Per owning queue; do not restart completed qualification                                 |
+| 2              | Integrate Team Resume/Support/More/Large, dense-field reader and imported-Hunter Start   | Players need working accepted imports, accurate rescue instructions and readable state even when compact canvas packing is impossible | Bounded source complete; composed checks/reconciliation and publisher integration remain |
+| 3              | Complete strategic-route evidence for the existing v37 trio and Cooling loop v38         | Four complete routes now exist; alternate Pressure/Relay strategies and broader full-route coverage remain open                       | 1–3 engineering days remaining for the bounded evidence/repair slice                     |
+| 4              | Review a new default spatial edition                                                     | New geometry cannot improve normal play while remaining opt-in; require useful complete routes, not just a larger version number      | Re-estimate after the v37 route review and human feedback                                |
+| 5              | Team teaching acknowledgement and remaining Studio/HUD donor ports                       | Avoid consumed-before-seen teaching, false Support completion and stale historical-host imports                                       | 0.5–2 days per bounded successor, after schema/ownership review                          |
+| 6              | Whole-Journey pacing, actor/state readability and final reference dispositions           | Distinct fair challenges matter more than repeating easy geometry or increasing speed globally                                        | 3–7 days per polished 3–5-mission slice; broader review remains multi-week               |
+| Deferred       | Production, accessibility/performance and two-player/device/human qualification          | Finds failures that mocks, byte audits and single-player routes cannot establish; does not block source work under latest request     | 2–5 days per bounded qualification stream plus hardware/players when resumed             |
+| Separate gates | Creator/community external services, soundtrack listening/rights and original production | These require real environments, rights and human quality review                                                                      | Owner estimates; not closed by source preservation or automated passes                   |
 
 Within the unchanged **A → B → C** ordering, do not recreate the implemented
-four-role Guide practice or retained-parent comparison. The next B/C source
-slices are broader cross-mode encounter guidance and accepted cohort/runtime
-binding preparation, estimated **0.5–2 engineering days per bounded slice**
+four-role Guide practice, Team trail Help, current-board Versus Help, retained-parent
+comparison or exact artwork-file handoff. The next B/C source slices are remaining
+cross-mode guidance gaps and accepted cohort/runtime binding preparation,
+estimated **0.5–2 engineering days per bounded slice**
 after owner reconciliation. This is not an estimate for production-art admission
 or the formal C2 human study, which remains last and deferred.
 
