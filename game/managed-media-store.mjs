@@ -11,6 +11,13 @@ import {
 import { isPreparedSoundtrackLibrary, ownSoundtrackAssets } from './soundtrack-bundle.mjs';
 import { inspectMP3, throwIfSoundtrackAborted } from './mp3.mjs';
 import {
+  SOUNDTRACK_STYLE_SELECTION_KEY,
+  validateSoundtrackStyleSelection,
+  soundtrackStyleSelection,
+  sameSoundtrackListening,
+  selectedPublicSoundtrackStyles,
+} from './soundtrack-style-selection.mjs';
+import {
   emptyGenericMediaLibrary,
   validateGenericMediaLibrary,
   isStoredStillMedia,
@@ -245,7 +252,8 @@ export function createManagedMediaStore({
   const storesInUse = storyMedia ? [...STORES, 'storyRecords'] : STORES;
   const domainValid = (d) => required(domains.includes(d), 'Unknown managed media domain.');
   const metadataBytes = (state, except) =>
-    domains.filter((d) => d !== except).reduce((n, d) => n + encoded(state[`${d}Row`]), 0);
+    domains.filter((d) => d !== except).reduce((n, d) => n + encoded(state[`${d}Row`]), 0) +
+    (except === 'audio' ? 0 : state.audioStyleBytes);
   function validateStoryState(media, story) {
     if (!storyMedia) return;
     storyRecords.validateStoredStories(story, media);
@@ -425,7 +433,7 @@ export function createManagedMediaStore({
       tx.onabort = () => finish(failure || tx.error || new Error('Media transaction failed.'));
       signal?.addEventListener('abort', cancel, { once: true });
       const values = {};
-      let left = storyMedia ? 10 : 9;
+      let left = (storyMedia ? 10 : 9) + (soundtrackCatalogue ? 1 : 0);
       function read(key, request) {
         request.onsuccess = () => {
           values[key] = request.result;
@@ -444,6 +452,8 @@ export function createManagedMediaStore({
                 ? row(values.storyRow, 'story', true, mediaRow.library)
                 : undefined,
               externalRow = externalUsage(values.externalRow),
+              audioStyleSelection = validateSoundtrackStyleSelection(values.audioStyleSelection),
+              audioStyleBytes = audioStyleSelection ? encoded(audioStyleSelection) : 0,
               blobs = new Map();
             let blobBytes = 0;
             for (const [kind, keys, files] of [
@@ -493,12 +503,15 @@ export function createManagedMediaStore({
             const usedBytes =
               blobBytes +
               encoded(audioRow) +
+              audioStyleBytes +
               encoded(mediaRow) +
               (storyMedia ? encoded(storyRow) : 0) +
               (values.externalRow === undefined ? 0 : externalStoredBytes(externalRow)) +
               OVERHEAD;
             const state = {
               audioRow,
+              audioStyleSelection,
+              audioStyleBytes,
               mediaRow,
               ...(storyMedia ? { storyRow } : {}),
               blobs,
@@ -519,6 +532,8 @@ export function createManagedMediaStore({
       }
       try {
         read('audioRow', stores.metadata.get('library'));
+        if (soundtrackCatalogue)
+          read('audioStyleSelection', stores.metadata.get(SOUNDTRACK_STYLE_SELECTION_KEY));
         read('mediaRow', stores.mediaRecords.get('library'));
         if (storyMedia) read('storyRow', stores.storyRecords.get('library'));
         read('audioKeys', stores.audio.getAllKeys());
@@ -576,7 +591,15 @@ export function createManagedMediaStore({
       .filter((a) => wanted.has(a.sha256))
       .sort((a, b) => a.sha256.localeCompare(b.sha256))
       .map(({ sha256, blob }) => Object.freeze({ sha256, blob }));
-    return Object.freeze({ ...current, assets: Object.freeze(assets) });
+    const publicStyles =
+      domain === 'audio'
+        ? selectedPublicSoundtrackStyles(state.audioStyleSelection, current)
+        : undefined;
+    return Object.freeze({
+      ...current,
+      ...(publicStyles ? { publicStyles } : {}),
+      assets: Object.freeze(assets),
+    });
   }
   async function readDomain(domain, { signal } = {}) {
     domainValid(domain);
@@ -1012,7 +1035,7 @@ export function createManagedMediaStore({
   async function commitPreparedDomain(
     domain,
     prepared,
-    { expectedGeneration, reservation, signal, otherManagedBytes = 0 } = {},
+    { expectedGeneration, reservation, signal, otherManagedBytes = 0, publicStyles } = {},
   ) {
     domainValid(domain);
     if (storyMedia) {
@@ -1047,6 +1070,19 @@ export function createManagedMediaStore({
       signal,
     );
     required(before.current.generation === expectedGeneration, changed(domain));
+    required(
+      publicStyles === undefined || (domain === 'audio' && soundtrackCatalogue),
+      'Public soundtrack styles require catalogue audio storage.',
+    );
+    const retainedStyles =
+      domain === 'audio' && sameSoundtrackListening(before.current.library, prepared.library)
+        ? before.current.publicStyles
+        : undefined;
+    const requestedStyles = publicStyles === undefined ? retainedStyles : publicStyles;
+    const nextStyleSelection =
+      domain === 'audio' && requestedStyles !== undefined && requestedStyles !== null
+        ? soundtrackStyleSelection(requestedStyles, nextRow.generation)
+        : null;
     required(
       domain !== 'audio' ||
         before.current.library.format !== SOUNDTRACK_FORMAT_V3 ||
@@ -1099,7 +1135,7 @@ export function createManagedMediaStore({
       }
     const newAssets = assets.filter((a) => !reusable.has(a.sha256)),
       newBytes = newAssets.reduce((n, a) => n + (official.has(a.sha256) ? 0 : size(a.blob)), 0),
-      nextMetadataBytes = encoded(nextRow);
+      nextMetadataBytes = encoded(nextRow) + (nextStyleSelection ? encoded(nextStyleSelection) : 0);
     let quota = null;
     try {
       const q = await estimate();
@@ -1117,7 +1153,8 @@ export function createManagedMediaStore({
         before.current.assets.reduce((n, a) => n + size(a.blob), 0) +
         newBytes +
         nextMetadataBytes +
-        encoded({ generation: before.current.generation, library: before.current.library }) <=
+        encoded({ generation: before.current.generation, library: before.current.library }) +
+        (domain === 'audio' ? before.state.audioStyleBytes : 0) <=
         MANAGED_MEDIA_LIMITS.bytes,
       'Committed media plus staging exceeds the 256 MiB managed budget.',
     );
@@ -1228,6 +1265,11 @@ export function createManagedMediaStore({
               finalBlobBytes -= old.bytes;
             }
           stores[recordStore(domain)].put(nextRow, 'library');
+          if (domain === 'audio' && soundtrackCatalogue) {
+            if (nextStyleSelection)
+              stores.metadata.put(nextStyleSelection, SOUNDTRACK_STYLE_SELECTION_KEY);
+            else stores.metadata.delete(SOUNDTRACK_STYLE_SELECTION_KEY);
+          }
           stores.reservations.delete(saved.id);
           expire(state, stores, t);
           ledger(
@@ -1235,7 +1277,12 @@ export function createManagedMediaStore({
             stores,
             finalBlobBytes + nextMetadataBytes + metadataBytes(state, domain) + OVERHEAD,
           );
-          return Object.freeze(nextRow);
+          return Object.freeze({
+            ...nextRow,
+            ...(nextStyleSelection
+              ? { publicStyles: Object.freeze([...nextStyleSelection.styles]) }
+              : {}),
+          });
         },
         signal,
       );

@@ -49,6 +49,7 @@ import {
   onlineSoundtrackRecordingAllowed,
 } from '../online-soundtrack-catalogue.mjs';
 import { soundtrackErrorText } from './soundtrack-error-copy.mjs';
+import { sameSoundtrackListening } from '../soundtrack-style-selection.mjs';
 import {
   PUBLIC_SOUNDTRACK_STYLE_IDS,
   localGenresForPublicStyles,
@@ -123,6 +124,7 @@ export function attachSoundtrackPanel({
     controller = null,
     saved = null,
     preparedBackup = null;
+  let draftPublicStyles;
   let draft = adopt(emptySoundtrackLibrary()),
     assets = [],
     dirty = false,
@@ -258,6 +260,7 @@ export function attachSoundtrackPanel({
     if (!saved || busy) return;
     invalidateBackup();
     draft = adopt(saved.library);
+    draftPublicStyles = undefined;
     assets = [...saved.assets];
     dirty = false;
     privateCollectionPlaylistId = null;
@@ -350,10 +353,11 @@ export function attachSoundtrackPanel({
     `${t('interface:savedOnThisDevice')} ${t('interface:playlistSelectedChoosePlayMusicIfItIsPaused')}`;
   function usePlaylist(chosen, { start = false, onPlaybackResult = null } = {}) {
     return task(t('interface:savingYourPlaylistChoice'), async (signal) => {
+      draftPublicStyles = null;
       edit((value) => {
         value.selection.playlistId = chosen;
       });
-      const committed = await commitDraft(signal);
+      const committed = await commitDraft(signal, { publicStyles: null });
       if (!committed.adopted || disposed) return;
       await stopAudition(false);
       wakeAudio();
@@ -411,11 +415,12 @@ export function attachSoundtrackPanel({
   const recordingStatus = node('p', 'recording-status', '', { class: 'micro-note' });
   const useListening = (chosen, { start = false } = {}) => {
     return task(t('interface:savingYourMusicSelection'), async (signal) => {
+      draftPublicStyles = null;
       edit((value) => {
         value.selection.playlistId = null;
         value.listening = chosen;
       });
-      const committed = await commitDraft(signal);
+      const committed = await commitDraft(signal, { publicStyles: null });
       if (!committed.adopted || disposed) return;
       await stopAudition(false);
       wakeAudio();
@@ -693,6 +698,12 @@ export function attachSoundtrackPanel({
       .map(([style]) => style);
   }
   function savedSettingsStyles() {
+    if (
+      draftPublicStyles !== null &&
+      saved?.publicStyles &&
+      sameSoundtrackListening(draft, adopt(saved.library))
+    )
+      return saved.publicStyles;
     if (!draft.listening || draft.listening.mode === 'auto') return PUBLIC_SOUNDTRACK_STYLE_IDS;
     if (draft.listening.mode === 'fusion') return ['fusion'];
     return publicSoundtrackStylesForLocalGenres(
@@ -737,10 +748,8 @@ export function attachSoundtrackPanel({
         );
         if (!matches.length) throw new Error(t('interface:soundtrack.chooseAtLeastOneStyle'));
         const localGenres = localGenresForPublicStyles(selected);
-        if (localGenres.length) {
-          const committed = await commitSettingsListening(localGenres, signal);
-          if (!committed.adopted || disposed) return;
-        }
+        const committed = await commitSettingsListening(localGenres, signal, selected);
+        if (!committed.adopted || disposed) return;
         await stopAudition(false);
         throwIfSoundtrackAborted(signal);
         if ((player.intentRevision?.() ?? 0) !== launchIntentGeneration) return;
@@ -1408,6 +1417,9 @@ export function attachSoundtrackPanel({
         throwIfSoundtrackAborted(signal);
         invalidateBackup();
         draft = adopt(prepared.library);
+        // A replacement backup carries its own legacy listening intent. The
+        // device-only public-style sidecar is deliberately not part of .rlsound.
+        draftPublicStyles = null;
         assets = [...prepared.assets];
         dirty = true;
         render();
@@ -2804,6 +2816,7 @@ export function attachSoundtrackPanel({
       throwIfSoundtrackAborted(signal);
       saved = value;
       draft = adopt(value.library);
+      draftPublicStyles = undefined;
       assets = [...value.assets];
       dirty = false;
       privateCollectionPlaylistId = null;
@@ -2829,6 +2842,7 @@ export function attachSoundtrackPanel({
         if (disposed) return null;
         saved = value;
         draft = adopt(value.library);
+        draftPublicStyles = undefined;
         assets = [...value.assets];
         dirty = false;
         render();
@@ -2849,15 +2863,16 @@ export function attachSoundtrackPanel({
       });
     return settingsLibraryPromise;
   }
-  async function commitSettingsListening(localGenres, signal) {
+  async function commitSettingsListening(localGenres, signal, publicStyles) {
     if (!saved) throw new Error(t('interface:loadTheLocalLibraryBeforeSaving'));
     const updateListening = (value) => {
       value.selection.playlistId = null;
-      value.listening = {
-        ...value.listening,
-        mode: 'mix',
-        genres: localGenres,
-      };
+      if (localGenres.length)
+        value.listening = {
+          ...value.listening,
+          mode: 'mix',
+          genres: localGenres,
+        };
       return value;
     };
     const nextSavedLibrary = resolveSoundtrackLibrary(updateListening(copy(adopt(saved.library))));
@@ -2873,12 +2888,18 @@ export function attachSoundtrackPanel({
       signal,
       expectedGeneration: saved.generation,
       otherManagedBytes: usage,
+      publicStyles,
     });
     // This operation owns only listening preferences. Keep every unrelated
     // authoring edit and its draft assets available for the explicit Save action.
     const retainedDirty = dirty;
     saved = { ...result, assets: [...prepared.assets] };
-    draft = resolveSoundtrackLibrary(updateListening(copy(draft)));
+    draft = resolveSoundtrackLibrary({
+      ...copy(draft),
+      selection: copy(nextSavedLibrary.selection),
+      listening: copy(nextSavedLibrary.listening),
+    });
+    draftPublicStyles = undefined;
     dirty = retainedDirty;
     if (disposed)
       return {
@@ -2897,7 +2918,7 @@ export function attachSoundtrackPanel({
     if (adopted && !disposed) warning = await notifyLibrary(saved);
     return { ...saved, warning, adopted };
   }
-  async function commitDraft(signal) {
+  async function commitDraft(signal, { publicStyles = draftPublicStyles } = {}) {
     if (!saved) throw new Error(t('interface:loadTheLocalLibraryBeforeSaving'));
     invalidateBackup();
     pruneAssets();
@@ -2917,10 +2938,12 @@ export function attachSoundtrackPanel({
       signal,
       expectedGeneration: saved.generation,
       otherManagedBytes: usage,
+      publicStyles,
     });
     // Store completion is authoritative even if a cancellation arrived too late.
     saved = { ...result, assets: [...prepared.assets] };
     draft = result.library;
+    draftPublicStyles = undefined;
     assets = [...prepared.assets];
     dirty = false;
     if (disposed)
