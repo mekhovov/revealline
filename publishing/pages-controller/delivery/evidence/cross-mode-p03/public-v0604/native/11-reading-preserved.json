@@ -1,8 +1,0 @@
-{
-  "active": "profile-recovery-download",
-  "href": "blob:https://mekhovov.github.io/378636b0-6646-409b-988a-87b4df054aa5",
-  "status": "Snapshot prepared. It contains stored profile data, without original media or verified flight recovery.",
-  "summary": "Exact channel: release-v0.60.4\nProfile: absent\nSaved flight: stored unverified. Flight inspection is unavailable here.\nMedia and original availability have not been inspected.",
-  "textFace": "plain",
-  "textSize": "large"
-}

@@ -1,9 +1,0 @@
-{
-  "priorRootServerPid": 43226,
-  "priorRootServer": "P03-F live worktree preview",
-  "replacedPid": 11716,
-  "replacedCommand": "/opt/homebrew/Cellar/python@3.14/3.14.4_1/Frameworks/Python.framework/Versions/3.14/Resources/Python.app/Contents/MacOS/Python .cache/p05-confirmation-dialogs/serve-native.py",
-  "reason": "Freeze unchanged G source for confirmation CSS review while H is developed independently.",
-  "source": "bb372a012ec2d12cf89bba1b251a4721e30b3c13",
-  "frozenBytes": 306043
-}
