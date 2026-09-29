@@ -395,8 +395,17 @@ test('real keyboard self-crossings explain the shared recovery and cause-aware r
   assert.equal(f.$('coop-level').value, 'self-crossing-coverage');
 });
 
-test('terminal failure offers a direct keyboard path to the same arena difficulty', async (t) => {
-  const f = await page(t, { nativeFocus: true }),
+async function terminalDifficulty(t, width = 844) {
+  const f = await page(t, {
+      nativeFocus: true,
+      nativeVisibility: true,
+      beforeImport({ doc, win }) {
+        Object.assign(win, doc.defaultView, { innerWidth: width, innerHeight: 390 });
+        doc.defaultView = win;
+        doc.documentElement.clientWidth = width;
+        doc.documentElement.clientHeight = 390;
+      },
+    }),
     pack = customPack('change-difficulty');
   pack.levels[0].enemies = [];
   await f.selectFile(JSON.stringify(pack));
@@ -421,14 +430,175 @@ test('terminal failure offers a direct keyboard path to the same arena difficult
   assert.equal(f.$('coop-level').value, 'change-difficulty-coverage');
   tabToTeamAction(f, 'coop-lobby');
   assert.equal(f.$('coop-lobby').disabled, false);
-  f.$('coop-lobby').onclick();
-  assert.equal(f.$('coop-play').hidden, true);
-  assert.equal(f.$('coop-menu').hidden, false);
-  assert.equal(f.$('coop-optional-setup').open, true);
-  assert.equal(f.doc.activeElement.id, 'coop-difficulty');
-  assert.equal(f.$('coop-difficulty').value, 'expert');
-  assert.equal(f.$('coop-level').value, 'change-difficulty-coverage');
-});
+  return f;
+}
+
+for (const width of [844, 390])
+  test(`terminal failure offers a direct keyboard path to the same arena difficulty at ${width}px`, async (t) => {
+    const f = await terminalDifficulty(t, width),
+      difficulty = f.$('coop-difficulty'),
+      clock = f.$('coop-clock').textContent;
+    f.tap('Enter');
+    assert.equal(f.$('coop-play').hidden, true);
+    assert.equal(f.$('coop-menu').hidden, false);
+    assert.equal(f.$('coop-optional-setup').open, true);
+    assert.equal(f.$('coop-options').open, true);
+    assert.equal(f.$('coop-options').getAttribute('data-settings-view'), 'panel');
+    assert.equal(f.$('coop-settings-tab-gameplay').getAttribute('aria-selected'), 'true');
+    assert.equal(f.$('coop-settings-panel-gameplay').inert, false);
+    assert.equal(f.$('coop-settings-panel-gameplay').contains(difficulty), true);
+    assert.ok(difficulty.getClientRects().length);
+    assert.equal(difficulty.closest('[hidden],[inert]'), null);
+    assert.equal(f.doc.activeElement, difficulty);
+    assert.equal(difficulty.value, 'expert');
+    assert.equal(f.$('coop-level').value, 'change-difficulty-coverage');
+    await f.choose('coop-difficulty', 'standard');
+    f.tick(120);
+    assert.equal(f.$('coop-clock').textContent, clock, 'Changing difficulty never starts play.');
+    assert.equal(f.$('coop-play').hidden, true);
+    f.tap('Escape');
+    if (width <= 700) {
+      assert.equal(f.$('coop-options').open, true, 'Compact Back returns to categories first.');
+      assert.equal(f.$('coop-options').getAttribute('data-settings-view'), 'categories');
+      assert.equal(f.doc.activeElement.id, 'coop-settings-tab-gameplay');
+      f.tap('Escape');
+    }
+    assert.equal(f.$('coop-options').open, false);
+    assert.equal(f.doc.activeElement.id, 'coop-settings-open');
+    assert.equal(f.$('coop-level').value, 'change-difficulty-coverage');
+    assert.equal(difficulty.value, 'standard');
+    f.$('coop-start').focus();
+    f.tap('Enter');
+    assert.equal(
+      f.$('coop-play').hidden,
+      false,
+      'A separate Start gesture creates the next attempt.',
+    );
+    assert.equal(f.doc.activeElement.id, 'coop-canvas');
+    assert.equal(f.$('coop-clock').textContent, '0:00');
+  });
+
+for (const phase of ['lobby', 'dialog', 'difficulty'])
+  for (const newer of ['focus-then-body', 'blur-return', 'reopen'])
+    test(`terminal difficulty handoff preserves newer ${newer} during ${phase}`, async (t) => {
+      const f = await terminalDifficulty(t),
+        dialog = f.$('coop-options'),
+        difficulty = f.$('coop-difficulty'),
+        target = f.$(
+          phase === 'lobby'
+            ? 'coop-settings-open'
+            : phase === 'dialog'
+              ? 'coop-settings-close'
+              : 'coop-difficulty',
+        ),
+        scrolls = [];
+      t.mock.method(difficulty, 'scrollIntoView', () => scrolls.push(true));
+      const observers = [f.doc, f.win].map((node) => ({
+        node,
+        before: new Map(
+          [...node.captureListeners].map(([type, values]) => [type, new Set(values)]),
+        ),
+      }));
+      let changed = false;
+      target.addEventListener('focusin', () => {
+        if (changed) return;
+        changed = true;
+        if (newer === 'focus-then-body') {
+          (phase === 'lobby' ? f.$('coop-start') : f.$('coop-settings-tab-display')).focus();
+          f.doc.body.focus();
+        } else if (newer === 'blur-return') {
+          f.win.emit('blur');
+          f.win.emit('focus');
+        } else {
+          if (dialog.open) dialog.close();
+          f.$('coop-settings-open').click();
+          f.$('coop-settings-tab-display').click();
+          f.$('coop-settings-tab-display').focus();
+        }
+      });
+      f.tap('Enter');
+      assert.equal(changed, true);
+      assert.deepEqual(scrolls, [], 'An older handoff cannot scroll after newer intent.');
+      if (newer === 'focus-then-body') assert.equal(f.doc.activeElement, f.doc.body);
+      if (newer === 'reopen') {
+        assert.equal(dialog.open, true);
+        assert.equal(f.doc.activeElement.id, 'coop-settings-tab-display');
+        assert.equal(f.$('coop-settings-tab-display').getAttribute('aria-selected'), 'true');
+      }
+      assert.equal(f.$('coop-play').hidden, true);
+      assert.equal(f.$('coop-difficulty').value, 'expert');
+      assert.equal(f.$('coop-level').value, 'change-difficulty-coverage');
+      for (const { node, before } of observers)
+        for (const [type, values] of node.captureListeners)
+          for (const listener of values)
+            assert.ok(
+              before.get(type)?.has(listener),
+              'Synchronous handoff observers are retired.',
+            );
+    });
+
+for (const newer of ['hidden-return', 'pointer-intent', 'key-intent', 'category', 'disabled'])
+  test(`terminal difficulty opening yields to ${newer} before selecting Gameplay`, async (t) => {
+    const f = await terminalDifficulty(t),
+      dialog = f.$('coop-options'),
+      difficulty = f.$('coop-difficulty'),
+      scrolls = [];
+    t.mock.method(difficulty, 'scrollIntoView', () => scrolls.push(true));
+    let changed = false;
+    f.$('coop-settings-close').addEventListener('focusin', () => {
+      if (changed) return;
+      changed = true;
+      if (newer === 'hidden-return') {
+        f.doc.hidden = true;
+        f.doc.emit('visibilitychange');
+        f.doc.hidden = false;
+        f.doc.emit('visibilitychange');
+      } else if (newer === 'pointer-intent') {
+        f.doc.body.emit('pointerdown', { pointerId: 19, button: 0 });
+      } else if (newer === 'key-intent') {
+        f.doc.body.emit('keydown', { key: 'F9', code: 'F9' });
+      } else if (newer === 'category') {
+        f.$('coop-settings-tab-display').click();
+      } else difficulty.disabled = true;
+    });
+    f.tap('Enter');
+    assert.equal(changed, true);
+    assert.equal(dialog.open, true);
+    assert.notEqual(f.doc.activeElement, difficulty);
+    assert.deepEqual(scrolls, []);
+    assert.equal(f.$('coop-play').hidden, true);
+    assert.equal(f.$('coop-level').value, 'change-difficulty-coverage');
+    if (newer === 'category')
+      assert.equal(f.$('coop-settings-tab-display').getAttribute('aria-selected'), 'true');
+  });
+
+for (const newer of ['measurement-focus', 'invalid-viewport'])
+  test(`terminal difficulty opening rejects ${newer} at the lobby handoff`, async (t) => {
+    const f = await terminalDifficulty(t),
+      target = f.$('coop-settings-open'),
+      read = target.getBoundingClientRect.bind(target);
+    let focused = false,
+      changed = false;
+    target.addEventListener('focusin', () => {
+      focused = true;
+    });
+    t.mock.method(target, 'getBoundingClientRect', () => {
+      if (focused && !changed) {
+        changed = true;
+        if (newer === 'measurement-focus') f.$('coop-start').focus();
+        else {
+          f.doc.documentElement.clientHeight = Number.NaN;
+          f.win.innerHeight = Number.NaN;
+        }
+      }
+      return read();
+    });
+    f.tap('Enter');
+    assert.equal(changed, true);
+    assert.equal(f.$('coop-options').open, false);
+    if (newer === 'measurement-focus') assert.equal(f.doc.activeElement.id, 'coop-start');
+    assert.equal(f.$('coop-play').hidden, true);
+  });
 
 test('retry feedback counts required objectives and distinguishes enemy and spark causes', () => {
   const run = {

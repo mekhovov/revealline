@@ -1313,7 +1313,7 @@ export function bootCoop({
     }
     if (play) void music.start();
   }
-  function openSettings() {
+  function openSettings({ focusDifficulty = false } = {}) {
     cancelNext();
     const opener = $('coop-settings-open');
     if (
@@ -1328,27 +1328,78 @@ export function bootCoop({
     discovery?.close({ restore: false });
     const owner = { opener, run, generation, visit: ++settingsVisit, restore: true };
     settingsOwner = owner;
-    // Lobby preparation stays owned by its existing operation; opening Settings
-    // must not call pause(), which also cancels that preparation.
-    if (running()) pause({ focus: false });
-    else clear();
-    if (!settingsCurrent(owner) || !visibleAction(opener)) {
-      if (settingsOwner === owner) settingsOwner = null;
-      return;
-    }
-    settingsDialog.showModal();
-    const active = document.activeElement;
-    if (
-      settingsCurrent(owner) &&
-      settingsDialog.open &&
-      (unclaimedFocus(active) ||
-        active === opener ||
-        active === settingsDialog ||
-        active === $('coop-settings-close'))
-    ) {
-      const target = settingsPanels.primary();
-      if (visibleAction(target) && settingsCurrent(owner) && document.activeElement === active)
-        target.focus({ preventScroll: true });
+    // A terminal-result shortcut owns this synchronous opening only. Native
+    // dialog focus may visit Close, but newer input/focus must permanently win.
+    const difficulty = focusDifficulty ? $('coop-difficulty') : null;
+    let moved = false;
+    const allowed = (element) =>
+      unclaimedFocus(element) ||
+      element === opener ||
+      element === settingsDialog ||
+      element === $('coop-settings-close') ||
+      element === difficulty;
+    const lose = () => {
+      moved = true;
+    };
+    const focusChanged = (event) => {
+      if (!allowed(event.target)) lose();
+    };
+    const observers = difficulty
+      ? [
+          [document, 'focusin', focusChanged],
+          [document, 'keydown', lose],
+          [document, 'pointerdown', lose],
+          [document, 'click', lose],
+        ]
+      : [];
+    for (const [node, type, callback] of observers) node.addEventListener(type, callback, true);
+    try {
+      // Lobby preparation stays owned by its existing operation; opening Settings
+      // must not call pause(), which also cancels that preparation.
+      if (running()) pause({ focus: false });
+      else clear();
+      if (!settingsCurrent(owner) || !visibleAction(opener)) {
+        if (settingsOwner === owner) settingsOwner = null;
+        return;
+      }
+      settingsDialog.showModal();
+      const active = document.activeElement;
+      if (difficulty) {
+        const current = () =>
+          !moved &&
+          owner.restore &&
+          settingsCurrent(owner) &&
+          settingsDialog.open &&
+          allowed(document.activeElement);
+        if (!current() || !settingsPanels.select('coop-settings-tab-gameplay') || !current())
+          return;
+        // Compact Settings has a separate category view. Reveal the selected
+        // panel without focusing its first (unrelated) control along the way.
+        settingsDialog.setAttribute('data-settings-view', 'panel');
+        const selected = () =>
+          current() &&
+          settingsPanels.selected() === 'coop-settings-tab-gameplay' &&
+          settingsPanels.panel()?.contains(difficulty);
+        if (!selected() || !visibleAction(difficulty) || !selected()) return;
+        difficulty.focus({ preventScroll: true });
+        const focused = () => selected() && document.activeElement === difficulty;
+        if (!focused() || !visibleAction(difficulty) || !focused()) return;
+        difficulty.scrollIntoView({ block: 'nearest', inline: 'nearest', behavior: 'instant' });
+      } else if (
+        settingsCurrent(owner) &&
+        settingsDialog.open &&
+        (unclaimedFocus(active) ||
+          active === opener ||
+          active === settingsDialog ||
+          active === $('coop-settings-close'))
+      ) {
+        const target = settingsPanels.primary();
+        if (visibleAction(target) && settingsCurrent(owner) && document.activeElement === active)
+          target.focus({ preventScroll: true });
+      }
+    } finally {
+      for (const [node, type, callback] of observers)
+        node.removeEventListener(type, callback, true);
     }
   }
   function closeSettings({ restore = true } = {}) {
@@ -4594,12 +4645,15 @@ export function bootCoop({
           rect.width <= 0 ||
           rect.height <= 0 ||
           width <= 16 ||
-          height <= 16 ||
-          (rect.left >= 8 && rect.top >= 8 && rect.right <= width - 8 && rect.bottom <= height - 8)
+          height <= 16
         )
           return;
         if (!focused() || !visibleAction(target) || !focused()) return;
-        target.scrollIntoView({ block: 'nearest', inline: 'nearest', behavior: 'instant' });
+        if (
+          !(rect.left >= 8 && rect.top >= 8 && rect.right <= width - 8 && rect.bottom <= height - 8)
+        )
+          target.scrollIntoView({ block: 'nearest', inline: 'nearest', behavior: 'instant' });
+        return focused() && visibleAction(target) && focused();
       },
       cancel() {
         for (const [node, type, callback] of observers)
@@ -4613,7 +4667,9 @@ export function bootCoop({
     nextStatus('');
     if (disposed || departure) return;
     if (revealSetup) $('coop-optional-setup').open = true;
-    const focus = lobbyFocus(focusTarget);
+    const difficultySettings =
+      focusTarget === $('coop-difficulty') && settingsDialog.contains(focusTarget);
+    const focus = lobbyFocus(difficultySettings ? $('coop-settings-open') : focusTarget);
     try {
       cancelImport({ forget: true });
       clear();
@@ -4642,7 +4698,10 @@ export function bootCoop({
         retainedPicture?.lease?.dispose();
         void preparePicture();
       }
-      focus.finish();
+      if (focus.finish() && difficultySettings) {
+        focus.cancel();
+        openSettings({ focusDifficulty: true });
+      }
     } finally {
       focus.cancel();
     }
