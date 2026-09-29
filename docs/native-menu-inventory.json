@@ -14,10 +14,14 @@
       "menus": "shared-native",
       "verification": {
         "automated": "catalogue, supported modes, scene and two launch routes checked",
-        "browser": "default-package EN and Ukrainian 390×844: branding, Solo-only capabilities, four actions, scene decode and overflow passed; local versioned standalone launcher → player handoff passed",
         "physicalController": "not tested",
         "publishedBuild": "not tested",
-        "standalonePackage": "final local compilation passed; complete dependency/font/icon/scene/offline inventory and version binding passed; source-hash agreement passed"
+        "browser": "pending exact-candidate qualification",
+        "standalonePackage": "pending exact-candidate qualification",
+        "historical": {
+          "browser": "default-package EN and Ukrainian 390×844: branding, Solo-only capabilities, four actions, scene decode and overflow passed; local versioned standalone launcher → player handoff passed",
+          "standalonePackage": "final local compilation passed; complete dependency/font/icon/scene/offline inventory and version binding passed; source-hash agreement passed"
+        }
       },
       "publicSlug": "coupa-all"
     },
@@ -31,10 +35,14 @@
       "menus": "shared-native",
       "verification": {
         "automated": "catalogue, supported modes, scene and two launch routes checked",
-        "browser": "default-package EN and Ukrainian 390×844: branding, Solo-only capabilities, four actions, scene decode and overflow passed; local versioned standalone launcher → player handoff passed",
         "physicalController": "not tested",
         "publishedBuild": "not tested",
-        "standalonePackage": "final local compilation passed; complete dependency/font/icon/scene/offline inventory and version binding passed; source-hash agreement passed"
+        "browser": "pending exact-candidate qualification",
+        "standalonePackage": "pending exact-candidate qualification",
+        "historical": {
+          "browser": "default-package EN and Ukrainian 390×844: branding, Solo-only capabilities, four actions, scene decode and overflow passed; local versioned standalone launcher → player handoff passed",
+          "standalonePackage": "final local compilation passed; complete dependency/font/icon/scene/offline inventory and version binding passed; source-hash agreement passed"
+        }
       },
       "publicSlug": "coupa-adventure"
     },
@@ -48,10 +56,14 @@
       "menus": "shared-native",
       "verification": {
         "automated": "catalogue, supported modes, scene and two launch routes checked",
-        "browser": "default-package EN and Ukrainian 390×844: branding, Solo-only capabilities, four actions, scene decode and overflow passed; local versioned standalone launcher → player handoff passed",
         "physicalController": "not tested",
         "publishedBuild": "not tested",
-        "standalonePackage": "final local compilation passed; complete dependency/font/icon/scene/offline inventory and version binding passed; source-hash agreement passed"
+        "browser": "pending exact-candidate qualification",
+        "standalonePackage": "pending exact-candidate qualification",
+        "historical": {
+          "browser": "default-package EN and Ukrainian 390×844: branding, Solo-only capabilities, four actions, scene decode and overflow passed; local versioned standalone launcher → player handoff passed",
+          "standalonePackage": "final local compilation passed; complete dependency/font/icon/scene/offline inventory and version binding passed; source-hash agreement passed"
+        }
       },
       "publicSlug": "coupa-culture"
     },
@@ -65,10 +77,14 @@
       "menus": "shared-native",
       "verification": {
         "automated": "catalogue, supported modes, scene and two launch routes checked",
-        "browser": "default-package EN and Ukrainian 390×844: branding, Solo-only capabilities, four actions, scene decode and overflow passed; local versioned standalone launcher → player handoff passed",
         "physicalController": "not tested",
         "publishedBuild": "not tested",
-        "standalonePackage": "final local compilation passed; complete dependency/font/icon/scene/offline inventory and version binding passed; source-hash agreement passed"
+        "browser": "pending exact-candidate qualification",
+        "standalonePackage": "pending exact-candidate qualification",
+        "historical": {
+          "browser": "default-package EN and Ukrainian 390×844: branding, Solo-only capabilities, four actions, scene decode and overflow passed; local versioned standalone launcher → player handoff passed",
+          "standalonePackage": "final local compilation passed; complete dependency/font/icon/scene/offline inventory and version binding passed; source-hash agreement passed"
+        }
       },
       "publicSlug": "coupa-foundations"
     },
@@ -82,10 +98,14 @@
       "menus": "shared-native",
       "verification": {
         "automated": "catalogue, supported modes, scene and two launch routes checked",
-        "browser": "default-package EN and Ukrainian 390×844: branding, Solo-only capabilities, four actions, scene decode and overflow passed; local versioned standalone launcher → player handoff passed",
         "physicalController": "not tested",
         "publishedBuild": "not tested",
-        "standalonePackage": "final local compilation passed; complete dependency/font/icon/scene/offline inventory and version binding passed; source-hash agreement passed"
+        "browser": "pending exact-candidate qualification",
+        "standalonePackage": "pending exact-candidate qualification",
+        "historical": {
+          "browser": "default-package EN and Ukrainian 390×844: branding, Solo-only capabilities, four actions, scene decode and overflow passed; local versioned standalone launcher → player handoff passed",
+          "standalonePackage": "final local compilation passed; complete dependency/font/icon/scene/offline inventory and version binding passed; source-hash agreement passed"
+        }
       },
       "publicSlug": "coupa-operations"
     },
@@ -99,10 +119,14 @@
       "menus": "shared-native",
       "verification": {
         "automated": "catalogue, supported modes, scene and two launch routes checked",
-        "browser": "default-package EN and Ukrainian 390×844: branding, Solo-only capabilities, four actions, scene decode and overflow passed; local versioned standalone launcher → player handoff passed",
         "physicalController": "not tested",
         "publishedBuild": "not tested",
-        "standalonePackage": "final local compilation passed; complete dependency/font/icon/scene/offline inventory and version binding passed; source-hash agreement passed"
+        "browser": "pending exact-candidate qualification",
+        "standalonePackage": "pending exact-candidate qualification",
+        "historical": {
+          "browser": "default-package EN and Ukrainian 390×844: branding, Solo-only capabilities, four actions, scene decode and overflow passed; local versioned standalone launcher → player handoff passed",
+          "standalonePackage": "final local compilation passed; complete dependency/font/icon/scene/offline inventory and version binding passed; source-hash agreement passed"
+        }
       },
       "publicSlug": "coupa-developers"
     },
@@ -116,10 +140,14 @@
       "menus": "shared-native",
       "verification": {
         "automated": "catalogue, supported modes, scene and two launch routes checked",
-        "browser": "default-package EN and Ukrainian 390×844: branding, Solo-only capabilities, four actions, scene decode and overflow passed; local versioned standalone launcher → player handoff passed",
         "physicalController": "not tested",
         "publishedBuild": "not tested",
-        "standalonePackage": "final local compilation passed; complete dependency/font/icon/scene/offline inventory and version binding passed; source-hash agreement passed"
+        "browser": "pending exact-candidate qualification",
+        "standalonePackage": "pending exact-candidate qualification",
+        "historical": {
+          "browser": "default-package EN and Ukrainian 390×844: branding, Solo-only capabilities, four actions, scene decode and overflow passed; local versioned standalone launcher → player handoff passed",
+          "standalonePackage": "final local compilation passed; complete dependency/font/icon/scene/offline inventory and version binding passed; source-hash agreement passed"
+        }
       },
       "publicSlug": "droneaid-community"
     },
@@ -133,10 +161,14 @@
       "menus": "shared-native",
       "verification": {
         "automated": "catalogue, supported modes, scene and two launch routes checked",
-        "browser": "default-package EN and Ukrainian 390×844: branding, Solo-only capabilities, four actions, scene decode and overflow passed; local versioned standalone launcher → player handoff passed",
         "physicalController": "not tested",
         "publishedBuild": "not tested",
-        "standalonePackage": "final local compilation passed; complete dependency/font/icon/scene/offline inventory and version binding passed; source-hash agreement passed"
+        "browser": "pending exact-candidate qualification",
+        "standalonePackage": "pending exact-candidate qualification",
+        "historical": {
+          "browser": "default-package EN and Ukrainian 390×844: branding, Solo-only capabilities, four actions, scene decode and overflow passed; local versioned standalone launcher → player handoff passed",
+          "standalonePackage": "final local compilation passed; complete dependency/font/icon/scene/offline inventory and version binding passed; source-hash agreement passed"
+        }
       },
       "publicSlug": "droneaid",
       "legacyRoutes": [
@@ -157,10 +189,14 @@
       "menus": "shared-native",
       "verification": {
         "automated": "catalogue, supported modes, scene and two launch routes checked",
-        "browser": "default-package EN and Ukrainian 390×844: branding, Solo-only capabilities, four actions, scene decode and overflow passed; local versioned standalone launcher → player handoff passed",
         "physicalController": "not tested",
         "publishedBuild": "not tested",
-        "standalonePackage": "final local compilation passed; complete dependency/font/icon/scene/offline inventory and version binding passed; source-hash agreement passed"
+        "browser": "pending exact-candidate qualification",
+        "standalonePackage": "pending exact-candidate qualification",
+        "historical": {
+          "browser": "default-package EN and Ukrainian 390×844: branding, Solo-only capabilities, four actions, scene decode and overflow passed; local versioned standalone launcher → player handoff passed",
+          "standalonePackage": "final local compilation passed; complete dependency/font/icon/scene/offline inventory and version binding passed; source-hash agreement passed"
+        }
       },
       "publicSlug": "droneaid-nl-workshop-lights"
     },
@@ -177,10 +213,14 @@
       "menus": "shared-native",
       "verification": {
         "automated": "catalogue, supported modes, scene and two launch routes checked",
-        "browser": "default-package EN and Ukrainian 390×844: branding, Solo-only capabilities, four actions, scene decode and overflow passed; local versioned standalone launcher → player handoff passed",
         "physicalController": "not tested",
         "publishedBuild": "not tested",
-        "standalonePackage": "final local compilation passed; complete dependency/font/icon/scene/offline inventory and version binding passed; source-hash agreement passed"
+        "browser": "pending exact-candidate qualification",
+        "standalonePackage": "pending exact-candidate qualification",
+        "historical": {
+          "browser": "default-package EN and Ukrainian 390×844: branding, Solo-only capabilities, four actions, scene decode and overflow passed; local versioned standalone launcher → player handoff passed",
+          "standalonePackage": "final local compilation passed; complete dependency/font/icon/scene/offline inventory and version binding passed; source-hash agreement passed"
+        }
       },
       "publicSlug": "droneaid-nl-parts-in-motion"
     },
@@ -197,10 +237,14 @@
       "menus": "shared-native",
       "verification": {
         "automated": "catalogue, supported modes, scene and two launch routes checked",
-        "browser": "default-package EN and Ukrainian 390×844: branding, Solo-only capabilities, four actions, scene decode and overflow passed; local versioned standalone launcher → player handoff passed",
         "physicalController": "not tested",
         "publishedBuild": "not tested",
-        "standalonePackage": "final local compilation passed; complete dependency/font/icon/scene/offline inventory and version binding passed; source-hash agreement passed"
+        "browser": "pending exact-candidate qualification",
+        "standalonePackage": "pending exact-candidate qualification",
+        "historical": {
+          "browser": "default-package EN and Ukrainian 390×844: branding, Solo-only capabilities, four actions, scene decode and overflow passed; local versioned standalone launcher → player handoff passed",
+          "standalonePackage": "final local compilation passed; complete dependency/font/icon/scene/offline inventory and version binding passed; source-hash agreement passed"
+        }
       },
       "publicSlug": "droneaid-nl-makers-together"
     },
@@ -217,10 +261,14 @@
       "menus": "shared-native",
       "verification": {
         "automated": "catalogue, supported modes, scene and two launch routes checked",
-        "browser": "default-package EN and Ukrainian 390×844: branding, Solo-only capabilities, four actions, scene decode and overflow passed; local versioned standalone launcher → player handoff passed",
         "physicalController": "not tested",
         "publishedBuild": "not tested",
-        "standalonePackage": "final local compilation passed; complete dependency/font/icon/scene/offline inventory and version binding passed; source-hash agreement passed"
+        "browser": "pending exact-candidate qualification",
+        "standalonePackage": "pending exact-candidate qualification",
+        "historical": {
+          "browser": "default-package EN and Ukrainian 390×844: branding, Solo-only capabilities, four actions, scene decode and overflow passed; local versioned standalone launcher → player handoff passed",
+          "standalonePackage": "final local compilation passed; complete dependency/font/icon/scene/offline inventory and version binding passed; source-hash agreement passed"
+        }
       },
       "publicSlug": "droneaid-nl-careful-handoff"
     },
@@ -237,10 +285,14 @@
       "menus": "shared-native",
       "verification": {
         "automated": "catalogue, supported modes, scene and two launch routes checked",
-        "browser": "default-package EN and Ukrainian 390×844: branding, Solo-only capabilities, four actions, scene decode and overflow passed; local versioned standalone launcher → player handoff passed",
         "physicalController": "not tested",
         "publishedBuild": "not tested",
-        "standalonePackage": "final local compilation passed; complete dependency/font/icon/scene/offline inventory and version binding passed; source-hash agreement passed"
+        "browser": "pending exact-candidate qualification",
+        "standalonePackage": "pending exact-candidate qualification",
+        "historical": {
+          "browser": "default-package EN and Ukrainian 390×844: branding, Solo-only capabilities, four actions, scene decode and overflow passed; local versioned standalone launcher → player handoff passed",
+          "standalonePackage": "final local compilation passed; complete dependency/font/icon/scene/offline inventory and version binding passed; source-hash agreement passed"
+        }
       },
       "publicSlug": "droneaid-nl-signals-of-support"
     },
@@ -257,10 +309,14 @@
       "menus": "shared-native",
       "verification": {
         "automated": "catalogue, supported modes, scene and two launch routes checked",
-        "browser": "default-package EN and Ukrainian 390×844: branding, Solo-only capabilities, four actions, scene decode and overflow passed; local versioned standalone launcher → player handoff passed",
         "physicalController": "not tested",
         "publishedBuild": "not tested",
-        "standalonePackage": "final local compilation passed; complete dependency/font/icon/scene/offline inventory and version binding passed; source-hash agreement passed"
+        "browser": "pending exact-candidate qualification",
+        "standalonePackage": "pending exact-candidate qualification",
+        "historical": {
+          "browser": "default-package EN and Ukrainian 390×844: branding, Solo-only capabilities, four actions, scene decode and overflow passed; local versioned standalone launcher → player handoff passed",
+          "standalonePackage": "final local compilation passed; complete dependency/font/icon/scene/offline inventory and version binding passed; source-hash agreement passed"
+        }
       },
       "publicSlug": "droneaid-nl-shared-horizon"
     }
@@ -303,166 +359,271 @@
     {
       "name": "Asset Studio",
       "route": "/authoring/asset-studio/",
-      "verification": "keyboard and virtual-controller browser workflow passed; physical controller not tested"
+      "verification": "pending exact-candidate browser qualification; historical observations do not establish current acceptance",
+      "historicalVerification": "keyboard and virtual-controller browser workflow passed; physical controller not tested"
     },
     {
       "name": "Mission Playground",
       "route": "/game/playground/",
-      "verification": "keyboard and virtual-controller browser workflow passed; physical controller not tested"
+      "verification": "pending exact-candidate browser qualification; historical observations do not establish current acceptance",
+      "historicalVerification": "keyboard and virtual-controller browser workflow passed; physical controller not tested"
     },
     {
       "name": "Enemy Workshop",
       "route": "/authoring/enemy-catalog/",
-      "verification": "keyboard and virtual-controller browser workflow passed; physical controller not tested"
+      "verification": "pending exact-candidate browser qualification; historical observations do not establish current acceptance",
+      "historicalVerification": "keyboard and virtual-controller browser workflow passed; physical controller not tested"
     },
     {
       "name": "Motion Lab",
       "route": "/authoring/motion-lab/",
-      "verification": "keyboard and virtual-controller browser workflow passed; physical controller not tested"
+      "verification": "pending exact-candidate browser qualification; historical observations do not establish current acceptance",
+      "historicalVerification": "keyboard and virtual-controller browser workflow passed; physical controller not tested"
     },
     {
       "name": "Pictures & Stories",
       "route": "/authoring/still-media/",
-      "verification": "keyboard and virtual-controller browser workflow passed; physical controller not tested"
+      "verification": "pending exact-candidate browser qualification; historical observations do not establish current acceptance",
+      "historicalVerification": "keyboard and virtual-controller browser workflow passed; physical controller not tested"
     },
     {
       "name": "Video Poster",
       "route": "/authoring/video-poster/",
-      "verification": "keyboard and virtual-controller browser workflow passed; physical controller not tested"
+      "verification": "pending exact-candidate browser qualification; historical observations do not establish current acceptance",
+      "historicalVerification": "keyboard and virtual-controller browser workflow passed; physical controller not tested"
     },
     {
       "name": "Design Atlas",
       "route": "/authoring/design-atlas/",
-      "verification": "keyboard and virtual-controller browser workflow passed; physical controller not tested"
+      "verification": "pending exact-candidate browser qualification; historical observations do not establish current acceptance",
+      "historicalVerification": "keyboard and virtual-controller browser workflow passed; physical controller not tested"
     },
     {
       "name": "Content Studio",
       "route": "/game/studio/",
-      "verification": "keyboard and virtual-controller browser workflow passed; physical controller not tested"
+      "verification": "pending exact-candidate browser qualification; historical observations do not establish current acceptance",
+      "historicalVerification": "keyboard and virtual-controller browser workflow passed; physical controller not tested"
     },
     {
       "name": "Picture Campaign Creator",
       "route": "/game/creator/",
-      "verification": "keyboard and virtual-controller browser workflow passed; physical controller not tested"
+      "verification": "pending exact-candidate browser qualification; historical observations do not establish current acceptance",
+      "historicalVerification": "keyboard and virtual-controller browser workflow passed; physical controller not tested"
     },
     {
       "name": "Team Campaign Creator",
       "route": "/game/creator/team.html",
-      "verification": "keyboard and virtual-controller browser workflow passed; physical controller not tested"
+      "verification": "pending exact-candidate browser qualification; historical observations do not establish current acceptance",
+      "historicalVerification": "keyboard and virtual-controller browser workflow passed; physical controller not tested"
     },
     {
       "name": "Company Studio",
       "route": "/authoring/company-studio/",
-      "verification": "keyboard and virtual-controller browser workflow passed; physical controller not tested"
+      "verification": "pending exact-candidate browser qualification; historical observations do not establish current acceptance",
+      "historicalVerification": "keyboard and virtual-controller browser workflow passed; physical controller not tested"
     },
     {
       "name": "Company transfer practice",
       "route": "/authoring/company-studio/playtest.html",
-      "verification": "keyboard and virtual-controller browser workflow passed; physical controller not tested"
+      "verification": "pending exact-candidate browser qualification; historical observations do not establish current acceptance",
+      "historicalVerification": "keyboard and virtual-controller browser workflow passed; physical controller not tested"
     },
     {
       "name": "Content Production",
       "route": "/authoring/production/",
-      "verification": "keyboard and virtual-controller browser workflow passed; physical controller not tested"
+      "verification": "pending exact-candidate browser qualification; historical observations do not establish current acceptance",
+      "historicalVerification": "keyboard and virtual-controller browser workflow passed; physical controller not tested"
     },
     {
       "name": "Viewport Lab",
       "route": "/authoring/viewport-lab/",
-      "verification": "keyboard and virtual-controller browser workflow passed; physical controller not tested"
-    },
-    {
-      "name": "Demo recording variants",
-      "route": "/authoring/demo-recording-variants.html",
-      "verification": "keyboard and virtual-controller browser workflow passed; physical controller not tested; existing six replay differences retained"
+      "verification": "pending exact-candidate browser qualification; historical observations do not establish current acceptance",
+      "historicalVerification": "keyboard and virtual-controller browser workflow passed; physical controller not tested"
     },
     {
       "name": "Community moderation",
       "route": "/game/community/moderation.html",
-      "verification": "shared navigation and fields mounted; no authenticated remote moderation action performed; physical controller not tested"
+      "verification": "pending exact-candidate browser qualification; historical observations do not establish current acceptance",
+      "historicalVerification": "shared navigation and fields mounted; no authenticated remote moderation action performed; physical controller not tested"
     }
   ],
   "referenceRoutes": [
     {
       "name": "Creator Guide",
       "route": "/authoring/community/index.html",
-      "verification": "browser mount verified; shared keyboard and virtual-controller reader/navigation; physical controller not tested"
+      "verification": "pending exact-candidate browser qualification; historical observations do not establish current acceptance",
+      "historicalVerification": "browser mount verified; shared keyboard and virtual-controller reader/navigation; physical controller not tested"
     },
     {
       "name": "FPV reveal source audit",
       "route": "/authoring/design-atlas/reveal-audit.html",
-      "verification": "browser mount verified; shared keyboard and virtual-controller reader/navigation; physical controller not tested"
+      "verification": "pending exact-candidate browser qualification; historical observations do not establish current acceptance",
+      "historicalVerification": "browser mount verified; shared keyboard and virtual-controller reader/navigation; physical controller not tested"
     },
     {
       "name": "Countercurrent art",
       "route": "/authoring/library/countercurrent-art/index.html",
-      "verification": "browser mount verified; shared keyboard and virtual-controller reader/navigation; physical controller not tested"
+      "verification": "pending exact-candidate browser qualification; historical observations do not establish current acceptance",
+      "historicalVerification": "browser mount verified; shared keyboard and virtual-controller reader/navigation; physical controller not tested"
     },
     {
       "name": "FPV enemy presentation",
       "route": "/authoring/library/fpv-enemy-presentations/index.html",
-      "verification": "browser mount verified; shared keyboard and virtual-controller reader/navigation; physical controller not tested"
+      "verification": "pending exact-candidate browser qualification; historical observations do not establish current acceptance",
+      "historicalVerification": "browser mount verified; shared keyboard and virtual-controller reader/navigation; physical controller not tested"
     },
     {
       "name": "FPV role presentation",
       "route": "/authoring/library/fpv-role-presentations/index.html",
-      "verification": "browser mount verified; shared keyboard and virtual-controller reader/navigation; physical controller not tested"
+      "verification": "pending exact-candidate browser qualification; historical observations do not establish current acceptance",
+      "historicalVerification": "browser mount verified; shared keyboard and virtual-controller reader/navigation; physical controller not tested"
     },
     {
       "name": "Reserve illustration catalog",
       "route": "/authoring/library/reserve-illustrations-catalog/index.html",
-      "verification": "browser mount verified; shared keyboard and virtual-controller reader/navigation; physical controller not tested"
+      "verification": "pending exact-candidate browser qualification; historical observations do not establish current acceptance",
+      "historicalVerification": "browser mount verified; shared keyboard and virtual-controller reader/navigation; physical controller not tested"
     },
     {
       "name": "Ukraine role presentation",
       "route": "/authoring/library/ukraine-role-presentations/index.html",
-      "verification": "browser mount verified; shared keyboard and virtual-controller reader/navigation; physical controller not tested"
+      "verification": "pending exact-candidate browser qualification; historical observations do not establish current acceptance",
+      "historicalVerification": "browser mount verified; shared keyboard and virtual-controller reader/navigation; physical controller not tested"
     },
     {
       "name": "Ukraine wide role variants",
       "route": "/authoring/library/ukraine-role-wide-variants/index.html",
-      "verification": "browser mount verified; shared keyboard and virtual-controller reader/navigation; physical controller not tested"
+      "verification": "pending exact-candidate browser qualification; historical observations do not establish current acceptance",
+      "historicalVerification": "browser mount verified; shared keyboard and virtual-controller reader/navigation; physical controller not tested"
     },
     {
       "name": "Prepared reveal review",
       "route": "/authoring/library/fpv-field-kit/prepared/reveals/review.html",
-      "verification": "browser mount verified; shared keyboard and virtual-controller reader/navigation; physical controller not tested"
+      "verification": "pending exact-candidate browser qualification; historical observations do not establish current acceptance",
+      "historicalVerification": "browser mount verified; shared keyboard and virtual-controller reader/navigation; physical controller not tested"
     },
     {
       "name": "Prepared title review",
       "route": "/authoring/library/fpv-field-kit/prepared/titles/review.html",
-      "verification": "browser mount verified; shared keyboard and virtual-controller reader/navigation; physical controller not tested"
+      "verification": "pending exact-candidate browser qualification; historical observations do not establish current acceptance",
+      "historicalVerification": "browser mount verified; shared keyboard and virtual-controller reader/navigation; physical controller not tested"
     },
     {
       "name": "Runtime sprite comparison",
       "route": "/authoring/library/runtime-sprite-candidates-v1/inspection/index.html",
-      "verification": "browser mount verified; shared keyboard and virtual-controller reader/navigation; physical controller not tested"
+      "verification": "pending exact-candidate browser qualification; historical observations do not establish current acceptance",
+      "historicalVerification": "browser mount verified; shared keyboard and virtual-controller reader/navigation; physical controller not tested"
     },
     {
       "name": "Original soundtrack audition",
       "route": "/authoring/library/revealline-original-soundtrack/local-production/audition.html",
-      "verification": "browser mount verified; shared keyboard and virtual-controller reader/navigation; physical controller not tested"
+      "verification": "pending exact-candidate browser qualification; historical observations do not establish current acceptance",
+      "historicalVerification": "browser mount verified; shared keyboard and virtual-controller reader/navigation; physical controller not tested"
     },
     {
       "name": "Journey actor review",
       "route": "/game/presentation/journey-actor-review.html",
-      "verification": "browser mount verified; shared keyboard and virtual-controller reader/navigation; physical controller not tested"
+      "verification": "pending exact-candidate browser qualification; historical observations do not establish current acceptance",
+      "historicalVerification": "browser mount verified; shared keyboard and virtual-controller reader/navigation; physical controller not tested"
     },
     {
       "name": "Combat review",
       "route": "/game/presentation/combat-review.html",
-      "verification": "browser mount verified; shared keyboard and virtual-controller reader/navigation; physical controller not tested"
+      "verification": "pending exact-candidate browser qualification; historical observations do not establish current acceptance",
+      "historicalVerification": "browser mount verified; shared keyboard and virtual-controller reader/navigation; physical controller not tested"
     },
     {
       "name": "Field Kit sprite review",
       "route": "/game/assets/field-kit/sprites/review.html",
-      "verification": "browser mount verified; shared keyboard and virtual-controller reader/navigation; physical controller not tested"
+      "verification": "pending exact-candidate browser qualification; historical observations do not establish current acceptance",
+      "historicalVerification": "browser mount verified; shared keyboard and virtual-controller reader/navigation; physical controller not tested"
     },
     {
       "name": "Field Kit icon review",
       "route": "/game/assets/field-kit/icons/review.html",
-      "verification": "browser mount verified; shared keyboard and virtual-controller reader/navigation; physical controller not tested"
+      "verification": "pending exact-candidate browser qualification; historical observations do not establish current acceptance",
+      "historicalVerification": "browser mount verified; shared keyboard and virtual-controller reader/navigation; physical controller not tested"
     }
   ],
   "brandingRevision": "2026-09-29-fpv-line",
-  "verificationNote": "Existing browser/native package observations below predate the FPV / LINE rename. Rebranding evidence is recorded separately in docs/verification/fpv-line-brand-2026-09-29.md."
+  "verificationNote": "Existing browser/native package observations below predate the FPV / LINE rename. Rebranding evidence is recorded separately in docs/verification/fpv-line-brand-2026-09-29.md.",
+  "evidenceScope": {
+    "historical": "Browser and standalone-package observations below belong to the shared development snapshots recorded on 2026-09-28 and 2026-09-29, before main reconciliation. They do not qualify the current candidate.",
+    "currentCandidate": "Exact-candidate browser, offline package, physical-controller and published-build acceptance remains pending. See docs/verification/native-menu-pr-integration-2026-09-29.md for current focused automated checks."
+  },
+  "deferredRoutes": [
+    {
+      "name": "Demo recording variants",
+      "route": "/authoring/demo-recording-variants.html",
+      "status": "pending dependency",
+      "reason": "The separate Demo recording tool is not included in this candidate. Integrate its owning input before adding the shared navigation adapter and qualifying this route."
+    }
+  ],
+  "generatedRoutes": [
+    {
+      "route": "/app/",
+      "source": "game/offline/app.html",
+      "generator": "scripts/offline-launcher.mjs"
+    },
+    {
+      "route": "/editions/coupa-all/app/",
+      "generator": "scripts/compile-edition.mjs"
+    },
+    {
+      "route": "/editions/coupa-adventure/app/",
+      "generator": "scripts/compile-edition.mjs"
+    },
+    {
+      "route": "/editions/coupa-culture/app/",
+      "generator": "scripts/compile-edition.mjs"
+    },
+    {
+      "route": "/editions/coupa-foundations/app/",
+      "generator": "scripts/compile-edition.mjs"
+    },
+    {
+      "route": "/editions/coupa-operations/app/",
+      "generator": "scripts/compile-edition.mjs"
+    },
+    {
+      "route": "/editions/coupa-developers/app/",
+      "generator": "scripts/compile-edition.mjs"
+    },
+    {
+      "route": "/editions/droneaid-community/app/",
+      "generator": "scripts/compile-edition.mjs"
+    },
+    {
+      "route": "/editions/droneaid/app/",
+      "generator": "scripts/compile-edition.mjs"
+    },
+    {
+      "route": "/editions/droneaid-nl-workshop-lights/app/",
+      "generator": "scripts/compile-edition.mjs"
+    },
+    {
+      "route": "/editions/droneaid-nl-parts-in-motion/app/",
+      "generator": "scripts/compile-edition.mjs"
+    },
+    {
+      "route": "/editions/droneaid-nl-makers-together/app/",
+      "generator": "scripts/compile-edition.mjs"
+    },
+    {
+      "route": "/editions/droneaid-nl-careful-handoff/app/",
+      "generator": "scripts/compile-edition.mjs"
+    },
+    {
+      "route": "/editions/droneaid-nl-signals-of-support/app/",
+      "generator": "scripts/compile-edition.mjs"
+    },
+    {
+      "route": "/editions/droneaid-nl-shared-horizon/app/",
+      "generator": "scripts/compile-edition.mjs"
+    },
+    {
+      "route": "/editions/droneaid-nl-community/app/",
+      "generator": "publishing/edition-promotion.mjs"
+    }
+  ]
 }
