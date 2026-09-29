@@ -4,10 +4,11 @@ Parent: `752df72d66c1a1bbbebb95e9db72fe8de0e1f332`, existing draft PR761.
 This batch continues A current characters/reliable play and B optional encounters
 in parallel. It does not change missions, art, collision rules, rewards or a
 production approval. C artwork review and the C2 human study remain deferred.
-An external preservation writer committed the score fix and two test files at
-`547bb44cb052fb821b1250880cd57632cd64de65` during this batch. Their bytes match the
-reviewed/tested sources; this handoff appends the remaining Sentry test and evidence
-without rewriting that commit. The manifest pins the complete source set.
+An external preservation writer committed source subsets at
+`547bb44cb052fb821b1250880cd57632cd64de65` and
+`69dd53c88194d0cbf00c8c8c939004f90936ec26` during this batch. Their bytes match the
+reviewed/tested sources; this handoff appends the remaining plan/prompt updates and
+evidence without rewriting those commits. The manifest pins the complete source set.
 
 ## A2 — actual Solo Continue during enemy freeze
 
