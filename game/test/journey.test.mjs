@@ -85,6 +85,32 @@ test('skipping never grants a clear; exact legal completion removes skip and is 
   );
 });
 
+test('completion keeps the best verified stars across replays and accepts legacy receipts', () => {
+  const legacy = applyJourneyEvent(emptyJourneyProfile(), complete);
+  assert.equal(legacy.clears.solo[id].bestStars, undefined);
+  assert.deepEqual(validateJourneyProfile(structuredClone(legacy)), legacy);
+
+  const twoStars = applyJourneyEvent(emptyJourneyProfile(), { ...complete, stars: 2 });
+  assert.equal(twoStars.clears.solo[id].bestStars, 2);
+  const lowerReplay = applyJourneyEvent(twoStars, {
+    ...complete,
+    runId: 'run-2',
+    stars: 1,
+  });
+  assert.equal(lowerReplay.clears.solo[id].bestStars, 2);
+  const bestReplay = applyJourneyEvent(lowerReplay, {
+    ...complete,
+    runId: 'run-3',
+    stars: 3,
+  });
+  assert.equal(bestReplay.clears.solo[id].bestStars, 3);
+  assert.deepEqual(
+    applyJourneyEvent(bestReplay, { ...complete, runId: 'run-3', stars: 3 }),
+    bestReplay,
+    'the same verified result is idempotent',
+  );
+});
+
 test('Journey profile and storage errors follow the active locale', async (context) => {
   const locale = getLocale();
   context.after(() => setLocale(locale, { persist: false }));
