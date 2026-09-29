@@ -35,6 +35,9 @@ import { prepareReviewedCreatorBundle } from './batch-bundle.mjs';
 import { createCreatorMediaReviewController } from './media-review.mjs';
 import { prepareCreatorMediaCampaign } from './media-campaign.mjs';
 import { focusCreatorInstalledPlay } from './player-menu-focus.mjs';
+import { runCreatorOperation } from './operation.mjs';
+import { attachCreatorReviewReading } from './review-reading.mjs';
+import { mountAuthoringInputHost } from '../ui/authoring-input-host.mjs';
 import {
   formatNumber,
   localizedAttribute,
@@ -550,20 +553,25 @@ async function saveDraft() {
     if (draft.running === running) draft.running = null;
   }
 }
-async function operation(action) {
+async function operation(action, options = {}) {
   if (busy) return;
-  busy = true;
-  controller = new AbortController();
-  controls();
-  try {
-    await action(controller.signal);
-  } catch (error) {
-    fail(error);
-  } finally {
-    busy = false;
-    controller = null;
-    controls();
-  }
+  return runCreatorOperation(action, {
+    document,
+    window,
+    cancel: $('cancel'),
+    onStart: (next) => {
+      busy = true;
+      controller = next;
+      controls();
+    },
+    onFinish: () => {
+      busy = false;
+      controller = null;
+      controls();
+    },
+    onError: fail,
+    ...options,
+  });
 }
 function showReview(pack) {
   const project = pack.manifest.content.project;
@@ -639,7 +647,13 @@ function showReview(pack) {
     const validation = document.createElement('p');
     validation.className = 'creator-mission-validation';
     validation.textContent = pack.review.validation;
-    card.append(heading, grid, storyStatus, validation);
+    attachCreatorReviewReading({
+      card,
+      heading,
+      content: [grid, storyStatus, validation],
+      index,
+      navigation: mountAuthoringInputHost().navigation,
+    });
     cards.push(card);
   }
   $('legacy-review-grid').hidden = true;
@@ -916,8 +930,10 @@ async function listInstalled() {
       edit.className = 'secondary';
       localizedText(edit, () => t('interface:creator.openEditableSource'));
       edit.onclick = () =>
-        operation(async (signal) =>
-          openPrepared(await loadInstalledCreatorBundle(store, manifest.editionId, { signal })),
+        operation(
+          async (signal) =>
+            openPrepared(await loadInstalledCreatorBundle(store, manifest.editionId, { signal })),
+          { opener: edit },
         );
       row.append(title, edition, play, document.createTextNode(' '), edit);
       list.append(row);
@@ -963,67 +979,85 @@ for (const key of [
     }
     status(localizedMessage('interface:creator.draftChangesPending'));
   };
-$('generate').onclick = () => operation(generate);
+$('generate').onclick = () => operation(generate, { opener: $('generate') });
 $('regenerate').onclick = () =>
-  operation(async (signal) => {
-    const created = generateCreatorProject({
-      id: content.project.id,
-      name: $('name').value,
-      seed: (content.provenance.generationSeed + 1) >>> 0,
-    });
-    const assets = content.project.assets;
-    content.project = structuredClone(created.project);
-    content.project.assets = assets;
-    content.project.missions[0].presentation.backgroundAssetId = assets[0].id;
-    content.provenance = created.provenance;
-    await generate(signal);
-  });
+  operation(
+    async (signal) => {
+      const created = generateCreatorProject({
+        id: content.project.id,
+        name: $('name').value,
+        seed: (content.provenance.generationSeed + 1) >>> 0,
+      });
+      const assets = content.project.assets;
+      content.project = structuredClone(created.project);
+      content.project.assets = assets;
+      content.project.missions[0].presentation.backgroundAssetId = assets[0].id;
+      content.provenance = created.provenance;
+      await generate(signal);
+    },
+    { opener: $('regenerate') },
+  );
 $('cancel').onclick = () => controller?.abort();
 $('approve').onclick = () =>
-  operation(async (signal) => {
-    await draft.running;
-    approval = approveCreatorBundle(prepared);
-    $('approved').hidden = false;
-    try {
-      installReview = await reviewCreatorInstallation(store, prepared, approval, { signal });
+  operation(
+    async (signal) => {
+      await draft.running;
+      approval = approveCreatorBundle(prepared);
+      $('approved').hidden = false;
+      try {
+        installReview = await reviewCreatorInstallation(store, prepared, approval, { signal });
+        const review = installReview;
+        localizedText($('storage-review'), () =>
+          t('interface:creator.storageReview', {
+            pack: mib(review.packageBytes),
+            staging: mib(review.stagingBytes),
+            used: mib(review.usedBytes),
+            limit: mib(review.limitBytes),
+            status: t(
+              review.enoughManagedSpace
+                ? 'interface:creator.readyToInstall'
+                : 'interface:creator.storageFullDownload',
+            ),
+          }),
+        );
+      } catch (error) {
+        localizedText(
+          $('storage-review'),
+          localizedMessage('interface:creator.installStorageUnavailable', {
+            error: error.message,
+          }),
+        );
+      }
+      status(localizedMessage('interface:creator.approvedInstallOrDownload'));
+    },
+    { opener: $('approve') },
+  );
+$('install').onclick = () =>
+  operation(
+    async (signal) => {
+      // Installation reviews authorize one attempt. Keep Approve available for
+      // a fresh store review after cancellation, contention or a failed write.
       const review = installReview;
-      localizedText($('storage-review'), () =>
-        t('interface:creator.storageReview', {
-          pack: mib(review.packageBytes),
-          staging: mib(review.stagingBytes),
-          used: mib(review.usedBytes),
-          limit: mib(review.limitBytes),
-          status: t(
-            review.enoughManagedSpace
-              ? 'interface:creator.readyToInstall'
-              : 'interface:creator.storageFullDownload',
-          ),
+      installReview = null;
+      await installPreparedCreatorBundle(store, prepared, approval, review, { signal });
+      $('play').href = `./player.html?edition=${prepared.editionId}`;
+      $('play').hidden = false;
+      status(localizedMessage('interface:creator.campaignInstalled'));
+      await listInstalled();
+    },
+    {
+      opener: $('install'),
+      restoreTo: $('approve'),
+      onSuccessFocus: ({ opener, ownedFocus }) =>
+        focusCreatorInstalledPlay({
+          document,
+          opener,
+          ownedFocus,
+          play: $('play'),
+          wasFocused: true,
         }),
-      );
-    } catch (error) {
-      localizedText(
-        $('storage-review'),
-        localizedMessage('interface:creator.installStorageUnavailable', {
-          error: error.message,
-        }),
-      );
-    }
-    status(localizedMessage('interface:creator.approvedInstallOrDownload'));
-  });
-$('install').onclick = () => {
-  const opener = $('install'),
-    wasFocused = document.activeElement === opener;
-  return operation(async (signal) => {
-    await installPreparedCreatorBundle(store, prepared, approval, installReview, { signal });
-    $('play').href = `./player.html?edition=${prepared.editionId}`;
-    $('play').hidden = false;
-    installReview = null;
-    status(localizedMessage('interface:creator.campaignInstalled'));
-    await listInstalled();
-    if (!signal.aborted)
-      focusCreatorInstalledPlay({ document, opener, play: $('play'), wasFocused });
-  });
-};
+    },
+  );
 $('download').onclick = () => {
   try {
     downloadCreatorFile(exportCreatorBundle(prepared, approval), `${content.project.id}.rlpack`);
@@ -1042,46 +1076,55 @@ $('save').onclick = () => {
   void saveDraft().catch(fail);
 };
 $('import').onchange = () =>
-  operation(async (signal) => {
-    const file = $('import').files[0];
-    if (!file) return;
-    if (file.name.toLowerCase().endsWith('.rlsource')) {
-      await openSource(await importCreatorSource(file, { signal }));
-      await saveDraft();
-    } else await openPrepared(await importCreatorBundle(file, { signal }));
-  });
+  operation(
+    async (signal) => {
+      const file = $('import').files[0];
+      if (!file) return;
+      if (file.name.toLowerCase().endsWith('.rlsource')) {
+        await openSource(await importCreatorSource(file, { signal }));
+        await saveDraft();
+      } else await openPrepared(await importCreatorBundle(file, { signal }));
+    },
+    { opener: $('import') },
+  );
 const advancedId = `advanced-${id}`;
 $('advanced').onclick = () =>
-  operation(async () => {
-    await saveDraft();
-    const drafts = createContentDraftBackend();
-    const checkpoint = await drafts.read(advancedId);
-    if (!checkpoint)
-      await drafts.save({ ...structuredClone(content.project), id: advancedId }, null);
-    location.href = `../studio/?project=${advancedId}&creator-draft=${id}`;
-  });
+  operation(
+    async () => {
+      await saveDraft();
+      const drafts = createContentDraftBackend();
+      const checkpoint = await drafts.read(advancedId);
+      if (!checkpoint)
+        await drafts.save({ ...structuredClone(content.project), id: advancedId }, null);
+      location.href = `../studio/?project=${advancedId}&creator-draft=${id}`;
+    },
+    { opener: $('advanced') },
+  );
 $('load-advanced').onclick = () =>
-  operation(async () => {
-    const checkpoint = await createContentDraftBackend().read(advancedId);
-    if (!checkpoint) throw new Error(t('errors:creator.saveAdvancedCheckpointFirst'));
-    requireCreatorEditableProject(checkpoint.project);
-    const next = { ...content, project: checkpoint.project };
-    // Validate source dependencies before replacing the current editable draft.
-    await prepareCreatorSource(
-      {
-        draftId: id,
-        content: next,
-        editing: { fit: $('fit').value },
-        originalSha256: image?.original?.sha256 ?? draft.source?.document.originalSha256 ?? null,
-      },
-      currentAssets(),
-    );
-    content = next;
-    invalidate();
-    fillLabels();
-    await saveDraft();
-    status(localizedMessage('interface:creator.studioEditsLoaded'));
-  });
+  operation(
+    async () => {
+      const checkpoint = await createContentDraftBackend().read(advancedId);
+      if (!checkpoint) throw new Error(t('errors:creator.saveAdvancedCheckpointFirst'));
+      requireCreatorEditableProject(checkpoint.project);
+      const next = { ...content, project: checkpoint.project };
+      // Validate source dependencies before replacing the current editable draft.
+      await prepareCreatorSource(
+        {
+          draftId: id,
+          content: next,
+          editing: { fit: $('fit').value },
+          originalSha256: image?.original?.sha256 ?? draft.source?.document.originalSha256 ?? null,
+        },
+        currentAssets(),
+      );
+      content = next;
+      invalidate();
+      fillLabels();
+      await saveDraft();
+      status(localizedMessage('interface:creator.studioEditsLoaded'));
+    },
+    { opener: $('load-advanced') },
+  );
 window.addEventListener('beforeunload', (event) => {
   if (
     saveTimer ||

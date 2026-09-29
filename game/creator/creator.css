@@ -349,6 +349,19 @@ img {
 .creator-mission-review-card p {
   margin-top: 0;
 }
+.creator-review-reading {
+  max-height: min(60svh, 40rem);
+  overflow: auto;
+  overscroll-behavior: contain;
+  scrollbar-gutter: stable;
+  margin-block: 0.75rem;
+  padding: 0.35rem;
+}
+.creator-review-reading:focus-visible,
+.creator-review-reading[data-controller-reading] {
+  outline: 3px solid currentColor;
+  outline-offset: 2px;
+}
 .creator-mission-validation {
   color: #8aefcd;
 }
