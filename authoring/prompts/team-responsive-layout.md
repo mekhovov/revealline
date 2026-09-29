@@ -24,3 +24,10 @@ Exercise both hybrid/specialist editions through import, actual Start, Pause and
 Help; keep native committed attacks and strict authored-field rejection. Compare
 previously successful tuning outputs and installed reconstruction, and preserve
 all frozen adapter versions. A schema-valid import alone is not Start evidence.
+
+Read slowed presentation from both actual Support and the active timed enemy-slow
+pickup. Use the core's tick interval for the pickup, never wall time or a changed
+stored velocity. Check one ring/caption under overlap and after either source
+expires; preserve compact LOCK/CHARGE/RECOVER labels, freeze, pause and inactive
+actor exclusion. A freeze-only pickup must not be relabelled Slowed. Keep the
+painter read-only and compare old no-bonus draws before production admission.
