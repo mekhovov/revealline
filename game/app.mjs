@@ -8753,8 +8753,17 @@ try {
       if (document.hidden || event.type === 'blur') operation.cancel();
     }
     try {
-      pause(true);
+      // The confirmed snapshot already requires Pause. Calling pause() after
+      // installing this operation would invoke cancelResultAttempt() and cancel
+      // our own library handoff through its normal navigation cleanup.
       clearInput();
+      if (
+        libraryNextOperation !== operation ||
+        controller.signal.aborted ||
+        journeySkipDestination !== destination ||
+        !skipSnapshotCurrent(destination.snapshot)
+      )
+        return;
       preparationButtonBusy(button, true, operation);
       preparation = issueSkipPreparation(destination, operation, controller);
       feedback = beginPreparation(
