@@ -2435,6 +2435,177 @@ test('Audio settings retain an attempted streamed-style selection after a failed
   assert.deepEqual((await app.store.read()).library.listening.genres, ['synth90s']);
 });
 
+for (const styles of [
+  ['fpv'],
+  ['fusion'],
+  ['synth', 'fpv'],
+  ['synth', 'fusion'],
+  PUBLIC_SOUNDTRACK_STYLE_IDS.filter((id) => !['fpv', 'fusion'].includes(id)),
+  PUBLIC_SOUNDTRACK_STYLE_IDS,
+]) {
+  test(`Audio settings preserve exact public styles ${styles.join(',')} after save and reload`, async (t) => {
+    const callbacks = {
+      catalogue: emptyCatalogue,
+      onlineCatalogueDownload: {
+        fetch: async () => onlineCatalogueResponse(onlineCatalogueFixture()),
+      },
+    };
+    const app = await setup(t, { open: false, settings: true, callbacks });
+    await settleOnlineCatalogue(() => !app.node('settings-play-styles').disabled, 'initial styles');
+    await app.click('settings-styles-none');
+    for (const id of styles) {
+      app.node(`settings-style-${id}`).checked = true;
+      app.node(`settings-style-${id}`).onchange();
+    }
+    await app.click('settings-play-styles');
+    assert.deepEqual(
+      PUBLIC_SOUNDTRACK_STYLE_IDS.filter((id) => app.node(`settings-style-${id}`).checked),
+      styles,
+    );
+    assert.deepEqual((await app.store.read()).publicStyles, styles);
+    assert.equal(app.calls.filter(([kind]) => kind === 'remote').length, 1);
+    app.panel.dispose();
+    const reopened = await setup(t, { open: false, settings: true, callbacks, store: app.store });
+    await settleOnlineCatalogue(
+      () => !reopened.node('settings-play-styles').disabled,
+      'restored styles',
+    );
+    assert.deepEqual(
+      PUBLIC_SOUNDTRACK_STYLE_IDS.filter((id) => reopened.node(`settings-style-${id}`).checked),
+      styles,
+    );
+  });
+}
+
+for (const replacement of ['style', 'all', 'playlist', 'backup']) {
+  test(`explicit ${replacement} choice clears public preferences even when legacy values are unchanged`, async (t) => {
+    const callbacks = {
+      catalogue: emptyCatalogue,
+      onlineCatalogueDownload: {
+        fetch: async () => onlineCatalogueResponse(onlineCatalogueFixture()),
+      },
+    };
+    const app = await setup(t, { settings: true, callbacks });
+    await settleOnlineCatalogue(() => !app.node('settings-play-styles').disabled, 'initial styles');
+    if (replacement === 'all') await app.click('play-all');
+    await app.click('settings-styles-none');
+    app.node('settings-style-fpv').checked = true;
+    app.node('settings-style-fpv').onchange();
+    await app.click('settings-play-styles');
+    const before = await app.store.read();
+    assert.deepEqual(before.publicStyles, ['fpv']);
+    if (replacement === 'style') {
+      app.choose('quick-style', before.library.listening.mode);
+      await app.click('play-style');
+    } else if (replacement === 'all') await app.click('play-all');
+    else if (replacement === 'playlist') {
+      app.choose('selection', '');
+      await app.click('use-selection');
+    } else {
+      app.node('bundle-file').files = [
+        await exportSoundtrackBundle(before.library, before.assets, { catalogue: emptyCatalogue }),
+      ];
+      await app.click('import-bundle');
+      await app.click('save');
+    }
+    const after = await app.store.read();
+    assert.deepEqual(after.library.listening, before.library.listening);
+    assert.deepEqual(after.library.selection, before.library.selection);
+    assert.equal(after.publicStyles, undefined);
+    assert.equal(app.node('settings-style-fpv').checked, replacement === 'all');
+  });
+}
+
+for (const replacement of ['style', 'playlist']) {
+  test(`failed explicit ${replacement} choice retains its preference replacement intent for Save All`, async (t) => {
+    const memory = memoryIndexedDB();
+    const backing = createSoundtrackStore({
+      indexedDB: memory.indexedDB,
+      soundtrackCatalogue: true,
+    });
+    t.after(() => backing.close());
+    let failNext = false;
+    const store = {
+      read: (...args) => backing.read(...args),
+      commit: (...args) => {
+        if (failNext) {
+          failNext = false;
+          throw new Error('Temporary preference failure');
+        }
+        return backing.commit(...args);
+      },
+    };
+    const app = await setup(t, {
+      settings: true,
+      store,
+      callbacks: {
+        catalogue: emptyCatalogue,
+        onlineCatalogueDownload: {
+          fetch: async () => onlineCatalogueResponse(onlineCatalogueFixture()),
+        },
+      },
+    });
+    await settleOnlineCatalogue(() => !app.node('settings-play-styles').disabled, 'initial styles');
+    await app.click('settings-styles-none');
+    app.node('settings-style-fpv').checked = true;
+    app.node('settings-style-fpv').onchange();
+    await app.click('settings-play-styles');
+    failNext = true;
+    if (replacement === 'style') {
+      app.choose('quick-style', (await store.read()).library.listening.mode);
+      await app.click('play-style');
+    } else {
+      app.choose('selection', '');
+      await app.click('use-selection');
+    }
+    assert.deepEqual((await store.read()).publicStyles, ['fpv']);
+    assert.equal(app.node('save').disabled, false);
+    await app.click('save');
+    assert.equal((await store.read()).publicStyles, undefined);
+  });
+}
+
+test('FPV-only preference supersedes an unsaved replacement listening choice while retaining unrelated draft edits', async (t) => {
+  const callbacks = {
+    catalogue: emptyCatalogue,
+    onlineCatalogueDownload: {
+      fetch: async () => onlineCatalogueResponse(onlineCatalogueFixture()),
+    },
+  };
+  const app = await setup(t, { settings: true, callbacks });
+  await settleOnlineCatalogue(() => !app.node('settings-play-styles').disabled, 'initial styles');
+  const imported = structuredClone(upgradeSoundtrackLibrary((await app.store.read()).library));
+  imported.listening.mode = 'metal';
+  imported.listening.installedOnly = true;
+  imported.playlists.push({
+    id: 'imported.mix',
+    title: 'Unsaved imported mix',
+    trackIds: [BUILTIN_SOUNDTRACK_TRACKS[0].id],
+    order: 'ordered',
+    repeat: 'all',
+  });
+  app.node('bundle-file').files = [
+    await exportSoundtrackBundle(imported, [], { catalogue: emptyCatalogue }),
+  ];
+  await app.click('import-bundle');
+  await app.click('settings-styles-none');
+  app.node('settings-style-fpv').checked = true;
+  app.node('settings-style-fpv').onchange();
+  await app.click('settings-play-styles');
+  assert.deepEqual(
+    PUBLIC_SOUNDTRACK_STYLE_IDS.filter((id) => app.node(`settings-style-${id}`).checked),
+    ['fpv'],
+  );
+  assert.match(app.node('draft-state').textContent, /Unsaved draft/);
+  assert.equal((await app.store.read()).library.playlists.length, 0);
+  await app.click('save');
+  const saved = await app.store.read();
+  assert.equal(saved.library.playlists[0].id, 'imported.mix');
+  assert.equal(saved.library.listening.mode, 'ukrainian');
+  assert.equal(saved.library.listening.installedOnly, false);
+  assert.deepEqual(saved.publicStyles, ['fpv']);
+});
+
 test('Audio style playback saves only listening preferences and retains a staged track removal', async (t) => {
   const initial = await fixture(),
     catalogue = onlineCatalogueFixture(),
