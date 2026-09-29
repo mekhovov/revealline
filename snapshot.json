@@ -1,0 +1,153 @@
+{
+  "format": "revealline-recovery-fragment-v1",
+  "capturedAt": "2026-09-29T15:09:08.459625+00:00",
+  "worktree": "<home>/.codex/worktrees/v135-replay-audit/go_test",
+  "branch": "refs/heads/codex/v135-replay-audit",
+  "head": "651b78756039f48d332a97528503193d9111c382",
+  "excluded": [],
+  "changes": [
+    {
+      "status": "A ",
+      "path": "docs/player-first-ux2-couch-secondary-navigation.md",
+      "object": "ba2560fc525bceecfc2b590194312175265e78f4",
+      "sha256": "b20dcef2d6081d7249ab2d2ace5040bb015a7934a6aa80671b430302f68d10bc",
+      "bytes": 3255,
+      "mode": "100644"
+    },
+    {
+      "status": "M ",
+      "path": "game/build-config.json",
+      "object": "4e761636eb928a4f74d047bb688f9d8df8b1fad3",
+      "sha256": "04e6db2205bdd5bc9d86b3caaea887a71411b35c6b2729bcb77fe0334b033f0d",
+      "bytes": 6002,
+      "mode": "100644"
+    },
+    {
+      "status": "M ",
+      "path": "game/couch/couch-shell.mjs",
+      "object": "8e9abc40270924e0c462f1caf6e22b36d283048b",
+      "sha256": "3ed38e396ad9db34769d783e2bb23c0bf4e1b8ae101823b96009baf54691ae04",
+      "bytes": 24866,
+      "mode": "100644"
+    },
+    {
+      "status": "M ",
+      "path": "game/couch/couch.css",
+      "object": "7d79ad02c98c79946c8e3ebedace256b7e629b6a",
+      "sha256": "d2c92023fa304998d98bf66a8ca386400188a1df6d99b3b228fdcec32ac861ea",
+      "bytes": 14491,
+      "mode": "100644"
+    },
+    {
+      "status": "M ",
+      "path": "game/couch/index.html",
+      "object": "51753272796e0d8e0dbe43279b81ac84928bd444",
+      "sha256": "c6ffc96bcca09ceee4bf74df5f43f910680554ab175aa2396dea9ace40403a3a",
+      "bytes": 41003,
+      "mode": "100644"
+    },
+    {
+      "status": "M ",
+      "path": "game/couch/relay-rescue.mjs",
+      "object": "2e2f9634b01dba97a3300e2ac439a928a98a3495",
+      "sha256": "5bd01eb58973b8eebab1f47c0f4db704d552a397619d8bde81428c94161c0384",
+      "bytes": 209062,
+      "mode": "100644"
+    },
+    {
+      "status": "M ",
+      "path": "game/test/couch-shell.test.mjs",
+      "object": "37cac0b85e0efb46ebe489f6d41c629cf438ffa6",
+      "sha256": "39dd2b9cdc74e82f6596ee0c871c2d7d9ed28ddccaa8a00a42b8466263921e2b",
+      "bytes": 27989,
+      "mode": "100644"
+    },
+    {
+      "status": "M ",
+      "path": "game/test/shared-pause-hierarchy.test.mjs",
+      "object": "4f3fa4d07584a68f02a6ee95edc829c4c2764fff",
+      "sha256": "6a111969f0c68bb87c63dc6eac64ccc0e58ff6d716b0b213d2eb08181c235fc5",
+      "bytes": 4418,
+      "mode": "100644"
+    },
+    {
+      "status": "M ",
+      "path": "package-lock.json",
+      "object": "7b8b949d163011a4bd25598e9e2b26092b42f9bf",
+      "sha256": "0caccbc0f06d6125985dc50f1a3a1fec5303c0d470d009c1337e6a2291d82c6f",
+      "bytes": 39731,
+      "mode": "100644"
+    },
+    {
+      "status": "M ",
+      "path": "package.json",
+      "object": "2d8b46e4e3d20f72641e36e0aa140735380d1f57",
+      "sha256": "84ec21a3c08a663d078f761834809e9f8556c75f156527dbc31a339636609c71",
+      "bytes": 2400,
+      "mode": "100644"
+    }
+  ],
+  "indexEntries": [
+    {
+      "path": "docs/player-first-ux2-couch-secondary-navigation.md",
+      "mode": "100644",
+      "object": "ba2560fc525bceecfc2b590194312175265e78f4",
+      "stage": 0
+    },
+    {
+      "path": "game/build-config.json",
+      "mode": "100644",
+      "object": "4e761636eb928a4f74d047bb688f9d8df8b1fad3",
+      "stage": 0
+    },
+    {
+      "path": "game/couch/couch-shell.mjs",
+      "mode": "100644",
+      "object": "8e9abc40270924e0c462f1caf6e22b36d283048b",
+      "stage": 0
+    },
+    {
+      "path": "game/couch/couch.css",
+      "mode": "100644",
+      "object": "7d79ad02c98c79946c8e3ebedace256b7e629b6a",
+      "stage": 0
+    },
+    {
+      "path": "game/couch/index.html",
+      "mode": "100644",
+      "object": "51753272796e0d8e0dbe43279b81ac84928bd444",
+      "stage": 0
+    },
+    {
+      "path": "game/couch/relay-rescue.mjs",
+      "mode": "100644",
+      "object": "2e2f9634b01dba97a3300e2ac439a928a98a3495",
+      "stage": 0
+    },
+    {
+      "path": "game/test/couch-shell.test.mjs",
+      "mode": "100644",
+      "object": "37cac0b85e0efb46ebe489f6d41c629cf438ffa6",
+      "stage": 0
+    },
+    {
+      "path": "game/test/shared-pause-hierarchy.test.mjs",
+      "mode": "100644",
+      "object": "4f3fa4d07584a68f02a6ee95edc829c4c2764fff",
+      "stage": 0
+    },
+    {
+      "path": "package-lock.json",
+      "mode": "100644",
+      "object": "7b8b949d163011a4bd25598e9e2b26092b42f9bf",
+      "stage": 0
+    },
+    {
+      "path": "package.json",
+      "mode": "100644",
+      "object": "2d8b46e4e3d20f72641e36e0aa140735380d1f57",
+      "stage": 0
+    }
+  ],
+  "purpose": "Recovery only. These bytes are not release admission. Missing files, conflict stages and obsolete generated outputs are preserved as observations, not deletion or merge instructions."
+}

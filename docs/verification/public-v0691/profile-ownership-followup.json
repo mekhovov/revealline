@@ -1,4 +1,0 @@
-{
-  "correction": "Earlier attribution to a historical tab was unproven. Source app.mjs385-426 scopes profile writer by exact release build version. Independent same-version audit tab18 existed during first root flight and is now closed. Retrying normal reload, no lock stealing or storage clearing.",
-  "previousObservationRetained": true
-}
