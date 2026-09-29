@@ -1044,6 +1044,19 @@ body.field-kit.race-focus .race-equipment:not(:has(button:not([hidden]))) {
 }
 @media (max-width: 680px) and (orientation: portrait),
   (max-width: 1024px) and (orientation: landscape) and (max-height: 600px) {
+  /* Only an admitted compact overflow adds a readable action beneath the
+     complete board. It uses the center slot, never either seat's controls. */
+  body.field-kit.playing:has(#coop-overlay[hidden])
+    .coop-board-slot:has(#coop-cue-overflow:not([hidden])) {
+    display: grid;
+    grid-template-rows: minmax(0, 1fr) auto;
+    row-gap: 4px;
+  }
+  body.field-kit.playing:has(#coop-overlay[hidden]) #coop-cue-overflow {
+    grid-column: 1;
+    grid-row: 2;
+    align-self: end;
+  }
   body.field-kit.playing:has(#coop-overlay[hidden]) .race-pad > button[data-action] {
     min-inline-size: 44px;
     min-block-size: 44px;

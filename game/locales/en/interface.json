@@ -5188,5 +5188,10 @@
   "team.picturePreviewTitle": "{{mission}} · Picture preview",
   "downloads.ownershipUnreadable": "Download ownership could not be read. Nothing was removed; existing game files and saves are kept.",
   "controller.confirmTrace.toggle": "Show temporary controller diagnostics",
-  "controller.confirmTrace.sessionOnly": "Shown only for this session. No input is saved or sent."
+  "controller.confirmTrace.sessionOnly": "Shown only for this session. No input is saved or sent.",
+  "team.cueOverflowNotice": "Some field labels need more room. Open Field details to pause and read them.",
+  "team.cuePatrol": "Patrolling",
+  "team.cueDrifter": "Drifter",
+  "team.cueRelay": "Relay {{number}}",
+  "team.cueLockedPlayer": "Target locked: {{player}}"
 }
