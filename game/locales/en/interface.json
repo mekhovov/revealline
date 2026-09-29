@@ -1458,7 +1458,7 @@
   "openToVerifySavedOriginalsAndTheSourceGameS": "Open to verify saved originals and the source game’s installed packs.",
   "installedChapter": "Installed chapter",
   "savedPictureRevision": "Saved picture revision",
-  "originalPngOrJpeg4MibMaximum": "Original PNG or JPEG (4 MiB maximum)",
+  "originalPngOrJpeg4MibMaximum": "Original PNG, JPEG or WebP (4 MiB maximum)",
   "declaredSource": "Declared source",
   "myUploadedFile": "My uploaded file",
   "originalArtwork": "Original artwork",
@@ -5322,5 +5322,9 @@
   "encounterHelp.unavailable": "Threat guidance is unavailable because these board rules could not be validated.",
   "enemyGuide.sentinelSpot": "The lock marks a core protected by linked shield relays.",
   "enemyGuide.sentinelTry": "Capture every linked shield relay. During {{coreOpen}}, close a sufficient new cut—or, if the core is isolated, return to reclaimed ground with no unfinished line.",
-  "enemyGuide.practiceInstructions": "{{advice}} Move with direction taps; Pause when you want to inspect. Closing a cut stops your craft; tap a fresh direction to fly again. Retry starts the same lesson."
+  "enemyGuide.practiceInstructions": "{{advice}} Move with direction taps; Pause when you want to inspect. Closing a cut stops your craft; tap a fresh direction to fly again. Retry starts the same lesson.",
+  "soundtrack.discoveryRecording": "Prepare recording for a discovery",
+  "soundtrack.discoveryChecking": "Verifying the discovery recording original…",
+  "soundtrack.discoveryPrepared": "Exact original prepared. Download it below, then use Recording discovery in Level/Campaign or Company Studio with the approved English and Ukrainian transcripts.",
+  "soundtrack.discoveryHelp": "Discovery handoff needs an MP3 up to 120 seconds with web, offline and redistribution permission. It keeps original bytes; longer recordings need a separately approved shorter original."
 }

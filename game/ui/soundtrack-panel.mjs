@@ -2,6 +2,10 @@ import { contentText } from '../i18n/content.mjs';
 import { t, localizedText, localizedAttribute, localizedMessage } from '../i18n/index.mjs';
 import { soundtrackDownloadVolumes } from '../soundtrack-download-volumes.mjs';
 import {
+  canPrepareDiscoveryRecording,
+  prepareDiscoveryRecording,
+} from '../rewards/audio-original.mjs';
+import {
   createOfficialDownloads,
   localOfficialRecordingIds,
   withOptionalMusicDownload,
@@ -997,6 +1001,32 @@ export function attachSoundtrackPanel({
         setStatus(t('interface:originalMp3VerifiedChooseDownloadPreparedMp3BelowToSave'));
       }),
   );
+  const discoveryRecording = button(
+    'discovery-recording',
+    localizedMessage('interface:soundtrack.discoveryRecording'),
+    () =>
+      task(t('interface:soundtrack.discoveryChecking'), async (signal) => {
+        const track = tracks().find((item) => item.id === tracksSelect.element.value);
+        if (!canPrepareDiscoveryRecording(track, { catalogue: catalogue ?? undefined }))
+          throw new Error(t('interface:soundtrack.discoveryHelp'));
+        const blob =
+          assets.find((asset) => asset.sha256 === track.asset.sha256)?.blob ??
+          (await readAsset?.(track.asset.sha256, { signal, purpose: 'export' }));
+        const prepared = await prepareDiscoveryRecording(track, blob, {
+          catalogue: catalogue ?? undefined,
+          signal,
+        });
+        throwIfSoundtrackAborted(signal);
+        if (disposed) return;
+        invalidateBackup();
+        preparedBackup = {
+          ...prepared,
+          recording: true,
+          url: typeof download === 'function' ? null : URLImpl.createObjectURL(prepared.blob),
+        };
+        setStatus(t('interface:soundtrack.discoveryPrepared'));
+      }),
+  );
   const applyTrack = button(
     'apply-track',
     localizedMessage('interface:applyTrackDetailsToDraft'),
@@ -1171,6 +1201,10 @@ export function attachSoundtrackPanel({
     trackInfo,
     trackSources,
     downloadTrack,
+    discoveryRecording,
+    node('p', null, localizedMessage('interface:soundtrack.discoveryHelp'), {
+      class: 'micro-note',
+    }),
     trackTitle.field,
     trackArtist.field,
     rightsKind.field,
@@ -2542,6 +2576,8 @@ export function attachSoundtrackPanel({
     const policy =
       track?.kind === 'mp3' ? soundtrackRights(track, { catalogue: catalogue ?? undefined }) : null;
     downloadTrack.disabled = busy || !saved || policy?.redistribute !== 'allowed';
+    discoveryRecording.disabled =
+      busy || !saved || !canPrepareDiscoveryRecording(track, { catalogue: catalogue ?? undefined });
     sourceLinks(trackSources, track);
     const online = catalogue?.tracks.some((item) => item.id === track?.id);
     const offloaded = soundtrackOffloadedBonusTrackIds(draft).includes(track?.id);
