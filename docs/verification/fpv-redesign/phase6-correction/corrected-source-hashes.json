@@ -1,8 +1,0 @@
-{
-  "game/test/creator-tools-scope-host.test.mjs": "4a0321922ecc6a22a21d99af4cf66de350dd0c91bbcf05f86dedfdeb1516e739",
-  "game/test/storage-retention-host.test.mjs": "b36d9a015043cf485d4f3d40d23468b4d43dbbc9949d520e1377e54112a0bc59",
-  "game/test/device-controls-host.test.mjs": "18d495182b8218b64c1cd87dd23ab6a062777c5e93c2f0fa9b007b5bfee94ba4",
-  "game/test/sentinel-theme-host.test.mjs": "5df7d1224b73ecb074808e491fffcbaa0abf76c3ae6dc0d1422504ad25d8e54e",
-  "scripts/run-test-shard.mjs": "79ebf5ee3d3b532805279116d619f1409586cae7caf3da74f0c12b9ad0a398a7",
-  ".github/workflows/qualify-release-source.yml": "1d06647994c3586b60b370053589c3bd0a0adbb67ef5c0ef5aff8fa4cd5e6c5e"
-}
