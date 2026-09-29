@@ -13,12 +13,48 @@ python3 -m http.server 8080 --bind 127.0.0.1
 Open [the lab](http://127.0.0.1:8080/authoring/motion-lab/). No npm, build step, external fonts, CDN or AI call is needed. HTTP is required for ES modules and JSON; `file://` is unsupported.
 
 - **Autoplay** follows a fixed cardinal route. Enabling it resets the route start. Pause freezes both the arena and inspection animation; Reset keeps artwork and response settings.
+- **Inspection travel response** defaults to Follow arena. Idle, Cruise, Boost and Slow feed only the enlarged inspection's cosmetic speed response, using the current motion preset's ratios. They do not move the arena character, simulate gameplay states or enter exported recipes. Changes retain animation phase and Play/Pause intent. Wings respond through flap frequency and exhaust through length; pulses and lights ignore travel. The existing Slow inspection motion option may cap different rotor responses to the same visible rate. Reduced effects retain their existing static poses.
 - **Arrows / WASD** select a cardinal direction under the current turn policy. Releasing a direction keeps the latest deliberate direction; Pause stops travel. **Shift / Hold boost** multiplies speed by 1.7; **Space / Hold slow** by 0.38. Touch and keyboard holds are supported.
 - **Body turn response**, banking, rotor speed and attachments affect presentation only. They never steer or delay authoritative travel.
 - **Escape, window blur and tab hiding** pause and release temporary boost/slow inputs while preserving direction and any queued turn. Press Play explicitly to resume; direction presses while paused cannot resume the study. Held buttons also release on losing focus.
 - **Reduced motion** is effective when the local checkbox, shared preference or OS requests it. An initially reduced study begins paused. It freezes optional attachment animation, removes particles, and disables banking/facing interpolation. Later preference changes keep the current running/paused intent; explicit Play allows intentional movement.
 
 Defaults remain **hybrid terrain** and a **1.25-cell FPV body slot**. The scale slider changes presentation only. The body readout reports the slot's CSS-pixel width; transparent padding and contained non-square art may occupy less of that slot. The enlarged north-up **inspection view** uses the same body and attachment rig without enlarging the arena character. Its slow mode exposes blades/flaps/exhaust detail; disabling it follows the normal visual response.
+
+### Other moving parts
+
+For a recipe with **wings, exhaust, pulses or lights**, the inspection panel exposes
+its existing attachment anchors and base animation rate. For example, inspect
+Atlas bird to adjust a wing hinge, Tape runner for exhaust, or Spend Sprite for a
+pulse and separate blinking lights. The current `paintCharacter` renderer draws
+the accepted draft in the inspection view and, when that character is equipped,
+the arena. The editor does not add a simulation state or a new animation type.
+
+Anchor X and Y are offsets from the body's presentation origin, scaled by the
+fitted image width and height respectively. Wings rotate around these anchors;
+their optional third tuple value retains the authored side. The existing reader
+allows anchor coordinates from −1 to 1. These decorative effects can overhang the
+image; this is not a production collision or complete-sweep validation.
+
+Base rates retain the existing limits: wings 0.1–5 Hz, exhaust flicker 0.1–12 Hz,
+and pulse/light cycles 0.1–2 Hz. Wings still add their authored speed-dependent
+frequency gain. Pausing retains the current pose and both clocks; reduced motion
+retains the current renderer's steady pose. An edit, rejection, restore or export
+does not resume, rephase, equip a character, change travel or write collection data.
+
+**Attachment JSON** imports/exports the existing non-rotor component-array
+fragment, bounded to 16,384 characters. It permits known fields of the selected
+recipe's existing component identities in their existing order, using the current
+animation validator for numeric and color limits. It cannot add, rename or change
+component types. Invalid or stale input retains the accepted preview. Export uses
+the accepted fragment even when the text area contains unapplied text.
+
+Accepted drafts are per character for this page lifetime. Changing the inspected
+character discards unapplied text and shows that character's accepted draft.
+Changing its recipe clears its attachment draft and uses the newly selected
+recipe; **Restore recipe attachments** returns to that recipe's source values.
+Source presets, manifests, historical readers and registered assets stay unchanged.
+There is no new save format or `.rltheme` approval path in this editor.
 
 ## Two configurable turn policies
 
@@ -166,9 +202,23 @@ Each named `animationRecipes` entry has a `label` and up to eight uniquely ident
 | `pulse`    | `anchors`: `[x,y]`; `radius`, `amplitude`: fractions of source dimensions; `frequencyHz`; `opacity`; `color`                                                                                                                                                                                                                                                             |
 | `blink`    | `anchors`: `[x,y]`; `size`: fraction of image width; `frequencyHz`; `dutyCycle`; `color` (small light/eye-highlight animation)                                                                                                                                                                                                                                           |
 
-The live recipe selector and 2/3/4-blade, shape and radius controls are ephemeral per-character presentation overrides. All other parameters are editable in JSON. A rotor recipe selected on a body without motor anchors is reported as unattached, rather than inventing a rig. Effects are designed visual cues, not photoreal flight/biological/engine simulation.
+The live recipe selector and 2/3/4-blade, shape and radius controls are ephemeral per-character presentation overrides. A rotor recipe selected on a body without motor anchors is reported as unattached, rather than inventing a rig. Effects are designed visual cues, not photoreal flight/biological/engine simulation.
+
+For a rotor recipe, select **Motor hub** to edit that anchor's direction and phase in degrees. The review line reports the effective direction (hub sign × recipe sign), combined phase offset and blades per hub for each rotor component. **Show selected hub and sweep** draws a review guide in the enlarged inspection only, using the same contained-image dimensions and heading offset as the body. Pause and slow inspection are useful for checking handedness and sweep clearance; reduced effects retain the authored offset in the steady frame.
+
+**Hub X / Y** edit source-normalized coordinates relative to the body origin (the center for ordinary rigs). X uses the contained image's width and Y its height. **Hub radius** edits a fraction of image width and stores the existing `radiusScale` multiplier, bounded to 0.1–2 of the first rotor component's radius. Other rotor components retain their proportional radii and are checked too. For a non-square image the circular sweep's height fraction is `radius × sourceWidth / sourceHeight`. The source pivot is respected; the fit box is not treated as a square image. The guide outlines the actual source rectangle and each selected hub sweep.
+
+Envelope changes wait for decoded body dimensions, then validate the entire proposed rig using production presentation geometry checks. Every sweep must fit in the frame and hub centers must be distinct. Rejected changes leave the accepted rig, canvas commands and export bytes unchanged. Legacy source rigs may remain outside the frame under their original or changed recipe; loading, direction/phase review, export and source reset preserve them with a warning. Repair all invalid hubs together through JSON, or first reduce the shared recipe radius. Nothing automatically moves hubs, enlarges frames or shrinks blades. Frame clearance does not establish motor/body clearance, pixel readability or production asset acceptance.
+
+**Rig JSON import and export** accepts the selected body's existing `rotors` array: zero to eight legacy tuples or object anchors. Objects accept `x`, `y`, `radiusScale`, `direction`, `phaseDegrees` and optional `bladeCount` (2/3/4); omitted values retain the existing reader defaults. Export downloads the accepted array as `<character>.rotors.json`, ready to place in that character entry; it excludes unsaved textarea changes and separate recipe overrides. Apply rejects unknown fields, malformed values, out-of-range anchors and stale body/rig drafts without changing the accepted preview. Only a directly edited legacy tuple becomes an explicit object, preserving its index-derived direction, phase and radius. **Restore source rig** removes that body's draft.
+
+A legacy tuple requires all three `[x, y, radius]` values. Its third value represents `radiusScale = radius / 0.16`; it is not an independent physical radius and the current recipe still controls the visible sweep. Missing radius values receive an explicit rejection. Object anchors with omitted `radiusScale` retain 1. JSON imports also pass the full envelope check; new geometry uses no new fields and keeps the prior Motion reader contract. Draft checks include recipe, image dimensions and pivot, so an unrefreshed stale edit cannot target changed geometry. Canonical export serializes only accepted values, preserving untouched tuple/object representations and source-reset output; it does not preserve arbitrary whitespace from pasted JSON.
+
+These edits retain the current animation clocks, steering, running/paused intent and local/shared reduction choices. They do not write presets, images, collection saves, shared preferences or game state. Reload discards the drafts; changing a character or recipe retains the existing animation-reset behavior. The separate **Other moving parts** editor above supports existing wing, thruster, pulse and blink anchors and base rates; it does not add new component types or gameplay states.
 
 At high requested spin, discrete blade motion is capped and sampled below a quarter of the repeating blade pattern per displayed frame to reduce apparent reversal. A restrained blur disc conveys higher requested activity. Slow inspection caps rotor detail to 0.65 visual rotations/s. Blade shapes stay countable without claiming real RPM; visual phase is intentionally presentation-timed and may slow at low frame rates. Authoritative movement remains time-consistent.
+
+Imported rigs with mixed per-hub blade counts use the densest repeating blade pattern for phase sampling; omitted counts still render with the unchanged recipe fallback. Focused coverage is in `game/test/motion-lab-rotor-editor.test.mjs` and the actual application harness in `game/test/motion-lab-display-host.test.mjs`. These checks establish data round trips, painted pose restoration and host-state preservation, not native browser, touch or small-sprite visual qualification.
 
 Terrain role entries expose `kind`, optional `microSrc`, optional `propSrc`. Null/missing image layers use diagrams. `terrainStyles` defines texture/prop opacity and prop pitch, validated before rendering so zero pitch cannot freeze a draw loop. Both art placements are clipped to the same role rectangle.
 
