@@ -3,6 +3,7 @@ import { journeyMissionDetails, authoredJourneyMissionTags } from './journey-pre
 import { COOP_STARTER_PACK } from '../coop/library.mjs';
 import { t } from '../i18n/index.mjs';
 import { classifyContent } from '../content-design/content-lifecycle.mjs';
+import { canonicalMissionLevelKey, officialLevelNumber } from '../level-numbering.mjs';
 
 export const TEAM_LIBRARY_JOURNEY_EDITION = 'team-cultural-specialist-originals-2';
 export const TEAM_LIBRARY_CLASSIC_SOURCE = 'team-classic:relay-rescue-starter';
@@ -82,6 +83,7 @@ export function teamArenaLibrarySource({
   collection = 'Classic',
   isCurrent = (row) => rows.includes(row),
   progress = () => '',
+  progressState = () => ({ state: 'new', bestStars: null }),
   launch,
 }) {
   const editionLabel = () => (typeof edition === 'function' ? edition() : edition);
@@ -126,16 +128,28 @@ export function teamArenaLibrarySource({
     edition: editionLabel(),
     collection,
     entries: rows,
-    describe: (row) => ({
-      id: row.levelId,
-      revision: row.pack.revision,
-      campaignKey: row.pack.id,
-      campaignTitle: row.packName,
-      name: row.title,
-      levelIndex: row.pack.levels.indexOf(row.level),
-      modes: ['team'],
-      rules: row.goal,
-    }),
+    describe: (row) => {
+      const canonicalLevelKey =
+        sourceId === TEAM_LIBRARY_CLASSIC_SOURCE && collection === 'Classic'
+          ? canonicalMissionLevelKey({
+              packId: row.pack.id,
+              campaignId: row.pack.id,
+              levelId: row.levelId,
+            })
+          : undefined;
+      return {
+        id: row.levelId,
+        revision: row.pack.revision,
+        campaignKey: row.pack.id,
+        campaignTitle: row.packName,
+        name: row.title,
+        levelIndex: row.pack.levels.indexOf(row.level),
+        canonicalLevelKey,
+        globalLevelNumber: officialLevelNumber(canonicalLevelKey),
+        modes: ['team'],
+        rules: row.goal,
+      };
+    },
     presentation: () => ({ edition: editionLabel() }),
     availability: (row) =>
       current(row)
@@ -145,6 +159,7 @@ export function teamArenaLibrarySource({
             reason: t('interface:missionLibrary.team.packUnavailableThisVisit'),
           },
     progress: (row) => (current(row) ? progress(row) : ''),
+    progressState: (row) => (current(row) ? progressState(row) : { state: 'new', bestStars: null }),
     launch(row, context) {
       if (!current(row)) throw new Error(t('errors:missionLibrary.teamPackSelectionChanged'));
       return launch(row, context);

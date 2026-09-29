@@ -22,6 +22,17 @@ const model = createMissionLibrary(
 );
 const late = model.missions.find((row) => row.runtimeId === 'signal-12');
 const settle = (predicate) => waitFor(predicate, { timeoutMs: 10000 });
+function assertReadyCard(card, name = card.querySelector('.journey-card-title').textContent) {
+  assert.equal(card.tagName, 'BUTTON');
+  assert.equal(card.type, 'button');
+  assert.equal(card.disabled, false);
+  assert.equal(card.dataset.availabilityState, 'ready');
+  assert.ok(name.length > 0, 'The ready mission has a readable name.');
+  assert.ok(
+    card.getAttribute('aria-label').includes(name),
+    'Its accessible name identifies the mission.',
+  );
+}
 class Locks {
   held = new Set();
   async request(name, options, work) {
@@ -152,7 +163,7 @@ test('Versus All missions lists exact Journey and retained Classic rows without 
   assert.equal(p.$('journey-mode').value, 'versus');
   assert.equal(p.$('journey-collection').value, '');
   assert.equal(p.$('journey-lifecycle').value, 'current');
-  assert.equal(p.$('journey-cards').children.length, 252);
+  assert.equal(p.$('journey-cards').children.length, 186);
   showAllLifecycles(p);
   assert.equal(p.$('journey-cards').children.length, 327);
   assert.match(p.$('journey-cards').children[0].textContent, /Journey/);
@@ -160,7 +171,10 @@ test('Versus All missions lists exact Journey and retained Classic rows without 
     card.querySelector('.journey-card-tags').textContent.includes('Classic'),
   );
   assert.equal(classic.length, 188);
-  assert.match(classic.find((card) => card.dataset.missionId === late.id).textContent, /Play/);
+  assertReadyCard(
+    classic.find((card) => card.dataset.missionId === late.id),
+    late.name,
+  );
   assert(!requests.some((path) => path.includes('/content-design/assets/')));
   p.$('journey-back').click();
   p.frame(0);
@@ -354,7 +368,8 @@ test('Versus mode filter exposes the same qualified Journey identities in Solo w
   );
   assert.equal(new Set(original).size, 327);
   const target = cards[1];
-  assert.match(target.textContent, /Journey.*Band 1\/12.*Play/);
+  assert.match(target.textContent, /Journey.*Band 1\/12/);
+  assertReadyCard(target);
   target.click();
   await settle(() => new URL(globalThis.location.href).searchParams.has('library-mission'));
   const destination = new URL(globalThis.location.href);
@@ -376,7 +391,7 @@ for (const collection of ['Journey', 'Classic'])
     const target = cards.find((card) =>
       card.querySelector('.journey-card-tags').textContent.includes(collection),
     );
-    assert.match(target.textContent, /Play/);
+    assertReadyCard(target);
     target.click();
     await settle(() => new URL(globalThis.location.href).searchParams.has('library-mission'));
     const destination = new URL(globalThis.location.href);
@@ -404,7 +419,7 @@ for (const custom of [false, true])
       (card) => JSON.parse(card.dataset.missionId)[3] === lateLevel.id,
     );
     assert(card);
-    assert.match(card.textContent, /Play/);
+    assertReadyCard(card, lateLevel.name);
     card.click();
     await running(p, lateLevel.id);
     assert.equal(p.renders[1].level.id, lateLevel.id);
@@ -585,7 +600,7 @@ for (const chapterSource of ['optional'])
       p.frame(0);
       assert.deepEqual(p.checkpoint(), before);
       assert.equal(p.drawOptions[0].backdrop, picture);
-      assert.equal(card().querySelector('.journey-card-action').textContent, 'Play');
+      assertReadyCard(card(), target.name);
       card().click();
       await waitFor(() => p.$('race-library-replace')?.open, { timeoutMs: 60000 });
       p.$('race-library-play').click();

@@ -9,10 +9,7 @@ import { createManagedMediaStore } from '../managed-media-store.mjs';
 import { prepareSoundtrackLibrary } from '../soundtrack-bundle.mjs';
 import { BUILTIN_SOUNDTRACK_TRACKS } from '../soundtrack.mjs';
 import { SOUNDTRACK_CATALOGUE } from '../content/soundtrack-catalogue.mjs';
-import {
-  ONLINE_SOUNDTRACK_CATALOGUE_URL,
-  ONLINE_SOUNDTRACK_DIRECTORY_URL,
-} from '../online-soundtrack-catalogue.mjs';
+import { ONLINE_SOUNDTRACK_CATALOGUE_URL } from '../online-soundtrack-catalogue.mjs';
 import { AUDIO_PREFERENCES_KEY } from '../audio-preferences.mjs';
 import { emptyLibrary, updatePreferences, saveLibrary, loadLibrary } from '../library.mjs';
 import { retryFixture } from './fixtures/retry-scenarios.mjs';
@@ -147,7 +144,7 @@ test('muted fresh Solo menu and Studio do not acquire admitted hosted recordings
   const { page } = await setup(t, {
     emptyMusic: true,
     fetchResponse: async (url) => {
-      if (String(url).includes('revealline-soundtracks-')) requests.push(String(url));
+      if (String(url) === ONLINE_SOUNDTRACK_CATALOGUE_URL) requests.push(String(url));
     },
   });
   await waitFor(
@@ -155,7 +152,7 @@ test('muted fresh Solo menu and Studio do not acquire admitted hosted recordings
     'Silent library preparation settles',
   );
   await openStudio(page);
-  assert.deepEqual(requests, [ONLINE_SOUNDTRACK_DIRECTORY_URL, ONLINE_SOUNDTRACK_CATALOGUE_URL]);
+  assert.deepEqual(requests, [ONLINE_SOUNDTRACK_CATALOGUE_URL]);
   assert.equal(
     requests.some((url) => /\.mp3(?:$|[?#])/.test(url)),
     false,
@@ -596,13 +593,15 @@ test('actual Studio prepares without downloading; controller, keyboard and touch
     return pending;
   };
   try {
-    // The prior Confirm opened backup tools; rearm its real 120 ms release lifecycle.
-    sample([], 121);
     sample([0]);
+    assert.equal(controllerPreparationCalls, 0, 'Prepare waits for Confirm release.');
+    sample([0], 1200);
+    assert.equal(controllerPreparationCalls, 0, 'Held Confirm cannot prepare a backup.');
+    sample([]);
     assert.equal(
       controllerPreparationCalls,
       1,
-      'Controller Confirm invokes the existing Prepare action exactly once.',
+      'Controller Confirm release invokes the existing Prepare action exactly once.',
     );
     assert.ok(controllerPreparation, 'Controller Confirm returns the real preparation operation.');
     assert.equal(
@@ -629,16 +628,16 @@ test('actual Studio prepares without downloading; controller, keyboard and touch
     Buffer.from(await recovered.assets[0].blob.arrayBuffer()),
     Buffer.from(await original.blob.arrayBuffer()),
   );
+  sample([]);
+  assert.equal(requested, 0, 'The Prepare release cannot activate its newly focused link.');
+  sample([0]);
+  assert.equal(requested, 0, 'A separate Download Confirm also waits for release.');
   sample([0], 1200);
   assert.equal(requested, 0, 'Held Confirm cannot activate the newly focused action.');
   sample([]);
-  sample([], 121); // A separate Confirm follows the real neutral-release interval.
-  sample([0]);
-  assert.equal(requested, 1);
-  sample([0], 1200);
-  assert.equal(requested, 1, 'Held Confirm does not request duplicate downloads.');
-  sample([]);
-  sample([], 121); // Observe release before measuring the separate native-echo window.
+  assert.equal(requested, 1, 'The separate Confirm release requests exactly one download.');
+  sample([], 121);
+  assert.equal(requested, 1, 'Further neutral samples cannot repeat the download.');
   const echoed = link.emit('keydown', { code: 'Enter', key: 'Enter', repeat: false });
   assert.equal(
     echoed.defaultPrevented,

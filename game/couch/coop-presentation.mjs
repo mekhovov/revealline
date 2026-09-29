@@ -67,9 +67,9 @@ function historicalPolicy(source) {
 function historicalPolicies(source) {
   if (source === null || source === undefined) return [];
   const entries = Array.isArray(source)
-    ? // Current93 plus the thirty-five explicitly preserved58–92 policies.
+    ? // Current101 plus the forty-two explicitly preserved58–97 and99–100 policies.
       // Another supported edition must deliberately revisit this finite bound.
-      boundedJSON(source, { maxBytes: 36 * 1024, maxArray: 36 })
+      boundedJSON(source, { maxBytes: 43 * 1024, maxArray: 43 })
     : [source];
   const seen = new Set();
   return freezePresentation(

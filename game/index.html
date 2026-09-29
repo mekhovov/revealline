@@ -1660,6 +1660,23 @@
           <p id="controller-navigation-help"></p>
           <p id="controller-connection-hint" class="micro-note" role="status"></p>
         </details>
+        <label class="field">
+          <input
+            id="controller-trace-enabled"
+            type="checkbox"
+            aria-describedby="controller-trace-session-help"
+          />
+          <span data-i18n="interface:controller.confirmTrace.toggle">
+            Show temporary controller diagnostics
+          </span>
+        </label>
+        <p
+          id="controller-trace-session-help"
+          class="micro-note"
+          data-i18n="interface:controller.confirmTrace.sessionOnly"
+        >
+          Shown only for this session. No input is saved or sent.
+        </p>
         <section
           id="controller-boost-setting"
           class="controller-boost-settings"
@@ -2694,7 +2711,7 @@ No offline check yet.</pre
           aria-label="Choose play mode"
           data-i18n-aria-label="common:game.chooseMode"
         >
-          <a href="company.html">Company journeys</a>
+          <a href="company.html" data-i18n="interface:companyJourneys">Company journeys</a>
           <a id="shell-title-versus" href="couch/?return=solo" data-i18n="common:game.couchVersus"
             >Couch Versus</a
           >
@@ -2940,8 +2957,15 @@ No offline check yet.</pre
             >Review a recorded flight</span
           ></a
         >
-        <a id="shell-community" href="community/" class="button secondary"
-          >Community campaigns <span>Discover, install and play creator editions</span></a
+        <a
+          id="shell-community"
+          href="community/"
+          class="button secondary"
+          data-i18n-rich="interface:creator.communityCard"
+          >Community campaigns
+          <span data-i18n="interface:creator.communityDescription" data-i18n-slot="slot0"
+            >Discover, install and play creator editions</span
+          ></a
         >
         <button id="shell-library" type="button" class="button secondary">
           <span data-i18n="interface:scoresSaves">Scores & saves</span>

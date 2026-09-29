@@ -215,7 +215,7 @@ test('wide filters remain expanded when focus moves to cards and footer', () => 
   p.chooser.destroy();
 });
 
-test('compact transition keeps focused filters reachable without resetting mode or selection', () => {
+test('compact transition preserves the exact focused filter without resetting mode or selection', () => {
   const p = setup({ compact: false });
   assert.equal(p.$('journey-filter-details').open, true);
   p.$('journey-mode').value = 'versus';
@@ -223,13 +223,13 @@ test('compact transition keeps focused filters reachable without resetting mode 
   const card = p.$('journey-cards').children[0];
   p.$('journey-mode').focus();
   p.resize(true);
-  assert.equal(p.$('journey-filter-details').open, false);
-  assert.equal(p.doc.activeElement, p.$('journey-filter-summary'));
+  assert.equal(p.$('journey-filter-details').open, true);
+  assert.equal(p.doc.activeElement, p.$('journey-mode'));
   assert.equal(p.$('journey-mode').value, 'versus');
   assert.equal(p.$('journey-cards').children[0], card);
   p.resize(false);
   assert.equal(p.$('journey-filter-details').open, true);
-  assert.equal(p.doc.activeElement, p.$('journey-collection'));
+  assert.equal(p.doc.activeElement, p.$('journey-mode'));
   assert.equal(p.$('journey-mode').value, 'versus');
   assert.equal(p.launches, 0);
   p.chooser.destroy();
@@ -251,7 +251,8 @@ test('compact cards keep image previews while optional details do not rebuild or
   control.checked = false;
   control.emit('change');
   assert.equal(p.$('journey-chooser').classList.contains('mission-library-detailed'), false);
-  assert.match(card.textContent, /Original edition.*Classic.*65% coverage.*Play/);
+  assert.match(card.textContent, /Original edition.*Classic.*65% coverage/);
+  assert(!card.textContent.includes('Play'));
   assert.equal(p.launches, 0);
   p.chooser.destroy();
 });
@@ -356,7 +357,7 @@ test('narrow large-text and forced-colour layouts keep one readable column and n
 
 test('short landscape setup fields scroll above an unchanged reachable footer', async () => {
   const css = await readFile(new URL('../ui/journey.css', import.meta.url), 'utf8');
-  const landscape = css.slice(css.lastIndexOf('@media (max-height: 480px)'));
+  const landscape = css;
   assert.match(landscape, /\.journey-footer \{\s*position: relative;/);
   assert.match(
     landscape,
@@ -366,5 +367,29 @@ test('short landscape setup fields scroll above an unchanged reachable footer', 
     landscape,
     /\.mission-library-setup\s+>\s+\.mission-picker-setup-fields \{[^}]*position: absolute;[^}]*bottom: calc\(100% \+ 0\.35rem\);[^}]*max-height: min\(24rem, calc\(100dvh - 8rem\)\);[^}]*overflow: auto;/s,
     'Opening settings must not grow the footer beyond the short viewport.',
+  );
+  assert.match(
+    landscape,
+    /@media \(max-height: 480px\) \{[^}]*\.journey-campaign-rail \{\s*display: none;[^}]*\}[^}]*\.mission-library-chooser\[open\] \{\s*grid-template-rows: auto auto minmax\(5\.5rem, 1fr\) minmax\(53\.6px, auto\);/s,
+    'Short landscape keeps a minimum gallery and a reachable bottom control row.',
+  );
+});
+
+test('selector shell owns safe areas, touch scrolling and reduced-motion behavior', async () => {
+  const css = await readFile(new URL('../ui/journey.css', import.meta.url), 'utf8');
+  assert.match(
+    css,
+    /#journey-chooser\.mission-library-chooser \{[^}]*min-height: 0;[^}]*overflow: hidden;/s,
+  );
+  assert.match(
+    css,
+    /#journey-chooser\.mission-library-chooser \.journey-cards \{[^}]*overflow-y: auto;[^}]*touch-action: pan-y;[^}]*-webkit-overflow-scrolling: touch;/s,
+    'The card collection is the single momentum-scrolling touch surface.',
+  );
+  for (const edge of ['top', 'right', 'bottom', 'left'])
+    assert.match(css, new RegExp(`env\\(safe-area-inset-${edge}\\)`));
+  assert.match(
+    css,
+    /@media \(prefers-reduced-motion: reduce\) \{[^}]*\.journey-card \{\s*transition: none;[^}]*\}[^}]*\.journey-card:hover \{\s*transform: none;/s,
   );
 });

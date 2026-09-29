@@ -1409,6 +1409,46 @@
       "recordSha256": "3a4c7d09df6ea80fe9482d4b54ec977ef805adeab96aec58f106bc62ec68fdf5",
       "manifestSha256": "76c13bd3027b0e0e3ee443c35a338914c03f7ae1b98fbdf487cfdf8a6206ee5f",
       "checksumSha256": "60f24fc9e124db52aa5c0a403be95cb3f327666133e46382a3dd75afae75bdf7"
+    },
+    {
+      "version": "v0.141.8",
+      "sourceRevision": "320fd3d8b0e3f83cb26b67a0ed05e71f64a8f81b",
+      "tagObject": "ec4936441e6ced7e1931bc4511d733cd1f5a5928",
+      "recordSha256": "33f47a16062ee256d2ffe96ea1810dd5d1125e04aaf16f6007c200b90bb69db6",
+      "manifestSha256": "304466fb85f2afb08ecd7809356f3ba6c64e09b7eaa25fd2ea86cac8b77de4ad",
+      "checksumSha256": "6805665387ead3b218efa57f114b36cccbfc9a75c8a3489967536c51451f4b80"
+    },
+    {
+      "version": "v0.142.0",
+      "sourceRevision": "813dee5feff5d42c54ef91292f6dd434d39d311a",
+      "tagObject": "813dee5feff5d42c54ef91292f6dd434d39d311a",
+      "recordSha256": "b742e27d250e5331796ccc4cd6a45cb8a9f39f75b1737b91a406a707fb32ecc0",
+      "manifestSha256": "bdd794feefb443ae6e8bd45451a7e0b4ded52216b0cc83001a2129bc142c2d60",
+      "checksumSha256": "8b1bb33f4a10a3d32d92f11c8d9a6a2857c1f342523ff9998e95a3845e8609ec"
+    },
+    {
+      "version": "v0.142.1",
+      "sourceRevision": "7138e7b6187bf69991d50313c3f9ac1620427778",
+      "tagObject": "7138e7b6187bf69991d50313c3f9ac1620427778",
+      "recordSha256": "8061d27b72da722fa59d97e5df1497c0dfc09c088fe103fb0f6126ce21d1ab1c",
+      "manifestSha256": "9a0828d186501196d8630724191d4c1164996ef6de630ec4008f7ad3aa0f6f80",
+      "checksumSha256": "91e10436f0979cfed9fe27462ca6470128c309d00537c23932d11fd59274176a"
+    },
+    {
+      "version": "v0.142.2",
+      "sourceRevision": "a5859df784314556072f9215f9b293962e4f2ea4",
+      "tagObject": "a5859df784314556072f9215f9b293962e4f2ea4",
+      "recordSha256": "ac8fb7f466f0801080a4c5560dcba430ee84ce95cfef04fbbd88434313dda35b",
+      "manifestSha256": "59a0434664b5fb340201c2a607bec9fe34b8f7a4d7e063a37ec58eb12caf9470",
+      "checksumSha256": "dfe9eedb1f910553cb637d3fe10672893dd655ac973f42d37519bf1c3b307220"
+    },
+    {
+      "version": "v0.142.3",
+      "sourceRevision": "b5ab06e12542f72e33c45b973ba693a5e1509c1c",
+      "tagObject": "79852d67fd35a8622626f10093e047e3853a8f7d",
+      "recordSha256": "3ffb0beaae70b83c38e88aaa8f864dd63de424823d8ede5f3165e4e3bfea0428",
+      "manifestSha256": "af97bf092f440e62e1d822d1b34f36cfce667e4a729e93e0b3182b7184c910d9",
+      "checksumSha256": "9cf7df647e53ced515218b4887b915e9348ded8673aa5a30111a87728ab936b7"
     }
   ]
 }

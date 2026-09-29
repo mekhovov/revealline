@@ -1,3 +1,5 @@
+import { attachLanguageControls, translateDOM } from './i18n/index.mjs';
+
 /** Preserve old company URLs and installed-app entry identities while using
  * the exact same document and runtime as ordinary Solo. */
 export function companyEntryHref(href, compiledEdition) {
@@ -10,6 +12,8 @@ export function companyEntryHref(href, compiledEdition) {
   return target.href;
 }
 if (globalThis.document && globalThis.location) {
+  translateDOM(document);
+  attachLanguageControls(document);
   const href = companyEntryHref(location.href, document.documentElement.dataset.editionId);
   document.getElementById('company-entry-link').href = href;
   location.replace(href);

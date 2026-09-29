@@ -18,6 +18,7 @@ import { encounterView } from '../ui/encounter-view.mjs';
 import { attachReplayNavigation } from './navigation.mjs';
 import { createOperationStatus } from '../ui/operation-status.mjs';
 import { mountReplayDisplay } from './display.mjs';
+import { replayEventRecord, replayEventText } from './event-copy.mjs';
 
 const $ = (id) => document.getElementById(id);
 globalThis.RevealLineToolLaunch?.attached();
@@ -116,7 +117,7 @@ try {
     for (const id of ['example', 'example-brief', 'load-example']) $(id).hidden = true;
     const exampleLabel = document.querySelector('label[for="example"]');
     if (exampleLabel) exampleLabel.hidden = true;
-    localizedText($('load-heading'), () => 'Import a recording');
+    localizedText($('load-heading'), () => t('interface:replay.importRecording'));
     const section = $('example').closest('section');
     const importPanel = section?.querySelector('.import-panel');
     if (importPanel) importPanel.open = true;
@@ -131,11 +132,7 @@ try {
       '[data-i18n="interface:themesChangeThePreviewSceneAndRawReplayActorsRecorded"]',
     );
     if (explanation)
-      localizedText(
-        explanation,
-        () =>
-          'Company recordings require their exact original actors, palette and mission picture. Raw recordings use the selected preview theme. Gameplay and results stay as recorded. Music and the original interface are not restored; this theater is silent.',
-      );
+      localizedText(explanation, () => t('interface:replay.companyRecordingExplanation'));
   }
   if (theaterDisposed) throw new DOMException(t('interface:theTheaterIsClosed'), 'AbortError');
   const context = $('board').getContext('2d');
@@ -156,7 +153,7 @@ try {
     controller = null,
     lastFrame = 0,
     lastClass = null,
-    eventLines = [],
+    eventHistory = [],
     disposed = false,
     frameId = null,
     nativeUnsubscribe = null;
@@ -265,26 +262,16 @@ try {
   }
   function displayEvents(events) {
     if (events.length) {
-      eventLines.push(
+      eventHistory.push(
         ...events.map((event) =>
-          t('gameplay:tick2', {
-            value1: event.tick ?? player.state.tick,
-            value2: clipped(event.type, 80),
-            value3: event.classId ? ` · ${clipped(event.classId, 80)}` : '',
-            value4: event.primitive ? ` · ${clipped(event.primitive, 80)}` : '',
-            value5:
-              event.type === 'signal.changed' && event.resistant && event.zoneIds.length
-                ? ' · interference resisted'
-                : '',
-            value6: event.reason ? ` · ${clipped(event.reason, 80)}` : '',
-          }),
+          replayEventRecord(event, player.state.tick, (value) => clipped(value, 80)),
         ),
       );
-      eventLines = eventLines.slice(-12);
+      eventHistory = eventHistory.slice(-12);
     }
-    const items = (eventLines.length ? eventLines : [t('interface:noEventsYet')]).map((text) => {
+    const items = (eventHistory.length ? eventHistory : [null]).map((event) => {
       const item = document.createElement('li');
-      localizedText(item, () => text);
+      localizedText(item, () => (event ? replayEventText(event) : t('interface:noEventsYet')));
       return item;
     });
     $('events').replaceChildren(...items);
@@ -331,9 +318,10 @@ try {
     pending = true;
     player?.pause();
     updateControls();
-    const current = () => !disposed && ticket === epoch && !nextController.signal.aborted;
+    const current = () => !disposed && ticket === epoch && !nextController.signal.aborted,
+      loadLabel = () => clipped(typeof label === 'function' ? label() : label);
     const display = importStatus.begin({
-      message: `Reading ${clipped(label)}…`,
+      message: () => t('gameplay:reading2', { value1: loadLabel() }),
       stage: 'reading',
       isCurrent: current,
     });
@@ -373,7 +361,7 @@ try {
       if (!current()) return;
       if (envelope) {
         if (runtimeContent && envelope.actorAppearancePin.style !== 'campaign')
-          throw new Error('This edition does not include that recorded actor style.');
+          throw new Error(t('interface:replay.actorStyleUnavailable'));
         display.update({
           message: t('interface:checkingTheRecordedMissionOwnerAndExactFpvActors'),
           stage: 'verifying',
@@ -396,7 +384,7 @@ try {
         if (!current()) return;
         if (actual.authoredBackground) {
           display.update({
-            message: 'Verifying the recorded mission’s original picture…',
+            message: () => t('interface:replay.verifyingOriginalPicture'),
             stage: 'decoding',
             progress: null,
           });
@@ -451,7 +439,7 @@ try {
       if (actorLease?.pin().authoredPresentationSha256) $('theme').value = theme.id;
       lastClass = player.state.activeClassId;
       lastFrame = 0;
-      eventLines = [];
+      eventHistory = [];
       displayEvents([]);
       localizedText($('recording-name'), () => player.info.levelName);
       localizedText($('asset-status'), () => assetMessage);
@@ -459,12 +447,14 @@ try {
         actorLease
           ? actorLease.pin().authoredPresentationSha256
             ? pictureLease
-              ? 'Recorded company actors, palette and original mission picture match their exact artwork receipt. Music and the original interface are not restored.'
-              : 'Recorded company actors and procedural palette match their exact artwork receipt. This mission has no authored picture. Music and the original interface are not restored.'
+              ? t('interface:replay.companyAppearanceWithPicture')
+              : t('interface:replay.companyAppearanceWithoutPicture')
             : t('interface:recordedFpvActorsExactActorReleaseRestoredPictureMusicAnd')
           : t('interface:rawReplayPreviewActorsAndSceneNoRecordedAppearanceIs'),
       );
-      display.finish({ message: `${clipped(label)} verified and loaded. Ready to watch.` });
+      display.finish({
+        message: () => t('gameplay:verifiedAndLoadedReadyToWatch', { value1: loadLabel() }),
+      });
       localizedText($('transport-status'), () =>
         player.phase === 'complete'
           ? t('interface:thisRecordingContainsNoInputTicksItsFinalCheckpointMatches')
@@ -475,7 +465,10 @@ try {
       if (current()) {
         display.finish({
           state: 'error',
-          message: `Could not load recording: ${clipped(error.message, 300)} The previous recording is unchanged.`,
+          message: () =>
+            t('gameplay:couldNotLoadRecordingThePreviousRecordingIsUnchanged', {
+              value1: clipped(error.message, 300),
+            }),
         });
         if (retainedRequest) {
           const link = document.createElement('a'),
@@ -484,7 +477,7 @@ try {
           target.searchParams.set('presentation', retainedRequest.id);
           link.href = target.href;
           link.id = 'retained-recording-artwork';
-          link.textContent = 'Open the exact retained artwork, then import this recording again';
+          localizedText(link, () => t('interface:replay.openRetainedArtwork'));
           retainedRecovery = document.createElement('p');
           retainedRecovery.append(link);
           $('import-status').parentElement.append(retainedRecovery);
@@ -501,7 +494,7 @@ try {
     }
   }
   async function fetchExample(signal) {
-    if (runtimeContent) throw new Error('Import a recording from this edition.');
+    if (runtimeContent) throw new Error(t('interface:replay.importFromEdition'));
     const example = examples[$('example').value];
     const response = await fetch(example.file, { signal });
     if (!response.ok) throw new Error(t('interface:theExampleFileCouldNotLoad'));
@@ -535,13 +528,16 @@ try {
   }
   $('load-example').addEventListener(
     'click',
-    () => void load(fetchExample, t('interface:fieldcraftExample')),
+    () => void load(fetchExample, () => t('interface:fieldcraftExample')),
   );
   $('example').addEventListener('change', exampleBrief);
   $('cancel-load').addEventListener('click', cancelLoad);
   $('load-text').addEventListener('click', () => {
     const text = $('replay-text').value;
-    return load(async () => text, t('interface:pastedReplay'));
+    return load(
+      async () => text,
+      () => t('interface:pastedReplay'),
+    );
   });
   $('replay-file').addEventListener('change', () => {
     const file = $('replay-file').files?.[0];
@@ -559,7 +555,7 @@ try {
       if (!player || pending) return;
       player.reset();
       painter.setLevel(player.state.level, { seed: player.info.seed });
-      eventLines = [];
+      eventHistory = [];
       displayEvents([]);
       lastFrame = 0;
       consume(player.pause());
@@ -654,11 +650,14 @@ try {
   document.querySelector('main').removeAttribute('aria-busy');
   bootDisplay.clear();
   frameId = requestAnimationFrame(frame);
-  if (!runtimeContent) void load(fetchExample, t('interface:copperCrossingExample'));
+  if (!runtimeContent) void load(fetchExample, () => t('interface:copperCrossingExample'));
 } catch (error) {
   if (!theaterDisposed)
     bootDisplay.finish({
       state: 'error',
-      message: `The theater could not start: ${clipped(error.message, 300)} Reload the page to try again.`,
+      message: () =>
+        t('gameplay:theTheaterCouldNotStartReloadThePageToTry', {
+          value1: clipped(error.message, 300),
+        }),
     });
 }

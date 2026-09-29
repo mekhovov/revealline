@@ -7,6 +7,8 @@ import {
   prepareCreatorTeamCampaign,
 } from '../creator/team.mjs';
 import {
+  CREATOR_TEAM_DATABASE,
+  CREATOR_TEAM_PROGRESS_FORMAT,
   createInstalledTeamAttempt,
   createInstalledTeamAttemptSnapshot,
   createInstalledTeamCampaignStore,
@@ -122,7 +124,8 @@ test('a fresh Team host discovers and launches one exact installed edition', asy
   assert.match(installed[0].textContent, /У цьому виданні не пройдено/);
   assert.match(installed[0].textContent, new RegExp(editionId.slice(0, 12)));
   assert.match(installed[0].textContent, /Campaign 22/);
-  assert.equal(installed[0].querySelector('.journey-card-action').textContent, 'Грати');
+  assert.equal(installed[0].querySelector('.journey-card-action').hidden, true);
+  assert.equal(installed[0].querySelector('.journey-card-action').textContent, '');
   await activateMissionCard(installed[0]);
   assert.equal(f.$('journey-chooser').open, false);
   assert.equal(f.$('coop-menu').hidden, true);
@@ -140,6 +143,74 @@ test('a fresh Team host discovers and launches one exact installed edition', asy
   assert(saved, 'Starting an installed Team mission writes its recoverable initial checkpoint.');
   assert.equal(saved.editionId, editionId);
   assert.equal(saved.checkpoint.tick, 0);
+});
+
+test('installed Team cards show historical clears without inventing a star grade', async (t) => {
+  const memory = managedIndexedDB(),
+    prepared = await campaign('team-host-cleared', 25),
+    installer = createInstalledTeamCampaignStore({ indexedDB: memory.indexedDB }),
+    { editionId } = await installer.install(prepared),
+    level = prepared.pack.levels[0];
+  installer.close();
+  // Model a valid receipt persisted by a previous Team host. This tests the
+  // real inventory-to-card adapter, not replay verification or grade authority.
+  await new Promise((resolve, reject) => {
+    const opened = memory.indexedDB.open(CREATOR_TEAM_DATABASE, 1);
+    opened.onerror = () => reject(opened.error);
+    opened.onsuccess = () => {
+      const db = opened.result,
+        tx = db.transaction('progress', 'readwrite');
+      tx.objectStore('progress').put(
+        {
+          format: CREATOR_TEAM_PROGRESS_FORMAT,
+          editionId,
+          generation: 1,
+          clears: {
+            [level.id]: {
+              runId: 'historical-team-clear',
+              gameplayId: installedTeamGameplayId(prepared.pack, level.id, 'standard', 'full'),
+              difficulty: 'standard',
+              presetId: 'full',
+            },
+          },
+          attempts: {},
+        },
+        editionId,
+      );
+      tx.oncomplete = () => {
+        db.close();
+        resolve();
+      };
+      tx.onabort = tx.onerror = () => {
+        db.close();
+        reject(tx.error);
+      };
+    };
+  });
+  const f = await page(t, {
+    nativeFocus: true,
+    nativeVisibility: true,
+    beforeImport: browserFixture(memory),
+    presentation: {
+      load: ({ snapshot }) => {
+        snapshot.resolved.theme.revision = 79;
+      },
+    },
+  });
+  await openMissionLibrary(f, 'coop-discovery-open');
+  const cards = [...f.$('journey-cards').children].filter(
+    (card) => JSON.parse(card.dataset.missionId)[0] === `team-installed:${editionId}`,
+  );
+  assert.equal(cards.length, prepared.pack.levels.length);
+  assert.equal(cards[0].dataset.completionState, 'completed');
+  assert.equal(cards[0].dataset.bestStars, '');
+  assert.match(
+    cards[0].querySelector('.journey-card-progress').textContent,
+    /Cleared.*Standard.*Full teamwork/,
+  );
+  assert.match(cards[0].getAttribute('aria-label'), /Cleared.*Standard.*Full teamwork/);
+  assert.equal(cards[1].dataset.completionState, 'new');
+  assert.equal(cards[1].dataset.bestStars, '');
 });
 
 test('a fresh Team host labels and resumes an exactly replayed installed checkpoint', async (t) => {

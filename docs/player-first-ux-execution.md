@@ -1,10 +1,11 @@
 # Reveal Line: player-first UX execution
 
 > **Current status:** use the
-> [27 September completion and remaining delivery plan](plan-status-2026-09-27.md)
-> for the accepted public boundary, prioritized releases, ETA ranges, blockers,
-> and content-accounting limits. The checkpoint below remains the detailed
-> v0.141.6 execution contract.
+> [28 September completion and remaining delivery plan](plan-status-2026-09-28.md)
+> for v0.141.7 deployment, remaining player acceptance, current owners, compatible
+> batches, focused effort ranges and content-accounting limits. The checkpoints
+> and version tables below preserve historical contracts and observations; their
+> serial version allocations and pending PR labels are not the current queue.
 
 > **Current release-coordination policy (27 September 2026):** the dedicated
 > release-coordinator chat is the sole merge, version, freeze, archive, selector,

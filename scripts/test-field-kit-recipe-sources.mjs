@@ -3,7 +3,17 @@ import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import {
   fieldKitRecipeSources,
+  verifyFieldKitSelectorAudioContinuationReview,
+  verifyFieldKitSteamDeckAudioContinuationReview,
+  verifyFieldKitAudioStyleMenuCorrectionReview,
+  verifyFieldKitAudioStyleMenuReview,
+  verifyFieldKitPlayerReadinessAudioReview,
+  verifyFieldKitLocalizationAudioReview,
+  verifyFieldKitSteamDeckPresentationContinuationReview,
+  verifyFieldKitMainBulkAudioReview,
   verifyFieldKitAudioContinuationReview,
+  verifyFieldKitCanonicalSoundtrackReview,
+  verifyFieldKitBulkQueueReview,
   verifyFieldKitCompanyAudioContinuationReview,
 } from './produce-field-kit-theme.mjs';
 
@@ -258,4 +268,214 @@ test('company startup audio review and both immutable predecessor byte strings f
     changed[index] = Buffer.concat([changed[index], Buffer.from(' ')]);
     assert.equal(verifyFieldKitCompanyAudioContinuationReview(...changed), false);
   }
+});
+
+test('canonical soundtrack review and both reconciled review byte strings fail closed', async () => {
+  const current = await readFile(
+    new URL(
+      '../docs/verification/canonical-soundtrack-main-rebase-2026-09-28/review.json',
+      import.meta.url,
+    ),
+  );
+  const company = await readFile(
+    new URL(
+      '../docs/verification/v0.141.7-company-startup-audio-continuation/review.json',
+      import.meta.url,
+    ),
+  );
+  const external = await readFile(
+    new URL(
+      '../docs/verification/external-soundtrack-delivery-2026-09-27/review.json',
+      import.meta.url,
+    ),
+  );
+  const branchRebase = await readFile(
+    new URL(
+      '../docs/verification/canonical-soundtrack-rebase-audio-continuation-2026-09-27/review.json',
+      import.meta.url,
+    ),
+  );
+  assert.equal(
+    verifyFieldKitCanonicalSoundtrackReview(current, company, branchRebase, external),
+    true,
+  );
+  for (let index = 0; index < 4; index++) {
+    const changed = [current, company, branchRebase, external];
+    changed[index] = Buffer.concat([changed[index], Buffer.from(' ')]);
+    assert.equal(verifyFieldKitCanonicalSoundtrackReview(...changed), false);
+  }
+});
+
+test('bulk queue continuation binds current review and all six immutable predecessors', async () => {
+  const current = await readFile(
+    new URL(
+      '../docs/verification/bulk-queue-audio-effects-2026-09-28/review.json',
+      import.meta.url,
+    ),
+  );
+  const paths = [
+    'docs/verification/canonical-soundtrack-main-rebase-2026-09-28/review.json',
+    'docs/verification/fpv-family-effects-continuation-2026-09-28/review.json',
+    'docs/verification/bulk-integration-presentation-continuation-2026-09-27/review.json',
+    'docs/verification/v0.141.7-company-startup-audio-continuation/review.json',
+    'docs/verification/bulk-integration-audio-continuation-2026-09-27/review.json',
+    'docs/verification/v0.141.0-managed-media-audio-continuation/review.json',
+  ];
+  const prior = await Promise.all(
+    paths.map((path) => readFile(new URL('../' + path, import.meta.url))),
+  );
+  assert.equal(verifyFieldKitBulkQueueReview(current, prior), true);
+  assert.equal(
+    verifyFieldKitBulkQueueReview(Buffer.concat([current, Buffer.from(' ')]), prior),
+    false,
+  );
+  assert.equal(verifyFieldKitBulkQueueReview(current, prior.slice(1)), false);
+  for (let i = 0; i < prior.length; i++) {
+    const changed = [...prior];
+    changed[i] = Buffer.concat([changed[i], Buffer.from(' ')]);
+    assert.equal(verifyFieldKitBulkQueueReview(current, changed), false);
+  }
+  assert.equal(verifyFieldKitBulkQueueReview(current, [...prior].reverse()), false);
+});
+
+test('Steam Deck Confirm presentation continuation and all immutable predecessors fail closed', async () => {
+  const paths = [
+    'docs/verification/v0.141.8-steamdeck-confirm-presentation-continuation/review.json',
+    'docs/verification/actor-only-ui-continuation-2026-09-24/review.json',
+    'docs/verification/v0.131.0-localization-presentation-continuation/review.json',
+    'docs/verification/v0.141.7-company-startup-audio-continuation/review.json',
+    'docs/verification/bulk-integration-audio-continuation-2026-09-27/review.json',
+    'docs/verification/v0.141.0-managed-media-audio-continuation/review.json',
+  ];
+  const bytes = await Promise.all(
+    paths.map((path) => readFile(new URL('../' + path, import.meta.url))),
+  );
+  assert.equal(verifyFieldKitSteamDeckPresentationContinuationReview(...bytes), true);
+  for (let index = 0; index < bytes.length; index++) {
+    const changed = [...bytes];
+    changed[index] = Buffer.concat([changed[index], Buffer.from(' ')]);
+    assert.equal(verifyFieldKitSteamDeckPresentationContinuationReview(...changed), false);
+  }
+});
+
+test('main and bulk continuation rejects every altered immutable review byte string', async () => {
+  const paths = [
+    'docs/verification/bulk-main320-audio-continuation-2026-09-28/review.json',
+    'docs/verification/v0.141.8-steamdeck-confirm-presentation-continuation/review.json',
+    'docs/verification/bulk-queue-audio-effects-2026-09-28/review.json',
+  ];
+  const bytes = await Promise.all(
+    paths.map((path) => readFile(new URL('../' + path, import.meta.url))),
+  );
+  assert.equal(verifyFieldKitMainBulkAudioReview(...bytes), true);
+  for (let i = 0; i < bytes.length; i++) {
+    const changed = [...bytes];
+    changed[i] = Buffer.concat([changed[i], Buffer.from(' ')]);
+    assert.equal(verifyFieldKitMainBulkAudioReview(...changed), false);
+  }
+});
+
+test('localization audio continuation rejects either altered immutable review', async () => {
+  const paths = [
+    'docs/verification/localization14-audio-continuation-2026-09-28/review.json',
+    'docs/verification/bulk-main320-audio-continuation-2026-09-28/review.json',
+  ];
+  const bytes = await Promise.all(
+    paths.map((path) => readFile(new URL('../' + path, import.meta.url))),
+  );
+  assert.equal(verifyFieldKitLocalizationAudioReview(...bytes), true);
+  for (let i = 0; i < bytes.length; i++) {
+    const changed = [...bytes];
+    changed[i] = Buffer.concat([changed[i], Buffer.from(' ')]);
+    assert.equal(verifyFieldKitLocalizationAudioReview(...changed), false);
+  }
+  assert.equal(verifyFieldKitLocalizationAudioReview(bytes[1], bytes[0]), false);
+});
+
+test('player readiness audio continuation rejects either altered immutable review', async () => {
+  const paths = [
+    'docs/verification/player-readiness17-audio-continuation-2026-09-28/review.json',
+    'docs/verification/localization14-audio-continuation-2026-09-28/review.json',
+  ];
+  const bytes = await Promise.all(
+    paths.map((path) => readFile(new URL('../' + path, import.meta.url))),
+  );
+  assert.equal(verifyFieldKitPlayerReadinessAudioReview(...bytes), true);
+  for (let i = 0; i < bytes.length; i++) {
+    const changed = [...bytes];
+    changed[i] = Buffer.concat([changed[i], Buffer.from(' ')]);
+    assert.equal(verifyFieldKitPlayerReadinessAudioReview(...changed), false);
+  }
+  assert.equal(verifyFieldKitPlayerReadinessAudioReview(bytes[1], bytes[0]), false);
+});
+
+test('Audio style-menu continuation and its immutable predecessor fail closed', async () => {
+  const paths = [
+    'docs/verification/audio-style-menu-2026-09-28/review.json',
+    'docs/verification/player-readiness17-audio-continuation-2026-09-28/review.json',
+  ];
+  const bytes = await Promise.all(
+    paths.map((path) => readFile(new URL('../' + path, import.meta.url))),
+  );
+  assert.equal(verifyFieldKitAudioStyleMenuReview(...bytes), true);
+  for (let index = 0; index < bytes.length; index++) {
+    const changed = [...bytes];
+    changed[index] = Buffer.concat([changed[index], Buffer.from(' ')]);
+    assert.equal(verifyFieldKitAudioStyleMenuReview(...changed), false);
+  }
+  assert.equal(verifyFieldKitAudioStyleMenuReview(bytes[1], bytes[0]), false);
+});
+
+test('Audio style-menu correction and production98 predecessor oracle fail closed', async () => {
+  const paths = [
+    'docs/verification/audio-style-menu-correction-2026-09-28/review.json',
+    'docs/verification/audio-style-menu-2026-09-28/review.json',
+    'game/test/fixtures/production-pr770-0d165-audio50.json',
+  ];
+  const bytes = await Promise.all(
+    paths.map((path) => readFile(new URL('../' + path, import.meta.url))),
+  );
+  assert.equal(verifyFieldKitAudioStyleMenuCorrectionReview(...bytes), true);
+  for (let index = 0; index < bytes.length; index++) {
+    const changed = [...bytes];
+    changed[index] = Buffer.concat([changed[index], Buffer.from(' ')]);
+    assert.equal(verifyFieldKitAudioStyleMenuCorrectionReview(...changed), false);
+  }
+  assert.equal(verifyFieldKitAudioStyleMenuCorrectionReview(...bytes.toReversed()), false);
+});
+
+test('Steam Deck audio continuation and exact production99 predecessor fail closed', async () => {
+  const paths = [
+    'docs/verification/v0.142.3-steamdeck-confirm-audio-continuation/review.json',
+    'docs/verification/audio-style-menu-correction-2026-09-28/review.json',
+    'game/test/fixtures/production-v01422-a585-fpv99.json',
+  ];
+  const bytes = await Promise.all(
+    paths.map((path) => readFile(new URL('../' + path, import.meta.url))),
+  );
+  assert.equal(verifyFieldKitSteamDeckAudioContinuationReview(...bytes), true);
+  for (let index = 0; index < bytes.length; index++) {
+    const changed = [...bytes];
+    changed[index] = Buffer.concat([changed[index], Buffer.from(' ')]);
+    assert.equal(verifyFieldKitSteamDeckAudioContinuationReview(...changed), false);
+  }
+  assert.equal(verifyFieldKitSteamDeckAudioContinuationReview(...bytes.toReversed()), false);
+});
+
+test('Selector audio continuation and exact production100 predecessor fail closed', async () => {
+  const paths = [
+    'docs/verification/v0.142.4-selector-audio-continuation/review.json',
+    'docs/verification/v0.142.3-steamdeck-confirm-audio-continuation/review.json',
+    'game/test/fixtures/production-v01423-b5ab-fpv100.json',
+  ];
+  const bytes = await Promise.all(
+    paths.map((path) => readFile(new URL('../' + path, import.meta.url))),
+  );
+  assert.equal(verifyFieldKitSelectorAudioContinuationReview(...bytes), true);
+  for (let index = 0; index < bytes.length; index++) {
+    const changed = [...bytes];
+    changed[index] = Buffer.concat([changed[index], Buffer.from(' ')]);
+    assert.equal(verifyFieldKitSelectorAudioContinuationReview(...changed), false);
+  }
+  assert.equal(verifyFieldKitSelectorAudioContinuationReview(...bytes.toReversed()), false);
 });

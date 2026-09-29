@@ -136,6 +136,20 @@ test('real Git snapshot runs an older frozen entry through an aliased temp root 
     new URL('./game-cli.mjs', import.meta.url),
     path.join(scripts, 'build-implementation.mjs'),
   );
+  await fs.writeFile(
+    path.join(scripts, 'localization.mjs'),
+    'export async function validateLocalization() { return { valid: true }; }\n',
+  );
+  await fs.mkdir(path.join(root, 'game/content'), { recursive: true });
+  await fs.writeFile(
+    path.join(root, 'game/content/soundtrack-catalogue.mjs'),
+    'export const SOUNDTRACK_BUNDLED_ASSETS = [];\n',
+  );
+  await fs.mkdir(path.join(root, 'game/i18n'), { recursive: true });
+  await fs.writeFile(
+    path.join(root, 'game/i18n/index.mjs'),
+    'export function t(key) { return key; }\n',
+  );
   // Archive the implementation's real metadata dependencies too. No module may
   // resolve back into the current working tree during the frozen build.
   for (const relative of [
@@ -766,10 +780,14 @@ test('public package has local entry, accurate storage notices and enforced prev
       .split(';')
       .find((value) => value.trim().startsWith('connect-src'))
       .trim(),
-    "connect-src 'self' https://mekhovov.github.io/revealline-soundtracks-01/",
+    "connect-src 'self' https://mekhovov.github.io/revealline-soundtracks/",
     'Local preview fetches may reach only the code-admitted soundtrack archive path.',
   );
   assert.match(PUBLIC_SECURITY_HEADERS['Content-Security-Policy'], /connect-src 'self';/);
+  assert.match(
+    release.headers['content-security-policy'],
+    /media-src 'self' data: blob: https:\/\/github\.com https:\/\/release-assets\.githubusercontent\.com/,
+  );
   assert.equal(release.headers['referrer-policy'], 'no-referrer');
   assert.equal(release.headers['cache-control'], 'no-cache');
   const entry = await getRaw(releaseServer.url, '/');
@@ -782,7 +800,7 @@ test('public package has local entry, accurate storage notices and enforced prev
   assert.match(credits, /Carol of the Bells \(Metal Version\)/);
   assert.match(credits, /Alexander Nakarada \(CreatorChords\)/);
   assert.match(credits, /Creative Commons Attribution 4\.0 International/);
-  assert.match(credits, /Mykola Leontovych’s <cite>Shchedryk<\/cite>/);
+  assert.match(credits, /Mykola Leontovych’s <cite[^>]*>Shchedryk<\/cite>/);
   const publishedHeaders = await fs.readFile(path.join(out, '_headers'), 'utf8');
   assert.match(publishedHeaders, /Content-Security-Policy/);
   assert.doesNotMatch(publishedHeaders, /revealline-soundtracks-01/);

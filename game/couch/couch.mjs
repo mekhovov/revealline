@@ -118,7 +118,10 @@ import {
   guardInstallOfflineBlur,
   installOfflineOwnsElement,
 } from '../ui/install-offline-panel.mjs';
-import { createOfflineDownloadAccess } from '../offline-download-access.mjs';
+import {
+  createOfflineDownloadAccess,
+  isOfflinePackageRequired,
+} from '../offline-download-access.mjs';
 import { ensureVersusEntryPackage } from './versus-package-readiness.mjs';
 import { attachCouchMusicHost } from './couch-music-host.mjs';
 import { soloCompatibleMusicContext } from './couch-music-context.mjs';
@@ -823,6 +826,7 @@ try {
     contentReady = true,
     contentBusy = false,
     contentError = null,
+    contentDownloadRequired = false,
     contentController = null,
     contentScope = null,
     accumulator = 0,
@@ -1096,7 +1100,10 @@ try {
       pendingTarget = null;
     const observe = (event) => {
       if (installOfflineOwnsElement(event.target)) return;
-      if (!shifting && ![origin, document.body, document.documentElement].includes(event.target))
+      if (
+        !shifting &&
+        ![origin, pendingTarget, document.body, document.documentElement].includes(event.target)
+      )
         moved = true;
     };
     const hidden = () => {
@@ -1188,6 +1195,7 @@ try {
     cancelAllPictures();
     contentBusy = false;
     contentReady = retainedResult;
+    contentDownloadRequired = false;
     contentError = retainedResult
       ? () =>
           t('interface:couch.continuationPictureLoadingCancelled', {
@@ -1265,6 +1273,7 @@ try {
     contentController = new AbortController();
     contentScope = shell?.scope() || 'main';
     contentError = null;
+    contentDownloadRequired = false;
     contentBusy = false;
     contentReady = false;
     clear({ resetDirection: true });
@@ -1404,10 +1413,11 @@ try {
       isOfficialPack,
     });
   }
-  function loadPreparedPicture(entry, { prompt = false } = {}) {
+  function loadPreparedPicture(entry, { prompt = false, preserveDownloadOnCancel = false } = {}) {
     contentReady = false;
     contentBusy = true;
     contentError = null;
+    contentDownloadRequired = false;
     const staticEntry = shippedMaps.includes(entry),
       owner = pictureOwner(entry),
       message = staticEntry
@@ -1461,6 +1471,9 @@ try {
       } catch (error) {
         if (disposed || controller.signal.aborted || match !== selectedRun || ticket !== generation)
           return false;
+        contentDownloadRequired =
+          isOfflinePackageRequired(error) ||
+          (preserveDownloadOnCancel && error?.name === 'AbortError');
         contentError = localizedMessage(
           staticEntry
             ? 'interface:couch.mapPictureOrActorAppearanceCouldNotLoad'
@@ -1707,6 +1720,7 @@ try {
       return prepared;
     } catch (error) {
       if (current()) {
+        contentDownloadRequired = false;
         contentError = () => {
           const retryAction = continuationAction();
           return t('interface:couch.continuationPictureOrActorsCouldNotBePrepared', {
@@ -1732,6 +1746,7 @@ try {
         ) {
           preparationStatus.clear();
           preparationDisplay = null;
+          contentDownloadRequired = false;
           contentError = t('interface:actorChoiceChangedBothPreviousBoardsAreKeptChooseStart');
           localizedText($('race-message'), () => contentError);
         }
@@ -1941,6 +1956,7 @@ try {
           !controller.signal.aborted
         ) {
           contentReady = false;
+          contentDownloadRequired = isOfflinePackageRequired(error);
           contentError = shippedMaps.includes(entry)
             ? localizedMessage('interface:couch.preparedPictureCouldNotBeConfirmed', {
                 error: error.message,
@@ -2001,7 +2017,9 @@ try {
   };
   $('race-chapter-retry').onclick = async () => {
     if (disposed || contentBusy || match.status !== 'ready') return;
-    const restoreFocus = actionFocus($('race-chapter-retry'));
+    const retry = $('race-chapter-retry'),
+      downloadAndPlay = contentDownloadRequired,
+      restoreFocus = actionFocus(retry);
     preparationStatus.clear();
     contentController?.abort();
     contentController = new AbortController();
@@ -2010,13 +2028,30 @@ try {
     // Retry the same untouched attempt and picture choice; only setup changes
     // establish a new race identity and may resolve a new assignment.
     const controller = contentController,
-      ready = loadPreparedPicture(entry, { prompt: true });
+      ready = loadPreparedPicture(entry, {
+        prompt: true,
+        preserveDownloadOnCancel: downloadAndPlay,
+      });
     restoreFocus.pending(
       $('race-picture-cancel'),
       controller === contentController && !controller.signal.aborted,
     );
     try {
-      return await ready;
+      const prepared = await ready,
+        current =
+          prepared &&
+          controller === contentController &&
+          !controller.signal.aborted &&
+          match.status === 'ready';
+      if (downloadAndPlay && current && restoreFocus.current(true)) {
+        const start = $('race-start');
+        restoreFocus.pending(start, true);
+        if (document.activeElement === start) {
+          restoreFocus.close();
+          return startRace(null, { focusOrigin: start });
+        }
+      }
+      return prepared;
     } finally {
       restoreFocus(
         contentReady ? $('race-start') : $('race-chapter-retry'),
@@ -2067,6 +2102,7 @@ try {
     } catch (error) {
       if (disposed || controller.signal.aborted || controller !== contentController) return;
       installedRefreshPending = false;
+      contentDownloadRequired = false;
       contentError = localizedMessage('gameplay:installedChaptersUnavailable', {
         value1: error.message,
       });
@@ -3462,6 +3498,7 @@ try {
           contentReady = true;
           contentBusy = false;
           contentError = null;
+          contentDownloadRequired = false;
           contentScope = 'main';
           maps.splice(0, maps.length, ...shippedMaps, ...rows);
           adopted = true;
@@ -3711,6 +3748,9 @@ try {
     $('race-chapters').disabled = running || contentBusy;
     $('race-chapter-retry').hidden = !contentError || match.status !== 'ready';
     $('race-chapter-retry').disabled = contentBusy;
+    localizedText($('race-chapter-retry'), () =>
+      contentDownloadRequired ? t('interface:downloadPlay') : t('interface:retryPicture2'),
+    );
     $('race-picture-cancel').hidden = !contentBusy && !libraryContinuation;
     $('race-installed-refresh').disabled = match.status !== 'ready' || contentBusy || !installed;
     localizedText($('race-installed-status'), () =>

@@ -44,11 +44,59 @@ export function createAuthoredJourneyRouteDefinition(
     createBorderCulturalCompletionCandidates,
     createBorderFrontierPocketCandidates,
     createCulturalTimedBonusPressureCandidates,
+    createCulturalPressureTriptychCandidates,
+    createCurrentRemixPressureCandidates,
+    createContestedWallTriptychCandidates,
+    createPressureCorridorTriptychCandidates,
     createUkrainianOrnamentJourney,
     createUkrainianOrnamentAtlasJourney,
   },
 ) {
   if (!isAuthoredJourneyRouteId(id)) return null;
+  if (id === 'whole-spatial-v37')
+    return freezeDesign({
+      id,
+      label: 'Whole Journey Ukrainian pressure corridor triptych · balance pending',
+      sessionKey: 'revealline.suspended.journey-whole-spatial.v37',
+      profileKey: 'journey-whole-spatial-v37',
+      source: createPressureCorridorTriptychCandidates({ artwork: true }),
+      corePackIds: [...WHOLE_JOURNEY_CORE_PACK_IDS],
+      optionalCampaignIds: ['ornament-crossings', 'workshop-routing'],
+      preserveOriginalThemes: true,
+    });
+  if (id === 'whole-spatial-v36')
+    return freezeDesign({
+      id,
+      label: 'Whole Journey contested Ukrainian wall triptych · balance pending',
+      sessionKey: 'revealline.suspended.journey-whole-spatial.v36',
+      profileKey: 'journey-whole-spatial-v36',
+      source: createContestedWallTriptychCandidates({ artwork: true }),
+      corePackIds: [...WHOLE_JOURNEY_CORE_PACK_IDS],
+      optionalCampaignIds: ['ornament-crossings', 'workshop-routing'],
+      preserveOriginalThemes: true,
+    });
+  if (id === 'whole-spatial-v35')
+    return freezeDesign({
+      id,
+      label: 'Whole Journey finite Remix pressure pair · balance pending',
+      sessionKey: 'revealline.suspended.journey-whole-spatial.v35',
+      profileKey: 'journey-whole-spatial-v35',
+      source: createCurrentRemixPressureCandidates({ artwork: true }),
+      corePackIds: [...WHOLE_JOURNEY_CORE_PACK_IDS],
+      optionalCampaignIds: ['ornament-crossings', 'workshop-routing'],
+      preserveOriginalThemes: true,
+    });
+  if (id === 'whole-spatial-v34')
+    return freezeDesign({
+      id,
+      label: 'Whole Journey Ukrainian cultural pressure triptych · balance pending',
+      sessionKey: 'revealline.suspended.journey-whole-spatial.v34',
+      profileKey: 'journey-whole-spatial-v34',
+      source: createCulturalPressureTriptychCandidates({ artwork: true }),
+      corePackIds: [...WHOLE_JOURNEY_CORE_PACK_IDS],
+      optionalCampaignIds: ['ornament-crossings', 'workshop-routing'],
+      preserveOriginalThemes: true,
+    });
   if (id === 'whole-spatial-v33')
     return freezeDesign({
       id,

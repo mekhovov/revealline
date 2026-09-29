@@ -84,3 +84,43 @@ test('launcher health detects eviction without fetching and repair verifies only
   assert.equal((await message('revealline.launcher-check')).status, 'ready');
   assert.equal(requests.length, 4);
 });
+
+test('installed launch preserves only opted-in controller diagnostics and its selected edition', async () => {
+  const source = (await readFile(new URL('../offline/app.mjs', import.meta.url), 'utf8'))
+    .replace(/import \{[\s\S]*?\} from '\.\/installed-app\.mjs';/, '')
+    .replace(/import \{[^;]*\} from '\.\/i18n\/index\.mjs';/, '');
+  for (const query of ['?controllerTrace=1&journey=untrusted', '?controllerTrace=0', '']) {
+    const elements = new Map(),
+      replacements = [],
+      selected = {
+        version: 'v0.141.7',
+        scope: 'https://game.example/revealline/releases/v0.141.7/site/',
+      };
+    vm.runInNewContext(source, {
+      document: {
+        getElementById: (id) => {
+          if (!elements.has(id)) elements.set(id, {});
+          return elements.get(id);
+        },
+      },
+      window: { addEventListener() {} },
+      location: {
+        href: `https://game.example/revealline/app/${query}`,
+        replace: (url) => replacements.push(url),
+      },
+      URL,
+      readInstalledState: () => ({ active: selected }),
+      validateInstalledEdition: (edition) => edition,
+      installedPresentation: () => true,
+      localizedText: () => {},
+      t: (key) => key,
+      fetch: () => {
+        throw new Error('Installed launch must not select a newer edition.');
+      },
+    });
+    const expected = `${selected.scope}game/${query.includes('controllerTrace=1') ? '?controllerTrace=1' : ''}`;
+    assert.deepEqual(replacements, [expected]);
+    assert.equal(elements.get('play').href, expected);
+    assert.equal(selected.version, 'v0.141.7');
+  }
+});

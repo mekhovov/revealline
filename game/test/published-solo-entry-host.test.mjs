@@ -82,8 +82,10 @@ async function setup(
   t,
   { storage = memoryStorage(), caches = committedCaches(), offline = false } = {},
 ) {
-  const runtimeReads = [],
-    approved = new Set();
+  const runtimeReads = [];
+  await (
+    await caches.open('fixture-core')
+  ).put('http://localhost/offline-content.json', Response.json(catalogue));
   const page = await soloPage(t, {
     search: '',
     storage,
@@ -123,8 +125,6 @@ async function setup(
           ).match(officialAssetURL(item.descriptor.sha256, 'http://localhost'));
           if (local) return local;
           if (offline) throw new Error('Network blocked for optional chapter runtime.');
-          if (!approved.has(item.descriptor.groups.solo))
-            throw new Error('A chapter runtime was fetched before consent.');
         }
         assert(shipped.has(runtime), `Published fixture must include ${runtime}`);
         return new Response(shipped.get(runtime));
@@ -142,17 +142,7 @@ async function setup(
       }
     },
   });
-  async function connect() {
-    await waitFor(() => page.$('install-offline-dialog')?.open, {
-      message: 'Mission must ask before fetching its chapter.',
-    });
-    const frame = page.$('install-offline-dialog').querySelector('iframe'),
-      messages = [];
-    frame.contentWindow = { postMessage: (message) => messages.push(message), focus() {} };
-    frame.emit('load');
-    return { frame, messages };
-  }
-  async function approve(groupId, frame) {
+  async function prepare(groupId) {
     const group = groups.find((item) => item.id === groupId);
     const cache = await caches.open(OFFICIAL_CACHE);
     for (const path of group.files) {
@@ -166,20 +156,14 @@ async function setup(
         }),
       );
     }
-    approved.add(groupId);
-    page.win.emit('message', {
-      origin: 'http://localhost',
-      source: frame.contentWindow,
-      data: { format: 'revealline.offline-panel.v1', action: 'packages-ready', groups: [groupId] },
-    });
   }
+
   return {
     ...page,
     page,
     caches,
     runtimeReads,
-    connect,
-    approve,
+    prepare,
     store: createOfficialDownloads({
       caches,
       locks: globalThis.navigator.locks,
@@ -196,7 +180,7 @@ async function selectedCard(page) {
     JSON.parse(card.dataset.missionId)[3].endsWith(`/${mission.id}`),
   );
 }
-test('published Solo boots only the starter, browses metadata, and keeps its flight after cancelling an unloaded chapter', async (t) => {
+test('published Solo boots the starter and starts an unprepared chapter online without a popup', async (t) => {
   const h = await setup(t);
   assert.deepEqual(h.runtimeReads, [
     `game/content-design/${generated.navigationDescriptor.path}`,
@@ -204,31 +188,20 @@ test('published Solo boots only the starter, browses metadata, and keeps its fli
   ]);
   const card = await selectedCard(h.page);
   assert(card, 'Unloaded current missions remain visible.');
-  assert.equal(h.$('journey-cards').children.length, 252);
-  assert.equal(h.runtimeReads.length, 2, 'Browsing must not materialize other modes or chapters.');
-  const previous = h.page.rendered.run;
-  const cancelled = activateMissionCard(card);
-  const first = await h.connect();
-  assert(first.messages.some((message) => message.groupId === chapter.descriptor.groups.solo));
-  h.$('install-offline-close').click();
-  await cancelled;
-  h.frame(0);
-  assert.equal(h.page.rendered.run, previous);
-  assert.equal(h.runtimeReads.length, 2);
-  const next = await selectedCard(h.page);
-  const launching = activateMissionCard(next);
-  const second = await h.connect();
-  await h.approve(chapter.descriptor.groups.solo, second.frame);
-  await launching;
+  assert.equal(h.$('journey-cards').children.length, 186);
+  assert.equal(h.runtimeReads.length, 2, 'Browsing does not load every chapter.');
+  await activateMissionCard(card);
   await waitFor(() => {
     h.frame(0);
     return h.doc.body.dataset.flightState === 'running';
   });
   assert.equal(h.page.rendered.run.levelId, mission.id);
   assert.deepEqual(h.runtimeReads.slice(2), [chapter.path]);
+  assert.equal(h.$('install-offline-dialog')?.open ?? false, false);
+  assert.deepEqual(await h.store.states(), [], 'Online play does not install a chapter');
 });
 
-test('an unloaded exact saved campaign has its title and restores only after consent, preserving saved bytes', async (t) => {
+test('an exact saved campaign restores online and retains explicitly prepared offline bytes', async (t) => {
   const originalThemes = JSON.parse(
     await readFile(new URL('../content-design/themes.json', import.meta.url)),
   ).themes;
@@ -264,20 +237,26 @@ test('an unloaded exact saved campaign has its title and restores only after con
   );
   const storage = memoryStorage({ [generated.route.sessionKey]: saved });
   let caches;
+  await t.test('online restore needs no offline preparation', async (stage) => {
+    const onlineStorage = memoryStorage({ [generated.route.sessionKey]: saved });
+    const h = await setup(stage, { storage: onlineStorage });
+    h.$('shell-home').close();
+    h.$('continue-saved').click();
+    await waitFor(() => {
+      h.frame(0);
+      return h.page.rendered.run.levelId === level.id && !h.$('continue-saved').disabled;
+    });
+    assert.equal(onlineStorage.getItem(generated.route.sessionKey), saved);
+    assert.equal(h.$('install-offline-dialog')?.open ?? false, false);
+    assert.deepEqual(await h.store.states(), []);
+  });
   await t.test('first preparation preserves and pins the exact saved campaign', async (stage) => {
     const h = await setup(stage, { storage });
     assert(h.$('continue-saved-note').textContent.includes(level.name));
     assert.equal(h.runtimeReads.length, 2);
+    await h.prepare(chapter.descriptor.groups.solo);
     h.$('shell-home').close();
     h.$('continue-saved').click();
-    await h.connect();
-    h.$('install-offline-close').click();
-    await waitFor(() => !h.$('continue-saved').disabled);
-    assert.equal(storage.getItem(generated.route.sessionKey), saved);
-    assert.equal(h.runtimeReads.length, 2);
-    h.$('continue-saved').click();
-    const accepted = await h.connect();
-    await h.approve(chapter.descriptor.groups.solo, accepted.frame);
     await waitFor(() => {
       h.frame(0);
       return h.page.rendered.run.levelId === level.id && !h.$('continue-saved').disabled;
@@ -331,20 +310,12 @@ test('an unloaded exact saved campaign has its title and restores only after con
   );
 });
 
-test('ordinary mode departure waits for its exact package and cancellation leaves Solo open', async (t) => {
+test('ordinary mode departure opens Versus without offline preparation', async (t) => {
   const h = await setup(t),
     before = globalThis.location.href;
   h.$('shell-title-versus').click();
-  const first = await h.connect();
-  assert(first.messages.some((message) => message.groupId === starter.descriptor.groups.versus));
-  assert.equal(globalThis.location.href, before);
-  h.$('install-offline-close').click();
-  await new Promise((resolve) => setImmediate(resolve));
-  assert.equal(globalThis.location.href, before);
-  h.$('shell-title-versus').click();
-  const second = await h.connect();
-  await h.approve(starter.descriptor.groups.versus, second.frame);
   await waitFor(() => globalThis.location.href !== before);
   assert.equal(new URL(globalThis.location.href).pathname, '/game/couch/');
-  assert.equal(h.runtimeReads.length, 2, 'The departing host must not execute Versus content.');
+  assert.equal(h.$('install-offline-dialog')?.open ?? false, false);
+  assert.equal(h.runtimeReads.length, 2, 'The departing host does not execute Versus content.');
 });
