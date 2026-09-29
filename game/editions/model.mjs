@@ -22,6 +22,11 @@ export const EDITION_BOOT_KEYS = Object.freeze([
 ]);
 const publications = ['public', 'restricted'];
 const modes = ['solo', 'versus', 'team'];
+// Only this module's completely validated, deeply frozen results are reusable.
+// A caller's frozen object or a mutable imported catalogue is never trusted.
+// Weak ownership lets an old presentation and all its derived closures retire.
+const validatedCatalogs = new WeakSet();
+const assetClosures = new WeakMap();
 const own = (source) =>
   boundedJSON(source, { maxBytes: 4 * 1024 * 1024, maxNodes: 100000, maxArray: 4096 });
 const text = (value, max = 512) =>
@@ -155,7 +160,7 @@ export function validateCampaignDescriptor(source) {
     value,
     ['id', 'revision', 'name', 'brandId', 'publication', 'sourcePath', 'assetIds', 'modes'],
     'Campaign descriptor',
-    ['lessonPath'],
+    ['lessonPath', 'rewardPath', 'localizationPath', 'localizationSha256', 'heroAssetId'],
   );
   required(
     stableId(value.id) &&
@@ -174,7 +179,24 @@ export function validateCampaignDescriptor(source) {
       editionRelativePath(value.lessonPath) && value.lessonPath.endsWith('.json'),
       'Lessons require a bounded JSON path.',
     );
+  if (value.rewardPath !== undefined)
+    required(
+      editionRelativePath(value.rewardPath) && value.rewardPath.endsWith('.json'),
+      'Completion rewards require a bounded JSON path.',
+    );
+  if (value.localizationPath !== undefined || value.localizationSha256 !== undefined)
+    required(
+      editionRelativePath(value.localizationPath) &&
+        value.localizationPath.endsWith('.json') &&
+        /^[a-f0-9]{64}$/.test(value.localizationSha256),
+      'Campaign localization requires a local JSON path and SHA-256 pin.',
+    );
   list(value.assetIds, EDITION_LIMITS.assets, 'campaign assets');
+  if (value.heroAssetId !== undefined)
+    required(
+      stableId(value.heroAssetId) && value.assetIds.includes(value.heroAssetId),
+      'Campaign artwork must be one of its declared assets.',
+    );
   modeList(value.modes);
   return freezeEdition(value);
 }
@@ -377,8 +399,14 @@ export function createEditionRuntimeCatalog(source) {
     if (visibility === 'public')
       required(item.publication === 'public', 'Restricted content cannot enter a public catalog.');
   }
-  for (const campaign of result.campaigns)
+  for (const campaign of result.campaigns) {
     required(byBrand.has(campaign.brandId), 'Campaign brand is missing.');
+    if (campaign.heroAssetId)
+      required(
+        /\.(?:png|jpe?g|webp)$/i.test(byAsset.get(campaign.heroAssetId).path),
+        'Campaign artwork requires a supported static raster image.',
+      );
+  }
   for (const brand of result.brands) {
     if (brand.fontAssetId)
       required(
@@ -464,10 +492,13 @@ export function createEditionRuntimeCatalog(source) {
     );
     paths.set(asset.path, asset);
   }
-  return freezeEdition(result);
+  freezeEdition(result);
+  validatedCatalogs.add(result);
+  return result;
 }
 
 export function validateEditionRuntimeCatalog(source) {
+  if (validatedCatalogs.has(source)) return source;
   const value = own(source);
   fields(
     value,
@@ -504,7 +535,10 @@ export function resolveEditionSelection(source, { editionId, campaignId } = {}) 
  * The registry owns all references, including edition-specific additions. */
 export function resolveEditionAssets(source, { editionId } = {}) {
   const catalog = validateEditionRuntimeCatalog(source);
-  const selection = resolveEditionSelection(catalog, { editionId });
+  const selectedId = editionIdentityId(editionId ?? catalog.defaultEditionId);
+  const closures = assetClosures.get(catalog);
+  if (closures?.has(selectedId)) return closures.get(selectedId);
+  const selection = resolveEditionSelection(catalog, { editionId: selectedId });
   const byId = new Map(catalog.assets.map((asset) => [asset.id, asset]));
   const ids = new Set([
     ...selection.brand.assetIds,
@@ -516,5 +550,9 @@ export function resolveEditionAssets(source, { editionId } = {}) {
     required(asset, 'An edition asset is unavailable.');
     asset.dependencies.forEach((dependency) => ids.add(dependency));
   }
-  return freezeEdition(catalog.assets.filter((asset) => ids.has(asset.id)));
+  const closure = freezeEdition(catalog.assets.filter((asset) => ids.has(asset.id)));
+  const cache = closures ?? new Map();
+  cache.set(selectedId, closure);
+  assetClosures.set(catalog, cache);
+  return closure;
 }

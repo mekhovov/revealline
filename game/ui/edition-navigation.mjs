@@ -1,4 +1,5 @@
 import { localizedText } from '../i18n/index.mjs';
+import { isStudioPreview, STUDIO_PREVIEW_PARAMETER } from '../studio-preview-session.mjs';
 import { gameDocumentURL } from '../community-routes.mjs';
 import { editionPublicSlug } from '../edition-context.mjs';
 
@@ -52,6 +53,7 @@ export function mountEditionNavigation({ provider, document: doc, href }) {
       const destination = new URL(game.href);
       for (const [key, value] of target.searchParams)
         if (!['edition', 'presentation'].includes(key)) destination.searchParams.set(key, value);
+      if (isStudioPreview(href)) destination.searchParams.set(STUDIO_PREVIEW_PARAMETER, '1');
       destination.hash = target.hash;
       link.href = destination.href;
     } else if (/^game\/(?:controller-lab|replay-theater)(?:\/|$)/.test(relative)) {

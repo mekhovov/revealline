@@ -1,4 +1,4 @@
-import { boundedJSON, dataIdentity, exactKeys, required } from './data-json.mjs';
+import { boundedJSON, canonicalJSON, dataIdentity, exactKeys, required } from './data-json.mjs';
 import { normalizedLevel } from './core/level.mjs';
 import { foundationGeometry } from './core/foundations.mjs';
 import { validateCoopLevel } from './coop/core.mjs';
@@ -49,6 +49,21 @@ const freeze = (value) => {
 const clamp = (value, low, high) => Math.max(low, Math.min(high, value));
 const fields = Object.keys(GAMEPLAY_TUNING_DEFAULTS);
 const copySmall = (value) => boundedJSON(value, { maxBytes: 4096, maxNodes: 40, maxDepth: 3 });
+
+// Published v4 levels use V8's scaled two-component norm. Native Math.hypot
+// differs by one ULP in other engines, changing both velocities and reward IDs.
+// Keep the exact division, multiplication and addition order for already
+// validated finite vectors; this does not change historical tuning dispatch.
+// Reference: v8/src/builtins/math.tq, FastMathHypot (two-argument branch).
+function publishedVectorMagnitude(x, y) {
+  const a = Math.abs(x),
+    b = Math.abs(y),
+    scale = Math.max(a, b);
+  if (scale === 0) return 0;
+  const nx = a / scale,
+    ny = b / scale;
+  return Math.sqrt(nx * nx + ny * ny) * scale;
+}
 
 function checkedOverrides(value) {
   const copy = copySmall(value);
@@ -381,6 +396,27 @@ function addKeepers(level, tuning, team) {
  * but must compare the entire result to the verified saved level before adopt.
  * The level embeds every change for recorder and paired-board determinism. */
 export function applyGameplayTuning(source, snapshot) {
+  return tuneGameplay(source, snapshot, publishedVectorMagnitude);
+}
+
+/** Match a recorded level against its installed authored source, not just its
+ * recipe tag. Replay/receipt verification remains the caller's responsibility.
+ * Pre-fix gp4 records can retain this runtime's original native arithmetic;
+ * fresh attempts and reward bindings always use applyGameplayTuning instead.
+ */
+export function matchRecordedGameplayTuning(source, recordedLevel) {
+  const recorded = boundedJSON(recordedLevel),
+    tuning = recoverGameplayTuning(recorded);
+  if (!tuning) return null;
+  const exact = canonicalJSON(recorded),
+    current = applyGameplayTuning(source, tuning);
+  if (canonicalJSON(current) === exact) return current;
+  if (tuning.version !== GAMEPLAY_TUNING_VERSION) return null;
+  const historicalNative = tuneGameplay(source, tuning, Math.hypot);
+  return canonicalJSON(historicalNative) === exact ? historicalNative : null;
+}
+
+function tuneGameplay(source, snapshot, vectorMagnitude) {
   const tuning = validateGameplayTuning(snapshot);
   const owned = boundedJSON(source);
   required(
@@ -414,7 +450,7 @@ export function applyGameplayTuning(source, snapshot) {
   };
   for (const enemy of level.enemies) {
     if (Number.isFinite(enemy.vx) && Number.isFinite(enemy.vy)) {
-      const magnitude = Math.hypot(enemy.vx, enemy.vy);
+      const magnitude = vectorMagnitude(enemy.vx, enemy.vy);
       // Arbitrary valid vector angles can otherwise round to more than 20 and
       // fail the strict Team cap. Keep a sub-nanocell numerical margin.
       const keeper = enemy.type === (team ? 'drifter' : 'bouncer');

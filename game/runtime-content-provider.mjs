@@ -10,6 +10,9 @@ import {
   gameDocumentURL,
 } from './community-routes.mjs';
 import { required } from './data-json.mjs';
+import { validateCompletionRewards } from './rewards/model.mjs';
+import { isStudioPreview, STUDIO_PREVIEW_PARAMETER } from './studio-preview-session.mjs';
+import { installEditionLocalization } from './editions/localization-runtime.mjs';
 import { projectEditionThemeSelection } from './editions/selected-presentation.mjs';
 import {
   editionPresentationSha256,
@@ -84,6 +87,7 @@ export async function loadRuntimeContentProvider({
 } = {}) {
   signal?.throwIfAborted();
   const sourceURL = new URL(locationRef.href);
+  const studioPreview = isStudioPreview(sourceURL.href);
   const compiled = documentRef.documentElement.dataset.editionId;
   const community = compiled ? null : communityRouteFromURL(sourceURL);
   const url = compiled
@@ -198,6 +202,8 @@ export async function loadRuntimeContentProvider({
     rootURL: rootURL.href,
     themes: projected.themes.themes,
     lessons: Object.values(bootstrap.lessons).flat(),
+    rewards: validateCompletionRewards(Object.values(bootstrap.rewards ?? {}).flat()),
+    installLocalization: () => installEditionLocalization(bootstrap),
     // The canonical host owns and augments its boot data; the immutable source
     // registry must remain untouched for session/presentation identities.
     boot: ['campaign', 'themes', 'presets', 'classes', 'packs', 'archives'].map((name) =>
@@ -234,6 +240,7 @@ export async function loadRuntimeContentProvider({
         if (key === 'edition') continue;
         else if (value != null) target.searchParams.set(key, value);
         else target.searchParams.delete(key);
+      if (studioPreview) target.searchParams.set(STUDIO_PREVIEW_PARAMETER, '1');
       return target.href;
     },
   });
