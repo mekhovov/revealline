@@ -1,0 +1,105 @@
+{
+  "format": "revealline-recovery-fragment-v1",
+  "capturedAt": "2026-09-29T15:08:53.697344+00:00",
+  "worktree": "<home>/.codex/worktrees/release-train-guard/go_test",
+  "branch": "refs/heads/codex/steamdeck-confirm-gate-fix",
+  "head": "23771611f841fc87303525d9c25e6c876f0449f6",
+  "excluded": [],
+  "changes": [
+    {
+      "status": " M",
+      "path": "docs/v0.132.1-steamdeck-short-tap-confirm.md",
+      "object": "160074bf00c46801920c4f19639e4df99ca9f83b",
+      "sha256": "728385e3b6ee71353530c2439631af9e3d19f142311f8f7d306f860f1a057571",
+      "bytes": 2226,
+      "mode": "100644"
+    },
+    {
+      "status": " M",
+      "path": "game/test/controller-navigation.test.mjs",
+      "object": "d4595108f410f8415d51156fe73b89d8b4e7903e",
+      "sha256": "405df18422179cbd11eac50f4e7a1eec3818865f8658e62550a28ba0984ef2c1",
+      "bytes": 98726,
+      "mode": "100644"
+    },
+    {
+      "status": " M",
+      "path": "game/test/controller-router-bindings.test.mjs",
+      "object": "73c1bc02e834f79717f155754cbb294e0b6477b3",
+      "sha256": "3c27da51837dba585757f89aa7d0750e8e5d305f9df2e97f0530c53d0c6b3c2d",
+      "bytes": 16106,
+      "mode": "100644"
+    },
+    {
+      "status": " M",
+      "path": "game/test/controller-router.test.mjs",
+      "object": "f824125bcab0a56b9080803d128750eab7a2bc37",
+      "sha256": "b4a6a8249bf4a0c6303a1c74cbc42e2bee770682234d410d3cb5a5be512e5c63",
+      "bytes": 21156,
+      "mode": "100644"
+    },
+    {
+      "status": " M",
+      "path": "game/test/touchscreen-controller-host.test.mjs",
+      "object": "c63043e3e58173d1188e74e52b6b651a058d4911",
+      "sha256": "326c3d0b054ccbb5b24bbed5f85a4c07b48213d5560f508d76605d2f1a1b08ed",
+      "bytes": 21142,
+      "mode": "100644"
+    },
+    {
+      "status": " M",
+      "path": "game/ui/controller-router.mjs",
+      "object": "85e2147d9b134bab27e7bec633c627fbaf1c53e8",
+      "sha256": "4d75497e15ed8860b1bbcb14e5a828f6332ffa0c0a748db2bf1ec94565e3388d",
+      "bytes": 19564,
+      "mode": "100644"
+    },
+    {
+      "status": "??",
+      "path": "game/test/steamdeck-short-tap-confirm.test.mjs",
+      "object": "881f664c9ccf45e10f085e63fece14a26c17161c",
+      "sha256": "6765d4c2f42b8f1fb75c519d2158d0c7af17cbe5f898ab916ebc78b9677abdfd",
+      "bytes": 1780,
+      "mode": "100644"
+    }
+  ],
+  "indexEntries": [
+    {
+      "path": "docs/v0.132.1-steamdeck-short-tap-confirm.md",
+      "mode": "100644",
+      "object": "6aa6f4612d8d2d922bdd587547faeb806ce817b3",
+      "stage": 0
+    },
+    {
+      "path": "game/test/controller-navigation.test.mjs",
+      "mode": "100644",
+      "object": "2c7c78e29f4dc58275703d4ba346609a0ae2a899",
+      "stage": 0
+    },
+    {
+      "path": "game/test/controller-router-bindings.test.mjs",
+      "mode": "100644",
+      "object": "94984e530caa94605aa36817e08b79794b90d3a4",
+      "stage": 0
+    },
+    {
+      "path": "game/test/controller-router.test.mjs",
+      "mode": "100644",
+      "object": "003d62d8cfb42f88af207f31d29916728bcdcb15",
+      "stage": 0
+    },
+    {
+      "path": "game/test/touchscreen-controller-host.test.mjs",
+      "mode": "100644",
+      "object": "a653f29395a2119f8e981972aa8cc4b5466232ee",
+      "stage": 0
+    },
+    {
+      "path": "game/ui/controller-router.mjs",
+      "mode": "100644",
+      "object": "320522a28edec074d349f840088eaf30a458d445",
+      "stage": 0
+    }
+  ],
+  "purpose": "Recovery only. These bytes are not release admission. Missing files, conflict stages and obsolete generated outputs are preserved as observations, not deletion or merge instructions."
+}

@@ -1,9 +1,0 @@
-{
-  "command": [
-    "git",
-    "diff",
-    "--check"
-  ],
-  "exitCode": 0,
-  "scope": "Seven affected files only; no full-source gate claim"
-}
