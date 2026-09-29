@@ -58,14 +58,15 @@ function friendlyPage(t, href, options = {}) {
   }).then((page) => ({ page, requests }));
 }
 
-test('actual friendly More and Workshop links compose at the canonical game root', async (t) => {
-  for (const [slug, query, base, editionId] of [
-    ['coupa', '', 'http://localhost/', 'coupa-all'],
-    ['droneaid', '', 'http://localhost/revealline/', 'droneaid-nl-community'],
+test('actual friendly Settings and Creator links compose at the canonical game root', async (t) => {
+  for (const [slug, query, base, editionId, publicEdition] of [
+    ['coupa', '', 'http://localhost/', 'coupa-all', 'coupa'],
+    ['droneaid', '', 'http://localhost/revealline/', 'droneaid-nl-community', 'droneaid'],
     [
       'coupa',
       '?edition=coupa-culture&journey=legacy#details',
       'http://localhost/revealline/releases/v0.142.3/site/',
+      'coupa-culture',
       'coupa-culture',
     ],
   ])
@@ -89,6 +90,10 @@ test('actual friendly More and Workshop links compose at the canonical game root
       });
       const checkpoint = authoritativeCheckpoint(page.rendered.run);
       const saved = [...page.storage.map];
+      page.$('shell-options').click();
+      assert.equal(page.$('settings-dialog').open, true);
+      page.$('settings-tab-extras').click();
+      assert.equal(page.$('settings-panel-extras').hidden, false);
       page.$('shell-workshop').click();
       assert.equal(page.$('shell-workshop-dialog').open, true);
       const disclosure = page.$('shell-workshop-dialog').querySelector('details');
@@ -96,18 +101,28 @@ test('actual friendly More and Workshop links compose at the canonical game root
       disclosure.open = true;
       for (const { id, path, opener } of WORKSHOP_TOOLS) {
         const link = page.$(opener);
-        assert.ok(page.$('shell-workshop-dialog').contains(link));
+        if (['controller-lab', 'replay-theater'].includes(id)) {
+          const workshop = page.$('shell-workshop-dialog');
+          if (workshop.open) workshop.querySelector('[data-close="shell-workshop-dialog"]').click();
+          if (!page.$('settings-dialog').open) page.$('shell-options').click();
+          assert.equal(page.$('settings-dialog').open, true);
+          const category = id === 'controller-lab' ? 'controls' : 'extras';
+          page.$(`settings-tab-${category}`).click();
+          const panel = page.$(`settings-panel-${category}`);
+          assert.equal(panel.hidden, false);
+          assert.ok(panel.contains(link));
+        } else assert.ok(page.$('shell-workshop-dialog').contains(link));
         assert.equal(link.hidden, false);
         const target = new URL(link.href);
         if (['controller-lab', 'replay-theater'].includes(id)) {
           assert.equal(target.origin + target.pathname, `${base}${path}`);
           assert.deepEqual([...target.searchParams].sort(), [
-            ['edition', editionId],
+            ['edition', publicEdition],
             ['journey', editionId],
           ]);
           const returned = new URL(workshopReturnLinks(target.href, id).game);
           assert.equal(returned.origin + returned.pathname, `${base}game/`);
-          assert.equal(returned.searchParams.get('edition'), editionId);
+          assert.equal(returned.searchParams.get('edition'), publicEdition);
           assert.equal(returned.searchParams.get('journey'), editionId);
         } else {
           assert.equal(target.href, `https://mekhovov.github.io/revealline/${path}`);
