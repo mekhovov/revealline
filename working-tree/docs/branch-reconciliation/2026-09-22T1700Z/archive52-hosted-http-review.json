@@ -1,0 +1,27 @@
+{
+  "status": "PASS_SCOPED_READ_ONLY_HOSTED_FALLBACK",
+  "reason": "Local full HTTP audit refused before any request because free space was below its unchanged 1GiB reserve. No cleanup or guard reduction.",
+  "deployedArchiveCommit": "2dd7e8a598d8e37af063933733b8dc458ea9d44f",
+  "deployedArchiveTree": "b21a8bdf97a7b4af190f065286d470e2c73e1f4f",
+  "deployment": 6600345978,
+  "deploymentStatus": 18696878979,
+  "deploymentRun": 35782103893,
+  "originalReceiptArtifact": 10718412859,
+  "originalReceiptBytes": 56329,
+  "originalReceiptSha256": "3b7d54766c50a1f5605d34013703830d950055cdcb63ac62050f2974b8f741a4",
+  "auditBranch": "codex/audit-archive52-http",
+  "auditCommit": "ccd16a481442fb26d167e7c018c39353dc60b092",
+  "auditTree": "16fc388e6243b9b42b8d9607dba52c44965793cd",
+  "review": [
+    "All seven authority original length/SHA pins independently match",
+    "Hosted original receipt binds the actual deployed source/tree and1063files/590419655bytes",
+    "Auditor logic unchanged from reviewed finite Archive51 helper; only identity and finite pins differ",
+    "New HTTP-only job requires workflow_dispatch and the exact audit ref, with contents:read permission",
+    "Separate source checkout pins actual deployed archive commit, not audit branch",
+    "Existing build/deploy conditions remain false on manual audit ref",
+    "No arbitrary URLs, inventory overrides, release writes, historical rebuilds or payload persistence"
+  ],
+  "authorization": "Push only this new audit ref and dispatch exactly once after readback/deduplication. No archive main merge or redeployment. Preserve local refusal and retain bounded hosted evidence.",
+  "publicAuditPassedAtReview": false,
+  "tests": "Automated test suites remain optional/waived; this is required public-byte verification, not a test-pass claim."
+}

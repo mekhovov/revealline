@@ -1,0 +1,3932 @@
+{
+  "schemaVersion": 1,
+  "repository": "mekhovov/revealline",
+  "pullRequest": 263,
+  "observedAt": "2026-09-22T16:22:00Z",
+  "scope": "Read-only audit of complete downloadable retained source CI logs from all four identified predecessor heads; no reruns, cancellations, branch changes, release or PR mutations.",
+  "authoritativeCurrent": {
+    "head": "83f5895943510ce98e7f5c0ff3201dc20127f325",
+    "sourceRunId": 35753052831,
+    "statusAtObservation": "in_progress",
+    "publisherPreviewRunId": 35753052906,
+    "note": "Current-head source and publisher checks remain authoritative. Live/incomplete current logs were not used as predecessor evidence or acceptance."
+  },
+  "summary": {
+    "retainedSourceArchivesAudited": 4,
+    "allZipCrcChecksPassed": true,
+    "allMembersReadAndDecoded": true,
+    "nonSkippedJobsWithRetainedRootLogs": 24,
+    "unexpectedMissingJobLogs": 0,
+    "distinctEmittedNotOk": 6,
+    "additionalBeyondPreviouslyKnownSix": 0,
+    "executionCompletion": "All four workflow runs were cancelled. Complete retained log coverage does not imply complete test execution or passing qualification."
+  },
+  "commands": [
+    "gh api 'repos/mekhovov/revealline/actions/runs?branch=codex%2Fux-default-journey&per_page=100'",
+    "gh api repos/mekhovov/revealline/pulls/263",
+    "gh api repos/mekhovov/revealline/actions/runs/RUN_ID",
+    "gh api 'repos/mekhovov/revealline/actions/runs/RUN_ID/jobs?filter=all&per_page=100'",
+    "gh api repos/mekhovov/revealline/actions/runs/RUN_ID/logs > OWN_TEMP_DIR/RUN_ID.zip",
+    "unzip -t OWN_TEMP_DIR/RUN_ID.zip",
+    "Python zipfile.ZipFile.testzip(); read and UTF-8 decode every ZIP member; hashlib.sha256 ZIP bytes and each member; enumerate every line containing 'not ok'; deduplicate root/per-step records by TAP body after removing timestamp prefix ^\\d{4}-\\d\\d-\\d\\dT\\S+Z\\s+"
+  ],
+  "predecessorPublisherPreviews": [
+    {
+      "runId": 35742425795,
+      "head": "6f9e74ab1277fb3bb9557bd21ccf14a03d3e398f",
+      "conclusion": "cancelled"
+    },
+    {
+      "runId": 35742940558,
+      "head": "74b0cac37748013a8c26a3f6c98d1bece3e4cc31",
+      "conclusion": "success"
+    },
+    {
+      "runId": 35745716824,
+      "head": "70836db6ac7559791ef61ecfbf31c0785604ffc0",
+      "conclusion": "success"
+    },
+    {
+      "runId": 35751896297,
+      "head": "3e09235ac23c7c5eccc3b5325e5cc858d093c8a0",
+      "conclusion": "success"
+    }
+  ],
+  "previewScopeNote": "Preview run metadata is discovery context only; this report scans retained source-workflow logs, not publisher-preview archives.",
+  "runs": [
+    {
+      "runId": 35742425720,
+      "archivePath": "/tmp/revealline-pr263-retained-logs.s5GZ5G/35742425720.zip",
+      "archiveBytes": 66922,
+      "archiveSha256": "e801b2622c17cd6ede5db18bf8e6eff03d9c634487202cd38d6a015383ffa687",
+      "zipCrcCheck": "PASS",
+      "memberCount": 12,
+      "allMembersReadAndDecoded": true,
+      "memberLogInventory": [
+        {
+          "name": "0_test (3).txt",
+          "bytes": 65021,
+          "sha256": "ff82f5fd89ad85bf31e235b7720722517eb8a0766ac8061fa9452d2fe53fb967",
+          "notOkCount": 0
+        },
+        {
+          "name": "test (3)/system.txt",
+          "bytes": 710,
+          "sha256": "7db59e399ea02b790758c808e80da48bbee117ca04edc486d399a4c78abc9787",
+          "notOkCount": 0
+        },
+        {
+          "name": "1_test (1).txt",
+          "bytes": 10748,
+          "sha256": "5fd3762bcf1f4487f28d585ff4c1f4ac44649b4cc636a875bf8a82cead9e291d",
+          "notOkCount": 0
+        },
+        {
+          "name": "test (1)/system.txt",
+          "bytes": 710,
+          "sha256": "fd512653f2c508576d33a20303eb7ef0780f08a54c666d538d6617ab2e20b15f",
+          "notOkCount": 0
+        },
+        {
+          "name": "2_test (2).txt",
+          "bytes": 10599,
+          "sha256": "1fe42df8ccca0c8a4640d41202ef73591d2f648103f1344657acb5f2b6692c6d",
+          "notOkCount": 0
+        },
+        {
+          "name": "test (2)/system.txt",
+          "bytes": 710,
+          "sha256": "ca640b0575df9d771e470b3f8549764029ba54921cec5a6c43f0892c9e56f1aa",
+          "notOkCount": 0
+        },
+        {
+          "name": "3_build.txt",
+          "bytes": 80533,
+          "sha256": "ce8a6ed3e178c2e01b193b96bd5acf5c0a0890a3a4738cdc000e632a34ccdc85",
+          "notOkCount": 0
+        },
+        {
+          "name": "build/system.txt",
+          "bytes": 711,
+          "sha256": "5dc00ec34972e621644e8ae85d759ab0d9277c118fce8b324a3be0ca52dcfed8",
+          "notOkCount": 0
+        },
+        {
+          "name": "4_test (4).txt",
+          "bytes": 58151,
+          "sha256": "933e7c2fda54c7480eeb86d5825f043ec72ddf6369bb505279b5c64a80518153",
+          "notOkCount": 0
+        },
+        {
+          "name": "test (4)/system.txt",
+          "bytes": 710,
+          "sha256": "3d00439630c6c01bf530531bc2c0f8b347055be6c19701346465eb0cf69a6a70",
+          "notOkCount": 0
+        },
+        {
+          "name": "5_preflight.txt",
+          "bytes": 67049,
+          "sha256": "c61910e64c838b275f8342b54d99f42dc8cf8d6001fc5666ef3f8e4b15cb6094",
+          "notOkCount": 0
+        },
+        {
+          "name": "preflight/system.txt",
+          "bytes": 715,
+          "sha256": "07cfaa32422b7aea39bf0a3f3377fce3b37d1b77c77d48a79fe45f6f489994a5",
+          "notOkCount": 0
+        }
+      ],
+      "rootJobLogs": [
+        {
+          "name": "0_test (3).txt",
+          "bytes": 65021,
+          "sha256": "ff82f5fd89ad85bf31e235b7720722517eb8a0766ac8061fa9452d2fe53fb967",
+          "notOkCount": 0,
+          "jobName": "test (3)",
+          "lines": 823,
+          "firstLine": "﻿2026-09-22T14:48:56.3287595Z Current runner version: '2.337.0'",
+          "lastLine": "2026-09-22T14:50:46.4069833Z ##[warning]Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/checkout@v4, actions/setup-node@v4. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/",
+          "failures": [],
+          "summaryAndErrors": [
+            {
+              "line": 780,
+              "text": "2026-09-22T14:50:23.3225831Z ##[error]The operation was canceled."
+            }
+          ],
+          "jobId": 106797062489,
+          "jobConclusion": "cancelled"
+        },
+        {
+          "name": "1_test (1).txt",
+          "bytes": 10748,
+          "sha256": "5fd3762bcf1f4487f28d585ff4c1f4ac44649b4cc636a875bf8a82cead9e291d",
+          "notOkCount": 0,
+          "jobName": "test (1)",
+          "lines": 126,
+          "firstLine": "﻿2026-09-22T14:48:56.3438444Z Current runner version: '2.337.0'",
+          "lastLine": "2026-09-22T14:50:11.6839749Z ##[warning]Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/checkout@v4. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/",
+          "failures": [],
+          "summaryAndErrors": [
+            {
+              "line": 96,
+              "text": "2026-09-22T14:50:11.3250422Z ##[error]The operation was canceled."
+            },
+            {
+              "line": 104,
+              "text": "2026-09-22T14:50:11.3819647Z ##[error]fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree."
+            },
+            {
+              "line": 107,
+              "text": "2026-09-22T14:50:11.3825734Z ##[error]Process completed with exit code 1."
+            }
+          ],
+          "jobId": 106797062437,
+          "jobConclusion": "cancelled"
+        },
+        {
+          "name": "2_test (2).txt",
+          "bytes": 10599,
+          "sha256": "1fe42df8ccca0c8a4640d41202ef73591d2f648103f1344657acb5f2b6692c6d",
+          "notOkCount": 0,
+          "jobName": "test (2)",
+          "lines": 124,
+          "firstLine": "﻿2026-09-22T14:48:56.0972210Z Current runner version: '2.337.0'",
+          "lastLine": "2026-09-22T14:50:11.0853701Z ##[warning]Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/checkout@v4. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/",
+          "failures": [],
+          "summaryAndErrors": [
+            {
+              "line": 96,
+              "text": "2026-09-22T14:50:10.7114608Z ##[error]The operation was canceled."
+            },
+            {
+              "line": 104,
+              "text": "2026-09-22T14:50:10.8374812Z ##[error]fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree."
+            },
+            {
+              "line": 107,
+              "text": "2026-09-22T14:50:10.8381674Z ##[error]Process completed with exit code 1."
+            }
+          ],
+          "jobId": 106797062223,
+          "jobConclusion": "cancelled"
+        },
+        {
+          "name": "3_build.txt",
+          "bytes": 80533,
+          "sha256": "ce8a6ed3e178c2e01b193b96bd5acf5c0a0890a3a4738cdc000e632a34ccdc85",
+          "notOkCount": 0,
+          "jobName": "build",
+          "lines": 846,
+          "firstLine": "﻿2026-09-22T14:48:56.8023634Z Current runner version: '2.337.0'",
+          "lastLine": "2026-09-22T14:50:36.6747039Z ##[warning]Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/checkout@v4, actions/setup-node@v4. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/",
+          "failures": [],
+          "summaryAndErrors": [
+            {
+              "line": 805,
+              "text": "2026-09-22T14:50:23.5674515Z ##[error]The operation was canceled."
+            }
+          ],
+          "jobId": 106797062132,
+          "jobConclusion": "cancelled"
+        },
+        {
+          "name": "4_test (4).txt",
+          "bytes": 58151,
+          "sha256": "933e7c2fda54c7480eeb86d5825f043ec72ddf6369bb505279b5c64a80518153",
+          "notOkCount": 0,
+          "jobName": "test (4)",
+          "lines": 769,
+          "firstLine": "﻿2026-09-22T14:48:55.8977870Z Current runner version: '2.337.0'",
+          "lastLine": "2026-09-22T14:50:38.3952739Z ##[warning]Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/checkout@v4, actions/setup-node@v4. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/",
+          "failures": [],
+          "summaryAndErrors": [
+            {
+              "line": 725,
+              "text": "2026-09-22T14:50:23.0851767Z ##[error]The operation was canceled."
+            }
+          ],
+          "jobId": 106797062261,
+          "jobConclusion": "cancelled"
+        },
+        {
+          "name": "5_preflight.txt",
+          "bytes": 67049,
+          "sha256": "c61910e64c838b275f8342b54d99f42dc8cf8d6001fc5666ef3f8e4b15cb6094",
+          "notOkCount": 0,
+          "jobName": "preflight",
+          "lines": 861,
+          "firstLine": "﻿2026-09-22T14:44:44.1483376Z Current runner version: '2.337.0'",
+          "lastLine": "2026-09-22T14:48:49.4048369Z ##[warning]Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/checkout@v4, actions/setup-node@v4. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/",
+          "failures": [],
+          "summaryAndErrors": [
+            {
+              "line": 807,
+              "text": "2026-09-22T14:48:32.5256586Z # tests 71"
+            },
+            {
+              "line": 809,
+              "text": "2026-09-22T14:48:32.5257501Z # pass 71"
+            },
+            {
+              "line": 810,
+              "text": "2026-09-22T14:48:32.5257960Z # fail 0"
+            },
+            {
+              "line": 811,
+              "text": "2026-09-22T14:48:32.5258287Z # cancelled 0"
+            },
+            {
+              "line": 812,
+              "text": "2026-09-22T14:48:32.5258581Z # skipped 0"
+            },
+            {
+              "line": 813,
+              "text": "2026-09-22T14:48:32.5259027Z # todo 0"
+            },
+            {
+              "line": 814,
+              "text": "2026-09-22T14:48:32.5270487Z # duration_ms 6024.125873"
+            }
+          ],
+          "jobId": 106795324952,
+          "jobConclusion": "success"
+        }
+      ],
+      "deduplicatedNotOkCount": 0,
+      "notOkCountMethod": "Every retained ZIP member was read. Root job logs counted once. Per-step copies reconciled by exact TAP line after stripping the GitHub timestamp prefix (root and step copies differ by fractional microseconds).",
+      "timestampVariantDuplicateCount": 0,
+      "additionalDistinctNotOkOutsideRootLogs": [],
+      "head": "6f9e74ab1277fb3bb9557bd21ccf14a03d3e398f",
+      "workflow": "Build and deploy GitHub Pages",
+      "conclusion": "cancelled",
+      "status": "completed",
+      "runAttempt": 1,
+      "createdAt": "2026-09-22T14:44:31Z",
+      "updatedAt": "2026-09-22T14:50:51Z",
+      "apiJobInventory": [
+        {
+          "id": 106795324307,
+          "name": "release_gate",
+          "head": "6f9e74ab1277fb3bb9557bd21ccf14a03d3e398f",
+          "conclusion": "skipped",
+          "startedAt": "2026-09-22T14:44:37Z",
+          "completedAt": "2026-09-22T14:44:36Z",
+          "steps": []
+        },
+        {
+          "id": 106795324952,
+          "name": "preflight",
+          "head": "6f9e74ab1277fb3bb9557bd21ccf14a03d3e398f",
+          "conclusion": "success",
+          "startedAt": "2026-09-22T14:44:42Z",
+          "completedAt": "2026-09-22T14:48:52Z",
+          "steps": [
+            {
+              "number": 1,
+              "name": "Set up job",
+              "conclusion": "success",
+              "status": "completed"
+            },
+            {
+              "number": 2,
+              "name": "Check out source",
+              "conclusion": "success",
+              "status": "completed"
+            },
+            {
+              "number": 3,
+              "name": "Check out the workflow's source verifier",
+              "conclusion": "success",
+              "status": "completed"
+            },
+            {
+              "number": 4,
+              "name": "Set up Node.js",
+              "conclusion": "success",
+              "status": "completed"
+            },
+            {
+              "number": 5,
+              "name": "Verify exact tracked source before commands",
+              "conclusion": "success",
+              "status": "completed"
+            },
+            {
+              "number": 6,
+              "name": "Install dependencies",
+              "conclusion": "success",
+              "status": "completed"
+            },
+            {
+              "number": 7,
+              "name": "Validate, lint, and format source",
+              "conclusion": "success",
+              "status": "completed"
+            },
+            {
+              "number": 8,
+              "name": "Verify Field Kit production ledger and compiled output",
+              "conclusion": "success",
+              "status": "completed"
+            },
+            {
+              "number": 9,
+              "name": "Verify immutable production sources first",
+              "conclusion": "success",
+              "status": "completed"
+            },
+            {
+              "number": 10,
+              "name": "Verify tracked source after preflight",
+              "conclusion": "success",
+              "status": "completed"
+            },
+            {
+              "number": 18,
+              "name": "Post Set up Node.js",
+              "conclusion": "success",
+              "status": "completed"
+            },
+            {
+              "number": 19,
+              "name": "Post Check out the workflow's source verifier",
+              "conclusion": "success",
+              "status": "completed"
+            },
+            {
+              "number": 20,
+              "name": "Post Check out source",
+              "conclusion": "success",
+              "status": "completed"
+            },
+            {
+              "number": 21,
+              "name": "Complete job",
+              "conclusion": "success",
+              "status": "completed"
+            }
+          ]
+        },
+        {
+          "id": 106797062132,
+          "name": "build",
+          "head": "6f9e74ab1277fb3bb9557bd21ccf14a03d3e398f",
+          "conclusion": "cancelled",
+          "startedAt": "2026-09-22T14:48:55Z",
+          "completedAt": "2026-09-22T14:50:39Z",
+          "steps": [
+            {
+              "number": 1,
+              "name": "Set up job",
+              "conclusion": "success",
+              "status": "completed"
+            },
+            {
+              "number": 2,
+              "name": "Check out complete history and tags",
+              "conclusion": "success",
+              "status": "completed"
+            },
+            {
+              "number": 3,
+              "name": "Check out the workflow's source verifier",
+              "conclusion": "success",
+              "status": "completed"
+            },
+            {
+              "number": 4,
+              "name": "Set up Node.js",
+              "conclusion": "success",
+              "status": "completed"
+            },
+            {
+              "number": 5,
+              "name": "Verify exact tracked source before commands",
+              "conclusion": "success",
+              "status": "completed"
+            },
+            {
+              "number": 6,
+              "name": "Install dependencies",
+              "conclusion": "success",
+              "status": "completed"
+            },
+            {
+              "number": 7,
+              "name": "Build pull-request artifact",
+              "conclusion": "cancelled",
+              "status": "completed"
+            },
+            {
+              "number": 8,
+              "name": "Verify tracked source after build",
+              "conclusion": "success",
+              "status": "completed"
+            },
+            {
+              "number": 14,
+              "name": "Post Set up Node.js",
+              "conclusion": "skipped",
+              "status": "completed"
+            },
+            {
+              "number": 15,
+              "name": "Post Check out the workflow's source verifier",
+              "conclusion": "success",
+              "status": "completed"
+            },
+            {
+              "number": 16,
+              "name": "Post Check out complete history and tags",
+              "conclusion": "success",
+              "status": "completed"
+            },
+            {
+              "number": 17,
+              "name": "Complete job",
+              "conclusion": "success",
+              "status": "completed"
+            }
+          ]
+        },
+        {
+          "id": 106797062223,
+          "name": "test (2)",
+          "head": "6f9e74ab1277fb3bb9557bd21ccf14a03d3e398f",
+          "conclusion": "cancelled",
+          "startedAt": "2026-09-22T14:48:55Z",
+          "completedAt": "2026-09-22T14:50:13Z",
+          "steps": [
+            {
+              "number": 1,
+              "name": "Set up job",
+              "conclusion": "success",
+              "status": "completed"
+            },
+            {
+              "number": 2,
+              "name": "Check out source",
+              "conclusion": "cancelled",
+              "status": "completed"
+            },
+            {
+              "number": 3,
+              "name": "Check out the workflow's test runner",
+              "conclusion": "skipped",
+              "status": "completed"
+            },
+            {
+              "number": 4,
+              "name": "Set up Node.js",
+              "conclusion": "skipped",
+              "status": "completed"
+            },
+            {
+              "number": 5,
+              "name": "Verify exact tracked source before commands",
+              "conclusion": "skipped",
+              "status": "completed"
+            },
+            {
+              "number": 6,
+              "name": "Install dependencies",
+              "conclusion": "skipped",
+              "status": "completed"
+            },
+            {
+              "number": 7,
+              "name": "Run test shard 2/4",
+              "conclusion": "skipped",
+              "status": "completed"
+            },
+            {
+              "number": 8,
+              "name": "Verify tracked source after test shard",
+              "conclusion": "failure",
+              "status": "completed"
+            },
+            {
+              "number": 16,
+              "name": "Post Check out source",
+              "conclusion": "success",
+              "status": "completed"
+            },
+            {
+              "number": 17,
+              "name": "Complete job",
+              "conclusion": "success",
+              "status": "completed"
+            }
+          ]
+        },
+        {
+          "id": 106797062261,
+          "name": "test (4)",
+          "head": "6f9e74ab1277fb3bb9557bd21ccf14a03d3e398f",
+          "conclusion": "cancelled",
+          "startedAt": "2026-09-22T14:48:55Z",
+          "completedAt": "2026-09-22T14:50:40Z",
+          "steps": [
+            {
+              "number": 1,
+              "name": "Set up job",
+              "conclusion": "success",
+              "status": "completed"
+            },
+            {
+              "number": 2,
+              "name": "Check out source",
+              "conclusion": "success",
+              "status": "completed"
+            },
+            {
+              "number": 3,
+              "name": "Check out the workflow's test runner",
+              "conclusion": "success",
+              "status": "completed"
+            },
+            {
+              "number": 4,
+              "name": "Set up Node.js",
+              "conclusion": "success",
+              "status": "completed"
+            },
+            {
+              "number": 5,
+              "name": "Verify exact tracked source before commands",
+              "conclusion": "success",
+              "status": "completed"
+            },
+            {
+              "number": 6,
+              "name": "Install dependencies",
+              "conclusion": "success",
+              "status": "completed"
+            },
+            {
+              "number": 7,
+              "name": "Run test shard 4/4",
+              "conclusion": "cancelled",
+              "status": "completed"
+            },
+            {
+              "number": 8,
+              "name": "Verify tracked source after test shard",
+              "conclusion": "success",
+              "status": "completed"
+            },
+            {
+              "number": 14,
+              "name": "Post Set up Node.js",
+              "conclusion": "skipped",
+              "status": "completed"
+            },
+            {
+              "number": 15,
+              "name": "Post Check out the workflow's test runner",
+              "conclusion": "success",
+              "status": "completed"
+            },
+            {
+              "number": 16,
+              "name": "Post Check out source",
+              "conclusion": "success",
+              "status": "completed"
+            },
+            {
+              "number": 17,
+              "name": "Complete job",
+              "conclusion": "success",
+              "status": "completed"
+            }
+          ]
+        },
+        {
+          "id": 106797062437,
+          "name": "test (1)",
+          "head": "6f9e74ab1277fb3bb9557bd21ccf14a03d3e398f",
+          "conclusion": "cancelled",
+          "startedAt": "2026-09-22T14:48:55Z",
+          "completedAt": "2026-09-22T14:50:13Z",
+          "steps": [
+            {
+              "number": 1,
+              "name": "Set up job",
+              "conclusion": "success",
+              "status": "completed"
+            },
+            {
+              "number": 2,
+              "name": "Check out source",
+              "conclusion": "cancelled",
+              "status": "completed"
+            },
+            {
+              "number": 3,
+              "name": "Check out the workflow's test runner",
+              "conclusion": "skipped",
+              "status": "completed"
+            },
+            {
+              "number": 4,
+              "name": "Set up Node.js",
+              "conclusion": "skipped",
+              "status": "completed"
+            },
+            {
+              "number": 5,
+              "name": "Verify exact tracked source before commands",
+              "conclusion": "skipped",
+              "status": "completed"
+            },
+            {
+              "number": 6,
+              "name": "Install dependencies",
+              "conclusion": "skipped",
+              "status": "completed"
+            },
+            {
+              "number": 7,
+              "name": "Run test shard 1/4",
+              "conclusion": "skipped",
+              "status": "completed"
+            },
+            {
+              "number": 8,
+              "name": "Verify tracked source after test shard",
+              "conclusion": "failure",
+              "status": "completed"
+            },
+            {
+              "number": 16,
+              "name": "Post Check out source",
+              "conclusion": "success",
+              "status": "completed"
+            },
+            {
+              "number": 17,
+              "name": "Complete job",
+              "conclusion": "success",
+              "status": "completed"
+            }
+          ]
+        },
+        {
+          "id": 106797062489,
+          "name": "test (3)",
+          "head": "6f9e74ab1277fb3bb9557bd21ccf14a03d3e398f",
+          "conclusion": "cancelled",
+          "startedAt": "2026-09-22T14:48:55Z",
+          "completedAt": "2026-09-22T14:50:47Z",
+          "steps": [
+            {
+              "number": 1,
+              "name": "Set up job",
+              "conclusion": "success",
+              "status": "completed"
+            },
+            {
+              "number": 2,
+              "name": "Check out source",
+              "conclusion": "success",
+              "status": "completed"
+            },
+            {
+              "number": 3,
+              "name": "Check out the workflow's test runner",
+              "conclusion": "success",
+              "status": "completed"
+            },
+            {
+              "number": 4,
+              "name": "Set up Node.js",
+              "conclusion": "success",
+              "status": "completed"
+            },
+            {
+              "number": 5,
+              "name": "Verify exact tracked source before commands",
+              "conclusion": "success",
+              "status": "completed"
+            },
+            {
+              "number": 6,
+              "name": "Install dependencies",
+              "conclusion": "success",
+              "status": "completed"
+            },
+            {
+              "number": 7,
+              "name": "Run test shard 3/4",
+              "conclusion": "cancelled",
+              "status": "completed"
+            },
+            {
+              "number": 8,
+              "name": "Verify tracked source after test shard",
+              "conclusion": "success",
+              "status": "completed"
+            },
+            {
+              "number": 14,
+              "name": "Post Set up Node.js",
+              "conclusion": "skipped",
+              "status": "completed"
+            },
+            {
+              "number": 15,
+              "name": "Post Check out the workflow's test runner",
+              "conclusion": "success",
+              "status": "completed"
+            },
+            {
+              "number": 16,
+              "name": "Post Check out source",
+              "conclusion": "success",
+              "status": "completed"
+            },
+            {
+              "number": 17,
+              "name": "Complete job",
+              "conclusion": "success",
+              "status": "completed"
+            }
+          ]
+        }
+      ],
+      "jobsWithoutRetainedRootLogs": [
+        {
+          "id": 106795324307,
+          "name": "release_gate",
+          "conclusion": "skipped",
+          "reason": "Not executed; no log expected"
+        }
+      ],
+      "unexpectedMissingJobLogs": 0
+    },
+    {
+      "runId": 35742940583,
+      "archivePath": "/tmp/revealline-pr263-retained-logs.s5GZ5G/35742940583.zip",
+      "archiveBytes": 361006,
+      "archiveSha256": "cff17216d515b6e540353929107a5e4e9bfc66b431054608c2e5a6c70d403612",
+      "zipCrcCheck": "PASS",
+      "memberCount": 12,
+      "allMembersReadAndDecoded": true,
+      "memberLogInventory": [
+        {
+          "name": "0_build.txt",
+          "bytes": 81345,
+          "sha256": "eaca4f312233989c800351c1ced957cb5ab49d24c6777b570504d70afe60fc2b",
+          "notOkCount": 0
+        },
+        {
+          "name": "build/system.txt",
+          "bytes": 711,
+          "sha256": "8d84a4a42491db8bbe27d7dfe194bc6b6a1c87fe7070d6c667106efa316a86d8",
+          "notOkCount": 0
+        },
+        {
+          "name": "1_test (1).txt",
+          "bytes": 300185,
+          "sha256": "864552a07b09058b75c3d1f7fbc048076f6ba04b4cd5e19eabd7ff113bf90264",
+          "notOkCount": 0
+        },
+        {
+          "name": "test (1)/system.txt",
+          "bytes": 710,
+          "sha256": "00d283595f444c6c8d3654c3762c94b444e311d695374d408e7aec1c8cbd68d9",
+          "notOkCount": 0
+        },
+        {
+          "name": "2_test (4).txt",
+          "bytes": 340571,
+          "sha256": "1ff19af8f1451e9d4242af9db19f0927759bfc6c29728d3b76a784af860ba7f8",
+          "notOkCount": 0
+        },
+        {
+          "name": "test (4)/system.txt",
+          "bytes": 710,
+          "sha256": "9289260446c657ee58c34f03b6797211b73f50421feedd4b9974d21c4bcac2a3",
+          "notOkCount": 0
+        },
+        {
+          "name": "3_test (2).txt",
+          "bytes": 487425,
+          "sha256": "e3d78bb07310409600df092e43da44c264a1ae5acef6ffb66650f2c34f2b5e13",
+          "notOkCount": 0
+        },
+        {
+          "name": "test (2)/system.txt",
+          "bytes": 710,
+          "sha256": "121a506fa7a808b272d12db0e231220a1e32857b4c917247f4fba819167d7086",
+          "notOkCount": 0
+        },
+        {
+          "name": "4_test (3).txt",
+          "bytes": 576796,
+          "sha256": "04ed0ceecf789afcc74840dcf1af976f0fa338c85beb88891130f1b0b4795310",
+          "notOkCount": 0
+        },
+        {
+          "name": "test (3)/system.txt",
+          "bytes": 710,
+          "sha256": "93e5b632f2c83d5033820a73d77e051680b8b022bca851f7c124385b95a077d2",
+          "notOkCount": 0
+        },
+        {
+          "name": "5_preflight.txt",
+          "bytes": 66845,
+          "sha256": "3fcab9fcd11a89d569867590afde09d7ee26eda31f93f1aecc10c584fa5e8804",
+          "notOkCount": 0
+        },
+        {
+          "name": "preflight/system.txt",
+          "bytes": 715,
+          "sha256": "cd7a9cc42c17cf14e72711c69fcc9e8c1d8d64d69d0d2881093448fa9baa1b16",
+          "notOkCount": 0
+        }
+      ],
+      "rootJobLogs": [
+        {
+          "name": "0_build.txt",
+          "bytes": 81345,
+          "sha256": "eaca4f312233989c800351c1ced957cb5ab49d24c6777b570504d70afe60fc2b",
+          "notOkCount": 0,
+          "jobName": "build",
+          "lines": 852,
+          "firstLine": "﻿2026-09-22T14:54:28.3173929Z Current runner version: '2.337.0'",
+          "lastLine": "2026-09-22T14:59:41.6983481Z ##[warning]Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/checkout@v4, actions/setup-node@v4. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/",
+          "failures": [],
+          "summaryAndErrors": [],
+          "jobId": 106799301587,
+          "jobConclusion": "success"
+        },
+        {
+          "name": "1_test (1).txt",
+          "bytes": 300185,
+          "sha256": "864552a07b09058b75c3d1f7fbc048076f6ba04b4cd5e19eabd7ff113bf90264",
+          "notOkCount": 0,
+          "jobName": "test (1)",
+          "lines": 3968,
+          "firstLine": "﻿2026-09-22T14:54:28.9374789Z Current runner version: '2.337.0'",
+          "lastLine": "2026-09-22T15:13:44.0317866Z ##[warning]Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/checkout@v4, actions/setup-node@v4. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/",
+          "failures": [],
+          "summaryAndErrors": [
+            {
+              "line": 3925,
+              "text": "2026-09-22T15:13:28.0587471Z ##[error]The operation was canceled."
+            }
+          ],
+          "jobId": 106799300438,
+          "jobConclusion": "cancelled"
+        },
+        {
+          "name": "2_test (4).txt",
+          "bytes": 340571,
+          "sha256": "1ff19af8f1451e9d4242af9db19f0927759bfc6c29728d3b76a784af860ba7f8",
+          "notOkCount": 0,
+          "jobName": "test (4)",
+          "lines": 4512,
+          "firstLine": "﻿2026-09-22T14:54:28.9918027Z Current runner version: '2.337.0'",
+          "lastLine": "2026-09-22T15:13:43.7338629Z ##[warning]Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/checkout@v4, actions/setup-node@v4. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/",
+          "failures": [],
+          "summaryAndErrors": [
+            {
+              "line": 4469,
+              "text": "2026-09-22T15:13:27.7397713Z ##[error]The operation was canceled."
+            }
+          ],
+          "jobId": 106799300336,
+          "jobConclusion": "cancelled"
+        },
+        {
+          "name": "3_test (2).txt",
+          "bytes": 487425,
+          "sha256": "e3d78bb07310409600df092e43da44c264a1ae5acef6ffb66650f2c34f2b5e13",
+          "notOkCount": 0,
+          "jobName": "test (2)",
+          "lines": 6547,
+          "firstLine": "﻿2026-09-22T14:54:30.0655846Z Current runner version: '2.337.0'",
+          "lastLine": "2026-09-22T15:13:54.1103899Z ##[warning]Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/checkout@v4, actions/setup-node@v4. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/",
+          "failures": [],
+          "summaryAndErrors": [
+            {
+              "line": 6504,
+              "text": "2026-09-22T15:13:28.2587482Z ##[error]The operation was canceled."
+            }
+          ],
+          "jobId": 106799300344,
+          "jobConclusion": "cancelled"
+        },
+        {
+          "name": "4_test (3).txt",
+          "bytes": 576796,
+          "sha256": "04ed0ceecf789afcc74840dcf1af976f0fa338c85beb88891130f1b0b4795310",
+          "notOkCount": 0,
+          "jobName": "test (3)",
+          "lines": 7660,
+          "firstLine": "﻿2026-09-22T14:54:29.3775763Z Current runner version: '2.337.0'",
+          "lastLine": "2026-09-22T15:13:44.8482431Z ##[warning]Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/checkout@v4, actions/setup-node@v4. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/",
+          "failures": [],
+          "summaryAndErrors": [
+            {
+              "line": 7617,
+              "text": "2026-09-22T15:13:28.1066503Z ##[error]The operation was canceled."
+            }
+          ],
+          "jobId": 106799300294,
+          "jobConclusion": "cancelled"
+        },
+        {
+          "name": "5_preflight.txt",
+          "bytes": 66845,
+          "sha256": "3fcab9fcd11a89d569867590afde09d7ee26eda31f93f1aecc10c584fa5e8804",
+          "notOkCount": 0,
+          "jobName": "preflight",
+          "lines": 855,
+          "firstLine": "﻿2026-09-22T14:51:00.1397810Z Current runner version: '2.337.0'",
+          "lastLine": "2026-09-22T14:54:22.5572092Z ##[warning]Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/checkout@v4, actions/setup-node@v4. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/",
+          "failures": [],
+          "summaryAndErrors": [
+            {
+              "line": 805,
+              "text": "2026-09-22T14:54:11.9054822Z # tests 71"
+            },
+            {
+              "line": 807,
+              "text": "2026-09-22T14:54:11.9061034Z # pass 71"
+            },
+            {
+              "line": 808,
+              "text": "2026-09-22T14:54:11.9061315Z # fail 0"
+            },
+            {
+              "line": 809,
+              "text": "2026-09-22T14:54:11.9061555Z # cancelled 0"
+            },
+            {
+              "line": 810,
+              "text": "2026-09-22T14:54:11.9061746Z # skipped 0"
+            },
+            {
+              "line": 811,
+              "text": "2026-09-22T14:54:11.9061918Z # todo 0"
+            },
+            {
+              "line": 812,
+              "text": "2026-09-22T14:54:11.9066847Z # duration_ms 4881.917992"
+            }
+          ],
+          "jobId": 106797886162,
+          "jobConclusion": "success"
+        }
+      ],
+      "deduplicatedNotOkCount": 0,
+      "notOkCountMethod": "Every retained ZIP member was read. Root job logs counted once. Per-step copies reconciled by exact TAP line after stripping the GitHub timestamp prefix (root and step copies differ by fractional microseconds).",
+      "timestampVariantDuplicateCount": 0,
+      "additionalDistinctNotOkOutsideRootLogs": [],
+      "head": "74b0cac37748013a8c26a3f6c98d1bece3e4cc31",
+      "workflow": "Build and deploy GitHub Pages",
+      "conclusion": "cancelled",
+      "status": "completed",
+      "runAttempt": 1,
+      "createdAt": "2026-09-22T14:48:57Z",
+      "updatedAt": "2026-09-22T15:13:57Z",
+      "apiJobInventory": [
+        {
+          "id": 106797885801,
+          "name": "release_gate",
+          "head": "74b0cac37748013a8c26a3f6c98d1bece3e4cc31",
+          "conclusion": "skipped",
+          "startedAt": "2026-09-22T14:50:56Z",
+          "completedAt": "2026-09-22T14:50:55Z",
+          "steps": []
+        },
+        {
+          "id": 106797886162,
+          "name": "preflight",
+          "head": "74b0cac37748013a8c26a3f6c98d1bece3e4cc31",
+          "conclusion": "success",
+          "startedAt": "2026-09-22T14:50:59Z",
+          "completedAt": "2026-09-22T14:54:23Z",
+          "steps": [
+            {
+              "number": 1,
+              "name": "Set up job",
+              "conclusion": "success",
+              "status": "completed"
+            },
+            {
+              "number": 2,
+              "name": "Check out source",
+              "conclusion": "success",
+              "status": "completed"
+            },
+            {
+              "number": 3,
+              "name": "Check out the workflow's source verifier",
+              "conclusion": "success",
+              "status": "completed"
+            },
+            {
+              "number": 4,
+              "name": "Set up Node.js",
+              "conclusion": "success",
+              "status": "completed"
+            },
+            {
+              "number": 5,
+              "name": "Verify exact tracked source before commands",
+              "conclusion": "success",
+              "status": "completed"
+            },
+            {
+              "number": 6,
+              "name": "Install dependencies",
+              "conclusion": "success",
+              "status": "completed"
+            },
+            {
+              "number": 7,
+              "name": "Validate, lint, and format source",
+              "conclusion": "success",
+              "status": "completed"
+            },
+            {
+              "number": 8,
+              "name": "Verify Field Kit production ledger and compiled output",
+              "conclusion": "success",
+              "status": "completed"
+            },
+            {
+              "number": 9,
+              "name": "Verify immutable production sources first",
+              "conclusion": "success",
+              "status": "completed"
+            },
+            {
+              "number": 10,
+              "name": "Verify tracked source after preflight",
+              "conclusion": "success",
+              "status": "completed"
+            },
+            {
+              "number": 18,
+              "name": "Post Set up Node.js",
+              "conclusion": "success",
+              "status": "completed"
+            },
+            {
+              "number": 19,
+              "name": "Post Check out the workflow's source verifier",
+              "conclusion": "success",
+              "status": "completed"
+            },
+            {
+              "number": 20,
+              "name": "Post Check out source",
+              "conclusion": "success",
+              "status": "completed"
+            },
+            {
+              "number": 21,
+              "name": "Complete job",
+              "conclusion": "success",
+              "status": "completed"
+            }
+          ]
+        },
+        {
+          "id": 106799300294,
+          "name": "test (3)",
+          "head": "74b0cac37748013a8c26a3f6c98d1bece3e4cc31",
+          "conclusion": "cancelled",
+          "startedAt": "2026-09-22T14:54:28Z",
+          "completedAt": "2026-09-22T15:13:47Z",
+          "steps": [
+            {
+              "number": 1,
+              "name": "Set up job",
+              "conclusion": "success",
+              "status": "completed"
+            },
+            {
+              "number": 2,
+              "name": "Check out source",
+              "conclusion": "success",
+              "status": "completed"
+            },
+            {
+              "number": 3,
+              "name": "Check out the workflow's test runner",
+              "conclusion": "success",
+              "status": "completed"
+            },
+            {
+              "number": 4,
+              "name": "Set up Node.js",
+              "conclusion": "success",
+              "status": "completed"
+            },
+            {
+              "number": 5,
+              "name": "Verify exact tracked source before commands",
+              "conclusion": "success",
+              "status": "completed"
+            },
+            {
+              "number": 6,
+              "name": "Install dependencies",
+              "conclusion": "success",
+              "status": "completed"
+            },
+            {
+              "number": 7,
+              "name": "Run test shard 3/4",
+              "conclusion": "cancelled",
+              "status": "completed"
+            },
+            {
+              "number": 8,
+              "name": "Verify tracked source after test shard",
+              "conclusion": "success",
+              "status": "completed"
+            },
+            {
+              "number": 14,
+              "name": "Post Set up Node.js",
+              "conclusion": "skipped",
+              "status": "completed"
+            },
+            {
+              "number": 15,
+              "name": "Post Check out the workflow's test runner",
+              "conclusion": "success",
+              "status": "completed"
+            },
+            {
+              "number": 16,
+              "name": "Post Check out source",
+              "conclusion": "success",
+              "status": "completed"
+            },
+            {
+              "number": 17,
+              "name": "Complete job",
+              "conclusion": "success",
+              "status": "completed"
+            }
+          ]
+        },
+        {
+          "id": 106799300336,
+          "name": "test (4)",
+          "head": "74b0cac37748013a8c26a3f6c98d1bece3e4cc31",
+          "conclusion": "cancelled",
+          "startedAt": "2026-09-22T14:54:27Z",
+          "completedAt": "2026-09-22T15:13:48Z",
+          "steps": [
+            {
+              "number": 1,
+              "name": "Set up job",
+              "conclusion": "success",
+              "status": "completed"
+            },
+            {
+              "number": 2,
+              "name": "Check out source",
+              "conclusion": "success",
+              "status": "completed"
+            },
+            {
+              "number": 3,
+              "name": "Check out the workflow's test runner",
+              "conclusion": "success",
+              "status": "completed"
+            },
+            {
+              "number": 4,
+              "name": "Set up Node.js",
+              "conclusion": "success",
+              "status": "completed"
+            },
+            {
+              "number": 5,
+              "name": "Verify exact tracked source before commands",
+              "conclusion": "success",
+              "status": "completed"
+            },
+            {
+              "number": 6,
+              "name": "Install dependencies",
+              "conclusion": "success",
+              "status": "completed"
+            },
+            {
+              "number": 7,
+              "name": "Run test shard 4/4",
+              "conclusion": "cancelled",
+              "status": "completed"
+            },
+            {
+              "number": 8,
+              "name": "Verify tracked source after test shard",
+              "conclusion": "success",
+              "status": "completed"
+            },
+            {
+              "number": 14,
+              "name": "Post Set up Node.js",
+              "conclusion": "skipped",
+              "status": "completed"
+            },
+            {
+              "number": 15,
+              "name": "Post Check out the workflow's test runner",
+              "conclusion": "success",
+              "status": "completed"
+            },
+            {
+              "number": 16,
+              "name": "Post Check out source",
+              "conclusion": "success",
+              "status": "completed"
+            },
+            {
+              "number": 17,
+              "name": "Complete job",
+              "conclusion": "success",
+              "status": "completed"
+            }
+          ]
+        },
+        {
+          "id": 106799300344,
+          "name": "test (2)",
+          "head": "74b0cac37748013a8c26a3f6c98d1bece3e4cc31",
+          "conclusion": "cancelled",
+          "startedAt": "2026-09-22T14:54:28Z",
+          "completedAt": "2026-09-22T15:13:56Z",
+          "steps": [
+            {
+              "number": 1,
+              "name": "Set up job",
+              "conclusion": "success",
+              "status": "completed"
+            },
+            {
+              "number": 2,
+              "name": "Check out source",
+              "conclusion": "success",
+              "status": "completed"
+            },
+            {
+              "number": 3,
+              "name": "Check out the workflow's test runner",
+              "conclusion": "success",
+              "status": "completed"
+            },
+            {
+              "number": 4,
+              "name": "Set up Node.js",
+              "conclusion": "success",
+              "status": "completed"
+            },
+            {
+              "number": 5,
+              "name": "Verify exact tracked source before commands",
+              "conclusion": "success",
+              "status": "completed"
+            },
+            {
+              "number": 6,
+              "name": "Install dependencies",
+              "conclusion": "success",
+              "status": "completed"
+            },
+            {
+              "number": 7,
+              "name": "Run test shard 2/4",
+              "conclusion": "cancelled",
+              "status": "completed"
+            },
+            {
+              "number": 8,
+              "name": "Verify tracked source after test shard",
+              "conclusion": "success",
+              "status": "completed"
+            },
+            {
+              "number": 14,
+              "name": "Post Set up Node.js",
+              "conclusion": "skipped",
+              "status": "completed"
+            },
+            {
+              "number": 15,
+              "name": "Post Check out the workflow's test runner",
+              "conclusion": "success",
+              "status": "completed"
+            },
+            {
+              "number": 16,
+              "name": "Post Check out source",
+              "conclusion": "success",
+              "status": "completed"
+            },
+            {
+              "number": 17,
+              "name": "Complete job",
+              "conclusion": "success",
+              "status": "completed"
+            }
+          ]
+        },
+        {
+          "id": 106799300438,
+          "name": "test (1)",
+          "head": "74b0cac37748013a8c26a3f6c98d1bece3e4cc31",
+          "conclusion": "cancelled",
+          "startedAt": "2026-09-22T14:54:27Z",
+          "completedAt": "2026-09-22T15:13:46Z",
+          "steps": [
+            {
+              "number": 1,
+              "name": "Set up job",
+              "conclusion": "success",
+              "status": "completed"
+            },
+            {
+              "number": 2,
+              "name": "Check out source",
+              "conclusion": "success",
+              "status": "completed"
+            },
+            {
+              "number": 3,
+              "name": "Check out the workflow's test runner",
+              "conclusion": "success",
+              "status": "completed"
+            },
+            {
+              "number": 4,
+              "name": "Set up Node.js",
+              "conclusion": "success",
+              "status": "completed"
+            },
+            {
+              "number": 5,
+              "name": "Verify exact tracked source before commands",
+              "conclusion": "success",
+              "status": "completed"
+            },
+            {
+              "number": 6,
+              "name": "Install dependencies",
+              "conclusion": "success",
+              "status": "completed"
+            },
+            {
+              "number": 7,
+              "name": "Run test shard 1/4",
+              "conclusion": "cancelled",
+              "status": "completed"
+            },
+            {
+              "number": 8,
+              "name": "Verify tracked source after test shard",
+              "conclusion": "success",
+              "status": "completed"
+            },
+            {
+              "number": 14,
+              "name": "Post Set up Node.js",
+              "conclusion": "skipped",
+              "status": "completed"
+            },
+            {
+              "number": 15,
+              "name": "Post Check out the workflow's test runner",
+              "conclusion": "success",
+              "status": "completed"
+            },
+            {
+              "number": 16,
+              "name": "Post Check out source",
+              "conclusion": "success",
+              "status": "completed"
+            },
+            {
+              "number": 17,
+              "name": "Complete job",
+              "conclusion": "success",
+              "status": "completed"
+            }
+          ]
+        },
+        {
+          "id": 106799301587,
+          "name": "build",
+          "head": "74b0cac37748013a8c26a3f6c98d1bece3e4cc31",
+          "conclusion": "success",
+          "startedAt": "2026-09-22T14:54:27Z",
+          "completedAt": "2026-09-22T14:59:43Z",
+          "steps": [
+            {
+              "number": 1,
+              "name": "Set up job",
+              "conclusion": "success",
+              "status": "completed"
+            },
+            {
+              "number": 2,
+              "name": "Check out complete history and tags",
+              "conclusion": "success",
+              "status": "completed"
+            },
+            {
+              "number": 3,
+              "name": "Check out the workflow's source verifier",
+              "conclusion": "success",
+              "status": "completed"
+            },
+            {
+              "number": 4,
+              "name": "Set up Node.js",
+              "conclusion": "success",
+              "status": "completed"
+            },
+            {
+              "number": 5,
+              "name": "Verify exact tracked source before commands",
+              "conclusion": "success",
+              "status": "completed"
+            },
+            {
+              "number": 6,
+              "name": "Install dependencies",
+              "conclusion": "success",
+              "status": "completed"
+            },
+            {
+              "number": 7,
+              "name": "Build pull-request artifact",
+              "conclusion": "success",
+              "status": "completed"
+            },
+            {
+              "number": 8,
+              "name": "Verify tracked source after build",
+              "conclusion": "success",
+              "status": "completed"
+            },
+            {
+              "number": 14,
+              "name": "Post Set up Node.js",
+              "conclusion": "success",
+              "status": "completed"
+            },
+            {
+              "number": 15,
+              "name": "Post Check out the workflow's source verifier",
+              "conclusion": "success",
+              "status": "completed"
+            },
+            {
+              "number": 16,
+              "name": "Post Check out complete history and tags",
+              "conclusion": "success",
+              "status": "completed"
+            },
+            {
+              "number": 17,
+              "name": "Complete job",
+              "conclusion": "success",
+              "status": "completed"
+            }
+          ]
+        }
+      ],
+      "jobsWithoutRetainedRootLogs": [
+        {
+          "id": 106797885801,
+          "name": "release_gate",
+          "conclusion": "skipped",
+          "reason": "Not executed; no log expected"
+        }
+      ],
+      "unexpectedMissingJobLogs": 0
+    },
+    {
+      "runId": 35745717120,
+      "archivePath": "/tmp/revealline-pr263-retained-logs.s5GZ5G/35745717120.zip",
+      "archiveBytes": 1547485,
+      "archiveSha256": "3dc46afafb01c1c3c1d038744747420f57a0951bcbc361f74a11692aa20aad2f",
+      "zipCrcCheck": "PASS",
+      "memberCount": 68,
+      "allMembersReadAndDecoded": true,
+      "memberLogInventory": [
+        {
+          "name": "0_test (1).txt",
+          "bytes": 1064700,
+          "sha256": "5747f358425bd0819389dd7f8e422752cadbcfc3b34b1d417d745cdbb5958717",
+          "notOkCount": 4
+        },
+        {
+          "name": "test (1)/system.txt",
+          "bytes": 710,
+          "sha256": "4b0d868f9f6a62361a942681aaeeaa8ffc917fb354c980d414b0d9b56959afd5",
+          "notOkCount": 0
+        },
+        {
+          "name": "test (1)/1_Set up job.txt",
+          "bytes": 1988,
+          "sha256": "f9dd2249b657036557b71987f680f5dc964b5288c3b23a424959f8d81be3a466",
+          "notOkCount": 0
+        },
+        {
+          "name": "test (1)/2_Check out source.txt",
+          "bytes": 13363,
+          "sha256": "3051b1db63e7eaa20d239370998086982f8911b64f057203c9fa553c3017b265",
+          "notOkCount": 0
+        },
+        {
+          "name": "test (1)/3_Check out the workflow's test runner.txt",
+          "bytes": 9100,
+          "sha256": "4b17805badd71daaeb3774810b6b92658c8c8276296580a86bda9075b9d134b9",
+          "notOkCount": 0
+        },
+        {
+          "name": "test (1)/4_Set up Node.js.txt",
+          "bytes": 3058,
+          "sha256": "c53d61c1e315a7539d8982aee13d763f693f369544e923d3fdc823bbf42c57a2",
+          "notOkCount": 0
+        },
+        {
+          "name": "test (1)/5_Verify exact tracked source before commands.txt",
+          "bytes": 998,
+          "sha256": "d3e323c46c6f1c3bbfe2730c6beeff854be812391239b791de5297229ba92dea",
+          "notOkCount": 0
+        },
+        {
+          "name": "test (1)/6_Install dependencies.txt",
+          "bytes": 665,
+          "sha256": "2527feadefcea1c2d29b0e89ea4dcf494c86ea6e611488201748bd9af5b2c438",
+          "notOkCount": 0
+        },
+        {
+          "name": "test (1)/7_Run test shard 1_4.txt",
+          "bytes": 1030226,
+          "sha256": "0c00a5b16cec3c47e788f7e21a42cbc85592afb9bfdb3843d73a750bf1ed8afa",
+          "notOkCount": 4
+        },
+        {
+          "name": "test (1)/8_Verify tracked source after test shard.txt",
+          "bytes": 998,
+          "sha256": "5e5363295a2257d1e940decb414fbf192da32008a5246b596f311e9ec90199cc",
+          "notOkCount": 0
+        },
+        {
+          "name": "test (1)/15_Post Check out the workflow's test runner.txt",
+          "bytes": 1893,
+          "sha256": "4cdab91d5bc4f877fd09d56282d95f1401c5f3d994238ab2677cc08789f3498c",
+          "notOkCount": 0
+        },
+        {
+          "name": "test (1)/16_Post Check out source.txt",
+          "bytes": 2070,
+          "sha256": "cbdbe537133f257054e11bd68c701ac3f08c67c6e545e80d000b540c29a3168a",
+          "notOkCount": 0
+        },
+        {
+          "name": "test (1)/17_Complete job.txt",
+          "bytes": 371,
+          "sha256": "d65276269a861d8b2a9b4093d6520f12068430ee07f0836d3f61ceb6215cea32",
+          "notOkCount": 0
+        },
+        {
+          "name": "1_test (2).txt",
+          "bytes": 1002786,
+          "sha256": "87c27664267189dd2c3b0cf4defa414efc9261aa2d8586215147ec5dc9046a49",
+          "notOkCount": 0
+        },
+        {
+          "name": "test (2)/system.txt",
+          "bytes": 710,
+          "sha256": "c46b78cff6f3235ad05d40b4978a0e6e1c69fa8f5890c0f9b4d4bb0ba0bd9923",
+          "notOkCount": 0
+        },
+        {
+          "name": "test (2)/1_Set up job.txt",
+          "bytes": 1986,
+          "sha256": "2914f212c742c736ec6b2113f7972eabf1fd0c4a1b66ccbf9c74b7b9f94b3447",
+          "notOkCount": 0
+        },
+        {
+          "name": "test (2)/2_Check out source.txt",
+          "bytes": 13426,
+          "sha256": "8f517f8c21af2c219b386b8f15555c735e2afb04b68199684b4bdcc96a4ee37d",
+          "notOkCount": 0
+        },
+        {
+          "name": "test (2)/3_Check out the workflow's test runner.txt",
+          "bytes": 8925,
+          "sha256": "19147bf255bb29e4d2a387c59bac1c0e16990667eca8696d8d74db66c943c8d6",
+          "notOkCount": 0
+        },
+        {
+          "name": "test (2)/4_Set up Node.js.txt",
+          "bytes": 3058,
+          "sha256": "38ade829881e1838d52fec36c2468efdeb70d0ba315c1438a5904c1ec4f5eae2",
+          "notOkCount": 0
+        },
+        {
+          "name": "test (2)/5_Verify exact tracked source before commands.txt",
+          "bytes": 998,
+          "sha256": "fc99c72cb1a8cf646dfb1d090c0b4432b66fca5a503ec565ca4f39b49306c58e",
+          "notOkCount": 0
+        },
+        {
+          "name": "test (2)/6_Install dependencies.txt",
+          "bytes": 665,
+          "sha256": "f05ce3a860efc85f46810a8292737ca10367b6e21b12a9e60f45d58f0f97b6ac",
+          "notOkCount": 0
+        },
+        {
+          "name": "test (2)/7_Run test shard 2_4.txt",
+          "bytes": 968061,
+          "sha256": "0f11e6e96ded218c846cb90d8f42a51121f9fb966189d8c10804115a9e6ed9fa",
+          "notOkCount": 0
+        },
+        {
+          "name": "test (2)/8_Verify tracked source after test shard.txt",
+          "bytes": 998,
+          "sha256": "401e03e3f1213f5c3c9a77831c434c0d6f309a54ffc693541630ad98763939dd",
+          "notOkCount": 0
+        },
+        {
+          "name": "test (2)/15_Post Check out the workflow's test runner.txt",
+          "bytes": 1893,
+          "sha256": "452252b00f56a0227fcbe2ab4535842e2237e071c9cb3a956828b192e0f2af22",
+          "notOkCount": 0
+        },
+        {
+          "name": "test (2)/16_Post Check out source.txt",
+          "bytes": 2070,
+          "sha256": "63762236fa16751dc95c8889087f6fc2932250b96214bd06f0538f0dcbd46f68",
+          "notOkCount": 0
+        },
+        {
+          "name": "test (2)/17_Complete job.txt",
+          "bytes": 736,
+          "sha256": "de7ac78bd836868253f2eae1bb8c3613639d266e0aff30acace464a831b2650e",
+          "notOkCount": 0
+        },
+        {
+          "name": "2_build.txt",
+          "bytes": 81442,
+          "sha256": "4b705e7568b6c7e8db9dfd51bc21422fbcdcef5814c7393681c370acea5edcd8",
+          "notOkCount": 0
+        },
+        {
+          "name": "build/system.txt",
+          "bytes": 711,
+          "sha256": "a95adea8f3cc63ea1aec51e14c7c1eb0a52fe8abfc8de9ba4854d2b1a26b6bf4",
+          "notOkCount": 0
+        },
+        {
+          "name": "build/1_Set up job.txt",
+          "bytes": 1982,
+          "sha256": "9f9605cd79e1fd8860209aa4bc75e21bbee377d666818eaa22084e8add86625c",
+          "notOkCount": 0
+        },
+        {
+          "name": "build/2_Check out complete history and tags.txt",
+          "bytes": 58793,
+          "sha256": "4fd2cf1cf95e642acc3046ca3c8faae0c89f837e3ab58444d3c3297b432404cb",
+          "notOkCount": 0
+        },
+        {
+          "name": "build/3_Check out the workflow's source verifier.txt",
+          "bytes": 8962,
+          "sha256": "0f3f039c8317396e2ba6d7027c176dc8d8e5b7fe9f6ee35c474c86d7f81e43cc",
+          "notOkCount": 0
+        },
+        {
+          "name": "build/4_Set up Node.js.txt",
+          "bytes": 2980,
+          "sha256": "70bdf3a1a48be0515740e186d8f44e667736ee22eabc2012cb71b4e945ff27bb",
+          "notOkCount": 0
+        },
+        {
+          "name": "build/5_Verify exact tracked source before commands.txt",
+          "bytes": 1001,
+          "sha256": "04c555bfa66ab0d0df8ec75d591316b8bf96a54a5dc306b1241e7844d0670563",
+          "notOkCount": 0
+        },
+        {
+          "name": "build/6_Install dependencies.txt",
+          "bytes": 665,
+          "sha256": "0df5d02413d6b2d57a792d6cb054d5da23d585f06ecb13d950c23ebabd62ffe9",
+          "notOkCount": 0
+        },
+        {
+          "name": "build/7_Build pull-request artifact.txt",
+          "bytes": 922,
+          "sha256": "1a4b499e4dfef311ddfd0451cd820a3eb4ba2526d0ee6e9310a9f5184184d6c7",
+          "notOkCount": 0
+        },
+        {
+          "name": "build/8_Verify tracked source after build.txt",
+          "bytes": 1001,
+          "sha256": "bee4ccb00f193a95941bd7db842af64e564f9ae41b8d4c98b42429b803108c66",
+          "notOkCount": 0
+        },
+        {
+          "name": "build/14_Post Set up Node.js.txt",
+          "bytes": 829,
+          "sha256": "9b49694da54001e0a378ace6cbd9e36689daedbb36565b97934a1bb4e6b0f188",
+          "notOkCount": 0
+        },
+        {
+          "name": "build/15_Post Check out the workflow's source verifier.txt",
+          "bytes": 1906,
+          "sha256": "fe1ab72adc389f3b6224bf80cb6c700ad445470778f4a547f49604ad628cedcf",
+          "notOkCount": 0
+        },
+        {
+          "name": "build/16_Post Check out complete history and tags.txt",
+          "bytes": 2063,
+          "sha256": "25f222c2d0a8c1f703d01606d057799d1aa627985919d0fe1cb244fd30f8fb03",
+          "notOkCount": 0
+        },
+        {
+          "name": "build/17_Complete job.txt",
+          "bytes": 371,
+          "sha256": "68fbde4889d239cba1e84d9cf91b9838acbd00193b6f72404d3c77c86a9e1667",
+          "notOkCount": 0
+        },
+        {
+          "name": "3_test (4).txt",
+          "bytes": 830241,
+          "sha256": "4a9718507a7a89640ef0edf3e804cded2b1178e4e5236405c04bbe06e7fe0266",
+          "notOkCount": 2
+        },
+        {
+          "name": "test (4)/system.txt",
+          "bytes": 710,
+          "sha256": "35f1bfccad26a38a40af73029e19d280882784e43506d0cd45f474497f0c7bc8",
+          "notOkCount": 0
+        },
+        {
+          "name": "test (4)/1_Set up job.txt",
+          "bytes": 1986,
+          "sha256": "4a6237e74486e3756b9b82b6b18a14e412a18d8e6e350f41696e32b4a6e1ed7f",
+          "notOkCount": 0
+        },
+        {
+          "name": "test (4)/2_Check out source.txt",
+          "bytes": 13426,
+          "sha256": "fa63b9553e092e2726cf642c98e4c9f7b33d99a7617e7c1be7459906ec04dfb4",
+          "notOkCount": 0
+        },
+        {
+          "name": "test (4)/3_Check out the workflow's test runner.txt",
+          "bytes": 8925,
+          "sha256": "0de413146cb1fff64de7fc511162a10302c5376781f5ecb97ecfb683224c1ef8",
+          "notOkCount": 0
+        },
+        {
+          "name": "test (4)/4_Set up Node.js.txt",
+          "bytes": 3137,
+          "sha256": "718755653bbeb536b2796a51c431202b9a4a41ddc25841d7db094b52573d5091",
+          "notOkCount": 0
+        },
+        {
+          "name": "test (4)/5_Verify exact tracked source before commands.txt",
+          "bytes": 998,
+          "sha256": "c76aff82d1bb3df070f1f68016349497d34700607a1ff8a0ff33e9b6207f8c7e",
+          "notOkCount": 0
+        },
+        {
+          "name": "test (4)/6_Install dependencies.txt",
+          "bytes": 665,
+          "sha256": "bab6cb369875bb6f3f19eadb727145661e7b88e08ebf6612b90eb5a7e26c2c42",
+          "notOkCount": 0
+        },
+        {
+          "name": "test (4)/7_Run test shard 4_4.txt",
+          "bytes": 795437,
+          "sha256": "7c881adfd69d31a325343a6ba8fe24193a9c8d2f01940a5727b9b51be0b3b19c",
+          "notOkCount": 2
+        },
+        {
+          "name": "test (4)/8_Verify tracked source after test shard.txt",
+          "bytes": 998,
+          "sha256": "02274d25942eccdcf978efde02f4117cf33a0ad52b89c350969f8f7bf3436dc0",
+          "notOkCount": 0
+        },
+        {
+          "name": "test (4)/15_Post Check out the workflow's test runner.txt",
+          "bytes": 1893,
+          "sha256": "faef5b17bdc4cc886f214ab7eddc333107dcc0a8900b141d5e39c3d299faf12e",
+          "notOkCount": 0
+        },
+        {
+          "name": "test (4)/16_Post Check out source.txt",
+          "bytes": 2070,
+          "sha256": "21928421a26bd40ba8f45cda2c01b70418918fad73a6e281950cc7d978ba7bd2",
+          "notOkCount": 0
+        },
+        {
+          "name": "test (4)/17_Complete job.txt",
+          "bytes": 736,
+          "sha256": "8e5fb8135e332dc817fc35e71c52db742de95793a9c74aab868ffbe2fa769648",
+          "notOkCount": 0
+        },
+        {
+          "name": "4_test (3).txt",
+          "bytes": 1234970,
+          "sha256": "72f82b04606f12bb37b2d27df83b797c33a7507e1f7d9417d10a5e5135eb5312",
+          "notOkCount": 0
+        },
+        {
+          "name": "test (3)/system.txt",
+          "bytes": 710,
+          "sha256": "ae2939d2fb1dbd88b19820ca2d247742ddcc1c084bb86c495447d454bddb619b",
+          "notOkCount": 0
+        },
+        {
+          "name": "test (3)/1_Set up job.txt",
+          "bytes": 1986,
+          "sha256": "8da513b79f0fbe6282d1e19ba32f9cb825bfa7e26d8f11891146017a1d13fee1",
+          "notOkCount": 0
+        },
+        {
+          "name": "test (3)/2_Check out source.txt",
+          "bytes": 13426,
+          "sha256": "9ffb62a55faeec046bbfd3d46d7742e3e8997b81f5c18eb71f3619695d096ea4",
+          "notOkCount": 0
+        },
+        {
+          "name": "test (3)/3_Check out the workflow's test runner.txt",
+          "bytes": 9100,
+          "sha256": "7e1627f7faaa0471fea29167ae46b8c6188d4e31f7df1bda8979137f978b293e",
+          "notOkCount": 0
+        },
+        {
+          "name": "test (3)/4_Set up Node.js.txt",
+          "bytes": 3058,
+          "sha256": "68bb67e5c257d6fb64e3bfdbcd074d634ca58fb6806253814e195dcf89f709de",
+          "notOkCount": 0
+        },
+        {
+          "name": "test (3)/5_Verify exact tracked source before commands.txt",
+          "bytes": 998,
+          "sha256": "9a4d3cecb0f9dd869d120fdb0aaf921516019544764ba25aa9965e6b0232fe13",
+          "notOkCount": 0
+        },
+        {
+          "name": "test (3)/6_Install dependencies.txt",
+          "bytes": 665,
+          "sha256": "f95043cd2cd05f30f5e6ee0c2f96a9258489b729b77711e2924f49b2c3886abf",
+          "notOkCount": 0
+        },
+        {
+          "name": "test (3)/7_Run test shard 3_4.txt",
+          "bytes": 1200435,
+          "sha256": "a5287640e2470e70623cb2afb80c5dd21ebe7cee4926819f7487fd13a0e2b542",
+          "notOkCount": 0
+        },
+        {
+          "name": "test (3)/8_Verify tracked source after test shard.txt",
+          "bytes": 998,
+          "sha256": "8c45d9b7bad599d07bf6ed7046d036276d272cc4e22671fb456d27828fa880e1",
+          "notOkCount": 0
+        },
+        {
+          "name": "test (3)/15_Post Check out the workflow's test runner.txt",
+          "bytes": 1893,
+          "sha256": "6a6bbaf78eb2136c1d8a7c207c1ea96f4df4efd8d3ba3b80ffe730c803b2b6fa",
+          "notOkCount": 0
+        },
+        {
+          "name": "test (3)/16_Post Check out source.txt",
+          "bytes": 2070,
+          "sha256": "1e161ffeb9502abf3817fef7f9341cb400b4304cc4ad1d1e683864e219267e95",
+          "notOkCount": 0
+        },
+        {
+          "name": "test (3)/17_Complete job.txt",
+          "bytes": 371,
+          "sha256": "0ce81f06d0c1bcd1643479f67aedb87fc4524661170e26e7ff5ea349265be134",
+          "notOkCount": 0
+        },
+        {
+          "name": "5_preflight.txt",
+          "bytes": 67228,
+          "sha256": "1a9dbe75a74242a0bb5a13e86fa3d38d56941c65065525fb1ff796d005f489c0",
+          "notOkCount": 0
+        },
+        {
+          "name": "preflight/system.txt",
+          "bytes": 715,
+          "sha256": "4ee57f091e72ff57529cf2eff8b4d34e3732296ee6184caf6a8c4bd4c585b153",
+          "notOkCount": 0
+        }
+      ],
+      "rootJobLogs": [
+        {
+          "name": "0_test (1).txt",
+          "bytes": 1064700,
+          "sha256": "5747f358425bd0819389dd7f8e422752cadbcfc3b34b1d417d745cdbb5958717",
+          "notOkCount": 4,
+          "jobName": "test (1)",
+          "lines": 14114,
+          "firstLine": "﻿2026-09-22T15:20:27.9090144Z Current runner version: '2.337.0'",
+          "lastLine": "2026-09-22T16:02:32.0288759Z ##[warning]Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/checkout@v4, actions/setup-node@v4. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/",
+          "failures": [
+            {
+              "line": 4173,
+              "emitted": "2026-09-22T15:36:35.8084339Z not ok 721 - combined ready focus after a required picture respects untouched",
+              "context": [
+                "2026-09-22T15:36:35.8083662Z # Subtest: combined ready focus after a required picture respects untouched",
+                "2026-09-22T15:36:35.8084339Z not ok 721 - combined ready focus after a required picture respects untouched",
+                "2026-09-22T15:36:35.8084751Z   ---",
+                "2026-09-22T15:36:35.8084995Z   duration_ms: 167.412124",
+                "2026-09-22T15:36:35.8085559Z   location: '/home/runner/work/revealline/revealline/source/game/test/couch-static-picture-host.test.mjs:501:3'",
+                "2026-09-22T15:36:35.8086334Z   failureType: 'testCodeFailure'",
+                "2026-09-22T15:36:35.8086690Z   error: |-",
+                "2026-09-22T15:36:35.8087016Z     Expected values to be strictly equal:",
+                "2026-09-22T15:36:35.8087366Z     + actual - expected",
+                "2026-09-22T15:36:35.8087650Z     ",
+                "2026-09-22T15:36:35.8087917Z     + '../?journey=legacy'",
+                "2026-09-22T15:36:35.8088209Z     - '../'",
+                "2026-09-22T15:36:35.8088448Z           ^",
+                "2026-09-22T15:36:35.8088704Z   code: 'ERR_ASSERTION'",
+                "2026-09-22T15:36:35.8088987Z   name: 'AssertionError'",
+                "2026-09-22T15:36:35.8089264Z   expected: '../'",
+                "2026-09-22T15:36:35.8089561Z   actual: '../?journey=legacy'",
+                "2026-09-22T15:36:35.8089855Z   operator: 'strictEqual'",
+                "2026-09-22T15:36:35.8090136Z   stack: |-",
+                "2026-09-22T15:36:35.8090785Z     TestContext.<anonymous> (file:///home/runner/work/revealline/revealline/source/game/test/couch-static-picture-host.test.mjs:548:12)",
+                "2026-09-22T15:36:35.8091574Z     async Test.run (node:internal/test_runner/test:797:9)",
+                "2026-09-22T15:36:35.8092215Z     async Test.processPendingSubtests (node:internal/test_runner/test:526:7)",
+                "2026-09-22T15:36:35.8092683Z   ..."
+              ]
+            },
+            {
+              "line": 4196,
+              "emitted": "2026-09-22T15:36:35.8116765Z not ok 722 - combined ready focus after a required picture respects deliberate mode link",
+              "context": [
+                "2026-09-22T15:36:35.8093164Z # Subtest: combined ready focus after a required picture respects deliberate mode link",
+                "2026-09-22T15:36:35.8116765Z not ok 722 - combined ready focus after a required picture respects deliberate mode link",
+                "2026-09-22T15:36:35.8121617Z   ---",
+                "2026-09-22T15:36:35.8122051Z   duration_ms: 164.513991",
+                "2026-09-22T15:36:35.8122743Z   location: '/home/runner/work/revealline/revealline/source/game/test/couch-static-picture-host.test.mjs:501:3'",
+                "2026-09-22T15:36:35.8123424Z   failureType: 'testCodeFailure'",
+                "2026-09-22T15:36:35.8123781Z   error: |-",
+                "2026-09-22T15:36:35.8124128Z     Expected values to be strictly equal:",
+                "2026-09-22T15:36:35.8124733Z     + actual - expected",
+                "2026-09-22T15:36:35.8125041Z     ",
+                "2026-09-22T15:36:35.8125322Z     + '../?journey=legacy'",
+                "2026-09-22T15:36:35.8125622Z     - '../'",
+                "2026-09-22T15:36:35.8125893Z           ^",
+                "2026-09-22T15:36:35.8126360Z   code: 'ERR_ASSERTION'",
+                "2026-09-22T15:36:35.8126683Z   name: 'AssertionError'",
+                "2026-09-22T15:36:35.8127009Z   expected: '../'",
+                "2026-09-22T15:36:35.8127445Z   actual: '../?journey=legacy'",
+                "2026-09-22T15:36:35.8127804Z   operator: 'strictEqual'",
+                "2026-09-22T15:36:35.8128133Z   stack: |-",
+                "2026-09-22T15:36:35.8128856Z     TestContext.<anonymous> (file:///home/runner/work/revealline/revealline/source/game/test/couch-static-picture-host.test.mjs:548:12)",
+                "2026-09-22T15:36:35.8129663Z     async Test.run (node:internal/test_runner/test:797:9)",
+                "2026-09-22T15:36:35.8130252Z     async Test.processPendingSubtests (node:internal/test_runner/test:526:7)",
+                "2026-09-22T15:36:35.8130747Z   ..."
+              ]
+            },
+            {
+              "line": 4219,
+              "emitted": "2026-09-22T15:36:35.8132046Z not ok 723 - combined ready focus after a required picture respects blur and return",
+              "context": [
+                "2026-09-22T15:36:35.8131322Z # Subtest: combined ready focus after a required picture respects blur and return",
+                "2026-09-22T15:36:35.8132046Z not ok 723 - combined ready focus after a required picture respects blur and return",
+                "2026-09-22T15:36:35.8132525Z   ---",
+                "2026-09-22T15:36:35.8132810Z   duration_ms: 182.867545",
+                "2026-09-22T15:36:35.8133442Z   location: '/home/runner/work/revealline/revealline/source/game/test/couch-static-picture-host.test.mjs:501:3'",
+                "2026-09-22T15:36:35.8134049Z   failureType: 'testCodeFailure'",
+                "2026-09-22T15:36:35.8134394Z   error: |-",
+                "2026-09-22T15:36:35.8134731Z     Expected values to be strictly equal:",
+                "2026-09-22T15:36:35.8135106Z     + actual - expected",
+                "2026-09-22T15:36:35.8135417Z     ",
+                "2026-09-22T15:36:35.8135714Z     + '../?journey=legacy'",
+                "2026-09-22T15:36:35.8136162Z     - '../'",
+                "2026-09-22T15:36:35.8136484Z           ^",
+                "2026-09-22T15:36:35.8136787Z   code: 'ERR_ASSERTION'",
+                "2026-09-22T15:36:35.8137106Z   name: 'AssertionError'",
+                "2026-09-22T15:36:35.8137441Z   expected: '../'",
+                "2026-09-22T15:36:35.8137786Z   actual: '../?journey=legacy'",
+                "2026-09-22T15:36:35.8138148Z   operator: 'strictEqual'",
+                "2026-09-22T15:36:35.8138467Z   stack: |-",
+                "2026-09-22T15:36:35.8139121Z     TestContext.<anonymous> (file:///home/runner/work/revealline/revealline/source/game/test/couch-static-picture-host.test.mjs:548:12)",
+                "2026-09-22T15:36:35.8139842Z     async Test.run (node:internal/test_runner/test:797:9)",
+                "2026-09-22T15:36:35.8140381Z     async Test.processPendingSubtests (node:internal/test_runner/test:526:7)",
+                "2026-09-22T15:36:35.8140837Z   ..."
+              ]
+            },
+            {
+              "line": 4242,
+              "emitted": "2026-09-22T15:36:35.8142073Z not ok 724 - combined ready focus after a required picture respects decode failure",
+              "context": [
+                "2026-09-22T15:36:35.8141313Z # Subtest: combined ready focus after a required picture respects decode failure",
+                "2026-09-22T15:36:35.8142073Z not ok 724 - combined ready focus after a required picture respects decode failure",
+                "2026-09-22T15:36:35.8142594Z   ---",
+                "2026-09-22T15:36:35.8143011Z   duration_ms: 159.767394",
+                "2026-09-22T15:36:35.8143718Z   location: '/home/runner/work/revealline/revealline/source/game/test/couch-static-picture-host.test.mjs:501:3'",
+                "2026-09-22T15:36:35.8144587Z   failureType: 'testCodeFailure'",
+                "2026-09-22T15:36:35.8145125Z   error: |-",
+                "2026-09-22T15:36:35.8145689Z     Expected values to be strictly equal:",
+                "2026-09-22T15:36:35.8146444Z     + actual - expected",
+                "2026-09-22T15:36:35.8146887Z     ",
+                "2026-09-22T15:36:35.8147316Z     + '../?journey=legacy'",
+                "2026-09-22T15:36:35.8147763Z     - '../'",
+                "2026-09-22T15:36:35.8148169Z           ^",
+                "2026-09-22T15:36:35.8148592Z   code: 'ERR_ASSERTION'",
+                "2026-09-22T15:36:35.8149152Z   name: 'AssertionError'",
+                "2026-09-22T15:36:35.8149705Z   expected: '../'",
+                "2026-09-22T15:36:35.8150275Z   actual: '../?journey=legacy'",
+                "2026-09-22T15:36:35.8150782Z   operator: 'strictEqual'",
+                "2026-09-22T15:36:35.8151246Z   stack: |-",
+                "2026-09-22T15:36:35.8152002Z     TestContext.<anonymous> (file:///home/runner/work/revealline/revealline/source/game/test/couch-static-picture-host.test.mjs:548:12)",
+                "2026-09-22T15:36:35.8152780Z     async Test.run (node:internal/test_runner/test:797:9)",
+                "2026-09-22T15:36:35.8153555Z     async Test.processPendingSubtests (node:internal/test_runner/test:526:7)",
+                "2026-09-22T15:36:35.8154306Z   ..."
+              ]
+            }
+          ],
+          "summaryAndErrors": [
+            {
+              "line": 14068,
+              "text": "2026-09-22T16:02:20.1978692Z # tests 2700"
+            },
+            {
+              "line": 14070,
+              "text": "2026-09-22T16:02:20.1978989Z # pass 2696"
+            },
+            {
+              "line": 14071,
+              "text": "2026-09-22T16:02:20.1979132Z # fail 4"
+            },
+            {
+              "line": 14072,
+              "text": "2026-09-22T16:02:20.1979273Z # cancelled 0"
+            },
+            {
+              "line": 14073,
+              "text": "2026-09-22T16:02:20.1979432Z # skipped 0"
+            },
+            {
+              "line": 14074,
+              "text": "2026-09-22T16:02:20.1979569Z # todo 0"
+            },
+            {
+              "line": 14075,
+              "text": "2026-09-22T16:02:20.1979726Z # duration_ms 2344465.665405"
+            },
+            {
+              "line": 14076,
+              "text": "2026-09-22T16:02:20.1996454Z ##[error]Process completed with exit code 1."
+            }
+          ],
+          "jobId": 106809820553,
+          "jobConclusion": "failure"
+        },
+        {
+          "name": "1_test (2).txt",
+          "bytes": 1002786,
+          "sha256": "87c27664267189dd2c3b0cf4defa414efc9261aa2d8586215147ec5dc9046a49",
+          "notOkCount": 0,
+          "jobName": "test (2)",
+          "lines": 13409,
+          "firstLine": "﻿2026-09-22T15:20:26.8870808Z Current runner version: '2.337.0'",
+          "lastLine": "2026-09-22T16:08:28.0414795Z ##[warning]Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/checkout@v4, actions/setup-node@v4. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/",
+          "failures": [],
+          "summaryAndErrors": [
+            {
+              "line": 13366,
+              "text": "2026-09-22T16:08:12.1794200Z ##[error]The operation was canceled."
+            }
+          ],
+          "jobId": 106809820724,
+          "jobConclusion": "cancelled"
+        },
+        {
+          "name": "2_build.txt",
+          "bytes": 81442,
+          "sha256": "4b705e7568b6c7e8db9dfd51bc21422fbcdcef5814c7393681c370acea5edcd8",
+          "notOkCount": 0,
+          "jobName": "build",
+          "lines": 853,
+          "firstLine": "﻿2026-09-22T15:20:26.9104774Z Current runner version: '2.337.0'",
+          "lastLine": "2026-09-22T15:25:37.9555278Z ##[warning]Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/checkout@v4, actions/setup-node@v4. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/",
+          "failures": [],
+          "summaryAndErrors": [],
+          "jobId": 106809820593,
+          "jobConclusion": "success"
+        },
+        {
+          "name": "3_test (4).txt",
+          "bytes": 830241,
+          "sha256": "4a9718507a7a89640ef0edf3e804cded2b1178e4e5236405c04bbe06e7fe0266",
+          "notOkCount": 2,
+          "jobName": "test (4)",
+          "lines": 11191,
+          "firstLine": "﻿2026-09-22T15:20:27.7782036Z Current runner version: '2.337.0'",
+          "lastLine": "2026-09-22T16:08:32.1540258Z ##[warning]Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/checkout@v4, actions/setup-node@v4. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/",
+          "failures": [
+            {
+              "line": 5120,
+              "emitted": "2026-09-22T15:55:28.8810189Z not ok 929 - title keeps five game destinations and quick sound; About lives in Workshop and Back preserves an unstarted flight",
+              "context": [
+                "2026-09-22T15:55:28.8808237Z # Subtest: title keeps five game destinations and quick sound; About lives in Workshop and Back preserves an unstarted flight",
+                "2026-09-22T15:55:28.8810189Z not ok 929 - title keeps five game destinations and quick sound; About lives in Workshop and Back preserves an unstarted flight",
+                "2026-09-22T15:55:28.8811455Z   ---",
+                "2026-09-22T15:55:28.8812067Z   duration_ms: 1428.114969",
+                "2026-09-22T15:55:28.8813518Z   location: '/home/runner/work/revealline/revealline/source/game/test/field-kit-flow.test.mjs:67:1'",
+                "2026-09-22T15:55:28.8814712Z   failureType: 'testCodeFailure'",
+                "2026-09-22T15:55:28.8815388Z   error: |-",
+                "2026-09-22T15:55:28.8816069Z     Expected values to be strictly deep-equal:",
+                "2026-09-22T15:55:28.8816885Z     + actual - expected ... Lines skipped",
+                "2026-09-22T15:55:28.8817517Z     ",
+                "2026-09-22T15:55:28.8818015Z       [",
+                "2026-09-22T15:55:28.8818609Z         'shell-featured',",
+                "2026-09-22T15:55:28.8819256Z         'shell-play',",
+                "2026-09-22T15:55:28.8819878Z     +   'shell-catalogue',",
+                "2026-09-22T15:55:28.8820573Z         'shell-gallery',",
+                "2026-09-22T15:55:28.8821240Z     ..."
+              ]
+            },
+            {
+              "line": 5167,
+              "emitted": "2026-09-22T15:55:28.8851241Z not ok 931 - Deploy uses the existing start guard and Continue replaces Deploy after a paused flight",
+              "context": [
+                "2026-09-22T15:55:28.8849524Z # Subtest: Deploy uses the existing start guard and Continue replaces Deploy after a paused flight",
+                "2026-09-22T15:55:28.8851241Z not ok 931 - Deploy uses the existing start guard and Continue replaces Deploy after a paused flight",
+                "2026-09-22T15:55:28.8852700Z   ---",
+                "2026-09-22T15:55:28.8853378Z   duration_ms: 1971.013073",
+                "2026-09-22T15:55:28.8854596Z   location: '/home/runner/work/revealline/revealline/source/game/test/field-kit-flow.test.mjs:159:1'",
+                "2026-09-22T15:55:28.8855847Z   failureType: 'testCodeFailure'",
+                "2026-09-22T15:55:28.8856608Z   error: |-",
+                "2026-09-22T15:55:28.8857356Z     Expected values to be strictly deep-equal:",
+                "2026-09-22T15:55:28.8858261Z     + actual - expected ... Lines skipped",
+                "2026-09-22T15:55:28.8858996Z     ",
+                "2026-09-22T15:55:28.8859578Z       [",
+                "2026-09-22T15:55:28.8860213Z         'shell-continue',",
+                "2026-09-22T15:55:28.8860913Z         'shell-play',",
+                "2026-09-22T15:55:28.8861601Z     +   'shell-catalogue',",
+                "2026-09-22T15:55:28.8862557Z         'shell-gallery',",
+                "2026-09-22T15:55:28.8863291Z     ..."
+              ]
+            }
+          ],
+          "summaryAndErrors": [
+            {
+              "line": 11148,
+              "text": "2026-09-22T16:08:16.2655338Z ##[error]The operation was canceled."
+            }
+          ],
+          "jobId": 106809820595,
+          "jobConclusion": "cancelled"
+        },
+        {
+          "name": "4_test (3).txt",
+          "bytes": 1234970,
+          "sha256": "72f82b04606f12bb37b2d27df83b797c33a7507e1f7d9417d10a5e5135eb5312",
+          "notOkCount": 0,
+          "jobName": "test (3)",
+          "lines": 16310,
+          "firstLine": "﻿2026-09-22T15:20:27.3097563Z Current runner version: '2.337.0'",
+          "lastLine": "2026-09-22T16:08:09.0081167Z ##[warning]Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/checkout@v4, actions/setup-node@v4. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/",
+          "failures": [],
+          "summaryAndErrors": [
+            {
+              "line": 16265,
+              "text": "2026-09-22T16:07:56.6823575Z # tests 3160"
+            },
+            {
+              "line": 16267,
+              "text": "2026-09-22T16:07:56.6823754Z # pass 3160"
+            },
+            {
+              "line": 16268,
+              "text": "2026-09-22T16:07:56.6823917Z # fail 0"
+            },
+            {
+              "line": 16269,
+              "text": "2026-09-22T16:07:56.6824013Z # cancelled 0"
+            },
+            {
+              "line": 16270,
+              "text": "2026-09-22T16:07:56.6824096Z # skipped 0"
+            },
+            {
+              "line": 16271,
+              "text": "2026-09-22T16:07:56.6824181Z # todo 0"
+            },
+            {
+              "line": 16272,
+              "text": "2026-09-22T16:07:56.6824305Z # duration_ms 2327095.90448"
+            }
+          ],
+          "jobId": 106809820564,
+          "jobConclusion": "cancelled"
+        },
+        {
+          "name": "5_preflight.txt",
+          "bytes": 67228,
+          "sha256": "1a9dbe75a74242a0bb5a13e86fa3d38d56941c65065525fb1ff796d005f489c0",
+          "notOkCount": 0,
+          "jobName": "preflight",
+          "lines": 861,
+          "firstLine": "﻿2026-09-22T15:14:00.8299359Z Current runner version: '2.337.0'",
+          "lastLine": "2026-09-22T15:20:18.0462950Z ##[warning]Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/checkout@v4, actions/setup-node@v4. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/",
+          "failures": [],
+          "summaryAndErrors": [
+            {
+              "line": 811,
+              "text": "2026-09-22T15:20:02.5441514Z # tests 71"
+            },
+            {
+              "line": 813,
+              "text": "2026-09-22T15:20:02.5442815Z # pass 71"
+            },
+            {
+              "line": 814,
+              "text": "2026-09-22T15:20:02.5443198Z # fail 0"
+            },
+            {
+              "line": 815,
+              "text": "2026-09-22T15:20:02.5443642Z # cancelled 0"
+            },
+            {
+              "line": 816,
+              "text": "2026-09-22T15:20:02.5448967Z # skipped 0"
+            },
+            {
+              "line": 817,
+              "text": "2026-09-22T15:20:02.5462729Z # todo 0"
+            },
+            {
+              "line": 818,
+              "text": "2026-09-22T15:20:02.5463233Z # duration_ms 5796.644995"
+            }
+          ],
+          "jobId": 106807230505,
+          "jobConclusion": "success"
+        }
+      ],
+      "deduplicatedNotOkCount": 6,
+      "notOkCountMethod": "Every retained ZIP member was read. Root job logs counted once. Per-step copies reconciled by exact TAP line after stripping the GitHub timestamp prefix (root and step copies differ by fractional microseconds).",
+      "timestampVariantDuplicateCount": 6,
+      "additionalDistinctNotOkOutsideRootLogs": [],
+      "head": "70836db6ac7559791ef61ecfbf31c0785604ffc0",
+      "workflow": "Build and deploy GitHub Pages",
+      "conclusion": "cancelled",
+      "status": "completed",
+      "runAttempt": 1,
+      "createdAt": "2026-09-22T15:12:37Z",
+      "updatedAt": "2026-09-22T16:08:36Z",
+      "apiJobInventory": [
+        {
+          "id": 106807230505,
+          "name": "preflight",
+          "head": "70836db6ac7559791ef61ecfbf31c0785604ffc0",
+          "conclusion": "success",
+          "startedAt": "2026-09-22T15:14:00Z",
+          "completedAt": "2026-09-22T15:20:23Z",
+          "steps": [
+            {
+              "number": 1,
+              "name": "Set up job",
+              "conclusion": "success",
+              "status": "completed"
+            },
+            {
+              "number": 2,
+              "name": "Check out source",
+              "conclusion": "success",
+              "status": "completed"
+            },
+            {
+              "number": 3,
+              "name": "Check out the workflow's source verifier",
+              "conclusion": "success",
+              "status": "completed"
+            },
+            {
+              "number": 4,
+              "name": "Set up Node.js",
+              "conclusion": "success",
+              "status": "completed"
+            },
+            {
+              "number": 5,
+              "name": "Verify exact tracked source before commands",
+              "conclusion": "success",
+              "status": "completed"
+            },
+            {
+              "number": 6,
+              "name": "Install dependencies",
+              "conclusion": "success",
+              "status": "completed"
+            },
+            {
+              "number": 7,
+              "name": "Validate, lint, and format source",
+              "conclusion": "success",
+              "status": "completed"
+            },
+            {
+              "number": 8,
+              "name": "Verify Field Kit production ledger and compiled output",
+              "conclusion": "success",
+              "status": "completed"
+            },
+            {
+              "number": 9,
+              "name": "Verify immutable production sources first",
+              "conclusion": "success",
+              "status": "completed"
+            },
+            {
+              "number": 10,
+              "name": "Verify tracked source after preflight",
+              "conclusion": "success",
+              "status": "completed"
+            },
+            {
+              "number": 18,
+              "name": "Post Set up Node.js",
+              "conclusion": "success",
+              "status": "completed"
+            },
+            {
+              "number": 19,
+              "name": "Post Check out the workflow's source verifier",
+              "conclusion": "success",
+              "status": "completed"
+            },
+            {
+              "number": 20,
+              "name": "Post Check out source",
+              "conclusion": "success",
+              "status": "completed"
+            },
+            {
+              "number": 21,
+              "name": "Complete job",
+              "conclusion": "success",
+              "status": "completed"
+            }
+          ]
+        },
+        {
+          "id": 106807231834,
+          "name": "release_gate",
+          "head": "70836db6ac7559791ef61ecfbf31c0785604ffc0",
+          "conclusion": "skipped",
+          "startedAt": "2026-09-22T15:13:58Z",
+          "completedAt": "2026-09-22T15:13:57Z",
+          "steps": []
+        },
+        {
+          "id": 106809820553,
+          "name": "test (1)",
+          "head": "70836db6ac7559791ef61ecfbf31c0785604ffc0",
+          "conclusion": "failure",
+          "startedAt": "2026-09-22T15:20:26Z",
+          "completedAt": "2026-09-22T16:02:38Z",
+          "steps": [
+            {
+              "number": 1,
+              "name": "Set up job",
+              "conclusion": "success",
+              "status": "completed"
+            },
+            {
+              "number": 2,
+              "name": "Check out source",
+              "conclusion": "success",
+              "status": "completed"
+            },
+            {
+              "number": 3,
+              "name": "Check out the workflow's test runner",
+              "conclusion": "success",
+              "status": "completed"
+            },
+            {
+              "number": 4,
+              "name": "Set up Node.js",
+              "conclusion": "success",
+              "status": "completed"
+            },
+            {
+              "number": 5,
+              "name": "Verify exact tracked source before commands",
+              "conclusion": "success",
+              "status": "completed"
+            },
+            {
+              "number": 6,
+              "name": "Install dependencies",
+              "conclusion": "success",
+              "status": "completed"
+            },
+            {
+              "number": 7,
+              "name": "Run test shard 1/4",
+              "conclusion": "failure",
+              "status": "completed"
+            },
+            {
+              "number": 8,
+              "name": "Verify tracked source after test shard",
+              "conclusion": "success",
+              "status": "completed"
+            },
+            {
+              "number": 14,
+              "name": "Post Set up Node.js",
+              "conclusion": "skipped",
+              "status": "completed"
+            },
+            {
+              "number": 15,
+              "name": "Post Check out the workflow's test runner",
+              "conclusion": "success",
+              "status": "completed"
+            },
+            {
+              "number": 16,
+              "name": "Post Check out source",
+              "conclusion": "success",
+              "status": "completed"
+            },
+            {
+              "number": 17,
+              "name": "Complete job",
+              "conclusion": "success",
+              "status": "completed"
+            }
+          ]
+        },
+        {
+          "id": 106809820564,
+          "name": "test (3)",
+          "head": "70836db6ac7559791ef61ecfbf31c0785604ffc0",
+          "conclusion": "cancelled",
+          "startedAt": "2026-09-22T15:20:26Z",
+          "completedAt": "2026-09-22T16:08:12Z",
+          "steps": [
+            {
+              "number": 1,
+              "name": "Set up job",
+              "conclusion": "success",
+              "status": "completed"
+            },
+            {
+              "number": 2,
+              "name": "Check out source",
+              "conclusion": "success",
+              "status": "completed"
+            },
+            {
+              "number": 3,
+              "name": "Check out the workflow's test runner",
+              "conclusion": "success",
+              "status": "completed"
+            },
+            {
+              "number": 4,
+              "name": "Set up Node.js",
+              "conclusion": "success",
+              "status": "completed"
+            },
+            {
+              "number": 5,
+              "name": "Verify exact tracked source before commands",
+              "conclusion": "success",
+              "status": "completed"
+            },
+            {
+              "number": 6,
+              "name": "Install dependencies",
+              "conclusion": "success",
+              "status": "completed"
+            },
+            {
+              "number": 7,
+              "name": "Run test shard 3/4",
+              "conclusion": "success",
+              "status": "completed"
+            },
+            {
+              "number": 8,
+              "name": "Verify tracked source after test shard",
+              "conclusion": "success",
+              "status": "completed"
+            },
+            {
+              "number": 14,
+              "name": "Post Set up Node.js",
+              "conclusion": "skipped",
+              "status": "completed"
+            },
+            {
+              "number": 15,
+              "name": "Post Check out the workflow's test runner",
+              "conclusion": "success",
+              "status": "completed"
+            },
+            {
+              "number": 16,
+              "name": "Post Check out source",
+              "conclusion": "success",
+              "status": "completed"
+            },
+            {
+              "number": 17,
+              "name": "Complete job",
+              "conclusion": "success",
+              "status": "completed"
+            }
+          ]
+        },
+        {
+          "id": 106809820593,
+          "name": "build",
+          "head": "70836db6ac7559791ef61ecfbf31c0785604ffc0",
+          "conclusion": "success",
+          "startedAt": "2026-09-22T15:20:26Z",
+          "completedAt": "2026-09-22T15:25:40Z",
+          "steps": [
+            {
+              "number": 1,
+              "name": "Set up job",
+              "conclusion": "success",
+              "status": "completed"
+            },
+            {
+              "number": 2,
+              "name": "Check out complete history and tags",
+              "conclusion": "success",
+              "status": "completed"
+            },
+            {
+              "number": 3,
+              "name": "Check out the workflow's source verifier",
+              "conclusion": "success",
+              "status": "completed"
+            },
+            {
+              "number": 4,
+              "name": "Set up Node.js",
+              "conclusion": "success",
+              "status": "completed"
+            },
+            {
+              "number": 5,
+              "name": "Verify exact tracked source before commands",
+              "conclusion": "success",
+              "status": "completed"
+            },
+            {
+              "number": 6,
+              "name": "Install dependencies",
+              "conclusion": "success",
+              "status": "completed"
+            },
+            {
+              "number": 7,
+              "name": "Build pull-request artifact",
+              "conclusion": "success",
+              "status": "completed"
+            },
+            {
+              "number": 8,
+              "name": "Verify tracked source after build",
+              "conclusion": "success",
+              "status": "completed"
+            },
+            {
+              "number": 14,
+              "name": "Post Set up Node.js",
+              "conclusion": "success",
+              "status": "completed"
+            },
+            {
+              "number": 15,
+              "name": "Post Check out the workflow's source verifier",
+              "conclusion": "success",
+              "status": "completed"
+            },
+            {
+              "number": 16,
+              "name": "Post Check out complete history and tags",
+              "conclusion": "success",
+              "status": "completed"
+            },
+            {
+              "number": 17,
+              "name": "Complete job",
+              "conclusion": "success",
+              "status": "completed"
+            }
+          ]
+        },
+        {
+          "id": 106809820595,
+          "name": "test (4)",
+          "head": "70836db6ac7559791ef61ecfbf31c0785604ffc0",
+          "conclusion": "cancelled",
+          "startedAt": "2026-09-22T15:20:26Z",
+          "completedAt": "2026-09-22T16:08:35Z",
+          "steps": [
+            {
+              "number": 1,
+              "name": "Set up job",
+              "conclusion": "success",
+              "status": "completed"
+            },
+            {
+              "number": 2,
+              "name": "Check out source",
+              "conclusion": "success",
+              "status": "completed"
+            },
+            {
+              "number": 3,
+              "name": "Check out the workflow's test runner",
+              "conclusion": "success",
+              "status": "completed"
+            },
+            {
+              "number": 4,
+              "name": "Set up Node.js",
+              "conclusion": "success",
+              "status": "completed"
+            },
+            {
+              "number": 5,
+              "name": "Verify exact tracked source before commands",
+              "conclusion": "success",
+              "status": "completed"
+            },
+            {
+              "number": 6,
+              "name": "Install dependencies",
+              "conclusion": "success",
+              "status": "completed"
+            },
+            {
+              "number": 7,
+              "name": "Run test shard 4/4",
+              "conclusion": "cancelled",
+              "status": "completed"
+            },
+            {
+              "number": 8,
+              "name": "Verify tracked source after test shard",
+              "conclusion": "success",
+              "status": "completed"
+            },
+            {
+              "number": 14,
+              "name": "Post Set up Node.js",
+              "conclusion": "skipped",
+              "status": "completed"
+            },
+            {
+              "number": 15,
+              "name": "Post Check out the workflow's test runner",
+              "conclusion": "success",
+              "status": "completed"
+            },
+            {
+              "number": 16,
+              "name": "Post Check out source",
+              "conclusion": "success",
+              "status": "completed"
+            },
+            {
+              "number": 17,
+              "name": "Complete job",
+              "conclusion": "success",
+              "status": "completed"
+            }
+          ]
+        },
+        {
+          "id": 106809820724,
+          "name": "test (2)",
+          "head": "70836db6ac7559791ef61ecfbf31c0785604ffc0",
+          "conclusion": "cancelled",
+          "startedAt": "2026-09-22T15:20:26Z",
+          "completedAt": "2026-09-22T16:08:29Z",
+          "steps": [
+            {
+              "number": 1,
+              "name": "Set up job",
+              "conclusion": "success",
+              "status": "completed"
+            },
+            {
+              "number": 2,
+              "name": "Check out source",
+              "conclusion": "success",
+              "status": "completed"
+            },
+            {
+              "number": 3,
+              "name": "Check out the workflow's test runner",
+              "conclusion": "success",
+              "status": "completed"
+            },
+            {
+              "number": 4,
+              "name": "Set up Node.js",
+              "conclusion": "success",
+              "status": "completed"
+            },
+            {
+              "number": 5,
+              "name": "Verify exact tracked source before commands",
+              "conclusion": "success",
+              "status": "completed"
+            },
+            {
+              "number": 6,
+              "name": "Install dependencies",
+              "conclusion": "success",
+              "status": "completed"
+            },
+            {
+              "number": 7,
+              "name": "Run test shard 2/4",
+              "conclusion": "cancelled",
+              "status": "completed"
+            },
+            {
+              "number": 8,
+              "name": "Verify tracked source after test shard",
+              "conclusion": "success",
+              "status": "completed"
+            },
+            {
+              "number": 14,
+              "name": "Post Set up Node.js",
+              "conclusion": "skipped",
+              "status": "completed"
+            },
+            {
+              "number": 15,
+              "name": "Post Check out the workflow's test runner",
+              "conclusion": "success",
+              "status": "completed"
+            },
+            {
+              "number": 16,
+              "name": "Post Check out source",
+              "conclusion": "success",
+              "status": "completed"
+            },
+            {
+              "number": 17,
+              "name": "Complete job",
+              "conclusion": "success",
+              "status": "completed"
+            }
+          ]
+        }
+      ],
+      "jobsWithoutRetainedRootLogs": [
+        {
+          "id": 106807231834,
+          "name": "release_gate",
+          "conclusion": "skipped",
+          "reason": "Not executed; no log expected"
+        }
+      ],
+      "unexpectedMissingJobLogs": 0
+    },
+    {
+      "runId": 35751896229,
+      "archivePath": "/tmp/revealline-pr263-retained-logs.s5GZ5G/35751896229.zip",
+      "archiveBytes": 125664,
+      "archiveSha256": "f2569b416ebecfa3c38143c627984cd1e5ff5c2ce45df228b1865a83abe543de",
+      "zipCrcCheck": "PASS",
+      "memberCount": 63,
+      "allMembersReadAndDecoded": true,
+      "memberLogInventory": [
+        {
+          "name": "0_test (3).txt",
+          "bytes": 10748,
+          "sha256": "49ddd2a962e6da79fcb23f0cbfb3882686bbd0bb7e8c30d71e1ebebd69c1927e",
+          "notOkCount": 0
+        },
+        {
+          "name": "test (3)/system.txt",
+          "bytes": 710,
+          "sha256": "c534d5e546234e1d0aaab9bca89c2ed0bb2e0b6e40ff32c7ae390cfe9ec0ae45",
+          "notOkCount": 0
+        },
+        {
+          "name": "test (3)/1_Set up job.txt",
+          "bytes": 1993,
+          "sha256": "994c573fff8c31eaaef0efe6c4e9885ee120dcc9165f36caecfe5e3f7f964c75",
+          "notOkCount": 0
+        },
+        {
+          "name": "test (3)/2_Check out source.txt",
+          "bytes": 5341,
+          "sha256": "7a08309ddd4826dc53f61661ede95807ecce51349137fa1face66cc56149ca77",
+          "notOkCount": 0
+        },
+        {
+          "name": "test (3)/8_Verify tracked source after test shard.txt",
+          "bytes": 864,
+          "sha256": "8f439425cd8f5f9ac650f3538c305419a14b0b96ad33458307bed7986dd94dda",
+          "notOkCount": 0
+        },
+        {
+          "name": "test (3)/16_Post Check out source.txt",
+          "bytes": 2070,
+          "sha256": "41f7789440a6f84060c87504c99f4fae41bbd29a3bc89c2d42ab166fcd75ce51",
+          "notOkCount": 0
+        },
+        {
+          "name": "test (3)/17_Complete job.txt",
+          "bytes": 492,
+          "sha256": "bd501e58e570a196f27c0c4f586883e41ea39fdb920a4a7716df2c3bc2fb54f4",
+          "notOkCount": 0
+        },
+        {
+          "name": "1_test (1).txt",
+          "bytes": 10828,
+          "sha256": "1d09c7adbfc672ada41a496d534aaf14532ce7ab38bf711c8de129fd7d40434c",
+          "notOkCount": 0
+        },
+        {
+          "name": "test (1)/system.txt",
+          "bytes": 710,
+          "sha256": "0b3f2583c0c4837b6ff33d905793502dbdf77adf5f52f23ae9d7b49ab72786f1",
+          "notOkCount": 0
+        },
+        {
+          "name": "test (1)/1_Set up job.txt",
+          "bytes": 1988,
+          "sha256": "8fbc9b85011f7607bf8674b1cf05672bc0696879f1f479a21ee5398c5f90ab23",
+          "notOkCount": 0
+        },
+        {
+          "name": "test (1)/2_Check out source.txt",
+          "bytes": 5341,
+          "sha256": "e486b606289e614fec2b7e53141a21667927466dc89d23cc8be88acf05c67864",
+          "notOkCount": 0
+        },
+        {
+          "name": "test (1)/8_Verify tracked source after test shard.txt",
+          "bytes": 864,
+          "sha256": "04abd388b56066b9eac4c34ea24959fdb48f49f4d5dd6ec39574027fb58f0922",
+          "notOkCount": 0
+        },
+        {
+          "name": "test (1)/16_Post Check out source.txt",
+          "bytes": 2070,
+          "sha256": "77e0027dbfa0eba33ed7a3604f937e82cae75fcbef1e2ce3c1b30a97f613793c",
+          "notOkCount": 0
+        },
+        {
+          "name": "test (1)/17_Complete job.txt",
+          "bytes": 577,
+          "sha256": "8bc4273730daff7b4c0ca6a6a5e699b32936dfcbefcc664e070a7fab5b251404",
+          "notOkCount": 0
+        },
+        {
+          "name": "2_test (2).txt",
+          "bytes": 43275,
+          "sha256": "b92f016f4effe910ebb43e9f4699bbda68218346a44a43b40585c21c4f73b244",
+          "notOkCount": 0
+        },
+        {
+          "name": "test (2)/system.txt",
+          "bytes": 710,
+          "sha256": "eb9b10fb2ed6948241ee1c12b872b8fe1dfc1bef5c9f5c01ccf96a69ddf72ed1",
+          "notOkCount": 0
+        },
+        {
+          "name": "test (2)/1_Set up job.txt",
+          "bytes": 1986,
+          "sha256": "3b85db76f8ebaf01040e38bb6078a53167f3e928436f862a19f6dc2899fd8ab1",
+          "notOkCount": 0
+        },
+        {
+          "name": "test (2)/2_Check out source.txt",
+          "bytes": 13419,
+          "sha256": "63168a5546f6b2ddee8724fa695688bd029682ccc01b78e27ad7fe39b8a744f2",
+          "notOkCount": 0
+        },
+        {
+          "name": "test (2)/3_Check out the workflow's test runner.txt",
+          "bytes": 8925,
+          "sha256": "e765776a0e8851498acba1c63dbcdab6385340b81c477bda43ee061f9d285115",
+          "notOkCount": 0
+        },
+        {
+          "name": "test (2)/4_Set up Node.js.txt",
+          "bytes": 3059,
+          "sha256": "108a082db5cf88d4bf762e4bd57e06e18a86ee1d15ff18ab02b9bc7c4e356103",
+          "notOkCount": 0
+        },
+        {
+          "name": "test (2)/5_Verify exact tracked source before commands.txt",
+          "bytes": 998,
+          "sha256": "20e2dccc3719ef596cda8ef7aba8a35dfd3be5e483933ca1a186f38b38d869e2",
+          "notOkCount": 0
+        },
+        {
+          "name": "test (2)/6_Install dependencies.txt",
+          "bytes": 665,
+          "sha256": "4938ce260b6e59fca9dc3640c9f3d4c9a200ada01bee3c61ad136a44b4a0902c",
+          "notOkCount": 0
+        },
+        {
+          "name": "test (2)/7_Run test shard 2_4.txt",
+          "bytes": 8556,
+          "sha256": "435a9b5f6cdd4111c8bf7f642e195fb721bc8bedc7a56061c55d8ed2c1e3718c",
+          "notOkCount": 0
+        },
+        {
+          "name": "test (2)/8_Verify tracked source after test shard.txt",
+          "bytes": 998,
+          "sha256": "1d08bda4632ff3cad16c05a0374e6695626a7a2b9eee5d8df77304bfa0b8f6a8",
+          "notOkCount": 0
+        },
+        {
+          "name": "test (2)/15_Post Check out the workflow's test runner.txt",
+          "bytes": 1893,
+          "sha256": "175733429df5bd2155419341b7cd601a51f2d8af06b474d9c20455506dc15ea7",
+          "notOkCount": 0
+        },
+        {
+          "name": "test (2)/16_Post Check out source.txt",
+          "bytes": 2070,
+          "sha256": "0f0b1cb387f6533138f9cba29ccc2c005d741992c40877a3d647dba1c57fb5ee",
+          "notOkCount": 0
+        },
+        {
+          "name": "test (2)/17_Complete job.txt",
+          "bytes": 736,
+          "sha256": "c6dec8f3d01ea327d00448f1bd949eb4ebeff83b5667aeee4ca54e9b01cb2391",
+          "notOkCount": 0
+        },
+        {
+          "name": "3_test (4).txt",
+          "bytes": 10741,
+          "sha256": "d192ba14fa908d31ce76482f7120d35089455cb73341d388d73fe51f8dc46c82",
+          "notOkCount": 0
+        },
+        {
+          "name": "test (4)/system.txt",
+          "bytes": 710,
+          "sha256": "188032d48c38f9dce1f1dabb20655ef646099ece9f88a3a481a943fd85db6a7b",
+          "notOkCount": 0
+        },
+        {
+          "name": "test (4)/1_Set up job.txt",
+          "bytes": 1986,
+          "sha256": "853c631ab640f193f85f88cd671888a87a54fa53cd8e95907fcc2cab617eba44",
+          "notOkCount": 0
+        },
+        {
+          "name": "test (4)/2_Check out source.txt",
+          "bytes": 5341,
+          "sha256": "b59574da275d6008986b8a39889ff46078d101e1477a8deea80f72a513f4c78b",
+          "notOkCount": 0
+        },
+        {
+          "name": "test (4)/8_Verify tracked source after test shard.txt",
+          "bytes": 864,
+          "sha256": "0f52d45168cd5123cd5a82b1b1546b9bfaca1ebe6a1f61e691e2633dfd907c23",
+          "notOkCount": 0
+        },
+        {
+          "name": "test (4)/16_Post Check out source.txt",
+          "bytes": 2070,
+          "sha256": "1f6cc6097e806011060d49de67b7d8f5cc743de21ebdf5a47e99ce11697f16ea",
+          "notOkCount": 0
+        },
+        {
+          "name": "test (4)/17_Complete job.txt",
+          "bytes": 492,
+          "sha256": "ad00c638ea4d0faf42c1138eab27ec40c77ae9a775de44b122d6b1a2a3ded907",
+          "notOkCount": 0
+        },
+        {
+          "name": "4_build.txt",
+          "bytes": 80479,
+          "sha256": "bdfdf65a1cc04828f929b9d82dc00fd505a863b22ecec006c4c0ebfb3f69c27b",
+          "notOkCount": 0
+        },
+        {
+          "name": "build/system.txt",
+          "bytes": 711,
+          "sha256": "41e79c123e155b8ff67682ff869e8f377827723f7ca4e2ec1c9482efb06a0046",
+          "notOkCount": 0
+        },
+        {
+          "name": "build/1_Set up job.txt",
+          "bytes": 1985,
+          "sha256": "b2026192df18b591f45704c1f14f8710a550bbc173ef1dcaecb28e8327d5da30",
+          "notOkCount": 0
+        },
+        {
+          "name": "build/2_Check out complete history and tags.txt",
+          "bytes": 58771,
+          "sha256": "c9c4666d305c4c62de0585e38b7fbef3c9aefa16e16f0bb582d1d259b662322c",
+          "notOkCount": 0
+        },
+        {
+          "name": "build/3_Check out the workflow's source verifier.txt",
+          "bytes": 8962,
+          "sha256": "93b1ff78f88d91c2150af8cf89c66e0e14dd820bc07aef943666179eb2b5fce2",
+          "notOkCount": 0
+        },
+        {
+          "name": "build/4_Set up Node.js.txt",
+          "bytes": 2979,
+          "sha256": "0df4559040eb6fd4e3156771b21257dc1d5d00400d2e7d506672cbb49c86ad50",
+          "notOkCount": 0
+        },
+        {
+          "name": "build/5_Verify exact tracked source before commands.txt",
+          "bytes": 1001,
+          "sha256": "9ff17b79aafea7b8291b39e67ed2dab984f6c97aee85c4440d09221617c8f67d",
+          "notOkCount": 0
+        },
+        {
+          "name": "build/6_Install dependencies.txt",
+          "bytes": 665,
+          "sha256": "7942ecba6d3eae7f4deb02ff70524422583211edbc71dcae713d356f3f1fc02f",
+          "notOkCount": 0
+        },
+        {
+          "name": "build/7_Build pull-request artifact.txt",
+          "bytes": 579,
+          "sha256": "165804aaa1e1408d5c4c682da366138470fb2150a9295b73820f2635947d23d1",
+          "notOkCount": 0
+        },
+        {
+          "name": "build/8_Verify tracked source after build.txt",
+          "bytes": 1001,
+          "sha256": "83f92f1fbcd5c257377539c5ebc69d1c1f2ee7e98785643e6f4df62087f94737",
+          "notOkCount": 0
+        },
+        {
+          "name": "build/15_Post Check out the workflow's source verifier.txt",
+          "bytes": 1906,
+          "sha256": "3d13aaa661e8f09f595499b936e76d56738b2685398c9bd66f47cab1634830f8",
+          "notOkCount": 0
+        },
+        {
+          "name": "build/16_Post Check out complete history and tags.txt",
+          "bytes": 2063,
+          "sha256": "612ae4514ac9d29ca5c8cdf6457ba6dd535ecd2ca351fdbd9d14681bec5f989d",
+          "notOkCount": 0
+        },
+        {
+          "name": "build/17_Complete job.txt",
+          "bytes": 597,
+          "sha256": "91c2f0a31f1ee6bf3d636ab44d4c1625a038de85e81ce559678364ae8e30071d",
+          "notOkCount": 0
+        },
+        {
+          "name": "5_preflight.txt",
+          "bytes": 67226,
+          "sha256": "bf53ef2c37a60479c388b395579f1fa78e907634d267dac1ad4183ee516a1451",
+          "notOkCount": 0
+        },
+        {
+          "name": "preflight/system.txt",
+          "bytes": 715,
+          "sha256": "63dd5cd345de8a8946fdc368f765e69634848de1ac567824411040540f10a20a",
+          "notOkCount": 0
+        },
+        {
+          "name": "preflight/1_Set up job.txt",
+          "bytes": 1987,
+          "sha256": "f9011b31ef0a70ddbfe650031037a1110e0fd57b4f6394ff154f476518233d35",
+          "notOkCount": 0
+        },
+        {
+          "name": "preflight/2_Check out source.txt",
+          "bytes": 13443,
+          "sha256": "a2dd1032c7308ab78d6f3e58d32387c29a88aba27b58a36c46fbbe3948f14eb9",
+          "notOkCount": 0
+        },
+        {
+          "name": "preflight/3_Check out the workflow's source verifier.txt",
+          "bytes": 8962,
+          "sha256": "2759bb115dc91d91387ed0eb187d534b8e7887fdc922f1bf4fa81a0506aecbce",
+          "notOkCount": 0
+        },
+        {
+          "name": "preflight/4_Set up Node.js.txt",
+          "bytes": 2979,
+          "sha256": "89ec6e0fca43a6f371c7adfc60c2bab9de1fe184f1747fa5be2ff2fed5bf1d01",
+          "notOkCount": 0
+        },
+        {
+          "name": "preflight/5_Verify exact tracked source before commands.txt",
+          "bytes": 1001,
+          "sha256": "6a15b671ef0b5293d13ae5dc472cac413a3045d7b4982778d57b115f9b926b58",
+          "notOkCount": 0
+        },
+        {
+          "name": "preflight/6_Install dependencies.txt",
+          "bytes": 665,
+          "sha256": "0c334b7b6b058fcf32235b3e8d1930695187d3b274676f59ea696af2ccf4dc55",
+          "notOkCount": 0
+        },
+        {
+          "name": "preflight/7_Validate, lint, and format source.txt",
+          "bytes": 3282,
+          "sha256": "ccdb90e9ddf38ef4acfb2133a36040f7dba366842868f073702cfc4a1598be38",
+          "notOkCount": 0
+        },
+        {
+          "name": "preflight/8_Verify Field Kit production ledger and compiled output.txt",
+          "bytes": 679,
+          "sha256": "2d06d84e5e6ccd131910f7f106538c27648f3d679b6fad844400a037062dd00e",
+          "notOkCount": 0
+        },
+        {
+          "name": "preflight/9_Verify immutable production sources first.txt",
+          "bytes": 28097,
+          "sha256": "d9a69884810d1f4cbb8ef5d94c8488a58e88ab2e1b446ae9c2960ec6fcbfaf20",
+          "notOkCount": 0
+        },
+        {
+          "name": "preflight/10_Verify tracked source after preflight.txt",
+          "bytes": 1001,
+          "sha256": "24e199cb5fca302a783526735c40bcac1d72f2a719f02981bcf20aa20f39316a",
+          "notOkCount": 0
+        },
+        {
+          "name": "preflight/18_Post Set up Node.js.txt",
+          "bytes": 829,
+          "sha256": "22882bea05b56e5c16fc9165026fc6e4700cfd31a3fcf9b9a03ddea52c14c9ce",
+          "notOkCount": 0
+        },
+        {
+          "name": "preflight/19_Post Check out the workflow's source verifier.txt",
+          "bytes": 1906,
+          "sha256": "995a74981b9d6eb20f858eb769c661108ca7e4e79e3315794da8dba29da43cf0",
+          "notOkCount": 0
+        },
+        {
+          "name": "preflight/20_Post Check out source.txt",
+          "bytes": 2063,
+          "sha256": "941beb9735c2960bd057727e71749316cc727d45778e280d55925d9bb77d34e4",
+          "notOkCount": 0
+        },
+        {
+          "name": "preflight/21_Complete job.txt",
+          "bytes": 371,
+          "sha256": "b051f018eed6df37a08962f4a0d4f4581a1120fe658cd81ba7086ac5ef2f7930",
+          "notOkCount": 0
+        }
+      ],
+      "rootJobLogs": [
+        {
+          "name": "0_test (3).txt",
+          "bytes": 10748,
+          "sha256": "49ddd2a962e6da79fcb23f0cbfb3882686bbd0bb7e8c30d71e1ebebd69c1927e",
+          "notOkCount": 0,
+          "jobName": "test (3)",
+          "lines": 126,
+          "firstLine": "﻿2026-09-22T16:15:37.0307036Z Current runner version: '2.337.0'",
+          "lastLine": "2026-09-22T16:16:52.1087411Z ##[warning]Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/checkout@v4. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/",
+          "failures": [],
+          "summaryAndErrors": [
+            {
+              "line": 96,
+              "text": "2026-09-22T16:16:51.7732895Z ##[error]The operation was canceled."
+            },
+            {
+              "line": 104,
+              "text": "2026-09-22T16:16:51.8062899Z ##[error]fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree."
+            },
+            {
+              "line": 107,
+              "text": "2026-09-22T16:16:51.8068680Z ##[error]Process completed with exit code 1."
+            }
+          ],
+          "jobId": 106831327483,
+          "jobConclusion": "cancelled"
+        },
+        {
+          "name": "1_test (1).txt",
+          "bytes": 10828,
+          "sha256": "1d09c7adbfc672ada41a496d534aaf14532ce7ab38bf711c8de129fd7d40434c",
+          "notOkCount": 0,
+          "jobName": "test (1)",
+          "lines": 127,
+          "firstLine": "﻿2026-09-22T16:15:36.7857545Z Current runner version: '2.337.0'",
+          "lastLine": "2026-09-22T16:16:51.6882934Z ##[warning]Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/checkout@v4. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/",
+          "failures": [],
+          "summaryAndErrors": [
+            {
+              "line": 96,
+              "text": "2026-09-22T16:16:51.4721448Z ##[error]The operation was canceled."
+            },
+            {
+              "line": 104,
+              "text": "2026-09-22T16:16:51.4917523Z ##[error]fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree."
+            },
+            {
+              "line": 107,
+              "text": "2026-09-22T16:16:51.4922519Z ##[error]Process completed with exit code 1."
+            }
+          ],
+          "jobId": 106831327269,
+          "jobConclusion": "cancelled"
+        },
+        {
+          "name": "2_test (2).txt",
+          "bytes": 43275,
+          "sha256": "b92f016f4effe910ebb43e9f4699bbda68218346a44a43b40585c21c4f73b244",
+          "notOkCount": 0,
+          "jobName": "test (2)",
+          "lines": 542,
+          "firstLine": "﻿2026-09-22T16:15:37.4521754Z Current runner version: '2.337.0'",
+          "lastLine": "2026-09-22T16:17:27.3458070Z ##[warning]Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/checkout@v4, actions/setup-node@v4. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/",
+          "failures": [],
+          "summaryAndErrors": [
+            {
+              "line": 499,
+              "text": "2026-09-22T16:17:04.7854630Z ##[error]The operation was canceled."
+            }
+          ],
+          "jobId": 106831327276,
+          "jobConclusion": "cancelled"
+        },
+        {
+          "name": "3_test (4).txt",
+          "bytes": 10741,
+          "sha256": "d192ba14fa908d31ce76482f7120d35089455cb73341d388d73fe51f8dc46c82",
+          "notOkCount": 0,
+          "jobName": "test (4)",
+          "lines": 126,
+          "firstLine": "﻿2026-09-22T16:15:38.3415135Z Current runner version: '2.337.0'",
+          "lastLine": "2026-09-22T16:16:53.5819877Z ##[warning]Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/checkout@v4. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/",
+          "failures": [],
+          "summaryAndErrors": [
+            {
+              "line": 96,
+              "text": "2026-09-22T16:16:53.2450543Z ##[error]The operation was canceled."
+            },
+            {
+              "line": 104,
+              "text": "2026-09-22T16:16:53.2788207Z ##[error]fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree."
+            },
+            {
+              "line": 107,
+              "text": "2026-09-22T16:16:53.2793258Z ##[error]Process completed with exit code 1."
+            }
+          ],
+          "jobId": 106831327222,
+          "jobConclusion": "cancelled"
+        },
+        {
+          "name": "4_build.txt",
+          "bytes": 80479,
+          "sha256": "bdfdf65a1cc04828f929b9d82dc00fd505a863b22ecec006c4c0ebfb3f69c27b",
+          "notOkCount": 0,
+          "jobName": "build",
+          "lines": 838,
+          "firstLine": "﻿2026-09-22T16:15:36.3686085Z Current runner version: '2.337.0'",
+          "lastLine": "2026-09-22T16:17:12.9159260Z ##[warning]Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/checkout@v4, actions/setup-node@v4. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/",
+          "failures": [],
+          "summaryAndErrors": [
+            {
+              "line": 797,
+              "text": "2026-09-22T16:17:03.5815655Z ##[error]The operation was canceled."
+            }
+          ],
+          "jobId": 106831327097,
+          "jobConclusion": "cancelled"
+        },
+        {
+          "name": "5_preflight.txt",
+          "bytes": 67226,
+          "sha256": "bf53ef2c37a60479c388b395579f1fa78e907634d267dac1ad4183ee516a1451",
+          "notOkCount": 0,
+          "jobName": "preflight",
+          "lines": 861,
+          "firstLine": "﻿2026-09-22T16:08:39.1002040Z Current runner version: '2.337.0'",
+          "lastLine": "2026-09-22T16:15:31.7279934Z ##[warning]Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/checkout@v4, actions/setup-node@v4. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/",
+          "failures": [],
+          "summaryAndErrors": [
+            {
+              "line": 811,
+              "text": "2026-09-22T16:15:16.9486603Z # tests 71"
+            },
+            {
+              "line": 813,
+              "text": "2026-09-22T16:15:16.9489007Z # pass 71"
+            },
+            {
+              "line": 814,
+              "text": "2026-09-22T16:15:16.9489344Z # fail 0"
+            },
+            {
+              "line": 815,
+              "text": "2026-09-22T16:15:16.9489678Z # cancelled 0"
+            },
+            {
+              "line": 816,
+              "text": "2026-09-22T16:15:16.9490010Z # skipped 0"
+            },
+            {
+              "line": 817,
+              "text": "2026-09-22T16:15:16.9490233Z # todo 0"
+            },
+            {
+              "line": 818,
+              "text": "2026-09-22T16:15:16.9495731Z # duration_ms 5822.364077"
+            }
+          ],
+          "jobId": 106828653066,
+          "jobConclusion": "success"
+        }
+      ],
+      "deduplicatedNotOkCount": 0,
+      "notOkCountMethod": "Every retained ZIP member was read. Root job logs counted once. Per-step copies reconciled by exact TAP line after stripping the GitHub timestamp prefix (root and step copies differ by fractional microseconds).",
+      "timestampVariantDuplicateCount": 0,
+      "additionalDistinctNotOkOutsideRootLogs": [],
+      "head": "3e09235ac23c7c5eccc3b5325e5cc858d093c8a0",
+      "workflow": "Build and deploy GitHub Pages",
+      "conclusion": "cancelled",
+      "status": "completed",
+      "runAttempt": 1,
+      "createdAt": "2026-09-22T16:06:38Z",
+      "updatedAt": "2026-09-22T16:17:35Z",
+      "apiJobInventory": [
+        {
+          "id": 106828653066,
+          "name": "preflight",
+          "head": "3e09235ac23c7c5eccc3b5325e5cc858d093c8a0",
+          "conclusion": "success",
+          "startedAt": "2026-09-22T16:08:38Z",
+          "completedAt": "2026-09-22T16:15:33Z",
+          "steps": [
+            {
+              "number": 1,
+              "name": "Set up job",
+              "conclusion": "success",
+              "status": "completed"
+            },
+            {
+              "number": 2,
+              "name": "Check out source",
+              "conclusion": "success",
+              "status": "completed"
+            },
+            {
+              "number": 3,
+              "name": "Check out the workflow's source verifier",
+              "conclusion": "success",
+              "status": "completed"
+            },
+            {
+              "number": 4,
+              "name": "Set up Node.js",
+              "conclusion": "success",
+              "status": "completed"
+            },
+            {
+              "number": 5,
+              "name": "Verify exact tracked source before commands",
+              "conclusion": "success",
+              "status": "completed"
+            },
+            {
+              "number": 6,
+              "name": "Install dependencies",
+              "conclusion": "success",
+              "status": "completed"
+            },
+            {
+              "number": 7,
+              "name": "Validate, lint, and format source",
+              "conclusion": "success",
+              "status": "completed"
+            },
+            {
+              "number": 8,
+              "name": "Verify Field Kit production ledger and compiled output",
+              "conclusion": "success",
+              "status": "completed"
+            },
+            {
+              "number": 9,
+              "name": "Verify immutable production sources first",
+              "conclusion": "success",
+              "status": "completed"
+            },
+            {
+              "number": 10,
+              "name": "Verify tracked source after preflight",
+              "conclusion": "success",
+              "status": "completed"
+            },
+            {
+              "number": 18,
+              "name": "Post Set up Node.js",
+              "conclusion": "success",
+              "status": "completed"
+            },
+            {
+              "number": 19,
+              "name": "Post Check out the workflow's source verifier",
+              "conclusion": "success",
+              "status": "completed"
+            },
+            {
+              "number": 20,
+              "name": "Post Check out source",
+              "conclusion": "success",
+              "status": "completed"
+            },
+            {
+              "number": 21,
+              "name": "Complete job",
+              "conclusion": "success",
+              "status": "completed"
+            }
+          ]
+        },
+        {
+          "id": 106828654484,
+          "name": "release_gate",
+          "head": "3e09235ac23c7c5eccc3b5325e5cc858d093c8a0",
+          "conclusion": "skipped",
+          "startedAt": "2026-09-22T16:08:36Z",
+          "completedAt": "2026-09-22T16:08:36Z",
+          "steps": []
+        },
+        {
+          "id": 106831327097,
+          "name": "build",
+          "head": "3e09235ac23c7c5eccc3b5325e5cc858d093c8a0",
+          "conclusion": "cancelled",
+          "startedAt": "2026-09-22T16:15:35Z",
+          "completedAt": "2026-09-22T16:17:15Z",
+          "steps": [
+            {
+              "number": 1,
+              "name": "Set up job",
+              "conclusion": "success",
+              "status": "completed"
+            },
+            {
+              "number": 2,
+              "name": "Check out complete history and tags",
+              "conclusion": "success",
+              "status": "completed"
+            },
+            {
+              "number": 3,
+              "name": "Check out the workflow's source verifier",
+              "conclusion": "success",
+              "status": "completed"
+            },
+            {
+              "number": 4,
+              "name": "Set up Node.js",
+              "conclusion": "success",
+              "status": "completed"
+            },
+            {
+              "number": 5,
+              "name": "Verify exact tracked source before commands",
+              "conclusion": "success",
+              "status": "completed"
+            },
+            {
+              "number": 6,
+              "name": "Install dependencies",
+              "conclusion": "success",
+              "status": "completed"
+            },
+            {
+              "number": 7,
+              "name": "Build pull-request artifact",
+              "conclusion": "cancelled",
+              "status": "completed"
+            },
+            {
+              "number": 8,
+              "name": "Verify tracked source after build",
+              "conclusion": "success",
+              "status": "completed"
+            },
+            {
+              "number": 14,
+              "name": "Post Set up Node.js",
+              "conclusion": "skipped",
+              "status": "completed"
+            },
+            {
+              "number": 15,
+              "name": "Post Check out the workflow's source verifier",
+              "conclusion": "success",
+              "status": "completed"
+            },
+            {
+              "number": 16,
+              "name": "Post Check out complete history and tags",
+              "conclusion": "success",
+              "status": "completed"
+            },
+            {
+              "number": 17,
+              "name": "Complete job",
+              "conclusion": "success",
+              "status": "completed"
+            }
+          ]
+        },
+        {
+          "id": 106831327222,
+          "name": "test (4)",
+          "head": "3e09235ac23c7c5eccc3b5325e5cc858d093c8a0",
+          "conclusion": "cancelled",
+          "startedAt": "2026-09-22T16:15:37Z",
+          "completedAt": "2026-09-22T16:16:56Z",
+          "steps": [
+            {
+              "number": 1,
+              "name": "Set up job",
+              "conclusion": "success",
+              "status": "completed"
+            },
+            {
+              "number": 2,
+              "name": "Check out source",
+              "conclusion": "cancelled",
+              "status": "completed"
+            },
+            {
+              "number": 3,
+              "name": "Check out the workflow's test runner",
+              "conclusion": "skipped",
+              "status": "completed"
+            },
+            {
+              "number": 4,
+              "name": "Set up Node.js",
+              "conclusion": "skipped",
+              "status": "completed"
+            },
+            {
+              "number": 5,
+              "name": "Verify exact tracked source before commands",
+              "conclusion": "skipped",
+              "status": "completed"
+            },
+            {
+              "number": 6,
+              "name": "Install dependencies",
+              "conclusion": "skipped",
+              "status": "completed"
+            },
+            {
+              "number": 7,
+              "name": "Run test shard 4/4",
+              "conclusion": "skipped",
+              "status": "completed"
+            },
+            {
+              "number": 8,
+              "name": "Verify tracked source after test shard",
+              "conclusion": "failure",
+              "status": "completed"
+            },
+            {
+              "number": 16,
+              "name": "Post Check out source",
+              "conclusion": "success",
+              "status": "completed"
+            },
+            {
+              "number": 17,
+              "name": "Complete job",
+              "conclusion": "success",
+              "status": "completed"
+            }
+          ]
+        },
+        {
+          "id": 106831327269,
+          "name": "test (1)",
+          "head": "3e09235ac23c7c5eccc3b5325e5cc858d093c8a0",
+          "conclusion": "cancelled",
+          "startedAt": "2026-09-22T16:15:36Z",
+          "completedAt": "2026-09-22T16:16:53Z",
+          "steps": [
+            {
+              "number": 1,
+              "name": "Set up job",
+              "conclusion": "success",
+              "status": "completed"
+            },
+            {
+              "number": 2,
+              "name": "Check out source",
+              "conclusion": "cancelled",
+              "status": "completed"
+            },
+            {
+              "number": 3,
+              "name": "Check out the workflow's test runner",
+              "conclusion": "skipped",
+              "status": "completed"
+            },
+            {
+              "number": 4,
+              "name": "Set up Node.js",
+              "conclusion": "skipped",
+              "status": "completed"
+            },
+            {
+              "number": 5,
+              "name": "Verify exact tracked source before commands",
+              "conclusion": "skipped",
+              "status": "completed"
+            },
+            {
+              "number": 6,
+              "name": "Install dependencies",
+              "conclusion": "skipped",
+              "status": "completed"
+            },
+            {
+              "number": 7,
+              "name": "Run test shard 1/4",
+              "conclusion": "skipped",
+              "status": "completed"
+            },
+            {
+              "number": 8,
+              "name": "Verify tracked source after test shard",
+              "conclusion": "failure",
+              "status": "completed"
+            },
+            {
+              "number": 16,
+              "name": "Post Check out source",
+              "conclusion": "success",
+              "status": "completed"
+            },
+            {
+              "number": 17,
+              "name": "Complete job",
+              "conclusion": "success",
+              "status": "completed"
+            }
+          ]
+        },
+        {
+          "id": 106831327276,
+          "name": "test (2)",
+          "head": "3e09235ac23c7c5eccc3b5325e5cc858d093c8a0",
+          "conclusion": "cancelled",
+          "startedAt": "2026-09-22T16:15:36Z",
+          "completedAt": "2026-09-22T16:17:29Z",
+          "steps": [
+            {
+              "number": 1,
+              "name": "Set up job",
+              "conclusion": "success",
+              "status": "completed"
+            },
+            {
+              "number": 2,
+              "name": "Check out source",
+              "conclusion": "success",
+              "status": "completed"
+            },
+            {
+              "number": 3,
+              "name": "Check out the workflow's test runner",
+              "conclusion": "success",
+              "status": "completed"
+            },
+            {
+              "number": 4,
+              "name": "Set up Node.js",
+              "conclusion": "success",
+              "status": "completed"
+            },
+            {
+              "number": 5,
+              "name": "Verify exact tracked source before commands",
+              "conclusion": "success",
+              "status": "completed"
+            },
+            {
+              "number": 6,
+              "name": "Install dependencies",
+              "conclusion": "success",
+              "status": "completed"
+            },
+            {
+              "number": 7,
+              "name": "Run test shard 2/4",
+              "conclusion": "cancelled",
+              "status": "completed"
+            },
+            {
+              "number": 8,
+              "name": "Verify tracked source after test shard",
+              "conclusion": "success",
+              "status": "completed"
+            },
+            {
+              "number": 14,
+              "name": "Post Set up Node.js",
+              "conclusion": "skipped",
+              "status": "completed"
+            },
+            {
+              "number": 15,
+              "name": "Post Check out the workflow's test runner",
+              "conclusion": "success",
+              "status": "completed"
+            },
+            {
+              "number": 16,
+              "name": "Post Check out source",
+              "conclusion": "success",
+              "status": "completed"
+            },
+            {
+              "number": 17,
+              "name": "Complete job",
+              "conclusion": "success",
+              "status": "completed"
+            }
+          ]
+        },
+        {
+          "id": 106831327483,
+          "name": "test (3)",
+          "head": "3e09235ac23c7c5eccc3b5325e5cc858d093c8a0",
+          "conclusion": "cancelled",
+          "startedAt": "2026-09-22T16:15:36Z",
+          "completedAt": "2026-09-22T16:16:53Z",
+          "steps": [
+            {
+              "number": 1,
+              "name": "Set up job",
+              "conclusion": "success",
+              "status": "completed"
+            },
+            {
+              "number": 2,
+              "name": "Check out source",
+              "conclusion": "cancelled",
+              "status": "completed"
+            },
+            {
+              "number": 3,
+              "name": "Check out the workflow's test runner",
+              "conclusion": "skipped",
+              "status": "completed"
+            },
+            {
+              "number": 4,
+              "name": "Set up Node.js",
+              "conclusion": "skipped",
+              "status": "completed"
+            },
+            {
+              "number": 5,
+              "name": "Verify exact tracked source before commands",
+              "conclusion": "skipped",
+              "status": "completed"
+            },
+            {
+              "number": 6,
+              "name": "Install dependencies",
+              "conclusion": "skipped",
+              "status": "completed"
+            },
+            {
+              "number": 7,
+              "name": "Run test shard 3/4",
+              "conclusion": "skipped",
+              "status": "completed"
+            },
+            {
+              "number": 8,
+              "name": "Verify tracked source after test shard",
+              "conclusion": "failure",
+              "status": "completed"
+            },
+            {
+              "number": 16,
+              "name": "Post Check out source",
+              "conclusion": "success",
+              "status": "completed"
+            },
+            {
+              "number": 17,
+              "name": "Complete job",
+              "conclusion": "success",
+              "status": "completed"
+            }
+          ]
+        }
+      ],
+      "jobsWithoutRetainedRootLogs": [
+        {
+          "id": 106828654484,
+          "name": "release_gate",
+          "conclusion": "skipped",
+          "reason": "Not executed; no log expected"
+        }
+      ],
+      "unexpectedMissingJobLogs": 0
+    }
+  ],
+  "conclusions": [
+    "The only six distinct emitted TAP 'not ok' results are run 35745717120 head 70836db6ac7559791ef61ecfbf31c0785604ffc0: four in test (1), job 106809820553, and two in test (4), job 106809820595.",
+    "Test (1) failures 721-724 are combined-ready focus return-route expectations in couch-static-picture-host.test.mjs:501:3, assertion 548:12: expected ../, actual ../?journey=legacy.",
+    "Test (4) failures 929 and 931 are field-kit-flow.test.mjs title/Deploy destination arrays missing shell-catalogue: locations 67:1 and 159:1, assertions 81:10 and 175:10.",
+    "No additional distinct 'not ok' appears anywhere in the complete retained archives, including per-step logs. Six timestamp-variant step/root duplicates are the same six results.",
+    "The correction-head run 35751896229 at 3e09235ac23c7c5eccc3b5325e5cc858d093c8a0 emitted no 'not ok', but most shards were cancelled during checkout and shard 2 was cancelled during tests. It does not establish that the four route fixes or the later two field-kit expectation fixes passed."
+  ],
+  "limitations": [
+    "All four source runs were cancelled; zero emitted failures is not a pass or complete-suite evidence.",
+    "Each API inventory has seven jobs. Six non-skipped jobs have root logs; the seventh release_gate was skipped with no executed steps, so no log is expected.",
+    "Earlier 6f9e74 and 74b0ca shard logs contain no final TAP summaries. In 70836, shard 1 reports 2700 tests, 2696 pass, 4 fail; shard 3 test step reports 3160 tests, 3160 pass, 0 fail but its overall job was cancelled. Shards 2 and 4 lack final TAP summaries.",
+    "In 3e09235, test (1), (3), and (4) test steps were skipped after checkout cancellation. Their post-verification failures report ambiguous HEAD and are cancellation/checkout errors, not additional emitted TAP test failures. Build was cancelled; test (2) output is partial.",
+    "Logs establish only results emitted before cancellation and retained by GitHub. Unexecuted or unfinished test cases may still fail.",
+    "None of these predecessor artifacts can substitute for exact-head 83f5895943510ce98e7f5c0ff3201dc20127f325 CI, current review, actual-merge qualification, release asset inspection, or public acceptance.",
+    "Raw ZIPs are preserved in the task-owned /tmp/revealline-pr263-retained-logs.s5GZ5G directory; immutable SHA-256 digests and complete member inventories are recorded here."
+  ]
+}

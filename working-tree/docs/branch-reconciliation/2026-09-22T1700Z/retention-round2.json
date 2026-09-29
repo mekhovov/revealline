@@ -1,0 +1,432 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-09-22T17:03:10.735Z",
+  "repository": "mekhovov/revealline",
+  "main": "7a8bf9aa3ec0a8264e8a6d0f15c7e4e8dcd7e6f0",
+  "liveMainObserved": "a870050ae2d7ac45d026243060cbd9a32e95ee49",
+  "liveDrift": {
+    "allReviewedPathBlobsIdentical": true,
+    "changedPaths": [
+      "docs/hosted-soundtracks.md",
+      "docs/music-library-upload-guide.md",
+      "docs/soundtrack-studio.md",
+      "docs/ua-fpv-upload-guide.md"
+    ],
+    "qualification": "Retention was inspected at requested pin; every reviewed path blob also matches observed live main."
+  },
+  "scope": "Three historical patch-match candidate branch committed deltas only. Dirty/ignored worktree content is not covered.",
+  "method": [
+    "Enumerated every commit absent from pinned main (2,1,1 respectively).",
+    "Recomputed stable patch IDs for all four source commits and exact matching historical main successors; verified successor ancestry.",
+    "Inspected original diffs, then successor-to-main changes and present code/test/doc anchors. Historical patch matches alone were not sufficient.",
+    "Supplemental line-presence check found all 19+1+727+45 added lines in the corresponding current paths; this check is not standalone behavior proof.",
+    "Compared exact source/current blobs for all changed paths and independently verified that observed live-main drift changes none of them."
+  ],
+  "proofs": [
+    {
+      "branch": "codex/actor-upload-geometry-oracle",
+      "tip": "948959769e61bde0ca6ce0070106aceb3ed8eb0c",
+      "uniqueCommits": [
+        "0efe66943bd3d59ce66b9818f7d59e37cf7649ff",
+        "948959769e61bde0ca6ce0070106aceb3ed8eb0c"
+      ],
+      "commitProofs": [
+        {
+          "commit": "0efe66943bd3d59ce66b9818f7d59e37cf7649ff",
+          "stablePatchId": "21a308327fe2df391cabc5a3490fcd225423dfc4",
+          "verifiedHistoricalSuccessor": "18405651d87eb55b2fcc883bbc266ad50d8129b3",
+          "successorIsAncestorOfPinnedMain": true,
+          "changedPaths": [
+            {
+              "path": "game/test/actor-presentation.test.mjs",
+              "sourceBlob": "dfbfee06c32db985cd5c955b0091bf6ac24a0c46",
+              "mainBlob": "f884927e6fc4ec080b03aa8d89f34a700da722d3",
+              "liveBlob": "f884927e6fc4ec080b03aa8d89f34a700da722d3",
+              "exactWholeFile": false
+            }
+          ]
+        },
+        {
+          "commit": "948959769e61bde0ca6ce0070106aceb3ed8eb0c",
+          "stablePatchId": "716522c5fa5bb6f30879aeadd8570ffa2837172b",
+          "verifiedHistoricalSuccessor": "bace9f199776129bfcb6e428b914f9b89d83a136",
+          "successorIsAncestorOfPinnedMain": true,
+          "changedPaths": [
+            {
+              "path": "game/test/touchscreen-controller-host.test.mjs",
+              "sourceBlob": "2af117e54152cac2573f71ec8c4aed4844a3888e",
+              "mainBlob": "0e7a1aee01ea10248c9ee33e1222368dc4793fc2",
+              "liveBlob": "0e7a1aee01ea10248c9ee33e1222368dc4793fc2",
+              "exactWholeFile": false
+            }
+          ]
+        }
+      ],
+      "retention": [
+        {
+          "intent": "Explicit boss upload pixels override both compiled geometry and legacy motion records for lane-boss and relay-sentinel; compiled fallback geometry retained when no upload exists.",
+          "anchors": [
+            {
+              "path": "game/test/actor-presentation.test.mjs",
+              "blob": "f884927e6fc4ec080b03aa8d89f34a700da722d3",
+              "start": 55,
+              "end": 84,
+              "text": "  const painter = new BoardPainter(presets);\n  const lane = { role: 'boss', type: 'lane-boss' },\n    relay = { role: 'boss', type: 'relay-sentinel' };\n  const laneBody = { image: { id: 'lane-original' }, record: { type: 'lane-boss' } };\n  const relayBody = { image: { id: 'relay-original' }, record: { type: 'relay-sentinel' } };\n  painter.enemyBodies = { current: (frame) => (frame.type === 'lane-boss' ? laneBody : relayBody) };\n  assert.equal(painter.enemyBody(lane), laneBody);\n  assert.equal(painter.enemyBody(relay), relayBody);\n  const compiled = {\n    image: { id: 'compiled-boss' },\n    geometry: { frame: { width: 64, height: 48 }, pivot: { x: 0.25, y: 0.5 }, rotors: [] },\n  };\n  assert.deepEqual(painter.enemyBody(lane, compiled), { ...compiled, record: null });\n  assert.deepEqual(painter.enemyBody(relay, compiled), { ...compiled, record: null });\n  const upload = { id: 'explicit-boss-upload' };\n  painter.images.boss = upload;\n  assert.deepEqual(painter.enemyBody(lane), { image: upload, geometry: null, record: null });\n  assert.deepEqual(painter.enemyBody(relay), { image: upload, geometry: null, record: null });\n  // Uploaded pixels must not inherit a compiled body's crop/pivot or legacy motion record.\n  assert.deepEqual(painter.enemyBody(lane, compiled), {\n    image: upload,\n    geometry: null,\n    record: null,\n  });\n  assert.deepEqual(painter.enemyBody(relay, compiled), {\n    image: upload,\n    geometry: null,\n    record: null,\n  });\n});"
+            }
+          ]
+        },
+        {
+          "intent": "Real host handedness test drives current touch-side control for right/left on stick, swipe and dpad, retains body datasets and mirrored child ordering assertions.",
+          "anchors": [
+            {
+              "path": "game/test/touchscreen-controller-host.test.mjs",
+              "blob": "0e7a1aee01ea10248c9ee33e1222368dc4793fc2",
+              "start": 130,
+              "end": 144,
+              "text": "for (const mode of ['stick', 'swipe', 'dpad']) {\n  test(`actual host: ${mode} changes direction and gesture release keeps continuous flight`, async (t) => {\n    const page = await classicPage(t);\n    page.change('touch-mode', mode);\n    for (const hand of ['right', 'left']) {\n      page.change('touch-side', hand);\n      assert.equal(page.doc.body.dataset.touchSide, hand);\n      assert.equal(page.doc.body.dataset.screenSteeringHand, hand);\n      assert.deepEqual(\n        page.doc.querySelector('.play-controls').children.map((node) => node.id || node.className),\n        hand === 'right'\n          ? ['ability-buttons', 'touch-surface', 'direction-controls']\n          : ['touch-surface', 'direction-controls', 'ability-buttons'],\n      );\n    }"
+            }
+          ]
+        }
+      ],
+      "reviewedEvolution": [
+        "Later changes elsewhere in actor test extend readability/paint-size and foundation tests; the original upload geometry assertions are unchanged.",
+        "Touch host fixture now explicitly opens packs panel and waits for selected flight readiness; additional controller/shared-preference tests leave the requested touch-side correction and its three-mode/two-hand assertions intact."
+      ],
+      "classification": "reviewed-current-retention",
+      "conclusion": "All committed changes are accounted in the pinned main tree; no unique committed path remainder identified.",
+      "unaccountedCommittedPaths": [],
+      "unclearIntentGaps": [],
+      "dirtyWorktreeCoverage": false
+    },
+    {
+      "branch": "codex/p03d-story-focus",
+      "tip": "e71d7c4b32341de2acb7b4b30798e71caac1fb5e",
+      "uniqueCommits": [
+        "e71d7c4b32341de2acb7b4b30798e71caac1fb5e"
+      ],
+      "commitProofs": [
+        {
+          "commit": "e71d7c4b32341de2acb7b4b30798e71caac1fb5e",
+          "stablePatchId": "389fa737a9431d193489a61d60722965d7b59b0d",
+          "verifiedHistoricalSuccessor": "9e8c9cf1fd2a2ff103c2270a16e05dbdf1dacb36",
+          "successorIsAncestorOfPinnedMain": true,
+          "changedPaths": [
+            {
+              "path": "authoring/prompts/authored-story-bindings.md",
+              "sourceBlob": "3c1f858b56819fdd1f2cfd6c4a22d565909df449",
+              "mainBlob": "3c1f858b56819fdd1f2cfd6c4a22d565909df449",
+              "liveBlob": "3c1f858b56819fdd1f2cfd6c4a22d565909df449",
+              "exactWholeFile": true
+            },
+            {
+              "path": "authoring/skills/xonix-runtime-maintainer/SKILL.md",
+              "sourceBlob": "419bcb99c4f7b59d4d2fd5ade69d03d2bf7c8e6b",
+              "mainBlob": "0bc35d5a303bd54900a922852ff61dc02b9fb729",
+              "liveBlob": "0bc35d5a303bd54900a922852ff61dc02b9fb729",
+              "exactWholeFile": false
+            },
+            {
+              "path": "docs/verification/cross-mode/p03-d/README.md",
+              "sourceBlob": "f9fe2a1fe71d93ef7b05c7e3e7fcc6a5296850dc",
+              "mainBlob": "f9fe2a1fe71d93ef7b05c7e3e7fcc6a5296850dc",
+              "liveBlob": "f9fe2a1fe71d93ef7b05c7e3e7fcc6a5296850dc",
+              "exactWholeFile": true
+            },
+            {
+              "path": "docs/verification/cross-mode/p03-d/evidence.json",
+              "sourceBlob": "352695cd5f6020a286b0744e5f9b59707096af3e",
+              "mainBlob": "352695cd5f6020a286b0744e5f9b59707096af3e",
+              "liveBlob": "352695cd5f6020a286b0744e5f9b59707096af3e",
+              "exactWholeFile": true
+            },
+            {
+              "path": "docs/verification/cross-mode/p03-d/final-node20.txt",
+              "sourceBlob": "e52eb73bc7001cc2d35bd7e5c4c07e1a534c23ae",
+              "mainBlob": "e52eb73bc7001cc2d35bd7e5c4c07e1a534c23ae",
+              "liveBlob": "e52eb73bc7001cc2d35bd7e5c4c07e1a534c23ae",
+              "exactWholeFile": true
+            },
+            {
+              "path": "docs/verification/cross-mode/p03-d/final-node22.txt",
+              "sourceBlob": "a74df2950c07fcf1e512277b95c97e3004e520db",
+              "mainBlob": "a74df2950c07fcf1e512277b95c97e3004e520db",
+              "liveBlob": "a74df2950c07fcf1e512277b95c97e3004e520db",
+              "exactWholeFile": true
+            },
+            {
+              "path": "docs/verification/cross-mode/p03-d/native-events.json",
+              "sourceBlob": "4740002503f6e1ee0bd3acfe0c6b6ad83d3c9aac",
+              "mainBlob": "4740002503f6e1ee0bd3acfe0c6b6ad83d3c9aac",
+              "liveBlob": "4740002503f6e1ee0bd3acfe0c6b6ad83d3c9aac",
+              "exactWholeFile": true
+            },
+            {
+              "path": "game/test/victory-story-ui.test.mjs",
+              "sourceBlob": "64642daa1c6e6a9a9c2491f7a4f9d6570a174c44",
+              "mainBlob": "9bc70632ab95e5f4b1d498d276cd67d181d8479b",
+              "liveBlob": "9bc70632ab95e5f4b1d498d276cd67d181d8479b",
+              "exactWholeFile": false
+            },
+            {
+              "path": "game/ui/victory-story.mjs",
+              "sourceBlob": "99c3f90fa4f74a8db2f6bd7672d397e38298fe2f",
+              "mainBlob": "4c518ffd3ddece5755a9222b51d1630ce6a6af77",
+              "liveBlob": "4c518ffd3ddece5755a9222b51d1630ce6a6af77",
+              "exactWholeFile": false
+            }
+          ]
+        }
+      ],
+      "retention": [
+        {
+          "intent": "Capture active focus before hiding/disabling controls, then transfer only unavailable owned control focus or focus dropped to body; preserve deliberate blur destination.",
+          "anchors": [
+            {
+              "path": "game/ui/victory-story.mjs",
+              "blob": "4c518ffd3ddece5755a9222b51d1630ce6a6af77",
+              "start": 181,
+              "end": 194,
+              "text": "  const render = () => {\n    if (disposed) return;\n    // Native browsers can blur an active control immediately when it is hidden\n    // or disabled. Remember ownership before updating its availability.\n    const focused = document.activeElement;\n    const showing = state === 'playing' || state === 'paused' || state === 'starting';\n    posterElement.hidden = showing;\n    if (media) media.hidden = !showing;\n    buttons.play.hidden = hasPlayed && state === 'poster';\n    buttons.play.textContent = state === 'paused' ? 'Resume story' : 'Play';\n    buttons.play.disabled = !ready || ['playing', 'starting', 'preparing', 'error'].includes(state);\n    buttons.pause.hidden = !['playing', 'starting'].includes(state);\n    buttons.skip.hidden = state === 'poster' || state === 'error';\n    buttons.replay.hidden = !hasPlayed || !['poster', 'blocked', 'paused'].includes(state);"
+            },
+            {
+              "path": "game/ui/victory-story.mjs",
+              "blob": "4c518ffd3ddece5755a9222b51d1630ce6a6af77",
+              "start": 222,
+              "end": 231,
+              "text": "    if (\n      !disposed &&\n      activePage() &&\n      Object.values(buttons).includes(focused) &&\n      (focused.hidden || focused.disabled) &&\n      (document.activeElement === focused || document.activeElement === document.body)\n    ) {\n      (\n        Object.values(buttons).find((button) => !button.hidden && !button.disabled) ?? notice\n      ).focus();"
+            }
+          ]
+        },
+        {
+          "intent": "Model native immediate blur on hidden/disabled; preserve Volume and Close focus and deliberate blur destination.",
+          "anchors": [
+            {
+              "path": "game/test/victory-story-ui.test.mjs",
+              "blob": "9bc70632ab95e5f4b1d498d276cd67d181d8479b",
+              "start": 9,
+              "end": 26,
+              "text": "\nclass Node extends Element {\n  get hidden() {\n    return this._hidden ?? false;\n  }\n  set hidden(value) {\n    this._hidden = Boolean(value);\n    // A browser drops focus as soon as its active control becomes hidden.\n    if (this._hidden && this.ownerDocument.activeElement === this) this.blur();\n  }\n  get disabled() {\n    return this._disabled ?? false;\n  }\n  set disabled(value) {\n    this._disabled = Boolean(value);\n    if (this._disabled && this.ownerDocument.activeElement === this) this.blur();\n  }\n  insertBefore(child, target) {"
+            },
+            {
+              "path": "game/test/victory-story-ui.test.mjs",
+              "blob": "9bc70632ab95e5f4b1d498d276cd67d181d8479b",
+              "start": 564,
+              "end": 592,
+              "text": "test('story completion preserves focus on volume or the enclosing Close action', async (t) => {\n  for (const target of ['volume', 'close']) {\n    const h = await setup(t);\n    h.ready();\n    const close = h.doc.createElement('button');\n    close.textContent = 'Close story';\n    h.doc.body.append(close);\n    const chosen = target === 'volume' ? h.player.element.querySelector('input') : close;\n    assert.ok(chosen);\n    await h.player.play();\n    chosen.focus();\n    h.video.at(4);\n    assert.equal(h.player.snapshot().state, 'poster');\n    assert.equal(h.doc.activeElement, chosen);\n  }\n});\n\ntest('a deliberate focus change during native blur wins over story fallback', async (t) => {\n  const h = await setup(t);\n  h.ready();\n  await h.player.play();\n  const close = h.doc.createElement('button');\n  close.textContent = 'Close story';\n  h.doc.body.append(close);\n  const pause = h.button('Pause');\n  pause.focus();\n  pause.blur = () => close.focus();\n  h.video.at(4);\n  assert.equal(h.doc.activeElement, close);"
+            }
+          ]
+        },
+        {
+          "intent": "Native qualification prompt retained byte-for-byte; runtime-maintainer focus guidance retained.",
+          "anchors": [
+            {
+              "path": "authoring/prompts/authored-story-bindings.md",
+              "blob": "3c1f858b56819fdd1f2cfd6c4a22d565909df449",
+              "start": 11,
+              "end": 11,
+              "text": "6. **Native story focus transitions.** Open a previously earned, exact-bound story from Collection using only the keyboard. Play, Pause and Resume, then let the selected segment finish while Pause is focused: require focus on visible Replay. Repeat with Cinematic volume and Close focused and require that each remains selected. Model immediate focus loss when a test control becomes hidden/disabled, and preserve a deliberate focus destination installed during blur. Record actual browser results separately, including nested Back focus and any unresolved tab-boundary behavior; do not change rewards, poster identity, mute or transport intent."
+            },
+            {
+              "path": "authoring/skills/xonix-runtime-maintainer/SKILL.md",
+              "blob": "0bc35d5a303bd54900a922852ff61dc02b9fb729",
+              "start": 493,
+              "end": 493,
+              "text": "When story actions change availability, capture active focus **before** setting `hidden` or `disabled`: native browsers may immediately move focus to the document body. Move an unavailable story action to the next visible enabled action only if focus remains owned or fell to the body. Preserve a player's focus on volume, the enclosing Close action, or another deliberate blur-handler destination. Verify keyboard Play → Pause → Resume → natural end → Replay in an actual earned story, separately from modeled tests that explicitly implement blur-on-hide/disable. Keep poster identity, soundtrack intent and awards unchanged; a focus fix is not full story or controller qualification."
+            }
+          ]
+        },
+        {
+          "intent": "All five added historical verification files remain exact blobs, including initial evidence limitations. Retention does not make historical observations current release evidence.",
+          "exactFilePaths": [
+            {
+              "path": "docs/verification/cross-mode/p03-d/README.md",
+              "blob": "f9fe2a1fe71d93ef7b05c7e3e7fcc6a5296850dc",
+              "sourceBlob": "f9fe2a1fe71d93ef7b05c7e3e7fcc6a5296850dc"
+            },
+            {
+              "path": "docs/verification/cross-mode/p03-d/evidence.json",
+              "blob": "352695cd5f6020a286b0744e5f9b59707096af3e",
+              "sourceBlob": "352695cd5f6020a286b0744e5f9b59707096af3e"
+            },
+            {
+              "path": "docs/verification/cross-mode/p03-d/final-node20.txt",
+              "blob": "e52eb73bc7001cc2d35bd7e5c4c07e1a534c23ae",
+              "sourceBlob": "e52eb73bc7001cc2d35bd7e5c4c07e1a534c23ae"
+            },
+            {
+              "path": "docs/verification/cross-mode/p03-d/final-node22.txt",
+              "blob": "a74df2950c07fcf1e512277b95c97e3004e520db",
+              "sourceBlob": "a74df2950c07fcf1e512277b95c97e3004e520db"
+            },
+            {
+              "path": "docs/verification/cross-mode/p03-d/native-events.json",
+              "blob": "4740002503f6e1ee0bd3acfe0c6b6ad83d3c9aac",
+              "sourceBlob": "4740002503f6e1ee0bd3acfe0c6b6ad83d3c9aac"
+            }
+          ]
+        }
+      ],
+      "reviewedEvolution": [
+        {
+          "commit": "f7c0c8b4d3da37d0ad8138d6f6e18defff7f1f44",
+          "intent": "Recheck !disposed before fallback so a blur handler disposing the story cannot focus a retired action.",
+          "anchors": [
+            {
+              "path": "game/ui/victory-story.mjs",
+              "blob": "4c518ffd3ddece5755a9222b51d1630ce6a6af77",
+              "start": 222,
+              "end": 227,
+              "text": "    if (\n      !disposed &&\n      activePage() &&\n      Object.values(buttons).includes(focused) &&\n      (focused.hidden || focused.disabled) &&\n      (document.activeElement === focused || document.activeElement === document.body)"
+            },
+            {
+              "path": "game/test/victory-story-ui.test.mjs",
+              "blob": "9bc70632ab95e5f4b1d498d276cd67d181d8479b",
+              "start": 615,
+              "end": 633,
+              "text": "test('closing the presentation during a focus change cannot focus a retired story action', async (t) => {\n  const h = await setup(t);\n  h.ready();\n  await h.player.play();\n  const skip = h.button('Skip');\n  skip.focus();\n  const blur = skip.blur.bind(skip);\n  skip.blur = () => {\n    blur();\n    h.player.dispose();\n  };\n  skip.click();\n  assert.equal(h.player.snapshot().state, 'disposed');\n  assert.equal(h.doc.activeElement, h.doc.body);\n  assert.equal(h.player.element.isConnected, false);\n  assert.equal(h.urls.size, 0);\n  assert.equal(h.poster.hidden, false);\n});\n"
+            }
+          ]
+        },
+        {
+          "commit": "124f58df87f6b0c24c18525aca7d3ccc4a08c9e5",
+          "intent": "Require activePage before fallback; background pause or foreground return must not steal focus or autoplay. This intentionally narrows fallback, not loss of active foreground focus preservation.",
+          "anchors": [
+            {
+              "path": "game/ui/victory-story.mjs",
+              "blob": "4c518ffd3ddece5755a9222b51d1630ce6a6af77",
+              "start": 222,
+              "end": 227,
+              "text": "    if (\n      !disposed &&\n      activePage() &&\n      Object.values(buttons).includes(focused) &&\n      (focused.hidden || focused.disabled) &&\n      (document.activeElement === focused || document.activeElement === document.body)"
+            },
+            {
+              "path": "game/test/victory-story-ui.test.mjs",
+              "blob": "9bc70632ab95e5f4b1d498d276cd67d181d8479b",
+              "start": 281,
+              "end": 309,
+              "text": "test('inactive-page pause releases hidden focus and needs explicit Resume story', async (t) => {\n  for (const hidden of [true, false]) {\n    const h = await setup(t);\n    h.ready();\n    await h.player.play();\n    h.video.at(2.75);\n    h.button('Pause').focus();\n    let foreground = false;\n    h.doc.hasFocus = () => foreground;\n    h.doc.hidden = hidden;\n    (hidden ? h.doc : h.win).emit(hidden ? 'visibilitychange' : 'blur');\n    assert.equal(h.player.snapshot().state, 'paused');\n    assert.equal(h.doc.activeElement, h.doc.body, 'no fallback focus while inactive');\n    assert.equal(h.video.currentTime, 2.75);\n    assert.equal(await h.player.play(), false);\n    foreground = true;\n    h.doc.hidden = false;\n    h.doc.emit('visibilitychange');\n    h.win.emit('focus');\n    assert.equal(h.video.playCalls, 1);\n    assert.equal(h.doc.activeElement, h.doc.body, 'return does not claim focus or resume');\n    h.button('Resume story').focus();\n    h.button('Resume story').click();\n    await microtasks();\n    assert.equal(h.player.snapshot().state, 'playing');\n    assert.equal(h.video.currentTime, 2.75);\n    assert.equal(h.doc.activeElement, h.button('Pause'));\n  }\n});"
+            }
+          ]
+        }
+      ],
+      "classification": "reviewed-current-retention",
+      "conclusion": "All committed changes are accounted in the pinned main tree; no unique committed path remainder identified.",
+      "unaccountedCommittedPaths": [],
+      "unclearIntentGaps": [],
+      "dirtyWorktreeCoverage": false
+    },
+    {
+      "branch": "codex/p04-stale-crop-guard",
+      "tip": "86618bfc5291142e78ff1ce923282a3e8242f33e",
+      "uniqueCommits": [
+        "86618bfc5291142e78ff1ce923282a3e8242f33e"
+      ],
+      "commitProofs": [
+        {
+          "commit": "86618bfc5291142e78ff1ce923282a3e8242f33e",
+          "stablePatchId": "1b95ddb0d1956ff1cadf6090fd87d2dcd3d2de13",
+          "verifiedHistoricalSuccessor": "7e48525c37d57bc9ec537507b131a7097e7611b0",
+          "successorIsAncestorOfPinnedMain": true,
+          "changedPaths": [
+            {
+              "path": "authoring/asset-studio/studio.mjs",
+              "sourceBlob": "0044f1f47efe74662fa95b14860e4441b5c6eb6a",
+              "mainBlob": "959cf72c312af204b94773e537c17b0e884bdd48",
+              "liveBlob": "959cf72c312af204b94773e537c17b0e884bdd48",
+              "exactWholeFile": false
+            },
+            {
+              "path": "authoring/skills/xonix-theme-designer/references/theme-brief.md",
+              "sourceBlob": "fcd1119fb8df84e0ac8d0319ec868298788704e9",
+              "mainBlob": "78ea8c318f166d832fa64c3aee0eb41e96daf427",
+              "liveBlob": "78ea8c318f166d832fa64c3aee0eb41e96daf427",
+              "exactWholeFile": false
+            },
+            {
+              "path": "docs/asset-studio.md",
+              "sourceBlob": "5f1916878536945aa43446d85aec467160afeccb",
+              "mainBlob": "479ba47b366de561c630dc8e2711ee529b810ff9",
+              "liveBlob": "479ba47b366de561c630dc8e2711ee529b810ff9",
+              "exactWholeFile": false
+            },
+            {
+              "path": "game/test/asset-studio-host-loading.test.mjs",
+              "sourceBlob": "194127b18ca197f921eb0df11612f71bb5543bf9",
+              "mainBlob": "261209940ea45150cf03531f89e34f7ab0ea658b",
+              "liveBlob": "261209940ea45150cf03531f89e34f7ab0ea658b",
+              "exactWholeFile": false
+            }
+          ]
+        }
+      ],
+      "retention": [
+        {
+          "intent": "Prepared derivative records exact crop; geometry/staging rereads valid crop and rejects changed coordinates before mutating candidate.",
+          "anchors": [
+            {
+              "path": "authoring/asset-studio/studio.mjs",
+              "blob": "959cf72c312af204b94773e537c17b0e884bdd48",
+              "start": 739,
+              "end": 744,
+              "text": "  if (!blob) throw new Error('The browser could not encode this crop.');\n  const asset = structuredClone(preparation.template);\n  asset.file = await fileMetadata(blob, canvas, task);\n  asset.geometry = imageGeometry(canvas, slot);\n  asset.provenance.parent = ref(preparation.original);\n  return { candidate: asset, candidateBlob: blob, preparedCrop: { ...crop } };"
+            },
+            {
+              "path": "authoring/asset-studio/studio.mjs",
+              "blob": "959cf72c312af204b94773e537c17b0e884bdd48",
+              "start": 786,
+              "end": 799,
+              "text": "async function validatePending(geometryOnly = false, task) {\n  if (!pending?.candidate) throw new Error('Prepare an image crop or choose media first.');\n  if (pending.bitmap) {\n    const crop = getCrop();\n    if (Object.keys(crop).some((key) => crop[key] !== pending.preparedCrop?.[key]))\n      throw new Error(\n        'The crop has changed. Prepare derivative before applying geometry or staging.',\n      );\n  }\n  const asset = structuredClone(pending.candidate);\n  if (asset.geometry) asset.geometry = editedGeometry();\n  if (!geometryOnly) {\n    for (const id of ['asset-creator', 'asset-source', 'asset-license'])\n      if (!$(id).value.trim()) {"
+            }
+          ]
+        },
+        {
+          "intent": "Host tests retain invalid crop refusal, stale valid crop refusal for stage and geometry, edit-during-encode refusal, and unchanged accepted workspace/binding assertions before reprepare.",
+          "anchors": [
+            {
+              "path": "game/test/asset-studio-host-loading.test.mjs",
+              "blob": "261209940ea45150cf03531f89e34f7ab0ea658b",
+              "start": 836,
+              "end": 865,
+              "text": "  // A failed or edited crop must never stage the last successful pixels.\n  const unchangedWorkspace = $('workspace-summary').textContent;\n  const unchangedBinding = $('slot-contract').textContent;\n  $('crop-width').value = preparedDimensions[0] + 1;\n  await $('prepare-crop').onclick();\n  assert.match(message(), /fit completely inside the original/);\n  await $('stage-asset').onclick();\n  assert.match(message(), /fit completely inside the original/);\n  assert.equal($('workspace-summary').textContent, unchangedWorkspace);\n  assert.equal($('slot-contract').textContent, unchangedBinding);\n  $('crop-width').value = Number(preparedCrop[2]) - 1;\n  await $('stage-asset').onclick();\n  assert.match(message(), /crop has changed.*Prepare derivative/);\n  await $('apply-geometry').onclick();\n  assert.match(message(), /crop has changed.*Prepare derivative/);\n  assert.equal($('workspace-summary').textContent, unchangedWorkspace);\n  assert.equal($('slot-contract').textContent, unchangedBinding);\n  // Edits made during an outstanding encode also invalidate its result.\n  encodeGate = deferred();\n  const cropPreparation = $('prepare-crop').onclick();\n  await until(() => /Encoding the crop/.test(message()));\n  $('crop-width').value = preparedCrop[2];\n  encodeGate.resolve();\n  await cropPreparation;\n  await $('stage-asset').onclick();\n  assert.match(message(), /crop has changed.*Prepare derivative/);\n  assert.equal($('workspace-summary').textContent, unchangedWorkspace);\n  assert.equal($('slot-contract').textContent, unchangedBinding);\n  await $('prepare-crop').onclick();\n  assert.match(message(), /Derivative prepared/);"
+            }
+          ]
+        },
+        {
+          "intent": "User guide and qualification prompt require current-crop preparation and preserve accepted workspace on invalid or stale derivative.",
+          "anchors": [
+            {
+              "path": "docs/asset-studio.md",
+              "blob": "479ba47b366de561c630dc8e2711ee529b810ff9",
+              "start": 60,
+              "end": 60,
+              "text": "2. For an image, adjust the original-image crop rectangle. **Center crop to slot** selects the appropriate aspect ratio; **Prepare derivative** creates a separate PNG at the exact slot frame size using the registered sampling rule. The source file and its original dimensions remain intact. Download the original at any time. After changing a crop, prepare the derivative again before applying geometry or staging. Invalid crops and edits made during encoding cannot stage earlier pixels; the accepted workspace remains unchanged."
+            },
+            {
+              "path": "authoring/skills/xonix-theme-designer/references/theme-brief.md",
+              "blob": "78ea8c318f166d832fa64c3aee0eb41e96daf427",
+              "start": 39,
+              "end": 43,
+              "text": "### Crop preparation acceptance\n\nA replacement must use a derivative prepared from the currently entered crop. After changing crop coordinates or dimensions, prepare again before applying geometry or staging. A failed crop or a field edit during encoding must not commit earlier pixels.\n\nQualification prompt: “Upload a small transparent sprite, prepare it, enter an out-of-bounds crop and confirm both preparation and staging leave the accepted workspace unchanged. Enter a different valid crop and confirm staging requires preparation. Change the crop during a delayed encode and confirm that result also cannot stage until prepared again. Then prepare the current crop, stage, save and verify original/derivative bytes survive export and import. Keep these checks separate from production artwork approval.”"
+            }
+          ]
+        }
+      ],
+      "reviewedEvolution": [
+        "Subsequent metadata-only revision changes reset review quality and add corresponding tests/guidance. These are additive to the unchanged prepared-crop snapshot and stale-crop guards/tests."
+      ],
+      "classification": "reviewed-current-retention",
+      "conclusion": "All committed changes are accounted in the pinned main tree; no unique committed path remainder identified.",
+      "unaccountedCommittedPaths": [],
+      "unclearIntentGaps": [],
+      "dirtyWorktreeCoverage": false
+    }
+  ],
+  "limitations": [
+    "Tests, CI and native/browser/release acceptance were not run by this read-only audit.",
+    "Historical evidence files retained as evidence of their original sources, not current release acceptance.",
+    "No dirty or ignored worktree content was inspected or classified.",
+    "No branch/worktree deletion is authorized; no branch, source, worktree, commit, remote or workflow changes were made.",
+    "Overall reconciliation remains incomplete."
+  ],
+  "repositoryReconciliationComplete": false,
+  "deletionAuthorized": false
+}
