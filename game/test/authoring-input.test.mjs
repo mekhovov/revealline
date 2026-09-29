@@ -14,7 +14,7 @@ import {
 } from '../ui/authoring-sources.mjs';
 import { attachAuthoringPreview, mountAuthoringInputHost } from '../ui/authoring-input-host.mjs';
 import { mountPageInputHost } from '../ui/page-input-host.mjs';
-import { getLocale, localizedText, setLocale } from '../i18n/index.mjs';
+import { getLocale, localizedText, onLocaleChange, setLocale } from '../i18n/index.mjs';
 
 function fixture() {
   const doc = new Document();
@@ -451,6 +451,56 @@ test('open source chooser relabels built-in controls across EN/UK/EN without cha
     assert.equal(changes, 0);
   } finally {
     picker.destroy();
+    setLocale(previous, { persist: false });
+  }
+});
+
+test('Sections refreshes after later heading bindings and host locale callbacks, then stops on disposal', () => {
+  const previous = getLocale();
+  setLocale('en', { persist: false });
+  const { doc, win, node } = fixture(),
+    main = node('main', 'workspace'),
+    section = node('section', 'response'),
+    boundHeading = node('h2', 'bound-heading'),
+    callbackHeading = node('h3', 'callback-heading'),
+    input = node('input', 'speed');
+  boundHeading.textContent = 'Response';
+  callbackHeading.textContent = 'Comfort';
+  input.type = 'range';
+  input.value = '9.5';
+  main.append(section);
+  section.append(boundHeading, callbackHeading, input);
+  const host = mountPageInputHost({ document: doc, window: win, readPads: () => [] });
+  doc.querySelector('.authoring-input-rail button').click();
+  const dialog = doc.querySelector('.authoring-sections-dialog'),
+    [back, , boundChoice, callbackChoice] = dialog.querySelectorAll('button');
+  // Both producers register after the open menu's choices. Locale listeners
+  // run after all ordinary bindings, so an eager derived binding goes stale.
+  localizedText(boundHeading, () => (getLocale() === 'uk' ? 'Реакція' : 'Response'));
+  const remove = onLocaleChange((locale) => {
+    callbackHeading.textContent = locale === 'uk' ? 'Зручність' : 'Comfort';
+  });
+  try {
+    for (const locale of ['uk', 'en', 'uk']) {
+      setLocale(locale, { persist: false });
+      assert.equal(boundChoice.textContent, locale === 'uk' ? 'Реакція' : 'Response');
+      assert.equal(callbackChoice.textContent, locale === 'uk' ? 'Зручність' : 'Comfort');
+      assert.equal(doc.activeElement, back);
+      assert.equal(dialog.open, true);
+      assert.equal(input.value, '9.5');
+    }
+    host.destroy();
+    // Retaining/reconnecting a retired dialog must not retain a live callback.
+    doc.body.append(dialog);
+    setLocale('en', { persist: false });
+    assert.equal(boundHeading.textContent, 'Response');
+    assert.equal(callbackHeading.textContent, 'Comfort');
+    assert.equal(boundChoice.textContent, 'Реакція');
+    assert.equal(callbackChoice.textContent, 'Зручність');
+  } finally {
+    remove();
+    host.destroy();
+    dialog.remove();
     setLocale(previous, { persist: false });
   }
 });
