@@ -1,7 +1,0 @@
-{
-  "status": "PREPARATION_ASSERTION_FAILED_BEFORE_OUTPUT_COPY",
-  "reason": "Initial expected runtime-overlay count was 10; exact composed set has 9. The count assertion stopped after in-memory exact patch composition and before helper/runtime/config writes.",
-  "correction": "Use the actual explicit nine-path set; no candidate bytes changed.",
-  "sourceTestFailure": false,
-  "nativeExecuted": false
-}
