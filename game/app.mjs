@@ -128,6 +128,7 @@ import { createRun, stepRun, getSummary, CLASSES, FIXED_DT } from './core/index.
 import { inspectCaptureSnapshot } from './core/capture-regions.mjs';
 import { BoardPainter, boardPaintSizeForRun, boardPaintSizeForLevel } from './ui/render.mjs';
 import { createPracticeRenderFailure } from './ui/practice-render-failure.mjs';
+import { readPracticeRemainsOverride } from './ui/practice-presentation.mjs';
 import { encounterView } from './ui/encounter-view.mjs';
 import { foundationCompatibleView as classicView } from './ui/foundation-view.mjs';
 import { terrainTransitionCaption } from './ui/terrain-feedback.mjs';
@@ -199,6 +200,7 @@ import { actionForKey, bindingLabels, keyLabel, resolveKeyBindings } from './key
 import { Soundscape, DEFAULT_TRACKS } from './ui/audio.mjs';
 import { createAudioMaster } from './ui/audio-master.mjs';
 import { createAudioPreferences } from './audio-preferences.mjs';
+import { attachEncounterDisplayControls } from './ui/encounter-display-controls.mjs';
 import { createDisplayPreferences } from './display-preferences.mjs';
 import { createActorStylePreferences } from './actor-style-preferences.mjs';
 import {
@@ -530,6 +532,9 @@ try {
   // Switching source maps inside an authored preview must not turn the same
   // session into an awarding game, even when the configured scenario is cleared.
   const practiceSession = !!scenario;
+  const practiceRemains = readPracticeRemainsOverride(location.search, {
+    practice: practiceSession && !courseSession,
+  });
   const practiceRenderFailure = createPracticeRenderFailure({
     enabled: practiceSession,
     document,
@@ -1176,6 +1181,13 @@ try {
     },
   });
   const stopDisplayView = displayPreferences.subscribe(applyDisplayPreferences);
+  const encounterDisplay = attachEncounterDisplayControls({
+    document,
+    window,
+    getStorage: () => localStorage,
+    writable: () =>
+      !practice && !courseSession && !courseEntry && persistenceReady && writer.writable,
+  });
   const actorPreferences = createActorStylePreferences({
     window,
     getStorage: () => localStorage,
@@ -3075,6 +3087,7 @@ try {
       audioRestoration.dispose();
       displayRestoration.dispose();
       displayPreferences.dispose();
+      encounterDisplay.dispose();
       menuStyle.dispose();
       audioPreferences.dispose();
       audioMaster.dispose();
@@ -11410,6 +11423,7 @@ try {
           reduced: displayPreferences.snapshot().effectiveReducedEffects,
           fullReveal: run.status === 'won',
           showGrid: scenario?.presentation?.showGrid || library.preferences.showGrid,
+          showCombatScrap: practiceRemains ?? encounterDisplay.snapshot().showRemains,
           backdrop: flightPictures?.current(),
           celebrationPaused: document.hidden || dialogOpen(),
           defeatEffectsRunning: defeatEffectsRunning(),

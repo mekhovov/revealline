@@ -97,6 +97,7 @@ import { encounterView } from '../ui/encounter-view.mjs';
 import { Soundscape, DEFAULT_TRACKS } from '../ui/audio.mjs';
 import { createAudioMaster } from '../ui/audio-master.mjs';
 import { createAudioPreferences } from '../audio-preferences.mjs';
+import { attachEncounterDisplayControls } from '../ui/encounter-display-controls.mjs';
 import { createDisplayPreferences } from '../display-preferences.mjs';
 import { createActorStylePreferences } from '../actor-style-preferences.mjs';
 import { prepareActorAppearanceLease } from '../presentation/actor-appearance-lease.mjs';
@@ -203,6 +204,12 @@ const renderDisplayPreferences = (state) => {
   );
 };
 const stopDisplayView = displayPreferences.subscribe(renderDisplayPreferences);
+const encounterDisplay = attachEncounterDisplayControls({
+  document,
+  window,
+  getStorage: () => localStorage,
+  prefix: 'race-',
+});
 const displayRestoration = attachPreferenceRestoration({
   window,
   getSnapshot: () => displayPreferences.snapshot(),
@@ -304,6 +311,7 @@ const releaseArtwork = (event) => {
   audioRestoration.dispose();
   displayRestoration.dispose();
   displayPreferences.dispose();
+  encounterDisplay.dispose();
   menuStyle.dispose();
   audioPreferences.dispose();
   artworkLifetime.abort();
@@ -4453,6 +4461,7 @@ try {
       const run = match.runs[i];
       painters[i].draw(contexts[i], run, Math.min(dt, 0.1), {
         displayCSSWidth: boardFootprints.width(i),
+        showCombatScrap: encounterDisplay.snapshot().showRemains,
         textFace: displayPreferences.snapshot().textFace,
         paused: match.status !== 'running',
         reduced: displayPreferences.snapshot().effectiveReducedEffects,

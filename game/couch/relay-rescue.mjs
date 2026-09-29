@@ -102,6 +102,7 @@ import { createCoopCommandBatch, COOP_INPUT_CAPABILITIES } from '../coop/input-p
 import { createOperationStatus } from '../ui/operation-status.mjs';
 import { createAudioMaster } from '../ui/audio-master.mjs';
 import { createAudioPreferences } from '../audio-preferences.mjs';
+import { attachEncounterDisplayControls } from '../ui/encounter-display-controls.mjs';
 import { createDisplayPreferences } from '../display-preferences.mjs';
 import { attachMenuStyleControls } from '../ui/menu-style-controls.mjs';
 import { attachPreferenceRestoration } from '../ui/preference-restoration.mjs';
@@ -365,6 +366,12 @@ export function bootCoop({
     renderDisplayPreferences(state);
     reveal?.();
   });
+  const encounterDisplay = attachEncounterDisplayControls({
+    document,
+    window,
+    getStorage: () => localStorage,
+    prefix: 'coop-',
+  });
   const displayRestoration = attachPreferenceRestoration({
     window,
     getSnapshot: () => displayPreferences.snapshot(),
@@ -384,6 +391,7 @@ export function bootCoop({
     stopDisplayView();
     displayRestoration.dispose();
     displayPreferences.dispose();
+    encounterDisplay.dispose();
     menuStyle.dispose();
   };
   const painter = createCoopPainter($('coop-canvas'));

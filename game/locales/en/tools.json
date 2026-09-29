@@ -2462,5 +2462,8 @@
   "studio.image.bundledNote": "Try a real Ukrainian landscape detail: rafts on Synevyr Lake. Loading it changes only the reference overlay, never your map, reveal picture or published content.",
   "studio.image.downloadReference": "Download reference",
   "studio.spatialReview.solo": "Solo · {{id}} (new tab)",
-  "studio.spatialReview.versus": "Versus · {{id}} (new tab)"
+  "studio.spatialReview.versus": "Versus · {{id}} (new tab)",
+  "studio.preview.combatCandidate": "Optional encounters are enabled in this Solo practice. No campaign rewards.",
+  "studio.preview.showRemains": "Show enemy remains",
+  "studio.preview.remainsHint": "For the next Solo preview only. Hides inert remains when off; live enemies, aim warnings, shots and brief sparks stay visible. Does not change the draft or replay."
 }
