@@ -49,7 +49,10 @@ import {
   onlineSoundtrackRecordingAllowed,
 } from '../online-soundtrack-catalogue.mjs';
 import { soundtrackErrorText } from './soundtrack-error-copy.mjs';
-import { sameSoundtrackListening } from '../soundtrack-style-selection.mjs';
+import {
+  sameSoundtrackListening,
+  publicSoundtrackSelection,
+} from '../soundtrack-style-selection.mjs';
 import {
   PUBLIC_SOUNDTRACK_STYLE_IDS,
   localGenresForPublicStyles,
@@ -740,27 +743,26 @@ export function attachSoundtrackPanel({
         const loaded = await loadOnlineCatalogue();
         throwIfSoundtrackAborted(signal);
         if (!loaded) throw new Error(t('interface:thePublicSoundtrackCatalogueIsUnavailable'));
-        const styles = new Set(selected);
-        const matches = loaded.tracks.filter(
-          (track) =>
-            (!draft.listening?.recordingMode || onlineSoundtrackRecordingAllowed(track)) &&
-            [...styles].some((style) => matchesOnlineStyle(track, style)),
-        );
-        if (!matches.length) throw new Error(t('interface:soundtrack.chooseAtLeastOneStyle'));
+        const selection = publicSoundtrackSelection(loaded, selected, {
+          recordingMode: Boolean(draft.listening?.recordingMode),
+        });
+        if (!selection.tracks.length)
+          throw new Error(t('interface:soundtrack.chooseAtLeastOneStyle'));
         const localGenres = localGenresForPublicStyles(selected);
         const committed = await commitSettingsListening(localGenres, signal, selected);
         if (!committed.adopted || disposed) return;
         await stopAudition(false);
         throwIfSoundtrackAborted(signal);
         if ((player.intentRevision?.() ?? 0) !== launchIntentGeneration) return;
-        await player.playRemotePlaylist(onlinePlaybackWindow(matches), {
+        await player.playRemotePlaylist(selection.tracks, {
           order: onlineOrder.element.value,
           repeat: onlineRepeat.element.value,
-          mixWithLibrary: localGenres.length > 0,
+          mixWithLibrary: selection.mixWithLibrary,
+          allowLibraryFallback: false,
         });
         await notifyPlayback();
         renderSettingsStyleStatus(
-          t('interface:soundtrack.playingSelectedStyles', { count: matches.length }),
+          t('interface:soundtrack.playingSelectedStyles', { count: selection.count }),
         );
       },
     );
@@ -2799,7 +2801,7 @@ export function attachSoundtrackPanel({
     // A Couch owner installs verified bytes and metadata together. The default
     // remains compatible with Solo; onLibrary is still a later notification.
     if (adoptLibrary) await adoptLibrary(value);
-    else player.setLibrary(adopt(value.library));
+    else player.setLibrary(adopt(value.library), { publicStyles: value.publicStyles });
   }
   function refreshWarning(error) {
     try {
@@ -3357,6 +3359,7 @@ export function attachSoundtrackPanel({
   }
   function close({ restoreFocus = true, restoreMusic = true } = {}) {
     if (busy || disposed || !dialog.open) return false;
+    player.cancelPendingPlay?.();
     const catalogueController = onlineCatalogueController;
     onlineCatalogueController = null;
     onlineCataloguePromise = null;
@@ -3483,6 +3486,7 @@ export function attachSoundtrackPanel({
   });
   function dispose() {
     if (disposed) return;
+    player.cancelPendingPlay?.();
     controller?.abort();
     onlineCatalogueController?.abort();
     onlineCatalogueController = null;

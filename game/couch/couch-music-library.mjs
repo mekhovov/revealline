@@ -113,7 +113,9 @@ export function createCouchMusicLibrary({
     const previous = assets;
     assets = next;
     try {
-      player.setLibrary(catalogue ? setCatalogueTracks(library, catalogue.tracks) : library);
+      player.setLibrary(catalogue ? setCatalogueTracks(library, catalogue.tracks) : library, {
+        publicStyles: value.publicStyles,
+      });
       if (closed)
         throw new DOMException(t('interface:couchMusicLibraryClosedDuringAdoption'), 'AbortError');
     } catch (cause) {

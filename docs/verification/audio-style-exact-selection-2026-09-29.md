@@ -36,12 +36,42 @@ remount and failed-save retry tests passed alongside those four failures.
   explicit saved Synth and historical Automatic preferences are not inferred
   to be factory defaults or overwritten.
 
-This record preserves device-local style controls. It does not recreate an
-online playback queue at startup or alter catalogue admission, automatic
-playback, mute, Recording mode, or browser gesture requirements. Public-only
-choices retain the compatible prior local listening projection for historical
-readers. The optional exact-choice record is not exported in `.rlsound`;
+The exact-choice record remains device-local and is not exported in `.rlsound`;
 replacement imports deliberately use their own legacy listening preferences.
+Public-only choices retain the compatible prior local listening projection for
+historical readers. The next explicit Play / Start restores the exact public
+queue lazily, as described below; startup does not restore a remote queue or
+change catalogue admission, automatic playback, mute, or browser permission.
+
+## Saved-choice playback follow-up
+
+Solo startup, the Couch library owner and the panel pass validated public
+choices alongside their adopted library. The shared player holds those choices
+pending the next user Play / Start. Neither adoption nor silent preparation
+fetches a catalogue or prepares the previous local-genre projection. The
+existing panel catalogue-discovery request remains unchanged; the host checks
+verify there is no additional player request before explicit playback.
+
+Generic Play and Play selected styles share the exact public taxonomy,
+Recording-mode filter, and bounded online-track window. Generic restoration
+uses the chooser's default Shuffle / Repeat all policy. It does not commit
+preferences or advance the saved generation. FPV-only and Fusion-only stream
+only their chosen public recordings; a selection with mapped genres may also
+include its matching local tracks.
+
+Repeated pending Play calls share one catalogue request. Pause, Studio close,
+suspension, disposal, changed preferences and newer explicit selections cancel
+obsolete acquisition. An unrelated same-style adoption preserves an active
+session queue and position. Changed or cleared authoritative metadata cancels
+both a pending request and an obsolete mixed queue, including when its current
+member is local. No-sidecar local playback retains its synchronous media call.
+
+Catalogue errors and an empty permitted match remain retryable without playing
+the prior genre. A browser gesture rejection retains the resolved exact queue
+for direct media retry. Exhausted exact-style media stops for retry after its
+selected queue members; it cannot fall through to an unrelated local genre.
+Ordinary archive queues retain their prior fallback behavior. Master mute and
+Recording-mode permission remain authoritative throughout acquisition.
 
 ## Verification
 
@@ -88,14 +118,42 @@ seconds. Log: `/tmp/audio-style-storage-boundaries-final.tap`. These bounded
 cohorts do not constitute a full-suite claim. Scoped ESLint, Prettier and
 `git diff --check` pass.
 
-## Release dependencies
+The saved-choice playback follow-up passed the expanded cohort:
 
-Independent review identified a remaining playback gap after a full reload:
-generic Play / Start uses the legacy listening projection rather than the
-restored exact public choices. Play selected styles uses the restored choices
-correctly. Release admission remains blocked on a user-gesture-bound playback
-follow-up and regression coverage; the passing cohorts above verify preference
-persistence, not that unresolved generic playback path.
+```sh
+node --test --test-concurrency=1 \
+  game/test/soundtrack-saved-styles.test.mjs \
+  game/test/soundtrack-player.test.mjs \
+  game/test/soundtrack-host.test.mjs \
+  game/test/soundtrack-panel.test.mjs \
+  game/test/soundtrack-style-selection.test.mjs \
+  game/test/soundtrack-style-taxonomy.test.mjs \
+  game/test/managed-media-store.test.mjs \
+  game/test/couch-music-library.test.mjs \
+  game/test/couch-music-session.test.mjs \
+  game/test/opening-soundtrack.test.mjs
+```
+
+Result: **342 passed, 0 failed, 0 skipped or cancelled**, 75.06 seconds. Log:
+`/tmp/audio-saved-playback-final.tap`. This includes 27 new real-player / durable
+Couch cases, actual Solo FPV Start and Fusion Studio Play after reload, actual
+Studio-close cancellation, and the remounted explicit chooser matrix. It also
+retains the existing ordinary archive fallback, prepared local-media gesture,
+master mute, lifecycle resume, opening-theme, panel authoring and old-reader
+storage checks. Scoped ESLint, Prettier and `git diff --check` pass. Independent
+runtime and test-evidence review found no remaining actionable finding.
+
+The existing muted-fresh Solo discovery test initially failed because its
+catalogue stub returned no response: failed attachment discovery retried when
+Studio opened. Exact pre-follow-up runtime and test bytes from `924340e32`
+reproduced that failure using the read-only loader at
+`/tmp/audio-playback-baseline-924340e32/loader.mjs`; evidence is
+`/tmp/audio-playback-baseline-924340e32/muted-discovery.tap` (one selected failure,
+20 skipped). The fixture now returns a valid bounded public catalogue. The
+one-request assertion and no-playback expectation remain unchanged. No runtime
+retry or discovery policy was altered to make the assertion pass.
+
+## Release dependencies
 
 Keep this functional follow-up separate from production generation until the
 accepted v0.142.4 source is fixed. PR #779's previous generated production101 /
@@ -106,11 +164,17 @@ available production/audio revision rather than replacing either history.
 Before fresh review and generation, add `game/soundtrack-style-selection.mjs`
 immediately after `game/soundtrack-style-taxonomy.mjs` in the ordered
 `sources.audio` list in `scripts/produce-field-kit-theme.mjs`. This expands the
-audio input closure from 28 to 29 files. Add the independent consumer contract
-`['game/soundtrack-style-selection.mjs', ['audio']]` in
+audio input closure by one file. Also add `game/couch/couch-music-library.mjs`
+immediately after the existing Couch music host: that changed adoption owner
+must participate in the same fingerprint. The final closure grows from 28 to
+30 ordered inputs. Add the independent consumer contracts
+`['game/soundtrack-style-selection.mjs', ['audio']]` and
+`['game/couch/couch-music-library.mjs', ['audio']]` in
 `scripts/test-field-kit-recipe-sources.mjs`; its existing mutation loop must
-then prove this helper invalidates audio alone. Neither the producer nor its
-generated outputs were changed in this functional follow-up.
+prove each dependency invalidates audio alone. The shared selector extends the
+existing style-selection helper; the new catalogue fixture is test-only.
+Neither the producer nor generated outputs were changed in these functional
+follow-ups.
 
 Recompute the combined source fingerprint, pin the accepted v0.142.4
 predecessor, update retained Team bindings/history tests, regenerate compiled
