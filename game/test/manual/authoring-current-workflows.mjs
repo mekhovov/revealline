@@ -2,6 +2,7 @@
 // to their historical receipts. Every edit below uses the real controller owner.
 import { importThemeBundle } from '../../presentation/bundle.mjs';
 import { validateScenario } from '../../content.mjs';
+import { validateEnemyCatalogDraft } from '../../enemy-catalog.mjs';
 
 const assert = (condition, message) => {
   if (!condition) throw new Error(message);
@@ -18,6 +19,139 @@ async function fingerprint(blob) {
 const value = (p, css) => p.doc.querySelector(css).value;
 
 export const currentAuthoringCases = {
+  enemyCurrent: [
+    'Current Enemy Workshop: edit, cancel, validate, save, preview return, export',
+    '/authoring/enemy-catalog/',
+    async (p) => {
+      const win = p.doc.defaultView,
+        savedKey = 'revealline.authoring.enemy-catalog.v1',
+        practiceKey = 'revealline.playground.current',
+        originalSaved = win.localStorage.getItem(savedKey),
+        originalPractice = win.sessionStorage.getItem(practiceKey);
+      try {
+        await p.wait(() => !p.doc.querySelector('#open-catalog').disabled);
+        if (!p.doc.querySelector('#enemy-catalog-dialog').open) await p.choose('#open-catalog');
+        await p.select('#enemy-catalog-role', 'eroder');
+        const initialSkin = value(p, '#enemy-catalog-skin'),
+          editedSkin = initialSkin === 'ukraine' ? 'retro' : 'ukraine',
+          initialStyle = value(p, '#enemy-catalog-style');
+        await p.choose('#enemy-catalog-style');
+        await p.pulse('down');
+        await p.pulse('back');
+        assert(value(p, '#enemy-catalog-style') === initialStyle, 'Canceled style changed choices');
+        await p.select('#enemy-catalog-skin', editedSkin);
+        await p.select('#enemy-catalog-style', initialStyle === 'props' ? 'hybrid' : 'props');
+        if (p.doc.querySelector('#enemy-catalog-enabled').checked)
+          await p.choose('#enemy-catalog-enabled');
+        assert(p.doc.querySelector('#enemy-catalog-play').disabled, 'Disabled role can launch');
+        await p.choose('#enemy-catalog-enabled');
+        assert(!p.doc.querySelector('#enemy-catalog-play').disabled, 'Enabled role cannot launch');
+        await p.expand('#enemy-catalog-json-section');
+        await p.choose('#enemy-catalog-show-json');
+        const editedText = value(p, '#enemy-catalog-json'),
+          edited = validateEnemyCatalogDraft(JSON.parse(editedText));
+        assert(
+          edited.entries.find((entry) => entry.type === 'eroder').skinId ===
+            `eroder.${editedSkin}.v1`,
+          'Registered skin selection was not applied to the actual catalog',
+        );
+        await p.edit('#enemy-catalog-json', ['end', 'q'], { cancel: true });
+        assert(value(p, '#enemy-catalog-json') === editedText, 'Canceled JSON changed the source');
+        await p.edit('#enemy-catalog-json', ['end', 'q']);
+        await p.choose('#enemy-catalog-apply-json');
+        await p.wait(() => p.doc.querySelector('#enemy-catalog-status').dataset.state === 'error');
+        assert(win.localStorage.getItem(savedKey) === originalSaved, 'Invalid JSON saved choices');
+        await p.choose('#enemy-catalog-show-json');
+        assert(value(p, '#enemy-catalog-json') === editedText, 'Invalid JSON replaced the model');
+        await p.choose('#enemy-catalog-apply-json');
+        await p.wait(() => !p.doc.querySelector('#enemy-catalog-apply').disabled);
+        assert(win.localStorage.getItem(savedKey) === originalSaved, 'Import implicitly saved');
+        p.record(
+          'Registered role/skin/style and availability edited; canceled select/JSON unchanged; invalid JSON rejected without replacing catalog or saving',
+          '#enemy-catalog-status',
+        );
+        await p.choose('#enemy-catalog-apply');
+        await p.wait(() => !p.doc.querySelector('#enemy-catalog-apply').disabled);
+        const stored = win.localStorage.getItem(savedKey);
+        assert(
+          JSON.stringify(JSON.parse(stored)) === JSON.stringify(edited),
+          'Save differs from draft',
+        );
+        await p.select('#enemy-catalog-skin', initialSkin);
+        await p.choose('#enemy-catalog-undo');
+        assert(value(p, '#enemy-catalog-skin') === editedSkin, 'Reload lost saved skin');
+        await p.pulse('back');
+        assert(!p.doc.querySelector('#enemy-catalog-dialog').open, 'Back did not close workshop');
+        await p.choose('#open-catalog');
+        await p.choose('#enemy-catalog-show-json');
+        assert(value(p, '#enemy-catalog-json') === editedText, 'Reopening changed saved choices');
+        p.record(
+          'Explicit Save persisted exact choices; Reload and close/reopen retained them',
+          '#enemy-catalog-status',
+        );
+        await p.choose('#enemy-catalog-play');
+        await p.wait(() => !p.doc.querySelector('#catalog-practice').hidden);
+        await p.wait(() => !p.doc.querySelector('#enemy-catalog-dialog').open);
+        await p.wait(
+          () =>
+            p.doc
+              .querySelector('#catalog-practice')
+              .contentDocument?.querySelector('#enemy-workshop-return'),
+          30000,
+        );
+        await p.choose('.authoring-preview-enter');
+        await p.returnPreview('#catalog-practice', '#enemy-workshop-return');
+        await p.wait(() => p.doc.querySelector('#enemy-catalog-dialog').open);
+        assert(p.doc.querySelector('#catalog-practice').hidden, 'Practice still owns input');
+        assert(p.doc.activeElement.id === 'enemy-catalog-role', 'Return lost catalog focus');
+        assert(value(p, '#enemy-catalog-skin') === editedSkin, 'Practice return changed the draft');
+        const scenario = JSON.parse(win.sessionStorage.getItem(practiceKey));
+        assert(validateScenario(scenario).valid, 'Practice scenario is invalid');
+        assert(scenario.level.id === 'catalog-eroder', 'Wrong role was prepared for practice');
+        assert(
+          win.localStorage.getItem(savedKey) === stored,
+          'Preview/return rewrote saved choices',
+        );
+        await p.choose('#enemy-catalog-export');
+        await p.wait(() => p.downloads.some(({ blob }) => blob.type === 'application/json'));
+        const blob = p.downloads.filter(({ blob }) => blob.type === 'application/json').at(-1).blob,
+          exported = validateEnemyCatalogDraft(JSON.parse(await blob.text()));
+        assert(
+          JSON.stringify(exported) === JSON.stringify(edited),
+          'Export lost exact saved choices',
+        );
+        p.record(
+          'Explicit practice/secure Return restored same catalog; actual export passed strict production validation and matches saved choices',
+          '#enemy-catalog-status',
+          {
+            artifact: {
+              name: 'fpv-line-enemy-catalog.json',
+              ...(await fingerprint(blob)),
+              roles: exported.entries.length,
+              version: exported.version,
+            },
+            boundary:
+              'Registered availability/presentation choices only; behavior/geometry are immutable here. OS receipt and physical controller remain separate.',
+          },
+        );
+      } finally {
+        // Fixture cleanup only, after observing real Save/export. Never use storage
+        // substitution to drive the authoring workflow or alter player progress.
+        for (const [storage, key, previous] of [
+          [win.localStorage, savedKey, originalSaved],
+          [win.sessionStorage, practiceKey, originalPractice],
+        ]) {
+          if (previous === null) storage.removeItem(key);
+          else storage.setItem(key, previous);
+          assert(storage.getItem(key) === previous, `Fixture cleanup failed: ${key}`);
+        }
+        p.record(
+          'Fixture cleanup restored exact pre-run catalog and Playground storage bytes',
+          '#catalog-host-status',
+        );
+      }
+    },
+  ],
   assetCurrent: [
     'Current Asset Studio: cancel, validate, save, reopen, export',
     '/authoring/asset-studio/',

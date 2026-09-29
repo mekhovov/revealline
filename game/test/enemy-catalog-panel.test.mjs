@@ -167,6 +167,54 @@ test('failed Apply retains the last saved draft; malformed or oversize imports c
     true,
   );
 });
+test('JSON draft inspection, strict rejection and reimport never implicitly save or replace choices', async (t) => {
+  const h = setup(t),
+    before = h.panel.snapshot();
+  h.$('skin').value = 'ukraine';
+  h.$('skin').onchange();
+  const edited = h.panel.snapshot();
+  h.$('show-json').click();
+  const source = h.$('json').value;
+  for (const invalid of [
+    `${source}!`,
+    JSON.stringify({ ...edited, style: 'unregistered' }),
+    JSON.stringify({ ...edited, extra: true }),
+    `${' '.repeat(65536)}${source}`,
+  ]) {
+    h.$('json').value = invalid;
+    assert.equal(await h.$('apply-json').onclick(), false);
+    assert.equal(h.$('status').dataset.state, 'error');
+    assert.deepEqual(h.panel.snapshot(), edited);
+    assert.equal(h.$('json').value, invalid, 'Rejected source stays available for correction.');
+    assert.equal(h.applied.length, 0);
+  }
+  h.$('show-json').click();
+  assert.equal(h.$('json').value, source);
+  h.$('undo').click();
+  assert.deepEqual(h.panel.snapshot(), before);
+  assert.equal(await h.$('apply-json').onclick(), true);
+  assert.deepEqual(h.panel.snapshot(), edited);
+  assert.equal(h.applied.length, 0, 'Validated JSON is still only the unsaved catalog.');
+  await h.$('apply').onclick();
+  assert.deepEqual(h.applied, [edited]);
+  h.$('undo').click();
+  assert.deepEqual(h.panel.snapshot(), edited);
+});
+
+test('catalog JSON editor is locked during save and unlocked only by its actual completion', async (t) => {
+  const gate = deferred(),
+    h = setup(t, { onApplyDraft: () => gate.promise });
+  const saving = h.$('apply').onclick();
+  assert.equal(h.$('json').disabled, true);
+  assert.equal(h.$('show-json').disabled, true);
+  assert.equal(h.$('apply-json').disabled, true);
+  h.panel.close();
+  assert.equal(h.$('json').disabled, true, 'Stop waiting cannot unlock an active save.');
+  gate.resolve();
+  await saving;
+  assert.equal(h.$('json').disabled, false);
+  assert.equal(h.$('apply-json').disabled, false);
+});
 test('cancelled catalog file reads cannot replace a draft or unlock a newer operation', async (t) => {
   const h = setup(t),
     first = deferred(),
@@ -220,7 +268,7 @@ test('shared keyboard/controller navigation reaches native catalog controls; Bac
   h.nav.handle({ confirm: true });
   assert.equal(h.$('role').value, 'border-patrol');
   const found = new Set();
-  for (let i = 0; i < 14; i++) {
+  for (let i = 0; i < 18; i++) {
     found.add(h.doc.activeElement.id);
     h.nav.handle({ direction: 'down' });
   }
@@ -288,6 +336,47 @@ function inputFixture(t) {
   input.poll(2);
   return { ...h, frame, input, press };
 }
+test('actual Enemy router opens multiline JSON, cancels its draft and rejects a committed invalid draft without saving', async (t) => {
+  const h = inputFixture(t);
+  let time = 10;
+  const tap = (index = 0) => {
+    h.press(index, true);
+    h.input.poll(++time);
+    h.press(index, false);
+    h.input.poll(++time);
+  };
+  const activate = (element) => {
+    element.focus();
+    tap();
+  };
+  const key = (name) => activate(h.doc.querySelector(`[data-editor-action="${name}"]`));
+  const before = h.panel.snapshot(),
+    source = h.$('json').value;
+  activate(h.$('json-section').querySelector('summary'));
+  activate(h.$('json'));
+  assert.equal(h.nav.editorState().element, h.$('json'));
+  key('end');
+  key('en');
+  key('q');
+  tap(1);
+  assert.equal(h.nav.editorState(), null);
+  assert.equal(h.$('json').value, source);
+  assert.equal(h.doc.activeElement, h.$('json'));
+  assert.equal(h.panel.dialog.open, true);
+  activate(h.$('json'));
+  key('end');
+  key('q');
+  key('done');
+  assert.equal(h.$('json').value, `${source}q`);
+  activate(h.$('apply-json'));
+  await Promise.resolve();
+  assert.equal(h.$('status').dataset.state, 'error');
+  assert.deepEqual(h.panel.snapshot(), before);
+  assert.deepEqual(h.applied, []);
+  assert.deepEqual(h.previews, []);
+  activate(h.$('show-json'));
+  assert.equal(h.$('json').value, source);
+});
 test('workshop native input clears held D-pad repeats until neutral and a fresh press', (t) => {
   const h = inputFixture(t);
   h.press(13, true);

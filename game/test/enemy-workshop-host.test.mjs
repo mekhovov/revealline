@@ -171,7 +171,11 @@ async function workshop(
   const key = (value) => {
     const target = doc.activeElement;
     const event = target.emit('keydown', { key: value });
-    if (!event.defaultPrevented && value === 'Enter' && ['A', 'BUTTON'].includes(target.tagName))
+    if (
+      !event.defaultPrevented &&
+      value === 'Enter' &&
+      ['A', 'BUTTON', 'SUMMARY'].includes(target.tagName)
+    )
       target.click();
     if (!event.defaultPrevented && value === 'Escape')
       doc.querySelector('dialog[open]')?.emit('cancel');
@@ -296,6 +300,53 @@ test('workshop modal Back keeps its draft before a separate keyboard Return to W
     'https://example.test/revealline/releases/v0.60.8/site/game/?workshop=enemy-catalog',
   ]);
   assert.deepEqual(h.local.writes, []);
+  assert.deepEqual(h.session.writes, []);
+});
+
+test('actual workshop keyboard JSON validation preserves rejected choices and saves only on explicit Apply', async (t) => {
+  const h = await workshop(t);
+  await h.ready();
+  const activate = (element) => {
+    element.focus();
+    h.key('Enter');
+  };
+  activate(h.$('enemy-catalog-json-section').querySelector('summary'));
+  activate(h.$('enemy-catalog-show-json'));
+  const source = h.$('enemy-catalog-json'),
+    before = source.value,
+    edited = JSON.parse(before);
+  edited.style = 'props';
+  edited.entries[0].skinId = 'bouncer.ukraine.v1';
+  // Native textarea typing is modeled at the DOM boundary. All commands use
+  // the actual host keyboard owner and its native button activation path.
+  source.focus();
+  source.value = `${before}!`;
+  source.emit('input');
+  activate(h.$('enemy-catalog-apply-json'));
+  await until(() => h.$('enemy-catalog-status').dataset.state === 'error');
+  assert.deepEqual(h.local.writes, []);
+  assert.deepEqual(h.session.writes, []);
+  activate(h.$('enemy-catalog-show-json'));
+  assert.equal(source.value, before);
+  source.focus();
+  source.value = JSON.stringify(edited);
+  source.emit('input');
+  activate(h.$('enemy-catalog-apply-json'));
+  await until(() => !h.$('enemy-catalog-apply').disabled);
+  assert.equal(h.$('enemy-catalog-style').value, 'props');
+  assert.equal(h.$('enemy-catalog-skin').value, 'ukraine');
+  assert.deepEqual(h.local.writes, [], 'Import remains an unsaved catalog draft.');
+  activate(h.$('enemy-catalog-apply'));
+  await until(() => !h.$('enemy-catalog-apply').disabled);
+  assert.equal(h.local.writes.length, 1);
+  assert.equal(h.local.writes[0][0], 'revealline.authoring.enemy-catalog.v1');
+  assert.deepEqual(JSON.parse(h.local.writes[0][1]), edited);
+  h.key('Escape');
+  assert.equal(h.doc.activeElement, h.$('open-catalog'));
+  h.key('Enter');
+  activate(h.$('enemy-catalog-show-json'));
+  assert.deepEqual(JSON.parse(source.value), edited);
+  assert.equal(h.local.writes.length, 1, 'Close/reopen does not rewrite the saved catalog.');
   assert.deepEqual(h.session.writes, []);
 });
 
