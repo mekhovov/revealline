@@ -650,15 +650,35 @@ export function attachControllerNavigation({
     }
     return invalidated;
   }
-  const label = (element) =>
-    element.getAttribute('aria-label') ||
-    [...(element.labels?.[0]?.childNodes || [])]
-      .filter((node) => node.nodeType === 3)
-      .map((node) => node.textContent)
-      .join('')
-      .trim() ||
-    element.id ||
-    t('interface:value');
+  function labelText(node, referenced = false) {
+    if (!node) return '';
+    if (node.nodeType === 3) return node.textContent;
+    if (
+      node.nodeType !== 1 ||
+      (!referenced && (node.hidden || node.getAttribute('aria-hidden') === 'true')) ||
+      /^(INPUT|SELECT|TEXTAREA|BUTTON|OPTION|OPTGROUP|SCRIPT|STYLE|TEMPLATE|SVG)$/.test(
+        node.tagName.toUpperCase(),
+      )
+    )
+      return '';
+    // Localized captions live in nested spans. Read those text nodes without
+    // allowing embedded controls, option lists or decorative icons into the name.
+    return [...(node.childNodes || [])].map((child) => labelText(child)).join('');
+  }
+  function label(element) {
+    const normalize = (text) => text.replace(/\s+/gu, ' ').trim();
+    const references = (element.getAttribute('aria-labelledby') || '')
+      .split(/\s+/u)
+      .filter(Boolean);
+    return (
+      // An explicit accessible-name reference may intentionally name a hidden caption.
+      normalize(references.map((id) => labelText(doc.getElementById(id), true)).join(' ')) ||
+      normalize(element.getAttribute('aria-label') || '') ||
+      normalize([...(element.labels || [])].map((caption) => labelText(caption)).join(' ')) ||
+      element.id ||
+      t('interface:value')
+    );
+  }
   function paintEdit() {
     if (!editing) return;
     const value =

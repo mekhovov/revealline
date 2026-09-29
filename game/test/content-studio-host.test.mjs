@@ -4,7 +4,7 @@ import { readFile } from 'node:fs/promises';
 import { parse } from 'parse5';
 import { Document } from './helpers/couch-dom.mjs';
 import { managedIndexedDB } from './helpers/managed-idb.mjs';
-import { getLocale, setLocale } from '../i18n/index.mjs';
+import { getLocale, setLocale, translateDOM, t as translate } from '../i18n/index.mjs';
 import { createContentDraftBackend } from '../content-design/drafts.mjs';
 import { compileContentProject } from '../content-design/project.mjs';
 import { editContentActor } from '../content-design/actors.mjs';
@@ -82,6 +82,20 @@ async function fixture(t, { controller = false } = {}) {
     });
     Object.defineProperty(node, 'selectedOptions', {
       get: () => node.options.filter((option) => option.selected || option.value === node.value),
+    });
+    Object.defineProperty(node, 'childNodes', {
+      get: () => [
+        ...(node._text ? [{ nodeType: 3, textContent: node._text }] : []),
+        ...node.children,
+      ],
+    });
+    Object.defineProperty(node, 'labels', {
+      get: () =>
+        doc
+          .querySelectorAll('label')
+          .filter(
+            (label) => label.contains(node) || (node.id && label.getAttribute('for') === node.id),
+          ),
     });
     node.before = (sibling) => node.parentNode.insertBefore(sibling, node);
     const click = node.click.bind(node);
@@ -248,6 +262,27 @@ test('actual Studio boots an editable project without touching player storage', 
   assert.equal(h.$('undo').disabled, true);
   assert.equal(h.$('redo').disabled, true);
   assert.equal(h.$('mission').value, 'nearby-shore');
+});
+
+test('actual Studio field editor uses the localized wrapped Local project ID label and cancels without changing it', async (t) => {
+  const h = await fixture(t, { controller: true });
+  const original = h.$('project-id').value;
+  translateDOM(h.$('project-id').closest('label'));
+  for (const locale of ['en', 'uk', 'en']) {
+    setLocale(locale, { persist: false });
+    h.focus('project-id');
+    await h.pulse(0);
+    const editor = h.doc.querySelector('.controller-field-editor');
+    assert.ok(editor);
+    const label = translate('common:editor.localProjectId');
+    assert.equal(editor.getAttribute('aria-label'), label);
+    assert.equal(editor.querySelector('h2').textContent, label);
+    assert.equal(editor.querySelector('.controller-field-draft').getAttribute('aria-label'), label);
+    await h.pulse(1);
+    assert.equal(h.doc.querySelector('.controller-field-editor'), null);
+    assert.equal(h.doc.activeElement.id, 'project-id');
+    assert.equal(h.$('project-id').value, original);
+  }
 });
 
 test('actual Studio rejects invalid source without enabling Apply or changing the accepted checkpoint', async (t) => {
