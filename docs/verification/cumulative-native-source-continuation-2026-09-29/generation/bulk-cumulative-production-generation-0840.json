@@ -1,0 +1,31 @@
+{
+  "format": "root-once-cumulative-production-generation.v1",
+  "startedAt": "2026-09-29T08:38:38.088Z",
+  "head": "b5e4437d8c076d0c5be55e66f09ea5e03e686779",
+  "root": "/Users/oleksandr.mekhovov/.codex/worktrees/publish-v01321/go_test",
+  "operations": {
+    "create": 1,
+    "retain": 1,
+    "compile": 0,
+    "write": 0
+  },
+  "fullsuite": "WAIVED_SKIPPED_NOT_PASSED",
+  "limitation": "One bounded production ledger/asset compile, not a web/full build, release, public/player/listening/physical acceptance.",
+  "freeBefore": 1327841280,
+  "before": {
+    "at": "2026-09-29T08:38:38.280Z",
+    "format": "revealline-source-identity.v1",
+    "root": "/Users/oleksandr.mekhovov/.codex/worktrees/publish-v01321/go_test",
+    "sourceRevision": "b5e4437d8c076d0c5be55e66f09ea5e03e686779",
+    "sourceTree": "89d5573b9b00772a4a123f0c0bf392ac68ee5cee",
+    "files": 20805,
+    "bytes": 1984848876,
+    "aggregateSha256": "41b1f69e665ca53bc0864e829a95ba152b6953a116e87106246b9375b02d9191",
+    "aggregateFormat": "UTF-8 path sorted JSONL [path, Git mode, raw content SHA-256]",
+    "allTrackedSourceContentsAndModesMatch": true
+  },
+  "accepted": false,
+  "error": "AssertionError [ERR_ASSERTION]: lossless historical evidence team.anchor.available\n    at file:///Users/oleksandr.mekhovov/.codex/visualizations/2026/09/20/01a0bffc-f5ed-7822-932c-55295e0a8d37/produce-cumulative-ledger-0840.mjs:81:14",
+  "freeAtFailure": 1326866432,
+  "completedAt": "2026-09-29T08:38:51.874Z"
+}
