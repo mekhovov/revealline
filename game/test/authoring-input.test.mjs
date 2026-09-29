@@ -14,6 +14,7 @@ import {
 } from '../ui/authoring-sources.mjs';
 import { attachAuthoringPreview, mountAuthoringInputHost } from '../ui/authoring-input-host.mjs';
 import { mountPageInputHost } from '../ui/page-input-host.mjs';
+import { getLocale, localizedText, setLocale } from '../i18n/index.mjs';
 
 function fixture() {
   const doc = new Document();
@@ -340,6 +341,118 @@ test('section headings can target a real control inside their own region without
     .click();
   assert.equal(doc.activeElement, first, 'a heading cannot redirect to an unrelated region');
   host.destroy();
+});
+
+test('open Sections follows EN/UK/EN in its accessible names and destinations without changing focus or activating controls', () => {
+  const previous = getLocale();
+  setLocale('en', { persist: false });
+  const { doc, win, node } = fixture(),
+    main = node('main', 'workspace'),
+    section = node('section', 'response'),
+    heading = node('h2', 'response-heading'),
+    input = node('input', 'speed');
+  input.type = 'range';
+  input.value = '9.5';
+  main.append(section);
+  section.append(heading, input);
+  localizedText(heading, () => (getLocale() === 'uk' ? 'Реакція' : 'Response'));
+  let changes = 0;
+  input.oninput = input.onchange = () => changes++;
+  const host = mountPageInputHost({ document: doc, window: win, readPads: () => [] }),
+    rail = doc.querySelector('.authoring-input-rail'),
+    open = rail.querySelector('button'),
+    dialog = doc.querySelector('.authoring-sections-dialog');
+  try {
+    input.focus();
+    open.click();
+    const controls = [...dialog.querySelectorAll('button')],
+      [back, , jump] = controls;
+    for (const locale of ['en', 'uk', 'en']) {
+      setLocale(locale, { persist: false });
+      assert.equal(
+        rail.getAttribute('aria-label'),
+        locale === 'uk' ? 'Навігація редактора' : 'Editor navigation',
+      );
+      assert.equal(dialog.getAttribute('aria-label'), locale === 'uk' ? 'Розділи' : 'Sections');
+      assert.equal(dialog.querySelector('h2').textContent, dialog.getAttribute('aria-label'));
+      assert.equal(open.textContent, dialog.getAttribute('aria-label'));
+      assert.equal(back.textContent, locale === 'uk' ? 'Назад' : 'Back');
+      assert.equal(jump.textContent, heading.textContent);
+      assert.deepEqual([...dialog.querySelectorAll('button')], controls);
+      assert.equal(doc.activeElement, back);
+      assert.equal(dialog.open, true);
+      assert.equal(input.value, '9.5');
+      assert.equal(changes, 0);
+    }
+    jump.click();
+    assert.equal(doc.activeElement, input);
+    assert.equal(dialog.open, false);
+    assert.equal(changes, 0);
+    input.emit('keydown', { key: 'Escape' });
+    assert.equal(dialog.open, true);
+    dialog.emit('cancel');
+    assert.equal(dialog.open, false);
+    assert.equal(doc.activeElement, input);
+  } finally {
+    host.destroy();
+    setLocale(previous, { persist: false });
+  }
+});
+
+test('open source chooser relabels built-in controls across EN/UK/EN without changing literal files or delivering a source', () => {
+  const previous = getLocale();
+  setLocale('en', { persist: false });
+  const { doc, win, node } = fixture(),
+    input = node('input', 'picture');
+  input.type = 'file';
+  input.accept = 'image/png';
+  const picker = createAuthoringSourcePicker({ document: doc, window: win }),
+    file = new File(['original'], 'My Зображення.png', { type: 'image/png' });
+  let changes = 0,
+    fetches = 0;
+  win.fetch = () => fetches++;
+  deliverAuthoringFile(input, file, win);
+  input.onchange = () => changes++;
+  picker.open(input);
+  const controls = [...picker.dialog.querySelectorAll('button')],
+    [close, sample, recent, device] = controls;
+  try {
+    for (const locale of ['en', 'uk', 'en']) {
+      setLocale(locale, { persist: false });
+      assert.equal(
+        picker.dialog.getAttribute('aria-label'),
+        locale === 'uk' ? 'Вибрати джерело' : 'Choose a source',
+      );
+      assert.equal(
+        picker.dialog.querySelector('h2').textContent,
+        picker.dialog.getAttribute('aria-label'),
+      );
+      assert.equal(close.textContent, locale === 'uk' ? 'Закрити' : 'Close');
+      assert.equal(
+        sample.textContent,
+        locale === 'uk' ? 'Зображення «Світанковий сигнал»' : 'Dawn Signal picture',
+      );
+      assert.equal(recent.textContent, file.name);
+      assert.equal(
+        device.textContent,
+        locale === 'uk' ? 'Вибрати новий файл із пристрою' : 'Choose a new file from this device',
+      );
+      assert.deepEqual([...picker.dialog.querySelectorAll('button')], controls);
+      assert.equal(doc.activeElement, close);
+      assert.equal(picker.dialog.open, true);
+      assert.equal(input.files[0], file);
+      assert.equal(changes, 0);
+      assert.equal(fetches, 0);
+    }
+    close.click();
+    assert.equal(picker.dialog.open, false);
+    assert.equal(doc.activeElement, input);
+    assert.equal(input.files[0], file);
+    assert.equal(changes, 0);
+  } finally {
+    picker.destroy();
+    setLocale(previous, { persist: false });
+  }
 });
 
 test('authoring menus coordinate native Confirm before frames and retain the captured modal handoff', () => {

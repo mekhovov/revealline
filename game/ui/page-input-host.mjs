@@ -4,7 +4,8 @@ import { attachControllerConfirmGuard } from './controller-confirm-guard.mjs';
 import { createControllerConfirmLifecycle } from './controller-confirm-lifecycle.mjs';
 import { resolveAuthoringEditor } from './authoring-editors.mjs';
 import { setMenuIcon } from './native-menu-icons.mjs';
-import { authoringLabel, authoringText } from './authoring-copy.mjs';
+import { authoringAttribute, authoringLabel } from './authoring-copy.mjs';
+import { localizedText } from '../i18n/index.mjs';
 
 const hosts = new WeakMap();
 const visible = (element) =>
@@ -186,7 +187,7 @@ export function mountPageInputHost({
     hint = doc.createElement('p'),
     sections = doc.createElement('dialog');
   rail.className = 'authoring-input-rail';
-  rail.setAttribute('aria-label', authoringText('navigation'));
+  authoringAttribute(rail, 'aria-label', 'navigation');
   sectionsButton.type = 'button';
   authoringLabel(sectionsButton, 'sections');
   setMenuIcon(sectionsButton, 'content');
@@ -194,7 +195,7 @@ export function mountPageInputHost({
   hint.className = 'authoring-input-hint';
   rail.append(sectionsButton, hint);
   sections.className = 'authoring-sections-dialog';
-  sections.setAttribute('aria-label', authoringText('sections'));
+  authoringAttribute(sections, 'aria-label', 'sections');
   doc.body.prepend(rail);
   doc.body.append(sections);
   let disposed = false,
@@ -255,7 +256,7 @@ export function mountPageInputHost({
     for (const heading of headings.slice(0, 64)) {
       const button = doc.createElement('button');
       button.type = 'button';
-      button.textContent = heading.textContent.trim();
+      localizedText(button, () => heading.textContent.trim());
       setMenuIcon(button, 'content');
       button.onclick = () => {
         sections.close();
