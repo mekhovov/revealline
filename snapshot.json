@@ -1,0 +1,27 @@
+{
+  "format": "revealline-recovery-fragment-v1",
+  "capturedAt": "2026-09-29T15:09:55.880941+00:00",
+  "worktree": "<home>/work/my_projects/go_test/.cache/worktrees/mission-gallery-v133-reconcile",
+  "branch": "refs/heads/codex/mission-gallery-v133-reconcile-safety",
+  "head": "623a9d65f6f9195e6d8eac0f4200f1601ac0ff08",
+  "excluded": [],
+  "changes": [
+    {
+      "status": " M",
+      "path": "docs/player-first-ux1b-compact-gallery.md",
+      "object": "9d2f5fe4fb5cdb6d26680098cdf0f0d0e7b37831",
+      "sha256": "906324b121b9b8fdfce780c49d9db56daeb44db154d9191adbf23c7265116079",
+      "bytes": 4891,
+      "mode": "100644"
+    }
+  ],
+  "indexEntries": [
+    {
+      "path": "docs/player-first-ux1b-compact-gallery.md",
+      "mode": "100644",
+      "object": "fbb6f83f4fe72a17b72a77db1926f80c8492a579",
+      "stage": 0
+    }
+  ],
+  "purpose": "Recovery only. These bytes are not release admission. Missing files, conflict stages and obsolete generated outputs are preserved as observations, not deletion or merge instructions."
+}
