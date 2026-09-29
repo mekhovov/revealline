@@ -1,4 +1,5 @@
 import { FeedbackDirector } from './feedback-director.mjs';
+import { readRadioAudio } from './radio-audio.mjs';
 import { readMenuAudio } from './menu-audio.mjs';
 import { t } from '../i18n/index.mjs';
 import { createPublishedCues } from './published-audio.mjs';
@@ -60,6 +61,7 @@ export class Soundscape {
       throw new TypeError('persistentMusic must be a boolean');
     this.enabled = false;
     this.menuSettings = readMenuAudio();
+    this.radioSettings = readRadioAudio();
     this.feedbackDirector = new FeedbackDirector(this);
     this.persistentMusic = persistentMusic;
     this.context = null;
@@ -283,6 +285,8 @@ export class Soundscape {
     this.musicBus = context.createGain();
     this.sfxBus = context.createGain();
     this.menuBus = context.createGain();
+    this.radioBus = context.createGain();
+    this.radioBus.connect(this.sfxBus);
     this.menuBus.connect(this.master);
     this.musicBus.connect(this.master);
     this.sfxBus.connect(this.master);
@@ -323,6 +327,13 @@ export class Soundscape {
   applyVolumes() {
     if (!this.context) return;
     const time = this.context.currentTime;
+    this.radioBus?.gain.setTargetAtTime(
+      this.radioSettings.enabled ? this.radioSettings.volume : 0,
+      time,
+      0.015,
+    );
+    if (!this.radioSettings.enabled || this.radioSettings.volume === 0)
+      for (const voice of [...this.voices]) if (voice.radio) voice.stop();
     this.menuBus?.gain.setTargetAtTime(
       this.menuSettings.enabled ? this.menuSettings.volume : 0,
       time,
@@ -468,6 +479,7 @@ export class Soundscape {
       this.musicBus,
       this.sfxBus,
       this.menuBus,
+      this.radioBus,
       this.master,
       this.compressor,
     ])

@@ -1,0 +1,21 @@
+{
+  "project": "EdgeTX/edgetx-sdcard-sounds",
+  "revision": "56f0bb41757798865254fd462ea5d177280ab12c",
+  "license": "GPL-2.0",
+  "changes": "Converted to mono PCM16 32kHz; 100Hz high-pass, 6500Hz low-pass, 3ms fade-in, limiter ceiling 0.65 with no auto gain. Edited 2026-09-29.",
+  "ffmpegFilter": "highpass=f=100,lowpass=f=6500,afade=t=in:d=0.003,alimiter=limit=0.65:level=false",
+  "originals": [
+    {
+      "locale": "en",
+      "source": "https://github.com/EdgeTX/edgetx-sdcard-sounds/blob/56f0bb41757798865254fd462ea5d177280ab12c/SOUNDS/en/armed.wav",
+      "local": "edgetx-armed-source-en.wav",
+      "sha256": "6f42907b8b1de9451349d611f16147ca04c50a2280ce516df5a0542ddc364d5b"
+    },
+    {
+      "locale": "uk",
+      "source": "https://github.com/EdgeTX/edgetx-sdcard-sounds/blob/56f0bb41757798865254fd462ea5d177280ab12c/SOUNDS/ua-polina/armed.wav",
+      "local": "edgetx-armed-source-uk.wav",
+      "sha256": "a3f22a0cb66ea82ca956de0cea4d2052e8ab0f2b7ad5c8e64813a62e95b64652"
+    }
+  ]
+}

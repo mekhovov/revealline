@@ -1,3 +1,4 @@
+import { RADIO_AUDIO_KEY } from './radio-audio.mjs';
 import { t, localizedText } from '../i18n/index.mjs';
 export const MENU_AUDIO_KEY = 'revealline.menu-audio.v1';
 export function readMenuAudio(storage) {
@@ -23,51 +24,79 @@ export function saveMenuAudio(value) {
   }
 }
 export function attachMenuAudioSettings(sound, doc = globalThis.document) {
-  if (!sound.menuSettings || !doc?.createElement) return () => {};
+  const menu = attachPreference(
+    sound,
+    doc,
+    'menu',
+    'menuSettings',
+    MENU_AUDIO_KEY,
+    'menuSounds',
+    'menuVolume',
+  );
+  const radio = attachPreference(
+    sound,
+    doc,
+    'radio',
+    'radioSettings',
+    RADIO_AUDIO_KEY,
+    'radioSounds',
+    'radioVolume',
+  );
+  return () => {
+    menu();
+    radio();
+  };
+}
+function attachPreference(sound, doc, prefix, property, key, enableCopy, volumeCopy) {
+  if (!sound[property] || !doc?.createElement) return () => {};
   const target =
     doc.getElementById('sfx-volume')?.parentElement?.parentElement ??
     doc.getElementById('race-settings-panel-audio') ??
     doc.getElementById('coop-settings-panel-audio') ??
     doc.getElementById('settings-panel-audio') ??
     doc.getElementById('settings-dialog');
-  if (!target || target.querySelector('[data-menu-audio]')) return () => {};
+  if (!target || target.querySelector(`[data-${prefix}-audio]`)) return () => {};
   const group = doc.createElement('div');
-  group.dataset.menuAudio = '';
+  group.dataset[`${prefix}Audio`] = '';
   group.style.display = 'grid';
   group.style.gap = '0.75rem';
   const enabledLabel = doc.createElement('label'),
     enabled = doc.createElement('input');
-  enabled.id = 'menu-audio-enabled';
+  enabled.id = `${prefix}-audio-enabled`;
   enabled.type = 'checkbox';
   enabled.style.width = 'auto';
   enabled.style.margin = '0';
   enabledLabel.style.display = 'flex';
   enabledLabel.style.alignItems = 'center';
   enabledLabel.style.gap = '0.6rem';
-  enabled.checked = sound.menuSettings.enabled;
+  enabled.checked = sound[property].enabled;
   const enabledText = doc.createElement('span');
-  localizedText(enabledText, () => t('common:menuSounds'));
+  localizedText(enabledText, () => t(`common:${enableCopy}`));
   enabledLabel.append(enabled, enabledText);
   const volumeLabel = doc.createElement('label'),
     volume = doc.createElement('input');
-  volume.id = 'menu-audio-volume';
+  volume.id = `${prefix}-audio-volume`;
   volume.type = 'range';
   volumeLabel.style.display = 'grid';
   volumeLabel.style.gap = '0.35rem';
   volume.min = '0';
   volume.max = '100';
   volume.step = '1';
-  volume.value = String(Math.round(sound.menuSettings.volume * 100));
-  volume.setAttribute('aria-label', t('common:menuVolume'));
+  volume.value = String(Math.round(sound[property].volume * 100));
+  volume.setAttribute('aria-label', t(`common:${volumeCopy}`));
   const volumeText = doc.createElement('span');
-  volumeText.id = 'menu-audio-volume-label';
+  volumeText.id = `${prefix}-audio-volume-label`;
   const volumeCaption = () =>
-    `${t('common:menuVolume')} · ${Math.round(sound.menuSettings.volume * 100)}%`;
+    `${t(`common:${volumeCopy}`)} · ${Math.round(sound[property].volume * 100)}%`;
   localizedText(volumeText, volumeCaption);
   volumeLabel.append(volumeText, volume);
   const change = () => {
-    sound.menuSettings = { enabled: enabled.checked, volume: Number(volume.value) / 100 };
-    saveMenuAudio(sound.menuSettings);
+    sound[property] = { enabled: enabled.checked, volume: Number(volume.value) / 100 };
+    try {
+      globalThis.localStorage?.setItem(key, JSON.stringify(sound[property]));
+    } catch {
+      /* Preserve session intent. */
+    }
     sound.applyVolumes();
     volumeText.textContent = volumeCaption();
   };
@@ -76,8 +105,8 @@ export function attachMenuAudioSettings(sound, doc = globalThis.document) {
   group.append(enabledLabel, volumeLabel);
   target.append(group);
   const restore = () => {
-    enabled.checked = sound.menuSettings.enabled;
-    volume.value = String(Math.round(sound.menuSettings.volume * 100));
+    enabled.checked = sound[property].enabled;
+    volume.value = String(Math.round(sound[property].volume * 100));
     volumeText.textContent = volumeCaption();
   };
   globalThis.addEventListener?.('pageshow', restore);

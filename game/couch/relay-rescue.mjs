@@ -212,11 +212,9 @@ export function bootCoop({
   const incomingLibraryMission = readMissionLibraryHandoff(entryParams);
   const libraryReturn = readMissionLibraryReturn(entryParams, {
     mode: 'team',
-    actorStyle: acceptedPicture?.actorAppearance?.style,
   });
   const libraryEdition = resolveJourneyRequest(entryParams, {
     mode: 'team',
-    actorStyle: acceptedPicture?.actorAppearance?.style,
   });
   const returns = entryParams.getAll('return');
   const fromSolo = libraryReturn
@@ -560,7 +558,6 @@ export function bootCoop({
     installedTeamLoading = null;
   const librarySession = createMissionLibrarySessionState({
     mode: 'team',
-    actorStyle: acceptedPicture?.actorAppearance?.style,
   });
   const libraryVisit = crypto.randomUUID();
   const discoveryRows = (sourcePack, artworkSource, prefix, teamMedia = null) =>
@@ -5152,6 +5149,7 @@ export function bootCoop({
           stepCoop(run, commands, FIXED_DT);
           music?.sound.feedback(true, { family: acceptedPicture?.request.themeId ?? 'fpv' }, run, {
             mode: 'team',
+            actorStyle: acceptedPicture?.actorAppearance?.style,
             commands,
           });
           accumulator -= FIXED_DT;
