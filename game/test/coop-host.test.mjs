@@ -37,8 +37,8 @@ test('the same Team mode choices belong to the lobby and active pause panel, nev
   assert.equal(modes.parentNode, f.$('coop-lobby-modes'));
   assert.equal(modes.hidden, false);
   const current = modes.querySelector('[aria-current="page"]');
-  assert.equal(current.tagName, 'SPAN');
-  assert.equal(current.getAttribute('tabindex'), null);
+  assert.equal(current.tagName, 'BUTTON');
+  assert.equal(current.tabIndex, 0);
   assert.equal(current.getAttribute('href'), null);
   assert.equal(solo.getAttribute('href'), '../?journey=legacy');
   assert.equal(versus.getAttribute('href'), './?journey=legacy');
@@ -1326,7 +1326,8 @@ for (const [id, path] of modePanelLinks)
     };
     f.tick(2);
     button(0); // South adoption/release has no departure action.
-    for (let i = 0; i < 20 && f.doc.activeElement.id !== id; i++) button(13);
+    for (let i = 0; i < 20 && f.doc.activeElement.id !== 'coop-solo'; i++) button(13);
+    if (id === 'coop-versus') button(15);
     assert.equal(f.doc.activeElement.id, id);
     unchangedPaused(f, before);
     button(0);
