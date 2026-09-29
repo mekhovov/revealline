@@ -1,0 +1,135 @@
+{
+  "format": "revealline-recovery-fragment-v1",
+  "capturedAt": "2026-09-29T15:27:54.201046+00:00",
+  "worktree": "<home>/.codex/worktrees/community-admission/go_test",
+  "branch": "refs/heads/codex/demo-qualification-20260929",
+  "head": "39bb06ceaf2c6c769a0308daa090ed5550250141",
+  "excluded": [],
+  "changes": [
+    {
+      "status": " M",
+      "path": "docs/demo-mode.md",
+      "object": "5d7da1eb6dbb5f7274a4c49a3ffe62a8319dc02c",
+      "sha256": "facdd6f8ab33090d8cda4b42f317e0a8c01b6f7d6237a348c0d16d2843c4f34d",
+      "bytes": 41981,
+      "mode": "100644"
+    },
+    {
+      "status": " M",
+      "path": "game/app.mjs",
+      "object": "8d2c7db21aa37ada1e8d087f2b814186a00e71a1",
+      "sha256": "3af68adb6f977aafb9773b5b72d2c84ed6304fb3cc003310a95be270bf404977",
+      "bytes": 477073,
+      "mode": "100644"
+    },
+    {
+      "status": " M",
+      "path": "game/test/boot-build.test.mjs",
+      "object": "bc7c3f1a580c2daff1a06e02e3ac8a08ed32a5dd",
+      "sha256": "1868682d87b389e6ec80660aecd8fbce654b6244f99d737fde2a37e709b1cfcc",
+      "bytes": 12619,
+      "mode": "100644"
+    },
+    {
+      "status": " M",
+      "path": "game/test/demo-picture.test.mjs",
+      "object": "3ec9a2be7304e468628cc212503ed0fac442854f",
+      "sha256": "23434e68f61610fbae39b5048560bdcc6f63176e5f6b3010bf8963c697cf2b82",
+      "bytes": 36672,
+      "mode": "100644"
+    },
+    {
+      "status": " M",
+      "path": "game/test/edition-runtime.test.mjs",
+      "object": "5c823178752a972c4a6522f35dc3b2cd2b41dff5",
+      "sha256": "c633e27ec9747f08d9d8110a5cf1f874bf252000072044c7a3454fa328b71745",
+      "bytes": 17598,
+      "mode": "100644"
+    },
+    {
+      "status": " M",
+      "path": "game/ui/demo-host.mjs",
+      "object": "e85b4056c2ccf5aada32ca2f9462044db94c2f6a",
+      "sha256": "259ae76bc58ee538ac5bdbbac32d57aa831486bbeb635ac838f3a12479e07d6a",
+      "bytes": 25114,
+      "mode": "100644"
+    },
+    {
+      "status": " M",
+      "path": "game/ui/demo-picture.mjs",
+      "object": "6ea15c1ff4ad6a58e38fa4e564e51c9ace057177",
+      "sha256": "eb51a0b79427ad05bb4095c2e0a86a7c3f859f0618a513a81b2b987acbf4c176",
+      "bytes": 13650,
+      "mode": "100644"
+    },
+    {
+      "status": "??",
+      "path": "game/test/demo-earned-picture-host.test.mjs",
+      "object": "2bcbaf0a516a16479fb50a2229aa6127f83a207a",
+      "sha256": "2c49fe390858993a2d9206e92a4bf0c423aa8305e8aeeed297fb8b38c99491fa",
+      "bytes": 10280,
+      "mode": "100644"
+    },
+    {
+      "status": "??",
+      "path": "game/test/demo-journey-picture.test.mjs",
+      "object": "8c555f84153bb2bbf10b8ceefae5c1ea49011588",
+      "sha256": "8c4ef727507274ef9663fa3cc6fa209bc8759f3f71d94996f55a9c1c1fb54369",
+      "bytes": 12041,
+      "mode": "100644"
+    },
+    {
+      "status": "??",
+      "path": "game/ui/demo-journey-picture.mjs",
+      "object": "c1cc21d457d22cec85e6b97670af679e607f78ab",
+      "sha256": "fe523986894dc4d25206d689bcece200653fbed4e9fd7153581edec5a9ef83ee",
+      "bytes": 4595,
+      "mode": "100644"
+    }
+  ],
+  "indexEntries": [
+    {
+      "path": "docs/demo-mode.md",
+      "mode": "100644",
+      "object": "6e6b47173cf18a01fb84d51b9d83d668d6616e80",
+      "stage": 0
+    },
+    {
+      "path": "game/app.mjs",
+      "mode": "100644",
+      "object": "c872bc250d527a416bc8c639e180c5264381e1af",
+      "stage": 0
+    },
+    {
+      "path": "game/test/boot-build.test.mjs",
+      "mode": "100644",
+      "object": "d540c3e94b52f52ed39d95171c85e0d106c13308",
+      "stage": 0
+    },
+    {
+      "path": "game/test/demo-picture.test.mjs",
+      "mode": "100644",
+      "object": "09572633d69e4ae5e8e1fdb621d03cc845251149",
+      "stage": 0
+    },
+    {
+      "path": "game/test/edition-runtime.test.mjs",
+      "mode": "100644",
+      "object": "1dab44e725c9495f5c16429d1cdba4fa8df91da6",
+      "stage": 0
+    },
+    {
+      "path": "game/ui/demo-host.mjs",
+      "mode": "100644",
+      "object": "38f86cdc9f1da473b838fbd8f29a3480f8fd7554",
+      "stage": 0
+    },
+    {
+      "path": "game/ui/demo-picture.mjs",
+      "mode": "100644",
+      "object": "a110873f20b2f1a88e0acc1ee73b5f73872f99fd",
+      "stage": 0
+    }
+  ],
+  "purpose": "Recovery only. These bytes are not release admission. Missing files, conflict stages and obsolete generated outputs are preserved as observations, not deletion or merge instructions."
+}
