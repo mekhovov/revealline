@@ -158,6 +158,24 @@ td small {
   overflow-wrap: anywhere;
   white-space: pre-wrap;
 }
+.production-reading-tools {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-block: 12px;
+}
+.production-reading-region {
+  box-sizing: border-box;
+  max-block-size: 55svh;
+  overflow: auto;
+  overscroll-behavior: contain;
+  padding: 12px 20px;
+  border: 1px solid var(--line);
+}
+.production-reading-region[data-controller-reading='true'] {
+  outline: 3px solid var(--accent);
+  outline-offset: 3px;
+}
 .preview img {
   display: block;
   max-width: 100%;
