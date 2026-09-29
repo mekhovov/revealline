@@ -5535,5 +5535,6 @@
   "multiplayerControllers.actionGuide": "Map gameplay actions for selected player",
   "multiplayerControllers.actionGuideHelp": "Choose an action, record its released position, hold only your chosen switch/button, then capture its active position. Ability/Support activates equipment or helps your teammate; Supply refills; Boost increases speed; Pause freezes play. Use Next action to move on or skip. Shared-radio players must use separate channels. Verify and Save/apply when ready.",
   "multiplayerControllers.nextAction": "Next action / skip",
+  "optionalPractice.fpvGameAction": "FPV flight simulator",
   "worldIdsCommaSeparated": "Worlds (comma separated: retro, fpv, ukraine)"
 }

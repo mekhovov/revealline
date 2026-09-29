@@ -125,6 +125,7 @@ test('title keeps its game destinations and quick sound; Workshop and unified Mi
     'shell-play',
     'shell-gallery',
     'shell-options',
+    'shell-home-fpv',
     'shell-home-practice',
     'shell-offline',
     'shell-offline-status',
@@ -246,6 +247,7 @@ test('visible title Start launches directly and Continue explicitly resumes the 
     'shell-play',
     'shell-gallery',
     'shell-options',
+    'shell-home-fpv',
     'shell-home-practice',
     'shell-offline',
     'shell-offline-status',
@@ -394,5 +396,27 @@ test('controller Back retains a cancellation warning when a transaction keeps it
   assert.equal(page.$('shell-home').open, true);
   assert.match(page.$('controller-ui-hint').textContent, /operation is still in progress/);
   assert.equal(page.rendered.run.tick, 0);
+  assert.deepEqual(page.errors, []);
+});
+
+test('main-menu FPV simulator uses the bundled route and preserves the game return address', async (t) => {
+  const page = await soloPage(t, { titleScreen: true });
+  // The finite DOM keeps defaultView separate from the host window. Browsers
+  // expose the same location object through both.
+  page.doc.defaultView.location = page.win.location;
+  let destination;
+  page.win.location.assign = (url) => {
+    destination = url;
+  };
+  const stored = [...page.storage.map];
+  assert.equal(page.$('shell-home-fpv').hidden, false);
+  page.$('shell-home-fpv').click();
+  const target = new URL(destination);
+  assert.equal(target.pathname, '/optional-practice/civilian-fpv/index.html');
+  assert.equal(
+    target.searchParams.get('game-return'),
+    new URL(page.win.location.href).pathname + new URL(page.win.location.href).search,
+  );
+  assert.deepEqual([...page.storage.map], stored);
   assert.deepEqual(page.errors, []);
 });

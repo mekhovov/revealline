@@ -28,7 +28,7 @@ export function optionalPracticeSourcePreviews(href) {
     location.password
   )
     return [];
-  if (location.pathname !== '/game/index.html') return [];
+  if (!['/game/', '/game/index.html'].includes(location.pathname)) return [];
   return SOURCE_PREVIEWS.map((preview) =>
     Object.freeze({
       id: preview.id,
