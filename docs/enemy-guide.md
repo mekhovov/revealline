@@ -65,3 +65,12 @@ The Field Guide deliberately paints its role illustration at 56 pixels inside it
 Opening Field Guide through Main menu → Workshop keeps both parent dialogs underneath it. Close guide, Back and Escape return focus to the Guide button in Workshop; leaving Workshop then returns to its Main menu opener. Returning from isolated practice restores the guide first. The same hierarchy remains when entered during an already-started flight; closing Main menu separately reveals that unchanged paused flight, which still requires explicit Resume. A direct flight opener, if supplied, still returns to its own paused origin. Destinations that can replace or start the campaign retain their existing title-closing behavior.
 
 The specimen is displayed at 288×168 CSS pixels on wider screens and 192×112 CSS pixels at viewport widths of 480px or less. Its logical canvas remains 192×112, with the same 56px role artwork, orbit and center contact cue. The existing mobile dialog leaves 280px of content width at a 320px viewport, enough for the 192px specimen. At narrower widths, the specimen clamps to its container and preserves its 12:7 aspect ratio. This CSS enlargement does not change flight sprites or simulation geometry; actual browser layout and readability remain a separate check.
+
+## Couch mission guidance
+
+Versus Help uses the accepted `match.runs` rules and labels which players face
+each enabled optional role. It refreshes on Help entry, preserves active reading
+on locale changes, and never starts Solo practice or reads staged setup fields.
+Team keeps its own hunter/relay/rescue rules; its two-front trail-impact advice
+applies only to explicit Team impact editions. Do not map Solo pursuit semantics
+onto Team hunters.

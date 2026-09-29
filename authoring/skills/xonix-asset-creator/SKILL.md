@@ -156,3 +156,11 @@ roundtrip establish authoring transport, not cultural accuracy, uniform pixel
 clusters, scene contrast or runtime approval. Do not infer a failed export solely
 from an automation download-event timeout: inspect the prepared-file status and
 actual named browser download before classifying the product result.
+
+### Verified single-file handoff
+
+Use the artwork panel's exact-file download to pass a retained source/derivative
+to existing creators. Keep the .rlart packet as provenance; never treat the file
+as approved or infer a mission binding. Preserve Blob bytes/MIME/safe declared
+name and verify selection/revision ownership after asynchronous checks. Record
+actual disk/hash evidence separately from requesting the browser download.

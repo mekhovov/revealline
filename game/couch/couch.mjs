@@ -89,6 +89,7 @@ import { attachControllerConfirmGuard } from '../ui/controller-confirm-guard.mjs
 import { attachControllerNavigation } from '../ui/controller-navigation.mjs';
 import { playgroundTabBoundary } from '../ui/playground-tab-boundary.mjs';
 import { attachControllerReading } from '../ui/controller-reading.mjs';
+import { attachEncounterHelp } from '../ui/encounter-help.mjs';
 import { readingInputPrompt } from '../ui/reading-input-prompt.mjs';
 import { nextInputModality } from '../input-presentation.mjs';
 import { BoardPainter, boardPaintSizeForLevel } from '../ui/render.mjs';
@@ -2319,6 +2320,10 @@ try {
   } catch {
     /* The fixed Solo title route remains available. */
   }
+  const encounterHelp = attachEncounterHelp({
+    root: $('race-encounter-help'),
+    getLevels: () => match?.runs?.map((run) => run.level) ?? [],
+  });
   shell = createCouchShell({
     authoredRoute: authoredRoute?.id ?? 'legacy',
     coarse: matchMedia('(pointer: coarse)').matches,
@@ -2346,6 +2351,7 @@ try {
       cancelLibraryDecision();
       clear();
       if (back || to !== contentScope) cancelContent();
+      if (to === 'help') encounterHelp.refresh();
     },
     onNewMatch: () => {
       if (match?.status === 'running' || disposed) return;
@@ -4066,6 +4072,7 @@ try {
     controllerConfirmGuard.destroy();
     menuRouter.destroy();
     reading.destroy();
+    encounterHelp.dispose();
     navigation.destroy();
     shell.destroy();
     stopNative();

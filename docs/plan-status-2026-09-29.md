@@ -36,6 +36,17 @@ entry/reflow and retained-parent artwork inspection. The [batch16 receipt](verif
 records source behavior, corrected fixture failures and limitations. These results
 do not complete A/B/C or grant production/public acceptance.
 
+## Next implementation batch
+
+The following source slices now extend the previous work without waiting for
+production review: Versus per-board optional encounter Help (17/17 focused),
+Team edition-specific two-front impact guidance (25/25), and exact selected
+artwork file handoff (38/38). See [batch17](verification/actor-batch-17/README.md).
+The native Studio handoff retained the expected downloaded image hash. Broader
+Versus input tests include reproduced baseline failures, not a blanket pass.
+The valid imported Team hunter Start incompatibility is owned separately by the
+Levels coordinator; these guidance changes do not alter schemas or rules.
+
 ## Public and queued
 
 - Latest observed main is `321408a3cfd75ae230d760f39fb692503652601a`

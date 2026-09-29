@@ -5021,5 +5021,7 @@
   "encounterGuide.previewNote": "Read the cues below, then practise in the actual mission. Its own map, timing and other threats stay active.",
   "encounterGuide.spot": "Spot: {{text}}",
   "encounterGuide.risk": "Risk: {{text}}",
-  "encounterGuide.try": "Try: {{text}}"
+  "encounterGuide.try": "Try: {{text}}",
+  "encounterHelp.title": "Mission threats",
+  "encounterHelp.unavailable": "Threat guidance is unavailable because these board rules could not be validated."
 }

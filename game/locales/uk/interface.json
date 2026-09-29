@@ -5127,5 +5127,7 @@
   "encounterGuide.previewNote": "Прочитайте про сигнали нижче, а потім практикуйтеся в самій місії. Її карта, таймінги та інші загрози залишаються активними.",
   "encounterGuide.spot": "Ознака: {{text}}",
   "encounterGuide.risk": "Ризик: {{text}}",
-  "encounterGuide.try": "Спробуйте: {{text}}"
+  "encounterGuide.try": "Спробуйте: {{text}}",
+  "encounterHelp.title": "Загрози місії",
+  "encounterHelp.unavailable": "Підказки щодо загроз недоступні: правила цих полів не вдалося перевірити."
 }

@@ -2517,5 +2517,11 @@
   "studio.artwork.comparisonFailed": "Parent preview failed. The selected file and collection are unchanged.",
   "studio.artwork.comparisonCancelled": "Parent preview cancelled. Choose Compare retained parent to try again.",
   "studio.artwork.comparisonFacts": "Collection {{collection}} · revision {{revision}} · {{medium}} · {{bytes}} bytes · SHA-256 {{sha256}}",
-  "studio.artwork.nativeFrame": "Scrollable artwork preview"
+  "studio.artwork.nativeFrame": "Scrollable artwork preview",
+  "studio.artwork.downloadFile": "Download selected verified file",
+  "studio.artwork.downloadFileHelp": "Downloads the selected original or derivative without resizing or re-encoding. Keep the .rlart packet for its full provenance. This does not bind, install or approve artwork.",
+  "studio.artwork.verifyingFile": "Verifying retained files before preparing the selected download…",
+  "studio.artwork.fileReady": "Exact file {{filename}} prepared from {{id}}, collection revision {{revision}}. Keep the .rlart packet for full provenance.",
+  "studio.artwork.fileFailed": "Selected file was not prepared: {{message}}",
+  "studio.artwork.fileExtension": "The declared filename must use its image format's extension: .png, .jpg, .jpeg or .webp. The packet and file bytes are unchanged."
 }
