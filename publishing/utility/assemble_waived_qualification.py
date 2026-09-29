@@ -25,6 +25,9 @@ FASTLINE_WORKFLOW = '.github/workflows/fastline-release.yml'
 QUALIFICATION_WORKFLOWS = {WORKFLOW, FASTLINE_WORKFLOW}
 FASTLINE_QUALIFICATION_JOBS = frozenset(('deduplicate', 'qualify', 'freeze', 'test'))
 POLICY = 'publishing/test-policy.json'
+HISTORICAL_AUDIO_EVIDENCE_SOURCE = 'publishing/utility/audio-source-retention-audit-704a.json'
+HISTORICAL_AUDIO_EVIDENCE_ARCHIVE = 'coordinator/audio-source-retention-audit-704a.json'
+HISTORICAL_AUDIO_EVIDENCE_SHA256 = '224cd93c3a7ef5e10708e83ae77b2e5958a52cd279ed198d12aeb60afdb6c3ce'
 COMMIT = re.compile(r'[0-9a-f]{40}')
 GATES = [('validate', 'npm run validate', 'Validate source'),
          ('lint', 'npm run lint', 'Lint source'),
@@ -113,6 +116,17 @@ def blob(repo, commit, name):
     size = int(git(repo, 'cat-file', '-s', object_name))
     require(0 <= size <= 4 * 1024**2, 'Source helper bound')
     return git(repo, 'show', object_name)
+
+
+def retain_historical_audio_evidence(evidence, repo, commit):
+    """Retain the reviewed audio-source audit in every future evidence package."""
+    body = blob(repo, commit, HISTORICAL_AUDIO_EVIDENCE_SOURCE)
+    require(sha(body) == HISTORICAL_AUDIO_EVIDENCE_SHA256,
+            'Historical audio retention evidence differs')
+    require(HISTORICAL_AUDIO_EVIDENCE_ARCHIVE not in evidence,
+            'Duplicate historical audio retention evidence')
+    evidence[HISTORICAL_AUDIO_EVIDENCE_ARCHIVE] = body
+    return body
 
 
 def step(job, name):
@@ -349,6 +363,7 @@ def assemble(config, output):
                     'approvedNonSourceChanges': allowed, 'allOtherTrackedContentsTypesModesIdentical': True,
                     'rawDiff': {'bytes': len(difference), 'sha256': sha(difference), 'retained': bool(difference)},
                     'scope': 'PR build corroboration only; not reuse of a predecessor source verdict.'})}
+    retain_historical_audio_evidence(evidence, automation_repo, automation_commit)
     if difference:
         evidence['preparation/pr-to-source.diff'] = difference
     for role in ('pr', 'manual', 'inspection'):
