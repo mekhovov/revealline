@@ -1,0 +1,449 @@
+TAP version 13
+# Subtest: controller choices contain all and only admitted company missions, with campaign cosmetics
+ok 1 - controller choices contain all and only admitted company missions, with campaign cosmetics
+  ---
+  duration_ms: 1568.413
+  type: 'test'
+  ...
+# Subtest: company practice reconstructs the canonical difficulty once and honors class and steering
+ok 2 - company practice reconstructs the canonical difficulty once and honors class and steering
+  ---
+  duration_ms: 201.371416
+  type: 'test'
+  ...
+# Subtest: practice links preserve the installed audience and reject foreign mission or input claims
+ok 3 - practice links preserve the installed audience and reject foreign mission or input claims
+  ---
+  duration_ms: 162.533209
+  type: 'test'
+  ...
+# Subtest: advanced relay, flow and sentinel missions pass the real Controller Practice import boundary
+ok 4 - advanced relay, flow and sentinel missions pass the real Controller Practice import boundary
+  ---
+  duration_ms: 1798.403125
+  type: 'test'
+  ...
+# Subtest: edition Guide practice reconstructs exact admitted rules and class recipes with a retained seed
+ok 5 - edition Guide practice reconstructs exact admitted rules and class recipes with a retained seed
+  ---
+  duration_ms: 175.995584
+  type: 'test'
+  ...
+# Subtest: retained Guide seeds require one bounded decimal and the exact practice return route
+ok 6 - retained Guide seeds require one bounded decimal and the exact practice return route
+  ---
+  duration_ms: 0.361625
+  type: 'test'
+  ...
+# Subtest: encounter topics resolve concise EN/UK copy and distinguish removable bodies from live attacks
+ok 7 - encounter topics resolve concise EN/UK copy and distinguish removable bodies from live attacks
+  ---
+  duration_ms: 3.625416
+  type: 'test'
+  ...
+# Subtest: availability requires a valid loaded role and keeps optional and pressure populations independent
+ok 8 - availability requires a valid loaded role and keeps optional and pressure populations independent
+  ---
+  duration_ms: 261.271958
+  type: 'test'
+  ...
+# Subtest: malformed, future and mismatched level definitions fail closed without repairs or getter reads
+ok 9 - malformed, future and mismatched level definitions fail closed without repairs or getter reads
+  ---
+  duration_ms: 90.932042
+  type: 'test'
+  ...
+# Subtest: practice imports the exact already-tuned level, selected craft and setup as an independent copy
+ok 10 - practice imports the exact already-tuned level, selected craft and setup as an independent copy
+  ---
+  duration_ms: 20.032833
+  type: 'test'
+  ...
+# Subtest: unknown craft, invalid seed, steering and theme are rejected without fallback settings
+ok 11 - unknown craft, invalid seed, steering and theme are rejected without fallback settings
+  ---
+  duration_ms: 14.6975
+  type: 'test'
+  ...
+# Subtest: immediate: sentry lesson preserves locked aim, live recovery shot and replay identity
+ok 12 - immediate: sentry lesson preserves locked aim, live recovery shot and replay identity
+  ---
+  duration_ms: 59.029
+  type: 'test'
+  ...
+# Subtest: immediate: closing the loaded return cancels the sentry warning before it fires
+ok 13 - immediate: closing the loaded return cancels the sentry warning before it fires
+  ---
+  duration_ms: 41.859333
+  type: 'test'
+  ...
+# Subtest: immediate: scout lesson allows ram without removing the ordinary keeper
+ok 14 - immediate: scout lesson allows ram without removing the ordinary keeper
+  ---
+  duration_ms: 27.882833
+  type: 'test'
+  ...
+# Subtest: immediate: scout lesson allows capture without removing the ordinary keeper
+ok 15 - immediate: scout lesson allows capture without removing the ordinary keeper
+  ---
+  duration_ms: 48.952583
+  type: 'test'
+  ...
+# Subtest: immediate/trail-pursuit: the same combined lesson keeps both attacks and real closure counterplay
+ok 16 - immediate/trail-pursuit: the same combined lesson keeps both attacks and real closure counterplay
+  ---
+  duration_ms: 178.159
+  type: 'test'
+  ...
+# Subtest: immediate/head-intercept: the same combined lesson keeps both attacks and real closure counterplay
+ok 17 - immediate/head-intercept: the same combined lesson keeps both attacks and real closure counterplay
+  ---
+  duration_ms: 163.844959
+  type: 'test'
+  ...
+# Subtest: grid-center: sentry lesson preserves locked aim, live recovery shot and replay identity
+ok 18 - grid-center: sentry lesson preserves locked aim, live recovery shot and replay identity
+  ---
+  duration_ms: 27.791625
+  type: 'test'
+  ...
+# Subtest: grid-center: closing the loaded return cancels the sentry warning before it fires
+ok 19 - grid-center: closing the loaded return cancels the sentry warning before it fires
+  ---
+  duration_ms: 23.423291
+  type: 'test'
+  ...
+# Subtest: grid-center: scout lesson allows ram without removing the ordinary keeper
+ok 20 - grid-center: scout lesson allows ram without removing the ordinary keeper
+  ---
+  duration_ms: 20.011125
+  type: 'test'
+  ...
+# Subtest: grid-center: scout lesson allows capture without removing the ordinary keeper
+ok 21 - grid-center: scout lesson allows capture without removing the ordinary keeper
+  ---
+  duration_ms: 40.070625
+  type: 'test'
+  ...
+# Subtest: grid-center/trail-pursuit: the same combined lesson keeps both attacks and real closure counterplay
+ok 22 - grid-center/trail-pursuit: the same combined lesson keeps both attacks and real closure counterplay
+  ---
+  duration_ms: 146.4105
+  type: 'test'
+  ...
+# Subtest: grid-center/head-intercept: the same combined lesson keeps both attacks and real closure counterplay
+ok 23 - grid-center/head-intercept: the same combined lesson keeps both attacks and real closure counterplay
+  ---
+  duration_ms: 141.552209
+  type: 'test'
+  ...
+# Subtest: query edition keeps catalog lessons readable without offering unsupported practice
+ok 24 - query edition keeps catalog lessons readable without offering unsupported practice
+  ---
+  duration_ms: 1299.463875
+  type: 'test'
+  ...
+# Subtest: compiled edition keeps catalog lessons readable without offering unsupported practice
+ok 25 - compiled edition keeps catalog lessons readable without offering unsupported practice
+  ---
+  duration_ms: 997.156375
+  type: 'test'
+  ...
+# Subtest: custom edition with no role image remains readable with no absent palette or canonical asset request
+ok 26 - custom edition with no role image remains readable with no absent palette or canonical asset request
+  ---
+  duration_ms: 12.16325
+  type: 'test'
+  ...
+# Subtest: selected compiled FPV role stays visible without enabling unavailable catalog practice or appearances
+ok 27 - selected compiled FPV role stays visible without enabling unavailable catalog practice or appearances
+  ---
+  duration_ms: 11.161958
+  type: 'test'
+  ...
+# Subtest: catalog capability blocks impact preparation even with canonical themes and a direct handler call
+ok 28 - catalog capability blocks impact preparation even with canonical themes and a direct handler call
+  ---
+  duration_ms: 3.5635
+  type: 'test'
+  ...
+# Subtest: visibility and BFCache return reconcile edition preview readiness without requesting another body
+ok 29 - visibility and BFCache return reconcile edition preview readiness without requesting another body
+  ---
+  duration_ms: 5.440709
+  type: 'test'
+  ...
+# Subtest: unavailable practice and preview explanations follow EN/UK without hiding the readable threat
+ok 30 - unavailable practice and preview explanations follow EN/UK without hiding the readable threat
+  ---
+  duration_ms: 17.686458
+  type: 'test'
+  ...
+# Subtest: an admitted edition launches its current pressure lesson and the actual child retains the exact setup without rewards
+    # Subtest: the real parent uses the exact edition adapter and preserves its paused run
+    ok 1 - the real parent uses the exact edition adapter and preserves its paused run
+      ---
+      duration_ms: 919.556084
+      type: 'test'
+      ...
+    # Subtest: the real edition child starts the same effective core and stays write-free
+    ok 2 - the real edition child starts the same effective core and stays write-free
+      ---
+      duration_ms: 741.24825
+      type: 'test'
+      ...
+    1..2
+ok 31 - an admitted edition launches its current pressure lesson and the actual child retains the exact setup without rewards
+  ---
+  duration_ms: 1735.199458
+  type: 'test'
+  ...
+# Subtest: a restored FPV-only pack keeps all four canonical Guide appearances and practices
+ok 32 - a restored FPV-only pack keeps all four canonical Guide appearances and practices
+  ---
+  duration_ms: 384.077208
+  type: 'test'
+  ...
+# Subtest: immediate: actual guide preserves a live cut, Large text preference and held-input isolation through practice and return
+ok 33 - immediate: actual guide preserves a live cut, Large text preference and held-input isolation through practice and return
+  ---
+  duration_ms: 3385.169292
+  type: 'test'
+  ...
+# Subtest: grid-center: actual guide preserves a live cut, Large text preference and held-input isolation through practice and return
+ok 34 - grid-center: actual guide preserves a live cut, Large text preference and held-input isolation through practice and return
+  ---
+  duration_ms: 3309.060792
+  type: 'test'
+  ...
+# Subtest: actual guide repeated return and canceled load preserve the parent and reject stale lesson messages
+ok 35 - actual guide repeated return and canceled load preserve the parent and reject stale lesson messages
+  ---
+  duration_ms: 1056.144792
+  type: 'test'
+  ...
+# Subtest: actual guide returns with streamed music still explicitly paused, without resuming flight
+ok 36 - actual guide returns with streamed music still explicitly paused, without resuming flight
+  ---
+  duration_ms: 1676.202209
+  type: 'test'
+  ...
+# Subtest: actual guide returns with streamed music continuing, without resuming flight
+ok 37 - actual guide returns with streamed music continuing, without resuming flight
+  ---
+  duration_ms: 1658.518458
+  type: 'test'
+  ...
+# Subtest: guide has concise theme-aware copy and native controls reachable through shared navigation
+ok 38 - guide has concise theme-aware copy and native controls reachable through shared navigation
+  ---
+  duration_ms: 33.756416
+  type: 'test'
+  ...
+# Subtest: original role previews move but Pause and reduced effects hold their cosmetic frames
+ok 39 - original role previews move but Pause and reduced effects hold their cosmetic frames
+  ---
+  duration_ms: 7.275917
+  type: 'test'
+  ...
+# Subtest: the guide paints only the selected registered image and motion, with separate boss bodies
+ok 40 - the guide paints only the selected registered image and motion, with separate boss bodies
+  ---
+  duration_ms: 21.198709
+  type: 'test'
+  ...
+# Subtest: the FPV guide uses the release sprite geometry and retains other-theme and legacy fallbacks
+ok 41 - the FPV guide uses the release sprite geometry and retains other-theme and legacy fallbacks
+  ---
+  duration_ms: 23.108667
+  type: 'test'
+  ...
+# Subtest: artwork completion repaints the same manual-clock frame and preserves reduced effects
+ok 42 - artwork completion repaints the same manual-clock frame and preserves reduced effects
+  ---
+  duration_ms: 3.1215
+  type: 'test'
+  ...
+# Subtest: retired guide catalogs cannot request images after a topic change, hidden page or disposal
+ok 43 - retired guide catalogs cannot request images after a topic change, hidden page or disposal
+  ---
+  duration_ms: 6.152167
+  type: 'test'
+  ...
+# Subtest: returning to a visible or reopened guide reacquires only its selected body
+ok 44 - returning to a visible or reopened guide reacquires only its selected body
+  ---
+  duration_ms: 16.546125
+  type: 'test'
+  ...
+# Subtest: hidden, closed, page-hidden and disposed previews release pending decodes without late painting
+ok 45 - hidden, closed, page-hidden and disposed previews release pending decodes without late painting
+  ---
+  duration_ms: 16.701167
+  type: 'test'
+  ...
+# Subtest: practice releases artwork immediately and its return errors survive independent artwork failures
+ok 46 - practice releases artwork immediately and its return errors survive independent artwork failures
+  ---
+  duration_ms: 13.411459
+  type: 'test'
+  ...
+# Subtest: practice uses a version-relative same-origin URL and restores only its own temporary handoff
+ok 47 - practice uses a version-relative same-origin URL and restores only its own temporary handoff
+  ---
+  duration_ms: 5.869875
+  type: 'test'
+  ...
+# Subtest: Cancel or disposal during preparation cannot launch late or replace preview/save data
+ok 48 - Cancel or disposal during preparation cannot launch late or replace preview/save data
+  ---
+  duration_ms: 11.334791
+  type: 'test'
+  ...
+# Subtest: storage failure is visible and returns the suspended parent without launching a child
+ok 49 - storage failure is visible and returns the suspended parent without launching a child
+  ---
+  duration_ms: 2.886125
+  type: 'test'
+  ...
+# Subtest: a denied preview restoration stays visible after practice returns to the guide
+ok 50 - a denied preview restoration stays visible after practice returns to the guide
+  ---
+  duration_ms: 4.717625
+  type: 'test'
+  ...
+# Subtest: a cancelled asynchronous pause callback cannot close a newer lesson
+ok 51 - a cancelled asynchronous pause callback cannot close a newer lesson
+  ---
+  duration_ms: 4.315416
+  type: 'test'
+  ...
+# Subtest: bridge accepts only finite return destinations and never a foreign game URL
+ok 52 - bridge accepts only finite return destinations and never a foreign game URL
+  ---
+  duration_ms: 1.178917
+  type: 'test'
+  ...
+# Subtest: actual child practice can lose, Retry the same impact lesson and return to the unchanged guide without rewards
+ok 53 - actual child practice can lose, Retry the same impact lesson and return to the unchanged guide without rewards
+  ---
+  duration_ms: 4743.711375
+  type: 'test'
+  ...
+# Subtest: enlarged guide artwork keeps a 56px body within its canvas without enlarging contact or sampled poses
+ok 54 - enlarged guide artwork keeps a 56px body within its canvas without enlarging contact or sampled poses
+  ---
+  duration_ms: 14.334458
+  type: 'test'
+  ...
+# Subtest: enlargement preserves failed-art and theme vector fallbacks, while the impact diagram stays separate
+ok 55 - enlargement preserves failed-art and theme vector fallbacks, while the impact diagram stays separate
+  ---
+  duration_ms: 3.49575
+  type: 'test'
+  ...
+# Subtest: the guide uses the selected compiled enemy geometry without acquiring original images
+ok 56 - the guide uses the selected compiled enemy geometry without acquiring original images
+  ---
+  duration_ms: 6.407833
+  type: 'test'
+  ...
+# Subtest: current presentation readiness releases the old guide image and repaints its held pose without disturbing practice or hidden state
+ok 57 - current presentation readiness releases the old guide image and repaints its held pose without disturbing practice or hidden state
+  ---
+  duration_ms: 4.207667
+  type: 'test'
+  ...
+# Subtest: compiled Guide motion uses the runtime snapshot scale while impact and other themes retain their lesson timing
+ok 58 - compiled Guide motion uses the runtime snapshot scale while impact and other themes retain their lesson timing
+  ---
+  duration_ms: 4.668875
+  type: 'test'
+  ...
+# Subtest: hosts without a compatible loaded mission retain old lessons and explain unavailable encounter practice
+ok 59 - hosts without a compatible loaded mission retain old lessons and explain unavailable encounter practice
+  ---
+  duration_ms: 2.304042
+  type: 'test'
+  ...
+# Subtest: encounter lessons snapshot exact setup before async pause and restore the owned handoff
+ok 60 - encounter lessons snapshot exact setup before async pause and restore the owned handoff
+  ---
+  duration_ms: 10.200125
+  type: 'test'
+  ...
+# Subtest: pending encounter practice cannot survive replace or overwrite retained bytes
+ok 61 - pending encounter practice cannot survive replace or overwrite retained bytes
+  ---
+  duration_ms: 4.578917
+  type: 'test'
+  ...
+# Subtest: pending encounter practice cannot survive cancel or overwrite retained bytes
+ok 62 - pending encounter practice cannot survive cancel or overwrite retained bytes
+  ---
+  duration_ms: 3.219333
+  type: 'test'
+  ...
+# Subtest: pending encounter practice cannot survive dispose or overwrite retained bytes
+ok 63 - pending encounter practice cannot survive dispose or overwrite retained bytes
+  ---
+  duration_ms: 3.522375
+  type: 'test'
+  ...
+# Subtest: edition encounter URLs use the existing return bridge without touching the Playground handoff
+ok 64 - edition encounter URLs use the existing return bridge without touching the Playground handoff
+  ---
+  duration_ms: 4.626917
+  type: 'test'
+  ...
+# Subtest: encounter lesson copy follows EN/UK locale without changing topic or lesson setup
+ok 65 - encounter lesson copy follows EN/UK locale without changing topic or lesson setup
+  ---
+  duration_ms: 3.541209
+  type: 'test'
+  ...
+# Subtest: twelve concise topics distinguish registered roles, optional encounters and line impacts
+ok 66 - twelve concise topics distinguish registered roles, optional encounters and line impacts
+  ---
+  duration_ms: 5.6105
+  type: 'test'
+  ...
+# Subtest: all four-theme/two-policy lesson variants validate without changing original content
+ok 67 - all four-theme/two-policy lesson variants validate without changing original content
+  ---
+  duration_ms: 122.614542
+  type: 'test'
+  ...
+# Subtest: immediate: the taught unboosted observation loses through real inputs and replay
+ok 68 - immediate: the taught unboosted observation loses through real inputs and replay
+  ---
+  duration_ms: 37.184458
+  type: 'test'
+  ...
+# Subtest: immediate: the taught Boost escape wins through real inputs and replay
+ok 69 - immediate: the taught Boost escape wins through real inputs and replay
+  ---
+  duration_ms: 26.382625
+  type: 'test'
+  ...
+# Subtest: grid-center: the taught unboosted observation loses through real inputs and replay
+ok 70 - grid-center: the taught unboosted observation loses through real inputs and replay
+  ---
+  duration_ms: 19.558458
+  type: 'test'
+  ...
+# Subtest: grid-center: the taught Boost escape wins through real inputs and replay
+ok 71 - grid-center: the taught Boost escape wins through real inputs and replay
+  ---
+  duration_ms: 12.370667
+  type: 'test'
+  ...
+1..71
+# tests 73
+# suites 0
+# pass 73
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 13441.78825

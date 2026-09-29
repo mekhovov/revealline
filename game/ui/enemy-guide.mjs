@@ -29,6 +29,9 @@ export function attachEnemyGuide({
   getRunOptions = () => undefined,
   getMissionTheme = () => null,
   resolveEncounterPracticeURL = () => null,
+  // Catalog lessons use the generic scenario handoff. Edition hosts admit only
+  // their current-mission reconstruction and must opt out of this separate route.
+  catalogPracticeAvailable = true,
   createBodyAssets = createEnemyBodyAssets,
   loadImpactScenario = async () => {
     const response = await fetch(
@@ -182,17 +185,41 @@ export function attachEnemyGuide({
   function entry() {
     return enemyGuideEntry(topic.el.value, appearance.el.value);
   }
+  function canonicalTheme(id = appearance.el.value) {
+    return ENEMY_THEMES.includes(id) ? themes?.find((theme) => theme.id === id) : null;
+  }
+  function catalogPracticeReady() {
+    return catalogPracticeAvailable === true && !!canonicalTheme();
+  }
+  function refreshAppearances() {
+    const available = ENEMY_THEMES.filter(
+      (id) => canonicalTheme(id) || compiledPreview(id, topic.el.value),
+    );
+    for (const option of appearance.el.children)
+      option.disabled = !available.includes(option.value);
+    if (!available.includes(appearance.el.value)) appearance.el.value = available[0] ?? 'fpv';
+    appearance.el.disabled = busy || isEncounterGuideTopic(topic.el.value) || available.length < 2;
+  }
+  function previewPalette() {
+    return (
+      compiledPreview(appearance.el.value, topic.el.value)?.palette ?? canonicalTheme()?.palette
+    );
+  }
   function refresh() {
+    refreshAppearances();
     const record = entry(),
       encounter = isEncounterGuideTopic(record.id),
-      availability = encounter ? encounterGuideAvailability(record.id, getLevel()) : null;
-    canvas.hidden = encounter;
+      availability = encounter ? encounterGuideAvailability(record.id, getLevel()) : null,
+      missingPreview = !encounter && record.id !== 'line-impact' && !previewPalette();
+    canvas.hidden = encounter || missingPreview;
     localizedText(previewNote, () =>
       encounter
         ? t('interface:encounterGuide.previewNote')
-        : record.id === 'line-impact'
-          ? t('interface:lineImpactDiagramPracticeUsesActualTiming')
-          : t('interface:enlargedIllustrationCenterDotMarksContact'),
+        : missingPreview
+          ? t('interface:guidePreviewUnavailable')
+          : record.id === 'line-impact'
+            ? t('interface:lineImpactDiagramPracticeUsesActualTiming')
+            : t('interface:enlargedIllustrationCenterDotMarksContact'),
     );
     canvas.setAttribute('aria-label', previewNote.textContent);
     localizedText(heading, () => entry().label);
@@ -213,17 +240,17 @@ export function attachEnemyGuide({
     localizedText(note, () => entry().note);
     exercise.wrap.hidden = record.id !== 'line-impact';
     localizedText(instructions, () =>
-      [
-        enemyGuidePracticeInstructions(record.id, exercise.el.value),
-        availability ? t(`interface:encounterGuide.${availability.reason}`) : '',
-      ]
-        .filter(Boolean)
-        .join(' '),
+      !encounter && !catalogPracticeReady()
+        ? t('interface:guideCatalogPracticeUnavailable')
+        : [
+            enemyGuidePracticeInstructions(record.id, exercise.el.value),
+            availability ? t(`interface:encounterGuide.${availability.reason}`) : '',
+          ]
+            .filter(Boolean)
+            .join(' '),
     );
-    for (const el of [topic.el, appearance.el, exercise.el, previous, next, play])
-      el.disabled = busy;
-    appearance.el.disabled = busy || encounter;
-    play.disabled = busy || (encounter && !availability.available);
+    for (const el of [topic.el, exercise.el, previous, next, play]) el.disabled = busy;
+    play.disabled = busy || (encounter ? !availability.available : !catalogPracticeReady());
     localizedText(play, () =>
       busy ? t('interface:preparingPractice') : t('interface:playPractice'),
     );
@@ -297,6 +324,9 @@ export function attachEnemyGuide({
   }
   async function launch() {
     if (disposed || busy || active || !dialog.open) return false;
+    // Disabled controls are only presentation: reject stale/direct activation
+    // before fetching, suspending the parent or touching its temporary handoff.
+    if (!isEncounterGuideTopic(topic.el.value) && !catalogPracticeReady()) return false;
     const ticket = ++generation,
       selected = topic.el.value,
       selectedTheme = appearance.el.value,
@@ -418,10 +448,10 @@ export function attachEnemyGuide({
     localizedText(artworkStatus, () => '');
     artworkStatus.hidden = true;
   }
-  function compiledPreview() {
-    if (previewPose?.themeId !== 'fpv') return null;
+  function compiledPreview(themeId = previewPose?.themeId, type = previewPose?.type) {
+    if (themeId !== 'fpv') return null;
     const snapshot = getPresentation();
-    const sprite = snapshot?.image?.(`enemy.${previewPose.type}`);
+    const sprite = snapshot?.image?.(`enemy.${type}`);
     return sprite ? { ...sprite, palette: snapshot.canvas.palette } : null;
   }
   function updatePreviewAssets() {
@@ -432,13 +462,13 @@ export function attachEnemyGuide({
   function refreshPresentation() {
     if (
       !previewVisible() ||
-      !previewPose ||
       topic.el.value === 'line-impact' ||
       isEncounterGuideTopic(topic.el.value)
     )
       return;
-    updatePreviewAssets();
-    paintPreview();
+    // Re-evaluate available roles when the selected presentation becomes ready
+    // or retires. A zero-delta refresh preserves the held cosmetic clocks.
+    refresh();
   }
   // A decode completion repaints the sampled frame without advancing either clock.
   function paintPreview() {
@@ -446,6 +476,7 @@ export function attachEnemyGuide({
       releasePreview();
       return;
     }
+    if (canvas.hidden) return;
     context.clearRect(0, 0, 192, 112);
     context.fillStyle = '#080d19';
     context.fillRect(0, 0, 192, 112);
@@ -464,11 +495,18 @@ export function attachEnemyGuide({
       return;
     }
     const compiled = compiledPreview(),
-      body = compiled ?? bodyAssets.current(previewPose);
+      body = compiled ?? bodyAssets.current(previewPose),
+      palette = compiled?.palette ?? canonicalTheme()?.palette;
+    if (!palette) {
+      canvas.hidden = true;
+      releasePreview();
+      localizedText(previewNote, () => t('interface:guidePreviewUnavailable'));
+      return;
+    }
     drawPresentedActor(
       context,
       { ...previewPose, diameter: PREVIEW_BODY_DIAMETER },
-      compiled?.palette ?? themes.find(({ id }) => id === appearance.el.value).palette,
+      palette,
       body?.image,
       compiled?.geometry,
       compiled ? null : body?.record,
@@ -477,7 +515,11 @@ export function attachEnemyGuide({
     artworkStatus.hidden = !artworkStatus.textContent;
   }
   function update(dt = 0, { paused = false, reduced = false } = {}) {
-    if (!previewVisible() || isEncounterGuideTopic(topic.el.value)) {
+    if (
+      !previewVisible() ||
+      isEncounterGuideTopic(topic.el.value) ||
+      (topic.el.value !== 'line-impact' && !previewPalette())
+    ) {
       releasePreview();
       return;
     }
@@ -565,7 +607,12 @@ export function attachEnemyGuide({
     event.preventDefault();
     close();
   };
-  const visibility = () => update(0, previewSettings);
+  const visibility = () => {
+    // Readiness can change while hidden, when presentation notifications must
+    // not paint. Reconcile the selected role before the first visible repaint.
+    if (previewVisible()) refresh();
+    else releasePreview();
+  };
   const pageHide = () => {
     pageVisible = false;
     releasePreview();

@@ -368,3 +368,19 @@ whole-content quality, device qualification and C2 remain deferred or unfinished
 Implementation continuation: [batch17](verification/actor-batch-17/README.md) adds
 current-board Versus Help, Team-specific impact advice and exact artwork handoff.
 Production review remains deferred; A/B/C acceptance and C2-last are unchanged.
+
+The following A3 continuation fixes accepted imported Team v6/v7 Hunter startup:
+PR757 `29f899e23ac556dd623a02df401adbea151fc087` adopts the shared tuning
+correction without altering historical schemas or frozen adapters. Its 54-case
+composition includes the real Start/paused Help path and preserves native attacks.
+This removes an implementation blocker; it does not resume production review.
+
+## Eighteenth batch: safe Field Guide access in editions
+
+[Batch18 evidence](verification/actor-batch-18/README.md) closes a source defect
+where missing canonical themes crashed the Guide and unsupported catalogue lessons
+attempted invalid edition children. Supported current-mission practice and ordinary
+lessons remain available. The 73-case cohort preserves exact parent state and
+covers background-ready illustration restoration. Older catalogue exercises in
+editions remain explicitly unavailable, not silently admitted. No production
+review, new artwork adoption or release is implied.

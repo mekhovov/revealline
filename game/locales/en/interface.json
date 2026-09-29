@@ -5023,5 +5023,7 @@
   "encounterGuide.risk": "Risk: {{text}}",
   "encounterGuide.try": "Try: {{text}}",
   "encounterHelp.title": "Mission threats",
-  "encounterHelp.unavailable": "Threat guidance is unavailable because these board rules could not be validated."
+  "encounterHelp.unavailable": "Threat guidance is unavailable because these board rules could not be validated.",
+  "guideCatalogPracticeUnavailable": "Practice for this lesson is unavailable in this edition. You can read the guide or choose a threat from the current mission.",
+  "guidePreviewUnavailable": "An illustration is not available for this edition. The threat guidance remains available below."
 }

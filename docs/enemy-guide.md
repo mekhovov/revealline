@@ -1,6 +1,6 @@
 # Player field guide and impact practice
 
-The in-game field guide teaches seven registered enemy roles, the optional travelling-line-impact rule, and four current-mission topics: optional Scout, optional Sentry, trail pursuit and head interception. It is separate from the Enemy workshop's authoring controls. The original eight entries retain their illustrations and short **Spot / Risk / Try** copy across FPV, Ukraine, retro and business appearances. The four current-mission entries use concise rule-derived guidance and the real practice renderer, without an unrelated role illustration. Previous/Next, native selects, Read guide, Play practice and Back work through the shared game navigation adapter; touch uses the same controls with nominal 44-pixel targets.
+The in-game field guide teaches seven registered enemy roles, the optional travelling-line-impact rule, and four current-mission topics: optional Scout, optional Sentry, trail pursuit and head interception. It is separate from the Enemy workshop's authoring controls. The original eight entries retain short **Spot / Risk / Try** copy and, where the host supplies the corresponding palette or selected compiled role, their illustrations across FPV, Ukraine, retro and business appearances. The four current-mission entries use concise rule-derived guidance and the real practice renderer, without an unrelated role illustration. Previous/Next, native selects, Read guide, Play practice and Back work through the shared game navigation adapter; touch uses the same controls with nominal 44-pixel targets.
 
 The impact topic offers two exercises on the existing `line-impact-demo` geometry. **Observe the strike** asks the player to leave Boost off and tap Down; an actual hostile line contact creates two fronts and the pursuing front causes a loss. **Escape with Boost** asks for Boost before Down; the same real cut reaches the opposite secured border before arrival and wins. Both Immediate and Grid + buffer are retained. These are separate practice attempts, not artificial rewards or scripted simulation outcomes. The preview illustration is explanatory and is not the lesson's timing authority.
 
@@ -21,6 +21,8 @@ The four encounter topics are available only when the validated loaded mission c
   document,
   window,
   themes,
+  // False for editions that cannot admit the separate catalog lessons.
+  catalogPracticeAvailable: true,
   getThemeId: () => theme.id,
   getTurnPolicy: () => turnPolicy,
   getLevel: () => run.level,
@@ -35,6 +37,22 @@ The four encounter topics are available only when the validated loaded mission c
   onRead: (request) => navigation.beginReading(request)
 }
 ```
+
+An edition host sets `catalogPracticeAvailable:false`: its loader accepts only
+admitted edition missions, so older catalog/impact practice cannot use the generic
+Playground child. The guide keeps its readable lesson and a localized explanation;
+it does not prepare a child, suspend the parent or write a handoff for that action.
+The four supported current-mission encounter lessons retain their exact edition
+adapter and no-awards boundary. This is truthful capability handling, not new
+support for catalog exercises inside an edition.
+
+Appearance availability is separate from practice availability. Missing canonical
+palettes must not cause a paint exception or start requests for unrelated artwork.
+An available compiled FPV role can still illustrate the selected lesson. If no
+supported illustration is available, show the explanation and retain guidance and
+Close. Ordinary non-edition hosts preserve their canonical themes captured before
+pack selection, including restored FPV-only packs. Never fix the guide by changing
+the live mission theme, inventing a palette or widening edition admission.
 
 The return object has `open({topic})`, `close()`, `update(dt,{paused,reduced})`, `ownsPracticeFocus()`, a `practiceActive` getter, `dialog`, `frame` and `dispose()`. The opening button must pause the current flight before `open()`. Opening the guide alone must not start a new attempt or switch the selected campaign. The parent should pause its music while the child owns a game session, then restore only the prior listening intent on return; it must not run two soundtrack schedulers audibly or implicitly resume flight.
 
