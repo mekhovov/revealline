@@ -21,12 +21,27 @@ records, reinterpret untested production assets as approved, weaken runtime
 validators, or call a test build fully qualified. Any build-integrity dependency
 remains a concrete technical issue, not an excuse to resume deferred testing.
 
-Levels is proceeding with a copy-on-write Cooling loop erosion successor on
-accepted main `321408a3cfd75ae230d760f39fb692503652601a`. The first task is to make
-the existing eroder engage earned routes through authored placement/heading,
+Levels has implemented and pushed the copy-on-write Cooling loop erosion
+successor in **[PR #793](https://github.com/mekhovov/revealline/pull/793)**,
+head `0314aa0273f50b9b97f896b1e85efacc06831803`, on accepted main
+`321408a3cfd75ae230d760f39fb692503652601a`. Actual edition `whole-spatial-v38`
+makes the existing eroder engage earned routes through authored placement/heading,
 while preserving straight-between-impact movement, protected foundations,
-original editions and the remaining actors. Complete-route and fairness evidence
-will stay explicitly bounded; no blanket speed increase or global physics change.
+original editions and other authored actors. No blanket speed increase or global
+physics change. This is a source input for the consolidated queue, **not a release**.
+
+The final new candidate/route cohort passes **33/33**, zero skipped. Selected
+loader/archive/Studio checks pass **11**, with **96 explicit name-filter skips**.
+Changed-file lint/format, content and presentation metadata validation pass;
+independent source review found no remaining blocker. One legal Standard/immediate/
+seed-1 route clears in 45.85 simulated seconds with zero lost lives, 13 cuts and
+six warned erosion events; replay and actual tied Versus boards agree. The wider
+preset/control/seed matrix proves first returns, not full-route balance.
+
+Next source work is **Pressure ladder's complete strategic-route review**, followed
+by Switchback exchange and a second complete Cooling loop approach. Production
+testing is not a prerequisite for this work. More detail and exact limitations:
+[Cooling loop v38 evidence](https://github.com/mekhovov/revealline/blob/0314aa0273f50b9b97f896b1e85efacc06831803/docs/cooling-loop-erosion-v38.md).
 
 ## Delivery boundary
 
@@ -45,8 +60,9 @@ will stay explicitly bounded; no blanket speed increase or global physics change
   `team-cultural-specialist-originals-2`. Newer candidate geometry is not silently
   promoted to default.
 - Full suites remain explicitly waived/skipped, not passed. Focused checks,
-  source identity, validation/lint/format, build/provenance, immutable hashes,
-  Pages availability and bounded public player checks remain release gates.
+  source identity, validation/lint/format, build/provenance, immutable hashes and
+  basic availability remain delivery-integrity gates. Public player qualification
+  is deferred under the latest user instruction, not represented as passed.
 
 Sources: [current public marker](https://mekhovov.github.io/revealline/release.json),
 [v0.142.3 release](https://github.com/mekhovov/revealline/releases/tag/v0.142.3),
@@ -101,6 +117,7 @@ and human cooperation. Static source art is not runtime animation acceptance.
 | 4             | Existing reserved v0.144–v0.149 train | Preserve the coordinator's allocations and dependencies; do not manufacture competing versions                                       |
 | 5             | v0.150.0 unified experience           | Existing menu, Pause, actor, discovery, Team, Demo and community inputs; reconcile into one reviewed playable batch                  |
 | Source intake | #786                                  | 158 unchanged actor/Moving Edges source files preserved, milestone 57/v0.150.0; draft/hold remains, runtime adoption separate        |
+| Source intake | #793 Cooling loop v38                 | Reviewed/pushed opt-in encounter successor; aggregate-input/hold for publisher integration, no separate version allocated            |
 | Maintenance   | #787                                  | CI timing/shard tools preserved under Branch reconciliation, milestone 13; no workflow activation or speedup claim                   |
 
 The newer community #784 head is
@@ -239,20 +256,20 @@ batch is frozen, stop adding scope; prepare later work independently.
 These are focused engineering estimates excluding serialized release time,
 hardware availability and human review; they are not promised delivery dates.
 
-| Priority       | Work                                                                                     | Why it matters                                                                                                                   | Focused effort                                                                 |
-| -------------- | ---------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------ |
-| 1              | Finish the already-prepared selector/audio/native/community batches                      | Turns completed source work into player-visible improvements and resolves navigation/recovery defects                            | Per owning queue; do not restart completed qualification                       |
-| 2              | Release the integrated Team Resume/Support/More/Large batch                              | Players need accurate rescue instructions and readable two-player state                                                          | Source integration complete; production-review estimate with owner, then queue |
-| 3              | Complete strategic-route evidence for the existing v37 trio                              | Current evidence proves first returns, not full clears or advertised strategic choices                                           | 1–3 engineering days for a bounded three-map evidence/repair slice             |
-| 4              | Review a new default spatial edition                                                     | New geometry cannot improve normal play while remaining opt-in; require useful complete routes, not just a larger version number | Re-estimate after the v37 route review and human feedback                      |
-| 5              | Team teaching acknowledgement and remaining Studio/HUD donor ports                       | Avoid consumed-before-seen teaching, false Support completion and stale historical-host imports                                  | 0.5–2 days per bounded successor, after schema/ownership review                |
-| 6              | Whole-Journey pacing, actor/state readability and final reference dispositions           | Distinct fair challenges matter more than repeating easy geometry or increasing speed globally                                   | 3–7 days per polished 3–5-mission slice; broader review remains multi-week     |
-| 7              | Offline/recovery, accessibility/performance and two-player/device qualification          | Finds failures that mocks, byte audits and single-player routes cannot establish                                                 | 2–5 days per bounded qualification stream plus hardware/players                |
-| Separate gates | Creator/community external services, soundtrack listening/rights and original production | These require real environments, rights and human quality review                                                                 | Owner estimates; not closed by source preservation or automated passes         |
+| Priority       | Work                                                                                     | Why it matters                                                                                                                    | Focused effort                                                               |
+| -------------- | ---------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------- |
+| 1              | Finish the already-prepared selector/audio/native/community batches                      | Turns completed source work into player-visible improvements and resolves navigation/recovery defects                             | Per owning queue; do not restart completed qualification                     |
+| 2              | Integrate the Team Resume/Support/More/Large batch                                       | Players need accurate rescue instructions and readable two-player state                                                           | Source complete; publisher integration, production testing deferred          |
+| 3              | Complete strategic-route evidence for the existing v37 trio and Cooling loop v38         | One Cooling loop full clear is now proved; the other maps and alternate complete strategies remain open                           | 1–3 engineering days remaining for the bounded evidence/repair slice         |
+| 4              | Review a new default spatial edition                                                     | New geometry cannot improve normal play while remaining opt-in; require useful complete routes, not just a larger version number  | Re-estimate after the v37 route review and human feedback                    |
+| 5              | Team teaching acknowledgement and remaining Studio/HUD donor ports                       | Avoid consumed-before-seen teaching, false Support completion and stale historical-host imports                                   | 0.5–2 days per bounded successor, after schema/ownership review              |
+| 6              | Whole-Journey pacing, actor/state readability and final reference dispositions           | Distinct fair challenges matter more than repeating easy geometry or increasing speed globally                                    | 3–7 days per polished 3–5-mission slice; broader review remains multi-week   |
+| Deferred       | Production, accessibility/performance and two-player/device/human qualification          | Finds failures that mocks, byte audits and single-player routes cannot establish; does not block source work under latest request | 2–5 days per bounded qualification stream plus hardware/players when resumed |
+| Separate gates | Creator/community external services, soundtrack listening/rights and original production | These require real environments, rights and human quality review                                                                  | Owner estimates; not closed by source preservation or automated passes       |
 
 ## Remaining local-source dispositions
 
-### Content review now started: Cooling loop
+### Cooling loop: investigation complete, scoped successor pushed
 
 A bounded legal-input review of v37/current tuning found two viable opening
 strategies on Standard, immediate steering, seed 1. One makes five closures,
@@ -269,13 +286,29 @@ Capture-induced domain repair can relocate an embedded actor, so this is not a
 claim of universal unreachability. The intended strategic choice should not
 depend on that exceptional relocation.
 
-Next: qualify a bounded successor eroder placement/heading, describe the route
-as a **protected-landing loop** (earned links remain erodible), prove two complete
-routes, and review whether meaningful pressure remains after hazard removal.
-Keep ordinary enemies straight between physical impacts and preserve the old
-edition. Six historical clear recipes failed before a closure under current
-tuning; do not reuse them as current acceptance. No geometry has been changed
-by this investigation, and no replay, public-host or human proof is claimed.
+That investigation is now followed by PR #793: actual v38 moves only the existing
+eroder from `(14.5, 9.5)` / `[1, 0]` to `(14.5, 24.5)` / `[1, 1]`. The corrected
+design describes protected landings connected by **erodible earned links**.
+The same map, banks, foundations, objectives, quota, media, policy and speeds stay
+intact. Expert's existing maximum-clearance algorithm consequently moves its
+generated extra keeper from `(44.5, 2.5)` to `(41.5, 2.5)`; role/count/speed stay
+unchanged and the preparation consequence is tested explicitly.
+
+Both opening strategies now experience warned erosion of ordinary earned return
+cells; neither is falsely described as proven lethal-bank reopening. A northern
+continuation reaches 1,708/2,098 cells (81.410867%) at tick 5,503 with 13 closures,
+six warnings/erasures and all three lives retained. Both banks are neutralized,
+all foundations remain linked, the denominator is stable, and no bonus is
+collected. Replay checkpoint `21a461387f53c722` and actual equal Versus winning
+boards agree. This is **one** Standard/immediate/seed-1 full route, not two complete
+strategies or a human balance verdict. Older v37 snapshots are unchanged.
+
+Still remaining: second full approach, broader full-route presets/controls/seeds,
+useful repair/escape decisions and post-bank pressure/cleanup review. Six old
+recipes and several candidate placements failed and remain documented, not
+relabelled as passing evidence. No public-host, physical-device or human proof is
+claimed. Default Solo/Versus remains v25; v38 is deliberately opt-in through exact
+links/Studio and its own selector, not silently promoted.
 
 ### Source preservation and selective adoption
 
