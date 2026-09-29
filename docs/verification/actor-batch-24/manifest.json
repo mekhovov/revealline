@@ -1,6 +1,5 @@
 {
   "parent": "752df72d66c1a1bbbebb95e9db72fe8de0e1f332",
-  "preservedIntermediateCommit": "547bb44cb052fb821b1250880cd57632cd64de65",
   "productionReview": "deferred-not-passed",
   "focusedResults": {
     "soloFreezeContinue": {
@@ -85,8 +84,8 @@
     },
     {
       "path": "docs/verification/actor-batch-24/README.md",
-      "bytes": 6028,
-      "sha256": "04c20d022f647bbef43416b946af1d9cfc78c8c27c991260590e1a0a85718cd5"
+      "bytes": 6067,
+      "sha256": "68df69c12268883fa7e53a5def7e0791676336bb9063b32381d66d8cb9e35f62"
     },
     {
       "path": "docs/verification/actor-batch-24/freeze-final.tap",
@@ -117,5 +116,9 @@
   "decodedDiagnostics": {
     "bytes": 34451,
     "sha256": "42307ecb7fbbf5458de2c7b8dca4fadb6636bbee33822bb527ffb493381f652b"
-  }
+  },
+  "preservedIntermediateCommits": [
+    "547bb44cb052fb821b1250880cd57632cd64de65",
+    "69dd53c88194d0cbf00c8c8c939004f90936ec26"
+  ]
 }
