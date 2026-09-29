@@ -6618,6 +6618,9 @@ try {
         : work(),
   });
   const libraryPanel = attachLibraryPanel({
+    // Selected editions already scope their pack catalogue; omitted examples
+    // must not trigger a request for the default game's unrelated catalogue.
+    examplePackIndex: runtimeContent ? packCatalog : undefined,
     prepareCollectionProgress,
     focusMission,
     pictureMedia: async (options) =>

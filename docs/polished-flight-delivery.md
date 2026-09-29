@@ -463,3 +463,127 @@ win, Gentle mission selection and English/Ukrainian label changes. Two targeted
 host checks and six exact-thumbnail checks pass, with independent review and
 changed-file lint/format checks. A new frozen observation is required before
 attributing a frame-time or long-task improvement to this follow-up.
+
+### Frozen selector batch `c807542ef`
+
+The [combined candidate receipt](verification/evidence/candidate-admission-c807542ef.json)
+binds the selected FPV edition and both optional packages to exact source
+`c807542ef4840ce739beb7af86424488f7508772` and tree
+`6be6aa62a151a6d32638f46f8fa08aad1b9cbaaf`. Each is built twice with identical
+outputs and admitted from its original archive members. The FPV edition ZIP is
+**33,282,781 bytes**. Compared with `83706c992`, 682 listed runtime files are
+identical; only `game/app.mjs` and four generated build/cache metadata files differ.
+No paths are added or removed. Optional FPV remains **50 runtime files /
+2,748,526 bytes**; the historical gym remains **29 files / 179,026 bytes**.
+This selected candidate check does not repeat default or complete-site admission.
+
+The [completed CI observation](verification/evidence/candidate-ci-c807542ef.json)
+records **947 company checks and 165 practice checks passing** at this exact source,
+with no failures, cancellations or skips. All eighteen company editions and both
+optional packages pass reproducible candidate compilation and original-member
+checks. The raw job log is retained with its hash; these are candidate checks, not
+merged-main source qualification or public deployment.
+
+The priority-plan audit finds no new unimplemented Phase 2–4 or 6 feature. Its
+test scope remains precise: the full Studio-to-Collection host regression uses
+one reusable synthetic edition. The four real showcases separately validate 24
+bilingual learning beats, 12 lessons, retained promises and maps. These checks do
+not establish native-browser/controller/touch walkthroughs of all four editions.
+Course Studio's previews cannot earn, and custom-course publication still requires
+registered sources, demonstrations and package admission.
+
+The [selector follow-up observation](verification/evidence/arcade-selector-c807542ef.json)
+retains three ordinary arcade attempts: an enemy caught the first route, and the
+other two won. The successful timeline's largest task is **41.539 ms**; the separate
+CPU diagnostic's first-win task is **49.061 ms**. An earlier **190.296 ms** task
+overlapping the measurement boundary remains recorded; it has no sampled reward
+ancestry. Seven selector samples have no campaign-key normalization beneath them.
+These scoped observations support the narrow optimization, without establishing a
+new matched 5% result or a universal exclusive reward-work limit. Separate closed
+viewer checkpoints at 0/20/40 cycles each retain seven main-realm image instances.
+Blob/data indirection prevents exact asset attribution; whole-heap/native/GPU
+stability is not inferred. Failed routes and the corrected header-proxy preflight
+are preserved alongside the accepted observations.
+
+The [frozen simulator first-completion observation](verification/evidence/fpv-first-completion-c807542ef.json)
+adds the previously missing airborne path: a bounded adaptive driver uses trusted
+keyboard events and read-only state observations to complete Lift and land on its
+first attempt. All fifty original package members match their served hashes under
+production-style headers. Ordinary Notebook verification and saving accept the
+practice proof; its exported bytes remain identical after reload. Next opens drill
+2 disarmed. Retry is visibly enabled, but this observation does not click it.
+
+Across 578 active-flight intervals, p95 and maximum are **16.8 ms**. The complete
+window keeps a **266.7 ms** gap after the accepted save and before the Notebook
+click; its cause is unestablished. The maximum recorded timeline slice is
+**22.120 ms** for Next, and the Notebook click takes **4.088 ms**. No Long Task
+entries are observed, but the trace omits top-level RunTask/CPU/GPU categories, so
+this is not whole-task attribution. Screenshots, reload and cleanup occur after
+measurement. All owned resources are closed. This is automated software evidence,
+not a human or physical-radio test.
+
+### Remaining release work
+
+1. Preserve the one integration PR while the active release root occupies the lane.
+   Release coordination allocates the version and promotion order.
+2. Qualify the exact merged-main source, produce and independently inspect the full
+   default archive, and admit the complete selected hosting graph under its cap.
+   Candidate projections and selected-package checks do not substitute for this.
+3. Complete final-source performance/request and retained-resource review, retaining
+   the unexplained post-completion frame gap and unverified broader ownership claims.
+4. Publish original qualified artifacts through the configured main repository,
+   verify downloaded and public bytes, and exercise the real published rollback.
+   Omitted editions remain explicit original GitHub Release downloads.
+
+Human learning, artwork and physical-radio/device evidence remains explicitly
+deferred. It is not replaced by automated completion counts or synthetic controls.
+
+### Request and publication boundaries
+
+The [additional untimed request audit](verification/evidence/edition-request-audit-c807542ef.json)
+records 551 requests and no failed admitted runtime member. Its two 404s are a
+browser favicon request and the shared Library's omitted example-pack index.
+The older preflight's two unidentified errors remain unidentified. The new check
+also records a blocked optional soundtrack catalogue: applying public self-only
+CSP on loopback differs from the existing preview policy for that origin. Its
+overall result remains failed; this does not establish a deployed-CSP defect or
+authorize relaxing the production policy.
+
+The example-index request is an actionable edition-boundary defect. Library now
+accepts an explicit example catalogue, and an edition supplies its already scoped
+catalogue. Default play keeps its original fetch and example-install path. Two
+actual-host regressions cover the empty edition and a successful default example
+installation. No extra catalogue asset, import permission, brand branch or security
+policy change is introduced.
+
+Publication admission has a separate 950,000,000-byte **additive release** cap.
+At exact `83706c992`, all eighteen edition originals total **1,144,220,158 bytes**.
+Both optional packages and their envelopes bring the known lower bound to
+**1,150,183,839 bytes**, before approved reviews and their referenced evidence.
+Choosing fewer hosted editions cannot reduce the publisher's full-envelope reads.
+All eighteen must therefore not be offered as one upload batch under current policy.
+
+A compatible proposed first publication contains the four new learning editions,
+`coupa-all` and `droneaid-nl-community`, plus both optional packages. That historical
+source's originals and canonical subset envelopes total **501,633,944 bytes** before
+review/evidence. Hosting is selected independently; all six plus default already
+exceed the hosted cap. The other twelve editions need a later coordinator-owned
+publication batch. Every batch requires its own exact envelope review and complete
+budget check; these historical totals allocate no version and qualify no future
+artifact. The feature changes remain combined in the existing integration PR.
+
+The edition and optional-package upload paths now share a metadata-only preflight
+against the same additive cap. It counts the unique union of existing draft assets
+and all proposed originals, envelopes, reviews and evidence; matching shared files
+count once. Conflicting pins, additive/core-name collisions and mixed source
+contracts fail before uploading. Both paths recheck refreshed inventories through
+completion. Original-byte and review admission still run separately and retain
+their authority; passing this budget check does not qualify a release.
+
+All **118 focused publishing checks** pass, including exact-cap/one-byte-over,
+deduplication/conflict, companion-envelope and no-upload-on-overflow cases. The
+initial three new CLI fixture failures came from mock newline escaping; corrected
+fixtures and the retained earlier log are distinguished from the clean final run.
+Independent review, formatting and lint pass. The combined Library/selector/
+thumbnail cohort passes **9 checks** after the edition request fix. Final-source
+candidate CI follows the combined commit; no version, selector or release changed.

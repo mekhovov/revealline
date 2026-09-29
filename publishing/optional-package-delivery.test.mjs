@@ -139,6 +139,39 @@ test('matching originals are verified without another POST', async () => {
   assert.equal(posts(f).length, 0);
 });
 
+test('other-envelope originals exceeding the combined budget prevent every optional POST', async () => {
+  const f = fixture();
+  f.releases.get(101).assets.push({
+    id: 555,
+    name: 'source-coupa.zip',
+    size: 950_000_000,
+    state: 'uploaded',
+    digest: `sha256:${'a'.repeat(64)}`,
+  });
+  await assert.rejects(f.deliver(), /exceed byte budget/);
+  assert.equal(posts(f).length, 0);
+  assert.equal(f.calls.filter((row) => row.type === 'readAsset').length, 0);
+  assert.equal(f.events.length, 0);
+});
+
+test('shared evidence already present in an edition counts once and is still downloaded', async () => {
+  const f = fixture();
+  const [name, bytes] = [...f.files][0];
+  f.put(101, name, bytes);
+  const total = [...f.files.values()].reduce((n, b) => n + b.length, 0);
+  f.releases.get(101).assets.push({
+    id: 555,
+    name: 'source-coupa.zip',
+    size: 950_000_000 - total,
+    state: 'uploaded',
+    digest: `sha256:${'a'.repeat(64)}`,
+  });
+  const receipt = await f.deliver();
+  assert.equal(posts(f).length, 1);
+  assert.equal(receipt.assets[0].status, 'EXISTING_VERIFIED');
+  assert(f.calls.some((row) => row.type === 'readAsset'));
+});
+
 test('every conflicting original is rejected before any upload', async () => {
   const f = fixture();
   f.put(101, 'optional-packages.json', Buffer.from('wrong bytes'));
