@@ -10,22 +10,29 @@ The remaining production targets include broader map progression, every map/them
 
 ## Company communities
 
-Open the [communities directory](https://mekhovov.github.io/revealline/game/community/)
-to choose a company outside the game, or use a direct entry:
+Open the [communities directory](https://mekhovov.github.io/revealline/game/communities/)
+to choose the main game or any public community outside the game:
 
-| Community | Public entry |
+| Community | Shareable entry |
 | --- | --- |
-| DroneAid | [Play DroneAid](https://mekhovov.github.io/revealline/game/company.html?edition=droneaid) |
-| Coupa | [Play Coupa](https://mekhovov.github.io/revealline/game/company.html?edition=coupa-all) |
+| FPV / LINE — main game | [Play](https://mekhovov.github.io/revealline/game/) |
+| DroneAid | [Netherlands campaigns](https://mekhovov.github.io/revealline/game/communities/droneaid/) · [Community Relay — Portugal / Germany](https://mekhovov.github.io/revealline/game/communities/droneaid-community/) |
+| Coupa | [Play Coupa](https://mekhovov.github.io/revealline/game/communities/coupa/) |
 
-The [source directory](game/community/index.html) also works on the local server at
-`/game/community/`. Company games only offer campaigns within their own company; the main
-game has no company switcher or link to this directory. Each edition retains its own saved
-flights and progress. See [community routing and isolation](docs/company-communities.md)
-for the boundary, creator-store deployment, and adding another community.
+DroneAid appears once, with both collections available: six Netherlands campaigns and
+Community Relay (39 missions combined). Coupa contains five campaigns (30 missions).
+These are all currently bundled communities; main-game worlds and creator examples are
+not separate company communities. Both DroneAid collections keep their existing saved progress.
 
-The static directory fix is prepared in source. The published `v0.142.2` snapshot still has
-the older creator-store page; the stable directory link updates when the next release is promoted.
+The [source directory](game/communities/index.html) works locally at `/game/communities/`.
+Addresses without the final slash also work on the local HTTP server and GitHub Pages.
+Older `/game/community/` bookmarks forward to the new directory, and `?edition=` game
+links remain compatible. Company games offer only their own company's campaigns; no game
+menu exposes a company switcher or directory link. Existing saved flights and progress
+keep their original edition identities. See [community routing and isolation](docs/company-communities.md).
+
+These routes are prepared in source. Stable public links update on the next promoted release;
+older versioned snapshots keep their archived pages.
 
 ## Run locally
 

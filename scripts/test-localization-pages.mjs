@@ -317,7 +317,7 @@ test('company entry and public directory localize independently of the main game
 
   const siteSource = await fs.readFile(new URL('../site/index.html', import.meta.url), 'utf8');
   const siteLink = descendants(parse(siteSource)).find(
-    (node) => attribute(node, 'href') === '../game/community/',
+    (node) => attribute(node, 'href') === '../game/communities/',
   );
   assert.equal(attribute(siteLink, 'data-i18n'), 'website:companyJourneys');
   for (const locale of ['en', 'uk'])
@@ -334,15 +334,13 @@ test('company entry and public directory localize independently of the main game
   assert.ok(!gameNodes.some((node) => attribute(node, 'id') === 'shell-community'));
 
   const directorySource = await fs.readFile(
-    new URL('../game/community/index.html', import.meta.url),
+    new URL('../game/communities/index.html', import.meta.url),
     'utf8',
   );
   const directoryNodes = descendants(parse(directorySource));
   assert.ok(directoryNodes.some((node) => attribute(node, 'data-language-control') !== undefined));
-  for (const edition of ['droneaid', 'coupa-all']) {
-    const link = directoryNodes.find(
-      (node) => attribute(node, 'href') === `../company.html?edition=${edition}`,
-    );
+  for (const edition of ['droneaid', 'coupa', 'droneaid-community']) {
+    const link = directoryNodes.find((node) => attribute(node, 'href') === `./${edition}/`);
     assert.ok(link, `company directory: ${edition} launch link`);
     assert.ok(
       descendants(link).some((node) => attribute(node, 'data-i18n')),

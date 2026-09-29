@@ -69,6 +69,17 @@ export function selectOfflineCore(entries, excluded, { mode = 'solo' } = {}) {
   (MODE_ENTRIES[mode] || PLAY_ENTRIES).forEach((name) => add(name));
   for (const entry of entries) {
     const name = entry.name;
+    // Public community entries mount the shared Solo host. Their small HTML
+    // shells and directory must remain reachable after ordinary offline
+    // preparation; navigation links alone do not establish a runtime edge.
+    // The creator marketplace remains optional, and artwork still follows its
+    // separately approved company package through the excluded set.
+    if (
+      mode === 'solo' &&
+      (name === 'game/community/index.html' ||
+        /^game\/communities\/(?:[a-z][a-z0-9-]*\/)?index\.html$/.test(name))
+    )
+      add(name);
     // Immutable compiled presentation metadata includes player-selected actor
     // themes, restore/backup pins and replay rendering. Keep its exact closure.
     if (
