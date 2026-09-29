@@ -1,0 +1,581 @@
+{
+  "format": "revealline-stash-actual-media-rights-check-v1",
+  "capturedAtUTC": "2026-09-29T15:24:35.332704+00:00",
+  "scope": "Exact1564 additional blob scope beyond240frontier+53snapshots, also absent live verified remote closure at initial audit. Read-only; no source/ref/stash/publishing mutation.",
+  "conclusion": "No actual private UA-FPV recording/pack or paused36-original candidate audio was found in this additional blob scope. No blob or commit exclusion is supported by this specific restriction check. Ordinary code/metadata mentions are not treated as restricted recordings.",
+  "explicitExcludedBlobHashes": [],
+  "explicitExcludedCommitHashes": [],
+  "sourceRestriction": {
+    "path": "docs/branch-reconciliation/PLAN.md",
+    "lines": "124-127",
+    "interpretation": "Continue withholding actual private UA-FPV and paused original-recording candidates; this finding does not lift those existing holds or authorize new music production."
+  },
+  "evidence": {
+    "blobCount": 1564,
+    "bytesInspected": 856418938,
+    "standaloneAudioCount": 29,
+    "standaloneAudioBytes": 193818483,
+    "allStandaloneAudioPinsMatch": true,
+    "licensedRegistryBlob": "1d041f3a8cbd2204722d8de706937d80543979fc",
+    "licensedRegistryWorks": 24,
+    "registryLicenseValues": [
+      "CC0 1.0 Universal"
+    ],
+    "historicalRightsReceiptBlob": "840abb9d96912e3eaa7170c0e6af252d9fb0910b",
+    "historicalReceiptDate": "2026-09-20",
+    "avifContainers": [
+      {
+        "object": "b9e357cdfa6039c262a667a43264af64a50a4562",
+        "path": "docs/research/_xposed-reloaded_reloaded_examples/level-example1.avif",
+        "majorBrand": "avif",
+        "compatibleBrands": [
+          "mif1",
+          "avif",
+          "miaf"
+        ]
+      },
+      {
+        "object": "cb4bb381a7d73548b69594919a2b24ee4bdb595c",
+        "path": "docs/research/_xposed-reloaded_reloaded_examples/level-example2.avif",
+        "majorBrand": "avif",
+        "compatibleBrands": [
+          "mif1",
+          "avif",
+          "miaf"
+        ]
+      },
+      {
+        "object": "0b757cb73942bbe6e0e4eddb012c567a3d8bbe0f",
+        "path": "docs/research/_xposed-reloaded_reloaded_examples/level-example3.avif",
+        "majorBrand": "avif",
+        "compatibleBrands": [
+          "mif1",
+          "avif",
+          "miaf"
+        ]
+      }
+    ],
+    "themeContainer": {
+      "bundleObject": "7bf4f91f7933bf2e1735c7ebfc0acafdf8baba88",
+      "format": "RLTHM1",
+      "payloads": 127,
+      "allPayloadHashesVerified": true,
+      "audio": [],
+      "audioBytes": 0,
+      "allAudioHashesInPublicMainBundle": true,
+      "payloadHeaderCounts": {
+        "png": 124,
+        "woff2": 3
+      }
+    },
+    "embeddedBase64CandidatesDecoded": 442,
+    "embeddedAudioOrArchiveFindings": [],
+    "unknownStandaloneArchives": []
+  },
+  "sourceMentions": {
+    "originalFamily": "README andPRODUCTIONdescribe36original plan withzeroapprovedrecordings; auditionHTMLreferences sketches/candidates but thoseaudio bodiesareabsentfromthisadditionalblobscope.",
+    "uaFpv": "Additionaltextreferences arepublicarchive-exclusion notices and testpolicyfixtures; noUA-FPVnamedassetpath or unidentifiedaudiobody found."
+  },
+  "licensedAudio": [
+    {
+      "object": "7fac9aa2d7b68b0559c7bb13e45beb20423713d7",
+      "type": "blob",
+      "bytes": 3841044,
+      "path": "authoring/library/licensed-audio/derivatives/3xBlast - Babe, You Look Poggers Tonight! (Looped).mp3",
+      "sha256": "709bdef4fae6f42a2747ddab802ce3087c79e126037f64b9d60b0fa71160c536",
+      "pin": {
+        "track": "3xblast.babe-you-look-poggers-tonight",
+        "role": "runtime",
+        "artist": "3xBlast",
+        "license": "CC0 1.0 Universal",
+        "source": "https://opengameart.org/content/7-pop-punk-chiptune-tracks",
+        "sha256": "709bdef4fae6f42a2747ddab802ce3087c79e126037f64b9d60b0fa71160c536",
+        "bytes": 3841044
+      },
+      "matchesRegisteredSource": true
+    },
+    {
+      "object": "614afad288e1099d421539f2af7f942efeceaf0f",
+      "type": "blob",
+      "bytes": 5684244,
+      "path": "authoring/library/licensed-audio/derivatives/3xBlast - If You're Thinking About Giving Up, Think Again Beause I Believe In You! (Looped).mp3",
+      "sha256": "e9cd1330b99e2f978b04795a7311c37f2fd7e2419bfd89c3c4277bfd15f216fa",
+      "pin": {
+        "track": "3xblast.if-you-re-thinking-about-giving-up-think-again-beause-i-believe-in-you",
+        "role": "runtime",
+        "artist": "3xBlast",
+        "license": "CC0 1.0 Universal",
+        "source": "https://opengameart.org/content/7-pop-punk-chiptune-tracks",
+        "sha256": "e9cd1330b99e2f978b04795a7311c37f2fd7e2419bfd89c3c4277bfd15f216fa",
+        "bytes": 5684244
+      },
+      "matchesRegisteredSource": true
+    },
+    {
+      "object": "4d7cf985c8490d1c48a1cb727ffc8230b7fbf885",
+      "type": "blob",
+      "bytes": 2972525,
+      "path": "authoring/library/licensed-audio/derivatives/3xBlast - Let's Go, Olive Boy! (Looped).mp3",
+      "sha256": "f97ea7ef15cff0de647b8116a8e917827268559b35f3bf3cad58ad901132b49f",
+      "pin": {
+        "track": "3xblast.let-s-go-olive-boy",
+        "role": "runtime",
+        "artist": "3xBlast",
+        "license": "CC0 1.0 Universal",
+        "source": "https://opengameart.org/content/7-pop-punk-chiptune-tracks",
+        "sha256": "f97ea7ef15cff0de647b8116a8e917827268559b35f3bf3cad58ad901132b49f",
+        "bytes": 2972525
+      },
+      "matchesRegisteredSource": true
+    },
+    {
+      "object": "44551ceb0fcd4061bda763f6689f6bbbd1f22e7c",
+      "type": "blob",
+      "bytes": 3890364,
+      "path": "authoring/library/licensed-audio/derivatives/3xBlast - Now This Is A Waterpark! (Looped).mp3",
+      "sha256": "93634c4c3d76558d0b4c80740883223c2d68cc0a095142c420107b2f8b08d037",
+      "pin": {
+        "track": "3xblast.now-this-is-a-waterpark",
+        "role": "runtime",
+        "artist": "3xBlast",
+        "license": "CC0 1.0 Universal",
+        "source": "https://opengameart.org/content/7-pop-punk-chiptune-tracks",
+        "sha256": "93634c4c3d76558d0b4c80740883223c2d68cc0a095142c420107b2f8b08d037",
+        "bytes": 3890364
+      },
+      "matchesRegisteredSource": true
+    },
+    {
+      "object": "6eb653263a540c1e6131be949d2b1e3752bb31b2",
+      "type": "blob",
+      "bytes": 7559209,
+      "path": "authoring/library/licensed-audio/derivatives/3xBlast - The Best Move Is To Keep Going (Looped).mp3",
+      "sha256": "bdff30f60f78f5c6e5103ba387f31b98672b8514358a9624207c33aeed1ac9c7",
+      "pin": {
+        "track": "3xblast.the-best-move-is-to-keep-going",
+        "role": "runtime",
+        "artist": "3xBlast",
+        "license": "CC0 1.0 Universal",
+        "source": "https://opengameart.org/content/7-pop-punk-chiptune-tracks",
+        "sha256": "bdff30f60f78f5c6e5103ba387f31b98672b8514358a9624207c33aeed1ac9c7",
+        "bytes": 7559209
+      },
+      "matchesRegisteredSource": true
+    },
+    {
+      "object": "aab28509e27c7572f30cd493a32ac00d550bb0be",
+      "type": "blob",
+      "bytes": 2860848,
+      "path": "authoring/library/licensed-audio/originals/3xblast/3xBlast - A Band of Jellyfish (Looped).ogg",
+      "sha256": "1a346766b8d628d2fee6710559ace9e37bc6cff78d0dbf806fb5172bd96cf1fe",
+      "pin": {
+        "track": "3xblast.a-band-of-jellyfish",
+        "role": "original",
+        "artist": "3xBlast",
+        "license": "CC0 1.0 Universal",
+        "source": "https://opengameart.org/content/7-pop-punk-chiptune-tracks",
+        "sha256": "1a346766b8d628d2fee6710559ace9e37bc6cff78d0dbf806fb5172bd96cf1fe",
+        "bytes": 2860848
+      },
+      "matchesRegisteredSource": true
+    },
+    {
+      "object": "0be6e4ba77cc9beb8c6bfea8df4034f0381d40a6",
+      "type": "blob",
+      "bytes": 7399662,
+      "path": "authoring/library/licensed-audio/originals/3xblast/3xBlast - Babe, You Look Poggers Tonight! (Looped).ogg",
+      "sha256": "2779bbc9b1672edec2010e0b471d60dd3ca6c0ee86676d8f0f7086c0134b84bc",
+      "pin": {
+        "track": "3xblast.babe-you-look-poggers-tonight",
+        "role": "original",
+        "artist": "3xBlast",
+        "license": "CC0 1.0 Universal",
+        "source": "https://opengameart.org/content/7-pop-punk-chiptune-tracks",
+        "sha256": "2779bbc9b1672edec2010e0b471d60dd3ca6c0ee86676d8f0f7086c0134b84bc",
+        "bytes": 7399662
+      },
+      "matchesRegisteredSource": true
+    },
+    {
+      "object": "e5863fde7ab4ba686337acae4dfd697fb9b17c0b",
+      "type": "blob",
+      "bytes": 10896553,
+      "path": "authoring/library/licensed-audio/originals/3xblast/3xBlast - If You're Thinking About Giving Up, Think Again Beause I Believe In You! (Looped).ogg",
+      "sha256": "1c225dbaa204d9ad584182daf0bce8106ee60e63980987926d6d99bd9b56e287",
+      "pin": {
+        "track": "3xblast.if-you-re-thinking-about-giving-up-think-again-beause-i-believe-in-you",
+        "role": "original",
+        "artist": "3xBlast",
+        "license": "CC0 1.0 Universal",
+        "source": "https://opengameart.org/content/7-pop-punk-chiptune-tracks",
+        "sha256": "1c225dbaa204d9ad584182daf0bce8106ee60e63980987926d6d99bd9b56e287",
+        "bytes": 10896553
+      },
+      "matchesRegisteredSource": true
+    },
+    {
+      "object": "9e8c0f752d367ab8fc902e2bf918db471704d61b",
+      "type": "blob",
+      "bytes": 5717731,
+      "path": "authoring/library/licensed-audio/originals/3xblast/3xBlast - Let's Go, Olive Boy! (Looped).ogg",
+      "sha256": "4075cc85649f781a7ec63f9b24c2a409453b9b585ff0c1ec94d3ab00adb30851",
+      "pin": {
+        "track": "3xblast.let-s-go-olive-boy",
+        "role": "original",
+        "artist": "3xBlast",
+        "license": "CC0 1.0 Universal",
+        "source": "https://opengameart.org/content/7-pop-punk-chiptune-tracks",
+        "sha256": "4075cc85649f781a7ec63f9b24c2a409453b9b585ff0c1ec94d3ab00adb30851",
+        "bytes": 5717731
+      },
+      "matchesRegisteredSource": true
+    },
+    {
+      "object": "e639f18497e32408cc97d76459e85524c60f7478",
+      "type": "blob",
+      "bytes": 7191489,
+      "path": "authoring/library/licensed-audio/originals/3xblast/3xBlast - Now This Is A Waterpark! (Looped).ogg",
+      "sha256": "d5b88e522728f4ef69efcabf0178c0911968a74cda403ace582e181bd2b062cd",
+      "pin": {
+        "track": "3xblast.now-this-is-a-waterpark",
+        "role": "original",
+        "artist": "3xBlast",
+        "license": "CC0 1.0 Universal",
+        "source": "https://opengameart.org/content/7-pop-punk-chiptune-tracks",
+        "sha256": "d5b88e522728f4ef69efcabf0178c0911968a74cda403ace582e181bd2b062cd",
+        "bytes": 7191489
+      },
+      "matchesRegisteredSource": true
+    },
+    {
+      "object": "3c955c8409fdba0c2956e832846366e859a17171",
+      "type": "blob",
+      "bytes": 3387717,
+      "path": "authoring/library/licensed-audio/originals/3xblast/3xBlast - Thanks For Listening! (Looped).ogg",
+      "sha256": "dfa62ad57bcaaaab310df9fa9eff70900f07983a4831747ff1445494ba597e70",
+      "pin": {
+        "track": "3xblast.thanks-for-listening",
+        "role": "original",
+        "artist": "3xBlast",
+        "license": "CC0 1.0 Universal",
+        "source": "https://opengameart.org/content/7-pop-punk-chiptune-tracks",
+        "sha256": "dfa62ad57bcaaaab310df9fa9eff70900f07983a4831747ff1445494ba597e70",
+        "bytes": 3387717
+      },
+      "matchesRegisteredSource": true
+    },
+    {
+      "object": "c3c196212835b597139212e8af511719f481a86f",
+      "type": "blob",
+      "bytes": 14334337,
+      "path": "authoring/library/licensed-audio/originals/3xblast/3xBlast - The Best Move Is To Keep Going (Looped).ogg",
+      "sha256": "0df251764cf9e920b45d92d95a20bcc9b6faaebc3c1d853ac22a3fdf79b1de75",
+      "pin": {
+        "track": "3xblast.the-best-move-is-to-keep-going",
+        "role": "original",
+        "artist": "3xBlast",
+        "license": "CC0 1.0 Universal",
+        "source": "https://opengameart.org/content/7-pop-punk-chiptune-tracks",
+        "sha256": "0df251764cf9e920b45d92d95a20bcc9b6faaebc3c1d853ac22a3fdf79b1de75",
+        "bytes": 14334337
+      },
+      "matchesRegisteredSource": true
+    },
+    {
+      "object": "b1d4347035baa1117aaff8082ffe17ce569f342e",
+      "type": "blob",
+      "bytes": 8431885,
+      "path": "authoring/library/licensed-audio/originals/holizna/01 HoliznaCC0 - Drama.mp3",
+      "sha256": "bacdf4eae1d6031a357837389b86f5b114997629be60ca9cb3d2e14284fee34b",
+      "pin": {
+        "track": "holizna.drama",
+        "role": "runtime",
+        "artist": "Holizna",
+        "license": "CC0 1.0 Universal",
+        "source": "https://opengameart.org/content/retro-wave-collection",
+        "sha256": "bacdf4eae1d6031a357837389b86f5b114997629be60ca9cb3d2e14284fee34b",
+        "bytes": 8431885
+      },
+      "matchesRegisteredSource": true
+    },
+    {
+      "object": "273005e8ebbf44aaa8e26551a7ed54ddc15d81b4",
+      "type": "blob",
+      "bytes": 6308365,
+      "path": "authoring/library/licensed-audio/originals/holizna/02 HoliznaCC0 - Retro Soundtrack.mp3",
+      "sha256": "b5f4aaee16d26df31fb64d19d80d98190b617a3e8bfa41c4f20a977bdbf56982",
+      "pin": {
+        "track": "holizna.retro-soundtrack",
+        "role": "runtime",
+        "artist": "Holizna",
+        "license": "CC0 1.0 Universal",
+        "source": "https://opengameart.org/content/retro-wave-collection",
+        "sha256": "b5f4aaee16d26df31fb64d19d80d98190b617a3e8bfa41c4f20a977bdbf56982",
+        "bytes": 6308365
+      },
+      "matchesRegisteredSource": true
+    },
+    {
+      "object": "f800a388d070f94c325725b6c48ca3af511e92a3",
+      "type": "blob",
+      "bytes": 6799885,
+      "path": "authoring/library/licensed-audio/originals/holizna/03 HoliznaCC0 - Cyber Anxiety.mp3",
+      "sha256": "10c172f2fcc6cd889fcbefcd8ac64d18e494748223973fba906d7371575181ed",
+      "pin": {
+        "track": "holizna.cyber-anxiety",
+        "role": "runtime",
+        "artist": "Holizna",
+        "license": "CC0 1.0 Universal",
+        "source": "https://opengameart.org/content/retro-wave-collection",
+        "sha256": "10c172f2fcc6cd889fcbefcd8ac64d18e494748223973fba906d7371575181ed",
+        "bytes": 6799885
+      },
+      "matchesRegisteredSource": true
+    },
+    {
+      "object": "c0066aaf0586dc9b447297f71951d83e23e4fde5",
+      "type": "blob",
+      "bytes": 6492685,
+      "path": "authoring/library/licensed-audio/originals/holizna/04 HoliznaCC0 - Lost In The Jungle.mp3",
+      "sha256": "e50fd5b7f3275040ba246df9ce2ed9a07b7c015d90ce628692f3c7615cd9dee3",
+      "pin": {
+        "track": "holizna.lost-in-the-jungle",
+        "role": "runtime",
+        "artist": "Holizna",
+        "license": "CC0 1.0 Universal",
+        "source": "https://opengameart.org/content/retro-wave-collection",
+        "sha256": "e50fd5b7f3275040ba246df9ce2ed9a07b7c015d90ce628692f3c7615cd9dee3",
+        "bytes": 6492685
+      },
+      "matchesRegisteredSource": true
+    },
+    {
+      "object": "7daef4ac9c2ec810b70ef3cb2022f1eefdf2d133",
+      "type": "blob",
+      "bytes": 8960845,
+      "path": "authoring/library/licensed-audio/originals/holizna/04 HoliznaCC0 - Night Life.mp3",
+      "sha256": "119b628fece763ccaf3da607d848258e6a281d6a45d0e27ac6c6841ee3022b21",
+      "pin": {
+        "track": "holizna.night-life",
+        "role": "runtime",
+        "artist": "Holizna",
+        "license": "CC0 1.0 Universal",
+        "source": "https://opengameart.org/content/retro-wave-collection",
+        "sha256": "119b628fece763ccaf3da607d848258e6a281d6a45d0e27ac6c6841ee3022b21",
+        "bytes": 8960845
+      },
+      "matchesRegisteredSource": true
+    },
+    {
+      "object": "24484c518bd1b2df3b7b6cf043649b71f9081466",
+      "type": "blob",
+      "bytes": 7901965,
+      "path": "authoring/library/licensed-audio/originals/holizna/05 HoliznaCC0 - Day Dreams.mp3",
+      "sha256": "345324857ee7c8ffc6ae15b8d646036f3630fbc7c4470cc633907715bfaad44f",
+      "pin": {
+        "track": "holizna.day-dreams",
+        "role": "runtime",
+        "artist": "Holizna",
+        "license": "CC0 1.0 Universal",
+        "source": "https://opengameart.org/content/retro-wave-collection",
+        "sha256": "345324857ee7c8ffc6ae15b8d646036f3630fbc7c4470cc633907715bfaad44f",
+        "bytes": 7901965
+      },
+      "matchesRegisteredSource": true
+    },
+    {
+      "object": "e396ecfcd31876d598364f68bde0bf9c5cd100f6",
+      "type": "blob",
+      "bytes": 7640845,
+      "path": "authoring/library/licensed-audio/originals/holizna/05 HoliznaCC0 - Fires Uptown.mp3",
+      "sha256": "01fc5e02157285c9ceb8f3c2d303768dfb02a43896f9c75a07629628330af126",
+      "pin": {
+        "track": "holizna.fires-uptown",
+        "role": "runtime",
+        "artist": "Holizna",
+        "license": "CC0 1.0 Universal",
+        "source": "https://opengameart.org/content/retro-wave-collection",
+        "sha256": "01fc5e02157285c9ceb8f3c2d303768dfb02a43896f9c75a07629628330af126",
+        "bytes": 7640845
+      },
+      "matchesRegisteredSource": true
+    },
+    {
+      "object": "090c2ca1ff85aa43cc5c4b498697616b56afdd29",
+      "type": "blob",
+      "bytes": 5228365,
+      "path": "authoring/library/licensed-audio/originals/holizna/07 HoliznaCC0 - Mutant Club.mp3",
+      "sha256": "385d8b71a88b933f5360ef63ed1e777ceb869e32ad6b1c6a4b784cba56a0255c",
+      "pin": {
+        "track": "holizna.mutant-club",
+        "role": "runtime",
+        "artist": "Holizna",
+        "license": "CC0 1.0 Universal",
+        "source": "https://opengameart.org/content/retro-wave-collection",
+        "sha256": "385d8b71a88b933f5360ef63ed1e777ceb869e32ad6b1c6a4b784cba56a0255c",
+        "bytes": 5228365
+      },
+      "matchesRegisteredSource": true
+    },
+    {
+      "object": "5809a42aacffb792bf2f407deaa0bc5ffc87b7ee",
+      "type": "blob",
+      "bytes": 8572045,
+      "path": "authoring/library/licensed-audio/originals/holizna/08 HoliznaCC0 - We used To Dance.mp3",
+      "sha256": "5af6bb3a28e3e8a45996c64638ebfbaf7abb71954a2a957de4b89141f555dbf2",
+      "pin": {
+        "track": "holizna.we-used-to-dance",
+        "role": "runtime",
+        "artist": "Holizna",
+        "license": "CC0 1.0 Universal",
+        "source": "https://opengameart.org/content/retro-wave-collection",
+        "sha256": "5af6bb3a28e3e8a45996c64638ebfbaf7abb71954a2a957de4b89141f555dbf2",
+        "bytes": 8572045
+      },
+      "matchesRegisteredSource": true
+    },
+    {
+      "object": "d74e0775b89f52382bedbb4062ded455439e5a24",
+      "type": "blob",
+      "bytes": 7920205,
+      "path": "authoring/library/licensed-audio/originals/holizna/09 HoliznaCC0 - Machines With Feelings.mp3",
+      "sha256": "abe5a49446af9a06514277dd4e585694cd0be70a4191ed9932a419f3086a4930",
+      "pin": {
+        "track": "holizna.machines-with-feelings",
+        "role": "runtime",
+        "artist": "Holizna",
+        "license": "CC0 1.0 Universal",
+        "source": "https://opengameart.org/content/retro-wave-collection",
+        "sha256": "abe5a49446af9a06514277dd4e585694cd0be70a4191ed9932a419f3086a4930",
+        "bytes": 7920205
+      },
+      "matchesRegisteredSource": true
+    },
+    {
+      "object": "e26cd1b117ed934870b40966147e24a0677de0e4",
+      "type": "blob",
+      "bytes": 8919565,
+      "path": "authoring/library/licensed-audio/originals/holizna/09 HoliznaCC0 - Retro Synths.mp3",
+      "sha256": "0aba9efcd8b2d6b127ac69676e15c7364ba5e2ed0adc811a19aa2da2eb2ed1d7",
+      "pin": {
+        "track": "holizna.retro-synths",
+        "role": "runtime",
+        "artist": "Holizna",
+        "license": "CC0 1.0 Universal",
+        "source": "https://opengameart.org/content/retro-wave-collection",
+        "sha256": "0aba9efcd8b2d6b127ac69676e15c7364ba5e2ed0adc811a19aa2da2eb2ed1d7",
+        "bytes": 8919565
+      },
+      "matchesRegisteredSource": true
+    },
+    {
+      "object": "333f4b60aaa59faf4acf7362b8f31c493dce41a1",
+      "type": "blob",
+      "bytes": 5228365,
+      "path": "authoring/library/licensed-audio/originals/holizna/12 HoliznaCC0 - 50 Over The Speed Limit.mp3",
+      "sha256": "c00de3e6294bc7dbd484c26815dfcfe0787cb352e7129a0e84ba14941fcab37f",
+      "pin": {
+        "track": "holizna.50-over-the-speed-limit",
+        "role": "runtime",
+        "artist": "Holizna",
+        "license": "CC0 1.0 Universal",
+        "source": "https://opengameart.org/content/retro-wave-collection",
+        "sha256": "c00de3e6294bc7dbd484c26815dfcfe0787cb352e7129a0e84ba14941fcab37f",
+        "bytes": 5228365
+      },
+      "matchesRegisteredSource": true
+    },
+    {
+      "object": "b4e5c28b3b95a7b48f074ad55c252bc5ab4aed24",
+      "type": "blob",
+      "bytes": 5612365,
+      "path": "authoring/library/licensed-audio/originals/holizna/13 HoliznaCC0 - Dear Mr Super Computer.mp3",
+      "sha256": "ea56caa66bd6c7ae35e07da2ee3912588e4934970d887f6cc1427716c30ef66b",
+      "pin": {
+        "track": "holizna.dear-mr-super-computer",
+        "role": "runtime",
+        "artist": "Holizna",
+        "license": "CC0 1.0 Universal",
+        "source": "https://opengameart.org/content/retro-wave-collection",
+        "sha256": "ea56caa66bd6c7ae35e07da2ee3912588e4934970d887f6cc1427716c30ef66b",
+        "bytes": 5612365
+      },
+      "matchesRegisteredSource": true
+    },
+    {
+      "object": "8cc89be174f753ac2dedf8dcd48f265256aa4d87",
+      "type": "blob",
+      "bytes": 2745003,
+      "path": "authoring/library/licensed-audio/originals/rock-metal/determination_1.mp3",
+      "sha256": "409a98ca2923cbe78427ba21f8f5131fb9f3439a255be562bcd840b111586fe7",
+      "pin": {
+        "track": "hydrogene.determination",
+        "role": "runtime",
+        "artist": "HydroGene",
+        "license": "CC0 1.0 Universal",
+        "source": "https://opengameart.org/content/determination-anime-style-music",
+        "sha256": "409a98ca2923cbe78427ba21f8f5131fb9f3439a255be562bcd840b111586fe7",
+        "bytes": 2745003
+      },
+      "matchesRegisteredSource": true
+    },
+    {
+      "object": "d4492ef39bb30edbf9d4f4480f23c707c7614587",
+      "type": "blob",
+      "bytes": 7270456,
+      "path": "authoring/library/licensed-audio/originals/rock-metal/devoted_guard_0.mp3",
+      "sha256": "6a7ab8157315c16eee234fd0eb5c523dc830c335272cec3cc5e795a5aa067e26",
+      "pin": {
+        "track": "vitalezzz.devoted-guard",
+        "role": "runtime",
+        "artist": "Vitalezzz",
+        "license": "CC0 1.0 Universal",
+        "source": "https://opengameart.org/content/devoted-guard",
+        "sha256": "6a7ab8157315c16eee234fd0eb5c523dc830c335272cec3cc5e795a5aa067e26",
+        "bytes": 7270456
+      },
+      "matchesRegisteredSource": true
+    },
+    {
+      "object": "4293f1aab71ab25c0d449a6101731341d539f79c",
+      "type": "blob",
+      "bytes": 5374338,
+      "path": "authoring/library/licensed-audio/originals/rock-metal/megasong_0.mp3",
+      "sha256": "13ac89fa8e5b12b78c872f981376315d0b9d33829ab85f259972be54913f8239",
+      "pin": {
+        "track": "emma-ma.megasong",
+        "role": "runtime",
+        "artist": "Emma_MA",
+        "license": "CC0 1.0 Universal",
+        "source": "https://opengameart.org/content/megasong",
+        "sha256": "13ac89fa8e5b12b78c872f981376315d0b9d33829ab85f259972be54913f8239",
+        "bytes": 5374338
+      },
+      "matchesRegisteredSource": true
+    },
+    {
+      "object": "ba9349e6803838c4244c7f97efff96124c748e63",
+      "type": "blob",
+      "bytes": 8675578,
+      "path": "authoring/library/licensed-audio/originals/rock-metal/silver_bullet_0.mp3",
+      "sha256": "ee645b6a0cf9c8cd45fa96882cd35cc3ba5ffd0a5b4fb92544d8ee49d24cedf1",
+      "pin": {
+        "track": "vitalezzz.silver-bullet",
+        "role": "runtime",
+        "artist": "Vitalezzz",
+        "license": "CC0 1.0 Universal",
+        "source": "https://opengameart.org/content/silver-bullet",
+        "sha256": "ee645b6a0cf9c8cd45fa96882cd35cc3ba5ffd0a5b4fb92544d8ee49d24cedf1",
+        "bytes": 8675578
+      },
+      "matchesRegisteredSource": true
+    }
+  ],
+  "priorDraftCorrection": "stash-rights-preliminary-superseded.json overclassified source/metadata and allmedia. Its264-blob/6-commit precautionary list isWITHDRAWN; do notuseit forfiltering. The credential-onlyscreen remainsseparate andpassed.",
+  "recoveryProposal": "Withinthisadditionalblobscope, the recordedprivate/paused soundtrackhold doesnotrequirea filteredsubset: retainallsevenstashheads onlyunderrootauthorizedrecoveryworkflow, distinctfromproductrelease. Ifanyfurtherblobscopeisadded, repeatidentity/media checkbeforepublication. No productmerge, productionresume, orselected-hostcutoverauthorized.",
+  "limitations": [
+    "Header/base64inspection doesnotclaimsteganography orencryptionanalysis.",
+    "Exactsourcepins andhistoricalCC0receipt distinguishthese24third-partyworks fromrestrictedUA-FPV/originalcandidates; nofreshlegalrightsopinion isgiven.",
+    "Already-publishedphase1closure isoutside thisadditional-blob review androotisreviewingitseparately."
+  ]
+}
