@@ -829,6 +829,7 @@ export function bootCoop({
     if (tools.parentNode !== destination) destination.append(tools);
     const pauseCore = $('coop-pause-core'),
       help = $('coop-help'),
+      catalogue = $('coop-catalogue'),
       settings = $('coop-settings-open'),
       sound = $('coop-quick-sound'),
       pausedAttempt = paused && run?.status === 'paused';
@@ -838,17 +839,20 @@ export function bootCoop({
       pauseCore.append(settings);
       pauseCore.append(sound);
       pauseCore.append($('coop-home-paused'));
+      // A live attempt owns departure confirmation outside Settings. Keep the
+      // journey switch reachable here; its lobby home is the Extras panel.
+      pauseCore.append(catalogue);
     } else if (paused) {
       // Results still own these tools. The landing page is hidden while the
       // completed attempt is retained, so it cannot host their only entry.
-      tools.append(help, settings, sound);
+      tools.append(help, settings, sound, catalogue);
     } else {
       if ($('coop-menu').classList.contains('native-landing')) {
-        $('coop-settings-panel-extras').append(help);
+        $('coop-settings-panel-extras').append(help, catalogue);
         const actions = $('coop-menu').querySelector('.native-menu-actions');
         actions.append(settings, sound);
       } else {
-        tools.append(help, settings, sound);
+        tools.append(help, settings, sound, catalogue);
       }
     }
     // Failed saves are operational recovery, so Pause and Results keep their
