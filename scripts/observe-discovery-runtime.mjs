@@ -16,6 +16,7 @@ const text = (value, limit = 256) =>
   typeof value === 'string' && value.trim() && value.length <= limit;
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const OBSERVER = 'docs/verification/discovery-observer.mjs';
+const REVIEW_MODEL = 'docs/verification/company-review-model.mjs';
 const TIMELINE =
   'toplevel,devtools.timeline,disabled-by-default-devtools.timeline,blink.user_timing';
 const CPU = `${TIMELINE},disabled-by-default-devtools.timeline.frame,disabled-by-default-devtools.timeline.stack,v8.execute,disabled-by-default-v8.cpu_profiler,disabled-by-default-v8.cpu_profiler.hires,disabled-by-default-v8.runtime_stats,blink,latencyInfo,renderer.scheduler`;
@@ -184,10 +185,13 @@ export function verifyDiscoveryRuntimeArtifact(planInput, { archive, manifest: m
 }
 
 /** Serves only verified members and separately pinned passive instrumentation. */
-export async function serveDiscoveryRuntime(files, observer, { port = 0 } = {}) {
+export async function serveDiscoveryRuntime(files, observer, { port = 0, reviewModel } = {}) {
   const owned = new Map([...files].map(([name, bytes]) => [name, Buffer.from(bytes)]));
-  if (owned.has(OBSERVER)) fail('Player archive collides with observation instrumentation.');
+  if (owned.has(OBSERVER) || owned.has(REVIEW_MODEL))
+    fail('Player archive collides with observation instrumentation.');
+  if (!(reviewModel instanceof Uint8Array)) fail('Missing pinned passive observer dependency.');
   owned.set(OBSERVER, Buffer.from(observer));
+  owned.set(REVIEW_MODEL, Buffer.from(reviewModel));
   const mime = {
     '.mjs': 'text/javascript',
     '.js': 'text/javascript',
@@ -421,7 +425,7 @@ export async function observeDiscoveryRuntime({ planFile, playwrightModule, outp
       'scripts/observe-discovery-runtime.mjs',
     ];
     const instrumentation = [];
-    let observer;
+    let observer, reviewModel;
     await mkdir(path.join(output, 'instrumentation'));
     for (const name of instrumentationPaths) {
       const bytes = await readFile(path.join(ROOT, name));
@@ -430,14 +434,31 @@ export async function observeDiscoveryRuntime({ planFile, playwrightModule, outp
       await mkdir(path.dirname(target), { recursive: true });
       await writeFile(target, bytes, { flag: 'wx' });
       if (name === OBSERVER) observer = bytes;
+      if (name === REVIEW_MODEL) reviewModel = bytes;
     }
-    server = await serveDiscoveryRuntime(checked.files, observer, { port: plan.serverPort ?? 0 });
-    for (const name of ['manifest.json', 'game/index.html', 'game/app.mjs', OBSERVER]) {
+    server = await serveDiscoveryRuntime(checked.files, observer, {
+      port: plan.serverPort ?? 0,
+      reviewModel,
+    });
+    for (const name of [
+      'manifest.json',
+      'game/index.html',
+      'game/app.mjs',
+      OBSERVER,
+      REVIEW_MODEL,
+    ]) {
       const response = await fetch(`${server.origin}/${name}`),
         bytes = Buffer.from(await response.arrayBuffer());
       if (
         !response.ok ||
-        digest(bytes) !== digest(name === OBSERVER ? observer : checked.files.get(name))
+        digest(bytes) !==
+          digest(
+            name === OBSERVER
+              ? observer
+              : name === REVIEW_MODEL
+                ? reviewModel
+                : checked.files.get(name),
+          )
       )
         fail(`Served bytes differ: ${name}`);
     }
