@@ -6,6 +6,7 @@ import { compileAssetRevision } from './assets.mjs';
 import { inspectMissionTopology } from './diagnostics.mjs';
 import { resolveTeamMission } from './team-runtime.mjs';
 import { CONTENT_PROJECT_JSON_LIMITS, CONTENT_PROJECT_ITEM_LIMITS } from './limits.mjs';
+import { validateMissionDiscovery, validateCampaignDiscovery } from './discovery-schema.mjs';
 import {
   journeyPolicy,
   journeyActors,
@@ -98,9 +99,12 @@ function checkDesign(design) {
       'mastery',
       'durationSeconds',
       'difficulty',
+      'pacingBeat',
+      'rewardRef',
     ],
     'mission design',
   );
+  validateMissionDiscovery(design);
   for (const key of [
     'routeDecision',
     'lesson',
@@ -308,7 +312,8 @@ export function compileContentProject(source) {
     );
   }
   for (const campaign of project.campaigns) {
-    identity(campaign, 'CampaignDesignV1', ['band', 'missionIds', 'archived']);
+    identity(campaign, 'CampaignDesignV1', ['band', 'missionIds', 'archived', 'discovery']);
+    if (campaign.discovery !== undefined) validateCampaignDiscovery(campaign.discovery);
     archiveFlag(campaign);
     required(integer(campaign.band, 1, 12), 'Campaign needs a challenge band.');
     refs(campaign.missionIds, missionIds, 'Campaign missions');
