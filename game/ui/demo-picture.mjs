@@ -25,7 +25,7 @@ export async function resolveDemoPicture({
   readMedia,
   currentPin,
   signal,
-  acquire = acquirePresentationImage,
+  acquire,
 } = {}) {
   let backdrop = null;
   const result = (pictureVisibility = 'blurred', artSeed = null) => {
@@ -63,7 +63,7 @@ export async function resolveDemoPicture({
     if (!identity) return result();
     const media = readMedia ? await readMedia({ signal }) : null;
     abort(signal);
-    const pin = currentPin
+    let pin = currentPin
       ? snapshotPictureChoice(currentPin)
       : media
         ? createPresentationPins({
@@ -74,17 +74,12 @@ export async function resolveDemoPicture({
           }).choices[0]
         : snapshotPictureChoice({ kind: 'legacy', identity });
     if (canonicalJSON(pin.identity) !== canonicalJSON(identity)) return result();
-    if (pin.kind === 'still') {
-      if (!media) return result();
-      backdrop = await acquire({ pin, metadata: media.metadata, store: media.store }, { signal });
-      abort(signal);
-      // An injected or failed adapter must not claim that another image is clear.
-      if (!backdrop?.image || canonicalJSON(backdrop.pin) !== canonicalJSON(pin)) {
-        backdrop?.release?.();
-        backdrop = null;
-        return result();
-      }
-    }
+    // Release defaults retain immutable originals without persisting a new
+    // assignment. In that case the exact earned original can own this scene;
+    // an explicit current choice still needs its own matching earned receipt.
+    const useEarnedOriginal = !currentPin && pin.kind === 'legacy';
+    let earnedPicture = false,
+      artSeed = null;
     for (const item of library?.gallery ?? []) {
       if (item.levelId !== level.id || item.themeId !== theme.id) continue;
       try {
@@ -103,14 +98,36 @@ export async function resolveDemoPicture({
           themeId: item.themeId,
         });
         if (!earnedIdentity || canonicalJSON(earnedIdentity) !== canonicalJSON(identity)) continue;
-        const earnedPin = receipt?.presentationPin ?? { kind: 'legacy', identity: earnedIdentity };
-        if (canonicalJSON(earnedPin) === canonicalJSON(pin))
-          return result('clear', pin.kind === 'legacy' ? earned.item.seed : null);
+        const earnedPin = earned.receipt?.presentationPin ?? {
+          kind: 'legacy',
+          identity: earnedIdentity,
+        };
+        if (useEarnedOriginal || canonicalJSON(earnedPin) === canonicalJSON(pin)) {
+          pin = snapshotPictureChoice(earnedPin);
+          earnedPicture = true;
+          artSeed = pin.kind === 'legacy' ? earned.item.seed : null;
+          break;
+        }
       } catch {
         // An invalid or unavailable receipt is no permission to reveal art.
       }
     }
-    return result();
+    if (pin.kind === 'still') {
+      if (!media) return result();
+      const acquireOriginal = acquire ?? media.acquire ?? acquirePresentationImage;
+      backdrop = await acquireOriginal(
+        { pin, metadata: media.metadata, store: media.store },
+        { signal },
+      );
+      abort(signal);
+      // An injected or failed adapter must not claim that another image is clear.
+      if (!backdrop?.image || canonicalJSON(backdrop.pin) !== canonicalJSON(pin)) {
+        backdrop?.release?.();
+        backdrop = null;
+        return result();
+      }
+    }
+    return result(earnedPicture ? 'clear' : 'blurred', artSeed);
   } catch (error) {
     backdrop?.release?.();
     backdrop = null;
