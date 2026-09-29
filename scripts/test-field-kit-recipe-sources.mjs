@@ -64,6 +64,8 @@ test('every declared helper invalidates all sharing groups and leaves nonconsume
     ['authoring/library/fpv-role-presentations/originals/trapper.png', ['motion']],
     ['game/ui/classic-view.mjs', ['effects', 'team']],
     ['game/couch/coop-view.mjs', ['team']],
+    ['game/couch/couch-music-library.mjs', ['audio']],
+    ['game/soundtrack-style-selection.mjs', ['audio']],
     ['game/soundtrack-bundled.mjs', ['audio']],
     ['game/soundtrack-portable.mjs', ['audio']],
     ['game/content/soundtrack-catalogue.mjs', ['audio']],

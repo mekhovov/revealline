@@ -161,20 +161,43 @@ audio53 conflicts with the selector's production101 / audio53. Preserve the
 accepted v0.142.4 ledger and its exact predecessor oracle; append the next
 available production/audio revision rather than replacing either history.
 
-Before fresh review and generation, add `game/soundtrack-style-selection.mjs`
-immediately after `game/soundtrack-style-taxonomy.mjs` in the ordered
-`sources.audio` list in `scripts/produce-field-kit-theme.mjs`. This expands the
-audio input closure by one file. Also add `game/couch/couch-music-library.mjs`
-immediately after the existing Couch music host: that changed adoption owner
-must participate in the same fingerprint. The final closure grows from 28 to
-30 ordered inputs. Add the independent consumer contracts
-`['game/soundtrack-style-selection.mjs', ['audio']]` and
-`['game/couch/couch-music-library.mjs', ['audio']]` in
-`scripts/test-field-kit-recipe-sources.mjs`; its existing mutation loop must
-prove each dependency invalidates audio alone. The shared selector extends the
-existing style-selection helper; the new catalogue fixture is test-only.
-Neither the producer nor generated outputs were changed in these functional
-follow-ups.
+The qualification-preparation follow-up adds
+`game/soundtrack-style-selection.mjs` immediately after
+`game/soundtrack-style-taxonomy.mjs` and `game/couch/couch-music-library.mjs`
+immediately after the Couch music host in the producer's ordered `sources.audio`
+list. The closure now contains 30 inputs instead of 28. Independent consumer
+contracts in `scripts/test-field-kit-recipe-sources.mjs` prove that mutating
+either dependency invalidates audio alone. The shared selector extends the
+existing style-selection helper; the catalogue fixture is test-only.
+
+The new `soundtrack-preferences-playback` focused category selects the reviewed
+ten-file Audio cohort for explicit persistence, playback, panel, Couch music,
+helper and regression-test paths. It runs under the temporary fast-release
+policy as a required selected gate. Existing Couch localization/navigation
+coverage, direct execution of other changed tests, unknown-runtime fallback and
+waiver policy remain unchanged. `game/app.mjs` alone retains its existing
+company gate; it does not select the new Audio category.
+
+Qualification-preparation checks:
+
+```sh
+node --test publishing/focused-tests.test.mjs
+node --test --test-name-pattern='every declared helper invalidates' \
+  scripts/test-field-kit-recipe-sources.mjs
+```
+
+Focused-map checks passed **33 tests, 0 failed or skipped**;
+`/tmp/audio-focused-gate-prep.tap`. The independent dependency-mutation test
+passed **1 selected test**, with **15 unrelated review tests deliberately
+skipped** by the name filter; `/tmp/audio-recipe-closure-prep.tap`. Scoped
+ESLint, Prettier and `git diff --check` pass. The runtime Audio cohort was not
+rerun for this declaration-only preparation; its preceding 342-test result
+remains separately recorded above.
+
+The producer declaration and focused map changed without regenerating outputs
+or adding a review approval. The full producer is intentionally stale until the
+v0.142.4-based continuation is reviewed and generated. No passing producer or
+release-qualification result is claimed for this preparatory commit.
 
 Recompute the combined source fingerprint, pin the accepted v0.142.4
 predecessor, update retained Team bindings/history tests, regenerate compiled
