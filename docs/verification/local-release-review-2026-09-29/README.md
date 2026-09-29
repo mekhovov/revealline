@@ -45,3 +45,9 @@ This review does not certify line-by-line correctness of all shared features, ig
 - [Complete worktree observation](worktree-inventory.json)
 
 Keep this documentation and other source merges behind the guarded v0.142.3 qualification/publication window.
+
+## Historical source preservation addendum
+
+The [bounded donor review](historical-donors/README.md) and [hash manifest](historical-donors/manifest.json) preserve useful Workshop and narrow-HUD source/test hunks as patch artifacts for selective integration after #782 in the v0.150.0 intake. They are not applied to current main and are not qualified product code. Old production ledgers, bindings and producer changes are excluded.
+
+The same review identifies UX3 timer/localization defects and reproduces the Team teaching v1 storage collision using isolated actual modules. Those unsafe donors are report-only; retain existing saves and require a schema-preserving design or explicit migration before adoption.
