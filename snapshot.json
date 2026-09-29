@@ -1,0 +1,77 @@
+{
+  "format": "revealline-recovery-fragment-v1",
+  "capturedAt": "2026-09-29T15:08:27.134616+00:00",
+  "worktree": "<home>/.codex/worktrees/audio-style-menu/go_test",
+  "branch": "refs/heads/codex/audio-style-menu",
+  "head": "0d165a203330eb250ed8d81a974304435e63023b",
+  "excluded": [],
+  "changes": [
+    {
+      "status": " M",
+      "path": "game/test/presentation-production-history.test.mjs",
+      "object": "66e213bfac95d2584b2470411e204c99d4bba283",
+      "sha256": "020beda564885a32ad5ee628a8e33fb33ae24680bdefa458e968c4a859ce6bb6",
+      "bytes": 53150,
+      "mode": "100644"
+    },
+    {
+      "status": " M",
+      "path": "game/test/soundtrack-panel.test.mjs",
+      "object": "0e53f04b5a63825273ef1a84d56e008106ae585f",
+      "sha256": "fe258e31bef860691b14cd7ac2ac7f2043cf538518d3dd2cceb0712f1abb04fa",
+      "bytes": 148651,
+      "mode": "100644"
+    },
+    {
+      "status": " M",
+      "path": "game/ui/soundtrack-panel.mjs",
+      "object": "bc2460f223c7e01f7e0b428bf1d91588573561cc",
+      "sha256": "9a8834a7a2d835766c2c9155aa0543cb42b2a24800fc0a7d9d268b4aa760009f",
+      "bytes": 130653,
+      "mode": "100644"
+    },
+    {
+      "status": " M",
+      "path": "game/ui/soundtrack-player.mjs",
+      "object": "e7037146eb0df4f996e6c100c2f5862ff66af0a6",
+      "sha256": "cd1b478d6085803f491f8d644161e5b491a1b1dc113903d0a7c4083d65800718",
+      "bytes": 49076,
+      "mode": "100644"
+    },
+    {
+      "status": "??",
+      "path": "game/test/fixtures/production-main7138-fpv97.json",
+      "object": "5e065c72ae77ea35c64c7df800b8bab20edb6742",
+      "sha256": "5fc2c4b239fcfc95cac47b9a94a7dbe6c78b117d9d15d114b5f26ea4191fb9ed",
+      "bytes": 1535,
+      "mode": "100644"
+    }
+  ],
+  "indexEntries": [
+    {
+      "path": "game/test/presentation-production-history.test.mjs",
+      "mode": "100644",
+      "object": "e39bc28ee013efddf7b8c426db0c564ff81bdb7d",
+      "stage": 0
+    },
+    {
+      "path": "game/test/soundtrack-panel.test.mjs",
+      "mode": "100644",
+      "object": "5a5697d0bd96f3e5ff18f423d6dfe70a33981e53",
+      "stage": 0
+    },
+    {
+      "path": "game/ui/soundtrack-panel.mjs",
+      "mode": "100644",
+      "object": "cb68b1e24d1e84fbe6352976ee3afec3b06b8250",
+      "stage": 0
+    },
+    {
+      "path": "game/ui/soundtrack-player.mjs",
+      "mode": "100644",
+      "object": "fe20a2ea48eca073222ee5631280a8414f065075",
+      "stage": 0
+    }
+  ],
+  "purpose": "Recovery only. These bytes are not release admission. Missing files, conflict stages and obsolete generated outputs are preserved as observations, not deletion or merge instructions."
+}
