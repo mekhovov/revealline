@@ -73,3 +73,13 @@ input safety. Distinguish capture cancellation, ram removal and fired-shot evasi
 in the findings. Preserve fixture errors separately from product failures. Follow
 [the Sentry example](../../docs/verification/actor-batch-19/README.md); this source
 qualification does not approve art, human fairness, hardware or a release.
+
+## Keep live Guide translations attached to the current lesson
+
+Translate player-facing threat advice, row labels and practice instructions through
+existing locale authorities, including the actual visible state names. Change EN/UK
+while reading a selected lesson and while its practice child is active. Preserve
+the same text nodes, selection, focus, child URL/window, handoff and complete paused
+checkpoint; translation must not recreate or resume a lesson. Regenerate only the
+required catalog and verify its exact bytes and placeholders. Keep existing
+messages and authored scenario identities unchanged, and retain original failures.

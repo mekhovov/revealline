@@ -401,3 +401,13 @@ at `f09146837cfcc5191c89e54d7f9afea56b2ef8e9`, with 70/70 focused checks.
 The first C cohort already has import, derivative, real-board preview and export
 support; remaining binding/native-grid/cultural review requires no new comparison
 tool. Keep A → B → C priority and C2 last.
+
+## Twentieth batch: consistent ordinary Guide language
+
+[Batch20](verification/actor-batch-20/README.md) localizes the remaining Sentinel
+advice, common movement/Pause/Retry instructions and ordinary row labels. EN/UK
+changes refresh the same Guide/practice nodes, preserving topic, appearance,
+child identity, focus and the exact paused attempt. All 45 complete focused Guide
+checks pass with independent source and generated-catalog review. The patch changes
+no gameplay, authored lesson identity, artwork or release approval; full Ukrainian
+translation and production review remain deferred.
