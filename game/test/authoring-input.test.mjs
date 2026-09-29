@@ -504,6 +504,7 @@ test('Sections refreshes after later heading bindings and host locale callbacks,
     setLocale(previous, { persist: false });
   }
 });
+
 test('authoring menus coordinate native Confirm before frames and retain the captured modal handoff', () => {
   const { doc, win, node, tick } = fixture(),
     open = node('button', 'open-tool'),
