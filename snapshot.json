@@ -1,0 +1,97 @@
+{
+  "format": "revealline-recovery-fragment-v1",
+  "capturedAt": "2026-09-29T15:09:07.611326+00:00",
+  "worktree": "<home>/.codex/worktrees/v0131-localization-finish/go_test",
+  "branch": "refs/heads/codex/v1417-ledger-reconciliation",
+  "head": "e1e31312d3e34842688eb9922bbda1203238c435",
+  "excluded": [],
+  "changes": [
+    {
+      "status": " M",
+      "path": "authoring/library/fpv-field-kit/production.rltheme",
+      "object": "64eec515f6572d73cbc05f774e905b5773027edc",
+      "sha256": "e07139a6c61f3cceea1233cc42c36e8a1592805e7e5204253f932dfeb153493d",
+      "bytes": 7596487,
+      "mode": "100644"
+    },
+    {
+      "status": " M",
+      "path": "game/presentation/compiled/manifest.json",
+      "object": "5179cac39a03da5a2ef1a30da5fb6e95018ab32b",
+      "sha256": "d959a4f0787ac74aa2d0bae70c2e46737ee99c8693e52ee9f0166cbdb7593443",
+      "bytes": 29118,
+      "mode": "100644"
+    },
+    {
+      "status": " M",
+      "path": "game/presentation/compiled/runtime.json",
+      "object": "402ba05f341f3dbed1dfcd60c9ba432a8f167485",
+      "sha256": "95579243407d7fb67cc1da10870f986ba2f547d3a843667957bae26ca75bc025",
+      "bytes": 1107623,
+      "mode": "100644"
+    },
+    {
+      "status": " M",
+      "path": "game/presentation/compiled/studio.json",
+      "object": "040e2214a5d8167f929c00dadbd65bc11e1ec7d4",
+      "sha256": "b515ef7a9c3acba64a709d7bc1b83ef662c6ad2bb23aac9dba2a930c983bb2df",
+      "bytes": 4516626,
+      "mode": "100644"
+    },
+    {
+      "status": " M",
+      "path": "scripts/produce-field-kit-theme.mjs",
+      "object": "bfa1b40e787ec1bb7556a11e83585843ee2d6479",
+      "sha256": "4e6bc74fef637183bc6918b1c0da04ff88abb017d8500b7f5616fc515484c62e",
+      "bytes": 32823,
+      "mode": "100644"
+    },
+    {
+      "status": " M",
+      "path": "scripts/test-field-kit-recipe-sources.mjs",
+      "object": "7ad125d21c88d37262ee87964cdc0745f7384947",
+      "sha256": "f06516c1e35665ff3c07ebac5700518de6e1d4802032ea37509d5f543d506293",
+      "bytes": 3374,
+      "mode": "100644"
+    }
+  ],
+  "indexEntries": [
+    {
+      "path": "authoring/library/fpv-field-kit/production.rltheme",
+      "mode": "100644",
+      "object": "525e12f7b99c7a76f3b9d4d8e2fef69c13375290",
+      "stage": 0
+    },
+    {
+      "path": "game/presentation/compiled/manifest.json",
+      "mode": "100644",
+      "object": "ee3a1919bcc4365cc8930e3f7f629fb4eab998fd",
+      "stage": 0
+    },
+    {
+      "path": "game/presentation/compiled/runtime.json",
+      "mode": "100644",
+      "object": "427228c6ec3d9ece1bdd71c9b6698b1641e1a027",
+      "stage": 0
+    },
+    {
+      "path": "game/presentation/compiled/studio.json",
+      "mode": "100644",
+      "object": "4eaec07a832b18caf0c362aeafdb189b384ed98f",
+      "stage": 0
+    },
+    {
+      "path": "scripts/produce-field-kit-theme.mjs",
+      "mode": "100644",
+      "object": "18317b83f940ede217814fca13b37f6608d550d7",
+      "stage": 0
+    },
+    {
+      "path": "scripts/test-field-kit-recipe-sources.mjs",
+      "mode": "100644",
+      "object": "222555e071a11069f55e65e9b65071f733de7ee7",
+      "stage": 0
+    }
+  ],
+  "purpose": "Recovery only. These bytes are not release admission. Missing files, conflict stages and obsolete generated outputs are preserved as observations, not deletion or merge instructions."
+}
