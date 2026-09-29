@@ -23,6 +23,12 @@ its separate review route.
 
 The latest user instruction defers production review, not correctness. Continue
 independent A/B/C implementation without manufacturing new production approvals.
+Keep fractional score formatting confined to the localized HUD callback: use the
+selected game locale, at most three decimal places and no grouping, with minimum
+five-place padding only for integer raw scores. Never round the run, saved replay
+or awards to shorten a label. Exercise a legal fractional capture and paused
+EN/UK refresh while checking exact saved bytes and replay score. Historical HUD
+CSS must be reproduced against current handheld geometry before reuse.
 For current-mission encounter Guide lessons, use `game/encounter-guide.mjs` and
 [the Guide contract](../../../docs/enemy-guide.md): validate role availability,
 clone the effective level and starting craft/seed/recipes before async work,
