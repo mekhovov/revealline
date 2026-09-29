@@ -414,8 +414,9 @@
     {
       "name": "Content Studio",
       "route": "/game/studio/",
-      "verification": "pending exact-candidate browser qualification; historical observations do not establish current acceptance",
-      "historicalVerification": "keyboard and virtual-controller browser workflow passed; physical controller not tested"
+      "verification": "Current eb45f1b65 plus e40d77773 and final 52a18ef97 pass overlapping 186/251/51 focused cohorts. Complete current 4/4 virtual-pad workflow qualifies new-project inspection/Apply, canceled drafts, invalid JSON, guarded discard/Undo/Redo, immutable geometry, numeric tuning, explicit exact-Solo preview Enter/Return/Close, checkpoint Save/Inspect saved/Apply and repeated backup export. Native keys qualify editing/history, two exact full-source reloads and Save/export without pointer reset. All four actual JSON backups pass production compilation, all six Solo/Versus presets and independently derived exact bytes. Fresh native preview remains unqualified at the IAB input-routing boundary; no guard was weakened. OS import, candidate libraries, remaining specialized editors, tracing/media recovery, guide reading, Team export, full Ukrainian workflow, physical/native/offline and published acceptance remain separate.",
+      "historicalVerification": "keyboard and virtual-controller browser workflow passed; physical controller not tested",
+      "evidence": "docs/verification/content-studio-input-2026-09-29.md"
     },
     {
       "name": "Picture Campaign Creator",
