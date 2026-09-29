@@ -17,3 +17,10 @@ When updating threat Help, select copy from the admitted Team edition. Explain
 both travelling fronts only for impact editions; keep Legacy relay/hunter advice
 exact. Verify active Start before Pause/reader assertions, both EN/UK and reversed
 specialist assignments. No Help update may introduce fields into level recipes.
+
+For imported impact editions, retain schema-valid Hunters in Start coverage.
+Current tuning must not inject the unsupported encounter override into v6/v7.
+Exercise both hybrid/specialist editions through import, actual Start, Pause and
+Help; keep native committed attacks and strict authored-field rejection. Compare
+previously successful tuning outputs and installed reconstruction, and preserve
+all frozen adapter versions. A schema-valid import alone is not Start evidence.
