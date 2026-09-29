@@ -409,6 +409,122 @@ function editorAction(h, key) {
   h.api.handle({ confirmCommit: true });
 }
 
+function labelCaption(h, text, parent = h.document.body) {
+  const node = h.control('span', { textContent: text }, parent);
+  Object.defineProperty(node, 'childNodes', {
+    get: () => [{ nodeType: 3, textContent: node.textContent }],
+  });
+  return node;
+}
+
+function assertFieldName(h, field, expected) {
+  field.focus();
+  h.api.handle({ confirm: true });
+  const panel = h.document.querySelector('.controller-field-editor');
+  assert.ok(panel);
+  assert.equal(panel.getAttribute('aria-label'), expected);
+  assert.equal(panel.children.find((node) => node.tagName === 'H2').textContent, expected);
+  assert.equal(panel.querySelector('textarea').getAttribute('aria-label'), expected);
+  h.api.handle({ back: true });
+  assert.equal(h.document.activeElement, field);
+}
+
+test('field names read localized nested captions on every EN/UK/EN editor opening', (context) => {
+  const locale = getLocale(),
+    h = setup(context),
+    label = h.control('label'),
+    caption = labelCaption(h, '', label),
+    field = h.control('input', { id: 'project-id', value: 'unchanged' }, label);
+  Object.defineProperty(label, 'childNodes', { get: () => label.children });
+  field.labels = [label];
+  localizedText(caption, () => translate('common:editor.localProjectId'));
+  context.after(() => setLocale(locale, { persist: false }));
+  for (const language of ['en', 'uk', 'en']) {
+    setLocale(language, { persist: false });
+    const expected = translate('common:editor.localProjectId');
+    assert.notEqual(expected, field.id);
+    assertFieldName(h, field, expected);
+    assert.equal(field.value, 'unchanged');
+  }
+});
+
+test('field names exclude nested controls, options and decorative label subtrees', (context) => {
+  const h = setup(context),
+    label = h.control('label'),
+    wrapper = h.control('span', {}, label),
+    field = h.control('input', { id: 'mission-name', value: 'old' }, label),
+    start = labelCaption(h, '  Mission\n ', wrapper),
+    number = labelCaption(h, ' 2 ', wrapper),
+    end = labelCaption(h, '\t name  ', wrapper);
+  for (const tag of ['input', 'select', 'textarea', 'button', 'option', 'optgroup', 'svg']) {
+    const ignored = h.control(tag, {}, wrapper);
+    const text = labelCaption(h, `Do not include ${tag}`, ignored);
+    Object.defineProperty(ignored, 'childNodes', { value: [text] });
+  }
+  const hidden = labelCaption(h, 'hidden caption', wrapper),
+    icon = labelCaption(h, 'decorative arrow', wrapper);
+  hidden.hidden = true;
+  icon.setAttribute('aria-hidden', 'true');
+  Object.defineProperty(wrapper, 'childNodes', { value: [...wrapper.children] });
+  Object.defineProperty(label, 'childNodes', { value: [wrapper, field] });
+  field.labels = [label];
+  assert.deepEqual(wrapper.childNodes.slice(0, 3), [start, number, end]);
+  assertFieldName(h, field, 'Mission 2 name');
+});
+
+test('aria-labelledby names take precedence and preserve ordered visible reference text', (context) => {
+  const h = setup(context),
+    first = labelCaption(h, ' Source\n'),
+    second = labelCaption(h, '\t JSON  '),
+    field = h.control('textarea', { id: 'source' });
+  first.id = 'source-name';
+  second.id = 'source-format';
+  field.setAttribute('aria-labelledby', 'source-name missing source-format');
+  field.setAttribute('aria-label', 'Explicit backup name');
+  assertFieldName(h, field, 'Source JSON');
+});
+
+test('explicit aria-labelledby retains intentionally hidden caption roots', (context) => {
+  const h = setup(context),
+    caption = labelCaption(h, 'Accessible source caption'),
+    field = h.control('textarea', { id: 'source' });
+  caption.id = 'hidden-source-caption';
+  caption.hidden = true;
+  caption.setAttribute('aria-hidden', 'true');
+  field.setAttribute('aria-labelledby', caption.id);
+  field.setAttribute('aria-label', 'Backup name');
+  assertFieldName(h, field, 'Accessible source caption');
+});
+
+test('explicit aria-label wins over associated labels when references are absent or empty', (context) => {
+  const h = setup(context),
+    label = labelCaption(h, 'Visible associated name'),
+    field = h.control('input', { id: 'field' });
+  field.labels = [label];
+  field.setAttribute('aria-labelledby', 'missing-reference');
+  field.setAttribute('aria-label', '  Explicit\n name  ');
+  assertFieldName(h, field, 'Explicit name');
+  field.removeAttribute('aria-label');
+  assertFieldName(h, field, 'Visible associated name');
+});
+
+test('multiple explicit associated labels combine without requiring an enclosing label', (context) => {
+  const h = setup(context),
+    first = labelCaption(h, 'Mission 3'),
+    second = labelCaption(h, 'title'),
+    field = h.control('input', { id: 'mission-3-title' });
+  field.labels = [first, second];
+  assertFieldName(h, field, 'Mission 3 title');
+});
+
+test('unnamed fields retain their ID and then localized value fallback', (context) => {
+  const h = setup(context),
+    field = h.control('input', { id: 'legacy-field' });
+  assertFieldName(h, field, 'legacy-field');
+  field.id = '';
+  assertFieldName(h, field, translate('interface:value'));
+});
+
 test('passive input hints follow accepted device changes and restore host attributes on disposal', (context) => {
   let confirm = 'R1';
   const h = setup(context, {
