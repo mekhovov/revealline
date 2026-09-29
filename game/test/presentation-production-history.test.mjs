@@ -538,8 +538,9 @@ test('shared-host UI and managed-media audio bind only reviewed current inputs',
   const continuationHash = createHash('sha256')
     .update(await fs.readFile(new URL(`../../${continuationPath}`, import.meta.url)))
     .digest('hex');
-  const currentReviewPath = 'docs/verification/audio-style-menu-correction-2026-09-28/review.json';
-  const currentReviewSHA256 = '62c1dac1be4286acdb8201aab99b6d3c5e2e2b282e1c88cb34d88af527172e09';
+  const currentReviewPath =
+    'docs/verification/v0.142.3-steamdeck-confirm-audio-continuation/review.json';
+  const currentReviewSHA256 = 'a059520f6ce0c394c3425355c711b641b4b23f9321e11c7d384317e7f814798c';
   const current = await authenticatedCurrentReview(currentReviewPath, currentReviewSHA256, [
     'audio',
   ]);
@@ -547,13 +548,21 @@ test('shared-host UI and managed-media audio bind only reviewed current inputs',
     'docs/verification/v0.141.8-steamdeck-confirm-presentation-continuation/review.json';
   const mainUIReviewSHA256 = '15b9ef304ba6e8ec6c2120e4e766fe630af327f2a54325bd0e9043ba875e9867';
   const mainUI = await authenticatedCurrentReview(mainUIReviewPath, mainUIReviewSHA256, ['ui']);
+  const correctionReview = JSON.parse(
+    await fs.readFile(
+      new URL(
+        '../../' + current.review.priorReviews.audioStyleMenuCorrection.path,
+        import.meta.url,
+      ),
+    ),
+  );
   assert.equal(
-    current.review.priorReviews.independentCorrection.sha256,
+    correctionReview.priorReviews.independentCorrection.sha256,
     '667561c739a060bffbe0abbba02eaa942f7db9323247308d30f33d4a8c93cfb0',
   );
   const styleReview = JSON.parse(
     await fs.readFile(
-      new URL('../../' + current.review.priorReviews.audioStyleMenu.path, import.meta.url),
+      new URL('../../' + correctionReview.priorReviews.audioStyleMenu.path, import.meta.url),
     ),
   );
   const priorAudioReview = JSON.parse(
@@ -1222,7 +1231,7 @@ test('PR #770 correction preserves exact theme98 and appends only eight audio51 
       'utf8',
     ),
   );
-  const current = await importThemeBundle(
+  const latest = await importThemeBundle(
     new Blob([
       await fs.readFile(
         new URL('../../authoring/library/fpv-field-kit/production.rltheme', import.meta.url),
@@ -1230,6 +1239,13 @@ test('PR #770 correction preserves exact theme98 and appends only eight audio51 
     ]),
     { decodeImage: null },
   );
+  const currentOracle = JSON.parse(
+    await fs.readFile(
+      new URL('./fixtures/production-v01422-a585-fpv99.json', import.meta.url),
+      'utf8',
+    ),
+  );
+  const current = await reconstructPinnedProduction(currentOracle, latest);
   const prior = await reconstructPinnedProduction(oracle, current);
 
   assert.equal(current.document.revision, 99);
@@ -1272,6 +1288,109 @@ test('PR #770 correction preserves exact theme98 and appends only eight audio51 
   assert.equal(theme.id, 'fpv');
   assert.equal(theme.revision, 99);
   assert.deepEqual(theme.parent, { id: 'fpv', revision: 98 });
+  assert.deepEqual(theme.tokens, {});
+  assert.deepEqual(
+    Object.values(theme.bindings)
+      .map((binding) => `${binding.id}@${binding.revision}`)
+      .sort(),
+    added.map((asset) => `${asset.id}@${asset.revision}`).sort(),
+  );
+});
+
+test('Steam Deck continuation preserves exact theme99 and appends only eight audio52 successors', async () => {
+  const oracle = JSON.parse(
+    await fs.readFile(
+      new URL('./fixtures/production-v01422-a585-fpv99.json', import.meta.url),
+      'utf8',
+    ),
+  );
+  const current = await importThemeBundle(
+    new Blob([
+      await fs.readFile(
+        new URL('../../authoring/library/fpv-field-kit/production.rltheme', import.meta.url),
+      ),
+    ]),
+    { decodeImage: null },
+  );
+  const prior = await reconstructPinnedProduction(oracle, current);
+  assert.equal(prior.document.revision, 99);
+  assert.equal(prior.document.assets.length, 2598);
+  assert.equal(prior.document.themes.length, 100);
+  assert.equal(current.document.revision, 100);
+  assert.equal(current.document.assets.length, 2606);
+  assert.equal(current.document.themes.length, 101);
+  validateThemeBundle(current.document, { previous: prior.document, expectedRevision: 99 });
+  assert.equal(current.assets.size, 132);
+  for (const [hash, blob] of prior.assets)
+    assert.deepEqual(
+      Buffer.from(await current.assets.get(hash).arrayBuffer()),
+      Buffer.from(await blob.arrayBuffer()),
+      `unchanged payload ${hash}`,
+    );
+
+  const review = await authenticatedCurrentReview(
+    'docs/verification/v0.142.3-steamdeck-confirm-audio-continuation/review.json',
+    'a059520f6ce0c394c3425355c711b641b4b23f9321e11c7d384317e7f814798c',
+    ['audio'],
+  );
+  const before = resolvePresentation(prior.document);
+  const after = resolvePresentation(current.document);
+  for (const [slot, asset] of Object.entries(before.assets))
+    if (!slot.startsWith('audio.')) assert.deepEqual(after.assets[slot], asset, slot);
+  const fingerprint = review.review.fingerprints.audio;
+  assert.equal(fingerprint.orderedInputs, 28);
+  assert.equal(fingerprint.bytes, 1074390);
+  assert.deepEqual(fingerprint.changedInputs, ['game/app.mjs']);
+  assert.deepEqual(
+    fingerprint.inputs.filter((input) => input.changedFromProduction99).map((input) => input.path),
+    ['game/app.mjs'],
+  );
+  const priorReview = JSON.parse(
+    await fs.readFile(
+      new URL(
+        '../../docs/verification/audio-style-menu-correction-2026-09-28/review.json',
+        import.meta.url,
+      ),
+    ),
+  );
+  for (const input of fingerprint.inputs) {
+    const old = priorReview.fingerprints.audio.inputs.find(
+      (candidate) => candidate.path === input.path,
+    );
+    assert.ok(old, `retained input ${input.path}`);
+    if (input.path === 'game/app.mjs') assert.notEqual(input.sha256, old.sha256);
+    else {
+      assert.equal(input.gitBlob, old.gitBlob, input.path);
+      assert.equal(input.sha256, old.sha256, input.path);
+      assert.equal(input.bytes, old.bytes, input.path);
+    }
+  }
+  const added = current.document.assets.slice(2598);
+  assert.equal(added.length, 8);
+  assert.deepEqual(added.map((asset) => asset.id).sort(), review.review.scope.slots.toSorted());
+  for (const asset of added) {
+    assert.equal(asset.revision, 52);
+    assert.equal(asset.quality.stage, 'reviewed');
+    assert.equal(asset.provenance.source, review.sources.audio);
+    const old = Object.values(before.assets).find((candidate) => candidate.id === asset.id);
+    assert.equal(old.revision, 51);
+    assert.deepEqual(asset.provenance.parent, { id: old.id, revision: 51 });
+    assert.deepEqual(asset.recipe, old.recipe);
+    assert.deepEqual(asset.file, old.file);
+    for (const evidence of old.quality.evidence)
+      assert.ok(asset.quality.evidence.includes(evidence), 'retained prior review evidence');
+    assert.ok(
+      asset.quality.evidence.some((entry) =>
+        entry.includes(
+          'docs/verification/v0.142.3-steamdeck-confirm-audio-continuation/review.json sha256:a059520f6ce0c394c3425355c711b641b4b23f9321e11c7d384317e7f814798c',
+        ),
+      ),
+    );
+  }
+  const theme = current.document.themes.at(-1);
+  assert.equal(theme.id, 'fpv');
+  assert.equal(theme.revision, 100);
+  assert.deepEqual(theme.parent, { id: 'fpv', revision: 99 });
   assert.deepEqual(theme.tokens, {});
   assert.deepEqual(
     Object.values(theme.bindings)
