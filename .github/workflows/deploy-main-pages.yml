@@ -64,6 +64,9 @@ jobs:
           test "$(git rev-parse HEAD)" = "$GITHUB_SHA"
           node scripts/check-source-identity.mjs --root .
 
+      - name: Install the locked build dependencies
+        run: npm ci --prefer-offline
+
       - name: Build the protected main snapshot
         env:
           BUILD_VERSION: ${{ steps.identity.outputs.build_version }}
