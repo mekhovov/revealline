@@ -1,3 +1,4 @@
+import { getLocale } from '../i18n/index.mjs';
 import { CELL, DIRECTIONS } from '../core/registry.mjs';
 import { EFFECT_BANK } from '../audio/effects/bank.mjs';
 import {
@@ -50,8 +51,24 @@ export class FeedbackDirector {
   }
   play(
     name,
-    { gain = 0.55, pan = 0, priority = 2, loop = false, ui = false, board = 'solo', rate = 1 } = {},
+    {
+      gain = 0.55,
+      pan = 0,
+      priority = 2,
+      loop = false,
+      ui = false,
+      board = 'solo',
+      rate = 1,
+      delay = 0,
+      radio = false,
+    } = {},
   ) {
+    const cueFamily = name.replace(/-[12]$/, '');
+    const routine = /^(focus|confirm|cancel|paper|pickup|closure|switch|reveal-)/.test(cueFamily);
+    if (['confirm', 'paper', 'pickup'].includes(name)) {
+      const variant = this.serial++ % 3;
+      if (variant) name += `-${variant}`;
+    }
     if (name.startsWith('contact-') && !/[-][12]$/.test(name)) {
       const variant = this.serial++ % 3;
       if (variant) name += `-${variant}`;
@@ -69,6 +86,9 @@ export class FeedbackDirector {
     )
       return null;
     if (ui && !s.menuSettings.enabled) return null;
+    if (radio && (!s.radioSettings?.enabled || s.radioSettings.volume === 0)) return null;
+    if (radio && [...s.voices].some((v) => v.radio || (v.feedback && v.priority >= 5))) return null;
+    if (priority >= 5) for (const voice of [...s.voices]) if (voice.radio) voice.stop();
     const buffer = this.buffers.get(name);
     if (!buffer) {
       this.load(name);
@@ -84,9 +104,16 @@ export class FeedbackDirector {
       victim.stop();
     }
     if (!loop) {
-      const key = `${board}:${name}`;
-      if (c.currentTime - (this.recent.get(key) ?? -Infinity) < (ui ? 0.065 : 0.045)) return null;
+      const key = `${board}:${cueFamily}`;
+      if (
+        c.currentTime - (this.recent.get(key) ?? -Infinity) <
+        (routine ? (ui ? 0.1 : 0.16) : 0.045)
+      )
+        return null;
       this.recent.set(key, c.currentTime);
+      if (routine)
+        for (const voice of [...s.voices])
+          if (voice.board === board && voice.cueFamily === cueFamily) voice.retire();
     }
     const source = c.createBufferSource(),
       volume = c.createGain();
@@ -99,14 +126,16 @@ export class FeedbackDirector {
     if (panner) {
       volume.connect(panner);
       panner.pan.setValueAtTime(pan, c.currentTime);
-      panner.connect(ui ? s.menuBus : s.sfxBus);
-    } else volume.connect(ui ? s.menuBus : s.sfxBus);
+      panner.connect(radio ? s.radioBus : ui ? s.menuBus : s.sfxBus);
+    } else volume.connect(radio ? s.radioBus : ui ? s.menuBus : s.sfxBus);
     let ended = false,
       retiring = false;
     const voice = {
       name,
+      cueFamily,
       bus: ui ? 'menu' : 'sfx',
       feedback: true,
+      radio,
       priority,
       board,
       source,
@@ -143,8 +172,8 @@ export class FeedbackDirector {
     source.onended = voice.stop;
     s.voices.add(voice);
     // Re-enter a periodic texture at its global phase, without an attack restart.
-    source.start(c.currentTime, loop ? c.currentTime % buffer.duration : 0);
-    if (!loop) source.stop(c.currentTime + buffer.duration / rate + 0.01);
+    source.start(c.currentTime + delay, loop ? c.currentTime % buffer.duration : 0);
+    if (!loop) source.stop(c.currentTime + delay + buffer.duration / rate + 0.01);
     return voice;
   }
   events(events, run, theme = {}, options = {}) {
@@ -154,6 +183,7 @@ export class FeedbackDirector {
       seen = new Set();
       this.seen.set(run, seen);
     }
+    const capturing = events.some((e) => e.type === 'cells.claimed');
     const final = events.some((e) => e.type === 'run.completed');
     events.forEach((event, index) => {
       const key = `${event.tick}:${event.time}:${index}:${event.type}`;
@@ -192,13 +222,14 @@ export class FeedbackDirector {
             ? indices.reduce((n, i) => n + (i % run.width) + 0.5, 0) / indices.length
             : run.width / 2;
           this.play(`contact-${material}`, {
-            gain: 0.24,
+            gain: 0.12,
             pan: screenPan(center, run.width, options.placement),
             board,
             rate,
           });
         }
       } else if (
+        !(capturing && event.type === 'cut.closed') &&
         !(final && ['cut.closed', 'objective.captured', 'relay.opened'].includes(event.type))
       ) {
         const cue = eventCue(event);
@@ -222,6 +253,7 @@ export class FeedbackDirector {
     const board = options.board ?? 'solo';
     let state = this.boards.get(board);
     if (!state || state.run !== run || run?.tick < state.tick) {
+      if (state) for (const v of [...this.sound.voices]) if (v.radio && v.board === board) v.stop();
       if (state && run?.tick < state.tick) this.seen.delete(run);
       if (state) for (const v of state.loops.values()) v.stop();
       state = { run, tick: run?.tick, loops: new Map(), previous: new Map(), started: false };
@@ -239,6 +271,7 @@ export class FeedbackDirector {
       sound.gameplayPaused ||
       sound.audioMaster.muted
     ) {
+      for (const v of [...sound.voices]) if (v.radio && v.board === board) v.stop();
       for (const v of state.loops.values()) v.stop();
       state.loops.clear();
       return;
@@ -246,10 +279,23 @@ export class FeedbackDirector {
     if (options.silentStart) state.started = true;
     if (!state.started) {
       const level = run.levelId ?? run.level?.id;
-      const started = this.play(level && this.lastLevels.get(board) === level ? 'retry' : 'start', {
-        priority: 4,
-        board,
-      });
+      const body =
+        options.bodyId ??
+        run.player?.bodyId ??
+        (options.actorStyle === 'fpv' ? 'fpv' : theme.player);
+      const fpv = /fpv|quad|rotor/.test(body ?? '') || (!body && theme.family === 'fpv');
+      const retry = level && this.lastLevels.get(board) === level;
+      const intro = fpv ? (retry ? 'esc-retry' : 'esc-start') : retry ? 'retry' : 'start';
+      const started = this.play(intro, { priority: 4, board });
+      // Scheduled now, owned by the normal SFX lifecycle; decoding never replays it later.
+      if (fpv && started)
+        this.play(getLocale() === 'uk' ? 'radio-armed-uk' : 'radio-armed-en', {
+          radio: true,
+          gain: 0.7,
+          priority: 2,
+          board,
+          delay: this.buffers.get(intro).duration + 0.08,
+        });
       if (!started && this.buffers.size === 0) this.sound.tone?.(440, 0.08, 0.035);
       this.lastLevels.set(board, level);
       state.started = true;
@@ -281,7 +327,7 @@ export class FeedbackDirector {
           options.actorStyle === 'fpv' ? { family: 'fpv' } : theme,
           actor.type,
         ),
-        gain: distanceGain(distance(actor), Math.min(run.width, run.height)) * 0.18,
+        gain: distanceGain(distance(actor), Math.min(run.width, run.height)) * 0.3,
         pan: screenPan(actor.x, run.width, options.placement),
       });
     }
@@ -325,7 +371,7 @@ export class FeedbackDirector {
             theme,
           ),
           rate: movementRate(options.bodyId ?? player.bodyId ?? run.activeClassId ?? ''),
-          gain: 0.1,
+          gain: 0.25,
           pan: screenPan(player.x, run.width, options.placement),
         });
     }
@@ -395,7 +441,13 @@ export class FeedbackDirector {
     }
     // At most two decorative sources per Versus board, four globally.
     const quota = options.mode === 'versus' ? 2 : 4;
-    const selected = candidates.sort((a, b) => b.gain - a.gain).slice(0, quota);
+    const ranked = candidates.sort((a, b) => b.gain - a.gain);
+    // Reserve the moving body and one nearby enemy before decorative zones.
+    const selected = ranked.filter((a) => a.key.startsWith('player:')).slice(0, quota - 1);
+    const nearestEnemy = ranked.find((a) => a.key.startsWith('enemy:'));
+    if (nearestEnemy) selected.push(nearestEnemy);
+    for (const item of ranked)
+      if (selected.length < quota && !selected.includes(item)) selected.push(item);
     const keys = new Set(selected.map((a) => a.key));
     for (const [key, voice] of state.loops)
       if (!keys.has(key) || voice.ended) {

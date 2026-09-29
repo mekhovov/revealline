@@ -92,3 +92,20 @@ test('essential WAV recipes are followed from the bank without pulling optional 
   assert.ok(!result.retained.has('game/audio/music/optional.mp3'));
   assert.ok(!result.retained.has('authoring/audio/original.wav'));
 });
+
+test('radio redistribution license and source recordings remain available in every offline mode', () => {
+  const files = entries({
+    'game/audio/effects/licenses.html': '<h1>GPL-2.0</h1>',
+    'game/audio/effects/edgetx-source.json': JSON.stringify({
+      originals: [{ local: 'edgetx-armed-source-en.wav' }, { local: 'edgetx-armed-source-uk.wav' }],
+    }),
+    'game/audio/effects/edgetx-armed-source-en.wav': 'English source',
+    'game/audio/effects/edgetx-armed-source-uk.wav': 'Ukrainian source',
+    'authoring/audio/unrelated.wav': 'optional production recording',
+  });
+  for (const mode of ['solo', 'versus', 'team']) {
+    const result = selectOfflineCore(files, new Set(), { mode });
+    assert.equal(result.retained.size, 4, mode);
+    assert.ok(!result.retained.has('authoring/audio/unrelated.wav'));
+  }
+});

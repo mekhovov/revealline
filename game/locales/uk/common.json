@@ -249,5 +249,7 @@
   "counts.videos_many": "{{count}} відео",
   "counts.videos_other": "{{count}} відео",
   "menuSounds": "Звуки меню",
-  "menuVolume": "Гучність меню"
+  "menuVolume": "Гучність меню",
+  "radioSounds": "Радіоповідомлення FPV",
+  "radioVolume": "Гучність радіо"
 }

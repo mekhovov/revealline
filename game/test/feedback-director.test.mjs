@@ -1,3 +1,5 @@
+import { readRadioAudio } from '../ui/radio-audio.mjs';
+import { audioHarness } from './helpers/soundtrack-audio.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
@@ -33,8 +35,11 @@ class Node {
   disconnect() {}
   start(time, offset) {
     this.offset = offset;
+    this.startedAt = time;
   }
-  stop() {}
+  stop(time = 0) {
+    this.stopAt = time;
+  }
 }
 function harness() {
   const context = {
@@ -191,7 +196,20 @@ test('bank assets match provenance and stay below transfer and decoded budgets',
     assert.equal(createHash('sha256').update(data).digest('hex'), entry.sha256);
     assert.equal(data.toString('ascii', 0, 4), 'RIFF');
     bytes += data.length;
-    decoded += data.length * 2;
+    let pcmBytes = 0,
+      sampleRate = 0;
+    for (let offset = 12; offset + 8 <= data.length; ) {
+      const size = data.readUInt32LE(offset + 4),
+        id = data.toString('ascii', offset, offset + 4);
+      if (id === 'fmt ') {
+        assert.equal(data.readUInt16LE(offset + 8), 1);
+        sampleRate = data.readUInt32LE(offset + 12);
+      }
+      if (id === 'data') pcmBytes = size;
+      offset += 8 + size + (size % 2);
+    }
+    assert.ok(pcmBytes > 0 && sampleRate > 0);
+    decoded += (pcmBytes / 2) * 4 * (48000 / sampleRate);
   }
   assert.ok(bytes <= 8 * 1024 * 1024);
   assert.ok(decoded <= 32 * 1024 * 1024);
@@ -210,7 +228,7 @@ test('Team shared source uses the nearest active player exactly once', () => {
   state.enemies[0].x++;
   director.update(true, {}, state, { mode: 'team' });
   assert.equal(director.boards.get('solo').loops.size, 1);
-  assert.equal(director.boards.get('solo').loops.get('enemy:enemy').volume.gain.value, 0.18);
+  assert.equal(director.boards.get('solo').loops.get('enemy:enemy').volume.gain.value, 0.3);
   state.tick++;
   state.players[1].status = 'downed';
   state.enemies[0].x++;
@@ -277,4 +295,178 @@ test('a decoded buffer becomes available for future events only, never replays a
   assert.ok(director.play('warning'));
   director.reset();
   assert.equal(sound.voices.size, 0);
+});
+
+test('FPV boot schedules one localized radio voice after its ESC cue and urgent threats cancel it', () => {
+  const { sound, director } = harness();
+  sound.radioSettings = { enabled: true, volume: 0.35 };
+  sound.radioBus = {};
+  const state = run();
+  director.update(true, { family: 'fpv' }, state);
+  assert.ok([...sound.voices].some((v) => v.name === 'esc-start'));
+  const radio = [...sound.voices].find((v) => v.radio);
+  assert.equal(radio.name, 'radio-armed-en');
+  assert.equal(radio.panner.to, sound.radioBus);
+  assert.ok(radio.source.startedAt > sound.context.currentTime);
+  director.update(true, { family: 'fpv' }, run(), { mode: 'versus', board: 'right' });
+  assert.equal([...sound.voices].filter((v) => v.radio).length, 1);
+  director.play('warning', { priority: 5 });
+  assert.equal([...sound.voices].filter((v) => v.radio).length, 0);
+  assert.equal(radio.ended, true);
+});
+test('radio opt-out, non-FPV bodies, replay silent start and reset never leave speech scheduled', () => {
+  for (const options of [{ bodyId: 'heritage-bird' }, { silentStart: true }]) {
+    const { sound, director } = harness();
+    sound.radioSettings = { enabled: true, volume: 0.35 };
+    director.update(true, { family: 'fpv' }, run(), options);
+    assert.equal([...sound.voices].filter((v) => v.radio).length, 0);
+  }
+  const { sound, director } = harness();
+  sound.radioSettings = { enabled: false, volume: 0.35 };
+  director.update(true, { family: 'fpv' }, run());
+  assert.equal([...sound.voices].filter((v) => v.radio).length, 0);
+  sound.radioSettings.enabled = true;
+  sound.context.currentTime += 2;
+  director.update(true, { family: 'fpv' }, run());
+  director.reset();
+  assert.equal(sound.voices.size, 0);
+});
+
+test('radio storage corruption and denied access keep independent safe defaults', () => {
+  assert.deepEqual(readRadioAudio({ getItem: () => '{bad' }), { enabled: true, volume: 0.35 });
+  assert.deepEqual(readRadioAudio({ getItem: () => '{"enabled":false,"volume":0.2}' }), {
+    enabled: false,
+    volume: 0.2,
+  });
+  assert.deepEqual(
+    readRadioAudio({
+      getItem() {
+        throw new Error('denied');
+      },
+    }),
+    { enabled: true, volume: 0.35 },
+  );
+});
+test('pending radio speech is retired by pause, suspension, disabling and disposal', async () => {
+  for (const action of ['pause', 'suspend', 'disable', 'dispose']) {
+    const { soundscape: s, context } = audioHarness();
+    s.setup();
+    s.enabled = true;
+    context.state = 'running';
+    s.feedbackDirector.buffers.set('radio-armed-en', { duration: 0.5 });
+    s.feedbackDirector.play('radio-armed-en', { radio: true, delay: 1 });
+    assert.equal([...s.voices].filter((v) => v.radio).length, 1);
+    await s[action]();
+    assert.equal([...s.voices].filter((v) => v.radio).length, 0, action);
+    await s.dispose();
+  }
+});
+test('radio volume is separate from menu volume and opting out stops pending speech', () => {
+  const { soundscape: s, context } = audioHarness();
+  s.setup();
+  s.enabled = true;
+  context.state = 'running';
+  s.radioSettings.volume = 0.2;
+  s.menuSettings.volume = 0.8;
+  s.applyVolumes();
+  assert.equal(s.radioBus.gain.value, 0.2);
+  assert.equal(s.menuBus.gain.value, 0.8);
+  s.feedbackDirector.buffers.set('radio-armed-en', { duration: 0.5 });
+  s.feedbackDirector.play('radio-armed-en', { radio: true, delay: 1 });
+  s.radioSettings.enabled = false;
+  s.applyVolumes();
+  assert.equal(s.radioBus.gain.value, 0);
+  assert.equal(s.voices.size, 0);
+});
+
+test('twenty simulated minutes of two-board feedback stay bounded and reset cleanly', () => {
+  const { sound, director } = harness();
+  const states = [run(), run()];
+  for (const state of states)
+    state.enemies = Array.from({ length: 12 }, (_, id) => ({
+      id,
+      type: 'bouncer',
+      x: 20 + id,
+      y: 10,
+    }));
+  let maxVoices = 0,
+    maxLoops = 0;
+  for (let tick = 1; tick <= 20 * 60 * 60; tick++) {
+    sound.context.currentTime = tick / 60;
+    for (const voice of [...sound.voices])
+      if (voice.source.stopAt <= sound.context.currentTime) voice.source.onended?.();
+    for (const [board, state] of states.entries()) {
+      state.tick = tick;
+      state.time = tick / 60;
+      for (const [i, enemy] of state.enemies.entries())
+        enemy.x = 35 + 30 * Math.sin(tick / 150 + i);
+      director.update(tick % 600 > 15, { family: 'fpv' }, state, {
+        board,
+        mode: 'versus',
+        silentStart: true,
+      });
+      if (tick % 90 === 0)
+        director.events(
+          [{ type: 'cut.closed', tick, time: state.time }],
+          state,
+          { family: 'fpv' },
+          { board, mode: 'versus' },
+        );
+    }
+    const loops = [...sound.voices].filter((v) => v.source.loop);
+    maxVoices = Math.max(maxVoices, sound.voices.size);
+    maxLoops = Math.max(maxLoops, loops.length);
+    assert.ok(sound.voices.size <= 16 && loops.length <= 4);
+  }
+  assert.ok(maxVoices > 0 && maxLoops === 4);
+  director.reset();
+  assert.equal(sound.voices.size, 0);
+  assert.equal(director.boards.size, 0);
+});
+
+test('crowded boards reserve a moving player and nearby enemy within the shared voice ceiling', () => {
+  const { director } = harness();
+  for (const board of ['left', 'right']) {
+    const state = run();
+    state.enemies = Array.from({ length: 8 }, (_, i) => ({
+      id: i,
+      type: 'bouncer',
+      x: 10 + i / 10,
+      y: 10,
+    }));
+    director.update(true, { family: 'fpv' }, state, { board, mode: 'versus', silentStart: true });
+    state.tick++;
+    state.player.x += 0.1;
+    for (const enemy of state.enemies) enemy.x += 0.1;
+    director.update(true, { family: 'fpv' }, state, { board, mode: 'versus', silentStart: true });
+    const loops = director.boards.get(board).loops;
+    assert.equal(loops.size, 2);
+    assert.ok(loops.has('player:0'));
+    assert.ok([...loops.keys()].some((k) => k.startsWith('enemy:')));
+    assert.equal(loops.get('player:0').name, 'rotor');
+  }
+});
+
+test('rapid routine feedback shares a cooldown across variations without suppressing a warning', () => {
+  const { director, sound } = harness();
+  assert.ok(director.play('pickup'));
+  sound.context.currentTime += 0.05;
+  assert.equal(director.play('pickup'), null);
+  assert.ok(director.play('warning', { priority: 5 }));
+  sound.context.currentTime += 0.2;
+  assert.ok(director.play('pickup'));
+  assert.equal([...sound.voices].filter((v) => v.cueFamily === 'pickup' && !v.ended).length, 1);
+});
+
+test('a capture transaction uses its reveal seal without stacking a separate closure', () => {
+  const { director, sound } = harness();
+  director.events(
+    [
+      { type: 'cut.closed', tick: 1 },
+      { type: 'cells.claimed', tick: 1, indices: [1, 2] },
+    ],
+    run(),
+  );
+  assert.ok([...sound.voices].some((v) => v.name === 'reveal-small'));
+  assert.ok(![...sound.voices].some((v) => v.name === 'closure'));
 });

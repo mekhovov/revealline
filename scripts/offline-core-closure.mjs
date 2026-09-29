@@ -90,6 +90,9 @@ export function selectOfflineCore(entries, excluded, { mode = 'solo' } = {}) {
       name.startsWith('icons/') ||
       name === 'manifest.webmanifest' ||
       name === 'game/build-info.json' ||
+      // Redistribution notices and editable radio sources must remain available offline.
+      name === 'game/audio/effects/licenses.html' ||
+      name === 'game/audio/effects/edgetx-source.json' ||
       /^game\/i18n\/.*\.(?:mjs|json)$/.test(name) ||
       /^game\/assets\//.test(name) ||
       /^game\/ui\/(?:art|fonts)\//.test(name) ||

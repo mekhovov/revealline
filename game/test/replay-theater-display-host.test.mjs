@@ -1,3 +1,4 @@
+import { RADIO_AUDIO_KEY } from '../ui/radio-audio.mjs';
 import { AUDIO_PREFERENCES_KEY } from '../audio-preferences.mjs';
 import { MENU_AUDIO_KEY } from '../ui/menu-audio.mjs';
 import test from 'node:test';
@@ -311,12 +312,16 @@ function raw(page) {
 function noPlayerAccess(page) {
   assert.ok(
     page.reads.every((key) =>
-      [DISPLAY_PREFERENCES_KEY, AUDIO_PREFERENCES_KEY, MENU_AUDIO_KEY].includes(key),
+      [DISPLAY_PREFERENCES_KEY, AUDIO_PREFERENCES_KEY, MENU_AUDIO_KEY, RADIO_AUDIO_KEY].includes(
+        key,
+      ),
     ),
   );
   assert.ok(
     page.writes.every(({ key }) =>
-      [DISPLAY_PREFERENCES_KEY, AUDIO_PREFERENCES_KEY, MENU_AUDIO_KEY].includes(key),
+      [DISPLAY_PREFERENCES_KEY, AUDIO_PREFERENCES_KEY, MENU_AUDIO_KEY, RADIO_AUDIO_KEY].includes(
+        key,
+      ),
     ),
   );
   assert.equal(page.data.get('revealline.library.dev.v1'), 'untouched player profile');

@@ -219,5 +219,7 @@
   "counts.videos_one": "{{count}} video",
   "counts.videos_other": "{{count}} videos",
   "menuSounds": "Menu sounds",
-  "menuVolume": "Menu volume"
+  "menuVolume": "Menu volume",
+  "radioSounds": "FPV radio announcements",
+  "radioVolume": "Radio volume"
 }

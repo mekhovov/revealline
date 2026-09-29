@@ -47,8 +47,9 @@ export function movementFor(body = '', theme = {}, type = '') {
   if (/pottery|chest|weaver|bell|basket/.test(body)) return 'grain';
   if (/navi|auditor|invoice|cursor/.test(body) || theme.family === 'navi') return 'grain';
   if (theme.family === 'atlas') return /rover|eroder/.test(type) ? 'grain' : 'wings';
-  if (/rover|eroder|tank|cart|bouncer/.test(type + body)) return 'wheels';
+  if (/rover|eroder|tank|cart/.test(type + body)) return 'wheels';
   if (/quad|fpv|rotor/.test(body) || theme.family === 'fpv') return 'rotor';
+  if (type === 'bouncer') return 'wheels';
   return 'motor';
 }
 export function eventCue(event) {

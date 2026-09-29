@@ -5,9 +5,9 @@
     0.12
   ],
   "confirm": [
-    "interface",
-    "confirmation_002",
-    0.28
+    "ui",
+    "click1",
+    0.1
   ],
   "cancel": [
     "interface",
@@ -46,8 +46,8 @@
   ],
   "paper": [
     "interface",
-    "scratch_001",
-    0.25
+    "scroll_001",
+    0.16
   ],
   "deploy": [
     "scifi",
@@ -76,13 +76,43 @@
   ],
   "pickup": [
     "interface",
-    "maximize_002",
-    0.4
+    "pluck_002",
+    0.16
   ],
   "closure": [
+    "ui",
+    "click4",
+    0.09
+  ],
+  "confirm-1": [
+    "ui",
+    "click2",
+    0.1
+  ],
+  "confirm-2": [
+    "ui",
+    "click3",
+    0.1
+  ],
+  "paper-1": [
+    "interface",
+    "scroll_002",
+    0.16
+  ],
+  "paper-2": [
+    "interface",
+    "scroll_003",
+    0.16
+  ],
+  "pickup-1": [
     "interface",
     "pluck_001",
-    0.18
+    0.16
+  ],
+  "pickup-2": [
+    "interface",
+    "drop_001",
+    0.16
   ],
   "contact-metal-1": [
     "impact",
