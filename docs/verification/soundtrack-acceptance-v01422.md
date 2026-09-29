@@ -6,15 +6,29 @@ physical-device evidence. The tested public build must report v0.142.2 and sourc
 
 ## Automated and desktop preflight
 
-| Check                              | Expected result                                                                                                                | State                                      |
-| ---------------------------------- | ------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------ |
-| Public selector and release marker | Root selects v0.142.2 and the game reports the exact source above                                                              | Ready to execute                           |
-| Canonical catalogue                | The game loads 196 public recordings and excludes 64 review-only recordings                                                    | Ready to execute                           |
-| Remote to bundled switch           | Start a canonical remote track, wait 15 seconds, select bundled Shchedryk, then return to a remote track; audio remains usable | Ready to execute                           |
-| Failed remote recovery             | Force one remote media request to fail; the failed deck is disposed and the next bundled, uploaded or remote recording plays   | Covered by source tests; repeat in browser |
-| Uploaded MP3 coexistence           | Upload one small MP3, mix it with public and bundled music, then use Previous/Next across all three sources                    | Ready to execute                           |
-| Saved style selection              | Choose at least two styles, reload, and confirm the explicit selection remains                                                 | Ready to execute                           |
-| Review-only exclusion              | A known review-only ID is absent from ordinary archive/game results                                                            | Ready to execute                           |
+| Check                              | Expected result                                                                                                              | State                                      |
+| ---------------------------------- | ---------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------ |
+| Public selector and release marker | Root selects v0.142.2 and the game reports the exact source above                                                            | Passed 29 September 2026                   |
+| Canonical catalogue                | The game loads 196 public recordings and excludes 64 review-only recordings                                                  | Passed 29 September 2026                   |
+| Remote to bundled switch           | Start a canonical remote track, wait at least 10 seconds, select bundled Shchedryk, then return to a remote track            | Passed 29 September 2026                   |
+| Failed remote recovery             | Force one remote media request to fail; the failed deck is disposed and the next bundled, uploaded or remote recording plays | Covered by source tests; repeat in browser |
+| Uploaded MP3 coexistence           | Upload one small MP3, mix it with public and bundled music, then use Previous/Next across all three sources                  | Ready to execute                           |
+| Saved style selection              | Choose at least two styles, reload, and confirm the explicit selection remains                                               | Failed in v0.142.2; source fix in PR #779  |
+| Review-only exclusion              | A known review-only ID is absent from ordinary archive/game results                                                          | Passed 29 September 2026                   |
+
+Desktop browser evidence on 29 September 2026: `runner2088` streamed inside the
+game to 0:10/1:37, switching to bundled Shchedryk reached 0:01/4:30, and switching
+back to remote `Revenge's Waiting` reached 0:03/0:48 without silence or a skip
+loop. Searching the ordinary game archive for review-only `Curse of the Moon`
+returned **0 of 196** results. This is desktop evidence and does not close the
+physical iPhone row.
+
+The same run exposed a persistence regression: selecting only Synth and Metal,
+starting that selection, and reloading restored all ten style checkboxes. Source
+tests cover writing the selected genres but not rehydrating the Audio settings
+controls. The source repair is runtime [PR #779](https://github.com/mekhovov/revealline/pull/779).
+It has focused reload coverage and deterministic review evidence, but this documentation
+PR does not change shipped behavior; public retest waits for its qualified release.
 
 ## Physical iPhone
 
