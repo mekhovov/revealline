@@ -220,3 +220,56 @@ The current map-edit test in `playground-import-host.test.mjs` runs the real
 Playground module and domain commands, checks invalid/valid complete JSON,
 and proves that storage and preview change only on explicit launch. Shared
 authoring tests cover a single input poller and native/virtual Confirm ownership.
+
+## Design Atlas
+
+Use the dedicated qualification origin:
+`http://127.0.0.1:8991/game/test/manual/authoring-controller.html?tool=atlasCurrent`.
+Run in English and keep the page foreground. Atlas is an original design review,
+not a playable game or project editor. Its validation, failure and success
+screens are illustrations, not calls to a domain validator.
+
+The real shared pad cancels screen/state drafts, visits all nine screens and
+eighteen allowed states, follows representative mock links and checks that each
+returns focus to the screen selector. It checks all four CSS preview widths,
+English/Ukrainian specimen text and language metadata, and the exact 32-row
+inventory: ten player, eleven support, four system and seven authoring rows.
+The width controls are layout studies, not physical-device qualification.
+Measurements wait for the CSS max-width transition to finish and include the
+actual iframe viewport; an outer browser viewport request does not establish
+the iframe's dimensions.
+
+Page, short-landscape preview, matrix and illustrative-brief reading use their
+real Read and scroll controls. The fixture measures actual overflow, reaches
+bounded edges only where they exist, and verifies that Back or Confirm exits
+to the exact reading entry. An axis without overflow is explicitly recorded as
+unexercised rather than claimed as a scrolling pass. The Workshop validation
+illustration opens the asset brief and focuses Copy without launching a game.
+In particular, a zero horizontal matrix maximum does not qualify virtual-pad
+horizontal scrolling; a separate narrow native-browser receipt may do so.
+
+One explicit Copy action must report success or select the exact visible text
+as its fallback. The fixture does not read, replace or mock the Clipboard API.
+A pending write's bounded two-second product fallback is accepted only when it
+selects the exact visible text, within the fixture's ten-second status wait.
+A success message alone is not an actual clipboard-byte receipt. The adjacent
+Download example brief anchor is activated twice through the real pad. Its
+existing `text/plain;charset=utf-8` Blob must contain the exact visible UTF-8
+bytes. If Atlas prepared it before the runner installed its passive allocation
+observer, the fixture reads the existing Blob URL without invoking an export
+handler or constructing a replacement. Both unprevented anchor dispatches must reference the unchanged
+prepared URL and `fpv-line-atlas-example-brief-en.txt` filename. URL allocation
+count is kept separate from the two download activations. Retain and validate
+both actual OS files separately; in-page Blob/anchor evidence does not prove an
+operating-system file was written.
+
+The case compares every pre-existing local/session storage entry and performs
+no storage writes or IndexedDB operations. Atlas has no project Save, import,
+JSON export or persisted study state; reloading resets the title/returning
+study. The text download is the illustrative brief only, not a generated asset
+or executable project. English/Ukrainian specimens do not qualify a full-page
+locale switch. For separate native keyboard checks use `&keyboard=1`, exercise
+selectors and reading controls with native keys, activate the real download
+anchor, and record Workshop return and actual clipboard/file receipts
+independently. Physical controllers, native platforms and release delivery
+remain separate gates.
