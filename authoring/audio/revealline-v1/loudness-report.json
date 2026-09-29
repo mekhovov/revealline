@@ -719,34 +719,94 @@
       "duration": 6.4
     }
   },
+  "ceramic": {
+    "target50msDbfs": -30,
+    "before": {
+      "rmsDbfs": -20.17973656269101,
+      "max50msDbfs": -9.529790518391643,
+      "samplePeakDbfs": -6.0636481282156085,
+      "duration": 6.4
+    },
+    "after": {
+      "rmsDbfs": -40.65021039774294,
+      "max50msDbfs": -30.00014344551883,
+      "samplePeakDbfs": -26.53605277920001,
+      "duration": 6.4
+    }
+  },
+  "wood": {
+    "target50msDbfs": -29,
+    "before": {
+      "rmsDbfs": -20.69681217726349,
+      "max50msDbfs": -10.242653210363212,
+      "samplePeakDbfs": -6.031740091457978,
+      "duration": 6.4
+    },
+    "after": {
+      "rmsDbfs": -39.454435982600266,
+      "max50msDbfs": -29.000275875715623,
+      "samplePeakDbfs": -24.788958899953357,
+      "duration": 6.4
+    }
+  },
+  "ratchet": {
+    "target50msDbfs": -29,
+    "before": {
+      "rmsDbfs": -22.111659587862412,
+      "max50msDbfs": -13.175259327011828,
+      "samplePeakDbfs": -6.021130074090242,
+      "duration": 5.8
+    },
+    "after": {
+      "rmsDbfs": -37.9366684144656,
+      "max50msDbfs": -29.000297083639182,
+      "samplePeakDbfs": -21.84735953324974,
+      "duration": 5.8
+    }
+  },
+  "bell": {
+    "target50msDbfs": -34,
+    "before": {
+      "rmsDbfs": -20.392384275123856,
+      "max50msDbfs": -9.45969411413959,
+      "samplePeakDbfs": -6.031740091457978,
+      "duration": 7.2
+    },
+    "after": {
+      "rmsDbfs": -44.933001667766426,
+      "max50msDbfs": -34.00017099335685,
+      "samplePeakDbfs": -30.573564013869465,
+      "duration": 7.2
+    }
+  },
   "esc-start": {
     "target50msDbfs": -32,
     "before": {
-      "rmsDbfs": -22.699600448978373,
-      "max50msDbfs": -18.68759252100625,
-      "samplePeakDbfs": -16.907794349731674,
-      "duration": 0.785
+      "rmsDbfs": -48.84220458338199,
+      "max50msDbfs": -45.836026733728076,
+      "samplePeakDbfs": -38.921520506893444,
+      "duration": 0.64
     },
     "after": {
-      "rmsDbfs": -35.941500306202165,
-      "max50msDbfs": -32.00022032221505,
-      "samplePeakDbfs": -30.370013729286732,
-      "duration": 0.785
+      "rmsDbfs": -34.785783477865444,
+      "max50msDbfs": -32.00037779226506,
+      "samplePeakDbfs": -26.729459753330968,
+      "duration": 0.64
     }
   },
   "esc-retry": {
     "target50msDbfs": -32,
     "before": {
-      "rmsDbfs": -23.084498968498405,
-      "max50msDbfs": -19.21477859189469,
-      "samplePeakDbfs": -16.92824268149124,
-      "duration": 0.285
+      "rmsDbfs": -47.16210307338461,
+      "max50msDbfs": -45.836026733728076,
+      "samplePeakDbfs": -38.921520506893444,
+      "duration": 0.29
     },
     "after": {
-      "rmsDbfs": -35.79358115011007,
-      "max50msDbfs": -32.0003455012439,
-      "samplePeakDbfs": -29.9017730462402,
-      "duration": 0.285
+      "rmsDbfs": -33.14687469162661,
+      "max50msDbfs": -32.00037779226506,
+      "samplePeakDbfs": -26.729459753330968,
+      "duration": 0.29
     }
   },
   "radio-armed-en": {

@@ -81,24 +81,15 @@ for name in ['flow','warning','start','retry','loss','respawn','win','reveal-sma
 from recorded_movement import build as build_recorded_movement, RECIPES as MOVEMENT_RECIPES
 build_recorded_movement(HERE, OUT)
 for name in MOVEMENT_RECIPES: bank[name]={'file':name+'.wav','loop':True}
-# Original short ESC-style motor-resonance sequence. Not a hardware recording or branded tune.
-for name, notes in [('esc-start', [(0,523.25,.12),(.17,659.25,.12),(.34,783.99,.14),(.58,1046.5,.18)]), ('esc-retry', [(0,783.99,.09),(.14,1046.5,.12)])]:
-    sr=32000; n=int((notes[-1][0]+notes[-1][2]+.025)*sr); data=[]
-    for i in range(n):
-        t=i/sr; value=0
-        for onset,freq,duration in notes:
-            dt=t-onset
-            if 0 <= dt < duration:
-                env=min(1,dt/.004,(duration-dt)/.012)
-                # Slightly detuned motor resonances with limited odd harmonics.
-                for detune in [0.997,1.003]:
-                    phase=2*math.pi*freq*detune*dt
-                    value+=.085*env*(math.sin(phase)+.24*math.sin(3*phase)+.08*math.sin(5*phase))
-        data.append(int(max(-.8,min(.8,value))*32767))
+# Real recorded FPV launch beeps. Source identifies Orqa hardware, not its firmware.
+# Short retry uses one of the same recorded beeps; neither is advertised as power-on telemetry.
+for name,start,duration in [('esc-start',0,.64),('esc-retry',.34,.29)]:
+    source=json.loads((HERE/'originals/freesound/sources.json').read_text())['esc-recording']['file']
     dest=OUT/(name+'.wav')
-    with wave.open(str(dest),'wb') as w:
-        w.setparams((1,2,sr,n,'NONE','not compressed'));w.writeframes(struct.pack('<'+'h'*n,*data))
+    filters=f'atrim=start={start}:duration={duration},asetpts=PTS-STARTPTS,highpass=f=1100,lowpass=f=4800,afade=t=in:d=0.008,afade=t=out:st={duration-.04}:d=0.04'
+    subprocess.run(['ffmpeg','-v','error','-y','-i',str(HERE/'originals/freesound'/source),'-af',filters,'-ar','32000','-ac','1','-c:a','pcm_s16le',str(dest)],check=True)
     bank[name]={'file':dest.name,'loop':False}
+(HERE/'hardware-recipes.json').write_text(json.dumps({'source':'esc-recording','esc-start':{'start':0,'duration':.64},'esc-retry':{'start':.34,'duration':.29},'filters':'highpass 1100 Hz, lowpass 4800 Hz, 8 ms attack and 40 ms release, 32 kHz mono PCM16; whole-bank calibration follows','identity':'Recorded Orqa FPV launch, firmware unspecified; not a Betaflight power-on melody'},indent=2)+'\n')
 # Official EdgeTX speech is separately GPL-2.0 licensed, not part of the CC0 ingredients.
 for locale in ['en','uk']:
     name='radio-armed-'+locale; dest=OUT/(name+'.wav')

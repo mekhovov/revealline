@@ -19,6 +19,7 @@ export async function inspectMixedEffects(buffers) {
       'reactivated',
       'esc-start',
     ],
+    newMaterials: ['contact-glass', 'contact-wood', 'erosion', 'esc-start', 'warning'],
     radioEnglish: ['radio-armed-en'],
     radioUkrainian: ['radio-armed-uk'],
   };
@@ -51,7 +52,11 @@ export async function inspectMixedEffects(buffers) {
     };
     const director = new FeedbackDirector(sound);
     director.buffers = new Map(buffers);
-    for (const [index, cue] of ['rotor', 'motor', 'wheels', 'wings'].entries()) {
+    const movement =
+      name === 'newMaterials'
+        ? ['ceramic', 'wood', 'ratchet', 'bell']
+        : ['rotor', 'motor', 'wheels', 'wings'];
+    for (const [index, cue] of movement.entries()) {
       const voice = director.play(cue, {
         loop: true,
         movement: true,

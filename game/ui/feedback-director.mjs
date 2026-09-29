@@ -297,11 +297,8 @@ export class FeedbackDirector {
     if (options.silentStart) state.started = true;
     if (!state.started) {
       const level = run.levelId ?? run.level?.id;
-      const body =
-        options.bodyId ??
-        run.player?.bodyId ??
-        (options.actorStyle === 'fpv' ? 'fpv' : theme.player);
-      const fpv = /fpv|quad|rotor/.test(body ?? '') || (!body && theme.family === 'fpv');
+      const body = playerMovementBody(run.player ?? run.players?.[0] ?? {}, run, theme, options);
+      const fpv = movementFor(body, theme) === 'rotor' || /fixedwing|delta-interceptor/.test(body);
       const retry = level && this.lastLevels.get(board) === level;
       const intro = fpv ? (retry ? 'esc-retry' : 'esc-start') : retry ? 'retry' : 'start';
       const started = this.play(intro, { priority: 4, board });

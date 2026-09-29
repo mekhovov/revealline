@@ -11,7 +11,17 @@ import {
   recordedMovement,
   playerMovementBody,
 } from '../ui/movement-profiles.mjs';
-const recorded = new Set(['rotor', 'motor', 'wings', 'grain', 'wheels']);
+const recorded = new Set([
+  'rotor',
+  'motor',
+  'wings',
+  'grain',
+  'wheels',
+  'ceramic',
+  'wood',
+  'ratchet',
+  'bell',
+]);
 const valid = (cue) => {
   assert.ok(recorded.has(cue), cue);
   assert.equal(EFFECT_BANK[cue].loop, true);
@@ -100,4 +110,16 @@ test('player body selection follows equipped class, per-player body and appearan
     ),
     'rotor',
   );
+});
+
+test('material bodies and eroders use their distinct recorded ingredients', () => {
+  for (const [body, cue] of Object.entries({
+    'atlas-pottery-courier-v1': 'ceramic',
+    'atlas-carved-chest-v1': 'wood',
+    'atlas-woven-basket-v1': 'wood',
+    'atlas-bell-warden-v1': 'bell',
+  }))
+    assert.equal(recordedMovement(body), cue);
+  assert.equal(recordedMovement('', { family: 'fpv' }, 'eroder'), 'ratchet');
+  assert.equal(recordedMovement('', { family: 'retro' }, 'eroder'), 'ratchet');
 });

@@ -22,12 +22,12 @@
     "fpv-impact-v1": "rotor",
     "fpv-trapper-v1": "rotor",
     "atlas-swallow-v3": "wings",
-    "atlas-pottery-courier-v1": "grain",
-    "atlas-carved-chest-v1": "grain",
+    "atlas-pottery-courier-v1": "ceramic",
+    "atlas-carved-chest-v1": "wood",
     "atlas-falcon-crest-v3": "wings",
     "atlas-weaver-shuttle-v3": "grain",
-    "atlas-bell-warden-v1": "grain",
-    "atlas-woven-basket-v1": "grain"
+    "atlas-bell-warden-v1": "bell",
+    "atlas-woven-basket-v1": "wood"
   },
   "worldEnemies": {
     "fpv": {
@@ -35,7 +35,7 @@
       "border-patrol": "rotor",
       "contour-patrol": "rotor",
       "claimed-rover": "wheels",
-      "eroder": "motor",
+      "eroder": "ratchet",
       "lane-boss": "motor",
       "relay-sentinel": "motor"
     },
@@ -53,7 +53,7 @@
       "border-patrol": "motor",
       "contour-patrol": "wheels",
       "claimed-rover": "wheels",
-      "eroder": "motor",
+      "eroder": "ratchet",
       "lane-boss": "motor",
       "relay-sentinel": "motor"
     },
@@ -69,13 +69,13 @@
   },
   "journey": {
     "horizon-enamel-v1": {
-      "bouncer": "motor",
-      "border-patrol": "motor",
-      "contour-patrol": "wheels",
-      "claimed-rover": "wheels",
-      "eroder": "motor",
-      "lane-boss": "motor",
-      "relay-sentinel": "motor"
+      "bouncer": "ceramic",
+      "border-patrol": "ceramic",
+      "contour-patrol": "ceramic",
+      "claimed-rover": "ceramic",
+      "eroder": "ceramic",
+      "lane-boss": "ceramic",
+      "relay-sentinel": "ceramic"
     },
     "border-seedpod-v1": {
       "bouncer": "grain",
@@ -87,13 +87,13 @@
       "relay-sentinel": "grain"
     },
     "signal-porcelain-v1": {
-      "bouncer": "motor",
-      "border-patrol": "motor",
-      "contour-patrol": "wheels",
-      "claimed-rover": "wheels",
-      "eroder": "motor",
-      "lane-boss": "motor",
-      "relay-sentinel": "motor"
+      "bouncer": "ceramic",
+      "border-patrol": "ceramic",
+      "contour-patrol": "ceramic",
+      "claimed-rover": "ceramic",
+      "eroder": "ceramic",
+      "lane-boss": "ceramic",
+      "relay-sentinel": "ceramic"
     },
     "neon-glass-v1": {
       "bouncer": "motor",
@@ -105,13 +105,13 @@
       "relay-sentinel": "motor"
     },
     "rover-rivets-v1": {
-      "bouncer": "motor",
-      "border-patrol": "motor",
-      "contour-patrol": "wheels",
-      "claimed-rover": "wheels",
-      "eroder": "motor",
-      "lane-boss": "motor",
-      "relay-sentinel": "motor"
+      "bouncer": "ratchet",
+      "border-patrol": "ratchet",
+      "contour-patrol": "ratchet",
+      "claimed-rover": "ratchet",
+      "eroder": "ratchet",
+      "lane-boss": "ratchet",
+      "relay-sentinel": "ratchet"
     },
     "fracture-basalt-v1": {
       "bouncer": "motor",
