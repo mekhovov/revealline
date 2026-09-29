@@ -1911,6 +1911,13 @@ function mountMotionLab() {
       resume();
     });
     for (const button of document.querySelectorAll('[data-direction]')) {
+      // Shared controller Confirm activates the semantic button with a click.
+      // A discrete direction keeps travel intent without inventing a held key.
+      listen(button, 'click', () => {
+        const source = `click-${button.dataset.direction}`;
+        manualStart(source, button.dataset.direction);
+        steering.release(source);
+      });
       setHeldPointer(
         button,
         (id) => manualStart(`pointer-${id}`, button.dataset.direction),
@@ -1987,17 +1994,25 @@ function mountMotionLab() {
       });
     }
     listen(window, 'keydown', (event) => {
+      // Form/menu navigation and already-consumed input never steer the study.
+      // Explicit direction/hold/action buttons own their handlers above.
+      if (
+        event.defaultPrevented ||
+        event.ctrlKey ||
+        event.metaKey ||
+        event.altKey ||
+        disposed ||
+        document.hidden ||
+        document.hasFocus() === false ||
+        document.activeElement !== canvas ||
+        event.target !== canvas
+      )
+        return;
       if (event.code === 'Escape') {
         pause();
         return;
       }
-      if (event.target.closest('input,select,textarea,button,[contenteditable=true]')) return;
-      if (
-        ['KeyE', 'KeyR'].includes(event.code) &&
-        !event.ctrlKey &&
-        !event.metaKey &&
-        !event.altKey
-      ) {
+      if (['KeyE', 'KeyR'].includes(event.code)) {
         event.preventDefault();
         if (!event.repeat) abilityCommand(event.code === 'KeyE' ? 'act' : 'pickup');
         return;
