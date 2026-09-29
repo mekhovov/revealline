@@ -1,6 +1,6 @@
 {
   "format": "lossless-evidence-archives.v1",
-  "note": "Large machine inventories are stored as deterministic gzip. Original bytes and hashes remain exact; decode before reading JSON. Small summaries and all browser reports remain directly readable.",
+  "note": "Machine inventories and exact diagnostic logs are stored as deterministic gzip. Original bytes and hashes remain exact; decode before reading. Browser reports remain directly readable.",
   "files": [
     {
       "originalPath": "baseline-web-manifest.json",
@@ -153,6 +153,14 @@
       "sha256": "40a0b5820eff836a0b12d23994feb9c96d5e8a20a1c9a995db39402b0ca35357",
       "archiveBytes": 54149,
       "archiveSha256": "e5198a56e419cb44c190c2e8c1db39f2082cb5016036f468d6fc95c3bcdbf8e1"
+    },
+    {
+      "originalPath": "pr781-a9edb0c-candidate-failure.log",
+      "archivePath": "pr781-a9edb0c-candidate-failure.log.gz",
+      "bytes": 3073,
+      "sha256": "4a56a5af49a09993a0aaf52c95567936df745858237b372b1d76df3a48058ecb",
+      "archiveBytes": 730,
+      "archiveSha256": "48b874b57dc8b71a76617abe6e7a67a9403a080d0e3a7fae6d10a2cb453a1256"
     }
   ]
 }
