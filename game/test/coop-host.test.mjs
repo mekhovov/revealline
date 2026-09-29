@@ -216,39 +216,39 @@ test('lobby keyboard navigation reaches Race and accessibility controls while ex
   }
   assert.ok(seen.has('coop-touch'), 'Controls category exposes touch settings');
   assert.equal(seen.has('coop-level'), false, 'The dialog excludes the lobby');
-  f.$('coop-settings-tab-display').click();
-  f.$('coop-settings-tab-display').focus();
+  f.$('coop-settings-tab-accessibility').click();
+  f.$('coop-settings-tab-accessibility').focus();
   for (let index = 0; index < 20; index++) {
     f.press('Tab');
     seen.add(f.doc.activeElement.id);
   }
-  assert.ok(seen.has('coop-reduced'), 'Display category exposes reduced effects');
+  assert.ok(seen.has('coop-reduced'), 'Accessibility category exposes reduced effects');
+  f.$('coop-settings-tab-gameplay').click();
+  f.$('coop-settings-tab-gameplay').focus();
+  const gameplay = new Set();
+  for (let index = 0; index < 30; index++) {
+    f.press('Tab');
+    gameplay.add(f.doc.activeElement.id);
+  }
+  assert.ok(gameplay.has('coop-optional-setup-toggle'));
+  assert.ok(gameplay.has('coop-level'), 'Gameplay exposes legacy arena selection.');
+  assert.ok(gameplay.has('coop-experiment'), 'Gameplay exposes Team play-style tuning.');
   f.$('coop-settings-close').click();
   for (let index = 0; index < 30; index++) {
     f.press('Tab');
     assert.equal(f.doc.activeElement.closest('.race-pad'), null);
     seen.add(f.doc.activeElement.id);
   }
-  for (const id of ['coop-optional-setup-toggle', 'coop-start'])
+  for (const id of ['coop-settings-open', 'coop-start'])
     assert.ok(seen.has(id), `Lobby Tab must reach ${id}.`);
   assert.equal(
     seen.has('coop-level'),
     false,
     'Arena selection stays out of quick-start Tab order.',
   );
-  assert.equal(seen.has('coop-experiment'), false, 'Optional Team tuning stays collapsed.');
-  f.disclose('coop-optional-setup');
-  for (let index = 0; index < 20; index++) {
-    f.press('Tab');
-    seen.add(f.doc.activeElement.id);
-  }
-  assert.ok(seen.has('coop-level'), 'Opening Team options exposes legacy arena selection.');
-  assert.ok(seen.has('coop-experiment'), 'Opening Team options exposes play-style tuning.');
+  assert.equal(seen.has('coop-experiment'), false, 'Optional Team tuning stays in Settings.');
   let left = 0;
   f.$('coop-race').onclick = () => left++;
-  f.press('Escape');
-  assert.equal(f.$('coop-optional-setup').open, false, 'Back closes optional Team tuning first.');
-  assert.equal(left, 0, 'Closing Team options stays in the lobby.');
   f.press('Escape');
   assert.equal(left, 1, 'Lobby Back returns through its code-owned prior-mode destination.');
   f.$('coop-start').click();

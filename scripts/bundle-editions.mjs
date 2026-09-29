@@ -17,6 +17,7 @@ import {
 } from '../publishing/edition-candidate.mjs';
 import { validateEditionAdmission } from '../publishing/edition-admission.mjs';
 import { editionHash } from '../publishing/edition-zip.mjs';
+import { editionIdentityId } from '../game/edition-context.mjs';
 
 const git = (root, args) =>
   execFileSync('git', args, { cwd: root, encoding: 'utf8', maxBuffer: 16 * 1024 * 1024 }).trim();
@@ -53,6 +54,7 @@ function verifyCommittedInputs(files, tree) {
  * qualification receipts; successful compilation is never human signoff. */
 export async function bundleEditions({ root = process.cwd(), editionIds, out, basePath = '/' }) {
   root = await fs.realpath(root);
+  if (Array.isArray(editionIds)) editionIds = editionIds.map(editionIdentityId);
   if (
     !Array.isArray(editionIds) ||
     !editionIds.length ||

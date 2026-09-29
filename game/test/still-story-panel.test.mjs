@@ -262,7 +262,7 @@ test('native prepared download transfers exact v2 bytes; keep-current preserves 
         assert.equal(clicked, true);
         invoked = true;
         assert.ok(blob.size > videoBytes.length);
-        assert.equal(filename, 'RevealLine-stories.rlstory');
+        assert.equal(filename, 'fpv-line-stories.rlstory');
       },
     },
   });

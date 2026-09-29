@@ -269,7 +269,8 @@ function tap(page, id) {
   return operation;
 }
 async function openCatalogue(page) {
-  activate(page, 'race-chapters');
+  await activate(page, 'race-chapters');
+  assert.ok(page.$('journey-chooser')?.open, page.$('race-message').textContent);
   await settled(
     page,
     () => page.$('journey-chooser')?.open && missionCard(page)?.disabled === false,

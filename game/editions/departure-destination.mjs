@@ -7,7 +7,9 @@ export function editionDepartureDestinationAllowed(provider, ticket, destination
         ticket.kind !== 'catalogue' ||
         ticket.presentationId !== undefined ||
         !(provider.currentCatalog ?? provider.catalog).editions.some(
-          (edition) => edition.id === ticket.destinationEditionId,
+          (edition) =>
+            edition.id === ticket.destinationEditionId &&
+            edition.brandId === provider.selection.brand.id,
         )
       )
         return false;

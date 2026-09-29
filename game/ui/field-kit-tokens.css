@@ -18,6 +18,9 @@
   --fk-font-display: var(--fk-font-pixel);
   --fk-font-ui: 'Field Kit UI', 'Field Kit Mono', system-ui, sans-serif;
   --fk-font-mono: 'Field Kit Mono', ui-monospace, monospace;
+  /* Departure Mono keeps its native 11px grid in prominent menu text. */
+  --fk-text-menu: 22px;
+  --fk-text-menu-title: 66px;
   --fk-text-body: 18px;
   --fk-text-control: 16px;
   --fk-text-secondary: 14px;
@@ -44,6 +47,8 @@
 /* Hosts apply the existing Standard/Large preference to body. */
 .field-kit[data-text-size='large'],
 [data-text-size='large'] .field-kit {
+  --fk-text-menu: 33px;
+  --fk-text-menu-title: 77px;
   --fk-text-body: 22px;
   --fk-text-control: 20px;
   --fk-text-secondary: 18px;

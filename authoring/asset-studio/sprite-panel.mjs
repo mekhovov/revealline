@@ -1,6 +1,10 @@
 import { t, localizedText, localizedAttribute } from '../../game/i18n/index.mjs';
 import { createSpriteEditor, spriteDocument } from '../../game/presentation/sprite-editor.mjs';
 import { hexColor, rgbHex } from './helpers.mjs';
+import {
+  createGridEditorAdapter,
+  registerAuthoringEditor,
+} from '../../game/ui/authoring-editors.mjs';
 export function mountSpritePanel({ onPrepare, onError, runOperation }) {
   const $ = (id) => document.getElementById(id),
     canvas = $('sprite-canvas'),
@@ -168,6 +172,36 @@ export function mountSpritePanel({ onPrepare, onError, runOperation }) {
       draw();
     }
   });
+  registerAuthoringEditor(
+    canvas,
+    createGridEditorAdapter({
+      element: canvas,
+      available: () => !!editor && !$('sprite-workbench').hidden,
+      dimensions: () => [canvas.width, canvas.height],
+      position: () => cursor,
+      move: (next) => {
+        cursor = next;
+      },
+      apply: () =>
+        guarded(() => {
+          const multi = ['line', 'rectangle', 'filled-rectangle', 'selection'].includes(
+            $('sprite-tool').value,
+          );
+          if (multi && !anchor) anchor = [...cursor];
+          else {
+            apply(anchor || cursor, cursor);
+            anchor = null;
+          }
+        }),
+      cancel: () => {
+        const pending = !!anchor;
+        anchor = null;
+        stroke = null;
+        return pending;
+      },
+      changed: draw,
+    }),
+  );
   canvas.addEventListener('focus', draw);
   canvas.addEventListener('blur', draw);
   $('sprite-zoom').addEventListener('change', draw);
