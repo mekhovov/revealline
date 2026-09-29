@@ -1,0 +1,20 @@
+{
+  "format": "revealline-recovery-fragment-v1",
+  "capturedAt": "2026-09-29T15:10:34.301807+00:00",
+  "worktree": "<home>/work/my_projects/go_test/.cache/worktrees/temporary-release-test-exception-20260922",
+  "branch": "refs/heads/codex/temporary-release-test-exception-20260922",
+  "head": "51b6d18447dbfe3584038f66d824a119bcdbd30a",
+  "excluded": [],
+  "changes": [
+    {
+      "status": "??",
+      "path": ".gstack/deploy-reports/2026-09-22-pr272-deploy.md",
+      "object": "77fc7f04a860bcc39c1696bbb6de5c44b39c1e18",
+      "sha256": "34ce7f88b179dec39a0932fe50ed7ae43a1f8a7cc8ad243ff4b338e6b06a360c",
+      "bytes": 2142,
+      "mode": "100644"
+    }
+  ],
+  "indexEntries": [],
+  "purpose": "Recovery only. These bytes are not release admission. Missing files, conflict stages and obsolete generated outputs are preserved as observations, not deletion or merge instructions."
+}
