@@ -465,3 +465,64 @@ selectors and reading controls with native keys, activate the real download
 anchor, and record Workshop return and actual clipboard/file receipts
 independently. Physical controllers, native platforms and release delivery
 remain separate gates.
+
+## Content Studio
+
+Use the dedicated qualification origin:
+`http://127.0.0.1:8992/game/test/manual/authoring-controller.html?tool=contentStudioCurrent`.
+Run in English and keep the editor foreground. The case opens a distinct
+`qse-…` starter URL, then creates a separate `qsc-…` project through the real
+Local project ID → New project → Apply controls. The product may create its
+initial starter checkpoint during boot; the fixture takes its read-only
+baseline after that save. Existing projects are not reused, reset or deleted.
+
+The shared pad cancels project ID and difficulty drafts, inspects the new
+project without saving, and explicitly adopts it with Apply.
+The new identity is entered by explicitly switching the real Letters and
+Symbols layouts for letters, digits and its hyphen. It then cancels a
+source-text draft, commits malformed JSON and requires Inspect to reject it
+while retaining both the text and the accepted checkpoint. Attempting New
+opens the in-app discard dialog with Cancel selected; Back must retain the
+unapplied source. The real text editor removes the invalid suffix, and Inspect
+must compile that repaired source before explicit Apply.
+
+The map cursor moves without changing source until Confirm. One foundation
+rectangle creates a new map revision while preserving the old revision.
+Undo/Redo must restore exact project snapshots.
+The case also dirties raw JSON after the geometry edit and requests Undo.
+Neither that request nor its modal may alter the text or saved accepted head;
+explicit Discard Continue must discard only the pending text and perform one
+Undo, after which one Redo restores the geometry. A canceled numeric draft leaves
+the target unchanged; committing and applying a 65% territory target changes
+only the accepted challenge. Accepted edits autosave after the product's
+300-millisecond debounce. Explicit Save checkpoint / retry coalesces with that
+save; the receipt does not claim that only the Save button can persist edits.
+Raw unapplied JSON is separate from the accepted project and is not autosaved.
+
+Play exact Solo preview must stage a production-valid scenario matching the
+accepted mission, without taking input before Enter preview. Real Enter,
+child Return to editor and Close preview actions must restore editor ownership
+and the exact Play opener without starting gameplay or changing a checkpoint.
+Only the product's known `revealline.playground.current` session staging key may
+change on this isolated origin; every unrelated local/session entry is retained.
+No fixture code writes or restores storage directly.
+
+Two explicit Export backup actions must produce exact accepted-project JSON
+with identical bytes and SHA-256 across Inspect saved → Apply → Save. Both
+backups pass the production `compileContentProject` path. Inspect saved stages
+a checkpoint for review; applying an unchanged current checkpoint must not
+rewrite it. Read-only IndexedDB snapshots verify every baseline head and
+immutable revision, allowing only the new test project's appended checkpoints.
+The product retains both new qualification projects for separate inspection.
+
+Export/Blob observation is not an OS-file receipt. Retain both actual
+`<project-id>-backup.json` downloads and independently compile/compare their
+bytes. The backup contains the current ContentProjectV1, not all checkpoint
+history or artwork/audio originals. For the separate native keyboard journey,
+use `&keyboard=1` and perform the same visible editing, discard, preview and
+checkpoint controls without pointer or programmatic focus interventions.
+
+This bounded case does not qualify a complete page reload, OS file import,
+candidate-library selection, every actor/objective/structure editor, tracing or
+media recovery, Team exports, full gameplay, physical controllers, native
+platforms or publication. No compiled candidate is treated as a human playtest.

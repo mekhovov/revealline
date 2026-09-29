@@ -10,6 +10,7 @@ import { stillCurrent } from './still-media-current-workflow.mjs';
 import { videoPosterCurrent } from './video-poster-current-workflow.mjs';
 import { soundtrackRecoveryCurrent } from './soundtrack-recovery-current-workflow.mjs';
 import { atlasCurrent } from './design-atlas-current-workflow.mjs';
+import { contentStudioCurrent } from './content-studio-current-workflow.mjs';
 
 const assert = (condition, message) => {
   if (!condition) throw new Error(message);
@@ -26,6 +27,7 @@ async function fingerprint(blob) {
 const value = (p, css) => p.doc.querySelector(css).value;
 
 export const currentAuthoringCases = {
+  contentStudioCurrent,
   atlasCurrent,
   enemyCurrent: [
     'Current Enemy Workshop: edit, cancel, validate, save, preview return, export',
