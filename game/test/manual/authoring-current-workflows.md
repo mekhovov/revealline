@@ -20,6 +20,53 @@ or activate anything, and replaces its listeners when Run is used again. This
 distinguishes late child-window boot focus from queued keys delivered after the
 parent has already reclaimed focus.
 
+## Picture Campaign Creator
+
+Use the isolated qualification origin:
+`http://127.0.0.1:8986/game/test/manual/authoring-controller.html?tool=creatorCurrent`.
+Run controller workflow and keep the tool in the foreground. This case refuses
+other ports because it intentionally retains a new source draft and installed
+edition. It never clears an existing database or removes installed content.
+
+The case cancels the source chooser and a name draft, selects the built-in Dawn
+Signal picture, and rejects a blank picture description before any checkpoint,
+review or approval is created. It corrects the description, generates a real
+single-picture mission and verifies its persisted checkpoint. Sections → Review
+then enters Read and scroll; the decoded picture and rendered map must exist,
+controller directions reach the bounded review region's bottom when it overflows,
+and Back restores the reading entry without approving. The case explicitly
+approves and exports a portable `.rlpack`. The actual exported Blob passes
+`importCreatorBundle`, including image bytes, hashes and completion evidence.
+
+It then explicitly installs, checks Play focus and the exact edition identity,
+opens the minimal custom-player landing without starting gameplay, and returns
+through Settings → Help & Extras → My creations. In the real new Creator page,
+it opens the exact installed row's editable source, approves and exports again.
+The final artifact must have the identical edition ID and SHA-256. Read-only
+store inspection checks that every pre-existing media reference and installed
+manifest remains unchanged; pre-existing local/session storage values are also
+checked. New qualification drafts and installation remain on this isolated
+origin so browser/OS download receipts can be inspected later.
+
+The runner follows real application links. On document load it reattaches the
+virtual pad and passive export observation to the new document; it does not
+set location, invoke browser Back, activate handlers or force focus to get
+through the journey. Cancellation here covers the source chooser and text
+draft. It does not claim a timed in-flight generation cancellation, victory
+gameplay, OS file-picker reimport or physical controller qualification.
+
+For a separate native keyboard journey add `&keyboard=1`. Tab to the image
+input's adjacent Choose source action to select Dawn Signal without an OS
+dialog. Cancel the chooser once, then choose the picture. Use native text
+editing to clear Description, Generate and verify rejection, then correct it.
+Generate, enter the review's Read and scroll action, inspect the picture/map,
+and return with Escape before separately approving. Install and verify Play
+receives focus. Open the custom
+player, then Settings → Help & Extras → My creations without starting a run.
+Open editable source on the same installed edition, Approve and Download.
+Record exact filenames, sizes, SHA-256 and production importer results from the
+actual OS downloads separately from the virtual-controller receipt.
+
 ## Enemy Workshop
 
 Open `/game/test/manual/authoring-controller.html?tool=enemyCurrent` and run.

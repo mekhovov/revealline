@@ -3,6 +3,7 @@
 import { importThemeBundle } from '../../presentation/bundle.mjs';
 import { validateScenario } from '../../content.mjs';
 import { validateEnemyCatalogDraft } from '../../enemy-catalog.mjs';
+import { creatorCurrent } from './creator-current-workflow.mjs';
 
 const assert = (condition, message) => {
   if (!condition) throw new Error(message);
@@ -359,4 +360,5 @@ export const currentAuthoringCases = {
       );
     },
   ],
+  creatorCurrent,
 };
