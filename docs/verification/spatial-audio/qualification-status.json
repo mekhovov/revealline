@@ -1,0 +1,45 @@
+{
+  "implementationCommit": "aa625deffb61b55bb61538638ac90d9eda5b4a0d",
+  "focusedTests": {
+    "passed": 130,
+    "failed": 0
+  },
+  "teamVersusAndNextTests": {
+    "passed": 36,
+    "failed": 0,
+    "skipped": 0
+  },
+  "nativeSfxMix": {
+    "scenarios": 6,
+    "highestStereoPeakDbfs": -19.463839324532383,
+    "musicIncluded": false,
+    "humanListening": false
+  },
+  "releaseSlot": "unallocated; release-ready check requires draft/stacked status",
+  "pending": [
+    "Full-repository failure triage and final run receipt",
+    "Human sustained listening/headphones/speakers and physical-device qualification",
+    "Coordinator release review/allocation and immutable publication"
+  ],
+  "offlineSmoke": {
+    "origin": "http://127.0.0.1:60561",
+    "serverStoppedBeforeReload": true,
+    "starterDownloaded": true,
+    "soundEnabled": true,
+    "mission": "First Return",
+    "coverage": 67.1,
+    "score": 15980,
+    "lives": 3,
+    "browserWarningsOrErrors": 0
+  },
+  "build": "lifecycle-build.json",
+  "fullRepositoryRun": {
+    "state": "running; not green",
+    "log": ".cache/audio-final-full-suite.log",
+    "observedFailures": [
+      "v34\u2013v37 authored bootstrap route assertions (previously baseline-reproduced)",
+      "Custom pack actor host async settle timeout",
+      "Backup blur host picture readiness timeout"
+    ]
+  }
+}

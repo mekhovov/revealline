@@ -110,3 +110,17 @@ Measured all 52 effects and found previously uncalibrated action/radio/ESC famil
 127 focused tests pass, including direct packaged-PCM loudness/peak/variation regression checks. Global lint and formatting pass. Browser decodes 52/52 with no console errors (`normalized-audition.png`). `normalization-measurements.json` contains previous/current file measurements and 192 kHz oversampled peaks; loudest one-shot oversampled peak −19.3 dBFS. Bank is 2,827,664 bytes. Measurements do not certify subjective loudness matching or sustained speaker/headphone comfort. Earlier release limitations remain open.
 
 Normalized-bank packaging passed: 1,835 files; all 57 effect/license/source entries match final source and offline-cache hashes. Exact distribution/build identifiers are in `normalized-audio-build.json`. Regeneration reproduces every runtime WAV byte for byte.
+
+## Lifecycle and native qualification — 2026-09-29
+
+Retry, run replacement and backward seeking stop board-owned cue tails and clear that board's cooldowns. Pause stops transient gameplay sounds without cutting off terminal victory/loss cues. Restored movement loops now seek with their actual playback rate. Menu and other-board voices remain independent. Three director regressions cover these cases.
+
+The Team Next cancellation fixture now waits beyond the controller-confirm compatibility echo window before sending its deliberately keyboard-driven Next action. This repairs the fixture's input timing; production controller semantics are unchanged. Focused audio cohort: 130 passed. Team/Versus appearance and Team Next cohort: 36 passed, no failures or skips. Lint and formatting passed.
+
+Added a native OfflineAudioContext mix-headroom check to the audition. Six SFX-only overlap scenes use actual decoded assets, four movement layers, maximum bus gains and no compressor. Highest stereo peak: −19.46 dBFS; all six stereo and averaged-mono renders remain unclipped. This is digital SFX headroom evidence, not a music mix, physical-device test, or subjective listening approval. See `native-mix-headroom.json` and `.png`.
+
+The 1,835-file production build passed. All 57 effect/license entries match offline-cache hashes; non-HTML effect assets and relevant runtime modules match source (license HTML receives ordinary build transformation). Exact identities are in `lifecycle-build.json`.
+
+Native offline smoke: on a fresh local origin, installed Solo Starter through the game's download UI, confirmed “ready offline”, stopped the task-owned HTTP server, reloaded the game, enabled sound and completed First Return with 67.1% capture, 15,980 points and three lives. No browser warning/error logs. `offline-native-game.png` records the result. This verifies starter gameplay with sound enabled and unavailable origin, not subjective audibility of every asset or all optional chapters.
+
+The fresh official repository suite has encountered the previously reproduced v34–v37 bootstrap route assertions and host readiness timeouts. It cannot currently certify a green exact-source gate. Latest status is in `qualification-status.json`; no unrelated gameplay assertions were weakened. Sustained human speaker/headphone listening and physical/native-device qualification remain open. PR #794 is draft and unallocated: the current coordinator-owned workflow must allocate its immutable release slot before publication.
