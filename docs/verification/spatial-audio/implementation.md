@@ -101,3 +101,10 @@ Extend the user-approved five recorded ingredients to explicit assignments for a
 126 focused audio/preferences/director/profile/company/replay/offline tests pass. Catalogue tests compare the explicit player map against the shipped presets and exhaust all world/enemy combinations; integration tests move each mobile enemy role and combat scout, then verify authoritative movement suppression. Global lint passed. Native audition: 52/52 decoded; heritage swallow/moth uses wings, weaver/serpent uses paper, document rover uses wheels, stationary lane emitter stays quiet. Full-suite and sustained physical listening qualifications remain open.
 
 Actor-movement build passed: all four changed/new runtime modules match source and are in the offline core cache. Exact identifiers are in `actor-movement-build.json`; the 52-file recorded bank is unchanged. Global formatting and lint passed. Audition evidence is `actor-movement-audition.png`.
+
+
+## Full-bank volume calibration — 2026-09-29
+
+Measured all 52 effects and found previously uncalibrated action/radio/ESC families, with short sections up to 25.6 dB above their new role target. Replace the partial RMS policy with explicit whole-bank maximum rolling 50 ms RMS calibration plus gentle one-shot transient shaping and sample-peak limits. Movement receives scalar gain only. Preserve sources, cue duration, priority, spatial behavior and saved volume preferences. All repeated variants, capture tiers, radio locales and ESC cues now match within 0.6 dB within each group. Fix alternate confirm audition buttons bypassing the menu bus.
+
+127 focused tests pass, including direct packaged-PCM loudness/peak/variation regression checks. Global lint and formatting pass. Browser decodes 52/52 with no console errors (`normalized-audition.png`). `normalization-measurements.json` contains previous/current file measurements and 192 kHz oversampled peaks; loudest one-shot oversampled peak −19.3 dBFS. Bank is 2,827,664 bytes. Measurements do not certify subjective loudness matching or sustained speaker/headphone comfort. Earlier release limitations remain open.

@@ -8,7 +8,7 @@ Recorded ingredients are from Kenney's [Impact Sounds](https://kenney.nl/assets/
 
 Run `python3 authoring/audio/revealline-v1/produce.py` with ffmpeg installed, then format `game/audio/effects/bank.mjs` with the repository's Prettier. `recipes.json` records source, trim duration and source package; `produce.py` records filtering, fades, harmonics, timing and deterministic seeds. The manifest contains the byte length and SHA-256 of every distributed asset. Original signatures have different intervals and durations for warning, start, retry, revival, loss, victory, neutralization and reactivation. Recorded material contacts have three variations. Recorded continuous loops use a 250 ms raised-cosine overlap; gesture loops leave silence between edits.
 
-52 mono PCM runtime assets, 2,827,936 bytes in total; approximately 8.1 MiB decoded at 48 kHz (excluding separately supplied source originals). All are local/offline distribution assets. No runtime third-party requests. The existing immutable build inventory owns offline caching and exact-build hashes.
+52 mono PCM runtime assets, 2,827,664 bytes in total; approximately 8.1 MiB decoded at 48 kHz (excluding separately supplied source originals). All are local/offline distribution assets. No runtime third-party requests. The existing immutable build inventory owns offline caching and exact-build hashes.
 
 ## Audition
 
@@ -63,3 +63,14 @@ The audition's Arcade selection now uses the arcade family instead of incorrectl
 Player selection follows the actual body, equipped class and FPV appearance override. Heavy lift uses rotors; fixed-wing and delta craft use motor recordings. Enemy sounds follow body recipes/skins before world defaults: tanks/wheeled patrols roll, rotor patrols hum, moths flap, paper enemies rustle and eroders use mechanical material. Company rotor/paper recipes override generic enemy-role topology. Team drifters/hunters/rovers and combat scouts have recorded mappings. Unknown uploaded/custom bodies use the role/family fallback.
 
 Stationary bosses remain quiet until their real warning/attack/opening/defeat events; decorative glints do not generate sounds. Authoritative freeze, stun, dormant/idle and inactive states suppress locomotion. Movement controls, spatial limits, foreground warning clarity and four-layer budget remain intact. The audition now exposes every shipped player body, four worlds and all enemy/Team roles.
+
+
+## Full-bank loudness calibration
+
+User listening identified major jumps between cues. Measured previous maximum rolling 50 ms RMS: interference −7.4, deploy −8.4, impact −10.9, ESC start −18.7 and Ukrainian Armed −12.4 dBFS, against confirm −32.2 and warning −28.0. The prior producer skipped calibration entirely for action effects, radio and ESC cues; whole-file RMS and a peak ceiling also left some short variants mismatched.
+
+`normalize_bank.py` now requires an explicit target for **every** effect family. It measures maximum rolling 50 ms RMS, applies role targets, gently shapes isolated one-shot transients, and limits sample peaks to −20 dBFS for one-shots / −16 dBFS for movement. This is a reproducible short-effect house measurement, not an EBU R128/LUFS certificate or a measurement of perceived loudness on speakers. Loops retain their recordings and receive scalar gain only; no movement timbre shaping is added.
+
+Frequent cues target −33 to −37 dBFS; actions/results mostly −31 to −33; warnings −29. All capture tiers target −35, both radio locales −31, both ESC cues −32. Menu, radio and movement preference buses remain independent. Alternate confirm previews now use the same menu bus as the base confirm, correcting an additional audition-only volume jump. Full synthesis/processing masters are recalibrated on each build, with no third-party calls.
+
+`loudness-report.json` records raw production input and final measurements. `docs/verification/spatial-audio/normalization-measurements.json` compares against the previous published branch bank and includes 192 kHz oversampled peak inspection. All files fall within 0.6 dB of their authored short-window target; repeated variants and matched radio/ESC/capture sets stay within 0.6 dB. Loudest oversampled one-shot peak is −19.3 dBFS. These are individual file measurements, not a guarantee about the summed mix or physical listening comfort.

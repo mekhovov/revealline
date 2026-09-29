@@ -106,20 +106,10 @@ for locale in ['en','uk']:
         '-af','highpass=f=100,lowpass=f=6500,afade=t=in:d=0.003,alimiter=limit=0.65:level=false',
         '-ar','32000','-ac','1','-c:a','pcm_s16le',str(dest)],check=True)
     bank[name]={'file':dest.name,'loop':False}
-# Calibrated role loudness: routine cues stay quiet; moving bodies retain audible midrange.
-# RMS is a reproducible production target, not a subjective loudness certificate.
-for name,entry in bank.items():
-    family=name.split('-')[0]
-    target={'focus':-36,'confirm':-32,'cancel':-33,'paper':-35,'pickup':-31,'closure':-34,'switch':-32,'contact':-29,'reveal':-37}.get(family)
-    if entry['loop']: target={'rotor':-27,'motor':-28,'wheels':-28,'wings':-30,'grain':-33,'flow':-29}[name]
-    if target is None: continue
-    dest=OUT/entry['file']
-    with wave.open(str(dest),'rb') as w:
-        sr=w.getframerate(); n=w.getnframes(); data=[v/32768 for v in struct.unpack('<'+'h'*n,w.readframes(n))]
-    rms=math.sqrt(sum(v*v for v in data)/max(1,n)); peak=max(map(abs,data),default=0)
-    scale=min(10**(target/20)/max(rms,1e-9),(.32 if entry['loop'] else .18)/max(peak,1e-9))
-    with wave.open(str(dest),'wb') as w:
-        w.setparams((1,2,sr,n,'NONE','not compressed')); w.writeframes(struct.pack('<'+'h'*n,*[round(v*scale*32767) for v in data]))
+# Full-bank short-window calibration, including speech, ESC and action effects.
+from normalize_bank import normalize
+calibration={name:normalize(OUT/entry['file'],name,entry['loop']) for name,entry in bank.items()}
+(HERE/'loudness-report.json').write_text(json.dumps(calibration,indent=2)+'\n')
 for name,entry in bank.items():
     file=OUT/entry['file'];entry['bytes']=file.stat().st_size;entry['sha256']=hashlib.sha256(file.read_bytes()).hexdigest()
     master=HERE/'masters'/file.name;master.parent.mkdir(exist_ok=True);shutil.copy2(file,master)
