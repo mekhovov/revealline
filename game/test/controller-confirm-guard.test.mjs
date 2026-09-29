@@ -80,6 +80,32 @@ test('a release-only trusted click cannot reverse a committed controller action'
   assert.equal(h.nativeActivations, 0);
 });
 
+test('click activation uses the primary button, not the PointerEvent isPrimary default', (t) => {
+  const h = setup(t);
+  const click = {
+    button: 0,
+    pointerId: 1,
+    pointerType: 'mouse',
+    isPrimary: false,
+    isTrusted: true,
+  };
+  h.guard.begin(h.target);
+  h.emit('pointerdown', { ...click, isPrimary: true });
+  h.guard.activate(h.target);
+  h.guard.finish();
+  h.emit('pointerup', { ...click, isPrimary: true });
+  assert.equal(h.emit('click', click).defaultPrevented, true);
+  assert.equal(h.programmaticActivations, 1);
+  assert.equal(h.nativeActivations, 0);
+  h.setTime(1400);
+  assert.equal(h.emit('click', click).defaultPrevented, false);
+  h.setTime(1420);
+  assert.equal(h.guard.begin(h.doc), 'native');
+  assert.equal(h.guard.activate(h.target), false);
+  assert.equal(h.programmaticActivations, 1);
+  assert.equal(h.nativeActivations, 1);
+});
+
 for (const event of [
   { button: 0, pointerId: 1, pointerType: 'mouse', isPrimary: true, isTrusted: true },
   { button: 0, pointerId: 2, pointerType: 'touch', isPrimary: true, isTrusted: true },
