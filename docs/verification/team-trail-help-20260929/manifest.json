@@ -1,0 +1,51 @@
+{
+  "parent": "fa442656da2d9d5827a2f12209d5f19eb49b94b1",
+  "productionReview": "deferred-not-passed",
+  "files": [
+    {
+      "path": "game/couch/coop-briefing.mjs",
+      "bytes": 5246,
+      "sha256": "a2a309fd55b0799f40d144fb93d1de42d2b6804588522735d81a7ab991052083"
+    },
+    {
+      "path": "game/test/coop-trail-impact-guidance.test.mjs",
+      "bytes": 7239,
+      "sha256": "dc75e8a71fbe1f7fd5f1203183dd88f5578141cd03ca22ce4fd19dc1e602e3f7"
+    },
+    {
+      "path": "game/locales/en/interface.json",
+      "bytes": 446061,
+      "sha256": "3cbc5da126bb580a73ebb05e69b8999324db7e9feee0c12718bbdf6974aa2cba"
+    },
+    {
+      "path": "game/locales/uk/interface.json",
+      "bytes": 727809,
+      "sha256": "14afb1e75d53cdd4bd68bbe8c6ff2c1059017a42c51880c062dc387eca950c4c"
+    },
+    {
+      "path": "game/i18n/catalogs.mjs",
+      "bytes": 1000035,
+      "sha256": "c421c217f262609e937c4078b74783a54ebf32fe6bef365e0f1326f819a9cb27"
+    },
+    {
+      "path": "authoring/prompts/team-responsive-layout.md",
+      "bytes": 2975,
+      "sha256": "80dc74bb8ef85d196c235508409bdbce4d65ef8089d87d69d07500eb065fbaf5"
+    },
+    {
+      "path": "docs/verification/team-trail-help-20260929/README.md",
+      "bytes": 1513,
+      "sha256": "033831847b2e3401c5f03e1becaa172fac6687ba30ae1cbe8e38db93ea54707a"
+    },
+    {
+      "path": "docs/verification/team-trail-help-20260929/focused.tap",
+      "bytes": 5963,
+      "sha256": "5e9abed416dc1e837e2c2afde422f7655a52829b9801ea42e8c4c4d9cd2baa8d"
+    },
+    {
+      "path": "docs/verification/team-trail-help-20260929/hunter-start-diagnostic.tap",
+      "bytes": 1273,
+      "sha256": "85c6dd4af4bfa97409f4c0ed278365b79704586a96f200887e26f8c9f3bd09de"
+    }
+  ]
+}
