@@ -7,8 +7,10 @@ unchanged. New first-person flight belongs to the separate `civilian-fpv` packag
 ## Order and compatibility
 
 Deliver Phase 2 → 3 → 4 → 6, with qualification in every batch, through integration
-PR #758 while open. The branch was refreshed onto main `afb19ebd0` (v0.142.3) for the latest batch,
-including the controller fixes from PRs #775 and #778.
+PR #758 while open. The branch was refreshed onto main `b5ab06e125` (v0.142.3),
+including the controller fixes from PRs #775/#778 and the production-provenance
+continuation from #785. It is a scheduled input to **v0.150.0 — Unified native
+experience**, alongside #783; it is not a second promoted release root.
 Keep 18 campaigns, 108 arcade missions, English/Ukrainian, shared arcade simulation,
 and every already-published reward promise. Human learning, artwork and physical
 radio testing remain explicitly deferred. Passing synthetic inputs is not hardware
@@ -22,7 +24,7 @@ qualification. Release coordination owns versions and production promotion.
 | D / 6          | USB-radio diagnostics, arbitrary channels, calibration, separate response profiles | Implemented; physical devices unverified                                 |
 | E / 6          | First-person model, Self-level/manual throttle and Acro, representative drills     | Implemented; portable numeric fixtures pass                              |
 | F / 6          | Twelve drills, typed practice rewards, notebook and studio round trips             | Implemented                                                              |
-| Continuous / 7 | Reproducible archives, portable proofs, lifecycle/performance, admission           | Local integration verified; remaining performance/publication gates open |
+| Continuous / 7 | Reproducible archives, portable proofs, lifecycle/performance, admission           | Implemented; final-source review, performance and publication gates open |
 
 ## Acceptance contracts
 
@@ -525,16 +527,24 @@ not a human or physical-radio test.
 
 ### Remaining release work
 
-1. Preserve the one integration PR while the active release root occupies the lane.
-   Release coordination allocates the version and promotion order. At this audit,
-   main declares v0.142.3 and its controller follow-up PR #778 has merged; the stable release
-   and checked-in Pages selector still name v0.142.2. These are metadata observations,
-   not verification of current deployed bytes.
+1. Preserve #758 as one scheduled v0.150.0 input while release coordination owns
+   promotion. Reconcile its overlapping shell, Journey, localization, Studio and
+   compiler changes with #783 once, preserving current Confirm ownership. The
+   selector release and already reserved v0.143.0–v0.149.0 releases precede this
+   milestone. Assignment does not grant artifact admission or advance a version.
 2. Qualify the exact merged-main source, produce and independently inspect the full
    default archive, and admit the complete selected hosting graph under its cap.
    Candidate projections and selected-package checks do not substitute for this.
+   Reopen the production UI/audio review on the final integrated inputs and append
+   the required immutable successors; older runtime fingerprints do not approve
+   this branch merely because the asset payloads are unchanged.
 3. Complete final-source performance/request and retained-resource review, retaining
    the unexplained post-completion frame gap and unverified broader ownership claims.
+   Rehearse the three other real showcase journeys in the browser, including
+   ordinary discovery/Collection interactions, English/Ukrainian and narrow layouts.
+   Their verified engine routes are preparation, not browser walkthrough evidence.
+   Resolve the retained capture-driver shutdown failure before claiming clean
+   ownership qualification; do not replace it with stable connected-node counts.
 4. Publish original qualified artifacts through the configured main repository,
    verify downloaded and public bytes, and exercise the real published rollback.
    Omitted editions remain explicit original GitHub Release downloads.
@@ -599,3 +609,90 @@ fixtures and the retained earlier log are distinguished from the clean final run
 Independent review, formatting and lint pass. The combined Library/selector/
 thumbnail cohort passes **9 checks** after the edition request fix. Final-source
 candidate CI follows the combined commit; no version, selector or release changed.
+
+### Repeatable qualification batch and production-provenance rebase
+
+The [completed `64b5a6c42` CI/capacity receipt](verification/evidence/candidate-ci-capacity-64b5a6c42.json)
+records **952 company checks and 167 practice checks passing**, plus the separate
+bounded publishing/authoring cohorts. All eighteen editions and both optional
+packages passed candidate compilation and original-member checks. The small
+capacity packet's GitHub digest and all 22 metadata members were verified locally;
+omitted edition archive bodies were not downloaded. These results remain bound to
+`64b5a6c42`, not the later rebase or observation-tool commits.
+
+Planning from the exact `64b5a6c42` packet puts the six-edition publication at **501,860,432 bytes**,
+the other twelve at **654,948,170 bytes**, and all eighteen at **1,150,863,303 bytes**,
+including the exact optional originals/envelope but before review/evidence or other
+draft assets. All eighteen exceed the unchanged 950 MB additive cap. The six/twelve
+subset envelopes are serialization projections only; rebuild each selected cohort
+through the existing bundler for its coordinator-owned release. Default archives,
+complete hosted output, retained versions and final review costs remain unqualified.
+
+The shared arcade observer now optionally uses `headerPolicy: "packaged-preview"`.
+It imports the existing server policy, checks exact served headers, records bounded
+CSP violations and includes the policy in comparison identity. Historical minimal
+plans retain their behavior. The [frozen browser observation](verification/evidence/discovery-preview-policy-64b5a6c42.json)
+retains a first route caught by an enemy, followed by an ordinary win and twenty
+decoded reward-viewer cycles. Connected DOM/media counts stayed constant, no CSP
+violations or application errors were observed, and owned cleanup succeeded.
+Concurrent builds were active: these timings are not a quiet matched benchmark.
+The packaged-preview soundtrack-origin exception is not deployed public-origin
+qualification.
+
+The reusable [FPV completion observer](fpv-completion-observer.md) separates genuine
+flight/proof/Retry behavior, passive timing, bounded trace capture and cleanup.
+Trace overflow or failure preserves a partial and cannot suppress the functional
+checks. The [exact frozen-package run](verification/evidence/fpv-completion-portable-64b5a6c42.json)
+completed one 493-tick airborne attempt, then a 1,001.8 ms passive post-save window
+before opening Notebook or Retry. Retry returned to flight-01 disarmed with zero
+commands, and proof bytes remained identical after Retry and reload. The complete
+trace's maximum inclusive completion/passive tasks were **4.433/0.942 ms**; all
+owned cleanup succeeded. This loaded-machine diagnostic neither explains the
+earlier 266.7 ms gap nor establishes exclusive reward cost or hardware performance.
+
+The offline discovery heap analyzer reuses the existing bounded V8 parser while
+preserving the flight analyzer's output. It binds one artifact, document, isolate
+and instrumentation set to warm/20/40 snapshots with real closed-view checkpoints.
+The [descriptive capture](verification/evidence/discovery-2026-09-29-retention-64b5a6c42.json)
+completed an ordinary win and forty decoded viewer cycles: all 73 selected cohort
+counts stayed constant, including fourteen named reward closures; detached nodes
+remained 16. Total shallow heap grew **815,656 bytes**, so whole-heap or exclusive
+retained-memory stability is not claimed. Chrome exited but the driver stalled
+during cleanup; only the owned process was terminated, with the failure and forced
+cleanup retained. Raw heaps remain private; public output omits their object strings
+and retaining paths. A temporary source-postcheck interruption during rebase is
+retained separately from the later successful hash comparison of the listed
+observation instrumentation; it does not qualify every rebased runtime input.
+
+All 39 integration commits rebased onto `b5ab06e125` without conflicts or changed
+patches. The shared arcade core still matches main. The new observer/analyzer
+cohort passes **48 checks**, and its new tests join the existing company/practice
+CI commands. The four showcase protocol candidates remain preparation for the
+next browser batch; no additional campaigns, simulation branches, release roots,
+caps or published reward promises changed.
+
+The [post-rebase production-review diagnostic](verification/evidence/production-review-gap-2ba974146.json)
+retains the initial broad check (187/209 passing, 22 missing-input failures).
+Restoring 81 exact committed sparse inputs, 8,224,734 bytes, removed those missing
+files without changing tracked content. The two affected suites then passed
+**30/34 checks**: all 15 recipe-source checks and 15 of 19 production-history
+checks. Four current-production/review checks remain failed. The branch changes
+`game/app.mjs`, `game/ui/audio.mjs` and `game/ui/soundtrack-panel.mjs` beyond the
+immutable reviewed audio inputs; all 28 exact-main inputs still match that review.
+This is an open release gate, not an inherited upstream failure or a waived test.
+The final integrated source needs an actual scoped continuation review and the
+existing append-only production flow. Historical review records, producer rules
+and assertions remain unchanged.
+
+The cleanup follow-up then closes an observer failure-containment gap. Bounded
+failure diagnostics now reach owned cleanup even when the renderer never answers;
+each cleanup operation has a deadline and separate start/outcome evidence. CDP
+detachment precedes browser shutdown. A timeout or failed journal cannot suppress
+later server cleanup or replace the primary error with success. The
+[combined observer/analyzer cohort](verification/evidence/observation-tools-c80b09d89.json)
+passes **55 checks** after this change; independent review and focused rerun pass.
+These are tooling regressions, not a new browser/heap capture or proof that the
+original driver hang is cured. Before the final audio continuation, explicitly
+cover published-cue precedence over authored victory motifs and cancellation or
+disposal during discovery-recording preparation; the scoped source audit identified
+those two compositions as missing targeted evidence, not demonstrated defects.
