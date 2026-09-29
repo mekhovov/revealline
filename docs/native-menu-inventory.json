@@ -406,8 +406,9 @@
     {
       "name": "Design Atlas",
       "route": "/authoring/design-atlas/",
-      "verification": "pending exact-candidate browser qualification; historical observations do not establish current acceptance",
-      "historicalVerification": "keyboard and virtual-controller browser workflow passed; physical controller not tested"
+      "verification": "Current 17fa81cb9 plus 2a42cc6c1 passes 52 focused tests. Complete current 4/4 virtual-pad review stages cover nine studies/eighteen states, cancellation, settled preview widths, EN/UK specimens, filters, owned reading and two explicit brief downloads. Native keyboard qualifies narrow matrix horizontal/vertical reading, short-landscape preview, long brief, EN/UK downloads and Workshop return/reentry without pointer reset. Actual downloaded UTF-8 text matches committed locale sources. This is a read-only design review tool: no project Save, import or real domain validator; illustrated error states are not runtime validation. Exact clipboard transfer, related reveal-audit browser qualification, hardware, offline and published acceptance remain separate.",
+      "historicalVerification": "keyboard and virtual-controller browser workflow passed; physical controller not tested",
+      "evidence": "docs/verification/design-atlas-input-2026-09-29.md"
     },
     {
       "name": "Content Studio",
