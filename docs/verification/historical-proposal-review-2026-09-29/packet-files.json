@@ -3,8 +3,8 @@
   "artifacts": [
     {
       "path": "README.md",
-      "bytes": 3553,
-      "sha256": "cab5f921ca9b9d4a5a72162c39cc11c2d4ecf49324d486064dbf30acf85498c4"
+      "bytes": 3808,
+      "sha256": "ff1f99dabde5e502bdb0d47503aaaa65dad019e1dad3dc76751a3542d665f376"
     },
     {
       "path": "branch-proposals/README.md",
@@ -50,6 +50,11 @@
       "path": "branch-proposals/validation.json",
       "bytes": 1332,
       "sha256": "8686975beefbb43b0e2aa4e1b27499bf0ee9b233589bd4262ad09b6c7409a8e7"
+    },
+    {
+      "path": "delivery-audit.json",
+      "bytes": 4648,
+      "sha256": "187a57eab8eb394649fea5b1bd1776829ab15d1db0a636b000e3894d9c634fb0"
     },
     {
       "path": "studio-team/README.md",

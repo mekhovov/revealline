@@ -2,7 +2,7 @@
 
 This source-only intake makes five historical proposal families reviewable without replacing current game files. It preserves 55 exact source/test/documentation files, their readable changes, and an optional eight-line inspection-job regression. Current game behavior, assets, formats, versions and workflows are unchanged.
 
-The broader historical recovery effort is separate and remains under screening. Its initial remote ref was withdrawn after a private-soundtrack provenance concern; do not treat that history as published. Local copies remain intact. This bounded, screened packet curates five proposal families only. Never merge a recovery-history branch or use it as a release source. Archive preservation is not product acceptance.
+The broader historical recovery is now verified on GitHub at `117d892e8bb140a1c30b574f1b23bba280d0adfe` on `codex/local-recovery-20260929`. It retains 240 historical frontier tips, 53 initial working/index snapshots, two final snapshots and all seven stashes. The temporary provenance concern was resolved: the screened recovery scope contains no private UA-FPV recordings or paused soundtrack candidates; their existing holds remain. This bounded packet curates five proposal families only. Never merge recovery history or use it as a release source. Archive preservation is not product acceptance. See `delivery-audit.json` for the verified cutoff and PR dispositions.
 
 ## Disposition and release order
 
