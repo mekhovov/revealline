@@ -4,6 +4,8 @@ import { createHash } from 'node:crypto';
 import { readFile } from 'node:fs/promises';
 import {
   ACTOR_CONTINUATION_FORMAT,
+  ACTOR_EFFECTS20_REVIEW_PATH,
+  ACTOR_EFFECTS20_REVIEW_SHA256,
   readActorPresentationContinuation,
 } from './actor-presentation-continuation.mjs';
 import {
@@ -19,27 +21,56 @@ const predecessor = {
   sha256: BULK_PRESENTATION_REVIEW_SHA256,
 };
 const root = new URL('../', import.meta.url);
+const currentPredecessor = {
+  path: ACTOR_EFFECTS20_REVIEW_PATH,
+  sha256: ACTOR_EFFECTS20_REVIEW_SHA256,
+};
+// The older actor branch lacks five newer main records. Retain exact bytes in a
+// test-only fixture, without adding or changing canonical approval documents.
+const mainFixtures = JSON.parse(
+  await readFile(new URL('./fixtures/actor-effects20-predecessors.json', import.meta.url)),
+);
+assert.equal(mainFixtures.format, 'revealline.test-only-actor-effects20-predecessors.v1');
+assert.equal(mainFixtures.source, '64c8b9d81604984363666abadae236d9f2f76f7f');
+assert.equal(mainFixtures.records.length, 5);
+const retainedMainBytes = new Map(
+  mainFixtures.records.map(({ path, bytes, sha256, text }) => {
+    const body = Buffer.from(text);
+    assert.equal(body.length, bytes, path);
+    assert.equal(hash(body), sha256, path);
+    return [path, body];
+  }),
+);
 const ancestors = new Map();
-async function loadAncestor(ref) {
-  if (ancestors.has(ref.path)) return;
-  const bytes = await readFile(new URL(ref.path, root));
+async function loadAncestor(ref, records = ancestors) {
+  if (records.has(ref.path)) return;
+  let bytes;
+  try {
+    bytes = await readFile(new URL(ref.path, root));
+  } catch (error) {
+    if (error.code !== 'ENOENT' || !retainedMainBytes.has(ref.path)) throw error;
+    bytes = retainedMainBytes.get(ref.path);
+  }
   assert.equal(hash(bytes), ref.sha256, `immutable fixture ${ref.path}`);
-  ancestors.set(ref.path, bytes);
+  records.set(ref.path, bytes);
   const value = JSON.parse(bytes);
   for (const child of [
     value.priorReview,
     value.priorEquipmentReview,
     ...Object.values(value.priorReviews ?? {}),
   ].filter(Boolean))
-    await loadAncestor(child);
+    await loadAncestor(child, records);
 }
 await loadAncestor(predecessor);
 const bulk = JSON.parse(ancestors.get(predecessor.path));
+const currentAncestors = new Map(ancestors);
+await loadAncestor(currentPredecessor, currentAncestors);
+const effects20 = JSON.parse(currentAncestors.get(currentPredecessor.path));
 
 // Synthetic review/source fixtures exercise validation plumbing only. These pins
 // are test-owned authority and cannot approve any current production source/art.
-function fixture() {
-  const files = new Map(ancestors),
+function fixture({ current = false } = {}) {
+  const files = new Map(current ? currentAncestors : ancestors),
     payloads = new Map(),
     fingerprints = {};
   for (const group of groups) {
@@ -62,7 +93,8 @@ function fixture() {
     }
     fingerprints[group] = {
       group,
-      priorSHA256: bulk.fingerprints[group].currentSHA256,
+      priorSHA256: (current && group === 'effects' ? effects20 : bulk).fingerprints[group]
+        .currentSHA256,
       currentSHA256: hash(Buffer.from('abc')),
       paths: inputs.map((v) => v.path).join('; '),
       inputs,
@@ -73,7 +105,7 @@ function fixture() {
   const record = {
     format: ACTOR_CONTINUATION_FORMAT,
     status: 'reviewed',
-    priorReview: { ...predecessor },
+    priorReview: { ...(current ? currentPredecessor : predecessor) },
     fingerprints,
   };
   const pin = { path: 'docs/verification/test-only-actor-continuation/review.json', sha256: '' };
@@ -145,6 +177,128 @@ test('bounded one-group and multi-group records grant matching only within their
         group,
       );
     }
+  }
+});
+
+test('current effects20 root authenticates exactly17 immutable records while other groups retain their bulk predecessor', async () => {
+  const f = fixture({ current: true }),
+    handle = await f.load();
+  assert.equal(currentAncestors.size, 17);
+  assert.equal(ancestors.size, 9, 'historical fixtures and reader behavior stay separate');
+  assert.equal(
+    f.record.fingerprints.effects.priorSHA256,
+    'b7aa3a6b9bc2302df0309e90acddf899766a9b9406f93bd266a94b685940a5eb',
+  );
+  assert.notEqual(
+    f.record.fingerprints.effects.priorSHA256,
+    bulk.fingerprints.effects.currentSHA256,
+  );
+  for (const group of groups) {
+    if (group !== 'effects')
+      assert.equal(
+        f.record.fingerprints[group].priorSHA256,
+        bulk.fingerprints[group].currentSHA256,
+      );
+    for (const slot of bulk.fingerprints[group].slots)
+      assert.equal(handle.matches(f.input(group, slot)), true, slot);
+  }
+  for (const path of currentAncestors.keys())
+    assert.equal(f.reads.filter((read) => read === path).length, 1, path);
+  assert.equal(handle.matches({ ...f.input('effects'), group: 'audio' }), false);
+  assert.deepEqual(Object.keys(handle).sort(), ['matches', 'record']);
+  assert.equal(handle.quality, undefined, 'synthetic matching grants no production quality');
+});
+
+test('current-root subsets retain exact per-group ownership and never admit its audio recipes', async () => {
+  for (const selected of [['effects'], ['effects', 'team'], ['motion'], ['team', 'equipment']]) {
+    const f = fixture({ current: true }),
+      inputs = Object.fromEntries(groups.map((group) => [group, f.input(group)]));
+    for (const group of groups) if (!selected.includes(group)) delete f.record.fingerprints[group];
+    f.seal();
+    const handle = await f.load();
+    for (const group of groups) {
+      assert.equal(handle.matches(inputs[group]), selected.includes(group), group);
+      assert.equal(
+        f.reads.some((path) => path.startsWith(`test-only/${group}-`)),
+        selected.includes(group),
+      );
+    }
+    assert.equal(
+      handle.matches({ ...inputs.effects, group: 'audio', slotId: 'audio.failure' }),
+      false,
+    );
+  }
+  const f = fixture({ current: true });
+  f.record.fingerprints.audio = { ...f.record.fingerprints.effects, group: 'audio' };
+  f.seal();
+  await assert.rejects(f.load(), /invalid renderer groups/);
+});
+
+test('current predecessor cannot be fabricated, reached through the old pin or assigned to another subset group', async () => {
+  for (const change of [
+    (f) => {
+      f.record.priorReview = { ...predecessor };
+    },
+    (f) => {
+      f.record.fingerprints.effects.priorSHA256 = bulk.fingerprints.effects.currentSHA256;
+    },
+    (f) => {
+      f.record.fingerprints.team.priorSHA256 = effects20.fingerprints.effects.currentSHA256;
+    },
+    (f) => {
+      f.record.fingerprints.team.slots = [...f.record.fingerprints.effects.slots];
+    },
+  ]) {
+    const f = fixture({ current: true });
+    delete f.record.fingerprints.motion;
+    delete f.record.fingerprints.equipment;
+    change(f);
+    f.seal();
+    await assert.rejects(f.load(), /wrong group|slot membership/);
+  }
+  for (const change of [
+    (ref) => {
+      ref.path = 'docs/verification/test-only-fabricated-current/review.json';
+    },
+    (ref) => {
+      ref.sha256 = '0'.repeat(64);
+    },
+  ]) {
+    const f = fixture({ current: true });
+    change(f.record.priorReview);
+    f.files.set(f.record.priorReview.path, currentAncestors.get(currentPredecessor.path));
+    f.seal();
+    await assert.rejects(f.load(), /wrong immutable predecessor/);
+    assert.deepEqual(f.reads, [f.pin.path], 'unknown roots are rejected before ancestry reads');
+  }
+});
+
+test('every current-root ancestor remains required and exact, including records outside the effects group', async () => {
+  for (const path of currentAncestors.keys()) {
+    const f = fixture({ current: true });
+    f.files.set(path, Buffer.concat([f.files.get(path), Buffer.from('\n')]));
+    await assert.rejects(f.load(), /ancestor bytes changed/, path);
+    f.files.delete(path);
+    await assert.rejects(f.load(), /Missing fixture/, path);
+  }
+});
+
+test('an eighteenth ancestor or a conflicting duplicate cannot extend the exactly pinned current graph', async () => {
+  const extraPath = 'docs/verification/test-only-eighteenth/review.json';
+  for (const extra of [
+    { path: extraPath, sha256: hash(json({ priorReviews: {} })) },
+    { path: predecessor.path, sha256: '0'.repeat(64) },
+  ]) {
+    const f = fixture({ current: true }),
+      forgedRoot = JSON.parse(f.files.get(currentPredecessor.path));
+    forgedRoot.priorReviews.extra = extra;
+    f.files.set(currentPredecessor.path, json(forgedRoot));
+    f.files.set(extraPath, json({ priorReviews: {} }));
+    // Re-sealing the caller-owned successor cannot re-sign an immutable root.
+    f.seal();
+    await assert.rejects(f.load(), /ancestor bytes changed/);
+    assert.equal(f.reads.includes(extraPath), false);
+    assert.deepEqual(f.reads, [f.pin.path, currentPredecessor.path]);
   }
 });
 
