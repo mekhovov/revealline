@@ -8,8 +8,10 @@ copied unchanged: no shell/Python image editing, resizing or cropping.
 The requested 1152 × 576 size was not produced. The actual opaque RGB PNG is
 **1774 × 887 (2:1), 2,825,101 bytes**, SHA-256
 `6428a4d0f7d0e97c30cf565a68ae8bbc515c3de98343c34af2413cb200a5f07a`.
-A native board image still needs a separate Asset Studio derivative. This source
-fits the current 4 MiB per-file intake limit.
+The separate [revision 7 board candidate](board-candidates-v1/README.md) is now
+prepared and natively reimported through Asset Studio at 1152 × 576. This retained
+source remains unchanged and fits the current 4 MiB per-file intake limit. Native
+preparation does not grant art, cultural or production approval.
 
 ## Reference and observed correction
 

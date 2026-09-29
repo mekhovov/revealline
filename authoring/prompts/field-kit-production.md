@@ -105,3 +105,12 @@ and reduced states. Keep missing-clock fallback finite and contact/role overlays
 unchanged. Verify a real company-theme BoardPainter and ordinary play separately
 from native low-frame-rate motion or art approval. Do not infer direction from a
 manufacturer name or create another phase multiplier.
+
+## Current non-rotor surface-motion correction
+
+For an existing prepared enemy, inspect wheel/tread glints and phase sweeps at
+10/30/60/120 FPS. Use the shared sampled surface clocks and admitted rate limit;
+never multiply ordinary travel/body clocks into a repeating accent that appears
+to reverse. Preserve the accepted body, part rectangles/rates, movement and
+contact cues. Separate actual painter-command checks from native pixel approval,
+and keep original artwork unchanged while production review is deferred.

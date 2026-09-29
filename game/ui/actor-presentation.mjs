@@ -1,7 +1,7 @@
 import { aliasSafePhase } from '../../authoring/motion-lab/animation.mjs';
 import { paintRotor } from './rotor-presentation.mjs';
 import { enemyCatalogRecord, resolveEnemySkin } from '../enemy-catalog.mjs';
-import { drawEnemyBodyMotion } from './enemy-body-motion.mjs';
+import { advanceEnemySurfacePhase, drawEnemyBodyMotion } from './enemy-body-motion.mjs';
 import { drawActorRecipe, resolveActorRecipe } from './actor-recipes.mjs';
 import {
   journeyActorThemeMaterial,
@@ -233,6 +233,14 @@ export function createActorPresentation() {
                 .phase;
         const travelPhase =
           (old?.travelPhase ?? 0) + (locked || reduced ? 0 : elapsed * Math.min(speed, 12) * 0.45);
+        const surfacePhase = advanceEnemySurfacePhase(
+          old?.surfacePhase ?? 0,
+          locked || reduced ? 0 : elapsed * (1 + Math.min(speed, 12) * 0.13),
+        );
+        const surfaceTravelPhase = advanceEnemySurfacePhase(
+          old?.surfaceTravelPhase ?? 0,
+          locked || reduced ? 0 : elapsed * Math.min(speed, 12) * 0.45,
+        );
         const tail = old?.tail ? [...old.tail] : [];
         if (
           !locked &&
@@ -254,6 +262,8 @@ export function createActorPresentation() {
           time,
           phase,
           travelPhase,
+          surfacePhase,
+          surfaceTravelPhase,
           rotorPhase,
           heading,
           target,
@@ -282,6 +292,8 @@ export function createActorPresentation() {
             heading,
             phase,
             travelPhase,
+            surfacePhase,
+            surfaceTravelPhase,
             rotorPhase,
             speed: locked ? 0 : speed,
             bank,
