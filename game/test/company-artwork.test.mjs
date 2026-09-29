@@ -124,7 +124,10 @@ test('the first artwork batch retains its four exact original public snapshots t
   assert.ok(registered.every((edition) => edition?.presentationHistory?.length));
   const newIds = new Set(batch.map(([, , id]) => id));
   for (const edition of registered) {
-    const descriptor = edition.presentationHistory[0];
+    const descriptor = edition.presentationHistory.find((entry) =>
+      entry.path.endsWith('-fb207466c.json'),
+    );
+    assert.ok(descriptor, edition.id);
     assert.deepEqual(Object.keys(descriptor).sort(), ['bytes', 'id', 'path', 'sha256']);
     const bytes = await readFile(new URL(descriptor.path, root));
     assert.equal(bytes.length, descriptor.bytes);
