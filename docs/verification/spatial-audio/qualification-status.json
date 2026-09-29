@@ -1,8 +1,9 @@
 {
-  "implementationCommit": "aa625deffb61b55bb61538638ac90d9eda5b4a0d",
+  "implementationCommit": "4861fed68af6ed7b961b4729c7b0cc8c355817e0",
   "focusedTests": {
-    "passed": 130,
-    "failed": 0
+    "passed": 135,
+    "failed": 0,
+    "skipped": 0
   },
   "teamVersusAndNextTests": {
     "passed": 36,
@@ -10,14 +11,15 @@
     "skipped": 0
   },
   "nativeSfxMix": {
-    "scenarios": 6,
-    "highestStereoPeakDbfs": -19.463839324532383,
+    "scenarios": 7,
+    "highestStereoPeakDbfs": -17.72864643884342,
     "musicIncluded": false,
-    "humanListening": false
+    "humanListening": false,
+    "sourceNote": "Polish audition with rejected recorded startup; native current-bank mix must be rerun."
   },
   "releaseSlot": "unallocated; release-ready check requires draft/stacked status",
   "pending": [
-    "Full-repository failure triage and final run receipt",
+    "New combined PR integration and exact-source checks/build",
     "Human sustained listening/headphones/speakers and physical-device qualification",
     "Coordinator release review/allocation and immutable publication"
   ],
@@ -30,16 +32,17 @@
     "coverage": 67.1,
     "score": 15980,
     "lives": 3,
-    "browserWarningsOrErrors": 0
+    "browserWarningsOrErrors": 0,
+    "sourceNote": "Earlier 52-cue lifecycle build; current 56-cue build cache qualification recorded separately."
   },
   "build": "lifecycle-build.json",
   "fullRepositoryRun": {
-    "state": "running; not green",
-    "log": ".cache/audio-final-full-suite.log",
-    "observedFailures": [
-      "v34\u2013v37 authored bootstrap route assertions (previously baseline-reproduced)",
-      "Custom pack actor host async settle timeout",
-      "Backup blur host picture readiness timeout"
-    ]
-  }
+    "state": "Stopped failing diagnostic before source revision; all 47 observed failures triaged",
+    "baselineReproduced": 45,
+    "passedOnBothTargetedReruns": 2,
+    "additionalBaselineCaptionFailure": 1,
+    "evidence": "polish-baseline-triage.json",
+    "fullSuitePass": false
+  },
+  "startupSelection": "User preferred previous startup; original synthesized start/retry restored byte-for-byte; 35 affected tests pass."
 }
