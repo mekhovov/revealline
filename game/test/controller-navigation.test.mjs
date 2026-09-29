@@ -183,7 +183,7 @@ class Element extends Events {
   matches(selector) {
     return selector.split(',').some((part) => {
       part = part.trim();
-      if (part === ':disabled') return this.disabled;
+      if (part === ':disabled') return this.effectivelyDisabled();
       if (part.startsWith('.')) return this.classList.contains(part.slice(1));
       if (part.startsWith('#')) return this.id === part.slice(1);
       const excluded = [...part.matchAll(/:not\(([^)]+)\)/g)].map((match) => match[1]);
@@ -239,7 +239,19 @@ class Element extends Events {
       if (node.hidden || node.style.display === 'none') return [];
     return this.isConnected ? [this.getBoundingClientRect()] : [];
   }
+  effectivelyDisabled() {
+    if (this.disabled) return true;
+    if (!['BUTTON', 'INPUT', 'SELECT', 'TEXTAREA', 'FIELDSET'].includes(this.tagName)) return false;
+    for (let parent = this.parentElement; parent; parent = parent.parentElement) {
+      if (parent.tagName !== 'FIELDSET' || !parent.disabled) continue;
+      const firstLegend = parent.children.find((child) => child.tagName === 'LEGEND');
+      if (!firstLegend?.contains(this)) return true;
+    }
+    return false;
+  }
   focus() {
+    // Model the native fieldset focus barrier, not just the reflected property.
+    if (this.effectivelyDisabled()) return;
     this.ownerDocument.activeElement = this;
     this.emit('focusin');
   }
@@ -250,7 +262,7 @@ class Element extends Events {
     this.scrolled = (this.scrolled ?? 0) + 1;
   }
   click() {
-    if (this.disabled) return;
+    if (this.effectivelyDisabled()) return;
     if (this.tagName === 'INPUT' && this.type === 'checkbox') this.checked = !this.checked;
     this.emit('click');
     if (this.tagName === 'INPUT' && this.type === 'checkbox') {
@@ -1119,6 +1131,112 @@ test('linear navigation skips hidden, disabled, inert, closed disclosure and hos
   assert.equal(h.document.activeElement, first);
   h.api.handle({ direction: 'up' });
   assert.equal(h.document.activeElement, last);
+});
+
+test('controller traversal skips effectively disabled fieldset fields and recovers when enabled', (t) => {
+  const h = setup(t),
+    restart = h.control('button', { id: 'restart' }),
+    fieldset = h.control('fieldset', { disabled: true });
+  const fields = ['select', 'input', 'textarea'].map((tag) => h.control(tag, {}, fieldset));
+  const feedback = h.control('button', { id: 'read-feedback' });
+  for (const field of fields) {
+    assert.equal(field.disabled, false, 'The reflected own property remains false.');
+    assert.equal(field.matches(':disabled'), true);
+  }
+  feedback.focus();
+  fields[0].focus();
+  assert.equal(
+    h.document.activeElement,
+    feedback,
+    'Native focus refuses inherited-disabled fields.',
+  );
+  h.api.handle({ direction: 'up' });
+  assert.equal(h.document.activeElement, restart);
+  h.api.sync();
+  assert.equal(h.document.activeElement, restart);
+  h.api.handle({ direction: 'down' });
+  assert.equal(h.document.activeElement, feedback);
+  fieldset.disabled = false;
+  h.api.handle({ direction: 'up' });
+  assert.equal(h.document.activeElement, fields.at(-1));
+});
+
+test('effective disabled filtering preserves first-legend controls and ordinary links', (t) => {
+  const h = setup(t),
+    first = h.control(),
+    fieldset = h.control('fieldset', { disabled: true }),
+    legend = h.control('legend', {}, fieldset),
+    allowed = h.control('button', {}, legend),
+    nestedDisabled = h.control('fieldset', { disabled: true }, legend),
+    nested = h.control('input', {}, nestedDisabled),
+    secondLegend = h.control('legend', {}, fieldset),
+    excluded = h.control('button', {}, secondLegend);
+  h.control('select', {}, fieldset);
+  const link = h.control('a', {}, fieldset),
+    last = h.control();
+  link.setAttribute('href', '#details');
+  assert.equal(allowed.matches(':disabled'), false);
+  assert.equal(nested.matches(':disabled'), true);
+  assert.equal(excluded.matches(':disabled'), true);
+  first.focus();
+  h.api.handle({ direction: 'down' });
+  assert.equal(h.document.activeElement, allowed);
+  h.api.handle({ direction: 'down' });
+  assert.equal(h.document.activeElement, link, 'Fieldset disabling does not disable anchors.');
+  h.api.handle({ direction: 'down' });
+  assert.equal(h.document.activeElement, last);
+});
+
+test('inherited disabling cancels a captured Confirm without redirecting to another action', (t) => {
+  const h = setup(t),
+    fieldset = h.control('fieldset'),
+    original = h.control('button', {}, fieldset),
+    next = h.control();
+  let activations = 0;
+  original.addEventListener('click', () => activations++);
+  next.addEventListener('click', () => activations++);
+  original.focus();
+  h.api.handle({ confirmStart: true });
+  fieldset.disabled = true;
+  h.api.handle({ confirmCommit: true });
+  assert.equal(activations, 0);
+  assert.equal(original.hasAttribute('data-controller-pressed'), false);
+  h.api.sync();
+  assert.equal(h.document.activeElement, next);
+  assert.equal(activations, 0, 'Neutral recovery cannot activate the successor.');
+});
+
+test('native Tab navigation skips fields disabled by their fieldset', (t) => {
+  const h = setup(t, { keyboard: true }),
+    first = h.control(),
+    fieldset = h.control('fieldset', { disabled: true });
+  h.control('select', {}, fieldset);
+  const last = h.control();
+  h.setScope('authoring', h.document.body);
+  first.focus();
+  h.api.sync();
+  const forward = first.emit('keydown', { key: 'Tab' });
+  assert.equal(forward.defaultPrevented, true);
+  assert.equal(h.document.activeElement, last);
+  last.emit('keydown', { key: 'Tab', shiftKey: true });
+  assert.equal(h.document.activeElement, first);
+});
+
+test('reading accepts an initially disabled Done control before the host enables it', (t) => {
+  let done;
+  const h = setup(t, {
+      onReadingChange: (state) => {
+        if (done) done.disabled = !state;
+      },
+    }),
+    surface = readingSurface(h);
+  done = h.control('button', { disabled: true });
+  surface.origin.focus();
+  assert.equal(h.api.beginReading({ ...surface, exit: done }), true);
+  assert.equal(done.disabled, false, 'The existing allowDisabled entry contract remains intact.');
+  h.api.handle({ back: true });
+  assert.equal(done.disabled, true);
+  assert.equal(h.document.activeElement, surface.origin);
 });
 
 for (const id of ['gallery-grid', 'missions'])
