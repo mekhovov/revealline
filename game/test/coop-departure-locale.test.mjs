@@ -35,6 +35,7 @@ for (const [id, english, ukrainian] of departures)
     assert.equal(f.$('coop-overlay').hidden, false);
 
     setLocale('en', { persist: false });
+    if (id === 'coop-catalogue') assert.equal(f.$(id).parentNode, f.$('coop-pause-core'));
     f.$(id).focus();
     assert.equal(f.doc.activeElement.id, id);
     f.tap('Enter');
