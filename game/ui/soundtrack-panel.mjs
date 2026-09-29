@@ -712,7 +712,7 @@ export function attachSoundtrackPanel({
         : t('interface:soundtrack.chooseAtLeastOneStyle'),
     );
   }
-  function playSettingsStyles() {
+  async function playSettingsStyles() {
     const selected = selectedSettingsStyles();
     if (!selected.length) {
       renderSettingsStyleStatus(t('interface:soundtrack.chooseAtLeastOneStyle'));
@@ -721,37 +721,50 @@ export function attachSoundtrackPanel({
     const launchIntentGeneration = player.intentRevision?.() ?? 0;
     for (const [style, checkbox] of onlineStyleInputs) checkbox.checked = selected.includes(style);
     wakeAudio();
-    return task(t('interface:loadingThePublicSoundtrackCatalogue'), async (signal) => {
-      await loadSettingsLibrary();
-      throwIfSoundtrackAborted(signal);
-      const loaded = await loadOnlineCatalogue();
-      throwIfSoundtrackAborted(signal);
-      if (!loaded) throw new Error(t('interface:thePublicSoundtrackCatalogueIsUnavailable'));
-      const styles = new Set(selected);
-      const matches = loaded.tracks.filter(
-        (track) =>
-          (!draft.listening?.recordingMode || onlineSoundtrackRecordingAllowed(track)) &&
-          [...styles].some((style) => matchesOnlineStyle(track, style)),
-      );
-      if (!matches.length) throw new Error(t('interface:soundtrack.chooseAtLeastOneStyle'));
-      const localGenres = localGenresForPublicStyles(selected);
-      if (localGenres.length) {
-        const committed = await commitSettingsListening(localGenres, signal);
-        if (!committed.adopted || disposed) return;
-      }
-      await stopAudition(false);
-      throwIfSoundtrackAborted(signal);
-      if ((player.intentRevision?.() ?? 0) !== launchIntentGeneration) return;
-      await player.playRemotePlaylist(onlinePlaybackWindow(matches), {
-        order: onlineOrder.element.value,
-        repeat: onlineRepeat.element.value,
-        mixWithLibrary: localGenres.length > 0,
-      });
-      await notifyPlayback();
-      renderSettingsStyleStatus(
-        t('interface:soundtrack.playingSelectedStyles', { count: matches.length }),
-      );
-    });
+    const completed = await task(
+      t('interface:loadingThePublicSoundtrackCatalogue'),
+      async (signal) => {
+        await loadSettingsLibrary();
+        throwIfSoundtrackAborted(signal);
+        const loaded = await loadOnlineCatalogue();
+        throwIfSoundtrackAborted(signal);
+        if (!loaded) throw new Error(t('interface:thePublicSoundtrackCatalogueIsUnavailable'));
+        const styles = new Set(selected);
+        const matches = loaded.tracks.filter(
+          (track) =>
+            (!draft.listening?.recordingMode || onlineSoundtrackRecordingAllowed(track)) &&
+            [...styles].some((style) => matchesOnlineStyle(track, style)),
+        );
+        if (!matches.length) throw new Error(t('interface:soundtrack.chooseAtLeastOneStyle'));
+        const localGenres = localGenresForPublicStyles(selected);
+        if (localGenres.length) {
+          const committed = await commitSettingsListening(localGenres, signal);
+          if (!committed.adopted || disposed) return;
+        }
+        await stopAudition(false);
+        throwIfSoundtrackAborted(signal);
+        if ((player.intentRevision?.() ?? 0) !== launchIntentGeneration) return;
+        await player.playRemotePlaylist(onlinePlaybackWindow(matches), {
+          order: onlineOrder.element.value,
+          repeat: onlineRepeat.element.value,
+          mixWithLibrary: localGenres.length > 0,
+        });
+        await notifyPlayback();
+        renderSettingsStyleStatus(
+          t('interface:soundtrack.playingSelectedStyles', { count: matches.length }),
+        );
+      },
+    );
+    // task() renders from the last durable preference while it owns the UI. If
+    // validation or the atomic save fails, restore the player's attempted
+    // selection so a transient failure does not silently replace it with the
+    // previous preference before they can retry.
+    if (!completed && !disposed) {
+      const attempted = new Set(selected);
+      for (const [style, checkbox] of settingsStyleInputs) checkbox.checked = attempted.has(style);
+      renderSettingsStyleStatus();
+    }
+    return completed;
   }
   const playOnlineResults = button(
     'online-play-all',
