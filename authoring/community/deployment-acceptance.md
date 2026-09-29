@@ -46,6 +46,12 @@ revision before installation. No selected-host acceptance is claimed.
   immutable edition offline. Before mutation it binds `/version` to the operator's exact expected
   release and source revision and requires both liveness and full dependency readiness. It requires
   explicit destructive opt-in and reserves its receipt before publication.
+- `npm run acceptance:account-bootstrap` first binds the selected HTTPS deployment to the expected
+  immutable release, creates two disposable creators, claims their verification messages through a
+  protected operator capture API, completes the exact same-origin actions, signs both accounts in,
+  and confirms an existing allowlisted administrator can read the moderation queue. Its owner-only
+  receipt contains counts and outcomes, never account addresses, passwords, tokens, cookies, action
+  URLs or message subjects.
 - `/health` remains a cheap PostgreSQL liveness check. `/ready` reruns schema, storage, and ffprobe
   checks; concurrent requests share a probe and both success and failure are cached for 30 seconds
   to bound work. The production container health check uses `/ready` and fails closed.
@@ -74,10 +80,17 @@ Run these checks in the selected production-like environment before claiming ava
 6. Exercise the HTTPS proxy with the configured exact hop count and confirm admission windows use
    the intended client address. Run `npm run acceptance:tus-deployed` and preserve its redacted
    receipt. Repeat it across API restart.
-7. Run `npm run acceptance:deployed` with Creator A, Creator B and administrator sessions. Preserve
+7. Run `npm run acceptance:account-bootstrap` against the selected mail capture provider. Preserve
+   its redacted receipt, then supply those verified disposable creator credentials to the remaining
+   deployed runners. Verify live-mailbox deliverability separately if the capture API is not the
+   production mailbox path.
+8. Run `npm run acceptance:deployed` with Creator A, Creator B and administrator sessions. Preserve
    its redacted receipt. Require the receipt's release/source identity to match the deployed
-   immutable artifact, then exercise immutable update in the browser.
-8. Stop writers and run `npm run recovery:rehearse` against a confirmed empty target. Retain the
+   immutable artifact. Repeat with `COMMUNITY_ACCEPTANCE_MODERATION_MODE=browser`, explicitly load
+   the seeded preview and choose **Unlist and resolve** in the shipped administrator page, then run
+   `npm run acceptance:browser-moderation` against the seed receipt. Preserve the passing verifier
+   receipt, then exercise immutable update in the browser.
+9. Stop writers and run `npm run recovery:rehearse` against a confirmed empty target. Retain the
    redacted receipt and repeat exact download plus offline ownership checks against the restored
    service.
 
