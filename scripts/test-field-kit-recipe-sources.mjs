@@ -4,6 +4,7 @@ import { readFile } from 'node:fs/promises';
 import {
   fieldKitRecipeSources,
   verifyFieldKitSteamDeckAudioContinuationReview,
+  verifyFieldKitDiscoveryAudioContinuationReview,
   verifyFieldKitAudioStyleMenuCorrectionReview,
   verifyFieldKitAudioStyleMenuReview,
   verifyFieldKitPlayerReadinessAudioReview,
@@ -74,6 +75,28 @@ test('every declared helper invalidates all sharing groups and leaves nonconsume
     ['game/media-storage-record.mjs', ['audio']],
     ['game/soundtrack-private-intake.mjs', ['audio']],
     ['game/ui/soundtrack-error-copy.mjs', ['audio']],
+    ['game/journey/campaign-feedback.mjs', ['audio']],
+    ['game/rewards/audio-original.mjs', ['audio']],
+    ['game/rewards/media-format.mjs', ['audio']],
+    ['game/ui/edition-solo.mjs', ['audio']],
+    ['game/ui/edition-rewards.mjs', ['audio']],
+    ['game/ui/reward-media.mjs', ['audio']],
+    ['game/ui/reward-audio-group.mjs', ['audio']],
+    ['game/rewards/audio-groups.mjs', ['audio']],
+    ['game/studio-preview-session.mjs', ['audio']],
+    ['game/audio-preferences.mjs', ['audio']],
+    ['game/ui/story-dialog.mjs', ['audio']],
+    ['game/ui/victory-story.mjs', ['audio']],
+    ['game/ui/music.mjs', ['audio']],
+    ['game/data-json.mjs', ['audio']],
+    ['game/mp3.mjs', ['audio']],
+    ['game/media-audio.mjs', ['audio']],
+    ['game/video-poster.mjs', ['audio']],
+    ['game/rewards/model.mjs', ['audio']],
+    ['game/rewards/media.mjs', ['audio']],
+    ['game/editions/assets.mjs', ['audio']],
+    ['game/editions/model.mjs', ['audio']],
+    ['game/editions/retained-presentation.mjs', ['audio']],
   ])
     assert.deepEqual([...(consumers.get(name) ?? [])].sort(), groups, name);
   assert.equal(consumers.size, inputs.size, 'Every read belongs to a declared group');
@@ -90,6 +113,8 @@ test('every declared helper invalidates all sharing groups and leaves nonconsume
 test('missing helper bytes cannot produce a supposedly valid fingerprint', async () => {
   for (const missing of [
     'game/ui/lane-presentation.mjs',
+    'game/journey/campaign-feedback.mjs',
+    'game/rewards/audio-original.mjs',
     'authoring/library/fpv-role-presentations/originals/impact.png',
   ])
     await assert.rejects(
@@ -459,4 +484,28 @@ test('Steam Deck audio continuation and exact production99 predecessor fail clos
     assert.equal(verifyFieldKitSteamDeckAudioContinuationReview(...changed), false);
   }
   assert.equal(verifyFieldKitSteamDeckAudioContinuationReview(...bytes.toReversed()), false);
+});
+
+test('discovery audio continuation pins the new review, unchanged predecessors and independent production100 oracle', async () => {
+  const paths = [
+    'docs/verification/discovery-audio-continuation-2026-09-29/review.json',
+    'docs/verification/v0.142.3-steamdeck-confirm-audio-continuation/review.json',
+    'docs/verification/audio-style-menu-correction-2026-09-28/review.json',
+    'game/test/fixtures/production-v01423-6a67-fpv100.json',
+  ];
+  const originals = await Promise.all(
+    paths.map((name) => readFile(new URL('../' + name, import.meta.url))),
+  );
+  assert.equal(verifyFieldKitDiscoveryAudioContinuationReview(...originals), true);
+  for (const index of originals.keys()) {
+    for (const changed of [Buffer.alloc(0), Buffer.concat([originals[index], Buffer.from(' ')])]) {
+      const candidate = [...originals];
+      candidate[index] = changed;
+      assert.equal(
+        verifyFieldKitDiscoveryAudioContinuationReview(...candidate),
+        false,
+        paths[index],
+      );
+    }
+  }
 });
