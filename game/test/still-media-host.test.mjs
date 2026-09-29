@@ -276,6 +276,7 @@ test('v1 MP3 bytes remain exact through shared v5 upgrade and explicit native ba
   assert.equal(await h.$('still-media-preview').onclick(), true);
   assert.equal(await h.$('still-media-save').onclick(), true);
   h.host.panel.close();
+  h.$('still-host-export-audio').focus();
   assert.equal(await h.$('still-host-export-audio').onclick(), true);
   assert.equal(h.$('still-host-download-audio').hidden, false);
   const blob = h.urls.get(h.$('still-host-download-audio').href);
@@ -286,6 +287,171 @@ test('v1 MP3 bytes remain exact through shared v5 upgrade and explicit native ba
   assert.match(h.$('still-host-status').textContent, /Download requested/);
   h.$('still-host-close').onclick();
   assert.equal(h.revoked.length, 1);
+});
+
+async function deferredAudioHost(t, { fail = false, readPads } = {}) {
+  const gate = deferred(),
+    entered = deferred();
+  const h = await setup(t, {
+    host: {
+      ...(readPads ? { readPads } : {}),
+      createAudio(args) {
+        const store = createSoundtrackStore(args);
+        return {
+          ...store,
+          async read(options) {
+            const saved = await store.read(options);
+            entered.resolve();
+            await gate.promise;
+            if (fail) throw new Error('Soundtrack read refused');
+            return saved;
+          },
+        };
+      },
+    },
+  });
+  await h.host.open();
+  h.host.panel.close();
+  const opener = h.$('still-host-export-audio'),
+    link = h.$('still-host-download-audio');
+  modelNativeDisabledFocus(h, opener);
+  return { ...h, gate, entered, opener, link };
+}
+
+for (const fail of [false, true])
+  test(`soundtrack preparation ${fail ? 'failure restores retry' : 'success selects Download'} after native disabled blur`, async (t) => {
+    const h = await deferredAudioHost(t, { fail }),
+      before = h.memory.allPuts.length;
+    h.opener.focus();
+    const pending = h.opener.onclick();
+    await h.entered.promise;
+    assert.equal(h.opener.disabled, true);
+    assert.equal(h.doc.activeElement, h.doc.body);
+    h.gate.resolve();
+    assert.equal(await pending, !fail);
+    assert.equal(h.opener.disabled, false);
+    assert.equal(h.doc.activeElement, fail ? h.opener : h.link);
+    assert.equal(h.link.hidden, fail);
+    assert.equal(h.memory.allPuts.length, before, 'Backup preparation must not save media');
+    if (!fail) {
+      const restored = await importSoundtrackBundle(h.urls.get(h.link.href), {
+        probeMedia: structuralProbe,
+      });
+      assert.deepEqual(restored.library, emptySoundtrackLibrary());
+      assert.equal(restored.assets.length, 0);
+    }
+  });
+
+for (const decision of [
+  'newer-focus',
+  'pointer',
+  'keyboard',
+  'hidden-return',
+  'blur-return',
+  'panel-reopen',
+  'unowned',
+])
+  test(`soundtrack completion preserves ${decision} instead of reclaiming page focus`, async (t) => {
+    const h = await deferredAudioHost(t),
+      other = h.$('still-host-close');
+    (decision === 'unowned' ? other : h.opener).focus();
+    const pending = h.opener.onclick();
+    await h.entered.promise;
+    if (decision === 'newer-focus') other.focus();
+    if (decision === 'pointer') other.emit('pointerdown', { button: 0 });
+    if (decision === 'keyboard') other.emit('keydown', { key: 'Shift' });
+    if (decision === 'hidden-return') {
+      h.doc.hidden = true;
+      h.doc.emit('visibilitychange');
+      h.doc.hidden = false;
+    }
+    if (decision === 'blur-return') h.win.emit('blur');
+    if (decision === 'panel-reopen') {
+      await h.host.open();
+      h.host.panel.close();
+    }
+    const focused = h.doc.activeElement;
+    h.gate.resolve();
+    assert.equal(await pending, true);
+    assert.equal(h.link.hidden, false, 'The verified backup remains available');
+    assert.equal(h.doc.activeElement, focused);
+  });
+
+for (const decision of ['close', 'close-reopen', 'pagehide', 'dispose'])
+  test(`cancelled soundtrack preparation cannot publish a late handoff after ${decision}`, async (t) => {
+    const h = await deferredAudioHost(t);
+    h.opener.focus();
+    const pending = h.opener.onclick();
+    await h.entered.promise;
+    if (decision.startsWith('close')) h.$('still-host-close').onclick();
+    if (decision === 'close-reopen') await h.host.open();
+    if (decision === 'pagehide') h.win.emit('pagehide', { persisted: true });
+    if (decision === 'dispose') h.host.dispose();
+    const focused = h.doc.activeElement,
+      status = h.$('still-host-status').textContent;
+    h.gate.resolve();
+    assert.equal(await pending, false);
+    assert.equal(h.doc.activeElement, focused);
+    assert.equal(h.$('still-host-status').textContent, status);
+    assert.equal(h.link.hidden, true);
+    assert.equal(h.urls.size, 0);
+  });
+
+test('persisted page return allows a fresh soundtrack preparation while the cancelled read finishes', async (t) => {
+  const h = await deferredAudioHost(t);
+  h.opener.focus();
+  const retired = h.opener.onclick();
+  await h.entered.promise;
+  h.win.emit('pagehide', { persisted: true });
+  h.win.emit('pageshow', { persisted: true });
+  assert.equal(h.opener.disabled, false, 'The retained local connection must permit retry');
+  h.opener.focus();
+  const current = h.opener.onclick();
+  h.gate.resolve();
+  assert.equal(await retired, false);
+  assert.equal(await current, true);
+  assert.equal(h.link.hidden, false);
+  assert.equal(h.doc.activeElement, h.link);
+  assert.equal(h.urls.size, 1, 'Only the current preparation may publish a URL');
+});
+
+test('soundtrack backup preserves a newer controller destination after actual Confirm release starts preparation', async (t) => {
+  const pad = {
+    id: 'Soundtrack focus pad',
+    index: 0,
+    mapping: 'standard',
+    connected: true,
+    axes: [0, 0, 0, 0],
+    buttons: Array.from({ length: 17 }, () => ({ pressed: false, value: 0 })),
+  };
+  const h = await deferredAudioHost(t, { readPads: () => [pad] });
+  const frame = (time) => {
+    const [id, callback] = h.frames.entries().next().value;
+    h.frames.delete(id);
+    callback(time);
+  };
+  const pulse = (button, time) => {
+    pad.buttons[button] = { pressed: true, value: 1 };
+    frame(time);
+    pad.buttons[button] = { pressed: false, value: 0 };
+    frame(time + 1);
+  };
+  frame(0);
+  pulse(0, 1); // Explicit controller join; it cannot activate a page control.
+  h.opener.focus();
+  pulse(0, 10);
+  await h.entered.promise;
+  assert.equal(h.opener.disabled, true);
+  pulse(13, 50);
+  const focused = h.doc.activeElement;
+  assert.notEqual(focused, h.doc.body);
+  assert.notEqual(focused, h.opener);
+  h.gate.resolve();
+  for (let attempt = 0; attempt < 100 && h.opener.disabled; attempt++)
+    await new Promise(setImmediate);
+  assert.equal(h.opener.disabled, false);
+  assert.equal(h.link.hidden, false);
+  assert.equal(h.doc.activeElement, focused);
 });
 
 function recoveryCatalogue(redistribute = 'allowed') {
