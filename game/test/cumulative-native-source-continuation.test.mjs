@@ -198,7 +198,20 @@ test('new Team source review cannot bypass original role, default, image or ance
       defaultAsset: defaults.find((asset) => asset.id === role.defaultAsset.id),
       inheritedAssets,
     };
-    assert.equal(fieldKitTeamRecipeQuality(args).stage, 'reviewed', role.slot);
+    const current = fieldKitTeamRecipeQuality(args);
+    assert.equal(current.stage, 'reviewed', role.slot);
+    const prior = review.fingerprints.team;
+    const previous = fieldKitTeamRecipeQuality({
+      ...args,
+      source: `${prior.priorPaths.join('; ')} sha256:${prior.priorSHA256}`,
+      cumulativeReviewBytes: null,
+    });
+    assert.equal(previous.stage, 'reviewed');
+    for (const entry of previous.evidence)
+      assert.ok(
+        current.evidence.some((value) => value.includes(entry)),
+        role.slot,
+      );
     for (const key of Object.keys(ancestors)) {
       assert.equal(fieldKitTeamRecipeQuality({ ...args, [key]: null }).stage, 'source', key);
       assert.equal(
@@ -240,7 +253,18 @@ test('five-image continuation requires unchanged original PNG identity and every
   );
   for (const row of equipment.originals) {
     const args = [row.slot, source('equipment'), row.sha256, ...ancestors, reviewBytes];
-    assert.equal(fieldKitEquipmentQuality(...args).stage, 'reviewed', row.slot);
+    const current = fieldKitEquipmentQuality(...args);
+    assert.equal(current.stage, 'reviewed', row.slot);
+    const previous = fieldKitEquipmentQuality(
+      row.slot,
+      review.fingerprints.equipment.priorSHA256,
+      row.sha256,
+      ...ancestors,
+    );
+    assert.equal(previous.stage, 'reviewed');
+    assert.equal(previous.evidence.length, 2, 'retain both exact predecessor scopes');
+    assert.equal(current.evidence.length, 3, 'append only the current scoped review');
+    for (const entry of previous.evidence) assert.ok(current.evidence.includes(entry), row.slot);
     for (const index of [0, 1, 2, 3, 4, 5, 6]) {
       const altered = [...args];
       altered[index] = index < 3 ? 'unreviewed' : changed(args[index]);
