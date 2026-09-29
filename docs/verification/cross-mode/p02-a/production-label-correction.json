@@ -1,5 +1,0 @@
-{
-  "initialLedgerBytes": 6809792,
-  "initialLedgerSha256": "641062928ab38e6e3aa88349259d4cd709c93364cd66cfa48394beb6a7729c8e",
-  "reason": "Strict test expects Scoped P02-A source review; change functional modifier placement only. Restore own uncommitted derivative to exact incoming HEAD r22 before canonical final r23 generation. No committed or published ledger replaced."
-}

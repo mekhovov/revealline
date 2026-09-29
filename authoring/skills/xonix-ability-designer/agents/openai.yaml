@@ -1,4 +1,0 @@
-interface:
-  display_name: "Xonix Ability Designer"
-  short_description: "Design classes, equipment and reusable arcade abilities"
-  default_prompt: "Use $xonix-ability-designer to create configurable player classes and equipment, separate them from cosmetic choices, map sourced references into fictional arcade roles, and test the actual supported ability preview."
