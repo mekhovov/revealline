@@ -7,7 +7,8 @@ unchanged. New first-person flight belongs to the separate `civilian-fpv` packag
 ## Order and compatibility
 
 Deliver Phase 2 → 3 → 4 → 6, with qualification in every batch, through integration
-PR #758 while open. The branch was refreshed onto main `a5859df78` (v0.142.2) for the latest batch.
+PR #758 while open. The branch was refreshed onto main `afb19ebd0` (v0.142.3) for the latest batch,
+including the controller fixes from PRs #775 and #778.
 Keep 18 campaigns, 108 arcade missions, English/Ukrainian, shared arcade simulation,
 and every already-published reward promise. Human learning, artwork and physical
 radio testing remain explicitly deferred. Passing synthetic inputs is not hardware
@@ -525,7 +526,10 @@ not a human or physical-radio test.
 ### Remaining release work
 
 1. Preserve the one integration PR while the active release root occupies the lane.
-   Release coordination allocates the version and promotion order.
+   Release coordination allocates the version and promotion order. At this audit,
+   main declares v0.142.3 and its controller follow-up PR #778 has merged; the stable release
+   and checked-in Pages selector still name v0.142.2. These are metadata observations,
+   not verification of current deployed bytes.
 2. Qualify the exact merged-main source, produce and independently inspect the full
    default archive, and admit the complete selected hosting graph under its cap.
    Candidate projections and selected-package checks do not substitute for this.
@@ -571,6 +575,14 @@ exceed the hosted cap. The other twelve editions need a later coordinator-owned
 publication batch. Every batch requires its own exact envelope review and complete
 budget check; these historical totals allocate no version and qualify no future
 artifact. The feature changes remain combined in the existing integration PR.
+
+Use the existing `bundle-editions --editions` command for each selected cohort;
+it produces a complete selected envelope and fresh reproducibility receipts.
+Filtering the all-eighteen metadata packet is planning only. Each immutable release
+has one `editions.json`, so the six- and twelve-edition cohorts require separate
+coordinator-owned releases, not two replacements of that asset in one release.
+Include actual review and evidence descriptors in the preflight before upload;
+unproduced evidence bytes remain unknown rather than counting as zero.
 
 The edition and optional-package upload paths now share a metadata-only preflight
 against the same additive cap. It counts the unique union of existing draft assets
