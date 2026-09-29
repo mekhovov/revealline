@@ -13,7 +13,7 @@ import {
 } from '../../scripts/produce-field-kit-theme.mjs';
 import { fieldKitTeamRecipeQuality } from '../../scripts/team-recipe-review.mjs';
 import { createDefaultThemeBundle } from '../presentation/catalog.mjs';
-import { FORMATS } from '../presentation/model.mjs';
+import { FORMATS, validateAssetRevision } from '../presentation/model.mjs';
 import {
   COOP_PICTURE_BINDINGS,
   COOP_SUPPORTED_PICTURE_BINDINGS,
@@ -107,6 +107,7 @@ test('every original evidence record and source dependency fails closed when byt
 });
 
 test('current ordinary recipe evidence appends without losing any historical audio evidence', () => {
+  const defaults = createDefaultThemeBundle();
   for (const group of ['ui', 'screens', 'motion', 'effects', 'audio']) {
     const row = review.fingerprints[group];
     const oldSource = `${row.priorPaths.join('; ')} sha256:${row.priorSHA256}`;
@@ -114,12 +115,29 @@ test('current ordinary recipe evidence appends without losing any historical aud
     const current = fieldKitRecipeQuality(group, source(group), reviewBytes);
     assert.equal(previous.stage, 'reviewed', group);
     assert.equal(current.stage, 'reviewed', group);
-    assert.deepEqual(current.evidence.slice(0, -1), previous.evidence, group);
+    const compact = previous.evidence.length === 16;
+    if (compact) {
+      assert.equal(current.evidence.length, 16);
+      assert.ok(current.evidence[0].endsWith('\n' + previous.evidence[0]));
+      assert.deepEqual(current.evidence.slice(1), previous.evidence.slice(1));
+    } else assert.deepEqual(current.evidence.slice(0, -1), previous.evidence, group);
     assert.match(
-      current.evidence.at(-1),
+      current.evidence[compact ? 0 : current.evidence.length - 1],
       /generated, packaged, public, physical and human acceptance remain separate/,
     );
     if (group === 'audio') assert.equal(previous.evidence.length, 16);
+    const slot = defaults.slots.find((row) => row.group === group);
+    const asset = defaults.assets.find((row) => row.id === `${slot.id}.default`);
+    assert.doesNotThrow(() => validateAssetRevision({ ...asset, quality: current }));
+    if (group === 'audio')
+      assert.throws(
+        () =>
+          validateAssetRevision({
+            ...asset,
+            quality: { ...current, evidence: [...current.evidence, 'unbounded'] },
+          }),
+        /quality evidence/,
+      );
     assert.equal(fieldKitRecipeQuality(group, source(group)).stage, 'source');
     assert.equal(
       fieldKitRecipeQuality(group, source(group) + ' changed', reviewBytes).stage,
