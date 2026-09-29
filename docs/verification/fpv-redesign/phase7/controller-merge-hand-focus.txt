@@ -1,1 +1,0 @@
-"{\"width\":844,\"height\":390,\"dpr\":1,\"active\":\"screen-steering-hand\",\"focusVisible\":true,\"selected\":\"left\",\"status\":\"Steering hand saved.\"}"
