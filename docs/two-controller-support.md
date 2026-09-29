@@ -117,3 +117,10 @@ movement through the couch gameplay adapter, menu routing, channel overlap
 rejection, shared disconnect, two radios and a radio/gamepad mixture.
 Physical Solo/shared Team/mixed-device verification is pending user testing;
 the confirmed FPV TX15 test does not qualify these modes.
+
+Physical follow-up: the user confirmed regular Solo right-stick movement works.
+During Team setup, browser inspection caught native Gamepad prototype fields
+being omitted by object spread in shared snapshots. Explicit field copying
+fixes this; a native-like prototype-field regression now covers it. The real
+TX15 now retains Player 1/right-stick and Player 2/left-stick assignments in
+Team. Physical movement confirmation is still pending.

@@ -406,3 +406,19 @@ test('shared radio menu owner reaches the existing menu router through compact s
   assert.equal(router.sample({ scope: 'menu' }).ui.direction, 'up');
   router.destroy();
 });
+
+test('shared radio snapshots preserve native Gamepad prototype getter fields', () => {
+  const source = tx15();
+  const native = Object.create(
+    Object.fromEntries(Object.keys(source).map((key) => [key, source[key]])),
+  );
+  const s = session();
+  s.sample([native]);
+  s.split(0, [tx15StickProfile(native), tx15StickProfile(native, 'left')]);
+  s.sample([native], { active: true });
+  native.axes[0] = 1;
+  const frame = s.sample([native], { active: true });
+  assert.deepEqual(frame.slots, [1024, 1025]);
+  assert.equal(gamepadCommand(frame.pads[1024]).direction, 'right');
+  assert.equal(s.state().devices.length, 3);
+});
