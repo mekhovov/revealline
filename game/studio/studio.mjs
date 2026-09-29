@@ -712,15 +712,16 @@ function inspectSource({ head, selectedRevision } = {}) {
   const text = $('source').value,
     project = compileContentProject(text).source;
   inspected = { text, project, head };
-  localizedText($('validation'), () =>
+  const report = () =>
     t(head ? 'tools:studio.source.checkpointInspected' : 'tools:studio.source.inspected', {
       name: contentText(project, 'name'),
       maps: project.maps.length,
       missions: project.missions.length,
       selectedRevision,
       latestRevision: head?.revision,
-    }),
-  );
+    });
+  localizedText($('validation'), report);
+  status(report);
   $('apply').disabled = false;
   candidateLibrary.reportInspection(() =>
     t('tools:studio.library.inspected', {
