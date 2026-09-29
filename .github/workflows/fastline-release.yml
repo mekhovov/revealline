@@ -398,6 +398,9 @@ jobs:
             publishing/fastline-release-objects.mjs
             publishing/fastline-release-publisher.mjs
             publishing/edition-promotion.mjs
+            publishing/optional-package-promotion.mjs
+            publishing/optional-package-admission.mjs
+            publishing/optional-package-policy.mjs
             publishing/edition-admission.mjs
             publishing/edition-zip.mjs
             game/edition-context.mjs

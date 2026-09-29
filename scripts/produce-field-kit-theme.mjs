@@ -45,7 +45,7 @@ const sources = {
     'game/ui/classic-view.mjs; game/ui/event-feedback.mjs; game/content-design/actor-marker.mjs; game/ui/lane-presentation.mjs; game/ui/render.mjs; game/ui/relay-view.mjs; game/ui/directional-view.mjs; game/ui/enemy-body-assets.mjs; game/ui/enemy-body-motion.mjs; game/enemy-catalog.mjs; game/ui/body-motion.mjs; game/ui/actor-recipes.mjs; game/ui/fpv-body-recipes.mjs; game/ui/body-backing.mjs; authoring/motion-lab/animation.mjs',
   team: 'game/couch/coop-view.mjs; game/couch/coop-actor-presentation.mjs; game/couch/coop-anchor-presentation.mjs; game/couch/coop-core-presentation.mjs; game/couch/coop-support-presentation.mjs; game/couch/coop-emitter-presentation.mjs; game/couch/coop-rescue-presentation.mjs; game/couch/coop-pilot-slots.mjs; game/couch/coop-enemy-slots.mjs; game/couch/coop-outcome-presentation.mjs; game/presentation/team-runtime-slots.mjs; game/ui/actor-presentation.mjs; game/presentation/catalog.mjs; game/couch/coop-actor-layout.mjs; game/couch/coop-terrain-trail.mjs; game/couch/coop-bonus-view.mjs; game/couch/candidate-team-pictures.mjs; game/content-design/material-markers.mjs; game/presentation/journey-actor-materials.mjs; authoring/motion-lab/render-character.mjs; game/ui/classic-view.mjs; game/ui/presentation-draw-image.mjs; game/ui/enemy-body-assets.mjs; game/ui/enemy-body-motion.mjs; authoring/motion-lab/animation.mjs; game/content-design/actor-marker.mjs; game/enemy-catalog.mjs; game/ui/actor-recipes.mjs; game/ui/fpv-body-recipes.mjs; game/ui/body-backing.mjs; game/ui/body-motion.mjs',
   audio:
-    'game/app.mjs; game/couch/couch-music-host.mjs; game/opening-soundtrack.mjs; game/ui/audio.mjs; game/ui/published-audio.mjs; game/ui/soundtrack-player.mjs; game/ui/quick-music-controls.mjs; game/ui/audio-master.mjs; game/soundtrack.mjs; game/soundtrack-style-taxonomy.mjs; game/soundtrack-rights.mjs; game/soundtrack-bundle.mjs; game/soundtrack-share.mjs; game/soundtrack-source.mjs; game/soundtrack-bundled.mjs; game/ui/soundtrack-panel.mjs; game/ui/soundtrack-panel.css; game/soundtrack-albums.mjs; game/soundtrack-portable.mjs; game/content/soundtrack-catalogue.mjs; game/online-soundtrack-catalogue.mjs; game/official-downloads.mjs; game/soundtrack-download-volumes.mjs; game/installed-app.mjs; game/managed-media-store.mjs; game/media-storage-record.mjs; game/soundtrack-private-intake.mjs; game/ui/soundtrack-error-copy.mjs',
+    'game/app.mjs; game/couch/couch-music-host.mjs; game/opening-soundtrack.mjs; game/ui/audio.mjs; game/ui/published-audio.mjs; game/ui/soundtrack-player.mjs; game/ui/quick-music-controls.mjs; game/ui/audio-master.mjs; game/soundtrack.mjs; game/soundtrack-style-taxonomy.mjs; game/soundtrack-rights.mjs; game/soundtrack-bundle.mjs; game/soundtrack-share.mjs; game/soundtrack-source.mjs; game/soundtrack-bundled.mjs; game/ui/soundtrack-panel.mjs; game/ui/soundtrack-panel.css; game/soundtrack-albums.mjs; game/soundtrack-portable.mjs; game/content/soundtrack-catalogue.mjs; game/online-soundtrack-catalogue.mjs; game/official-downloads.mjs; game/soundtrack-download-volumes.mjs; game/installed-app.mjs; game/managed-media-store.mjs; game/media-storage-record.mjs; game/soundtrack-private-intake.mjs; game/ui/soundtrack-error-copy.mjs; game/journey/campaign-feedback.mjs; game/rewards/audio-original.mjs; game/rewards/media-format.mjs; game/ui/edition-solo.mjs; game/ui/edition-rewards.mjs; game/ui/reward-media.mjs; game/ui/reward-audio-group.mjs; game/rewards/audio-groups.mjs; game/studio-preview-session.mjs; game/audio-preferences.mjs; game/ui/story-dialog.mjs; game/ui/victory-story.mjs; game/ui/music.mjs; game/data-json.mjs; game/mp3.mjs; game/media-audio.mjs; game/video-poster.mjs; game/rewards/model.mjs; game/rewards/media.mjs; game/editions/assets.mjs; game/editions/model.mjs; game/editions/retained-presentation.mjs',
 };
 
 // Image review is independent of the 37 Team recipes. Bind original bytes and
@@ -169,8 +169,9 @@ const REVIEWED_RECIPE_INPUTS = {
     ],
   },
   ui: {
-    sha256: '2530c099cf3b9fc0d5d3dbd865a083b76368f51b95b357ece7209111434a3360',
+    sha256: '96761947c99f18dda6af25b3eb109e9cee1460991420776822903daa9e465b9a',
     evidence: [
+      'Scoped discovery WebP UI software continuation: docs/verification/discovery-webp-ui-continuation-2026-09-29/review.json sha256:2496cbfe4e885a931f22cbf5287efac45344074bb14dc4cf96f09a2d5a0a366f; exact seven-input UI fingerprint sha256:96761947c99f18dda6af25b3eb109e9cee1460991420776822903daa9e465b9a. Only the complete-original MIME allowlist and error copy admit WebP beside PNG/JPEG; all24 UI recipe identities, payloads, input bounds, hash/source checks, decoding and cancellation ownership remain unchanged. Production101/UI23 source-stage checkpoint is retained exactly by oracle sha256:bb8ef5f69c674d36737dcfd8a23267eb5207fd0bc2757965ae841da552b2551c. This is software continuation only; human artwork, full navigation, screen-reader, physical-device, frozen/public, performance and release acceptance remain separate.',
       'Scoped v0.141.8 Steam Deck Confirm continuation: docs/verification/v0.141.8-steamdeck-confirm-presentation-continuation/review.json sha256:15b9ef304ba6e8ec6c2120e4e766fe630af327f2a54325bd0e9043ba875e9867; exact seven-input UI fingerprint sha256:2530c099cf3b9fc0d5d3dbd865a083b76368f51b95b357ece7209111434a3360. Only field-kit-components.css changes, adding bounded pressed feedback through existing Field Kit tokens while preserving all 24 UI recipe identities, DOM ownership and payloads.',
       'v0.131 English/Ukrainian presentation continuation: docs/verification/v0.131.0-localization-presentation-continuation/review.json sha256:92c63ed7f4eb6f79502cae2089836de1fbdabcb1cacd76b55e22596e49492445; exact UI fingerprint sha256:c7ebea5695fe1fbd7c17eafdd0035dcd4d1651b5d3ec91893c6575334da38d3a. Maintained copy and operation status are locale-bound while the24 UI recipes, Field Kit tokens and DOM ownership contracts remain unchanged.',
       'Scoped actor-only UI functional continuation: docs/verification/actor-only-ui-continuation-2026-09-24/review.json sha256:dbde124fb9d24cb26dd901b51f58cf59fc7bfb4df212e47419cdb15581155b73; seven ordered UI inputs sha256:4b7db79dd3f6931dd72c0ae702f15a5a5d8ff2b7044aca5a2e02886e8e61636a. Only presentation host changes after the prior exact review; all24 UI recipe payloads, tokens and DOM ownership contracts remain unchanged.',
@@ -179,11 +180,11 @@ const REVIEWED_RECIPE_INPUTS = {
     ],
   },
   audio: {
-    sha256: 'fd3d7e347bc3a6e36bd884b508af8bbd8492cc3a4dac19bb745664a7fe90adc6',
+    sha256: '1776f2cd1edd169c15a7905650c8bc70be75f52773bb6d21abed3236b005c535',
     evidence: [
-      'Scoped v0.142.4 mission-selector audio continuation: docs/verification/v0.142.4-selector-audio-continuation/review.json sha256:f2cf0cc93f8de8e959eabf6e6313a0af306dfae87e2cb663bfe7bef805df6fe6; exact28 inputs sha256:fd3d7e347bc3a6e36bd884b508af8bbd8492cc3a4dac19bb745664a7fe90adc6. Only game/app.mjs changes, adding clear-star metadata and mission-card progress adapters; audio implementation, eight procedural recipes, routing and payloads remain unchanged. Exact published production100/audio52 predecessor fixture sha256:db9cc258d79aaa0caaf587fa3c73be5fcc55cea5f6129524c59255f04f3bbeb0 is retained. Selector/save compatibility, final qualification, frozen/public, listening and physical-device acceptance remain separate.\nScoped v0.142.3 Steam Deck Confirm audio continuation: docs/verification/v0.142.3-steamdeck-confirm-audio-continuation/review.json sha256:a059520f6ce0c394c3425355c711b641b4b23f9321e11c7d384317e7f814798c; exact28 inputs sha256:39fe40240f0475e471a52772060899d3e329e4d54d6b2bb6679e76dc745ee9a4. Only game/app.mjs changes, coordinating native and Gamepad Confirm ownership and opt-in local diagnostics; all audio implementation, eight existing procedural recipes, routing and payloads remain unchanged. Exact v0.142.2 production99/audio51 predecessor fixture sha256:528361f4e7823a23b02b261ca1de0c9b3157d1a17cbba643e4ff7e67073bc0a7 is retained. Final qualification, frozen/public, listening and physical Steam Deck acceptance remain separate.',
+      'Merged main/candidate software continuation: docs/verification/discovery-main321-reconciliation/review.json sha256:f2b3a2724cf48455dbe98d5ca12a2b081ef1f982531e91838c0291a64bbed976. Exact50-source approval only; historical branch lineages and runtime pins remain separate. No listening, device, frozen/public approval.\nScoped v0.142.4 mission-selector audio continuation: docs/verification/v0.142.4-selector-audio-continuation/review.json sha256:f2cf0cc93f8de8e959eabf6e6313a0af306dfae87e2cb663bfe7bef805df6fe6; exact28 inputs sha256:fd3d7e347bc3a6e36bd884b508af8bbd8492cc3a4dac19bb745664a7fe90adc6. Only game/app.mjs changes, adding clear-star metadata and mission-card progress adapters; audio implementation, eight procedural recipes, routing and payloads remain unchanged. Exact published production100/audio52 predecessor fixture sha256:db9cc258d79aaa0caaf587fa3c73be5fcc55cea5f6129524c59255f04f3bbeb0 is retained. Selector/save compatibility, final qualification, frozen/public, listening and physical-device acceptance remain separate.\nScoped v0.142.3 Steam Deck Confirm audio continuation: docs/verification/v0.142.3-steamdeck-confirm-audio-continuation/review.json sha256:a059520f6ce0c394c3425355c711b641b4b23f9321e11c7d384317e7f814798c; exact28 inputs sha256:39fe40240f0475e471a52772060899d3e329e4d54d6b2bb6679e76dc745ee9a4. Only game/app.mjs changes, coordinating native and Gamepad Confirm ownership and opt-in local diagnostics; all audio implementation, eight existing procedural recipes, routing and payloads remain unchanged. Exact v0.142.2 production99/audio51 predecessor fixture sha256:528361f4e7823a23b02b261ca1de0c9b3157d1a17cbba643e4ff7e67073bc0a7 is retained. Final qualification, frozen/public, listening and physical Steam Deck acceptance remain separate.',
       'Scoped PR #770 Audio playback correction continuation: docs/verification/audio-style-menu-correction-2026-09-28/review.json sha256:62c1dac1be4286acdb8201aab99b6d3c5e2e2b282e1c88cb34d88af527172e09; exact28 inputs sha256:d9650ffde4c938064703de7c1e8ec987ac1efc1b6470ebcad4ca4ab459a32018. Only soundtrack-player.mjs and soundtrack-panel.mjs changed: saved listening preferences are isolated from unsaved Music Studio drafts, newer transport intent wins delayed playback, identity-owned catalogue retry survives close, and queue-capacity copy is corrected. The associated test-evidence repair pins the exact accepted-main production97 predecessor oracle. Exact production98/audio50 predecessor fixture sha256:e397af798928a72502c970276fe212eaad8d2a4889f5afe02587559244496714 is bound separately. Eight existing procedural recipes, routing and payloads remain unchanged; production generation, hosted, frozen/public, listening and physical-device acceptance remain separate.',
-      'Scoped v0.142.1 Audio menu and style taxonomy continuation: docs/verification/audio-style-menu-2026-09-28/review.json sha256:bc87031d46ded1ace2cc62c6ca87e2ce90ccbb043db7c5fdb653d262c3b94f49; exact28 inputs sha256:9f0bf41c491a44b4ac585975fd444f7e2e5822534914f36b0213157861173344. Audio settings expose transport and broad style selection, automatically mix matching archive and local music, separate Synth/Electronic, combine UA/Ukrainian and require exact Cyrillic ФПВ. The dependency closure binds the quick controls and taxonomy modules. Eight existing procedural recipes and payloads remain unchanged; hosted, frozen/public, listening and physical-device acceptance remain separate.',
+      'Scoped v0.142.1 Audio menu and style taxonomy continuation: docs/verification/audio-style-menu-2026-09-28/review.json sha256:bc87031d46ded1ace2cc62c6ca87e2ce90ccbb043db7c5fdb653d262c3b94f49; exact28 inputs sha256:9f0bf41c491a44b4ac585975fd444f7e2e5822534914f36b0213157861173344. Audio settings expose transport and broad style selection, automatically mix matching archive and local music, separate Synth/Electronic, combine UA/Ukrainian and require exact Cyrillic \u0424\u041f\u0412. The dependency closure binds the quick controls and taxonomy modules. Eight existing procedural recipes and payloads remain unchanged; hosted, frozen/public, listening and physical-device acceptance remain separate.',
       'Scoped player-readiness17 ownership source continuation: docs/verification/player-readiness17-audio-continuation-2026-09-28/review.json sha256:0584016a71b220780cc8912666638c468550c7167c2c1084b28b7952f27fa608; exact26 inputs sha256:124a7d186850bd1175bfc45bafba2f19912c89bcb271b5a0c2773e9ad5441b34. Existing eight recipes, routing and payloads unchanged; theme96/audio48 and all predecessors retained. Append-only production and all hosted/frozen/public/listening/device/human acceptance remain separate.',
       'Scoped localization14 Flight Details source continuation: docs/verification/localization14-audio-continuation-2026-09-28/review.json sha256:104e5cb33140537f9234fc26966d4a32f70927c89f1e4bfd1e3955432e1910da; exact26 inputs sha256:81a03fb4791564b775735a1cc977a2c63d492ac8221fb043fa9aa3008fcb9509. Existing eight recipes, routing and payloads unchanged; main95/audio47 and all predecessors retained. Append-only production, hosted/frozen/public/listening/device and human acceptance remain separate.',
       'Scoped main/bulk audio continuation: docs/verification/bulk-main320-audio-continuation-2026-09-28/review.json sha256:afcfcca1612109e117595c424e03ac002271165ccb1a4082697011e16c4c5a75; exact26 inputs sha256:d10dcf448002347b200f9886d0a5f3a23789a7f4fb928bccb4884224359cd575. Fresh canonical-main successors only; all main records and payloads retained, divergent unpublished branch identities preserved as immutable Git evidence without relabelling. Existing recipes only; final production, candidate, hosted, frozen/public and listening/device gates remain separate.',
@@ -383,6 +384,47 @@ export function verifyFieldKitSteamDeckAudioContinuationReview(
   );
 }
 
+export function verifyFieldKitDiscoveryAudioContinuationReview(
+  currentBytes,
+  steamDeckBytes,
+  predecessorBytes,
+  production100OracleBytes,
+) {
+  return (
+    hash(currentBytes) === 'edeecf9fbafdabd7e4fdb653be58baf8deaa3483a6ee426552d611d2fff768ea' &&
+    hash(steamDeckBytes) === 'a059520f6ce0c394c3425355c711b641b4b23f9321e11c7d384317e7f814798c' &&
+    hash(predecessorBytes) === '62c1dac1be4286acdb8201aab99b6d3c5e2e2b282e1c88cb34d88af527172e09' &&
+    hash(production100OracleBytes) ===
+      'cf19ad831cc0347f4f84c2ac310a1168354858e75f40991b35ffec18ea58d0b7'
+  );
+}
+
+export function verifyFieldKitDiscoveryWebPUIContinuationReview(
+  currentBytes,
+  priorReviewBytes,
+  production101OracleBytes,
+) {
+  return (
+    hash(currentBytes) === '2496cbfe4e885a931f22cbf5287efac45344074bb14dc4cf96f09a2d5a0a366f' &&
+    hash(priorReviewBytes) === '15b9ef304ba6e8ec6c2120e4e766fe630af327f2a54325bd0e9043ba875e9867' &&
+    hash(production101OracleBytes) ===
+      'bb8ef5f69c674d36737dcfd8a23267eb5207fd0bc2757965ae841da552b2551c'
+  );
+}
+
+export function verifyFieldKitGP4RestoreAudioContinuationReview(
+  currentBytes,
+  priorReviewBytes,
+  production102OracleBytes,
+) {
+  return (
+    hash(currentBytes) === '27c3663b72c1ccf1b78b2bf641952ff5d011e10520f0044d981f5c8166741b0d' &&
+    hash(priorReviewBytes) === 'edeecf9fbafdabd7e4fdb653be58baf8deaa3483a6ee426552d611d2fff768ea' &&
+    hash(production102OracleBytes) ===
+      '88f08a4ed55e2d7a26e491828d808d1a2c6784ab5e811acce7537009a68ad315'
+  );
+}
+
 export function verifyFieldKitSelectorAudioContinuationReview(
   currentBytes,
   priorBytes,
@@ -393,6 +435,22 @@ export function verifyFieldKitSelectorAudioContinuationReview(
     hash(priorBytes) === 'a059520f6ce0c394c3425355c711b641b4b23f9321e11c7d384317e7f814798c' &&
     hash(predecessorOracleBytes) ===
       'db9cc258d79aaa0caaf587fa3c73be5fcc55cea5f6129524c59255f04f3bbeb0'
+  );
+}
+
+export function verifyFieldKitMainReconciliationReview(...inputs) {
+  const expected = [
+    'f2b3a2724cf48455dbe98d5ca12a2b081ef1f982531e91838c0291a64bbed976',
+    'f2cf0cc93f8de8e959eabf6e6313a0af306dfae87e2cb663bfe7bef805df6fe6',
+    '27c3663b72c1ccf1b78b2bf641952ff5d011e10520f0044d981f5c8166741b0d',
+    'aeb03a91c4da24fe300a9312b79ef986265d6bc78ce6f1f3893549d5fb5a8daa',
+    '9aac97ef9ded7270148887d8148fc01fec378f5e5ef612ca86b3353015263e91',
+    'a11e83533645783b6e35fd815e4494480527febe45d1f3afca86754d5a9a43d6',
+    'b4b40e42fc155e8bd7223654a1464332d535b6850de32d8b09b103b0184a9fd9',
+  ];
+  return (
+    inputs.length === expected.length &&
+    inputs.every((bytes, index) => hash(bytes) === expected[index])
   );
 }
 
@@ -506,6 +564,70 @@ export async function createFieldKitProduction({ projectRoot = root } = {}) {
       'Player readiness audio continuation review bytes changed; production approval must reopen.',
     );
   if (
+    !verifyFieldKitSteamDeckAudioContinuationReview(
+      await read('docs/verification/v0.142.3-steamdeck-confirm-audio-continuation/review.json'),
+      await read('docs/verification/audio-style-menu-correction-2026-09-28/review.json'),
+      await read('game/test/fixtures/production-v01422-a585-fpv99.json'),
+    )
+  )
+    throw new Error(
+      'Steam Deck audio continuation review or production99 predecessor oracle bytes changed; production approval must reopen.',
+    );
+  if (
+    !verifyFieldKitAudioStyleMenuCorrectionReview(
+      await read('docs/verification/audio-style-menu-correction-2026-09-28/review.json'),
+      await read('docs/verification/audio-style-menu-2026-09-28/review.json'),
+      await read('game/test/fixtures/production-pr770-0d165-audio50.json'),
+    )
+  )
+    throw new Error(
+      'Audio style-menu correction review or production98 predecessor oracle bytes changed; production approval must reopen.',
+    );
+  if (
+    !verifyFieldKitAudioStyleMenuReview(
+      await read('docs/verification/audio-style-menu-2026-09-28/review.json'),
+      await read('docs/verification/player-readiness17-audio-continuation-2026-09-28/review.json'),
+    )
+  )
+    throw new Error(
+      'Audio style-menu continuation review bytes changed; production approval must reopen.',
+    );
+  if (
+    !verifyFieldKitDiscoveryAudioContinuationReview(
+      await read('docs/verification/discovery-audio-continuation-2026-09-29/review.json'),
+      await read('docs/verification/v0.142.3-steamdeck-confirm-audio-continuation/review.json'),
+      await read('docs/verification/audio-style-menu-correction-2026-09-28/review.json'),
+      await read('game/test/fixtures/production-v01423-6a67-fpv100.json'),
+    )
+  )
+    throw new Error(
+      'Discovery audio continuation review or production100 predecessor oracle bytes changed; production approval must reopen.',
+    );
+  if (
+    !verifyFieldKitDiscoveryWebPUIContinuationReview(
+      await read('docs/verification/discovery-webp-ui-continuation-2026-09-29/review.json'),
+      await read(
+        'docs/verification/v0.141.8-steamdeck-confirm-presentation-continuation/review.json',
+      ),
+      await read('game/test/fixtures/production-discovery-source-ui-fpv101.json'),
+    )
+  )
+    throw new Error(
+      'Discovery WebP UI continuation review or production101 predecessor oracle bytes changed; production approval must reopen.',
+    );
+  if (
+    !verifyFieldKitGP4RestoreAudioContinuationReview(
+      await read(
+        'docs/verification/discovery-gp4-restore-audio-continuation-2026-09-29/review.json',
+      ),
+      await read('docs/verification/discovery-audio-continuation-2026-09-29/review.json'),
+      await read('game/test/fixtures/production-discovery-reviewed-ui-fpv102.json'),
+    )
+  )
+    throw new Error(
+      'GP4 restore audio continuation review or production102 predecessor oracle bytes changed; production approval must reopen.',
+    );
+  if (
     !verifyFieldKitSelectorAudioContinuationReview(
       await read('docs/verification/v0.142.4-selector-audio-continuation/review.json'),
       await read('docs/verification/v0.142.3-steamdeck-confirm-audio-continuation/review.json'),
@@ -543,6 +665,24 @@ export async function createFieldKitProduction({ projectRoot = root } = {}) {
   )
     throw new Error(
       'Audio style-menu continuation review bytes changed; production approval must reopen.',
+    );
+  if (
+    !verifyFieldKitMainReconciliationReview(
+      ...(await Promise.all(
+        [
+          'docs/verification/discovery-main321-reconciliation/review.json',
+          'docs/verification/v0.142.4-selector-audio-continuation/review.json',
+          'docs/verification/discovery-gp4-restore-audio-continuation-2026-09-29/review.json',
+          'game/test/fixtures/production-v01424-main321-fpv101.json',
+          'game/test/fixtures/production-discovery-db4-fpv103.json',
+          'docs/verification/discovery-main321-reconciliation/discovery-production103.rltheme.gz',
+          'docs/verification/discovery-main321-reconciliation/retained-inputs.json',
+        ].map(read),
+      )),
+    )
+  )
+    throw new Error(
+      'Merged main/candidate continuation or exact lineage inputs changed; production approval must reopen.',
     );
   const assets = [],
     bindings = {},

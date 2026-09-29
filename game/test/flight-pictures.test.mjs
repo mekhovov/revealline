@@ -1,3 +1,4 @@
+import { createExecutionCatalog } from '../campaign-contexts.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { createFlightPictures } from '../ui/flight-pictures.mjs';
@@ -413,4 +414,38 @@ test('accepted picture phases and failures retranslate without changing frozen c
   assert.equal(JSON.stringify(owner.pins()), pins);
   assert.equal(owner.current(), null);
   assert.equal(owner.ready('fpv'), false);
+});
+
+test('picture identity reuse is limited to exact owned entries without mutable recovery metadata', () => {
+  const { f } = setup();
+  const first = createPictureIdentityCatalog({ entries: f.catalog.entries });
+  assert.equal(createPictureIdentityCatalog({ entries: f.catalog.entries }), first);
+  assert(Object.isFrozen(first));
+  assert.throws(
+    () =>
+      createPictureIdentityCatalog({
+        entries: f.catalog.entries,
+        metadata: { document: null },
+      }),
+    TypeError,
+    'A cached live catalogue must not bypass validation of supplied recovery metadata.',
+  );
+  const copied = Object.freeze(structuredClone(f.catalog.entries));
+  const before = createPictureIdentityCatalog({ entries: copied });
+  assert.notEqual(before, first);
+  for (const entry of copied) entry.themes.push({ id: 'new-world' });
+  const after = createPictureIdentityCatalog({ entries: copied });
+  const request = { ...f.request(), themeId: 'new-world' };
+  assert.equal(before.resolve(request), null);
+  assert.deepEqual(after.resolve(request), { ...f.identity, themeId: 'new-world' });
+  assert.equal(first.resolve(request), null);
+  for (const entry of copied) entry.campaign.levels[0].width = 0;
+  assert.throws(() => createPictureIdentityCatalog({ entries: copied }), /Invalid level/);
+  const changed = structuredClone(f.campaign);
+  changed.revision = 'next';
+  const replacement = createExecutionCatalog([{ campaign: changed, themes: [{ id: 'fpv' }] }]);
+  const next = createPictureIdentityCatalog({ entries: replacement.entries });
+  assert.notEqual(next, first);
+  assert.equal(next.resolve(f.request()), null);
+  assert.equal(first.resolve(f.request()).baseCampaignKey, f.identity.baseCampaignKey);
 });

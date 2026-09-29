@@ -1,0 +1,331 @@
+{
+  "format": "revealline-default-capacity-observation.v1",
+  "sourceRevision": "83706c9924e3972b106966a9bfffe542d1fde5e3",
+  "sourceTree": "b8d5f16792a15e457d7ef7844bbbcff1e3fb1d1c",
+  "version": "0.142.2",
+  "publicEligible": false,
+  "promotable": false,
+  "completeHostedOutput": false,
+  "sourceCleanAtCompletion": true,
+  "report": {
+    "path": ".cache/phase7-83706c992/default-capacity.json",
+    "bytes": 425562,
+    "sha256": "d5222c1bd1cdb5d02d16eef23b10b21d3e774afa08047d8e7756398b26bd5ff2"
+  },
+  "manifest": {
+    "path": "manifest.json",
+    "bytes": 402023,
+    "sha256": "a358137b82155067ca0065ee63accdd36033648c03ff03a893095018434717e8"
+  },
+  "defaultPreparation": {
+    "files": 2177,
+    "contentBytes": 797852718,
+    "payloadBytesIncludingManifest": 798254741,
+    "normalPreparationPassed": true,
+    "includedInputs": {
+      "format": "revealline-default-build-inputs.v1",
+      "sourceRevision": "83706c9924e3972b106966a9bfffe542d1fde5e3",
+      "sourceTree": "b8d5f16792a15e457d7ef7844bbbcff1e3fb1d1c",
+      "files": 2038,
+      "bytes": 587750611,
+      "note": "Included originals only; transitive producer inputs are checked by normal build preparation."
+    },
+    "availableCommittedSources": {
+      "files": 5131,
+      "bytes": 844318339,
+      "absentTrackedFiles": 15495,
+      "inventorySha256": "b5478884fc3e61af21bd2597d954a380c2ecca906983cc42c6b8e8afab727263"
+    },
+    "sourceEligibility": {
+      "status": "verified",
+      "format": "revealline-public-source-eligibility.v1",
+      "files": 5143,
+      "assets": 294
+    },
+    "includedInputsVerified": true,
+    "availableCommittedSourcesVerified": true,
+    "reproducibleBuilds": 0
+  },
+  "archiveSizeProjection": {
+    "method": "Existing deterministic STORE createZip writer with exact inspected names and zero-byte bodies, plus exact inspected payload lengths. Header sizes are independent of CRC/body content. This proves the size projection only, not an archive hash or extraction result.",
+    "entries": 2178,
+    "headerAndFilenameBytes": 378300,
+    "projectedZipBytes": 798633041,
+    "limitBytes": 800000000,
+    "headroomBytes": 1366959,
+    "withinSizeLimit": true,
+    "archiveAdmissionPerformed": false
+  },
+  "comparison": {
+    "priorSourceRevision": "440cdb749179837fba358a0d46d94d1ab18e6afe",
+    "priorReport": {
+      "path": ".cache/phase7-440cdb749/default-capacity.json",
+      "bytes": 425562,
+      "sha256": "1981141877a1d07b1a8939f7d971bf252a3ac092e31dc2a78b439945bf3b9d98"
+    },
+    "addedPaths": [],
+    "removedPaths": [],
+    "identicalFiles": 2151,
+    "changedFiles": [
+      {
+        "path": "game/app.mjs",
+        "beforeBytes": 470090,
+        "afterBytes": 470907,
+        "byteDelta": 817
+      },
+      {
+        "path": "game/assets/field-kit/icons/review.html",
+        "beforeBytes": 31283,
+        "afterBytes": 31283,
+        "byteDelta": 0
+      },
+      {
+        "path": "game/assets/field-kit/sprites/review.html",
+        "beforeBytes": 222189,
+        "afterBytes": 222189,
+        "byteDelta": 0
+      },
+      {
+        "path": "game/build-info.json",
+        "beforeBytes": 143,
+        "afterBytes": 143,
+        "byteDelta": 0
+      },
+      {
+        "path": "game/community/index.html",
+        "beforeBytes": 35559,
+        "afterBytes": 35559,
+        "byteDelta": 0
+      },
+      {
+        "path": "game/community/moderation.html",
+        "beforeBytes": 31323,
+        "afterBytes": 31323,
+        "byteDelta": 0
+      },
+      {
+        "path": "game/company.html",
+        "beforeBytes": 28863,
+        "afterBytes": 28863,
+        "byteDelta": 0
+      },
+      {
+        "path": "game/controller-lab/index.html",
+        "beforeBytes": 48828,
+        "afterBytes": 48828,
+        "byteDelta": 0
+      },
+      {
+        "path": "game/couch/index.html",
+        "beforeBytes": 69448,
+        "afterBytes": 69448,
+        "byteDelta": 0
+      },
+      {
+        "path": "game/couch/relay-rescue.html",
+        "beforeBytes": 78989,
+        "afterBytes": 78989,
+        "byteDelta": 0
+      },
+      {
+        "path": "game/creator/index.html",
+        "beforeBytes": 41345,
+        "afterBytes": 41345,
+        "byteDelta": 0
+      },
+      {
+        "path": "game/creator/player.html",
+        "beforeBytes": 33767,
+        "afterBytes": 33767,
+        "byteDelta": 0
+      },
+      {
+        "path": "game/creator/team.html",
+        "beforeBytes": 33858,
+        "afterBytes": 33858,
+        "byteDelta": 0
+      },
+      {
+        "path": "game/data-json.mjs",
+        "beforeBytes": 5108,
+        "afterBytes": 5594,
+        "byteDelta": 486
+      },
+      {
+        "path": "game/downloads.html",
+        "beforeBytes": 35501,
+        "afterBytes": 35501,
+        "byteDelta": 0
+      },
+      {
+        "path": "game/index.html",
+        "beforeBytes": 150016,
+        "afterBytes": 150016,
+        "byteDelta": 0
+      },
+      {
+        "path": "game/playground/index.html",
+        "beforeBytes": 66261,
+        "afterBytes": 66261,
+        "byteDelta": 0
+      },
+      {
+        "path": "game/presentation/combat-review.html",
+        "beforeBytes": 31875,
+        "afterBytes": 31875,
+        "byteDelta": 0
+      },
+      {
+        "path": "game/presentation/journey-actor-review.html",
+        "beforeBytes": 30597,
+        "afterBytes": 30597,
+        "byteDelta": 0
+      },
+      {
+        "path": "game/profile-recovery.html",
+        "beforeBytes": 33434,
+        "afterBytes": 33434,
+        "byteDelta": 0
+      },
+      {
+        "path": "game/replay-theater/index.html",
+        "beforeBytes": 41606,
+        "afterBytes": 41606,
+        "byteDelta": 0
+      },
+      {
+        "path": "game/studio/index.html",
+        "beforeBytes": 179687,
+        "afterBytes": 179687,
+        "byteDelta": 0
+      },
+      {
+        "path": "offline-cache.json",
+        "beforeBytes": 480572,
+        "afterBytes": 480572,
+        "byteDelta": 0
+      },
+      {
+        "path": "offline-content.json",
+        "beforeBytes": 7248535,
+        "afterBytes": 5562781,
+        "byteDelta": -1685754
+      },
+      {
+        "path": "offline-inventory.json",
+        "beforeBytes": 3047050,
+        "afterBytes": 3047050,
+        "byteDelta": 0
+      },
+      {
+        "path": "service-worker.js",
+        "beforeBytes": 405500,
+        "afterBytes": 405500,
+        "byteDelta": 0
+      }
+    ],
+    "catalogueSavedBytes": 1685754,
+    "sourceAppAndParserAddedBytes": 1303,
+    "netContentSavedBytes": 1684451,
+    "interpretation": "All 2,177 paths remain. 2,151 files are byte-identical to440c. The two intended runtime changes are the app host-copy optimization and bounded scalar encoding cache. Remaining changes are generated source/build-ID bindings and compact offline catalogue bytes. The existing 39-test builder/offline/inspection cohort verifies parsed catalogue/inventory, public reader resolution, exact output hashes and preservation of original whitespace."
+  },
+  "cumulativeComparison": {
+    "sourceRevision": "9105025316c21bfe749ea8617dbb2220fd2b5530",
+    "report": {
+      "path": ".cache/phase7-910502531/default-capacity.json",
+      "bytes": 425562,
+      "sha256": "54e581832cccff78fd87ab38e6b35878f6c98f9193dcb8da92634e719f367121"
+    },
+    "netContentSavedBytes": 2739959,
+    "inventorySavedBytes": 1055508,
+    "catalogueSavedBytes": 1685754
+  },
+  "optional": {
+    "receipt": {
+      "path": ".cache/phase7-83706c992/downloaded-optional-admission.json",
+      "bytes": 1095,
+      "sha256": "b83cee1e036c95f835c685a7d06c0e5b7f75b6d856353a42aeb0444a47937a7e"
+    },
+    "artifact": {
+      "id": 11004552187,
+      "runId": 36498701748,
+      "bytes": 1302660,
+      "sha256": "30aea6ee6e5abcc4f4c6a02f749654352867c90f6b663b0ddcdf372eab7ca567",
+      "githubDigestVerified": true
+    },
+    "all12DownloadedMembersEqualLocalDoubleBuild": true,
+    "admission": {
+      "format": "revealline-optional-package-admission.v1",
+      "version": "v0.142.2",
+      "sourceRevision": "83706c9924e3972b106966a9bfffe542d1fde5e3",
+      "sourceTree": "b8d5f16792a15e457d7ef7844bbbcff1e3fb1d1c",
+      "packages": [
+        {
+          "id": "civilian-flight",
+          "revision": "5c933c0c582baf18b4d3b385762b04eef887d1e3157e64eaec236da75c113010",
+          "files": 29,
+          "bytes": 179026
+        },
+        {
+          "id": "civilian-fpv",
+          "revision": "eafcc49fbb2283fb926a29df9e6db5da484f9e6131beeaf0036c80397c96d11f",
+          "files": 50,
+          "bytes": 2748526
+        }
+      ],
+      "zipMembersVerified": true,
+      "publicEligible": false
+    }
+  },
+  "selectedEdition": {
+    "receipt": {
+      "path": ".cache/phase7-83706c992/fpv-admission.json",
+      "bytes": 7359,
+      "sha256": "121ddb6c282c3411191b4c97c2c32e35397dd0396cc17362abb9f542d555131f"
+    },
+    "editionId": "fpv-learning",
+    "distribution": {
+      "bytes": 33282600,
+      "path": "distribution-fpv-learning.zip",
+      "sha256": "3f43d7558d411925c5367393a1b18be551a41e42256d16e5f710c32bf32ebdc2"
+    },
+    "manifest": {
+      "bytes": 93740,
+      "path": "manifest-fpv-learning.json",
+      "sha256": "28858f5070857674f2bd8435738c40c69d4c7e196d295d777ab962b86edff3b2"
+    },
+    "immutable": {
+      "bytes": 33182828,
+      "files": 688
+    },
+    "stableLauncher": {
+      "bytes": 12685,
+      "currentPointer": {
+        "bytes": 115,
+        "path": "editions/fpv-learning/app/current.json",
+        "sha256": "ea57da618d891a57d1ff715b3ae4f3c2f5669019ae2b1bf45058a40fe1474807"
+      },
+      "files": 6
+    },
+    "reproducibleBuilds": 2,
+    "publicEligible": false
+  },
+  "cleanup": {
+    "buildAndInspectionProcessesExited": true,
+    "temporaryObserversOrBrowsersCreatedByThisTask": false,
+    "additionalLargeArchivesDownloaded": false,
+    "retainedOutputs": "Immutable optional and selected-FPV candidate artifacts plus bounded metadata receipts remain in this ignored directory. No temporary user files or source assets were removed."
+  },
+  "missingComponents": [
+    "Pages root routes and publication metadata",
+    "Hosted edition versions, stable launchers and company hub",
+    "Hosted optional packages, launchers and any other generated files"
+  ],
+  "limitations": [
+    "No default ZIP or expanded site was written; default archive hash/extraction/reproducibility qualification remains separate.",
+    "The 800,000,000-byte archive size projection is below the unchanged cap. This is not merged-main release qualification or a 950,000,000-byte complete hosted-site admission.",
+    "Current all-18 edition metadata and retained publication/root/hub composition are not measured in this receipt. Do not mix older all-18 packet totals into current qualification.",
+    "Hosting remains main-repository-only; omitted or historical editions may use explicit GitHub Release downloads, not newly allocated targets.",
+    "No human/physical-device approval, version allocation or public release is implied."
+  ]
+}
