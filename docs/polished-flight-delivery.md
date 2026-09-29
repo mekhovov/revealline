@@ -543,10 +543,11 @@ not a human or physical-radio test.
    the unexplained post-completion frame gap and unverified broader ownership claims.
    The three additional showcase journeys now have real ordinary-win, bilingual
    discovery/Collection and narrow-layout observations below. Social and Victory
-   complete cleanup; Ukraine's functional flow passes but its browser-close timeout
-   remains a failed overall observation. Resolve that environment/capture boundary
-   before claiming clean ownership qualification; connected-node counts are not
-   a substitute. Later application and six-win finales are outside these walkthroughs.
+   complete cleanup. Ukraine now completes the frozen Firefox walkthrough and all
+   owned cleanup below; its earlier Chrome timeout remains failed. Chrome lifecycle,
+   matched performance and retained-resource qualification still need their own
+   evidence; connected-node counts are not a substitute. Later application and
+   six-win finales are outside these browser walkthroughs.
 4. Publish original qualified artifacts through the configured main repository,
    verify downloaded and public bytes, and exercise the real published rollback.
    Omitted editions remain explicit original GitHub Release downloads.
@@ -895,3 +896,22 @@ clean-source candidate and complete default/hosted admission remain separate.
 The current/retained Team association and result cohort passes **158/158** checks,
 including exact102 restoration and actual starts for every supported retained
 revision. Unknown104 remains rejected before media reads.
+
+The clean `28fbe1583` [frozen Ukraine receipt](verification/evidence/showcase-firefox-28fbe1583.json)
+closes the Firefox first-mission walkthrough. The edition reproduces twice and
+passes original runtime/source ZIP-member admission. Its distribution is 42,182,913
+bytes, SHA-256 `4f96e42b882eb15bfc1f73eeead8972bc48746956c93e157b9b347f1cb956254`.
+Firefox 146.0.1 boots successfully and completes two ordinary wins, eleven phases,
+English 1280×633 and Ukrainian 390×844 discovery/Collection views, Retry and Next.
+There are no application/CSP errors; observer, page, context, browser and server
+all close within the unchanged deadlines. The 73-file capture inventory pins 3,899,936
+bytes. This is one distinct mission, not a six-win finale or later application.
+
+The same clean source's default inspector stops on 131 missing committed inputs
+(total 250,442,007 bytes) in this sparse checkout. No files were hydrated and no
+current default inspection report was produced. The earlier default-size receipt
+remains historical; it cannot establish this source's capacity. Full default and
+hosting admission require the complete release checkout. Frozen Firefox success
+does not resolve Chrome's earlier shutdown or substitute for quiet performance,
+retained-memory, physical-device or human review. The source remains one scheduled
+PR #758 input to the coordinator-owned v0.150.0 integration and publication.
