@@ -155,3 +155,23 @@ test('another tab cannot overwrite a newer setup; forget is isolated from Solo a
   assert.equal(store.getItem(SOLO_RESTORE_KEY), 'preserved');
   assert.equal(store.getItem('revealline.flight-profiles.v1'), 'fpv');
 });
+
+test('joining a gamepad does not erase saved ambiguous radio profiles', () => {
+  const store = storage(),
+    a = pad(),
+    b = pad(1),
+    first = session(store);
+  first.sample([a, b]);
+  first.apply(0, tx15StickProfile(a));
+  first.assign(0, 0);
+  first.apply(1, tx15StickProfile(b));
+  first.assign(1, 1);
+  const next = session(store),
+    c = pad(3);
+  c.mapping = 'standard';
+  c.id = 'Gamepad';
+  next.sample([a, b, c]);
+  next.assign(3, 0);
+  const saved = createRadioRestoreStore(store, COUCH_RESTORE_KEY).entries();
+  assert.equal(saved.length, 2);
+});
