@@ -76,7 +76,7 @@ test('company practice reconstructs the canonical difficulty once and honors cla
   }
 });
 
-test('practice links preserve the installed audience and reject foreign mission or input claims', async () => {
+test('practice links preserve the friendly installed audience and reject foreign mission or input claims', async () => {
   const { provider } = await providerFor('droneaid-nl-workshop-lights');
   const missionId = editionPracticeChoices(provider)[0].missionId;
   const session = '0123456789abcdef0123456789abcdef';
@@ -89,7 +89,7 @@ test('practice links preserve the installed audience and reject foreign mission 
     revision: 3,
   };
   const url = new URL(editionPracticePreviewURL(provider, options));
-  assert.equal(url.pathname, '/game/index.html');
+  assert.equal(url.pathname, '/game/communities/droneaid/');
   assert.equal(url.searchParams.get('edition'), provider.editionId);
   assert.equal(url.searchParams.get('edition-mission'), missionId);
   assert.equal(url.searchParams.get('class'), 'fiber');
