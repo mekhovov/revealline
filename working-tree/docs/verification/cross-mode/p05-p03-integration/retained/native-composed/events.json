@@ -1,0 +1,1502 @@
+[
+  {
+    "n": 1,
+    "label": "Composed P05 Title Ready",
+    "dom": {
+      "body": {
+        "classes": "field-kit game-shell",
+        "dataset": {
+          "arenaChrome": "full",
+          "effects": "full",
+          "flightState": "briefing",
+          "inputMode": "keyboard",
+          "pictureState": "ready",
+          "screenControls": "hidden",
+          "screenSteeringHand": "right",
+          "textFace": "pixel",
+          "textSize": "standard",
+          "touchMode": "stick",
+          "touchSide": "right",
+          "touchSize": "regular"
+        }
+      },
+      "dialogs": [
+        "shell-home"
+      ],
+      "displayControls": [
+        {
+          "checked": false,
+          "id": "reduced-effects",
+          "value": "on"
+        },
+        {
+          "checked": false,
+          "id": "collection-context",
+          "value": ""
+        },
+        {
+          "checked": false,
+          "id": "text-face",
+          "value": "pixel"
+        },
+        {
+          "checked": false,
+          "id": "text-size",
+          "value": "standard"
+        },
+        {
+          "checked": false,
+          "id": "settings-reduced-effects",
+          "value": "on"
+        }
+      ],
+      "focus": {
+        "id": "shell-featured",
+        "tag": "BUTTON",
+        "text": "Start\n            →"
+      },
+      "fonts": [
+        {
+          "font": "RLAsset-fce2dc8f15375b66d336c1defbca23dfb2310301b62c822206a0a013d19601ef, RLAsset-0498bcb48294756b5ac9062290e1639e907b1ec69b5dc2e8cfdec3fab58e0bc8, \"Field Kit Mono\", sans-serif",
+          "size": "16px",
+          "text": "◩ REVEAL / LINE"
+        },
+        {
+          "font": "RLAsset-fce2dc8f15375b66d336c1defbca23dfb2310301b62c822206a0a013d19601ef, RLAsset-0498bcb48294756b5ac9062290e1639e907b1ec69b5dc2e8cfdec3fab58e0bc8, \"Field Kit Mono\", sans-serif",
+          "size": "0px",
+          "text": "⛶"
+        },
+        {
+          "font": "RLAsset-fce2dc8f15375b66d336c1defbca23dfb2310301b62c822206a0a013d19601ef, RLAsset-0498bcb48294756b5ac9062290e1639e907b1ec69b5dc2e8cfdec3fab58e0bc8, \"Field Kit Mono\", sans-serif",
+          "size": "16px",
+          "text": "Missions"
+        },
+        {
+          "font": "RLAsset-fce2dc8f15375b66d336c1defbca23dfb2310301b62c822206a0a013d19601ef, RLAsset-0498bcb48294756b5ac9062290e1639e907b1ec69b5dc2e8cfdec3fab58e0bc8, \"Field Kit Mono\", sans-serif",
+          "size": "16px",
+          "text": "Collection"
+        },
+        {
+          "font": "RLAsset-fce2dc8f15375b66d336c1defbca23dfb2310301b62c822206a0a013d19601ef, RLAsset-0498bcb48294756b5ac9062290e1639e907b1ec69b5dc2e8cfdec3fab58e0bc8, \"Field Kit Mono\", sans-serif",
+          "size": "16px",
+          "text": "Settings"
+        },
+        {
+          "font": "RLAsset-4797c11d5e17c3f5f9b5b3fa96efb4fd2aabb877fb4d625dfc8eb7465464e145, monospace",
+          "size": "40px",
+          "text": "Clear a path.\nReveal a world."
+        },
+        {
+          "font": "RLAsset-fce2dc8f15375b66d336c1defbca23dfb2310301b62c822206a0a013d19601ef, RLAsset-0498bcb48294756b5ac9062290e1639e907b1ec69b5dc2e8cfdec3fab58e0bc8, \"Field Kit Mono\", sans-serif",
+          "size": "16px",
+          "text": "Start mission ↗"
+        },
+        {
+          "font": "RLAsset-fce2dc8f15375b66d336c1defbca23dfb2310301b62c822206a0a013d19601ef, RLAsset-0498bcb48294756b5ac9062290e1639e907b1ec69b5dc2e8cfdec3fab58e0bc8, \"Field Kit Mono\", sans-serif",
+          "size": "16px",
+          "text": "Learn by playing"
+        },
+        {
+          "font": "RLAsset-fce2dc8f15375b66d336c1defbca23dfb2310301b62c822206a0a013d19601ef, RLAsset-0498bcb48294756b5ac9062290e1639e907b1ec69b5dc2e8cfdec3fab58e0bc8, \"Field Kit Mono\", sans-serif",
+          "size": "16px",
+          "text": "Mission brief"
+        },
+        {
+          "font": "RLAsset-fce2dc8f15375b66d336c1defbca23dfb2310301b62c822206a0a013d19601ef, RLAsset-0498bcb48294756b5ac9062290e1639e907b1ec69b5dc2e8cfdec3fab58e0bc8, \"Field Kit Mono\", sans-serif",
+          "size": "16px",
+          "text": "Main menu"
+        },
+        {
+          "font": "RLAsset-4797c11d5e17c3f5f9b5b3fa96efb4fd2aabb877fb4d625dfc8eb7465464e145, monospace",
+          "size": "91.6222px",
+          "text": "REVEAL/ LINE"
+        },
+        {
+          "font": "RLAsset-fce2dc8f15375b66d336c1defbca23dfb2310301b62c822206a0a013d19601ef, RLAsset-0498bcb48294756b5ac9062290e1639e907b1ec69b5dc2e8cfdec3fab58e0bc8, \"Field Kit Mono\", sans-serif",
+          "size": "20px",
+          "text": "Start\n            →"
+        }
+      ],
+      "url": "http://127.0.0.1:58349/game/",
+      "viewport": {
+        "height": 1348,
+        "width": 1309
+      }
+    },
+    "snapshot": "- button \"Game menu\": ◩ REVEAL / LINE\n- generic: TACTICAL EDITION\n- button \"Enter fullscreen\": ⛶\n- button \"Missions\"\n- button \"Collection\"\n- button \"Game settings\": Settings\n- main:\n  - region \"Game\":\n    - generic: REVEALED\n    - strong: 0.0%\n    - emphasis: TARGET 45%\n    - generic: LIVES\n    - strong: ◆ ◆ ◆\n    - generic: TIME\n    - strong: 0:00\n    - generic: SCORE\n    - strong: \"00000\"\n    - application \"Territory capture game. Tap a direction to fly. Tap another to turn. Up ↑ / W; down ↓ / S; left ← / A; right → / D; ability E; boost Left Shift / Right Shift; change craft G; pause Esc / P. Releasing a direction keeps you moving.\"\n    - region \"Mission details\":\n      - paragraph: MISSION 01\n      - heading \"Clear a path. Reveal a world.\" [level=1]\n      - paragraph: Leave safe ground, draw a line and return. Reveal 45% by enclosing regions without a field enemy.\n      - paragraph: Standard difficulty.\n    - button \"Start mission ↗\"\n    - button \"Learn by playing\"\n    - button \"Mission brief\"\n    - button \"Main menu\"\n    - paragraph: Tap a direction to fly. Equipment controls are in How to play. Esc / P pauses.\n    - strong: Ready for launch\n    - generic: Close a line to reveal the picture\n    - status: \"Your first route: fly down from the marked start to the opposite border.\"\n    - status\n- dialog \"REVEAL / LINE\":\n  - paragraph: FPV FIELD KIT / FLIGHT READY\n  - heading \"REVEAL / LINE\" [level=1]:\n    - text: REVEAL\n    - generic: / LINE\n  - paragraph:\n    - text: Find your line.\n    - text: Bring the picture home.\n  - navigation \"Game mode\":\n    - strong: Solo\n    - generic: One player\n    - link \"Versus Two rival boards\":\n      - /url: couch/?return=solo\n      - strong: Versus\n      - generic: Two rival boards\n    - link \"Team One shared arena\":\n      - /url: couch/relay-rescue.html?return=solo\n      - strong: Team\n      - generic: One shared arena\n  - navigation \"Main menu\":\n    - button \"Start\" [active]:\n      - generic: Start\n      - generic: →\n    - button \"Missions\"\n    - button \"Collection\"\n    - button \"Settings\"\n    - button \"Workshop\"\n    - link \"Release explorer Play another edition\":\n      - /url: http://127.0.0.1:58349/releases/\n      - text: Release explorer\n      - generic: Play another edition\n  - paragraph: Start · First Signal\n  - paragraph: Choose a flight. Trace a path. Close the line.\n  - paragraph: Version DEV\n  - paragraph:\n    - text: HANGAR 01\n    - generic: FIRST LIGHT"
+  },
+  {
+    "n": 2,
+    "label": "Solo selects Plain, Large and Reduced effects through keyboard",
+    "dom": {
+      "body": {
+        "classes": "field-kit game-shell",
+        "dataset": {
+          "arenaChrome": "full",
+          "effects": "reduced",
+          "flightState": "briefing",
+          "inputMode": "keyboard",
+          "pictureState": "ready",
+          "screenControls": "hidden",
+          "screenSteeringHand": "right",
+          "textFace": "plain",
+          "textSize": "large",
+          "touchMode": "stick",
+          "touchSide": "right",
+          "touchSize": "regular"
+        }
+      },
+      "dialogs": [
+        "settings-dialog",
+        "shell-home"
+      ],
+      "displayControls": [
+        {
+          "checked": true,
+          "id": "reduced-effects",
+          "value": "on"
+        },
+        {
+          "checked": false,
+          "id": "collection-context",
+          "value": ""
+        },
+        {
+          "checked": false,
+          "id": "text-face",
+          "value": "plain"
+        },
+        {
+          "checked": false,
+          "id": "text-size",
+          "value": "large"
+        },
+        {
+          "checked": true,
+          "id": "settings-reduced-effects",
+          "value": "on"
+        }
+      ],
+      "focus": {
+        "id": "settings-reduced-effects",
+        "tag": "INPUT",
+        "text": ""
+      },
+      "fonts": [
+        {
+          "font": "system-ui, -apple-system, \"system-ui\", \"Segoe UI\", sans-serif",
+          "size": "20px",
+          "text": "◩ REVEAL / LINE"
+        },
+        {
+          "font": "system-ui, -apple-system, \"system-ui\", \"Segoe UI\", sans-serif",
+          "size": "0px",
+          "text": "⛶"
+        },
+        {
+          "font": "system-ui, -apple-system, \"system-ui\", \"Segoe UI\", sans-serif",
+          "size": "20px",
+          "text": "Missions"
+        },
+        {
+          "font": "system-ui, -apple-system, \"system-ui\", \"Segoe UI\", sans-serif",
+          "size": "20px",
+          "text": "Collection"
+        },
+        {
+          "font": "system-ui, -apple-system, \"system-ui\", \"Segoe UI\", sans-serif",
+          "size": "20px",
+          "text": "Settings"
+        },
+        {
+          "font": "system-ui, -apple-system, \"system-ui\", \"Segoe UI\", sans-serif",
+          "size": "48px",
+          "text": "Clear a path.\nReveal a world."
+        },
+        {
+          "font": "system-ui, -apple-system, \"system-ui\", \"Segoe UI\", sans-serif",
+          "size": "20px",
+          "text": "Start mission ↗"
+        },
+        {
+          "font": "system-ui, -apple-system, \"system-ui\", \"Segoe UI\", sans-serif",
+          "size": "20px",
+          "text": "Learn by playing"
+        },
+        {
+          "font": "system-ui, -apple-system, \"system-ui\", \"Segoe UI\", sans-serif",
+          "size": "20px",
+          "text": "Mission brief"
+        },
+        {
+          "font": "system-ui, -apple-system, \"system-ui\", \"Segoe UI\", sans-serif",
+          "size": "20px",
+          "text": "Main menu"
+        },
+        {
+          "font": "system-ui, -apple-system, \"system-ui\", \"Segoe UI\", sans-serif",
+          "size": "0px",
+          "text": "×"
+        },
+        {
+          "font": "system-ui, -apple-system, \"system-ui\", \"Segoe UI\", sans-serif",
+          "size": "48px",
+          "text": "Flight settings."
+        }
+      ],
+      "url": "http://127.0.0.1:58349/game/",
+      "viewport": {
+        "height": 1348,
+        "width": 1309
+      }
+    },
+    "snapshot": "- button \"Game menu\": ◩ REVEAL / LINE\n- generic: TACTICAL EDITION\n- button \"Enter fullscreen\": ⛶\n- button \"Missions\"\n- button \"Collection\"\n- button \"Game settings\": Settings\n- main:\n  - region \"Game\":\n    - generic: REVEALED\n    - strong: 0.0%\n    - emphasis: TARGET 45%\n    - generic: LIVES\n    - strong: ◆ ◆ ◆\n    - generic: TIME\n    - strong: 0:00\n    - generic: SCORE\n    - strong: \"00000\"\n    - application \"Territory capture game. Tap a direction to fly. Tap another to turn. Up ↑ / W; down ↓ / S; left ← / A; right → / D; ability E; boost Left Shift / Right Shift; change craft G; pause Esc / P. Releasing a direction keeps you moving.\"\n    - region \"Mission details\":\n      - paragraph: MISSION 01\n      - heading \"Clear a path. Reveal a world.\" [level=1]\n      - paragraph: Leave safe ground, draw a line and return. Reveal 45% by enclosing regions without a field enemy.\n      - paragraph: Standard difficulty.\n    - button \"Start mission ↗\"\n    - button \"Learn by playing\"\n    - button \"Mission brief\"\n    - button \"Main menu\"\n    - paragraph: Tap a direction to fly. Equipment controls are in How to play. Esc / P pauses.\n    - strong: Ready for launch\n    - generic: Close a line to reveal the picture\n    - status: \"Your first route: fly down from the marked start to the opposite border.\"\n    - status\n- dialog \"Flight settings.\":\n  - button \"Close settings\": ×\n  - paragraph: TUNE YOUR ARCADE\n  - heading \"Flight settings.\" [level=2]\n  - tablist \"Settings categories\":\n    - tab \"Controls\"\n    - tab \"Audio\"\n    - tab \"Display & accessibility\" [selected]\n    - tab \"Game data\"\n  - tabpanel \"Display & accessibility\":\n    - heading \"Display & accessibility\" [level=3]\n    - paragraph: Readable text, terrain and comfortable motion.\n    - text: Text style\n    - combobox \"Text style\":\n      - option \"Theme font\"\n      - option \"Plain\" [selected]\n    - text: Text size\n    - combobox \"Text size\":\n      - option \"Standard\"\n      - option \"Large\" [selected]\n    - text: Terrain detail\n    - combobox \"Terrain detail\":\n      - option \"Balanced detail\" [selected]\n      - option \"Small pixel tiles\"\n      - option \"Larger landmarks\"\n    - checkbox \"Show grid guides\"\n    - text: Show grid guides\n    - checkbox \"Reduced effects\" [checked] [active]\n    - text: Reduced effects\n    - paragraph\n    - status\n    - paragraph: Reduced effects softens movement and celebration effects. Every direction tap keeps you moving. Use Pause to take a break. Manual equipment, when provided by a map, uses separate controls.\n- dialog \"REVEAL / LINE\":\n  - paragraph: FPV FIELD KIT / FLIGHT READY\n  - heading \"REVEAL / LINE\" [level=1]:\n    - text: REVEAL\n    - generic: / LINE\n  - paragraph:\n    - text: Find your line.\n    - text: Bring the picture home.\n  - navigation \"Game mode\":\n    - strong: Solo\n    - generic: One player\n    - link \"Versus Two rival boards\":\n      - /url: couch/?return=solo\n      - strong: Versus\n      - generic: Two rival boards\n    - link \"Team One shared arena\":\n      - /url: couch/relay-rescue.html?return=solo\n      - strong: Team\n      - generic: One shared arena\n  - navigation \"Main menu\":\n    - button \"Start\":\n      - generic: Start\n      - generic: →\n    - button \"Missions\"\n    - button \"Collection\"\n    - button \"Settings\"\n    - button \"Workshop\"\n    - link \"Release explorer Play another edition\":\n      - /url: http://127.0.0.1:58349/releases/\n      - text: Release explorer\n      - generic: Play another edition\n  - paragraph: Start · First Signal\n  - paragraph: Choose a flight. Trace a path. Close the line.\n  - paragraph: Version DEV\n  - paragraph:\n    - text: HANGAR 01\n    - generic: FIRST LIGHT"
+  },
+  {
+    "n": 3,
+    "label": "Versus inherits Plain Large Reduced effects after title departure",
+    "dom": {
+      "body": {
+        "classes": "field-kit field-kit-support",
+        "dataset": {
+          "couchScreen": "main",
+          "effects": "reduced",
+          "fieldKitPage": "couch",
+          "textFace": "plain",
+          "textSize": "large"
+        }
+      },
+      "dialogs": [],
+      "displayControls": [
+        {
+          "checked": false,
+          "id": "race-text-face",
+          "value": "plain"
+        },
+        {
+          "checked": false,
+          "id": "race-text-size",
+          "value": "large"
+        },
+        {
+          "checked": true,
+          "id": "race-reduced",
+          "value": "on"
+        }
+      ],
+      "focus": {
+        "id": "race-start",
+        "tag": "BUTTON",
+        "text": "Start round ↗"
+      },
+      "fonts": [
+        {
+          "font": "system-ui, -apple-system, \"system-ui\", \"Segoe UI\", sans-serif",
+          "size": "72px",
+          "text": "Two boards. One race."
+        },
+        {
+          "font": "system-ui, -apple-system, \"system-ui\", \"Segoe UI\", sans-serif",
+          "size": "26px",
+          "text": "Sunflower"
+        },
+        {
+          "font": "system-ui, -apple-system, \"system-ui\", \"Segoe UI\", sans-serif",
+          "size": "26px",
+          "text": "Skyline"
+        },
+        {
+          "font": "system-ui, -apple-system, \"system-ui\", \"Segoe UI\", sans-serif",
+          "size": "22px",
+          "text": "Start round ↗"
+        },
+        {
+          "font": "system-ui, -apple-system, \"system-ui\", \"Segoe UI\", sans-serif",
+          "size": "22px",
+          "text": "Race setup"
+        },
+        {
+          "font": "system-ui, -apple-system, \"system-ui\", \"Segoe UI\", sans-serif",
+          "size": "22px",
+          "text": "Options"
+        },
+        {
+          "font": "system-ui, -apple-system, \"system-ui\", \"Segoe UI\", sans-serif",
+          "size": "22px",
+          "text": "How to play"
+        }
+      ],
+      "url": "http://127.0.0.1:58349/game/couch/?return=solo",
+      "viewport": {
+        "height": 1348,
+        "width": 1309
+      }
+    },
+    "snapshot": "- main:\n  - region \"Two boards. One race.\":\n    - navigation \"Game mode\":\n      - link \"Solo One player\":\n        - /url: ../\n        - strong: Solo\n        - generic: One player\n      - strong: Versus\n      - generic: Two rival boards\n      - link \"Team One shared arena\":\n        - /url: relay-rescue.html?return=versus\n        - strong: Team\n        - generic: One shared arena\n    - paragraph: REVEAL LINE / LOCAL TWO PLAYER\n    - heading \"Two boards. One race.\" [level=1]\n    - status: Both boards use the same map, class and seed. Ready when you are.\n    - paragraph: FPV Front · Pressure Lines · Orchard Crossing · Arcade · FPV Front · Immediate turns · 90 seconds\n    - article:\n      - text: PLAYER 1\n      - heading \"Sunflower\" [level=2]\n      - paragraph: W A S D\n    - article:\n      - text: PLAYER 2\n      - heading \"Skyline\" [level=2]\n      - paragraph: Arrow keys\n    - button \"Start round ↗\" [active]\n    - button \"Race setup\"\n    - button \"Options\"\n    - button \"How to play\"\n    - paragraph: First to two rounds. Couch races do not change your solo progress.\n  - status: Connect a controller and use it while this page is visible. Keyboard and touch remain available."
+  },
+  {
+    "n": 4,
+    "label": "Versus explicitly sets Theme font Standard and full effects",
+    "dom": {
+      "body": {
+        "classes": "field-kit field-kit-support",
+        "dataset": {
+          "couchScreen": "options",
+          "effects": "full",
+          "fieldKitPage": "couch",
+          "textFace": "pixel",
+          "textSize": "standard"
+        }
+      },
+      "dialogs": [],
+      "displayControls": [
+        {
+          "checked": false,
+          "id": "race-text-face",
+          "value": "pixel"
+        },
+        {
+          "checked": false,
+          "id": "race-text-size",
+          "value": "standard"
+        },
+        {
+          "checked": false,
+          "id": "race-reduced",
+          "value": "on"
+        }
+      ],
+      "focus": {
+        "id": "race-reduced",
+        "tag": "INPUT",
+        "text": ""
+      },
+      "fonts": [
+        {
+          "font": "RLAsset-4797c11d5e17c3f5f9b5b3fa96efb4fd2aabb877fb4d625dfc8eb7465464e145, monospace",
+          "size": "72px",
+          "text": "Flight settings"
+        },
+        {
+          "font": "RLAsset-fce2dc8f15375b66d336c1defbca23dfb2310301b62c822206a0a013d19601ef, RLAsset-0498bcb48294756b5ac9062290e1639e907b1ec69b5dc2e8cfdec3fab58e0bc8, \"Field Kit Mono\", sans-serif",
+          "size": "16px",
+          "text": "Unmute sound"
+        },
+        {
+          "font": "RLAsset-fce2dc8f15375b66d336c1defbca23dfb2310301b62c822206a0a013d19601ef, RLAsset-0498bcb48294756b5ac9062290e1639e907b1ec69b5dc2e8cfdec3fab58e0bc8, \"Field Kit Mono\", sans-serif",
+          "size": "16px",
+          "text": "Back"
+        }
+      ],
+      "url": "http://127.0.0.1:58349/game/couch/?return=solo",
+      "viewport": {
+        "height": 1348,
+        "width": 1309
+      }
+    },
+    "snapshot": "- main:\n  - region \"Flight settings\":\n    - paragraph: MAKE YOURSELF AT HOME\n    - heading \"Flight settings\" [level=1]\n    - text: Text style\n    - combobox \"Text style\":\n      - option \"Theme font\" [selected]\n      - option \"Plain\"\n    - generic: Text size\n    - combobox \"Text size\":\n      - option \"Standard\" [selected]\n      - option \"Large\"\n    - text: Player 1 touch controls\n    - combobox \"Player 1 touch controls\":\n      - option \"Auto\" [selected]\n      - option \"Always\"\n      - option \"Off\"\n    - text: Player 2 touch controls\n    - combobox \"Player 2 touch controls\":\n      - option \"Auto\" [selected]\n      - option \"Always\"\n      - option \"Off\"\n    - paragraph: Auto shows a player's controls after a touch on their board. Keyboard or controller use hides them at the next pause. Choose Always to play with a mouse.\n    - checkbox \"Reduced effects\" [active]\n    - text: Reduced effects\n    - paragraph\n    - status\n    - button \"Unmute sound\"\n    - text: Master sound volume\n    - slider \"Master sound volume\": \"0.65\"\n    - status\n    - paragraph: \"0 standard controllers assigned · Player 1: keyboard/touch · Player 2: keyboard/touch. Keyboard and touch remain available. Escape pauses both boards.\"\n    - button \"Back\"\n  - status: Connect a controller and use it while this page is visible. Keyboard and touch remain available."
+  },
+  {
+    "n": 5,
+    "label": "Team inherits latest Versus Theme font Standard full effects",
+    "dom": {
+      "body": {
+        "classes": "field-kit field-kit-support",
+        "dataset": {
+          "coopTouch": "hidden",
+          "effects": "full",
+          "fieldKitPage": "relay-rescue",
+          "textFace": "pixel",
+          "textSize": "standard"
+        }
+      },
+      "dialogs": [],
+      "displayControls": [
+        {
+          "checked": false,
+          "id": "coop-text-face",
+          "value": "pixel"
+        },
+        {
+          "checked": false,
+          "id": "coop-text-size",
+          "value": "standard"
+        },
+        {
+          "checked": false,
+          "id": "coop-reduced",
+          "value": "on"
+        }
+      ],
+      "focus": {
+        "id": "coop-start",
+        "tag": "BUTTON",
+        "text": "Start together →"
+      },
+      "fonts": [
+        {
+          "font": "\"Field Kit Display\", \"Field Kit UI\", sans-serif",
+          "size": "40px",
+          "text": "Find yourcommon ground."
+        },
+        {
+          "font": "\"Field Kit UI\", \"Field Kit Mono\", system-ui, sans-serif",
+          "size": "16px",
+          "text": "Start together →"
+        },
+        {
+          "font": "\"Field Kit UI\", \"Field Kit Mono\", system-ui, sans-serif",
+          "size": "16px",
+          "text": "Unmute sound"
+        }
+      ],
+      "url": "http://127.0.0.1:58349/game/couch/relay-rescue.html?return=versus",
+      "viewport": {
+        "height": 1348,
+        "width": 1309
+      }
+    },
+    "snapshot": "- main:\n  - link \"REVEAL LINE\":\n    - /url: ../\n    - text: REVEAL\n    - generic: LINE\n  - text: COUCH CO-OP\n  - generic: RELAY YARD\n  - link \"Race mode ↗\":\n    - /url: ./\n  - region \"Find your common ground.\":\n    - navigation \"Game mode\":\n      - link \"Solo One player\":\n        - /url: ../\n        - strong: Solo\n        - generic: One player\n      - link \"Versus Two rival boards\":\n        - /url: ./\n        - strong: Versus\n        - generic: Two rival boards\n      - strong: Team\n      - generic: One shared arena\n    - paragraph: ONE ARENA. TWO PARTNERS.\n    - heading \"Find your common ground.\" [level=1]:\n      - text: Find your\n      - emphasis: common ground.\n    - paragraph: Start with a small loop. Cover each other, then meet to join a larger cut.\n    - text: Arena\n    - combobox \"Arena\":\n      - option \"First Connection · territory challenge\"\n      - option \"Relay Yard · stronghold challenge\" [selected]\n    - text: Play style\n    - combobox \"Play style\":\n      - option \"Full teamwork\" [selected]\n      - option \"Joint Cuts + ordinary cover\"\n      - option \"Individual cuts + ordinary cover\"\n    - text: Challenge\n    - combobox \"Challenge\":\n      - option \"Gentle\"\n      - option \"Standard\" [selected]\n      - option \"Expert\"\n    - paragraph: Captures recharge both players’ Support and can rescue a downed partner.\n    - paragraph: One open field. Bait a Hunter, cover the crossing, then take the anchors together.\n    - button \"Start together →\" [active]\n    - paragraph:\n      - status: Two players · one screen · a shared victory\n    - generic \"Play a created co-op pack\"\n    - complementary \"Help and options\":\n      - generic \"How to play and controls\"\n      - generic \"Options\"\n      - option \"Theme font\" [selected]\n      - option \"Plain\"\n      - option \"Standard\" [selected]\n      - option \"Large\"\n      - option \"Auto · touch players without a controller\" [selected]\n      - option \"Show both players\"\n      - option \"Hide touch controls\"\n    - paragraph: TAKE THE STRONGHOLD TOGETHER\n    - list:\n      - strong: Start small.\n      - text: Draw a short loop back to safe ground to claim it. Banking stops your craft; steer again for your next cut.\n      - strong: Join when ready.\n      - text: Steer both moving heads together to bank a shared cut. Crossing an old part of a partner’s line is harmless.\n      - strong: Watch the red shapes.\n      - text: Enemies can hit your craft and unfinished line. Hunters mark a route before charging. Wait for recovery or use Support to protect the crossing. Both approaches face the same enemy tools.\n      - strong: Cover each other.\n      - text: Tap Support to slow nearby enemies and intercept sparks. A dashed ring marks an enemy while it is slowed. Hold Support beside a downed partner for one second to rescue them for free.\n      - strong: Open both approaches.\n      - text: Capture anchors A and B to expose the core. Then make a new cut that captures the core itself. The shield blocks entry. Bait the Hunter’s warning and cut during recovery; banking its cell clears it.\n    - paragraph:\n      - text: TEAM OBJECTIVE\n      - strong: Capture both anchors, then the exposed core"
+  },
+  {
+    "n": 6,
+    "label": "Paused Team sets Plain Large Reduced without changing the round",
+    "dom": {
+      "body": {
+        "classes": "field-kit field-kit-support playing",
+        "dataset": {
+          "coopTouch": "hidden",
+          "effects": "reduced",
+          "fieldKitPage": "relay-rescue",
+          "textFace": "plain",
+          "textSize": "large"
+        }
+      },
+      "dialogs": [],
+      "displayControls": [
+        {
+          "checked": false,
+          "id": "coop-text-face",
+          "value": "plain"
+        },
+        {
+          "checked": false,
+          "id": "coop-text-size",
+          "value": "large"
+        },
+        {
+          "checked": true,
+          "id": "coop-reduced",
+          "value": "on"
+        }
+      ],
+      "focus": {
+        "id": "coop-reduced",
+        "tag": "INPUT",
+        "text": ""
+      },
+      "fonts": [
+        {
+          "font": "system-ui, -apple-system, \"system-ui\", \"Segoe UI\", sans-serif",
+          "size": "48px",
+          "text": "Both players paused"
+        },
+        {
+          "font": "system-ui, -apple-system, \"system-ui\", \"Segoe UI\", sans-serif",
+          "size": "20px",
+          "text": "Resume together"
+        },
+        {
+          "font": "system-ui, -apple-system, \"system-ui\", \"Segoe UI\", sans-serif",
+          "size": "20px",
+          "text": "Retry same arena"
+        },
+        {
+          "font": "system-ui, -apple-system, \"system-ui\", \"Segoe UI\", sans-serif",
+          "size": "20px",
+          "text": "Change setup"
+        },
+        {
+          "font": "system-ui, -apple-system, \"system-ui\", \"Segoe UI\", sans-serif",
+          "size": "20px",
+          "text": "Unmute sound"
+        },
+        {
+          "font": "system-ui, -apple-system, \"system-ui\", \"Segoe UI\", sans-serif",
+          "size": "20px",
+          "text": "Pause"
+        }
+      ],
+      "url": "http://127.0.0.1:58349/game/couch/relay-rescue.html?return=versus",
+      "viewport": {
+        "height": 1348,
+        "width": 1309
+      }
+    },
+    "snapshot": "- main:\n  - link \"REVEAL LINE\":\n    - /url: ../\n    - text: REVEAL\n    - generic: LINE\n  - text: COUCH CO-OP\n  - generic: RELAY YARD\n  - link \"Race mode ↗\":\n    - /url: ./\n  - region \"Shared Relay Rescue arena\":\n    - generic: \"1\"\n    - strong: SUNFLOWER\n    - generic: On safe ground\n    - generic: Support ready\n    - generic: TEAM TERRITORY\n    - strong: 0.0%\n    - generic: 3 reserves\n    - progressbar \"Team territory\"\n    - generic: \"2\"\n    - strong: SKYLINE\n    - generic: On safe ground\n    - generic: Support ready\n    - paragraph: Capture the shield anchors · 0 / 2 secured\n    - img \"One shared arena. Sunflower is marked 1 and Skyline is marked 2.\"\n    - paragraph: PAUSED\n    - heading \"Both players paused\" [level=2]\n    - paragraph: Release your controls, then choose Resume together.\n    - button \"Resume together\"\n    - button \"Retry same arena\"\n    - button \"Change setup\"\n    - navigation \"Game mode\":\n      - link \"Solo One player\":\n        - /url: ../\n        - strong: Solo\n        - generic: One player\n      - link \"Versus Two rival boards\":\n        - /url: ./\n        - strong: Versus\n        - generic: Two rival boards\n      - strong: Team\n      - generic: One shared arena\n    - complementary \"Help and options\":\n      - generic \"How to play and controls\"\n      - generic \"Options\"\n      - generic: Text style\n      - combobox \"Text style\":\n        - option \"Theme font\"\n        - option \"Plain\" [selected]\n      - generic: Text size\n      - combobox \"Text size\":\n        - option \"Standard\"\n        - option \"Large\" [selected]\n      - generic: Touch controls\n      - combobox \"Touch controls\":\n        - option \"Auto · touch players without a controller\" [selected]\n        - option \"Show both players\"\n        - option \"Hide touch controls\"\n      - paragraph: Touch controls appear only while playing. Auto follows this screen's touch capability and each player's actual controller assignment. Show and Hide override that choice for this visit.\n      - checkbox \"Reduce effects\" [checked] [active]\n      - text: Reduce effects\n      - paragraph\n      - status\n      - button \"Unmute sound\"\n      - generic: Master sound volume\n      - slider \"Master sound volume\": \"0.65\"\n      - status: Shared with Solo, Versus and previews. This Team chapter currently uses visual feedback.\n      - status: 0 controllers connected\n    - status: Watch the Hunter warnings. Cover a crossing or join after the charge passes.\n    - generic: 0:00\n    - button \"Pause\" [disabled]"
+  },
+  {
+    "n": 7,
+    "label": "Explicit Team Resume retains shared display choices, then pauses",
+    "dom": {
+      "body": {
+        "classes": "field-kit field-kit-support playing",
+        "dataset": {
+          "coopTouch": "hidden",
+          "effects": "reduced",
+          "fieldKitPage": "relay-rescue",
+          "textFace": "plain",
+          "textSize": "large"
+        }
+      },
+      "dialogs": [],
+      "displayControls": [
+        {
+          "checked": false,
+          "id": "coop-text-face",
+          "value": "plain"
+        },
+        {
+          "checked": false,
+          "id": "coop-text-size",
+          "value": "large"
+        },
+        {
+          "checked": true,
+          "id": "coop-reduced",
+          "value": "on"
+        }
+      ],
+      "focus": {
+        "id": "coop-resume",
+        "tag": "BUTTON",
+        "text": "Resume together"
+      },
+      "fonts": [
+        {
+          "font": "system-ui, -apple-system, \"system-ui\", \"Segoe UI\", sans-serif",
+          "size": "48px",
+          "text": "Both players paused"
+        },
+        {
+          "font": "system-ui, -apple-system, \"system-ui\", \"Segoe UI\", sans-serif",
+          "size": "20px",
+          "text": "Resume together"
+        },
+        {
+          "font": "system-ui, -apple-system, \"system-ui\", \"Segoe UI\", sans-serif",
+          "size": "20px",
+          "text": "Retry same arena"
+        },
+        {
+          "font": "system-ui, -apple-system, \"system-ui\", \"Segoe UI\", sans-serif",
+          "size": "20px",
+          "text": "Change setup"
+        },
+        {
+          "font": "system-ui, -apple-system, \"system-ui\", \"Segoe UI\", sans-serif",
+          "size": "20px",
+          "text": "Pause"
+        }
+      ],
+      "url": "http://127.0.0.1:58349/game/couch/relay-rescue.html?return=versus",
+      "viewport": {
+        "height": 1348,
+        "width": 1309
+      }
+    },
+    "snapshot": "- main:\n  - link \"REVEAL LINE\":\n    - /url: ../\n    - text: REVEAL\n    - generic: LINE\n  - text: COUCH CO-OP\n  - generic: RELAY YARD\n  - link \"Race mode ↗\":\n    - /url: ./\n  - region \"Shared Relay Rescue arena\":\n    - generic: \"1\"\n    - strong: SUNFLOWER\n    - generic: On safe ground\n    - generic: Support ready\n    - generic: TEAM TERRITORY\n    - strong: 0.0%\n    - generic: 3 reserves\n    - progressbar \"Team territory\"\n    - generic: \"2\"\n    - strong: SKYLINE\n    - generic: On safe ground\n    - generic: Support ready\n    - paragraph: Capture the shield anchors · 0 / 2 secured\n    - img \"One shared arena. Sunflower is marked 1 and Skyline is marked 2.\"\n    - paragraph: PAUSED\n    - heading \"Both players paused\" [level=2]\n    - paragraph: Release your controls, then choose Resume together.\n    - button \"Resume together\" [active]\n    - button \"Retry same arena\"\n    - button \"Change setup\"\n    - navigation \"Game mode\":\n      - link \"Solo One player\":\n        - /url: ../\n        - strong: Solo\n        - generic: One player\n      - link \"Versus Two rival boards\":\n        - /url: ./\n        - strong: Versus\n        - generic: Two rival boards\n      - strong: Team\n      - generic: One shared arena\n    - complementary \"Help and options\":\n      - generic \"How to play and controls\"\n      - generic \"Options\"\n      - option \"Theme font\"\n      - option \"Plain\" [selected]\n      - option \"Standard\"\n      - option \"Large\" [selected]\n      - option \"Auto · touch players without a controller\" [selected]\n      - option \"Show both players\"\n      - option \"Hide touch controls\"\n    - status: Choose fresh directions when you are ready.\n    - generic: 0:00\n    - button \"Pause\" [disabled]"
+  },
+  {
+    "n": 8,
+    "label": "Team discard dialog inherits Plain Large presentation",
+    "dom": {
+      "body": {
+        "classes": "field-kit field-kit-support playing",
+        "dataset": {
+          "coopTouch": "hidden",
+          "effects": "reduced",
+          "fieldKitPage": "relay-rescue",
+          "textFace": "plain",
+          "textSize": "large"
+        }
+      },
+      "dialogs": [
+        "coop-discard-dialog"
+      ],
+      "displayControls": [
+        {
+          "checked": false,
+          "id": "coop-text-face",
+          "value": "plain"
+        },
+        {
+          "checked": false,
+          "id": "coop-text-size",
+          "value": "large"
+        },
+        {
+          "checked": true,
+          "id": "coop-reduced",
+          "value": "on"
+        }
+      ],
+      "focus": {
+        "id": "coop-discard-stay",
+        "tag": "BUTTON",
+        "text": "Stay"
+      },
+      "fonts": [
+        {
+          "font": "system-ui, -apple-system, \"system-ui\", \"Segoe UI\", sans-serif",
+          "size": "48px",
+          "text": "Both players paused"
+        },
+        {
+          "font": "system-ui, -apple-system, \"system-ui\", \"Segoe UI\", sans-serif",
+          "size": "20px",
+          "text": "Resume together"
+        },
+        {
+          "font": "system-ui, -apple-system, \"system-ui\", \"Segoe UI\", sans-serif",
+          "size": "20px",
+          "text": "Retry same arena"
+        },
+        {
+          "font": "system-ui, -apple-system, \"system-ui\", \"Segoe UI\", sans-serif",
+          "size": "20px",
+          "text": "Change setup"
+        },
+        {
+          "font": "system-ui, -apple-system, \"system-ui\", \"Segoe UI\", sans-serif",
+          "size": "20px",
+          "text": "Read controls"
+        },
+        {
+          "font": "system-ui, -apple-system, \"system-ui\", \"Segoe UI\", sans-serif",
+          "size": "20px",
+          "text": "Unmute sound"
+        },
+        {
+          "font": "system-ui, -apple-system, \"system-ui\", \"Segoe UI\", sans-serif",
+          "size": "20px",
+          "text": "Pause"
+        },
+        {
+          "font": "system-ui, -apple-system, \"system-ui\", \"Segoe UI\", sans-serif",
+          "size": "33px",
+          "text": "Discard this Team attempt?"
+        },
+        {
+          "font": "system-ui, -apple-system, \"system-ui\", \"Segoe UI\", sans-serif",
+          "size": "20px",
+          "text": "Stay"
+        },
+        {
+          "font": "system-ui, -apple-system, \"system-ui\", \"Segoe UI\", sans-serif",
+          "size": "20px",
+          "text": "Discard and leave"
+        }
+      ],
+      "url": "http://127.0.0.1:58349/game/couch/relay-rescue.html?return=versus",
+      "viewport": {
+        "height": 1348,
+        "width": 1309
+      }
+    },
+    "snapshot": "- main:\n  - link \"REVEAL LINE\":\n    - /url: ../\n    - text: REVEAL\n    - generic: LINE\n  - text: COUCH CO-OP\n  - generic: RELAY YARD\n  - link \"Race mode ↗\":\n    - /url: ./\n  - region \"Shared Relay Rescue arena\":\n    - generic: \"1\"\n    - strong: SUNFLOWER\n    - generic: On safe ground\n    - generic: Support ready\n    - generic: TEAM TERRITORY\n    - strong: 0.0%\n    - generic: 3 reserves\n    - progressbar \"Team territory\"\n    - generic: \"2\"\n    - strong: SKYLINE\n    - generic: On safe ground\n    - generic: Support ready\n    - paragraph: Capture the shield anchors · 0 / 2 secured\n    - img \"One shared arena. Sunflower is marked 1 and Skyline is marked 2.\"\n    - paragraph: PAUSED\n    - heading \"Both players paused\" [level=2]\n    - paragraph: Release your controls, then choose Resume together.\n    - button \"Resume together\"\n    - button \"Retry same arena\"\n    - button \"Change setup\"\n    - navigation \"Game mode\":\n      - link \"Solo One player\":\n        - /url: ../\n        - strong: Solo\n        - generic: One player\n      - link \"Versus Two rival boards\":\n        - /url: ./\n        - strong: Versus\n        - generic: Two rival boards\n      - strong: Team\n      - generic: One shared arena\n    - complementary \"Help and options\":\n      - generic \"How to play and controls\"\n      - generic \"Options\"\n      - option \"Theme font\"\n      - option \"Plain\" [selected]\n      - option \"Standard\"\n      - option \"Large\" [selected]\n      - option \"Auto · touch players without a controller\" [selected]\n      - option \"Show both players\"\n      - option \"Hide touch controls\"\n    - status: Choose fresh directions when you are ready.\n    - generic: 0:00\n    - button \"Pause\" [disabled]\n  - alertdialog \"Discard this Team attempt?\":\n    - heading \"Discard this Team attempt?\" [level=2]\n    - paragraph: Team progress is only kept on this page; this attempt is not saved. Stay keeps both players paused. Resume together remains a separate action. Discard and leave returns to the linked mode and loses this Team attempt.\n    - button \"Stay\" [active]\n    - button \"Discard and leave\""
+  },
+  {
+    "n": 9,
+    "label": "Solo title inherits latest Team Plain Large Reduced settings",
+    "dom": {
+      "body": {
+        "classes": "field-kit game-shell",
+        "dataset": {
+          "arenaChrome": "full",
+          "effects": "reduced",
+          "flightState": "briefing",
+          "inputMode": "keyboard",
+          "pictureState": "ready",
+          "screenControls": "hidden",
+          "screenSteeringHand": "right",
+          "textFace": "plain",
+          "textSize": "large",
+          "touchMode": "stick",
+          "touchSide": "right",
+          "touchSize": "regular"
+        }
+      },
+      "dialogs": [
+        "shell-home"
+      ],
+      "displayControls": [
+        {
+          "checked": true,
+          "id": "reduced-effects",
+          "value": "on"
+        },
+        {
+          "checked": false,
+          "id": "collection-context",
+          "value": ""
+        },
+        {
+          "checked": false,
+          "id": "text-face",
+          "value": "plain"
+        },
+        {
+          "checked": false,
+          "id": "text-size",
+          "value": "large"
+        },
+        {
+          "checked": true,
+          "id": "settings-reduced-effects",
+          "value": "on"
+        }
+      ],
+      "focus": {
+        "id": "shell-featured",
+        "tag": "BUTTON",
+        "text": "Start\n            →"
+      },
+      "fonts": [
+        {
+          "font": "system-ui, -apple-system, \"system-ui\", \"Segoe UI\", sans-serif",
+          "size": "20px",
+          "text": "◩ REVEAL / LINE"
+        },
+        {
+          "font": "system-ui, -apple-system, \"system-ui\", \"Segoe UI\", sans-serif",
+          "size": "0px",
+          "text": "⛶"
+        },
+        {
+          "font": "system-ui, -apple-system, \"system-ui\", \"Segoe UI\", sans-serif",
+          "size": "20px",
+          "text": "Missions"
+        },
+        {
+          "font": "system-ui, -apple-system, \"system-ui\", \"Segoe UI\", sans-serif",
+          "size": "20px",
+          "text": "Collection"
+        },
+        {
+          "font": "system-ui, -apple-system, \"system-ui\", \"Segoe UI\", sans-serif",
+          "size": "20px",
+          "text": "Settings"
+        },
+        {
+          "font": "system-ui, -apple-system, \"system-ui\", \"Segoe UI\", sans-serif",
+          "size": "48px",
+          "text": "Clear a path.\nReveal a world."
+        },
+        {
+          "font": "system-ui, -apple-system, \"system-ui\", \"Segoe UI\", sans-serif",
+          "size": "20px",
+          "text": "Start mission ↗"
+        },
+        {
+          "font": "system-ui, -apple-system, \"system-ui\", \"Segoe UI\", sans-serif",
+          "size": "20px",
+          "text": "Learn by playing"
+        },
+        {
+          "font": "system-ui, -apple-system, \"system-ui\", \"Segoe UI\", sans-serif",
+          "size": "20px",
+          "text": "Mission brief"
+        },
+        {
+          "font": "system-ui, -apple-system, \"system-ui\", \"Segoe UI\", sans-serif",
+          "size": "20px",
+          "text": "Main menu"
+        },
+        {
+          "font": "system-ui, -apple-system, \"system-ui\", \"Segoe UI\", sans-serif",
+          "size": "91.6222px",
+          "text": "REVEAL/ LINE"
+        },
+        {
+          "font": "system-ui, -apple-system, \"system-ui\", \"Segoe UI\", sans-serif",
+          "size": "20px",
+          "text": "Start\n            →"
+        }
+      ],
+      "url": "http://127.0.0.1:58349/game/",
+      "viewport": {
+        "height": 1348,
+        "width": 1309
+      }
+    },
+    "snapshot": "- button \"Game menu\": ◩ REVEAL / LINE\n- generic: TACTICAL EDITION\n- button \"Enter fullscreen\": ⛶\n- button \"Missions\"\n- button \"Collection\"\n- button \"Game settings\": Settings\n- main:\n  - region \"Game\":\n    - generic: REVEALED\n    - strong: 0.0%\n    - emphasis: TARGET 45%\n    - generic: LIVES\n    - strong: ◆ ◆ ◆\n    - generic: TIME\n    - strong: 0:00\n    - generic: SCORE\n    - strong: \"00000\"\n    - application \"Territory capture game. Tap a direction to fly. Tap another to turn. Up ↑ / W; down ↓ / S; left ← / A; right → / D; ability E; boost Left Shift / Right Shift; change craft G; pause Esc / P. Releasing a direction keeps you moving.\"\n    - region \"Mission details\":\n      - paragraph: MISSION 01\n      - heading \"Clear a path. Reveal a world.\" [level=1]\n      - paragraph: Leave safe ground, draw a line and return. Reveal 45% by enclosing regions without a field enemy.\n      - paragraph: Standard difficulty.\n    - button \"Start mission ↗\"\n    - button \"Learn by playing\"\n    - button \"Mission brief\"\n    - button \"Main menu\"\n    - paragraph: Tap a direction to fly. Equipment controls are in How to play. Esc / P pauses.\n    - strong: Ready for launch\n    - generic: Close a line to reveal the picture\n    - status: \"Your first route: fly down from the marked start to the opposite border.\"\n    - status\n- dialog \"REVEAL / LINE\":\n  - paragraph: FPV FIELD KIT / FLIGHT READY\n  - heading \"REVEAL / LINE\" [level=1]:\n    - text: REVEAL\n    - generic: / LINE\n  - paragraph:\n    - text: Find your line.\n    - text: Bring the picture home.\n  - navigation \"Game mode\":\n    - strong: Solo\n    - generic: One player\n    - link \"Versus Two rival boards\":\n      - /url: couch/?return=solo\n      - strong: Versus\n      - generic: Two rival boards\n    - link \"Team One shared arena\":\n      - /url: couch/relay-rescue.html?return=solo\n      - strong: Team\n      - generic: One shared arena\n  - navigation \"Main menu\":\n    - button \"Start\" [active]:\n      - generic: Start\n      - generic: →\n    - button \"Missions\"\n    - button \"Collection\"\n    - button \"Settings\"\n    - button \"Workshop\"\n    - link \"Release explorer Play another edition\":\n      - /url: http://127.0.0.1:58349/releases/\n      - text: Release explorer\n      - generic: Play another edition\n  - paragraph: Start · First Signal\n  - paragraph: Choose a flight. Trace a path. Close the line.\n  - paragraph: Version DEV\n  - paragraph:\n    - text: HANGAR 01\n    - generic: FIRST LIGHT"
+  },
+  {
+    "n": 10,
+    "label": "Solo restart dialog is compact and inherits Plain Large",
+    "dom": {
+      "body": {
+        "classes": "field-kit game-shell",
+        "dataset": {
+          "arenaChrome": "full",
+          "effects": "reduced",
+          "flightState": "paused",
+          "inputMode": "keyboard",
+          "pictureState": "ready",
+          "screenControls": "hidden",
+          "screenSteeringHand": "right",
+          "textFace": "plain",
+          "textSize": "large",
+          "touchMode": "stick",
+          "touchSide": "right",
+          "touchSize": "regular"
+        }
+      },
+      "dialogs": [
+        "restart-dialog"
+      ],
+      "displayControls": [
+        {
+          "checked": true,
+          "id": "reduced-effects",
+          "value": "on"
+        },
+        {
+          "checked": false,
+          "id": "collection-context",
+          "value": ""
+        },
+        {
+          "checked": false,
+          "id": "text-face",
+          "value": "plain"
+        },
+        {
+          "checked": false,
+          "id": "text-size",
+          "value": "large"
+        },
+        {
+          "checked": true,
+          "id": "settings-reduced-effects",
+          "value": "on"
+        }
+      ],
+      "focus": {
+        "id": "restart-cancel",
+        "tag": "BUTTON",
+        "text": "Stay paused"
+      },
+      "fonts": [
+        {
+          "font": "system-ui, -apple-system, \"system-ui\", \"Segoe UI\", sans-serif",
+          "size": "20px",
+          "text": "◩ REVEAL / LINE"
+        },
+        {
+          "font": "system-ui, -apple-system, \"system-ui\", \"Segoe UI\", sans-serif",
+          "size": "0px",
+          "text": "⛶"
+        },
+        {
+          "font": "system-ui, -apple-system, \"system-ui\", \"Segoe UI\", sans-serif",
+          "size": "20px",
+          "text": "Missions"
+        },
+        {
+          "font": "system-ui, -apple-system, \"system-ui\", \"Segoe UI\", sans-serif",
+          "size": "20px",
+          "text": "Collection"
+        },
+        {
+          "font": "system-ui, -apple-system, \"system-ui\", \"Segoe UI\", sans-serif",
+          "size": "20px",
+          "text": "Settings"
+        },
+        {
+          "font": "system-ui, -apple-system, \"system-ui\", \"Segoe UI\", sans-serif",
+          "size": "20px",
+          "text": "Resume →"
+        },
+        {
+          "font": "system-ui, -apple-system, \"system-ui\", \"Segoe UI\", sans-serif",
+          "size": "20px",
+          "text": "Restart mission"
+        },
+        {
+          "font": "system-ui, -apple-system, \"system-ui\", \"Segoe UI\", sans-serif",
+          "size": "20px",
+          "text": "Mission brief"
+        },
+        {
+          "font": "system-ui, -apple-system, \"system-ui\", \"Segoe UI\", sans-serif",
+          "size": "20px",
+          "text": "Main menu"
+        },
+        {
+          "font": "system-ui, -apple-system, \"system-ui\", \"Segoe UI\", sans-serif",
+          "size": "48px",
+          "text": "Restart this mission?"
+        },
+        {
+          "font": "system-ui, -apple-system, \"system-ui\", \"Segoe UI\", sans-serif",
+          "size": "20px",
+          "text": "Stay paused"
+        },
+        {
+          "font": "system-ui, -apple-system, \"system-ui\", \"Segoe UI\", sans-serif",
+          "size": "20px",
+          "text": "Restart mission"
+        }
+      ],
+      "url": "http://127.0.0.1:58349/game/",
+      "viewport": {
+        "height": 1348,
+        "width": 1309
+      }
+    },
+    "snapshot": "- button \"Game menu\": ◩ REVEAL / LINE\n- generic: TACTICAL EDITION\n- button \"Enter fullscreen\": ⛶\n- button \"Missions\"\n- button \"Collection\"\n- button \"Game settings\": Settings\n- main:\n  - region \"Game\":\n    - generic: REVEALED\n    - strong: 0.0%\n    - emphasis: TARGET 45%\n    - generic: LIVES\n    - strong: ◆ ◆ ◆\n    - generic: TIME\n    - strong: 0:08\n    - generic: SCORE\n    - strong: \"00000\"\n    - application \"Territory capture game. Tap a direction to fly. Tap another to turn. Up ↑ / W; down ↓ / S; left ← / A; right → / D; ability E; boost Left Shift / Right Shift; change craft G; pause Esc / P. Releasing a direction keeps you moving.\"\n    - status: Paused\n    - text: ◆ ◆\n    - button \"Resume →\"\n    - text: ◆ ◆ ◆ ◆ ◆\n    - button \"Restart mission\"\n    - button \"Mission brief\"\n    - button \"Main menu\"\n    - strong: Paused\n    - generic: Close a line to reveal the picture\n    - status: \"Your first route: fly down from the marked start to the opposite border.\"\n    - status\n- alertdialog \"Restart this mission?\":\n  - paragraph: CURRENT ATTEMPT\n  - heading \"Restart this mission?\" [level=2]\n  - paragraph: Your current line, score and elapsed time will be reset. Campaign progress you already earned stays safe.\n  - button \"Stay paused\" [active]\n  - button \"Restart mission\""
+  },
+  {
+    "n": 11,
+    "label": "Solo restart Stay restores its opener and keeps pause",
+    "dom": {
+      "body": {
+        "classes": "field-kit game-shell",
+        "dataset": {
+          "arenaChrome": "full",
+          "effects": "reduced",
+          "flightState": "paused",
+          "inputMode": "keyboard",
+          "pictureState": "ready",
+          "screenControls": "hidden",
+          "screenSteeringHand": "right",
+          "textFace": "plain",
+          "textSize": "large",
+          "touchMode": "stick",
+          "touchSide": "right",
+          "touchSize": "regular"
+        }
+      },
+      "dialogs": [],
+      "displayControls": [
+        {
+          "checked": true,
+          "id": "reduced-effects",
+          "value": "on"
+        },
+        {
+          "checked": false,
+          "id": "collection-context",
+          "value": ""
+        },
+        {
+          "checked": false,
+          "id": "text-face",
+          "value": "plain"
+        },
+        {
+          "checked": false,
+          "id": "text-size",
+          "value": "large"
+        },
+        {
+          "checked": true,
+          "id": "settings-reduced-effects",
+          "value": "on"
+        }
+      ],
+      "focus": {
+        "id": "overlay-restart",
+        "tag": "BUTTON",
+        "text": "Restart mission"
+      },
+      "fonts": [
+        {
+          "font": "system-ui, -apple-system, \"system-ui\", \"Segoe UI\", sans-serif",
+          "size": "20px",
+          "text": "◩ REVEAL / LINE"
+        },
+        {
+          "font": "system-ui, -apple-system, \"system-ui\", \"Segoe UI\", sans-serif",
+          "size": "0px",
+          "text": "⛶"
+        },
+        {
+          "font": "system-ui, -apple-system, \"system-ui\", \"Segoe UI\", sans-serif",
+          "size": "20px",
+          "text": "Missions"
+        },
+        {
+          "font": "system-ui, -apple-system, \"system-ui\", \"Segoe UI\", sans-serif",
+          "size": "20px",
+          "text": "Collection"
+        },
+        {
+          "font": "system-ui, -apple-system, \"system-ui\", \"Segoe UI\", sans-serif",
+          "size": "20px",
+          "text": "Settings"
+        },
+        {
+          "font": "system-ui, -apple-system, \"system-ui\", \"Segoe UI\", sans-serif",
+          "size": "20px",
+          "text": "Resume →"
+        },
+        {
+          "font": "system-ui, -apple-system, \"system-ui\", \"Segoe UI\", sans-serif",
+          "size": "20px",
+          "text": "Restart mission"
+        },
+        {
+          "font": "system-ui, -apple-system, \"system-ui\", \"Segoe UI\", sans-serif",
+          "size": "20px",
+          "text": "Mission brief"
+        },
+        {
+          "font": "system-ui, -apple-system, \"system-ui\", \"Segoe UI\", sans-serif",
+          "size": "20px",
+          "text": "Main menu"
+        }
+      ],
+      "url": "http://127.0.0.1:58349/game/",
+      "viewport": {
+        "height": 1348,
+        "width": 1309
+      }
+    },
+    "snapshot": "- button \"Game menu\": ◩ REVEAL / LINE\n- generic: TACTICAL EDITION\n- button \"Enter fullscreen\": ⛶\n- button \"Missions\"\n- button \"Collection\"\n- button \"Game settings\": Settings\n- main:\n  - region \"Game\":\n    - generic: REVEALED\n    - strong: 0.0%\n    - emphasis: TARGET 45%\n    - generic: LIVES\n    - strong: ◆ ◆ ◆\n    - generic: TIME\n    - strong: 0:08\n    - generic: SCORE\n    - strong: \"00000\"\n    - application \"Territory capture game. Tap a direction to fly. Tap another to turn. Up ↑ / W; down ↓ / S; left ← / A; right → / D; ability E; boost Left Shift / Right Shift; change craft G; pause Esc / P. Releasing a direction keeps you moving.\"\n    - status: Paused\n    - text: ◆ ◆\n    - button \"Resume →\"\n    - text: ◆ ◆ ◆ ◆ ◆\n    - button \"Restart mission\" [active]\n    - button \"Mission brief\"\n    - button \"Main menu\"\n    - strong: Paused\n    - generic: Close a line to reveal the picture\n    - status: \"Your first route: fly down from the marked start to the opposite border.\"\n    - status"
+  },
+  {
+    "n": 12,
+    "label": "Corrected Options candidate Ready on new origin, default display retained",
+    "dom": {
+      "body": {
+        "classes": "field-kit field-kit-support",
+        "dataset": {
+          "couchScreen": "main",
+          "effects": "full",
+          "fieldKitPage": "couch",
+          "textFace": "pixel",
+          "textSize": "standard"
+        }
+      },
+      "dialogs": [],
+      "displayControls": [
+        {
+          "checked": false,
+          "id": "race-text-face",
+          "value": "pixel"
+        },
+        {
+          "checked": false,
+          "id": "race-text-size",
+          "value": "standard"
+        },
+        {
+          "checked": false,
+          "id": "race-reduced",
+          "value": "on"
+        }
+      ],
+      "focus": {
+        "id": "race-start",
+        "tag": "BUTTON",
+        "text": "Start round ↗"
+      },
+      "fonts": [
+        {
+          "font": "RLAsset-4797c11d5e17c3f5f9b5b3fa96efb4fd2aabb877fb4d625dfc8eb7465464e145, monospace",
+          "size": "72px",
+          "text": "Two boards. One race."
+        },
+        {
+          "font": "RLAsset-fce2dc8f15375b66d336c1defbca23dfb2310301b62c822206a0a013d19601ef, RLAsset-0498bcb48294756b5ac9062290e1639e907b1ec69b5dc2e8cfdec3fab58e0bc8, \"Field Kit Mono\", sans-serif",
+          "size": "22px",
+          "text": "Sunflower"
+        },
+        {
+          "font": "RLAsset-fce2dc8f15375b66d336c1defbca23dfb2310301b62c822206a0a013d19601ef, RLAsset-0498bcb48294756b5ac9062290e1639e907b1ec69b5dc2e8cfdec3fab58e0bc8, \"Field Kit Mono\", sans-serif",
+          "size": "22px",
+          "text": "Skyline"
+        },
+        {
+          "font": "RLAsset-fce2dc8f15375b66d336c1defbca23dfb2310301b62c822206a0a013d19601ef, RLAsset-0498bcb48294756b5ac9062290e1639e907b1ec69b5dc2e8cfdec3fab58e0bc8, \"Field Kit Mono\", sans-serif",
+          "size": "18px",
+          "text": "Start round ↗"
+        },
+        {
+          "font": "RLAsset-fce2dc8f15375b66d336c1defbca23dfb2310301b62c822206a0a013d19601ef, RLAsset-0498bcb48294756b5ac9062290e1639e907b1ec69b5dc2e8cfdec3fab58e0bc8, \"Field Kit Mono\", sans-serif",
+          "size": "18px",
+          "text": "Race setup"
+        },
+        {
+          "font": "RLAsset-fce2dc8f15375b66d336c1defbca23dfb2310301b62c822206a0a013d19601ef, RLAsset-0498bcb48294756b5ac9062290e1639e907b1ec69b5dc2e8cfdec3fab58e0bc8, \"Field Kit Mono\", sans-serif",
+          "size": "18px",
+          "text": "Options"
+        },
+        {
+          "font": "RLAsset-fce2dc8f15375b66d336c1defbca23dfb2310301b62c822206a0a013d19601ef, RLAsset-0498bcb48294756b5ac9062290e1639e907b1ec69b5dc2e8cfdec3fab58e0bc8, \"Field Kit Mono\", sans-serif",
+          "size": "18px",
+          "text": "How to play"
+        }
+      ],
+      "url": "http://127.0.0.1:59927/game/couch/",
+      "viewport": {
+        "height": 1348,
+        "width": 1309
+      }
+    },
+    "snapshot": "- main:\n  - region \"Two boards. One race.\":\n    - navigation \"Game mode\":\n      - link \"Solo One player\":\n        - /url: ../\n        - strong: Solo\n        - generic: One player\n      - strong: Versus\n      - generic: Two rival boards\n      - link \"Team One shared arena\":\n        - /url: relay-rescue.html?return=versus\n        - strong: Team\n        - generic: One shared arena\n    - paragraph: REVEAL LINE / LOCAL TWO PLAYER\n    - heading \"Two boards. One race.\" [level=1]\n    - status: Both boards use the same map, class and seed. Ready when you are.\n    - paragraph: FPV Front · Pressure Lines · Orchard Crossing · Arcade · FPV Front · Immediate turns · 90 seconds\n    - article:\n      - text: PLAYER 1\n      - heading \"Sunflower\" [level=2]\n      - paragraph: W A S D\n    - article:\n      - text: PLAYER 2\n      - heading \"Skyline\" [level=2]\n      - paragraph: Arrow keys\n    - button \"Start round ↗\" [active]\n    - button \"Race setup\"\n    - button \"Options\"\n    - button \"How to play\"\n    - paragraph: First to two rounds. Couch races do not change your solo progress.\n  - status: Connect a controller and use it while this page is visible. Keyboard and touch remain available."
+  },
+  {
+    "n": 13,
+    "label": "Corrected Versus Options initially focuses its first visible Text style field",
+    "dom": {
+      "body": {
+        "classes": "field-kit field-kit-support",
+        "dataset": {
+          "couchScreen": "options",
+          "effects": "full",
+          "fieldKitPage": "couch",
+          "textFace": "pixel",
+          "textSize": "standard"
+        }
+      },
+      "dialogs": [],
+      "displayControls": [
+        {
+          "checked": false,
+          "id": "race-text-face",
+          "value": "pixel"
+        },
+        {
+          "checked": false,
+          "id": "race-text-size",
+          "value": "standard"
+        },
+        {
+          "checked": false,
+          "id": "race-reduced",
+          "value": "on"
+        }
+      ],
+      "focus": {
+        "id": "race-text-face",
+        "tag": "SELECT",
+        "text": "Theme font\n              Plain"
+      },
+      "fonts": [
+        {
+          "font": "RLAsset-4797c11d5e17c3f5f9b5b3fa96efb4fd2aabb877fb4d625dfc8eb7465464e145, monospace",
+          "size": "72px",
+          "text": "Flight settings"
+        },
+        {
+          "font": "RLAsset-fce2dc8f15375b66d336c1defbca23dfb2310301b62c822206a0a013d19601ef, RLAsset-0498bcb48294756b5ac9062290e1639e907b1ec69b5dc2e8cfdec3fab58e0bc8, \"Field Kit Mono\", sans-serif",
+          "size": "16px",
+          "text": "Unmute sound"
+        },
+        {
+          "font": "RLAsset-fce2dc8f15375b66d336c1defbca23dfb2310301b62c822206a0a013d19601ef, RLAsset-0498bcb48294756b5ac9062290e1639e907b1ec69b5dc2e8cfdec3fab58e0bc8, \"Field Kit Mono\", sans-serif",
+          "size": "16px",
+          "text": "Back"
+        }
+      ],
+      "url": "http://127.0.0.1:59927/game/couch/",
+      "viewport": {
+        "height": 1348,
+        "width": 1309
+      }
+    },
+    "snapshot": "- main:\n  - region \"Flight settings\":\n    - paragraph: MAKE YOURSELF AT HOME\n    - heading \"Flight settings\" [level=1]\n    - text: Text style\n    - combobox \"Text style\" [active]:\n      - option \"Theme font\" [selected]\n      - option \"Plain\"\n    - generic: Text size\n    - combobox \"Text size\":\n      - option \"Standard\" [selected]\n      - option \"Large\"\n    - text: Player 1 touch controls\n    - combobox \"Player 1 touch controls\":\n      - option \"Auto\" [selected]\n      - option \"Always\"\n      - option \"Off\"\n    - text: Player 2 touch controls\n    - combobox \"Player 2 touch controls\":\n      - option \"Auto\" [selected]\n      - option \"Always\"\n      - option \"Off\"\n    - paragraph: Auto shows a player's controls after a touch on their board. Keyboard or controller use hides them at the next pause. Choose Always to play with a mouse.\n    - checkbox \"Reduced effects\"\n    - text: Reduced effects\n    - paragraph\n    - status\n    - button \"Unmute sound\"\n    - text: Master sound volume\n    - slider \"Master sound volume\": \"0.65\"\n    - status\n    - paragraph: \"0 standard controllers assigned · Player 1: keyboard/touch · Player 2: keyboard/touch. Keyboard and touch remain available. Escape pauses both boards.\"\n    - button \"Back\"\n  - status: Connect a controller and use it while this page is visible. Keyboard and touch remain available."
+  },
+  {
+    "n": 14,
+    "label": "Paused Versus Options opens Text style without resuming",
+    "dom": {
+      "body": {
+        "classes": "field-kit field-kit-support",
+        "dataset": {
+          "couchScreen": "options",
+          "effects": "full",
+          "fieldKitPage": "couch",
+          "textFace": "pixel",
+          "textSize": "standard"
+        }
+      },
+      "dialogs": [],
+      "displayControls": [
+        {
+          "checked": false,
+          "id": "race-text-face",
+          "value": "pixel"
+        },
+        {
+          "checked": false,
+          "id": "race-text-size",
+          "value": "standard"
+        },
+        {
+          "checked": false,
+          "id": "race-reduced",
+          "value": "on"
+        }
+      ],
+      "focus": {
+        "id": "race-text-face",
+        "tag": "SELECT",
+        "text": "Theme font\n              Plain"
+      },
+      "fonts": [
+        {
+          "font": "RLAsset-4797c11d5e17c3f5f9b5b3fa96efb4fd2aabb877fb4d625dfc8eb7465464e145, monospace",
+          "size": "72px",
+          "text": "Flight settings"
+        },
+        {
+          "font": "RLAsset-fce2dc8f15375b66d336c1defbca23dfb2310301b62c822206a0a013d19601ef, RLAsset-0498bcb48294756b5ac9062290e1639e907b1ec69b5dc2e8cfdec3fab58e0bc8, \"Field Kit Mono\", sans-serif",
+          "size": "16px",
+          "text": "Unmute sound"
+        },
+        {
+          "font": "RLAsset-fce2dc8f15375b66d336c1defbca23dfb2310301b62c822206a0a013d19601ef, RLAsset-0498bcb48294756b5ac9062290e1639e907b1ec69b5dc2e8cfdec3fab58e0bc8, \"Field Kit Mono\", sans-serif",
+          "size": "16px",
+          "text": "Back"
+        }
+      ],
+      "url": "http://127.0.0.1:59927/game/couch/",
+      "viewport": {
+        "height": 1348,
+        "width": 1309
+      }
+    },
+    "snapshot": "- main:\n  - region \"Flight settings\":\n    - paragraph: MAKE YOURSELF AT HOME\n    - heading \"Flight settings\" [level=1]\n    - text: Text style\n    - combobox \"Text style\" [active]:\n      - option \"Theme font\" [selected]\n      - option \"Plain\"\n    - generic: Text size\n    - combobox \"Text size\":\n      - option \"Standard\" [selected]\n      - option \"Large\"\n    - text: Player 1 touch controls\n    - combobox \"Player 1 touch controls\":\n      - option \"Auto\" [selected]\n      - option \"Always\"\n      - option \"Off\"\n    - text: Player 2 touch controls\n    - combobox \"Player 2 touch controls\":\n      - option \"Auto\" [selected]\n      - option \"Always\"\n      - option \"Off\"\n    - paragraph: Auto shows a player's controls after a touch on their board. Keyboard or controller use hides them at the next pause. Choose Always to play with a mouse.\n    - checkbox \"Reduced effects\"\n    - text: Reduced effects\n    - paragraph\n    - status\n    - button \"Unmute sound\"\n    - text: Master sound volume\n    - slider \"Master sound volume\": \"0.65\"\n    - status\n    - paragraph: \"0 standard controllers assigned · Player 1: keyboard/touch · Player 2: keyboard/touch. Keyboard and touch remain available. Escape pauses both boards.\"\n    - button \"Back\"\n  - status: Connect a controller and use it while this page is visible. Keyboard and touch remain available."
+  },
+  {
+    "n": 15,
+    "label": "Paused Versus changes Plain Large Reduced",
+    "dom": {
+      "body": {
+        "classes": "field-kit field-kit-support",
+        "dataset": {
+          "couchScreen": "options",
+          "effects": "reduced",
+          "fieldKitPage": "couch",
+          "textFace": "plain",
+          "textSize": "large"
+        }
+      },
+      "dialogs": [],
+      "displayControls": [
+        {
+          "checked": false,
+          "id": "race-text-face",
+          "value": "plain"
+        },
+        {
+          "checked": false,
+          "id": "race-text-size",
+          "value": "large"
+        },
+        {
+          "checked": true,
+          "id": "race-reduced",
+          "value": "on"
+        }
+      ],
+      "focus": {
+        "id": "race-reduced",
+        "tag": "INPUT",
+        "text": ""
+      },
+      "fonts": [
+        {
+          "font": "system-ui, -apple-system, \"system-ui\", \"Segoe UI\", sans-serif",
+          "size": "72px",
+          "text": "Flight settings"
+        },
+        {
+          "font": "system-ui, -apple-system, \"system-ui\", \"Segoe UI\", sans-serif",
+          "size": "20px",
+          "text": "Unmute sound"
+        },
+        {
+          "font": "system-ui, -apple-system, \"system-ui\", \"Segoe UI\", sans-serif",
+          "size": "20px",
+          "text": "Back"
+        }
+      ],
+      "url": "http://127.0.0.1:59927/game/couch/",
+      "viewport": {
+        "height": 1348,
+        "width": 1309
+      }
+    },
+    "snapshot": "- main:\n  - region \"Flight settings\":\n    - paragraph: MAKE YOURSELF AT HOME\n    - heading \"Flight settings\" [level=1]\n    - text: Text style\n    - combobox \"Text style\":\n      - option \"Theme font\"\n      - option \"Plain\" [selected]\n    - generic: Text size\n    - combobox \"Text size\":\n      - option \"Standard\"\n      - option \"Large\" [selected]\n    - text: Player 1 touch controls\n    - combobox \"Player 1 touch controls\":\n      - option \"Auto\" [selected]\n      - option \"Always\"\n      - option \"Off\"\n    - text: Player 2 touch controls\n    - combobox \"Player 2 touch controls\":\n      - option \"Auto\" [selected]\n      - option \"Always\"\n      - option \"Off\"\n    - paragraph: Auto shows a player's controls after a touch on their board. Keyboard or controller use hides them at the next pause. Choose Always to play with a mouse.\n    - checkbox \"Reduced effects\" [checked] [active]\n    - text: Reduced effects\n    - paragraph\n    - status\n    - button \"Unmute sound\"\n    - text: Master sound volume\n    - slider \"Master sound volume\": \"0.65\"\n    - status\n    - paragraph: \"0 standard controllers assigned · Player 1: keyboard/touch · Player 2: keyboard/touch. Keyboard and touch remain available. Escape pauses both boards.\"\n    - button \"Back\"\n  - status: Connect a controller and use it while this page is visible. Keyboard and touch remain available."
+  },
+  {
+    "n": 16,
+    "label": "Options Back restores its exact opener and retains paused round",
+    "dom": {
+      "body": {
+        "classes": "field-kit field-kit-support",
+        "dataset": {
+          "couchScreen": "main",
+          "effects": "reduced",
+          "fieldKitPage": "couch",
+          "textFace": "plain",
+          "textSize": "large"
+        }
+      },
+      "dialogs": [],
+      "displayControls": [
+        {
+          "checked": false,
+          "id": "race-text-face",
+          "value": "plain"
+        },
+        {
+          "checked": false,
+          "id": "race-text-size",
+          "value": "large"
+        },
+        {
+          "checked": true,
+          "id": "race-reduced",
+          "value": "on"
+        }
+      ],
+      "focus": {
+        "id": "race-options",
+        "tag": "BUTTON",
+        "text": "Options"
+      },
+      "fonts": [
+        {
+          "font": "system-ui, -apple-system, \"system-ui\", \"Segoe UI\", sans-serif",
+          "size": "72px",
+          "text": "Both boards paused."
+        },
+        {
+          "font": "system-ui, -apple-system, \"system-ui\", \"Segoe UI\", sans-serif",
+          "size": "26px",
+          "text": "Sunflower"
+        },
+        {
+          "font": "system-ui, -apple-system, \"system-ui\", \"Segoe UI\", sans-serif",
+          "size": "26px",
+          "text": "Skyline"
+        },
+        {
+          "font": "system-ui, -apple-system, \"system-ui\", \"Segoe UI\", sans-serif",
+          "size": "22px",
+          "text": "Resume round →"
+        },
+        {
+          "font": "system-ui, -apple-system, \"system-ui\", \"Segoe UI\", sans-serif",
+          "size": "22px",
+          "text": "New match · setup"
+        },
+        {
+          "font": "system-ui, -apple-system, \"system-ui\", \"Segoe UI\", sans-serif",
+          "size": "22px",
+          "text": "Options"
+        },
+        {
+          "font": "system-ui, -apple-system, \"system-ui\", \"Segoe UI\", sans-serif",
+          "size": "22px",
+          "text": "How to play"
+        }
+      ],
+      "url": "http://127.0.0.1:59927/game/couch/",
+      "viewport": {
+        "height": 1348,
+        "width": 1309
+      }
+    },
+    "snapshot": "- main:\n  - region \"Both boards paused.\":\n    - navigation \"Game mode\":\n      - link \"Solo One player\":\n        - /url: ../\n        - strong: Solo\n        - generic: One player\n      - strong: Versus\n      - generic: Two rival boards\n      - link \"Team One shared arena\":\n        - /url: relay-rescue.html?return=versus\n        - strong: Team\n        - generic: One shared arena\n    - paragraph: REVEAL LINE / LOCAL TWO PLAYER\n    - heading \"Both boards paused.\" [level=1]\n    - status: Both players are paused. Resume when everyone is ready.\n    - paragraph: FPV Front · Pressure Lines · Orchard Crossing · Arcade · FPV Front · Immediate turns · 90 seconds\n    - article:\n      - text: PLAYER 1\n      - heading \"Sunflower\" [level=2]\n      - paragraph: W A S D\n    - article:\n      - text: PLAYER 2\n      - heading \"Skyline\" [level=2]\n      - paragraph: Arrow keys\n    - button \"Resume round →\"\n    - button \"New match · setup\"\n    - button \"Options\" [active]\n    - button \"How to play\"\n    - paragraph: First to two rounds. Couch races do not change your solo progress.\n  - status: Connect a controller and use it while this page is visible. Keyboard and touch remain available."
+  },
+  {
+    "n": 17,
+    "label": "Explicit Versus Resume displays both boards with retained preferences; paused again",
+    "dom": {
+      "body": {
+        "classes": "field-kit field-kit-support",
+        "dataset": {
+          "couchScreen": "main",
+          "effects": "reduced",
+          "fieldKitPage": "couch",
+          "textFace": "plain",
+          "textSize": "large"
+        }
+      },
+      "dialogs": [],
+      "displayControls": [
+        {
+          "checked": false,
+          "id": "race-text-face",
+          "value": "plain"
+        },
+        {
+          "checked": false,
+          "id": "race-text-size",
+          "value": "large"
+        },
+        {
+          "checked": true,
+          "id": "race-reduced",
+          "value": "on"
+        }
+      ],
+      "focus": {
+        "id": "race-start",
+        "tag": "BUTTON",
+        "text": "Resume round →"
+      },
+      "fonts": [
+        {
+          "font": "system-ui, -apple-system, \"system-ui\", \"Segoe UI\", sans-serif",
+          "size": "72px",
+          "text": "Both boards paused."
+        },
+        {
+          "font": "system-ui, -apple-system, \"system-ui\", \"Segoe UI\", sans-serif",
+          "size": "26px",
+          "text": "Sunflower"
+        },
+        {
+          "font": "system-ui, -apple-system, \"system-ui\", \"Segoe UI\", sans-serif",
+          "size": "26px",
+          "text": "Skyline"
+        },
+        {
+          "font": "system-ui, -apple-system, \"system-ui\", \"Segoe UI\", sans-serif",
+          "size": "22px",
+          "text": "Resume round →"
+        },
+        {
+          "font": "system-ui, -apple-system, \"system-ui\", \"Segoe UI\", sans-serif",
+          "size": "22px",
+          "text": "New match · setup"
+        },
+        {
+          "font": "system-ui, -apple-system, \"system-ui\", \"Segoe UI\", sans-serif",
+          "size": "22px",
+          "text": "Options"
+        },
+        {
+          "font": "system-ui, -apple-system, \"system-ui\", \"Segoe UI\", sans-serif",
+          "size": "22px",
+          "text": "How to play"
+        }
+      ],
+      "url": "http://127.0.0.1:59927/game/couch/",
+      "viewport": {
+        "height": 1348,
+        "width": 1309
+      }
+    },
+    "snapshot": "- main:\n  - region \"Both boards paused.\":\n    - navigation \"Game mode\":\n      - link \"Solo One player\":\n        - /url: ../\n        - strong: Solo\n        - generic: One player\n      - strong: Versus\n      - generic: Two rival boards\n      - link \"Team One shared arena\":\n        - /url: relay-rescue.html?return=versus\n        - strong: Team\n        - generic: One shared arena\n    - paragraph: REVEAL LINE / LOCAL TWO PLAYER\n    - heading \"Both boards paused.\" [level=1]\n    - status: Both players are paused. Resume when everyone is ready.\n    - paragraph: FPV Front · Pressure Lines · Orchard Crossing · Arcade · FPV Front · Immediate turns · 90 seconds\n    - article:\n      - text: PLAYER 1\n      - heading \"Sunflower\" [level=2]\n      - paragraph: W A S D\n    - article:\n      - text: PLAYER 2\n      - heading \"Skyline\" [level=2]\n      - paragraph: Arrow keys\n    - button \"Resume round →\" [active]\n    - button \"New match · setup\"\n    - button \"Options\"\n    - button \"How to play\"\n    - paragraph: First to two rounds. Couch races do not change your solo progress.\n  - status: Connect a controller and use it while this page is visible. Keyboard and touch remain available."
+  }
+]

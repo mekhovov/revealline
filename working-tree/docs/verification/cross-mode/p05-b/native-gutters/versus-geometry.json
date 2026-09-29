@@ -1,0 +1,111 @@
+[
+  {
+    "surface": "race-options-panel",
+    "display": "block",
+    "scrollOverflow": false,
+    "controls": [
+      {
+        "id": "race-options-title",
+        "tag": "H1",
+        "leftGap": 12.000015258789062,
+        "rightGap": 11.999984741211165
+      },
+      {
+        "id": "",
+        "tag": "LABEL",
+        "leftGap": 12.000015258789062,
+        "rightGap": 11.999984741211165
+      },
+      {
+        "id": "race-text-face",
+        "tag": "SELECT",
+        "leftGap": 12.000015258789062,
+        "rightGap": 11.999984741211165
+      },
+      {
+        "id": "",
+        "tag": "LABEL",
+        "leftGap": 12.000015258789062,
+        "rightGap": 11.999984741211165
+      },
+      {
+        "id": "race-text-size",
+        "tag": "SELECT",
+        "leftGap": 12.000015258789062,
+        "rightGap": 11.999984741211165
+      },
+      {
+        "id": "",
+        "tag": "LABEL",
+        "leftGap": 12.000015258789062,
+        "rightGap": 11.999984741211165
+      },
+      {
+        "id": "race-menu-palette",
+        "tag": "SELECT",
+        "leftGap": 12.000015258789062,
+        "rightGap": 11.999984741211165
+      },
+      {
+        "id": "",
+        "tag": "LABEL",
+        "leftGap": 12.000015258789062,
+        "rightGap": 11.999984741211165
+      },
+      {
+        "id": "race-menu-ornaments",
+        "tag": "SELECT",
+        "leftGap": 6.4444552587890485,
+        "rightGap": 6.444424741211151
+      },
+      {
+        "id": "",
+        "tag": "LABEL",
+        "leftGap": 12.000015258789062,
+        "rightGap": 444.00520324707054
+      },
+      {
+        "id": "race-touch-0",
+        "tag": "SELECT",
+        "leftGap": 12.000015258789062,
+        "rightGap": 444.00520324707054
+      },
+      {
+        "id": "",
+        "tag": "LABEL",
+        "leftGap": 444.0052185058594,
+        "rightGap": 12
+      },
+      {
+        "id": "race-touch-1",
+        "tag": "SELECT",
+        "leftGap": 444.0052185058594,
+        "rightGap": 12
+      },
+      {
+        "id": "",
+        "tag": "LABEL",
+        "leftGap": 12.000015258789062,
+        "rightGap": 11.999984741211165
+      },
+      {
+        "id": "race-audio",
+        "tag": "BUTTON",
+        "leftGap": 12.000015258789062,
+        "rightGap": 689.8645782470705
+      },
+      {
+        "id": "",
+        "tag": "LABEL",
+        "leftGap": 182.16494750976557,
+        "rightGap": 528.5972137451174
+      },
+      {
+        "id": "race-options-back",
+        "tag": "BUTTON",
+        "leftGap": 12.000015258789062,
+        "rightGap": 761.6788177490237
+      }
+    ]
+  }
+]

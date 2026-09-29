@@ -1,0 +1,37 @@
+{
+  "createdUtc": "2026-09-15T22:07:35.309121+00:00",
+  "base": "063ff5d650b6e071d2b59e89fa6e9fb5058b3f08",
+  "bindingSha256": "697c6d919732fdaa5d665f4521e15a07d1a927ad902346b9511ef0b23dbb6b15",
+  "responses": [
+    {
+      "path": "game/couch/couch-shell.mjs",
+      "status": 200,
+      "bytes": 15181,
+      "sha256": "a6f66819d255cf6fd0bb3bc3e22a52991ef1435095fc1d7cbb72af9153dce893"
+    },
+    {
+      "path": "game/couch/couch.mjs",
+      "status": 200,
+      "bytes": 47859,
+      "sha256": "a71856b827c243e93e7f2239a58865d5c2021f18366247baa6fc1a9cc8927f0c"
+    },
+    {
+      "path": "game/couch/index.html",
+      "status": 200,
+      "bytes": 16521,
+      "sha256": "1d946ce9d526fc6f3debe49807aa2d26c5a21696ab58f1afef603ba24546da36"
+    },
+    {
+      "path": "game/ui/controller-navigation.mjs",
+      "status": 200,
+      "bytes": 21848,
+      "sha256": "82cf9f2d1060f7559a89f795abc72f0d972c519684528f495225cc4d919bac4f"
+    }
+  ],
+  "held02SourceStillExact": true,
+  "old53085StillServesHeld01": {
+    "bytes": 15005,
+    "sha256": "80f28f453c8b1d14a4c6a31481a8ae8a69cfd5ac04831e3877ba664a10c068c2"
+  },
+  "scope": "Actual source HTTP bytes; no native behavior claim."
+}

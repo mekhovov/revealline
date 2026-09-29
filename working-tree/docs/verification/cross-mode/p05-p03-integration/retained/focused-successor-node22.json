@@ -1,0 +1,29 @@
+{
+  "base": "3acce1941116d18f9e86dcfa26dea463433cd3b2",
+  "sourceHoldSha256": "89860d252c2684bd89acd8a97cfae3958f5956f18d051614299bb397630354d8",
+  "command": [
+    "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node",
+    "--test",
+    "--test-concurrency=1",
+    "--test-reporter=tap",
+    "game/test/display-preferences-host.test.mjs",
+    "game/test/couch-shell.test.mjs",
+    "game/test/couch-navigation.test.mjs",
+    "game/test/coop-host.test.mjs"
+  ],
+  "nodeVersion": "v22.22.2",
+  "exitCode": 1,
+  "seconds": 76.64503533300012,
+  "inputsUnchanged": true,
+  "files": [
+    "display-preferences-host.test.mjs",
+    "couch-shell.test.mjs",
+    "couch-navigation.test.mjs",
+    "coop-host.test.mjs"
+  ],
+  "log": {
+    "path": "focused-successor-node22.log",
+    "bytes": 31289,
+    "sha256": "fd29b677c114bb970cae370ed21a5018acd4082d22e4f9b4e6fbcae55017a71a"
+  }
+}

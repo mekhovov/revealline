@@ -1,0 +1,10 @@
+{
+  "scope": "Source-only independent review; no duplicated tests, browser, images or network.",
+  "reviewer": "Dewey /root/music_studio_ui",
+  "held": {
+    "path": ".cache/p08a/held-source-start-intent.json",
+    "sha256": "d86d97ccdafa28668148770925ba40e8c788463e0467ba25eb6382cd17ee3f48"
+  },
+  "findings": "No blocker: epoch creation and pause invalidation; both async boundaries; pending/error focus and immediate pre-resume gate; two complete held-lock/Next-decode blur-return tests. Prepared run/picture may settle ready without reviving interrupted intent; fresh Start required.",
+  "earlierReviews": "Resolver and page/host peers remain scoped to unchanged reviewed portions. Parfit separately reconciled all 23 earlier copied evidence files, native 23 events and six JPEGs, plus two then-current log transformations and README links. Later additions have their own hashes."
+}

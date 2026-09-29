@@ -1,0 +1,187 @@
+{
+  "scope": "Closed second-origin root native record and its unchanged-byte delay fixture; separate from normal native and automated cases. No original body or browser profile copied. Earlier native timing labels remain raw and are qualified by final review.",
+  "sourceHoldSha256": "b1e8d58a209f1baf4942573bda4e45d45a624371703348937e59eaf9fec43194",
+  "nativeReviewSha256": "533c87072fec2e9087dbf32d8fa0517efb252f9586eafd6c1096d57ce778da5e",
+  "files": [
+    {
+      "source": ".cache/p05b-p08/native-delayed-root/01-loading-back-result.png",
+      "retained": "delayed-native/01-loading-back-result.png",
+      "transformation": "byte-exact",
+      "originalBytes": 86188,
+      "originalSha256": "bb7b94f83e982ede30b4817526a2859374ad708a391d04cdb79277290c9772a2",
+      "retainedBytes": 86188,
+      "retainedSha256": "bb7b94f83e982ede30b4817526a2859374ad708a391d04cdb79277290c9772a2"
+    },
+    {
+      "source": ".cache/p05b-p08/native-delayed-root/02-cancelled-retry.png",
+      "retained": "delayed-native/02-cancelled-retry.png",
+      "transformation": "byte-exact",
+      "originalBytes": 88232,
+      "originalSha256": "50f96c9c73310ebd94baacd57b435d6ddad630f563ab334d0c849abb6b907582",
+      "retainedBytes": 88232,
+      "retainedSha256": "50f96c9c73310ebd94baacd57b435d6ddad630f563ab334d0c849abb6b907582"
+    },
+    {
+      "source": ".cache/p05b-p08/native-delayed-root/03-retry-pending.png",
+      "retained": "delayed-native/03-retry-pending.png",
+      "transformation": "byte-exact",
+      "originalBytes": 86978,
+      "originalSha256": "649f4b3ed88abd297070a19958d626247e4a01757cf510e25696b7536a4248a7",
+      "retainedBytes": 86978,
+      "retainedSha256": "649f4b3ed88abd297070a19958d626247e4a01757cf510e25696b7536a4248a7"
+    },
+    {
+      "source": ".cache/p05b-p08/native-delayed-root/04-button-cancel.png",
+      "retained": "delayed-native/04-button-cancel.png",
+      "transformation": "byte-exact",
+      "originalBytes": 92214,
+      "originalSha256": "68f1afd6df04de37b02f0259e81b30d887f7b766d2e6c60feb495d6c95974d70",
+      "retainedBytes": 92214,
+      "retainedSha256": "68f1afd6df04de37b02f0259e81b30d887f7b766d2e6c60feb495d6c95974d70"
+    },
+    {
+      "source": ".cache/p05b-p08/native-delayed-root/05-first-signal-cancel.png",
+      "retained": "delayed-native/05-first-signal-cancel.png",
+      "transformation": "byte-exact",
+      "originalBytes": 85144,
+      "originalSha256": "ab70413179056b1e2f071c39fb1bf06d3d18fe1daef109a89df36f1463cb19f2",
+      "retainedBytes": 85144,
+      "retainedSha256": "ab70413179056b1e2f071c39fb1bf06d3d18fe1daef109a89df36f1463cb19f2"
+    },
+    {
+      "source": ".cache/p05b-p08/native-delayed-root/06-first-signal-button-cancel.png",
+      "retained": "delayed-native/06-first-signal-button-cancel.png",
+      "transformation": "byte-exact",
+      "originalBytes": 85208,
+      "originalSha256": "ff1f62d0a21ca2c9b2fd84dc9f978ebe8c9ec86d2e13761c2606aeff41f28e33",
+      "retainedBytes": 85208,
+      "retainedSha256": "ff1f62d0a21ca2c9b2fd84dc9f978ebe8c9ec86d2e13761c2606aeff41f28e33"
+    },
+    {
+      "source": ".cache/p05b-p08/native-delayed-root/07-ready-keeps-new-focus.png",
+      "retained": "delayed-native/07-ready-keeps-new-focus.png",
+      "transformation": "byte-exact",
+      "originalBytes": 84438,
+      "originalSha256": "24e052228fd2027d07640707d56606970bfeab0c522b449c0a5910870459c7e8",
+      "retainedBytes": 84438,
+      "retainedSha256": "24e052228fd2027d07640707d56606970bfeab0c522b449c0a5910870459c7e8"
+    },
+    {
+      "source": ".cache/p05b-p08/native-delayed-root/08-both-seats-live.png",
+      "retained": "delayed-native/08-both-seats-live.png",
+      "transformation": "byte-exact",
+      "originalBytes": 68828,
+      "originalSha256": "27dd5c21aa75242d62595fb6550ae1d035fcedf2886d733e7bb448c8f1d79601",
+      "retainedBytes": 68828,
+      "retainedSha256": "27dd5c21aa75242d62595fb6550ae1d035fcedf2886d733e7bb448c8f1d79601"
+    },
+    {
+      "source": ".cache/p05b-p08/native-delayed-root/09-both-seats-paused.png",
+      "retained": "delayed-native/09-both-seats-paused.png",
+      "transformation": "byte-exact",
+      "originalBytes": 90978,
+      "originalSha256": "52fdd4ca3c0ecbc9da01dd428d0ac3732a1817b4b3552a482ab293d1d1f77d9c",
+      "retainedBytes": 90978,
+      "retainedSha256": "52fdd4ca3c0ecbc9da01dd428d0ac3732a1817b4b3552a482ab293d1d1f77d9c"
+    },
+    {
+      "source": ".cache/p05b-p08/native-delayed-root/10-earned-picture-boards.png",
+      "retained": "delayed-native/10-earned-picture-boards.png",
+      "transformation": "byte-exact",
+      "originalBytes": 128321,
+      "originalSha256": "e14a5020ef12c531b359d1501ccde7d1499279e8f0574a9d1a63c6e15ebc7ec5",
+      "retainedBytes": 128321,
+      "retainedSha256": "e14a5020ef12c531b359d1501ccde7d1499279e8f0574a9d1a63c6e15ebc7ec5"
+    },
+    {
+      "source": ".cache/p05b-p08/native-delayed-root/events.json",
+      "retained": "delayed-native/events.json.gz",
+      "transformation": "lossless gzip, mtime 0",
+      "originalBytes": 32000,
+      "originalSha256": "22e9f85ae52588f18904dabd7ca1ee0d6d3662f61c0151c4cd44344133729fb1",
+      "retainedBytes": 3025,
+      "retainedSha256": "b32ce47ae5b71d16d0dadf9ab7a158efa68e3f50041f503e8462fef524552920"
+    },
+    {
+      "source": ".cache/p05b-p08/native-delayed-root/review-held-01.json",
+      "retained": "delayed-native/review-held-01.json",
+      "transformation": "byte-exact",
+      "originalBytes": 4001,
+      "originalSha256": "2841ea5219ed9f9090853c3aab57440559eee533e51c7306559639a1bdf574d3",
+      "retainedBytes": 4001,
+      "retainedSha256": "2841ea5219ed9f9090853c3aab57440559eee533e51c7306559639a1bdf574d3"
+    },
+    {
+      "source": ".cache/p05b-p08/native-delayed-root/review.json",
+      "retained": "delayed-native/review.json",
+      "transformation": "byte-exact",
+      "originalBytes": 4399,
+      "originalSha256": "533c87072fec2e9087dbf32d8fa0517efb252f9586eafd6c1096d57ce778da5e",
+      "retainedBytes": 4399,
+      "retainedSha256": "533c87072fec2e9087dbf32d8fa0517efb252f9586eafd6c1096d57ce778da5e"
+    },
+    {
+      "source": ".cache/p05b-p08/preview-delayed/binding.json",
+      "retained": "delayed-preview/binding.json",
+      "transformation": "byte-exact",
+      "originalBytes": 3769,
+      "originalSha256": "f7ea3d54686547a850e1eaa1810bde724a207e50366bc5b1c4e37ceb8f026155",
+      "retainedBytes": 3769,
+      "retainedSha256": "f7ea3d54686547a850e1eaa1810bde724a207e50366bc5b1c4e37ceb8f026155"
+    },
+    {
+      "source": ".cache/p05b-p08/preview-delayed/serve.py",
+      "retained": "delayed-preview/serve.py",
+      "transformation": "byte-exact",
+      "originalBytes": 7698,
+      "originalSha256": "4fd67a30de46443e6b509e817ba9c7f85d4174a5bc37381791f531a35802e8bf",
+      "retainedBytes": 7698,
+      "retainedSha256": "4fd67a30de46443e6b509e817ba9c7f85d4174a5bc37381791f531a35802e8bf"
+    },
+    {
+      "source": ".cache/p05b-p08/preview-delayed/preparation.json",
+      "retained": "delayed-preview/preparation.json",
+      "transformation": "byte-exact",
+      "originalBytes": 670,
+      "originalSha256": "3496be136eb381d5ede01f1008ce32fa914c6eb76ee1ac64c9a2e15a1ce4493e",
+      "retainedBytes": 670,
+      "retainedSha256": "3496be136eb381d5ede01f1008ce32fa914c6eb76ee1ac64c9a2e15a1ce4493e"
+    },
+    {
+      "source": ".cache/p05b-p08/preview-delayed/helper-reuse.diff",
+      "retained": "delayed-preview/helper-reuse.diff.gz",
+      "transformation": "lossless gzip, mtime 0",
+      "originalBytes": 3652,
+      "originalSha256": "5bcf911cfdfc3ad7bbf34baab927ac42d83cd595fc50a778aa0c64d9ad9df0bc",
+      "retainedBytes": 1786,
+      "retainedSha256": "dd3c057047c928f2f0012715e336a34e1b78d5a1e8dea4e8d6ecb2e98c4b8785"
+    },
+    {
+      "source": ".cache/p05b-p08/preview-delayed/http-source-check.json",
+      "retained": "delayed-preview/http-source-check.json",
+      "transformation": "byte-exact",
+      "originalBytes": 4257,
+      "originalSha256": "4876d5090c769c9dcb7411105300a4bec835b8fd6ec0bb4343ff9cd7be107824",
+      "retainedBytes": 4257,
+      "retainedSha256": "4876d5090c769c9dcb7411105300a4bec835b8fd6ec0bb4343ff9cd7be107824"
+    },
+    {
+      "source": ".cache/p05b-p08/native-post-http.json",
+      "retained": "native-post-http.json",
+      "transformation": "byte-exact",
+      "originalBytes": 9136,
+      "originalSha256": "591de361ee115a24a09921175bca49bf6354e2de4fae60610ed21812b99ad3a7",
+      "retainedBytes": 9136,
+      "retainedSha256": "591de361ee115a24a09921175bca49bf6354e2de4fae60610ed21812b99ad3a7"
+    }
+  ],
+  "totals": {
+    "files": 19,
+    "originalBytes": 966111,
+    "retainedBytes": 935270
+  },
+  "limits": [
+    "Root inspected final six selected PNGs; packager did not view images or drive browser.",
+    "No Next, audio, offline/public, full responsive/zoom/device or complete phase qualification."
+  ]
+}

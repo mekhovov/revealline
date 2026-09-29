@@ -1,0 +1,211 @@
+{
+  "format": "revealline-team-presentation-local-verification.v1",
+  "base": "1da77ee586d0fdd3ac73883235a822b959e85b37",
+  "files": [
+    {
+      "path": "game/couch/coop-view.mjs",
+      "bytes": 14217,
+      "sha256": "e5ff6e24048108f788eb11a472b9cbed5af3d7915f4fe3e3830bb7e3a1c1fc20"
+    },
+    {
+      "path": "game/couch/coop-presentation.mjs",
+      "bytes": 16435,
+      "sha256": "9f5be9089850be505af01154acb59dfd8154415f4f6ff739200195441cc9b9b8"
+    },
+    {
+      "path": "game/test/coop-view-presentation.test.mjs",
+      "bytes": 12072,
+      "sha256": "cbda9bdc7df1dbaab801d21bfc967b55770a4fb7c09d64adfd5a64f66e704cc2"
+    },
+    {
+      "path": "game/test/coop-presentation.test.mjs",
+      "bytes": 21663,
+      "sha256": "d50bd82a03ac92abe6c4a661e72fd21dc016a59f539be8cf4d076d7432c08064"
+    }
+  ],
+  "results": [
+    {
+      "node": "22.22.2",
+      "argv": [
+        "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node",
+        "--test",
+        "game/test/coop-view-presentation.test.mjs",
+        "game/test/coop-presentation.test.mjs",
+        "game/test/coop-host.test.mjs",
+        "game/test/coop-core.test.mjs",
+        "game/test/coop-library.test.mjs",
+        "game/test/coop-authoring.test.mjs",
+        "game/test/coop-balanced-routes.test.mjs"
+      ],
+      "exitCode": 0,
+      "wallSeconds": 1.8458145421463996,
+      "log": "cleanup-final-node22.log",
+      "bytes": 27460,
+      "sha256": "3ea56f1310eecc8812bc59610a232c9691bbdd9b0d5efb06a16b858f8808fa2f",
+      "sourcePinsUnchanged": true,
+      "summary": {
+        "tests": "107",
+        "pass": "107",
+        "fail": "0",
+        "cancelled": "0",
+        "skipped": "0",
+        "todo": "0",
+        "duration_ms": "1552.165625"
+      }
+    },
+    {
+      "node": "20.19.5",
+      "argv": [
+        "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/20.19.5/bin/node",
+        "--test",
+        "game/test/coop-view-presentation.test.mjs",
+        "game/test/coop-presentation.test.mjs",
+        "game/test/coop-host.test.mjs",
+        "game/test/coop-core.test.mjs",
+        "game/test/coop-library.test.mjs",
+        "game/test/coop-authoring.test.mjs",
+        "game/test/coop-balanced-routes.test.mjs"
+      ],
+      "exitCode": 0,
+      "wallSeconds": 1.82379704201594,
+      "log": "cleanup-final-node20.log",
+      "bytes": 25828,
+      "sha256": "e37b34f321f13ae6c1a4b82b94a810dad0a81f5bada1522ec6c63a48867382c5",
+      "sourcePinsUnchanged": true,
+      "summary": {
+        "tests": "107",
+        "pass": "107",
+        "fail": "0",
+        "cancelled": "0",
+        "skipped": "0",
+        "todo": "0",
+        "duration_ms": "1536.151125"
+      }
+    }
+  ],
+  "static": {
+    "checks": [
+      {
+        "argv": [
+          "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node",
+          "/Users/oleksandr.mekhovov/work/my_projects/go_test/node_modules/eslint/bin/eslint.js",
+          "game/couch/coop-view.mjs",
+          "game/couch/coop-presentation.mjs",
+          "game/test/coop-view-presentation.test.mjs",
+          "game/test/coop-presentation.test.mjs",
+          "--max-warnings",
+          "0"
+        ],
+        "exitCode": 0,
+        "output": ""
+      },
+      {
+        "argv": [
+          "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node",
+          "/Users/oleksandr.mekhovov/work/my_projects/go_test/node_modules/prettier/bin/prettier.cjs",
+          "--check",
+          "game/couch/coop-view.mjs",
+          "game/couch/coop-presentation.mjs",
+          "game/test/coop-view-presentation.test.mjs",
+          "game/test/coop-presentation.test.mjs"
+        ],
+        "exitCode": 0,
+        "output": "Checking formatting...\nAll matched files use Prettier code style!\n"
+      },
+      {
+        "argv": [
+          "git",
+          "diff",
+          "--check"
+        ],
+        "exitCode": 0,
+        "output": ""
+      }
+    ],
+    "sourcePinsUnchanged": true
+  },
+  "evidence": [
+    {
+      "path": "source-held-01.json",
+      "bytes": 1230,
+      "sha256": "f53f983b02557e96bb1bb3973dc41c0f3088d47aba9ef2cbe98f330c7ebe14e9"
+    },
+    {
+      "path": "source-held-02.json",
+      "bytes": 1587,
+      "sha256": "de87fa89f1e4a7645e298e5864d6a09ce0473ee933ef3d5e054cd03a4b84e2c8"
+    },
+    {
+      "path": "source-held-03.json",
+      "bytes": 1589,
+      "sha256": "6ff5d0f81560f848a5633db9d6af45d471770a1d26b31dec0fabcbfcba27ed23"
+    },
+    {
+      "path": "source-held-04.json",
+      "bytes": 1588,
+      "sha256": "88817eb6c66348cde7f8337a9c9bbd5ca590068cce8c68a322066f964ba6d3c8"
+    },
+    {
+      "path": "initial-node22.log",
+      "bytes": 28025,
+      "sha256": "637a868008672718654179c2148e102ccfdc15ab19f539fcdc092f2a7f8ea361"
+    },
+    {
+      "path": "final-node22.log",
+      "bytes": 26010,
+      "sha256": "92d7dcc632814c25cdfc3b6e4424255caaba73a6230577db9469cd8928149814"
+    },
+    {
+      "path": "final-node20.log",
+      "bytes": 24486,
+      "sha256": "65f19346f3942a501062496591e919cc4d5caf6bcbd6853ea924e21a7add4ecc"
+    },
+    {
+      "path": "ownership-final-node22.log",
+      "bytes": 26970,
+      "sha256": "c02b76a6ee3a8150227b25922b65dc438f768ecb87c315c3fd780dc627a6b2ff"
+    },
+    {
+      "path": "ownership-final-node20.log",
+      "bytes": 25402,
+      "sha256": "357c9a0790bda32a8b1c6475c44cf86348be4e48cd61c8323163a1b52474e9fb"
+    },
+    {
+      "path": "cleanup-final-node22.log",
+      "bytes": 27460,
+      "sha256": "3ea56f1310eecc8812bc59610a232c9691bbdd9b0d5efb06a16b858f8808fa2f"
+    },
+    {
+      "path": "cleanup-final-node20.log",
+      "bytes": 25828,
+      "sha256": "e37b34f321f13ae6c1a4b82b94a810dad0a81f5bada1522ec6c63a48867382c5"
+    },
+    {
+      "path": "execution-cleanup-final.json",
+      "bytes": 1919,
+      "sha256": "16848197a07b09893b1a3ca873cf216bb06bb75ad36a7511949b4c0d08af5c35"
+    },
+    {
+      "path": "static-cleanup-final.json",
+      "bytes": 1190,
+      "sha256": "6cfb30310a3e40f5557e93e441250d16e21a071e4001ed519a5303443e689990"
+    },
+    {
+      "path": "HANDOFF.md",
+      "bytes": 2938,
+      "sha256": "c62f04f2564f6051a83dd243b15822394b7e2cb532da89111ac710e0057bc4e5"
+    }
+  ],
+  "ownedRegularBytesBeforeReceipt": 1863105,
+  "freeBytes": 1057206272,
+  "sourceReview": {
+    "painter": "closed by Dewey at unchanged e5ff6e24/cbda9bdc",
+    "root": "main flow read; two earlier findings corrected",
+    "lease": "closed by Parfit at exact 9f5be908/d50bd82a; complete source plus held03/04 ownership corrections"
+  },
+  "hostIntegrated": false,
+  "artAdopted": false,
+  "native": false,
+  "phaseComplete": false,
+  "committed": false
+}

@@ -1,0 +1,195 @@
+{
+  "format": "revealline-local-evidence-copy.v1",
+  "baseSource": "1da77ee586d0fdd3ac73883235a822b959e85b37",
+  "records": [
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08a-team-presentation/.cache/team-presentation/HANDOFF.md",
+      "retained": "retained/HANDOFF.md",
+      "rawBytes": 2938,
+      "rawSha256": "c62f04f2564f6051a83dd243b15822394b7e2cb532da89111ac710e0057bc4e5",
+      "bytes": 2938,
+      "sha256": "c62f04f2564f6051a83dd243b15822394b7e2cb532da89111ac710e0057bc4e5",
+      "transformation": "byte-exact"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08a-team-presentation/.cache/team-presentation/README.md",
+      "retained": "retained/README.md",
+      "rawBytes": 3787,
+      "rawSha256": "24d93b11a6bff7505433410ec366bbe4634c48125b4b73374bcb453b3c06d2bd",
+      "bytes": 3787,
+      "sha256": "24d93b11a6bff7505433410ec366bbe4634c48125b4b73374bcb453b3c06d2bd",
+      "transformation": "byte-exact"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08a-team-presentation/.cache/team-presentation/cleanup-final-node20.log",
+      "retained": "retained/cleanup-final-node20.log",
+      "rawBytes": 25828,
+      "rawSha256": "e37b34f321f13ae6c1a4b82b94a810dad0a81f5bada1522ec6c63a48867382c5",
+      "bytes": 25828,
+      "sha256": "e37b34f321f13ae6c1a4b82b94a810dad0a81f5bada1522ec6c63a48867382c5",
+      "transformation": "byte-exact"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08a-team-presentation/.cache/team-presentation/cleanup-final-node22.log",
+      "retained": "retained/cleanup-final-node22.log",
+      "rawBytes": 27460,
+      "rawSha256": "3ea56f1310eecc8812bc59610a232c9691bbdd9b0d5efb06a16b858f8808fa2f",
+      "bytes": 27460,
+      "sha256": "3ea56f1310eecc8812bc59610a232c9691bbdd9b0d5efb06a16b858f8808fa2f",
+      "transformation": "byte-exact"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08a-team-presentation/.cache/team-presentation/execution-cleanup-final.json",
+      "retained": "retained/execution-cleanup-final.json",
+      "rawBytes": 1919,
+      "rawSha256": "16848197a07b09893b1a3ca873cf216bb06bb75ad36a7511949b4c0d08af5c35",
+      "bytes": 1919,
+      "sha256": "16848197a07b09893b1a3ca873cf216bb06bb75ad36a7511949b4c0d08af5c35",
+      "transformation": "byte-exact"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08a-team-presentation/.cache/team-presentation/execution-ownership-final.json",
+      "retained": "retained/execution-ownership-final.json",
+      "rawBytes": 1923,
+      "rawSha256": "f005da547cafbc63cf445554343de37b5cf6cb456be7553e09d7688342653994",
+      "bytes": 1923,
+      "sha256": "f005da547cafbc63cf445554343de37b5cf6cb456be7553e09d7688342653994",
+      "transformation": "byte-exact"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08a-team-presentation/.cache/team-presentation/execution.json",
+      "retained": "retained/execution.json",
+      "rawBytes": 1907,
+      "rawSha256": "8ddb98d9af50ca6d032d56813849085a6841bfc9fde072c2653e842158942bd1",
+      "bytes": 1907,
+      "sha256": "8ddb98d9af50ca6d032d56813849085a6841bfc9fde072c2653e842158942bd1",
+      "transformation": "byte-exact"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08a-team-presentation/.cache/team-presentation/final-node20.log",
+      "retained": "retained/final-node20.log",
+      "rawBytes": 24486,
+      "rawSha256": "65f19346f3942a501062496591e919cc4d5caf6bcbd6853ea924e21a7add4ecc",
+      "bytes": 24486,
+      "sha256": "65f19346f3942a501062496591e919cc4d5caf6bcbd6853ea924e21a7add4ecc",
+      "transformation": "byte-exact"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08a-team-presentation/.cache/team-presentation/final-node22.log",
+      "retained": "retained/final-node22.log",
+      "rawBytes": 26010,
+      "rawSha256": "92d7dcc632814c25cdfc3b6e4424255caaba73a6230577db9469cd8928149814",
+      "bytes": 26010,
+      "sha256": "92d7dcc632814c25cdfc3b6e4424255caaba73a6230577db9469cd8928149814",
+      "transformation": "byte-exact"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08a-team-presentation/.cache/team-presentation/initial-node22.log",
+      "retained": "retained/initial-node22.log",
+      "rawBytes": 28025,
+      "rawSha256": "637a868008672718654179c2148e102ccfdc15ab19f539fcdc092f2a7f8ea361",
+      "bytes": 28017,
+      "sha256": "fc66442c748ed28d4a2b3e75318381e84bc922a49433ff1f85ed49e30f148740",
+      "transformation": "strip trailing horizontal whitespace per line; one terminal newline"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08a-team-presentation/.cache/team-presentation/ownership-final-node20.log",
+      "retained": "retained/ownership-final-node20.log",
+      "rawBytes": 25402,
+      "rawSha256": "357c9a0790bda32a8b1c6475c44cf86348be4e48cd61c8323163a1b52474e9fb",
+      "bytes": 25402,
+      "sha256": "357c9a0790bda32a8b1c6475c44cf86348be4e48cd61c8323163a1b52474e9fb",
+      "transformation": "byte-exact"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08a-team-presentation/.cache/team-presentation/ownership-final-node22.log",
+      "retained": "retained/ownership-final-node22.log",
+      "rawBytes": 26970,
+      "rawSha256": "c02b76a6ee3a8150227b25922b65dc438f768ecb87c315c3fd780dc627a6b2ff",
+      "bytes": 26970,
+      "sha256": "c02b76a6ee3a8150227b25922b65dc438f768ecb87c315c3fd780dc627a6b2ff",
+      "transformation": "byte-exact"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08a-team-presentation/.cache/team-presentation/source-held-01.diff",
+      "retained": "retained/source-held-01.diff",
+      "rawBytes": 23506,
+      "rawSha256": "038c33c918f252edbc3fce389adf87c617e767f07631ee06068514e0144debc0",
+      "bytes": 23506,
+      "sha256": "038c33c918f252edbc3fce389adf87c617e767f07631ee06068514e0144debc0",
+      "transformation": "byte-exact"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08a-team-presentation/.cache/team-presentation/source-held-01.json",
+      "retained": "retained/source-held-01.json",
+      "rawBytes": 1230,
+      "rawSha256": "f53f983b02557e96bb1bb3973dc41c0f3088d47aba9ef2cbe98f330c7ebe14e9",
+      "bytes": 1230,
+      "sha256": "f53f983b02557e96bb1bb3973dc41c0f3088d47aba9ef2cbe98f330c7ebe14e9",
+      "transformation": "byte-exact"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08a-team-presentation/.cache/team-presentation/source-held-02.diff",
+      "retained": "retained/source-held-02.diff",
+      "rawBytes": 23852,
+      "rawSha256": "d05724676080c879a873710b198dff8874e1d7360352c57001ecae30bbacbe43",
+      "bytes": 23852,
+      "sha256": "d05724676080c879a873710b198dff8874e1d7360352c57001ecae30bbacbe43",
+      "transformation": "byte-exact"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08a-team-presentation/.cache/team-presentation/source-held-02.json",
+      "retained": "retained/source-held-02.json",
+      "rawBytes": 1587,
+      "rawSha256": "de87fa89f1e4a7645e298e5864d6a09ce0473ee933ef3d5e054cd03a4b84e2c8",
+      "bytes": 1587,
+      "sha256": "de87fa89f1e4a7645e298e5864d6a09ce0473ee933ef3d5e054cd03a4b84e2c8",
+      "transformation": "byte-exact"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08a-team-presentation/.cache/team-presentation/source-held-03.json",
+      "retained": "retained/source-held-03.json",
+      "rawBytes": 1589,
+      "rawSha256": "6ff5d0f81560f848a5633db9d6af45d471770a1d26b31dec0fabcbfcba27ed23",
+      "bytes": 1589,
+      "sha256": "6ff5d0f81560f848a5633db9d6af45d471770a1d26b31dec0fabcbfcba27ed23",
+      "transformation": "byte-exact"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08a-team-presentation/.cache/team-presentation/source-held-04.json",
+      "retained": "retained/source-held-04.json",
+      "rawBytes": 1588,
+      "rawSha256": "88817eb6c66348cde7f8337a9c9bbd5ca590068cce8c68a322066f964ba6d3c8",
+      "bytes": 1588,
+      "sha256": "88817eb6c66348cde7f8337a9c9bbd5ca590068cce8c68a322066f964ba6d3c8",
+      "transformation": "byte-exact"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08a-team-presentation/.cache/team-presentation/static-cleanup-final.json",
+      "retained": "retained/static-cleanup-final.json",
+      "rawBytes": 1190,
+      "rawSha256": "6cfb30310a3e40f5557e93e441250d16e21a071e4001ed519a5303443e689990",
+      "bytes": 1190,
+      "sha256": "6cfb30310a3e40f5557e93e441250d16e21a071e4001ed519a5303443e689990",
+      "transformation": "byte-exact"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08a-team-presentation/.cache/team-presentation/verification-final.json",
+      "retained": "retained/verification-final.json",
+      "rawBytes": 6643,
+      "rawSha256": "691e5edcbf8bbe8982a3c860f50d4ac5dec820567dca5bafce82273675004da6",
+      "bytes": 6643,
+      "sha256": "691e5edcbf8bbe8982a3c860f50d4ac5dec820567dca5bafce82273675004da6",
+      "transformation": "byte-exact"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08a-team-presentation/.cache/team-presentation/verification.json",
+      "retained": "retained/verification.json",
+      "rawBytes": 4299,
+      "rawSha256": "6bf5f9ef85fa2897a6c4033e66fadb52c0c5ef6fbeff860947adcd9a6b96659c",
+      "bytes": 4299,
+      "sha256": "6bf5f9ef85fa2897a6c4033e66fadb52c0c5ef6fbeff860947adcd9a6b96659c",
+      "transformation": "byte-exact"
+    }
+  ]
+}

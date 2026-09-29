@@ -1,0 +1,23 @@
+{
+  "normalHelper": {
+    "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08a-p05-integration/.cache/p08-integration/preview/serve.py",
+    "bytes": 6916,
+    "sha256": "ac4fc5ceb8f3d59ffb358b6e13bf14f869378bc6f9558650b5566ff852124d26"
+  },
+  "reviewedExactDelayReference": {
+    "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-operation-focus/.cache/operation-focus/serve-focus-fieldcraft.py",
+    "bytes": 8471,
+    "sha256": "87c9812ec92a59c2c0c9f470ecde82c661e2e3774ff770386100db43900f8bdd"
+  },
+  "delayedHelper": {
+    "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08a-p05-integration/.cache/p08-integration/preview-delayed/serve.py",
+    "bytes": 7757,
+    "sha256": "c90e592d83581b5b901fd1ad86b93eb5fd59edf4eadfef9d75864d7498b07f1a"
+  },
+  "normalBinding": {
+    "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08a-p05-integration/.cache/p08-integration/preview/binding.json",
+    "bytes": 1697,
+    "sha256": "f9d92707a05e75cc9ee45dcf22c8c792f6c98b9490f9518b69ae938d6cd77cf1"
+  },
+  "scope": "Normal reviewed bounded immutable Git helper with the exact-equality GET-only six-second time.sleep seam from the reviewed Fieldcraft delay helper; fixed original PNG path, distinct origin, no source/game state mutation."
+}

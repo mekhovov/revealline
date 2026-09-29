@@ -1,0 +1,16 @@
+{
+  "active": {
+    "id": "race-start",
+    "rect": {
+      "height": 50.000003814697266,
+      "width": 837.795166015625,
+      "x": 49.9913215637207,
+      "y": 367.0746765136719
+    },
+    "text": "Next round ↗"
+  },
+  "height": 433,
+  "scrollY": 266.1111145019531,
+  "text": "Solo\nOne player\nVersus\nTwo rival boards\nTeam\nOne shared arena\n\nREVEAL LINE / LOCAL TWO PLAYER\n\nRound complete.\n\nSunflower wins the round. First clear.\n\nFirst Signal · First Signal · Tactical · FPV Front · Immediate turns · 90 seconds\n\nPLAYER 1\nSunflower\n\nW A S D\n\n52.2% · 3 lives · 8160 points · 1 round wins\n\nPLAYER 2\nSkyline\n\nArrow keys\n\n0.0% · 3 lives · 0 points · 0 round wins\n\nNext round ↗\nNew match · setup\nOptions\nHow to play\nView both boards\n\nFirst to two rounds. Couch races do not change your solo progress.\n\nConnect a controller and use it while this page is visible. Keyboard and touch remain available.",
+  "width": 938
+}

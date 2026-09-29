@@ -1,0 +1,35 @@
+{
+  "base": "3f934b7508645d2cad03466276d20e8d038f9d76",
+  "baseTree": "5be2690d05921fbe99fdc4e306de79fa6dd5be5c",
+  "sourceHoldSha256": "e92141bfea272954915778b99386ce9f4567f4eb937c201519afdefe45579687",
+  "overlays": [
+    {
+      "path": "game/couch/couch-static-pictures.mjs",
+      "bytes": 16109,
+      "sha256": "7fa81955a6a47b7178daec4be88a334fbe40d837673b7f9e792143913fd501df"
+    },
+    {
+      "path": "game/couch/couch.mjs",
+      "bytes": 47408,
+      "sha256": "8f933d40c6b9234f02326c446dab8bd60cecfc357f8f20816eca3df84ce32056"
+    },
+    {
+      "path": "game/couch/index.html",
+      "bytes": 15809,
+      "sha256": "ff17990b3e9fedf7a34aebdeb4ec6b17806ae781e45d67f6c45cfbaf385128ac"
+    },
+    {
+      "path": "game/presentation/page.mjs",
+      "bytes": 6550,
+      "sha256": "a51c2ae4b06cb61b00f7c498b0419ed5b54367169e6dae326b31a0b45c37bf60"
+    }
+  ],
+  "incomingDelta": "f047a46a9a1bb9982600bd7e2682d765a75cb9cc..1da77ee586d0fdd3ac73883235a822b959e85b37",
+  "pid": 59305,
+  "port": 64092,
+  "url": "http://127.0.0.1:64092/game/",
+  "gitBlobCacheBytes": 67108864,
+  "maxConcurrentRequests": 4,
+  "helperSha256": "ac4fc5ceb8f3d59ffb358b6e13bf14f869378bc6f9558650b5566ff852124d26",
+  "scope": "Exact Git3f934b7 P05-A baseline with four static P08 production immutable memory overlays pinned at e921 source-held-01. All other regular assets come from Git3f934b7; current Title/Missions/Library/Team departure, mode rows, Ready focus and shared display remain. No state injection, scripted responses, timing fixtures, P05-B or later P03 operation-focus correction. Finished-to-Next prior-result preservation remains P07. LRU cap describes stored Git blobs, not total process RSS."
+}

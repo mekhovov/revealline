@@ -1,0 +1,164 @@
+[
+  {
+    "id": "coop-menu",
+    "scrollOverflow": false,
+    "controls": [
+      {
+        "id": "coop-solo",
+        "tag": "A",
+        "leftGap": 12.000001907348633,
+        "rightGap": 1036.869779586792
+      },
+      {
+        "id": "coop-versus",
+        "tag": "A",
+        "leftGap": 224.03126335144043,
+        "rightGap": 824.8385181427002
+      },
+      {
+        "id": "coop-title",
+        "tag": "H1",
+        "leftGap": 12.000001907348633,
+        "rightGap": 612.7985820770264
+      },
+      {
+        "id": "",
+        "tag": "LABEL",
+        "leftGap": 12.000001907348633,
+        "rightGap": 924.6909465789795
+      },
+      {
+        "id": "coop-level",
+        "tag": "SELECT",
+        "leftGap": 12.000001907348633,
+        "rightGap": 924.6909465789795
+      },
+      {
+        "id": "",
+        "tag": "LABEL",
+        "leftGap": 340.21183586120605,
+        "rightGap": 635.367998123169
+      },
+      {
+        "id": "coop-experiment",
+        "tag": "SELECT",
+        "leftGap": 340.21183586120605,
+        "rightGap": 635.367998123169
+      },
+      {
+        "id": "",
+        "tag": "LABEL",
+        "leftGap": 12.000001907348633,
+        "rightGap": 1125.2465190887451
+      },
+      {
+        "id": "coop-difficulty",
+        "tag": "SELECT",
+        "leftGap": 12.000001907348633,
+        "rightGap": 1125.2465190887451
+      },
+      {
+        "id": "coop-start",
+        "tag": "BUTTON",
+        "leftGap": 12.000001907348633,
+        "rightGap": 1087.2517223358154
+      },
+      {
+        "id": "",
+        "tag": "SUMMARY",
+        "leftGap": 12.000001907348633,
+        "rightGap": 612.7985820770264
+      },
+      {
+        "id": "coop-help-toggle",
+        "tag": "SUMMARY",
+        "leftGap": 12.000001907348633,
+        "rightGap": 612.7985820770264
+      },
+      {
+        "id": "coop-options-toggle",
+        "tag": "SUMMARY",
+        "leftGap": 12.000001907348633,
+        "rightGap": 612.7985820770264
+      },
+      {
+        "id": "",
+        "tag": "LABEL",
+        "leftGap": 12.000001907348633,
+        "rightGap": 612.7985820770264
+      },
+      {
+        "id": "coop-text-face",
+        "tag": "SELECT",
+        "leftGap": 12.000001907348633,
+        "rightGap": 1108.0242900848389
+      },
+      {
+        "id": "",
+        "tag": "LABEL",
+        "leftGap": 12.000001907348633,
+        "rightGap": 612.7985820770264
+      },
+      {
+        "id": "coop-text-size",
+        "tag": "SELECT",
+        "leftGap": 12.000001907348633,
+        "rightGap": 1125.2465190887451
+      },
+      {
+        "id": "",
+        "tag": "LABEL",
+        "leftGap": 12.000001907348633,
+        "rightGap": 612.7985820770264
+      },
+      {
+        "id": "coop-menu-palette",
+        "tag": "SELECT",
+        "leftGap": 12.000001907348633,
+        "rightGap": 1018.0242900848389
+      },
+      {
+        "id": "",
+        "tag": "LABEL",
+        "leftGap": 12.000001907348633,
+        "rightGap": 612.7985820770264
+      },
+      {
+        "id": "coop-menu-ornaments",
+        "tag": "SELECT",
+        "leftGap": 5.3333319073486365,
+        "rightGap": 1138.579849088745
+      },
+      {
+        "id": "",
+        "tag": "LABEL",
+        "leftGap": 12.000001907348633,
+        "rightGap": 612.7985820770264
+      },
+      {
+        "id": "coop-touch",
+        "tag": "SELECT",
+        "leftGap": 12.000001907348633,
+        "rightGap": 896.9131755828857
+      },
+      {
+        "id": "",
+        "tag": "LABEL",
+        "leftGap": 12.000001907348633,
+        "rightGap": 612.7985820770264
+      },
+      {
+        "id": "coop-audio",
+        "tag": "BUTTON",
+        "leftGap": 12.000001907348633,
+        "rightGap": 1098.7534618377686
+      },
+      {
+        "id": "",
+        "tag": "LABEL",
+        "leftGap": 12.000001907348633,
+        "rightGap": 612.7985820770264
+      }
+    ]
+  }
+]

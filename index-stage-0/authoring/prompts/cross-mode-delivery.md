@@ -1,0 +1,53 @@
+# Cross-mode delivery prompts
+
+Use the [active phase register](../../docs/cross-mode-execution.md). Preserve earlier immutable records, player ownership and historical simulations. Each prompt applies only after its prerequisite phase is accepted; examples do not claim implementation.
+
+## Continue a phase
+
+“Inspect the current branch, latest main and `docs/cross-mode-execution.md`. Continue the active unaccepted phase. Reconcile related work without touching unrelated hunks. Show exact evidence for its blocking acceptance, fix failures, update this contract and relevant skills, synchronize the next unused version, commit related changes, qualify the exact source, freeze and deploy through the existing Pages controller. Verify all public bytes and ordinary play before marking accepted or beginning the next phase. Report physical devices separately from modeled/browser checks.”
+
+## Add or change asynchronous presentation
+
+“Read `docs/presentation-loading.md` and the active A01–A56 inventory. Use the shared operation presenter with the host's existing operation identity, cancellation and storage owner. Announce before the first delayed boundary; show truthful stages and measured counts only. Keep Back/Cancel visible, retain the original audio gesture, and make old completion/finally callbacks unable to alter a newer screen, focus, draft or run. Join existing picture preparation instead of repeating it. Distinguish stopping observation from aborting a durable/shared operation. Add delayed, cached, failure/retry, close/reopen and stale completion checks; await real operation completion or the shared elapsed-time readiness helper instead of counting immediate callbacks. For real installed originals, align initial and later equivalent picture waits through one documented local fixture allowance; audit restoration, recovery and replacement entry points while retaining explicit timeout-boundary overrides. Preserve shared ordinary-host defaults, runtime deadlines and every identity assertion. Then review portrait/landscape and reduced motion. Update inventory, phase evidence and this contract before the release gate.”
+
+“For offline progress, use the concise status/result summary and keep the complete optional-pack catalogue in expandable details. Preserve the existing full message for older consumers. With the full shipped list, verify Prepare, advancing counts, Stop, rejoin and completion at portrait and short-landscape sizes: status changes must not push the count or Stop action out of view. Retain the original public failure and correct it in a new immutable patch when necessary.”
+
+## Bind a map across modes
+
+“Resolve this mission using its complete content/revision, edition, collection and artwork revision. Compare fresh Solo and both Versus boards; preserve pinned saved/earned and authenticated installed originals. Verify preview, reveal, result and Retry retain the decoded binding. For Team use a versioned presentation envelope and the shared read-only painter primitives, preserving its 72×36 mechanics. Exercise invalid required art, stale preparation, cancellation and offline. Do not infer missing art from absent JSON image fields or use an unannounced procedural substitute.”
+
+## Qualify shared master audio
+
+Use the P02-A [shared master candidate contract](../../docs/shared-master-audio.md) within the active phase's authorization. These examples add no registered prompt IDs, new playlists or phase/public acceptance claim.
+
+“Start Studio audition or story Play with its actual completion held, then explicitly mute master before settling it. Verify output stays muted, the local fader and transport intent remain unchanged, and late callbacks never unmute. Change master volume while muted, then explicitly unmute without a new seek or selected-track restart. Include storage refusal: output changes immediately and a session-only warning remains visible. Preserve the legacy uninjected caller contract.”
+
+“Open saved and draft Asset Studio audio previews together. Set different local audition volumes and change the shared master. Verify each effective output once, then replace only the saved preview while draft continues. Close during pending metadata/context readiness and settle the old work: no late playback, URL adoption or authority change. Keep native-control attempts subordinate to master policy. Record modeled lifecycle results separately from actual native decoding and audible output.”
+
+“Pause music intentionally, visit another audio-capable page, change master there and return through browser history. Check the shared two-scalar preference, exact track/position where the existing page restores its transport, and the retained music Pause. Exercise visibility interruption and nested practice without resuming gameplay or a hidden page. New-page transport is not transferred by localStorage, and preference adoption alone cannot autoplay. Verify browser permission/retry and physical-device volume behavior separately before claiming public acceptance.”
+
+## Generate a Team role variation
+
+“Read the selected Asset Studio slot and resolved edition contract. Create original pixel artwork for the exact Team role and states, using the slot's required dimensions, palette, alpha, bounds, pivot and rotor anchors. Keep player number/shape readable independently of colour. Support must remain distinct from Scan; anchors from ordinary pickups; hunters from drifters and border patrols. Preserve runtime propellers and mechanical geometry. Return editable source plus prepared derivatives under the declared filenames, with provenance, byte/dimension/alpha validation and actual-size 20/24/32 CSS-pixel previews. A candidate is not approved until reviewed in Solo, left/right Versus and Team wherever the slot is used.”
+
+## Qualify a twelve-mission campaign
+
+“Follow this campaign's P11–P15 row. Author exactly twelve original missions with deliberate progression, one unfamiliar role introduced at a time, no shooters in the first three and no more than two shooter missions. Qualify Gentle/Standard/Hard with encounters on/off, relevant Versus cases and the edition's two existing Team art variants. Keep scenes, actors, menus and audio consistent, saved originals intact, clear Retry/Next/end destinations, and explicit Support/Combat framing. Update inventory, provenance, prompts and guide; give this campaign its own immutable version and public proof.”
+
+## Qualify initial Ready focus
+
+“On the exact candidate source, open a fresh Versus lobby and wait for its real initial preparation. Verify enabled visible Start receives focus once only after boot inertness clears, without starting the round or joining a controller. Use Shift+Tab, explicit Start, Pause and setup traversal. Repeat with the actual bootstrap response delayed and deliberately focus Back before readiness: cleanup may remove that temporary link, but must not steal focus for Start or re-arm after blur, hidden state or pagehide. Test disabled/error/current-generation cases through the real host, recording the actual focus-call ordering rather than relying on a permissive DOM stub. Preserve A1/A2 departure and return ownership. If P08 required-picture preparation is also present, qualify its Cancel/Back availability and explicit Start separately on the combined source. Keep modeled, desktop-native, physical-device and public evidence distinct.”
+
+## Qualify shared mode presentation
+
+“Reuse the existing Solo/Versus/Team anchors with the shared mode presenter. Keep the current mode non-actionable and the visible order equal to keyboard order. In both Couch lobbies, use explicit Start and Pause, open a mode-departure decision and Stay back to the same anchor. Verify Team moves the same nodes into its active pause panel and hides them during play. Preserve fixed routes, return-hint namespaces and checked attempt ownership; presentation must not start, save or discard a run. Check shared token styles against host CSS specificity, then test the actual intended viewport. On composition, separately qualify R5 initial focus, Title departure and P08 pending-picture/Start cancellation. Keep source, modeled host, native desktop, physical device and public evidence distinct.”
+
+## Preserve focus after asynchronous menu actions
+
+Use the [completed-operation focus contract](../../docs/operation-focus.md). Reproduce the actual focused control becoming disabled, including non-bubbling element blur reaching window capture. Preserve true-window blur refusal. Traverse the actual keyboard order to explicit Cancel after the automatic lease retires; that focused action may capture a fresh same-dialog return intent before abort, while detached commits and cleanup focus/background changes still veto it. Prove that completion/error can return only to the original connected control; a newer focus, dialog or foreground choice wins. Retain the real busy/commit owner and test callbacks during cleanup. Check the original native journey and one deliberate pending-focus choice; record routing mistakes honestly. Do not infer focus for a removed/recreated row or count superseded/partial runs as passing qualification.
+
+## Qualify menu appearance without changing a flight
+
+“On the exact P05-B candidate, open a real paused unfinished Solo cut, change Menu colours and each ornament choice, close Options and verify the same checkpoint and explicit Resume. Follow the stored two-field preference into Team and Versus; keep Text style first, controller/native selectors usable, Back on the actual opener and no Solo profile/display/audio writes. Inspect a late Music Library dialog and its replacement/close lifecycle. Use actual compiled borders while checking primary, danger, disabled and focused text in Theme/Plain and Standard/Large. Keep inset ornaments away from labels/outlines and never decorate arena/HUD. Record computed colours/opacity and real viewport/zoom separately from token ratios and finite host tests; an unsaved local choice must stay usable after storage refusal. Do not rewrite authored theme/image/font identities, regenerate art, resume music/gameplay or declare the phase publicly accepted.”
+
+“For an ornament gutter correction, retain the failing screenshots, source and original event labels. Measure actual text/control/focus bounds against both side stripes in Versus and Team, check overflow, then change Rich/Off/Subtle while paused and close Options back to its owner. A source budget or a changed DPR does not prove responsive layout or browser zoom. Record separate action-row/mode-row spacing defects without hiding them behind a successful side-gutter result.”

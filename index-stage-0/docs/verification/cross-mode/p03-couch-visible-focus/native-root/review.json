@@ -1,0 +1,179 @@
+{
+  "status": "BOARD_RETURN_PASS_FIRST_RESULTS_VISIBILITY_OPEN",
+  "sourceBase": "063ff5d650b6e071d2b59e89fa6e9fb5058b3f08",
+  "sourceHold": "../source-held-01.json",
+  "url": "http://127.0.0.1:53085/game/couch/",
+  "scope": "Seven native samples, six screenshots, all six visually inspected. Real keyboard First Signal Tactical race; no state, clock or response injection.",
+  "settings": {
+    "textFace": "plain",
+    "textSize": "large",
+    "menuPalette": "ukrainian",
+    "menuOrnaments": "rich"
+  },
+  "viewports": [
+    [
+      844,
+      390
+    ],
+    [
+      390,
+      844
+    ]
+  ],
+  "viewportReset": true,
+  "result": {
+    "winner": "Sunflower",
+    "coverage": 50,
+    "score": 7820,
+    "lives": 3,
+    "match": "1:0",
+    "clock": "1:09",
+    "otherCoverage": 0,
+    "otherScore": 0,
+    "otherLives": 3
+  },
+  "findings": [
+    {
+      "status": "PASS_SCOPED",
+      "events": [
+        "04",
+        "05",
+        "06",
+        "07"
+      ],
+      "observation": "Both complete boards remain contained, and returning to Results visibly focuses View both boards. Landscape target y323.15625 height50.6953125 within390; portrait y778.0625 height49.6953125 within844. Scores, coverage, lives and match result stay unchanged."
+    },
+    {
+      "status": "FAIL_FIRST_RESULTS",
+      "events": [
+        "03"
+      ],
+      "observation": "The first Results screen logically focuses Next round but its target is at y393.265625 height50.6953125 below390px viewport, scrollY236. Source-order investigation remains required; do not infer that current state from the event intent label."
+    },
+    {
+      "status": "OPEN_RESIZE_ONLY",
+      "events": [
+        "01"
+      ],
+      "observation": "Changing viewport while the lobby already owns Start does not reveal it: y592.265625 at390px viewport. This is separate from the corrected explicit return focus path and remains responsive qualification work."
+    }
+  ],
+  "labelCorrection": {
+    "event": "03",
+    "intendedLabel": "Actual win Results keeps Next round visible at844x390",
+    "actual": "Next round is below the viewport; this sample is failure evidence."
+  },
+  "preparation": "Keyboard Options selected Plain/Large/Ukrainian/Rich. Map selection followed by Escape cancelled initial picture preparation; an explicit Retry completed before Start. Those pre-recorder actions were observed but not counted as seven captured events.",
+  "limits": [
+    "Keyboard and explicit browser viewport override, not physical touch/controller/rotation or zoom.",
+    "No Next-round transition, offline audio/media, final integration or public release qualification.",
+    "Normal predecessor and all earlier closed recorders remain unchanged."
+  ],
+  "originals": [
+    {
+      "path": "01.json",
+      "bytes": 400,
+      "sha256": "8b93a9e5a2a88fca3c6bda747bbd3f15c0aaa2a15f6643744ba5ab59d695c6f9"
+    },
+    {
+      "path": "01.txt",
+      "bytes": 216,
+      "sha256": "aba6766c82c859c750db199501658feeead0446bf07e40695fad22ddc9ae467e"
+    },
+    {
+      "path": "02.json",
+      "bytes": 388,
+      "sha256": "a99467df7b85b06584e55a8fc258f56b50f597edc0039f4ee17e5284605ad7d1"
+    },
+    {
+      "path": "02.png",
+      "bytes": 29754,
+      "sha256": "b12492786f631e50c408c056e2d91392483064d58f2c7ff56cefc23fb9fc6eca"
+    },
+    {
+      "path": "02.txt",
+      "bytes": 954,
+      "sha256": "cef2cad2c2c068d8ac7da1672cce27cfb1c5fa7a6df51df7d4e152d60ad856a9"
+    },
+    {
+      "path": "03.json",
+      "bytes": 401,
+      "sha256": "c897b6f2ccef44eab43c938d746367064fadc201ee3a5638b960b4adb4b0b0f7"
+    },
+    {
+      "path": "03.png",
+      "bytes": 39041,
+      "sha256": "fb66e68401e818eaf0506f7c14d1e34c80f1582b31fedbdd5b17bed1ca12f634"
+    },
+    {
+      "path": "03.txt",
+      "bytes": 215,
+      "sha256": "73baf3b8a0f4b7c5be5635e85bb16ddd1b1c7f2b1ed694be6553d8d513a11c10"
+    },
+    {
+      "path": "04.json",
+      "bytes": 383,
+      "sha256": "25330b5dc1f4ed31d590fb156c5841b94441a8e1326143498b5bd4a6bc86559c"
+    },
+    {
+      "path": "04.png",
+      "bytes": 42820,
+      "sha256": "1098fe5817856c93c9a778ed92065c23e6a436b563cccd86b0b6db3fa1ed1c50"
+    },
+    {
+      "path": "04.txt",
+      "bytes": 934,
+      "sha256": "393fa479063f322e58a5fee5990cfc149869aba206f504646899fd4740309f6c"
+    },
+    {
+      "path": "05.json",
+      "bytes": 406,
+      "sha256": "dcac56b81edda542cd48d0b71da95d9d3860405035ed3c4d1bebdd5fc90c47cc"
+    },
+    {
+      "path": "05.png",
+      "bytes": 44850,
+      "sha256": "3b201a951b49f10fa5080e69444700ac3aedcea0eb2ff97bc22e3e23b0ae5698"
+    },
+    {
+      "path": "05.txt",
+      "bytes": 1713,
+      "sha256": "6626db4a0693df3437d919d5a5c598212058311f6e254c68449ce2057de8bb84"
+    },
+    {
+      "path": "06.json",
+      "bytes": 383,
+      "sha256": "b34b4151bd4aec9e1cc6247229f4c5396dedbfc99cbbe9b029c2b211bd35b42e"
+    },
+    {
+      "path": "06.png",
+      "bytes": 50012,
+      "sha256": "ae80fe80a96f15162251287309730bbcd41b3048f97ce2e1d6996698972e31da"
+    },
+    {
+      "path": "06.txt",
+      "bytes": 894,
+      "sha256": "b78abb910ce193228f97a6a46e4c33fb7c91277ff9599d15eb29b76daa74342d"
+    },
+    {
+      "path": "07.json",
+      "bytes": 403,
+      "sha256": "9edfd8012708bf13233bb18e71a75f2113d10ffee3b98cd6c10856ca001ac1be"
+    },
+    {
+      "path": "07.png",
+      "bytes": 50370,
+      "sha256": "f95725ad0da41946bce106bd2054f6e751a2a6c0fb7534bc743ceb5f2985c722"
+    },
+    {
+      "path": "07.txt",
+      "bytes": 1713,
+      "sha256": "6626db4a0693df3437d919d5a5c598212058311f6e254c68449ce2057de8bb84"
+    },
+    {
+      "path": "events.json",
+      "bytes": 1435,
+      "sha256": "af60995624b4773c4e93fe21913dd22a1df4396cb3dc0021c095d86daeb2391c"
+    }
+  ]
+}

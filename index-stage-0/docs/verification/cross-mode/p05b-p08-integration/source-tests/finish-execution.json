@@ -1,0 +1,75 @@
+{
+  "scope": "Separate complete installed-chapter Node22 run after exact input restoration, then complete17-file Node20 union. Preserve earlier16-file358 Node22 passes and the import failure; not a whole17-file Node22 rerun.",
+  "files": [
+    "game/test/controller-navigation.test.mjs",
+    "game/test/coop-host.test.mjs",
+    "game/test/couch-audio-master.test.mjs",
+    "game/test/couch-chapter.test.mjs",
+    "game/test/couch-initial-focus.test.mjs",
+    "game/test/couch-input.test.mjs",
+    "game/test/couch-installed-chapters.test.mjs",
+    "game/test/couch-navigation.test.mjs",
+    "game/test/couch-shell.test.mjs",
+    "game/test/couch-static-picture-host.test.mjs",
+    "game/test/couch-static-pictures.test.mjs",
+    "game/test/display-preferences-host.test.mjs",
+    "game/test/menu-appearance.test.mjs",
+    "game/test/menu-style-host.test.mjs",
+    "game/test/menu-style-preferences.test.mjs",
+    "game/test/presentation-page.test.mjs",
+    "game/test/title-entry-host.test.mjs"
+  ],
+  "sourceHoldSha256": "b1e8d58a209f1baf4942573bda4e45d45a624371703348937e59eaf9fec43194",
+  "runs": [
+    {
+      "node": "22.22.2",
+      "argv": [
+        "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node",
+        "--test",
+        "--test-concurrency=2",
+        "game/test/couch-installed-chapters.test.mjs"
+      ],
+      "startedAt": "2026-09-15T21:20:47.049863+00:00",
+      "wallSeconds": 166.142911,
+      "exitCode": 0,
+      "log": ".cache/p05b-p08/installed-node22.log",
+      "logBytes": 3424,
+      "logSha256": "dbf34325ba347546eacd9d1d5e6f10e90c8d52f8cbf4de80156bfb33996a6cbe"
+    },
+    {
+      "node": "20.19.5",
+      "argv": [
+        "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/20.19.5/bin/node",
+        "--test",
+        "--test-concurrency=2",
+        "game/test/controller-navigation.test.mjs",
+        "game/test/coop-host.test.mjs",
+        "game/test/couch-audio-master.test.mjs",
+        "game/test/couch-chapter.test.mjs",
+        "game/test/couch-initial-focus.test.mjs",
+        "game/test/couch-input.test.mjs",
+        "game/test/couch-installed-chapters.test.mjs",
+        "game/test/couch-navigation.test.mjs",
+        "game/test/couch-shell.test.mjs",
+        "game/test/couch-static-picture-host.test.mjs",
+        "game/test/couch-static-pictures.test.mjs",
+        "game/test/display-preferences-host.test.mjs",
+        "game/test/menu-appearance.test.mjs",
+        "game/test/menu-style-host.test.mjs",
+        "game/test/menu-style-preferences.test.mjs",
+        "game/test/presentation-page.test.mjs",
+        "game/test/title-entry-host.test.mjs"
+      ],
+      "startedAt": "2026-09-15T21:23:33.468424+00:00",
+      "wallSeconds": 197.311751,
+      "exitCode": 0,
+      "log": ".cache/p05b-p08/union-node20.log",
+      "logBytes": 82811,
+      "logSha256": "56936aa95e8919d48e256ba8813a8103019beb6e639a09c7479276e3f5067542"
+    }
+  ],
+  "inputsUnchanged": true,
+  "inputCount": 536,
+  "inputBytes": 78653307,
+  "allRuntimesAttempted": true
+}

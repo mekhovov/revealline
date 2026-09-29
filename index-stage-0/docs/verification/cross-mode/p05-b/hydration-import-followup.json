@@ -1,0 +1,85 @@
+{
+  "base": "3f934b7508645d2cad03466276d20e8d038f9d76",
+  "cause": "Initial host import refused missing finite authoring dependencies; retained raw log. No game failure yet.",
+  "freeBytesBefore": 833318912,
+  "addedBytes": 142391,
+  "files": [
+    {
+      "path": "authoring/motion-lab/animation.mjs",
+      "object": "887cb989d0f849b8c6bad12dee2820eb1a51c584",
+      "bytes": 8068,
+      "mode": "100644",
+      "sha256": "e739040d96daea57fd782f13991d96241e11022803038af8d4d184be15981c40"
+    },
+    {
+      "path": "authoring/motion-lab/render-character.mjs",
+      "object": "7a5edad2472ff03253a0e3a7db36588bc1e9ec50",
+      "bytes": 6660,
+      "mode": "100644",
+      "sha256": "16f55a0a9c8751a9c9ab9e1ea7f741ac727e2786ade9ed288688748e641a8b71"
+    },
+    {
+      "path": "authoring/production/model.mjs",
+      "object": "0c490df3f0fec491b0a8a8ea4d7f5c51bede8e8a",
+      "bytes": 24204,
+      "mode": "100644",
+      "sha256": "228a554a884fcd8b4cdcb216ec5e7cc3485ff4e53a56dac081a7a1bfde139e80"
+    },
+    {
+      "path": "game/presentation/catalog.mjs",
+      "object": "baaf75bd40ab04011c10af4a6da416578115cb30",
+      "bytes": 14535,
+      "mode": "100644",
+      "sha256": "535739ab7b043e5c3ab9cb6ac982438737f42924635609e8e64618efb850c9c5"
+    },
+    {
+      "path": "game/presentation/icons.mjs",
+      "object": "574a0c8b4b366bb8ff37bdede6361b1113493348",
+      "bytes": 17030,
+      "mode": "100644",
+      "sha256": "750dd23fcac12fff007505ec4b8e91d81c2dae6d9e92fdcc8777fddd187a6780"
+    },
+    {
+      "path": "game/presentation/pixel-art.mjs",
+      "object": "f8626962268827bd7634c535e04b28143249e734",
+      "bytes": 21430,
+      "mode": "100644",
+      "sha256": "544c975f88686455607dbed2f4babb472dc1ad5d9992d878c8c91dc2b123e582"
+    },
+    {
+      "path": "game/presentation/studio-session.mjs",
+      "object": "908fa9b60f73ef5474270eb6a6e35f37cbcf3016",
+      "bytes": 11783,
+      "mode": "100644",
+      "sha256": "b1646b0da0fbb4c9279d87104993260a4540a3ef62867b101524b68db160da53"
+    },
+    {
+      "path": "scripts/compile-presentation.mjs",
+      "object": "fc45381aa5a04ba5b625f3e79b0bc1bb8597d527",
+      "bytes": 12035,
+      "mode": "100644",
+      "sha256": "3d98b9661230901000a322c2cd360cdb50c427ac63803585878e8c28ebc09e12"
+    },
+    {
+      "path": "scripts/presentation-production-history.mjs",
+      "object": "3e564432fea074f4b31ad7af74c744f4d4d1221d",
+      "bytes": 2887,
+      "mode": "100644",
+      "sha256": "238de86667e57d51b0d3f65e27b0ff19b324a3cd956b6db53aa2eb3254af2ded"
+    },
+    {
+      "path": "scripts/produce-field-kit-sprites.mjs",
+      "object": "f77ffec351524038d2751666fdd754e2a69e0202",
+      "bytes": 20154,
+      "mode": "100644",
+      "sha256": "0dbdb1324508f1bead6a04d5035481ef05b18196caf168563139981a60f430bc"
+    },
+    {
+      "path": "scripts/write-presentation.mjs",
+      "object": "dc02b0842fc0979ea8f845a7fd4305bbecf95c19",
+      "bytes": 3605,
+      "mode": "100644",
+      "sha256": "e380e997019338b8b641bfe6456e1d7c1d28193bee772e953d5f5c41f7618f88"
+    }
+  ]
+}

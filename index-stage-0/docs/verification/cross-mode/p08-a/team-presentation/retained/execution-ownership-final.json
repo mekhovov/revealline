@@ -1,0 +1,63 @@
+{
+  "hold": "source-held-03.json",
+  "results": [
+    {
+      "node": "22.22.2",
+      "argv": [
+        "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node",
+        "--test",
+        "game/test/coop-view-presentation.test.mjs",
+        "game/test/coop-presentation.test.mjs",
+        "game/test/coop-host.test.mjs",
+        "game/test/coop-core.test.mjs",
+        "game/test/coop-library.test.mjs",
+        "game/test/coop-authoring.test.mjs",
+        "game/test/coop-balanced-routes.test.mjs"
+      ],
+      "exitCode": 0,
+      "wallSeconds": 1.8978044169489294,
+      "log": "ownership-final-node22.log",
+      "bytes": 26970,
+      "sha256": "c02b76a6ee3a8150227b25922b65dc438f768ecb87c315c3fd780dc627a6b2ff",
+      "sourcePinsUnchanged": true,
+      "summary": {
+        "tests": "105",
+        "pass": "105",
+        "fail": "0",
+        "cancelled": "0",
+        "skipped": "0",
+        "todo": "0",
+        "duration_ms": "1611.644208"
+      }
+    },
+    {
+      "node": "20.19.5",
+      "argv": [
+        "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/20.19.5/bin/node",
+        "--test",
+        "game/test/coop-view-presentation.test.mjs",
+        "game/test/coop-presentation.test.mjs",
+        "game/test/coop-host.test.mjs",
+        "game/test/coop-core.test.mjs",
+        "game/test/coop-library.test.mjs",
+        "game/test/coop-authoring.test.mjs",
+        "game/test/coop-balanced-routes.test.mjs"
+      ],
+      "exitCode": 0,
+      "wallSeconds": 2.366996082942933,
+      "log": "ownership-final-node20.log",
+      "bytes": 25402,
+      "sha256": "357c9a0790bda32a8b1c6475c44cf86348be4e48cd61c8323163a1b52474e9fb",
+      "sourcePinsUnchanged": true,
+      "summary": {
+        "tests": "105",
+        "pass": "105",
+        "fail": "0",
+        "cancelled": "0",
+        "skipped": "0",
+        "todo": "0",
+        "duration_ms": "2069.55375"
+      }
+    }
+  ]
+}

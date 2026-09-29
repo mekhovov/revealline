@@ -1,0 +1,60 @@
+{
+  "scope": "Seventeen complete files, finite materialized input inventory including preserved evidence; not native/full-release qualification or a claim of complete import discovery.",
+  "files": [
+    "game/test/controller-navigation.test.mjs",
+    "game/test/coop-host.test.mjs",
+    "game/test/couch-audio-master.test.mjs",
+    "game/test/couch-chapter.test.mjs",
+    "game/test/couch-initial-focus.test.mjs",
+    "game/test/couch-input.test.mjs",
+    "game/test/couch-installed-chapters.test.mjs",
+    "game/test/couch-navigation.test.mjs",
+    "game/test/couch-shell.test.mjs",
+    "game/test/couch-static-picture-host.test.mjs",
+    "game/test/couch-static-pictures.test.mjs",
+    "game/test/display-preferences-host.test.mjs",
+    "game/test/menu-appearance.test.mjs",
+    "game/test/menu-style-host.test.mjs",
+    "game/test/menu-style-preferences.test.mjs",
+    "game/test/presentation-page.test.mjs",
+    "game/test/title-entry-host.test.mjs"
+  ],
+  "sourceHoldSha256": "b1e8d58a209f1baf4942573bda4e45d45a624371703348937e59eaf9fec43194",
+  "runs": [
+    {
+      "node": "22.22.2",
+      "argv": [
+        "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node",
+        "--test",
+        "--test-concurrency=2",
+        "game/test/controller-navigation.test.mjs",
+        "game/test/coop-host.test.mjs",
+        "game/test/couch-audio-master.test.mjs",
+        "game/test/couch-chapter.test.mjs",
+        "game/test/couch-initial-focus.test.mjs",
+        "game/test/couch-input.test.mjs",
+        "game/test/couch-installed-chapters.test.mjs",
+        "game/test/couch-navigation.test.mjs",
+        "game/test/couch-shell.test.mjs",
+        "game/test/couch-static-picture-host.test.mjs",
+        "game/test/couch-static-pictures.test.mjs",
+        "game/test/display-preferences-host.test.mjs",
+        "game/test/menu-appearance.test.mjs",
+        "game/test/menu-style-host.test.mjs",
+        "game/test/menu-style-preferences.test.mjs",
+        "game/test/presentation-page.test.mjs",
+        "game/test/title-entry-host.test.mjs"
+      ],
+      "startedAt": "2026-09-15T21:17:16.590433+00:00",
+      "wallSeconds": 93.228962,
+      "exitCode": 1,
+      "log": ".cache/p05b-p08/union-node22.log",
+      "logBytes": 86728,
+      "logSha256": "5182a61b422e07c97b2080edd332adab4359f48ab4608f8e92fd7954f0444d4f"
+    }
+  ],
+  "inputsUnchanged": true,
+  "inputCount": 532,
+  "inputBytes": 78577051,
+  "allRuntimesAttempted": false
+}

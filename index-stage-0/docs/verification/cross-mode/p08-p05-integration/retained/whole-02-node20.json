@@ -1,0 +1,45 @@
+{
+  "node": "20.19.5",
+  "testFiles": [
+    "game/test/couch-static-pictures.test.mjs",
+    "game/test/couch-static-picture-host.test.mjs",
+    "game/test/presentation-page.test.mjs",
+    "game/test/couch-chapter.test.mjs",
+    "game/test/couch-installed-chapters.test.mjs",
+    "game/test/couch-navigation.test.mjs",
+    "game/test/couch-shell.test.mjs",
+    "game/test/couch-initial-focus.test.mjs",
+    "game/test/couch-input.test.mjs",
+    "game/test/controller-navigation.test.mjs",
+    "game/test/display-preferences-host.test.mjs",
+    "game/test/couch-audio-master.test.mjs"
+  ],
+  "command": [
+    "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/20.19.5/bin/node",
+    "--test",
+    "--test-concurrency=1",
+    "game/test/couch-static-pictures.test.mjs",
+    "game/test/couch-static-picture-host.test.mjs",
+    "game/test/presentation-page.test.mjs",
+    "game/test/couch-chapter.test.mjs",
+    "game/test/couch-installed-chapters.test.mjs",
+    "game/test/couch-navigation.test.mjs",
+    "game/test/couch-shell.test.mjs",
+    "game/test/couch-initial-focus.test.mjs",
+    "game/test/couch-input.test.mjs",
+    "game/test/controller-navigation.test.mjs",
+    "game/test/display-preferences-host.test.mjs",
+    "game/test/couch-audio-master.test.mjs"
+  ],
+  "exitCode": 0,
+  "seconds": 283.537,
+  "sourceUnchanged": true,
+  "inputPins": "test-inputs-02.json",
+  "sourceHold": "source-held-01.json",
+  "log": {
+    "path": "whole-02-node20.log",
+    "bytes": 48743,
+    "sha256": "03d8c1d561277a97c95eb8a2205001c504548e313e0528f39063c77ac05d4043"
+  },
+  "summary": "1..203\n# tests 210\n# suites 0\n# pass 210\n# fail 0\n# cancelled 0\n# skipped 0\n# todo 0\n# duration_ms 283171.272166\n"
+}

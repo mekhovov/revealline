@@ -1,0 +1,694 @@
+TAP version 13
+# Subtest: fresh couch uses exact wide Pressure Lines originals, authored Arcade controls and independent continuations
+ok 1 - fresh couch uses exact wide Pressure Lines originals, authored Arcade controls and independent continuations
+  ---
+  duration_ms: 1573.03725
+  type: 'test'
+  ...
+# Subtest: an offline optional featured download leaves base Couch maps playable and solo storage untouched
+ok 2 - an offline optional featured download leaves base Couch maps playable and solo storage untouched
+  ---
+  duration_ms: 83.658875
+  type: 'test'
+  ...
+# Subtest: all three exact map pictures change together; explicit Tactical legacy choice clears the original binding
+ok 3 - all three exact map pictures change together; explicit Tactical legacy choice clears the original binding
+  ---
+  duration_ms: 1530.564208
+  type: 'test'
+  ...
+# Subtest: wrong decoded dimensions and complete decode failure release every allocated original
+ok 4 - wrong decoded dimensions and complete decode failure release every allocated original
+  ---
+  duration_ms: 1902.0365
+  type: 'test'
+  ...
+# Subtest: shipped artwork requires explicit contain fit and an original for each exact known level
+ok 5 - shipped artwork requires explicit contain fit and an original for each exact known level
+  ---
+  duration_ms: 1540.545792
+  type: 'test'
+  ...
+# Subtest: cancellation during complete decode rejects promptly, disposes earlier images and ignores a late result
+ok 6 - cancellation during complete decode rejects promptly, disposes earlier images and ignores a late result
+  ---
+  duration_ms: 888.889583
+  type: 'test'
+  ...
+# Subtest: failed original preparation leaves the real lobby Start disabled with its explicit error
+ok 7 - failed original preparation leaves the real lobby Start disabled with its explicit error
+  ---
+  duration_ms: 914.711917
+  type: 'test'
+  ...
+# Subtest: terminal pagehide during installed authority opening cannot publish released pictures or start a race
+ok 8 - terminal pagehide during installed authority opening cannot publish released pictures or start a race
+  ---
+  duration_ms: 1084.457833
+  type: 'test'
+  ...
+# Subtest: immediate: actual couch inputs keep both phase cues independent and freeze them on pause/finish
+ok 9 - immediate: actual couch inputs keep both phase cues independent and freeze them on pause/finish
+  ---
+  duration_ms: 4560.13775
+  type: 'test'
+  ...
+# Subtest: grid-center: actual couch inputs keep both phase cues independent and freeze them on pause/finish
+ok 10 - grid-center: actual couch inputs keep both phase cues independent and freeze them on pause/finish
+  ---
+  duration_ms: 4343.977791
+  type: 'test'
+  ...
+# Subtest: ordinary couch boards hide both empty encounter groups before and during a round
+ok 11 - ordinary couch boards hide both empty encounter groups before and during a round
+  ---
+  duration_ms: 1857.626375
+  type: 'test'
+  ...
+# Subtest: cancelled Start confirmation cannot overwrite Retry for the same untouched attempt
+ok 12 - cancelled Start confirmation cannot overwrite Retry for the same untouched attempt
+  ---
+  duration_ms: 11428.743041
+  type: 'test'
+  ...
+# Subtest: installed couch reader authenticates the same three originals without acquiring a writer or changing solo data
+ok 13 - installed couch reader authenticates the same three originals without acquiring a writer or changing solo data
+  ---
+  duration_ms: 12356.3645
+  type: 'test'
+  ...
+# Subtest: publication rejects a changed original generation after actual decode and a changed pointer before Start
+ok 14 - publication rejects a changed original generation after actual decode and a changed pointer before Start
+  ---
+  duration_ms: 14408.402291
+  type: 'test'
+  ...
+# Subtest: cancelled decode is joined before replacement and cannot publish a late image
+ok 15 - cancelled decode is joined before replacement and cannot publish a late image
+  ---
+  duration_ms: 9586.299541
+  type: 'test'
+  ...
+# Subtest: pending journals, missing descriptors and absent original bytes refuse instead of displaying generic artwork
+ok 16 - pending journals, missing descriptors and absent original bytes refuse instead of displaying generic artwork
+  ---
+  duration_ms: 5593.916166
+  type: 'test'
+  ...
+# Subtest: Couch recovers installed R5 originals when its optional shipped URL is unavailable
+ok 17 - Couch recovers installed R5 originals when its optional shipped URL is unavailable
+  ---
+  duration_ms: 4390.789083
+  type: 'test'
+  ...
+# Subtest: actual Couch selection shares the exact installed image, keeps separate motion and restores asynchronous action focus
+ok 18 - actual Couch selection shares the exact installed image, keeps separate motion and restores asynchronous action focus
+  ---
+  duration_ms: 19187.779375
+  type: 'test'
+  ...
+# Subtest: superseding embedded inspection cancels the old decoder between images and retains the exact legacy fit
+ok 19 - superseding embedded inspection cancels the old decoder between images and retains the exact legacy fit
+  ---
+  duration_ms: 3464.081541
+  type: 'test'
+  ...
+# Subtest: main-lobby Back cancels an explicitly pending Retry and never enables Start after the late decode
+ok 20 - main-lobby Back cancels an explicitly pending Retry and never enables Start after the late decode
+  ---
+  duration_ms: 25197.099959
+  type: 'test'
+  ...
+# Subtest: new Fracture owner keeps exact installed originals through the reader and shared Couch boards without solo writes
+ok 21 - new Fracture owner keeps exact installed originals through the reader and shared Couch boards without solo writes
+  ---
+  duration_ms: 22299.755209
+  type: 'test'
+  ...
+# Subtest: new Countercurrent owner keeps exact installed originals through the reader and shared Couch boards without solo writes
+ok 22 - new Countercurrent owner keeps exact installed originals through the reader and shared Couch boards without solo writes
+  ---
+  duration_ms: 22420.02175
+  type: 'test'
+  ...
+# Subtest: two sparse pads deliberately claim one menu; join/held Confirm cannot start or leak flight actions
+ok 23 - two sparse pads deliberately claim one menu; join/held Confirm cannot start or leak flight actions
+  ---
+  duration_ms: 1783.860583
+  type: 'test'
+  ...
+# Subtest: actual select previews cancel without replacing the duel and commit once through onchange
+ok 24 - actual select previews cancel without replacing the duel and commit once through onchange
+  ---
+  duration_ms: 1585.881416
+  type: 'test'
+  ...
+# Subtest: Back and Menu cancel previews or focus the primary action without starting or resetting
+ok 25 - Back and Menu cancel previews or focus the primary action without starting or resetting
+  ---
+  duration_ms: 1546.173
+  type: 'test'
+  ...
+# Subtest: native menu focus cancels a held D-pad repeat until neutral without clearing either flight keyboard
+ok 26 - native menu focus cancels a held D-pad repeat until neutral without clearing either flight keyboard
+  ---
+  duration_ms: 1476.097542
+  type: 'test'
+  ...
+# Subtest: Ready slot loss consumes another pad Confirm; the surviving player keeps its slot
+ok 27 - Ready slot loss consumes another pad Confirm; the surviving player keeps its slot
+  ---
+  duration_ms: 1533.583292
+  type: 'test'
+  ...
+# Subtest: descriptor change at the same index pauses flight and requires neutral plus a new menu join
+ok 28 - descriptor change at the same index pauses flight and requires neutral plus a new menu join
+  ---
+  duration_ms: 1495.106584
+  type: 'test'
+  ...
+# Subtest: disconnect event at the same index pauses flight and requires neutral plus a new menu join
+ok 29 - disconnect event at the same index pauses flight and requires neutral plus a new menu join
+  ---
+  duration_ms: 1491.670625
+  type: 'test'
+  ...
+# Subtest: explicit menu release permits the other player to join, never transfers a held edge
+ok 30 - explicit menu release permits the other player to join, never transfers a held edge
+  ---
+  duration_ms: 1490.913209
+  type: 'test'
+  ...
+# Subtest: one hardware read per visible frame and no reads or ticks while unfocused, hidden or disposed
+ok 31 - one hardware read per visible frame and no reads or ticks while unfocused, hidden or disposed
+  ---
+  duration_ms: 1472.723875
+  type: 'test'
+  ...
+# Subtest: persisted return and Ready Escape preserve the true state and cancel a pending edit
+ok 32 - persisted return and Ready Escape preserve the true state and cancel a pending edit
+  ---
+  duration_ms: 1481.893375
+  type: 'test'
+  ...
+# Subtest: API errors and unsupported pads remain usable with keyboard and truthful Ready status
+ok 33 - API errors and unsupported pads remain usable with keyboard and truthful Ready status
+  ---
+  duration_ms: 1523.635959
+  type: 'test'
+  ...
+# Subtest: immediate: actual Sentinel round win and best-of-three rematch retain legal core route results
+ok 34 - immediate: actual Sentinel round win and best-of-three rematch retain legal core route results
+  ---
+  duration_ms: 7419.943458
+  type: 'test'
+  ...
+# Subtest: grid-center: actual Sentinel round win and best-of-three rematch retain legal core route results
+ok 35 - grid-center: actual Sentinel round win and best-of-three rematch retain legal core route results
+  ---
+  duration_ms: 7759.758542
+  type: 'test'
+  ...
+# Subtest: one lost craft does not expose shared menu; both ended draws retain explicit Next
+ok 36 - one lost craft does not expose shared menu; both ended draws retain explicit Next
+  ---
+  duration_ms: 1617.974583
+  type: 'test'
+  ...
+# Subtest: native checkboxes and both held touch pads stay independent after leaving controller navigation
+ok 37 - native checkboxes and both held touch pads stay independent after leaving controller navigation
+  ---
+  duration_ms: 1827.17475
+  type: 'test'
+  ...
+# Subtest: immediate: actual Pause retains two different requested turns and explicit Resume continues both
+ok 38 - immediate: actual Pause retains two different requested turns and explicit Resume continues both
+  ---
+  duration_ms: 2347.560916
+  type: 'test'
+  ...
+# Subtest: immediate: real recovery clears only that player's continuous intent before later substeps
+ok 39 - immediate: real recovery clears only that player's continuous intent before later substeps
+  ---
+  duration_ms: 2080.711875
+  type: 'test'
+  ...
+# Subtest: grid-center: actual Pause retains two different requested turns and explicit Resume continues both
+ok 40 - grid-center: actual Pause retains two different requested turns and explicit Resume continues both
+  ---
+  duration_ms: 1597.443917
+  type: 'test'
+  ...
+# Subtest: grid-center: real recovery clears only that player's continuous intent before later substeps
+ok 41 - grid-center: real recovery clears only that player's continuous intent before later substeps
+  ---
+  duration_ms: 1627.788958
+  type: 'test'
+  ...
+# Subtest: timeout draw keeps series at zero and needs a fresh explicit Next gesture
+ok 42 - timeout draw keeps series at zero and needs a fresh explicit Next gesture
+  ---
+  duration_ms: 1767.846916
+  type: 'test'
+  ...
+# Subtest: immediate, keyboard: real cut closure stops only its player across substeps and held input
+ok 43 - immediate, keyboard: real cut closure stops only its player across substeps and held input
+  ---
+  duration_ms: 1966.677583
+  type: 'test'
+  ...
+# Subtest: immediate, controller: real cut closure stops only its player across substeps and held input
+ok 44 - immediate, controller: real cut closure stops only its player across substeps and held input
+  ---
+  duration_ms: 1966.152584
+  type: 'test'
+  ...
+# Subtest: grid-center, keyboard: real cut closure stops only its player across substeps and held input
+ok 45 - grid-center, keyboard: real cut closure stops only its player across substeps and held input
+  ---
+  duration_ms: 2000.05
+  type: 'test'
+  ...
+# Subtest: grid-center, controller: real cut closure stops only its player across substeps and held input
+ok 46 - grid-center, controller: real cut closure stops only its player across substeps and held input
+  ---
+  duration_ms: 2104.01275
+  type: 'test'
+  ...
+# Subtest: lobby, setup and children use reachable native controls and Back restores the actual opener
+ok 47 - lobby, setup and children use reachable native controls and Back restores the actual opener
+  ---
+  duration_ms: 1459.308458
+  type: 'test'
+  ...
+# Subtest: an embedded Couch route stays loading until its actual setup is prepared
+ok 48 - an embedded Couch route stays loading until its actual setup is prepared
+  ---
+  duration_ms: 1328.802375
+  type: 'test'
+  ...
+# Subtest: pause children and cancelled new match preserve two different continuations; reset is explicit
+ok 49 - pause children and cancelled new match preserve two different continuations; reset is explicit
+  ---
+  duration_ms: 1496.606125
+  type: 'test'
+  ...
+# Subtest: per-seat Auto expands on touch and defers collapse until pause without changing movement
+ok 50 - per-seat Auto expands on touch and defers collapse until pause without changing movement
+  ---
+  duration_ms: 1432.504958
+  type: 'test'
+  ...
+# Subtest: Always supports independent pointer players; Off wins over coarse and later touch
+ok 51 - Always supports independent pointer players; Off wins over coarse and later touch
+  ---
+  duration_ms: 1343.743833
+  type: 'test'
+  ...
+# Subtest: authored Arcade removes equipment controls and hints; Tactical reflects the equipped recipe
+ok 52 - authored Arcade removes equipment controls and hints; Tactical reflects the equipped recipe
+  ---
+  duration_ms: 1310.005542
+  type: 'test'
+  ...
+# Subtest: controller setup/help and repeated keyboard Confirm cannot leak through the flight boundary
+ok 53 - controller setup/help and repeated keyboard Confirm cannot leak through the flight boundary
+  ---
+  duration_ms: 1394.512583
+  type: 'test'
+  ...
+# Subtest: markup keeps touch crosses outside both arenas and uses separate screen roots
+ok 54 - markup keeps touch crosses outside both arenas and uses separate screen roots
+  ---
+  duration_ms: 2.035042
+  type: 'test'
+  ...
+# Subtest: controller can read and scroll Help without starting; Back exits reading then the child
+ok 55 - controller can read and scroll Help without starting; Back exits reading then the child
+  ---
+  duration_ms: 1385.167834
+  type: 'test'
+  ...
+# Subtest: a real finished draw exposes both frozen boards, Results returns without a new round
+ok 56 - a real finished draw exposes both frozen boards, Results returns without a new round
+  ---
+  duration_ms: 1452.299209
+  type: 'test'
+  ...
+# Subtest: an old held controller cannot reclaim a seat from accepted touch across pause and resume
+ok 57 - an old held controller cannot reclaim a seat from accepted touch across pause and resume
+  ---
+  duration_ms: 1423.585583
+  type: 'test'
+  ...
+# Subtest: blocked pad input and held keyboard repeats never replace newer touch modality
+ok 58 - blocked pad input and held keyboard repeats never replace newer touch modality
+  ---
+  duration_ms: 1377.905666
+  type: 'test'
+  ...
+# Subtest: accepted-input observer is optional and observer failures cannot reject or replay commands
+ok 59 - accepted-input observer is optional and observer failures cannot reject or replay commands
+  ---
+  duration_ms: 2.641084
+  type: 'test'
+  ...
+# Subtest: actual Versus signal-01 shares one exact approved picture and fit through Start and paused continuation
+ok 60 - actual Versus signal-01 shares one exact approved picture and fit through Start and paused continuation
+  ---
+  duration_ms: 161.566541
+  type: 'test'
+  ...
+# Subtest: actual Versus orchard-crossing shares one exact approved picture and fit through Start and paused continuation
+ok 61 - actual Versus orchard-crossing shares one exact approved picture and fit through Start and paused continuation
+  ---
+  duration_ms: 1464.77
+  type: 'test'
+  ...
+# Subtest: required decode failure blocks Start; Retry retains the same attempt and chosen original
+ok 62 - required decode failure blocks Start; Retry retains the same attempt and chosen original
+  ---
+  duration_ms: 60.745708
+  type: 'test'
+  ...
+# Subtest: pending Retry owns Cancel and respects ready
+ok 63 - pending Retry owns Cancel and respects ready
+  ---
+  duration_ms: 55.362959
+  type: 'test'
+  ...
+# Subtest: pending Retry owns Cancel and respects error
+ok 64 - pending Retry owns Cancel and respects error
+  ---
+  duration_ms: 47.7875
+  type: 'test'
+  ...
+# Subtest: pending Retry owns Cancel and respects deliberate focus
+ok 65 - pending Retry owns Cancel and respects deliberate focus
+  ---
+  duration_ms: 53.037084
+  type: 'test'
+  ...
+# Subtest: pending Retry owns Cancel and respects background return
+ok 66 - pending Retry owns Cancel and respects background return
+  ---
+  duration_ms: 51.066958
+  type: 'test'
+  ...
+# Subtest: pending Retry owns Cancel and respects scope return
+ok 67 - pending Retry owns Cancel and respects scope return
+  ---
+  duration_ms: 50.044
+  type: 'test'
+  ...
+# Subtest: whole optional snapshot failure retains explicit authored fallback with a visible notice
+ok 68 - whole optional snapshot failure retains explicit authored fallback with a visible notice
+  ---
+  duration_ms: 1385.46275
+  type: 'test'
+  ...
+# Subtest: Back cancels a pending required picture and late completion cannot resume or replace the accepted attempt
+ok 69 - Back cancels a pending required picture and late completion cannot resume or replace the accepted attempt
+  ---
+  duration_ms: 59.9565
+  type: 'test'
+  ...
+# Subtest: page disposal releases the owned picture URL once and preserves the original bytes
+ok 70 - page disposal releases the owned picture URL once and preserves the original bytes
+  ---
+  duration_ms: 40.089417
+  type: 'test'
+  ...
+# Subtest: initial required-picture loading leaves the actual lobby Cancel keyboard reachable
+ok 71 - initial required-picture loading leaves the actual lobby Cancel keyboard reachable
+  ---
+  duration_ms: 34.606709
+  type: 'test'
+  ...
+# Subtest: exact published original has one decoded lease for both boards and no storage API fallback is explicit
+ok 72 - exact published original has one decoded lease for both boards and no storage API fallback is explicit
+  ---
+  duration_ms: 36.63675
+  type: 'test'
+  ...
+# Subtest: whole optional snapshot failure keeps explicit borrowed authored art, without releasing its owner
+ok 73 - whole optional snapshot failure keeps explicit borrowed authored art, without releasing its owner
+  ---
+  duration_ms: 29.708042
+  type: 'test'
+  ...
+# Subtest: valid empty media store selects release art without any media/progress writes
+ok 74 - valid empty media store selects release art without any media/progress writes
+  ---
+  duration_ms: 36.081291
+  type: 'test'
+  ...
+# Subtest: available but failing storage blocks Start and never guesses an unassigned picture
+ok 75 - available but failing storage blocks Start and never guesses an unassigned picture
+  ---
+  duration_ms: 16.772542
+  type: 'test'
+  ...
+# Subtest: explicit saved still assignment wins over current release art without any library mutation
+ok 76 - explicit saved still assignment wins over current release art without any library mutation
+  ---
+  duration_ms: 375.509833
+  type: 'test'
+  ...
+# Subtest: manual authored replacement does not borrow a release original just because gameplay identity matches
+ok 77 - manual authored replacement does not borrow a release original just because gameplay identity matches
+  ---
+  duration_ms: 16.595
+  type: 'test'
+  ...
+# Subtest: unknown same-ID owner, changed level revision and crossed theme cannot request release bytes
+ok 78 - unknown same-ID owner, changed level revision and crossed theme cannot request release bytes
+  ---
+  duration_ms: 17.086833
+  type: 'test'
+  ...
+# Subtest: selected release read failure blocks Start and never silently falls back
+ok 79 - selected release read failure blocks Start and never silently falls back
+  ---
+  duration_ms: 14.674917
+  type: 'test'
+  ...
+# Subtest: selected release hash failure blocks Start and never silently falls back
+ok 80 - selected release hash failure blocks Start and never silently falls back
+  ---
+  duration_ms: 16.050334
+  type: 'test'
+  ...
+# Subtest: selected release decode failure blocks Start and never silently falls back
+ok 81 - selected release decode failure blocks Start and never silently falls back
+  ---
+  duration_ms: 18.948542
+  type: 'test'
+  ...
+# Subtest: selected release dimensions failure blocks Start and never silently falls back
+ok 82 - selected release dimensions failure blocks Start and never silently falls back
+  ---
+  duration_ms: 17.584792
+  type: 'test'
+  ...
+# Subtest: same-race retry retains exact saved pin and refuses changed metadata instead of selecting the replacement
+ok 83 - same-race retry retains exact saved pin and refuses changed metadata instead of selecting the replacement
+  ---
+  duration_ms: 765.407292
+  type: 'test'
+  ...
+# Subtest: confirm refuses a changed saved generation and a changed release snapshot without replacement reads
+ok 84 - confirm refuses a changed saved generation and a changed release snapshot without replacement reads
+  ---
+  duration_ms: 31.444417
+  type: 'test'
+  ...
+# Subtest: cancelling after an unassigned choice is captured cannot make Retry adopt a new saved assignment
+ok 85 - cancelling after an unassigned choice is captured cannot make Retry adopt a new saved assignment
+  ---
+  duration_ms: 276.271792
+  type: 'test'
+  ...
+# Subtest: failed replacement retains the prior accepted lease until a new picture succeeds
+ok 86 - failed replacement retains the prior accepted lease until a new picture succeeds
+  ---
+  duration_ms: 30.059125
+  type: 'test'
+  ...
+# Subtest: cancel during full decode promptly releases its URL and late completion cannot replace accepted art
+ok 87 - cancel during full decode promptly releases its URL and late completion cannot replace accepted art
+  ---
+  duration_ms: 23.771583
+  type: 'test'
+  ...
+# Subtest: dispose during pending bytes suppresses late status/decode and closes only its owned resource
+ok 88 - dispose during pending bytes suppresses late status/decode and closes only its owned resource
+  ---
+  duration_ms: 14.814083
+  type: 'test'
+  ...
+# Subtest: corrupt selected saved bytes fail before decoder and do not borrow the published default
+ok 89 - corrupt selected saved bytes fail before decoder and do not borrow the published default
+  ---
+  duration_ms: 219.649333
+  type: 'test'
+  ...
+# Subtest: stale pending release cannot replace a newer selection and its later original is ignored
+ok 90 - stale pending release cannot replace a newer selection and its later original is ignored
+  ---
+  duration_ms: 20.226
+  type: 'test'
+  ...
+# Subtest: a changed borrowed backdrop is refused after capture rather than silently replacing the prepared original
+ok 91 - a changed borrowed backdrop is refused after capture rather than silently replacing the prepared original
+  ---
+  duration_ms: 18.111375
+  type: 'test'
+  ...
+# Subtest: a reentrant status selection joins the published operation promise before starting a newer race
+ok 92 - a reentrant status selection joins the published operation promise before starting a newer race
+  ---
+  duration_ms: 20.621541
+  type: 'test'
+  ...
+# Subtest: the 51 existing static combinations resolve exact authored owners without touching gameplay records
+ok 93 - the 51 existing static combinations resolve exact authored owners without touching gameplay records
+  ---
+  duration_ms: 3014.583917
+  type: 'test'
+  ...
+# Subtest: two Couch painters and repeated page mounts share one load, while leases retain independent cleanup
+ok 94 - two Couch painters and repeated page mounts share one load, while leases retain independent cleanup
+  ---
+  duration_ms: 0.986709
+  type: 'test'
+  ...
+# Subtest: Replay replacement restores only its previous painter and never overwrites an independently pinned snapshot
+ok 95 - Replay replacement restores only its previous painter and never overwrites an independently pinned snapshot
+  ---
+  duration_ms: 0.133083
+  type: 'test'
+  ...
+# Subtest: a late compiled load cannot replace a painter chosen while loading, or publish after page disposal
+ok 96 - a late compiled load cannot replace a painter chosen while loading, or publish after page disposal
+  ---
+  duration_ms: 0.163292
+  type: 'test'
+  ...
+# Subtest: BFCache suspension retains the host and boards until actual disposal, then a new mount can reload
+ok 97 - BFCache suspension retains the host and boards until actual disposal, then a new mount can reload
+  ---
+  duration_ms: 0.093958
+  type: 'test'
+  ...
+# Subtest: missing or rejected release resources preserve source look and notify without rejecting page readiness
+ok 98 - missing or rejected release resources preserve source look and notify without rejecting page readiness
+  ---
+  duration_ms: 0.3365
+  type: 'test'
+  ...
+# Subtest: cosmetic page status is immediate, shared without duplicate work, and fenced per closed lease
+ok 99 - cosmetic page status is immediate, shared without duplicate work, and fenced per closed lease
+  ---
+  duration_ms: 0.272416
+  type: 'test'
+  ...
+# Subtest: picture reads keep exact snapshot and original bytes while leases cancel independently
+ok 100 - picture reads keep exact snapshot and original bytes while leases cancel independently
+  ---
+  duration_ms: 1.219542
+  type: 'test'
+  ...
+# Subtest: external cancellation and final page disposal fence late picture results
+ok 101 - external cancellation and final page disposal fence late picture results
+  ---
+  duration_ms: 0.363
+  type: 'test'
+  ...
+# Subtest: new attempts durably pin an exact release original without changing assignments or campaign identity
+ok 102 - new attempts durably pin an exact release original without changing assignments or campaign identity
+  ---
+  duration_ms: 513.204917
+  type: 'test'
+  ...
+# Subtest: a newer release appends history while an existing saved pin and restored attempt keep exact bytes
+ok 103 - a newer release appends history while an existing saved pin and restored attempt keep exact bytes
+  ---
+  duration_ms: 1169.129084
+  type: 'test'
+  ...
+# Subtest: explicit assignments win and old unpinned, practice, and explicit legacy attempts never mint defaults
+ok 104 - explicit assignments win and old unpinned, practice, and explicit legacy attempts never mint defaults
+  ---
+  duration_ms: 1071.257459
+  type: 'test'
+  ...
+# Subtest: cancelled original download cannot mint a pin or persist provisional history
+ok 105 - cancelled original download cannot mint a pin or persist provisional history
+  ---
+  duration_ms: 1.633709
+  type: 'test'
+  ...
+# Subtest: a concurrent media writer defeats CAS atomically and preserves its accepted library
+ok 106 - a concurrent media writer defeats CAS atomically and preserves its accepted library
+  ---
+  duration_ms: 60.530292
+  type: 'test'
+  ...
+# Subtest: unknown owners, other themes, and recipes never become inferred picture defaults
+ok 107 - unknown owners, other themes, and recipes never become inferred picture defaults
+  ---
+  duration_ms: 0.764375
+  type: 'test'
+  ...
+# Subtest: transient default selection remains a validated immutable library without publishing assignments
+ok 108 - transient default selection remains a validated immutable library without publishing assignments
+  ---
+  duration_ms: 235.587417
+  type: 'test'
+  ...
+# Subtest: adding a default retains archived media owners that are absent from the current playable catalog
+ok 109 - adding a default retains archived media owners that are absent from the current playable catalog
+  ---
+  duration_ms: 650.778125
+  type: 'test'
+  ...
+# Subtest: invalid original bytes and stale fresh-install proof cannot publish assets or assignments
+ok 110 - invalid original bytes and stale fresh-install proof cannot publish assets or assignments
+  ---
+  duration_ms: 55.8775
+  type: 'test'
+  ...
+# Subtest: source fingerprints stay exact and manually replaced embedded pictures or fitting keep priority
+ok 111 - source fingerprints stay exact and manually replaced embedded pictures or fitting keep priority
+  ---
+  duration_ms: 284.911417
+  type: 'test'
+  ...
+# Subtest: generic reveal defaults are dimension-matched and exact FPV owners always take precedence
+ok 112 - generic reveal defaults are dimension-matched and exact FPV owners always take precedence
+  ---
+  duration_ms: 1.066208
+  type: 'test'
+  ...
+# Subtest: a generic original uses the same durable new-attempt pins and preserves manual and saved choices
+ok 113 - a generic original uses the same durable new-attempt pins and preserves manual and saved choices
+  ---
+  duration_ms: 1037.289709
+  type: 'test'
+  ...
+# Subtest: picture feedback keeps Finishing save through an actual commit and cancellation preserves completed history without adopting pins
+ok 114 - picture feedback keeps Finishing save through an actual commit and cancellation preserves completed history without adopting pins
+  ---
+  duration_ms: 583.881167
+  type: 'test'
+  ...
+1..114
+# tests 114
+# suites 0
+# pass 114
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 168175.557292

@@ -1,0 +1,36 @@
+{
+  "sourceHold": "a81322667bde06e741ed4ba0c468e538c3109c2d3b705f2f4a3e418ef18634dc",
+  "reason": "Root actual Versus and Team PNGs show inset decoration over content at zero inline padding. Original205pair/source/native unchanged.",
+  "files": [
+    {
+      "path": "game/ui/menu-appearance.css",
+      "retained": ".cache/p05b/gutter-fix/predecessor-menu-appearance.css",
+      "bytes": 3442,
+      "sha256": "b1b7f1124af7f63e0a09b8e3745a07f65f85eea57a0b9ae275455b7cd6abe207"
+    },
+    {
+      "path": "game/test/menu-appearance.test.mjs",
+      "retained": ".cache/p05b/gutter-fix/predecessor-menu-appearance.test.mjs",
+      "bytes": 11659,
+      "sha256": "228425d948464a228cabfe7e36af3e6e1da409987bd50e21b18322b3e9490a99"
+    },
+    {
+      "path": "game/test/menu-style-host.test.mjs",
+      "retained": ".cache/p05b/gutter-fix/predecessor-menu-style-host.test.mjs",
+      "bytes": 14786,
+      "sha256": "60fbf465bc6ea2e01910185262301b8a540592bc2f848ffd6dd50aadccefe16c"
+    },
+    {
+      "path": "docs/menu-appearance.md",
+      "retained": ".cache/p05b/gutter-fix/predecessor-menu-appearance.md",
+      "bytes": 6312,
+      "sha256": "aa67a28cbeabc2cb52da66fa3cc79f51377e3a2b7f69419cf9e4b3c41ee1c1c4"
+    }
+  ],
+  "finiteInput": {
+    "path": "game/ui/field-kit-components.css",
+    "bytes": 10003,
+    "sha256": "52f2a5b524f5473b601d313bb4d0b5eaab49231fd9814e4075c494dae74fead8"
+  },
+  "preparationNote": "Initial setup expected the focus CSS absent, but it was already hydrated. No source changed; unmatched-filter run is not regression evidence."
+}

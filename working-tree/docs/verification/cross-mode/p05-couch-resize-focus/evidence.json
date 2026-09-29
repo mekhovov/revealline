@@ -1,0 +1,559 @@
+{
+  "scope": "P05 isolated Couch current-focus resize candidate. Exact bytes or deterministic gzip; no normalization or fabricated browser observations.",
+  "base": "2c61981b26990b8eb9641ac649300d4a32720746",
+  "files": [
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-couch-resize-focus/.cache/couch-resize-focus/verification.json",
+      "retained": "docs/verification/cross-mode/p05-couch-resize-focus/automated/held01/verification.json",
+      "encoding": "exact bytes",
+      "originalBytes": 3342,
+      "originalSha256": "795565c39047721e99741fd4e065ace1b906fc6a275373b3f85cc0f8f75c0a64",
+      "retainedBytes": 3342,
+      "retainedSha256": "795565c39047721e99741fd4e065ace1b906fc6a275373b3f85cc0f8f75c0a64"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-couch-resize-focus/.cache/couch-resize-focus/inputs-before.json",
+      "retained": "docs/verification/cross-mode/p05-couch-resize-focus/automated/held01/inputs-before.json.gz",
+      "encoding": "gzip, exact original after decompression",
+      "originalBytes": 89719,
+      "originalSha256": "474e748b746e262db96616291b71e0c9495df1502a3bc2e4b9c81ede089d8cc8",
+      "retainedBytes": 27937,
+      "retainedSha256": "4d5875ee9efc5535f01c5c582319141c82355f73e5c0dfa2eafac67932b3d977"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-couch-resize-focus/.cache/couch-resize-focus/inputs-after.json",
+      "retained": "docs/verification/cross-mode/p05-couch-resize-focus/automated/held01/inputs-after.json.gz",
+      "encoding": "gzip, exact original after decompression",
+      "originalBytes": 89719,
+      "originalSha256": "474e748b746e262db96616291b71e0c9495df1502a3bc2e4b9c81ede089d8cc8",
+      "retainedBytes": 27937,
+      "retainedSha256": "4d5875ee9efc5535f01c5c582319141c82355f73e5c0dfa2eafac67932b3d977"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-couch-resize-focus/.cache/couch-resize-focus/whole-node22.log",
+      "retained": "docs/verification/cross-mode/p05-couch-resize-focus/automated/held01/whole-node22.log.gz",
+      "encoding": "gzip, exact original after decompression",
+      "originalBytes": 14694,
+      "originalSha256": "c117185bf2aeb9990880e5c68cba6f1db3328ab4198515ab05301873eba7b369",
+      "retainedBytes": 2956,
+      "retainedSha256": "9242b46a460de38f0b8f507e53b548bccc53b97f0c4ad6b3da8a7cbd431f34d6"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-couch-resize-focus/.cache/couch-resize-focus/whole-node20.log",
+      "retained": "docs/verification/cross-mode/p05-couch-resize-focus/automated/held01/whole-node20.log.gz",
+      "encoding": "gzip, exact original after decompression",
+      "originalBytes": 13788,
+      "originalSha256": "80ef6d6d6f8dbc842ec259c9e6ea46e0ed9420bf7c9a445f4a8d820d2783276f",
+      "retainedBytes": 2949,
+      "retainedSha256": "e38ed72e6fd4f2bfdc308f4a7f29b8047d62cbb9274c7ffa965f4e619dbfbcd6"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-couch-resize-focus/.cache/couch-resize-focus/lint.log",
+      "retained": "docs/verification/cross-mode/p05-couch-resize-focus/automated/held01/lint.log.gz",
+      "encoding": "gzip, exact original after decompression",
+      "originalBytes": 0,
+      "originalSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "retainedBytes": 20,
+      "retainedSha256": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-couch-resize-focus/.cache/couch-resize-focus/format.log",
+      "retained": "docs/verification/cross-mode/p05-couch-resize-focus/automated/held01/format.log.gz",
+      "encoding": "gzip, exact original after decompression",
+      "originalBytes": 66,
+      "originalSha256": "17aa973d3f004560237d9a95171210b0671deff23d61628eecf7322ff5938f20",
+      "retainedBytes": 82,
+      "retainedSha256": "6cd316ae8e81df0ff79776205007450fac3d62e1ba8e884e169e326d7955ebe5"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-couch-resize-focus/.cache/couch-resize-focus/diff.log",
+      "retained": "docs/verification/cross-mode/p05-couch-resize-focus/automated/held01/diff.log.gz",
+      "encoding": "gzip, exact original after decompression",
+      "originalBytes": 0,
+      "originalSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "retainedBytes": 20,
+      "retainedSha256": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-couch-resize-focus/.cache/couch-resize-focus/run-focused.py",
+      "retained": "docs/verification/cross-mode/p05-couch-resize-focus/automated/held01/run-focused.py.gz",
+      "encoding": "gzip, exact original after decompression",
+      "originalBytes": 2931,
+      "originalSha256": "cf8a12cf3eaec6a61df445d3021aebdc0568e885b6b2474fc1065c1aa672a7e8",
+      "retainedBytes": 1158,
+      "retainedSha256": "ae102588d378b8238c4cbc377ccccd84adf3021ab385aa3a8b9e041be0ea39e4"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-couch-resize-focus/.cache/couch-resize-focus/final/verification.json",
+      "retained": "docs/verification/cross-mode/p05-couch-resize-focus/automated/final/verification.json",
+      "encoding": "exact bytes",
+      "originalBytes": 3385,
+      "originalSha256": "c4f73bfa0ef1fe76e384945daddc42eb2c8a6a61680f37d07c809e2ad66bd5fd",
+      "retainedBytes": 3385,
+      "retainedSha256": "c4f73bfa0ef1fe76e384945daddc42eb2c8a6a61680f37d07c809e2ad66bd5fd"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-couch-resize-focus/.cache/couch-resize-focus/final/inputs-before.json",
+      "retained": "docs/verification/cross-mode/p05-couch-resize-focus/automated/final/inputs-before.json.gz",
+      "encoding": "gzip, exact original after decompression",
+      "originalBytes": 89719,
+      "originalSha256": "4a36e129c4658dbdb82bef4d8193e02dab5d3d8b5f7d15bba1c147e4f347a2a3",
+      "retainedBytes": 27938,
+      "retainedSha256": "9debb81935f174d79d687ecfffb02bed2f73842d394cf747ebe00c6e3f7454dc"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-couch-resize-focus/.cache/couch-resize-focus/final/inputs-after.json",
+      "retained": "docs/verification/cross-mode/p05-couch-resize-focus/automated/final/inputs-after.json.gz",
+      "encoding": "gzip, exact original after decompression",
+      "originalBytes": 89719,
+      "originalSha256": "4a36e129c4658dbdb82bef4d8193e02dab5d3d8b5f7d15bba1c147e4f347a2a3",
+      "retainedBytes": 27938,
+      "retainedSha256": "9debb81935f174d79d687ecfffb02bed2f73842d394cf747ebe00c6e3f7454dc"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-couch-resize-focus/.cache/couch-resize-focus/final/whole-node22.log",
+      "retained": "docs/verification/cross-mode/p05-couch-resize-focus/automated/final/whole-node22.log.gz",
+      "encoding": "gzip, exact original after decompression",
+      "originalBytes": 14937,
+      "originalSha256": "e4fd5ffe82a30ad5ce2566fae1b854b969378496f7c60b5fef5743ce9e87feed",
+      "retainedBytes": 3036,
+      "retainedSha256": "4c6304659286fe64724e169fca87a78f1a3e9235c72337edbec53c7e2f35bdcd"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-couch-resize-focus/.cache/couch-resize-focus/final/whole-node20.log",
+      "retained": "docs/verification/cross-mode/p05-couch-resize-focus/automated/final/whole-node20.log.gz",
+      "encoding": "gzip, exact original after decompression",
+      "originalBytes": 13977,
+      "originalSha256": "b55bb2df6a7c431256d3783e7eae2fef0d969d2918d8f3c18b2c2c9e6cf02511",
+      "retainedBytes": 3004,
+      "retainedSha256": "e1b6d99020be480390c997123a6b1cbb8d39362a4bcb22dd2b6348da29d75678"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-couch-resize-focus/.cache/couch-resize-focus/final/lint.log",
+      "retained": "docs/verification/cross-mode/p05-couch-resize-focus/automated/final/lint.log.gz",
+      "encoding": "gzip, exact original after decompression",
+      "originalBytes": 0,
+      "originalSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "retainedBytes": 20,
+      "retainedSha256": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-couch-resize-focus/.cache/couch-resize-focus/final/format.log",
+      "retained": "docs/verification/cross-mode/p05-couch-resize-focus/automated/final/format.log.gz",
+      "encoding": "gzip, exact original after decompression",
+      "originalBytes": 66,
+      "originalSha256": "17aa973d3f004560237d9a95171210b0671deff23d61628eecf7322ff5938f20",
+      "retainedBytes": 82,
+      "retainedSha256": "6cd316ae8e81df0ff79776205007450fac3d62e1ba8e884e169e326d7955ebe5"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-couch-resize-focus/.cache/couch-resize-focus/final/diff.log",
+      "retained": "docs/verification/cross-mode/p05-couch-resize-focus/automated/final/diff.log.gz",
+      "encoding": "gzip, exact original after decompression",
+      "originalBytes": 0,
+      "originalSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "retainedBytes": 20,
+      "retainedSha256": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-couch-resize-focus/.cache/couch-resize-focus/final/run-focused.py",
+      "retained": "docs/verification/cross-mode/p05-couch-resize-focus/automated/final/run-focused.py.gz",
+      "encoding": "gzip, exact original after decompression",
+      "originalBytes": 2962,
+      "originalSha256": "ede490ec25a97a8e3a9ddcdafa99b8caf35d26c64f797d906935dd469908b94b",
+      "retainedBytes": 1172,
+      "retainedSha256": "206e4722c824c6213f1a383c61fa07b8ffa3dec8101f96f6bfe3ac4ffb31b6e3"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-couch-resize-focus/.cache/couch-resize-focus/admission.json",
+      "retained": "docs/verification/cross-mode/p05-couch-resize-focus/automated/admission.json.gz",
+      "encoding": "gzip, exact original after decompression",
+      "originalBytes": 140216,
+      "originalSha256": "867478c6f5efc101df4412317f9ba5f487c893eb1491e82523b020d5787cd7c9",
+      "retainedBytes": 42144,
+      "retainedSha256": "c75bfefaa4276350982543b2967b4ad2479ba79e0b2d5c0442f03a57db8c7b40"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-couch-resize-focus/.cache/couch-resize-focus/final-read-before-fix.log",
+      "retained": "docs/verification/cross-mode/p05-couch-resize-focus/automated/final-read-before-fix.log.gz",
+      "encoding": "gzip, exact original after decompression",
+      "originalBytes": 1243,
+      "originalSha256": "a7d2ac2914b0d46aabcf5ed47c865dc4d1e5360ed2f4ce67e8c89c41e66b3ec7",
+      "retainedBytes": 597,
+      "retainedSha256": "fdcc425d079b652746c93d11f67b177c0d48ea08516bbfe4245b11bb17a06144"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-couch-resize-focus/.cache/couch-resize-focus/design.md",
+      "retained": "docs/verification/cross-mode/p05-couch-resize-focus/automated/design.md.gz",
+      "encoding": "gzip, exact original after decompression",
+      "originalBytes": 2044,
+      "originalSha256": "14c957acb442c4ced35c27cd1b5ed2c868704c968aec75868c868176c50b6ff9",
+      "retainedBytes": 1104,
+      "retainedSha256": "3abcbb244d74fcfba6f59f12a4b3801343a92f14e7b1eb7b8f0d32d1188e0a6b"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-couch-resize-focus/.cache/couch-resize-focus/final-read-before-fix.json",
+      "retained": "docs/verification/cross-mode/p05-couch-resize-focus/automated/final-read-before-fix.json",
+      "encoding": "exact bytes",
+      "originalBytes": 1099,
+      "originalSha256": "282e4415934deab152343bf16bee4724e6109b8cb0c17ef929cfc98e976c3e74",
+      "retainedBytes": 1099,
+      "retainedSha256": "282e4415934deab152343bf16bee4724e6109b8cb0c17ef929cfc98e976c3e74"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-couch-resize-focus/.cache/couch-resize-focus/source-held-01.json",
+      "retained": "docs/verification/cross-mode/p05-couch-resize-focus/source/held01.json",
+      "encoding": "exact bytes",
+      "originalBytes": 504,
+      "originalSha256": "cb3e9eeb6d7ebf9c19bf26296836abc41ea4a8d7abc4eb1eb9ab6e0f36fbe057",
+      "retainedBytes": 504,
+      "retainedSha256": "cb3e9eeb6d7ebf9c19bf26296836abc41ea4a8d7abc4eb1eb9ab6e0f36fbe057"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-couch-resize-focus/.cache/couch-resize-focus/source-held-01.diff",
+      "retained": "docs/verification/cross-mode/p05-couch-resize-focus/source/held01.diff.gz",
+      "encoding": "gzip, exact original after decompression",
+      "originalBytes": 3610,
+      "originalSha256": "624c1ca00ab1e435384746f49197c908d635b91eb209a45c0651afc946de6a50",
+      "retainedBytes": 1341,
+      "retainedSha256": "6e4951c4a07a58ef4716d3565facbb930280671cc3a8220cce72134a2ba82abb"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-couch-resize-focus/.cache/couch-resize-focus/source-held-02.json",
+      "retained": "docs/verification/cross-mode/p05-couch-resize-focus/source/held02.json",
+      "encoding": "exact bytes",
+      "originalBytes": 533,
+      "originalSha256": "81b8df42d99663c1a1b6ff5fcf1bc19b0ee0a35a98fe44736af6c176f599fae4",
+      "retainedBytes": 533,
+      "retainedSha256": "81b8df42d99663c1a1b6ff5fcf1bc19b0ee0a35a98fe44736af6c176f599fae4"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-couch-resize-focus/.cache/couch-resize-focus/source-held-02.diff",
+      "retained": "docs/verification/cross-mode/p05-couch-resize-focus/source/held02.diff.gz",
+      "encoding": "gzip, exact original after decompression",
+      "originalBytes": 3974,
+      "originalSha256": "29b6313456f1d008337281f295bda2082f7c795a5f86d2f5e6f8a6d278569fe8",
+      "retainedBytes": 1430,
+      "retainedSha256": "d5e86afd53a29ea43d55d504b1c88bcf4fa58dfd23d5c9ca488c3d0eae17573a"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-couch-resize-focus/.cache/couch-resize-focus/held01-source/couch-shell.mjs",
+      "retained": "docs/verification/cross-mode/p05-couch-resize-focus/source/held01-couch-shell.mjs.gz",
+      "encoding": "gzip, exact original after decompression",
+      "originalBytes": 16603,
+      "originalSha256": "a2a4c399ae99302f428c169b08a2419d51d323bc2cc5c19e5e5811fb78fd2c79",
+      "retainedBytes": 5222,
+      "retainedSha256": "13a7a9a331b854e741a9a62e9d80107789327e3ff8b87c6880a190342575b6b5"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-couch-resize-focus/.cache/couch-resize-focus/held01-source/couch-resize-focus.test.mjs",
+      "retained": "docs/verification/cross-mode/p05-couch-resize-focus/source/held01-couch-resize-focus.test.mjs.gz",
+      "encoding": "gzip, exact original after decompression",
+      "originalBytes": 8090,
+      "originalSha256": "58a75df5db19c40339645c9c3b2f312717ea7d7a4cff0903b4a82155719573fe",
+      "retainedBytes": 2217,
+      "retainedSha256": "b03492eab1c5cde984666eff39ad90163700e7fd02e1ebc21c49d809bc7a8711"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-couch-resize-focus/.cache/couch-resize-focus/preview/binding.json",
+      "retained": "docs/verification/cross-mode/p05-couch-resize-focus/preview/binding.json",
+      "encoding": "exact bytes",
+      "originalBytes": 1098,
+      "originalSha256": "cce52318a9c88252820b313681559591ce432841be249a06322e598677122a57",
+      "retainedBytes": 1098,
+      "retainedSha256": "cce52318a9c88252820b313681559591ce432841be249a06322e598677122a57"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-couch-resize-focus/.cache/couch-resize-focus/preview/http-before.json",
+      "retained": "docs/verification/cross-mode/p05-couch-resize-focus/preview/http-before.json",
+      "encoding": "exact bytes",
+      "originalBytes": 1086,
+      "originalSha256": "5aeec84869d1424858cc79f9a8c3e1ed644c8a94904fb42c37480510f319513d",
+      "retainedBytes": 1086,
+      "retainedSha256": "5aeec84869d1424858cc79f9a8c3e1ed644c8a94904fb42c37480510f319513d"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-couch-resize-focus/.cache/couch-resize-focus/preview/serve.py",
+      "retained": "docs/verification/cross-mode/p05-couch-resize-focus/preview/serve.py.gz",
+      "encoding": "gzip, exact original after decompression",
+      "originalBytes": 6854,
+      "originalSha256": "9b35cc3cbbd325d8a94dbcb938c5595e3a33bfd3633fd07adffcdcddeabf41b3",
+      "retainedBytes": 2590,
+      "retainedSha256": "274a1250fa963f8020d6b6dac6de5f6459e804d9bd6a54b9b301787b7cfdd39a"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-couch-resize-focus/.cache/couch-resize-focus/preview/helper-reuse.diff",
+      "retained": "docs/verification/cross-mode/p05-couch-resize-focus/preview/helper-reuse.diff.gz",
+      "encoding": "gzip, exact original after decompression",
+      "originalBytes": 2304,
+      "originalSha256": "55440855460f816473e0b36a496f02d06ea0f0229668cba16051a6881ede94fe",
+      "retainedBytes": 1121,
+      "retainedSha256": "31921efa75e8828c51b28abf7d92e770dc3799aeb3e9bc6f30846b1d1c448073"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-couch-resize-focus/.cache/couch-resize-focus/native-predecessor-copies.json",
+      "retained": "docs/verification/cross-mode/p05-couch-resize-focus/native/predecessor-copies.json",
+      "encoding": "exact bytes",
+      "originalBytes": 1117,
+      "originalSha256": "8a1620d3ad12bc1c26bd334f277764d9509ccb62a8d2e3e291d2311f1f161ad1",
+      "retainedBytes": 1117,
+      "retainedSha256": "8a1620d3ad12bc1c26bd334f277764d9509ccb62a8d2e3e291d2311f1f161ad1"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-couch-resize-focus/.cache/couch-resize-focus/native-predecessor/01.json",
+      "retained": "docs/verification/cross-mode/p05-couch-resize-focus/native/predecessor/01.json.gz",
+      "encoding": "gzip, exact original after decompression",
+      "originalBytes": 400,
+      "originalSha256": "8b93a9e5a2a88fca3c6bda747bbd3f15c0aaa2a15f6643744ba5ab59d695c6f9",
+      "retainedBytes": 236,
+      "retainedSha256": "367c4dda10c7937fa88d7729e2cafe36608e94b18ae5ac0f767d8424bf3f4938"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-couch-resize-focus/.cache/couch-resize-focus/native-predecessor/01.txt",
+      "retained": "docs/verification/cross-mode/p05-couch-resize-focus/native/predecessor/01.txt.gz",
+      "encoding": "gzip, exact original after decompression",
+      "originalBytes": 216,
+      "originalSha256": "aba6766c82c859c750db199501658feeead0446bf07e40695fad22ddc9ae467e",
+      "retainedBytes": 200,
+      "retainedSha256": "bb6ba4a0da6a66d7b91273755f87ffd12e55c49ed096521d09e48b4af2e6c271"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-couch-resize-focus/.cache/couch-resize-focus/native-predecessor/review.json",
+      "retained": "docs/verification/cross-mode/p05-couch-resize-focus/native/predecessor/review.json.gz",
+      "encoding": "gzip, exact original after decompression",
+      "originalBytes": 5705,
+      "originalSha256": "8f28ee10ea15d32e7322becf65a2c9b49427d95d57c7ac3512d31a35f8249d7e",
+      "retainedBytes": 2395,
+      "retainedSha256": "31bbdc0e5c47eb84caacf46c1eb9e919e79d3e697fa33b93dd2f9ee5ffc326eb"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-couch-resize-focus/.cache/couch-resize-focus/native-closed.json",
+      "retained": "docs/verification/cross-mode/p05-couch-resize-focus/native/closed.json",
+      "encoding": "exact bytes",
+      "originalBytes": 4404,
+      "originalSha256": "5e37d7298fa48ad058be79b3853d8d27823a07831b2075c26b361d8f22f8b277",
+      "retainedBytes": 4404,
+      "retainedSha256": "5e37d7298fa48ad058be79b3853d8d27823a07831b2075c26b361d8f22f8b277"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-couch-resize-focus/.cache/couch-resize-focus/native-root/01.json",
+      "retained": "docs/verification/cross-mode/p05-couch-resize-focus/native/final/01.json.gz",
+      "encoding": "gzip, exact original after decompression",
+      "originalBytes": 3553,
+      "originalSha256": "e86ff182baee70f96bcfb869ba4fe84c382447ba5ee36b32bc01725b2a419a3e",
+      "retainedBytes": 1251,
+      "retainedSha256": "88f20558d105ba7da0053e0b9abb8a6422dd4af34f6c544edb62fa730dd33677"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-couch-resize-focus/.cache/couch-resize-focus/native-root/02.jpg",
+      "retained": "docs/verification/cross-mode/p05-couch-resize-focus/native/final/02.jpg",
+      "encoding": "exact bytes",
+      "originalBytes": 41454,
+      "originalSha256": "6c52ab224d8cbd69256e71e80e835e1e9e5f06abb6152651194711f0eedbff9b",
+      "retainedBytes": 41454,
+      "retainedSha256": "6c52ab224d8cbd69256e71e80e835e1e9e5f06abb6152651194711f0eedbff9b"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-couch-resize-focus/.cache/couch-resize-focus/native-root/02.json",
+      "retained": "docs/verification/cross-mode/p05-couch-resize-focus/native/final/02.json.gz",
+      "encoding": "gzip, exact original after decompression",
+      "originalBytes": 2016,
+      "originalSha256": "ad3b47024e2f67cd5c01e27e5cfa339b9aeabbc1bbd663db8926090ff57c9b45",
+      "retainedBytes": 977,
+      "retainedSha256": "4875edb3245774117eb3a7307db88db877a2161fe33dddd1a9eb4c9913ae4983"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-couch-resize-focus/.cache/couch-resize-focus/native-root/03.jpg",
+      "retained": "docs/verification/cross-mode/p05-couch-resize-focus/native/final/03.jpg",
+      "encoding": "exact bytes",
+      "originalBytes": 48529,
+      "originalSha256": "564a120f7089d7d5ce85522df8308feca1399c41252136b5c3c7dd020370e04a",
+      "retainedBytes": 48529,
+      "retainedSha256": "564a120f7089d7d5ce85522df8308feca1399c41252136b5c3c7dd020370e04a"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-couch-resize-focus/.cache/couch-resize-focus/native-root/03.json",
+      "retained": "docs/verification/cross-mode/p05-couch-resize-focus/native/final/03.json.gz",
+      "encoding": "gzip, exact original after decompression",
+      "originalBytes": 2009,
+      "originalSha256": "23ea1f079711b48029ccf3ad237b0bcb61730fd8ee81a6bf8a4aa4c5ec658ad6",
+      "retainedBytes": 971,
+      "retainedSha256": "5a75a59170e1026417c892db249e5a5b60a67b97f3d317e0b334857cda917a38"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-couch-resize-focus/.cache/couch-resize-focus/native-root/04.json",
+      "retained": "docs/verification/cross-mode/p05-couch-resize-focus/native/final/04.json.gz",
+      "encoding": "gzip, exact original after decompression",
+      "originalBytes": 3564,
+      "originalSha256": "9ed713e9281107d4efabe4bc4f07beeb6e9eea956e48d3a5ec8bf5b526a5d801",
+      "retainedBytes": 1254,
+      "retainedSha256": "2366ba9236ecfa9374b558572373362e727b46ba8de69df741927be443ae9622"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-couch-resize-focus/.cache/couch-resize-focus/native-root/05.jpg",
+      "retained": "docs/verification/cross-mode/p05-couch-resize-focus/native/final/05.jpg",
+      "encoding": "exact bytes",
+      "originalBytes": 43433,
+      "originalSha256": "59930607c443e79d7e52a3fbfd3a55480fb60d8d8176df5bb341b45945281907",
+      "retainedBytes": 43433,
+      "retainedSha256": "59930607c443e79d7e52a3fbfd3a55480fb60d8d8176df5bb341b45945281907"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-couch-resize-focus/.cache/couch-resize-focus/native-root/05.json",
+      "retained": "docs/verification/cross-mode/p05-couch-resize-focus/native/final/05.json.gz",
+      "encoding": "gzip, exact original after decompression",
+      "originalBytes": 2007,
+      "originalSha256": "b87b7635e604ccbb43af5a2ca241a012e3d2eea8e9600a201dd986982a3c9997",
+      "retainedBytes": 975,
+      "retainedSha256": "4a1b8cca431cdfe6f6936e6b0135bf26a06fbbb6d2c71a366d9cf0bcae9355ed"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-couch-resize-focus/.cache/couch-resize-focus/native-root/06.jpg",
+      "retained": "docs/verification/cross-mode/p05-couch-resize-focus/native/final/06.jpg",
+      "encoding": "exact bytes",
+      "originalBytes": 57889,
+      "originalSha256": "0e3acca7435f4b2e5d7c2712dd08fff8bcb43e1f4afd0bcd285411bb1822ee15",
+      "retainedBytes": 57889,
+      "retainedSha256": "0e3acca7435f4b2e5d7c2712dd08fff8bcb43e1f4afd0bcd285411bb1822ee15"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-couch-resize-focus/.cache/couch-resize-focus/native-root/06.json",
+      "retained": "docs/verification/cross-mode/p05-couch-resize-focus/native/final/06.json.gz",
+      "encoding": "gzip, exact original after decompression",
+      "originalBytes": 2024,
+      "originalSha256": "696b2ac409d6fb3c6136b64a73d54455fe78d4050f5d755c200248d5140ffb2a",
+      "retainedBytes": 1003,
+      "retainedSha256": "a60f4428634610fc19e4957b148cd238a2260a4f3f19f146655d38aba707c8fb"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-couch-resize-focus/.cache/couch-resize-focus/native-root/07.jpg",
+      "retained": "docs/verification/cross-mode/p05-couch-resize-focus/native/final/07.jpg",
+      "encoding": "exact bytes",
+      "originalBytes": 43185,
+      "originalSha256": "5e46ffa5b1ecd76c1999ebf0b462ebe480bf23175d35555654f38a92713f3438",
+      "retainedBytes": 43185,
+      "retainedSha256": "5e46ffa5b1ecd76c1999ebf0b462ebe480bf23175d35555654f38a92713f3438"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-couch-resize-focus/.cache/couch-resize-focus/native-root/07.json",
+      "retained": "docs/verification/cross-mode/p05-couch-resize-focus/native/final/07.json.gz",
+      "encoding": "gzip, exact original after decompression",
+      "originalBytes": 2010,
+      "originalSha256": "bb5966ac1bb2e361f08234d3f2d020fc7bfa85fe62aba9b25c9f6b073bd43ec2",
+      "retainedBytes": 998,
+      "retainedSha256": "9690319c3b38fa3605f3e8c1298b9c09e94f483b9aa5a30d0f7ed2c9684c3eae"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-couch-resize-focus/.cache/couch-resize-focus/native-root/08.jpg",
+      "retained": "docs/verification/cross-mode/p05-couch-resize-focus/native/final/08.jpg",
+      "encoding": "exact bytes",
+      "originalBytes": 38979,
+      "originalSha256": "56c144314bf442e7a0fcbc462374989d6ebdc4fd1f460ab4a978aabdf26965ef",
+      "retainedBytes": 38979,
+      "retainedSha256": "56c144314bf442e7a0fcbc462374989d6ebdc4fd1f460ab4a978aabdf26965ef"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-couch-resize-focus/.cache/couch-resize-focus/native-root/08.json",
+      "retained": "docs/verification/cross-mode/p05-couch-resize-focus/native/final/08.json.gz",
+      "encoding": "gzip, exact original after decompression",
+      "originalBytes": 3509,
+      "originalSha256": "79268f38b19702892144ec80cd8dc2d878a77ec00a7559c54e75f3e82e1382b6",
+      "retainedBytes": 1247,
+      "retainedSha256": "c24bdadbb7a1234b8c2b04dc0c969e9820dbf8e6e7ec8e37bc428bb8de0f477b"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-couch-resize-focus/.cache/couch-resize-focus/native-root/09.jpg",
+      "retained": "docs/verification/cross-mode/p05-couch-resize-focus/native/final/09.jpg",
+      "encoding": "exact bytes",
+      "originalBytes": 48176,
+      "originalSha256": "ab3a9975e3a42230ab539d33eafbd1374ebe292c18664d6e82fd9413cd601922",
+      "retainedBytes": 48176,
+      "retainedSha256": "ab3a9975e3a42230ab539d33eafbd1374ebe292c18664d6e82fd9413cd601922"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-couch-resize-focus/.cache/couch-resize-focus/native-root/09.json",
+      "retained": "docs/verification/cross-mode/p05-couch-resize-focus/native/final/09.json.gz",
+      "encoding": "gzip, exact original after decompression",
+      "originalBytes": 1975,
+      "originalSha256": "ab34f6bc2a6d2288f528dbcf6321728fba69fa1cd4d66628eb3753c8eea514a0",
+      "retainedBytes": 947,
+      "retainedSha256": "66f525928223ea76ee57ae30e118307e375e40151ce83a0d2589e8f9752a1298"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-couch-resize-focus/.cache/couch-resize-focus/native-root/10.jpg",
+      "retained": "docs/verification/cross-mode/p05-couch-resize-focus/native/final/10.jpg",
+      "encoding": "exact bytes",
+      "originalBytes": 38475,
+      "originalSha256": "3fc0e50b7ab2220d85f76025fb7466f2287c68065ed50ceddc15816ef3d616c8",
+      "retainedBytes": 38475,
+      "retainedSha256": "3fc0e50b7ab2220d85f76025fb7466f2287c68065ed50ceddc15816ef3d616c8"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-couch-resize-focus/.cache/couch-resize-focus/native-root/10.json",
+      "retained": "docs/verification/cross-mode/p05-couch-resize-focus/native/final/10.json.gz",
+      "encoding": "gzip, exact original after decompression",
+      "originalBytes": 1977,
+      "originalSha256": "bf37776f83d7c801939bc0074b7309f1de12840662a79d127e13a9bb85a4c497",
+      "retainedBytes": 951,
+      "retainedSha256": "78dc7fb32d27a6e814c78aae3089db8cffe5396cdb88d90a3f66cf47d0f37a4f"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-couch-resize-focus/.cache/couch-resize-focus/native-root/11.json",
+      "retained": "docs/verification/cross-mode/p05-couch-resize-focus/native/final/11.json.gz",
+      "encoding": "gzip, exact original after decompression",
+      "originalBytes": 1979,
+      "originalSha256": "66aaef65ede2b4a51beccaba58d01e21145582864d2ce30235098340a110b9d4",
+      "retainedBytes": 957,
+      "retainedSha256": "df942c3190790776c4b3e1b9b9b41a6a7d2080fde04fa7581834498b3ed57767"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-couch-resize-focus/.cache/couch-resize-focus/native-root/closed.json",
+      "retained": "docs/verification/cross-mode/p05-couch-resize-focus/native/final/closed.json.gz",
+      "encoding": "gzip, exact original after decompression",
+      "originalBytes": 70,
+      "originalSha256": "eeac61ab489b97387c0bd17bc0707cccc70ae08494ecf6f608742b6b98031801",
+      "retainedBytes": 81,
+      "retainedSha256": "cafc1def86e143b284e7e0b506b9ebf18fb482b7afba4a0c068eef34e7c5091a"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-couch-resize-focus/.cache/couch-resize-focus/native-root/events.json",
+      "retained": "docs/verification/cross-mode/p05-couch-resize-focus/native/final/events.json.gz",
+      "encoding": "gzip, exact original after decompression",
+      "originalBytes": 5508,
+      "originalSha256": "f558d46c4a5632bb8388bb556033bd9937838e40549f9b60a5b9ea5c197d3d7c",
+      "retainedBytes": 858,
+      "retainedSha256": "13abb29c5439795f02ca1fc4495b2a6fd5c6fa83e0202461a97bda26a1b60579"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-couch-resize-focus/.cache/couch-resize-focus/native-root/preferences.json",
+      "retained": "docs/verification/cross-mode/p05-couch-resize-focus/native/final/preferences.json.gz",
+      "encoding": "gzip, exact original after decompression",
+      "originalBytes": 98,
+      "originalSha256": "f7892cb67084e52a63bb4fc679f63cd660f91dd1ca67a0691253022032da4a73",
+      "retainedBytes": 94,
+      "retainedSha256": "0773f92e73656550ea1785d46f5270438e6238448ac3a91914b9b5744a7ace0c"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-couch-resize-focus/.cache/couch-resize-focus/native-root/root-review.json",
+      "retained": "docs/verification/cross-mode/p05-couch-resize-focus/native/final/root-review.json.gz",
+      "encoding": "gzip, exact original after decompression",
+      "originalBytes": 12306,
+      "originalSha256": "3a68b9a13db50278c4df096b8ca1a53f208594d92b97152ca7cd4929a25af0a1",
+      "retainedBytes": 3380,
+      "retainedSha256": "b97a0a3c9a312d80b879adc5cbc6d01a68b01748e5c34aeb1b9c8a8e70a203c2"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-couch-resize-focus/.cache/couch-resize-focus/preview/http-after.json",
+      "retained": "docs/verification/cross-mode/p05-couch-resize-focus/preview/http-after.json",
+      "encoding": "exact bytes",
+      "originalBytes": 1366,
+      "originalSha256": "950e98d82455d73ed4cbfd445e881d1a860dec1d47935db4ba557ee1681c05b5",
+      "retainedBytes": 1366,
+      "retainedSha256": "950e98d82455d73ed4cbfd445e881d1a860dec1d47935db4ba557ee1681c05b5"
+    }
+  ],
+  "originalBytes": 1036215,
+  "retainedBytes": 580864,
+  "held01Reconstruction": "Two historical source bodies reconstructed by reversing only the reviewed final guard/test insertion and checked byte-for-byte against source-held-01 hashes before retention.",
+  "qualification": "Final three whole files: 64/64 on Node22 and20. Overlapping held01 63/63 and one modeled before-fix failure remain distinct. Native status is declared separately in README and root review."
+}
