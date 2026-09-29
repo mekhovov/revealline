@@ -23,11 +23,12 @@ export function attachCreatorPlayerNavigation({
     autoJoin: true,
     navigationAliases: true,
   });
-  const lifecycle = createControllerConfirmLifecycle();
+  let lifecycle;
   const guard = attachControllerConfirmGuard({
     document: doc,
     now,
     confirmPressed: () => getScope() !== 'flight' && router.menuConfirmPressed(),
+    beforeNativeActivation: (event) => lifecycle?.beforeNativeActivation(event),
   });
   const topDialog = () => [...doc.querySelectorAll('dialog[open]')].at(-1);
   const scope = () =>
@@ -64,15 +65,35 @@ export function attachCreatorPlayerNavigation({
     accept: (element) => !element.closest('#arena,.touch-controls'),
     activateControl: (element) => guard.activate(element),
     activateFileInput: (element) => sources.open(element),
-    onNativeInput: () => router.clear(),
+    onNativeInput: (event) => {
+      lifecycle?.nativeInput(event);
+      router.clear();
+    },
     onBack: back,
     onMenu: back,
+  });
+  lifecycle = createControllerConfirmLifecycle({
+    document: doc,
+    readConfirm: (options) => router.readMenuConfirm(options),
+    getContext: () => ({
+      scope: scope(),
+      root: topDialog() || doc.body,
+      focused: doc.activeElement,
+      active: getScope() !== 'flight' && !doc.hidden && doc.hasFocus?.() !== false && !disposed,
+    }),
+    navigation: {
+      beginConfirm: (target) => navigation?.beginConfirm(target),
+      commitConfirm: () => navigation?.commitConfirm(),
+      cancelConfirm: () => navigation?.cancelConfirm(),
+      confirmCurrent: () => navigation?.confirmCurrent(),
+    },
+    guard,
+    now,
   });
   function refresh({ focus = false } = {}) {
     if (disposed) return;
     router.clear();
-    lifecycle.reset('player-state');
-    guard.cancel('player-state');
+    lifecycle.cancel('player-state', { hard: true });
     navigation?.clear();
     navigation?.sync();
     lastScope = scope();
@@ -92,21 +113,10 @@ export function attachCreatorPlayerNavigation({
       if (currentScope !== 'flight') refresh();
       return;
     }
-    const frame = lifecycle.filter(router.sample({ scope: currentScope, timeMs }), {
-      scope: currentScope,
-      timeMs,
-    });
+    const frame = router.sample({ scope: currentScope, timeMs });
     if (frame.status.code === 'joined') navigation.engage();
-    const command = frame.ui;
-    const target = navigation.handle(command);
-    if (command.confirmStart) {
-      if (target) guard.begin(target);
-      else lifecycle.reset('unavailable-target');
-    } else if (command.confirmCancel) guard.cancel('lifecycle-cancel');
-    else if (command.confirmCommit) {
-      if (target) guard.finish('release');
-      else guard.cancel('invalid-target');
-    }
+    lifecycle.sample(frame.confirmSnapshot);
+    navigation.handle({ ...frame.ui, confirm: false });
   }
   const clear = () => refresh();
   win.addEventListener('blur', clear);
@@ -121,7 +131,7 @@ export function attachCreatorPlayerNavigation({
       navigation.destroy();
       guard.destroy();
       router.destroy();
-      lifecycle.reset('dispose');
+      lifecycle.destroy();
       win.removeEventListener('blur', clear);
       doc.removeEventListener('visibilitychange', clear);
     },

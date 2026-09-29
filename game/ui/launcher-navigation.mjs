@@ -19,10 +19,11 @@ export function attachLauncherNavigation({
       .map((id) => doc.getElementById(id))
       .find((element) => element && !element.hidden && !element.disabled);
   const router = createControllerRouter({ eventTarget: win, autoJoin: true, readPads, now });
-  const lifecycle = createControllerConfirmLifecycle();
+  let lifecycle;
   const guard = attachControllerConfirmGuard({
     document: doc,
     confirmPressed: () => foreground() && router.menuConfirmPressed(),
+    beforeNativeActivation: (event) => lifecycle?.beforeNativeActivation(event),
     now,
   });
   const navigation = attachControllerNavigation({
@@ -33,33 +34,43 @@ export function attachLauncherNavigation({
     keyboard: true,
     ownsKeyboardEvent: () => !foreground(),
     activateControl: (element) => guard.activate(element),
+    onNativeInput: (event) => {
+      lifecycle?.nativeInput(event);
+      router.clear();
+    },
     onBack: () => preferred()?.focus(),
+  });
+  lifecycle = createControllerConfirmLifecycle({
+    document: doc,
+    readConfirm: (options) => router.readMenuConfirm(options),
+    getContext: () => ({
+      scope: 'launcher',
+      root: doc.body,
+      focused: doc.activeElement,
+      active: foreground(),
+    }),
+    navigation: {
+      beginConfirm: (target) => navigation.beginConfirm(target),
+      commitConfirm: () => navigation.commitConfirm(),
+      cancelConfirm: () => navigation.cancelConfirm(),
+      confirmCurrent: () => navigation.confirmCurrent(),
+    },
+    guard,
+    now,
   });
   const clear = () => {
     router.clear();
-    lifecycle.reset('launcher-lifecycle');
-    guard.cancel('launcher-lifecycle');
+    lifecycle.cancel('launcher-lifecycle', { hard: true });
     navigation.clear();
   };
   const sample = (timeMs) => {
     frame = null;
     if (disposed || suspended) return;
     if (foreground()) {
-      const state = lifecycle.filter(router.sample({ scope: 'launcher', timeMs }), {
-        scope: 'launcher',
-        timeMs,
-      });
+      const state = router.sample({ scope: 'launcher', timeMs });
       if (state.status.code === 'joined') navigation.engage();
-      const command = state.ui;
-      const target = navigation.handle(command);
-      if (command.confirmStart) {
-        if (target) guard.begin(target);
-        else lifecycle.reset('unavailable-target');
-      } else if (command.confirmCancel) guard.cancel('launcher-cancel');
-      else if (command.confirmCommit) {
-        if (target) guard.finish('release');
-        else guard.cancel('invalid-target');
-      }
+      lifecycle.sample(state.confirmSnapshot);
+      navigation.handle({ ...state.ui, confirm: false });
     } else clear();
     frame = win.requestAnimationFrame(sample);
   };
@@ -89,6 +100,7 @@ export function attachLauncherNavigation({
       pagehide();
       disposed = true;
       router.destroy();
+      lifecycle.destroy();
       guard.destroy();
       navigation.destroy();
       win.removeEventListener('blur', clear);
