@@ -1,0 +1,171 @@
+{
+  "format": "revealline-recovery-fragment-v1",
+  "capturedAt": "2026-09-29T15:10:02.348365+00:00",
+  "worktree": "<home>/work/my_projects/go_test/.cache/worktrees/p03-team-lobby-visible-focus",
+  "branch": "refs/heads/codex/p03-team-lobby-visible-focus",
+  "head": "628e95daf403082768cdcf900a8ea1d1ef4629a2",
+  "excluded": [],
+  "changes": [
+    {
+      "status": " M",
+      "path": "authoring/prompts/cross-mode-delivery.md",
+      "object": "17587ba9f49c5406f7ec70b0b9c4ccee204b9b14",
+      "sha256": "ec29dbd9d58f22d62b5ab710b6b7daaf6885a13efcfcf0c87362d4f982e53b52",
+      "bytes": 55257,
+      "mode": "100644"
+    },
+    {
+      "status": " M",
+      "path": "authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "object": "e58a299c72c8307f637048ada85011cec6ce9701",
+      "sha256": "0ab3caa8699eaa3aa5368616e5207eb238f824cd25a33f58aa20cc940bb4d4bb",
+      "bytes": 205053,
+      "mode": "100644"
+    },
+    {
+      "status": " M",
+      "path": "docs/team-picture-host.md",
+      "object": "61782e949d87fb63d4719992ead12a5acb84b5d7",
+      "sha256": "dd6667158d9e6a7440e795199530f6b73c40339a348012b6361b789726a297ef",
+      "bytes": 7788,
+      "mode": "100644"
+    },
+    {
+      "status": " M",
+      "path": "game/couch/coop-view.mjs",
+      "object": "162320b9abf93fc050d07bf412d842dc54556ae0",
+      "sha256": "f54b0a83047606aa845209716cdd4ee6a952c892808606d2597539927b76e342",
+      "bytes": 21420,
+      "mode": "100644"
+    },
+    {
+      "status": " M",
+      "path": "game/couch/relay-rescue.css",
+      "object": "4725fa33c3b1706f7bcf239ba07c93833e0b7114",
+      "sha256": "315069d23962338346347c5cfb102249c3efbe380d99032baf207fef079e16dc",
+      "bytes": 19284,
+      "mode": "100644"
+    },
+    {
+      "status": " M",
+      "path": "game/couch/relay-rescue.html",
+      "object": "8e136716896a45ef50293ebaef0508c8d9c500e0",
+      "sha256": "95ea2552db1b2d3dceb26ac4f0f41ff2fab6addb8979acfbac1d768c810e1ea7",
+      "bytes": 22232,
+      "mode": "100644"
+    },
+    {
+      "status": " M",
+      "path": "game/couch/relay-rescue.mjs",
+      "object": "f3a0110e4d98aaccabf2b720dc7f577babbc13e3",
+      "sha256": "6fd7388ad0b7a6ece3bff9c61c61002c2f4f5e51a8a0660ea62b8f3da452b06f",
+      "bytes": 61847,
+      "mode": "100644"
+    },
+    {
+      "status": " M",
+      "path": "game/test/coop-won-terminal-host.test.mjs",
+      "object": "aa402173d66db5718bbc1233d0aa126eb6dc6580",
+      "sha256": "ed4d80728a0de8f854b11c050d7e973a0acd68a7ea7e8745e0acbadd80761bff",
+      "bytes": 7912,
+      "mode": "100644"
+    },
+    {
+      "status": " M",
+      "path": "game/test/helpers/coop-host.mjs",
+      "object": "de071572c03d2c2d53d5d459bfda0af6069d1e79",
+      "sha256": "8e11dca89c4022334b5326282afbeda905a7fd281a091917e8278f89b6bc2034",
+      "bytes": 11374,
+      "mode": "100644"
+    },
+    {
+      "status": "??",
+      "path": "docs/team-victory-picture.md",
+      "object": "3b0042470e5a41921d6fc7c328373daa152f9185",
+      "sha256": "dc5e7f0c385b3ebc71a396ac4dbc6c24145284f54704a3f91ed7aeded0db27de",
+      "bytes": 5449,
+      "mode": "100644"
+    },
+    {
+      "status": "??",
+      "path": "game/test/coop-lobby-focus.test.mjs",
+      "object": "25ca1153f332224b9e8aeff42deb7f33754bb6e3",
+      "sha256": "e52c2f191916d6155dc244ff876a5877d97885bdfba7d0ab0ddf73eb24e19a7c",
+      "bytes": 6602,
+      "mode": "100644"
+    },
+    {
+      "status": "??",
+      "path": "game/test/coop-lobby-preview.test.mjs",
+      "object": "f76ba6e30968917bbd1f82e46130d1f8110a134a",
+      "sha256": "f5757a75aa04808562be2f09d3b237f88190314fca491d5252dd8a62d4e4f703",
+      "bytes": 26070,
+      "mode": "100644"
+    },
+    {
+      "status": "??",
+      "path": "game/test/coop-victory-picture.test.mjs",
+      "object": "9b3dd4dcb80f32de164d639a72a56d8934524527",
+      "sha256": "3d5fe255e923bf9f67b43fd0a168c1a56db06a2801c314616323b49bd5377737",
+      "bytes": 8757,
+      "mode": "100644"
+    }
+  ],
+  "indexEntries": [
+    {
+      "path": "authoring/prompts/cross-mode-delivery.md",
+      "mode": "100644",
+      "object": "988160ec70d3f7949d9fc2365cd0d1b0d3592dd6",
+      "stage": 0
+    },
+    {
+      "path": "authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "mode": "100644",
+      "object": "62d0e1c2b180659156f1d3214a8341038e4e0326",
+      "stage": 0
+    },
+    {
+      "path": "docs/team-picture-host.md",
+      "mode": "100644",
+      "object": "9dc4e10e4a1de53b9658d6ff0b67662d98b74814",
+      "stage": 0
+    },
+    {
+      "path": "game/couch/coop-view.mjs",
+      "mode": "100644",
+      "object": "a4f5f3736e4c7b6323323d13f68b6ed2578923f2",
+      "stage": 0
+    },
+    {
+      "path": "game/couch/relay-rescue.css",
+      "mode": "100644",
+      "object": "fe83be36cb5ed6b84833b6da11cfd0f0e734d98e",
+      "stage": 0
+    },
+    {
+      "path": "game/couch/relay-rescue.html",
+      "mode": "100644",
+      "object": "32f9a6cafa4651d10a578c1a62224eee6231f1bd",
+      "stage": 0
+    },
+    {
+      "path": "game/couch/relay-rescue.mjs",
+      "mode": "100644",
+      "object": "47ae5a11577a103271adf9ae3684417452277b36",
+      "stage": 0
+    },
+    {
+      "path": "game/test/coop-won-terminal-host.test.mjs",
+      "mode": "100644",
+      "object": "72816e10c92f3fa94e49d42d39bec32a4dd9866c",
+      "stage": 0
+    },
+    {
+      "path": "game/test/helpers/coop-host.mjs",
+      "mode": "100644",
+      "object": "45005b9b563386b3cfd7fe42fbcd8e246c340148",
+      "stage": 0
+    }
+  ],
+  "purpose": "Recovery only. These bytes are not release admission. Missing files, conflict stages and obsolete generated outputs are preserved as observations, not deletion or merge instructions."
+}
