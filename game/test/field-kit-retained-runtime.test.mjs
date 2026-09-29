@@ -15,6 +15,7 @@ import {
   FIELD_KIT_RETAINED_DISCOVERY102 as pinDiscovery102,
   FIELD_KIT_RETAINED_DISCOVERY103 as pinDiscovery103,
   FIELD_KIT_RETAINED_MAIN101 as pinMain101,
+  FIELD_KIT_RETAINED_RADIO_PREDECESSOR102 as pinRadio102,
   readFieldKitRetainedOutput,
 } from '../../scripts/field-kit-retained-runtime.mjs';
 import { compileFieldKitProduction } from '../../scripts/produce-field-kit-theme.mjs';
@@ -134,7 +135,7 @@ function fixture() {
   })());
 }
 
-test('retained production inputs preserve eight exact paths across independent lineages', async () => {
+test('retained production inputs preserve nine exact paths across independent lineages', async () => {
   const { original, production } = await fixture();
   const reads = [];
   const files = await readFieldKitRetainedOutput({
@@ -153,11 +154,19 @@ test('retained production inputs preserve eight exact paths across independent l
     pinDiscovery102.path,
     pinDiscovery103.path,
     pinMain101.path,
+    pinRadio102.path,
   ]);
   assert.equal(pin.commit, 'b810521a53af7be145acb8dedce0a01a747339cf');
   assert.equal(pin.originalPath, 'game/presentation/compiled/runtime.json');
-  assert.equal(sha(files.get('runtime.json')), pinMain101.sha256);
-  assert.deepEqual(files.get('runtime.json'), await read(pinMain101.path));
+  assert.equal(sha(files.get('runtime.json')), pinRadio102.sha256);
+  assert.deepEqual(files.get('runtime.json'), await read(pinRadio102.path));
+  assert.deepEqual(files.get(`runtime.${pinMain101.sha256}.json`), await read(pinMain101.path));
+  assert.equal(pinRadio102.commit, '280321ca77eef81d1bce9de8c23247548ae9dd03');
+  assert.equal(pinRadio102.bytes, 1249035);
+  assert.equal(
+    pinRadio102.sha256,
+    '92f09d9eb867989438991f116ee8a192cee6ac8c2e3f286297aa184257c96f78',
+  );
   assert.deepEqual(files.get(`runtime.${pin.sha256}.json`), original);
   assert.equal(pin58.commit, '6842203fbf24db198da21759e23d5c5c64d499dd');
   assert.equal(pin58.originalPath, 'game/presentation/compiled/runtime.json');
@@ -226,6 +235,7 @@ test('production regeneration retains raw runtime54,58,60 and62 and originals wi
           pinDiscovery102.path,
           pinDiscovery103.path,
           pinMain101.path,
+          pinRadio102.path,
         ].includes(path),
         'no incidental compiled-output history read',
       );
@@ -244,6 +254,7 @@ test('production regeneration retains raw runtime54,58,60 and62 and originals wi
       pinDiscovery102.path,
       pinDiscovery103.path,
       pinMain101.path,
+      pinRadio102.path,
     ],
     ...[
       pin.path,
@@ -254,6 +265,7 @@ test('production regeneration retains raw runtime54,58,60 and62 and originals wi
       pinDiscovery102.path,
       pinDiscovery103.path,
       pinMain101.path,
+      pinRadio102.path,
     ],
   ]);
   assert.deepEqual([...first.files], [...second.files], 'repeat generation is byte-identical');
@@ -282,8 +294,8 @@ test('production regeneration retains raw runtime54,58,60 and62 and originals wi
     );
   assert.equal(
     first.files.size,
-    144,
-    '127 originals, five exact equipment payloads, current output and eight retained runtimes',
+    145,
+    '127 originals, five exact equipment payloads, current output and nine retained runtimes',
   );
   const reformatted = await compileFieldKitProduction(production, {
     ...options,
@@ -394,7 +406,7 @@ test('accepted58 is byte-exact, dependency-complete and fails closed without los
   }
   assert.deepEqual(files.get(`runtime.${pin.sha256}.json`), await read(pin.path));
   assert.deepEqual(files.get(`runtime.${pin60.sha256}.json`), await read(pin60.path));
-  assert.deepEqual(files.get('runtime.json'), await read(pinMain101.path));
+  assert.deepEqual(files.get('runtime.json'), await read(pinRadio102.path));
 });
 
 test('explicit62 preserves all lazy dependencies and rejects changed original manifest bytes', async () => {
@@ -426,14 +438,14 @@ test('explicit62 preserves all lazy dependencies and rejects changed original ma
 test('colliding preview and canonical revision101 retain different exact manifest authorities', async () => {
   const { production } = await fixture();
   const files = await readFieldKitRetainedOutput({ assets: production.assets, read });
-  const pins = [pinDiscovery101, pinDiscovery102, pinDiscovery103, pinMain101];
+  const pins = [pinDiscovery101, pinDiscovery102, pinDiscovery103, pinMain101, pinRadio102];
   const identities = [];
   for (const item of pins) {
     const original = await read(item.path);
     assert.equal(original.length, item.bytes);
     assert.equal(sha(original), item.sha256);
     const retained = files.get(
-      item === pinMain101 ? 'runtime.json' : `runtime.${item.sha256}.json`,
+      item === pinRadio102 ? 'runtime.json' : `runtime.${item.sha256}.json`,
     );
     assert.deepEqual(retained, original);
     const inventory = await inspectPresentationDependencies(retained, {
@@ -454,7 +466,8 @@ test('colliding preview and canonical revision101 retain different exact manifes
       /runtime input hash differs/,
     );
   }
-  assert.deepEqual(identities, [101, 102, 103, 101]);
+  assert.deepEqual(identities, [101, 102, 103, 101, 102]);
   assert.notEqual(pinDiscovery101.sha256, pinMain101.sha256);
+  assert.notEqual(pinDiscovery102.sha256, pinRadio102.sha256);
   await verifyPresentationOutput(files);
 });

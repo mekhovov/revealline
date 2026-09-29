@@ -14,6 +14,7 @@ import {
   createFieldKitProduction,
   fieldKitEquipmentQuality,
   fieldKitEquipmentSource,
+  verifyFieldKitRadioAudioContinuationReview,
 } from '../../scripts/produce-field-kit-theme.mjs';
 import { createHash } from 'node:crypto';
 import { gunzipSync } from 'node:zlib';
@@ -587,11 +588,19 @@ test('shared-host UI and managed-media audio bind only reviewed current inputs',
   const continuationHash = createHash('sha256')
     .update(await fs.readFile(new URL(`../../${continuationPath}`, import.meta.url)))
     .digest('hex');
-  const currentReviewPath = 'docs/verification/discovery-main321-reconciliation/review.json';
-  const currentReviewSHA256 = 'f2b3a2724cf48455dbe98d5ca12a2b081ef1f982531e91838c0291a64bbed976';
+  const currentReviewPath = 'docs/verification/radio-audio-20260929/review.json';
+  const currentReviewSHA256 = '93fdb14773e7ef58cdcaebcf1db3d4a3100d77aa13081d25ff799aa0e24c84e3';
   const current = await authenticatedCurrentReview(currentReviewPath, currentReviewSHA256, [
     'audio',
   ]);
+  const mainReconciliation = await authenticatedReviewRecord(
+    current.review.priorReviews.mainReconciliation.path,
+    current.review.priorReviews.mainReconciliation.sha256,
+  );
+  assert.equal(
+    current.review.fingerprints.audio.priorSHA256,
+    mainReconciliation.fingerprints.audio.currentSHA256,
+  );
   const mainUIReviewPath =
     'docs/verification/discovery-webp-ui-continuation-2026-09-29/review.json';
   const mainUIReviewSHA256 = '2496cbfe4e885a931f22cbf5287efac45344074bb14dc4cf96f09a2d5a0a366f';
@@ -602,11 +611,11 @@ test('shared-host UI and managed-media audio bind only reviewed current inputs',
   );
   assert.equal(mainUI.review.fingerprints.ui.priorSHA256, priorUI.fingerprints.ui.currentSHA256);
   const priorGP4Review = await authenticatedReviewRecord(
-    current.review.priorReviews.candidateGP4.path,
-    current.review.priorReviews.candidateGP4.sha256,
+    mainReconciliation.priorReviews.candidateGP4.path,
+    mainReconciliation.priorReviews.candidateGP4.sha256,
   );
   assert.equal(
-    current.review.fingerprints.audio.priorSHA256,
+    mainReconciliation.fingerprints.audio.priorSHA256,
     priorGP4Review.fingerprints.audio.currentSHA256,
   );
   const priorDiscoveryReview = await authenticatedReviewRecord(
@@ -2025,7 +2034,7 @@ test('canonical main101 appends one reviewed successor while complete candidate1
     sha(oracleBytes),
     'aeb03a91c4da24fe300a9312b79ef986265d6bc78ce6f1f3893549d5fb5a8daa',
   );
-  const current = await importThemeBundle(
+  const latest = await importThemeBundle(
     new Blob([
       await fs.readFile(
         new URL('../../authoring/library/fpv-field-kit/production.rltheme', import.meta.url),
@@ -2033,6 +2042,14 @@ test('canonical main101 appends one reviewed successor while complete candidate1
     ]),
     { decodeImage: null },
   );
+  const currentOracle = await fs.readFile(
+    new URL('./fixtures/production-radio-head280-fpv102.json', import.meta.url),
+  );
+  assert.equal(
+    sha(currentOracle),
+    '83c4153ec97c693526b6d00baf722b4494a107cd48f03a991f7e2de64b7de3d2',
+  );
+  const current = await reconstructPinnedProduction(JSON.parse(currentOracle), latest);
   const prior = await reconstructPinnedProduction(JSON.parse(oracleBytes), current);
   assert.equal(current.document.revision, 102);
   assert.equal(current.document.assets.length, 2646);
@@ -2060,11 +2077,14 @@ test('canonical main101 appends one reviewed successor while complete candidate1
     prior.document.themes,
   );
   const reviewPath = 'docs/verification/discovery-main321-reconciliation/review.json';
-  const reviewed = await authenticatedCurrentReview(
+  const historicalReview = await authenticatedReviewRecord(
     reviewPath,
     'f2b3a2724cf48455dbe98d5ca12a2b081ef1f982531e91838c0291a64bbed976',
-    ['audio'],
   );
+  const historicalAudioSource =
+    historicalReview.fingerprints.audio.paths +
+    ' sha256:' +
+    historicalReview.fingerprints.audio.currentSHA256;
   const before = resolvePresentation(prior.document),
     after = resolvePresentation(current.document);
   for (const [slot, asset] of Object.entries(before.assets)) {
@@ -2074,7 +2094,7 @@ test('canonical main101 appends one reviewed successor while complete candidate1
       const next = after.assets[slot];
       assert.equal(next.revision, 54);
       assert.equal(next.quality.stage, 'reviewed');
-      assert.equal(next.provenance.source, reviewed.sources.audio);
+      assert.equal(next.provenance.source, historicalAudioSource);
       assert.deepEqual(next.recipe, asset.recipe);
       assert(next.quality.evidence[0].endsWith('\n' + asset.quality.evidence[0]));
       assert.deepEqual(next.quality.evidence.slice(1), asset.quality.evidence.slice(1));
@@ -2088,4 +2108,78 @@ test('canonical main101 appends one reviewed successor while complete candidate1
       Buffer.from(await alternate.assets.get(hash).arrayBuffer()),
     );
   assert.equal(current.document.themes.at(-1).parent.revision, 101);
+});
+
+test('radio source continuation preserves canonical102 and appends exactly eight audio55 records', async () => {
+  const read = (relative) => fs.readFile(new URL('../../' + relative, import.meta.url));
+  const oraclePath = 'game/test/fixtures/production-radio-head280-fpv102.json';
+  const oracleBytes = await read(oraclePath);
+  const current = await importThemeBundle(
+    new Blob([await read('authoring/library/fpv-field-kit/production.rltheme')]),
+    { decodeImage: null },
+  );
+  const prior = await reconstructPinnedProduction(JSON.parse(oracleBytes), current);
+  assert.equal(prior.document.revision, 102);
+  assert.equal(current.document.revision, 103);
+  assert.equal(current.document.assets.length, prior.document.assets.length + 8);
+  assert.equal(current.document.themes.length, prior.document.themes.length + 1);
+  validateThemeBundle(current.document, { previous: prior.document, expectedRevision: 102 });
+  for (const group of ['assets', 'themes', 'slots', 'collections'])
+    assert.deepEqual(
+      current.document[group].slice(0, prior.document[group].length),
+      prior.document[group],
+    );
+  assert.equal(current.document.slots.length, prior.document.slots.length);
+  assert.equal(current.document.collections.length, prior.document.collections.length);
+  const reviewPath = 'docs/verification/radio-audio-20260929/review.json';
+  const reviewed = await authenticatedCurrentReview(
+    reviewPath,
+    '93fdb14773e7ef58cdcaebcf1db3d4a3100d77aa13081d25ff799aa0e24c84e3',
+    ['audio'],
+  );
+  assert.deepEqual(reviewed.review.fingerprints.audio.changedInputs, ['game/app.mjs']);
+  const before = resolvePresentation(prior.document),
+    after = resolvePresentation(current.document);
+  for (const [slot, original] of Object.entries(before.assets)) {
+    const next = after.assets[slot];
+    if (!slot.startsWith('audio.')) {
+      assert.deepEqual(next, original, slot);
+      continue;
+    }
+    assert.equal(next.revision, 55);
+    assert.equal(next.quality.stage, 'reviewed');
+    assert.equal(next.provenance.source, reviewed.sources.audio);
+    assert.deepEqual(next.recipe, original.recipe);
+    assert.deepEqual(next.file, original.file);
+    assert.deepEqual(next.provenance.parent, { id: original.id, revision: original.revision });
+    assert.equal(next.quality.evidence.length, original.quality.evidence.length);
+    assert(next.quality.evidence[0].endsWith('\n' + original.quality.evidence[0]));
+    assert.deepEqual(next.quality.evidence.slice(1), original.quality.evidence.slice(1));
+    assert(next.quality.evidence.every((entry) => entry.length <= 2048));
+  }
+  const last = current.document.themes.at(-1);
+  assert.deepEqual(last.parent, { id: 'fpv', revision: 102 });
+  assert.equal(Object.keys(last.bindings).length, 8);
+  assert(Object.keys(last.bindings).every((slot) => slot.startsWith('audio.')));
+  assert.equal(current.assets.size, 132);
+  for (const [hash, original] of prior.assets)
+    assert.deepEqual(
+      Buffer.from(await current.assets.get(hash).arrayBuffer()),
+      Buffer.from(await original.arrayBuffer()),
+    );
+  const reviewBytes = await read(reviewPath);
+  const mainBytes = await read('docs/verification/discovery-main321-reconciliation/review.json');
+  assert.equal(
+    verifyFieldKitRadioAudioContinuationReview(reviewBytes, mainBytes, oracleBytes),
+    true,
+  );
+  for (let index = 0; index < 3; index++) {
+    const inputs = [reviewBytes, mainBytes, oracleBytes];
+    inputs[index] = Buffer.concat([inputs[index], Buffer.from('\n')]);
+    assert.equal(
+      verifyFieldKitRadioAudioContinuationReview(...inputs),
+      false,
+      'changed evidence ' + index,
+    );
+  }
 });
