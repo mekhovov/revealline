@@ -1,7 +1,9 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { attachControllerConfirmTrace } from '../ui/controller-confirm-trace.mjs';
+import { attachControllerConfirmGuard } from '../ui/controller-confirm-guard.mjs';
 import { getLocale, setLocale } from '../i18n/index.mjs';
+import { Events } from './helpers/couch-dom.mjs';
 
 function fixture() {
   const listeners = new Map();
@@ -251,6 +253,69 @@ test('visible native trace preserves primary pointer edges and nonprimary click 
     output,
     /native:click trusted:true pointer:mouse pointerId:1 primary:false button:0/,
   );
+  trace.destroy();
+});
+
+test('enabling trace after the document guard observes owned native events before consumption', () => {
+  const window = new Events(),
+    document = new Events(),
+    target = new Events();
+  document.parentNode = window;
+  document.defaultView = window;
+  document.activeElement = target;
+  target.parentNode = document;
+  target.id = 'sound';
+  const trace = attachControllerConfirmTrace({ document, enabled: false }),
+    guard = attachControllerConfirmGuard({ document, onTrace: trace.record });
+  let targetActivations = 0;
+  target.addEventListener('click', () => targetActivations++);
+  guard.begin(target);
+  target.emit('click', { isTrusted: true, button: 0, isPrimary: false });
+  assert.deepEqual(trace.snapshot(), []);
+  trace.setEnabled(true);
+  for (const [type, isPrimary] of [
+    ['pointerdown', true],
+    ['pointerup', true],
+    ['click', false],
+  ]) {
+    const event = target.emit(type, {
+      isTrusted: true,
+      pointerType: 'mouse',
+      pointerId: 1,
+      isPrimary,
+      button: 0,
+    });
+    assert.equal(event.defaultPrevented, true);
+  }
+  assert.deepEqual(
+    trace
+      .snapshot()
+      .map(({ event, native, primary, pointerId, button, trusted }) => [
+        event,
+        native,
+        primary,
+        pointerId,
+        button,
+        trusted,
+      ]),
+    [
+      ['native-observed', 'pointerdown', true, 1, 0, true],
+      ['native-consumed', 'pointerdown', undefined, null, null, undefined],
+      ['native-observed', 'pointerup', true, 1, 0, true],
+      ['native-consumed', 'pointerup', undefined, null, null, undefined],
+      ['native-observed', 'click', false, 1, 0, true],
+      ['native-consumed', 'click', undefined, null, null, undefined],
+    ],
+  );
+  assert.equal(targetActivations, 0);
+  trace.setEnabled(false);
+  target.emit('click', { isTrusted: true, button: 0, isPrimary: false });
+  assert.deepEqual(trace.snapshot(), []);
+  assert.equal(
+    [...window.captureListeners.values()].every((listeners) => !listeners.size),
+    true,
+  );
+  guard.destroy();
   trace.destroy();
 });
 
