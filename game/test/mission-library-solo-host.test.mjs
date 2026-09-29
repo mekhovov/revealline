@@ -56,6 +56,18 @@ const currentPressure = model.missions.find(
     mission.ownerId.includes('current-line-impact.v1'),
 );
 
+function assertReadyCard(card, name = card.querySelector('.journey-card-title').textContent) {
+  assert.equal(card.tagName, 'BUTTON');
+  assert.equal(card.type, 'button');
+  assert.equal(card.disabled, false);
+  assert.equal(card.dataset.availabilityState, 'ready');
+  assert.ok(name.length > 0, 'The ready mission has a readable name.');
+  assert.ok(
+    card.getAttribute('aria-label').includes(name),
+    'Its accessible name identifies the mission.',
+  );
+}
+
 async function installedAssets(pack) {
   const assets = managedIndexedDB();
   const db = await new Promise((resolve, reject) => {
@@ -104,7 +116,8 @@ test('installed Custom late mission in a second campaign launches its exact auth
   const card = [...p.$('journey-cards').children].find(
     (button) => JSON.parse(button.dataset.missionId)[3] === second.levels.at(-1).id,
   );
-  assert.match(card.textContent, /Custom.*Authored rules.*Play/);
+  assert.match(card.textContent, /Custom.*Authored rules/);
+  assertReadyCard(card, second.levels.at(-1).name);
   card.click();
   await running(p, second.levels.at(-1).id);
   assert.equal(p.$('pack-select').value, source.id);
@@ -227,7 +240,10 @@ test('Classic Solo mounts all139 Journey and188 retained Classic missions', asyn
       .length,
     188,
   );
-  assert.match(cards.find((card) => card.dataset.missionId === lateBase.id).textContent, /Play/);
+  assertReadyCard(
+    cards.find((card) => card.dataset.missionId === lateBase.id),
+    lateBase.name,
+  );
   assert.deepEqual(p.errors, []);
 });
 
@@ -338,7 +354,7 @@ test('unified Solo failed Download retries inline and preserves the flight until
   await open(p);
   assert.equal(p.$('journey-search').value, 'night');
   assert.equal(p.doc.activeElement, selected());
-  assert.match(selected().textContent, /Play/);
+  assertReadyCard(selected(), row.name);
   assert.deepEqual(p.errors, []);
 });
 
@@ -524,7 +540,8 @@ test('Solo mode filter exposes the same qualified Journey identities in Versus w
   );
   assert.equal(new Set(original).size, 327);
   const target = cards[1];
-  assert.match(target.textContent, /Journey.*Band 1\/12.*Play/);
+  assert.match(target.textContent, /Journey.*Band 1\/12/);
+  assertReadyCard(target);
   target.click();
   await settle(() => globalThis.location.href.includes('library-mission='));
   const destination = new URL(globalThis.location.href);
@@ -546,7 +563,7 @@ for (const collection of ['Journey', 'Classic'])
     const target = cards.find((card) =>
       card.querySelector('.journey-card-tags').textContent.includes(collection),
     );
-    assert.match(target.textContent, /Play/);
+    assertReadyCard(target);
     target.click();
     await settle(() => globalThis.location.href.includes('library-mission='));
     const destination = new URL(globalThis.location.href);

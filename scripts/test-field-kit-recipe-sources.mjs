@@ -7,6 +7,8 @@ import {
   verifyFieldKitDiscoveryAudioContinuationReview,
   verifyFieldKitDiscoveryWebPUIContinuationReview,
   verifyFieldKitGP4RestoreAudioContinuationReview,
+  verifyFieldKitSelectorAudioContinuationReview,
+  verifyFieldKitMainReconciliationReview,
   verifyFieldKitAudioStyleMenuCorrectionReview,
   verifyFieldKitAudioStyleMenuReview,
   verifyFieldKitPlayerReadinessAudioReview,
@@ -558,4 +560,44 @@ test('gp4 restore audio continuation pins the scoped review and complete product
     }
   }
   assert.equal(verifyFieldKitGP4RestoreAudioContinuationReview(...originals.toReversed()), false);
+});
+
+test('Selector audio continuation and exact production100 predecessor fail closed', async () => {
+  const paths = [
+    'docs/verification/v0.142.4-selector-audio-continuation/review.json',
+    'docs/verification/v0.142.3-steamdeck-confirm-audio-continuation/review.json',
+    'game/test/fixtures/production-v01423-b5ab-fpv100.json',
+  ];
+  const bytes = await Promise.all(
+    paths.map((path) => readFile(new URL('../' + path, import.meta.url))),
+  );
+  assert.equal(verifyFieldKitSelectorAudioContinuationReview(...bytes), true);
+  for (let index = 0; index < bytes.length; index++) {
+    const changed = [...bytes];
+    changed[index] = Buffer.concat([changed[index], Buffer.from(' ')]);
+    assert.equal(verifyFieldKitSelectorAudioContinuationReview(...changed), false);
+  }
+  assert.equal(verifyFieldKitSelectorAudioContinuationReview(...bytes.toReversed()), false);
+});
+
+test('main reconciliation authenticates both review lineages, original archive and retained inputs', async () => {
+  const paths = [
+    'docs/verification/discovery-main321-reconciliation/review.json',
+    'docs/verification/v0.142.4-selector-audio-continuation/review.json',
+    'docs/verification/discovery-gp4-restore-audio-continuation-2026-09-29/review.json',
+    'game/test/fixtures/production-v01424-main321-fpv101.json',
+    'game/test/fixtures/production-discovery-db4-fpv103.json',
+    'docs/verification/discovery-main321-reconciliation/discovery-production103.rltheme.gz',
+    'docs/verification/discovery-main321-reconciliation/retained-inputs.json',
+  ];
+  const inputs = await Promise.all(
+    paths.map((name) => readFile(new URL('../' + name, import.meta.url))),
+  );
+  assert.equal(verifyFieldKitMainReconciliationReview(...inputs), true);
+  for (const index of inputs.keys()) {
+    const changed = [...inputs];
+    changed[index] = Buffer.concat([inputs[index], Buffer.from(' ')]);
+    assert.equal(verifyFieldKitMainReconciliationReview(...changed), false, paths[index]);
+  }
+  assert.equal(verifyFieldKitMainReconciliationReview(...inputs.toReversed()), false);
 });

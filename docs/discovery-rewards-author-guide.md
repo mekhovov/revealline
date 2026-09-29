@@ -220,7 +220,7 @@ This player check is distinct from **06 / Whole-game preview**: the Studio-launc
 preview explicitly uses fresh in-memory progress and does not read, save, import
 or export a player's Journey or rewards. Guided fixture and reward previews also
 cannot supply completion evidence. The automated chain is covered by
-`game/test/company-studio-playthrough.test.mjs`; its modeled DOM/canvas boundaries
+`game/test/showcase-studio-playthrough.test.mjs`; its modeled DOM/canvas boundaries
 do not establish physical touch/controller, layout or learning effectiveness.
 
 The export command produces a candidate and report, not a ZIP release or publication. Leave

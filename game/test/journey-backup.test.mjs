@@ -61,6 +61,30 @@ test('Journey restore merges missing progress for every mode while current recei
   );
 });
 
+test('restore keeps the current receipt identity and merges the separate highest star result', async () => {
+  const current = createJourneyProfileStore({ backend: createJourneyBackend(managedIndexedDB()) });
+  const incoming = createJourneyProfileStore({ backend: createJourneyBackend(managedIndexedDB()) });
+  const complete = (runId, stars) => ({
+    type: 'complete',
+    mode: 'solo',
+    missionId: 'shared',
+    ...receipt(runId),
+    stars,
+  });
+  current.record(complete('current-run', 1));
+  incoming.record(complete('backup-run', 3));
+  await Promise.all([current.flush(), incoming.flush()]);
+  const exported = incoming.export();
+  current.restore(exported);
+  assert.equal(await current.flush(), true);
+  assert.equal(current.snapshot().clears.solo.shared.runId, 'current-run');
+  assert.equal(current.bestStars('solo', 'shared'), 3);
+  const before = current.export();
+  current.restore(exported);
+  assert.equal(await current.flush(), true);
+  assert.equal(current.export(), before, 'Restore is idempotent');
+});
+
 test('malformed, oversized, prototype and invented receipt backups cannot modify state', () => {
   const badReceipt = backup();
   badReceipt.profile.clears.solo.shared.difficulty = 'impossible';

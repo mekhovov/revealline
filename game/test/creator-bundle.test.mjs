@@ -454,3 +454,45 @@ test('installed project sources remain Custom and do not require decoding media 
   assert.equal(library.search('', { collection: 'Journey', mode: 'solo' }).length, 0);
   store.close();
 });
+
+test('installed Creator stars read the separate profile record without changing saved v1 receipts', async (t) => {
+  const creatorDisk = memoryIndexedDB();
+  const store = createCreatorStore({ indexedDB: creatorDisk.indexedDB });
+  const pack = await prepared('Star sidecar');
+  const approval = approveCreatorBundle(pack);
+  await installPreparedCreatorBundle(
+    store,
+    pack,
+    approval,
+    await reviewCreatorInstallation(store, pack, approval),
+    { decodeImage },
+  );
+  const disk = managedIndexedDB();
+  const backend = createJourneyBackend({ ...disk, profileKey: creatorProfileKey(pack.editionId) });
+  await backend.commit([
+    {
+      type: 'complete',
+      mode: 'solo',
+      missionId: 'picture-1',
+      runId: 'run-stars',
+      gameplayId: 'gameplay-stars',
+      difficulty: 'standard',
+      stars: 2,
+    },
+  ]);
+  const original = Object.getOwnPropertyDescriptor(globalThis, 'indexedDB');
+  Object.defineProperty(globalThis, 'indexedDB', { configurable: true, value: disk.indexedDB });
+  t.after(() => {
+    if (original) Object.defineProperty(globalThis, 'indexedDB', original);
+    else delete globalThis.indexedDB;
+  });
+  const sources = await installedCreatorLibrarySources({ store });
+  const library = createMissionLibrary(sources);
+  const [row] = library.search('', { collection: 'Custom', mode: 'solo' });
+  assert.deepEqual(library.progressState(row, 'solo'), { state: 'completed', bestStars: 2 });
+  assert.deepEqual(Object.keys((await backend.read()).clears.solo['picture-1']), [
+    'runId',
+    'gameplayId',
+    'difficulty',
+  ]);
+});

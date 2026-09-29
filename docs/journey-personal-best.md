@@ -62,8 +62,8 @@ Journey save.
 ## Backup and presentation
 
 Without optional evidence, exports retain the existing v1/v2/v3 shape. Backups
-containing it use `revealline-journey-backup.v4`, bound to the existing logical
-profile key. Explicit Inspect and Restore use the asynchronous replay verifier;
+containing stars or performance use `revealline-journey-backup.v5`, bound to the existing logical
+profile key. The two historical v4 shapes remain readable using their distinct stars or performance sidecar; ambiguous shapes are rejected. Explicit Inspect and Restore use the asynchronous replay verifier;
 claimed scores, false outcomes and wrong mission/gameplay bindings are rejected.
 Closing the recovery dialog cancels verification and suppresses late UI updates.
 Once an explicit Restore has accepted ordinary valid clears, a later optional

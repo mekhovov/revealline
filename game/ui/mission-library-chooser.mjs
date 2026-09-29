@@ -15,6 +15,11 @@ import {
 } from '../mission-library/library.mjs';
 import { paintMissionThumbnail } from '../content-design/mission-card.mjs';
 import { trackMissionLibraryOpening } from '../mission-library/opening-intent.mjs';
+import {
+  applyLevelCardPresentation,
+  createLevelCardView,
+  levelCardPresentation,
+} from './level-card.mjs';
 
 const LIBRARY_TAG_KEYS = Object.freeze({
   Journey: 'common:collections.journey',
@@ -203,6 +208,7 @@ export function attachMissionLibraryChooser({
     destroyed = false,
     restoringCardFocus = false,
     resizeFrame = null,
+    viewportAnchor = null,
     message = '';
   let goal = null;
   let initialOpen = true;
@@ -312,7 +318,11 @@ export function attachMissionLibraryChooser({
     if (selectedId && !library.find(selectedId)) return search;
     const current =
       !selectedId && modeFilter.value === mode ? currentSelectionButton(getCurrentId()) : null;
-    return current ?? [...list.children].find((button) => !button.disabled) ?? search;
+    return (
+      current ??
+      [...list.querySelectorAll('.journey-card')].find((button) => !button.disabled) ??
+      search
+    );
   }
   function restoreSelection() {
     const target = primary();
@@ -522,16 +532,42 @@ export function attachMissionLibraryChooser({
     }
   }
   function makeCard(row) {
-    const button = node('button');
-    button.type = 'button';
-    button.className = 'journey-card journey-card-illustrated';
+    const view = createLevelCardView({
+      document: doc,
+      className: 'journey-card journey-card-illustrated',
+      classes: {
+        campaignHeading: 'journey-campaign-heading',
+        meta: 'journey-card-meta',
+        number: 'journey-card-number',
+        position: 'journey-card-position',
+        title: 'journey-card-title',
+        campaign: 'journey-card-campaign',
+        progressGroup: 'journey-card-progress-group',
+        progress: 'journey-card-progress',
+        stars: 'journey-card-stars',
+        status: 'journey-card-action',
+        preview: 'journey-card-preview',
+        check: 'journey-card-check',
+      },
+    });
+    const {
+      button,
+      campaignHeading,
+      number,
+      position: campaignPosition,
+      title: name,
+      campaign: campaignName,
+      progress,
+      stars,
+      status: action,
+      preview,
+      check,
+    } = view;
     button.dataset.missionId = row.id;
-    const number = node('span', null, String(row.levelIndex + 1).padStart(2, '0'));
-    number.className = 'journey-card-number';
     const display = () => library.presentation?.(row) ?? row;
-    const name = node('strong', null, () => display().name);
-    const campaignName = node('span', null, () => display().campaignTitle);
-    campaignName.className = 'journey-card-campaign';
+    localizedText(campaignHeading, () => display().campaignTitle);
+    localizedText(name, () => display().name);
+    localizedText(campaignName, () => display().campaignTitle);
     localizedAttribute(button, 'data-campaign-title', () => display().campaignTitle);
     const edition = node('span', null, () => display().edition);
     edition.className = 'journey-card-edition';
@@ -539,8 +575,6 @@ export function attachMissionLibraryChooser({
       row.tags.map((tag) => t(LIBRARY_TAG_KEYS[tag])).join(' · '),
     );
     tags.className = 'journey-card-tags';
-    const progress = node('span');
-    progress.className = 'journey-card-progress';
     const rules = node('span', null, row.rules);
     rules.className = 'journey-card-challenge';
     rules.hidden = !row.rules;
@@ -548,20 +582,7 @@ export function attachMissionLibraryChooser({
     route.className = 'journey-card-route';
     const mastery = node('span');
     mastery.className = 'journey-card-mastery';
-    const action = node('span');
-    action.className = 'journey-card-action';
-    button.append(
-      number,
-      name,
-      campaignName,
-      edition,
-      tags,
-      progress,
-      rules,
-      route,
-      mastery,
-      action,
-    );
+    button.append(edition, tags, rules, route, mastery);
     button.onclick = () => activate(row, button);
     button.addEventListener('focusin', () => {
       selectedId = row.id;
@@ -571,11 +592,17 @@ export function attachMissionLibraryChooser({
     return {
       row,
       button,
+      campaignHeading,
+      number,
+      campaignPosition,
       progress,
+      stars,
       rules,
       route,
       mastery,
       action,
+      preview,
+      check,
       diagram: null,
       artwork: null,
       completion: null,
@@ -594,19 +621,16 @@ export function attachMissionLibraryChooser({
       collection: collection.value,
       lifecycle: lifecycle.value,
     });
-    const matches = campaign.value
-      ? railRows.filter((row) => row.campaignKey === campaign.value)
-      : railRows;
+    // Campaigns are navigation anchors, never a hidden second filter. Every
+    // matching campaign remains in this one scroll surface.
+    const matches = railRows;
     localizedText(
       status,
       () =>
         `${t('common:counts.missions', { count: matches.length })} · ${modeLabel(modeFilter.value)}${message ? ` · ${renderMessage(message)}` : ''}`,
     );
     const filtersActive =
-      !!collection.value ||
-      !!campaign.value ||
-      modeFilter.value !== mode ||
-      lifecycle.value !== 'current';
+      !!collection.value || modeFilter.value !== mode || lifecycle.value !== 'current';
     localizedText(filterSummary, () =>
       filtersActive ? t('interface:filtersActive') : t('interface:filters'),
     );
@@ -636,13 +660,11 @@ export function attachMissionLibraryChooser({
         if (destroyed || !dialog.open || doc.hidden || doc.hasFocus?.() === false) return;
         retirePendingSelection();
         retirePreparations();
-        if (campaign.value) {
-          campaign.value = '';
-          pendingCampaign = '';
-          ++visit;
-          render();
-        }
-        const target = [...list.children].find((card) => card.dataset.campaignKey === key);
+        campaign.value = key;
+        pendingCampaign = '';
+        const target = [...list.querySelectorAll('.journey-card')].find(
+          (card) => card.dataset.campaignKey === key,
+        );
         if (!target || target.disabled) return;
         selectedId = target.dataset.missionId;
         target.focus({ preventScroll: true });
@@ -655,12 +677,35 @@ export function attachMissionLibraryChooser({
     campaignRail.hidden = shortcuts.length < 2;
     let previousCampaign = null;
     const buttons = matches.map((row) => {
+      const display = () => library.presentation?.(row) ?? row;
       let card = cards.get(row.id);
       if (card?.row !== row) {
         card = makeCard(row);
         cards.set(row.id, card);
       }
       const availability = library.availability(row, modeFilter.value);
+      const progressState = library.progressState(row, modeFilter.value);
+      const cardPresentation = levelCardPresentation({ ...row, progressState });
+      applyLevelCardPresentation(card, cardPresentation);
+      localizedText(card.number, () =>
+        row.globalLevelNumber === null
+          ? t('interface:missionLibrary.customLevel')
+          : t('interface:missionLibrary.levelNumber', { number: row.globalLevelNumber }),
+      );
+      localizedText(card.campaignPosition, () =>
+        t('interface:missionLibrary.campaignPosition', {
+          position: row.campaignLevelNumber,
+          total: row.campaignLevelCount,
+        }),
+      );
+      localizedText(card.stars, () => cardPresentation.stars);
+      localizedAttribute(card.stars, 'aria-label', () =>
+        progressState.state === 'completed'
+          ? progressState.bestStars === null
+            ? t('interface:missionLibrary.completedStarsUnknown')
+            : t('interface:missionLibrary.completedStars', { stars: progressState.bestStars })
+          : t('interface:missionLibrary.notCompleted'),
+      );
       const details = library.details(row, modeFilter.value);
       localizedText(card.rules, () => library.details(row, modeFilter.value).challenge);
       card.rules.hidden = !details.challenge;
@@ -677,19 +722,21 @@ export function attachMissionLibraryChooser({
       card.button.dataset.campaignKey = row.campaignKey;
       card.button.dataset.campaignStart = String(previousCampaign !== row.campaignKey);
       card.button.dataset.availabilityState = availability.state;
-      card.button.dataset.completionState = card.completion?.state ?? 'unfinished';
       card.button.dataset.pictureState = card.completion?.state ?? 'unfinished';
       card.button.dataset.current = String(row.id === getCurrentId());
-      previousCampaign = row.campaignKey;
+      card.campaignHeading.hidden = previousCampaign === row.campaignKey;
       localizedText(card.progress, () =>
         card.completion?.state === 'unavailable'
           ? card.completion.reason
-          : library.progress(row, modeFilter.value),
+          : library.progress(row, modeFilter.value) ||
+            (progressState.state === 'completed' && progressState.bestStars === null
+              ? t('interface:missionLibrary.completedStarsUnknown')
+              : ''),
       );
       card.progress.hidden = !card.progress.textContent;
       localizedText(card.action, () =>
         availability.state === 'ready'
-          ? t('common:actions.play')
+          ? ''
           : availability.state === 'download'
             ? `${t('interface:downloadPlay')} · ${sizeLabel(availability.bytes)}`
             : availability.state === 'preparing'
@@ -701,8 +748,25 @@ export function attachMissionLibraryChooser({
                   { reason: availability.reason },
                 ),
       );
+      card.action.hidden = availability.state === 'ready';
+      localizedAttribute(card.button, 'aria-label', () => {
+        const progressLabel =
+          progressState.state === 'completed'
+            ? progressState.bestStars === null
+              ? t('interface:missionLibrary.completedStarsUnknown')
+              : t('interface:missionLibrary.completedStars', { stars: progressState.bestStars })
+            : progressState.state === 'skipped'
+              ? t('interface:skippedTryAgain')
+              : t('interface:missionLibrary.notCompleted');
+        const ownerProgress =
+          progressState.state === 'completed' && progressState.bestStars === null
+            ? library.progress(row, modeFilter.value)
+            : '';
+        return `${card.number.textContent} · ${displayName(row)} · ${display().campaignTitle} · ${card.campaignPosition.textContent} · ${progressLabel}${ownerProgress ? ` · ${ownerProgress}` : ''}`;
+      });
       card.button.disabled = availability.state === 'unavailable' && !availability.retry;
       card.button.setAttribute('aria-busy', String(availability.state === 'preparing'));
+      previousCampaign = row.campaignKey;
       return card.button;
     });
     // Reuse buttons across status changes instead of throwing away keyboard focus.
@@ -750,17 +814,12 @@ export function attachMissionLibraryChooser({
     const changed =
       !!card.artwork ||
       !!card.diagram ||
-      !!card.button.querySelector('.journey-card-map') ||
-      !!card.button.querySelector('.journey-card-picture-status');
+      !!card.preview.querySelector('.journey-card-map') ||
+      !!card.preview.querySelector('.journey-card-picture-status');
     card.artwork?.release();
     card.artwork = null;
     card.diagram = null;
-    card.button.querySelector('.journey-card-map')?.remove();
-    card.button.querySelector('.journey-card-picture-status')?.remove();
-    // Lazy previews above the selected card can change the scroll geometry
-    // without a viewport resize. Preserve the player's exact focus and bring
-    // that same card back into view after the complete observer batch settles.
-    if (changed) keepFocusedCardVisible();
+    if (changed) card.preview.replaceChildren();
   }
   function showPreview(card) {
     if (card.diagram || !dialog.open || !list.contains(card.button)) return;
@@ -773,7 +832,7 @@ export function attachMissionLibraryChooser({
       if (card.completion?.state === 'earned') {
         const pictureStatus = node('span');
         pictureStatus.className = 'journey-card-picture-status';
-        card.button.append(canvas, pictureStatus);
+        card.preview.append(canvas, pictureStatus);
         card.artwork = createJourneyArtworkView({
           canvas,
           status: pictureStatus,
@@ -784,9 +843,8 @@ export function attachMissionLibraryChooser({
         if (!diagram) return;
         canvas.height = (288 * diagram.height) / diagram.width;
         paintMissionThumbnail(canvas.getContext('2d'), diagram, canvas.width);
-        card.button.append(canvas);
+        card.preview.append(canvas);
       }
-      keepFocusedCardVisible();
     } catch {
       /* Optional previews cannot prevent a mission launch. */
     }
@@ -810,7 +868,7 @@ export function attachMissionLibraryChooser({
     if (observer || !dialog.open) return;
     const bounds = list.getBoundingClientRect();
     let shown = 0;
-    for (const button of list.children) {
+    for (const button of list.querySelectorAll('.journey-card')) {
       const card = cards.get(button.dataset.missionId),
         rect = button.getBoundingClientRect();
       const near = rect.bottom >= bounds.top - 120 && rect.top <= bounds.bottom + 120;
@@ -827,10 +885,25 @@ export function attachMissionLibraryChooser({
         observer?.unobserve?.(card.button);
         hidePreview(card);
       }
-    for (const button of list.children) observer?.observe?.(button);
+    for (const button of list.querySelectorAll('.journey-card')) observer?.observe?.(button);
     fallbackPreviews();
   }
+  function captureViewportAnchor() {
+    if (!dialog.open) return;
+    const bounds = list.getBoundingClientRect();
+    for (const button of list.querySelectorAll('.journey-card')) {
+      const rect = button.getBoundingClientRect();
+      if (rect.bottom >= bounds.top) {
+        viewportAnchor = {
+          id: button.dataset.missionId,
+          offset: rect.top - bounds.top,
+        };
+        return;
+      }
+    }
+  }
   list.addEventListener('scroll', fallbackPreviews);
+  list.addEventListener('scroll', captureViewportAnchor);
   function invalidateDiagrams() {
     observer?.disconnect();
     for (const card of cards.values()) hidePreview(card);
@@ -839,46 +912,37 @@ export function attachMissionLibraryChooser({
     if (resizeFrame !== null) view.cancelAnimationFrame?.(resizeFrame);
     resizeFrame = null;
   }
-  function keepFocusedCardVisible() {
+  function preserveViewportAnchor() {
     cancelResizeScroll();
     if (destroyed || !dialog.open || doc.hidden || doc.hasFocus?.() === false) return;
-    const focused = doc.activeElement,
-      ticket = visit;
-    if (!focused || currentSelectionButton(focused.dataset.missionId) !== focused) return;
-    // Layout can move the selected card outside the scrollport after rotation.
-    // Scroll only the focus that owned this resize; never refocus or acquire a
-    // newer action after the player has moved to a filter or another screen.
-    const scroll = () => {
+    if (!viewportAnchor) captureViewportAnchor();
+    const anchor = viewportAnchor && { ...viewportAnchor };
+    if (!anchor) return;
+    const ticket = visit;
+    const restore = () => {
       resizeFrame = null;
-      if (
-        destroyed ||
-        ticket !== visit ||
-        !dialog.open ||
-        doc.hidden ||
-        doc.hasFocus?.() === false ||
-        doc.activeElement !== focused ||
-        currentSelectionButton(focused.dataset.missionId) !== focused
-      )
+      if (destroyed || ticket !== visit || !dialog.open || doc.hidden || doc.hasFocus?.() === false)
         return;
-      focused.scrollIntoView?.({ block: 'nearest', inline: 'nearest' });
+      const target = currentSelectionButton(anchor.id);
+      if (!target) return;
+      const bounds = list.getBoundingClientRect();
+      const delta = target.getBoundingClientRect().top - bounds.top - anchor.offset;
+      if (Number.isFinite(delta) && Math.abs(delta) >= 1) list.scrollTop += delta;
+      viewportAnchor = anchor;
     };
-    if (view.requestAnimationFrame) resizeFrame = view.requestAnimationFrame(scroll);
-    else scroll();
+    if (view.requestAnimationFrame) resizeFrame = view.requestAnimationFrame(restore);
+    else restore();
   }
-  view.addEventListener?.('resize', keepFocusedCardVisible);
+  view.addEventListener?.('resize', preserveViewportAnchor);
   function resizeFilters(event) {
     compact = event.matches === true;
-    // A viewport change must not hide the focused native select inside a
-    // collapsed details element. No filter value or browsing state is reset.
+    // Keep the exact focused control and selection across rotation. If a
+    // compact transition catches focus inside the filter panel, leave that
+    // panel open until the player moves onward instead of relocating focus.
     const focused = doc.activeElement;
-    filterDetails.open = !compact;
-    if (dialog.open && !doc.hidden && doc.hasFocus?.() !== false) {
-      if (compact && filterOptions.contains(focused)) filterSummary.focus({ preventScroll: true });
-      else if (!compact && (focused === filterSummary || detailLabel.contains(focused)))
-        collection.focus({ preventScroll: true });
-    }
+    filterDetails.open = !compact || filterOptions.contains(focused);
     if (dialog.open) observeDiagrams();
-    keepFocusedCardVisible();
+    preserveViewportAnchor();
   }
   media?.addEventListener?.('change', resizeFilters);
   detailedCards.addEventListener('change', () => {
@@ -974,13 +1038,29 @@ export function attachMissionLibraryChooser({
         !(focused === clearSearch && doc.activeElement === doc.body))
     )
       return;
-    const first = [...list.children].find((button) => !button.disabled);
+    const first = [...list.querySelectorAll('.journey-card')].find((button) => !button.disabled);
     (first ?? (compact ? filterSummary : collection)).focus({
       preventScroll: true,
     });
     remember();
   };
-  for (const control of [collection, campaign, modeFilter, lifecycle])
+  campaign.addEventListener('change', () => {
+    retirePendingSelection();
+    retirePreparations();
+    pendingCampaign = '';
+    const key = campaign.value;
+    if (!key) return;
+    const target = [...list.querySelectorAll('.journey-card')].find(
+      (card) => card.dataset.campaignKey === key && !card.disabled,
+    );
+    if (!target) return;
+    selectedId = target.dataset.missionId;
+    target.focus({ preventScroll: true });
+    target.scrollIntoView?.({ block: 'start', inline: 'nearest' });
+    updateCampaignRailSelection(selectedId);
+    remember({ captureFocus: false });
+  });
+  for (const control of [collection, modeFilter, lifecycle])
     control.addEventListener('change', () => {
       retirePendingSelection();
       retirePreparations();
@@ -990,7 +1070,7 @@ export function attachMissionLibraryChooser({
       savedScroll = 0;
       list.scrollTop = 0;
       pendingCampaign = '';
-      if (control !== campaign) rebuildCampaigns();
+      rebuildCampaigns();
       if (control === modeFilter) invalidateDiagrams();
       render();
       remember();
@@ -1078,7 +1158,7 @@ export function attachMissionLibraryChooser({
       doc.removeEventListener('visibilitychange', selectionVisibilityChanged);
       view.removeEventListener?.('blur', retirePendingSelection);
       view.removeEventListener?.('blur', cancelResizeScroll);
-      view.removeEventListener?.('resize', keepFocusedCardVisible);
+      view.removeEventListener?.('resize', preserveViewportAnchor);
       dialog.remove();
     },
   };

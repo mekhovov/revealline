@@ -180,12 +180,11 @@ const REVIEWED_RECIPE_INPUTS = {
     ],
   },
   audio: {
-    sha256: '94c62d025dd9a8764baec87514d25083e0026caa7ed9c9cf5f71497ef447e1be',
+    sha256: '1776f2cd1edd169c15a7905650c8bc70be75f52773bb6d21abed3236b005c535',
     evidence: [
-      'Scoped discovery audio software continuation: docs/verification/discovery-audio-continuation-2026-09-29/review.json sha256:edeecf9fbafdabd7e4fdb653be58baf8deaa3483a6ee426552d611d2fff768ea; exact50 ordered inputs sha256:a7780c46c20f2603e41f8d7c728d3d13c3efdb6e799a3e5d429ae236bf15d20c. Accepted campaign fallback, explicit exact-original recording export, shared reward master/gain ownership and isolated preview preferences retain the eight existing recipe identities and original payloads. The 22 added behavior and media-validation inputs reopen this group when changed. Exact production100/audio52 predecessor oracle sha256:cf19ad831cc0347f4f84c2ac310a1168354858e75f40991b35ffec18ea58d0b7 is retained. This is software continuation only; composition, listening, physical-device, frozen/public and release acceptance remain separate.',
-      'Scoped v0.142.3 Steam Deck Confirm audio continuation: docs/verification/v0.142.3-steamdeck-confirm-audio-continuation/review.json sha256:a059520f6ce0c394c3425355c711b641b4b23f9321e11c7d384317e7f814798c; exact28 inputs sha256:39fe40240f0475e471a52772060899d3e329e4d54d6b2bb6679e76dc745ee9a4. Only game/app.mjs changes, coordinating native and Gamepad Confirm ownership and opt-in local diagnostics; all audio implementation, eight existing procedural recipes, routing and payloads remain unchanged. Exact v0.142.2 production99/audio51 predecessor fixture sha256:528361f4e7823a23b02b261ca1de0c9b3157d1a17cbba643e4ff7e67073bc0a7 is retained. Final qualification, frozen/public, listening and physical Steam Deck acceptance remain separate.',
+      'Merged main/candidate software continuation: docs/verification/discovery-main321-reconciliation/review.json sha256:f2b3a2724cf48455dbe98d5ca12a2b081ef1f982531e91838c0291a64bbed976. Exact50-source approval only; historical branch lineages and runtime pins remain separate. No listening, device, frozen/public approval.\nScoped v0.142.4 mission-selector audio continuation: docs/verification/v0.142.4-selector-audio-continuation/review.json sha256:f2cf0cc93f8de8e959eabf6e6313a0af306dfae87e2cb663bfe7bef805df6fe6; exact28 inputs sha256:fd3d7e347bc3a6e36bd884b508af8bbd8492cc3a4dac19bb745664a7fe90adc6. Only game/app.mjs changes, adding clear-star metadata and mission-card progress adapters; audio implementation, eight procedural recipes, routing and payloads remain unchanged. Exact published production100/audio52 predecessor fixture sha256:db9cc258d79aaa0caaf587fa3c73be5fcc55cea5f6129524c59255f04f3bbeb0 is retained. Selector/save compatibility, final qualification, frozen/public, listening and physical-device acceptance remain separate.\nScoped v0.142.3 Steam Deck Confirm audio continuation: docs/verification/v0.142.3-steamdeck-confirm-audio-continuation/review.json sha256:a059520f6ce0c394c3425355c711b641b4b23f9321e11c7d384317e7f814798c; exact28 inputs sha256:39fe40240f0475e471a52772060899d3e329e4d54d6b2bb6679e76dc745ee9a4. Only game/app.mjs changes, coordinating native and Gamepad Confirm ownership and opt-in local diagnostics; all audio implementation, eight existing procedural recipes, routing and payloads remain unchanged. Exact v0.142.2 production99/audio51 predecessor fixture sha256:528361f4e7823a23b02b261ca1de0c9b3157d1a17cbba643e4ff7e67073bc0a7 is retained. Final qualification, frozen/public, listening and physical Steam Deck acceptance remain separate.',
       'Scoped PR #770 Audio playback correction continuation: docs/verification/audio-style-menu-correction-2026-09-28/review.json sha256:62c1dac1be4286acdb8201aab99b6d3c5e2e2b282e1c88cb34d88af527172e09; exact28 inputs sha256:d9650ffde4c938064703de7c1e8ec987ac1efc1b6470ebcad4ca4ab459a32018. Only soundtrack-player.mjs and soundtrack-panel.mjs changed: saved listening preferences are isolated from unsaved Music Studio drafts, newer transport intent wins delayed playback, identity-owned catalogue retry survives close, and queue-capacity copy is corrected. The associated test-evidence repair pins the exact accepted-main production97 predecessor oracle. Exact production98/audio50 predecessor fixture sha256:e397af798928a72502c970276fe212eaad8d2a4889f5afe02587559244496714 is bound separately. Eight existing procedural recipes, routing and payloads remain unchanged; production generation, hosted, frozen/public, listening and physical-device acceptance remain separate.',
-      'Scoped v0.142.1 Audio menu and style taxonomy continuation: docs/verification/audio-style-menu-2026-09-28/review.json sha256:bc87031d46ded1ace2cc62c6ca87e2ce90ccbb043db7c5fdb653d262c3b94f49; exact28 inputs sha256:9f0bf41c491a44b4ac585975fd444f7e2e5822534914f36b0213157861173344. Audio settings expose transport and broad style selection, automatically mix matching archive and local music, separate Synth/Electronic, combine UA/Ukrainian and require exact Cyrillic ФПВ. The dependency closure binds the quick controls and taxonomy modules. Eight existing procedural recipes and payloads remain unchanged; hosted, frozen/public, listening and physical-device acceptance remain separate.',
+      'Scoped v0.142.1 Audio menu and style taxonomy continuation: docs/verification/audio-style-menu-2026-09-28/review.json sha256:bc87031d46ded1ace2cc62c6ca87e2ce90ccbb043db7c5fdb653d262c3b94f49; exact28 inputs sha256:9f0bf41c491a44b4ac585975fd444f7e2e5822534914f36b0213157861173344. Audio settings expose transport and broad style selection, automatically mix matching archive and local music, separate Synth/Electronic, combine UA/Ukrainian and require exact Cyrillic \u0424\u041f\u0412. The dependency closure binds the quick controls and taxonomy modules. Eight existing procedural recipes and payloads remain unchanged; hosted, frozen/public, listening and physical-device acceptance remain separate.',
       'Scoped player-readiness17 ownership source continuation: docs/verification/player-readiness17-audio-continuation-2026-09-28/review.json sha256:0584016a71b220780cc8912666638c468550c7167c2c1084b28b7952f27fa608; exact26 inputs sha256:124a7d186850bd1175bfc45bafba2f19912c89bcb271b5a0c2773e9ad5441b34. Existing eight recipes, routing and payloads unchanged; theme96/audio48 and all predecessors retained. Append-only production and all hosted/frozen/public/listening/device/human acceptance remain separate.',
       'Scoped localization14 Flight Details source continuation: docs/verification/localization14-audio-continuation-2026-09-28/review.json sha256:104e5cb33140537f9234fc26966d4a32f70927c89f1e4bfd1e3955432e1910da; exact26 inputs sha256:81a03fb4791564b775735a1cc977a2c63d492ac8221fb043fa9aa3008fcb9509. Existing eight recipes, routing and payloads unchanged; main95/audio47 and all predecessors retained. Append-only production, hosted/frozen/public/listening/device and human acceptance remain separate.',
       'Scoped main/bulk audio continuation: docs/verification/bulk-main320-audio-continuation-2026-09-28/review.json sha256:afcfcca1612109e117595c424e03ac002271165ccb1a4082697011e16c4c5a75; exact26 inputs sha256:d10dcf448002347b200f9886d0a5f3a23789a7f4fb928bccb4884224359cd575. Fresh canonical-main successors only; all main records and payloads retained, divergent unpublished branch identities preserved as immutable Git evidence without relabelling. Existing recipes only; final production, candidate, hosted, frozen/public and listening/device gates remain separate.',
@@ -197,7 +196,8 @@ const REVIEWED_RECIPE_INPUTS = {
       'v0.141.0 managed-media continuation: docs/verification/v0.141.0-managed-media-audio-continuation/review.json sha256:16f3eb26f28eae82f6529c8a872438c216a05d7a905e0fee0b3d6b0e9601e998; twenty-four ordered audio inputs sha256:77370fe6fc7a8d376865b05d8ba2020b8683b3922c20cc3dfad260d0a0251f79. Only managed-media-store.mjs and media-storage-record.mjs changed after the prior exact review, adding bounded cross-domain byte accounting and exact reviewed still-byte detachment while preserving audio routing, recipes, rows, blobs, playback and soundtrack bytes.',
       'v0.132.5 locale-refresh continuation: docs/verification/v0.132.5-presentation-continuation/review.json sha256:fbc818dcfbbfd2cf1985017417959c82741162842cd3c7293f5be67fc594ef35; twenty-four ordered audio inputs sha256:301e68a4898cf7d9140abee266195401a69cfca0db2301a12409ec252c882ec9. Only game/app.mjs changed after the prior exact review, asking the shared shell to refresh localized Home copy while preserving audio routing, recipes and bytes.',
       'Scoped v0.132.1 Steam Deck controller continuation: docs/verification/v0.132.1-steamdeck-audio-continuation/review.json sha256:b715c81fa1f86a562d5c195ffc025727fc009d1de6cfe03c403db75fdfbf8d70; twenty-five ordered audio inputs sha256:417ceb75d58709373e1abdb047c26224db06721bd58b3ff8302152c33d2f735a. Only game/app.mjs changed among those inputs, adding a controller Confirm lifecycle filter before menu dispatch while preserving audio routing and bytes.',
-      'Scoped gp4 restore audio software continuation: docs/verification/discovery-gp4-restore-audio-continuation-2026-09-29/review.json sha256:27c3663b72c1ccf1b78b2bf641952ff5d011e10520f0044d981f5c8166741b0d; exact50 ordered inputs sha256:94c62d025dd9a8764baec87514d25083e0026caa7ed9c9cf5f71497ef447e1be. Only the app Collection eligibility guard changes to exact recorded-level matching; administrative rejection, audio call sites, recipes, routing, media ownership and payloads are unchanged. Independent production102 oracle sha256:88f08a4ed55e2d7a26e491828d808d1a2c6784ab5e811acce7537009a68ad315 retains every predecessor. Gameplay restoration and frozen-browser qualification remain separate. The prior offline ownership and v0.131 English/Ukrainian reviews remain incorporated. All 8 selected roles retain the same procedural recipes; playback state, volume values, local-only selection, resumable download, shared-byte removal, rights, cancellation and imported-media preservation are unchanged. No recording, composition, musical suitability, Ukrainian authenticity, full-track listening, physical-device, frozen-build or public game approval. Historical reviews and original payloads remain immutable; any audio dependency or review-byte change reopens this group.',
+      'The prior offline ownership and v0.131 English/Ukrainian reviews remain incorporated. All 8 selected roles retain the same procedural recipes; playback state, volume values, local-only selection, resumable download, shared-byte removal, rights, cancellation and imported-media preservation are unchanged.',
+      'No recording, composition, musical suitability, Ukrainian authenticity, full-track listening, physical-device, frozen-build or public game approval. Historical reviews and original payloads remain immutable; any audio dependency or review-byte change reopens this group.',
     ],
   },
   motion: {
@@ -425,6 +425,35 @@ export function verifyFieldKitGP4RestoreAudioContinuationReview(
   );
 }
 
+export function verifyFieldKitSelectorAudioContinuationReview(
+  currentBytes,
+  priorBytes,
+  predecessorOracleBytes,
+) {
+  return (
+    hash(currentBytes) === 'f2cf0cc93f8de8e959eabf6e6313a0af306dfae87e2cb663bfe7bef805df6fe6' &&
+    hash(priorBytes) === 'a059520f6ce0c394c3425355c711b641b4b23f9321e11c7d384317e7f814798c' &&
+    hash(predecessorOracleBytes) ===
+      'db9cc258d79aaa0caaf587fa3c73be5fcc55cea5f6129524c59255f04f3bbeb0'
+  );
+}
+
+export function verifyFieldKitMainReconciliationReview(...inputs) {
+  const expected = [
+    'f2b3a2724cf48455dbe98d5ca12a2b081ef1f982531e91838c0291a64bbed976',
+    'f2cf0cc93f8de8e959eabf6e6313a0af306dfae87e2cb663bfe7bef805df6fe6',
+    '27c3663b72c1ccf1b78b2bf641952ff5d011e10520f0044d981f5c8166741b0d',
+    'aeb03a91c4da24fe300a9312b79ef986265d6bc78ce6f1f3893549d5fb5a8daa',
+    '9aac97ef9ded7270148887d8148fc01fec378f5e5ef612ca86b3353015263e91',
+    'a11e83533645783b6e35fd815e4494480527febe45d1f3afca86754d5a9a43d6',
+    'b4b40e42fc155e8bd7223654a1464332d535b6850de32d8b09b103b0184a9fd9',
+  ];
+  return (
+    inputs.length === expected.length &&
+    inputs.every((bytes, index) => hash(bytes) === expected[index])
+  );
+}
+
 /** Explicit dependency fingerprints; a helper change must reopen its review group. */
 export async function fieldKitRecipeSources(read) {
   return Object.fromEntries(
@@ -597,6 +626,63 @@ export async function createFieldKitProduction({ projectRoot = root } = {}) {
   )
     throw new Error(
       'GP4 restore audio continuation review or production102 predecessor oracle bytes changed; production approval must reopen.',
+    );
+  if (
+    !verifyFieldKitSelectorAudioContinuationReview(
+      await read('docs/verification/v0.142.4-selector-audio-continuation/review.json'),
+      await read('docs/verification/v0.142.3-steamdeck-confirm-audio-continuation/review.json'),
+      await read('game/test/fixtures/production-v01423-b5ab-fpv100.json'),
+    )
+  )
+    throw new Error(
+      'Selector audio continuation review or production100 predecessor oracle bytes changed; production approval must reopen.',
+    );
+  if (
+    !verifyFieldKitSteamDeckAudioContinuationReview(
+      await read('docs/verification/v0.142.3-steamdeck-confirm-audio-continuation/review.json'),
+      await read('docs/verification/audio-style-menu-correction-2026-09-28/review.json'),
+      await read('game/test/fixtures/production-v01422-a585-fpv99.json'),
+    )
+  )
+    throw new Error(
+      'Steam Deck audio continuation review or production99 predecessor oracle bytes changed; production approval must reopen.',
+    );
+  if (
+    !verifyFieldKitAudioStyleMenuCorrectionReview(
+      await read('docs/verification/audio-style-menu-correction-2026-09-28/review.json'),
+      await read('docs/verification/audio-style-menu-2026-09-28/review.json'),
+      await read('game/test/fixtures/production-pr770-0d165-audio50.json'),
+    )
+  )
+    throw new Error(
+      'Audio style-menu correction review or production98 predecessor oracle bytes changed; production approval must reopen.',
+    );
+  if (
+    !verifyFieldKitAudioStyleMenuReview(
+      await read('docs/verification/audio-style-menu-2026-09-28/review.json'),
+      await read('docs/verification/player-readiness17-audio-continuation-2026-09-28/review.json'),
+    )
+  )
+    throw new Error(
+      'Audio style-menu continuation review bytes changed; production approval must reopen.',
+    );
+  if (
+    !verifyFieldKitMainReconciliationReview(
+      ...(await Promise.all(
+        [
+          'docs/verification/discovery-main321-reconciliation/review.json',
+          'docs/verification/v0.142.4-selector-audio-continuation/review.json',
+          'docs/verification/discovery-gp4-restore-audio-continuation-2026-09-29/review.json',
+          'game/test/fixtures/production-v01424-main321-fpv101.json',
+          'game/test/fixtures/production-discovery-db4-fpv103.json',
+          'docs/verification/discovery-main321-reconciliation/discovery-production103.rltheme.gz',
+          'docs/verification/discovery-main321-reconciliation/retained-inputs.json',
+        ].map(read),
+      )),
+    )
+  )
+    throw new Error(
+      'Merged main/candidate continuation or exact lineage inputs changed; production approval must reopen.',
     );
   const assets = [],
     bindings = {},

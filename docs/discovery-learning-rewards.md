@@ -79,6 +79,19 @@ corrective feedback; a corrected transcript must verify before satisfying the
 reward. A Collection revisit without an accepted run remains practice and cannot
 manufacture a verified win or completion.
 
+Unfinished choices now survive reload under their exact edition, lesson/fixture and
+gameplay identities. Recovery replays the bounded actions and opens a clearly
+labelled practice draft; it cannot recreate a lost terminal arcade replay or earn
+a verified application bonus. At a current accepted won result, **Start a new
+verified attempt** explicitly starts a fresh learning transcript using that result's
+verified replay. Same-tab interrupted workbenches retain their existing earning path.
+
+Optional-learning backup v2 carries verified proofs and non-evidence drafts
+separately. Proof-only v1 remains readable. Import checks every draft before changing
+proofs; unknown revisions, forged outcomes and foreign contexts are rejected.
+Unreadable stored originals are preserved, and failed writes expose exportable
+session-only choices. These records do not add another completion or XP authority.
+
 English and Ukrainian project the same canonical lesson and ordered transcript.
 Language changes preserve answers, inspected records and keyboard focus; they do
 not create another completion record or change expected answers. Result, Collection

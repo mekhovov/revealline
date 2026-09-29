@@ -7,9 +7,9 @@ unchanged. New first-person flight belongs to the separate `civilian-fpv` packag
 ## Order and compatibility
 
 Deliver Phase 2 → 3 → 4 → 6, with qualification in every batch, through integration
-PR #758 while open. The branch was refreshed onto main `6a67d6dbfe` (v0.142.3 Pages metadata),
-including the controller fixes from PRs #775/#778 and the production-provenance
-continuation from #785. It is a scheduled input to **v0.150.0 — Unified native
+PR #758 while open. The branch integrates main `321408a3c` (v0.142.4 mission-selector and star-progress changes),
+preserving both immutable source lineages in merge ancestry. Controller fixes from
+PRs #775/#778 and the production-provenance continuation from #785 remain included. It is a scheduled input to **v0.150.0 — Unified native
 experience**, alongside #783; it is not a second promoted release root.
 Keep 18 campaigns, 108 arcade missions, English/Ukrainian, shared arcade simulation,
 and every already-published reward promise. Human learning, artwork and physical
@@ -536,7 +536,7 @@ not a human or physical-radio test.
    default archive, and admit the complete selected hosting graph under its cap.
    Candidate projections and selected-package checks do not substitute for this.
    The branch's audio/UI review is closed by scoped continuations through
-   immutable production103 below. Recheck the final integrated fingerprints and
+   canonical production102 and exact retained preview101–103 below. Recheck final integrated fingerprints and
    append reviewed successors if integration changes those inputs; unchanged
    asset payloads alone never approve different runtime behavior.
 3. Complete final-source performance/request and retained-resource review, retaining
@@ -915,3 +915,76 @@ hosting admission require the complete release checkout. Frozen Firefox success
 does not resolve Chrome's earlier shutdown or substitute for quiet performance,
 retained-memory, physical-device or human review. The source remains one scheduled
 PR #758 input to the coordinator-owned v0.150.0 integration and publication.
+
+### Latest-main compatibility and interrupted learning — 29 September
+
+The main321 integration resolves two real identity collisions. Published and
+preview presentation101 are different immutable records; their complete original
+runtime manifests are retained by hash. Canonical production102 appends a scoped
+merged-source continuation to published main101, while the preview101–103 bundle
+remains independently authenticated. All 132 original payloads stay unchanged.
+Team's finite picture policy admits published101 only with its exact manifest;
+preview source-stage101 and unreviewed98 still cannot borrow that association.
+See the [lineage inventory and source review](verification/discovery-main321-reconciliation/README.md).
+
+Published main and the preview also issued different Journey backup.v4 shapes.
+Import distinguishes their explicit stars/performance sidecars and rejects ambiguous
+objects. New enriched backups use v5 and retain both sidecars atomically; plain
+v1–v3 exports keep their existing format. Pinned historical writers exercise import,
+rollback, cancellation, failed writes and lease loss. The combined Journey groups
+pass **94/94** checks. No accepted clear or earned promise is invented or rewritten.
+
+Optional lesson choices now persist by exact edition, lesson/fixture and gameplay
+identity. Reload opens a labelled practice draft with replayed choices and feedback;
+it cannot reconstruct lost arcade authority. At a current accepted won result an
+explicit fresh attempt uses the existing verified replay. Collection can repeat
+practice without earning. Learning backup v2 retains these drafts separately from
+verified proofs and still accepts v1. Failed writes remain visibly session-only;
+corrupt originals are preserved. The original reload-loss bug was reproduced before
+the fix; **44/44** draft, proof, host and locale checks pass, with independent review.
+These modeled-host checks do not establish human comprehension or physical input.
+
+The [previous db4 candidate run](verification/evidence/candidate-ci-db4b2c8e8.json)
+finished with **1,149 passed, one cancelled** company check: the real Threads Studio
+playthrough exceeded its 60-second test deadline under the parallel cohort. Both
+optional packages passed their independent CI job. No company candidate archive
+was produced by that failed run. The showcase file now runs explicitly before the
+parallel company cohort, with unchanged 30/60-second test deadlines and assertions.
+Its isolated local rerun passes **2/2**, including Threads in 28.42 seconds; fresh CI
+still must verify the new scheduling on its runner.
+
+Company generation/source eligibility verifies **186 files and 294 eligible assets**.
+Production history/retention/source checks pass **52/52**, and the normal producer
+reproduces canonical102 exactly. The final Team history/policy cohort passes **141/141**, including manifest
+mutation during reads/decoding and invalid Start/Retry contexts. Its earlier failure
+was a test adapter that omitted the published101 hash; that adapter now copies the
+complete prepared snapshot. A selector/host cohort initially passed116/117; the one
+failure was an absent committed Team artwork file in the sparse checkout. Exact
+committed originals were restored for its focused rerun; no artwork bytes changed. All 50 reviewed
+audio source inputs were independently rehashed. These are software checks, not new
+listening or artwork approval.
+
+A separate CI job now inspects the complete clean default checkout and uploads a
+small source-bound dependency/capacity report. It uses the existing inspector and
+limits, without creating a second full archive. The four new exact runtime pins add
+4,900,684 bytes; after current metadata reductions, compiled output grows 4,877,674
+bytes from db4. Against the historical default's 1,366,959-byte headroom, this is a
+rough 3.51 MB overage before other source changes. This is a planning delta, not a
+current whole-build measurement. Read-only inspection found no safe formatting-only
+reduction sufficient to cover it: existing generated offline catalogues and Studio
+provenance are already compact, while historical bytes cannot be silently changed.
+
+Remaining release work, in order:
+
+1. Qualify this merged batch, including the new complete-checkout capacity job.
+2. Resolve default capacity through an explicit, verified packaging change; retain
+   original histories and all existing core/edition/optional/hosted limits.
+3. Reconcile the final coordinator-owned source with #783; qualify its selected
+   release and hosting cohorts. All 18 editions still cannot enter one additive
+   release envelope under 950 MB. Keep one integration PR and split release cohorts.
+4. Finish final-source performance/request, retained-resource, published installation
+   and rollback evidence, then verify downloaded/deployed original bytes before promotion.
+
+Human learning, artwork and physical-radio/device evidence remains deferred by the
+user. PR #758 remains a held input to the v0.150.0 aggregate; this batch does not
+allocate a new version, publish an artifact or bypass the queue.

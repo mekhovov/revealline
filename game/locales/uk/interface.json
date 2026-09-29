@@ -3296,6 +3296,12 @@
   "missionLibrary.lifecycle.filter": "Редакції",
   "missionLibrary.lifecycle.archive": "Архів",
   "missionLibrary.lifecycle.all": "Усі редакції",
+  "missionLibrary.levelNumber": "Рівень №{{number}}",
+  "missionLibrary.customLevel": "Власний рівень",
+  "missionLibrary.campaignPosition": "{{position}}/{{total}}",
+  "missionLibrary.completedStars": "Пройдено · {{stars}} із 3 зірок",
+  "missionLibrary.completedStarsUnknown": "Пройдено · найкращі зірки не записано",
+  "missionLibrary.notCompleted": "Не пройдено",
   "missionLibrary.challenge": "Ранг {{band}}/12 · {{difficulty}}",
   "missionLibrary.optionalChallenge": "Необов’язкове випробування: {{challenge}}",
   "missionLibrary.difficulty.gentle": "Полегшена",
@@ -5544,5 +5550,12 @@
   "optionalPractice.sourcePreviews": "Локальне тестування",
   "optionalPractice.sourcePreviewNote": "Некваліфікований попередній перегляд вихідної версії. Відкривається окремо; прогрес кампанії не зараховується.",
   "optionalPractice.assistedSourcePreview": "Тренажер орієнтації з допомогою · вихідна версія · без кваліфікації",
-  "optionalPractice.fpvSourcePreview": "Студія польотів FPV · вихідна версія · без кваліфікації"
+  "optionalPractice.fpvSourcePreview": "Студія польотів FPV · вихідна версія · без кваліфікації",
+  "editionLessons.draftRecovered": "Відновлена чернетка практики. Ваші рішення зберігаються окремо; виправлення цієї чернетки не дає підтвердженого бонусу.",
+  "editionLessons.draftPractice": "Повторення для практики. Ці рішення можна зберегти, але в цьому перегляді не можна отримати підтверджений бонус.",
+  "editionLessons.draftFresh": "Почати нову спробу з перевіркою",
+  "editionLessons.draftInTab": "Ці рішення для практики доступні лише в цій вкладці. Перед виходом експортуйте необов’язкове навчання.",
+  "editionLessons.draftMismatch": "Попередні чернетки практики не вдалося перевірити для цього контексту. Їхні початкові збережені дані залишено без змін.",
+  "editionLessons.recordsImportedWithDrafts": "Записи необов’язкового навчання та чернетки практики імпортовано. Чернетки не дають підтверджених бонусів.",
+  "editionLessons.draftRestartPractice": "Почати практику спочатку"
 }

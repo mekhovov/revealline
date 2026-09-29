@@ -223,7 +223,8 @@ test('bonus and Collection captions translate while workbench choices and focus 
   assert.equal(control().value, field.options[0].value);
   assert.equal(h.doc.activeElement, control());
   assert.deepEqual(h.view.rewardEvidence(), before);
-  assert.deepEqual(h.storage.writes, []);
+  assert.equal(h.storage.writes.length, 1);
+  assert.ok(h.storage.writes[0][0].startsWith('revealline.company-learning-draft.'));
   h.doc.getElementById('edition-lesson-dialog').close();
   assert.equal(h.doc.activeElement, revisit);
   setLocale('en', { persist: false });
@@ -625,5 +626,157 @@ test('independent completed bonuses both persist when replay proofs finish out o
       .map((proof) => proof.attempt.missionId)
       .sort(),
     lessons.map((lesson) => lesson.missionId).sort(),
+  );
+});
+
+test('a wrong optional choice survives reload as practice; only a fresh actual won-run attempt earns proof', async (t) => {
+  const lesson = COMPANY_LESSONS.find((entry) => entry.campaignId === 'coupa-source-to-pay'),
+    source = createCompanyProject({ brandId: 'coupa', campaignId: lesson.campaignId }),
+    compiled = compileContentProject(source),
+    row = JSON.parse(
+      readFileSync(new URL('fixtures/company-campaign-routes.json', import.meta.url)),
+    ).rows.find(
+      (entry) =>
+        entry.id === lesson.missionId &&
+        entry.difficulty === 'standard' &&
+        entry.turnPolicy === 'immediate',
+    ),
+    level = applyGameplayTuning(resolveMission(compiled, row.id).level, row.gameplayTuning),
+    options = { seed: row.seed, classId: 'scout', turnPolicy: row.turnPolicy },
+    run = createRun(level, options),
+    recorder = createRecorder(level, options),
+    storage = memoryStorage();
+  for (const segment of row.segments)
+    for (let tick = 0; tick < segment.ticks; tick++) {
+      const input = { direction: segment.direction };
+      stepRun(run, input, FIXED_DT);
+      recordInput(recorder, input);
+    }
+  assert.equal(run.status, 'won');
+  const checkpoint = authoritativeCheckpoint(run),
+    proofKey = 'revealline.company-learning-proofs.sample-public.v1';
+  const mount = () =>
+    learningDialogFixture(t, {
+      source,
+      lessons: [lesson],
+      storage,
+      getRun: () => run,
+      getRecorder: () => recorder,
+    });
+  const control = (h, id) => h.doc.querySelector(`[data-control="${id}"]`);
+  const choose = (h, correct) => {
+    for (const record of lesson.records) control(h, `inspect-${record.id}`).click();
+    for (const field of lesson.fields) {
+      const select = control(h, `field-${field.id}`);
+      select.value = correct
+        ? field.expected
+        : field.options.find((option) => option.value !== field.expected).value;
+      select.emit('change');
+    }
+    control(h, 'commit').click();
+  };
+  const first = await mount();
+  first.settings.close();
+  first.view.refresh();
+  first.doc.getElementById('edition-lesson-open').click();
+  choose(first, false);
+  const wrong = Object.fromEntries(
+    lesson.fields.map((field) => [field.id, control(first, `field-${field.id}`).value]),
+  );
+  assert.equal(control(first, 'commit').disabled, false);
+  assert.equal(storage.getItem(proofKey), null);
+  first.view.dispose();
+
+  const second = await mount();
+  second.settings.close();
+  second.view.refresh();
+  second.doc.getElementById('edition-lesson-open').click();
+  for (const field of lesson.fields)
+    assert.equal(control(second, `field-${field.id}`).value, wrong[field.id]);
+  assert.match(
+    second.doc.getElementById('edition-lesson-draft-notice').textContent,
+    /Recovered practice.*does not earn/,
+  );
+  assert.equal(second.doc.getElementById('edition-lesson-fresh').hidden, false);
+  choose(second, true);
+  assert.equal(control(second, 'commit').disabled, true);
+  assert.equal(storage.getItem(proofKey), null);
+  assert.deepEqual(second.view.rewardEvidence().learning, []);
+  const originalLocale = getLocale();
+  t.after(() => setLocale(originalLocale, { persist: false }));
+  setLocale('uk', { persist: false });
+  assert.match(
+    second.doc.getElementById('edition-lesson-draft-notice').textContent,
+    /Відновлена чернетка практики/,
+  );
+  setLocale('en', { persist: false });
+  second.doc.getElementById('edition-lesson-fresh').click();
+  assert.equal(second.doc.getElementById('edition-lesson-draft-notice').hidden, true);
+  for (const field of lesson.fields) assert.equal(control(second, `field-${field.id}`).value, '');
+  choose(second, true);
+  for (let tries = 0; tries < 1000 && !storage.getItem(proofKey); tries++)
+    await new Promise((resolve) => setTimeout(resolve, 5));
+  const proofBytes = storage.getItem(proofKey);
+  assert.equal(JSON.parse(proofBytes).proofs.length, 1);
+  assert.equal(second.view.rewardEvidence().learning.length, 1);
+  second.doc.getElementById('edition-lesson-dialog').close();
+  const revisit = second.view.pictureReady(second.picture);
+  second.doc.body.append(revisit);
+  revisit.click();
+  assert.match(
+    second.doc.getElementById('edition-lesson-draft-notice').textContent,
+    /does not earn/,
+  );
+  assert.equal(second.doc.getElementById('edition-lesson-fresh').hidden, false);
+  assert.equal(control(second, 'commit').disabled, true);
+  assert.equal(storage.getItem(proofKey), proofBytes);
+  second.doc.getElementById('edition-lesson-fresh').click();
+  assert.equal(control(second, 'commit').disabled, false);
+  choose(second, true);
+  assert.equal(
+    storage.getItem(proofKey),
+    proofBytes,
+    'Restarting Collection practice never earns proof.',
+  );
+  assert.deepEqual(authoritativeCheckpoint(run), checkpoint);
+});
+
+test('v2 learning backups preserve exact drafts and reject tampering before importing any proof data', async (t) => {
+  const first = await learningDialogFixture(t);
+  first.settings.close();
+  const revisit = first.view.pictureReady(first.picture);
+  first.doc.body.append(revisit);
+  revisit.click();
+  const field = first.lesson.fields[0],
+    select = first.doc.querySelector(`[data-control="field-${field.id}"]`);
+  select.value = field.options[0].value;
+  select.emit('change');
+  const draft = JSON.parse(first.storage.writes.at(-1)[1]);
+  const backup = {
+    ...JSON.parse(first.emptyBackup),
+    format: 'revealline-edition-learning-backup.v2',
+    drafts: [draft],
+  };
+  const second = await learningDialogFixture(t),
+    original = new Map(second.storage.map);
+  const malformed = structuredClone(backup);
+  malformed.drafts[0].attempt.configuration[field.id] = 'invented';
+  second.upload.files = [second.file(JSON.stringify(malformed))];
+  await second.upload.onchange();
+  assert.match(second.status.textContent, /transcript|choice/);
+  assert.deepEqual(second.storage.map, original);
+  assert.deepEqual(second.storage.writes, []);
+  second.upload.files = [second.file(JSON.stringify(backup))];
+  await second.upload.onchange();
+  assert.match(second.status.textContent, /practice drafts imported.*do not grant/);
+  assert.deepEqual(second.view.rewardEvidence().learning, []);
+  second.settings.close();
+  const imported = second.view.pictureReady(second.picture);
+  second.doc.body.append(imported);
+  imported.click();
+  assert.equal(second.doc.querySelector(`[data-control="field-${field.id}"]`).value, select.value);
+  assert.match(
+    second.doc.getElementById('edition-lesson-draft-notice').textContent,
+    /Recovered practice/,
   );
 });

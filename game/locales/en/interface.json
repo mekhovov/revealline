@@ -3812,6 +3812,12 @@
   "missionLibrary.lifecycle.filter": "Editions",
   "missionLibrary.lifecycle.archive": "Archive",
   "missionLibrary.lifecycle.all": "All editions",
+  "missionLibrary.levelNumber": "Level #{{number}}",
+  "missionLibrary.customLevel": "Custom level",
+  "missionLibrary.campaignPosition": "{{position}}/{{total}}",
+  "missionLibrary.completedStars": "Completed · {{stars}} of 3 stars",
+  "missionLibrary.completedStarsUnknown": "Completed · best stars not recorded",
+  "missionLibrary.notCompleted": "Not completed",
   "missionLibrary.challenge": "Band {{band}}/12 · {{difficulty}}",
   "missionLibrary.optionalChallenge": "Optional challenge: {{challenge}}",
   "missionLibrary.difficulty.gentle": "Gentle",
@@ -5434,5 +5440,12 @@
   "optionalPractice.sourcePreviews": "Local testing",
   "optionalPractice.sourcePreviewNote": "Unqualified source preview. Opens separately; no campaign progress is awarded.",
   "optionalPractice.assistedSourcePreview": "Assisted orientation gym · source preview · unqualified",
-  "optionalPractice.fpvSourcePreview": "FPV Flight Studio · source preview · unqualified"
+  "optionalPractice.fpvSourcePreview": "FPV Flight Studio · source preview · unqualified",
+  "editionLessons.draftRecovered": "Recovered practice draft. Your choices are saved separately; correcting this draft does not earn a verified bonus.",
+  "editionLessons.draftPractice": "Practice revisit. These choices can be saved, but this view cannot earn a verified bonus.",
+  "editionLessons.draftFresh": "Start a new verified attempt",
+  "editionLessons.draftInTab": "These practice choices are only in this tab. Export optional learning before leaving.",
+  "editionLessons.draftMismatch": "Earlier practice drafts could not be verified for this context. Their original stored data has been kept.",
+  "editionLessons.recordsImportedWithDrafts": "Optional learning records and practice drafts imported. Drafts do not grant verified bonuses.",
+  "editionLessons.draftRestartPractice": "Start over as practice"
 }

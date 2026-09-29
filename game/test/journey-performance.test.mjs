@@ -1,5 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import { readFile } from 'node:fs/promises';
+import { createHash } from 'node:crypto';
 import { createRun, stepRun, FIXED_DT, CLASSES } from '../core/index.mjs';
 import { createRecorder, recordInput, exportReplay } from '../replay.mjs';
 import { dataIdentity, canonicalJSON } from '../data-json.mjs';
@@ -9,6 +11,8 @@ import {
   createJourneyProfileStore,
   emptyJourneyProfile,
   JOURNEY_PERFORMANCE_BACKUP_VERSION,
+  JOURNEY_STARS_BACKUP_VERSION,
+  JOURNEY_COMBINED_BACKUP_VERSION,
 } from '../journey/profile.mjs';
 import {
   verifyPerformanceRecord,
@@ -16,10 +20,35 @@ import {
   performanceComparison,
   selectPerformanceRecords,
 } from '../journey/performance.mjs';
+import { emptyJourneyStars } from '../journey/stars.mjs';
 import { createSoloPerformanceBinding } from '../journey/performance-binding.mjs';
 import { managedIndexedDB } from './helpers/managed-idb.mjs';
 import { waitFor } from './helpers/wait-for.mjs';
 import { journeyPerformanceText } from '../ui/journey-performance.mjs';
+
+// Frozen profile readers/writers from the two branches that independently issued
+// v4. Only the profile module is frozen; its relative imports use the current
+// shared dependencies. No Git, network access, or test-time file writes are used.
+async function historicalProfile(file, sha256) {
+  const bytes = await readFile(new URL(`./fixtures/${file}`, import.meta.url));
+  assert.equal(createHash('sha256').update(bytes).digest('hex'), sha256);
+  const source = bytes
+    .toString()
+    .replace(
+      /from (['"])(\.\.?\/[^'"]+)\1/g,
+      (_, _quote, relative) =>
+        `from ${JSON.stringify(new URL(relative, new URL('../journey/profile.mjs', import.meta.url)).href)}`,
+    );
+  return import(`data:text/javascript;base64,${Buffer.from(source).toString('base64')}`);
+}
+const oldStarsProfile = await historicalProfile(
+  'journey-profile-v4-stars-321408a3c.mjs.txt',
+  'b52be92340d496765659d32d827a41aac1c78230068025b20d582950c75df2b0',
+);
+const oldPerformanceProfile = await historicalProfile(
+  'journey-profile-v4-performance-db4b2c8e.mjs.txt',
+  'ef1cd43d45f2415574da3390dd4ac83a71bf44685d489cc4b42d79cf6c0a4820',
+);
 
 const missionId = 'candidate/workshop/route/one';
 const authored = {
@@ -144,7 +173,7 @@ test('ordinary Journey bytes and clear records stay unchanged until optional ver
   assert.deepEqual(f.store.snapshot(), before);
   assert.deepEqual(await f.backend.read(), before);
   const exported = JSON.parse(f.store.export());
-  assert.equal(exported.format, JOURNEY_PERFORMANCE_BACKUP_VERSION);
+  assert.equal(exported.format, JOURNEY_COMBINED_BACKUP_VERSION);
   assert.equal(exported.performance.records[0].runId, 'first');
   assert.deepEqual(
     new Set(f.disk.allPuts.map(([, key]) => key)),
@@ -261,7 +290,8 @@ test('corrupt optional persisted evidence neither invents a best nor blocks ordi
 test('asynchronous Restore applies its inspected owned backup rather than mutated caller data', async () => {
   const source = fixture();
   await source.store.load();
-  await earn(source, flight('inspected-original'));
+  const record = flight('inspected-original');
+  await earnWithStars(source, record);
   const backup = JSON.parse(source.store.export());
   let reached, release;
   const waiting = new Promise((resolve) => {
@@ -283,9 +313,11 @@ test('asynchronous Restore applies its inspected owned backup rather than mutate
   await waiting;
   backup.profile.clears.solo[missionId].runId = 'mutated-after-inspection';
   backup.performance.records[0].replay.summary.score++;
+  backup.stars.best.solo[missionId] = 0;
   release();
   await pending;
   assert.equal(target.store.snapshot().clears.solo[missionId].runId, 'inspected-original');
+  assert.equal(target.store.bestStars('solo', missionId), starsFor(record));
   assert.equal(target.store.performance.snapshot().records[0].runId, 'inspected-original');
   assert.equal(target.store.performance.snapshot().records[0].durable, true);
   source.store.performance.dispose();
@@ -376,9 +408,15 @@ test('hosts without the Solo verifier preserve optional evidence without display
 test('a lost writer lease leaves optional comparisons and accepted clears session-only', async () => {
   const f = fixture(managedIndexedDB(), { canWrite: () => false });
   await f.store.load();
-  const result = await earn(f, flight('unwritten'));
+  const record = flight('unwritten');
+  f.store.record({ ...clear(record), stars: starsFor(record) });
+  assert.equal(await f.store.flush(), false);
+  const result = await f.store.performance.capture(record);
   assert.equal(result.durable, false);
   assert.equal(f.store.snapshot().clears.solo[missionId].runId, 'unwritten');
+  assert.equal(f.store.bestStars('solo', missionId), starsFor(record));
+  assert.equal(JSON.parse(f.store.export()).format, JOURNEY_COMBINED_BACKUP_VERSION);
+  assert.deepEqual((await f.backend.readState()).stars, emptyJourneyStars());
   assert(f.store.performance.snapshot().records.every((row) => !row.durable));
   assert.deepEqual(await f.backend.read(), emptyJourneyProfile());
   assert.deepEqual(f.disk.allPuts, []);
@@ -466,4 +504,177 @@ test('cyclic and non-JSON optional backend data cannot interrupt accepted clears
     assert.equal(f.store.performance.snapshot().records.length, 0);
     f.store.performance.dispose();
   }
+});
+
+const starsFor = (record) =>
+  record.replay.summary.medal === 'gold' ? 3 : record.replay.summary.medal === 'silver' ? 2 : 1;
+async function earnWithStars(f, record) {
+  f.store.record({ ...clear(record), stars: starsFor(record) });
+  assert.equal(await f.store.flush(), true);
+  assert.equal((await f.store.performance.capture(record)).durable, true);
+}
+
+test('both issued v4 exact shapes import in either order and re-export unambiguous v5 evidence', async () => {
+  const source = fixture(),
+    record = flight('v4-donor');
+  await source.store.load();
+  await earnWithStars(source, record);
+  const combined = JSON.parse(source.store.export());
+  assert.equal(combined.format, JOURNEY_COMBINED_BACKUP_VERSION);
+  assert.deepEqual(Object.keys(combined).sort(), [
+    'format',
+    'performance',
+    'pictures',
+    'profile',
+    'profileKey',
+    'stars',
+  ]);
+  const { performance: evidence, stars } = combined;
+  const oldStarStore = oldStarsProfile.createJourneyProfileStore({
+      backend: oldStarsProfile.createJourneyBackend({
+        ...source.disk,
+        profileKey: source.backend.profileKey,
+      }),
+    }),
+    oldPerformanceStore = oldPerformanceProfile.createJourneyProfileStore({
+      backend: oldPerformanceProfile.createJourneyBackend({
+        ...source.disk,
+        profileKey: source.backend.profileKey,
+      }),
+      acceptPerformanceBinding: binding(),
+    });
+  await oldStarStore.load();
+  await oldPerformanceStore.load();
+  await waitFor(() => oldPerformanceStore.performance.snapshot().records.length === 1);
+  const oldStars = JSON.parse(oldStarStore.export()),
+    oldPerformance = JSON.parse(oldPerformanceStore.export());
+  assert.deepEqual(oldStars.stars, stars);
+  assert.deepEqual(oldPerformance.performance.records, evidence.records);
+  assert.equal(oldStars.format, 'revealline-journey-backup.v4');
+  assert.equal(oldPerformance.format, 'revealline-journey-backup.v4');
+  for (const order of [
+    [oldStars, oldPerformance],
+    [oldPerformance, oldStars],
+  ]) {
+    const target = fixture();
+    await target.store.load();
+    for (const backup of order) {
+      const inspected = await target.store.inspectBackupAsync(backup);
+      assert.deepEqual(inspected.backup, backup, 'The historical envelope shape remains exact.');
+      if ('performance' in backup) await target.store.restoreAsync(backup);
+      else target.store.restore(backup);
+      assert.equal(await target.store.flush(), true);
+    }
+    assert.equal(target.store.bestStars('solo', missionId), starsFor(record));
+    assert.deepEqual(target.store.snapshot(), source.store.snapshot());
+    const exported = JSON.parse(target.store.export());
+    assert.equal(exported.format, JOURNEY_COMBINED_BACKUP_VERSION);
+    assert.deepEqual(exported.stars, stars);
+    assert.deepEqual(exported.performance.records, evidence.records);
+    const roundTrip = fixture();
+    await roundTrip.store.load();
+    await roundTrip.store.restoreAsync(exported);
+    assert.equal(await roundTrip.store.flush(), true);
+    const saved = await roundTrip.backend.readState();
+    assert.deepEqual(saved.profile, target.store.snapshot());
+    assert.deepEqual(saved.stars, stars);
+    assert.deepEqual(saved.performance.records, evidence.records);
+    target.store.performance.dispose();
+    roundTrip.store.performance.dispose();
+  }
+  // Each older reader writes only its own known fields. A rollback must not
+  // remove the other branch's already-earned metadata or verified replays.
+  oldStarStore.record({ type: 'select', mode: 'solo', missionId });
+  assert.equal(await oldStarStore.flush(), true);
+  oldPerformanceStore.record({ type: 'select', mode: 'solo', missionId });
+  assert.equal(await oldPerformanceStore.flush(), true);
+  const afterOlderWrites = await source.backend.readState();
+  assert.deepEqual(afterOlderWrites.stars, stars);
+  assert.deepEqual(afterOlderWrites.performance.records, evidence.records);
+  oldPerformanceStore.performance.dispose();
+  source.store.performance.dispose();
+});
+
+test('ambiguous v4 shapes and malformed v5 sidecars cannot change accepted progress or stars', async () => {
+  const source = fixture();
+  await source.store.load();
+  await earnWithStars(source, flight('shape-donor'));
+  const combined = JSON.parse(source.store.export()),
+    { stars: _stars, performance: _performance, ...base } = combined;
+  const wrongReplay = structuredClone(combined);
+  wrongReplay.performance.records[0].replay.summary.score++;
+  const orphan = structuredClone(combined);
+  orphan.stars.best.solo['missing-clear'] = 3;
+  const invalid = [
+    { ...combined, format: JOURNEY_STARS_BACKUP_VERSION },
+    { ...base, format: JOURNEY_PERFORMANCE_BACKUP_VERSION },
+    { ...base, performance: combined.performance },
+    { ...combined, unexpected: true },
+    { ...combined, stars: null },
+    { ...combined, performance: null },
+    wrongReplay,
+    orphan,
+  ];
+  for (const backup of invalid) {
+    const target = fixture();
+    await target.store.load();
+    await assert.rejects(target.store.restoreAsync(backup));
+    assert.deepEqual(target.store.snapshot(), emptyJourneyProfile());
+    assert.deepEqual(target.store.stars(), emptyJourneyStars());
+    assert.deepEqual(target.store.performance.snapshot().records, []);
+    assert.deepEqual(target.disk.allPuts, []);
+    target.store.performance.dispose();
+  }
+  source.store.performance.dispose();
+});
+
+test('four-record transactions preserve both sidecars across cancellation, quota failure and retry', async () => {
+  const f = fixture();
+  await f.store.load();
+  await earnWithStars(f, flight('before-transaction'));
+  const before = await f.backend.readState(),
+    nextRecord = flight('after-transaction', { wait: 100 }),
+    afterPerformance = {
+      ...before.performance,
+      generation: before.performance.generation + 1,
+      records: [nextRecord],
+    },
+    events = [
+      { ...clear(nextRecord), stars: starsFor(nextRecord) },
+      {
+        type: 'performance',
+        previous: canonicalJSON(before.performance),
+        performance: afterPerformance,
+      },
+    ];
+  assert.equal(before.stars.best.solo[missionId], starsFor(before.performance.records[0]));
+  for (const failure of ['cancel', 'quota']) {
+    const controller = new AbortController();
+    f.disk.onAnyPut = ({ key }) => {
+      if (key.endsWith(':stars.v1') && failure === 'cancel') controller.abort();
+    };
+    f.disk.failAnyPutAt = failure === 'quota' ? 3 : null;
+    await assert.rejects(
+      f.backend.commitState(events, { signal: controller.signal }),
+      failure === 'cancel' ? { name: 'AbortError' } : /write failure/,
+    );
+    assert.deepEqual(
+      await f.backend.readState(),
+      before,
+      'The clear, star metadata and performance evidence remain one atomic native transaction.',
+    );
+  }
+  f.disk.onAnyPut = null;
+  f.disk.failAnyPutAt = null;
+  const accepted = await f.backend.commitState(events);
+  assert.equal(accepted.profile.clears.solo[missionId].runId, nextRecord.runId);
+  assert.deepEqual(accepted.performance, afterPerformance);
+  assert.deepEqual(accepted.stars, before.stars);
+  const reloaded = fixture(f.disk);
+  await reloaded.store.load();
+  await waitFor(() => reloaded.store.performance.snapshot().records.length === 1);
+  assert.equal(reloaded.store.performance.snapshot().records[0].runId, nextRecord.runId);
+  assert.equal(reloaded.store.bestStars('solo', missionId), before.stars.best.solo[missionId]);
+  f.store.performance.dispose();
+  reloaded.store.performance.dispose();
 });
