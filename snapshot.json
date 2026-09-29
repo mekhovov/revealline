@@ -1,0 +1,74 @@
+{
+  "format": "revealline-recovery-fragment-v1",
+  "capturedAt": "2026-09-29T15:09:49.121204+00:00",
+  "worktree": "<home>/work/my_projects/go_test/.cache/worktrees/field-kit-production-ledger-83340f6",
+  "branch": "refs/heads/fix/field-kit-production-ledger",
+  "head": "492423b140d4dc0a2d0dabcc01e8ff7d66b441d4",
+  "excluded": [
+    {
+      "status": "??",
+      "path": "node_modules"
+    }
+  ],
+  "changes": [
+    {
+      "status": " M",
+      "path": "authoring/library/fpv-field-kit/production.rltheme",
+      "object": "cfabe03522be7085248f168a2b57ed7aa92f6468",
+      "sha256": "a630a6719156e856e8ac59dc0af3493545c5505f8a925882c3830c4d617aa66e",
+      "bytes": 6587700,
+      "mode": "100644"
+    },
+    {
+      "status": " M",
+      "path": "game/presentation/compiled/manifest.json",
+      "object": "2730afafddccc100e0765c355ec6391bf23506bb",
+      "sha256": "a10d5506e0e153699836ede89abc662db54d4c19b5b3b55ec19f977a8f505741",
+      "bytes": 27214,
+      "mode": "100644"
+    },
+    {
+      "status": " M",
+      "path": "game/presentation/compiled/runtime.json",
+      "object": "3e0fb655e2f2fa64ebe9b3f485f4fdb643df315e",
+      "sha256": "0bb053ea78c2ecf6612f90963cdd372ab8859b0cc841c1e84fd98440bba46fd6",
+      "bytes": 960211,
+      "mode": "100644"
+    },
+    {
+      "status": " M",
+      "path": "game/presentation/compiled/studio.json",
+      "object": "932bb246607cc705919817281c3a71e5c6054987",
+      "sha256": "35a019de7b3c39d9041aed38e4b12c49b8287c9eadf0b6a949a49a18933833c3",
+      "bytes": 2965849,
+      "mode": "100644"
+    }
+  ],
+  "indexEntries": [
+    {
+      "path": "authoring/library/fpv-field-kit/production.rltheme",
+      "mode": "100644",
+      "object": "96208db99c5c34b126d1e678dec9ce8c9b21a7fd",
+      "stage": 0
+    },
+    {
+      "path": "game/presentation/compiled/manifest.json",
+      "mode": "100644",
+      "object": "6e6a3eee02c74515e149729f007680b64a829315",
+      "stage": 0
+    },
+    {
+      "path": "game/presentation/compiled/runtime.json",
+      "mode": "100644",
+      "object": "84b990980c646b48359ef60972defa83e4afce74",
+      "stage": 0
+    },
+    {
+      "path": "game/presentation/compiled/studio.json",
+      "mode": "100644",
+      "object": "b0bf98ae97d68f4a7e88e4ed7b1a7c4d1fb7653f",
+      "stage": 0
+    }
+  ],
+  "purpose": "Recovery only. These bytes are not release admission. Missing files, conflict stages and obsolete generated outputs are preserved as observations, not deletion or merge instructions."
+}
