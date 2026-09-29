@@ -9,6 +9,11 @@ import {
   classicLibrarySources,
   prepareMissionLibraryIndex,
 } from '../mission-library/classic-source.mjs';
+import {
+  CLASSIC_RULES_CURRENT,
+  CLASSIC_RULES_ORIGINAL,
+  supportsClassicCurrentRules,
+} from '../mission-library/classic-current-rules.mjs';
 
 const index = JSON.parse(
   await readFile(new URL('../content/mission-library-index.json', import.meta.url)),
@@ -19,7 +24,18 @@ const adapters = {
   launch: () => true,
 };
 
-test('Archive retains superseded First Light and pilot owners while named chapters stay current', () => {
+function classicMissionKey(row) {
+  const owner = JSON.parse(row.ownerId);
+  assert(Array.isArray(owner) && [3, 4].includes(owner.length));
+  assert.equal(owner[0], 'classic');
+  if (owner.length === 4) {
+    assert.equal(owner[3], CLASSIC_RULES_CURRENT);
+    owner.pop();
+  }
+  return JSON.stringify([owner, row.runtimeId]);
+}
+
+test('Archive retains superseded content and original rules once a current-rules edition exists', () => {
   const identity = dataIdentity(index);
   const sources = classicLibrarySources(index, adapters);
   const archivedPacks = new Set([
@@ -31,17 +47,76 @@ test('Archive retains superseded First Light and pilot owners while named chapte
   ]);
   for (const source of sources) {
     const original = source.entries[0];
+    const supersededRules =
+      original.rulesEdition === CLASSIC_RULES_ORIGINAL && supportsClassicCurrentRules(original);
     assert.equal(
       source.lifecycle,
-      original.source === 'archived' || archivedPacks.has(original.packId) ? 'archive' : 'current',
+      original.source === 'archived' || archivedPacks.has(original.packId) || supersededRules
+        ? 'archive'
+        : 'current',
       original.packId,
     );
   }
   const library = createMissionLibrary(sources);
-  assert.equal(library.search('', { lifecycle: 'current' }).length, 161);
-  assert.equal(library.search('', { lifecycle: 'archive' }).length, 27);
+  assert.equal(library.search('', { lifecycle: 'current' }).length, 95);
+  assert.equal(library.search('', { lifecycle: 'archive' }).length, 93);
   assert.equal(library.search('', { lifecycle: '' }).length, 188);
+  assert.equal(
+    new Set(library.search('', { lifecycle: 'current' }).map(classicMissionKey)).size,
+    95,
+  );
   assert.equal(dataIdentity(index), identity);
+});
+
+test('Classic dedupe collapses actual rules editions without merging unrelated mission owners', () => {
+  const library = createMissionLibrary(classicLibrarySources(index, adapters));
+  const projected = library.missions.filter(
+    (row) => JSON.parse(row.ownerId)[3] === CLASSIC_RULES_CURRENT,
+  );
+  assert.equal(projected.length, 78);
+  for (const row of projected) {
+    const owner = JSON.parse(row.ownerId).slice(0, 3);
+    const original = library.missions.find(
+      (other) => other.ownerId === JSON.stringify(owner) && other.runtimeId === row.runtimeId,
+    );
+    assert(original, row.id);
+    assert.notEqual(row.ownerId, original.ownerId);
+    assert.equal(classicMissionKey(row), classicMissionKey(original));
+  }
+  assert.equal(new Set(library.missions.map(classicMissionKey)).size, 110);
+
+  const current = library.search('', { lifecycle: 'current' });
+  const row = current.find((item) => JSON.parse(item.ownerId)[3] === CLASSIC_RULES_CURRENT);
+  const owner = JSON.parse(row.ownerId).slice(0, 3);
+  const original = library.missions.find(
+    (item) => item.ownerId === JSON.stringify(owner) && item.runtimeId === row.runtimeId,
+  );
+  const unrelated = current.find((item) => classicMissionKey(item) !== classicMissionKey(row));
+  // Preserve the row count while injecting the exact duplicate the guard must catch.
+  const duplicated = [...current.filter((item) => item !== unrelated), original];
+  assert.equal(duplicated.length, 95);
+  assert.equal(new Set(duplicated.map(classicMissionKey)).size, 94);
+
+  for (const distinct of [
+    { ...row, ownerId: JSON.stringify([owner[0], 'other-source', owner[2]]) },
+    { ...row, ownerId: JSON.stringify([owner[0], owner[1], 'other-pack']) },
+    { ...row, runtimeId: 'other-mission' },
+  ])
+    assert.notEqual(classicMissionKey(distinct), classicMissionKey(row));
+  const policyNamedPack = {
+    ...row,
+    ownerId: JSON.stringify(['classic', owner[1], CLASSIC_RULES_CURRENT]),
+  };
+  assert.equal(
+    classicMissionKey(policyNamedPack),
+    JSON.stringify([['classic', owner[1], CLASSIC_RULES_CURRENT], row.runtimeId]),
+  );
+  for (const invalid of [
+    ['journey', owner[1], owner[2]],
+    [...owner, 'unrelated-rules'],
+    [...owner, CLASSIC_RULES_CURRENT, 'extra-owner-field'],
+  ])
+    assert.throws(() => classicMissionKey({ ...row, ownerId: JSON.stringify(invalid) }));
 });
 
 test('Classic editions translate exact source metadata while retaining launch ownership and authored imports', (context) => {

@@ -66,11 +66,7 @@ export async function loadEditionToolProvider({
       '[data-i18n="interface:thisVirtualPadControlsTheActualGameBelowPracticeAwards"]',
     );
     if (explanation)
-      localizedText(
-        explanation,
-        () =>
-          'This virtual pad controls the same Solo game using this edition’s missions and three First Flight lessons. Practice does not award progress or unlocks. The lab does not verify physical controller support.',
-      );
+      localizedText(explanation, () => t('interface:editionTools.controllerPracticeExplanation'));
   }
   return provider;
 }

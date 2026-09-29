@@ -8,6 +8,14 @@ import { downloadFiles } from '../game/download-catalogue.mjs';
 const sum = (files) => files.reduce((total, file) => total + file.bytes, 0);
 const distinct = (files) => [...new Map(files.map((file) => [file.sha256, file])).values()];
 const mib = (bytes) => `${(bytes / 1024 ** 2).toFixed(2)} MiB`;
+const bytesByExtension = (files) => {
+  const totals = new Map();
+  for (const file of files) {
+    const extension = path.extname(file.path) || '(none)';
+    totals.set(extension, (totals.get(extension) || 0) + file.bytes);
+  }
+  return Object.fromEntries([...totals].sort((a, b) => b[1] - a[1]));
+};
 
 /** Core stores URL copies, official downloads store hashes, launcher owns its scope. */
 export function packageMeasurement(core, official, launcher = []) {
@@ -141,10 +149,15 @@ export function buildPackageReport({ catalogue, core, manifest, launcher, archiv
       storedBytesByExtension: Object.fromEntries([...byExtension].sort((a, b) => b[1] - a[1])),
       largestFiles: [...core.files].sort((a, b) => b.bytes - a.bytes).slice(0, 15),
     },
+    currentGameplay: {
+      officialBytesByExtension: bytesByExtension(currentFiles),
+      mp3Files: [...core.files, ...currentFiles].filter((file) => file.path.endsWith('.mp3'))
+        .length,
+    },
     groups: groupRows,
     limitations: [
-      'This is a development build measurement, not a frozen release or physical-device certification.',
-      'The starter has nine Horizon original pictures and no recorded music. Full current navigation metadata remains available.',
+      'These are manifest-declared payload sizes, not physical-device certification or measurements of browser cache overhead.',
+      'Starter counts describe the selected base group. Full current navigation metadata remains available; a displayed chapter is not evidence that its assets have been downloaded.',
       'Solo uses navigation metadata and one opening-chapter runtime. Other executable chapters, Versus/Team host entry points and historical route sources are separate packages; shared compiler, replay, controller and presentation helpers remain in core.',
       'Versus and Team runtimes still include complete route sources needed by their existing browsers. Further mode-internal chapter splitting remains unqualified.',
       'Original PNG bytes are unchanged. These numbers do not assume new artwork or promise a final optimized image budget.',
@@ -155,14 +168,14 @@ export function buildPackageReport({ catalogue, core, manifest, launcher, archiv
 
 export function packageReportMarkdown(
   report,
-  { site = '.cache/offline-package-check', output = 'docs/content-offline/packages' } = {},
+  { site = '.cache/offline-package-check', output = 'docs/content-offline/packages', command } = {},
 ) {
   const rows = Object.entries(report.packages).map(
     ([name, value]) =>
       `| ${name} | ${mib(value.decodedTransferBytes)} | ${mib(value.maximumDecodedTransferBytes)} | ${mib(value.storedPayloadBytes)} |`,
   );
   const starter = report.packages.starter;
-  return `# Offline package measurements\n\nGenerated from the built distribution, version ${report.version}, build ID \`${report.buildId}\`. Source revision: ${report.sourceRevision || 'not frozen (development build)'}. Distribution SHA-256: \`${report.distributionSHA256}\`.\n\nReproduce after building with:\n\n\`\`\`sh\nnode scripts/report-offline-packages.mjs --site ${site} --out ${output}\n\`\`\`\n\n${report.units}\n\n| Selection | Decoded transfer by owner | Conservative transfer upper bound | Stored payload |\n| --- | ---: | ---: | ---: |\n${rows.join('\n')}\n\nAll gameplay selections include the edition runtime and the stable installed launcher. Soundtracks are an independent additional download. Archive and tooling packages are excluded from all-current. The complete shipped distribution payload is ${mib(report.distributionPayloadBytes)}; this is not the starter download.\n\n## Starter composition\n\nThe Solo Horizon starter contains ${report.starter.missions.length} core missions, ${report.starter.officialFiles.filter((file) => file.path.endsWith('.png')).length} original PNG pictures, the Horizon chapter snapshot, and no recordings. The remix is a separate package.\n\n| Owner | Decoded transfer | Stored payload |\n| --- | ---: | ---: |\n${Object.entries(
+  return `# Offline package measurements\n\nGenerated from the built distribution, version ${report.version}, build ID \`${report.buildId}\`. Source revision: ${report.sourceRevision || 'not frozen (development build)'}. Distribution SHA-256: \`${report.distributionSHA256}\`.\n\n${report.evidence ? report.evidence.scope : 'Measured from local build metadata.'}\n\nReproduce with:\n\n\`\`\`sh\n${command || `node scripts/report-offline-packages.mjs --site ${site} --out ${output}`}\n\`\`\`\n\n${report.units}\n\n| Selection | Decoded transfer by owner | Conservative transfer upper bound | Stored payload |\n| --- | ---: | ---: | ---: |\n${rows.join('\n')}\n\nAll gameplay selections include the edition runtime and the stable installed launcher. Soundtracks are an independent additional download. Archive and tooling packages are excluded from all-current. The complete shipped distribution payload is ${mib(report.distributionPayloadBytes)}; this is not the starter download.\n\n## Starter composition\n\nThe Solo Horizon starter contains ${report.starter.missions.length} core missions, ${report.starter.officialFiles.filter((file) => file.path.endsWith('.png')).length} original PNG pictures, the Horizon chapter snapshot, and no recordings. The remix is a separate package.\n\n| Owner | Decoded transfer | Stored payload |\n| --- | ---: | ---: |\n${Object.entries(
     starter.owners,
   )
     .map(
@@ -171,7 +184,13 @@ export function packageReportMarkdown(
     )
     .join(
       '\n',
-    )}\n\n${report.ownership} Runtime deduplication saves transfer when identical files exist at multiple URLs; these URLs still occupy separate cache entries. The conservative UI estimate counts those copies. The launcher owns ${starter.owners.installedLauncher.storedPayloadBytes.toLocaleString('en-US')} additional bytes. These figures describe a fresh cache; already verified files reduce subsequent downloads.\n\n${report.starter.coreChapterSnapshots.length} standalone chapter snapshots are in core. Current navigation metadata is ${report.starter.currentMetadataSnapshots.reduce((total, file) => total + file.bytes, 0).toLocaleString('en-US')} bytes; keeping it allows future chapters and existing progress to remain visible.\n\n## Shared runtime composition\n\n| File type | Stored payload |\n| --- | ---: |\n${Object.entries(
+    )}\n\n${report.ownership} Runtime deduplication saves transfer when identical files exist at multiple URLs; these URLs still occupy separate cache entries. The conservative UI estimate counts those copies. The launcher owns ${starter.owners.installedLauncher.storedPayloadBytes.toLocaleString('en-US')} additional bytes. These figures describe a fresh cache; already verified files reduce subsequent downloads.\n\n${report.starter.coreChapterSnapshots.length} standalone chapter snapshots are in core. Current navigation metadata is ${report.starter.currentMetadataSnapshots.reduce((total, file) => total + file.bytes, 0).toLocaleString('en-US')} bytes; keeping it allows future chapters and existing progress to remain visible.\n\n## Current gameplay official payload\n\nThis excludes the separately counted runtime and launcher above. All current gameplay lists ${report.currentGameplay.mp3Files} MP3 files. Optional soundtrack downloads remain independent.\n\n| File type | Stored payload |\n| --- | ---: |\n${Object.entries(
+    report.currentGameplay.officialBytesByExtension,
+  )
+    .map(([extension, bytes]) => `| ${extension} | ${mib(bytes)} |`)
+    .join(
+      '\n',
+    )}\n\n## Shared runtime composition\n\n| File type | Stored payload |\n| --- | ---: |\n${Object.entries(
     report.sharedRuntime.storedBytesByExtension,
   )
     .map(([extension, bytes]) => `| ${extension} | ${mib(bytes)} |`)

@@ -191,6 +191,55 @@ async function editionSwitchHost(t, { occupied = false, start = true } = {}) {
   return page;
 }
 
+test('edition chrome and retained-artwork recovery switch locale without remounting controls', async (t) => {
+  const previousLocale = getLocale();
+  setLocale('en', { persist: false });
+  t.after(() => setLocale(previousLocale, { persist: false }));
+  const f = await retainedEditionFixture(),
+    page = await soloPage(t, {
+      search: '?edition=sample-public',
+      titleScreen: true,
+      storage: memoryStorage(),
+      journeyIndexedDB: managedIndexedDB().indexedDB,
+      fetchResponse: f.fetcher,
+    }),
+    picker = page.$('edition-select'),
+    artwork = page.$('edition-presentation-select'),
+    actorNote = page.$('menu-actor-note'),
+    authoredOptions = [...picker.options].map((option) => option.textContent);
+  assert.match(picker.parentNode.textContent, /Company & campaign edition/);
+  assert.match(artwork.parentNode.textContent, /Artwork snapshot/);
+  assert.equal(artwork.options[0].textContent, 'Current artwork');
+  assert.match(artwork.options[1].textContent, /^Retained original · /);
+  assert.match(actorNote.textContent, /campaign artwork/);
+  assert.ok(
+    page.doc
+      .querySelectorAll('summary')
+      .some((summary) => summary.textContent === 'About this edition & artwork'),
+  );
+
+  setLocale('uk', { persist: false });
+  assert.equal(page.$('edition-select'), picker);
+  assert.equal(page.$('edition-presentation-select'), artwork);
+  assert.match(picker.parentNode.textContent, /Видання компанії та кампанії/);
+  assert.match(artwork.parentNode.textContent, /Знімок оформлення/);
+  assert.equal(artwork.options[0].textContent, 'Поточне оформлення');
+  assert.match(artwork.options[1].textContent, /^Збережений оригінал · /);
+  assert.match(actorNote.textContent, /оформлення своєї кампанії/);
+  assert.ok(
+    page.doc
+      .querySelectorAll('summary')
+      .some((summary) => summary.textContent === 'Про це видання й оформлення'),
+  );
+  assert.deepEqual(
+    [...picker.options].map((option) => option.textContent),
+    authoredOptions,
+    'Authored edition names remain unchanged.',
+  );
+  assert.equal(artwork.value, '', 'The selected artwork remains unchanged.');
+  assert.deepEqual(page.errors, []);
+});
+
 for (const saving of ['verified', 'quota', 'occupied'])
   test(`edition switch retains the paused attempt and offers Stay before ${saving} departure`, async (t) => {
     const page = await editionSwitchHost(t, { occupied: saving === 'occupied' });

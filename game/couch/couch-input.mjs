@@ -1,5 +1,6 @@
 import { t } from '../i18n/index.mjs';
 import { attachTouchSteering } from '../ui/touch-steering.mjs';
+import { attachPlayfieldContextMenu } from '../ui/playfield-context-menu.mjs';
 import { gamepadCommand } from '../ui/input.mjs';
 import { neutralCommand } from '../multiplayer.mjs';
 
@@ -106,6 +107,12 @@ export function attachCouchInput({
   );
   let order = 0,
     destroyed = false;
+  const detachPlayfieldContextMenu = attachPlayfieldContextMenu({
+    // Versus owns two boards; Team supplies its one explicit coop-canvas.
+    // Do not include artwork/discovery previews elsewhere in either document.
+    roots: [arena, arena?.id === 'race-canvas-0' ? doc.getElementById('race-canvas-1') : null],
+    active,
+  });
   const continuous = () => continuousSteering() === true;
   const listen = (target, type, fn, options) => {
     target.addEventListener(type, fn, options);
@@ -404,6 +411,7 @@ export function attachCouchInput({
     for (const pad of doc.querySelectorAll('.race-pad')) {
       const player = Number(pad.dataset.player);
       touchInputs[player] = attachTouchSteering({
+        window: win,
         pad: pad.querySelector('.race-cross'),
         surface: pad.querySelector('.touch-surface'),
         indicator: pad.querySelector('.touch-indicator'),
@@ -532,6 +540,7 @@ export function attachCouchInput({
     clear();
     destroyed = true;
     touchInputs.forEach((touch) => touch.destroy());
+    detachPlayfieldContextMenu();
     for (const remove of listeners) remove();
     for (const button of buttons) {
       clearTimeout(button.keyTimer);

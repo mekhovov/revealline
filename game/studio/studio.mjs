@@ -123,6 +123,11 @@ import { createPacingInspector } from './pacing-inspector.mjs';
 import { createAcceptanceInspector } from './acceptance-inspector.mjs';
 import { observePreviewReadiness } from './preview-readiness.mjs';
 import { createCandidateLibrary } from './candidate-library.mjs';
+import {
+  isStudioSpatialReview,
+  inspectStudioSpatialReview,
+  mountStudioSpatialReviews,
+} from './spatial-editions.mjs';
 
 const $ = (id) => document.getElementById(id);
 const creatorDraftId = new URLSearchParams(location.search).get('creator-draft');
@@ -132,6 +137,7 @@ if (creatorDraftId && /^[a-z][a-z0-9-]{0,59}$/.test(creatorDraftId)) {
   localizedText(back, localizedMessage('tools:studio.returnToPictureCreator'));
   document.querySelector('header').append(back);
 }
+const stopSpatialReviews = mountStudioSpatialReviews({ document });
 const candidateLibrary = createCandidateLibrary({ document });
 const backend = createContentDraftBackend();
 const pacingInspector = createPacingInspector({ document, getSource: () => session.current() });
@@ -1013,35 +1019,49 @@ $('whole-timed').onclick = guarded(() => {
   sourceChanged = true;
   inspectSource();
 });
-$('whole-variety').onclick = guarded(() => {
+$('whole-variety').onclick = guarded(async () => {
   if (!discardSource()) return;
-  const create =
-    {
-      'variety-1': createWholeVarietyCandidates,
-      'sorting-lanes-1': createWholeSortingCandidates,
-      'global-impact-1': createWholeImpactCandidates,
-      'pressure-arcs-1': createWholePressureCandidates,
-      'cultural-pressure-1': createWholeCulturalPressureCandidates,
-      'erosion-counterplay-1': createWholeErosionReviewCandidates,
-      'cultural-spatial-triptych-1': createSpatialNextBatchCandidates,
-      'horizon-cultural-joins-1': createHorizonNextBatchCandidates,
-      'border-cultural-routes-1': createBorderCulturalNextBatchCandidates,
-      'border-signal-cultural-routes-1': createBorderSignalCulturalNextBatchCandidates,
-      'early-cultural-routes-1': createEarlyCulturalRoutesCandidates,
-      'signal-cultural-routes-1': createSignalCulturalRoutesCandidates,
-      'neon-cultural-routes-1': createNeonCulturalRoutesCandidates,
-      'neon-cultural-routes-2': createNeonCulturalRoutesFinaleCandidates,
-      'rover-cultural-routes-1': createRoverCulturalRoutesCandidates,
-      'fracture-cultural-routes-1': createFractureCulturalRoutesCandidates,
-      'phaseworks-cultural-routes-1': createPhaseworksCulturalRoutesCandidates,
-      'livewire-cultural-routes-1': createLivewireCulturalRoutesCandidates,
-      'relay-cultural-routes-1': createRelayCulturalRoutesCandidates,
-      'crosswind-cultural-routes-1': createCrosswindCulturalRoutesCandidates,
-      'sentinel-cultural-routes-1': createSentinelCulturalRoutesCandidates,
-      'apex-cultural-routes-1': createApexCulturalRoutesCandidates,
-      'ukrainian-ornament-study-1': createUkrainianOrnamentJourney,
-      'ukrainian-ornament-atlas-1': createUkrainianOrnamentAtlasJourney,
-    }[$('whole-variety-edition').value] ?? createWholeVarietyCandidates;
+  const edition = $('whole-variety-edition').value;
+  if (isStudioSpatialReview(edition)) {
+    await inspectStudioSpatialReview({
+      id: edition,
+      inspections,
+      getEdition: () => $('whole-variety-edition').value,
+      inspect: (source) => {
+        $('source').value = JSON.stringify(source, null, 2);
+        sourceChanged = true;
+        inspectSource();
+      },
+    });
+    return;
+  }
+  const create = {
+    'variety-1': createWholeVarietyCandidates,
+    'sorting-lanes-1': createWholeSortingCandidates,
+    'global-impact-1': createWholeImpactCandidates,
+    'pressure-arcs-1': createWholePressureCandidates,
+    'cultural-pressure-1': createWholeCulturalPressureCandidates,
+    'erosion-counterplay-1': createWholeErosionReviewCandidates,
+    'cultural-spatial-triptych-1': createSpatialNextBatchCandidates,
+    'horizon-cultural-joins-1': createHorizonNextBatchCandidates,
+    'border-cultural-routes-1': createBorderCulturalNextBatchCandidates,
+    'border-signal-cultural-routes-1': createBorderSignalCulturalNextBatchCandidates,
+    'early-cultural-routes-1': createEarlyCulturalRoutesCandidates,
+    'signal-cultural-routes-1': createSignalCulturalRoutesCandidates,
+    'neon-cultural-routes-1': createNeonCulturalRoutesCandidates,
+    'neon-cultural-routes-2': createNeonCulturalRoutesFinaleCandidates,
+    'rover-cultural-routes-1': createRoverCulturalRoutesCandidates,
+    'fracture-cultural-routes-1': createFractureCulturalRoutesCandidates,
+    'phaseworks-cultural-routes-1': createPhaseworksCulturalRoutesCandidates,
+    'livewire-cultural-routes-1': createLivewireCulturalRoutesCandidates,
+    'relay-cultural-routes-1': createRelayCulturalRoutesCandidates,
+    'crosswind-cultural-routes-1': createCrosswindCulturalRoutesCandidates,
+    'sentinel-cultural-routes-1': createSentinelCulturalRoutesCandidates,
+    'apex-cultural-routes-1': createApexCulturalRoutesCandidates,
+    'ukrainian-ornament-study-1': createUkrainianOrnamentJourney,
+    'ukrainian-ornament-atlas-1': createUkrainianOrnamentAtlasJourney,
+  }[edition];
+  if (!create) throw editorMessageError('errors:studio.source.unknownEdition');
   $('source').value = JSON.stringify(create({ artwork: true }), null, 2);
   sourceChanged = true;
   inspectSource();
@@ -1259,6 +1279,7 @@ window.addEventListener('beforeunload', (event) => {
 });
 window.addEventListener('pagehide', (event) => {
   if (!event.persisted) {
+    stopSpatialReviews();
     stopGameplayTuning();
     gameplayTuning.dispose();
     stopMapLocale();
@@ -1268,6 +1289,9 @@ window.addEventListener('pagehide', (event) => {
   previewController?.abort();
   clearTimeout(saveTimer);
   stopPreviewReadiness();
+});
+window.addEventListener('pageshow', (event) => {
+  if (event.persisted && session) imageWorkbench.sync();
 });
 async function boot() {
   let saved = null,

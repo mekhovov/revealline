@@ -16,24 +16,47 @@ export class Events {
   }
   dispatchEvent(event) {
     if (!event.target) Object.defineProperty(event, 'target', { configurable: true, value: this });
+    const priorImmediate = Object.getOwnPropertyDescriptor(event, 'stopImmediatePropagation'),
+      stopImmediate = event.stopImmediatePropagation;
+    let immediateStopped = false;
+    Object.defineProperty(event, 'stopImmediatePropagation', {
+      configurable: true,
+      value() {
+        immediateStopped = true;
+        stopImmediate?.call(this);
+        this.cancelBubble = true;
+      },
+    });
     const ancestors = [];
     for (let node = this.parentNode; node; node = node.parentNode) ancestors.push(node);
-    for (const node of [...ancestors].reverse()) {
-      for (const fn of [...(node.captureListeners.get(event.type) || [])]) fn(event);
-      if (event.cancelBubble) return !event.defaultPrevented;
-    }
-    for (const fn of [...(this.captureListeners.get(event.type) || [])]) fn(event);
-    const bubble = (node) => {
-      for (const fn of [...(node.listeners.get(event.type) || [])]) fn(event);
-      node[`on${event.type}`]?.(event);
-    };
-    bubble(this);
-    if (event.bubbles)
-      for (const node of ancestors) {
-        if (event.cancelBubble) break;
-        bubble(node);
+    const invoke = (callbacks) => {
+      for (const fn of [...(callbacks || [])]) {
+        fn(event);
+        if (immediateStopped) break;
       }
-    return !event.defaultPrevented;
+    };
+    const bubble = (node) => {
+      invoke(node.listeners.get(event.type));
+      if (!immediateStopped) node[`on${event.type}`]?.(event);
+    };
+    try {
+      for (const node of [...ancestors].reverse()) {
+        invoke(node.captureListeners.get(event.type));
+        if (event.cancelBubble) return !event.defaultPrevented;
+      }
+      invoke(this.captureListeners.get(event.type));
+      if (immediateStopped) return !event.defaultPrevented;
+      bubble(this);
+      if (event.bubbles)
+        for (const node of ancestors) {
+          if (event.cancelBubble) break;
+          bubble(node);
+        }
+      return !event.defaultPrevented;
+    } finally {
+      if (priorImmediate) Object.defineProperty(event, 'stopImmediatePropagation', priorImmediate);
+      else delete event.stopImmediatePropagation;
+    }
   }
   emit(type, extra = {}) {
     const event = {
@@ -45,6 +68,9 @@ export class Events {
         this.defaultPrevented = true;
       },
       stopPropagation() {
+        this.cancelBubble = true;
+      },
+      stopImmediatePropagation() {
         this.cancelBubble = true;
       },
       ...extra,

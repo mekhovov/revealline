@@ -4,10 +4,7 @@ import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
 import { setLocale } from '../i18n/index.mjs';
 import { attachSoundtrackPanel } from '../ui/soundtrack-panel.mjs';
-import {
-  ONLINE_SOUNDTRACK_CATALOGUE_URL,
-  ONLINE_SOUNDTRACK_DIRECTORY_URL,
-} from '../online-soundtrack-catalogue.mjs';
+import { ONLINE_SOUNDTRACK_CATALOGUE_URL } from '../online-soundtrack-catalogue.mjs';
 import { createAudioMaster } from '../ui/audio-master.mjs';
 import {
   SOUNDTRACK_BUNDLED_ASSETS,
@@ -107,6 +104,12 @@ class Element {
       this.children.push(child);
     }
   }
+  after(...siblings) {
+    if (!this.parentNode) return;
+    const index = this.parentNode.children.indexOf(this);
+    for (const sibling of siblings) sibling.parentNode = this.parentNode;
+    this.parentNode.children.splice(index + 1, 0, ...siblings);
+  }
   replaceChildren(...children) {
     this._text = '';
     this.children = [];
@@ -126,11 +129,20 @@ class Element {
       this.parentNode.children = this.parentNode.children.filter((child) => child !== this);
   }
   querySelectorAll(selector) {
-    const tags = selector.toUpperCase().split(',');
+    const selectors = selector.split(',').map((value) => value.trim());
     return this.children.flatMap((child) => [
-      ...(tags.includes(child.tagName) ? [child] : []),
+      ...(selectors.some((value) =>
+        value.startsWith('.')
+          ? child.className?.split(/\s+/).includes(value.slice(1))
+          : value.toUpperCase() === child.tagName,
+      )
+        ? [child]
+        : []),
       ...child.querySelectorAll(selector),
     ]);
+  }
+  querySelector(selector) {
+    return this.querySelectorAll(selector)[0] ?? null;
   }
   addEventListener(type, callback) {
     if (!this.listeners.has(type)) this.listeners.set(type, new Set());
@@ -211,6 +223,7 @@ async function setup(
     store: overrideStore,
     callbacks = {},
     open = true,
+    settings = false,
   } = {},
 ) {
   const doc = {
@@ -227,6 +240,7 @@ async function setup(
   doc.body = new Element(doc, 'body');
   doc.head = new Element(doc, 'head');
   doc.createElement = (tag) => new Element(doc, tag);
+  const settingsRoot = settings ? new Element(doc, 'section') : null;
   const db = memoryIndexedDB(),
     store =
       overrideStore ??
@@ -249,27 +263,45 @@ async function setup(
     durationSeconds: 90,
     volume: 0.6,
   };
+  let intentGeneration = 0;
   const player = {
     snapshot: () => ({ ...state }),
+    intentRevision: () => intentGeneration,
     setLibrary: (library) => calls.push(['library', library]),
     setIntent: (desired) => {
       calls.push(['intent', desired]);
+      intentGeneration++;
       state.desired = desired;
     },
-    selectPlaylist: async (id) => calls.push(['select', id]),
-    selectListening: async (value) => calls.push(['listening', value]),
+    selectPlaylist: async (id) => {
+      intentGeneration++;
+      calls.push(['select', id]);
+    },
+    selectListening: async (value) => {
+      intentGeneration++;
+      calls.push(['listening', value]);
+    },
     pause: () => {
       calls.push(['pause']);
+      intentGeneration++;
       Object.assign(state, { playing: false, desired: false, status: 'paused' });
     },
     play: async () => {
       calls.push(['play']);
+      intentGeneration++;
       Object.assign(state, { playing: true, desired: true, status: 'playing' });
     },
-    previous: async () => calls.push(['previous']),
-    next: async () => calls.push(['next']),
+    previous: async () => {
+      intentGeneration++;
+      calls.push(['previous']);
+    },
+    next: async () => {
+      intentGeneration++;
+      calls.push(['next']);
+    },
     playRemotePlaylist: async (tracks, options) => {
       calls.push(['remote', tracks, options]);
+      intentGeneration++;
       Object.assign(state, {
         playing: true,
         desired: true,
@@ -314,6 +346,7 @@ async function setup(
         throw new Error('Online catalogue is unavailable in this isolated test.');
       },
     },
+    settingsRoot,
     ...callbacks,
   });
   const node = (id) => {
@@ -346,6 +379,7 @@ async function setup(
     downloads,
     urls,
     revoked,
+    settingsRoot,
   };
 }
 const file = (name = 'Neon sky.mp3', value = silenceBytes) =>
@@ -371,33 +405,67 @@ function onlineCatalogueFixture() {
       'Space collection',
       ['ambient', 'atmospheric'],
     ],
+    [
+      '7'.repeat(64),
+      'FPV Run',
+      'TRENCH ORDERLY',
+      'TRENCH ORDERLY',
+      ['ФПВ', 'UA', 'rock'],
+      ['TRENCH ORDERLY', 'ФПВ'],
+    ],
   ];
-  const tracks = definitions.map(([sha256, title, artist, collection, tags], index) => ({
-    id: `fixture-${index + 1}`,
-    title,
-    artist,
-    durationSeconds: 180 + index,
-    tags,
-    source: `https://artists.example/${index + 1}`,
-    license: 'CC BY 4.0 International',
-    licenseURL: 'https://creativecommons.org/licenses/by/4.0/',
-    credit: `${title} by ${artist}`,
-    fileName: `${title}.mp3`,
-    archiveId: `fixture-${index + 1}`,
-    collection,
-    status: 'published-audition',
-    listeningApproval: 'pending',
-    gameCatalogueAdmission: false,
-    contentId: index === 2 ? true : 'unknown',
-    recordingModeEligible: false,
-    audio: { path: `objects/${sha256}.mp3`, bytes: 1000 + index, sha256 },
-    aliases: [],
-  }));
+  const tracks = definitions.map(
+    ([sha256, title, artist, collection, tags, collections = [collection]], index) => ({
+      id: `fixture-${index + 1}`,
+      title,
+      artist,
+      durationSeconds: 180 + index,
+      tags,
+      source: `https://artists.example/${index + 1}`,
+      license: index === 6 ? 'Unknown — uploader-confirmed rights' : 'CC BY 4.0 International',
+      licenseURL: index === 6 ? null : 'https://creativecommons.org/licenses/by/4.0/',
+      credit: `${title} by ${artist}`,
+      fileName: `${title}.mp3`,
+      archiveId: `fixture-${index + 1}`,
+      collection,
+      collections,
+      status: 'published-audition',
+      listeningApproval: 'pending',
+      gameCatalogueAdmission: false,
+      contentId: index === 2 ? true : 'unknown',
+      recordingModeEligible: false,
+      audio: {
+        path: `https://github.com/mekhovov/revealline-soundtracks/releases/download/audio-test/${sha256}.mp3`,
+        bytes: 1000 + index,
+        sha256,
+      },
+      aliases: [],
+      ...(index === 6
+        ? {
+            rights: {
+              licenseId: 'UNKNOWN',
+              licenseVersion: null,
+              licenseURL: null,
+              rightsEvidenceURL: `https://artists.example/${index + 1}`,
+              attribution: `${title} by ${artist}`,
+              derivativeChangeNotice: 'Exact submitted MP3 bytes retained.',
+              permissionBasis: 'uploader-confirmed-public-redistribution-and-web-playback',
+              shareAlike: {
+                required: null,
+                deliveryLicenseId: null,
+                deliveryLicenseVersion: null,
+                deliveryLicenseURL: null,
+              },
+            },
+          }
+        : {}),
+    }),
+  );
   return {
     format: 'revealline-public-soundtrack-catalogue.v1',
     archive: {
-      id: 'revealline-soundtracks-01',
-      baseURL: 'https://mekhovov.github.io/revealline-soundtracks-01/',
+      id: 'revealline-soundtracks',
+      baseURL: 'https://mekhovov.github.io/revealline-soundtracks/',
     },
     sources: [],
     counts: {
@@ -419,34 +487,6 @@ function onlineCatalogueResponse(catalogue, url = ONLINE_SOUNDTRACK_CATALOGUE_UR
     headers: { get: () => String(body.byteLength) },
     body: new Response(body).body,
   };
-}
-
-function onlineDirectoryResponse(
-  catalogues = [
-    {
-      id: 'revealline-soundtracks-01',
-      url: ONLINE_SOUNDTRACK_CATALOGUE_URL,
-      baseURL: 'https://mekhovov.github.io/revealline-soundtracks-01/',
-      required: true,
-    },
-  ],
-) {
-  const body = new TextEncoder().encode(
-    JSON.stringify({ format: 'revealline-public-soundtrack-directory.v1', catalogues }),
-  );
-  return {
-    status: 200,
-    redirected: false,
-    url: ONLINE_SOUNDTRACK_DIRECTORY_URL,
-    headers: { get: () => String(body.byteLength) },
-    body: new Response(body).body,
-  };
-}
-
-function onlineArchiveResponse(url, catalogue = onlineCatalogueFixture()) {
-  return url === ONLINE_SOUNDTRACK_DIRECTORY_URL
-    ? onlineDirectoryResponse()
-    : onlineCatalogueResponse(catalogue);
 }
 
 async function settleOnlineCatalogue(predicate = () => true, label = 'online catalogue update') {
@@ -2119,7 +2159,7 @@ test('archive website remains a secondary credits and download link', async (t) 
   await app.click('advanced-community-toggle');
   const link = app.node('licensed-previews');
   assert.equal(link.tagName, 'A');
-  assert.equal(link.getAttribute('href'), 'https://mekhovov.github.io/revealline-soundtracks-01/');
+  assert.equal(link.getAttribute('href'), 'https://mekhovov.github.io/revealline-soundtracks/');
   assert.equal(link.getAttribute('target'), '_blank');
   assert.equal(link.getAttribute('rel'), 'noopener noreferrer');
   assert.match(link.textContent, /Open the public archive website/);
@@ -2151,24 +2191,25 @@ test('public archive searches and plays any published recording through the shar
       onlineCatalogueDownload: {
         fetch: async (url, options) => {
           requests.push([url, options]);
-          return onlineArchiveResponse(url, catalogue);
+          return onlineCatalogueResponse(catalogue);
         },
       },
     },
   });
   await settleOnlineCatalogue(
-    () => requests.length === 2 && app.node('online-results').children.length === 6,
+    () => requests.length === 1 && app.node('online-results').children.length === 7,
     'the public catalogue results',
   );
-  assert.equal(requests.length, 2);
-  assert.deepEqual(
-    requests.map(([url]) => url),
-    [ONLINE_SOUNDTRACK_DIRECTORY_URL, ONLINE_SOUNDTRACK_CATALOGUE_URL],
-  );
+  assert.equal(requests.length, 1);
+  assert.equal(requests[0][0], ONLINE_SOUNDTRACK_CATALOGUE_URL);
   assert.equal(requests[0][1].credentials, 'omit');
-  assert.equal(requests[1][1].credentials, 'omit');
-  assert.equal(app.node('online-results').children.length, 6);
-  assert.match(app.node('online-status').textContent, /6 of 6 published recordings/);
+  assert.equal(app.node('online-results').children.length, 7);
+  assert.match(app.node('online-status').textContent, /7 of 7 published recordings/);
+  const fpvItem = app.node(`online-play-${'7'.repeat(64)}`).parentNode;
+  assert.match(fpvItem.textContent, /FPV Run/);
+  assert.match(fpvItem.textContent, /TRENCH ORDERLY/);
+  assert.doesNotMatch(fpvItem.textContent, /Unknown|licen[cs]e/i);
+  assert.equal(fpvItem.lastElementChild.getAttribute('href'), 'https://artists.example/7');
 
   app.node('online-search').value = 'dnipro';
   app.node('online-search').oninput();
@@ -2193,15 +2234,15 @@ test('public archive searches and plays any published recording through the shar
   app.node('online-style-synth').onchange();
   app.node('online-style-ukrainian').checked = true;
   app.node('online-style-ukrainian').onchange();
-  assert.equal(app.node('online-results').children.length, 2);
+  assert.equal(app.node('online-results').children.length, 3);
   app.choose('online-order', 'ordered');
   app.choose('online-repeat', 'off');
   await app.click('online-play-all');
   const mixed = app.calls.findLast(([name]) => name === 'remote');
-  assert.equal(mixed[1].length, 2);
+  assert.equal(mixed[1].length, 3);
   assert.deepEqual(
     mixed[1].map((track) => track.title),
-    ['Night Circuit', 'Dnipro Bells'],
+    ['Night Circuit', 'Dnipro Bells', 'FPV Run'],
   );
   assert.deepEqual(mixed[2], {
     order: 'ordered',
@@ -2214,9 +2255,22 @@ test('public archive searches and plays any published recording through the shar
   assert.equal(app.calls.findLast(([name]) => name === 'remote')[2].mixWithLibrary, false);
 
   await app.click('online-styles-all');
-  assert.equal(app.node('online-results').children.length, 6);
+  assert.equal(app.node('online-results').children.length, 7);
 
   await app.click('online-styles-none');
+  app.node('online-style-fpv').checked = true;
+  app.node('online-style-fpv').onchange();
+  assert.equal(app.node('online-results').children.length, 1);
+  assert.match(app.node('online-results').textContent, /FPV Run/);
+  app.node('online-style-ukrainian').checked = true;
+  app.node('online-style-ukrainian').onchange();
+  assert.equal(app.node('online-results').children.length, 2);
+  assert.match(app.node('online-results').textContent, /Dnipro Bells/);
+  app.choose('online-collection', 'ФПВ');
+  assert.equal(app.node('online-results').children.length, 1);
+
+  await app.click('online-styles-none');
+  app.choose('online-collection', '');
   app.node('online-style-chiptune').checked = true;
   app.node('online-style-chiptune').onchange();
   assert.equal(app.node('online-results').children.length, 1);
@@ -2225,16 +2279,342 @@ test('public archive searches and plays any published recording through the shar
   app.node('online-style-rock').onchange();
   app.node('online-style-ambient').checked = true;
   app.node('online-style-ambient').onchange();
-  assert.equal(app.node('online-results').children.length, 3);
+  assert.equal(app.node('online-results').children.length, 4);
   assert.match(app.node('online-results').textContent, /Road Voltage/);
   assert.match(app.node('online-results').textContent, /Quiet Orbit/);
+  assert.match(app.node('online-results').textContent, /FPV Run/);
 
   app.node('recording-mode').checked = true;
   await app.click('apply-listening');
   assert.equal((await app.store.read()).library.listening.recordingMode, true);
   assert.equal(app.node('online-results').children.length, 0);
   assert.equal(app.node('online-play-all').disabled, true);
-  assert.match(app.node('online-status').textContent, /Recording mode excludes 6/);
+  assert.match(app.node('online-status').textContent, /Recording mode excludes 7/);
+});
+
+test('Audio settings expose streamed styles and play a selected style without opening Studio', async (t) => {
+  const catalogue = onlineCatalogueFixture(),
+    requests = [];
+  const app = await setup(t, {
+    open: false,
+    settings: true,
+    callbacks: {
+      catalogue: emptyCatalogue,
+      onlineCatalogueDownload: {
+        fetch: async (url, options) => {
+          requests.push([url, options]);
+          return onlineCatalogueResponse(catalogue);
+        },
+      },
+    },
+  });
+  await settleOnlineCatalogue(
+    () =>
+      requests.length === 1 &&
+      app.node('online-results').children.length === 7 &&
+      !app.node('settings-play-styles').disabled,
+    'the settings catalogue preload',
+  );
+  assert.equal(app.settingsRoot.children.length, 1);
+  assert.match(app.settingsRoot.textContent, /Music styles/);
+  assert.match(app.settingsRoot.textContent, /Ukrainian · UA/);
+  assert.match(app.settingsRoot.textContent, /ФПВ/);
+
+  await app.click('settings-styles-none');
+  app.node('settings-style-synth').checked = true;
+  app.node('settings-style-synth').onchange();
+  app.node('online-search').value = 'hidden advanced filter must not constrain Audio settings';
+  app.node('online-search').oninput();
+  await app.click('settings-play-styles');
+
+  const streamed = app.calls.findLast(([name]) => name === 'remote');
+  assert.deepEqual(
+    streamed[1].map((track) => track.title),
+    ['Night Circuit'],
+  );
+  assert.deepEqual(streamed[2], {
+    order: 'shuffle',
+    repeat: 'all',
+    mixWithLibrary: true,
+  });
+  assert.deepEqual((await app.store.read()).library.listening.genres, ['synth90s']);
+  assert.match(app.node('settings-style-status').textContent, /Playing 1 matching/);
+});
+
+test('Audio style playback saves only listening preferences and retains a staged track removal', async (t) => {
+  const initial = await fixture(),
+    catalogue = onlineCatalogueFixture(),
+    app = await setup(t, {
+      initial,
+      settings: true,
+      callbacks: {
+        catalogue: emptyCatalogue,
+        onlineCatalogueDownload: {
+          fetch: async () => onlineCatalogueResponse(catalogue),
+        },
+      },
+    });
+  await settleOnlineCatalogue(
+    () => app.node('online-results').children.length === 7,
+    'the settings catalogue preload',
+  );
+
+  app.choose('playlists', 'qa.mix');
+  app.choose('entries', '1');
+  await app.click('remove-entry');
+  app.choose('tracks', initial.track.id);
+  await app.click('delete-track');
+  const before = await app.store.read();
+  assert.equal(before.generation, 1);
+  assert.equal(before.library.tracks.length, 1);
+  assert.equal(before.assets.length, 1);
+
+  await app.click('settings-styles-none');
+  app.node('settings-style-synth').checked = true;
+  app.node('settings-style-synth').onchange();
+  await app.click('settings-play-styles');
+
+  const preferences = await app.store.read();
+  assert.equal(preferences.generation, 2);
+  assert.deepEqual(preferences.library.listening.genres, ['synth90s']);
+  assert.equal(preferences.library.tracks.length, 1, 'the staged deletion is not committed');
+  assert.equal(preferences.assets.length, 1, 'the saved original remains retained');
+
+  await app.click('save');
+  const explicitlySaved = await app.store.read();
+  assert.equal(explicitlySaved.generation, 3);
+  assert.equal(explicitlySaved.library.tracks.length, 0, 'the unsaved draft survived playback');
+  assert.equal(explicitlySaved.assets.length, 0, 'only explicit Save removes the original');
+});
+
+test('a later Pause cancels a delayed Audio style launch without losing its preference', async (t) => {
+  const catalogue = onlineCatalogueFixture();
+  let releaseCatalogue,
+    requests = 0;
+  const app = await setup(t, {
+    open: false,
+    settings: true,
+    callbacks: {
+      catalogue: emptyCatalogue,
+      onlineCatalogueDownload: {
+        fetch: async () => {
+          requests++;
+          return new Promise((resolve) => {
+            releaseCatalogue = () => resolve(onlineCatalogueResponse(catalogue));
+          });
+        },
+      },
+    },
+  });
+  await settleOnlineCatalogue(() => requests === 1 && releaseCatalogue, 'the delayed request');
+  app.node('settings-styles-none').disabled = false;
+  await app.click('settings-styles-none');
+  app.node('settings-style-synth').checked = true;
+  app.node('settings-style-synth').onchange();
+  // Exercise the handler's own pending-catalogue path directly. Native UI
+  // normally disables this action during preload, but a delayed fetch can also
+  // be inherited from a preceding view lifecycle.
+  app.node('settings-play-styles').disabled = false;
+  const launching = app.click('settings-play-styles');
+  app.player.pause();
+  releaseCatalogue();
+  await launching;
+
+  assert.equal(app.state.status, 'paused');
+  assert.equal(app.state.desired, false);
+  assert.equal(
+    app.calls.some(([name]) => name === 'remote'),
+    false,
+    'the settled request cannot override the newer transport intent',
+  );
+  assert.deepEqual((await app.store.read()).library.listening.genres, ['synth90s']);
+});
+
+test('closing an in-flight catalogue load allows a fresh successful retry', async (t) => {
+  const catalogue = onlineCatalogueFixture();
+  let requests = 0;
+  const app = await setup(t, {
+    callbacks: {
+      catalogue: emptyCatalogue,
+      onlineCatalogueDownload: {
+        fetch: async (_url, { signal }) => {
+          requests++;
+          if (requests > 1) return onlineCatalogueResponse(catalogue);
+          return new Promise((_resolve, reject) => {
+            signal.addEventListener('abort', () => {
+              const error = new Error('cancelled catalogue');
+              error.name = 'AbortError';
+              reject(error);
+            });
+          });
+        },
+      },
+    },
+  });
+  await settleOnlineCatalogue(() => requests === 1, 'the first pending catalogue request');
+  assert.equal(app.panel.close(), true);
+  await app.panel.open();
+  await settleOnlineCatalogue(
+    () => requests === 2 && app.node('online-results').children.length === 7,
+    'the replacement catalogue request',
+  );
+  assert.equal(app.node('online-reload').disabled, false);
+});
+
+test('verified external recording installs exact bytes as a draft and saves beside local music', async (t) => {
+  const audio = new Uint8Array(silenceBytes),
+    sha256 = createHash('sha256').update(audio).digest('hex'),
+    catalogue = onlineCatalogueFixture(),
+    externalURL = 'https://audio.example.test/library/external-song.mp3',
+    external = {
+      ...catalogue.tracks[0],
+      id: 'external-song',
+      title: 'External Song',
+      fileName: 'external-song.mp3',
+      audio: {
+        path: externalURL,
+        bytes: audio.byteLength,
+        sha256,
+        delivery: {
+          type: 'external-url',
+          verifiedAt: '2026-09-27T00:00:00Z',
+          rangeRequests: true,
+          cors: true,
+        },
+      },
+    };
+  catalogue.tracks[0] = external;
+  catalogue.counts.audioBytes = catalogue.tracks.reduce(
+    (total, track) => total + track.audio.bytes,
+    0,
+  );
+  const requests = [];
+  const app = await setup(t, {
+    callbacks: {
+      catalogue: emptyCatalogue,
+      onlineCatalogueDownload: {
+        fetch: async (url, options) => {
+          requests.push([url, options]);
+          if (url === ONLINE_SOUNDTRACK_CATALOGUE_URL) return onlineCatalogueResponse(catalogue);
+          assert.equal(url, externalURL);
+          return {
+            status: 206,
+            redirected: false,
+            url,
+            headers: {
+              get: (name) =>
+                name.toLowerCase() === 'content-length' ? String(audio.byteLength) : null,
+            },
+            body: new Response(audio).body,
+          };
+        },
+      },
+    },
+  });
+  await settleOnlineCatalogue(
+    () => app.doc.nodes.has(`soundtrack-online-install-${sha256}`),
+    'the external recording install action',
+  );
+  await app.click(`online-install-${sha256}`);
+  assert.equal((await app.store.read()).assets.length, 0, 'verified download stays a draft');
+  assert.match(app.node('status').textContent, /1 MP3 file verified and added to the draft/);
+  assert.match(app.node('status').textContent, /Save all changes/);
+  assert.doesNotMatch(app.node('status').textContent, /saved for offline/i);
+  await app.click(`online-install-${sha256}`);
+  assert.equal((await app.store.read()).assets.length, 0, 'duplicate download is still unsaved');
+  assert.match(app.node('status').textContent, /added to the draft/);
+  assert.doesNotMatch(app.node('status').textContent, /saved for offline/i);
+  assert.equal(requests.filter(([url]) => url === externalURL).length, 1);
+  await app.click('reload');
+  assert.equal((await app.store.read()).assets.length, 0, 'reload cannot recover an unsaved draft');
+  assert.equal((await app.store.read()).library.tracks.length, 0);
+  await app.click(`online-install-${sha256}`);
+  assert.equal(requests.filter(([url]) => url === externalURL).length, 2);
+  assert.match(app.node('status').textContent, /added to the draft/);
+  const download = requests.find(([url]) => url === externalURL);
+  assert.deepEqual(download[1].headers, { Range: `bytes=0-${audio.byteLength - 1}` });
+  assert.equal(download[1].credentials, 'omit');
+  assert.equal(download[1].mode, 'cors');
+
+  await app.click('save');
+  const saved = await app.store.read();
+  assert.equal(saved.assets.length, 1);
+  assert.equal(saved.assets[0].sha256, sha256);
+  assert.deepEqual(new Uint8Array(await saved.assets[0].blob.arrayBuffer()), audio);
+  assert.equal(saved.library.tracks.length, 1);
+  assert.equal(saved.library.tracks[0].title, 'External Song');
+  assert.equal(saved.library.tracks[0].artist, 'Signal Artist');
+  await app.click('reload');
+  const reloaded = await app.store.read();
+  assert.deepEqual(new Uint8Array(await reloaded.assets[0].blob.arrayBuffer()), audio);
+  assert.equal(reloaded.library.tracks[0].title, 'External Song');
+  await app.click(`online-install-${sha256}`);
+  assert.equal(
+    requests.filter(([url]) => url === externalURL).length,
+    2,
+    'saved duplicate never downloads again',
+  );
+  assert.match(app.node('status').textContent, /saved for offline/i);
+  assert.equal((await app.store.read()).assets.length, 1);
+});
+
+test('public archive refresh discovers newly published recordings without game changes', async (t) => {
+  let catalogue = onlineCatalogueFixture(),
+    attempts = 0;
+  const app = await setup(t, {
+    callbacks: {
+      catalogue: emptyCatalogue,
+      onlineCatalogueDownload: {
+        fetch: async () => {
+          attempts++;
+          return onlineCatalogueResponse(catalogue);
+        },
+      },
+    },
+  });
+  await settleOnlineCatalogue(
+    () => attempts === 1 && app.node('online-results').children.length === 7,
+    'the initial public catalogue',
+  );
+  const sha256 = '8'.repeat(64),
+    published = {
+      ...catalogue.tracks[0],
+      id: 'newly-published-song',
+      title: 'Newly Published Song',
+      artist: 'New Artist',
+      source: 'https://artists.example/new',
+      credit: 'Newly Published Song by New Artist',
+      collection: 'New collection',
+      collections: ['New collection'],
+      fileName: 'newly-published-song.mp3',
+      audio: {
+        path: `https://github.com/mekhovov/revealline-soundtracks/releases/download/audio-test/${sha256}.mp3`,
+        bytes: 2048,
+        sha256,
+      },
+    };
+  catalogue = {
+    ...catalogue,
+    counts: {
+      declaredTracks: 8,
+      uniqueRecordings: 8,
+      duplicateAliases: 0,
+      audioBytes: catalogue.counts.audioBytes + published.audio.bytes,
+    },
+    tracks: [...catalogue.tracks, published],
+  };
+  await app.click('online-reload');
+  await settleOnlineCatalogue(
+    () => attempts === 2 && app.node('online-results').children.length === 8,
+    'the newly published recording',
+  );
+  app.node('online-search').value = 'newly published';
+  app.node('online-search').oninput();
+  assert.equal(app.node('online-results').children.length, 1);
+  assert.match(app.node('online-results').textContent, /Newly Published Song/);
+  assert.match(app.node('online-results').textContent, /New Artist/);
+  await app.click(`online-play-${sha256}`);
+  assert.equal(app.calls.findLast(([name]) => name === 'remote')[1][0].title, published.title);
 });
 
 test('public archive catalogue outage can refresh without disabling built-in controls', async (t) => {
@@ -2242,8 +2622,7 @@ test('public archive catalogue outage can refresh without disabling built-in con
   const failed = await setup(t, {
     callbacks: {
       onlineCatalogueDownload: {
-        fetch: async (url) => {
-          if (url === ONLINE_SOUNDTRACK_DIRECTORY_URL) return onlineDirectoryResponse();
+        fetch: async () => {
           return ++attempts === 1
             ? new Response('no', { status: 503 })
             : onlineCatalogueResponse(onlineCatalogueFixture());
@@ -2271,11 +2650,11 @@ test('public archive catalogue outage can refresh without disabling built-in con
   await settleOnlineCatalogue(
     () =>
       attempts === 2 &&
-      /6 of 6 published recordings/.test(failed.node('online-status').textContent),
+      /7 of 7 published recordings/.test(failed.node('online-status').textContent),
     'the refreshed public catalogue',
   );
   assert.equal(attempts, 2);
-  assert.match(failed.node('online-status').textContent, /6 of 6 published recordings/);
+  assert.match(failed.node('online-status').textContent, /7 of 7 published recordings/);
   await failed.click(`online-play-${'1'.repeat(64)}`);
   const recovered = failed.calls.findLast(([name]) => name === 'remote');
   assert.equal(recovered[1][0].title, 'Night Circuit');
@@ -2759,8 +3138,8 @@ test('additional genre choices save a specific style or selected cross-style mix
     app.node(`mix-${genre}`).checked = ['chiptune', 'electronic', 'ambient'].includes(genre);
   await app.click('apply-listening');
   assert.deepEqual((await app.store.read()).library.listening.genres, [
-    'chiptune',
     'electronic',
+    'chiptune',
     'ambient',
   ]);
   assert(!app.calls.some(([name]) => name === 'play'));
@@ -3574,95 +3953,4 @@ test('legacy music libraries retain a visible playlist playback choice without a
   app.choose('selection', 'builtin.all');
   await app.click('use-selection');
   assert.equal((await app.store.read()).library.selection.playlistId, 'builtin.all');
-});
-
-test('partial archives stay playable and queues remain bounded past 256', async (t) => {
-  t.after(() => setLocale('en'));
-  const primary = onlineCatalogueFixture(),
-    archive = {
-      id: 'revealline-soundtracks-02',
-      url: 'https://mekhovov.github.io/revealline-soundtracks-02/catalogue.json',
-      baseURL: 'https://mekhovov.github.io/revealline-soundtracks-02/',
-      required: false,
-    },
-    tracks = Array.from({ length: 251 }, (_, index) => {
-      const sha256 = (index + 100).toString(16).padStart(64, '0');
-      return {
-        ...primary.tracks[0],
-        id: `second.song-${index}`,
-        title: `Second ${index}`,
-        fileName: `second-${index}.mp3`,
-        audio: { path: `objects/${sha256}.mp3`, bytes: 2 + index, sha256 },
-      };
-    }),
-    secondary = {
-      ...primary,
-      archive: { id: archive.id, baseURL: archive.baseURL },
-      tracks,
-      counts: {
-        declaredTracks: tracks.length,
-        uniqueRecordings: tracks.length,
-        duplicateAliases: 0,
-        audioBytes: tracks.reduce((n, x) => n + x.audio.bytes, 0),
-      },
-    },
-    entries = [
-      {
-        id: 'revealline-soundtracks-01',
-        url: ONLINE_SOUNDTRACK_CATALOGUE_URL,
-        baseURL: 'https://mekhovov.github.io/revealline-soundtracks-01/',
-        required: true,
-      },
-      archive,
-    ];
-  let available = false;
-  const app = await setup(t, {
-    callbacks: {
-      catalogue: emptyCatalogue,
-      onlineCatalogueDownload: {
-        fetch: async (url) => {
-          if (url === ONLINE_SOUNDTRACK_DIRECTORY_URL) return onlineDirectoryResponse(entries);
-          if (url === ONLINE_SOUNDTRACK_CATALOGUE_URL) return onlineCatalogueResponse(primary);
-          return available
-            ? onlineCatalogueResponse(secondary, archive.url)
-            : new Response('no', { status: 503 });
-        },
-      },
-    },
-  });
-  await settleOnlineCatalogue(
-    () =>
-      app.node('online-results').children.length === 6 &&
-      /Some public archives/.test(app.node('online-status').textContent),
-    'partial',
-  );
-  await app.click(`online-play-${primary.tracks[0].audio.sha256}`);
-  assert.equal(app.calls.findLast(([n]) => n === 'remote')[1].length, 6);
-  setLocale('uk');
-  assert.match(app.node('online-status').textContent, /Деякі публічні архіви/);
-  setLocale('en');
-  available = true;
-  await app.click('online-reload');
-  await settleOnlineCatalogue(
-    () => app.node('online-results').children.length === 257,
-    'recovered',
-  );
-  assert.match(app.node('online-status').textContent, /Playback queues 256 of 257/);
-  await app.click('online-play-all');
-  let call = app.calls.findLast(([n]) => n === 'remote');
-  assert.equal(call[1].length, 256);
-  app.choose('online-order', 'ordered');
-  app.choose('online-repeat', 'off');
-  app.node('online-mix-library').checked = false;
-  const last = tracks.at(-1);
-  await app.click(`online-play-${last.audio.sha256}`);
-  call = app.calls.findLast(([n]) => n === 'remote');
-  assert.equal(call[1].length, 256);
-  assert.equal(call[1][0].id, `online.${last.audio.sha256}`);
-  assert.deepEqual(call[2], {
-    order: 'ordered',
-    repeat: 'off',
-    startTrackId: `online.${last.audio.sha256}`,
-    mixWithLibrary: false,
-  });
 });

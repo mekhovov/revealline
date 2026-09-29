@@ -109,7 +109,10 @@ import {
   guardInstallOfflineBlur,
   installOfflineOwnsElement,
 } from '../ui/install-offline-panel.mjs';
-import { createOfflineDownloadAccess } from '../offline-download-access.mjs';
+import {
+  createOfflineDownloadAccess,
+  isOfflinePackageRequired,
+} from '../offline-download-access.mjs';
 
 import { createTeamArenaPreference } from './team-arena-preference.mjs';
 import { createMissionLibrary } from '../mission-library/library.mjs';
@@ -1874,7 +1877,11 @@ export function bootCoop({
     $('coop-picture-cancel').hidden = !busy;
     $('coop-picture-retry').hidden = busy || (ready && !retryPreview);
     localizedText($('coop-picture-retry'), () =>
-      retryPreview ? t('common:preview.retry') : t('interface:retryPicture2'),
+      retryPreview
+        ? t('common:preview.retry')
+        : pictureSelection?.downloadRequired
+          ? t('interface:downloadPlay')
+          : t('interface:retryPicture2'),
     );
     $('coop-picture-status').dataset.state = busy
       ? 'preparing'
@@ -1965,6 +1972,7 @@ export function bootCoop({
             }),
       binding: null,
       actorAppearance: null,
+      downloadRequired: false,
       state: 'new',
     };
     // Ownership, not matching IDs/bytes, authorizes this cosmetic overlay.
@@ -2197,9 +2205,10 @@ export function bootCoop({
         });
         if (!current()) return;
         selection.binding = binding;
+        selection.downloadRequired = false;
         selection.state = 'ready';
         pictureOperation = null;
-        if (onPrepared?.(selection) === true) {
+        if (onPrepared?.(selection, focus) === true) {
           focus.finish(null, false);
           return;
         }
@@ -2222,6 +2231,9 @@ export function bootCoop({
           console.error(t('interface:teamPicturePreparationFailed'), error);
         } catch {}
         if (!current()) return;
+        selection.downloadRequired =
+          isOfflinePackageRequired(error) ||
+          (error?.name === 'AbortError' && selection.downloadRequired);
         selection.state = 'error';
         pictureOperation = null;
         pictureUI(
@@ -2245,7 +2257,35 @@ export function bootCoop({
       );
       return;
     }
-    return preparePicture({ retry: true });
+    if (!pictureSelection?.downloadRequired) return preparePicture({ retry: true });
+    const selection = pictureSelection,
+      attempt = run,
+      epoch = generation,
+      recipe = currentRecipe();
+    return preparePicture({
+      retry: true,
+      onPrepared(prepared, actionFocus) {
+        if (
+          prepared !== selection ||
+          run !== attempt ||
+          generation !== epoch ||
+          pictureSelection !== selection ||
+          disposed ||
+          inactive ||
+          !foreground() ||
+          !actionFocus?.current()
+        )
+          return false;
+        // The package panel returns to the temporary Cancel control. Publish
+        // readiness and transfer this same admitted action to Start before the
+        // retention gate; hiding a focused Cancel must not strand the launch.
+        pictureUI(localizedMessage('interface:teamPictureReadyStartRemainsASeparateAction'));
+        actionFocus.pending($('coop-start'));
+        if (document.activeElement !== $('coop-start')) return false;
+        start(recipe);
+        return true;
+      },
+    });
   };
   // Follow the accepted content snapshot. Imports retain their own order and
   // recipes even when IDs match built-ins or a source catalogue later changes.
@@ -3308,6 +3348,14 @@ export function bootCoop({
         })}${receipt.reward ? ` · ${t('interface:pictureEarned')}` : ''}`
       : t('interface:missionLibrary.team.notClearedInstalledEdition');
   }
+  function installedProgressState(row) {
+    const clears = installedTeamProgress.get(row.installedEditionId)?.clears;
+    return {
+      state: Object.hasOwn(clears ?? {}, row.levelId) ? 'completed' : 'new',
+      // Installed Team v1 receipts record exact clears, but no star grade.
+      bestStars: null,
+    };
+  }
   async function launchInstalledTeamRow(edition, row, context) {
     if (
       !installedTeamStore ||
@@ -3384,6 +3432,7 @@ export function bootCoop({
               isCurrent: (row) =>
                 installedTeamEditions.get(edition.editionId) === edition && rows.includes(row),
               progress: installedProgressText,
+              progressState: installedProgressState,
               launch: (row, context) => launchInstalledTeamRow(edition, row, context),
             }),
             (row) => row,

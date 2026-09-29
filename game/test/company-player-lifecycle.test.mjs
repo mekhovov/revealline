@@ -14,6 +14,7 @@ import { createDisplayPreferences } from '../display-preferences.mjs';
 import { createAudioPreferences } from '../audio-preferences.mjs';
 import { createAudioMaster } from '../ui/audio-master.mjs';
 import { Soundscape } from '../ui/audio.mjs';
+import { auditSource } from '../../scripts/localization-audit.mjs';
 
 // Run the actual host callbacks against real stores/preference adapters without
 // starting a browser or replacing their production API with permissive stubs.
@@ -40,6 +41,63 @@ function callback(node, context) {
   return vm.runInNewContext(`(${source.slice(node.start, node.end)})`, context);
 }
 
+test('company notices retain a live message producer in the page and open dialog', () => {
+  const notice = { dataset: {} },
+    dialog = {
+      status: null,
+      querySelector() {
+        return this.status;
+      },
+      append(value) {
+        this.status = value;
+      },
+    },
+    localizedText = (element, message) => {
+      element.binding = message;
+      element.textContent = typeof message === 'function' ? message() : message;
+      return element.textContent;
+    },
+    context = {
+      $: (id) => {
+        assert.equal(id, 'notice');
+        return notice;
+      },
+      document: { querySelector: () => dialog },
+      localizedText,
+      node: () => ({
+        dataset: {},
+        attributes: new Map(),
+        setAttribute(name, value) {
+          this.attributes.set(name, value);
+        },
+      }),
+    },
+    report = callback(
+      find(tree, (node) => node.type === 'VariableDeclarator' && node.id?.name === 'report').init,
+      context,
+    ),
+    message = () => 'Localized status';
+  assert.equal(report(message, true), 'Localized status');
+  assert.equal(notice.binding, message);
+  assert.equal(dialog.status.binding, message);
+  assert.equal(notice.dataset.error, 'true');
+  assert.equal(dialog.status.dataset.error, 'true');
+  assert.equal(dialog.status.attributes.get('role'), 'status');
+  assert.equal(dialog.status.attributes.get('aria-live'), 'polite');
+});
+
+test('company player leaves only technical tokens outside the localization catalogs', () => {
+  assert.deepEqual(
+    auditSource(source, 'game/company-player.mjs').map(({ text }) => text),
+    [
+      'Company Brand',
+      '"Company Brand", system-ui, sans-serif',
+      'noopener noreferrer',
+      'company-level-title',
+    ],
+  );
+});
+
 test('the company host keeps multiple read-only wins in exported progress without writing another tab’s store', async () => {
   const disk = managedIndexedDB(),
     backend = createJourneyBackend({
@@ -63,10 +121,13 @@ test('the company host keeps multiple read-only wins in exported progress withou
     find(tree, (node) => node.type === 'FunctionDeclaration' && node.id?.name === 'creditWin'),
     context,
   );
-  for (const missionId of ['first-connection', 'second-connection']) {
+  for (const [missionId, medal] of [
+    ['first-connection', 'silver'],
+    ['second-connection', 'gold'],
+  ]) {
     context.awarded = false;
     context.current = {
-      run: { status: 'won', levelId: missionId },
+      run: { status: 'won', levelId: missionId, medal },
       mission: { id: missionId },
       runId: `${missionId}-run`,
       selection: { difficulty: 'standard' },
@@ -75,11 +136,14 @@ test('the company host keeps multiple read-only wins in exported progress withou
     creditWin();
     assert.equal(await profile.flush(), false);
   }
-  const exported = JSON.parse(profile.export()).profile;
+  const backup = JSON.parse(profile.export()),
+    exported = backup.profile;
   assert.deepEqual(Object.keys(exported.clears.solo).sort(), [
     'first-connection',
     'second-connection',
   ]);
+  assert.equal(backup.stars.best.solo['first-connection'], 2);
+  assert.equal(backup.stars.best.solo['second-connection'], 3);
   assert.equal(exported.generation, 2, 'an already credited win is not counted twice');
   assert.deepEqual(await backend.read(), emptyJourneyProfile());
   assert.equal(disk.allPuts.length, 0);
@@ -180,7 +244,11 @@ test('Home retires a staged mission and ignores its late abort or response witho
       missionFor: (id) => ({ id }),
       pause() {},
       preferences: { difficulty: 'standard' },
-      report: (message) => notices.push(message),
+      t: (key) => {
+        assert.equal(key, 'interface:companyPlayer.preparingMission');
+        return 'Preparing the exact mission and its artwork…';
+      },
+      report: (message) => notices.push(typeof message === 'function' ? message() : message),
       $: (id) => screens[id],
       renderCampaigns: () => {
         rendered++;

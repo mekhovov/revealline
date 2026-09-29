@@ -1,4 +1,4 @@
-import { localizedText } from '../i18n/index.mjs';
+import { localizedText, t } from '../i18n/index.mjs';
 import { mountEditionNavigation } from './edition-navigation.mjs';
 import { mountEditionLessons } from './edition-lessons.mjs';
 import { mountEditionPlayLayout } from './edition-play-layout.mjs';
@@ -80,8 +80,10 @@ export async function mountEditionSoloUI({
     logo.alt = selection.brand.name;
     (home.querySelector('.home-content') ?? home).prepend(logo);
   }
-  const picker = node('label', 'Company & campaign edition'),
+  const picker = node('label'),
+    pickerLabel = node('span'),
     select = node('select');
+  localizedText(pickerLabel, () => t('interface:editionSolo.switcherLabel'));
   picker.className = 'field edition-switcher';
   select.id = 'edition-select';
   const availableEditions = (provider.currentCatalog ?? provider.catalog).editions;
@@ -92,7 +94,7 @@ export async function mountEditionSoloUI({
   }
   select.value = provider.editionId;
   select.disabled = availableEditions.length === 1;
-  picker.append(select);
+  picker.append(pickerLabel, select);
   (home.querySelector('.home-content') ?? home).append(picker);
   select.onchange = () => {
     const requested = select.value;
@@ -104,16 +106,23 @@ export async function mountEditionSoloUI({
   };
   if (provider.presentationHistory?.length) {
     const retained = node('details'),
-      title = node('summary', 'Original artwork & saved-flight recovery'),
+      title = node('summary'),
       choice = node('select'),
-      label = node('label', 'Artwork snapshot');
+      label = node('label'),
+      labelText = node('span');
+    localizedText(title, () => t('interface:editionSolo.originalArtworkRecovery'));
+    localizedText(labelText, () => t('interface:editionSolo.artworkSnapshot'));
     retained.className = 'edition-about';
     choice.id = 'edition-presentation-select';
-    const current = node('option', 'Current artwork');
+    const current = node('option');
+    localizedText(current, () => t('interface:soloDeparture.currentArtwork'));
     current.value = '';
     choice.append(current);
     for (const record of provider.presentationHistory) {
-      const option = node('option', `Retained original · ${record.id.slice(0, 12)}`);
+      const option = node('option');
+      localizedText(option, () =>
+        t('interface:editionSolo.retainedOriginal', { id: record.id.slice(0, 12) }),
+      );
       option.value = record.id;
       choice.append(option);
     }
@@ -123,21 +132,17 @@ export async function mountEditionSoloUI({
       choice.value = provider.retainedPresentationId ?? '';
       return onPresentationChange(requested, choice);
     };
-    label.append(choice);
-    retained.append(
-      title,
-      node(
-        'p',
-        'Older flights and imports need their exact original campaign and artwork. Opening a retained snapshot keeps the same game and progress; it does not rewrite a save or substitute newer images.',
-      ),
-      label,
-    );
+    label.append(labelText, choice);
+    const recoveryExplanation = node('p');
+    localizedText(recoveryExplanation, () => t('interface:editionSolo.recoveryExplanation'));
+    retained.append(title, recoveryExplanation, label);
     const saved = getSavedPresentation();
     if (
       saved !== provider.authoredPresentationSha256 &&
       provider.presentationHistory.some((item) => item.id === saved)
     ) {
-      const recover = node('button', 'Open artwork matching saved flight');
+      const recover = node('button');
+      localizedText(recover, () => t('interface:editionSolo.openSavedArtwork'));
       recover.type = 'button';
       recover.id = 'edition-recover-presentation';
       recover.className = 'button secondary';
@@ -145,26 +150,24 @@ export async function mountEditionSoloUI({
       retained.append(recover);
       retained.open = true;
     }
-    if (provider.retainedPresentationId)
-      retained.append(
-        node(
-          'p',
-          `This page uses retained original ${provider.retainedPresentationId.slice(0, 12)}. New flights here also use that snapshot. Choose Current artwork to return to the latest campaign presentation.`,
-        ),
+    if (provider.retainedPresentationId) {
+      const retainedNotice = node('p');
+      localizedText(retainedNotice, () =>
+        t('interface:editionSolo.retainedNotice', {
+          id: provider.retainedPresentationId.slice(0, 12),
+        }),
       );
+      retained.append(retainedNotice);
+    }
     (home.querySelector('.home-content') ?? home).append(retained);
   }
   const about = node('details'),
-    aboutTitle = node('summary', 'About this edition & artwork');
+    aboutTitle = node('summary'),
+    learningDisclaimer = node('p');
+  localizedText(aboutTitle, () => t('interface:editionSolo.about'));
+  localizedText(learningDisclaimer, () => t('interface:editionSolo.learningDisclaimer'));
   about.className = 'edition-about';
-  about.append(
-    aboutTitle,
-    node('p', selection.brand.description),
-    node(
-      'p',
-      'Optional learning uses fictional records. It does not connect to company accounts or award a professional qualification.',
-    ),
-  );
+  about.append(aboutTitle, node('p', selection.brand.description), learningDisclaimer);
   for (const source of new Map(
     [
       ...(selection.brand.sources ?? []),
@@ -197,10 +200,8 @@ export async function mountEditionSoloUI({
     for (const option of actorStyle.options) option.disabled = option.value !== 'campaign';
   }
   if (doc.getElementById('menu-actor-note'))
-    localizedText(
-      doc.getElementById('menu-actor-note'),
-      () =>
-        'This edition uses its campaign artwork. Gameplay and enemy behavior follow the shared Solo rules.',
+    localizedText(doc.getElementById('menu-actor-note'), () =>
+      t('interface:editionSolo.campaignArtworkNote'),
     );
   const worlds = doc.getElementById('shell-worlds');
   if (worlds) {
@@ -236,14 +237,13 @@ export async function mountEditionSoloUI({
   try {
     const raw = (win.localStorage ?? globalThis.localStorage).getItem(provider.legacySessionKey);
     if (raw) {
-      legacy.append(
-        node('h3', 'Earlier preview save retained'),
-        node(
-          'p',
-          'This edition now uses the full Solo game. Its earlier preview save uses different pinned rules and remains untouched. Export it for recovery with the matching earlier preview.',
-        ),
-      );
-      const exportOld = node('button', 'Export earlier preview save');
+      const legacyHeading = node('h3'),
+        legacyExplanation = node('p');
+      localizedText(legacyHeading, () => t('interface:editionSolo.legacyHeading'));
+      localizedText(legacyExplanation, () => t('interface:editionSolo.legacyExplanation'));
+      legacy.append(legacyHeading, legacyExplanation);
+      const exportOld = node('button');
+      localizedText(exportOld, () => t('interface:editionSolo.exportLegacy'));
       exportOld.type = 'button';
       exportOld.className = 'button secondary';
       exportOld.onclick = () => {
@@ -258,17 +258,17 @@ export async function mountEditionSoloUI({
       doc.getElementById('settings-panel-data').append(legacy);
     }
   } catch {
-    report(
-      'Earlier preview storage could not be read. Existing saved records have not been changed.',
-    );
+    report(t('errors:editionSolo.legacyStorageUnreadable'));
   }
   let disposed = false;
   const offline = node('section');
   offline.className = 'edition-offline';
   if (root.dataset.editionId && version !== 'DEV') {
-    const prepare = node('button', 'Prepare this edition for offline play'),
-      install = node('button', 'Use this edition in the installed app'),
+    const prepare = node('button'),
+      install = node('button'),
       status = node('p');
+    localizedText(prepare, () => t('interface:editionSolo.prepareOffline'));
+    localizedText(install, () => t('interface:downloads.useEdition'));
     prepare.type = install.type = 'button';
     prepare.className = install.className = 'button secondary';
     install.disabled = true;
@@ -283,24 +283,24 @@ export async function mountEditionSoloUI({
           version,
           onStatus: (value) => {
             if (!disposed)
-              status.textContent =
+              localizedText(status, () =>
                 value.status === 'downloading'
-                  ? 'Downloading and checking this edition…'
-                  : 'Verifying the saved files…';
+                  ? t('interface:editionSolo.downloading')
+                  : t('interface:editionSolo.verifying'),
+              );
           },
         });
         if (disposed) return;
         if (checked.status === 'waiting') {
-          status.textContent =
-            'Close this edition’s tabs and reopen it to activate the checked update.';
+          localizedText(status, () => t('interface:editionSolo.activateCheckedUpdate'));
           return;
         }
         await verifyEditionOffline({ editionId: provider.editionId, version });
         if (disposed) return;
-        status.textContent = 'This edition is verified for offline play.';
+        localizedText(status, () => t('interface:editionSolo.offlineVerified'));
         install.disabled = false;
       } catch (error) {
-        if (!disposed) status.textContent = error.message;
+        if (!disposed) localizedText(status, error.message);
       } finally {
         if (!disposed) prepare.disabled = false;
       }
@@ -309,11 +309,9 @@ export async function mountEditionSoloUI({
       install.disabled = true;
       try {
         await selectPreparedEdition({ editionId: provider.editionId, version });
-        if (!disposed)
-          status.textContent =
-            'The installed launcher will open this edition. Its previous release is retained.';
+        if (!disposed) localizedText(status, () => t('interface:downloads.activationReady'));
       } catch (error) {
-        if (!disposed) status.textContent = error.message;
+        if (!disposed) localizedText(status, error.message);
       } finally {
         if (!disposed) install.disabled = false;
       }

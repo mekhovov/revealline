@@ -2,6 +2,47 @@
   "format": "revealline-focused-test-map.v1",
   "categories": [
     {
+      "id": "official-download-retention",
+      "pathPatterns": [
+        "^game/official-downloads\\.mjs$",
+        "^game/test/official-downloads\\.test\\.mjs$"
+      ],
+      "commands": [
+        {
+          "id": "official-download-retention",
+          "command": "node",
+          "args": [
+            "--test",
+            "game/test/official-downloads.test.mjs",
+            "game/test/offline-download-access.test.mjs",
+            "game/test/offline-team-retention-host.test.mjs"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "optional-offline-play",
+      "pathPatterns": [
+        "^game/offline-download-access\\.mjs$",
+        "^game/offline/service-worker\\.template\\.js$",
+        "^game/ui/company-startup\\.mjs$",
+        "^game/test/optional-offline-access\\.test\\.mjs$"
+      ],
+      "commands": [
+        {
+          "id": "optional-offline-play",
+          "command": "node",
+          "args": [
+            "--test",
+            "game/test/optional-offline-access.test.mjs",
+            "game/test/company-startup.test.mjs",
+            "game/test/published-solo-entry-host.test.mjs",
+            "game/test/offline-team-retention-host.test.mjs"
+          ]
+        }
+      ]
+    },
+    {
       "id": "content-artwork-preparation",
       "pathPatterns": [
         "^game/content-design/(assets|attempt|limits|picture)\\.mjs$",
@@ -17,6 +58,80 @@
             "game/test/content-attempt.test.mjs",
             "game/test/content-picture.test.mjs",
             "game/test/candidate-team-pictures.test.mjs"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "neutral-pilot-evidence",
+      "pathPatterns": [
+        "^game/content-design/(neutral-pilot-session|uniqueness-pilot(-player)?)\\.mjs$",
+        "^game/test/(neutral-pilot-session|uniqueness-pilot)\\.test\\.mjs$",
+        "^scripts/verify-pilot-observations\\.mjs$",
+        "^docs/content-offline/pilot-player\\.html$"
+      ],
+      "commands": [
+        {
+          "id": "neutral-pilot-evidence",
+          "command": "node",
+          "args": [
+            "--test",
+            "game/test/neutral-pilot-session.test.mjs",
+            "game/test/uniqueness-pilot.test.mjs"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "content-inventory",
+      "pathPatterns": [
+        "^scripts/(content-inventory|content-artwork-screening|artwork-screening)\\.mjs$",
+        "^game/content-design/content-lifecycle\\.mjs$",
+        "^game/test/(content-lifecycle|artwork-screening)\\.test\\.mjs$",
+        "^scripts/(test-)?company-artwork-screening\\.mjs$"
+      ],
+      "commands": [
+        {
+          "id": "content-inventory",
+          "command": "node",
+          "args": [
+            "--test",
+            "game/test/content-lifecycle.test.mjs",
+            "game/test/artwork-screening.test.mjs",
+            "scripts/test-company-artwork-screening.mjs"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "company-content-inventory",
+      "pathPatterns": ["^scripts/(test-)?company-content-inventory\\.mjs$"],
+      "commands": [
+        {
+          "id": "company-content-inventory",
+          "command": "node",
+          "args": [
+            "--test",
+            "scripts/test-company-content-inventory.mjs",
+            "game/test/edition-retained-presentation.test.mjs",
+            "game/test/edition-profile-compatibility.test.mjs"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "offline-package-measurements",
+      "pathPatterns": [
+        "^scripts/(report-(published-)?offline-packages|test-report-(published-)?offline-packages)\\.mjs$"
+      ],
+      "commands": [
+        {
+          "id": "offline-package-measurements",
+          "command": "node",
+          "args": [
+            "--test",
+            "scripts/test-report-offline-packages.mjs",
+            "scripts/test-report-published-offline-packages.mjs"
           ]
         }
       ]
@@ -230,6 +345,29 @@
             "--test",
             "scripts/test-offline-finalize.mjs",
             "publishing/frozen-offline.test.mjs"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "journey-star-compatibility",
+      "pathPatterns": [
+        "^game/journey/(profile|stars)\\.mjs$",
+        "^game/mission-library/(journey-source|creator-source)\\.mjs$",
+        "^game/test/journey-stars\\.test\\.mjs$"
+      ],
+      "commands": [
+        {
+          "id": "journey-star-compatibility",
+          "command": "node",
+          "args": [
+            "--test",
+            "game/test/journey-stars.test.mjs",
+            "game/test/journey-backup.test.mjs",
+            "game/test/journey-pictures.test.mjs",
+            "game/test/journey-profile-editions.test.mjs",
+            "game/test/journey.test.mjs",
+            "game/test/creator-bundle.test.mjs"
           ]
         }
       ]

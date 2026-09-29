@@ -8,6 +8,7 @@ import { readAssetStore } from '../storage.mjs';
 import { ownsProfileWriter } from '../profile-writer.mjs';
 import { captureInstallPrompt } from './pwa-install.mjs';
 import { createOfficialDownloads } from '../official-downloads.mjs';
+import { localizedAttribute, localizedText, onLocaleChange, t } from '../i18n/index.mjs';
 
 const protocol = 'revealline.offline-panel.v1';
 const ownedFrames = new WeakMap();
@@ -66,14 +67,18 @@ export function attachInstallOfflinePanel({
     unsubscribe,
     pendingPackage,
     disposed = false,
-    statusReported = false;
-  const reportStatus = (text) => {
+    statusReported = false,
+    localStatus = null;
+  const reportStatus = (text, producer = null) => {
     if (disposed) return;
     statusReported = true;
+    localStatus = producer;
     onStatus(text);
   };
   const label = () =>
-    installedPresentation(win, win?.navigator) ? 'Offline play' : 'Install & offline play';
+    installedPresentation(win, win?.navigator)
+      ? t('interface:offlinePlay')
+      : t('interface:installAppGameAndSoundtrackDownloads');
   const tellFrame = (action, fields = {}) =>
     frame?.contentWindow?.postMessage({ format: protocol, action, ...fields }, origin);
   const close = () => {
@@ -114,13 +119,12 @@ export function attachInstallOfflinePanel({
     try {
       const candidate = validateInstalledEdition(event.data.candidate, win.location);
       if (candidate.scope !== editionScope)
-        throw new Error('The prepared edition differs from this game.');
+        throw new Error(t('interface:downloads.preparedEditionMismatch'));
       if (!canActivate()) {
         reply.postMessage({
           activated: false,
           deferred: true,
-          message:
-            'Game files are ready. Finish the current flight, then open Offline play from the main menu to select this edition safely.',
+          message: t('interface:downloads.activationDeferred'),
         });
         return;
       }
@@ -149,14 +153,14 @@ export function attachInstallOfflinePanel({
     dialog = doc.createElement('dialog');
     dialog.id = 'install-offline-dialog';
     dialog.className = 'install-offline-dialog';
-    dialog.setAttribute('aria-label', 'Install & offline play');
+    localizedAttribute(dialog, 'aria-label', label);
     const header = doc.createElement('div'),
       title = doc.createElement('h2');
     header.className = 'install-offline-header';
-    title.textContent = 'Install & offline play';
+    localizedText(title, label);
     installButton = doc.createElement('button');
     installButton.id = 'install-offline-install';
-    installButton.textContent = 'Install app';
+    localizedText(installButton, () => t('interface:launcher.install'));
     installButton.onclick = () => {
       void install?.request().catch((error) => reportStatus(error.message));
     };
@@ -166,11 +170,11 @@ export function attachInstallOfflinePanel({
     refreshInstall();
     closeButton = doc.createElement('button');
     closeButton.id = 'install-offline-close';
-    closeButton.textContent = 'Back to game';
+    localizedText(closeButton, () => t('common:navigation.backToGame'));
     closeButton.onclick = close;
     frame = doc.createElement('iframe');
     frame.tabIndex = 0;
-    frame.title = 'Offline game and optional soundtrack downloads';
+    localizedAttribute(frame, 'title', () => t('interface:downloads.frameTitle'));
     frame.src = url.href;
     frame.onload = () => {
       tellFrame('host-ready', { installed: install?.installed() || false });
@@ -178,7 +182,7 @@ export function attachInstallOfflinePanel({
     };
     downloadsButton = doc.createElement('button');
     downloadsButton.id = 'install-offline-downloads';
-    downloadsButton.textContent = 'Choose downloads';
+    localizedText(downloadsButton, () => t('interface:downloads.chooseDownloads'));
     downloadsButton.onclick = () => {
       frame.contentWindow?.focus();
       frame.contentDocument?.getElementById('download-game')?.focus({ preventScroll: true });
@@ -192,7 +196,9 @@ export function attachInstallOfflinePanel({
         const pending = pendingPackage;
         pendingPackage = null;
         pending.cleanup();
-        pending.reject(new DOMException('Offline package selection closed.', 'AbortError'));
+        pending.reject(
+          new DOMException(t('interface:downloads.packageSelectionClosed'), 'AbortError'),
+        );
       }
       tellFrame('panel-closed');
       onClose();
@@ -219,18 +225,19 @@ export function attachInstallOfflinePanel({
     frameFocused: () => Boolean(dialog?.open && frame && doc.activeElement === frame),
     requestPackage({ groupId, signal } = {}) {
       if (typeof groupId !== 'string' || groupId.length > 200)
-        return Promise.reject(new Error('Invalid offline package selection.'));
+        return Promise.reject(new Error(t('interface:downloads.invalidPackageSelection')));
       if (signal?.aborted)
         return Promise.reject(
-          signal.reason || new DOMException('Package request cancelled.', 'AbortError'),
+          signal.reason ||
+            new DOMException(t('interface:downloads.packageRequestCancelled'), 'AbortError'),
         );
       if (pendingPackage)
-        return Promise.reject(new Error('Another package request is already open.'));
+        return Promise.reject(new Error(t('interface:downloads.packageRequestAlreadyOpen')));
       return new Promise((resolve, reject) => {
         const abort = () => {
           pendingPackage = null;
           signal?.removeEventListener('abort', abort);
-          reject(new DOMException('Package request cancelled.', 'AbortError'));
+          reject(new DOMException(t('interface:downloads.packageRequestCancelled'), 'AbortError'));
           close();
         };
         pendingPackage = {
@@ -255,13 +262,13 @@ export function attachInstallOfflinePanel({
       } catch {
         return false;
       }
-      reportStatus(
-        'Install Reveal Line for one-tap play. Open Install & offline play in the menu.',
-      );
+      const producer = () => t('interface:downloads.installSuggestion');
+      reportStatus(producer(), producer);
       return true;
     },
     dispose() {
       disposed = true;
+      stopLocaleStatus();
       if (ownedFrames.get(doc)?.frame === frame) ownedFrames.delete(doc);
       unsubscribe?.();
       win?.removeEventListener?.('message', message);
@@ -283,11 +290,16 @@ export function attachInstallOfflinePanel({
       const saved = states.some(
         (state) => state.edition === editionScope && state.group === 'gameplay',
       );
-      if (!statusReported && (saved || active?.scope === editionScope))
-        reportStatus('Saved offline selection · open Offline play to verify.');
+      if (!statusReported && (saved || active?.scope === editionScope)) {
+        const producer = () => t('interface:downloads.savedSelection');
+        reportStatus(producer(), producer);
+      }
     } catch {
       // Unavailable metadata cannot establish offline readiness.
     }
   })();
+  const stopLocaleStatus = onLocaleChange(() => {
+    if (localStatus) onStatus(localStatus());
+  });
   return Object.freeze(panel);
 }
