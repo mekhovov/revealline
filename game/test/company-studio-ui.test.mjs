@@ -229,6 +229,7 @@ function previewUI(overrides = {}) {
       if (!elements.has(id))
         elements.set(id, {
           hidden: true,
+          focus() {},
           removeAttribute(name) {
             delete this[name];
           },
@@ -248,7 +249,7 @@ function previewUI(overrides = {}) {
     clearTimeout: (id) => timers.delete(id),
     ...overrides,
   });
-  for (const name of ['readJSON', 'readSource', 'showStep', 'openPreview']) {
+  for (const name of ['stepTargets', 'readJSON', 'readSource', 'showStep', 'openPreview']) {
     const declaration = studioTree.body.find(
       (entry) => entry.type === 'FunctionDeclaration' && entry.id.name === name,
     );
