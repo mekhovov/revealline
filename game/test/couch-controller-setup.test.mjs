@@ -88,5 +88,8 @@ test('TX15 setup offers explicit Solo-style and shared-stick assignments', (t) =
   assert.equal(f.session.state().devices[0].profile.flight.up[0].index, 1);
   f.click('tx15Shared');
   assert.deepEqual(f.session.state().seats, [1024, 1025]);
+  const state = f.session.state();
+  assert.equal(state.devices.find((d) => d.index === state.seats[0]).profile.flight.up[0].index, 2);
+  assert.equal(state.devices.find((d) => d.index === state.seats[1]).profile.flight.up[0].index, 1);
   assert.equal(f.session.completeFlight(1), false, 'partial profiles preserve touch actions');
 });
