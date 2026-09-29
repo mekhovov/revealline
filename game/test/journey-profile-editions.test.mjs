@@ -62,8 +62,8 @@ test('company-edition profiles retain best stars without leaking them between ed
   await first.commit([complete('acme-silver', 2)]);
   await second.commit([complete('contoso-gold', 3)]);
   await first.commit([complete('acme-bronze', 1)]);
-  assert.equal((await first.read()).clears.solo[missionId].bestStars, 2);
-  assert.equal((await second.read()).clears.solo[missionId].bestStars, 3);
+  assert.equal((await first.readState()).stars.best.solo[missionId], 2);
+  assert.equal((await second.readState()).stars.best.solo[missionId], 3);
 });
 
 test('review storage failure preserves session progress and retry/export without writing legacy records', async () => {

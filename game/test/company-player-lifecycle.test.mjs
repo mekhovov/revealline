@@ -136,13 +136,14 @@ test('the company host keeps multiple read-only wins in exported progress withou
     creditWin();
     assert.equal(await profile.flush(), false);
   }
-  const exported = JSON.parse(profile.export()).profile;
+  const backup = JSON.parse(profile.export()),
+    exported = backup.profile;
   assert.deepEqual(Object.keys(exported.clears.solo).sort(), [
     'first-connection',
     'second-connection',
   ]);
-  assert.equal(exported.clears.solo['first-connection'].bestStars, 2);
-  assert.equal(exported.clears.solo['second-connection'].bestStars, 3);
+  assert.equal(backup.stars.best.solo['first-connection'], 2);
+  assert.equal(backup.stars.best.solo['second-connection'], 3);
   assert.equal(exported.generation, 2, 'an already credited win is not counted twice');
   assert.deepEqual(await backend.read(), emptyJourneyProfile());
   assert.equal(disk.allPuts.length, 0);

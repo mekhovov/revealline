@@ -81,7 +81,7 @@ export function journeyLibrarySource({
       if (receipt)
         return {
           state: 'completed',
-          bestStars: receipt.bestStars ?? null,
+          bestStars: profile.bestStars?.(mode, mission.id) ?? null,
         };
       return {
         state: currentState().snapshot.skipped[mode]?.includes(mission.id) ? 'skipped' : 'new',

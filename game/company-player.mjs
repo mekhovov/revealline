@@ -315,10 +315,9 @@ async function main() {
     arcadeCleared(id) && (!lessonFor(id) || assignment(id)?.status === 'complete');
   const progressState = (id) => {
     if (!completed(id)) return { state: 'new', bestStars: null };
-    const receipt = profile.snapshot().clears.solo[missionFor(id)?.id];
     return {
       state: 'completed',
-      bestStars: receipt?.bestStars ?? null,
+      bestStars: profile.bestStars('solo', missionFor(id)?.id),
     };
   };
   const unlocked = (id) => {
