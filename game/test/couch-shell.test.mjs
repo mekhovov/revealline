@@ -468,7 +468,11 @@ test('controller setup/help and repeated keyboard Confirm cannot leak through th
   f.pulse(0, 1);
   assert.equal(f.doc.activeElement.id, 'race-help');
   f.focus('race-start');
-  f.pulse(0, 0);
+  f.button(0, 0, true);
+  f.frame();
+  // Keep Confirm held through the real three-second cue, then mirror its release.
+  f.frame();
+  f.button(0, 0, false);
   f.frame();
   f.key('Escape');
   f.key('Escape', false);
@@ -601,6 +605,8 @@ test('a real finished draw exposes both frozen boards, Results returns without a
 
 test('an old held controller cannot reclaim a seat from accepted touch across pause and resume', async (t) => {
   const f = await couchPage(t, { pads: [pad(0), pad(1)] });
+  f.frame();
+  f.pulse(0, 3);
   f.$('race-start').click();
   f.frame();
   f.pads()[0].axes[0] = 1;

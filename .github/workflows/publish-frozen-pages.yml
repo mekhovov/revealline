@@ -9,6 +9,7 @@ on:
       - "scripts/pages-archive.mjs"
       - "scripts/pages-current-entry.mjs"
       - "publishing/edition-promotion.mjs"
+      - "publishing/optional-package-*.mjs"
       - "publishing/edition-admission.mjs"
       - "publishing/edition-zip.mjs"
       - "game/edition-context.mjs"
@@ -38,6 +39,9 @@ jobs:
             /.github/workflows/qualify-release-source.yml
             /publishing/pages-controller/
             /publishing/edition-promotion.mjs
+            /publishing/optional-package-promotion.mjs
+            /publishing/optional-package-admission.mjs
+            /publishing/optional-package-policy.mjs
             /publishing/edition-admission.mjs
             /publishing/edition-zip.mjs
             /game/edition-context.mjs

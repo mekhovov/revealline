@@ -1,0 +1,395 @@
+[
+  {
+    "brief": "Use the motion illustration and component photograph, then repair two role cards for an unpowered civilian display model.",
+    "campaignId": "fpv-meet-aircraft",
+    "fields": [
+      {
+        "expected": "motor",
+        "explanation": "Windings and a rotating motor assembly belong to the motor role, not the separate blades.",
+        "id": "a",
+        "label": "Card A",
+        "options": [
+          { "label": "Propeller", "value": "propeller" },
+          { "label": "Motor", "value": "motor" }
+        ]
+      },
+      {
+        "expected": "propeller",
+        "explanation": "The blades and hub identify the propeller. Its interaction with air differs from the motor’s conversion to rotation.",
+        "id": "b",
+        "label": "Card B",
+        "options": [
+          { "label": "Propeller", "value": "propeller" },
+          { "label": "Motor", "value": "motor" }
+        ]
+      },
+      {
+        "expected": "roles",
+        "explanation": "These cards identify roles only. A generic illustration cannot establish a safe real assembly or its rotation direction.",
+        "id": "limit",
+        "label": "What can the display establish?",
+        "options": [
+          { "label": "A verified real mounting and rotation direction", "value": "setup" },
+          { "label": "Two different component roles", "value": "roles" }
+        ]
+      }
+    ],
+    "fixtureRevision": "1",
+    "format": "revealline-learning-lesson.v1",
+    "id": "fpv-meet-aircraft-02-lesson",
+    "kind": "practice",
+    "locales": {
+      "uk": {
+        "brief": "Скористайтеся ілюстрацією руху й фото компонента, а потім виправте дві картки ролей для знеструмленої цивільної виставкової моделі.",
+        "fields": [
+          {
+            "explanation": "Обмотки й обертовий вузол належать до двигуна, а не до окремих лопатей.",
+            "id": "a",
+            "label": "Картка A",
+            "options": [
+              { "label": "Пропелер", "value": "propeller" },
+              { "label": "Двигун", "value": "motor" }
+            ]
+          },
+          {
+            "explanation": "Лопаті й втулка визначають пропелер. Його взаємодія з повітрям відрізняється від перетворення енергії на обертання у двигуні.",
+            "id": "b",
+            "label": "Картка B",
+            "options": [
+              { "label": "Пропелер", "value": "propeller" },
+              { "label": "Двигун", "value": "motor" }
+            ]
+          },
+          {
+            "explanation": "Картки визначають лише ролі. Загальна ілюстрація не підтверджує безпечності реального складання чи напрямку обертання.",
+            "id": "limit",
+            "label": "Що доводить експозиція?",
+            "options": [
+              { "label": "Перевірене реальне кріплення й напрямок обертання", "value": "setup" },
+              { "label": "Дві різні ролі компонентів", "value": "roles" }
+            ]
+          }
+        ],
+        "notice": "Оригінальна навчальна вправа без таймера. Джерела пояснюють поняття; це не звіт про справжній захід спільноти й не підтвердження практичної кваліфікації.",
+        "records": [
+          {
+            "id": "example",
+            "lines": [
+              "Двигун перетворює подану електричну енергію на механічне обертання. Пропелер, який він приводить у рух, взаємодіє з повітрям. Фото двигуна не є фото обох деталей разом."
+            ],
+            "title": "Розібрана пара ролей"
+          },
+          {
+            "id": "display",
+            "lines": [
+              "Картка A описує компонент з обмотками й обертовим вузлом. Картка B описує лопаті, з’єднані з втулкою. Жодна не задає кріплення, напрямку обертання чи електричного підключення."
+            ],
+            "title": "Картки вашої експозиції"
+          }
+        ],
+        "role": "Учасник виставки",
+        "success": "Експозиція окремо називає двигун і пропелер; підпис не робить висновків про практичне налаштування без доказів.",
+        "title": "Розрізніть двигун і пропелер"
+      }
+    },
+    "missionId": "fpv-meet-aircraft-02",
+    "notice": "An original untimed learning fixture. Sources explain the concepts; this is not an account of a real community event or a practical qualification.",
+    "records": [
+      {
+        "id": "example",
+        "lines": [
+          "The motor converts supplied electrical energy into mechanical rotation. A driven propeller interacts with air. A motor photograph is not a photograph of both parts together."
+        ],
+        "title": "Worked role pair"
+      },
+      {
+        "id": "display",
+        "lines": [
+          "Card A describes a component with windings and a rotating assembly. Card B describes blades connected to a hub. Neither card supplies mounting, rotation-direction or electrical-connection instructions."
+        ],
+        "title": "Your display cards"
+      }
+    ],
+    "revision": "1",
+    "role": "Exhibit participant",
+    "sourceReviewedAt": "2026-09-28",
+    "sources": [
+      {
+        "title": "NASA Glenn — Propeller propulsion",
+        "url": "https://www.grc.nasa.gov/www/k-12/airplane/propeller.html"
+      },
+      {
+        "title": "Betaflight — Flight-controller roles",
+        "url": "https://betaflight.com/docs/wiki/getting-started"
+      }
+    ],
+    "success": "The display now names the motor and propeller separately, and its label keeps practical setup outside the evidence supplied.",
+    "title": "Distinguish the motor and the propeller"
+  },
+  {
+    "brief": "Apply the component roles to a different fictional classroom diagram. Name the role that calculates a command, the role that regulates motor power and the source of energy.",
+    "campaignId": "fpv-meet-aircraft",
+    "fields": [
+      {
+        "expected": "fc",
+        "explanation": "Calculating commands from inputs is the flight-controller role. The battery supplies energy rather than performing this computation.",
+        "id": "calculate",
+        "label": "Box A",
+        "options": [
+          { "label": "Battery", "value": "battery" },
+          { "label": "Flight controller", "value": "fc" }
+        ]
+      },
+      {
+        "expected": "esc",
+        "explanation": "The ESC acts on motor commands to regulate motor power; the camera records a view.",
+        "id": "regulate",
+        "label": "Box B",
+        "options": [
+          { "label": "ESC", "value": "esc" },
+          { "label": "Camera", "value": "camera" }
+        ]
+      },
+      {
+        "expected": "battery",
+        "explanation": "Stored electrical energy is the battery’s role in this model. A frame supports components rather than supplying power.",
+        "id": "energy",
+        "label": "Box C",
+        "options": [
+          { "label": "Frame", "value": "frame" },
+          { "label": "Battery", "value": "battery" }
+        ]
+      }
+    ],
+    "fixtureRevision": "1",
+    "format": "revealline-learning-lesson.v1",
+    "id": "fpv-meet-aircraft-04-lesson",
+    "kind": "practice",
+    "locales": {
+      "uk": {
+        "brief": "Застосуйте ролі компонентів до іншої вигаданої навчальної схеми. Назвіть роль обчислення команди, роль регулювання живлення двигуна та джерело енергії.",
+        "fields": [
+          {
+            "explanation": "Обчислення команд за вхідними даними — роль польотного контролера. Акумулятор надає енергію, а не виконує це обчислення.",
+            "id": "calculate",
+            "label": "Блок A",
+            "options": [
+              { "label": "Акумулятор", "value": "battery" },
+              { "label": "Польотний контролер", "value": "fc" }
+            ]
+          },
+          {
+            "explanation": "ESC виконує команди двигуна й регулює його живлення; камера формує зображення.",
+            "id": "regulate",
+            "label": "Блок B",
+            "options": [
+              { "label": "ESC", "value": "esc" },
+              { "label": "Камера", "value": "camera" }
+            ]
+          },
+          {
+            "explanation": "Запас електричної енергії — роль акумулятора в цій моделі. Рама підтримує компоненти, а не живить їх.",
+            "id": "energy",
+            "label": "Блок C",
+            "options": [
+              { "label": "Рама", "value": "frame" },
+              { "label": "Акумулятор", "value": "battery" }
+            ]
+          }
+        ],
+        "notice": "Оригінальна навчальна вправа без таймера. Джерела пояснюють поняття; це не звіт про справжній захід спільноти й не підтвердження практичної кваліфікації.",
+        "records": [
+          {
+            "id": "example",
+            "lines": [
+              "Двигун обертається, а пропелер взаємодіє з повітрям. Ця пара ролей не визначає, який компонент обчислює команду двигуна."
+            ],
+            "title": "Попередній приклад"
+          },
+          {
+            "id": "diagram",
+            "lines": [
+              "Блок A використовує дані датчиків і запитаний рух для обчислення команд. Блок B отримує команди й регулює електричну потужність двигуна. Блок C надає запасену електричну енергію. Реальні вироби можуть поєднувати ролі."
+            ],
+            "title": "Три підписані блоки"
+          }
+        ],
+        "role": "Учасник виставки",
+        "success": "Схема розрізняє обчислення, регулювання живлення двигуна й джерело енергії. Це підписи понять, а не інструкція фізичного підключення.",
+        "title": "Простежте інформацію й енергію"
+      }
+    },
+    "missionId": "fpv-meet-aircraft-04",
+    "notice": "An original untimed learning fixture. Sources explain the concepts; this is not an account of a real community event or a practical qualification.",
+    "records": [
+      {
+        "id": "example",
+        "lines": [
+          "A motor turns and a propeller interacts with air. That role pair does not tell us which component decides the motor command."
+        ],
+        "title": "Earlier example"
+      },
+      {
+        "id": "diagram",
+        "lines": [
+          "Box A uses sensor information and requested movement to calculate commands. Box B receives those commands and regulates electrical power to the motor. Box C supplies stored electrical energy. Actual products may combine roles."
+        ],
+        "title": "Three labelled boxes"
+      }
+    ],
+    "revision": "1",
+    "role": "Exhibit participant",
+    "sourceReviewedAt": "2026-09-28",
+    "sources": [
+      {
+        "title": "Betaflight — Flight-controller roles",
+        "url": "https://betaflight.com/docs/wiki/getting-started"
+      },
+      {
+        "title": "Betaflight — ESC firmware",
+        "url": "https://betaflight.com/docs/wiki/getting-started/hardware/esc-firmware"
+      }
+    ],
+    "success": "The diagram now separates calculation, motor-power regulation and energy supply. These are conceptual labels, not physical wiring instructions.",
+    "title": "Follow information and energy"
+  },
+  {
+    "brief": "A museum has mixed up three labels on its fictional civilian aircraft exhibit. Inspect the visitor observations and component roles, then choose the label for each information path.",
+    "campaignId": "fpv-meet-aircraft",
+    "fields": [
+      {
+        "expected": "rx",
+        "explanation": "A camera view cannot stand in for the requested pilot action. Station A follows the RX control path toward the flight controller.",
+        "id": "control",
+        "label": "Station A label",
+        "options": [
+          { "label": "RX · control information", "value": "rx" },
+          { "label": "Camera/VTX · video information", "value": "video" }
+        ]
+      },
+      {
+        "expected": "video",
+        "explanation": "The two viewers receive the camera view in this fixture. Use the camera/VTX label; seeing an image does not itself send a pilot command.",
+        "id": "view",
+        "label": "Station B label",
+        "options": [
+          { "label": "RX · control information", "value": "rx" },
+          { "label": "Camera/VTX · video information", "value": "video" }
+        ]
+      },
+      {
+        "expected": "esc",
+        "explanation": "The flight controller has already calculated the motor command. The ESC uses it to regulate motor power; the VTX serves the video path.",
+        "id": "motor",
+        "label": "Station C destination",
+        "options": [
+          { "label": "VTX · video transmission", "value": "vtx" },
+          { "label": "ESC · motor power control", "value": "esc" }
+        ]
+      }
+    ],
+    "fixtureRevision": "1",
+    "format": "revealline-learning-lesson.v1",
+    "id": "fpv-meet-aircraft-06-lesson",
+    "kind": "practice",
+    "locales": {
+      "uk": {
+        "brief": "У музеї переплутали три підписи на вигаданій експозиції цивільного апарата. Перегляньте спостереження відвідувачів і ролі компонентів, а потім підберіть підпис до кожного інформаційного шляху.",
+        "fields": [
+          {
+            "explanation": "Зображення камери не замінює запитану дію пілота. Станція A показує шлях керування через RX до польотного контролера.",
+            "id": "control",
+            "label": "Підпис станції A",
+            "options": [
+              { "label": "RX · інформація керування", "value": "rx" },
+              { "label": "Камера/VTX · відеоінформація", "value": "video" }
+            ]
+          },
+          {
+            "explanation": "У цьому прикладі двоє глядачів отримують зображення камери. Виберіть підпис «Камера/VTX»: сам перегляд зображення не надсилає команду пілота.",
+            "id": "view",
+            "label": "Підпис станції B",
+            "options": [
+              { "label": "RX · інформація керування", "value": "rx" },
+              { "label": "Камера/VTX · відеоінформація", "value": "video" }
+            ]
+          },
+          {
+            "explanation": "Польотний контролер уже розрахував команду двигуна. ESC використовує її для регулювання живлення двигуна; VTX обслуговує відеошлях.",
+            "id": "motor",
+            "label": "Призначення станції C",
+            "options": [
+              { "label": "VTX · передавання відео", "value": "vtx" },
+              { "label": "ESC · керування живленням двигуна", "value": "esc" }
+            ]
+          }
+        ],
+        "notice": "Офлайн-модель понять. Жодного реального апарата, підключення дротів, налаштування радіо чи підтвердження льотної кваліфікації. Правильні підписи пояснюють ролі, але не доводять безпечність реального апарата.",
+        "records": [
+          {
+            "id": "observations",
+            "lines": [
+              "Станція A показує шлях команди пілота до польотного контролера. Це запитана дія, а не зображення камери.",
+              "Станція B показує шлях зображення камери до системи перегляду. Двоє відвідувачів бачать той самий вид; жоден екран у цьому прикладі не надсилає команду пілота.",
+              "Станція C показує шлях розрахованої команди двигуна від польотного контролера до компонента, що регулює живлення двигуна."
+            ],
+            "title": "Спостереження відвідувачів"
+          },
+          {
+            "id": "roles",
+            "lines": [
+              "RX — приймач каналу керування в цій спрощеній моделі. Камера та VTX забезпечують окремий відеошлях.",
+              "Польотний контролер використовує команди керування та дані датчиків для розрахунків. ESC отримує команди двигуна й регулює електричну потужність, що надходить до нього.",
+              "Це функціональні ролі. Реальні вироби можуть поєднувати кілька ролей в одному пристрої; експозиція не є універсальною схемою підключення."
+            ],
+            "title": "Картки ролей компонентів"
+          }
+        ],
+        "role": "Куратор майстерні",
+        "success": "Експозиція тепер розрізняє керування пілота, відео та команди двигуна. Підписи пояснюють вигадані спостереження, не ототожнюючи зображення на екрані з командою керування.",
+        "title": "Виправте підписи експозиції"
+      }
+    },
+    "missionId": "fpv-meet-aircraft-06",
+    "notice": "An offline conceptual model. No aircraft, wiring, radio setup or flight certification. Correct labels explain roles; they do not prove that a real aircraft is safe.",
+    "records": [
+      {
+        "id": "observations",
+        "lines": [
+          "Station A traces a pilot control message toward the flight controller. It carries a requested action, not a camera image.",
+          "Station B traces a camera view toward the viewing system. Two visitors see the same view; neither display is issuing a pilot command in this fixture.",
+          "Station C traces a computed motor command leaving the flight controller toward the component that regulates motor power."
+        ],
+        "title": "Visitor observations"
+      },
+      {
+        "id": "roles",
+        "lines": [
+          "RX is the control-link receiver in this simplified model. The camera and VTX provide the separate video path.",
+          "The flight controller uses control inputs and sensor information to calculate commands. The ESC receives motor commands and regulates electrical power to the motor.",
+          "These are functional roles. Actual products can integrate several roles in one unit; the exhibit is not a universal wiring diagram."
+        ],
+        "title": "Component role cards"
+      }
+    ],
+    "revision": "1",
+    "role": "Workshop curator",
+    "sourceReviewedAt": "2026-09-28",
+    "sources": [
+      {
+        "title": "Betaflight — About the flight controller",
+        "url": "https://betaflight.com/docs/wiki/getting-started"
+      },
+      {
+        "title": "Betaflight — ESC firmware",
+        "url": "https://betaflight.com/docs/wiki/getting-started/hardware/esc-firmware"
+      },
+      {
+        "title": "Betaflight — Video transmitters",
+        "url": "https://betaflight.com/docs/wiki/getting-started/hardware/vtx"
+      }
+    ],
+    "success": "The exhibit now separates pilot control, video and motor commands. The labels explain the fictional observations without treating a screen image as a control message.",
+    "title": "Repair the exhibit labels"
+  }
+]

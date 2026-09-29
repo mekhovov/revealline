@@ -96,7 +96,7 @@ test('picture and star sidecars commit and round-trip together without changing 
     stars: emptyJourneyStars(),
   });
   const exported = profile.export();
-  assert.equal(JSON.parse(exported).format, 'revealline-journey-backup.v4');
+  assert.equal(JSON.parse(exported).format, 'revealline-journey-backup.v5');
   disk.failAnyPutAt = null;
   assert.equal(await profile.flush(), true);
   const restored = store(managedIndexedDB()).profile;

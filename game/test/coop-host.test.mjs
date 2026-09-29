@@ -427,6 +427,15 @@ test('Auto touch uses actual controller seats while menu hiding and explicit ove
     buttons: Array.from({ length: 17 }, () => ({ pressed: false, value: 0 })),
   });
   f.tick(2);
+  assert.equal(f.touchPads[0].hidden, false, 'Connecting alone never claims a seat.');
+  f.$('coop-pause').click();
+  f.tick();
+  f.pads[0].buttons[3] = { pressed: true, value: 1 };
+  f.tick();
+  f.pads[0].buttons[3] = { pressed: false, value: 0 };
+  f.tick();
+  f.$('coop-resume').click();
+  f.tick();
   assert.deepEqual(
     f.touchPads.map((p) => p.hidden),
     [true, false],
@@ -529,6 +538,15 @@ test('assigning a controller releases hidden held touch; disconnect stays paused
     buttons: Array.from({ length: 17 }, () => ({ pressed: false, value: 0 })),
   });
   f.tick(2);
+  assert.equal(f.touchPads[0].hidden, false, 'Connecting alone never claims a seat.');
+  f.$('coop-pause').click();
+  f.tick();
+  f.pads[0].buttons[3] = { pressed: true, value: 1 };
+  f.tick();
+  f.pads[0].buttons[3] = { pressed: false, value: 0 };
+  f.tick();
+  f.$('coop-resume').click();
+  f.tick();
   assert.equal(f.touchPads[0].hidden, true);
   assert.equal(boost.getAttribute('aria-pressed'), 'false');
   f.pads[0].connected = false;

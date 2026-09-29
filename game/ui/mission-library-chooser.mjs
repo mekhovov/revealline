@@ -1,3 +1,4 @@
+import { attachMissionLibraryGoal } from './mission-library-goal.mjs';
 import { createJourneyArtworkView } from './journey-artwork.mjs';
 import {
   t,
@@ -53,6 +54,7 @@ export function attachMissionLibraryChooser({
   getCurrentId = () => null,
   supportedModes = LIBRARY_MODES,
   availableCollectionsOnly = false,
+  goalPreferenceOptions = {},
   description = localizedMessage('interface:allMissionsOneLibraryJourneyClassicAndCustomKeepTheir'),
 }) {
   if (
@@ -208,6 +210,7 @@ export function attachMissionLibraryChooser({
     resizeFrame = null,
     viewportAnchor = null,
     message = '';
+  let goal = null;
   let initialOpen = true;
   let saved = null;
   try {
@@ -584,6 +587,7 @@ export function attachMissionLibraryChooser({
     button.addEventListener('focusin', () => {
       selectedId = row.id;
       updateCampaignRailSelection(row.id);
+      goal?.refresh();
     });
     return {
       row,
@@ -801,6 +805,7 @@ export function attachMissionLibraryChooser({
       }
     restorePendingSelection();
     updateCampaignRailSelection();
+    goal?.refresh();
     observeDiagrams();
   }
   // Decode only near the viewport. An earned picture owns the same exact
@@ -1087,6 +1092,45 @@ export function attachMissionLibraryChooser({
       render();
     }
   });
+  function revealExisting(id, targetMode = mode) {
+    const row = library.find(id);
+    if (!row || !modes.includes(targetMode) || !row.modes.includes(targetMode)) return false;
+    retirePendingSelection();
+    const modeChanged = modeFilter.value !== targetMode;
+    modeFilter.value = targetMode;
+    lifecycle.value = row.lifecycle;
+    pendingCampaign = '';
+    if (modeChanged || !list.contains(cards.get(id)?.button)) {
+      search.value = '';
+      collection.value = '';
+      campaign.value = '';
+      rebuildCampaigns();
+      if (modeChanged) invalidateDiagrams();
+      render();
+    }
+    selectedId = id;
+    cards.get(id)?.button.focus({ preventScroll: true });
+    cards.get(id)?.button.scrollIntoView?.({ block: 'nearest' });
+    goal?.refresh();
+    remember();
+    return true;
+  }
+  goal = attachMissionLibraryGoal({
+    container: footer,
+    library,
+    modes,
+    getMode: () => modeFilter.value,
+    getSelectedId: () => (currentSelectionButton(selectedId) ? selectedId : null),
+    isActive: () => !destroyed && dialog.open && !doc.hidden && doc.hasFocus?.() !== false,
+    reveal: revealExisting,
+    onIntent() {
+      retirePendingSelection();
+      retirePreparations();
+      ++visit;
+    },
+    ...goalPreferenceOptions,
+    window: view,
+  });
   return {
     open,
     primary,
@@ -1095,30 +1139,8 @@ export function attachMissionLibraryChooser({
     },
     close,
     state,
-    reveal(id) {
-      const row = library.find(id);
-      if (!row || !row.modes.includes(mode)) return false;
-      retirePendingSelection();
-      // Exact incoming selections belong to this host, even when its last
-      // browsing session was looking at a different mode.
-      const modeChanged = modeFilter.value !== mode;
-      modeFilter.value = mode;
-      lifecycle.value = row.lifecycle;
-      pendingCampaign = '';
-      if (modeChanged || !list.contains(cards.get(id)?.button)) {
-        search.value = '';
-        collection.value = '';
-        campaign.value = '';
-        rebuildCampaigns();
-        if (modeChanged) invalidateDiagrams();
-        render();
-      }
-      selectedId = id;
-      cards.get(id)?.button.focus({ preventScroll: true });
-      cards.get(id)?.button.scrollIntoView?.({ block: 'nearest' });
-      remember();
-      return true;
-    },
+    // Incoming launch intent keeps its existing host-mode ownership rule.
+    reveal: (id) => revealExisting(id, mode),
     refresh() {
       if (dialog.open) {
         invalidateDiagrams();
@@ -1129,6 +1151,7 @@ export function attachMissionLibraryChooser({
     destroy() {
       close();
       destroyed = true;
+      goal.dispose();
       unsubscribe();
       observer?.disconnect();
       media?.removeEventListener?.('change', resizeFilters);

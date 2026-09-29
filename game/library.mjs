@@ -11,7 +11,11 @@ import { normalizedLevel } from './core/level.mjs';
 import { resolveKeyBindings } from './key-bindings.mjs';
 import { resolveControllerBindings } from './controller-bindings.mjs';
 import { DEFAULT_CONTROLLER_BOOST_MODE, resolveControllerBoostMode } from './controller-boost.mjs';
-import { DEFAULT_CAMPAIGN_DIFFICULTY, resolveCampaignDifficulty } from './campaign-difficulty.mjs';
+import {
+  DEFAULT_CAMPAIGN_DIFFICULTY,
+  resolveCampaignDifficulty,
+  ownedDifficultyCampaignKey,
+} from './campaign-difficulty.mjs';
 import { DEFAULT_TEXT_SIZE, resolveTextSize } from './text-size.mjs';
 import { DEFAULT_TEXT_FACE, resolveTextFace } from './text-face.mjs';
 import {
@@ -118,6 +122,8 @@ const sortScores = (a, b) =>
   a.completedAt.localeCompare(b.completedAt) ||
   a.runId.localeCompare(b.runId);
 export function campaignKey(campaign) {
+  const ownedKey = ownedDifficultyCampaignKey(campaign);
+  if (ownedKey !== undefined) return ownedKey;
   required(
     stableId(campaign?.id) && text(campaign?.revision, 60),
     libraryError('campaignIdentity'),

@@ -8,10 +8,11 @@ import {
   verifyEditionReview,
   EDITION_REVIEW_GATES,
   validateEditionPublication,
-  frozenEditionOverlay,
   selectRetainedEditionRelease,
+  selectPublishedEditionRelease,
 } from '../publishing/edition-promotion.mjs';
 import { editionHash } from '../publishing/edition-zip.mjs';
+import { additiveReleaseAssetBudget } from '../publishing/fastline-release-publisher.mjs';
 
 /** Both selector commands reread the complete retained publication from GitHub.
  * Metadata and binary reads stay bounded; no mutating GitHub commands are used. */
@@ -99,7 +100,7 @@ if (
   )
 )
   throw new Error(
-    'Usage: publish-editions.mjs review-template|verify|upload-draft|sync-selector --bundle DIR --review FILE [--repository OWNER/REPO --selector FILE --base-path /PATH/]; or select-retained --version vX.Y.Z --editions ID[,ID] --selector FILE --repository OWNER/REPO --base-path /PATH/',
+    'Usage: publish-editions.mjs review-template|verify|upload-draft|sync-selector --bundle DIR --review FILE [--repository OWNER/REPO --selector FILE --base-path /PATH/]; sync-selector optionally accepts --editions ID[,ID] to host a subset; or select-retained --version vX.Y.Z --editions ID[,ID] --selector FILE --repository OWNER/REPO --base-path /PATH/',
   );
 for (let i = 0; i < args.length; i += 2) {
   if (
@@ -147,8 +148,10 @@ if (command === 'select-retained') {
   );
   process.exit(0);
 }
-if (options['--version'] || options['--editions'])
-  throw new Error('Explicit version and editions belong to select-retained only.');
+if (options['--version'] || (options['--editions'] && command !== 'sync-selector'))
+  throw new Error(
+    'Explicit editions belong to sync-selector or select-retained; version belongs to select-retained only.',
+  );
 if (!options['--bundle'] || !options['--review'])
   throw new Error('Bundle and review paths are required.');
 const directory = path.resolve(options['--bundle']);
@@ -217,34 +220,18 @@ if (command === 'sync-selector') {
   const selectorPath = path.resolve(options['--selector']),
     originalSelector = await fs.readFile(selectorPath),
     selector = validateEditionPublication(JSON.parse(originalSelector));
-  if (selector.releases.some((row) => row.version === envelope.version))
-    throw new Error(
-      'This immutable version is already selected. Review a rollback by editing activeEditionIds only.',
-    );
-  const ids = envelope.editions.map((entry) => entry.id);
-  const updated = validateEditionPublication({
-    ...selector,
-    releases: [
-      ...selector.releases.map((row) => ({
-        ...row,
-        activeEditionIds: row.activeEditionIds.filter((id) => !ids.includes(id)),
-      })),
-      {
-        version: envelope.version,
-        envelopeSha256: editionHash(original),
-        reviewSha256: editionHash(reviewBytes),
-        basePath: options['--base-path'],
-        editionIds: ids,
-        activeEditionIds: ids,
-      },
-    ],
-  });
-  // Verify every retained release and the combined deployment budget before
+  // Verify every retained release and the combined edition overlay budget before
   // staging any selector change. The new release is not an independent site.
-  await frozenEditionOverlay(updated, {
-    targetBasePath: options['--base-path'],
-    ...publishedReleaseReader(),
-  });
+  const updated = await selectPublishedEditionRelease(
+    selector,
+    {
+      envelopeBytes: original,
+      reviewBytes,
+      basePath: options['--base-path'],
+      editionIds: options['--editions']?.split(','),
+    },
+    { targetBasePath: options['--base-path'], ...publishedReleaseReader() },
+  );
   await replaceUnchangedSelector(selectorPath, originalSelector, updated);
   console.log(
     'Selector updated from downloaded, verified release bytes. Review this change through the sole Pages publisher.',
@@ -289,6 +276,13 @@ const verifyRemote = (name, bytes) => {
     throw new Error(`Downloaded release asset differs: ${name}`);
 };
 if (command === 'upload-draft') {
+  const proposed = [...frozen].map(([name, bytes]) => ({
+    name,
+    size: bytes.length,
+    digest: `sha256:${editionHash(bytes)}`,
+  }));
+  const checkBudget = () => additiveReleaseAssetBudget({ existing: release.assets, proposed });
+  checkBudget();
   const temporary = await fs.mkdtemp(path.join(os.tmpdir(), 'revealline-edition-upload-'));
   try {
     // Publish the envelope last, after every dependency is present and reread.
@@ -302,14 +296,22 @@ if (command === 'upload-draft') {
         throw new Error(
           'The release was published during upload. Stop and review its existing assets.',
         );
+      checkBudget();
       if (!release.assets.some((asset) => asset.name === name)) {
         const filename = path.join(temporary, name);
         await fs.writeFile(filename, bytes, { flag: 'wx' });
         gh(['release', 'upload', envelope.version, filename, '--repo', repository]);
         release = api(`releases/tags/${envelope.version}`);
+        checkBudget();
       }
       verifyRemote(name, bytes);
     }
+    release = api(`releases/tags/${envelope.version}`);
+    if (!release.draft)
+      throw new Error(
+        'The release was published during upload. Stop and review its existing assets.',
+      );
+    checkBudget();
     const receipt = {
       format: 'revealline-edition-delivery.v1',
       repository,

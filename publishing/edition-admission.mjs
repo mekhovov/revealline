@@ -130,7 +130,7 @@ export function validatePublicSourceEligibility({ files, assets = [] } = {}) {
   }
   for (const name of files.keys())
     if (
-      /^(?:game\/(?:editions|company-campaigns)|authoring\/brands)\/.*\.(?:png|jpe?g|webp|svg|mp3|ogg|wav|mp4|ttf|otf|woff2?)$/i.test(
+      /^(?:game\/(?:editions|company-campaigns)|authoring\/brands)\/.*\.(?:png|jpe?g|webp|svg|mp3|ogg|wav|mp4|webm|vtt|txt|ttf|otf|woff2?)$/i.test(
         name,
       ) &&
       !seen.has(name)
@@ -214,11 +214,14 @@ export function editionPublicationAssets(catalog, files) {
         retained?.id !== edition.id ||
         retained.presentationHistory?.length ||
         !['brandId', 'audience', 'publication'].every((key) => retained[key] === edition[key]) ||
-        !sameList(retained.campaignIds, edition.campaignIds) ||
+        !Array.isArray(retained.campaignIds) ||
+        !retained.campaignIds.length ||
+        new Set(retained.campaignIds).size !== retained.campaignIds.length ||
+        !retained.campaignIds.every((id) => edition.campaignIds.includes(id)) ||
         !sameList(retained.modes, edition.modes) ||
         !sameList(
           old.campaigns?.map((item) => item.id),
-          edition.campaignIds,
+          retained.campaignIds,
         ) ||
         old.campaigns.some(
           (item) => item.brandId !== edition.brandId || item.publication !== 'public',
@@ -232,6 +235,8 @@ export function editionPublicationAssets(catalog, files) {
           ...old.campaigns.flatMap((item) => [
             item.sourcePath,
             ...(item.lessonPath ? [item.lessonPath] : []),
+            ...(item.rewardPath ? [item.rewardPath] : []),
+            ...(item.localizationPath ? [item.localizationPath] : []),
           ]),
         ]),
         inline = new Map();

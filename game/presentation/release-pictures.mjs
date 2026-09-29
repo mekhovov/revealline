@@ -95,7 +95,7 @@ export function releasePictureForIdentity(snapshot, identity) {
     file = asset.file,
     frame = asset.geometry.frame;
   required(
-    ['image/png', 'image/jpeg'].includes(file.mime) &&
+    ['image/png', 'image/jpeg', 'image/webp'].includes(file.mime) &&
       file.bytes <= MEDIA_LIMITS.assetBytes &&
       file.width <= MEDIA_LIMITS.posterWidth &&
       file.height <= MEDIA_LIMITS.posterHeight &&
@@ -103,7 +103,7 @@ export function releasePictureForIdentity(snapshot, identity) {
       frame.y === 0 &&
       frame.width === file.width &&
       frame.height === file.height,
-    'A release picture must be a complete bounded PNG/JPEG original.',
+    'A release picture must be a complete bounded PNG/JPEG/WebP original.',
   );
   if (slotId !== row.id && (file.width !== row.dimensions[0] || file.height !== row.dimensions[1]))
     return null;

@@ -1201,5 +1201,1427 @@
     "publication": "public",
     "approved": true,
     "dependencies": []
+  },
+  {
+    "id": "ukraine-culture-home",
+    "path": "game/editions/assets/discovery/ukraine-culture-home-v1.png",
+    "sha256": "03813996c50eb852be3da6d5d7812e926cf7176ab7496a92f6033d8010c19144",
+    "bytes": 1106859,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "social-drone-ua-home",
+    "path": "game/editions/assets/discovery/social-drone-ua-home-v1.png",
+    "sha256": "72be301e23b0e2bac69cd5d55baf4f7c6d8d3e92735fb64e18395e4cb269b185",
+    "bytes": 1043972,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "victory-drones-home",
+    "path": "game/editions/assets/discovery/victory-drones-home-v1.png",
+    "sha256": "6f6ff23c610a5b9b3ddab1430ee8026059d897afa29e4d134c24af857a2caae3",
+    "bytes": 1150183,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "fpv-learning-home",
+    "path": "game/editions/assets/discovery/fpv-learning-home-v1.png",
+    "sha256": "11f0368d2703552d2b3f24b602c75f520bd80b3c689663261770210499c29cb8",
+    "bytes": 1062590,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "met-degas-ukrainian-dress-436157",
+    "path": "game/editions/assets/discovery/met-degas-436157.jpg",
+    "sha256": "4416b3cd2225bef59671d5bd06a4c73633e27d73a06713dd1d8d336ea1257d11",
+    "bytes": 387825,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "fpv-meet-aircraft-01-art-v1",
+    "path": "game/editions/assets/discovery/fpv-meet-aircraft-01-v1.jpg",
+    "sha256": "8b79d705bb064333eefece3c6acdd0f9f0a4a9079cab8ab2939401ae47689fe8",
+    "bytes": 193494,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "ukraine-threads-03-art-v1",
+    "path": "game/editions/assets/discovery/ukraine-threads-03-v1.jpg",
+    "sha256": "16b7fcca255f5915b14cadf0bddb3d543df5a214bb881144eff9f8024d6dce70",
+    "bytes": 263606,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "social-drone-people-workshop-01-art-v1",
+    "path": "game/editions/assets/discovery/social-drone-people-workshop-01-v1.jpg",
+    "sha256": "1a23739d451d250b8622edd8d5dd6c0d82d2125143dcf16c46df1f8b8e326319",
+    "bytes": 270761,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "reference-fpv-ar-drone-prototype",
+    "path": "game/editions/assets/discovery/reference-fpv-ar-drone-prototype.jpg",
+    "sha256": "9b990e53725e07fdf08f93f99aaeeb2eae0746db4bc696c3146ea570fb13abdf",
+    "bytes": 135252,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "reference-fpv-solder-iron",
+    "path": "game/editions/assets/discovery/reference-fpv-solder-iron.jpg",
+    "sha256": "4c657713640d71b4b43cadd125c3420304d3a8458609cee4f833b20c28efdf49",
+    "bytes": 95391,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "reference-fpv-pixhawk-controller",
+    "path": "game/editions/assets/discovery/reference-fpv-pixhawk-controller.png",
+    "sha256": "bfd4dc1a46b9c8dd0680590ea277c5ada26caaed34ab436635d22c55a4c10bf6",
+    "bytes": 82439,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "reference-fpv-brushless-motor",
+    "path": "game/editions/assets/discovery/reference-fpv-brushless-motor.jpg",
+    "sha256": "c1ada93c62901ed4e724e0c0f3ba7207b3da1d44bb079813c457c71d11d23a94",
+    "bytes": 129226,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "reference-fpv-solder-spool-label",
+    "path": "game/editions/assets/discovery/reference-fpv-solder-spool-label.jpg",
+    "sha256": "5245e5a65b8bd0d7f735c7dca8adab46b32d31d549709afbedf93cbbafa45095",
+    "bytes": 205957,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "reference-fpv-solder-joint",
+    "path": "game/editions/assets/discovery/reference-fpv-solder-joint.jpg",
+    "sha256": "b0971f7e55c5c93308415698bc7af50038bb583672323adace25eb8f485dde0c",
+    "bytes": 278304,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "ukraine-threads-key-v1",
+    "path": "game/editions/assets/discovery/ukraine-threads-key-v1.jpg",
+    "sha256": "bbe7249caf7b3d42afb9a78dd56dabee1bcf57481a313cb66a863e99260ec06a",
+    "bytes": 336268,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "ukraine-colour-clay-spring-key-v1",
+    "path": "game/editions/assets/discovery/ukraine-colour-clay-spring-key-v1.jpg",
+    "sha256": "5e934f67d22763bb0d4b2d8d139ab03a18099d97618a610e6584abeabe2b73a4",
+    "bytes": 263191,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "ukraine-crimea-ornek-key-v1",
+    "path": "game/editions/assets/discovery/ukraine-crimea-ornek-key-v1.jpg",
+    "sha256": "ee8f5544264c4e0c4d1cfd614f2c2791b7d9cb26b6d4f0c1dd2c68cc5453134b",
+    "bytes": 297277,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "ukraine-voices-travel-key-v1",
+    "path": "game/editions/assets/discovery/ukraine-voices-travel-key-v1.jpg",
+    "sha256": "492901d52b609f724599b02d85bae510644d47db0487ebe98be76d4de57501ea",
+    "bytes": 248004,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "ukraine-cities-symbols-time-key-v1",
+    "path": "game/editions/assets/discovery/ukraine-cities-symbols-time-key-v1.jpg",
+    "sha256": "23f32a8d07f14efbabf46cfa1813a7ed96f680561bbc9b86d99bcab07e34ede4",
+    "bytes": 294985,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "ukraine-everyday-culture-key-v1",
+    "path": "game/editions/assets/discovery/ukraine-everyday-culture-key-v1.jpg",
+    "sha256": "3a073c5217136f23e3d9671aa4a4053ce18bef1331d9e8a6f0b8143870ca312f",
+    "bytes": 290344,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "fpv-meet-aircraft-key-v1",
+    "path": "game/editions/assets/discovery/fpv-meet-aircraft-key-v1.jpg",
+    "sha256": "faa75b972fe0dd2495d6d4b8c2df82dea2139e07c356e0688ed95da21b74bee0",
+    "bytes": 279176,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "fpv-parts-bench-key-v1",
+    "path": "game/editions/assets/discovery/fpv-parts-bench-key-v1.jpg",
+    "sha256": "3523e4cb5cf2c0879e36e8c99262583ece60e280bffca4b75d78d14c9f455265",
+    "bytes": 227588,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "fpv-soldering-workshop-key-v1",
+    "path": "game/editions/assets/discovery/fpv-soldering-workshop-key-v1.jpg",
+    "sha256": "232344bf736f3a75de3971ff76ebbde4cba2106ad622c5550d9511ac76abb939",
+    "bytes": 236903,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "fpv-four-controls-key-v1",
+    "path": "game/editions/assets/discovery/fpv-four-controls-key-v1.jpg",
+    "sha256": "c44f486d219a3419c1d43de8f9784e0fd47baffef1fb6a006c720fbfe65e3c03",
+    "bytes": 246308,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "fpv-first-flight-key-v1",
+    "path": "game/editions/assets/discovery/fpv-first-flight-key-v1.jpg",
+    "sha256": "a35b3173e87e85562cb2cc9d4186cd7526c05065183284142b958f672da40757",
+    "bytes": 207668,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "fpv-drone-families-key-v1",
+    "path": "game/editions/assets/discovery/fpv-drone-families-key-v1.jpg",
+    "sha256": "7dff7e193639178dd15000dd60a005e043b8ab6b37b89707d73747f1ba1e00e1",
+    "bytes": 249553,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "fpv-drones-ukraine-key-v1",
+    "path": "game/editions/assets/discovery/fpv-drones-ukraine-key-v1.jpg",
+    "sha256": "02b0a057201a4cede2a428db0538a6a17934bffc2361512293009f7e95f16931",
+    "bytes": 270366,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "fpv-care-repair-key-v1",
+    "path": "game/editions/assets/discovery/fpv-care-repair-key-v1.jpg",
+    "sha256": "9f4d57dfc9a56ceb514868cbd79e9e42e6ab8cb4dd88887151a8e1bbc06bbc90",
+    "bytes": 207785,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "ukraine-threads-01-reveal-v1",
+    "path": "game/editions/assets/discovery/ukraine-threads-01-v1.jpg",
+    "sha256": "948ae2b5db094f54aec6e7d9fe57408bb121dd535b471943425378a7af9de2af",
+    "bytes": 161965,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "ukraine-threads-02-reveal-v1",
+    "path": "game/editions/assets/discovery/ukraine-threads-02-v1.jpg",
+    "sha256": "3b0ba003bc7e170dbb16dc46ba35f6bbdbaf81bf6dc9e8b34b7fce78dc3cec72",
+    "bytes": 170394,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "ukraine-threads-04-reveal-v1",
+    "path": "game/editions/assets/discovery/ukraine-threads-04-v1.jpg",
+    "sha256": "22ae3b4e43d3e02260437d980e4a421d73bbacc0a35dfd0e809a0300150dec16",
+    "bytes": 158455,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "ukraine-threads-05-reveal-v1",
+    "path": "game/editions/assets/discovery/ukraine-threads-05-v1.jpg",
+    "sha256": "d3c81a60d651ba8c9e2801a4de4608e5580fa4d2df5a4df44210e41c5de405c4",
+    "bytes": 173578,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "ukraine-threads-06-reveal-v1",
+    "path": "game/editions/assets/discovery/ukraine-threads-06-v1.jpg",
+    "sha256": "f85f89cd0a3513736e1b88867982878176affe8ee8e7c72171c6887ded041614",
+    "bytes": 207158,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "ukraine-colour-clay-spring-01-reveal-v1",
+    "path": "game/editions/assets/discovery/ukraine-colour-clay-spring-01-v1.jpg",
+    "sha256": "76afafc6aee7efbbb84b8b97ac96768465023c8cd3acdd7093f7de08b9c3f655",
+    "bytes": 233452,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "ukraine-colour-clay-spring-02-reveal-v1",
+    "path": "game/editions/assets/discovery/ukraine-colour-clay-spring-02-v1.jpg",
+    "sha256": "eac1252d6cf2e6b6084f3c00cbc0d07d0278aa1a2f27badf2418b95856caaab1",
+    "bytes": 169956,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "ukraine-colour-clay-spring-03-reveal-v1",
+    "path": "game/editions/assets/discovery/ukraine-colour-clay-spring-03-v1.jpg",
+    "sha256": "7df81716961ae08ed04adf4d4359edbad08e9010190563fbd8ef3da3e01a2547",
+    "bytes": 224938,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "ukraine-colour-clay-spring-04-reveal-v1",
+    "path": "game/editions/assets/discovery/ukraine-colour-clay-spring-04-v1.jpg",
+    "sha256": "c3ea48e72d2cc67dee8a8bb611580286aa1c1b0afccf1e2ee0bfb97a16e68d2d",
+    "bytes": 140500,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "social-drone-people-workshop-key-v1",
+    "path": "game/editions/assets/discovery/social-drone-people-workshop-key-v1.jpg",
+    "sha256": "bd497dca7e40b32e861203da65fda069df26338b556de3c374d126da94bc8782",
+    "bytes": 282921,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "social-drone-community-connections-key-v1",
+    "path": "game/editions/assets/discovery/social-drone-community-connections-key-v1.jpg",
+    "sha256": "c9b8e3975dfdce3d04a9099a38d0bae5c0bef3dcff79df11dbe701241b49eebb",
+    "bytes": 318557,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "victory-drones-knowledge-connects-key-v1",
+    "path": "game/editions/assets/discovery/victory-drones-knowledge-connects-key-v1.jpg",
+    "sha256": "19978dc032a20d171108a80d630845d30ff74658c1b0ab6bb7d8f3d1399b2f9f",
+    "bytes": 304837,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "ukraine-colour-clay-spring-05-reveal-v1",
+    "path": "game/editions/assets/discovery/ukraine-colour-clay-spring-05-v1.jpg",
+    "sha256": "3ce2f25907dc3a3aac911729deb7be72180ee39b4510c6d69a8c821c27796b3b",
+    "bytes": 156667,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "ukraine-colour-clay-spring-06-reveal-v1",
+    "path": "game/editions/assets/discovery/ukraine-colour-clay-spring-06-v1.jpg",
+    "sha256": "3906cda63a720416d840efb79ceb5acd2cda31f9d8f9b8fcbacdca776651ea27",
+    "bytes": 227413,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "ukraine-crimea-ornek-01-reveal-v1",
+    "path": "game/editions/assets/discovery/ukraine-crimea-ornek-01-v1.jpg",
+    "sha256": "dc7fad1a463982a631b34151834fe71cd934972f65ffebe86e894b98edc02ae3",
+    "bytes": 178150,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "victory-drones-ideas-understanding-key-v1",
+    "path": "game/editions/assets/discovery/victory-drones-ideas-understanding-key-v1.jpg",
+    "sha256": "19363cf5d6ed26c67d2415a0303458e058741b05a3ff21de46dcf3e3bdac32fb",
+    "bytes": 292281,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "ukraine-crimea-ornek-02-reveal-v1",
+    "path": "game/editions/assets/discovery/ukraine-crimea-ornek-02-v1.jpg",
+    "sha256": "215c097a82066b44b65001c54db18a57bab0d56e72413cdec0d0348b1006802e",
+    "bytes": 154495,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "ukraine-crimea-ornek-03-reveal-v1",
+    "path": "game/editions/assets/discovery/ukraine-crimea-ornek-03-v1.jpg",
+    "sha256": "b20f4074396bbf1095cb2c2acdc245816de51edd313cda74029662eada08b351",
+    "bytes": 148122,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "ukraine-crimea-ornek-04-reveal-v1",
+    "path": "game/editions/assets/discovery/ukraine-crimea-ornek-04-v1.jpg",
+    "sha256": "bf62229d15c47d7960e1bac8995ba9cfac76f8b832debcd9ccb380a7d0d53020",
+    "bytes": 187796,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "ukraine-crimea-ornek-05-reveal-v1",
+    "path": "game/editions/assets/discovery/ukraine-crimea-ornek-05-v1.jpg",
+    "sha256": "a449f2633c14c4a4681e36f23e1a6b9b647771211714545bb23e6d73c32348ca",
+    "bytes": 156173,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "ukraine-crimea-ornek-06-reveal-v1",
+    "path": "game/editions/assets/discovery/ukraine-crimea-ornek-06-v1.jpg",
+    "sha256": "1032314b0755ee10aeea0d317665b7b3dd932463ea3b9f64234f9c8f99126afd",
+    "bytes": 180624,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "ukraine-voices-travel-01-reveal-v1",
+    "path": "game/editions/assets/discovery/ukraine-voices-travel-01-v1.jpg",
+    "sha256": "efb920278d7961fbffd8f13ec2cab5b81d6ec99353f3da24eef5f1b639ccffca",
+    "bytes": 160887,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "ukraine-voices-travel-02-reveal-v1",
+    "path": "game/editions/assets/discovery/ukraine-voices-travel-02-v1.jpg",
+    "sha256": "656e823c9d7f3189a68fa68f0473f06a8d2a2607a89d4b5aed013a06248eb888",
+    "bytes": 184771,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "ukraine-voices-travel-03-reveal-v1",
+    "path": "game/editions/assets/discovery/ukraine-voices-travel-03-v1.jpg",
+    "sha256": "cc9dd354676ea8bfa74670b61a4a77eb8c20050f18f5ff8c9840f2805c629fa5",
+    "bytes": 196019,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "ukraine-voices-travel-04-reveal-v1",
+    "path": "game/editions/assets/discovery/ukraine-voices-travel-04-v1.jpg",
+    "sha256": "ba6a6aadc7859ace1865c0889b9215f1b8d264e85484e22a10a327568f0702e8",
+    "bytes": 177391,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "fpv-meet-aircraft-02-reveal-v1",
+    "path": "game/editions/assets/discovery/fpv-meet-aircraft-02-v1.jpg",
+    "sha256": "ecd4d5e5281b903a965724a4fa0632f6a161b1ad57f840cb446e0dc36f150d33",
+    "bytes": 164826,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "fpv-meet-aircraft-03-reveal-v1",
+    "path": "game/editions/assets/discovery/fpv-meet-aircraft-03-v1.jpg",
+    "sha256": "38a92e62c73aacdcda4f9e22cc853f22609f8683a7c08ac4b12fc1271d639c42",
+    "bytes": 164334,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "fpv-meet-aircraft-04-reveal-v1",
+    "path": "game/editions/assets/discovery/fpv-meet-aircraft-04-v1.jpg",
+    "sha256": "e7566c6d820bb94edec5f2b8ba529137718fdd9a2b9ba39a90ccb79baa60dc11",
+    "bytes": 153991,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "ukraine-voices-travel-05-reveal-v1",
+    "path": "game/editions/assets/discovery/ukraine-voices-travel-05-v1.jpg",
+    "sha256": "919797b57a3374258d94292efca7cf835d45ebf34b404368ab3995993e013534",
+    "bytes": 189714,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "ukraine-voices-travel-06-reveal-v1",
+    "path": "game/editions/assets/discovery/ukraine-voices-travel-06-v1.jpg",
+    "sha256": "62c3833fc32c79df5ddac7f113b57e4ce33ded59c1b1b4d3c161ec5621f0237a",
+    "bytes": 195867,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "ukraine-cities-symbols-time-01-reveal-v1",
+    "path": "game/editions/assets/discovery/ukraine-cities-symbols-time-01-v1.jpg",
+    "sha256": "08b07520b4dc9d551c207e99de322f66c9d30a23f62cc64be7fcb077066b8604",
+    "bytes": 178217,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "fpv-meet-aircraft-05-reveal-v1",
+    "path": "game/editions/assets/discovery/fpv-meet-aircraft-05-v1.jpg",
+    "sha256": "bef707ab50ad899059120d49bfd120e82b7f571f84f6666c3bf0f2923a682487",
+    "bytes": 160217,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "fpv-meet-aircraft-06-reveal-v1",
+    "path": "game/editions/assets/discovery/fpv-meet-aircraft-06-v1.jpg",
+    "sha256": "b11754ae638bc1d41d905b8e97024fc5cd7322abdad63c03e356291d6e826db2",
+    "bytes": 182417,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "fpv-parts-bench-01-reveal-v1",
+    "path": "game/editions/assets/discovery/fpv-parts-bench-01-v1.jpg",
+    "sha256": "2c0956d41e954d3b4fb76004e035ae7aad18dfb197b9459195b51fb8e4085f25",
+    "bytes": 148819,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "ukraine-cities-symbols-time-02-reveal-v1",
+    "path": "game/editions/assets/discovery/ukraine-cities-symbols-time-02-v1.jpg",
+    "sha256": "91b992f6582f1a43c6ff7fa252090856b145cad929f5c7322ed745e8fb1cd8e3",
+    "bytes": 149431,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "ukraine-cities-symbols-time-03-reveal-v1",
+    "path": "game/editions/assets/discovery/ukraine-cities-symbols-time-03-v1.jpg",
+    "sha256": "3355b815e9331081fc536ac9cd47a66763acf25a95cbf293ad7b271371d98df9",
+    "bytes": 205707,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "ukraine-cities-symbols-time-04-reveal-v1",
+    "path": "game/editions/assets/discovery/ukraine-cities-symbols-time-04-v1.jpg",
+    "sha256": "24b3bc2dd9a79f4130f7af5c1ba28a1ab09e348f5b7d2beb9a5b99d4434923e4",
+    "bytes": 147999,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "reference-ukraine-state-emblem",
+    "path": "game/editions/assets/discovery/reference-ukraine-state-emblem.png",
+    "sha256": "43e0b61f5fa66df1674160b9d7cbc1d189a1fce2d9be6362e82bc2b3127dc7cf",
+    "bytes": 32211,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "fpv-parts-bench-02-reveal-v1",
+    "path": "game/editions/assets/discovery/fpv-parts-bench-02-v1.jpg",
+    "sha256": "1e9510e6330ef432ee9078e25bffc9fe31d125daf0140f582b34f1faf16acb40",
+    "bytes": 123554,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "fpv-parts-bench-03-reveal-v1",
+    "path": "game/editions/assets/discovery/fpv-parts-bench-03-v1.jpg",
+    "sha256": "2154c75f9cfcd0acc3b6942c161a1af3dded9c8527e85829bd688a4db15a1fdc",
+    "bytes": 169233,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "fpv-parts-bench-04-reveal-v1",
+    "path": "game/editions/assets/discovery/fpv-parts-bench-04-v1.jpg",
+    "sha256": "343176573a12f4697df0c3172d2e7cdeda49e04f5e9968dc7e568589934c50f8",
+    "bytes": 133773,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "fpv-parts-bench-05-reveal-v1",
+    "path": "game/editions/assets/discovery/fpv-parts-bench-05-v1.jpg",
+    "sha256": "34da85b3bd3d4afea5290acff9538ebb95fae9a667f47eae3a7dc32e790eb4fc",
+    "bytes": 134307,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "fpv-parts-bench-06-reveal-v1",
+    "path": "game/editions/assets/discovery/fpv-parts-bench-06-v1.jpg",
+    "sha256": "de0f3074e9c6378ef75052407351e94ea100928f9c4fc7f9ab67541f8723de24",
+    "bytes": 160283,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "ukraine-cities-symbols-time-05-reveal-v1",
+    "path": "game/editions/assets/discovery/ukraine-cities-symbols-time-05-v1.jpg",
+    "sha256": "17b8455b4ab30803951b2a276b3a1c4031164fcd2164f53c1313cd86d34e32dc",
+    "bytes": 123064,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "ukraine-cities-symbols-time-06-reveal-v1",
+    "path": "game/editions/assets/discovery/ukraine-cities-symbols-time-06-v1.jpg",
+    "sha256": "553e59b52cf99f317696d6639789f689ae9fe9074767ad53ca3bff35f80aa31d",
+    "bytes": 193849,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "ukraine-everyday-culture-01-reveal-v1",
+    "path": "game/editions/assets/discovery/ukraine-everyday-culture-01-v1.jpg",
+    "sha256": "8f4ed7543e43144de4fcf3766ea375df0c09eb143a2466c19038c40a25f23eac",
+    "bytes": 177174,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "reference-ukraine-state-flag",
+    "path": "game/editions/assets/discovery/reference-ukraine-state-flag.png",
+    "sha256": "2331ad1bb17e2f072b42dbc3fb145917a3963a45efdf0b6cff307d2ee8f7e514",
+    "bytes": 704,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "ukraine-everyday-culture-02-reveal-v1",
+    "path": "game/editions/assets/discovery/ukraine-everyday-culture-02-v1.jpg",
+    "sha256": "7c1377b4e36f4e28daa99bcfda585768ceef275df8f64e51d283e0b2673c4ab6",
+    "bytes": 134202,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "ukraine-everyday-culture-03-reveal-v1",
+    "path": "game/editions/assets/discovery/ukraine-everyday-culture-03-v1.jpg",
+    "sha256": "5ebb4aaca19d026d0a610d712149395848bb9e3ace016e7432f2485e8b311623",
+    "bytes": 185270,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "ukraine-everyday-culture-04-reveal-v1",
+    "path": "game/editions/assets/discovery/ukraine-everyday-culture-04-v1.jpg",
+    "sha256": "b1f860501106e80dd47b46b856bc50a7735d84adc95ae9de5b4ffc37eb58bf6e",
+    "bytes": 133829,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "ukraine-everyday-culture-05-reveal-v1",
+    "path": "game/editions/assets/discovery/ukraine-everyday-culture-05-v1.jpg",
+    "sha256": "f140d676d3f01fce4a2e2cd50d80277456b51454f5fc404cd3c566686f655810",
+    "bytes": 192176,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "ukraine-everyday-culture-06-reveal-v1",
+    "path": "game/editions/assets/discovery/ukraine-everyday-culture-06-v1.jpg",
+    "sha256": "9c67d5162dc5be14ffb1b56c81ee76e8d3f6468ebdfc90fa179db2cca0d2f3a8",
+    "bytes": 191952,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "fpv-soldering-workshop-01-reveal-v1",
+    "path": "game/editions/assets/discovery/fpv-soldering-workshop-01-v1.jpg",
+    "sha256": "2b18f1e9ad3c235f775d85e73b58e02354d05abe7d265ba5c6e239a94fce67dc",
+    "bytes": 122111,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "fpv-soldering-workshop-02-reveal-v1",
+    "path": "game/editions/assets/discovery/fpv-soldering-workshop-02-v1.jpg",
+    "sha256": "b5d3e5882a7432d542263e12ef1b561db0f1621bb35a38fe86ceee11d33b2b7d",
+    "bytes": 119640,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "fpv-soldering-workshop-03-reveal-v1",
+    "path": "game/editions/assets/discovery/fpv-soldering-workshop-03-v1.jpg",
+    "sha256": "bf9e828998b19cb67914fe884dd6f5304bfd4800595b16ce0f55089ed246a699",
+    "bytes": 129530,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "fpv-soldering-workshop-04-reveal-v1",
+    "path": "game/editions/assets/discovery/fpv-soldering-workshop-04-v1.jpg",
+    "sha256": "439b3f8cc0918409669b764f0df5c4646df53df40b144ff716ecf9b53f7e577f",
+    "bytes": 93510,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "fpv-soldering-workshop-05-reveal-v1",
+    "path": "game/editions/assets/discovery/fpv-soldering-workshop-05-v1.jpg",
+    "sha256": "678d477a2c747a5bd92415c5002763a63454d041fb24df73537a2c6a61057831",
+    "bytes": 128687,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "fpv-soldering-workshop-06-reveal-v1",
+    "path": "game/editions/assets/discovery/fpv-soldering-workshop-06-v1.jpg",
+    "sha256": "ef4cd4a71bfded876c5063a035d84dafbc59aabfe6da03c6e9701100a353dc67",
+    "bytes": 119078,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "social-drone-people-workshop-02-reveal-v1",
+    "path": "game/editions/assets/discovery/social-drone-people-workshop-02-v1.jpg",
+    "sha256": "04549079a9ce5359f9e30e8072d85ccbc17aa71a329832334f69d1a1e582896e",
+    "bytes": 179440,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "social-drone-people-workshop-03-reveal-v1",
+    "path": "game/editions/assets/discovery/social-drone-people-workshop-03-v1.jpg",
+    "sha256": "8583d72d7c92c57bd3532e32136f0950c1c71040e3276c1f945b1da8293dc1bf",
+    "bytes": 179382,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "social-drone-people-workshop-04-reveal-v1",
+    "path": "game/editions/assets/discovery/social-drone-people-workshop-04-v1.jpg",
+    "sha256": "85ad91530e6bc5c33851aab986319a3491e73b3dbbbe8dc24322872f71d3eee9",
+    "bytes": 182818,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "social-drone-people-workshop-05-reveal-v1",
+    "path": "game/editions/assets/discovery/social-drone-people-workshop-05-v1.jpg",
+    "sha256": "14f06f2e8864b7e20ef33d952f8badd7eeaf52c0f61ba83a2973cf62dc575bec",
+    "bytes": 187972,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "social-drone-people-workshop-06-reveal-v1",
+    "path": "game/editions/assets/discovery/social-drone-people-workshop-06-v1.jpg",
+    "sha256": "b6b80c7688e32834f8ce4b7efdf9805aa0679bc3051db86e85829d101f39bb25",
+    "bytes": 232824,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "social-drone-community-connections-01-reveal-v1",
+    "path": "game/editions/assets/discovery/social-drone-community-connections-01-v1.jpg",
+    "sha256": "792d40af92d286850cd10688398440c6d444e32463f19d2b37d7dc486b46bd16",
+    "bytes": 176459,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "fpv-four-controls-01-reveal-v1",
+    "path": "game/editions/assets/discovery/fpv-four-controls-01-v1.jpg",
+    "sha256": "06376321a870bb8edbb1bff457fe27295d26b06f9a8a481634d578e831d838b7",
+    "bytes": 148286,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "fpv-four-controls-02-reveal-v1",
+    "path": "game/editions/assets/discovery/fpv-four-controls-02-v1.jpg",
+    "sha256": "affba1dd04bb175292c7179ad667687ec1982977ea388686d352d0d1dfe300bf",
+    "bytes": 114622,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "fpv-four-controls-03-reveal-v1",
+    "path": "game/editions/assets/discovery/fpv-four-controls-03-v1.jpg",
+    "sha256": "2adebfe28917b39bc2686a5b8e30f4243df0fb94eb1a19fa742e8f8ffb281fbd",
+    "bytes": 147937,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "social-drone-community-connections-02-reveal-v1",
+    "path": "game/editions/assets/discovery/social-drone-community-connections-02-v1.jpg",
+    "sha256": "8c5cba7cbc015357ceedc5c2adc6d3d3eb63f2fbd64b6b8e64babc8efe7c2ca2",
+    "bytes": 183460,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "social-drone-community-connections-03-reveal-v1",
+    "path": "game/editions/assets/discovery/social-drone-community-connections-03-v1.jpg",
+    "sha256": "38bf49eb62dd8e9d07f830f0d06289acf5e98d691bf83f9826cb915333ffe741",
+    "bytes": 167058,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "social-drone-community-connections-04-reveal-v1",
+    "path": "game/editions/assets/discovery/social-drone-community-connections-04-v1.jpg",
+    "sha256": "ef616a08e49258ca9e8a2a8105a3965e3729d99d12516c777e282072f1d2ab88",
+    "bytes": 186789,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "fpv-four-controls-04-reveal-v1",
+    "path": "game/editions/assets/discovery/fpv-four-controls-04-v1.jpg",
+    "sha256": "8604abd20aced15a333d238d4f041f074508a6adab3a4367bb39d637e951a97d",
+    "bytes": 133484,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "fpv-four-controls-05-reveal-v1",
+    "path": "game/editions/assets/discovery/fpv-four-controls-05-v1.jpg",
+    "sha256": "3a5b9e4f021f5cf7dfa81cbc71a00856487b25ac96a8ff77be0ffef3c14eb992",
+    "bytes": 139478,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "fpv-four-controls-06-reveal-v1",
+    "path": "game/editions/assets/discovery/fpv-four-controls-06-v1.jpg",
+    "sha256": "6293ecce59eea58dbe6c6d065d18f54c71f4631ec30455f169dce9db2c7cb825",
+    "bytes": 166812,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "fpv-first-flight-01-reveal-v1",
+    "path": "game/editions/assets/discovery/fpv-first-flight-01-v1.jpg",
+    "sha256": "991e2ba9d123625894bbb124ed92373179650f01affd65f0fcba78f7ee448376",
+    "bytes": 141896,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "fpv-first-flight-02-reveal-v1",
+    "path": "game/editions/assets/discovery/fpv-first-flight-02-v1.jpg",
+    "sha256": "b08cfe7d0d4d25c55b958ffeadec3477092836606ab102e37442288f6c3ef493",
+    "bytes": 121938,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "fpv-first-flight-03-reveal-v1",
+    "path": "game/editions/assets/discovery/fpv-first-flight-03-v1.jpg",
+    "sha256": "00a382113a9346f8e3e664ea480a57eb98866449ff92b300ba0e8a6538194638",
+    "bytes": 120040,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "fpv-first-flight-04-reveal-v1",
+    "path": "game/editions/assets/discovery/fpv-first-flight-04-v1.jpg",
+    "sha256": "0d22e3cbbf1693ef8cd4bec21003480c50b720ae9b730fae911a542be4eba827",
+    "bytes": 150717,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "fpv-first-flight-05-reveal-v1",
+    "path": "game/editions/assets/discovery/fpv-first-flight-05-v1.jpg",
+    "sha256": "ae257751d93ebe8c3c8cfedfd98a70656baf9ba4f854fc6f4f2134b4808b0bba",
+    "bytes": 117319,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "fpv-first-flight-06-reveal-v1",
+    "path": "game/editions/assets/discovery/fpv-first-flight-06-v1.jpg",
+    "sha256": "3c2fdd8a8c038ad1c2e50d18e833cb7cf2e141b02ffc7b3402af77c3f679a8b2",
+    "bytes": 135472,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "fpv-drone-families-01-reveal-v1",
+    "path": "game/editions/assets/discovery/fpv-drone-families-01-v1.jpg",
+    "sha256": "43b5eb213c9e6aea5565587f3cb45bb592175982b7140de666b6ac049e5a2b7d",
+    "bytes": 138884,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "fpv-drone-families-02-reveal-v1",
+    "path": "game/editions/assets/discovery/fpv-drone-families-02-v1.jpg",
+    "sha256": "d6c316fe11726eecc47d18894e0a880da2b33f5b68d22bb1f39801e2661df385",
+    "bytes": 147129,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "fpv-drone-families-03-reveal-v1",
+    "path": "game/editions/assets/discovery/fpv-drone-families-03-v1.jpg",
+    "sha256": "802bbc7a54eeb0a538832d06bb411be02b8e7bc4cc9a5f8a5c98c8b76e2eb180",
+    "bytes": 140472,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "fpv-drone-families-04-reveal-v1",
+    "path": "game/editions/assets/discovery/fpv-drone-families-04-v1.jpg",
+    "sha256": "db4151cdb72326a815a779f1b8bf8684e9899d036088d981fcfb0828d35a7649",
+    "bytes": 165281,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "fpv-drone-families-05-reveal-v1",
+    "path": "game/editions/assets/discovery/fpv-drone-families-05-v1.jpg",
+    "sha256": "96fd3b75b810745a1c87ebed3d4055162d4789e0a436c9d0177ebcc05aa88676",
+    "bytes": 140216,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "fpv-drone-families-06-reveal-v1",
+    "path": "game/editions/assets/discovery/fpv-drone-families-06-v1.jpg",
+    "sha256": "879ae84c35afadd6a8f220656dd311ec279ccf6e162af8b6b642b5969dfdc358",
+    "bytes": 152692,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "fpv-drones-ukraine-01-reveal-v1",
+    "path": "game/editions/assets/discovery/fpv-drones-ukraine-01-v1.jpg",
+    "sha256": "59a72f4aa8ed8529b8b9babf4a94e873d404e3bdcf7084f6c57084316c88c50f",
+    "bytes": 174451,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "fpv-drones-ukraine-02-reveal-v1",
+    "path": "game/editions/assets/discovery/fpv-drones-ukraine-02-v1.jpg",
+    "sha256": "f8d0b39849e0e56431327a28f606bf8a1bf3d0ca6b43c7977b32c9dbbef4c2cf",
+    "bytes": 110577,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "fpv-drones-ukraine-03-reveal-v1",
+    "path": "game/editions/assets/discovery/fpv-drones-ukraine-03-v1.jpg",
+    "sha256": "8a6ec57c23eaaf34200510a0733bc24a3464a19fd711b273d62895aca6b4b8b9",
+    "bytes": 98917,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "social-drone-community-connections-05-reveal-v1",
+    "path": "game/editions/assets/discovery/social-drone-community-connections-05-v1.jpg",
+    "sha256": "8a4068c39e990b909eee4fba4e340c4482e0067ff7f26fca629cce38811d199d",
+    "bytes": 135605,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "social-drone-community-connections-06-reveal-v1",
+    "path": "game/editions/assets/discovery/social-drone-community-connections-06-v1.jpg",
+    "sha256": "00e3dafc52a05ea3012c7f143548fc32c0d0df35cbd920cec8420cb316123db7",
+    "bytes": 206693,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "victory-drones-knowledge-connects-01-reveal-v1",
+    "path": "game/editions/assets/discovery/victory-drones-knowledge-connects-01-v1.jpg",
+    "sha256": "614c9a38f9c9233c01a649f4b59e9f638e5b9dd712cda0bb04b2bc2a25a184a7",
+    "bytes": 170521,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "victory-drones-knowledge-connects-02-reveal-v1",
+    "path": "game/editions/assets/discovery/victory-drones-knowledge-connects-02-v1.jpg",
+    "sha256": "794cca9930fae791df22caef7e2caa3a5379557396974585c17986609a1140de",
+    "bytes": 196661,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "victory-drones-knowledge-connects-03-reveal-v1",
+    "path": "game/editions/assets/discovery/victory-drones-knowledge-connects-03-v1.jpg",
+    "sha256": "3be987f6c3072b1de39b9cdfb7c38c95a3808e4657765fea1cfbd3bf4990287e",
+    "bytes": 170273,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "victory-drones-knowledge-connects-04-reveal-v1",
+    "path": "game/editions/assets/discovery/victory-drones-knowledge-connects-04-v1.jpg",
+    "sha256": "fcf58c0d74e131fa7a9163285512cf77c66ffc2d7c793dc013f714bde27368b6",
+    "bytes": 173623,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "fpv-drones-ukraine-04-reveal-v1",
+    "path": "game/editions/assets/discovery/fpv-drones-ukraine-04-v1.jpg",
+    "sha256": "a85aa3515935cdae8f983c0376d3da03178f6310287ed9266cf364b2923e3d98",
+    "bytes": 186265,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "fpv-drones-ukraine-05-reveal-v1",
+    "path": "game/editions/assets/discovery/fpv-drones-ukraine-05-v1.jpg",
+    "sha256": "92ec7e8bcce3fe937565eaba83d4ed7a930d6e64d74f9335583f49e51bd866fb",
+    "bytes": 128946,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "fpv-drones-ukraine-06-reveal-v1",
+    "path": "game/editions/assets/discovery/fpv-drones-ukraine-06-v1.jpg",
+    "sha256": "82feb4086bcf33a5a80d4a98fa7d50cace3bff9de95336562f53ca394b68341f",
+    "bytes": 180611,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "fpv-care-repair-01-reveal-v1",
+    "path": "game/editions/assets/discovery/fpv-care-repair-01-v1.jpg",
+    "sha256": "7f570a43475e304a926228a28bbc98e1ec0a76ee1df54fbe77deb36a67f3d601",
+    "bytes": 121480,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "fpv-care-repair-02-reveal-v1",
+    "path": "game/editions/assets/discovery/fpv-care-repair-02-v1.jpg",
+    "sha256": "5aeb3ea85a03e23f7999282b8648d66322ef0f18a0a1a580d8f7ec287259917e",
+    "bytes": 118110,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "fpv-care-repair-03-reveal-v1",
+    "path": "game/editions/assets/discovery/fpv-care-repair-03-v1.jpg",
+    "sha256": "e95ecd746401b8ac04f9e440147b4b5f1fdcf3459f59498bd694a48422b9d87c",
+    "bytes": 93933,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "victory-drones-knowledge-connects-05-reveal-v1",
+    "path": "game/editions/assets/discovery/victory-drones-knowledge-connects-05-v1.jpg",
+    "sha256": "04e343285fbad88d8c4e32ad365652c29c51aa1927b6be4ba7f751c126fbd4e6",
+    "bytes": 168765,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "victory-drones-knowledge-connects-06-reveal-v1",
+    "path": "game/editions/assets/discovery/victory-drones-knowledge-connects-06-v1.jpg",
+    "sha256": "494447b8b5ba6af10d8eaa4dcc7497ac480cb754104f6f36ac1d7d76885aa350",
+    "bytes": 227648,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "victory-drones-ideas-understanding-01-reveal-v1",
+    "path": "game/editions/assets/discovery/victory-drones-ideas-understanding-01-v1.jpg",
+    "sha256": "9352d919d1f6f0d5d989241982cd5bdd836544c76c3822196bdf203936489045",
+    "bytes": 148956,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "fpv-care-repair-04-reveal-v1",
+    "path": "game/editions/assets/discovery/fpv-care-repair-04-v1.jpg",
+    "sha256": "1592f632fbce43aacc121cfac72476303bb3145fff3ebced154857a29a262aa5",
+    "bytes": 108518,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "fpv-care-repair-05-reveal-v1",
+    "path": "game/editions/assets/discovery/fpv-care-repair-05-v1.jpg",
+    "sha256": "b1426ba3ebb1598179c6ab6b8ec34d052a024d321776aae61276b73bbc39c0bd",
+    "bytes": 109921,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "fpv-care-repair-06-reveal-v1",
+    "path": "game/editions/assets/discovery/fpv-care-repair-06-v1.jpg",
+    "sha256": "d3c9b3b8d2acd2fa94a63aa66ef471094c2142badf9700ef6e4afe5d97e54bdb",
+    "bytes": 116476,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "victory-drones-ideas-understanding-02-reveal-v1",
+    "path": "game/editions/assets/discovery/victory-drones-ideas-understanding-02-v1.jpg",
+    "sha256": "d2532d7bd90b41393a2b97c2dbc10780bbca85ed7d03bcfb8ac6b7d7378abdbd",
+    "bytes": 139105,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "victory-drones-ideas-understanding-03-reveal-v1",
+    "path": "game/editions/assets/discovery/victory-drones-ideas-understanding-03-v1.jpg",
+    "sha256": "027c9cccb10195e5ca22fa62ddeac9f873eb599e3561c550cc53e58600564f3e",
+    "bytes": 164462,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "victory-drones-ideas-understanding-04-reveal-v1",
+    "path": "game/editions/assets/discovery/victory-drones-ideas-understanding-04-v1.jpg",
+    "sha256": "7b42d7f7991f3334ea8dece380d0fd7c094c098e695e4e8b4a8a91840f7b95a7",
+    "bytes": 164122,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "victory-drones-ideas-understanding-05-reveal-v1",
+    "path": "game/editions/assets/discovery/victory-drones-ideas-understanding-05-v1.jpg",
+    "sha256": "2567a823b10e581274fd58c6efd57444f0fd51c58358133230d63f9d5aef9b97",
+    "bytes": 149490,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "victory-drones-ideas-understanding-06-reveal-v1",
+    "path": "game/editions/assets/discovery/victory-drones-ideas-understanding-06-v1.jpg",
+    "sha256": "fad28290f3eb9e0bf2848b70fb9b6b4d77bc5c2fc968ee44da8faa7a901e0cbd",
+    "bytes": 172086,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "reward-fpv-discovery-courier-v1",
+    "path": "game/editions/assets/discovery/reward-fpv-discovery-courier-v1.png",
+    "sha256": "06c674cbf50463df5e75c5f657f9b0279023b96edec244f56de0ae06ce641efe",
+    "bytes": 65737,
+    "approved": true,
+    "publication": "public",
+    "dependencies": []
+  },
+  {
+    "id": "reward-textile-discovery-shuttle-v1",
+    "path": "game/editions/assets/discovery/reward-textile-discovery-shuttle-v1.png",
+    "sha256": "d7075034d3b53761fa0ee5e696af619eb950af29c9af028fe0f73a5ada06b604",
+    "bytes": 65737,
+    "approved": true,
+    "publication": "public",
+    "dependencies": []
+  },
+  {
+    "id": "reference-ukraine-met-shirt-fragment",
+    "path": "game/editions/assets/discovery/met-shirt-fragment-157573.jpg",
+    "sha256": "edb86aaaa16ec601d1816765940cdfa37d761e3e557b9e5c2ba37d642fbc216f",
+    "bytes": 177615,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "social-community-listening-jellyfish",
+    "path": "game/editions/assets/discovery/audio/3xblast-jellyfish-v1.mp3",
+    "sha256": "f03927dbb34fca2946b4d156523e24d8ada69fbf390ed522597b9fbaedbf09a6",
+    "bytes": 1423569,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "social-community-listening-jellyfish-en",
+    "path": "game/editions/assets/discovery/audio/3xblast-jellyfish-en-v1.txt",
+    "sha256": "eeabea4dcee857b57b0b16a18db66634e1a5e60c726889b8d00810024e2fa813",
+    "bytes": 779,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "social-community-listening-jellyfish-uk",
+    "path": "game/editions/assets/discovery/audio/3xblast-jellyfish-uk-v1.txt",
+    "sha256": "607565e80f20763ae3ae31e42b9aac372eb84d4015f663970ed0e1fdbb8f8ddb",
+    "bytes": 1242,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "social-community-listening-thanks",
+    "path": "game/editions/assets/discovery/audio/3xblast-thanks-v1.mp3",
+    "sha256": "ecf32b424b78773ba6df4c56a5068ddb0e1674f5c3fdadc47d23c79dde15f5af",
+    "bytes": 1781342,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "social-community-listening-thanks-en",
+    "path": "game/editions/assets/discovery/audio/3xblast-thanks-en-v1.txt",
+    "sha256": "964728a066d5761e7e5b69d81662fbce30210eacf67904873d535108dc5fcc9f",
+    "bytes": 783,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "social-community-listening-thanks-uk",
+    "path": "game/editions/assets/discovery/audio/3xblast-thanks-uk-v1.txt",
+    "sha256": "269063c609e595b1482573ceb11233d5f5364457aaf4c8a79bdc01325e865237",
+    "bytes": 1246,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "textile-light-diffuse-v1",
+    "path": "game/editions/assets/discovery/textile-light-diffuse-v1.png",
+    "sha256": "eabcef992854e71c481a7e4fdb17fcaf86894375e2950644b940886a7ea1c7e1",
+    "bytes": 3333938,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "textile-light-left-v1",
+    "path": "game/editions/assets/discovery/textile-light-left-v1.png",
+    "sha256": "09ff0b2d7811b9ae6076db4ab2708688250ac66d4f683c0fba6e2de92dea4607",
+    "bytes": 3145957,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "textile-light-right-v1",
+    "path": "game/editions/assets/discovery/textile-light-right-v1.png",
+    "sha256": "53fe2601e7dfff5ea54f63fea9481c29c1cf7acdea3025f6967bacfdcc88259d",
+    "bytes": 3114152,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "fpv-motion-makers-video",
+    "path": "game/editions/assets/discovery/motion-makers/motion-makers-v1.mp4",
+    "bytes": 188873,
+    "sha256": "2c6ab067612b4530f729e6c92b49c5ebeb278eb44b4020cd8b3ff34e8e90cc5b",
+    "dependencies": [],
+    "publication": "public",
+    "approved": true
+  },
+  {
+    "id": "fpv-motion-makers-poster",
+    "path": "game/editions/assets/discovery/motion-makers/motion-makers-poster-v1.png",
+    "bytes": 42073,
+    "sha256": "a78136eb42349fb9f8faeb17b96144bb82217354dc2b86f7a936134b3c753297",
+    "dependencies": [],
+    "publication": "public",
+    "approved": true
+  },
+  {
+    "id": "fpv-motion-makers-transcript-en",
+    "path": "game/editions/assets/discovery/motion-makers/motion-makers-en-v1.txt",
+    "bytes": 2154,
+    "sha256": "f9f4d52645201f655e24d3e47376d90df72ad4e180c33ac53c15bf24aedb9cda",
+    "dependencies": [],
+    "publication": "public",
+    "approved": true
+  },
+  {
+    "id": "fpv-motion-makers-transcript-uk",
+    "path": "game/editions/assets/discovery/motion-makers/motion-makers-uk-v1.txt",
+    "bytes": 3846,
+    "sha256": "afaad10bc2d870f3493ec1549b1a0cde87cb97b433e29f26ec6ca4b0550430f5",
+    "dependencies": [],
+    "publication": "public",
+    "approved": true
+  },
+  {
+    "id": "fpv-motion-makers-captions-en",
+    "path": "game/editions/assets/discovery/motion-makers/motion-makers-en-v1.vtt",
+    "bytes": 455,
+    "sha256": "6f70bfd2bac0003663b660fdc83612a9439b4131f6cc167d1aa83619612e7193",
+    "dependencies": [],
+    "publication": "public",
+    "approved": true
+  },
+  {
+    "id": "fpv-motion-makers-captions-uk",
+    "path": "game/editions/assets/discovery/motion-makers/motion-makers-uk-v1.vtt",
+    "bytes": 709,
+    "sha256": "8dfd9aeb10bfdcaa89faf19b66c68966b08be609b35e028b3db06bf7a6c070cf",
+    "dependencies": [],
+    "publication": "public",
+    "approved": true
+  },
+  {
+    "id": "reference-ukraine-met-shirt-fragment-157571",
+    "path": "game/editions/assets/discovery/met-shirt-fragment-157571.jpg",
+    "sha256": "4a5913f8a42a58165353e44bf492df473f9a90b12bf7b060cc49e3819e6de6bd",
+    "bytes": 1761339,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
   }
 ]
