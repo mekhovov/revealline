@@ -90,7 +90,7 @@ export function createGeometryEditor({ document, getSource, getMission, apply })
         if (row.surface === 'terrain') command.rectangle.kind = $('kind').value;
       }
       const candidate = editContentGeometry(getSource(), getMission()?.id, command);
-      if (apply(candidate) === false) return;
+      if (apply(candidate, () => commit(action)) === false) return;
       key = null;
       sync();
       localizedText($('result'), localizedMessage('tools:studio.rectangle.applied'));

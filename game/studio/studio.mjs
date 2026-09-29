@@ -1,4 +1,10 @@
 import { editorMessageError, editorErrorText } from './editor-copy.mjs';
+import { createSourceDiscardGate } from './source-discard.mjs';
+import {
+  disableStudioControl,
+  syncStudioHistory,
+  captureStudioActionFocus,
+} from './action-focus.mjs';
 import { createGridEditorAdapter, registerAuthoringEditor } from '../ui/authoring-editors.mjs';
 import { platformExportText } from '../ui/export-copy.mjs';
 import { localizedMessage, localizedText, onLocaleChange, t } from '../i18n/index.mjs';
@@ -171,14 +177,31 @@ const inspections = createInspectionRequests(() =>
     $('checkpoint').value,
   ]),
 );
+const sourceDiscard = createSourceDiscardGate({
+  document,
+  isDirty: () => sourceChanged,
+  getContext: () => ({
+    owner: session,
+    signature: JSON.stringify([
+      session.export(),
+      $('source').value,
+      [...document.querySelectorAll('main input,main select,main textarea')].map((node) => [
+        node.id,
+        node.value,
+        node.checked,
+      ]),
+    ]),
+  }),
+  onStale: () => status(localizedMessage('tools:studio.source.changed'), true),
+});
 const imageWorkbench = createImageWorkbench({
   document,
   getSource: () => session.current(),
   getMission: () => currentMission(),
   getDifficulty: () => $('difficulty').value,
   redraw: () => inspectBoard(inspectedTrail),
-  apply: (candidate) => {
-    if (!discardSource()) return false;
+  apply: (candidate, retry) => {
+    if (!discardSource(retry)) return false;
     session.replace(candidate);
     render();
     queueSave();
@@ -198,8 +221,8 @@ const actorEditor = createActorEditor({
   getSource: () => session.current(),
   getMission: currentMission,
   getDifficulty: () => $('difficulty').value,
-  apply: (candidate) => {
-    if (!discardSource()) return false;
+  apply: (candidate, retry) => {
+    if (!discardSource(retry)) return false;
     session.replace(candidate);
     render();
     queueSave();
@@ -210,8 +233,8 @@ const combatEditor = createCombatEditor({
   document,
   getSource: () => session.current(),
   getMission: currentMission,
-  apply: (candidate) => {
-    if (!discardSource()) return false;
+  apply: (candidate, retry) => {
+    if (!discardSource(retry)) return false;
     session.replace(candidate);
     render();
     queueSave();
@@ -222,8 +245,8 @@ const geometryEditor = createGeometryEditor({
   document,
   getSource: () => session.current(),
   getMission: currentMission,
-  apply: (candidate) => {
-    if (!discardSource()) return false;
+  apply: (candidate, retry) => {
+    if (!discardSource(retry)) return false;
     session.replace(candidate);
     render();
     queueSave();
@@ -234,8 +257,8 @@ const bonusEditor = createBonusEditor({
   document,
   getSource: () => session.current(),
   getMission: currentMission,
-  apply: (candidate) => {
-    if (!discardSource()) return false;
+  apply: (candidate, retry) => {
+    if (!discardSource(retry)) return false;
     session.replace(candidate);
     render();
     queueSave();
@@ -246,8 +269,8 @@ const timedBonusEditor = createTimedBonusEditor({
   document,
   getSource: () => session.current(),
   getMission: currentMission,
-  apply: (candidate) => {
-    if (!discardSource()) return false;
+  apply: (candidate, retry) => {
+    if (!discardSource(retry)) return false;
     session.replace(candidate);
     render();
     queueSave();
@@ -258,8 +281,8 @@ const objectiveEditor = createObjectiveEditor({
   document,
   getSource: () => session.current(),
   getMission: currentMission,
-  apply: (candidate) => {
-    if (!discardSource()) return false;
+  apply: (candidate, retry) => {
+    if (!discardSource(retry)) return false;
     session.replace(candidate);
     render();
     queueSave();
@@ -270,8 +293,8 @@ const relayEditor = createRelayEditor({
   document,
   getSource: () => session.current(),
   getMission: currentMission,
-  apply: (candidate) => {
-    if (!discardSource()) return false;
+  apply: (candidate, retry) => {
+    if (!discardSource(retry)) return false;
     session.replace(candidate);
     render();
     queueSave();
@@ -282,8 +305,8 @@ const directionalEditor = createDirectionalEditor({
   document,
   getSource: () => session.current(),
   getMission: currentMission,
-  apply: (candidate) => {
-    if (!discardSource()) return false;
+  apply: (candidate, retry) => {
+    if (!discardSource(retry)) return false;
     session.replace(candidate);
     render();
     queueSave();
@@ -294,8 +317,8 @@ const encounterEditor = createEncounterEditor({
   document,
   getSource: () => session.current(),
   getMission: currentMission,
-  apply: (candidate) => {
-    if (!discardSource()) return false;
+  apply: (candidate, retry) => {
+    if (!discardSource(retry)) return false;
     session.replace(candidate);
     render();
     queueSave();
@@ -319,14 +342,27 @@ function status(text, error = false) {
   $('status').dataset.error = String(error);
 }
 function guarded(action) {
-  return async (event) => {
+  const handler = async (event) => {
     try {
-      await action(event);
+      await sourceDiscard.run(
+        () => action(event),
+        () => handler(event),
+      );
     } catch (error) {
       if (error.name === 'AbortError') return;
       status(() => editorErrorText(error), true);
     }
   };
+  return handler;
+}
+function syncHistory() {
+  syncStudioHistory({
+    undo: $('undo'),
+    redo: $('redo'),
+    fallback: $('save'),
+    canUndo: !!session?.canUndo(),
+    canRedo: !!session?.canRedo(),
+  });
 }
 function showStorage(state) {
   if (state.error)
@@ -341,8 +377,7 @@ function showStorage(state) {
         ? localizedMessage('tools:studio.storage.unsaved')
         : localizedMessage('tools:studio.storage.saved', { revision: state.revision }),
     );
-  $('undo').disabled = !session?.canUndo();
-  $('redo').disabled = !session?.canRedo();
+  syncHistory();
 }
 function setSession(project, revision = null) {
   inspections.invalidate();
@@ -368,8 +403,8 @@ function queueSave() {
     owner.save().catch(() => {});
   }, 300);
 }
-function discardSource() {
-  return !sourceChanged || window.confirm(t('tools:studio.source.discard'));
+function discardSource(retry) {
+  return sourceDiscard.allow(retry);
 }
 function currentMission() {
   return session.current().missions.find((m) => m.id === $('mission').value);
@@ -554,7 +589,7 @@ function render(selected = $('mission').value) {
   sourceChanged = false;
   inspected = null;
   candidateLibrary.clearInspection();
-  $('apply').disabled = true;
+  disableStudioControl($('apply'), $('validate'));
   localizedText(
     $('validation'),
     localizedMessage('tools:studio.source.current', {
@@ -562,8 +597,7 @@ function render(selected = $('mission').value) {
       missions: project.missions.length,
     }),
   );
-  $('undo').disabled = !session.canUndo();
-  $('redo').disabled = !session.canRedo();
+  syncHistory();
   localizedText($('structure-result'), localizedMessage('tools:studio.structure.current'));
   syncStructure();
   inspectBoard();
@@ -674,7 +708,7 @@ function inspectSource({ head, selectedRevision } = {}) {
   inspections.invalidate();
   inspected = null;
   candidateLibrary.clearInspection();
-  $('apply').disabled = true;
+  disableStudioControl($('apply'), $('validate'));
   const text = $('source').value,
     project = compileContentProject(text).source;
   inspected = { text, project, head };
@@ -700,7 +734,7 @@ $('source').addEventListener('input', () => {
   sourceChanged = true;
   inspected = null;
   candidateLibrary.clearInspection();
-  $('apply').disabled = true;
+  disableStudioControl($('apply'), $('validate'));
   localizedText($('validation'), localizedMessage('tools:studio.source.unapplied'));
 });
 $('validate').onclick = guarded(() => inspectSource());
@@ -751,7 +785,7 @@ $('pressure-edition').onclick = guarded(() => {
   inspections.invalidate();
   inspected = null;
   candidateLibrary.clearInspection();
-  $('apply').disabled = true;
+  disableStudioControl($('apply'), $('validate'));
   $('source').value = JSON.stringify(withPressureDifficulty(session.current()), null, 2);
   sourceChanged = true;
   inspectSource();
@@ -1244,6 +1278,7 @@ $('play').onclick = guarded(() =>
   launchPreview(session.current(), $('mission').value, $('difficulty').value),
 );
 async function launchPreview(source, missionId, difficulty) {
+  const focusIntent = captureStudioActionFocus(document.activeElement);
   previewController?.abort();
   const controller = new AbortController();
   previewController = controller;
@@ -1277,10 +1312,14 @@ async function launchPreview(source, missionId, difficulty) {
           })()
         : null,
     ]);
-    if (ticket !== previewRevision) return;
+    if (ticket !== previewRevision) {
+      focusIntent.cancel();
+      return;
+    }
     result = prepareContentPreview(project, missionId, { difficulty, theme, artwork });
     sessionStorage.setItem('revealline.playground.current', JSON.stringify(result.scenario));
   } catch (error) {
+    focusIntent.cancel();
     if (ticket === previewRevision && error.name !== 'AbortError')
       localizedText($('preview-status'), () => studioPreviewFailureText(error));
     return;
@@ -1293,7 +1332,8 @@ async function launchPreview(source, missionId, difficulty) {
   localizedText($('preview-status'), () =>
     studioPreviewLoadingText(previewProject, missionId, difficulty),
   );
-  $('preview-panel').scrollIntoView({ block: 'start' });
+  focusIntent.reveal($('preview-panel'));
+  focusIntent.cancel();
   stopPreviewReadiness = observePreviewReadiness({
     expectedURL: url,
     watchPractice: true,
@@ -1341,6 +1381,7 @@ window.addEventListener('pagehide', (event) => {
   discoveryEditor.suspend();
   if (!event.persisted) {
     discoveryEditor.dispose();
+    sourceDiscard.destroy();
     stopSpatialReviews();
     stopGameplayTuning();
     gameplayTuning.dispose();
