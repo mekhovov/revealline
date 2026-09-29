@@ -62,7 +62,7 @@ async function setup(t, options = {}) {
     }
     el.inert = /\binert\b/.test(rest);
     el.hidden = /\bhidden\b/.test(rest);
-    el.disabled = /\bdisabled\b/.test(rest);
+    el.disabled = /(?:^|\s)disabled(?=\s|=|$)/.test(rest);
     el.setAttribute('aria-label', id);
     main.append(el);
   }
@@ -215,6 +215,7 @@ test('actual workshop handlers inspect/select/capture and retain exact PNG until
   h.$('time').value = '2';
   h.$('time').emit('input');
   assert.equal(h.$('range').value, '2');
+  h.$('capture').focus();
   assert.equal(await h.$('capture').onclick(), true);
   assert.equal(h.doc.activeElement, h.$('download'));
   assert.equal(h.$('download').hidden, false);
@@ -734,3 +735,176 @@ test('Video Poster native Confirm is captured before a frame and cannot clear th
   h.frame(3);
   assert.equal(h.captures, 1);
 });
+
+// Explicitly model native disabled-button blur. The fake DOM does not claim to
+// reproduce browser layout, codecs, downloads or focus behavior by itself.
+function nativeDisabled(element) {
+  let disabled = element.disabled;
+  Object.defineProperty(element, 'disabled', {
+    configurable: true,
+    get: () => disabled,
+    set(value) {
+      disabled = value;
+      if (value && element.ownerDocument.activeElement === element) element.blur();
+    },
+  });
+}
+function listenerCount(h) {
+  return [h.doc, h.win].reduce(
+    (total, node) =>
+      total +
+      [...node.listeners.values(), ...node.captureListeners.values()].reduce(
+        (sum, listeners) => sum + listeners.size,
+        0,
+      ),
+    0,
+  );
+}
+for (const fail of [false, true]) {
+  test(`native capture ${fail ? 'failure' : 'success'} owns Cancel and returns to an enabled action`, async (t) => {
+    const gate = deferred();
+    const h = await setup(t, { capture: () => gate.promise });
+    await h.inspect();
+    nativeDisabled(h.$('capture'));
+    nativeDisabled(h.$('cancel'));
+    h.$('capture').focus();
+    const before = listenerCount(h);
+    const pending = h.$('capture').onclick();
+    assert.equal(h.doc.activeElement, h.$('cancel'));
+    assert.equal(h.$('cancel').disabled, false);
+    if (fail) gate.reject(new Error('Decoder refused capture'));
+    else gate.resolve(poster(0));
+    assert.equal(await pending, !fail);
+    const target = h.$(fail ? 'capture' : 'download');
+    assert.equal(h.doc.activeElement, target);
+    assert.equal(target.disabled, false);
+    assert.equal(listenerCount(h), before, 'Finished work releases focus ownership listeners');
+    assert.equal(h.urls.size, fail ? 0 : 1);
+  });
+}
+for (const decision of [
+  'newer-focus',
+  'body-key',
+  'body-pointer',
+  'window-blur',
+  'hidden',
+  'pagehide',
+  'disconnected',
+  'unowned',
+]) {
+  test(`late capture respects ${decision} instead of taking focus`, async (t) => {
+    const gate = deferred();
+    const h = await setup(t, { capture: () => gate.promise });
+    await h.inspect();
+    nativeDisabled(h.$('capture'));
+    nativeDisabled(h.$('cancel'));
+    (decision === 'unowned' ? h.$('back') : h.$('capture')).focus();
+    const before = listenerCount(h);
+    const pending = h.$('capture').onclick();
+    if (decision === 'newer-focus') {
+      h.$('back').focus();
+      h.$('back').blur();
+    } else if (decision === 'body-key') h.doc.body.emit('keydown', { key: 'x' });
+    else if (decision === 'body-pointer') h.doc.body.emit('pointerdown');
+    else if (decision === 'window-blur') h.win.emit('blur');
+    else if (decision === 'hidden') {
+      h.doc.hidden = true;
+      h.doc.emit('visibilitychange');
+      h.doc.hidden = false;
+    } else if (decision === 'pagehide') h.win.emit('pagehide', { persisted: true });
+    else if (decision === 'disconnected') h.win.emit('gamepaddisconnected');
+    const accepted = h.doc.activeElement;
+    gate.resolve(poster(0));
+    assert.equal(await pending, !['hidden', 'pagehide'].includes(decision));
+    assert.notEqual(h.doc.activeElement, h.$('download'));
+    assert.equal(h.doc.activeElement, accepted === h.$('cancel') ? h.doc.body : accepted);
+    assert.equal(listenerCount(h), before);
+  });
+}
+test('focused Cancel immediately restores Capture and fences the late result', async (t) => {
+  const gate = deferred();
+  const h = await setup(t, { capture: () => gate.promise });
+  await h.inspect();
+  nativeDisabled(h.$('capture'));
+  nativeDisabled(h.$('cancel'));
+  h.$('capture').focus();
+  const pending = h.$('capture').onclick();
+  assert.equal(h.doc.activeElement, h.$('cancel'));
+  h.$('cancel').onclick();
+  assert.equal(h.doc.activeElement, h.$('capture'));
+  gate.resolve(poster(0));
+  assert.equal(await pending, false);
+  assert.equal(h.doc.activeElement, h.$('capture'));
+  assert.equal(h.urls.size, 0);
+});
+for (const owned of [true, false]) {
+  test(`Clear ${owned ? 'returns its owner to source' : 'preserves another owner'} while revoking PNG`, async (t) => {
+    const h = await setup(t);
+    await h.inspect();
+    await h.host.capture();
+    nativeDisabled(h.$('clear'));
+    (owned ? h.$('clear') : h.$('back')).focus();
+    h.$('clear').onclick();
+    assert.equal(h.doc.activeElement, h.$(owned ? 'file' : 'back'));
+    assert.equal(h.sources[0].disposed, true);
+    assert.equal(h.urls.size, 0);
+  });
+}
+for (const fail of [false, true]) {
+  test(`source inspection ${fail ? 'failure' : 'success'} cannot steal a newer Return focus`, async (t) => {
+    const gate = deferred();
+    const h = await setup(t, { openSource: () => gate.promise });
+    h.$('file').focus();
+    const pending = h.inspect();
+    assert.equal(h.doc.activeElement, h.$('cancel'));
+    h.$('back').focus();
+    if (fail) gate.reject(new Error('Video unsupported'));
+    else
+      gate.resolve({
+        info: {
+          mime: 'video/mp4',
+          width: 640,
+          height: 360,
+          bytes: 100,
+          durationSeconds: 6,
+          sha256: 'a'.repeat(64),
+        },
+        dispose() {},
+      });
+    assert.equal(await pending, !fail);
+    assert.equal(h.doc.activeElement, h.$('back'));
+  });
+}
+test('failed frame step restores its opener and preserves the exact accepted PNG', async (t) => {
+  const h = await setup(t, { capture: (time) => poster(time, 2) });
+  await h.inspect();
+  h.$('time').value = '2';
+  await h.host.capture();
+  const url = h.$('download').href;
+  nativeDisabled(h.$('step-forward'));
+  nativeDisabled(h.$('cancel'));
+  h.$('step-forward').focus();
+  assert.equal(await h.$('step-forward').onclick(), false);
+  assert.equal(h.doc.activeElement, h.$('step-forward'));
+  assert.equal(h.$('download').href, url);
+  assert.equal(h.urls.size, 1);
+});
+for (const outcome of ['unsupported', 'failure']) {
+  test(`conversion support ${outcome} restores its control without publishing a transform`, async (t) => {
+    const h = await setup(t, {
+      physicalTrim: {
+        support: async () => {
+          if (outcome === 'failure') throw new Error('Converter unavailable');
+          return { supported: false, reason: 'Not available', formats: [] };
+        },
+      },
+    });
+    await h.inspect();
+    nativeDisabled(h.$('check-trim'));
+    nativeDisabled(h.$('cancel'));
+    h.$('check-trim').focus();
+    assert.equal(await h.$('check-trim').onclick(), false);
+    assert.equal(h.doc.activeElement, h.$('check-trim'));
+    assert.equal(h.$('trim-download').hidden, true);
+  });
+}

@@ -140,7 +140,7 @@ export function attachVideoPosterWorkshop({
     });
   }
   const message = (error) => (error instanceof Error ? error.message : String(error));
-  function controls() {
+  function controls({ syncNavigation = true } = {}) {
     $('capture').disabled = !source || Boolean(task);
     $('time').disabled = $('range').disabled = !source || Boolean(task);
     const frameStep = result?.capture?.timingEvidence === 'presented-frame';
@@ -157,7 +157,68 @@ export function attachVideoPosterWorkshop({
       Boolean(task);
     $('cancel').disabled = !task;
     $('clear').disabled = !source && !task && !previewURL && !trimURL;
-    navigation.sync();
+    if (syncNavigation && foreground()) navigation.sync();
+  }
+  // A page operation owns only its explicit opener and Cancel. Losing that
+  // ownership permanently vetoes its eventual focus handoff, even after return.
+  function captureFocus(opener) {
+    const owned = new Set([opener, $('cancel')]),
+      removers = [];
+    let active = !!(opener && doc.activeElement === opener && foreground());
+    const empty = (element) => !element || element === doc.body || element === doc.documentElement;
+    const retire = () => {
+      active = false;
+      for (const remove of removers.splice(0)) remove();
+    };
+    const listen = (node, type, callback) => {
+      node.addEventListener(type, callback, true);
+      removers.push(() => node.removeEventListener(type, callback, true));
+    };
+    if (active) {
+      listen(doc, 'focusin', (event) => {
+        if (!empty(event.target) && !owned.has(event.target)) retire();
+      });
+      for (const type of ['pointerdown', 'keydown'])
+        listen(doc, type, (event) => {
+          if (![...owned].some((element) => element?.contains(event.target))) retire();
+        });
+      listen(win, 'blur', (event) => {
+        if (event.target === win) retire();
+      });
+      listen(win, 'pagehide', retire);
+      listen(win, 'gamepaddisconnected', retire);
+      listen(doc, 'visibilitychange', () => {
+        if (doc.hidden) retire();
+      });
+      listen(doc, 'beforetoggle', (event) => {
+        if (event.target?.tagName === 'DIALOG' && event.newState === 'open') retire();
+      });
+    }
+    const move = (target, final) => {
+      const allowed =
+        active &&
+        foreground() &&
+        (empty(doc.activeElement) || owned.has(doc.activeElement)) &&
+        target?.isConnected &&
+        $('main').contains(target) &&
+        !target.disabled &&
+        !target.closest('[hidden],[inert],dialog:not([open]),details:not([open])');
+      if (final) retire();
+      if (allowed && doc.activeElement !== target) target.focus();
+    };
+    return {
+      retire,
+      hold: () => move($('cancel'), false),
+      restore: (target) => move(target, true),
+    };
+  }
+  function finish(current, target) {
+    if (!current.current()) return current.focus.retire();
+    task = null;
+    controls({ syncNavigation: false });
+    if (disposed || serial !== current.id) current.focus.retire();
+    else current.focus.restore(target);
+    if (foreground()) navigation.sync();
   }
   function discardPreview() {
     rewardExport.reset();
@@ -201,12 +262,14 @@ export function attachVideoPosterWorkshop({
     feedback.clear();
     activity = null;
     serial++;
+    task?.focus.retire();
     task?.controller.abort();
     task = null;
     router.clear();
   }
   function cancel() {
     if (!task) return false;
+    const focus = captureFocus(doc.activeElement === $('cancel') ? $('cancel') : task.opener);
     stopTask();
     setStatus(
       source
@@ -214,11 +277,13 @@ export function attachVideoPosterWorkshop({
         : localizedMessage('interface:inspectionCancelledChooseTheSourceAgainWhenReady'),
       'cancelled',
     );
-    controls();
-    (source ? $('capture') : $('file')).focus();
+    controls({ syncNavigation: false });
+    focus.restore(source ? $('capture') : $('file'));
+    if (foreground()) navigation.sync();
     return true;
   }
   function clear({ focus = true } = {}) {
+    const owner = focus ? captureFocus($('clear')) : null;
     stopTask();
     source?.dispose();
     source = null;
@@ -234,20 +299,28 @@ export function attachVideoPosterWorkshop({
     $('transform').value = 'source';
     updateTransformPlan();
     setStatus(localizedMessage('interface:sourceAndPreviewClearedNoGameDataOrMediaStorage'));
-    controls();
-    if (focus && !disposed) $('file').focus();
+    controls({ syncNavigation: false });
+    owner?.restore($('file'));
+    if (foreground()) navigation.sync();
   }
-  function begin(label) {
+  function begin(label, opener) {
     rewardExport.reset();
     stopTask();
-    const current = { id: serial, controller: new AbortController() };
+    const current = {
+      id: serial,
+      controller: new AbortController(),
+      opener,
+      focus: captureFocus(opener),
+    };
     task = current;
     activity = feedback.begin({
       message: label,
       stage: source ? 'decoding' : 'reading',
       isCurrent: () => !disposed && task?.id === current.id,
     });
-    controls();
+    controls({ syncNavigation: false });
+    current.focus.hold();
+    if (foreground()) navigation.sync();
     return {
       ...current,
       current: () => !disposed && task?.id === current.id && !current.controller.signal.aborted,
@@ -266,6 +339,7 @@ export function attachVideoPosterWorkshop({
     localizedText($('metadata'), () => t('interface:inspectingALocalVideo'));
     const current = begin(
       localizedMessage('interface:inspectingVideoMetadataTheSourceIsMutedAndNeverPlayed'),
+      $('file'),
     );
     let staged = null;
     try {
@@ -313,9 +387,7 @@ export function attachVideoPosterWorkshop({
       setStatus(completed);
       activity?.finish({ message: completed });
       activity = null;
-      task = null;
-      controls();
-      $('time').focus();
+      finish(current, $('time'));
       return true;
     } catch (error) {
       staged?.dispose();
@@ -323,9 +395,7 @@ export function attachVideoPosterWorkshop({
       localizedText($('metadata'), () => t('interface:videoCouldNotBeInspected'));
       activity?.finish({ message: message(error), state: 'error' });
       activity = null;
-      task = null;
-      controls();
-      $('file').focus();
+      finish(current, $('file'));
       return false;
     }
   }
@@ -395,11 +465,14 @@ export function attachVideoPosterWorkshop({
       requested > source.info.durationSeconds
     ) {
       setStatus(localizedMessage('interface:enterATimeWithinThisVideoSDurationValuesAre'));
-      $('time').focus();
+      captureFocus($('capture')).restore($('time'));
       return false;
     }
     const selectedSource = source,
-      current = begin(localizedMessage('gameplay:capturingRequestedTimeS', { value1: requested }));
+      current = begin(
+        localizedMessage('gameplay:capturingRequestedTimeS', { value1: requested }),
+        $('capture'),
+      );
     try {
       const candidate = await selectedSource.capture(requested, posterMetadata(), {
         signal: current.controller.signal,
@@ -412,9 +485,7 @@ export function attachVideoPosterWorkshop({
       setStatus(completed);
       activity?.finish({ message: completed });
       activity = null;
-      task = null;
-      controls();
-      $('download').focus();
+      finish(current, $('download'));
       return true;
     } catch (error) {
       if (!current.current()) return false;
@@ -425,9 +496,7 @@ export function attachVideoPosterWorkshop({
       setStatus(failed);
       activity?.finish({ message: failed, state: 'error' });
       activity = null;
-      task = null;
-      controls();
-      $('capture').focus();
+      finish(current, $('capture'));
       return false;
     }
   }
@@ -440,6 +509,7 @@ export function attachVideoPosterWorkshop({
             ? 'tools:videoPoster.seekingPreviousFrame'
             : 'tools:videoPoster.seekingNextFrame',
         ),
+        direction < 0 ? $('step-back') : $('step-forward'),
       );
     try {
       const stepped = await seekDistinctPresentedFrame(
@@ -460,9 +530,7 @@ export function attachVideoPosterWorkshop({
       setStatus(completed);
       activity?.finish({ message: completed });
       activity = null;
-      task = null;
-      controls();
-      (direction < 0 ? $('step-back') : $('step-forward')).focus();
+      finish(current, direction < 0 ? $('step-back') : $('step-forward'));
       return true;
     } catch (error) {
       if (!current.current()) return false;
@@ -473,12 +541,11 @@ export function attachVideoPosterWorkshop({
       setStatus(failed);
       activity?.finish({ message: failed, state: 'error' });
       activity = null;
-      task = null;
-      controls();
+      finish(current, direction < 0 ? $('step-back') : $('step-forward'));
       return false;
     }
   }
-  function applyPlaybackRange() {
+  function applyPlaybackRange(opener = $('apply-range')) {
     if (!source || task) return false;
     try {
       playbackRange = preparePlaybackRange(source.info, {
@@ -498,14 +565,17 @@ export function attachVideoPosterWorkshop({
       return true;
     } catch (error) {
       setStatus(message(error));
-      $('playback-start').focus();
+      captureFocus(opener).restore($('playback-start'));
       return false;
     }
   }
   async function checkPhysicalTrim() {
     if (!source || task) return false;
     const selectedSource = source,
-      current = begin(localizedMessage('tools:videoPoster.checkingPhysicalConverter'));
+      current = begin(
+        localizedMessage('tools:videoPoster.checkingPhysicalConverter'),
+        $('check-trim'),
+      );
     try {
       const capability = await physicalTrim.support(selectedSource.info, {
         original: selectedSource.original,
@@ -537,8 +607,7 @@ export function attachVideoPosterWorkshop({
         state: capability.supported ? 'ready' : 'cancelled',
       });
       activity = null;
-      task = null;
-      controls();
+      finish(current, $('check-trim'));
       return capability.supported;
     } catch (error) {
       if (!current.current()) return false;
@@ -546,16 +615,15 @@ export function attachVideoPosterWorkshop({
       $('trim-support').textContent = message(error);
       activity?.finish({ message: message(error), state: 'error' });
       activity = null;
-      task = null;
-      controls();
+      finish(current, $('check-trim'));
       return false;
     }
   }
   async function trimVideo() {
     if (!source || task || !trimCapability?.supported) return false;
-    if (!applyPlaybackRange()) return false;
+    if (!applyPlaybackRange($('trim'))) return false;
     const selectedSource = source,
-      current = begin(localizedMessage('tools:videoPoster.trimmingAndVerifying'));
+      current = begin(localizedMessage('tools:videoPoster.trimmingAndVerifying'), $('trim'));
     try {
       const transformed = await physicalTrim.trim(
         selectedSource.original,
@@ -610,9 +678,7 @@ export function attachVideoPosterWorkshop({
       setStatus(completed);
       activity?.finish({ message: completed });
       activity = null;
-      task = null;
-      controls();
-      $('trim-download').focus();
+      finish(current, $('trim-download'));
       return true;
     } catch (error) {
       if (!current.current()) return false;
@@ -620,8 +686,7 @@ export function attachVideoPosterWorkshop({
       setStatus(failed);
       activity?.finish({ message: failed, state: 'error' });
       activity = null;
-      task = null;
-      controls();
+      finish(current, $('trim'));
       return false;
     }
   }
@@ -629,7 +694,7 @@ export function attachVideoPosterWorkshop({
   $('capture').onclick = capture;
   $('step-back').onclick = () => stepFrame(-1);
   $('step-forward').onclick = () => stepFrame(1);
-  $('apply-range').onclick = applyPlaybackRange;
+  $('apply-range').onclick = () => applyPlaybackRange();
   $('transform').onchange = () => {
     discardTrim();
     trimCapability = null;
