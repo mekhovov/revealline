@@ -1,0 +1,58 @@
+{
+  "format": "ukraine-enemy-original.v1",
+  "at": "2026-09-14T18:58:05.093833+00:00",
+  "role": "relay-sentinel",
+  "proposedName": "Sunflower Keep",
+  "narrativePurpose": "Linked staged core requires its relay objective and a legitimate opening before release.",
+  "implementedMechanics": false,
+  "historicalAuthenticityClaim": false,
+  "tool": "image_gen.imagegen",
+  "generation": "One fresh text-only call; no image inputs",
+  "toolModel": "Not exposed; not inferred",
+  "toolOriginalPath": "/Users/oleksandr.mekhovov/.codex/generated_images/01a09357-2b06-77f1-b001-1afd50d8bc73/exec-42e4cadc-0d5a-46ed-8879-6eaffa02833e.png",
+  "original": {
+    "path": "originals/relay-sentinel.png",
+    "bytes": 988500,
+    "sha256": "1da704f8ee052e70ce8999ef809de254eff16279080e119b6d1d123d39c7da6c",
+    "width": 1254,
+    "height": 1254,
+    "bitDepth": 8,
+    "pngColorType": 6,
+    "pngChunks": [
+      "IHDR",
+      "caBX",
+      "IDAT",
+      "IDAT",
+      "IDAT",
+      "IDAT",
+      "IDAT",
+      "IDAT",
+      "IDAT",
+      "IDAT",
+      "IDAT",
+      "IDAT",
+      "IDAT",
+      "IDAT",
+      "IDAT",
+      "IDAT",
+      "IDAT",
+      "IEND"
+    ],
+    "allChunkCRCsValid": true
+  },
+  "prompt": {
+    "path": "prompts/relay-sentinel.txt",
+    "sha256": "68e4d19d152d19bb5b2b5c830c169a97ad2a0564e892e3fdb03a59a9b3af07bf",
+    "formatting": "Exact request plus one final LF"
+  },
+  "copy": {
+    "method": "Exclusive APFS fclonefileat, no fallback",
+    "originalInode": 76152784,
+    "cloneInode": 76152924
+  },
+  "transformations": [],
+  "runtimeBinding": null,
+  "inspection": "Full-image, alpha and native CSS checks follow in separate retained records",
+  "freshFreeBeforeClone": 1750392832,
+  "conservativeOriginalAndRawGitPlus2MiBReserveBytes": 14981006
+}
