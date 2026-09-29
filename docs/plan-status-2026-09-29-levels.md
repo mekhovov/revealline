@@ -165,6 +165,39 @@ approval. Keep priorities A (characters/reliable play), B (encounter variety), C
 Teaching acknowledgement/schema work is still under design review, not included
 by copying an old host or silently reinterpreting v1 progress.
 
+### Next A2: prevent compact canvas cue overlap without hiding state
+
+The UX review reports overlapping Ukrainian Hunter role labels in the final
+`relay-downed-568-uk-large.png`: the complete board is 212×106 CSS pixels.
+The shield remains visible. This is not evidence of an active LOCK warning
+failure. A3 outer HUD/control work remains source-verified; it does not establish
+whole-canvas visual acceptance.
+
+Source inspection of PR #757 at `1a406a2c` confirms the mechanism:
+`game/couch/coop-actor-layout.mjs` hard-excludes actor heads but only penalizes
+occupied cue plates. Its bounded ring/corner search can miss a non-overlapping
+placement. `game/couch/coop-view.mjs` omits a cue when placement returns null, so
+simply rejecting every plate collision would risk hiding required state.
+
+The next bounded correction should:
+
+- Preserve existing clear placements and add deterministic edge candidates or
+  bounded nearby repacking; keep layout work predictable.
+- Retain 12px Standard and 16px Large labels instead of shrinking text to hide
+  the issue. Account for every required cue with a readable visible overflow
+  treatment when on-board packing is genuinely impossible.
+- Exercise the actual painter recorder at a 212px board width with Ukrainian
+  text, both Hunters, anchors/shield, and downed/warning/commit/recovery/slowed
+  state cases. Assert pairwise plate intersections and expected label counts,
+  not only label bounds or a helper-only result.
+- Reopen Team/equipment production closure against the final renderer, then
+  verify the real small-board result. Preserve prior approvals as history.
+
+This is a recorded read-only finding, not a new implementation or test pass.
+Focused effort estimate: 0.5–2 engineering days plus final production/public
+qualification. Coordinate with the existing Team/A2 owner; do not open a
+competing renderer PR or add scope after its release batch is frozen.
+
 Prefer these reviewed small slices in the existing v0.150.0 batch, with logical
 commits and focused regressions, rather than one new release per fix. Once a
 batch is frozen, stop adding scope; prepare later work independently.
