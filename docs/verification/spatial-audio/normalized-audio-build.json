@@ -1,0 +1,12 @@
+{
+  "implementationCommit": "699775b28e895f9b3ad8a423113cdf9fe78b4689",
+  "sourceRevision": null,
+  "distributionSha256": "552949a75af3c8f99fce75d0fcf173db1b9e5fc587cfc71a729ed22687c9cb4b",
+  "offlineBuildId": "2bfc62ca172e0dce5b48145de80cd028a6a2bd52b2f07e52a0455f54bd52bf86",
+  "files": 1835,
+  "effectEntriesInCore": 57,
+  "effectsMatchSource": true,
+  "runtimeWavCount": 52,
+  "runtimeWavBytes": 2827664,
+  "qualification": "Local packaging evidence. Full-suite and sustained physical listening qualification remain open."
+}
