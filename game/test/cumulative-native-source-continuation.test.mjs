@@ -143,6 +143,7 @@ test('new Team source review cannot bypass original role, default, image or ance
         format: FORMATS.asset,
         id: expected.assemblyAsset.id,
         revision: 1,
+        kind: 'image',
         description: sprite.description,
         file,
         recipe: null,
