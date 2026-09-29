@@ -381,3 +381,23 @@ test("frozen publication is PR-only while every protected-main push deploys", as
   assert.doesNotMatch(push, /paths:|paths-ignore:/);
   assert.doesNotMatch(continuous, /  pull_request:/);
 });
+
+test("draft staging never rewrites admission-bound PR titles", async () => {
+  const workflow = await fs.readFile(
+    new URL("../../.github/workflows/stage-unallocated-pr.yml", import.meta.url),
+    "utf8",
+  );
+  assert.doesNotMatch(
+    workflow,
+    /sync-target-title:|github\.rest\.(?:pulls|issues)\.update\s*\(/,
+  );
+  assert.match(workflow, /\n  stage:\n/);
+  assert.match(workflow, /!github\.event\.pull_request\.draft/);
+  assert.match(workflow, /github\.event\.pull_request\.milestone == null/);
+  assert.match(
+    workflow,
+    /!contains\(github\.event\.pull_request\.labels\.\*\.name, 'release-train-approved'\)/,
+  );
+  assert.match(workflow, /github\.rest\.issues\.addLabels/);
+  assert.match(workflow, /labels: \['release-train-hold'\]/);
+});
