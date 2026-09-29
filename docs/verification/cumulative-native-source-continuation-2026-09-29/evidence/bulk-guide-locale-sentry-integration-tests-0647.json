@@ -1,0 +1,104 @@
+{
+  "format": "root-bulk-guide-locale-sentry-integration-tests.v1",
+  "startedAt": "2026-09-29T06:45:56.770Z",
+  "root": "/Users/oleksandr.mekhovov/.codex/worktrees/publish-v01321/go_test",
+  "expectedHead": "132822927d1fbbc780bc488079e4fc22269ca956",
+  "cohorts": [
+    {
+      "name": "bulk-guide-locale-current-0647",
+      "args": [
+        "--test",
+        "--test-concurrency=1",
+        "game/test/enemy-guide.test.mjs",
+        "game/test/enemy-guide-host.test.mjs"
+      ],
+      "startedAt": "2026-09-29T06:46:03.047Z",
+      "completedAt": "2026-09-29T06:46:28.387Z",
+      "code": 0,
+      "stdout": {
+        "bytes": 4214,
+        "sha256": "beece60175409840c61f7caed3ff6ae2cc282d6f10767a14ba527454c1ad80ae",
+        "path": "/Users/oleksandr.mekhovov/.codex/visualizations/2026/09/20/01a0bffc-f5ed-7822-932c-55295e0a8d37/bulk-guide-locale-current-0647.tap"
+      },
+      "stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "path": "/Users/oleksandr.mekhovov/.codex/visualizations/2026/09/20/01a0bffc-f5ed-7822-932c-55295e0a8d37/bulk-guide-locale-current-0647.stderr"
+      },
+      "summary": [
+        "# tests 17",
+        "# suites 0",
+        "# pass 17",
+        "# fail 0",
+        "# cancelled 0",
+        "# skipped 0",
+        "# todo 0",
+        "# duration_ms 25311.179667"
+      ]
+    },
+    {
+      "name": "bulk-sentry-practice-current-0647",
+      "args": [
+        "--test",
+        "--test-concurrency=1",
+        "game/test/sentry-practice-qualification.test.mjs"
+      ],
+      "startedAt": "2026-09-29T06:46:28.388Z",
+      "completedAt": "2026-09-29T06:49:51.120Z",
+      "code": 0,
+      "stdout": {
+        "bytes": 640,
+        "sha256": "91b545fd526627144096a5563f74ab9db8274745fa086d0f37f7c621b0bd50dd",
+        "path": "/Users/oleksandr.mekhovov/.codex/visualizations/2026/09/20/01a0bffc-f5ed-7822-932c-55295e0a8d37/bulk-sentry-practice-current-0647.tap"
+      },
+      "stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "path": "/Users/oleksandr.mekhovov/.codex/visualizations/2026/09/20/01a0bffc-f5ed-7822-932c-55295e0a8d37/bulk-sentry-practice-current-0647.stderr"
+      },
+      "summary": [
+        "# tests 2",
+        "# suites 0",
+        "# pass 2",
+        "# fail 0",
+        "# cancelled 0",
+        "# skipped 0",
+        "# todo 0",
+        "# duration_ms 202703.452"
+      ]
+    }
+  ],
+  "fullsuite": "WAIVED_SKIPPED_NOT_PASSED",
+  "limitation": "Fresh source integration tests, not generated qualification, browser, hardware or listening acceptance.",
+  "freeBefore": 3666509824,
+  "nodeVersion": "v20.20.0",
+  "before": {
+    "observedAt": "2026-09-29T06:46:03.046Z",
+    "format": "revealline-source-identity.v1",
+    "root": "/Users/oleksandr.mekhovov/.codex/worktrees/publish-v01321/go_test",
+    "sourceRevision": "132822927d1fbbc780bc488079e4fc22269ca956",
+    "sourceTree": "b48a823745dc2bdcc7abba8acece99942d5c5a4b",
+    "files": 20669,
+    "bytes": 1976286605,
+    "aggregateSha256": "83614668795146c9ff16a44d565365993c6d7ee6e97a624d5d6880e7ae3c0a89",
+    "aggregateFormat": "UTF-8 path sorted JSONL [path, Git mode, raw content SHA-256]",
+    "allTrackedSourceContentsAndModesMatch": true
+  },
+  "after": {
+    "observedAt": "2026-09-29T06:49:57.172Z",
+    "format": "revealline-source-identity.v1",
+    "root": "/Users/oleksandr.mekhovov/.codex/worktrees/publish-v01321/go_test",
+    "sourceRevision": "132822927d1fbbc780bc488079e4fc22269ca956",
+    "sourceTree": "b48a823745dc2bdcc7abba8acece99942d5c5a4b",
+    "files": 20669,
+    "bytes": 1976286605,
+    "aggregateSha256": "83614668795146c9ff16a44d565365993c6d7ee6e97a624d5d6880e7ae3c0a89",
+    "aggregateFormat": "UTF-8 path sorted JSONL [path, Git mode, raw content SHA-256]",
+    "allTrackedSourceContentsAndModesMatch": true
+  },
+  "identityPairMatches": true,
+  "statusAfter": "",
+  "freeAfter": 3654307840,
+  "accepted": true,
+  "completedAt": "2026-09-29T06:49:57.306Z"
+}

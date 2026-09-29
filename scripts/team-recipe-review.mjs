@@ -1,6 +1,11 @@
 /** Exact scoped Team functional review; immutable ancestor records are never edited. */
 import { createHash } from 'node:crypto';
 import {
+  cumulativeNativeContinuation,
+  cumulativeSourceReviewed,
+  cumulativeNativeEvidence,
+} from './cumulative-native-source-continuation.mjs';
+import {
   bulkPresentationContinuation,
   BULK_PRESENTATION_REVIEW_PATH,
   BULK_PRESENTATION_REVIEW_SHA256,
@@ -39,6 +44,7 @@ export function fieldKitTeamRecipeQuality({
   successorReviewBytes,
   continuationReviewBytes,
   bulkContinuationReviewBytes,
+  cumulativeReviewBytes,
 }) {
   if (!reviewBytes || hash(reviewBytes) !== reviewedRecord) return unreviewed();
   const review = JSON.parse(reviewBytes);
@@ -89,12 +95,22 @@ export function fieldKitTeamRecipeQuality({
           bulk.priorReviews.teamContinuation.path !== continuationReviewPath ||
           bulk.priorReviews.teamContinuation.sha256 !== continuationRecord ||
           bulk.fingerprints.team.priorSHA256 !== continuation.fingerprints.team.currentSHA256 ||
-          !bulk.fingerprints.team.slots.includes(slotId) ||
-          source !==
-            `${bulk.fingerprints.team.paths} sha256:${bulk.fingerprints.team.currentSHA256}`
+          !bulk.fingerprints.team.slots.includes(slotId)
         )
           return unreviewed();
         evidence = `Scoped current Team continuation: ${BULK_PRESENTATION_REVIEW_PATH} sha256:${BULK_PRESENTATION_REVIEW_SHA256}; prior ${continuationReviewPath} sha256:${continuationRecord}; original ${priorReviewPath} sha256:${reviewedRecord}`;
+        if (
+          source !==
+          `${bulk.fingerprints.team.paths} sha256:${bulk.fingerprints.team.currentSHA256}`
+        ) {
+          const cumulative = cumulativeNativeContinuation(cumulativeReviewBytes);
+          if (
+            !cumulativeSourceReviewed('team', source, cumulativeReviewBytes, slotId) ||
+            cumulative.fingerprints.team.priorSHA256 !== bulk.fingerprints.team.currentSHA256
+          )
+            return unreviewed();
+          evidence = `${cumulativeNativeEvidence('team')} Prior: ${evidence}`;
+        }
       }
     }
   }

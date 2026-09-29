@@ -1,0 +1,183 @@
+{
+  "priorGuardOnlyAttempts": [
+    "0752",
+    "0803"
+  ],
+  "successorReason": "Actual 764411904-byte verified cleanup completed at 08:04:20; separate build PID36979 no longer present; prior attempts executed zero cohorts.",
+  "format": "root-bulk-source-closure-authoring-integration-tests.v1",
+  "startedAt": "2026-09-29T08:04:46.912Z",
+  "root": "/Users/oleksandr.mekhovov/.codex/worktrees/publish-v01321/go_test",
+  "expectedHead": "a92872b5fa730f8f2c4df3fefe43d3ac363c65b6",
+  "cohorts": [
+    {
+      "name": "bulk-rotor-source-closure-0808",
+      "args": [
+        "--test",
+        "--test-concurrency=1",
+        "game/test/rotor-body-detail-candidate.test.mjs",
+        "game/test/rotor-body-contrast-candidate.test.mjs",
+        "game/test/rotor-body-optical-candidate.test.mjs",
+        "game/test/rotor-body-roster-candidate.test.mjs"
+      ],
+      "startedAt": "2026-09-29T08:05:03.086Z",
+      "completedAt": "2026-09-29T08:05:04.272Z",
+      "code": 0,
+      "stdout": {
+        "bytes": 10059,
+        "sha256": "c2fbdb506a17ab97299c326512194fc3a35fe37d012eb0f67c7a9306f4d6ec3b",
+        "path": "/Users/oleksandr.mekhovov/.codex/visualizations/2026/09/20/01a0bffc-f5ed-7822-932c-55295e0a8d37/bulk-rotor-source-closure-0808.tap"
+      },
+      "stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "path": "/Users/oleksandr.mekhovov/.codex/visualizations/2026/09/20/01a0bffc-f5ed-7822-932c-55295e0a8d37/bulk-rotor-source-closure-0808.stderr"
+      },
+      "summary": [
+        "# tests 42",
+        "# suites 0",
+        "# pass 42",
+        "# fail 0",
+        "# cancelled 0",
+        "# skipped 0",
+        "# todo 0",
+        "# duration_ms 1151.807041"
+      ]
+    },
+    {
+      "name": "bulk-authoring-focus-localization-0808",
+      "args": [
+        "--test",
+        "--test-concurrency=1",
+        "game/test/authoring-input.test.mjs",
+        "game/test/authoring-reference.test.mjs",
+        "game/test/still-media-panel.test.mjs",
+        "game/test/still-story-panel.test.mjs",
+        "game/test/still-media-bundle-ui.test.mjs"
+      ],
+      "startedAt": "2026-09-29T08:05:04.273Z",
+      "completedAt": "2026-09-29T08:05:21.413Z",
+      "code": 0,
+      "stdout": {
+        "bytes": 25125,
+        "sha256": "3bd5a3c2f352815fbfd018cec09537fad9a257f0cb03ea8f00af939d5366451e",
+        "path": "/Users/oleksandr.mekhovov/.codex/visualizations/2026/09/20/01a0bffc-f5ed-7822-932c-55295e0a8d37/bulk-authoring-focus-localization-0808.tap"
+      },
+      "stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "path": "/Users/oleksandr.mekhovov/.codex/visualizations/2026/09/20/01a0bffc-f5ed-7822-932c-55295e0a8d37/bulk-authoring-focus-localization-0808.stderr"
+      },
+      "summary": [
+        "# tests 114",
+        "# suites 0",
+        "# pass 114",
+        "# fail 0",
+        "# cancelled 0",
+        "# skipped 0",
+        "# todo 0",
+        "# duration_ms 17107.677833"
+      ]
+    }
+  ],
+  "fullsuite": "WAIVED_SKIPPED_NOT_PASSED",
+  "limitation": "Fresh source integration tests, not generated qualification, browser, hardware or listening acceptance.",
+  "freeBefore": 2593161216,
+  "nodeVersion": "v20.20.0",
+  "before": {
+    "observedAt": "2026-09-29T08:05:03.085Z",
+    "format": "revealline-source-identity.v1",
+    "root": "/Users/oleksandr.mekhovov/.codex/worktrees/publish-v01321/go_test",
+    "sourceRevision": "a92872b5fa730f8f2c4df3fefe43d3ac363c65b6",
+    "sourceTree": "3d3ca378c3476928fc8f73fe80385b4de317996d",
+    "files": 20788,
+    "bytes": 1984675191,
+    "aggregateSha256": "979f7380218befc43d25fdace73df2db5a024b02e41a4c7177738625609ad752",
+    "aggregateFormat": "UTF-8 path sorted JSONL [path, Git mode, raw content SHA-256]",
+    "allTrackedSourceContentsAndModesMatch": true
+  },
+  "staticChecks": [
+    {
+      "name": "eslint",
+      "files": [
+        "game/test/authoring-input.test.mjs",
+        "game/test/authoring-reference.test.mjs",
+        "game/test/rotor-body-contrast-candidate.test.mjs",
+        "game/test/rotor-body-detail-candidate.test.mjs",
+        "game/test/rotor-body-optical-candidate.test.mjs",
+        "game/test/rotor-body-roster-candidate.test.mjs",
+        "game/test/still-media-bundle-ui.test.mjs",
+        "game/test/still-media-panel.test.mjs",
+        "game/test/still-story-panel.test.mjs",
+        "game/ui/authoring-copy.mjs",
+        "game/ui/authoring-reference.mjs",
+        "game/ui/authoring-sources.mjs",
+        "game/ui/page-input-host.mjs",
+        "game/ui/still-media-panel.mjs",
+        "game/ui/still-story-panel.mjs",
+        "scripts/produce-rotor-body-contrast.mjs",
+        "scripts/produce-rotor-body-details.mjs",
+        "scripts/produce-rotor-body-optical.mjs",
+        "scripts/produce-rotor-body-roster.mjs"
+      ],
+      "code": 0,
+      "stdout": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "name": "prettier",
+      "files": [
+        "game/test/authoring-input.test.mjs",
+        "game/test/authoring-reference.test.mjs",
+        "game/test/rotor-body-contrast-candidate.test.mjs",
+        "game/test/rotor-body-detail-candidate.test.mjs",
+        "game/test/rotor-body-optical-candidate.test.mjs",
+        "game/test/rotor-body-roster-candidate.test.mjs",
+        "game/test/still-media-bundle-ui.test.mjs",
+        "game/test/still-media-panel.test.mjs",
+        "game/test/still-story-panel.test.mjs",
+        "game/ui/authoring-copy.mjs",
+        "game/ui/authoring-reference.mjs",
+        "game/ui/authoring-sources.mjs",
+        "game/ui/page-input-host.mjs",
+        "game/ui/still-media-panel.mjs",
+        "game/ui/still-story-panel.mjs",
+        "scripts/produce-rotor-body-contrast.mjs",
+        "scripts/produce-rotor-body-details.mjs",
+        "scripts/produce-rotor-body-optical.mjs",
+        "scripts/produce-rotor-body-roster.mjs"
+      ],
+      "code": 0,
+      "stdout": {
+        "bytes": 66,
+        "sha256": "17aa973d3f004560237d9a95171210b0671deff23d61628eecf7322ff5938f20"
+      },
+      "stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    }
+  ],
+  "after": {
+    "observedAt": "2026-09-29T08:05:28.871Z",
+    "format": "revealline-source-identity.v1",
+    "root": "/Users/oleksandr.mekhovov/.codex/worktrees/publish-v01321/go_test",
+    "sourceRevision": "a92872b5fa730f8f2c4df3fefe43d3ac363c65b6",
+    "sourceTree": "3d3ca378c3476928fc8f73fe80385b4de317996d",
+    "files": 20788,
+    "bytes": 1984675191,
+    "aggregateSha256": "979f7380218befc43d25fdace73df2db5a024b02e41a4c7177738625609ad752",
+    "aggregateFormat": "UTF-8 path sorted JSONL [path, Git mode, raw content SHA-256]",
+    "allTrackedSourceContentsAndModesMatch": true
+  },
+  "identityPairMatches": true,
+  "statusAfter": "",
+  "freeAfter": 2568658944,
+  "accepted": true,
+  "completedAt": "2026-09-29T08:05:29.015Z"
+}

@@ -1,0 +1,108 @@
+{
+  "format": "root-bulk-skip-correction-tests.v1",
+  "startedAt": "2026-09-29T04:04:17.449Z",
+  "root": "/Users/oleksandr.mekhovov/.codex/worktrees/publish-v01321/go_test",
+  "expectedHead": "17f51e859468b123872e86c78bb7df06261b28d2",
+  "cohorts": [
+    {
+      "name": "bulk-skip-boundaries-0404",
+      "args": [
+        "--test",
+        "--test-concurrency=1",
+        "game/test/pr771-r2-core.test.mjs",
+        "game/test/pr771-r2-finalization.test.mjs",
+        "game/test/solo-skip-ownership.test.mjs",
+        "game/test/solo-skip-presentation.test.mjs"
+      ],
+      "startedAt": "2026-09-29T04:04:29.979Z",
+      "completedAt": "2026-09-29T04:04:32.850Z",
+      "code": 0,
+      "stdout": {
+        "bytes": 301464,
+        "sha256": "82821932b07041be32331a4e7895d07bb438ad60a8ad75aa5a19efcb144b8262",
+        "path": "/Users/oleksandr.mekhovov/.codex/visualizations/2026/09/20/01a0bffc-f5ed-7822-932c-55295e0a8d37/bulk-skip-boundaries-0404.tap"
+      },
+      "stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "path": "/Users/oleksandr.mekhovov/.codex/visualizations/2026/09/20/01a0bffc-f5ed-7822-932c-55295e0a8d37/bulk-skip-boundaries-0404.stderr"
+      },
+      "summary": [
+        "# tests 69",
+        "# suites 0",
+        "# pass 69",
+        "# fail 0",
+        "# cancelled 0",
+        "# skipped 0",
+        "# todo 0",
+        "# duration_ms 2838.533666"
+      ]
+    },
+    {
+      "name": "bulk-skip-real-host-0404",
+      "args": [
+        "--test",
+        "--test-concurrency=1",
+        "--test-name-pattern=Classic Skip resolves universally|Solo Skip advances a Custom",
+        "game/test/pause-menu-host.test.mjs",
+        "game/test/solo-continuous-library-next-host.test.mjs"
+      ],
+      "startedAt": "2026-09-29T04:04:32.851Z",
+      "completedAt": "2026-09-29T04:04:50.603Z",
+      "code": 0,
+      "stdout": {
+        "bytes": 2627,
+        "sha256": "0b556926213a20cdee9e6da89eb0165fc96800c48e3e24134d94866014ef57c4",
+        "path": "/Users/oleksandr.mekhovov/.codex/visualizations/2026/09/20/01a0bffc-f5ed-7822-932c-55295e0a8d37/bulk-skip-real-host-0404.tap"
+      },
+      "stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "path": "/Users/oleksandr.mekhovov/.codex/visualizations/2026/09/20/01a0bffc-f5ed-7822-932c-55295e0a8d37/bulk-skip-real-host-0404.stderr"
+      },
+      "summary": [
+        "# tests 10",
+        "# suites 0",
+        "# pass 2",
+        "# fail 0",
+        "# cancelled 0",
+        "# skipped 8",
+        "# todo 0",
+        "# duration_ms 17719.459708"
+      ]
+    }
+  ],
+  "fullsuite": "WAIVED_SKIPPED_NOT_PASSED",
+  "limitation": "Fresh source integration tests, not generated qualification, browser, hardware or listening acceptance.",
+  "freeBefore": 2923413504,
+  "nodeVersion": "v20.20.0",
+  "before": {
+    "observedAt": "2026-09-29T04:04:29.978Z",
+    "format": "revealline-source-identity.v1",
+    "root": "/Users/oleksandr.mekhovov/.codex/worktrees/publish-v01321/go_test",
+    "sourceRevision": "17f51e859468b123872e86c78bb7df06261b28d2",
+    "sourceTree": "696de31363651b855d2dde3a25f9c6f714d22d73",
+    "files": 20139,
+    "bytes": 1881351624,
+    "aggregateSha256": "2790fcc928a13969c6307194f5004cfaa3e96a8eed473afbd8c2a189c377182a",
+    "aggregateFormat": "UTF-8 path sorted JSONL [path, Git mode, raw content SHA-256]",
+    "allTrackedSourceContentsAndModesMatch": true
+  },
+  "after": {
+    "observedAt": "2026-09-29T04:04:56.289Z",
+    "format": "revealline-source-identity.v1",
+    "root": "/Users/oleksandr.mekhovov/.codex/worktrees/publish-v01321/go_test",
+    "sourceRevision": "17f51e859468b123872e86c78bb7df06261b28d2",
+    "sourceTree": "696de31363651b855d2dde3a25f9c6f714d22d73",
+    "files": 20139,
+    "bytes": 1881351624,
+    "aggregateSha256": "2790fcc928a13969c6307194f5004cfaa3e96a8eed473afbd8c2a189c377182a",
+    "aggregateFormat": "UTF-8 path sorted JSONL [path, Git mode, raw content SHA-256]",
+    "allTrackedSourceContentsAndModesMatch": true
+  },
+  "identityPairMatches": true,
+  "statusAfter": "",
+  "freeAfter": 2923286528,
+  "accepted": true,
+  "completedAt": "2026-09-29T04:04:56.423Z"
+}
