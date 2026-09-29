@@ -1,0 +1,117 @@
+# Retained historical excerpt after an ownership migration. Exact originals are preserved separately. This excerpt is not the original complete record or a release qualification.
+
+TAP version 13
+# Subtest: the actual friendly host rejects a cross-company selector before content reads or flight setup
+ok 3 - the actual friendly host rejects a cross-company selector before content reads or flight setup
+  ---
+  duration_ms: 15.352875
+  ...
+# Subtest: the actual friendly field guide opens and closes without changing company progress
+ok 4 - the actual friendly field guide opens and closes without changing company progress
+  ---
+  duration_ms: 3060.575459
+  ...
+# Subtest: edition navigation retains the exact tool-return owner inside its installed root
+ok 6 - edition navigation retains the exact tool-return owner inside its installed root
+  ---
+  duration_ms: 1.839042
+  ...
+# Subtest: retained presentation stays scoped across game and replay/controller tool returns
+ok 7 - retained presentation stays scoped across game and replay/controller tool returns
+  ---
+  duration_ms: 0.550666
+  ...
+# Subtest: all nine tools retain exact edition routes under http://localhost/
+ok 8 - all nine tools retain exact edition routes under http://localhost/
+  ---
+  duration_ms: 1.37225
+  ...
+# Subtest: all nine tools retain exact edition routes under https://example.test/releases/v0.69.3/site/
+ok 9 - all nine tools retain exact edition routes under https://example.test/releases/v0.69.3/site/
+  ---
+  duration_ms: 0.670292
+  ...
+# Subtest: all nine tools retain exact edition routes under https://example.test/archive/releases/v0.68.2/site/
+ok 10 - all nine tools retain exact edition routes under https://example.test/archive/releases/v0.68.2/site/
+  ---
+  duration_ms: 0.539708
+  ...
+# Subtest: finite tools and competing launch owners cannot be overridden by a return hint
+ok 11 - finite tools and competing launch owners cannot be overridden by a return hint
+  ---
+  duration_ms: 3.62125
+  ...
+# Subtest: history consumption preserves unrelated route and state and tolerates unavailable history
+ok 12 - history consumption preserves unrelated route and state and tolerates unavailable history
+  ---
+  duration_ms: 2.45675
+  ...
+# Subtest: every standalone tool keeps a same-edition game exit before any module loads
+ok 13 - every standalone tool keeps a same-edition game exit before any module loads
+  ---
+  duration_ms: 26.99025
+  ...
+# Subtest: all standalone pages prepare both returns before enabling and retain cross-tool hints
+ok 14 - all standalone pages prepare both returns before enabling and retain cross-tool hints
+  ---
+  duration_ms: 7.7995
+  ...
+# Subtest: actual Solo boot returns asset-studio to its own Workshop opener without advancing or saving
+ok 15 - actual Solo boot returns asset-studio to its own Workshop opener without advancing or saving
+  ---
+  duration_ms: 1810.9385
+  ...
+# Subtest: actual Solo boot returns playground to its own Workshop opener without advancing or saving
+ok 16 - actual Solo boot returns playground to its own Workshop opener without advancing or saving
+  ---
+  duration_ms: 1339.322333
+  ...
+# Subtest: actual Solo boot returns enemy-catalog to its own Workshop opener without advancing or saving
+ok 17 - actual Solo boot returns enemy-catalog to its own Workshop opener without advancing or saving
+  ---
+  duration_ms: 1070.727583
+  ...
+# Subtest: actual Solo boot returns motion-lab to its own Workshop opener without advancing or saving
+ok 18 - actual Solo boot returns motion-lab to its own Workshop opener without advancing or saving
+  ---
+  duration_ms: 1018.741833
+  ...
+# Subtest: actual Solo boot returns still-media to its own Workshop opener without advancing or saving
+ok 19 - actual Solo boot returns still-media to its own Workshop opener without advancing or saving
+  ---
+  duration_ms: 1081.81925
+  ...
+# Subtest: actual Solo boot returns video-poster to its own Workshop opener without advancing or saving
+ok 20 - actual Solo boot returns video-poster to its own Workshop opener without advancing or saving
+  ---
+  duration_ms: 938.712375
+  ...
+# Subtest: actual Solo boot returns design-atlas to its own Workshop opener without advancing or saving
+ok 21 - actual Solo boot returns design-atlas to its own Workshop opener without advancing or saving
+  ---
+  duration_ms: 1004.569541
+  ...
+# Subtest: actual Solo boot returns replay-theater to its own Workshop opener without advancing or saving
+ok 22 - actual Solo boot returns replay-theater to its own Workshop opener without advancing or saving
+  ---
+  duration_ms: 1087.535
+  ...
+# Subtest: actual Solo boot returns controller-lab to its own Workshop opener without advancing or saving
+ok 23 - actual Solo boot returns controller-lab to its own Workshop opener without advancing or saving
+  ---
+  duration_ms: 939.932125
+  ...
+# Subtest: company tool routes retain only a valid single edition through exact-release return
+ok 24 - company tool routes retain only a valid single edition through exact-release return
+  ---
+  duration_ms: 0.337791
+  ...
+1..24
+# tests 34
+# suites 0
+# pass 34
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 33730.708375
