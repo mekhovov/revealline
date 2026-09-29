@@ -1,9 +1,0 @@
-{
-  "commit": "513736ab56d0baf6b05c532f05752890a93924a0",
-  "nodeTests": 49,
-  "pythonTests": 4,
-  "preview": "PASS_NONPUBLISHABLE",
-  "failedPreviewRun": 35743815737,
-  "successorPreviewRun": 35744655331,
-  "note": "Exact historical deploy-run.log bytes intentionally retain original trailing whitespace. All evidence references require committed-blob hash verification."
-}

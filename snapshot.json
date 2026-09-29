@@ -1,0 +1,44 @@
+{
+  "format": "revealline-recovery-fragment-v1",
+  "capturedAt": "2026-09-29T15:09:11.016824+00:00",
+  "worktree": "<home>/work/my_projects/go_test/.cache/worktrees/ci-balanced-shards-20260922",
+  "branch": "refs/heads/codex/ci-balanced-shards-20260922",
+  "head": "95fa082d3907ee012decae60bb023abb2fc8abd2",
+  "excluded": [],
+  "changes": [
+    {
+      "status": "??",
+      "path": "docs/verification/ci-throughput-20260922/activation-plan.md",
+      "object": "8ce944262a899bddd0d02ce2c68b2f610676bb3c",
+      "sha256": "8cc37dd99ba2c8a35bcad2ba85c9d1affdf735c4dab64c63c40abc9b41ac063a",
+      "bytes": 5209,
+      "mode": "100644"
+    },
+    {
+      "status": "??",
+      "path": "docs/verification/ci-throughput-20260929/intake.md",
+      "object": "0c035e7a7ef78b884cc2770847d3abd057740386",
+      "sha256": "ad2c2fbce460ed45e67c0462965c31bd0ad09047c13783a04c4f48a690dca1d1",
+      "bytes": 4598,
+      "mode": "100644"
+    },
+    {
+      "status": "??",
+      "path": "scripts/convert-test-timings.mjs",
+      "object": "9852a79e1594b6c788c6f2e807566249fc8c4e0a",
+      "sha256": "314610a617f0c1ef93c37ef70c5e97905068f7d344b9966bd48b28d13dea0356",
+      "bytes": 15950,
+      "mode": "100644"
+    },
+    {
+      "status": "??",
+      "path": "scripts/test-convert-test-timings.mjs",
+      "object": "21ec6f22b21067eb76a5b50df55918117b9180f0",
+      "sha256": "dfbaa0e8ebd3c5f9d2342f222fe091de152ae83ee83279df3bde84881afadb1e",
+      "bytes": 17435,
+      "mode": "100644"
+    }
+  ],
+  "indexEntries": [],
+  "purpose": "Recovery only. These bytes are not release admission. Missing files, conflict stages and obsolete generated outputs are preserved as observations, not deletion or merge instructions."
+}
