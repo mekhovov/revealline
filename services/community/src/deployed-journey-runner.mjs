@@ -70,6 +70,7 @@ try {
       version: process.env.COMMUNITY_ACCEPTANCE_EXPECTED_VERSION,
       sourceRevision: process.env.COMMUNITY_ACCEPTANCE_EXPECTED_SOURCE_REVISION,
     },
+    moderationMode: process.env.COMMUNITY_ACCEPTANCE_MODERATION_MODE,
     auth: {
       creatorA: accountAuthentication('COMMUNITY_ACCEPTANCE_CREATOR_A'),
       creatorB: accountAuthentication('COMMUNITY_ACCEPTANCE_CREATOR_B'),
@@ -92,7 +93,11 @@ try {
 try {
   await writeReceipt(receipt);
   if (passed) {
-    process.stdout.write(`Deployed community acceptance passed. Receipt: ${destination}\n`);
+    process.stdout.write(
+      receipt.status === 'awaiting-browser'
+        ? `Deployed community acceptance is ready for browser moderation. Receipt: ${destination}\n`
+        : `Deployed community acceptance passed. Receipt: ${destination}\n`,
+    );
   } else {
     process.stderr.write(
       `Deployed community acceptance failed at ${receipt.failedStage}; see redacted receipt: ${destination}\n`,
