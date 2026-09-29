@@ -1,3 +1,6 @@
+import { Soundscape } from '../ui/audio.mjs';
+import { createAudioMaster } from '../ui/audio-master.mjs';
+import { createAudioPreferences } from '../audio-preferences.mjs';
 import { REPLAY_EXAMPLES as examples } from './examples.mjs';
 import { editionPublicSlug } from '../edition-context.mjs';
 import { loadEditionToolProvider, editionToolPresentation } from '../ui/edition-tool-provider.mjs';
@@ -23,6 +26,19 @@ import { replayEventRecord, replayEventText } from './event-copy.mjs';
 
 const $ = (id) => document.getElementById(id);
 globalThis.RevealLineToolLaunch?.attached();
+const replayMaster = createAudioMaster();
+const replayAudioPreferences = createAudioPreferences({ audioMaster: replayMaster });
+const replaySound = new Soundscape({ audioMaster: replayMaster });
+replaySound.configure({ master: 1, music: 0 });
+const releaseAudioLabel = replayMaster.subscribe(({ muted }) =>
+  localizedText($('replay-audio'), () =>
+    muted ? t('common:audio.unmute') : t('interface:muteSound'),
+  ),
+);
+$('replay-audio').addEventListener('click', () => {
+  replayAudioPreferences.setMuted(!replayMaster.snapshot().muted);
+  if (!replayMaster.snapshot().muted) void replaySound.enable();
+});
 let theaterDisposed = false;
 let disposeRecording = () => {};
 const replayDisplay = mountReplayDisplay();
@@ -38,6 +54,9 @@ let runtimeContent = null,
 const closeTheater = (event = {}) => {
   if (event.persisted || theaterDisposed) return;
   theaterDisposed = true;
+  releaseAudioLabel();
+  replayAudioPreferences.dispose();
+  void replaySound.dispose();
   disposeRecording();
   replayDisplay.dispose();
   bootStatus.dispose();
@@ -163,6 +182,7 @@ try {
   disposeRecording = () => {
     if (disposed) return;
     disposed = true;
+    replaySound.reset();
     controller?.abort();
     epoch++;
     importStatus.dispose();
@@ -279,6 +299,7 @@ try {
   }
   function consume(result) {
     painter.effectsFor(result.events, player.state);
+    if (player.phase === 'playing') replaySound.events(result.events, player.state, chosenTheme());
     if (result.events.length) displayEvents(result.events);
     if (lastClass !== player.state.activeClassId) {
       lastClass = player.state.activeClassId;
@@ -508,6 +529,8 @@ try {
   }
   function togglePlay() {
     if (!player || pending || ['complete', 'error'].includes(player.phase)) return;
+    if (player.phase !== 'playing' && !replayMaster.snapshot().muted) void replaySound.enable();
+    else replaySound.stopVoices('sfx');
     consume(player.phase === 'playing' ? player.pause() : player.play());
     lastFrame = 0;
     localizedText($('transport-status'), () =>
@@ -554,6 +577,7 @@ try {
   $('restart').addEventListener('click', () =>
     safely(() => {
       if (!player || pending) return;
+      replaySound.reset();
       player.reset();
       painter.setLevel(player.state.level, { seed: player.info.seed });
       eventHistory = [];
@@ -602,6 +626,7 @@ try {
     togglePlay: () => safely(togglePlay),
     step: () => safely(step),
     onInactive: () => {
+      replaySound.suspend();
       lastFrame = 0;
       localizedText($('transport-status'), () => t('interface:playbackPausedChoosePlayToContinue'));
     },
@@ -629,6 +654,11 @@ try {
     safely(() => {
       if (player && painter) {
         if (player.phase === 'playing' && !pending) consume(player.advance(dt));
+        replaySound.feedback(player.phase === 'playing' && !pending, chosenTheme(), player.state, {
+          bodyId: bodyFor(chosenTheme(), player.state),
+          actorStyle: actorLease?.pin().style,
+          silentStart: true,
+        });
         const display = replayDisplay.snapshot();
         painter.draw(context, player.state, Math.min(dt, 0.1), {
           paused: player.phase !== 'playing',

@@ -1,3 +1,4 @@
+import { FIXED_DT } from '../coop/core.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { COOP_PICTURE_BINDINGS } from '../couch/coop-picture-bindings.mjs';
@@ -234,7 +235,9 @@ test('menu, lifecycle, mode departure and newer focus retire a pending Next with
         menuPad.buttons[0] = { pressed: true, value: 1 };
         f.tick(2);
         menuPad.buttons[0] = { pressed: false, value: 0 };
-        f.tick(2);
+        // This case joins by controller, then deliberately activates Next by
+        // keyboard. Advance beyond the 1250 ms native Confirm echo window.
+        f.tick(Math.ceil(1.5 / FIXED_DT));
         assertResult(f, result);
       }
       const held = control.hold();
