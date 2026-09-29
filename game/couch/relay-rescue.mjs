@@ -4344,6 +4344,17 @@ export function bootCoop({
     message(t('interface:team.arenaStoppedAction', { error: error.message }));
     console.error(error);
   }
+  function downedCaption(playerId) {
+    const failure = knockdowns[playerId] ?? { player: playerId };
+    return () =>
+      t('interface:team.playerNeedsRescue', {
+        cause: coopFailureFeedback(run, failure).cause,
+        player: names()[playerId],
+        alternative: run.config.advancedCooperation
+          ? ' ' + t('interface:orCapture2NewTerritory')
+          : '',
+      });
+  }
   function resume() {
     if (
       disposed ||
@@ -4363,7 +4374,12 @@ export function bootCoop({
     last = null;
     overlay();
     input.focus();
-    message(localizedMessage('interface:chooseFreshDirectionsWhenYouAreReady'));
+    const downed = run.players.find((player) => player.status === 'downed');
+    message(
+      downed
+        ? downedCaption(downed.id)
+        : localizedMessage('interface:chooseFreshDirectionsWhenYouAreReady'),
+    );
   }
   // This synchronous handoff owns only the return from an attempt to its lobby.
   // Do not let focus/layout callbacks revive it after a newer action or lifecycle.
@@ -4813,15 +4829,7 @@ export function bootCoop({
         knockdowns[event.player] = event;
         input.clearPlayer(event.player);
         batch.release(event.player);
-        announce(() =>
-          t('interface:team.playerNeedsRescue', {
-            cause: coopFailureFeedback(run, event).cause,
-            player: names()[event.player],
-            alternative: run.config.advancedCooperation
-              ? ' ' + t('interface:orCapture2NewTerritory')
-              : '',
-          }),
-        );
+        announce(downedCaption(event.player));
       }
       if (event.type === 'player.revived') {
         const cause =
