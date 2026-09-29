@@ -748,7 +748,7 @@ function assertCrowdingCues(view, roleLabels, context) {
 
 for (const [phase, roleLabels] of [
   ['patrol', ['МИСЛИВЕЦЬ', 'МИСЛИВЕЦЬ']],
-  ['warning', ['LOCK 2', 'LOCK 2']],
+  ['warning', ['ЦІЛЬ 2', 'ЦІЛЬ 2']],
   ['commit', ['РИВОК', 'РИВОК']],
   ['recovery', ['ВІДНОВЛЕННЯ', 'ВІДНОВЛЕННЯ']],
   // At compact widths the full functional status replaces only its own
@@ -772,7 +772,7 @@ test('362 CSS px Ukrainian Large Relay keeps legacy full role/danger and Slowed 
   t.after(() => setLocale('en', { persist: false }));
   for (const [phase, caption] of [
     ['patrol', 'МИСЛИВЕЦЬ'],
-    ['warning', 'LOCK 2'],
+    ['warning', 'ЦІЛЬ 2'],
     ['commit', 'РИВОК'],
     ['recovery', 'ВІДНОВЛЕННЯ'],
   ])
@@ -814,7 +814,7 @@ test('362 CSS px Ukrainian Large Relay keeps legacy full role/danger and Slowed 
 });
 
 for (const [phase, danger] of [
-  ['warning', 'LOCK 2'],
+  ['warning', 'ЦІЛЬ 2'],
   ['commit', 'РИВОК'],
   ['recovery', 'ВІДНОВЛЕННЯ'],
 ])
@@ -934,7 +934,7 @@ test('compact cue packing reuses identical geometry and invalidates changed aren
   view.painter.paint(view.run, view.paintOptions);
   assert.equal(view.painter.cueLayout.cached, false);
   assert.equal(
-    view.calls.filter((call) => call.name === 'fillText' && call.args[0] === 'LOCK 2').length,
+    view.calls.filter((call) => call.name === 'fillText' && call.args[0] === 'ЦІЛЬ 2').length,
     2,
   );
   assert.ok(!view.calls.some((call) => call.name === 'fillText' && call.args[0] === 'МИСЛИВЕЦЬ'));
@@ -963,7 +963,7 @@ test('a moved locked target invalidates warm packing without changing warning te
   view.calls.length = 0;
   view.painter.paint(view.run, view.paintOptions);
   assert.equal(view.painter.cueLayout.cached, false);
-  assertCrowdingCues(view, ['LOCK 2', 'LOCK 2'], { movedTarget: hunter.targetPoint });
+  assertCrowdingCues(view, ['ЦІЛЬ 2', 'ЦІЛЬ 2'], { movedTarget: hunter.targetPoint });
   assert.deepEqual(view.run, before);
 });
 
