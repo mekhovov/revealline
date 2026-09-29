@@ -1,8 +1,0 @@
-preflight	Verify Field Kit production ledger and compiled output	﻿2026-09-15T15:15:39.8785572Z ##[group]Run node scripts/produce-field-kit-theme.mjs --check
-preflight	Verify Field Kit production ledger and compiled output	2026-09-15T15:15:39.8785969Z ^[[36;1mnode scripts/produce-field-kit-theme.mjs --check^[[0m
-preflight	Verify Field Kit production ledger and compiled output	2026-09-15T15:15:39.8818903Z shell: /usr/bin/bash -e {0}
-preflight	Verify Field Kit production ledger and compiled output	2026-09-15T15:15:39.8819122Z env:
-preflight	Verify Field Kit production ledger and compiled output	2026-09-15T15:15:39.8819339Z   EXPECTED_SOURCE: a2794f954467fd97c1b89af9c6848da6b7a630e6
-preflight	Verify Field Kit production ledger and compiled output	2026-09-15T15:15:39.8819610Z ##[endgroup]
-preflight	Verify Field Kit production ledger and compiled output	2026-09-15T15:15:42.8036788Z Stale production revision ledger. Run --write to append compatible revisions.
-preflight	Verify Field Kit production ledger and compiled output	2026-09-15T15:15:42.8194460Z ##[error]Process completed with exit code 1.
