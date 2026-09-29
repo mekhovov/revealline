@@ -1,0 +1,142 @@
+{
+  "format": "revealline-dutch-edition-memory-verification.v1",
+  "status": "passed",
+  "releaseAdmitted": false,
+  "sourceRevision": "55c5ec57cc1ed478b44e065951073c0bdd3c3ead",
+  "version": "0.142.3",
+  "editionId": "droneaid-nl-community",
+  "startedAt": "2026-09-29T03:24:43.686Z",
+  "finishedAt": "2026-09-29T03:24:51.433Z",
+  "elapsedSeconds": 7.745621375,
+  "command": "node docs/verification/demo-qualification-2026-09-29/loading-recovery/check-dutch-edition-memory.mjs",
+  "execution": "Production edition compiler and offline generator; all package bytes retained only in memory.",
+  "inputs": {
+    "engineFiles": 586,
+    "selectedFiles": 92,
+    "uniqueFiles": 678,
+    "totalBytes": 73419664,
+    "inventorySha256": "56168e31f5fbb60dd6d17b0490aaabd5d3b061b623b7790d97552a8b3290c1ad",
+    "catalogSha256": "615d7ef7fa7b0a30a547770df976f3ea53220dc2b0959819a4d20f35711431e9"
+  },
+  "compiled": {
+    "files": 697,
+    "totalBytes": 67229238,
+    "editionIds": ["droneaid-nl-community"],
+    "campaignIds": [
+      "droneaid-nl-workshop-lights",
+      "droneaid-nl-parts-in-motion",
+      "droneaid-nl-makers-together",
+      "droneaid-nl-careful-handoff",
+      "droneaid-nl-signals-of-support",
+      "droneaid-nl-shared-horizon"
+    ],
+    "manifestSha256": "e8f2a284562e17e41d672ef02712a2c7436f7c5b6a61e675850d7a0c9bf9b0d0",
+    "runtimeDependenciesSha256": "d9881e736002cbc4ee51dd1182a924451fb9942f8dc69ff09daa9475664c9061",
+    "completeCodeClosureValidated": true
+  },
+  "offline": {
+    "files": 694,
+    "fileLimit": 2000,
+    "totalBytes": 66937284,
+    "byteLimit": 67108864,
+    "remainingBytes": 171580,
+    "inventorySha256": "68f42a306fac98dc381a5872e09be8b51c336b81064d1086d1ff1a017d8a611b",
+    "serviceWorkerSha256": "6cff0bb0e29c60551905519f14cbd157783228dae9183bbad07e48fa6f79bd56",
+    "allInventoryBytesAndHashesVerified": true
+  },
+  "demoLibraryByteLimit": 33554432,
+  "loadingEdges": [
+    {
+      "from": "game/demo-catalog.mjs",
+      "to": "game/demo-loading.mjs"
+    },
+    {
+      "from": "game/demo-director.mjs",
+      "to": "game/demo-loading.mjs"
+    },
+    {
+      "from": "game/demo-sources.mjs",
+      "to": "game/demo-loading.mjs"
+    }
+  ],
+  "exactSourceAndOfflineFiles": [
+    {
+      "path": "game/demo-loading.mjs",
+      "bytes": 2305,
+      "sha256": "8b35db9e51774eb606af0904c762b5f206382a633aff7104932236944e5c7353"
+    },
+    {
+      "path": "game/demo-catalog.mjs",
+      "bytes": 9706,
+      "sha256": "860a33e4be0688cf73b818c831b6da0adcd49bc1f59a66ca7dbad5a1ecdd586d"
+    },
+    {
+      "path": "game/demo-director.mjs",
+      "bytes": 7405,
+      "sha256": "7a56e0ea15fcde19d2130262d2ff59637faeaaf505047151a64a5adcf053aa69"
+    },
+    {
+      "path": "game/demo-sources.mjs",
+      "bytes": 3718,
+      "sha256": "5660d6aab183d5e0951898457875081c74b3e8be06dc9f7f241cf05fd0e531df"
+    },
+    {
+      "path": "game/demo-library.mjs",
+      "bytes": 10298,
+      "sha256": "b41aa582fb958fbdff02548e4f119ca96425892a50ecdf86f332426cc6fea250"
+    },
+    {
+      "path": "game/ui/demo-host.mjs",
+      "bytes": 24797,
+      "sha256": "cf671f8df5160e4a22d44d8eb1dba61fa0808642935b377017cbb62c385c2239"
+    },
+    {
+      "path": "game/ui/demo.css",
+      "bytes": 5609,
+      "sha256": "a99acc0c869a7b44b318e42058b1fb7b16b448bb572540e47050c5d46e2a671d"
+    },
+    {
+      "path": "game/demo-bot-worker.mjs",
+      "bytes": 530,
+      "sha256": "135b0c9aefbef402be23fdbd91fd16a3549a30e68d34aabdd6998152a18dc837"
+    },
+    {
+      "path": "game/demo-data/catalog.json",
+      "bytes": 4079,
+      "sha256": "ccbc57dab22d661252f1a8de3e107651733b43ba83ba66afc24059da75f94132"
+    },
+    {
+      "path": "game/ui/art/menu-scenes/fpv.webp",
+      "bytes": 514190,
+      "sha256": "19f43cb1602e59a692d416d36d715e664765eecc24784b3b3e6516651c53df45"
+    },
+    {
+      "path": "game/ui/art/menu-scenes/fpv-portrait.webp",
+      "bytes": 482136,
+      "sha256": "3d651795fa7623b0200fadaed05a1127109a9c9c6cbd44d183a92a8e12c2ee24"
+    },
+    {
+      "path": "game/ui/art/menu-scenes/droneaid-main-background.webp",
+      "bytes": 493598,
+      "sha256": "378741b03c221c08ead77ee4af8f0a65a7d2b15088363898bfb8b79dfebc6000"
+    },
+    {
+      "path": "game/ui/art/menu-scenes/droneaid-wordmark-light.svg",
+      "bytes": 119252,
+      "sha256": "cecf8a67c455d4a7f931594e2ffc4481c473c3475a3316b8cdd876c39abb1e5b"
+    },
+    {
+      "path": "game/ui/art/menu-scenes/provenance.json",
+      "bytes": 9456,
+      "sha256": "51d83c7828b8e8e70789ab07984f71e574f1f86e5706365cfce1f6d0ccb99b58"
+    }
+  ],
+  "outputWritten": [
+    "docs/verification/demo-qualification-2026-09-29/loading-recovery/dutch-edition-memory.json"
+  ],
+  "limitations": [
+    "No compiled package, ZIP, native stage, or large output tree was written.",
+    "No network, installation, browser, service-worker execution, Worker soak, or device check was performed.",
+    "This is local package composition and closure evidence, not public release admission or offline disk durability."
+  ]
+}

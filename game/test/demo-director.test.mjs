@@ -1,6 +1,12 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import { readFile } from 'node:fs/promises';
 import { createDemoDirector } from '../demo-director.mjs';
+import { prepareBotPlayer } from '../demo-bot-player.mjs';
+import { planDemoMacro } from '../demo-bot.mjs';
+import { prepareReplayPlayer } from '../replay-player.mjs';
+import { authoritativeCheckpoint } from '../replay.mjs';
+import { applyGameplayTuning, resolveGameplayTuning } from '../gameplay-tuning.mjs';
 import { demoLoadingClock, settleDemoLoading } from './helpers/demo-loading-clock.mjs';
 
 function adapter() {
@@ -309,6 +315,109 @@ test('a worker fault quarantines that bot and immediately falls back to a replay
   assert.equal(director.source.id, 'reviewed');
   assert.deepEqual(director.failedSourceIds, ['first-bot']);
   director.dispose();
+});
+
+test('the real bot watchdog adopts a verified reviewed replay and cannot revive from a late Worker reply', async (t) => {
+  const pack = JSON.parse(
+    await readFile(new URL('../content/packs/fpv-arcade-r5.json', import.meta.url)),
+  );
+  const level = applyGameplayTuning(
+    pack.campaigns[0].levels.find((level) => level.id.endsWith('courtyard-exits')),
+    resolveGameplayTuning('standard'),
+  );
+  const recording = JSON.parse(
+    await readFile(new URL('../demo-data/first-signal-left.replay.json', import.meta.url)),
+  );
+  // Verify the actual frozen recording before replacing wall timers with a clock.
+  const reviewed = await prepareReplayPlayer(recording);
+  let worker, bot;
+  class StalledWorker {
+    callbacks = new Set();
+    constructor() {
+      worker = this;
+    }
+    addEventListener(type, callback) {
+      if (type === 'message') this.callbacks.add(callback);
+    }
+    removeEventListener(type, callback) {
+      this.callbacks.delete(callback);
+    }
+    postMessage(data) {
+      if (data.decision === 0) {
+        this.first = planDemoMacro(data.state, data);
+        queueMicrotask(() => {
+          for (const callback of this.callbacks)
+            callback({ data: { id: data.id, result: this.first } });
+        });
+      } else {
+        this.pending = data;
+        this.lateCallbacks = [...this.callbacks];
+      }
+    }
+    terminate() {
+      this.stopped = true;
+    }
+  }
+  const attempted = [];
+  const director = createDemoDirector({
+    sources: [
+      { id: 'stalled-bot', kind: 'bot', levelId: level.id, approachable: true },
+      { id: 'reviewed', kind: 'replay', levelId: recording.level.id },
+      { id: 'other-bot', kind: 'bot', levelId: 'other' },
+    ],
+    random: () => 0,
+    prepare: async (source, { signal }) => {
+      attempted.push(source.id);
+      if (source.id === 'reviewed') return reviewed;
+      assert.equal(source.id, 'stalled-bot');
+      bot = await prepareBotPlayer(
+        level,
+        { seed: 2, turnPolicy: 'immediate', classId: 'scout', classRecipes: pack.classRecipes },
+        { signal, WorkerClass: StalledWorker },
+      );
+      return bot;
+    },
+  });
+  t.mock.timers.enable({ apis: ['setTimeout'] });
+  try {
+    assert.equal(await director.start(), true);
+    for (let count = 0; bot.maxAdvanceSeconds > 0; count++) {
+      assert.ok(count < 50, 'Only the prepared macro is consumed.');
+      director.advance(bot.maxAdvanceSeconds);
+    }
+    assert.equal(bot.state.tick, worker.first.endTick - 1);
+    t.mock.timers.tick(999);
+    await settleDemoLoading();
+    assert.equal(director.phase, 'playing');
+    assert.equal(bot.maxAdvanceSeconds, 0);
+    t.mock.timers.tick(1);
+    await bot.planning;
+    assert.equal(director.advance(bot.maxAdvanceSeconds).reason, 'source-error');
+    await settleDemoLoading();
+    assert.equal(director.player, reviewed);
+    assert.equal(director.phase, 'playing');
+    assert.deepEqual(director.failedSourceIds, ['stalled-bot']);
+    assert.deepEqual(attempted, ['stalled-bot', 'reviewed']);
+    assert.match(bot.error, /planning deadline/);
+    assert.equal(worker.stopped, true);
+    assert.equal(worker.callbacks.size, 0);
+    const checkpoint = authoritativeCheckpoint(reviewed.state);
+    const replayTick = reviewed.state.tick;
+    // Deliver to even the removed callback, as if a message was already queued.
+    for (const callback of worker.lateCallbacks)
+      callback({ data: { id: worker.pending.id, result: worker.first } });
+    await settleDemoLoading();
+    assert.equal(director.player, reviewed);
+    assert.equal(director.phase, 'playing');
+    assert.deepEqual(authoritativeCheckpoint(reviewed.state), checkpoint);
+    assert.equal(bot.phase, 'error');
+    director.advance(0.25);
+    assert.ok(reviewed.state.tick > replayTick);
+  } finally {
+    director.dispose();
+    reviewed.dispose();
+    t.mock.timers.reset();
+  }
 });
 
 test('no safe first macro falls back without quarantine; missing replay leaves a stable unavailable state', async () => {

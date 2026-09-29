@@ -10,6 +10,14 @@ The integrated [Confirm/Back cohort](merged-confirm-cohort.tap) passed **127/127
 node --test --test-concurrency=1 game/test/demo-back-host.test.mjs game/test/demo-confirm-host.test.mjs game/test/demo-input.test.mjs game/test/demo-audio-host.test.mjs game/test/controller-confirm-lifecycle.test.mjs game/test/controller-confirm-guard.test.mjs game/test/steamdeck-menu-confirm-host.test.mjs
 ```
 
+## Loading and observation recovery follow-up
+
+Runtime source `55c5ec57cc1ed478b44e065951073c0bdd3c3ead` adds bounded loading with immediate cancellation cleanup and durable, explicitly incomplete observation checkpoints. Byte-cap tests now distinguish UTF-8 bytes from character counts and count-based eviction. The [focused evidence](loading-recovery/README.md) covers **112 passing tests**, an actual reload of both incomplete and finalized browser reports, and the largest standalone edition's current offline closure. Prior failures and partial observations remain intact below.
+
+The new real-Worker regression stopped on the production one-second planning watchdog after 20 complete scenes; its failed report and cleanup counters are preserved. This result is not relabeled as a pass or replaced by the earlier successful soak. Release qualification remains open.
+
+A [new finite observation](loading-recovery/browser-observation-handoff.md) started at 03:30:56.950 UTC with durable incomplete checkpoints. It is running, not qualified. Earlier interrupted and short reports remain separate.
+
 ## Completed automated checks
 
 | Evidence                                               | Result       | Boundary                                                                                                                           |
@@ -57,7 +65,7 @@ Neither preliminary run reached its requested two-hour duration. Every saved sam
 
 A browser log contained stackless `MutationObserver.observe` TypeErrors at 02:25:25 and 02:32:50 UTC saying its target was not a Node. Their source remains unknown; continuing samples do not disprove them. The harness's synchronous attachment call was caught, so the available log does not establish that it caused the uncaught error. The revised harness validates targets in the child document's realm, reports observer-attachment failures as incomplete evidence, and captures bounded parent/child error and rejection stacks, filenames and locations without suppressing browser reporting. The earlier JSON files predate those diagnostics.
 
-A fresh two-hour observation started on the frozen integrated runtime, but its held tab was unavailable on continuation at about 03:03 UTC. Reading tab 32 failed, and both the browser tab list and enabled-surface inventory returned no in-app-browser tabs. The cause is unknown. No replacement run was started. The finite heartbeat was paused, and the task-owned port 8820 server was stopped after saving the interruption evidence; the user's port 8779 game was untouched. The [handoff record](browser-observation-handoff.md) now records this terminal limitation.
+A fresh two-hour observation started on the frozen integrated runtime, but its held tab was unavailable on continuation at about 03:03 UTC. Reading tab 32 failed, and both the browser tab list and enabled-surface inventory returned no in-app-browser tabs. The cause is unknown. No replacement run was started in that evidence-only continuation. The finite heartbeat was paused, and the task-owned port 8820 server was stopped after saving the interruption evidence; the user's port 8779 game was untouched. The [handoff record](browser-observation-handoff.md) now records this terminal limitation.
 
 The [last saved status snapshot](browser-observation-running.json) records **549.8 elapsed seconds and 109 samples**. A later heartbeat observation in the conversation reported approximately **1,303.1 seconds and 257 samples**, with zero reported gaps, attachment failures or JavaScript diagnostics at that point; its complete in-memory sample report was not saved. Neither status snapshot establishes the unobserved remainder, final source/storage hashes or browser cleanup. The requested 7,200 seconds is not an achieved duration.
 
@@ -83,11 +91,11 @@ The [executed audit helpers](packaging/audit-scripts/README.md) retain their ass
 
 At review head `5f2d442e08833f535e8249f3e7b4fa6351fcf17c`, GitHub's [candidate job](https://github.com/mekhovov/revealline/actions/runs/36514672212/job/109234205696) and [hosted-acceptance job](https://github.com/mekhovov/revealline/actions/runs/36514672209/job/109234205720) both passed. The [exact-head check receipt](pr781-5f2d442-ci.json) retains their completion times and the unchanged draft/hold labels. The skipped staging job is not an acceptance pass; these checks do not establish a full release gate.
 
-A [read-only follow-up review](remaining-code-review.md) identified bounded scene loading, direct 32 MiB eviction coverage and recoverable incomplete observation checkpoints as further concrete work. These findings remain open after this evidence-only continuation.
+A [read-only follow-up review](remaining-code-review.md) identified bounded scene loading, direct 32 MiB eviction coverage and recoverable incomplete observation checkpoints as further concrete work. The subsequent implementation at `55c5ec57cc1ed478b44e065951073c0bdd3c3ead` addresses all three findings. The [loading and recovery record](loading-recovery/README.md) retains 112 passing focused checks, actual incomplete/final report recovery, current Dutch offline packaging, and the separately preserved new Worker watchdog failure. The earlier successful soak remains evidence for its earlier source, not a pass for this continuation.
 
 Use the [viewer and physical-device worksheet](viewer-device-checklist.md) to retain the remaining observations against the exact candidate. It is blank intentionally; no viewer or device result has been fabricated.
 
-1. Arrange a new two-hour rendered observation on an agreed frozen source; the interrupted run cannot be resumed or promoted to a pass. Separately demonstrate a genuinely hidden page and explicit Pause preservation; record OS suspension as an observation gap, not continued activity.
+1. Complete and inspect the new two-hour rendered observation on frozen `55c5ec57` source; the interrupted run cannot be resumed or promoted to a pass. Separately demonstrate a genuinely hidden page and explicit Pause preservation; record OS suspension as an observation gap, not continued activity.
 2. Qualify physical keyboard/controller/touch, reconnect/remap and Hold/Toggle behavior, native wrappers and supported browser engines. Verify enabled audio and track boundaries on real output devices; keep the blocked external album distinct from local recovery.
 3. Ask three unfamiliar viewers to identify the capture mechanic, understand tips and distinguish practice from an ordinary progression attempt. Check attraction, readability and motion comfort on small screens and reduced-effects settings.
 4. Retain release-coordinator review and final target-specific acceptance before admission. Merged Confirm/Back, web, edition and native static checks are now green; a passed duration, build or modeled test does not remove the release hold.
