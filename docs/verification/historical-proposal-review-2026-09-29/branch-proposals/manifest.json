@@ -1,0 +1,310 @@
+{
+  "schemaVersion": 1,
+  "packet": "historical-branch-donors-2026-09-29",
+  "repository": "mekhovov/revealline",
+  "purpose": "Source-only preservation; no runtime adoption",
+  "donors": [
+    {
+      "id": "chapter-residency",
+      "branch": "feat/chapter-download-management",
+      "status": "Unintegrated metadata prototype. No current manager writes this proposed format.",
+      "commit": "06c7f15db4afe4334d6ae5685be009612c128438",
+      "parents": [
+        "57bee98f23a6bf5882f19065f1d70473ece7a12e"
+      ],
+      "tree": "4ad5b34ad3e000953e777f1c3e9331953a418783",
+      "authorDate": "2026-09-14T11:45:50+02:00",
+      "committerDate": "2026-09-14T11:45:50+02:00",
+      "subject": "Model explicit still-original residency without storage writes",
+      "baseCommit": "57bee98f23a6bf5882f19065f1d70473ece7a12e",
+      "versions": {
+        "base": {
+          "package.json": "0.40.0",
+          "game/build-config.json": "0.40.0"
+        },
+        "donor": {
+          "package.json": "0.40.0",
+          "game/build-config.json": "0.40.0"
+        }
+      },
+      "sourceUrl": "https://github.com/mekhovov/revealline/commit/06c7f15db4afe4334d6ae5685be009612c128438",
+      "files": [
+        {
+          "sourcePath": "game/still-residency.mjs",
+          "retainedPath": "source/chapter-residency/game/still-residency.mjs",
+          "mode": "100644",
+          "gitBlob": "ad665630620809afe33077a38267368ed933f0be",
+          "bytes": 4988,
+          "sha256": "db58bc6ceb89cc3e1dfcea14d6b2cb8cdb4b0619b696bcc4e416a71354cdaf17"
+        },
+        {
+          "sourcePath": "game/test/still-residency.test.mjs",
+          "retainedPath": "source/chapter-residency/game/test/still-residency.test.mjs",
+          "mode": "100644",
+          "gitBlob": "7d16fa9fdec4b216718c12c42aeba107626d6399",
+          "bytes": 7643,
+          "sha256": "e6dbca60a1ed265ce41bf04338acdde45b63e4f5e4909166a79131ea21d27847"
+        }
+      ],
+      "originalCommitPaths": [
+        {
+          "status": "A",
+          "path": "game/still-residency.mjs"
+        },
+        {
+          "status": "A",
+          "path": "game/test/still-residency.test.mjs"
+        }
+      ],
+      "patches": [
+        {
+          "retainedPath": "patches/chapter-residency-selected-files.patch",
+          "sourcePaths": [
+            "game/still-residency.mjs",
+            "game/test/still-residency.test.mjs"
+          ],
+          "bytes": 13442,
+          "sha256": "c8601feb23fdc410a6532dd1d74bf7f1545b95617a7915a8dddc6e9f31766d37",
+          "baseCommit": "57bee98f23a6bf5882f19065f1d70473ece7a12e",
+          "donorCommit": "06c7f15db4afe4334d6ae5685be009612c128438"
+        }
+      ]
+    },
+    {
+      "id": "classic-race-tour",
+      "branch": "codex/p07-campaign-tour",
+      "status": "Historical session progression proposal. Current host integration and product approval are not established.",
+      "commit": "74e2c9baec91462e68cee130c952550d82d611d0",
+      "parents": [
+        "1f3b9995af43879d54fb7b0053846f0723e2e069"
+      ],
+      "tree": "5eaed35e40500bf73ca2cffb963e992ccf68ba58",
+      "authorDate": "2026-09-16T05:45:55+02:00",
+      "committerDate": "2026-09-16T05:45:55+02:00",
+      "subject": "Add authored couch tours with retained results and rematch credit",
+      "baseCommit": "1f3b9995af43879d54fb7b0053846f0723e2e069",
+      "versions": {
+        "base": {
+          "package.json": "0.58.0",
+          "game/build-config.json": "0.58.0"
+        },
+        "donor": {
+          "package.json": "0.58.0",
+          "game/build-config.json": "0.58.0"
+        }
+      },
+      "sourceUrl": "https://github.com/mekhovov/revealline/commit/74e2c9baec91462e68cee130c952550d82d611d0",
+      "files": [
+        {
+          "sourcePath": "game/couch/couch-progression.mjs",
+          "retainedPath": "source/classic-race-tour/game/couch/couch-progression.mjs",
+          "mode": "100644",
+          "gitBlob": "49ea64d77a6409944654806b40a251a8f7bd90d4",
+          "bytes": 5478,
+          "sha256": "2e82db52916e56af58cb348e857eb6a979485af23b26d2590f3ca7b2910ad5ff"
+        },
+        {
+          "sourcePath": "game/test/couch-progression.test.mjs",
+          "retainedPath": "source/classic-race-tour/game/test/couch-progression.test.mjs",
+          "mode": "100644",
+          "gitBlob": "9eda513ed62b1a7488a89073cff9d942fe994ac1",
+          "bytes": 12787,
+          "sha256": "9a73fa638af704a7c4c8c695643e3ce6df0a8dfa1688d99fc7749cb482319ef7"
+        },
+        {
+          "sourcePath": "game/test/couch-progression-host.test.mjs",
+          "retainedPath": "source/classic-race-tour/game/test/couch-progression-host.test.mjs",
+          "mode": "100644",
+          "gitBlob": "0ad0362bc967085a43a0d981a8c8e46112326af3",
+          "bytes": 17377,
+          "sha256": "86c5f32249637d89173a4dd166928f180262d5ef737f986c5297668b8d2dae9a"
+        }
+      ],
+      "originalCommitPaths": [
+        {
+          "status": "M",
+          "path": "authoring/prompts/couch-native-chapters.md"
+        },
+        {
+          "status": "M",
+          "path": "authoring/skills/xonix-runtime-maintainer/SKILL.md"
+        },
+        {
+          "status": "A",
+          "path": "docs/couch-campaign-tour.md"
+        },
+        {
+          "status": "M",
+          "path": "docs/couch-installed-chapters.md"
+        },
+        {
+          "status": "M",
+          "path": "docs/cross-mode-execution.md"
+        },
+        {
+          "status": "A",
+          "path": "docs/verification/cross-mode/p07-campaign-tour/README.md"
+        },
+        {
+          "status": "A",
+          "path": "docs/verification/cross-mode/p07-campaign-tour/evidence.json"
+        },
+        {
+          "status": "A",
+          "path": "docs/verification/cross-mode/p07-campaign-tour/evidence.zip"
+        },
+        {
+          "status": "M",
+          "path": "game/couch/couch-installed-chapters.mjs"
+        },
+        {
+          "status": "A",
+          "path": "game/couch/couch-progression.mjs"
+        },
+        {
+          "status": "M",
+          "path": "game/couch/couch-shell.mjs"
+        },
+        {
+          "status": "M",
+          "path": "game/couch/couch.mjs"
+        },
+        {
+          "status": "M",
+          "path": "game/couch/index.html"
+        },
+        {
+          "status": "M",
+          "path": "game/test/couch-installed-chapters.test.mjs"
+        },
+        {
+          "status": "M",
+          "path": "game/test/couch-navigation.test.mjs"
+        },
+        {
+          "status": "A",
+          "path": "game/test/couch-progression-host.test.mjs"
+        },
+        {
+          "status": "A",
+          "path": "game/test/couch-progression.test.mjs"
+        },
+        {
+          "status": "M",
+          "path": "game/test/couch-shell.test.mjs"
+        },
+        {
+          "status": "M",
+          "path": "game/test/couch-static-picture-host.test.mjs"
+        }
+      ],
+      "patches": [
+        {
+          "retainedPath": "patches/classic-race-tour-selected-files.patch",
+          "sourcePaths": [
+            "game/couch/couch-progression.mjs",
+            "game/test/couch-progression.test.mjs",
+            "game/test/couch-progression-host.test.mjs"
+          ],
+          "bytes": 37432,
+          "sha256": "b1799d3bd3fdf1e07102634987db05b62d4ac065f35427f60ada800dd3e490a9",
+          "baseCommit": "1f3b9995af43879d54fb7b0053846f0723e2e069",
+          "donorCommit": "74e2c9baec91462e68cee130c952550d82d611d0"
+        },
+        {
+          "retainedPath": "patches/classic-race-tour-game-integration.patch",
+          "sourcePaths": [
+            "game/couch/couch-installed-chapters.mjs",
+            "game/couch/couch-progression.mjs",
+            "game/couch/couch-shell.mjs",
+            "game/couch/couch.mjs",
+            "game/couch/index.html",
+            "game/test/couch-installed-chapters.test.mjs",
+            "game/test/couch-navigation.test.mjs",
+            "game/test/couch-progression-host.test.mjs",
+            "game/test/couch-progression.test.mjs",
+            "game/test/couch-shell.test.mjs",
+            "game/test/couch-static-picture-host.test.mjs"
+          ],
+          "bytes": 78569,
+          "sha256": "9725dc506a34d0d2f9db69c8b54e37f1b3611fce03ca0452021e9313b71f526b",
+          "baseCommit": "1f3b9995af43879d54fb7b0053846f0723e2e069",
+          "donorCommit": "74e2c9baec91462e68cee130c952550d82d611d0"
+        }
+      ],
+      "excludedNonGamePaths": [
+        "authoring/prompts/couch-native-chapters.md",
+        "authoring/skills/xonix-runtime-maintainer/SKILL.md",
+        "docs/couch-campaign-tour.md",
+        "docs/couch-installed-chapters.md",
+        "docs/cross-mode-execution.md",
+        "docs/verification/cross-mode/p07-campaign-tour/README.md",
+        "docs/verification/cross-mode/p07-campaign-tour/evidence.json",
+        "docs/verification/cross-mode/p07-campaign-tour/evidence.zip"
+      ]
+    },
+    {
+      "id": "optional-inspection-job-regression",
+      "branch": "codex/fastline-evidence-job-collision",
+      "status": "Optional eight-line regression addition only. Implementation behavior already exists; no missing runtime fix or workflow change is claimed.",
+      "commit": "3c3811a4e54b3f2892c90dd25f700ccc3cebe166",
+      "parents": [
+        "80911bf5ec0f6df711d7e70b36a11005d2be4c3a"
+      ],
+      "tree": "06e73098c5258a36a86e73181ea742ea64d7b1c2",
+      "authorDate": "2026-09-26T11:24:29+02:00",
+      "committerDate": "2026-09-26T11:25:32+02:00",
+      "subject": "fix(release): distinguish nested inspection job",
+      "baseCommit": "80911bf5ec0f6df711d7e70b36a11005d2be4c3a",
+      "versions": {
+        "base": {
+          "package.json": "0.132.4",
+          "game/build-config.json": "0.132.4"
+        },
+        "donor": {
+          "package.json": "0.132.4",
+          "game/build-config.json": "0.132.4"
+        }
+      },
+      "sourceUrl": "https://github.com/mekhovov/revealline/commit/3c3811a4e54b3f2892c90dd25f700ccc3cebe166",
+      "files": [],
+      "originalCommitPaths": [
+        {
+          "status": "M",
+          "path": "publishing/utility/test_assemble_waived_qualification.py"
+        }
+      ],
+      "patches": [
+        {
+          "retainedPath": "patches/optional-inspection-job-regression.patch",
+          "sourcePaths": [
+            "publishing/utility/test_assemble_waived_qualification.py"
+          ],
+          "bytes": 1313,
+          "sha256": "848dc732a1243ba7efa3a6a45ce25016150470d018dcbf623c755ccc8a353717",
+          "baseCommit": "80911bf5ec0f6df711d7e70b36a11005d2be4c3a",
+          "donorCommit": "3c3811a4e54b3f2892c90dd25f700ccc3cebe166"
+        }
+      ],
+      "addedLines": 8,
+      "removedLines": 0
+    }
+  ],
+  "retainedExactFiles": 5,
+  "readablePatchCount": 4,
+  "archivePolicy": {
+    "regularFilesOnly": true,
+    "normalizedUid": 0,
+    "normalizedGid": 0,
+    "normalizedMtime": 0,
+    "gzipMtime": 0
+  },
+  "excluded": [
+    "media bytes",
+    "distribution outputs",
+    "historical evidence ZIP",
+    "workflow activation",
+    "package/version edits",
+    "repository config/ref/index operations"
+  ]
+}
