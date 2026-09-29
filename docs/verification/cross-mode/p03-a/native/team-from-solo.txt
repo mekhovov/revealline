@@ -1,4 +1,0 @@
-Browser tab: 431, Title: "Relay Rescue · RevealLine", URL: "http://127.0.0.1:60366/game/couch/relay-rescue.html?return=solo".
-The following is a diff from the previous accessibility tree with ~ and + representing changed and added elements, respectively. Removed elements are summarized by ID range.
-+			65 text Two players · one screen · a shared victory
-The focused UI element is 1 AXWebArea Relay Rescue · RevealLine, URL: 127.0.0.1:60366/game/couch/relay-rescue.html?return=solo
