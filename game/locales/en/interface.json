@@ -5266,5 +5266,11 @@
   "multiplayerControllers.pressThreshold": "Axis activation threshold",
   "multiplayerControllers.releaseThreshold": "Axis release threshold",
   "multiplayerControllers.needsSetup": "Configure this controller in Settings → Controls → Two controllers.",
-  "multiplayerControllers.assigned": "{{count}} controllers assigned · {{players}}. Keyboard and touch remain available. Escape pauses both boards."
+  "multiplayerControllers.assigned": "{{count}} controllers assigned · {{players}}. Keyboard and touch remain available. Escape pauses both boards.",
+  "multiplayerControllers.soloTitle": "Radios and custom joysticks — Solo",
+  "multiplayerControllers.soloIntro": "Configure your radio or raw joystick here. Standard gamepads use the controller settings above. Save and apply a tested profile, then release its mapped controls to connect. Unmapped actions remain on keyboard/touch.",
+  "multiplayerControllers.soloSaved": "Saved Solo radio profiles",
+  "multiplayerControllers.soloApplied": "Profile applied",
+  "multiplayerControllers.soloUnmapped": "Configure to use in Solo",
+  "multiplayerControllers.soloSeparateProfiles": "Solo radio mappings are stored separately from multiplayer profiles, standard gamepad bindings and FPV calibration."
 }

@@ -5376,5 +5376,11 @@
   "multiplayerControllers.pressThreshold": "Поріг активації осі",
   "multiplayerControllers.releaseThreshold": "Поріг відпускання осі",
   "multiplayerControllers.needsSetup": "Налаштуйте цей контролер: Налаштування → Керування → Два контролери.",
-  "multiplayerControllers.assigned": "Призначено контролерів: {{count}} · {{players}}. Клавіатура й сенсорне керування доступні. Escape призупиняє обидва поля."
+  "multiplayerControllers.assigned": "Призначено контролерів: {{count}} · {{players}}. Клавіатура й сенсорне керування доступні. Escape призупиняє обидва поля.",
+  "multiplayerControllers.soloTitle": "Радіопульти та джойстики — Соло",
+  "multiplayerControllers.soloIntro": "Налаштуйте радіопульт або джойстик тут. Стандартні геймпади використовують налаштування вище. Збережіть перевірений профіль і відпустіть призначені органи керування для підключення. Непризначені дії доступні з клавіатури чи дотиком.",
+  "multiplayerControllers.soloSaved": "Збережені профілі радіопульта для Соло",
+  "multiplayerControllers.soloApplied": "Профіль застосовано",
+  "multiplayerControllers.soloUnmapped": "Налаштуйте для Соло",
+  "multiplayerControllers.soloSeparateProfiles": "Призначення радіопульта для Соло зберігаються окремо від мультиплеєра, стандартних геймпадів та калібрування FPV."
 }
