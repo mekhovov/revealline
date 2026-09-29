@@ -1,0 +1,60 @@
+{
+  "format": "revealline-recovery-fragment-v1",
+  "capturedAt": "2026-09-29T15:10:37.149742+00:00",
+  "worktree": "<home>/work/my_projects/go_test_p01_pending_cancel",
+  "branch": null,
+  "head": "114a5eb42083009db6865d50bcbb53a8e7592b53",
+  "excluded": [
+    {
+      "status": "??",
+      "path": "node_modules"
+    }
+  ],
+  "changes": [
+    {
+      "status": " M",
+      "path": "game/app.mjs",
+      "object": "bbf34c1602ffdd5a794110533cf3d31d70096229",
+      "sha256": "f61f8dbc3c11aca57f135db55a3b01c17eb79f3f621b72bb01b0d854c96fb45b",
+      "bytes": 217154,
+      "mode": "100644"
+    },
+    {
+      "status": " M",
+      "path": "game/test/flight-pictures-host.test.mjs",
+      "object": "cfe67cf361248243e5169176862df5248cdeb2ad",
+      "sha256": "b8d76a9221d70f727df45b2326f6be2594cb1e78ba12caf2156204c484502b9c",
+      "bytes": 23041,
+      "mode": "100644"
+    },
+    {
+      "status": " M",
+      "path": "game/test/history-picture-host.test.mjs",
+      "object": "dc3a7928371081e325c5894f85ce868a7816fa4a",
+      "sha256": "c35d970fbc07074fd75928745a0c0304f6e835b7dab92de2b1c63e1481a2aaad",
+      "bytes": 14600,
+      "mode": "100644"
+    }
+  ],
+  "indexEntries": [
+    {
+      "path": "game/app.mjs",
+      "mode": "100644",
+      "object": "b15196fbeafd2fcdefbf9a44ddc7cf922529ff21",
+      "stage": 0
+    },
+    {
+      "path": "game/test/flight-pictures-host.test.mjs",
+      "mode": "100644",
+      "object": "7ac0352c92964429b121c0dbee5bdc6d8edb0f36",
+      "stage": 0
+    },
+    {
+      "path": "game/test/history-picture-host.test.mjs",
+      "mode": "100644",
+      "object": "deee1b93857337826c2664b9c091f4b576652c5e",
+      "stage": 0
+    }
+  ],
+  "purpose": "Recovery only. These bytes are not release admission. Missing files, conflict stages and obsolete generated outputs are preserved as observations, not deletion or merge instructions."
+}
