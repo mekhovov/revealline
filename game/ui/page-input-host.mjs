@@ -18,6 +18,10 @@ const focusable =
  * Same-origin child menus receive a real Return button; no child game commands
  * or synthetic keys are issued by the editor. */
 export function attachAuthoringPreview(frame, { document: doc, window: win }) {
+  const originalTabIndex = frame.getAttribute('tabindex');
+  // Enter preview is the keyboard entry point. Avoid a Tab loop in which the
+  // browser enters an unclaimed iframe and the boot guard returns it immediately.
+  frame.setAttribute('tabindex', '-1');
   const enter = doc.createElement('button');
   enter.type = 'button';
   enter.className = 'authoring-preview-enter';
@@ -26,8 +30,27 @@ export function attachAuthoringPreview(frame, { document: doc, window: win }) {
   frame.before(enter);
   let observer = null,
     returnButton = null,
-    entered = false;
+    entered = false,
+    removeChildFocus = () => {},
+    parentFocus = doc.activeElement;
+  const rememberParentFocus = (event) => {
+    if (event.target !== frame && event.target?.matches?.(focusable)) {
+      parentFocus = event.target;
+      entered = false;
+    }
+  };
+  doc.addEventListener('focusin', rememberParentFocus);
+  const ownsUnenteredFocus = () =>
+    !entered && !doc.hidden && doc.hasFocus?.() !== false && doc.activeElement === frame;
+  const reclaimUnenteredFocus = () => {
+    if (!ownsUnenteredFocus()) return;
+    const target = parentFocus?.matches?.(focusable) && visible(parentFocus) ? parentFocus : enter;
+    win.focus();
+    target.focus();
+  };
   const cleanupChild = () => {
+    removeChildFocus();
+    removeChildFocus = () => {};
     observer?.disconnect();
     observer = null;
     returnButton?.remove();
@@ -35,13 +58,40 @@ export function attachAuthoringPreview(frame, { document: doc, window: win }) {
   };
   const loaded = () => {
     cleanupChild();
-    let child;
+    let child, childWindow;
     try {
       child = frame.contentDocument;
+      childWindow = frame.contentWindow;
     } catch {
       return;
     }
     if (!child?.body) return;
+    // Module boot can focus its menu after the iframe load event. Keep the
+    // editor's current owner until Enter preview deliberately transfers it.
+    const pointerEntry = (event) => {
+      if (!doc.hidden && event.button === 0 && event.isPrimary !== false) entered = true;
+    };
+    const unenteredKey = (event) => {
+      if (entered) return;
+      // An iframe window/body can receive a key without an element focusin.
+      // Capture before the child's document/game owner so its first Enter can
+      // never start a run merely because asynchronous boot took window focus.
+      // A queued child key can arrive after focus was already reclaimed; it is
+      // still unowned, but must not replace a newer parent focus destination.
+      event.preventDefault();
+      event.stopImmediatePropagation();
+      reclaimUnenteredFocus();
+    };
+    childWindow?.addEventListener?.('focus', reclaimUnenteredFocus, true);
+    childWindow?.addEventListener?.('keydown', unenteredKey, true);
+    child.addEventListener('focusin', reclaimUnenteredFocus);
+    child.addEventListener('pointerdown', pointerEntry, true);
+    removeChildFocus = () => {
+      child.removeEventListener('focusin', reclaimUnenteredFocus);
+      child.removeEventListener('pointerdown', pointerEntry, true);
+      childWindow?.removeEventListener?.('focus', reclaimUnenteredFocus, true);
+      childWindow?.removeEventListener?.('keydown', unenteredKey, true);
+    };
     const button = child.createElement('button');
     returnButton = button;
     button.type = 'button';
@@ -79,10 +129,7 @@ export function attachAuthoringPreview(frame, { document: doc, window: win }) {
     });
     // Child boot code may focus its own menu. Loading a preview must not
     // transfer input ownership before the explicit Enter preview action.
-    if (!entered && doc.activeElement === frame) {
-      win.focus();
-      enter.focus();
-    }
+    reclaimUnenteredFocus();
   };
   enter.onclick = () => {
     if (!visible(frame)) return;
@@ -106,8 +153,11 @@ export function attachAuthoringPreview(frame, { document: doc, window: win }) {
     },
     destroy() {
       frame.removeEventListener('load', loaded);
+      doc.removeEventListener('focusin', rememberParentFocus);
       cleanupChild();
       enter.remove();
+      if (originalTabIndex === null) frame.removeAttribute('tabindex');
+      else frame.setAttribute('tabindex', originalTabIndex);
     },
   };
 }
@@ -210,7 +260,16 @@ export function mountPageInputHost({
       button.onclick = () => {
         sections.close();
         const region = heading.closest('section,fieldset,details,article') || heading.parentElement;
-        const target = [...region.querySelectorAll(focusable)].find(visible) || heading;
+        const namedTarget = doc.getElementById(heading.dataset.authoringTarget),
+          target =
+            (namedTarget &&
+            region.contains(namedTarget) &&
+            visible(namedTarget) &&
+            namedTarget.matches(focusable)
+              ? namedTarget
+              : null) ||
+            [...region.querySelectorAll(focusable)].find(visible) ||
+            heading;
         if (!target.matches(focusable)) target.tabIndex = -1;
         target.focus();
         target.scrollIntoView({ block: 'nearest' });

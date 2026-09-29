@@ -224,7 +224,8 @@ test('preview boot cannot steal input before explicit entry, and Return restores
   first.textContent = 'Game menu';
   child.body.append(first);
   frame.contentDocument = child;
-  frame.contentWindow = { focus() {} };
+  frame.contentWindow = Object.assign(new Events(), { focus() {} });
+  child.parentNode = frame.contentWindow;
   frame.before = (element) => doc.body.append(element);
   doc.activeElement = frame;
   const preview = attachAuthoringPreview(frame, { document: doc, window: win });
@@ -238,6 +239,107 @@ test('preview boot cannot steal input before explicit entry, and Return restores
   assert.equal(doc.activeElement, enter);
   preview.destroy();
   assert.equal(back.isConnected, false);
+});
+
+test('late preview boot preserves newer editor focus, explicit entry owns the child, and cleanup releases the focus guard', () => {
+  const { doc, win, node } = fixture(),
+    field = node('input', 'edited-source'),
+    frame = node('iframe', 'preview'),
+    child = new Document(),
+    first = child.createElement('button');
+  child.body.append(first);
+  frame.contentDocument = child;
+  frame.contentWindow = Object.assign(new Events(), { focus() {} });
+  child.parentNode = frame.contentWindow;
+  frame.before = (element) => doc.body.append(element);
+  const preview = attachAuthoringPreview(frame, { document: doc, window: win }),
+    enter = doc.querySelector('.authoring-preview-enter');
+  assert.equal(frame.getAttribute('tabindex'), '-1', 'Enter preview is the native Tab entry point');
+  field.focus();
+  let childActions = 0;
+  first.addEventListener('keydown', () => childActions++);
+  const lateBootFocus = () => {
+    // Native iframe ownership changes before the child's focusin dispatch.
+    doc.activeElement = frame;
+    first.focus();
+    first.emit('focusin');
+  };
+  lateBootFocus();
+  assert.equal(doc.activeElement, field, 'late asynchronous boot restores the editor control');
+  const queuedEnter = first.emit('keydown', { key: 'Enter' });
+  assert.equal(queuedEnter.defaultPrevented, true);
+  assert.equal(childActions, 0, 'queued child Enter stays unowned after parent focus was restored');
+  assert.equal(
+    doc.activeElement,
+    field,
+    'discarding a queued child key preserves the newer parent owner',
+  );
+  doc.activeElement = frame;
+  frame.contentWindow.emit('focus');
+  assert.equal(doc.activeElement, field, 'a late child window focus needs no element focusin');
+  doc.activeElement = frame;
+  const unenteredEnter = first.emit('keydown', { key: 'Enter' });
+  assert.equal(unenteredEnter.defaultPrevented, true);
+  assert.equal(childActions, 0, 'window capture consumes unentered Enter before game handlers');
+  assert.equal(doc.activeElement, field);
+  enter.onclick();
+  first.emit('focusin');
+  assert.equal(doc.activeElement, frame, 'explicit Enter yields ownership to the child');
+  first.emit('keydown', { key: 'Enter' });
+  assert.equal(childActions, 1, 'explicit entry retains the child input owner');
+  child.querySelector('.authoring-preview-return').onclick();
+  lateBootFocus();
+  assert.equal(doc.activeElement, enter, 'late refocus cannot undo Return');
+  first.emit('pointerdown', { button: 0, isPrimary: true });
+  lateBootFocus();
+  assert.equal(doc.activeElement, frame, 'deliberate pointer entry still owns the child');
+  field.focus();
+  doc.focused = false;
+  lateBootFocus();
+  assert.equal(doc.activeElement, frame, 'background boot cannot activate its parent window');
+  doc.focused = true;
+  preview.destroy();
+  assert.equal(
+    frame.getAttribute('tabindex'),
+    null,
+    'destroy restores original frame tab behavior',
+  );
+  lateBootFocus();
+  assert.equal(doc.activeElement, frame, 'destroy removes the child listener');
+});
+
+test('section headings can target a real control inside their own region without opening or changing it', () => {
+  const { doc, win, node } = fixture(),
+    section = node('section', 'configuration'),
+    first = doc.createElement('button'),
+    heading = doc.createElement('h2'),
+    canvas = doc.createElement('canvas'),
+    outside = node('button', 'outside');
+  node('main', 'authoring-main').append(section);
+  canvas.id = 'board';
+  canvas.setAttribute('data-controller-editor', 'true');
+  heading.textContent = 'Paint the board';
+  heading.dataset.authoringTarget = 'board';
+  section.append(first, heading, canvas);
+  let activations = 0;
+  canvas.onclick = () => activations++;
+  const host = mountPageInputHost({ document: doc, window: win });
+  doc.querySelector('.authoring-input-rail button').click();
+  const sections = doc.querySelector('.authoring-sections-dialog'),
+    jump = [...sections.querySelectorAll('button')].find(
+      (button) => button.textContent === heading.textContent,
+    );
+  assert.ok(jump);
+  jump.click();
+  assert.equal(doc.activeElement, canvas);
+  assert.equal(activations, 0);
+  heading.dataset.authoringTarget = outside.id;
+  doc.querySelector('.authoring-input-rail button').click();
+  [...sections.querySelectorAll('button')]
+    .find((button) => button.textContent === heading.textContent)
+    .click();
+  assert.equal(doc.activeElement, first, 'a heading cannot redirect to an unrelated region');
+  host.destroy();
 });
 
 test('authoring menus coordinate native Confirm before frames and retain the captured modal handoff', () => {
