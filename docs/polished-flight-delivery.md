@@ -7,7 +7,7 @@ unchanged. New first-person flight belongs to the separate `civilian-fpv` packag
 ## Order and compatibility
 
 Deliver Phase 2 → 3 → 4 → 6, with qualification in every batch, through integration
-PR #758 while open. The branch was refreshed onto main `b5ab06e125` (v0.142.3),
+PR #758 while open. The branch was refreshed onto main `6a67d6dbfe` (v0.142.3 Pages metadata),
 including the controller fixes from PRs #775/#778 and the production-provenance
 continuation from #785. It is a scheduled input to **v0.150.0 — Unified native
 experience**, alongside #783; it is not a second promoted release root.
@@ -696,3 +696,49 @@ original driver hang is cured. Before the final audio continuation, explicitly
 cover published-cue precedence over authored victory motifs and cancellation or
 disposal during discovery-recording preparation; the scoped source audit identified
 those two compositions as missing targeted evidence, not demonstrated defects.
+
+### Current-source continuation and showcase rehearsals — 29 September
+
+The source implementation remains complete for priority batches A–F: four polished
+six-mission showcases, USB-radio setup, the separate twelve-drill first-person
+simulator, and shared reward/Studio integration. Phase7 remains qualification and
+coordinated publication; human learning, artwork and physical-device evidence stays
+deferred. No new release root, version, cap or campaign promise is introduced.
+
+The branch rebased onto `6a67d6dbfe` without conflicts; all41 existing patches are
+unchanged. The preceding remote candidate run36508987834 passed964 company tests
+and cancelled one real Journey/Retry host test at its60-second bound. That test
+now renders at30Hz while preserving120Hz physics, its original tick budget, actual
+keyboard/save/replay path and an independently stepped authoritative checkpoint.
+The focused host/performance cohort passes21checks without increasing the timeout
+or changing runtime simulation.
+
+The scoped [audio software review](verification/discovery-audio-continuation-2026-09-29/review.json)
+adds the22 missing behavioral/media-validation inputs to the existing28-source
+fingerprint. Published-cue precedence, authored fallback, pending original export
+cancellation, master ownership and isolated preview preferences have targeted
+composition coverage. The130-check composition cohort passes; a separate initial
+145-check owner cohort had144passes and one malformed HTTP fixture. Correcting
+that fixture and explicitly checking503/retry produces22/22 soundtrack-host passes.
+The earlier failure is retained, rather than counted as a green full rerun.
+
+Production101 at immutable `d541946f4` is preserved as an
+[audited intermediate checkpoint](verification/evidence/discovery-production101-checkpoint-2026-09-29.json):
+eight reviewed audio53 successors and24 source-stage UI23 successors. The producer
+correctly detected the branch's existing WebP import extension, so the initial
+audio-only expectation was not met. A separate
+[WebP software review](verification/discovery-webp-ui-continuation-2026-09-29/review.json)
+verifies the exact seven UI inputs and60 focused host/media tests. Only full-frame
+static WebP admission and its error copy changed; limits, hashes, cancellation and
+downstream complete decoding remain enforced. Production102 appends24 reviewed
+UI24 successors. All132 original payloads and every previous production record
+remain immutable; current coverage is99source/236reviewed/0missing slots. Review
+approval here is scoped software evidence, not human artwork or release approval.
+
+The [showcase observer](discovery-desktop-observations.md) now has explicit Social
+Drone UA, Victory Drones and Ukraine protocols alongside the existing FPV path.
+They use ordinary public controls and accepted wins, inspect exact bilingual
+discovery copy, reopen Collection, retain the locked finale and exercise Retry/Next.
+Routes remain experimental until rehearsed against an exact frozen artifact.
+Its22 automated checks pass; browser outcomes and final current-source production
+checks follow in the next checkpoint below.

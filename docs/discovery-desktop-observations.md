@@ -264,7 +264,7 @@ The reusable `observe-discovery-runtime.mjs` plan accepts
 `"headerPolicy": "packaged-preview"`. It serves the exact existing
 `PREVIEW_SECURITY_HEADERS` from `game-cli.mjs`, with `Cache-Control: no-cache`;
 it verifies the served headers and retains their values and the supplying source
-hashes. The loopback soundtrack connection exception stays in that shared policy.
+hashes. The packaged-preview soundtrack origin allowance stays in that shared policy.
 Omitting the option preserves the earlier minimal server behavior. The selected
 policy enters `settingsIdentity`, so a minimal-policy sample cannot silently serve
 as the baseline for a packaged-preview sample.
@@ -272,6 +272,95 @@ as the baseline for a packaged-preview sample.
 This checks the packaged preview policy on loopback. It does not reproduce a
 public deployed origin, public CSP, warm-cache behavior, installation or promotion.
 A failed route remains a failed observation even when boot and headers are correct.
+
+## Functional showcase mode
+
+`scripts/observe-discovery-runtime.mjs` also accepts `mode: "showcase"`. This is a
+bounded functional run, separate from the existing `fpv-frame-first-win.v1`
+timing/trace protocol. It does not collect a frame-time comparison or qualify a
+release. The operator supplies the original frozen edition ZIP and manifest; the
+runner verifies their exact hashes, every listed archive member, source commit/tree
+and the registered mission's standard gameplay identity before opening the browser.
+
+| Protocol                        | Edition           | Campaign and first mission                           |
+| ------------------------------- | ----------------- | ---------------------------------------------------- |
+| `social-community-first-win.v1` | `social-drone-ua` | Community Connections — One Shared Brief             |
+| `victory-ideas-first-win.v1`    | `victory-drones`  | Ideas into Understanding — Observe Before Explaining |
+| `ukraine-threads-first-win.v1`  | `ukraine-culture` | Threads Across Ukraine — Read the Cloth              |
+
+Use a new plan and output directory for each edition/attempt. The complete plan
+shape is below; replace every angle-bracket placeholder with the frozen descriptor
+or an honest operator statement before running. Placeholder hashes are deliberately
+not valid pins.
+
+```json
+{
+  "format": "revealline-discovery-runtime-plan.v1",
+  "caseId": "social-showcase-01",
+  "protocol": "social-community-first-win.v1",
+  "deviceLabel": "<machine and browser test environment>",
+  "quietWindow": "<actual concurrent workload; this is a functional check>",
+  "mode": "showcase",
+  "cycles": 0,
+  "headerPolicy": "packaged-preview",
+  "artifact": {
+    "archive": "<path to original distribution-social-drone-ua.zip>",
+    "archiveSha256": "<64 lowercase hexadecimal characters>",
+    "manifest": "<path to original manifest-social-drone-ua.json>",
+    "manifestSha256": "<64 lowercase hexadecimal characters>",
+    "sourceRevision": "<exact 40–64 character hexadecimal source commit>",
+    "sourceTree": "<exact 40–64 character hexadecimal source tree>",
+    "editionId": "social-drone-ua"
+  }
+}
+```
+
+No additional fields are accepted. `caseId` is 1–64 lowercase letters, digits or
+hyphens. `deviceLabel` and `quietWindow` are required nonempty strings, bounded to
+256 and 2,048 characters respectively. Artifact paths are resolved relative to the
+plan file (absolute paths also work), with a 4,096-character limit. Optional
+`serverPort` is an integer from 0 to 65,535; omit it or use 0 for an available port.
+Showcase mode requires `cycles: 0`, `headerPolicy: "packaged-preview"` and the
+edition matching its registered protocol. It cannot accept an arbitrary route,
+script or alternate gameplay identity through the plan. The plan is limited to
+64 KiB, the original playable ZIP to 256 MiB and its manifest to 8 MiB. Existing
+source/release admission remains a separate prerequisite; this runner's member
+checks do not approve publication rights or release promotion.
+
+Run with an existing approved Playwright installation; the runner does not install
+browser dependencies:
+
+```sh
+node scripts/observe-discovery-runtime.mjs /absolute/path/to/playwright/index.mjs /absolute/path/to/showcase-plan.json /absolute/path/to/new-observation-directory
+```
+
+Each run uses a fresh isolated browser context and ordinary public controls. It
+selects the exact mission through the native chooser, uses keyboard input to earn
+an English desktop result at 1280 × 633/DPR 1, opens the earned discovery, closes
+Back to its opener and revisits the reward in Collection. Checks require decoded
+visible imagery, the exact admitted English reward title/first knowledge paragraph,
+an earned first-mission card and still-locked campaign finales.
+
+The same earned session then changes language through Settings and changes the
+viewport to 390 × 844. It revisits the Ukrainian discovery and Collection, checks
+the exact Ukrainian reward copy and focus return, uses Retry for a second ordinary
+win of the same mission, and uses Next to launch the correctly localized second
+mission. These are **two wins of one distinct mission in one profile**, not two
+independent fresh-profile tests or six wins. The final running mission is paused
+before cleanup. The first mission's discovery is exercised; later application
+workbenches, completed finales, Studio export/import and the other five missions
+are not established by this observation. Portrait browser sizing is not physical
+touch, controller or mobile-device evidence.
+
+The registered routes are experimental wall-clock keyboard candidates derived from
+offline witnesses. They may fail because ordinary input timing and encounters vary.
+The runner never injects progress, invokes a core win or substitutes a replay proof
+for a visible accepted result. It stops on failure and retains `showcase-attempt-*.json`,
+source bindings, partial surface/copy records, screenshots and failure diagnostics.
+A success includes `showcase.json` and `complete.json` only after cleanup succeeds;
+every report remains `qualified: false`. Preserve failed attempts and use a new
+output directory when rehearsing again. Do not relabel a failed route as an interface
+pass or a functional pass as a performance/human qualification.
 
 ## Reward-owner heap diagnostics after repeated viewing
 

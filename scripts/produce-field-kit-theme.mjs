@@ -169,8 +169,9 @@ const REVIEWED_RECIPE_INPUTS = {
     ],
   },
   ui: {
-    sha256: '2530c099cf3b9fc0d5d3dbd865a083b76368f51b95b357ece7209111434a3360',
+    sha256: '96761947c99f18dda6af25b3eb109e9cee1460991420776822903daa9e465b9a',
     evidence: [
+      'Scoped discovery WebP UI software continuation: docs/verification/discovery-webp-ui-continuation-2026-09-29/review.json sha256:2496cbfe4e885a931f22cbf5287efac45344074bb14dc4cf96f09a2d5a0a366f; exact seven-input UI fingerprint sha256:96761947c99f18dda6af25b3eb109e9cee1460991420776822903daa9e465b9a. Only the complete-original MIME allowlist and error copy admit WebP beside PNG/JPEG; all24 UI recipe identities, payloads, input bounds, hash/source checks, decoding and cancellation ownership remain unchanged. Production101/UI23 source-stage checkpoint is retained exactly by oracle sha256:bb8ef5f69c674d36737dcfd8a23267eb5207fd0bc2757965ae841da552b2551c. This is software continuation only; human artwork, full navigation, screen-reader, physical-device, frozen/public, performance and release acceptance remain separate.',
       'Scoped v0.141.8 Steam Deck Confirm continuation: docs/verification/v0.141.8-steamdeck-confirm-presentation-continuation/review.json sha256:15b9ef304ba6e8ec6c2120e4e766fe630af327f2a54325bd0e9043ba875e9867; exact seven-input UI fingerprint sha256:2530c099cf3b9fc0d5d3dbd865a083b76368f51b95b357ece7209111434a3360. Only field-kit-components.css changes, adding bounded pressed feedback through existing Field Kit tokens while preserving all 24 UI recipe identities, DOM ownership and payloads.',
       'v0.131 English/Ukrainian presentation continuation: docs/verification/v0.131.0-localization-presentation-continuation/review.json sha256:92c63ed7f4eb6f79502cae2089836de1fbdabcb1cacd76b55e22596e49492445; exact UI fingerprint sha256:c7ebea5695fe1fbd7c17eafdd0035dcd4d1651b5d3ec91893c6575334da38d3a. Maintained copy and operation status are locale-bound while the24 UI recipes, Field Kit tokens and DOM ownership contracts remain unchanged.',
       'Scoped actor-only UI functional continuation: docs/verification/actor-only-ui-continuation-2026-09-24/review.json sha256:dbde124fb9d24cb26dd901b51f58cf59fc7bfb4df212e47419cdb15581155b73; seven ordered UI inputs sha256:4b7db79dd3f6931dd72c0ae702f15a5a5d8ff2b7044aca5a2e02886e8e61636a. Only presentation host changes after the prior exact review; all24 UI recipe payloads, tokens and DOM ownership contracts remain unchanged.',
@@ -398,6 +399,19 @@ export function verifyFieldKitDiscoveryAudioContinuationReview(
   );
 }
 
+export function verifyFieldKitDiscoveryWebPUIContinuationReview(
+  currentBytes,
+  priorReviewBytes,
+  production101OracleBytes,
+) {
+  return (
+    hash(currentBytes) === '2496cbfe4e885a931f22cbf5287efac45344074bb14dc4cf96f09a2d5a0a366f' &&
+    hash(priorReviewBytes) === '15b9ef304ba6e8ec6c2120e4e766fe630af327f2a54325bd0e9043ba875e9867' &&
+    hash(production101OracleBytes) ===
+      'bb8ef5f69c674d36737dcfd8a23267eb5207fd0bc2757965ae841da552b2551c'
+  );
+}
+
 /** Explicit dependency fingerprints; a helper change must reopen its review group. */
 export async function fieldKitRecipeSources(read) {
   return Object.fromEntries(
@@ -546,6 +560,18 @@ export async function createFieldKitProduction({ projectRoot = root } = {}) {
   )
     throw new Error(
       'Discovery audio continuation review or production100 predecessor oracle bytes changed; production approval must reopen.',
+    );
+  if (
+    !verifyFieldKitDiscoveryWebPUIContinuationReview(
+      await read('docs/verification/discovery-webp-ui-continuation-2026-09-29/review.json'),
+      await read(
+        'docs/verification/v0.141.8-steamdeck-confirm-presentation-continuation/review.json',
+      ),
+      await read('game/test/fixtures/production-discovery-source-ui-fpv101.json'),
+    )
+  )
+    throw new Error(
+      'Discovery WebP UI continuation review or production101 predecessor oracle bytes changed; production approval must reopen.',
     );
   const assets = [],
     bindings = {},
