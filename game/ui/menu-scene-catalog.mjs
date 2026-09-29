@@ -172,8 +172,7 @@ const indoorActors = new Set(['droneaid-community',
 
 // Mode artwork belongs to its existing world; it is not a theme, campaign or
 // capability. Selected Solo editions project this map to an empty object.
-export const MENU_SCENE_COMPOSITIONS = Object.freeze({
-  fpv: Object.freeze({
+export const MENU_SCENE_COMPOSITIONS = Object.freeze({fpv: Object.freeze({
     versus: Object.freeze({
       composition: 'fpv-versus',
       landscape: './art/menu-scenes/fpv-versus.webp',
@@ -213,7 +212,7 @@ export const MENU_SCENE_COMPOSITIONS = Object.freeze({
       ]),
     }),
   }),
-  ukraine: Object.freeze({
+ukraine: Object.freeze({
     versus: Object.freeze({
       composition: 'ukraine-versus',
       landscape: './art/menu-scenes/ukraine-versus.webp',
@@ -253,7 +252,46 @@ export const MENU_SCENE_COMPOSITIONS = Object.freeze({
       ]),
     }),
   }),
-});
+retro: Object.freeze({
+    versus: Object.freeze({
+      composition: 'retro-versus',
+      landscape: './art/menu-scenes/retro-versus.webp',
+      portrait: './art/menu-scenes/retro-versus-portrait.webp',
+      landscapePosition: '70% 50%',
+      portraitPosition: '50% 50%',
+      environment: freezeEnvironment([
+        ['water', 64, 88, 20, 8, -1.2, 4.8],
+        ['lamp', 61, 27, 5, 7, -1, 4.2],
+        ['lamp', 68, 19, 14, 4, -3, 5.6],
+        ['foliage', 44, 45, 5, 16, -2, 7],
+      ]),
+      portraitEnvironment: freezeEnvironment([
+        ['water', 54, 84, 26, 9, -1.2, 4.8],
+        ['lamp', 61, 31, 7, 4, -1, 4.2],
+        ['lamp', 73, 33, 6, 5, -3, 5.6],
+        ['foliage', 31, 42, 11, 12, -2, 7],
+      ]),
+    }),
+    team: Object.freeze({
+      composition: 'retro-team',
+      landscape: './art/menu-scenes/retro-team.webp',
+      portrait: './art/menu-scenes/retro-team-portrait.webp',
+      landscapePosition: '70% 50%',
+      portraitPosition: '50% 50%',
+      environment: freezeEnvironment([
+        ['water', 67, 87, 20, 9, -1.2, 4.8],
+        ['lamp', 61, 27, 5, 7, -1, 4.2],
+        ['lamp', 68, 19, 14, 4, -3, 5.6],
+        ['foliage', 44, 45, 5, 17, -2, 7],
+      ]),
+      portraitEnvironment: freezeEnvironment([
+        ['water', 55, 82, 24, 11, -1.2, 4.8],
+        ['lamp', 63, 29, 6, 4, -1, 4.2],
+        ['lamp', 70, 31, 6, 5, -3, 5.6],
+        ['foliage', 44, 44, 9, 10, -2, 7],
+      ]),
+    }),
+  })});
 const compositionProfiles = new WeakMap();
 
 export const MENU_SCENES = Object.freeze(

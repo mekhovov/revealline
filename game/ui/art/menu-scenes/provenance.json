@@ -246,6 +246,62 @@
       "promptSource": "authoring/library/menu-scenes/ukraine-mode-prompts.json",
       "generator": "OpenAI built-in image_gen",
       "rights": "Original generated project artwork; existing UKRAINE project art used as reference"
+    },
+    {
+      "id": "retro-versus",
+      "file": "retro-versus.webp",
+      "bytes": 1929216,
+      "sha256": "587c3ca3efe91d906b1a5fa56993d125d0c533c11d7cfd15699bc12e59a37a20",
+      "source": "authoring/library/menu-scenes/retro-versus-v1.png",
+      "sourceSha256": "6bad2c9189f52ebe816eda5d693ef504bee0d5be85a9f82d1d17ff948957710a",
+      "width": 1536,
+      "height": 1024,
+      "process": "WebP lossless; quality=100 encoding effort, method=6; decoded RGBA verified identical",
+      "promptSource": "authoring/library/menu-scenes/retro-mode-prompts.json",
+      "generator": "OpenAI built-in image_gen",
+      "rights": "Original generated project artwork; existing RETRO project art used as reference"
+    },
+    {
+      "id": "retro-versus-portrait",
+      "file": "retro-versus-portrait.webp",
+      "bytes": 580790,
+      "sha256": "a536925b458dfb1b0015328945e224eddf321ac877aa868fa9133d45617ccd8f",
+      "source": "authoring/library/menu-scenes/retro-versus-portrait-v1.png",
+      "sourceSha256": "b2f7d44ff725d2ec69c282ab7643f1e2e118375a006cca90d9b5fadc0ed57c2b",
+      "width": 941,
+      "height": 1672,
+      "process": "WebP quality 94, method=6; no cropping, resizing or retouching",
+      "promptSource": "authoring/library/menu-scenes/retro-mode-prompts.json",
+      "generator": "OpenAI built-in image_gen",
+      "rights": "Original generated project artwork; existing RETRO project art used as reference"
+    },
+    {
+      "id": "retro-team",
+      "file": "retro-team.webp",
+      "bytes": 1937786,
+      "sha256": "0760ab82df934667efd69c14b778f4e6da862475db76ecf8fb8eacc6983e334b",
+      "source": "authoring/library/menu-scenes/retro-team-v1.png",
+      "sourceSha256": "d6ab9650fd2e369e9f74b1c03591671bc1f5fc25f059c7040fecb5aeff9c6b52",
+      "width": 1536,
+      "height": 1024,
+      "process": "WebP lossless; quality=100 encoding effort, method=6; decoded RGBA verified identical",
+      "promptSource": "authoring/library/menu-scenes/retro-mode-prompts.json",
+      "generator": "OpenAI built-in image_gen",
+      "rights": "Original generated project artwork; existing RETRO project art used as reference"
+    },
+    {
+      "id": "retro-team-portrait",
+      "file": "retro-team-portrait.webp",
+      "bytes": 545932,
+      "sha256": "3a235ff27b250595b6e95100bf7306d8962a4592ef6b02cc0ec690f4839de3a3",
+      "source": "authoring/library/menu-scenes/retro-team-portrait-v1.png",
+      "sourceSha256": "c18069ace1a54e512f134c045870c750331866bc3dd8e44768ca06720e958dcc",
+      "width": 941,
+      "height": 1672,
+      "process": "WebP quality 94, method=6; no cropping, resizing or retouching",
+      "promptSource": "authoring/library/menu-scenes/retro-mode-prompts.json",
+      "generator": "OpenAI built-in image_gen",
+      "rights": "Original generated project artwork; existing RETRO project art used as reference"
     }
   ]
 }

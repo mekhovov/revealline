@@ -15,7 +15,26 @@ import argparse
 ROOT = Path(__file__).resolve().parents[1]
 OUT = ROOT / 'game/ui/art/menu-scenes'
 ACTIVE_BUDGET = 2 * 1024 * 1024
-SOURCES = {'fpv': 'game/ui/art/field-kit/prepared/title-hangar-v1.png', 'fpv-portrait': 'game/ui/art/field-kit/prepared/title-hangar-portrait-v1.png', 'fpv-versus': 'authoring/library/menu-scenes/fpv-versus-v1.png', 'fpv-versus-portrait': 'authoring/library/menu-scenes/fpv-versus-portrait-v1.png', 'fpv-team': 'authoring/library/menu-scenes/fpv-team-v1.png', 'fpv-team-portrait': 'authoring/library/menu-scenes/fpv-team-portrait-v1.png', 'ukraine': 'authoring/library/menu-scenes/ukraine-dawn-v1.png', 'ukraine-versus': 'authoring/library/menu-scenes/ukraine-versus-v1.png', 'ukraine-versus-portrait': 'authoring/library/menu-scenes/ukraine-versus-portrait-v1.png', 'ukraine-team': 'authoring/library/menu-scenes/ukraine-team-v1.png', 'ukraine-team-portrait': 'authoring/library/menu-scenes/ukraine-team-portrait-v1.png', 'retro': 'authoring/library/menu-scenes/retro-rainy-arcade-v1.png', 'droneaid-community': 'game/editions/assets/droneaid/droneaid-community-relay-01.png', 'droneaid-nl-community': 'authoring/library/droneaid-brand-kit-2026-09-29/background-original.png'}
+SOURCES = {
+    'fpv': 'game/ui/art/field-kit/prepared/title-hangar-v1.png',
+    'fpv-portrait': 'game/ui/art/field-kit/prepared/title-hangar-portrait-v1.png',
+    'fpv-versus': 'authoring/library/menu-scenes/fpv-versus-v1.png',
+    'fpv-versus-portrait': 'authoring/library/menu-scenes/fpv-versus-portrait-v1.png',
+    'fpv-team': 'authoring/library/menu-scenes/fpv-team-v1.png',
+    'fpv-team-portrait': 'authoring/library/menu-scenes/fpv-team-portrait-v1.png',
+    'ukraine': 'authoring/library/menu-scenes/ukraine-dawn-v1.png',
+    'ukraine-versus': 'authoring/library/menu-scenes/ukraine-versus-v1.png',
+    'ukraine-versus-portrait': 'authoring/library/menu-scenes/ukraine-versus-portrait-v1.png',
+    'ukraine-team': 'authoring/library/menu-scenes/ukraine-team-v1.png',
+    'ukraine-team-portrait': 'authoring/library/menu-scenes/ukraine-team-portrait-v1.png',
+    'retro': 'authoring/library/menu-scenes/retro-rainy-arcade-v1.png',
+    'retro-versus': 'authoring/library/menu-scenes/retro-versus-v1.png',
+    'retro-versus-portrait': 'authoring/library/menu-scenes/retro-versus-portrait-v1.png',
+    'retro-team': 'authoring/library/menu-scenes/retro-team-v1.png',
+    'retro-team-portrait': 'authoring/library/menu-scenes/retro-team-portrait-v1.png',
+    'droneaid-community': 'game/editions/assets/droneaid/droneaid-community-relay-01.png',
+    'droneaid-nl-community': 'authoring/library/droneaid-brand-kit-2026-09-29/background-original.png',
+}
 for slug in ['workshop-lights', 'parts-in-motion', 'makers-together', 'careful-handoff', 'signals-of-support', 'shared-horizon']:
     SOURCES[f'droneaid-nl-{slug}-theme'] = f'game/editions/assets/droneaid-nl/artwork-v2/droneaid-nl-{slug}-01.png'
 
@@ -29,7 +48,7 @@ for name, source in SOURCES.items():
     if selected and name not in selected:
         continue
     preserve_original = name == 'droneaid-nl-community'
-    mode_world = next((world for world in ['fpv', 'ukraine']
+    mode_world = next((world for world in ['fpv', 'ukraine', 'retro']
                        if name.startswith((world + '-versus', world + '-team'))), None)
     output = OUT / ('droneaid-main-background.png' if preserve_original else name + '.webp')
     with Image.open(ROOT / source) as original:
@@ -39,9 +58,9 @@ for name, source in SOURCES.items():
             process = 'Original supplied PNG; byte-for-byte copy, no raster changes'
         else:
             # Quality controls lossless encoder effort, not pixel fidelity.
-            # Ukraine's detailed paintings benefit from its exhaustive setting;
+            # Detailed mode paintings benefit from its exhaustive setting;
             # retain the earlier recipe for previously admitted artwork.
-            effort = 100 if mode_world == 'ukraine' else 75
+            effort = 100 if mode_world and mode_world != 'fpv' else 75
             original.save(output, format='WEBP', lossless=True, quality=effort, method=6)
             atlas_bytes = (OUT / 'analog-noise-atlas.png').stat().st_size
             threshold = ACTIVE_BUDGET - atlas_bytes if mode_world else 700 * 1024
@@ -52,7 +71,7 @@ for name, source in SOURCES.items():
                 with Image.open(output) as encoded:
                     assert encoded.convert('RGBA').tobytes() == original.convert('RGBA').tobytes()
             process = ('WebP lossless; quality=100 encoding effort, method=6; decoded RGBA verified identical'
-                       if lossless and mode_world == 'ukraine' else
+                       if lossless and effort == 100 else
                        'WebP lossless; decoded RGBA verified identical' if lossless else
                        'WebP quality 94, method=6; no cropping, resizing or retouching')
         size = original.size
