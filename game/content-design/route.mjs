@@ -40,6 +40,7 @@ import { createCulturalPressureTriptychCandidates } from './cultural-pressure-tr
 import { createCurrentRemixPressureCandidates } from './current-remix-pressure-candidates.mjs';
 import { createContestedWallTriptychCandidates } from './contested-wall-triptych-candidates.mjs';
 import { createPressureCorridorTriptychCandidates } from './pressure-corridor-triptych-candidates.mjs';
+import { createCoolingLoopErosionCandidates } from './cooling-loop-erosion-candidates.mjs';
 import { createUkrainianOrnamentJourney } from './ukrainian-ornament-candidates.mjs';
 import { createUkrainianOrnamentAtlasJourney } from './ukrainian-ornament-atlas.mjs';
 
@@ -90,6 +91,7 @@ export function createAuthoredJourneyRoute(id) {
     createCurrentRemixPressureCandidates,
     createContestedWallTriptychCandidates,
     createPressureCorridorTriptychCandidates,
+    createCoolingLoopErosionCandidates,
     createUkrainianOrnamentJourney,
     createUkrainianOrnamentAtlasJourney,
   });
