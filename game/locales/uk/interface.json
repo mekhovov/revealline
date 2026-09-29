@@ -1,4 +1,5 @@
 {
+  "enemyGuide.practiceBootFailed": "Тренування не запустилося. Поверніться до довідника й спробуйте знову. Кампанія залишається на паузі.",
   "revealLineControllerPractice": "FPV / LINE — Тренування з контролером",
   "revealLine": "◩ FPV / LINE",
   "controllerPractice": "ТРЕНУВАННЯ З КОНТРОЛЕРОМ",
