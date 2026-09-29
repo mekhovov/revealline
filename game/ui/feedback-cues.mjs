@@ -42,16 +42,7 @@ export function materialFor(theme = {}) {
   if (/navi|coupa|spend|paper/.test(id)) return 'soft';
   return 'metal';
 }
-export function movementFor(body = '', theme = {}, type = '') {
-  if (/bird|falcon|swallow|sail|moth/.test(body)) return 'wings';
-  if (/pottery|chest|weaver|bell|basket/.test(body)) return 'grain';
-  if (/navi|auditor|invoice|cursor/.test(body) || theme.family === 'navi') return 'grain';
-  if (theme.family === 'atlas') return /rover|eroder/.test(type) ? 'grain' : 'wings';
-  if (/rover|eroder|tank|cart/.test(type + body)) return 'wheels';
-  if (/quad|fpv|rotor/.test(body) || theme.family === 'fpv') return 'rotor';
-  if (type === 'bouncer') return 'wheels';
-  return 'motor';
-}
+export { recordedMovement as movementFor } from './movement-profiles.mjs';
 export function eventCue(event) {
   const type = event.type;
   if (type === 'ability.used')

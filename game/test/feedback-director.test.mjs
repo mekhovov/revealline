@@ -512,3 +512,52 @@ test('movement settings keep session defaults on storage failure and use a separ
   assert.ok(voice.ended);
   assert.equal(s.movementBus.gain.value, 0);
 });
+
+test('all moving enemy roles receive recorded voices when near, including Team and combat actors', () => {
+  for (const type of [
+    'bouncer',
+    'border-patrol',
+    'contour-patrol',
+    'claimed-rover',
+    'eroder',
+    'drifter',
+    'hunter',
+  ]) {
+    const { director } = harness();
+    const state = run();
+    state.enemies[0].type = type;
+    director.update(true, { family: 'fpv' }, state, { silentStart: true });
+    state.tick++;
+    state.enemies[0].x += 0.1;
+    director.update(true, { family: 'fpv' }, state, { silentStart: true });
+    assert.ok(director.boards.get('solo').loops.get('enemy:enemy'), type);
+  }
+  const { director } = harness();
+  const state = run();
+  state.enemies = [];
+  state.classic = {
+    combatPatrols: { actors: [{ id: 'combat', role: 'scout', alive: true, x: 15, y: 10 }] },
+  };
+  director.update(true, { family: 'fpv' }, state, { silentStart: true });
+  state.tick++;
+  state.classic.combatPatrols.actors[0].x += 0.1;
+  director.update(true, { family: 'fpv' }, state, { silentStart: true });
+  assert.equal(director.boards.get('solo').loops.get('enemy:combat').name, 'rotor');
+});
+test('authoritative freeze and dormant details suppress movement despite a position correction', () => {
+  for (const detail of [
+    { frozen: true },
+    { stunned: true },
+    { mode: 'dormant' },
+    { mode: 'idle' },
+  ]) {
+    const { director } = harness();
+    const state = run();
+    state.classic = { enemies: [{ id: 'enemy', ...detail }] };
+    director.update(true, { family: 'fpv' }, state, { silentStart: true });
+    state.tick++;
+    state.enemies[0].x += 0.1;
+    director.update(true, { family: 'fpv' }, state, { silentStart: true });
+    assert.equal(director.boards.get('solo').loops.size, 0);
+  }
+});
