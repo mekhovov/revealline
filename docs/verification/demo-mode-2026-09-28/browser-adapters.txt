@@ -1,0 +1,7 @@
+PASS: all six shipped source adapters strictly prepared and completed exact playback in this browser.
+first-signal-left: 3682 ticks, 3 lives, won, exact 3a51be5a501dc282
+first-signal-right: 3829 ticks, 3 lives, won, exact 5efde708340b17cf
+relay-orchard-loop: 5457 ticks, 3 lives, won, exact c7a8896b3bfc8a88
+relay-orchard-stairs: 5481 ticks, 3 lives, won, exact d1d1dc2537c5c3e1
+crosswind-openings: 5604 ticks, 3 lives, won, exact 6793da5f588f4099
+night-patrol-loop: 5602 ticks, 3 lives, won, exact 0bdda36c648dd003

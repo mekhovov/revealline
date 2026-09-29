@@ -88,7 +88,8 @@ export async function packageDesktop({
     await packager({
       dir: input,
       out: output,
-      name: 'Reveal Line',
+      name: 'FPV LINE',
+      extendInfo: { CFBundleDisplayName: 'FPV / LINE' },
       platform: process.platform,
       arch: process.arch,
       electronVersion: info.devDependencies.electron,

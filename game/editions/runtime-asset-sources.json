@@ -1,6 +1,6 @@
 {
   "format": "revealline-shared-runtime-asset-sources.v1",
-  "description": "Existing public main-game runtime resources reused unchanged by selected editions. Exact bytes are admitted by runtime-assets.json; no broad directory or media exemption is granted.",
+  "description": "Reviewed public main-game runtime resources reused by selected editions. Exact bytes, including the menu scene derivatives and font, are admitted by runtime-assets.json; no broad directory or media exemption is granted.",
   "groups": [
     {
       "assetIds": ["runtime-tiny5-license", "runtime-tiny5"],
@@ -41,6 +41,78 @@
       "credit": "Music: Carol of the Bells (Metal Version) by Alexander Nakarada (CreatorChords). Licensed under Creative Commons Attribution 4.0 International.",
       "runtimeRightsSource": "game/content/soundtrack-catalogue.mjs",
       "description": "Exact main-game bundled recording. Existing rights, credits, sharing policy and optional download catalog remain unchanged."
+    },
+    {
+      "assetIds": [
+        "runtime-departure-license",
+        "runtime-departure-provenance",
+        "runtime-departure-source",
+        "runtime-departure"
+      ],
+      "kind": "licensed-font",
+      "license": "SIL Open Font License 1.1",
+      "source": "game/ui/fonts/departure-mono/provenance.json",
+      "licensePath": "game/ui/fonts/departure-mono/LICENSE"
+    },
+    {
+      "assetIds": [
+        "runtime-menu-scene-provenance",
+        "runtime-menu-scene-fpv",
+        "runtime-menu-scene-fpv-portrait",
+        "runtime-menu-scene-ukraine",
+        "runtime-menu-scene-retro",
+        "runtime-menu-scene-coupa",
+        "runtime-menu-scene-coupa-village",
+        "runtime-menu-scene-coupa-spend-in-motion-theme",
+        "runtime-menu-scene-coupa-inside-village-theme",
+        "runtime-menu-scene-coupa-source-to-pay-theme",
+        "runtime-menu-scene-coupa-product-operations-theme",
+        "runtime-menu-scene-coupa-developer-integration-theme",
+        "runtime-menu-scene-droneaid-community",
+        "runtime-menu-scene-droneaid-nl-community",
+        "runtime-menu-scene-droneaid-nl-workshop-lights-theme",
+        "runtime-menu-scene-droneaid-nl-parts-in-motion-theme",
+        "runtime-menu-scene-droneaid-nl-makers-together-theme",
+        "runtime-menu-scene-droneaid-nl-careful-handoff-theme",
+        "runtime-menu-scene-droneaid-nl-signals-of-support-theme",
+        "runtime-menu-scene-droneaid-nl-shared-horizon-theme"
+      ],
+      "kind": "generated-project-artwork-and-encoding-derivatives",
+      "source": "game/ui/art/menu-scenes/provenance.json",
+      "description": "Two original built-in image_gen core scenes; existing project/brand campaign artwork re-encoded for bounded menu delivery. Source hashes and encoding recipes remain in provenance; generated prompts and originals are retained in authoring/library/menu-scenes."
+    },
+    {
+      "assetIds": ["runtime-analog-noise-atlas"],
+      "kind": "procedural-project-artwork",
+      "source": "scripts/build-analog-noise-atlas.mjs",
+      "description": "Four deterministic monochrome receiver-noise frames generated with the shared analog-signal algorithm; no source footage or reward artwork."
+    },
+    {
+      "assetIds": [
+        "runtime-fpv-line-provenance",
+        "runtime-fpv-line-install-recipe",
+        "runtime-fpv-line-wordmark",
+        "runtime-fpv-line-icon-16",
+        "runtime-fpv-line-icon-32",
+        "runtime-fpv-line-icon-180",
+        "runtime-fpv-line-icon-192",
+        "runtime-fpv-line-icon-512"
+      ],
+      "kind": "generated-project-identity-and-install-derivatives",
+      "source": "game/ui/art/identity/fpv-line/provenance.json",
+      "description": "Original FPV / LINE wordmark and icon generated with built-in image_gen. Full prompts/originals remain under authoring/library/fpv-line-identity. Required-size PNGs and native containers derive deterministically; only the 512 px icon uses bounded 6-bit channel encoding with maximum error 2/255. Master/native-only large images are not pulled into edition graphs."
+    },
+    {
+      "assetIds": ["runtime-menu-scene-droneaid-main-background"],
+      "kind": "user-supplied-brand-original",
+      "source": "authoring/library/droneaid-brand-kit-2026-09-29/background-original.png",
+      "description": "Unmodified supplied PNG selected for the aggregate DroneAid landing only. Source and runtime bytes are identical; this is not a generated derivative or a replacement for campaign artwork."
+    },
+    {
+      "assetIds": ["runtime-droneaid-wordmark-light"],
+      "kind": "user-supplied-brand-original",
+      "source": "authoring/library/droneaid-brand-kit-2026-09-29/wordmark-dark.svg",
+      "description": "Unmodified official white-letter wordmark supplied by the user. Source filename denotes its dark-background use; runtime filename denotes light lettering. Existing shared propeller/logo receipts and install icons are unchanged."
     }
   ]
 }

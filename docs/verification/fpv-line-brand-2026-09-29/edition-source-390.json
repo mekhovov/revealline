@@ -1,0 +1,2601 @@
+{
+  "date": "2026-09-29",
+  "origin": "http://127.0.0.1:8768",
+  "locale": "en",
+  "viewport": {
+    "width": 390,
+    "height": 844
+  },
+  "scope": "14 current source edition landing DOM bounds/decoded logos and scenes; no mission start",
+  "notes": [
+    "Heading glyph inline boxes extend about4.8px below their CSS line box; title/home-content overflow is visible, measured text fragments remain inside viewport and finish before mode control. ScrollHeight>clientHeight alone was therefore not used as a clipping verdict.",
+    "The title field contains the h1 bounding rect; landingTitle is its observed text."
+  ],
+  "checks": [
+    {
+      "selector": "coupa-all",
+      "titleMatches": true,
+      "titleFits": true,
+      "titleHorizontalFits": true,
+      "titlePartsFitViewport": true,
+      "titleEndsBeforeModes": true,
+      "documentNoOverflow": true,
+      "controlsFit": true,
+      "onlySolo": true,
+      "logosDecoded": true,
+      "sceneLoaded": true,
+      "propellerExpected": false,
+      "propellerRotates": null,
+      "titleHeight": 138.5859375,
+      "lowestControl": 703.4921875,
+      "glyphOverflowBelowLineBox": 4.8046875
+    },
+    {
+      "selector": "coupa-adventure",
+      "titleMatches": true,
+      "titleFits": true,
+      "titleHorizontalFits": true,
+      "titlePartsFitViewport": true,
+      "titleEndsBeforeModes": true,
+      "documentNoOverflow": true,
+      "controlsFit": true,
+      "onlySolo": true,
+      "logosDecoded": true,
+      "sceneLoaded": true,
+      "propellerExpected": false,
+      "propellerRotates": null,
+      "titleHeight": 138.5859375,
+      "lowestControl": 703.4921875,
+      "glyphOverflowBelowLineBox": 4.8046875
+    },
+    {
+      "selector": "coupa-culture",
+      "titleMatches": true,
+      "titleFits": true,
+      "titleHorizontalFits": true,
+      "titlePartsFitViewport": true,
+      "titleEndsBeforeModes": true,
+      "documentNoOverflow": true,
+      "controlsFit": true,
+      "onlySolo": true,
+      "logosDecoded": true,
+      "sceneLoaded": true,
+      "propellerExpected": false,
+      "propellerRotates": null,
+      "titleHeight": 138.5859375,
+      "lowestControl": 703.4921875,
+      "glyphOverflowBelowLineBox": 4.8046875
+    },
+    {
+      "selector": "coupa-foundations",
+      "titleMatches": true,
+      "titleFits": true,
+      "titleHorizontalFits": true,
+      "titlePartsFitViewport": true,
+      "titleEndsBeforeModes": true,
+      "documentNoOverflow": true,
+      "controlsFit": true,
+      "onlySolo": true,
+      "logosDecoded": true,
+      "sceneLoaded": true,
+      "propellerExpected": false,
+      "propellerRotates": null,
+      "titleHeight": 92.390625,
+      "lowestControl": 680.390625,
+      "glyphOverflowBelowLineBox": 4.8046875
+    },
+    {
+      "selector": "coupa-operations",
+      "titleMatches": true,
+      "titleFits": true,
+      "titleHorizontalFits": true,
+      "titlePartsFitViewport": true,
+      "titleEndsBeforeModes": true,
+      "documentNoOverflow": true,
+      "controlsFit": true,
+      "onlySolo": true,
+      "logosDecoded": true,
+      "sceneLoaded": true,
+      "propellerExpected": false,
+      "propellerRotates": null,
+      "titleHeight": 92.390625,
+      "lowestControl": 680.390625,
+      "glyphOverflowBelowLineBox": 4.8046875
+    },
+    {
+      "selector": "coupa-developers",
+      "titleMatches": true,
+      "titleFits": true,
+      "titleHorizontalFits": true,
+      "titlePartsFitViewport": true,
+      "titleEndsBeforeModes": true,
+      "documentNoOverflow": true,
+      "controlsFit": true,
+      "onlySolo": true,
+      "logosDecoded": true,
+      "sceneLoaded": true,
+      "propellerExpected": false,
+      "propellerRotates": null,
+      "titleHeight": 138.5859375,
+      "lowestControl": 703.4921875,
+      "glyphOverflowBelowLineBox": 4.8046875
+    },
+    {
+      "selector": "droneaid-community",
+      "titleMatches": true,
+      "titleFits": true,
+      "titleHorizontalFits": true,
+      "titlePartsFitViewport": true,
+      "titleEndsBeforeModes": true,
+      "documentNoOverflow": true,
+      "controlsFit": true,
+      "onlySolo": true,
+      "logosDecoded": true,
+      "sceneLoaded": true,
+      "propellerExpected": false,
+      "propellerRotates": null,
+      "titleHeight": 92.390625,
+      "lowestControl": 680.390625,
+      "glyphOverflowBelowLineBox": 4.8046875
+    },
+    {
+      "selector": "droneaid",
+      "titleMatches": true,
+      "titleFits": true,
+      "titleHorizontalFits": true,
+      "titlePartsFitViewport": true,
+      "titleEndsBeforeModes": true,
+      "documentNoOverflow": true,
+      "controlsFit": true,
+      "onlySolo": true,
+      "logosDecoded": true,
+      "sceneLoaded": true,
+      "propellerExpected": true,
+      "propellerRotates": true,
+      "titleHeight": 92.390625,
+      "lowestControl": 682.390625,
+      "glyphOverflowBelowLineBox": 4.8046875
+    },
+    {
+      "selector": "droneaid-nl-workshop-lights",
+      "titleMatches": true,
+      "titleFits": true,
+      "titleHorizontalFits": true,
+      "titlePartsFitViewport": true,
+      "titleEndsBeforeModes": true,
+      "documentNoOverflow": true,
+      "controlsFit": true,
+      "onlySolo": true,
+      "logosDecoded": true,
+      "sceneLoaded": true,
+      "propellerExpected": true,
+      "propellerRotates": true,
+      "titleHeight": 138.5859375,
+      "lowestControl": 705.4921875,
+      "glyphOverflowBelowLineBox": 4.8046875
+    },
+    {
+      "selector": "droneaid-nl-parts-in-motion",
+      "titleMatches": true,
+      "titleFits": true,
+      "titleHorizontalFits": true,
+      "titlePartsFitViewport": true,
+      "titleEndsBeforeModes": true,
+      "documentNoOverflow": true,
+      "controlsFit": true,
+      "onlySolo": true,
+      "logosDecoded": true,
+      "sceneLoaded": true,
+      "propellerExpected": true,
+      "propellerRotates": true,
+      "titleHeight": 138.5859375,
+      "lowestControl": 705.4921875,
+      "glyphOverflowBelowLineBox": 4.8046875
+    },
+    {
+      "selector": "droneaid-nl-makers-together",
+      "titleMatches": true,
+      "titleFits": true,
+      "titleHorizontalFits": true,
+      "titlePartsFitViewport": true,
+      "titleEndsBeforeModes": true,
+      "documentNoOverflow": true,
+      "controlsFit": true,
+      "onlySolo": true,
+      "logosDecoded": true,
+      "sceneLoaded": true,
+      "propellerExpected": true,
+      "propellerRotates": true,
+      "titleHeight": 138.5859375,
+      "lowestControl": 705.4921875,
+      "glyphOverflowBelowLineBox": 4.8046875
+    },
+    {
+      "selector": "droneaid-nl-careful-handoff",
+      "titleMatches": true,
+      "titleFits": true,
+      "titleHorizontalFits": true,
+      "titlePartsFitViewport": true,
+      "titleEndsBeforeModes": true,
+      "documentNoOverflow": true,
+      "controlsFit": true,
+      "onlySolo": true,
+      "logosDecoded": true,
+      "sceneLoaded": true,
+      "propellerExpected": true,
+      "propellerRotates": true,
+      "titleHeight": 138.5859375,
+      "lowestControl": 705.4921875,
+      "glyphOverflowBelowLineBox": 4.8046875
+    },
+    {
+      "selector": "droneaid-nl-signals-of-support",
+      "titleMatches": true,
+      "titleFits": true,
+      "titleHorizontalFits": true,
+      "titlePartsFitViewport": true,
+      "titleEndsBeforeModes": true,
+      "documentNoOverflow": true,
+      "controlsFit": true,
+      "onlySolo": true,
+      "logosDecoded": true,
+      "sceneLoaded": true,
+      "propellerExpected": true,
+      "propellerRotates": true,
+      "titleHeight": 138.5859375,
+      "lowestControl": 705.4921875,
+      "glyphOverflowBelowLineBox": 4.8046875
+    },
+    {
+      "selector": "droneaid-nl-shared-horizon",
+      "titleMatches": true,
+      "titleFits": true,
+      "titleHorizontalFits": true,
+      "titlePartsFitViewport": true,
+      "titleEndsBeforeModes": true,
+      "documentNoOverflow": true,
+      "controlsFit": true,
+      "onlySolo": true,
+      "logosDecoded": true,
+      "sceneLoaded": true,
+      "propellerExpected": true,
+      "propellerRotates": true,
+      "titleHeight": 138.5859375,
+      "lowestControl": 705.4921875,
+      "glyphOverflowBelowLineBox": 4.8046875
+    }
+  ],
+  "rows": [
+    {
+      "selector": "coupa-all",
+      "expectedTitle": "Coupa Village / LINE",
+      "brand": "coupa",
+      "controls": [
+        {
+          "id": "solo-current-mode",
+          "label": "Solo",
+          "rect": {
+            "bottom": 379.4921875,
+            "height": 72.3984375,
+            "left": 20,
+            "right": 180,
+            "top": 307.09375,
+            "width": 160,
+            "x": 20,
+            "y": 307.09375
+          }
+        },
+        {
+          "id": "shell-featured",
+          "label": "Start\n            →",
+          "rect": {
+            "bottom": 455.4921875,
+            "height": 56,
+            "left": 20,
+            "right": 370,
+            "top": 399.4921875,
+            "width": 350,
+            "x": 20,
+            "y": 399.4921875
+          }
+        },
+        {
+          "id": "shell-play",
+          "label": "Select Mission",
+          "rect": {
+            "bottom": 519.4921875,
+            "height": 56,
+            "left": 20,
+            "right": 370,
+            "top": 463.4921875,
+            "width": 350,
+            "x": 20,
+            "y": 463.4921875
+          }
+        },
+        {
+          "id": "shell-options",
+          "label": "Settings",
+          "rect": {
+            "bottom": 583.4921875,
+            "height": 56,
+            "left": 20,
+            "right": 370,
+            "top": 527.4921875,
+            "width": 350,
+            "x": 20,
+            "y": 527.4921875
+          }
+        },
+        {
+          "id": "shell-sound",
+          "label": "Sound: off",
+          "rect": {
+            "bottom": 647.4921875,
+            "height": 56,
+            "left": 20,
+            "right": 370,
+            "top": 591.4921875,
+            "width": 350,
+            "x": 20,
+            "y": 591.4921875
+          }
+        },
+        {
+          "id": "solo-landing-fullscreen",
+          "label": "Enter fullscreen",
+          "rect": {
+            "bottom": 703.4921875,
+            "height": 44,
+            "left": 20,
+            "right": 215.1640625,
+            "top": 659.4921875,
+            "width": 195.1640625,
+            "x": 20,
+            "y": 659.4921875
+          }
+        }
+      ],
+      "documentWidth": 390,
+      "editionId": "coupa-all",
+      "landingTitle": "Coupa Village / LINE",
+      "logo": [
+        {
+          "alt": "Coupa",
+          "decoded": true,
+          "rect": {
+            "bottom": 132.5078125,
+            "height": 32,
+            "left": 20,
+            "right": 200,
+            "top": 100.5078125,
+            "width": 180,
+            "x": 20,
+            "y": 100.5078125
+          },
+          "src": "http://127.0.0.1:8768/game/editions/assets/coupa/flower-blue.png"
+        }
+      ],
+      "propeller": null,
+      "scene": "coupa-village",
+      "sceneLoaded": "true",
+      "title": {
+        "bottom": 287.09375,
+        "height": 138.5859375,
+        "left": 20,
+        "right": 370,
+        "top": 148.5078125,
+        "width": 350,
+        "x": 20,
+        "y": 148.5078125
+      },
+      "titleParts": [
+        {
+          "rect": {
+            "bottom": 245.703125,
+            "height": 102.1953125,
+            "left": 20,
+            "right": 209,
+            "top": 143.5078125,
+            "width": 189,
+            "x": 20,
+            "y": 143.5078125
+          },
+          "text": "Coupa Village"
+        },
+        {
+          "rect": {
+            "bottom": 291.8984375,
+            "height": 56,
+            "left": 20,
+            "right": 182,
+            "top": 235.8984375,
+            "width": 162,
+            "x": 20,
+            "y": 235.8984375
+          },
+          "text": " / LINE"
+        }
+      ],
+      "titleScroll": {
+        "clientHeight": 139,
+        "clientWidth": 350,
+        "height": 143,
+        "width": 350
+      },
+      "url": "http://127.0.0.1:8768/game/?edition=coupa-all",
+      "viewport": {
+        "height": 844,
+        "width": 390
+      }
+    },
+    {
+      "selector": "coupa-adventure",
+      "expectedTitle": "Spend in Motion / LINE",
+      "brand": "coupa",
+      "controls": [
+        {
+          "id": "solo-current-mode",
+          "label": "Solo",
+          "rect": {
+            "bottom": 379.4921875,
+            "height": 72.3984375,
+            "left": 20,
+            "right": 180,
+            "top": 307.09375,
+            "width": 160,
+            "x": 20,
+            "y": 307.09375
+          }
+        },
+        {
+          "id": "shell-featured",
+          "label": "Start\n            →",
+          "rect": {
+            "bottom": 455.4921875,
+            "height": 56,
+            "left": 20,
+            "right": 370,
+            "top": 399.4921875,
+            "width": 350,
+            "x": 20,
+            "y": 399.4921875
+          }
+        },
+        {
+          "id": "shell-play",
+          "label": "Select Mission",
+          "rect": {
+            "bottom": 519.4921875,
+            "height": 56,
+            "left": 20,
+            "right": 370,
+            "top": 463.4921875,
+            "width": 350,
+            "x": 20,
+            "y": 463.4921875
+          }
+        },
+        {
+          "id": "shell-options",
+          "label": "Settings",
+          "rect": {
+            "bottom": 583.4921875,
+            "height": 56,
+            "left": 20,
+            "right": 370,
+            "top": 527.4921875,
+            "width": 350,
+            "x": 20,
+            "y": 527.4921875
+          }
+        },
+        {
+          "id": "shell-sound",
+          "label": "Sound: off",
+          "rect": {
+            "bottom": 647.4921875,
+            "height": 56,
+            "left": 20,
+            "right": 370,
+            "top": 591.4921875,
+            "width": 350,
+            "x": 20,
+            "y": 591.4921875
+          }
+        },
+        {
+          "id": "solo-landing-fullscreen",
+          "label": "Enter fullscreen",
+          "rect": {
+            "bottom": 703.4921875,
+            "height": 44,
+            "left": 20,
+            "right": 215.1640625,
+            "top": 659.4921875,
+            "width": 195.1640625,
+            "x": 20,
+            "y": 659.4921875
+          }
+        }
+      ],
+      "documentWidth": 390,
+      "editionId": "coupa-adventure",
+      "landingTitle": "Spend in Motion / LINE",
+      "logo": [
+        {
+          "alt": "Coupa",
+          "decoded": true,
+          "rect": {
+            "bottom": 132.5078125,
+            "height": 32,
+            "left": 20,
+            "right": 200,
+            "top": 100.5078125,
+            "width": 180,
+            "x": 20,
+            "y": 100.5078125
+          },
+          "src": "http://127.0.0.1:8768/game/editions/assets/coupa/flower-blue.png"
+        }
+      ],
+      "propeller": null,
+      "scene": "coupa-spend-in-motion-theme",
+      "sceneLoaded": "true",
+      "title": {
+        "bottom": 287.09375,
+        "height": 138.5859375,
+        "left": 20,
+        "right": 370,
+        "top": 148.5078125,
+        "width": 350,
+        "x": 20,
+        "y": 148.5078125
+      },
+      "titleParts": [
+        {
+          "rect": {
+            "bottom": 245.703125,
+            "height": 102.1953125,
+            "left": 20,
+            "right": 236,
+            "top": 143.5078125,
+            "width": 216,
+            "x": 20,
+            "y": 143.5078125
+          },
+          "text": "Spend in Motion"
+        },
+        {
+          "rect": {
+            "bottom": 291.8984375,
+            "height": 56,
+            "left": 20,
+            "right": 182,
+            "top": 235.8984375,
+            "width": 162,
+            "x": 20,
+            "y": 235.8984375
+          },
+          "text": " / LINE"
+        }
+      ],
+      "titleScroll": {
+        "clientHeight": 139,
+        "clientWidth": 350,
+        "height": 143,
+        "width": 350
+      },
+      "url": "http://127.0.0.1:8768/game/?edition=coupa-adventure",
+      "viewport": {
+        "height": 844,
+        "width": 390
+      }
+    },
+    {
+      "selector": "coupa-culture",
+      "expectedTitle": "Inside the Village / LINE",
+      "brand": "coupa",
+      "controls": [
+        {
+          "id": "solo-current-mode",
+          "label": "Solo",
+          "rect": {
+            "bottom": 379.4921875,
+            "height": 72.3984375,
+            "left": 20,
+            "right": 180,
+            "top": 307.09375,
+            "width": 160,
+            "x": 20,
+            "y": 307.09375
+          }
+        },
+        {
+          "id": "shell-featured",
+          "label": "Start\n            →",
+          "rect": {
+            "bottom": 455.4921875,
+            "height": 56,
+            "left": 20,
+            "right": 370,
+            "top": 399.4921875,
+            "width": 350,
+            "x": 20,
+            "y": 399.4921875
+          }
+        },
+        {
+          "id": "shell-play",
+          "label": "Select Mission",
+          "rect": {
+            "bottom": 519.4921875,
+            "height": 56,
+            "left": 20,
+            "right": 370,
+            "top": 463.4921875,
+            "width": 350,
+            "x": 20,
+            "y": 463.4921875
+          }
+        },
+        {
+          "id": "shell-options",
+          "label": "Settings",
+          "rect": {
+            "bottom": 583.4921875,
+            "height": 56,
+            "left": 20,
+            "right": 370,
+            "top": 527.4921875,
+            "width": 350,
+            "x": 20,
+            "y": 527.4921875
+          }
+        },
+        {
+          "id": "shell-sound",
+          "label": "Sound: off",
+          "rect": {
+            "bottom": 647.4921875,
+            "height": 56,
+            "left": 20,
+            "right": 370,
+            "top": 591.4921875,
+            "width": 350,
+            "x": 20,
+            "y": 591.4921875
+          }
+        },
+        {
+          "id": "solo-landing-fullscreen",
+          "label": "Enter fullscreen",
+          "rect": {
+            "bottom": 703.4921875,
+            "height": 44,
+            "left": 20,
+            "right": 215.1640625,
+            "top": 659.4921875,
+            "width": 195.1640625,
+            "x": 20,
+            "y": 659.4921875
+          }
+        }
+      ],
+      "documentWidth": 390,
+      "editionId": "coupa-culture",
+      "landingTitle": "Inside the Village / LINE",
+      "logo": [
+        {
+          "alt": "Coupa",
+          "decoded": true,
+          "rect": {
+            "bottom": 132.5078125,
+            "height": 32,
+            "left": 20,
+            "right": 200,
+            "top": 100.5078125,
+            "width": 180,
+            "x": 20,
+            "y": 100.5078125
+          },
+          "src": "http://127.0.0.1:8768/game/editions/assets/coupa/flower-blue.png"
+        }
+      ],
+      "propeller": null,
+      "scene": "coupa-inside-village-theme",
+      "sceneLoaded": "true",
+      "title": {
+        "bottom": 287.09375,
+        "height": 138.5859375,
+        "left": 20,
+        "right": 370,
+        "top": 148.5078125,
+        "width": 350,
+        "x": 20,
+        "y": 148.5078125
+      },
+      "titleParts": [
+        {
+          "rect": {
+            "bottom": 245.703125,
+            "height": 102.1953125,
+            "left": 20,
+            "right": 290,
+            "top": 143.5078125,
+            "width": 270,
+            "x": 20,
+            "y": 143.5078125
+          },
+          "text": "Inside the Village"
+        },
+        {
+          "rect": {
+            "bottom": 291.8984375,
+            "height": 56,
+            "left": 20,
+            "right": 182,
+            "top": 235.8984375,
+            "width": 162,
+            "x": 20,
+            "y": 235.8984375
+          },
+          "text": " / LINE"
+        }
+      ],
+      "titleScroll": {
+        "clientHeight": 139,
+        "clientWidth": 350,
+        "height": 143,
+        "width": 350
+      },
+      "url": "http://127.0.0.1:8768/game/?edition=coupa-culture",
+      "viewport": {
+        "height": 844,
+        "width": 390
+      }
+    },
+    {
+      "selector": "coupa-foundations",
+      "expectedTitle": "From Need to Value / LINE",
+      "brand": "coupa",
+      "controls": [
+        {
+          "id": "solo-current-mode",
+          "label": "Solo",
+          "rect": {
+            "bottom": 356.390625,
+            "height": 72.3984375,
+            "left": 20,
+            "right": 180,
+            "top": 283.9921875,
+            "width": 160,
+            "x": 20,
+            "y": 283.9921875
+          }
+        },
+        {
+          "id": "shell-featured",
+          "label": "Start\n            →",
+          "rect": {
+            "bottom": 432.390625,
+            "height": 56,
+            "left": 20,
+            "right": 370,
+            "top": 376.390625,
+            "width": 350,
+            "x": 20,
+            "y": 376.390625
+          }
+        },
+        {
+          "id": "shell-play",
+          "label": "Select Mission",
+          "rect": {
+            "bottom": 496.390625,
+            "height": 56,
+            "left": 20,
+            "right": 370,
+            "top": 440.390625,
+            "width": 350,
+            "x": 20,
+            "y": 440.390625
+          }
+        },
+        {
+          "id": "shell-options",
+          "label": "Settings",
+          "rect": {
+            "bottom": 560.390625,
+            "height": 56,
+            "left": 20,
+            "right": 370,
+            "top": 504.390625,
+            "width": 350,
+            "x": 20,
+            "y": 504.390625
+          }
+        },
+        {
+          "id": "shell-sound",
+          "label": "Sound: off",
+          "rect": {
+            "bottom": 624.390625,
+            "height": 56,
+            "left": 20,
+            "right": 370,
+            "top": 568.390625,
+            "width": 350,
+            "x": 20,
+            "y": 568.390625
+          }
+        },
+        {
+          "id": "solo-landing-fullscreen",
+          "label": "Enter fullscreen",
+          "rect": {
+            "bottom": 680.390625,
+            "height": 44,
+            "left": 20,
+            "right": 215.1640625,
+            "top": 636.390625,
+            "width": 195.1640625,
+            "x": 20,
+            "y": 636.390625
+          }
+        }
+      ],
+      "documentWidth": 390,
+      "editionId": "coupa-foundations",
+      "landingTitle": "From Need to Value / LINE",
+      "logo": [
+        {
+          "alt": "Coupa",
+          "decoded": true,
+          "rect": {
+            "bottom": 155.6015625,
+            "height": 32,
+            "left": 20,
+            "right": 200,
+            "top": 123.6015625,
+            "width": 180,
+            "x": 20,
+            "y": 123.6015625
+          },
+          "src": "http://127.0.0.1:8768/game/editions/assets/coupa/flower-blue.png"
+        }
+      ],
+      "propeller": null,
+      "scene": "coupa-source-to-pay-theme",
+      "sceneLoaded": "true",
+      "title": {
+        "bottom": 263.9921875,
+        "height": 92.390625,
+        "left": 20,
+        "right": 370,
+        "top": 171.6015625,
+        "width": 350,
+        "x": 20,
+        "y": 171.6015625
+      },
+      "titleParts": [
+        {
+          "rect": {
+            "bottom": 268.796875,
+            "height": 102.1953125,
+            "left": 20,
+            "right": 344,
+            "top": 166.6015625,
+            "width": 324,
+            "x": 20,
+            "y": 166.6015625
+          },
+          "text": "From Need to Value"
+        },
+        {
+          "rect": {
+            "bottom": 268.796875,
+            "height": 56,
+            "left": 155,
+            "right": 344,
+            "top": 212.796875,
+            "width": 189,
+            "x": 155,
+            "y": 212.796875
+          },
+          "text": " / LINE"
+        }
+      ],
+      "titleScroll": {
+        "clientHeight": 92,
+        "clientWidth": 350,
+        "height": 97,
+        "width": 350
+      },
+      "url": "http://127.0.0.1:8768/game/?edition=coupa-foundations",
+      "viewport": {
+        "height": 844,
+        "width": 390
+      }
+    },
+    {
+      "selector": "coupa-operations",
+      "expectedTitle": "A Day in Coupa / LINE",
+      "brand": "coupa",
+      "controls": [
+        {
+          "id": "solo-current-mode",
+          "label": "Solo",
+          "rect": {
+            "bottom": 356.390625,
+            "height": 72.3984375,
+            "left": 20,
+            "right": 180,
+            "top": 283.9921875,
+            "width": 160,
+            "x": 20,
+            "y": 283.9921875
+          }
+        },
+        {
+          "id": "shell-featured",
+          "label": "Start\n            →",
+          "rect": {
+            "bottom": 432.390625,
+            "height": 56,
+            "left": 20,
+            "right": 370,
+            "top": 376.390625,
+            "width": 350,
+            "x": 20,
+            "y": 376.390625
+          }
+        },
+        {
+          "id": "shell-play",
+          "label": "Select Mission",
+          "rect": {
+            "bottom": 496.390625,
+            "height": 56,
+            "left": 20,
+            "right": 370,
+            "top": 440.390625,
+            "width": 350,
+            "x": 20,
+            "y": 440.390625
+          }
+        },
+        {
+          "id": "shell-options",
+          "label": "Settings",
+          "rect": {
+            "bottom": 560.390625,
+            "height": 56,
+            "left": 20,
+            "right": 370,
+            "top": 504.390625,
+            "width": 350,
+            "x": 20,
+            "y": 504.390625
+          }
+        },
+        {
+          "id": "shell-sound",
+          "label": "Sound: off",
+          "rect": {
+            "bottom": 624.390625,
+            "height": 56,
+            "left": 20,
+            "right": 370,
+            "top": 568.390625,
+            "width": 350,
+            "x": 20,
+            "y": 568.390625
+          }
+        },
+        {
+          "id": "solo-landing-fullscreen",
+          "label": "Enter fullscreen",
+          "rect": {
+            "bottom": 680.390625,
+            "height": 44,
+            "left": 20,
+            "right": 215.1640625,
+            "top": 636.390625,
+            "width": 195.1640625,
+            "x": 20,
+            "y": 636.390625
+          }
+        }
+      ],
+      "documentWidth": 390,
+      "editionId": "coupa-operations",
+      "landingTitle": "A Day in Coupa / LINE",
+      "logo": [
+        {
+          "alt": "Coupa",
+          "decoded": true,
+          "rect": {
+            "bottom": 155.6015625,
+            "height": 32,
+            "left": 20,
+            "right": 200,
+            "top": 123.6015625,
+            "width": 180,
+            "x": 20,
+            "y": 123.6015625
+          },
+          "src": "http://127.0.0.1:8768/game/editions/assets/coupa/flower-blue.png"
+        }
+      ],
+      "propeller": null,
+      "scene": "coupa-product-operations-theme",
+      "sceneLoaded": "true",
+      "title": {
+        "bottom": 263.9921875,
+        "height": 92.390625,
+        "left": 20,
+        "right": 370,
+        "top": 171.6015625,
+        "width": 350,
+        "x": 20,
+        "y": 171.6015625
+      },
+      "titleParts": [
+        {
+          "rect": {
+            "bottom": 268.796875,
+            "height": 102.1953125,
+            "left": 20,
+            "right": 236,
+            "top": 166.6015625,
+            "width": 216,
+            "x": 20,
+            "y": 166.6015625
+          },
+          "text": "A Day in Coupa"
+        },
+        {
+          "rect": {
+            "bottom": 268.796875,
+            "height": 56,
+            "left": 155,
+            "right": 344,
+            "top": 212.796875,
+            "width": 189,
+            "x": 155,
+            "y": 212.796875
+          },
+          "text": " / LINE"
+        }
+      ],
+      "titleScroll": {
+        "clientHeight": 92,
+        "clientWidth": 350,
+        "height": 97,
+        "width": 350
+      },
+      "url": "http://127.0.0.1:8768/game/?edition=coupa-operations",
+      "viewport": {
+        "height": 844,
+        "width": 390
+      }
+    },
+    {
+      "selector": "coupa-developers",
+      "expectedTitle": "Connect the Network / LINE",
+      "brand": "coupa",
+      "controls": [
+        {
+          "id": "solo-current-mode",
+          "label": "Solo",
+          "rect": {
+            "bottom": 379.4921875,
+            "height": 72.3984375,
+            "left": 20,
+            "right": 180,
+            "top": 307.09375,
+            "width": 160,
+            "x": 20,
+            "y": 307.09375
+          }
+        },
+        {
+          "id": "shell-featured",
+          "label": "Start\n            →",
+          "rect": {
+            "bottom": 455.4921875,
+            "height": 56,
+            "left": 20,
+            "right": 370,
+            "top": 399.4921875,
+            "width": 350,
+            "x": 20,
+            "y": 399.4921875
+          }
+        },
+        {
+          "id": "shell-play",
+          "label": "Select Mission",
+          "rect": {
+            "bottom": 519.4921875,
+            "height": 56,
+            "left": 20,
+            "right": 370,
+            "top": 463.4921875,
+            "width": 350,
+            "x": 20,
+            "y": 463.4921875
+          }
+        },
+        {
+          "id": "shell-options",
+          "label": "Settings",
+          "rect": {
+            "bottom": 583.4921875,
+            "height": 56,
+            "left": 20,
+            "right": 370,
+            "top": 527.4921875,
+            "width": 350,
+            "x": 20,
+            "y": 527.4921875
+          }
+        },
+        {
+          "id": "shell-sound",
+          "label": "Sound: off",
+          "rect": {
+            "bottom": 647.4921875,
+            "height": 56,
+            "left": 20,
+            "right": 370,
+            "top": 591.4921875,
+            "width": 350,
+            "x": 20,
+            "y": 591.4921875
+          }
+        },
+        {
+          "id": "solo-landing-fullscreen",
+          "label": "Enter fullscreen",
+          "rect": {
+            "bottom": 703.4921875,
+            "height": 44,
+            "left": 20,
+            "right": 215.1640625,
+            "top": 659.4921875,
+            "width": 195.1640625,
+            "x": 20,
+            "y": 659.4921875
+          }
+        }
+      ],
+      "documentWidth": 390,
+      "editionId": "coupa-developers",
+      "landingTitle": "Connect the Network / LINE",
+      "logo": [
+        {
+          "alt": "Coupa",
+          "decoded": true,
+          "rect": {
+            "bottom": 132.5078125,
+            "height": 32,
+            "left": 20,
+            "right": 200,
+            "top": 100.5078125,
+            "width": 180,
+            "x": 20,
+            "y": 100.5078125
+          },
+          "src": "http://127.0.0.1:8768/game/editions/assets/coupa/flower-blue.png"
+        }
+      ],
+      "propeller": null,
+      "scene": "coupa-developer-integration-theme",
+      "sceneLoaded": "true",
+      "title": {
+        "bottom": 287.09375,
+        "height": 138.5859375,
+        "left": 20,
+        "right": 370,
+        "top": 148.5078125,
+        "width": 350,
+        "x": 20,
+        "y": 148.5078125
+      },
+      "titleParts": [
+        {
+          "rect": {
+            "bottom": 245.703125,
+            "height": 102.1953125,
+            "left": 20,
+            "right": 317,
+            "top": 143.5078125,
+            "width": 297,
+            "x": 20,
+            "y": 143.5078125
+          },
+          "text": "Connect the Network"
+        },
+        {
+          "rect": {
+            "bottom": 291.8984375,
+            "height": 56,
+            "left": 20,
+            "right": 182,
+            "top": 235.8984375,
+            "width": 162,
+            "x": 20,
+            "y": 235.8984375
+          },
+          "text": " / LINE"
+        }
+      ],
+      "titleScroll": {
+        "clientHeight": 139,
+        "clientWidth": 350,
+        "height": 143,
+        "width": 350
+      },
+      "url": "http://127.0.0.1:8768/game/?edition=coupa-developers",
+      "viewport": {
+        "height": 844,
+        "width": 390
+      }
+    },
+    {
+      "selector": "droneaid-community",
+      "expectedTitle": "Community Relay / LINE",
+      "brand": "droneaid",
+      "controls": [
+        {
+          "id": "solo-current-mode",
+          "label": "Solo",
+          "rect": {
+            "bottom": 356.390625,
+            "height": 72.3984375,
+            "left": 20,
+            "right": 180,
+            "top": 283.9921875,
+            "width": 160,
+            "x": 20,
+            "y": 283.9921875
+          }
+        },
+        {
+          "id": "shell-featured",
+          "label": "Start\n            →",
+          "rect": {
+            "bottom": 432.390625,
+            "height": 56,
+            "left": 20,
+            "right": 370,
+            "top": 376.390625,
+            "width": 350,
+            "x": 20,
+            "y": 376.390625
+          }
+        },
+        {
+          "id": "shell-play",
+          "label": "Select Mission",
+          "rect": {
+            "bottom": 496.390625,
+            "height": 56,
+            "left": 20,
+            "right": 370,
+            "top": 440.390625,
+            "width": 350,
+            "x": 20,
+            "y": 440.390625
+          }
+        },
+        {
+          "id": "shell-options",
+          "label": "Settings",
+          "rect": {
+            "bottom": 560.390625,
+            "height": 56,
+            "left": 20,
+            "right": 370,
+            "top": 504.390625,
+            "width": 350,
+            "x": 20,
+            "y": 504.390625
+          }
+        },
+        {
+          "id": "shell-sound",
+          "label": "Sound: off",
+          "rect": {
+            "bottom": 624.390625,
+            "height": 56,
+            "left": 20,
+            "right": 370,
+            "top": 568.390625,
+            "width": 350,
+            "x": 20,
+            "y": 568.390625
+          }
+        },
+        {
+          "id": "solo-landing-fullscreen",
+          "label": "Enter fullscreen",
+          "rect": {
+            "bottom": 680.390625,
+            "height": 44,
+            "left": 20,
+            "right": 215.1640625,
+            "top": 636.390625,
+            "width": 195.1640625,
+            "x": 20,
+            "y": 636.390625
+          }
+        }
+      ],
+      "documentWidth": 390,
+      "editionId": "droneaid-community",
+      "landingTitle": "Community Relay / LINE",
+      "logo": [
+        {
+          "alt": "DroneAid",
+          "decoded": true,
+          "rect": {
+            "bottom": 155.6015625,
+            "height": 32,
+            "left": 20,
+            "right": 200,
+            "top": 123.6015625,
+            "width": 180,
+            "x": 20,
+            "y": 123.6015625
+          },
+          "src": "http://127.0.0.1:8768/game/editions/assets/droneaid/logo.png"
+        }
+      ],
+      "propeller": null,
+      "scene": "droneaid-community",
+      "sceneLoaded": "true",
+      "title": {
+        "bottom": 263.9921875,
+        "height": 92.390625,
+        "left": 20,
+        "right": 370,
+        "top": 171.6015625,
+        "width": 350,
+        "x": 20,
+        "y": 171.6015625
+      },
+      "titleParts": [
+        {
+          "rect": {
+            "bottom": 268.796875,
+            "height": 102.1953125,
+            "left": 20,
+            "right": 263,
+            "top": 166.6015625,
+            "width": 243,
+            "x": 20,
+            "y": 166.6015625
+          },
+          "text": "Community Relay"
+        },
+        {
+          "rect": {
+            "bottom": 268.796875,
+            "height": 56,
+            "left": 155,
+            "right": 344,
+            "top": 212.796875,
+            "width": 189,
+            "x": 155,
+            "y": 212.796875
+          },
+          "text": " / LINE"
+        }
+      ],
+      "titleScroll": {
+        "clientHeight": 92,
+        "clientWidth": 350,
+        "height": 97,
+        "width": 350
+      },
+      "url": "http://127.0.0.1:8768/game/?edition=droneaid-community",
+      "viewport": {
+        "height": 844,
+        "width": 390
+      }
+    },
+    {
+      "selector": "droneaid",
+      "expectedTitle": "DroneAid / LINE",
+      "brand": "droneaid-nl",
+      "controls": [
+        {
+          "id": "solo-current-mode",
+          "label": "Solo",
+          "rect": {
+            "bottom": 358.390625,
+            "height": 72.3984375,
+            "left": 20,
+            "right": 180,
+            "top": 285.9921875,
+            "width": 160,
+            "x": 20,
+            "y": 285.9921875
+          }
+        },
+        {
+          "id": "shell-featured",
+          "label": "Start\n            →",
+          "rect": {
+            "bottom": 434.390625,
+            "height": 56,
+            "left": 20,
+            "right": 370,
+            "top": 378.390625,
+            "width": 350,
+            "x": 20,
+            "y": 378.390625
+          }
+        },
+        {
+          "id": "shell-play",
+          "label": "Select Mission",
+          "rect": {
+            "bottom": 498.390625,
+            "height": 56,
+            "left": 20,
+            "right": 370,
+            "top": 442.390625,
+            "width": 350,
+            "x": 20,
+            "y": 442.390625
+          }
+        },
+        {
+          "id": "shell-options",
+          "label": "Settings",
+          "rect": {
+            "bottom": 562.390625,
+            "height": 56,
+            "left": 20,
+            "right": 370,
+            "top": 506.390625,
+            "width": 350,
+            "x": 20,
+            "y": 506.390625
+          }
+        },
+        {
+          "id": "shell-sound",
+          "label": "Sound: off",
+          "rect": {
+            "bottom": 626.390625,
+            "height": 56,
+            "left": 20,
+            "right": 370,
+            "top": 570.390625,
+            "width": 350,
+            "x": 20,
+            "y": 570.390625
+          }
+        },
+        {
+          "id": "solo-landing-fullscreen",
+          "label": "Enter fullscreen",
+          "rect": {
+            "bottom": 682.390625,
+            "height": 44,
+            "left": 20,
+            "right": 203.2890625,
+            "top": 638.390625,
+            "width": 183.2890625,
+            "x": 20,
+            "y": 638.390625
+          }
+        }
+      ],
+      "documentWidth": 390,
+      "editionId": "droneaid-nl-community",
+      "landingTitle": "DroneAid / LINE",
+      "logo": [
+        {
+          "alt": "DroneAid",
+          "decoded": true,
+          "rect": {
+            "bottom": 161.76486206054688,
+            "height": 56.32659149169922,
+            "left": 6.980405807495117,
+            "right": 189.0195903778076,
+            "top": 105.43827056884766,
+            "width": 182.0391845703125,
+            "x": 6.980405807495117,
+            "y": 105.43827056884766
+          },
+          "src": "http://127.0.0.1:8768/game/editions/assets/droneaid-nl/propeller.png"
+        }
+      ],
+      "propeller": {
+        "animationName": "edition-propeller-turn",
+        "animationPlayState": "running",
+        "transform": "matrix(0.998916, 0.0465479, -0.0465479, 0.998916, 0, 0)"
+      },
+      "scene": "droneaid-nl-community",
+      "sceneLoaded": "true",
+      "title": {
+        "bottom": 265.9921875,
+        "height": 92.390625,
+        "left": 20,
+        "right": 370,
+        "top": 173.6015625,
+        "width": 350,
+        "x": 20,
+        "y": 173.6015625
+      },
+      "titleParts": [
+        {
+          "rect": {
+            "bottom": 224.6015625,
+            "height": 56,
+            "left": 20,
+            "right": 236,
+            "top": 168.6015625,
+            "width": 216,
+            "x": 20,
+            "y": 168.6015625
+          },
+          "text": "DroneAid"
+        },
+        {
+          "rect": {
+            "bottom": 270.796875,
+            "height": 56,
+            "left": 20,
+            "right": 182,
+            "top": 214.796875,
+            "width": 162,
+            "x": 20,
+            "y": 214.796875
+          },
+          "text": " / LINE"
+        }
+      ],
+      "titleScroll": {
+        "clientHeight": 92,
+        "clientWidth": 350,
+        "height": 97,
+        "width": 350
+      },
+      "url": "http://127.0.0.1:8768/game/?edition=droneaid",
+      "viewport": {
+        "height": 844,
+        "width": 390
+      },
+      "propellerNext": {
+        "transform": "matrix(0.304047, 0.952657, -0.952657, 0.304047, 0, 0)"
+      }
+    },
+    {
+      "selector": "droneaid-nl-workshop-lights",
+      "expectedTitle": "Workshop Lights / LINE",
+      "brand": "droneaid-nl",
+      "controls": [
+        {
+          "id": "solo-current-mode",
+          "label": "Solo",
+          "rect": {
+            "bottom": 381.4921875,
+            "height": 72.3984375,
+            "left": 20,
+            "right": 180,
+            "top": 309.09375,
+            "width": 160,
+            "x": 20,
+            "y": 309.09375
+          }
+        },
+        {
+          "id": "shell-featured",
+          "label": "Start\n            →",
+          "rect": {
+            "bottom": 457.4921875,
+            "height": 56,
+            "left": 20,
+            "right": 370,
+            "top": 401.4921875,
+            "width": 350,
+            "x": 20,
+            "y": 401.4921875
+          }
+        },
+        {
+          "id": "shell-play",
+          "label": "Select Mission",
+          "rect": {
+            "bottom": 521.4921875,
+            "height": 56,
+            "left": 20,
+            "right": 370,
+            "top": 465.4921875,
+            "width": 350,
+            "x": 20,
+            "y": 465.4921875
+          }
+        },
+        {
+          "id": "shell-options",
+          "label": "Settings",
+          "rect": {
+            "bottom": 585.4921875,
+            "height": 56,
+            "left": 20,
+            "right": 370,
+            "top": 529.4921875,
+            "width": 350,
+            "x": 20,
+            "y": 529.4921875
+          }
+        },
+        {
+          "id": "shell-sound",
+          "label": "Sound: off",
+          "rect": {
+            "bottom": 649.4921875,
+            "height": 56,
+            "left": 20,
+            "right": 370,
+            "top": 593.4921875,
+            "width": 350,
+            "x": 20,
+            "y": 593.4921875
+          }
+        },
+        {
+          "id": "solo-landing-fullscreen",
+          "label": "Enter fullscreen",
+          "rect": {
+            "bottom": 705.4921875,
+            "height": 44,
+            "left": 20,
+            "right": 203.2890625,
+            "top": 661.4921875,
+            "width": 183.2890625,
+            "x": 20,
+            "y": 661.4921875
+          }
+        }
+      ],
+      "documentWidth": 390,
+      "editionId": "droneaid-nl-workshop-lights",
+      "landingTitle": "Workshop Lights / LINE",
+      "logo": [
+        {
+          "alt": "DroneAid",
+          "decoded": true,
+          "rect": {
+            "bottom": 138.2573699951172,
+            "height": 55.499122619628906,
+            "left": 7.073518753051758,
+            "right": 188.9264850616455,
+            "top": 82.75824737548828,
+            "width": 181.85296630859375,
+            "x": 7.073518753051758,
+            "y": 82.75824737548828
+          },
+          "src": "http://127.0.0.1:8768/game/editions/assets/droneaid-nl/propeller.png"
+        }
+      ],
+      "propeller": {
+        "animationName": "edition-propeller-turn",
+        "animationPlayState": "running",
+        "transform": "matrix(0.999122, 0.041896, -0.041896, 0.999122, 0, 0)"
+      },
+      "scene": "droneaid-nl-workshop-lights-theme",
+      "sceneLoaded": "true",
+      "title": {
+        "bottom": 289.09375,
+        "height": 138.5859375,
+        "left": 20,
+        "right": 370,
+        "top": 150.5078125,
+        "width": 350,
+        "x": 20,
+        "y": 150.5078125
+      },
+      "titleParts": [
+        {
+          "rect": {
+            "bottom": 247.703125,
+            "height": 102.1953125,
+            "left": 20,
+            "right": 236,
+            "top": 145.5078125,
+            "width": 216,
+            "x": 20,
+            "y": 145.5078125
+          },
+          "text": "Workshop Lights"
+        },
+        {
+          "rect": {
+            "bottom": 293.8984375,
+            "height": 56,
+            "left": 20,
+            "right": 182,
+            "top": 237.8984375,
+            "width": 162,
+            "x": 20,
+            "y": 237.8984375
+          },
+          "text": " / LINE"
+        }
+      ],
+      "titleScroll": {
+        "clientHeight": 139,
+        "clientWidth": 350,
+        "height": 143,
+        "width": 350
+      },
+      "url": "http://127.0.0.1:8768/game/?edition=droneaid-nl-workshop-lights",
+      "viewport": {
+        "height": 844,
+        "width": 390
+      },
+      "propellerNext": {
+        "transform": "matrix(0.500037, 0.866004, -0.866004, 0.500037, 0, 0)"
+      }
+    },
+    {
+      "selector": "droneaid-nl-parts-in-motion",
+      "expectedTitle": "Parts in Motion / LINE",
+      "brand": "droneaid-nl",
+      "controls": [
+        {
+          "id": "solo-current-mode",
+          "label": "Solo",
+          "rect": {
+            "bottom": 381.4921875,
+            "height": 72.3984375,
+            "left": 20,
+            "right": 180,
+            "top": 309.09375,
+            "width": 160,
+            "x": 20,
+            "y": 309.09375
+          }
+        },
+        {
+          "id": "shell-featured",
+          "label": "Start\n            →",
+          "rect": {
+            "bottom": 457.4921875,
+            "height": 56,
+            "left": 20,
+            "right": 370,
+            "top": 401.4921875,
+            "width": 350,
+            "x": 20,
+            "y": 401.4921875
+          }
+        },
+        {
+          "id": "shell-play",
+          "label": "Select Mission",
+          "rect": {
+            "bottom": 521.4921875,
+            "height": 56,
+            "left": 20,
+            "right": 370,
+            "top": 465.4921875,
+            "width": 350,
+            "x": 20,
+            "y": 465.4921875
+          }
+        },
+        {
+          "id": "shell-options",
+          "label": "Settings",
+          "rect": {
+            "bottom": 585.4921875,
+            "height": 56,
+            "left": 20,
+            "right": 370,
+            "top": 529.4921875,
+            "width": 350,
+            "x": 20,
+            "y": 529.4921875
+          }
+        },
+        {
+          "id": "shell-sound",
+          "label": "Sound: off",
+          "rect": {
+            "bottom": 649.4921875,
+            "height": 56,
+            "left": 20,
+            "right": 370,
+            "top": 593.4921875,
+            "width": 350,
+            "x": 20,
+            "y": 593.4921875
+          }
+        },
+        {
+          "id": "solo-landing-fullscreen",
+          "label": "Enter fullscreen",
+          "rect": {
+            "bottom": 705.4921875,
+            "height": 44,
+            "left": 20,
+            "right": 203.2890625,
+            "top": 661.4921875,
+            "width": 183.2890625,
+            "x": 20,
+            "y": 661.4921875
+          }
+        }
+      ],
+      "documentWidth": 390,
+      "editionId": "droneaid-nl-parts-in-motion",
+      "landingTitle": "Parts in Motion / LINE",
+      "logo": [
+        {
+          "alt": "DroneAid",
+          "decoded": true,
+          "rect": {
+            "bottom": 139.64712524414062,
+            "height": 58.27862548828125,
+            "left": 6.768050193786621,
+            "right": 189.23194789886475,
+            "top": 81.36849975585938,
+            "width": 182.46389770507812,
+            "x": 6.768050193786621,
+            "y": 81.36849975585938
+          },
+          "src": "http://127.0.0.1:8768/game/editions/assets/droneaid-nl/propeller.png"
+        }
+      ],
+      "propeller": {
+        "animationName": "edition-propeller-turn",
+        "animationPlayState": "running",
+        "transform": "matrix(0.998343, 0.0575454, -0.0575454, 0.998343, 0, 0)"
+      },
+      "scene": "droneaid-nl-parts-in-motion-theme",
+      "sceneLoaded": "true",
+      "title": {
+        "bottom": 289.09375,
+        "height": 138.5859375,
+        "left": 20,
+        "right": 370,
+        "top": 150.5078125,
+        "width": 350,
+        "x": 20,
+        "y": 150.5078125
+      },
+      "titleParts": [
+        {
+          "rect": {
+            "bottom": 247.703125,
+            "height": 102.1953125,
+            "left": 20,
+            "right": 236,
+            "top": 145.5078125,
+            "width": 216,
+            "x": 20,
+            "y": 145.5078125
+          },
+          "text": "Parts in Motion"
+        },
+        {
+          "rect": {
+            "bottom": 293.8984375,
+            "height": 56,
+            "left": 20,
+            "right": 182,
+            "top": 237.8984375,
+            "width": 162,
+            "x": 20,
+            "y": 237.8984375
+          },
+          "text": " / LINE"
+        }
+      ],
+      "titleScroll": {
+        "clientHeight": 139,
+        "clientWidth": 350,
+        "height": 143,
+        "width": 350
+      },
+      "url": "http://127.0.0.1:8768/game/?edition=droneaid-nl-parts-in-motion",
+      "viewport": {
+        "height": 844,
+        "width": 390
+      },
+      "propellerNext": {
+        "transform": "matrix(0.777145, 0.629322, -0.629322, 0.777145, 0, 0)"
+      }
+    },
+    {
+      "selector": "droneaid-nl-makers-together",
+      "expectedTitle": "Makers Together / LINE",
+      "brand": "droneaid-nl",
+      "controls": [
+        {
+          "id": "solo-current-mode",
+          "label": "Solo",
+          "rect": {
+            "bottom": 381.4921875,
+            "height": 72.3984375,
+            "left": 20,
+            "right": 180,
+            "top": 309.09375,
+            "width": 160,
+            "x": 20,
+            "y": 309.09375
+          }
+        },
+        {
+          "id": "shell-featured",
+          "label": "Start\n            →",
+          "rect": {
+            "bottom": 457.4921875,
+            "height": 56,
+            "left": 20,
+            "right": 370,
+            "top": 401.4921875,
+            "width": 350,
+            "x": 20,
+            "y": 401.4921875
+          }
+        },
+        {
+          "id": "shell-play",
+          "label": "Select Mission",
+          "rect": {
+            "bottom": 521.4921875,
+            "height": 56,
+            "left": 20,
+            "right": 370,
+            "top": 465.4921875,
+            "width": 350,
+            "x": 20,
+            "y": 465.4921875
+          }
+        },
+        {
+          "id": "shell-options",
+          "label": "Settings",
+          "rect": {
+            "bottom": 585.4921875,
+            "height": 56,
+            "left": 20,
+            "right": 370,
+            "top": 529.4921875,
+            "width": 350,
+            "x": 20,
+            "y": 529.4921875
+          }
+        },
+        {
+          "id": "shell-sound",
+          "label": "Sound: off",
+          "rect": {
+            "bottom": 649.4921875,
+            "height": 56,
+            "left": 20,
+            "right": 370,
+            "top": 593.4921875,
+            "width": 350,
+            "x": 20,
+            "y": 593.4921875
+          }
+        },
+        {
+          "id": "solo-landing-fullscreen",
+          "label": "Enter fullscreen",
+          "rect": {
+            "bottom": 705.4921875,
+            "height": 44,
+            "left": 20,
+            "right": 203.2890625,
+            "top": 661.4921875,
+            "width": 183.2890625,
+            "x": 20,
+            "y": 661.4921875
+          }
+        }
+      ],
+      "documentWidth": 390,
+      "editionId": "droneaid-nl-makers-together",
+      "landingTitle": "Makers Together / LINE",
+      "logo": [
+        {
+          "alt": "DroneAid",
+          "decoded": true,
+          "rect": {
+            "bottom": 139.18057250976562,
+            "height": 57.34552001953125,
+            "left": 6.8682756423950195,
+            "right": 189.13173389434817,
+            "top": 81.83505249023438,
+            "width": 182.26345825195312,
+            "x": 6.8682756423950195,
+            "y": 81.83505249023438
+          },
+          "src": "http://127.0.0.1:8768/game/editions/assets/droneaid-nl/propeller.png"
+        }
+      ],
+      "propeller": {
+        "animationName": "edition-propeller-turn",
+        "animationPlayState": "running",
+        "transform": "matrix(0.998632, 0.0522843, -0.0522843, 0.998632, 0, 0)"
+      },
+      "scene": "droneaid-nl-makers-together-theme",
+      "sceneLoaded": "true",
+      "title": {
+        "bottom": 289.09375,
+        "height": 138.5859375,
+        "left": 20,
+        "right": 370,
+        "top": 150.5078125,
+        "width": 350,
+        "x": 20,
+        "y": 150.5078125
+      },
+      "titleParts": [
+        {
+          "rect": {
+            "bottom": 247.703125,
+            "height": 102.1953125,
+            "left": 20,
+            "right": 236,
+            "top": 145.5078125,
+            "width": 216,
+            "x": 20,
+            "y": 145.5078125
+          },
+          "text": "Makers Together"
+        },
+        {
+          "rect": {
+            "bottom": 293.8984375,
+            "height": 56,
+            "left": 20,
+            "right": 182,
+            "top": 237.8984375,
+            "width": 162,
+            "x": 20,
+            "y": 237.8984375
+          },
+          "text": " / LINE"
+        }
+      ],
+      "titleScroll": {
+        "clientHeight": 139,
+        "clientWidth": 350,
+        "height": 143,
+        "width": 350
+      },
+      "url": "http://127.0.0.1:8768/game/?edition=droneaid-nl-makers-together",
+      "viewport": {
+        "height": 844,
+        "width": 390
+      },
+      "propellerNext": {
+        "transform": "matrix(0.0684639, 0.997654, -0.997654, 0.0684639, 0, 0)"
+      }
+    },
+    {
+      "selector": "droneaid-nl-careful-handoff",
+      "expectedTitle": "The Careful Handoff / LINE",
+      "brand": "droneaid-nl",
+      "controls": [
+        {
+          "id": "solo-current-mode",
+          "label": "Solo",
+          "rect": {
+            "bottom": 381.4921875,
+            "height": 72.3984375,
+            "left": 20,
+            "right": 180,
+            "top": 309.09375,
+            "width": 160,
+            "x": 20,
+            "y": 309.09375
+          }
+        },
+        {
+          "id": "shell-featured",
+          "label": "Start\n            →",
+          "rect": {
+            "bottom": 457.4921875,
+            "height": 56,
+            "left": 20,
+            "right": 370,
+            "top": 401.4921875,
+            "width": 350,
+            "x": 20,
+            "y": 401.4921875
+          }
+        },
+        {
+          "id": "shell-play",
+          "label": "Select Mission",
+          "rect": {
+            "bottom": 521.4921875,
+            "height": 56,
+            "left": 20,
+            "right": 370,
+            "top": 465.4921875,
+            "width": 350,
+            "x": 20,
+            "y": 465.4921875
+          }
+        },
+        {
+          "id": "shell-options",
+          "label": "Settings",
+          "rect": {
+            "bottom": 585.4921875,
+            "height": 56,
+            "left": 20,
+            "right": 370,
+            "top": 529.4921875,
+            "width": 350,
+            "x": 20,
+            "y": 529.4921875
+          }
+        },
+        {
+          "id": "shell-sound",
+          "label": "Sound: off",
+          "rect": {
+            "bottom": 649.4921875,
+            "height": 56,
+            "left": 20,
+            "right": 370,
+            "top": 593.4921875,
+            "width": 350,
+            "x": 20,
+            "y": 593.4921875
+          }
+        },
+        {
+          "id": "solo-landing-fullscreen",
+          "label": "Enter fullscreen",
+          "rect": {
+            "bottom": 705.4921875,
+            "height": 44,
+            "left": 20,
+            "right": 203.2890625,
+            "top": 661.4921875,
+            "width": 183.2890625,
+            "x": 20,
+            "y": 661.4921875
+          }
+        }
+      ],
+      "documentWidth": 390,
+      "editionId": "droneaid-nl-careful-handoff",
+      "landingTitle": "The Careful Handoff / LINE",
+      "logo": [
+        {
+          "alt": "DroneAid",
+          "decoded": true,
+          "rect": {
+            "bottom": 141.0319366455078,
+            "height": 61.048248291015625,
+            "left": 6.484543800354004,
+            "right": 189.51545810699463,
+            "top": 79.98368835449219,
+            "width": 183.03091430664065,
+            "x": 6.484543800354004,
+            "y": 79.98368835449219
+          },
+          "src": "http://127.0.0.1:8768/game/editions/assets/droneaid-nl/propeller.png"
+        }
+      ],
+      "propeller": {
+        "animationName": "edition-propeller-turn",
+        "animationPlayState": "running",
+        "transform": "matrix(0.997317, 0.0732058, -0.0732058, 0.997317, 0, 0)"
+      },
+      "scene": "droneaid-nl-careful-handoff-theme",
+      "sceneLoaded": "true",
+      "title": {
+        "bottom": 289.09375,
+        "height": 138.5859375,
+        "left": 20,
+        "right": 370,
+        "top": 150.5078125,
+        "width": 350,
+        "x": 20,
+        "y": 150.5078125
+      },
+      "titleParts": [
+        {
+          "rect": {
+            "bottom": 247.703125,
+            "height": 102.1953125,
+            "left": 20,
+            "right": 317,
+            "top": 145.5078125,
+            "width": 297,
+            "x": 20,
+            "y": 145.5078125
+          },
+          "text": "The Careful Handoff"
+        },
+        {
+          "rect": {
+            "bottom": 293.8984375,
+            "height": 56,
+            "left": 20,
+            "right": 182,
+            "top": 237.8984375,
+            "width": 162,
+            "x": 20,
+            "y": 237.8984375
+          },
+          "text": " / LINE"
+        }
+      ],
+      "titleScroll": {
+        "clientHeight": 139,
+        "clientWidth": 350,
+        "height": 143,
+        "width": 350
+      },
+      "url": "http://127.0.0.1:8768/game/?edition=droneaid-nl-careful-handoff",
+      "viewport": {
+        "height": 844,
+        "width": 390
+      },
+      "propellerNext": {
+        "transform": "matrix(0.344103, 0.938932, -0.938932, 0.344103, 0, 0)"
+      }
+    },
+    {
+      "selector": "droneaid-nl-signals-of-support",
+      "expectedTitle": "Signals of Support / LINE",
+      "brand": "droneaid-nl",
+      "controls": [
+        {
+          "id": "solo-current-mode",
+          "label": "Solo",
+          "rect": {
+            "bottom": 381.4921875,
+            "height": 72.3984375,
+            "left": 20,
+            "right": 180,
+            "top": 309.09375,
+            "width": 160,
+            "x": 20,
+            "y": 309.09375
+          }
+        },
+        {
+          "id": "shell-featured",
+          "label": "Start\n            →",
+          "rect": {
+            "bottom": 457.4921875,
+            "height": 56,
+            "left": 20,
+            "right": 370,
+            "top": 401.4921875,
+            "width": 350,
+            "x": 20,
+            "y": 401.4921875
+          }
+        },
+        {
+          "id": "shell-play",
+          "label": "Select Mission",
+          "rect": {
+            "bottom": 521.4921875,
+            "height": 56,
+            "left": 20,
+            "right": 370,
+            "top": 465.4921875,
+            "width": 350,
+            "x": 20,
+            "y": 465.4921875
+          }
+        },
+        {
+          "id": "shell-options",
+          "label": "Settings",
+          "rect": {
+            "bottom": 585.4921875,
+            "height": 56,
+            "left": 20,
+            "right": 370,
+            "top": 529.4921875,
+            "width": 350,
+            "x": 20,
+            "y": 529.4921875
+          }
+        },
+        {
+          "id": "shell-sound",
+          "label": "Sound: off",
+          "rect": {
+            "bottom": 649.4921875,
+            "height": 56,
+            "left": 20,
+            "right": 370,
+            "top": 593.4921875,
+            "width": 350,
+            "x": 20,
+            "y": 593.4921875
+          }
+        },
+        {
+          "id": "solo-landing-fullscreen",
+          "label": "Enter fullscreen",
+          "rect": {
+            "bottom": 705.4921875,
+            "height": 44,
+            "left": 20,
+            "right": 203.2890625,
+            "top": 661.4921875,
+            "width": 183.2890625,
+            "x": 20,
+            "y": 661.4921875
+          }
+        }
+      ],
+      "documentWidth": 390,
+      "editionId": "droneaid-nl-signals-of-support",
+      "landingTitle": "Signals of Support / LINE",
+      "logo": [
+        {
+          "alt": "DroneAid",
+          "decoded": true,
+          "rect": {
+            "bottom": 141.03515625,
+            "height": 61.05467987060547,
+            "left": 6.483911514282227,
+            "right": 189.516077041626,
+            "top": 79.98047637939453,
+            "width": 183.03216552734375,
+            "x": 6.483911514282227,
+            "y": 79.98047637939453
+          },
+          "src": "http://127.0.0.1:8768/game/editions/assets/droneaid-nl/propeller.png"
+        }
+      ],
+      "propeller": {
+        "animationName": "edition-propeller-turn",
+        "animationPlayState": "running",
+        "transform": "matrix(0.997314, 0.0732422, -0.0732422, 0.997314, 0, 0)"
+      },
+      "scene": "droneaid-nl-signals-of-support-theme",
+      "sceneLoaded": "true",
+      "title": {
+        "bottom": 289.09375,
+        "height": 138.5859375,
+        "left": 20,
+        "right": 370,
+        "top": 150.5078125,
+        "width": 350,
+        "x": 20,
+        "y": 150.5078125
+      },
+      "titleParts": [
+        {
+          "rect": {
+            "bottom": 247.703125,
+            "height": 102.1953125,
+            "left": 20,
+            "right": 290,
+            "top": 145.5078125,
+            "width": 270,
+            "x": 20,
+            "y": 145.5078125
+          },
+          "text": "Signals of Support"
+        },
+        {
+          "rect": {
+            "bottom": 293.8984375,
+            "height": 56,
+            "left": 20,
+            "right": 182,
+            "top": 237.8984375,
+            "width": 162,
+            "x": 20,
+            "y": 237.8984375
+          },
+          "text": " / LINE"
+        }
+      ],
+      "titleScroll": {
+        "clientHeight": 139,
+        "clientWidth": 350,
+        "height": 143,
+        "width": 350
+      },
+      "url": "http://127.0.0.1:8768/game/?edition=droneaid-nl-signals-of-support",
+      "viewport": {
+        "height": 844,
+        "width": 390
+      },
+      "propellerNext": {
+        "transform": "matrix(0.873791, 0.486302, -0.486302, 0.873791, 0, 0)"
+      }
+    },
+    {
+      "selector": "droneaid-nl-shared-horizon",
+      "expectedTitle": "Shared Horizon / LINE",
+      "brand": "droneaid-nl",
+      "controls": [
+        {
+          "id": "solo-current-mode",
+          "label": "Solo",
+          "rect": {
+            "bottom": 381.4921875,
+            "height": 72.3984375,
+            "left": 20,
+            "right": 180,
+            "top": 309.09375,
+            "width": 160,
+            "x": 20,
+            "y": 309.09375
+          }
+        },
+        {
+          "id": "shell-featured",
+          "label": "Start\n            →",
+          "rect": {
+            "bottom": 457.4921875,
+            "height": 56,
+            "left": 20,
+            "right": 370,
+            "top": 401.4921875,
+            "width": 350,
+            "x": 20,
+            "y": 401.4921875
+          }
+        },
+        {
+          "id": "shell-play",
+          "label": "Select Mission",
+          "rect": {
+            "bottom": 521.4921875,
+            "height": 56,
+            "left": 20,
+            "right": 370,
+            "top": 465.4921875,
+            "width": 350,
+            "x": 20,
+            "y": 465.4921875
+          }
+        },
+        {
+          "id": "shell-options",
+          "label": "Settings",
+          "rect": {
+            "bottom": 585.4921875,
+            "height": 56,
+            "left": 20,
+            "right": 370,
+            "top": 529.4921875,
+            "width": 350,
+            "x": 20,
+            "y": 529.4921875
+          }
+        },
+        {
+          "id": "shell-sound",
+          "label": "Sound: off",
+          "rect": {
+            "bottom": 649.4921875,
+            "height": 56,
+            "left": 20,
+            "right": 370,
+            "top": 593.4921875,
+            "width": 350,
+            "x": 20,
+            "y": 593.4921875
+          }
+        },
+        {
+          "id": "solo-landing-fullscreen",
+          "label": "Enter fullscreen",
+          "rect": {
+            "bottom": 705.4921875,
+            "height": 44,
+            "left": 20,
+            "right": 203.2890625,
+            "top": 661.4921875,
+            "width": 183.2890625,
+            "x": 20,
+            "y": 661.4921875
+          }
+        }
+      ],
+      "documentWidth": 390,
+      "editionId": "droneaid-nl-shared-horizon",
+      "landingTitle": "Shared Horizon / LINE",
+      "logo": [
+        {
+          "alt": "DroneAid",
+          "decoded": true,
+          "rect": {
+            "bottom": 139.15301513671875,
+            "height": 57.29039764404297,
+            "left": 6.874270439147949,
+            "right": 189.12573528289795,
+            "top": 81.86261749267578,
+            "width": 182.25146484375,
+            "x": 6.874270439147949,
+            "y": 81.86261749267578
+          },
+          "src": "http://127.0.0.1:8768/game/editions/assets/droneaid-nl/propeller.png"
+        }
+      ],
+      "propeller": {
+        "animationName": "edition-propeller-turn",
+        "animationPlayState": "running",
+        "transform": "matrix(0.998648, 0.0519737, -0.0519737, 0.998648, 0, 0)"
+      },
+      "scene": "droneaid-nl-shared-horizon-theme",
+      "sceneLoaded": "true",
+      "title": {
+        "bottom": 289.09375,
+        "height": 138.5859375,
+        "left": 20,
+        "right": 370,
+        "top": 150.5078125,
+        "width": 350,
+        "x": 20,
+        "y": 150.5078125
+      },
+      "titleParts": [
+        {
+          "rect": {
+            "bottom": 247.703125,
+            "height": 102.1953125,
+            "left": 20,
+            "right": 209,
+            "top": 145.5078125,
+            "width": 189,
+            "x": 20,
+            "y": 145.5078125
+          },
+          "text": "Shared Horizon"
+        },
+        {
+          "rect": {
+            "bottom": 293.8984375,
+            "height": 56,
+            "left": 20,
+            "right": 182,
+            "top": 237.8984375,
+            "width": 162,
+            "x": 20,
+            "y": 237.8984375
+          },
+          "text": " / LINE"
+        }
+      ],
+      "titleScroll": {
+        "clientHeight": 139,
+        "clientWidth": 350,
+        "height": 143,
+        "width": 350
+      },
+      "url": "http://127.0.0.1:8768/game/?edition=droneaid-nl-shared-horizon",
+      "viewport": {
+        "height": 844,
+        "width": 390
+      },
+      "propellerNext": {
+        "transform": "matrix(0.161548, 0.986865, -0.986865, 0.161548, 0, 0)"
+      }
+    }
+  ]
+}

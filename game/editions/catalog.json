@@ -1304,8 +1304,8 @@
       "heroAssetId": "droneaid-nl-workshop-lights-01-reveal-v2",
       "iconAssetId": "droneaid-nl-icon-512",
       "id": "droneaid-nl",
-      "logoAssetId": "droneaid-nl-logo",
-      "name": "DroneAid Netherlands",
+      "logoAssetId": "droneaid-nl-propeller",
+      "name": "DroneAid",
       "publication": "public",
       "revision": 2,
       "sources": [
@@ -1563,7 +1563,7 @@
       "format": "revealline-edition.v1",
       "id": "coupa-all",
       "modes": ["solo"],
-      "name": "Coupa Village",
+      "name": "Coupa Village / LINE",
       "presentationHistory": [
         {
           "bytes": 146284,
@@ -1597,7 +1597,7 @@
       "format": "revealline-edition.v1",
       "id": "coupa-adventure",
       "modes": ["solo"],
-      "name": "Spend in Motion",
+      "name": "Spend in Motion / LINE",
       "presentationHistory": [
         {
           "bytes": 29600,
@@ -1625,7 +1625,7 @@
       "format": "revealline-edition.v1",
       "id": "coupa-culture",
       "modes": ["solo"],
-      "name": "Inside the Village",
+      "name": "Inside the Village / LINE",
       "presentationHistory": [
         {
           "bytes": 44733,
@@ -1653,7 +1653,7 @@
       "format": "revealline-edition.v1",
       "id": "coupa-foundations",
       "modes": ["solo"],
-      "name": "From Need to Value",
+      "name": "From Need to Value / LINE",
       "presentationHistory": [
         {
           "bytes": 46542,
@@ -1687,7 +1687,7 @@
       "format": "revealline-edition.v1",
       "id": "coupa-operations",
       "modes": ["solo"],
-      "name": "A Day in Coupa",
+      "name": "A Day in Coupa / LINE",
       "presentationHistory": [
         {
           "bytes": 47693,
@@ -1721,7 +1721,7 @@
       "format": "revealline-edition.v1",
       "id": "coupa-developers",
       "modes": ["solo"],
-      "name": "Connect the Network",
+      "name": "Connect the Network / LINE",
       "presentationHistory": [
         {
           "bytes": 50046,
@@ -1755,7 +1755,7 @@
       "format": "revealline-edition.v1",
       "id": "droneaid-community",
       "modes": ["solo"],
-      "name": "Community Relay",
+      "name": "Community Relay / LINE",
       "publication": "public",
       "revision": 1
     },
@@ -1782,7 +1782,7 @@
       "format": "revealline-edition.v1",
       "id": "droneaid-nl-community",
       "modes": ["solo"],
-      "name": "DroneAid Netherlands",
+      "name": "DroneAid / LINE",
       "presentationHistory": [
         {
           "bytes": 118479,
@@ -1822,7 +1822,7 @@
       "format": "revealline-edition.v1",
       "id": "droneaid-nl-workshop-lights",
       "modes": ["solo"],
-      "name": "Workshop Lights",
+      "name": "Workshop Lights / LINE",
       "presentationHistory": [
         {
           "bytes": 29573,
@@ -1856,7 +1856,7 @@
       "format": "revealline-edition.v1",
       "id": "droneaid-nl-parts-in-motion",
       "modes": ["solo"],
-      "name": "Parts in Motion",
+      "name": "Parts in Motion / LINE",
       "presentationHistory": [
         {
           "bytes": 33974,
@@ -1896,7 +1896,7 @@
       "format": "revealline-edition.v1",
       "id": "droneaid-nl-makers-together",
       "modes": ["solo"],
-      "name": "Makers Together",
+      "name": "Makers Together / LINE",
       "presentationHistory": [
         {
           "bytes": 34640,
@@ -1930,7 +1930,7 @@
       "format": "revealline-edition.v1",
       "id": "droneaid-nl-careful-handoff",
       "modes": ["solo"],
-      "name": "The Careful Handoff",
+      "name": "The Careful Handoff / LINE",
       "presentationHistory": [
         {
           "bytes": 35799,
@@ -1964,7 +1964,7 @@
       "format": "revealline-edition.v1",
       "id": "droneaid-nl-signals-of-support",
       "modes": ["solo"],
-      "name": "Signals of Support",
+      "name": "Signals of Support / LINE",
       "presentationHistory": [
         {
           "bytes": 37264,
@@ -1998,7 +1998,7 @@
       "format": "revealline-edition.v1",
       "id": "droneaid-nl-shared-horizon",
       "modes": ["solo"],
-      "name": "Shared Horizon",
+      "name": "Shared Horizon / LINE",
       "presentationHistory": [
         {
           "bytes": 37998,

@@ -85,8 +85,8 @@ function missionCards(count = 6, unknown = false) {
 
 function titleScreen(state) {
   const first = state === 'first-visit';
-  return `<div class="mock-screen">${top('REVEALLINE', copy(localizedMessage('tools:soloFieldKit')))}
-    <div class="mock-title-content"><div><p class="mock-logo">REVEAL<br /><span>LINE</span></p><p class="mock-subtitle"><span data-i18n="tools:atlas.subtitle"></span></p>
+  return `<div class="mock-screen">${top('FPV / LINE', copy(localizedMessage('tools:soloFieldKit')))}
+    <div class="mock-title-content"><div><p class="mock-logo">FPV<br /><span>/ LINE</span></p><p class="mock-subtitle"><span data-i18n="tools:atlas.subtitle"></span></p>
     <div class="mock-menu"><button type="button" class="menu-focus" data-screen="${first ? 'missions' : 'briefing'}">${first ? copy(localizedMessage('common:actions.deploy')) : copy(localizedMessage('common:actions.continue'))}</button><button type="button" data-screen="missions"><span data-i18n="interface:missions"></span></button><button type="button" data-screen="collection"><span data-i18n="interface:collection"></span></button><button type="button" data-screen="settings"><span data-i18n="common:navigation.settings"></span></button><button type="button" data-screen="workshop"><span data-i18n="tools:atlas.workshop"></span></button></div>
     <p class="menu-destination">${first ? copy(localizedMessage('tools:yourFirstRouteIsWaiting')) : copy(localizedMessage('tools:firstLightRiverCrossingScout'))}</p></div><div class="title-art">${drone}</div></div>
     <div class="mock-command"><span><span data-i18n="tools:atlas.originalWorld"></span></span><span class="desktop-hints"><kbd>↑↓</kbd> <span data-i18n="tools:atlas.move"></span> <kbd>Enter</kbd> <span data-i18n="tools:atlas.choose"></span></span><span><span data-i18n="tools:atlas.proposedTitle"></span></span></div></div>`;
@@ -659,7 +659,7 @@ async function checkFonts() {
   const results = await Promise.allSettled(
     required.map(([family, weight]) =>
       Promise.resolve().then(() =>
-        document.fonts.load(`${weight} 20px "${family}"`, 'Ґґ Єє Іі Її RevealLine'),
+        document.fonts.load(`${weight} 20px "${family}"`, 'Ґґ Єє Іі Її FPV / LINE'),
       ),
     ),
   );

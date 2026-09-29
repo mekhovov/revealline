@@ -1256,6 +1256,97 @@ test('scene selection switches menu/gameplay music without changing paused liste
   assert.equal(h.media.plays, 1);
 });
 
+test('deferred scene context preserves the current song until the audible boundary', async (t) => {
+  const entries = ['menu', 'gameplay'].map((role) => ({
+    ...original.track,
+    id: `qa.deferred-${role}`,
+    title: role,
+  }));
+  const base = upgradeSoundtrackLibrary(emptySoundtrackLibrary());
+  const h = setup({
+    library: {
+      ...base,
+      tracks: entries,
+      listening: { ...base.listening, mode: 'synth90s' },
+      tags: Object.fromEntries(
+        entries.map((track) => [
+          track.id,
+          {
+            genres: ['synth90s'],
+            role: track.title,
+            energy: 2,
+            themes: [],
+          },
+        ]),
+      ),
+    },
+  });
+  t.after(() => h.player.dispose());
+  h.player.setContext({ scene: 'menu' });
+  await h.player.play();
+  assert.equal(h.player.snapshot().track.id, 'qa.deferred-menu');
+  const originalSource = h.media.src;
+  h.media.currentTime = 7;
+  h.player.setContext({ scene: 'gameplay' }, { deferUntilNextTrack: true });
+  assert.equal(h.player.snapshot().track.id, 'qa.deferred-menu');
+  assert.equal(h.media.src, originalSource);
+  assert.equal(h.media.currentTime, 7);
+  assert.equal(h.media.plays, 1);
+  assert.equal(h.player.snapshot().playing, true);
+  assert.ok(h.player.snapshot().pendingPlaylistId);
+  h.media.emit('ended');
+  await settleUntil(
+    () => h.player.snapshot().track.id === 'qa.deferred-gameplay' && h.player.snapshot().playing,
+  );
+  assert.equal(h.player.snapshot().playing, true);
+  assert.equal(h.media.plays, 2);
+});
+
+test('deferred context preserves explicit Pause and a newer context replaces the pending scene', async (t) => {
+  const entries = ['menu', 'gameplay'].map((role) => ({
+    ...original.track,
+    id: `qa.deferred-pause-${role}`,
+    title: role,
+  }));
+  const base = upgradeSoundtrackLibrary(emptySoundtrackLibrary());
+  const h = setup({
+    library: {
+      ...base,
+      tracks: entries,
+      listening: { ...base.listening, mode: 'synth90s' },
+      tags: Object.fromEntries(
+        entries.map((track) => [
+          track.id,
+          {
+            genres: ['synth90s'],
+            role: track.title,
+            energy: 2,
+            themes: [],
+          },
+        ]),
+      ),
+    },
+  });
+  t.after(() => h.player.dispose());
+  h.player.setContext({ scene: 'menu' });
+  await h.player.play();
+  h.player.pause();
+  h.player.setContext({ scene: 'gameplay' }, { deferUntilNextTrack: true });
+  assert.equal(h.player.snapshot().track.id, 'qa.deferred-pause-menu');
+  assert.equal(h.player.snapshot().desired, false);
+  assert.equal(h.player.snapshot().playing, false);
+  assert.equal(h.media.plays, 1);
+  h.player.setContext({ scene: 'menu' }, { deferUntilNextTrack: true });
+  await h.player.next();
+  assert.equal(h.player.snapshot().track.id, 'qa.deferred-pause-menu');
+  assert.equal(h.player.snapshot().desired, false);
+  assert.equal(h.media.plays, 1, 'a later pending context does not undo explicit Pause');
+  assert.throws(
+    () => h.player.setContext({ scene: 'gameplay' }, { deferUntilNextTrack: 'yes' }),
+    /context timing/,
+  );
+});
+
 test('empty Ukrainian/fusion selections stay silent with an explanation instead of unrelated fallback', async (t) => {
   const h = setup({ library: upgradeSoundtrackLibrary(emptySoundtrackLibrary()) });
   t.after(() => h.player.dispose());

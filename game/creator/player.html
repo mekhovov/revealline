@@ -7,15 +7,26 @@
     <script src="../i18n/catalogs.mjs"></script>
     <script src="../i18n/bootstrap.mjs"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title data-i18n="interface:creator.playerPageTitle">Custom campaign · RevealLine</title>
+    <title data-i18n="interface:creator.playerPageTitle">Custom campaign · FPV / LINE</title>
     <link rel="stylesheet" href="./creator.css" />
     <script type="module" src="./player.mjs"></script>
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="../ui/art/identity/fpv-line/icon-32.png"
+    />
+    <link rel="stylesheet" href="../ui/brand-identity.css" />
   </head>
-  <body>
+  <body class="creator-player">
     <div data-language-control></div>
     <header>
       <a href="./" data-i18n="interface:creator.backToMyCreations">← My creations</a
-      ><a href="../" data-i18n="interface:revealLine">RevealLine</a
+      ><a class="fpv-line-brand fpv-line-brand--compact" href="../"
+        ><img
+          class="fpv-line-wordmark"
+          src="../ui/art/identity/fpv-line/wordmark.png"
+          alt="FPV / LINE" /></a
       ><span data-i18n="interface:creator.customCampaign">Custom campaign</span>
     </header>
     <main>

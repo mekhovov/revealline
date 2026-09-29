@@ -1074,7 +1074,8 @@ export function createSoundtrackPlayer({
     failed = new Set();
     return setContext(context);
   }
-  function setContext(value) {
+  function setContext(value, { deferUntilNextTrack = false } = {}) {
+    required(typeof deferUntilNextTrack === 'boolean', 'Invalid soundtrack context timing.');
     const owned = boundedJSON(value, {
       maxBytes: 32768,
       maxNodes: 1000,
@@ -1091,7 +1092,12 @@ export function createSoundtrackPlayer({
     const next = resolve();
     if (canonicalJSON(next.playlist) !== canonicalJSON(playlist)) pending = next;
     else if (!dirty) pending = null;
-    if (sceneChanged && current && !next.playlist.trackIds.includes(current.id)) {
+    if (
+      !deferUntilNextTrack &&
+      sceneChanged &&
+      current &&
+      !next.playlist.trackIds.includes(current.id)
+    ) {
       install(next);
       void startAt(0, { fading: true });
     }
