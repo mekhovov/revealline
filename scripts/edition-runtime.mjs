@@ -6,6 +6,36 @@ import {
   resolveMenuScene,
 } from '../game/ui/menu-scene-catalog.mjs';
 
+export const DEFAULT_GAME_WORDMARK = 'game/ui/art/identity/fpv-line/wordmark.png';
+
+/** Standalone company chrome already uses its selected brand. Keep the shared
+ * helper's image fallback local to that same approved logo instead of shipping
+ * an otherwise unused default-game wordmark. Source/default-game bytes stay put. */
+export function projectEditionBrandIdentity(bytes, logoPath) {
+  if (!/^game\/[A-Za-z0-9_.\/-]+$/.test(logoPath) || logoPath.split('/').includes('..'))
+    throw new Error('Edition branding needs an approved local logo path.');
+  const source = new TextDecoder('utf-8', { fatal: true }).decode(bytes);
+  const tree = parse(source, { ecmaVersion: 'latest', sourceType: 'module' });
+  const declarations = tree.body.flatMap((node) => (node.declaration ?? node).declarations ?? []);
+  const declaration = declarations.find((node) => node.id?.name === 'GAME_WORDMARK_URL');
+  const url = declaration?.init?.object;
+  const literal = url?.arguments?.[0];
+  if (
+    declaration?.init?.type !== 'MemberExpression' ||
+    declaration.init.property?.name !== 'href' ||
+    url?.type !== 'NewExpression' ||
+    url.callee?.name !== 'URL' ||
+    literal?.type !== 'Literal' ||
+    literal.value !== './art/identity/fpv-line/wordmark.png'
+  )
+    throw new Error('Unknown shared brand image fallback.');
+  const relative = path.posix.relative('game/ui', logoPath);
+  const target = relative.startsWith('.') ? relative : './' + relative;
+  return Buffer.from(
+    source.slice(0, literal.start) + JSON.stringify(target) + source.slice(literal.end),
+  );
+}
+
 function sceneAssets(scene) {
   return [scene.landscape, scene.portrait, scene.wordmark]
     .filter(Boolean)
