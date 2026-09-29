@@ -1,0 +1,682 @@
+TAP version 13
+# Subtest: portrait functional player numerals retain at least fourteen CSS pixels
+ok 1 - portrait functional player numerals retain at least fourteen CSS pixels
+  ---
+  duration_ms: 14.445417
+  type: 'test'
+  ...
+# Subtest: pilot complete image frames remain within the arena at the true boundary
+ok 2 - pilot complete image frames remain within the arena at the true boundary
+  ---
+  duration_ms: 7.623042
+  type: 'test'
+  ...
+# Subtest: compact full frame, motor and nose bounds stay inside every corner through heading and banking
+ok 3 - compact full frame, motor and nose bounds stay inside every corner through heading and banking
+  ---
+  duration_ms: 63.519416
+  type: 'test'
+  ...
+# Subtest: detailed full frame, motor and nose bounds stay inside every corner through heading and banking
+ok 4 - detailed full frame, motor and nose bounds stay inside every corner through heading and banking
+  ---
+  duration_ms: 41.563375
+  type: 'test'
+  ...
+# Subtest: body offset leaves shared default drawing exact and contact at its real pixel position
+ok 5 - body offset leaves shared default drawing exact and contact at its real pixel position
+  ---
+  duration_ms: 1.569042
+  type: 'test'
+  ...
+# Subtest: plain portrait cues and player identities retain CSS size without covering true heads
+ok 6 - plain portrait cues and player identities retain CSS size without covering true heads
+  ---
+  duration_ms: 5.083625
+  type: 'test'
+  ...
+# Subtest: pixel portrait cues and player identities retain CSS size without covering true heads
+ok 7 - pixel portrait cues and player identities retain CSS size without covering true heads
+  ---
+  duration_ms: 5.980833
+  type: 'test'
+  ...
+# Subtest: complete CSS cue plates avoid both pilot heads and remain in the 362 by181 arena
+ok 8 - complete CSS cue plates avoid both pilot heads and remain in the 362 by181 arena
+  ---
+  duration_ms: 0.324375
+  type: 'test'
+  ...
+# Subtest: Large scales Team canvas type after its CSS-size clamp without changing cell geometry
+ok 9 - Large scales Team canvas type after its CSS-size clamp without changing cell geometry
+  ---
+  duration_ms: 3.399666
+  type: 'test'
+  ...
+# Subtest: Standard Team commands retain the pre-Large-preference baseline
+ok 10 - Standard Team commands retain the pre-Large-preference baseline
+  ---
+  duration_ms: 38.062875
+  type: 'test'
+  ...
+# Subtest: Large enlarges actual player, downed and warning labels while preserving prepared bodies and contacts
+ok 11 - Large enlarges actual player, downed and warning labels while preserving prepared bodies and contacts
+  ---
+  duration_ms: 45.792958
+  type: 'test'
+  ...
+# Subtest: crowded Team labels keep their measured size instead of covering a pilot or shrinking text
+ok 12 - crowded Team labels keep their measured size instead of covering a pilot or shrinking text
+  ---
+  duration_ms: 0.140958
+  type: 'test'
+  ...
+# Subtest: invalid canvas text size fails before drawing or mutating the Team run
+ok 13 - invalid canvas text size fails before drawing or mutating the Team run
+  ---
+  duration_ms: 1.495625
+  type: 'test'
+  ...
+# Subtest: the same Team mode choices belong to the lobby and active pause panel, never the live arena
+ok 14 - the same Team mode choices belong to the lobby and active pause panel, never the live arena
+  ---
+  duration_ms: 568.979459
+  type: 'test'
+  ...
+# Subtest: Team More exposes every global destination and returns collapsed across input and play states
+ok 15 - Team More exposes every global destination and returns collapsed across input and play states
+  ---
+  duration_ms: 426.801709
+  type: 'test'
+  ...
+# Subtest: a file selected before Start cannot replace setup after returning from an attempt
+ok 16 - a file selected before Start cannot replace setup after returning from an attempt
+  ---
+  duration_ms: 163.189417
+  type: 'test'
+  ...
+# Subtest: invalid or oversized imports preserve the selected custom pack and challenge
+ok 17 - invalid or oversized imports preserve the selected custom pack and challenge
+  ---
+  duration_ms: 182.476333
+  type: 'test'
+  ...
+# Subtest: the latest file selection wins when earlier reads finish out of order
+ok 18 - the latest file selection wins when earlier reads finish out of order
+  ---
+  duration_ms: 137.570208
+  type: 'test'
+  ...
+# Subtest: returning to built-ins cancels an outstanding file read
+ok 19 - returning to built-ins cancels an outstanding file read
+  ---
+  duration_ms: 133.162708
+  type: 'test'
+  ...
+# Subtest: custom fractional coverage and multiple required cores drive the actual briefing and HUD
+ok 20 - custom fractional coverage and multiple required cores drive the actual briefing and HUD
+  ---
+  duration_ms: 195.874333
+  type: 'test'
+  ...
+# Subtest: lobby keyboard navigation reaches Race and accessibility controls while excluding flight pads
+ok 21 - lobby keyboard navigation reaches Race and accessibility controls while excluding flight pads
+  ---
+  duration_ms: 474.603959
+  type: 'test'
+  ...
+# Subtest: the selected cut rules agree across the briefing and actual start message
+ok 22 - the selected cut rules agree across the briefing and actual start message
+  ---
+  duration_ms: 192.996042
+  type: 'test'
+  ...
+# Subtest: real keyboard self-crossings explain the shared recovery and cause-aware retry
+ok 23 - real keyboard self-crossings explain the shared recovery and cause-aware retry
+  ---
+  duration_ms: 628.901416
+  type: 'test'
+  ...
+# Subtest: retry feedback counts required objectives and distinguishes enemy and spark causes
+ok 24 - retry feedback counts required objectives and distinguishes enemy and spark causes
+  ---
+  duration_ms: 0.505458
+  type: 'test'
+  ...
+# Subtest: a slowed enemy stays marked after the pulse, through pause and reduced effects, then expires
+ok 25 - a slowed enemy stays marked after the pulse, through pause and reduced effects, then expires
+  ---
+  duration_ms: 7.110125
+  type: 'test'
+  ...
+# Subtest: Auto touch uses actual controller seats while menu hiding and explicit overrides stay authoritative
+ok 26 - Auto touch uses actual controller seats while menu hiding and explicit overrides stay authoritative
+  ---
+  duration_ms: 148.067708
+  type: 'test'
+  ...
+# Subtest: paused Help reading and Back return to an action without resuming the shared simulation
+ok 27 - paused Help reading and Back return to an action without resuming the shared simulation
+  ---
+  duration_ms: 1218.296167
+  type: 'test'
+  ...
+# Subtest: assigning a controller releases hidden held touch; disconnect stays paused until Resume
+ok 28 - assigning a controller releases hidden held touch; disconnect stays paused until Resume
+  ---
+  duration_ms: 258.218625
+  type: 'test'
+  ...
+# Subtest: Team pack reads show immediate status, Stop waiting rejects late adoption, and completion preserves deliberately moved focus
+ok 29 - Team pack reads show immediate status, Stop waiting rejects late adoption, and completion preserves deliberately moved focus
+  ---
+  duration_ms: 106.294708
+  type: 'test'
+  ...
+# Subtest: Back and closing the Team pack picker detach a read before reopening
+ok 30 - Back and closing the Team pack picker detach a read before reopening
+  ---
+  duration_ms: 122.119583
+  type: 'test'
+  ...
+# Subtest: Team lobby uses only its code-owned return destination ?return=solo
+ok 31 - Team lobby uses only its code-owned return destination ?return=solo
+  ---
+  duration_ms: 400.1035
+  type: 'test'
+  ...
+# Subtest: Team lobby uses only its code-owned return destination ?return=versus
+ok 32 - Team lobby uses only its code-owned return destination ?return=versus
+  ---
+  duration_ms: 421.094916
+  type: 'test'
+  ...
+# Subtest: Team lobby uses only its code-owned return destination (default)
+ok 33 - Team lobby uses only its code-owned return destination (default)
+  ---
+  duration_ms: 426.780125
+  type: 'test'
+  ...
+# Subtest: Team lobby uses only its code-owned return destination ?return=https://other.invalid/
+ok 34 - Team lobby uses only its code-owned return destination ?return=https://other.invalid/
+  ---
+  duration_ms: 446.480584
+  type: 'test'
+  ...
+# Subtest: Team lobby uses only its code-owned return destination ?return=solo&return=versus
+ok 35 - Team lobby uses only its code-owned return destination ?return=solo&return=versus
+  ---
+  duration_ms: 404.014625
+  type: 'test'
+  ...
+# Subtest: the existing Solo and Versus Team entry links declare their code-owned return context
+ok 36 - the existing Solo and Versus Team entry links declare their code-owned return context
+  ---
+  duration_ms: 1.842
+  type: 'test'
+  ...
+# Subtest: actual Team lobby preserves the bounded Solo return token through native Back without consuming it
+ok 37 - actual Team lobby preserves the bounded Solo return token through native Back without consuming it
+  ---
+  duration_ms: 86.267375
+  type: 'test'
+  ...
+# Subtest: fresh Team lobby focuses enabled Start only after actual ready, without starting play
+ok 38 - fresh Team lobby focuses enabled Start only after actual ready, without starting play
+  ---
+  duration_ms: 95.2235
+  type: 'test'
+  ...
+# Subtest: a deliberate preload coop-race focus is kept through Team readiness
+ok 39 - a deliberate preload coop-race focus is kept through Team readiness
+  ---
+  duration_ms: 99.980416
+  type: 'test'
+  ...
+# Subtest: a deliberate preload coop-level focus is kept through Team readiness
+ok 40 - a deliberate preload coop-level focus is kept through Team readiness
+  ---
+  duration_ms: 98.169875
+  type: 'test'
+  ...
+# Subtest: a late deliberate menu choice at ready is not replaced by Team initial focus
+ok 41 - a late deliberate menu choice at ready is not replaced by Team initial focus
+  ---
+  duration_ms: 99.163291
+  type: 'test'
+  ...
+# Subtest: a hidden Team page does not claim focus now or after returning
+ok 42 - a hidden Team page does not claim focus now or after returning
+  ---
+  duration_ms: 90.356291
+  type: 'test'
+  ...
+# Subtest: a unfocused Team page does not claim focus now or after returning
+ok 43 - a unfocused Team page does not claim focus now or after returning
+  ---
+  duration_ms: 98.637917
+  type: 'test'
+  ...
+# Subtest: a hidden Start uses the existing visible navigation fallback
+ok 44 - a hidden Start uses the existing visible navigation fallback
+  ---
+  duration_ms: 104.480292
+  type: 'test'
+  ...
+# Subtest: a disabled Start uses the existing visible navigation fallback
+ok 45 - a disabled Start uses the existing visible navigation fallback
+  ---
+  duration_ms: 84.720625
+  type: 'test'
+  ...
+# Subtest: a inert Start uses the existing visible navigation fallback
+ok 46 - a inert Start uses the existing visible navigation fallback
+  ---
+  duration_ms: 89.895917
+  type: 'test'
+  ...
+# Subtest: a invisible Start uses the existing visible navigation fallback
+ok 47 - a invisible Start uses the existing visible navigation fallback
+  ---
+  duration_ms: 84.8635
+  type: 'test'
+  ...
+# Subtest: a loader recovery link hidden by attachment is not mistaken for untouched BODY
+ok 48 - a loader recovery link hidden by attachment is not mistaken for untouched BODY
+  ---
+  duration_ms: 90.440417
+  type: 'test'
+  ...
+# Subtest: a real Canvas boot failure retains recovery focus and never runs the ready handoff
+ok 49 - a real Canvas boot failure retains recovery focus and never runs the ready handoff
+  ---
+  duration_ms: 16.202417
+  type: 'test'
+  ...
+# Subtest: a deliberate ready-time choice that then blurs is not reclaimed by initial focus
+ok 50 - a deliberate ready-time choice that then blurs is not reclaimed by initial focus
+  ---
+  duration_ms: 88.290458
+  type: 'test'
+  ...
+# Subtest: foreground loss during boot vetoes initial focus even if the page is focused again at ready
+ok 51 - foreground loss during boot vetoes initial focus even if the page is focused again at ready
+  ---
+  duration_ms: 94.940875
+  type: 'test'
+  ...
+# Subtest: setup from running requires a separate decision; Stay preserves painted/HUD flight without Resume
+ok 52 - setup from running requires a separate decision; Stay preserves painted/HUD flight without Resume
+  ---
+  duration_ms: 1453.728
+  type: 'test'
+  ...
+# Subtest: setup from paused requires a separate decision; Stay preserves painted/HUD flight without Resume
+ok 53 - setup from paused requires a separate decision; Stay preserves painted/HUD flight without Resume
+  ---
+  duration_ms: 1554.774792
+  type: 'test'
+  ...
+# Subtest: retry from running requires a separate decision; Stay preserves painted/HUD flight without Resume
+ok 54 - retry from running requires a separate decision; Stay preserves painted/HUD flight without Resume
+  ---
+  duration_ms: 1292.192208
+  type: 'test'
+  ...
+# Subtest: retry from paused requires a separate decision; Stay preserves painted/HUD flight without Resume
+ok 55 - retry from paused requires a separate decision; Stay preserves painted/HUD flight without Resume
+  ---
+  duration_ms: 1438.157625
+  type: 'test'
+  ...
+# Subtest: return from running requires a separate decision; Stay preserves painted/HUD flight without Resume
+ok 56 - return from running requires a separate decision; Stay preserves painted/HUD flight without Resume
+  ---
+  duration_ms: 1298.075375
+  type: 'test'
+  ...
+# Subtest: return from paused requires a separate decision; Stay preserves painted/HUD flight without Resume
+ok 57 - return from paused requires a separate decision; Stay preserves painted/HUD flight without Resume
+  ---
+  duration_ms: 1372.121292
+  type: 'test'
+  ...
+# Subtest: home from running requires a separate decision; Stay preserves painted/HUD flight without Resume
+ok 58 - home from running requires a separate decision; Stay preserves painted/HUD flight without Resume
+  ---
+  duration_ms: 1591.9395
+  type: 'test'
+  ...
+# Subtest: home from paused requires a separate decision; Stay preserves painted/HUD flight without Resume
+ok 59 - home from paused requires a separate decision; Stay preserves painted/HUD flight without Resume
+  ---
+  duration_ms: 1370.458542
+  type: 'test'
+  ...
+# Subtest: native Escape reaches only the top confirmation cancel and keeps its paused opener
+ok 60 - native Escape reaches only the top confirmation cancel and keeps its paused opener
+  ---
+  duration_ms: 761.877291
+  type: 'test'
+  ...
+# Subtest: confirmation Tab wraps both directions and editor defaults cannot start or discard
+ok 61 - confirmation Tab wraps both directions and editor defaults cannot start or discard
+  ---
+  duration_ms: 1076.888292
+  type: 'test'
+  ...
+# Subtest: controller adoption/held Confirm cannot discard; a separate Back stays paused
+ok 62 - controller adoption/held Confirm cannot discard; a separate Back stays paused
+  ---
+  duration_ms: 993.90675
+  type: 'test'
+  ...
+# Subtest: confirmed setup discards once into lobby without starting the mutable setup choice
+ok 63 - confirmed setup discards once into lobby without starting the mutable setup choice
+  ---
+  duration_ms: 366.797917
+  type: 'test'
+  ...
+# Subtest: confirmed retry uses the actual level/configuration, not edited hidden lobby selects
+ok 64 - confirmed retry uses the actual level/configuration, not edited hidden lobby selects
+  ---
+  duration_ms: 513.252708
+  type: 'test'
+  ...
+# Subtest: confirmed return keeps only its fixed solo destination
+ok 65 - confirmed return keeps only its fixed solo destination
+  ---
+  duration_ms: 829.065875
+  type: 'test'
+  ...
+# Subtest: confirmed return keeps only its fixed versus destination
+ok 66 - confirmed return keeps only its fixed versus destination
+  ---
+  duration_ms: 739.198667
+  type: 'test'
+  ...
+# Subtest: confirmed home keeps only its fixed solo destination
+ok 67 - confirmed home keeps only its fixed solo destination
+  ---
+  duration_ms: 959.914041
+  type: 'test'
+  ...
+# Subtest: confirmed home keeps only its fixed versus destination
+ok 68 - confirmed home keeps only its fixed versus destination
+  ---
+  duration_ms: 1011.655542
+  type: 'test'
+  ...
+# Subtest: blur cancels an open discard choice and stale Confirm cannot leave after return
+ok 69 - blur cancels an open discard choice and stale Confirm cannot leave after return
+  ---
+  duration_ms: 834.160958
+  type: 'test'
+  ...
+# Subtest: hidden cancels an open discard choice and stale Confirm cannot leave after return
+ok 70 - hidden cancels an open discard choice and stale Confirm cannot leave after return
+  ---
+  duration_ms: 783.197
+  type: 'test'
+  ...
+# Subtest: pagehide cancels an open discard choice and stale Confirm cannot leave after return
+ok 71 - pagehide cancels an open discard choice and stale Confirm cannot leave after return
+  ---
+  duration_ms: 735.992542
+  type: 'test'
+  ...
+# Subtest: faulted attempt cannot Resume; Back focuses Retry and header Stay restores its opener
+ok 72 - faulted attempt cannot Resume; Back focuses Retry and header Stay restores its opener
+  ---
+  duration_ms: 449.578583
+  type: 'test'
+  ...
+# Subtest: failed native navigation retains an explicit paused attempt instead of silently clearing it
+ok 73 - failed native navigation retains an explicit paused attempt instead of silently clearing it
+  ---
+  duration_ms: 752.35225
+  type: 'test'
+  ...
+# Subtest: modified link gestures retain native browser ownership without a discard or current-page mutation
+ok 74 - modified link gestures retain native browser ownership without a discard or current-page mutation
+  ---
+  duration_ms: 775.778083
+  type: 'test'
+  ...
+# Subtest: paint failure while opening departure releases the invisible intent and exposes stopped Retry
+ok 75 - paint failure while opening departure releases the invisible intent and exposes stopped Retry
+  ---
+  duration_ms: 472.416791
+  type: 'test'
+  ...
+# Subtest: a repeated Retry paint failure stops the new attempt truthfully until another explicit Retry
+ok 76 - a repeated Retry paint failure stops the new attempt truthfully until another explicit Retry
+  ---
+  duration_ms: 1114.247208
+  type: 'test'
+  ...
+# Subtest: in-panel coop-solo keyboard departure from pause preserves its exact Stay/Back opener
+ok 77 - in-panel coop-solo keyboard departure from pause preserves its exact Stay/Back opener
+  ---
+  duration_ms: 1868.858125
+  type: 'test'
+  ...
+# Subtest: in-panel coop-solo keyboard departure from fault preserves its exact Stay/Back opener
+ok 78 - in-panel coop-solo keyboard departure from fault preserves its exact Stay/Back opener
+  ---
+  duration_ms: 570.479417
+  type: 'test'
+  ...
+# Subtest: in-panel coop-versus keyboard departure from pause preserves its exact Stay/Back opener
+ok 79 - in-panel coop-versus keyboard departure from pause preserves its exact Stay/Back opener
+  ---
+  duration_ms: 1889.335917
+  type: 'test'
+  ...
+# Subtest: in-panel coop-versus keyboard departure from fault preserves its exact Stay/Back opener
+ok 80 - in-panel coop-versus keyboard departure from fault preserves its exact Stay/Back opener
+  ---
+  duration_ms: 647.263833
+  type: 'test'
+  ...
+# Subtest: in-panel coop-solo is reachable by actual controller navigation and requires a separate discard
+ok 81 - in-panel coop-solo is reachable by actual controller navigation and requires a separate discard
+  ---
+  duration_ms: 1837.443542
+  type: 'test'
+  ...
+# Subtest: in-panel coop-versus is reachable by actual controller navigation and requires a separate discard
+ok 82 - in-panel coop-versus is reachable by actual controller navigation and requires a separate discard
+  ---
+  duration_ms: 1701.858792
+  type: 'test'
+  ...
+# Subtest: in-panel Solo keeps the exact existing one-use return context and does not consume or rewrite it
+ok 83 - in-panel Solo keeps the exact existing one-use return context and does not consume or rewrite it
+  ---
+  duration_ms: 954.375166
+  type: 'test'
+  ...
+# Subtest: terminal in-panel coop-solo follows the refreshed fixed native route without another discard
+ok 84 - terminal in-panel coop-solo follows the refreshed fixed native route without another discard
+  ---
+  duration_ms: 1333.400041
+  type: 'test'
+  ...
+# Subtest: terminal in-panel coop-versus follows the refreshed fixed native route without another discard
+ok 85 - terminal in-panel coop-versus follows the refreshed fixed native route without another discard
+  ---
+  duration_ms: 1008.998125
+  type: 'test'
+  ...
+# Subtest: in-panel navigation failure keeps the paused attempt and explicit retryable actions
+ok 86 - in-panel navigation failure keeps the paused attempt and explicit retryable actions
+  ---
+  duration_ms: 863.384292
+  type: 'test'
+  ...
+# Subtest: in-panel departure loses its authority on blur; background return cannot reuse Confirm
+ok 87 - in-panel departure loses its authority on blur; background return cannot reuse Confirm
+  ---
+  duration_ms: 777.487833
+  type: 'test'
+  ...
+# Subtest: already-paused Team retires Help and controller intent on blur, then requires explicit foreground Resume
+ok 88 - already-paused Team retires Help and controller intent on blur, then requires explicit foreground Resume
+  ---
+  duration_ms: 2305.147333
+  type: 'test'
+  ...
+# Subtest: already-paused Team retires Help and controller intent on hidden, then requires explicit foreground Resume
+ok 89 - already-paused Team retires Help and controller intent on hidden, then requires explicit foreground Resume
+  ---
+  duration_ms: 2412.832084
+  type: 'test'
+  ...
+# Subtest: already-paused Team retires Help and controller intent on persisted pagehide, then requires explicit foreground Resume
+ok 90 - already-paused Team retires Help and controller intent on persisted pagehide, then requires explicit foreground Resume
+  ---
+  duration_ms: 2268.73
+  type: 'test'
+  ...
+# Subtest: Team detects missed focus-loss notification before polling or stepping and returns paused
+ok 91 - Team detects missed focus-loss notification before polling or stepping and returns paused
+  ---
+  duration_ms: 1525.324292
+  type: 'test'
+  ...
+# Subtest: P1 rescue guidance survives Pause → Settings → Resume with no world advance
+ok 92 - P1 rescue guidance survives Pause → Settings → Resume with no world advance
+  ---
+  duration_ms: 1832.55375
+  type: 'test'
+  ...
+# Subtest: P2 rescue guidance survives Pause → Settings → Resume with no world advance
+ok 93 - P2 rescue guidance survives Pause → Settings → Resume with no world advance
+  ---
+  duration_ms: 1507.669375
+  type: 'test'
+  ...
+# Subtest: ordinary Resume keeps the fresh-direction instruction when both players are active
+ok 94 - ordinary Resume keeps the fresh-direction instruction when both players are active
+  ---
+  duration_ms: 207.977209
+  type: 'test'
+  ...
+# Subtest: Resume reconstructs current rescue guidance after a real Support pulse replaces the advisory
+ok 95 - Resume reconstructs current rescue guidance after a real Support pulse replaces the advisory
+  ---
+  duration_ms: 1302.850292
+  type: 'test'
+  ...
+# Subtest: reserve revival retires a retained knockdown before a later Resume
+ok 96 - reserve revival retires a retained knockdown before a later Resume
+  ---
+  duration_ms: 3563.349542
+  type: 'test'
+  ...
+# Subtest: confirmed Retry cannot restore a previous attempt knockdown on Resume
+ok 97 - confirmed Retry cannot restore a previous attempt knockdown on Resume
+  ---
+  duration_ms: 1318.621042
+  type: 'test'
+  ...
+# Subtest: a completed partner rescue retires the old cause without spending a reserve
+ok 98 - a completed partner rescue retires the old cause without spending a reserve
+  ---
+  duration_ms: 791.369584
+  type: 'test'
+  ...
+# Subtest: current-rules specialist Resume retains the travelling-impact cause and the correct rescue target
+ok 99 - current-rules specialist Resume retains the travelling-impact cause and the correct rescue target
+  ---
+  duration_ms: 528.999708
+  type: 'test'
+  ...
+# Subtest: the live Team host keeps arena rules and translates active cut and Support teaching
+ok 100 - the live Team host keeps arena rules and translates active cut and Support teaching
+  ---
+  duration_ms: 1366.686084
+  type: 'test'
+  ...
+# Subtest: the live Team host translates rescue, clears coach styling at terminal state and suppresses it on Retry
+ok 101 - the live Team host translates rescue, clears coach styling at terminal state and suppresses it on Retry
+  ---
+  duration_ms: 1529.679333
+  type: 'test'
+  ...
+# Subtest: Team teaching introduces a cut, then relevant Support and rescue without repeating on Retry
+ok 102 - Team teaching introduces a cut, then relevant Support and rescue without repeating on Retry
+  ---
+  duration_ms: 1.138375
+  type: 'test'
+  ...
+# Subtest: completion in the same step suppresses an obsolete teaching prompt
+ok 103 - completion in the same step suppresses an obsolete teaching prompt
+  ---
+  duration_ms: 0.084333
+  type: 'test'
+  ...
+# Subtest: Support with absent result arrays neither completes learning nor suppresses its cut cue
+ok 104 - Support with absent result arrays neither completes learning nor suppresses its cut cue
+  ---
+  duration_ms: 0.1365
+  type: 'test'
+  ...
+# Subtest: Support with empty result arrays neither completes learning nor suppresses its cut cue
+ok 105 - Support with empty result arrays neither completes learning nor suppresses its cut cue
+  ---
+  duration_ms: 0.068416
+  type: 'test'
+  ...
+# Subtest: Support with an actual slowed enemy completes learning and persists the existing format
+ok 106 - Support with an actual slowed enemy completes learning and persists the existing format
+  ---
+  duration_ms: 0.164917
+  type: 'test'
+  ...
+# Subtest: Support with an actual intercepted impact completes learning and persists the existing format
+ok 107 - Support with an actual intercepted impact completes learning and persists the existing format
+  ---
+  duration_ms: 0.482792
+  type: 'test'
+  ...
+# Subtest: Team teaching skips an irrelevant Support prompt but still teaches rescue
+ok 108 - Team teaching skips an irrelevant Support prompt but still teaches rescue
+  ---
+  duration_ms: 0.296083
+  type: 'test'
+  ...
+# Subtest: specialist teaching follows actual threats and the authored seat order
+ok 109 - specialist teaching follows actual threats and the authored seat order
+  ---
+  duration_ms: 14.745792
+  type: 'test'
+  ...
+# Subtest: Team teaching tolerates unavailable, corrupt and failing storage with bounded state
+ok 110 - Team teaching tolerates unavailable, corrupt and failing storage with bounded state
+  ---
+  duration_ms: 0.381084
+  type: 'test'
+  ...
+# Subtest: Team teaching validates callbacks and event input
+ok 111 - Team teaching validates callbacks and event input
+  ---
+  duration_ms: 0.399959
+  type: 'test'
+  ...
+# Subtest: Team teaching cue keys resolve complete English and Ukrainian instructions
+ok 112 - Team teaching cue keys resolve complete English and Ukrainian instructions
+  ---
+  duration_ms: 1.230625
+  type: 'test'
+  ...
+1..112
+# tests 112
+# suites 0
+# pass 112
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 55924.791958

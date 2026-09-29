@@ -1649,3 +1649,22 @@ enabled tabs and one-action ownership with the shared controller navigator. Nati
 text/select editing and modified shortcuts must remain excluded. A Settings visit
 must preserve a paused flight and require explicit Resume. Follow the regression
 prompt in [Settings native keys](../../../docs/settings-native-key-navigation.md).
+
+## Team canvas text and recovery guidance
+
+Forward the global text-size preference to the Team painter. Apply Large once to
+CSS-sized labels and their measured backings after the existing size clamp; never
+scale actor bodies, contact circles, warning timing or board geometry with text.
+Keep Standard command-stream regression evidence, head exclusions and bounded
+cue placement. Include `game/text-size.mjs` in the Team recipe-source closure;
+changed renderer dependencies require a new reviewed production successor, not
+rewritten old fingerprints. Tiny Ukrainian DOM HUD/ability-label wrapping remains
+a separate layout concern from canvas scaling.
+
+On Resume, derive rescue guidance from currently downed players and retained
+knockdown facts, resolving labels through the live locale. Revival and Retry must
+retire old guidance. Mark Support learned only when its emitted event reports an
+actual slowed enemy or intercepted impact; keep existing teaching records intact.
+Use a fresh controller press when opening Settings after assignment rather than
+injecting a mouse click into the compatibility-echo shield. Preserve the guard.
+See the [Team batch evidence](../../../docs/verification/team-readability-20260929/README.md).

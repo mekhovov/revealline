@@ -348,8 +348,8 @@ test('Versus controller selects the real display control without replacing or st
   const page = await couchPage(t, { storage: store, pads: [pad] });
   page.join(0);
   const displayBefore = store.getItem(DISPLAY_PREFERENCES_KEY);
-  page.$('race-options').click();
-  page.frame();
+  page.focus('race-options');
+  page.pulse(0, 0);
   assert.equal(page.doc.activeElement.id, 'race-settings-tab-display');
   assert.equal(store.getItem(DISPLAY_PREFERENCES_KEY), displayBefore);
   const before = page.checkpoint();

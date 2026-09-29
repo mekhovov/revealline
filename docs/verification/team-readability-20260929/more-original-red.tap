@@ -1,0 +1,32 @@
+TAP version 13
+# Subtest: Team More exposes every global destination and returns collapsed across input and play states
+not ok 1 - Team More exposes every global destination and returns collapsed across input and play states
+  ---
+  duration_ms: 258.114
+  type: 'test'
+  location: '/Users/oleksandr.mekhovov/.codex/worktrees/gallery-v133-verify/go_test/game/test/coop-host.test.mjs:72:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Starting play retires the lobby disclosure.
+    
+    true !== false
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: false
+  actual: true
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/.codex/worktrees/gallery-v133-verify/go_test/game/test/coop-host.test.mjs:100:10)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async startSubtestAfterBootstrap (node:internal/test_runner/harness:296:3)
+  ...
+1..1
+# tests 1
+# suites 0
+# pass 0
+# fail 1
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 524.215875
