@@ -443,6 +443,14 @@ body.field-kit {
 #geometry-panel > label {
   margin-top: 16px;
 }
+#rotor-controls {
+  margin-bottom: 20px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid var(--fk-line);
+}
+#rotor-controls :is(input, select) {
+  min-height: 44px;
+}
 .provenance-fields {
   margin-top: 22px;
 }

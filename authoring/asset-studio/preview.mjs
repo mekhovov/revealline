@@ -56,7 +56,7 @@ export async function drawAssetPreview(surface, slot, asset, resolved, blobs, se
     state = 'default',
     statusTarget,
     cancelButton,
-    label = t('tools:assetPreview'),
+    label = () => t('tools:assetPreview'),
     isCurrent: hostCurrent = () => true,
     audioMaster = null,
     motionPreferences = null,
