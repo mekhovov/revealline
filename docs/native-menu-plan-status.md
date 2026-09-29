@@ -50,6 +50,7 @@ Each source batch is a separate commit with its own evidence. Independent source
 - #781 preserves the earlier mixed snapshot. Its matching menu/branding changes must not be applied again over #782; reconcile feature ownership before aggregate promotion.
 - Keep #776 mission selector, #771 Pause/Skip, #779 Audio persistence, #758 Library/provider, #761 authoring/presentation and the separately owned Demo/Community changes intact.
 - Preserve PR #785’s accepted production history and Confirm continuation. Do not replace compiled manifests with an older shared snapshot.
+- Head `c0a875750` later failed hosted focused checks in three stale navigation-test files. The [CI reconciliation report](verification/native-menu-ci-reconciliation-2026-09-29.md) records the reproduced failures, corrected visible menu routes and release-edge expectations, and local results. A fresh pushed head still needs hosted validation.
 - The early September 29 #782 preflight failure reported “PR changed before preflight; await its new gate” during metadata synchronization. A later fresh run passed preflight. Every subsequent pushed head still requires its own stable-head admission; no CI bypass is allowed.
 - Preserve archived snapshots and saved internal edition identities. `droneaid` is the public slug; the old internal ID remains a compatibility boundary.
 
