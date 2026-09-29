@@ -1,6 +1,7 @@
 import { createLearningAttempt } from '../company-campaigns/learning.mjs';
 import { mountCompanyWorkbench } from '../company-campaigns/workbench.mjs';
 import { createCompanyLearningProofStore } from '../company-campaigns/learning-proofs.mjs';
+import { createCompanyLearningDraftStore } from '../company-campaigns/learning-drafts.mjs';
 import { createCompanyStorage } from '../company-storage.mjs';
 import { companySimulationIdentity } from '../company-session.mjs';
 import { compileContentProject, resolveMission } from '../content-design/project.mjs';
@@ -8,7 +9,7 @@ import { journeyDifficultyCatalog } from '../content-design/catalogs.mjs';
 import { applyGameplayTuning, resolveGameplayTuning } from '../gameplay-tuning.mjs';
 import { createRun } from '../core/index.mjs';
 import { exportReplay } from '../replay.mjs';
-import { boundedJSON } from '../data-json.mjs';
+import { boundedJSON, exactKeys } from '../data-json.mjs';
 import { journeyMissionId } from '../journey/catalog.mjs';
 import { getLocale, localizedText, render, t } from '../i18n/index.mjs';
 import { localizeCompanyLesson } from '../company-campaigns/lesson-localization.mjs';
@@ -128,6 +129,19 @@ export async function mountEditionLessons({
   });
   const hydration = await proofs.hydrate({ signal: lifetime.signal });
   if (hydration.rejected) reportData(() => t('interface:editionLessons.revisionMismatch'));
+  const drafts = createCompanyLearningDraftStore({
+    editionId: provider.editionId,
+    lessons: provider.lessons,
+    simulations,
+    storage: {
+      getItem: storage.getItem,
+      setItem(key, value) {
+        if (!writer.writable) throw localizedIssue('errors:editionLearning.keptInTab');
+        storage.setItem(key, value);
+      },
+    },
+  });
+  if (drafts.hydrate().rejected) reportData(() => t('interface:editionLessons.draftMismatch'));
   const button = node('button');
   localizedText(button, () => t('interface:editionLessons.exploreConnection'));
   button.id = 'edition-lesson-open';
@@ -140,7 +154,15 @@ export async function mountEditionLessons({
   dialog.className = 'edition-lesson-dialog';
   const content = node('div');
   content.setAttribute('data-game-reading', '');
-  dialog.append(content, lessonStatus);
+  const draftNotice = node('p'),
+    freshAttempt = node('button');
+  draftNotice.id = 'edition-lesson-draft-notice';
+  freshAttempt.id = 'edition-lesson-fresh';
+  freshAttempt.type = 'button';
+  freshAttempt.className = 'button secondary';
+  localizedText(freshAttempt, () => t('interface:editionLessons.draftFresh'));
+  freshAttempt.hidden = true;
+  dialog.append(draftNotice, content, freshAttempt, lessonStatus);
   doc.body.append(dialog);
   const seen = new WeakSet(),
     attempts = new WeakMap();
@@ -154,7 +176,7 @@ export async function mountEditionLessons({
   };
   dialog.addEventListener('close', close);
   let lessonOpener = button;
-  function openLesson(lesson, run = null) {
+  function openLesson(lesson, run = null, pictureIdentity = null, fresh = false) {
     if (disposed) return;
     const visit = ++lessonVisit;
     localizedText(lessonStatus, '');
@@ -176,13 +198,18 @@ export async function mountEditionLessons({
       );
     };
     const recorder = run ? getRecorder() : null;
-    const identity = run ? companySimulationIdentity(run) : null;
+    const identity = run ? companySimulationIdentity(run) : pictureIdentity;
     const pinned = recorder && simulations.get(lesson.missionId)?.has(identity);
+    const cached = !fresh && run ? attempts.get(run) : null;
+    const recovered = !fresh && !cached ? drafts.load(lesson, identity) : null;
+    const resumed = recovered?.actions.length ? recovered : null;
+    const replayEligible = cached ? cached.replayEligible : !!pinned && !resumed;
     const attempt =
-      (run ? attempts.get(run) : null) ??
+      cached?.attempt ??
+      resumed ??
       createLearningAttempt(
         lesson,
-        pinned
+        replayEligible
           ? {
               attemptId: `bonus-${crypto.randomUUID()}`,
               simulationIdentity: identity,
@@ -190,16 +217,49 @@ export async function mountEditionLessons({
             }
           : {},
       );
+    if (run) attempts.set(run, { attempt, replayEligible });
+    localizedText(
+      draftNotice,
+      replayEligible
+        ? ''
+        : () =>
+            resumed || cached
+              ? t('interface:editionLessons.draftRecovered')
+              : t('interface:editionLessons.draftPractice'),
+    );
+    draftNotice.hidden = replayEligible;
+    const refreshDraftAction = (next) => {
+      freshAttempt.hidden = replayEligible || (!pinned && next.status !== 'complete');
+    };
+    refreshDraftAction(attempt);
+    localizedText(freshAttempt, () =>
+      pinned
+        ? t('interface:editionLessons.draftFresh')
+        : t('interface:editionLessons.draftRestartPractice'),
+    );
+    freshAttempt.onclick = () => {
+      if (run && (getRun() !== run || run.status !== 'won' || !seen.has(run))) return;
+      openLesson(lesson, run, identity, true);
+    };
+    if (fresh && !persistWithReport(reportLesson, () => drafts.save(lesson, identity, attempt)))
+      reportLesson(() => t('interface:editionLessons.draftInTab'));
     // Snapshot the accepted terminal replay before any asynchronous proof work.
-    const replay = pinned ? exportReplay(recorder, run) : null;
-    const boundary = run ? { tick: run.tick, kind: 'result' } : null;
+    const replay = replayEligible ? exportReplay(recorder, run) : null;
+    const boundary = replayEligible ? { tick: run.tick, kind: 'result' } : null;
     workbench?.destroy();
     workbench = mountCompanyWorkbench(content, {
       lesson,
       attempt,
       evidence: { availableRecordIds: lesson.records.map((record) => record.id), boundary },
       onChange: (next) => {
-        if (run) attempts.set(run, next);
+        if (run) attempts.set(run, { attempt: next, replayEligible });
+        refreshDraftAction(next);
+        try {
+          if (!persistWithReport(reportLesson, () => drafts.save(lesson, identity, next)))
+            reportLesson(() => t('interface:editionLessons.draftInTab'));
+        } catch (error) {
+          reportLesson(error.localizedMessage || error.message);
+        }
         if (next.status !== 'complete' || !replay) return;
         if (current())
           localizedText(lessonStatus, () => t('interface:editionLessons.checkingCompletedBonus'));
@@ -222,7 +282,10 @@ export async function mountEditionLessons({
     });
     const title = content.querySelector('h2');
     dialog.setAttribute('aria-labelledby', title.id);
-    dialog.showModal();
+    if (!dialog.open) dialog.showModal();
+    if (fresh) content.querySelector('[data-control]')?.focus({ preventScroll: true });
+    if (!replayEligible && attempt.actions.length && !drafts.isDurable(lesson, identity))
+      reportLesson(() => t('interface:editionLessons.draftInTab'));
   }
   button.onclick = () => {
     const run = getRun();
@@ -257,10 +320,11 @@ export async function mountEditionLessons({
       new Blob(
         [
           JSON.stringify({
-            format: 'revealline-edition-learning-backup.v1',
+            format: 'revealline-edition-learning-backup.v2',
             editionId: provider.editionId,
             proofs: proofs.exportProofs(),
             recovery: proofs.exportRecovery(),
+            drafts: drafts.exportDrafts(),
           }),
         ],
         { type: 'application/json' },
@@ -294,9 +358,22 @@ export async function mountEditionLessons({
         maxDepth: 40,
       });
       requireLocalized(
-        backup.format === 'revealline-edition-learning-backup.v1' &&
-          backup.editionId === provider.editionId,
+        ['revealline-edition-learning-backup.v1', 'revealline-edition-learning-backup.v2'].includes(
+          backup.format,
+        ) && backup.editionId === provider.editionId,
         'errors:editionLearning.otherEdition',
+      );
+      exactKeys(
+        backup,
+        backup.format === 'revealline-edition-learning-backup.v2'
+          ? ['format', 'editionId', 'proofs', 'recovery', 'drafts']
+          : ['format', 'editionId', 'proofs', 'recovery'],
+        'optional learning backup',
+      );
+      // Drafts are checked before any completion proof is imported. They never
+      // enter the proof verifier or reward-evidence projection.
+      const checkedDrafts = drafts.inspect(
+        backup.format === 'revealline-edition-learning-backup.v2' ? backup.drafts : [],
       );
       const recovery = proofs.inspectRecovery(backup.recovery);
       const checked = await proofs.inspectProofs(backup.proofs, { signal: request.signal });
@@ -306,12 +383,16 @@ export async function mountEditionLessons({
         throw localizedIssue('errors:editionLearning.cannotWriteRecords');
       }
       const durable = persistWithReport(reportData, () => {
+        const draftDurable = drafts.import(checkedDrafts);
         proofs.importRecovery(recovery);
-        return proofs.importVerified(checked);
+        return proofs.importVerified(checked) && draftDurable;
       });
       reportData(
         durable
-          ? () => t('interface:editionLessons.recordsImported')
+          ? () =>
+              checkedDrafts.length
+                ? t('interface:editionLessons.recordsImportedWithDrafts')
+                : t('interface:editionLessons.recordsImported')
           : () => t('interface:editionLessons.importedInTab'),
       );
     } catch (error) {
@@ -346,7 +427,7 @@ export async function mountEditionLessons({
       revisit.className = 'button secondary';
       revisit.onclick = () => {
         lessonOpener = revisit;
-        openLesson(lesson);
+        openLesson(lesson, null, record.gameplayId);
       };
       return revisit;
     },

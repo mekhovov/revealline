@@ -81665,678 +81665,6 @@
         "revision": 52
       },
       {
-        "description": "Panel frame: existing bounded component with Field Kit tokens and state styling.",
-        "file": null,
-        "format": "revealline-asset-revision.v1",
-        "geometry": null,
-        "id": "ui.panel.field-kit",
-        "kind": "recipe",
-        "provenance": {
-          "creator": "Reveal Line",
-          "license": "Project-authored runtime recipe",
-          "parent": {
-            "id": "ui.panel.field-kit",
-            "revision": 22
-          },
-          "prompt": 223,
-          "source": 545
-        },
-        "quality": {
-          "evidence": [
-            "Connected runtime recipe; screen and state review remains required."
-          ],
-          "stage": "source"
-        },
-        "recipe": {
-          "id": "ui.panel.v1"
-        },
-        "revision": 23
-      },
-      {
-        "description": "Dialog frame: existing bounded component with Field Kit tokens and state styling.",
-        "file": null,
-        "format": "revealline-asset-revision.v1",
-        "geometry": null,
-        "id": "ui.dialog.field-kit",
-        "kind": "recipe",
-        "provenance": {
-          "creator": "Reveal Line",
-          "license": "Project-authored runtime recipe",
-          "parent": {
-            "id": "ui.dialog.field-kit",
-            "revision": 22
-          },
-          "prompt": 62,
-          "source": 545
-        },
-        "quality": {
-          "evidence": [
-            "Connected runtime recipe; screen and state review remains required."
-          ],
-          "stage": "source"
-        },
-        "recipe": {
-          "id": "ui.panel.v1"
-        },
-        "revision": 23
-      },
-      {
-        "description": "Tooltip frame: existing bounded component with Field Kit tokens and state styling.",
-        "file": null,
-        "format": "revealline-asset-revision.v1",
-        "geometry": null,
-        "id": "ui.tooltip.field-kit",
-        "kind": "recipe",
-        "provenance": {
-          "creator": "Reveal Line",
-          "license": "Project-authored runtime recipe",
-          "parent": {
-            "id": "ui.tooltip.field-kit",
-            "revision": 22
-          },
-          "prompt": 328,
-          "source": 545
-        },
-        "quality": {
-          "evidence": [
-            "Connected runtime recipe; screen and state review remains required."
-          ],
-          "stage": "source"
-        },
-        "recipe": {
-          "id": "ui.panel.v1"
-        },
-        "revision": 23
-      },
-      {
-        "description": "Status message frame: existing bounded component with Field Kit tokens and state styling.",
-        "file": null,
-        "format": "revealline-asset-revision.v1",
-        "geometry": null,
-        "id": "ui.toast.field-kit",
-        "kind": "recipe",
-        "provenance": {
-          "creator": "Reveal Line",
-          "license": "Project-authored runtime recipe",
-          "parent": {
-            "id": "ui.toast.field-kit",
-            "revision": 22
-          },
-          "prompt": 285,
-          "source": 545
-        },
-        "quality": {
-          "evidence": [
-            "Connected runtime recipe; screen and state review remains required."
-          ],
-          "stage": "source"
-        },
-        "recipe": {
-          "id": "ui.panel.v1"
-        },
-        "revision": 23
-      },
-      {
-        "description": "primary button: existing bounded component with Field Kit tokens and state styling.",
-        "file": null,
-        "format": "revealline-asset-revision.v1",
-        "geometry": null,
-        "id": "ui.button.primary.field-kit",
-        "kind": "recipe",
-        "provenance": {
-          "creator": "Reveal Line",
-          "license": "Project-authored runtime recipe",
-          "parent": {
-            "id": "ui.button.primary.field-kit",
-            "revision": 22
-          },
-          "prompt": 230,
-          "source": 545
-        },
-        "quality": {
-          "evidence": [
-            "Connected runtime recipe; screen and state review remains required."
-          ],
-          "stage": "source"
-        },
-        "recipe": {
-          "id": "ui.button.v1"
-        },
-        "revision": 23
-      },
-      {
-        "description": "secondary button: existing bounded component with Field Kit tokens and state styling.",
-        "file": null,
-        "format": "revealline-asset-revision.v1",
-        "geometry": null,
-        "id": "ui.button.secondary.field-kit",
-        "kind": "recipe",
-        "provenance": {
-          "creator": "Reveal Line",
-          "license": "Project-authored runtime recipe",
-          "parent": {
-            "id": "ui.button.secondary.field-kit",
-            "revision": 22
-          },
-          "prompt": 248,
-          "source": 545
-        },
-        "quality": {
-          "evidence": [
-            "Connected runtime recipe; screen and state review remains required."
-          ],
-          "stage": "source"
-        },
-        "recipe": {
-          "id": "ui.button.v1"
-        },
-        "revision": 23
-      },
-      {
-        "description": "danger button: existing bounded component with Field Kit tokens and state styling.",
-        "file": null,
-        "format": "revealline-asset-revision.v1",
-        "geometry": null,
-        "id": "ui.button.danger.field-kit",
-        "kind": "recipe",
-        "provenance": {
-          "creator": "Reveal Line",
-          "license": "Project-authored runtime recipe",
-          "parent": {
-            "id": "ui.button.danger.field-kit",
-            "revision": 22
-          },
-          "prompt": 61,
-          "source": 545
-        },
-        "quality": {
-          "evidence": [
-            "Connected runtime recipe; screen and state review remains required."
-          ],
-          "stage": "source"
-        },
-        "recipe": {
-          "id": "ui.button.v1"
-        },
-        "revision": 23
-      },
-      {
-        "description": "icon button: existing bounded component with Field Kit tokens and state styling.",
-        "file": null,
-        "format": "revealline-asset-revision.v1",
-        "geometry": null,
-        "id": "ui.button.icon.field-kit",
-        "kind": "recipe",
-        "provenance": {
-          "creator": "Reveal Line",
-          "license": "Project-authored runtime recipe",
-          "parent": {
-            "id": "ui.button.icon.field-kit",
-            "revision": 22
-          },
-          "prompt": 186,
-          "source": 545
-        },
-        "quality": {
-          "evidence": [
-            "Connected runtime recipe; screen and state review remains required."
-          ],
-          "stage": "source"
-        },
-        "recipe": {
-          "id": "ui.button.v1"
-        },
-        "revision": 23
-      },
-      {
-        "description": "tab button: existing bounded component with Field Kit tokens and state styling.",
-        "file": null,
-        "format": "revealline-asset-revision.v1",
-        "geometry": null,
-        "id": "ui.button.tab.field-kit",
-        "kind": "recipe",
-        "provenance": {
-          "creator": "Reveal Line",
-          "license": "Project-authored runtime recipe",
-          "parent": {
-            "id": "ui.button.tab.field-kit",
-            "revision": 22
-          },
-          "prompt": 289,
-          "source": 545
-        },
-        "quality": {
-          "evidence": [
-            "Connected runtime recipe; screen and state review remains required."
-          ],
-          "stage": "source"
-        },
-        "recipe": {
-          "id": "ui.button.v1"
-        },
-        "revision": 23
-      },
-      {
-        "description": "chip button: existing bounded component with Field Kit tokens and state styling.",
-        "file": null,
-        "format": "revealline-asset-revision.v1",
-        "geometry": null,
-        "id": "ui.button.chip.field-kit",
-        "kind": "recipe",
-        "provenance": {
-          "creator": "Reveal Line",
-          "license": "Project-authored runtime recipe",
-          "parent": {
-            "id": "ui.button.chip.field-kit",
-            "revision": 22
-          },
-          "prompt": 46,
-          "source": 545
-        },
-        "quality": {
-          "evidence": [
-            "Connected runtime recipe; screen and state review remains required."
-          ],
-          "stage": "source"
-        },
-        "recipe": {
-          "id": "ui.button.v1"
-        },
-        "revision": 23
-      },
-      {
-        "description": "checkbox control: existing bounded component with Field Kit tokens and state styling.",
-        "file": null,
-        "format": "revealline-asset-revision.v1",
-        "geometry": null,
-        "id": "ui.input.checkbox.field-kit",
-        "kind": "recipe",
-        "provenance": {
-          "creator": "Reveal Line",
-          "license": "Project-authored runtime recipe",
-          "parent": {
-            "id": "ui.input.checkbox.field-kit",
-            "revision": 22
-          },
-          "prompt": 45,
-          "source": 545
-        },
-        "quality": {
-          "evidence": [
-            "Connected runtime recipe; screen and state review remains required."
-          ],
-          "stage": "source"
-        },
-        "recipe": {
-          "id": "ui.input.v1"
-        },
-        "revision": 23
-      },
-      {
-        "description": "radio control: existing bounded component with Field Kit tokens and state styling.",
-        "file": null,
-        "format": "revealline-asset-revision.v1",
-        "geometry": null,
-        "id": "ui.input.radio.field-kit",
-        "kind": "recipe",
-        "provenance": {
-          "creator": "Reveal Line",
-          "license": "Project-authored runtime recipe",
-          "parent": {
-            "id": "ui.input.radio.field-kit",
-            "revision": 22
-          },
-          "prompt": 232,
-          "source": 545
-        },
-        "quality": {
-          "evidence": [
-            "Connected runtime recipe; screen and state review remains required."
-          ],
-          "stage": "source"
-        },
-        "recipe": {
-          "id": "ui.input.v1"
-        },
-        "revision": 23
-      },
-      {
-        "description": "toggle control: existing bounded component with Field Kit tokens and state styling.",
-        "file": null,
-        "format": "revealline-asset-revision.v1",
-        "geometry": null,
-        "id": "ui.input.toggle.field-kit",
-        "kind": "recipe",
-        "provenance": {
-          "creator": "Reveal Line",
-          "license": "Project-authored runtime recipe",
-          "parent": {
-            "id": "ui.input.toggle.field-kit",
-            "revision": 22
-          },
-          "prompt": 327,
-          "source": 545
-        },
-        "quality": {
-          "evidence": [
-            "Connected runtime recipe; screen and state review remains required."
-          ],
-          "stage": "source"
-        },
-        "recipe": {
-          "id": "ui.input.v1"
-        },
-        "revision": 23
-      },
-      {
-        "description": "slider control: existing bounded component with Field Kit tokens and state styling.",
-        "file": null,
-        "format": "revealline-asset-revision.v1",
-        "geometry": null,
-        "id": "ui.input.slider.field-kit",
-        "kind": "recipe",
-        "provenance": {
-          "creator": "Reveal Line",
-          "license": "Project-authored runtime recipe",
-          "parent": {
-            "id": "ui.input.slider.field-kit",
-            "revision": 22
-          },
-          "prompt": 263,
-          "source": 545
-        },
-        "quality": {
-          "evidence": [
-            "Connected runtime recipe; screen and state review remains required."
-          ],
-          "stage": "source"
-        },
-        "recipe": {
-          "id": "ui.input.v1"
-        },
-        "revision": 23
-      },
-      {
-        "description": "select control: existing bounded component with Field Kit tokens and state styling.",
-        "file": null,
-        "format": "revealline-asset-revision.v1",
-        "geometry": null,
-        "id": "ui.input.select.field-kit",
-        "kind": "recipe",
-        "provenance": {
-          "creator": "Reveal Line",
-          "license": "Project-authored runtime recipe",
-          "parent": {
-            "id": "ui.input.select.field-kit",
-            "revision": 22
-          },
-          "prompt": 251,
-          "source": 545
-        },
-        "quality": {
-          "evidence": [
-            "Connected runtime recipe; screen and state review remains required."
-          ],
-          "stage": "source"
-        },
-        "recipe": {
-          "id": "ui.input.v1"
-        },
-        "revision": 23
-      },
-      {
-        "description": "text control: existing bounded component with Field Kit tokens and state styling.",
-        "file": null,
-        "format": "revealline-asset-revision.v1",
-        "geometry": null,
-        "id": "ui.input.text.field-kit",
-        "kind": "recipe",
-        "provenance": {
-          "creator": "Reveal Line",
-          "license": "Project-authored runtime recipe",
-          "parent": {
-            "id": "ui.input.text.field-kit",
-            "revision": 22
-          },
-          "prompt": 322,
-          "source": 545
-        },
-        "quality": {
-          "evidence": [
-            "Connected runtime recipe; screen and state review remains required."
-          ],
-          "stage": "source"
-        },
-        "recipe": {
-          "id": "ui.input.v1"
-        },
-        "revision": 23
-      },
-      {
-        "description": "scrollbar control: existing bounded component with Field Kit tokens and state styling.",
-        "file": null,
-        "format": "revealline-asset-revision.v1",
-        "geometry": null,
-        "id": "ui.input.scrollbar.field-kit",
-        "kind": "recipe",
-        "provenance": {
-          "creator": "Reveal Line",
-          "license": "Project-authored runtime recipe",
-          "parent": {
-            "id": "ui.input.scrollbar.field-kit",
-            "revision": 22
-          },
-          "prompt": 247,
-          "source": 545
-        },
-        "quality": {
-          "evidence": [
-            "Connected runtime recipe; screen and state review remains required."
-          ],
-          "stage": "source"
-        },
-        "recipe": {
-          "id": "ui.input.v1"
-        },
-        "revision": 23
-      },
-      {
-        "description": "coverage meter: existing bounded component with Field Kit tokens and state styling.",
-        "file": null,
-        "format": "revealline-asset-revision.v1",
-        "geometry": null,
-        "id": "ui.meter.coverage.field-kit",
-        "kind": "recipe",
-        "provenance": {
-          "creator": "Reveal Line",
-          "license": "Project-authored runtime recipe",
-          "parent": {
-            "id": "ui.meter.coverage.field-kit",
-            "revision": 22
-          },
-          "prompt": 59,
-          "source": 545
-        },
-        "quality": {
-          "evidence": [
-            "Connected runtime recipe; screen and state review remains required."
-          ],
-          "stage": "source"
-        },
-        "recipe": {
-          "id": "ui.meter.v1"
-        },
-        "revision": 23
-      },
-      {
-        "description": "progress meter: existing bounded component with Field Kit tokens and state styling.",
-        "file": null,
-        "format": "revealline-asset-revision.v1",
-        "geometry": null,
-        "id": "ui.meter.progress.field-kit",
-        "kind": "recipe",
-        "provenance": {
-          "creator": "Reveal Line",
-          "license": "Project-authored runtime recipe",
-          "parent": {
-            "id": "ui.meter.progress.field-kit",
-            "revision": 22
-          },
-          "prompt": 231,
-          "source": 545
-        },
-        "quality": {
-          "evidence": [
-            "Connected runtime recipe; screen and state review remains required."
-          ],
-          "stage": "source"
-        },
-        "recipe": {
-          "id": "ui.meter.v1"
-        },
-        "revision": 23
-      },
-      {
-        "description": "time meter: existing bounded component with Field Kit tokens and state styling.",
-        "file": null,
-        "format": "revealline-asset-revision.v1",
-        "geometry": null,
-        "id": "ui.meter.time.field-kit",
-        "kind": "recipe",
-        "provenance": {
-          "creator": "Reveal Line",
-          "license": "Project-authored runtime recipe",
-          "parent": {
-            "id": "ui.meter.time.field-kit",
-            "revision": 22
-          },
-          "prompt": 324,
-          "source": 545
-        },
-        "quality": {
-          "evidence": [
-            "Connected runtime recipe; screen and state review remains required."
-          ],
-          "stage": "source"
-        },
-        "recipe": {
-          "id": "ui.meter.v1"
-        },
-        "revision": 23
-      },
-      {
-        "description": "ability meter: existing bounded component with Field Kit tokens and state styling.",
-        "file": null,
-        "format": "revealline-asset-revision.v1",
-        "geometry": null,
-        "id": "ui.meter.ability.field-kit",
-        "kind": "recipe",
-        "provenance": {
-          "creator": "Reveal Line",
-          "license": "Project-authored runtime recipe",
-          "parent": {
-            "id": "ui.meter.ability.field-kit",
-            "revision": 22
-          },
-          "prompt": 18,
-          "source": 545
-        },
-        "quality": {
-          "evidence": [
-            "Connected runtime recipe; screen and state review remains required."
-          ],
-          "stage": "source"
-        },
-        "recipe": {
-          "id": "ui.meter.v1"
-        },
-        "revision": 23
-      },
-      {
-        "description": "volume meter: existing bounded component with Field Kit tokens and state styling.",
-        "file": null,
-        "format": "revealline-asset-revision.v1",
-        "geometry": null,
-        "id": "ui.meter.volume.field-kit",
-        "kind": "recipe",
-        "provenance": {
-          "creator": "Reveal Line",
-          "license": "Project-authored runtime recipe",
-          "parent": {
-            "id": "ui.meter.volume.field-kit",
-            "revision": 22
-          },
-          "prompt": 357,
-          "source": 545
-        },
-        "quality": {
-          "evidence": [
-            "Connected runtime recipe; screen and state review remains required."
-          ],
-          "stage": "source"
-        },
-        "recipe": {
-          "id": "ui.meter.v1"
-        },
-        "revision": 23
-      },
-      {
-        "description": "Focus brackets: existing bounded component with Field Kit tokens and state styling.",
-        "file": null,
-        "format": "revealline-asset-revision.v1",
-        "geometry": null,
-        "id": "ui.focus.field-kit",
-        "kind": "recipe",
-        "provenance": {
-          "creator": "Reveal Line",
-          "license": "Project-authored runtime recipe",
-          "parent": {
-            "id": "ui.focus.field-kit",
-            "revision": 22
-          },
-          "prompt": 138,
-          "source": 545
-        },
-        "quality": {
-          "evidence": [
-            "Connected runtime recipe; screen and state review remains required."
-          ],
-          "stage": "source"
-        },
-        "recipe": {
-          "id": "ui.focus.v1"
-        },
-        "revision": 23
-      },
-      {
-        "description": "Selection cursor: existing bounded component with Field Kit tokens and state styling.",
-        "file": null,
-        "format": "revealline-asset-revision.v1",
-        "geometry": null,
-        "id": "ui.cursor.field-kit",
-        "kind": "recipe",
-        "provenance": {
-          "creator": "Reveal Line",
-          "license": "Project-authored runtime recipe",
-          "parent": {
-            "id": "ui.cursor.field-kit",
-            "revision": 22
-          },
-          "prompt": 252,
-          "source": 545
-        },
-        "quality": {
-          "evidence": [
-            "Connected runtime recipe; screen and state review remains required."
-          ],
-          "stage": "source"
-        },
-        "recipe": {
-          "id": "ui.cursor.v1"
-        },
-        "revision": 23
-      },
-      {
         "description": "focus audio cue: existing bounded component with Field Kit tokens and state styling.",
         "file": null,
         "format": "revealline-asset-revision.v1",
@@ -82351,12 +81679,11 @@
             "revision": 52
           },
           "prompt": 137,
-          "source": 485
+          "source": 484
         },
         "quality": {
           "evidence": [
-            "Scoped discovery audio software continuation: docs/verification/discovery-audio-continuation-2026-09-29/review.json sha256:edeecf9fbafdabd7e4fdb653be58baf8deaa3483a6ee426552d611d2fff768ea; exact50 ordered inputs sha256:a7780c46c20f2603e41f8d7c728d3d13c3efdb6e799a3e5d429ae236bf15d20c. Accepted campaign fallback, explicit exact-original recording export, shared reward master/gain ownership and isolated preview preferences retain the eight existing recipe identities and original payloads. The 22 added behavior and media-validation inputs reopen this group when changed. Exact production100/audio52 predecessor oracle sha256:cf19ad831cc0347f4f84c2ac310a1168354858e75f40991b35ffec18ea58d0b7 is retained. This is software continuation only; composition, listening, physical-device, frozen/public and release acceptance remain separate.",
-            "Scoped v0.142.3 Steam Deck Confirm audio continuation: docs/verification/v0.142.3-steamdeck-confirm-audio-continuation/review.json sha256:a059520f6ce0c394c3425355c711b641b4b23f9321e11c7d384317e7f814798c; exact28 inputs sha256:39fe40240f0475e471a52772060899d3e329e4d54d6b2bb6679e76dc745ee9a4. Only game/app.mjs changes, coordinating native and Gamepad Confirm ownership and opt-in local diagnostics; all audio implementation, eight existing procedural recipes, routing and payloads remain unchanged. Exact v0.142.2 production99/audio51 predecessor fixture sha256:528361f4e7823a23b02b261ca1de0c9b3157d1a17cbba643e4ff7e67073bc0a7 is retained. Final qualification, frozen/public, listening and physical Steam Deck acceptance remain separate.",
+            "Scoped v0.142.4 mission-selector audio continuation: docs/verification/v0.142.4-selector-audio-continuation/review.json sha256:f2cf0cc93f8de8e959eabf6e6313a0af306dfae87e2cb663bfe7bef805df6fe6; exact28 inputs sha256:fd3d7e347bc3a6e36bd884b508af8bbd8492cc3a4dac19bb745664a7fe90adc6. Only game/app.mjs changes, adding clear-star metadata and mission-card progress adapters; audio implementation, eight procedural recipes, routing and payloads remain unchanged. Exact published production100/audio52 predecessor fixture sha256:db9cc258d79aaa0caaf587fa3c73be5fcc55cea5f6129524c59255f04f3bbeb0 is retained. Selector/save compatibility, final qualification, frozen/public, listening and physical-device acceptance remain separate.\nScoped v0.142.3 Steam Deck Confirm audio continuation: docs/verification/v0.142.3-steamdeck-confirm-audio-continuation/review.json sha256:a059520f6ce0c394c3425355c711b641b4b23f9321e11c7d384317e7f814798c; exact28 inputs sha256:39fe40240f0475e471a52772060899d3e329e4d54d6b2bb6679e76dc745ee9a4. Only game/app.mjs changes, coordinating native and Gamepad Confirm ownership and opt-in local diagnostics; all audio implementation, eight existing procedural recipes, routing and payloads remain unchanged. Exact v0.142.2 production99/audio51 predecessor fixture sha256:528361f4e7823a23b02b261ca1de0c9b3157d1a17cbba643e4ff7e67073bc0a7 is retained. Final qualification, frozen/public, listening and physical Steam Deck acceptance remain separate.",
             "Scoped PR #770 Audio playback correction continuation: docs/verification/audio-style-menu-correction-2026-09-28/review.json sha256:62c1dac1be4286acdb8201aab99b6d3c5e2e2b282e1c88cb34d88af527172e09; exact28 inputs sha256:d9650ffde4c938064703de7c1e8ec987ac1efc1b6470ebcad4ca4ab459a32018. Only soundtrack-player.mjs and soundtrack-panel.mjs changed: saved listening preferences are isolated from unsaved Music Studio drafts, newer transport intent wins delayed playback, identity-owned catalogue retry survives close, and queue-capacity copy is corrected. The associated test-evidence repair pins the exact accepted-main production97 predecessor oracle. Exact production98/audio50 predecessor fixture sha256:e397af798928a72502c970276fe212eaad8d2a4889f5afe02587559244496714 is bound separately. Eight existing procedural recipes, routing and payloads remain unchanged; production generation, hosted, frozen/public, listening and physical-device acceptance remain separate.",
             "Scoped v0.142.1 Audio menu and style taxonomy continuation: docs/verification/audio-style-menu-2026-09-28/review.json sha256:bc87031d46ded1ace2cc62c6ca87e2ce90ccbb043db7c5fdb653d262c3b94f49; exact28 inputs sha256:9f0bf41c491a44b4ac585975fd444f7e2e5822534914f36b0213157861173344. Audio settings expose transport and broad style selection, automatically mix matching archive and local music, separate Synth/Electronic, combine UA/Ukrainian and require exact Cyrillic ФПВ. The dependency closure binds the quick controls and taxonomy modules. Eight existing procedural recipes and payloads remain unchanged; hosted, frozen/public, listening and physical-device acceptance remain separate.",
             "Scoped player-readiness17 ownership source continuation: docs/verification/player-readiness17-audio-continuation-2026-09-28/review.json sha256:0584016a71b220780cc8912666638c468550c7167c2c1084b28b7952f27fa608; exact26 inputs sha256:124a7d186850bd1175bfc45bafba2f19912c89bcb271b5a0c2773e9ad5441b34. Existing eight recipes, routing and payloads unchanged; theme96/audio48 and all predecessors retained. Append-only production and all hosted/frozen/public/listening/device/human acceptance remain separate.",
@@ -82370,7 +81697,8 @@
             "v0.141.0 managed-media continuation: docs/verification/v0.141.0-managed-media-audio-continuation/review.json sha256:16f3eb26f28eae82f6529c8a872438c216a05d7a905e0fee0b3d6b0e9601e998; twenty-four ordered audio inputs sha256:77370fe6fc7a8d376865b05d8ba2020b8683b3922c20cc3dfad260d0a0251f79. Only managed-media-store.mjs and media-storage-record.mjs changed after the prior exact review, adding bounded cross-domain byte accounting and exact reviewed still-byte detachment while preserving audio routing, recipes, rows, blobs, playback and soundtrack bytes.",
             "v0.132.5 locale-refresh continuation: docs/verification/v0.132.5-presentation-continuation/review.json sha256:fbc818dcfbbfd2cf1985017417959c82741162842cd3c7293f5be67fc594ef35; twenty-four ordered audio inputs sha256:301e68a4898cf7d9140abee266195401a69cfca0db2301a12409ec252c882ec9. Only game/app.mjs changed after the prior exact review, asking the shared shell to refresh localized Home copy while preserving audio routing, recipes and bytes.",
             "Scoped v0.132.1 Steam Deck controller continuation: docs/verification/v0.132.1-steamdeck-audio-continuation/review.json sha256:b715c81fa1f86a562d5c195ffc025727fc009d1de6cfe03c403db75fdfbf8d70; twenty-five ordered audio inputs sha256:417ceb75d58709373e1abdb047c26224db06721bd58b3ff8302152c33d2f735a. Only game/app.mjs changed among those inputs, adding a controller Confirm lifecycle filter before menu dispatch while preserving audio routing and bytes.",
-            "The prior offline ownership and v0.131 English/Ukrainian reviews remain incorporated. All 8 selected roles retain the same procedural recipes; playback state, volume values, local-only selection, resumable download, shared-byte removal, rights, cancellation and imported-media preservation are unchanged. No recording, composition, musical suitability, Ukrainian authenticity, full-track listening, physical-device, frozen-build or public game approval. Historical reviews and original payloads remain immutable; any audio dependency or review-byte change reopens this group."
+            "The prior offline ownership and v0.131 English/Ukrainian reviews remain incorporated. All 8 selected roles retain the same procedural recipes; playback state, volume values, local-only selection, resumable download, shared-byte removal, rights, cancellation and imported-media preservation are unchanged.",
+            "No recording, composition, musical suitability, Ukrainian authenticity, full-track listening, physical-device, frozen-build or public game approval. Historical reviews and original payloads remain immutable; any audio dependency or review-byte change reopens this group."
           ],
           "stage": "reviewed"
         },
@@ -82394,12 +81722,11 @@
             "revision": 52
           },
           "prompt": 51,
-          "source": 485
+          "source": 484
         },
         "quality": {
           "evidence": [
-            "Scoped discovery audio software continuation: docs/verification/discovery-audio-continuation-2026-09-29/review.json sha256:edeecf9fbafdabd7e4fdb653be58baf8deaa3483a6ee426552d611d2fff768ea; exact50 ordered inputs sha256:a7780c46c20f2603e41f8d7c728d3d13c3efdb6e799a3e5d429ae236bf15d20c. Accepted campaign fallback, explicit exact-original recording export, shared reward master/gain ownership and isolated preview preferences retain the eight existing recipe identities and original payloads. The 22 added behavior and media-validation inputs reopen this group when changed. Exact production100/audio52 predecessor oracle sha256:cf19ad831cc0347f4f84c2ac310a1168354858e75f40991b35ffec18ea58d0b7 is retained. This is software continuation only; composition, listening, physical-device, frozen/public and release acceptance remain separate.",
-            "Scoped v0.142.3 Steam Deck Confirm audio continuation: docs/verification/v0.142.3-steamdeck-confirm-audio-continuation/review.json sha256:a059520f6ce0c394c3425355c711b641b4b23f9321e11c7d384317e7f814798c; exact28 inputs sha256:39fe40240f0475e471a52772060899d3e329e4d54d6b2bb6679e76dc745ee9a4. Only game/app.mjs changes, coordinating native and Gamepad Confirm ownership and opt-in local diagnostics; all audio implementation, eight existing procedural recipes, routing and payloads remain unchanged. Exact v0.142.2 production99/audio51 predecessor fixture sha256:528361f4e7823a23b02b261ca1de0c9b3157d1a17cbba643e4ff7e67073bc0a7 is retained. Final qualification, frozen/public, listening and physical Steam Deck acceptance remain separate.",
+            "Scoped v0.142.4 mission-selector audio continuation: docs/verification/v0.142.4-selector-audio-continuation/review.json sha256:f2cf0cc93f8de8e959eabf6e6313a0af306dfae87e2cb663bfe7bef805df6fe6; exact28 inputs sha256:fd3d7e347bc3a6e36bd884b508af8bbd8492cc3a4dac19bb745664a7fe90adc6. Only game/app.mjs changes, adding clear-star metadata and mission-card progress adapters; audio implementation, eight procedural recipes, routing and payloads remain unchanged. Exact published production100/audio52 predecessor fixture sha256:db9cc258d79aaa0caaf587fa3c73be5fcc55cea5f6129524c59255f04f3bbeb0 is retained. Selector/save compatibility, final qualification, frozen/public, listening and physical-device acceptance remain separate.\nScoped v0.142.3 Steam Deck Confirm audio continuation: docs/verification/v0.142.3-steamdeck-confirm-audio-continuation/review.json sha256:a059520f6ce0c394c3425355c711b641b4b23f9321e11c7d384317e7f814798c; exact28 inputs sha256:39fe40240f0475e471a52772060899d3e329e4d54d6b2bb6679e76dc745ee9a4. Only game/app.mjs changes, coordinating native and Gamepad Confirm ownership and opt-in local diagnostics; all audio implementation, eight existing procedural recipes, routing and payloads remain unchanged. Exact v0.142.2 production99/audio51 predecessor fixture sha256:528361f4e7823a23b02b261ca1de0c9b3157d1a17cbba643e4ff7e67073bc0a7 is retained. Final qualification, frozen/public, listening and physical Steam Deck acceptance remain separate.",
             "Scoped PR #770 Audio playback correction continuation: docs/verification/audio-style-menu-correction-2026-09-28/review.json sha256:62c1dac1be4286acdb8201aab99b6d3c5e2e2b282e1c88cb34d88af527172e09; exact28 inputs sha256:d9650ffde4c938064703de7c1e8ec987ac1efc1b6470ebcad4ca4ab459a32018. Only soundtrack-player.mjs and soundtrack-panel.mjs changed: saved listening preferences are isolated from unsaved Music Studio drafts, newer transport intent wins delayed playback, identity-owned catalogue retry survives close, and queue-capacity copy is corrected. The associated test-evidence repair pins the exact accepted-main production97 predecessor oracle. Exact production98/audio50 predecessor fixture sha256:e397af798928a72502c970276fe212eaad8d2a4889f5afe02587559244496714 is bound separately. Eight existing procedural recipes, routing and payloads remain unchanged; production generation, hosted, frozen/public, listening and physical-device acceptance remain separate.",
             "Scoped v0.142.1 Audio menu and style taxonomy continuation: docs/verification/audio-style-menu-2026-09-28/review.json sha256:bc87031d46ded1ace2cc62c6ca87e2ce90ccbb043db7c5fdb653d262c3b94f49; exact28 inputs sha256:9f0bf41c491a44b4ac585975fd444f7e2e5822534914f36b0213157861173344. Audio settings expose transport and broad style selection, automatically mix matching archive and local music, separate Synth/Electronic, combine UA/Ukrainian and require exact Cyrillic ФПВ. The dependency closure binds the quick controls and taxonomy modules. Eight existing procedural recipes and payloads remain unchanged; hosted, frozen/public, listening and physical-device acceptance remain separate.",
             "Scoped player-readiness17 ownership source continuation: docs/verification/player-readiness17-audio-continuation-2026-09-28/review.json sha256:0584016a71b220780cc8912666638c468550c7167c2c1084b28b7952f27fa608; exact26 inputs sha256:124a7d186850bd1175bfc45bafba2f19912c89bcb271b5a0c2773e9ad5441b34. Existing eight recipes, routing and payloads unchanged; theme96/audio48 and all predecessors retained. Append-only production and all hosted/frozen/public/listening/device/human acceptance remain separate.",
@@ -82413,7 +81740,8 @@
             "v0.141.0 managed-media continuation: docs/verification/v0.141.0-managed-media-audio-continuation/review.json sha256:16f3eb26f28eae82f6529c8a872438c216a05d7a905e0fee0b3d6b0e9601e998; twenty-four ordered audio inputs sha256:77370fe6fc7a8d376865b05d8ba2020b8683b3922c20cc3dfad260d0a0251f79. Only managed-media-store.mjs and media-storage-record.mjs changed after the prior exact review, adding bounded cross-domain byte accounting and exact reviewed still-byte detachment while preserving audio routing, recipes, rows, blobs, playback and soundtrack bytes.",
             "v0.132.5 locale-refresh continuation: docs/verification/v0.132.5-presentation-continuation/review.json sha256:fbc818dcfbbfd2cf1985017417959c82741162842cd3c7293f5be67fc594ef35; twenty-four ordered audio inputs sha256:301e68a4898cf7d9140abee266195401a69cfca0db2301a12409ec252c882ec9. Only game/app.mjs changed after the prior exact review, asking the shared shell to refresh localized Home copy while preserving audio routing, recipes and bytes.",
             "Scoped v0.132.1 Steam Deck controller continuation: docs/verification/v0.132.1-steamdeck-audio-continuation/review.json sha256:b715c81fa1f86a562d5c195ffc025727fc009d1de6cfe03c403db75fdfbf8d70; twenty-five ordered audio inputs sha256:417ceb75d58709373e1abdb047c26224db06721bd58b3ff8302152c33d2f735a. Only game/app.mjs changed among those inputs, adding a controller Confirm lifecycle filter before menu dispatch while preserving audio routing and bytes.",
-            "The prior offline ownership and v0.131 English/Ukrainian reviews remain incorporated. All 8 selected roles retain the same procedural recipes; playback state, volume values, local-only selection, resumable download, shared-byte removal, rights, cancellation and imported-media preservation are unchanged. No recording, composition, musical suitability, Ukrainian authenticity, full-track listening, physical-device, frozen-build or public game approval. Historical reviews and original payloads remain immutable; any audio dependency or review-byte change reopens this group."
+            "The prior offline ownership and v0.131 English/Ukrainian reviews remain incorporated. All 8 selected roles retain the same procedural recipes; playback state, volume values, local-only selection, resumable download, shared-byte removal, rights, cancellation and imported-media preservation are unchanged.",
+            "No recording, composition, musical suitability, Ukrainian authenticity, full-track listening, physical-device, frozen-build or public game approval. Historical reviews and original payloads remain immutable; any audio dependency or review-byte change reopens this group."
           ],
           "stage": "reviewed"
         },
@@ -82437,12 +81765,11 @@
             "revision": 52
           },
           "prompt": 34,
-          "source": 485
+          "source": 484
         },
         "quality": {
           "evidence": [
-            "Scoped discovery audio software continuation: docs/verification/discovery-audio-continuation-2026-09-29/review.json sha256:edeecf9fbafdabd7e4fdb653be58baf8deaa3483a6ee426552d611d2fff768ea; exact50 ordered inputs sha256:a7780c46c20f2603e41f8d7c728d3d13c3efdb6e799a3e5d429ae236bf15d20c. Accepted campaign fallback, explicit exact-original recording export, shared reward master/gain ownership and isolated preview preferences retain the eight existing recipe identities and original payloads. The 22 added behavior and media-validation inputs reopen this group when changed. Exact production100/audio52 predecessor oracle sha256:cf19ad831cc0347f4f84c2ac310a1168354858e75f40991b35ffec18ea58d0b7 is retained. This is software continuation only; composition, listening, physical-device, frozen/public and release acceptance remain separate.",
-            "Scoped v0.142.3 Steam Deck Confirm audio continuation: docs/verification/v0.142.3-steamdeck-confirm-audio-continuation/review.json sha256:a059520f6ce0c394c3425355c711b641b4b23f9321e11c7d384317e7f814798c; exact28 inputs sha256:39fe40240f0475e471a52772060899d3e329e4d54d6b2bb6679e76dc745ee9a4. Only game/app.mjs changes, coordinating native and Gamepad Confirm ownership and opt-in local diagnostics; all audio implementation, eight existing procedural recipes, routing and payloads remain unchanged. Exact v0.142.2 production99/audio51 predecessor fixture sha256:528361f4e7823a23b02b261ca1de0c9b3157d1a17cbba643e4ff7e67073bc0a7 is retained. Final qualification, frozen/public, listening and physical Steam Deck acceptance remain separate.",
+            "Scoped v0.142.4 mission-selector audio continuation: docs/verification/v0.142.4-selector-audio-continuation/review.json sha256:f2cf0cc93f8de8e959eabf6e6313a0af306dfae87e2cb663bfe7bef805df6fe6; exact28 inputs sha256:fd3d7e347bc3a6e36bd884b508af8bbd8492cc3a4dac19bb745664a7fe90adc6. Only game/app.mjs changes, adding clear-star metadata and mission-card progress adapters; audio implementation, eight procedural recipes, routing and payloads remain unchanged. Exact published production100/audio52 predecessor fixture sha256:db9cc258d79aaa0caaf587fa3c73be5fcc55cea5f6129524c59255f04f3bbeb0 is retained. Selector/save compatibility, final qualification, frozen/public, listening and physical-device acceptance remain separate.\nScoped v0.142.3 Steam Deck Confirm audio continuation: docs/verification/v0.142.3-steamdeck-confirm-audio-continuation/review.json sha256:a059520f6ce0c394c3425355c711b641b4b23f9321e11c7d384317e7f814798c; exact28 inputs sha256:39fe40240f0475e471a52772060899d3e329e4d54d6b2bb6679e76dc745ee9a4. Only game/app.mjs changes, coordinating native and Gamepad Confirm ownership and opt-in local diagnostics; all audio implementation, eight existing procedural recipes, routing and payloads remain unchanged. Exact v0.142.2 production99/audio51 predecessor fixture sha256:528361f4e7823a23b02b261ca1de0c9b3157d1a17cbba643e4ff7e67073bc0a7 is retained. Final qualification, frozen/public, listening and physical Steam Deck acceptance remain separate.",
             "Scoped PR #770 Audio playback correction continuation: docs/verification/audio-style-menu-correction-2026-09-28/review.json sha256:62c1dac1be4286acdb8201aab99b6d3c5e2e2b282e1c88cb34d88af527172e09; exact28 inputs sha256:d9650ffde4c938064703de7c1e8ec987ac1efc1b6470ebcad4ca4ab459a32018. Only soundtrack-player.mjs and soundtrack-panel.mjs changed: saved listening preferences are isolated from unsaved Music Studio drafts, newer transport intent wins delayed playback, identity-owned catalogue retry survives close, and queue-capacity copy is corrected. The associated test-evidence repair pins the exact accepted-main production97 predecessor oracle. Exact production98/audio50 predecessor fixture sha256:e397af798928a72502c970276fe212eaad8d2a4889f5afe02587559244496714 is bound separately. Eight existing procedural recipes, routing and payloads remain unchanged; production generation, hosted, frozen/public, listening and physical-device acceptance remain separate.",
             "Scoped v0.142.1 Audio menu and style taxonomy continuation: docs/verification/audio-style-menu-2026-09-28/review.json sha256:bc87031d46ded1ace2cc62c6ca87e2ce90ccbb043db7c5fdb653d262c3b94f49; exact28 inputs sha256:9f0bf41c491a44b4ac585975fd444f7e2e5822534914f36b0213157861173344. Audio settings expose transport and broad style selection, automatically mix matching archive and local music, separate Synth/Electronic, combine UA/Ukrainian and require exact Cyrillic ФПВ. The dependency closure binds the quick controls and taxonomy modules. Eight existing procedural recipes and payloads remain unchanged; hosted, frozen/public, listening and physical-device acceptance remain separate.",
             "Scoped player-readiness17 ownership source continuation: docs/verification/player-readiness17-audio-continuation-2026-09-28/review.json sha256:0584016a71b220780cc8912666638c468550c7167c2c1084b28b7952f27fa608; exact26 inputs sha256:124a7d186850bd1175bfc45bafba2f19912c89bcb271b5a0c2773e9ad5441b34. Existing eight recipes, routing and payloads unchanged; theme96/audio48 and all predecessors retained. Append-only production and all hosted/frozen/public/listening/device/human acceptance remain separate.",
@@ -82456,7 +81783,8 @@
             "v0.141.0 managed-media continuation: docs/verification/v0.141.0-managed-media-audio-continuation/review.json sha256:16f3eb26f28eae82f6529c8a872438c216a05d7a905e0fee0b3d6b0e9601e998; twenty-four ordered audio inputs sha256:77370fe6fc7a8d376865b05d8ba2020b8683b3922c20cc3dfad260d0a0251f79. Only managed-media-store.mjs and media-storage-record.mjs changed after the prior exact review, adding bounded cross-domain byte accounting and exact reviewed still-byte detachment while preserving audio routing, recipes, rows, blobs, playback and soundtrack bytes.",
             "v0.132.5 locale-refresh continuation: docs/verification/v0.132.5-presentation-continuation/review.json sha256:fbc818dcfbbfd2cf1985017417959c82741162842cd3c7293f5be67fc594ef35; twenty-four ordered audio inputs sha256:301e68a4898cf7d9140abee266195401a69cfca0db2301a12409ec252c882ec9. Only game/app.mjs changed after the prior exact review, asking the shared shell to refresh localized Home copy while preserving audio routing, recipes and bytes.",
             "Scoped v0.132.1 Steam Deck controller continuation: docs/verification/v0.132.1-steamdeck-audio-continuation/review.json sha256:b715c81fa1f86a562d5c195ffc025727fc009d1de6cfe03c403db75fdfbf8d70; twenty-five ordered audio inputs sha256:417ceb75d58709373e1abdb047c26224db06721bd58b3ff8302152c33d2f735a. Only game/app.mjs changed among those inputs, adding a controller Confirm lifecycle filter before menu dispatch while preserving audio routing and bytes.",
-            "The prior offline ownership and v0.131 English/Ukrainian reviews remain incorporated. All 8 selected roles retain the same procedural recipes; playback state, volume values, local-only selection, resumable download, shared-byte removal, rights, cancellation and imported-media preservation are unchanged. No recording, composition, musical suitability, Ukrainian authenticity, full-track listening, physical-device, frozen-build or public game approval. Historical reviews and original payloads remain immutable; any audio dependency or review-byte change reopens this group."
+            "The prior offline ownership and v0.131 English/Ukrainian reviews remain incorporated. All 8 selected roles retain the same procedural recipes; playback state, volume values, local-only selection, resumable download, shared-byte removal, rights, cancellation and imported-media preservation are unchanged.",
+            "No recording, composition, musical suitability, Ukrainian authenticity, full-track listening, physical-device, frozen-build or public game approval. Historical reviews and original payloads remain immutable; any audio dependency or review-byte change reopens this group."
           ],
           "stage": "reviewed"
         },
@@ -82480,12 +81808,11 @@
             "revision": 52
           },
           "prompt": 36,
-          "source": 485
+          "source": 484
         },
         "quality": {
           "evidence": [
-            "Scoped discovery audio software continuation: docs/verification/discovery-audio-continuation-2026-09-29/review.json sha256:edeecf9fbafdabd7e4fdb653be58baf8deaa3483a6ee426552d611d2fff768ea; exact50 ordered inputs sha256:a7780c46c20f2603e41f8d7c728d3d13c3efdb6e799a3e5d429ae236bf15d20c. Accepted campaign fallback, explicit exact-original recording export, shared reward master/gain ownership and isolated preview preferences retain the eight existing recipe identities and original payloads. The 22 added behavior and media-validation inputs reopen this group when changed. Exact production100/audio52 predecessor oracle sha256:cf19ad831cc0347f4f84c2ac310a1168354858e75f40991b35ffec18ea58d0b7 is retained. This is software continuation only; composition, listening, physical-device, frozen/public and release acceptance remain separate.",
-            "Scoped v0.142.3 Steam Deck Confirm audio continuation: docs/verification/v0.142.3-steamdeck-confirm-audio-continuation/review.json sha256:a059520f6ce0c394c3425355c711b641b4b23f9321e11c7d384317e7f814798c; exact28 inputs sha256:39fe40240f0475e471a52772060899d3e329e4d54d6b2bb6679e76dc745ee9a4. Only game/app.mjs changes, coordinating native and Gamepad Confirm ownership and opt-in local diagnostics; all audio implementation, eight existing procedural recipes, routing and payloads remain unchanged. Exact v0.142.2 production99/audio51 predecessor fixture sha256:528361f4e7823a23b02b261ca1de0c9b3157d1a17cbba643e4ff7e67073bc0a7 is retained. Final qualification, frozen/public, listening and physical Steam Deck acceptance remain separate.",
+            "Scoped v0.142.4 mission-selector audio continuation: docs/verification/v0.142.4-selector-audio-continuation/review.json sha256:f2cf0cc93f8de8e959eabf6e6313a0af306dfae87e2cb663bfe7bef805df6fe6; exact28 inputs sha256:fd3d7e347bc3a6e36bd884b508af8bbd8492cc3a4dac19bb745664a7fe90adc6. Only game/app.mjs changes, adding clear-star metadata and mission-card progress adapters; audio implementation, eight procedural recipes, routing and payloads remain unchanged. Exact published production100/audio52 predecessor fixture sha256:db9cc258d79aaa0caaf587fa3c73be5fcc55cea5f6129524c59255f04f3bbeb0 is retained. Selector/save compatibility, final qualification, frozen/public, listening and physical-device acceptance remain separate.\nScoped v0.142.3 Steam Deck Confirm audio continuation: docs/verification/v0.142.3-steamdeck-confirm-audio-continuation/review.json sha256:a059520f6ce0c394c3425355c711b641b4b23f9321e11c7d384317e7f814798c; exact28 inputs sha256:39fe40240f0475e471a52772060899d3e329e4d54d6b2bb6679e76dc745ee9a4. Only game/app.mjs changes, coordinating native and Gamepad Confirm ownership and opt-in local diagnostics; all audio implementation, eight existing procedural recipes, routing and payloads remain unchanged. Exact v0.142.2 production99/audio51 predecessor fixture sha256:528361f4e7823a23b02b261ca1de0c9b3157d1a17cbba643e4ff7e67073bc0a7 is retained. Final qualification, frozen/public, listening and physical Steam Deck acceptance remain separate.",
             "Scoped PR #770 Audio playback correction continuation: docs/verification/audio-style-menu-correction-2026-09-28/review.json sha256:62c1dac1be4286acdb8201aab99b6d3c5e2e2b282e1c88cb34d88af527172e09; exact28 inputs sha256:d9650ffde4c938064703de7c1e8ec987ac1efc1b6470ebcad4ca4ab459a32018. Only soundtrack-player.mjs and soundtrack-panel.mjs changed: saved listening preferences are isolated from unsaved Music Studio drafts, newer transport intent wins delayed playback, identity-owned catalogue retry survives close, and queue-capacity copy is corrected. The associated test-evidence repair pins the exact accepted-main production97 predecessor oracle. Exact production98/audio50 predecessor fixture sha256:e397af798928a72502c970276fe212eaad8d2a4889f5afe02587559244496714 is bound separately. Eight existing procedural recipes, routing and payloads remain unchanged; production generation, hosted, frozen/public, listening and physical-device acceptance remain separate.",
             "Scoped v0.142.1 Audio menu and style taxonomy continuation: docs/verification/audio-style-menu-2026-09-28/review.json sha256:bc87031d46ded1ace2cc62c6ca87e2ce90ccbb043db7c5fdb653d262c3b94f49; exact28 inputs sha256:9f0bf41c491a44b4ac585975fd444f7e2e5822534914f36b0213157861173344. Audio settings expose transport and broad style selection, automatically mix matching archive and local music, separate Synth/Electronic, combine UA/Ukrainian and require exact Cyrillic ФПВ. The dependency closure binds the quick controls and taxonomy modules. Eight existing procedural recipes and payloads remain unchanged; hosted, frozen/public, listening and physical-device acceptance remain separate.",
             "Scoped player-readiness17 ownership source continuation: docs/verification/player-readiness17-audio-continuation-2026-09-28/review.json sha256:0584016a71b220780cc8912666638c468550c7167c2c1084b28b7952f27fa608; exact26 inputs sha256:124a7d186850bd1175bfc45bafba2f19912c89bcb271b5a0c2773e9ad5441b34. Existing eight recipes, routing and payloads unchanged; theme96/audio48 and all predecessors retained. Append-only production and all hosted/frozen/public/listening/device/human acceptance remain separate.",
@@ -82499,7 +81826,8 @@
             "v0.141.0 managed-media continuation: docs/verification/v0.141.0-managed-media-audio-continuation/review.json sha256:16f3eb26f28eae82f6529c8a872438c216a05d7a905e0fee0b3d6b0e9601e998; twenty-four ordered audio inputs sha256:77370fe6fc7a8d376865b05d8ba2020b8683b3922c20cc3dfad260d0a0251f79. Only managed-media-store.mjs and media-storage-record.mjs changed after the prior exact review, adding bounded cross-domain byte accounting and exact reviewed still-byte detachment while preserving audio routing, recipes, rows, blobs, playback and soundtrack bytes.",
             "v0.132.5 locale-refresh continuation: docs/verification/v0.132.5-presentation-continuation/review.json sha256:fbc818dcfbbfd2cf1985017417959c82741162842cd3c7293f5be67fc594ef35; twenty-four ordered audio inputs sha256:301e68a4898cf7d9140abee266195401a69cfca0db2301a12409ec252c882ec9. Only game/app.mjs changed after the prior exact review, asking the shared shell to refresh localized Home copy while preserving audio routing, recipes and bytes.",
             "Scoped v0.132.1 Steam Deck controller continuation: docs/verification/v0.132.1-steamdeck-audio-continuation/review.json sha256:b715c81fa1f86a562d5c195ffc025727fc009d1de6cfe03c403db75fdfbf8d70; twenty-five ordered audio inputs sha256:417ceb75d58709373e1abdb047c26224db06721bd58b3ff8302152c33d2f735a. Only game/app.mjs changed among those inputs, adding a controller Confirm lifecycle filter before menu dispatch while preserving audio routing and bytes.",
-            "The prior offline ownership and v0.131 English/Ukrainian reviews remain incorporated. All 8 selected roles retain the same procedural recipes; playback state, volume values, local-only selection, resumable download, shared-byte removal, rights, cancellation and imported-media preservation are unchanged. No recording, composition, musical suitability, Ukrainian authenticity, full-track listening, physical-device, frozen-build or public game approval. Historical reviews and original payloads remain immutable; any audio dependency or review-byte change reopens this group."
+            "The prior offline ownership and v0.131 English/Ukrainian reviews remain incorporated. All 8 selected roles retain the same procedural recipes; playback state, volume values, local-only selection, resumable download, shared-byte removal, rights, cancellation and imported-media preservation are unchanged.",
+            "No recording, composition, musical suitability, Ukrainian authenticity, full-track listening, physical-device, frozen-build or public game approval. Historical reviews and original payloads remain immutable; any audio dependency or review-byte change reopens this group."
           ],
           "stage": "reviewed"
         },
@@ -82523,12 +81851,11 @@
             "revision": 52
           },
           "prompt": 78,
-          "source": 485
+          "source": 484
         },
         "quality": {
           "evidence": [
-            "Scoped discovery audio software continuation: docs/verification/discovery-audio-continuation-2026-09-29/review.json sha256:edeecf9fbafdabd7e4fdb653be58baf8deaa3483a6ee426552d611d2fff768ea; exact50 ordered inputs sha256:a7780c46c20f2603e41f8d7c728d3d13c3efdb6e799a3e5d429ae236bf15d20c. Accepted campaign fallback, explicit exact-original recording export, shared reward master/gain ownership and isolated preview preferences retain the eight existing recipe identities and original payloads. The 22 added behavior and media-validation inputs reopen this group when changed. Exact production100/audio52 predecessor oracle sha256:cf19ad831cc0347f4f84c2ac310a1168354858e75f40991b35ffec18ea58d0b7 is retained. This is software continuation only; composition, listening, physical-device, frozen/public and release acceptance remain separate.",
-            "Scoped v0.142.3 Steam Deck Confirm audio continuation: docs/verification/v0.142.3-steamdeck-confirm-audio-continuation/review.json sha256:a059520f6ce0c394c3425355c711b641b4b23f9321e11c7d384317e7f814798c; exact28 inputs sha256:39fe40240f0475e471a52772060899d3e329e4d54d6b2bb6679e76dc745ee9a4. Only game/app.mjs changes, coordinating native and Gamepad Confirm ownership and opt-in local diagnostics; all audio implementation, eight existing procedural recipes, routing and payloads remain unchanged. Exact v0.142.2 production99/audio51 predecessor fixture sha256:528361f4e7823a23b02b261ca1de0c9b3157d1a17cbba643e4ff7e67073bc0a7 is retained. Final qualification, frozen/public, listening and physical Steam Deck acceptance remain separate.",
+            "Scoped v0.142.4 mission-selector audio continuation: docs/verification/v0.142.4-selector-audio-continuation/review.json sha256:f2cf0cc93f8de8e959eabf6e6313a0af306dfae87e2cb663bfe7bef805df6fe6; exact28 inputs sha256:fd3d7e347bc3a6e36bd884b508af8bbd8492cc3a4dac19bb745664a7fe90adc6. Only game/app.mjs changes, adding clear-star metadata and mission-card progress adapters; audio implementation, eight procedural recipes, routing and payloads remain unchanged. Exact published production100/audio52 predecessor fixture sha256:db9cc258d79aaa0caaf587fa3c73be5fcc55cea5f6129524c59255f04f3bbeb0 is retained. Selector/save compatibility, final qualification, frozen/public, listening and physical-device acceptance remain separate.\nScoped v0.142.3 Steam Deck Confirm audio continuation: docs/verification/v0.142.3-steamdeck-confirm-audio-continuation/review.json sha256:a059520f6ce0c394c3425355c711b641b4b23f9321e11c7d384317e7f814798c; exact28 inputs sha256:39fe40240f0475e471a52772060899d3e329e4d54d6b2bb6679e76dc745ee9a4. Only game/app.mjs changes, coordinating native and Gamepad Confirm ownership and opt-in local diagnostics; all audio implementation, eight existing procedural recipes, routing and payloads remain unchanged. Exact v0.142.2 production99/audio51 predecessor fixture sha256:528361f4e7823a23b02b261ca1de0c9b3157d1a17cbba643e4ff7e67073bc0a7 is retained. Final qualification, frozen/public, listening and physical Steam Deck acceptance remain separate.",
             "Scoped PR #770 Audio playback correction continuation: docs/verification/audio-style-menu-correction-2026-09-28/review.json sha256:62c1dac1be4286acdb8201aab99b6d3c5e2e2b282e1c88cb34d88af527172e09; exact28 inputs sha256:d9650ffde4c938064703de7c1e8ec987ac1efc1b6470ebcad4ca4ab459a32018. Only soundtrack-player.mjs and soundtrack-panel.mjs changed: saved listening preferences are isolated from unsaved Music Studio drafts, newer transport intent wins delayed playback, identity-owned catalogue retry survives close, and queue-capacity copy is corrected. The associated test-evidence repair pins the exact accepted-main production97 predecessor oracle. Exact production98/audio50 predecessor fixture sha256:e397af798928a72502c970276fe212eaad8d2a4889f5afe02587559244496714 is bound separately. Eight existing procedural recipes, routing and payloads remain unchanged; production generation, hosted, frozen/public, listening and physical-device acceptance remain separate.",
             "Scoped v0.142.1 Audio menu and style taxonomy continuation: docs/verification/audio-style-menu-2026-09-28/review.json sha256:bc87031d46ded1ace2cc62c6ca87e2ce90ccbb043db7c5fdb653d262c3b94f49; exact28 inputs sha256:9f0bf41c491a44b4ac585975fd444f7e2e5822534914f36b0213157861173344. Audio settings expose transport and broad style selection, automatically mix matching archive and local music, separate Synth/Electronic, combine UA/Ukrainian and require exact Cyrillic ФПВ. The dependency closure binds the quick controls and taxonomy modules. Eight existing procedural recipes and payloads remain unchanged; hosted, frozen/public, listening and physical-device acceptance remain separate.",
             "Scoped player-readiness17 ownership source continuation: docs/verification/player-readiness17-audio-continuation-2026-09-28/review.json sha256:0584016a71b220780cc8912666638c468550c7167c2c1084b28b7952f27fa608; exact26 inputs sha256:124a7d186850bd1175bfc45bafba2f19912c89bcb271b5a0c2773e9ad5441b34. Existing eight recipes, routing and payloads unchanged; theme96/audio48 and all predecessors retained. Append-only production and all hosted/frozen/public/listening/device/human acceptance remain separate.",
@@ -82542,7 +81869,8 @@
             "v0.141.0 managed-media continuation: docs/verification/v0.141.0-managed-media-audio-continuation/review.json sha256:16f3eb26f28eae82f6529c8a872438c216a05d7a905e0fee0b3d6b0e9601e998; twenty-four ordered audio inputs sha256:77370fe6fc7a8d376865b05d8ba2020b8683b3922c20cc3dfad260d0a0251f79. Only managed-media-store.mjs and media-storage-record.mjs changed after the prior exact review, adding bounded cross-domain byte accounting and exact reviewed still-byte detachment while preserving audio routing, recipes, rows, blobs, playback and soundtrack bytes.",
             "v0.132.5 locale-refresh continuation: docs/verification/v0.132.5-presentation-continuation/review.json sha256:fbc818dcfbbfd2cf1985017417959c82741162842cd3c7293f5be67fc594ef35; twenty-four ordered audio inputs sha256:301e68a4898cf7d9140abee266195401a69cfca0db2301a12409ec252c882ec9. Only game/app.mjs changed after the prior exact review, asking the shared shell to refresh localized Home copy while preserving audio routing, recipes and bytes.",
             "Scoped v0.132.1 Steam Deck controller continuation: docs/verification/v0.132.1-steamdeck-audio-continuation/review.json sha256:b715c81fa1f86a562d5c195ffc025727fc009d1de6cfe03c403db75fdfbf8d70; twenty-five ordered audio inputs sha256:417ceb75d58709373e1abdb047c26224db06721bd58b3ff8302152c33d2f735a. Only game/app.mjs changed among those inputs, adding a controller Confirm lifecycle filter before menu dispatch while preserving audio routing and bytes.",
-            "The prior offline ownership and v0.131 English/Ukrainian reviews remain incorporated. All 8 selected roles retain the same procedural recipes; playback state, volume values, local-only selection, resumable download, shared-byte removal, rights, cancellation and imported-media preservation are unchanged. No recording, composition, musical suitability, Ukrainian authenticity, full-track listening, physical-device, frozen-build or public game approval. Historical reviews and original payloads remain immutable; any audio dependency or review-byte change reopens this group."
+            "The prior offline ownership and v0.131 English/Ukrainian reviews remain incorporated. All 8 selected roles retain the same procedural recipes; playback state, volume values, local-only selection, resumable download, shared-byte removal, rights, cancellation and imported-media preservation are unchanged.",
+            "No recording, composition, musical suitability, Ukrainian authenticity, full-track listening, physical-device, frozen-build or public game approval. Historical reviews and original payloads remain immutable; any audio dependency or review-byte change reopens this group."
           ],
           "stage": "reviewed"
         },
@@ -82566,12 +81894,11 @@
             "revision": 52
           },
           "prompt": 355,
-          "source": 485
+          "source": 484
         },
         "quality": {
           "evidence": [
-            "Scoped discovery audio software continuation: docs/verification/discovery-audio-continuation-2026-09-29/review.json sha256:edeecf9fbafdabd7e4fdb653be58baf8deaa3483a6ee426552d611d2fff768ea; exact50 ordered inputs sha256:a7780c46c20f2603e41f8d7c728d3d13c3efdb6e799a3e5d429ae236bf15d20c. Accepted campaign fallback, explicit exact-original recording export, shared reward master/gain ownership and isolated preview preferences retain the eight existing recipe identities and original payloads. The 22 added behavior and media-validation inputs reopen this group when changed. Exact production100/audio52 predecessor oracle sha256:cf19ad831cc0347f4f84c2ac310a1168354858e75f40991b35ffec18ea58d0b7 is retained. This is software continuation only; composition, listening, physical-device, frozen/public and release acceptance remain separate.",
-            "Scoped v0.142.3 Steam Deck Confirm audio continuation: docs/verification/v0.142.3-steamdeck-confirm-audio-continuation/review.json sha256:a059520f6ce0c394c3425355c711b641b4b23f9321e11c7d384317e7f814798c; exact28 inputs sha256:39fe40240f0475e471a52772060899d3e329e4d54d6b2bb6679e76dc745ee9a4. Only game/app.mjs changes, coordinating native and Gamepad Confirm ownership and opt-in local diagnostics; all audio implementation, eight existing procedural recipes, routing and payloads remain unchanged. Exact v0.142.2 production99/audio51 predecessor fixture sha256:528361f4e7823a23b02b261ca1de0c9b3157d1a17cbba643e4ff7e67073bc0a7 is retained. Final qualification, frozen/public, listening and physical Steam Deck acceptance remain separate.",
+            "Scoped v0.142.4 mission-selector audio continuation: docs/verification/v0.142.4-selector-audio-continuation/review.json sha256:f2cf0cc93f8de8e959eabf6e6313a0af306dfae87e2cb663bfe7bef805df6fe6; exact28 inputs sha256:fd3d7e347bc3a6e36bd884b508af8bbd8492cc3a4dac19bb745664a7fe90adc6. Only game/app.mjs changes, adding clear-star metadata and mission-card progress adapters; audio implementation, eight procedural recipes, routing and payloads remain unchanged. Exact published production100/audio52 predecessor fixture sha256:db9cc258d79aaa0caaf587fa3c73be5fcc55cea5f6129524c59255f04f3bbeb0 is retained. Selector/save compatibility, final qualification, frozen/public, listening and physical-device acceptance remain separate.\nScoped v0.142.3 Steam Deck Confirm audio continuation: docs/verification/v0.142.3-steamdeck-confirm-audio-continuation/review.json sha256:a059520f6ce0c394c3425355c711b641b4b23f9321e11c7d384317e7f814798c; exact28 inputs sha256:39fe40240f0475e471a52772060899d3e329e4d54d6b2bb6679e76dc745ee9a4. Only game/app.mjs changes, coordinating native and Gamepad Confirm ownership and opt-in local diagnostics; all audio implementation, eight existing procedural recipes, routing and payloads remain unchanged. Exact v0.142.2 production99/audio51 predecessor fixture sha256:528361f4e7823a23b02b261ca1de0c9b3157d1a17cbba643e4ff7e67073bc0a7 is retained. Final qualification, frozen/public, listening and physical Steam Deck acceptance remain separate.",
             "Scoped PR #770 Audio playback correction continuation: docs/verification/audio-style-menu-correction-2026-09-28/review.json sha256:62c1dac1be4286acdb8201aab99b6d3c5e2e2b282e1c88cb34d88af527172e09; exact28 inputs sha256:d9650ffde4c938064703de7c1e8ec987ac1efc1b6470ebcad4ca4ab459a32018. Only soundtrack-player.mjs and soundtrack-panel.mjs changed: saved listening preferences are isolated from unsaved Music Studio drafts, newer transport intent wins delayed playback, identity-owned catalogue retry survives close, and queue-capacity copy is corrected. The associated test-evidence repair pins the exact accepted-main production97 predecessor oracle. Exact production98/audio50 predecessor fixture sha256:e397af798928a72502c970276fe212eaad8d2a4889f5afe02587559244496714 is bound separately. Eight existing procedural recipes, routing and payloads remain unchanged; production generation, hosted, frozen/public, listening and physical-device acceptance remain separate.",
             "Scoped v0.142.1 Audio menu and style taxonomy continuation: docs/verification/audio-style-menu-2026-09-28/review.json sha256:bc87031d46ded1ace2cc62c6ca87e2ce90ccbb043db7c5fdb653d262c3b94f49; exact28 inputs sha256:9f0bf41c491a44b4ac585975fd444f7e2e5822534914f36b0213157861173344. Audio settings expose transport and broad style selection, automatically mix matching archive and local music, separate Synth/Electronic, combine UA/Ukrainian and require exact Cyrillic ФПВ. The dependency closure binds the quick controls and taxonomy modules. Eight existing procedural recipes and payloads remain unchanged; hosted, frozen/public, listening and physical-device acceptance remain separate.",
             "Scoped player-readiness17 ownership source continuation: docs/verification/player-readiness17-audio-continuation-2026-09-28/review.json sha256:0584016a71b220780cc8912666638c468550c7167c2c1084b28b7952f27fa608; exact26 inputs sha256:124a7d186850bd1175bfc45bafba2f19912c89bcb271b5a0c2773e9ad5441b34. Existing eight recipes, routing and payloads unchanged; theme96/audio48 and all predecessors retained. Append-only production and all hosted/frozen/public/listening/device/human acceptance remain separate.",
@@ -82585,7 +81912,8 @@
             "v0.141.0 managed-media continuation: docs/verification/v0.141.0-managed-media-audio-continuation/review.json sha256:16f3eb26f28eae82f6529c8a872438c216a05d7a905e0fee0b3d6b0e9601e998; twenty-four ordered audio inputs sha256:77370fe6fc7a8d376865b05d8ba2020b8683b3922c20cc3dfad260d0a0251f79. Only managed-media-store.mjs and media-storage-record.mjs changed after the prior exact review, adding bounded cross-domain byte accounting and exact reviewed still-byte detachment while preserving audio routing, recipes, rows, blobs, playback and soundtrack bytes.",
             "v0.132.5 locale-refresh continuation: docs/verification/v0.132.5-presentation-continuation/review.json sha256:fbc818dcfbbfd2cf1985017417959c82741162842cd3c7293f5be67fc594ef35; twenty-four ordered audio inputs sha256:301e68a4898cf7d9140abee266195401a69cfca0db2301a12409ec252c882ec9. Only game/app.mjs changed after the prior exact review, asking the shared shell to refresh localized Home copy while preserving audio routing, recipes and bytes.",
             "Scoped v0.132.1 Steam Deck controller continuation: docs/verification/v0.132.1-steamdeck-audio-continuation/review.json sha256:b715c81fa1f86a562d5c195ffc025727fc009d1de6cfe03c403db75fdfbf8d70; twenty-five ordered audio inputs sha256:417ceb75d58709373e1abdb047c26224db06721bd58b3ff8302152c33d2f735a. Only game/app.mjs changed among those inputs, adding a controller Confirm lifecycle filter before menu dispatch while preserving audio routing and bytes.",
-            "The prior offline ownership and v0.131 English/Ukrainian reviews remain incorporated. All 8 selected roles retain the same procedural recipes; playback state, volume values, local-only selection, resumable download, shared-byte removal, rights, cancellation and imported-media preservation are unchanged. No recording, composition, musical suitability, Ukrainian authenticity, full-track listening, physical-device, frozen-build or public game approval. Historical reviews and original payloads remain immutable; any audio dependency or review-byte change reopens this group."
+            "The prior offline ownership and v0.131 English/Ukrainian reviews remain incorporated. All 8 selected roles retain the same procedural recipes; playback state, volume values, local-only selection, resumable download, shared-byte removal, rights, cancellation and imported-media preservation are unchanged.",
+            "No recording, composition, musical suitability, Ukrainian authenticity, full-track listening, physical-device, frozen-build or public game approval. Historical reviews and original payloads remain immutable; any audio dependency or review-byte change reopens this group."
           ],
           "stage": "reviewed"
         },
@@ -82609,12 +81937,11 @@
             "revision": 52
           },
           "prompt": 225,
-          "source": 485
+          "source": 484
         },
         "quality": {
           "evidence": [
-            "Scoped discovery audio software continuation: docs/verification/discovery-audio-continuation-2026-09-29/review.json sha256:edeecf9fbafdabd7e4fdb653be58baf8deaa3483a6ee426552d611d2fff768ea; exact50 ordered inputs sha256:a7780c46c20f2603e41f8d7c728d3d13c3efdb6e799a3e5d429ae236bf15d20c. Accepted campaign fallback, explicit exact-original recording export, shared reward master/gain ownership and isolated preview preferences retain the eight existing recipe identities and original payloads. The 22 added behavior and media-validation inputs reopen this group when changed. Exact production100/audio52 predecessor oracle sha256:cf19ad831cc0347f4f84c2ac310a1168354858e75f40991b35ffec18ea58d0b7 is retained. This is software continuation only; composition, listening, physical-device, frozen/public and release acceptance remain separate.",
-            "Scoped v0.142.3 Steam Deck Confirm audio continuation: docs/verification/v0.142.3-steamdeck-confirm-audio-continuation/review.json sha256:a059520f6ce0c394c3425355c711b641b4b23f9321e11c7d384317e7f814798c; exact28 inputs sha256:39fe40240f0475e471a52772060899d3e329e4d54d6b2bb6679e76dc745ee9a4. Only game/app.mjs changes, coordinating native and Gamepad Confirm ownership and opt-in local diagnostics; all audio implementation, eight existing procedural recipes, routing and payloads remain unchanged. Exact v0.142.2 production99/audio51 predecessor fixture sha256:528361f4e7823a23b02b261ca1de0c9b3157d1a17cbba643e4ff7e67073bc0a7 is retained. Final qualification, frozen/public, listening and physical Steam Deck acceptance remain separate.",
+            "Scoped v0.142.4 mission-selector audio continuation: docs/verification/v0.142.4-selector-audio-continuation/review.json sha256:f2cf0cc93f8de8e959eabf6e6313a0af306dfae87e2cb663bfe7bef805df6fe6; exact28 inputs sha256:fd3d7e347bc3a6e36bd884b508af8bbd8492cc3a4dac19bb745664a7fe90adc6. Only game/app.mjs changes, adding clear-star metadata and mission-card progress adapters; audio implementation, eight procedural recipes, routing and payloads remain unchanged. Exact published production100/audio52 predecessor fixture sha256:db9cc258d79aaa0caaf587fa3c73be5fcc55cea5f6129524c59255f04f3bbeb0 is retained. Selector/save compatibility, final qualification, frozen/public, listening and physical-device acceptance remain separate.\nScoped v0.142.3 Steam Deck Confirm audio continuation: docs/verification/v0.142.3-steamdeck-confirm-audio-continuation/review.json sha256:a059520f6ce0c394c3425355c711b641b4b23f9321e11c7d384317e7f814798c; exact28 inputs sha256:39fe40240f0475e471a52772060899d3e329e4d54d6b2bb6679e76dc745ee9a4. Only game/app.mjs changes, coordinating native and Gamepad Confirm ownership and opt-in local diagnostics; all audio implementation, eight existing procedural recipes, routing and payloads remain unchanged. Exact v0.142.2 production99/audio51 predecessor fixture sha256:528361f4e7823a23b02b261ca1de0c9b3157d1a17cbba643e4ff7e67073bc0a7 is retained. Final qualification, frozen/public, listening and physical Steam Deck acceptance remain separate.",
             "Scoped PR #770 Audio playback correction continuation: docs/verification/audio-style-menu-correction-2026-09-28/review.json sha256:62c1dac1be4286acdb8201aab99b6d3c5e2e2b282e1c88cb34d88af527172e09; exact28 inputs sha256:d9650ffde4c938064703de7c1e8ec987ac1efc1b6470ebcad4ca4ab459a32018. Only soundtrack-player.mjs and soundtrack-panel.mjs changed: saved listening preferences are isolated from unsaved Music Studio drafts, newer transport intent wins delayed playback, identity-owned catalogue retry survives close, and queue-capacity copy is corrected. The associated test-evidence repair pins the exact accepted-main production97 predecessor oracle. Exact production98/audio50 predecessor fixture sha256:e397af798928a72502c970276fe212eaad8d2a4889f5afe02587559244496714 is bound separately. Eight existing procedural recipes, routing and payloads remain unchanged; production generation, hosted, frozen/public, listening and physical-device acceptance remain separate.",
             "Scoped v0.142.1 Audio menu and style taxonomy continuation: docs/verification/audio-style-menu-2026-09-28/review.json sha256:bc87031d46ded1ace2cc62c6ca87e2ce90ccbb043db7c5fdb653d262c3b94f49; exact28 inputs sha256:9f0bf41c491a44b4ac585975fd444f7e2e5822534914f36b0213157861173344. Audio settings expose transport and broad style selection, automatically mix matching archive and local music, separate Synth/Electronic, combine UA/Ukrainian and require exact Cyrillic ФПВ. The dependency closure binds the quick controls and taxonomy modules. Eight existing procedural recipes and payloads remain unchanged; hosted, frozen/public, listening and physical-device acceptance remain separate.",
             "Scoped player-readiness17 ownership source continuation: docs/verification/player-readiness17-audio-continuation-2026-09-28/review.json sha256:0584016a71b220780cc8912666638c468550c7167c2c1084b28b7952f27fa608; exact26 inputs sha256:124a7d186850bd1175bfc45bafba2f19912c89bcb271b5a0c2773e9ad5441b34. Existing eight recipes, routing and payloads unchanged; theme96/audio48 and all predecessors retained. Append-only production and all hosted/frozen/public/listening/device/human acceptance remain separate.",
@@ -82628,7 +81955,8 @@
             "v0.141.0 managed-media continuation: docs/verification/v0.141.0-managed-media-audio-continuation/review.json sha256:16f3eb26f28eae82f6529c8a872438c216a05d7a905e0fee0b3d6b0e9601e998; twenty-four ordered audio inputs sha256:77370fe6fc7a8d376865b05d8ba2020b8683b3922c20cc3dfad260d0a0251f79. Only managed-media-store.mjs and media-storage-record.mjs changed after the prior exact review, adding bounded cross-domain byte accounting and exact reviewed still-byte detachment while preserving audio routing, recipes, rows, blobs, playback and soundtrack bytes.",
             "v0.132.5 locale-refresh continuation: docs/verification/v0.132.5-presentation-continuation/review.json sha256:fbc818dcfbbfd2cf1985017417959c82741162842cd3c7293f5be67fc594ef35; twenty-four ordered audio inputs sha256:301e68a4898cf7d9140abee266195401a69cfca0db2301a12409ec252c882ec9. Only game/app.mjs changed after the prior exact review, asking the shared shell to refresh localized Home copy while preserving audio routing, recipes and bytes.",
             "Scoped v0.132.1 Steam Deck controller continuation: docs/verification/v0.132.1-steamdeck-audio-continuation/review.json sha256:b715c81fa1f86a562d5c195ffc025727fc009d1de6cfe03c403db75fdfbf8d70; twenty-five ordered audio inputs sha256:417ceb75d58709373e1abdb047c26224db06721bd58b3ff8302152c33d2f735a. Only game/app.mjs changed among those inputs, adding a controller Confirm lifecycle filter before menu dispatch while preserving audio routing and bytes.",
-            "The prior offline ownership and v0.131 English/Ukrainian reviews remain incorporated. All 8 selected roles retain the same procedural recipes; playback state, volume values, local-only selection, resumable download, shared-byte removal, rights, cancellation and imported-media preservation are unchanged. No recording, composition, musical suitability, Ukrainian authenticity, full-track listening, physical-device, frozen-build or public game approval. Historical reviews and original payloads remain immutable; any audio dependency or review-byte change reopens this group."
+            "The prior offline ownership and v0.131 English/Ukrainian reviews remain incorporated. All 8 selected roles retain the same procedural recipes; playback state, volume values, local-only selection, resumable download, shared-byte removal, rights, cancellation and imported-media preservation are unchanged.",
+            "No recording, composition, musical suitability, Ukrainian authenticity, full-track listening, physical-device, frozen-build or public game approval. Historical reviews and original payloads remain immutable; any audio dependency or review-byte change reopens this group."
           ],
           "stage": "reviewed"
         },
@@ -82652,12 +81980,11 @@
             "revision": 52
           },
           "prompt": 323,
-          "source": 485
+          "source": 484
         },
         "quality": {
           "evidence": [
-            "Scoped discovery audio software continuation: docs/verification/discovery-audio-continuation-2026-09-29/review.json sha256:edeecf9fbafdabd7e4fdb653be58baf8deaa3483a6ee426552d611d2fff768ea; exact50 ordered inputs sha256:a7780c46c20f2603e41f8d7c728d3d13c3efdb6e799a3e5d429ae236bf15d20c. Accepted campaign fallback, explicit exact-original recording export, shared reward master/gain ownership and isolated preview preferences retain the eight existing recipe identities and original payloads. The 22 added behavior and media-validation inputs reopen this group when changed. Exact production100/audio52 predecessor oracle sha256:cf19ad831cc0347f4f84c2ac310a1168354858e75f40991b35ffec18ea58d0b7 is retained. This is software continuation only; composition, listening, physical-device, frozen/public and release acceptance remain separate.",
-            "Scoped v0.142.3 Steam Deck Confirm audio continuation: docs/verification/v0.142.3-steamdeck-confirm-audio-continuation/review.json sha256:a059520f6ce0c394c3425355c711b641b4b23f9321e11c7d384317e7f814798c; exact28 inputs sha256:39fe40240f0475e471a52772060899d3e329e4d54d6b2bb6679e76dc745ee9a4. Only game/app.mjs changes, coordinating native and Gamepad Confirm ownership and opt-in local diagnostics; all audio implementation, eight existing procedural recipes, routing and payloads remain unchanged. Exact v0.142.2 production99/audio51 predecessor fixture sha256:528361f4e7823a23b02b261ca1de0c9b3157d1a17cbba643e4ff7e67073bc0a7 is retained. Final qualification, frozen/public, listening and physical Steam Deck acceptance remain separate.",
+            "Scoped v0.142.4 mission-selector audio continuation: docs/verification/v0.142.4-selector-audio-continuation/review.json sha256:f2cf0cc93f8de8e959eabf6e6313a0af306dfae87e2cb663bfe7bef805df6fe6; exact28 inputs sha256:fd3d7e347bc3a6e36bd884b508af8bbd8492cc3a4dac19bb745664a7fe90adc6. Only game/app.mjs changes, adding clear-star metadata and mission-card progress adapters; audio implementation, eight procedural recipes, routing and payloads remain unchanged. Exact published production100/audio52 predecessor fixture sha256:db9cc258d79aaa0caaf587fa3c73be5fcc55cea5f6129524c59255f04f3bbeb0 is retained. Selector/save compatibility, final qualification, frozen/public, listening and physical-device acceptance remain separate.\nScoped v0.142.3 Steam Deck Confirm audio continuation: docs/verification/v0.142.3-steamdeck-confirm-audio-continuation/review.json sha256:a059520f6ce0c394c3425355c711b641b4b23f9321e11c7d384317e7f814798c; exact28 inputs sha256:39fe40240f0475e471a52772060899d3e329e4d54d6b2bb6679e76dc745ee9a4. Only game/app.mjs changes, coordinating native and Gamepad Confirm ownership and opt-in local diagnostics; all audio implementation, eight existing procedural recipes, routing and payloads remain unchanged. Exact v0.142.2 production99/audio51 predecessor fixture sha256:528361f4e7823a23b02b261ca1de0c9b3157d1a17cbba643e4ff7e67073bc0a7 is retained. Final qualification, frozen/public, listening and physical Steam Deck acceptance remain separate.",
             "Scoped PR #770 Audio playback correction continuation: docs/verification/audio-style-menu-correction-2026-09-28/review.json sha256:62c1dac1be4286acdb8201aab99b6d3c5e2e2b282e1c88cb34d88af527172e09; exact28 inputs sha256:d9650ffde4c938064703de7c1e8ec987ac1efc1b6470ebcad4ca4ab459a32018. Only soundtrack-player.mjs and soundtrack-panel.mjs changed: saved listening preferences are isolated from unsaved Music Studio drafts, newer transport intent wins delayed playback, identity-owned catalogue retry survives close, and queue-capacity copy is corrected. The associated test-evidence repair pins the exact accepted-main production97 predecessor oracle. Exact production98/audio50 predecessor fixture sha256:e397af798928a72502c970276fe212eaad8d2a4889f5afe02587559244496714 is bound separately. Eight existing procedural recipes, routing and payloads remain unchanged; production generation, hosted, frozen/public, listening and physical-device acceptance remain separate.",
             "Scoped v0.142.1 Audio menu and style taxonomy continuation: docs/verification/audio-style-menu-2026-09-28/review.json sha256:bc87031d46ded1ace2cc62c6ca87e2ce90ccbb043db7c5fdb653d262c3b94f49; exact28 inputs sha256:9f0bf41c491a44b4ac585975fd444f7e2e5822534914f36b0213157861173344. Audio settings expose transport and broad style selection, automatically mix matching archive and local music, separate Synth/Electronic, combine UA/Ukrainian and require exact Cyrillic ФПВ. The dependency closure binds the quick controls and taxonomy modules. Eight existing procedural recipes and payloads remain unchanged; hosted, frozen/public, listening and physical-device acceptance remain separate.",
             "Scoped player-readiness17 ownership source continuation: docs/verification/player-readiness17-audio-continuation-2026-09-28/review.json sha256:0584016a71b220780cc8912666638c468550c7167c2c1084b28b7952f27fa608; exact26 inputs sha256:124a7d186850bd1175bfc45bafba2f19912c89bcb271b5a0c2773e9ad5441b34. Existing eight recipes, routing and payloads unchanged; theme96/audio48 and all predecessors retained. Append-only production and all hosted/frozen/public/listening/device/human acceptance remain separate.",
@@ -82671,7 +81998,8 @@
             "v0.141.0 managed-media continuation: docs/verification/v0.141.0-managed-media-audio-continuation/review.json sha256:16f3eb26f28eae82f6529c8a872438c216a05d7a905e0fee0b3d6b0e9601e998; twenty-four ordered audio inputs sha256:77370fe6fc7a8d376865b05d8ba2020b8683b3922c20cc3dfad260d0a0251f79. Only managed-media-store.mjs and media-storage-record.mjs changed after the prior exact review, adding bounded cross-domain byte accounting and exact reviewed still-byte detachment while preserving audio routing, recipes, rows, blobs, playback and soundtrack bytes.",
             "v0.132.5 locale-refresh continuation: docs/verification/v0.132.5-presentation-continuation/review.json sha256:fbc818dcfbbfd2cf1985017417959c82741162842cd3c7293f5be67fc594ef35; twenty-four ordered audio inputs sha256:301e68a4898cf7d9140abee266195401a69cfca0db2301a12409ec252c882ec9. Only game/app.mjs changed after the prior exact review, asking the shared shell to refresh localized Home copy while preserving audio routing, recipes and bytes.",
             "Scoped v0.132.1 Steam Deck controller continuation: docs/verification/v0.132.1-steamdeck-audio-continuation/review.json sha256:b715c81fa1f86a562d5c195ffc025727fc009d1de6cfe03c403db75fdfbf8d70; twenty-five ordered audio inputs sha256:417ceb75d58709373e1abdb047c26224db06721bd58b3ff8302152c33d2f735a. Only game/app.mjs changed among those inputs, adding a controller Confirm lifecycle filter before menu dispatch while preserving audio routing and bytes.",
-            "The prior offline ownership and v0.131 English/Ukrainian reviews remain incorporated. All 8 selected roles retain the same procedural recipes; playback state, volume values, local-only selection, resumable download, shared-byte removal, rights, cancellation and imported-media preservation are unchanged. No recording, composition, musical suitability, Ukrainian authenticity, full-track listening, physical-device, frozen-build or public game approval. Historical reviews and original payloads remain immutable; any audio dependency or review-byte change reopens this group."
+            "The prior offline ownership and v0.131 English/Ukrainian reviews remain incorporated. All 8 selected roles retain the same procedural recipes; playback state, volume values, local-only selection, resumable download, shared-byte removal, rights, cancellation and imported-media preservation are unchanged.",
+            "No recording, composition, musical suitability, Ukrainian authenticity, full-track listening, physical-device, frozen-build or public game approval. Historical reviews and original payloads remain immutable; any audio dependency or review-byte change reopens this group."
           ],
           "stage": "reviewed"
         },
@@ -82692,7 +82020,7 @@
           "license": "Project-authored runtime recipe",
           "parent": {
             "id": "ui.panel.field-kit",
-            "revision": 23
+            "revision": 22
           },
           "prompt": 223,
           "source": 545
@@ -82711,7 +82039,7 @@
         "recipe": {
           "id": "ui.panel.v1"
         },
-        "revision": 24
+        "revision": 23
       },
       {
         "description": "Dialog frame: existing bounded component with Field Kit tokens and state styling.",
@@ -82725,7 +82053,7 @@
           "license": "Project-authored runtime recipe",
           "parent": {
             "id": "ui.dialog.field-kit",
-            "revision": 23
+            "revision": 22
           },
           "prompt": 62,
           "source": 545
@@ -82744,7 +82072,7 @@
         "recipe": {
           "id": "ui.panel.v1"
         },
-        "revision": 24
+        "revision": 23
       },
       {
         "description": "Tooltip frame: existing bounded component with Field Kit tokens and state styling.",
@@ -82758,7 +82086,7 @@
           "license": "Project-authored runtime recipe",
           "parent": {
             "id": "ui.tooltip.field-kit",
-            "revision": 23
+            "revision": 22
           },
           "prompt": 328,
           "source": 545
@@ -82777,7 +82105,7 @@
         "recipe": {
           "id": "ui.panel.v1"
         },
-        "revision": 24
+        "revision": 23
       },
       {
         "description": "Status message frame: existing bounded component with Field Kit tokens and state styling.",
@@ -82791,7 +82119,7 @@
           "license": "Project-authored runtime recipe",
           "parent": {
             "id": "ui.toast.field-kit",
-            "revision": 23
+            "revision": 22
           },
           "prompt": 285,
           "source": 545
@@ -82810,7 +82138,7 @@
         "recipe": {
           "id": "ui.panel.v1"
         },
-        "revision": 24
+        "revision": 23
       },
       {
         "description": "primary button: existing bounded component with Field Kit tokens and state styling.",
@@ -82824,7 +82152,7 @@
           "license": "Project-authored runtime recipe",
           "parent": {
             "id": "ui.button.primary.field-kit",
-            "revision": 23
+            "revision": 22
           },
           "prompt": 230,
           "source": 545
@@ -82843,7 +82171,7 @@
         "recipe": {
           "id": "ui.button.v1"
         },
-        "revision": 24
+        "revision": 23
       },
       {
         "description": "secondary button: existing bounded component with Field Kit tokens and state styling.",
@@ -82857,7 +82185,7 @@
           "license": "Project-authored runtime recipe",
           "parent": {
             "id": "ui.button.secondary.field-kit",
-            "revision": 23
+            "revision": 22
           },
           "prompt": 248,
           "source": 545
@@ -82876,7 +82204,7 @@
         "recipe": {
           "id": "ui.button.v1"
         },
-        "revision": 24
+        "revision": 23
       },
       {
         "description": "danger button: existing bounded component with Field Kit tokens and state styling.",
@@ -82890,7 +82218,7 @@
           "license": "Project-authored runtime recipe",
           "parent": {
             "id": "ui.button.danger.field-kit",
-            "revision": 23
+            "revision": 22
           },
           "prompt": 61,
           "source": 545
@@ -82909,7 +82237,7 @@
         "recipe": {
           "id": "ui.button.v1"
         },
-        "revision": 24
+        "revision": 23
       },
       {
         "description": "icon button: existing bounded component with Field Kit tokens and state styling.",
@@ -82923,7 +82251,7 @@
           "license": "Project-authored runtime recipe",
           "parent": {
             "id": "ui.button.icon.field-kit",
-            "revision": 23
+            "revision": 22
           },
           "prompt": 186,
           "source": 545
@@ -82942,7 +82270,7 @@
         "recipe": {
           "id": "ui.button.v1"
         },
-        "revision": 24
+        "revision": 23
       },
       {
         "description": "tab button: existing bounded component with Field Kit tokens and state styling.",
@@ -82956,7 +82284,7 @@
           "license": "Project-authored runtime recipe",
           "parent": {
             "id": "ui.button.tab.field-kit",
-            "revision": 23
+            "revision": 22
           },
           "prompt": 289,
           "source": 545
@@ -82975,7 +82303,7 @@
         "recipe": {
           "id": "ui.button.v1"
         },
-        "revision": 24
+        "revision": 23
       },
       {
         "description": "chip button: existing bounded component with Field Kit tokens and state styling.",
@@ -82989,7 +82317,7 @@
           "license": "Project-authored runtime recipe",
           "parent": {
             "id": "ui.button.chip.field-kit",
-            "revision": 23
+            "revision": 22
           },
           "prompt": 46,
           "source": 545
@@ -83008,7 +82336,7 @@
         "recipe": {
           "id": "ui.button.v1"
         },
-        "revision": 24
+        "revision": 23
       },
       {
         "description": "checkbox control: existing bounded component with Field Kit tokens and state styling.",
@@ -83022,7 +82350,7 @@
           "license": "Project-authored runtime recipe",
           "parent": {
             "id": "ui.input.checkbox.field-kit",
-            "revision": 23
+            "revision": 22
           },
           "prompt": 45,
           "source": 545
@@ -83041,7 +82369,7 @@
         "recipe": {
           "id": "ui.input.v1"
         },
-        "revision": 24
+        "revision": 23
       },
       {
         "description": "radio control: existing bounded component with Field Kit tokens and state styling.",
@@ -83055,7 +82383,7 @@
           "license": "Project-authored runtime recipe",
           "parent": {
             "id": "ui.input.radio.field-kit",
-            "revision": 23
+            "revision": 22
           },
           "prompt": 232,
           "source": 545
@@ -83074,7 +82402,7 @@
         "recipe": {
           "id": "ui.input.v1"
         },
-        "revision": 24
+        "revision": 23
       },
       {
         "description": "toggle control: existing bounded component with Field Kit tokens and state styling.",
@@ -83088,7 +82416,7 @@
           "license": "Project-authored runtime recipe",
           "parent": {
             "id": "ui.input.toggle.field-kit",
-            "revision": 23
+            "revision": 22
           },
           "prompt": 327,
           "source": 545
@@ -83107,7 +82435,7 @@
         "recipe": {
           "id": "ui.input.v1"
         },
-        "revision": 24
+        "revision": 23
       },
       {
         "description": "slider control: existing bounded component with Field Kit tokens and state styling.",
@@ -83121,7 +82449,7 @@
           "license": "Project-authored runtime recipe",
           "parent": {
             "id": "ui.input.slider.field-kit",
-            "revision": 23
+            "revision": 22
           },
           "prompt": 263,
           "source": 545
@@ -83140,7 +82468,7 @@
         "recipe": {
           "id": "ui.input.v1"
         },
-        "revision": 24
+        "revision": 23
       },
       {
         "description": "select control: existing bounded component with Field Kit tokens and state styling.",
@@ -83154,7 +82482,7 @@
           "license": "Project-authored runtime recipe",
           "parent": {
             "id": "ui.input.select.field-kit",
-            "revision": 23
+            "revision": 22
           },
           "prompt": 251,
           "source": 545
@@ -83173,7 +82501,7 @@
         "recipe": {
           "id": "ui.input.v1"
         },
-        "revision": 24
+        "revision": 23
       },
       {
         "description": "text control: existing bounded component with Field Kit tokens and state styling.",
@@ -83187,7 +82515,7 @@
           "license": "Project-authored runtime recipe",
           "parent": {
             "id": "ui.input.text.field-kit",
-            "revision": 23
+            "revision": 22
           },
           "prompt": 322,
           "source": 545
@@ -83206,7 +82534,7 @@
         "recipe": {
           "id": "ui.input.v1"
         },
-        "revision": 24
+        "revision": 23
       },
       {
         "description": "scrollbar control: existing bounded component with Field Kit tokens and state styling.",
@@ -83220,7 +82548,7 @@
           "license": "Project-authored runtime recipe",
           "parent": {
             "id": "ui.input.scrollbar.field-kit",
-            "revision": 23
+            "revision": 22
           },
           "prompt": 247,
           "source": 545
@@ -83239,7 +82567,7 @@
         "recipe": {
           "id": "ui.input.v1"
         },
-        "revision": 24
+        "revision": 23
       },
       {
         "description": "coverage meter: existing bounded component with Field Kit tokens and state styling.",
@@ -83253,7 +82581,7 @@
           "license": "Project-authored runtime recipe",
           "parent": {
             "id": "ui.meter.coverage.field-kit",
-            "revision": 23
+            "revision": 22
           },
           "prompt": 59,
           "source": 545
@@ -83272,7 +82600,7 @@
         "recipe": {
           "id": "ui.meter.v1"
         },
-        "revision": 24
+        "revision": 23
       },
       {
         "description": "progress meter: existing bounded component with Field Kit tokens and state styling.",
@@ -83286,7 +82614,7 @@
           "license": "Project-authored runtime recipe",
           "parent": {
             "id": "ui.meter.progress.field-kit",
-            "revision": 23
+            "revision": 22
           },
           "prompt": 231,
           "source": 545
@@ -83305,7 +82633,7 @@
         "recipe": {
           "id": "ui.meter.v1"
         },
-        "revision": 24
+        "revision": 23
       },
       {
         "description": "time meter: existing bounded component with Field Kit tokens and state styling.",
@@ -83319,7 +82647,7 @@
           "license": "Project-authored runtime recipe",
           "parent": {
             "id": "ui.meter.time.field-kit",
-            "revision": 23
+            "revision": 22
           },
           "prompt": 324,
           "source": 545
@@ -83338,7 +82666,7 @@
         "recipe": {
           "id": "ui.meter.v1"
         },
-        "revision": 24
+        "revision": 23
       },
       {
         "description": "ability meter: existing bounded component with Field Kit tokens and state styling.",
@@ -83352,7 +82680,7 @@
           "license": "Project-authored runtime recipe",
           "parent": {
             "id": "ui.meter.ability.field-kit",
-            "revision": 23
+            "revision": 22
           },
           "prompt": 18,
           "source": 545
@@ -83371,7 +82699,7 @@
         "recipe": {
           "id": "ui.meter.v1"
         },
-        "revision": 24
+        "revision": 23
       },
       {
         "description": "volume meter: existing bounded component with Field Kit tokens and state styling.",
@@ -83385,7 +82713,7 @@
           "license": "Project-authored runtime recipe",
           "parent": {
             "id": "ui.meter.volume.field-kit",
-            "revision": 23
+            "revision": 22
           },
           "prompt": 357,
           "source": 545
@@ -83404,7 +82732,7 @@
         "recipe": {
           "id": "ui.meter.v1"
         },
-        "revision": 24
+        "revision": 23
       },
       {
         "description": "Focus brackets: existing bounded component with Field Kit tokens and state styling.",
@@ -83418,7 +82746,7 @@
           "license": "Project-authored runtime recipe",
           "parent": {
             "id": "ui.focus.field-kit",
-            "revision": 23
+            "revision": 22
           },
           "prompt": 138,
           "source": 545
@@ -83437,7 +82765,7 @@
         "recipe": {
           "id": "ui.focus.v1"
         },
-        "revision": 24
+        "revision": 23
       },
       {
         "description": "Selection cursor: existing bounded component with Field Kit tokens and state styling.",
@@ -83451,7 +82779,7 @@
           "license": "Project-authored runtime recipe",
           "parent": {
             "id": "ui.cursor.field-kit",
-            "revision": 23
+            "revision": 22
           },
           "prompt": 252,
           "source": 545
@@ -83470,7 +82798,7 @@
         "recipe": {
           "id": "ui.cursor.v1"
         },
-        "revision": 24
+        "revision": 23
       },
       {
         "description": "focus audio cue: existing bounded component with Field Kit tokens and state styling.",
@@ -83487,12 +82815,11 @@
             "revision": 53
           },
           "prompt": 137,
-          "source": 484
+          "source": 485
         },
         "quality": {
           "evidence": [
-            "Scoped discovery audio software continuation: docs/verification/discovery-audio-continuation-2026-09-29/review.json sha256:edeecf9fbafdabd7e4fdb653be58baf8deaa3483a6ee426552d611d2fff768ea; exact50 ordered inputs sha256:a7780c46c20f2603e41f8d7c728d3d13c3efdb6e799a3e5d429ae236bf15d20c. Accepted campaign fallback, explicit exact-original recording export, shared reward master/gain ownership and isolated preview preferences retain the eight existing recipe identities and original payloads. The 22 added behavior and media-validation inputs reopen this group when changed. Exact production100/audio52 predecessor oracle sha256:cf19ad831cc0347f4f84c2ac310a1168354858e75f40991b35ffec18ea58d0b7 is retained. This is software continuation only; composition, listening, physical-device, frozen/public and release acceptance remain separate.",
-            "Scoped v0.142.3 Steam Deck Confirm audio continuation: docs/verification/v0.142.3-steamdeck-confirm-audio-continuation/review.json sha256:a059520f6ce0c394c3425355c711b641b4b23f9321e11c7d384317e7f814798c; exact28 inputs sha256:39fe40240f0475e471a52772060899d3e329e4d54d6b2bb6679e76dc745ee9a4. Only game/app.mjs changes, coordinating native and Gamepad Confirm ownership and opt-in local diagnostics; all audio implementation, eight existing procedural recipes, routing and payloads remain unchanged. Exact v0.142.2 production99/audio51 predecessor fixture sha256:528361f4e7823a23b02b261ca1de0c9b3157d1a17cbba643e4ff7e67073bc0a7 is retained. Final qualification, frozen/public, listening and physical Steam Deck acceptance remain separate.",
+            "Merged main/candidate software continuation: docs/verification/discovery-main321-reconciliation/review.json sha256:f2b3a2724cf48455dbe98d5ca12a2b081ef1f982531e91838c0291a64bbed976. Exact50-source approval only; historical branch lineages and runtime pins remain separate. No listening, device, frozen/public approval.\nScoped v0.142.4 mission-selector audio continuation: docs/verification/v0.142.4-selector-audio-continuation/review.json sha256:f2cf0cc93f8de8e959eabf6e6313a0af306dfae87e2cb663bfe7bef805df6fe6; exact28 inputs sha256:fd3d7e347bc3a6e36bd884b508af8bbd8492cc3a4dac19bb745664a7fe90adc6. Only game/app.mjs changes, adding clear-star metadata and mission-card progress adapters; audio implementation, eight procedural recipes, routing and payloads remain unchanged. Exact published production100/audio52 predecessor fixture sha256:db9cc258d79aaa0caaf587fa3c73be5fcc55cea5f6129524c59255f04f3bbeb0 is retained. Selector/save compatibility, final qualification, frozen/public, listening and physical-device acceptance remain separate.\nScoped v0.142.3 Steam Deck Confirm audio continuation: docs/verification/v0.142.3-steamdeck-confirm-audio-continuation/review.json sha256:a059520f6ce0c394c3425355c711b641b4b23f9321e11c7d384317e7f814798c; exact28 inputs sha256:39fe40240f0475e471a52772060899d3e329e4d54d6b2bb6679e76dc745ee9a4. Only game/app.mjs changes, coordinating native and Gamepad Confirm ownership and opt-in local diagnostics; all audio implementation, eight existing procedural recipes, routing and payloads remain unchanged. Exact v0.142.2 production99/audio51 predecessor fixture sha256:528361f4e7823a23b02b261ca1de0c9b3157d1a17cbba643e4ff7e67073bc0a7 is retained. Final qualification, frozen/public, listening and physical Steam Deck acceptance remain separate.",
             "Scoped PR #770 Audio playback correction continuation: docs/verification/audio-style-menu-correction-2026-09-28/review.json sha256:62c1dac1be4286acdb8201aab99b6d3c5e2e2b282e1c88cb34d88af527172e09; exact28 inputs sha256:d9650ffde4c938064703de7c1e8ec987ac1efc1b6470ebcad4ca4ab459a32018. Only soundtrack-player.mjs and soundtrack-panel.mjs changed: saved listening preferences are isolated from unsaved Music Studio drafts, newer transport intent wins delayed playback, identity-owned catalogue retry survives close, and queue-capacity copy is corrected. The associated test-evidence repair pins the exact accepted-main production97 predecessor oracle. Exact production98/audio50 predecessor fixture sha256:e397af798928a72502c970276fe212eaad8d2a4889f5afe02587559244496714 is bound separately. Eight existing procedural recipes, routing and payloads remain unchanged; production generation, hosted, frozen/public, listening and physical-device acceptance remain separate.",
             "Scoped v0.142.1 Audio menu and style taxonomy continuation: docs/verification/audio-style-menu-2026-09-28/review.json sha256:bc87031d46ded1ace2cc62c6ca87e2ce90ccbb043db7c5fdb653d262c3b94f49; exact28 inputs sha256:9f0bf41c491a44b4ac585975fd444f7e2e5822534914f36b0213157861173344. Audio settings expose transport and broad style selection, automatically mix matching archive and local music, separate Synth/Electronic, combine UA/Ukrainian and require exact Cyrillic ФПВ. The dependency closure binds the quick controls and taxonomy modules. Eight existing procedural recipes and payloads remain unchanged; hosted, frozen/public, listening and physical-device acceptance remain separate.",
             "Scoped player-readiness17 ownership source continuation: docs/verification/player-readiness17-audio-continuation-2026-09-28/review.json sha256:0584016a71b220780cc8912666638c468550c7167c2c1084b28b7952f27fa608; exact26 inputs sha256:124a7d186850bd1175bfc45bafba2f19912c89bcb271b5a0c2773e9ad5441b34. Existing eight recipes, routing and payloads unchanged; theme96/audio48 and all predecessors retained. Append-only production and all hosted/frozen/public/listening/device/human acceptance remain separate.",
@@ -83506,7 +82833,8 @@
             "v0.141.0 managed-media continuation: docs/verification/v0.141.0-managed-media-audio-continuation/review.json sha256:16f3eb26f28eae82f6529c8a872438c216a05d7a905e0fee0b3d6b0e9601e998; twenty-four ordered audio inputs sha256:77370fe6fc7a8d376865b05d8ba2020b8683b3922c20cc3dfad260d0a0251f79. Only managed-media-store.mjs and media-storage-record.mjs changed after the prior exact review, adding bounded cross-domain byte accounting and exact reviewed still-byte detachment while preserving audio routing, recipes, rows, blobs, playback and soundtrack bytes.",
             "v0.132.5 locale-refresh continuation: docs/verification/v0.132.5-presentation-continuation/review.json sha256:fbc818dcfbbfd2cf1985017417959c82741162842cd3c7293f5be67fc594ef35; twenty-four ordered audio inputs sha256:301e68a4898cf7d9140abee266195401a69cfca0db2301a12409ec252c882ec9. Only game/app.mjs changed after the prior exact review, asking the shared shell to refresh localized Home copy while preserving audio routing, recipes and bytes.",
             "Scoped v0.132.1 Steam Deck controller continuation: docs/verification/v0.132.1-steamdeck-audio-continuation/review.json sha256:b715c81fa1f86a562d5c195ffc025727fc009d1de6cfe03c403db75fdfbf8d70; twenty-five ordered audio inputs sha256:417ceb75d58709373e1abdb047c26224db06721bd58b3ff8302152c33d2f735a. Only game/app.mjs changed among those inputs, adding a controller Confirm lifecycle filter before menu dispatch while preserving audio routing and bytes.",
-            "Scoped gp4 restore audio software continuation: docs/verification/discovery-gp4-restore-audio-continuation-2026-09-29/review.json sha256:27c3663b72c1ccf1b78b2bf641952ff5d011e10520f0044d981f5c8166741b0d; exact50 ordered inputs sha256:94c62d025dd9a8764baec87514d25083e0026caa7ed9c9cf5f71497ef447e1be. Only the app Collection eligibility guard changes to exact recorded-level matching; administrative rejection, audio call sites, recipes, routing, media ownership and payloads are unchanged. Independent production102 oracle sha256:88f08a4ed55e2d7a26e491828d808d1a2c6784ab5e811acce7537009a68ad315 retains every predecessor. Gameplay restoration and frozen-browser qualification remain separate. The prior offline ownership and v0.131 English/Ukrainian reviews remain incorporated. All 8 selected roles retain the same procedural recipes; playback state, volume values, local-only selection, resumable download, shared-byte removal, rights, cancellation and imported-media preservation are unchanged. No recording, composition, musical suitability, Ukrainian authenticity, full-track listening, physical-device, frozen-build or public game approval. Historical reviews and original payloads remain immutable; any audio dependency or review-byte change reopens this group."
+            "The prior offline ownership and v0.131 English/Ukrainian reviews remain incorporated. All 8 selected roles retain the same procedural recipes; playback state, volume values, local-only selection, resumable download, shared-byte removal, rights, cancellation and imported-media preservation are unchanged.",
+            "No recording, composition, musical suitability, Ukrainian authenticity, full-track listening, physical-device, frozen-build or public game approval. Historical reviews and original payloads remain immutable; any audio dependency or review-byte change reopens this group."
           ],
           "stage": "reviewed"
         },
@@ -83530,12 +82858,11 @@
             "revision": 53
           },
           "prompt": 51,
-          "source": 484
+          "source": 485
         },
         "quality": {
           "evidence": [
-            "Scoped discovery audio software continuation: docs/verification/discovery-audio-continuation-2026-09-29/review.json sha256:edeecf9fbafdabd7e4fdb653be58baf8deaa3483a6ee426552d611d2fff768ea; exact50 ordered inputs sha256:a7780c46c20f2603e41f8d7c728d3d13c3efdb6e799a3e5d429ae236bf15d20c. Accepted campaign fallback, explicit exact-original recording export, shared reward master/gain ownership and isolated preview preferences retain the eight existing recipe identities and original payloads. The 22 added behavior and media-validation inputs reopen this group when changed. Exact production100/audio52 predecessor oracle sha256:cf19ad831cc0347f4f84c2ac310a1168354858e75f40991b35ffec18ea58d0b7 is retained. This is software continuation only; composition, listening, physical-device, frozen/public and release acceptance remain separate.",
-            "Scoped v0.142.3 Steam Deck Confirm audio continuation: docs/verification/v0.142.3-steamdeck-confirm-audio-continuation/review.json sha256:a059520f6ce0c394c3425355c711b641b4b23f9321e11c7d384317e7f814798c; exact28 inputs sha256:39fe40240f0475e471a52772060899d3e329e4d54d6b2bb6679e76dc745ee9a4. Only game/app.mjs changes, coordinating native and Gamepad Confirm ownership and opt-in local diagnostics; all audio implementation, eight existing procedural recipes, routing and payloads remain unchanged. Exact v0.142.2 production99/audio51 predecessor fixture sha256:528361f4e7823a23b02b261ca1de0c9b3157d1a17cbba643e4ff7e67073bc0a7 is retained. Final qualification, frozen/public, listening and physical Steam Deck acceptance remain separate.",
+            "Merged main/candidate software continuation: docs/verification/discovery-main321-reconciliation/review.json sha256:f2b3a2724cf48455dbe98d5ca12a2b081ef1f982531e91838c0291a64bbed976. Exact50-source approval only; historical branch lineages and runtime pins remain separate. No listening, device, frozen/public approval.\nScoped v0.142.4 mission-selector audio continuation: docs/verification/v0.142.4-selector-audio-continuation/review.json sha256:f2cf0cc93f8de8e959eabf6e6313a0af306dfae87e2cb663bfe7bef805df6fe6; exact28 inputs sha256:fd3d7e347bc3a6e36bd884b508af8bbd8492cc3a4dac19bb745664a7fe90adc6. Only game/app.mjs changes, adding clear-star metadata and mission-card progress adapters; audio implementation, eight procedural recipes, routing and payloads remain unchanged. Exact published production100/audio52 predecessor fixture sha256:db9cc258d79aaa0caaf587fa3c73be5fcc55cea5f6129524c59255f04f3bbeb0 is retained. Selector/save compatibility, final qualification, frozen/public, listening and physical-device acceptance remain separate.\nScoped v0.142.3 Steam Deck Confirm audio continuation: docs/verification/v0.142.3-steamdeck-confirm-audio-continuation/review.json sha256:a059520f6ce0c394c3425355c711b641b4b23f9321e11c7d384317e7f814798c; exact28 inputs sha256:39fe40240f0475e471a52772060899d3e329e4d54d6b2bb6679e76dc745ee9a4. Only game/app.mjs changes, coordinating native and Gamepad Confirm ownership and opt-in local diagnostics; all audio implementation, eight existing procedural recipes, routing and payloads remain unchanged. Exact v0.142.2 production99/audio51 predecessor fixture sha256:528361f4e7823a23b02b261ca1de0c9b3157d1a17cbba643e4ff7e67073bc0a7 is retained. Final qualification, frozen/public, listening and physical Steam Deck acceptance remain separate.",
             "Scoped PR #770 Audio playback correction continuation: docs/verification/audio-style-menu-correction-2026-09-28/review.json sha256:62c1dac1be4286acdb8201aab99b6d3c5e2e2b282e1c88cb34d88af527172e09; exact28 inputs sha256:d9650ffde4c938064703de7c1e8ec987ac1efc1b6470ebcad4ca4ab459a32018. Only soundtrack-player.mjs and soundtrack-panel.mjs changed: saved listening preferences are isolated from unsaved Music Studio drafts, newer transport intent wins delayed playback, identity-owned catalogue retry survives close, and queue-capacity copy is corrected. The associated test-evidence repair pins the exact accepted-main production97 predecessor oracle. Exact production98/audio50 predecessor fixture sha256:e397af798928a72502c970276fe212eaad8d2a4889f5afe02587559244496714 is bound separately. Eight existing procedural recipes, routing and payloads remain unchanged; production generation, hosted, frozen/public, listening and physical-device acceptance remain separate.",
             "Scoped v0.142.1 Audio menu and style taxonomy continuation: docs/verification/audio-style-menu-2026-09-28/review.json sha256:bc87031d46ded1ace2cc62c6ca87e2ce90ccbb043db7c5fdb653d262c3b94f49; exact28 inputs sha256:9f0bf41c491a44b4ac585975fd444f7e2e5822534914f36b0213157861173344. Audio settings expose transport and broad style selection, automatically mix matching archive and local music, separate Synth/Electronic, combine UA/Ukrainian and require exact Cyrillic ФПВ. The dependency closure binds the quick controls and taxonomy modules. Eight existing procedural recipes and payloads remain unchanged; hosted, frozen/public, listening and physical-device acceptance remain separate.",
             "Scoped player-readiness17 ownership source continuation: docs/verification/player-readiness17-audio-continuation-2026-09-28/review.json sha256:0584016a71b220780cc8912666638c468550c7167c2c1084b28b7952f27fa608; exact26 inputs sha256:124a7d186850bd1175bfc45bafba2f19912c89bcb271b5a0c2773e9ad5441b34. Existing eight recipes, routing and payloads unchanged; theme96/audio48 and all predecessors retained. Append-only production and all hosted/frozen/public/listening/device/human acceptance remain separate.",
@@ -83549,7 +82876,8 @@
             "v0.141.0 managed-media continuation: docs/verification/v0.141.0-managed-media-audio-continuation/review.json sha256:16f3eb26f28eae82f6529c8a872438c216a05d7a905e0fee0b3d6b0e9601e998; twenty-four ordered audio inputs sha256:77370fe6fc7a8d376865b05d8ba2020b8683b3922c20cc3dfad260d0a0251f79. Only managed-media-store.mjs and media-storage-record.mjs changed after the prior exact review, adding bounded cross-domain byte accounting and exact reviewed still-byte detachment while preserving audio routing, recipes, rows, blobs, playback and soundtrack bytes.",
             "v0.132.5 locale-refresh continuation: docs/verification/v0.132.5-presentation-continuation/review.json sha256:fbc818dcfbbfd2cf1985017417959c82741162842cd3c7293f5be67fc594ef35; twenty-four ordered audio inputs sha256:301e68a4898cf7d9140abee266195401a69cfca0db2301a12409ec252c882ec9. Only game/app.mjs changed after the prior exact review, asking the shared shell to refresh localized Home copy while preserving audio routing, recipes and bytes.",
             "Scoped v0.132.1 Steam Deck controller continuation: docs/verification/v0.132.1-steamdeck-audio-continuation/review.json sha256:b715c81fa1f86a562d5c195ffc025727fc009d1de6cfe03c403db75fdfbf8d70; twenty-five ordered audio inputs sha256:417ceb75d58709373e1abdb047c26224db06721bd58b3ff8302152c33d2f735a. Only game/app.mjs changed among those inputs, adding a controller Confirm lifecycle filter before menu dispatch while preserving audio routing and bytes.",
-            "Scoped gp4 restore audio software continuation: docs/verification/discovery-gp4-restore-audio-continuation-2026-09-29/review.json sha256:27c3663b72c1ccf1b78b2bf641952ff5d011e10520f0044d981f5c8166741b0d; exact50 ordered inputs sha256:94c62d025dd9a8764baec87514d25083e0026caa7ed9c9cf5f71497ef447e1be. Only the app Collection eligibility guard changes to exact recorded-level matching; administrative rejection, audio call sites, recipes, routing, media ownership and payloads are unchanged. Independent production102 oracle sha256:88f08a4ed55e2d7a26e491828d808d1a2c6784ab5e811acce7537009a68ad315 retains every predecessor. Gameplay restoration and frozen-browser qualification remain separate. The prior offline ownership and v0.131 English/Ukrainian reviews remain incorporated. All 8 selected roles retain the same procedural recipes; playback state, volume values, local-only selection, resumable download, shared-byte removal, rights, cancellation and imported-media preservation are unchanged. No recording, composition, musical suitability, Ukrainian authenticity, full-track listening, physical-device, frozen-build or public game approval. Historical reviews and original payloads remain immutable; any audio dependency or review-byte change reopens this group."
+            "The prior offline ownership and v0.131 English/Ukrainian reviews remain incorporated. All 8 selected roles retain the same procedural recipes; playback state, volume values, local-only selection, resumable download, shared-byte removal, rights, cancellation and imported-media preservation are unchanged.",
+            "No recording, composition, musical suitability, Ukrainian authenticity, full-track listening, physical-device, frozen-build or public game approval. Historical reviews and original payloads remain immutable; any audio dependency or review-byte change reopens this group."
           ],
           "stage": "reviewed"
         },
@@ -83573,12 +82901,11 @@
             "revision": 53
           },
           "prompt": 34,
-          "source": 484
+          "source": 485
         },
         "quality": {
           "evidence": [
-            "Scoped discovery audio software continuation: docs/verification/discovery-audio-continuation-2026-09-29/review.json sha256:edeecf9fbafdabd7e4fdb653be58baf8deaa3483a6ee426552d611d2fff768ea; exact50 ordered inputs sha256:a7780c46c20f2603e41f8d7c728d3d13c3efdb6e799a3e5d429ae236bf15d20c. Accepted campaign fallback, explicit exact-original recording export, shared reward master/gain ownership and isolated preview preferences retain the eight existing recipe identities and original payloads. The 22 added behavior and media-validation inputs reopen this group when changed. Exact production100/audio52 predecessor oracle sha256:cf19ad831cc0347f4f84c2ac310a1168354858e75f40991b35ffec18ea58d0b7 is retained. This is software continuation only; composition, listening, physical-device, frozen/public and release acceptance remain separate.",
-            "Scoped v0.142.3 Steam Deck Confirm audio continuation: docs/verification/v0.142.3-steamdeck-confirm-audio-continuation/review.json sha256:a059520f6ce0c394c3425355c711b641b4b23f9321e11c7d384317e7f814798c; exact28 inputs sha256:39fe40240f0475e471a52772060899d3e329e4d54d6b2bb6679e76dc745ee9a4. Only game/app.mjs changes, coordinating native and Gamepad Confirm ownership and opt-in local diagnostics; all audio implementation, eight existing procedural recipes, routing and payloads remain unchanged. Exact v0.142.2 production99/audio51 predecessor fixture sha256:528361f4e7823a23b02b261ca1de0c9b3157d1a17cbba643e4ff7e67073bc0a7 is retained. Final qualification, frozen/public, listening and physical Steam Deck acceptance remain separate.",
+            "Merged main/candidate software continuation: docs/verification/discovery-main321-reconciliation/review.json sha256:f2b3a2724cf48455dbe98d5ca12a2b081ef1f982531e91838c0291a64bbed976. Exact50-source approval only; historical branch lineages and runtime pins remain separate. No listening, device, frozen/public approval.\nScoped v0.142.4 mission-selector audio continuation: docs/verification/v0.142.4-selector-audio-continuation/review.json sha256:f2cf0cc93f8de8e959eabf6e6313a0af306dfae87e2cb663bfe7bef805df6fe6; exact28 inputs sha256:fd3d7e347bc3a6e36bd884b508af8bbd8492cc3a4dac19bb745664a7fe90adc6. Only game/app.mjs changes, adding clear-star metadata and mission-card progress adapters; audio implementation, eight procedural recipes, routing and payloads remain unchanged. Exact published production100/audio52 predecessor fixture sha256:db9cc258d79aaa0caaf587fa3c73be5fcc55cea5f6129524c59255f04f3bbeb0 is retained. Selector/save compatibility, final qualification, frozen/public, listening and physical-device acceptance remain separate.\nScoped v0.142.3 Steam Deck Confirm audio continuation: docs/verification/v0.142.3-steamdeck-confirm-audio-continuation/review.json sha256:a059520f6ce0c394c3425355c711b641b4b23f9321e11c7d384317e7f814798c; exact28 inputs sha256:39fe40240f0475e471a52772060899d3e329e4d54d6b2bb6679e76dc745ee9a4. Only game/app.mjs changes, coordinating native and Gamepad Confirm ownership and opt-in local diagnostics; all audio implementation, eight existing procedural recipes, routing and payloads remain unchanged. Exact v0.142.2 production99/audio51 predecessor fixture sha256:528361f4e7823a23b02b261ca1de0c9b3157d1a17cbba643e4ff7e67073bc0a7 is retained. Final qualification, frozen/public, listening and physical Steam Deck acceptance remain separate.",
             "Scoped PR #770 Audio playback correction continuation: docs/verification/audio-style-menu-correction-2026-09-28/review.json sha256:62c1dac1be4286acdb8201aab99b6d3c5e2e2b282e1c88cb34d88af527172e09; exact28 inputs sha256:d9650ffde4c938064703de7c1e8ec987ac1efc1b6470ebcad4ca4ab459a32018. Only soundtrack-player.mjs and soundtrack-panel.mjs changed: saved listening preferences are isolated from unsaved Music Studio drafts, newer transport intent wins delayed playback, identity-owned catalogue retry survives close, and queue-capacity copy is corrected. The associated test-evidence repair pins the exact accepted-main production97 predecessor oracle. Exact production98/audio50 predecessor fixture sha256:e397af798928a72502c970276fe212eaad8d2a4889f5afe02587559244496714 is bound separately. Eight existing procedural recipes, routing and payloads remain unchanged; production generation, hosted, frozen/public, listening and physical-device acceptance remain separate.",
             "Scoped v0.142.1 Audio menu and style taxonomy continuation: docs/verification/audio-style-menu-2026-09-28/review.json sha256:bc87031d46ded1ace2cc62c6ca87e2ce90ccbb043db7c5fdb653d262c3b94f49; exact28 inputs sha256:9f0bf41c491a44b4ac585975fd444f7e2e5822534914f36b0213157861173344. Audio settings expose transport and broad style selection, automatically mix matching archive and local music, separate Synth/Electronic, combine UA/Ukrainian and require exact Cyrillic ФПВ. The dependency closure binds the quick controls and taxonomy modules. Eight existing procedural recipes and payloads remain unchanged; hosted, frozen/public, listening and physical-device acceptance remain separate.",
             "Scoped player-readiness17 ownership source continuation: docs/verification/player-readiness17-audio-continuation-2026-09-28/review.json sha256:0584016a71b220780cc8912666638c468550c7167c2c1084b28b7952f27fa608; exact26 inputs sha256:124a7d186850bd1175bfc45bafba2f19912c89bcb271b5a0c2773e9ad5441b34. Existing eight recipes, routing and payloads unchanged; theme96/audio48 and all predecessors retained. Append-only production and all hosted/frozen/public/listening/device/human acceptance remain separate.",
@@ -83592,7 +82919,8 @@
             "v0.141.0 managed-media continuation: docs/verification/v0.141.0-managed-media-audio-continuation/review.json sha256:16f3eb26f28eae82f6529c8a872438c216a05d7a905e0fee0b3d6b0e9601e998; twenty-four ordered audio inputs sha256:77370fe6fc7a8d376865b05d8ba2020b8683b3922c20cc3dfad260d0a0251f79. Only managed-media-store.mjs and media-storage-record.mjs changed after the prior exact review, adding bounded cross-domain byte accounting and exact reviewed still-byte detachment while preserving audio routing, recipes, rows, blobs, playback and soundtrack bytes.",
             "v0.132.5 locale-refresh continuation: docs/verification/v0.132.5-presentation-continuation/review.json sha256:fbc818dcfbbfd2cf1985017417959c82741162842cd3c7293f5be67fc594ef35; twenty-four ordered audio inputs sha256:301e68a4898cf7d9140abee266195401a69cfca0db2301a12409ec252c882ec9. Only game/app.mjs changed after the prior exact review, asking the shared shell to refresh localized Home copy while preserving audio routing, recipes and bytes.",
             "Scoped v0.132.1 Steam Deck controller continuation: docs/verification/v0.132.1-steamdeck-audio-continuation/review.json sha256:b715c81fa1f86a562d5c195ffc025727fc009d1de6cfe03c403db75fdfbf8d70; twenty-five ordered audio inputs sha256:417ceb75d58709373e1abdb047c26224db06721bd58b3ff8302152c33d2f735a. Only game/app.mjs changed among those inputs, adding a controller Confirm lifecycle filter before menu dispatch while preserving audio routing and bytes.",
-            "Scoped gp4 restore audio software continuation: docs/verification/discovery-gp4-restore-audio-continuation-2026-09-29/review.json sha256:27c3663b72c1ccf1b78b2bf641952ff5d011e10520f0044d981f5c8166741b0d; exact50 ordered inputs sha256:94c62d025dd9a8764baec87514d25083e0026caa7ed9c9cf5f71497ef447e1be. Only the app Collection eligibility guard changes to exact recorded-level matching; administrative rejection, audio call sites, recipes, routing, media ownership and payloads are unchanged. Independent production102 oracle sha256:88f08a4ed55e2d7a26e491828d808d1a2c6784ab5e811acce7537009a68ad315 retains every predecessor. Gameplay restoration and frozen-browser qualification remain separate. The prior offline ownership and v0.131 English/Ukrainian reviews remain incorporated. All 8 selected roles retain the same procedural recipes; playback state, volume values, local-only selection, resumable download, shared-byte removal, rights, cancellation and imported-media preservation are unchanged. No recording, composition, musical suitability, Ukrainian authenticity, full-track listening, physical-device, frozen-build or public game approval. Historical reviews and original payloads remain immutable; any audio dependency or review-byte change reopens this group."
+            "The prior offline ownership and v0.131 English/Ukrainian reviews remain incorporated. All 8 selected roles retain the same procedural recipes; playback state, volume values, local-only selection, resumable download, shared-byte removal, rights, cancellation and imported-media preservation are unchanged.",
+            "No recording, composition, musical suitability, Ukrainian authenticity, full-track listening, physical-device, frozen-build or public game approval. Historical reviews and original payloads remain immutable; any audio dependency or review-byte change reopens this group."
           ],
           "stage": "reviewed"
         },
@@ -83616,12 +82944,11 @@
             "revision": 53
           },
           "prompt": 36,
-          "source": 484
+          "source": 485
         },
         "quality": {
           "evidence": [
-            "Scoped discovery audio software continuation: docs/verification/discovery-audio-continuation-2026-09-29/review.json sha256:edeecf9fbafdabd7e4fdb653be58baf8deaa3483a6ee426552d611d2fff768ea; exact50 ordered inputs sha256:a7780c46c20f2603e41f8d7c728d3d13c3efdb6e799a3e5d429ae236bf15d20c. Accepted campaign fallback, explicit exact-original recording export, shared reward master/gain ownership and isolated preview preferences retain the eight existing recipe identities and original payloads. The 22 added behavior and media-validation inputs reopen this group when changed. Exact production100/audio52 predecessor oracle sha256:cf19ad831cc0347f4f84c2ac310a1168354858e75f40991b35ffec18ea58d0b7 is retained. This is software continuation only; composition, listening, physical-device, frozen/public and release acceptance remain separate.",
-            "Scoped v0.142.3 Steam Deck Confirm audio continuation: docs/verification/v0.142.3-steamdeck-confirm-audio-continuation/review.json sha256:a059520f6ce0c394c3425355c711b641b4b23f9321e11c7d384317e7f814798c; exact28 inputs sha256:39fe40240f0475e471a52772060899d3e329e4d54d6b2bb6679e76dc745ee9a4. Only game/app.mjs changes, coordinating native and Gamepad Confirm ownership and opt-in local diagnostics; all audio implementation, eight existing procedural recipes, routing and payloads remain unchanged. Exact v0.142.2 production99/audio51 predecessor fixture sha256:528361f4e7823a23b02b261ca1de0c9b3157d1a17cbba643e4ff7e67073bc0a7 is retained. Final qualification, frozen/public, listening and physical Steam Deck acceptance remain separate.",
+            "Merged main/candidate software continuation: docs/verification/discovery-main321-reconciliation/review.json sha256:f2b3a2724cf48455dbe98d5ca12a2b081ef1f982531e91838c0291a64bbed976. Exact50-source approval only; historical branch lineages and runtime pins remain separate. No listening, device, frozen/public approval.\nScoped v0.142.4 mission-selector audio continuation: docs/verification/v0.142.4-selector-audio-continuation/review.json sha256:f2cf0cc93f8de8e959eabf6e6313a0af306dfae87e2cb663bfe7bef805df6fe6; exact28 inputs sha256:fd3d7e347bc3a6e36bd884b508af8bbd8492cc3a4dac19bb745664a7fe90adc6. Only game/app.mjs changes, adding clear-star metadata and mission-card progress adapters; audio implementation, eight procedural recipes, routing and payloads remain unchanged. Exact published production100/audio52 predecessor fixture sha256:db9cc258d79aaa0caaf587fa3c73be5fcc55cea5f6129524c59255f04f3bbeb0 is retained. Selector/save compatibility, final qualification, frozen/public, listening and physical-device acceptance remain separate.\nScoped v0.142.3 Steam Deck Confirm audio continuation: docs/verification/v0.142.3-steamdeck-confirm-audio-continuation/review.json sha256:a059520f6ce0c394c3425355c711b641b4b23f9321e11c7d384317e7f814798c; exact28 inputs sha256:39fe40240f0475e471a52772060899d3e329e4d54d6b2bb6679e76dc745ee9a4. Only game/app.mjs changes, coordinating native and Gamepad Confirm ownership and opt-in local diagnostics; all audio implementation, eight existing procedural recipes, routing and payloads remain unchanged. Exact v0.142.2 production99/audio51 predecessor fixture sha256:528361f4e7823a23b02b261ca1de0c9b3157d1a17cbba643e4ff7e67073bc0a7 is retained. Final qualification, frozen/public, listening and physical Steam Deck acceptance remain separate.",
             "Scoped PR #770 Audio playback correction continuation: docs/verification/audio-style-menu-correction-2026-09-28/review.json sha256:62c1dac1be4286acdb8201aab99b6d3c5e2e2b282e1c88cb34d88af527172e09; exact28 inputs sha256:d9650ffde4c938064703de7c1e8ec987ac1efc1b6470ebcad4ca4ab459a32018. Only soundtrack-player.mjs and soundtrack-panel.mjs changed: saved listening preferences are isolated from unsaved Music Studio drafts, newer transport intent wins delayed playback, identity-owned catalogue retry survives close, and queue-capacity copy is corrected. The associated test-evidence repair pins the exact accepted-main production97 predecessor oracle. Exact production98/audio50 predecessor fixture sha256:e397af798928a72502c970276fe212eaad8d2a4889f5afe02587559244496714 is bound separately. Eight existing procedural recipes, routing and payloads remain unchanged; production generation, hosted, frozen/public, listening and physical-device acceptance remain separate.",
             "Scoped v0.142.1 Audio menu and style taxonomy continuation: docs/verification/audio-style-menu-2026-09-28/review.json sha256:bc87031d46ded1ace2cc62c6ca87e2ce90ccbb043db7c5fdb653d262c3b94f49; exact28 inputs sha256:9f0bf41c491a44b4ac585975fd444f7e2e5822534914f36b0213157861173344. Audio settings expose transport and broad style selection, automatically mix matching archive and local music, separate Synth/Electronic, combine UA/Ukrainian and require exact Cyrillic ФПВ. The dependency closure binds the quick controls and taxonomy modules. Eight existing procedural recipes and payloads remain unchanged; hosted, frozen/public, listening and physical-device acceptance remain separate.",
             "Scoped player-readiness17 ownership source continuation: docs/verification/player-readiness17-audio-continuation-2026-09-28/review.json sha256:0584016a71b220780cc8912666638c468550c7167c2c1084b28b7952f27fa608; exact26 inputs sha256:124a7d186850bd1175bfc45bafba2f19912c89bcb271b5a0c2773e9ad5441b34. Existing eight recipes, routing and payloads unchanged; theme96/audio48 and all predecessors retained. Append-only production and all hosted/frozen/public/listening/device/human acceptance remain separate.",
@@ -83635,7 +82962,8 @@
             "v0.141.0 managed-media continuation: docs/verification/v0.141.0-managed-media-audio-continuation/review.json sha256:16f3eb26f28eae82f6529c8a872438c216a05d7a905e0fee0b3d6b0e9601e998; twenty-four ordered audio inputs sha256:77370fe6fc7a8d376865b05d8ba2020b8683b3922c20cc3dfad260d0a0251f79. Only managed-media-store.mjs and media-storage-record.mjs changed after the prior exact review, adding bounded cross-domain byte accounting and exact reviewed still-byte detachment while preserving audio routing, recipes, rows, blobs, playback and soundtrack bytes.",
             "v0.132.5 locale-refresh continuation: docs/verification/v0.132.5-presentation-continuation/review.json sha256:fbc818dcfbbfd2cf1985017417959c82741162842cd3c7293f5be67fc594ef35; twenty-four ordered audio inputs sha256:301e68a4898cf7d9140abee266195401a69cfca0db2301a12409ec252c882ec9. Only game/app.mjs changed after the prior exact review, asking the shared shell to refresh localized Home copy while preserving audio routing, recipes and bytes.",
             "Scoped v0.132.1 Steam Deck controller continuation: docs/verification/v0.132.1-steamdeck-audio-continuation/review.json sha256:b715c81fa1f86a562d5c195ffc025727fc009d1de6cfe03c403db75fdfbf8d70; twenty-five ordered audio inputs sha256:417ceb75d58709373e1abdb047c26224db06721bd58b3ff8302152c33d2f735a. Only game/app.mjs changed among those inputs, adding a controller Confirm lifecycle filter before menu dispatch while preserving audio routing and bytes.",
-            "Scoped gp4 restore audio software continuation: docs/verification/discovery-gp4-restore-audio-continuation-2026-09-29/review.json sha256:27c3663b72c1ccf1b78b2bf641952ff5d011e10520f0044d981f5c8166741b0d; exact50 ordered inputs sha256:94c62d025dd9a8764baec87514d25083e0026caa7ed9c9cf5f71497ef447e1be. Only the app Collection eligibility guard changes to exact recorded-level matching; administrative rejection, audio call sites, recipes, routing, media ownership and payloads are unchanged. Independent production102 oracle sha256:88f08a4ed55e2d7a26e491828d808d1a2c6784ab5e811acce7537009a68ad315 retains every predecessor. Gameplay restoration and frozen-browser qualification remain separate. The prior offline ownership and v0.131 English/Ukrainian reviews remain incorporated. All 8 selected roles retain the same procedural recipes; playback state, volume values, local-only selection, resumable download, shared-byte removal, rights, cancellation and imported-media preservation are unchanged. No recording, composition, musical suitability, Ukrainian authenticity, full-track listening, physical-device, frozen-build or public game approval. Historical reviews and original payloads remain immutable; any audio dependency or review-byte change reopens this group."
+            "The prior offline ownership and v0.131 English/Ukrainian reviews remain incorporated. All 8 selected roles retain the same procedural recipes; playback state, volume values, local-only selection, resumable download, shared-byte removal, rights, cancellation and imported-media preservation are unchanged.",
+            "No recording, composition, musical suitability, Ukrainian authenticity, full-track listening, physical-device, frozen-build or public game approval. Historical reviews and original payloads remain immutable; any audio dependency or review-byte change reopens this group."
           ],
           "stage": "reviewed"
         },
@@ -83659,12 +82987,11 @@
             "revision": 53
           },
           "prompt": 78,
-          "source": 484
+          "source": 485
         },
         "quality": {
           "evidence": [
-            "Scoped discovery audio software continuation: docs/verification/discovery-audio-continuation-2026-09-29/review.json sha256:edeecf9fbafdabd7e4fdb653be58baf8deaa3483a6ee426552d611d2fff768ea; exact50 ordered inputs sha256:a7780c46c20f2603e41f8d7c728d3d13c3efdb6e799a3e5d429ae236bf15d20c. Accepted campaign fallback, explicit exact-original recording export, shared reward master/gain ownership and isolated preview preferences retain the eight existing recipe identities and original payloads. The 22 added behavior and media-validation inputs reopen this group when changed. Exact production100/audio52 predecessor oracle sha256:cf19ad831cc0347f4f84c2ac310a1168354858e75f40991b35ffec18ea58d0b7 is retained. This is software continuation only; composition, listening, physical-device, frozen/public and release acceptance remain separate.",
-            "Scoped v0.142.3 Steam Deck Confirm audio continuation: docs/verification/v0.142.3-steamdeck-confirm-audio-continuation/review.json sha256:a059520f6ce0c394c3425355c711b641b4b23f9321e11c7d384317e7f814798c; exact28 inputs sha256:39fe40240f0475e471a52772060899d3e329e4d54d6b2bb6679e76dc745ee9a4. Only game/app.mjs changes, coordinating native and Gamepad Confirm ownership and opt-in local diagnostics; all audio implementation, eight existing procedural recipes, routing and payloads remain unchanged. Exact v0.142.2 production99/audio51 predecessor fixture sha256:528361f4e7823a23b02b261ca1de0c9b3157d1a17cbba643e4ff7e67073bc0a7 is retained. Final qualification, frozen/public, listening and physical Steam Deck acceptance remain separate.",
+            "Merged main/candidate software continuation: docs/verification/discovery-main321-reconciliation/review.json sha256:f2b3a2724cf48455dbe98d5ca12a2b081ef1f982531e91838c0291a64bbed976. Exact50-source approval only; historical branch lineages and runtime pins remain separate. No listening, device, frozen/public approval.\nScoped v0.142.4 mission-selector audio continuation: docs/verification/v0.142.4-selector-audio-continuation/review.json sha256:f2cf0cc93f8de8e959eabf6e6313a0af306dfae87e2cb663bfe7bef805df6fe6; exact28 inputs sha256:fd3d7e347bc3a6e36bd884b508af8bbd8492cc3a4dac19bb745664a7fe90adc6. Only game/app.mjs changes, adding clear-star metadata and mission-card progress adapters; audio implementation, eight procedural recipes, routing and payloads remain unchanged. Exact published production100/audio52 predecessor fixture sha256:db9cc258d79aaa0caaf587fa3c73be5fcc55cea5f6129524c59255f04f3bbeb0 is retained. Selector/save compatibility, final qualification, frozen/public, listening and physical-device acceptance remain separate.\nScoped v0.142.3 Steam Deck Confirm audio continuation: docs/verification/v0.142.3-steamdeck-confirm-audio-continuation/review.json sha256:a059520f6ce0c394c3425355c711b641b4b23f9321e11c7d384317e7f814798c; exact28 inputs sha256:39fe40240f0475e471a52772060899d3e329e4d54d6b2bb6679e76dc745ee9a4. Only game/app.mjs changes, coordinating native and Gamepad Confirm ownership and opt-in local diagnostics; all audio implementation, eight existing procedural recipes, routing and payloads remain unchanged. Exact v0.142.2 production99/audio51 predecessor fixture sha256:528361f4e7823a23b02b261ca1de0c9b3157d1a17cbba643e4ff7e67073bc0a7 is retained. Final qualification, frozen/public, listening and physical Steam Deck acceptance remain separate.",
             "Scoped PR #770 Audio playback correction continuation: docs/verification/audio-style-menu-correction-2026-09-28/review.json sha256:62c1dac1be4286acdb8201aab99b6d3c5e2e2b282e1c88cb34d88af527172e09; exact28 inputs sha256:d9650ffde4c938064703de7c1e8ec987ac1efc1b6470ebcad4ca4ab459a32018. Only soundtrack-player.mjs and soundtrack-panel.mjs changed: saved listening preferences are isolated from unsaved Music Studio drafts, newer transport intent wins delayed playback, identity-owned catalogue retry survives close, and queue-capacity copy is corrected. The associated test-evidence repair pins the exact accepted-main production97 predecessor oracle. Exact production98/audio50 predecessor fixture sha256:e397af798928a72502c970276fe212eaad8d2a4889f5afe02587559244496714 is bound separately. Eight existing procedural recipes, routing and payloads remain unchanged; production generation, hosted, frozen/public, listening and physical-device acceptance remain separate.",
             "Scoped v0.142.1 Audio menu and style taxonomy continuation: docs/verification/audio-style-menu-2026-09-28/review.json sha256:bc87031d46ded1ace2cc62c6ca87e2ce90ccbb043db7c5fdb653d262c3b94f49; exact28 inputs sha256:9f0bf41c491a44b4ac585975fd444f7e2e5822534914f36b0213157861173344. Audio settings expose transport and broad style selection, automatically mix matching archive and local music, separate Synth/Electronic, combine UA/Ukrainian and require exact Cyrillic ФПВ. The dependency closure binds the quick controls and taxonomy modules. Eight existing procedural recipes and payloads remain unchanged; hosted, frozen/public, listening and physical-device acceptance remain separate.",
             "Scoped player-readiness17 ownership source continuation: docs/verification/player-readiness17-audio-continuation-2026-09-28/review.json sha256:0584016a71b220780cc8912666638c468550c7167c2c1084b28b7952f27fa608; exact26 inputs sha256:124a7d186850bd1175bfc45bafba2f19912c89bcb271b5a0c2773e9ad5441b34. Existing eight recipes, routing and payloads unchanged; theme96/audio48 and all predecessors retained. Append-only production and all hosted/frozen/public/listening/device/human acceptance remain separate.",
@@ -83678,7 +83005,8 @@
             "v0.141.0 managed-media continuation: docs/verification/v0.141.0-managed-media-audio-continuation/review.json sha256:16f3eb26f28eae82f6529c8a872438c216a05d7a905e0fee0b3d6b0e9601e998; twenty-four ordered audio inputs sha256:77370fe6fc7a8d376865b05d8ba2020b8683b3922c20cc3dfad260d0a0251f79. Only managed-media-store.mjs and media-storage-record.mjs changed after the prior exact review, adding bounded cross-domain byte accounting and exact reviewed still-byte detachment while preserving audio routing, recipes, rows, blobs, playback and soundtrack bytes.",
             "v0.132.5 locale-refresh continuation: docs/verification/v0.132.5-presentation-continuation/review.json sha256:fbc818dcfbbfd2cf1985017417959c82741162842cd3c7293f5be67fc594ef35; twenty-four ordered audio inputs sha256:301e68a4898cf7d9140abee266195401a69cfca0db2301a12409ec252c882ec9. Only game/app.mjs changed after the prior exact review, asking the shared shell to refresh localized Home copy while preserving audio routing, recipes and bytes.",
             "Scoped v0.132.1 Steam Deck controller continuation: docs/verification/v0.132.1-steamdeck-audio-continuation/review.json sha256:b715c81fa1f86a562d5c195ffc025727fc009d1de6cfe03c403db75fdfbf8d70; twenty-five ordered audio inputs sha256:417ceb75d58709373e1abdb047c26224db06721bd58b3ff8302152c33d2f735a. Only game/app.mjs changed among those inputs, adding a controller Confirm lifecycle filter before menu dispatch while preserving audio routing and bytes.",
-            "Scoped gp4 restore audio software continuation: docs/verification/discovery-gp4-restore-audio-continuation-2026-09-29/review.json sha256:27c3663b72c1ccf1b78b2bf641952ff5d011e10520f0044d981f5c8166741b0d; exact50 ordered inputs sha256:94c62d025dd9a8764baec87514d25083e0026caa7ed9c9cf5f71497ef447e1be. Only the app Collection eligibility guard changes to exact recorded-level matching; administrative rejection, audio call sites, recipes, routing, media ownership and payloads are unchanged. Independent production102 oracle sha256:88f08a4ed55e2d7a26e491828d808d1a2c6784ab5e811acce7537009a68ad315 retains every predecessor. Gameplay restoration and frozen-browser qualification remain separate. The prior offline ownership and v0.131 English/Ukrainian reviews remain incorporated. All 8 selected roles retain the same procedural recipes; playback state, volume values, local-only selection, resumable download, shared-byte removal, rights, cancellation and imported-media preservation are unchanged. No recording, composition, musical suitability, Ukrainian authenticity, full-track listening, physical-device, frozen-build or public game approval. Historical reviews and original payloads remain immutable; any audio dependency or review-byte change reopens this group."
+            "The prior offline ownership and v0.131 English/Ukrainian reviews remain incorporated. All 8 selected roles retain the same procedural recipes; playback state, volume values, local-only selection, resumable download, shared-byte removal, rights, cancellation and imported-media preservation are unchanged.",
+            "No recording, composition, musical suitability, Ukrainian authenticity, full-track listening, physical-device, frozen-build or public game approval. Historical reviews and original payloads remain immutable; any audio dependency or review-byte change reopens this group."
           ],
           "stage": "reviewed"
         },
@@ -83702,12 +83030,11 @@
             "revision": 53
           },
           "prompt": 355,
-          "source": 484
+          "source": 485
         },
         "quality": {
           "evidence": [
-            "Scoped discovery audio software continuation: docs/verification/discovery-audio-continuation-2026-09-29/review.json sha256:edeecf9fbafdabd7e4fdb653be58baf8deaa3483a6ee426552d611d2fff768ea; exact50 ordered inputs sha256:a7780c46c20f2603e41f8d7c728d3d13c3efdb6e799a3e5d429ae236bf15d20c. Accepted campaign fallback, explicit exact-original recording export, shared reward master/gain ownership and isolated preview preferences retain the eight existing recipe identities and original payloads. The 22 added behavior and media-validation inputs reopen this group when changed. Exact production100/audio52 predecessor oracle sha256:cf19ad831cc0347f4f84c2ac310a1168354858e75f40991b35ffec18ea58d0b7 is retained. This is software continuation only; composition, listening, physical-device, frozen/public and release acceptance remain separate.",
-            "Scoped v0.142.3 Steam Deck Confirm audio continuation: docs/verification/v0.142.3-steamdeck-confirm-audio-continuation/review.json sha256:a059520f6ce0c394c3425355c711b641b4b23f9321e11c7d384317e7f814798c; exact28 inputs sha256:39fe40240f0475e471a52772060899d3e329e4d54d6b2bb6679e76dc745ee9a4. Only game/app.mjs changes, coordinating native and Gamepad Confirm ownership and opt-in local diagnostics; all audio implementation, eight existing procedural recipes, routing and payloads remain unchanged. Exact v0.142.2 production99/audio51 predecessor fixture sha256:528361f4e7823a23b02b261ca1de0c9b3157d1a17cbba643e4ff7e67073bc0a7 is retained. Final qualification, frozen/public, listening and physical Steam Deck acceptance remain separate.",
+            "Merged main/candidate software continuation: docs/verification/discovery-main321-reconciliation/review.json sha256:f2b3a2724cf48455dbe98d5ca12a2b081ef1f982531e91838c0291a64bbed976. Exact50-source approval only; historical branch lineages and runtime pins remain separate. No listening, device, frozen/public approval.\nScoped v0.142.4 mission-selector audio continuation: docs/verification/v0.142.4-selector-audio-continuation/review.json sha256:f2cf0cc93f8de8e959eabf6e6313a0af306dfae87e2cb663bfe7bef805df6fe6; exact28 inputs sha256:fd3d7e347bc3a6e36bd884b508af8bbd8492cc3a4dac19bb745664a7fe90adc6. Only game/app.mjs changes, adding clear-star metadata and mission-card progress adapters; audio implementation, eight procedural recipes, routing and payloads remain unchanged. Exact published production100/audio52 predecessor fixture sha256:db9cc258d79aaa0caaf587fa3c73be5fcc55cea5f6129524c59255f04f3bbeb0 is retained. Selector/save compatibility, final qualification, frozen/public, listening and physical-device acceptance remain separate.\nScoped v0.142.3 Steam Deck Confirm audio continuation: docs/verification/v0.142.3-steamdeck-confirm-audio-continuation/review.json sha256:a059520f6ce0c394c3425355c711b641b4b23f9321e11c7d384317e7f814798c; exact28 inputs sha256:39fe40240f0475e471a52772060899d3e329e4d54d6b2bb6679e76dc745ee9a4. Only game/app.mjs changes, coordinating native and Gamepad Confirm ownership and opt-in local diagnostics; all audio implementation, eight existing procedural recipes, routing and payloads remain unchanged. Exact v0.142.2 production99/audio51 predecessor fixture sha256:528361f4e7823a23b02b261ca1de0c9b3157d1a17cbba643e4ff7e67073bc0a7 is retained. Final qualification, frozen/public, listening and physical Steam Deck acceptance remain separate.",
             "Scoped PR #770 Audio playback correction continuation: docs/verification/audio-style-menu-correction-2026-09-28/review.json sha256:62c1dac1be4286acdb8201aab99b6d3c5e2e2b282e1c88cb34d88af527172e09; exact28 inputs sha256:d9650ffde4c938064703de7c1e8ec987ac1efc1b6470ebcad4ca4ab459a32018. Only soundtrack-player.mjs and soundtrack-panel.mjs changed: saved listening preferences are isolated from unsaved Music Studio drafts, newer transport intent wins delayed playback, identity-owned catalogue retry survives close, and queue-capacity copy is corrected. The associated test-evidence repair pins the exact accepted-main production97 predecessor oracle. Exact production98/audio50 predecessor fixture sha256:e397af798928a72502c970276fe212eaad8d2a4889f5afe02587559244496714 is bound separately. Eight existing procedural recipes, routing and payloads remain unchanged; production generation, hosted, frozen/public, listening and physical-device acceptance remain separate.",
             "Scoped v0.142.1 Audio menu and style taxonomy continuation: docs/verification/audio-style-menu-2026-09-28/review.json sha256:bc87031d46ded1ace2cc62c6ca87e2ce90ccbb043db7c5fdb653d262c3b94f49; exact28 inputs sha256:9f0bf41c491a44b4ac585975fd444f7e2e5822534914f36b0213157861173344. Audio settings expose transport and broad style selection, automatically mix matching archive and local music, separate Synth/Electronic, combine UA/Ukrainian and require exact Cyrillic ФПВ. The dependency closure binds the quick controls and taxonomy modules. Eight existing procedural recipes and payloads remain unchanged; hosted, frozen/public, listening and physical-device acceptance remain separate.",
             "Scoped player-readiness17 ownership source continuation: docs/verification/player-readiness17-audio-continuation-2026-09-28/review.json sha256:0584016a71b220780cc8912666638c468550c7167c2c1084b28b7952f27fa608; exact26 inputs sha256:124a7d186850bd1175bfc45bafba2f19912c89bcb271b5a0c2773e9ad5441b34. Existing eight recipes, routing and payloads unchanged; theme96/audio48 and all predecessors retained. Append-only production and all hosted/frozen/public/listening/device/human acceptance remain separate.",
@@ -83721,7 +83048,8 @@
             "v0.141.0 managed-media continuation: docs/verification/v0.141.0-managed-media-audio-continuation/review.json sha256:16f3eb26f28eae82f6529c8a872438c216a05d7a905e0fee0b3d6b0e9601e998; twenty-four ordered audio inputs sha256:77370fe6fc7a8d376865b05d8ba2020b8683b3922c20cc3dfad260d0a0251f79. Only managed-media-store.mjs and media-storage-record.mjs changed after the prior exact review, adding bounded cross-domain byte accounting and exact reviewed still-byte detachment while preserving audio routing, recipes, rows, blobs, playback and soundtrack bytes.",
             "v0.132.5 locale-refresh continuation: docs/verification/v0.132.5-presentation-continuation/review.json sha256:fbc818dcfbbfd2cf1985017417959c82741162842cd3c7293f5be67fc594ef35; twenty-four ordered audio inputs sha256:301e68a4898cf7d9140abee266195401a69cfca0db2301a12409ec252c882ec9. Only game/app.mjs changed after the prior exact review, asking the shared shell to refresh localized Home copy while preserving audio routing, recipes and bytes.",
             "Scoped v0.132.1 Steam Deck controller continuation: docs/verification/v0.132.1-steamdeck-audio-continuation/review.json sha256:b715c81fa1f86a562d5c195ffc025727fc009d1de6cfe03c403db75fdfbf8d70; twenty-five ordered audio inputs sha256:417ceb75d58709373e1abdb047c26224db06721bd58b3ff8302152c33d2f735a. Only game/app.mjs changed among those inputs, adding a controller Confirm lifecycle filter before menu dispatch while preserving audio routing and bytes.",
-            "Scoped gp4 restore audio software continuation: docs/verification/discovery-gp4-restore-audio-continuation-2026-09-29/review.json sha256:27c3663b72c1ccf1b78b2bf641952ff5d011e10520f0044d981f5c8166741b0d; exact50 ordered inputs sha256:94c62d025dd9a8764baec87514d25083e0026caa7ed9c9cf5f71497ef447e1be. Only the app Collection eligibility guard changes to exact recorded-level matching; administrative rejection, audio call sites, recipes, routing, media ownership and payloads are unchanged. Independent production102 oracle sha256:88f08a4ed55e2d7a26e491828d808d1a2c6784ab5e811acce7537009a68ad315 retains every predecessor. Gameplay restoration and frozen-browser qualification remain separate. The prior offline ownership and v0.131 English/Ukrainian reviews remain incorporated. All 8 selected roles retain the same procedural recipes; playback state, volume values, local-only selection, resumable download, shared-byte removal, rights, cancellation and imported-media preservation are unchanged. No recording, composition, musical suitability, Ukrainian authenticity, full-track listening, physical-device, frozen-build or public game approval. Historical reviews and original payloads remain immutable; any audio dependency or review-byte change reopens this group."
+            "The prior offline ownership and v0.131 English/Ukrainian reviews remain incorporated. All 8 selected roles retain the same procedural recipes; playback state, volume values, local-only selection, resumable download, shared-byte removal, rights, cancellation and imported-media preservation are unchanged.",
+            "No recording, composition, musical suitability, Ukrainian authenticity, full-track listening, physical-device, frozen-build or public game approval. Historical reviews and original payloads remain immutable; any audio dependency or review-byte change reopens this group."
           ],
           "stage": "reviewed"
         },
@@ -83745,12 +83073,11 @@
             "revision": 53
           },
           "prompt": 225,
-          "source": 484
+          "source": 485
         },
         "quality": {
           "evidence": [
-            "Scoped discovery audio software continuation: docs/verification/discovery-audio-continuation-2026-09-29/review.json sha256:edeecf9fbafdabd7e4fdb653be58baf8deaa3483a6ee426552d611d2fff768ea; exact50 ordered inputs sha256:a7780c46c20f2603e41f8d7c728d3d13c3efdb6e799a3e5d429ae236bf15d20c. Accepted campaign fallback, explicit exact-original recording export, shared reward master/gain ownership and isolated preview preferences retain the eight existing recipe identities and original payloads. The 22 added behavior and media-validation inputs reopen this group when changed. Exact production100/audio52 predecessor oracle sha256:cf19ad831cc0347f4f84c2ac310a1168354858e75f40991b35ffec18ea58d0b7 is retained. This is software continuation only; composition, listening, physical-device, frozen/public and release acceptance remain separate.",
-            "Scoped v0.142.3 Steam Deck Confirm audio continuation: docs/verification/v0.142.3-steamdeck-confirm-audio-continuation/review.json sha256:a059520f6ce0c394c3425355c711b641b4b23f9321e11c7d384317e7f814798c; exact28 inputs sha256:39fe40240f0475e471a52772060899d3e329e4d54d6b2bb6679e76dc745ee9a4. Only game/app.mjs changes, coordinating native and Gamepad Confirm ownership and opt-in local diagnostics; all audio implementation, eight existing procedural recipes, routing and payloads remain unchanged. Exact v0.142.2 production99/audio51 predecessor fixture sha256:528361f4e7823a23b02b261ca1de0c9b3157d1a17cbba643e4ff7e67073bc0a7 is retained. Final qualification, frozen/public, listening and physical Steam Deck acceptance remain separate.",
+            "Merged main/candidate software continuation: docs/verification/discovery-main321-reconciliation/review.json sha256:f2b3a2724cf48455dbe98d5ca12a2b081ef1f982531e91838c0291a64bbed976. Exact50-source approval only; historical branch lineages and runtime pins remain separate. No listening, device, frozen/public approval.\nScoped v0.142.4 mission-selector audio continuation: docs/verification/v0.142.4-selector-audio-continuation/review.json sha256:f2cf0cc93f8de8e959eabf6e6313a0af306dfae87e2cb663bfe7bef805df6fe6; exact28 inputs sha256:fd3d7e347bc3a6e36bd884b508af8bbd8492cc3a4dac19bb745664a7fe90adc6. Only game/app.mjs changes, adding clear-star metadata and mission-card progress adapters; audio implementation, eight procedural recipes, routing and payloads remain unchanged. Exact published production100/audio52 predecessor fixture sha256:db9cc258d79aaa0caaf587fa3c73be5fcc55cea5f6129524c59255f04f3bbeb0 is retained. Selector/save compatibility, final qualification, frozen/public, listening and physical-device acceptance remain separate.\nScoped v0.142.3 Steam Deck Confirm audio continuation: docs/verification/v0.142.3-steamdeck-confirm-audio-continuation/review.json sha256:a059520f6ce0c394c3425355c711b641b4b23f9321e11c7d384317e7f814798c; exact28 inputs sha256:39fe40240f0475e471a52772060899d3e329e4d54d6b2bb6679e76dc745ee9a4. Only game/app.mjs changes, coordinating native and Gamepad Confirm ownership and opt-in local diagnostics; all audio implementation, eight existing procedural recipes, routing and payloads remain unchanged. Exact v0.142.2 production99/audio51 predecessor fixture sha256:528361f4e7823a23b02b261ca1de0c9b3157d1a17cbba643e4ff7e67073bc0a7 is retained. Final qualification, frozen/public, listening and physical Steam Deck acceptance remain separate.",
             "Scoped PR #770 Audio playback correction continuation: docs/verification/audio-style-menu-correction-2026-09-28/review.json sha256:62c1dac1be4286acdb8201aab99b6d3c5e2e2b282e1c88cb34d88af527172e09; exact28 inputs sha256:d9650ffde4c938064703de7c1e8ec987ac1efc1b6470ebcad4ca4ab459a32018. Only soundtrack-player.mjs and soundtrack-panel.mjs changed: saved listening preferences are isolated from unsaved Music Studio drafts, newer transport intent wins delayed playback, identity-owned catalogue retry survives close, and queue-capacity copy is corrected. The associated test-evidence repair pins the exact accepted-main production97 predecessor oracle. Exact production98/audio50 predecessor fixture sha256:e397af798928a72502c970276fe212eaad8d2a4889f5afe02587559244496714 is bound separately. Eight existing procedural recipes, routing and payloads remain unchanged; production generation, hosted, frozen/public, listening and physical-device acceptance remain separate.",
             "Scoped v0.142.1 Audio menu and style taxonomy continuation: docs/verification/audio-style-menu-2026-09-28/review.json sha256:bc87031d46ded1ace2cc62c6ca87e2ce90ccbb043db7c5fdb653d262c3b94f49; exact28 inputs sha256:9f0bf41c491a44b4ac585975fd444f7e2e5822534914f36b0213157861173344. Audio settings expose transport and broad style selection, automatically mix matching archive and local music, separate Synth/Electronic, combine UA/Ukrainian and require exact Cyrillic ФПВ. The dependency closure binds the quick controls and taxonomy modules. Eight existing procedural recipes and payloads remain unchanged; hosted, frozen/public, listening and physical-device acceptance remain separate.",
             "Scoped player-readiness17 ownership source continuation: docs/verification/player-readiness17-audio-continuation-2026-09-28/review.json sha256:0584016a71b220780cc8912666638c468550c7167c2c1084b28b7952f27fa608; exact26 inputs sha256:124a7d186850bd1175bfc45bafba2f19912c89bcb271b5a0c2773e9ad5441b34. Existing eight recipes, routing and payloads unchanged; theme96/audio48 and all predecessors retained. Append-only production and all hosted/frozen/public/listening/device/human acceptance remain separate.",
@@ -83764,7 +83091,8 @@
             "v0.141.0 managed-media continuation: docs/verification/v0.141.0-managed-media-audio-continuation/review.json sha256:16f3eb26f28eae82f6529c8a872438c216a05d7a905e0fee0b3d6b0e9601e998; twenty-four ordered audio inputs sha256:77370fe6fc7a8d376865b05d8ba2020b8683b3922c20cc3dfad260d0a0251f79. Only managed-media-store.mjs and media-storage-record.mjs changed after the prior exact review, adding bounded cross-domain byte accounting and exact reviewed still-byte detachment while preserving audio routing, recipes, rows, blobs, playback and soundtrack bytes.",
             "v0.132.5 locale-refresh continuation: docs/verification/v0.132.5-presentation-continuation/review.json sha256:fbc818dcfbbfd2cf1985017417959c82741162842cd3c7293f5be67fc594ef35; twenty-four ordered audio inputs sha256:301e68a4898cf7d9140abee266195401a69cfca0db2301a12409ec252c882ec9. Only game/app.mjs changed after the prior exact review, asking the shared shell to refresh localized Home copy while preserving audio routing, recipes and bytes.",
             "Scoped v0.132.1 Steam Deck controller continuation: docs/verification/v0.132.1-steamdeck-audio-continuation/review.json sha256:b715c81fa1f86a562d5c195ffc025727fc009d1de6cfe03c403db75fdfbf8d70; twenty-five ordered audio inputs sha256:417ceb75d58709373e1abdb047c26224db06721bd58b3ff8302152c33d2f735a. Only game/app.mjs changed among those inputs, adding a controller Confirm lifecycle filter before menu dispatch while preserving audio routing and bytes.",
-            "Scoped gp4 restore audio software continuation: docs/verification/discovery-gp4-restore-audio-continuation-2026-09-29/review.json sha256:27c3663b72c1ccf1b78b2bf641952ff5d011e10520f0044d981f5c8166741b0d; exact50 ordered inputs sha256:94c62d025dd9a8764baec87514d25083e0026caa7ed9c9cf5f71497ef447e1be. Only the app Collection eligibility guard changes to exact recorded-level matching; administrative rejection, audio call sites, recipes, routing, media ownership and payloads are unchanged. Independent production102 oracle sha256:88f08a4ed55e2d7a26e491828d808d1a2c6784ab5e811acce7537009a68ad315 retains every predecessor. Gameplay restoration and frozen-browser qualification remain separate. The prior offline ownership and v0.131 English/Ukrainian reviews remain incorporated. All 8 selected roles retain the same procedural recipes; playback state, volume values, local-only selection, resumable download, shared-byte removal, rights, cancellation and imported-media preservation are unchanged. No recording, composition, musical suitability, Ukrainian authenticity, full-track listening, physical-device, frozen-build or public game approval. Historical reviews and original payloads remain immutable; any audio dependency or review-byte change reopens this group."
+            "The prior offline ownership and v0.131 English/Ukrainian reviews remain incorporated. All 8 selected roles retain the same procedural recipes; playback state, volume values, local-only selection, resumable download, shared-byte removal, rights, cancellation and imported-media preservation are unchanged.",
+            "No recording, composition, musical suitability, Ukrainian authenticity, full-track listening, physical-device, frozen-build or public game approval. Historical reviews and original payloads remain immutable; any audio dependency or review-byte change reopens this group."
           ],
           "stage": "reviewed"
         },
@@ -83788,12 +83116,11 @@
             "revision": 53
           },
           "prompt": 323,
-          "source": 484
+          "source": 485
         },
         "quality": {
           "evidence": [
-            "Scoped discovery audio software continuation: docs/verification/discovery-audio-continuation-2026-09-29/review.json sha256:edeecf9fbafdabd7e4fdb653be58baf8deaa3483a6ee426552d611d2fff768ea; exact50 ordered inputs sha256:a7780c46c20f2603e41f8d7c728d3d13c3efdb6e799a3e5d429ae236bf15d20c. Accepted campaign fallback, explicit exact-original recording export, shared reward master/gain ownership and isolated preview preferences retain the eight existing recipe identities and original payloads. The 22 added behavior and media-validation inputs reopen this group when changed. Exact production100/audio52 predecessor oracle sha256:cf19ad831cc0347f4f84c2ac310a1168354858e75f40991b35ffec18ea58d0b7 is retained. This is software continuation only; composition, listening, physical-device, frozen/public and release acceptance remain separate.",
-            "Scoped v0.142.3 Steam Deck Confirm audio continuation: docs/verification/v0.142.3-steamdeck-confirm-audio-continuation/review.json sha256:a059520f6ce0c394c3425355c711b641b4b23f9321e11c7d384317e7f814798c; exact28 inputs sha256:39fe40240f0475e471a52772060899d3e329e4d54d6b2bb6679e76dc745ee9a4. Only game/app.mjs changes, coordinating native and Gamepad Confirm ownership and opt-in local diagnostics; all audio implementation, eight existing procedural recipes, routing and payloads remain unchanged. Exact v0.142.2 production99/audio51 predecessor fixture sha256:528361f4e7823a23b02b261ca1de0c9b3157d1a17cbba643e4ff7e67073bc0a7 is retained. Final qualification, frozen/public, listening and physical Steam Deck acceptance remain separate.",
+            "Merged main/candidate software continuation: docs/verification/discovery-main321-reconciliation/review.json sha256:f2b3a2724cf48455dbe98d5ca12a2b081ef1f982531e91838c0291a64bbed976. Exact50-source approval only; historical branch lineages and runtime pins remain separate. No listening, device, frozen/public approval.\nScoped v0.142.4 mission-selector audio continuation: docs/verification/v0.142.4-selector-audio-continuation/review.json sha256:f2cf0cc93f8de8e959eabf6e6313a0af306dfae87e2cb663bfe7bef805df6fe6; exact28 inputs sha256:fd3d7e347bc3a6e36bd884b508af8bbd8492cc3a4dac19bb745664a7fe90adc6. Only game/app.mjs changes, adding clear-star metadata and mission-card progress adapters; audio implementation, eight procedural recipes, routing and payloads remain unchanged. Exact published production100/audio52 predecessor fixture sha256:db9cc258d79aaa0caaf587fa3c73be5fcc55cea5f6129524c59255f04f3bbeb0 is retained. Selector/save compatibility, final qualification, frozen/public, listening and physical-device acceptance remain separate.\nScoped v0.142.3 Steam Deck Confirm audio continuation: docs/verification/v0.142.3-steamdeck-confirm-audio-continuation/review.json sha256:a059520f6ce0c394c3425355c711b641b4b23f9321e11c7d384317e7f814798c; exact28 inputs sha256:39fe40240f0475e471a52772060899d3e329e4d54d6b2bb6679e76dc745ee9a4. Only game/app.mjs changes, coordinating native and Gamepad Confirm ownership and opt-in local diagnostics; all audio implementation, eight existing procedural recipes, routing and payloads remain unchanged. Exact v0.142.2 production99/audio51 predecessor fixture sha256:528361f4e7823a23b02b261ca1de0c9b3157d1a17cbba643e4ff7e67073bc0a7 is retained. Final qualification, frozen/public, listening and physical Steam Deck acceptance remain separate.",
             "Scoped PR #770 Audio playback correction continuation: docs/verification/audio-style-menu-correction-2026-09-28/review.json sha256:62c1dac1be4286acdb8201aab99b6d3c5e2e2b282e1c88cb34d88af527172e09; exact28 inputs sha256:d9650ffde4c938064703de7c1e8ec987ac1efc1b6470ebcad4ca4ab459a32018. Only soundtrack-player.mjs and soundtrack-panel.mjs changed: saved listening preferences are isolated from unsaved Music Studio drafts, newer transport intent wins delayed playback, identity-owned catalogue retry survives close, and queue-capacity copy is corrected. The associated test-evidence repair pins the exact accepted-main production97 predecessor oracle. Exact production98/audio50 predecessor fixture sha256:e397af798928a72502c970276fe212eaad8d2a4889f5afe02587559244496714 is bound separately. Eight existing procedural recipes, routing and payloads remain unchanged; production generation, hosted, frozen/public, listening and physical-device acceptance remain separate.",
             "Scoped v0.142.1 Audio menu and style taxonomy continuation: docs/verification/audio-style-menu-2026-09-28/review.json sha256:bc87031d46ded1ace2cc62c6ca87e2ce90ccbb043db7c5fdb653d262c3b94f49; exact28 inputs sha256:9f0bf41c491a44b4ac585975fd444f7e2e5822534914f36b0213157861173344. Audio settings expose transport and broad style selection, automatically mix matching archive and local music, separate Synth/Electronic, combine UA/Ukrainian and require exact Cyrillic ФПВ. The dependency closure binds the quick controls and taxonomy modules. Eight existing procedural recipes and payloads remain unchanged; hosted, frozen/public, listening and physical-device acceptance remain separate.",
             "Scoped player-readiness17 ownership source continuation: docs/verification/player-readiness17-audio-continuation-2026-09-28/review.json sha256:0584016a71b220780cc8912666638c468550c7167c2c1084b28b7952f27fa608; exact26 inputs sha256:124a7d186850bd1175bfc45bafba2f19912c89bcb271b5a0c2773e9ad5441b34. Existing eight recipes, routing and payloads unchanged; theme96/audio48 and all predecessors retained. Append-only production and all hosted/frozen/public/listening/device/human acceptance remain separate.",
@@ -83807,7 +83134,8 @@
             "v0.141.0 managed-media continuation: docs/verification/v0.141.0-managed-media-audio-continuation/review.json sha256:16f3eb26f28eae82f6529c8a872438c216a05d7a905e0fee0b3d6b0e9601e998; twenty-four ordered audio inputs sha256:77370fe6fc7a8d376865b05d8ba2020b8683b3922c20cc3dfad260d0a0251f79. Only managed-media-store.mjs and media-storage-record.mjs changed after the prior exact review, adding bounded cross-domain byte accounting and exact reviewed still-byte detachment while preserving audio routing, recipes, rows, blobs, playback and soundtrack bytes.",
             "v0.132.5 locale-refresh continuation: docs/verification/v0.132.5-presentation-continuation/review.json sha256:fbc818dcfbbfd2cf1985017417959c82741162842cd3c7293f5be67fc594ef35; twenty-four ordered audio inputs sha256:301e68a4898cf7d9140abee266195401a69cfca0db2301a12409ec252c882ec9. Only game/app.mjs changed after the prior exact review, asking the shared shell to refresh localized Home copy while preserving audio routing, recipes and bytes.",
             "Scoped v0.132.1 Steam Deck controller continuation: docs/verification/v0.132.1-steamdeck-audio-continuation/review.json sha256:b715c81fa1f86a562d5c195ffc025727fc009d1de6cfe03c403db75fdfbf8d70; twenty-five ordered audio inputs sha256:417ceb75d58709373e1abdb047c26224db06721bd58b3ff8302152c33d2f735a. Only game/app.mjs changed among those inputs, adding a controller Confirm lifecycle filter before menu dispatch while preserving audio routing and bytes.",
-            "Scoped gp4 restore audio software continuation: docs/verification/discovery-gp4-restore-audio-continuation-2026-09-29/review.json sha256:27c3663b72c1ccf1b78b2bf641952ff5d011e10520f0044d981f5c8166741b0d; exact50 ordered inputs sha256:94c62d025dd9a8764baec87514d25083e0026caa7ed9c9cf5f71497ef447e1be. Only the app Collection eligibility guard changes to exact recorded-level matching; administrative rejection, audio call sites, recipes, routing, media ownership and payloads are unchanged. Independent production102 oracle sha256:88f08a4ed55e2d7a26e491828d808d1a2c6784ab5e811acce7537009a68ad315 retains every predecessor. Gameplay restoration and frozen-browser qualification remain separate. The prior offline ownership and v0.131 English/Ukrainian reviews remain incorporated. All 8 selected roles retain the same procedural recipes; playback state, volume values, local-only selection, resumable download, shared-byte removal, rights, cancellation and imported-media preservation are unchanged. No recording, composition, musical suitability, Ukrainian authenticity, full-track listening, physical-device, frozen-build or public game approval. Historical reviews and original payloads remain immutable; any audio dependency or review-byte change reopens this group."
+            "The prior offline ownership and v0.131 English/Ukrainian reviews remain incorporated. All 8 selected roles retain the same procedural recipes; playback state, volume values, local-only selection, resumable download, shared-byte removal, rights, cancellation and imported-media preservation are unchanged.",
+            "No recording, composition, musical suitability, Ukrainian authenticity, full-track listening, physical-device, frozen-build or public game approval. Historical reviews and original payloads remain immutable; any audio dependency or review-byte change reopens this group."
           ],
           "stage": "reviewed"
         },
@@ -85074,7 +84402,7 @@
     ],
     "format": "revealline-theme-bundle.v1",
     "id": "field-kit",
-    "revision": 103,
+    "revision": 102,
     "selection": {
       "base": {
         "id": "base",
@@ -85083,7 +84411,7 @@
       "collection": null,
       "theme": {
         "id": "fpv",
-        "revision": 103
+        "revision": 102
       }
     },
     "slots": [
@@ -120012,102 +119340,6 @@
           "audio.victory": {
             "id": "audio.victory.field-kit",
             "revision": 53
-          },
-          "ui.button.chip": {
-            "id": "ui.button.chip.field-kit",
-            "revision": 23
-          },
-          "ui.button.danger": {
-            "id": "ui.button.danger.field-kit",
-            "revision": 23
-          },
-          "ui.button.icon": {
-            "id": "ui.button.icon.field-kit",
-            "revision": 23
-          },
-          "ui.button.primary": {
-            "id": "ui.button.primary.field-kit",
-            "revision": 23
-          },
-          "ui.button.secondary": {
-            "id": "ui.button.secondary.field-kit",
-            "revision": 23
-          },
-          "ui.button.tab": {
-            "id": "ui.button.tab.field-kit",
-            "revision": 23
-          },
-          "ui.cursor": {
-            "id": "ui.cursor.field-kit",
-            "revision": 23
-          },
-          "ui.dialog": {
-            "id": "ui.dialog.field-kit",
-            "revision": 23
-          },
-          "ui.focus": {
-            "id": "ui.focus.field-kit",
-            "revision": 23
-          },
-          "ui.input.checkbox": {
-            "id": "ui.input.checkbox.field-kit",
-            "revision": 23
-          },
-          "ui.input.radio": {
-            "id": "ui.input.radio.field-kit",
-            "revision": 23
-          },
-          "ui.input.scrollbar": {
-            "id": "ui.input.scrollbar.field-kit",
-            "revision": 23
-          },
-          "ui.input.select": {
-            "id": "ui.input.select.field-kit",
-            "revision": 23
-          },
-          "ui.input.slider": {
-            "id": "ui.input.slider.field-kit",
-            "revision": 23
-          },
-          "ui.input.text": {
-            "id": "ui.input.text.field-kit",
-            "revision": 23
-          },
-          "ui.input.toggle": {
-            "id": "ui.input.toggle.field-kit",
-            "revision": 23
-          },
-          "ui.meter.ability": {
-            "id": "ui.meter.ability.field-kit",
-            "revision": 23
-          },
-          "ui.meter.coverage": {
-            "id": "ui.meter.coverage.field-kit",
-            "revision": 23
-          },
-          "ui.meter.progress": {
-            "id": "ui.meter.progress.field-kit",
-            "revision": 23
-          },
-          "ui.meter.time": {
-            "id": "ui.meter.time.field-kit",
-            "revision": 23
-          },
-          "ui.meter.volume": {
-            "id": "ui.meter.volume.field-kit",
-            "revision": 23
-          },
-          "ui.panel": {
-            "id": "ui.panel.field-kit",
-            "revision": 23
-          },
-          "ui.toast": {
-            "id": "ui.toast.field-kit",
-            "revision": 23
-          },
-          "ui.tooltip": {
-            "id": "ui.tooltip.field-kit",
-            "revision": 23
           }
         },
         "format": "revealline-presentation-theme.v1",
@@ -120118,115 +119350,6 @@
           "revision": 100
         },
         "revision": 101,
-        "tokens": {}
-      },
-      {
-        "bindings": {
-          "ui.button.chip": {
-            "id": "ui.button.chip.field-kit",
-            "revision": 24
-          },
-          "ui.button.danger": {
-            "id": "ui.button.danger.field-kit",
-            "revision": 24
-          },
-          "ui.button.icon": {
-            "id": "ui.button.icon.field-kit",
-            "revision": 24
-          },
-          "ui.button.primary": {
-            "id": "ui.button.primary.field-kit",
-            "revision": 24
-          },
-          "ui.button.secondary": {
-            "id": "ui.button.secondary.field-kit",
-            "revision": 24
-          },
-          "ui.button.tab": {
-            "id": "ui.button.tab.field-kit",
-            "revision": 24
-          },
-          "ui.cursor": {
-            "id": "ui.cursor.field-kit",
-            "revision": 24
-          },
-          "ui.dialog": {
-            "id": "ui.dialog.field-kit",
-            "revision": 24
-          },
-          "ui.focus": {
-            "id": "ui.focus.field-kit",
-            "revision": 24
-          },
-          "ui.input.checkbox": {
-            "id": "ui.input.checkbox.field-kit",
-            "revision": 24
-          },
-          "ui.input.radio": {
-            "id": "ui.input.radio.field-kit",
-            "revision": 24
-          },
-          "ui.input.scrollbar": {
-            "id": "ui.input.scrollbar.field-kit",
-            "revision": 24
-          },
-          "ui.input.select": {
-            "id": "ui.input.select.field-kit",
-            "revision": 24
-          },
-          "ui.input.slider": {
-            "id": "ui.input.slider.field-kit",
-            "revision": 24
-          },
-          "ui.input.text": {
-            "id": "ui.input.text.field-kit",
-            "revision": 24
-          },
-          "ui.input.toggle": {
-            "id": "ui.input.toggle.field-kit",
-            "revision": 24
-          },
-          "ui.meter.ability": {
-            "id": "ui.meter.ability.field-kit",
-            "revision": 24
-          },
-          "ui.meter.coverage": {
-            "id": "ui.meter.coverage.field-kit",
-            "revision": 24
-          },
-          "ui.meter.progress": {
-            "id": "ui.meter.progress.field-kit",
-            "revision": 24
-          },
-          "ui.meter.time": {
-            "id": "ui.meter.time.field-kit",
-            "revision": 24
-          },
-          "ui.meter.volume": {
-            "id": "ui.meter.volume.field-kit",
-            "revision": 24
-          },
-          "ui.panel": {
-            "id": "ui.panel.field-kit",
-            "revision": 24
-          },
-          "ui.toast": {
-            "id": "ui.toast.field-kit",
-            "revision": 24
-          },
-          "ui.tooltip": {
-            "id": "ui.tooltip.field-kit",
-            "revision": 24
-          }
-        },
-        "format": "revealline-presentation-theme.v1",
-        "id": "fpv",
-        "name": "FPV Field Kit",
-        "parent": {
-          "id": "fpv",
-          "revision": 101
-        },
-        "revision": 102,
         "tokens": {}
       },
       {
@@ -120262,6 +119385,102 @@
           "audio.victory": {
             "id": "audio.victory.field-kit",
             "revision": 54
+          },
+          "ui.button.chip": {
+            "id": "ui.button.chip.field-kit",
+            "revision": 23
+          },
+          "ui.button.danger": {
+            "id": "ui.button.danger.field-kit",
+            "revision": 23
+          },
+          "ui.button.icon": {
+            "id": "ui.button.icon.field-kit",
+            "revision": 23
+          },
+          "ui.button.primary": {
+            "id": "ui.button.primary.field-kit",
+            "revision": 23
+          },
+          "ui.button.secondary": {
+            "id": "ui.button.secondary.field-kit",
+            "revision": 23
+          },
+          "ui.button.tab": {
+            "id": "ui.button.tab.field-kit",
+            "revision": 23
+          },
+          "ui.cursor": {
+            "id": "ui.cursor.field-kit",
+            "revision": 23
+          },
+          "ui.dialog": {
+            "id": "ui.dialog.field-kit",
+            "revision": 23
+          },
+          "ui.focus": {
+            "id": "ui.focus.field-kit",
+            "revision": 23
+          },
+          "ui.input.checkbox": {
+            "id": "ui.input.checkbox.field-kit",
+            "revision": 23
+          },
+          "ui.input.radio": {
+            "id": "ui.input.radio.field-kit",
+            "revision": 23
+          },
+          "ui.input.scrollbar": {
+            "id": "ui.input.scrollbar.field-kit",
+            "revision": 23
+          },
+          "ui.input.select": {
+            "id": "ui.input.select.field-kit",
+            "revision": 23
+          },
+          "ui.input.slider": {
+            "id": "ui.input.slider.field-kit",
+            "revision": 23
+          },
+          "ui.input.text": {
+            "id": "ui.input.text.field-kit",
+            "revision": 23
+          },
+          "ui.input.toggle": {
+            "id": "ui.input.toggle.field-kit",
+            "revision": 23
+          },
+          "ui.meter.ability": {
+            "id": "ui.meter.ability.field-kit",
+            "revision": 23
+          },
+          "ui.meter.coverage": {
+            "id": "ui.meter.coverage.field-kit",
+            "revision": 23
+          },
+          "ui.meter.progress": {
+            "id": "ui.meter.progress.field-kit",
+            "revision": 23
+          },
+          "ui.meter.time": {
+            "id": "ui.meter.time.field-kit",
+            "revision": 23
+          },
+          "ui.meter.volume": {
+            "id": "ui.meter.volume.field-kit",
+            "revision": 23
+          },
+          "ui.panel": {
+            "id": "ui.panel.field-kit",
+            "revision": 23
+          },
+          "ui.toast": {
+            "id": "ui.toast.field-kit",
+            "revision": 23
+          },
+          "ui.tooltip": {
+            "id": "ui.tooltip.field-kit",
+            "revision": 23
           }
         },
         "format": "revealline-presentation-theme.v1",
@@ -120269,9 +119488,9 @@
         "name": "FPV Field Kit",
         "parent": {
           "id": "fpv",
-          "revision": 102
+          "revision": 101
         },
-        "revision": 103,
+        "revision": 102,
         "tokens": {}
       }
     ]
@@ -120729,8 +119948,8 @@
     "game/app.mjs; game/couch/couch-music-host.mjs; game/opening-soundtrack.mjs; game/ui/audio.mjs; game/ui/published-audio.mjs; game/ui/soundtrack-player.mjs; game/ui/quick-music-controls.mjs; game/ui/audio-master.mjs; game/soundtrack.mjs; game/soundtrack-style-taxonomy.mjs; game/soundtrack-rights.mjs; game/soundtrack-bundle.mjs; game/soundtrack-share.mjs; game/soundtrack-source.mjs; game/soundtrack-bundled.mjs; game/ui/soundtrack-panel.mjs; game/ui/soundtrack-panel.css; game/soundtrack-albums.mjs; game/soundtrack-portable.mjs; game/content/soundtrack-catalogue.mjs; game/online-soundtrack-catalogue.mjs; game/official-downloads.mjs; game/soundtrack-download-volumes.mjs; game/installed-app.mjs; game/managed-media-store.mjs; game/media-storage-record.mjs; game/soundtrack-private-intake.mjs; game/ui/soundtrack-error-copy.mjs sha256:39fe40240f0475e471a52772060899d3e329e4d54d6b2bb6679e76dc745ee9a4",
     "game/app.mjs; game/couch/couch-music-host.mjs; game/opening-soundtrack.mjs; game/ui/audio.mjs; game/ui/published-audio.mjs; game/ui/soundtrack-player.mjs; game/ui/quick-music-controls.mjs; game/ui/audio-master.mjs; game/soundtrack.mjs; game/soundtrack-style-taxonomy.mjs; game/soundtrack-rights.mjs; game/soundtrack-bundle.mjs; game/soundtrack-share.mjs; game/soundtrack-source.mjs; game/soundtrack-bundled.mjs; game/ui/soundtrack-panel.mjs; game/ui/soundtrack-panel.css; game/soundtrack-albums.mjs; game/soundtrack-portable.mjs; game/content/soundtrack-catalogue.mjs; game/online-soundtrack-catalogue.mjs; game/official-downloads.mjs; game/soundtrack-download-volumes.mjs; game/installed-app.mjs; game/managed-media-store.mjs; game/media-storage-record.mjs; game/soundtrack-private-intake.mjs; game/ui/soundtrack-error-copy.mjs sha256:9f0bf41c491a44b4ac585975fd444f7e2e5822534914f36b0213157861173344",
     "game/app.mjs; game/couch/couch-music-host.mjs; game/opening-soundtrack.mjs; game/ui/audio.mjs; game/ui/published-audio.mjs; game/ui/soundtrack-player.mjs; game/ui/quick-music-controls.mjs; game/ui/audio-master.mjs; game/soundtrack.mjs; game/soundtrack-style-taxonomy.mjs; game/soundtrack-rights.mjs; game/soundtrack-bundle.mjs; game/soundtrack-share.mjs; game/soundtrack-source.mjs; game/soundtrack-bundled.mjs; game/ui/soundtrack-panel.mjs; game/ui/soundtrack-panel.css; game/soundtrack-albums.mjs; game/soundtrack-portable.mjs; game/content/soundtrack-catalogue.mjs; game/online-soundtrack-catalogue.mjs; game/official-downloads.mjs; game/soundtrack-download-volumes.mjs; game/installed-app.mjs; game/managed-media-store.mjs; game/media-storage-record.mjs; game/soundtrack-private-intake.mjs; game/ui/soundtrack-error-copy.mjs sha256:d9650ffde4c938064703de7c1e8ec987ac1efc1b6470ebcad4ca4ab459a32018",
-    "game/app.mjs; game/couch/couch-music-host.mjs; game/opening-soundtrack.mjs; game/ui/audio.mjs; game/ui/published-audio.mjs; game/ui/soundtrack-player.mjs; game/ui/quick-music-controls.mjs; game/ui/audio-master.mjs; game/soundtrack.mjs; game/soundtrack-style-taxonomy.mjs; game/soundtrack-rights.mjs; game/soundtrack-bundle.mjs; game/soundtrack-share.mjs; game/soundtrack-source.mjs; game/soundtrack-bundled.mjs; game/ui/soundtrack-panel.mjs; game/ui/soundtrack-panel.css; game/soundtrack-albums.mjs; game/soundtrack-portable.mjs; game/content/soundtrack-catalogue.mjs; game/online-soundtrack-catalogue.mjs; game/official-downloads.mjs; game/soundtrack-download-volumes.mjs; game/installed-app.mjs; game/managed-media-store.mjs; game/media-storage-record.mjs; game/soundtrack-private-intake.mjs; game/ui/soundtrack-error-copy.mjs; game/journey/campaign-feedback.mjs; game/rewards/audio-original.mjs; game/rewards/media-format.mjs; game/ui/edition-solo.mjs; game/ui/edition-rewards.mjs; game/ui/reward-media.mjs; game/ui/reward-audio-group.mjs; game/rewards/audio-groups.mjs; game/studio-preview-session.mjs; game/audio-preferences.mjs; game/ui/story-dialog.mjs; game/ui/victory-story.mjs; game/ui/music.mjs; game/data-json.mjs; game/mp3.mjs; game/media-audio.mjs; game/video-poster.mjs; game/rewards/model.mjs; game/rewards/media.mjs; game/editions/assets.mjs; game/editions/model.mjs; game/editions/retained-presentation.mjs sha256:94c62d025dd9a8764baec87514d25083e0026caa7ed9c9cf5f71497ef447e1be",
-    "game/app.mjs; game/couch/couch-music-host.mjs; game/opening-soundtrack.mjs; game/ui/audio.mjs; game/ui/published-audio.mjs; game/ui/soundtrack-player.mjs; game/ui/quick-music-controls.mjs; game/ui/audio-master.mjs; game/soundtrack.mjs; game/soundtrack-style-taxonomy.mjs; game/soundtrack-rights.mjs; game/soundtrack-bundle.mjs; game/soundtrack-share.mjs; game/soundtrack-source.mjs; game/soundtrack-bundled.mjs; game/ui/soundtrack-panel.mjs; game/ui/soundtrack-panel.css; game/soundtrack-albums.mjs; game/soundtrack-portable.mjs; game/content/soundtrack-catalogue.mjs; game/online-soundtrack-catalogue.mjs; game/official-downloads.mjs; game/soundtrack-download-volumes.mjs; game/installed-app.mjs; game/managed-media-store.mjs; game/media-storage-record.mjs; game/soundtrack-private-intake.mjs; game/ui/soundtrack-error-copy.mjs; game/journey/campaign-feedback.mjs; game/rewards/audio-original.mjs; game/rewards/media-format.mjs; game/ui/edition-solo.mjs; game/ui/edition-rewards.mjs; game/ui/reward-media.mjs; game/ui/reward-audio-group.mjs; game/rewards/audio-groups.mjs; game/studio-preview-session.mjs; game/audio-preferences.mjs; game/ui/story-dialog.mjs; game/ui/victory-story.mjs; game/ui/music.mjs; game/data-json.mjs; game/mp3.mjs; game/media-audio.mjs; game/video-poster.mjs; game/rewards/model.mjs; game/rewards/media.mjs; game/editions/assets.mjs; game/editions/model.mjs; game/editions/retained-presentation.mjs sha256:a7780c46c20f2603e41f8d7c728d3d13c3efdb6e799a3e5d429ae236bf15d20c",
+    "game/app.mjs; game/couch/couch-music-host.mjs; game/opening-soundtrack.mjs; game/ui/audio.mjs; game/ui/published-audio.mjs; game/ui/soundtrack-player.mjs; game/ui/quick-music-controls.mjs; game/ui/audio-master.mjs; game/soundtrack.mjs; game/soundtrack-style-taxonomy.mjs; game/soundtrack-rights.mjs; game/soundtrack-bundle.mjs; game/soundtrack-share.mjs; game/soundtrack-source.mjs; game/soundtrack-bundled.mjs; game/ui/soundtrack-panel.mjs; game/ui/soundtrack-panel.css; game/soundtrack-albums.mjs; game/soundtrack-portable.mjs; game/content/soundtrack-catalogue.mjs; game/online-soundtrack-catalogue.mjs; game/official-downloads.mjs; game/soundtrack-download-volumes.mjs; game/installed-app.mjs; game/managed-media-store.mjs; game/media-storage-record.mjs; game/soundtrack-private-intake.mjs; game/ui/soundtrack-error-copy.mjs sha256:fd3d7e347bc3a6e36bd884b508af8bbd8492cc3a4dac19bb745664a7fe90adc6",
+    "game/app.mjs; game/couch/couch-music-host.mjs; game/opening-soundtrack.mjs; game/ui/audio.mjs; game/ui/published-audio.mjs; game/ui/soundtrack-player.mjs; game/ui/quick-music-controls.mjs; game/ui/audio-master.mjs; game/soundtrack.mjs; game/soundtrack-style-taxonomy.mjs; game/soundtrack-rights.mjs; game/soundtrack-bundle.mjs; game/soundtrack-share.mjs; game/soundtrack-source.mjs; game/soundtrack-bundled.mjs; game/ui/soundtrack-panel.mjs; game/ui/soundtrack-panel.css; game/soundtrack-albums.mjs; game/soundtrack-portable.mjs; game/content/soundtrack-catalogue.mjs; game/online-soundtrack-catalogue.mjs; game/official-downloads.mjs; game/soundtrack-download-volumes.mjs; game/installed-app.mjs; game/managed-media-store.mjs; game/media-storage-record.mjs; game/soundtrack-private-intake.mjs; game/ui/soundtrack-error-copy.mjs; game/journey/campaign-feedback.mjs; game/rewards/audio-original.mjs; game/rewards/media-format.mjs; game/ui/edition-solo.mjs; game/ui/edition-rewards.mjs; game/ui/reward-media.mjs; game/ui/reward-audio-group.mjs; game/rewards/audio-groups.mjs; game/studio-preview-session.mjs; game/audio-preferences.mjs; game/ui/story-dialog.mjs; game/ui/victory-story.mjs; game/ui/music.mjs; game/data-json.mjs; game/mp3.mjs; game/media-audio.mjs; game/video-poster.mjs; game/rewards/model.mjs; game/rewards/media.mjs; game/editions/assets.mjs; game/editions/model.mjs; game/editions/retained-presentation.mjs sha256:1776f2cd1edd169c15a7905650c8bc70be75f52773bb6d21abed3236b005c535",
     "game/couch/coop-view.mjs; game/couch/coop-actor-presentation.mjs; game/couch/coop-anchor-presentation.mjs; game/couch/coop-core-presentation.mjs; game/couch/coop-support-presentation.mjs; game/couch/coop-emitter-presentation.mjs; game/couch/coop-rescue-presentation.mjs; game/couch/coop-pilot-slots.mjs; game/couch/coop-enemy-slots.mjs; game/couch/coop-outcome-presentation.mjs; game/presentation/team-runtime-slots.mjs; game/ui/actor-presentation.mjs; game/presentation/catalog.mjs; game/couch/coop-actor-layout.mjs; game/couch/coop-terrain-trail.mjs; game/couch/coop-bonus-view.mjs; game/couch/candidate-team-pictures.mjs; game/content-design/material-markers.mjs; game/presentation/journey-actor-materials.mjs; authoring/motion-lab/render-character.mjs; game/ui/classic-view.mjs; game/ui/presentation-draw-image.mjs; game/ui/enemy-body-assets.mjs; game/ui/enemy-body-motion.mjs; authoring/motion-lab/animation.mjs; game/content-design/actor-marker.mjs; game/enemy-catalog.mjs sha256:0229867c05150db9c6a1ee1481ddf0bc346e7aa7fb5edac57e2fa24abe5fb140",
     "game/couch/coop-view.mjs; game/couch/coop-actor-presentation.mjs; game/couch/coop-anchor-presentation.mjs; game/couch/coop-core-presentation.mjs; game/couch/coop-support-presentation.mjs; game/couch/coop-emitter-presentation.mjs; game/couch/coop-rescue-presentation.mjs; game/couch/coop-pilot-slots.mjs; game/couch/coop-enemy-slots.mjs; game/couch/coop-outcome-presentation.mjs; game/presentation/team-runtime-slots.mjs; game/ui/actor-presentation.mjs; game/presentation/catalog.mjs; game/couch/coop-actor-layout.mjs; game/couch/coop-terrain-trail.mjs; game/couch/coop-bonus-view.mjs; game/couch/candidate-team-pictures.mjs; game/content-design/material-markers.mjs; game/presentation/journey-actor-materials.mjs; authoring/motion-lab/render-character.mjs; game/ui/classic-view.mjs; game/ui/presentation-draw-image.mjs; game/ui/enemy-body-assets.mjs; game/ui/enemy-body-motion.mjs; authoring/motion-lab/animation.mjs; game/content-design/actor-marker.mjs; game/enemy-catalog.mjs sha256:af9b229c4a1d0aa5a5c44516e8def34255f03d9e510f7e780e797b58f79d2210",
     "game/couch/coop-view.mjs; game/couch/coop-actor-presentation.mjs; game/couch/coop-anchor-presentation.mjs; game/couch/coop-core-presentation.mjs; game/couch/coop-support-presentation.mjs; game/couch/coop-emitter-presentation.mjs; game/couch/coop-rescue-presentation.mjs; game/couch/coop-pilot-slots.mjs; game/couch/coop-enemy-slots.mjs; game/couch/coop-outcome-presentation.mjs; game/presentation/team-runtime-slots.mjs; game/ui/actor-presentation.mjs; game/presentation/catalog.mjs; game/couch/coop-actor-layout.mjs; game/couch/coop-terrain-trail.mjs; game/couch/coop-bonus-view.mjs; game/couch/candidate-team-pictures.mjs; game/content-design/material-markers.mjs; game/presentation/journey-actor-materials.mjs; authoring/motion-lab/render-character.mjs; game/ui/classic-view.mjs; game/ui/presentation-draw-image.mjs; game/ui/enemy-body-assets.mjs; game/ui/enemy-body-motion.mjs; authoring/motion-lab/animation.mjs; game/content-design/actor-marker.mjs; game/enemy-catalog.mjs sha256:cc3009118ddd7525466a31b2282767655684e59c5dc9576e528a9b2053cb2170",

@@ -33,6 +33,36 @@ export const FIELD_KIT_RETAINED_RUNTIME_62 = Object.freeze({
   commit: '2e64c130d219dfece5134ba9119b85a5bf34904d',
   originalPath: 'game/presentation/compiled/runtime.json',
 });
+// Independent release/candidate lineages use exact runtime hashes. Numeric
+// theme revisions alone cannot distinguish their immutable promises.
+export const FIELD_KIT_RETAINED_DISCOVERY101 = Object.freeze({
+  path: "authoring/library/fpv-field-kit/retained/runtime.ebeb38f511c01b48daa84eb824e1521b43bddbfb0e16345c952b7b822b19db5b.json",
+  sha256: "ebeb38f511c01b48daa84eb824e1521b43bddbfb0e16345c952b7b822b19db5b",
+  bytes: 1005846,
+  commit: 'd541946f4e9d49e97cfcb2b0ce4054f3dac7d2cf',
+  originalPath: 'game/presentation/compiled/runtime.json',
+});
+export const FIELD_KIT_RETAINED_DISCOVERY102 = Object.freeze({
+  path: "authoring/library/fpv-field-kit/retained/runtime.911a111fb2cfd2fdbae9da95ae13602800cfdccb8a3b7e3545ffce61579b38f5.json",
+  sha256: "911a111fb2cfd2fdbae9da95ae13602800cfdccb8a3b7e3545ffce61579b38f5",
+  bytes: 1072278,
+  commit: 'db8e45e0e4dcfb9c57a4d942c424ae04ee147b16',
+  originalPath: 'game/presentation/compiled/runtime.json',
+});
+export const FIELD_KIT_RETAINED_DISCOVERY103 = Object.freeze({
+  path: "authoring/library/fpv-field-kit/retained/runtime.3074a0964b6f451500b7f104c62d17d876ee2058488a830365ad5ed23ff3cfaa.json",
+  sha256: "3074a0964b6f451500b7f104c62d17d876ee2058488a830365ad5ed23ff3cfaa",
+  bytes: 1077814,
+  commit: 'db4b2c8e89f3c9a3c0b67d6e7e5f64f08ea3c6ef',
+  originalPath: 'game/presentation/compiled/runtime.json',
+});
+export const FIELD_KIT_RETAINED_MAIN101 = Object.freeze({
+  path: "authoring/library/fpv-field-kit/retained/runtime.a78a35c1f86b8192cd10f4582eac7bcbbc3411f6a78b9746cfbfc72da3384dc0.json",
+  sha256: "a78a35c1f86b8192cd10f4582eac7bcbbc3411f6a78b9746cfbfc72da3384dc0",
+  bytes: 1046822,
+  commit: '321408a3cfd75ae230d760f39fb692503652601a',
+  originalPath: 'game/presentation/compiled/runtime.json',
+});
 const hash = (bytes) => createHash('sha256').update(bytes).digest('hex');
 
 /** Construct explicit compiler history from immutable authoring input and the
@@ -86,15 +116,27 @@ async function readPinnedOutput({ read, assets }, pin, revision) {
   return files;
 }
 
-/** Preserve exact committed54, accepted58 and retained60/62 runtime manifests and their complete lazy
+/** Preserve exact committed54, accepted58, retained60/62 and both101–103 lineages
+ * by manifest identity, with their complete lazy
  * dependencies. New ledger revisions never authorize implicit output-directory IO. */
 export async function readFieldKitRetainedOutput(options) {
   const legacy = await readPinnedOutput(options, FIELD_KIT_RETAINED_RUNTIME, 54);
   const accepted = await readPinnedOutput(options, FIELD_KIT_RETAINED_RUNTIME_58, 58);
   const held = await readPinnedOutput(options, FIELD_KIT_RETAINED_RUNTIME_60, 60);
   const actors = await readPinnedOutput(options, FIELD_KIT_RETAINED_RUNTIME_62, 62);
-  return retainPresentationOutput(
+  let previous = await retainPresentationOutput(
     actors,
     await retainPresentationOutput(held, await retainPresentationOutput(accepted, legacy)),
   );
+  for (const [pin, revision] of [
+    [FIELD_KIT_RETAINED_DISCOVERY101, 101],
+    [FIELD_KIT_RETAINED_DISCOVERY102, 102],
+    [FIELD_KIT_RETAINED_DISCOVERY103, 103],
+    [FIELD_KIT_RETAINED_MAIN101, 101],
+  ])
+    previous = await retainPresentationOutput(
+      await readPinnedOutput(options, pin, revision),
+      previous,
+    );
+  return previous;
 }

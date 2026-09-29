@@ -35,6 +35,12 @@ import {
   selectPreparedEdition,
 } from './editions/offline-client.mjs';
 import { localizedAttribute, localizedText, t } from './i18n/index.mjs';
+import { canonicalCompanyLevelKey, officialLevelNumber } from './level-numbering.mjs';
+import {
+  applyLevelCardPresentation,
+  createLevelCardView,
+  levelCardPresentation,
+} from './ui/level-card.mjs';
 
 const $ = (id) => document.getElementById(id);
 const BACKUP_LIMITS = Object.freeze({
@@ -231,6 +237,7 @@ async function main() {
     preferences.reduced = value.effectiveReducedEffects;
     $('reduced-motion').checked = value.effectiveReducedEffects;
     document.documentElement.dataset.reducedMotion = String(value.effectiveReducedEffects);
+    document.documentElement.dataset.textSize = value.textSize;
   });
   $('show-grid').checked = preferences.grid;
   $('difficulty').value = preferences.difficulty;
@@ -306,6 +313,13 @@ async function main() {
   };
   const completed = (id) =>
     arcadeCleared(id) && (!lessonFor(id) || assignment(id)?.status === 'complete');
+  const progressState = (id) => {
+    if (!completed(id)) return { state: 'new', bestStars: null };
+    return {
+      state: 'completed',
+      bestStars: profile.bestStars('solo', missionFor(id)?.id),
+    };
+  };
   const unlocked = (id) => {
     const campaign = source.campaigns.find((c) => c.missionIds.includes(id));
     const i = campaign?.missionIds.indexOf(id);
@@ -368,6 +382,7 @@ async function main() {
         runId: current.runId,
         gameplayId: companySimulationIdentity(current.run),
         difficulty: current.selection.difficulty,
+        stars: current.run.medal === 'gold' ? 3 : current.run.medal === 'silver' ? 2 : 1,
       });
     } catch (error) {
       report(() => t('interface:companyPlayer.completedInTab', { error: error.message }), true);
@@ -569,25 +584,88 @@ async function main() {
         }),
       );
       content.append(number, node('h3', campaign.name), node('p', first.design.lesson));
-      const select = node('select');
-      localizedAttribute(select, 'aria-label', () =>
-        t('interface:companyPlayer.missionInCampaign', { campaign: campaign.name }),
-      );
+      const levels = node('div', undefined, 'company-level-list');
       campaign.missionIds.forEach((id, i) => {
-        const m = source.missions.find((m) => m.id === id),
-          option = node('option', `${i + 1}. ${m.name}${completed(id) ? ' ✓' : ''}`);
-        option.value = id;
-        option.disabled = !unlocked(id);
-        select.append(option);
+        const mission = source.missions.find((candidate) => candidate.id === id);
+        const canonicalLevelKey = canonicalCompanyLevelKey({
+          campaignId: campaign.id,
+          missionId: id,
+        });
+        const presentation = levelCardPresentation({
+          globalLevelNumber: officialLevelNumber(canonicalLevelKey),
+          campaignLevelNumber: i + 1,
+          campaignLevelCount: campaign.missionIds.length,
+          collection: campaign.name,
+          progressState: progressState(id),
+        });
+        const view = createLevelCardView({
+          document,
+          className: 'company-level-card',
+          classes: {
+            campaignHeading: 'company-level-campaign-heading',
+            meta: 'company-level-meta',
+            number: 'company-level-number',
+            position: 'company-level-position',
+            title: 'company-level-title',
+            campaign: 'company-level-campaign',
+            progressGroup: 'company-level-status',
+            progress: 'company-level-status-text',
+            stars: 'company-level-stars',
+            status: 'company-level-action',
+            preview: 'company-level-preview',
+            check: 'company-level-check',
+          },
+        });
+        const level = view.button;
+        level.disabled = !unlocked(id);
+        applyLevelCardPresentation(view, presentation);
+        localizedText(view.number, () =>
+          t('interface:missionLibrary.levelNumber', {
+            number: presentation.globalLevelNumber,
+          }),
+        );
+        localizedText(view.position, () =>
+          t('interface:missionLibrary.campaignPosition', {
+            position: i + 1,
+            total: campaign.missionIds.length,
+          }),
+        );
+        localizedText(view.title, mission.name);
+        localizedText(view.campaign, campaign.name);
+        localizedText(view.campaignHeading, campaign.name);
+        view.campaign.hidden = true;
+        view.campaignHeading.hidden = true;
+        view.preview.hidden = true;
+        view.status.hidden = true;
+        view.stars.setAttribute('aria-hidden', 'true');
+        localizedText(view.progress, () =>
+          !unlocked(id)
+            ? t('common:status.locked')
+            : presentation.completed
+              ? presentation.bestStars === null
+                ? t('interface:missionLibrary.completedStarsUnknown')
+                : t('interface:missionLibrary.completedStars', {
+                    stars: presentation.bestStars,
+                  })
+              : t('interface:missionLibrary.notCompleted'),
+        );
+        localizedAttribute(level, 'aria-label', () => {
+          const completion = !unlocked(id)
+            ? t('common:status.locked')
+            : presentation.completed
+              ? presentation.bestStars === null
+                ? t('interface:missionLibrary.completedStarsUnknown')
+                : t('interface:missionLibrary.completedStars', {
+                    stars: presentation.bestStars,
+                  })
+              : t('interface:missionLibrary.notCompleted');
+          return `${t('interface:missionLibrary.levelNumber', {
+            number: presentation.globalLevelNumber,
+          })}. ${mission.name}. ${campaign.name}, ${presentation.campaignLabel}. ${completion}. ${mission.design.lesson}`;
+        });
+        level.onclick = guard(() => start(id));
+        levels.append(level);
       });
-      select.value =
-        campaign.missionIds.find((id) => !completed(id) && unlocked(id)) ?? campaign.missionIds[0];
-      const button = node('button', undefined, 'primary');
-      localizedText(button, () => t('interface:companyPlayer.enterJourney'));
-      localizedAttribute(button, 'aria-label', () =>
-        t('interface:companyPlayer.enterJourneyNamed', { campaign: campaign.name }),
-      );
-      button.onclick = guard(() => start(select.value));
       const footer = node('div', undefined, 'campaign-footer');
       const connected = node('span'),
         kind = node('span'),
@@ -604,7 +682,7 @@ async function main() {
           : t('interface:companyPlayer.adventure'),
       );
       footer.append(connected, kind);
-      content.append(select, button, footer);
+      content.append(levels, footer);
       card.append(content);
       $('campaigns').append(card);
     });

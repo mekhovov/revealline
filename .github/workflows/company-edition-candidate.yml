@@ -40,6 +40,34 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  default-capacity:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+      - uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v5
+        with:
+          package-manager-cache: false
+          node-version: '22.13.1'
+          cache: npm
+      - run: npm ci
+      - name: Inspect complete default-build dependencies and capacity
+        run: |
+          mkdir -p .cache/default-capacity
+          node scripts/inspect-default-build.mjs --out .cache/default-capacity/default-inspection.json
+      - uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6
+        with:
+          name: default-capacity-${{ github.event.pull_request.head.sha || github.sha }}
+          path: .cache/default-capacity/default-inspection.json
+          if-no-files-found: error
+          retention-days: 14
+      - name: Report inspection boundary
+        run: |
+          echo 'The complete checkout passed exact-source default dependency preparation and capacity inspection.' >> "$GITHUB_STEP_SUMMARY"
+          echo 'This small inventory is not a frozen default ZIP, installation receipt, full hosted-size verdict or permission to promote.' >> "$GITHUB_STEP_SUMMARY"
   optional-practice:
     runs-on: ubuntu-latest
     timeout-minutes: 8

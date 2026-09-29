@@ -16,6 +16,7 @@ import {
   fieldKitEquipmentSource,
 } from '../../scripts/produce-field-kit-theme.mjs';
 import { createHash } from 'node:crypto';
+import { gunzipSync } from 'node:zlib';
 import { canonicalJSON } from '../data-json.mjs';
 import { compilePresentation } from '../../scripts/compile-presentation.mjs';
 
@@ -73,6 +74,22 @@ async function reconstructPinnedProduction(oracle, candidate) {
   assert.equal(raw.length, oracle.provenance.bytes);
   assert.equal(sha(raw), oracle.provenance.sha256, 'reconstructed pinned bundle');
   return { document, assets, raw };
+}
+
+async function archivedDiscoveryProduction103() {
+  const compressed = await fs.readFile(
+    new URL(
+      '../../docs/verification/discovery-main321-reconciliation/discovery-production103.rltheme.gz',
+      import.meta.url,
+    ),
+  );
+  const sha = (bytes) => createHash('sha256').update(bytes).digest('hex');
+  assert.equal(compressed.length, 3853676);
+  assert.equal(sha(compressed), 'a11e83533645783b6e35fd815e4494480527febe45d1f3afca86754d5a9a43d6');
+  const bytes = gunzipSync(compressed, { maxOutputLength: 8492839 });
+  assert.equal(bytes.length, 8492839);
+  assert.equal(sha(bytes), '01e8db067359589dc20fcde86b8b36f7617b9229f3d666df8e2524a49378fed0');
+  return importThemeBundle(new Blob([bytes]), { decodeImage: null });
 }
 
 test('P02 retains the published P01 history and appends audio7 under a new fpv24', async () => {
@@ -570,9 +587,8 @@ test('shared-host UI and managed-media audio bind only reviewed current inputs',
   const continuationHash = createHash('sha256')
     .update(await fs.readFile(new URL(`../../${continuationPath}`, import.meta.url)))
     .digest('hex');
-  const currentReviewPath =
-    'docs/verification/discovery-gp4-restore-audio-continuation-2026-09-29/review.json';
-  const currentReviewSHA256 = '27c3663b72c1ccf1b78b2bf641952ff5d011e10520f0044d981f5c8166741b0d';
+  const currentReviewPath = 'docs/verification/discovery-main321-reconciliation/review.json';
+  const currentReviewSHA256 = 'f2b3a2724cf48455dbe98d5ca12a2b081ef1f982531e91838c0291a64bbed976';
   const current = await authenticatedCurrentReview(currentReviewPath, currentReviewSHA256, [
     'audio',
   ]);
@@ -585,12 +601,20 @@ test('shared-host UI and managed-media audio bind only reviewed current inputs',
     mainUI.review.priorReviews.steamDeckPresentation.sha256,
   );
   assert.equal(mainUI.review.fingerprints.ui.priorSHA256, priorUI.fingerprints.ui.currentSHA256);
-  const priorDiscoveryReview = await authenticatedReviewRecord(
-    current.review.priorReviews.discoveryAudio.path,
-    current.review.priorReviews.discoveryAudio.sha256,
+  const priorGP4Review = await authenticatedReviewRecord(
+    current.review.priorReviews.candidateGP4.path,
+    current.review.priorReviews.candidateGP4.sha256,
   );
   assert.equal(
     current.review.fingerprints.audio.priorSHA256,
+    priorGP4Review.fingerprints.audio.currentSHA256,
+  );
+  const priorDiscoveryReview = await authenticatedReviewRecord(
+    priorGP4Review.priorReviews.discoveryAudio.path,
+    priorGP4Review.priorReviews.discoveryAudio.sha256,
+  );
+  assert.equal(
+    priorGP4Review.fingerprints.audio.priorSHA256,
     priorDiscoveryReview.fingerprints.audio.currentSHA256,
   );
   const steamDeckReview = await authenticatedReviewRecord(
@@ -1471,14 +1495,7 @@ test('discovery checkpoint preserves production100 and appends eight reviewed au
     'cf19ad831cc0347f4f84c2ac310a1168354858e75f40991b35ffec18ea58d0b7',
   );
   const oracle = JSON.parse(oracleBytes);
-  const latest = await importThemeBundle(
-    new Blob([
-      await fs.readFile(
-        new URL('../../authoring/library/fpv-field-kit/production.rltheme', import.meta.url),
-      ),
-    ]),
-    { decodeImage: null },
-  );
+  const latest = await archivedDiscoveryProduction103();
   const checkpointOracleBytes = await fs.readFile(
     new URL('./fixtures/production-discovery-source-ui-fpv101.json', import.meta.url),
   );
@@ -1659,14 +1676,7 @@ test('WebP UI continuation retains production101 and appends only24 reviewed UI2
     createHash('sha256').update(oracleBytes).digest('hex'),
     'bb8ef5f69c674d36737dcfd8a23267eb5207fd0bc2757965ae841da552b2551c',
   );
-  const latest = await importThemeBundle(
-    new Blob([
-      await fs.readFile(
-        new URL('../../authoring/library/fpv-field-kit/production.rltheme', import.meta.url),
-      ),
-    ]),
-    { decodeImage: null },
-  );
+  const latest = await archivedDiscoveryProduction103();
   const checkpointOracleBytes = await fs.readFile(
     new URL('./fixtures/production-discovery-reviewed-ui-fpv102.json', import.meta.url),
   );
@@ -1784,14 +1794,7 @@ test('gp4 restore continuation preserves production102 and appends only eight re
     sha(oracleBytes),
     '88f08a4ed55e2d7a26e491828d808d1a2c6784ab5e811acce7537009a68ad315',
   );
-  const current = await importThemeBundle(
-    new Blob([
-      await fs.readFile(
-        new URL('../../authoring/library/fpv-field-kit/production.rltheme', import.meta.url),
-      ),
-    ]),
-    { decodeImage: null },
-  );
+  const current = await archivedDiscoveryProduction103();
   const prior = await reconstructPinnedProduction(JSON.parse(oracleBytes), current);
   assert.equal(prior.document.revision, 102);
   assert.equal(prior.document.assets.length, 2662);
@@ -1811,8 +1814,12 @@ test('gp4 restore continuation preserves production102 and appends only eight re
   const reviewPath =
     'docs/verification/discovery-gp4-restore-audio-continuation-2026-09-29/review.json';
   const reviewSHA = '27c3663b72c1ccf1b78b2bf641952ff5d011e10520f0044d981f5c8166741b0d';
-  const currentReview = await authenticatedCurrentReview(reviewPath, reviewSHA, ['audio']);
-  const review = currentReview.review;
+  const review = await authenticatedReviewRecord(reviewPath, reviewSHA);
+  const currentReview = {
+    sources: {
+      audio: `${review.fingerprints.audio.paths} sha256:${review.fingerprints.audio.currentSHA256}`,
+    },
+  };
   const predecessorReview = await authenticatedReviewRecord(
     review.priorReviews.discoveryAudio.path,
     review.priorReviews.discoveryAudio.sha256,
@@ -1886,4 +1893,199 @@ test('gp4 restore continuation preserves production102 and appends only eight re
     () => validateThemeBundle(tampered, { previous: prior.document }),
     /Immutable assets history changed/,
   );
+});
+
+test('Selector continuation preserves exact theme100 and appends only eight audio53 successors', async () => {
+  const oracle = JSON.parse(
+    await fs.readFile(
+      new URL('./fixtures/production-v01423-b5ab-fpv100.json', import.meta.url),
+      'utf8',
+    ),
+  );
+  const currentLatest = await importThemeBundle(
+    new Blob([
+      await fs.readFile(
+        new URL('../../authoring/library/fpv-field-kit/production.rltheme', import.meta.url),
+      ),
+    ]),
+    { decodeImage: null },
+  );
+  const canonical = currentLatest;
+  const pinned = JSON.parse(
+    await fs.readFile(
+      new URL('./fixtures/production-v01424-main321-fpv101.json', import.meta.url),
+      'utf8',
+    ),
+  );
+  const restored = await reconstructPinnedProduction(pinned, canonical);
+  const prior = await reconstructPinnedProduction(oracle, restored);
+  const current = restored;
+  assert.equal(prior.document.revision, 100);
+  assert.equal(prior.document.assets.length, 2606);
+  assert.equal(prior.document.themes.length, 101);
+  assert.equal(current.document.revision, 101);
+  assert.equal(current.document.assets.length, 2614);
+  assert.equal(current.document.themes.length, 102);
+  validateThemeBundle(current.document, { previous: prior.document, expectedRevision: 100 });
+  assert.equal(current.assets.size, 132);
+  for (const [hash, blob] of prior.assets)
+    assert.deepEqual(
+      Buffer.from(await current.assets.get(hash).arrayBuffer()),
+      Buffer.from(await blob.arrayBuffer()),
+      `unchanged payload ${hash}`,
+    );
+
+  const historical = await authenticatedReviewRecord(
+    'docs/verification/v0.142.4-selector-audio-continuation/review.json',
+    'f2cf0cc93f8de8e959eabf6e6313a0af306dfae87e2cb663bfe7bef805df6fe6',
+  );
+  const review = {
+    review: historical,
+    sources: {
+      audio: `${historical.fingerprints.audio.paths} sha256:${historical.fingerprints.audio.currentSHA256}`,
+    },
+  };
+  const before = resolvePresentation(prior.document);
+  const after = resolvePresentation(current.document);
+  for (const [slot, asset] of Object.entries(before.assets))
+    if (!slot.startsWith('audio.')) assert.deepEqual(after.assets[slot], asset, slot);
+  const fingerprint = review.review.fingerprints.audio;
+  assert.equal(fingerprint.orderedInputs, 28);
+  assert.equal(fingerprint.bytes, 1075150);
+  assert.deepEqual(fingerprint.changedInputs, ['game/app.mjs']);
+  assert.deepEqual(
+    fingerprint.inputs.filter((input) => input.changedFromProduction100).map((input) => input.path),
+    ['game/app.mjs'],
+  );
+  const priorReview = JSON.parse(
+    await fs.readFile(
+      new URL(
+        '../../docs/verification/v0.142.3-steamdeck-confirm-audio-continuation/review.json',
+        import.meta.url,
+      ),
+    ),
+  );
+  for (const input of fingerprint.inputs) {
+    const old = priorReview.fingerprints.audio.inputs.find(
+      (candidate) => candidate.path === input.path,
+    );
+    assert.ok(old, `retained input ${input.path}`);
+    if (input.path === 'game/app.mjs') assert.notEqual(input.sha256, old.sha256);
+    else {
+      assert.equal(input.gitBlob, old.gitBlob, input.path);
+      assert.equal(input.sha256, old.sha256, input.path);
+      assert.equal(input.bytes, old.bytes, input.path);
+    }
+  }
+  const added = current.document.assets.slice(2606);
+  assert.equal(added.length, 8);
+  assert.deepEqual(added.map((asset) => asset.id).sort(), review.review.scope.slots.toSorted());
+  for (const asset of added) {
+    assert.equal(asset.revision, 53);
+    assert.equal(asset.quality.stage, 'reviewed');
+    assert.equal(asset.provenance.source, review.sources.audio);
+    const old = Object.values(before.assets).find((candidate) => candidate.id === asset.id);
+    assert.equal(old.revision, 52);
+    assert.deepEqual(asset.provenance.parent, { id: old.id, revision: 52 });
+    assert.deepEqual(asset.recipe, old.recipe);
+    assert.deepEqual(asset.file, old.file);
+    assert.equal(asset.quality.evidence.length, 16, 'preserve the schema evidence bound');
+    assert.ok(
+      asset.quality.evidence[0].endsWith('\n' + old.quality.evidence[0]),
+      'current continuation retains the complete predecessor evidence text',
+    );
+    assert.deepEqual(asset.quality.evidence.slice(1), old.quality.evidence.slice(1));
+    assert.ok(
+      asset.quality.evidence.some((entry) =>
+        entry.includes(
+          'docs/verification/v0.142.4-selector-audio-continuation/review.json sha256:f2cf0cc93f8de8e959eabf6e6313a0af306dfae87e2cb663bfe7bef805df6fe6',
+        ),
+      ),
+    );
+  }
+  const theme = current.document.themes.at(-1);
+  assert.equal(theme.id, 'fpv');
+  assert.equal(theme.revision, 101);
+  assert.deepEqual(theme.parent, { id: 'fpv', revision: 100 });
+  assert.deepEqual(theme.tokens, {});
+  assert.deepEqual(
+    Object.values(theme.bindings)
+      .map((binding) => `${binding.id}@${binding.revision}`)
+      .sort(),
+    added.map((asset) => `${asset.id}@${asset.revision}`).sort(),
+  );
+});
+
+test('canonical main101 appends one reviewed successor while complete candidate103 stays immutable', async () => {
+  const sha = (bytes) => createHash('sha256').update(bytes).digest('hex');
+  const oracleBytes = await fs.readFile(
+    new URL('./fixtures/production-v01424-main321-fpv101.json', import.meta.url),
+  );
+  assert.equal(
+    sha(oracleBytes),
+    'aeb03a91c4da24fe300a9312b79ef986265d6bc78ce6f1f3893549d5fb5a8daa',
+  );
+  const current = await importThemeBundle(
+    new Blob([
+      await fs.readFile(
+        new URL('../../authoring/library/fpv-field-kit/production.rltheme', import.meta.url),
+      ),
+    ]),
+    { decodeImage: null },
+  );
+  const prior = await reconstructPinnedProduction(JSON.parse(oracleBytes), current);
+  assert.equal(current.document.revision, 102);
+  assert.equal(current.document.assets.length, 2646);
+  assert.equal(current.document.themes.length, 103);
+  validateThemeBundle(current.document, { previous: prior.document, expectedRevision: 101 });
+  const alternate = await archivedDiscoveryProduction103();
+  const alternateOracleBytes = await fs.readFile(
+    new URL('./fixtures/production-discovery-db4-fpv103.json', import.meta.url),
+  );
+  assert.equal(
+    sha(alternateOracleBytes),
+    '9aac97ef9ded7270148887d8148fc01fec378f5e5ef612ca86b3353015263e91',
+  );
+  await reconstructPinnedProduction(JSON.parse(alternateOracleBytes), alternate);
+  assert.notDeepEqual(
+    alternate.document.themes.find((t) => t.id === 'fpv' && t.revision === 101),
+    prior.document.themes.at(-1),
+  );
+  assert.deepEqual(
+    current.document.assets.slice(0, prior.document.assets.length),
+    prior.document.assets,
+  );
+  assert.deepEqual(
+    current.document.themes.slice(0, prior.document.themes.length),
+    prior.document.themes,
+  );
+  const reviewPath = 'docs/verification/discovery-main321-reconciliation/review.json';
+  const reviewed = await authenticatedCurrentReview(
+    reviewPath,
+    'f2b3a2724cf48455dbe98d5ca12a2b081ef1f982531e91838c0291a64bbed976',
+    ['audio'],
+  );
+  const before = resolvePresentation(prior.document),
+    after = resolvePresentation(current.document);
+  for (const [slot, asset] of Object.entries(before.assets)) {
+    if (!slot.startsWith('audio.') && !slot.startsWith('ui.'))
+      assert.deepEqual(after.assets[slot], asset, slot);
+    if (slot.startsWith('audio.')) {
+      const next = after.assets[slot];
+      assert.equal(next.revision, 54);
+      assert.equal(next.quality.stage, 'reviewed');
+      assert.equal(next.provenance.source, reviewed.sources.audio);
+      assert.deepEqual(next.recipe, asset.recipe);
+      assert(next.quality.evidence[0].endsWith('\n' + asset.quality.evidence[0]));
+      assert.deepEqual(next.quality.evidence.slice(1), asset.quality.evidence.slice(1));
+    }
+  }
+  assert.equal(current.assets.size, 132);
+  assert.equal(alternate.assets.size, 132);
+  for (const [hash, blob] of current.assets)
+    assert.deepEqual(
+      Buffer.from(await blob.arrayBuffer()),
+      Buffer.from(await alternate.assets.get(hash).arrayBuffer()),
+    );
+  assert.equal(current.document.themes.at(-1).parent.revision, 101);
 });

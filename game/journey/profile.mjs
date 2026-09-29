@@ -9,6 +9,12 @@ import {
   validateJourneyPictureCompletions,
   applyJourneyPictureEvent,
 } from './pictures.mjs';
+import {
+  emptyJourneyStars,
+  validateJourneyStars,
+  journeyStarsForProfile,
+  applyJourneyStarsEvent,
+} from './stars.mjs';
 
 export const JOURNEY_PROFILE_VERSION = 'revealline-journey-profile.v1';
 import { JOURNEY_PROFILE_DATABASE } from '../profile-database.mjs';
@@ -16,7 +22,10 @@ export { JOURNEY_PROFILE_DATABASE } from '../profile-database.mjs';
 export const JOURNEY_BACKUP_VERSION = 'revealline-journey-backup.v1';
 export const JOURNEY_SCOPED_BACKUP_VERSION = 'revealline-journey-backup.v2';
 export const JOURNEY_PICTURE_BACKUP_VERSION = 'revealline-journey-backup.v3';
+// Both exact v4 shapes were issued independently; keep their readers immutable.
 export const JOURNEY_PERFORMANCE_BACKUP_VERSION = 'revealline-journey-backup.v4';
+export const JOURNEY_STARS_BACKUP_VERSION = 'revealline-journey-backup.v4';
+export const JOURNEY_COMBINED_BACKUP_VERSION = 'revealline-journey-backup.v5';
 const emptyModes = (make) => Object.fromEntries(JOURNEY_MODES.map((mode) => [mode, make()]));
 const text = (value) => typeof value === 'string' && value.length > 0 && value.length <= 1024;
 const own = (object, key) => Object.hasOwn(object, key);
@@ -39,40 +48,25 @@ function pictureEditionId(profileKey) {
 }
 
 function inspectProfileBackup(source, profileKey) {
-  const candidate = boundedJSON(source, { maxBytes: 16 * 1024 * 1024, maxNodes: 400032 });
-  if (candidate?.format === JOURNEY_PERFORMANCE_BACKUP_VERSION) {
+  const candidate = boundedJSON(source, { maxBytes: 16 * 1024 * 1024, maxNodes: 430032 });
+  const legacySidecar = candidate?.format === JOURNEY_PERFORMANCE_BACKUP_VERSION,
+    combined = candidate?.format === JOURNEY_COMBINED_BACKUP_VERSION;
+  if (legacySidecar || combined || candidate?.format === JOURNEY_PICTURE_BACKUP_VERSION) {
+    const hasStars = own(candidate, 'stars'),
+      hasPerformance = own(candidate, 'performance');
+    if (legacySidecar && hasStars === hasPerformance)
+      throw new TypeError('Journey v4 backup requires exactly one historical sidecar.');
+    if (combined && !hasStars) throw new TypeError('Journey v5 backup requires its stars sidecar.');
     exactJourneyKeys(
       candidate,
-      ['format', 'profileKey', 'profile', 'pictures', 'performance'],
-      'Journey performance backup',
-    );
-    if (candidate.profileKey !== profileKey)
-      throw new TypeError(t('errors:journey.differentEdition'));
-    const normalized = inspectProfileBackup(
-      {
-        format: JOURNEY_PICTURE_BACKUP_VERSION,
-        profileKey,
-        profile: candidate.profile,
-        pictures: candidate.pictures,
-      },
-      profileKey,
-    );
-    const performance = inspectJourneyPerformance(candidate.performance);
-    return {
-      ...normalized,
-      backup: {
-        ...candidate,
-        profile: normalized.normalized.profile,
-        pictures: normalized.pictures,
-        performance,
-      },
-      performance,
-    };
-  }
-  if (candidate?.format === JOURNEY_PICTURE_BACKUP_VERSION) {
-    exactJourneyKeys(
-      candidate,
-      ['format', 'profileKey', 'profile', 'pictures'],
+      [
+        'format',
+        'profileKey',
+        'profile',
+        'pictures',
+        ...((legacySidecar || combined) && hasStars ? ['stars'] : []),
+        ...((legacySidecar || combined) && hasPerformance ? ['performance'] : []),
+      ],
       'Journey picture backup',
     );
     if (candidate.profileKey !== profileKey)
@@ -80,11 +74,23 @@ function inspectProfileBackup(source, profileKey) {
     const profile = validateJourneyProfile(candidate.profile),
       pictures = validateJourneyPictureCompletions(profile, candidate.pictures, {
         editionId: pictureEditionId(profileKey),
-      });
+      }),
+      starResults = hasStars
+        ? journeyStarsForProfile(candidate.stars, profile, { strict: true })
+        : undefined,
+      performance = hasPerformance ? inspectJourneyPerformance(candidate.performance) : undefined;
     return {
-      backup: { ...candidate, profile, pictures },
+      backup: {
+        ...candidate,
+        profile,
+        pictures,
+        ...(hasStars ? { stars: starResults } : {}),
+        ...(hasPerformance ? { performance } : {}),
+      },
       normalized: { format: JOURNEY_BACKUP_VERSION, profile },
       pictures,
+      ...(hasStars ? { starResults } : {}),
+      ...(hasPerformance ? { performance } : {}),
     };
   }
 
@@ -228,7 +234,8 @@ export function applyJourneyEvent(source, event) {
     if (
       !text(event.runId) ||
       !text(event.gameplayId) ||
-      !['gentle', 'standard', 'expert'].includes(event.difficulty)
+      !['gentle', 'standard', 'expert'].includes(event.difficulty) ||
+      !(event.stars === undefined || [1, 2, 3].includes(event.stars))
     )
       throw new TypeError(t('errors:journey.exactReceiptRequired'));
     if (own(profile.clears[mode], missionId)) {
@@ -304,10 +311,11 @@ export function createJourneyBackend({
         store = tx.objectStore('profiles'),
         read = store.get(profileKey),
         pictureRead = store.get(`${profileKey}:pictures.v1`),
+        starsRead = store.get(`${profileKey}:stars.v1`),
         performanceRead = store.get(`${profileKey}:performance.v1`);
       let next,
         failure,
-        remaining = 3;
+        remaining = 4;
       const abort = () => {
         failure = signal.reason;
         try {
@@ -333,10 +341,15 @@ export function createJourneyBackend({
               pictureRead.result === undefined
                 ? emptyJourneyPictures()
                 : validateJourneyPictures(pictureRead.result),
+            stars:
+              starsRead.result === undefined
+                ? emptyJourneyStars()
+                : validateJourneyStars(starsRead.result),
             ...(performanceRead.result === undefined
               ? {}
               : { performance: performanceRead.result }),
           };
+          next.stars = journeyStarsForProfile(next.stars, next.profile);
           for (const event of events)
             next = applyStateEvent(next, event, pictureEditionId(profileKey));
           if (events.some((event) => event.type !== 'performance'))
@@ -345,12 +358,18 @@ export function createJourneyBackend({
             store.put(next.performance, `${profileKey}:performance.v1`);
           if (events.some((event) => event.picture !== undefined || event.pictures !== undefined))
             store.put(next.pictures, `${profileKey}:pictures.v1`);
+          if (events.some((event) => event.stars !== undefined || event.starResults !== undefined))
+            store.put(next.stars, `${profileKey}:stars.v1`);
         } catch (error) {
           failure = error;
           tx.abort();
         }
       };
-      read.onsuccess = pictureRead.onsuccess = performanceRead.onsuccess = loaded;
+      read.onsuccess =
+        pictureRead.onsuccess =
+        starsRead.onsuccess =
+        performanceRead.onsuccess =
+          loaded;
       tx.oncomplete = () => {
         cleanup();
         resolve(next);
@@ -381,16 +400,22 @@ function applyStateEvent(state, event, editionId = null) {
       throw new Error('Journey performance generation changed.');
     return { ...state, performance };
   }
-  const { pictures, ...profileEvent } = event;
+  const { pictures, starResults: _starResults, ...profileEvent } = event;
   const profile = applyJourneyEvent(state.profile, profileEvent);
   if (event.type === 'restore' && pictures !== undefined)
     validateJourneyPictureCompletions(profile, pictures, { editionId });
-  return { ...state, profile, pictures: applyJourneyPictureEvent(state.pictures, event) };
+  return {
+    ...state,
+    profile,
+    pictures: applyJourneyPictureEvent(state.pictures, event),
+    stars: applyJourneyStarsEvent(state.stars ?? emptyJourneyStars(), event, profile),
+  };
 }
 function validateState(state) {
   return {
     profile: validateJourneyProfile(state.profile),
     pictures: validateJourneyPictures(state.pictures),
+    stars: journeyStarsForProfile(state.stars ?? emptyJourneyStars(), state.profile),
     ...(state.performance === undefined ? {} : { performance: state.performance }),
   };
 }
@@ -424,6 +449,7 @@ export function createJourneyProfileStore({
     });
   let profile = emptyJourneyProfile(),
     pictures = emptyJourneyPictures(),
+    stars = emptyJourneyStars(),
     pending = [],
     saving = null,
     ready = false,
@@ -443,15 +469,20 @@ export function createJourneyProfileStore({
   };
   const snapshot = () => structuredClone(profile);
   const pictureSnapshot = () => structuredClone(pictures);
+  const starSnapshot = () => structuredClone(stars);
   const adopt = (state, { observePerformance = true } = {}) => {
-    ({ profile, pictures } = state);
+    ({ profile, pictures, stars = emptyJourneyStars() } = state);
     stateRevision++;
     if (observePerformance) performance.observe(state);
   };
   const readState = async () =>
     backend.readState
       ? validateState(await backend.readState())
-      : { profile: validateJourneyProfile(await backend.read()), pictures: emptyJourneyPictures() };
+      : {
+          profile: validateJourneyProfile(await backend.read()),
+          pictures: emptyJourneyPictures(),
+          stars: emptyJourneyStars(),
+        };
   const commitState = async (events, { signal } = {}) => {
     signal?.throwIfAborted();
     if (!canWrite()) throw new Error('The profile saving lease is no longer held.');
@@ -460,9 +491,12 @@ export function createJourneyProfileStore({
       throw new Error('This Journey backend cannot retain optional performance evidence.');
     if (events.some((event) => event.picture !== undefined || event.pictures !== undefined))
       throw new Error(t('errors:journey.pictureReceiptsUnsupported'));
+    if (events.some((event) => event.stars !== undefined || event.starResults !== undefined))
+      throw new Error(t('errors:journey.saveFailed'));
     return {
       profile: validateJourneyProfile(await backend.commit(events)),
       pictures: emptyJourneyPictures(),
+      stars: emptyJourneyStars(),
     };
   };
   async function flush() {
@@ -501,7 +535,7 @@ export function createJourneyProfileStore({
     const owned = structuredClone(events);
     // Validate the whole transition before publishing either its cursor or skip.
     // One status notification cannot expose a partially applied transition.
-    const next = owned.reduce(applyEvent, { profile, pictures });
+    const next = owned.reduce(applyEvent, { profile, pictures, stars });
     adopt(next, { observePerformance: false });
     pending.push(...owned);
     durable = false;
@@ -619,17 +653,23 @@ export function createJourneyProfileStore({
   const inspectAsync = async (source, { signal } = {}) => {
     const inspected = inspectProfileBackup(source, profileKey);
     const merged = applyEvent(
-      { profile, pictures },
+      { profile, pictures, stars },
       {
         type: 'restore',
         backup: inspected.normalized,
         ...(inspected.pictures ? { pictures: inspected.pictures } : {}),
+        ...(inspected.starResults ? { starResults: inspected.starResults } : {}),
       },
     );
     if (inspected.performance)
       await performance.inspect(inspected.performance, merged.profile, { signal });
     signal?.throwIfAborted();
-    return { backup: inspected.backup, merged: merged.profile, pictures: merged.pictures };
+    return {
+      backup: inspected.backup,
+      merged: merged.profile,
+      pictures: merged.pictures,
+      stars: merged.stars,
+    };
   };
   return {
     performance,
@@ -645,6 +685,7 @@ export function createJourneyProfileStore({
           type: 'restore',
           backup: inspected.normalized,
           ...(inspected.pictures ? { pictures: inspected.pictures } : {}),
+          ...(inspected.starResults ? { starResults: inspected.starResults } : {}),
         },
       ]);
       let optional;
@@ -670,6 +711,11 @@ export function createJourneyProfileStore({
     },
     snapshot,
     pictures: pictureSnapshot,
+    stars: starSnapshot,
+    bestStars: (mode, missionId) =>
+      own(profile.clears[mode] ?? {}, missionId) && own(stars.best[mode] ?? {}, missionId)
+        ? stars.best[mode][missionId]
+        : null,
     stateRevision: () => stateRevision,
     status,
     flush,
@@ -681,12 +727,17 @@ export function createJourneyProfileStore({
       const inspected = inspectProfileBackup(source, profileKey);
       if (inspected.performance)
         throw new TypeError('Inspect performance evidence asynchronously before restoring it.');
-      const { backup, normalized, pictures: restored } = inspected;
+      const { backup, normalized, pictures: restored, starResults } = inspected;
       const merged = applyEvent(
-        { profile, pictures },
-        { type: 'restore', backup: normalized, ...(restored ? { pictures: restored } : {}) },
+        { profile, pictures, stars },
+        {
+          type: 'restore',
+          backup: normalized,
+          ...(restored ? { pictures: restored } : {}),
+          ...(starResults ? { starResults } : {}),
+        },
       );
-      return { backup, merged: merged.profile, pictures: merged.pictures };
+      return { backup, merged: merged.profile, pictures: merged.pictures, stars: merged.stars };
     },
     restore(source) {
       const inspected = inspectProfileBackup(source, profileKey);
@@ -699,6 +750,7 @@ export function createJourneyProfileStore({
           type: 'restore',
           backup: inspected.normalized,
           ...(inspected.pictures ? { pictures: inspected.pictures } : {}),
+          ...(inspected.starResults ? { starResults: inspected.starResults } : {}),
         },
       ]);
     },
@@ -708,15 +760,17 @@ export function createJourneyProfileStore({
     recordWithReceiptFallback,
     recordMany: recordEvents,
     export() {
-      const evidence = performance.backup();
+      const evidence = performance.backup(),
+        hasStars = JOURNEY_MODES.some((mode) => Object.keys(stars.best[mode]).length);
       return JSON.stringify(
-        evidence
+        evidence || hasStars
           ? {
-              format: JOURNEY_PERFORMANCE_BACKUP_VERSION,
+              format: JOURNEY_COMBINED_BACKUP_VERSION,
               profileKey,
               profile: snapshot(),
               pictures: pictureSnapshot(),
-              performance: evidence,
+              stars: starSnapshot(),
+              ...(evidence ? { performance: evidence } : {}),
             }
           : pictures.records.length
             ? {

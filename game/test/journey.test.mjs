@@ -85,6 +85,33 @@ test('skipping never grants a clear; exact legal completion removes skip and is 
   );
 });
 
+test('completion keeps verified stars in the separate store while v1 receipts remain unchanged', async () => {
+  const backend = createJourneyBackend(managedIndexedDB());
+  const profile = createJourneyProfileStore({ backend });
+  profile.record(complete);
+  assert.equal(await profile.flush(), true);
+  assert.equal(profile.bestStars('solo', id), null);
+  for (const [runId, stars, best] of [
+    ['run-2', 2, 2],
+    ['run-3', 1, 2],
+    ['run-4', 3, 3],
+  ]) {
+    profile.record({ ...complete, runId, stars });
+    assert.equal(await profile.flush(), true);
+    assert.equal(profile.bestStars('solo', id), best);
+    assert.deepEqual(Object.keys((await backend.read()).clears.solo[id]), [
+      'runId',
+      'gameplayId',
+      'difficulty',
+    ]);
+  }
+  const before = profile.snapshot();
+  profile.record({ ...complete, runId: 'run-4', stars: 3 });
+  assert.equal(await profile.flush(), true);
+  assert.deepEqual(profile.snapshot(), before, 'the same verified result is idempotent');
+  assert.equal((await backend.readState()).stars.best.solo[id], 3);
+});
+
 test('Journey profile and storage errors follow the active locale', async (context) => {
   const locale = getLocale();
   context.after(() => setLocale(locale, { persist: false }));
