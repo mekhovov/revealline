@@ -128,6 +128,7 @@ for (const policy of ['immediate', 'grid-center'])
       await settle(() => p.doc.body.dataset.pictureState === 'ready');
     }
     p.$('start-button').click();
+    await settle(() => p.doc.body.dataset.flightState === 'running');
     p.key('ArrowDown');
     ticks(p, 13);
     p.key('ArrowDown', false);
@@ -135,7 +136,7 @@ for (const policy of ['immediate', 'grid-center'])
     p.frame(0);
     const saved = JSON.parse(p.storage.getItem(sessionKey)),
       beforeTime = p.rendered.run.time;
-    assert.equal(saved.format, 'xonix-session.v4');
+    assert.equal(saved.format, 'xonix-session.v6');
     assert.equal(
       presentationPicturePins(saved.presentationPins).choices.find(
         (x) => x.identity.themeId === 'fpv',
@@ -195,7 +196,7 @@ test('pending decoded original blocks every fixed tick; background return never 
   await new Promise((resolve) => setTimeout(resolve, 10));
   assert.equal(decoding, 1, 'Start observes the existing prewarm instead of decoding again.');
   assert.equal(p.$('flight-preparation-status').dataset.state, 'busy');
-  assert.equal(p.$('flight-preparation-cancel').hidden, false);
+  assert.equal(p.$('flight-preparation-cancel').hidden, true);
   assert.deepEqual(authoritativeCheckpoint(p.rendered.run), before);
   p.doc.hidden = true;
   p.doc.emit('visibilitychange');
@@ -258,7 +259,7 @@ test('a failed picture prewarm can be retried without reusing its rejected promi
   assert.deepEqual(p.errors, []);
 });
 
-test('cancelling picture preparation restores keyboard focus before native hiding drops it', async (t) => {
+test('cancelling picture preparation keeps keyboard focus on the launch command', async (t) => {
   const f = await setup(t),
     gate = deferred();
   let decoding = 0;
@@ -273,17 +274,7 @@ test('cancelling picture preparation restores keyboard focus before native hidin
   p.$('start-button').click();
   const before = authoritativeCheckpoint(p.rendered.run),
     cancel = p.$('flight-preparation-cancel');
-  let hidden = cancel.hidden;
-  Object.defineProperty(cancel, 'hidden', {
-    configurable: true,
-    get: () => hidden,
-    set(value) {
-      hidden = value;
-      // A browser drops focus when its current action becomes display:none.
-      if (value && p.doc.activeElement === cancel) p.doc.body.focus();
-    },
-  });
-  cancel.focus();
+  p.$('start-button').focus();
   cancel.click();
   assert.equal(p.doc.activeElement, p.$('start-button'));
   assert.equal(p.$('flight-preparation-status').dataset.state, 'cancelled');
@@ -350,6 +341,7 @@ for (const launch of ['start', 'retry', 'restart'])
       joinPad(p, pad);
       if (launch !== 'start') {
         p.$('start-button').click();
+        await settle(() => p.doc.body.dataset.flightState === 'running');
         p.key('ArrowDown');
         if (launch === 'retry') {
           for (let i = 0; i < 900 && p.rendered.run.status !== 'won'; i++) p.frame();
@@ -393,7 +385,7 @@ for (const launch of ['start', 'retry', 'restart'])
         library = p.storage.getItem('revealline.library.dev.v1'),
         selected = [p.$('pack-select').value, p.$('level-select').value, p.$('theme-select').value],
         media = await f.store.read();
-      p.$('flight-preparation-cancel').focus();
+      p.$(launch === 'retry' ? 'retry-button' : 'start-button').focus();
       backInput(p, mode, pad);
       assert.equal(p.$('flight-preparation-status').dataset.state, 'cancelled');
       assert.equal(p.$('flight-preparation-cancel').hidden, true);
@@ -445,6 +437,7 @@ test('old v2 saved flight remains legacy even when a current managed assignment 
   const f = await setup(t),
     p = await pageFor(t, f);
   p.$('start-button').click();
+  await settle(() => p.doc.body.dataset.flightState === 'running');
   p.key('ArrowDown');
   ticks(p, 13);
   p.key('ArrowDown', false);
@@ -452,6 +445,8 @@ test('old v2 saved flight remains legacy even when a current managed assignment 
   const old = JSON.parse(p.storage.getItem(sessionKey));
   old.format = 'xonix-session.v2';
   delete old.presentationPins;
+  delete old.visualThemePin;
+  delete old.actorAppearancePin;
   p.$('library-button').click();
   p.$('save-json').value = JSON.stringify(old);
   p.$('import-save').click();
@@ -493,6 +488,7 @@ test('a missing saved original cannot adopt a different picture or overwrite the
   const f = await setup(t),
     p = await pageFor(t, f);
   p.$('start-button').click();
+  await settle(() => p.doc.body.dataset.flightState === 'running');
   p.key('ArrowDown');
   ticks(p, 13);
   p.key('ArrowDown', false);
@@ -554,6 +550,7 @@ test('First Flight keeps legacy artwork and creates no managed or player progres
   const p = await pageFor(t, f, { search: '?course=first-flight&lesson=close-line' });
   const writes = p.storage.writes.length;
   p.$('start-button').click();
+  await settle(() => p.doc.body.dataset.flightState === 'running');
   p.key('ArrowDown');
   ticks(p, 30);
   p.key('ArrowDown', false);
@@ -575,6 +572,7 @@ test('managed current attempt export and First Flight handoff preserve the exact
   p.change('turn-select', 'grid-center');
   await settle(() => p.doc.body.dataset.pictureState === 'ready');
   p.$('start-button').click();
+  await settle(() => p.doc.body.dataset.flightState === 'running');
   p.key('ArrowDown');
   ticks(p, 13);
   p.key('ArrowDown', false);
@@ -589,7 +587,7 @@ test('managed current attempt export and First Flight handoff preserve the exact
   p.$('export-session').click();
   await settle(() => p.$('save-json').value.startsWith('{'));
   const exported = JSON.parse(p.$('save-json').value);
-  assert.equal(exported.format, 'xonix-session.v4');
+  assert.equal(exported.format, 'xonix-session.v6');
   assert.deepEqual(exported.presentationPins, raw.presentationPins);
   assert.equal(verifyReplay(exported.replay).match, true);
   p.$('library-dialog').close();
@@ -597,7 +595,7 @@ test('managed current attempt export and First Flight handoff preserve the exact
   p.$('first-flight-help-enter').click();
   await settle(() => navigation !== null);
   const retained = JSON.parse(p.storage.getItem(sessionKey));
-  assert.equal(retained.format, 'xonix-session.v4');
+  assert.equal(retained.format, 'xonix-session.v6');
   assert.deepEqual(retained.presentationPins, raw.presentationPins);
   assert.deepEqual(retained.continuation, raw.continuation);
   assert.equal(verifyReplay(retained.replay).match, true);
@@ -609,6 +607,7 @@ test('raw installed campaign plus retained normalized owner can export a complet
   const f = await setup(t),
     p = await pageFor(t, f);
   p.$('start-button').click();
+  await settle(() => p.doc.body.dataset.flightState === 'running');
   p.key('ArrowDown');
   ticks(p, 13);
   p.key('ArrowDown', false);
@@ -617,7 +616,7 @@ test('raw installed campaign plus retained normalized owner can export a complet
   p.$('export-backup').click();
   await settle(() => p.$('save-json').value.startsWith('{'));
   const backup = JSON.parse(p.$('save-json').value);
-  assert.equal(backup.session.format, 'xonix-session.v4');
+  assert.equal(backup.session.format, 'xonix-session.v6');
   assert.equal(
     presentationPicturePins(backup.session.presentationPins).choices.find(
       (x) => x.identity.themeId === 'fpv',

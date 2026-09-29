@@ -347,7 +347,7 @@ export function createMissionLibrary(sources = []) {
         mastery: bounded(value?.mastery),
       });
     },
-    async prepare(row, { mode = 'solo', signal } = {}) {
+    async prepare(row, { mode = 'solo', signal, preparation } = {}) {
       const { owner, entry } = requireRow(row, mode);
       const state = availability(row, mode);
       requireRow(row, mode); // Availability may reconcile an installed owner.
@@ -369,9 +369,13 @@ export function createMissionLibrary(sources = []) {
         const completed = await Promise.race([
           Promise.resolve().then(() => {
             if (controller.signal.aborted) return false;
-            return Promise.resolve(owner.prepare(entry, { mode, signal: controller.signal })).then(
-              () => true,
-            );
+            return Promise.resolve(
+              owner.prepare(entry, {
+                mode,
+                signal: controller.signal,
+                ...(preparation === undefined ? {} : { preparation, preparationRow: row }),
+              }),
+            ).then(() => true);
           }),
           cancelled,
         ]);
