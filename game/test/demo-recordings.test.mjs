@@ -30,10 +30,10 @@ campaign.classRecipes = classRecipes;
 const entry = { campaign, classRecipes };
 const catalog = await json('../demo-data/catalog.json');
 
-test('six curated recordings reproduce current Standard tuning on four installed maps with authored picture ownership', async () => {
+test('ten curated recordings reproduce current Standard tuning on eight installed maps with authored picture ownership', async () => {
   const generated = await buildDemoRecordings();
-  assert.equal(generated.length, 6);
-  assert.equal(new Set(generated.map(({ replay }) => replay.level.id)).size, 4);
+  assert.equal(generated.length, 10);
+  assert.equal(new Set(generated.map(({ replay }) => replay.level.id)).size, 8);
   assert.deepEqual(
     catalog.clips,
     generated.map(({ descriptor }) => descriptor),
@@ -61,12 +61,68 @@ test('six curated recordings reproduce current Standard tuning on four installed
     );
     assert.ok(demoReplayMatchesEntry(replay, entry));
     assert.ok(metrics.closedCuts >= 3 && metrics.bends >= 3);
+    assert.ok(replay.ticks / 120 >= 20 && replay.ticks / 120 <= 60);
+    assert.ok(replay.segments.every((segment) => !segment.input.boost));
     const player = await prepareReplayPlayer(frozen);
+    const events = {};
+    let takeoverChecked = false;
     player.play();
-    while (player.phase === 'playing') player.advance(0.2);
+    while (player.phase === 'playing') {
+      const before = { ...player.state.player };
+      for (const event of player.advance(0.2).events)
+        events[event.type] = (events[event.type] ?? 0) + 1;
+      if (
+        descriptor.id === 'stone-lanes-detour' &&
+        !takeoverChecked &&
+        before.cutting &&
+        player.state.player.cutting &&
+        before.direction !== player.state.player.direction
+      ) {
+        player.pause();
+        const expected = authoritativeCheckpoint(player.state);
+        const fork = await player.forkForPractice();
+        assert.notEqual(fork.run, player.state);
+        assert.deepEqual(authoritativeCheckpoint(fork.run), expected);
+        stepRun(fork.run, { direction: 'up' }, FIXED_DT);
+        assert.deepEqual(authoritativeCheckpoint(player.state), expected);
+        assert.equal(fork.run.tick, player.state.tick + 1);
+        takeoverChecked = true;
+        player.play();
+      }
+    }
     assert.equal(player.finalCheckpoint.hash, frozen.checkpoint.hash);
     assert.equal(player.state.status, 'won');
     assert.equal(player.state.lives, 3);
+    assert.equal(events['player.failed'] ?? 0, 0);
+    assert.ok(events['cut.closed'] >= 3);
+    if (descriptor.id === 'stone-lanes-detour') {
+      assert.equal(
+        takeoverChecked,
+        true,
+        'Takeover must cover an actual live bend on the new map.',
+      );
+      assert.ok(authored.walls.length > 0);
+      assert.equal(events['objective.captured'], 1);
+    } else if (descriptor.id === 'hidden-frequency-search') {
+      assert.ok(authored.objectives.some((objective) => objective.hidden && objective.required));
+      assert.ok(events['ability.used'] >= 1);
+      assert.equal(events['objective.captured'], 1);
+      assert.equal(
+        player.state.objectives.find((objective) => objective.id === 'hidden-relay').captured,
+        true,
+      );
+    } else if (descriptor.id === 'the-crossing-windows') {
+      assert.ok(
+        events['boss.warning'] >= 2,
+        'The lane threat must actually telegraph during playback.',
+      );
+      assert.equal(events['objective.captured'], 1);
+    } else if (descriptor.id === 'signal-garden-route') {
+      assert.ok(events['signal.changed'] >= 2, 'The flight must enter and leave interference.');
+      assert.ok(events['ability.used'] >= 1);
+      assert.equal(events['objective.captured'], 1);
+    }
+    player.dispose();
   }
 });
 
@@ -100,7 +156,19 @@ test('personal replay compatibility reconstructs tuning from installed originals
 test('frozen browser variants preserve the exact reviewed trace and every non-enemy outcome', async () => {
   const provenance = await json('../demo-data/variant-provenance.json');
   assert.equal(provenance.format, 'revealline-demo-runtime-variants.v1');
-  assert.equal(provenance.variants.length, 6);
+  assert.equal(
+    provenance.variants.length,
+    catalog.clips.reduce((count, clip) => count + clip.replayVariants.length, 0),
+  );
+  for (const id of [
+    'first-signal-left',
+    'first-signal-right',
+    'relay-orchard-loop',
+    'relay-orchard-stairs',
+    'crosswind-openings',
+    'night-patrol-loop',
+  ])
+    assert.ok(provenance.variants.some((variant) => variant.id === id));
   for (const variant of provenance.variants) {
     const clip = catalog.clips.find((candidate) => candidate.id === variant.id);
     assert.ok(clip.replayVariants.includes(variant.replayURL));
@@ -128,7 +196,7 @@ test('frozen browser variants preserve the exact reviewed trace and every non-en
 });
 
 test('catalogue admits only matching installed content and local bundled replay URLs', async () => {
-  assert.equal(resolveDemoCatalog(catalog, [entry]).length, 6);
+  assert.equal(resolveDemoCatalog(catalog, [entry]).length, 10);
   assert.equal(resolveDemoCatalog(catalog, []).length, 0);
   const changed = structuredClone(entry);
   changed.campaign.levels[0].rules.moveSpeed++;

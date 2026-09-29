@@ -117,7 +117,7 @@ export function createDemoCaptions() {
   let clock = 0,
     until = 0,
     key = 'demo:tipStart',
-    pending = null;
+    pending = [];
   const seen = new Set();
   const cues = {
     'cut.started': 'demo:tipCut',
@@ -130,27 +130,40 @@ export function createDemoCaptions() {
     'class.switched': 'demo:tipClass',
     'player.failed': 'demo:tipFailure',
     'lineImpact.seeded': 'demo:tipImpact',
+    'objective.captured': 'demo:tipObjective',
+  };
+  const cue = (event) => {
+    if (event.type === 'ability.used' && event.primitive === 'scan') return 'demo:tipScan';
+    if (event.type === 'signal.changed')
+      return Array.isArray(event.zoneIds) &&
+        event.zoneIds.length > 0 &&
+        event.resistant === false &&
+        ((Number.isFinite(event.speedFactor) && event.speedFactor < 1) ||
+          event.boostBlocked === true ||
+          event.abilityBlocked === true)
+        ? 'demo:tipSignal'
+        : null;
+    return Object.hasOwn(cues, event.type) ? cues[event.type] : null;
   };
   return {
     reset() {
       clock = 0;
       until = 6;
       key = 'demo:tipStart';
-      pending = null;
+      pending = [];
       seen.clear();
     },
     advance(seconds, events = []) {
       clock += Math.min(0.25, Math.max(0, seconds));
       for (const event of events) {
-        const next = cues[event.type];
-        if (next && !seen.has(next)) {
-          pending = next;
-          seen.add(next);
-        }
+        const next = cue(event);
+        // The finite cue vocabulary bounds this queue. Keep each lesson once,
+        // including same-tick capture/objective events, in its observed order.
+        if (next && !seen.has(next) && !pending.includes(next)) pending.push(next);
       }
-      if (pending && clock >= until) {
-        key = pending;
-        pending = null;
+      if (pending.length && clock >= until) {
+        key = pending.shift();
+        seen.add(key);
         until = clock + 6;
       }
       return key;
