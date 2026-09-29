@@ -126,6 +126,8 @@ for (const themeId of ['fpv', 'ukraine', 'retro', 'coupa'])
     assert.equal(page.doc.activeElement.id, 'skip-celebration');
     assert.equal(page.rendered.paused, true);
     assert.equal(page.rendered.defeatEffectsRunning, true);
+    assert.equal(page.rendered.signalReception, 'lost');
+    assert.equal(page.rendered.signalEffectsRunning, true);
     const label = `${themeId === 'fpv' ? 'CRAFT LOST' : themeId === 'coupa' ? 'LINK LOST' : 'LIFE LOST'} · -1 LIFE`;
     assert.ok(surface.frame.context.calls.some((c) => c.op === 'fillText' && c.args[0] === label));
     page.frame(100);
@@ -138,6 +140,9 @@ for (const themeId of ['fpv', 'ukraine', 'retro', 'coupa'])
     assert.equal(page.$('game-overlay').hidden, false);
     assert.equal(page.$('game-overlay').dataset.kind, 'lost');
     assert.equal(page.doc.activeElement.id, 'retry-button');
+    page.frame(0);
+    assert.equal(page.rendered.signalReception, 'lost');
+    assert.equal(page.rendered.signalEffectsRunning, false);
     assert.deepEqual(authoritativeCheckpoint(run), checkpoint);
   });
 test('Classic traveling-front defeat, reduced effects, focus loss and explicit skip preserve the terminal run', async (t) => {
@@ -157,6 +162,7 @@ test('Classic traveling-front defeat, reduced effects, focus loss and explicit s
   assert.equal(effect().age, age);
   assert.equal(page.$('game-overlay').hidden, true);
   assert.equal(page.rendered.defeatEffectsRunning, false);
+  assert.equal(page.rendered.signalEffectsRunning, false);
   key(page, 'Enter');
   assert.equal(page.$('game-overlay').dataset.kind, 'lost');
   assert.equal(page.doc.activeElement.id, 'retry-button');
@@ -186,23 +192,31 @@ test('controller skip cannot carry held Confirm into Retry', async (t) => {
       buttons: Array.from({ length: 17 }, () => ({ pressed: false, value: 0 })),
     };
   navigator.getGamepads = () => [pad];
-  // Neutral auto-join does not consume a Confirm press. The first press below
-  // skips the wreck, and its held state must not activate the focused Retry.
+  // Neutral auto-join does not consume a Confirm press. The actual menu
+  // lifecycle commits on release, so holding cannot skip or activate Retry.
   page.frame(0);
   pad.buttons[0] = { pressed: true, value: 1 };
   page.frame(0);
-  assert.equal(page.$('game-overlay').dataset.kind, 'lost');
-  assert.equal(page.doc.activeElement.id, 'retry-button');
+  assert.equal(page.$('game-overlay').hidden, true);
+  assert.equal(page.doc.activeElement.id, 'skip-celebration');
   for (let i = 0; i < 4; i++) page.frame(0);
+  assert.equal(page.$('game-overlay').hidden, true);
   assert.equal(page.rendered.run, run);
   assert.deepEqual(authoritativeCheckpoint(run), checkpoint);
   pad.buttons[0] = { pressed: false, value: 0 };
   page.frame(0);
+  assert.equal(page.$('game-overlay').dataset.kind, 'lost');
+  assert.equal(page.doc.activeElement.id, 'retry-button');
   // The Confirm lifecycle uses the real performance clock. Observe a full
   // neutral window before treating the next press as a deliberate Retry.
   await delay(130);
   page.frame(0);
   pad.buttons[0] = { pressed: true, value: 1 };
+  page.frame(0);
+  assert.equal(page.$('retry-button').disabled, false);
+  for (let i = 0; i < 4; i++) page.frame(0);
+  assert.equal(page.rendered.run, run, 'Holding the next Confirm does not start Retry.');
+  pad.buttons[0] = { pressed: false, value: 0 };
   page.frame(0);
   assert.equal(
     page.rendered.run,
@@ -238,10 +252,13 @@ test('nonterminal wreck follows ordinary recovery; Pause holds both recovery and
   assert.equal(run.lives, 1);
   assert.equal(page.$('skip-celebration').hidden, true);
   assert.equal(page.rendered.defeatEffectsRunning, false);
+  assert.equal(page.rendered.signalReception, 'playing');
   const age = effect().age;
   page.$('pause-button').click();
   const checkpoint = authoritativeCheckpoint(run);
   page.frame(100);
+  assert.equal(page.rendered.signalReception, 'playing');
+  assert.equal(page.rendered.signalEffectsRunning, false);
   assert.equal(effect().age, age);
   assert.deepEqual(authoritativeCheckpoint(run), checkpoint);
   page.$('start-button').click();
@@ -249,6 +266,7 @@ test('nonterminal wreck follows ordinary recovery; Pause holds both recovery and
   assert.equal(run.status, 'running');
   assert.equal(run.lives, 1);
   assert.equal(page.$('game-overlay').hidden, true);
+  assert.equal(page.rendered.signalReception, 'playing');
 });
 
 test('terminal Pause freezes the brief cue; mouse/touch skip reaches results without a gameplay tick', async (t) => {
@@ -257,6 +275,7 @@ test('terminal Pause freezes the brief cue; mouse/touch skip reaches results wit
   page.$('pause-button').click();
   const age = effect().age;
   for (let i = 0; i < 10; i++) page.frame(100);
+  assert.equal(page.rendered.signalEffectsRunning, false);
   assert.equal(effect().age, age);
   assert.equal(page.$('game-overlay').hidden, true);
   assert.match(page.$('run-message').textContent, /presentation paused/);

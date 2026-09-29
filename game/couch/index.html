@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en" data-tool-state="loading">
+<html lang="en" data-build-version="__REVEALLINE_VERSION__" data-tool-state="loading">
   <head>
     <meta charset="UTF-8" />
     <link rel="stylesheet" href="../i18n/style.css" />
@@ -8,7 +8,7 @@
     <script src="../i18n/bootstrap.mjs"></script>
 
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-    <title data-i18n="interface:couchRaceRevealLine">Couch race · Reveal Line</title>
+    <title data-i18n="interface:couchRaceRevealLine">Couch race · FPV / LINE</title>
     <link rel="stylesheet" href="../style.css" />
     <link rel="stylesheet" href="../ui/game-shell.css" />
     <link rel="stylesheet" href="../ui/pixel-theme.css" />
@@ -28,6 +28,14 @@
     <link rel="stylesheet" href="../ui/handheld-play.css" />
     <link rel="stylesheet" href="../ui/journey-save-cue.css" />
     <link rel="stylesheet" href="../ui/quick-music-controls.css" />
+    <link rel="stylesheet" href="../ui/menu-scenes.css" />
+    <link rel="stylesheet" href="../ui/native-menu.css" />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="../ui/art/identity/fpv-line/icon-32.png"
+    />
   </head>
   <body class="field-kit field-kit-support" data-field-kit-page="couch">
     <div data-language-control data-language-launch></div>
@@ -348,7 +356,7 @@
             data-i18n-aria-label="common:game.mode"
           ></nav>
           <p class="race-kicker" data-i18n="interface:revealLineLocalTwoPlayer">
-            REVEAL LINE / LOCAL TWO PLAYER
+            FPV / LINE / LOCAL TWO PLAYER
           </p>
           <h1 class="field-kit-display" id="race-title" data-i18n-rich="interface:twoBoardsOneRace">
             Two boards.<br data-i18n-slot="slot0" />One race.
@@ -924,9 +932,7 @@
           hidden
           inert
         >
-          <p class="race-kicker" data-i18n="interface:couch.helpKicker">
-            REVEAL LINE / HOW TO PLAY
-          </p>
+          <p class="race-kicker" data-i18n="interface:couch.helpKicker">FPV / LINE / HOW TO PLAY</p>
           <h1 id="race-help-title" data-i18n="common:navigation.howToPlay">How to play</h1>
           <div id="race-help-unit">
             <div class="reading-toolbar">

@@ -5,7 +5,16 @@ import { deferred, waitFor } from './helpers/coop-presentation-fixture.mjs';
 import { COOP_STARTER_PACK } from '../coop/library.mjs';
 import { AUDIO_PREFERENCES_KEY } from '../audio-preferences.mjs';
 
-const ids = ['controls', 'audio', 'display', 'data'];
+const ids = [
+  'gameplay',
+  'controls',
+  'audio',
+  'display',
+  'accessibility',
+  'data',
+  'content',
+  'extras',
+];
 const tab = (f, id) => f.$(`coop-settings-tab-${id}`);
 const open = (f) => {
   f.$('coop-settings-open').focus();
@@ -61,7 +70,7 @@ const pause = (f) => {
   f.tick();
 };
 
-test('Team Settings has the same four categories, original controls, and exact lobby return without preparing or saving', async (t) => {
+test('Team Settings has all eight categories, original controls, and exact lobby return without preparing or saving', async (t) => {
   const f = await fixture(t);
   const controls = ['coop-touch', 'coop-audio', 'coop-text-face', 'coop-menu-palette'].map(f.$);
   const before = state(f);
@@ -77,6 +86,14 @@ test('Team Settings has the same four categories, original controls, and exact l
     assert.equal(ids.filter((key) => !f.$(`coop-settings-panel-${key}`).hidden).length, 1);
   }
   for (const node of controls) assert.equal(f.$(node.id), node);
+  for (const id of ['coop-text-face', 'coop-text-size']) {
+    assert.equal(f.$(id).parentNode, f.$('coop-settings-panel-accessibility'));
+    assert.equal(
+      f.doc.querySelector(`label[for="${id}"]`).parentNode,
+      f.$('coop-settings-panel-accessibility'),
+    );
+  }
+  assert.equal(f.$('coop-system-reduction').parentNode, f.$('coop-settings-panel-accessibility'));
   assert.match(f.$('coop-settings-panel-data').textContent, /does not write Solo saves/);
   f.$('coop-settings-close').click();
   assert.equal(f.doc.activeElement.id, 'coop-settings-open');
@@ -111,14 +128,39 @@ test('Settings stays above a retained paused Team attempt and reopens its select
   assert.notEqual(f.$('coop-clock').textContent, before.hud[0]);
 });
 
+test('compact Team native cancellation returns to categories before the host closes Settings', async (t) => {
+  const f = await fixture(t);
+  f.doc.defaultView.innerWidth = 640;
+  pause(f);
+  const before = state(f),
+    writes = [...f.writes];
+  open(f);
+  tab(f, 'accessibility').click();
+  const dialog = f.$('coop-options');
+  assert.equal(dialog.getAttribute('data-settings-view'), 'panel');
+  assert.equal(f.doc.activeElement.id, 'coop-text-face');
+  const first = dialog.emit('cancel', { bubbles: false });
+  assert.equal(first.defaultPrevented, true);
+  assert.equal(dialog.open, true, 'the host close listener cannot consume this same Back');
+  assert.equal(dialog.getAttribute('data-settings-view'), 'categories');
+  assert.equal(f.doc.activeElement, tab(f, 'accessibility'));
+  dialog.emit('cancel', { bubbles: false });
+  assert.equal(dialog.open, false);
+  assert.equal(f.doc.activeElement.id, 'coop-settings-open');
+  f.tick(60);
+  assert.deepEqual(state(f), before);
+  assert.deepEqual(f.writes, writes);
+  assert.equal(f.$('coop-overlay').hidden, false, 'closing Settings leaves the attempt paused');
+});
+
 test('Settings tab keys stay in the categories and Tab cannot reach inactive content or the arena', async (t) => {
   const f = await fixture(t);
   open(f);
   for (const [key, expected] of [
-    ['ArrowLeft', 'audio'],
-    ['Home', 'controls'],
-    ['End', 'data'],
-    ['ArrowRight', 'controls'],
+    ['ArrowUp', 'audio'],
+    ['Home', 'gameplay'],
+    ['End', 'extras'],
+    ['ArrowDown', 'gameplay'],
   ]) {
     const event = f.press(key);
     assert.equal(event.defaultPrevented, true);
@@ -137,6 +179,7 @@ test('a controller selects Team Settings and paused quick sound without resuming
   const f = await fixture(t);
   pause(f);
   const before = state(f);
+  const writesBefore = f.writes.length;
   const pad = {
     index: 0,
     id: 'Settings controller',
@@ -159,7 +202,10 @@ test('a controller selects Team Settings and paused quick sound without resuming
   button(0);
   assert.equal(f.$('coop-options').open, true);
   for (const id of ['audio', 'data', 'controls', 'display']) {
-    for (let i = 0; i < 24 && f.doc.activeElement !== tab(f, id); i++) button(13);
+    for (let i = 0; i < ids.length && f.doc.activeElement !== tab(f, id); i++) {
+      const current = f.doc.activeElement.id.replace('coop-settings-tab-', '');
+      button(ids.indexOf(current) < ids.indexOf(id) ? 13 : 12);
+    }
     assert.equal(f.doc.activeElement, tab(f, id));
     button(0);
     assert.equal(tab(f, id).getAttribute('aria-selected'), 'true');
@@ -175,7 +221,10 @@ test('a controller selects Team Settings and paused quick sound without resuming
   f.tick(120);
   assert.equal(f.$('coop-quick-sound').textContent, 'Sound: on');
   assert.equal(JSON.parse(f.values.get(AUDIO_PREFERENCES_KEY)).muted, false);
-  assert.deepEqual([...new Set(f.writes.map(([key]) => key))], [AUDIO_PREFERENCES_KEY]);
+  assert.deepEqual(
+    [...new Set(f.writes.slice(writesBefore).map(([key]) => key))],
+    [AUDIO_PREFERENCES_KEY],
+  );
   assert.deepEqual(state(f), { ...before, stored: [...f.values] });
 });
 
@@ -263,6 +312,7 @@ test('paused keyboard quick Sound and Settings mute share one owner without resu
   const f = await fixture(t);
   pause(f);
   const before = state(f);
+  const writesBefore = f.writes.length;
   const note = f.$('coop-audio-note').textContent;
   for (let i = 0; i < 30 && f.doc.activeElement.id !== 'coop-quick-sound'; i++) f.tap('Tab');
   assert.equal(f.doc.activeElement.id, 'coop-quick-sound');
@@ -279,7 +329,10 @@ test('paused keyboard quick Sound and Settings mute share one owner without resu
   assert.equal(f.$('coop-quick-sound').getAttribute('aria-pressed'), 'false');
   assert.equal(f.$('coop-audio-note').textContent, note);
   assert.equal(JSON.parse(f.values.get(AUDIO_PREFERENCES_KEY)).muted, true);
-  assert.deepEqual([...new Set(f.writes.map(([key]) => key))], [AUDIO_PREFERENCES_KEY]);
+  assert.deepEqual(
+    [...new Set(f.writes.slice(writesBefore).map(([key]) => key))],
+    [AUDIO_PREFERENCES_KEY],
+  );
   assert.equal(f.values.get('revealline.library.test.v1'), 'preserved solo profile');
   assert.equal(f.values.get('revealline.suspended.test.v1'), 'preserved solo flight');
   f.$('coop-settings-close').click();
@@ -292,6 +345,7 @@ test('terminal disposal retires Settings controls without reopening, refocusing,
   pause(f);
   open(f);
   const reads = f.artwork.calls.reads.length;
+  const writes = [...f.writes];
   // Native close observers can synchronously repeat terminal page disposal.
   f.$('coop-options').addEventListener('close', () => f.win.emit('pagehide'));
   f.win.emit('pagehide');
@@ -302,7 +356,7 @@ test('terminal disposal retires Settings controls without reopening, refocusing,
   f.$('coop-options').emit('close', { bubbles: false });
   assert.equal(f.$('coop-options').open, false);
   assert.equal(f.doc.activeElement, focus);
-  assert.deepEqual(f.writes, []);
+  assert.deepEqual(f.writes, writes);
   assert.equal(f.artwork.calls.reads.length, reads);
   assert.equal(f.artwork.calls.closes, 1);
   assert.deepEqual(f.artwork.calls.releases, f.artwork.calls.urls);
@@ -315,12 +369,12 @@ test('a newer focus choice during native Settings opening wins over the default 
         show = dialog.showModal;
       dialog.showModal = () => {
         show();
-        $('coop-text-face').focus();
+        $('coop-menu-palette').focus();
       };
     },
   });
   open(f);
-  assert.equal(f.doc.activeElement.id, 'coop-text-face');
+  assert.equal(f.doc.activeElement.id, 'coop-menu-palette');
 });
 
 for (const change of ['reopen', 'background'])

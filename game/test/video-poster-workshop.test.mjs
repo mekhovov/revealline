@@ -218,7 +218,7 @@ test('actual workshop handlers inspect/select/capture and retain exact PNG until
   assert.equal(await h.$('capture').onclick(), true);
   assert.equal(h.doc.activeElement, h.$('download'));
   assert.equal(h.$('download').hidden, false);
-  assert.equal(h.$('download').download, 'RevealLine-poster-2.png');
+  assert.equal(h.$('download').download, 'fpv-line-poster-2.png');
   assert.match(
     h.$('evidence').textContent,
     /Requested seek: 2 s.*\nObserved frame timestamp: 1.967/,
@@ -331,7 +331,7 @@ test('verified optional trim publishes the adapter output URL and explicit audio
   assert.equal(h.$('trim').disabled, false);
   assert.equal(await h.host.trimVideo(), true);
   assert.equal(h.$('trim-download').hidden, false);
-  assert.equal(h.$('trim-download').download, 'RevealLine-transformed.mp4');
+  assert.equal(h.$('trim-download').download, 'fpv-line-transformed.mp4');
   assert.match(h.$('trim-evidence').textContent, /Visual boundaries: start error 0\.002/);
   assert.match(h.$('trim-evidence').textContent, /Audio synchronization: unverified/);
   assert.deepEqual(await h.urls.values().next().value.text(), 'trimmed');

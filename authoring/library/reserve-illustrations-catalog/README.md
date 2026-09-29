@@ -15,7 +15,9 @@ python3 authoring/library/reserve-illustrations-catalog/catalog.py
 python3 authoring/library/reserve-illustrations-catalog/catalog.py --serve
 ```
 
-The second command prints an available loopback URL. It serves this small catalog from the worktree and the 103 unique selected source/text references from the pinned Git objects, on demand. It has no directory listing or filesystem fallback. It does not write image files, create disk caches, build a site, connect to a network service or change a Git ref. Each requested source body is checked against its recorded length and SHA-256 before delivery. HEAD requests check route metadata without reading PNG bodies. Use Ctrl-C to stop this owned server.
+The second command prints an available loopback URL. It serves this small catalog and an explicit, bounded list of controller UI modules, styles and fonts from the worktree, plus the 103 unique selected source/text references from the pinned Git objects, on demand. It has no directory listing or filesystem fallback. It does not write image files, create disk caches, build a site, connect to a network service or change a Git ref. Each requested source body is checked against its recorded length and SHA-256 before delivery. HEAD requests check route metadata without reading PNG bodies. Use Ctrl-C to stop this owned server.
+
+Run `python3 authoring/library/reserve-illustrations-catalog/test_catalog.py` to check the current controller dependency closure and live HTTP byte/MIME behavior. The server rejects unlisted repository files and traversal paths. Changing a UI import requires reviewing its explicit route entry in `catalog.py`; no image directory is added to that list.
 
 A full checkout can also use an ordinary repository HTTP server at `authoring/library/reserve-illustrations-catalog/index.html`. Opening through `file://` may block the JSON/module fetch; use HTTP. The sparse preview requires Git object availability for the pinned source commit. It intentionally refuses missing or mismatched references rather than substituting another original.
 

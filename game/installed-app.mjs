@@ -2,6 +2,7 @@ import {
   editionIdFromLocation,
   installedStateKey,
   resolveEditionContext,
+  validateCompanyInstallationReference,
 } from './edition-context.mjs';
 import { profileWriterOwns } from './profile-writer.mjs';
 export const INSTALLED_STATE_KEY = 'revealline.installed-app.v1';
@@ -41,6 +42,18 @@ export function validateInstalledEdition(value, locationRef = globalThis.locatio
   const editionId = editionIdFromLocation(locationRef);
   if (value.editionId !== undefined && value.editionId !== editionId)
     throw new Error('The installed edition identity differs from this app.');
+  let sameEditionAlias = false;
+  if (editionId !== undefined) {
+    try {
+      validateCompanyInstallationReference(
+        { ...value, editionId, entry: 'game/company.html' },
+        { editionId, baseURL: app.href, editionRoot: new URL('../', app).pathname },
+      );
+      sameEditionAlias = true;
+    } catch {
+      // Ordinary/default installations retain their existing scope checks.
+    }
+  }
   if (
     !/^v?\d+\.\d+\.\d+$/.test(value.version) ||
     scope.origin !== app.origin ||
@@ -54,6 +67,7 @@ export function validateInstalledEdition(value, locationRef = globalThis.locatio
         value.selection.length > 100 ||
         value.selection.some((id) => typeof id !== 'string' || id.length > 200))) ||
     !(
+      sameEditionAlias ||
       scope.pathname === new URL('../', app).pathname ||
       scope.pathname.startsWith(new URL('../releases/', app).pathname)
     )

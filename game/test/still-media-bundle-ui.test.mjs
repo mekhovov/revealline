@@ -91,7 +91,7 @@ test('actual workshop reviews without writes, explicitly restores all originals,
   assert.equal(clicks, 0);
   assert.equal(link.hidden, false);
   assert.equal(h.doc.activeElement, link);
-  assert.equal(link.download, 'RevealLine-originals.rlmedia');
+  assert.equal(link.download, 'fpv-line-originals.rlmedia');
   assert.deepEqual(await bytes(h.urls.get(link.href)), await bytes(bundle));
   assert.match(h.$('status').textContent, /has not saved a file to disk/);
   link.click();

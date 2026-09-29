@@ -128,7 +128,8 @@ for (const route of ['opening', 'authored']) {
       p.$('shell-title-versus').getAttribute('href'),
       `couch/?journey=${route}&return=solo`,
     );
-    assert.match(p.$('shell-title-team').textContent, /Separate Team arenas/);
+    assert.equal(p.$('shell-title-team').textContent, 'Team');
+    assert.equal(p.$('shell-title-team').dataset.menuIcon, 'team');
     await action(p.$('shell-title-versus'));
     assert.equal(
       globalThis.location.href,
@@ -144,7 +145,8 @@ for (const route of ['opening', 'authored']) {
     const p = await versus(t, route),
       before = p.checkpoint();
     assert.equal(p.$('race-journey-note').hidden, false);
-    assert.match(p.$('race-coop').textContent, /Separate Team arenas/);
+    assert.equal(p.$('race-coop').textContent, 'Team');
+    assert.equal(p.$('race-coop').dataset.menuIcon, 'team');
     assert.equal(
       p.$('race-coop').getAttribute('href'),
       `relay-rescue.html?return=versus&journey-return=${route}`,

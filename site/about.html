@@ -11,10 +11,10 @@
     <meta name="theme-color" content="#091118" />
     <meta
       name="description"
-      content="Reveal Line is a modern pixel-art territory-capture game with a guided coach, Solo, Couch Versus, Couch Team, and optional campaign packs."
+      content="FPV / LINE is a modern pixel-art territory-capture game with a guided coach, Solo, Couch Versus, Couch Team, and optional campaign packs."
       data-i18n-content="website:revealLineIsAModernPixelArtTerritoryCaptureGame2"
     />
-    <title data-i18n="website:aboutRevealLineFieldKit">About Reveal Line · Field Kit</title>
+    <title data-i18n="website:aboutRevealLineFieldKit">About FPV / LINE · Field Kit</title>
     <link rel="stylesheet" href="./landing.css" />
     <link rel="stylesheet" href="../game/ui/field-kit-fonts.css" />
     <link rel="stylesheet" href="../game/ui/field-kit-tokens.css" />
@@ -23,6 +23,12 @@
     <script type="module" src="../game/presentation/page-entry.mjs"></script>
     <link rel="stylesheet" href="../game/ui/field-kit-surfaces.css" />
     <script type="module" src="../game/ui/field-kit-surfaces.mjs"></script>
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="../game/ui/art/identity/fpv-line/icon-32.png"
+    />
   </head>
   <body class="field-kit field-kit-support" data-field-kit-page="about">
     <div data-language-control></div>
@@ -30,13 +36,16 @@
     <div class="grain" aria-hidden="true"></div>
     <header class="site-header">
       <a
-        class="brand"
+        class="brand fpv-line-brand fpv-line-brand--compact"
         href="../game/"
-        aria-label="Reveal Line home"
+        aria-label="FPV / LINE home"
         data-i18n-aria-label="website:revealLineHome"
       >
-        <span class="brand-mark" aria-hidden="true">◩</span>
-        <span data-i18n-rich="website:revealLine">REVEAL <i data-i18n-slot="slot0">/</i> LINE</span>
+        <img
+          class="fpv-line-wordmark"
+          src="../game/ui/art/identity/fpv-line/wordmark.png"
+          alt="FPV / LINE"
+        />
       </a>
       <label class="field-kit-page-text"
         ><span data-field-kit-copy="display.textSize" data-i18n="website:textSize">Text size</span
@@ -799,12 +808,12 @@
     </main>
 
     <footer class="site-footer">
-      <a class="brand" href="../game/"
-        ><span class="brand-mark" aria-hidden="true">◩</span
-        ><span data-i18n-rich="website:revealLine"
-          >REVEAL <i data-i18n-slot="slot0">/</i> LINE</span
-        ></a
-      >
+      <a class="brand fpv-line-brand fpv-line-brand--compact" href="../game/"
+        ><img
+          class="fpv-line-wordmark"
+          src="../game/ui/art/identity/fpv-line/wordmark.png"
+          alt="FPV / LINE"
+      /></a>
       <p data-i18n="website:originalTerritoryCaptureArcadeLocalSavesNoAccountRequired">
         Original territory-capture arcade · local saves · no account required
       </p>

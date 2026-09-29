@@ -1,0 +1,82 @@
+{
+  "files": 692,
+  "offlineFiles": 689,
+  "offlineBytes": 66665376,
+  "offlineBudget": 67108864,
+  "manifest": {
+    "id": "/editions/droneaid-nl-community/",
+    "start_url": "/editions/droneaid/app/",
+    "scope": "/editions/droneaid/",
+    "name": "DroneAid / LINE",
+    "short_name": "DroneAid / LINE",
+    "display": "standalone",
+    "background_color": "#FFFFFF",
+    "theme_color": "#0D0B2E",
+    "icons": [
+      {
+        "src": "./icon-1.png",
+        "sizes": "192x192",
+        "type": "image/png",
+        "purpose": "any"
+      },
+      {
+        "src": "./icon-2.png",
+        "sizes": "512x512",
+        "type": "image/png",
+        "purpose": "any"
+      }
+    ]
+  },
+  "checked": [
+    {
+      "path": "game/ui/native-menu.css",
+      "bytes": 25041,
+      "sha256": "19056e089648933c5383b0346c9c3a3ef1c43fa2c28413b0fa4dd4b3af0b7476"
+    },
+    {
+      "path": "game/ui/native-menus.mjs",
+      "bytes": 16316,
+      "sha256": "59871fdab5ba9925cc3e3bbf46629a41a5e1603577c0ec31f1f341bcd28b98ce"
+    },
+    {
+      "path": "game/ui/edition-theme-label.mjs",
+      "bytes": 974,
+      "sha256": "ee12e832cb38341a4e063c924c91f563e5c2cfeb123febe70d66e17b93fc1f87"
+    },
+    {
+      "path": "game/ui/menu-scene-motion.mjs",
+      "bytes": 14944,
+      "sha256": "c3436885bcc42a62fa5bc2573688559534b60821ed2de57c69fd7a29f732444e"
+    },
+    {
+      "path": "game/ui/controller-field-editor.css",
+      "bytes": 1986,
+      "sha256": "e42457a6fc83d48f7e2b80163f2c10d6aeb5823d03bbf27e7c8a100fbc2b4aa1"
+    },
+    {
+      "path": "game/ui/soundtrack-panel.css",
+      "bytes": 9055,
+      "sha256": "f2c2f6087b4d9edf3c32c3790acdf03ce539441470f28e14f067af781c64011d"
+    },
+    {
+      "path": "game/ui/soundtrack-panel.mjs",
+      "bytes": 122819,
+      "sha256": "d6461da7abd8450f4c07104c47f9f10f33d624eb6ada077ecd5bd30003c572d1"
+    },
+    {
+      "path": "game/ui/install-offline-panel.css",
+      "bytes": 799,
+      "sha256": "51c433a5404b5f292e5e088a31895cc3e7fd8e88713d629abf95d3cdb6319266"
+    },
+    {
+      "path": "game/ui/art/identity/fpv-line/wordmark.png",
+      "bytes": 485216,
+      "sha256": "1a0e6083ddc1147f20b374178c68618c4fc2ea1cb915664178f371ec055cc298"
+    },
+    {
+      "path": "game/ui/library-panel.mjs",
+      "bytes": 77713,
+      "sha256": "d9f803a63aafda28301035c9cf5fac72cb90ff6b54c092c4476f9e917f9102af"
+    }
+  ]
+}
