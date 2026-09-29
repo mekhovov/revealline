@@ -3757,6 +3757,9 @@ try {
             : 'won'
           : null,
       missionId: roundRecipe?.entry?.mission?.id,
+      feedback: candidateJourney?.owns(roundRecipe?.entry)
+        ? roundRecipe.entry.campaignFeedback
+        : null,
     });
     const running = match.status === 'running';
     $('race-journey-controls').hidden = !!shell && shell.scope() !== 'main' && !running;
@@ -4214,7 +4217,20 @@ try {
           for (let i = 0; i < 2; i++)
             if (match.runs[i].tick !== before[i]) {
               painters[i].effectsFor(match.runs[i].events, match.runs[i]);
-              for (const event of match.runs[i].events) sound.event(event);
+              for (const event of match.runs[i].events)
+                sound.event(
+                  event,
+                  {},
+                  event.type === 'run.completed' && candidateJourney?.owns(roundRecipe?.entry)
+                    ? {
+                        owned: true,
+                        mode: 'versus',
+                        outcome: match.runs[i].status,
+                        missionId: roundRecipe.entry.mission.id,
+                        feedback: roundRecipe.entry.campaignFeedback,
+                      }
+                    : null,
+                );
               const run = match.runs[i],
                 caption = foundationReturnCaption(run);
               if (caption)
