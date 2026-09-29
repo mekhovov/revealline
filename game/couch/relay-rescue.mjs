@@ -1417,9 +1417,10 @@ export function bootCoop({
       context.imageSmoothingEnabled = false;
       context.drawImage(owner.picture.binding.image, 0, 0, 1152, 576);
       if (!earnedCurrent(owner)) return;
+      const earnedLevel = attemptLevel || owner.run.level;
       localizedText($('coop-earned-picture-title'), () =>
         t('interface:team.sharedPictureTitle', {
-          mission: contentText(attemptLevel || run.level, 'name'),
+          mission: contentText(earnedLevel, 'name'),
         }),
       );
       navigation.clear();
@@ -1522,8 +1523,10 @@ export function bootCoop({
     );
     discoveryControls();
     if (!show) return;
-    const won = run.status === 'won',
-      lost = run.status === 'lost';
+    const resultRun = run,
+      resultKnockdowns = knockdowns.filter(Boolean),
+      won = resultRun.status === 'won',
+      lost = resultRun.status === 'lost';
     const destination = won && !loopStopped ? teamDestination() : null;
     $('coop-next').hidden = !destination?.next && !destination?.error;
     localizedText($('coop-next'), () =>
@@ -1585,16 +1588,16 @@ export function bootCoop({
       won
         ? [
             t('interface:team.resultCoverage', {
-              coverage: formatNumber(run.coverage * 100, {
+              coverage: formatNumber(resultRun.coverage * 100, {
                 minimumFractionDigits: 1,
                 maximumFractionDigits: 1,
               }),
-              time: clock(run.time),
+              time: clock(resultRun.time),
             }),
-            t('interface:team.resultJointCuts', { count: formatNumber(run.team.jointCuts) }),
-            t('interface:team.resultRescues', { count: formatNumber(run.team.rescues) }),
+            t('interface:team.resultJointCuts', { count: formatNumber(resultRun.team.jointCuts) }),
+            t('interface:team.resultRescues', { count: formatNumber(resultRun.team.rescues) }),
             t('interface:team.resultInterceptions', {
-              count: formatNumber(run.team.interceptions),
+              count: formatNumber(resultRun.team.interceptions),
             }),
             destination?.next
               ? t('interface:team.nextArenaResult', {
@@ -1607,94 +1610,103 @@ export function bootCoop({
                   : t('interface:browseTeamArenasOrRetryThisChallenge'),
           ].join(' ')
         : lost
-          ? coopRetryFeedback(run, knockdowns.filter(Boolean))
+          ? coopRetryFeedback(resultRun, resultKnockdowns)
           : t('interface:releaseYourControlsThenChooseResumeTogether'),
     );
     if (focus) primary().focus({ preventScroll: true });
   }
   function render() {
-    if (!run) return;
+    const renderedRun = run;
+    if (!renderedRun) return;
+    // Locale bindings may outlive this attempt after returning to setup.
+    const renderedLevel = attemptLevel || renderedRun.level;
     localizedText(
       $('coop-stage'),
       () =>
-        `${attemptTuning.get(run)?.adminOverride ? '' + t('interface:adminPlaytest') + ' ' : ''}${contentText(attemptLevel || run.level, 'name').toUpperCase()}`,
+        `${attemptTuning.get(renderedRun)?.adminOverride ? '' + t('interface:adminPlaytest') + ' ' : ''}${contentText(renderedLevel, 'name').toUpperCase()}`,
     );
-    const bonusView = coopBonusView(run),
+    const bonusView = coopBonusView(renderedRun),
       bonusLive = coopBonusLive(bonusView);
     localizedText($('coop-bonus-live'), () => coopBonusLive(bonusView));
     $('coop-bonus-live').hidden = !bonusLive;
-    $('coop-bonus-details').hidden = !bonusView || run.status !== 'paused';
+    $('coop-bonus-details').hidden = !bonusView || renderedRun.status !== 'paused';
     localizedText(
       $('coop-bonus-detail-state'),
       () => coopBonusDetails(bonusView) || t('interface:noPickupOrEffectWindowActive'),
     );
     localizedText($('coop-bonus-help'), () => (bonusView ? teamBonusHelp() : ''));
-    painter.paint(run, {
+    painter.paint(renderedRun, {
       reduced: displayPreferences.snapshot().effectiveReducedEffects,
       textFace: displayPreferences.snapshot().textFace,
       textSize: displayPreferences.snapshot().textSize,
       picture: acceptedPicture?.binding ?? null,
       actorAppearance: acceptedPicture?.actorAppearance ?? null,
-      pictureLevel: attemptTuning.get(run)?.pictureLevel ?? run.level,
+      pictureLevel: attemptTuning.get(renderedRun)?.pictureLevel ?? renderedRun.level,
     });
     updateCueOverflow();
-    const coverage = run.coverage * 100;
+    const coverage = renderedRun.coverage * 100;
     localizedText(
       $('coop-coverage'),
       () => `${formatNumber(coverage, { minimumFractionDigits: 1, maximumFractionDigits: 1 })}%`,
     );
-    $('coop-coverage').dataset.target = run.level.goal.coverage
-      ? ` / ${Math.round(run.level.goal.coverage * 100)}%`
+    $('coop-coverage').dataset.target = renderedRun.level.goal.coverage
+      ? ` / ${Math.round(renderedRun.level.goal.coverage * 100)}%`
       : '';
     $('coop-progress').value = coverage;
     localizedText($('coop-reserves'), () =>
-      t('gameplay:team.reserves', { count: run.team.reserves }),
+      t('gameplay:team.reserves', { count: renderedRun.team.reserves }),
     );
-    localizedText($('coop-clock'), () => clock(run.time));
-    const strongholds = run.strongholds.filter((item) => run.level.goal.cores?.includes(item.id));
+    localizedText($('coop-clock'), () => clock(renderedRun.time));
+    const strongholds = renderedRun.strongholds.filter((item) =>
+      renderedRun.level.goal.cores?.includes(item.id),
+    );
     const stronghold = strongholds.find((item) => !item.defeated);
     $('coop-objective').dataset.kind = stronghold ? 'stronghold' : 'coverage';
-    localizedText($('coop-objective'), () => coopObjectiveLabel(run));
-    const finished = run.status === 'won' || run.status === 'lost';
-    const groundContext = coopGroundContext(run.level);
-    for (const player of run.players) {
+    localizedText($('coop-objective'), () => coopObjectiveLabel(renderedRun));
+    const finished = renderedRun.status === 'won' || renderedRun.status === 'lost';
+    const groundContext = coopGroundContext(renderedRun.level);
+    for (const player of renderedRun.players) {
       localizedText($('coop-state-' + player.id), () =>
         finished
-          ? run.status === 'won'
+          ? renderedRun.status === 'won'
             ? t('interface:objectiveComplete')
             : t('interface:attemptEnded')
           : player.status === 'downed'
-            ? run.team.reserves === 0
+            ? renderedRun.team.reserves === 0
               ? t('interface:downFreeRescueAvailable')
               : t('gameplay:team.rescueSeconds', {
-                  seconds: formatNumber(Math.max(0, Math.ceil(player.downedUntil - run.time))),
+                  seconds: formatNumber(
+                    Math.max(0, Math.ceil(player.downedUntil - renderedRun.time)),
+                  ),
                 })
             : player.cutting
               ? t('interface:lineExposed')
-              : player.graceUntil > run.time
+              : player.graceUntil > renderedRun.time
                 ? t('gameplay:team.recoveryShield', { context: groundContext })
                 : t('gameplay:team.onGround', { context: groundContext }),
       );
       localizedAttribute($('coop-state-' + player.id), 'data-compact', () =>
         finished
-          ? run.status === 'won'
+          ? renderedRun.status === 'won'
             ? t('interface:complete')
             : t('interface:ended')
           : player.status === 'downed'
-            ? run.team.reserves === 0
+            ? renderedRun.team.reserves === 0
               ? t('interface:freeRescue')
               : t('gameplay:team.rescueCompact', {
-                  seconds: formatNumber(Math.max(0, Math.ceil(player.downedUntil - run.time))),
+                  seconds: formatNumber(
+                    Math.max(0, Math.ceil(player.downedUntil - renderedRun.time)),
+                  ),
                 })
             : player.cutting
               ? t('interface:exposed')
-              : player.graceUntil > run.time
+              : player.graceUntil > renderedRun.time
                 ? t('interface:shielded')
                 : groundContext === 'reclaimed'
                   ? t('interface:reclaimed')
                   : t('interface:safe'),
       );
-      const recharge = Math.max(0, (player.support?.readyAt || 0) - run.time);
+      const recharge = Math.max(0, (player.support?.readyAt || 0) - renderedRun.time);
       const supportRole = () =>
         player.supportRole === 'interceptor'
           ? t('interface:interceptor')
@@ -1739,11 +1751,11 @@ export function bootCoop({
       );
       localizedText($('coop-support-' + player.id), () =>
         finished
-          ? `${names()[player.id]}: ${run.status === 'won' ? t('interface:objectiveCompleteChooseAnotherArenaOrRetry') : t('interface:attemptEndedChooseRetryOrChangeSetup')}`
+          ? `${names()[player.id]}: ${renderedRun.status === 'won' ? t('interface:objectiveCompleteChooseAnotherArenaOrRetry') : t('interface:attemptEndedChooseRetryOrChangeSetup')}`
           : player.rescue
             ? t('gameplay:team.rescuing', {
                 percent: formatNumber(
-                  Math.min(100, Math.floor((run.time - player.rescue.startedAt) * 100)),
+                  Math.min(100, Math.floor((renderedRun.time - player.rescue.startedAt) * 100)),
                 ),
               })
             : player.status === 'downed'
@@ -2732,9 +2744,8 @@ export function bootCoop({
           $('coop-difficulty').value = previous.difficulty;
           $('coop-experiment').value = previous.configuration;
           setupNote({ level: attemptLevel, experiment: run.config });
-          localizedText($('coop-stage'), () =>
-            contentText(attemptLevel || run.level, 'name').toUpperCase(),
-          );
+          const restoredLevel = attemptLevel || run.level;
+          localizedText($('coop-stage'), () => contentText(restoredLevel, 'name').toUpperCase());
           $('coop-progress').max = run.level.goal.coverage ? run.level.goal.coverage * 100 : 100;
           overlay({ focus: false });
         }
@@ -3242,9 +3253,8 @@ export function bootCoop({
       pictureUI(previous.pictureMessage);
       if (!owns()) return;
       if (run) {
-        localizedText($('coop-stage'), () =>
-          contentText(attemptLevel || run.level, 'name').toUpperCase(),
-        );
+        const restoredLevel = attemptLevel || run.level;
+        localizedText($('coop-stage'), () => contentText(restoredLevel, 'name').toUpperCase());
         $('coop-progress').max = run.level.goal.coverage ? run.level.goal.coverage * 100 : 100;
       }
       overlay({ focus: false });

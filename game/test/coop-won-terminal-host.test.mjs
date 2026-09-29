@@ -1,6 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { page } from './helpers/coop-host.mjs';
+import { setLocale } from '../i18n/index.mjs';
 import {
   winTeam,
   teamHud as hud,
@@ -55,6 +56,7 @@ for (const [level, name] of [
   });
 
 test('earned Team victory → keyboard Change setup returns to Ready without discard or automatic Start', async (t) => {
+  t.after(() => setLocale('en', { persist: false }));
   const { f, first } = await win(t);
   tabTo(f, 'coop-lobby');
   f.doc.documentElement.clientWidth = 844;
@@ -83,6 +85,10 @@ test('earned Team victory → keyboard Change setup returns to Ready without dis
   assert.deepEqual(hud(f), before);
   assert.equal(f.$('coop-menu').hidden, false);
   assert.deepEqual(f.visits, []);
+  assert.doesNotThrow(() => setLocale('uk', { persist: false }));
+  assert.doesNotThrow(() => setLocale('en', { persist: false }));
+  assert.equal(f.doc.activeElement.id, 'coop-start');
+  assert.equal(f.$('coop-menu').hidden, false);
   f.tap('Enter');
   assert.equal(f.$('coop-menu').hidden, true);
   assert.equal(f.doc.activeElement.id, 'coop-canvas');
