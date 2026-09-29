@@ -1,0 +1,185 @@
+{
+  "observedAt": "2026-09-29T15:25:50.787546+00:00",
+  "pullRequests": [
+    {
+      "number": 803,
+      "title": "[Target v0.150.0 input] Restore universal Solo skip and compact pause UX",
+      "head": "8f06ab31ee5754ec38c759609c45881b63784801",
+      "headRef": "codex/pause-menu-universal-skip",
+      "baseRef": "main",
+      "draft": false,
+      "milestone": "v0.150.0 \u2014 Unified native experience",
+      "url": "https://github.com/mekhovov/revealline/pull/803"
+    },
+    {
+      "number": 802,
+      "title": "[Target v0.150.0 input] Preserve historical Studio and Team proposals for selective review",
+      "head": "61eeeadb2e66c8ff80c82784f0801e9eabc69037",
+      "headRef": "codex/historical-proposal-review-20260929",
+      "baseRef": "main",
+      "draft": true,
+      "milestone": "v0.150.0 \u2014 Unified native experience",
+      "url": "https://github.com/mekhovov/revealline/pull/802"
+    },
+    {
+      "number": 800,
+      "title": "[Superseded input] Preserve historical Steam Deck settling proposal",
+      "head": "bf3b6b1b76870ad9a6ba1d6629365f3c011912f8",
+      "headRef": "codex/steamdeck-confirm-gate-fix",
+      "baseRef": "main",
+      "draft": true,
+      "milestone": "Superseded components",
+      "url": "https://github.com/mekhovov/revealline/pull/800"
+    },
+    {
+      "number": 797,
+      "title": "[Target v0.150.0 input] Support two controllers and shared EdgeTX radio sticks",
+      "head": "4ce585fb666f5338f0d69aebe5df3d64d66a9546",
+      "headRef": "codex/radio-integration",
+      "baseRef": "codex/radio-review-base-20260929",
+      "draft": true,
+      "milestone": "v0.150.0 \u2014 Unified native experience",
+      "url": "https://github.com/mekhovov/revealline/pull/797"
+    },
+    {
+      "number": 796,
+      "title": "[Target v0.150.0] Combine native experience with spatial audio and quieter feedback",
+      "head": "c99fbbac348691bb91bd16a7e1e281f5a9e2b69b",
+      "headRef": "codex/combined-native-spatial-audio-20260929",
+      "baseRef": "main",
+      "draft": true,
+      "milestone": "v0.150.0 \u2014 Unified native experience",
+      "url": "https://github.com/mekhovov/revealline/pull/796"
+    },
+    {
+      "number": 795,
+      "title": "[Target v0.150.0] Integrate reviewed native experience, Team recovery and audio",
+      "head": "6a949973b740edacc953c120d38008b346b7724a",
+      "headRef": "codex/bulk-audio-integration-20260929",
+      "baseRef": "main",
+      "draft": false,
+      "milestone": "v0.150.0 \u2014 Unified native experience",
+      "url": "https://github.com/mekhovov/revealline/pull/795"
+    },
+    {
+      "number": 794,
+      "title": "[Target v0.150.0 input] Add spatial sound design and synchronized capture feedback",
+      "head": "337ded7926168c465229253242c4c93c8be3955b",
+      "headRef": "codex/spatial-game-audio",
+      "baseRef": "main",
+      "draft": true,
+      "milestone": "v0.150.0 \u2014 Unified native experience",
+      "url": "https://github.com/mekhovov/revealline/pull/794"
+    },
+    {
+      "number": 787,
+      "title": "Preserve opt-in CI timing and balanced-shard tools",
+      "head": "6138b28ba068455128c3d4f55de6aa2ae283649f",
+      "headRef": "codex/ci-timing-intake-20260929",
+      "baseRef": "main",
+      "draft": true,
+      "milestone": "Branch reconciliation",
+      "url": "https://github.com/mekhovov/revealline/pull/787"
+    },
+    {
+      "number": 783,
+      "title": "[Target v0.150.0 input] Integrate unified native player, menu, branding, and authoring experience",
+      "head": "0cc7337a8e490d73ad9d7718fb5b208aaf7da924",
+      "headRef": "codex/unified-experience-local-20260929",
+      "baseRef": "main",
+      "draft": true,
+      "milestone": "v0.150.0 \u2014 Unified native experience",
+      "url": "https://github.com/mekhovov/revealline/pull/783"
+    },
+    {
+      "number": 782,
+      "title": "[Target v0.150.0 input] Simplify native menus and introduce FPV / LINE identity",
+      "head": "82f9e6ff20941e0b2837438e73eecdd79fad61d6",
+      "headRef": "codex/native-menus-fpv-line",
+      "baseRef": "main",
+      "draft": true,
+      "milestone": "v0.150.0 \u2014 Unified native experience",
+      "url": "https://github.com/mekhovov/revealline/pull/782"
+    },
+    {
+      "number": 781,
+      "title": "[Target v0.150.0 input] Expand demo variety and bound playback loading",
+      "head": "39bb06ceaf2c6c769a0308daa090ed5550250141",
+      "headRef": "codex/local-experience-review-20260929",
+      "baseRef": "codex/unified-experience-local-20260929",
+      "draft": true,
+      "milestone": "v0.150.0 \u2014 Unified native experience",
+      "url": "https://github.com/mekhovov/revealline/pull/781"
+    },
+    {
+      "number": 780,
+      "title": "[Target v0.150.0 input] Document local changes and release integration dependencies",
+      "head": "5d942540e5720d739568d8580ae35d5551253481",
+      "headRef": "codex/local-release-reconciliation",
+      "baseRef": "main",
+      "draft": true,
+      "milestone": "v0.150.0 \u2014 Unified native experience",
+      "url": "https://github.com/mekhovov/revealline/pull/780"
+    },
+    {
+      "number": 779,
+      "title": "[Target v0.150.0 input] Preserve Audio styles across reload and playback",
+      "head": "2c160ed7e8f291fcc80e35c8fa6192d72ce2dfa6",
+      "headRef": "codex/audio-style-persistence",
+      "baseRef": "main",
+      "draft": true,
+      "milestone": "v0.150.0 \u2014 Unified native experience",
+      "url": "https://github.com/mekhovov/revealline/pull/779"
+    },
+    {
+      "number": 761,
+      "title": "[Target v0.150.0 input] Improve FPV roster, optional encounter authoring and artwork collections",
+      "head": "752df72d66c1a1bbbebb95e9db72fe8de0e1f332",
+      "headRef": "codex/actor-rotor-motion",
+      "baseRef": "main",
+      "draft": true,
+      "milestone": "v0.150.0 \u2014 Unified native experience",
+      "url": "https://github.com/mekhovov/revealline/pull/761"
+    },
+    {
+      "number": 747,
+      "title": "[Target v0.142.4 input] Screen company artwork against mission originals",
+      "head": "8f9b7aa6d1494aedfb310dad429b815d43331f31",
+      "headRef": "codex/offline-company-screening",
+      "baseRef": "main",
+      "draft": false,
+      "milestone": "v0.142.4 \u2014 Mission selector and level cards",
+      "url": "https://github.com/mekhovov/revealline/pull/747"
+    },
+    {
+      "number": 745,
+      "title": "[Target v0.150.0] Automate deployed browser moderation cutover",
+      "head": "e390ac9dd1066af78f4e2ce7b3772f66d8de59ad",
+      "headRef": "codex/community-browser-moderation",
+      "baseRef": "codex/community-account-bootstrap",
+      "draft": false,
+      "milestone": "v0.150.0 \u2014 Unified native experience",
+      "url": "https://github.com/mekhovov/revealline/pull/745"
+    },
+    {
+      "number": 738,
+      "title": "[Target v0.142.4 input] Inventory company missions and retained originals",
+      "head": "ec5825e283c1250e423f881677617bdd017d4559",
+      "headRef": "codex/offline-company-inventory",
+      "baseRef": "main",
+      "draft": false,
+      "milestone": "v0.142.4 \u2014 Mission selector and level cards",
+      "url": "https://github.com/mekhovov/revealline/pull/738"
+    },
+    {
+      "number": 736,
+      "title": "[Target v0.150.0] Automate deployed account verification acceptance",
+      "head": "7af3dde47daaf4bc8cd92574a6d62dc803ee00b2",
+      "headRef": "codex/community-account-bootstrap",
+      "baseRef": "codex/community-production-session-acceptance",
+      "draft": false,
+      "milestone": "v0.150.0 \u2014 Unified native experience",
+      "url": "https://github.com/mekhovov/revealline/pull/736"
+    }
+  ]
+}
