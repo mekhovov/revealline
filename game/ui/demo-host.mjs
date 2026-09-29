@@ -4,6 +4,7 @@ import { createRun } from '../core/index.mjs';
 import { arcadeActionCapabilities } from '../core/arcade-actions.mjs';
 import { BoardPainter, boardPaintSizeForRun } from './render.mjs';
 import { resolveDemoPicture } from './demo-picture.mjs';
+import { resolveDemoJourneyPicture } from './demo-journey-picture.mjs';
 import { createDemoDirector } from '../demo-director.mjs';
 import {
   createDemoIdle,
@@ -25,6 +26,7 @@ export function attachDemoHost({
   getContext,
   loadSources,
   readMedia,
+  getJourneyPictureContext = () => null,
   canAutoStart,
   canOpen,
   onEnter,
@@ -283,15 +285,18 @@ export function attachDemoHost({
         overrides,
       );
       check();
-      nextPicture = await resolveDemoPicture({
-        entry,
-        level: source.level,
-        theme,
-        library: current.library,
-        entries: current.entries,
-        readMedia,
-        signal,
-      });
+      const journey = getJourneyPictureContext(source);
+      nextPicture = journey
+        ? await resolveDemoJourneyPicture({ entry, level: source.level, theme, journey, signal })
+        : await resolveDemoPicture({
+            entry,
+            level: source.level,
+            theme,
+            library: current.library,
+            entries: current.entries,
+            readMedia,
+            signal,
+          });
       // A media decoder may have completed after the abort cleanup ran.
       if (released) nextPicture.dispose();
       check();

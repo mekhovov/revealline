@@ -12,6 +12,8 @@ import { deferred } from './helpers/media-fixtures.mjs';
 import { BoardPainter } from '../ui/render.mjs';
 import { createRun, stepRun, FIXED_DT } from '../core/index.mjs';
 import { authoritativeCheckpoint } from '../replay.mjs';
+import { createSessionPictureView } from '../presentation/session-picture-view.mjs';
+import { emptyGenericMediaLibrary, hydrateStoredStillMedia } from '../media-storage-record.mjs';
 
 function request(f, mode = 'standard', themeId = 'fpv') {
   const entry = f.entries.find((item) => item.difficulty === mode);
@@ -30,6 +32,190 @@ function request(f, mode = 'standard', themeId = 'fpv') {
     }),
   };
 }
+
+async function retainWithoutAssignment(f) {
+  const saved = await f.store.read();
+  await f.store.commit(
+    await f.store.prepare({ ...saved.document.library, assignments: [] }, saved.assets, {
+      executionCatalog: f.catalog,
+      previous: saved.document,
+    }),
+    { expectedGeneration: saved.generation },
+  );
+  f.metadata = await f.store.readMetadata();
+}
+
+test('an earned release original stays clear when its retained history has no persistent assignment', async () => {
+  const f = await earnedPictureFixture('gentle');
+  try {
+    await retainWithoutAssignment(f);
+    const profileBefore = JSON.stringify(f.profile),
+      metadataBefore = JSON.stringify(f.metadata),
+      acquired = [];
+    let releases = 0;
+    const options = {
+      ...request(f, 'standard'),
+      acquire: async ({ pin }) => {
+        acquired.push(pin);
+        return { image: { width: 1, height: 1 }, pin, release: () => releases++ };
+      },
+    };
+    const result = await resolveDemoPicture(options);
+    assert.equal(result.pictureVisibility, 'clear');
+    assert.deepEqual(result.backdrop.pin, f.receipt.presentationPin);
+    assert.deepEqual(acquired, [f.receipt.presentationPin]);
+    assert.equal(
+      result.artSeed,
+      null,
+      'A still uses its exact decoded original, not procedural art.',
+    );
+    assert.equal(JSON.stringify(f.profile), profileBefore);
+    assert.equal(JSON.stringify(await f.store.readMetadata()), metadataBefore);
+    result.dispose();
+    result.dispose();
+    assert.equal(releases, 1);
+
+    const unearned = await resolveDemoPicture({ ...options, library: { gallery: [] } });
+    assert.equal(unearned.pictureVisibility, 'blurred');
+    assert.equal(unearned.backdrop, null);
+    assert.equal(acquired.length, 1, 'Retained bytes alone never authorize an earned fallback.');
+    const otherTheme = await resolveDemoPicture(request(f, 'standard', 'retro'));
+    assert.equal(otherTheme.pictureVisibility, 'blurred');
+    const foreign = structuredClone(f.profile);
+    foreign.pictureReceipts[0].presentationPin.identity.baseCampaignKey += '-foreign';
+    assert.equal(
+      (await resolveDemoPicture({ ...options, library: foreign })).pictureVisibility,
+      'blurred',
+    );
+    const explicitLegacy = await resolveDemoPicture({
+      ...options,
+      currentPin: { kind: 'legacy', identity: f.receipt.presentationPin.identity },
+    });
+    assert.equal(explicitLegacy.pictureVisibility, 'blurred');
+    assert.equal(explicitLegacy.backdrop, null);
+    assert.equal(
+      acquired.length,
+      1,
+      'An explicit current choice cannot be replaced by an earned one.',
+    );
+  } finally {
+    f.manager.close();
+  }
+});
+
+test('earned-original fallback fails concealed and releases mismatched or cancelled acquisitions', async () => {
+  const f = await earnedPictureFixture();
+  try {
+    await retainWithoutAssignment(f);
+    for (const failure of ['wrong-pin', 'missing-image', 'decode-error']) {
+      let releases = 0;
+      const result = await resolveDemoPicture({
+        ...request(f),
+        acquire: async ({ pin }) => {
+          if (failure === 'decode-error') throw new Error('Original unavailable');
+          return {
+            image: failure === 'missing-image' ? null : { width: 1, height: 1 },
+            pin: failure === 'wrong-pin' ? { ...pin, sha256: '0'.repeat(64) } : pin,
+            release: () => releases++,
+          };
+        },
+      });
+      assert.equal(result.pictureVisibility, 'blurred', failure);
+      assert.equal(result.backdrop, null, failure);
+      result.dispose();
+      assert.equal(releases, failure === 'decode-error' ? 0 : 1);
+    }
+
+    const gate = deferred(),
+      started = deferred(),
+      controller = new AbortController();
+    let releases = 0;
+    const pending = resolveDemoPicture({
+      ...request(f),
+      signal: controller.signal,
+      acquire: async ({ pin }) => {
+        started.resolve();
+        await gate.promise;
+        return { image: { width: 1, height: 1 }, pin, release: () => releases++ };
+      },
+    });
+    await started.promise;
+    controller.abort();
+    gate.resolve();
+    await assert.rejects(pending, { name: 'AbortError' });
+    assert.equal(releases, 1, 'An earned fallback cannot outlive its cancelled scene.');
+  } finally {
+    f.manager.close();
+  }
+});
+
+test('earned session originals use their combined view adapter while explicit acquisition overrides stay authoritative', async () => {
+  const f = await earnedPictureFixture();
+  try {
+    await retainWithoutAssignment(f);
+    const media = {
+      metadata: { generation: 0, document: hydrateStoredStillMedia(emptyGenericMediaLibrary()) },
+      store: {
+        readAsset: () => assert.fail('Session originals do not belong to the durable store.'),
+      },
+    };
+    const before = JSON.stringify(media.metadata),
+      profileBefore = JSON.stringify(f.profile),
+      original = { width: 1, height: 1, sessionOriginal: true };
+    let acquisitions = 0,
+      releases = 0,
+      wrongPin = false;
+    const registry = {
+      metadata: () => ({ scope: 'session', revision: 1, document: f.metadata.document }),
+      has: (pin) => pin.presentationId === f.receipt.presentationPin.presentationId,
+      acquire: async (pin) => {
+        assert.deepEqual(pin, f.receipt.presentationPin);
+        acquisitions++;
+        return {
+          image: original,
+          pin: wrongPin ? { ...pin, sha256: '0'.repeat(64) } : pin,
+          release: () => releases++,
+        };
+      },
+    };
+    const view = createSessionPictureView(media, registry),
+      options = { ...request(f), readMedia: async () => view };
+    delete options.acquire;
+    const result = await resolveDemoPicture(options);
+    assert.equal(result.pictureVisibility, 'clear');
+    assert.equal(result.backdrop.image, original);
+    assert.deepEqual(result.backdrop.pin, f.receipt.presentationPin);
+    result.dispose();
+    result.dispose();
+    assert.equal(acquisitions, 1);
+    assert.equal(releases, 1);
+    assert.equal(JSON.stringify(media.metadata), before);
+    assert.equal(JSON.stringify(f.profile), profileBefore);
+    assert.equal(view.metadata.scope, 'durable-and-session');
+    assert.equal(view.metadata.document.library.assignments.length, 0);
+
+    wrongPin = true;
+    const mismatch = await resolveDemoPicture(options);
+    assert.equal(mismatch.pictureVisibility, 'blurred');
+    assert.equal(mismatch.backdrop, null);
+    assert.equal(releases, 2, 'The view adapter cannot authorize a different decoded original.');
+    const overridden = await resolveDemoPicture({
+      ...options,
+      acquire: async () => {
+        throw new Error('Explicit acquisition unavailable');
+      },
+    });
+    assert.equal(overridden.pictureVisibility, 'blurred');
+    assert.equal(overridden.backdrop, null);
+    assert.equal(
+      acquisitions,
+      2,
+      'Failure of the explicit adapter cannot fall through to the view.',
+    );
+  } finally {
+    f.manager.close();
+  }
+});
 
 test('only the exact earned assignment reveals a picture, including shared Standard/Gentle identity', async () => {
   const f = await earnedPictureFixture('gentle');

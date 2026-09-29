@@ -57,6 +57,7 @@ const demoRuntimeFiles = [
   'game/ui/demo-input.mjs',
   'game/ui/demo-fullscreen.mjs',
   'game/ui/demo-picture.mjs',
+  'game/ui/demo-journey-picture.mjs',
   'game/ui/analog-signal.mjs',
   'game/ui/signal-reception.mjs',
   'game/ui/jammer-picture.mjs',
@@ -250,6 +251,7 @@ test('build rewrites native root paths, preserves extras and includes boot bytes
   }
   const nativeFiles = [
     'game/ui/demo-clock.mjs',
+    'game/ui/demo-journey-picture.mjs',
     'game/ui/demo-audio.mjs',
     'game/ui/signal-reception.mjs',
     'game/ui/music-credit.mjs',
