@@ -528,6 +528,59 @@ non-empty target blob roots are rejected. Keep failed rehearsal work for diagnos
 target after review, restart the source writers, and retain the successful receipt with the
 off-host snapshot record.
 
+## Deployed account bootstrap acceptance
+
+`npm run acceptance:account-bootstrap` automates the production account gate that precedes the
+two-user content journey. It requires an exact HTTPS service origin, creates two disposable creator
+accounts, waits for each verification delivery through an operator-controlled capture boundary,
+opens the exact same-origin verification action, signs both creators in, and verifies that an
+existing administrator account can read the bounded report queue. Run it only against a disposable
+account namespace; the service does not yet expose account deletion.
+
+The capture boundary is a protected operator/testing API separate from the public mail-delivery
+webhook. The runner sends `POST` with a bearer token and this JSON body, keeping recipient addresses
+out of access-log query strings:
+
+```json
+{
+  "kind": "verify-email",
+  "to": "creator-a+unique-run@example.test",
+  "after": "2026-09-28T02:00:00.000Z"
+}
+```
+
+Return `404` while no matching delivery exists. Return `200` with
+`{"message":{"id":"<64 lowercase hex>","kind":"verify-email","to":"...","actionURL":"https://community.example.test/api/auth/verify-email?token=...","expiresAt":"..."}}`
+when it arrives. The reader endpoint and service must use HTTPS. The runner rejects expired,
+cross-origin, incorrectly addressed, malformed, oversized, or stalled results and never records the
+recipient, password, capture token, verification token, session cookie, or administrator subject.
+
+```sh
+cd services/community
+export COMMUNITY_ACCOUNT_ACCEPTANCE_BASE_URL='https://community.example.test/'
+export COMMUNITY_ACCOUNT_ACCEPTANCE_NAMESPACE='account-staging-20260928-a'
+export COMMUNITY_ACCOUNT_ACCEPTANCE_ALLOW_DESTRUCTIVE='I_UNDERSTAND_THIS_CREATES_DISPOSABLE_TEST_ACCOUNTS'
+export COMMUNITY_ACCOUNT_ACCEPTANCE_EXPECTED_VERSION='v0.141.7'
+export COMMUNITY_ACCOUNT_ACCEPTANCE_EXPECTED_SOURCE_REVISION='replace-with-exact-deployed-source'
+export COMMUNITY_ACCOUNT_ACCEPTANCE_CREATOR_A_NAME='Acceptance creator A'
+export COMMUNITY_ACCOUNT_ACCEPTANCE_CREATOR_A_EMAIL='creator-a+unique-run@example.test'
+export COMMUNITY_ACCOUNT_ACCEPTANCE_CREATOR_A_PASSWORD='replace-in-owner-only-environment'
+export COMMUNITY_ACCOUNT_ACCEPTANCE_CREATOR_B_NAME='Acceptance creator B'
+export COMMUNITY_ACCOUNT_ACCEPTANCE_CREATOR_B_EMAIL='creator-b+unique-run@example.test'
+export COMMUNITY_ACCOUNT_ACCEPTANCE_CREATOR_B_PASSWORD='replace-in-owner-only-environment'
+export COMMUNITY_ACCOUNT_ACCEPTANCE_ADMIN_EMAIL='verified-admin@example.test'
+export COMMUNITY_ACCOUNT_ACCEPTANCE_ADMIN_PASSWORD='replace-in-owner-only-environment'
+export COMMUNITY_ACCOUNT_ACCEPTANCE_MAIL_CAPTURE_URL='https://mail-capture.example.test/messages/claim'
+export COMMUNITY_ACCOUNT_ACCEPTANCE_MAIL_CAPTURE_TOKEN='replace-with-at-least-32-characters'
+export COMMUNITY_ACCOUNT_ACCEPTANCE_RECEIPT='/secure/acceptance/account-staging-20260928-a.json'
+npm run acceptance:account-bootstrap
+```
+
+The mail-capture API proves that the configured webhook received the service-generated action and
+that the deployed HTTPS origin can complete it. A production launch still requires a separate live
+mailbox/deliverability rehearsal through the selected provider. The administrator must already be
+verified and its immutable Better Auth user ID must be present in `COMMUNITY_ADMIN_SUBJECTS`.
+
 ## Deployed two-user acceptance
 
 The `Community hosted acceptance` workflow combines `compose.yaml`, `compose.production.yaml`, and
@@ -593,6 +646,34 @@ package content are excluded. The CLI prints only the receipt path and a pass/fa
 prints the supplied authorization values. After an edition identity is received, a failed run makes one best-effort administrator
 unlisting attempt and records only whether cleanup succeeded. Inspect a `cleanup: failed` receipt
 and remove the uniquely named edition before reusing that deployment.
+
+### Browser moderation cutover
+
+Set `COMMUNITY_ACCEPTANCE_MODERATION_MODE=browser` to stop the deployed journey after it publishes,
+plays and reports the disposable edition. The resulting receipt has `status: awaiting-browser` and
+binds one report and edition to the exact release and service origin. The edition intentionally
+remains public until the operator completes the next step.
+
+Open `/game/community/moderation.html` on that same origin with the allowlisted administrator
+account. Find the exact report identity from the seed receipt, explicitly load its preview, choose
+**Unlist and resolve**, and record a bounded resolution. Then verify the result without copying a
+session cookie:
+
+```sh
+export COMMUNITY_BROWSER_MODERATION_BASE_URL="$COMMUNITY_ACCEPTANCE_BASE_URL"
+export COMMUNITY_BROWSER_MODERATION_EXPECTED_VERSION="$COMMUNITY_ACCEPTANCE_EXPECTED_VERSION"
+export COMMUNITY_BROWSER_MODERATION_EXPECTED_SOURCE_REVISION="$COMMUNITY_ACCEPTANCE_EXPECTED_SOURCE_REVISION"
+export COMMUNITY_BROWSER_MODERATION_ADMIN_EMAIL="$COMMUNITY_ACCEPTANCE_ADMIN_EMAIL"
+export COMMUNITY_BROWSER_MODERATION_ADMIN_PASSWORD="$COMMUNITY_ACCEPTANCE_ADMIN_PASSWORD"
+export COMMUNITY_BROWSER_MODERATION_SEED_RECEIPT="$COMMUNITY_ACCEPTANCE_RECEIPT"
+export COMMUNITY_BROWSER_MODERATION_RECEIPT='/secure/acceptance/community-browser-moderation.json'
+npm run acceptance:browser-moderation
+```
+
+The verifier rejects a seed from another origin or release, an open report, a still-public edition,
+and a resolved report for a different edition. Its owner-only receipt omits account credentials,
+sessions, report text and media. An abandoned seed must be unlisted and resolved through the same
+administrator page before the namespace is discarded.
 
 ## Limits and operational work still required
 

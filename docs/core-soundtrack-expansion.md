@@ -73,21 +73,39 @@ remains review-only and outside the Metal direction collection. These collection
 are dynamically visible to current archive clients; they are curation, not new
 audio publication or trusted built-in admission.
 
+The owner subsequently approved all eleven recordings in the three active review
+sets. Archive [#63](https://github.com/mekhovov/revealline-soundtracks/pull/63)
+merged as `d011192720c91cb41e2d55a5f2bfdd30604197be`; exact-head run
+[36515659086](https://github.com/mekhovov/revealline-soundtracks/actions/runs/36515659086)
+and Pages run
+[36515853977](https://github.com/mekhovov/revealline-soundtracks/actions/runs/36515853977)
+passed. The live catalogue now marks two Synthwave/Electro recordings, five Metal
+recordings, Shchedryk and three Ukrainian Commons recordings with
+`listeningApproval: owner-approved-2026-09-29`. It groups them into
+`Synthwave & Electro — approved`, `Metal — approved` and `Ukrainian — approved`.
+Exact audio, rights, source metadata, public visibility and
+`gameCatalogueAdmission: false` remain unchanged. Approval makes the recordings
+eligible for admission review; it does not silently add them to a trusted game
+default or claim physical-device/cultural acceptance.
+
 ### Active release batches
 
-1. **P0 — saved style persistence (v0.143.0).** Runtime
+1. **P0 — saved style persistence (v0.150.0 cumulative train).** Runtime
    [PR #779](https://github.com/mekhovov/revealline/pull/779) restores saved
    top-level style choices after reload and retains a player's attempted choice
-   after an atomic-save failure. It is rebased on accepted main `79e07b501` at
-   exact head `ef968688a8afcf71c514e519c7be4fbfd4618dfb`. The latest functional
-   tree passes **158/158** combined soundtrack, taxonomy, production-history and
-   fail-closed source tests with zero skips; revision 101/audio53 reproduces, and
-   validation, lint and both formatting checks pass. Hosted exact-head
-   [run 36511167281](https://github.com/mekhovov/revealline/actions/runs/36511167281)
-   passed preflight, focused verification and release readiness; build and broad
-   test jobs were skipped by the staged-release policy and are not counted as
-   passes. The PR remains draft/held until the v0.142.4 mission-selector
-   batch lands, then must be refreshed onto that actual merge before final
+   after an atomic-save failure. Its exact pushed preparation head is
+   `2c160ed7e8f291fcc80e35c8fa6192d72ce2dfa6`. Local focused validation passed
+   **342/342** soundtrack, player, panel, storage, taxonomy, Couch-session and
+   opening-theme tests, plus the separate **88/88** storage/opening boundary
+   cohort. Hosted run
+   [36515171739](https://github.com/mekhovov/revealline/actions/runs/36515171739)
+   passed preflight and the 342-test soundtrack cohort but failed four unrelated
+   Team composite-navigation cases because its unpublished predecessor lacked
+   exact Team picture bindings. That failure is preserved and is not counted as a
+   pass. PR #791 subsequently merged the v0.142.4 source at `321408a3c`, but
+   v0.142.4 is not yet an immutable release or public Pages selection. The PR
+   remains draft/held until that release boundary is accepted, then must be
+   refreshed onto the actual accepted merge before final
    qualification. **Estimate: 0.5–1 working day after v0.142.4, plus CI and
    publication queues.**
 2. **Deferred by user — physical and offline acceptance.** After #779 is public, verify an
@@ -97,37 +115,39 @@ audio publication or trusted built-in admission.
    29 September 2026 so content curation can continue; it remains required before
    legacy archive retirement. **Estimate: about 0.5 day when restored and the
    devices are available.**
-3. **P1 Synth review and first admission.** Use the user's approved direction
-   around Bogart VGM and wekont, with fuller night-drive/racing arrangements:
+3. **P1 Synth admission.** The owner approved **Retroracing Nightlife** and
+   **runner2088** through archive #63. Preserve the broader auditions as reference
+   material:
    [six-track Synth approved directions](https://mekhovov.github.io/revealline-soundtracks/?collection=synth-approved-directions-audition-20260925&order=sequential&repeat=all#recordings),
    [runner2088](https://mekhovov.github.io/revealline-soundtracks/?collection=runner2088+retrowave+audition&order=sequential&repeat=all#recordings), and
    [three-track racing Synth finale](https://mekhovov.github.io/revealline-soundtracks/?collection=racing-synth-final-audition-20260926&order=sequential&repeat=all#recordings).
-   Approve individual complete tracks rather than whole collections. Metadata
-   The two explicitly promising directions are now grouped through archive #59;
-   complete listening and public-game admission still follow only for an accepted subset.
-   **Estimate: several hours of listening plus 1–2 working days for admission
-   and release.**
-4. **P1 Metal review and first admission.** Start with the closest groove-led
-   direction: [YannZ groove pair](https://mekhovov.github.io/revealline-soundtracks/?collection=metal-groove-yannz-audition-20260924&order=sequential&repeat=all#recordings),
+   The exact two-track approved subset remains non-default and not trusted for game
+   admission. Admit it through a scoped catalogue/game PR with transition and
+   public playback verification. **Estimate: 1–2 working days plus CI/release.**
+4. **P1 Metal admission.** Archive #63 records owner approval for **Agony
+   Space-deep**, **God of Darkness**, **Suffocation**, **Pixel Damnation** and
+   **Revenge's Waiting**. Preserve the remaining groove-led auditions as references:
+   [YannZ groove pair](https://mekhovov.github.io/revealline-soundtracks/?collection=metal-groove-yannz-audition-20260924&order=sequential&repeat=all#recordings),
    [Purgatory volume 3](https://mekhovov.github.io/revealline-soundtracks/?collection=metal-purgatory3-audition-20260925&order=sequential&repeat=all#recordings), and the Interstellar EDM-metal recordings
    [Space Odyssey](https://mekhovov.github.io/revealline-soundtracks/?collection=Space+Odyssey+EDM-metal+audition&order=sequential&repeat=all#recordings),
    [Red Dwarf](https://mekhovov.github.io/revealline-soundtracks/?collection=Red+Dwarf+EDM-metal+audition&order=sequential&repeat=all#recordings),
    [Stellar Confrontation](https://mekhovov.github.io/revealline-soundtracks/?collection=Stellar+Confrontation+EDM-metal+audition&order=sequential&repeat=all#recordings) and
    [Deep Space](https://mekhovov.github.io/revealline-soundtracks/?collection=Deep+Space+EDM-metal+audition&order=sequential&repeat=all#recordings).
    Then review the [four Reckless tracks](https://mekhovov.github.io/revealline-soundtracks/?collection=metal-reckless2-audition-20260925&order=sequential&repeat=all#recordings).
-   The five recordings already described as closer/right-direction material are
-   grouped through archive #60. Keep the existing Eternity tracks as backup
-   material. Admission requires
-   complete-track approval for rhythmic drive, riff articulation and gameplay
-   energy. **Estimate: several hours of listening plus 1–2 working days after an
-   accepted subset.**
-5. **P1 Ukrainian review and first expansion.** Shchedryk remains the accepted
-   benchmark and bundled opening track. Review the three rights-cleared
+   Keep the other Eternity tracks as backup material. The exact five-track approved
+   subset remains non-default and not trusted for game admission. Admit only that
+   subset with transition, warning-audibility and public playback evidence.
+   **Estimate: 1–2 working days plus CI/release.**
+5. **P1 Ukrainian admission and cultural acceptance.** Shchedryk remains the
+   bundled opening track. Archive #63 records owner approval for it and the three
+   rights-cleared
    [Ukrainian Commons candidates](https://mekhovov.github.io/revealline-soundtracks/?collection=ukrainian-commons-audition-20260925&order=sequential&repeat=all#recordings)
-   individually for musical accuracy, recording quality and gameplay role.
+   **Oi u luzi chervona kalyna**, **A v kryvoho tantsia** and **Oi khodyt son kolo
+   vikon**. Musical approval does not replace the remaining Ukrainian cultural
+   review or scene/energy assignment.
    **UA-FPV remains excluded from the active plan by user direction.** Additional
    recordings require exact rights and cultural review. **Estimate: several hours
-   of review plus 1–2 working days after acceptance; sourcing can take longer.**
+   of cultural review plus 1–2 working days for admission/release.**
 6. **P2 — metadata curation.** Apply style, scene, energy and collection
    corrections only to recordings accepted in the three batches above. Do not
    restart a disruptive full-library retagging effort. **Estimate: 1–3 hours per
@@ -145,11 +165,13 @@ approximately 450 recordings, leaving capacity at 260. Broader genres follow the
 three core families. The rejected AI-original workflow remains paused at **0/36
 approved compositions**.
 
-Local free space is now about **5.4 GiB**, above the 1 GiB guard, but hosted builds
-remain preferred for release artifacts. The active release queue still places the
-v0.142.4 mission-selector batch ahead of soundtrack v0.143.0. Musical admission
-needs complete-track listening; Ukrainian admission additionally needs cultural
-and rights review.
+Local free space is now about **1.4 GiB**, only narrowly above the 1 GiB guard, so
+hosted builds remain preferred for release artifacts. The release manager moved
+PR #779 from the separate v0.143.0 slot into the cumulative
+**v0.150.0 — Unified native experience** train on 29 September 2026. Its release
+hold remains in place while the cumulative predecessors merge and qualify.
+Musical admission needs complete-track listening; Ukrainian admission additionally
+needs cultural and rights review.
 
 ## Superseded execution checkpoint — 28 September 2026
 
@@ -1402,20 +1424,20 @@ Estimates are hands-on effort, not promised dates. CI queues, listening reviewer
 rights and actual failure diagnosis can extend elapsed time. No soundtrack game
 version is allocated without the release owner's confirmation.
 
-| ID  | Current state                                                                                                                                                                                            | Remaining completion condition                                                                                                       | Priority / estimate                                         |
-| --- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------ | ----------------------------------------------------------- |
-| M0  | Durable plan maintenance is active; this checkpoint reconciles the 260-track archive and v0.142.3.                                                                                                       | Update after each meaningful archive, game, acceptance or release milestone.                                                         | P0 maintenance; less than 1 hour per milestone.             |
-| M1  | Admission, rights, canonical-catalogue and dynamic game-discovery infrastructure is public.                                                                                                              | Preserve regression coverage and generated-ledger boundaries.                                                                        | Complete; maintenance only.                                 |
-| M2  | Exact Shchedryk opening theme is public, bundled and desktop-verified.                                                                                                                                   | Finish repeated listening, cultural, cold-offline and physical-device evidence without changing its identity.                        | P0 acceptance; 0.5 day plus reviewers/devices.              |
-| M3  | Keyboard and in-game quick controls are public; Audio settings now exposes transport and styles.                                                                                                         | Confirm touch and controller focus/activation on physical targets.                                                                   | P0 acceptance; about 0.5 day with devices.                  |
-| M4  | Shchedryk and Ukrainian audition material are preserved; UA-FPV is excluded from active delivery.                                                                                                        | Approve a small rights-cleared, culturally specific Ukrainian set through full listening and cultural review.                        | P1; several hours review plus 1–2 days integration/release. |
-| M5  | Archive #59 groups RetroRacing Nightlife and runner2088 as exact-hash owner-approved directions; rejected/review-only recordings stay excluded and neither grouped track is marked listened or admitted. | Complete listening, approve a small Xonix/XPOSED-inspired full-track subset, then admit only that subset.                            | P1; several hours review plus 1–2 days integration/release. |
-| M6  | Archive #60 groups three retained Eternity tracks and the YannZ groove pair as exact-hash owner-approved directions; Desolation and all user-hidden tracks stay excluded.                                | Complete listening, approve a small rhythmic, energetic subset, then admit only that subset.                                         | P1; several hours review plus 1–2 days integration/release. |
-| M7  | Historical UA-FPV evidence and private packs are preserved.                                                                                                                                              | No action unless the user explicitly restores this item.                                                                             | Inactive / unscheduled.                                     |
-| M8  | Mixed-source recovery and desktop acceptance are public; PR #779 exact head `ef968688` passed its staged focused/release-ready run and repairs saved style controls after reload.                        | Release PR #779 after v0.142.4; physical iPhone/controller and cold-offline checks are explicitly deferred by the user but retained. | P0 release: 0.5–1 day; deferred device work: 0.5 day.       |
-| M9  | Broad retagging is replaced by exact ID/hash curation; archive #59 and #60 delivered the first Synth and Metal direction collections without changing admission or rights.                               | Continue style, scene, energy and collection corrections per reviewed M4–M6 subset without changing rights or saved identities.      | P2; 1–3 hours per reviewed batch.                           |
-| M10 | Broader genre expansion remains available after the core families.                                                                                                                                       | Release small reviewed albums only after Synth, Metal and Ukrainian batches.                                                         | P3; 1–2 days per batch plus review.                         |
-| M11 | Original production remains paused after synchronization and quality rejection.                                                                                                                          | Resume only with a demonstrably better method and accepted pilots; retain the 36-composition brief.                                  | Deferred / unscheduled; 0/36 approved.                      |
+| ID  | Current state                                                                                                                                                              | Remaining completion condition                                                                                                   | Priority / estimate                                         |
+| --- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------- |
+| M0  | Durable plan maintenance is active; this checkpoint reconciles the 260-track archive, eleven owner-approved recordings and the pending v0.142.4 boundary.                  | Update after each meaningful archive, game, acceptance or release milestone.                                                     | P0 maintenance; less than 1 hour per milestone.             |
+| M1  | Admission, rights, canonical-catalogue and dynamic game-discovery infrastructure is public.                                                                                | Preserve regression coverage and generated-ledger boundaries.                                                                    | Complete; maintenance only.                                 |
+| M2  | Exact Shchedryk opening theme is public, bundled and desktop-verified.                                                                                                     | Finish repeated listening, cultural, cold-offline and physical-device evidence without changing its identity.                    | P0 acceptance; 0.5 day plus reviewers/devices.              |
+| M3  | Keyboard and in-game quick controls are public; Audio settings now exposes transport and styles.                                                                           | Confirm touch and controller focus/activation on physical targets.                                                               | P0 acceptance; about 0.5 day with devices.                  |
+| M4  | Archive #63 records owner approval for Shchedryk and three rights-cleared Ukrainian Commons recordings; UA-FPV remains excluded.                                           | Complete Ukrainian cultural/role review, then admit the reviewed subset without changing rights or recording identity.           | P1; several hours review plus 1–2 days integration/release. |
+| M5  | Archive #63 records owner approval for exact-hash Retroracing Nightlife and runner2088; rejected/review-only recordings stay excluded.                                     | Admit the approved two-track Synth subset and verify transitions and public playback.                                            | P1; 1–2 days integration/release.                           |
+| M6  | Archive #63 records owner approval for three retained Eternity tracks and the YannZ groove pair; Desolation and all user-hidden tracks stay excluded.                      | Admit the approved five-track Metal subset and verify transitions, warning audibility and public playback.                       | P1; 1–2 days integration/release.                           |
+| M7  | Historical UA-FPV evidence and private packs are preserved.                                                                                                                | No action unless the user explicitly restores this item.                                                                         | Inactive / unscheduled.                                     |
+| M8  | Mixed-source recovery and desktop acceptance are public; PR #779 exact pushed head `2c160ed7` passes its soundtrack cohort but retains four failed stale-base Team checks. | After v0.142.4 is public, reconcile #779 and run fresh exact-head/release qualification; deferred device checks remain recorded. | P0 release: 0.5–1 day; deferred device work: 0.5 day.       |
+| M9  | Broad retagging is replaced by exact ID/hash curation; archive #63 adds approval metadata/collections without changing admission, rights or bytes.                         | Apply only reviewed scene/energy corrections needed for M4–M6 admission while preserving saved identities.                       | P2; 1–3 hours per reviewed batch.                           |
+| M10 | Broader genre expansion remains available after the core families.                                                                                                         | Release small reviewed albums only after Synth, Metal and Ukrainian batches.                                                     | P3; 1–2 days per batch plus review.                         |
+| M11 | Original production remains paused after synchronization and quality rejection.                                                                                            | Resume only with a demonstrably better method and accepted pilots; retain the 36-composition brief.                              | Deferred / unscheduled; 0/36 approved.                      |
 
 M4–M6 research proceeds in parallel. M3 does not wait for music rights. A cleared
 Ukrainian, synth or metal subset can ship without waiting for the other families.
