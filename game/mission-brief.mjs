@@ -86,6 +86,26 @@ export function missionBriefing(
     'xonix-level.v7',
     'xonix-level.v8',
   ].includes(level.version);
+  const combat = level.classic?.combatPatrols;
+  const optionalRoles =
+    foundations &&
+    combat?.version === 'combat-patrols.v1' &&
+    combat.enabled === true &&
+    Array.isArray(combat.actors)
+      ? combat.actors.map((actor) => actor.role)
+      : [];
+  // Optional actors live outside level.enemies. Their authoring design is not
+  // part of the playable scenario, so derive this lesson from enabled rules.
+  const optionalHint = optionalRoles.includes('sentry')
+    ? t('gameplay:brief.optionalSentry')
+    : optionalRoles.includes('scout')
+      ? t('gameplay:brief.optionalScout')
+      : '';
+  const optionalDetails = optionalRoles.includes('sentry')
+    ? t('gameplay:brief.optionalSentryDetails')
+    : optionalRoles.includes('scout')
+      ? t('gameplay:brief.optionalScoutDetails')
+      : '';
   const classicHint = [
     'xonix-level.v4',
     'xonix-level.v5',
@@ -145,9 +165,19 @@ export function missionBriefing(
     goal,
     facts,
     copy: intro
-      ? t('gameplay:leaveSafeGroundDrawALineAndReturnRevealBy', { value1: coverage })
-      : [facts, captureHint, impactHint, classicHint].filter(Boolean).join('\n'),
-    fullBrief: authored || t('gameplay:brief.returnToSafeGroundToSecureEachLineRegionsWithout'),
+      ? [
+          t('gameplay:leaveSafeGroundDrawALineAndReturnRevealBy', { value1: coverage }),
+          optionalHint,
+        ]
+          .filter(Boolean)
+          .join('\n')
+      : [facts, captureHint, optionalHint, impactHint, classicHint].filter(Boolean).join('\n'),
+    fullBrief: [
+      authored || t('gameplay:brief.returnToSafeGroundToSecureEachLineRegionsWithout'),
+      optionalDetails,
+    ]
+      .filter(Boolean)
+      .join('\n\n'),
     status: encounter
       ? multiShield && shieldCount > 1
         ? t('gameplay:brief.captureShieldsFirst', { count: shieldCount })

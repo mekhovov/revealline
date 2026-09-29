@@ -1,5 +1,6 @@
 import { t, render, onLocaleChange, localizedMessage, formatNumber } from '../i18n/index.mjs';
 import { encounterCopy } from './encounter-copy.mjs';
+import { FIXED_DT } from '../core/registry.mjs';
 
 const roleName = (type) => {
   const names = {
@@ -79,6 +80,19 @@ const group = (lines) => {
   for (const line of lines) counts.set(line, (counts.get(line) || 0) + 1);
   return [...counts].map(([line, count]) => (count > 1 ? `${count} × ${line}` : line));
 };
+const enemyRole = (enemy) => {
+  const pressure =
+    enemy.pressure?.mode === 'trail-pursuit'
+      ? t('interface:trailPursuer')
+      : enemy.pressure?.mode === 'head-intercept'
+        ? t('interface:headingInterceptor')
+        : null;
+  return (
+    [pressure, enemy.impactCarrier ? t('interface:trailImpactCarrier') : null]
+      .filter(Boolean)
+      .join(' · ') || roleName(enemy.type)
+  );
+};
 const enemyState = (enemy, snapshot) => {
   if (enemy.type === 'relay-sentinel')
     return snapshot.encounterLane?.id === enemy.id && snapshot.encounter
@@ -100,10 +114,8 @@ const enemyState = (enemy, snapshot) => {
         : t('interface:contactWithYourCraftOrUnfinishedLineIsStillDangerous'),
     });
   }
-  if (enemy.impactCarrier)
-    return t('interface:trailContactSendsVisibleFrontsAlongYourUnfinishedLineClose');
-  if (enemy.pressure)
-    return (
+  if (enemy.pressure) {
+    const state =
       {
         patrol: t('interface:flightDetails.pressurePatrol'),
         warning: t('interface:flightDetails.pressureWarning', {
@@ -115,8 +127,14 @@ const enemyState = (enemy, snapshot) => {
         cooldown: t('interface:flightDetails.pressureCooldown', {
           time: seconds(enemy.pressure.seconds),
         }),
-      }[enemy.pressure.phase] || t('interface:watchItsMovementInTheField')
-    );
+      }[enemy.pressure.phase] || t('interface:watchItsMovementInTheField');
+    // A recovering charge and travelling trail impacts remain independent dangers.
+    return enemy.impactCarrier
+      ? `${sentence(state)} ${t('interface:trailContactSendsVisibleFrontsAlongYourUnfinishedLineClose')}`
+      : state;
+  }
+  if (enemy.impactCarrier)
+    return t('interface:trailContactSendsVisibleFrontsAlongYourUnfinishedLineClose');
   return (
     {
       dormant: t('interface:waitingRevealingItsPositionCanWakeIt'),
@@ -149,6 +167,43 @@ const laneState = (value) => {
     }[value.phase] || t('interface:watchTheHighlightedLane')
   );
 };
+// Consume only the existing owned combat projection. Counts describe this paused
+// view; a recovering body does not imply that its earlier shot has disappeared.
+function optionalPatrolDetails(combat) {
+  if (!combat) return null;
+  const text = (key, values) => t(`interface:optionalPatrolDetails.${key}`, values),
+    title = localizedMessage('interface:optionalPatrolDetails.title');
+  if (!combat.valid) return section('optional-patrols', title, [text('unavailable')]);
+  const ended = ['won', 'lost'].includes(combat.status);
+  if (!combat.actors.length)
+    return combat.eliminations.length
+      ? section('optional-patrols', title, [text(ended ? 'ended' : 'removed')])
+      : null;
+  const scouts = combat.actors.filter((actor) => actor.role === 'scout').length,
+    sentries = combat.actors.length - scouts,
+    warning = combat.actors.filter((actor) => actor.phase === 'warning'),
+    recovering = combat.actors.filter((actor) => actor.phase === 'recovery').length,
+    lines = [text('counts', { scouts, sentries })];
+  if (ended) lines.push(text('ended'));
+  else {
+    if (warning.length) {
+      // Round upward to a tenth: a positive remaining tick must not read as zero.
+      const seconds = formatNumber(
+        Math.ceil(Math.min(...warning.map((actor) => actor.warningTicks)) * FIXED_DT * 10) / 10,
+        { minimumFractionDigits: 1, maximumFractionDigits: 1 },
+      );
+      lines.push(
+        text(combat.frozen ? 'warningHeld' : 'warning', { warnings: warning.length, seconds }),
+      );
+    }
+    if (recovering) lines.push(text('recovery', { recovering }));
+    if (combat.projectiles.length) lines.push(text('shots', { shots: combat.projectiles.length }));
+    if (combat.frozen) lines.push(text('frozen'));
+    lines.push(text(sentries ? 'counterplay' : 'scoutCounterplay'));
+  }
+  return section('optional-patrols', title, lines);
+}
+
 /** Full paused player information. Typed diagnostic details remain in the read-only source. */
 export function flightDetailsModel(information, context) {
   const s = information?.snapshot,
@@ -214,9 +269,7 @@ export function flightDetailsModel(information, context) {
           : enemy.slowed
             ? ' ' + t('interface:movementSlowed') + ''
             : '';
-      threats.push(
-        `${enemy.impactCarrier ? t('interface:trailImpactCarrier') : enemy.pressure?.mode === 'trail-pursuit' ? t('interface:trailPursuer') : enemy.pressure?.mode === 'head-intercept' ? t('interface:headingInterceptor') : roleName(enemy.type)}: ${sentence(enemyState(enemy, s))}${effect}`,
-      );
+      threats.push(`${enemyRole(enemy)}: ${sentence(enemyState(enemy, s))}${effect}`);
     }
     for (const mark of classic.erosion)
       threats.push(t('interface:flightDetails.erosion', { time: seconds(mark.seconds) }));
@@ -280,6 +333,8 @@ export function flightDetailsModel(information, context) {
         context.actorRoles.map((r) => `${r.count} × ${roleName(r.type)}`),
       ),
     );
+  const patrols = optionalPatrolDetails(s.combat);
+  if (patrols) parts.push(patrols);
   if (s.laneBosses.length)
     parts.push(
       section(
