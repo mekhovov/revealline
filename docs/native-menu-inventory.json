@@ -391,15 +391,17 @@
     {
       "name": "Pictures & Stories",
       "route": "/authoring/still-media/",
-      "verification": "Current e73b8a690 focus fixes pass 175 tests. Native keyboard bundled picture/story cancel, invalid provenance/segment, explicit Save, preview, close/reopen and actual OS exports pass without pointer reset. Full PNG and production metadata/hash/canonical backup validation pass. Complete current virtual-pad journey passes 3/3 stages, preserving prior records with matching actual OS export pairs; separate soundtrack recovery, target restore, full video playback and physical/published acceptance remain open.",
+      "verification": "Current e73b8a690 focus fixes pass 175 tests. Native keyboard bundled picture/story cancel, invalid provenance/segment, explicit Save, preview, close/reopen and actual OS exports pass without pointer reset. Full PNG and production metadata/hash/canonical backup validation pass. Complete current virtual-pad journey passes 3/3 stages, preserving prior records with matching actual OS export pairs. Separate soundtrack recovery b38c96445 + dbb95e900 passes 76 focused checks plus fresh native/virtual Prepare/Download journeys and four exact-byte validated empty-audio backups; neutral polling retains explicit Cancel ownership. Nonempty audio browser recovery, target restore, full video playback and physical/published acceptance remain open.",
       "historicalVerification": "keyboard and virtual-controller browser workflow passed; physical controller not tested",
-      "evidence": "docs/verification/still-media-input-2026-09-29.md"
+      "evidence": "docs/verification/still-media-input-2026-09-29.md",
+      "soundtrackRecoveryEvidence": "docs/verification/soundtrack-recovery-input-2026-09-29.md"
     },
     {
       "name": "Video Poster",
       "route": "/authoring/video-poster/",
-      "verification": "pending exact-candidate browser qualification; historical observations do not establish current acceptance",
-      "historicalVerification": "keyboard and virtual-controller browser workflow passed; physical controller not tested"
+      "verification": "Current 40c35003e passes 112 focused tests and independent review. Native keyboard and complete 3/3 virtual-pad bundled-source cancel/invalid time/range/capture/download/reselection journeys pass; native Workshop return and reentry pass without pointer reset. All five actual PNG downloads pass production validation and complete pixel decoding. No project Save or product JSON export exists. Physical/device, optional conversion, installed-offline and published acceptance remain separate.",
+      "historicalVerification": "keyboard and virtual-controller browser workflow passed; physical controller not tested",
+      "evidence": "docs/verification/video-poster-input-2026-09-29.md"
     },
     {
       "name": "Design Atlas",
