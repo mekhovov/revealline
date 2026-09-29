@@ -12,6 +12,7 @@ import {
   selectPublishedEditionRelease,
 } from '../publishing/edition-promotion.mjs';
 import { editionHash } from '../publishing/edition-zip.mjs';
+import { additiveReleaseAssetBudget } from '../publishing/fastline-release-publisher.mjs';
 
 /** Both selector commands reread the complete retained publication from GitHub.
  * Metadata and binary reads stay bounded; no mutating GitHub commands are used. */
@@ -275,6 +276,13 @@ const verifyRemote = (name, bytes) => {
     throw new Error(`Downloaded release asset differs: ${name}`);
 };
 if (command === 'upload-draft') {
+  const proposed = [...frozen].map(([name, bytes]) => ({
+    name,
+    size: bytes.length,
+    digest: `sha256:${editionHash(bytes)}`,
+  }));
+  const checkBudget = () => additiveReleaseAssetBudget({ existing: release.assets, proposed });
+  checkBudget();
   const temporary = await fs.mkdtemp(path.join(os.tmpdir(), 'revealline-edition-upload-'));
   try {
     // Publish the envelope last, after every dependency is present and reread.
@@ -288,14 +296,22 @@ if (command === 'upload-draft') {
         throw new Error(
           'The release was published during upload. Stop and review its existing assets.',
         );
+      checkBudget();
       if (!release.assets.some((asset) => asset.name === name)) {
         const filename = path.join(temporary, name);
         await fs.writeFile(filename, bytes, { flag: 'wx' });
         gh(['release', 'upload', envelope.version, filename, '--repo', repository]);
         release = api(`releases/tags/${envelope.version}`);
+        checkBudget();
       }
       verifyRemote(name, bytes);
     }
+    release = api(`releases/tags/${envelope.version}`);
+    if (!release.draft)
+      throw new Error(
+        'The release was published during upload. Stop and review its existing assets.',
+      );
+    checkBudget();
     const receipt = {
       format: 'revealline-edition-delivery.v1',
       repository,

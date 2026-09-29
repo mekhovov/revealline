@@ -1,5 +1,6 @@
 import { createHash } from 'node:crypto';
 import { isDeepStrictEqual } from 'node:util';
+import { additiveReleaseAssetBudget } from './fastline-release-publisher.mjs';
 
 const hash = (bytes) => createHash('sha256').update(bytes).digest('hex');
 const positive = (value) => Number.isSafeInteger(value) && value > 0;
@@ -91,6 +92,11 @@ export async function deliverOptionalPackageDraft({
       fail('Optional delivery file is invalid.');
     frozen.set(name, Buffer.from(bytes));
   }
+  const proposed = [...frozen].map(([name, bytes]) => ({
+    name,
+    size: bytes.length,
+    digest: `sha256:${hash(bytes)}`,
+  }));
   const endpoint = `https://uploads.github.com/repos/${repository}/releases/${releaseId}/assets`;
   let expected;
   const validateRelease = (release) => {
@@ -116,6 +122,7 @@ export async function deliverOptionalPackageDraft({
       identity?.sourceTree !== envelope.sourceTree
     )
       fail('Optional release tag moved; delivery is stopped.');
+    additiveReleaseAssetBudget({ existing: [...direct.values()], proposed });
     return direct;
   };
   const verifyBytes = async (pin, bytes) => {
