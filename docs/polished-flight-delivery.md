@@ -705,34 +705,34 @@ simulator, and shared reward/Studio integration. Phase7 remains qualification an
 coordinated publication; human learning, artwork and physical-device evidence stays
 deferred. No new release root, version, cap or campaign promise is introduced.
 
-The branch rebased onto `6a67d6dbfe` without conflicts; all41 existing patches are
-unchanged. The preceding remote candidate run36508987834 passed964 company tests
-and cancelled one real Journey/Retry host test at its60-second bound. That test
-now renders at30Hz while preserving120Hz physics, its original tick budget, actual
+The branch rebased onto `6a67d6dbfe` without conflicts; all 41 existing patches are
+unchanged. The preceding remote candidate run36508987834 passed 964 company tests
+and cancelled one real Journey/Retry host test at its 60-second bound. That test
+now renders at 30 Hz while preserving 120 Hz physics, its original tick budget, actual
 keyboard/save/replay path and an independently stepped authoritative checkpoint.
-The focused host/performance cohort passes21checks without increasing the timeout
+The focused host/performance cohort passes 21 checks without increasing the timeout
 or changing runtime simulation.
 
 The scoped [audio software review](verification/discovery-audio-continuation-2026-09-29/review.json)
-adds the22 missing behavioral/media-validation inputs to the existing28-source
+adds the 22 missing behavioral/media-validation inputs to the existing 28-source
 fingerprint. Published-cue precedence, authored fallback, pending original export
 cancellation, master ownership and isolated preview preferences have targeted
-composition coverage. The130-check composition cohort passes; a separate initial
-145-check owner cohort had144passes and one malformed HTTP fixture. Correcting
-that fixture and explicitly checking503/retry produces22/22 soundtrack-host passes.
+composition coverage. The 130-check composition cohort passes; a separate initial
+145-check owner cohort had 144 passes and one malformed HTTP fixture. Correcting
+that fixture and explicitly checking 503/retry produces 22/22 soundtrack-host passes.
 The earlier failure is retained, rather than counted as a green full rerun.
 
 Production101 at immutable `d541946f4` is preserved as an
 [audited intermediate checkpoint](verification/evidence/discovery-production101-checkpoint-2026-09-29.json):
-eight reviewed audio53 successors and24 source-stage UI23 successors. The producer
+eight reviewed audio53 successors and 24 source-stage UI23 successors. The producer
 correctly detected the branch's existing WebP import extension, so the initial
 audio-only expectation was not met. A separate
 [WebP software review](verification/discovery-webp-ui-continuation-2026-09-29/review.json)
-verifies the exact seven UI inputs and60 focused host/media tests. Only full-frame
+verifies the exact seven UI inputs and 60 focused host/media tests. Only full-frame
 static WebP admission and its error copy changed; limits, hashes, cancellation and
-downstream complete decoding remain enforced. Production102 appends24 reviewed
-UI24 successors. All132 original payloads and every previous production record
-remain immutable; current coverage is99source/236reviewed/0missing slots. Review
+downstream complete decoding remain enforced. Production102 appends 24 reviewed
+UI24 successors. All 132 original payloads and every previous production record
+remain immutable; current coverage is 99 source/236 reviewed/0 missing slots. Review
 approval here is scoped software evidence, not human artwork or release approval.
 
 The [showcase observer](discovery-desktop-observations.md) now has explicit Social
@@ -740,5 +740,34 @@ Drone UA, Victory Drones and Ukraine protocols alongside the existing FPV path.
 They use ordinary public controls and accepted wins, inspect exact bilingual
 discovery copy, reopen Collection, retain the locked finale and exercise Retry/Next.
 Routes remain experimental until rehearsed against an exact frozen artifact.
-Its22 automated checks pass; browser outcomes and final current-source production
+Its 22 automated checks pass; browser outcomes and final current-source production
 checks follow in the next checkpoint below.
+
+The complete production-history/source cohort now passes **38/38**, including
+current UI/audio source authentication, immutable production100/101 reconstruction,
+source mutation rejection and the exact 101→102 transition. Reproduction passes,
+and the committed 102 ledger reports all **194 required slots reviewed**. These
+are declaration/source gates, not fresh human visual acceptance.
+
+The broader company run passes **969/971**, with two actual Team-result failures
+and no cancellations. They exposed a real compatibility gap: production 102 had
+no explicit legacy Team picture association. The
+[association follow-up](verification/evidence/discovery-team-picture102-2026-09-29.json)
+adds current 102 and retains 100 with identical Orchard/Foundry hashes, dimensions
+and geometry. The finite policy count changes 42→43; its 42 KiB byte budget,
+picture limits and package limits stay unchanged. Revisions 98, source-stage 101
+and unknown 103 remain rejected. The full five-file follow-up passes **156/156**,
+including both unchanged failing result tests and actual starts/verified leases
+for every retained 58–97, 99, 100 revision. Four direct association suites now run
+with the company candidate job. The full 971-check run is retained as failed; this
+focused repair is not presented as a fresh all-green full rerun.
+
+The association modules are outside the explicit production recipe source groups.
+They require their own finite mapping review and newly frozen source; they do not
+change reviewed audio/UI inputs or require another production revision. The normal
+producer reproduction check confirms unchanged 102 output after the repair.
+
+The first three-edition build from `db8e45e0e` was cancelled before admission after
+the Team gap was found. A delivery-ledger edit had also occurred during that run,
+so it cannot prove an unchanged-source build. No archive or qualification receipt
+is claimed from it. A fresh clean-source build follows the committed repair.
