@@ -9,12 +9,12 @@ production qualification while source implementation continues.
 
 ## What is newly established
 
-| Mission / edition                    | Complete legal route                                                                                                           | Active mechanic evidence                                                                                         | Important limit                                                                                          |
-| ------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------ | ---------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------- |
-| Pressure ladder / v37                | Standard, immediate, seed 1; 4,531 ticks, about 37.75 seconds; 1,790/2,206 claimed; eight closures; zero losses and no pickups | Interceptor warnings and a committed route; two travelling impacts cancelled by captures                         | Lower foundation remains unlinked; optional mastery is not complete                                      |
-| Switchback exchange / v37            | Standard, immediate, seed 1; 6,107 ticks, about 50.9 seconds; 90.9091% coverage; nine closures; zero losses and no pickups     | Both relay connectors open and their reclaimed return ground is used; roamer activates; travelling impacts occur | Gate-cell use is not full end-to-end shortcut traversal; impact-on-relay-closure mastery is not complete |
-| Cooling loop / v38, northern route   | Standard, immediate, seed 1; 5,503 ticks, about 45.85 seconds; 1,708/2,098 claimed; 13 closures; zero losses and no pickups    | Six warned erosion events; both lethal banks neutralized; all foundations linked                                 | Neither useful repair necessity nor human fairness is proved                                             |
-| Cooling loop / v38, bank-first route | Standard, immediate, seed 1; 8,189 ticks, about 68.24 seconds; 1,713/2,098 claimed; 15 closures; zero losses and no pickups    | Eight warned erosion events; western bank neutralized; all foundations linked                                    | Forty eastern-bank lethal cells remain; optional mastery incomplete                                      |
+| Mission / edition                    | Complete legal route                                                                                                           | Active mechanic evidence                                                                                         | Important limit                                                                                              |
+| ------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------ | ---------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------ |
+| Pressure ladder / v37                | Standard, immediate, seed 1; 4,531 ticks, about 37.75 seconds; 1,790/2,206 claimed; eight closures; zero losses and no pickups | Interceptor warnings and a committed route; two travelling impacts cancelled by captures                         | Lower foundation remains unlinked; historical helper fails, while current v37 both-gap goal is unmeasured    |
+| Switchback exchange / v37            | Standard, immediate, seed 1; 6,107 ticks, about 50.9 seconds; 90.9091% coverage; nine closures; zero losses and no pickups     | Both relay connectors open and their reclaimed return ground is used; roamer activates; travelling impacts occur | Gate-cell use is not full traversal; historical impact-on-relay helper fails, not a current v37 goal verdict |
+| Cooling loop / v38, northern route   | Standard, immediate, seed 1; 5,503 ticks, about 45.85 seconds; 1,708/2,098 claimed; 13 closures; zero losses and no pickups    | Six warned erosion events; both lethal banks neutralized; all foundations linked                                 | Neither useful repair necessity nor human fairness is proved                                                 |
+| Cooling loop / v38, bank-first route | Standard, immediate, seed 1; 8,189 ticks, about 68.24 seconds; 1,713/2,098 claimed; 15 closures; zero losses and no pickups    | Eight warned erosion events; western bank neutralized; all foundations linked                                    | Forty eastern-bank lethal cells remain; optional mastery incomplete                                          |
 
 Every route starts from a fresh compiled/resolved mission, normal gameplay
 tuning applied exactly once, and a fresh `scout` run. Commands are legal public
@@ -30,9 +30,16 @@ The complete paths are executable regression fixtures:
 
 Pressure ladder's replay checkpoint is `b4963c61fd2d4316`; Switchback exchange's
 is `09638acfdde8cf90`; Cooling loop's northern and bank-first checkpoints are
-`21a461387f53c722` and `b8aab03a29e67318`. Runtime wins are
-distinct from optional mastery recognition, which is asserted separately where
-relevant. No bonus is necessary in these demonstrated routes.
+`21a461387f53c722` and `b8aab03a29e67318`. Runtime wins are distinct from
+test-only optional-goal observations. No bonus is necessary in these demonstrated
+routes.
+
+Subsequent source review corrected a qualification label, not these routes or
+their original counts: the Phaseworks/Relay helpers retain the earlier
+all-foundation-plus-impact and impact-on-relay predicates. v37 now describes
+both staggered gaps and different court gaps respectively. The older helper
+results are not proof that those newer authored challenges failed, nor do they
+award runtime mastery. Gap-specific current-edition evidence remains separate.
 
 ## Design interpretation, not automatic acceptance
 

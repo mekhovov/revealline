@@ -213,7 +213,9 @@ test('Pressure ladder Standard immediate seed1 clears with warned interception, 
     );
   }
 
-  // Winning the runtime is not the optional all-foundation mastery objective.
+  // This historical Phaseworks helper measures all-foundation connectivity.
+  // v37 instead authors a both-gap challenge; that geometry-specific goal is
+  // not measured here, and this test-only result does not award runtime mastery.
   assert.deepEqual(
     inspectPhaseGoal({
       missionId: 'pressure-ladder',
@@ -350,6 +352,9 @@ test('Switchback exchange Standard immediate seed1 clears with ordered relays, u
     events.filter((event) => event.type === 'rover.activated').map(({ tick }) => tick),
     [2072],
   );
+  // The historical helper measures impact-on-relay closure, not v37's newer
+  // different-court-gap wording. Preserve the observation without claiming a
+  // current-edition mastery result or a runtime award.
   const goal = inspectRelayGoal({ missionId: 'relay-remix', run, evidence: relayEvidence });
   assert.equal(goal.achieved, false);
   assert.equal(goal.impactRelayClosure, false);
