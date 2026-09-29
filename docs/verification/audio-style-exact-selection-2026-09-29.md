@@ -65,16 +65,37 @@ reads/writes, immediate display, remount, explicit All, mixed selections,
 replacement imports and retry behavior. Log:
 `/tmp/audio-style-exact-choice-tests-final.tap`.
 
-The additional connection, legacy store, Couch library, opening-theme and
-catalogue cohort produced 87 passes and one pre-existing stale catalogue
-expectation. The assertion at `soundtrack-catalogue.test.mjs:85` uses the first
-three expanded genres (Synth, Metal, Electronic) while the selected historical
-genres are explicitly Synth, Metal, Ukrainian. The exact PR #779 test and
-unchanged `soundtrack.mjs` reproduce that failure independently at
-`/tmp/audio-pr779-review/baseline-catalogue.tap`. This is not a passing full-suite
-claim. Scoped ESLint, Prettier and `git diff --check` pass.
+The first additional boundary run produced 87 passes and one pre-existing stale
+catalogue expectation. The assertion at `soundtrack-catalogue.test.mjs:85` used
+the first three expanded genres (Synth, Metal, Electronic) while the selected
+historical genres are explicitly Synth, Metal, Ukrainian. The exact PR #779
+test and unchanged `soundtrack.mjs` reproduced that failure independently at
+`/tmp/audio-pr779-review/baseline-catalogue.tap`. The follow-up derives expected
+recording IDs from those explicit `previousChoices`, preserving the intended
+historical selection instead of relying on catalogue order.
+
+```sh
+node --test --test-concurrency=1 \
+  game/test/managed-media-connection.test.mjs \
+  game/test/soundtrack-store.test.mjs \
+  game/test/couch-music-library.test.mjs \
+  game/test/opening-soundtrack.test.mjs \
+  game/test/soundtrack-catalogue.test.mjs
+```
+
+The corrected boundary cohort passed **88 tests, 0 failed, 0 skipped**, 6.38
+seconds. Log: `/tmp/audio-style-storage-boundaries-final.tap`. These bounded
+cohorts do not constitute a full-suite claim. Scoped ESLint, Prettier and
+`git diff --check` pass.
 
 ## Release dependencies
+
+Independent review identified a remaining playback gap after a full reload:
+generic Play / Start uses the legacy listening projection rather than the
+restored exact public choices. Play selected styles uses the restored choices
+correctly. Release admission remains blocked on a user-gesture-bound playback
+follow-up and regression coverage; the passing cohorts above verify preference
+persistence, not that unresolved generic playback path.
 
 Keep this functional follow-up separate from production generation until the
 accepted v0.142.4 source is fixed. PR #779's previous generated production101 /
@@ -82,10 +103,18 @@ audio53 conflicts with the selector's production101 / audio53. Preserve the
 accepted v0.142.4 ledger and its exact predecessor oracle; append the next
 available production/audio revision rather than replacing either history.
 
-The new `game/soundtrack-style-selection.mjs` must join the ordered audio recipe
-input closure before that fresh review and generation. Recompute the combined
-source fingerprint, pin the accepted v0.142.4 predecessor, update retained Team
-bindings/history tests, regenerate compiled outputs, and run exact-head hosted
-qualification and release gates. Existing PR #779 receipts cannot approve the
-new storage implementation. Public bytes, cold-offline operation, physical
+Before fresh review and generation, add `game/soundtrack-style-selection.mjs`
+immediately after `game/soundtrack-style-taxonomy.mjs` in the ordered
+`sources.audio` list in `scripts/produce-field-kit-theme.mjs`. This expands the
+audio input closure from 28 to 29 files. Add the independent consumer contract
+`['game/soundtrack-style-selection.mjs', ['audio']]` in
+`scripts/test-field-kit-recipe-sources.mjs`; its existing mutation loop must
+then prove this helper invalidates audio alone. Neither the producer nor its
+generated outputs were changed in this functional follow-up.
+
+Recompute the combined source fingerprint, pin the accepted v0.142.4
+predecessor, update retained Team bindings/history tests, regenerate compiled
+outputs, and run exact-head hosted qualification and release gates. Existing
+PR #779 receipts cannot approve the new storage implementation or the expanded
+input closure. Public bytes, cold-offline operation, physical
 iPhone/controller/touch and Steam Deck acceptance remain separate gates.
