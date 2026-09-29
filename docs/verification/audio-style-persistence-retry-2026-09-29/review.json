@@ -1,0 +1,262 @@
+{
+  "format": "revealline-audio-style-persistence-retry-continuation.v1",
+  "reviewedAt": "2026-09-29T01:23:31.061Z",
+  "status": "Scoped saved-style and save-retry continuation reviewed. Exact-source CI, frozen/public, physical-device and human listening acceptance remain separate.",
+  "source": {
+    "candidateCommit": "ba8af716aed7b1527eca28de80b9c38c231b31c2",
+    "candidateTree": "8b895a8d71d2348840e18e4090a1d9fa1c38b838",
+    "acceptedMain": "b5ab06e12542f72e33c45b973ba693a5e1509c1c",
+    "acceptedMainTree": "adc436ac5fd2809ccad9a25410f538fc774074bc"
+  },
+  "scope": [
+    "audio.focus.field-kit",
+    "audio.confirm.field-kit",
+    "audio.cancel.field-kit",
+    "audio.capture.field-kit",
+    "audio.failure.field-kit",
+    "audio.victory.field-kit",
+    "audio.pickup.field-kit",
+    "audio.music.field-kit"
+  ],
+  "priorReviews": {
+    "acceptedMainAudio": {
+      "path": "docs/verification/v0.142.3-steamdeck-confirm-audio-continuation/review.json",
+      "bytes": 14357,
+      "sha256": "a059520f6ce0c394c3425355c711b641b4b23f9321e11c7d384317e7f814798c",
+      "fingerprintSHA256": "39fe40240f0475e471a52772060899d3e329e4d54d6b2bb6679e76dc745ee9a4"
+    }
+  },
+  "review": {
+    "trigger": "Saved Synth and Metal choices reopened as all styles after reload, and a failed validation or atomic save replaced the player’s attempted style checkboxes before retry.",
+    "change": "Derive visible Audio style controls from the authoritative saved listening mode and genres, while retaining the current attempted public-style selection after a failed save so the same choice can be retried without mutating durable state.",
+    "evidence": [
+      "The complete soundtrack panel and style-taxonomy suites pass, including dispose/remount persistence and fail-once atomic-save retry regressions.",
+      "The continuation changes only soundtrack-style-taxonomy.mjs and soundtrack-panel.mjs inside the 28-file audio dependency closure.",
+      "No soundtrack bytes, catalogue identities, rights, transport, queue ordering, procedural recipes or payloads change."
+    ],
+    "limitations": [
+      "Exact-source hosted qualification, frozen/public release and physical iPhone/controller/offline acceptance remain separate.",
+      "This is a UI and persistence correction; it does not approve any recording or musical suitability."
+    ]
+  },
+  "fingerprints": {
+    "audio": {
+      "group": "audio",
+      "orderedInputs": 28,
+      "bytes": 1076228,
+      "priorSHA256": "39fe40240f0475e471a52772060899d3e329e4d54d6b2bb6679e76dc745ee9a4",
+      "currentSHA256": "80fcf66ad0d1293982a7945908171a583587d68b544b33c0c0435c57c57f8022",
+      "algorithm": "SHA256 concatenation of the ordered original source bytes declared by the producer",
+      "paths": "game/app.mjs; game/couch/couch-music-host.mjs; game/opening-soundtrack.mjs; game/ui/audio.mjs; game/ui/published-audio.mjs; game/ui/soundtrack-player.mjs; game/ui/quick-music-controls.mjs; game/ui/audio-master.mjs; game/soundtrack.mjs; game/soundtrack-style-taxonomy.mjs; game/soundtrack-rights.mjs; game/soundtrack-bundle.mjs; game/soundtrack-share.mjs; game/soundtrack-source.mjs; game/soundtrack-bundled.mjs; game/ui/soundtrack-panel.mjs; game/ui/soundtrack-panel.css; game/soundtrack-albums.mjs; game/soundtrack-portable.mjs; game/content/soundtrack-catalogue.mjs; game/online-soundtrack-catalogue.mjs; game/official-downloads.mjs; game/soundtrack-download-volumes.mjs; game/installed-app.mjs; game/managed-media-store.mjs; game/media-storage-record.mjs; game/soundtrack-private-intake.mjs; game/ui/soundtrack-error-copy.mjs",
+      "inputs": [
+        {
+          "path": "game/app.mjs",
+          "gitBlob": "15751777bfea8a875c95a5962fda05368d69e081",
+          "bytes": 461449,
+          "sha256": "9da828070b22e5ec988e833a9e4cf2f2e49baed9f4f9918d549ef3acfdf66bd9",
+          "changedFromProduction100": false
+        },
+        {
+          "path": "game/couch/couch-music-host.mjs",
+          "gitBlob": "5fd03365cff42d413cfd5202da6e0dcae405fd3e",
+          "bytes": 16204,
+          "sha256": "6fc411e32d934a1e5b247a3a3b6497462f90f6b25827a5f1a8584ab7a3271a42",
+          "changedFromProduction100": false
+        },
+        {
+          "path": "game/opening-soundtrack.mjs",
+          "gitBlob": "146c5c8198ddbce2348534abe6c30918fd6379da",
+          "bytes": 1959,
+          "sha256": "237ac4932d4baeee30f7a6e7e355294fe598832624b47017f29cce23437b310b",
+          "changedFromProduction100": false
+        },
+        {
+          "path": "game/ui/audio.mjs",
+          "gitBlob": "b89f6c9b6a6900ed24ebef2006564deba8370621",
+          "bytes": 26850,
+          "sha256": "2e00042160e1f0717c0be5d8103db75d7f6957531473f3fce8170d3accbe7783",
+          "changedFromProduction100": false
+        },
+        {
+          "path": "game/ui/published-audio.mjs",
+          "gitBlob": "93b283003f8f0b7fdb3d92710f6662444045bc99",
+          "bytes": 6659,
+          "sha256": "05939897e7dd78773e1a1fb84b1b5ef71b11ea93162a803b58b986689116cac0",
+          "changedFromProduction100": false
+        },
+        {
+          "path": "game/ui/soundtrack-player.mjs",
+          "gitBlob": "e7037146eb0df4f996e6c100c2f5862ff66af0a6",
+          "bytes": 49076,
+          "sha256": "cd1b478d6085803f491f8d644161e5b491a1b1dc113903d0a7c4083d65800718",
+          "changedFromProduction100": false
+        },
+        {
+          "path": "game/ui/quick-music-controls.mjs",
+          "gitBlob": "5398f5a768be05e21de325b3d11f80ea68e8e5c3",
+          "bytes": 10161,
+          "sha256": "87cb2da9fb75475a5eded73f932a0159a57568cd42235974524fe1d7f7307619",
+          "changedFromProduction100": false
+        },
+        {
+          "path": "game/ui/audio-master.mjs",
+          "gitBlob": "c3c693f0244f9a112294e596335e5030530b58c2",
+          "bytes": 5431,
+          "sha256": "6bf14bc5268c0eff8f38c21c819f398917712fdc2607c33977ac873111d1dca8",
+          "changedFromProduction100": false
+        },
+        {
+          "path": "game/soundtrack.mjs",
+          "gitBlob": "e6857cd2035cebee759483efa13b63c3cd265de3",
+          "bytes": 39449,
+          "sha256": "6e5550281c928fc03704d1c743e01d600ba83d5b186d107b510de9bd0bd1610d",
+          "changedFromProduction100": false
+        },
+        {
+          "path": "game/soundtrack-style-taxonomy.mjs",
+          "gitBlob": "6cdd9e41c01ca242f8e4fe18aa53a4e711f2331e",
+          "bytes": 2775,
+          "sha256": "fe4b87fb4d70c7e31d4d6022cbfa87af8ba6dd8711bf8e2251ff1c796f333281",
+          "changedFromProduction100": true
+        },
+        {
+          "path": "game/soundtrack-rights.mjs",
+          "gitBlob": "2bb01e1aaa14a4aec99699e3d6f4bd04b4facdb5",
+          "bytes": 3755,
+          "sha256": "8c1c10927cf5c1f7360374ca1a4d64a7dec3c312b197ace89201c37d75793f04",
+          "changedFromProduction100": false
+        },
+        {
+          "path": "game/soundtrack-bundle.mjs",
+          "gitBlob": "b5b02a135a502757bf745ce1bf03abf057adf5b9",
+          "bytes": 12028,
+          "sha256": "fa6a98e404ca7d169c2dc4fd5383065d79d69f2f8af25e3ca7c4ee6f67d745fd",
+          "changedFromProduction100": false
+        },
+        {
+          "path": "game/soundtrack-share.mjs",
+          "gitBlob": "3e3b8190791b422664fc2bf04029677c844e74b4",
+          "bytes": 5602,
+          "sha256": "6cc8878ca926476b236c0fb0f9544a5248ee627011787a14c2d1c00cad7a78ee",
+          "changedFromProduction100": false
+        },
+        {
+          "path": "game/soundtrack-source.mjs",
+          "gitBlob": "7a0d3b7d7d6fad7c9d545cfaa54afe892f155505",
+          "bytes": 4918,
+          "sha256": "fb4930936a51c052dd5462fbd2f1178323dc59173b6a6556b6039c10dc9a4c83",
+          "changedFromProduction100": false
+        },
+        {
+          "path": "game/soundtrack-bundled.mjs",
+          "gitBlob": "fa36dd47a2d30cd0a77480149437e7ef1c74605a",
+          "bytes": 1980,
+          "sha256": "4603942591731b0bc214b0d27d0d8c957462485ba0dcd0dd074d7449a39c77ce",
+          "changedFromProduction100": false
+        },
+        {
+          "path": "game/ui/soundtrack-panel.mjs",
+          "gitBlob": "32de974ad7f9bd4b1c8d5b687bd9f9467a8c840e",
+          "bytes": 131876,
+          "sha256": "e1bcba6f5d9f072fdbfea7254a72e9f30b97065773ac71ab20f055edb7175b23",
+          "changedFromProduction100": true
+        },
+        {
+          "path": "game/ui/soundtrack-panel.css",
+          "gitBlob": "35735620dfba897bd3d47a65d7211391618de126",
+          "bytes": 9840,
+          "sha256": "b38d186fefe7d74255c0cbd41ca5b255701511f99195d261c1ad5925f882ebf6",
+          "changedFromProduction100": false
+        },
+        {
+          "path": "game/soundtrack-albums.mjs",
+          "gitBlob": "080b5577b586f1a0df3ddcae83d11b530a57cff0",
+          "bytes": 11118,
+          "sha256": "632e82dfc0189fd0f11bbdfbbfc4c8ac468725ca967a76d0c478adc86b1645e1",
+          "changedFromProduction100": false
+        },
+        {
+          "path": "game/soundtrack-portable.mjs",
+          "gitBlob": "97cca6252f3011ab4f430d471326c624e29b5831",
+          "bytes": 2891,
+          "sha256": "d5423f59dfd25ca6310d47d78e433d7ff1e32a8003bf313bb74968f2e07b1103",
+          "changedFromProduction100": false
+        },
+        {
+          "path": "game/content/soundtrack-catalogue.mjs",
+          "gitBlob": "c16efc6fc377122acdbe194e64cd59433d47b968",
+          "bytes": 135438,
+          "sha256": "b712a11fa82bbd4b2c380a8ed7d50abb14b78642585c1a34f54450f9630f5ed2",
+          "changedFromProduction100": false
+        },
+        {
+          "path": "game/online-soundtrack-catalogue.mjs",
+          "gitBlob": "9919c2cb3994a666614796664214910bf3ea3d7e",
+          "bytes": 23469,
+          "sha256": "11d7fe13b71a9400f4f89b4deec16e2cbf39700fc30b598745565142d74bcda9",
+          "changedFromProduction100": false
+        },
+        {
+          "path": "game/official-downloads.mjs",
+          "gitBlob": "d96f55d136ddd7246f58e07429b52f45f17f7380",
+          "bytes": 17757,
+          "sha256": "fae1a94813c7e2173280f7b0100298c8de267d64b31600dde09e6d347a638d43",
+          "changedFromProduction100": false
+        },
+        {
+          "path": "game/soundtrack-download-volumes.mjs",
+          "gitBlob": "cf8ff53e56a91a1d5189771510ce6c11974f67ca",
+          "bytes": 1710,
+          "sha256": "d85620f614ace6f91cb585e2068ed70c52fca55176fd24b1b2bef29a18369c49",
+          "changedFromProduction100": false
+        },
+        {
+          "path": "game/installed-app.mjs",
+          "gitBlob": "5acfcbfebc654fd4442a915a554200fa681f28e4",
+          "bytes": 16845,
+          "sha256": "36cd968913543c61e2d54ed303b23837c18414bda2be80526e1f22e16b8fac96",
+          "changedFromProduction100": false
+        },
+        {
+          "path": "game/managed-media-store.mjs",
+          "gitBlob": "0f38804124737c7975b4e6f9785a5b487a61fa31",
+          "bytes": 50203,
+          "sha256": "65d9249677045e7d7aad1d99003aeeac5adc9b72ea0b045be7a08b8480219885",
+          "changedFromProduction100": false
+        },
+        {
+          "path": "game/media-storage-record.mjs",
+          "gitBlob": "b03ae992435a475f236125832f0ef9ad1493432c",
+          "bytes": 17058,
+          "sha256": "8ac345221034ec28e9968942d86dfdd4cb33415f0e7319a62e9466e072a0b93a",
+          "changedFromProduction100": false
+        },
+        {
+          "path": "game/soundtrack-private-intake.mjs",
+          "gitBlob": "93986c9375f50594d05da699a108614229a169b1",
+          "bytes": 3422,
+          "sha256": "0186af6e1d6ddc00b1494c527bc7dcce61393c4270e1b753c2f485be3595e7cc",
+          "changedFromProduction100": false
+        },
+        {
+          "path": "game/ui/soundtrack-error-copy.mjs",
+          "gitBlob": "a3f9c01332efec2fcdb520a0c2d686e972d9d783",
+          "bytes": 6305,
+          "sha256": "1c7d1b7f070e30e7033d70bb87bf606451e61c9ef7f89190eb51faffbfc3b938",
+          "changedFromProduction100": false
+        }
+      ],
+      "changedInputs": ["game/soundtrack-style-taxonomy.mjs", "game/ui/soundtrack-panel.mjs"],
+      "slots": [
+        "audio.focus.field-kit",
+        "audio.confirm.field-kit",
+        "audio.cancel.field-kit",
+        "audio.capture.field-kit",
+        "audio.failure.field-kit",
+        "audio.victory.field-kit",
+        "audio.pickup.field-kit",
+        "audio.music.field-kit"
+      ]
+    }
+  }
+}

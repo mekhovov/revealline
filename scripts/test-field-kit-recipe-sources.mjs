@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import {
   fieldKitRecipeSources,
+  verifyFieldKitAudioStylePersistenceRetryReview,
   verifyFieldKitSteamDeckAudioContinuationReview,
   verifyFieldKitAudioStyleMenuCorrectionReview,
   verifyFieldKitAudioStyleMenuReview,
@@ -459,4 +460,22 @@ test('Steam Deck audio continuation and exact production99 predecessor fail clos
     assert.equal(verifyFieldKitSteamDeckAudioContinuationReview(...changed), false);
   }
   assert.equal(verifyFieldKitSteamDeckAudioContinuationReview(...bytes.toReversed()), false);
+});
+
+test('Audio style persistence/retry continuation and production100 predecessor fail closed', async () => {
+  const paths = [
+    'docs/verification/audio-style-persistence-retry-2026-09-29/review.json',
+    'docs/verification/v0.142.3-steamdeck-confirm-audio-continuation/review.json',
+    'game/test/fixtures/production-v01423-b5ab-fpv100.json',
+  ];
+  const bytes = await Promise.all(
+    paths.map((path) => readFile(new URL('../' + path, import.meta.url))),
+  );
+  assert.equal(verifyFieldKitAudioStylePersistenceRetryReview(...bytes), true);
+  for (let index = 0; index < bytes.length; index++) {
+    const changed = [...bytes];
+    changed[index] = Buffer.concat([changed[index], Buffer.from(' ')]);
+    assert.equal(verifyFieldKitAudioStylePersistenceRetryReview(...changed), false);
+  }
+  assert.equal(verifyFieldKitAudioStylePersistenceRetryReview(...bytes.toReversed()), false);
 });
