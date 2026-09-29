@@ -8,6 +8,32 @@ The game includes local scores, replay-backed saved flights, a picture collectio
 
 The remaining production targets include broader map progression, every map/theme illustration, more story rewards, character presentation sets, finished auditioned music and physical-device qualification. The [feedback review](docs/feedback-and-next-steps.md) separates delivered changes from those remaining checks. Automated routes establish reproducibility and legal outcomes, not human enjoyment or hardware certification.
 
+## Company communities
+
+Open the [communities directory](https://mekhovov.github.io/revealline/game/communities/)
+to choose the main game or any public community outside the game:
+
+| Community | Shareable entry |
+| --- | --- |
+| FPV / LINE — main game | [Play](https://mekhovov.github.io/revealline/game/) |
+| DroneAid | [Netherlands campaigns](https://mekhovov.github.io/revealline/game/communities/droneaid/) · [Community Relay — Portugal / Germany](https://mekhovov.github.io/revealline/game/communities/droneaid-community/) |
+| Coupa | [Play Coupa](https://mekhovov.github.io/revealline/game/communities/coupa/) |
+
+DroneAid appears once, with both collections available: six Netherlands campaigns and
+Community Relay (39 missions combined). Coupa contains five campaigns (30 missions).
+These are all currently bundled communities; main-game worlds and creator examples are
+not separate company communities. Both DroneAid collections keep their existing saved progress.
+
+The [source directory](game/communities/index.html) works locally at `/game/communities/`.
+Addresses without the final slash also work on the local HTTP server and GitHub Pages.
+Older `/game/community/` bookmarks forward to the new directory, and `?edition=` game
+links remain compatible. Company games offer only their own company's campaigns; no game
+menu exposes a company switcher or directory link. Existing saved flights and progress
+keep their original edition identities. See [community routing and isolation](docs/company-communities.md).
+
+These routes are prepared in source. Stable public links update on the next promoted release;
+older versioned snapshots keep their archived pages.
+
 ## Run locally
 
 Relay Rescue adds [two-player cooperative play](http://127.0.0.1:8768/game/couch/relay-rescue.html)

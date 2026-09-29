@@ -13,7 +13,7 @@ const repository = 'owner/game',
   canonical = scope + 'releases/v0.29.1/site/',
   hash = (bytes) => createHash('sha256').update(bytes).digest('hex');
 
-async function fixture(t, { localized = false } = {}) {
+async function fixture(t, { localized = false, communities = false } = {}) {
   const source = await fs.mkdtemp(path.join(os.tmpdir(), 'pages-current-'));
   t.after(() => fs.rm(source, { recursive: true, force: true }));
   const assets = {
@@ -26,6 +26,15 @@ async function fixture(t, { localized = false } = {}) {
     'game/app.mjs': 'export const frozen = true;',
     'service-worker.js': '/* original scoped worker */',
   };
+  if (communities) {
+    assets['game/communities/index.html'] = '<a href="coupa/">Coupa</a>';
+    assets['game/community/index.html'] = '<script src="redirect.mjs"></script>';
+    assets['game/community/redirect.mjs'] = 'export const legacy = true;';
+    assets['game/communities/entry.mjs'] = 'export const shared = true;';
+    for (const slug of ['coupa', 'droneaid', 'droneaid-community'])
+      assets[`game/communities/${slug}/index.html`] =
+        `<html data-community="${slug}"><script type="module" src="../entry.mjs"></script></html>`;
+  }
   if (localized)
     for (const name of [
       'i18n/style.css',
@@ -74,6 +83,41 @@ function navigate(page, href) {
   assert.equal(link.href, destination);
   return destination;
 }
+
+test('public community aliases preserve clean nested routes, saved links and frozen entry bytes', async (t) => {
+  const { source, assets, plan } = await fixture(t, { communities: true });
+  const paths = [
+    'game/communities',
+    'game/communities/coupa',
+    'game/communities/droneaid',
+    'game/communities/droneaid-community',
+    'game/community',
+  ];
+  const navigation = new Map(plan.metadata.navigationRoutes.map(({ from, to }) => [from, to]));
+  for (const base of [scope, 'http://127.0.0.1:8768/', 'http://127.0.0.1:8768/project/']) {
+    for (const route of paths) {
+      const name = `${route}/index.html`,
+        page = plan.files.get(name);
+      assert.ok(page, name);
+      for (const suffix of ['', '/', '/index.html']) {
+        assert.equal(
+          navigate(page, `${base}${route}${suffix}?campaign=retained&presentation=abc#saved`),
+          `${base}releases/v0.29.1/site/${name}?campaign=retained&presentation=abc#saved`,
+        );
+        assert.equal(
+          navigation.get(route + suffix),
+          route + (suffix === '/index.html' ? suffix : '/'),
+        );
+      }
+      assert.deepEqual(await fs.readFile(path.join(source, name)), Buffer.from(assets[name]));
+    }
+  }
+  assert.ok(!navigation.has('game/communities/unpublished'));
+  assert.ok(
+    !plan.files.has('game/communities/entry.mjs'),
+    'Runtime modules stay in the frozen release graph.',
+  );
+});
 
 test('localized aliases resolve locale assets within the same immutable release at every depth', async (t) => {
   const { plan, source, assets } = await fixture(t, { localized: true });

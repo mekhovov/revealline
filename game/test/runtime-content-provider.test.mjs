@@ -10,6 +10,108 @@ import { retainedEditionFixture } from './helpers/retained-edition-fixture.mjs';
 import { loadPreviewArtwork } from '../content-design/assets.mjs';
 import { acquireCandidatePicture } from '../content-design/picture.mjs';
 import { PNGImage } from './helpers/png-image.mjs';
+import { createHash } from 'node:crypto';
+import { captureEditionPresentation } from '../editions/retained-presentation.mjs';
+import { editionDepartureDestinationAllowed } from '../editions/departure-destination.mjs';
+
+async function friendlyProviderFixture(prefix = '/') {
+  const fixture = await editionProviderFixture();
+  const catalog = structuredClone(fixture.catalog);
+  catalog.brands[0].id = 'coupa';
+  catalog.campaigns[0].brandId = 'coupa';
+  catalog.editions[0].brandId = 'coupa';
+  catalog.editions[0].id = 'coupa-all';
+  catalog.editions.push({ ...catalog.editions[0], id: 'coupa-culture', name: 'Culture' });
+  catalog.defaultEditionId = 'coupa-all';
+  for (const path of ['game/editions/catalog.json', 'edition-catalog.json'])
+    fixture.files.set(path, catalog);
+  const base = `https://example.test${prefix}`;
+  const requests = [];
+  const load = (suffix, compiled = false) =>
+    loadRuntimeContentProvider({
+      locationRef: { href: `${base}${suffix}` },
+      documentRef: { documentElement: { dataset: compiled ? { editionId: 'coupa-all' } : {} } },
+      fetcher(value) {
+        const url = new URL(value);
+        requests.push(url.href);
+        assert.ok(url.pathname.startsWith(prefix));
+        return fixture.fetcher(`https://example.test/${url.pathname.slice(prefix.length)}`);
+      },
+    });
+  return { ...fixture, catalog, base, requests, load };
+}
+
+test('friendly community host resolves shared files and preserves canonical save and artwork identity', async () => {
+  for (const prefix of ['/', '/revealline/', '/revealline/releases/v0.142.3/site/']) {
+    const f = await friendlyProviderFixture(prefix);
+    const canonical = await f.load('game/index.html?edition=coupa-all');
+    for (const suffix of ['', '/', '/index.html']) {
+      const friendly = await f.load(`game/communities/coupa${suffix}?mission=first#details`);
+      assert.equal(friendly.editionId, canonical.editionId);
+      assert.deepEqual(friendly.context('0.142.3'), canonical.context('0.142.3'));
+      assert.equal(friendly.route.profileKey, canonical.route.profileKey);
+      assert.equal(friendly.route.sessionKey, canonical.route.sessionKey);
+      assert.equal(friendly.authoredPresentationSha256, canonical.authoredPresentationSha256);
+      assert.equal(friendly.rootURL, f.base);
+      assert.equal(friendly.href(), `${f.base}game/communities/coupa/`);
+      assert.equal(
+        friendly.href({ edition: 'coupa-culture', mission: 'first' }),
+        `${f.base}game/communities/coupa/?edition=coupa-culture&mission=first`,
+      );
+      assert.throws(() => friendly.href({ edition: 'droneaid' }), /another company/);
+    }
+    assert.ok(f.requests.every((request) => !request.includes('/communities/')));
+    const narrower = await f.load('game/communities/coupa/?edition=coupa-culture');
+    assert.equal(narrower.editionId, 'coupa-culture');
+    assert.equal(narrower.href({ edition: 'coupa-all' }), `${f.base}game/communities/coupa/`);
+    assert.equal(canonical.href(), `${f.base}game/communities/coupa/`);
+    const installed = await f.load('game/index.html', true);
+    assert.equal(installed.href(), `${f.base}game/index.html?edition=coupa-all`);
+  }
+});
+
+test('friendly path rejects foreign and duplicate selectors before fetching or opening another company', async () => {
+  const f = await friendlyProviderFixture();
+  for (const query of ['edition=droneaid', 'edition=coupa-all&edition=coupa-culture'])
+    await assert.rejects(f.load(`game/communities/coupa/?${query}`), /community|selector/);
+  assert.equal(f.requests.length, 0);
+  f.catalog.brands[0].id = 'another-company';
+  f.catalog.campaigns[0].brandId = 'another-company';
+  for (const edition of f.catalog.editions) edition.brandId = 'another-company';
+  await assert.rejects(f.load('game/communities/coupa/'), /another company/);
+});
+
+test('friendly retained artwork navigation keeps its exact original and departure validation', async () => {
+  const f = await friendlyProviderFixture('/revealline/releases/v0.142.3/site/');
+  const original = await f.load('game/index.html?edition=coupa-all');
+  const snapshot = await captureEditionPresentation(original.bootstrap);
+  const bytes = Buffer.from(JSON.stringify(snapshot));
+  const descriptor = {
+    id: snapshot.authoredPresentationSha256,
+    path: `game/editions/retained/${snapshot.authoredPresentationSha256}.json`,
+    bytes: bytes.length,
+    sha256: createHash('sha256').update(bytes).digest('hex'),
+  };
+  f.files.set(descriptor.path, snapshot);
+  f.catalog.editions[0].presentationHistory = [descriptor];
+  f.data.themes.themes[0].palette.accent = '#ff00ff';
+  const retained = await f.load(`game/communities/coupa/?presentation=${descriptor.id}`);
+  assert.equal(retained.authoredPresentationSha256, original.authoredPresentationSha256);
+  assert.equal(retained.href(), `${f.base}game/communities/coupa/?presentation=${descriptor.id}`);
+  assert.equal(retained.href({ presentation: null }), `${f.base}game/communities/coupa/`);
+  const ticket = { kind: 'catalogue', destinationEditionId: 'coupa-culture' };
+  const target = retained.href({ edition: 'coupa-culture', presentation: null });
+  assert.equal(editionDepartureDestinationAllowed(retained, ticket, target, retained.href()), true);
+  for (const foreign of [
+    target.replace('/coupa/', '/droneaid/'),
+    target.replace('coupa-culture', 'droneaid-community'),
+    target.replace('example.test', 'foreign.test'),
+  ])
+    assert.equal(
+      editionDepartureDestinationAllowed(retained, ticket, foreign, retained.href()),
+      false,
+    );
+});
 
 test('menu defers reveal-only bytes but retains their full receipt and exact acquisition checks', async () => {
   const f = await retainedEditionFixture({ originalArtwork: true });
@@ -147,6 +249,33 @@ test('ordinary Solo uses its current startup path without any edition fetch', as
     },
   });
   assert.equal(provider, null);
+});
+test('artwork URLs stay inside the selected company receipt while retained originals remain available', async () => {
+  const f = await retainedEditionFixture({ originalArtwork: true });
+  const originalAsset = f.catalog.assets.find((asset) => asset.id === 'old-picture');
+  const foreign = {
+    ...originalAsset,
+    id: 'another-company-logo',
+    path: 'game/editions/assets/another-company-logo.png',
+  };
+  f.catalog.assets.push(foreign);
+  f.catalog.brands.push({
+    ...f.catalog.brands[0],
+    id: 'another-company',
+    name: 'Another company',
+    logoAssetId: foreign.id,
+    assetIds: [foreign.id],
+  });
+  const current = await f.load();
+  assert.ok(current.catalog.assets.some((asset) => asset.id === foreign.id));
+  assert.ok(current.assetURL(originalAsset.id).endsWith(originalAsset.path));
+  assert.throws(() => current.assetURL(foreign.id), /does not contain/);
+  assert.equal(current.authoredPresentationSha256, f.original.authoredPresentationSha256);
+  f.replacePicture();
+  const retained = await f.load(f.descriptor.id);
+  assert.ok(retained.assetURL(originalAsset.id).endsWith(originalAsset.path));
+  assert.throws(() => retained.assetURL(foreign.id), /does not contain/);
+  assert.equal(retained.authoredPresentationSha256, f.original.authoredPresentationSha256);
 });
 test('edition content injects owned boot data and preserves audience and old saves', async () => {
   const f = await editionProviderFixture();
