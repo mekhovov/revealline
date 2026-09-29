@@ -1,0 +1,334 @@
+TAP version 13
+# Subtest: Team setup and paused Help describe only authored roles: empty
+ok 1 - Team setup and paused Help describe only authored roles: empty
+  ---
+  duration_ms: 511.03225
+  type: 'test'
+  ...
+# Subtest: Team setup and paused Help describe only authored roles: hunter
+ok 2 - Team setup and paused Help describe only authored roles: hunter
+  ---
+  duration_ms: 392.856292
+  type: 'test'
+  ...
+# Subtest: Team setup and paused Help describe only authored roles: drifter
+ok 3 - Team setup and paused Help describe only authored roles: drifter
+  ---
+  duration_ms: 393.03075
+  type: 'test'
+  ...
+# Subtest: Team setup and paused Help describe only authored roles: relay
+ok 4 - Team setup and paused Help describe only authored roles: relay
+  ---
+  duration_ms: 406.022417
+  type: 'test'
+  ...
+# Subtest: Team setup and paused Help describe only authored roles: hunter, drifter
+ok 5 - Team setup and paused Help describe only authored roles: hunter, drifter
+  ---
+  duration_ms: 390.933542
+  type: 'test'
+  ...
+# Subtest: Team setup and paused Help describe only authored roles: hunter, relay
+ok 6 - Team setup and paused Help describe only authored roles: hunter, relay
+  ---
+  duration_ms: 397.033708
+  type: 'test'
+  ...
+# Subtest: Team setup and paused Help describe only authored roles: drifter, relay
+ok 7 - Team setup and paused Help describe only authored roles: drifter, relay
+  ---
+  duration_ms: 394.591083
+  type: 'test'
+  ...
+# Subtest: Team setup and paused Help describe only authored roles: hunter, drifter, relay
+ok 8 - Team setup and paused Help describe only authored roles: hunter, drifter, relay
+  ---
+  duration_ms: 388.352
+  type: 'test'
+  ...
+# Subtest: en: impact advice uses the admitted edition and preserves Legacy/relay-only/empty guidance
+ok 9 - en: impact advice uses the admitted edition and preserves Legacy/relay-only/empty guidance
+  ---
+  duration_ms: 12.155792
+  type: 'test'
+  ...
+# Subtest: en/hybrid: imported Team Help retains exact impact and seat advice through pause/read/Back
+ok 10 - en/hybrid: imported Team Help retains exact impact and seat advice through pause/read/Back
+  ---
+  duration_ms: 526.902166
+  type: 'test'
+  ...
+# Subtest: en/hybrid/with-hunters: imported Team Help retains exact impact and seat advice through pause/read/Back
+ok 11 - en/hybrid/with-hunters: imported Team Help retains exact impact and seat advice through pause/read/Back
+  ---
+  duration_ms: 411.733792
+  type: 'test'
+  ...
+# Subtest: en/specialist: imported Team Help retains exact impact and seat advice through pause/read/Back
+ok 12 - en/specialist: imported Team Help retains exact impact and seat advice through pause/read/Back
+  ---
+  duration_ms: 410.939583
+  type: 'test'
+  ...
+# Subtest: en/specialist/with-hunters: imported Team Help retains exact impact and seat advice through pause/read/Back
+ok 13 - en/specialist/with-hunters: imported Team Help retains exact impact and seat advice through pause/read/Back
+  ---
+  duration_ms: 410.6885
+  type: 'test'
+  ...
+# Subtest: uk: impact advice uses the admitted edition and preserves Legacy/relay-only/empty guidance
+ok 14 - uk: impact advice uses the admitted edition and preserves Legacy/relay-only/empty guidance
+  ---
+  duration_ms: 11.731042
+  type: 'test'
+  ...
+# Subtest: uk/hybrid: imported Team Help retains exact impact and seat advice through pause/read/Back
+ok 15 - uk/hybrid: imported Team Help retains exact impact and seat advice through pause/read/Back
+  ---
+  duration_ms: 403.221125
+  type: 'test'
+  ...
+# Subtest: uk/hybrid/with-hunters: imported Team Help retains exact impact and seat advice through pause/read/Back
+ok 16 - uk/hybrid/with-hunters: imported Team Help retains exact impact and seat advice through pause/read/Back
+  ---
+  duration_ms: 405.790833
+  type: 'test'
+  ...
+# Subtest: uk/specialist: imported Team Help retains exact impact and seat advice through pause/read/Back
+ok 17 - uk/specialist: imported Team Help retains exact impact and seat advice through pause/read/Back
+  ---
+  duration_ms: 403.324958
+  type: 'test'
+  ...
+# Subtest: uk/specialist/with-hunters: imported Team Help retains exact impact and seat advice through pause/read/Back
+ok 18 - uk/specialist/with-hunters: imported Team Help retains exact impact and seat advice through pause/read/Back
+  ---
+  duration_ms: 407.571542
+  type: 'test'
+  ...
+# Subtest: current gp4 preserves pre-fix complete Team v1 hunter outputs
+ok 19 - current gp4 preserves pre-fix complete Team v1 hunter outputs
+  ---
+  duration_ms: 24.786375
+  type: 'test'
+  ...
+# Subtest: current gp4 preserves pre-fix complete Team v2 hunter outputs
+ok 20 - current gp4 preserves pre-fix complete Team v2 hunter outputs
+  ---
+  duration_ms: 34.471125
+  type: 'test'
+  ...
+# Subtest: current gp4 preserves pre-fix complete Team v3 hunter outputs
+ok 21 - current gp4 preserves pre-fix complete Team v3 hunter outputs
+  ---
+  duration_ms: 27.681208
+  type: 'test'
+  ...
+# Subtest: current gp4 preserves pre-fix complete Team v4 hunter outputs
+ok 22 - current gp4 preserves pre-fix complete Team v4 hunter outputs
+  ---
+  duration_ms: 25.062708
+  type: 'test'
+  ...
+# Subtest: frozen v1 source and Team hunter dispatch retain pre-fix byte and behavior receipts
+ok 23 - frozen v1 source and Team hunter dispatch retain pre-fix byte and behavior receipts
+  ---
+  duration_ms: 102.882958
+  type: 'test'
+  ...
+# Subtest: frozen v2 source and Team hunter dispatch retain pre-fix byte and behavior receipts
+ok 24 - frozen v2 source and Team hunter dispatch retain pre-fix byte and behavior receipts
+  ---
+  duration_ms: 86.137375
+  type: 'test'
+  ...
+# Subtest: frozen v3 source and Team hunter dispatch retain pre-fix byte and behavior receipts
+ok 25 - frozen v3 source and Team hunter dispatch retain pre-fix byte and behavior receipts
+  ---
+  duration_ms: 82.043459
+  type: 'test'
+  ...
+# Subtest: current preparation preserves v6/v7 schema defaults rather than admitting encounter overrides
+ok 26 - current preparation preserves v6/v7 schema defaults rather than admitting encounter overrides
+  ---
+  duration_ms: 15.443125
+  type: 'test'
+  ...
+# Subtest: installed Team v6 hunter configuration reconstructs a saved recipe and exact checkpoint
+ok 27 - installed Team v6 hunter configuration reconstructs a saved recipe and exact checkpoint
+  ---
+  duration_ms: 35.734625
+  type: 'test'
+  ...
+# Subtest: installed Team v7 hunter configuration reconstructs a saved recipe and exact checkpoint
+ok 28 - installed Team v7 hunter configuration reconstructs a saved recipe and exact checkpoint
+  ---
+  duration_ms: 23.486542
+  type: 'test'
+  ...
+# Subtest: raw Team v6/gentle: accepted hunters tune and start with native committed attacks
+ok 29 - raw Team v6/gentle: accepted hunters tune and start with native committed attacks
+  ---
+  duration_ms: 30.182417
+  type: 'test'
+  ...
+# Subtest: raw Team v6/gentle: hunter-free imports still tune and start
+ok 30 - raw Team v6/gentle: hunter-free imports still tune and start
+  ---
+  duration_ms: 6.200333
+  type: 'test'
+  ...
+# Subtest: raw Team v6/standard: accepted hunters tune and start with native committed attacks
+ok 31 - raw Team v6/standard: accepted hunters tune and start with native committed attacks
+  ---
+  duration_ms: 11.841458
+  type: 'test'
+  ...
+# Subtest: raw Team v6/standard: hunter-free imports still tune and start
+ok 32 - raw Team v6/standard: hunter-free imports still tune and start
+  ---
+  duration_ms: 5.898958
+  type: 'test'
+  ...
+# Subtest: raw Team v6/expert: accepted hunters tune and start with native committed attacks
+ok 33 - raw Team v6/expert: accepted hunters tune and start with native committed attacks
+  ---
+  duration_ms: 14.169375
+  type: 'test'
+  ...
+# Subtest: raw Team v6/expert: hunter-free imports still tune and start
+ok 34 - raw Team v6/expert: hunter-free imports still tune and start
+  ---
+  duration_ms: 6.799167
+  type: 'test'
+  ...
+# Subtest: raw Team v7/gentle: accepted hunters tune and start with native committed attacks
+ok 35 - raw Team v7/gentle: accepted hunters tune and start with native committed attacks
+  ---
+  duration_ms: 9.255459
+  type: 'test'
+  ...
+# Subtest: raw Team v7/gentle: hunter-free imports still tune and start
+ok 36 - raw Team v7/gentle: hunter-free imports still tune and start
+  ---
+  duration_ms: 4.417833
+  type: 'test'
+  ...
+# Subtest: raw Team v7/standard: accepted hunters tune and start with native committed attacks
+ok 37 - raw Team v7/standard: accepted hunters tune and start with native committed attacks
+  ---
+  duration_ms: 8.236083
+  type: 'test'
+  ...
+# Subtest: raw Team v7/standard: hunter-free imports still tune and start
+ok 38 - raw Team v7/standard: hunter-free imports still tune and start
+  ---
+  duration_ms: 5.326125
+  type: 'test'
+  ...
+# Subtest: raw Team v7/expert: accepted hunters tune and start with native committed attacks
+ok 39 - raw Team v7/expert: accepted hunters tune and start with native committed attacks
+  ---
+  duration_ms: 8.8105
+  type: 'test'
+  ...
+# Subtest: raw Team v7/expert: hunter-free imports still tune and start
+ok 40 - raw Team v7/expert: hunter-free imports still tune and start
+  ---
+  duration_ms: 5.109542
+  type: 'test'
+  ...
+# Subtest: raw Team v5 still rejects hunters before import acceptance
+ok 41 - raw Team v5 still rejects hunters before import acceptance
+  ---
+  duration_ms: 0.673167
+  type: 'test'
+  ...
+# Subtest: raw Team v6 still rejects authored encounter overrides
+ok 42 - raw Team v6 still rejects authored encounter overrides
+  ---
+  duration_ms: 0.657875
+  type: 'test'
+  ...
+# Subtest: raw Team v7 still rejects authored encounter overrides
+ok 43 - raw Team v7 still rejects authored encounter overrides
+  ---
+  duration_ms: 0.604958
+  type: 'test'
+  ...
+# Subtest: v2 travelling impacts require the explicit Team impact edition
+ok 44 - v2 travelling impacts require the explicit Team impact edition
+  ---
+  duration_ms: 5.469459
+  type: 'test'
+  ...
+# Subtest: one enemy source seeds two fronts once for a stable player and cut identity
+ok 45 - one enemy source seeds two fronts once for a stable player and cut identity
+  ---
+  duration_ms: 4.951875
+  type: 'test'
+  ...
+# Subtest: front ownership survives partner changes, trims secured cells and never transfers to a later cut
+ok 46 - front ownership survives partner changes, trims secured cells and never transfers to a later cut
+  ---
+  duration_ms: 2.086
+  type: 'test'
+  ...
+# Subtest: one partner closing removes only that owned cut while the other player fronts continue
+ok 47 - one partner closing removes only that owned cut while the other player fronts continue
+  ---
+  duration_ms: 5.295208
+  type: 'test'
+  ...
+# Subtest: a joint closure cancels both participating owned cuts without transferring either identity
+ok 48 - a joint closure cancels both participating owned cuts without transferring either identity
+  ---
+  duration_ms: 3.547375
+  type: 'test'
+  ...
+# Subtest: partner-fill prefix trimming clears secured fronts and rebases a surviving departure front
+ok 49 - partner-fill prefix trimming clears secured fronts and rebases a surviving departure front
+  ---
+  duration_ms: 1.743791
+  type: 'test'
+  ...
+# Subtest: downing clears only the failed owned cut and a later cut receives a fresh identity
+ok 50 - downing clears only the failed owned cut and a later cut receives a fresh identity
+  ---
+  duration_ms: 2.155375
+  type: 'test'
+  ...
+# Subtest: pause and disconnect-style input release preserve stable front ownership
+ok 51 - pause and disconnect-style input release preserve stable front ownership
+  ---
+  duration_ms: 1.539542
+  type: 'test'
+  ...
+# Subtest: live enemy contact launches fronts without an immediate loss and fixed impact speed ignores enemy slow
+ok 52 - live enemy contact launches fronts without an immediate loss and fixed impact speed ignores enemy slow
+  ---
+  duration_ms: 3.805292
+  type: 'test'
+  ...
+# Subtest: a valid closure wins an exact craft-front arrival tie and clears only that owned cut
+ok 53 - a valid closure wins an exact craft-front arrival tie and clears only that owned cut
+  ---
+  duration_ms: 2.593792
+  type: 'test'
+  ...
+# Subtest: freeze blocks new enemy seeds while already-launched fronts continue at policy speed
+ok 54 - freeze blocks new enemy seeds while already-launched fronts continue at policy speed
+  ---
+  duration_ms: 1.452375
+  type: 'test'
+  ...
+1..54
+# tests 54
+# suites 0
+# pass 54
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 3634.467208

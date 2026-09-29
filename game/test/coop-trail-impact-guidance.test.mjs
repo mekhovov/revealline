@@ -9,7 +9,7 @@ import { getLocale, setLocale, t as text } from '../i18n/index.mjs';
 import { page } from './helpers/coop-host.mjs';
 import { waitFor } from './helpers/coop-presentation-fixture.mjs';
 
-function impactLevel({ specialist = false, enemies = true } = {}) {
+function impactLevel({ specialist = false, enemies = true, hunters = false } = {}) {
   const level = structuredClone(COOP_STARTER_PACK.levels[0]);
   delete level.strongholds;
   delete level.encounter;
@@ -21,9 +21,13 @@ function impactLevel({ specialist = false, enemies = true } = {}) {
     terrain: [],
     lineImpact: { version: 'team-line-impact.v2', speed: 24 },
   });
-  // Current travelling-impact missions use keepers/roamers; retain an actual
-  // drifter from the authored starter rather than combine unqualified hunter tuning.
-  level.enemies = level.enemies.filter((enemy) => enemy.type === 'drifter');
+  // Keep the original drifter coverage and explicitly exercise imported v6/v7
+  // hunters without adding the encounter field forbidden by those editions.
+  if (!hunters) level.enemies = level.enemies.filter((enemy) => enemy.type === 'drifter');
+  assert.equal(
+    level.enemies.some((enemy) => enemy.type === 'hunter'),
+    hunters,
+  );
   assert.ok(level.enemies.length > 0);
   if (specialist) level.supportRoles = ['disruptor', 'interceptor'];
   if (!enemies) level.enemies = [];
@@ -96,10 +100,12 @@ for (const locale of ['en', 'uk']) {
     }
   });
 
-  for (const specialist of [false, true])
-    test(`${locale}/${specialist ? 'specialist' : 'hybrid'}: imported Team Help retains exact impact and seat advice through pause/read/Back`, async (t) => {
+  for (const { specialist, hunters } of [false, true].flatMap((specialist) =>
+    [false, true].map((hunters) => ({ specialist, hunters })),
+  ))
+    test(`${locale}/${specialist ? 'specialist' : 'hybrid'}${hunters ? '/with-hunters' : ''}: imported Team Help retains exact impact and seat advice through pause/read/Back`, async (t) => {
       const f = await page(t),
-        pack = impactPack({ specialist });
+        pack = impactPack({ specialist, hunters });
       assert.deepEqual(validateCoopPack(pack), { valid: true, errors: [] });
       await f.selectFile(JSON.stringify(pack));
       assert.equal(f.$('coop-level').value, pack.levels[0].id);
@@ -110,6 +116,15 @@ for (const locale of ['en', 'uk']) {
       useLocale(t, locale);
       const check = () => {
         assert.ok(f.$('coop-threat-help').textContent.includes(impactCopy()));
+        assert.equal(
+          f
+            .$('coop-threat-help')
+            .textContent.includes(
+              text('interface:huntersMarkARouteBeforeChargingCrossDuringRecoveryOr'),
+            ),
+          hunters,
+          'The imported hunter roster retains its own Team guidance.',
+        );
         assert.doesNotMatch(f.$('coop-help-reading').textContent, /team\.trailImpact|\{\{/);
         const support = f.$('coop-help-support').textContent;
         if (specialist)
