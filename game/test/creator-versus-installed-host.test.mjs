@@ -3,7 +3,8 @@ import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import { couchPage } from './helpers/couch-host.mjs';
 import { managedIndexedDB } from './helpers/managed-idb.mjs';
-import { pngBytes } from './helpers/media-fixtures.mjs';
+import { pngBytes, deferred } from './helpers/media-fixtures.mjs';
+import { waitFor } from './helpers/wait-for.mjs';
 import { activateMissionCard } from './helpers/library-selection.mjs';
 import { PNGImage } from './helpers/png-image.mjs';
 import { generateCreatorProject } from '../creator/templates.mjs';
@@ -185,9 +186,12 @@ function replayPlayerOne(page, replay) {
 }
 
 async function openMissionLibrary(page) {
+  page.$('race-options').click();
+  page.$('race-settings-tab-content').click();
   const opener = page.$('race-library-switch'),
     listeners = opener.listeners.get('click'),
     pending = [];
+  assert(opener.getClientRects().length, 'the moved library action is visible in Settings');
   opener.listeners.set(
     'click',
     new Set(
@@ -226,6 +230,60 @@ test('installed Creator launch does not evaluate an absent authored Journey rout
     page.$('race-message').textContent + ' ' + page.$('journey-chooser-status').textContent,
   );
 });
+
+for (const interruption of ['Settings Back', 'foreground loss'])
+  test(`installed Creator launch from Settings retires after ${interruption} during picture preparation`, async (t) => {
+    const { pack, indexedDB, storage } = await fixture(),
+      gate = deferred();
+    let held = null,
+      armed = false;
+    class HeldPicture extends PNGImage {
+      async decode() {
+        await super.decode();
+        if (
+          armed &&
+          !held &&
+          globalThis.document.getElementById('race-preparation')?.dataset.state === 'busy'
+        ) {
+          held = this;
+          await gate.promise;
+        }
+      }
+    }
+    t.after(() => gate.resolve());
+    const page = await openCreatorHost(t, indexedDB, storage, { ImageClass: HeldPicture });
+    page.frame(0);
+    const before = [...page.renders],
+      wasStartDisabled = page.$('race-start').disabled;
+    await openMissionLibrary(page);
+    const card = [...page.$('journey-cards').children].find((candidate) => {
+      const [owner, edition] = JSON.parse(candidate.dataset.missionId);
+      return owner === `creator:${pack.editionId}` && edition === pack.editionId;
+    });
+    assert(card);
+    armed = true;
+    const pending = activateMissionCard(card);
+    await waitFor(() => held, { message: 'Installed picture preparation did not begin.' });
+    assert.equal(page.$('journey-chooser').open, false);
+    assert.equal(page.$('race-options-panel').hidden, false);
+    if (interruption === 'Settings Back') {
+      page.$('race-options-back').focus();
+      page.$('race-options-back').click();
+    } else {
+      page.doc.focused = false;
+      page.win.emit('blur');
+    }
+    const focused = page.doc.activeElement;
+    gate.resolve();
+    await pending;
+    page.frame(0);
+    assert.notEqual(page.state(), 'running');
+    assert.ok(page.renders[0] === before[0], 'Player one keeps the preceding board.');
+    assert.ok(page.renders[1] === before[1], 'Player two keeps the preceding board.');
+    assert.equal(page.$('race-start').disabled, wasStartDisabled);
+    assert.equal(page.doc.activeElement, focused);
+    assert.equal(page.$('journey-chooser').open, false);
+  });
 
 test('installed creator campaigns continue and restore their earned state in a fresh Versus host', async (t) => {
   const { pack, route, indexedDB, storage } = await fixture();

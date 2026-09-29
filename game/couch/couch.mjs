@@ -1507,7 +1507,7 @@ try {
   async function prepareNext(
     destination = null,
     focusOrigin = $('race-start'),
-    { configured = null, fresh = false, rulesEdition } = {},
+    { configured = null, fresh = false, rulesEdition, ownsStart = null } = {},
   ) {
     const target = destination ?? roundRecipe.entry;
     const sameMission =
@@ -1588,6 +1588,7 @@ try {
     let adopted = false;
     const current = () =>
       !disposed &&
+      (!ownsStart || (ownsStart() && restoreFocus.current(true))) &&
       !controller.signal.aborted &&
       contentController === controller &&
       nextAttempt === attempt &&
@@ -1785,7 +1786,19 @@ try {
     }
     updateMenu();
   }
-  async function startRace(destination = null, { rulesEdition, focusOrigin = null } = {}) {
+  async function startRace(
+    destination = null,
+    { rulesEdition, focusOrigin = null, libraryStart = null } = {},
+  ) {
+    // A confirmed library selection may originate from Settings. Its captured
+    // scope remains authoritative through preparation; ordinary Start/Retry
+    // still belong to main, and the running-state update leaves Settings only
+    // after the exact prepared match has been accepted.
+    const startScope = shell.scope(),
+      libraryAdmission =
+        destination &&
+        libraryStart?.isCurrent() === true &&
+        libraryStart.attempt?.scope === startScope;
     if (
       disposed ||
       contentBusy ||
@@ -1793,7 +1806,8 @@ try {
       document.hidden ||
       !document.hasFocus() ||
       match.status === 'running' ||
-      shell.scope() !== 'main'
+      (libraryStart && !libraryAdmission) ||
+      (startScope !== 'main' && !(startScope === 'options' && libraryAdmission))
     )
       return;
     // A ready preview is not a resumed attempt. A preference changed after its
@@ -1850,7 +1864,7 @@ try {
         generation !== previousGeneration ||
         contentController !== previousController ||
         contentBusy ||
-        shell.scope() !== 'main'
+        shell.scope() !== startScope
       )
         return;
     }
@@ -1860,7 +1874,11 @@ try {
       // origin until the new attempt makes Start available again.
       const start =
           focusOrigin ||
-          (destination && !contentReady ? $('race-library-switch') : $('race-start')),
+          (libraryAdmission
+            ? $(startScope === 'options' ? 'race-library-switch' : 'race-chapters')
+            : destination && !contentReady
+              ? $('race-library-switch')
+              : $('race-start')),
         previousRun = match,
         previousGeneration = generation,
         previousController = contentController;
@@ -1876,10 +1894,13 @@ try {
         generation !== previousGeneration ||
         contentController !== previousController ||
         contentBusy ||
-        shell.scope() !== 'main'
+        shell.scope() !== startScope
       )
         return;
-      const prepared = await prepareNext(destination, start, { rulesEdition });
+      const prepared = await prepareNext(destination, start, {
+        rulesEdition,
+        ownsStart: libraryAdmission ? ownsStartIntent : null,
+      });
       // Preparation may finish after blur, but only this uninterrupted foreground
       // action may start it. Installed pictures pass the same confirmation boundary.
       if (
@@ -1889,7 +1910,7 @@ try {
         match !== prepared.match ||
         contentController !== prepared.controller ||
         prepared.controller.signal.aborted ||
-        shell.scope() !== 'main'
+        shell.scope() !== startScope
       ) {
         prepared?.releaseFocus();
         return;
@@ -1912,7 +1933,7 @@ try {
           match === selectedRun &&
           ticket === generation &&
           match.status === 'ready' &&
-          shell.scope() === 'main';
+          shell.scope() === startScope;
       const display = preparationStatus.begin({
         message: t('interface:confirmingThePreparedPictureBeforeStarting'),
         stage: 'verifying',
@@ -2675,7 +2696,10 @@ try {
       if (!entry) throw new Error(t('interface:thisExactBaseMissionIsUnavailable'));
       if (!(await confirmLibraryReplacement(context, `Play ${entry.level.name}?`))) return false;
       if (!context.isCurrent()) return false;
-      await startRace(entry, { rulesEdition: selection.rulesEdition });
+      await startRace(entry, {
+        rulesEdition: selection.rulesEdition,
+        libraryStart: context.continuousNext ? null : context,
+      });
       const started = roundRecipe.entry === entry && match.status === 'running';
       if (started) currentLibrarySelection = { match, id: context.libraryMissionId };
       return started;
@@ -2962,7 +2986,7 @@ try {
     if (!entry) throw new Error('This exact creator mission is unavailable in Versus.');
     if (!(await confirmLibraryReplacement(context, `Play ${mission.name}?`))) return false;
     if (!context.isCurrent()) return false;
-    await startRace(entry);
+    await startRace(entry, { libraryStart: context.continuousNext ? null : context });
     const started = roundRecipe.entry === entry && match.status === 'running';
     if (started) currentLibrarySelection = { match, id: context.libraryMissionId };
     return started;
@@ -3080,7 +3104,7 @@ try {
                   if (!(await confirmLibraryReplacement(context, `Play ${mission.name}?`)))
                     return false;
                   if (!context.isCurrent()) return false;
-                  await startRace(entry);
+                  await startRace(entry, { libraryStart: context.continuousNext ? null : context });
                   const started = roundRecipe.entry === entry && match.status === 'running';
                   if (started)
                     currentLibrarySelection = {
