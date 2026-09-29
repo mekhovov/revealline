@@ -7,3 +7,7 @@ This branch preserves local source history and working/index snapshots. It is a 
 The interval capture includes old generated files, superseded proposals, partial checkouts and unresolved conflict stages. Their presence preserves evidence; it does not approve their behavior or missing-file deletions. Current feature PRs control release integration. Dependency links, OS metadata and ignored build caches are outside this source snapshot.
 
 Independent verification checked the original parents, every recorded tree mapping, all captured working-file hashes, and all index objects. Physical device and product acceptance are separate from this recovery check.
+
+All seven recorded Git stashes are retained through the parent history and `stash-preservation-audit.json`. They were not applied or dropped.
+
+The complete newly reachable media was checked against the existing private/paused soundtrack restriction before final preservation. Both provenance receipts found no private UA-FPV recordings/packs or paused original candidates. The 29 audio file identities in each reviewed set match recorded CC0 source hashes and sizes. Theme bundles contain only images/fonts; archive/embedded-payload checks found no restricted recording. Private ignored media outside Git remains outside this archive and is not authorized for publication. Metadata references are historical evidence, not approval to resume a paused project.
