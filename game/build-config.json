@@ -5,6 +5,8 @@
     "game",
     "site",
     "authoring/community",
+    "authoring/company-studio",
+    "docs/company-editions-playtest.md",
     "docs/story-workshop-authoring.md",
     "docs/feature-delivery-workflow.md",
     "authoring/motion-lab/animation.mjs",
