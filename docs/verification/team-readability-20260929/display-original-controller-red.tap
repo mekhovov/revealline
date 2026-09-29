@@ -9,11 +9,11 @@ not ok 1 - Versus controller selects the real display control without replacing 
   error: |-
     Expected values to be strictly equal:
     + actual - expected
-    
+
     + 'race-start'
     - 'race-settings-tab-display'
              ^
-    
+
   code: 'ERR_ASSERTION'
   name: 'AssertionError'
   expected: 'race-settings-tab-display'
