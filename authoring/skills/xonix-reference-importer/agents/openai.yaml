@@ -1,4 +1,0 @@
-interface:
-  display_name: "Xonix Reference Importer"
-  short_description: "Import source art and develop original pixel variants"
-  default_prompt: "Use $xonix-reference-importer to inventory this Telegram pack or supplied originals, preserve hashes and provenance, analyze accessible silhouettes, and propose original pixel-art variants with independent game bindings."

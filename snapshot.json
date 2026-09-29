@@ -1,0 +1,113 @@
+{
+  "format": "revealline-recovery-fragment-v1",
+  "capturedAt": "2026-09-29T15:10:01.776912+00:00",
+  "worktree": "<home>/work/my_projects/go_test/.cache/worktrees/p03-studio-inline-guide",
+  "branch": "refs/heads/codex/p03-studio-inline-guide",
+  "head": "628e95daf403082768cdcf900a8ea1d1ef4629a2",
+  "excluded": [],
+  "changes": [
+    {
+      "status": " M",
+      "path": "authoring/asset-studio/index.html",
+      "object": "f0b4440391d235de0925d04ecfb905e141ca65b4",
+      "sha256": "cddb29396cdff4181785b7a5024a6e2c296fd099e67c9b29be19f3e312a108d4",
+      "bytes": 32362,
+      "mode": "100644"
+    },
+    {
+      "status": " M",
+      "path": "authoring/asset-studio/studio.css",
+      "object": "b49a60c9f4e5b683e092fb948344afd7a66d5f41",
+      "sha256": "5fa43b17e34478699ae52945c7faf36dcbd809871737d613866acfa90144eee7",
+      "bytes": 20770,
+      "mode": "100644"
+    },
+    {
+      "status": " M",
+      "path": "authoring/asset-studio/studio.mjs",
+      "object": "d990d0201691769d9f60c30fb65e3fa04b0b2a54",
+      "sha256": "f6e778413535700dee515d4734fb5413034a7f0af7cee0371c9809856f439803",
+      "bytes": 44250,
+      "mode": "100644"
+    },
+    {
+      "status": " M",
+      "path": "authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "object": "b0abdffdbee146765f6a081aa2a53cce87686015",
+      "sha256": "575bc69509d7d365e2a01e98a48536f80ff9445bdeaf5c8b56b368d97d062bd9",
+      "bytes": 202240,
+      "mode": "100644"
+    },
+    {
+      "status": " M",
+      "path": "docs/asset-studio.md",
+      "object": "f6fcb67e96f4a45284442f9ba2e83ec026e43e4f",
+      "sha256": "195d96ccd7b13046cb1c24f46b0f758536307362a18924199506d2ca565a47fb",
+      "bytes": 17805,
+      "mode": "100644"
+    },
+    {
+      "status": " M",
+      "path": "game/test/asset-studio-host-loading.test.mjs",
+      "object": "08dd81f9cefdbaf362ac0da03280f8c2dd09a400",
+      "sha256": "486afccd353d3cb49ae5030a383a174fe0db4cd3e37d0ae569e5f2092340ddfe",
+      "bytes": 30276,
+      "mode": "100644"
+    },
+    {
+      "status": "??",
+      "path": "authoring/asset-studio/guide.mjs",
+      "object": "a1db437a55c8cd59d599a5016f3d64a91e7e752a",
+      "sha256": "815e4b010660d3b1c3a73564ffbdc184d5f8b730ab248f383dfe78df6ac3b490",
+      "bytes": 1636,
+      "mode": "100644"
+    },
+    {
+      "status": "??",
+      "path": "game/test/asset-studio-guide.test.mjs",
+      "object": "c50ef56c8ce025bd262ada92f19b8fdd033f0b86",
+      "sha256": "6189eb08c5d4199ecfa77b16d3dac22f04dc56e2da44059bdefa3ec7cf2a4b6e",
+      "bytes": 4726,
+      "mode": "100644"
+    }
+  ],
+  "indexEntries": [
+    {
+      "path": "authoring/asset-studio/index.html",
+      "mode": "100644",
+      "object": "19e8b8561326488c07a92e1c2e7d2f8ed87f9300",
+      "stage": 0
+    },
+    {
+      "path": "authoring/asset-studio/studio.css",
+      "mode": "100644",
+      "object": "39e5fe5dc7da71135bde4bc5f1f615b7c3a14e75",
+      "stage": 0
+    },
+    {
+      "path": "authoring/asset-studio/studio.mjs",
+      "mode": "100644",
+      "object": "2a5baf43c7f43055d3c946289934155c12185dec",
+      "stage": 0
+    },
+    {
+      "path": "authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "mode": "100644",
+      "object": "62d0e1c2b180659156f1d3214a8341038e4e0326",
+      "stage": 0
+    },
+    {
+      "path": "docs/asset-studio.md",
+      "mode": "100644",
+      "object": "08cb2d77b375ace1cb2cf94d4fa72e5906888e1c",
+      "stage": 0
+    },
+    {
+      "path": "game/test/asset-studio-host-loading.test.mjs",
+      "mode": "100644",
+      "object": "66cc46229133b694d7f4b65e3d24347072e5151c",
+      "stage": 0
+    }
+  ],
+  "purpose": "Recovery only. These bytes are not release admission. Missing files, conflict stages and obsolete generated outputs are preserved as observations, not deletion or merge instructions."
+}
