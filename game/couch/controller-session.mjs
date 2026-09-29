@@ -6,6 +6,16 @@ import {
   validateProfile,
   mapProfile,
 } from './controller-profiles.mjs';
+// Native Gamepad fields are prototype getters, not enumerable own properties.
+const withIndex = (pad, index) => ({
+  index,
+  id: pad.id,
+  mapping: pad.mapping,
+  connected: pad.connected,
+  axes: pad.axes,
+  buttons: pad.buttons,
+  timestamp: pad.timestamp,
+});
 const blank = () => Array.from({ length: 16 }, () => ({ pressed: false, value: 0 }));
 const positions = {
   up: 12,
@@ -133,7 +143,7 @@ export function createControllerSession({
         splits.delete(source);
         for (const index of split.indexes) lose(index);
       } else {
-        for (const index of split.indexes) incoming.set(index, { ...pad, index });
+        for (const index of split.indexes) incoming.set(index, withIndex(pad, index));
       }
     }
     for (const [index, d] of devices)
@@ -256,7 +266,7 @@ export function createControllerSession({
           ...source,
           index: child,
           generation: ++generation,
-          pad: { ...source.pad, index: child },
+          pad: withIndex(source.pad, child),
           profile: checked[seat],
           standard: false,
           previous: new Map(),
