@@ -101,6 +101,10 @@ test("source qualification retains mandatory guards while protected main owns pu
   assert.match(continuous, /cancel-in-progress: true/);
   assert.match(continuous, /MAX_PUBLISHED_BYTES: 950000000/);
   assert.match(continuous, /run: npm ci --prefer-offline/);
+  assert.match(continuous, /game_version=.*game\/build-config\.json/);
+  assert.match(continuous, /--version "\$GAME_VERSION"/);
+  assert.match(continuous, /build\.version !== process\.env\.GAME_VERSION/);
+  assert.doesNotMatch(continuous, /--version "\$BUILD_VERSION"/);
   assert.match(continuous, /main-deployment\.json/);
   assert.match(continuous, /include-hidden-files: true/);
   assert.match(continuous, /environment:\n\s+name: github-pages/);
