@@ -1,7 +1,0 @@
-{
-  "source": "4fd8e2dac4fdc851d0d2bf0b21e77162d9d405c9",
-  "path": "authoring/motion-lab/presets.json",
-  "bytes": 50888,
-  "sha256": "c1ad73a04e31f63eaa1244b5a73ba076160960746f57bf0944c53ee28e85d7ba",
-  "reason": "Retained 27 actual Solo setup ENOENT failures identify explicit getJSON startup preset. No test/runtime assertion changed."
-}
