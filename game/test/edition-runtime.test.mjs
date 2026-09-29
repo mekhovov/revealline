@@ -107,6 +107,7 @@ test('actual demo and landing closure retains clock, audio, Worker, frozen repla
   const required = [
     'game/demo-loading.mjs',
     'game/ui/demo-clock.mjs',
+    'game/ui/demo-journey-picture.mjs',
     'game/ui/demo-audio.mjs',
     'game/ui/signal-reception.mjs',
     'game/ui/music-credit.mjs',
