@@ -1,0 +1,225 @@
+{
+  "format": "revealline-recovery-fragment-v1",
+  "capturedAt": "2026-09-29T15:10:00.622805+00:00",
+  "worktree": "<home>/work/my_projects/go_test/.cache/worktrees/p03-responsive-navigation-next",
+  "branch": "refs/heads/codex/p03-responsive-navigation-next",
+  "head": "2f1074a37ade9c731ea7be37a6e56e533b51d1ac",
+  "excluded": [],
+  "changes": [
+    {
+      "status": " M",
+      "path": "authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "object": "d80f039beb56741233f549b183e2e5e99b174f8f",
+      "sha256": "5d3cfc2609112b9974bb20ed76a7df10184dab54663e6aea0c036b78f46349b7",
+      "bytes": 226177,
+      "mode": "100644"
+    },
+    {
+      "status": " M",
+      "path": "game/couch/relay-rescue.css",
+      "object": "335320e497d1e202284fe568823af45b8b54c8a6",
+      "sha256": "a3ba904ed0afc64075b12894c3f0dd6c99bee490678daded3df74c1cb92bf77e",
+      "bytes": 53945,
+      "mode": "100644"
+    },
+    {
+      "status": " M",
+      "path": "game/couch/relay-rescue.html",
+      "object": "60b13cca3ed2af511f9171178aa9743457485439",
+      "sha256": "743085a3afc8010215b3bd59a920b2bf4596b3359b5d82634e60e91f8ca47fb2",
+      "bytes": 23324,
+      "mode": "100644"
+    },
+    {
+      "status": " M",
+      "path": "game/couch/relay-rescue.mjs",
+      "object": "9981c32e94ba02c3c94cee27625c333974259f1d",
+      "sha256": "031ee9aabb546f664014a3ac27b764e99f3870ad637be50e1baf5b593bd9f540",
+      "bytes": 70829,
+      "mode": "100644"
+    },
+    {
+      "status": " M",
+      "path": "game/test/coop-host.test.mjs",
+      "object": "6af578c4680c916c90d9cfbdf838cf34005d2fa9",
+      "sha256": "1e02f41ec6eb91d3a0ae4279fffdaa56952a5d9b155572fc84946da947f8dd45",
+      "bytes": 60298,
+      "mode": "100644"
+    },
+    {
+      "status": " M",
+      "path": "game/test/helpers/coop-host.mjs",
+      "object": "653749c916143aeb34d85eed5cad7e9d25936997",
+      "sha256": "59a503f5a84e1e6ef0cd21265623a637aa8a9440d20736e0f7fc9a81e6db48a4",
+      "bytes": 12383,
+      "mode": "100644"
+    },
+    {
+      "status": " M",
+      "path": "game/ui/focus-clearance.mjs",
+      "object": "970615eb6b99e9ffa0fcfd762afd62ce99719715",
+      "sha256": "01bf2f3c2ea33b1568132d1d5e600cca941ad0d25d54acabae5c625d368dd3f4",
+      "bytes": 3918,
+      "mode": "100644"
+    },
+    {
+      "status": " M",
+      "path": "game/ui/game-shell.mjs",
+      "object": "8a3b2ddbf45979d51e5c4a6e6111ae8cd0b8d180",
+      "sha256": "f778ab49c76ca6cf703e7b94eec56932050e3623dc7e7868331bbbdcaf9cd57f",
+      "bytes": 24740,
+      "mode": "100644"
+    },
+    {
+      "status": " M",
+      "path": "game/ui/mission-picker.css",
+      "object": "1c417969369d38340272f37bb7641a98bafe253f",
+      "sha256": "9ee575ecc9e39aa2dccacc6ef1eb7ba53943346583087b758374e1692d216dde",
+      "bytes": 7342,
+      "mode": "100644"
+    },
+    {
+      "status": " M",
+      "path": "game/ui/mission-picker.mjs",
+      "object": "6da434e0e6296240dc69fa80e4ef661015e2a717",
+      "sha256": "f2211e0be735e13a194e663279f8e2bd3f1ba80b8b815d43987041ec30a3e91c",
+      "bytes": 11120,
+      "mode": "100644"
+    },
+    {
+      "status": "??",
+      "path": "docs/responsive-player-navigation.md",
+      "object": "b629ab5c743db7ca76dccb3652fbb387b5b36973",
+      "sha256": "603f6721ecbdf2e8b21d53f61599ed694b976253d7d92f43c1e0aad3620e586b",
+      "bytes": 3525,
+      "mode": "100644"
+    },
+    {
+      "status": "??",
+      "path": "game/couch/coop-compact-copy.mjs",
+      "object": "fa82235f9d5cd7cf5b699d0c6dc8c57ab70a1940",
+      "sha256": "585c3f5797ef9deb55452beca6f1d5c65220bc5319d7fc05ad5103b4cb189f6b",
+      "bytes": 4466,
+      "mode": "100644"
+    },
+    {
+      "status": "??",
+      "path": "game/test/chapter-focus-clearance.test.mjs",
+      "object": "7a124a72d4344de42daca1c81617d54456eb1560",
+      "sha256": "1a896dbf25fad1b5a57d2fdbf0b8763437dfe4700e5e150804990c26f712923e",
+      "bytes": 9683,
+      "mode": "100644"
+    },
+    {
+      "status": "??",
+      "path": "game/test/chapter-focus-nested.test.mjs",
+      "object": "125f4482730280cc308759f25aa46e6789b7ae44",
+      "sha256": "84ba2aadb48102cc8ce009ea1f21d796825e8bcb37f079167e225010f1dac2f5",
+      "bytes": 17340,
+      "mode": "100644"
+    },
+    {
+      "status": "??",
+      "path": "game/test/coop-compact-copy.test.mjs",
+      "object": "638c54a184830a863caad82e5947ca39e8f33598",
+      "sha256": "29be65813b4f81328d1ccb18f38eb8ad84b46eb04dba22d404b0072e759d5467",
+      "bytes": 16024,
+      "mode": "100644"
+    },
+    {
+      "status": "??",
+      "path": "game/test/coop-resume-down-warning.test.mjs",
+      "object": "e4f1b9abb9638656cbc7cfd0507f3d5ada07c41b",
+      "sha256": "e6ea296bf05ca2777148ab8dc5884c31f6bee81bc582c517765826a4f1acb2a7",
+      "bytes": 6401,
+      "mode": "100644"
+    },
+    {
+      "status": "??",
+      "path": "game/test/coop-startup-selection.test.mjs",
+      "object": "07714e3bd54e1d1593e1dd03f7e1cc149b3d2e67",
+      "sha256": "a51ff7aa8d272f1e572ab76fa31d2b29d1b6ba997b80dc4e4573313342bea278",
+      "bytes": 4407,
+      "mode": "100644"
+    },
+    {
+      "status": "??",
+      "path": "game/test/helpers/coop-compact-route.mjs",
+      "object": "acf6ecfc0728af2d0ed1a1c28c74afd9790169b5",
+      "sha256": "6455903fc25131a355ca56d3d3dacc20f2d6549621cd9a829f74828b7450070f",
+      "bytes": 9197,
+      "mode": "100644"
+    },
+    {
+      "status": "??",
+      "path": "game/ui/chapter-focus-clearance.mjs",
+      "object": "6e43d84b967acf832d80f85d9a8e3c61c15e2a34",
+      "sha256": "27e23f455dd12d39414a1ce7da9dede3db45d3ea47d26fe9806805224cb24003",
+      "bytes": 6089,
+      "mode": "100644"
+    }
+  ],
+  "indexEntries": [
+    {
+      "path": "authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "mode": "100644",
+      "object": "8f12347634abd992ec2116f1919880f5c4c1d332",
+      "stage": 0
+    },
+    {
+      "path": "game/couch/relay-rescue.css",
+      "mode": "100644",
+      "object": "f1bb33a69232d83d031555897f7791f586904714",
+      "stage": 0
+    },
+    {
+      "path": "game/couch/relay-rescue.html",
+      "mode": "100644",
+      "object": "3723dc22f6d15a462068642773d5df4111216979",
+      "stage": 0
+    },
+    {
+      "path": "game/couch/relay-rescue.mjs",
+      "mode": "100644",
+      "object": "af68fbfbb830176927a5078b156919d713782ffd",
+      "stage": 0
+    },
+    {
+      "path": "game/test/coop-host.test.mjs",
+      "mode": "100644",
+      "object": "098a8f64f69c0d4b5b28dda6f5bfe2c649736bf1",
+      "stage": 0
+    },
+    {
+      "path": "game/test/helpers/coop-host.mjs",
+      "mode": "100644",
+      "object": "6aca98365d6581ab7f1513c02788663447ccb4e4",
+      "stage": 0
+    },
+    {
+      "path": "game/ui/focus-clearance.mjs",
+      "mode": "100644",
+      "object": "a3cee1126f51c62ab799dde1e09b671fb1220a38",
+      "stage": 0
+    },
+    {
+      "path": "game/ui/game-shell.mjs",
+      "mode": "100644",
+      "object": "08ca25faed0e30f84e49d485d7b4d72dbb2feb6e",
+      "stage": 0
+    },
+    {
+      "path": "game/ui/mission-picker.css",
+      "mode": "100644",
+      "object": "7ae02816038dad66dea1e83ab0fccca295df9f82",
+      "stage": 0
+    },
+    {
+      "path": "game/ui/mission-picker.mjs",
+      "mode": "100644",
+      "object": "e1de58db6af6134c0cc6f4fb3807507095fd864a",
+      "stage": 0
+    }
+  ],
+  "purpose": "Recovery only. These bytes are not release admission. Missing files, conflict stages and obsolete generated outputs are preserved as observations, not deletion or merge instructions."
+}

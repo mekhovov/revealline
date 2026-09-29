@@ -1,1 +1,0 @@
-"{\"online\":true,\"url\":\"https://mekhovov.github.io/revealline-archive-06/releases/v0.44.0/site/game/\",\"textSize\":\"large\"}"
