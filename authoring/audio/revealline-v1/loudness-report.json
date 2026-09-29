@@ -782,31 +782,31 @@
   "esc-start": {
     "target50msDbfs": -32,
     "before": {
-      "rmsDbfs": -48.84220458338199,
-      "max50msDbfs": -45.836026733728076,
-      "samplePeakDbfs": -38.921520506893444,
-      "duration": 0.64
+      "rmsDbfs": -22.699600448978373,
+      "max50msDbfs": -18.68759252100625,
+      "samplePeakDbfs": -16.907794349731674,
+      "duration": 0.785
     },
     "after": {
-      "rmsDbfs": -34.785783477865444,
-      "max50msDbfs": -32.00037779226506,
-      "samplePeakDbfs": -26.729459753330968,
-      "duration": 0.64
+      "rmsDbfs": -35.941500306202165,
+      "max50msDbfs": -32.00022032221505,
+      "samplePeakDbfs": -30.370013729286732,
+      "duration": 0.785
     }
   },
   "esc-retry": {
     "target50msDbfs": -32,
     "before": {
-      "rmsDbfs": -47.16210307338461,
-      "max50msDbfs": -45.836026733728076,
-      "samplePeakDbfs": -38.921520506893444,
-      "duration": 0.29
+      "rmsDbfs": -23.084498968498405,
+      "max50msDbfs": -19.21477859189469,
+      "samplePeakDbfs": -16.92824268149124,
+      "duration": 0.285
     },
     "after": {
-      "rmsDbfs": -33.14687469162661,
-      "max50msDbfs": -32.00037779226506,
-      "samplePeakDbfs": -26.729459753330968,
-      "duration": 0.29
+      "rmsDbfs": -35.79358115011007,
+      "max50msDbfs": -32.0003455012439,
+      "samplePeakDbfs": -29.9017730462402,
+      "duration": 0.285
     }
   },
   "radio-armed-en": {

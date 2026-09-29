@@ -119,6 +119,7 @@
     "verified": "2026-09-29",
     "sha256": "8764ad308064baf50b2c1fd6c013a7800d73cb5ca3b4c0470dd0c7a743d4a20f",
     "provenance": "Orqa MRM2-10 launch, extracted by qubodup with RX de-wind from Sgt. Max Elliott / U.S. Army V Corps, DVIDS 1005552, timecode 1:06. DVIDS identifies source as public domain. Firmware unspecified; not claimed to be Betaflight/Bluejay.",
-    "upstream": "https://www.dvidshub.net/video/1005552/b-roll-integration-meets-innovation-us-uk-forces-prove-lethality-against-aerial-threats-project-flytrap"
+    "upstream": "https://www.dvidshub.net/video/1005552/b-roll-integration-meets-innovation-us-uk-forces-prove-lethality-against-aerial-threats-project-flytrap",
+    "adoption": "Rejected after user audition on 2026-09-29; retained research source, not used in runtime."
   }
 }
