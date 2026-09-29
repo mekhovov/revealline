@@ -83,7 +83,7 @@ const rows = [
     '#f0b887',
     '#8eded7',
     '63% 50%',
-    '61% 50%',
+    '10% 50%',
     'parcel',
   ],
   [
@@ -231,6 +231,30 @@ const fpvPortraitEnvironment = freezeEnvironment([
   ['lamp', 5, 49, 12, 3, -1, 4.8],
   ['foliage', 79, 58, 12, 10, -2, 7],
 ]);
+// These narrow crops keep the drones/workbenches as their focal subjects, but
+// exclude the large windows and desk lamps at the edges of the full picture.
+// Measure alternate regions on the scenery that is actually visible: the rear
+// pendant, sunlit work surfaces/walls, and the makers' trailing plant. Parts is
+// reframed toward its lamp, window and assembled drone instead of the empty mat.
+// Lighting changes brightness only; it must not bend drones, tools or their geometry.
+const portraitEnvironments = Object.fromEntries(
+  Object.entries({
+    'droneaid-nl-workshop-lights-theme': [
+      ['lamp', 60, 0, 5, 8, -1, 5.2],
+      ['beam', 53, 27, 20, 10, -2, 8],
+    ],
+    'droneaid-nl-parts-in-motion-theme': [
+      ['lamp', 4, 12, 10, 18, -1, 5.6],
+      ['beam', 22, 4, 24, 38, -2, 8],
+    ],
+    'droneaid-nl-makers-together-theme': [
+      ['foliage', 48, 7, 8, 26, -2, 7],
+      ['beam', 46, 41, 18, 12, -3, 8.6],
+    ],
+    'droneaid-nl-signals-of-support-theme': [['beam', 51, 22, 20, 18, -3, 8.4]],
+    'droneaid-nl-shared-horizon-theme': [['beam', 54, 26, 17, 14, -3, 8.6]],
+  }).map(([id, values]) => [id, freezeEnvironment(values)]),
+);
 const indoorActors = new Set([
   'coupa-product-operations-theme',
   'coupa-developer-integration-theme',
@@ -259,7 +283,8 @@ export const MENU_SCENES = Object.freeze(
           actor,
           actorVisible: !indoorActors.has(id),
           environment: environments[id],
-          portraitEnvironment: id === 'fpv' ? fpvPortraitEnvironment : environments[id],
+          portraitEnvironment:
+            id === 'fpv' ? fpvPortraitEnvironment : (portraitEnvironments[id] ?? environments[id]),
           landscape:
             id === 'droneaid-nl-community'
               ? './art/menu-scenes/droneaid-main-background.png'

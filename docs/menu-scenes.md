@@ -8,6 +8,8 @@ Edition landing hosts pass their edition identity without an explicit gameplay t
 
 One active image is selected, including on orientation changes. FPV uses a distinct authored portrait original. The other 17 profiles use intentional portrait crops of their landscape original, each with an explicit focal position in the catalog. The dark text-safe overlay changes from left-to-right on landscape to bottom-to-top on portrait. ResizeObserver recalculates the source-image cover geometry when the viewport or image changes.
 
+Five Dutch campaign portraits have separately measured animation regions because their narrow central crops exclude the landscape windows and edge lamps. Workshop Lights uses its small rear pendant and sunlit bench; Parts in Motion is reframed toward its bench lamp, window light and assembled drone; Makers Together uses the trailing plant and lit floor; Signals of Support and Shared Horizon use visible wall light. These portrait regions reuse the original pixels. Lighting changes brightness without deforming the depicted drones or tools; only the plant region receives bounded foliage movement. The supplied aggregate DroneAid poster retains its deliberate still treatment.
+
 `game/ui/menu-scene-motion.mjs` renders the complete artwork through one WebGL texture with a fixed `1.025` crop and zero pan when the profile has supported motion regions. Clouds use a single displaced source sample with slow, nonsynchronized drift; steam uses rising two-phase flow; softly bounded source-coordinate regions provide small water movement, lighting changes and foliage sway. The camera does not repeatedly zoom or move. FPV foliage uses the landscape rectangle `61,35,28,20` and portrait rectangle `79,58,12,10`, expressed as source-image percentages. The scene DOM contains the image/canvas artwork plane, a normally hidden receiver canvas, and the subtle analog texture. Menus, their text-safe shading and their controls remain stationary. Mode selection retains its existing artwork identity without introducing a separate flying actor or particle layer.
 
 The renderer draws at most 30 frames per second while the landing is visible and active. It uses the already-loaded image as its sole texture, inline shader programs and a source-ratio canvas capped at 1,600 pixels on its longest edge and 1.44 million pixels in area. The uploaded texture obeys the same limits. It does not advance gameplay, run hidden simulation or fetch a second moving-image asset. Every loaded still gets one six-second CSS arrival from scale `1` to `1.035`, then holds. That shared parent transform applies to both the original image and WebGL output, so successful WebGL no longer bypasses the entrance. The GPU has no animated camera. Without supported regions it draws once at source scale and requests no further frames; if WebGL is unavailable, the original image still receives the same CSS arrival. The fallback never alternates or loops, and renderer readiness never restarts the entrance. Animation off and reduced effects show the original static image.
@@ -22,26 +24,26 @@ Committed landing-to-mission-picker navigation and Back can add a separate 220 m
 
 Every layer is aria-hidden, inert, pointer-transparent and unfocusable. Rendering and CSS animation stop when the landing or an ancestor is hidden, a dialog closes, a sibling Settings/reading dialog covers home, the page is hidden or suspended, or the host marks gameplay active. A visible page keeps animating when keyboard focus moves to another pane or the address bar. Reduced motion and the local setting cancel artwork animation and reset the camera transform. Failed image loading retains a static palette background. Disposal cancels the owned frame callback and receiver timer, disconnects the visibility/dialog observers, and releases the WebGL resources. There is no video decode, third-party request or preloading of other profiles.
 
-| Profile                                | Artwork and atmosphere                              | Localized image regions           |
-| -------------------------------------- | --------------------------------------------------- | --------------------------------- |
-| `fpv`                                  | Authored dawn hangar, amber/cyan                    | Clouds, sunbeam, lamp, foliage    |
-| `ukraine`                              | Original generated Ukrainian river valley at dawn   | Clouds, river, sunbeam            |
-| `retro`                                | Original generated 1994 Forever rainy arcade street | Wet pavement, neon lamps          |
-| `coupa`                                | Existing Coupa home illustration                    | Water, sunbeam                    |
-| `coupa-village`                        | Original generated coastal village overview         | Water, clouds                     |
-| `coupa-spend-in-motion-theme`          | Spend-city campaign artwork                         | Water, clouds                     |
-| `coupa-inside-village-theme`           | Inside-village campaign artwork                     | Water, clouds, garden lamp        |
-| `coupa-source-to-pay-theme`            | Source-to-pay campaign artwork                      | Water, clouds                     |
-| `coupa-product-operations-theme`       | Product-operations campaign artwork                 | Work lamps and window light       |
-| `coupa-developer-integration-theme`    | Network-atlas campaign artwork                      | Anchored network-route light      |
-| `droneaid-community`                   | Community-relay campaign artwork                    | Workshop lamps, steam above a cup |
+| Profile                                | Artwork and atmosphere                                 | Localized image regions           |
+| -------------------------------------- | ------------------------------------------------------ | --------------------------------- |
+| `fpv`                                  | Authored dawn hangar, amber/cyan                       | Clouds, sunbeam, lamp, foliage    |
+| `ukraine`                              | Original generated Ukrainian river valley at dawn      | Clouds, river, sunbeam            |
+| `retro`                                | Original generated 1994 Forever rainy arcade street    | Wet pavement, neon lamps          |
+| `coupa`                                | Existing Coupa home illustration                       | Water, sunbeam                    |
+| `coupa-village`                        | Original generated coastal village overview            | Water, clouds                     |
+| `coupa-spend-in-motion-theme`          | Spend-city campaign artwork                            | Water, clouds                     |
+| `coupa-inside-village-theme`           | Inside-village campaign artwork                        | Water, clouds, garden lamp        |
+| `coupa-source-to-pay-theme`            | Source-to-pay campaign artwork                         | Water, clouds                     |
+| `coupa-product-operations-theme`       | Product-operations campaign artwork                    | Work lamps and window light       |
+| `coupa-developer-integration-theme`    | Network-atlas campaign artwork                         | Anchored network-route light      |
+| `droneaid-community`                   | Community-relay campaign artwork                       | Workshop lamps, steam above a cup |
 | `droneaid-nl-community`                | Supplied DroneAid blue/yellow poster with a real drone | One arrival, receiver dropouts    |
-| `droneaid-nl-workshop-lights-theme`    | Workshop-lights campaign artwork                    | Window light and overhead lamp    |
-| `droneaid-nl-parts-in-motion-theme`    | Parts-in-motion campaign artwork                    | Bench lamp and window light       |
-| `droneaid-nl-makers-together-theme`    | Makers-together campaign artwork                    | Ceiling lamp and window light     |
-| `droneaid-nl-careful-handoff-theme`    | Careful-handoff campaign artwork                    | Ceiling lamp and window light     |
-| `droneaid-nl-signals-of-support-theme` | Signals-of-support campaign artwork                 | Desk lamp and window light        |
-| `droneaid-nl-shared-horizon-theme`     | Shared-horizon campaign artwork                     | Desk lamp and window light        |
+| `droneaid-nl-workshop-lights-theme`    | Workshop-lights campaign artwork                       | Window light and overhead lamp    |
+| `droneaid-nl-parts-in-motion-theme`    | Parts-in-motion campaign artwork                       | Bench lamp and window light       |
+| `droneaid-nl-makers-together-theme`    | Makers-together campaign artwork                       | Ceiling lamp and window light     |
+| `droneaid-nl-careful-handoff-theme`    | Careful-handoff campaign artwork                       | Ceiling lamp and window light     |
+| `droneaid-nl-signals-of-support-theme` | Signals-of-support campaign artwork                    | Desk lamp and window light        |
+| `droneaid-nl-shared-horizon-theme`     | Shared-horizon campaign artwork                        | Desk lamp and window light        |
 
 The profiles have separate palettes, focal positions, durations and atmosphere identities. Existing campaign source art is preserved; this change does not retouch or overwrite it. New originals were made with the built-in image_gen tool and are retained with their complete prompts under `authoring/library/menu-scenes/`. The four generated originals were visually inspected before selection. The two aggregate overviews are new compositions referenced to the approved brand artwork, distinct from all child campaign scenes; their exact reference roles and prompts are in `authoring/library/menu-scenes/aggregate-prompts.json`. Core and campaign artwork are re-encoded by `scripts/prepare-menu-scenes.py`; no crop, resize or image retouching is performed. Lossless outputs are verified against decoded source RGBA, while larger originals use WebP quality 94. Output bytes, source bytes, hashes, dimensions and exact encoding policy are in `game/ui/art/menu-scenes/provenance.json`.
 
@@ -49,32 +51,34 @@ The largest active scene image is the supplied DroneAid PNG at 880,307 bytes, be
 
 Automated checks: `node --test game/test/menu-scenes.test.mjs game/test/menu-scene-motion.test.mjs game/test/menu-signal-loss.test.mjs game/test/menu-font.test.mjs game/test/tiny5-font.test.mjs`. Scene checks cover all 18 profiles, precedence and unsafe unknown IDs, original asset checksums and byte limits, signal intensities, exact atlas reproduction, focus preservation, motion preferences, hidden/gameplay pause, visible-but-unfocused animation, page suspension/restoration, original-image cover geometry, source-coordinate anchors, orientation selection, error fallback, storage denial and cleanup. `node --test game/test/edition-runtime.test.mjs game/test/boot-build.test.mjs game/test/native-menu-inventory.test.mjs` checks selected edition resources, offline integrity and exact native staging of the artwork renderer and shared texture. These modeled tests do not certify animation comfort or phone performance. Check real rendered EN/UK landing screens on portrait and landscape Safari/Chromium, with animation both on and off, alongside the full menu keyboard/controller acceptance.
 
+The crop regression loads dimensions from the committed artwork provenance and checks 320×568, 390×844, 430×932, 768×1024, 844×390 and 1280×800. Every animated profile must retain at least an 8×8-pixel intersection with a region's fully weighted inner 60%, after both the WebGL safety crop and completed CSS entrance. This rejects off-screen regions and almost invisible feather edges. It initially caught 19 failing portrait combinations in the five Dutch campaigns. Geometry establishes that motion can be visible; the [five-portrait framebuffer check](verification/menu-portrait-motion-2026-09-29.md) records actual changed source pixels and the limits of that evidence.
+
 Retune checks: `node --test game/test/menu-retune.test.mjs game/test/menu-retune-host.test.mjs game/test/mission-library-chooser.test.mjs`. These cover committed navigation, unchanged input/focus ownership, cooldown, stale timer rejection, motion/visibility gates, dynamic picker replacement, disposal, all three chooser modes and actual Solo/Versus host hooks. They do not establish a rendered comfort or physical-device claim.
 
 ## Portrait composition map
 
 Only FPV uses a separate portrait original. Every other row uses an explicit focal crop of its full landscape image; these percentages are CSS object positions, not authored new raster variants.
 
-| Profile                                | Landscape focal point | Portrait focal point | Portrait source            |
-| -------------------------------------- | --------------------- | -------------------- | -------------------------- |
-| `fpv`                                  | 68% 50%               | 50% 50%              | Separate portrait original |
-| `ukraine`                              | 68% 50%               | 71% 50%              | Landscape crop             |
-| `retro`                                | 68% 50%               | 68% 50%              | Landscape crop             |
-| `coupa`                                | 62% 50%               | 65% 45%              | Landscape crop             |
-| `coupa-village`                        | 68% 50%               | 71% 50%              | Landscape crop             |
-| `coupa-spend-in-motion-theme`          | 60% 50%               | 64% 50%              | Landscape crop             |
-| `coupa-inside-village-theme`           | 60% 50%               | 55% 50%              | Landscape crop             |
-| `coupa-source-to-pay-theme`            | 60% 50%               | 58% 50%              | Landscape crop             |
-| `coupa-product-operations-theme`       | 60% 50%               | 62% 50%              | Landscape crop             |
-| `coupa-developer-integration-theme`    | 60% 50%               | 57% 50%              | Landscape crop             |
-| `droneaid-community`                   | 64% 50%               | 67% 50%              | Landscape crop             |
+| Profile                                | Landscape focal point | Portrait focal point | Portrait source              |
+| -------------------------------------- | --------------------- | -------------------- | ---------------------------- |
+| `fpv`                                  | 68% 50%               | 50% 50%              | Separate portrait original   |
+| `ukraine`                              | 68% 50%               | 71% 50%              | Landscape crop               |
+| `retro`                                | 68% 50%               | 68% 50%              | Landscape crop               |
+| `coupa`                                | 62% 50%               | 65% 45%              | Landscape crop               |
+| `coupa-village`                        | 68% 50%               | 71% 50%              | Landscape crop               |
+| `coupa-spend-in-motion-theme`          | 60% 50%               | 64% 50%              | Landscape crop               |
+| `coupa-inside-village-theme`           | 60% 50%               | 55% 50%              | Landscape crop               |
+| `coupa-source-to-pay-theme`            | 60% 50%               | 58% 50%              | Landscape crop               |
+| `coupa-product-operations-theme`       | 60% 50%               | 62% 50%              | Landscape crop               |
+| `coupa-developer-integration-theme`    | 60% 50%               | 57% 50%              | Landscape crop               |
+| `droneaid-community`                   | 64% 50%               | 67% 50%              | Landscape crop               |
 | `droneaid-nl-community`                | 50% 48%               | 90% 50%              | Supplied poster, CSS framing |
-| `droneaid-nl-workshop-lights-theme`    | 62% 50%               | 68% 50%              | Landscape crop             |
-| `droneaid-nl-parts-in-motion-theme`    | 63% 50%               | 61% 50%              | Landscape crop             |
-| `droneaid-nl-makers-together-theme`    | 62% 50%               | 59% 50%              | Landscape crop             |
-| `droneaid-nl-careful-handoff-theme`    | 65% 50%               | 64% 50%              | Landscape crop             |
-| `droneaid-nl-signals-of-support-theme` | 64% 50%               | 66% 50%              | Landscape crop             |
-| `droneaid-nl-shared-horizon-theme`     | 65% 50%               | 66% 50%              | Landscape crop             |
+| `droneaid-nl-workshop-lights-theme`    | 62% 50%               | 68% 50%              | Landscape crop               |
+| `droneaid-nl-parts-in-motion-theme`    | 63% 50%               | 10% 50%              | Landscape crop               |
+| `droneaid-nl-makers-together-theme`    | 62% 50%               | 59% 50%              | Landscape crop               |
+| `droneaid-nl-careful-handoff-theme`    | 65% 50%               | 64% 50%              | Landscape crop               |
+| `droneaid-nl-signals-of-support-theme` | 64% 50%               | 66% 50%              | Landscape crop               |
+| `droneaid-nl-shared-horizon-theme`     | 65% 50%               | 66% 50%              | Landscape crop               |
 
 ## Earlier motion evidence — 29 September 2026
 

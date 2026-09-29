@@ -248,6 +248,64 @@ test('every scene retains bounded artwork anchors and one shared image/canvas pl
   f.api.dispose();
 });
 
+test('actual portrait and landscape crops retain a visible full-strength artwork motion region', async () => {
+  const provenance = JSON.parse(
+    await readFile(new URL('../ui/art/menu-scenes/provenance.json', import.meta.url)),
+  );
+  const assets = new Map(provenance.assets.map((asset) => [asset.file, asset]));
+  const f = fixture();
+  let bounds;
+  f.scene.getBoundingClientRect = () => bounds;
+  const plane = f.scene.querySelector('.menu-scene-art-plane');
+  const missing = [];
+  for (const [width, height] of [
+    [320, 568],
+    [390, 844],
+    [430, 932],
+    [768, 1024],
+    [844, 390],
+    [1280, 800],
+  ]) {
+    bounds = { width, height };
+    const vertical = height > width;
+    f.portrait.matches = vertical;
+    for (const profile of Object.values(MENU_SCENES)) {
+      // The supplied DroneAid poster intentionally preserves its photographed
+      // geometry and uses only the shared arrival and receiver treatment.
+      if (profile.id === 'droneaid-nl-community') continue;
+      f.context.themeId = profile.id;
+      f.api.update();
+      const source = (vertical ? profile.portrait : profile.landscape).split('/').at(-1);
+      const asset = assets.get(source);
+      assert.ok(asset, `${source} has recorded source dimensions`);
+      f.load(asset.width, asset.height);
+      const pw = parseFloat(plane.style.width),
+        ph = parseFloat(plane.style.height);
+      const left = parseFloat(plane.style.left),
+        top = parseFloat(plane.style.top);
+      const layers = vertical ? profile.portraitEnvironment : profile.environment;
+      // Test the shader's fully weighted inner 60%, after both the GPU safety
+      // crop and the completed CSS arrival, rather than accepting a barely
+      // visible feather or a rectangle outside the real object-cover crop.
+      const zoom = 1.025 * 1.035;
+      const projects = (start, length, extent, offset) => [
+        offset + extent / 2 + ((start + length * 0.2) / 100 - 0.5) * extent * zoom,
+        offset + extent / 2 + ((start + length * 0.8) / 100 - 0.5) * extent * zoom,
+      ];
+      const visible = layers.some((region) => {
+        const [x1, x2] = projects(region.x, region.width, pw, left);
+        const [y1, y2] = projects(region.y, region.height, ph, top);
+        return (
+          Math.min(width, x2) - Math.max(0, x1) >= 8 && Math.min(height, y2) - Math.max(0, y1) >= 8
+        );
+      });
+      if (!visible) missing.push(`${profile.id} at ${width}×${height}`);
+    }
+  }
+  f.api.dispose();
+  assert.deepEqual(missing, [], 'Each crop must contain actual animated source artwork.');
+});
+
 test('every landing has restrained signal styling, with all drone and technical scenes stronger', () => {
   const technical = new Set([
     'fpv',
