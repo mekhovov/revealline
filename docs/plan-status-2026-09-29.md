@@ -12,7 +12,7 @@ compatibility, artwork and release requirements.
 
 ## Public and queued
 
-- Latest observed main is `6a67d6dbfe01d5e1f3842b5a79dd5d5ddeefcfd8`.
+- Latest observed main is `64c8b9d81604984363666abadae236d9f2f76f7f`.
   Public `release.json` declares **v0.142.3**, source
   `b5ab06e12542f72e33c45b973ba693a5e1509c1c`, distribution prefix
   `37eca33f…`. This is an observed public release identity; the canonical
@@ -90,23 +90,44 @@ real immutable ancestors using synthetic successor manifests, reject altered
 inputs and keep group subsets independent. This prepares A1 adoption; the existing
 production review gap remains open. See [batch 14](verification/actor-batch-14/README.md).
 
+## Current implementation update
+
+A1 now has an exact-main, 17-path integration patch: eight runtime paths,
+seven test files and two small fixtures. **152/152 focused checks and 31/31
+preservation checks pass** using exact main modules; three new rotor regressions
+fail on unchanged main. Syntax, scoped lint, formatting and patch application
+checks pass. The patch deliberately preserves newer rendering behavior and
+approved image bytes. It does not claim the full older worker is merge-ready.
+The [durable handoff](verification/actor-a1-current-main-20260929/README.md)
+contains the patch, exact inputs, complete logs, initial harness failures and
+reproduction instructions. Remaining A1 work is integrated visual review and
+59-slot production admission, then the canonical release gates.
+
+A3's next Team layout correction is being verified in PR757's isolated lineage
+on current main. It replaces fixed HUD heights with measured text rows, separates
+steering-pad size from long action-label width, and preserves 44px targets.
+An adjacent terminal fixture was corrected to slow a moving enemy on the winning
+step: empty Support remains unlearned. The complete terminal file passes 9/9.
+Source, native layout, production and public evidence remain separate; the final
+PR757 receipt records the accepted viewport matrix and unresolved edge cases.
+
 ## Remaining work and planning ranges
 
 Ranges are effort after each item starts, not publication promises. Necessary
 prerequisites and independent review may run concurrently. Reconciliation,
 failed gates and publisher availability add delivery time.
 
-| Order                                | Work and player benefit                                                                                  | Completion boundary                                                                                                                                                                       | Effort range                                                                                           |
-| ------------------------------------ | -------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------ |
-| **A1 — first**                       | Deliver already implemented character/control corrections so players actually receive the improvements   | Reconcile the smallest renderer slice; review 59 renderer/equipment successors while keeping approved imagery and app/audio unchanged; final build, immutable publication and public play | Estimate after the exact port is scoped; publisher waiting time is separate from implementation effort |
-| **A2 — current characters**          | Convincing player/common-enemy bodies, propellers, scale, facing and reactions across Solo/Versus/Team   | Current roster/state review and reviewed native-body adoption; retained originals and core behavior unchanged                                                                             | 3–5 days for remaining C3 scope; existing fixes do not need to wait for the whole roster               |
-| **A3 — reliable play**               | Deliver the prepared Team fixes and reflow the demonstrated narrow Ukrainian HUD/ability labels          | Fresh input, retained recovery, exact return, readable status and full board/control bounds; reuse PR757 and existing inputs                                                              | Team source batch prepared; next bounded layout correction ½–1 day, then integrated release gates      |
-| **B — encounter variety**            | Optional pursuit/interception/patrol/sentry encounters teach distinct decisions and readable counterplay | Finish Field Guide/cross-mode guidance, full missions/combinations, difficulty/fairness/replay qualification; preserve original editions                                                  | 3–5 days                                                                                               |
-| **C — one finished cohort**          | Complete a coherent Ukrainian/FPV artwork set that players can actually select and play                  | Native pixel/cultural/contrast review, exact approved mission bindings, retained ownership and complete preview/runtime presentation                                                      | 2–4 days for the first accepted cohort                                                                 |
-| **Supporting C0/C1/C6**              | Only the rig, source coverage and Studio changes required to deliver A/B/C                               | Bounded geometry, state, history, resource and real import/edit/export checks alongside the consuming feature                                                                             | Included per slice; broader C6 2–3 days later                                                          |
-| **Rest — further cohorts and tools** | DroneAid and other communities, broader authoring workflow, offline/history and guide closure            | Separate reviewed cohort and workflow acceptance; no bulk production added before the priority work                                                                                       | 2–4 days per cohort; refine wider scope from accepted inventory                                        |
-| **C7 / UX6**                         | Whole-content and player-journey reliability                                                             | Every current binding; terrain/equipment/effects, offline/performance/accessibility and device checks                                                                                     | 4–7 days plus devices                                                                                  |
-| **C2 — last**                        | Formal game-feel comparison and directional human feedback                                               | Three missions, audio/haptics comparison, two consented rounds with six players                                                                                                           | 2–3 days plus participants/listening                                                                   |
+| Order                                | Work and player benefit                                                                                  | Completion boundary                                                                                                                                                                       | Effort range                                                                                      |
+| ------------------------------------ | -------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------- |
+| **A1 — first**                       | Deliver already implemented character/control corrections so players actually receive the improvements   | Reconcile the smallest renderer slice; review 59 renderer/equipment successors while keeping approved imagery and app/audio unchanged; final build, immutable publication and public play | Exact port prepared; 1–2 days for integrated visual/admission checks, plus publisher queue        |
+| **A2 — current characters**          | Convincing player/common-enemy bodies, propellers, scale, facing and reactions across Solo/Versus/Team   | Current roster/state review and reviewed native-body adoption; retained originals and core behavior unchanged                                                                             | 3–5 days for remaining C3 scope; existing fixes do not need to wait for the whole roster          |
+| **A3 — reliable play**               | Deliver the prepared Team fixes and reflow the demonstrated narrow Ukrainian HUD/ability labels          | Fresh input, retained recovery, exact return, readable status and full board/control bounds; reuse PR757 and existing inputs                                                              | Team wrapping correction implemented and under native verification; then integrated release gates |
+| **B — encounter variety**            | Optional pursuit/interception/patrol/sentry encounters teach distinct decisions and readable counterplay | Finish Field Guide/cross-mode guidance, full missions/combinations, difficulty/fairness/replay qualification; preserve original editions                                                  | 3–5 days                                                                                          |
+| **C — one finished cohort**          | Complete a coherent Ukrainian/FPV artwork set that players can actually select and play                  | Native pixel/cultural/contrast review, exact approved mission bindings, retained ownership and complete preview/runtime presentation                                                      | 2–4 days for the first accepted cohort                                                            |
+| **Supporting C0/C1/C6**              | Only the rig, source coverage and Studio changes required to deliver A/B/C                               | Bounded geometry, state, history, resource and real import/edit/export checks alongside the consuming feature                                                                             | Included per slice; broader C6 2–3 days later                                                     |
+| **Rest — further cohorts and tools** | DroneAid and other communities, broader authoring workflow, offline/history and guide closure            | Separate reviewed cohort and workflow acceptance; no bulk production added before the priority work                                                                                       | 2–4 days per cohort; refine wider scope from accepted inventory                                   |
+| **C7 / UX6**                         | Whole-content and player-journey reliability                                                             | Every current binding; terrain/equipment/effects, offline/performance/accessibility and device checks                                                                                     | 4–7 days plus devices                                                                             |
+| **C2 — last**                        | Formal game-feel comparison and directional human feedback                                               | Three missions, audio/haptics comparison, two consented rounds with six players                                                                                                           | 2–3 days plus participants/listening                                                              |
 
 A is not a dependency on shipping every new sprite before B can be prepared.
 Finish bounded A corrections first; independent B/C references or test preparation

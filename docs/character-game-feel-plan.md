@@ -19,7 +19,7 @@ admission remains pending. Preserve every historical record and original.
 
 Batch15 is pushed at `c332a45cb38af3d62b2b73fbd37087d93389c8c0`, with
 127 focused checks. Latest observed main is
-`6a67d6dbfe01d5e1f3842b5a79dd5d5ddeefcfd8`; public `release.json`
+`64c8b9d81604984363666abadae236d9f2f76f7f`; public `release.json`
 declares v0.142.3 from `b5ab06e12542f72e33c45b973ba693a5e1509c1c`,
 distribution prefix `37eca33f…`. Publisher acceptance and byte-audit closure
 remain unresolved. This conflicting branch requires deliberate reconciliation;
@@ -38,6 +38,14 @@ reopens. Narrow Ukrainian HUD/ability wrapping remains the next A3 layout fix. P
 held without activation. The register retains exact limits, the corrected
 controller-fixture failure, current capacity and effort ranges. The batch sections below
 preserve earlier evidence at its original checkpoint; queued work is not delivery.
+
+The [A1 exact-main handoff](verification/actor-a1-current-main-20260929/README.md)
+now narrows the renderer adoption to 17 paths. It passes 152 focused and 31
+preservation checks, preserving newer main rendering and original image bytes.
+It remains a prepared integration patch: 59-slot production admission, integrated
+visual/build checks and public delivery are open. A3's narrow Ukrainian Team
+layout correction proceeds in PR757 in parallel; no competing publisher or
+version is introduced.
 
 ## Implemented and awaiting integration
 
