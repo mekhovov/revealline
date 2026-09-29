@@ -9406,7 +9406,7 @@ try {
     controllerConfirmTrace.syncHost();
     const scope = controllerScope();
     const controllerTime = performance.now();
-    controllerFrame = controller.sample({
+    const sampledFrame = controller.sample({
       scope: demoHost?.gameplayInputActive ? 'flight' : scope,
       spectator: demoHost?.active && !demoHost?.practiceArmed,
       timeMs: controllerTime,
@@ -9414,22 +9414,24 @@ try {
         ? demoHost.toggleBoostEligible
         : run?.status === 'running',
     });
+    controllerFrame = sampledFrame;
+    controllerConfirmLifecycle.sample(sampledFrame.confirmSnapshot);
     refreshControllerBoostCue();
-    const { status, assigned, disconnected } = controllerFrame;
+    const { status, assigned, disconnected } = sampledFrame;
     if (demoHost?.active) {
-      demoHost.controller(controllerFrame);
+      demoHost.controller(sampledFrame);
       demoHost.update(elapsed);
       return;
     }
-    if (Object.values(controllerFrame.ui).some(Boolean)) demoHost?.activity();
+    if (Object.values(sampledFrame.ui).some(Boolean)) demoHost?.activity();
     demoHost?.update(elapsed);
     if (demoHost?.active) return;
-    const flightModality = JSON.stringify(controllerFrame.flight);
+    const flightModality = JSON.stringify(sampledFrame.flight);
     if (
       status.code === 'joined' ||
-      Object.values(controllerFrame.ui).some(Boolean) ||
+      Object.values(sampledFrame.ui).some(Boolean) ||
       (flightModality !== lastControllerModality &&
-        Object.values(controllerFrame.flight).some(Boolean))
+        Object.values(sampledFrame.flight).some(Boolean))
     )
       setInputModality('controller');
     lastControllerModality = flightModality;
@@ -9454,8 +9456,6 @@ try {
       if (assigned && scope !== 'flight') controllerNavigation.engage();
     }
     if (status.code === 'joined' && scope !== 'flight') controllerNavigation.engage();
-    const sampledFrame = controllerFrame;
-    controllerConfirmLifecycle.sample(sampledFrame.confirmSnapshot);
     // Confirm alone is owned by the coordinator. Native-event probes never
     // consume the remaining router edges, which are dispatched once here.
     const confirmCommand = { ...sampledFrame.ui, confirm: false };
@@ -9469,7 +9469,7 @@ try {
       );
     } else {
       if (controllerScope() === scope) controllerNavigation.handle(confirmCommand);
-      const flight = controllerFrame?.flight ?? {};
+      const flight = sampledFrame.flight;
       const capabilities = arcadeActionCapabilities(run?.level);
       if (scope === 'flight' && (flight.stop || (flight.action && !capabilities.manualAbility))) {
         pause(true);
@@ -11828,20 +11828,7 @@ try {
     onFreshStart: (source, current) => prepareDemoFresh(source, current),
     clearInput,
     menu: (commands) => {
-      const target = controllerNavigation.handle(commands);
-      if (commands.confirmStart) {
-        if (target)
-          controllerConfirmGuard.begin(target, {
-            buttons:
-              controllerFrame?.confirmTransaction?.buttons || controllerFrame?.confirmButtons,
-            gamepadTimestamp: controllerFrame?.gamepadTimestamp,
-          });
-        else controllerConfirmLifecycle.reset('unavailable-target');
-      } else if (commands.confirmCancel) controllerConfirmGuard.cancel('lifecycle-cancel');
-      else if (commands.confirmCommit) {
-        if (target) controllerConfirmGuard.finish('release');
-        else controllerConfirmGuard.cancel('invalid-target');
-      }
+      controllerNavigation.handle({ ...commands, confirm: false });
     },
     canWrite: () => writer.writable && persistenceReady && !backupBusy,
     settingsKey: `revealline.demo.${channel}.v1`,
