@@ -1628,6 +1628,98 @@ test('Motion superseded PNG byte read cannot allocate a URL or replace the newer
   assert.equal(h.revoked.includes(accepted.src), false);
 });
 
+for (const phase of ['byte read', 'native decode'])
+  for (const rejection of ['unsupported type', 'oversized file'])
+    test(`Motion rejected replacement retires pending ${phase}: ${rejection}`, async (t) => {
+      const h = await harness(t);
+      await h.ready();
+      const accepted = await uploadBackground(h, 'static-default.png');
+      accepted.onload();
+      const acceptedURL = accepted.src,
+        gate = deferred();
+      let pending, lateLoad, lateError, pendingURL;
+      if (phase === 'byte read')
+        selectBackground(h, {
+          name: 'pending.png',
+          type: 'image/png',
+          size: 122,
+          arrayBuffer: () => gate.promise,
+        });
+      else {
+        pending = await uploadBackground(h, 'animated-first-frame.webp', 'image/webp');
+        pendingURL = pending.src;
+        lateLoad = pending.onload;
+        lateError = pending.onerror;
+      }
+      const count = h.objectURLs.length,
+        control = h.$('motion-text-size'),
+        state = freezeView(h),
+        frames = h.frames.size;
+      control.focus();
+      selectBackground(
+        h,
+        rejection === 'unsupported type'
+          ? { name: 'rejected.txt', type: 'text/plain', size: 8 }
+          : { name: 'rejected.png', type: 'image/png', size: 25 * 1024 * 1024 + 1 },
+      );
+      const status = h.$('background-status').textContent;
+      assert.match(status, /Choose a PNG, JPEG, WebP or GIF/);
+      if (phase === 'byte read') {
+        gate.resolve(await (await backgroundFile('static-default.png')).arrayBuffer());
+        await settleBackground();
+        if (h.objectURLs.length > count) h.images.at(-1).onload?.();
+      } else {
+        lateLoad();
+        lateError();
+      }
+      assert.equal(
+        h.revoked.includes(acceptedURL),
+        false,
+        'rejected selection retains the last accepted image',
+      );
+      assert.equal(h.objectURLs.length, count, 'retired byte reads cannot allocate another URL');
+      assert.equal(
+        h.$('background-status').textContent,
+        status,
+        'late completion cannot replace the rejection',
+      );
+      assert.equal(h.$('clear-background').disabled, false);
+      assert.equal(h.doc.activeElement.id, control.id);
+      assert.deepEqual(freezeView(h), state);
+      assert.equal(h.frames.size, frames, 'background rejection does not change playback');
+      if (pending) {
+        assert.equal(pending.onload, null);
+        assert.equal(pending.onerror, null);
+        assert.ok(h.revoked.includes(pendingURL));
+      }
+      const paintStart = h.$('arena').context.calls.length;
+      h.$('background-fit').emit('change');
+      const painted = h
+        .$('arena')
+        .context.calls.slice(paintStart)
+        .filter((call) => call.op === 'drawImage')
+        .map((call) => call.args[0]);
+      assert.ok(painted.includes(accepted), 'the real renderer still uses accepted A');
+      assert.equal(painted.includes(pending), false);
+      assert.equal(h.writes.length, 0);
+    });
+
+test('Motion cancelled file picker preserves the pending background intent', async (t) => {
+  const h = await harness(t);
+  await h.ready();
+  const accepted = await uploadBackground(h, 'static-default.png');
+  accepted.onload();
+  const pending = await uploadBackground(h, 'animated-first-frame.webp', 'image/webp'),
+    pendingURL = pending.src;
+  h.$('background-file').files = [];
+  h.$('background-file').emit('change');
+  assert.equal(h.revoked.includes(pendingURL), false);
+  pending.onload();
+  assert.equal(h.revoked.includes(accepted.src), true);
+  assert.match(h.$('background-status').textContent, /animated-first-frame.webp/);
+  assert.equal(h.revoked.includes(pendingURL), false);
+});
+
 test('Motion Clear while reading PNG bytes prevents late URL, image and status resurrection', async (t) => {
   const h = await harness(t);
   await h.ready();

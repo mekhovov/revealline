@@ -1,0 +1,31 @@
+{
+  "category": "manual-browser-interaction-and-visual-observation",
+  "url": "http://127.0.0.1:8814/game/index.html?edition=droneaid-nl-community",
+  "browser": "Codex IAB",
+  "viewportCSS": [1280, 720],
+  "visualViewportScale": 1,
+  "logicalCanvas": [1152, 576],
+  "canvasBoxCSS": [1243.015625, 621.5078125],
+  "input": "ordinary keyboard Down, P, focused Resume Return, fresh Down, P",
+  "observations": [
+    {
+      "coveragePercent": 0.5,
+      "score": 120,
+      "lives": 3,
+      "state": "paused; Resume focused"
+    },
+    {
+      "coveragePercent": 57.7,
+      "score": 13280,
+      "lives": 3,
+      "state": "paused; Resume focused"
+    }
+  ],
+  "browserWarnErrorEntries": [],
+  "rawSourceLimitation": "No built game/build-info.json; server404, not immutable-release qualification",
+  "limits": [
+    "Not all-six native rotor-motion qualification",
+    "Not physical controller/touch, full responsive or art approval",
+    "Not victory, public or offline qualification"
+  ]
+}

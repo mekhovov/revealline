@@ -428,3 +428,19 @@ Parallel Team PR757 at `541d7fcde298ccddffe3f683698bf890212db766` now localizes
 functional target-lock and rescue canvas cues, with separate 67/67 role/bonus and
 29/29 layout cohorts. A → B → C remains the implementation order; source work
 continues while production review and the C2 human study remain deferred.
+
+## Twenty-second batch: character and encounter work in parallel
+
+[Batch22](verification/actor-batch-22/README.md) corrects the six procedural
+community quad recipes to use alias-safe rotor phase, diagonal counterrotation
+and mirrored blade handedness. The 50-case complete adjacent cohort and bounded
+native DroneAid Start/capture/Pause/Resume check pass; no body asset or collision
+changes. One complete Lens intercept practice proof now reaches its historical
+5,130-tick terminal state, verifies the real replay and deliberate retained Retry
+without persistence writes. Motion Lab's rejected replacement now retires older
+pending background work while preserving accepted artwork; 101/101 checks pass.
+
+These are A2/B/necessary-C6 source slices. Artwork adoption, broader difficulty and
+human fairness, production review and C2 remain deferred or unfinished. Existing
+PR761 carries the follow-up; the single publisher's earlier integrated Guide and
+Team corrections are no longer described as implementation still to write.

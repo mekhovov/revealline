@@ -94,3 +94,14 @@ owned by the same failed Document. Test hidden and visible-blurred returns, newe
 focus, stale navigation, close/dispose and held Confirm. Preserve exact paused
 state, handoff bytes and the return-token protocol. Keep valid failure evidence,
 fixture corrections and physical-device limitations separate.
+
+## Keep procedural community propellers consistent
+
+Use the shared alias-safe rotor phase for registered quad body recipes. Preserve
+motor anchors, radii, static geometry and phase offsets; derive the established
+props-in diagonal pair from actual hub quadrants and mirror local blade handedness
+once. Compare actual transformed blade vertices at 10/30/60/120 FPS, paused/frozen
+and reduced states. Keep missing-clock fallback finite and contact/role overlays
+unchanged. Verify a real company-theme BoardPainter and ordinary play separately
+from native low-frame-rate motion or art approval. Do not infer direction from a
+manufacturer name or create another phase multiplier.
