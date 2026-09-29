@@ -1,4 +1,4 @@
-import { boundedJSON } from '../../game/data-json.mjs';
+import { boundedJSON, canonicalJSON } from '../../game/data-json.mjs';
 import { getLocale, setLocale } from '../../game/i18n/index.mjs';
 import {
   createFlight,
@@ -10,6 +10,7 @@ import { FLIGHT_COURSES } from './catalogue.mjs';
 import { FLIGHT_DEMONSTRATIONS } from './demonstrations.mjs';
 import {
   createFlightProfileStore,
+  defaultRadioProfile,
   DEFAULT_RESPONSE,
   FLIGHT_CONTROLS,
   neutralFlightInput,
@@ -454,6 +455,8 @@ export function mountFlightApp({
       let radioInput = neutralFlightInput();
       if (!replay && input.owner() === 'radio') {
         radioInput = radio.poll();
+        if (!radio.status().active && ['paused', 'disarmed'].includes(flight.snapshot().status))
+          message = radio.status().reason === 'ready' ? 'radioReady' : radio.status().reason;
         if (radio.status().active && ['paused', 'disarmed'].includes(flight.snapshot().status)) {
           flight.arm();
           input.enable(true);
@@ -526,6 +529,26 @@ export function mountFlightApp({
   listen($('mode'), 'change', () => reset(selected, $('mode').value));
   listen($('input-source'), 'change', () => {
     input.select($('input-source').value);
+    if (input.owner() === 'radio' && !radio.status().profile) {
+      try {
+        const saved =
+          createFlightProfileStore({ storage: win.localStorage }).snapshot().radio ??
+          defaultRadioProfile();
+        const matches = saved?.verified
+          ? radio
+              .devices()
+              .devices.filter(
+                ({ index, ...identity }) => canonicalJSON(identity) === canonicalJSON(saved.device),
+              )
+          : [];
+        if (matches.length === 1 && radio.select(matches[0].index)) {
+          radio.setProfile(saved);
+          radio.verify();
+        }
+      } catch {
+        // Unavailable storage or unmatched hardware requires explicit setup.
+      }
+    }
     reset();
     $('touch-controls').hidden = input.owner() !== 'touch';
     doc.body.classList.toggle('touch-mode', input.owner() === 'touch');
@@ -718,4 +741,3 @@ export function mountFlightApp({
 }
 
 if (globalThis.document?.documentElement?.dataset?.civilianFpv === 'true') mountFlightApp();
-
