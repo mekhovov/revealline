@@ -5503,10 +5503,10 @@
   "multiplayerControllers.flight.right": "Right",
   "multiplayerControllers.flight.down": "Down",
   "multiplayerControllers.flight.left": "Left",
-  "multiplayerControllers.flight.action": "Ability / Support",
-  "multiplayerControllers.flight.pickup": "Supply",
-  "multiplayerControllers.flight.boost": "Hold Boost",
-  "multiplayerControllers.flight.pause": "Pause",
+  "multiplayerControllers.flight.action": "Ability / Support — activate equipment or help teammate",
+  "multiplayerControllers.flight.pickup": "Supply — refill equipment",
+  "multiplayerControllers.flight.boost": "Boost — hold to increase speed",
+  "multiplayerControllers.flight.pause": "Pause — freeze play",
   "multiplayerControllers.menu.up": "Up",
   "multiplayerControllers.menu.right": "Right",
   "multiplayerControllers.menu.down": "Down",
@@ -5529,5 +5529,12 @@
   "multiplayerControllers.tx15Right": "TX15: movement — right stick up/down/left/right",
   "multiplayerControllers.tx15Shared": "Share TX15: P1 left stick, P2 right stick",
   "multiplayerControllers.tx15Applied": "TX15 movement applied. Centre the right stick; actions remain on keyboard/touch or can be mapped in Configure.",
-  "multiplayerControllers.tx15SplitApplied": "P1: left stick up/down/left/right. P2: right stick up/down/left/right. Centre BOTH sticks, including the non-centring left vertical stick. Actions remain on keyboard/touch; Configure each player for separate switches."
+  "multiplayerControllers.tx15SplitApplied": "P1: left stick up/down/left/right. P2: right stick up/down/left/right. Centre BOTH sticks, including the non-centring left vertical stick. Actions remain on keyboard/touch; Configure each player for separate switches.",
+  "multiplayerControllers.forgetRestore": "Forget automatic radio setup",
+  "multiplayerControllers.restoreForgotten": "Automatic radio setup forgotten. Current controls still work; applying or assigning a setup saves it again.",
+  "multiplayerControllers.restoreFailed": "Automatic setup could not be saved or restored. Current controls still work. Keep a profile export; reload after changes in another tab.",
+  "multiplayerControllers.restoreHelp": "Applied radio mappings and player assignments restore on this device. Release every mapped control first. Identical radios cannot be distinguished: assign their players explicitly. Shared radio: centre both sticks, including the left vertical stick.",
+  "multiplayerControllers.actionGuide": "Map gameplay actions for selected player",
+  "multiplayerControllers.actionGuideHelp": "Choose an action, record its released position, hold only your chosen switch/button, then capture its active position. Ability/Support activates equipment or helps your teammate; Supply refills; Boost increases speed; Pause freezes play. Use Next action to move on or skip. Shared-radio players must use separate channels. Verify and Save/apply when ready.",
+  "multiplayerControllers.nextAction": "Next action / skip"
 }

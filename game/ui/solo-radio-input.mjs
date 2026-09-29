@@ -1,10 +1,15 @@
+import { SOLO_RESTORE_KEY } from '../couch/controller-restore.mjs';
 import { createControllerSession } from '../couch/controller-session.mjs';
 export const SOLO_RADIO_PROFILE_KEY = 'revealline.solo-radio-profiles.v1';
 
 // Standard pads retain their existing Solo bindings. Only explicitly configured
 // raw devices enter the router; neither snapshots nor FPV profiles are modified.
 export function createSoloRadioInput({ readPads, eventTarget, getScope }) {
-  const session = createControllerSession({ eventTarget });
+  const session = createControllerSession({
+    eventTarget,
+    restoreKey: SOLO_RESTORE_KEY,
+    restoreInFlight: true,
+  });
   let capturing = false;
   let profiles = new Map();
   const capture = session.capture;

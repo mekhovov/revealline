@@ -97,6 +97,10 @@ export function mountControllerSetup({
       message = tr('tx15SplitApplied');
   });
   tx15Shared.hidden = solo;
+  button('forgetRestore', () => {
+    message = tr(session.forgetSaved() ? 'restoreForgotten' : 'restoreFailed');
+  });
+  const restorationNote = node('p');
   const profileActions = node('div');
   profileActions.className = 'race-fields';
   function begin(profile) {
@@ -113,6 +117,17 @@ export function mountControllerSetup({
     selectedGeneration = session.state().devices.find((d) => d.index === pad.index)?.generation;
     session.capture(true);
   }
+  const actionGuide = button(
+    'actionGuide',
+    () => {
+      const d = session.state().devices.find((d) => d.index === Number(devices.value));
+      if (!d?.profile) throw new Error(tr('chooseDevice'));
+      begin(d.profile);
+      action.value = 'flight:action';
+      message = tr('actionGuideHelp');
+    },
+    profileActions,
+  );
   button(
     'configure',
     () => {
@@ -273,6 +288,24 @@ export function mountControllerSetup({
     },
     editor,
   );
+  button(
+    'nextAction',
+    () => {
+      const steps = [
+        'flight:action',
+        'flight:pickup',
+        'flight:boost',
+        'flight:pause',
+        'menu:confirm',
+        'menu:back',
+        'menu:menu',
+      ];
+      action.value = steps[(steps.indexOf(action.value) + 1) % steps.length];
+      baseline = null;
+      message = tr('actionGuideHelp');
+    },
+    editor,
+  );
   const verified = node('label', editor),
     check = node('input', verified);
   check.type = 'checkbox';
@@ -419,6 +452,9 @@ export function mountControllerSetup({
     const selectedPad = session.raw(Number(devices.value));
     tx15Solo.disabled = tx15Shared.disabled =
       !!draft || !state.editable || !isTestedTX15(selectedPad) || Number(devices.value) >= 1024;
+    actionGuide.disabled =
+      !!draft || !state.editable || !list.find((d) => d.index === Number(devices.value))?.profile;
+    restorationNote.textContent = tr(state.restoreError ? 'restoreFailed' : 'restoreHelp');
     devices.disabled = !list.length || !!draft;
     profiles.disabled = !storedProfiles.length || !!draft;
     const text =

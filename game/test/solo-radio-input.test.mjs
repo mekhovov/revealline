@@ -105,7 +105,7 @@ test('Solo radio uses semantic actions with remapped standard bindings and guard
   assert.equal(f.sample().ui.confirm, false);
 });
 
-test('Capture, scope transitions and reconnect require release; reconnect requires reapplying raw profile', () => {
+test('Capture, scope transitions and reconnect require release; reconnect restores the profile after neutral', () => {
   const f = fixture();
   f.sample();
   f.pad.axes[3] = -1;
@@ -123,8 +123,9 @@ test('Capture, scope transitions and reconnect require release; reconnect requir
   f.pads([]);
   assert.equal(f.sample().disconnected, true);
   f.pads([f.pad]);
-  assert.equal(f.sample().status.code, 'unsupported');
-  f.input.session.apply(0, f.profile);
+  f.pad.axes[3] = -1;
+  assert.equal(f.sample().flight.direction, null);
+  f.pad.axes[3] = 0;
   assert.equal(f.sample().status.code, 'joined');
 });
 

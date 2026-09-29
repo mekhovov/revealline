@@ -30,7 +30,7 @@ Multiplayer direction mapping is separate from simulator calibration. It does no
 
 Regular Solo now exposes **Settings → Controls → Radios and custom joysticks — Solo** for raw devices such as the RadioMaster TX15. Standard gamepads retain their existing bindings, aliases and Solo Boost Hold/Toggle behavior. Capture and verify the radio channels, save/apply the profile, then release mapped controls before flying. Unmapped throttle and switches do not prevent neutral detection. Unmapped gameplay actions retain keyboard support and partially mapped radios retain Auto touch controls on touch-capable devices. Hangar and Stop remain available through the existing keyboard/touch controls; the radio recipe covers movement, Ability, Supply, Boost and Pause.
 
-Solo uses `revealline.solo-radio-profiles.v1`, a separate store of the same bounded channel-recipe schema. Profiles do not automatically apply after reload/reconnection: select the saved recipe, verify, and apply it again. Entering capture suppresses radio navigation; focus loss, closing settings or changing context cancels unfinished capture. The router retains its normal release, disconnect and Boost reset behavior.
+Solo uses `revealline.solo-radio-profiles.v1`, a separate store of the same bounded channel-recipe schema. The last applied radio setup now restores after reload/reconnection when its device identity is unambiguous. Mapped controls must return to neutral before input is accepted. Recipe imports still require explicit verification/application. Entering capture suppresses radio navigation; focus loss, closing settings or changing context cancels unfinished capture. The router retains its normal release, disconnect and Boost reset behavior.
 
 This is separate from the optional civilian FPV simulator's four-axis calibration, full-range throttle and arming flow. Test that source from its own checkout; it is not included in this branch's distribution.
 
@@ -101,7 +101,7 @@ from FPV throttle calibration.
 The split uses right horizontal/vertical axes 0/1 and left horizontal/vertical
 axes 3/2. A physical channel cannot be assigned to both players. Each player
 has independent neutral gating and mapping; disconnect removes both seats.
-Reconnect requires explicit setup again. Shared assignments are session-only.
+Shared assignments now persist in a separate automatic-setup store and restore on an unambiguous reconnect while play is paused. Both sticks must pass their neutral checks. Identical radios require explicit assignment.
 Configure each logical stick entry to add separate action switches; keyboard
 and touch actions remain available with movement-only presets. Applying the
 single-player preset to the physical radio ends its shared assignment.
@@ -160,3 +160,34 @@ skipped on the user's instruction.
 - The earlier iOS staging blocker (missing explicit head in the sprite review
   HTML) remains outside these radio changes; the existing platform limitation
   above remains applicable.
+
+
+### Integration and saved setups
+
+The combined local branch is `codex/radio-integration`, based on the FPV/discovery
+branch with all controller changes integrated. The original controller and
+discovery branches remain intact. This includes the simulator's dependencies,
+its tested TX15 default and its arm/reset fixes; nothing has been published.
+
+Automatic setup is separate from the editable profile library and FPV storage:
+`revealline.solo-radio-setup.v1` for Solo and
+`revealline.couch-radio-setup.v1` for both couch hosts. Applying a mapping or
+changing player assignments saves the current radio layout. This includes
+shared-stick sides and swaps. Previously saved recipe-library entries are not
+silently trusted: apply them once to opt into restoration. Connection indexes
+are not identities. Ambiguous identical radios never receive guessed player
+assignments, and already occupied seats are not taken away. Reload/reconnect
+never auto-resumes a paused round. Forget automatic radio setup clears only the
+restoration record; current input still works.
+
+Storage input is bounded and validated, overlapping shared channels are rejected,
+and malformed/newer data or changes from another tab are preserved. Failed
+writes keep the setup usable for the session and surface a message. Mappings
+for disconnected distinct radios are retained when other radios are configured.
+
+**Map gameplay actions for selected player** opens an action-focused draft
+without erasing movement. Choose a logical left/right stick entry when sharing.
+Record released and active positions for Ability/Support, Supply, Boost, Pause
+and optional menu actions; Next action skips controls that should remain on
+keyboard/touch. Verification and Save/apply are still required. No unmeasured
+radio switches are guessed, and one physical channel cannot control both players.

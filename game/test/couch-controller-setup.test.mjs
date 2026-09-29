@@ -93,3 +93,43 @@ test('TX15 setup offers explicit Solo-style and shared-stick assignments', (t) =
   assert.equal(state.devices.find((d) => d.index === state.seats[1]).profile.flight.up[0].index, 1);
   assert.equal(f.session.completeFlight(1), false, 'partial profiles preserve touch actions');
 });
+
+test('action guide preserves shared movement and rejects using the partner switch', (t) => {
+  const f = setup(t);
+  f.pad.id = 'TX15 Joystick (Vendor: 1209 Product: 4f54)';
+  f.session.sample([f.pad]);
+  f.ui.refresh();
+  f.click('tx15Shared');
+  const selects = f.root.querySelectorAll('select');
+  const choose = (index) => {
+    selects[0].value = String(index);
+    selects[0].emit('change');
+    f.ui.refresh();
+  };
+  choose(1024);
+  f.click('actionGuide');
+  assert.equal(selects[2].value, 'flight:action');
+  selects[3].value = 'button';
+  f.click('released');
+  f.pad.buttons[5].value = 1;
+  f.click('capture');
+  f.click('nextAction');
+  assert.equal(selects[2].value, 'flight:pickup');
+  f.root.querySelector('input[type="checkbox"]').checked = true;
+  f.click('apply');
+  let left = f.session.state().devices.find((d) => d.index === 1024).profile;
+  assert.equal(left.flight.up[0].index, 2);
+  assert.equal(left.flight.action[0].index, 5);
+  f.pad.buttons[5].value = 0;
+  choose(1025);
+  f.click('actionGuide');
+  selects[3].value = 'button';
+  f.click('released');
+  f.pad.buttons[5].value = 1;
+  f.click('capture');
+  f.root.querySelector('input[type="checkbox"]').checked = true;
+  f.click('apply');
+  const right = f.session.state().devices.find((d) => d.index === 1025).profile;
+  assert.equal(right.flight.action.length, 0);
+  assert.match(f.root.textContent, /separate channels/);
+});

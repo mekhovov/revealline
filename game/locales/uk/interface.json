@@ -5613,10 +5613,10 @@
   "multiplayerControllers.flight.right": "Праворуч",
   "multiplayerControllers.flight.down": "Униз",
   "multiplayerControllers.flight.left": "Ліворуч",
-  "multiplayerControllers.flight.action": "Здібність / підтримка",
-  "multiplayerControllers.flight.pickup": "Припаси",
-  "multiplayerControllers.flight.boost": "Утримання прискорення",
-  "multiplayerControllers.flight.pause": "Пауза",
+  "multiplayerControllers.flight.action": "Здібність / Підтримка — обладнання або допомога партнеру",
+  "multiplayerControllers.flight.pickup": "Постачання — поповнити обладнання",
+  "multiplayerControllers.flight.boost": "Прискорення — утримуйте для збільшення швидкості",
+  "multiplayerControllers.flight.pause": "Пауза — зупинити гру",
   "multiplayerControllers.menu.up": "Угору",
   "multiplayerControllers.menu.right": "Праворуч",
   "multiplayerControllers.menu.down": "Униз",
@@ -5639,5 +5639,12 @@
   "multiplayerControllers.tx15Right": "TX15: рух — правий стік вгору/вниз/ліворуч/праворуч",
   "multiplayerControllers.tx15Shared": "Спільний TX15: Г1 лівий стік, Г2 правий стік",
   "multiplayerControllers.tx15Applied": "Рух TX15 застосовано. Центруйте правий стік; дії доступні на клавіатурі/сенсорі або через налаштування.",
-  "multiplayerControllers.tx15SplitApplied": "Г1: лівий стік вгору/вниз/ліворуч/праворуч. Г2: правий стік вгору/вниз/ліворуч/праворуч. Центруйте ОБИДВА стіки, включно з лівим вертикальним. Дії — на клавіатурі/сенсорі; окремі перемикачі можна призначити кожному гравцю."
+  "multiplayerControllers.tx15SplitApplied": "Г1: лівий стік вгору/вниз/ліворуч/праворуч. Г2: правий стік вгору/вниз/ліворуч/праворуч. Центруйте ОБИДВА стіки, включно з лівим вертикальним. Дії — на клавіатурі/сенсорі; окремі перемикачі можна призначити кожному гравцю.",
+  "multiplayerControllers.forgetRestore": "Забути автоматичне налаштування пульта",
+  "multiplayerControllers.restoreForgotten": "Автоматичне налаштування забуто. Поточне керування діє; застосування або призначення збереже його знову.",
+  "multiplayerControllers.restoreFailed": "Не вдалося зберегти або відновити автоматичне налаштування. Поточне керування діє. Експортуйте профіль; після змін в іншій вкладці перезавантажте сторінку.",
+  "multiplayerControllers.restoreHelp": "Застосовані призначення пульта й гравців відновлюються на цьому пристрої. Спочатку відпустіть усі призначені органи керування. Однакові пульти неможливо розрізнити: призначте гравців вручну. Спільний пульт: центруйте обидва стіки, включно з лівим вертикальним.",
+  "multiplayerControllers.actionGuide": "Призначити ігрові дії вибраному гравцю",
+  "multiplayerControllers.actionGuideHelp": "Виберіть дію, запишіть відпущене положення, утримуйте лише вибраний перемикач/кнопку й зафіксуйте активне положення. Здібність/Підтримка активує обладнання або допомагає партнеру; Постачання поповнює; Прискорення збільшує швидкість; Пауза зупиняє гру. Наступна дія дозволяє перейти далі або пропустити. На спільному пульті гравцям потрібні різні канали. Перевірте та збережіть.",
+  "multiplayerControllers.nextAction": "Наступна дія / пропустити"
 }
