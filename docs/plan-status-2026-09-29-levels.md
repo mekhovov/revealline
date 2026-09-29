@@ -5,6 +5,29 @@ Preserve earlier dated plans as history. The original **Journey P00–P15** and
 the broader **whole-game P00–P18** are different programmes, not interchangeable
 phase numbers.
 
+## Latest direction: production testing deferred
+
+The user's subsequent instruction is: **defer production testing and proceed
+with the remaining implementation**. Extended production/public play,
+production-visual qualification, hardware, frame-time and human sessions are
+now **deferred, not passed**, and must not block preparation of the next bounded
+features. Historical sections below retain what was checked and what was open;
+this direction supersedes their use of those tests as implementation blockers.
+
+Keep proportionate local correctness regressions, source review, lint/format,
+and required delivery-integrity checks (build/provenance, immutable hashes,
+archive preservation and basic availability). Do not manufacture approval
+records, reinterpret untested production assets as approved, weaken runtime
+validators, or call a test build fully qualified. Any build-integrity dependency
+remains a concrete technical issue, not an excuse to resume deferred testing.
+
+Levels is proceeding with a copy-on-write Cooling loop erosion successor on
+accepted main `321408a3cfd75ae230d760f39fb692503652601a`. The first task is to make
+the existing eroder engage earned routes through authored placement/heading,
+while preserving straight-between-impact movement, protected foundations,
+original editions and the remaining actors. Complete-route and fairness evidence
+will stay explicitly bounded; no blanket speed increase or global physics change.
+
 ## Delivery boundary
 
 - GitHub lists **v0.142.3** as published, from the main continuation based on
