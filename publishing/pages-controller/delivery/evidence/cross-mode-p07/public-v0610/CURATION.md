@@ -1,9 +1,0 @@
-# Evidence curation
-
-This delivery-only packet retains the exact file originals from `.cache/p07-public-audit-fc2c7af6`, excluding Python bytecode cache files. The cache preparation README is retained as `preparation-README.original.md`; the new `README.md` and `planning/progress-and-next.md` provide current prose. The root acceptance SHA-256 is `7e69d6e117de3fc8f237d2c37fe4c17008aec7b94717936124412ad51a93aa83`. Its original browser observations, pins, request records, logs and diffs were copied without normalization. Screenshots were viewed inline only; none were exported or invented.
-
-The retained helper paths, commands and absolute cache paths record where the checks actually ran. They are not portable execution instructions, and copying them creates no new acceptance. Public response bodies were streamed and hashed; their large payloads are not included. The bounded original receipt ZIP, extracted members, authority records, source metadata, all HTTP request/result rows and before/after observations remain included.
-
-The original HTTP report predates browser acceptance. Pending controller/deployment records and unsuccessful observations remain unchanged alongside the final authorities. The native record retains a legitimate failed cut, a null image-source lookup, the initial viewport applied to a different tab, and a real pending-Next cancellation. The later root acceptance identifies what was accepted and what remains open; it does not turn the earlier observations into successes.
-
-`retained-files.json` pins every file in this new directory except itself and records the copied source where applicable. Only the current delivery README is changed outside this new evidence directory. Existing delivery history, game source, version files, release selector and published editions remain unchanged.
