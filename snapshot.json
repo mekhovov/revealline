@@ -1,0 +1,69 @@
+{
+  "format": "revealline-recovery-fragment-v1",
+  "capturedAt": "2026-09-29T15:10:01.067104+00:00",
+  "worktree": "<home>/work/my_projects/go_test/.cache/worktrees/p03-still-preview-focus",
+  "branch": "refs/heads/codex/p03-still-preview-focus",
+  "head": "628e95daf403082768cdcf900a8ea1d1ef4629a2",
+  "excluded": [],
+  "changes": [
+    {
+      "status": " M",
+      "path": "authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "object": "f2fd105ccb9f68817bb0038a8e6eabbf1624bc07",
+      "sha256": "3656100912f86f98f4ab4723b2415ee0ff90eb14230b116bd00a893671fc55ea",
+      "bytes": 202006,
+      "mode": "100644"
+    },
+    {
+      "status": " M",
+      "path": "docs/operation-focus.md",
+      "object": "84ec80ffcad99e06fcec58c462a69552727ed3b2",
+      "sha256": "87b55e8817eeeea64b3cb5f66aadecf25a07a951d5054cd530b38a81eece8089",
+      "bytes": 13679,
+      "mode": "100644"
+    },
+    {
+      "status": " M",
+      "path": "game/test/still-media-panel.test.mjs",
+      "object": "ea6691341b6cb3d81fe04e82dec5acbc72840ab8",
+      "sha256": "cafcafe4f542a167f6619f2aeff59be67fc9eb66c413292d79007d7dbf5fc5e8",
+      "bytes": 18636,
+      "mode": "100644"
+    },
+    {
+      "status": " M",
+      "path": "game/ui/still-media-panel.mjs",
+      "object": "824d22202e6e81fbf68237bf02c7bfc2e8ce5617",
+      "sha256": "9a058555aa138cd6b14e1460c79b92c9ec5fde0ec756e4563a9828f38931d477",
+      "bytes": 30379,
+      "mode": "100644"
+    }
+  ],
+  "indexEntries": [
+    {
+      "path": "authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "mode": "100644",
+      "object": "62d0e1c2b180659156f1d3214a8341038e4e0326",
+      "stage": 0
+    },
+    {
+      "path": "docs/operation-focus.md",
+      "mode": "100644",
+      "object": "419d1bf6e4ee8ec13781ddf8c932afdc4257c26c",
+      "stage": 0
+    },
+    {
+      "path": "game/test/still-media-panel.test.mjs",
+      "mode": "100644",
+      "object": "93878ed6893bc413b950a6578e0eca4998d2a7c7",
+      "stage": 0
+    },
+    {
+      "path": "game/ui/still-media-panel.mjs",
+      "mode": "100644",
+      "object": "0d8cf78635a2e837456aec4fffad6d509500caff",
+      "stage": 0
+    }
+  ],
+  "purpose": "Recovery only. These bytes are not release admission. Missing files, conflict stages and obsolete generated outputs are preserved as observations, not deletion or merge instructions."
+}
