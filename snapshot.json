@@ -1,0 +1,93 @@
+{
+  "format": "revealline-recovery-fragment-v1",
+  "capturedAt": "2026-09-29T15:10:07.453152+00:00",
+  "worktree": "<home>/work/my_projects/go_test/.cache/worktrees/p05-narrow-hud-on-actor622",
+  "branch": "refs/heads/codex/p05-narrow-hud-on-actor622",
+  "head": "80efcc3ddda302a014c3409c248892f36b3a12a9",
+  "excluded": [],
+  "changes": [
+    {
+      "status": " M",
+      "path": "authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "object": "7365a49805b8823a06b5ba38c076bbe672b1addd",
+      "sha256": "0b7999c2000381a9c70c98d077094a2f1370f3bd5c6b286fc25028da8349e5bb",
+      "bytes": 225452,
+      "mode": "100644"
+    },
+    {
+      "status": " M",
+      "path": "game/app.mjs",
+      "object": "216b2fa60b4a8e37f65d29369d6f6ef8a3f41d3c",
+      "sha256": "fc5cdd5c04bdb3662c7f6bdd0343bda5aa24053a479adeb8d168dd75031d646a",
+      "bytes": 281072,
+      "mode": "100644"
+    },
+    {
+      "status": " M",
+      "path": "game/couch/couch.css",
+      "object": "d4a2e39963955d1d3d2428c4b4a761d58be79aa9",
+      "sha256": "1bbefcaa095d440065126c8a9dda42b54a9c90863302796cf25143817a5ec7e7",
+      "bytes": 10071,
+      "mode": "100644"
+    },
+    {
+      "status": " M",
+      "path": "game/ui/field-kit-compiled.css",
+      "object": "81d87b5677492974d78bf45b24d30777d6ea7e01",
+      "sha256": "a3446bef6874a130b9cae2838124014e7c053bd4e5fee4e59ba4cda30cc8c595",
+      "bytes": 23482,
+      "mode": "100644"
+    },
+    {
+      "status": "??",
+      "path": "docs/narrow-hud-layout.md",
+      "object": "604ec03c789e8720c12a32a67eef8c070cc1b9cf",
+      "sha256": "7e6763fa04b3aaa5b8b6963060d1b31d5d4a505f603f891e7bc2a0464a94dcc5",
+      "bytes": 6749,
+      "mode": "100644"
+    },
+    {
+      "status": "??",
+      "path": "game/test/hud-numeric-values.test.mjs",
+      "object": "9aa03d8232c0e6bb4bc6ec36b3bd19063ddef4aa",
+      "sha256": "358705647ff471585e2f9bf8b580175c42e55c44b105e58370d57337ae8f47d7",
+      "bytes": 3072,
+      "mode": "100644"
+    },
+    {
+      "status": "??",
+      "path": "game/ui/hud-values.mjs",
+      "object": "a08e05b83e47250a2bb12adb763adcc7d5107090",
+      "sha256": "df37feee2506ab546bd991ef193cddd20c2a0540e99e2ac991a710fd76e2b16d",
+      "bytes": 371,
+      "mode": "100644"
+    }
+  ],
+  "indexEntries": [
+    {
+      "path": "authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "mode": "100644",
+      "object": "8948eb3a222119fe12e7554a45c2d2d75ef93430",
+      "stage": 0
+    },
+    {
+      "path": "game/app.mjs",
+      "mode": "100644",
+      "object": "e0f6c5bb84bdfd8a2ec2c06e5b3b79abcd6fc915",
+      "stage": 0
+    },
+    {
+      "path": "game/couch/couch.css",
+      "mode": "100644",
+      "object": "8f4618ecbe48b3d0e7f70424909ed5730cb035d0",
+      "stage": 0
+    },
+    {
+      "path": "game/ui/field-kit-compiled.css",
+      "mode": "100644",
+      "object": "3b198e87d8a0867a4f087e52f48a8ea7b692dbc0",
+      "stage": 0
+    }
+  ],
+  "purpose": "Recovery only. These bytes are not release admission. Missing files, conflict stages and obsolete generated outputs are preserved as observations, not deletion or merge instructions."
+}
