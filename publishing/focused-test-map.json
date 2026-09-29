@@ -204,6 +204,38 @@
       ]
     },
     {
+      "id": "soundtrack-preferences-playback",
+      "pathPatterns": [
+        "^game/(managed-media-store|media-storage-record|soundtrack(?:-store|-style-selection|-style-taxonomy)?|online-soundtrack-catalogue|opening-soundtrack)\\.mjs$",
+        "^game/ui/(soundtrack-player|soundtrack-panel|audio-master|quick-music-controls)\\.mjs$",
+        "^game/couch/couch-music-(host|library|session)\\.mjs$",
+        "^game/test/(soundtrack-(saved-styles|player|host|panel|style-selection|style-taxonomy)|managed-media-store|couch-music-(library|session)|opening-soundtrack)\\.test\\.mjs$",
+        "^game/test/(soundtrack-store|managed-media-connection|online-soundtrack-catalogue|audio-master|quick-music-controls|couch-audio-master)\\.test\\.mjs$",
+        "^game/test/helpers/(soundtrack-(public-catalogue|audio|fixtures)|managed-idb)\\.mjs$",
+        "^game/test/fixtures/managed-media-store-pr779\\.mjs\\.txt$"
+      ],
+      "commands": [
+        {
+          "id": "soundtrack-preferences-playback",
+          "command": "node",
+          "args": [
+            "--test",
+            "--test-concurrency=1",
+            "game/test/soundtrack-saved-styles.test.mjs",
+            "game/test/soundtrack-player.test.mjs",
+            "game/test/soundtrack-host.test.mjs",
+            "game/test/soundtrack-panel.test.mjs",
+            "game/test/soundtrack-style-selection.test.mjs",
+            "game/test/soundtrack-style-taxonomy.test.mjs",
+            "game/test/managed-media-store.test.mjs",
+            "game/test/couch-music-library.test.mjs",
+            "game/test/couch-music-session.test.mjs",
+            "game/test/opening-soundtrack.test.mjs"
+          ]
+        }
+      ]
+    },
+    {
       "id": "publishing",
       "pathPatterns": [
         "^publishing/",

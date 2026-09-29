@@ -77,6 +77,105 @@ test('localization and offline paths select only their bounded gates', () => {
   );
 });
 
+test('Audio helpers and persistence changes select the reviewed bounded playback cohort in fast mode', () => {
+  const requiredTests = [
+    'game/test/soundtrack-saved-styles.test.mjs',
+    'game/test/soundtrack-player.test.mjs',
+    'game/test/soundtrack-host.test.mjs',
+    'game/test/soundtrack-panel.test.mjs',
+    'game/test/soundtrack-style-selection.test.mjs',
+    'game/test/soundtrack-style-taxonomy.test.mjs',
+    'game/test/managed-media-store.test.mjs',
+    'game/test/couch-music-library.test.mjs',
+    'game/test/couch-music-session.test.mjs',
+    'game/test/opening-soundtrack.test.mjs',
+  ];
+  for (const file of [
+    'game/managed-media-store.mjs',
+    'game/media-storage-record.mjs',
+    'game/soundtrack.mjs',
+    'game/soundtrack-store.mjs',
+    'game/soundtrack-style-selection.mjs',
+    'game/soundtrack-style-taxonomy.mjs',
+    'game/online-soundtrack-catalogue.mjs',
+    'game/opening-soundtrack.mjs',
+    'game/ui/soundtrack-player.mjs',
+    'game/ui/soundtrack-panel.mjs',
+    'game/ui/audio-master.mjs',
+    'game/ui/quick-music-controls.mjs',
+    'game/couch/couch-music-host.mjs',
+    'game/couch/couch-music-library.mjs',
+    'game/couch/couch-music-session.mjs',
+    'game/test/helpers/soundtrack-public-catalogue.mjs',
+    'game/test/helpers/soundtrack-audio.mjs',
+    'game/test/helpers/soundtrack-fixtures.mjs',
+    'game/test/helpers/managed-idb.mjs',
+    'game/test/fixtures/managed-media-store-pr779.mjs.txt',
+    ...requiredTests,
+  ]) {
+    const plan = focusedTestPlan([file], manifest, { fallbackHandled: true });
+    assert(plan.categories.includes('soundtrack-preferences-playback'), file);
+    assert.deepEqual(plan.unknownRuntime, [], file);
+    assert.deepEqual(plan.deferredTests, [], file);
+    const command = plan.commands.find(({ id }) => id === 'soundtrack-preferences-playback');
+    assert.equal(command.command, 'node');
+    assert.deepEqual(command.args, ['--test', '--test-concurrency=1', ...requiredTests]);
+    assert(!plan.commands.some(({ id }) => id.startsWith('changed-test:')), file);
+  }
+});
+
+test('related Audio tests retain direct execution alongside the bounded shared cohort', () => {
+  for (const name of [
+    'soundtrack-store',
+    'managed-media-connection',
+    'online-soundtrack-catalogue',
+    'audio-master',
+    'quick-music-controls',
+    'couch-audio-master',
+  ]) {
+    const file = `game/test/${name}.test.mjs`;
+    const plan = focusedTestPlan([file], manifest);
+    assert(plan.categories.includes('soundtrack-preferences-playback'), file);
+    assert.deepEqual(plan.deferredTests, [], file);
+    assert(
+      plan.commands.some(({ id }) => id === 'soundtrack-preferences-playback'),
+      file,
+    );
+    assert.deepEqual(
+      plan.commands.find(({ id }) => id === `changed-test:${file}`),
+      {
+        id: `changed-test:${file}`,
+        command: 'node',
+        args: ['--test', file],
+      },
+    );
+  }
+});
+
+test('Audio helper-only changes require their gate without broadening app or waiving adjacent coverage', () => {
+  const helper = focusedTestPlan(['game/soundtrack-style-selection.mjs'], manifest);
+  assert.deepEqual(helper.categories, ['soundtrack-preferences-playback']);
+  assert.deepEqual(
+    helper.commands.map(({ id }) => id),
+    ['soundtrack-preferences-playback'],
+  );
+  const app = focusedTestPlan(['game/app.mjs'], manifest);
+  assert(!app.categories.includes('soundtrack-preferences-playback'));
+  assert(app.categories.includes('company-editions'));
+  const couch = focusedTestPlan(['game/couch/couch-music-library.mjs'], manifest);
+  assert.deepEqual(couch.categories, [
+    'localization',
+    'player-navigation-team',
+    'soundtrack-preferences-playback',
+  ]);
+  const unknown = focusedTestPlan(['game/soundtrack-new-owner.mjs'], manifest);
+  assert.deepEqual(unknown.categories, []);
+  assert.deepEqual(
+    unknown.commands.map(({ id }) => id),
+    ['unknown-runtime-validate'],
+  );
+});
+
 test('unknown runtime paths fail closed through validate', () => {
   const plan = focusedTestPlan(['game/new-player-runtime.mjs'], manifest);
   assert.deepEqual(plan.categories, []);
