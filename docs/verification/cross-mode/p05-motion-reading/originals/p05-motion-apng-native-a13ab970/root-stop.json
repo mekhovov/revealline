@@ -1,8 +1,0 @@
-{
-  "at": "2026-09-17T14:51:03.664698+00:00",
-  "pid": 45380,
-  "command": "/opt/homebrew/Cellar/python@3.14/3.14.4_1/Frameworks/Python.framework/Versions/3.14/Resources/Python.app/Contents/MacOS/Python -u serve.py --commit a13ab970222498d7c5fa7f62f9fc04fe436979d5",
-  "signal": "SIGINT",
-  "tab38Closed": true,
-  "viewportReset": true
-}

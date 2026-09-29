@@ -1,5 +1,0 @@
-
-> revealline@0.78.0 validate
-> node scripts/game-cli.mjs validate
-
-Game CLI error: ENOENT: no such file or directory, lstat '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/soundtrack-v3-latest/authoring/library/fpv-role-presentations/originals'
