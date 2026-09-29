@@ -1,0 +1,74 @@
+{
+  "format": "root-bulk-combat-integration-tests.v1",
+  "startedAt": "2026-09-29T06:07:37.691Z",
+  "root": "/Users/oleksandr.mekhovov/.codex/worktrees/publish-v01321/go_test",
+  "expectedHead": "197afa6ada13b4fab05255916d2c796f2284ec40",
+  "cohorts": [
+    {
+      "name": "bulk-combat-renderer-0610",
+      "args": [
+        "--test",
+        "--test-concurrency=1",
+        "game/test/combat-board-adapter.test.mjs",
+        "game/test/combat-presentation.test.mjs",
+        "game/test/combat-view.test.mjs"
+      ],
+      "startedAt": "2026-09-29T06:07:43.379Z",
+      "completedAt": "2026-09-29T06:07:50.053Z",
+      "code": 0,
+      "stdout": {
+        "bytes": 11040,
+        "sha256": "071ece2d83544b9455a9151d37633046fea72e3818dbbe29b934620276563ecc",
+        "path": "/Users/oleksandr.mekhovov/.codex/visualizations/2026/09/20/01a0bffc-f5ed-7822-932c-55295e0a8d37/bulk-combat-renderer-0610.tap"
+      },
+      "stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "path": "/Users/oleksandr.mekhovov/.codex/visualizations/2026/09/20/01a0bffc-f5ed-7822-932c-55295e0a8d37/bulk-combat-renderer-0610.stderr"
+      },
+      "summary": [
+        "# tests 46",
+        "# suites 0",
+        "# pass 46",
+        "# fail 0",
+        "# cancelled 0",
+        "# skipped 0",
+        "# todo 0",
+        "# duration_ms 6646.266042"
+      ]
+    }
+  ],
+  "fullsuite": "WAIVED_SKIPPED_NOT_PASSED",
+  "limitation": "Fresh source integration tests, not generated qualification, browser, hardware or listening acceptance.",
+  "freeBefore": 1646612480,
+  "nodeVersion": "v20.20.0",
+  "before": {
+    "observedAt": "2026-09-29T06:07:43.378Z",
+    "format": "revealline-source-identity.v1",
+    "root": "/Users/oleksandr.mekhovov/.codex/worktrees/publish-v01321/go_test",
+    "sourceRevision": "197afa6ada13b4fab05255916d2c796f2284ec40",
+    "sourceTree": "406cb616a2d7d12dca496052221f5f871bf167c8",
+    "files": 20650,
+    "bytes": 1976078615,
+    "aggregateSha256": "8c580cb0c9a456f13188c48025701aa4d4a4153e54069db4804270e27c26a95d",
+    "aggregateFormat": "UTF-8 path sorted JSONL [path, Git mode, raw content SHA-256]",
+    "allTrackedSourceContentsAndModesMatch": true
+  },
+  "after": {
+    "observedAt": "2026-09-29T06:07:55.606Z",
+    "format": "revealline-source-identity.v1",
+    "root": "/Users/oleksandr.mekhovov/.codex/worktrees/publish-v01321/go_test",
+    "sourceRevision": "197afa6ada13b4fab05255916d2c796f2284ec40",
+    "sourceTree": "406cb616a2d7d12dca496052221f5f871bf167c8",
+    "files": 20650,
+    "bytes": 1976078615,
+    "aggregateSha256": "8c580cb0c9a456f13188c48025701aa4d4a4153e54069db4804270e27c26a95d",
+    "aggregateFormat": "UTF-8 path sorted JSONL [path, Git mode, raw content SHA-256]",
+    "allTrackedSourceContentsAndModesMatch": true
+  },
+  "identityPairMatches": true,
+  "statusAfter": "",
+  "freeAfter": 1645473792,
+  "accepted": true,
+  "completedAt": "2026-09-29T06:07:55.731Z"
+}

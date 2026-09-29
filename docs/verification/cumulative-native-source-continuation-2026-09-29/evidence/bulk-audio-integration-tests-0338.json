@@ -1,0 +1,112 @@
+{
+  "format": "root-bulk-audio-integration-tests.v1",
+  "startedAt": "2026-09-29T03:36:59.429Z",
+  "root": "/Users/oleksandr.mekhovov/.codex/worktrees/publish-v01321/go_test",
+  "expectedHead": "0fc329163332b2c451792e8b08d50b856803187b",
+  "cohorts": [
+    {
+      "name": "bulk-audio-integration-0338",
+      "args": [
+        "--test",
+        "--test-concurrency=1",
+        "game/test/soundtrack-saved-styles.test.mjs",
+        "game/test/soundtrack-player.test.mjs",
+        "game/test/soundtrack-host.test.mjs",
+        "game/test/soundtrack-panel.test.mjs",
+        "game/test/soundtrack-style-selection.test.mjs",
+        "game/test/soundtrack-style-taxonomy.test.mjs",
+        "game/test/managed-media-store.test.mjs",
+        "game/test/couch-music-library.test.mjs",
+        "game/test/couch-music-session.test.mjs",
+        "game/test/opening-soundtrack.test.mjs"
+      ],
+      "startedAt": "2026-09-29T03:37:12.269Z",
+      "completedAt": "2026-09-29T03:38:18.509Z",
+      "code": 0,
+      "stdout": {
+        "bytes": 76417,
+        "sha256": "05be3b0068fda4ce1b11770529ac0178e291ca97a9e4b93b84261ff98d0d7d75",
+        "path": "/Users/oleksandr.mekhovov/.codex/visualizations/2026/09/20/01a0bffc-f5ed-7822-932c-55295e0a8d37/bulk-audio-integration-0338.tap"
+      },
+      "stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "path": "/Users/oleksandr.mekhovov/.codex/visualizations/2026/09/20/01a0bffc-f5ed-7822-932c-55295e0a8d37/bulk-audio-integration-0338.stderr"
+      },
+      "summary": [
+        "# tests 342",
+        "# suites 0",
+        "# pass 342",
+        "# fail 0",
+        "# cancelled 0",
+        "# skipped 0",
+        "# todo 0",
+        "# duration_ms 66206.828584"
+      ]
+    },
+    {
+      "name": "bulk-audio-focused-map-0338",
+      "args": [
+        "--test",
+        "--test-concurrency=1",
+        "publishing/focused-tests.test.mjs"
+      ],
+      "startedAt": "2026-09-29T03:38:18.509Z",
+      "completedAt": "2026-09-29T03:38:18.651Z",
+      "code": 0,
+      "stdout": {
+        "bytes": 7494,
+        "sha256": "c7427cd4c436e67f45a577589e78975c4156f1c46868a6e63f7e4f848d308cf3",
+        "path": "/Users/oleksandr.mekhovov/.codex/visualizations/2026/09/20/01a0bffc-f5ed-7822-932c-55295e0a8d37/bulk-audio-focused-map-0338.tap"
+      },
+      "stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "path": "/Users/oleksandr.mekhovov/.codex/visualizations/2026/09/20/01a0bffc-f5ed-7822-932c-55295e0a8d37/bulk-audio-focused-map-0338.stderr"
+      },
+      "summary": [
+        "# tests 36",
+        "# suites 0",
+        "# pass 36",
+        "# fail 0",
+        "# cancelled 0",
+        "# skipped 0",
+        "# todo 0",
+        "# duration_ms 108.167833"
+      ]
+    }
+  ],
+  "fullsuite": "WAIVED_SKIPPED_NOT_PASSED",
+  "limitation": "Fresh source integration tests, not generated qualification, browser, hardware or listening acceptance.",
+  "freeBefore": 3154227200,
+  "nodeVersion": "v20.20.0",
+  "before": {
+    "observedAt": "2026-09-29T03:37:12.269Z",
+    "format": "revealline-source-identity.v1",
+    "root": "/Users/oleksandr.mekhovov/.codex/worktrees/publish-v01321/go_test",
+    "sourceRevision": "0fc329163332b2c451792e8b08d50b856803187b",
+    "sourceTree": "e43b3d52f4d3e661d1f92a4fe4f77b9f04cf994c",
+    "files": 20130,
+    "bytes": 1881206763,
+    "aggregateSha256": "87a7240580ac295591d1632a9ef941deef6c5467abd10309f5815f7b6a85cc09",
+    "aggregateFormat": "UTF-8 path sorted JSONL [path, Git mode, raw content SHA-256]",
+    "allTrackedSourceContentsAndModesMatch": true
+  },
+  "after": {
+    "observedAt": "2026-09-29T03:38:28.081Z",
+    "format": "revealline-source-identity.v1",
+    "root": "/Users/oleksandr.mekhovov/.codex/worktrees/publish-v01321/go_test",
+    "sourceRevision": "0fc329163332b2c451792e8b08d50b856803187b",
+    "sourceTree": "e43b3d52f4d3e661d1f92a4fe4f77b9f04cf994c",
+    "files": 20130,
+    "bytes": 1881206763,
+    "aggregateSha256": "87a7240580ac295591d1632a9ef941deef6c5467abd10309f5815f7b6a85cc09",
+    "aggregateFormat": "UTF-8 path sorted JSONL [path, Git mode, raw content SHA-256]",
+    "allTrackedSourceContentsAndModesMatch": true
+  },
+  "identityPairMatches": true,
+  "statusAfter": "",
+  "freeAfter": 3137097728,
+  "accepted": true,
+  "completedAt": "2026-09-29T03:38:28.234Z"
+}

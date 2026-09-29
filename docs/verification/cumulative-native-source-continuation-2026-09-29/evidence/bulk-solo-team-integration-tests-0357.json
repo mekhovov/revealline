@@ -1,0 +1,148 @@
+{
+  "format": "root-bulk-solo-team-integration-tests.v1",
+  "startedAt": "2026-09-29T03:56:37.647Z",
+  "root": "/Users/oleksandr.mekhovov/.codex/worktrees/publish-v01321/go_test",
+  "expectedHead": "54284b72e6608a407d3715de1f56fa028369fd70",
+  "cohorts": [
+    {
+      "name": "bulk-solo-ownership-0357",
+      "args": [
+        "--test",
+        "--test-concurrency=1",
+        "game/test/solo-skip-ownership.test.mjs",
+        "game/test/solo-skip-presentation.test.mjs",
+        "game/test/pr771-r2-core.test.mjs",
+        "game/test/pr771-r2-storage.test.mjs",
+        "game/test/pr771-r2-finalization.test.mjs",
+        "game/test/external-chapter-final-authority.test.mjs",
+        "game/test/continuous-next.test.mjs",
+        "game/test/fullscreen.test.mjs",
+        "game/test/quick-music-controls.test.mjs",
+        "game/test/pause-layout-contract.test.mjs",
+        "game/test/solo-continuation-admission.test.mjs"
+      ],
+      "startedAt": "2026-09-29T03:56:56.870Z",
+      "completedAt": "2026-09-29T03:57:02.326Z",
+      "code": 0,
+      "stdout": {
+        "bytes": 364090,
+        "sha256": "ee927e66681b79c6a0a412b71a17d7bdeb0821be0938bc016605cd99963c7b67",
+        "path": "/Users/oleksandr.mekhovov/.codex/visualizations/2026/09/20/01a0bffc-f5ed-7822-932c-55295e0a8d37/bulk-solo-ownership-0357.tap"
+      },
+      "stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "path": "/Users/oleksandr.mekhovov/.codex/visualizations/2026/09/20/01a0bffc-f5ed-7822-932c-55295e0a8d37/bulk-solo-ownership-0357.stderr"
+      },
+      "summary": [
+        "# tests 126",
+        "# suites 0",
+        "# pass 126",
+        "# fail 0",
+        "# cancelled 0",
+        "# skipped 0",
+        "# todo 0",
+        "# duration_ms 5422.4885"
+      ]
+    },
+    {
+      "name": "bulk-team-recovery-0357",
+      "args": [
+        "--test",
+        "--test-concurrency=1",
+        "game/test/coop-host.test.mjs"
+      ],
+      "startedAt": "2026-09-29T03:57:02.327Z",
+      "completedAt": "2026-09-29T03:58:04.958Z",
+      "code": 0,
+      "stdout": {
+        "bytes": 17642,
+        "sha256": "49c1c0a85728df42bdda449715005af817b80e95e5fd4a7203845afda8f03141",
+        "path": "/Users/oleksandr.mekhovov/.codex/visualizations/2026/09/20/01a0bffc-f5ed-7822-932c-55295e0a8d37/bulk-team-recovery-0357.tap"
+      },
+      "stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "path": "/Users/oleksandr.mekhovov/.codex/visualizations/2026/09/20/01a0bffc-f5ed-7822-932c-55295e0a8d37/bulk-team-recovery-0357.stderr"
+      },
+      "summary": [
+        "# tests 78",
+        "# suites 0",
+        "# pass 78",
+        "# fail 0",
+        "# cancelled 0",
+        "# skipped 0",
+        "# todo 0",
+        "# duration_ms 62596.085291"
+      ]
+    },
+    {
+      "name": "bulk-solo-host-0357",
+      "args": [
+        "--test",
+        "--test-concurrency=1",
+        "game/test/pause-menu-host.test.mjs",
+        "game/test/solo-continuous-library-next-host.test.mjs"
+      ],
+      "startedAt": "2026-09-29T03:58:04.958Z",
+      "completedAt": "2026-09-29T04:00:39.023Z",
+      "code": 1,
+      "signal": null,
+      "killed": false,
+      "error": "Command failed: /Users/oleksandr.mekhovov/.local/share/mise/installs/node/20.20.0/bin/node --test --test-concurrency=1 game/test/pause-menu-host.test.mjs game/test/solo-continuous-library-next-host.test.mjs\n",
+      "stdout": {
+        "bytes": 4119,
+        "sha256": "08d16a4ed7d45d51d2a7cc12221ace3166df81d940d2a18d586d37d614e1090f",
+        "path": "/Users/oleksandr.mekhovov/.codex/visualizations/2026/09/20/01a0bffc-f5ed-7822-932c-55295e0a8d37/bulk-solo-host-0357.tap"
+      },
+      "stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "path": "/Users/oleksandr.mekhovov/.codex/visualizations/2026/09/20/01a0bffc-f5ed-7822-932c-55295e0a8d37/bulk-solo-host-0357.stderr"
+      },
+      "summary": [
+        "# tests 10",
+        "# suites 0",
+        "# pass 8",
+        "# fail 2",
+        "# cancelled 0",
+        "# skipped 0",
+        "# todo 0",
+        "# duration_ms 153777.315125"
+      ]
+    }
+  ],
+  "fullsuite": "WAIVED_SKIPPED_NOT_PASSED",
+  "limitation": "Fresh source integration tests, not generated qualification, browser, hardware or listening acceptance.",
+  "freeBefore": 2916487168,
+  "nodeVersion": "v20.20.0",
+  "before": {
+    "observedAt": "2026-09-29T03:56:56.869Z",
+    "format": "revealline-source-identity.v1",
+    "root": "/Users/oleksandr.mekhovov/.codex/worktrees/publish-v01321/go_test",
+    "sourceRevision": "54284b72e6608a407d3715de1f56fa028369fd70",
+    "sourceTree": "f2f1b45fd67558b8776db1de49bfd8cf4e1ec3d9",
+    "files": 20139,
+    "bytes": 1881350672,
+    "aggregateSha256": "f716c16b6a8bdafbe0183a9f9f9cf5716408992a012e13c47c9d7749691194bf",
+    "aggregateFormat": "UTF-8 path sorted JSONL [path, Git mode, raw content SHA-256]",
+    "allTrackedSourceContentsAndModesMatch": true
+  },
+  "after": {
+    "observedAt": "2026-09-29T04:00:50.677Z",
+    "format": "revealline-source-identity.v1",
+    "root": "/Users/oleksandr.mekhovov/.codex/worktrees/publish-v01321/go_test",
+    "sourceRevision": "54284b72e6608a407d3715de1f56fa028369fd70",
+    "sourceTree": "f2f1b45fd67558b8776db1de49bfd8cf4e1ec3d9",
+    "files": 20139,
+    "bytes": 1881350672,
+    "aggregateSha256": "f716c16b6a8bdafbe0183a9f9f9cf5716408992a012e13c47c9d7749691194bf",
+    "aggregateFormat": "UTF-8 path sorted JSONL [path, Git mode, raw content SHA-256]",
+    "allTrackedSourceContentsAndModesMatch": true
+  },
+  "identityPairMatches": true,
+  "statusAfter": "",
+  "freeAfter": 2892783616,
+  "accepted": false,
+  "completedAt": "2026-09-29T04:00:50.867Z"
+}

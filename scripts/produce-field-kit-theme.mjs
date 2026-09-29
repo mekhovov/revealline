@@ -24,6 +24,12 @@ import { writePresentation, retainedPresentationPath } from './write-presentatio
 import { readFieldKitRetainedOutput } from './field-kit-retained-runtime.mjs';
 import { retainFieldKitProductionHistory } from './team-production-history.mjs';
 import { importThemeBundle, exportThemeBundle } from '../game/presentation/bundle.mjs';
+import {
+  cumulativeNativeContinuation,
+  cumulativeSourceReviewed,
+  cumulativeNativeEvidence,
+  readCumulativeNativeContinuation,
+} from './cumulative-native-source-continuation.mjs';
 
 import {
   bulkPresentationContinuation,
@@ -82,6 +88,7 @@ export function fieldKitEquipmentQuality(
   successorReviewBytes,
   continuationReviewBytes,
   bulkContinuationReviewBytes,
+  cumulativeReviewBytes,
 ) {
   const successor =
     successorReviewBytes && hash(successorReviewBytes) === reviewedTeamSuccessorRecord
@@ -120,14 +127,29 @@ export function fieldKitEquipmentQuality(
     hash(continuationReviewBytes) === reviewedTeamContinuationRecord &&
     successorReviewBytes &&
     hash(successorReviewBytes) === reviewedTeamSuccessorRecord;
+  const cumulative = cumulativeNativeContinuation(cumulativeReviewBytes);
+  const cumulativeContinued =
+    cumulativeSourceReviewed('equipment', source, cumulativeReviewBytes, slotId) &&
+    bulk?.fingerprints?.equipment?.currentSHA256 ===
+      cumulative?.fingerprints?.equipment?.priorSHA256 &&
+    bulk.fingerprints.equipment.slots.includes(slotId) &&
+    continuationReviewBytes &&
+    hash(continuationReviewBytes) === reviewedTeamContinuationRecord &&
+    successorReviewBytes &&
+    hash(successorReviewBytes) === reviewedTeamSuccessorRecord;
   if (
     Object.hasOwn(reviewedEquipmentOriginals, slotId) &&
-    (source === reviewedEquipmentSource || continued || currentContinued || bulkContinued) &&
+    (source === reviewedEquipmentSource ||
+      continued ||
+      currentContinued ||
+      bulkContinued ||
+      cumulativeContinued) &&
     reviewedEquipmentOriginals[slotId] === originalHash
   )
     return {
       stage: 'reviewed',
       evidence: [
+        ...(cumulativeContinued ? [cumulativeNativeEvidence('equipment')] : []),
         ...(bulkContinued
           ? [
               `Exact current five-image consumer continuation: ${BULK_PRESENTATION_REVIEW_PATH} sha256:${BULK_PRESENTATION_REVIEW_SHA256}`,
@@ -221,8 +243,13 @@ const REVIEWED_RECIPE_INPUTS = {
   },
 };
 
-function recipeQuality(group, source) {
+export function fieldKitRecipeQuality(group, source, cumulativeReviewBytes) {
   const review = REVIEWED_RECIPE_INPUTS[group];
+  if (review && cumulativeSourceReviewed(group, source, cumulativeReviewBytes))
+    return {
+      stage: 'reviewed',
+      evidence: [...review.evidence, cumulativeNativeEvidence(group)],
+    };
   if (review && source.endsWith(`sha256:${review.sha256}`))
     return { stage: 'reviewed', evidence: review.evidence };
   return {
@@ -414,6 +441,7 @@ export async function createFieldKitProduction({ projectRoot = root } = {}) {
   const baseline = createDefaultThemeBundle();
   const recipeSources = await fieldKitRecipeSources(read);
   const bulkContinuationReviewBytes = await readBulkPresentationContinuation(read);
+  const cumulativeReviewBytes = await readCumulativeNativeContinuation(read);
   const companyAudioReviewBytes = await read(
     'docs/verification/v0.141.7-company-startup-audio-continuation/review.json',
   );
@@ -592,7 +620,7 @@ export async function createFieldKitProduction({ projectRoot = root } = {}) {
         prompt: slot.prompt,
         parent: { id: `${slot.id}.default`, revision: 1 },
       },
-      quality: recipeQuality(group, recipeSources[group]),
+      quality: fieldKitRecipeQuality(group, recipeSources[group], cumulativeReviewBytes),
     });
   }
   const sprites = await json('game/assets/field-kit/sprites/sprites.json');
@@ -640,6 +668,7 @@ export async function createFieldKitProduction({ projectRoot = root } = {}) {
       successorReviewBytes: teamSuccessorReviewBytes,
       continuationReviewBytes: teamContinuationReviewBytes,
       bulkContinuationReviewBytes,
+      cumulativeReviewBytes,
     });
   }
   const equipmentSource = 'game/presentation/team-equipment-art.mjs';
@@ -677,6 +706,7 @@ export async function createFieldKitProduction({ projectRoot = root } = {}) {
           teamSuccessorReviewBytes,
           teamContinuationReviewBytes,
           bulkContinuationReviewBytes,
+          cumulativeReviewBytes,
         ),
       },
       body,

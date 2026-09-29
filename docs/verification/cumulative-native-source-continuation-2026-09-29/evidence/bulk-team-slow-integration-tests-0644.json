@@ -1,0 +1,76 @@
+{
+  "format": "root-bulk-team-slow-integration-tests.v1",
+  "startedAt": "2026-09-29T06:43:36.813Z",
+  "root": "/Users/oleksandr.mekhovov/.codex/worktrees/publish-v01321/go_test",
+  "expectedHead": "b5fd13ad8cb16fa9d648abfdd279aec583fc2bc8",
+  "cohorts": [
+    {
+      "name": "bulk-team-slow-current-renderer-0644",
+      "args": [
+        "--test",
+        "--test-concurrency=1",
+        "game/test/coop-bonus-slow-cue.test.mjs",
+        "game/test/coop-view-presentation.test.mjs",
+        "game/test/coop-pilot-cues.test.mjs",
+        "game/test/coop-cue-group-layout.test.mjs",
+        "game/test/coop-cue-overflow.test.mjs"
+      ],
+      "startedAt": "2026-09-29T06:43:48.057Z",
+      "completedAt": "2026-09-29T06:43:49.209Z",
+      "code": 0,
+      "stdout": {
+        "bytes": 7752,
+        "sha256": "15232369348da31c1b6a063a26f9c7be55b1b1f1bd09a51ce4bfa4689b82a587",
+        "path": "/Users/oleksandr.mekhovov/.codex/visualizations/2026/09/20/01a0bffc-f5ed-7822-932c-55295e0a8d37/bulk-team-slow-current-renderer-0644.tap"
+      },
+      "stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "path": "/Users/oleksandr.mekhovov/.codex/visualizations/2026/09/20/01a0bffc-f5ed-7822-932c-55295e0a8d37/bulk-team-slow-current-renderer-0644.stderr"
+      },
+      "summary": [
+        "# tests 34",
+        "# suites 0",
+        "# pass 34",
+        "# fail 0",
+        "# cancelled 0",
+        "# skipped 0",
+        "# todo 0",
+        "# duration_ms 1124.054084"
+      ]
+    }
+  ],
+  "fullsuite": "WAIVED_SKIPPED_NOT_PASSED",
+  "limitation": "Fresh source integration tests, not generated qualification, browser, hardware or listening acceptance.",
+  "freeBefore": 3658391552,
+  "nodeVersion": "v20.20.0",
+  "before": {
+    "observedAt": "2026-09-29T06:43:48.056Z",
+    "format": "revealline-source-identity.v1",
+    "root": "/Users/oleksandr.mekhovov/.codex/worktrees/publish-v01321/go_test",
+    "sourceRevision": "b5fd13ad8cb16fa9d648abfdd279aec583fc2bc8",
+    "sourceTree": "3e36a4045777a1c554c0a1113efc060de8a62e00",
+    "files": 20668,
+    "bytes": 1976266980,
+    "aggregateSha256": "0601f200cafa8b73079f1d69e7746d1ea713e7e37dc9e9a7ca88f4357dc7b1f2",
+    "aggregateFormat": "UTF-8 path sorted JSONL [path, Git mode, raw content SHA-256]",
+    "allTrackedSourceContentsAndModesMatch": true
+  },
+  "after": {
+    "observedAt": "2026-09-29T06:43:54.659Z",
+    "format": "revealline-source-identity.v1",
+    "root": "/Users/oleksandr.mekhovov/.codex/worktrees/publish-v01321/go_test",
+    "sourceRevision": "b5fd13ad8cb16fa9d648abfdd279aec583fc2bc8",
+    "sourceTree": "3e36a4045777a1c554c0a1113efc060de8a62e00",
+    "files": 20668,
+    "bytes": 1976266980,
+    "aggregateSha256": "0601f200cafa8b73079f1d69e7746d1ea713e7e37dc9e9a7ca88f4357dc7b1f2",
+    "aggregateFormat": "UTF-8 path sorted JSONL [path, Git mode, raw content SHA-256]",
+    "allTrackedSourceContentsAndModesMatch": true
+  },
+  "identityPairMatches": true,
+  "statusAfter": "",
+  "freeAfter": 3657510912,
+  "accepted": true,
+  "completedAt": "2026-09-29T06:43:54.799Z"
+}
