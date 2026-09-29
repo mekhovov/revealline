@@ -7,6 +7,8 @@ import { trial } from './helpers/coop-route-search.mjs';
 import { RELAY_YARD } from '../coop/relay-yard.mjs';
 import { applyGameplayTuning, resolveGameplayTuning } from '../gameplay-tuning.mjs';
 import { COOP_STARTER_PACK } from '../coop/library.mjs';
+import { createCoop, startCoop, stepCoop } from '../coop/core.mjs';
+import { setLocale } from '../i18n/index.mjs';
 
 const options = { nativeFocus: true, nativeVisibility: true, capturePaint: true };
 const terminalMessage = (outcome) =>
@@ -159,8 +161,38 @@ test('a Support pulse on the winning step is remembered while terminal copy stay
     await readFile(new URL('./fixtures/team-terminal-hud-qa.json', import.meta.url), 'utf8'),
   );
   pack.levels[1].enemies = [
-    { id: 'support-marker', type: 'drifter', x: 35.5, y: 1.5, vx: 0, vy: 0, radius: 0.35 },
+    { id: 'support-marker', type: 'drifter', x: 35.5, y: 30.5, vx: -1, vy: 0, radius: 0.35 },
   ];
+  // Rehearse the same public core inputs and fresh Expert tuning as the host.
+  // The marker must actually move within Support range on the winning step;
+  // a distant stationary marker only proved that an empty pulse was recorded.
+  const reference = startCoop(
+      createCoop(applyGameplayTuning(pack.levels[1], resolveGameplayTuning('expert')), {
+        seed: 17,
+        difficulty: 'expert',
+      }),
+    ),
+    neutral = { direction: null, boost: false, support: false },
+    right = { ...neutral, direction: 'right' };
+  // The first host frame establishes its clock; the next two advance the core.
+  for (let tick = 0; tick < 2; tick++) stepCoop(reference, [neutral, neutral]);
+  for (let tick = 0; tick < 957; tick++) {
+    stepCoop(reference, [right, neutral]);
+    assert.ok(!reference.events.some((event) => event.type === 'player.downed'));
+  }
+  assert.equal(reference.status, 'running');
+  stepCoop(reference, [{ ...right, support: true }, neutral]);
+  const pulse = reference.events.find((event) => event.type === 'support.pulse'),
+    completed = reference.events.find((event) => event.type === 'run.completed');
+  assert.deepEqual(
+    pulse?.slowedEnemies,
+    ['support-marker'],
+    'The final pulse slows a moving enemy rather than merely consuming Support.',
+  );
+  assert.equal(reference.players[0].support.slows, 1);
+  assert.equal(reference.status, 'won');
+  assert.ok(completed);
+  assert.equal(pulse.tick, completed.tick, 'The effective pulse shares the winning core step.');
   await f.selectFile(JSON.stringify(pack));
   await f.choose('coop-level', 'qa-terminal-win');
   await f.choose('coop-difficulty', 'expert');
@@ -171,6 +203,12 @@ test('a Support pulse on the winning step is remembered while terminal copy stay
   f.tap('KeyD');
   f.tick(957);
   assert.equal(f.$('coop-overlay').hidden, true, 'The pulse is reserved for the winning step.');
+  assert.ok(
+    !JSON.parse(storage.getItem('revealline.team-contextual-teaching.v1')).completed.includes(
+      'support',
+    ),
+    'Support is not learned before its first effective pulse.',
+  );
   f.press('KeyQ');
   f.tick();
   f.doc.activeElement.emit('keyup', { key: 'KeyQ', code: 'KeyQ' });
@@ -178,6 +216,9 @@ test('a Support pulse on the winning step is remembered while terminal copy stay
   const teaching = JSON.parse(storage.getItem('revealline.team-contextual-teaching.v1'));
   assert.ok(teaching.completed.includes('support'));
   assert.doesNotMatch(f.$('coop-message').textContent, /SUPPORT READY/);
+  const terminal = snapshot(f);
+  f.tick(60);
+  assert.deepEqual(snapshot(f), terminal, 'The effective final pulse cannot advance Results.');
   f.$('coop-retry').focus();
   f.tap('Enter');
   assert.equal(f.$('coop-message').dataset.coach, undefined);
@@ -186,6 +227,8 @@ test('a Support pulse on the winning step is remembered while terminal copy stay
 
 for (const downed of [0, 1])
   test(`P${downed + 1} alone with zero reserves retains rescue guidance and keyboard Help returns without resuming`, async (t) => {
+    setLocale('en', { persist: false });
+    t.after(() => setLocale('en', { persist: false }));
     const f = await emptyArena(t);
     selfCross(f);
     f.tick(240);
@@ -204,6 +247,12 @@ for (const downed of [0, 1])
       f.$('coop-message').textContent,
       new RegExp(`${downed === 0 ? 'Sunflower' : 'Skyline'} needs a rescue\\. Hold Support nearby`),
     );
+    setLocale('uk', { persist: false });
+    const ukrainian = players(f);
+    assert.equal(ukrainian[downed].state, 'Збито · доступний безкоштовний порятунок');
+    assert.equal(ukrainian[downed].compactState, 'Порятунок');
+    assert.equal(ukrainian[downed].charge, 'Повзіть до напарника');
+    assert.equal(ukrainian[downed].compactCharge, 'До напарника');
     f.tap('Escape');
     const paused = snapshot(f);
     f.disclose('coop-help');
@@ -221,6 +270,8 @@ for (const downed of [0, 1])
     assert.deepEqual(snapshot(f), paused);
     f.tap('Enter');
     assert.equal(f.$('coop-overlay').hidden, true);
+    assert.deepEqual(players(f), ukrainian);
+    setLocale('en', { persist: false });
     assert.deepEqual(players(f), status);
   });
 

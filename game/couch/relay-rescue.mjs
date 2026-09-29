@@ -4496,13 +4496,13 @@ export function bootCoop({
     }
   }
   const unfinished = () => run && ['running', 'paused'].includes(run.status);
-  const departureLabels = {
-    setup: t('interface:discardAndChangeSetup'),
-    retry: t('interface:discardAndRetry'),
-    return: t('interface:discardAndLeave'),
-    home: t('interface:discardAndLeave'),
-    versus: t('interface:discardAndGoToVersus'),
-    catalogue: t('interface:discardAndSwitchJourney'),
+  const departureLabelKeys = {
+    setup: 'interface:discardAndChangeSetup',
+    retry: 'interface:discardAndRetry',
+    return: 'interface:discardAndLeave',
+    home: 'interface:discardAndLeave',
+    versus: 'interface:discardAndGoToVersus',
+    catalogue: 'interface:discardAndSwitchJourney',
   };
   function visibleAction(element) {
     return (
@@ -4547,7 +4547,7 @@ export function bootCoop({
       settingsDialog.open ||
       earnedDialog.open ||
       pictureOperation ||
-      !Object.hasOwn(departureLabels, kind)
+      !Object.hasOwn(departureLabelKeys, kind)
     )
       return;
     if (!unfinished()) {
@@ -4591,7 +4591,7 @@ export function bootCoop({
                 : t('interface:discardAndLeaveReturnsToTheLinkedModeAndLoses')
         }`,
     );
-    localizedText($('coop-discard-confirm'), () => departureLabels[kind]);
+    localizedText($('coop-discard-confirm'), () => t(departureLabelKeys[kind]));
     try {
       departureDialog.showModal();
       $('coop-discard-stay').focus({ preventScroll: true });
