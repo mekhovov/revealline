@@ -43,12 +43,19 @@ the older queue snapshots below; their source and test receipts remain history.
 - **Actor continuation #761:** batch23 is now pushed at
   `ff42765772555fe91b6b8c24d002ee7283b2e448`, following batch22. The post-push
   checkout has no modified source; only the previously retained untracked
-  `proportions-solo.png` remains for evidence classification. The latest owner
+  `proportions-solo.png` remains. Its owner classifies it as local derived
+  proportions-page evidence, not a runtime asset or required release file;
+  leave it intact rather than upload, rename or delete it. The latest owner
   continuations are not blanket-adopted by #796. Keep the existing PR and
   v0.150.0 target for integration; this push does not certify a release.
 - **Native menu/Company continuation #782:** `82f9e6ff20941e0b2837438e73eecdd79fad61d6`
   remains pushed and targeted, with current qualification/harness additions not
   present in the sampled aggregate. Reconcile these in the existing owner lane.
+- **Demo continuation #781:** the former 26-file working batch is now committed
+  and pushed at `39bb06ceaf2c6c769a0308daa090ed5550250141` on the PR's actual
+  `codex/local-experience-review-20260929` branch. The observed checkout is clean;
+  the 42-path commit includes the authored-map rotation and its receipts. Keep
+  the existing stacked PR and v0.150.0 target; no duplicate intake is needed.
 - **Radio/controller family:** fresh advertised refs at 15:08:39 UTC confirm
   `radio-integration` at `6d19567cc0440ce6e052a89ffecdf0c7f6fcddb9`,
   `discovery-rewards` at `cd1ceff06` and `two-controller-support` at `600fe30d`
@@ -57,6 +64,13 @@ the older queue snapshots below; their source and test receipts remain history.
   at the exact `6d19567c` head, targeted to the existing v0.150.0 milestone.
   Source integration and qualification remain separate from this completed
   push/PR assignment; do not create three duplicate PRs.
+- **Steam Deck Confirm continuation:** source is now pushed in held draft
+  [PR #800](https://github.com/mekhovov/revealline/pull/800), exact head
+  `bf3b6b1b76870ad9a6ba1d6629365f3c011912f8`, also a v0.150.0 aggregate input.
+  This historical-base router refinement must be ported or deduplicated against
+  the current controller aggregate. Its owner records 208 passing focused
+  checks separately from a reproduced parent-fixture mismatch and unavailable
+  local lint dependencies; neither is relabeled as a complete passing release gate.
 - **Historical residue:** the 15:06:07–15:06:21 UTC scan covered 267 registered
   worktrees: 155 clean, 111 dirty, one missing/prunable and no status errors.
   Of the dirty checkouts, 58 contain only untracked dependencies and five only
@@ -86,6 +100,11 @@ the older queue snapshots below; their source and test receipts remain history.
   `whole-ornament-v2` and retains its four atlas modules and documentation.
   Classification is **historical pushed preimage / superseded integration**,
   not a new public-play acceptance or permission to overwrite current hosts.
+- **Player UX's 24 retained local files:** 22 exactly match pushed
+  `b79a979cb0a1653499e8c4432c3e755374015230`. The remaining test and
+  `production63.md` are obsolete intermediates with older assertions/evidence,
+  already classified in #780's worktree review. Do not overwrite their corrected
+  successors or create another product/preservation PR.
 
 ### Release blockers and honest delivery boundary
 
