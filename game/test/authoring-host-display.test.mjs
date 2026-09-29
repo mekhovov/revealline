@@ -87,6 +87,14 @@ async function harness(
     unavailable = denied,
     frameSourceWrites = 0;
   win.location = { href: `${origin}authoring/${route}/` };
+  // Production now mounts the same single input owner as its browser entry.
+  // These display tests do not advance gamepad frames; input has its own suite.
+  win.requestAnimationFrame = () => 1;
+  win.cancelAnimationFrame = () => {};
+  win.MutationObserver = class {
+    observe() {}
+    disconnect() {}
+  };
   win.matchMedia = function (query) {
     assert.equal(this, win);
     assert.equal(query, '(prefers-reduced-motion: reduce)');
@@ -154,6 +162,12 @@ async function harness(
   const createElement = doc.createElement.bind(doc);
   doc.createElement = (tag) => {
     const node = createElement(tag);
+    node.before = (other) => {
+      other.remove();
+      const siblings = node.parentNode.children;
+      siblings.splice(siblings.indexOf(node), 0, other);
+      other.parentNode = node.parentNode;
+    };
     if (tag === 'img') {
       const gate = deferred();
       node.naturalWidth = picture.width;
@@ -407,6 +421,33 @@ test('Production cached lifecycle keeps its display owner but preserves existing
   assert.equal(h.media.listeners.get('change').size, 0);
   assert.deepEqual(h.writes, []);
 });
+
+for (const boundary of ['blur', 'hidden'])
+  test(`Production ${boundary} cancels a pending original decode without replacing newer focus`, async (t) => {
+    const h = await harness(t, 'production');
+    await productionReady(h);
+    const { detail, search } = openPicture(h);
+    button(detail, 'Preview original').click();
+    await until(() => h.decoded.length === 1, 'decode pending');
+    const request = h.requests.at(-1),
+      image = h.decoded[0].node;
+    search.focus();
+    if (boundary === 'blur') {
+      h.doc.focused = false;
+      h.win.emit('blur');
+    } else {
+      h.doc.hidden = true;
+      h.doc.emit('visibilitychange');
+    }
+    assert.equal(request.signal.aborted, true);
+    h.decoded[0].gate.resolve();
+    await settle();
+    assert.equal(image.isConnected, false);
+    assert.equal(h.released.length, 1);
+    assert.equal(h.doc.activeElement, search);
+    assert.match(detail.textContent, /Preview cleared/);
+    assert.deepEqual(h.writes, []);
+  });
 
 test('Viewport adopts saved host preferences without loading a game or altering a pending selection', async (t) => {
   const h = await harness(t, 'viewport-lab', {
