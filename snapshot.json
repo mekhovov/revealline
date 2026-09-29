@@ -1,0 +1,256 @@
+{
+  "format": "revealline-recovery-fragment-v1",
+  "capturedAt": "2026-09-29T15:10:05.091171+00:00",
+  "worktree": "<home>/work/my_projects/go_test/.cache/worktrees/p04-reference-prototype-r1",
+  "branch": "refs/heads/codex/p04-reference-prototype-r1",
+  "head": "17e0a455f76c3f4a72f2e596397a0e73463335a5",
+  "excluded": [
+    {
+      "status": "??",
+      "path": "node_modules"
+    }
+  ],
+  "changes": [
+    {
+      "status": " M",
+      "path": "authoring/asset-studio/index.html",
+      "object": "5921e33ac49f561ded69c6295344a9d007362e49",
+      "sha256": "660f0a5791636cc39f9ed716c12c276029405626191152453ecd77b3e53769d7",
+      "bytes": 33517,
+      "mode": "100644"
+    },
+    {
+      "status": " M",
+      "path": "authoring/asset-studio/studio.mjs",
+      "object": "fdbd4992777a6cb87cba30deba3d8ab70b73f904",
+      "sha256": "297d04d37569d9a3aa6290d3f4bbb44468218c08c80424a363da003005e60041",
+      "bytes": 45926,
+      "mode": "100644"
+    },
+    {
+      "status": " M",
+      "path": "authoring/skills/xonix-asset-creator/SKILL.md",
+      "object": "fea7e3d28bf0958f825a6cfeba2765b4d8ba08ce",
+      "sha256": "6a93b5618087dd757093d123e75bdf50c1e30a102ccbf94e38701edaa1fea96b",
+      "bytes": 24633,
+      "mode": "100644"
+    },
+    {
+      "status": " M",
+      "path": "authoring/skills/xonix-theme-designer/SKILL.md",
+      "object": "46ed304bad57700283f385f51f4f30478cfd09b1",
+      "sha256": "8d2b32b9d4873e83997b3cf92cca512d12814be342d873313d4c4a207c2b2e32",
+      "bytes": 14873,
+      "mode": "100644"
+    },
+    {
+      "status": " M",
+      "path": "docs/asset-studio.md",
+      "object": "1a5751bfb977816041bec70a2608e88280be29b0",
+      "sha256": "652c45171c2b23165b12dcbc601c573d1569564dded42d2126fad924f468282b",
+      "bytes": 21408,
+      "mode": "100644"
+    },
+    {
+      "status": " M",
+      "path": "docs/presentation-system.md",
+      "object": "3e4be05bef77a5d06b776d58878c4463d0cce91f",
+      "sha256": "bc51a090bf492cc20fe411fbfce7d2d144cfb4f3ed35fe1c6486a20ed6a58b66",
+      "bytes": 18318,
+      "mode": "100644"
+    },
+    {
+      "status": " M",
+      "path": "game/presentation/bundle.mjs",
+      "object": "4758c9db09bb0cd6533c46d53d6bebac16942821",
+      "sha256": "aaadc0e995b14d98b073260828da9da6a22c6172a4726ed5c87586c5b19d52bc",
+      "bytes": 9230,
+      "mode": "100644"
+    },
+    {
+      "status": " M",
+      "path": "game/presentation/model.mjs",
+      "object": "54bb5e67402652e3c46b8d8c8f6adde8b96bfa92",
+      "sha256": "d8adac1e4fc08c9fe3be5b6f3dda6c3ac8a74ce59ac29553c52b15cab75a35b5",
+      "bytes": 27453,
+      "mode": "100644"
+    },
+    {
+      "status": " M",
+      "path": "game/presentation/published-studio.mjs",
+      "object": "56532c11afac92d5fff7047d4d271f8f43652b5e",
+      "sha256": "19640112f54ace1f65f528d359a5fb7140e5374ffcb4a3adf9698b038d70261a",
+      "bytes": 4312,
+      "mode": "100644"
+    },
+    {
+      "status": " M",
+      "path": "game/presentation/studio-store.mjs",
+      "object": "9b364dd23def25992c58e18f1dba8ae5ad7b9448",
+      "sha256": "d78eb2be88926c2606e2b19167d270ffe88a03f0c4b26540e3a5d21d0078b320",
+      "bytes": 8313,
+      "mode": "100644"
+    },
+    {
+      "status": " M",
+      "path": "game/test/asset-studio-host-loading.test.mjs",
+      "object": "a2c812d295ec36ce2c0a418935341f5a917db1be",
+      "sha256": "d869c40d2290d398010e7336478c58bd240ede2f764eb461e3c710794b3bfaaa",
+      "bytes": 39845,
+      "mode": "100644"
+    },
+    {
+      "status": " M",
+      "path": "game/test/published-studio.test.mjs",
+      "object": "7d9374c0b201ea6786f41e766775a83d33465c04",
+      "sha256": "c6514f12b6f45c2bd00c5138feb631da7f413e18190c38dbf556613e201700a3",
+      "bytes": 5262,
+      "mode": "100644"
+    },
+    {
+      "status": " M",
+      "path": "scripts/compile-presentation.mjs",
+      "object": "f1e910b09a9181844e3fad9068ba08d00f97fe3a",
+      "sha256": "75f94457e93a3857956d8953fc01a4c907f8b98e2ec347de116f69ffba72bca3",
+      "bytes": 13111,
+      "mode": "100644"
+    },
+    {
+      "status": "??",
+      "path": "game/presentation/reference-bundle.mjs",
+      "object": "38472bbb35198dffd9a14528a2d7aceba23bf32e",
+      "sha256": "216577d207e974e6b1881d77af47dc712ef6bb445df99210b3deff8bdbc9da1f",
+      "bytes": 4101,
+      "mode": "100644"
+    },
+    {
+      "status": "??",
+      "path": "game/presentation/reference-model.mjs",
+      "object": "83c6ed363d23436a15c26185175e153eb2958bb3",
+      "sha256": "392fc8bb7deaa79a5449573771fac05316c2b6a1d3c4f4e55c5d84f931d784cc",
+      "bytes": 10214,
+      "mode": "100644"
+    },
+    {
+      "status": "??",
+      "path": "game/presentation/reference-session.mjs",
+      "object": "68e49650b4deded5135579bbf617621fa9e3fa2c",
+      "sha256": "24f05c404153146c7d2ec46dc1cec6af74ed38167aed5cdcff7f8256e85706ff",
+      "bytes": 7964,
+      "mode": "100644"
+    },
+    {
+      "status": "??",
+      "path": "game/presentation/reference-store.mjs",
+      "object": "5120972a86b22e6ff2d4b347ef62f7f92d56be9f",
+      "sha256": "86d49fcc661cf6987742a116d4ed9665850e7dfc043526ae7ed36fafac4946ed",
+      "bytes": 3380,
+      "mode": "100644"
+    },
+    {
+      "status": "??",
+      "path": "game/presentation/studio-formats.mjs",
+      "object": "8034a3d8eb7d295971ef69def1a302a981a09a80",
+      "sha256": "64c15c9e59f11b027882efc96d8750e2c332a2dc1a106dd4e6012cf53b78d00c",
+      "bytes": 5992,
+      "mode": "100644"
+    },
+    {
+      "status": "??",
+      "path": "game/test/presentation-references.test.mjs",
+      "object": "7667b2347d71220ddc2be33a160b499f83e05de4",
+      "sha256": "28710d0083090ef5517b9831bd41b2545cc442daca3d50707765c79db944dec3",
+      "bytes": 24494,
+      "mode": "100644"
+    },
+    {
+      "status": "??",
+      "path": "game/test/presentation-studio-formats.test.mjs",
+      "object": "d3c801dd9b9595afac731d3ae7d1dda1535a47f5",
+      "sha256": "80823b20282b355d2e18444287967ae400997e98b29de51726b14ab59443098f",
+      "bytes": 8239,
+      "mode": "100644"
+    }
+  ],
+  "indexEntries": [
+    {
+      "path": "authoring/asset-studio/index.html",
+      "mode": "100644",
+      "object": "d3d973c9ee560ad485ba0a767c0530353f5c3291",
+      "stage": 0
+    },
+    {
+      "path": "authoring/asset-studio/studio.mjs",
+      "mode": "100644",
+      "object": "d990d0201691769d9f60c30fb65e3fa04b0b2a54",
+      "stage": 0
+    },
+    {
+      "path": "authoring/skills/xonix-asset-creator/SKILL.md",
+      "mode": "100644",
+      "object": "27aac7ef895aba98d781d419881917dffc687370",
+      "stage": 0
+    },
+    {
+      "path": "authoring/skills/xonix-theme-designer/SKILL.md",
+      "mode": "100644",
+      "object": "67f071f388964f9e46df65885f54a72d0f8abed0",
+      "stage": 0
+    },
+    {
+      "path": "docs/asset-studio.md",
+      "mode": "100644",
+      "object": "49bccd83c94cf4e1c76ff3cc06c26d6f94d045bc",
+      "stage": 0
+    },
+    {
+      "path": "docs/presentation-system.md",
+      "mode": "100644",
+      "object": "f5294a9c919cc81ac919cdfdacd859b807255fb7",
+      "stage": 0
+    },
+    {
+      "path": "game/presentation/bundle.mjs",
+      "mode": "100644",
+      "object": "efbc0d2676186b9a21101cbd4b96d89ef58d0b73",
+      "stage": 0
+    },
+    {
+      "path": "game/presentation/model.mjs",
+      "mode": "100644",
+      "object": "ebf144d3fabc19fdc78bfbf05cd3e700c31a69ea",
+      "stage": 0
+    },
+    {
+      "path": "game/presentation/published-studio.mjs",
+      "mode": "100644",
+      "object": "0e7fc9db76316013bb73d24cd3736a07dbd700e3",
+      "stage": 0
+    },
+    {
+      "path": "game/presentation/studio-store.mjs",
+      "mode": "100644",
+      "object": "9a870b3e60ce1144cf523cc34b22fdab0386ee96",
+      "stage": 0
+    },
+    {
+      "path": "game/test/asset-studio-host-loading.test.mjs",
+      "mode": "100644",
+      "object": "fbf7c1b4092bc6d4b539c2d4d6bbcc73b6ec71d2",
+      "stage": 0
+    },
+    {
+      "path": "game/test/published-studio.test.mjs",
+      "mode": "100644",
+      "object": "31331e2f91699dc9b65986ca6dde8b38fec25819",
+      "stage": 0
+    },
+    {
+      "path": "scripts/compile-presentation.mjs",
+      "mode": "100644",
+      "object": "fc45381aa5a04ba5b625f3e79b0bc1bb8597d527",
+      "stage": 0
+    }
+  ],
+  "purpose": "Recovery only. These bytes are not release admission. Missing files, conflict stages and obsolete generated outputs are preserved as observations, not deletion or merge instructions."
+}
