@@ -40,6 +40,7 @@ async function setup(t, options = {}) {
     read: async () => context,
     withCurrent: async (snapshot, work) => {
       assert.equal(snapshot, context);
+      await options.beforeCommit?.();
       if (!valid) throw new Error('Installed packs changed. Reload.');
       return work();
     },
@@ -315,6 +316,121 @@ function listenerCount(h) {
     0,
   );
 }
+async function pendingSave(t, { fail = false, focused = true } = {}) {
+  const entered = deferred(),
+    gate = deferred();
+  const h = await setup(t, {
+    beforeCommit: async () => {
+      entered.resolve();
+      await gate.promise;
+    },
+  });
+  focusWindow(h);
+  h.choose();
+  await h.$('preview').onclick();
+  const before = await h.store.read();
+  if (fail) h.memory.failAnyPutAt = 1;
+  const opener = h.$('save'),
+    listenersBefore = listenerCount(h);
+  nativeDisabled(opener);
+  (focused ? opener : h.$('close')).focus();
+  const pending = opener.onclick();
+  await entered.promise;
+  t.after(() => gate.resolve());
+  return {
+    h,
+    opener,
+    listenersBefore,
+    before,
+    async complete() {
+      gate.resolve();
+      return pending;
+    },
+  };
+}
+for (const fail of [false, true]) {
+  test(`picture Save ${fail ? 'refusal retains retry' : 'success selects saved preview'} after native disabled blur`, async (t) => {
+    const { h, opener, before, complete, listenersBefore } = await pendingSave(t, { fail });
+    assert.equal(h.doc.activeElement, h.doc.body);
+    assert.equal(await complete(), !fail);
+    const target = fail ? opener : h.$('show-saved');
+    assert.equal(h.doc.activeElement, target);
+    assert.equal(target.disabled, false);
+    assert.equal(opener.disabled, !fail);
+    assert.equal(listenerCount(h), listenersBefore);
+    const after = await h.store.read();
+    if (fail) assert.deepEqual(after, before);
+    else {
+      assert.equal(after.generation, before.generation + 1);
+      assert.equal(after.document.library.assignments.length, 1);
+      assert.deepEqual(Buffer.from(await after.assets[0].blob.arrayBuffer()), pngBytes());
+    }
+  });
+}
+for (const decision of ['close-focus', 'hidden', 'window-blur', 'cancel', 'unowned']) {
+  test(`picture Save respects ${decision} while its atomic commit completes`, async (t) => {
+    const { h, complete } = await pendingSave(t, { focused: decision !== 'unowned' });
+    if (decision === 'close-focus') h.$('close').focus();
+    else if (decision === 'hidden') {
+      h.doc.hidden = true;
+      h.doc.emit('visibilitychange');
+      h.doc.hidden = false;
+    } else if (decision === 'window-blur') h.doc.defaultView.emit('blur');
+    else if (decision === 'cancel') {
+      nativeDisabled(h.$('cancel'));
+      h.$('cancel').focus();
+      h.$('cancel').onclick();
+      assert.equal(h.doc.activeElement, h.$('reload'));
+    }
+    const acceptedFocus = h.doc.activeElement;
+    assert.equal(await complete(), decision !== 'cancel');
+    assert.equal(h.doc.activeElement, acceptedFocus);
+    assert.notEqual(acceptedFocus, h.$('show-saved'));
+    if (decision === 'cancel')
+      assert.deepEqual((await h.store.read()).document.library.assignments, []);
+  });
+}
+for (const fail of [false, true]) {
+  test(`Discard ${fail ? 'preview failure' : 'completion'} preserves saved bytes and restores an enabled authored preview`, async (t) => {
+    let refuse = false;
+    const h = await setup(t, {
+      show: async () => {
+        if (refuse) throw new Error('Authored preview refused');
+        return true;
+      },
+    });
+    focusWindow(h);
+    h.choose();
+    await h.$('preview').onclick();
+    const before = await h.store.read();
+    const opener = h.$('discard');
+    nativeDisabled(opener);
+    opener.focus();
+    refuse = fail;
+    assert.equal(await opener.onclick(), !fail);
+    assert.equal(h.panel.snapshot().hasDraft, false);
+    assert.equal(opener.disabled, true);
+    assert.equal(h.doc.activeElement, h.$('show-authored'));
+    assert.equal(h.$('show-authored').disabled, false);
+    assert.deepEqual(await h.store.read(), before);
+  });
+}
+test('Use authored picture hands off only its own focus and retains immutable history', async (t) => {
+  const h = await setup(t);
+  focusWindow(h);
+  h.choose();
+  await h.$('preview').onclick();
+  await h.$('save').onclick();
+  const before = await h.store.read();
+  nativeDisabled(h.$('unassign'));
+  h.$('unassign').focus();
+  assert.equal(await h.$('unassign').onclick(), true);
+  assert.equal(h.doc.activeElement, h.$('show-authored'));
+  const after = await h.store.read();
+  assert.deepEqual(after.document.library.assignments, []);
+  assert.deepEqual(after.document.library.presentations, before.document.library.presentations);
+  assert.deepEqual(after.assets, before.assets);
+});
 async function pendingPreview(t, action, { fail = false, onEnable } = {}) {
   let gate = null;
   const entered = deferred();

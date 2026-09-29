@@ -1,6 +1,6 @@
 import { mountAuthoringInputHost } from './authoring-input-host.mjs';
 import { registerAuthoringEditor } from './authoring-editors.mjs';
-import { authoringLabel, authoringText } from './authoring-copy.mjs';
+import { authoringAttribute, authoringLabel } from './authoring-copy.mjs';
 import { setMenuIcon } from './native-menu-icons.mjs';
 
 const owners = new WeakMap();
@@ -48,7 +48,7 @@ export function attachReferenceMedia(media) {
   seek.max = '0';
   seek.step = '1';
   seek.value = '0';
-  seek.setAttribute('aria-label', authoringText('mediaPosition'));
+  authoringAttribute(seek, 'aria-label', 'mediaPosition');
   status.setAttribute('role', 'status');
   controls.append(play, mute, seek, status);
   media.after(controls);

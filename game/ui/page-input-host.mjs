@@ -4,7 +4,8 @@ import { attachControllerConfirmGuard } from './controller-confirm-guard.mjs';
 import { createControllerConfirmLifecycle } from './controller-confirm-lifecycle.mjs';
 import { resolveAuthoringEditor } from './authoring-editors.mjs';
 import { setMenuIcon } from './native-menu-icons.mjs';
-import { authoringLabel, authoringText } from './authoring-copy.mjs';
+import { authoringAttribute, authoringLabel } from './authoring-copy.mjs';
+import { onLocaleChange } from '../i18n/index.mjs';
 
 const hosts = new WeakMap();
 const visible = (element) =>
@@ -186,7 +187,7 @@ export function mountPageInputHost({
     hint = doc.createElement('p'),
     sections = doc.createElement('dialog');
   rail.className = 'authoring-input-rail';
-  rail.setAttribute('aria-label', authoringText('navigation'));
+  authoringAttribute(rail, 'aria-label', 'navigation');
   sectionsButton.type = 'button';
   authoringLabel(sectionsButton, 'sections');
   setMenuIcon(sectionsButton, 'content');
@@ -194,7 +195,7 @@ export function mountPageInputHost({
   hint.className = 'authoring-input-hint';
   rail.append(sectionsButton, hint);
   sections.className = 'authoring-sections-dialog';
-  sections.setAttribute('aria-label', authoringText('sections'));
+  authoringAttribute(sections, 'aria-label', 'sections');
   doc.body.prepend(rail);
   doc.body.append(sections);
   let disposed = false,
@@ -202,11 +203,27 @@ export function mountPageInputHost({
     returnFocus = null;
   const fileButtons = new Map(),
     previews = new Map(),
+    sectionLabels = new Map(),
     listeners = [];
   const listen = (target, type, callback) => {
     target.addEventListener(type, callback);
     listeners.push(() => target.removeEventListener(type, callback));
   };
+  listeners.push(
+    onLocaleChange(
+      () => () => {
+        if (disposed) return;
+        // Headings may be translated by bindings or host locale callbacks.
+        // Finalizers run after both, independent of their registration order.
+        for (const [button, heading] of sectionLabels) {
+          if (!button.isConnected || !heading.isConnected) continue;
+          const label = heading.textContent.trim();
+          if (button.textContent !== label) button.textContent = label;
+        }
+      },
+      { before: true },
+    ),
+  );
   const now = () => win.performance?.now?.() ?? Date.now();
   const router = createRouter({
     now,
@@ -225,6 +242,7 @@ export function mountPageInputHost({
   function openSections() {
     if (sections.open) return closeSections();
     returnFocus = doc.activeElement;
+    sectionLabels.clear();
     sections.replaceChildren();
     const title = doc.createElement('h2'),
       close = doc.createElement('button');
@@ -256,6 +274,7 @@ export function mountPageInputHost({
       const button = doc.createElement('button');
       button.type = 'button';
       button.textContent = heading.textContent.trim();
+      sectionLabels.set(button, heading);
       setMenuIcon(button, 'content');
       button.onclick = () => {
         sections.close();
@@ -436,6 +455,7 @@ export function mountPageInputHost({
       sources?.destroy();
       previews.forEach((preview) => preview.destroy());
       fileButtons.forEach((button) => button.remove());
+      sectionLabels.clear();
       rail.remove();
       sections.remove();
       links.remove();
