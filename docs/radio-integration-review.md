@@ -5,8 +5,30 @@
 The local `codex/radio-integration` branch combines the tested controller work
 with the optional FPV simulator and its discovery dependencies. It is based on
 `cd1ceff06`; original `codex/two-controller-support` and
-`codex/discovery-rewards` branch references remain unchanged. No publication
-or remote pull request is part of this task.
+`codex/discovery-rewards` branch references were preserved during consolidation.
+
+## GitHub review and release schedule
+
+[PR #797](https://github.com/mekhovov/revealline/pull/797) is a draft aggregate
+input scheduled under **v0.150.0 — Unified native experience** (milestone 57).
+The fixed review base `codex/radio-review-base-20260929` is discovery checkpoint
+`2218f3cc21d82e23373e3324c75d27fa2fbe24a0`, keeping the entire 43-file radio delta
+visible even as the discovery branch advances. The baseline is a review
+reference, not another release input.
+
+The discovery/optional-FPV dependency was previously tracked by closed,
+unmerged PR #758. The release aggregate must reconcile that dependency and this
+radio delta together. The pushed controller donor `600fe30db8669909169b9b233519db8a7c6c10bd`
+is retained as original history; do not apply its changes again after integrating
+this PR. The consolidated branch also preserves the local TX15 FPV commits from
+`codex/discovery-rewards`.
+
+The review checked input ownership, neutral/reconnect behavior, shared-channel
+isolation, storage validation/concurrent-tab recovery, capture cleanup and FPV
+compatibility. No blocking issue was found in those paths. Inherited discovery
+work is not newly qualified by this scoped radio review. Cross-task coordination
+was explicitly authorized: the repository audit owns other local worktrees and
+the release task owns final aggregate qualification and publication.
 
 ## Completed recommendations
 
@@ -29,9 +51,10 @@ or remote pull request is part of this task.
 
 ## Verification
 
-- 644 integrated controller, Solo, couch navigation, Team host and FPV tests pass.
-- Eight focused restoration tests pass after the final recovery change, including
-  explicit forgetting of unreadable data and protection of newer tab changes.
+- Fresh PR review run at `6d19567cc`: 645 integrated controller, Solo, couch
+  navigation, Team host and FPV tests pass (zero failed, cancelled or skipped).
+  This includes all eight restoration tests after the final recovery change,
+  covering explicit forgetting of unreadable data and newer-tab protection.
 - 40 desktop/iOS wrapper tests pass.
 - Combined core build passes: version 0.142.4, 2,191 manifest files.
   The packaged restoration, session, setup, TX15 preset and Solo adapter modules
