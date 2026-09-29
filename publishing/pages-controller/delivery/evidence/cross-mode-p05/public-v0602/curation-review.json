@@ -1,9 +1,0 @@
-{
-  "status": "PASS_EXACT_COPY_AND_PIN_CLOSURE",
-  "filesCopied": 183,
-  "bytesCopied": 7627392,
-  "directPinsRehashed": 18,
-  "sourceBytesUnchanged": true,
-  "newMarkdownLinksVerified": true,
-  "largeReleasePayloadsCopied": false
-}

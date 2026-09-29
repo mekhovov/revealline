@@ -1,0 +1,175 @@
+{
+  "format": "revealline-recovery-fragment-v1",
+  "capturedAt": "2026-09-29T15:09:59.782379+00:00",
+  "worktree": "<home>/work/my_projects/go_test/.cache/worktrees/p03-release-history-about",
+  "branch": "refs/heads/codex/p03-release-history-about",
+  "head": "628e95daf403082768cdcf900a8ea1d1ef4629a2",
+  "excluded": [],
+  "changes": [
+    {
+      "status": " M",
+      "path": "authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "object": "5fd915adc3689ab9a6a9db96f572eaad1347504c",
+      "sha256": "d189b918d771d71909bce66777ff137529cc3c399bd9e95a4864efcb31abac27",
+      "bytes": 202581,
+      "mode": "100644"
+    },
+    {
+      "status": " M",
+      "path": "docs/field-kit-surfaces.md",
+      "object": "7a7d552eb537049d0bf7c877d38dcbfb417e1dfc",
+      "sha256": "5e3ba8b9a736efaff2e4c12e96a8fe32a40bfc2f302b41218fe3e6f4750a885c",
+      "bytes": 7174,
+      "mode": "100644"
+    },
+    {
+      "status": " M",
+      "path": "game/app.mjs",
+      "object": "30b2c1712b1df9c6fb8099492280be7c8aa6d34d",
+      "sha256": "592bcb9d2a151e7f3a1b181976055c6b68a060bdb77c313427f7d14a62ab9d22",
+      "bytes": 269100,
+      "mode": "100644"
+    },
+    {
+      "status": " M",
+      "path": "game/index.html",
+      "object": "e1fcaf1a67c1e7b410959c35bf65d09c00bd9664",
+      "sha256": "7537d586c218a1ad5a0e93a8d6d37f909c17cfe4f6c6d14b3031905b1dd652fd",
+      "bytes": 72178,
+      "mode": "100644"
+    },
+    {
+      "status": " M",
+      "path": "game/test/field-kit-flow.test.mjs",
+      "object": "fc7f8edcb8b049b515289db36cab98f1bad272cd",
+      "sha256": "3ecfd59516900871beb216f2914bb84d91f5831bca053d8c596d091ef8dc9c3f",
+      "bytes": 13703,
+      "mode": "100644"
+    },
+    {
+      "status": " M",
+      "path": "game/test/site-release-links.test.mjs",
+      "object": "e5820fd41071e3fcf0203d91a8ca84908afe3bb5",
+      "sha256": "e03c2a022bed61c0e83c45d07c6bbc24ffba385c6228c255bcaf7daab42e6df5",
+      "bytes": 5123,
+      "mode": "100644"
+    },
+    {
+      "status": " M",
+      "path": "scripts/test-pages-current-entry.mjs",
+      "object": "281b4135121a23c688432a30d86a7a4660f418c6",
+      "sha256": "d63ad9a452ea0e2765ebc799895927f257071c3eff4fd28c7e0940c6a509e410",
+      "bytes": 13000,
+      "mode": "100644"
+    },
+    {
+      "status": " M",
+      "path": "site/about.html",
+      "object": "e239ad50d808f9c45505f247f49116a00b3a00ae",
+      "sha256": "859ceaf4f78f0e74090ca4fd430ea98f29e085daa23392844eee525c78538df9",
+      "bytes": 27157,
+      "mode": "100644"
+    },
+    {
+      "status": " M",
+      "path": "site/landing.css",
+      "object": "082f1ca95231a61ff9b25749ae0f768414ad3529",
+      "sha256": "0ed7e2220b436a6c08c1528a4f8fdefaf42bc1a1782e2cba94d2fce20d0034eb",
+      "bytes": 33928,
+      "mode": "100644"
+    },
+    {
+      "status": " M",
+      "path": "site/landing.mjs",
+      "object": "2e7b7040919226ae9ebe7ded3bea553e0064d0b0",
+      "sha256": "6ec652f513a9d994530eafb9633e912fc8680fa9bb4075c973ffb893d740eb0f",
+      "bytes": 5494,
+      "mode": "100644"
+    },
+    {
+      "status": " M",
+      "path": "site/release-links.mjs",
+      "object": "ca55f647611d8c1e9a93c4c31c3c6c16dffd59ff",
+      "sha256": "0e9b734784b6af2222f552c82b133e6d57eee91f5e51bf2e3a347cdfe6036526",
+      "bytes": 1364,
+      "mode": "100644"
+    },
+    {
+      "status": "??",
+      "path": "game/test/landing-release-history-host.test.mjs",
+      "object": "569bfe3a903051a2f5e419664af3d0c709504bfe",
+      "sha256": "cd09fd2de0cb8bff371174447635937ed73e9a8d048537a02d175a038b000183",
+      "bytes": 8177,
+      "mode": "100644"
+    }
+  ],
+  "indexEntries": [
+    {
+      "path": "authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "mode": "100644",
+      "object": "62d0e1c2b180659156f1d3214a8341038e4e0326",
+      "stage": 0
+    },
+    {
+      "path": "docs/field-kit-surfaces.md",
+      "mode": "100644",
+      "object": "08a81ade42cd81118099ab83b8dad4e458355e72",
+      "stage": 0
+    },
+    {
+      "path": "game/app.mjs",
+      "mode": "100644",
+      "object": "2f2aea49a9608b5cf72f56754ae6d6d7ffbe02d2",
+      "stage": 0
+    },
+    {
+      "path": "game/index.html",
+      "mode": "100644",
+      "object": "267c4f9243b19a7c0a45a753e3edb894bf8f93ae",
+      "stage": 0
+    },
+    {
+      "path": "game/test/field-kit-flow.test.mjs",
+      "mode": "100644",
+      "object": "9f0922100023cb12510811d3bd83e57319bf8035",
+      "stage": 0
+    },
+    {
+      "path": "game/test/site-release-links.test.mjs",
+      "mode": "100644",
+      "object": "09ec9cc09d5de3042e4a40aa2f8d5ed73e53f814",
+      "stage": 0
+    },
+    {
+      "path": "scripts/test-pages-current-entry.mjs",
+      "mode": "100644",
+      "object": "aac2b2f3a3bf1ff3a3a39209e346d06a1e1795bc",
+      "stage": 0
+    },
+    {
+      "path": "site/about.html",
+      "mode": "100644",
+      "object": "0ce33847ca0cb71820f2ed5ca9cdfceb7da6ceae",
+      "stage": 0
+    },
+    {
+      "path": "site/landing.css",
+      "mode": "100644",
+      "object": "7c574db7ac4678094eb86856e3ce16396ad245e4",
+      "stage": 0
+    },
+    {
+      "path": "site/landing.mjs",
+      "mode": "100644",
+      "object": "0a8031bbdf81159eb53d586762a412deaae9e2e8",
+      "stage": 0
+    },
+    {
+      "path": "site/release-links.mjs",
+      "mode": "100644",
+      "object": "e5831e269fedae26c5bddff8d389ee888810fbd3",
+      "stage": 0
+    }
+  ],
+  "purpose": "Recovery only. These bytes are not release admission. Missing files, conflict stages and obsolete generated outputs are preserved as observations, not deletion or merge instructions."
+}
