@@ -85,30 +85,31 @@ test('skipping never grants a clear; exact legal completion removes skip and is 
   );
 });
 
-test('completion keeps the best verified stars across replays and accepts legacy receipts', () => {
-  const legacy = applyJourneyEvent(emptyJourneyProfile(), complete);
-  assert.equal(legacy.clears.solo[id].bestStars, undefined);
-  assert.deepEqual(validateJourneyProfile(structuredClone(legacy)), legacy);
-
-  const twoStars = applyJourneyEvent(emptyJourneyProfile(), { ...complete, stars: 2 });
-  assert.equal(twoStars.clears.solo[id].bestStars, 2);
-  const lowerReplay = applyJourneyEvent(twoStars, {
-    ...complete,
-    runId: 'run-2',
-    stars: 1,
-  });
-  assert.equal(lowerReplay.clears.solo[id].bestStars, 2);
-  const bestReplay = applyJourneyEvent(lowerReplay, {
-    ...complete,
-    runId: 'run-3',
-    stars: 3,
-  });
-  assert.equal(bestReplay.clears.solo[id].bestStars, 3);
-  assert.deepEqual(
-    applyJourneyEvent(bestReplay, { ...complete, runId: 'run-3', stars: 3 }),
-    bestReplay,
-    'the same verified result is idempotent',
-  );
+test('completion keeps verified stars in the separate store while v1 receipts remain unchanged', async () => {
+  const backend = createJourneyBackend(managedIndexedDB());
+  const profile = createJourneyProfileStore({ backend });
+  profile.record(complete);
+  assert.equal(await profile.flush(), true);
+  assert.equal(profile.bestStars('solo', id), null);
+  for (const [runId, stars, best] of [
+    ['run-2', 2, 2],
+    ['run-3', 1, 2],
+    ['run-4', 3, 3],
+  ]) {
+    profile.record({ ...complete, runId, stars });
+    assert.equal(await profile.flush(), true);
+    assert.equal(profile.bestStars('solo', id), best);
+    assert.deepEqual(Object.keys((await backend.read()).clears.solo[id]), [
+      'runId',
+      'gameplayId',
+      'difficulty',
+    ]);
+  }
+  const before = profile.snapshot();
+  profile.record({ ...complete, runId: 'run-4', stars: 3 });
+  assert.equal(await profile.flush(), true);
+  assert.deepEqual(profile.snapshot(), before, 'the same verified result is idempotent');
+  assert.equal((await backend.readState()).stars.best.solo[id], 3);
 });
 
 test('Journey profile and storage errors follow the active locale', async (context) => {

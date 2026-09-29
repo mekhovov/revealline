@@ -37,14 +37,18 @@ export async function installedCreatorLibrarySources({
         ? await profileForEdition(manifest.editionId)
         : await createJourneyBackend({
             profileKey: creatorProfileKey(manifest.editionId),
-          }).read();
+          }).readState();
     } catch {
       /* Browsing remains available when progress storage is unavailable. */
     }
     const snapshot = () =>
-      typeof progress?.snapshot === 'function' ? progress.snapshot() : progress;
+      typeof progress?.snapshot === 'function'
+        ? progress.snapshot()
+        : (progress?.profile ?? progress);
     const pictures = () =>
-      typeof progress?.pictures === 'function' ? progress.pictures() : emptyJourneyPictures();
+      typeof progress?.pictures === 'function'
+        ? progress.pictures()
+        : (progress?.pictures ?? emptyJourneyPictures());
     sources.push({
       id: `creator:${manifest.editionId}`,
       editionId: manifest.editionId,
@@ -74,7 +78,14 @@ export async function installedCreatorLibrarySources({
       progressState: (mission, mode) => {
         const receipt = snapshot()?.clears?.[mode]?.[mission.levelId];
         return receipt
-          ? { state: 'completed', bestStars: receipt.bestStars ?? null }
+          ? {
+              state: 'completed',
+              bestStars:
+                progress?.bestStars?.(mode, mission.levelId) ??
+                (Object.hasOwn(progress?.stars?.best?.[mode] ?? {}, mission.levelId)
+                  ? progress.stars.best[mode][mission.levelId]
+                  : null),
+            }
           : { state: 'new', bestStars: null };
       },
       completion(mission, mode) {
