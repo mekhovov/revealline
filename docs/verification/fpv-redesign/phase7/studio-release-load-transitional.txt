@@ -1,1 +1,0 @@
-"{\"slot\":\"ui.panel\",\"context\":\"Panel frameDeploy · ПочатиInteractive sample only; changes are not saved.default · component library specimen. This is not a live game control, telemetry, earned reward or production review.\",\"width\":1440,\"height\":900,\"dpr\":1}"

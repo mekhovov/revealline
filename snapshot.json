@@ -1,0 +1,33 @@
+{
+  "format": "revealline-recovery-fragment-v1",
+  "capturedAt": "2026-09-29T15:10:03.923236+00:00",
+  "worktree": "<home>/work/my_projects/go_test/.cache/worktrees/p03m-title-modes",
+  "branch": "refs/heads/codex/p03m-title-modes",
+  "head": "abdca9a71f82f5d97101aae7bb3179574eee5ce4",
+  "excluded": [
+    {
+      "status": "??",
+      "path": "node_modules"
+    }
+  ],
+  "changes": [
+    {
+      "status": "??",
+      "path": "game/ui/mode-choice.css",
+      "object": "9b213a4a01e496d6e19cf2c7cc059fe8a08dcf3d",
+      "sha256": "e731f8bac965adcec2e8fe5fe855eeb53c28a2f77529d619fedc2898ea49e7d6",
+      "bytes": 1506,
+      "mode": "100644"
+    },
+    {
+      "status": "??",
+      "path": "game/ui/mode-choice.mjs",
+      "object": "545d82f81eb52a4c39bd09e61e5f749467c75e97",
+      "sha256": "7b7f7369966c7d56d1c74c512bff7da006d5e6b29ec9d2bc08bc0d184107b858",
+      "bytes": 1339,
+      "mode": "100644"
+    }
+  ],
+  "indexEntries": [],
+  "purpose": "Recovery only. These bytes are not release admission. Missing files, conflict stages and obsolete generated outputs are preserved as observations, not deletion or merge instructions."
+}
