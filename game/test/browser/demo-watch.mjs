@@ -1,5 +1,5 @@
-/** Read-only local observation. No game modules are imported or APIs replaced. */
-const { document, location, window, DOMParser, MutationObserver } = globalThis;
+/** Read-only game observation; observer checkpoints use their own database. No game APIs are replaced. */
+const { DOMParser } = globalThis;
 export const OBSERVATION_LIMITS = Object.freeze({
   intervalMs: 5000,
   longGapMs: 10000,
@@ -13,6 +13,9 @@ export const OBSERVATION_LIMITS = Object.freeze({
   // Retain its full served-byte hash without widening other dependency limits.
   fileByteExceptions: Object.freeze({ 'game/content/packs/fpv-arcade-r5.json': 12 * 1024 * 1024 }),
   storageKeys: 512,
+  checkpointMs: 15000,
+  checkpointBytes: 8 * 1024 * 1024,
+  storageTimeoutMs: 5000,
 });
 
 export const OBSERVATION_ROOTS = [
@@ -307,11 +310,180 @@ async function storageSnapshot(win) {
   }
 }
 
-function mountObserver() {
+export const OBSERVATION_DATABASE = 'revealline-demo-watch-observer-v1';
+const REPORT_FORMAT = 'revealline-demo-browser-observation.v1';
+
+/** Observer-only storage: two bounded slots, never a game/profile database. */
+export function createObservationCheckpointStore({
+  indexedDB = globalThis.indexedDB,
+  setTimeout = globalThis.setTimeout,
+  clearTimeout = globalThis.clearTimeout,
+} = {}) {
+  let connection = null,
+    opening = null,
+    closed = false;
+  const pending = new Set();
+  function operation(perform) {
+    return new Promise((resolve, reject) => {
+      let settled = false,
+        cancel = () => {};
+      const finish = (error, value) => {
+        if (settled) return;
+        settled = true;
+        clearTimeout(timer);
+        pending.delete(stop);
+        if (error) reject(error);
+        else resolve(value);
+      };
+      const stop = () => {
+        finish(new Error('Observer checkpoint storage closed.'));
+        cancel();
+      };
+      const timer = setTimeout(() => {
+        finish(new Error('Observer checkpoint storage timed out.'));
+        cancel();
+      }, OBSERVATION_LIMITS.storageTimeoutMs);
+      pending.add(stop);
+      try {
+        if (closed) throw new Error('Observer checkpoint storage closed.');
+        cancel = perform(finish, () => settled) ?? cancel;
+      } catch (error) {
+        finish(error);
+      }
+    });
+  }
+  async function open() {
+    if (closed) throw new Error('Observer checkpoint storage closed.');
+    if (connection) return connection;
+    if (!opening)
+      opening = operation((finish, settled) => {
+        if (!indexedDB) throw new Error('IndexedDB is unavailable for observer checkpoints.');
+        const request = indexedDB.open(OBSERVATION_DATABASE, 1);
+        request.onupgradeneeded = () => {
+          if (settled()) {
+            request.transaction.abort();
+            return;
+          }
+          request.result.createObjectStore('reports');
+        };
+        request.onerror = () =>
+          finish(request.error ?? new Error('Observer database open failed.'));
+        request.onsuccess = () => {
+          const db = request.result;
+          if (closed || settled()) {
+            db.close();
+            return;
+          }
+          connection = db;
+          db.onversionchange = () => {
+            db.close();
+            if (connection === db) connection = null;
+          };
+          finish(null, db);
+        };
+      }).finally(() => {
+        opening = null;
+      });
+    return opening;
+  }
+  async function transaction(mode, action) {
+    const db = await open();
+    return operation((finish) => {
+      const tx = db.transaction(['reports'], mode);
+      let result;
+      tx.oncomplete = () => finish(null, result);
+      tx.onabort = () => finish(tx.error ?? new Error('Observer checkpoint transaction aborted.'));
+      tx.onerror = () => {}; // The abort owns rejection and rollback.
+      action(tx.objectStore('reports'), (value) => {
+        result = value;
+      });
+      return () => {
+        try {
+          tx.abort();
+        } catch {
+          /* Already committed. */
+        }
+      };
+    });
+  }
+  function decode(text) {
+    if (text == null) return null;
+    if (typeof text !== 'string' || textBytes(text).length > OBSERVATION_LIMITS.checkpointBytes)
+      throw new Error('Observer checkpoint exceeds its byte limit.');
+    const report = JSON.parse(text);
+    if (
+      report.format !== REPORT_FORMAT ||
+      !Array.isArray(report.initialInventory?.files) ||
+      report.initialInventory.files.length > OBSERVATION_LIMITS.sourceFiles ||
+      !Array.isArray(report.samples) ||
+      report.samples.length > OBSERVATION_LIMITS.samples ||
+      !Array.isArray(report.events) ||
+      report.events.length > OBSERVATION_LIMITS.events ||
+      !Array.isArray(report.diagnostics) ||
+      report.diagnostics.length > OBSERVATION_LIMITS.diagnostics
+    )
+      throw new Error('Observer checkpoint is not a bounded observation report.');
+    return report;
+  }
+  return {
+    async read() {
+      const values = await transaction('readonly', (store, result) => {
+        const rows = {};
+        for (const slot of ['checkpoint', 'final']) {
+          const request = store.get(slot);
+          request.onsuccess = () => {
+            rows[slot] = request.result;
+          };
+        }
+        result(rows);
+      });
+      return { checkpoint: decode(values.checkpoint), final: decode(values.final) };
+    },
+    async write(slot, text) {
+      if (!['checkpoint', 'final'].includes(slot)) throw new Error('Unknown observer slot.');
+      decode(text); // Check before opening a transaction or retaining a second queued copy.
+      await transaction('readwrite', (store) => {
+        store.put(text, slot);
+      });
+    },
+    async clear() {
+      await transaction('readwrite', (store) => {
+        store.delete('checkpoint');
+        store.delete('final');
+      });
+    },
+    close() {
+      closed = true;
+      for (const cancel of [...pending]) cancel();
+      connection?.close();
+      connection = null;
+    },
+  };
+}
+
+/** Mount the actual observer; dependency injection only supplies browser boundaries in tests. */
+export function mountObserver({
+  environment = globalThis,
+  readInventory = sourceInventory,
+  readStorage = storageSnapshot,
+  checkpointStore = null,
+  moduleURL = import.meta.url,
+} = {}) {
+  const {
+    document,
+    location,
+    window,
+    navigator,
+    performance,
+    MutationObserver,
+    setTimeout,
+    clearTimeout,
+  } = environment;
+  const calendarNow = () => (environment.Date ?? Date).now();
   const $ = (id) => document.getElementById(id),
     frame = $('observed-game');
-  const root = new URL('../../../', import.meta.url),
-    childURL = new URL('../../index.html?journey=legacy', import.meta.url);
+  const root = new URL('../../../', moduleURL),
+    childURL = new URL('../../index.html?journey=legacy', moduleURL);
   if (
     root.origin !== location.origin ||
     childURL.origin !== location.origin ||
@@ -337,6 +509,25 @@ function mountObserver() {
     diagnostics = [],
     droppedDiagnostics = 0,
     removeChildDiagnostics = () => {};
+  let disposed = false,
+    recovering = true,
+    clearing = false,
+    recovered = null,
+    storedFinal = null,
+    checkpointText = '',
+    recoveryText = '',
+    finalText = '',
+    queuedSave = null,
+    saving = null,
+    lastCheckpointMs = -Infinity,
+    persistenceFailed = false;
+  const store =
+    checkpointStore ??
+    createObservationCheckpointStore({
+      indexedDB: environment.indexedDB,
+      setTimeout,
+      clearTimeout,
+    });
   const cleanupListeners = [];
   const listen = (target, type, listener) => {
     target.addEventListener(type, listener);
@@ -346,7 +537,7 @@ function mountObserver() {
     const entry = observationDiagnostic(error, {
       scope,
       type,
-      at: new Date().toISOString(),
+      at: new Date(calendarNow()).toISOString(),
       elapsedSeconds: running ? Math.max(0, (performance.now() - startMs) / 1000) : null,
       ...details,
     });
@@ -376,6 +567,135 @@ function mountObserver() {
   const status = (value) => {
     $('observer-status').textContent = value;
   };
+  const persistenceStatus = (text) => {
+    $('observation-checkpoint-status').textContent = text;
+  };
+  function storageFailure(error) {
+    if (!persistenceFailed) diagnostic('observer-window', 'checkpoint-storage-unavailable', error);
+    persistenceFailed = true;
+    queuedSave = null;
+    persistenceStatus(
+      `Automatic recovery unavailable: ${boundedText(error.message)} Download JSON while this page remains open. Observation can continue.`,
+    );
+  }
+  function queueSave(slot, text) {
+    if (persistenceFailed || disposed) return saving;
+    queuedSave = { slot, text }; // At most one in-flight and one newest bounded serialization.
+    if (!saving)
+      saving = (async () => {
+        while (queuedSave && !persistenceFailed) {
+          const next = queuedSave;
+          queuedSave = null;
+          try {
+            await store.write(next.slot, next.text);
+            if (!disposed)
+              persistenceStatus(
+                `Saved ${next.slot === 'final' ? 'finalized report' : 'incomplete checkpoint'} to the observer-only database. Last successful save: ${new Date(calendarNow()).toISOString()}.`,
+              );
+          } catch (error) {
+            storageFailure(error);
+          }
+        }
+      })().finally(() => {
+        saving = null;
+      });
+    return saving;
+  }
+  function serialize(value) {
+    let text = JSON.stringify(value, null, 2);
+    // A pathological sequence of long DOM labels must not create unbounded storage or DOM output.
+    for (const key of ['samples', 'events', 'diagnostics']) {
+      while (textBytes(text).length > OBSERVATION_LIMITS.checkpointBytes && value[key]?.length) {
+        const count = Math.max(1, Math.ceil(value[key].length / 2));
+        value[key] = value[key].slice(count);
+        value.reportTruncation ??= {};
+        value.reportTruncation[key] = (value.reportTruncation[key] ?? 0) + count;
+        text = JSON.stringify(value, null, 2);
+      }
+    }
+    if (textBytes(text).length > OBSERVATION_LIMITS.checkpointBytes)
+      throw new Error('Observer report exceeds its byte budget even without samples/events.');
+    return text;
+  }
+  function publishCheckpoint(reason = 'periodic', force = false) {
+    if (!report || !log || disposed) return;
+    const value = {
+      ...report,
+      status: 'incomplete',
+      checkpointAt: new Date(calendarNow()).toISOString(),
+      checkpointReason: reason,
+      finishedAt: null,
+      stopReason: null,
+      timing: { ...log.totals },
+      samples: [...log.samples],
+      events: [...log.events],
+      childNavigationsDuringObservation: frameLoads,
+      observerHealth: { ...observerHealth },
+      diagnostics: [...diagnostics],
+      droppedDiagnostics,
+      terminalChecks: { sourceInventory: 'pending', storage: 'pending' },
+      sourceInventoryStable: null,
+      observationValidForPinnedSources: false,
+      observationComplete: false,
+      requestedDurationReached: log.totals.elapsedSeconds >= durationSeconds,
+      releaseQualified: false,
+      checkpointLimitations:
+        'Incomplete checkpoint only. Terminal source/storage comparisons have not run. Time after this checkpoint is unobserved. Recovery never resumes a run or operates the game.',
+    };
+    try {
+      checkpointText = serialize(value);
+      $('observation-report').value = checkpointText;
+      $('observation-download').disabled = false;
+      const now = performance.now();
+      if (force || now - lastCheckpointMs >= OBSERVATION_LIMITS.checkpointMs) {
+        lastCheckpointMs = now;
+        queueSave('checkpoint', checkpointText);
+      }
+    } catch (error) {
+      storageFailure(error);
+    }
+  }
+  function showRecovered() {
+    const kind = $('observation-recovered-kind').value;
+    const value = kind === 'final' ? storedFinal : recovered;
+    recoveryText = value ? JSON.stringify(value, null, 2) : '';
+    $('observation-recovered-report').value = recoveryText;
+    $('observation-recovered-download').disabled = !value;
+    $('observation-recovered-status').textContent = value
+      ? `Previous run — ${kind === 'final' ? 'finalized report' : 'INCOMPLETE checkpoint; terminal source/storage checks missing'}. Started ${value.startedAt}; captured ${value.timing?.elapsedSeconds ?? 0}s, ${value.samples?.length ?? 0} samples. No observation was resumed and the game was not operated.`
+      : `No saved ${kind === 'final' ? 'finalized report' : 'incomplete checkpoint'} from a previous run.`;
+  }
+  function download(text) {
+    if (!text) return;
+    const value = JSON.parse(text);
+    const URLClass = environment.URL ?? URL;
+    const url = URLClass.createObjectURL(new Blob([text], { type: 'application/json' }));
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = `demo-browser-${value.status ?? 'finalized'}-${value.mode}-${value.startedAt.replaceAll(':', '-')}.json`;
+    link.click();
+    setTimeout(() => URLClass.revokeObjectURL(url), 1000);
+  }
+  const ready = (async () => {
+    $('observation-start').disabled = true;
+    persistenceStatus('Reading the observer-only checkpoint database…');
+    try {
+      const prior = await store.read();
+      if (disposed) return;
+      recovered = prior.checkpoint;
+      storedFinal = prior.final;
+      if (!recovered && storedFinal) $('observation-recovered-kind').value = 'final';
+      showRecovered();
+      persistenceStatus(
+        'Automatic checkpoint recovery is available. Only the latest incomplete checkpoint and last finalized report are kept; a new observation replaces the incomplete slot.',
+      );
+    } catch (error) {
+      if (!disposed) storageFailure(error);
+    } finally {
+      recovering = false;
+      if (!disposed) $('observation-start').disabled = false;
+    }
+  })();
   const memory = () => {
     const value = frame.contentWindow?.performance?.memory;
     return value
@@ -574,11 +894,12 @@ function mountObserver() {
   function sample() {
     if (!running) return;
     const current = state();
-    log.sample(performance.now(), Date.now(), { ...current, canvas: canvasSample() });
+    log.sample(performance.now(), calendarNow(), { ...current, canvas: canvasSample() });
     phaseChanged();
     status(
       `Observing ${log.totals.elapsedSeconds.toFixed(1)} / ${durationSeconds} seconds\nSamples ${log.samples.length}; long gaps ${log.totals.longGaps}; unobserved gap time ${log.totals.unobservedLongGapSeconds.toFixed(1)}s\n${current.source ?? ''} · ${current.level ?? ''}\n${current.statusAndTimer ?? current.error ?? ''}\nDOM observer ${observerHealth.attached ? 'attached' : 'UNAVAILABLE'}; attachment failures ${observerHealth.failures}; JS diagnostics ${diagnostics.length}${droppedDiagnostics ? ` (+${droppedDiagnostics} dropped)` : ''}`,
     );
+    publishCheckpoint();
   }
   function wake() {
     timer = null;
@@ -592,7 +913,7 @@ function mountObserver() {
     requestController = new AbortController();
     const timeout = setTimeout(() => requestController?.abort(), 60000);
     try {
-      return await sourceInventory(root, paths, requestController.signal);
+      return await readInventory(root, paths, requestController.signal);
     } finally {
       clearTimeout(timeout);
       requestController = null;
@@ -611,7 +932,7 @@ function mountObserver() {
     }
   }
   async function start() {
-    if (running || preparing || finishing) return;
+    if (disposed || recovering || clearing || running || preparing || finishing) return;
     const current = state();
     if (!current.available || current.bootState !== 'ready' || !current.demoOpen) {
       status('Open Watch demo in the game below before starting observation.');
@@ -624,6 +945,10 @@ function mountObserver() {
     $('observation-download').disabled = true;
     $('observation-duration').disabled = true;
     $('observation-report').value = '';
+    $('observation-clear-saved').disabled = true;
+    checkpointText = '';
+    finalText = '';
+    lastCheckpointMs = -Infinity;
     report = null;
     log = null;
     phaseKey = '';
@@ -632,17 +957,17 @@ function mountObserver() {
     status('Hashing served sources. The observation clock has not started.');
     try {
       const initialInventory = await inventory();
-      if (preparationCancelled)
+      if (preparationCancelled || disposed)
         throw new DOMException('Observation preparation cancelled.', 'AbortError');
-      const initialStorage = await storageSnapshot(frame.contentWindow);
-      if (preparationCancelled)
+      const initialStorage = await readStorage(frame.contentWindow);
+      if (preparationCancelled || disposed)
         throw new DOMException('Observation preparation cancelled.', 'AbortError');
       durationSeconds = Number($('observation-duration').value);
       startMs = performance.now();
-      const calendar = Date.now();
+      const calendar = calendarNow();
       log = createObservationLog(startMs, calendar);
       report = {
-        format: 'revealline-demo-browser-observation.v1',
+        format: REPORT_FORMAT,
         startedAt: new Date(calendar).toISOString(),
         intendedDurationSeconds: durationSeconds,
         mode: durationSeconds < 7200 ? 'short-smoke-not-qualification' : 'two-hour-observation',
@@ -672,6 +997,8 @@ function mountObserver() {
     } catch (error) {
       preparing = false;
       releaseObservation();
+      if (disposed) return;
+      $('observation-clear-saved').disabled = false;
       status(`Observation did not start: ${boundedText(error.message)}`);
       $('observation-start').disabled = false;
       $('observation-stop').disabled = true;
@@ -685,13 +1012,14 @@ function mountObserver() {
       status('Cancelling observation preparation…');
       return;
     }
-    if (!running || finishing) return;
+    if (disposed || !running || finishing) return;
     sample();
+    publishCheckpoint('finalizing', true);
     running = false;
     finishing = true;
     releaseObservation();
     $('observation-stop').disabled = true;
-    report.finishedAt = new Date().toISOString();
+    report.finishedAt = new Date(calendarNow()).toISOString();
     report.stopReason = reason;
     report.timing = {
       ...log.totals,
@@ -701,7 +1029,8 @@ function mountObserver() {
     report.events = log.events;
     report.childNavigationsDuringObservation = frameLoads;
     status('Observation stopped. Comparing final served source and storage hashes…');
-    report.finalStorage = await storageSnapshot(frame.contentWindow);
+    report.finalStorage = await readStorage(frame.contentWindow);
+    if (disposed) return;
     report.storageChanges =
       report.initialStorage.available && report.finalStorage.available
         ? compareHashes(report.initialStorage.entries, report.finalStorage.entries, 'keyHash')
@@ -710,6 +1039,7 @@ function mountObserver() {
       report.finalInventory = await inventory(
         report.initialInventory.files.map((file) => file.path),
       );
+      if (disposed) return;
       report.sourceChanges = compareHashes(
         report.initialInventory.files,
         report.finalInventory.files,
@@ -718,6 +1048,7 @@ function mountObserver() {
         (values) => values.length === 0,
       );
     } catch (error) {
+      if (disposed) return;
       report.sourceInventoryStable = false;
       report.finalInventoryError = boundedText(error.message);
     }
@@ -729,7 +1060,31 @@ function mountObserver() {
       report.sourceInventoryStable && frameLoads === 0 && report.observerComplete;
     report.requestedDurationReached = report.timing.elapsedSeconds >= durationSeconds;
     report.releaseQualified = false;
-    $('observation-report').value = JSON.stringify(report, null, 2);
+    report.status = 'finalized';
+    report.terminalChecks = {
+      sourceInventory: report.finalInventory
+        ? report.sourceInventoryStable
+          ? 'complete'
+          : 'changed'
+        : 'failed',
+      storage:
+        report.initialStorage.available && report.finalStorage.available
+          ? 'complete'
+          : 'unavailable',
+    };
+    report.observationComplete =
+      report.requestedDurationReached &&
+      report.observationValidForPinnedSources &&
+      report.terminalChecks.storage === 'complete';
+    try {
+      finalText = serialize(report);
+      $('observation-report').value = finalText;
+      await queueSave('final', finalText);
+    } catch (error) {
+      storageFailure(error);
+    }
+    if (disposed) return;
+    $('observation-clear-saved').disabled = false;
     $('observation-download').disabled = false;
     $('observation-start').disabled = false;
     $('observation-duration').disabled = false;
@@ -741,16 +1096,41 @@ function mountObserver() {
   listen($('observation-start'), 'click', () => void start());
   listen($('observation-stop'), 'click', () => void stop());
   listen($('observation-download'), 'click', () => {
-    if (!report || running || finishing) return;
-    const url = URL.createObjectURL(
-      new Blob([JSON.stringify(report, null, 2)], { type: 'application/json' }),
-    );
-    const link = document.createElement('a');
-    link.href = url;
-    link.download = `demo-browser-${report.mode}-${report.startedAt.replaceAll(':', '-')}.json`;
-    link.click();
-    setTimeout(() => URL.revokeObjectURL(url), 1000);
+    if (running) {
+      sample();
+      publishCheckpoint('manual-export', true);
+    }
+    download(finalText || checkpointText);
   });
+  listen($('observation-recovered-kind'), 'change', showRecovered);
+  listen($('observation-recovered-download'), 'click', () => download(recoveryText));
+  listen($('observation-clear-saved'), 'click', () => void clearSaved());
+  async function clearSaved() {
+    if (disposed || recovering || clearing || running || preparing || finishing) return;
+    clearing = true;
+    $('observation-start').disabled = true;
+    $('observation-clear-saved').disabled = true;
+    try {
+      await saving;
+      await store.clear();
+      if (disposed) return;
+      recovered = null;
+      storedFinal = null;
+      showRecovered();
+      persistenceFailed = false;
+      persistenceStatus(
+        'Cleared only the two saved observer reports. Game saves/profiles and the current in-memory export were untouched.',
+      );
+    } catch (error) {
+      if (!disposed) storageFailure(error);
+    } finally {
+      clearing = false;
+      if (!disposed) {
+        $('observation-clear-saved').disabled = false;
+        $('observation-start').disabled = false;
+      }
+    }
+  }
   listen(frame, 'load', () => {
     if (running) {
       frameLoads++;
@@ -760,21 +1140,41 @@ function mountObserver() {
   });
   for (const event of ['visibilitychange', 'freeze', 'resume'])
     listen(document, event, () => {
-      if (running) log.event(event, performance.now(), { visibility: document.visibilityState });
+      if (running) {
+        log.event(event, performance.now(), { visibility: document.visibilityState });
+        sample();
+        publishCheckpoint(event, true);
+      }
     });
   for (const event of ['focus', 'blur'])
     listen(window, event, () => {
       if (running) log.event(event, performance.now(), { visibility: document.visibilityState });
     });
-  listen(window, 'pagehide', () => {
+  function dispose() {
+    if (disposed) return saving ?? Promise.resolve();
+    if (running) {
+      sample();
+      log.event('observer-pagehide', performance.now());
+      publishCheckpoint('pagehide-best-effort', true);
+    }
+    disposed = true;
     running = false;
     preparing = false;
+    preparationCancelled = true;
     requestController?.abort();
     releaseObservation();
     removeChildDiagnostics();
     for (const remove of cleanupListeners) remove();
-  });
+    $('observation-start').disabled = true;
+    $('observation-stop').disabled = true;
+    status(
+      'Observer stopped. Reload to recover its latest saved checkpoint; a pagehide write is best effort only.',
+    );
+    return (saving ?? Promise.resolve()).finally(() => store.close());
+  }
+  listen(window, 'pagehide', () => void dispose());
   attachChild();
+  return { ready, dispose, flush: () => saving ?? Promise.resolve() };
 }
 
 if (globalThis.document?.documentElement?.hasAttribute('data-demo-watch-observer')) mountObserver();

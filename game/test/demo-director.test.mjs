@@ -1,6 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { createDemoDirector } from '../demo-director.mjs';
+import { demoLoadingClock, settleDemoLoading } from './helpers/demo-loading-clock.mjs';
 
 function adapter() {
   let phase = 'paused',
@@ -111,8 +112,10 @@ test('late cancelled preparation cannot replace a newer player and releases its 
   const original = director.start();
   await director.next();
   assert.equal(oldSignal.aborted, true);
+  assert.equal(await original, false, 'Cancellation settles before the old loader returns.');
+  assert.equal(late.disposals, 0);
   gate.resolve();
-  assert.equal(await original, false);
+  await settleDemoLoading();
   assert.equal(director.player, current);
   assert.equal(late.disposals, 1);
   director.dispose();
@@ -135,8 +138,9 @@ test('suspension cancels loading and requires an explicit play gesture after lif
   });
   const original = director.start();
   director.suspend();
+  assert.equal(await original, false, 'Suspension does not await an uncooperative loader.');
   gate.resolve();
-  await original;
+  await settleDemoLoading();
   assert.equal(director.phase, 'paused');
   assert.equal(director.player, null);
   assert.equal(late.disposals, 1);
@@ -326,4 +330,131 @@ test('no safe first macro falls back without quarantine; missing replay leaves a
     assert.equal(director.phase, candidates.length === 3 ? 'playing' : 'unavailable');
     director.dispose();
   }
+});
+
+test('preparation deadline quarantines a hung bot, falls back to replay and preserves explicit Pause', async () => {
+  const clock = demoLoadingClock(),
+    gate = deferred(),
+    late = adapter(),
+    replay = adapter();
+  let abandonedSignal;
+  const seen = [];
+  const director = createDemoDirector({
+    sources: mixedSources,
+    random: () => 0,
+    loading: clock.options,
+    prepare: (source, { signal }) => {
+      seen.push(source.id);
+      if (source.kind === 'bot') {
+        abandonedSignal = signal;
+        return gate.promise;
+      }
+      return replay;
+    },
+  });
+  const pending = director.start();
+  director.pause();
+  clock.advance(15000);
+  assert.equal(await pending, true);
+  assert.equal(abandonedSignal.aborted, true);
+  assert.deepEqual(seen, ['first-bot', 'reviewed']);
+  assert.deepEqual(director.failedSourceIds, ['first-bot']);
+  assert.equal(director.phase, 'paused');
+  assert.equal(replay.phase, 'paused');
+  assert.equal(clock.pending, 0);
+  gate.resolve(late);
+  await settleDemoLoading();
+  assert.equal(late.disposals, 1);
+  assert.equal(director.player, replay);
+  await director.play();
+  assert.equal(director.phase, 'playing');
+  director.dispose();
+  clock.advance(30000);
+  assert.equal(late.disposals, 1);
+  assert.equal(replay.disposals, 1);
+});
+
+test('Next cancels a preparation which never returns and retains only its newer owner', async () => {
+  const clock = demoLoadingClock(),
+    current = adapter();
+  let calls = 0,
+    oldSignal;
+  const director = createDemoDirector({
+    sources,
+    loading: clock.options,
+    prepare: (_, { signal }) => {
+      if (!calls++) {
+        oldSignal = signal;
+        return new Promise(() => {});
+      }
+      return current;
+    },
+  });
+  const abandoned = director.start();
+  const replacement = director.next();
+  assert.equal(await abandoned, false);
+  assert.equal(await replacement, true);
+  assert.equal(oldSignal.aborted, true);
+  assert.equal(director.player, current);
+  assert.equal(clock.pending, 0);
+  clock.advance(30000);
+  assert.equal(director.player, current);
+  assert.deepEqual(director.failedSourceIds, []);
+  director.dispose();
+  assert.equal(current.disposals, 1);
+});
+
+test('dispose settles preparation immediately and disposes its ignored-abort late adapter once', async () => {
+  const clock = demoLoadingClock(),
+    gate = deferred(),
+    late = adapter();
+  let signal;
+  const director = createDemoDirector({
+    sources,
+    loading: clock.options,
+    prepare: (_, options) => {
+      signal = options.signal;
+      return gate.promise;
+    },
+  });
+  const pending = director.start();
+  director.dispose();
+  assert.equal(await pending, false);
+  assert.equal(signal.aborted, true);
+  assert.equal(director.phase, 'disposed');
+  assert.equal(clock.pending, 0);
+  gate.resolve(late);
+  await settleDemoLoading();
+  director.dispose();
+  assert.equal(late.disposals, 1);
+  assert.equal(director.player, null);
+});
+
+test('wholly timed-out recordings end unavailable after one bounded attempt per source', async () => {
+  const clock = demoLoadingClock();
+  const attempted = [];
+  const director = createDemoDirector({
+    sources: [
+      { id: 'one', levelId: 'one', kind: 'replay' },
+      { id: 'two', levelId: 'two', kind: 'replay' },
+    ],
+    random: () => 0,
+    loading: clock.options,
+    prepare: (source, { signal }) => {
+      attempted.push({ id: source.id, signal });
+      return new Promise(() => {});
+    },
+  });
+  const pending = director.start();
+  clock.advance(15000);
+  await settleDemoLoading();
+  assert.equal(director.phase, 'loading');
+  assert.equal(attempted.length, 2);
+  clock.advance(15000);
+  assert.equal(await pending, false);
+  assert.equal(director.phase, 'unavailable');
+  assert.deepEqual(director.failedSourceIds, ['one', 'two']);
+  assert.ok(attempted.every(({ signal }) => signal.aborted));
+  assert.equal(clock.pending, 0);
+  director.dispose();
 });

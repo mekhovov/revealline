@@ -1,3 +1,4 @@
+import { withDemoLoadingDeadline } from './demo-loading.mjs';
 import { boundedJSON, dataIdentity, exactKeys, required, stableId } from './data-json.mjs';
 import { normalizedLevel } from './core/level.mjs';
 import { CLASSES } from './core/registry.mjs';
@@ -108,12 +109,56 @@ export function validateDemoCatalog(source) {
   return catalog;
 }
 
-export async function loadDemoCatalog({ fetch: fetcher = globalThis.fetch, signal } = {}) {
-  const response = await fetcher(DEMO_CATALOG_URL, { signal });
-  if (!response.ok) throw new Error('The demo catalogue could not load.');
-  if (Number(response.headers?.get?.('content-length')) > 256 * 1024)
-    throw new Error('The demo catalogue exceeds its size budget.');
-  return validateDemoCatalog(await response.text());
+/** Fetch and body consumption share one deadline. Cancelling also releases an
+ * eventual response from a transport which ignored the original signal. */
+function loadBundledText(url, { fetch: fetcher, signal, maxBytes, label, ...loading }) {
+  return withDemoLoadingDeadline(
+    async (signal) => {
+      const response = await fetcher(url, { signal });
+      let bodyCancelled = false;
+      const cancelBody = () => {
+        if (bodyCancelled) return;
+        bodyCancelled = true;
+        try {
+          Promise.resolve(response.body?.cancel?.()).catch(() => {});
+        } catch {
+          /* A locked native body is cancelled by the transport's abort signal. */
+        }
+      };
+      if (signal.aborted) {
+        cancelBody();
+        throw signal.reason;
+      }
+      signal.addEventListener('abort', cancelBody, { once: true });
+      try {
+        if (!response.ok) throw new Error(`The demo ${label} could not load.`);
+        if (Number(response.headers?.get?.('content-length')) > maxBytes)
+          throw new Error(`The demo ${label} exceeds its size budget.`);
+        return await response.text();
+      } catch (error) {
+        cancelBody();
+        throw error;
+      } finally {
+        signal.removeEventListener('abort', cancelBody);
+      }
+    },
+    { ...loading, signal },
+  );
+}
+
+export async function loadDemoCatalog({
+  fetch: fetcher = globalThis.fetch,
+  signal,
+  ...loading
+} = {}) {
+  const text = await loadBundledText(DEMO_CATALOG_URL, {
+    ...loading,
+    fetch: fetcher,
+    signal,
+    maxBytes: 256 * 1024,
+    label: 'catalogue',
+  });
+  return validateDemoCatalog(text);
 }
 
 /** Only supplied installed entries are eligible. This never fetches a pack. */
@@ -162,7 +207,10 @@ export function demoReplayMatchesEntry(replay, entry) {
 
 /** Load only a resolved local/bundled descriptor. Playback still verifies its
  * final checkpoint before adopting it. No remote pack acquisition is possible. */
-export async function loadDemoRecording(clip, { fetch: fetcher = globalThis.fetch, signal } = {}) {
+export async function loadDemoRecording(
+  clip,
+  { fetch: fetcher = globalThis.fetch, signal, ...loading } = {},
+) {
   const check = () => {
     if (signal?.aborted) throw new DOMException('Demo loading cancelled.', 'AbortError');
   };
@@ -170,11 +218,13 @@ export async function loadDemoRecording(clip, { fetch: fetcher = globalThis.fetc
   let source = clip.source === 'local' ? clip.replay : null;
   if (!source) {
     required(bundledReplayURL(clip.replayURL), 'Demo recordings must use bundled relative URLs.');
-    const response = await fetcher(new URL(clip.replayURL, import.meta.url), { signal });
-    if (!response.ok) throw new Error('The demo recording could not load.');
-    if (Number(response.headers?.get?.('content-length')) > MAX_REPLAY_BYTES)
-      throw new Error('The demo recording exceeds its size budget.');
-    source = await response.text();
+    source = await loadBundledText(new URL(clip.replayURL, import.meta.url), {
+      ...loading,
+      fetch: fetcher,
+      signal,
+      maxBytes: MAX_REPLAY_BYTES,
+      label: 'recording',
+    });
   }
   check();
   const replay = snapshotReplay(source),

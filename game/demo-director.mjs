@@ -1,3 +1,5 @@
+import { withDemoLoadingDeadline } from './demo-loading.mjs';
+
 /** Presentation-only rotation. Each prepared player owns an isolated run; this
  * controller never reads input, advances a hidden clock, or writes a profile. */
 export function createDemoDirector({
@@ -5,6 +7,7 @@ export function createDemoDirector({
   prepare = (source, options) => source.create(options),
   random = Math.random,
   onChange = () => {},
+  loading = {},
 } = {}) {
   if (!Array.isArray(sources) || typeof prepare !== 'function' || typeof random !== 'function')
     throw new TypeError('Demo rotation needs sources, a preparation adapter and a random source.');
@@ -90,7 +93,11 @@ export function createDemoDirector({
       emit();
       let prepared = null;
       try {
-        prepared = await prepare(candidate, { signal: controller.signal });
+        prepared = await withDemoLoadingDeadline((signal) => prepare(candidate, { signal }), {
+          ...loading,
+          signal: controller.signal,
+          onLateResult: release,
+        });
         if (!current()) {
           release(prepared);
           return false;

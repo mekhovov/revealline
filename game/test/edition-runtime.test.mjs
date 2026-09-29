@@ -73,6 +73,7 @@ test('actual demo and landing closure retains clock, audio, Worker, frozen repla
   assert.equal(catalog.clips.length, 6);
   assert.equal(recordings.length, 12);
   const required = [
+    'game/demo-loading.mjs',
     'game/ui/demo-clock.mjs',
     'game/ui/demo-audio.mjs',
     'game/ui/signal-reception.mjs',

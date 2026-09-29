@@ -1,3 +1,4 @@
+import { withDemoLoadingDeadline } from './demo-loading.mjs';
 import {
   loadDemoCatalog,
   resolveDemoCatalog,
@@ -17,6 +18,7 @@ export async function loadDemoSources({
   signal,
   fetch: fetcher = globalThis.fetch,
   WorkerClass = globalThis.Worker,
+  loading = {},
 }) {
   const checkAbort = () => {
     if (signal?.aborted) throw new DOMException('Cancelled', 'AbortError');
@@ -24,13 +26,21 @@ export async function loadDemoSources({
   checkAbort();
   let clips = [];
   try {
-    clips = resolveDemoCatalog(await loadDemoCatalog({ fetch: fetcher, signal }), entries);
+    clips = resolveDemoCatalog(
+      await loadDemoCatalog({ ...loading, fetch: fetcher, signal }),
+      entries,
+    );
   } catch (error) {
     if (signal?.aborted) throw error;
   }
   checkAbort();
   try {
-    clips.push(...(await library.list(entries, { signal })));
+    clips.push(
+      ...(await withDemoLoadingDeadline((signal) => library.list(entries, { signal }), {
+        ...loading,
+        signal,
+      })),
+    );
   } catch (error) {
     if (signal?.aborted) throw error;
   }
@@ -48,7 +58,7 @@ export async function loadDemoSources({
       for (let index = 0; index < candidates.length; index++) {
         const replay = await loadDemoRecording(
           { ...clip, replayURL: candidates[index] },
-          { fetch: fetcher, signal },
+          { ...loading, fetch: fetcher, signal },
         );
         try {
           return await prepareReplayPlayer(replay, { signal });
