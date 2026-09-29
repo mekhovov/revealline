@@ -20,7 +20,7 @@ This is a produced and integrated bank, **not a completed subjective listening c
 
 Official EdgeTX English and Ukrainian (Polina) “Armed” sources are pinned to `56f0bb41757798865254fd462ea5d177280ab12c`. These recordings are **GPL-2.0**, not CC0. Unmodified recordings, full license, hashes and processing recipe are distributed with the game through `game/audio/effects/licenses.html` and `edgetx-source.json`. All other recorded ingredients retain their previous CC0 provenance.
 
-The ESC start/retry timbre is original synthesis with slightly detuned motor resonances and short electrical tones; it is **not an authentic hardware recording or a copied branded melody**. FPV body selection chooses it on a fresh start. One localized radio announcement is scheduled after it, with its own persisted enable/volume settings (`revealline.radio-audio.v1`, enabled at 35%). Critical warnings interrupt speech; SFX pause, mute, reset, hidden-page suspension and disposal cancel scheduled speech. No telemetry/battery callouts are mapped to unrelated game states.
+**Historical version, superseded by the recorded hardware polish below:** The ESC start/retry timbre was original synthesis with slightly detuned motor resonances and short electrical tones; it is **not an authentic hardware recording or a copied branded melody**. FPV body selection chooses it on a fresh start. One localized radio announcement is scheduled after it, with its own persisted enable/volume settings (`revealline.radio-audio.v1`, enabled at 35%). Critical warnings interrupt speech; SFX pause, mute, reset, hidden-page suspension and disposal cancel scheduled speech. No telemetry/battery callouts are mapped to unrelated game states.
 
 ## Repeated-cue comfort revision
 
