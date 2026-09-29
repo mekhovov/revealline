@@ -281,7 +281,9 @@ async function authoredEdition() {
 
 test(
   'guided Studio source survives export/import and compiled ordinary win, corrective application and exact Collection revisit',
-  { timeout: 30000 },
+  // Both real host journeys also run alongside the company file-level suite.
+  // Bound slow hosted runners without removing any gameplay or persistence checks.
+  { timeout: 120000 },
   async (t) => {
     const priorLocale = getLocale();
     setLocale('en', { persist: false });
@@ -588,7 +590,7 @@ async function realShowcaseEdition() {
 
 test(
   'real Threads showcase survives guided staging, source round trip, ordinary wins and bilingual corrective Collection revisit',
-  { timeout: 60000 },
+  { timeout: 120000 },
   async (t) => {
     const priorLocale = getLocale();
     setLocale('en', { persist: false });

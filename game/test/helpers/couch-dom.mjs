@@ -298,7 +298,13 @@ export class Element extends Events {
     ]);
   }
   querySelector(selector) {
-    return this.querySelectorAll(selector)[0] ?? null;
+    // Match native first-result traversal without allocating every later match.
+    for (const child of this.children) {
+      if (child.matches(selector)) return child;
+      const descendant = child.querySelector(selector);
+      if (descendant) return descendant;
+    }
+    return null;
   }
   getBoundingClientRect() {
     const r = this._rect;
@@ -409,7 +415,7 @@ export class Document extends Events {
     return this.documentElement.querySelectorAll(selector);
   }
   querySelector(selector) {
-    return this.querySelectorAll(selector)[0] ?? null;
+    return this.documentElement.querySelector(selector);
   }
   getElementById(id) {
     return this.querySelector(`#${id}`);
