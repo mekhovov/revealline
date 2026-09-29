@@ -5228,7 +5228,9 @@ try {
         ),
       );
     }
-    const baseKey = campaignKey(baseEntry.campaign);
+    // Every adopted execution catalog compiles baseEntry first. Its owned key
+    // already identifies the current base; selector repaint needs no raw-map validation.
+    const baseKey = executionCatalog.entries[0].baseCampaignKey;
     const currentKey = activeEntry.baseCampaignKey || campaignKey(campaign);
     let selectedPack = activeEntry.sourcePackId || '';
     if (!activeEntry.sourcePackId && currentKey !== baseKey) {

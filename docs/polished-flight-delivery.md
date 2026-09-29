@@ -386,3 +386,80 @@ host-test session-format literals and waits for actual asynchronous startup.
 All 22 picture-host checks pass; fixture-owned JSON download leases are explicitly
 retired at teardown, with the two export cases rerun successfully. This cleanup
 does not change production download lifetime or gameplay.
+
+### Frozen performance batch `83706c992`
+
+Both candidate CI jobs pass at `83706c9924e3972b106966a9bfffe542d1fde5e3`, including
+all eighteen reproducible editions and both optional packages. The
+[downloaded optional archive](verification/evidence/optional-package-download-83706c992.json)
+matches all twelve original local bundle members and passes ordinary admission.
+FPV remains **50 runtime files / 2,748,526 bytes** and **52 source files /
+2,762,920 bytes**, below the unchanged optional-package limits.
+
+The [default sizing receipt](verification/evidence/default-capacity-83706c992.json)
+preserves all **2,177 paths** and verifies source hashes before and after preparation.
+Content is **797,852,718 bytes**; including the manifest and the existing STORE ZIP
+writer's exact headers/names projects **798,633,041 bytes**, leaving **1,366,959
+bytes** below the unchanged 800 MB archive limit. Compared with `440cdb749`,
+2,151 files are byte-identical; catalogue compaction saves 1,685,754 bytes and the
+app/parser changes add 1,303 bytes. This is exact candidate sizing, not a produced
+default ZIP hash, independent extraction or merged-main publication qualification.
+
+The [fresh installation observation](verification/evidence/optional-installation-83706c992.json)
+passes all seven transitions from frozen `d226` v0.142.1 to `83706c992` v0.142.2.
+Two actual Chrome standalone apps preserve verified proof and synthetic controller
+profile exports through update, failed download, offline rollback and removal of
+the other app. The owned apps, profile and server are cleaned up. Physical radio
+operation and arbitrary model migrations remain unverified.
+
+Before timing, a browser import preflight identified a missing passive observer
+dependency in the new measurement server. The corrected tool serves and hashes
+the complete two-module instrumentation closure, rejects collisions with player
+files, and serves no unrelated repository files. The new HTTP-closure regression
+and existing observer tests pass (**25 checks**), and an isolated Chrome import
+passes with no errors. Frozen game files remain unchanged; the measurement-tool
+hash is recorded separately from the observed artifact source.
+
+Current publication follows the main-repository-only policy in
+[the release train](release-train.md): admit selected content on main Pages and
+keep omitted editions as original GitHub Release downloads. Do not allocate new
+archive repositories or raise the 950 MB cap. Candidate observations do not replace
+merged-main source qualification, complete hosted admission or deployed-byte checks.
+
+The independently checked [current CI packet](verification/evidence/company-capacity-83706c992.json)
+records **945 company checks and 165 practice checks passing**, with no failures,
+cancellations or skips. The selected FPV edition descriptors match the local frozen
+build. Same-source default, optional packages and four new editions have a hosted
+lower bound of **923,549,058 bytes**; six editions already exceed the cap. Remaining
+root/hub/pointer and retained-output costs still require complete admission.
+
+The [new matched browser observation](verification/evidence/arcade-performance-83706c992.json)
+uses original `1106ec0ac` and frozen `83706c992` in opposite-order pairs. All four
+comparisons meet the scoped 5% p95 target: active/results changes are **+0.60% /
+−0.60%** for pair A and **0% / 0%** for pair B. Both twenty-cycle viewer observations
+complete. Candidate A retains a **60 ms** page task and **66.7 ms** maximum frame;
+candidate B records no page-wide long task. No sample is discarded. Resource timing
+snapshots stop at the browser's 250-entry buffer and are explicitly incomplete;
+they do not establish cold-start requests or production-cache behavior.
+
+The separate diagnostic has an inclusive **64.939 ms** first-win task, including
+a **59.507 ms** Phaser callback. Sample support identifies overlapping reward,
+state-composition and mission-selector normalization work; it is not exclusive
+wall-clock attribution. No asynchronous save task exceeds 50 ms in this trace,
+but the exclusive reward-work gate remains unverified. Across separate forced-GC
+checkpoints after 0/20/40 viewer cycles, renderer document/node/listener counts
+remain **2 / 12,809 / 998**. Heap increases by **623,716 bytes**, so whole-heap
+stability is not claimed. Native/decoder/GPU memory and all-edition behavior remain
+outside this observation. All owned browser and server resources were closed.
+
+### Selector follow-up
+
+The first-win trace also showed the mission selector deriving the base campaign's
+identity again from raw geometry. It now uses the adopted execution catalogue's
+existing base identity; dynamic active routes still receive fresh validation.
+No completion, unlock, difficulty or gameplay rule changes. The actual-host
+regression observes one raw geometry reread before this change and zero after a
+win, Gentle mission selection and English/Ukrainian label changes. Two targeted
+host checks and six exact-thumbnail checks pass, with independent review and
+changed-file lint/format checks. A new frozen observation is required before
+attributing a frame-time or long-task improvement to this follow-up.
