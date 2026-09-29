@@ -225,19 +225,9 @@ export function attachEnemyGuide({
     canvas.setAttribute('aria-label', previewNote.textContent);
     localizedText(heading, () => entry().label);
     localizedText(form, () => entry().form);
-    localizedText(spot, () =>
-      encounter
-        ? t('interface:encounterGuide.spot', { text: entry().spot })
-        : `Spot: ${entry().spot}`,
-    );
-    localizedText(risk, () =>
-      encounter
-        ? t('interface:encounterGuide.risk', { text: entry().risk })
-        : `Risk: ${entry().risk}`,
-    );
-    localizedText(action, () =>
-      encounter ? t('interface:encounterGuide.try', { text: entry().try }) : `Try: ${entry().try}`,
-    );
+    localizedText(spot, () => t('interface:encounterGuide.spot', { text: entry().spot }));
+    localizedText(risk, () => t('interface:encounterGuide.risk', { text: entry().risk }));
+    localizedText(action, () => t('interface:encounterGuide.try', { text: entry().try }));
     localizedText(note, () => entry().note);
     exercise.wrap.hidden = record.id !== 'line-impact';
     localizedText(instructions, () =>
