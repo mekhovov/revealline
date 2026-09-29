@@ -14,6 +14,7 @@ import { contentText } from '../i18n/content.mjs';
 import { coopGoalLabel, coopObjectiveLabel } from './coop-copy.mjs';
 import { attachCouchTouch } from '../ui/couch-touch.mjs';
 import { attachJourneyReactions } from '../ui/journey-reactions.mjs';
+import { resultContinuationLabel } from '../ui/result-continuation.mjs';
 import { attachJourneySaveCue } from '../ui/journey-save-cue.mjs';
 import { attachJourneyModePictures } from '../ui/journey-mode-pictures.mjs';
 import {
@@ -1569,6 +1570,7 @@ export function bootCoop({
       mode: 'team',
       outcome: run?.status,
       missionId: reactionRow?.mission?.id,
+      feedback: candidateJourney?.owns(reactionRow) ? reactionRow.campaignFeedback : null,
     });
     const show = run && !running();
     $('coop-overlay').hidden = !show;
@@ -1594,8 +1596,12 @@ export function bootCoop({
     $('coop-next').hidden = !destination?.next && !destination?.error;
     localizedText($('coop-next'), () =>
       destination?.next
-        ? t('interface:team.nextMission', {
+        ? resultContinuationLabel(t, {
             mission: contentText(destination.next, 'name'),
+            campaign: destination.nextRow?.mission
+              ? contentText(destination.nextRow.mission, 'campaignTitle')
+              : '',
+            crossesCampaign: destination.crossesCampaign === true,
           })
         : t('interface:nextArena'),
     );
@@ -5020,6 +5026,24 @@ export function bootCoop({
     for (const event of run.events)
       if (event.type === 'player.downed') recoveryFailures[event.player] = event;
     for (const event of run.events) {
+      const feedbackRow = acceptedPicture?.journeyRow;
+      if (
+        event.type === 'run.completed' &&
+        run.status === 'won' &&
+        candidateJourney?.owns(feedbackRow) &&
+        feedbackRow.campaignFeedback
+      )
+        music?.sound.event(
+          event,
+          {},
+          {
+            owned: true,
+            mode: 'team',
+            outcome: run.status,
+            missionId: feedbackRow.mission.id,
+            feedback: feedbackRow.campaignFeedback,
+          },
+        );
       if (event.type === 'cells.claimed' && captureCaption)
         announce(captureCaption, { foundationPlayers });
       if (event.type === 'cut.closed') {
