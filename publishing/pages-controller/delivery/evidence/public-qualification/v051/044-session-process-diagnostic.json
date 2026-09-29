@@ -1,7 +1,0 @@
-{
-  "observedAt": "2026-09-15T01:18:06.452750+00:00",
-  "session": "field-kit-public51",
-  "pidFileModifiedAt": "2026-09-15T00:56:38.581169+00:00",
-  "pid": 44058,
-  "process": "44058 Tue Sep 15 02:56:38 2026     21:28 /Users/oleksandr.mekhovov/.local/share/mise/installs/node/20.19.5/lib/node_modules/agent-browser/bin/agent-browser-darwin-arm64"
-}

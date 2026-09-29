@@ -1,8 +1,0 @@
-{
-  "status": "PASS",
-  "paths": 16,
-  "lineReview": "Workflow archive ID and single original tag; one-cohort lock and tests; original metadata byte pins; main-only deployment; no simulation changes",
-  "allIndexPinsMatch": true,
-  "productionHelpersUnchanged": true,
-  "publicAcceptance": false
-}
