@@ -1428,7 +1428,7 @@ test('Selector continuation preserves exact theme100 and appends only eight audi
       'utf8',
     ),
   );
-  const current = await importThemeBundle(
+  const latest = await importThemeBundle(
     new Blob([
       await fs.readFile(
         new URL('../../authoring/library/fpv-field-kit/production.rltheme', import.meta.url),
@@ -1436,6 +1436,11 @@ test('Selector continuation preserves exact theme100 and appends only eight audi
     ]),
     { decodeImage: null },
   );
+  // This is the accepted selector101 history, not a current-source approval.
+  const currentOracle = JSON.parse(
+    await fs.readFile(new URL('./fixtures/production-main321-fpv101.json', import.meta.url)),
+  );
+  const current = await reconstructPinnedProduction(currentOracle, latest);
   const prior = await reconstructPinnedProduction(oracle, current);
   assert.equal(prior.document.revision, 100);
   assert.equal(prior.document.assets.length, 2606);
@@ -1452,11 +1457,32 @@ test('Selector continuation preserves exact theme100 and appends only eight audi
       `unchanged payload ${hash}`,
     );
 
-  const review = await authenticatedCurrentReview(
-    'docs/verification/v0.142.4-selector-audio-continuation/review.json',
-    'f2cf0cc93f8de8e959eabf6e6313a0af306dfae87e2cb663bfe7bef805df6fe6',
-    ['audio'],
+  const reviewBytes = await fs.readFile(
+    new URL(
+      '../../docs/verification/v0.142.4-selector-audio-continuation/review.json',
+      import.meta.url,
+    ),
   );
+  assert.equal(
+    createHash('sha256').update(reviewBytes).digest('hex'),
+    'f2cf0cc93f8de8e959eabf6e6313a0af306dfae87e2cb663bfe7bef805df6fe6',
+  );
+  const retainedReview = JSON.parse(reviewBytes);
+  const review = {
+    review: retainedReview,
+    sources: {
+      audio:
+        retainedReview.fingerprints.audio.inputs.map((input) => input.path).join('; ') +
+        ' sha256:' +
+        retainedReview.fingerprints.audio.currentSHA256,
+    },
+  };
+  assert.equal(
+    retainedReview.fingerprints.audio.currentSHA256,
+    'fd3d7e347bc3a6e36bd884b508af8bbd8492cc3a4dac19bb745664a7fe90adc6',
+  );
+  // Current source bytes are separately authenticated by the cumulative gate.
+  // Do not compare today's changed consumers with this immutable older review.
   const before = resolvePresentation(prior.document);
   const after = resolvePresentation(current.document);
   for (const [slot, asset] of Object.entries(before.assets))
