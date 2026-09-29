@@ -455,8 +455,9 @@
     {
       "name": "Viewport Lab",
       "route": "/authoring/viewport-lab/",
-      "verification": "pending exact-candidate browser qualification; historical observations do not establish current acceptance",
-      "historicalVerification": "keyboard and virtual-controller browser workflow passed; physical controller not tested"
+      "verification": "Current runtime 05ef9c792 and optional admission dea0fc7ee: 56/56 initial runtime checks and later 230/230 overlapping input checks pass; shared landing-group correction 76b56eccf and final 8/8 Couch cases pass. Native keys at observed 1280 × 720 verify no implicit selector submission, explicit Couch load, child Settings/Back/real Return and stage X106/Y303 (earlier portrait Y527), without pointer reset. Two virtual 2/4 attempts exposed a real mode-to-Fullscreen cycle; the fresh corrected repeat passes 4/4 with unchanged commands: canceled drafts, actual Solo/Couch readiness, all five exact sizes preserving the loaded document, stage X972/Y386 and notes Y25, both Settings/Return chains and explicit-only replacement. Final runner 390 × 844, inner Lab approximately 358 × 641. Source assigned twice; final local/session key deltas empty as an observation, not a storage contract. Native Solo remains unqualified due to IAB targeting; a later Couch save-recovery panel after PASS leaves persistence unqualified. No project Save/import/export. Final 14/14 in-memory edition compiles and 859-path Git/disk attribution pass; 10 added optional files total 83,901 bytes. Child runtime closure, physical/native-device/offline/published acceptance remain separate.",
+      "historicalVerification": "keyboard and virtual-controller browser workflow passed; physical controller not tested",
+      "evidence": "docs/verification/viewport-lab-input-2026-09-29.md"
     },
     {
       "name": "Community moderation",
