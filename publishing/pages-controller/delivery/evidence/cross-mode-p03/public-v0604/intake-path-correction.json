@@ -1,7 +1,0 @@
-{
-  "firstAttempt": "intake-execution.stderr",
-  "cause": "Caller request used absolute nested evidence paths; unchanged wrapper correctly requires safe relative paths.",
-  "correction": "Two reference paths made relative to audit root, same original bytes and hashes.",
-  "runtimeOrProductionChanges": false,
-  "requestSha256": "fb8ffe2f24219b087619926fbacc41bb7ec69d731e44ca38f4923b2df6ae986f"
-}
