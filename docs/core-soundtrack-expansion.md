@@ -90,7 +90,7 @@ default or claim physical-device/cultural acceptance.
 
 ### Active release batches
 
-1. **P0 — saved style persistence (v0.143.0).** Runtime
+1. **P0 — saved style persistence (v0.150.0 cumulative train).** Runtime
    [PR #779](https://github.com/mekhovov/revealline/pull/779) restores saved
    top-level style choices after reload and retains a player's attempted choice
    after an atomic-save failure. Its exact pushed preparation head is
@@ -165,11 +165,13 @@ approximately 450 recordings, leaving capacity at 260. Broader genres follow the
 three core families. The rejected AI-original workflow remains paused at **0/36
 approved compositions**.
 
-Local free space is now about **5.4 GiB**, above the 1 GiB guard, but hosted builds
-remain preferred for release artifacts. The active release queue still places the
-v0.142.4 mission-selector batch ahead of soundtrack v0.143.0. Musical admission
-needs complete-track listening; Ukrainian admission additionally needs cultural
-and rights review.
+Local free space is now about **1.4 GiB**, only narrowly above the 1 GiB guard, so
+hosted builds remain preferred for release artifacts. The release manager moved
+PR #779 from the separate v0.143.0 slot into the cumulative
+**v0.150.0 — Unified native experience** train on 29 September 2026. Its release
+hold remains in place while the cumulative predecessors merge and qualify.
+Musical admission needs complete-track listening; Ukrainian admission additionally
+needs cultural and rights review.
 
 ## Superseded execution checkpoint — 28 September 2026
 
