@@ -2560,5 +2560,20 @@
   "motionLab.inspectionTravel.cruise": "Звичайний рух",
   "motionLab.inspectionTravel.boost": "Прискорення",
   "motionLab.inspectionTravel.slow": "Уповільнення",
-  "motionLab.inspectionTravel.hint": "Лише візуальний огляд; рух на арені не змінюється. Пауза зупиняє анімацію. Повільний огляд може зрівняти видиму швидкість роторів. Пульсація та вогні не залежать від руху."
+  "motionLab.inspectionTravel.hint": "Лише візуальний огляд; рух на арені не змінюється. Пауза зупиняє анімацію. Повільний огляд може зрівняти видиму швидкість роторів. Пульсація та вогні не залежать від руху.",
+  "studio.artwork.inspectionView": "Перегляд зображення",
+  "studio.artwork.fitView": "Умістити все зображення",
+  "studio.artwork.nativeView": "Вихідні пікселі · прокручування",
+  "studio.artwork.compareParent": "Порівняти зі збереженим джерелом",
+  "studio.artwork.comparisonHelp": "Порівняйте вибраний файл із задекларованим збереженим джерелом. У режимі вихідних пікселів один піксель зображення відповідає одному CSS-пікселю в області з прокручуванням; масштабування пристрою може відрізнятися. Це огляд зображення, а не місія чи схвалення.",
+  "studio.artwork.selectedImage": "Вибрано · {{id}} · {{width}} × {{height}}",
+  "studio.artwork.parentImage": "Збережене джерело · {{id}} · {{width}} × {{height}}",
+  "studio.artwork.comparisonIdle": "Порівняння з джерелом вимкнено.",
+  "studio.artwork.comparisonNoParent": "Для цього зображення не задекларовано збереженого джерела.",
+  "studio.artwork.comparisonLoading": "Завантаження точного збереженого джерела…",
+  "studio.artwork.comparisonReady": "Збережене джерело готове до огляду.",
+  "studio.artwork.comparisonFailed": "Не вдалося показати джерело. Вибраний файл і колекція не змінилися.",
+  "studio.artwork.comparisonCancelled": "Перегляд джерела скасовано. Щоб повторити, виберіть «Порівняти зі збереженим джерелом».",
+  "studio.artwork.comparisonFacts": "Колекція {{collection}} · редакція {{revision}} · {{medium}} · {{bytes}} байтів · SHA-256 {{sha256}}",
+  "studio.artwork.nativeFrame": "Перегляд зображення з прокручуванням"
 }

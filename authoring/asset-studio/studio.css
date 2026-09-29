@@ -1020,6 +1020,8 @@ body.field-kit[data-effects='reduced'] .preview-surface {
 }
 .artwork-source-preview {
   height: min(50dvh, 420px);
+  max-width: 100%;
+  overflow: auto;
   background: #070b12;
 }
 .artwork-source-preview img {
@@ -1033,4 +1035,25 @@ body.field-kit[data-effects='reduced'] .preview-surface {
 }
 .artwork-source-provenance {
   overflow-wrap: anywhere;
+}
+.artwork-review-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 360px), 1fr));
+  gap: 16px;
+}
+.artwork-review-grid figure {
+  margin: 0;
+  min-width: 0;
+}
+.artwork-review-grid figcaption {
+  overflow-wrap: anywhere;
+  margin-bottom: 8px;
+}
+.artwork-review-grid[data-view='native'] .artwork-source-preview img {
+  width: auto;
+  height: auto;
+  max-width: none;
+  max-height: none;
+  object-fit: initial;
+  display: block;
 }

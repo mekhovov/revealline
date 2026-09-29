@@ -7,6 +7,16 @@ with each feature; additional editions and broad tools follow. C2's formal human
 benchmark remains last. See the [current register](plan-status-2026-09-29.md) for
 completed work, exact source status, blockers and remaining effort ranges.
 
+## Latest instruction: defer production review
+
+The user deferred production review on 29 September. Continue A/B/C source
+implementation in parallel, keeping focused correctness and integrity checks.
+Production/cultural/device/human approval remains deferred rather than passed;
+no candidate is silently adopted. The immediate batch adds dense Team cue
+reading, current-mission encounter lessons and retained-parent artwork comparison.
+Necessary C6 support travels with C; broad tooling and C2 remain later.
+The current register supersedes historical status paragraphs below.
+
 ## Batch policy and current delivery state
 
 Keep compatible work in draft [PR761](https://github.com/mekhovov/revealline/pull/761)
@@ -17,9 +27,9 @@ release subset for unrelated unfinished production. PR761 is a **v0.150.0 schedu
 input**, not delivered work; its source version is unbumped and production
 admission remains pending. Preserve every historical record and original.
 
-Batch15 is pushed at `c332a45cb38af3d62b2b73fbd37087d93389c8c0`, with
-127 focused checks. Latest observed main is
-`64c8b9d81604984363666abadae236d9f2f76f7f`; public `release.json`
+Pre-batch PR761 head is `626cafc7d252375a8cc928e094aff74bb0c5456a`, adding
+32 focused Effects20 reader checks to the retained batch15 evidence. Latest main
+is `321408a3cfd75ae230d760f39fb692503652601a`; public `release.json`
 declares v0.142.3 from `b5ab06e12542f72e33c45b973ba693a5e1509c1c`,
 distribution prefix `37eca33f…`. Publisher acceptance and byte-audit closure
 remain unresolved. This conflicting branch requires deliberate reconciliation;
@@ -33,7 +43,9 @@ not production authority. Native body candidates require separate adoption.
 Parallel PR757 is prepared on current main with More/Large/rescue/Support fixes,
 112/112 combined checks, 9/9 display-host tests and two source-closure checks;
 focused EN/UK responsive browser review is recorded and Team/equipment review
-reopens. Narrow Ukrainian HUD/ability wrapping remains the next A3 layout fix. PR786's 158 preserved sources across
+reopens. Narrow Ukrainian HUD/ability wrapping is now corrected; the compact cue successor
+passes 157 focused checks at PR757 head `f067823fe8e2f76d061bd45d17b11787fe376a23`.
+Dense-map overflow reading is the next A2/A3 implementation slice. PR786's 158 preserved sources across
 162 additions are queued for v0.150.0, not live. PR787's optional CI tooling is
 held without activation. The register retains exact limits, the corrected
 controller-fixture failure, current capacity and effort ranges. The batch sections below
@@ -341,3 +353,14 @@ retained class setup and exact authenticated images. Authored Arcade restriction
 remain authoritative; the tool hides its inactive Boost control. This is a bounded
 A2 adoption prerequisite, not a new comparison project or C2 human qualification.
 See [the evidence and open acceptance](verification/actor-batch-15/README.md).
+
+## Sixteenth batch: remaining implementation while production review is deferred
+
+[Batched source evidence](verification/actor-batch-16/README.md) records four
+current-mission encounter Guide lessons with exact starting setup and admitted
+edition reconstruction, plus .rlart derivative/retained-parent comparison and
+native-pixel inspection. The separate Team PR adds a stable outside-board
+Field details action for compact cue overflow, preserving the existing paused
+reader and explicit Resume. Focused correctness, no-awards ownership, exact
+artifact bytes and basic browser interaction are checked. Production adoption,
+whole-content quality, device qualification and C2 remain deferred or unfinished.

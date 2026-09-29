@@ -5,6 +5,22 @@ candidates** to import collection JSON together with every named image, or one
 previously exported `.rlart` packet. This separate authoring draft does not change
 the Studio's `.rltheme` workspace or register artwork for a mission.
 
+To inspect a retained revision, select its exact artwork ID and choose **Compare
+retained parent**. Studio follows the packet's explicit parent relationship and
+shows both files with their collection revision, dimensions, medium and SHA-256.
+For the revision 7 community packet, `poltava-revised-r6-wide-r7` compares with
+`poltava-revised-r6`; selecting that revision 6 image compares with
+`poltava-original`. File names never choose a parent. Original images without a
+declared parent have no comparison.
+
+**Fit whole image** keeps each complete image visible. **Native pixels · scroll**
+uses one image pixel per CSS pixel in bounded, keyboard-scrollable frames; browser
+zoom and device scaling can still differ. The views share this display choice,
+not a resize or crop. Only the chosen parent is additionally decoded. Hiding the
+comparison, replacing its selection or leaving the page releases that resource;
+late or cancelled decodes cannot restore it. A back/forward-cache return leaves
+comparison off. These controls do not change packet revisions or exported bytes.
+
 To prepare a board image:
 
 1. Select a retained artwork with the `reveal` role. Its original bytes, SHA-256

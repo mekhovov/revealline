@@ -1,23 +1,21 @@
 # RevealLine delivery plan
 
-> **Current status:** use the
-> [completed and remaining delivery plan](plan-status-2026-09-28.md) for released
-> features, active promotion, prioritized remaining work and evidence limits.
-> Dated “current” versions and “next” queues below are historical. Default
-> Journey and unified-library delivery are complete; whole-game qualification
-> is not. Update the linked status register after each public acceptance.
+> **Current status:** use the [29 September register](plan-status-2026-09-29.md)
+> for completed source work, remaining implementation and evidence limits.
+> Dated versions and queues below retain their historical scope; source work
+> is not automatically public delivery.
 
-## Character and game-feel priority — 28 September 2026
+## Current instruction — 29 September 2026
 
-The latest user instruction puts **C3 core roster, C4 optional encounter variants,
-C5 edition/community cohorts and C6 authoring** first, in parallel, with their
-necessary C0/C1 checks. **C2 moves to the very end.** The
-[updated character plan](character-game-feel-plan.md#priority-revision-c3c6-first-c2-last)
-defines dependencies and the current [delivery checkpoint](plan-status-2026-09-28.md)
-separates implemented, queued and public work. Do not wait for C2’s human pilot
-or a publisher queue slot to develop independent C3–C6 slices. Required source,
-provenance, compatibility and visual checks still apply to each changed cohort;
-publication remains serialized with one owner.
+Continue **A current characters/reliable play → B optional encounter guidance →
+C one Ukrainian/FPV cohort**, with independent implementation in parallel.
+The user explicitly deferred production review. Do not make production approval,
+physical-device qualification or the publishing queue prerequisites for source
+work. Keep focused correctness, compatibility and artifact-integrity checks;
+record extended qualification as **deferred, not passed**. C2's formal human
+study stays last. The [character plan](character-game-feel-plan.md) describes
+scope and the existing PR757/761 batches preserve related changes. Publication
+remains with the single canonical publisher; no competing versions or approvals.
 
 ## Historical integration checkpoint — 23 September 2026 (v0.85 delivery state)
 

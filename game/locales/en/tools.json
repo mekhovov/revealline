@@ -2502,5 +2502,20 @@
   "motionLab.inspectionTravel.cruise": "Cruise",
   "motionLab.inspectionTravel.boost": "Boost",
   "motionLab.inspectionTravel.slow": "Slow",
-  "motionLab.inspectionTravel.hint": "Cosmetic preview only; arena travel stays unchanged. Pause freezes animation. Slow inspection can make rotor speeds look alike. Pulses and lights ignore travel."
+  "motionLab.inspectionTravel.hint": "Cosmetic preview only; arena travel stays unchanged. Pause freezes animation. Slow inspection can make rotor speeds look alike. Pulses and lights ignore travel.",
+  "studio.artwork.inspectionView": "Image view",
+  "studio.artwork.fitView": "Fit whole image",
+  "studio.artwork.nativeView": "Native pixels · scroll",
+  "studio.artwork.compareParent": "Compare retained parent",
+  "studio.artwork.comparisonHelp": "Compare the selected file with its declared retained parent. Native pixels shows one image pixel per CSS pixel in a scrollable frame; device scaling may differ. This is artwork inspection, not a mission or approval.",
+  "studio.artwork.selectedImage": "Selected · {{id}} · {{width}} × {{height}}",
+  "studio.artwork.parentImage": "Retained parent · {{id}} · {{width}} × {{height}}",
+  "studio.artwork.comparisonIdle": "Parent comparison is off.",
+  "studio.artwork.comparisonNoParent": "This artwork has no declared retained parent.",
+  "studio.artwork.comparisonLoading": "Loading the exact retained parent…",
+  "studio.artwork.comparisonReady": "Retained parent is ready for inspection.",
+  "studio.artwork.comparisonFailed": "Parent preview failed. The selected file and collection are unchanged.",
+  "studio.artwork.comparisonCancelled": "Parent preview cancelled. Choose Compare retained parent to try again.",
+  "studio.artwork.comparisonFacts": "Collection {{collection}} · revision {{revision}} · {{medium}} · {{bytes}} bytes · SHA-256 {{sha256}}",
+  "studio.artwork.nativeFrame": "Scrollable artwork preview"
 }

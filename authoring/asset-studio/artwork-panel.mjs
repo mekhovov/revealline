@@ -7,6 +7,7 @@ import {
 } from './artwork-collection.mjs';
 import { createStudioDownload } from './download.mjs';
 import { prepareArtworkDerivative } from './artwork-derivative.mjs';
+import { createArtworkParentPreview } from './artwork-comparison.mjs';
 import { t, localizedText, localizedAttribute, formatNumber } from '../../game/i18n/index.mjs';
 
 const copy = (key, values) => t(`tools:studio.artwork.${key}`, values);
@@ -89,9 +90,56 @@ export function mountArtworkCollectionPanel({
   $('artwork-fit').value = 'contain';
   let disposed = false,
     suspended = false,
+    comparing = false,
     request = 0,
     previewURL = null,
     pendingImage = null;
+  const comparisonMessage = (key) => localizedText($('artwork-comparison-status'), () => copy(key));
+  const compareButton = $('artwork-compare');
+  const setComparing = (value) => {
+    comparing = value;
+    compareButton.setAttribute('aria-pressed', String(value));
+  };
+  const comparison = createArtworkParentPreview({
+    document,
+    preview: $('artwork-parent-preview'),
+    urls,
+    onState(state, pair, image) {
+      if (disposed || suspended) return;
+      if (state === 'loading' || state === 'ready') {
+        $('artwork-parent').hidden = false;
+        localizedText($('artwork-parent-caption'), () =>
+          copy('parentImage', { id: pair.parent.id, ...pair.parent.file }),
+        );
+        localizedText($('artwork-parent-facts'), () =>
+          copy('comparisonFacts', {
+            collection: pair.collection.id,
+            revision: pair.collection.revision,
+            medium: pair.parent.medium,
+            ...pair.parent.file,
+            bytes: formatNumber(pair.parent.file.bytes),
+          }),
+        );
+        localizedText($('artwork-parent-rights'), () =>
+          copy('creatorFacts', {
+            creator: pair.parent.provenance.creator,
+            origin: pair.parent.provenance.origin,
+            ...pair.parent.provenance.license,
+          }),
+        );
+        if (image)
+          localizedAttribute(image, 'alt', () =>
+            copy('imageAlt', { id: pair.parent.id, medium: pair.parent.medium }),
+          );
+      } else {
+        setComparing(false);
+        $('artwork-parent').hidden = true;
+      }
+      comparisonMessage(`comparison${state[0].toUpperCase()}${state.slice(1)}`);
+    },
+  });
+  $('artwork-view').value = 'fit';
+  comparisonMessage('comparisonIdle');
   const message = (key, values = {}) => {
     if (!disposed)
       localizedText(status, () => copy(key, typeof values === 'function' ? values() : values));
@@ -109,10 +157,17 @@ export function mountArtworkCollectionPanel({
     previewURL = null;
   }
   function busy(value) {
+    if (value) comparison.cancel();
     $('artwork-cancel').disabled = !value;
     $('artwork-export').disabled = value || !draft.current || suspended;
     $('artwork-preview-source').disabled = value || !draft.current || suspended;
     treatment.disabled = selector.disabled = value || !draft.current || suspended;
+    $('artwork-view').disabled = value || !draft.current || suspended;
+    compareButton.disabled =
+      value ||
+      suspended ||
+      !draft.current?.document.artworks.find((artwork) => artwork.id === selector.value)?.provenance
+        .derivative;
     $('artwork-board').disabled = $('artwork-fit').disabled = value || !draft.current || suspended;
     $('artwork-prepare').disabled =
       value ||
@@ -181,6 +236,20 @@ export function mountArtworkCollectionPanel({
     const artwork =
       collection.artworks.find((entry) => entry.id === selector.value) ?? collection.artworks[0];
     clearPreview();
+    comparison.clear();
+    $('artwork-parent').hidden = true;
+    localizedText($('artwork-selected-caption'), () =>
+      copy('selectedImage', { id: artwork.id, ...artwork.file }),
+    );
+    localizedText($('artwork-selected-facts'), () =>
+      copy('comparisonFacts', {
+        collection: collection.id,
+        revision: collection.revision,
+        medium: artwork.medium,
+        ...artwork.file,
+        bytes: formatNumber(artwork.file.bytes),
+      }),
+    );
     showSources(artwork, collection);
     const shownAt = request;
     const image = document.createElement('img'),
@@ -191,6 +260,8 @@ export function mountArtworkCollectionPanel({
       copy('imageAlt', { id: artwork.id, medium: artwork.medium }),
     );
     image.dataset.medium = artwork.medium;
+    image.width = artwork.file.width;
+    image.height = artwork.file.height;
     image.onload = () => {
       if (disposed || suspended || pendingImage !== image || shownAt !== request) return;
       message('previewReady');
@@ -203,6 +274,11 @@ export function mountArtworkCollectionPanel({
     };
     image.src = url;
     preview.append(image);
+    if (!artwork.provenance.derivative) {
+      setComparing(false);
+      comparisonMessage('comparisonNoParent');
+    } else if (comparing) comparison.show(draft.current, artwork.id);
+    else comparisonMessage('comparisonIdle');
   }
   function acceptedView(selectedId = null) {
     const collection = draft.current.document;
@@ -259,6 +335,22 @@ export function mountArtworkCollectionPanel({
     busy(false);
   };
   $('artwork-preview-source').onclick = showSelected;
+  $('artwork-view').onchange = () => {
+    const view = $('artwork-view').value === 'native' ? 'native' : 'fit';
+    $('artwork-review').setAttribute('data-view', view);
+    for (const frame of [preview, $('artwork-parent-preview')]) {
+      frame.tabIndex = view === 'native' ? 0 : -1;
+      frame.scrollTop = frame.scrollLeft = 0;
+    }
+  };
+  compareButton.onclick = () => {
+    if (compareButton.disabled || disposed || suspended) return;
+    setComparing(!comparing);
+    if (comparing) return comparison.show(draft.current, selector.value);
+    comparison.clear();
+    $('artwork-parent').hidden = true;
+    comparisonMessage('comparisonIdle');
+  };
   treatment.onchange = () => {
     try {
       draft.setTreatment(treatment.value);
@@ -326,6 +418,10 @@ export function mountArtworkCollectionPanel({
     suspended = true;
     draft.cancel();
     clearPreview();
+    comparison.clear();
+    setComparing(false);
+    $('artwork-parent').hidden = true;
+    comparisonMessage('comparisonIdle');
     download.dispose();
     busy(false);
     if (!event.persisted) dispose();
@@ -342,13 +438,16 @@ export function mountArtworkCollectionPanel({
     request++;
     draft.dispose();
     clearPreview();
+    comparison.dispose();
     download.dispose();
-    for (const id of ['artwork-files', 'artwork-item', 'artwork-treatment']) $(id).onchange = null;
+    for (const id of ['artwork-files', 'artwork-item', 'artwork-treatment', 'artwork-view'])
+      $(id).onchange = null;
     for (const id of [
       'artwork-export',
       'artwork-cancel',
       'artwork-preview-source',
       'artwork-prepare',
+      'artwork-compare',
     ])
       $(id).onclick = null;
     window.removeEventListener('pagehide', hide);

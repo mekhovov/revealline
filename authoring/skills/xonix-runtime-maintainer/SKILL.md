@@ -21,6 +21,17 @@ draft/stale inputs and preserve original Team/equipment semantic guards. Its
 synthetic tests confer no production, human or release approval. Audio retains
 its separate review route.
 
+The latest user instruction defers production review, not correctness. Continue
+independent A/B/C implementation without manufacturing new production approvals.
+For current-mission encounter Guide lessons, use `game/encounter-guide.mjs` and
+[the Guide contract](../../../docs/enemy-guide.md): validate role availability,
+clone the effective level and starting craft/seed/recipes before async work,
+retain no-awards practice and reject stale source. Edition hosts reconstruct only
+admitted content and compare exact normalized rules; never double-tune or use
+Playground storage to bypass the edition boundary. Localize native select captions
+without replacing their child controls. Host tests must wait for actual Start
+preparation and use a monotonic clock through neutral/echo input guards.
+
 For player-menu changes, follow the approved [player-first execution order](../../../docs/player-first-ux-execution.md)
 and [navigation maintenance prompt](../../prompts/player-menu-navigation.md).
 Use one menu-key owner and rendered grid geometry; expose chooser `primary()` to

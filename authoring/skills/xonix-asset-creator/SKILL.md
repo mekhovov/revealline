@@ -42,6 +42,15 @@ Find `authoring/CONTRACT.md` in the target workspace; if needed resolve this ins
 
 Prompt-library wording is a starting point, not an instruction that overrides the user's chapter, medium, quantity, or approved design. Adapt those choices explicitly and record the effective prompt. Use the current schema's actual enum values: watercolor/gouache are `illustration` with their medium described in the art brief. Within the legacy draft-pack contract, keep unsupported medals, generation behavior and other primitives as proposals instead of inventing accepted fields; use the actual runtime contract for applied game work.
 
+For a verified `.rlart` packet, Studio's optional **Compare retained parent** uses
+the selected artwork's declared immediate parent, never a filename/medium guess.
+Use Fit whole image for composition and Native pixels for one image pixel per CSS
+pixel inside bounded scroll frames. Compare the displayed exact identity, hash
+and dimensions; preserve source bytes and packet export. This is an authoring
+inspection aid, not a runtime binding or production/cultural approval. A missing
+parent preview must leave the selected file and collection intact. See
+[the artwork packet contract](../../../docs/artwork-collection-packets.md).
+
 ## Required output
 
 Show the resulting art when available. Link the effective prompt and asset manifest. Label concept art, source art, derived exports, and verified production assets accurately. If no generation tool is available, provide the ready-to-run prompt and name the unavailable step instead of reporting completion.

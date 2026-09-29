@@ -49,3 +49,13 @@ validated file metadata and reject conflicting facts for one hash. Do not raise
 budgets, compress opaque metadata, truncate history or edit evidence to pass.
 Check the real current collection and byte-identical import/export round trips;
 record older-reader compatibility separately from production/art approval.
+
+## Compare an artwork candidate with its retained source
+
+Import the verified `.rlart` packet and select the declared board derivative.
+Use Compare retained parent, then Fit whole image and Native pixels. Record both
+exact IDs, dimensions and hashes. Confirm only the declared parent is shown;
+compare EN/UK labels, selection changes and cancellation without changing the
+collection or exporting altered originals. Retain failed decode evidence. This
+prepares a later art decision; when production review is deferred, leave the
+candidate unapproved and continue independent implementation.
