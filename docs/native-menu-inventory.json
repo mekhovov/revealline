@@ -421,8 +421,9 @@
     {
       "name": "Team Campaign Creator",
       "route": "/game/creator/team.html",
-      "verification": "pending exact-candidate browser qualification; historical observations do not establish current acceptance",
-      "historicalVerification": "keyboard and virtual-controller browser workflow passed; physical controller not tested"
+      "verification": "Current picture-only virtual-pad and native-keyboard workflows passed on dda49b3be, including cancellation, invalid input, separate review/approval, installation, exact installed reopening, byte-identical OS exports and mission search/Back without starting play. Native input required no pointer reset. Video, physical-device and published acceptance remain pending.",
+      "historicalVerification": "keyboard and virtual-controller browser workflow passed; physical controller not tested",
+      "evidence": "docs/verification/team-creator-input-2026-09-29.md"
     },
     {
       "name": "Company Studio",

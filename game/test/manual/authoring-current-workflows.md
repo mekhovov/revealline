@@ -67,6 +67,61 @@ Open editable source on the same installed edition, Approve and Download.
 Record exact filenames, sizes, SHA-256 and production importer results from the
 actual OS downloads separately from the virtual-controller receipt.
 
+## Team Campaign Creator
+
+Use the isolated qualification origin:
+`http://127.0.0.1:8987/game/test/manual/authoring-controller.html?tool=teamCreatorCurrent`.
+Run controller workflow and keep the tool in the foreground. This case refuses
+other ports and retains a new installed Team package. It does not clear player
+saves, remove installed content or replace pre-existing creator drafts.
+
+The case cancels a name draft and a seed draft, then commits a unique campaign
+ID and seed 1. A blank campaign name is rejected before levels or approval
+appear. Two real cooperative levels are generated; the picture source chooser
+is canceled once, and preparing a review without pictures must fail. The built-in
+Dawn Signal picture is assigned to each level. A picture-fit draft is canceled
+before Cover is deliberately selected. A blank picture description must fail
+without replacing either selected File or enabling export.
+
+After correcting the description, each actual review picture must decode at
+1152 × 576. Read and scroll uses the shared controller reading owner; Down reaches
+the region's bottom when it overflows, and Back restores its entry without
+approving. A separate Approve and Download produces `.rlteammedia` bytes accepted
+by `importCreatorTeamMediaCampaign`, including image decoding, hashes and twelve
+replayed difficulty/preset routes. The odd seed's reversed template order is
+checked against the production template metadata.
+
+Install must focus Open Team. Show installed packages then opens the exact new
+edition, restoring public fields and verified runtime media while source File
+inputs remain empty. This is an installed-package editing path, **not recovery
+of original private images, image descriptions or crop history**. Prepare review,
+Approve and Download must reproduce the identical bytes and SHA-256. Reinstall
+is idempotent. The real Open Team link must leave gameplay stopped; Select Mission
+then filters to Custom and the unique campaign, focuses the exact installed
+mission card without activating it, and Back returns to the unchanged Team
+landing. There is no dedicated Team-to-Creator return route to qualify.
+
+Read-only production store inspection checks that all pre-existing Team editions,
+progress and media references remain unchanged. The fixture explicitly restores
+the previous Team library session-filter value/absence after browsing, then
+checks old local/session keys. This cleanup is not application input or evidence
+of a menu command. The new installed package and actual exports remain available
+for separate OS download inspection.
+
+For native keyboard add `&keyboard=1`. Use Tab/Shift+Tab and native Enter, text
+editing, and select keys. Cancel a source chooser, edit a unique name/ID and seed,
+check blank-name and missing-picture rejection, assign the two bundled pictures
+through their adjacent Choose source actions, and reject an empty description.
+Prepare review, enter each Read and scroll region and leave with Escape, then
+separately Approve and Download. Install, verify Open Team focus, Show installed
+packages, reopen the exact edition and re-review/reapprove/export. Finally use
+Open Team → Select Mission to find that edition by its visible campaign name
+(not its raw campaign ID), without starting it, and Back.
+Retain the exact `.rlteammedia` files and record byte count, SHA-256, production
+import and full image decoding separately from the virtual-pad result. Optional
+video, timed operation cancellation, gameplay, OS file-picker reimport, physical
+controller and device qualification remain separate gates.
+
 ## Enemy Workshop
 
 Open `/game/test/manual/authoring-controller.html?tool=enemyCurrent` and run.

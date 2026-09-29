@@ -4,6 +4,7 @@ import { importCreatorBundle } from '../../creator/bundle.mjs';
 import { createCreatorStore, installedCreatorManifests } from '../../creator/installed.mjs';
 import { createCreatorDraftBackend } from '../../creator/drafts.mjs';
 import { canonicalJSON } from '../../data-json.mjs';
+import { hydrateStoredStillMedia } from '../../media-storage-record.mjs';
 
 const assert = (condition, message) => {
   if (!condition) throw new Error(message);
@@ -39,7 +40,9 @@ export const creatorCurrent = [
       store = createCreatorStore(),
       drafts = createCreatorDraftBackend(store);
     try {
-      const beforeMedia = await store.readDomainMetadata('media'),
+      const beforeMedia = hydrateStoredStillMedia(
+          (await store.readDomainMetadata('media')).library,
+        ),
         beforeInstalled = await installedCreatorManifests(store),
         draftId = new URL(win.location.href).searchParams.get('draft'),
         originalName = p.doc.querySelector('#name').value;
@@ -224,10 +227,10 @@ export const creatorCurrent = [
         finalReceipt.sha256 === firstReceipt.sha256,
         'Reopened export is not the exact same portable pack',
       );
-      const afterMedia = await store.readDomainMetadata('media'),
+      const afterMedia = hydrateStoredStillMedia((await store.readDomainMetadata('media')).library),
         afterInstalled = await installedCreatorManifests(store),
-        retained = new Map(afterMedia.library.legacy.items.map((row) => [row.id, row]));
-      for (const row of beforeMedia.library.legacy.items)
+        retained = new Map(afterMedia.legacy.items.map((row) => [row.id, row]));
+      for (const row of beforeMedia.legacy.items)
         assert(
           canonicalJSON(retained.get(row.id)) === canonicalJSON(row),
           `Existing media reference changed: ${row.id}`,
@@ -255,7 +258,7 @@ export const creatorCurrent = [
           },
           retainedExisting: {
             installedEditions: beforeInstalled.length,
-            mediaReferences: beforeMedia.library.legacy.items.length,
+            mediaReferences: beforeMedia.legacy.items.length,
             localKeys: originalLocal.length,
             sessionKeys: originalSession.length,
           },

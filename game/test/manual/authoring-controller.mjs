@@ -583,6 +583,7 @@ document.getElementById('run').onclick = async () => {
       },
       visible,
       pulse,
+      navigate,
       choose,
       downloads,
       wait: until,
