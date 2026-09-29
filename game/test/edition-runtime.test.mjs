@@ -131,7 +131,7 @@ test('actual landing closure retains artwork motion, receiver loss and signal at
     entries: ['game/ui/menu-scenes.mjs', 'game/ui/native-menus.mjs'],
   });
   const required = [
-    ...['fpv', 'ukraine'].flatMap((world) =>
+    ...['fpv', 'ukraine', 'retro', 'coupa'].flatMap((world) =>
       ['versus', 'versus-portrait', 'team', 'team-portrait'].map(
         (mode) => `game/ui/art/menu-scenes/${world}-${mode}.webp`,
       ),
@@ -195,10 +195,10 @@ test('standalone menu projection preserves selected profile data and fallback wi
     assert.ok(resources.includes(`game/ui/${selected.landscape.slice(2)}`));
     assert.ok(resources.includes('game/ui/art/menu-scenes/fpv-portrait.webp'));
     assert.ok(!resources.includes('game/ui/art/menu-scenes/retro.webp'));
-    assert.ok(!resources.some((name) => /(?:fpv|ukraine)-(versus|team)/.test(name)));
+    assert.ok(!resources.some((name) => /(?:fpv|ukraine|retro|coupa)-(versus|team)/.test(name)));
     assert.doesNotMatch(
       projectEditionMenuScenes(original, [id]).toString(),
-      /(?:fpv|ukraine)-(versus|team).*\.webp/,
+      /(?:fpv|ukraine|retro|coupa)-(versus|team).*\.webp/,
     );
     if (selected.wordmark) assert.ok(resources.includes(`game/ui/${selected.wordmark.slice(2)}`));
   }

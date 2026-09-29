@@ -141,8 +141,8 @@
   {
     "id": "runtime-menu-scene-provenance",
     "path": "game/ui/art/menu-scenes/provenance.json",
-    "sha256": "897f9145c25735cd3fb300fb05360b7d0aa6dc6c30cf9d8ea37a9d208a0c8e35",
-    "bytes": 15059,
+    "sha256": "baaee31dedd103ee88a84776531469202b17cee5f0c735a056ea165c76028df3",
+    "bytes": 21119,
     "publication": "public",
     "approved": true,
     "dependencies": []
@@ -485,6 +485,78 @@
     "path": "game/ui/art/menu-scenes/ukraine-team-portrait.webp",
     "sha256": "7670db78d5d46fe4be95367ebb20c8ed2d39f007c501be621b5907d864164cfe",
     "bytes": 546480,
+    "publication": "public",
+    "approved": true,
+    "dependencies": ["runtime-menu-scene-provenance"]
+  },
+  {
+    "id": "runtime-menu-scene-retro-versus",
+    "path": "game/ui/art/menu-scenes/retro-versus.webp",
+    "sha256": "587c3ca3efe91d906b1a5fa56993d125d0c533c11d7cfd15699bc12e59a37a20",
+    "bytes": 1929216,
+    "publication": "public",
+    "approved": true,
+    "dependencies": ["runtime-menu-scene-provenance"]
+  },
+  {
+    "id": "runtime-menu-scene-retro-versus-portrait",
+    "path": "game/ui/art/menu-scenes/retro-versus-portrait.webp",
+    "sha256": "a536925b458dfb1b0015328945e224eddf321ac877aa868fa9133d45617ccd8f",
+    "bytes": 580790,
+    "publication": "public",
+    "approved": true,
+    "dependencies": ["runtime-menu-scene-provenance"]
+  },
+  {
+    "id": "runtime-menu-scene-retro-team",
+    "path": "game/ui/art/menu-scenes/retro-team.webp",
+    "sha256": "0760ab82df934667efd69c14b778f4e6da862475db76ecf8fb8eacc6983e334b",
+    "bytes": 1937786,
+    "publication": "public",
+    "approved": true,
+    "dependencies": ["runtime-menu-scene-provenance"]
+  },
+  {
+    "id": "runtime-menu-scene-retro-team-portrait",
+    "path": "game/ui/art/menu-scenes/retro-team-portrait.webp",
+    "sha256": "3a235ff27b250595b6e95100bf7306d8962a4592ef6b02cc0ec690f4839de3a3",
+    "bytes": 545932,
+    "publication": "public",
+    "approved": true,
+    "dependencies": ["runtime-menu-scene-provenance"]
+  },
+  {
+    "id": "runtime-menu-scene-coupa-versus",
+    "path": "game/ui/art/menu-scenes/coupa-versus.webp",
+    "sha256": "7c10b3469f5bbabd6a704abb0900f9c9afd1d8755b830f2f0229c3370cf051dd",
+    "bytes": 1620118,
+    "publication": "public",
+    "approved": true,
+    "dependencies": ["runtime-menu-scene-provenance"]
+  },
+  {
+    "id": "runtime-menu-scene-coupa-versus-portrait",
+    "path": "game/ui/art/menu-scenes/coupa-versus-portrait.webp",
+    "sha256": "5e5aa3c392527b45757f4175639919544be598ad4140959f8c7297297e0af8e6",
+    "bytes": 1669344,
+    "publication": "public",
+    "approved": true,
+    "dependencies": ["runtime-menu-scene-provenance"]
+  },
+  {
+    "id": "runtime-menu-scene-coupa-team",
+    "path": "game/ui/art/menu-scenes/coupa-team.webp",
+    "sha256": "be7f79098d17957e598e7fd4a96004f2656a7459a08980b0bcd8ac757c30f136",
+    "bytes": 1580074,
+    "publication": "public",
+    "approved": true,
+    "dependencies": ["runtime-menu-scene-provenance"]
+  },
+  {
+    "id": "runtime-menu-scene-coupa-team-portrait",
+    "path": "game/ui/art/menu-scenes/coupa-team-portrait.webp",
+    "sha256": "41c42fefb39048fd1dadd790ef14225275ca99333c8b6383e8fc09f9763d0de7",
+    "bytes": 1744888,
     "publication": "public",
     "approved": true,
     "dependencies": ["runtime-menu-scene-provenance"]

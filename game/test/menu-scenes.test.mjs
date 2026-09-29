@@ -14,7 +14,7 @@ import {
 } from '../ui/menu-scenes.mjs';
 import { Document, Events } from './helpers/couch-dom.mjs';
 
-const modeWorlds = ['fpv', 'ukraine'];
+const modeWorlds = ['fpv', 'ukraine', 'retro', 'coupa'];
 const modeProfiles = () =>
   modeWorlds.flatMap((themeId) =>
     ['versus', 'team'].map((mode) => resolveMenuScene({ themeId, mode })),
@@ -215,7 +215,7 @@ for (const world of modeWorlds)
         resolveMenuScene({ themeId: world, editionId: 'coupa-all', mode }),
         MENU_SCENES[world],
       );
-      for (const themeId of ['retro', 'coupa'])
+      for (const themeId of Object.keys(MENU_SCENES).filter((id) => !modeWorlds.includes(id)))
         assert.equal(resolveMenuScene({ themeId, mode }), MENU_SCENES[themeId]);
     }
     for (const mode of ['solo', '__proto__', 'constructor', '../../private'])
@@ -239,7 +239,7 @@ for (const world of modeWorlds)
       ['team', false, `${world}-team.webp`],
       ['team', true, `${world}-team-portrait.webp`],
       ['versus', true, `${world}-versus-portrait.webp`],
-      ['solo', true, world === 'fpv' ? 'fpv-portrait.webp' : 'ukraine.webp'],
+      ['solo', true, MENU_SCENES[world].portrait.split('/').at(-1)],
     ]) {
       const resets = receiver.resets;
       f.context.mode = mode;
@@ -495,12 +495,13 @@ test('scene files and provenance match checksums and fit 2 MiB including the sha
 for (const world of modeWorlds)
   test(`${world} mode originals, style references and prompts are bound to their delivered derivatives`, async () => {
     const root = new URL('../../', import.meta.url);
-    const prompts = JSON.parse(
-      await readFile(new URL(`authoring/library/menu-scenes/${world}-mode-prompts.json`, root)),
-    );
     const provenance = JSON.parse(
       await readFile(new URL('../ui/art/menu-scenes/provenance.json', import.meta.url)),
     );
+    const promptSource = provenance.assets.find(
+      (asset) => asset.id === `${world}-versus`,
+    ).promptSource;
+    const prompts = JSON.parse(await readFile(new URL(promptSource, root)));
     assert.equal(prompts.generator, 'OpenAI built-in image_gen');
     assert.deepEqual(prompts.images.map((entry) => entry.id).sort(), [
       `${world}-team`,
@@ -594,8 +595,8 @@ test('DroneAid photograph keeps a full static source in both orientations and We
   f.api.dispose();
 });
 
-test('Solo, Versus and Team changes preserve focus, the artwork source and a single renderer', () => {
-  const f = fixture({ themeId: 'retro' });
+test('mode requests on a Solo-only edition preserve focus, the artwork source and a single renderer', () => {
+  const f = fixture({ themeId: 'coupa-village', editionId: 'coupa-all' });
   f.menu.focus();
   f.load();
   f.renderer.ready(true);

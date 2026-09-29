@@ -28,7 +28,15 @@ SOURCES = {
     'ukraine-team': 'authoring/library/menu-scenes/ukraine-team-v1.png',
     'ukraine-team-portrait': 'authoring/library/menu-scenes/ukraine-team-portrait-v1.png',
     'retro': 'authoring/library/menu-scenes/retro-rainy-arcade-v1.png',
+    'retro-versus': 'authoring/library/menu-scenes/retro-versus-v1.png',
+    'retro-versus-portrait': 'authoring/library/menu-scenes/retro-versus-portrait-v1.png',
+    'retro-team': 'authoring/library/menu-scenes/retro-team-v1.png',
+    'retro-team-portrait': 'authoring/library/menu-scenes/retro-team-portrait-v1.png',
     'coupa': 'game/editions/assets/coupa/home.png',
+    'coupa-versus': 'authoring/library/menu-scenes/coupa-mode-scenes-2026-09-29/coupa-versus-v1.png',
+    'coupa-versus-portrait': 'authoring/library/menu-scenes/coupa-mode-scenes-2026-09-29/coupa-versus-portrait-v1.png',
+    'coupa-team': 'authoring/library/menu-scenes/coupa-mode-scenes-2026-09-29/coupa-team-v1.png',
+    'coupa-team-portrait': 'authoring/library/menu-scenes/coupa-mode-scenes-2026-09-29/coupa-team-portrait-v1.png',
     'coupa-village': 'authoring/library/menu-scenes/coupa-overview-v1.png',
     'coupa-spend-in-motion-theme': 'game/editions/assets/coupa/spend-city-v2.png',
     'coupa-inside-village-theme': 'game/editions/assets/coupa/coupa-inside-village-key.png',
@@ -51,7 +59,7 @@ for name, source in SOURCES.items():
     if selected and name not in selected:
         continue
     preserve_original = name == 'droneaid-nl-community'
-    mode_world = next((world for world in ['fpv', 'ukraine']
+    mode_world = next((world for world in ['fpv', 'ukraine', 'retro', 'coupa']
                        if name.startswith((world + '-versus', world + '-team'))), None)
     output = OUT / ('droneaid-main-background.png' if preserve_original else name + '.webp')
     with Image.open(ROOT / source) as original:
@@ -61,9 +69,9 @@ for name, source in SOURCES.items():
             process = 'Original supplied PNG; byte-for-byte copy, no raster changes'
         else:
             # Quality controls lossless encoder effort, not pixel fidelity.
-            # Ukraine's detailed paintings benefit from its exhaustive setting;
+            # Detailed mode paintings benefit from its exhaustive setting;
             # retain the earlier recipe for previously admitted artwork.
-            effort = 100 if mode_world == 'ukraine' else 75
+            effort = 100 if mode_world and mode_world != 'fpv' else 75
             original.save(output, format='WEBP', lossless=True, quality=effort, method=6)
             atlas_bytes = (OUT / 'analog-noise-atlas.png').stat().st_size
             threshold = ACTIVE_BUDGET - atlas_bytes if mode_world else 700 * 1024
@@ -74,7 +82,7 @@ for name, source in SOURCES.items():
                 with Image.open(output) as encoded:
                     assert encoded.convert('RGBA').tobytes() == original.convert('RGBA').tobytes()
             process = ('WebP lossless; quality=100 encoding effort, method=6; decoded RGBA verified identical'
-                       if lossless and mode_world == 'ukraine' else
+                       if lossless and effort == 100 else
                        'WebP lossless; decoded RGBA verified identical' if lossless else
                        'WebP quality 94, method=6; no cropping, resizing or retouching')
         size = original.size
@@ -86,7 +94,9 @@ for name, source in SOURCES.items():
         'sourceSha256': hashlib.sha256((ROOT / source).read_bytes()).hexdigest(),
         'width': size[0], 'height': size[1],
         'process': process,
-        **({'promptSource': f'authoring/library/menu-scenes/{mode_world}-mode-prompts.json',
+        **({'promptSource': ('authoring/library/menu-scenes/coupa-mode-scenes-2026-09-29/prompts.json'
+                            if mode_world == 'coupa' else
+                            f'authoring/library/menu-scenes/{mode_world}-mode-prompts.json'),
             'generator': 'OpenAI built-in image_gen',
             'rights': f'Original generated project artwork; existing {mode_world.upper()} project art used as reference'}
            if mode_world else {}),

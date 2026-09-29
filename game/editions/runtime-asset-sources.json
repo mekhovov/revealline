@@ -137,6 +137,30 @@
       "source": "game/ui/art/menu-scenes/provenance.json",
       "promptSource": "authoring/library/menu-scenes/ukraine-mode-prompts.json",
       "description": "Four original built-in image_gen Ukraine Versus/Team compositions, with separate landscape and portrait originals. Complete prompts and source/reference hashes are retained. Landscapes use verified lossless WebP; portraits use quality 94 WebP without cropping, resizing or retouching. Default-game mode artwork is excluded from all Solo-only company edition packages."
+    },
+    {
+      "assetIds": [
+        "runtime-menu-scene-retro-versus",
+        "runtime-menu-scene-retro-versus-portrait",
+        "runtime-menu-scene-retro-team",
+        "runtime-menu-scene-retro-team-portrait"
+      ],
+      "kind": "generated-project-artwork-and-encoding-derivatives",
+      "source": "game/ui/art/menu-scenes/provenance.json",
+      "promptSource": "authoring/library/menu-scenes/retro-mode-prompts.json",
+      "description": "Four original built-in image_gen retro Versus/Team compositions, separately authored for landscape and portrait. Complete prompts and source/reference hashes retained; unchanged dimensions and exact encoding recipes recorded in provenance. Default-game mode artwork is excluded from every Solo-only company edition package."
+    },
+    {
+      "assetIds": [
+        "runtime-menu-scene-coupa-versus",
+        "runtime-menu-scene-coupa-versus-portrait",
+        "runtime-menu-scene-coupa-team",
+        "runtime-menu-scene-coupa-team-portrait"
+      ],
+      "kind": "generated-project-artwork-and-encoding-derivatives",
+      "source": "game/ui/art/menu-scenes/provenance.json",
+      "promptSource": "authoring/library/menu-scenes/coupa-mode-scenes-2026-09-29/prompts.json",
+      "description": "Four original built-in image_gen coupa Versus/Team compositions, separately authored for landscape and portrait. Complete prompts and source/reference hashes retained; unchanged dimensions and exact encoding recipes recorded in provenance. Default-game mode artwork is excluded from every Solo-only company edition package."
     }
   ]
 }

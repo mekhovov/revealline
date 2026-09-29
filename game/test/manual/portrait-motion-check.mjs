@@ -4,7 +4,7 @@ import { attachArtworkMotion } from '../../ui/menu-scene-motion.mjs';
 import { resolveMenuScene } from '../../ui/menu-scene-catalog.mjs';
 
 const parameters = new URL(window.location.href).searchParams;
-const modeWorld = ['fpv', 'ukraine'].includes(parameters.get('suite'))
+const modeWorld = ['fpv', 'ukraine', 'retro', 'coupa'].includes(parameters.get('suite'))
   ? parameters.get('suite')
   : null;
 const modeSuite = Boolean(modeWorld);
@@ -24,8 +24,8 @@ const delay = (ms) => new Promise((resolve) => window.setTimeout(resolve, ms));
 const status = document.getElementById('status');
 const output = document.getElementById('results');
 if (modeSuite) {
-  document.querySelector('h1').textContent =
-    `${modeWorld === 'fpv' ? 'FPV' : 'Ukraine'} Versus and Team artwork`;
+  const name = { fpv: 'FPV', ukraine: 'Ukraine', retro: '1994 Forever', coupa: 'Coupa' }[modeWorld];
+  document.querySelector('h1').textContent = `${name} Versus and Team artwork`;
   document.querySelector('#controls p').textContent =
     'Measures four production compositions at 1280 × 800 and 390 × 844. No player preferences or saves are changed.';
   document.getElementById('run').textContent = 'Run four compositions';

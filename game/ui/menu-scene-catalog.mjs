@@ -350,6 +350,86 @@ export const MENU_SCENE_COMPOSITIONS = Object.freeze({
       ]),
     }),
   }),
+  retro: Object.freeze({
+    versus: Object.freeze({
+      composition: 'retro-versus',
+      landscape: './art/menu-scenes/retro-versus.webp',
+      portrait: './art/menu-scenes/retro-versus-portrait.webp',
+      landscapePosition: '70% 50%',
+      portraitPosition: '50% 50%',
+      environment: freezeEnvironment([
+        ['water', 64, 88, 20, 8, -1.2, 4.8],
+        ['lamp', 61, 27, 5, 7, -1, 4.2],
+        ['lamp', 68, 19, 14, 4, -3, 5.6],
+        ['foliage', 44, 45, 5, 16, -2, 7],
+      ]),
+      portraitEnvironment: freezeEnvironment([
+        ['water', 54, 84, 26, 9, -1.2, 4.8],
+        ['lamp', 61, 31, 7, 4, -1, 4.2],
+        ['lamp', 73, 33, 6, 5, -3, 5.6],
+        ['foliage', 31, 42, 11, 12, -2, 7],
+      ]),
+    }),
+    team: Object.freeze({
+      composition: 'retro-team',
+      landscape: './art/menu-scenes/retro-team.webp',
+      portrait: './art/menu-scenes/retro-team-portrait.webp',
+      landscapePosition: '70% 50%',
+      portraitPosition: '50% 50%',
+      environment: freezeEnvironment([
+        ['water', 67, 87, 20, 9, -1.2, 4.8],
+        ['lamp', 61, 27, 5, 7, -1, 4.2],
+        ['lamp', 68, 19, 14, 4, -3, 5.6],
+        ['foliage', 44, 45, 5, 17, -2, 7],
+      ]),
+      portraitEnvironment: freezeEnvironment([
+        ['water', 55, 82, 24, 11, -1.2, 4.8],
+        ['lamp', 63, 29, 6, 4, -1, 4.2],
+        ['lamp', 70, 31, 6, 5, -3, 5.6],
+        ['foliage', 44, 44, 9, 10, -2, 7],
+      ]),
+    }),
+  }),
+  coupa: Object.freeze({
+    versus: Object.freeze({
+      composition: 'coupa-versus',
+      landscape: './art/menu-scenes/coupa-versus.webp',
+      portrait: './art/menu-scenes/coupa-versus-portrait.webp',
+      landscapePosition: '70% 50%',
+      portraitPosition: '50% 50%',
+      environment: freezeEnvironment([
+        ['cloud', 79, 4, 20, 10, -4, 16],
+        ['lamp', 39, 24, 3, 6, -1, 4.8],
+        ['water', 85, 28, 9, 4, -2, 5.2],
+        ['foliage', 32, 38, 5, 12, -2, 7],
+      ]),
+      portraitEnvironment: freezeEnvironment([
+        ['cloud', 56, 40, 37, 5, -4, 16],
+        ['lamp', 17, 49, 5, 3, -1, 4.8],
+        ['water', 81, 54, 10, 3, -2, 5.2],
+        ['foliage', 78, 85, 15, 10, -2, 7],
+      ]),
+    }),
+    team: Object.freeze({
+      composition: 'coupa-team',
+      landscape: './art/menu-scenes/coupa-team.webp',
+      portrait: './art/menu-scenes/coupa-team-portrait.webp',
+      landscapePosition: '70% 50%',
+      portraitPosition: '50% 50%',
+      environment: freezeEnvironment([
+        ['cloud', 78, 9, 20, 14, -4, 16],
+        ['lamp', 39, 19, 3, 7, -1, 4.8],
+        ['water', 84, 33, 7, 5, -2, 5.2],
+        ['foliage', 42, 30, 5, 18, -2, 7],
+      ]),
+      portraitEnvironment: freezeEnvironment([
+        ['cloud', 57, 40, 39, 7, -4, 16],
+        ['lamp', 7, 34, 7, 5, -1, 4.8],
+        ['water', 78, 53, 8, 3, -2, 5.2],
+        ['foliage', 80, 87, 12, 10, -2, 7],
+      ]),
+    }),
+  }),
 });
 const compositionProfiles = new WeakMap();
 
