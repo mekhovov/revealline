@@ -86,6 +86,11 @@ export function selectOfflineCore(entries, excluded, { mode = 'solo' } = {}) {
       name === 'game/ui/install-entry.mjs' ||
       name === 'authoring/motion-lab/presets.json' ||
       name.startsWith('game/content-design/runtime/') ||
+      // Bundled flight simulation includes vendor-to-vendor imports that the
+      // generic dependency walker deliberately does not parse. Retain its
+      // explicit build-config payload together for offline menu launches.
+      name.startsWith('optional-practice/civilian-fpv/') ||
+      name === 'optional-practice/install-context.mjs' ||
       name.startsWith('app/') ||
       name.startsWith('icons/') ||
       name === 'manifest.webmanifest' ||

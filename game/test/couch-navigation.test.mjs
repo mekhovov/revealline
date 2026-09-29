@@ -187,6 +187,10 @@ test('native menu focus cancels a held D-pad repeat until neutral without cleari
 
 test('Ready slot loss consumes another pad Confirm; the surviving player keeps its slot', async (t) => {
   const f = await page(t, { pads: [pad(0), pad(1)] });
+  f.join(0);
+  f.join(1);
+  // Give the second assigned player the shared menu explicitly.
+  f.$('race-menu-release').onclick();
   f.join(1);
   f.setPads([null, f.pads()[1]]);
   f.button(1, 0, true);
@@ -209,6 +213,7 @@ for (const eventLoss of [false, true]) {
   test(`${eventLoss ? 'disconnect event' : 'descriptor change'} at the same index pauses flight and requires neutral plus a new menu join`, async (t) => {
     const f = await page(t, { pads: [pad(0), pad(1)] });
     f.join(0);
+    f.join(1);
     f.pulse(0, 0);
     f.frame();
     f.pads()[0].axes[0] = 1;
@@ -238,6 +243,7 @@ for (const eventLoss of [false, true]) {
 test('explicit menu release permits the other player to join, never transfers a held edge', async (t) => {
   const f = await page(t, { pads: [pad(0), pad(1)] });
   f.join(0);
+  f.join(1);
   f.focus('race-options');
   f.pulse(0, 0);
   f.focus('race-settings-tab-controls');
@@ -417,7 +423,7 @@ test('API errors and unsupported pads remain usable with keyboard and truthful R
   const unsupported = pad(0);
   unsupported.mapping = '';
   const f = await page(t, { pads: [unsupported] });
-  assert.match(f.$('race-menu-status').textContent, /no standard mapping/);
+  assert.match(f.$('race-menu-status').textContent, /Configure/);
   f.setError(new DOMException('Denied', 'SecurityError'));
   f.frame();
   assert.match(f.$('race-menu-status').textContent, /unavailable/);
@@ -680,9 +686,14 @@ for (const turnPolicy of ['immediate', 'grid-center']) {
 test('timeout draw keeps series at zero and needs a fresh explicit Next gesture', async (t) => {
   const f = await page(t, { pads: [pad(0), pad(1), pad(2)] });
   f.frame();
-  f.pulse(2, 0);
-  assert.equal(f.$('race-menu-release').hidden, true);
   f.join(0);
+  f.join(1);
+  f.pulse(2, 0);
+  assert.equal(
+    f.$('race-menu-release').hidden,
+    false,
+    'Unassigned third pad does not change the menu owner.',
+  );
   f.button(0, 0, true);
   f.frame();
   f.button(0, 0, false);
@@ -734,6 +745,10 @@ for (const turnPolicy of ['immediate', 'grid-center']) {
         turnPolicy,
         pads: adapter === 'controller' ? [pad(0)] : [],
       });
+      if (adapter === 'controller') {
+        f.frame();
+        f.pulse(0, 3);
+      }
       f.$('race-start').click();
       f.frames(2);
       if (adapter === 'controller') f.pads()[0].axes[1] = 1;

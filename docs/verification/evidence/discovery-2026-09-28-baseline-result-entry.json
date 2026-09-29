@@ -1,0 +1,212 @@
+{
+  "binding": {
+    "deviceLabel": "local-Mac16,7-AppleM4Pro-48GiB-macOS26.7",
+    "editionId": "fpv-learning",
+    "gameplayId": "7feffc97157784af",
+    "inputProtocol": "normal Frame01 keyboard cuts; arm before final cut; no input for 20 seconds after result becomes visible",
+    "label": "FPV Learning baseline a0eefe578 — ordinary keyboard win and result entry",
+    "settingsIdentity": "en;standard;immediate;scout;full;muted;neon;hybrid;grid-off;reactions-on;1280x633@1",
+    "sourceIdentity": "35adf3aeb8a5fd6058d136d96d0858a871fec95f72bf2bf1f0e278b4eff6ad99",
+    "sourceKind": "compiled-artifact"
+  },
+  "cycles": {
+    "collection": 0,
+    "result": 0,
+    "rewardViewer": 0
+  },
+  "environment": {
+    "dpr": 1,
+    "hardwareConcurrency": 14,
+    "headlessReported": true,
+    "height": 633,
+    "platform": "MacIntel",
+    "timeOrigin": 1790604287146.6,
+    "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/154.0.0.0 Safari/537.36",
+    "width": 1280
+  },
+  "format": "revealline-discovery-observation.v1",
+  "limitations": [
+    "Desktop browser observation only; no human, mobile-device or installed-app qualification.",
+    "Frame intervals include observer overhead and are not isolated render durations.",
+    "Connected DOM and media counts do not prove absence of detached nodes, leaked object URLs or decoder allocations.",
+    "Long tasks are page-wide and cannot establish reward-rendering attribution.",
+    "Reloading editions destroys the old document and is not a same-document ownership leak test."
+  ],
+  "qualified": false,
+  "records": [
+    {
+      "atMs": 0.800000011920929,
+      "decodedBytes": 6084275,
+      "kind": "checkpoint",
+      "label": "observer attached",
+      "qualified": false,
+      "resourceTimingEntries": 250,
+      "resourceTimingMayBeIncomplete": true,
+      "resources": {
+        "connectedAudio": 1,
+        "connectedBlobMedia": 0,
+        "connectedImages": 1,
+        "connectedNodes": 2726,
+        "connectedVideo": 0,
+        "decoderResources": null,
+        "detachedNodes": null,
+        "heapScope": "approximate browser-provided heap; not edition-owned retained memory",
+        "openDialogs": 0,
+        "outstandingObjectURLs": null,
+        "rewardDialogs": 1,
+        "rewardResults": 1,
+        "rewardShelves": 1,
+        "uniqueConnectedBlobURLs": 0,
+        "usedJSHeapBytes": 41626895
+      },
+      "state": {
+        "collection": false,
+        "effects": "full",
+        "failed": false,
+        "host": "solo",
+        "mission": "01 · The Frame",
+        "prepared": true,
+        "preparedOutcome": "Running flight observed after activation",
+        "ready": true,
+        "rewardViewer": false,
+        "running": true,
+        "wonResult": false
+      },
+      "transferBytes": 5285138,
+      "zeroTransferEntries": 3
+    },
+    {
+      "activeElapsedMs": null,
+      "after": {
+        "connectedAudio": 1,
+        "connectedBlobMedia": 0,
+        "connectedImages": 1,
+        "connectedNodes": 2726,
+        "connectedVideo": 0,
+        "decoderResources": null,
+        "detachedNodes": null,
+        "heapScope": "approximate browser-provided heap; not edition-owned retained memory",
+        "openDialogs": 0,
+        "outstandingObjectURLs": null,
+        "rewardDialogs": 1,
+        "rewardResults": 1,
+        "rewardShelves": 1,
+        "uniqueConnectedBlobURLs": 0,
+        "usedJSHeapBytes": 58709239
+      },
+      "atMs": 30006.30000001192,
+      "before": {
+        "connectedAudio": 1,
+        "connectedBlobMedia": 0,
+        "connectedImages": 1,
+        "connectedNodes": 2726,
+        "connectedVideo": 0,
+        "decoderResources": null,
+        "detachedNodes": null,
+        "heapScope": "approximate browser-provided heap; not edition-owned retained memory",
+        "openDialogs": 0,
+        "outstandingObjectURLs": null,
+        "rewardDialogs": 1,
+        "rewardResults": 1,
+        "rewardShelves": 1,
+        "uniqueConnectedBlobURLs": 0,
+        "usedJSHeapBytes": 41626895
+      },
+      "durationMs": 20000,
+      "effects": null,
+      "frameIntervals": null,
+      "inputEvents": {
+        "synthetic": 0,
+        "trusted": 2
+      },
+      "kind": "sample",
+      "metric": "requestAnimationFrame intervals including observer overhead, not renderer execution time",
+      "mission": null,
+      "outcome": "discarded: target surface did not appear within 30 seconds",
+      "pageLongTasks": {
+        "count": 0,
+        "maxMs": 0,
+        "over50Ms": 0,
+        "scope": "page-wide from arming through completion; not attributed to reward rendering",
+        "supported": true
+      },
+      "qualified": false,
+      "rewardTaskAttribution": {
+        "supported": false
+      },
+      "scenario": "result-reveal",
+      "surfaceVisibleWhenArmed": false,
+      "transitionWindowMs": 30005.09999999404
+    },
+    {
+      "activeElapsedMs": 20002.20000001788,
+      "after": {
+        "connectedAudio": 1,
+        "connectedBlobMedia": 0,
+        "connectedImages": 1,
+        "connectedNodes": 2726,
+        "connectedVideo": 0,
+        "decoderResources": null,
+        "detachedNodes": null,
+        "heapScope": "approximate browser-provided heap; not edition-owned retained memory",
+        "openDialogs": 0,
+        "outstandingObjectURLs": null,
+        "rewardDialogs": 1,
+        "rewardResults": 1,
+        "rewardShelves": 1,
+        "uniqueConnectedBlobURLs": 0,
+        "usedJSHeapBytes": 42160808
+      },
+      "atMs": 80554.5,
+      "before": {
+        "connectedAudio": 1,
+        "connectedBlobMedia": 0,
+        "connectedImages": 1,
+        "connectedNodes": 2726,
+        "connectedVideo": 0,
+        "decoderResources": null,
+        "detachedNodes": null,
+        "heapScope": "approximate browser-provided heap; not edition-owned retained memory",
+        "openDialogs": 0,
+        "outstandingObjectURLs": null,
+        "rewardDialogs": 1,
+        "rewardResults": 1,
+        "rewardShelves": 1,
+        "uniqueConnectedBlobURLs": 0,
+        "usedJSHeapBytes": 46256351
+      },
+      "durationMs": 20000,
+      "effects": "full",
+      "frameIntervals": {
+        "frames": 1120,
+        "maxMs": 399.8999999999651,
+        "over33ms": 5,
+        "p50Ms": 16.70000000001164,
+        "p95Ms": 16.70000000001164
+      },
+      "inputEvents": {
+        "synthetic": 0,
+        "trusted": 2
+      },
+      "kind": "sample",
+      "metric": "requestAnimationFrame intervals including observer overhead, not renderer execution time",
+      "mission": "01 · The Frame",
+      "outcome": "observed",
+      "pageLongTasks": {
+        "count": 7,
+        "maxMs": 403,
+        "over50Ms": 7,
+        "scope": "page-wide from arming through completion; not attributed to reward rendering",
+        "supported": true
+      },
+      "qualified": false,
+      "rewardTaskAttribution": {
+        "supported": false
+      },
+      "scenario": "result-reveal",
+      "surfaceVisibleWhenArmed": false,
+      "transitionWindowMs": 25443.80000001192
+    }
+  ],
+  "startedAt": "2026-09-28T14:11:29.887Z"
+}

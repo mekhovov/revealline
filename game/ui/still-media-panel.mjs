@@ -1,3 +1,4 @@
+import { mountRewardAssetExport } from '../studio/reward-asset-export.mjs';
 import { contentText } from '../i18n/content.mjs';
 import { t, localizedText, localizedAttribute, localizedMessage } from '../i18n/index.mjs';
 import { createOperationStatus } from './operation-status.mjs';
@@ -83,7 +84,7 @@ export function attachStillMediaPanel({
   const history = control('select', 'history', t('interface:savedPictureRevision'));
   const file = control('input', 'file', t('interface:originalPngOrJpeg4MibMaximum'), {
     type: 'file',
-    accept: 'image/png,image/jpeg',
+    accept: 'image/png,image/jpeg,image/webp',
   });
   const kind = control('select', 'kind', t('interface:declaredSource'));
   for (const [id, label] of [
@@ -135,6 +136,7 @@ export function attachStillMediaPanel({
   );
   const discard = button('discard', localizedMessage('interface:discardDraft'), () => {
     draft = null;
+    rewardAssetExport.reset();
     sync();
     return savedPreview(true);
   });
@@ -280,6 +282,29 @@ export function attachStillMediaPanel({
     : null;
   if (story) dialog.append(story.section);
 
+  const rewardAssetExport = mountRewardAssetExport({
+    container: dialog,
+    URLImpl,
+    getOriginal() {
+      if (!ready || task) throw new Error('Reload the verified picture selection before handoff.');
+      // Captured video frames enter this same exact picture-draft path. A full
+      // video is never relabelled as a raster or exported without its dependencies.
+      if (draft?.asset && draft.blob)
+        return {
+          blob: draft.blob,
+          sha256: draft.asset.sha256,
+          mime: draft.asset.mime,
+          name: draft.asset.id,
+        };
+      const selected = storySelection();
+      const asset = saved.document.library.assets.find((item) => item.id === selected.pin?.assetId);
+      const original = asset && saved.assets.find((item) => item.sha256 === asset.sha256);
+      if (!original)
+        throw new Error('Preview a picture draft or choose a saved exact picture revision.');
+      return { blob: original.blob, sha256: asset.sha256, mime: asset.mime, name: asset.id };
+    },
+  });
+
   function storySelection() {
     const selected = current();
     if (!selected) return { ticket: context, saved };
@@ -335,6 +360,7 @@ export function attachStillMediaPanel({
     return storySelection();
   }
   function discardBundles() {
+    rewardAssetExport.reset();
     if (bundleURL !== null) URLImpl.revokeObjectURL(bundleURL);
     bundleURL = null;
     reviewedBundle = null;
@@ -889,6 +915,7 @@ export function attachStillMediaPanel({
       feedback.dispose();
       preview.dispose();
       story?.dispose();
+      rewardAssetExport.dispose();
       dialog.remove();
     },
   });

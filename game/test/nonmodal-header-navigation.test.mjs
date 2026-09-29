@@ -187,6 +187,9 @@ function pad(page, t) {
     frame();
     set(i, false);
     frame();
+    // The release may open a new modal scope. Sample physical neutral in
+    // that scope before the next distinct controller gesture.
+    frame();
   };
   const reach = (id) => {
     for (let i = 0; i < 60 && page.doc.activeElement.id !== id; i++) pulse(13);
@@ -312,11 +315,12 @@ for (const policy of ['immediate', 'grid-center']) {
     controls.set(0, true);
     controls.frame();
     controls.frame();
-    assert.equal(page.rendered.paused, false);
-    assert.equal(page.rendered.run.player.direction, 'down');
+    assert.equal(page.rendered.paused, true, 'Confirm commits only on physical release');
     assert.equal(page.$('hangar-dialog').open, false);
     controls.set(0, false);
     controls.frame();
+    assert.equal(page.rendered.paused, false);
+    assert.equal(page.rendered.run.player.direction, 'down');
     assert.ok(page.rendered.run.tick > pausedTick);
     assert.deepEqual(page.errors, []);
   });

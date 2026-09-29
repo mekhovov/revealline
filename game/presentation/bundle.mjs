@@ -1,3 +1,4 @@
+import { inspectAudioBytes } from '../media-audio.mjs';
 import { boundedJSON, canonicalJSON, exactKeys, required } from '../data-json.mjs';
 import { inspectImageDataUrl } from '../content.mjs';
 import { browserDecodeImage } from '../imports.mjs';
@@ -69,26 +70,6 @@ function inspectFont(bytes, mime) {
     required(offset + length <= bytes.length, 'Font table exceeds the original bytes.');
   }
 }
-function inspectAudio(bytes, mime) {
-  if (mime === 'audio/wav') {
-    required(
-      bytes.length >= 44 && starts(bytes, 'RIFF') && starts(bytes.subarray(8), 'WAVE'),
-      'Invalid WAV header.',
-    );
-    required(
-      new DataView(bytes.buffer, bytes.byteOffset, bytes.byteLength).getUint32(4, true) + 8 ===
-        bytes.length,
-      'WAV size mismatch.',
-    );
-  } else if (mime === 'audio/ogg')
-    required(bytes.length >= 27 && starts(bytes, 'OggS') && bytes[4] === 0, 'Invalid Ogg header.');
-  else
-    required(
-      bytes.length >= 10 &&
-        (starts(bytes, 'ID3') || (bytes[0] === 255 && (bytes[1] & 224) === 224)),
-      'Invalid MPEG audio header.',
-    );
-}
 // validateThemeBundle already rejects inconsistent file facts for a shared hash.
 // V2 and V3 derive their tables only after complete document validation.
 function payloadTable(document) {
@@ -151,7 +132,7 @@ export async function verifyThemeAssets(source, sourceAssets, { signal, decodeIm
         );
       }
     } else if (fact.kind === 'font') inspectFont(bytes, fact.mime);
-    else inspectAudio(bytes, fact.mime);
+    else inspectAudioBytes(bytes, fact.mime);
     abort(signal);
     accepted.set(hash, new Blob([bytes], { type: fact.mime }));
   }

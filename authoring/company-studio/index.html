@@ -32,7 +32,7 @@
           ><button data-step="1"><span>02</span> Artwork</button
           ><button data-step="2"><span>03</span> Actors &amp; atmosphere</button
           ><button data-step="3"><span>04</span> Campaigns</button
-          ><button data-step="4"><span>05</span> Learning</button
+          ><button data-step="4"><span>05</span> Learning &amp; rewards</button
           ><button data-step="5"><span>06</span> Whole-game preview</button
           ><button data-step="6"><span>07</span> Validate &amp; export</button>
         </nav>
@@ -188,6 +188,21 @@
           <div class="panel">
             <label>Campaign to edit<select id="campaign-select"></select></label>
             <p id="campaign-path" class="path"></p>
+            <form id="campaign-art-form" class="form-grid">
+              <label
+                ><span data-i18n="tools:studio.campaignArtwork.label">Campaign key picture</span
+                ><select id="campaign-hero-asset"></select
+              ></label>
+              <button type="submit" data-i18n="tools:studio.campaignArtwork.apply">
+                Apply campaign picture
+              </button>
+              <p class="small wide" data-i18n="tools:studio.campaignArtwork.help">
+                A public campaign preview, separate from its locked finale. Choose a raster image
+                already registered to this campaign.
+              </p>
+              <img id="campaign-hero-preview" class="campaign-hero-preview wide" alt="" hidden />
+            </form>
+
             <label
               >Campaign project JSON<textarea
                 id="campaign-json"
@@ -197,10 +212,92 @@
               ></textarea></label
             ><button id="apply-campaign">Compile &amp; apply campaign</button>
             <p id="campaign-summary" class="small"></p>
+            <details>
+              <summary data-i18n="tools:studio.localization.title">Campaign languages</summary>
+              <p data-i18n="tools:studio.localization.help">
+                Edit the selected translation sidecar. Keep its exact English source fields and give
+                edits a new revision. Applying updates the edition revision and SHA-256 pin without
+                changing gameplay.
+              </p>
+              <p id="localization-path" class="path"></p>
+              <label
+                ><span data-i18n="tools:studio.localization.json">Translation JSON</span
+                ><textarea
+                  id="localization-json"
+                  class="code"
+                  rows="16"
+                  spellcheck="false"
+                ></textarea>
+              </label>
+              <button id="apply-localization" data-i18n="tools:studio.localization.apply">
+                Validate and apply translations
+              </button>
+              <button id="preview-localization" data-i18n="tools:studio.localization.preview">
+                Preview both languages
+              </button>
+              <pre id="localization-preview" class="small" aria-live="polite"></pre>
+            </details>
+            <label
+              ><span data-i18n="tools:studio.discovery.mission">Mission discovery design</span
+              ><select id="discovery-mission"></select
+            ></label>
+            <details id="discovery-editor">
+              <summary data-i18n="tools:studio.discovery.title">
+                Discoveries, pacing and campaign exhibits
+              </summary>
+              <p class="note" data-i18n="tools:studio.discovery.companyHelp">
+                Apply rewards in Learning &amp; rewards before binding them here. Previewing never
+                earns player progress.
+              </p>
+
+              <form id="discovery-form">
+                <fieldset id="discovery-tools">
+                  <label
+                    ><span data-i18n="tools:studio.discovery.campaign">Campaign</span
+                    ><select id="discovery-campaign"></select
+                  ></label>
+                  <label
+                    ><span data-i18n="tools:studio.discovery.pacing">Mission beat</span
+                    ><select id="discovery-beat"></select
+                  ></label>
+                  <label
+                    ><span data-i18n="tools:studio.discovery.reward">First-win discovery</span
+                    ><select id="discovery-reward"></select
+                  ></label>
+                  <label
+                    ><span data-i18n="tools:studio.discovery.exhibit">Campaign exhibit layout</span
+                    ><select id="discovery-layout"></select
+                  ></label>
+                  <label
+                    ><span data-i18n="tools:studio.discovery.finale">Campaign finale</span
+                    ><select id="discovery-finale"></select
+                  ></label>
+                  <label
+                    ><span data-i18n="tools:studio.discovery.language">Preview language</span
+                    ><select id="discovery-locale">
+                      <option value="en">English</option>
+                      <option value="uk">Українська</option>
+                    </select></label
+                  >
+                  <button
+                    id="discovery-apply"
+                    type="submit"
+                    data-i18n="tools:studio.discovery.apply"
+                  >
+                    Apply discovery design
+                  </button>
+                  <button id="discovery-show" type="button" data-i18n="tools:studio.discovery.show">
+                    Preview route and exhibit
+                  </button>
+                </fieldset>
+              </form>
+              <p id="discovery-result" class="note" role="status"></p>
+              <div id="discovery-preview" aria-live="polite"></div>
+            </details>
           </div>
         </section>
         <section data-panel="4" hidden>
-          <p class="eyebrow">05 / LEARNING</p>
+          <p class="eyebrow">05 / LEARNING &amp; REWARDS</p>
           <h2 tabindex="-1">Turn evidence into action.</h2>
           <p class="lede">
             Use fictional records with role-specific handoffs. Practice requires inspected evidence
@@ -208,22 +305,142 @@
             progress. Reflection records a choice without scoring a person’s values.
           </p>
           <div class="panel">
-            <label>Learning campaign<select id="learning-campaign-select"></select></label>
-            <p id="learning-path" class="path"></p>
             <label
-              >Versioned lesson JSON<textarea
-                id="learning-json"
-                class="code"
-                rows="24"
-                spellcheck="false"
-              ></textarea></label
-            ><button id="apply-learning">Validate &amp; apply lessons</button>
+              >Learning and rewards campaign<select id="learning-campaign-select"></select
+            ></label>
+            <p id="learning-path" class="path"></p>
+            <button id="create-learning" type="button">Add a lesson sidecar</button>
+            <div id="lesson-editor"></div>
+            <details>
+              <summary>Advanced versioned lesson JSON</summary>
+              <label
+                >Versioned lesson JSON<textarea
+                  id="learning-json"
+                  class="code"
+                  rows="24"
+                  spellcheck="false"
+                ></textarea>
+              </label>
+            </details>
+            <button id="apply-learning">Validate &amp; apply lessons</button>
             <p id="learning-summary" class="small"></p>
           </div>
           <p class="small">
             Lessons are offline illustrations. Include authoritative sources, a review date and a
             new fixture revision when the teaching content changes.
           </p>
+          <div class="panel">
+            <h3>Discoveries and campaign finales</h3>
+            <p class="small">
+              Choose the requirement explicitly. These shareable rewards change presentation only.
+              Published revisions keep their promised requirements.
+            </p>
+            <p id="rewards-path" class="path"></p>
+            <button id="create-rewards">Add a reward sidecar to this campaign</button>
+            <details>
+              <summary>Create a knowledge reward</summary>
+              <fieldset id="reward-builder">
+                <legend>Completion promise</legend>
+                <label
+                  >Completion rule<select id="reward-rule">
+                    <option value="">Choose a rule…</option>
+                    <option value="mission-win">Win one selected mission</option>
+                    <option value="all-missions">Win every mission in this campaign</option>
+                    <option
+                      value="selected-missions"
+                      data-i18n="tools:studio.discovery.selectedMissions"
+                    >
+                      Win an explicit selection of missions
+                    </option>
+                  </select></label
+                >
+                <label
+                  >Mission for a single-mission reward<select id="reward-mission"></select
+                ></label>
+                <fieldset
+                  id="reward-learning"
+                  aria-label="Optional required learning assignments"
+                  data-i18n-aria-label="tools:studio.discovery.requiredLearning"
+                ></fieldset>
+                <p class="small" data-i18n="tools:studio.discovery.learningRequirementsHelp">
+                  Optionally require named, verified learning assignments as well as their
+                  explicitly selected mission wins. A bonus never gates Next or arcade progress.
+                </p>
+                <fieldset
+                  id="reward-mastery"
+                  aria-label="Optional no-life-lost mission requirements"
+                  data-i18n-aria-label="tools:studio.mastery.required"
+                ></fieldset>
+                <p class="small" data-i18n="tools:studio.mastery.help">
+                  Optionally require a replay-verified win without losing a life for explicitly
+                  selected missions. This never changes gameplay or gates Next.
+                </p>
+                <div class="reward-copy-grid">
+                  <fieldset
+                    id="reward-missions"
+                    disabled
+                    aria-label="Required missions"
+                    data-i18n-aria-label="tools:studio.discovery.requiredMissions"
+                  ></fieldset>
+                  <fieldset>
+                    <legend>English</legend>
+                    <label>Title<input id="reward-title-en" maxlength="160" /></label>
+                    <label>Locked teaser<textarea id="reward-teaser-en" rows="2"></textarea></label>
+                    <label
+                      >Knowledge to discover<textarea id="reward-paragraph-en" rows="4"></textarea>
+                    </label>
+                  </fieldset>
+                  <fieldset>
+                    <legend>Українська</legend>
+                    <label>Назва<input id="reward-title-uk" maxlength="160" /></label>
+                    <label
+                      >Опис закритої винагороди<textarea id="reward-teaser-uk" rows="2"></textarea>
+                    </label>
+                    <label
+                      >Знання для відкриття<textarea id="reward-paragraph-uk" rows="4"></textarea>
+                    </label>
+                  </fieldset>
+                </div>
+                <button id="add-reward">Add to JSON draft</button>
+              </fieldset>
+            </details>
+            <label
+              >Versioned reward JSON<textarea
+                id="rewards-json"
+                class="code"
+                rows="22"
+                spellcheck="false"
+              ></textarea>
+            </label>
+            <button id="apply-rewards">Validate &amp; apply rewards</button>
+            <p id="rewards-summary" class="small"></p>
+            <p class="small" data-i18n="tools:studio.discovery.rewardCapabilities">
+              The JSON editor preserves sources, exact media references and English/Ukrainian copy.
+              Rewards support knowledge, images, interactive atlases, HTTPS links, public codes,
+              audio and video with transcripts and captions. Cosmetic rewards need a later shared
+              adapter.
+            </p>
+            <div class="reward-preview-controls">
+              <label>Reward preview<select id="reward-preview-select"></select></label>
+              <label
+                >State<select id="reward-preview-state">
+                  <option value="locked">Locked</option>
+                  <option value="partial">One required mission missing</option>
+                  <option value="eligible">All requirements complete</option>
+                </select></label
+              >
+              <label
+                >Language<select id="reward-preview-locale">
+                  <option value="en">English</option>
+                  <option value="uk">Українська</option>
+                </select></label
+              >
+              <button id="preview-reward">Preview current JSON</button>
+            </div>
+            <div id="reward-preview" class="reward-preview" aria-live="polite">
+              Preview uses synthetic evidence only; it never earns player progress.
+            </div>
+          </div>
         </section>
         <section data-panel="5" hidden>
           <p class="eyebrow">06 / WHOLE-GAME PREVIEW</p>
