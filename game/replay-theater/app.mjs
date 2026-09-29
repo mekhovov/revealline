@@ -655,6 +655,7 @@ try {
         if (player.phase === 'playing' && !pending) consume(player.advance(dt));
         replaySound.feedback(player.phase === 'playing' && !pending, chosenTheme(), player.state, {
           bodyId: bodyFor(chosenTheme(), player.state),
+          actorStyle: actorLease?.pin().style,
           silentStart: true,
         });
         const display = replayDisplay.snapshot();

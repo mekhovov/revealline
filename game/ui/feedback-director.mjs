@@ -1,3 +1,4 @@
+import { playerMovementBody } from './movement-profiles.mjs';
 import { getLocale } from '../i18n/index.mjs';
 import { CELL, DIRECTIONS } from '../core/registry.mjs';
 import { EFFECT_BANK } from '../audio/effects/bank.mjs';
@@ -319,6 +320,7 @@ export class FeedbackDirector {
     const distance = (actor) =>
       Math.min(...players.map((p) => Math.hypot(p.x - actor.x, p.y - actor.y)));
     const candidates = [];
+    const details = new Map((run.classic?.enemies ?? []).map((actor) => [actor.id, actor]));
     for (const [i, actor] of [
       ...(run.enemies ?? []),
       ...(run.classic?.combatPatrols?.actors ?? []).filter((a) => a.alive),
@@ -329,17 +331,30 @@ export class FeedbackDirector {
         ? previous && Math.hypot(actor.x - previous.x, actor.y - previous.y) > 0.0001
         : previous?.moving;
       if (newTick || !previous) state.previous.set(key, { x: actor.x, y: actor.y, moving: moved });
-      if (!moved || actor.stunnedUntil > run.time || actor.frozenUntil > run.time) continue;
+      const detail = details.get(actor.id);
+      if (
+        !moved ||
+        actor.alive === false ||
+        actor.active === false ||
+        (actor.rover && actor.rover.mode !== 'active') ||
+        actor.stunnedUntil > run.time ||
+        actor.frozenUntil > run.time ||
+        detail?.stunned ||
+        detail?.frozen ||
+        ['dormant', 'idle'].includes(detail?.mode)
+      )
+        continue;
       const d = distance(actor) / Math.min(run.width, run.height);
       if (d >= (state.loops.has(key) ? 0.8 : 0.74)) continue;
       candidates.push({
         key,
         movement: true,
-        rate: movementRate(actor.bodyId ?? '', actor.type),
+        rate: movementRate(actor.bodyId ?? '', actor.type ?? actor.role),
         name: movementFor(
           actor.bodyId ?? '',
           options.actorStyle === 'fpv' ? { family: 'fpv' } : theme,
-          actor.type,
+          actor.type ?? actor.role,
+          options.actorSkins?.[actor.type] ?? actor.skinId,
         ),
         gain: distanceGain(distance(actor), Math.min(run.width, run.height)) * 0.3,
         pan: screenPan(actor.x, run.width, options.placement),
@@ -377,15 +392,8 @@ export class FeedbackDirector {
         candidates.push({
           key,
           movement: true,
-          name: movementFor(
-            options.bodyId ??
-              player.bodyId ??
-              (options.actorStyle === 'fpv'
-                ? `fpv-${run.activeClassId ?? 'scout'}`
-                : (theme.player ?? '')),
-            theme,
-          ),
-          rate: movementRate(options.bodyId ?? player.bodyId ?? run.activeClassId ?? ''),
+          name: movementFor(playerMovementBody(player, run, theme, options), theme),
+          rate: movementRate(playerMovementBody(player, run, theme, options)),
           gain: 0.25,
           pan: screenPan(player.x, run.width, options.placement),
         });
