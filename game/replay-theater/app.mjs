@@ -1,4 +1,5 @@
 import { REPLAY_EXAMPLES as examples } from './examples.mjs';
+import { editionPublicSlug } from '../edition-context.mjs';
 import { loadEditionToolProvider, editionToolPresentation } from '../ui/edition-tool-provider.mjs';
 import { contentText } from '../i18n/content.mjs';
 import { t, localizedText } from '../i18n/index.mjs';
@@ -473,7 +474,7 @@ try {
         if (retainedRequest) {
           const link = document.createElement('a'),
             target = new URL(location.href);
-          target.searchParams.set('edition', runtimeContent.editionId);
+          target.searchParams.set('edition', editionPublicSlug(runtimeContent.editionId));
           target.searchParams.set('presentation', retainedRequest.id);
           link.href = target.href;
           link.id = 'retained-recording-artwork';

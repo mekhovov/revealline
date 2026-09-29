@@ -1323,7 +1323,7 @@ try {
     paintRound(roundRecipe);
     finished = false;
     localizedText($('race-start'), () =>
-      roundRecipe.format === 'single' ? t('interface:startRace2') : t('interface:startRound2'),
+      roundRecipe.format === 'single' ? t('interface:startRace') : t('interface:startRound'),
     );
     return loadPreparedPicture(entry);
   }
@@ -1702,7 +1702,7 @@ try {
           missionId: attempt.recipe.entry.mission.id,
         });
       localizedText($('race-start'), () =>
-        roundRecipe.format === 'single' ? t('interface:startRace2') : t('interface:startRound2'),
+        roundRecipe.format === 'single' ? t('interface:startRace') : t('interface:startRound'),
       );
       localizedText($('race-message'), () =>
         [lease.picture?.notice, t('interface:bothBoardsUseThePreparedNextPictureStartWhenYou')]
@@ -2348,6 +2348,10 @@ try {
     /* The fixed Solo title route remains available. */
   }
   shell = createCouchShell({
+    getSceneContext: () => ({
+      themeId: theme?.id ?? 'fpv',
+      active: match?.status !== 'running',
+    }),
     authoredRoute: authoredRoute?.id ?? 'legacy',
     coarse: matchMedia('(pointer: coarse)').matches,
     getDepartureState: () => ({ match, generation }),
@@ -3537,7 +3541,7 @@ try {
             $('race-theme').value = nextTheme.id;
             paintRound(recipe);
             localizedText($('race-start'), () =>
-              recipe.format === 'single' ? t('interface:startRace2') : t('interface:startRound2'),
+              recipe.format === 'single' ? t('interface:startRace') : t('interface:startRound'),
             );
             localizedText($('race-message'), () =>
               t('interface:couch.sharedPictureReady', {
@@ -3904,6 +3908,7 @@ try {
     ownsKeyboardEvent: (event) =>
       !music?.root() && settingsTabOwnsKey(event, $('race-options-panel')),
     accept: (element) =>
+      !!element.closest('[data-menu-scope]') ||
       music?.contains(element) ||
       (element.tagName === 'A' &&
         !!element.closest('#race-music-now-playing, #race-music-menu-now-playing')) ||

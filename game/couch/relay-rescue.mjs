@@ -30,6 +30,7 @@ import { attachCouchMusicHost } from './couch-music-host.mjs';
 import { prepareTeamMusicContext } from './couch-music-context.mjs';
 import { attachPublishedAudio } from '../ui/published-audio.mjs';
 import { mountModeChoices } from '../ui/mode-choice.mjs';
+import { prepareNativeMenus } from '../ui/native-menus.mjs';
 import { authoredTeamReturn } from '../ui/authored-mode-routes.mjs';
 import { resolveJourneyRequest } from '../content-design/default-entry.mjs';
 import { attachOfflineModeNavigation } from '../ui/offline-tool-navigation.mjs';
@@ -749,11 +750,25 @@ export function bootCoop({
       pauseCore.append(settings);
       pauseCore.append(sound);
       pauseCore.append($('coop-home-paused'));
+    } else if (paused) {
+      // Results still own these tools. The landing page is hidden while the
+      // completed attempt is retained, so it cannot host their only entry.
+      tools.append(help, settings, sound);
     } else {
-      tools.append(help);
-      tools.append(settings);
-      tools.append(sound);
+      if ($('coop-menu').classList.contains('native-landing')) {
+        $('coop-settings-panel-extras').append(help);
+        const actions = $('coop-menu').querySelector('.native-menu-actions');
+        actions.append(settings, sound);
+      } else {
+        tools.append(help, settings, sound);
+      }
     }
+    // Failed saves are operational recovery, so Pause and Results keep their
+    // live actions visible. The lobby gives them a stable home under Data.
+    const recoveryDestination = paused ? tools : $('coop-settings-panel-data');
+    if (recoveryDestination)
+      for (const id of ['coop-journey-save', 'coop-journey-preferences'])
+        recoveryDestination.append($(id));
     tools.hidden = running();
     if (tools.hidden) {
       $('coop-help').open = false;
@@ -1130,6 +1145,14 @@ export function bootCoop({
     if (run) releaseCoopInputs(run);
     accumulator = 0;
   }
+  const nativeMenu = prepareNativeMenus({
+    document,
+    mode: 'team',
+    getSceneContext: () => ({
+      themeId: acceptedPicture?.request?.themeId ?? 'fpv',
+      active: !running(),
+    }),
+  });
   settingsPanels = attachSettingsPanels({
     root: settingsDialog,
     document,
@@ -4051,10 +4074,12 @@ export function bootCoop({
           );
         void libraryOtherModesLoad();
       } catch (error) {
-        if (opening.current() && !disposed)
+        if (opening.current() && !disposed) {
+          $('coop-discovery-status').dataset.state = 'error';
           localizedText($('coop-discovery-status'), () =>
             t('interface:team.libraryUnavailable', { error: error.message }),
           );
+        }
       } finally {
         opening.dispose();
       }
@@ -5788,6 +5813,7 @@ export function bootCoop({
     settingsDialog.removeEventListener('close', settingsClosed);
     settingsDialog.removeEventListener('keydown', settingsKeydown);
     settingsPanels.destroy();
+    nativeMenu?.destroy();
     if (settingsDialog.open) settingsDialog.close();
     // The shared page may already have retired its painter snapshot. Stop the
     // core without repainting during terminal cleanup. BFCache uses suspend.
