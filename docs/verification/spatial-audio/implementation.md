@@ -82,3 +82,12 @@ Release remains held for unresolved full-suite qualification and subjective/devi
 - Current bank is 2,575,136 bytes (~2.46 MiB transfer, ~7.36 MiB decoded at 48 kHz). `movement-file-inspection.json` supersedes prior loop measurements. Earlier build receipts remain historical until the current packaging check is recorded.
 
 - Current movement packaging build, lint, formatting and validation passed (10,857 localized messages). All 52 runtime WAVs and the new movement preference module are in the core offline cache and match source; see `movement-build.json`. This supersedes prior packaging evidence for the movement revision and remains a local build, not an immutable release certificate.
+
+
+## Recorded movement revision — 2026-09-29
+
+User rejected the generic broadband actor sounds. Five real CC0 Freesound HQ preview recordings now replace rotor, wings, grain, wheels and motor; all source bytes, creators, page/preview URLs, licenses and hashes are preserved under `authoring/audio/revealline-v1/originals/freesound`. Production is reproducible offline from `produce.py` plus `recorded_movement.py`. PCM masters are derived from MP3 previews, not lossless source originals. Current bank: 52 files / 2,827,936 bytes (~8.1 MiB decoded at 48 kHz), within budgets.
+
+Wings and paper use spaced recorded gestures; mechanical bodies use crossfaded recordings. Isolated source handling spikes are softened. Audio menu movement enable/volume, spatial attenuation, voice priorities and warning behavior remain unchanged. No simulation modules changed. Arcade audition family selection was corrected (it previously demonstrated rotor instead of motor).
+
+Verification: 119 focused audio/preferences/director/replay/offline tests pass (`.cache/recorded-movement-tests.log`). Native audition decodes 52/52; all five selected player voices confirmed; mute removes player/enemy voices and reenabling restores them; no browser console errors. See `recorded-movement-file-inspection.json` for PCM measurements and `recorded-movement-audition.png` for visible fixture evidence. Prior test and release limitations remain in force; no 20-minute speaker/headphone approval is claimed.

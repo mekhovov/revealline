@@ -1,0 +1,4 @@
+All five recordings are dedicated to the public domain under CC0 1.0.
+https://creativecommons.org/publicdomain/zero/1.0/
+Source pages, creators, public preview URLs and SHA-256 hashes are in sources.json.
+The preserved files are high-quality MP3 previews, not the login-gated lossless originals.

@@ -33,10 +33,11 @@ for name,(pack,source,duration) in recipes.items():
     filters=f'atrim=0:{duration},asetpts=PTS-STARTPTS,highpass=f=65,lowpass=f={cutoff},afade=t=in:d=0.004,afade=t=out:st={max(.005,duration-.04)}:d=0.04,alimiter=limit=0.65:level=false'
     subprocess.run(['ffmpeg','-v','error','-y','-i',str(original),'-af',filters,'-ar','32000','-ac','1','-c:a','pcm_s16le',str(dest)],check=True)
     bank[name]={'file':dest.name,'loop':False}
-# Periodic harmonics avoid arbitrary loop cuts. Seeded noise has an overlapping
-# periodic envelope. Every source is original; no melody is copied from music.
-for name in ['motor','rotor','wings','wheels','grain','flow','warning','start','retry','loss','respawn','win','reveal-small','reveal-medium','reveal-large','neutralized','reactivated']:
-    loop=name in ['motor','rotor','wings','wheels','grain','flow']
+# Original signatures and a quiet environmental flow bed.
+# Recorded actor movement is produced separately below.
+# These procedural sources are original; no melody is copied from music.
+for name in ['flow','warning','start','retry','loss','respawn','win','reveal-small','reveal-medium','reveal-large','neutralized','reactivated']:
+    loop=name=='flow'
     duration=4 if loop else {'win':1.35,'loss':.6,'warning':.42,'reveal-small':.2,'reveal-medium':.4,'reveal-large':.65}.get(name,.45)
     sr=32000;n=int(duration*sr); rng=random.Random(724); data=[]; smooth=0
     for i in range(n):
@@ -44,9 +45,8 @@ for name in ['motor','rotor','wings','wheels','grain','flow','warning','start','
         env=1 if loop else min(1,t/.008)*max(0,1-u)**1.7
         smooth=.87*smooth+.13*rng.uniform(-1,1)
         if loop:
-            # Soft broadband motion rather than a sustained musical note or 13 Hz buzz.
-            # A warm-up period reaches steady filter state; the tail is crossfaded below.
-            cutoff={'motor':900,'rotor':1250,'wheels':650,'grain':1100,'flow':700,'wings':850}[name]
+            # Environmental flow only; actors use recorded materials below.
+            cutoff=700
             alpha=1-math.exp(-2*math.pi*cutoff/sr)
             filtered=alpha*rng.uniform(-1,1)+(1-alpha)*(data[-1] if data else 0)
             value=filtered
@@ -77,6 +77,10 @@ for name in ['motor','rotor','wings','wheels','grain','flow','warning','start','
     with wave.open(str(dest),'wb') as w:
         w.setparams((1,2,sr,n,'NONE','not compressed'));w.writeframes(struct.pack('<'+'h'*n,*[int(v*32767) for v in data]))
     bank[name]={'file':dest.name,'loop':loop}
+# Real material movement replaces the five synthetic actor noise beds.
+from recorded_movement import build as build_recorded_movement, RECIPES as MOVEMENT_RECIPES
+build_recorded_movement(HERE, OUT)
+for name in MOVEMENT_RECIPES: bank[name]={'file':name+'.wav','loop':True}
 # Original short ESC-style motor-resonance sequence. Not a hardware recording or branded tune.
 for name, notes in [('esc-start', [(0,523.25,.12),(.17,659.25,.12),(.34,783.99,.14),(.58,1046.5,.18)]), ('esc-retry', [(0,783.99,.09),(.14,1046.5,.12)])]:
     sr=32000; n=int((notes[-1][0]+notes[-1][2]+.025)*sr); data=[]
@@ -107,7 +111,7 @@ for locale in ['en','uk']:
 for name,entry in bank.items():
     family=name.split('-')[0]
     target={'focus':-36,'confirm':-32,'cancel':-33,'paper':-35,'pickup':-31,'closure':-34,'switch':-32,'contact':-29,'reveal':-37}.get(family)
-    if entry['loop']: target=-25 if name in ['motor','rotor','wheels','wings'] else -29
+    if entry['loop']: target={'rotor':-27,'motor':-28,'wheels':-28,'wings':-30,'grain':-33,'flow':-29}[name]
     if target is None: continue
     dest=OUT/entry['file']
     with wave.open(str(dest),'rb') as w:

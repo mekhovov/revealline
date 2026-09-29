@@ -186,36 +186,6 @@ export const EFFECT_BANK = {
     bytes: 8512,
     sha256: '578dfb76e36479d6c6e33ce8048fc24711eae95c98b144b4e890f39e8ea15483',
   },
-  motor: {
-    file: 'motor.wav',
-    loop: true,
-    bytes: 250924,
-    sha256: '3e0df10d7f43e10c3be236b416a604e3c16c12b64fe7f0093bed7fcb7e259223',
-  },
-  rotor: {
-    file: 'rotor.wav',
-    loop: true,
-    bytes: 250924,
-    sha256: 'b2b2947e18e5fb90a23944dd654e26514e20dffe89213480025c3a4abc1cd54f',
-  },
-  wings: {
-    file: 'wings.wav',
-    loop: true,
-    bytes: 250924,
-    sha256: '6506d32df102d333e510951809b6cfad49451c29cc62b2f1212a0f56bd2465ef',
-  },
-  wheels: {
-    file: 'wheels.wav',
-    loop: true,
-    bytes: 250924,
-    sha256: 'cd9583cda01c5cc7eced4494297b4692fa12e8b5336d4da73eb03858390f8983',
-  },
-  grain: {
-    file: 'grain.wav',
-    loop: true,
-    bytes: 250924,
-    sha256: '436eccdfafab0d01cdbadbf0ca635a24b9a5630814aec6a1286c7f11e4ef390c',
-  },
   flow: {
     file: 'flow.wav',
     loop: true,
@@ -287,6 +257,36 @@ export const EFFECT_BANK = {
     loop: false,
     bytes: 28844,
     sha256: '822fd9233820fed99dcbc68908155f4077437f63733953bb3d6967aa0570f852',
+  },
+  rotor: {
+    file: 'rotor.wav',
+    loop: true,
+    bytes: 384044,
+    sha256: '5a83472891a17b29bed900c37d5dad4d070e17702bc00cf9e0ccb9a35153105b',
+  },
+  motor: {
+    file: 'motor.wav',
+    loop: true,
+    bytes: 211244,
+    sha256: '96a8436fe34569f33b60f8512b7b592de430ab36672bea044e7908db52a04615',
+  },
+  wheels: {
+    file: 'wheels.wav',
+    loop: true,
+    bytes: 144044,
+    sha256: '7d646506c3f2b5ea5710e2d74c84a59739bc7def17cd30604c5bd44c8d2544ba',
+  },
+  wings: {
+    file: 'wings.wav',
+    loop: true,
+    bytes: 358444,
+    sha256: '0c8b6b52ba06ed4ff63a6549af64ee7860ec367a6d61d650518f93f949be587d',
+  },
+  grain: {
+    file: 'grain.wav',
+    loop: true,
+    bytes: 409644,
+    sha256: 'c7a1fdd820db10501b465b6c715cffe77c7adbc02f96becb8ebd9daad7adba59',
   },
   'esc-start': {
     file: 'esc-start.wav',
