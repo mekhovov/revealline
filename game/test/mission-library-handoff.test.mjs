@@ -5,6 +5,7 @@ import {
   missionLibraryHref,
   readMissionLibraryHandoff,
   readMissionLibraryIntent,
+  readMissionLibraryReady,
   createMissionLibrarySessionState,
   MISSION_LIBRARY_STATE_PREFIX,
 } from '../mission-library/handoff.mjs';
@@ -49,6 +50,25 @@ test('HTTP and file deployments retain their own directories and encoded identif
     assert.equal(actual.searchParams.get('journey'), 'legacy');
     assert.equal(readMissionLibraryHandoff(actual.searchParams), opaque);
   }
+});
+
+test('explicit Ready handoff retains the exact Solo Legacy mission without inheriting autoplay', () => {
+  const target = new URL(href({ journey: 'legacy', ready: true }));
+  assert.equal(readMissionLibraryHandoff(target.searchParams), opaque);
+  assert.equal(readMissionLibraryReady(target.searchParams), true);
+  assert.equal(target.searchParams.get('play'), null);
+  assert.equal(readMissionLibraryReady(new URL(href()).searchParams), false);
+  assert.throws(() => href({ ready: true }), /Solo Legacy/);
+  assert.throws(() => href({ journey: 'legacy', mode: 'versus', ready: true }), /Solo Legacy/);
+  assert.throws(() => href({ journey: 'legacy', ready: '1' }), /Solo Legacy/);
+  for (const search of [
+    'library-ready=1',
+    'library-mission=exact&journey=legacy&library-ready=0',
+    'library-mission=exact&journey=legacy&library-ready=1&library-ready=1',
+    'library-mission=exact&journey=whole-spatial-v5&library-ready=1',
+    'library-mission=exact&journey=legacy&journey=legacy&library-ready=1',
+  ])
+    assert.throws(() => readMissionLibraryReady(new URLSearchParams(search)), /Ready/);
 });
 
 test('builder admits only known authored routes, explicit Legacy and supported host modes', () => {

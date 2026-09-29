@@ -114,6 +114,7 @@
     <link rel="stylesheet" data-boot-href="style.css" />
     <link rel="stylesheet" data-boot-href="ui/controller-settings.css" />
     <link rel="stylesheet" data-boot-href="ui/game-shell.css" />
+    <link rel="stylesheet" data-boot-href="ui/demo.css" />
     <link rel="stylesheet" data-boot-href="ui/flight-information-details.css" />
     <link rel="stylesheet" data-boot-href="ui/mode-choice.css" />
     <link rel="stylesheet" data-boot-href="ui/pixel-theme.css" />
@@ -899,13 +900,8 @@
             ><label
               ><input id="reduced-effects" type="checkbox" />
               <span data-i18n="interface:reducedEffects">Reduced effects</span></label
-            ><button
-              id="demo-button"
-              class="text-button"
-              type="button"
-              data-i18n="interface:watchFirstCut"
-            >
-              Watch first cut</button
+            ><button id="demo-button" class="text-button" type="button" data-i18n="demo:watch">
+              Watch demo</button
             ><span id="input-status" data-i18n="interface:keyboardTouch">Keyboard / touch</span>
           </div>
           <p id="save-warning" class="warning" role="status" hidden></p>
@@ -2072,6 +2068,27 @@
         >
           Manage saved flights, game-data backups and installed chapters in your flight library.
         </p>
+        <section class="demo-settings" aria-labelledby="demo-settings-title">
+          <h3 id="demo-settings-title" data-i18n="demo:settings">Demo mode</h3>
+          <label
+            ><input id="demo-auto" type="checkbox" /><span data-i18n="demo:auto"
+              >Show a demo after 60 seconds on the idle home screen</span
+            ></label
+          >
+          <label
+            ><input id="demo-collect" type="checkbox" /><span data-i18n="demo:collect"
+              >Use my successful runs in demos</span
+            ></label
+          >
+          <p class="micro-note" data-i18n="demo:localOnly">
+            Recordings stay on this device. The disposable demo cache holds up to 12 recordings / 32
+            MiB and is separate from saved flights.
+          </p>
+          <button id="demo-clear" type="button" class="button secondary" data-i18n="demo:clear">
+            Clear my demo recordings
+          </button>
+          <p id="demo-settings-status" class="micro-note" role="status"></p>
+        </section>
         <section aria-label="Download retention" data-i18n-aria-label="interface:downloadRetention">
           <button
             id="storage-retention-button"
@@ -2753,6 +2770,181 @@ No offline check yet.</pre
         </button>
       </div>
     </dialog>
+    <dialog id="demo-dialog" class="demo-dialog" aria-labelledby="demo-level">
+      <header class="demo-header">
+        <div>
+          <p class="eyebrow">
+            <span data-i18n="demo:title">DEMO</span> · <span id="demo-source"></span>
+          </p>
+          <h2 id="demo-level"></h2>
+        </div>
+        <div class="demo-header-actions" data-demo-ui>
+          <button
+            id="demo-fullscreen"
+            type="button"
+            class="button secondary"
+            data-demo-ui
+            data-i18n="demo:enterFullscreen"
+            hidden
+          >
+            Enter fullscreen
+          </button>
+          <button
+            id="demo-back"
+            type="button"
+            class="button secondary"
+            data-demo-exit
+            data-i18n="demo:back"
+          >
+            Back
+          </button>
+        </div>
+      </header>
+      <div class="demo-board">
+        <canvas
+          id="demo-canvas"
+          width="768"
+          height="576"
+          tabindex="0"
+          data-i18n-aria-label="demo:canvas"
+          aria-label="Live game demonstration"
+        ></canvas>
+      </div>
+      <div class="demo-panel">
+        <div class="demo-transport" data-demo-ui>
+          <button
+            id="demo-watch-pause"
+            class="button secondary"
+            type="button"
+            data-i18n="demo:pauseDemo"
+          >
+            Pause demo
+          </button>
+          <button id="demo-next" class="button secondary" type="button" data-i18n="demo:next">
+            Next demonstration
+          </button>
+          <button
+            id="demo-interrupt"
+            data-demo-ui
+            class="button primary"
+            type="button"
+            data-i18n="demo:playChoices"
+          >
+            Want to play?
+          </button>
+        </div>
+        <div id="demo-audio" data-demo-ui></div>
+        <div class="demo-notes">
+          <p id="demo-caption"></p>
+          <p id="demo-status"></p>
+          <p id="demo-picture-note"></p>
+        </div>
+        <div id="demo-actions" class="demo-actions" data-demo-ui hidden>
+          <button id="demo-fresh" class="button primary" type="button" data-i18n="demo:fresh">
+            Play from beginning
+          </button>
+          <button
+            id="demo-takeover"
+            class="button secondary"
+            type="button"
+            data-i18n="demo:takeover"
+          >
+            Take over · practice
+          </button>
+          <button
+            id="demo-resume"
+            class="button secondary"
+            type="button"
+            data-i18n="demo:keepWatching"
+          >
+            Keep watching
+          </button>
+          <button
+            id="demo-return"
+            class="button secondary"
+            type="button"
+            hidden
+            data-i18n="demo:returnToDemo"
+          >
+            Return to demo
+          </button>
+          <button
+            id="demo-pause"
+            class="button secondary"
+            type="button"
+            hidden
+            data-i18n="common:actions.pause"
+          >
+            Pause
+          </button>
+        </div>
+        <div id="demo-practice-controls" class="demo-practice-controls" hidden>
+          <p data-i18n="demo:practiceControls">
+            Use your direction keys, controller, swipe the board, or tap these arrows.
+          </p>
+          <p id="demo-bound-controls"></p>
+          <p id="demo-pad-controls" hidden></p>
+          <div class="demo-directions">
+            <button
+              type="button"
+              data-demo-move="left"
+              aria-label="Left"
+              data-i18n-aria-label="demo:left"
+            >
+              ←
+            </button>
+            <button
+              type="button"
+              data-demo-move="up"
+              aria-label="Up"
+              data-i18n-aria-label="demo:up"
+            >
+              ↑
+            </button>
+            <button
+              type="button"
+              data-demo-move="down"
+              aria-label="Down"
+              data-i18n-aria-label="demo:down"
+            >
+              ↓
+            </button>
+            <button
+              type="button"
+              data-demo-move="right"
+              aria-label="Right"
+              data-i18n-aria-label="demo:right"
+            >
+              →
+            </button>
+            <button id="demo-boost" type="button" data-demo-action="boost" data-i18n="demo:boost">
+              Boost
+            </button>
+            <button
+              id="demo-ability"
+              type="button"
+              data-demo-action="ability"
+              data-i18n="demo:ability"
+            >
+              Ability
+            </button>
+            <button
+              id="demo-pickup"
+              type="button"
+              data-demo-action="pickup"
+              data-i18n="demo:pickup"
+            >
+              Supply
+            </button>
+            <select
+              id="demo-craft"
+              aria-label="Practice craft"
+              data-i18n-aria-label="demo:craft"
+            ></select>
+          </div>
+        </div>
+      </div>
+    </dialog>
     <dialog id="shell-home" class="shell-home" aria-labelledby="shell-title">
       <div class="home-art" aria-hidden="true"></div>
       <div class="home-content">
@@ -2835,6 +3027,10 @@ No offline check yet.</pre
           >
             Missions
           </button>
+          <button id="shell-demo" type="button" class="button secondary" data-i18n="demo:watch">
+            Watch demo
+          </button>
+          <p id="demo-availability" class="home-status" role="status"></p>
           <button
             id="shell-gallery"
             type="button"
@@ -3139,6 +3335,10 @@ No offline check yet.</pre
           >
             Export replay
           </button>
+          <button id="demo-keep" class="button secondary" type="button" data-i18n="demo:keep">
+            Keep for demo
+          </button>
+          <p id="demo-keep-status" role="status"></p>
         </nav>
       </details>
       <details class="shell-tools">

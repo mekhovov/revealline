@@ -75,6 +75,23 @@ export function readMissionLibraryIntent(params) {
   return values[0];
 }
 
+/** Explicit Solo briefing intent; it never grants installation or progression. */
+export function readMissionLibraryReady(params) {
+  if (!(params instanceof URLSearchParams))
+    throw new TypeError('Mission handoff needs URLSearchParams.');
+  const values = params.getAll('library-ready');
+  if (!values.length) return false;
+  if (
+    values.length !== 1 ||
+    values[0] !== '1' ||
+    !readMissionLibraryHandoff(params) ||
+    params.getAll('journey').length !== 1 ||
+    params.get('journey') !== 'legacy'
+  )
+    throw new TypeError('Ready handoff needs one exact Legacy mission request.');
+  return true;
+}
+
 /** Independent, finite source navigation for an exact library handoff. Invalid
  * hints fall back normally; they never change the selected destination owner.
  * Token authenticity still belongs to the existing mode-return reader, not here.
@@ -129,12 +146,15 @@ export function missionLibraryHref({
   intent = 'play',
   sourceJourney,
   returnToken,
+  ready = false,
 }) {
   modeId(currentMode);
   modeId(mode);
   missionId(id);
   if (!['play', 'select'].includes(intent) || (intent === 'select' && mode !== 'versus'))
     throw new TypeError('Select-only mission handoff is supported in Versus.');
+  if (typeof ready !== 'boolean' || (ready && (mode !== 'solo' || journey !== 'legacy')))
+    throw new TypeError('Ready handoff is supported only for Solo Legacy missions.');
   if (!journeyForMode(journey, mode))
     throw new TypeError('Mission handoff needs a registered destination Journey route.');
   if (sourceJourney !== undefined && !isMissionLibrarySourceJourney(sourceJourney, currentMode))
@@ -158,6 +178,7 @@ export function missionLibraryHref({
   target.searchParams.set('journey', journey);
   target.searchParams.set(MISSION_LIBRARY_HANDOFF_PARAM, id);
   if (intent === 'select') target.searchParams.set(MISSION_LIBRARY_INTENT_PARAM, intent);
+  if (ready) target.searchParams.set('library-ready', '1');
   if (sourceJourney !== undefined && currentMode !== mode) {
     target.searchParams.set('return', currentMode);
     target.searchParams.set('journey-return', sourceJourney);
