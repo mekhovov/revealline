@@ -173,6 +173,8 @@ import { attachMissionPicker } from './ui/mission-picker.mjs';
 import { fetchBundledChapter } from './chapter-download.mjs';
 import { attachModalNavigation } from './ui/modal-navigation.mjs';
 import { attachProfileRecoveryDialog } from './ui/profile-recovery-dialog.mjs';
+import { createSoloRadioInput, SOLO_RADIO_PROFILE_KEY } from './ui/solo-radio-input.mjs';
+import { mountControllerSetup } from './couch/controller-setup.mjs';
 import { createControllerRouter } from './ui/controller-router.mjs';
 import { attachControllerConfirmGuard } from './ui/controller-confirm-guard.mjs';
 import { createControllerConfirmLifecycle } from './ui/controller-confirm-lifecycle.mjs';
@@ -2509,13 +2511,19 @@ try {
   function dialogOpen() {
     return !!document.querySelector('dialog[open]');
   }
+  const soloRadio = createSoloRadioInput({
+    readPads: controllerPreview ? controllerPreview.readPads : () => navigator.getGamepads(),
+    eventTarget: window,
+    getScope: () => controllerScope(),
+  });
   const controller = createControllerRouter({
+    readPads: soloRadio.readPads,
+    rawProfile: soloRadio.rawProfile,
     autoJoin: true,
     diagnostics: () => controllerConfirmTrace.enabled,
     navigationAliases: true,
     bindings: library.preferences.controllerBindings,
     boostMode: library.preferences.controllerBoostMode,
-    ...(controllerPreview ? { readPads: controllerPreview.readPads } : {}),
   });
   const controllerConfirmGuard = attachControllerConfirmGuard({
     confirmPressed: () => controller.menuConfirmPressed(),
@@ -2863,7 +2871,12 @@ try {
       document.body.dataset.fieldCaptions = captions;
     const visible = showScreenControls({
       preference: library.preferences.screenControls,
-      modality: document.body.dataset.inputMode,
+      modality:
+        controllerFrame?.assigned?.mapping === '' &&
+        !soloRadio.completeFlight(controllerFrame.assigned.index) &&
+        (navigator.maxTouchPoints > 0 || globalThis.matchMedia?.('(any-pointer: coarse)').matches)
+          ? 'touch'
+          : document.body.dataset.inputMode,
       scope: controllerScope(),
       running: run?.status === 'running',
     });
@@ -3302,6 +3315,12 @@ try {
           };
     },
   });
+  const soloRadioSetup = mountControllerSetup({
+    root: $('controller-settings-root'),
+    session: soloRadio.session,
+    solo: true,
+    storageKey: SOLO_RADIO_PROFILE_KEY,
+  });
   const storageRetention = attachStorageRetention({
     button: $('storage-retention-button'),
     status: $('storage-retention-status'),
@@ -3313,6 +3332,8 @@ try {
       storageRetention.destroy();
       keySettings.destroy();
       controllerSettings.destroy();
+      soloRadioSetup.dispose();
+      soloRadio.dispose();
       controllerBoostSettings.destroy();
     }
   });
@@ -10434,6 +10455,7 @@ try {
     });
     controllerFrame = sampledFrame;
     controllerConfirmLifecycle.sample(sampledFrame.confirmSnapshot);
+    soloRadioSetup.refresh();
     refreshControllerBoostCue();
     const { status, assigned, disconnected } = sampledFrame;
     if (demoHost?.active) {

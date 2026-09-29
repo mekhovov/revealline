@@ -8,6 +8,7 @@ import {
 } from '../../game/data-json.mjs';
 
 export const RADIO_FORMAT = 'RadioProfile.v1';
+export const AXIS_RADIO_FORMAT = 'RadioProfile.v2';
 export const RESPONSE_FORMAT = 'FlightResponseProfile.v1';
 export const FLIGHT_CONTROLS = Object.freeze(['roll', 'pitch', 'yaw', 'throttle']);
 export const STICK_LAYOUTS = Object.freeze({
@@ -59,7 +60,7 @@ export function validateRadioProfile(input) {
     'radio profile',
   );
   required(
-    p.format === RADIO_FORMAT &&
+    [RADIO_FORMAT, AXIS_RADIO_FORMAT].includes(p.format) &&
       stableId(p.id) &&
       typeof p.name === 'string' &&
       p.name.trim().length > 0 &&
@@ -115,6 +116,19 @@ export function validateRadioProfile(input) {
   for (const action of ['arm', 'pause', 'reset']) {
     const s = p.switches[action];
     if (s === null) continue;
+    if (p.format === AXIS_RADIO_FORMAT && Object.hasOwn(s, 'axis')) {
+      exactKeys(s, ['axis', 'off', 'on'], action);
+      required(
+        int(s.axis, 0, p.device.axes - 1) &&
+          !used.has(s.axis) &&
+          finite(s.off, -1, 1) &&
+          finite(s.on, -1, 1) &&
+          Math.abs(s.on - s.off) >= 0.5,
+        'Invalid switch axis or overlap with another control',
+      );
+      used.add(s.axis);
+      continue;
+    }
     exactKeys(s, ['button', 'threshold', 'invert'], action);
     required(
       int(s.button, 0, p.device.buttons - 1) &&
@@ -154,14 +168,50 @@ export function normalizeRadioInput(profile, pad) {
   }
   return out;
 }
-export function radioSwitch(profile, pad, action) {
+export function radioSwitch(profile, pad, action, wasActive = false) {
   const binding = profile.switches[action];
   if (!binding) return false;
+  if (Object.hasOwn(binding, 'axis')) {
+    const value = pad.axes[binding.axis];
+    required(finite(value, -1, 1), 'Invalid switch axis sample');
+    const travel = (value - binding.off) / (binding.on - binding.off);
+    return travel > (wasActive ? 0.25 : 0.75);
+  }
   const button = pad.buttons[binding.button];
   const value = typeof button === 'number' ? button : button?.value;
   required(finite(value, 0, 1), 'Invalid switch sample');
   return binding.invert ? value < binding.threshold : value >= binding.threshold;
 }
+// User-tested TX15 USB simulator model. Match the complete device identity;
+// other radios and radio-side mixes still need their own calibration.
+export function defaultRadioProfile() {
+  return validateRadioProfile({
+    format: AXIS_RADIO_FORMAT,
+    id: 'tx15-usb-mode2',
+    name: 'RadioMaster TX15 — tested USB Mode 2',
+    device: {
+      id: 'TX15 Joystick (Vendor: 1209 Product: 4f54)',
+      mapping: '',
+      axes: 8,
+      buttons: 24,
+    },
+    stickMode: 2,
+    throttleStyle: 'full-travel',
+    verified: true,
+    channels: {
+      roll: { axis: 0, min: -1, center: 0.004, max: 1, invert: false, deadZone: 0.02 },
+      pitch: { axis: 1, min: -1, center: 0.004, max: 1, invert: false, deadZone: 0.02 },
+      yaw: { axis: 3, min: -0.996, center: 0.004, max: 1, invert: false, deadZone: 0.02 },
+      throttle: { axis: 2, min: -1, center: null, max: 1, invert: false, deadZone: 0 },
+    },
+    switches: {
+      arm: { axis: 4, off: -1, on: 1 },
+      pause: null,
+      reset: { button: 1, threshold: 0.5, invert: false },
+    },
+  });
+}
+
 export const DEFAULT_RESPONSE = Object.freeze({
   format: RESPONSE_FORMAT,
   id: 'gentle-v1',

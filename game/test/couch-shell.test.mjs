@@ -663,6 +663,8 @@ test('a real finished draw exposes both frozen boards, Results returns without a
 
 test('an old held controller cannot reclaim a seat from accepted touch across pause and resume', async (t) => {
   const f = await couchPage(t, { pads: [pad(0), pad(1)] });
+  f.frame();
+  f.pulse(0, 3);
   f.$('race-start').click();
   f.frame();
   f.pads()[0].axes[0] = 1;
