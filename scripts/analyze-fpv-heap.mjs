@@ -47,6 +47,28 @@ const label = (value) =>
 /** Offline snapshot analysis. Shallow sizes and strong paths are not dominator
  * retained sizes, exclusive ownership, native decoder accounting or GPU bytes. */
 export function analyzeFlightHeap(input) {
+  return {
+    ...analyzeNamedHeap(input, { constructors: CONSTRUCTORS, closures: CLOSURES }),
+    format: 'FlightHeapAnalysis.v1',
+  };
+}
+
+/** Shared offline parser. Callers select actual runtime names, not new runtime
+ * instrumentation. The existing flight adapter retains its exact output. */
+export function analyzeNamedHeap(input, { constructors = [], closures = [] } = {}) {
+  const names = (values) => {
+    const result = new Set(values);
+    if (
+      result.size > 64 ||
+      [...result].some(
+        (value) => typeof value !== 'string' || !/^[A-Za-z_$][\w$]{0,79}$/.test(value),
+      )
+    )
+      fail('invalid named cohorts');
+    return result;
+  };
+  const selectedConstructors = names(constructors),
+    selectedClosures = names(closures);
   const meta = input?.snapshot?.meta,
     nodes = input?.nodes,
     edges = input?.edges,
@@ -108,8 +130,8 @@ export function analyzeFlightHeap(input) {
     detached = 0;
   const ids = new Set();
   const cohortFor = (type, name) => {
-    if (type === 'object' && CONSTRUCTORS.has(name)) return `object:${name}`;
-    if (type === 'closure' && CLOSURES.has(name)) return `closure:${name}`;
+    if (type === 'object' && selectedConstructors.has(name)) return `object:${name}`;
+    if (type === 'closure' && selectedClosures.has(name)) return `closure:${name}`;
     if (type === 'native') {
       const dom =
         name.match(/^(?:Detached )?(HTML\w+|SVG\w+|Document|Window)(?:\b|$)/) ??
@@ -220,7 +242,7 @@ export function analyzeFlightHeap(input) {
     row.paths.push({ target: describe(index), truncated: at !== 0, strongPath: path.reverse() });
   }
   return {
-    format: 'FlightHeapAnalysis.v1',
+    format: 'NamedHeapAnalysis.v1',
     nodeCount: count,
     edgeCount,
     strongReachableNodes: tail,

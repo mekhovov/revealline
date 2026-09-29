@@ -85,6 +85,31 @@ test('an existing evidence directory is never overwritten, including a failed pr
   );
 });
 
+test('failed admission retains exact plan and observer authority pins without launching a browser', async (t) => {
+  const directory = await temporary(t),
+    file = path.join(directory, 'plan.json'),
+    output = path.join(directory, 'rejected');
+  await writeFile(file, JSON.stringify(plan()));
+  await writeFile(path.join(directory, 'optional-packages.json'), '{}');
+  const report = await observeFPVCompletion({
+    planFile: file,
+    playwrightModule: '/must-not-be-imported.mjs',
+    output,
+  });
+  assert.equal(report.completed, false);
+  assert.equal(report.qualified, false);
+  assert.equal(report.functionalStatus, 'not-started');
+  assert.match(report.failure, /Envelope differs/);
+  assert.equal(report.instrumentation.length, 6);
+  assert(
+    report.instrumentation.every((item) => item.bytes > 0 && /^[a-f0-9]{64}$/.test(item.sha256)),
+  );
+  assert.equal(report.instrumentation[0].path, 'scripts/observe-fpv-completion.mjs');
+  assert.deepEqual(report.cleanup.operations, []);
+  assert.deepEqual(JSON.parse(await readFile(path.join(output, 'observation.json'))), report);
+  assert.deepEqual(JSON.parse(await readFile(path.join(output, 'plan.json'))), plan());
+});
+
 function traceClient(rows, { readFailure, hang = false, closeFailure = false } = {}) {
   const client = new EventEmitter();
   const calls = [];
