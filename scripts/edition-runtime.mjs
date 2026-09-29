@@ -1,6 +1,6 @@
 import path from 'node:path';
 import { parse } from 'acorn';
-import { MENU_SCENES, MENU_SCENE_COMPOSITIONS, resolveMenuScene } from '../game/ui/menu-scene-catalog.mjs';
+import { MENU_SCENES, resolveMenuScene } from '../game/ui/menu-scene-catalog.mjs';
 
 function sceneAssets(scene) {
   return [scene.landscape, scene.portrait, scene.wordmark]
@@ -33,23 +33,19 @@ export function projectEditionMenuResourcePaths(paths, editionIds) {
 export function projectEditionMenuScenes(bytes, editionIds) {
   const source = new TextDecoder('utf-8', { fatal: true }).decode(bytes);
   const tree = parse(source, { ecmaVersion: 'latest', sourceType: 'module' });
-  const declarations = tree.body.flatMap((node) => (node.declaration ?? node).declarations ?? []);
-  const declaration = declarations.find((node) => node.id?.name === 'MENU_SCENES');
-  const compositions = declarations.find((node) => node.id?.name === 'MENU_SCENE_COMPOSITIONS');
+  const declaration = tree.body
+    .flatMap((node) => (node.declaration ?? node).declarations ?? [])
+    .find((node) => node.id?.name === 'MENU_SCENES');
   if (!declaration?.init) throw new Error('Menu scene catalog lacks its explicit profile lookup.');
-  if (!compositions?.init) throw new Error('Menu scene catalog lacks its explicit composition lookup.');
   const ids = [
     ...new Set(['fpv', ...editionIds.map((editionId) => resolveMenuScene({ editionId }).id)]),
   ];
   const { start, end } = declaration.init;
-  const edits = [
-    { start, end, text: `Object.freeze(Object.fromEntries(Object.entries(${source.slice(start, end)}).filter(([id]) => ${JSON.stringify(ids)}.includes(id))))` },
-    { start: compositions.init.start, end: compositions.init.end, text: 'Object.freeze({})' },
-  ];
-  let projected = source;
-  for (const edit of edits.sort((a, b) => b.start - a.start))
-    projected = projected.slice(0, edit.start) + edit.text + projected.slice(edit.end);
-  return Buffer.from(projected);
+  return Buffer.from(
+    source.slice(0, start) +
+      `Object.freeze(Object.fromEntries(Object.entries(${source.slice(start, end)}).filter(([id]) => ${JSON.stringify(ids)}.includes(id))))` +
+      source.slice(end),
+  );
 }
 
 // These are release-owned adapters, not content-supplied scripts. Original
@@ -91,7 +87,6 @@ export const EDITION_RUNTIME_RESOURCES = Object.freeze({
   ],
   'game/ui/menu-scene-catalog.mjs': [
     ...new Set(Object.values(MENU_SCENES).flatMap(sceneAssets)),
-    ...Object.values(MENU_SCENE_COMPOSITIONS).flatMap((modes) => Object.values(modes).flatMap(sceneAssets)),
     'game/ui/art/menu-scenes/provenance.json',
   ],
   'game/content/soundtrack-catalogue.mjs': [
