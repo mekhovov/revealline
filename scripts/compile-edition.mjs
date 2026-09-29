@@ -1,3 +1,6 @@
+import { createRewardCosmeticRegistry, resolveRewardCosmetic } from '../game/rewards/cosmetics.mjs';
+import { inspectImageDataUrl } from '../game/content.mjs';
+import { rewardMediaReferences, inspectRewardMediaBytes } from '../game/rewards/media-format.mjs';
 import fs from 'node:fs/promises';
 import path from 'node:path';
 import { createHash } from 'node:crypto';
@@ -5,16 +8,23 @@ import { pathToFileURL } from 'node:url';
 import { parse } from 'acorn';
 import { canonicalJSON, boundedJSON, required } from '../game/data-json.mjs';
 import { compileContentProject } from '../game/content-design/project.mjs';
+import { loadPreviewArtwork } from '../game/content-design/assets.mjs';
 import {
   validateEditionCampaignProject,
   validateEditionLessonBundle,
+  validateEditionRewardBundle,
 } from '../game/editions/project.mjs';
+import { verifyCampaignLocalization } from '../game/editions/localization.mjs';
 import {
   createEditionRuntimeCatalog,
   editionRelativePath,
   validateEditionRuntimeCatalog,
   validateEditionAsset,
+  resolveEditionAssets,
+  resolveEditionSelection,
 } from '../game/editions/model.mjs';
+import { mergeEditionProjects } from '../game/editions/bootstrap.mjs';
+import { validateCompletionRewards } from '../game/rewards/model.mjs';
 import {
   editionIdentityId,
   validateEditionId,
@@ -136,6 +146,8 @@ export async function collectEditionSelectedFiles({ catalog, editionIds, read })
     ...selected.campaigns.flatMap((campaign) => [
       campaign.sourcePath,
       ...(campaign.lessonPath ? [campaign.lessonPath] : []),
+      ...(campaign.rewardPath ? [campaign.rewardPath] : []),
+      ...(campaign.localizationPath ? [campaign.localizationPath] : []),
     ]),
     ...selected.editions.flatMap((edition) => [
       ...Object.values(edition.boot ?? {}),
@@ -393,6 +405,64 @@ export async function compileEdition({
   offline = null,
 } = {}) {
   required(sourceFiles instanceof Map, 'Edition compilation requires original source bytes.');
+  const verifyCampaignHeroes = (catalog) => {
+    for (const campaign of catalog.campaigns) {
+      if (!campaign.heroAssetId) continue;
+      const asset = catalog.assets.find((item) => item.id === campaign.heroAssetId),
+        bytes = sourceFiles.get(asset.path);
+      required(
+        bytes instanceof Uint8Array && bytes.length === asset.bytes && hash(bytes) === asset.sha256,
+        'Campaign artwork differs from its pinned bytes.',
+      );
+      const extension = asset.path.split('.').at(-1).toLowerCase(),
+        mime = extension === 'jpg' ? 'jpeg' : extension;
+      required(
+        inspectImageDataUrl(`data:image/${mime};base64,${Buffer.from(bytes).toString('base64')}`)
+          .valid,
+        'Campaign artwork requires a bounded static raster image.',
+      );
+    }
+  };
+  const verifiedArtwork = new Set();
+  const verifyArtwork = async (assets) => {
+    for (const asset of assets) {
+      const identity = canonicalJSON(asset);
+      if (verifiedArtwork.has(identity)) continue;
+      await loadPreviewArtwork(asset, {
+        fetchAsset: async (name) => {
+          const bytes = sourceFiles.get(`game/${name}`);
+          required(bytes instanceof Uint8Array, `Campaign artwork bytes are missing: ${name}.`);
+          return new Response(bytes);
+        },
+        digest: async (bytes) => createHash('sha256').update(bytes).digest(),
+      });
+      verifiedArtwork.add(identity);
+    }
+  };
+  const verifyRewardMedia = (definitions, assets, presets, themes) => {
+    const registry = createRewardCosmeticRegistry({ presets, themes, assets });
+    for (const reward of definitions)
+      for (const { role, reference } of [
+        ...(reward.teaserImage ? [{ role: 'poster', reference: reward.teaserImage.asset }] : []),
+        ...reward.payloads.flatMap((payload) => [
+          ...rewardMediaReferences(payload),
+          ...(payload.type === 'cosmetic' && resolveRewardCosmetic(registry, payload).image
+            ? [{ role: 'poster', reference: resolveRewardCosmetic(registry, payload).image }]
+            : []),
+        ]),
+      ]) {
+        const asset = assets.find(
+          (item) => item.id === reference.assetId && item.sha256 === reference.sha256,
+        );
+        required(asset, 'Reward media differs from its selected asset pin.');
+        const bytes = sourceFiles.get(asset.path);
+        required(
+          bytes instanceof Uint8Array && hash(bytes) === asset.sha256,
+          'Reward media differs from its exact SHA-256.',
+        );
+        inspectRewardMediaBytes(asset, role, bytes);
+      }
+  };
   const catalog = validateEditionRuntimeCatalog(source);
   let runtimeCatalog = selectEditionClosure(catalog, editionIds);
   editionIds = runtimeCatalog.editions.map((edition) => edition.id);
@@ -424,10 +494,13 @@ export async function compileEdition({
       assets: [...selected.assets, ...assets],
     });
   }
+  verifyCampaignHeroes(runtimeCatalog);
   const selectedData = new Set(
     runtimeCatalog.campaigns.flatMap((campaign) => [
       campaign.sourcePath,
       ...(campaign.lessonPath ? [campaign.lessonPath] : []),
+      ...(campaign.rewardPath ? [campaign.rewardPath] : []),
+      ...(campaign.localizationPath ? [campaign.localizationPath] : []),
     ]),
   );
   for (const edition of runtimeCatalog.editions) {
@@ -443,6 +516,14 @@ export async function compileEdition({
         'Retained presentation source bytes differ from their registration.',
       );
       const retained = await validateRetainedPresentation(readJSON(bytes), { edition });
+      await verifyArtwork(retained.bootstrap.source.assets);
+      verifyCampaignHeroes(retained.bootstrap.catalog);
+      verifyRewardMedia(
+        Object.values(retained.bootstrap.rewards ?? {}).flat(),
+        resolveEditionAssets(retained.bootstrap.catalog, { editionId: edition.id }),
+        retained.bootstrap.boot.presets,
+        retained.bootstrap.boot.themes.themes,
+      );
       required(
         retained.snapshot.authoredPresentationSha256 === descriptor.id,
         'Retained presentation identity differs from its registration.',
@@ -461,6 +542,8 @@ export async function compileEdition({
       .flatMap((campaign) => [
         campaign.sourcePath,
         ...(campaign.lessonPath ? [campaign.lessonPath] : []),
+        ...(campaign.rewardPath ? [campaign.rewardPath] : []),
+        ...(campaign.localizationPath ? [campaign.localizationPath] : []),
       ])
       .filter((file) => !selectedData.has(file)),
     ...catalog.assets.map((asset) => asset.path).filter((file) => !selectedMedia.has(file)),
@@ -474,13 +557,14 @@ export async function compileEdition({
   for (const file of enginePaths) {
     required(!excluded.has(file), 'The engine inventory includes omitted edition content.');
     required(
-      !/^(?:game\/company-campaigns\/(?:content|catalog|brands|lessons|artwork)\.mjs|game\/editions\/(?:catalog|assets)\.json)$/.test(
+      !/^(?:game\/company-campaigns\/(?:content|catalog|brands|lessons|rewards|artwork)\.mjs|game\/editions\/(?:catalog|assets)\.json)$/.test(
         file,
       ),
       'Build-time company registries cannot enter a player edition.',
     );
     required(
-      !/\.(?:png|jpe?g|webp|svg|ttf|otf|woff2?|mp3|ogg|wav|mp4)$/i.test(file) ||
+      (!/\.(?:png|jpe?g|webp|svg|ttf|otf|woff2?|mp3|ogg|wav|mp4|webm|vtt)$/i.test(file) &&
+        !/^game\/editions\/assets\/.*\.txt$/i.test(file)) ||
         selectedMedia.has(file),
       'Player media must belong to the approved asset closure.',
     );
@@ -693,10 +777,56 @@ html[data-edition-id] .edition-boot-logo{display:inline-block;width:auto;height:
         'Campaign artwork is outside the selected approved asset closure.',
       );
     }
+    await verifyArtwork(project.assets);
     if (descriptor.lessonPath)
       validateEditionLessonBundle(readJSON(files.get(descriptor.lessonPath)), project);
+    if (descriptor.localizationPath)
+      await verifyCampaignLocalization(
+        readJSON(files.get(descriptor.localizationPath)),
+        project,
+        descriptor,
+      );
   }
   for (const edition of runtimeCatalog.editions) {
+    const rewards = [];
+    const rewardSelection = resolveEditionSelection(runtimeCatalog, { editionId: edition.id });
+    const selectedCampaigns = rewardSelection.campaigns;
+    const editionRewards = selectedCampaigns.flatMap((descriptor) =>
+      descriptor.rewardPath ? readJSON(files.get(descriptor.rewardPath)) : [],
+    );
+    const editionProject = editionRewards.some((reward) => reward?.scope?.kind === 'edition')
+      ? mergeEditionProjects(
+          rewardSelection,
+          selectedCampaigns.map((descriptor) => readJSON(files.get(descriptor.sourcePath))),
+        )
+      : undefined;
+    for (const descriptor of runtimeCatalog.campaigns.filter(
+      (campaign) => edition.campaignIds.includes(campaign.id) && campaign.rewardPath,
+    ))
+      rewards.push(
+        ...validateEditionRewardBundle(
+          readJSON(files.get(descriptor.rewardPath)),
+          readJSON(files.get(descriptor.sourcePath)),
+          {
+            descriptor,
+            editionId: edition.id,
+            presets: readJSON(files.get(edition.boot.presets)),
+            themes: readJSON(files.get(edition.boot.themes)).themes,
+            editionProject,
+            lessons: selectedCampaigns.flatMap((campaign) =>
+              campaign.lessonPath ? readJSON(files.get(campaign.lessonPath)) : [],
+            ),
+            assets: resolveEditionAssets(runtimeCatalog, { editionId: edition.id }),
+          },
+        ),
+      );
+    validateCompletionRewards(rewards);
+    verifyRewardMedia(
+      rewards,
+      resolveEditionAssets(runtimeCatalog, { editionId: edition.id }),
+      readJSON(files.get(edition.boot.presets)),
+      readJSON(files.get(edition.boot.themes)).themes,
+    );
     Object.values(edition.boot).forEach((file) => readJSON(files.get(file)));
     validateEditionPresentation({
       catalog: runtimeCatalog,

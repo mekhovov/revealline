@@ -1,8 +1,6 @@
 import fs from 'node:fs/promises';
 import path from 'node:path';
-import { execFileSync } from 'node:child_process';
 import { pathToFileURL } from 'node:url';
-import { createHash } from 'node:crypto';
 import {
   collectEditionEngineFiles,
   compileEdition,
@@ -18,37 +16,18 @@ import {
 import { validateEditionAdmission } from '../publishing/edition-admission.mjs';
 import { editionHash } from '../publishing/edition-zip.mjs';
 import { editionIdentityId } from '../game/edition-context.mjs';
+import {
+  createEditionCapacityReport,
+  editionCapacityPacket,
+  EDITION_CAPACITY_REPORT,
+} from '../publishing/edition-capacity.mjs';
 
-const git = (root, args) =>
-  execFileSync('git', args, { cwd: root, encoding: 'utf8', maxBuffer: 16 * 1024 * 1024 }).trim();
-function frozenSource(root) {
-  if (git(root, ['status', '--porcelain', '--untracked-files=normal']))
-    throw new Error(
-      'Candidate bundles require a clean committed source tree. Commit the reviewed inputs first.',
-    );
-  return {
-    sourceRevision: git(root, ['rev-parse', 'HEAD']),
-    sourceTree: git(root, ['rev-parse', 'HEAD^{tree}']),
-  };
-}
-function committedInputMap(root) {
-  return new Map(
-    git(root, ['ls-tree', '-rz', '--full-tree', 'HEAD'])
-      .split('\0')
-      .filter(Boolean)
-      .map((row) => {
-        const match = /^(100644|100755) blob ([a-f0-9]+)\t([\s\S]+)$/.exec(row);
-        return match ? [match[3], match[2]] : [row.split('\t')[1], null];
-      }),
-  );
-}
-function verifyCommittedInputs(files, tree) {
-  for (const [name, bytes] of files) {
-    const object = createHash('sha1').update(`blob ${bytes.length}\0`).update(bytes).digest('hex');
-    if (tree.get(name) !== object)
-      throw new Error(`Selected input differs from the immutable commit: ${name}`);
-  }
-}
+import {
+  sourceGit as git,
+  frozenSource,
+  committedInputMap,
+  verifyCommittedInputs,
+} from './frozen-source.mjs';
 
 /** Create candidates only. Publication needs the separate reviewed selector and
  * qualification receipts; successful compilation is never human signoff. */
@@ -186,6 +165,7 @@ export async function bundleEditions({ root = process.cwd(), editionIds, out, ba
       ],
     }),
   );
+  files.set(EDITION_CAPACITY_REPORT, editionJSON(createEditionCapacityReport(files)));
   files.set(
     'checksums.json',
     editionJSON({
@@ -195,6 +175,7 @@ export async function bundleEditions({ root = process.cwd(), editionIds, out, ba
         .sort((a, b) => (a.path < b.path ? -1 : a.path > b.path ? 1 : 0)),
     }),
   );
+  const capacityPacket = editionCapacityPacket(files);
   if (JSON.stringify(frozenSource(root)) !== JSON.stringify(binding))
     throw new Error('Source changed while building the candidate.');
   await fs.mkdir(path.dirname(output), { recursive: true });
@@ -218,6 +199,11 @@ export async function bundleEditions({ root = process.cwd(), editionIds, out, ba
     zipMembersVerified: true,
     reproducibleBuilds: 2,
     verifiedPresentationReceipts: presentationReceipts.length,
+    capacityMetadataFiles: capacityPacket.size,
+    capacityMetadataBytes: [...capacityPacket.values()].reduce(
+      (total, bytes) => total + bytes.length,
+      0,
+    ),
     publicEligible: false,
   };
 }
