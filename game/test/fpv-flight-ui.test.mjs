@@ -10,6 +10,7 @@ import { FLIGHT_DEMONSTRATIONS } from '../../optional-practice/civilian-fpv/demo
 import { replayFlight } from '../../optional-practice/civilian-fpv/model.mjs';
 import {
   createFlightProfileStore,
+  defaultRadioProfile,
   radioDeviceIdentity,
 } from '../../optional-practice/civilian-fpv/radio-profile.mjs';
 import { mountFlightNotebook } from '../../optional-practice/civilian-fpv/notebook.mjs';
@@ -728,4 +729,46 @@ test('selecting USB radio restores saved axis arm and button reset after reload'
   f.tick();
   assert.equal(f.view.snapshot().status, 'disarmed');
   assert.equal(f.view.snapshot().ticks, 0);
+});
+
+test('tested TX15 default loads without saved calibration and does not auto-arm', (t) => {
+  const storage = { getItem: () => null, setItem() {} };
+  const profile = defaultRadioProfile();
+  const pad = {
+    index: 0,
+    id: profile.device.id,
+    mapping: '',
+    connected: true,
+    axes: [0.004, 0.004, -1, 0.004, -1, 0, 0, 0],
+    buttons: Array.from({ length: 24 }, () => ({ value: 0, pressed: false })),
+  };
+  const f = fixture(t, { storage });
+  f.setPads([pad]);
+  f.$('input-source').value = 'radio';
+  f.$('input-source').emit('change');
+  f.tick();
+  assert.equal(f.view.radio.status().verified, true);
+  assert.equal(f.view.snapshot().status, 'disarmed');
+  pad.axes[4] = 1;
+  f.tick();
+  assert.equal(f.view.snapshot().status, 'active');
+});
+
+test('TX15 default does not match an unrelated joystick', (t) => {
+  const f = fixture(t, { storage: { getItem: () => null, setItem() {} } });
+  f.setPads([
+    {
+      index: 0,
+      id: 'Different radio',
+      mapping: '',
+      connected: true,
+      axes: Array(8).fill(0),
+      buttons: Array.from({ length: 24 }, () => ({ value: 0 })),
+    },
+  ]);
+  f.$('input-source').value = 'radio';
+  f.$('input-source').emit('change');
+  f.tick();
+  assert.equal(f.view.radio.status().profile, null);
+  assert.equal(f.view.snapshot().status, 'disarmed');
 });

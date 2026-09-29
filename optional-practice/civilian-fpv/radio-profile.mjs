@@ -182,6 +182,36 @@ export function radioSwitch(profile, pad, action, wasActive = false) {
   required(finite(value, 0, 1), 'Invalid switch sample');
   return binding.invert ? value < binding.threshold : value >= binding.threshold;
 }
+// User-tested TX15 USB simulator model. Match the complete device identity;
+// other radios and radio-side mixes still need their own calibration.
+export function defaultRadioProfile() {
+  return validateRadioProfile({
+    format: AXIS_RADIO_FORMAT,
+    id: 'tx15-usb-mode2',
+    name: 'RadioMaster TX15 — tested USB Mode 2',
+    device: {
+      id: 'TX15 Joystick (Vendor: 1209 Product: 4f54)',
+      mapping: '',
+      axes: 8,
+      buttons: 24,
+    },
+    stickMode: 2,
+    throttleStyle: 'full-travel',
+    verified: true,
+    channels: {
+      roll: { axis: 0, min: -1, center: 0.004, max: 1, invert: false, deadZone: 0.02 },
+      pitch: { axis: 1, min: -1, center: 0.004, max: 1, invert: false, deadZone: 0.02 },
+      yaw: { axis: 3, min: -0.996, center: 0.004, max: 1, invert: false, deadZone: 0.02 },
+      throttle: { axis: 2, min: -1, center: null, max: 1, invert: false, deadZone: 0 },
+    },
+    switches: {
+      arm: { axis: 4, off: -1, on: 1 },
+      pause: null,
+      reset: { button: 1, threshold: 0.5, invert: false },
+    },
+  });
+}
+
 export const DEFAULT_RESPONSE = Object.freeze({
   format: RESPONSE_FORMAT,
   id: 'gentle-v1',

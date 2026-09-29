@@ -7,6 +7,7 @@ import {
   AXIS_RADIO_FORMAT,
   STICK_LAYOUTS,
   createFlightProfileStore,
+  defaultRadioProfile,
   normalizeRadioInput,
   radioDeviceIdentity,
   responseCurve,
@@ -576,7 +577,7 @@ export function mountRadioSetup({
         runtime.devices().status === 'unavailable' ? copy.unavailable : copy.pick;
       return;
     }
-    const p = store.snapshot().radio;
+    const p = store.snapshot().radio ?? defaultRadioProfile();
     if (p && canonicalJSON(p.device) === canonicalJSON(radioDeviceIdentity(pad))) loadProfile(p);
   });
   for (const node of [
