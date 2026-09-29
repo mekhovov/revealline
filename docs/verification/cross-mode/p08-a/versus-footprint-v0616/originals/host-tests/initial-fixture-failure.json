@@ -1,6 +1,0 @@
-{
-  "source": "d34e283819376eb43e4942287d9767b22a4f6487",
-  "initial_exit": 1,
-  "cause": "Missing exact game/content/classes.json prevented boot in both cases; subsequently hydrated finite dependency. Not product RED evidence.",
-  "large_pack": "Hydrator refused fpv-arcade-r5.json at its file bound before writing. Parent notified."
-}
