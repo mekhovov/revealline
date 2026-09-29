@@ -1,4 +1,4 @@
-import { mountAuthoringInputHost } from './authoring-input-host.mjs';
+import { mountPageInputHost } from './page-input-host.mjs';
 
 /** Support screens use the existing menu/field owner. Controller Practice keeps
  * its session-checked child handoff; no second preview bridge is installed. */
@@ -7,7 +7,7 @@ export function mountSupportInput({
   window: win = doc.defaultView,
   ...options
 } = {}) {
-  return mountAuthoringInputHost({
+  return mountPageInputHost({
     ...options,
     document: doc,
     window: win,

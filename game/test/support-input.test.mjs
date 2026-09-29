@@ -82,11 +82,34 @@ test('support pages mount the shared owner and preserve their own home/preview l
   }
   const f = fixture();
   assert.equal(f.doc.querySelector('.authoring-preview-enter'), null);
+  assert.equal(f.doc.querySelector('.authoring-source-dialog'), null);
   f.refresh.focus();
   f.press(1);
   assert.deepEqual(f.calls, ['home']);
   f.host.destroy();
   assert.equal(f.frames.size, 0);
+});
+
+test('support file controls retain the native platform picker boundary without authoring samples', () => {
+  const f = fixture();
+  const input = f.node('input', 'publish-pack');
+  input.type = 'file';
+  input.setAttribute('type', 'file');
+  input.accept = '.rlpack';
+  input.onclick = () => f.calls.push('platform-picker');
+  input.focus();
+  input.click();
+  assert.deepEqual(f.calls, ['platform-picker']);
+  f.calls.length = 0;
+  f.press(0);
+  assert.deepEqual(
+    f.calls,
+    [],
+    'A sampled pad event does not synthesize platform user activation.',
+  );
+  assert.equal(f.doc.querySelector('.authoring-source-dialog'), null);
+  assert.equal(f.doc.querySelector('.authoring-source-open'), null);
+  f.host.destroy();
 });
 
 test('dynamic catalog actions are reachable without re-registering the page', () => {

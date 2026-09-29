@@ -43,4 +43,17 @@ The custom Solo player exposed another Phase 2 gap: its installed-player shell s
 
 ## Release boundary
 
+### Support-page package correction
+
+An in-memory standalone compile of the first pushed batch (`88ce620f4`) caught an actual admission failure: Controller Practice imported the authoring source picker, which pulled `dawn-signal.png` and `dawn-signal.mp4` into a player edition without media-admission records. The compiler correctly rejected this with “Player media must belong to the approved asset closure.”
+
+The correction extracts the common owner into `page-input-host.mjs`. Authoring retains its source-picker wrapper and single document owner; support pages import the common owner without authoring sample media. Dynamic CSS and sparse authoring dependencies follow the new module. No asset-admission guard, production manifest or ledger was changed.
+
+Verification of the frozen correction:
+
+- 27/27 focused authoring-input, support-input and edition-runtime tests; 2/2 sparse catalogue Python tests. Scoped lint, formatting and diff checks passed.
+- The Controller Practice dependency closure includes input navigation and field-editor CSS, with no authoring samples or manual test fixtures; projected imports have no missing targets.
+- `compileEdition` for Coupa Village succeeded in memory: 558 engine inputs, 599 output files, 61,475,615 bytes (under the 64 MiB limit). Inputs were the exact `88ce620f4` package plus this bounded runtime correction; the concurrent custom-menu locale build was replaced with its `88ce620f4` bytes for this verification only. This did not write a package or establish acceptance of every edition.
+- On the default landing, trusted keyboard Enter entered fullscreen, Escape exited it, and focus remained on the fullscreen action. This verifies the IAB keyboard path, not browser activation from a physical controller.
+
 This report is local candidate evidence. Physical controllers, Steam Deck/native webviews, mobile frame-time/memory, forced-colors browser rendering, every final edition package and the published build remain separate gates. #782 is a draft aggregate input assigned to v0.150.0; no version or public deployment is created by these commits.

@@ -53,6 +53,7 @@ CONTROLLER_FILES = (
     'game/ui/native-menu-icons.mjs',
     'game/ui/operation-status.css',
     'game/ui/operation-status.mjs',
+    'game/ui/page-input-host.mjs',
     'game/ui/settings-panels.mjs',
     'game/vendor/i18next-26.4.2.min.js',
 )
