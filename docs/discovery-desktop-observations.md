@@ -257,3 +257,77 @@ with an 11.629 ms renderer maximum. The original oversized cycle trace remains
 preserved alongside an explicit renderer-only derivative. These scoped observations
 retain the negative result and do not close matched p95, all-reward or retained-resource
 qualification.
+
+## Packaged-preview HTTP policy
+
+The reusable `observe-discovery-runtime.mjs` plan accepts
+`"headerPolicy": "packaged-preview"`. It serves the exact existing
+`PREVIEW_SECURITY_HEADERS` from `game-cli.mjs`, with `Cache-Control: no-cache`;
+it verifies the served headers and retains their values and the supplying source
+hashes. The loopback soundtrack connection exception stays in that shared policy.
+Omitting the option preserves the earlier minimal server behavior. The selected
+policy enters `settingsIdentity`, so a minimal-policy sample cannot silently serve
+as the baseline for a packaged-preview sample.
+
+This checks the packaged preview policy on loopback. It does not reproduce a
+public deployed origin, public CSP, warm-cache behavior, installation or promotion.
+A failed route remains a failed observation even when boot and headers are correct.
+
+## Reward-owner heap diagnostics after repeated viewing
+
+Connected counters cannot determine whether closed viewers remain reachable.
+`scripts/analyze-discovery-heap.mjs` adds a separate, offline diagnostic using the
+same bounded V8 snapshot parser as the flight-retention tool. The existing flight
+analysis format and default cohorts remain unchanged. This does not instrument
+player code, invent progress, or change any performance gate.
+
+A capture starts with a normally earned discovery. Warm the exact viewer once,
+close it and the result, and capture the first heap after explicit garbage
+collection. Use `runDiscoveryCycles` for twenty ordinary Results → Explore → Back
+→ Picture transitions, capture a second closed heap, then repeat twenty transitions
+and capture the third. Keep the same CDP isolate and document alive throughout.
+Do not collect heaps during a frame-time benchmark. Stop and retain the failure if
+a control is clipped, artwork is unavailable, a requested transition is missing,
+or a snapshot exceeds the existing 128 MiB limit.
+
+The private capture manifest uses
+`revealline-discovery-retention-capture.v1`, `qualified: false`, and contains:
+
+- `binding`: exact artifact and manifest SHA-256, source commit/tree, edition and
+  gameplay identities;
+- `instrumentation`: unique `{path, bytes, sha256}` records for the actual capture,
+  observer, runner and analysis sources retained beside the evidence;
+- `environment`: the unchanged browser environment from the ordinary cycle reports;
+- `snapshots`: ordered `warm`, `after20`, `after40` entries with a pinned `heap`,
+  `forcedGC: true`, monotonic `atMs` and closed viewer/result/Collection state;
+- `intervals`: two pinned ordinary cycle reports, each with `startMs` and `endMs`
+  between its surrounding snapshots;
+- `context` on every snapshot and interval: the identical `binding`,
+  `instrumentationSha256` (SHA-256 of the path-sorted instrumentation JSON), actual
+  CDP `isolateId` and unchanged browser `timeOrigin`.
+
+Every interval must contain twenty ordered viewer/result exits and twenty distinct
+closed checkpoints. Each checkpoint must have one reward host and no connected
+video or blob media. The analyzer verifies all evidence byte hashes before parsing,
+rejects changed contexts/settings and never counts a requested cycle as observed.
+The context identifies the capture's declared isolate; it is not an attestation
+against fabricated evidence.
+
+```sh
+node scripts/analyze-discovery-heap.mjs /absolute/private-capture/capture.json \
+  > /absolute/private-capture/analysis.json
+node --test scripts/test-analyze-discovery-heap.mjs scripts/test-analyze-fpv-heap.mjs
+```
+
+The result describes native DOM/media wrappers, detachedness where Chrome supplies
+it, shallow sizes, and surviving/added object IDs within selected named cohorts.
+Cohort names come from the shared reward viewers and store. A factory can remain
+resident after all its instances close, and unrelated modules can share callback
+names; neither a positive count nor a count increase alone proves a leak. Raw
+snapshots may contain player data, source text and URLs: keep them private and
+ignored. The summary omits raw object strings, IDs and retaining paths.
+
+No threshold produces an automatic stability pass. This diagnostic does not measure
+exclusive/dominator retained bytes, native decoders, GPU allocations, all outstanding
+object URLs or natural pacing. Repeated viewing of one reward is not evidence of
+same-document edition replacement, new wins, all media types, or physical devices.
