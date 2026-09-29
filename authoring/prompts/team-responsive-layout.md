@@ -31,3 +31,11 @@ stored velocity. Check one ring/caption under overlap and after either source
 expires; preserve compact LOCK/CHARGE/RECOVER labels, freeze, pause and inactive
 actor exclusion. A freeze-only pickup must not be relabelled Slowed. Keep the
 painter read-only and compare old no-bonus draws before production admission.
+
+Keep functional lock and rescue captions on the shared locale authority. Switch
+EN → UK → EN during real warning and contact-rescue states for both players;
+retain exact English, target numbers, validated progress, slowdown marker and
+complete simulation checkpoints. Legacy roles must not invent a percentage, and
+reserve recovery must not show contact rescue. Preserve measured packing and font
+minima; update only intentionally changed translated-caption expectations, keeping
+all geometry/overlap/cache assertions. Model bounds are not native-font approval.
