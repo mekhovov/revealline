@@ -106,6 +106,15 @@ the existing PR #757 batch, not claimed as released. The source commit
 `42710c2b2340ad7d6a02078b98cf6e569537d47f` is pushed; see its
 [focused evidence](https://github.com/mekhovov/revealline/blob/42710c2b2340ad7d6a02078b98cf6e569537d47f/docs/verification/team-resume-rescue-guidance-2026-09-29.md).
 
+**Levels: empty Support pulses no longer count as learned.** A second narrow
+correction, `8a143fe951b28ea36c18b4138650c9187032d9f2`, requires an actual slowed
+enemy or intercepted impact. The pre-fix unit cohort had nine passes and two
+expected failures; the corrected teaching/host/Resume cohort passes all 21 with
+no skips. Independent review found no actionable defect. Stored v1 fields,
+acknowledgement, capability APIs and existing saved completion flags are
+unchanged. Both pushed commits are accepted for integration into existing
+PR #757, not yet claimed as adopted or released.
+
 **UX, in parallel: Team Large text in the actual painter.** Respect the same
 stored display preference in canvas labels while preserving actor/contact
 geometry. Keep that separately owned rendering change clear of the Resume hunks.
@@ -134,12 +143,39 @@ hardware availability and human review; they are not promised delivery dates.
 
 ## Remaining local-source dispositions
 
+### Content review now started: Cooling loop
+
+A bounded legal-input review of v37/current tuning found two viable opening
+strategies on Standard, immediate steering, seed 1. One makes five closures,
+links all four islands and neutralizes both 40-cell lethal banks without a loss
+by tick 1,650. It earns only 331 of 2,098 claimable cells (15.777%); the mission
+still requires 81%. The alternate bank-first opening also succeeds, but neither
+is a full-clear proof or proof that the remaining quota is tedious.
+
+The erosion interaction needs repair or a narrower design claim. Following the
+five-closure route with 2,400 neutral ticks produced no erosion through tick
+4,050: the eroder stayed at y=9.5 and x=1.2504–25.7448, away from the banks.
+Its authored horizontal heading and northwest wall explain that ordinary motion.
+Capture-induced domain repair can relocate an embedded actor, so this is not a
+claim of universal unreachability. The intended strategic choice should not
+depend on that exceptional relocation.
+
+Next: qualify a bounded successor eroder placement/heading, describe the route
+as a **protected-landing loop** (earned links remain erodible), prove two complete
+routes, and review whether meaningful pressure remains after hazard removal.
+Keep ordinary enemies straight between physical impacts and preserve the old
+edition. Six historical clear recipes failed before a closure under current
+tuning; do not reuse them as current acceptance. No geometry has been changed
+by this investigation, and no replay, public-host or human proof is claimed.
+
+### Source preservation and selective adoption
+
 The bounded donor review distinguishes unapplied work from already-delivered
 behavior. Preserve exact original commits; do not merge their historical hosts.
 
 | Source                                                                                                 | Disposition and next action                                                                                                                                                                                                                                                       |
 | ------------------------------------------------------------------------------------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Team teaching `57bfaa567c62def3eae222c8feb69ddc4fc8039c`                                               | A narrow actual-effect Support completion guard is still useful: empty pulses must not count as learned. The larger acknowledgement donor changes stored v1 fields and guidance/localization contracts; it needs the UX owner's compatibility design before adoption.             |
+| Team teaching `57bfaa567c62def3eae222c8feb69ddc4fc8039c`                                               | The narrow actual-effect Support completion guard is implemented in `8a143fe95` for #757. The larger acknowledgement donor changes stored v1 fields and guidance/localization contracts; it still needs the UX owner's compatibility design before adoption.                      |
 | Campaign Tour `74e2c9baec91462e68cee130c952550d82d611d0`                                               | A distinct larger Classic race-session feature, not integrated single-race behavior. Preserve the donor and evidence archive; new integration must retain current media/installed-owner transactions, controller guards and namespaced identities. No new version allocation yet. |
 | Terminal Retry `ab96375aeae648763380e9210402dbe53b06c6d4` / `d103953f08edbb81331dc4171fc24f88f45d422d` | Principal deliberate-Retry behavior is already integrated. Do not add a competing historical activation guard. The old 600-ms Solo cue is a separate proposal, not a missing recovery fix.                                                                                        |
 | Narrow HUD and Enemy Workshop                                                                          | Route labels, numeric formatting, reduced effects and shared typography through existing native-menu ownership/#782. Existing #780 preservation patches must be checked rather than duplicated; exclude old generated actor/production changes.                                   |
