@@ -72,28 +72,28 @@ export function attachQuickMusicControls({
         ),
     )
     .map((anchor, index) => {
-    const root = doc.createElement('div'),
-      title = doc.createElement('span'),
-      toggle = doc.createElement('button'),
-      skip = doc.createElement('button');
-    root.id = `${prefix}-quick-music-${index}`;
-    root.className = 'quick-music-controls';
-    root.setAttribute('role', 'group');
-    localizedAttribute(root, 'aria-label', () => t('interface:quickMusic.controls'));
-    title.className = 'quick-music-title';
-    toggle.id = `${root.id}-toggle`;
-    toggle.type = skip.type = 'button';
-    toggle.className = skip.className = 'button secondary';
-    skip.id = `${root.id}-next`;
-    localizedText(skip, () => t('interface:quickMusic.next'));
-    toggle.onclick = () => run('toggle');
-    skip.onclick = () => run('next');
-    root.append(title, toggle, skip);
-    // Landing metadata is passive. The same live transport belongs to Audio.
-    const landing = ['shell-continue', 'race-start', 'coop-start'].includes(anchor.id);
-    if (landing && settingsRoot) settingsRoot.append(root);
-    else anchor.after(root);
-    return { root, title, toggle, skip };
+      const root = doc.createElement('div'),
+        title = doc.createElement('span'),
+        toggle = doc.createElement('button'),
+        skip = doc.createElement('button');
+      root.id = `${prefix}-quick-music-${index}`;
+      root.className = 'quick-music-controls';
+      root.setAttribute('role', 'group');
+      localizedAttribute(root, 'aria-label', () => t('interface:quickMusic.controls'));
+      title.className = 'quick-music-title';
+      toggle.id = `${root.id}-toggle`;
+      toggle.type = skip.type = 'button';
+      toggle.className = skip.className = 'button secondary';
+      skip.id = `${root.id}-next`;
+      localizedText(skip, () => t('interface:quickMusic.next'));
+      toggle.onclick = () => run('toggle');
+      skip.onclick = () => run('next');
+      root.append(title, toggle, skip);
+      // Landing metadata is passive. The same live transport belongs to Audio.
+      const landing = ['shell-continue', 'race-start', 'coop-start'].includes(anchor.id);
+      if (landing && settingsRoot) settingsRoot.append(root);
+      else anchor.after(root);
+      return { root, title, toggle, skip };
     });
   let settingsTransport = null;
   if (settingsRoot) {
