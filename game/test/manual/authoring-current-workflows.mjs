@@ -7,6 +7,8 @@ import { creatorCurrent } from './creator-current-workflow.mjs';
 import { teamCreatorCurrent } from './team-creator-current-workflow.mjs';
 import { motionCurrent } from './motion-lab-current-workflow.mjs';
 import { stillCurrent } from './still-media-current-workflow.mjs';
+import { videoPosterCurrent } from './video-poster-current-workflow.mjs';
+import { soundtrackRecoveryCurrent } from './soundtrack-recovery-current-workflow.mjs';
 
 const assert = (condition, message) => {
   if (!condition) throw new Error(message);
@@ -367,4 +369,6 @@ export const currentAuthoringCases = {
   teamCreatorCurrent,
   motionCurrent,
   stillCurrent,
+  videoPosterCurrent,
+  soundtrackRecoveryCurrent,
 };
