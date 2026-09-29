@@ -30,6 +30,67 @@ export function releaseAssetNames(formatVersion = 1) {
   );
 }
 
+export const ADDITIVE_RELEASE_ASSET_BYTE_LIMIT = 950_000_000;
+
+/** Metadata-only upload preflight. This does not admit an envelope, source,
+ * evidence or original bytes; the publisher still performs those checks. */
+export function additiveReleaseAssetBudget({ existing = [], proposed = [] } = {}) {
+  if (!Array.isArray(existing) || !Array.isArray(proposed))
+    throw new Error('additive release budget needs asset inventories');
+  const legacyCore = releaseAssetNames(1),
+    currentCore = releaseAssetNames(2),
+    reservedCore = new Set([...legacyCore, ...currentCore]),
+    remote = new Map();
+  const pin = (asset) => {
+    if (
+      !asset ||
+      typeof asset.name !== 'string' ||
+      !/^[A-Za-z0-9_.-]+$/u.test(asset.name) ||
+      asset.name === '.' ||
+      asset.name === '..' ||
+      !Number.isSafeInteger(asset.size) ||
+      asset.size <= 0
+    )
+      throw new Error('invalid additive release budget descriptor');
+    return {
+      name: asset.name,
+      size: asset.size,
+      digest: normalizeAssetDigest(asset.digest),
+    };
+  };
+  for (const asset of existing) {
+    const value = pin(asset);
+    if (remote.has(value.name)) throw new Error('duplicate release asset name');
+    remote.set(value.name, value);
+  }
+  if (remote.has('source.tar') && remote.has('source-manifest.json'))
+    throw new Error('mixed core source contracts in additive release budget');
+  const core = new Set(remote.has('source-manifest.json') ? currentCore : legacyCore);
+  const additions = new Map([...remote].filter(([name]) => !core.has(name)));
+  for (const asset of proposed) {
+    const value = pin(asset);
+    if (reservedCore.has(value.name))
+      throw new Error('proposed additive asset collides with the core release contract');
+    const previous = additions.get(value.name);
+    if (previous && (previous.size !== value.size || previous.digest !== value.digest))
+      throw new Error('Existing additive release asset differs; overwrite is forbidden.');
+    additions.set(value.name, value);
+  }
+  let bytes = 0;
+  for (const asset of additions.values()) {
+    bytes += asset.size;
+    if (!Number.isSafeInteger(bytes) || bytes > ADDITIVE_RELEASE_ASSET_BYTE_LIMIT)
+      throw new Error('additive edition assets exceed byte budget');
+  }
+  return Object.freeze({
+    files: additions.size,
+    bytes,
+    limitBytes: ADDITIVE_RELEASE_ASSET_BYTE_LIMIT,
+    remainingBytes: ADDITIVE_RELEASE_ASSET_BYTE_LIMIT - bytes,
+    publicEligible: false,
+  });
+}
+
 function assertRequest({ repository, version, sourceSha }) {
   if (!/^[A-Za-z0-9_.-]+\/[A-Za-z0-9_.-]+$/u.test(repository || ''))
     throw new Error('invalid repository identity');
@@ -321,7 +382,7 @@ export async function verifyAdditiveEditionAssets({
     );
   let bytesRead = 0;
   const consumed = new Map();
-  const read = async (name, limit = 950_000_000) => {
+  const read = async (name, limit = ADDITIVE_RELEASE_ASSET_BYTE_LIMIT) => {
     if (!/^[A-Za-z0-9_.-]+$/u.test(name) || name === '.' || name === '..')
       throw new Error('invalid additive edition asset path');
     if (consumed.has(name)) return consumed.get(name);
@@ -329,7 +390,8 @@ export async function verifyAdditiveEditionAssets({
     if (!asset || !Number.isSafeInteger(asset.size) || asset.size <= 0 || asset.size > limit)
       throw new Error(`missing or oversized edition asset: ${name}`);
     bytesRead += asset.size;
-    if (bytesRead > 950_000_000) throw new Error('additive edition assets exceed byte budget');
+    if (bytesRead > ADDITIVE_RELEASE_ASSET_BYTE_LIMIT)
+      throw new Error('additive edition assets exceed byte budget');
     const digest = normalizeAssetDigest(asset.digest);
     const bytes = await readAsset({
       repository,
