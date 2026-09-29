@@ -23,25 +23,39 @@ remains a concrete technical issue, not an excuse to resume deferred testing.
 
 Levels has implemented and pushed the copy-on-write Cooling loop erosion
 successor in **[PR #793](https://github.com/mekhovov/revealline/pull/793)**,
-head `0314aa0273f50b9b97f896b1e85efacc06831803`, on accepted main
+head `de5aeaac2f601ed3703b40071c9c4e09a7ec7724`, on accepted main
 `321408a3cfd75ae230d760f39fb692503652601a`. Actual edition `whole-spatial-v38`
 makes the existing eroder engage earned routes through authored placement/heading,
 while preserving straight-between-impact movement, protected foundations,
 original editions and other authored actors. No blanket speed increase or global
 physics change. This is a source input for the consolidated queue, **not a release**.
 
-The final new candidate/route cohort passes **33/33**, zero skipped. Selected
+The final supplemented candidate/route cohort passes **36/36**, zero skipped. Selected
 loader/archive/Studio checks pass **11**, with **96 explicit name-filter skips**.
 Changed-file lint/format, content and presentation metadata validation pass;
-independent source review found no remaining blocker. One legal Standard/immediate/
-seed-1 route clears in 45.85 simulated seconds with zero lost lives, 13 cuts and
-six warned erosion events; replay and actual tied Versus boards agree. The wider
-preset/control/seed matrix proves first returns, not full-route balance.
+independent source review found no remaining blocker. Two legal Standard/immediate/
+seed-1 Cooling loop routes clear in 45.85 and 68.24 simulated seconds with zero
+lost lives. Northern-first neutralizes both banks; bank-first deliberately leaves
+40 eastern lethal cells, a valid ordinary clear but not optional mastery.
+Unchanged v37 Pressure ladder and Switchback exchange now have complete 37.75-
+and 50.89-second lossless routes with active signature threats. All four complete
+routes have deterministic replay and actual equal Versus winning-board evidence.
+The wider preset/control/seed matrix still proves first returns, not full clears.
 
-Next source work is **Pressure ladder's complete strategic-route review**, followed
-by Switchback exchange and a second complete Cooling loop approach. Production
-testing is not a prerequisite for this work. More detail and exact limitations:
-[Cooling loop v38 evidence](https://github.com/mekhovov/revealline/blob/0314aa0273f50b9b97f896b1e85efacc06831803/docs/cooling-loop-erosion-v38.md).
+Next source work is **alternate complete strategies for Pressure ladder and
+Switchback exchange**, then broader presets/controls/seeds and targeted remaining
+campaign defects. Pressure's lower-foundation mastery is still incomplete;
+Switchback uses actual opened return ground but does not establish end-to-end
+shortcut necessity or impact-on-relay mastery. Production testing is not a
+prerequisite for this work. Exact evidence and limitations:
+[Cooling loop v38](https://github.com/mekhovov/revealline/blob/de5aeaac2f601ed3703b40071c9c4e09a7ec7724/docs/cooling-loop-erosion-v38.md),
+[complete triptych routes](https://github.com/mekhovov/revealline/blob/de5aeaac2f601ed3703b40071c9c4e09a7ec7724/docs/verification/pressure-corridor-complete-routes-2026-09-29.md).
+
+PR #793 is a consolidated source input, draft/held pending publisher allocation.
+Its initial preflight passed, but `release-ready` explicitly failed for
+`ADMISSION=hold` / no immutable release slot; focused/full/build jobs were skipped.
+That is not a source-test failure or a passed hosted build. Do not bypass the gate
+or allocate a competing release. Source development continues independently.
 
 ## Delivery boundary
 
@@ -260,7 +274,7 @@ hardware availability and human review; they are not promised delivery dates.
 | -------------- | ---------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------- |
 | 1              | Finish the already-prepared selector/audio/native/community batches                      | Turns completed source work into player-visible improvements and resolves navigation/recovery defects                             | Per owning queue; do not restart completed qualification                     |
 | 2              | Integrate the Team Resume/Support/More/Large batch                                       | Players need accurate rescue instructions and readable two-player state                                                           | Source complete; publisher integration, production testing deferred          |
-| 3              | Complete strategic-route evidence for the existing v37 trio and Cooling loop v38         | One Cooling loop full clear is now proved; the other maps and alternate complete strategies remain open                           | 1–3 engineering days remaining for the bounded evidence/repair slice         |
+| 3              | Complete strategic-route evidence for the existing v37 trio and Cooling loop v38         | Four complete routes now exist; alternate Pressure/Relay strategies and broader full-route coverage remain open                   | 1–3 engineering days remaining for the bounded evidence/repair slice         |
 | 4              | Review a new default spatial edition                                                     | New geometry cannot improve normal play while remaining opt-in; require useful complete routes, not just a larger version number  | Re-estimate after the v37 route review and human feedback                    |
 | 5              | Team teaching acknowledgement and remaining Studio/HUD donor ports                       | Avoid consumed-before-seen teaching, false Support completion and stale historical-host imports                                   | 0.5–2 days per bounded successor, after schema/ownership review              |
 | 6              | Whole-Journey pacing, actor/state readability and final reference dispositions           | Distinct fair challenges matter more than repeating easy geometry or increasing speed globally                                    | 3–7 days per polished 3–5-mission slice; broader review remains multi-week   |
@@ -303,7 +317,13 @@ collected. Replay checkpoint `21a461387f53c722` and actual equal Versus winning
 boards agree. This is **one** Standard/immediate/seed-1 full route, not two complete
 strategies or a human balance verdict. Older v37 snapshots are unchanged.
 
-Still remaining: second full approach, broader full-route presets/controls/seeds,
+The second bank-first approach is now also complete: 1,713/2,098 cells at tick
+8,189 (68.24 seconds), 15 closures, eight warned erosions, zero losses and no
+pickups. All foundations connect; the 40 eastern-bank lethal cells remain.
+Checkpoint `b8aab03a29e67318` and actual equal Versus boards agree. This is an
+ordinary win without both-bank mastery, not a contradictory mastery award.
+
+Still remaining: broader full-route presets/controls/seeds,
 useful repair/escape decisions and post-bank pressure/cleanup review. Six old
 recipes and several candidate placements failed and remain documented, not
 relabelled as passing evidence. No public-host, physical-device or human proof is
