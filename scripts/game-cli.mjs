@@ -30,7 +30,7 @@ export const PUBLIC_SECURITY_HEADERS = Object.freeze({
 });
 // Public Pages and the soundtrack archive share an origin. Local packaged
 // previews need only this code-admitted archive path added for verified fetches.
-const PREVIEW_SECURITY_HEADERS = Object.freeze({
+export const PREVIEW_SECURITY_HEADERS = Object.freeze({
   ...PUBLIC_SECURITY_HEADERS,
   'Content-Security-Policy': PUBLIC_SECURITY_HEADERS['Content-Security-Policy']
     .replace(
