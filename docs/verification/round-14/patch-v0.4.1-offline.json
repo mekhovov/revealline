@@ -1,6 +1,0 @@
-{
-  "origin": "http://127.0.0.1:8798",
-  "observedAt": "2026-09-12T08:03:43.166Z",
-  "details": "{\n  \"status\": \"ready\",\n  \"version\": \"v0.4.1\",\n  \"buildId\": \"a4a32f30c26a1a89fdab542724c3f3575568d004ac6caeb30607409fca4e795c\",\n  \"count\": 97,\n  \"verified\": 97,\n  \"bytes\": 19894948,\n  \"missing\": [],\n  \"corrupt\": [],\n  \"message\": \"Offline files verified. This version can open without a connection while the browser retains its storage.\"\n}",
-  "status": "Offline files verified. This version can open without a connection while the browser retains its storage. · 97 files verified"
-}

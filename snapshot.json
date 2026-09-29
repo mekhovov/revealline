@@ -1,0 +1,63 @@
+{
+  "format": "revealline-recovery-fragment-v1",
+  "capturedAt": "2026-09-29T15:10:09.757695+00:00",
+  "worktree": "<home>/work/my_projects/go_test/.cache/worktrees/p05-still-media-reading",
+  "branch": "refs/heads/codex/p05-still-media-reading",
+  "head": "b3262eb02a998c50354758ba922324d023138875",
+  "excluded": [],
+  "changes": [
+    {
+      "status": " M",
+      "path": "authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "object": "ed133ab6be0dafe079854668874665dbe96f1de5",
+      "sha256": "77f08d40ddc20b9f67df9723203083e22b65c138682739b74aca0fb56b531e1d",
+      "bytes": 219158,
+      "mode": "100644"
+    },
+    {
+      "status": " M",
+      "path": "authoring/still-media/index.html",
+      "object": "85bfb1ea604360decb6149a06d145875c8127b0b",
+      "sha256": "2255ee23405e7d5bb49dcd1b064dbdcc00483aed74e158d241efa9831f3b4888",
+      "bytes": 5435,
+      "mode": "100644"
+    },
+    {
+      "status": " M",
+      "path": "docs/still-media-workshop.md",
+      "object": "66ad2cadd8a8702d257a866f3a75c74d31b4d9ad",
+      "sha256": "124393dd95a16ed522372385fab1764ffdfac824a3ab069c09eff2d29fef39dd",
+      "bytes": 13987,
+      "mode": "100644"
+    },
+    {
+      "status": "??",
+      "path": "game/test/still-media-display-host.test.mjs",
+      "object": "4441e0ac86e0b733a940702126a04dc95a9a953b",
+      "sha256": "8e253aafccf130ef586ab8230b70372449e30c83f2f68512271afa1677893657",
+      "bytes": 7562,
+      "mode": "100644"
+    }
+  ],
+  "indexEntries": [
+    {
+      "path": "authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "mode": "100644",
+      "object": "0ed0b00bb302efdc0d941536f74a71bb844533a0",
+      "stage": 0
+    },
+    {
+      "path": "authoring/still-media/index.html",
+      "mode": "100644",
+      "object": "68f8e92a8e57f336a9ad99a058450bf627a01b58",
+      "stage": 0
+    },
+    {
+      "path": "docs/still-media-workshop.md",
+      "mode": "100644",
+      "object": "f7519badfeeef761ca0366d51b0e10b3e9cd51c8",
+      "stage": 0
+    }
+  ],
+  "purpose": "Recovery only. These bytes are not release admission. Missing files, conflict stages and obsolete generated outputs are preserved as observations, not deletion or merge instructions."
+}
