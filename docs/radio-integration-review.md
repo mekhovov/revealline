@@ -30,7 +30,12 @@ or remote pull request is part of this task.
 ## Verification
 
 - 644 integrated controller, Solo, couch navigation, Team host and FPV tests pass.
+- Eight focused restoration tests pass after the final recovery change, including
+  explicit forgetting of unreadable data and protection of newer tab changes.
 - 40 desktop/iOS wrapper tests pass.
+- Combined core build passes: version 0.142.4, 2,191 manifest files.
+  The packaged restoration, session, setup, TX15 preset and Solo adapter modules
+  match the tested source and manifest hashes.
 - Optional-package build test passes; the development FPV ZIP has 44 files.
   Radio modules were compared byte-for-byte against the source.
 - Localization check: English and Ukrainian, 11,463 messages / 8,625 references.
@@ -38,6 +43,17 @@ or remote pull request is part of this task.
 - Browser inspection confirmed the consolidated game starts and its Controls
   panel exposes restoration guidance, forgetting saved setup and the action guide.
   No additional physical qualification is claimed.
+
+## Local build artifacts
+
+- Core: `.cache/radio-integration-dist/distribution.zip`
+  SHA-256: `3bcc47936fe91aeb24f3847ffff4ad0cb2e1b2a9f4c0722133f63780554c4e93`.
+- Optional FPV: `.cache/radio-integration-fpv/civilian-fpv.zip`
+  SHA-256: `2b22d2dd24dbf5678a7f0a6fc3a2bcb3ce55f50105170db04dfcff89c0f83957`.
+
+These are local development artifacts, not a publication approval. The sparse
+checkout's missing tracked content dependencies were restored from the current
+branch before the successful core build; this did not alter their source.
 
 ## Deferred items
 
