@@ -1,6 +1,0 @@
-
-> revealline@0.60.6 format:check
-> prettier --check "game/**/*.{mjs,css,html,json}" "scripts/*.mjs" "site/**/*.{mjs,css,html}"
-
-Checking formatting...
-All matched files use Prettier code style!
