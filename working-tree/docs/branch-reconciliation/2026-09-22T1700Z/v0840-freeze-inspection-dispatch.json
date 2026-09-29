@@ -1,0 +1,28 @@
+{
+  "version": "v0.84.0",
+  "source": "1107f570508e0d107440236b6aeedbce8506cd7d",
+  "tree": "793ee7e682e206e0914754cf60fd93af0792c463",
+  "qualificationRun": 35779409329,
+  "qualificationConclusion": "success",
+  "qualificationJobs": {"qualify": "success", "freeze": "success", "test": "skipped"},
+  "testEvidence": "Explicit user waiver; no test-pass claim.",
+  "artifact": {
+    "id": 10717823950,
+    "name": "qualified-release-snapshot",
+    "bytes": 2198989977,
+    "sha256": "77ce533193f1cf9070aebf0c87b003b7c174c4bbe3f6668a3116f630f2b6d813",
+    "expired": false,
+    "verifiedAgainst": ["run artifact listing", "direct artifact API"],
+    "scope": "Outer frozen artifact ZIP, not inner distribution.zip."
+  },
+  "inspectionRun": 35780681780,
+  "inspectionUrl": "https://github.com/mekhovov/revealline/actions/runs/35780681780",
+  "inspectionCreatedAt": "2026-09-22T20:30:01Z",
+  "inspectionRef": "refs/heads/codex/qualify-v0840-1107f570-20260922",
+  "operation": "inspect-artifact",
+  "inspectionInitialStatus": "in_progress",
+  "inspectionAcceptance": "Pending INSPECTED_VERIFIED and inner PASS; not asserted at dispatch.",
+  "localValidation": "Pure exact-source binding validator passed. Initial CLI harness refused missing GITHUB_OUTPUT; no hosted validation result was fabricated.",
+  "publisherBoundary": "Root owns only delegated qualification/freeze/read-only inspection. No tag, draft, upload or publication before inspection handoff to Playlist.",
+  "preservation": "No source changes, force push, ref deletion, local large-artifact download or historical asset rewrite."
+}

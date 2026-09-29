@@ -1,0 +1,16 @@
+{
+  "pr": 276,
+  "head": "c48281869de4ca02c69f2b0fab99fead8d6b27a0",
+  "tree": "304eba3aa024ea6c2750d78070ef0b43ce21d57c",
+  "mergeCommit": "4d331265a26b94f35bf74b9434b919a72c7d9ed1",
+  "mergedAt": "2026-09-22T21:16:38Z",
+  "classification": "Merged documentation-only change; owner branches/worktrees retained",
+  "scope": ["publishing/pages-controller/delivery/current-progress.md"],
+  "review": "Independent exact-head review passed after additive waiver-boundary and first-fetch-failure corrections; PR body updated to final audit state",
+  "previewRun": 35785179286,
+  "previewConclusion": "success",
+  "previewReceiptArtifact": 10719579566,
+  "publicInventoryUnchanged": {"files": 3859, "bytes": 614523893, "allRowsEqualProduction": true},
+  "deployment": "Not required; delivery-only path excluded from production publisher push triggers. Existing v0.84 deployment unchanged.",
+  "tests": "Waived, not passed"
+}
