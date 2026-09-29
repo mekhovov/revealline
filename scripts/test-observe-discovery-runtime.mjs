@@ -18,6 +18,8 @@ import {
   executeDiscoveryShowcaseRoute,
   validateDiscoveryShowcaseState,
   validateDiscoveryShowcaseCopy,
+  selectDiscoveryShowcaseCard,
+  visitDiscoveryShowcaseCollection,
 } from './observe-discovery-runtime.mjs';
 
 const hash = (bytes) => createHash('sha256').update(bytes).digest('hex');
@@ -98,8 +100,53 @@ test('successful completion is finalized after the browser and server close', as
   ]);
 });
 
-test('never-settling observer, CDP and browser cleanup cannot prevent remaining owners or failure evidence', async () => {
-  for (const stalled of ['observer', 'cdp', 'browser']) {
+test('owned page and context close before a browser that cannot finish with active contexts', async () => {
+  const calls = [],
+    saved = new Map();
+  let pageClosed = false,
+    contextClosed = false;
+  await finishDiscoveryObservation({
+    page: {
+      evaluate: async () => calls.push('observer'),
+      close: async (options) => {
+        calls.push('page');
+        assert.deepEqual(options, { runBeforeUnload: false });
+        pageClosed = true;
+      },
+    },
+    context: {
+      close: async () => {
+        calls.push('context');
+        assert.equal(pageClosed, true, 'The owned page must have finished closing.');
+        contextClosed = true;
+      },
+    },
+    cdp: { detach: async () => calls.push('cdp') },
+    browser: {
+      close: () => {
+        calls.push('browser');
+        return contextClosed ? Promise.resolve() : new Promise(() => {});
+      },
+    },
+    server: { close: async () => calls.push('server') },
+    cleanupTimeoutMs: 10,
+    save: async (name, value) => {
+      if (name === 'complete.json')
+        assert.deepEqual(calls, ['observer', 'cdp', 'page', 'context', 'browser', 'server']);
+      saved.set(name, structuredClone(value));
+    },
+    complete: { qualified: false, completed: true },
+  });
+  assert.equal(saved.get('complete.json').completed, true);
+  for (const name of calls) {
+    assert.equal(saved.get(`cleanup-${name}-start.json`).timeoutMs, 10);
+    assert.equal(saved.get(`cleanup-${name}-outcome.json`).closed, true);
+    assert.equal(saved.get(`cleanup-${name}-outcome.json`).timedOut, false);
+  }
+});
+
+test('never-settling observer, CDP, page, context or browser cleanup cannot prevent remaining owners or failure evidence', async () => {
+  for (const stalled of ['observer', 'cdp', 'page', 'context', 'browser']) {
     const calls = [],
       saved = new Map();
     let resolveLate;
@@ -113,7 +160,8 @@ test('never-settling observer, CDP and browser cleanup cannot prevent remaining 
     };
     await assert.rejects(
       finishDiscoveryObservation({
-        page: { evaluate: close('observer') },
+        page: { evaluate: close('observer'), close: close('page') },
+        context: { close: close('context') },
         cdp: { detach: close('cdp') },
         browser: { close: close('browser') },
         server: { close: close('server') },
@@ -126,7 +174,7 @@ test('never-settling observer, CDP and browser cleanup cannot prevent remaining 
         error.errors.length === 1 &&
         error.errors[0].code === 'DISCOVERY_CLEANUP_TIMEOUT',
     );
-    assert.deepEqual(calls, ['observer', 'cdp', 'browser', 'server']);
+    assert.deepEqual(calls, ['observer', 'cdp', 'page', 'context', 'browser', 'server']);
     assert.equal(saved.has('complete.json'), false);
     const outcome = saved.get(`cleanup-${stalled}-outcome.json`);
     assert.equal(saved.get(`cleanup-${stalled}-start.json`).phase, 'started');
@@ -145,6 +193,10 @@ test('never-settling observer, CDP and browser cleanup cannot prevent remaining 
 
 test('cleanup journals and summary save failures remain independent of resource shutdown and primary errors', async () => {
   for (const failedFile of [
+    'cleanup-page-start.json',
+    'cleanup-page-outcome.json',
+    'cleanup-context-start.json',
+    'cleanup-context-outcome.json',
     'cleanup-browser-start.json',
     'cleanup-browser-outcome.json',
     'cleanup.json',
@@ -157,6 +209,8 @@ test('cleanup journals and summary save failures remain independent of resource 
         closeFailure = new Error('Browser close failed');
       await assert.rejects(
         finishDiscoveryObservation({
+          page: { evaluate: async () => {}, close: async () => calls.push('page') },
+          context: { close: async () => calls.push('context') },
           browser: {
             async close() {
               calls.push('browser');
@@ -182,7 +236,7 @@ test('cleanup journals and summary save failures remain independent of resource 
               error.errors.includes(closeFailure) &&
               error.errors.includes(saveFailure),
       );
-      assert.deepEqual(calls, ['browser', 'server']);
+      assert.deepEqual(calls, ['page', 'context', 'browser', 'server']);
       assert.equal(saved.get('cleanup-server-outcome.json').closed, true);
       assert.equal(saved.has('complete.json'), false);
       if (saved.has('cleanup.json')) assert.equal(saved.get('cleanup.json').completed, false);
@@ -196,7 +250,8 @@ test('a stalled journal write cannot block cleanup, and a timed-out close preser
     primary = new Error('Original route failed');
   await assert.rejects(
     finishDiscoveryObservation({
-      page: { evaluate: () => new Promise(() => {}) },
+      page: { evaluate: () => new Promise(() => {}), close: async () => calls.push('page') },
+      context: { close: async () => calls.push('context') },
       browser: { close: async () => calls.push('browser') },
       server: { close: async () => calls.push('server') },
       save: async (name, value) => {
@@ -208,7 +263,7 @@ test('a stalled journal write cannot block cleanup, and a timed-out close preser
     }),
     (error) => error === primary,
   );
-  assert.deepEqual(calls, ['browser', 'server']);
+  assert.deepEqual(calls, ['page', 'context', 'browser', 'server']);
   assert.equal(saved.has('complete.json'), false);
   assert.equal(saved.get('cleanup.json').journalFailures.length, 1);
   assert.equal(saved.get('cleanup.json').operations[0].timedOut, true);
@@ -293,7 +348,10 @@ test('actual observation failure reaches bounded cleanup when its renderer diagn
 export const calls = [];
 export const chromium = { launch: async () => ({
   close: async () => { calls.push('browser closed'); },
-  newContext: async () => ({ newPage: async () => ({
+  newContext: async () => ({
+    close: async () => { calls.push('context closed'); },
+    newPage: async () => ({
+    close: async (options) => { calls.push(['page closed', options]); },
     setDefaultTimeout() {}, on() {}, addInitScript: async () => {},
     goto: async () => { throw primary; },
     evaluate: () => { calls.push('renderer read'); return new Promise(() => {}); },
@@ -306,13 +364,19 @@ export const chromium = { launch: async () => ({
     observeDiscoveryRuntime({ planFile, playwrightModule, output, cleanupTimeoutMs: 10 }),
     (error) => error === fake.primary,
   );
-  assert.equal(fake.calls.at(-1), 'browser closed');
+  assert.deepEqual(fake.calls.slice(-3), [
+    ['page closed', { runBeforeUnload: false }],
+    'context closed',
+    'browser closed',
+  ]);
   assert.equal(fake.calls.filter((item) => item === 'renderer read').length, 4);
   const cleanup = JSON.parse(await readFile(path.join(output, 'cleanup.json')));
   assert.equal(cleanup.completed, false);
   assert.equal(cleanup.primaryError, fake.primary.stack);
   assert.equal(cleanup.diagnosticFailures.filter((item) => item.timedOut).length, 3);
   assert.equal(cleanup.operations.find((item) => item.name === 'observer').timedOut, true);
+  assert.equal(cleanup.operations.find((item) => item.name === 'page').closed, true);
+  assert.equal(cleanup.operations.find((item) => item.name === 'context').closed, true);
   assert.equal(cleanup.operations.find((item) => item.name === 'server').closed, true);
   const failure = JSON.parse(await readFile(path.join(output, 'failure.json')));
   assert.equal(failure.error, fake.primary.stack);
@@ -370,6 +434,17 @@ function fixture({ gameplayId, extra = false, protocolId } = {}) {
       ),
     ],
   ]);
+  if (showcase)
+    files.set(
+      rewardPath.replace('.rewards.json', '.json'),
+      Buffer.from(
+        JSON.stringify({
+          packs: [{ id: `${showcase.campaignId}-pack`, campaignIds: [showcase.campaignId] }],
+          campaigns: [{ id: showcase.campaignId, missionIds: [missionId] }],
+          missions: [{ id: missionId, name: showcase.missionName }],
+        }),
+      ),
+    );
   const manifest = Buffer.from(
     JSON.stringify({
       format: 'revealline-edition-manifest.v1',
@@ -856,4 +931,280 @@ test('showcase locale checks reject stale reward titles or untranslated knowledg
     );
     assert.throws(() => validateDiscoveryShowcaseCopy({}, observed, locale), /exact earned locale/);
   }
+});
+
+test('public chooser selection understands the exact source-derived Library tuple and rejects guessed suffixes', () => {
+  for (const protocol of Object.values(DISCOVERY_SHOWCASE_PROTOCOLS)) {
+    const input = fixture({ protocolId: protocol.id });
+    const { showcaseSelection: selection } = verifyDiscoveryRuntimeArtifact(input.plan, input);
+    const alias = selection.aliases[0];
+    const tuple = [
+      `journey:${protocol.editionId}`,
+      protocol.editionId,
+      alias.campaign,
+      alias.mission,
+      '',
+    ];
+    const row = {
+      id: JSON.stringify(tuple),
+      name: protocol.missionName,
+      visible: true,
+      disabled: false,
+    };
+    assert.equal(
+      row.id.endsWith('/' + protocol.missionId),
+      false,
+      'This is the real Library wrapper, not a bare Journey ID.',
+    );
+    const hidden = { ...row, visible: false };
+    assert.equal(selectDiscoveryShowcaseCard({ total: 2, rows: [hidden, row] }, selection), row);
+    const rejected = [
+      { ...row, id: alias.mission },
+      {
+        ...row,
+        id: JSON.stringify(tuple.map((value, index) => (index === 0 ? 'journey:foreign' : value))),
+      },
+      {
+        ...row,
+        id: JSON.stringify(tuple.map((value, index) => (index === 1 ? 'foreign' : value))),
+      },
+      {
+        ...row,
+        id: JSON.stringify(tuple.map((value, index) => (index === 2 ? 'wrong-campaign' : value))),
+      },
+      {
+        ...row,
+        id: JSON.stringify(
+          tuple.map((value, index) => (index === 3 ? alias.mission + '-wrong' : value)),
+        ),
+      },
+      {
+        ...row,
+        id: JSON.stringify(tuple.map((value, index) => (index === 4 ? 'historical' : value))),
+      },
+      { ...row, name: 'Same route, unrelated title' },
+      { ...row, disabled: true },
+      hidden,
+    ];
+    for (const bad of rejected)
+      assert.throws(
+        () => selectDiscoveryShowcaseCard({ total: 1, rows: [bad] }, selection),
+        /not uniquely/,
+      );
+    assert.throws(
+      () => selectDiscoveryShowcaseCard({ total: 2, rows: [row, row] }, selection),
+      /not uniquely/,
+    );
+    assert.throws(
+      () => selectDiscoveryShowcaseCard({ total: 129, rows: [row] }, selection),
+      /bound/,
+    );
+  }
+});
+
+test('showcase Collection uses the public header or native narrow Home route and returns to the same win', async () => {
+  for (const compact of [false, true]) {
+    const actions = [];
+    let home = false,
+      collection = false,
+      recordedRoute;
+    const visible = (selector) =>
+      selector === '#shell-collection' ? !compact : selector === '#shell-home' ? home : collection;
+    const click = async (selector) => {
+      actions.push(selector);
+      if (selector === '#shell-collection') {
+        assert.equal(compact, false);
+        collection = true;
+      } else if (selector === '#shell-menu') {
+        assert.equal(compact, true);
+        home = true;
+      } else if (selector === '#shell-home #shell-gallery') {
+        assert.equal(home, true);
+        collection = true;
+      } else if (selector === '#collection-back') {
+        assert.equal(collection, true);
+        collection = false;
+      } else assert.fail('No private or hidden alternative is allowed: ' + selector);
+    };
+    const page = {
+      locator: (selector) => ({
+        isVisible: async () => visible(selector),
+        waitFor: async ({ state }) => assert.equal(visible(selector), state === 'visible'),
+      }),
+      keyboard: {
+        press: async (key) => {
+          assert.equal(key, 'Escape');
+          assert.equal(home, true);
+          assert.equal(collection, false);
+          actions.push(key);
+          home = false;
+        },
+      },
+    };
+    const route = await visitDiscoveryShowcaseCollection({
+      page,
+      click,
+      onRoute: async (value) => {
+        recordedRoute = value;
+      },
+      visit: async () => {
+        assert.equal(collection, true);
+        actions.push('inspect exact earned reward');
+      },
+      record: async () => ({
+        overlay: { kind: 'won', hidden: false },
+        openDialogs: [home && 'shell-home', collection && 'collection-dialog'].filter(Boolean),
+      }),
+    });
+    assert.equal(route, compact ? 'home' : 'header');
+    assert.equal(recordedRoute, route);
+    assert.deepEqual(
+      actions,
+      compact
+        ? [
+            '#shell-menu',
+            '#shell-home #shell-gallery',
+            'inspect exact earned reward',
+            '#collection-back',
+            'Escape',
+          ]
+        : ['#shell-collection', 'inspect exact earned reward', '#collection-back'],
+    );
+    assert.equal(home, false);
+    assert.equal(collection, false);
+  }
+});
+
+test('showcase Collection cannot continue to Retry with Home still open or a missing won result', async () => {
+  for (const state of [
+    { overlay: { kind: 'won', hidden: false }, openDialogs: ['shell-home'] },
+    { overlay: { kind: 'paused', hidden: false }, openDialogs: [] },
+    { overlay: { kind: 'won', hidden: true }, openDialogs: [] },
+  ]) {
+    await assert.rejects(
+      visitDiscoveryShowcaseCollection({
+        page: { locator: () => ({ isVisible: async () => true, waitFor: async () => {} }) },
+        click: async () => {},
+        visit: async () => {},
+        onRoute: async () => {},
+        record: async () => state,
+      }),
+      /underlying won result/,
+    );
+  }
+});
+
+test('Social public route candidate keeps a bounded margin through the exact shared gameplay', async () => {
+  const { compileContentProject, resolveMission } = await import(
+    '../game/content-design/project.mjs'
+  );
+  const { applyGameplayTuning, resolveGameplayTuning } = await import(
+    '../game/gameplay-tuning.mjs'
+  );
+  const { createRun, stepRun, FIXED_DT } = await import('../game/core/index.mjs');
+  const { dataIdentity } = await import('../game/data-json.mjs');
+  const protocol = DISCOVERY_SHOWCASE_PROTOCOLS['social-community-first-win.v1'];
+  const source = JSON.parse(
+    await readFile(
+      new URL(
+        '../game/content/company-campaigns/social-drone-community-connections.json',
+        import.meta.url,
+      ),
+      'utf8',
+    ),
+  );
+  const manifest = resolveMission(compileContentProject(source), protocol.missionId, {
+    difficulty: 'standard',
+  });
+  const level = applyGameplayTuning(manifest.level, resolveGameplayTuning('standard'));
+  assert.equal(protocol.routeRevision, 2);
+  assert.equal(protocol.route.length, 4);
+  assert.ok(protocol.route.reduce((sum, [, duration]) => sum + duration, 0) < 20000);
+  // Disposable source verification is preparation only. The observer imports no
+  // engine and accepts a win only from the actual visible public game result.
+  for (const offset of [-24, -12, 0, 12, 24]) {
+    const run = createRun(level, { seed: 1, classId: 'scout', turnPolicy: 'immediate' });
+    assert.equal(
+      dataIdentity({ ruleset: run.ruleset, level: run.level, classes: run.classRecipes }),
+      protocol.gameplayId,
+    );
+    for (const [key, duration] of protocol.route) {
+      const direction = key.slice('Arrow'.length).toLowerCase();
+      const ticks = Math.round(duration / 1000 / FIXED_DT) + offset;
+      let stopped = false;
+      for (let tick = 0; tick < ticks && run.status !== 'won'; tick++) {
+        stepRun(run, { direction: stopped ? null : direction }, FIXED_DT);
+        if (
+          run.status === 'respawning' ||
+          run.events.some((event) => event.type === 'capture.stopped')
+        )
+          stopped = true;
+      }
+    }
+    assert.equal(run.status, 'won', `offset ${offset}: offline feasibility, not a browser win`);
+    assert.equal(run.classic.livesLost, 0);
+    assert.ok(run.coverage >= level.goal.coverage);
+    assert.ok(
+      run.objectives
+        .filter((objective) => objective.required)
+        .every((objective) => objective.captured),
+    );
+  }
+});
+
+test('Ukraine public route leaves a closing-leg margin without changing its actual win authority', async () => {
+  const { compileContentProject, resolveMission } = await import(
+    '../game/content-design/project.mjs'
+  );
+  const { applyGameplayTuning, resolveGameplayTuning } = await import(
+    '../game/gameplay-tuning.mjs'
+  );
+  const { createRun, stepRun, FIXED_DT } = await import('../game/core/index.mjs');
+  const { dataIdentity } = await import('../game/data-json.mjs');
+  const protocol = DISCOVERY_SHOWCASE_PROTOCOLS['ukraine-threads-first-win.v1'];
+  const source = JSON.parse(
+    await readFile(
+      new URL('../game/content/company-campaigns/ukraine-threads.json', import.meta.url),
+      'utf8',
+    ),
+  );
+  const manifest = resolveMission(compileContentProject(source), protocol.missionId, {
+    difficulty: 'standard',
+  });
+  const level = applyGameplayTuning(manifest.level, resolveGameplayTuning('standard'));
+  assert.equal(protocol.routeRevision, 2);
+  assert.deepEqual(protocol.route, [
+    ['ArrowRight', (163 * 1000) / 120],
+    ['ArrowDown', 5000],
+  ]);
+  // This is only a disposable route-feasibility proof: the browser still checks
+  // a visible earned result. First-leg +/-100 ms and closing-leg +/-200 ms are
+  // independent offsets, not claims about scheduling on every loaded machine.
+  for (const rightOffset of [-12, 0, 12])
+    for (const downOffset of [-24, 0, 24]) {
+      const run = createRun(level, { seed: 1, classId: 'scout', turnPolicy: 'immediate' });
+      assert.equal(
+        dataIdentity({ ruleset: run.ruleset, level: run.level, classes: run.classRecipes }),
+        protocol.gameplayId,
+      );
+      for (const [index, [key, duration]] of protocol.route.entries()) {
+        const direction = key.slice('Arrow'.length).toLowerCase();
+        const ticks =
+          Math.round(duration / 1000 / FIXED_DT) + (index === 0 ? rightOffset : downOffset);
+        for (let tick = 0; tick < ticks && run.status === 'running'; tick++)
+          stepRun(run, { direction }, FIXED_DT);
+      }
+      assert.equal(
+        run.status,
+        'won',
+        `offsets ${rightOffset}/${downOffset}: offline feasibility only`,
+      );
+      assert.equal(run.classic.livesLost, 0);
+      assert.ok(run.coverage >= level.goal.coverage);
+      assert.ok(
+        run.objectives
+          .filter((objective) => objective.required)
+          .every((objective) => objective.captured),
+      );
+    }
 });

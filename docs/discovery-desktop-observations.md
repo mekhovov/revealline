@@ -357,7 +357,9 @@ offline witnesses. They may fail because ordinary input timing and encounters va
 The runner never injects progress, invokes a core win or substitutes a replay proof
 for a visible accepted result. It stops on failure and retains `showcase-attempt-*.json`,
 source bindings, partial surface/copy records, screenshots and failure diagnostics.
-A success includes `showcase.json` and `complete.json` only after cleanup succeeds;
+The functional flow writes `showcase.json` before cleanup;
+`complete.json` is written only after cleanup succeeds. Require the latter and
+successful cleanup outcomes for a completed observation;
 every report remains `qualified: false`. Preserve failed attempts and use a new
 output directory when rehearsing again. Do not relabel a failed route as an interface
 pass or a functional pass as a performance/human qualification.
@@ -429,7 +431,10 @@ per-operation deadlines. A timed-out or rejected diagnostic does not prevent
 subsequent browser/server cleanup, and the original observation error remains
 authoritative. Cleanup records each requested operation before starting it and
 records its outcome separately, including timeouts and journal-write failures.
-CDP detachment precedes browser shutdown when a session exists.
+CDP detachment precedes page, context and browser shutdown when a session exists.
+The runner retains its explicitly created context and separately closes its page
+without before-unload prompts, then the context, then the browser. A successful
+context closure cannot conceal a later browser-close timeout.
 
 A deadline only bounds the runner's wait; it does not cancel the underlying
 operation or prove that the resource closed. Late resolution cannot change the

@@ -16,15 +16,15 @@ and every already-published reward promise. Human learning, artwork and physical
 radio testing remain explicitly deferred. Passing synthetic inputs is not hardware
 qualification. Release coordination owns versions and production promotion.
 
-| Batch          | Deliverable                                                                        | Current integration state                                                |
-| -------------- | ---------------------------------------------------------------------------------- | ------------------------------------------------------------------------ |
-| A / 2          | Shared screen polish, practice discovery, guided lesson and atlas editing          | Implemented                                                              |
-| B / 3          | First three polished missions in each of four existing showcase campaigns          | Implemented                                                              |
-| C / 4          | Six missions per showcase, different application fixtures, control lab             | Implemented                                                              |
-| D / 6          | USB-radio diagnostics, arbitrary channels, calibration, separate response profiles | Implemented; physical devices unverified                                 |
-| E / 6          | First-person model, Self-level/manual throttle and Acro, representative drills     | Implemented; portable numeric fixtures pass                              |
-| F / 6          | Twelve drills, typed practice rewards, notebook and studio round trips             | Implemented                                                              |
-| Continuous / 7 | Reproducible archives, portable proofs, lifecycle/performance, admission           | Implemented; final-source review, performance and publication gates open |
+| Batch          | Deliverable                                                                        | Current integration state                                          |
+| -------------- | ---------------------------------------------------------------------------------- | ------------------------------------------------------------------ |
+| A / 2          | Shared screen polish, practice discovery, guided lesson and atlas editing          | Implemented                                                        |
+| B / 3          | First three polished missions in each of four existing showcase campaigns          | Implemented                                                        |
+| C / 4          | Six missions per showcase, different application fixtures, control lab             | Implemented                                                        |
+| D / 6          | USB-radio diagnostics, arbitrary channels, calibration, separate response profiles | Implemented; physical devices unverified                           |
+| E / 6          | First-person model, Self-level/manual throttle and Acro, representative drills     | Implemented; portable numeric fixtures pass                        |
+| F / 6          | Twelve drills, typed practice rewards, notebook and studio round trips             | Implemented                                                        |
+| Continuous / 7 | Reproducible archives, portable proofs, lifecycle/performance, admission           | In progress; final integration, performance and publication remain |
 
 ## Acceptance contracts
 
@@ -535,16 +535,18 @@ not a human or physical-radio test.
 2. Qualify the exact merged-main source, produce and independently inspect the full
    default archive, and admit the complete selected hosting graph under its cap.
    Candidate projections and selected-package checks do not substitute for this.
-   Reopen the production UI/audio review on the final integrated inputs and append
-   the required immutable successors; older runtime fingerprints do not approve
-   this branch merely because the asset payloads are unchanged.
+   The current branch's audio/UI review is closed by the scoped continuation and
+   immutable production102 below. Recheck the final integrated fingerprints and
+   append reviewed successors if integration changes those inputs; unchanged
+   asset payloads alone never approve different runtime behavior.
 3. Complete final-source performance/request and retained-resource review, retaining
    the unexplained post-completion frame gap and unverified broader ownership claims.
-   Rehearse the three other real showcase journeys in the browser, including
-   ordinary discovery/Collection interactions, English/Ukrainian and narrow layouts.
-   Their verified engine routes are preparation, not browser walkthrough evidence.
-   Resolve the retained capture-driver shutdown failure before claiming clean
-   ownership qualification; do not replace it with stable connected-node counts.
+   The three additional showcase journeys now have real ordinary-win, bilingual
+   discovery/Collection and narrow-layout observations below. Social and Victory
+   complete cleanup; Ukraine's functional flow passes but its browser-close timeout
+   remains a failed overall observation. Resolve that environment/capture boundary
+   before claiming clean ownership qualification; connected-node counts are not
+   a substitute. Later application and six-win finales are outside these walkthroughs.
 4. Publish original qualified artifacts through the configured main repository,
    verify downloaded and public bytes, and exercise the real published rollback.
    Omitted editions remain explicit original GitHub Release downloads.
@@ -771,3 +773,48 @@ The first three-edition build from `db8e45e0e` was cancelled before admission af
 the Team gap was found. A delivery-ledger edit had also occurred during that run,
 so it cannot prove an unchanged-source build. No archive or qualification receipt
 is claimed from it. A fresh clean-source build follows the committed repair.
+
+The repaired clean `4689753f6` source produced three frozen showcase editions:
+Social Drone UA, Victory Drones and Ukraine. All three reproduce byte for byte
+across two builds and pass original ZIP-member, source and offline admission.
+The [candidate receipt](verification/evidence/showcase-candidates-4689753f6.json)
+pins each archive, manifest and presentation receipt. They are private candidates
+using the existing package version, not new published v0.142.3 release assets.
+
+Browser rehearsal found two observer navigation assumptions that did not match the
+shared Library/shell: mission IDs are complete Library tuples, and the narrow
+header exposes Collection through Menu → Gallery. The runner now derives exact
+aliases from the admitted campaign source, uses only visible native controls and
+checks return to the won result. No gameplay code or frozen archive changed.
+Cleanup now independently closes the owned page and context before the browser;
+each existing 10-second deadline remains enforced and recorded. Earlier failed
+attempts remain failed even when later captures succeed.
+
+The [functional browser receipt](verification/evidence/showcase-functional-4689753f6.json)
+retains all ten captures. Social02 and Victory01 complete two ordinary wins of
+their first mission, eleven observed phases, exact English desktop and Ukrainian
+portrait discoveries, Collection reopen, locked campaign promises, Retry, Next
+and every owned cleanup operation. Ukraine07 completes the same functional flow
+with no application or CSP errors, but its browser-close operation exceeds the
+unchanged 10-second deadline; the overall observation remains failed. Earlier
+selector, navigation, route and shutdown failures remain separately recorded.
+These are three first-mission flows, not new six-win finale, later-application,
+physical-controller, touch or quiet-performance evidence.
+
+The two revised keyboard candidates add safe route margins, with exact shared-core
+feasibility checks under bounded input timing variation. The final observer cohort
+passes **28/28**; no runtime gameplay or frozen archive changed. Ukraine06's final
+immediate read was still running, while its later diagnostic screenshot displayed
+a genuine win. Its failed observation remains retained rather than retroactively
+accepted. Independent review checked exact public Library selection, native narrow
+navigation, cleanup failure containment and all candidate archive/source member pins.
+
+The [blank-browser diagnostic](verification/evidence/discovery-chrome-close-diagnostic-2026-09-29.json)
+reproduces a 10-second shutdown timeout without the game: the owned Chrome parent
+exits normally, but inherited process stdio does not finish before Playwright's
+close promise is due. Updater activity on that pipe is a supported lead, not proof
+of the precise cause of every showcase timeout. An immediate blank close and real
+Social/Victory cleanup succeed. No timeout, launch option, simulation or public
+release gate was relaxed. Final integrated CI, matched performance/retention,
+complete default/hosting admission and coordinated publication/rollback remain
+Phase 7 work; human and physical-device evidence remains deferred.
