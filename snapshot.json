@@ -1,0 +1,1042 @@
+{
+  "format": "revealline-recovery-fragment-v1",
+  "capturedAt": "2026-09-29T15:08:40.526649+00:00",
+  "worktree": "<home>/.codex/worktrees/english-ukrainian-localization/go_test",
+  "branch": "refs/heads/codex/asset-studio-error-localization",
+  "head": "e4b323f6ba940e9bebeb766367d08baaefac052c",
+  "excluded": [
+    {
+      "status": "??",
+      "path": ".DS_Store"
+    }
+  ],
+  "changes": [
+    {
+      "status": " D",
+      "path": ".gitattributes",
+      "absent": true
+    },
+    {
+      "status": " D",
+      "path": ".gitignore",
+      "absent": true
+    },
+    {
+      "status": " D",
+      "path": ".prettierignore",
+      "absent": true
+    },
+    {
+      "status": " D",
+      "path": ".prettierrc.json",
+      "absent": true
+    },
+    {
+      "status": " M",
+      "path": "authoring/library/fpv-field-kit/originals/reveals/scene-frayed-causeway-fpv-v1.png",
+      "object": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "mode": "100644"
+    },
+    {
+      "status": " M",
+      "path": "authoring/library/fpv-field-kit/originals/reveals/scene-homeward-01-v1.png",
+      "object": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "mode": "100644"
+    },
+    {
+      "status": " M",
+      "path": "authoring/library/fpv-field-kit/originals/reveals/scene-homeward-02-v1.png",
+      "object": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "mode": "100644"
+    },
+    {
+      "status": " M",
+      "path": "authoring/library/fpv-field-kit/originals/reveals/scene-homeward-03-v1.png",
+      "object": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "mode": "100644"
+    },
+    {
+      "status": " M",
+      "path": "authoring/library/fpv-field-kit/originals/reveals/scene-listening-court-v1.png",
+      "object": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "mode": "100644"
+    },
+    {
+      "status": " M",
+      "path": "authoring/library/fpv-field-kit/originals/reveals/scene-night-crossfire-v1.png",
+      "object": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "mode": "100644"
+    },
+    {
+      "status": " M",
+      "path": "authoring/library/fpv-field-kit/originals/reveals/scene-night-signal-v1.png",
+      "object": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "mode": "100644"
+    },
+    {
+      "status": " M",
+      "path": "authoring/library/fpv-field-kit/originals/reveals/scene-offset-docks-fpv-v1.png",
+      "object": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "mode": "100644"
+    },
+    {
+      "status": " M",
+      "path": "authoring/library/fpv-field-kit/originals/reveals/scene-open-the-circuit-v1.png",
+      "object": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "mode": "100644"
+    },
+    {
+      "status": " M",
+      "path": "authoring/library/fpv-field-kit/originals/reveals/scene-orchard-crossing-v1.png",
+      "object": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "mode": "100644"
+    },
+    {
+      "status": " M",
+      "path": "authoring/library/fpv-field-kit/originals/reveals/scene-orchard-window-v1.png",
+      "object": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "mode": "100644"
+    },
+    {
+      "status": " M",
+      "path": "authoring/library/fpv-field-kit/originals/reveals/scene-sandbar-braid-fpv-v1.png",
+      "object": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "mode": "100644"
+    },
+    {
+      "status": " M",
+      "path": "authoring/library/fpv-field-kit/originals/reveals/scene-sentinel-relay-01-v1.png",
+      "object": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "mode": "100644"
+    },
+    {
+      "status": " M",
+      "path": "authoring/library/fpv-field-kit/originals/reveals/scene-signal-01-v1.png",
+      "object": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "mode": "100644"
+    },
+    {
+      "status": " M",
+      "path": "authoring/library/fpv-field-kit/originals/reveals/scene-signal-02-v1.png",
+      "object": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "mode": "100644"
+    },
+    {
+      "status": " M",
+      "path": "authoring/library/fpv-field-kit/originals/reveals/scene-signal-03-v1.png",
+      "object": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "mode": "100644"
+    },
+    {
+      "status": " M",
+      "path": "authoring/library/fpv-field-kit/originals/reveals/scene-signal-04-v1.png",
+      "object": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "mode": "100644"
+    },
+    {
+      "status": " M",
+      "path": "authoring/library/fpv-field-kit/originals/reveals/scene-signal-05-v1.png",
+      "object": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "mode": "100644"
+    },
+    {
+      "status": " M",
+      "path": "authoring/library/fpv-field-kit/originals/reveals/scene-signal-06-v1.png",
+      "object": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "mode": "100644"
+    },
+    {
+      "status": " M",
+      "path": "authoring/library/fpv-field-kit/originals/reveals/scene-signal-06-v2.png",
+      "object": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "mode": "100644"
+    },
+    {
+      "status": " M",
+      "path": "authoring/library/fpv-field-kit/originals/reveals/scene-signal-07-v1.png",
+      "object": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "mode": "100644"
+    },
+    {
+      "status": " M",
+      "path": "authoring/library/fpv-field-kit/originals/reveals/scene-signal-08-v1.png",
+      "object": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "mode": "100644"
+    },
+    {
+      "status": " M",
+      "path": "authoring/library/fpv-field-kit/originals/reveals/scene-signal-09-v1.png",
+      "object": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "mode": "100644"
+    },
+    {
+      "status": " M",
+      "path": "authoring/library/fpv-field-kit/originals/reveals/scene-signal-10-v1.png",
+      "object": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "mode": "100644"
+    },
+    {
+      "status": " M",
+      "path": "authoring/library/fpv-field-kit/originals/reveals/scene-signal-11-v1.png",
+      "object": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "mode": "100644"
+    },
+    {
+      "status": " M",
+      "path": "authoring/library/fpv-field-kit/originals/title-hangar.png",
+      "object": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "mode": "100644"
+    },
+    {
+      "status": " M",
+      "path": "authoring/library/fpv-field-kit/prepared/reveals/scene-fieldcraft-01-768x576-v1.png",
+      "object": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "mode": "100644"
+    },
+    {
+      "status": " M",
+      "path": "authoring/library/fpv-field-kit/prepared/reveals/scene-fieldcraft-02-768x576-v1.png",
+      "object": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "mode": "100644"
+    },
+    {
+      "status": " M",
+      "path": "authoring/library/fpv-field-kit/prepared/reveals/scene-fieldcraft-03-768x576-v1.png",
+      "object": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "mode": "100644"
+    },
+    {
+      "status": " M",
+      "path": "authoring/library/fpv-field-kit/prepared/reveals/scene-fieldcraft-04-768x576-v1.png",
+      "object": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "mode": "100644"
+    },
+    {
+      "status": " M",
+      "path": "authoring/library/fpv-field-kit/prepared/reveals/scene-frayed-causeway-fpv-1774x887-v1.png",
+      "object": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "mode": "100644"
+    },
+    {
+      "status": " M",
+      "path": "authoring/library/fpv-field-kit/prepared/reveals/scene-homeward-01-1152x576-v1.png",
+      "object": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "mode": "100644"
+    },
+    {
+      "status": " M",
+      "path": "authoring/library/fpv-field-kit/prepared/reveals/scene-homeward-01-768x576-v1.png",
+      "object": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "mode": "100644"
+    },
+    {
+      "status": " M",
+      "path": "authoring/library/fpv-field-kit/prepared/reveals/scene-homeward-02-1152x576-v1.png",
+      "object": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "mode": "100644"
+    },
+    {
+      "status": " M",
+      "path": "authoring/library/fpv-field-kit/prepared/reveals/scene-homeward-02-768x576-v1.png",
+      "object": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "mode": "100644"
+    },
+    {
+      "status": " M",
+      "path": "authoring/library/fpv-field-kit/prepared/reveals/scene-homeward-03-1152x576-v1.png",
+      "object": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "mode": "100644"
+    },
+    {
+      "status": " M",
+      "path": "authoring/library/fpv-field-kit/prepared/reveals/scene-homeward-03-768x576-v1.png",
+      "object": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "mode": "100644"
+    },
+    {
+      "status": " M",
+      "path": "authoring/library/fpv-field-kit/prepared/reveals/scene-listening-court-1774x887-v1.png",
+      "object": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "mode": "100644"
+    },
+    {
+      "status": " M",
+      "path": "authoring/library/fpv-field-kit/prepared/reveals/scene-night-crossfire-1152x576-v1.png",
+      "object": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "mode": "100644"
+    },
+    {
+      "status": " M",
+      "path": "authoring/library/fpv-field-kit/prepared/reveals/scene-night-crossfire-1774x887-v1.png",
+      "object": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "mode": "100644"
+    },
+    {
+      "status": " M",
+      "path": "authoring/library/fpv-field-kit/prepared/reveals/scene-night-signal-1152x576-v1.png",
+      "object": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "mode": "100644"
+    },
+    {
+      "status": " M",
+      "path": "authoring/library/fpv-field-kit/prepared/reveals/scene-offset-docks-fpv-1774x887-v1.png",
+      "object": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "mode": "100644"
+    },
+    {
+      "status": " M",
+      "path": "authoring/library/fpv-field-kit/prepared/reveals/scene-open-the-circuit-1774x887-v1.png",
+      "object": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "mode": "100644"
+    },
+    {
+      "status": " M",
+      "path": "authoring/library/fpv-field-kit/prepared/reveals/scene-orchard-crossing-1152x576-v1.png",
+      "object": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "mode": "100644"
+    },
+    {
+      "status": " M",
+      "path": "authoring/library/fpv-field-kit/prepared/reveals/scene-orchard-crossing-1774x887-v1.png",
+      "object": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "mode": "100644"
+    },
+    {
+      "status": " M",
+      "path": "authoring/library/fpv-field-kit/prepared/reveals/scene-orchard-window-1152x576-v1.png",
+      "object": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "mode": "100644"
+    },
+    {
+      "status": " M",
+      "path": "authoring/library/fpv-field-kit/prepared/reveals/scene-sandbar-braid-fpv-1774x887-v1.png",
+      "object": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "mode": "100644"
+    },
+    {
+      "status": " M",
+      "path": "authoring/library/fpv-field-kit/prepared/reveals/scene-sentinel-relay-01-768x576-v1.png",
+      "object": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "mode": "100644"
+    },
+    {
+      "status": " M",
+      "path": "authoring/library/fpv-field-kit/prepared/reveals/scene-signal-01-768x576-v1.png",
+      "object": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "mode": "100644"
+    },
+    {
+      "status": " M",
+      "path": "authoring/library/fpv-field-kit/prepared/reveals/scene-signal-02-768x576-v1.png",
+      "object": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "mode": "100644"
+    },
+    {
+      "status": " M",
+      "path": "authoring/library/fpv-field-kit/prepared/reveals/scene-signal-03-768x576-v1.png",
+      "object": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "mode": "100644"
+    },
+    {
+      "status": " M",
+      "path": "authoring/library/fpv-field-kit/prepared/reveals/scene-signal-04-768x576-v1.png",
+      "object": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "mode": "100644"
+    },
+    {
+      "status": " M",
+      "path": "game/content/packs/fpv-arcade-r2.json",
+      "object": "45e7d0583bd97a149faa18be3795ea0c5ba237cf",
+      "sha256": "1d27cb62e452a7a3a92826fd932d79be8f1f77ecc3fc26a45c2179596c20efc2",
+      "bytes": 8388608,
+      "mode": "100644"
+    },
+    {
+      "status": " M",
+      "path": "game/content/packs/fpv-arcade-r3.json",
+      "object": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "mode": "100644"
+    },
+    {
+      "status": " M",
+      "path": "game/content/packs/fpv-arcade-r4.json",
+      "object": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "mode": "100644"
+    },
+    {
+      "status": " M",
+      "path": "game/content/packs/fpv-arcade-r5.json",
+      "object": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "mode": "100644"
+    },
+    {
+      "status": " M",
+      "path": "game/content/packs/fpv-arcade.json",
+      "object": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "mode": "100644"
+    },
+    {
+      "status": " M",
+      "path": "game/content/packs/fpv-pressure-frontier.json",
+      "object": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "mode": "100644"
+    },
+    {
+      "status": " M",
+      "path": "game/content/packs/homeward-skies.json",
+      "object": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "mode": "100644"
+    },
+    {
+      "status": " M",
+      "path": "game/enemy-catalog-scenarios.mjs",
+      "object": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "mode": "100644"
+    },
+    {
+      "status": " M",
+      "path": "game/enemy-catalog.mjs",
+      "object": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "mode": "100644"
+    },
+    {
+      "status": " M",
+      "path": "game/enemy-guide.mjs",
+      "object": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "mode": "100644"
+    },
+    {
+      "status": " M",
+      "path": "game/enemy-presentations.mjs",
+      "object": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "mode": "100644"
+    },
+    {
+      "status": " M",
+      "path": "game/external-backup-assets.mjs",
+      "object": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "mode": "100644"
+    },
+    {
+      "status": " M",
+      "path": "game/external-chapter-backup.mjs",
+      "object": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "mode": "100644"
+    },
+    {
+      "status": " M",
+      "path": "game/external-chapter-catalog.mjs",
+      "object": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "mode": "100644"
+    },
+    {
+      "status": " M",
+      "path": "game/external-chapter-host.mjs",
+      "object": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "mode": "100644"
+    },
+    {
+      "status": " M",
+      "path": "game/external-chapter-install.mjs",
+      "object": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "mode": "100644"
+    },
+    {
+      "status": " M",
+      "path": "game/external-chapter-pointer.mjs",
+      "object": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "mode": "100644"
+    },
+    {
+      "status": " M",
+      "path": "game/external-chapter-source.mjs",
+      "object": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "mode": "100644"
+    }
+  ],
+  "indexEntries": [
+    {
+      "path": ".gitattributes",
+      "mode": "100644",
+      "object": "ec5fb409f5933eb32fb2d3eeebbf51739f5df034",
+      "stage": 0
+    },
+    {
+      "path": ".gitignore",
+      "mode": "100644",
+      "object": "caf8a3c1bfab999f3124fe8c41d030998eab983c",
+      "stage": 0
+    },
+    {
+      "path": ".prettierignore",
+      "mode": "100644",
+      "object": "293da0fe93f72cfce3d143cd9583019510188404",
+      "stage": 0
+    },
+    {
+      "path": ".prettierrc.json",
+      "mode": "100644",
+      "object": "ebb4af5f9a7d5c457d4c01d96f8a80d9e0285fd1",
+      "stage": 0
+    },
+    {
+      "path": "authoring/library/fpv-field-kit/originals/reveals/scene-frayed-causeway-fpv-v1.png",
+      "mode": "100644",
+      "object": "14aec4f0a04338ba8636251d7ed1f4f112186c5d",
+      "stage": 0
+    },
+    {
+      "path": "authoring/library/fpv-field-kit/originals/reveals/scene-homeward-01-v1.png",
+      "mode": "100644",
+      "object": "ea217ad8df9c3e13304a376f2771082966716d2f",
+      "stage": 0
+    },
+    {
+      "path": "authoring/library/fpv-field-kit/originals/reveals/scene-homeward-02-v1.png",
+      "mode": "100644",
+      "object": "47fdae760530bc8db59e30a5dfd164ef0a6c3157",
+      "stage": 0
+    },
+    {
+      "path": "authoring/library/fpv-field-kit/originals/reveals/scene-homeward-03-v1.png",
+      "mode": "100644",
+      "object": "7a89a8de9c4be29ab9a156ec205a35d0a219bb84",
+      "stage": 0
+    },
+    {
+      "path": "authoring/library/fpv-field-kit/originals/reveals/scene-listening-court-v1.png",
+      "mode": "100644",
+      "object": "92ee533908a009605ba04489d78f5c5f1f6315fc",
+      "stage": 0
+    },
+    {
+      "path": "authoring/library/fpv-field-kit/originals/reveals/scene-night-crossfire-v1.png",
+      "mode": "100644",
+      "object": "67785b667e0ef8854438006a904c81e2fe6625e3",
+      "stage": 0
+    },
+    {
+      "path": "authoring/library/fpv-field-kit/originals/reveals/scene-night-signal-v1.png",
+      "mode": "100644",
+      "object": "a58ab9982a73e6eaea9d5090ae403770a69d3249",
+      "stage": 0
+    },
+    {
+      "path": "authoring/library/fpv-field-kit/originals/reveals/scene-offset-docks-fpv-v1.png",
+      "mode": "100644",
+      "object": "83b229b5fe4a0b6b1c3c90461ed1ed95a5115dc8",
+      "stage": 0
+    },
+    {
+      "path": "authoring/library/fpv-field-kit/originals/reveals/scene-open-the-circuit-v1.png",
+      "mode": "100644",
+      "object": "cca1c6b19a07885093fd69dee97654cf94daa2d2",
+      "stage": 0
+    },
+    {
+      "path": "authoring/library/fpv-field-kit/originals/reveals/scene-orchard-crossing-v1.png",
+      "mode": "100644",
+      "object": "8b02f524669b772f1bdf743220da888c2a9fc609",
+      "stage": 0
+    },
+    {
+      "path": "authoring/library/fpv-field-kit/originals/reveals/scene-orchard-window-v1.png",
+      "mode": "100644",
+      "object": "d6ade46c53740e6a3de90d890bace4b0dfbdeed1",
+      "stage": 0
+    },
+    {
+      "path": "authoring/library/fpv-field-kit/originals/reveals/scene-sandbar-braid-fpv-v1.png",
+      "mode": "100644",
+      "object": "c64f48d04187a6a90ee7ad9e1782a2e7bb4298f3",
+      "stage": 0
+    },
+    {
+      "path": "authoring/library/fpv-field-kit/originals/reveals/scene-sentinel-relay-01-v1.png",
+      "mode": "100644",
+      "object": "4c205bd7694903115e6afa69103b048df2d1d310",
+      "stage": 0
+    },
+    {
+      "path": "authoring/library/fpv-field-kit/originals/reveals/scene-signal-01-v1.png",
+      "mode": "100644",
+      "object": "79f2d65924363c324b03a6dcaec591ff1b5bb90c",
+      "stage": 0
+    },
+    {
+      "path": "authoring/library/fpv-field-kit/originals/reveals/scene-signal-02-v1.png",
+      "mode": "100644",
+      "object": "3f65bb8912f0e6caeac2c64ab671393aa86c8e70",
+      "stage": 0
+    },
+    {
+      "path": "authoring/library/fpv-field-kit/originals/reveals/scene-signal-03-v1.png",
+      "mode": "100644",
+      "object": "a4135cf39e02414be44e81d6d715f2772268bc2c",
+      "stage": 0
+    },
+    {
+      "path": "authoring/library/fpv-field-kit/originals/reveals/scene-signal-04-v1.png",
+      "mode": "100644",
+      "object": "87ec191fca498a0cb3e8f0150c359273c4485431",
+      "stage": 0
+    },
+    {
+      "path": "authoring/library/fpv-field-kit/originals/reveals/scene-signal-05-v1.png",
+      "mode": "100644",
+      "object": "37f3675b68ab10d2d0cf1df3139e3fba7a4803c7",
+      "stage": 0
+    },
+    {
+      "path": "authoring/library/fpv-field-kit/originals/reveals/scene-signal-06-v1.png",
+      "mode": "100644",
+      "object": "c240075057ba467a2471c3c6a286ddc856d2d410",
+      "stage": 0
+    },
+    {
+      "path": "authoring/library/fpv-field-kit/originals/reveals/scene-signal-06-v2.png",
+      "mode": "100644",
+      "object": "5a5d01e3eae346bf03f6f772fbc9af9f1d21b72f",
+      "stage": 0
+    },
+    {
+      "path": "authoring/library/fpv-field-kit/originals/reveals/scene-signal-07-v1.png",
+      "mode": "100644",
+      "object": "c275542f77d1218c4f88354f4d4a73e28d12a414",
+      "stage": 0
+    },
+    {
+      "path": "authoring/library/fpv-field-kit/originals/reveals/scene-signal-08-v1.png",
+      "mode": "100644",
+      "object": "c0465ffe9468d240d2d04c2b90c86fc41205b818",
+      "stage": 0
+    },
+    {
+      "path": "authoring/library/fpv-field-kit/originals/reveals/scene-signal-09-v1.png",
+      "mode": "100644",
+      "object": "b988191bf8d5d3133cdcc87f452864ae96a1158e",
+      "stage": 0
+    },
+    {
+      "path": "authoring/library/fpv-field-kit/originals/reveals/scene-signal-10-v1.png",
+      "mode": "100644",
+      "object": "d290bba3e250ebc46aa57cdc7084e64a93b3553c",
+      "stage": 0
+    },
+    {
+      "path": "authoring/library/fpv-field-kit/originals/reveals/scene-signal-11-v1.png",
+      "mode": "100644",
+      "object": "a2310d10284464304dd680bf0fe675ec17054172",
+      "stage": 0
+    },
+    {
+      "path": "authoring/library/fpv-field-kit/originals/title-hangar.png",
+      "mode": "100644",
+      "object": "e42fc643e0e42edb27e3be580dde4ece98ce8bc7",
+      "stage": 0
+    },
+    {
+      "path": "authoring/library/fpv-field-kit/prepared/reveals/scene-fieldcraft-01-768x576-v1.png",
+      "mode": "100644",
+      "object": "8c005c3bafcb8bda24f2fbcac04bb25e4461e01d",
+      "stage": 0
+    },
+    {
+      "path": "authoring/library/fpv-field-kit/prepared/reveals/scene-fieldcraft-02-768x576-v1.png",
+      "mode": "100644",
+      "object": "b4268030bc7fa2cdc6994748563177218a881537",
+      "stage": 0
+    },
+    {
+      "path": "authoring/library/fpv-field-kit/prepared/reveals/scene-fieldcraft-03-768x576-v1.png",
+      "mode": "100644",
+      "object": "6834889260f439f4d205c735f7682708ba85d70d",
+      "stage": 0
+    },
+    {
+      "path": "authoring/library/fpv-field-kit/prepared/reveals/scene-fieldcraft-04-768x576-v1.png",
+      "mode": "100644",
+      "object": "a3946b8b312c91c83399ac9d20c6fb30f7540aee",
+      "stage": 0
+    },
+    {
+      "path": "authoring/library/fpv-field-kit/prepared/reveals/scene-frayed-causeway-fpv-1774x887-v1.png",
+      "mode": "100644",
+      "object": "1258ba961e8177898ca92ad4ef231eefc7b87df8",
+      "stage": 0
+    },
+    {
+      "path": "authoring/library/fpv-field-kit/prepared/reveals/scene-homeward-01-1152x576-v1.png",
+      "mode": "100644",
+      "object": "fed271e7a1b22340d07b182e7295fcda40401f78",
+      "stage": 0
+    },
+    {
+      "path": "authoring/library/fpv-field-kit/prepared/reveals/scene-homeward-01-768x576-v1.png",
+      "mode": "100644",
+      "object": "c45800c2c06faf9612aa90685f641782a308450f",
+      "stage": 0
+    },
+    {
+      "path": "authoring/library/fpv-field-kit/prepared/reveals/scene-homeward-02-1152x576-v1.png",
+      "mode": "100644",
+      "object": "5c6ed8556bfc3f199bdcde3f05b7ec2c0c5701d8",
+      "stage": 0
+    },
+    {
+      "path": "authoring/library/fpv-field-kit/prepared/reveals/scene-homeward-02-768x576-v1.png",
+      "mode": "100644",
+      "object": "4695e615f7c2c0ebf86d1655b73a527e694eced8",
+      "stage": 0
+    },
+    {
+      "path": "authoring/library/fpv-field-kit/prepared/reveals/scene-homeward-03-1152x576-v1.png",
+      "mode": "100644",
+      "object": "82307312afddfc68f7c47fd052cac977f16a80d6",
+      "stage": 0
+    },
+    {
+      "path": "authoring/library/fpv-field-kit/prepared/reveals/scene-homeward-03-768x576-v1.png",
+      "mode": "100644",
+      "object": "c37a54eb8274e0ca63d3379dd64960184515720f",
+      "stage": 0
+    },
+    {
+      "path": "authoring/library/fpv-field-kit/prepared/reveals/scene-listening-court-1774x887-v1.png",
+      "mode": "100644",
+      "object": "8a1c62d700e5cb5ed273d96b4669039cadd184d0",
+      "stage": 0
+    },
+    {
+      "path": "authoring/library/fpv-field-kit/prepared/reveals/scene-night-crossfire-1152x576-v1.png",
+      "mode": "100644",
+      "object": "47f3825491a6d66e5831c70f801f9b4ebc945a7a",
+      "stage": 0
+    },
+    {
+      "path": "authoring/library/fpv-field-kit/prepared/reveals/scene-night-crossfire-1774x887-v1.png",
+      "mode": "100644",
+      "object": "87d6f224b753be210bb64cd62c9720b761b2185e",
+      "stage": 0
+    },
+    {
+      "path": "authoring/library/fpv-field-kit/prepared/reveals/scene-night-signal-1152x576-v1.png",
+      "mode": "100644",
+      "object": "2b7bb4256154dda3eb01b95dc3960269f8b4b237",
+      "stage": 0
+    },
+    {
+      "path": "authoring/library/fpv-field-kit/prepared/reveals/scene-offset-docks-fpv-1774x887-v1.png",
+      "mode": "100644",
+      "object": "d53fd5a53f86cdb5fbf9760385186b50f7139cac",
+      "stage": 0
+    },
+    {
+      "path": "authoring/library/fpv-field-kit/prepared/reveals/scene-open-the-circuit-1774x887-v1.png",
+      "mode": "100644",
+      "object": "6e8eb25634bac3e1e5a94773e6ee0f68d5a1ea2b",
+      "stage": 0
+    },
+    {
+      "path": "authoring/library/fpv-field-kit/prepared/reveals/scene-orchard-crossing-1152x576-v1.png",
+      "mode": "100644",
+      "object": "8cdea40e694d59178c7590fb16d03bae2399a220",
+      "stage": 0
+    },
+    {
+      "path": "authoring/library/fpv-field-kit/prepared/reveals/scene-orchard-crossing-1774x887-v1.png",
+      "mode": "100644",
+      "object": "1af0d14c02b99e37830db4dc329ac213d10b8246",
+      "stage": 0
+    },
+    {
+      "path": "authoring/library/fpv-field-kit/prepared/reveals/scene-orchard-window-1152x576-v1.png",
+      "mode": "100644",
+      "object": "dbee30d6db5a88c41cc36e13b92c68d0e9d4e476",
+      "stage": 0
+    },
+    {
+      "path": "authoring/library/fpv-field-kit/prepared/reveals/scene-sandbar-braid-fpv-1774x887-v1.png",
+      "mode": "100644",
+      "object": "fcfd5a17ebd415aa72013d647e4d37c607c0fa77",
+      "stage": 0
+    },
+    {
+      "path": "authoring/library/fpv-field-kit/prepared/reveals/scene-sentinel-relay-01-768x576-v1.png",
+      "mode": "100644",
+      "object": "8fbbab552ab3031dc3604d77014b2b5ebe83ca78",
+      "stage": 0
+    },
+    {
+      "path": "authoring/library/fpv-field-kit/prepared/reveals/scene-signal-01-768x576-v1.png",
+      "mode": "100644",
+      "object": "0f07684afcb8a7fdb9810496b1c751e9f91e4b64",
+      "stage": 0
+    },
+    {
+      "path": "authoring/library/fpv-field-kit/prepared/reveals/scene-signal-02-768x576-v1.png",
+      "mode": "100644",
+      "object": "aeeb19766a2ce4fa5159a83e3579a27397bfb6ac",
+      "stage": 0
+    },
+    {
+      "path": "authoring/library/fpv-field-kit/prepared/reveals/scene-signal-03-768x576-v1.png",
+      "mode": "100644",
+      "object": "851c518ed5158335e0a02c23ced0733870da6bf9",
+      "stage": 0
+    },
+    {
+      "path": "authoring/library/fpv-field-kit/prepared/reveals/scene-signal-04-768x576-v1.png",
+      "mode": "100644",
+      "object": "f8e33a5b6192f91bea485c3258a454f6fc2ddd8e",
+      "stage": 0
+    },
+    {
+      "path": "game/content/packs/fpv-arcade-r2.json",
+      "mode": "100644",
+      "object": "713fcdff2a9dabaa06c5babd0d1db3bcf5982869",
+      "stage": 0
+    },
+    {
+      "path": "game/content/packs/fpv-arcade-r3.json",
+      "mode": "100644",
+      "object": "ba77047ceafeda3acf0e32bbe4e82fe7982f3000",
+      "stage": 0
+    },
+    {
+      "path": "game/content/packs/fpv-arcade-r4.json",
+      "mode": "100644",
+      "object": "f1ace8d00d619ca4bb1532c0310f25961fa9ec60",
+      "stage": 0
+    },
+    {
+      "path": "game/content/packs/fpv-arcade-r5.json",
+      "mode": "100644",
+      "object": "37108db6fc98f1c4e3eeed4381b1b5d19e24ef16",
+      "stage": 0
+    },
+    {
+      "path": "game/content/packs/fpv-arcade.json",
+      "mode": "100644",
+      "object": "bfbcbe28dace73bde4f95afded9b95b4010f4c80",
+      "stage": 0
+    },
+    {
+      "path": "game/content/packs/fpv-pressure-frontier.json",
+      "mode": "100644",
+      "object": "2dadcf901beb298d1ef4dc856e66ae01d59b942f",
+      "stage": 0
+    },
+    {
+      "path": "game/content/packs/homeward-skies.json",
+      "mode": "100644",
+      "object": "df1de5b6fe61803f407e8fe25ebf720331a6193a",
+      "stage": 0
+    },
+    {
+      "path": "game/enemy-catalog-scenarios.mjs",
+      "mode": "100644",
+      "object": "a703f65c62f23509b7b1ecdc0f9b790bbd36402a",
+      "stage": 0
+    },
+    {
+      "path": "game/enemy-catalog.mjs",
+      "mode": "100644",
+      "object": "d1a4cf09a81bd6466b2931fe6d7d1a9f9630fb70",
+      "stage": 0
+    },
+    {
+      "path": "game/enemy-guide.mjs",
+      "mode": "100644",
+      "object": "1b3f43b906f9fe58d1fe11d72eeb60af4586a52b",
+      "stage": 0
+    },
+    {
+      "path": "game/enemy-presentations.mjs",
+      "mode": "100644",
+      "object": "7acc47a103d374e62d2db23a782b4368c608295e",
+      "stage": 0
+    },
+    {
+      "path": "game/external-backup-assets.mjs",
+      "mode": "100644",
+      "object": "645b8755bcea9401e11af41e59912ebb1360c700",
+      "stage": 0
+    },
+    {
+      "path": "game/external-chapter-backup.mjs",
+      "mode": "100644",
+      "object": "6e402361e872a32b66cf873cbd461b085022e2c8",
+      "stage": 0
+    },
+    {
+      "path": "game/external-chapter-catalog.mjs",
+      "mode": "100644",
+      "object": "b6d9dbb6c07441536a9b7f72dc66248d6cd317ac",
+      "stage": 0
+    },
+    {
+      "path": "game/external-chapter-host.mjs",
+      "mode": "100644",
+      "object": "632d303ed6b3d43725bb21f5a69d0646fc116dba",
+      "stage": 0
+    },
+    {
+      "path": "game/external-chapter-install.mjs",
+      "mode": "100644",
+      "object": "1f64b81247e0a61bc639aae806c3c65ceba506d3",
+      "stage": 0
+    },
+    {
+      "path": "game/external-chapter-pointer.mjs",
+      "mode": "100644",
+      "object": "2a401eee3fb7a61fa7d15ef4d3dcef61bd4ad773",
+      "stage": 0
+    },
+    {
+      "path": "game/external-chapter-source.mjs",
+      "mode": "100644",
+      "object": "3e4467ace9ffecf7e2c070e41b5ec77916ce1bcc",
+      "stage": 0
+    }
+  ],
+  "purpose": "Recovery only. These bytes are not release admission. Missing files, conflict stages and obsolete generated outputs are preserved as observations, not deletion or merge instructions."
+}
