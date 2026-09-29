@@ -1,9 +1,0 @@
-{
-  "status": "EXACT_SPARSE_INPUTS_HYDRATED",
-  "source": "4fd8e2dac4fdc851d0d2bf0b21e77162d9d405c9",
-  "sourceTree": "d16edac0127fc96139445ae2365cc74499f80921",
-  "paths": 88,
-  "bytes": 1105523,
-  "initialSetupObservation": "git worktree add --no-checkout and sparse-checkout set alone left the new index unpopulated; the first physical-file assertion failed before any candidate edits. Explicit read-tree -mu HEAD materialized the finite sparse patterns. All 88 inputs now hash-match the committed source and the new index is clean.",
-  "at": "2026-09-18T05:23:33.864229+00:00"
-}
