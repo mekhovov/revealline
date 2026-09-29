@@ -37,6 +37,22 @@ The checked child bridge now has a real menu Return action. It uses the same ses
 
 In the browser, keyboard activation of Focus game entered the ready child; Down engaged Start, four more Down presses reached Return, and Enter returned parent focus to the mission selector. The child stayed in briefing. This is keyboard evidence; the virtual-pad host test is separate from physical-controller qualification. The simulator's existing input-source policy remains unchanged.
 
+## Versus library launch ownership
+
+The relocated Settings → Content → Mission Library action exposed a real host mismatch: a valid installed mission was selected, but `startRace` only accepted the main screen's scope. Commit `0832938b0` retains the actual Settings owner throughout explicit selection/preparation and leaves Settings only after the prepared match is accepted. Back or foreground loss during that preparation leaves both previous boards/readiness intact. Ordinary Start, Retry and continuous Next keep their existing semantics.
+
+The installed Creator Versus suite passed **7/7**. After narrowing the new admission to explicit chooser launches, the final chooser/cancellation/Start/Retry boundary subset passed **6/6**. Independent interruption/Next/Retry/focus review passed **8/8 selected cases**; its other 31 enumerated cases were intentionally skipped and are not counted as passes. Scoped lint/format/diff checks passed. These are actual-host automated checks, not a physical-controller claim.
+
+## Mode selection is not Play
+
+Review caught a second routing distinction: the Custom Solo mode link originally reused the existing explicit-Play mission handoff. It now carries the finite `library-intent=select` value. Versus resolves and reveals the exact installed row without preparing or launching it; malformed or duplicated intent is rejected. Existing explicit-Play links without this new parameter keep their behavior.
+
+Commit `2612dc7d4` passed the final handoff/menu/installed-host cohort **34/34**, including the formerly failing select-only route. Existing incoming Base/Journey Play and metadata-ownership checks passed **4/4 selected cases** (15 filtered skips). Independent handoff tests passed **9/9**, with no actionable review findings. These cohorts overlap; they are not a combined total.
+
+Fresh browser keyboard acceptance used the same installed fixture: choose Versus, confirm leaving the saved Solo campaign, then arrive at the exact `dawn-signal` library card. The lobby remained ready. Down to Back and Enter returned focus to Select Mission without starting. Reopening the selector retained the exact card; a new Enter on its Play action started the two boards. Escape then paused both and focused Resume. This establishes the mode/Play distinction in the browser; automated state assertions separately check unchanged pre-launch boards.
+
 ## Remaining qualification
 
 Complete keyboard-only and controller-only editing journeys for every creator, physical pads/reconnects, 200% zoom, final standalone/native packages and the published aggregate remain open. This report covers the installed fixture and source under review; it does not certify every imported campaign or hardware device.
+
+The candidate was reconciled with main `6a67d6dbfe01d5e1f3842b5a79dd5d5ddeefcfd8` in merge `78542943e`. That incoming delta contains six Pages v0.142.3 metadata/evidence files; it changed no player runtime source. Existing publication records are retained, not regenerated. #782 remains a v0.150.0 aggregate input, and these source batches do not publish a release.
