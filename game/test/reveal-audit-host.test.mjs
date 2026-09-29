@@ -421,3 +421,19 @@ test('Reveal audit Page actions returns to its real home link instead of reopeni
   h.pulse(0);
   assert.equal(h.doc.querySelector('dialog[open]'), null);
 });
+
+for (const field of ['path', 'subject', 'bytes', 'sha256', 'width', 'height'])
+  test(`Reveal audit rejects ${field} drift before binding a pinned source viewer`, async (t) => {
+    let next = audit;
+    const h = await fixture(t, { read: async () => response(next) });
+    const before = cards(h);
+    next = structuredClone(audit);
+    const target = ['path', 'subject'].includes(field) ? next.images[0] : next.images[0].image;
+    target[field] =
+      typeof target[field] === 'number' ? target[field] + 1 : `${target[field]}-changed`;
+    startRetry(h);
+    await settle();
+    assert.deepEqual(cards(h), before);
+    assert.equal(h.$('status').dataset.error, 'true');
+    assert.equal(h.doc.activeElement, h.$('reveal-reload'));
+  });

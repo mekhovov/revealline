@@ -3,6 +3,8 @@ import { CURRENT_ART_SOURCES } from '../../game/presentation/current-art-sources
 import { createSceneArt, sceneDescriptor } from '../../game/ui/scene-art.mjs';
 import { setMenuIcon } from '../../game/ui/native-menu-icons.mjs';
 import { mountRevealAuditInput, attachRevealAuditReader } from './reveal-audit-input.mjs';
+import { mountRevealAuditViewer } from './reveal-audit-viewer.mjs';
+import { REVEAL_AUDIT_SOURCES } from './reveal-audit-sources.mjs';
 
 const doc = document,
   win = window;
@@ -43,6 +45,22 @@ function retire({ announce = true, restore = false } = {}) {
   return true;
 }
 const owner = mountRevealAuditInput(doc, win, () => retire({ restore: true }));
+const viewer = mountRevealAuditViewer({
+  document: doc,
+  window: win,
+  navigation: owner.navigation,
+  sources: REVEAL_AUDIT_SOURCES,
+});
+function sourceLink(link, id) {
+  link.id = `reveal-source-${id}`;
+  link.setAttribute('aria-haspopup', 'dialog');
+  link.onclick = (event) => {
+    event.preventDefault();
+    viewer.open(id, link);
+  };
+}
+for (const id of ['audit-markdown', 'audit-json'])
+  sourceLink(doc.querySelector(`#reveal-source-${id}`), id);
 const sectionReaders = [
   attachRevealAuditReader({
     navigation: owner.navigation,
@@ -99,6 +117,17 @@ function stage(audit, generation) {
       audit.counts?.fpvOwners
   )
     throw new Error('The historical audit inventory is incomplete.');
+  const pins = new Map(REVEAL_AUDIT_SOURCES.map((entry) => [entry.id, entry]));
+  for (const [index, entry] of audit.images.entries()) {
+    const pin = pins.get(`raster-${index + 1}`);
+    if (
+      !pin ||
+      pin.path !== entry.path ||
+      pin.title !== entry.subject ||
+      ['bytes', 'sha256', 'width', 'height'].some((key) => pin[key] !== entry.image?.[key])
+    )
+      throw new Error(t('tools:revealSourceMismatch'));
+  }
   const originals = new Map(CURRENT_ART_SOURCES.map((entry) => [entry.id, entry]));
   const nextReaders = [];
   const images = audit.images.map((entry, index) => {
@@ -132,6 +161,7 @@ function stage(audit, generation) {
     box.append(img);
     const link = el('a', () => t('tools:openUnchangedSourcePng'));
     link.href = img.src;
+    sourceLink(link, id);
     article.append(
       box,
       el('p', `${size(entry.image)} source · ${entry.owners.length} exact owners`, 'meta'),
@@ -243,6 +273,10 @@ const pagehide = (event) => {
   disposed = true;
   readers.forEach((reader) => reader.destroy());
   sectionReaders.forEach((reader) => reader.destroy());
+  viewer.destroy();
+  doc.querySelectorAll('[id^="reveal-source-"][aria-haspopup="dialog"]').forEach((link) => {
+    link.onclick = null;
+  });
   owner.destroy();
   reload.onclick = cancel.onclick = null;
   for (const name of [

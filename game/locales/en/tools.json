@@ -987,7 +987,7 @@
   "sourceAudit56ExactOwnersNoProductionApproval": "SOURCE AUDIT · 56 EXACT OWNERS · NO PRODUCTION APPROVAL",
   "thePicturesBehindTheField": "The pictures behind the field",
   "twentyOneUniqueRasterOriginalsAndSeventeenExistingProceduralScenes": "Twenty-one unique raster originals and seventeen existing procedural scenes. This review keeps the exact source artwork intact and records which subjects the new Field Kit compositions must preserve.",
-  "sourceCheckoutReviewOnlyOriginalPngsLoadFromTheirExisting": "Historical source snapshot. Originals load from recorded authoring paths; some already ship for other features. Missing originals stay explicitly unavailable. Source-document links use browser navigation. Procedural previews use the recorded seed 0 descriptors.",
+  "sourceCheckoutReviewOnlyOriginalPngsLoadFromTheirExisting": "Historical source snapshot. Originals load from recorded authoring paths; some already ship for other features. Missing originals stay explicitly unavailable. Source documents open in an in-app reader. Procedural previews use the recorded seed 0 descriptors.",
   "readTheCompleteAuditAndProductionPlan": "Read the complete audit and production plan",
   "inspectOwnerHashAndFrameRecords": "Inspect owner, hash and frame records",
   "loadingTheAudit": "Loading the audit…",
@@ -2467,5 +2467,12 @@
   "studio.spatialReview.versus": "Versus · {{id}} (new tab)",
   "revealAuditSummary": "Historical snapshot: {{owners}} recorded owners · {{rasters}} raster originals · {{procedural}} procedural records. No production approval.",
   "revealAuditUnavailable": "Audit unavailable: {{reason}}. Retry when the matching source checkout is available.",
-  "revealAuditCancelled": "Audit loading cancelled. Previously shown records are unchanged."
+  "revealAuditCancelled": "Audit loading cancelled. Previously shown records are unchanged.",
+  "revealSourceLoading": "Loading recorded source…",
+  "revealSourceReady": "Verified source · {{bytes}} bytes",
+  "revealSourceUnavailable": "Source unavailable: {{reason}}. Return to the audit or retry from its recorded link.",
+  "revealSourceMismatch": "The source differs from the recorded historical file.",
+  "revealSourceCancelled": "Source loading cancelled. Close this reader and open the source again to retry.",
+  "revealSourceFit": "Fit image",
+  "revealSourceActualSize": "Actual size"
 }
