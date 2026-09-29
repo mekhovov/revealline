@@ -1,9 +1,0 @@
-# Exact-source hosted observations
-
-Source `69195ddd1d21a7bc3f863cf7589069a735301a03`, tree `6dea75eef274c3625d7a7e9c251b20d587a42191`. Final original API snapshots are `manual/run.json`, `manual/jobs.json`, `pr-source/run.json`, and `pr-source/jobs.json`; publisher preview is kept separately. The timestamped originals remain intact. Each completed non-skipped job has its original `job-ID.log`.
-
-`review.json` and `job-step-records.json` expose conclusions and actual executed step results. `log-receipts.json` preserves each log hash and TAP count. Source-suite totals count only the four source shards, excluding separate preflight infrastructure tests. `source-identities.json` retains raw before/after content-and-mode identities from PR source jobs. `partition-coverage.json`, when present, compares every ordered manual shard file to the pinned Git source and exact runner contract. `pr-partition-coverage.json` separately binds the PR selections to actual runner bytes, start markers, steps and source identities; the PR logs do not emit per-file execution traces.
-
-`failures.json` preserves failed/cancelled jobs and raw error excerpts. A successful PR run cannot erase a failed manual run; a failed manual source gate blocks freeze. Publisher preview validates mutable archive admissions separately and does not establish source qualification or public deployment. Artifact JSON is only original GitHub API metadata; payload reception, inner-byte validation, and release admission are separate root-owned checks.
-
-No workflow rerun, source mutation, PR/tag/release mutation, payload download, or publication was performed by this observer. Earlier source runs retain their own evidence directories. `pr-final.json` is a later PR-state observation and may contain a newer head; actual tested identity comes from each pinned run and checkout log.
