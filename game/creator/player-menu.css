@@ -1,0 +1,305 @@
+@import url('../ui/field-kit-fonts.css');
+@import url('../ui/menu-scenes.css');
+
+.creator-player {
+  font-family: 'Field Kit UI', system-ui, sans-serif;
+  background: #080e18;
+  color: #f3f5ef;
+}
+.creator-player main {
+  width: 100%;
+  margin: 0;
+}
+#creator-home {
+  position: relative;
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  justify-content: safe center;
+  padding: max(24px, env(safe-area-inset-top)) max(24px, 6vw) max(64px, env(safe-area-inset-bottom));
+  isolation: isolate;
+}
+.creator-menu-copy {
+  width: min(470px, 100%);
+}
+.creator-menu-copy > .fpv-line-wordmark {
+  width: min(370px, 100%);
+  margin-bottom: 16px;
+}
+#creator-home h1 {
+  font-size: clamp(18px, 2.5vw, 26px);
+  line-height: 1.25;
+  letter-spacing: 0;
+  margin: 0 0 20px;
+  overflow-wrap: anywhere;
+}
+#creator-modes {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 20px;
+}
+#creator-modes > * {
+  flex: 1;
+}
+#creator-home-actions,
+#creator-primary-actions {
+  display: grid;
+  gap: 8px;
+}
+.creator-player :is(button, a[data-menu-icon]) {
+  min-height: 46px;
+  border-radius: 3px;
+}
+#creator-home-actions button {
+  width: 100%;
+  text-align: left;
+  background: #101927e8;
+  color: #f3f5ef;
+  border-color: #819297;
+}
+#creator-primary-actions button {
+  background: #ffda69;
+  color: #081019;
+  border-color: #ffda69;
+}
+#creator-modes :is(button, a) {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  background: #101927e8;
+  color: #f3f5ef;
+  padding: 8px 12px;
+  border: 1px solid #819297;
+}
+#creator-modes [aria-current] {
+  border-color: #ffda69;
+  color: #ffda69;
+}
+#creator-fullscreen {
+  margin-top: 16px;
+  background: #101927e8;
+  color: #f3f5ef;
+}
+.creator-menu-footer {
+  position: absolute !important;
+  bottom: max(18px, env(safe-area-inset-bottom));
+  left: max(24px, 6vw);
+  right: max(24px, 6vw);
+  display: flex;
+  gap: 16px;
+  justify-content: space-between;
+  color: #bac5cd;
+  font-size: 12px;
+}
+[data-menu-input='controller'] [data-menu-keyboard-hint],
+[data-menu-controller-hint] {
+  display: none;
+}
+[data-menu-input='controller'] [data-menu-controller-hint] {
+  display: inline !important;
+}
+.creator-player [data-menu-icon]::before {
+  content: '';
+  display: inline-block;
+  width: 18px;
+  height: 18px;
+  flex: 0 0 18px;
+  margin-right: 10px;
+  vertical-align: -2px;
+  background: currentColor;
+  mask: var(--native-menu-icon) center / contain no-repeat;
+}
+#creator-game {
+  padding: 16px max(16px, 4vw);
+}
+#creator-flight-actions {
+  display: flex;
+  justify-content: end;
+}
+.creator-menu-dialog {
+  width: min(850px, 94vw);
+  max-height: 90dvh;
+  max-height: 90svh;
+  overflow: auto;
+  color: #f3f5ef;
+  background: #0e1827;
+  border: 1px solid #89a0b0;
+  border-radius: 6px;
+  padding: 24px;
+}
+.creator-menu-dialog::backdrop {
+  background: #030811d9;
+}
+.creator-menu-dialog header {
+  padding: 0 0 16px;
+  margin-bottom: 16px;
+  justify-content: space-between;
+  gap: 12px;
+}
+.creator-menu-dialog h2 {
+  margin: 0;
+  font-size: 24px;
+}
+.creator-menu-dialog button {
+  color: #f3f5ef;
+  background: #1a2d43;
+}
+.creator-settings-layout {
+  display: grid;
+  grid-template-columns: minmax(190px, 1fr) minmax(0, 2fr);
+  gap: 24px;
+}
+.field-kit-settings-tabs,
+#creator-runtime-controls,
+#creator-mission-list,
+#creator-replace-attempt [data-menu-layout] {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 10px;
+}
+.field-kit-settings-tabs {
+  align-self: start;
+}
+.field-kit-settings-tabs button {
+  text-align: left;
+}
+.field-kit-settings-tabs [aria-selected='true'] {
+  border-color: #ffda69;
+  color: #ffda69;
+}
+#creator-mission-list [aria-current] {
+  border-color: #ffda69;
+}
+#creator-background-animation {
+  width: 22px;
+  height: 22px;
+}
+#creator-panel-data button,
+#creator-panel-help a {
+  display: block;
+  margin: 12px 0;
+}
+#creator-replace-attempt {
+  width: min(560px, 94vw);
+}
+#creator-replace-confirm {
+  background: #ffda69;
+  color: #081019;
+}
+#creator-home #status {
+  font-size: 14px;
+  line-height: 1.4;
+  margin-bottom: 0;
+}
+@media (max-width: 700px) {
+  #creator-home {
+    padding-inline: 24px;
+  }
+  .creator-menu-copy {
+    margin: 0 auto;
+  }
+  .creator-menu-footer {
+    left: 24px;
+    right: 24px;
+  }
+  .creator-settings-layout {
+    display: block;
+  }
+  .native-settings[data-settings-view='categories'] [role='tabpanel'],
+  .native-settings[data-settings-view='panel'] .field-kit-settings-tabs {
+    display: none;
+  }
+}
+@media (max-height: 500px) and (min-width: 650px) {
+  #creator-home {
+    padding: 20px 28px 44px;
+  }
+  .creator-menu-copy {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1.2fr;
+    column-gap: 28px;
+    align-items: start;
+  }
+  .creator-menu-copy > .fpv-line-wordmark {
+    width: min(280px, 100%);
+    margin: 0;
+    grid-column: 1;
+    grid-row: 1;
+  }
+  #creator-home h1 {
+    grid-column: 1;
+    grid-row: 2;
+    margin: 0;
+    font-size: 18px;
+  }
+  #creator-modes {
+    grid-column: 1;
+    grid-row: 3;
+    margin: 10px 0 0;
+  }
+  #creator-home-actions {
+    grid-column: 2;
+    grid-row: 1 / span 3;
+  }
+  #creator-fullscreen {
+    grid-column: 2;
+    grid-row: 4;
+    margin-top: 8px;
+  }
+  #creator-home #status {
+    grid-column: 1;
+    grid-row: 4;
+  }
+  .creator-menu-footer {
+    left: 28px;
+    right: 28px;
+    bottom: 12px;
+  }
+}
+
+.creator-player {
+  --creator-action-size: 22px;
+}
+#creator-home :is(button, a) {
+  font-family: 'Reveal Line Pixel', 'Field Kit UI', sans-serif;
+  font-size: var(--creator-action-size);
+  font-weight: 400;
+  line-height: 1.35;
+  overflow-wrap: normal;
+  word-break: normal;
+  hyphens: none;
+}
+.creator-player[data-text-face='plain'] #creator-home :is(button, a) {
+  font-family: system-ui, sans-serif;
+}
+.creator-player[data-text-size='large'] {
+  font-size: 20px;
+  --creator-action-size: 33px;
+}
+.creator-player[data-text-size='large'] #creator-home {
+  justify-content: flex-start;
+}
+.creator-player[data-text-size='large'] .creator-menu-footer {
+  position: relative !important;
+  inset: auto;
+  margin-top: 28px;
+}
+.creator-player[data-text-size='large'] #creator-modes {
+  flex-wrap: wrap;
+}
+.creator-player[data-text-size='large'] #creator-modes > * {
+  min-width: 180px;
+}
+
+#creator-save-warning {
+  font-size: 14px;
+  line-height: 1.4;
+}
+#creator-home:has(#creator-save-warning:not([hidden])) .creator-menu-footer {
+  position: relative !important;
+  inset: auto;
+  margin-top: 24px;
+}

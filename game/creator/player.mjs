@@ -17,11 +17,15 @@ import { createCreatorVictoryStoryHost } from './victory-story-host.mjs';
 import { createCreatorPlayerVictoryStory } from './player-victory-story.mjs';
 import { localizedMessage, localizedText, t } from '../i18n/index.mjs';
 import { attachCreatorPlayerNavigation } from './player-navigation.mjs';
+import { attachCreatorPlayerMenu } from './player-menu.mjs';
 
 const $ = (id) => document.getElementById(id);
 const status = (message, error = false) => {
   localizedText($('status'), message);
   $('status').classList.toggle('error', error);
+  if (error) $('status').hidden = false;
+  localizedText($('creator-settings-status'), error ? message : '');
+  $('creator-settings-status').hidden = !error;
 };
 const fail = (error) =>
   status(error.message || localizedMessage('errors:creator.operationFailed'), true);
@@ -47,9 +51,42 @@ let runtime,
   pictureSha256,
   storyPlayer,
   startMissionId = null,
-  nextMissionId = null;
+  nextMissionId = null,
+  activationEpoch = 0;
 const saveKey = creatorAttemptKey(edition);
-const menu = attachCreatorPlayerNavigation({
+let menu;
+const playerMenu = attachCreatorPlayerMenu({
+  getState: () => ({
+    busy,
+    ready: !!runtime,
+    paused,
+    ended,
+    savedRaw,
+    pack,
+    attempt: runtime?.current(),
+    missionId: startMissionId,
+    missionOrder: runtime?.missionOrder,
+  }),
+  onInputReset: () => {
+    activationEpoch++;
+    menu?.refresh();
+  },
+  onChooseMission: (missionId) =>
+    operation(async (epoch) => {
+      if (!runtime.missionOrder.includes(missionId))
+        throw new Error(t('errors:creator.chooseBoundedAttempt'));
+      await adoptDisplay(
+        await runtime.start({
+          missionId,
+          difficulty: $('difficulty').value,
+          turnPolicy: $('steering').value,
+        }),
+        true,
+        epoch,
+      );
+    }),
+});
+menu = attachCreatorPlayerNavigation({
   getScope: () =>
     busy
       ? 'creator-busy'
@@ -60,11 +97,9 @@ const menu = attachCreatorPlayerNavigation({
           : paused
             ? 'creator-menu'
             : 'flight',
-  getDefaultFocus: () =>
-    ['next', 'pause', 'resume', 'start', 'retry']
-      .map($)
-      .find((element) => element && !element.hidden && !element.disabled) ||
-    document.querySelector('header a[href]'),
+  getDefaultFocus: () => playerMenu.primary(),
+  getRoot: () => playerMenu.root(),
+  onBack: () => playerMenu.back(),
 });
 function persistAttempt() {
   const attempt = runtime?.current();
@@ -78,8 +113,10 @@ function persistAttempt() {
       throw new Error(t('errors:creator.attemptChangedInAnotherTab'));
     localStorage.setItem(saveKey, saved);
     savedRaw = saved;
+    $('save-status').dataset.error = 'false';
     localizedText($('save-status'), localizedMessage('interface:creator.attemptSavedOnDevice'));
   } catch (error) {
+    $('save-status').dataset.error = 'true';
     localizedText(
       $('save-status'),
       localizedMessage('interface:creator.attemptSaveFailed', { error: error.message }),
@@ -87,6 +124,7 @@ function persistAttempt() {
   }
 }
 function pause() {
+  activationEpoch++;
   if (!runtime?.current() || paused) return;
   paused = true;
   input?.clear();
@@ -95,13 +133,16 @@ function pause() {
   persistAttempt();
   localizedText($('pause'), localizedMessage('common:actions.resume'));
   status(localizedMessage('interface:creator.pausedReady'));
+  playerMenu.refresh();
   menu.refresh({ focus: true });
 }
 function setRunning() {
+  if (document.hidden || document.hasFocus?.() === false) return;
   paused = false;
   input.clear();
   previousTime = null;
   accumulator = 0;
+  playerMenu.refresh();
   menu.refresh();
   localizedText($('pause'), localizedMessage('common:actions.pause'));
   $('arena').focus();
@@ -121,6 +162,7 @@ function updateControls() {
   $('import-progress').disabled = busy || !profile;
   $('export-progress').disabled = busy || !profile;
   $('next').disabled = busy;
+  playerMenu.refresh();
   menu.refresh();
 }
 async function operation(action) {
@@ -128,7 +170,7 @@ async function operation(action) {
   busy = true;
   updateControls();
   try {
-    await action();
+    await action(activationEpoch);
   } catch (error) {
     fail(error);
   } finally {
@@ -181,7 +223,7 @@ async function showEarned(preferredMissionId = null) {
     posterElement: $('earned-picture'),
   });
 }
-async function adoptDisplay(attempt, running) {
+async function adoptDisplay(attempt, running, epoch) {
   storyPlayer?.reset();
   painter.setLevel(attempt.run.level, { seed: attempt.run.seed });
   await painter.setLook(attempt.theme, 'neutral-marker');
@@ -201,7 +243,14 @@ async function adoptDisplay(attempt, running) {
     profile.record({ type: 'select', mode: 'solo', missionId: attempt.manifest.missionId });
   $('next').hidden = true;
   persistAttempt();
-  if (running) setRunning();
+  if (
+    running &&
+    epoch === activationEpoch &&
+    !document.hidden &&
+    document.hasFocus?.() !== false &&
+    !document.querySelector('dialog[open]')
+  )
+    setRunning();
   else {
     localizedText($('pause'), localizedMessage('common:actions.resume'));
     status(localizedMessage('interface:creator.savedAttemptRestored'));
@@ -295,7 +344,7 @@ function frame(time) {
   }
   painter.draw($('board').getContext('2d'), attempt.run, dt, {
     paused,
-    reduced: matchMedia('(prefers-reduced-motion: reduce)').matches,
+    reduced: document.body.dataset.effects === 'reduced',
     fullReveal: attempt.run.status === 'won',
     backdrop: attempt.picture,
   });
@@ -307,24 +356,30 @@ function frame(time) {
   });
 }
 $('start').onclick = () =>
-  operation(async () =>
-    adoptDisplay(
-      await runtime.start({
-        missionId: startMissionId,
-        difficulty: $('difficulty').value,
-        turnPolicy: $('steering').value,
-      }),
-      true,
+  playerMenu.request(() =>
+    operation(async (epoch) =>
+      adoptDisplay(
+        await runtime.start({
+          missionId: startMissionId,
+          difficulty: $('difficulty').value,
+          turnPolicy: $('steering').value,
+        }),
+        true,
+        epoch,
+      ),
     ),
   );
 $('resume').onclick = () =>
-  operation(async () => adoptDisplay(await runtime.restore(savedRaw), false));
+  operation(async (epoch) => adoptDisplay(await runtime.restore(savedRaw), true, epoch));
 $('retry').onclick = () =>
-  operation(async () => {
-    pause();
-    const current = runtime.current().selection;
-    await adoptDisplay(await runtime.start(current), true);
-  });
+  playerMenu.request(() =>
+    operation(async () => {
+      pause();
+      const epoch = activationEpoch,
+        current = runtime.current().selection;
+      await adoptDisplay(await runtime.start(current), true, epoch);
+    }),
+  );
 $('pause').onclick = () => {
   if (paused) setRunning();
   else pause();
@@ -332,7 +387,7 @@ $('pause').onclick = () => {
 $('next').onclick = () => {
   if (!nextMissionId) return void (location.href = './#installed');
   const missionId = nextMissionId;
-  void operation(async () => {
+  void operation(async (epoch) => {
     const current = runtime.current().selection;
     await adoptDisplay(
       await runtime.start({
@@ -341,6 +396,7 @@ $('next').onclick = () => {
         turnPolicy: current.turnPolicy,
       }),
       true,
+      epoch,
     );
   });
 };
@@ -397,6 +453,7 @@ window.addEventListener('pagehide', () => {
   runtime?.dispose();
   input?.destroy();
   menu.destroy();
+  playerMenu.destroy();
   store.close();
   cancelAnimationFrame(frameId);
   if (pictureURL) URL.revokeObjectURL(pictureURL);
@@ -425,11 +482,14 @@ try {
           },
         }),
     onStatus: (value) => {
-      if (value.error)
+      if (value.error) {
+        $('save-status').dataset.error = 'true';
         localizedText(
           $('save-status'),
           localizedMessage('interface:creator.sessionOnlyError', { error: value.error }),
         );
+        playerMenu.refresh();
+      }
     },
   });
   await profile.load();
@@ -464,6 +524,7 @@ try {
   try {
     savedRaw = localStorage.getItem(saveKey);
   } catch {
+    $('save-status').dataset.error = 'true';
     localizedText(
       $('save-status'),
       localizedMessage('interface:creator.attemptStorageUnavailable'),
@@ -475,7 +536,10 @@ try {
       ? localizedMessage('interface:creator.unfinishedAttemptAvailable')
       : localizedMessage('interface:creator.readyToPlayCustomCampaign'),
   );
-  if (!lease.writable) localizedText($('save-status'), lease.reason);
+  if (!lease.writable) {
+    $('save-status').dataset.error = 'true';
+    localizedText($('save-status'), lease.reason);
+  }
   await showEarned();
   busy = false;
   updateControls();
