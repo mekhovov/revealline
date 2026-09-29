@@ -53,6 +53,7 @@ import {
   PUBLIC_SOUNDTRACK_STYLE_IDS,
   localGenresForPublicStyles,
   matchesPublicSoundtrackStyle,
+  publicSoundtrackStylesForLocalGenres,
 } from '../soundtrack-style-taxonomy.mjs';
 
 const copy = (value) => structuredClone(value);
@@ -690,6 +691,13 @@ export function attachSoundtrackPanel({
     return [...settingsStyleInputs]
       .filter(([, checkbox]) => checkbox.checked)
       .map(([style]) => style);
+  }
+  function savedSettingsStyles() {
+    if (!draft.listening || draft.listening.mode === 'auto') return PUBLIC_SOUNDTRACK_STYLE_IDS;
+    if (draft.listening.mode === 'fusion') return ['fusion'];
+    return publicSoundtrackStylesForLocalGenres(
+      draft.listening.mode === 'mix' ? draft.listening.genres : [draft.listening.mode],
+    );
   }
   function renderSettingsStyleStatus(message = null) {
     if (!settingsStyleStatus) return;
@@ -2659,6 +2667,9 @@ export function attachSoundtrackPanel({
       );
       for (const { id, element } of mixGenres)
         element.checked = draft.listening.genres.includes(id);
+      const selectedSettings = new Set(savedSettingsStyles());
+      for (const [style, checkbox] of settingsStyleInputs)
+        checkbox.checked = selectedSettings.has(style);
       for (const control of listeningSection.querySelectorAll('button,input,select'))
         control.disabled = busy || !saved;
       for (const control of quickListen.querySelectorAll('button,input,select'))
@@ -2808,6 +2819,7 @@ export function attachSoundtrackPanel({
         assets = [...value.assets];
         dirty = false;
         render();
+        renderSettingsStyleStatus();
         return value;
       })
       .catch((error) => {
