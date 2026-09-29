@@ -1,3 +1,4 @@
+import { captureRecipe } from './feedback-cues.mjs';
 import { t } from '../i18n/index.mjs';
 import { PICKUP_COLORS, drawPickupIcon } from './classic-view.mjs';
 
@@ -7,6 +8,7 @@ export function presentationEvent(event, run = null) {
   const known = [
     'cut.closed',
     'cells.claimed',
+    'relay.opened',
     'player.failed',
     'run.completed',
     'craft.redeployed',
@@ -29,6 +31,10 @@ export function presentationEvent(event, run = null) {
   return {
     type: event.type,
     age: 0,
+    ...(event.type === 'relay.opened' ? { revealDuration: 0.4 } : {}),
+    ...(event.type === 'cells.claimed'
+      ? { revealDuration: captureRecipe(event, run).duration }
+      : {}),
     tick: event.tick,
     ...(point ? { x: point.x, y: point.y } : {}),
     ...(PICKUP_COLORS[event.kind] ? { kind: event.kind } : {}),

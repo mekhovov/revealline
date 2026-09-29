@@ -136,8 +136,7 @@ test('Team Extras exposes every global destination and retires More across input
   tabToTeamAction(f, 'coop-settings-open');
   button(0);
   assert.equal(settings.open, true, 'Controller Confirm opens the paused Settings owner.');
-  for (let i = 0; i < 40 && f.doc.activeElement.id !== 'coop-settings-tab-extras'; i++)
-    button(13);
+  for (let i = 0; i < 40 && f.doc.activeElement.id !== 'coop-settings-tab-extras'; i++) button(13);
   assert.equal(f.doc.activeElement.id, 'coop-settings-tab-extras');
   assert.equal(extras.hidden, false);
   button(15); // Leave the category rail for its visible controls.

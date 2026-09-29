@@ -215,8 +215,12 @@ export function bootCoop({
   // Older/direct links and ambiguous contexts retain the existing Versus return.
   const entryParams = new URL(location.href).searchParams;
   const incomingLibraryMission = readMissionLibraryHandoff(entryParams);
-  const libraryReturn = readMissionLibraryReturn(entryParams, { mode: 'team' });
-  const libraryEdition = resolveJourneyRequest(entryParams, { mode: 'team' });
+  const libraryReturn = readMissionLibraryReturn(entryParams, {
+    mode: 'team',
+  });
+  const libraryEdition = resolveJourneyRequest(entryParams, {
+    mode: 'team',
+  });
   const returns = entryParams.getAll('return');
   const fromSolo = libraryReturn
     ? libraryReturn.mode === 'solo'
@@ -564,7 +568,9 @@ export function bootCoop({
     installedTeamEditions = new Map(),
     installedTeamGeneration = -1,
     installedTeamLoading = null;
-  const librarySession = createMissionLibrarySessionState({ mode: 'team' });
+  const librarySession = createMissionLibrarySessionState({
+    mode: 'team',
+  });
   const libraryVisit = crypto.randomUUID();
   const discoveryRows = (sourcePack, artworkSource, prefix, teamMedia = null) =>
     sourcePack.levels.map((level) =>
@@ -1286,7 +1292,7 @@ export function bootCoop({
       sound: music.sound,
       ready: presentationPage.ready,
       getHost: () => presentationPage,
-      cues: false,
+      cues: true,
       allowMusic: () =>
         !acceptedPicture?.artworkSource && (acceptedPicture?.request.themeId ?? 'fpv') === 'fpv',
     });
@@ -4977,6 +4983,25 @@ export function bootCoop({
   window.addEventListener('focus', returned);
   document.addEventListener('visibilitychange', hidden);
   function events() {
+    const feedbackRow = acceptedPicture?.journeyRow;
+    music?.sound.events(
+      run.events,
+      run,
+      { family: acceptedPicture?.request.themeId ?? 'fpv' },
+      {
+        mode: 'team',
+        actorStyle: acceptedPicture?.actorAppearance?.style,
+        resultContext: candidateJourney?.owns(feedbackRow)
+          ? {
+              owned: true,
+              mode: 'team',
+              outcome: run.status,
+              missionId: feedbackRow.mission.id,
+              feedback: feedbackRow.campaignFeedback,
+            }
+          : null,
+      },
+    );
     painter.observe(run);
     const terminalMessage =
       run.status === 'won'
@@ -5026,24 +5051,6 @@ export function bootCoop({
     for (const event of run.events)
       if (event.type === 'player.downed') recoveryFailures[event.player] = event;
     for (const event of run.events) {
-      const feedbackRow = acceptedPicture?.journeyRow;
-      if (
-        event.type === 'run.completed' &&
-        run.status === 'won' &&
-        candidateJourney?.owns(feedbackRow) &&
-        feedbackRow.campaignFeedback
-      )
-        music?.sound.event(
-          event,
-          {},
-          {
-            owned: true,
-            mode: 'team',
-            outcome: run.status,
-            missionId: feedbackRow.mission.id,
-            feedback: feedbackRow.campaignFeedback,
-          },
-        );
       if (event.type === 'cells.claimed' && captureCaption)
         announce(captureCaption, { foundationPlayers });
       if (event.type === 'cut.closed') {
@@ -5326,8 +5333,15 @@ export function bootCoop({
     }
     try {
       acceptMusic(acceptedPicture);
-      if (!loopStopped)
+      if (!loopStopped) {
+        music?.sound.feedback(
+          running(),
+          { family: acceptedPicture?.request.themeId ?? 'fpv' },
+          run,
+          { mode: 'team', actorStyle: acceptedPicture?.actorAppearance?.style },
+        );
         music?.update(running(), { family: acceptedPicture?.request.themeId ?? 'fpv' });
+      }
       try {
         framePads = [...(navigator.getGamepads?.() || [])];
       } catch {
@@ -5364,6 +5378,11 @@ export function bootCoop({
           const commands = batch.consume(input.consume());
           appendInstalledTeamCommands(run, commands);
           stepCoop(run, commands, FIXED_DT);
+          music?.sound.feedback(true, { family: acceptedPicture?.request.themeId ?? 'fpv' }, run, {
+            mode: 'team',
+            actorStyle: acceptedPicture?.actorAppearance?.style,
+            commands,
+          });
           accumulator -= FIXED_DT;
           events();
           if (running()) persistInstalledTeamAttempt(run, acceptedPicture);

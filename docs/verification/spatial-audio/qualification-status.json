@@ -1,0 +1,48 @@
+{
+  "implementationCommit": "4861fed68af6ed7b961b4729c7b0cc8c355817e0",
+  "focusedTests": {
+    "passed": 135,
+    "failed": 0,
+    "skipped": 0
+  },
+  "teamVersusAndNextTests": {
+    "passed": 36,
+    "failed": 0,
+    "skipped": 0
+  },
+  "nativeSfxMix": {
+    "scenarios": 7,
+    "highestStereoPeakDbfs": -17.72864643884342,
+    "musicIncluded": false,
+    "humanListening": false,
+    "sourceNote": "Polish audition with rejected recorded startup; native current-bank mix must be rerun."
+  },
+  "releaseSlot": "unallocated; release-ready check requires draft/stacked status",
+  "pending": [
+    "New combined PR integration and exact-source checks/build",
+    "Human sustained listening/headphones/speakers and physical-device qualification",
+    "Coordinator release review/allocation and immutable publication"
+  ],
+  "offlineSmoke": {
+    "origin": "http://127.0.0.1:60561",
+    "serverStoppedBeforeReload": true,
+    "starterDownloaded": true,
+    "soundEnabled": true,
+    "mission": "First Return",
+    "coverage": 67.1,
+    "score": 15980,
+    "lives": 3,
+    "browserWarningsOrErrors": 0,
+    "sourceNote": "Earlier 52-cue lifecycle build; current 56-cue build cache qualification recorded separately."
+  },
+  "build": "lifecycle-build.json",
+  "fullRepositoryRun": {
+    "state": "Stopped failing diagnostic before source revision; all 47 observed failures triaged",
+    "baselineReproduced": 45,
+    "passedOnBothTargetedReruns": 2,
+    "additionalBaselineCaptionFailure": 1,
+    "evidence": "polish-baseline-triage.json",
+    "fullSuitePass": false
+  },
+  "startupSelection": "User preferred previous startup; original synthesized start/retry restored byte-for-byte; 35 affected tests pass."
+}

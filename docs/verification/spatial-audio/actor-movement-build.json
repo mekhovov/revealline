@@ -1,0 +1,16 @@
+{
+  "implementationCommit": "598095b33ab7125c18d9d28fa4086ea3031fbfb4",
+  "sourceRevision": null,
+  "distributionSha256": "3f72057dfeb81155461fb1e89ff558efbb0ca7cd0fcaf84be3b9a65e5bf0c4a1",
+  "offlineBuildId": "e9aab5b042320e6d6afb5596616dd38c74ac906d7683707e15898c860f5c38bf",
+  "files": 1835,
+  "verifiedModules": [
+    "game/ui/movement-profiles.mjs",
+    "game/ui/feedback-cues.mjs",
+    "game/ui/feedback-director.mjs",
+    "game/replay-theater/app.mjs"
+  ],
+  "modulesMatchSourceAndOfflineCache": true,
+  "runtimeBankUnchanged": true,
+  "qualification": "Local packaging evidence; full-suite and sustained physical listening remain open."
+}

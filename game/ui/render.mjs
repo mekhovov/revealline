@@ -629,8 +629,8 @@ export class BoardPainter {
     // An old capture pulse must never wash over a newly opened live line.
     if (!fullReveal && captureAccent)
       for (const effect of this.effects)
-        if (effect.type === 'cells.claimed')
-          drawCapturePulse(ctx, effect, columns, state.cells, p, reduced);
+        if (['cells.claimed', 'relay.opened'].includes(effect.type))
+          drawCapturePulse(ctx, effect, columns, state.cells, p, reduced, this.theme.family);
     for (let y = 0; y < rows; y++)
       for (let x = 0; x < columns; x++) {
         const v = state.cells[y * columns + x],
