@@ -60,7 +60,7 @@ function friendlyPage(t, href, options = {}) {
 
 test('actual friendly Settings and Creator links compose at the canonical game root', async (t) => {
   for (const [slug, query, base, editionId, publicEdition] of [
-    ['coupa', '', 'http://localhost/', 'coupa-all', 'coupa'],
+    ['coupa', '', 'http://localhost/', 'coupa-all', 'coupa-all'],
     ['droneaid', '', 'http://localhost/revealline/', 'droneaid-nl-community', 'droneaid'],
     [
       'coupa',
