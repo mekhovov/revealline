@@ -13,13 +13,31 @@ Keep compatible work in draft [PR761](https://github.com/mekhovov/revealline/pul
 with bounded commits and feature evidence. The canonical publisher owns main
 reconciliation, version allocation, immutable publication and public acceptance.
 Independent source work can continue while it qualifies; do not delay a verified
-release subset for unrelated unfinished production. The current branch is a source
-input, not a release reservation. Preserve every historical record and original.
+release subset for unrelated unfinished production. PR761 is a **v0.150.0 scheduled
+input**, not delivered work; its source version is unbumped and production
+admission remains pending. Preserve every historical record and original.
 
-Batch 13 is pushed at `396ad4cf901b3fb99951ff02beff57f9bad19f52`.
-The register records the publisher's v0.142.2 deployment/byte evidence separately
-from pending public player acceptance. This conflicting branch requires deliberate
-reconciliation; do not force-rebase it or overwrite newer accepted assets.
+Batch15 is pushed at `c332a45cb38af3d62b2b73fbd37087d93389c8c0`, with
+127 focused checks. Latest observed main is
+`6a67d6dbfe01d5e1f3842b5a79dd5d5ddeefcfd8`; public `release.json`
+declares v0.142.3 from `b5ab06e12542f72e33c45b973ba693a5e1509c1c`,
+distribution prefix `37eca33f…`. Publisher acceptance and byte-audit closure
+remain unresolved. This conflicting branch requires deliberate reconciliation;
+do not force-rebase it or overwrite newer assets or their immutable history.
+
+The smallest A1 continuation keeps approved imagery and the independent fpv62
+actor lease, targeting 59 renderer/equipment slots if current-main app/audio is
+unchanged. The older full-worker 67-slot audit remains historical context.
+Effects20 requires its current predecessor; batch14's helper is preparation,
+not production authority. Native body candidates require separate adoption.
+Parallel PR757 is prepared on current main with More/Large/rescue/Support fixes,
+112/112 combined checks, 9/9 display-host tests and two source-closure checks;
+focused EN/UK responsive browser review is recorded and Team/equipment review
+reopens. Narrow Ukrainian HUD/ability wrapping remains the next A3 layout fix. PR786's 158 preserved sources across
+162 additions are queued for v0.150.0, not live. PR787's optional CI tooling is
+held without activation. The register retains exact limits, the corrected
+controller-fixture failure, current capacity and effort ranges. The batch sections below
+preserve earlier evidence at its original checkpoint; queued work is not delivery.
 
 ## Implemented and awaiting integration
 
