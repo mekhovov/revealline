@@ -245,11 +245,20 @@ const REVIEWED_RECIPE_INPUTS = {
 
 export function fieldKitRecipeQuality(group, source, cumulativeReviewBytes) {
   const review = REVIEWED_RECIPE_INPUTS[group];
-  if (review && cumulativeSourceReviewed(group, source, cumulativeReviewBytes))
+  if (review && cumulativeSourceReviewed(group, source, cumulativeReviewBytes)) {
+    const evidence = [...review.evidence];
+    const continuation = cumulativeNativeEvidence(group);
+    // Preserve every historical string while respecting the existing16-entry
+    // schema. The complete first string remains the exact suffix, never cut.
+    if (evidence.length === 16) evidence[0] = `${continuation}\n${evidence[0]}`;
+    else evidence.push(continuation);
+    if (evidence.length > 16 || evidence.some((line) => line.length > 2048))
+      throw new Error('Cumulative recipe evidence exceeds the unchanged schema bound.');
     return {
       stage: 'reviewed',
-      evidence: [...review.evidence, cumulativeNativeEvidence(group)],
+      evidence,
     };
+  }
   if (review && source.endsWith(`sha256:${review.sha256}`))
     return { stage: 'reviewed', evidence: review.evidence };
   return {
