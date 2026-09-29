@@ -36,6 +36,8 @@ import { createDiscoveryEditor } from '../../game/studio/discovery-editor.mjs';
 import { createRewardPrintPreview } from '../../game/studio/reward-print-preview.mjs';
 import { mountDiscoveryExploration } from '../../game/ui/discovery-exploration.mjs';
 import { loadRewardImage } from '../../game/ui/reward-image.mjs';
+import { createCompanyOperation } from './operation.mjs';
+import { attachCompanyReader } from './reading.mjs';
 
 const $ = (id) => document.getElementById(id);
 const labels = [
@@ -91,7 +93,9 @@ let catalog,
   loadGeneration = 0,
   report = null,
   previewController = null,
-  missionReview = null;
+  missionReview = null,
+  operation = null,
+  lastExport = null;
 const editorBuffers = new Map();
 let rewardPreviewExplorations = [];
 function disposeRewardPreviews() {
@@ -268,7 +272,16 @@ function chooseOptions(select, items, value, none = false) {
   }
   select.value = value ?? '';
 }
-function showStep(index) {
+const stepTargets = [
+  'brand-name',
+  'logo-asset',
+  'theme-json',
+  'campaign-select',
+  'learning-campaign-select',
+  'import-report',
+  'export-draft-bottom',
+];
+function showStep(index, { focus = true } = {}) {
   step = Math.max(0, Math.min(6, index));
   for (const panel of document.querySelectorAll('[data-panel]'))
     panel.hidden = Number(panel.dataset.panel) !== step;
@@ -285,7 +298,7 @@ function showStep(index) {
     $('preview-frame').hidden = true;
     $('preview-frame').removeAttribute('src');
   }
-  document.querySelector(`[data-panel="${step}"] h2`)?.focus();
+  if (focus && !document.hidden && document.hasFocus?.() !== false) $(stepTargets[step])?.focus();
 }
 function renderCatalog() {
   const { edition, brand, campaigns, assets } = selected();
@@ -413,6 +426,9 @@ async function renderDocuments() {
   ].filter(Boolean);
   await Promise.all(paths.map((path) => readSource(path)));
   if (ticket !== loadGeneration) return;
+  paintDocuments(edition, campaign);
+}
+function paintDocuments(edition, campaign) {
   for (const [key, path] of [
     ['theme', edition.boot?.themes],
     ['presets', edition.boot?.presets],
@@ -897,28 +913,113 @@ function renderReport() {
   $('preview-note').textContent =
     `Report received for ${report.name}. Opening the preview verifies its complete file inventory and selected source against this applied draft. This is a consistency check, not publication or human approval.`;
 }
+function operationContext() {
+  return {
+    catalog,
+    files,
+    signature: JSON.stringify([
+      editionId,
+      campaignId,
+      step,
+      revision,
+      report,
+      [...editorBuffers],
+      [...document.querySelectorAll('input,select,textarea')]
+        .filter((field) => !field.closest('#company-operation') && field.type !== 'file')
+        .map((field) => [field.id, field.value, field.checked]),
+    ]),
+  };
+}
+async function completePacket(sourceCatalog, sourceFiles, signal) {
+  const paths = declaredJSONPaths(sourceCatalog),
+    prepared = new Map(sourceFiles);
+  await Promise.all(
+    paths.map(async (path) => {
+      if (prepared.has(path)) return;
+      const originalText = sourceCatalog.editions.some((edition) =>
+        (edition.presentationHistory ?? []).some((record) => record.path === path),
+      );
+      const data = await readJSON(new URL(path, rootURL), { signal, originalText });
+      signal.throwIfAborted();
+      prepared.set(path, data);
+    }),
+  );
+  signal.throwIfAborted();
+  const checked = validateStudioDraft({
+    format: DRAFT_FORMAT,
+    catalog: sourceCatalog,
+    files: paths.map((path) => ({ path, data: prepared.get(path) })),
+  });
+  await validateStudioHistory(checked.catalog, checked.files, { signal });
+  signal.throwIfAborted();
+  return checked;
+}
+async function prepareIncoming(text, signal) {
+  signal.throwIfAborted();
+  const input = boundedJSON(text, {
+    maxBytes: 16 * 1024 * 1024,
+    maxNodes: 400000,
+    maxArray: 8192,
+    maxString: 4 * 1024 * 1024,
+  });
+  if (input.format === DRAFT_FORMAT) {
+    const checked = validateStudioDraft(input);
+    await validateStudioHistory(checked.catalog, checked.files, { signal });
+    signal.throwIfAborted();
+    return checked;
+  }
+  return completePacket(validateEditionRuntimeCatalog(input), new Map(), signal);
+}
+function replaceDraft(checked, preferredEdition) {
+  ++loadGeneration;
+  catalog = checked.catalog;
+  files = checked.files;
+  editorBuffers.clear();
+  editionId = catalog.editions.some((edition) => edition.id === preferredEdition)
+    ? preferredEdition
+    : catalog.defaultEditionId;
+  campaignId = null;
+  changed('Validated source replaced the current tab draft. Nothing was saved persistently.');
+  renderCatalog();
+  paintDocuments(selected().edition, selectedCampaign());
+  showStep(0, { focus: false });
+}
 async function exportDraft() {
   if (editorBuffers.size)
     throw new Error('Apply your JSON editor changes before exporting the source draft.');
-  status('Collecting every declared source file and validating the draft…');
-  const paths = declaredJSONPaths(catalog);
-  await Promise.all(paths.map((path) => readSource(path)));
-  const packet = {
-    format: DRAFT_FORMAT,
-    catalog,
-    files: paths.map((path) => ({ path, data: files.get(path) })),
-  };
-  const checked = validateStudioDraft(packet);
-  await validateStudioHistory(checked.catalog, checked.files);
-  files = checked.files;
-  download(`${editionId}-draft.json`, {
-    ...packet,
-    files: [...files].map(([path, data]) => ({ path, data })),
+  const sourceCatalog = catalog,
+    sourceFiles = new Map(files),
+    sourceEdition = editionId;
+  await operation.run({
+    label: 'Prepare source export',
+    prepare: (signal) => completePacket(sourceCatalog, sourceFiles, signal),
+    commit(checked) {
+      const packet = {
+        format: DRAFT_FORMAT,
+        catalog: checked.catalog,
+        files: [...checked.files].map(([path, data]) => ({ path, data })),
+      };
+      const text = `${format(packet)}\n`;
+      download(`${sourceEdition}-draft.json`, packet);
+      lastExport = Object.freeze({ editionId: sourceEdition, text });
+      $('reopen-export').disabled = false;
+      $('draft-state').textContent = 'Source download requested';
+      status(
+        'Source download requested. The validated packet can be reopened in this tab; it is not a persistent save. Compile it in a separate workspace for artifact verification.',
+      );
+    },
   });
-  $('draft-state').textContent = 'Source exported';
-  status(
-    'Source packet exported. Import it into a new workspace, compile the selected edition, then import its report here.',
-  );
+}
+async function reopenExport() {
+  const snapshot = lastExport;
+  if (!snapshot) return;
+  await operation.run({
+    label: 'Reopen last exported draft',
+    replacement: true,
+    prepare: (signal) => prepareIncoming(snapshot.text, signal),
+    commit: (checked) => replaceDraft(checked, snapshot.editionId),
+    successFocus: () => $('brand-name'),
+  });
 }
 async function openPreview() {
   if (editorBuffers.size)
@@ -999,6 +1100,12 @@ async function openPreview() {
 
 async function main() {
   missionReview = createStudioReviewPane({ documentRef: document, download, status });
+  operation = createCompanyOperation({
+    document,
+    getContext: operationContext,
+    onCancel: () =>
+      status('Operation cancelled. The current draft and unapplied changes are unchanged.'),
+  });
   registeredCatalog = validateEditionRuntimeCatalog(
     await readJSON(new URL('game/editions/catalog.json', rootURL)),
   );
@@ -1129,49 +1236,55 @@ async function main() {
   $('export-draft').onclick = guarded(exportDraft);
   $('export-draft-bottom').onclick = guarded(exportDraft);
   $('open-preview').onclick = guarded(openPreview);
+  $('reopen-export').onclick = guarded(reopenExport);
   $('import-draft').onchange = guarded(async () => {
     const file = $('import-draft').files[0];
     if (!file) return;
     if (file.size > 16 * 1024 * 1024) throw new Error('The source packet exceeds 16 MB.');
-    const input = boundedJSON(await file.text(), {
-      maxBytes: 16 * 1024 * 1024,
-      maxNodes: 400000,
-      maxArray: 8192,
-      maxString: 4 * 1024 * 1024,
+    const preferredEdition = editionId;
+    await operation.run({
+      label: 'Validate imported source',
+      replacement: true,
+      prepare: async (signal) => prepareIncoming(await file.text(), signal),
+      commit: (checked) => {
+        replaceDraft(checked, preferredEdition);
+        $('import-draft').value = '';
+      },
+      successFocus: () => $('brand-name'),
     });
-    if (input.format === DRAFT_FORMAT) {
-      const draft = validateStudioDraft(input);
-      await validateStudioHistory(draft.catalog, draft.files);
-      editorBuffers.clear();
-      files = draft.files;
-      await applyCatalog(draft.catalog, 'Complete source draft imported.');
-    } else {
-      const checked = validateEditionRuntimeCatalog(input);
-      editorBuffers.clear();
-      files = new Map();
-      await applyCatalog(
-        checked,
-        'Catalog imported. Source JSON is loaded from its declared workspace paths.',
-      );
-    }
-    $('import-draft').value = '';
   });
   $('import-report').onchange = guarded(async () => {
     const file = $('import-report').files[0];
     if (!file) return;
     if (file.size > 4 * 1024 * 1024) throw new Error('The compiler report exceeds 4 MB.');
-    const checked = validateStudioReport(await file.text());
-    if (checked.editionId !== editionId)
-      throw new Error('Select the edition named by this report before importing it.');
-    if (checked.previewURL) studioPreviewURL(checked, location.href);
-    invalidatePreview();
-    report = checked;
-    renderReport();
-    $('import-report').value = '';
-    status(
-      'Compiler report imported but not yet verified. Verify the artifact in step 06; human review remains pending.',
-    );
+    const expectedEdition = editionId;
+    await operation.run({
+      label: 'Read compiler report',
+      prepare: async (signal) => {
+        const checked = validateStudioReport(await file.text());
+        signal.throwIfAborted();
+        if (checked.editionId !== expectedEdition)
+          throw new Error('Select the edition named by this report before importing it.');
+        if (checked.previewURL) studioPreviewURL(checked, location.href);
+        return checked;
+      },
+      commit(checked) {
+        invalidatePreview();
+        report = checked;
+        renderReport();
+        $('import-report').value = '';
+        status(
+          'Compiler report imported but not yet verified. Verify the artifact in step 06; human review remains pending.',
+        );
+      },
+    });
   });
+  for (const [id, region, label] of [
+    ['company-read-artwork', 'asset-grid', 'Artwork provenance'],
+    ['company-read-commands', 'compile-commands', 'Compiler commands'],
+    ['company-read-report', 'report-checks', 'Unverified compiler report'],
+  ])
+    attachCompanyReader({ document, id, region: $(region), label });
   showStep(0);
 }
 main().catch((error) => {

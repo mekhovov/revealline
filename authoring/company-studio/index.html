@@ -31,6 +31,7 @@
             type="file"
             accept="application/json,.json" /></label
         ><button id="export-draft" class="primary">Export source draft ↗</button>
+        <button id="reopen-export" disabled>Reopen last exported draft</button>
       </div>
     </header>
     <div class="studio-layout">
@@ -48,7 +49,8 @@
           ><button data-step="6"><span>07</span> Validate &amp; export</button>
         </nav>
         <p class="sidebar-note">
-          Changes stay in this tab until you export. Your published game stays untouched.
+          Changes stay in this tab until you export. Reopen uses the last validated export held in
+          this tab only; reloading clears it. Your published game stays untouched.
         </p>
         <a href="../asset-studio/">Open Asset Studio ↗</a
         ><a href="../../game/company.html">Play company journeys ↗</a
@@ -62,7 +64,7 @@
         <p id="status" role="status" aria-live="polite">Opening the company catalog…</p>
         <section data-panel="0">
           <p class="eyebrow">01 / IDENTITY</p>
-          <h2 tabindex="-1">Give this world a name.</h2>
+          <h2 tabindex="-1" data-authoring-target="brand-name">Give this world a name.</h2>
           <p class="lede">
             Keep the company identity and the audience edition explicit. A shared brand can have
             several focused journeys.
@@ -122,7 +124,7 @@
         </section>
         <section data-panel="1" hidden>
           <p class="eyebrow">02 / ARTWORK</p>
-          <h2 tabindex="-1">A place people recognize.</h2>
+          <h2 tabindex="-1" data-authoring-target="logo-asset">A place people recognize.</h2>
           <p class="lede">
             Assign registered originals to the home page and identity. Every media file carries its
             own byte count, hash and publication decision.
@@ -152,7 +154,7 @@
         </section>
         <section data-panel="2" hidden>
           <p class="eyebrow">03 / ACTORS &amp; ATMOSPHERE</p>
-          <h2 tabindex="-1">Set the tone of play.</h2>
+          <h2 tabindex="-1" data-authoring-target="theme-json">Set the tone of play.</h2>
           <p class="lede">
             Palette, vocabulary, moving characters, threat recipes and soundtrack live in the
             selected edition’s presentation files. Collision rules stay in the game engine.
@@ -186,7 +188,7 @@
         </section>
         <section data-panel="3" hidden>
           <p class="eyebrow">04 / CAMPAIGNS</p>
-          <h2 tabindex="-1">Build a connected journey.</h2>
+          <h2 tabindex="-1" data-authoring-target="campaign-select">Build a connected journey.</h2>
           <p class="lede">
             Choose the campaigns for this audience, then author the maps and mission briefs in the
             existing content format.
@@ -309,7 +311,9 @@
         </section>
         <section data-panel="4" hidden>
           <p class="eyebrow">05 / LEARNING &amp; REWARDS</p>
-          <h2 tabindex="-1">Turn evidence into action.</h2>
+          <h2 tabindex="-1" data-authoring-target="learning-campaign-select">
+            Turn evidence into action.
+          </h2>
           <p class="lede">
             Use fictional records with role-specific handoffs. Practice requires inspected evidence
             and a successful local commit within an optional after-win bonus; it never gates arcade
@@ -455,7 +459,7 @@
         </section>
         <section data-panel="5" hidden>
           <p class="eyebrow">06 / WHOLE-GAME PREVIEW</p>
-          <h2 tabindex="-1">See the entire experience.</h2>
+          <h2 tabindex="-1" data-authoring-target="import-report">See the entire experience.</h2>
           <p class="lede">
             Open the compiled artifact to review the home page, menus, actors, missions, collection
             and workbench together.
@@ -603,7 +607,9 @@
         </section>
         <section data-panel="6" hidden>
           <p class="eyebrow">07 / VALIDATE &amp; EXPORT</p>
-          <h2 tabindex="-1">Make a reviewable release.</h2>
+          <h2 tabindex="-1" data-authoring-target="export-draft-bottom">
+            Make a reviewable release.
+          </h2>
           <p class="lede">
             Export the complete source packet, compile a selected edition, then bring its report
             back for a verified whole-game preview.

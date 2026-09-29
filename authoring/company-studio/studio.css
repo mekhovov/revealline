@@ -686,3 +686,40 @@ iframe {
   object-fit: contain;
   border-radius: 0.8rem;
 }
+.header-actions {
+  flex-wrap: wrap;
+}
+#company-operation {
+  max-width: min(560px, calc(100vw - 32px));
+  max-height: calc(100svh - 32px);
+  overflow: auto;
+  border: 2px solid var(--accent);
+  border-radius: 10px;
+  padding: 24px;
+  color: var(--ink);
+  background: var(--paper);
+}
+#company-operation::backdrop {
+  background: #102629b8;
+}
+#company-operation button + button {
+  margin-left: 12px;
+}
+.company-reading-tools {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-block: 12px;
+}
+.company-reading-tools[hidden] {
+  display: none;
+}
+.company-reading-region {
+  max-height: 55svh;
+  overflow: auto;
+  overscroll-behavior: contain;
+}
+.company-reading-region:focus {
+  outline: 3px solid #945600;
+  outline-offset: 4px;
+}
