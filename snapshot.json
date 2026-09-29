@@ -1,0 +1,141 @@
+{
+  "format": "revealline-recovery-fragment-v1",
+  "capturedAt": "2026-09-29T15:10:14.834718+00:00",
+  "worktree": "<home>/work/my_projects/go_test/.cache/worktrees/p07-solo-continuation",
+  "branch": "refs/heads/codex/p07-solo-continuation",
+  "head": "cc161f7d97b2a90482e84d875a4360e4bf4afffe",
+  "excluded": [],
+  "changes": [
+    {
+      "status": " M",
+      "path": "authoring/prompts/cross-mode-delivery.md",
+      "object": "fb563e180135ff9f4edb2e7743a57c10617d258f",
+      "sha256": "e2ba42f7f128cf1d677029ee26bceb9e51113ad7d3ee29e31ab655b5317f868e",
+      "bytes": 52677,
+      "mode": "100644"
+    },
+    {
+      "status": " M",
+      "path": "authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "object": "e49e19bba9915f35f0b1336b52cee6b20ec00460",
+      "sha256": "2c608bf55ed76d9969b0072f969bd691d1656ba4b0aa8fc7868be5b9451f8d45",
+      "bytes": 199883,
+      "mode": "100644"
+    },
+    {
+      "status": " M",
+      "path": "game/app.mjs",
+      "object": "f314c01f0bec16f7f58e945a930b0c591a78ba01",
+      "sha256": "e4ecc924eaa24877d25c72c209e9723ba118370292063997daa1601d9e275d84",
+      "bytes": 281216,
+      "mode": "100644"
+    },
+    {
+      "status": " M",
+      "path": "game/flight-media-pins.mjs",
+      "object": "deeb0aebf024132b91f87373c5858bf384bf507f",
+      "sha256": "e7fcc1e020ac3991d6947bc79487e54c13d6176356a177a45274a8ba6d64f241",
+      "bytes": 5415,
+      "mode": "100644"
+    },
+    {
+      "status": " M",
+      "path": "game/test/flight-media-pins.test.mjs",
+      "object": "5f94a68695bc442789d0bbdfb7062939e712112b",
+      "sha256": "8b97b22992ba757fc3152053b4c7377dc2d27c2184d4342cbdcc8e3c459307e8",
+      "bytes": 10212,
+      "mode": "100644"
+    },
+    {
+      "status": " M",
+      "path": "game/test/flight-pictures-host.test.mjs",
+      "object": "07b36dc940f9de52fce9b2ffe9bd5bc8dadb5a1b",
+      "sha256": "4f6ff8bca2220f7c6795f1ed55ad672815f01b3f22f932f98a39bc7f485450c7",
+      "bytes": 26295,
+      "mode": "100644"
+    },
+    {
+      "status": " M",
+      "path": "game/test/soundtrack-host.test.mjs",
+      "object": "aed3dade71058169fe1367403ac6399441c7fa8f",
+      "sha256": "7d1f12401e1830801041f6ffb04feed782f43ba00c5748f59b16d0492e4f589f",
+      "bytes": 23939,
+      "mode": "100644"
+    },
+    {
+      "status": " M",
+      "path": "game/test/story-flight-host.test.mjs",
+      "object": "22bf87118f8dc9c40aa3b1c42a06c1bd2f35b461",
+      "sha256": "878e2192e8fc7e3a2d5712072dd496796e2cfc7ae201944a5be03bbb87015296",
+      "bytes": 9815,
+      "mode": "100644"
+    },
+    {
+      "status": "??",
+      "path": "docs/solo-result-continuation.md",
+      "object": "c2b00da6fc2d8feb7fdfcbba3c9b46020ffbb442",
+      "sha256": "a7ccb1c266e24e1944d8bdfe9db9736f1d39a9afd9259d9d6688d85e0c4e793e",
+      "bytes": 2703,
+      "mode": "100644"
+    },
+    {
+      "status": "??",
+      "path": "game/test/solo-result-continuation-host.test.mjs",
+      "object": "529e220063ba7076408b06b990c85106fb7c2caf",
+      "sha256": "20f26dad4b4351955266a367ef4d78006d6ee4951b979e58dabd21167618b2d6",
+      "bytes": 15426,
+      "mode": "100644"
+    }
+  ],
+  "indexEntries": [
+    {
+      "path": "authoring/prompts/cross-mode-delivery.md",
+      "mode": "100644",
+      "object": "988160ec70d3f7949d9fc2365cd0d1b0d3592dd6",
+      "stage": 0
+    },
+    {
+      "path": "authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "mode": "100644",
+      "object": "f8a4f20023676d42f039ee5cb4ff34796bc48c5f",
+      "stage": 0
+    },
+    {
+      "path": "game/app.mjs",
+      "mode": "100644",
+      "object": "2f2aea49a9608b5cf72f56754ae6d6d7ffbe02d2",
+      "stage": 0
+    },
+    {
+      "path": "game/flight-media-pins.mjs",
+      "mode": "100644",
+      "object": "a8e1968316e64438f212c2954fe6816fa7b75a6e",
+      "stage": 0
+    },
+    {
+      "path": "game/test/flight-media-pins.test.mjs",
+      "mode": "100644",
+      "object": "61044d0e1073aa8c9b643a6ed369e3d116f7777e",
+      "stage": 0
+    },
+    {
+      "path": "game/test/flight-pictures-host.test.mjs",
+      "mode": "100644",
+      "object": "2c4b12575ef149b309485925c7f7be4225beb16b",
+      "stage": 0
+    },
+    {
+      "path": "game/test/soundtrack-host.test.mjs",
+      "mode": "100644",
+      "object": "e7a0b287049d8e384977258de16118640fd94894",
+      "stage": 0
+    },
+    {
+      "path": "game/test/story-flight-host.test.mjs",
+      "mode": "100644",
+      "object": "0c9751fea7e91cd0049f4dbb7994a655b8492367",
+      "stage": 0
+    }
+  ],
+  "purpose": "Recovery only. These bytes are not release admission. Missing files, conflict stages and obsolete generated outputs are preserved as observations, not deletion or merge instructions."
+}
