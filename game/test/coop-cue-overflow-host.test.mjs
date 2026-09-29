@@ -96,7 +96,10 @@ test('actual imported maximum-density arena exposes all entries and one press en
   assert.equal(f.$('coop-field-details-list').children.length, 26);
   const details = f.$('coop-field-details-list').textContent;
   const progress = f.$('coop-progress').value;
+  assert.equal(f.doc.activeElement.id, 'coop-help-reading', 'ordinary paused frames keep focus');
   setLocale('uk', { persist: false });
+  assert.match(f.$('coop-field-details-list').textContent, /Вузол 1/);
+  assert.equal(f.doc.activeElement.id, 'coop-help-reading', 'the locale transaction keeps focus');
   f.tick(2);
   assert.match(f.$('coop-field-details-list').textContent, /Вузол 1/);
   assert.equal(f.doc.activeElement.id, 'coop-help-reading');
@@ -181,6 +184,10 @@ test('fresh controller Confirm enters overflow details once and Back preserves t
   assert.equal(f.$('coop-field-details').onclick, null);
   retiredAction();
   assert.notEqual(f.doc.activeElement.id, 'coop-help-reading');
+  const retiredText = f.$('coop-field-details-list').textContent;
+  setLocale('uk', { persist: false });
+  assert.equal(f.$('coop-field-details-list').textContent, retiredText);
+  setLocale('en', { persist: false });
 });
 
 test('clear ordinary Team canvas adds no overflow action or announcement', async (t) => {

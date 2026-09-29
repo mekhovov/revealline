@@ -8,6 +8,7 @@ import {
   render as renderMessage,
   translateDOM,
   attachLanguageControls,
+  onLocaleChange,
 } from '../i18n/index.mjs';
 import { contentText } from '../i18n/content.mjs';
 import { coopGoalLabel, coopObjectiveLabel } from './coop-copy.mjs';
@@ -756,6 +757,12 @@ export function bootCoop({
     region.scrollIntoView({ block: 'nearest', inline: 'nearest', behavior: 'instant' });
   }
   $('coop-field-details').onclick = openCueDetails;
+  // Update reader text inside the locale transaction, before navigation accepts
+  // the translated snapshot. A later paint would look like unrelated content
+  // replacement and retire the current reader/focus owner.
+  const stopCueLocale = onLocaleChange(() => {
+    if (!disposed) updateCueOverflow();
+  });
   const selectedLevel = () =>
     pack.levels.find((level) => level.id === $('coop-level').value) || pack.levels[0];
   const selectedConfiguration = () =>
@@ -5893,6 +5900,7 @@ export function bootCoop({
   const dispose = () => {
     if (disposed) return;
     $('coop-field-details').onclick = null;
+    stopCueLocale();
     installOfflinePanel?.dispose();
     stopActorView();
     actorPreferences.dispose();
