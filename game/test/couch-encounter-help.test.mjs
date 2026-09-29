@@ -36,6 +36,19 @@ function key(page, code) {
   page.key(code, true, page.doc.activeElement);
   page.key(code, false, page.doc.activeElement);
 }
+function openHelp(page) {
+  // The integrated native menus own Help inside Settings → Extras. Use the
+  // visible controls and retain that owner for Back; never click a hidden leaf.
+  page.frames(151, 1000 / 120);
+  page.$('race-options').click();
+  assert.equal(page.$('race-options-panel').hidden, false);
+  page.$('race-settings-tab-extras').click();
+  assert.equal(page.$('race-settings-panel-extras').hidden, false);
+  assert.equal(page.$('race-help').closest('[hidden],[inert]'), null);
+  page.$('race-help').focus();
+  key(page, 'Enter');
+  assert.equal(page.$('race-help-panel').hidden, false);
+}
 async function start(page) {
   page.$('race-start').click();
   await waitFor(() => {
@@ -93,8 +106,7 @@ test('Versus Help reads actual optional board rules without advancing either pau
   const checkpoints = p.checkpoint(),
     boards = [...p.renders],
     writes = p.storage.writes.length;
-  p.$('race-help').focus();
-  key(p, 'Enter');
+  openHelp(p);
   const section = p.$('race-encounter-help');
   assert.ok(section, 'Current optional encounters need a section in the existing Help reader.');
   assert.equal(section.hidden, false);
@@ -141,7 +153,7 @@ test('combined mission Help localizes its existing reader and preserves paused b
   // Uncommitted setup controls must not become the rules of the held round.
   p.$('race-level').value = 'an-uncommitted-choice';
   p.$('race-class').value = 'carrier';
-  p.$('race-help').click();
+  openHelp(p);
   const section = p.$('race-encounter-help');
   const rows = section.querySelectorAll('[data-encounter-topic]');
   assert.deepEqual(
@@ -191,7 +203,7 @@ test('absent and disabled patrol rules add no Help section or actions', async (t
       else level.classic.combatPatrols.enabled = enabled;
       const p = await host(t, level);
       const checkpoint = p.checkpoint();
-      p.$('race-help').click();
+      openHelp(p);
       const section = p.$('race-encounter-help');
       assert.equal(section.hidden, true);
       assert.equal(section.textContent, '');
@@ -210,7 +222,7 @@ test('reading encounter guidance after the real time limit retains both result b
   const checkpoint = p.checkpoint(),
     boards = [...p.renders],
     writes = p.storage.writes.length;
-  p.$('race-help').click();
+  openHelp(p);
   assert.equal(p.$('race-encounter-help').hidden, false);
   p.$('race-help-read').focus();
   key(p, 'Enter');
@@ -242,7 +254,7 @@ test('controller reading uses the existing end-only Help return and survives cac
   p.join(0);
   // A separate pointer entry follows the controller's neutral/echo interval.
   p.frames(200);
-  p.$('race-help').click();
+  openHelp(p);
   p.frame(0);
   p.$('race-help-reading').scrollHeight = 600;
   p.$('race-help-read').focus();
