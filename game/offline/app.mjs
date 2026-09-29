@@ -4,7 +4,9 @@ import {
   installedPresentation,
 } from './installed-app.mjs';
 import { localizedText, t } from './i18n/index.mjs';
+import { attachLauncherNavigation } from './ui/launcher-navigation.mjs';
 const $ = (id) => document.getElementById(id);
+attachLauncherNavigation();
 localizedText($('status'), () => t('interface:launcher.opening'));
 const localError = (key, values) =>
   Object.assign(new Error(t(key, values)), { localization: { key, values } });

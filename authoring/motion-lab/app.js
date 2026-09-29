@@ -39,6 +39,7 @@ import {
 import { paintAbilityStage } from './render-ability.mjs';
 import { describeAbilityLabels } from './ability-labels.mjs';
 import { derivePngStill, PNG_PREVIEW_MAX_BYTES } from './png-preview.mjs';
+import { registerAuthoringEditor } from '../../game/ui/authoring-editors.mjs';
 
 const number = (value, places) =>
   formatNumber(value, { minimumFractionDigits: places, maximumFractionDigits: places });
@@ -1735,6 +1736,62 @@ function mountMotionLab() {
   }
 
   function setupControls() {
+    registerAuthoringEditor($('arena'), {
+      enter() {
+        if (!state || disposed) return false;
+        autoplay = false;
+        $('autoplay').checked = false;
+        clearHeld();
+        resume();
+        $('arena').focus();
+        return true;
+      },
+      isCurrent: () => !!state && !disposed,
+      focus: () => $('arena').focus(),
+      handle(command) {
+        if (command.back || command.menu) return 'cancel';
+        if (command.direction) {
+          steering.release('controller-preview');
+          manualStart('controller-preview', command.direction);
+        }
+        if (command.confirm) abilityCommand('act');
+        readouts();
+      },
+      exit() {
+        clearHeld();
+        pause();
+      },
+    });
+    for (const [id, setter] of [
+      [
+        'boost',
+        (value) => {
+          pointerBoost = value;
+        },
+      ],
+      [
+        'slow',
+        (value) => {
+          pointerSlow = value;
+        },
+      ],
+    ])
+      registerAuthoringEditor($(id), {
+        enter() {
+          if (paused) return false;
+          setter(true);
+          readouts();
+          return true;
+        },
+        isCurrent: () => !paused && !disposed,
+        handle(command) {
+          if (command.confirm || command.back || command.menu) return 'done';
+        },
+        exit() {
+          setter(false);
+          readouts();
+        },
+      });
     $('turn-policy').value = motion.turnPolicy || 'immediate';
     listen($('turn-policy'), 'change', (event) => {
       motion.turnPolicy = event.target.value;

@@ -5,6 +5,7 @@ import { couchPage } from './helpers/couch-host.mjs';
 import { page as teamPage } from './helpers/coop-host.mjs';
 import { teamHud, winTeam } from './helpers/coop-win.mjs';
 import { retryFixture } from './fixtures/retry-scenarios.mjs';
+import { COOP_STARTER_PACK } from '../coop/library.mjs';
 
 const base = JSON.parse(await readFile(new URL('../content/campaign.json', import.meta.url)));
 const pad = () => ({
@@ -20,6 +21,38 @@ async function teamResult(t) {
   const { f } = await winTeam(t);
   assert.equal(f.$('coop-overlay').hidden, false);
   assert.equal(f.$('coop-overlay-kicker').textContent, 'A WORLD YOU REVEALED TOGETHER');
+  return f;
+}
+
+async function teamLoss(t) {
+  const f = await teamPage(t, {
+      nativeFocus: true,
+      nativeVisibility: true,
+      capturePaint: true,
+    }),
+    pack = structuredClone(COOP_STARTER_PACK);
+  pack.id = 'native-menu-terminal-loss';
+  pack.levels[0].enemies = [];
+  await f.selectFile(JSON.stringify(pack));
+  await f.choose('coop-difficulty', 'expert');
+  f.$('coop-start').focus();
+  f.tap('Enter');
+  f.tick(3);
+  for (let attempt = 0; attempt < 2; attempt++)
+    for (const [first, second, ticks] of [
+      ['KeyD', 'ArrowLeft', 30],
+      ['KeyW', 'ArrowUp', 15],
+      ['KeyD', 'ArrowLeft', 15],
+      ['KeyS', 'ArrowDown', 15],
+      ['KeyA', 'ArrowRight', 15],
+    ]) {
+      f.tap(first);
+      f.tap(second);
+      f.tick(ticks);
+    }
+  assert.equal(f.$('coop-overlay').hidden, false);
+  assert.equal(f.$('coop-resume').hidden, true);
+  assert.match(f.$('coop-overlay-copy').textContent, /unfinished line crossed itself/);
   return f;
 }
 
@@ -47,8 +80,25 @@ function navigation(f, adapter, team = false) {
   return {
     reach(id) {
       for (let n = 0; n < 40 && f.doc.activeElement.id !== id; n++) {
-        if (adapter === 'controller') pulse(13);
-        else key('Tab');
+        if (adapter === 'controller') {
+          const current = f.doc.activeElement,
+            target = f.$(id),
+            group = current.closest('[data-menu-layout]'),
+            controls = f.doc.querySelectorAll('button,a[href],select,input,textarea,summary'),
+            forward = controls.indexOf(target) > controls.indexOf(current),
+            withinGroup = group?.contains(target),
+            horizontal = withinGroup
+              ? group.getAttribute('data-menu-layout') === 'horizontal'
+              : group?.getAttribute('data-menu-layout') === 'vertical' &&
+                group.getAttribute('data-menu-edge-exit') !== 'true';
+          pulse(horizontal ? (forward ? 15 : 14) : forward ? 13 : 12);
+        } else if (
+          f.doc.activeElement.getAttribute('role') === 'tab' &&
+          f.$(id).getAttribute('role') === 'tab'
+        ) {
+          const tabs = f.doc.activeElement.parentNode.querySelectorAll('[role="tab"]');
+          key(tabs.indexOf(f.$(id)) < tabs.indexOf(f.doc.activeElement) ? 'ArrowUp' : 'ArrowDown');
+        } else key('Tab');
         assert.equal(f.doc.activeElement.closest('.race-pad'), null);
         assert.equal(
           ['coop-pause', 'coop-canvas', 'race-pause', 'race-canvas-0', 'race-canvas-1'].includes(
@@ -120,12 +170,14 @@ for (const adapter of ['keyboard', 'controller']) {
     assert.deepEqual(f.checkpoint(), terminal, 'Cancelling Next preserves both finished boards.');
   });
 
-  for (const state of ['paused', 'won'])
+  for (const state of ['paused', 'won', 'lost'])
     test(`Team ${adapter} reaches visible masthead from ${state} without entering flight controls`, async (t) => {
       const f =
         state === 'won'
           ? await teamResult(t)
-          : await teamPage(t, { nativeFocus: true, capturePaint: true });
+          : state === 'lost'
+            ? await teamLoss(t)
+            : await teamPage(t, { nativeFocus: true, capturePaint: true });
       if (state === 'paused') {
         f.$('coop-start').click();
         f.tick(3);
@@ -141,9 +193,25 @@ for (const adapter of ['keyboard', 'controller']) {
             if (!event.defaultPrevented)
               f.visits.push(new URL(this.getAttribute('href'), globalThis.location.href).href);
           });
-      const nav = navigation(f, adapter, true),
-        held = { hud: teamHud(f), paint: f.lastPaint };
+      const checkpoint = () => ({
+          hud: teamHud(f),
+          // Signal loss intentionally remains alive on the terminal screen;
+          // controller navigation advances its visual clock without advancing play.
+          ...(state === 'lost' ? {} : { paint: f.lastPaint }),
+        }),
+        nav = navigation(f, adapter, true),
+        held = checkpoint();
       nav.adopt();
+      nav.reach('coop-settings-open');
+      nav.confirm();
+      assert.equal(f.$('coop-options').open, true);
+      nav.reach('coop-settings-tab-data');
+      nav.confirm();
+      assert.equal(f.$('coop-settings-panel-data').hidden, false);
+      nav.back();
+      assert.equal(f.$('coop-options').open, false);
+      assert.equal(f.doc.activeElement.id, 'coop-settings-open');
+      assert.deepEqual(checkpoint(), held);
       for (const id of ['coop-race', 'coop-home']) {
         nav.reach(id);
         if (state === 'paused') {
@@ -163,6 +231,6 @@ for (const adapter of ['keyboard', 'controller']) {
       }
       assert.equal(f.$('coop-discard-dialog').open, false);
       assert.deepEqual(f.visits, ['http://localhost/game/?journey=legacy']);
-      assert.deepEqual({ hud: teamHud(f), paint: f.lastPaint }, held);
+      assert.deepEqual(checkpoint(), held);
     });
 }

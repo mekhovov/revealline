@@ -1,0 +1,55 @@
+{
+  "format": "revealline-demo-runtime-variants.v1",
+  "provenance": "Fixed committed input traces recorded and independently strictly verified twice in the named browser. Only the exact enemy checkpoint section differs from the original runtime; all other sections, summaries, levels, options, input segments and ticks are identical.",
+  "createdAt": "2026-09-28T20:43:11.298Z",
+  "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/154.0.0.0 Safari/537.36",
+  "platform": "MacIntel",
+  "mathWitness": {
+    "sin": 0.6833454390418383,
+    "hypot": 0.7615773105863908
+  },
+  "variants": [
+    {
+      "id": "first-signal-left",
+      "replayURL": "./demo-data/first-signal-left.chromium-macos.replay.json",
+      "inputTraceIdentity": "004a620b36d19d0d",
+      "sourceCheckpoint": "456fdc8321bcf296",
+      "checkpoint": "3a51be5a501dc282"
+    },
+    {
+      "id": "first-signal-right",
+      "replayURL": "./demo-data/first-signal-right.chromium-macos.replay.json",
+      "inputTraceIdentity": "0d05c1be36470add",
+      "sourceCheckpoint": "2451aa6bc58d0614",
+      "checkpoint": "5efde708340b17cf"
+    },
+    {
+      "id": "relay-orchard-loop",
+      "replayURL": "./demo-data/relay-orchard-loop.chromium-macos.replay.json",
+      "inputTraceIdentity": "6846dc10dc836abe",
+      "sourceCheckpoint": "bb6ef6c69bd534b5",
+      "checkpoint": "c7a8896b3bfc8a88"
+    },
+    {
+      "id": "relay-orchard-stairs",
+      "replayURL": "./demo-data/relay-orchard-stairs.chromium-macos.replay.json",
+      "inputTraceIdentity": "f1d666419fb5f5e0",
+      "sourceCheckpoint": "e95334f384f5d8c3",
+      "checkpoint": "d1d1dc2537c5c3e1"
+    },
+    {
+      "id": "crosswind-openings",
+      "replayURL": "./demo-data/crosswind-openings.chromium-macos.replay.json",
+      "inputTraceIdentity": "9e8557a13e622aa0",
+      "sourceCheckpoint": "4fbbce27372cbf2d",
+      "checkpoint": "6793da5f588f4099"
+    },
+    {
+      "id": "night-patrol-loop",
+      "replayURL": "./demo-data/night-patrol-loop.chromium-macos.replay.json",
+      "inputTraceIdentity": "b6b1b38a63b715ba",
+      "sourceCheckpoint": "016a46a4b5673580",
+      "checkpoint": "0bdda36c648dd003"
+    }
+  ]
+}

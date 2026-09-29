@@ -2,7 +2,7 @@ import { editionOfflinePackageId } from './editions/offline-package-id.mjs';
 import { loadEditionBootstrap } from './editions/bootstrap.mjs';
 import { verifyEditionAssets } from './editions/assets.mjs';
 import { resolveEditionAssets } from './editions/model.mjs';
-import { resolveEditionContext } from './edition-context.mjs';
+import { editionIdentityId, editionPublicSlug, resolveEditionContext } from './edition-context.mjs';
 import { required } from './data-json.mjs';
 import { projectEditionThemeSelection } from './editions/selected-presentation.mjs';
 import {
@@ -79,7 +79,8 @@ export async function loadRuntimeContentProvider({
   signal?.throwIfAborted();
   const url = new URL(locationRef.href);
   const compiled = documentRef.documentElement.dataset.editionId;
-  const requested = url.searchParams.get('edition') ?? compiled;
+  const selector = url.searchParams.get('edition') ?? compiled;
+  const requested = selector ? editionIdentityId(selector) : selector;
   if (!requested && url.searchParams.get('company') !== '1') return null;
   if (compiled)
     required(requested === compiled, 'This installed edition cannot load another audience.');
@@ -151,8 +152,14 @@ export async function loadRuntimeContentProvider({
   required(theme, 'This edition is missing its selected presentation.');
   const authoredPresentationSha256 = await editionPresentationSha256(bootstrap);
   signal?.throwIfAborted();
+  const selectedAssets = new Map(
+    resolveEditionAssets(catalog, { editionId: selection.edition.id }).map((asset) => [
+      asset.id,
+      asset,
+    ]),
+  );
   const assetURL = (id) => {
-    const asset = catalog.assets.find((item) => item.id === id);
+    const asset = selectedAssets.get(id);
     required(asset, 'This edition does not contain the requested artwork.');
     return new URL(asset.path, rootURL).href;
   };
@@ -191,14 +198,15 @@ export async function loadRuntimeContentProvider({
     href(parameters = {}) {
       const target = new URL('index.html', url);
       target.search = '';
-      target.searchParams.set('edition', selection.edition.id);
+      target.searchParams.set('edition', editionPublicSlug(selection.edition.id));
       if (
         retainedPresentationId &&
-        (!parameters.edition || parameters.edition === selection.edition.id)
+        (!parameters.edition || editionIdentityId(parameters.edition) === selection.edition.id)
       )
         target.searchParams.set('presentation', retainedPresentationId);
       for (const [key, value] of Object.entries(parameters))
-        if (value != null) target.searchParams.set(key, value);
+        if (value != null)
+          target.searchParams.set(key, key === 'edition' ? editionPublicSlug(value) : value);
         else target.searchParams.delete(key);
       return target.href;
     },

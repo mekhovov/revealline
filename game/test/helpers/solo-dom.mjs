@@ -174,6 +174,7 @@ export async function soloPage(
     parentWindow,
     pictures,
     waitForPictures = true,
+    animationFrames = false,
     initialReadyTimeoutMs = 5000,
     browserSetup,
     readPads = () => [],
@@ -236,6 +237,8 @@ export async function soloPage(
       return element;
     };
   }
+  Object.assign(win, doc.defaultView);
+  doc.defaultView = win;
   win.parent = parentWindow ?? win;
   doc.parentNode = win;
   const html = await readFile(new URL('../../index.html', import.meta.url), 'utf8');
@@ -375,6 +378,11 @@ export async function soloPage(
       },
     },
   };
+  if (animationFrames) {
+    win.performance = { now: () => now };
+    win.requestAnimationFrame = globals.requestAnimationFrame;
+    win.cancelAnimationFrame = globals.cancelAnimationFrame;
+  }
   // Presentation bytes, manifests and header/hash validation remain real. Only
   // browser codecs are modeled, as they are unavailable in the Node DOM host.
   const pngDimensions = async (blob) => {
@@ -523,6 +531,13 @@ export async function soloPage(
   function frame(ms = 1000 / 120) {
     now += ms;
     scene.update(now, ms);
+    if (animationFrames && !doc.hidden) {
+      const queued = [...frames];
+      for (const [id, callback] of queued) {
+        if (!frames.delete(id)) continue;
+        callback(now);
+      }
+    }
   }
   if (waitForPictures)
     await initialReady(

@@ -16,6 +16,7 @@ import { downloadCreatorFile } from './download.mjs';
 import { createCreatorVictoryStoryHost } from './victory-story-host.mjs';
 import { createCreatorPlayerVictoryStory } from './player-victory-story.mjs';
 import { localizedMessage, localizedText, t } from '../i18n/index.mjs';
+import { attachCreatorPlayerNavigation } from './player-navigation.mjs';
 
 const $ = (id) => document.getElementById(id);
 const status = (message, error = false) => {
@@ -48,6 +49,23 @@ let runtime,
   startMissionId = null,
   nextMissionId = null;
 const saveKey = creatorAttemptKey(edition);
+const menu = attachCreatorPlayerNavigation({
+  getScope: () =>
+    busy
+      ? 'creator-busy'
+      : !runtime
+        ? 'creator-error'
+        : ended
+          ? 'creator-result'
+          : paused
+            ? 'creator-menu'
+            : 'flight',
+  getDefaultFocus: () =>
+    ['next', 'pause', 'resume', 'start', 'retry']
+      .map($)
+      .find((element) => element && !element.hidden && !element.disabled) ||
+    document.querySelector('header a[href]'),
+});
 function persistAttempt() {
   const attempt = runtime?.current();
   if (!attempt || !['running', 'respawning'].includes(attempt.run.status)) return;
@@ -77,12 +95,14 @@ function pause() {
   persistAttempt();
   localizedText($('pause'), localizedMessage('common:actions.resume'));
   status(localizedMessage('interface:creator.pausedReady'));
+  menu.refresh({ focus: true });
 }
 function setRunning() {
   paused = false;
   input.clear();
   previousTime = null;
   accumulator = 0;
+  menu.refresh();
   localizedText($('pause'), localizedMessage('common:actions.pause'));
   $('arena').focus();
   status(localizedMessage('interface:creator.closeLineToReveal'));
@@ -101,6 +121,7 @@ function updateControls() {
   $('import-progress').disabled = busy || !profile;
   $('export-progress').disabled = busy || !profile;
   $('next').disabled = busy;
+  menu.refresh();
 }
 async function operation(action) {
   if (busy) return;
@@ -250,6 +271,7 @@ async function finish() {
 }
 function frame(time) {
   frameId = requestAnimationFrame(frame);
+  menu.update(time);
   const dt = previousTime === null ? 0 : Math.min((time - previousTime) / 1000, 0.1);
   previousTime = time;
   const attempt = runtime?.current();
@@ -374,10 +396,13 @@ window.addEventListener('pagehide', () => {
   storyPlayer?.dispose();
   runtime?.dispose();
   input?.destroy();
+  menu.destroy();
   store.close();
   cancelAnimationFrame(frameId);
   if (pictureURL) URL.revokeObjectURL(pictureURL);
 });
+// Menus remain usable while loading or after an installation error as well.
+frameId = requestAnimationFrame(frame);
 try {
   pack = await loadInstalledCreatorBundle(store, edition);
   const response = await fetch('../../authoring/motion-lab/presets.json');
@@ -454,7 +479,6 @@ try {
   await showEarned();
   busy = false;
   updateControls();
-  frameId = requestAnimationFrame(frame);
 } catch (error) {
   busy = false;
   updateControls();

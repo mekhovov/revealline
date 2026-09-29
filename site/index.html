@@ -7,10 +7,10 @@
     <meta name="theme-color" content="#070914" />
     <meta
       name="description"
-      content="Reveal Line. Find an opening. Make your line. Reveal the story."
+      content="FPV / LINE. Find an opening. Make your line. Reveal the story."
       data-i18n-content="website:revealLineFindAnOpeningMakeYourLineRevealThe"
     />
-    <title data-i18n="website:revealLineLaunch">Reveal Line · Launch</title>
+    <title data-i18n="website:revealLineLaunch">FPV / LINE · Launch</title>
     <style>
       html {
         background: #070914;
@@ -47,13 +47,25 @@
     <link rel="stylesheet" href="../game/ui/field-kit-fonts.css" />
     <link rel="stylesheet" href="../game/ui/field-kit-tokens.css" />
     <link rel="stylesheet" href="../game/ui/field-kit-components.css" />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="../game/ui/art/identity/fpv-line/icon-32.png"
+    />
   </head>
   <body class="field-kit field-kit-support">
     <div data-language-control></div>
 
     <main id="boot-screen" class="launch-screen" aria-labelledby="boot-title">
       <div class="launch-card">
-        <p class="launch-kicker">REVEAL / LINE</p>
+        <p class="launch-kicker fpv-line-brand">
+          <img
+            class="fpv-line-wordmark"
+            src="../game/ui/art/identity/fpv-line/wordmark.png"
+            alt="FPV / LINE"
+          />
+        </p>
         <div class="launch-signal" aria-hidden="true"><i></i><i></i><i></i></div>
         <h1 class="field-kit-display" id="boot-title" data-i18n="website:findYourLine">
           Find your line.
@@ -81,7 +93,7 @@
           aria-label="Launch options"
           data-i18n-aria-label="website:launchOptions"
         >
-          <a class="launch-action" href="../game/company.html" data-i18n="website:companyJourneys"
+          <a class="launch-action" href="../game/community/" data-i18n="website:companyJourneys"
             >Company journeys</a
           >
           <a id="launch-game" class="launch-action" href="../game/" data-i18n="website:enterGame"

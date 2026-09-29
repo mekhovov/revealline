@@ -30,6 +30,7 @@
     "authoring/motion-lab/png-preview.mjs",
     "authoring/enemy-catalog",
     "authoring/still-media",
+    "authoring/shared/samples",
     "authoring/video-poster/index.html",
     "authoring/video-poster/launch.js",
     "authoring/video-poster/workshop.mjs",
