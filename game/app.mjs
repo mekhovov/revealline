@@ -62,6 +62,7 @@ import {
 import { createInstalledMissionLibrary } from './mission-library/installed-library.mjs';
 import {
   CLASSIC_RULES_ORIGINAL,
+  classicRulesCampaignIdentity,
   projectClassicCurrentRulesEntry,
 } from './mission-library/classic-current-rules.mjs';
 import { journeyLibrarySource } from './mission-library/journey-source.mjs';
@@ -228,7 +229,7 @@ import { createMasteryObserver, captureMasterySetup, captureMasteryFacts } from 
 import { createMasteryAwards } from './mastery-awards.mjs';
 import { createMasteryCatalog } from './mastery-catalog.mjs';
 import { normalizedLevel } from './core/level.mjs';
-import { canonicalJSON, dataIdentity } from './data-json.mjs';
+import { boundedJSON, canonicalJSON, dataIdentity } from './data-json.mjs';
 import {
   emptyLibrary,
   loadLibrary,
@@ -246,6 +247,7 @@ import {
   isOfficialPack,
   importPackLibrary,
   exportPackLibrary,
+  packLibrarySnapshot,
   preparePack,
   installPack,
   resolvePackCampaign,
@@ -306,7 +308,14 @@ import {
   scenarioMasteryCampaign,
 } from './content.mjs';
 import { prepareScenario } from './imports.mjs';
-import { createRecorder, recordInput, exportReplay, MAX_REPLAY_TICKS } from './replay.mjs';
+import {
+  createRecorder,
+  recordInput,
+  exportReplay,
+  authoritativeCheckpoint,
+  MAX_REPLAY_TICKS,
+  MAX_REPLAY_BYTES,
+} from './replay.mjs';
 import { exportReplayPresentation } from './replay-presentation.mjs';
 
 const $ = (id) => document.getElementById(id),
@@ -424,13 +433,24 @@ try {
       registrations,
     };
   }
-  function adoptContentCatalog(content) {
-    attemptFiles?.invalidate();
+  function adoptContentCatalog(content, preparation) {
+    if (preparation !== undefined) {
+      const state = assertSkipPreparation(preparation);
+      if (!state.published || state.accepted)
+        throw new Error('This preparation cannot adopt again.');
+      assertSkipProposal(preparation, content.packs);
+      invalidateSkipAttempt(preparation, 'adopt');
+      assertSkipPreparation(preparation);
+    } else attemptFiles?.invalidate();
     packs = content.packs;
     chapterSnapshot = content.chapterSnapshot ?? null;
     installedEntries = content.entries;
     executionCatalog = content.executions;
     masteryCatalog = content.registrations;
+    if (preparation !== undefined) {
+      // No callback between the final guard, assignments and owned acceptance.
+      skipPreparations.get(preparation).accepted = content.packs;
+    }
   }
   let buildVersion = document.documentElement.dataset.buildVersion;
   let buildSourceRevision = null;
@@ -579,7 +599,14 @@ try {
     unifiedLaunchRevision = 0,
     unifiedDisposed = false,
     journeySkipArmed = null,
+    journeySkipDestination = null,
+    librarySkipResolution = null,
+    librarySkipResolutionRevision = 0,
     journeyLaunch = null;
+  const skipPreparations = new WeakMap();
+  let activeSkipPreparation = null,
+    skipLifecycleEpoch = 0,
+    skipAttemptPreparer = null;
   $('creator-tools').hidden = practiceSession;
   let packLaunchRequest = null,
     packLaunchError = '';
@@ -698,7 +725,11 @@ try {
     if (values.some((value) => value !== null))
       throw new Error(t('interface:safeChapterRecoveryRequiresWebLocksStoredDataIsPreserved'));
     const raw = await readAssetStore(packsKey);
-    return { status: 'checked', packs: raw ? await importPackLibrary(raw) : emptyPackLibrary() };
+    return {
+      status: 'checked',
+      packs: raw ? await importPackLibrary(raw) : emptyPackLibrary(),
+      packLibrary: raw,
+    };
   }
   async function checkedChapters(options) {
     const snapshot = await inspectChapters(options);
@@ -713,11 +744,47 @@ try {
   function contentFromChapters(snapshot) {
     return { ...prepareContentCatalog(snapshot.packs), chapterSnapshot: snapshot };
   }
-  async function writeCheckedPacks(value) {
-    const snapshot = await checkedChapters();
-    if (!externalChapters) return writeAssetStore(packsKey, value);
-    const review = await externalChapters.prepareMutation(snapshot, value ?? emptyPackLibrary());
-    return externalChapters.commitMutation(review);
+  async function writeCheckedPacks(value, preparation) {
+    const state = preparation === undefined ? null : assertSkipPreparation(preparation);
+    const signal = state?.signal;
+    const snapshot = await checkedChapters({ signal });
+    if (state) {
+      assertSkipPreparation(preparation);
+      if (skipMountedIdentity(snapshot.packs) !== state.beforeIdentity)
+        throw new Error('Stored chapters changed during mission preparation.');
+      if (canonicalJSON(value) !== canonicalJSON(state.proposal))
+        throw new Error('This writer has no reviewed chapter proposal.');
+    }
+    if (!externalChapters)
+      return writeAssetStore(
+        packsKey,
+        value,
+        state
+          ? {
+              signal,
+              beforeWrite(stored) {
+                if (canonicalJSON(stored) !== canonicalJSON(snapshot.packLibrary ?? null))
+                  throw new Error('Stored chapters changed before publication.');
+                assertSkipPreparation(preparation);
+              },
+            }
+          : {},
+      );
+    const review = await externalChapters.prepareMutation(snapshot, value ?? emptyPackLibrary(), {
+      signal,
+    });
+    if (state) assertSkipProposal(preparation, review.packs);
+    return externalChapters.commitMutation(
+      review,
+      state
+        ? {
+            signal,
+            beforeWrite: () => {
+              assertSkipProposal(preparation, review.packs);
+            },
+          }
+        : {},
+    );
   }
   async function assertExternalBackupSupported(options) {
     if (candidateHost)
@@ -1087,6 +1154,7 @@ try {
       if (titleFlight?.actorsFresh) cancelTitleFlight();
       cancelWorldAttempt();
       if (resultAttempt?.kind !== 'retry') cancelResultAttempt();
+      cancelSkipForContentChange();
       if (!flightActorsReady && pictureResume !== null)
         cancelPictureStart({ preserveResult: true, preserveWorld: true });
     }
@@ -1118,6 +1186,7 @@ try {
   let musicPreviewState = null,
     musicPreviewRequest = 0;
   function renderMusicPreview() {
+    $('overlay-next-song').disabled = !musicPreviewState?.queue?.length;
     if (!musicPreviewState) return;
     quickMusicControls?.render();
     const track = musicPreviewState.track;
@@ -1238,6 +1307,34 @@ try {
   const preparationFeedback = createOperationStatus($('flight-preparation-status'));
   const themeFeedback = createOperationStatus($('theme-preparation-status'));
   let preparationOperation = null;
+  const preparationButtonOwners = new WeakMap();
+  function preparationButtonBusy(button, busy, owner) {
+    if (!button || !owner) return false;
+    if (!busy && preparationButtonOwners.get(button)?.owner !== owner) return false;
+    // Claim/retire before DOM callbacks. Even a replacement that starts and
+    // cancels synchronously must fence the old operation's remaining writes.
+    const lease = { owner: busy ? owner : null };
+    preparationButtonOwners.set(button, lease);
+    const current = () => preparationButtonOwners.get(button) === lease;
+    // Keep the originating command focusable so keyboard/controller users never
+    // fall onto a temporary Cancel control while its asynchronous work runs.
+    button.disabled = false;
+    if (!current()) return false;
+    if (busy) {
+      button.setAttribute('aria-disabled', 'true');
+      if (!current()) return false;
+      button.setAttribute('aria-busy', 'true');
+      if (!current()) return false;
+      button.dataset.busy = 'true';
+    } else {
+      button.removeAttribute('aria-disabled');
+      if (!current()) return false;
+      button.removeAttribute('aria-busy');
+      if (!current()) return false;
+      delete button.dataset.busy;
+    }
+    return current();
+  }
   function clearPreparation() {
     preparationOperation = null;
     preparationFeedback.clear();
@@ -1246,7 +1343,9 @@ try {
   function beginPreparation(message, cancel, stage = 'preparing', result = false) {
     const operation = { status: preparationFeedback.begin({ message, stage }), cancel, result };
     preparationOperation = operation;
-    $('flight-preparation-cancel').hidden = !cancel;
+    // Cancellation belongs to Back/Escape and navigation invalidation. Keep the
+    // legacy hook non-visual for programmatic routing without adding a command.
+    $('flight-preparation-cancel').hidden = true;
     return {
       update(status) {
         if (preparationOperation !== operation || status.status !== 'preparing') return;
@@ -1772,7 +1871,7 @@ try {
       quickMusicControls = attachQuickMusicControls({
         document,
         prefix: 'solo',
-        after: [$('shell-continue'), $('start-button')],
+        after: [$('shell-continue')],
         settingsRoot: $('settings-panel-audio'),
         snapshot: () => soundtrackPlayer?.snapshot(),
         getMaster: () => audioMaster.snapshot(),
@@ -1800,6 +1899,7 @@ try {
         },
         onError: (error) => soundtrackStatus(() => soundtrackErrorText(error)),
       });
+      renderMusicPreview();
       soundtrackPlayer.setAuthoredTrack(authoredMusic);
       soundtrackPlayer.setContext(soundtrackContext());
       publishedAudio.setPlayer(soundtrackPlayer);
@@ -2548,6 +2648,10 @@ try {
       libraryNextOperation.cancel({ restoreFocus: true });
       return;
     }
+    if (librarySkipResolution) {
+      cancelSkipResolution({ restoreFocus: true });
+      return;
+    }
     if (resultAttempt) {
       cancelResultAttempt({ restoreFocus: true });
       return;
@@ -2838,6 +2942,7 @@ try {
     enemyGuide.open();
   };
   handlePageHide = (event) => {
+    advanceSkipLifecycle();
     cancelUnifiedOpening?.();
     ++unifiedOpenRevision;
     ++unifiedLaunchRevision;
@@ -3570,6 +3675,7 @@ try {
       (event.button !== undefined && event.button !== 0)
     )
       return;
+    if (Object.hasOwn(modeDestinations, kind)) advanceSkipLifecycle();
     event.preventDefault();
     if (!Object.hasOwn(modeDestinations, kind)) return;
     const destinationEdition =
@@ -4573,6 +4679,7 @@ try {
       refreshContentSelectors();
       return false;
     }
+    advanceSkipLifecycle();
     // Only explicit player launch/selection adapters call this gate. Restore,
     // internal adoption and authored Hangar actions keep their contracts.
     const setup = isSetupRequest(request);
@@ -5307,19 +5414,481 @@ try {
       ? journeyMission()
       : null;
   }
+  function normalSoloSkipAvailable() {
+    return (
+      !practice &&
+      !scenario &&
+      !courseSession &&
+      !campaignOverview &&
+      !!run &&
+      !!started &&
+      ['running', 'respawning'].includes(run.status)
+    );
+  }
+  function clearSkipConfirmation(message = '') {
+    journeySkipArmed = null;
+    journeySkipDestination = null;
+    localizedText($('journey-skip'), () => t('interface:skipMission'));
+    if (message) warning(message);
+  }
+  function cancelSkipForContentChange() {
+    const armed = journeySkipArmed !== null;
+    if (librarySkipResolution) cancelSkipResolution({ announce: false });
+    if (armed) clearSkipConfirmation(localizedMessage('interface:solo.skipCancelledSetupChanged'));
+  }
+  function skipSnapshot() {
+    return {
+      run,
+      recorder,
+      runId,
+      entry: activeEntry,
+      campaign,
+      levelIndex,
+      theme,
+      classId,
+      seed,
+      turnPolicy,
+      difficulty: library.preferences.campaignDifficulty,
+      journeyRevision: journeyPreferences?.snapshot().revision,
+      actorRevision: actorPreferences.snapshot().revision,
+      libraryGeneration,
+      packs,
+    };
+  }
+  function advanceSkipLifecycle() {
+    ++skipLifecycleEpoch;
+    const token = activeSkipPreparation;
+    if (!token) return;
+    const state = skipPreparations.get(token);
+    // Retire before abort listeners can start/cancel another intent.
+    state.closed = true;
+    activeSkipPreparation = null;
+    state.controller.abort();
+  }
+  function observeSkipFlight() {
+    return canonicalJSON({
+      checkpoint: authoritativeCheckpoint(run),
+      recorder: boundedJSON(recorder, {
+        maxBytes: MAX_REPLAY_BYTES,
+        maxNodes: 3000000,
+        maxDepth: 24,
+        maxArray: MAX_REPLAY_TICKS,
+        maxString: 262144,
+      }),
+      preferences: library.preferences,
+      actors: actorPreferences.snapshot(),
+      journey: journeyPreferences?.snapshot() ?? null,
+      pictures: flightPictures?.pins() ?? null,
+      bodyId,
+      themeOverride,
+      musicOverride,
+      recordingStopped,
+    });
+  }
+  function skipMountedIdentity(value) {
+    // Prepared library ownership plus full immutable content: an official
+    // reference alone is not permission to replace an imported mounted owner.
+    return canonicalJSON({ stored: packLibrarySnapshot(value), content: value.packs });
+  }
+  function issueSkipPreparation(destination, operation, controller) {
+    const epoch = ++skipLifecycleEpoch;
+    const token = Object.freeze({});
+    const state = {
+      destination,
+      operation,
+      controller,
+      snapshot: destination.snapshot,
+      epoch,
+      before: packs,
+      beforeIdentity: skipMountedIdentity(packs),
+      profile: library,
+      pictures: flightPictures,
+      visuals: flightVisualLease,
+      actors: flightActorLease,
+      resultEpoch: resultAttemptEpoch,
+      worldEpoch: worldPlayEpoch,
+      openRevision: unifiedOpenRevision,
+      launchRevision: unifiedLaunchRevision,
+      writable: writer.writable,
+      persistence: persistenceReady,
+      savedRaw: localStorage.getItem(sessionKey),
+      backupLock: localStorage.getItem(`${libraryKey}.backup-lock`),
+      observation: observeSkipFlight(),
+      invalidations: new Set(),
+      row: null,
+      ticket: null,
+      signal: controller.signal,
+      accepted: null,
+      proposal: null,
+      published: false,
+      closed: false,
+    };
+    if (
+      epoch !== skipLifecycleEpoch ||
+      activeSkipPreparation ||
+      libraryNextOperation !== operation ||
+      !skipSnapshotCurrent(destination.snapshot)
+    )
+      throw new DOMException('Mission preparation was superseded.', 'AbortError');
+    skipPreparations.set(token, state);
+    activeSkipPreparation = token;
+    try {
+      assertSkipPreparation(token);
+    } catch (error) {
+      retireSkipPreparation(token);
+      throw error;
+    }
+    return token;
+  }
+  function retireSkipPreparation(token) {
+    const state = skipPreparations.get(token);
+    if (state) state.closed = true;
+    if (activeSkipPreparation === token) activeSkipPreparation = null;
+  }
+  function skipContentCurrent(snapshot) {
+    if (snapshot.packs === packs) return true;
+    const state = skipPreparations.get(activeSkipPreparation);
+    return (
+      !!state &&
+      !state.closed &&
+      state.snapshot === snapshot &&
+      state.before === snapshot.packs &&
+      state.accepted === packs &&
+      state.epoch === skipLifecycleEpoch &&
+      !state.controller.signal.aborted &&
+      !state.signal.aborted &&
+      libraryNextOperation === state.operation
+    );
+  }
+  function assertSkipPreparation(token, transferring = false, confirmationCleared = false) {
+    const state = skipPreparations.get(token);
+    if (!state || state.closed || activeSkipPreparation !== token)
+      throw new DOMException('This mission preparation is no longer owned.', 'AbortError');
+    const destination = state.destination;
+    // These inspections can call host code. The identity/epoch check below
+    // must follow them, including a departure that starts and cancels in-place.
+    const writable = writer.writable;
+    const savedRaw = localStorage.getItem(sessionKey);
+    const backupLock = localStorage.getItem(`${libraryKey}.backup-lock`);
+    const observation = observeSkipFlight();
+    const rowsCurrent =
+      destination.host.library.find(destination.current.id) === destination.current &&
+      destination.host.library.find(destination.next.id) === destination.next;
+    if (
+      state.closed ||
+      activeSkipPreparation !== token ||
+      state.epoch !== skipLifecycleEpoch ||
+      state.controller.signal.aborted ||
+      state.signal.aborted ||
+      libraryNextOperation !== state.operation ||
+      (transferring
+        ? !state.transferStarted ||
+          journeySkipDestination !== (confirmationCleared ? null : destination)
+        : state.transferStarted ||
+          journeySkipDestination !== destination ||
+          journeySkipArmed !== state.snapshot.runId) ||
+      !rowsCurrent ||
+      !skipSnapshotCurrent(state.snapshot) ||
+      dialogOpen() ||
+      library !== state.profile ||
+      flightPictures !== state.pictures ||
+      flightVisualLease !== state.visuals ||
+      flightActorLease !== state.actors ||
+      observation !== state.observation ||
+      resultAttemptEpoch !== state.resultEpoch ||
+      worldPlayEpoch !== state.worldEpoch ||
+      unifiedOpenRevision !== state.openRevision ||
+      unifiedLaunchRevision !== state.launchRevision ||
+      writable !== state.writable ||
+      persistenceReady !== state.persistence ||
+      savedRaw !== state.savedRaw ||
+      backupLock !== state.backupLock ||
+      backupLock !== null ||
+      modeDeparture ||
+      missionReplacement ||
+      restartRequest ||
+      titleFlight ||
+      courseEntry ||
+      sessionBusy ||
+      backupBusy ||
+      pictureThemePending ||
+      (contentSwitchBusy && !state.ticket)
+    )
+      throw new DOMException('The original flight or mission intent changed.', 'AbortError');
+    if (state.ticket) packLaunchGuard.assert(state.ticket, state.accepted ?? state.before);
+    // Final epoch check also covers callback-bearing currentness predicates.
+    if (state.closed || state.epoch !== skipLifecycleEpoch || activeSkipPreparation !== token)
+      throw new DOMException('Mission preparation was superseded.', 'AbortError');
+    return state;
+  }
+  function bindSkipPreparation(token, row, publicRow, signal) {
+    const state = assertSkipPreparation(token);
+    const current = row.rulesEdition !== CLASSIC_RULES_ORIGINAL;
+    const owner = JSON.stringify([
+      'classic',
+      row.source,
+      row.packId,
+      ...(current ? [row.rulesEdition] : []),
+    ]);
+    const edition = row.sourceFile.sha256 + (current ? `:${row.rulesEdition}` : '');
+    const id = JSON.stringify([
+      owner,
+      edition,
+      classicRulesCampaignIdentity(row),
+      row.levelId,
+      String(row.levelRevision),
+    ]);
+    if (
+      state.row ||
+      publicRow !== state.destination.next ||
+      publicRow.id !== id ||
+      !['bundled', 'optional', 'base'].includes(row.source)
+    )
+      throw new Error('This chapter needs its existing explicit installation or recovery flow.');
+    state.row = row;
+    state.signal = signal;
+    assertSkipPreparation(token);
+  }
+  function bindSkipWriter(token, ticket) {
+    const state = assertSkipPreparation(token);
+    if (!state.row || state.ticket) throw new Error('This preparation already has a writer.');
+    packLaunchGuard.assert(ticket, state.before);
+    state.ticket = ticket;
+  }
+  async function reviewSkipProposal(token, next) {
+    const state = assertSkipPreparation(token);
+    const selected = next.packs.find((pack) => pack.id === state.row?.packId);
+    if (!selected || !(await verifyIndexedInstalledPack(selected, state.row)))
+      throw new Error('The selected chapter differs from its trusted edition.');
+    assertSkipPreparation(token);
+    const old = state.before.packs;
+    const hadSelected = old.some((pack) => pack.id === selected.id);
+    if (
+      next.packs.length !== old.length + (hadSelected ? 0 : 1) ||
+      old.some(
+        (pack, index) =>
+          isOfficialPack(pack) !== isOfficialPack(next.packs[index]) ||
+          canonicalJSON(pack) !== canonicalJSON(next.packs[index]),
+      ) ||
+      (!hadSelected && next.packs.at(-1) !== selected)
+    )
+      throw new Error('Preparing this mission must preserve every mounted chapter.');
+    state.proposal = exportPackLibrary(next);
+    state.proposalIdentity = skipMountedIdentity(next);
+    assertSkipPreparation(token);
+  }
+  function assertSkipProposal(token, next) {
+    const state = assertSkipPreparation(token);
+    if (!state.proposal || skipMountedIdentity(next) !== state.proposalIdentity)
+      throw new Error('The checked chapter proposal differs from the owned preparation.');
+    assertSkipPreparation(token);
+  }
+  function invalidateSkipAttempt(token, phase) {
+    const state = assertSkipPreparation(token);
+    if (
+      !state.ticket ||
+      state.invalidations.has(phase) ||
+      (phase !== 'replace' && phase !== 'adopt')
+    )
+      throw new Error('This preparation cannot repeat an attempt invalidation.');
+    state.invalidations.add(phase);
+    state.epoch = ++skipLifecycleEpoch;
+    skipAttemptPreparer?.invalidate();
+    assertSkipPreparation(token);
+  }
+  function skipAttemptFacade(preparer) {
+    skipAttemptPreparer = preparer;
+    return Object.freeze({
+      source: (...args) => preparer.source(...args),
+      prepare(...args) {
+        advanceSkipLifecycle();
+        return preparer.prepare(...args);
+      },
+      invalidate(...args) {
+        advanceSkipLifecycle();
+        return preparer.invalidate(...args);
+      },
+    });
+  }
+  function skipSnapshotCurrent(snapshot) {
+    return (
+      normalSoloSkipAvailable() &&
+      paused &&
+      snapshot?.run === run &&
+      snapshot.recorder === recorder &&
+      snapshot.runId === runId &&
+      snapshot.entry === activeEntry &&
+      snapshot.campaign === campaign &&
+      snapshot.levelIndex === levelIndex &&
+      snapshot.theme === theme &&
+      snapshot.classId === classId &&
+      snapshot.seed === seed &&
+      snapshot.turnPolicy === turnPolicy &&
+      snapshot.difficulty === library.preferences.campaignDifficulty &&
+      snapshot.journeyRevision === journeyPreferences?.snapshot().revision &&
+      snapshot.actorRevision === actorPreferences.snapshot().revision &&
+      snapshot.libraryGeneration === libraryGeneration &&
+      skipContentCurrent(snapshot) &&
+      !document.hidden &&
+      document.hasFocus?.() !== false
+    );
+  }
   function refreshJourneySkip() {
-    const mission = journeySkipMission();
-    show('journey-skip', !!mission);
-    if (!mission) journeySkipArmed = null;
-    if (journeySkipArmed === null)
-      localizedText($('journey-skip'), () =>
-        mission && !nextJourneyMission(mission.id)
-          ? t('interface:findMissions')
-          : t('interface:skipMission'),
-      );
+    const available = normalSoloSkipAvailable();
+    show('journey-skip', available);
+    if (!available) clearSkipConfirmation();
+    else if (journeySkipDestination && !skipSnapshotCurrent(journeySkipDestination.snapshot))
+      clearSkipConfirmation();
   }
   function nextJourneyMission(id) {
     return candidateHost ? candidateHost.next(id) : journeyCatalog.next(id);
+  }
+  function currentSoloLibraryMission(host) {
+    const mission = journeyMission();
+    if (mission) {
+      const row = host.library
+        .forMode('solo')
+        .find(
+          (item) =>
+            item.collection === 'Journey' &&
+            item.editionId === (authoredRoute?.id ?? DEFAULT_JOURNEY_ROUTES.solo) &&
+            item.runtimeId === mission.id,
+        );
+      if (!row) throw new Error('The exact current Journey mission is unavailable.');
+      return row;
+    }
+    return retainedLibraryMission(host.library, {
+      mode: 'solo',
+      levelId: campaign.levels[levelIndex].id,
+      campaignKey: activeEntry.classicRulesSourceCampaignKey
+        ? `${activeEntry.classicRulesSourceCampaignKey}::${activeEntry.classicRulesEdition}`
+        : activeEntry.baseCampaignKey || campaignKey(campaign),
+      sourcePackId: activeEntry.sourcePackId ?? null,
+      rulesEdition: activeEntry.classicRulesEdition ?? CLASSIC_RULES_ORIGINAL,
+      ...(retainedLibraryOwner?.entry === activeEntry ? retainedLibraryOwner : {}),
+    });
+  }
+  function skipMissionMessage(destination, key) {
+    // Presentation only: never rebind a removed row by ID or mutate an intent
+    // while locale subscribers repaint. Strict library ownership stays intact.
+    return () => {
+      let name;
+      try {
+        if (destination.type === 'journey') {
+          if (journeyCatalog.find(destination.mission.id) !== destination.mission)
+            return t('interface:solo.skipUnavailable');
+          name = contentText(destination.mission, 'name');
+        } else name = destination.host.library.presentation(destination.next).name;
+      } catch {
+        return t('interface:solo.skipUnavailable');
+      }
+      return t(key, { mission: name });
+    };
+  }
+  function armSkip(destination) {
+    journeySkipArmed = runId;
+    journeySkipDestination = destination;
+    localizedText($('journey-skip'), () => t('interface:confirmSkip'));
+    warning(skipMissionMessage(destination, 'interface:solo.universalSkipConfirm'));
+    $('journey-skip').focus({ preventScroll: true });
+  }
+  function cancelSkipResolution({
+    operation = librarySkipResolution,
+    restoreFocus = false,
+    announce = true,
+  } = {}) {
+    if (!operation || librarySkipResolution !== operation) return;
+    // Retire before callbacks: abort and feedback may start a replacement lookup.
+    librarySkipResolution = null;
+    operation.controller.abort();
+    if (librarySkipResolutionRevision !== operation.revision) return;
+    operation.feedback?.finish(
+      announce && skipSnapshotCurrent(operation.snapshot)
+        ? localizedMessage('interface:solo.skipCancelledCurrentFlightKept')
+        : '',
+      'cancelled',
+    );
+    if (librarySkipResolutionRevision !== operation.revision) return;
+    if (!preparationButtonBusy(operation.button, false, operation)) return;
+    clearSkipConfirmation();
+    if (
+      librarySkipResolutionRevision === operation.revision &&
+      restoreFocus &&
+      skipSnapshotCurrent(operation.snapshot) &&
+      !operation.button.hidden
+    )
+      operation.button.focus({ preventScroll: true });
+  }
+  async function resolveLibrarySkip() {
+    if (librarySkipResolution || !normalSoloSkipAvailable()) return;
+    pause(true);
+    clearInput();
+    const operation = {
+      revision: ++librarySkipResolutionRevision,
+      snapshot: skipSnapshot(),
+      controller: new AbortController(),
+      button: $('journey-skip'),
+      feedback: null,
+    };
+    librarySkipResolution = operation;
+    preparationButtonBusy(operation.button, true, operation);
+    if (librarySkipResolution !== operation) return;
+    operation.feedback = beginPreparation(
+      localizedMessage('interface:solo.findingNextMission'),
+      ({ restoreFocus = false } = {}) => cancelSkipResolution({ operation, restoreFocus }),
+      'preparing',
+      true,
+    );
+    if (librarySkipResolution !== operation) return;
+    try {
+      const host = await getUnifiedMissionLibrary();
+      if (librarySkipResolution !== operation || !skipSnapshotCurrent(operation.snapshot)) {
+        cancelSkipResolution({ operation, announce: false });
+        return;
+      }
+      await host.refreshInstalled();
+      if (librarySkipResolution !== operation || !skipSnapshotCurrent(operation.snapshot)) {
+        cancelSkipResolution({ operation, announce: false });
+        return;
+      }
+      const current = currentSoloLibraryMission(host);
+      const next = librarySuccessor(host.library, current, 'solo', { wrap: true });
+      if (!next) throw new Error(t('interface:solo.noOtherNormalMission'));
+      librarySkipResolution = null;
+      operation.feedback.finish();
+      if (librarySkipResolutionRevision !== operation.revision) return;
+      if (!preparationButtonBusy(operation.button, false, operation)) return;
+      if (!skipSnapshotCurrent(operation.snapshot)) {
+        clearSkipConfirmation();
+        return;
+      }
+      armSkip({
+        type: 'library',
+        host,
+        current,
+        next,
+        snapshot: operation.snapshot,
+        skipped: journeySkipMission(),
+      });
+    } catch (error) {
+      if (librarySkipResolution !== operation) return;
+      librarySkipResolution = null;
+      operation.feedback.finish(
+        skipSnapshotCurrent(operation.snapshot)
+          ? localizedMessage('interface:solo.skipUnavailable')
+          : '',
+        'error',
+      );
+      if (librarySkipResolutionRevision !== operation.revision) return;
+      if (!preparationButtonBusy(operation.button, false, operation)) return;
+      clearSkipConfirmation();
+      if (
+        librarySkipResolutionRevision === operation.revision &&
+        skipSnapshotCurrent(operation.snapshot) &&
+        !operation.button.hidden
+      )
+        operation.button.focus({ preventScroll: true });
+    }
   }
   async function launchJourneyMission(mission, { kind = 'choose', skipped = null } = {}) {
     if (
@@ -5357,9 +5926,7 @@ try {
         if (restoreFocus) controllerFocus()?.focus({ preventScroll: true });
       };
       owner.feedback = beginPreparation(
-        localizedMessage('interface:solo.preparingNextMission', {
-          mission: contentText(mission, 'name'),
-        }),
+        skipMissionMessage({ type: 'journey', mission }, 'interface:solo.preparingNextMission'),
         owner.cancel,
         'preparing',
         true,
@@ -5406,12 +5973,10 @@ try {
         runId === owner.runId
       ) {
         owner.feedback?.finish(
-          localizedMessage('interface:solo.prepareNextFailed', {
-            mission: contentText(mission, 'name'),
-          }),
+          skipMissionMessage({ type: 'journey', mission }, 'interface:solo.prepareNextFailed'),
           'error',
         );
-        warning(localizedMessage('interface:solo.openNextFailed', { error: error.message }));
+        warning(localizedMessage('interface:solo.skipUnavailable'));
       }
       return false;
     } finally {
@@ -5493,10 +6058,11 @@ try {
   }
   async function replacePackLibrary(
     next,
-    { contentSwitchTicket = null, preserveCurrentRun = false } = {},
+    { contentSwitchTicket = null, preserveCurrentRun = false, preparation } = {},
   ) {
     if (courseEntry) throw new Error(t('interface:cancelTheCourseHandoffBeforeChangingPacks'));
-    attemptFiles?.invalidate();
+    if (preparation !== undefined) invalidateSkipAttempt(preparation, 'replace');
+    else attemptFiles?.invalidate();
     const ownsOperation = !contentSwitchTicket;
     const operation = contentSwitchTicket || packLaunchGuard.begin(packs);
     if (ownsOperation) {
@@ -5517,13 +6083,27 @@ try {
         throw new Error(t('interface:installingAWorldMustPreserveEveryExistingPack'));
       packLaunchGuard.assert(operation, before);
       assertWriter();
+      if (preparation !== undefined) {
+        const state = assertSkipPreparation(preparation);
+        if (state.ticket !== operation || before !== state.before || state.proposal)
+          throw new Error('This writer does not own the selected chapter proposal.');
+        await reviewSkipProposal(preparation, next);
+      }
       let content = prepareContentCatalog(next);
       if (!preserveCurrentRun || !paused) pause(true);
       cancelRestore();
       if (!preserveCurrentRun) masteryAwards.cancelAll();
       try {
         await packCommits.commit(exportPackLibrary(next), {
-          beforeWrite: () => packLaunchGuard.assert(operation, packs),
+          beforeWrite: () => {
+            packLaunchGuard.assert(operation, packs);
+            if (preparation !== undefined) assertSkipProposal(preparation, next);
+          },
+          ...(preparation === undefined
+            ? {}
+            : {
+                writeValue: (value) => writeCheckedPacks(value, preparation),
+              }),
         });
       } catch (error) {
         if (!packLaunchGuard.current(operation, packs)) throw error;
@@ -5535,9 +6115,15 @@ try {
         await packCommits.noteStaleCommit();
         packLaunchGuard.assert(operation, packs);
       }
-      content = contentFromChapters(await checkedChapters());
-      packLaunchGuard.assert(operation, before);
-      adoptContentCatalog(content);
+      if (preparation !== undefined) skipPreparations.get(preparation).published = true;
+      try {
+        content = contentFromChapters(await checkedChapters());
+        packLaunchGuard.assert(operation, before);
+        adoptContentCatalog(content, preparation);
+      } catch (error) {
+        if (preparation !== undefined) await packCommits.noteStaleCommit();
+        throw error;
+      }
       packLaunchGuard.advance(operation, before, packs);
       packCommits.acceptCurrent();
       if (
@@ -5568,7 +6154,11 @@ try {
       }
     }
   }
-  async function ensureBundledPack(packId, operation, { preserveCurrentRun = false } = {}) {
+  async function ensureBundledPack(
+    packId,
+    operation,
+    { preserveCurrentRun = false, preparation } = {},
+  ) {
     const before = packs;
     packLaunchGuard.assert(operation, before);
     const installed = packs.packs.find((pack) => pack.id === packId);
@@ -5593,6 +6183,7 @@ try {
       await replacePackLibrary(installPack(before, official), {
         contentSwitchTicket: operation,
         preserveCurrentRun,
+        preparation,
       });
       return { pack: official, installed: true };
     }
@@ -5625,6 +6216,7 @@ try {
     await replacePackLibrary(installPack(before, prepared.pack), {
       contentSwitchTicket: operation,
       preserveCurrentRun,
+      preparation,
     });
     return { pack: prepared.pack, installed: true };
   }
@@ -5722,7 +6314,7 @@ try {
       }
     }
   }
-  async function installOptionalChapter(summary, { signal, onStatus } = {}) {
+  async function installOptionalChapter(summary, { signal, onStatus, preparation } = {}) {
     if (courseEntry || courseSession || practice)
       throw new Error(t('interface:returnFromPracticeBeforeInstallingWorlds'));
     const old = packs.packs.find((item) => item.id === summary.id);
@@ -5731,6 +6323,7 @@ try {
     cancelRestore();
     const operation = packLaunchGuard.begin(packs),
       before = packs;
+    if (preparation !== undefined) bindSkipWriter(preparation, operation);
     packCommits.markIntent();
     contentSwitchBusy = true;
     refreshContentSelectors();
@@ -5770,6 +6363,7 @@ try {
       await replacePackLibrary(installPack(before, pack), {
         contentSwitchTicket: operation,
         preserveCurrentRun: true,
+        preparation,
       });
       return pack;
     } finally {
@@ -6018,6 +6612,7 @@ try {
     if (sessionBusy) throw new Error(t('interface:aFlightIsAlreadyBeingVerified'));
     if (signal?.aborted) throw new DOMException(t('interface:titleLaunchCancelled'), 'AbortError');
     invalidateContentSwitch();
+    advanceSkipLifecycle();
     sessionBusy = true;
     refreshSavedFlight();
     cancelPictureStart();
@@ -6248,6 +6843,7 @@ try {
     );
   }
   async function launchTitleFlight(kind, { isCurrent, leave }) {
+    advanceSkipLifecycle();
     if (
       !isCurrent() ||
       titleFlight ||
@@ -6285,7 +6881,7 @@ try {
       savedRaw: null,
     };
     titleFlight = ticket;
-    $('shell-flight-cancel').hidden = false;
+    $('shell-flight-cancel').hidden = true;
     // The original activation unlocks audio; the persisted master gate is unchanged.
     void activateAudio().catch(() => {});
     try {
@@ -6487,40 +7083,42 @@ try {
     musicOverride = true;
     prepare();
   }
-  attemptFiles = createAttemptFilePreparer({
-    getState: () => ({
-      run,
-      recorder,
-      runId,
-      library,
-      packs,
-      started,
-      paused,
-      practice,
-      courseActive: courseSession,
-      courseEntry: !!courseEntry,
-      recordingStopped,
-      contentBusy: contentSwitchBusy,
-      sessionBusy,
-      backupBusy,
-      hidden: document.hidden,
-      themeId: theme.id,
-      bodyId,
+  attemptFiles = skipAttemptFacade(
+    createAttemptFilePreparer({
+      getState: () => ({
+        run,
+        recorder,
+        runId,
+        library,
+        packs,
+        started,
+        paused,
+        practice,
+        courseActive: courseSession,
+        courseEntry: !!courseEntry,
+        recordingStopped,
+        contentBusy: contentSwitchBusy,
+        sessionBusy,
+        backupBusy,
+        hidden: document.hidden,
+        themeId: theme.id,
+        bodyId,
+      }),
+      snapshotCurrent: () => {
+        pause(true);
+        return snapshotAttempt();
+      },
+      resolveCampaign: (key) => findCampaignEntry(key)?.campaign,
+      resolveMediaIdentityCatalog: () => pictureIdentity(),
+      readStored: () => localStorage.getItem(sessionKey),
+      readBackupMarker: () => localStorage.getItem(`${libraryKey}.backup-lock`),
+      readJournal: () => readAssetStore(journalKey),
+      withStorageLock: (work, signal) =>
+        navigator.locks?.request
+          ? navigator.locks.request(`${libraryKey}.backup-lock`, { signal }, work)
+          : work(),
     }),
-    snapshotCurrent: () => {
-      pause(true);
-      return snapshotAttempt();
-    },
-    resolveCampaign: (key) => findCampaignEntry(key)?.campaign,
-    resolveMediaIdentityCatalog: () => pictureIdentity(),
-    readStored: () => localStorage.getItem(sessionKey),
-    readBackupMarker: () => localStorage.getItem(`${libraryKey}.backup-lock`),
-    readJournal: () => readAssetStore(journalKey),
-    withStorageLock: (work, signal) =>
-      navigator.locks?.request
-        ? navigator.locks.request(`${libraryKey}.backup-lock`, { signal }, work)
-        : work(),
-  });
+  );
   const libraryPanel = attachLibraryPanel({
     prepareCollectionProgress,
     focusMission,
@@ -6687,6 +7285,7 @@ try {
       const releaseAwards = masteryAwards.holdCommits();
       try {
         await assertExternalBackupSupported({ kind: 'backup' });
+        advanceSkipLifecycle();
         backupBusy = true;
         invalidateContentSwitch();
         packCommits.markIntent();
@@ -6844,6 +7443,7 @@ try {
     if (candidateHost?.owns(activeEntry)) {
       journeyPreferences.choose($('difficulty-select').value);
       cancelResultAttempt();
+      cancelSkipForContentChange();
       clearInput();
       if (!started && !sessionBusy) prepare();
       else refreshDifficulty();
@@ -6853,6 +7453,8 @@ try {
     browsingJourneyPreferences.choose(mode);
     clearInput();
     preferences({ campaignDifficulty: mode });
+    cancelResultAttempt();
+    cancelSkipForContentChange();
     // Saving may merge a newer preference from another writer; use the actual
     // adopted library. A setting-only change never touches the suspended slot.
     if (!started && !sessionBusy) prepare();
@@ -6865,6 +7467,7 @@ try {
     if (!candidateHost?.owns(activeEntry))
       preferences({ campaignDifficulty: difficulty === 'gentle' ? 'gentle' : 'standard' });
     cancelResultAttempt();
+    cancelSkipForContentChange();
     cancelWorldAttempt();
     cancelTitleFlight();
     clearInput();
@@ -6878,6 +7481,7 @@ try {
   });
   gameplayTuning.subscribe(() => {
     cancelResultAttempt();
+    cancelSkipForContentChange();
     cancelWorldAttempt();
     cancelTitleFlight();
     clearInput();
@@ -7534,7 +8138,9 @@ try {
     if ($('shell-workshop-dialog').open) $('shell-workshop-dialog').close();
     if ($('shell-home').open) $('shell-home').close();
     $('arena-shell').scrollIntoView({ block: 'center', inline: 'nearest', behavior: 'instant' });
-    (campaignOverview ? $('next-button') : $('start-button')).focus({ preventScroll: true });
+    const target = campaignOverview ? $('next-button') : $('start-button');
+    target.focus({ preventScroll: true });
+    target.scrollIntoView({ block: 'nearest', inline: 'nearest', behavior: 'auto' });
   }
   function currentBriefing() {
     if (courseSession) {
@@ -7630,9 +8236,9 @@ try {
     show('start-button', kind === 'ready' || kind === 'pause');
     show('overlay-restart', kind === 'pause');
     show('overlay-missions', kind === 'pause');
-    show('overlay-help', kind === 'pause');
     show('overlay-settings', kind === 'pause');
     show('overlay-sound', kind === 'pause');
+    show('overlay-next-song', kind === 'pause');
     show('pause-mission-info', kind === 'pause' || (!courseSession && kind === 'ready'));
     if (kind === 'ready') $('pause-mission-info').open = true;
     else if (kind === 'pause' && !repeatedPause) $('pause-mission-info').open = false;
@@ -7896,7 +8502,7 @@ try {
     if (resultAttempt !== ticket) return;
     resultAttempt = null;
     const epoch = ++resultAttemptEpoch;
-    ticket.button.disabled = false;
+    preparationButtonBusy(ticket.button, false, ticket);
     ticket.feedback?.finish(message, state);
     ticket.controller.abort();
     ticket.pictures?.dispose();
@@ -7918,6 +8524,7 @@ try {
   }
   function cancelResultAttempt({ restoreFocus = false } = {}) {
     libraryNextOperation?.cancel({ restoreFocus });
+    const cancellingSkip = resultAttempt?.kind === 'skip';
     if (resultAttempt)
       finishResultAttempt(
         resultAttempt,
@@ -7925,6 +8532,7 @@ try {
         'cancelled',
         restoreFocus,
       );
+    if (cancellingSkip) clearSkipConfirmation();
   }
   async function nextLibraryMission() {
     if (
@@ -7967,7 +8575,7 @@ try {
       libraryNextOperation = null;
       detach();
       controller.abort();
-      button.disabled = false;
+      preparationButtonBusy(button, false, operation);
       feedback?.finish(
         t('interface:preparationCancelledYourResultIsKeptChooseNextToRetry'),
         'cancelled',
@@ -7991,14 +8599,16 @@ try {
     }
     const windowBlur = guardInstallOfflineBlur(lostForeground);
     try {
+      preparationButtonBusy(button, true, operation);
+      if (!current()) return;
       feedback = beginPreparation(
         t('interface:findingTheNextMissionYourResultIsKept'),
         operation.cancel,
         'preparing',
         true,
       );
-      button.disabled = true;
-      cancelButton.focus({ preventScroll: true });
+      if (!current()) return;
+      button.focus({ preventScroll: true });
       document.addEventListener('focusin', changedFocus);
       document.addEventListener('visibilitychange', lostForeground);
       window.addEventListener('blur', windowBlur);
@@ -8006,26 +8616,7 @@ try {
       if (!current()) return;
       await host.refreshInstalled();
       if (!current()) return;
-      const mission = journeyEnabled ? journeyMission() : null;
-      const row = mission
-        ? host.library
-            .forMode('solo')
-            .find(
-              (item) =>
-                item.collection === 'Journey' &&
-                item.editionId === authoredRoute?.id &&
-                item.runtimeId === mission.id,
-            )
-        : retainedLibraryMission(host.library, {
-            mode: 'solo',
-            levelId: campaign.levels[levelIndex].id,
-            campaignKey: activeEntry.classicRulesSourceCampaignKey
-              ? `${activeEntry.classicRulesSourceCampaignKey}::${activeEntry.classicRulesEdition}`
-              : activeEntry.baseCampaignKey || campaignKey(campaign),
-            sourcePackId: activeEntry.sourcePackId ?? null,
-            rulesEdition: activeEntry.classicRulesEdition ?? CLASSIC_RULES_ORIGINAL,
-            ...(retainedLibraryOwner?.entry === activeEntry ? retainedLibraryOwner : {}),
-          });
+      const row = currentSoloLibraryMission(host);
       const next = librarySuccessor(host.library, row, 'solo');
       if (!next) {
         feedback.finish(t('interface:endOfTheSoloMissionLibraryReplayOrChooseAnother'));
@@ -8061,7 +8652,7 @@ try {
           transferred = true;
           detach();
           libraryNextOperation = null;
-          button.disabled = false;
+          preparationButtonBusy(button, false, operation);
           feedback.finish();
           button.focus({ preventScroll: true });
           return activation.isCurrent();
@@ -8081,12 +8672,202 @@ try {
     } finally {
       detach();
       if (libraryNextOperation === operation) libraryNextOperation = null;
-      if (!libraryNextOperation && !resultAttempt) button.disabled = false;
+      if (!libraryNextOperation && !resultAttempt) preparationButtonBusy(button, false, operation);
       if (
         run === previous &&
         document.activeElement === cancelButton &&
         !document.hidden &&
         !dialogOpen()
+      )
+        button.focus({ preventScroll: true });
+    }
+  }
+  async function launchLibrarySkip(destination) {
+    if (
+      libraryNextOperation ||
+      journeySkipDestination !== destination ||
+      journeySkipArmed !== runId ||
+      !skipSnapshotCurrent(destination.snapshot) ||
+      dialogOpen()
+    )
+      return;
+    const controller = new AbortController(),
+      button = $('journey-skip'),
+      cancelButton = $('flight-preparation-cancel'),
+      operation = { cancel: null };
+    libraryNextOperation = operation;
+    let feedback,
+      preparation,
+      skipRecorded = false,
+      transferred = false;
+    const current = () => {
+      try {
+        assertSkipPreparation(preparation);
+      } catch {
+        return false;
+      }
+      return (
+        libraryNextOperation === operation &&
+        !controller.signal.aborted &&
+        journeySkipDestination === destination &&
+        journeySkipArmed === destination.snapshot.runId &&
+        destination.host.library.find(destination.current.id) === destination.current &&
+        destination.host.library.find(destination.next.id) === destination.next &&
+        skipSnapshotCurrent(destination.snapshot) &&
+        !dialogOpen()
+      );
+    };
+    const detach = () => {
+      document.removeEventListener('focusin', changedFocus);
+      document.removeEventListener('visibilitychange', lostForeground);
+      window.removeEventListener('blur', lostForeground);
+    };
+    operation.cancel = ({ restoreFocus = false } = {}) => {
+      if (libraryNextOperation !== operation) return;
+      retireSkipPreparation(preparation);
+      const epoch = ++skipLifecycleEpoch;
+      libraryNextOperation = null;
+      detach();
+      controller.abort();
+      if (libraryNextOperation || epoch !== skipLifecycleEpoch) return;
+      if (!preparationButtonBusy(button, false, operation)) return;
+      feedback?.finish(localizedMessage('interface:solo.skipCancelledRetry'), 'cancelled');
+      if (libraryNextOperation || epoch !== skipLifecycleEpoch) return;
+      const canRestore = skipSnapshotCurrent(destination.snapshot);
+      if (libraryNextOperation || epoch !== skipLifecycleEpoch) return;
+      clearSkipConfirmation();
+      if (
+        restoreFocus &&
+        canRestore &&
+        !button.hidden &&
+        !libraryNextOperation &&
+        epoch === skipLifecycleEpoch
+      )
+        button.focus({ preventScroll: true });
+    };
+    function changedFocus(event) {
+      if (![button, cancelButton, document.body, document.documentElement].includes(event.target))
+        operation.cancel();
+    }
+    function lostForeground(event) {
+      if (document.hidden || event.type === 'blur') operation.cancel();
+    }
+    try {
+      pause(true);
+      clearInput();
+      preparationButtonBusy(button, true, operation);
+      preparation = issueSkipPreparation(destination, operation, controller);
+      feedback = beginPreparation(
+        skipMissionMessage(destination, 'interface:solo.preparingNextMission'),
+        operation.cancel,
+        'preparing',
+        true,
+      );
+      if (!current()) return;
+      button.focus({ preventScroll: true });
+      document.addEventListener('focusin', changedFocus);
+      document.addEventListener('visibilitychange', lostForeground);
+      window.addEventListener('blur', lostForeground);
+      if (!current()) return;
+      if (destination.host.library.availability(destination.next, 'solo').state !== 'ready') {
+        const ready = await destination.host.library.prepare(destination.next, {
+          mode: 'solo',
+          signal: controller.signal,
+          preparation,
+        });
+        if (!current()) return;
+        if (ready.state !== 'ready')
+          throw new Error(ready.reason || 'The destination mission is not ready.');
+      }
+      if (!current()) return;
+      const state = assertSkipPreparation(preparation);
+      const launchRevision = state.launchRevision;
+      const activation = libraryActivationContext();
+      if (unifiedLaunchRevision !== launchRevision + 1)
+        throw new DOMException('Mission launch was superseded.', 'AbortError');
+      state.launchRevision = launchRevision + 1;
+      assertSkipPreparation(preparation);
+      const context = {
+        ...activation,
+        signal: controller.signal,
+        continuation: true,
+        skip: true,
+        onStatus: feedback.update,
+        isCurrent: () => activation.isCurrent() && (transferred || current()),
+        transferContinuation: () => {
+          if (!current() || !activation.isCurrent()) return false;
+          const state = assertSkipPreparation(preparation);
+          state.transferStarted = true;
+          detach();
+          assertSkipPreparation(preparation, true);
+          feedback.finish();
+          assertSkipPreparation(preparation, true);
+          clearSkipConfirmation();
+          assertSkipPreparation(preparation, true, true);
+          if (!preparationButtonBusy(button, false, operation)) return false;
+          assertSkipPreparation(preparation, true, true);
+          if (!activation.isCurrent()) return false;
+          assertSkipPreparation(preparation, true, true);
+          retireSkipPreparation(preparation);
+          libraryNextOperation = null;
+          transferred = true;
+          return true;
+        },
+        onSkipAdopt: () => {
+          if (!transferred || skipRecorded) return;
+          skipRecorded = true;
+          if (destination.skipped)
+            journeyProfile?.record({
+              type: 'skip',
+              mode: 'solo',
+              missionId: destination.skipped.id,
+            });
+          else unifiedChooser?.select(destination.next.id);
+        },
+      };
+      const launched = await destination.host.library.launch(destination.next, {
+        mode: 'solo',
+        ...context,
+      });
+      if (launched === false && !transferred && current())
+        throw new Error('The destination mission could not start.');
+      if (!transferred && current()) feedback.finish();
+    } catch (error) {
+      const epoch = skipLifecycleEpoch;
+      if (
+        !transferred &&
+        libraryNextOperation === operation &&
+        skipPreparations.get(preparation)?.epoch === skipLifecycleEpoch &&
+        skipSnapshotCurrent(destination.snapshot) &&
+        !controller.signal.aborted &&
+        libraryNextOperation === operation &&
+        epoch === skipLifecycleEpoch
+      ) {
+        feedback?.finish(
+          skipMissionMessage(destination, 'interface:solo.prepareNextFailed'),
+          'error',
+        );
+        if (libraryNextOperation === operation && epoch === skipLifecycleEpoch)
+          clearSkipConfirmation();
+      }
+    } finally {
+      const epoch = skipLifecycleEpoch;
+      retireSkipPreparation(preparation);
+      detach();
+      const ownsOperation = libraryNextOperation === operation && epoch === skipLifecycleEpoch;
+      if (ownsOperation) {
+        libraryNextOperation = null;
+        if (!resultAttempt) preparationButtonBusy(button, false, operation);
+      }
+      if (
+        ownsOperation &&
+        !transferred &&
+        skipSnapshotCurrent(destination.snapshot) &&
+        document.activeElement === cancelButton &&
+        !document.hidden &&
+        !dialogOpen() &&
+        !libraryNextOperation &&
+        epoch === skipLifecycleEpoch
       )
         button.focus({ preventScroll: true });
     }
@@ -8111,8 +8892,9 @@ try {
       dialogOpen() ||
       document.hidden ||
       !document.hasFocus() ||
-      (kind !== 'choose' && !['won', 'lost'].includes(run?.status)) ||
+      (kind !== 'choose' && kind !== 'skip' && !['won', 'lost'].includes(run?.status)) ||
       (kind === 'choose' && (!journeyEnabled || !run || !paused)) ||
+      (kind === 'skip' && (!normalSoloSkipAvailable() || !paused)) ||
       (kind === 'next' && run.status !== 'won')
     )
       return;
@@ -8120,7 +8902,9 @@ try {
       kind,
       actorChoice: actorPreferences.snapshot(),
       controller: new AbortController(),
-      button: $(kind === 'next' ? 'next-button' : 'retry-button'),
+      button: $(
+        kind === 'next' ? 'next-button' : kind === 'skip' ? 'journey-skip' : 'retry-button',
+      ),
       run,
       recorder,
       runId,
@@ -8147,10 +8931,14 @@ try {
     resultAttempt = ticket;
     const epoch = ++resultAttemptEpoch;
     try {
+      preparationButtonBusy(ticket.button, true, ticket);
+      if (resultAttempt !== ticket || resultAttemptEpoch !== epoch) return;
       ticket.feedback = beginPreparation(
         kind === 'next'
           ? t('interface:preparingTheNextMission')
-          : t('interface:preparingThisMissionAgain'),
+          : kind === 'skip'
+            ? localizedMessage('interface:solo.preparingSkip')
+            : t('interface:preparingThisMissionAgain'),
         cancelResultAttempt,
         'preparing',
         true,
@@ -8199,8 +8987,7 @@ try {
         message: () =>
           t('interface:solo.preparingMission', { mission: contentText(level, 'name') }),
       });
-      ticket.button.disabled = true;
-      if (ownedFocus) $('flight-preparation-cancel').focus({ preventScroll: true });
+      if (ownedFocus) ticket.button.focus({ preventScroll: true });
       if (!resultAttemptCurrent(ticket))
         throw new DOMException(t('interface:preparationCancelled'), 'AbortError');
       let candidateAttempt = null;
@@ -8459,7 +9246,7 @@ try {
       } else {
         resultAttempt = null;
         ticket.adoptionEpoch = ++resultAttemptEpoch;
-        ticket.button.disabled = false;
+        preparationButtonBusy(ticket.button, false, ticket);
       }
       previousPictures = flightPictures;
       adoptedPictures = ticket.pictures;
@@ -8500,8 +9287,7 @@ try {
     completionWarning = '';
     appearanceRewardIds = [];
     celebrationActive = false;
-    journeySkipArmed = null;
-    localizedText($('journey-skip'), () => t('interface:skipMission'));
+    clearSkipConfirmation();
     defeatActive = false;
     defeatPaused = false;
     defeatRemaining = 0;
@@ -8701,9 +9487,9 @@ try {
     if (document.hidden || !document.hasFocus()) return;
     if (courseBlocked()) return;
     if (!run || (campaignOverview && !practice) || ['won', 'lost'].includes(run.status)) return;
+    if (librarySkipResolution) cancelSkipResolution({ announce: false });
     if (journeySkipArmed !== null) {
-      journeySkipArmed = null;
-      localizedText($('journey-skip'), () => t('interface:skipMission'));
+      clearSkipConfirmation();
       warning(localizedMessage('interface:skipCancelledContinueThisMission'));
     }
     attemptFiles?.invalidate();
@@ -9930,6 +10716,7 @@ try {
     );
   }
   function requestRestart(opener) {
+    advanceSkipLifecycle();
     const top = controllerDialog();
     if (
       restartRequest ||
@@ -10091,6 +10878,7 @@ try {
   $('settings-master-mute').onclick = () => setMasterMuted(!audioMaster.snapshot().muted);
   $('shell-sound').onclick = () => setMasterMuted(!audioMaster.snapshot().muted);
   $('overlay-sound').onclick = () => setMasterMuted(!audioMaster.snapshot().muted);
+  $('overlay-next-song').onclick = () => quickMusicControls?.perform('next');
   for (const id of ['tap-steering', 'settings-tap-steering']) {
     $(id).onchange = () => {
       clearInput();
@@ -10102,7 +10890,7 @@ try {
   }
   $('help-button').onclick = () => {
     pause(true);
-    focusPauseToolReturn('overlay-help');
+    focusPauseToolReturn('start-button');
     $('help-dialog').showModal();
   };
   let collectionContextKey = null,
@@ -10319,6 +11107,7 @@ try {
     lastReplay && downloadCurrentReplay(lastReplayPresentation ?? lastReplay);
   $('download-raw-replay').onclick = () => lastReplay && downloadCurrentReplay(lastReplay);
   function suspendInteraction() {
+    advanceSkipLifecycle();
     cancelUnifiedOpening?.();
     // Returning to focus must not revive a picker or launch requested before
     // the interruption, even when its asynchronous work finishes afterward.
@@ -10500,21 +11289,24 @@ try {
       ? []
       : preparePackCatalog(archiveCatalogSource).packs.map(({ id }) => id),
   });
-  async function prepareLibraryClassic(row, { signal }) {
+  async function prepareLibraryClassic(row, { signal, preparation, preparationRow }) {
+    if (preparation !== undefined) bindSkipPreparation(preparation, row, preparationRow, signal);
     if (runtimeContent) throw new Error(t('interface:thisPackIsNotBundledWithTheCurrentBuild'));
     await gameplayDownloads.ensureClassic(row.packId, { signal });
+    if (preparation !== undefined) assertSkipPreparation(preparation);
     if (row.source === 'external')
       return installSourceChapter(row.packId, null, { signal, download: true });
     if (row.source === 'optional') {
       const catalog = await loadOptionalCatalog({ signal, baseURL: new URL('../', location.href) });
       const summary = catalog.packs.find((item) => item.id === row.packId);
       if (!summary) throw new Error(t('interface:thatOptionalChapterIsUnavailableInThisRelease'));
-      return installOptionalChapter(summary, { signal });
+      return installOptionalChapter(summary, { signal, preparation });
     }
     if (row.source === 'base') return;
     if (contentSwitchBusy || backupBusy || sessionBusy)
       throw new Error(t('interface:finishTheCurrentOperationBeforeDownloadingAnotherChapter'));
     const operation = packLaunchGuard.begin(packs);
+    if (preparation !== undefined) bindSkipWriter(preparation, operation);
     packCommits.markIntent();
     contentSwitchBusy = true;
     const cancelled = () => {
@@ -10523,7 +11315,10 @@ try {
     signal?.addEventListener('abort', cancelled, { once: true });
     try {
       if (signal?.aborted) throw new DOMException(t('interface:downloadCancelled'), 'AbortError');
-      return await ensureBundledPack(row.packId, operation, { preserveCurrentRun: true });
+      return await ensureBundledPack(row.packId, operation, {
+        preserveCurrentRun: true,
+        preparation,
+      });
     } finally {
       signal?.removeEventListener('abort', cancelled);
       if (packLaunchGuard.current(operation, packs)) {
@@ -10535,8 +11330,22 @@ try {
   }
   function departLibraryMission(context) {
     if (context.isCurrent?.() === false) return false;
-    if (context.transferContinuation && !context.transferContinuation()) return false;
     const target = unifiedLibrary.library.find(context.libraryMissionId);
+    if (!target) throw new Error('This exact mission selection is no longer available.');
+    if (context.skip) {
+      if (context.transferContinuation && !context.transferContinuation()) return false;
+      location.href = missionLibraryHref({
+        baseURL: location.href,
+        currentMode: 'solo',
+        mode: context.mode,
+        journey: target.collection === 'Journey' ? target.editionId : 'legacy',
+        missionId: target.id,
+        sourceJourney: currentAuthoredModeRoute() || 'legacy',
+      });
+      context.onSkipAdopt?.();
+      return true;
+    }
+    if (context.transferContinuation && !context.transferContinuation()) return false;
     return requestModeDeparture('library', { preventDefault() {} }, $('shell-play'), {
       libraryTarget: target,
       libraryMode: context.mode,
@@ -10576,6 +11385,26 @@ try {
       }
     }
     if (journeyEnabled || context.mode !== 'solo') return departLibraryMission(context);
+    if (context.skip) {
+      const source = pack === null ? baseEntry : resolvePackCampaign(pack, selection.campaignId);
+      const authored = projectClassicCurrentRulesEntry(source, selection.rulesEdition);
+      const entry = executionForEntry(authored, library.preferences.campaignDifficulty);
+      const nextIndex = entry.campaign.levels.findIndex((level) => level.id === selection.levelId);
+      if (nextIndex < 0) throw new Error(t('interface:theExactNextMissionIsUnavailable'));
+      if (context.transferContinuation && !context.transferContinuation()) return false;
+      const selected = await prepareResultAttempt('skip', nextIndex, entry);
+      if (selected) {
+        const row = unifiedLibrary.library.find(context.libraryMissionId);
+        retainedLibraryOwner = {
+          entry: activeEntry,
+          ownerId: row.ownerId,
+          editionId: row.editionId,
+          campaignKey: JSON.parse(row.campaignKey)[2],
+        };
+        context.onSkipAdopt?.();
+      }
+      return selected;
+    }
     if (context.continuation && run?.status === 'won') {
       const source = pack === null ? baseEntry : resolvePackCampaign(pack, selection.campaignId);
       const authored = projectClassicCurrentRulesEntry(source, selection.rulesEdition);
@@ -10665,12 +11494,54 @@ try {
         : createJourneyProfileStore({ profileKey: route.profileKey });
       if (!candidateHost) await profile.load();
       collectionJourneyState = { profile, catalog: host.catalog, editionId: route.id };
-      const launchSolo = (mission, context) => {
+      const launchSolo = async (mission, context) => {
         if (context.isCurrent?.() === false) return false;
-        if (!candidateHost || context.mode !== 'solo') return departLibraryMission(context);
+        if (!candidateHost || context.mode !== 'solo') {
+          if (context.skip && context.mode === 'solo') {
+            let validationHost = host,
+              disposeValidationHost = false;
+            if (!validationHost.preparer) {
+              validationHost = await createSoloRouteHost(route, {
+                themes: libraryThemes,
+                buildVersion,
+                corePackIds: route.corePackIds,
+                optionalCampaignIds: route.optionalCampaignIds,
+                ...(!runtimeContent
+                  ? {
+                      ensurePackage: (groupId, options) =>
+                        gameplayDownloads.ensure(groupId, options),
+                    }
+                  : {}),
+              });
+              disposeValidationHost = true;
+            }
+            try {
+              const candidate = await validationHost.preparer.prepare(
+                {
+                  missionId: mission.id,
+                  difficulty: browsingJourneyPreferences.snapshot().difficulty,
+                  seed,
+                  turnPolicy,
+                },
+                { signal: context.signal, onStatus: context.onStatus },
+              );
+              if (context.isCurrent?.() === false) {
+                if (validationHost.preparer.current(candidate)) validationHost.preparer.cancel();
+                return false;
+              }
+              validationHost.preparer.cancel();
+            } finally {
+              if (disposeValidationHost) validationHost.preparer.dispose();
+            }
+          }
+          return departLibraryMission(context);
+        }
         if ($('shell-home').open) $('shell-home').close();
         if (context.transferContinuation && !context.transferContinuation()) return false;
-        return launchJourneyMission(mission, { kind: context.continuation ? 'next' : 'choose' });
+        return launchJourneyMission(mission, {
+          kind: context.skip ? 'skip' : context.continuation ? 'next' : 'choose',
+          skipped: context.skip ? journeySkipMission() : null,
+        });
       };
       let journeySources,
         spatialEditions = { dispose() {} };
@@ -10997,8 +11868,7 @@ try {
         onPause: () => {
           pause(true);
           clearInput();
-          journeySkipArmed = null;
-          localizedText($('journey-skip'), () => t('interface:skipMission'));
+          clearSkipConfirmation();
         },
         onReturn: (opener) => {
           clearInput();
@@ -11075,6 +11945,7 @@ try {
     };
   }
   async function openUnifiedMissions(opener, options) {
+    advanceSkipLifecycle();
     cancelUnifiedOpening?.();
     const revision = ++unifiedOpenRevision;
     // The picker may need its first metadata load. Retire post-adoption Next
@@ -11182,8 +12053,7 @@ try {
       onPause: () => {
         pause(true);
         clearInput();
-        journeySkipArmed = null;
-        localizedText($('journey-skip'), () => t('interface:skipMission'));
+        clearSkipConfirmation();
       },
       onReturn: (opener) => {
         clearInput();
@@ -11192,31 +12062,6 @@ try {
     });
     $('journey-chooser').querySelector('.journey-footer').append($('missions-catalogue'));
     refreshJourneySkip();
-    $('journey-skip').onclick = () => {
-      const mission = journeySkipMission();
-      if (!mission) return;
-      const next = nextJourneyMission(mission.id);
-      if (!next) {
-        journeyChooser.open($('journey-skip'));
-        return;
-      }
-      if (journeySkipArmed !== runId) {
-        pause(true);
-        clearInput();
-        journeySkipArmed = runId;
-        localizedText($('journey-skip'), () => t('interface:confirmSkip'));
-        warning(
-          localizedMessage('interface:journey.skipConfirm', {
-            mission: contentText(next, 'name'),
-          }),
-        );
-        $('journey-skip').focus({ preventScroll: true });
-        return;
-      }
-      journeySkipArmed = null;
-      localizedText($('journey-skip'), () => t('interface:skipMission'));
-      void launchJourneyMission(next, { skipped: mission });
-    };
     $('journey-save-retry').onclick = () => void journeyProfile.flush();
     $('journey-save-export').onclick = async () => {
       try {
@@ -11229,6 +12074,45 @@ try {
     };
     window.addEventListener('online', () => void journeyProfile.flush());
   }
+  $('journey-skip').onclick = () => {
+    if (!normalSoloSkipAvailable()) return;
+    if (journeySkipArmed !== null) {
+      const destination = journeySkipDestination;
+      if (
+        journeySkipArmed !== runId ||
+        !destination ||
+        !skipSnapshotCurrent(destination.snapshot)
+      ) {
+        clearSkipConfirmation(localizedMessage('interface:solo.skipCancelledFlightChanged'));
+        $('journey-skip').focus({ preventScroll: true });
+        return;
+      }
+      if (destination.type === 'journey') {
+        void launchJourneyMission(destination.mission, {
+          kind: 'skip',
+          skipped: destination.skipped,
+        }).then((adopted) => {
+          if (!adopted && journeySkipDestination === destination && !document.hidden)
+            $('journey-skip').focus({ preventScroll: true });
+        });
+      } else void launchLibrarySkip(destination);
+      return;
+    }
+    const mission = journeySkipMission(),
+      next = mission && nextJourneyMission(mission.id);
+    if (mission && next) {
+      pause(true);
+      clearInput();
+      armSkip({
+        type: 'journey',
+        mission: next,
+        skipped: mission,
+        snapshot: skipSnapshot(),
+      });
+      return;
+    }
+    void resolveLibrarySkip();
+  };
   if (journeyPreferences) {
     let preferenceRevision = journeyPreferences.snapshot().revision,
       exportSequence = 0;
@@ -11238,6 +12122,7 @@ try {
       if (preferenceRevision !== snapshot.revision) {
         preferenceRevision = snapshot.revision;
         cancelResultAttempt();
+        cancelSkipForContentChange();
       }
       exportSequence++;
       show('journey-preferences-recovery', !snapshot.durable);
@@ -11550,7 +12435,8 @@ try {
           }),
       })
     : null;
-  attachFullscreen($('shell-fullscreen'));
+  attachFullscreen($('shell-fullscreen'), document, { allowInstallHelp: false });
+  attachFullscreen($('overlay-fullscreen'), document, { allowInstallHelp: false });
   void initializeSoundtrack();
   if (autoplayPackLaunch)
     requestAnimationFrame(() => {

@@ -287,6 +287,15 @@ export function createExternalChapterHost({
                   sameSnapshot(result, mutation.before),
                   'Chapter snapshot changed; review again.',
                 );
+                if (mutation.beforeWrite) {
+                  mutation.beforeWrite();
+                  // The caller may only veto publication. Recheck after its
+                  // synchronous callback; it cannot replace our writer/lock/CAS.
+                  check(signal, true);
+                  required(!marker(), 'A backup lock requires recovery first.');
+                  check(signal, true);
+                  // No caller callback may run after the final host checks.
+                }
                 if (values.packs !== mutation.after) store.put(mutation.after, keys.packsKey);
                 result = { ...result, packs: mutation.after };
               }
@@ -600,7 +609,7 @@ export function createExternalChapterHost({
         return review;
       });
     },
-    commitMutation(review, { signal } = {}) {
+    commitMutation(review, { signal, beforeWrite } = {}) {
       const proposal = reviews.get(review);
       required(proposal, 'Use a fresh single-use chapter mutation review.');
       reviews.delete(review);
@@ -612,7 +621,11 @@ export function createExternalChapterHost({
           const { store } = await borrowed(s);
           closure(content, (await store.readPresentationMetadata({ signal: s })).metadata);
         }
-        const committed = await raw(s, { before: proposal.before, after: proposal.after });
+        const committed = await raw(s, {
+          before: proposal.before,
+          after: proposal.after,
+          beforeWrite,
+        });
         return Object.freeze({
           status: 'committed',
           packs: content.packs,

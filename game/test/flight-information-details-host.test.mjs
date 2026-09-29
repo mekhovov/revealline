@@ -441,6 +441,10 @@ test('mounted controller navigates Pause to Details and reading; held Back canno
   assert.equal(p.doc.activeElement, p.$('overlay-field-details'));
   pulse(0);
   assert.equal(p.$('flight-details-dialog').open, true);
+  pulse(5);
+  assert.equal(p.doc.activeElement, p.$('flight-details-back'));
+  pulse(4);
+  assert.equal(p.doc.activeElement, p.$('flight-details-read'));
   pulse(0);
   assert.equal(p.doc.activeElement, p.$('flight-details-reading'));
   pulse(1);

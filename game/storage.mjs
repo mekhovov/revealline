@@ -31,14 +31,46 @@ export async function readAssetStore(key) {
     request.onerror = () => reject(request.error);
   });
 }
-export async function writeAssetStore(key, value) {
+export async function writeAssetStore(key, value, { signal, beforeWrite } = {}) {
   const db = await openDatabase();
   return new Promise((resolve, reject) => {
     const transaction = db.transaction('assets', 'readwrite');
-    transaction.objectStore('assets').put(value, key);
-    transaction.oncomplete = () => resolve();
-    transaction.onerror = () => reject(transaction.error);
-    transaction.onabort = () =>
-      reject(transaction.error || new Error('Asset storage was cancelled.'));
+    let failure;
+    const clean = () => signal?.removeEventListener('abort', cancel);
+    const fail = (error) => {
+      failure = error;
+      try {
+        transaction.abort();
+      } catch {}
+    };
+    const cancel = () => fail(new DOMException('Asset storage was cancelled.', 'AbortError'));
+    transaction.oncomplete = () => {
+      clean();
+      resolve();
+    };
+    transaction.onerror = () => {
+      failure ??= transaction.error;
+    };
+    transaction.onabort = () => {
+      clean();
+      reject(failure || transaction.error || new Error('Asset storage was cancelled.'));
+    };
+    signal?.addEventListener('abort', cancel, { once: true });
+    const commit = (stored) => {
+      try {
+        if (signal?.aborted) return cancel();
+        beforeWrite?.(stored);
+        if (signal?.aborted) return cancel();
+        transaction.objectStore('assets').put(value, key);
+      } catch (error) {
+        fail(error);
+      }
+    };
+    if (beforeWrite) {
+      // Opt-in writers compare the actual transaction snapshot, after database
+      // opening/queueing, rather than a read performed before either await.
+      const request = transaction.objectStore('assets').get(key);
+      request.onsuccess = () => commit(request.result ?? null);
+    } else commit();
   });
 }

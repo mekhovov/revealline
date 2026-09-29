@@ -1421,7 +1421,9 @@ export function bootCoop({
           })
         : t('interface:nextArena'),
     );
-    localizedText($('coop-lobby'), () => t('interface:changeSetup'));
+    localizedText($('coop-lobby'), () =>
+      lost ? t('interface:changeDifficulty') : t('interface:changeSetup'),
+    );
     $('coop-resume').hidden = won || lost;
     $('coop-view-picture').hidden = !won || loopStopped || !acceptedPicture?.binding?.image;
     let story = null;
@@ -4374,7 +4376,7 @@ export function bootCoop({
   }
   // This synchronous handoff owns only the return from an attempt to its lobby.
   // Do not let focus/layout callbacks revive it after a newer action or lifecycle.
-  function lobbyFocus() {
+  function lobbyFocus(preferredTarget = null) {
     const origin = document.activeElement,
       epoch = generation + 1,
       visit = settingsVisit;
@@ -4415,17 +4417,19 @@ export function bootCoop({
       !$('coop-menu').hidden;
     return {
       finish() {
-        target = primary();
+        const desired = () =>
+          preferredTarget && visibleAction(preferredTarget) ? preferredTarget : primary();
+        target = desired();
         const owns = () =>
           current() &&
-          primary() === target &&
+          desired() === target &&
           (document.activeElement === origin ||
             document.activeElement === target ||
             unclaimedFocus(document.activeElement));
         if (!owns() || !visibleAction(target) || !owns()) return;
         if (document.activeElement !== target) target.focus({ preventScroll: true });
         const focused = () =>
-          current() && primary() === target && document.activeElement === target;
+          current() && desired() === target && document.activeElement === target;
         if (!focused() || !visibleAction(target) || !focused()) return;
         const rect = target.getBoundingClientRect(),
           width = document.documentElement.clientWidth || window.innerWidth,
@@ -4448,12 +4452,13 @@ export function bootCoop({
       },
     };
   }
-  function lobby() {
+  function lobby({ focusTarget = null, revealSetup = false } = {}) {
     discovery?.close({ restore: false });
     cancelNext();
     nextStatus('');
     if (disposed || departure) return;
-    const focus = lobbyFocus();
+    if (revealSetup) $('coop-optional-setup').open = true;
+    const focus = lobbyFocus(focusTarget);
     try {
       cancelImport({ forget: true });
       clear();
@@ -4529,7 +4534,7 @@ export function bootCoop({
   function cancelDeparture(options) {
     closeDeparture(departure, options);
   }
-  function requestDeparture(kind, opener) {
+  function requestDeparture(kind, opener, { lobbyTarget = null, revealSetup = false } = {}) {
     discovery?.close({ restore: false });
     cancelNext();
     if (
@@ -4542,7 +4547,7 @@ export function bootCoop({
     )
       return;
     if (!unfinished()) {
-      if (kind === 'setup') lobby();
+      if (kind === 'setup') lobby({ focusTarget: lobbyTarget, revealSetup });
       else if (kind === 'retry') {
         try {
           start();
@@ -5154,7 +5159,13 @@ export function bootCoop({
   $('coop-retry').onclick = () => requestDeparture('retry', $('coop-retry'));
   $('coop-resume').onclick = resume;
   $('coop-pause').onclick = pause;
-  $('coop-lobby').onclick = () => requestDeparture('setup', $('coop-lobby'));
+  $('coop-lobby').onclick = () => {
+    const changeDifficulty = run?.status === 'lost';
+    requestDeparture('setup', $('coop-lobby'), {
+      lobbyTarget: changeDifficulty ? $('coop-difficulty') : null,
+      revealSetup: changeDifficulty,
+    });
+  };
   $('coop-home-paused').onclick = () => requestDeparture('home', $('coop-home-paused'));
   function supportGuidance(guidance, level) {
     localizedText($('coop-support-help'), () => guidance().supportText);
