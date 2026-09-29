@@ -1064,18 +1064,18 @@ function mountMotionLab() {
       const file = event.target.files[0];
       event.target.value = '';
       if (!file) return;
+      // A real replacement selection owns the result, even if rejected before
+      // decode. Retire the previous request while retaining accepted artwork.
+      cancelPendingBackground();
       if (
         !['image/png', 'image/jpeg', 'image/webp', 'image/gif'].includes(file.type) ||
         file.size > PNG_PREVIEW_MAX_BYTES
       ) {
+        $('clear-background').disabled = !background;
         backgroundMessage(localizedMessage('tools:motionLab.chooseImage'), 'error');
         return;
       }
-      const token = ++backgroundToken;
-      if (pendingBackground) {
-        pendingBackground.image?.removeAttribute('src');
-        if (pendingBackground.url) URL.revokeObjectURL(pendingBackground.url);
-      }
+      const token = backgroundToken;
       pendingBackground = { image: null, url: null };
       $('clear-background').disabled = false;
       const current = () => !disposed && token === backgroundToken;
