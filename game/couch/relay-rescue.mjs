@@ -1,3 +1,5 @@
+import { createControllerSession } from './controller-session.mjs';
+import { mountControllerSetup } from './controller-setup.mjs';
 import { gameplayTuningDescription } from '../ui/gameplay-copy.mjs';
 import {
   t,
@@ -511,7 +513,6 @@ export function bootCoop({
       (run ? gameplayPreferences.snapshot().difficulty : $('coop-difficulty').value),
   });
   let inactive = !foreground();
-  let previousPads = new Map();
   let pack = COOP_STARTER_PACK;
   let packArtworkSource = null;
   let installedTeamStore = null,
@@ -723,7 +724,9 @@ export function bootCoop({
       const visible =
         running() &&
         (mode === 'on' ||
-          (mode === 'auto' && touchQuery.matches && assignedSlots[player] === null));
+          (mode === 'auto' &&
+            touchQuery.matches &&
+            (assignedSlots[player] === null || !controllerSession.completeFlight(player))));
       if (!pad.hidden && !visible) input?.clearPhysical(player);
       pad.hidden = !visible;
       pad.closest('.control-card').dataset.touchVisible = String(visible);
@@ -955,7 +958,18 @@ export function bootCoop({
     controls: $('coop-touch').parentElement,
     clear: () => input?.clearPhysical(),
   });
+  const controllerSession = createControllerSession({
+    onLoss: () => {
+      pause();
+      clear();
+    },
+  });
+  const controllerSetup = mountControllerSetup({
+    root: $('coop-settings-panel-controls'),
+    session: controllerSession,
+  });
   input = attachCouchInput({
+    controllerSession,
     getTouchSettings: () => couchTouch.snapshot(),
     ...COOP_INPUT_CAPABILITIES,
     arena: $('coop-canvas'),
@@ -974,9 +988,13 @@ export function bootCoop({
       if ($('coop-pads').textContent !== text()) localizedText($('coop-pads'), text);
     },
   });
-  const router = createControllerRouter({ readPads: () => framePads });
+  const router = createControllerRouter({
+    readPads: () => controllerSession.frame().menuPads,
+    autoJoin: true,
+    eventTarget: null,
+  });
   const controllerConfirmGuard = attachControllerConfirmGuard({
-    confirmPressed: () => router.menuConfirmPressed(),
+    confirmPressed: () => router.menuConfirmPressed() || controllerSession.frame().confirmHeld,
   });
   const menuMasthead = $('coop-home').closest('.masthead');
   let compositeMenu = false;
@@ -1123,6 +1141,7 @@ export function bootCoop({
   }
   window.addEventListener('resize', revealMenuAction);
   function clear() {
+    controllerSession.clear();
     input.clear();
     batch.release();
     router.clear();
@@ -5092,27 +5111,19 @@ export function bootCoop({
       acceptMusic(acceptedPicture);
       if (!loopStopped)
         music?.update(running(), { family: acceptedPicture?.request.themeId ?? 'fpv' });
+      let readError = null;
       try {
-        framePads = [...(navigator.getGamepads?.() || [])];
-      } catch {
+        if (typeof navigator.getGamepads !== 'function') throw new Error('Gamepad API unavailable');
+        framePads = [...navigator.getGamepads()];
+      } catch (error) {
         framePads = [];
+        readError = error;
       }
-      const signatures = new Map(
-        framePads
-          .filter((pad) => pad?.connected)
-          .map((pad) => [
-            pad.index,
-            `${pad.id}:${pad.mapping}:${pad.buttons?.length}:${pad.axes?.length}`,
-          ]),
-      );
-      if ([...previousPads].some(([index, signature]) => signatures.get(index) !== signature)) {
-        pause();
-        clear();
-      }
-      previousPads = signatures;
+      framePads = controllerSession.sample(framePads, { active: running(), error: readError }).pads;
+      controllerSetup.refresh();
       input.poll();
       const routed = router.sample({ scope: scope(), timeMs: now });
-      controllerConfirmGuard.observe(routed.confirmHeld);
+      controllerConfirmGuard.observe(routed.confirmHeld || controllerSession.frame().confirmHeld);
       if (!running()) {
         if (routed.status.code === 'joined' || Object.values(routed.ui).some(Boolean))
           setReadingModality('controller');
@@ -5830,6 +5841,8 @@ export function bootCoop({
     cancelAnimationFrame(frame);
     clear();
     couchTouch.destroy();
+    controllerSetup.dispose();
+    controllerSession.dispose();
     input.destroy();
     controllerConfirmGuard.destroy();
     router.destroy();

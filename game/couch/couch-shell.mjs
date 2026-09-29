@@ -68,6 +68,7 @@ export function createCouchShell({
   getSoloJourneyRoute = () => null,
   getTeamJourneyRoute = () => null,
   onMissions = null,
+  controllerNeedsTouch = () => false,
 } = {}) {
   const $ = (id) => doc.getElementById(id),
     view = doc.defaultView,
@@ -237,7 +238,9 @@ export function createCouchShell({
   function renderPads() {
     for (let i = 0; i < 2; i++) {
       const wanted =
-        preferences[i] === 'always' || (preferences[i] === 'auto' && modality[i] === 'touch');
+        preferences[i] === 'always' ||
+        (preferences[i] === 'auto' &&
+          (modality[i] === 'touch' || (coarse && controllerNeedsTouch(i))));
       // A held physical control may not vanish mid-round. Collapse at pause,
       // after the host has called its existing clearPhysical lifecycle guard.
       shown[i] = status === 'running' && (wanted || shown[i]);
