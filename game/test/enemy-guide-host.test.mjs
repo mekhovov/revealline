@@ -26,6 +26,9 @@ import {
   resolvePackCampaign,
 } from '../packs.mjs';
 import { createSelectionBookmark } from '../selection-bookmark.mjs';
+import { editionProviderFixture } from './helpers/edition-provider-fixture.mjs';
+import { compileContentProject, resolveMission } from '../content-design/project.mjs';
+import { createRun, stepRun, FIXED_DT } from '../core/index.mjs';
 
 // Model native dialog opening/return focus; real app modal navigation and handlers stay active.
 function nativeDialogs(t) {
@@ -60,6 +63,98 @@ const campaign = {
   classRecipes: JSON.parse(readFileSync(new URL('../content/classes.json', import.meta.url))),
   levels: [retryFixture('self-contact').level],
 };
+
+test('an admitted edition launches its current pressure lesson and the actual child retains the exact setup without rewards', async (t) => {
+  const fixture = await editionProviderFixture();
+  fixture.source.missions[0].actors[0].role = 'trail-pursuer';
+  const compiled = compileContentProject(fixture.source);
+  fixture.data.campaign.levels = compiled.missions.map(
+    (mission) => resolveMission(compiled, mission.id, { difficulty: 'standard' }).level,
+  );
+  const preview = memoryStorage({ [handoffKey]: 'unrelated retained preview' });
+  let search, level, options;
+  await t.test(
+    'the real parent uses the exact edition adapter and preserves its paused run',
+    async (t) => {
+      const page = await setup(t, {
+        search: '?edition=sample-public',
+        fetchResponse: fixture.fetcher,
+        previewStorage: preview,
+      });
+      page.$('start-button').click();
+      await settle(() => page.doc.body.dataset.flightState === 'running');
+      ticks(page, 12);
+      page.$('pause-button').click();
+      page.frame(0);
+      const run = page.rendered.run;
+      level = structuredClone(run.level);
+      options = {
+        seed: run.seed,
+        classId: run.classId,
+        classRecipes: structuredClone(run.classRecipes),
+        turnPolicy: run.turnPolicy,
+      };
+      const checkpoint = authoritativeCheckpoint(run);
+      openGuide(page);
+      page.change('enemy-guide-topic', 'trail-pursuit');
+      assert.equal(page.$('enemy-guide-play').disabled, false);
+      const writes = page.storage.writes.length;
+      const lesson = await launch(page);
+      const url = new URL(lesson.frame.src);
+      search = url.search;
+      assert.equal(url.searchParams.get('edition'), 'sample-public');
+      assert.equal(url.searchParams.get('edition-mission'), run.levelId);
+      assert.equal(url.searchParams.get('guide-seed'), String(run.seed));
+      assert.equal(url.searchParams.get('class'), run.classId);
+      assert.equal(
+        preview.writes.length,
+        0,
+        'Edition reconstruction never overwrites the Playground.',
+      );
+      childReturn(page, lesson);
+      page.frame(0);
+      assert.deepEqual(authoritativeCheckpoint(run), checkpoint);
+      assert.equal(page.rendered.paused, true);
+      assert.equal(page.storage.writes.length, writes);
+      assert.deepEqual(page.errors, []);
+    },
+  );
+  await t.test(
+    'the real edition child starts the same effective core and stays write-free',
+    async (t) => {
+      const page = await setup(t, {
+        search,
+        fetchResponse: fixture.fetcher,
+        previewStorage: preview,
+        parentWindow: { location: { origin: 'http://localhost' }, postMessage() {} },
+      });
+      const expected = createRun(level, options);
+      assert.deepEqual(
+        authoritativeCheckpoint(page.rendered.run),
+        authoritativeCheckpoint(expected),
+      );
+      assert.deepEqual(page.rendered.run.classRecipes, options.classRecipes);
+      assert.equal(page.$('enemy-workshop-return').textContent, 'Return to field guide');
+      page.$('start-button').click();
+      page.key('ArrowRight');
+      for (let i = 0; i < 30; i++) {
+        page.frame();
+        stepRun(expected, { direction: 'right' }, FIXED_DT);
+      }
+      page.key('ArrowRight', false);
+      assert.deepEqual(
+        authoritativeCheckpoint(page.rendered.run),
+        authoritativeCheckpoint(expected),
+      );
+      page.$('pause-button').click();
+      page.frame(0);
+      assert.equal(page.rendered.paused, true);
+      assert.equal(page.storage.writes.length, 0);
+      assert.equal(preview.getItem(handoffKey), 'unrelated retained preview');
+      assert.deepEqual(page.errors, []);
+    },
+  );
+});
 
 test('a restored FPV-only pack keeps all four canonical Guide appearances and practices', async (t) => {
   nativeDialogs(t);
@@ -245,8 +340,11 @@ async function setup(t, options = {}) {
   page.$('enemy-guide-frame').contentWindow = {};
   return page;
 }
-function liveCut(page) {
+async function liveCut(page) {
   page.$('start-button').click();
+  // Start owns asynchronous accepted actor/picture preparation. Do not send
+  // gameplay input or Escape while its ready-card operation is still pending.
+  await settle(() => page.doc.body.dataset.flightState === 'running');
   page.key('ArrowDown');
   ticks(page, 30);
   page.key('ArrowDown', false);
@@ -289,7 +387,9 @@ function childReturn(page, { frame, token }, overrides = {}) {
   });
 }
 function padBoundary(page, t) {
-  let now = 1000;
+  // Continue the host clock; a reset to 1000ms would regress after earlier
+  // complete-file cases and keep the Confirm lifecycle guarded indefinitely.
+  let now = performance.now();
   t.mock.method(performance, 'now', () => now);
   const original = navigator.getGamepads;
   const pad = {
@@ -326,7 +426,7 @@ for (const turnPolicy of ['immediate', 'grid-center']) {
       preview = memoryStorage({ [handoffKey]: 'an existing authoring preview' });
     saveLibrary(storage, profileKey, updatePreferences(emptyLibrary(), { turnPolicy }));
     const page = await setup(t, { storage, previewStorage: preview });
-    const checkpoint = liveCut(page);
+    const checkpoint = await liveCut(page);
     const pausedPlayer = structuredClone(page.rendered.run.player);
     assert.equal(page.$('pause-label').hidden, false);
     assert.equal(page.$('overlay-reading').hidden, true);
@@ -393,7 +493,10 @@ for (const turnPolicy of ['immediate', 'grid-center']) {
     controls.pulse(13);
     page.key('ArrowRight');
     page.key('ArrowRight', false);
-    ticks(page, 20);
+    // Advance the mocked physical clock through the 120ms Confirm release
+    // and 1250ms Steam/native echo guard before a separate keyboard gesture.
+    // The parent remains paused for every neutral sample.
+    for (let i = 0; i < 80; i++) controls.frame();
     assert.equal(page.rendered.paused, true, 'direction inputs never resume the paused parent');
     assert.deepEqual(authoritativeCheckpoint(page.rendered.run), checkpoint);
     assert.deepEqual(
@@ -404,6 +507,7 @@ for (const turnPolicy of ['immediate', 'grid-center']) {
     assert.equal(storage.writes.length, writeCount, 'practice never rewrites a campaign save');
     page.$('start-button').focus();
     nativeKey(page, 'Enter');
+    await settle(() => page.doc.body.dataset.flightState === 'running');
     ticks(page, 3);
     assert.equal(page.rendered.paused, false);
     assert.ok(page.rendered.run.player.y > pausedPlayer.y, 'explicit Resume continues saved Down');
@@ -419,7 +523,7 @@ for (const turnPolicy of ['immediate', 'grid-center']) {
 test('actual guide repeated return and canceled load preserve the parent and reject stale lesson messages', async (t) => {
   const preview = memoryStorage({ [handoffKey]: 'previous preview' });
   const page = await setup(t, { previewStorage: preview });
-  const checkpoint = liveCut(page);
+  const checkpoint = await liveCut(page);
   openGuide(page);
   const saved = [...page.storage.map];
   const first = await launch(page);
@@ -529,7 +633,7 @@ for (const listening of [false, true]) {
     const stream = media.src;
     page.$('soundtrack-close').click();
     page.doc.querySelector('[data-close="settings-dialog"]').click();
-    const checkpoint = liveCut(page);
+    const checkpoint = await liveCut(page);
     openGuide(page);
     const child = await launch(page);
     assert.equal(media.paused, true, 'parent audio suspends while the child lesson runs');

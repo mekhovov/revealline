@@ -7,6 +7,7 @@ import {
   enemyGuidePracticeInstructions,
   createEnemyGuideScenario,
 } from '../enemy-guide.mjs';
+import { isEncounterGuideTopic } from '../encounter-guide.mjs';
 import { createRun, stepRun, FIXED_DT } from '../core/index.mjs';
 import { createRecorder, recordInput, exportReplay, verifyReplay } from '../replay.mjs';
 import { validateScenario } from '../content.mjs';
@@ -17,8 +18,8 @@ const impactScenario = JSON.parse(
 const lesson = (topic, themeId, turnPolicy) =>
   createEnemyGuideScenario({ topic, themeId, turnPolicy, themes, impactScenario });
 
-test('eight concise topics describe the registered roles and distinguish opt-in line impacts', () => {
-  assert.equal(ENEMY_GUIDE_TOPICS.length, 8);
+test('twelve concise topics distinguish registered roles, optional encounters and line impacts', () => {
+  assert.equal(ENEMY_GUIDE_TOPICS.length, 12);
   for (const { id } of ENEMY_GUIDE_TOPICS)
     for (const theme of ['fpv', 'ukraine', 'retro', 'coupa']) {
       const entry = enemyGuideEntry(id, theme);
@@ -35,7 +36,7 @@ test('eight concise topics describe the registered roles and distinguish opt-in 
 
 test('all four-theme/two-policy lesson variants validate without changing original content', () => {
   const before = structuredClone({ themes, impactScenario });
-  for (const { id } of ENEMY_GUIDE_TOPICS)
+  for (const { id } of ENEMY_GUIDE_TOPICS.filter(({ id }) => !isEncounterGuideTopic(id)))
     for (const themeId of ['fpv', 'ukraine', 'retro', 'coupa'])
       for (const turnPolicy of ['immediate', 'grid-center']) {
         const scenario = lesson(id, themeId, turnPolicy);
