@@ -10,6 +10,7 @@ import { prepareSoundtrackLibrary } from '../soundtrack-bundle.mjs';
 import { BUILTIN_SOUNDTRACK_TRACKS } from '../soundtrack.mjs';
 import { SOUNDTRACK_CATALOGUE } from '../content/soundtrack-catalogue.mjs';
 import { ONLINE_SOUNDTRACK_CATALOGUE_URL } from '../online-soundtrack-catalogue.mjs';
+import { publicCatalogueResponse } from './helpers/soundtrack-public-catalogue.mjs';
 import { AUDIO_PREFERENCES_KEY } from '../audio-preferences.mjs';
 import { emptyLibrary, updatePreferences, saveLibrary, loadLibrary } from '../library.mjs';
 import { retryFixture } from './fixtures/retry-scenarios.mjs';
@@ -92,11 +93,17 @@ async function waitFor(predicate, label) {
 }
 async function setup(
   t,
-  { filePlayback = true, audioPreferences = {}, emptyMusic = false, fetchResponse } = {},
+  {
+    filePlayback = true,
+    audioPreferences = {},
+    emptyMusic = false,
+    fetchResponse,
+    publicStyles,
+  } = {},
 ) {
   const original = await fixture(),
     db = memoryIndexedDB(),
-    store = createSoundtrackStore({ indexedDB: db.indexedDB });
+    store = createSoundtrackStore({ indexedDB: db.indexedDB, soundtrackCatalogue: !!publicStyles });
   const library = {
     ...original.library,
     playlists: [
@@ -110,7 +117,7 @@ async function setup(
   const prepared = await prepareSoundtrackLibrary(library, original.assets, {
     probeMedia: structuralProbe,
   });
-  if (!emptyMusic) await store.commit(prepared, { expectedGeneration: 0 });
+  if (!emptyMusic) await store.commit(prepared, { expectedGeneration: 0, publicStyles });
   store.close();
   const audio = {
     ...audioHarness(),
@@ -144,7 +151,10 @@ test('muted fresh Solo menu and Studio do not acquire admitted hosted recordings
   const { page } = await setup(t, {
     emptyMusic: true,
     fetchResponse: async (url) => {
-      if (String(url) === ONLINE_SOUNDTRACK_CATALOGUE_URL) requests.push(String(url));
+      if (String(url) === ONLINE_SOUNDTRACK_CATALOGUE_URL) {
+        requests.push(String(url));
+        return publicCatalogueResponse();
+      }
     },
   });
   await waitFor(
@@ -832,3 +842,78 @@ for (const gesture of ['keyboard', 'pointer']) {
     assert.deepEqual(page.errors, []);
   });
 }
+
+for (const [styles, action] of [
+  [['fpv'], 'start'],
+  [['fusion'], 'play'],
+]) {
+  test(`Solo reload uses saved ${styles[0]} on generic ${action} without rewriting preferences`, async (t) => {
+    let catalogueRequests = 0;
+    const { page, db } = await setup(t, {
+      publicStyles: styles,
+      audioPreferences: { musicEnabled: true },
+      fetchResponse: async (url) => {
+        if (String(url) === ONLINE_SOUNDTRACK_CATALOGUE_URL) {
+          catalogueRequests++;
+          return publicCatalogueResponse();
+        }
+      },
+    });
+    await openStudio(page);
+    assert.equal(catalogueRequests, 1, 'only the pre-existing panel discovery runs before Play');
+    assert.equal(
+      musicMedia(page).src || '',
+      '',
+      'saved public choice does not prepare the old local projection',
+    );
+    assert.equal(musicMedia(page).plays, 0);
+    if (action === 'start') {
+      page.$('soundtrack-close').click();
+      page.$('settings-dialog').close();
+      await startFlight(page);
+    } else await playStudio(page);
+    const expectedHash = (styles[0] === 'fpv' ? '2' : '3').repeat(64);
+    await waitFor(
+      () => musicMedia(page).src?.includes(expectedHash),
+      'generic host action selects saved exact remote style',
+    );
+    assert.equal(
+      catalogueRequests,
+      2,
+      'explicit generic playback acquires the verified catalogue once',
+    );
+    assert.equal(musicMedia(page).paused, false);
+    const manager = createManagedMediaStore({ indexedDB: db.indexedDB, soundtrackCatalogue: true });
+    const saved = await manager.readDomain('audio');
+    manager.close();
+    assert.equal(saved.generation, 1);
+    assert.deepEqual(saved.publicStyles, styles);
+    assert.deepEqual(page.errors, []);
+  });
+}
+
+test('closing Studio cancels a pending saved-style Play without a late stream', async (t) => {
+  let catalogueRequests = 0,
+    release;
+  const response = new Promise((resolve) => (release = resolve));
+  t.after(() => release(publicCatalogueResponse()));
+  const { page } = await setup(t, {
+    publicStyles: ['fpv'],
+    fetchResponse: async (url) => {
+      if (String(url) === ONLINE_SOUNDTRACK_CATALOGUE_URL) {
+        catalogueRequests++;
+        return catalogueRequests === 1 ? publicCatalogueResponse() : response;
+      }
+    },
+  });
+  await openStudio(page);
+  const playing = page.$('soundtrack-play').onclick();
+  await waitFor(() => catalogueRequests === 2, 'generic Play awaits catalogue');
+  page.$('soundtrack-close').click();
+  assert.equal(page.$('soundtrack-dialog').open, false);
+  release(publicCatalogueResponse());
+  await playing;
+  assert.equal(musicMedia(page).plays, 0);
+  assert.equal(musicMedia(page).src || '', '');
+  assert.deepEqual(page.errors, []);
+});
