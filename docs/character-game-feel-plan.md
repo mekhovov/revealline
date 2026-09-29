@@ -1,12 +1,25 @@
 # Character motion, game feel and authentic artwork
 
-Approved scope updated 28 September 2026 through nine implementation batches and the user’s C3–C6 priority revision. This replaces the earlier character-improvement order; the [current delivery checkpoint](plan-status-2026-09-28.md) and single publisher still own release acceptance. Source base: `bb9b3640270dc26633d37cfdf4a306aecda277b6`; the seventh checkpoint is `efa33669249402ede3e1e651f1d4f3ad8f840c03`. An implemented candidate below is not a published release.
+Approved priority updated 29 September 2026: **A → B → C → remaining work**.
+A is current characters and reliable play; B is optional encounter variety; C is
+one finished Ukrainian/FPV artwork cohort. Required authoring/verification travels
+with each feature; additional editions and broad tools follow. C2's formal human
+benchmark remains last. See the [current register](plan-status-2026-09-29.md) for
+completed work, exact source status, blockers and remaining effort ranges.
 
 ## Batch policy and current delivery state
 
-The latest user instruction supersedes one-PR-per-phase ordering: keep compatible C0–C7 work in **draft [PR761](https://github.com/mekhovov/revealline/pull/761)** while the publisher queue is occupied. Develop independent features in parallel, review and commit bounded changes inside that PR, then freeze the verified subset when the publisher admits it. Do not wait for a merge to prepare independent art, tools or evidence; do not delay a ready release for unrelated unfinished production.
+Keep compatible work in draft [PR761](https://github.com/mekhovov/revealline/pull/761)
+with bounded commits and feature evidence. The canonical publisher owns main
+reconciliation, version allocation, immutable publication and public acceptance.
+Independent source work can continue while it qualifies; do not delay a verified
+release subset for unrelated unfinished production. The current branch is a source
+input, not a release reservation. Preserve every historical record and original.
 
-Latest main observed for this review is `a10fcbf8ae982f31d684f8abdc265d7e0338b3db`; the ordinary live selector now reports v0.142.1 with game source `7138e7b6187bf69991d50313c3f9ac1620427778`. The separate 17-input player-readiness batch is merged as PR768. Its published selector identity is verified here; this branch does not repeat or expand the publisher’s public-play evidence. This branch remains an unversioned feature input. That owner reconciles it onto accepted source, checks overlap with queued UX fixes, assigns a version and owns publication. Existing tags, source originals and historical evidence remain unchanged. No release or public acceptance is claimed for this actor batch.
+Batch 13 is pushed at `396ad4cf901b3fb99951ff02beff57f9bad19f52`.
+The register records the publisher's v0.142.2 deployment/byte evidence separately
+from pending public player acceptance. This conflicting branch requires deliberate
+reconciliation; do not force-rebase it or overwrite newer accepted assets.
 
 ## Implemented and awaiting integration
 
@@ -229,42 +242,37 @@ source checkpoint inside PR761, not a published version or whole-phase acceptanc
 Production recipe review and main-branch reconciliation remain blocking for release;
 parallel C3–C6 implementation continues. C2 remains last.
 
-## Priority revision: C3–C6 first; C2 last
+## Approved order: A, then B, then C, then the rest
 
-The latest user instruction supersedes the earlier “C1/C2 before expansion”
-condition. **C3, C4, C5 and C6 are the active parallel tracks. C2 is last.**
-Publication is a serialized acceptance step, not a dependency for independent
-implementation. Keep compatible slices in PR761 with separate commits and
-feature evidence; the publisher may freeze a ready subset without waiting for
-unrelated work.
+The user selected this order after reviewing the remaining items and their impact.
+It supersedes equal-priority C3–C6 expansion and the original C2-before-expansion gate.
 
-| Priority         | Work                                                                                                                  | Required dependency and acceptance                                                                                                                          | Effort remaining after start                                                                                             |
-| ---------------- | --------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------ |
-| Parallel release | Integrate and publish a verified subset of PR761                                                                      | Preserve current main, immutable history and exact reviewed body/rig dependencies; resolve applicable production gates, build, provenance and public checks | Publisher admission plus integration; no extra version allocated here                                                    |
-| C3 — active      | Adopt the seven-class native cohort; complete current enemy silhouettes, Team state presentation and native-flow gaps | Use C1’s shared rigs; validate pixels, moving-part clearance, actual-size readability, states and retained appearances per cohort                           | 3–5 days for the remaining phase; native roster slice implemented; production adoption open                              |
-| C4 — active      | Qualify existing optional pursuit/interception/patrol/sentry variants through the actual practice preview             | Preserve registered recipes and unaffected identities; complete counterplay, full-mission, retained-artwork and public checks after production reapproval   | 3–5 days; safe authoring, actual Solo preview and global remains choice implemented; broader qualification remains       |
-| C5 — active      | Community/Ukrainian, cultural, Retro and Coupa cohorts                                                                | Original source/provenance and deliberate native artwork; compatible C3 rigs and C6 artwork policy where used; no dependency on C2 pilot                    | 2–4 days per cohort; three sources, four board candidates and revised Poltava source prepared; art/runtime review remain |
-| C6 — active      | Finish authoring moving parts/states, structured references and collection artwork policy                             | Version new envelopes; keep historical strict readers intact; exercise real import/edit/export/preview and invalid/stale operations                         | 2–3 days in parallel                                                                                                     |
-| Supporting C0/C1 | Refresh exact affected coverage; finish necessary rigs and per-cohort performance/bounds checks                       | Only the dependency needed by that cohort. Do not wait for unrelated whole-game baseline collection                                                         | Fold into C3–C6 slices; ½–1 day for wider baseline later                                                                 |
-| C7 / UX6         | Whole-content/player qualification and outstanding terrain/pickup/art/history corrections                             | Every current distinct binding and ordinary flow reviewed; hardware/offline limitations separate                                                            | 4–7 days plus device availability                                                                                        |
-| C2 — last        | Three-mission game-feel assessment, audio/haptics comparisons and six-player pilot                                    | Two consented rounds with newcomers/experienced players; report fairness and enjoyment, not inferred retention                                              | 2–3 days plus participants/listening/hardware, after the prioritized programme                                           |
+1. **A — current characters and reliable play (C3 plus required C0/C1/C6).**
+   First deliver completed corrections; finish convincing common player/enemy
+   bodies, moving parts, direction/scale and Team states. Correct proven native-flow
+   failures in the same bounded priority. Existing reviewed imagery can receive its
+   scoped renderer continuation before new body candidates are approved separately.
+2. **B — meaningful optional variety (C4).** Finish real mission/counterplay and
+   combination qualification for the existing optional encounters. Preserve original
+   missions, difficulty records, deterministic checkpoints and replay identities.
+3. **C — one finished Ukrainian/FPV artwork cohort (first C5 slice).** Complete
+   source/native-pixel, cultural, gameplay contrast and binding review before
+   expanding to multiple communities. An imported candidate is not published art.
+4. **Remaining work.** Further community/edition cohorts, broader C6 tools and
+   community workflow, outstanding map/theme/offline/history work, and C7/UX6 full
+   qualification follow. The formal **C2 game-feel/human pilot stays last**.
 
-**Still required immediately:** source/byte identity, provenance, strict-reader
-compatibility, moving-part geometry, bounded resources, deliberate input,
-retained artwork and applicable focused/browser checks. Simulation changes need
-determinism and replay checks. These do not move to C2.
+Required source/byte identity, provenance, strict-reader compatibility, bounded
+resources, geometry, deliberate input and retained-artwork tests remain in every
+changed feature. Simulation changes still require deterministic/replay checks.
+Those checks do not move to C2. A new comparison tool, audio/haptic experiment,
+exhaustive unrelated baseline or new bulk campaign is off the immediate path.
 
-**Off the critical path:** further Scout-only contrast studies and comparison UI,
-audio/haptic experiments, the six-player pilot, an exhaustive baseline unrelated
-to a changed cohort, new bulk mission production, and unrelated creator/admin
-polish. Existing comparison tools remain available; maintain them when shared
-changes require it, but do not extend them instead of completing C3–C6.
-
-Ranges are implementation estimates, not guaranteed publication dates. Failed
-checks block the affected change’s acceptance; they do not stop independent
-work. Source candidates remain candidates until visual review and explicit
-production adoption. Neither a pending release nor C2 availability blocks
-preparing the next compatible cohort.
+Continue independent review and necessary preparation in parallel without
+competing with A. Development need not wait for publication. Freeze each verified
+compatible subset; do not bundle unfinished optional work into its acceptance.
+The current register carries effort ranges and evidence limits rather than
+promising publication dates from queue position alone.
 
 ## Stable design contract
 
@@ -300,4 +308,4 @@ Use this bounded multi-phase PR as one compatible publisher input. Preserve sepa
 
 ## Latest delivery checkpoint
 
-Use the [29 September completed/remaining register](plan-status-2026-09-29.md) for current queue state and effort ranges. Batch 12 adds rule-derived optional-encounter teaching, Team recovery-pose correction, inspection-only travel response, and a separate native Poltava board candidate. These bounded C3–C6 slices do not close whole phases or change the C2-last priority.
+Use the [29 September completed/remaining register](plan-status-2026-09-29.md) for current queue state and effort ranges. Batch 12 adds rule-derived optional-encounter teaching, Team recovery-pose correction, inspection-only travel response, and a separate native Poltava board candidate. These bounded slices do not close whole phases. The approved order above is now A → B → C → remaining work, with C2 last.

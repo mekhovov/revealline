@@ -5,6 +5,22 @@ description: Maintain, test, build and archive this project's playable Xonix run
 
 # Xonix Runtime Maintainer
 
+For the current character programme, use the approved **A → B → C → rest** order
+in [the current register](../../../docs/plan-status-2026-09-29.md): deliver current
+character/reliable-play corrections, qualify optional encounters, then finish one
+Ukrainian/FPV artwork cohort. Necessary tooling/checks travel with the feature;
+broader editions/tools and the formal C2 human benchmark follow later. A pending
+release does not block independent source work, but the single publisher retains
+integration, version and public-acceptance ownership. Existing approval hashes
+cannot be edited to admit changed renderer bytes. Source or imported candidates
+remain unapproved until scoped review and exact production adoption.
+For [current-character admission](../../../docs/actor-presentation-adoption.md),
+`readActorPresentationContinuation` takes a code-owned reviewed pin, never bundle
+authority. Keep group subsets independent, snapshot shared bytes once, reject
+draft/stale inputs and preserve original Team/equipment semantic guards. Its
+synthetic tests confer no production, human or release approval. Audio retains
+its separate review route.
+
 For player-menu changes, follow the approved [player-first execution order](../../../docs/player-first-ux-execution.md)
 and [navigation maintenance prompt](../../prompts/player-menu-navigation.md).
 Use one menu-key owner and rendered grid geometry; expose chooser `primary()` to
