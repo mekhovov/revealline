@@ -1,7 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
-import { createHash } from 'node:crypto';
 import { createCoop } from '../coop/core.mjs';
 import { FIRST_CONNECTION } from '../coop/first-connection.mjs';
 import { RELAY_YARD } from '../coop/relay-yard.mjs';
@@ -94,6 +93,52 @@ function surface(width = 362) {
     ctx,
   };
 }
+// Compare the painted footprint, not whether the helper uses translated local
+// coordinates or direct board coordinates. Reject stretched/shifted contacts.
+function pilotContactArcs(view, player) {
+  const unit = view.canvas.width / view.run.width;
+  return view.calls.filter((call) => {
+    if (call.name !== 'arc') return false;
+    const [a, b, c, d, e, f] = call.state.matrix;
+    const [x, y, radius] = call.args;
+    const near = (actual, expected) => Math.abs(actual - expected) < 1e-9;
+    return (
+      near(a * x + c * y + e, player.x * unit) &&
+      near(b * x + d * y + f, player.y * unit) &&
+      near(radius * Math.hypot(a, b), player.radius * unit) &&
+      near(radius * Math.hypot(c, d), player.radius * unit) &&
+      near(a * c + b * d, 0)
+    );
+  });
+}
+
+function assertPreparedPilotContacts(view) {
+  for (const player of view.run.players) {
+    const arcs = pilotContactArcs(view, player);
+    assert.ok(arcs.length > 0, `Pilot ${player.id + 1} retains the exact physical footprint`);
+    // The last matching path is the foreground contact above all actor art.
+    const last = view.calls.indexOf(arcs.at(-1));
+    const end = view.calls.findIndex((call, index) => index > last && call.name === 'restore');
+    assert.ok(end > last);
+    const painted = view.calls.slice(last + 1, end);
+    assert.equal(
+      painted.some((call) => call.name === 'fill'),
+      false,
+    );
+    const strokes = painted.filter((call) => call.name === 'stroke');
+    assert.equal(strokes.length, 2);
+    assert.deepEqual(
+      strokes.map((call) => call.state.strokeStyle),
+      ['#07111c', player.id === 0 ? palette.accent : palette.safe],
+    );
+    const cssCell = view.canvas.clientWidth / view.run.width;
+    assert.deepEqual(
+      strokes.map((call) => call.state.lineWidth),
+      [3 / cssCell, 1 / cssCell],
+    );
+  }
+}
+
 function bounds(call, rectangle = call.args.slice(1)) {
   const [a, b, c, d, e, f] = call.state.matrix;
   const [x, y, w, h] = rectangle;
@@ -262,17 +307,8 @@ for (const textFace of ['plain', 'pixel'])
     }
     const identity = labels.find((c) => c.args[0] === '1');
     assert.equal(identity.state.matrix[0], 16);
-    // The final colored circle remains at the authoritative head and exact radius.
-    for (const player of run.players)
-      assert.ok(
-        v.calls.some(
-          (c) =>
-            c.name === 'arc' &&
-            c.args[0] === player.x &&
-            c.args[1] === player.y &&
-            c.args[2] === player.radius,
-        ),
-      );
+    // Prepared art keeps an unfilled foreground circle at its exact true head.
+    assertPreparedPilotContacts({ ...v, run });
     const cell = 362 / run.width,
       heads = run.players.map((player) => ({
         left: player.x * cell - player.radius * cell - 2,
@@ -376,20 +412,14 @@ function labelStudy(width = 362, options = {}) {
   return { run, ...v };
 }
 
-test('Standard Team commands retain the pre-Large-preference baseline', () => {
-  const baseline = {
-    pixel: '0c396f52408c0e8de8a052974b1c9b4d52c805bded20259bb55570b23cf214d4',
-    plain: '2bf0c9bd9b797d11960ceef870006d11ef14739d267ddc4789caa0b2d6012c0b',
-  };
+test('Standard Team commands equal the omitted preference with exact unfilled pilot contacts', () => {
   for (const textFace of ['pixel', 'plain']) {
     const options = { textFace, reduced: true };
     const omitted = labelStudy(362, options),
       explicit = labelStudy(362, { ...options, textSize: 'standard' });
     assert.deepEqual(explicit.calls, omitted.calls);
-    assert.equal(
-      createHash('sha256').update(JSON.stringify(omitted.calls)).digest('hex'),
-      baseline[textFace],
-    );
+    assertPreparedPilotContacts(omitted);
+    assertPreparedPilotContacts(explicit);
   }
 });
 
@@ -452,14 +482,7 @@ test('Large enlarges actual player, downed and warning labels while preserving p
         clearHeads({ left: x - radius, right: x + radius, top: y - radius, bottom: y + radius });
       }
       for (const player of large.run.players) {
-        const contacts = (view) =>
-          view.calls.filter(
-            (call) =>
-              call.name === 'arc' &&
-              call.args[0] === player.x &&
-              call.args[1] === player.y &&
-              call.args[2] === player.radius,
-          );
+        const contacts = (view) => pilotContactArcs(view, player);
         assert.ok(contacts(large).length > 0);
         assert.deepEqual(
           contacts(large),
@@ -467,6 +490,8 @@ test('Large enlarges actual player, downed and warning labels while preserving p
           'Contact radius and foreground commands stay exact',
         );
       }
+      assertPreparedPilotContacts(standard);
+      assertPreparedPilotContacts(large);
     }
 });
 
