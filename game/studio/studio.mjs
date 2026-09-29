@@ -1,4 +1,5 @@
 import { editorMessageError, editorErrorText } from './editor-copy.mjs';
+import { createGridEditorAdapter, registerAuthoringEditor } from '../ui/authoring-editors.mjs';
 import { platformExportText } from '../ui/export-copy.mjs';
 import { localizedMessage, localizedText, onLocaleChange, t } from '../i18n/index.mjs';
 import { contentText } from '../i18n/content.mjs';
@@ -1186,6 +1187,27 @@ $('board').onclick = (event) => {
     Math.max(0, Math.floor(((event.clientY - rect.top) * 36) / rect.height)),
   );
 };
+registerAuthoringEditor(
+  $('board'),
+  createGridEditorAdapter({
+    element: $('board'),
+    available: () => !!currentMission(),
+    dimensions: () => [72, 36],
+    position: () => [Number($('x').value), Number($('y').value)],
+    move: ([x, y]) => {
+      $('x').value = x;
+      $('y').value = y;
+    },
+    apply: () => $('geometry-form').requestSubmit(),
+    changed: () => {
+      $('board').setAttribute(
+        'aria-label',
+        `${t('interface:map')} X ${$('x').value}, Y ${$('y').value}`,
+      );
+    },
+  }),
+  { keyboard: true },
+);
 $('inspect').onclick = guarded(() => {
   const text = $('trail').value.trim();
   if (text.length > 16000) throw editorMessageError('errors:studio.trail.inputBudget');

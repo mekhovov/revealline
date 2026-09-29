@@ -3,6 +3,7 @@ import { attachSettingsPanels } from './settings-panels.mjs';
 import { createMenuStylePreferences } from '../menu-style-preferences.mjs';
 import { createMenuAppearance } from './menu-appearance.mjs';
 import { hasEditionToolRequest } from './edition-tool-provider.mjs';
+import { prepareNativeMenus } from './native-menus.mjs';
 
 /** Presentation navigation only. Original host controls own preferences and saves. */
 export function attachFieldKitSurfaces({
@@ -11,6 +12,7 @@ export function attachFieldKitSurfaces({
   getStorage = () => globalThis.localStorage,
 } = {}) {
   applyFieldKitCopy(doc);
+  const nativeMenu = prepareNativeMenus({ document: doc });
   const removers = [];
   const listen = (node, type, handler) => {
     if (!node) return;
@@ -29,6 +31,7 @@ export function attachFieldKitSurfaces({
     },
   });
   removers.push(() => settings.destroy());
+  if (nativeMenu) removers.push(() => nativeMenu.destroy());
   const hasNativeSkinOwner = ['menu-palette', 'race-menu-palette', 'coop-menu-palette'].some((id) =>
     doc.getElementById(id),
   );

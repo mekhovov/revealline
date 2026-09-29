@@ -101,7 +101,8 @@ a:focus-visible,
 input:focus-visible,
 select:focus-visible,
 summary:focus-visible,
-#arena:focus-visible {
+#arena:focus-visible,
+.creator-player .controller-focus {
   outline: 3px solid #ffdc84;
   outline-offset: 4px;
 }

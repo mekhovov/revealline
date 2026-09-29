@@ -4,6 +4,7 @@ import fs from 'node:fs/promises';
 import os from 'node:os';
 import path from 'node:path';
 import { spawnSync } from 'node:child_process';
+import vm from 'node:vm';
 import {
   EDITION_REVIEW_GATES,
   verifyEditionReview,
@@ -752,4 +753,86 @@ test('publication requires an independently resolved tag matching both source co
       /source differs from the immutable release tag/,
     );
   }
+});
+
+test('renamed DroneAid publishes one canonical launcher and preserves legacy frozen releases and links', async () => {
+  const editionId = 'droneaid-nl-community';
+  const older = reviewedFixture({ editionId, version: 'v0.139.0', legacyPublicAddress: true });
+  older.release.activeEditionIds = [];
+  const newer = reviewedFixture({ editionId, version: 'v0.140.0' });
+  const output = await frozenEditionOverlay(selector(older.release, newer.release), {
+    readReleaseAsset: releaseReader(older, newer),
+    resolveReleaseIdentity: releaseIdentity(older, newer),
+    targetBasePath: '/revealline/',
+  });
+  for (const [fixture, slug] of [
+    [older, editionId],
+    [newer, 'droneaid'],
+  ])
+    for (const [name, source] of runtimeMembers(fixture))
+      assert.deepEqual(
+        output.get(`editions/${slug}/releases/${fixture.release.version}/site/${name}`),
+        source,
+      );
+  assert.equal(json(output.get('editions/droneaid/app/current.json')).editionId, editionId);
+  assert.equal(
+    json(output.get('editions/droneaid/app/manifest.webmanifest')).id,
+    `/revealline/editions/${editionId}/`,
+  );
+  assert.equal(
+    json(output.get('editions/droneaid/app/manifest.webmanifest')).scope,
+    '/revealline/editions/droneaid/',
+  );
+  const alias = output.get(`editions/${editionId}/app/index.html`).toString();
+  assert.match(alias, /href="\/revealline\/editions\/droneaid\/app\/"/);
+  let redirected;
+  vm.runInNewContext(alias.match(/<script>([\s\S]+)<\/script>/)[1], {
+    URL,
+    location: {
+      href: `https://example.test/revealline/editions/${editionId}/app/?language=uk#offline`,
+      search: '?language=uk',
+      hash: '#offline',
+      replace: (href) => {
+        redirected = href;
+      },
+    },
+  });
+  assert.equal(
+    redirected,
+    'https://example.test/revealline/editions/droneaid/app/?language=uk#offline',
+  );
+  assert.equal(output.has(`editions/${editionId}/app/current.json`), false);
+  const index = output.get('editions/index.html').toString();
+  assert.equal((index.match(/<li>/g) ?? []).length, 1);
+  assert.match(index, /href="droneaid\/app\/"/);
+});
+
+test('rollback to a frozen legacy DroneAid release keeps the canonical launcher address reachable', async () => {
+  const editionId = 'droneaid-nl-community';
+  const older = reviewedFixture({ editionId, version: 'v0.139.0', legacyPublicAddress: true });
+  const newer = reviewedFixture({ editionId, version: 'v0.140.0' });
+  newer.release.activeEditionIds = [];
+  const output = await frozenEditionOverlay(selector(older.release, newer.release), {
+    readReleaseAsset: releaseReader(older, newer),
+    resolveReleaseIdentity: releaseIdentity(older, newer),
+    targetBasePath: '/revealline/',
+  });
+  assert.match(
+    output.get('editions/droneaid/app/index.html').toString(),
+    /href="\/revealline\/editions\/droneaid-nl-community\/app\/"/,
+  );
+  assert.equal(
+    json(output.get(`editions/${editionId}/app/current.json`)).version,
+    older.release.version,
+  );
+  assert.match(output.get('editions/index.html').toString(), /href="droneaid\/app\/"/);
+  for (const [fixture, slug] of [
+    [older, editionId],
+    [newer, 'droneaid'],
+  ])
+    for (const [name, source] of runtimeMembers(fixture))
+      assert.deepEqual(
+        output.get(`editions/${slug}/releases/${fixture.release.version}/site/${name}`),
+        source,
+      );
 });

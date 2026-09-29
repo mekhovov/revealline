@@ -98,6 +98,76 @@ test('company player leaves only technical tokens outside the localization catal
   );
 });
 
+test('company reception follows first Start and foreground terminal display without advancing a paused run', () => {
+  let options;
+  const context = {
+    current: { run: { status: 'running', tick: 0 }, theme: {} },
+    signalStarted: false,
+    paused: true,
+    preparing: false,
+    accumulator: 0,
+    last: 0,
+    autosave: 0,
+    preferences: { reduced: false, grid: false },
+    canvas: { clientWidth: 600 },
+    ctx: {},
+    document: { hidden: false, hasFocus: () => true, querySelector: () => null },
+    $: () => ({ hidden: false }),
+    isPlaying: () => !context.paused,
+    input: { poll: () => ({}) },
+    FIXED_DT: 1 / 120,
+    painter: {
+      draw: (_ctx, _run, _dt, next) => {
+        options = next;
+      },
+    },
+    sound: { update() {} },
+    refresh() {},
+    requestAnimationFrame: () => 1,
+  };
+  const update = callback(
+    find(tree, (node) => node.type === 'FunctionDeclaration' && node.id?.name === 'update'),
+    context,
+  );
+  update(0);
+  assert.equal(options.signalReception, 'ready');
+  assert.equal(options.signalEffectsRunning, false);
+  context.signalStarted = true;
+  context.paused = false;
+  update(0);
+  assert.equal(options.signalReception, 'playing');
+  assert.equal(options.signalEffectsRunning, true);
+  context.paused = true;
+  update(0);
+  assert.equal(options.signalReception, 'playing');
+  assert.equal(options.signalEffectsRunning, false);
+  context.current.run.status = 'lost';
+  const ended = structuredClone(context.current.run);
+  update(0);
+  assert.equal(options.signalReception, 'lost');
+  assert.equal(options.signalEffectsRunning, true);
+  context.document.hidden = true;
+  update(0);
+  assert.equal(options.signalEffectsRunning, false);
+  assert.deepEqual(context.current.run, ended);
+  context.document.hidden = false;
+  context.current.run = { status: 'running', tick: 7 };
+  context.signalStarted = false;
+  update(0);
+  assert.equal(
+    options.signalReception,
+    'ready',
+    'An early restored run is observed as Ready before Resume.',
+  );
+  assert.equal(options.signalEffectsRunning, false);
+  context.signalStarted = true;
+  context.paused = false;
+  update(0);
+  assert.equal(options.signalReception, 'playing');
+  assert.equal(options.signalEffectsRunning, true);
+  assert.equal(context.current.run.tick, 7);
+});
+
 test('the company host keeps multiple read-only wins in exported progress without writing another tab’s store', async () => {
   const disk = managedIndexedDB(),
     backend = createJourneyBackend({

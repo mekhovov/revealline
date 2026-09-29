@@ -1,7 +1,9 @@
+@import url('./brand-identity.css');
+
 /* Original font names and OFL notices are retained beside their font files. */
 @font-face {
   font-family: 'Reveal Line Pixel';
-  src: url('./fonts/Tiny5-Regular.ttf') format('truetype');
+  src: url('./fonts/departure-mono/DepartureMono-Regular.woff2') format('woff2');
   font-weight: 400;
   font-style: normal;
   font-display: swap;

@@ -74,3 +74,33 @@ test('catalogue references never pull selected chapter or soundtrack bytes back 
   for (const name of excluded) assert(!result.retained.has(name));
   assert.equal(result.optional.length, 0);
 });
+
+test('nested string arrays retain frozen runtime variants while excluded and remote paths stay outside core', () => {
+  const files = entries({
+    'game/index.html': '<script src="demo.mjs"></script>',
+    'game/demo.mjs': 'const catalog = new URL("./demo-data/catalog.json", import.meta.url);',
+    'game/demo-data/catalog.json': {
+      clips: [
+        {
+          replayURL: './demo-data/primary.json',
+          replayVariants: ['./demo-data/chromium.json', './demo-data/excluded.json'],
+          nested: [['./demo-data/other-engine.json', 'https://example.test/private.json']],
+        },
+      ],
+    },
+    'game/demo-data/primary.json': { checkpoint: 'primary' },
+    'game/demo-data/chromium.json': { checkpoint: 'chromium' },
+    'game/demo-data/other-engine.json': { checkpoint: 'other' },
+    'game/demo-data/excluded.json': { checkpoint: 'excluded' },
+    'game/demo-data/unreferenced.json': { checkpoint: 'unused' },
+  });
+  const result = selectOfflineCore(files, new Set(['game/demo-data/excluded.json']));
+  for (const name of ['primary', 'chromium', 'other-engine'])
+    assert(result.retained.has(`game/demo-data/${name}.json`), name);
+  assert(!result.retained.has('game/demo-data/excluded.json'));
+  assert.deepEqual(result.optional, ['game/demo-data/unreferenced.json']);
+  assert.equal(
+    result.references.get('game/demo-data/chromium.json'),
+    'game/demo-data/catalog.json',
+  );
+});

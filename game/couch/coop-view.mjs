@@ -35,6 +35,7 @@ import {
 import { paintMaterialMarker } from '../content-design/material-markers.mjs';
 import { candidateTeamPictureFrame } from './candidate-team-pictures.mjs';
 import { coopBonusView, drawCoopBonuses } from './coop-bonus-view.mjs';
+import { createSignalReception } from '../ui/signal-reception.mjs';
 import {
   TEAM_PILOT_SLOTS,
   TEAM_ENEMY_SLOTS,
@@ -111,14 +112,15 @@ function prepareActorAppearance(snapshot) {
 }
 
 /** Draw the authoritative board once. Rendering never advances game state. */
-export function createCoopPainter(canvas) {
+export function createCoopPainter(canvas, { signalCanvasFactory } = {}) {
   const ctx = canvas.getContext('2d');
   if (!ctx) throw new Error(t('interface:relayRescueNeedsABrowserWithCanvas2dSupport'));
   let actors = createCoopActorPresentation(),
     actorPresentation = null,
     actorAppearanceStyle = null;
   const outcomes = createTeamOutcomeFeedback(),
-    captures = createCoopCaptureFeedback();
+    captures = createCoopCaptureFeedback(),
+    receptionEffect = createSignalReception({ canvasFactory: signalCanvasFactory });
   let presentation = null,
     look = null,
     wall = null,
@@ -194,6 +196,9 @@ export function createCoopPainter(canvas) {
       actorAppearance = null,
       feedback = null,
       previousRun = null,
+      signalReception = 'off',
+      signalEffectsRunning = false,
+      signalDelta = 0,
     } = {},
   ) {
     if (actorAppearance !== null && !['fpv', 'campaign'].includes(actorAppearance?.style))
@@ -264,6 +269,11 @@ export function createCoopPainter(canvas) {
     const colors = palette ? [palette.accent, palette.safe] : COLORS;
     const motionScale = reduced ? 0 : (look?.motionScale ?? 1);
     reduced ||= motionScale === 0;
+    const reception = receptionEffect.advance(run, signalDelta, {
+      mode: run.status === 'won' ? 'off' : signalReception,
+      running: signalEffectsRunning,
+      reduced,
+    });
     actors.update(run, {
       reduced,
       motionScale,
@@ -272,6 +282,12 @@ export function createCoopPainter(canvas) {
       previousRun,
     });
     const unit = canvas.width / run.width;
+    const drawReception = () => {
+      ctx.save();
+      ctx.scale(1 / unit, 1 / unit);
+      receptionEffect.draw(ctx, canvas.width, run.height * unit, reception);
+      ctx.restore();
+    };
     const cueScale = coopCueScale(canvas.clientWidth, run.width),
       cssCell = cueScale.cell,
       occupied = [],
@@ -324,6 +340,18 @@ export function createCoopPainter(canvas) {
         // cells and score intact while retiring the live arena's concealment/cues.
         if (run.status === 'won') return;
       }
+      const acquiring = reception.kind === 'acquire';
+      if (acquiring) {
+        // Mask first, then degrade only that permitted feed. The normal pass
+        // paints terrain and all actionable cues sharply over the reception.
+        if (picture?.image) {
+          ctx.fillStyle = '#000000';
+          for (let y = 0; y < run.height; y++)
+            for (let x = 0; x < run.width; x++)
+              if (run.cells[y * run.width + x] === 0) ctx.fillRect(x, y, 1, 1);
+        }
+        drawReception();
+      }
       for (let y = 0; y < run.height; y++) {
         for (let x = 0; x < run.width; x++) {
           const cell = run.cells[y * run.width + x];
@@ -348,7 +376,7 @@ export function createCoopPainter(canvas) {
               ctx.fill();
             }
           } else {
-            if (picture?.image) {
+            if (picture?.image && !acquiring) {
               // Required picture concealment is opaque black in every theme.
               ctx.fillStyle = '#000000';
               ctx.fillRect(x, y, 1, 1);
@@ -818,12 +846,14 @@ export function createCoopPainter(canvas) {
           ctx.restore();
         } else drawTeamEmitterSpark(ctx, emitterFrames, { x, y }, palette);
       }
+      if (reception.kind === 'lost') drawReception();
     } finally {
       ctx.restore();
     }
   }
   return {
     paint,
+    dispose: () => receptionEffect.dispose(),
     observe(run) {
       outcomes.observe(run);
       captures.observe(run);
