@@ -11,6 +11,7 @@ import { motionCurrent } from './motion-lab-current-workflow.mjs';
 import { stillCurrent } from './still-media-current-workflow.mjs';
 import { videoPosterCurrent } from './video-poster-current-workflow.mjs';
 import { soundtrackRecoveryCurrent } from './soundtrack-recovery-current-workflow.mjs';
+import { contentStudioCurrent } from './content-studio-current-workflow.mjs';
 
 const assert = (condition, message) => {
   if (!condition) throw new Error(message);
@@ -28,6 +29,7 @@ const value = (p, css) => p.doc.querySelector(css).value;
 
 export const currentAuthoringCases = {
   productionCurrent,
+  contentStudioCurrent,
   atlasCurrent,
   enemyCurrent: [
     'Current Enemy Workshop: edit, cancel, validate, save, preview return, export',
