@@ -17,6 +17,16 @@ reading, current-mission encounter lessons and retained-parent artwork compariso
 Necessary C6 support travels with C; broad tooling and C2 remain later.
 The current register supersedes historical status paragraphs below.
 
+The next bounded [batch24](verification/actor-batch-24/README.md) qualifies real
+Solo save/Continue during an active enemy-freeze interval and real Sentry
+projectile contact/nonterminal recovery. These close distinct host boundaries;
+they do not add or rebalance missions. It also corrects raw floating-point score
+labels through the selected locale, preserving exact saves and replays. Historical
+story-focus and continuation candidates have newer successors; do not replay
+them wholesale. Production/native artwork adoption remains deferred, and one
+publisher retains the integrated release. See the current register for final
+focused results and remaining scope.
+
 ## Batch policy and current delivery state
 
 Keep compatible work in draft [PR761](https://github.com/mekhovov/revealline/pull/761)
