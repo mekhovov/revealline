@@ -3,13 +3,16 @@ import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import { PNGImage } from './helpers/png-image.mjs';
 import { soloPage, settle, memoryStorage } from './helpers/solo-dom.mjs';
+import { demoPage } from './helpers/demo-host-fixture.mjs';
 import { managedIndexedDB } from './helpers/managed-idb.mjs';
 import { editionProviderFixture } from './helpers/edition-provider-fixture.mjs';
 import { compileContentProject, resolveMission } from '../content-design/project.mjs';
 import { applyGameplayTuning, resolveGameplayTuning } from '../gameplay-tuning.mjs';
-import { createRun } from '../core/index.mjs';
+import { createRun, stepRun, FIXED_DT } from '../core/index.mjs';
 import { companySimulationIdentity } from '../company-session.mjs';
-import { authoritativeCheckpoint } from '../replay.mjs';
+import { authoritativeCheckpoint, createRecorder, recordInput, exportReplay } from '../replay.mjs';
+import { createExecutionCatalog } from '../campaign-contexts.mjs';
+import { DEMO_CATALOG_VERSION, demoDescriptor } from '../demo-catalog.mjs';
 import { retainedEditionFixture } from './helpers/retained-edition-fixture.mjs';
 import { getLocale, setLocale } from '../i18n/index.mjs';
 import { DISPLAY_PREFERENCES_KEY } from '../display-preferences.mjs';
@@ -755,7 +758,7 @@ test('edition Continue preserves a matching receipt and rejects a same-ID change
     });
 });
 
-test('edition pause keeps canonical Skip confirmation and Watch first cut actions reachable', async (t) => {
+test('edition pause keeps Skip confirmation and opens isolated Demo without mutating company progress', async (t) => {
   const f = await editionProviderFixture();
   const second = {
     ...structuredClone(f.source.missions[0]),
@@ -766,11 +769,44 @@ test('edition pause keeps canonical Skip confirmation and Watch first cut action
   f.source.campaigns[0].missionIds.push(second.id);
   const project = compileContentProject(f.source);
   f.data.campaign.levels.push(resolveMission(project, second.id).level);
-  const page = await soloPage(t, {
+  // This company has no bundled clip or live-bot route. Supply an actual strict
+  // recording of its own first mission, not a cross-company Legacy fallback.
+  const entry = createExecutionCatalog([
+    {
+      campaign: { ...f.data.campaign, classRecipes: f.data.classes },
+      classRecipes: f.data.classes,
+    },
+  ]).entries.find((candidate) => candidate.difficulty === 'standard');
+  const level = applyGameplayTuning(entry.campaign.levels[0], resolveGameplayTuning('standard')),
+    options = { seed: 1, turnPolicy: 'immediate', classRecipes: f.data.classes },
+    recordedRun = createRun(level, options),
+    recorder = createRecorder(level, options, 'edition-demo-host-fixture');
+  for (let tick = 0; tick < 120; tick++) {
+    stepRun(recordedRun, {}, FIXED_DT);
+    recordInput(recorder, {});
+  }
+  const replay = exportReplay(recorder, recordedRun),
+    clip = {
+      ...demoDescriptor(replay, entry, { id: 'sample-company-demo' }),
+      replayURL: './demo-data/sample-company-demo.replay.json',
+    },
+    demoRequests = [];
+  const page = await demoPage(t, {
     search: '?edition=sample-public',
     titleScreen: true,
     journeyIndexedDB: managedIndexedDB().indexedDB,
-    fetchResponse: f.fetcher,
+    fetchResponse: async (url, init) => {
+      const path = new URL(url, 'http://localhost/game/').pathname;
+      if (path.endsWith('/demo-data/catalog.json')) {
+        demoRequests.push('catalog');
+        return new Response(JSON.stringify({ format: DEMO_CATALOG_VERSION, clips: [clip] }));
+      }
+      if (path.endsWith('/demo-data/sample-company-demo.replay.json')) {
+        demoRequests.push('replay');
+        return new Response(JSON.stringify(replay));
+      }
+      return f.fetcher(url, init);
+    },
   });
   const actions = page.$('game-overlay').querySelector('.overlay-actions');
   assert.equal(page.$('journey-skip').parentElement, actions);
@@ -793,11 +829,58 @@ test('edition pause keeps canonical Skip confirmation and Watch first cut action
   page.$('pause-button').click();
   assert.equal(page.$('game-overlay').hidden, false);
   assert.equal(page.$('demo-button').hidden, false);
+  const ordinary = page.rendered.run,
+    checkpoint = authoritativeCheckpoint(ordinary),
+    stored = [...page.storage.map];
+  page.$('demo-button').focus();
   page.$('demo-button').click();
+  await page.ready();
+  page.frame(20);
+  assert.equal(page.$('demo-dialog').open, true);
+  assert.deepEqual(demoRequests, ['catalog', 'replay']);
+  assert.notEqual(page.demoFrame.run, ordinary, 'Demo owns a separate spectator run.');
+  assert.equal(
+    page.demoFrame.run.levelId,
+    entry.campaign.levels[0].id,
+    'Demo uses the verified first mission of the selected company.',
+  );
+  assert.deepEqual(authoritativeCheckpoint(ordinary), checkpoint);
+  assert.deepEqual([...page.storage.map], stored, 'Watching does not award or rewrite progress.');
+  page.$('demo-back').click();
+  page.frame(0);
+  assert.equal(page.$('demo-dialog').open, false);
+  assert.equal(page.$('shell-home').open, true);
+  assert.equal(page.rendered.run, ordinary);
+  assert.equal(page.rendered.paused, true);
+  assert.deepEqual(authoritativeCheckpoint(page.rendered.run), checkpoint);
+  assert.deepEqual([...page.storage.map], stored);
+  assert.deepEqual(page.errors, []);
+});
+
+test('edition Demo without a matching clip returns safely instead of borrowing a Legacy mission', async (t) => {
+  const f = await editionProviderFixture();
+  const page = await demoPage(t, {
+    search: '?edition=sample-public',
+    journeyIndexedDB: managedIndexedDB().indexedDB,
+    fetchResponse: f.fetcher,
+  });
+  page.$('shell-featured').click();
   await settle(() => page.doc.body.dataset.flightState === 'running');
   page.frame(0);
-  assert.equal(page.rendered.run.levelId, f.project.missions[0].id);
-  assert.match(page.$('run-message').textContent, /Demonstration.*no.*(award|reward)/i);
+  page.$('pause-button').click();
+  const ordinary = page.rendered.run,
+    checkpoint = authoritativeCheckpoint(ordinary),
+    stored = [...page.storage.map];
+  page.$('demo-button').click();
+  assert.equal(page.$('demo-dialog').open, true);
+  await settle(() => !page.$('demo-dialog').open && page.$('demo-availability').textContent);
+  page.frame(0);
+  assert.equal(page.demoFrame, null, 'An unrelated bundled recording is never played.');
+  assert.equal(page.$('shell-home').open, true);
+  assert.equal(page.rendered.run, ordinary);
+  assert.equal(page.rendered.paused, true);
+  assert.deepEqual(authoritativeCheckpoint(ordinary), checkpoint);
+  assert.deepEqual([...page.storage.map], stored);
   assert.deepEqual(page.errors, []);
 });
 
