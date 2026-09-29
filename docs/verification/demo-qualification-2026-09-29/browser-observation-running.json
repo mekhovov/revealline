@@ -1,7 +1,0 @@
-{
-  "capturedAt": "2026-09-29T02:44:08.684Z",
-  "kind": "Running observation snapshot — not a completed soak",
-  "runtimeRevision": "c5e3419eecd564621470a654ce071f0f83d5984f",
-  "url": "http://127.0.0.1:8820/game/test/browser/demo-watch.html",
-  "status": "Observing 549.8 / 7200 seconds\nSamples 109; long gaps 0; unobserved gap time 0.0s\nRecorded play · Relay Orchard\n68% captured · 3 lives · 45s\nDOM observer attached; attachment failures 0; JS diagnostics 0"
-}

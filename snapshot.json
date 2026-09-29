@@ -1,0 +1,355 @@
+{
+  "format": "revealline-recovery-fragment-v1",
+  "capturedAt": "2026-09-29T15:08:30.641848+00:00",
+  "worktree": "<home>/.codex/worktrees/community-admission/go_test",
+  "branch": "refs/heads/codex/demo-qualification-20260929",
+  "head": "78831c543c530c9209d808998f995c897642d059",
+  "excluded": [],
+  "changes": [
+    {
+      "status": " M",
+      "path": "authoring/demo-recording-variants.html",
+      "object": "727e98d9774e648b3e0b561d382ad89f480d3843",
+      "sha256": "82c1b7964d5d22fa0503fa3ae525f579a8de570f37182a20137cd4e8cfdfe539",
+      "bytes": 837,
+      "mode": "100644"
+    },
+    {
+      "status": " M",
+      "path": "authoring/demo-recording-variants.mjs",
+      "object": "42f3582f51d8580c97a47531b05d2c05099c3628",
+      "sha256": "e0fca2c33219d6f756d3efd4ac8059307cab2fe388ea9feac9ff96d6783bdc35",
+      "bytes": 6285,
+      "mode": "100644"
+    },
+    {
+      "status": " M",
+      "path": "docs/demo-mode.md",
+      "object": "68ea8fdb04f98200b44657c9ef9b1505ae26afb0",
+      "sha256": "c07b2e996fe006dc28e993669c6afeb2ea32f5afbe1a928e016e6dba76373255",
+      "bytes": 40510,
+      "mode": "100644"
+    },
+    {
+      "status": " M",
+      "path": "game/demo-data/catalog.json",
+      "object": "c82b3030e39dad6c41506458123f444d4a53aeb2",
+      "sha256": "3d4fbe0437fb6dfc7e4140e72e597012e95ec82c007621e6dee358c38baf4078",
+      "bytes": 6839,
+      "mode": "100644"
+    },
+    {
+      "status": " M",
+      "path": "game/demo-data/variant-provenance.json",
+      "object": "e11ea09862dc9472fac1465f22a23856eb9393a5",
+      "sha256": "701d0c04385779caa7c2660fa30216df9b856738f2da040e02434131e31f39b6",
+      "bytes": 4722,
+      "mode": "100644"
+    },
+    {
+      "status": " M",
+      "path": "game/demo-experience.mjs",
+      "object": "3fbf8c079c1f38f74b1acbd27393a68c73f9cda1",
+      "sha256": "7319c41862168a98a1a63d67b6eb9072b6245e2d27dede57500dcdce8f6191cc",
+      "bytes": 5673,
+      "mode": "100644"
+    },
+    {
+      "status": " M",
+      "path": "game/i18n/catalogs.mjs",
+      "object": "aaae062d2fc25a87376ae4151c58a62527c919ec",
+      "sha256": "8c2a3ad4f2e1a71457f285df9f01e93f65f0a217635ed69e6d30603c1f09b7bb",
+      "bytes": 1007523,
+      "mode": "100644"
+    },
+    {
+      "status": " M",
+      "path": "game/locales/en/demo.json",
+      "object": "170985f6a4571bcc36146f3d076dd64c4f45a6cc",
+      "sha256": "bc996b26cdef0650da2533e66b35ff0ed5e479b45ef4f32ba7c17d4ff1fa6e09",
+      "bytes": 4911,
+      "mode": "100644"
+    },
+    {
+      "status": " M",
+      "path": "game/locales/uk/demo.json",
+      "object": "f680e17373a27e4c6e7b9e0ca8c1849f6eb8ef86",
+      "sha256": "b93f454ca9f495e2f069e473e34ca873a7d4bcae8a8c10719223a0e3cbd40d39",
+      "bytes": 7979,
+      "mode": "100644"
+    },
+    {
+      "status": " M",
+      "path": "game/test/boot-build.test.mjs",
+      "object": "d540c3e94b52f52ed39d95171c85e0d106c13308",
+      "sha256": "fa6529e21f52cefed58403aef9c7c13137582361072ed2bf6d63b29cdac535dd",
+      "bytes": 12541,
+      "mode": "100644"
+    },
+    {
+      "status": " M",
+      "path": "game/test/demo-experience.test.mjs",
+      "object": "e2ed3a1b258648b82c40fa4ecb4ba1df8d0cfbb8",
+      "sha256": "00e84b9be0b9420b98c4f19efef2521fd096ff248b1ece7be8d110b917bae0a6",
+      "bytes": 11025,
+      "mode": "100644"
+    },
+    {
+      "status": " M",
+      "path": "game/test/demo-recordings.test.mjs",
+      "object": "3624c4de0eead04f7d0e3444f67484f8b1b10305",
+      "sha256": "7ee8eabb7c82d5662ebf30b18bd5f518d8fb09ff9179bfdb8c7071c003bb6836",
+      "bytes": 18372,
+      "mode": "100644"
+    },
+    {
+      "status": " M",
+      "path": "game/test/demo-sources.test.mjs",
+      "object": "b1ac80cb1722c5e858a0a2129abc2a2effe6a68f",
+      "sha256": "1042c54e59f0bcfe9075805660ddb826a924cf1d2c7ecbca2f9516c9391f8af8",
+      "bytes": 16015,
+      "mode": "100644"
+    },
+    {
+      "status": " M",
+      "path": "game/test/edition-runtime.test.mjs",
+      "object": "1dab44e725c9495f5c16429d1cdba4fa8df91da6",
+      "sha256": "db8e53fdd0523a9565c0d0b743513f2d1e190dd8a9a58261b3a51a715502c927",
+      "bytes": 17558,
+      "mode": "100644"
+    },
+    {
+      "status": " M",
+      "path": "scripts/build-demo-recordings.mjs",
+      "object": "a89686208346ce159eea116eac0b2b8a1219b197",
+      "sha256": "525977bec91093c9dd0e61375b1ad95c888fd8860d96c0355cb8a0af0932dc17",
+      "bytes": 9740,
+      "mode": "100644"
+    },
+    {
+      "status": " M",
+      "path": "scripts/edition-runtime.mjs",
+      "object": "05087dd46c4adbd8a00351d61c2c216fe024448a",
+      "sha256": "3281a754781211aa4fe642a8d8e4ff0876a3d711902cae70ee73c5c04ba385b7",
+      "bytes": 8459,
+      "mode": "100644"
+    },
+    {
+      "status": " M",
+      "path": "scripts/import-demo-runtime-variants.mjs",
+      "object": "1ac9be69762a4d3c8f04ebf99913da0bcb27c14d",
+      "sha256": "4015d1e9f83c9fe7ba64ec3a92bdd3b80b9f64f76373fcc736f7843f58ebbe45",
+      "bytes": 4230,
+      "mode": "100644"
+    },
+    {
+      "status": "??",
+      "path": "docs/verification/demo-variety-2026-09-29/automated-tests.txt",
+      "object": "9dcd26628a81c9b761d71f5bd41acbb9798013e8",
+      "sha256": "dc5924958ca04022be1fefe50794434b6b039fced103fdb9c80cbc7e89300b51",
+      "bytes": 9030,
+      "mode": "100644"
+    },
+    {
+      "status": "??",
+      "path": "docs/verification/demo-variety-2026-09-29/browser-adapters.txt",
+      "object": "76e0f88e05403d855723391556aa60989bd5ecc2",
+      "sha256": "3c465ca2c40ba675cc95cb3f536537bfd5e852ae713d82d5f9d962a3a537e90d",
+      "bytes": 799,
+      "mode": "100644"
+    },
+    {
+      "status": "??",
+      "path": "docs/verification/demo-variety-2026-09-29/browser-authoring.json",
+      "object": "39ae1b698e9ab1e9c4bc4230782c6e3da5dd34a3",
+      "sha256": "860a61118a52ea6a6333e4dc3ceae8739b52cf37fb9d663cd83c9db0cfbf4404",
+      "bytes": 83818,
+      "mode": "100644"
+    },
+    {
+      "status": "??",
+      "path": "docs/verification/demo-variety-2026-09-29/edition-inventories.json",
+      "object": "65924fb0b4d7f01ed9e9fce95e7918d3a28a68cb",
+      "sha256": "b8177fa2ecb7305fbda44bc17beab988b32e6c1d5f6eac9265dd6514f6183d92",
+      "bytes": 12694,
+      "mode": "100644"
+    },
+    {
+      "status": "??",
+      "path": "docs/verification/demo-variety-2026-09-29/signal-garden.png",
+      "object": "7315b1271db4c054180541660fd5b2b1b3710da0",
+      "sha256": "7daa7c21bd9c35cc621841c02fb64a370a03be0078d5ee58fd5b8594415fbb40",
+      "bytes": 140114,
+      "mode": "100644"
+    },
+    {
+      "status": "??",
+      "path": "game/demo-data/hidden-frequency-search.chromium-macos.replay.json",
+      "object": "263fd54e71c1713f2c779b9f7f0a057156ce276d",
+      "sha256": "a43f31a3eb398264dcbf75e7e212f7d42711bd0aa8d45695b2d6990d2b19cd56",
+      "bytes": 11549,
+      "mode": "100644"
+    },
+    {
+      "status": "??",
+      "path": "game/demo-data/hidden-frequency-search.replay.json",
+      "object": "2b7fa81330db31e075ef2526d9142e4bd87e0a56",
+      "sha256": "1d85817d9f8e6e48c95e3a6442b979e69380bcaed2ed8810784931bc402b1774",
+      "bytes": 11541,
+      "mode": "100644"
+    },
+    {
+      "status": "??",
+      "path": "game/demo-data/signal-garden-route.chromium-macos.replay.json",
+      "object": "6355f7df6fa74b4c254faffaab7031c08a8e6a49",
+      "sha256": "6e6fb52a4e5c65752a14b3c236171b61c5c4ec5521552cc7e2e92af854326620",
+      "bytes": 11837,
+      "mode": "100644"
+    },
+    {
+      "status": "??",
+      "path": "game/demo-data/signal-garden-route.replay.json",
+      "object": "716084e26e2f80109038811665cbff42926a357f",
+      "sha256": "f1f29e4361ff6f1f3a8b0bf2968a81861fbde92df6a3cf457d95faad72055742",
+      "bytes": 11829,
+      "mode": "100644"
+    },
+    {
+      "status": "??",
+      "path": "game/demo-data/stone-lanes-detour.chromium-macos.replay.json",
+      "object": "e083942319c1731fc4d7b887202de5b2513fd142",
+      "sha256": "d3ab805ac7d7411fe5a0c5b81f7567d7c7ed4574d2d1ce330805e7036af281f5",
+      "bytes": 9184,
+      "mode": "100644"
+    },
+    {
+      "status": "??",
+      "path": "game/demo-data/stone-lanes-detour.replay.json",
+      "object": "0377603a672564e2e8dcc1891c61eb7476906832",
+      "sha256": "293c805dae048c39c3eced219aac5626bbbb2576b2cc1cabf252c8e6d0ce7ced",
+      "bytes": 9176,
+      "mode": "100644"
+    },
+    {
+      "status": "??",
+      "path": "game/demo-data/the-crossing-windows.chromium-macos.replay.json",
+      "object": "335edd0b83e10fa4e33b1e923d66b6a3bb28a136",
+      "sha256": "6c17749c381c7c10f0b9bffa83f720ecea588f30706cadfa2e6cfb553e5633da",
+      "bytes": 9919,
+      "mode": "100644"
+    },
+    {
+      "status": "??",
+      "path": "game/demo-data/the-crossing-windows.replay.json",
+      "object": "b95cdffcfaa42262d4596a0c714e34b95ae07f3e",
+      "sha256": "87d4028a1b1f7baed48f3f82e0ee6cd74f30babdd595b9e391c813cf988f18e7",
+      "bytes": 9911,
+      "mode": "100644"
+    }
+  ],
+  "indexEntries": [
+    {
+      "path": "authoring/demo-recording-variants.html",
+      "mode": "100644",
+      "object": "95503d7173a76d9c36fc20d7a6f910e7945123bd",
+      "stage": 0
+    },
+    {
+      "path": "authoring/demo-recording-variants.mjs",
+      "mode": "100644",
+      "object": "7c58f2338e10f664c77a44cbc20836c2bf4f8d16",
+      "stage": 0
+    },
+    {
+      "path": "docs/demo-mode.md",
+      "mode": "100644",
+      "object": "5ff6be3eee11f88d28617bd364c6519bc4581c7d",
+      "stage": 0
+    },
+    {
+      "path": "game/demo-data/catalog.json",
+      "mode": "100644",
+      "object": "fba308a3ae07b162991dced6b1e310217e471571",
+      "stage": 0
+    },
+    {
+      "path": "game/demo-data/variant-provenance.json",
+      "mode": "100644",
+      "object": "49b783f87a50186889465357082e8fdfeebae327",
+      "stage": 0
+    },
+    {
+      "path": "game/demo-experience.mjs",
+      "mode": "100644",
+      "object": "90a6d82cbba3aea7df90171da900a46f7c83ff3f",
+      "stage": 0
+    },
+    {
+      "path": "game/i18n/catalogs.mjs",
+      "mode": "100644",
+      "object": "c9f56833fcb6b233340d08a7507980eb351098fb",
+      "stage": 0
+    },
+    {
+      "path": "game/locales/en/demo.json",
+      "mode": "100644",
+      "object": "b1e40f963cf25d04e21f1d6d506194014a41d276",
+      "stage": 0
+    },
+    {
+      "path": "game/locales/uk/demo.json",
+      "mode": "100644",
+      "object": "56fbb23225767fa4066090b74f45d887be1939e6",
+      "stage": 0
+    },
+    {
+      "path": "game/test/boot-build.test.mjs",
+      "mode": "100644",
+      "object": "e86642abd0e6cc9aa571c8079a671d1a877b6e40",
+      "stage": 0
+    },
+    {
+      "path": "game/test/demo-experience.test.mjs",
+      "mode": "100644",
+      "object": "33517994fedac01a58f037dd953964363f25a2d0",
+      "stage": 0
+    },
+    {
+      "path": "game/test/demo-recordings.test.mjs",
+      "mode": "100644",
+      "object": "4727cb213ea7564a0a6ea06a1351d1c480dc6b5e",
+      "stage": 0
+    },
+    {
+      "path": "game/test/demo-sources.test.mjs",
+      "mode": "100644",
+      "object": "87e244c92f66f1cf67f06033d7ca8bd57ca3380e",
+      "stage": 0
+    },
+    {
+      "path": "game/test/edition-runtime.test.mjs",
+      "mode": "100644",
+      "object": "284863ddd379cb6174ed10ef144d3881fc6330c1",
+      "stage": 0
+    },
+    {
+      "path": "scripts/build-demo-recordings.mjs",
+      "mode": "100644",
+      "object": "8a1814c01746a922ad58c9900cf05c3a5298ab38",
+      "stage": 0
+    },
+    {
+      "path": "scripts/edition-runtime.mjs",
+      "mode": "100644",
+      "object": "4e0d0e57b54400648c4be9c7e8e93be97035fc2e",
+      "stage": 0
+    },
+    {
+      "path": "scripts/import-demo-runtime-variants.mjs",
+      "mode": "100644",
+      "object": "947cd15c3b0ea6ceea54d16d658e56203b605367",
+      "stage": 0
+    }
+  ],
+  "purpose": "Recovery only. These bytes are not release admission. Missing files, conflict stages and obsolete generated outputs are preserved as observations, not deletion or merge instructions."
+}

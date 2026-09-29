@@ -1,9 +1,0 @@
-{"scenes":20,"simulatedSeconds":734,"wallSeconds":19,"workerOwners":0,"listeners":0,"heapMiB":26.7}
-{"scenes":40,"simulatedSeconds":1517,"wallSeconds":36,"workerOwners":0,"listeners":0,"heapMiB":26.8}
-{"scenes":60,"simulatedSeconds":2226,"wallSeconds":57,"workerOwners":0,"listeners":0,"heapMiB":26.9}
-{"scenes":80,"simulatedSeconds":2981,"wallSeconds":73,"workerOwners":0,"listeners":0,"heapMiB":27.1}
-{"scenes":100,"simulatedSeconds":3706,"wallSeconds":96,"workerOwners":0,"listeners":0,"heapMiB":27.2}
-{"scenes":120,"simulatedSeconds":4610,"wallSeconds":128,"workerOwners":0,"listeners":0,"heapMiB":27.6}
-{"scenes":140,"simulatedSeconds":5497,"wallSeconds":164,"workerOwners":0,"listeners":0,"heapMiB":27.5}
-{"scenes":160,"simulatedSeconds":6406,"wallSeconds":191,"workerOwners":0,"listeners":0,"heapMiB":27.5}
-{"passed":true,"scenes":179,"actualSimulationSeconds":7251.975,"wallSeconds":219.274,"verifiedRecordings":179,"replayScenes":92,"botScenes":87,"players":{"created":179,"disposed":179,"live":0,"peakLive":1},"workers":{"created":87,"liveOwners":0,"running":0,"peakRunning":2,"listeners":0},"errors":[],"reportFile":"/Users/oleksandr.mekhovov/.codex/worktrees/community-admission/go_test/docs/verification/demo-qualification-2026-09-29/accelerated-soak.json"}
