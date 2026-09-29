@@ -1,0 +1,113 @@
+{
+  "format": "ukraine-enemy-source-art.v1",
+  "source": "e9928cdaad2f55d912aadd2ef25f635fb99e938c",
+  "scope": "Fictional static body art only; no accepted runtime record or new mechanics.",
+  "promptTemplate": "enemy-role-skin adapted explicitly to source-only seven-role art; no gameplay/animation claims",
+  "roles": [
+    {
+      "type": "bouncer",
+      "name": "Embroidered Beetle",
+      "existingLabel": "Field hunter",
+      "existingBehavior": "Hidden-field reflection threatens the player or unfinished line; its territory is retained on capture.",
+      "subject": "A broad oval shield-backed beetle of dark carved wood and warm bronze, viewed straight down. Six short stout legs form three clear pairs. Two small solid antennae point NORTH. Its broad ivory-edged shell carries just one large coral diamond and two simple turquoise stitch bands. The body reads as a compact six-legged armored beetle, no tank tracks, no wings.",
+      "prompt": "prompts/bouncer.txt",
+      "original": "originals/bouncer.png",
+      "status": "original-generated-whole-viewed-alpha-inspected-native-pending",
+      "north": "image top",
+      "imageFramePivotProposal": [
+        0.5,
+        0.5
+      ]
+    },
+    {
+      "type": "border-patrol",
+      "name": "Swift Moth",
+      "existingLabel": "Border guard",
+      "existingBehavior": "Circles the original perimeter; its appearance does not make the border safe.",
+      "subject": "A broad swift moth of carved wood and enamel, viewed straight down. Two large swept triangular wings form a bold bow-tie silhouette with notched back corners, clearly different from a beetle. Small coral head and two short chunky antennae at NORTH, stout tapering abdomen toward SOUTH. Ivory wing rims and two large turquoise panels, simple amber geometric stitch marks. Wings are static source shapes, no duplicate wing poses.",
+      "prompt": "prompts/border-patrol.txt",
+      "original": "originals/border-patrol.png",
+      "status": "original-generated-whole-viewed-alpha-inspected-native-pending",
+      "north": "image top",
+      "imageFramePivotProposal": [
+        0.5,
+        0.5
+      ]
+    },
+    {
+      "type": "contour-patrol",
+      "name": "Frontier Serpent",
+      "existingLabel": "Contour crawler",
+      "existingBehavior": "Follows the changing captured frontier and visibly rejoins a changed route.",
+      "subject": "A chunky carved serpent curled into a wide angular S silhouette, viewed straight down. Three thick connected bends and visible transparent gaps; the large angular head at top center points NORTH, with a broad coral nose. Tail curls inward near bottom right. Dark indigo-wood segments have thick ivory rims and a few amber and turquoise chevrons. No thin long tail or tiny scales. Recognizably serpent, no circular wheel, no insect legs.",
+      "prompt": "prompts/contour-patrol.txt",
+      "original": "originals/contour-patrol.png",
+      "status": "original-generated-whole-viewed-alpha-inspected-native-pending",
+      "north": "image top",
+      "imageFramePivotProposal": [
+        0.5,
+        0.5
+      ]
+    },
+    {
+      "type": "claimed-rover",
+      "name": "Clockwork Hare",
+      "existingLabel": "Ground rover",
+      "existingBehavior": "Starts dormant and wakes after a warning when fully supported by claimed ground.",
+      "subject": "A squat clockwork hare of carved wood, warm bronze and enamel, viewed straight down. Broad rounded body, two chunky upright ears extending NORTH with coral inset tips, two broad hind feet projecting diagonally southwest and southeast, small forefeet near shoulders. Ivory body rim and one large turquoise diamond back plate. Full ears and feet visible, compact 78 percent canvas span. Do not make a humanoid or front-facing portrait.",
+      "prompt": "prompts/claimed-rover.txt",
+      "original": "originals/claimed-rover.png",
+      "status": "original-generated-whole-viewed-alpha-inspected-native-pending",
+      "north": "image top",
+      "imageFramePivotProposal": [
+        0.5,
+        0.5
+      ]
+    },
+    {
+      "type": "eroder",
+      "name": "Thorn Wheel",
+      "existingLabel": "Territory eroder",
+      "existingBehavior": "Warns before reopening eligible captured cells while protected anchors remain intact.",
+      "subject": "A compact thorn wheel of braided roots and carved dark wood, viewed straight down. Six broad triangular wooden teeth around a thick ivory-edged root ring, with one larger coral tooth pointing NORTH. The SOUTH edge has a clear flat notch for orientation. Solid warm-bronze hub with a single turquoise inset, large deliberate shapes. No fine spikes, glowing aura, spokes thinner than a substantial pixel cluster, or realistic weapon.",
+      "prompt": "prompts/eroder.txt",
+      "original": "originals/eroder.png",
+      "status": "original-generated-whole-viewed-alpha-inspected-native-pending",
+      "north": "image top",
+      "imageFramePivotProposal": [
+        0.5,
+        0.5
+      ]
+    },
+    {
+      "type": "lane-boss",
+      "name": "Storm Gate",
+      "existingLabel": "Lane emitter",
+      "existingBehavior": "Stationary emitter with authored lane timing and warning/opening states.",
+      "subject": "A broad squared arch-shaped storm gate, viewed strictly straight down as a compact ground device. Two stout carved-wood side piers joined by a wide warm-bronze crossbar at the SOUTH, leaving a large squared U-shaped transparent opening toward NORTH. Each north pier ends in a coral capped blunt fin. Broad ivory edges, turquoise inset side panels and three simple geometric stitch bands. Clear chunky U silhouette; no perspective wall, no beam or attack effect painted beyond the body.",
+      "prompt": "prompts/lane-boss.txt",
+      "original": "originals/lane-boss.png",
+      "status": "original-generated-whole-viewed-alpha-inspected-native-pending",
+      "north": "image top",
+      "imageFramePivotProposal": [
+        0.5,
+        0.5
+      ]
+    },
+    {
+      "type": "relay-sentinel",
+      "name": "Sunflower Keep",
+      "existingLabel": "Relay sentinel",
+      "existingBehavior": "Linked staged core requires its relay objective and a legitimate opening before release.",
+      "subject": "A compact diamond-shaped sunflower keep, viewed strictly straight down. Four solid corner bastions form a broad diamond silhouette around a large round sunflower-like central sealed core. The NORTH bastion is slightly longer with a coral cap; east west south bastions are ivory edged. Core has eight broad amber petal plates around a dark turquoise center, simple large petal shapes. Wood-and-bronze construction, tiny restrained invented stitch ornament. Distinct fortified diamond, no thorn-wheel teeth, no perspective building, no emitted rings or effect halos.",
+      "prompt": "prompts/relay-sentinel.txt",
+      "original": "originals/relay-sentinel.png",
+      "status": "original-generated-whole-viewed-alpha-inspected-native-pending",
+      "north": "image top",
+      "imageFramePivotProposal": [
+        0.5,
+        0.5
+      ]
+    }
+  ]
+}
