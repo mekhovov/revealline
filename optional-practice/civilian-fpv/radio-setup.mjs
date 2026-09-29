@@ -1,3 +1,4 @@
+import { radioControlLabel, captureRadioSwitch } from './radio-controls.mjs';
 import { canonicalJSON } from '../../game/data-json.mjs';
 import {
   DEFAULT_RESPONSE,
@@ -16,7 +17,7 @@ const COPY = {
   en: {
     title: 'Radio setup',
     intro:
-      'Connect a USB joystick radio, select joystick mode on the transmitter, then move a stick. This browser must receive an interaction before some devices appear. Desktop USB first; physical compatibility is still unverified.',
+      'Connect a USB joystick radio, select joystick mode on the transmitter, then move a stick. This browser must receive an interaction before some devices appear. Check the live channels below before flying.',
     refresh: 'Find devices',
     none: 'No visible device — check USB joystick mode and interact with this page.',
     unavailable: 'Gamepad API unavailable or blocked in this browser.',
@@ -57,12 +58,22 @@ const COPY = {
     incomplete:
       'Mapping/calibration incomplete. Record travel and centres, then verify all controls.',
     ambiguous: 'Move only one control through at least one quarter of its travel, then try again.',
-    switches: 'Optional switches (button channel; blank means none)',
+    switches: 'Radio switches and buttons (optional)',
+    captureSwitch: 'Identify switch / button',
+    useSwitch: 'Use active switch / button',
+    switchStart:
+      'First leave the chosen switch OFF (or release the button). Click Identify, then move only that switch ON and leave it there (or hold the button). Click Use active switch / button. For arming, use a maintained switch; for reset, use a momentary button if available.',
+    switchMove:
+      'Move only the chosen switch to its active position and leave it there, then click Use active switch / button. No button change? Assign the switch to an EdgeTX USB joystick button channel.',
+    switchAmbiguous:
+      'No single button channel changed. Reset the switch, click Identify again, then operate only that switch. It must be exposed as a USB joystick button channel.',
+    switchCaptured:
+      'Switch captured. Return it to OFF/released. Verify and save the profile to apply.',
     threshold: 'Activation threshold',
     buttons: 'Buttons',
-    arm: 'Arm/disarm',
-    pause: 'Pause',
-    resetAction: 'Reset to launch',
+    arm: 'Arm/disarm — switch ON enables flight; OFF stops motors',
+    pause: 'Pause — freeze flight until resumed',
+    resetAction: 'Reset level — restart this drill at the launch pad',
     roll: 'Roll',
     pitch: 'Pitch',
     yaw: 'Yaw',
@@ -76,7 +87,7 @@ const COPY = {
   uk: {
     title: 'Налаштування пульта',
     intro:
-      'Підключіть USB-пульт, виберіть на ньому режим джойстика та поворушіть стік. Деякі браузери показують пристрій лише після взаємодії зі сторінкою. Спочатку підтримується настільний USB; фізичні пристрої ще не перевірено.',
+      'Підключіть USB-пульт, виберіть на ньому режим джойстика та поворушіть стік. Деякі браузери показують пристрій лише після взаємодії зі сторінкою. Перевірте канали наживо перед польотом.',
     refresh: 'Знайти пристрої',
     none: 'Пристрій не видно — перевірте режим USB-джойстика та взаємодійте зі сторінкою.',
     unavailable: 'Gamepad API недоступний або заблокований.',
@@ -117,12 +128,22 @@ const COPY = {
     incomplete:
       'Призначення або калібрування не завершено. Запишіть повний хід і центри, потім перевірте керування.',
     ambiguous: 'Рухайте лише один орган керування щонайменше на чверть ходу та спробуйте ще раз.',
-    switches: 'Додаткові перемикачі (канал кнопки; порожньо — немає)',
+    switches: 'Перемикачі та кнопки пульта (необов’язково)',
+    captureSwitch: 'Визначити перемикач / кнопку',
+    useSwitch: 'Використати активний перемикач / кнопку',
+    switchStart:
+      'Залиште перемикач вимкненим або відпустіть кнопку. Натисніть Визначити, увімкніть лише цей перемикач або утримуйте кнопку та підтвердьте активне положення. Для моторів використовуйте перемикач із фіксацією, для скидання — кнопку без фіксації.',
+    switchMove:
+      'Увімкніть лише вибраний перемикач або утримуйте кнопку й підтвердьте активне положення. Якщо канал не змінюється, призначте перемикач каналу кнопки USB-джойстика EdgeTX.',
+    switchAmbiguous:
+      'Не вдалося визначити один канал кнопки. Поверніть перемикач у вимкнене положення, почніть визначення знову та рухайте лише його.',
+    switchCaptured:
+      'Перемикач визначено. Вимкніть його або відпустіть кнопку. Перевірте та збережіть профіль.',
     threshold: 'Поріг спрацьовування',
     buttons: 'Кнопки',
-    arm: 'Увімкнути/вимкнути',
-    pause: 'Пауза',
-    resetAction: 'На старт',
+    arm: 'Мотори — увімкнений перемикач дозволяє політ, вимкнений зупиняє мотори',
+    pause: 'Пауза — призупинити політ до відновлення',
+    resetAction: 'Скинути рівень — почати цю вправу зі стартового майданчика',
     roll: 'Крен',
     pitch: 'Тангаж',
     yaw: 'Рискання',
@@ -156,6 +177,7 @@ export function mountRadioSetup({
   let verified = false,
     recording = false,
     identifying = null,
+    switchCapture = null,
     travel = null,
     frame = null,
     disposed = false,
@@ -222,7 +244,7 @@ export function mountRadioSetup({
     option.value = String(i);
   }
   mode.value = '2';
-  const throttleLabel = el('label', copy.throttle),
+  const throttleLabel = el('label', radioControlLabel('throttle', 2, locale)),
     throttle = el('select', undefined, throttleLabel);
   for (const [id, text] of [
     ['full-travel', copy.full],
@@ -236,7 +258,7 @@ export function mountRadioSetup({
   channels.className = 'radio-channels';
   for (const control of FLIGHT_CONTROLS) {
     const field = el('fieldset', undefined, channels);
-    el('legend', copy[control], field);
+    const legend = el('legend', radioControlLabel(control, Number(mode.value), locale), field);
     const axis = label(copy.axis, 'number', '', field);
     axis.min = '0';
     axis.max = '63';
@@ -280,7 +302,7 @@ export function mountRadioSetup({
       },
       field,
     );
-    rows[control] = { axis, min, center, max, invert, deadZone, identify };
+    rows[control] = { axis, min, center, max, invert, deadZone, identify, legend };
   }
   function invalidate() {
     verified = false;
@@ -309,17 +331,58 @@ export function mountRadioSetup({
     invalidate();
   });
   el('h3', copy.switches);
+  el('p', copy.switchStart);
   for (const action of ['arm', 'pause', 'reset']) {
-    const node = label(copy[action === 'reset' ? 'resetAction' : action], 'number', '');
+    const field = el('fieldset');
+    field.setAttribute('data-radio-switch', action);
+    el('legend', copy[action === 'reset' ? 'resetAction' : action], field);
+    const node = label(copy.buttons, 'number', '', field);
     node.min = '0';
     node.max = '255';
     node.step = '1';
-    const threshold = label(copy.threshold, 'number', '0.5');
+    const threshold = label(copy.threshold, 'number', '0.5', field);
     threshold.min = '0.1';
     threshold.max = '0.9';
     threshold.step = '0.05';
-    const invert = label(copy.invert, 'checkbox', '');
-    switchRows[action] = { button: node, threshold, invert };
+    const invert = label(copy.invert, 'checkbox', '', field);
+    const identify = button(
+      copy.captureSwitch,
+      () => {
+        const pad = runtime.raw();
+        if (!pad) {
+          status.textContent = copy.pick;
+          return;
+        }
+        const identity = canonicalJSON(radioDeviceIdentity(pad));
+        const values = pad.buttons.map((b) => b.value ?? b);
+        if (switchCapture?.action === action) {
+          const binding =
+            switchCapture.identity === identity
+              ? captureRadioSwitch(switchCapture.values, values)
+              : null;
+          switchCapture = null;
+          identify.textContent = copy.captureSwitch;
+          if (!binding) {
+            status.textContent = copy.switchAmbiguous;
+            return;
+          }
+          node.value = String(binding.button);
+          threshold.value = String(binding.threshold);
+          invert.checked = binding.invert;
+          invalidate();
+          status.textContent = copy.switchCaptured;
+        } else {
+          if (switchCapture)
+            switchRows[switchCapture.action].identify.textContent = copy.captureSwitch;
+          invalidate();
+          switchCapture = { action, identity, values };
+          identify.textContent = copy.useSwitch;
+          status.textContent = copy.switchMove;
+        }
+      },
+      field,
+    );
+    switchRows[action] = { button: node, threshold, invert, identify };
   }
   const sticks = el('div');
   sticks.className = 'radio-sticks';
@@ -374,6 +437,8 @@ export function mountRadioSetup({
   }
   function loadProfile(p) {
     if (!p) return;
+    switchCapture = null;
+    for (const row of Object.values(switchRows)) row.identify.textContent = copy.captureSwitch;
     mode.value = String(p.stickMode);
     throttle.value = p.throttleStyle;
     for (const name of FLIGHT_CONTROLS) {
@@ -388,11 +453,12 @@ export function mountRadioSetup({
       row.threshold.value = String(p.switches[key]?.threshold ?? 0.5);
       row.invert.checked = p.switches[key]?.invert ?? false;
     }
+    describeControls();
     invalidate();
   }
   button(copy.verify, () => {
     try {
-      if (recording) throw new Error(copy.incomplete);
+      if (recording || switchCapture) throw new Error(copy.incomplete);
       readProfile(true);
       verified = true;
       status.textContent = copy.verified;
@@ -402,7 +468,7 @@ export function mountRadioSetup({
   });
   button(copy.save, () => {
     try {
-      if (!verified || recording) throw new Error(copy.incomplete);
+      if (!verified || recording || switchCapture) throw new Error(copy.incomplete);
       const p = readProfile(true);
       runtime.setProfile(p);
       runtime.verify();
@@ -424,6 +490,8 @@ export function mountRadioSetup({
       pad = selected ? runtime.raw() : null;
     recording = false;
     identifying = null;
+    switchCapture = null;
+    for (const row of Object.values(switchRows)) row.identify.textContent = copy.captureSwitch;
     travelButton.textContent = copy.travel;
     for (const row of Object.values(rows)) {
       for (const key of ['axis', 'min', 'max', 'center']) row[key].value = '';
@@ -444,7 +512,9 @@ export function mountRadioSetup({
     ...Object.values(rows).flatMap((row) =>
       Object.values(row).filter((node) => node.tagName === 'INPUT'),
     ),
-    ...Object.values(switchRows).flatMap((row) => Object.values(row)),
+    ...Object.values(switchRows).flatMap((row) =>
+      Object.values(row).filter((node) => node.tagName === 'INPUT'),
+    ),
   ])
     listen(node, 'change', invalidate);
 
@@ -516,6 +586,16 @@ export function mountRadioSetup({
       status.textContent = e.message;
     }
   });
+  function describeControls() {
+    for (const control of FLIGHT_CONTROLS)
+      rows[control].legend.textContent = radioControlLabel(control, Number(mode.value), locale);
+    throttleLabel.firstChild.textContent = radioControlLabel(
+      'throttle',
+      Number(mode.value),
+      locale,
+    );
+  }
+  listen(mode, 'change', describeControls);
   function paint(now) {
     if (disposed) return;
     if (now - lastPaint >= 100) {
@@ -544,7 +624,8 @@ export function mountRadioSetup({
               y = vertical === 'throttle' ? input.throttle * 2 - 1 : input[vertical];
             stickNodes[i].dot.style.transform =
               `translate(${input[horizontal] * 34}px, ${-y * 34}px)`;
-            stickNodes[i].label.textContent = `${copy[horizontal]} / ${copy[vertical]}`;
+            stickNodes[i].label.textContent =
+              `${radioControlLabel(horizontal, Number(mode.value), locale)} · ${radioControlLabel(vertical, Number(mode.value), locale)}`;
           }
         } catch {
           /* Incomplete mapping is expected until all endpoints are captured. */
