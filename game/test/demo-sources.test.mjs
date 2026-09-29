@@ -10,6 +10,10 @@ import { demoIdentity } from '../demo-catalog.mjs';
 import { applyGameplayTuning, resolveGameplayTuning } from '../gameplay-tuning.mjs';
 import { verifyReplay } from '../replay.mjs';
 import { demoLoadingClock, settleDemoLoading } from './helpers/demo-loading-clock.mjs';
+import { loadAuthoredJourneyRoute } from '../content-design/route-loader.mjs';
+import { createSoloRouteHost } from '../content-design/solo-route-host.mjs';
+import { DEFAULT_JOURNEY_ROUTES } from '../content-design/default-entry.mjs';
+import { loadEditionBootstrap } from '../editions/bootstrap.mjs';
 
 const json = async (relative) =>
   JSON.parse(await readFile(new URL(relative, import.meta.url), 'utf8'));
@@ -31,7 +35,7 @@ class LazyWorker {
 }
 const assetFetch = async (url) => ({ ok: true, text: async () => readFile(url, 'utf8') });
 
-test('actual installed Standard/Gentle catalogue exposes six curated and six qualified live sources lazily', async () => {
+test('actual installed Standard/Gentle catalogue exposes ten curated and six qualified live sources lazily', async () => {
   const requests = [];
   const sources = await loadDemoSources({
     entries,
@@ -42,9 +46,9 @@ test('actual installed Standard/Gentle catalogue exposes six curated and six qua
       return assetFetch(url);
     },
   });
-  assert.equal(sources.filter((source) => source.kind === 'replay').length, 6);
+  assert.equal(sources.filter((source) => source.kind === 'replay').length, 10);
   assert.equal(sources.filter((source) => source.kind === 'bot').length, 6);
-  assert.equal(new Set(sources.map((source) => source.id)).size, 12);
+  assert.equal(new Set(sources.map((source) => source.id)).size, 16);
   assert.equal(requests.length, 1, 'Only the bundled catalogue loads before a scene is chosen.');
   assert.ok(requests[0].endsWith('/game/demo-data/catalog.json'));
   assert.equal(sources.filter((source) => source.approachable).length, 1);
@@ -95,6 +99,65 @@ test('same map IDs in separately installed themed owners do not collide', async 
   createDemoDirector({ sources }).dispose();
 });
 
+test('current main Journey host retains the expanded base showcase without pretending the clips belong to Journey', async (t) => {
+  const route = await loadAuthoredJourneyRoute(DEFAULT_JOURNEY_ROUTES.solo);
+  const host = await createSoloRouteHost(route, {
+    themes: (await json('../content-design/themes.json')).themes,
+    buildVersion: 'demo-source-test',
+  });
+  t.after(() => host.preparer.dispose());
+  assert.ok(host.entries.length > 0);
+  // This is the production executionEntries() composition for a fresh main
+  // profile: current Journey plus the installed base, without optional packs.
+  const sources = await loadDemoSources({
+    entries: [...host.entries, ...createExecutionCatalog([base]).entries],
+    library: emptyLibrary,
+    fetch: assetFetch,
+    WorkerClass: LazyWorker,
+  });
+  assert.equal(sources.length, 10);
+  assert.ok(sources.every((source) => source.kind === 'replay'));
+  assert.ok(sources.every((source) => source.campaignId === base.campaign.id));
+  assert.ok(sources.every((source) => !host.owns(source.entry)));
+  assert.equal(new Set(sources.map((source) => source.levelId)).size, 8);
+});
+
+test('actual public company editions cannot select base or another company showcase', async () => {
+  const root = new URL('../../', import.meta.url);
+  for (const editionId of ['coupa-all', 'droneaid-nl-community', 'droneaid-community']) {
+    const bootstrap = await loadEditionBootstrap({
+      catalogURL: new URL('game/editions/catalog.json', root).href,
+      contentBaseURL: root.href,
+      editionId,
+      fetcher: async (url) => ({ ok: true, text: async () => readFile(new URL(url), 'utf8') }),
+    });
+    const host = await createSoloRouteHost(bootstrap.route, {
+      themes: bootstrap.boot.themes.themes,
+      buildVersion: 'demo-company-source-test',
+    });
+    try {
+      const campaign = structuredClone(bootstrap.boot.campaign);
+      campaign.classRecipes = bootstrap.boot.classes;
+      const boot = { campaign, classRecipes: bootstrap.boot.classes };
+      const requests = [];
+      const sources = await loadDemoSources({
+        entries: [...host.entries, ...createExecutionCatalog([boot]).entries],
+        library: emptyLibrary,
+        WorkerClass: LazyWorker,
+        fetch: async (url) => {
+          requests.push(url.href);
+          return assetFetch(url);
+        },
+      });
+      assert.deepEqual(sources, [], editionId);
+      assert.equal(requests.length, 1, editionId);
+      assert.ok(requests[0].endsWith('/game/demo-data/catalog.json'));
+    } finally {
+      host.preparer.dispose();
+    }
+  }
+});
+
 test('missing Worker and uninstalled content filter sources without downloading or installing packs', async () => {
   const requested = [];
   const fetcher = async (url) => {
@@ -104,7 +167,7 @@ test('missing Worker and uninstalled content filter sources without downloading 
   assert.equal(
     (await loadDemoSources({ entries, library: emptyLibrary, fetch: fetcher, WorkerClass: null }))
       .length,
-    6,
+    10,
   );
   assert.deepEqual(
     await loadDemoSources({
@@ -142,7 +205,7 @@ test('manually kept local recordings join the catalogue without enabling automat
   await library.keep(source, { entry: base, practice: false, manual: true });
   const sources = await loadDemoSources({ entries, library, fetch: assetFetch, WorkerClass: null });
   assert.equal(library.enabled, false);
-  assert.equal(sources.length, 7);
+  assert.equal(sources.length, 11);
   const local = sources.find((candidate) => candidate.source === 'local');
   assert.ok(local);
   assert.equal(
@@ -310,7 +373,7 @@ test('a personal cache that never settles times out without discarding bundled s
   assert.ok(librarySignal);
   clock.advance(15000);
   const sources = await pending;
-  assert.equal(sources.length, 6);
+  assert.equal(sources.length, 10);
   assert.ok(sources.every((source) => source.kind === 'replay'));
   assert.equal(librarySignal.aborted, true);
   assert.equal(clock.pending, 0);

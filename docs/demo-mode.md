@@ -48,25 +48,31 @@ The effect desaturates and disturbs only the revealed picture. Covered cells rem
 
 ## Actual content coverage
 
-The base campaign supplies six bundled recordings on four unchanged maps, available without installing an optional pack. These are **human-authored input routes**, generated and verified through the real core; they are not recordings of human play sessions. All use Scout with the current default Standard `gameplay-pressure.v4` recipe, retain all three lives, win, and contain four or five closed cuts and eight or ten bends. Installed authored maps remain the picture/fresh-start owners; the recordings embed their exact tuned simulation. Durations below are rounded for readability; the catalogue retains exact values.
+The base campaign supplies ten bundled recordings on eight unchanged maps, available without installing an optional pack. These are **authored input routes**, generated and verified through the real core; they are not recordings of human play sessions. All use Scout with the current default Standard `gameplay-pressure.v4` recipe, retain all three lives, win, and contain three to five closed cuts and three to ten bends. Installed authored maps remain the picture/fresh-start owners; the recordings embed their exact tuned simulation. Durations below are rounded for readability; the catalogue retains exact values.
 
-| Clip ID                | Real level                  | Steering    | Duration | Showcase                                      |
-| ---------------------- | --------------------------- | ----------- | -------- | --------------------------------------------- |
-| `first-signal-left`    | First Signal (`signal-01`)  | Immediate   | 30.683 s | Left-side bent cuts and return to safe ground |
-| `first-signal-right`   | First Signal (`signal-01`)  | Grid center | 31.908 s | Mirrored right-side capture route             |
-| `relay-orchard-loop`   | Relay Orchard (`signal-02`) | Immediate   | 45.475 s | Bent loop through the relay layout            |
-| `relay-orchard-stairs` | Relay Orchard (`signal-02`) | Grid center | 45.675 s | Staggered expanding capture route             |
-| `crosswind-openings`   | Crosswind (`signal-03`)     | Immediate   | 46.700 s | Repeated openings around multiple enemies     |
-| `night-patrol-loop`    | Night Patrol (`signal-05`)  | Grid center | 46.683 s | Bent capture with border patrol pressure      |
+| Clip ID                   | Real level                     | Steering    | Duration | Showcase                                        |
+| ------------------------- | ------------------------------ | ----------- | -------- | ----------------------------------------------- |
+| `first-signal-left`       | First Signal (`signal-01`)     | Immediate   | 30.683 s | Left-side bent cuts and return to safe ground   |
+| `first-signal-right`      | First Signal (`signal-01`)     | Grid center | 31.908 s | Mirrored right-side capture route               |
+| `relay-orchard-loop`      | Relay Orchard (`signal-02`)    | Immediate   | 45.475 s | Bent loop through the relay layout              |
+| `relay-orchard-stairs`    | Relay Orchard (`signal-02`)    | Grid center | 45.675 s | Staggered expanding capture route               |
+| `crosswind-openings`      | Crosswind (`signal-03`)        | Immediate   | 46.700 s | Repeated openings around multiple enemies       |
+| `night-patrol-loop`       | Night Patrol (`signal-05`)     | Grid center | 46.683 s | Bent capture with border patrol pressure        |
+| `stone-lanes-detour`      | Stone Lanes (`signal-04`)      | Immediate   | 25.042 s | Bent captures around walls and a required relay |
+| `hidden-frequency-search` | Hidden Frequency (`signal-06`) | Immediate   | 44.392 s | Scan, hidden relay and alternating return edges |
+| `the-crossing-windows`    | The Crossing (`signal-07`)     | Immediate   | 34.608 s | Capture windows during timed lane warnings      |
+| `signal-garden-route`     | Signal Garden (`signal-09`)    | Immediate   | 47.133 s | Jammer interference and a hidden archive        |
 
-Bundled recordings keep their authored steering policy. The six seeds, in table order, are 35, 5, 331, 322, 287 and 376. Live autoplay uses the current steering policy and is qualified only for the current default Standard tuning of these R5 map/roster identities:
+Bundled recordings keep their authored steering policy. The seeds, in table order, are 35, 5, 331, 322, 287, 376, 1, 1, 1 and 1. The four additions use explicit waypoint routes chosen through bounded simulation, with no boost or artificial changes to map physics. They are not human play sessions. Scan, objective-capture and active-interference captions follow real events; distinct lessons queue once per scene and remain readable for at least six seconds. Lane guidance describes the warning cycle without claiming that a delayed caption identifies a currently active warning.
+
+The [variety expansion report](verification/demo-variety-2026-09-29/README.md) records exact replay and browser checks. These base-campaign sources remain available to the normal main-game execution catalogue; they are not rebound to current Journey missions or company campaigns. Company editions continue to admit only their own compatible recordings. Live autoplay uses the current steering policy and is qualified only for the current default Standard tuning of these R5 map/roster identities:
 
 | Map              | Level ID           | Live variants                            |
 | ---------------- | ------------------ | ---------------------------------------- |
 | Orchard Crossing | `orchard-crossing` | Seeds 1, 2 and 3; both steering policies |
 | Courtyard Exits  | `courtyard-exits`  | Seeds 1, 2 and 3; both steering policies |
 
-Installing the corresponding R5 content gives six live source descriptors in addition to the six bundled clips. An installed themed owner may use the same qualified geometry, but remains a separate campaign identity in rotation. Gentle variants, revised geometry, and different rosters do not inherit bot qualification. **Night Crossfire is not bot-qualified.** Night Patrol in the table above is a different base-campaign map.
+Installing the corresponding R5 content gives six live source descriptors in addition to the ten bundled clips. An installed themed owner may use the same qualified geometry, but remains a separate campaign identity in rotation. Gentle variants, revised geometry, and different rosters do not inherit bot qualification. **Night Crossfire is not bot-qualified.** Night Patrol in the table above is a different base-campaign map.
 
 Other installed levels are eligible only when a compatible, qualifying personal recording exists in the local demo cache. This implementation does not autoplay every installed level. It never installs or downloads a pack to expand coverage, and it ignores recordings whose owner, level revision, map or class roster no longer matches installed content.
 
@@ -84,7 +90,7 @@ The [loading and recovery follow-up](verification/demo-qualification-2026-09-29/
 
 The current core deliberately hashes authoritative floating-point state exactly. Its `field-course.v2` enemy bounces use native trigonometric functions, which can produce different last-bit results across runtimes. The six original Node arm64 recordings all rejected strict verification in the observed Chromium 154 macOS browser: only their final enemy section differed; levels, input traces, summaries and every other authoritative section agreed. This is consistent with the existing [cross-runtime route findings](company-editions-validation.md). No physics revision, rounding, tolerance, checkpoint replacement or weaker replay reader was introduced.
 
-Each clip therefore ships two **independently recorded, frozen ordinary replay files**. The additional browser variants were produced by executing the original exact input traces with the normal recorder in Chromium, exporting the resulting state, and independently verifying those exports in the same browser. [The provenance manifest](../game/demo-data/variant-provenance.json) records the runtime, timestamp, math witnesses, source hashes and variant hashes. Twelve assets represent six scenes; they do not double the rotation pool.
+Each clip therefore ships two **independently recorded, frozen ordinary replay files**. The additional browser variants were produced by executing the original exact input traces with the normal recorder in Chromium, exporting the resulting state, and independently verifying those exports in the same browser. [The provenance manifest](../game/demo-data/variant-provenance.json) records the runtime, timestamp, math witnesses, source hashes and variant hashes. Twenty assets represent ten scenes; they do not double the rotation pool. Original manifest metadata belongs to the first six variants; the four additions carry their own `recordedIn` runtime provenance. Existing recordings remain byte-for-byte unchanged. The authoring tools can append scenes and browser variants while checking existing traces and preserving earlier provenance.
 
 The catalogue pins `inputTraceIdentity` over the exact replay version, ruleset, level, options, input segments, tick count and release markers. It allows at most three distinct bundled alternative URLs. Preparation tries the original and then its frozen variants, accepting only a complete ordinary strict replay verification. Invalid identity, schema, fetch or cancellation errors stop preparation; they cannot be bypassed by another variant. If none reproduces exactly on the current runtime, that scene is unavailable and the director applies its ordinary fallback. The scheme establishes the recorded Node/Chromium observations; it does not claim universal replay portability or qualify untested Safari/native versions. Personal recordings retain the ordinary strict verification rule and do not receive manufactured alternatives.
 
@@ -132,14 +138,14 @@ A separate [automatic-finalization smoke](verification/demo-qualification-2026-0
 
 `source.level` and `source.identity` remain the installed authored map for picture ownership and normal Fresh routing. `recordingIdentity` pins the tuned simulation independently. Bot factories receive that tuned simulation; no tuned level replaces the source picture owner. Locked Fresh practice creates its new run from the recording's exact level and options. A replay fork returns `{ run, origin }`, where origin identifies its source, level, tick and ruleset. The replay controller stays paused and unchanged. The practice adapter releases held input on the new run only. Exact reconstruction preserves input-release markers at RLE boundaries; it does not depend on a shallow copy or serialize/restore a suspended game.
 
-The ordinary build collects the `game/` tree, excluding tests, so the catalogue, twelve frozen replay assets, provenance manifest and Worker module ship in source and distribution builds. Dynamic asset inclusion and offline byte/hash inventory have regression tests. New clips must be added with compatible installed identities and real verified recordings; widening the bot whitelist requires new map/roster qualification rather than an ID-only match.
+The ordinary build collects the `game/` tree, excluding tests, so the catalogue, twenty frozen replay assets, provenance manifest and Worker module ship in source and distribution builds. Dynamic asset inclusion and offline byte/hash inventory have regression tests. New clips must be added with compatible installed identities and real verified recordings; widening the bot whitelist requires new map/roster qualification rather than an ID-only match.
 
 ## Commands and automated coverage
 
 From the repository root:
 
 ```sh
-# Reproduce six exact input traces and verify a frozen variant on this runtime.
+# Reproduce ten exact input traces and verify a frozen variant on this runtime.
 node scripts/build-demo-recordings.mjs
 
 # Targeted demo, existing replay-player and shared music transport tests.
@@ -148,7 +154,7 @@ node --test game/test/demo-*.test.mjs game/test/replay-player.test.mjs game/test
 # Recoverable observation checkpoints and direct UTF-8 cache byte-cap regressions.
 node --test game/test/demo-watch-checkpoints.test.mjs game/test/demo-library-size.test.mjs
 
-# Tiny build fixture: actual demo modules, all twelve assets and offline hashes.
+# Tiny build fixture: actual demo modules, all twenty assets and offline hashes.
 node --test game/test/boot-build.test.mjs
 
 # Accelerated simulation soak with real Node Worker threads.
@@ -169,15 +175,15 @@ Run the accelerated soak without a concurrent CPU-heavy suite: the production pl
 
 The refreshed [accelerated report](verification/demo-qualification-2026-09-29/accelerated-soak.json) records 7,251.975 simulated seconds across 179 scenes in 219.274 elapsed seconds, with zero unexpected errors and 29 expected safe-plan exhaustion handoffs. This is accelerated Node simulation with real Worker threads, not a two-hour rendered browser run or evidence that a hidden browser executes continuously. The [current qualification follow-up](verification/demo-qualification-2026-09-29/README.md) separates exact-source results, short preliminary browser observations, the external audio failure and the still-open human/device/long-run gates.
 
-`build-demo-recordings.mjs --write` creates new files only and refuses to overwrite committed assets. The default verification command is the appropriate routine check.
+`build-demo-recordings.mjs --write` creates new files only and refuses to overwrite committed assets. The default verification command is the appropriate routine check. After adding reviewed route definitions, `--extend` appends new scenes while preserving existing scene order, identities and immutable recordings; it rejects missing historical files. Metadata uses an atomic replacement after all recordings pass verification. Run `node --test scripts/test-demo-authoring.mjs` for interrupted-write and preservation checks.
 
-To author an additional runtime variant, serve the repository and open `/authoring/demo-recording-variants.html`. **Run and verify six recordings** executes only the committed traces, then independently strictly verifies each new ordinary recording. **Export verified bundle** downloads the reviewable result with original mismatch diagnostics. **Verify all shipped scene adapters** tests the actual `loadDemoSources` candidate selection and completes every selected recording to its exact final checkpoint, without authoring anything. The existing browser family was imported once with `node scripts/import-demo-runtime-variants.mjs <reviewed-bundle.json>`; that importer compares every input/identity/summary and all non-enemy sections, and uses exclusive creation so it cannot overwrite the original or existing variant evidence. A new browser family requires an explicit reviewed extension to the provenance/URL set, followed by strict browser playback and offline-inventory verification.
+To author an additional runtime variant, serve the repository and open `/authoring/demo-recording-variants.html`. **Run and verify recordings** executes only the committed traces, then independently strictly verifies each new ordinary recording. **Export verified bundle** downloads the reviewable result with original mismatch diagnostics. **Verify all shipped scene adapters** tests the actual `loadDemoSources` candidate selection and completes every selected recording to its exact final checkpoint, without authoring anything. The existing browser family was imported once with `node scripts/import-demo-runtime-variants.mjs <reviewed-bundle.json>`; that importer compares every input/identity/summary and all non-enemy sections, and uses exclusive creation so it cannot overwrite the original or existing variant evidence. For additional scenes in the same browser family, use `node scripts/import-demo-runtime-variants.mjs <reviewed-bundle.json> --append`, followed by `node scripts/build-demo-recordings.mjs --extend` to publish their variant URLs in the catalogue. Append preserves historical runtime provenance and accepts an interrupted new file only when every byte matches the proposed recording. A new browser family requires an explicit reviewed extension to the provenance/URL set, followed by strict browser playback and offline-inventory verification.
 
 | Test area                                            | Coverage                                                                                                                                                                                                                                   |
 | ---------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `demo-recordings` and `replay-player`                | All six authored wins; source identity; exact fork across four core branches and both steering policies; release markers, live cut, equipment bank, support field, Impact recovery and staged encounter phases; cancellation and disposal. |
+| `demo-recordings` and `replay-player`                | All ten authored wins; source identity; exact fork across four core branches and both steering policies; release markers, live cut, equipment bank, support field, Impact recovery and staged encounter phases; cancellation and disposal. |
 | `demo-library`                                       | Manual/automatic distinction, practice/incomplete/tampered/stale rejection, quality admission, dedupe, bounded eviction, snapshots, opt-out during verification, missing storage and failed writes.                                        |
-| `demo-sources`                                       | Real installed catalogue, lazy six-replay/six-bot pool, duplicate map IDs under distinct owners, unavailable Worker, cancellation, wrong fetched recording, local cache and dynamic build assets.                                          |
+| `demo-sources`                                       | Real installed catalogue, lazy ten-replay/six-bot pool, duplicate map IDs under distinct owners, unavailable Worker, cancellation, wrong fetched recording, local cache and dynamic build assets.                                          |
 | `demo-bot` and `demo-director`                       | Qualified seeds/maps, ordinary-input captures and checkpoints, real Worker lifecycle/watchdog, safe exhaustion and mandatory replay fallback, source rotation, genuine failure quarantine, stale preparation and lifecycle suspension.     |
 | `demo-experience`, `demo-host`, `demo-picture`       | Idle/settings/captions, real app handoffs and save preservation, consumed interruption, focus/cancellation, controls, locked-level practice, exact earned image access, blur and resource disposal.                                        |
 | `demo-clock`, `demo-background`                      | A single scheduler, hidden-page advancement, explicit pause, bounded recovery, freeze/resume and cleanup under controlled clocks; accelerated simulation does not qualify OS scheduling.                                                   |
