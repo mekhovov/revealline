@@ -8,7 +8,10 @@ import { createFlightRenderer } from '../../optional-practice/civilian-fpv/rende
 import { FLIGHT_COURSES } from '../../optional-practice/civilian-fpv/catalogue.mjs';
 import { FLIGHT_DEMONSTRATIONS } from '../../optional-practice/civilian-fpv/demonstrations.mjs';
 import { replayFlight } from '../../optional-practice/civilian-fpv/model.mjs';
-import { radioDeviceIdentity } from '../../optional-practice/civilian-fpv/radio-profile.mjs';
+import {
+  createFlightProfileStore,
+  radioDeviceIdentity,
+} from '../../optional-practice/civilian-fpv/radio-profile.mjs';
 import { mountFlightNotebook } from '../../optional-practice/civilian-fpv/notebook.mjs';
 import { Document, Events } from './helpers/couch-dom.mjs';
 
@@ -18,7 +21,7 @@ const html = parse(
     'utf8',
   ),
 );
-function fixture(t, { available = true, ...factories } = {}) {
+function fixture(t, { available = true, storage, ...factories } = {}) {
   const doc = new Document(),
     win = new Events(),
     frames = new Map(),
@@ -59,6 +62,7 @@ function fixture(t, { available = true, ...factories } = {}) {
   });
   Object.defineProperty(win, 'localStorage', {
     get() {
+      if (storage) return storage;
       throw new Error('No persistent test storage');
     },
   });
@@ -687,4 +691,41 @@ test('stale queued animation timestamps cannot advance after a long execution ga
       assert.equal(f.view.snapshot().lastInput.yaw, owner === 'radio' ? 500 : 0);
       assert.equal(f.deliveries.length, 0);
     }
+});
+
+test('selecting USB radio restores saved axis arm and button reset after reload', (t) => {
+  const data = new Map();
+  const storage = {
+    getItem: (key) => data.get(key) ?? null,
+    setItem: (key, value) => data.set(key, value),
+  };
+  const pad = {
+    index: 0,
+    id: 'TX15 test',
+    mapping: '',
+    connected: true,
+    axes: [0, 0, 0, -1, -1],
+    buttons: [{ value: 0, pressed: false }],
+  };
+  const profile = radioProfile(pad);
+  profile.format = 'RadioProfile.v2';
+  profile.switches.arm = { axis: 4, off: -1, on: 1 };
+  profile.switches.reset = { button: 0, threshold: 0.5, invert: false };
+  const store = createFlightProfileStore({ storage });
+  store.save({ ...store.snapshot(), radio: profile });
+  const f = fixture(t, { storage });
+  f.setPads([pad]);
+  f.$('input-source').value = 'radio';
+  f.$('input-source').emit('change');
+  f.tick();
+  assert.equal(f.view.radio.status().verified, true);
+  pad.axes[4] = 1;
+  f.tick();
+  assert.equal(f.view.snapshot().status, 'active');
+  pad.axes[3] = 0;
+  f.tick(5);
+  pad.buttons[0].value = 1;
+  f.tick();
+  assert.equal(f.view.snapshot().status, 'disarmed');
+  assert.equal(f.view.snapshot().ticks, 0);
 });

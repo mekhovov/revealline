@@ -31,3 +31,23 @@ test('switch capture learns a single active channel and polarity without guessin
   ])
     assert.equal(captureRadioSwitch(a, b), null);
 });
+
+test('switch capture accepts separate axes, including reversed travel, but never flight controls or ambiguous changes', async () => {
+  const { captureRadioControlSwitch: capture } = await import(
+    '../../optional-practice/civilian-fpv/radio-controls.mjs'
+  );
+  const before = { buttons: [0, 0], axes: [0, 0, -1] };
+  assert.deepEqual(capture(before, { buttons: [0, 0], axes: [0, 0, 1] }, [0, 1]), {
+    axis: 2,
+    off: -1,
+    on: 1,
+  });
+  assert.deepEqual(capture({ buttons: [0], axes: [1] }, { buttons: [0], axes: [-1] }), {
+    axis: 0,
+    off: 1,
+    on: -1,
+  });
+  assert.equal(capture(before, { buttons: [0, 0], axes: [0, 0, 1] }, [2]), null);
+  assert.equal(capture(before, { buttons: [1, 0], axes: [0, 0, 1] }), null);
+  assert.equal(capture(before, { buttons: [0, 0], axes: [1, 0, 1] }), null);
+});

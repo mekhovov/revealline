@@ -284,3 +284,42 @@ test('radio arm switch disarms on OFF and held reset restarts only once, requiri
   radio.poll();
   assert.equal(radio.status().active, true);
 });
+
+test('v2 axis switches preserve v1 calibration, reject flight-axis overlap and require fresh arming', async () => {
+  const { AXIS_RADIO_FORMAT, radioSwitch } = await import(
+    '../../optional-practice/civilian-fpv/radio-profile.mjs'
+  );
+  const p = pad(),
+    config = profile(p);
+  const original = JSON.stringify(config.channels);
+  config.format = AXIS_RADIO_FORMAT;
+  config.switches.arm = { axis: 1, off: -1, on: 1 };
+  config.switches.reset = { axis: 3, off: 1, on: -1 };
+  validateRadioProfile(config);
+  assert.equal(JSON.stringify(config.channels), original);
+  const overlap = structuredClone(config);
+  overlap.switches.arm.axis = 4;
+  assert.throws(() => validateRadioProfile(overlap));
+  const legacy = structuredClone(config);
+  legacy.format = RADIO_FORMAT;
+  assert.throws(() => validateRadioProfile(legacy));
+  p.axes[1] = -1;
+  p.axes[3] = 1;
+  const { radio } = runtime(p, config);
+  p.axes[1] = 0;
+  radio.poll();
+  assert.equal(radio.status().active, false);
+  p.axes[1] = 1;
+  radio.poll();
+  assert.equal(radio.status().active, true);
+  p.axes[1] = 0;
+  radio.poll();
+  assert.equal(radio.status().active, true);
+  p.axes[1] = -1;
+  radio.poll();
+  assert.equal(radio.status().active, false);
+  p.axes[3] = -1;
+  assert.equal(radioSwitch(config, p, 'reset'), true);
+  p.axes[3] = NaN;
+  assert.throws(() => radioSwitch(config, p, 'reset'));
+});
