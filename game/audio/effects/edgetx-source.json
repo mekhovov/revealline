@@ -2,7 +2,7 @@
   "project": "EdgeTX/edgetx-sdcard-sounds",
   "revision": "56f0bb41757798865254fd462ea5d177280ab12c",
   "license": "GPL-2.0",
-  "changes": "Converted to mono PCM16 32kHz; 100Hz high-pass, 6500Hz low-pass, 3ms fade-in, limiter ceiling 0.65 with no auto gain. Edited 2026-09-29.",
+  "changes": "Converted to mono PCM16 32kHz; 100Hz high-pass, 6500Hz low-pass, 3ms fade-in, limiter ceiling 0.65 with no auto gain. Edited 2026-09-29. Then matched both locales to -31 dBFS maximum rolling 50ms RMS, soft transient shaping and -20 dBFS sample-peak ceiling; see authoring/audio/revealline-v1/normalize_bank.py.",
   "ffmpegFilter": "highpass=f=100,lowpass=f=6500,afade=t=in:d=0.003,alimiter=limit=0.65:level=false",
   "originals": [
     {
@@ -17,5 +17,10 @@
       "local": "edgetx-armed-source-uk.wav",
       "sha256": "a3f22a0cb66ea82ca956de0cea4d2052e8ab0f2b7ad5c8e64813a62e95b64652"
     }
-  ]
+  ],
+  "normalization": {
+    "targetMax50msRmsDbfs": -31,
+    "samplePeakCeilingDbfs": -20,
+    "softKnee": "min(0.05, 2.5 * 10^(-31/20)); knee*tanh(sample/knee), followed by peak-limited scalar calibration"
+  }
 }
