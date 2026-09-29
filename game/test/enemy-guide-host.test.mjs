@@ -29,6 +29,7 @@ import { createSelectionBookmark } from '../selection-bookmark.mjs';
 import { editionProviderFixture } from './helpers/edition-provider-fixture.mjs';
 import { compileContentProject, resolveMission } from '../content-design/project.mjs';
 import { createRun, stepRun, FIXED_DT } from '../core/index.mjs';
+import { getLocale, setLocale } from '../i18n/index.mjs';
 
 // Model native dialog opening/return focus; real app modal navigation and handlers stay active.
 function nativeDialogs(t) {
@@ -386,6 +387,75 @@ function childReturn(page, { frame, token }, overrides = {}) {
     ...overrides,
   });
 }
+
+test('live Guide locale changes translate ordinary rows and practice without replacing the paused parent or child', async (t) => {
+  const locale = getLocale();
+  t.after(() => setLocale(locale, { persist: false }));
+  setLocale('en', { persist: false });
+  const page = await setup(t),
+    checkpoint = await liveCut(page);
+  openGuide(page);
+  page.change('enemy-guide-topic', 'relay-sentinel');
+  page.change('enemy-guide-theme', 'ukraine');
+  const topic = page.$('enemy-guide-topic'),
+    spot = page.$('enemy-guide-spot'),
+    risk = page.$('enemy-guide-risk'),
+    action = page.$('enemy-guide-try');
+  topic.focus();
+  setLocale('uk', { persist: false });
+  assert.equal(
+    spot.textContent,
+    'Ознака: Поетапна зустріч. Замок позначає ядро, захищене пов’язаними ретрансляторами щита.',
+  );
+  assert.match(risk.textContent, /^Ризик: /);
+  assert.match(
+    action.textContent,
+    /^Спробуйте: Захопіть усі ретранслятори щита\. Коли ЯДРО ВІДКРИТО,/,
+  );
+  assert.equal(page.doc.activeElement, topic);
+  assert.equal(topic.value, 'relay-sentinel');
+  assert.equal(page.$('enemy-guide-theme').value, 'ukraine');
+  assert.equal(page.$('enemy-guide-spot'), spot);
+  assert.equal(page.$('enemy-guide-risk'), risk);
+  assert.equal(page.$('enemy-guide-try'), action);
+  page.frame(0);
+  assert.equal(page.rendered.paused, true);
+  assert.deepEqual(authoritativeCheckpoint(page.rendered.run), checkpoint);
+  const child = await launch(page),
+    childURL = child.frame.src,
+    childWindow = child.frame.contentWindow,
+    handoff = page.win.sessionStorage.getItem(handoffKey),
+    hint = page.$('enemy-guide-practice-hint'),
+    writes = page.storage.writes.length;
+  const ukrainian = hint.textContent;
+  assert.match(ukrainian, /Коли ЯДРО ВІДКРИТО/);
+  assert.match(ukrainian, /Повтор починає той самий урок\./);
+  assert.doesNotMatch(ukrainian, /Move with|Retry starts|CORE OPEN/);
+  for (const language of ['en', 'uk']) {
+    setLocale(language, { persist: false });
+    page.frame(0);
+    if (language === 'en')
+      assert.match(hint.textContent, /During CORE OPEN.*Retry starts the same lesson\./);
+    else assert.equal(hint.textContent, ukrainian);
+    assert.equal(page.$('enemy-guide-practice-hint'), hint);
+    assert.equal(child.frame.src, childURL);
+    assert.equal(child.frame.contentWindow, childWindow);
+    assert.equal(child.frame.hidden, false);
+    assert.equal(page.doc.activeElement, child.frame);
+    assert.equal(topic.value, 'relay-sentinel');
+    assert.equal(page.$('enemy-guide-theme').value, 'ukraine');
+    assert.equal(page.win.sessionStorage.getItem(handoffKey), handoff);
+    assert.deepEqual(authoritativeCheckpoint(page.rendered.run), checkpoint);
+    assert.equal(page.rendered.paused, true);
+    assert.equal(page.storage.writes.length, writes);
+  }
+  childReturn(page, child);
+  page.frame(0);
+  assert.deepEqual(authoritativeCheckpoint(page.rendered.run), checkpoint);
+  assert.equal(page.rendered.paused, true);
+  assert.equal(page.doc.activeElement.id, 'enemy-guide-play');
+  assert.deepEqual(page.errors, []);
+});
 function padBoundary(page, t) {
   // Continue the host clock; a reset to 1000ms would regress after earlier
   // complete-file cases and keep the Confirm lifecycle guarded indefinitely.

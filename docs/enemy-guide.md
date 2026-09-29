@@ -8,6 +8,14 @@ Role lessons reuse the seven Enemy workshop scenario builders as new `guide-*` a
 
 The four encounter topics are available only when the validated loaded mission contains the corresponding enabled optional role or pressure rule. Missing, disabled or malformed rules leave Play unavailable with an explanation; the reader can still inspect the guidance. Their practice is a fresh attempt of the exact effective level, starting craft, full class recipes, seed, steering and theme. A craft changed at a hangar does not replace the attempt's starting craft. The clone preserves combined threats and all authored capture behavior, without renaming the mission, applying tuning again or forcing a one-capture finish. Scout ram/capture, Sentry fixed aim and still-live recovery shots, and warning cancellation on an early return remain core rules, not scripted lesson outcomes.
 
+Ordinary Spot/Risk/Try rows, Relay Sentinel counterplay and the common
+movement/Pause/Retry instructions use live EN/UK message keys. Changing language
+updates the same reader and active-practice hint without changing topic,
+appearance, practice child, handoff or the paused parent attempt. The displayed
+core-open phrase matches the existing localized state label. Stored lesson IDs
+and authored scenario names remain unchanged. See [batch20 verification](verification/actor-batch-20/README.md)
+for the original mixed-language failures and the complete focused checks.
+
 ## Integration
 
 `game/enemy-guide.mjs` exports `ENEMY_GUIDE_TOPICS`, `enemyGuideEntry`, `enemyGuidePracticeInstructions` and `createEnemyGuideScenario`. The scenario factory uses actual runtime validation and accepts only known topics and turning modes. An unregistered presentation family falls back to FPV; missing registered theme data is an error. It does not install or mutate packs.

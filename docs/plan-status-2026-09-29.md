@@ -64,6 +64,13 @@ review and actual shipped EN/UK text verification. The original failing paths ar
 preserved. This closes the bounded Guide capability defect, not all B teaching or
 production acceptance. No new artwork or approval is adopted.
 
+The following [batch20 correction](verification/actor-batch-20/README.md) removes
+English fragments from ordinary Ukrainian Guide entries and practice hints.
+**45/45** complete Guide checks pass; live language changes preserve the selected
+lesson, focus, child identity, handoff and exact paused checkpoint. Independent
+review confirms generated-catalog byte identity. This fixes existing player copy,
+without expanding the deferred full-translation or production scope.
+
 ## Public and queued
 
 - Latest observed main is `321408a3cfd75ae230d760f39fb692503652601a`
