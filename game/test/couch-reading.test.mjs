@@ -265,14 +265,13 @@ for (const mode of ['Versus', 'Team']) {
   test(`${mode} fresh input changes reading copy while an idle pad preserves keyboard ownership`, async (t) => {
     const f = await host(t, mode);
     f.join();
-    if (mode === 'Versus') {
-      const held = f.state();
-      // Joining owns the Confirm gesture and its 1250 ms native echo tail.
-      // This separate native Help entry follows 151 neutral 120 Hz frames
-      // (1258.3 ms); waiting cannot start or change either ready run.
-      f.frames(151, 1000 / 120);
-      assert.deepEqual(f.state(), held);
-    }
+    const held = f.state();
+    // Joining owns the Confirm gesture and its 1250 ms native echo tail.
+    // This separate native Help entry follows 151 neutral 120 Hz frames
+    // (1258.3 ms); waiting cannot start or change either ready run.
+    if (mode === 'Versus') f.frames(151, 1000 / 120);
+    else f.tick(151);
+    assert.deepEqual(f.state(), held);
     f.openHelp();
     f.control('help-reading').scrollHeight = 500;
     f.pulse(0);
