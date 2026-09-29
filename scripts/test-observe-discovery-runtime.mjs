@@ -4,6 +4,7 @@ import { mkdtemp, writeFile, readFile, rm, mkdir } from 'node:fs/promises';
 import path from 'node:path';
 import { tmpdir } from 'node:os';
 import { createHash } from 'node:crypto';
+import { pathToFileURL } from 'node:url';
 import { createEditionZip } from '../publishing/edition-zip.mjs';
 import { PREVIEW_SECURITY_HEADERS } from './game-cli.mjs';
 import {
@@ -12,6 +13,7 @@ import {
   serveDiscoveryRuntime,
   observeDiscoveryRuntime,
   finishDiscoveryObservation,
+  recordDiscoveryFailureEvidence,
 } from './observe-discovery-runtime.mjs';
 
 const hash = (bytes) => createHash('sha256').update(bytes).digest('hex');
@@ -47,7 +49,10 @@ test('cleanup failures cannot leave successful completion evidence and do not hi
           : error instanceof AggregateError && error.errors[0] === browserFailure,
     );
     assert.equal(saved.has('complete.json'), false);
-    assert.deepEqual(sequence.slice(0, 2), ['browser', 'server']);
+    assert.deepEqual(
+      sequence.filter((name) => !name.endsWith('.json')),
+      ['browser', 'server'],
+    );
     const cleanup = saved.get('cleanup.json');
     assert.equal(cleanup.completed, false);
     assert.equal(cleanup.operations.find((row) => row.name === 'browser').closed, false);
@@ -72,11 +77,245 @@ test('successful completion is finalized after the browser and server close', as
     },
     save: async (name, value) => {
       sequence.push(name);
-      assert.equal(value.cleanup?.completed ?? value.completed, true);
+      if (['cleanup.json', 'complete.json'].includes(name))
+        assert.equal(value.cleanup?.completed ?? value.completed, true);
     },
     complete: { qualified: false, completed: true },
   });
-  assert.deepEqual(sequence, ['browser', 'server', 'cleanup.json', 'complete.json']);
+  assert.deepEqual(sequence, [
+    'cleanup-browser-start.json',
+    'browser',
+    'cleanup-browser-outcome.json',
+    'cleanup-server-start.json',
+    'server',
+    'cleanup-server-outcome.json',
+    'cleanup.json',
+    'complete.json',
+  ]);
+});
+
+test('never-settling observer, CDP and browser cleanup cannot prevent remaining owners or failure evidence', async () => {
+  for (const stalled of ['observer', 'cdp', 'browser']) {
+    const calls = [],
+      saved = new Map();
+    let resolveLate;
+    const close = (name) => () => {
+      calls.push(name);
+      return name === stalled
+        ? new Promise((resolve) => {
+            resolveLate = resolve;
+          })
+        : Promise.resolve();
+    };
+    await assert.rejects(
+      finishDiscoveryObservation({
+        page: { evaluate: close('observer') },
+        cdp: { detach: close('cdp') },
+        browser: { close: close('browser') },
+        server: { close: close('server') },
+        cleanupTimeoutMs: 10,
+        save: async (name, value) => saved.set(name, structuredClone(value)),
+        complete: { qualified: false, completed: true },
+      }),
+      (error) =>
+        error instanceof AggregateError &&
+        error.errors.length === 1 &&
+        error.errors[0].code === 'DISCOVERY_CLEANUP_TIMEOUT',
+    );
+    assert.deepEqual(calls, ['observer', 'cdp', 'browser', 'server']);
+    assert.equal(saved.has('complete.json'), false);
+    const outcome = saved.get(`cleanup-${stalled}-outcome.json`);
+    assert.equal(saved.get(`cleanup-${stalled}-start.json`).phase, 'started');
+    assert.equal(outcome.closed, false);
+    assert.equal(outcome.timedOut, true);
+    assert.equal(saved.get('cleanup.json').completed, false);
+    assert.equal(saved.get('cleanup-server-outcome.json').closed, true);
+    assert.equal(saved.get('failure.json').completed, false);
+    const before = JSON.stringify([...saved]);
+    resolveLate();
+    await Promise.resolve();
+    await Promise.resolve();
+    assert.equal(JSON.stringify([...saved]), before, 'Late resolution cannot relabel a timeout.');
+  }
+});
+
+test('cleanup journals and summary save failures remain independent of resource shutdown and primary errors', async () => {
+  for (const failedFile of [
+    'cleanup-browser-start.json',
+    'cleanup-browser-outcome.json',
+    'cleanup.json',
+    'failure.json',
+  ]) {
+    for (const primary of [null, new Error('Original observation failed')]) {
+      const saved = new Map(),
+        calls = [],
+        saveFailure = new Error('Evidence disk failure'),
+        closeFailure = new Error('Browser close failed');
+      await assert.rejects(
+        finishDiscoveryObservation({
+          browser: {
+            async close() {
+              calls.push('browser');
+              throw closeFailure;
+            },
+          },
+          server: {
+            async close() {
+              calls.push('server');
+            },
+          },
+          save: async (name, value) => {
+            if (name === failedFile) throw saveFailure;
+            saved.set(name, structuredClone(value));
+          },
+          complete: { qualified: false, completed: true },
+          error: primary,
+        }),
+        (error) =>
+          primary
+            ? error === primary
+            : error instanceof AggregateError &&
+              error.errors.includes(closeFailure) &&
+              error.errors.includes(saveFailure),
+      );
+      assert.deepEqual(calls, ['browser', 'server']);
+      assert.equal(saved.get('cleanup-server-outcome.json').closed, true);
+      assert.equal(saved.has('complete.json'), false);
+      if (saved.has('cleanup.json')) assert.equal(saved.get('cleanup.json').completed, false);
+    }
+  }
+});
+
+test('a stalled journal write cannot block cleanup, and a timed-out close preserves the primary failure', async () => {
+  const saved = new Map(),
+    calls = [],
+    primary = new Error('Original route failed');
+  await assert.rejects(
+    finishDiscoveryObservation({
+      page: { evaluate: () => new Promise(() => {}) },
+      browser: { close: async () => calls.push('browser') },
+      server: { close: async () => calls.push('server') },
+      save: async (name, value) => {
+        if (name === 'cleanup-observer-start.json') return new Promise(() => {});
+        saved.set(name, structuredClone(value));
+      },
+      cleanupTimeoutMs: 10,
+      error: primary,
+    }),
+    (error) => error === primary,
+  );
+  assert.deepEqual(calls, ['browser', 'server']);
+  assert.equal(saved.has('complete.json'), false);
+  assert.equal(saved.get('cleanup.json').journalFailures.length, 1);
+  assert.equal(saved.get('cleanup.json').operations[0].timedOut, true);
+  assert.equal(saved.get('cleanup.json').primaryError, primary.stack);
+});
+
+test('a final completion write error is returned after every resource has closed', async () => {
+  const saved = new Map(),
+    failure = new Error('Completion disk failure');
+  await assert.rejects(
+    finishDiscoveryObservation({
+      browser: { close: async () => {} },
+      server: { close: async () => {} },
+      save: async (name, value) => {
+        if (name === 'complete.json') throw failure;
+        saved.set(name, structuredClone(value));
+      },
+    }),
+    (error) => error === failure,
+  );
+  assert.equal(saved.has('complete.json'), false);
+  assert.equal(saved.get('cleanup.json').completed, true);
+});
+
+test('cleanup rejects an invalid deadline before operating on owners', async () => {
+  for (const cleanupTimeoutMs of [0, -1, 1.5, Infinity, 60_001])
+    await assert.rejects(
+      finishDiscoveryObservation({ cleanupTimeoutMs }),
+      /Cleanup timeout must be an integer/,
+    );
+});
+
+test('bounded failure evidence preserves partial files and reports independent save, renderer and trace stalls', async () => {
+  const saved = new Map(),
+    original = new Error('Source-bound observation failed');
+  const diagnostics = await recordDiscoveryFailureEvidence({
+    page: { evaluate: () => new Promise(() => {}) },
+    save: async (name) => {
+      throw new Error(`Cannot save ${name}`);
+    },
+    screenshot: async () => {
+      saved.set('failure.png', 'partial screenshot');
+      throw new Error('Screenshot failed after partial output');
+    },
+    stopTrace: () => new Promise(() => {}),
+    failure: { error: original.stack, sourceRevision: 'a'.repeat(40) },
+    timeoutMs: 10,
+  });
+  assert.equal(diagnostics.length, 6);
+  assert.equal(diagnostics.filter((item) => item.timedOut).length, 4);
+  assert.equal(saved.get('failure.png'), 'partial screenshot');
+  const closed = [];
+  await assert.rejects(
+    finishDiscoveryObservation({
+      browser: { close: async () => closed.push('browser') },
+      server: { close: async () => closed.push('server') },
+      save: async (name, value) => saved.set(name, structuredClone(value)),
+      diagnosticFailures: diagnostics,
+      error: original,
+    }),
+    (error) => error === original,
+  );
+  assert.deepEqual(closed, ['browser', 'server']);
+  assert.deepEqual(saved.get('cleanup.json').diagnosticFailures, diagnostics);
+  assert.equal(saved.get('cleanup.json').completed, false);
+  assert.equal(saved.has('complete.json'), false);
+});
+
+test('actual observation failure reaches bounded cleanup when its renderer diagnostics never settle', async (t) => {
+  const folder = await mkdtemp(path.join(tmpdir(), 'discovery-observer-hung-renderer-'));
+  t.after(() => rm(folder, { recursive: true, force: true }));
+  const input = fixture(),
+    planFile = path.join(folder, 'plan.json'),
+    output = path.join(folder, 'attempt'),
+    playwrightModule = path.join(folder, 'fake-playwright.mjs');
+  await writeFile(planFile, JSON.stringify(input.plan));
+  await writeFile(path.join(folder, 'distribution.zip'), input.archive);
+  await writeFile(path.join(folder, 'manifest.json'), input.manifest);
+  await writeFile(
+    playwrightModule,
+    `export const primary = new Error('Actual caller route failed');
+export const calls = [];
+export const chromium = { launch: async () => ({
+  close: async () => { calls.push('browser closed'); },
+  newContext: async () => ({ newPage: async () => ({
+    setDefaultTimeout() {}, on() {}, addInitScript: async () => {},
+    goto: async () => { throw primary; },
+    evaluate: () => { calls.push('renderer read'); return new Promise(() => {}); },
+    screenshot: async () => { calls.push('screenshot'); throw Error('Screenshot unavailable'); }
+  }) })
+}) };`,
+  );
+  const fake = await import(pathToFileURL(playwrightModule).href);
+  await assert.rejects(
+    observeDiscoveryRuntime({ planFile, playwrightModule, output, cleanupTimeoutMs: 10 }),
+    (error) => error === fake.primary,
+  );
+  assert.equal(fake.calls.at(-1), 'browser closed');
+  assert.equal(fake.calls.filter((item) => item === 'renderer read').length, 4);
+  const cleanup = JSON.parse(await readFile(path.join(output, 'cleanup.json')));
+  assert.equal(cleanup.completed, false);
+  assert.equal(cleanup.primaryError, fake.primary.stack);
+  assert.equal(cleanup.diagnosticFailures.filter((item) => item.timedOut).length, 3);
+  assert.equal(cleanup.operations.find((item) => item.name === 'observer').timedOut, true);
+  assert.equal(cleanup.operations.find((item) => item.name === 'server').closed, true);
+  const failure = JSON.parse(await readFile(path.join(output, 'failure.json')));
+  assert.equal(failure.error, fake.primary.stack);
+  assert.equal(failure.identity.sourceRevision, input.plan.artifact.sourceRevision);
+  const observation = JSON.parse(await readFile(path.join(output, 'case.json')));
+  await assert.rejects(fetch(observation.origin + '/game/app.mjs'));
+  await assert.rejects(readFile(path.join(output, 'complete.json')), { code: 'ENOENT' });
 });
 function fixture({ gameplayId = '7feffc97157784af', extra = false } = {}) {
   const rewardPath = 'game/content/company-campaigns/fpv-meet-aircraft.rewards.json';

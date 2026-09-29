@@ -263,15 +263,116 @@ async function readBounded(file, limit) {
   return bytes;
 }
 
-/** Completion evidence is emitted only after every owned cleanup has settled. */
-export async function finishDiscoveryObservation({ page, browser, server, save, complete, error }) {
+async function cleanupDeadline(action, timeoutMs, label) {
+  let timer;
+  try {
+    return await Promise.race([
+      Promise.resolve().then(action),
+      new Promise((_, reject) => {
+        timer = setTimeout(() => {
+          const error = new Error(`Observation cleanup ${label} timed out after ${timeoutMs} ms.`);
+          error.code = 'DISCOVERY_CLEANUP_TIMEOUT';
+          reject(error);
+        }, timeoutMs);
+      }),
+    ]);
+  } finally {
+    clearTimeout(timer);
+  }
+}
+
+/** Failure diagnostics are optional evidence, never a reason to skip owned
+ * resource cleanup. Keep already-written or partial artifacts unchanged. */
+export async function recordDiscoveryFailureEvidence({
+  page,
+  save,
+  screenshot,
+  stopTrace,
+  failure,
+  timeoutMs = 10_000,
+}) {
+  if (!Number.isInteger(timeoutMs) || timeoutMs < 1 || timeoutMs > 60_000)
+    throw new TypeError('Diagnostic timeout must be an integer from 1 to 60000 ms.');
+  const failures = [];
+  for (const [name, action] of [
+    ['failure.json', () => save('failure.json', failure)],
+    ...(page
+      ? [
+          [
+            'security-policy-on-failure.json',
+            async () =>
+              save(
+                'security-policy-on-failure.json',
+                await page.evaluate(() => globalThis.__discoveryPolicy ?? null),
+              ),
+          ],
+          ['failure.png', () => screenshot('failure')],
+          [
+            'observer-on-failure.json',
+            async () =>
+              save(
+                'observer-on-failure.json',
+                await page.evaluate(() => globalThis.discoveryObservation?.exportReport() ?? null),
+              ),
+          ],
+          [
+            'win-on-failure.json',
+            async () =>
+              save(
+                'win-on-failure.json',
+                await page.evaluate(() => globalThis.__discoveryFirstWin ?? null),
+              ),
+          ],
+        ]
+      : []),
+    ['trace-on-failure', stopTrace],
+  ]) {
+    try {
+      await cleanupDeadline(action, timeoutMs, `diagnostic ${name}`);
+    } catch (error) {
+      failures.push({
+        name,
+        timedOut: error.code === 'DISCOVERY_CLEANUP_TIMEOUT',
+        error: error.stack ?? String(error),
+      });
+    }
+  }
+  return failures;
+}
+
+/** A timed-out close is not cancelled or presumed successful. Continue releasing
+ * the other owners and preserve failure evidence before returning to the caller. */
+export async function finishDiscoveryObservation({
+  page,
+  cdp,
+  browser,
+  server,
+  save,
+  complete,
+  error,
+  diagnosticFailures = [],
+  cleanupTimeoutMs = 10_000,
+}) {
+  if (!Number.isInteger(cleanupTimeoutMs) || cleanupTimeoutMs < 1 || cleanupTimeoutMs > 60_000)
+    throw new TypeError('Cleanup timeout must be an integer from 1 to 60000 ms.');
   const cleanup = {
     qualified: false,
     completed: false,
     primaryError: error?.stack ?? null,
     operations: [],
+    journalFailures: [],
+    diagnosticFailures: [...diagnosticFailures],
   };
-  const failures = [];
+  const failures = diagnosticFailures.map((failure) => new Error(failure.error));
+  const record = async (name, value) => {
+    try {
+      await cleanupDeadline(() => save(name, value), cleanupTimeoutMs, `save ${name}`);
+    } catch (failure) {
+      failures.push(failure);
+      cleanup.journalFailures.push({ name, error: failure.stack ?? String(failure) });
+      cleanup.completed = false;
+    }
+  };
   for (const [name, owner, close] of [
     [
       'observer',
@@ -282,37 +383,70 @@ export async function finishDiscoveryObservation({ page, browser, server, save, 
           globalThis.__discoveryWinCleanup?.();
         }),
     ],
+    ['cdp', cdp, () => cdp.detach()],
     ['browser', browser, () => browser.close()],
     ['server', server, () => server.close()],
   ]) {
-    const outcome = { name, requested: Boolean(owner), closed: false, error: null };
+    const outcome = {
+      name,
+      requested: Boolean(owner),
+      closed: false,
+      timedOut: false,
+      error: null,
+    };
     if (owner) {
+      await record(`cleanup-${name}-start.json`, {
+        qualified: false,
+        phase: 'started',
+        name,
+        timeoutMs: cleanupTimeoutMs,
+      });
       try {
-        await close();
+        await cleanupDeadline(close, cleanupTimeoutMs, name);
         outcome.closed = true;
       } catch (failure) {
+        outcome.timedOut = failure.code === 'DISCOVERY_CLEANUP_TIMEOUT';
         outcome.error = failure.stack ?? String(failure);
         failures.push(failure);
       }
+      await record(`cleanup-${name}-outcome.json`, {
+        qualified: false,
+        phase: 'settled',
+        ...outcome,
+      });
     }
-    cleanup.operations.push(outcome);
+    cleanup.operations.push(Object.freeze(outcome));
   }
   cleanup.completed = failures.length === 0;
-  await save('cleanup.json', cleanup);
+  await record('cleanup.json', {
+    ...cleanup,
+    operations: [...cleanup.operations],
+    journalFailures: [...cleanup.journalFailures],
+  });
   if (error) throw error; // Retain the original failure; cleanup has its own exact outcomes.
   if (failures.length) {
-    const failure = new AggregateError(
+    let failure = new AggregateError(
       failures,
       'Observation cleanup failed; completion was not recorded.',
     );
-    await save('failure.json', { ...complete, completed: false, error: failure.stack, cleanup });
+    const recordedFailures = failures.length;
+    await record('failure.json', { ...complete, completed: false, error: failure.stack, cleanup });
+    if (failures.length !== recordedFailures)
+      failure = new AggregateError(failures, failure.message);
     throw failure;
   }
   await save('complete.json', { ...complete, cleanup });
 }
 
 /** External Playwright is an explicit validation dependency, never a game dependency. */
-export async function observeDiscoveryRuntime({ planFile, playwrightModule, output }) {
+export async function observeDiscoveryRuntime({
+  planFile,
+  playwrightModule,
+  output,
+  cleanupTimeoutMs = 10_000,
+}) {
+  if (!Number.isInteger(cleanupTimeoutMs) || cleanupTimeoutMs < 1 || cleanupTimeoutMs > 60_000)
+    throw new TypeError('Cleanup timeout must be an integer from 1 to 60000 ms.');
   const plan = validateDiscoveryRuntimePlan(
     await readBounded(planFile, 65536).then((b) => b.toString('utf8')),
   );
@@ -328,7 +462,8 @@ export async function observeDiscoveryRuntime({ planFile, playwrightModule, outp
     tracing = false,
     identity = null,
     completion = null,
-    primaryError = null;
+    primaryError = null,
+    diagnosticFailures = [];
   const screenshot = (name) => page.screenshot({ path: path.join(output, `${name}.png`) });
   const record = async (label) => {
     const state = await page.evaluate(() => {
@@ -399,8 +534,9 @@ export async function observeDiscoveryRuntime({ planFile, playwrightModule, outp
     });
     let stream;
     try {
-      await cdp.send('Tracing.end');
-      ({ stream } = await complete);
+      // Observe both promises immediately: a wedged Tracing.end must not leave
+      // the completion timer's rejection unhandled during bounded cleanup.
+      [, { stream }] = await Promise.all([cdp.send('Tracing.end'), complete]);
     } finally {
       clearTimeout(timer);
     }
@@ -730,40 +866,32 @@ export async function observeDiscoveryRuntime({ planFile, playwrightModule, outp
     };
   } catch (error) {
     primaryError = error;
-    await save('failure.json', {
-      qualified: false,
-      error: error.stack,
-      identity,
-      events,
-      errors,
-      at: new Date().toISOString(),
+    diagnosticFailures = await recordDiscoveryFailureEvidence({
+      page,
+      save,
+      screenshot,
+      stopTrace,
+      timeoutMs: cleanupTimeoutMs,
+      failure: {
+        qualified: false,
+        error: error.stack,
+        identity,
+        events,
+        errors,
+        at: new Date().toISOString(),
+      },
     });
-    if (page) {
-      await save(
-        'security-policy-on-failure.json',
-        await page.evaluate(() => globalThis.__discoveryPolicy ?? null).catch(() => null),
-      );
-      await screenshot('failure').catch(() => {});
-      await save(
-        'observer-on-failure.json',
-        await page
-          .evaluate(() => globalThis.discoveryObservation?.exportReport() ?? null)
-          .catch(() => null),
-      );
-      await save(
-        'win-on-failure.json',
-        await page.evaluate(() => globalThis.__discoveryFirstWin ?? null).catch(() => null),
-      );
-    }
-    await stopTrace().catch(() => {});
   } finally {
     await finishDiscoveryObservation({
       page,
+      cdp,
       browser,
       server,
       save,
       complete: completion,
       error: primaryError,
+      diagnosticFailures,
+      cleanupTimeoutMs,
     });
   }
   return { qualified: false, completed: true, output };

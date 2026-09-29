@@ -331,3 +331,21 @@ No threshold produces an automatic stability pass. This diagnostic does not meas
 exclusive/dominator retained bytes, native decoders, GPU allocations, all outstanding
 object URLs or natural pacing. Repeated viewing of one reward is not evidence of
 same-document edition replacement, new wins, all media types, or physical devices.
+
+## Bounded failure collection and cleanup
+
+The frozen-artifact runner keeps failure evidence separate from a successful
+observation. Best-effort browser diagnostics and owned cleanup operations have
+per-operation deadlines. A timed-out or rejected diagnostic does not prevent
+subsequent browser/server cleanup, and the original observation error remains
+authoritative. Cleanup records each requested operation before starting it and
+records its outcome separately, including timeouts and journal-write failures.
+CDP detachment precedes browser shutdown when a session exists.
+
+A deadline only bounds the runner's wait; it does not cancel the underlying
+operation or prove that the resource closed. Late resolution cannot change the
+recorded failed outcome. `complete.json` is written only after successful cleanup
+and evidence writes; failures remain failed and retain the available journals.
+This containment is covered by stalled-operation and failing-writer tests. It
+does not establish the cause or cure of the earlier retained-capture driver hang;
+actual clean shutdown still requires a new source-bound browser observation.
