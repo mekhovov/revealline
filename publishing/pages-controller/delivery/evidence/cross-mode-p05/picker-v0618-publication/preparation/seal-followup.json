@@ -1,9 +1,0 @@
-{
-  "status": "LOCAL_SEAL_LINK_REFUSAL_CORRECTED",
-  "at": "2026-09-18T15:07:27.408773+00:00",
-  "cause": "New publication README used the planning-page five-level archive link from a four-level README location. Relative-link validation refused before any candidate manifest or staging. Corrected README to four-level relative link; planning five-level link remains correct.",
-  "sourceOrRuntimeChanges": false,
-  "testsRepeated": false,
-  "originalPreparationBundlePreserved": true,
-  "alsoAppliedRootQueueUpdate": "R12 root peer pass; footer R4 scoped cases; 20 HUD native combinations and bounded Pause-ring successor; actor packaging correction eleven paths. No integrated/public acceptance inferred."
-}

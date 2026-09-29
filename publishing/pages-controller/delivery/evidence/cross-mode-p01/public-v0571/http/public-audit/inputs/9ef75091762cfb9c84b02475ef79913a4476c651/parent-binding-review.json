@@ -1,9 +1,0 @@
-{
-  "status": "PASS",
-  "bindingSha256": "c7254fd8899c5e0bfc7139ec78925a2c8ceee804b2271c564d9a0390c9ad5ae4",
-  "nineOriginalPinsRehashed": true,
-  "fiveCommittedOriginalBodiesMatch": true,
-  "fourOriginalHostedBodiesMatch": true,
-  "publicAuditAuthorized": true,
-  "browserQualification": false
-}
