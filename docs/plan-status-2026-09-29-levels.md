@@ -115,7 +115,7 @@ message from current player state and retained knockdown cause. Ordinary Resume,
 fresh-input requirements, cancelled rescue channels, travelling impacts,
 specialist roles and teaching progress remain unchanged. Eight new public-input
 regressions and 31 adjacent Team checks pass, with no skips. This is a host
-presentation correction, not a simulation-policy change. It is being handed to
+presentation correction, not a simulation-policy change. It is adopted in
 the existing PR #757 batch, not claimed as released. The source commit
 `42710c2b2340ad7d6a02078b98cf6e569537d47f` is pushed; see its
 [focused evidence](https://github.com/mekhovov/revealline/blob/42710c2b2340ad7d6a02078b98cf6e569537d47f/docs/verification/team-resume-rescue-guidance-2026-09-29.md).
@@ -137,12 +137,31 @@ plus changed-file lint/format and bounded local EN/UK browser layouts. Levels
 verified the PR head and read that evidence; it did not independently repeat
 those combined runs. The changed Team renderer fingerprint requires a new
 Team/equipment production review before release. Do not rewrite historical
-approvals. Browser review also found a remaining narrow-screen Ukrainian DOM
-HUD/ability-label wrapping defect, now owned by UX as the next small slice.
+approvals. Browser review also found a narrow-screen Ukrainian DOM
+HUD/ability-label wrapping defect; the subsequent source correction is described
+below rather than remaining incorrectly marked as unimplemented.
 
-**UX, in parallel: Team Large text in the actual painter.** Respect the same
-stored display preference in canvas labels while preserving actor/contact
-geometry. Keep that separately owned rendering change clear of the Resume hunks.
+**UX: Team Large text and the compact HUD follow-up are source-complete.**
+The same stored display preference now reaches canvas labels without changing
+actor/contact geometry. PR #757 is verified at the newer head
+`1a406a2c0a33b1ba75cc61318ee91f8bcf3504a0`, with narrow HUD/control wrapping,
+compact Ukrainian labels and locale-live departure captions. Pushed
+[follow-up evidence](https://github.com/mekhovov/revealline/blob/1a406a2c0a33b1ba75cc61318ee91f8bcf3504a0/docs/verification/team-hud-wrap-20260929/README.md)
+records 99 layout/host checks before the isolated caption fix, then six locale
+checks and 20 existing guards afterward. These overlap and are **not** 125 unique
+final-source tests. Native local EN/UK evidence includes actual downing,
+recovery, Settings/Resume and four viewports; physical hardware, frozen public
+source and 200% zoom remain unqualified. At 568×320 the full board is small and
+long messages scroll inside the retained message band; not all sentences are
+simultaneously visible.
+
+PR #761, verified at `d22a6d0795ac095bbf9c988665060913a789ff07`, tracks the
+minimal 17-path A1 renderer preservation input and its separate production
+admission work. The owner reports 152 and 31 focused checks; the 59-slot admission
+is still pending. Source preservation and passing tests are not production-art
+approval. Keep priorities A (characters/reliable play), B (encounter variety), C
+(a finished Ukrainian/FPV cohort), with formal C2 human game-feel study last.
+
 Teaching acknowledgement/schema work is still under design review, not included
 by copying an old host or silently reinterpreting v1 progress.
 
