@@ -1,4 +1,5 @@
 import { localizedText } from '../i18n/index.mjs';
+import { gameDocumentURL } from '../community-routes.mjs';
 
 const onlineRoot = 'https://mekhovov.github.io/revealline/';
 
@@ -6,7 +7,8 @@ const onlineRoot = 'https://mekhovov.github.io/revealline/';
  * are explicitly online tools and leave the running edition in its own tab. */
 export function mountEditionNavigation({ provider, document: doc, href }) {
   const game = new URL(provider.href()),
-    root = new URL(provider.rootURL);
+    root = new URL(provider.rootURL),
+    documentURL = gameDocumentURL(href);
   for (const link of doc.querySelectorAll('[data-release-explorer]')) {
     link.href = new URL('releases/', onlineRoot).href;
     link.target = '_blank';
@@ -16,7 +18,7 @@ export function mountEditionNavigation({ provider, document: doc, href }) {
   for (const label of doc.querySelectorAll('[data-i18n="interface:revealLineMenu"]'))
     localizedText(label, () => `${provider.selection.brand.name} / Menu`);
   for (const link of doc.querySelectorAll('a[href]')) {
-    const target = new URL(link.getAttribute('href') || link.href, href);
+    const target = new URL(link.getAttribute('href') || link.href, documentURL);
     if (target.origin !== root.origin || !target.pathname.startsWith(root.pathname)) continue;
     const relative = target.pathname.slice(root.pathname.length);
     if (/^game\/couch(?:\/|$)/.test(relative)) {
@@ -47,11 +49,8 @@ export function mountEditionNavigation({ provider, document: doc, href }) {
     }
     if (['game/', 'game/index.html', 'game/company.html'].includes(relative)) {
       const destination = new URL(game.href);
-      destination.search = target.search;
-      destination.searchParams.set('edition', provider.editionId);
-      if (provider.retainedPresentationId)
-        destination.searchParams.set('presentation', provider.retainedPresentationId);
-      else destination.searchParams.delete('presentation');
+      for (const [key, value] of target.searchParams)
+        if (!['edition', 'presentation'].includes(key)) destination.searchParams.set(key, value);
       destination.hash = target.hash;
       link.href = destination.href;
     } else if (/^game\/(?:controller-lab|replay-theater)(?:\/|$)/.test(relative)) {

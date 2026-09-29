@@ -1,22 +1,36 @@
 # Company communities
 
-The [public directory](https://mekhovov.github.io/revealline/game/community/) is a discovery
-page outside the game. Its source is [`game/community/index.html`](../game/community/index.html).
+The [public directory](https://mekhovov.github.io/revealline/game/communities/) is a discovery
+page outside the game. Its source is [`game/communities/index.html`](../game/communities/index.html).
 The repository guide and public website link to it. The ordinary game and company game menus
 do not expose cross-company discovery or a company switcher.
 
 ## Entry points
 
-| Community | Stable public entry | Stored edition identity | Brand boundary |
-| --- | --- | --- | --- |
-| DroneAid Netherlands | [Play DroneAid](https://mekhovov.github.io/revealline/game/company.html?edition=droneaid-nl-community) | `droneaid-nl-community` | `droneaid-nl` |
-| Coupa | [Play Coupa](https://mekhovov.github.io/revealline/game/company.html?edition=coupa-all) | `coupa-all` | `coupa` |
+| Community                                     | Shareable path (relative to the distribution) | Stored edition identity | Brand boundary |
+| --------------------------------------------- | --------------------------------------------- | ----------------------- | -------------- |
+| FPV / LINE — main game                        | `game/`                                       | Default game profile    | Default game   |
+| DroneAid Netherlands                          | `game/communities/droneaid/`                  | `droneaid-nl-community` | `droneaid-nl`  |
+| Coupa                                         | `game/communities/coupa/`                     | `coupa-all`             | `coupa`        |
+| DroneAid Community Relay — Portugal / Germany | `game/communities/droneaid-community/`        | `droneaid-community`    | `droneaid`     |
 
-The directory uses `../company.html?edition=…`, not origin-root paths or standalone
-`/editions/` links. These links stay inside the same deployment when served locally, under
-the GitHub project prefix, or within a frozen release. The company entry forwards to the
-ordinary game host with the exact company selected. The DroneAid link uses the canonical
-`droneaid-nl-community` ID supported by this source baseline. No stored identity is renamed.
+The directory includes every public brand, using each brand's aggregate edition, plus the
+main game. Individual company campaigns stay in that company's existing selector. The two
+DroneAid communities have distinct content and saved identities and remain separate.
+
+Friendly entry pages keep the clean URL visible. They load the same packaged `game/index.html`
+host, rebasing its resources to that host without an iframe or a `<base>` exception to CSP.
+There is no copied game UI to drift out of date. The route selects the aggregate edition;
+a same-company `edition` query can select a narrower edition, while foreign overrides fail
+before startup. `campaign`, retained `presentation`, language and other supported query/hash
+values survive loading. Provider navigation keeps friendly addresses for these brands.
+
+Relative links work on localhost, beneath a GitHub project prefix and in frozen releases.
+Use a trailing slash in shared links; HTTP serves the slashless spelling as a directory too.
+The old `/game/community/` index forwards to `/game/communities/`. Old `company.html?edition=…`
+and `index.html?edition=…` bookmarks continue working. Public slugs never rename stored keys,
+content pins or installed app identities. Compiled standalone editions keep their existing
+entry and selected-content boundary.
 
 ## Isolation contract
 
@@ -40,7 +54,7 @@ ownership and public collections; it does not implement company tenant access co
 
 ## Directory versus creator marketplace
 
-`game/community/index.html` is static HTML plus packaged localization. It has no catalog
+`game/communities/index.html` is static HTML plus packaged localization. It has no catalog
 fetch, account form, upload client or dependency on IndexedDB. Its company links work
 without JavaScript. Both English and Ukrainian are provided.
 
@@ -57,8 +71,9 @@ tools; the static company directory does not link players into them.
 1. Add and validate its brand and public aggregate edition through the existing company
    content pipeline. Set a distinct `brandId`; do not reuse another company's brand to
    gain campaign visibility.
-2. Add one explicit entry to the static directory, with its public edition slug and both
-   English/Ukrainian labels. Keep the link relative to `../company.html`.
+2. Add its route and allowed editions to `game/community-routes.mjs`, a small entry page
+   under `game/communities/<slug>/`, and a relative link in the directory with English and
+   Ukrainian labels. The route inventory test must match every public catalog brand/edition.
 3. Add its direct URL to the repository guide and table above. Do not add discovery links
    to `game/index.html` or the game's menus.
 4. Check directory routing, same-company navigation, cross-company rejection, asset
@@ -69,12 +84,12 @@ tools; the static company directory does not link players into them.
 The reported `releases/v0.142.2/site/game/community/index.html` belongs to an immutable
 snapshot. On 2026-09-29 it still served the old marketplace and attempted unavailable API
 requests. This fix updates source; it does not edit that frozen snapshot or promote a
-release. After the next reviewed release is promoted, the stable `/game/community/` alias
-will lead to its static directory. Bookmarks into `v0.142.2` retain that archived version.
+release. After the next reviewed release is promoted, the stable `/game/communities/` alias
+will lead to its static directory; `/game/community/` remains a compatibility entry. Bookmarks into `v0.142.2` retain that archived version.
 
-The current-entry generator discovers both `index.html` and `store.html`. The full static
-build includes `game/`, so the directory, stylesheet and local translations travel together.
-Standalone company builds retain their selected-content packaging boundary; the directory
-does not introduce new edition routes or a dependency on standalone `/editions/` publishing.
+The current-entry generator discovers the directory, nested company entry pages, old
+compatibility entry and `store.html`. The full static/native build includes `game/`. Offline
+Solo preparation includes the directory and entry resources; company artwork remains in
+its existing optional package. No standalone `/editions/` publication is required.
 
 See the [verification report](verification/company-community-directory-2026-09-29.md).

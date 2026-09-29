@@ -1,0 +1,335 @@
+TAP version 13
+# Subtest: public company directory can display and navigate without a community backend
+ok 1 - public company directory can display and navigate without a community backend
+  ---
+  duration_ms: 22.232416
+  ...
+# Subtest: directory exposes the main game and every public brand through relative clean routes
+ok 2 - directory exposes the main game and every public brand through relative clean routes
+  ---
+  duration_ms: 34.537959
+  ...
+# Subtest: old directory bookmarks preserve query and hash while forwarding to the plural path
+ok 3 - old directory bookmarks preserve query and hash while forwarding to the plural path
+  ---
+  duration_ms: 6.202959
+  ...
+# Subtest: the separate community store retains its service configuration and existing account/catalog host
+ok 4 - the separate community store retains its service configuration and existing account/catalog host
+  ---
+  duration_ms: 8.493125
+  ...
+# Subtest: creator and moderator return links retain the separate service marketplace
+ok 5 - creator and moderator return links retain the separate service marketplace
+  ---
+  duration_ms: 8.381291
+  ...
+# Subtest: static directory resources and preserved store entry are covered by the source distribution
+ok 6 - static directory resources and preserved store entry are covered by the source distribution
+  ---
+  duration_ms: 42.70125
+  ...
+# Subtest: Pages aliases retain both entry routes and preserve frozen directory/store bytes
+ok 7 - Pages aliases retain both entry routes and preserve frozen directory/store bytes
+  ---
+  duration_ms: 34.511
+  ...
+# Subtest: the real shared host rebases every resource while keeping empty and fragment links local
+ok 8 - the real shared host rebases every resource while keeping empty and fragment links local
+  ---
+  duration_ms: 285.116375
+  ...
+# Subtest: relative CSS, srcset, posters and offline metadata keep the shared host resource scope
+ok 9 - relative CSS, srcset, posters and offline metadata keep the shared host resource scope
+  ---
+  duration_ms: 2.199
+  ...
+# Subtest: unrelated HTML, base overrides and foreign offline scopes fail before a host is serialized
+ok 10 - unrelated HTML, base overrides and foreign offline scopes fail before a host is serialized
+  ---
+  duration_ms: 3.606584
+  ...
+# Subtest: coupa loads the one shared document without changing its visible URL
+ok 11 - coupa loads the one shared document without changing its visible URL
+  ---
+  duration_ms: 64.973792
+  ...
+# Subtest: droneaid loads the one shared document without changing its visible URL
+ok 12 - droneaid loads the one shared document without changing its visible URL
+  ---
+  duration_ms: 10.357375
+  ...
+# Subtest: droneaid-community loads the one shared document without changing its visible URL
+ok 13 - droneaid-community loads the one shared document without changing its visible URL
+  ---
+  duration_ms: 3.276625
+  ...
+# Subtest: a foreign edition query cannot fetch or write a host and retains only its own fallback
+ok 14 - a foreign edition query cannot fetch or write a host and retains only its own fallback
+  ---
+  duration_ms: 0.937458
+  ...
+# Subtest: foreign response preserves the readable entry and never writes returned content
+ok 15 - foreign response preserves the readable entry and never writes returned content
+  ---
+  duration_ms: 2.290583
+  ...
+# Subtest: same-origin wrong document preserves the readable entry and never writes returned content
+ok 16 - same-origin wrong document preserves the readable entry and never writes returned content
+  ---
+  duration_ms: 1.801542
+  ...
+# Subtest: redirect preserves the readable entry and never writes returned content
+ok 17 - redirect preserves the readable entry and never writes returned content
+  ---
+  duration_ms: 2.570625
+  ...
+# Subtest: non-HTML preserves the readable entry and never writes returned content
+ok 18 - non-HTML preserves the readable entry and never writes returned content
+  ---
+  duration_ms: 1.281584
+  ...
+# Subtest: HTTP failure preserves the readable entry and never writes returned content
+ok 19 - HTTP failure preserves the readable entry and never writes returned content
+  ---
+  duration_ms: 1.115375
+  ...
+# Subtest: unrelated HTML preserves the readable entry and never writes returned content
+ok 20 - unrelated HTML preserves the readable entry and never writes returned content
+  ---
+  duration_ms: 0.377334
+  ...
+# Subtest: a pagehide during fetch prevents late document replacement and retires its listener
+ok 21 - a pagehide during fetch prevents late document replacement and retires its listener
+  ---
+  duration_ms: 0.672667
+  ...
+# Subtest: a stalled fetch expires into the same readable recovery page without document writes
+ok 22 - a stalled fetch expires into the same readable recovery page without document writes
+  ---
+  duration_ms: 6.18975
+  ...
+# Subtest: friendly community manifest covers every public brand and edition without merging identities
+ok 23 - friendly community manifest covers every public brand and edition without merging identities
+  ---
+  duration_ms: 6.187583
+  ...
+# Subtest: friendly routes resolve slash, index and slashless entries within local and frozen roots
+ok 24 - friendly routes resolve slash, index and slashless entries within local and frozen roots
+  ---
+  duration_ms: 2.789458
+  ...
+# Subtest: friendly entry preserves own campaign, controls and fragment but refuses foreign or ambiguous editions
+ok 25 - friendly entry preserves own campaign, controls and fragment but refuses foreign or ambiguous editions
+  ---
+  duration_ms: 2.460125
+  ...
+# Subtest: share URLs omit aggregate query, retain narrower edition identity and never change the release root
+ok 26 - share URLs omit aggregate query, retain narrower edition identity and never change the release root
+  ---
+  duration_ms: 2.300875
+  ...
+# Subtest: friendly company navigation keeps owned links and tool parameters in the shared release root
+ok 27 - friendly company navigation keeps owned links and tool parameters in the shared release root
+  ---
+  duration_ms: 1.365875
+  ...
+# Subtest: default channels retain their exact spellings; same-release company profiles and app IDs differ
+ok 28 - default channels retain their exact spellings; same-release company profiles and app IDs differ
+  ---
+  duration_ms: 2.339
+  ...
+# Subtest: transfer discovers earlier same-edition profiles; read-only recovery protects other editions
+ok 29 - transfer discovers earlier same-edition profiles; read-only recovery protects other editions
+  ---
+  duration_ms: 0.632375
+  ...
+# Subtest: same-release installed editions have independent state and writer locks
+ok 30 - same-release installed editions have independent state and writer locks
+  ---
+  duration_ms: 0.908375
+  ...
+# Subtest: branded updates require source review and retain both profiles through rollback
+ok 31 - branded updates require source review and retain both profiles through rollback
+  ---
+  duration_ms: 13.559667
+  ...
+# Subtest: an authenticated catalogue switch selects an edition within its company without retaining old artwork
+ok 32 - an authenticated catalogue switch selects an edition within its company without retaining old artwork
+  ---
+  duration_ms: 0.940542
+  ...
+# Subtest: a declared edition in another company cannot be a main-game departure destination
+ok 33 - a declared edition in another company cannot be a main-game departure destination
+  ---
+  duration_ms: 0.153792
+  ...
+# Subtest: an authenticated artwork switch selects its retained presentation
+ok 34 - an authenticated artwork switch selects its retained presentation
+  ---
+  duration_ms: 0.259833
+  ...
+# Subtest: a retained presentation can return to the current presentation
+ok 35 - a retained presentation can return to the current presentation
+  ---
+  duration_ms: 0.176375
+  ...
+# Subtest: foreign, credentialed, altered and unregistered destinations fail closed
+ok 36 - foreign, credentialed, altered and unregistered destinations fail closed
+  ---
+  duration_ms: 0.628542
+  ...
+# Subtest: ambiguous mixed requests and wrong departure kinds fail closed
+ok 37 - ambiguous mixed requests and wrong departure kinds fail closed
+  ---
+  duration_ms: 0.314042
+  ...
+# Subtest: the actual host boundary accepts edition and retained artwork changes without default downloads
+ok 38 - the actual host boundary accepts edition and retained artwork changes without default downloads
+  ---
+  duration_ms: 0.628459
+  ...
+# Subtest: the actual host boundary rejects cancelled and stale departures
+ok 39 - the actual host boundary rejects cancelled and stale departures
+  ---
+  duration_ms: 0.524875
+  ...
+# Subtest: the actual host boundary rejects invalid destinations before successful ownership completion
+ok 40 - the actual host boundary rejects invalid destinations before successful ownership completion
+  ---
+  duration_ms: 0.245292
+  ...
+# Subtest: the actual host boundary rejects a declared destination owned by another company
+ok 41 - the actual host boundary rejects a declared destination owned by another company
+  ---
+  duration_ms: 0.225666
+  ...
+# Subtest: friendly community host resolves shared files and preserves canonical save and artwork identity
+ok 42 - friendly community host resolves shared files and preserves canonical save and artwork identity
+  ---
+  duration_ms: 1401.892625
+  ...
+# Subtest: friendly path rejects foreign and duplicate selectors before fetching or opening another company
+ok 43 - friendly path rejects foreign and duplicate selectors before fetching or opening another company
+  ---
+  duration_ms: 63.666958
+  ...
+# Subtest: friendly retained artwork navigation keeps its exact original and departure validation
+ok 44 - friendly retained artwork navigation keeps its exact original and departure validation
+  ---
+  duration_ms: 179.42225
+  ...
+# Subtest: menu defers reveal-only bytes but retains their full receipt and exact acquisition checks
+ok 45 - menu defers reveal-only bytes but retains their full receipt and exact acquisition checks
+  ---
+  duration_ms: 240.381541
+  ...
+# Subtest: mission picture reused as brand hero remains an eagerly verified dependency
+ok 46 - mission picture reused as brand hero remains an eagerly verified dependency
+  ---
+  duration_ms: 162.280291
+  ...
+# Subtest: mission picture reused as edition root remains an eagerly verified dependency
+ok 47 - mission picture reused as edition root remains an eagerly verified dependency
+  ---
+  duration_ms: 154.25275
+  ...
+# Subtest: mission picture reused as actor body remains an eagerly verified dependency
+ok 48 - mission picture reused as actor body remains an eagerly verified dependency
+  ---
+  duration_ms: 175.094042
+  ...
+# Subtest: mission picture reused as dependency remains an eagerly verified dependency
+ok 49 - mission picture reused as dependency remains an eagerly verified dependency
+  ---
+  duration_ms: 158.635208
+  ...
+# Subtest: deferred artwork still obeys the full budget, publication rules and exact catalog membership
+ok 50 - deferred artwork still obeys the full budget, publication rules and exact catalog membership
+  ---
+  duration_ms: 85.407709
+  ...
+# Subtest: ordinary Solo uses its current startup path without any edition fetch
+ok 51 - ordinary Solo uses its current startup path without any edition fetch
+  ---
+  duration_ms: 0.161042
+  ...
+# Subtest: artwork URLs stay inside the selected company receipt while retained originals remain available
+ok 52 - artwork URLs stay inside the selected company receipt while retained originals remain available
+  ---
+  duration_ms: 178.630917
+  ...
+# Subtest: edition content injects owned boot data and preserves audience and old saves
+ok 53 - edition content injects owned boot data and preserves audience and old saves
+  ---
+  duration_ms: 62.555125
+  ...
+# Subtest: compiled audience cannot be escaped by a query before network or activation
+ok 54 - compiled audience cannot be escaped by a query before network or activation
+  ---
+  duration_ms: 0.317875
+  ...
+# Subtest: presentation receipt is origin-independent and changes with selected palette or actor recipes
+ok 55 - presentation receipt is origin-independent and changes with selected palette or actor recipes
+  ---
+  duration_ms: 162.706583
+  ...
+# Subtest: generic company entry resolves the registry default rather than a company name in code
+ok 56 - generic company entry resolves the registry default rather than a company name in code
+  ---
+  duration_ms: 50.639042
+  ...
+# Subtest: compatibility entry retains mission, input preferences and fragment on the common document
+ok 57 - compatibility entry retains mission, input preferences and fragment on the common document
+  ---
+  duration_ms: 0.166041
+  ...
+# Subtest: generated public pages use complete messages and retain original attribution links
+ok 58 - generated public pages use complete messages and retain original attribution links
+  ---
+  duration_ms: 18.688417
+  ...
+# Subtest: community guide rich messages match their direct DOM slots in every locale
+ok 59 - community guide rich messages match their direct DOM slots in every locale
+  ---
+  duration_ms: 18.648042
+  ...
+# Subtest: root launch rewriting keeps every localization asset inside the distribution
+ok 60 - root launch rewriting keeps every localization asset inside the distribution
+  ---
+  duration_ms: 6.34075
+  ...
+# Subtest: historical distributions without localization never request missing new runtime files
+ok 61 - historical distributions without localization never request missing new runtime files
+  ---
+  duration_ms: 0.563041
+  ...
+# Subtest: maintained sprite review pages localize static and generated presentation text
+ok 62 - maintained sprite review pages localize static and generated presentation text
+  ---
+  duration_ms: 77.517167
+  ...
+# Subtest: offline download and launcher routes provide live language controls and bilingual fallbacks
+ok 63 - offline download and launcher routes provide live language controls and bilingual fallbacks
+  ---
+  duration_ms: 13.947541
+  ...
+# Subtest: offline runtime-owned captions have one live binding owner
+ok 64 - offline runtime-owned captions have one live binding owner
+  ---
+  duration_ms: 7.210625
+  ...
+# Subtest: company entry and public directory localize independently of the main game menu
+ok 65 - company entry and public directory localize independently of the main game menu
+  ---
+  duration_ms: 118.19175
+  ...
+1..65
+# tests 65
+# suites 0
+# pass 65
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 3776.229334

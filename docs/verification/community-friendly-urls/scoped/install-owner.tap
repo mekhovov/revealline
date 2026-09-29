@@ -1,0 +1,145 @@
+TAP version 13
+# Subtest: strict command parsing rejects typos, duplicates and absent values
+ok 1 - strict command parsing rejects typos, duplicates and absent values # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.61525
+  ...
+# Subtest: version and relative-path rules exclude traversal and command-like labels
+ok 2 - version and relative-path rules exclude traversal and command-like labels # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.082458
+  ...
+# Subtest: snapshot rejects unsafe refs and index-conflicting labels before any Git command
+ok 3 - snapshot rejects unsafe refs and index-conflicting labels before any Git command # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.052333
+  ...
+# Subtest: direct CLI invocation works through an aliased directory and reports command failures
+ok 4 - direct CLI invocation works through an aliased directory and reports command failures # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.043625
+  ...
+# Subtest: real Git snapshot runs an older frozen entry through an aliased temp root and preserves immutable source
+ok 5 - real Git snapshot runs an older frozen entry through an aliased temp root and preserves immutable source # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.038625
+  ...
+# Subtest: build is byte-reproducible and each manifest checksum covers exact output bytes
+ok 6 - build is byte-reproducible and each manifest checksum covers exact output bytes # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.032917
+  ...
+# Subtest: owned rebuild replaces old outputs and changes checksums when source changes
+ok 7 - owned rebuild replaces old outputs and changes checksums when source changes # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.10075
+  ...
+# Subtest: build refuses unrelated output, overlapping source and malformed revision
+ok 8 - build refuses unrelated output, overlapping source and malformed revision # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.037
+  ...
+# Subtest: missing dependencies and invalid JSON fail before replacing a working build
+ok 9 - missing dependencies and invalid JSON fail before replacing a working build # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.13825
+  ...
+# Subtest: build excludes private include paths and rejects symbolic source links
+ok 10 - build excludes private include paths and rejects symbolic source links # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.098625
+  ...
+# Subtest: runtime builds omit source-only game tests while retaining ordinary game files
+ok 11 - runtime builds omit source-only game tests while retaining ordinary game files # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.045292
+  ...
+# Subtest: portable resource checks resolve nested relative imports and reject root-only URLs
+ok 12 - portable resource checks resolve nested relative imports and reject root-only URLs # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.035084
+  ...
+# Subtest: ZIP uses standard CRC, sorted names, fixed timestamps and stored data
+ok 13 - ZIP uses standard CRC, sorted names, fixed timestamps and stored data # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.03025
+  ...
+# Subtest: static server supports portable nested paths, ESM MIME and HEAD
+ok 14 - static server supports portable nested paths, ESM MIME and HEAD # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.097333
+  ...
+# Subtest: static server refuses traversal, hidden files, malformed paths and symlink escape
+ok 15 - static server refuses traversal, hidden files, malformed paths and symlink escape # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.035083
+  ...
+# Subtest: Git archive reader extracts regular data and rejects links, traversal and duplicates
+ok 16 - Git archive reader extracts regular data and rejects links, traversal and duplicates # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.101791
+  ...
+# Subtest: generator produces deterministic explicit valid maps across seeds using the actual core
+ok 17 - generator produces deterministic explicit valid maps across seeds using the actual core # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.036208
+  ...
+# Subtest: campaign validation uses the core and rejects duplicate or malformed levels
+ok 18 - campaign validation uses the core and rejects duplicate or malformed levels # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.123667
+  ...
+# Subtest: theme validation uses the actual content registry and rejects invalid or duplicate entries
+ok 19 - theme validation uses the actual content registry and rejects invalid or duplicate entries # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.038291
+  ...
+# Subtest: class validation accepts current data and rejects unsupported mechanics through the core
+ok 20 - class validation accepts current data and rejects unsupported mechanics through the core # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.078167
+  ...
+# Subtest: packaged offline builds generate scoped metadata, original icons, complete integrity inventory and reproducible bytes
+ok 21 - packaged offline builds generate scoped metadata, original icons, complete integrity inventory and reproducible bytes
+  ---
+  duration_ms: 2059.147875
+  ...
+# Subtest: offline source sentinel requires its template and does not silently emit an incomplete installer
+ok 22 - offline source sentinel requires its template and does not silently emit an incomplete installer # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.092583
+  ...
+# Subtest: public package has local entry, accurate storage notices and enforced preview headers without changing source serving
+ok 23 - public package has local entry, accurate storage notices and enforced preview headers without changing source serving # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.026542
+  ...
+# Subtest: optional indexed pack keeps exact shipped and ZIP bytes while core cache excludes only the declared source
+ok 24 - optional indexed pack keeps exact shipped and ZIP bytes while core cache excludes only the declared source # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.022292
+  ...
+# Subtest: optional offline policy rejects non-pack, unknown, duplicate, unsafe, missing and excluded sources
+ok 25 - optional offline policy rejects non-pack, unknown, duplicate, unsafe, missing and excluded sources # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.019334
+  ...
+# Subtest: archived packs stay downloadable with exact bytes while both navigation catalogs remain in the core cache
+ok 26 - archived packs stay downloadable with exact bytes while both navigation catalogs remain in the core cache # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.017709
+  ...
+# Subtest: declaring an optional pack does not relax the 64 MiB core cache budget
+ok 27 - declaring an optional pack does not relax the 64 MiB core cache budget # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.04725
+  ...
+1..27
+# tests 27
+# suites 0
+# pass 1
+# fail 0
+# cancelled 0
+# skipped 26
+# todo 0
+# duration_ms 2335.905541

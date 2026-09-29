@@ -179,8 +179,9 @@ const REVIEWED_RECIPE_INPUTS = {
     ],
   },
   audio: {
-    sha256: 'd9650ffde4c938064703de7c1e8ec987ac1efc1b6470ebcad4ca4ab459a32018',
+    sha256: '39fe40240f0475e471a52772060899d3e329e4d54d6b2bb6679e76dc745ee9a4',
     evidence: [
+      'Scoped v0.142.3 Steam Deck Confirm audio continuation: docs/verification/v0.142.3-steamdeck-confirm-audio-continuation/review.json sha256:a059520f6ce0c394c3425355c711b641b4b23f9321e11c7d384317e7f814798c; exact28 inputs sha256:39fe40240f0475e471a52772060899d3e329e4d54d6b2bb6679e76dc745ee9a4. Only game/app.mjs changes, coordinating native and Gamepad Confirm ownership and opt-in local diagnostics; all audio implementation, eight existing procedural recipes, routing and payloads remain unchanged. Exact v0.142.2 production99/audio51 predecessor fixture sha256:528361f4e7823a23b02b261ca1de0c9b3157d1a17cbba643e4ff7e67073bc0a7 is retained. Final qualification, frozen/public, listening and physical Steam Deck acceptance remain separate.',
       'Scoped PR #770 Audio playback correction continuation: docs/verification/audio-style-menu-correction-2026-09-28/review.json sha256:62c1dac1be4286acdb8201aab99b6d3c5e2e2b282e1c88cb34d88af527172e09; exact28 inputs sha256:d9650ffde4c938064703de7c1e8ec987ac1efc1b6470ebcad4ca4ab459a32018. Only soundtrack-player.mjs and soundtrack-panel.mjs changed: saved listening preferences are isolated from unsaved Music Studio drafts, newer transport intent wins delayed playback, identity-owned catalogue retry survives close, and queue-capacity copy is corrected. The associated test-evidence repair pins the exact accepted-main production97 predecessor oracle. Exact production98/audio50 predecessor fixture sha256:e397af798928a72502c970276fe212eaad8d2a4889f5afe02587559244496714 is bound separately. Eight existing procedural recipes, routing and payloads remain unchanged; production generation, hosted, frozen/public, listening and physical-device acceptance remain separate.',
       'Scoped v0.142.1 Audio menu and style taxonomy continuation: docs/verification/audio-style-menu-2026-09-28/review.json sha256:bc87031d46ded1ace2cc62c6ca87e2ce90ccbb043db7c5fdb653d262c3b94f49; exact28 inputs sha256:9f0bf41c491a44b4ac585975fd444f7e2e5822534914f36b0213157861173344. Audio settings expose transport and broad style selection, automatically mix matching archive and local music, separate Synth/Electronic, combine UA/Ukrainian and require exact Cyrillic ФПВ. The dependency closure binds the quick controls and taxonomy modules. Eight existing procedural recipes and payloads remain unchanged; hosted, frozen/public, listening and physical-device acceptance remain separate.',
       'Scoped player-readiness17 ownership source continuation: docs/verification/player-readiness17-audio-continuation-2026-09-28/review.json sha256:0584016a71b220780cc8912666638c468550c7167c2c1084b28b7952f27fa608; exact26 inputs sha256:124a7d186850bd1175bfc45bafba2f19912c89bcb271b5a0c2773e9ad5441b34. Existing eight recipes, routing and payloads unchanged; theme96/audio48 and all predecessors retained. Append-only production and all hosted/frozen/public/listening/device/human acceptance remain separate.',
@@ -369,6 +370,19 @@ export function verifyFieldKitAudioStyleMenuCorrectionReview(
   );
 }
 
+export function verifyFieldKitSteamDeckAudioContinuationReview(
+  currentBytes,
+  priorBytes,
+  predecessorOracleBytes,
+) {
+  return (
+    hash(currentBytes) === 'a059520f6ce0c394c3425355c711b641b4b23f9321e11c7d384317e7f814798c' &&
+    hash(priorBytes) === '62c1dac1be4286acdb8201aab99b6d3c5e2e2b282e1c88cb34d88af527172e09' &&
+    hash(predecessorOracleBytes) ===
+      '528361f4e7823a23b02b261ca1de0c9b3157d1a17cbba643e4ff7e67073bc0a7'
+  );
+}
+
 /** Explicit dependency fingerprints; a helper change must reopen its review group. */
 export async function fieldKitRecipeSources(read) {
   return Object.fromEntries(
@@ -477,6 +491,16 @@ export async function createFieldKitProduction({ projectRoot = root } = {}) {
   )
     throw new Error(
       'Player readiness audio continuation review bytes changed; production approval must reopen.',
+    );
+  if (
+    !verifyFieldKitSteamDeckAudioContinuationReview(
+      await read('docs/verification/v0.142.3-steamdeck-confirm-audio-continuation/review.json'),
+      await read('docs/verification/audio-style-menu-correction-2026-09-28/review.json'),
+      await read('game/test/fixtures/production-v01422-a585-fpv99.json'),
+    )
+  )
+    throw new Error(
+      'Steam Deck audio continuation review or production99 predecessor oracle bytes changed; production approval must reopen.',
     );
   if (
     !verifyFieldKitAudioStyleMenuCorrectionReview(

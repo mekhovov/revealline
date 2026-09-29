@@ -5192,7 +5192,7 @@
   "communityDirectory.pageTitle": "Communities · FPV / LINE",
   "communityDirectory.eyebrow": "COMMUNITY EDITIONS",
   "communityDirectory.heading": "Find your community.",
-  "communityDirectory.intro": "A shared game, a world of your own. Open your company’s edition to play its campaigns.",
+  "communityDirectory.intro": "Start with the main game, or open your community’s own world and campaigns.",
   "communityDirectory.droneaidCategory": "BUILD / CONNECT / SUPPORT",
   "communityDirectory.droneaidDescription": "FPV workshop adventures inspired by DroneAid Netherlands and its support for Ukraine.",
   "communityDirectory.openDroneaid": "Play DroneAid",
@@ -5202,5 +5202,12 @@
   "communityDirectory.separateHeading": "Your company. Your campaigns.",
   "communityDirectory.separateDescription": "Each edition keeps its own saved flights and progress. Inside the game, campaign choices stay within that company.",
   "communityDirectory.footer": "Community directory · No account needed to play",
-  "communityDirectory.guide": "Repository guide ↗"
+  "communityDirectory.guide": "Repository guide ↗",
+  "communityDirectory.mainCategory": "THE ORIGINAL GAME",
+  "communityDirectory.mainDescription": "The main game: explore its worlds, reveal pictures, and play Solo, Versus or Team.",
+  "communityDirectory.openMain": "Play the main game",
+  "communityDirectory.relayCategory": "PORTUGAL / GERMANY",
+  "communityDirectory.relayDescription": "A community workshop adventure inspired by DroneAid in Portugal and Germany. Make small connections with a shared purpose.",
+  "communityDirectory.openRelay": "Play Community Relay",
+  "communityDirectory.openDirectory": "Open communities"
 }

@@ -1,3 +1,4 @@
+import { communityRouteFromURL, gameDocumentURL } from './community-routes.mjs';
 import { loadCompanyStartup } from './ui/company-startup.mjs';
 import { editionDepartureDestinationAllowed } from './editions/departure-destination.mjs';
 import { mountEditionSoloUI } from './ui/edition-solo.mjs';
@@ -312,7 +313,9 @@ import { exportReplayPresentation } from './replay-presentation.mjs';
 const $ = (id) => document.getElementById(id),
   show = (id, on) => ($(id).hidden = !on);
 const getJSON = async (path) => {
-  const r = await fetch(path);
+  const r = await fetch(
+    communityRouteFromURL(location.href) ? new URL(path, gameDocumentURL(location.href)) : path,
+  );
   if (!r.ok) throw new Error(t('gameplay:couldNotLoad', { value1: path }));
   return r.json();
 };
@@ -1992,7 +1995,7 @@ try {
   try {
     if (!runtimeContent)
       presentationHost = createPresentationHost({
-        baseURL: new URL('presentation/compiled/', location.href),
+        baseURL: new URL('presentation/compiled/', gameDocumentURL(location.href)),
       });
     if (presentationHost)
       presentationReady = presentationHost
@@ -2044,7 +2047,7 @@ try {
       return Promise.resolve(null);
     return prepareFreshSoloVisualTheme(
       { entry, level, themeId, currentManifestSha256: pagePresentationSnapshot?.manifestSha256 },
-      { baseURL: new URL('presentation/compiled/', location.href), ...options },
+      { baseURL: new URL('presentation/compiled/', gameDocumentURL(location.href)), ...options },
     );
   }
   async function actorContent(entry, level, themeId, { signal, retained = false } = {}) {
@@ -2157,7 +2160,7 @@ try {
         ? { ...identity, authoredPresentationSha256: runtimeContent.authoredPresentationSha256 }
         : identity;
     const dependencies = {
-      baseURL: new URL('presentation/compiled/', location.href),
+      baseURL: new URL('presentation/compiled/', gameDocumentURL(location.href)),
       currentManifestSha256: pagePresentationSnapshot?.manifestSha256 ?? null,
       ...options,
     };
@@ -3371,13 +3374,22 @@ try {
       };
     }
     if (librarySourceReturn?.mode === ticket.kind)
-      return { token: null, href: new URL(modeDestination(ticket), location.href).href };
+      return {
+        token: null,
+        href: new URL(modeDestination(ticket), gameDocumentURL(location.href)).href,
+      };
     if (ticket.kind === 'catalogue')
-      return { token: null, href: new URL(modeDestination(ticket), location.href).href };
+      return {
+        token: null,
+        href: new URL(modeDestination(ticket), gameDocumentURL(location.href)).href,
+      };
     // Authored progress and suspended attempts already have their own route.
     // Do not write a Legacy selection bookmark for a candidate execution.
     if (ticket.journeyRouteId)
-      return { token: null, href: new URL(modeDestination(ticket), location.href).href };
+      return {
+        token: null,
+        href: new URL(modeDestination(ticket), gameDocumentURL(location.href)).href,
+      };
     return ticket.kind === 'versus'
       ? modeReturnV2.prepare({
           origin: 'solo-missions',
@@ -3690,7 +3702,7 @@ try {
     if (origin === 'solo-title' && !ticket.unfinished) {
       try {
         modeDepartureCurrent(ticket);
-        location.href = new URL(modeDestination(ticket), location.href).href;
+        location.href = new URL(modeDestination(ticket), gameDocumentURL(location.href)).href;
       } catch (error) {
         cancelModeDeparture({ restore: true });
         warning(
@@ -3801,7 +3813,7 @@ try {
           return;
         }
       }
-      let destination = new URL(modeDestination(ticket), location.href).href;
+      let destination = new URL(modeDestination(ticket), gameDocumentURL(location.href)).href;
       if (ticket.origin === 'solo-missions' && !ticket.fallback) {
         try {
           const prepared = prepareModeHint(ticket);
@@ -5665,7 +5677,7 @@ try {
       const prepared = download
         ? await prepareExternalDownload(descriptor.id, {
             signal,
-            baseURL: new URL('../', location.href),
+            baseURL: new URL('../', gameDocumentURL(location.href)),
           })
         : await prepareSourceExternalChapter(files, { chapterId: descriptor.id, signal });
       packLaunchGuard.assert(operation, before);
@@ -5757,7 +5769,7 @@ try {
               prepareOptionalDownload(summary, {
                 library: before,
                 signal,
-                baseURL: new URL('../', location.href),
+                baseURL: new URL('../', gameDocumentURL(location.href)),
               }),
           ),
       );
@@ -6083,7 +6095,7 @@ try {
             currentManifestSha256: pagePresentationSnapshot?.manifestSha256,
           },
           {
-            baseURL: new URL('presentation/compiled/', location.href),
+            baseURL: new URL('presentation/compiled/', gameDocumentURL(location.href)),
             signal: controller.signal,
             onStatus(status) {
               feedback.update(status);
@@ -10506,7 +10518,10 @@ try {
     if (row.source === 'external')
       return installSourceChapter(row.packId, null, { signal, download: true });
     if (row.source === 'optional') {
-      const catalog = await loadOptionalCatalog({ signal, baseURL: new URL('../', location.href) });
+      const catalog = await loadOptionalCatalog({
+        signal,
+        baseURL: new URL('../', gameDocumentURL(location.href)),
+      });
       const summary = catalog.packs.find((item) => item.id === row.packId);
       if (!summary) throw new Error(t('interface:thatOptionalChapterIsUnavailableInThisRelease'));
       return installOptionalChapter(summary, { signal });
@@ -11329,7 +11344,7 @@ try {
         : [],
     loadCatalog: async ({ signal }) => {
       if (runtimeContent) return { format: 'revealline-optional-chapters.v1', packs: [] };
-      const options = { signal, baseURL: new URL('../', location.href) };
+      const options = { signal, baseURL: new URL('../', gameDocumentURL(location.href)) };
       if (isRelease) await loadExternalCatalog(options);
       return loadOptionalCatalog(options);
     },

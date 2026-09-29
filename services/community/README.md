@@ -8,7 +8,7 @@ production launch.
 
 The browser marketplace entry is [`game/community/store.html`](../../game/community/store.html).
 Host it with `/v1/*` and `/api/auth/*` on the same origin; accounts use HttpOnly session cookies.
-The separate [`game/community/index.html`](../../game/community/index.html) is a static company
+The separate [`game/communities/index.html`](../../game/communities/index.html) is a static company
 directory and does not call this service. A GitHub Pages deployment can serve the directory,
 but cannot provide the marketplace API or account service.
 

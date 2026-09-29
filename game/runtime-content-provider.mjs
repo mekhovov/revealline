@@ -3,6 +3,12 @@ import { loadEditionBootstrap } from './editions/bootstrap.mjs';
 import { verifyEditionAssets } from './editions/assets.mjs';
 import { resolveEditionAssets } from './editions/model.mjs';
 import { resolveEditionContext } from './edition-context.mjs';
+import {
+  communityEntryURL,
+  communityHref,
+  communityRouteFromURL,
+  gameDocumentURL,
+} from './community-routes.mjs';
 import { required } from './data-json.mjs';
 import { projectEditionThemeSelection } from './editions/selected-presentation.mjs';
 import {
@@ -77,8 +83,14 @@ export async function loadRuntimeContentProvider({
   signal,
 } = {}) {
   signal?.throwIfAborted();
-  const url = new URL(locationRef.href);
+  const sourceURL = new URL(locationRef.href);
   const compiled = documentRef.documentElement.dataset.editionId;
+  const community = compiled ? null : communityRouteFromURL(sourceURL);
+  const url = compiled
+    ? sourceURL
+    : community
+      ? communityEntryURL(sourceURL)
+      : gameDocumentURL(sourceURL);
   const requested = url.searchParams.get('edition') ?? compiled;
   if (!requested && url.searchParams.get('company') !== '1') return null;
   if (compiled)
@@ -93,6 +105,10 @@ export async function loadRuntimeContentProvider({
     campaignId: url.searchParams.get('campaign') ?? undefined,
     allowMissing: false,
   });
+  required(
+    !community || currentBootstrap.selection.brand.id === community.brandId,
+    'This community address cannot open another company edition.',
+  );
   const retainedPresentationId = url.searchParams.get('presentation');
   const history = currentBootstrap.selection.edition.presentationHistory ?? [];
   const retained = retainedPresentationId
@@ -195,16 +211,26 @@ export async function loadRuntimeContentProvider({
     },
     assetURL,
     href(parameters = {}) {
-      const target = new URL('index.html', url);
-      target.search = '';
-      target.searchParams.set('edition', selection.edition.id);
+      const destinationId = parameters.edition == null ? selection.edition.id : parameters.edition;
+      const destination = currentBootstrap.catalog.editions.find(
+        (edition) => edition.id === destinationId && edition.brandId === selection.brand.id,
+      );
+      required(destination, 'This edition cannot navigate to another company.');
+      const friendly =
+        !compiled && communityHref(url, { brandId: selection.brand.id, editionId: destinationId });
+      const target = friendly || new URL('index.html', url);
+      if (!friendly) {
+        target.search = '';
+        target.searchParams.set('edition', destinationId);
+      }
       if (
         retainedPresentationId &&
         (!parameters.edition || parameters.edition === selection.edition.id)
       )
         target.searchParams.set('presentation', retainedPresentationId);
       for (const [key, value] of Object.entries(parameters))
-        if (value != null) target.searchParams.set(key, value);
+        if (key === 'edition') continue;
+        else if (value != null) target.searchParams.set(key, value);
         else target.searchParams.delete(key);
       return target.href;
     },

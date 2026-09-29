@@ -669,6 +669,20 @@ test('packaged offline builds generate scoped metadata, original icons, complete
     path.join(root, 'game/playground/index.html'),
     '<html><head><title>Nested</title><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"></head><body>Preview</body></html>',
   );
+  await fs.mkdir(path.join(root, 'game/ui'));
+  await fs.writeFile(
+    path.join(root, 'game/ui/install-entry.mjs'),
+    'export const installOwner = true;',
+  );
+  await fs.mkdir(path.join(root, 'game/communities/coupa'), { recursive: true });
+  await fs.writeFile(
+    path.join(root, 'game/communities/coupa/index.html'),
+    '<!doctype html><html data-community-entry="loading"><head><script type="module" src="../entry.mjs"></script></head><body>Opening community</body></html>',
+  );
+  await fs.writeFile(
+    path.join(root, 'game/communities/entry.mjs'),
+    'export const loadSharedHost = true;',
+  );
   // Canonical sources remain in the distribution; the complete runtime catalog
   // is the sole copy needed by a player preparing offline play.
   await fs.mkdir(path.join(root, 'game/i18n'));
@@ -717,6 +731,22 @@ test('packaged offline builds generate scoped metadata, original icons, complete
   assert.match(entry, new RegExp(cache.buildId));
   const nested = await fs.readFile(path.join(out, 'game/playground/index.html'), 'utf8');
   assert.match(nested, /\.\.\/\.\.\/manifest.webmanifest/);
+  for (const page of [entry, nested])
+    assert.equal(
+      [...page.matchAll(/<script\b[^>]*src="[^"]*\/ui\/install-entry\.mjs"/g)].length,
+      1,
+    );
+  const community = await fs.readFile(path.join(out, 'game/communities/coupa/index.html'), 'utf8');
+  assert.doesNotMatch(community, /install-entry\.mjs/);
+  assert.deepEqual(
+    [...community.matchAll(/<script\b[^>]*src="([^"]+)"/g)].map((match) => match[1]),
+    ['../entry.mjs'],
+    'Only the shared-host loader runs before document replacement; install listeners belong to the fetched main host.',
+  );
+  assert.match(community, /\.\.\/\.\.\/\.\.\/manifest.webmanifest/);
+  assert.match(community, /\.\.\/\.\.\/\.\.\/service-worker.js/);
+  assert.ok(cache.files.some((file) => file.path === 'game/communities/coupa/index.html'));
+  assert.ok(cache.files.some((file) => file.path === 'game/communities/entry.mjs'));
   // Both missing metadata and an already prepared page produce one declaration.
   for (const page of [entry, nested]) {
     for (const [name, content] of [

@@ -5302,7 +5302,7 @@
   "communityDirectory.pageTitle": "Спільноти · FPV / LINE",
   "communityDirectory.eyebrow": "ВИДАННЯ СПІЛЬНОТ",
   "communityDirectory.heading": "Знайдіть свою спільноту.",
-  "communityDirectory.intro": "Спільна гра, власний світ. Відкрийте видання своєї компанії та грайте в її кампанії.",
+  "communityDirectory.intro": "Почніть з основної гри або відкрийте власний світ і кампанії своєї спільноти.",
   "communityDirectory.droneaidCategory": "БУДУЙТЕ / ЄДНАЙТЕСЯ / ПІДТРИМУЙТЕ",
   "communityDirectory.droneaidDescription": "Пригоди у FPV-майстерні, натхненні DroneAid Netherlands та її підтримкою України.",
   "communityDirectory.openDroneaid": "Грати в DroneAid",
@@ -5312,5 +5312,12 @@
   "communityDirectory.separateHeading": "Ваша компанія. Ваші кампанії.",
   "communityDirectory.separateDescription": "Кожне видання має власні збережені польоти та прогрес. У грі можна обирати кампанії лише своєї компанії.",
   "communityDirectory.footer": "Каталог спільнот · Для гри не потрібен обліковий запис",
-  "communityDirectory.guide": "Посібник у репозиторії ↗"
+  "communityDirectory.guide": "Посібник у репозиторії ↗",
+  "communityDirectory.mainCategory": "ОСНОВНА ГРА",
+  "communityDirectory.mainDescription": "Основна гра: досліджуйте її світи, відкривайте зображення та грайте соло, у дуелі або командою.",
+  "communityDirectory.openMain": "Грати в основну гру",
+  "communityDirectory.relayCategory": "ПОРТУГАЛІЯ / НІМЕЧЧИНА",
+  "communityDirectory.relayDescription": "Пригоди у спільній майстерні, натхненні DroneAid у Португалії та Німеччині. Створюйте маленькі зв’язки заради спільної мети.",
+  "communityDirectory.openRelay": "Грати в Community Relay",
+  "communityDirectory.openDirectory": "Відкрити спільноти"
 }
