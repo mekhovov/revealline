@@ -188,6 +188,7 @@ export function createCoopPainter(canvas) {
     {
       reduced = false,
       textFace = 'pixel',
+      textSize = 'standard',
       picture = null,
       pictureLevel = run.level,
       actorStyle = 'hybrid',
@@ -196,6 +197,7 @@ export function createCoopPainter(canvas) {
       previousRun = null,
     } = {},
   ) {
+    const cueScale = coopCueScale(canvas.clientWidth, run.width, textSize);
     if (actorAppearance !== null && !['fpv', 'campaign'].includes(actorAppearance?.style))
       throw new TypeError(t('interface:teamActorAppearanceNeedsASupportedStyle'));
     const selectedActors =
@@ -272,8 +274,7 @@ export function createCoopPainter(canvas) {
       previousRun,
     });
     const unit = canvas.width / run.width;
-    const cueScale = coopCueScale(canvas.clientWidth, run.width),
-      cssCell = cueScale.cell,
+    const cssCell = cueScale.cell,
       occupied = [],
       heads = run.players.map((player) => {
         const radius = player.radius * cssCell + 2;
@@ -388,7 +389,7 @@ export function createCoopPainter(canvas) {
             bodies.add(`${kind}:${actor.id}`);
       const clearance = (kind, id, minimum) =>
         body(kind, id)
-          ? Math.max(minimum, actors.frame(kind, id).diameter / 32 + 9 / cssCell)
+          ? Math.max(minimum, actors.frame(kind, id).diameter / 32 + cueScale.px(9) / cssCell)
           : minimum;
       function cue(text, x, y, size, font, backed = false, color = '#f1f7ed', minimum = 12) {
         ctx.save();
@@ -398,7 +399,8 @@ export function createCoopPainter(canvas) {
         ctx.textBaseline = 'middle';
         const measured = ctx.measureText(text)?.width;
         const width =
-          (Number.isFinite(measured) ? measured : size * text.length * 0.7) * cssCell + 6;
+          (Number.isFinite(measured) ? measured : size * text.length * 0.7) * cssCell +
+          cueScale.px(6);
         const rect = place(x, y, width, size * cssCell * 1.4);
         if (rect) {
           if (backed) {
@@ -420,12 +422,12 @@ export function createCoopPainter(canvas) {
           offset = frame?.bodyOffset,
           x = player.x + (offset?.x ?? 0) / 16,
           y = player.y + (offset?.y ?? 0) / 16,
-          shape = player.id === 0 ? 20 : 24,
+          shape = cueScale.px(player.id === 0 ? 20 : 24),
           downed = player.status === 'downed',
-          width = shape + (downed ? 10 : 0),
+          width = shape + (downed ? cueScale.px(10) : 0),
           rect = place(
             x,
-            y - (frame ? frame.diameter / 32 : 0.7) - (shape / 2 + 3) / cssCell,
+            y - (frame ? frame.diameter / 32 : 0.7) - (shape / 2 + cueScale.px(3)) / cssCell,
             width,
             shape,
           );
@@ -458,14 +460,14 @@ export function createCoopPainter(canvas) {
         if (downed) {
           ctx.fillStyle = '#07111c';
           ctx.fillRect(
-            (rect.right - 10) / cssCell,
-            (rect.y - 8) / cssCell,
-            10 / cssCell,
-            16 / cssCell,
+            (rect.right - cueScale.px(10)) / cssCell,
+            (rect.y - cueScale.px(8)) / cssCell,
+            cueScale.px(10) / cssCell,
+            cueScale.px(16) / cssCell,
           );
           ctx.fillStyle = '#f1f7ed';
-          ctx.font = `600 ${12 / cssCell}px ${fonts.numeric}`;
-          ctx.fillText('+', (rect.right - 5) / cssCell, cy);
+          ctx.font = `600 ${cueScale.px(12) / cssCell}px ${fonts.numeric}`;
+          ctx.fillText('+', (rect.right - cueScale.px(5)) / cssCell, cy);
         }
         if (pilotBody && offset && (offset.x !== 0 || offset.y !== 0)) {
           // Dashed cosmetic tether ends at the true cutting head; it is not a trail.
@@ -491,7 +493,7 @@ export function createCoopPainter(canvas) {
               ? `RESCUE ${rescue.target + 1} · ${Math.floor(rescue.progress * 100)}%`
               : `RESCUE ${frame.rescueTarget + 1}`,
             x,
-            (rect.bottom + 12) / cssCell,
+            (rect.bottom + cueScale.px(12)) / cssCell,
             0.66,
             fonts.ui,
             true,
@@ -507,7 +509,7 @@ export function createCoopPainter(canvas) {
           const decorated = drawTeamAnchor(ctx, anchors, anchor, palette);
           // Keep a 12px readable label outside replacement artwork, including
           // small Studio/handheld canvases. Legacy cue placement stays exact.
-          const labelOffset = 0.7 + 12 / cssCell;
+          const labelOffset = 0.7 + cueScale.px(12) / cssCell;
           const labelY = decorated
             ? anchor.y + labelOffset < run.height - 0.6
               ? anchor.y + labelOffset
@@ -771,8 +773,14 @@ export function createCoopPainter(canvas) {
           outcome.slot === 'team.capture.joint' ? '1 + 2 · JOINT CUT' : '1 + 2 · TEAM RECOVERY';
         const size = cueScale.font(0.75, 12, 18);
         ctx.font = `600 ${size}px ${fonts.ui}`;
-        const width = (ctx.measureText(label)?.width ?? size * label.length * 0.7) * cssCell + 38;
-        const rect = place(run.width / 2, (18 + index * 34) / cssCell, width, 28);
+        const width =
+          (ctx.measureText(label)?.width ?? size * label.length * 0.7) * cssCell + cueScale.px(38);
+        const rect = place(
+          run.width / 2,
+          cueScale.px(18 + index * 34) / cssCell,
+          width,
+          cueScale.px(28),
+        );
         if (!rect) continue;
         drawTeamOutcomeBadge(
           ctx,
@@ -786,15 +794,15 @@ export function createCoopPainter(canvas) {
         ctx.save();
         ctx.fillStyle = '#07111c';
         ctx.fillRect(
-          (rect.left + 28) / cssCell,
+          (rect.left + cueScale.px(28)) / cssCell,
           rect.top / cssCell,
-          (rect.width - 28) / cssCell,
+          (rect.width - cueScale.px(28)) / cssCell,
           rect.height / cssCell,
         );
         ctx.fillStyle = palette?.ink ?? '#f3f0db';
         ctx.textAlign = 'left';
         ctx.textBaseline = 'middle';
-        ctx.fillText(label, (rect.left + 32) / cssCell, rect.y / cssCell);
+        ctx.fillText(label, (rect.left + cueScale.px(32)) / cssCell, rect.y / cssCell);
         ctx.restore();
       }
       for (const impact of run.impacts || []) {
