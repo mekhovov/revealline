@@ -126,8 +126,19 @@ enemy or intercepted impact. The pre-fix unit cohort had nine passes and two
 expected failures; the corrected teaching/host/Resume cohort passes all 21 with
 no skips. Independent review found no actionable defect. Stored v1 fields,
 acknowledgement, capability APIs and existing saved completion flags are
-unchanged. Both pushed commits are accepted for integration into existing
-PR #757, not yet claimed as adopted or released.
+unchanged. Both commits are now adopted into existing **PR #757**, verified at
+`0c89c1c3b88e7eb8ae0f91e2dd42f2e393cb606e` on main base `6a67d6db`; logical
+adopted commits are `0e13057b7` and `552d5faa0`. The combined batch includes
+More-collapse and Large-text rendering. It is integrated, **not released**.
+
+The owner's pushed evidence records 112 combined Team checks, nine complete
+display-preference checks and two selected source-dependency checks passing,
+plus changed-file lint/format and bounded local EN/UK browser layouts. Levels
+verified the PR head and read that evidence; it did not independently repeat
+those combined runs. The changed Team renderer fingerprint requires a new
+Team/equipment production review before release. Do not rewrite historical
+approvals. Browser review also found a remaining narrow-screen Ukrainian DOM
+HUD/ability-label wrapping defect, now owned by UX as the next small slice.
 
 **UX, in parallel: Team Large text in the actual painter.** Respect the same
 stored display preference in canvas labels while preserving actor/contact
@@ -144,16 +155,16 @@ batch is frozen, stop adding scope; prepare later work independently.
 These are focused engineering estimates excluding serialized release time,
 hardware availability and human review; they are not promised delivery dates.
 
-| Priority       | Work                                                                                     | Why it matters                                                                                                                   | Focused effort                                                               |
-| -------------- | ---------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------- |
-| 1              | Finish the already-prepared selector/audio/native/community batches                      | Turns completed source work into player-visible improvements and resolves navigation/recovery defects                            | Per owning queue; do not restart completed qualification                     |
-| 2              | Integrate reviewed Team Resume correction and separately owned Large-text fix            | Players need accurate rescue instructions and readable two-player state                                                          | Resume implementation/checks done; combined integration 1–3 hours plus queue |
-| 3              | Complete strategic-route evidence for the existing v37 trio                              | Current evidence proves first returns, not full clears or advertised strategic choices                                           | 1–3 engineering days for a bounded three-map evidence/repair slice           |
-| 4              | Review a new default spatial edition                                                     | New geometry cannot improve normal play while remaining opt-in; require useful complete routes, not just a larger version number | Re-estimate after the v37 route review and human feedback                    |
-| 5              | Team teaching acknowledgement and remaining Studio/HUD donor ports                       | Avoid consumed-before-seen teaching, false Support completion and stale historical-host imports                                  | 0.5–2 days per bounded successor, after schema/ownership review              |
-| 6              | Whole-Journey pacing, actor/state readability and final reference dispositions           | Distinct fair challenges matter more than repeating easy geometry or increasing speed globally                                   | 3–7 days per polished 3–5-mission slice; broader review remains multi-week   |
-| 7              | Offline/recovery, accessibility/performance and two-player/device qualification          | Finds failures that mocks, byte audits and single-player routes cannot establish                                                 | 2–5 days per bounded qualification stream plus hardware/players              |
-| Separate gates | Creator/community external services, soundtrack listening/rights and original production | These require real environments, rights and human quality review                                                                 | Owner estimates; not closed by source preservation or automated passes       |
+| Priority       | Work                                                                                     | Why it matters                                                                                                                   | Focused effort                                                                 |
+| -------------- | ---------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------ |
+| 1              | Finish the already-prepared selector/audio/native/community batches                      | Turns completed source work into player-visible improvements and resolves navigation/recovery defects                            | Per owning queue; do not restart completed qualification                       |
+| 2              | Release the integrated Team Resume/Support/More/Large batch                              | Players need accurate rescue instructions and readable two-player state                                                          | Source integration complete; production-review estimate with owner, then queue |
+| 3              | Complete strategic-route evidence for the existing v37 trio                              | Current evidence proves first returns, not full clears or advertised strategic choices                                           | 1–3 engineering days for a bounded three-map evidence/repair slice             |
+| 4              | Review a new default spatial edition                                                     | New geometry cannot improve normal play while remaining opt-in; require useful complete routes, not just a larger version number | Re-estimate after the v37 route review and human feedback                      |
+| 5              | Team teaching acknowledgement and remaining Studio/HUD donor ports                       | Avoid consumed-before-seen teaching, false Support completion and stale historical-host imports                                  | 0.5–2 days per bounded successor, after schema/ownership review                |
+| 6              | Whole-Journey pacing, actor/state readability and final reference dispositions           | Distinct fair challenges matter more than repeating easy geometry or increasing speed globally                                   | 3–7 days per polished 3–5-mission slice; broader review remains multi-week     |
+| 7              | Offline/recovery, accessibility/performance and two-player/device qualification          | Finds failures that mocks, byte audits and single-player routes cannot establish                                                 | 2–5 days per bounded qualification stream plus hardware/players                |
+| Separate gates | Creator/community external services, soundtrack listening/rights and original production | These require real environments, rights and human quality review                                                                 | Owner estimates; not closed by source preservation or automated passes         |
 
 ## Remaining local-source dispositions
 
