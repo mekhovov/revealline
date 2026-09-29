@@ -624,3 +624,14 @@ body.touch-mode #sticks {
     animation: none !important;
   }
 }
+
+#game-return {
+  color: inherit;
+  border: 1px solid currentColor;
+  border-radius: 0.5rem;
+  padding: 0.65rem 0.9rem;
+  text-decoration: none;
+}
+#game-return[hidden] {
+  display: none;
+}

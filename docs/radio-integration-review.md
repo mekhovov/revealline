@@ -1,5 +1,45 @@
 # Radio integration review
 
+## Bundled simulator and latest-main update
+
+At the user's request, the reviewed integration was consolidated and rebased
+onto main `9957a6820ae9cc7b37942e21473948ea70752095`. The complete original
+history remains at `codex/radio-before-main-20260929` (`4ce585fb6`). Replaying
+intermediate pre-reconciliation discovery commits initially exposed obsolete
+save-format conflicts; rebasing the final reviewed tree retained that completed
+reconciliation and all current-main changes without conflicts.
+
+The regular main menu now offers **FPV flight simulator** / **Симулятор
+FPV-польотів**. It opens the bundled simulator in the same tab, with a localized
+**Back to game** link to the exact original game route. Keyboard, touch and
+saved radio calibration continue to use the existing simulator. Campaign
+progress is separate from simulation drills. No published optional-package
+catalog or separate installation is required for this entry.
+
+The core build includes the explicit FPV package payload and retains its renderer
+vendor dependencies in the regular offline cache. The optional standalone
+package remains available independently. Its install/remove controls are hidden
+when launched from the regular game, which owns the bundled offline cache.
+Local preview links also work for both `/game/` and `/game/index.html`.
+
+Validation for this update:
+
+- 48 menu, optional-practice, flight UI and navigation tests pass after updating
+  the two expected main-menu lists for the new button.
+- Six entry/return/offline-closure checks pass, including source, hosted edition,
+  file and native URL roots and rejection of foreign return destinations.
+- The actual Solo host launch check passes; 18 unrelated cases were explicitly
+  filtered in that focused rerun. The finite DOM location alias was aligned
+  with the real browser before that check passed.
+- The optional package build test passes. Localization validates 11,464 messages
+  and 8,643 references across English and Ukrainian. Scoped lint passes.
+- Browser verification: Ukrainian main menu → FPV simulator → Back to game
+  returns to `/game/?journey=legacy`; simulator and return labels are visible.
+
+The sections below retain the previous review/build evidence. PR #797 is updated
+to target main after the rebase; its original fixed review baseline is historical.
+The v0.150.0 scheduling and separate final aggregate/device qualification remain.
+
 ## Scope and branch
 
 The local `codex/radio-integration` branch combines the tested controller work

@@ -72,6 +72,7 @@ export const OPTIONAL_PACKAGE_POLICIES = Object.freeze({
     sharedFiles: Object.freeze([
       'optional-practice/install-context.mjs',
       'game/data-json.mjs',
+      'game/fpv-entry.mjs',
       'game/key-bindings.mjs',
       'game/i18n/index.mjs',
       'game/i18n/bootstrap.mjs',

@@ -1,3 +1,4 @@
+import { fpvReturnURL } from '../../game/fpv-entry.mjs';
 import { boundedJSON, canonicalJSON } from '../../game/data-json.mjs';
 import { getLocale, setLocale } from '../../game/i18n/index.mjs';
 import {
@@ -41,6 +42,14 @@ export function mountFlightApp({
     target.addEventListener(type, handler);
     listeners.push(() => target.removeEventListener(type, handler));
   };
+  const gameReturn = fpvReturnURL(win.location.href);
+  if (gameReturn && $('game-return')) {
+    $('game-return').href = gameReturn;
+    $('game-return').hidden = false;
+    // The containing game provides the offline cache for bundled practice.
+    $('install-offline').hidden = true;
+    $('remove-offline').hidden = true;
+  }
   const requestedLocale = new URL(win.location.href).searchParams.get('lang');
   let locale = ['en', 'uk'].includes(requestedLocale) ? requestedLocale : getLocale(),
     selected = 0,
