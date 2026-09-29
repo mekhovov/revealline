@@ -11,6 +11,7 @@ import { videoPosterCurrent } from './video-poster-current-workflow.mjs';
 import { soundtrackRecoveryCurrent } from './soundtrack-recovery-current-workflow.mjs';
 import { atlasCurrent } from './design-atlas-current-workflow.mjs';
 import { contentStudioCurrent } from './content-studio-current-workflow.mjs';
+import { productionCurrent } from './production-current-workflow.mjs';
 import {
   companyStudioCurrent,
   companyPracticeCurrent,
@@ -31,6 +32,7 @@ async function fingerprint(blob) {
 const value = (p, css) => p.doc.querySelector(css).value;
 
 export const currentAuthoringCases = {
+  productionCurrent,
   companyStudioCurrent,
   companyPracticeCurrent,
   contentStudioCurrent,
