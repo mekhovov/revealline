@@ -2,7 +2,7 @@
 
 Demo mode presents normal gameplay on installed levels, with recorded routes, a small qualified live-autoplay pool, contextual tips, and an explicit invitation to play. It runs through the ordinary simulation and renderer. It does not change level rules, grant progress, or replace a suspended flight while watching.
 
-This guide describes the working implementation ported onto main `a10fcbf8a` (v0.142.1). See the [verification record](verification/demo-mode-2026-09-28.md) for measured results and remaining release gates.
+This guide describes the working implementation originally ported onto main `a10fcbf8a` (v0.142.1), with subsequent playback, input, audio and qualification work. See the [current qualification follow-up](verification/demo-qualification-2026-09-29/README.md) for source-specific cache, host, Worker, browser and packaging evidence and the remaining release gates. The [initial verification record](verification/demo-mode-2026-09-28.md) remains historical evidence.
 
 ## Player behavior
 
@@ -140,7 +140,7 @@ node scripts/game-cli.mjs serve --root dist --port 8769
 
 Run the accelerated soak without a concurrent CPU-heavy suite: the production planning watchdog deliberately drops sources that cannot finish within its deadline. The soak records tested source hashes and fails if those files change during qualification. Its simulation duration is not elapsed wall time.
 
-The current local [accelerated report](verification/demo-atmosphere-2026-09-29/accelerated-soak.json) records 7,251.975 simulated seconds across 179 scenes in 209.095 elapsed seconds. This is accelerated Node simulation with real Worker threads, not a two-hour rendered browser run or evidence that a hidden browser will execute continuously. Exact source scope and browser/audio observations belong in the verification record.
+The refreshed [accelerated report](verification/demo-qualification-2026-09-29/accelerated-soak.json) records 7,251.975 simulated seconds across 179 scenes in 219.274 elapsed seconds, with zero unexpected errors and 29 expected safe-plan exhaustion handoffs. This is accelerated Node simulation with real Worker threads, not a two-hour rendered browser run or evidence that a hidden browser executes continuously. The [current qualification follow-up](verification/demo-qualification-2026-09-29/README.md) separates exact-source results, short preliminary browser observations, the external audio failure and the still-open human/device/long-run gates.
 
 `build-demo-recordings.mjs --write` creates new files only and refuses to overwrite committed assets. The default verification command is the appropriate routine check.
 
