@@ -1,0 +1,133 @@
+{
+  "format": "revealline-recovery-fragment-v1",
+  "capturedAt": "2026-09-29T15:10:10.998522+00:00",
+  "worktree": "<home>/work/my_projects/go_test/.cache/worktrees/p05-team-large-cues-next",
+  "branch": "refs/heads/codex/p05-team-large-cues-next",
+  "head": "d51acab59232edc4e7f77ab5df491f2c403de709",
+  "excluded": [],
+  "changes": [
+    {
+      "status": " M",
+      "path": "authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "object": "cb24644b3598b243b3bb7c5f11c0b5e7b8b1111e",
+      "sha256": "2cc60d70a63da9613e652f6dae238463d8ef2f7d8bf646e7f4cc09629b9031c2",
+      "bytes": 223922,
+      "mode": "100644"
+    },
+    {
+      "status": " M",
+      "path": "docs/team-actor-presentation.md",
+      "object": "9499d236c9c6ef22ade06003397c66da4ed83f09",
+      "sha256": "b1c95022e8103e0dfc27ca04025160187841c844f6862ba60e34a770d17d6b37",
+      "bytes": 11980,
+      "mode": "100644"
+    },
+    {
+      "status": " M",
+      "path": "game/couch/coop-actor-layout.mjs",
+      "object": "a2b5a1237da5b1ec73b9639ea731f6ca841e0d2e",
+      "sha256": "106e936282675f93730e5fee3d51a62153e09067d11ff6ddd2636d8950a35e5d",
+      "bytes": 6357,
+      "mode": "100644"
+    },
+    {
+      "status": " M",
+      "path": "game/couch/coop-view.mjs",
+      "object": "a7ca41524665792c530ccc9bedbcaf6c7395cda9",
+      "sha256": "fdbbe963dbcff33b57914561badc03944de8b82211eebf2d5253272fd0e7aa15",
+      "bytes": 23229,
+      "mode": "100644"
+    },
+    {
+      "status": " M",
+      "path": "game/couch/relay-rescue.mjs",
+      "object": "8d785116d5da99423f2b320709360de7900ae287",
+      "sha256": "21052d11be1bf33d6f085cef0623cd8e7870362b1499af67212d0ce61cb7e5d9",
+      "bytes": 63916,
+      "mode": "100644"
+    },
+    {
+      "status": " M",
+      "path": "game/test/coop-actor-layout.test.mjs",
+      "object": "c481611ba8ef7df26a5e19b00e6a7fa84cd25a6e",
+      "sha256": "87c097fd77b5eba64018f19fad7dd31bd0b46b3ff534019a53e59e6daa77c421",
+      "bytes": 22298,
+      "mode": "100644"
+    },
+    {
+      "status": " M",
+      "path": "game/test/display-preferences-host.test.mjs",
+      "object": "ab098e2db5d63cb14c5f2f578b9b76a8690c85c1",
+      "sha256": "62127c6507cea365bbf18394aab95fb7f5bb878d1775de7afc5a0f563290b984",
+      "bytes": 16844,
+      "mode": "100644"
+    },
+    {
+      "status": " M",
+      "path": "game/test/helpers/coop-host.mjs",
+      "object": "059facead4d7ce20af7c63aa2417b0c5b143d2e3",
+      "sha256": "5554a8a67177708c0f49d3ef2713724d13a6f86fee0b30c0f3ecb2d382b2f33c",
+      "bytes": 12201,
+      "mode": "100644"
+    },
+    {
+      "status": "??",
+      "path": "game/test/coop-large-text-host.test.mjs",
+      "object": "70c4395daaade20746291765fbc66a2a9d7477a2",
+      "sha256": "49003592476470d436cdb0a2bdbfe3463bdc14911acf1d7ae8adf9a0553fef0c",
+      "bytes": 7805,
+      "mode": "100644"
+    }
+  ],
+  "indexEntries": [
+    {
+      "path": "authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "mode": "100644",
+      "object": "6a5b70aed0276c5f84fc4bd2c5019eb964d30c77",
+      "stage": 0
+    },
+    {
+      "path": "docs/team-actor-presentation.md",
+      "mode": "100644",
+      "object": "42120063e8d9d0be245b7796772f0a445d30c7fe",
+      "stage": 0
+    },
+    {
+      "path": "game/couch/coop-actor-layout.mjs",
+      "mode": "100644",
+      "object": "78e7c365173042bf82435bcf3a9b7f95d949a307",
+      "stage": 0
+    },
+    {
+      "path": "game/couch/coop-view.mjs",
+      "mode": "100644",
+      "object": "162320b9abf93fc050d07bf412d842dc54556ae0",
+      "stage": 0
+    },
+    {
+      "path": "game/couch/relay-rescue.mjs",
+      "mode": "100644",
+      "object": "09ce35344cab33b5c744970a4f555a7633290bda",
+      "stage": 0
+    },
+    {
+      "path": "game/test/coop-actor-layout.test.mjs",
+      "mode": "100644",
+      "object": "5d8f420abb4de15c5ddb476b759b45f59b688e70",
+      "stage": 0
+    },
+    {
+      "path": "game/test/display-preferences-host.test.mjs",
+      "mode": "100644",
+      "object": "b52469389d05ede9a6885ecd862a0af18208b48e",
+      "stage": 0
+    },
+    {
+      "path": "game/test/helpers/coop-host.mjs",
+      "mode": "100644",
+      "object": "de071572c03d2c2d53d5d459bfda0af6069d1e79",
+      "stage": 0
+    }
+  ],
+  "purpose": "Recovery only. These bytes are not release admission. Missing files, conflict stages and obsolete generated outputs are preserved as observations, not deletion or merge instructions."
+}
