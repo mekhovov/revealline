@@ -108,7 +108,9 @@ export function createRadioRestoreStore(storage, key) {
     save,
     error: () => error,
     forget() {
-      // Use the same guarded write instead of deleting another tab's changes.
+      // Explicit forgetting may replace unreadable data from this tab's baseline,
+      // but must still refuse to overwrite a newer setup written by another tab.
+      if (blocked && error === 'invalid') blocked = false;
       return save([]);
     },
   };

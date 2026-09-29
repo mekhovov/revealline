@@ -175,3 +175,17 @@ test('joining a gamepad does not erase saved ambiguous radio profiles', () => {
   const saved = createRadioRestoreStore(store, COUCH_RESTORE_KEY).entries();
   assert.equal(saved.length, 2);
 });
+
+test('explicit forgetting recovers malformed setup without overwriting a newer tab', () => {
+  const store = storage();
+  store.setItem(COUCH_RESTORE_KEY, '{');
+  const saved = createRadioRestoreStore(store, COUCH_RESTORE_KEY);
+  assert.equal(saved.forget(), true);
+  assert.deepEqual(JSON.parse(store.getItem(COUCH_RESTORE_KEY)).entries, []);
+  store.setItem(COUCH_RESTORE_KEY, '{');
+  const stale = createRadioRestoreStore(store, COUCH_RESTORE_KEY);
+  const newer = JSON.stringify({ format: 'RadioSetup.v1', entries: [] });
+  store.setItem(COUCH_RESTORE_KEY, newer);
+  assert.equal(stale.forget(), false);
+  assert.equal(store.getItem(COUCH_RESTORE_KEY), newer);
+});
