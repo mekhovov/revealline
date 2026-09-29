@@ -25,6 +25,7 @@ import {
   exportSoundtrackBundle,
 } from '../soundtrack-bundle.mjs';
 import { soundtrackPlaylistShare } from '../soundtrack-share.mjs';
+import { PUBLIC_SOUNDTRACK_STYLE_IDS } from '../soundtrack-style-taxonomy.mjs';
 import {
   fixture,
   memoryIndexedDB,
@@ -2339,6 +2340,47 @@ test('Audio settings expose streamed styles and play a selected style without op
   });
   assert.deepEqual((await app.store.read()).library.listening.genres, ['synth90s']);
   assert.match(app.node('settings-style-status').textContent, /Playing 1 matching/);
+});
+
+test('Audio settings restore a saved streamed-style selection after remount', async (t) => {
+  const catalogue = onlineCatalogueFixture();
+  const callbacks = {
+    catalogue: emptyCatalogue,
+    onlineCatalogueDownload: {
+      fetch: async () => onlineCatalogueResponse(catalogue),
+    },
+  };
+  const first = await setup(t, { open: false, settings: true, callbacks });
+  await settleOnlineCatalogue(
+    () => !first.node('settings-play-styles').disabled,
+    'the first settings catalogue preload',
+  );
+  await first.click('settings-styles-none');
+  for (const style of ['synth', 'metal']) {
+    first.node(`settings-style-${style}`).checked = true;
+    first.node(`settings-style-${style}`).onchange();
+  }
+  await first.click('settings-play-styles');
+  assert.deepEqual((await first.store.read()).library.listening.genres, ['synth90s', 'metal']);
+  first.panel.dispose();
+
+  const restored = await setup(t, {
+    open: false,
+    settings: true,
+    store: first.store,
+    callbacks,
+  });
+  await settleOnlineCatalogue(
+    () => !restored.node('settings-play-styles').disabled,
+    'the restored settings catalogue preload',
+  );
+  for (const style of PUBLIC_SOUNDTRACK_STYLE_IDS)
+    assert.equal(
+      restored.node(`settings-style-${style}`).checked,
+      ['synth', 'metal'].includes(style),
+      `${style} reflects the saved selection`,
+    );
+  assert.match(restored.node('settings-style-status').textContent, /2 styles selected/);
 });
 
 test('Audio style playback saves only listening preferences and retains a staged track removal', async (t) => {
