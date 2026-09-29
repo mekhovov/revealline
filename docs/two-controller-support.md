@@ -86,7 +86,7 @@ USB/Bluetooth/dongle support means the host exposes the device as a Gamepad. Uns
 
 - Raw-radio adapter and mapping UI added for regular Solo. The controller regression cohort passed **712 tests**; **22** existing Solo shared-settings/touch/controller host tests passed. A new real Solo host test passed through raw-axis capture, separate persistence, actual craft movement and pause on disconnect. Four focused adapter tests cover hysteresis, remapped standard bindings, Confirm probes, release/reconnect and storage isolation.
 - Scoped lint, formatting, localization (10,928 messages / 8,573 references) and the optional FPV compatibility script passed. The full distribution recorded above predates this Solo extension; the extension is being tested from source.
-- Physical TX15 USB detection confirmed in both regular Solo setup and the optional FPV setup: eight axes and 24 buttons. FPV raw readings visibly update. The user reported a mapping/movement problem; exact failure details and completed calibration remain pending. Neither Solo nor FPV flight is hardware-qualified yet.
+- Physical TX15 USB detection confirmed in regular Solo and the optional FPV setup: eight axes and 24 buttons. The user subsequently confirmed FPV flight, arm/disarm and reset, regular Solo right-stick movement, and shared-stick Team movement. These are local source-browser USB results, not packaged/native or other-transport qualification.
 
 ### Shared TX15 and mixed inputs
 
@@ -115,14 +115,32 @@ separate.
 Automated verification covers Solo right-stick isolation, shared stick
 movement through the couch gameplay adapter, menu routing, channel overlap
 rejection, shared disconnect, two radios and a radio/gamepad mixture.
-Physical Solo/shared Team/mixed-device verification is pending user testing;
-the confirmed FPV TX15 test does not qualify these modes.
+Physical Solo and shared Team movement are user-confirmed below. Two-radio and
+radio/gamepad hardware verification was explicitly skipped at the user’s request;
+their automated results must not be presented as physical qualification.
 
 Physical follow-up: the user confirmed regular Solo right-stick movement works.
 During Team setup, browser inspection caught native Gamepad prototype fields
 being omitted by object spread in shared snapshots. Explicit field copying
 fixes this; a native-like prototype-field regression now covers it. The real
-TX15 now retains Player 1/right-stick and Player 2/left-stick assignments in
-Team. Physical movement confirmation is still pending.
+TX15 retains both independent assignments in Team. The user confirmed movement,
+then requested the side-matching order recorded below.
 
 The user confirmed both sticks independently work in Team. At their request, the default shared assignment now matches screen sides: Player 1/left uses the left stick, and Player 2/right uses the right stick. Solo continues to use the right stick. Two physical radios and a radio/gamepad mixture remain hardware qualification checks.
+
+
+### Final software qualification
+
+The real Team host is exercised through its settings and assignment UI for one
+shared radio, two radios, and a radio/gamepad mixture. All three tests pass,
+including disconnect pausing and per-player touch fallback. Test devices model
+native Gamepad prototype fields. The existing Solo host test and shared couch
+gameplay-adapter tests cover movement delivery; session tests cover independent
+directions, neutral gates, menu ownership, channel-overlap rejection and reconnect.
+
+The optional FPV compatibility script passes against the updated FPV worktree:
+separate profile storage, unchanged raw channels, full throttle range, arming
+and airborne pickup remain intact. All 40 desktop/iOS wrapper tests pass.
+These automated checks do not claim a real two-radio, mixed-device, Bluetooth,
+dongle, mobile, Steam Deck or packaged-native run. Further physical testing was
+skipped on the user's instruction.
