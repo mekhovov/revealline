@@ -987,7 +987,7 @@
   "sourceAudit56ExactOwnersNoProductionApproval": "SOURCE AUDIT · 56 EXACT OWNERS · NO PRODUCTION APPROVAL",
   "thePicturesBehindTheField": "The pictures behind the field",
   "twentyOneUniqueRasterOriginalsAndSeventeenExistingProceduralScenes": "Twenty-one unique raster originals and seventeen existing procedural scenes. This review keeps the exact source artwork intact and records which subjects the new Field Kit compositions must preserve.",
-  "sourceCheckoutReviewOnlyOriginalPngsLoadFromTheirExisting": "Source checkout review only. Original PNGs load from their existing authoring paths as you scroll; they are not copied into this page or a release. Procedural previews use the real scene renderer at seed 0. Missing originals stay explicitly unavailable.",
+  "sourceCheckoutReviewOnlyOriginalPngsLoadFromTheirExisting": "Historical source snapshot. Originals load from recorded authoring paths; some already ship for other features. Missing originals stay explicitly unavailable. Source-document links use browser navigation. Procedural previews use the recorded seed 0 descriptors.",
   "readTheCompleteAuditAndProductionPlan": "Read the complete audit and production plan",
   "inspectOwnerHashAndFrameRecords": "Inspect owner, hash and frame records",
   "loadingTheAudit": "Loading the audit…",
@@ -2464,5 +2464,8 @@
   "studio.image.bundledNote": "Try a real Ukrainian landscape detail: rafts on Synevyr Lake. Loading it changes only the reference overlay, never your map, reveal picture or published content.",
   "studio.image.downloadReference": "Download reference",
   "studio.spatialReview.solo": "Solo · {{id}} (new tab)",
-  "studio.spatialReview.versus": "Versus · {{id}} (new tab)"
+  "studio.spatialReview.versus": "Versus · {{id}} (new tab)",
+  "revealAuditSummary": "Historical snapshot: {{owners}} recorded owners · {{rasters}} raster originals · {{procedural}} procedural records. No production approval.",
+  "revealAuditUnavailable": "Audit unavailable: {{reason}}. Retry when the matching source checkout is available.",
+  "revealAuditCancelled": "Audit loading cancelled. Previously shown records are unchanged."
 }

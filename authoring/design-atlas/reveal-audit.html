@@ -104,6 +104,29 @@
       }
       button {
         cursor: pointer;
+        min-height: 44px;
+      }
+      .reveal-load-actions,
+      .reveal-reading-tools {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+        margin: 12px 0;
+      }
+      .reveal-reading-region {
+        max-height: min(70svh, 720px);
+        overflow: auto;
+        overscroll-behavior: contain;
+      }
+      .owners.reveal-reading-region {
+        max-height: min(50svh, 420px);
+      }
+      .reveal-reading-region:focus-visible {
+        outline: 3px solid #78dce8;
+        outline-offset: 3px;
+      }
+      .reveal-reading-tools button[aria-pressed='true'] {
+        border: 3px double currentColor;
       }
       #status[data-error='true'] {
         color: #f07879;
@@ -130,56 +153,79 @@
     <div data-language-control></div>
 
     <main>
-      <a href="index.html" data-i18n="tools:designAtlas2">← Design atlas</a>
-      <p class="eyebrow" data-i18n="tools:sourceAudit56ExactOwnersNoProductionApproval">
-        SOURCE AUDIT · 56 EXACT OWNERS · NO PRODUCTION APPROVAL
-      </p>
-      <h1 data-i18n="tools:thePicturesBehindTheField">The pictures behind the field</h1>
-      <p data-i18n="tools:twentyOneUniqueRasterOriginalsAndSeventeenExistingProceduralScenes">
-        Twenty-one unique raster originals and seventeen existing procedural scenes. This review
-        keeps the exact source artwork intact and records which subjects the new Field Kit
-        compositions must preserve.
-      </p>
-      <p
-        class="preview-note"
-        data-i18n="tools:sourceCheckoutReviewOnlyOriginalPngsLoadFromTheirExisting"
-      >
-        Source checkout review only. Original PNGs load from their existing authoring paths as you
-        scroll; they are not copied into this page or a release. Procedural previews use the real
-        scene renderer at seed 0. Missing originals stay explicitly unavailable.
-      </p>
-      <p>
-        <a
-          href="../../docs/fpv-reveal-art-audit.md"
-          data-i18n="tools:readTheCompleteAuditAndProductionPlan"
-          >Read the complete audit and production plan</a
+      <header>
+        <a id="reveal-audit-home" href="index.html" data-i18n="tools:designAtlas2"
+          >← Design atlas</a
         >
-        ·
-        <a href="reveal-audit.json" data-i18n="tools:inspectOwnerHashAndFrameRecords"
-          >Inspect owner, hash and frame records</a
+        <p class="eyebrow" data-i18n="tools:sourceAudit56ExactOwnersNoProductionApproval">
+          SOURCE AUDIT · 56 EXACT OWNERS · NO PRODUCTION APPROVAL
+        </p>
+        <h1 data-i18n="tools:thePicturesBehindTheField">The pictures behind the field</h1>
+        <p data-i18n="tools:twentyOneUniqueRasterOriginalsAndSeventeenExistingProceduralScenes">
+          Twenty-one unique raster originals and seventeen existing procedural scenes. This review
+          keeps the exact source artwork intact and records which subjects the new Field Kit
+          compositions must preserve.
+        </p>
+        <p
+          class="preview-note"
+          data-i18n="tools:sourceCheckoutReviewOnlyOriginalPngsLoadFromTheirExisting"
         >
-      </p>
-      <p id="status" role="status" data-i18n="tools:loadingTheAudit">Loading the audit…</p>
-      <h2 data-i18n="tools:rasterOriginals">Raster originals</h2>
-      <p
-        data-i18n="tools:theseRichPixelPaintedIllustrationsSupplyValuableCompositionsNewPresentation"
-      >
-        These rich pixel-painted illustrations supply valuable compositions. New presentation work
-        should preserve their distinctive subjects while using restrained square clusters, quieter
-        lighting and clear gameplay priority. Historical originals remain pinned.
-      </p>
-      <div id="rasters" class="grid"></div>
-      <h2 data-i18n="tools:currentProceduralScenes">Current procedural scenes</h2>
-      <p data-i18n="tools:everySourceUsesTheSameDawnVillageTemplateNative384">
-        Every source uses the same dawn village template. Native 384 × 288 previews below show why
-        new mission-specific compositions are needed.
-      </p>
-      <div id="procedures" class="grid"></div>
+          Historical source snapshot. Originals load from recorded authoring paths; some already
+          ship for other features. Missing originals stay explicitly unavailable. Source-document
+          links use browser navigation. Procedural previews use the recorded seed 0 descriptors.
+        </p>
+        <p>
+          <a
+            href="../../docs/fpv-reveal-art-audit.md"
+            data-i18n="tools:readTheCompleteAuditAndProductionPlan"
+            >Read the complete audit and production plan</a
+          >
+          ·
+          <a href="reveal-audit.json" data-i18n="tools:inspectOwnerHashAndFrameRecords"
+            >Inspect owner, hash and frame records</a
+          >
+        </p>
+        <p id="status" role="status" data-i18n="tools:loadingTheAudit">Loading the audit…</p>
+        <div class="reveal-load-actions">
+          <button id="reveal-reload" type="button">Retry loading study</button
+          ><button id="reveal-cancel" type="button" hidden disabled>Cancel</button>
+        </div>
+      </header>
+      <section aria-labelledby="reveal-rasters-heading">
+        <h2
+          id="reveal-rasters-heading"
+          data-authoring-target="reveal-read-rasters"
+          data-i18n="tools:rasterOriginals"
+        >
+          Raster originals
+        </h2>
+        <p
+          data-i18n="tools:theseRichPixelPaintedIllustrationsSupplyValuableCompositionsNewPresentation"
+        >
+          These rich pixel-painted illustrations supply valuable compositions. New presentation work
+          should preserve their distinctive subjects while using restrained square clusters, quieter
+          lighting and clear gameplay priority. Historical originals remain pinned.
+        </p>
+        <div id="rasters" class="grid"></div>
+      </section>
+      <section aria-labelledby="reveal-procedures-heading">
+        <h2
+          id="reveal-procedures-heading"
+          data-authoring-target="reveal-read-procedures"
+          data-i18n="tools:currentProceduralScenes"
+        >
+          Current procedural scenes
+        </h2>
+        <p data-i18n="tools:everySourceUsesTheSameDawnVillageTemplateNative384">
+          Every source uses the same dawn village template. Native 384 × 288 previews below show why
+          new mission-specific compositions are needed.
+        </p>
+        <div id="procedures" class="grid"></div>
+      </section>
       <noscript
         >This source review requires JavaScript. The linked audit document contains all findings and
         exact owners.</noscript
       >
     </main>
-    <script type="module" src="../../game/ui/authoring-reference-entry.mjs"></script>
   </body>
 </html>
