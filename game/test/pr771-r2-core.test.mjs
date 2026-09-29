@@ -79,6 +79,23 @@ test('already-ready destination needs no owned publication', { skip: !corrected 
     f.close();
   }
 });
+test('an already-paused confirmed Skip does not re-enter navigation cancellation', async () => {
+  const f = await fixture({ ready: true });
+  let redundantPauses = 0;
+  f.ctx.pause = () => {
+    redundantPauses++;
+    // The real host's pause -> cancelPictureStart -> cancelResultAttempt path.
+    f.ctx.libraryNextOperation?.cancel();
+  };
+  try {
+    await f.start();
+    assert.equal(redundantPauses, 0);
+    assert.equal(f.transfers, 1);
+    assert.equal(f.ctx.packs, f.before);
+  } finally {
+    f.close();
+  }
+});
 for (const host of [false, true])
   for (const change of [
     'cancel',
