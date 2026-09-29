@@ -1,0 +1,675 @@
+{
+  "actorCatalogId": "journey-actors-v9",
+  "assets": [
+    {
+      "alt": "A viewing-goggles sculpture stands apart from three different inert aircraft shapes in a museum hall.",
+      "bytes": 138884,
+      "format": "AssetRevisionV1",
+      "height": 480,
+      "id": "fpv-drone-families-01-picture",
+      "kind": "reveal-background",
+      "path": "editions/assets/discovery/fpv-drone-families-01-v1.jpg",
+      "review": "candidate",
+      "revision": "1",
+      "sha256": "43b5eb213c9e6aea5565587f3cb45bb592175982b7140de666b6ac049e5a2b7d",
+      "width": 960
+    },
+    {
+      "alt": "Three museum silhouettes compare four, six and eight rotor positions without ranking their performance.",
+      "bytes": 147129,
+      "format": "AssetRevisionV1",
+      "height": 480,
+      "id": "fpv-drone-families-02-picture",
+      "kind": "reveal-background",
+      "path": "editions/assets/discovery/fpv-drone-families-02-v1.jpg",
+      "review": "candidate",
+      "revision": "1",
+      "sha256": "d6c316fe11726eecc47d18894e0a880da2b33f5b68d22bb1f39801e2661df385",
+      "width": 960
+    },
+    {
+      "alt": "A broad-winged civilian glider and a four-disc multicopter form a structural comparison.",
+      "bytes": 140472,
+      "format": "AssetRevisionV1",
+      "height": 480,
+      "id": "fpv-drone-families-03-picture",
+      "kind": "reveal-background",
+      "path": "editions/assets/discovery/fpv-drone-families-03-v1.jpg",
+      "review": "candidate",
+      "revision": "1",
+      "sha256": "802bbc7a54eeb0a538832d06bb411be02b8e7bc4cc9a5f8a5c98c8b76e2eb180",
+      "width": 960
+    },
+    {
+      "alt": "An exhibition combines a demonstration court, separate viewing gallery and prominent pause symbol.",
+      "bytes": 165281,
+      "format": "AssetRevisionV1",
+      "height": 480,
+      "id": "fpv-drone-families-04-picture",
+      "kind": "reveal-background",
+      "path": "editions/assets/discovery/fpv-drone-families-04-v1.jpg",
+      "review": "candidate",
+      "revision": "1",
+      "sha256": "db4151cdb72326a815a779f1b8bf8684e9899d036088d981fcfb0828d35a7649",
+      "width": 960
+    },
+    {
+      "alt": "Three separate alcoves present a classroom model, a still-life camera and a fictional parcel-study desk.",
+      "bytes": 140216,
+      "format": "AssetRevisionV1",
+      "height": 480,
+      "id": "fpv-drone-families-05-picture",
+      "kind": "reveal-background",
+      "path": "editions/assets/discovery/fpv-drone-families-05-v1.jpg",
+      "review": "candidate",
+      "revision": "1",
+      "sha256": "96fd3b75b810745a1c87ebed3d4055162d4789e0a436c9d0177ebcc05aa88676",
+      "width": 960
+    },
+    {
+      "alt": "An illustrated family atlas has separate classification columns and intentionally empty fields.",
+      "bytes": 152692,
+      "format": "AssetRevisionV1",
+      "height": 480,
+      "id": "fpv-drone-families-06-picture",
+      "kind": "reveal-background",
+      "path": "editions/assets/discovery/fpv-drone-families-06-v1.jpg",
+      "review": "candidate",
+      "revision": "1",
+      "sha256": "879ae84c35afadd6a8f220656dd311ec279ccf6e162af8b6b642b5969dfdc358",
+      "width": 960
+    }
+  ],
+  "campaigns": [
+    {
+      "band": 5,
+      "discovery": {
+        "exhibitLayout": "gallery",
+        "feedback": {
+          "format": "revealline-campaign-feedback.v1",
+          "lines": {
+            "en": ["Another aircraft family enters the gallery."],
+            "uk": ["Ще одна родина апаратів з’явилася в галереї."]
+          },
+          "revision": "feedback-195727e7c68fe467",
+          "victoryMotif": "bright-return-v1"
+        },
+        "finaleRewardRef": { "id": "fpv-drone-families-finale", "revision": "4" }
+      },
+      "format": "CampaignDesignV1",
+      "id": "fpv-drone-families",
+      "missionIds": [
+        "fpv-drone-families-01",
+        "fpv-drone-families-02",
+        "fpv-drone-families-03",
+        "fpv-drone-families-04",
+        "fpv-drone-families-05",
+        "fpv-drone-families-06"
+      ],
+      "name": "Drone Families",
+      "revision": "1"
+    }
+  ],
+  "difficultyCatalogId": "journey-difficulty-v2",
+  "format": "ContentProjectV1",
+  "id": "fpv-drone-families",
+  "maps": [
+    {
+      "format": "MapDesignV2",
+      "foundations": [
+        { "h": 5, "w": 12, "x": 11, "y": 10 },
+        { "h": 4, "w": 20, "x": 17, "y": 24 },
+        { "h": 4, "w": 12, "x": 48, "y": 12 }
+      ],
+      "gates": [],
+      "height": 36,
+      "id": "fpv-drone-families-01-map",
+      "name": "A View, Not a Shape",
+      "revision": "2",
+      "spawns": [{ "id": "home", "x": 17.5, "y": 0.5 }],
+      "terrain": [],
+      "walls": [{ "h": 13, "w": 2, "x": 40, "y": 10 }],
+      "width": 72
+    },
+    {
+      "format": "MapDesignV2",
+      "foundations": [
+        { "h": 4, "w": 9, "x": 11, "y": 8 },
+        { "h": 4, "w": 10, "x": 10, "y": 25 },
+        { "h": 5, "w": 22, "x": 36, "y": 12 }
+      ],
+      "gates": [],
+      "height": 36,
+      "id": "fpv-drone-families-02-map",
+      "name": "More Than Four Rotors",
+      "revision": "2",
+      "spawns": [{ "id": "home", "x": 15.5, "y": 0.5 }],
+      "terrain": [],
+      "walls": [{ "h": 12, "w": 2, "x": 26, "y": 13 }],
+      "width": 72
+    },
+    {
+      "format": "MapDesignV2",
+      "foundations": [
+        { "h": 5, "w": 14, "x": 11, "y": 15 },
+        { "h": 4, "w": 16, "x": 42, "y": 9 },
+        { "h": 4, "w": 11, "x": 47, "y": 24 }
+      ],
+      "gates": [],
+      "height": 36,
+      "id": "fpv-drone-families-03-map",
+      "name": "Wings Tell Another Story",
+      "revision": "2",
+      "spawns": [{ "id": "home", "x": 18.5, "y": 0.5 }],
+      "terrain": [],
+      "walls": [
+        { "h": 7, "w": 2, "x": 32, "y": 7 },
+        { "h": 7, "w": 2, "x": 32, "y": 23 }
+      ],
+      "width": 72
+    },
+    {
+      "format": "MapDesignV2",
+      "foundations": [
+        { "h": 6, "w": 25, "x": 16, "y": 12 },
+        { "h": 4, "w": 9, "x": 19, "y": 26 },
+        { "h": 4, "w": 13, "x": 48, "y": 19 }
+      ],
+      "gates": [],
+      "height": 36,
+      "id": "fpv-drone-families-04-map",
+      "name": "A Sport Has a Setting",
+      "revision": "2",
+      "spawns": [{ "id": "home", "x": 28.5, "y": 0.5 }],
+      "terrain": [],
+      "walls": [{ "h": 6, "w": 2, "x": 52, "y": 11 }],
+      "width": 72
+    },
+    {
+      "format": "MapDesignV2",
+      "foundations": [
+        { "h": 5, "w": 9, "x": 10, "y": 9 },
+        { "h": 5, "w": 10, "x": 34, "y": 12 },
+        { "h": 4, "w": 9, "x": 54, "y": 20 }
+      ],
+      "gates": [],
+      "height": 36,
+      "id": "fpv-drone-families-05-map",
+      "name": "Purpose Changes the Questions",
+      "revision": "2",
+      "spawns": [{ "id": "home", "x": 15.5, "y": 0.5 }],
+      "terrain": [{ "h": 3, "id": "slow-1", "kind": "slow", "w": 11, "x": 26, "y": 27 }],
+      "walls": [
+        { "h": 11, "w": 2, "x": 24, "y": 10 },
+        { "h": 2, "w": 13, "x": 42, "y": 24 }
+      ],
+      "width": 72
+    },
+    {
+      "format": "MapDesignV2",
+      "foundations": [
+        { "h": 5, "w": 10, "x": 10, "y": 22 },
+        { "h": 5, "w": 8, "x": 30, "y": 8 },
+        { "h": 6, "w": 8, "x": 31, "y": 23 },
+        { "h": 5, "w": 9, "x": 54, "y": 9 },
+        { "h": 4, "w": 11, "x": 51, "y": 19 }
+      ],
+      "gates": [{ "h": 5, "id": "return-1", "w": 1, "x": 56, "y": 14 }],
+      "height": 36,
+      "id": "fpv-drone-families-06-map",
+      "name": "Curate the Family Atlas",
+      "revision": "2",
+      "spawns": [{ "id": "home", "x": 34.5, "y": 0.5 }],
+      "terrain": [],
+      "walls": [
+        { "h": 10, "w": 2, "x": 23, "y": 9 },
+        { "h": 12, "w": 2, "x": 46, "y": 18 }
+      ],
+      "width": 72
+    }
+  ],
+  "missions": [
+    {
+      "actors": [
+        {
+          "heading": [-1, -1],
+          "id": "paper-drifter",
+          "role": "field-keeper",
+          "tier": "measured",
+          "x": 61.5,
+          "y": 28.5
+        },
+        {
+          "heading": [1, -1],
+          "id": "locked-demand",
+          "role": "trail-pursuer",
+          "tier": "measured",
+          "x": 13.5,
+          "y": 27.5
+        }
+      ],
+      "bonuses": [],
+      "coverage": 0.5780000000000001,
+      "design": {
+        "captureConsequence": "This fictional reveal never changes a business record or a real-world delivery.",
+        "combines": [],
+        "counterplay": "The pursuer commits to one observed point on the unfinished trail. Keep a short return ready and close before its finite approach reaches you.",
+        "difficulty": {
+          "band": 5,
+          "coordination": 0,
+          "execution": 4,
+          "mechanicLoad": 5,
+          "planning": 5,
+          "threatDensity": 2,
+          "timePressure": 0
+        },
+        "durationSeconds": [50, 210],
+        "introduces": ["trail-pursuer"],
+        "lesson": "Reveal the viewing gallery and separate FPV from airframe type. The pursuer commits to one observed point on the unfinished trail. Keep a short return ready and close before its finite approach reaches you.",
+        "mastery": "Connect every required objective and complete the encounter without losing a life; optional learning remains separate from arcade progress.",
+        "memorableMoment": "Original drone museum entrance with a large goggles silhouette and several distinct unarmed aircraft silhouettes, separated classification columns.",
+        "pacingBeat": "discover",
+        "practices": [
+          "foundations",
+          "enemy-seeded-closure",
+          "travelling-trail-impact",
+          "trail-pursuer"
+        ],
+        "rewardRef": { "id": "fpv-drone-families-01-discovery", "revision": "4" },
+        "routeDecision": "Open the wide viewing bay or connect the camera and airframe alcoves separately. Keep a second return ready before the warning locks your trail or heading."
+      },
+      "format": "MissionDesignV2",
+      "id": "fpv-drone-families-01",
+      "map": { "id": "fpv-drone-families-01-map", "revision": "2" },
+      "modes": ["solo"],
+      "name": "A View, Not a Shape",
+      "objectives": [
+        { "hidden": false, "id": "connection", "required": true, "x": 12.5, "y": 8.5 },
+        { "hidden": false, "id": "handoff", "required": true, "x": 55.5, "y": 25.5 }
+      ],
+      "presentation": {
+        "backgroundAssetId": "fpv-drone-families-01-picture",
+        "themeId": "fpv-drone-families-theme"
+      },
+      "relayLinks": [],
+      "revision": "2",
+      "spawnId": "home",
+      "timeLimitSeconds": 0
+    },
+    {
+      "actors": [
+        {
+          "heading": [-1, -1],
+          "id": "paper-drifter",
+          "role": "field-keeper",
+          "tier": "measured",
+          "x": 61.5,
+          "y": 28.5
+        },
+        {
+          "heading": [1, -1],
+          "id": "locked-demand",
+          "role": "trail-pursuer",
+          "tier": "measured",
+          "x": 13.5,
+          "y": 29.5
+        }
+      ],
+      "bonuses": [],
+      "coverage": 0.6280000000000001,
+      "design": {
+        "captureConsequence": "This fictional reveal never changes a business record or a real-world delivery.",
+        "combines": [],
+        "counterplay": "The pursuer commits to one observed point on the unfinished trail. Keep a short return ready and close before its finite approach reaches you.",
+        "difficulty": {
+          "band": 5,
+          "coordination": 0,
+          "execution": 4,
+          "mechanicLoad": 5,
+          "planning": 5,
+          "threatDensity": 2,
+          "timePressure": 0
+        },
+        "durationSeconds": [50, 210],
+        "introduces": [],
+        "lesson": "Connect the rotor-family plinths and count before comparing. The pursuer commits to one observed point on the unfinished trail. Keep a short return ready and close before its finite approach reaches you.",
+        "mastery": "Connect every required objective and complete the encounter without losing a life; optional learning remains separate from arcade progress.",
+        "memorableMoment": "Original overhead silhouettes of four-, six- and eight-rotor civilian display craft on differently shaped museum plinths.",
+        "pacingBeat": "choose",
+        "practices": [
+          "foundations",
+          "enemy-seeded-closure",
+          "travelling-trail-impact",
+          "trail-pursuer"
+        ],
+        "rewardRef": { "id": "fpv-drone-families-02-discovery", "revision": "4" },
+        "routeDecision": "Collect the small-count plinths first or reach the broad comparison island. Keep a second return ready before the warning locks your trail or heading."
+      },
+      "format": "MissionDesignV2",
+      "id": "fpv-drone-families-02",
+      "map": { "id": "fpv-drone-families-02-map", "revision": "2" },
+      "modes": ["solo"],
+      "name": "More Than Four Rotors",
+      "objectives": [
+        { "hidden": false, "id": "connection", "required": true, "x": 12.5, "y": 7.5 },
+        { "hidden": false, "id": "handoff", "required": true, "x": 55.5, "y": 25.5 }
+      ],
+      "presentation": {
+        "backgroundAssetId": "fpv-drone-families-02-picture",
+        "themeId": "fpv-drone-families-theme"
+      },
+      "relayLinks": [],
+      "revision": "2",
+      "spawnId": "home",
+      "timeLimitSeconds": 0
+    },
+    {
+      "actors": [
+        {
+          "heading": [-1, -1],
+          "id": "paper-drifter",
+          "role": "field-keeper",
+          "tier": "measured",
+          "x": 61.5,
+          "y": 28.5
+        },
+        {
+          "heading": [1, -1],
+          "id": "locked-demand",
+          "role": "heading-interceptor",
+          "tier": "measured",
+          "x": 13.5,
+          "y": 27.5
+        }
+      ],
+      "bonuses": [],
+      "coverage": 0.6580000000000001,
+      "design": {
+        "captureConsequence": "This fictional reveal never changes a business record or a real-world delivery.",
+        "combines": [],
+        "counterplay": "The interceptor commits to one observed heading after its warning. Change your route after the lock and close on the nearer return.",
+        "difficulty": {
+          "band": 5,
+          "coordination": 0,
+          "execution": 4,
+          "mechanicLoad": 5,
+          "planning": 5,
+          "threatDensity": 2,
+          "timePressure": 0
+        },
+        "durationSeconds": [50, 210],
+        "introduces": ["heading-interceptor"],
+        "lesson": "Join wing and rotor galleries without turning a silhouette into a performance claim. The interceptor commits to one observed heading after its warning. Change your route after the lock and close on the nearer return.",
+        "mastery": "Connect every required objective and complete the encounter without losing a life; optional learning remains separate from arcade progress.",
+        "memorableMoment": "Original civilian fixed-wing and multicopter display sculptures with broad wing surface and distinct rotor discs, no performance specifications.",
+        "pacingBeat": "combine",
+        "practices": [
+          "foundations",
+          "enemy-seeded-closure",
+          "travelling-trail-impact",
+          "heading-interceptor"
+        ],
+        "rewardRef": { "id": "fpv-drone-families-03-discovery", "revision": "4" },
+        "routeDecision": "Cross between the wing gallery and rotor terrace or secure both outer returns. Keep a second return ready before the warning locks your trail or heading."
+      },
+      "format": "MissionDesignV2",
+      "id": "fpv-drone-families-03",
+      "map": { "id": "fpv-drone-families-03-map", "revision": "2" },
+      "modes": ["solo"],
+      "name": "Wings Tell Another Story",
+      "objectives": [
+        { "hidden": false, "id": "connection", "required": true, "x": 12.5, "y": 8.5 },
+        { "hidden": false, "id": "handoff", "required": true, "x": 55.5, "y": 23.5 }
+      ],
+      "presentation": {
+        "backgroundAssetId": "fpv-drone-families-03-picture",
+        "themeId": "fpv-drone-families-theme"
+      },
+      "relayLinks": [],
+      "revision": "2",
+      "spawnId": "home",
+      "timeLimitSeconds": 0
+    },
+    {
+      "actors": [
+        {
+          "heading": [-1, -1],
+          "id": "paper-drifter",
+          "role": "field-keeper",
+          "tier": "measured",
+          "x": 61.5,
+          "y": 28.5
+        },
+        {
+          "heading": [1, -1],
+          "id": "locked-demand",
+          "role": "heading-interceptor",
+          "tier": "measured",
+          "x": 13.5,
+          "y": 27.5
+        },
+        {
+          "axis": "horizontal",
+          "id": "scheduled-wave",
+          "role": "lane-emitter",
+          "tier": "measured",
+          "x": 56.5,
+          "y": 27.5
+        }
+      ],
+      "bonuses": [{ "id": "steady-return", "kind": "extra-life", "x": 16.5, "y": 12.5 }],
+      "coverage": 0.5980000000000001,
+      "design": {
+        "captureConsequence": "This fictional reveal never changes a business record or a real-world delivery.",
+        "combines": ["heading-interceptor", "lane-emitter"],
+        "counterplay": "The interceptor commits to one observed heading after its warning. Change your route after the lock and close on the nearer return. The marked lane warns before firing; close the whole exposed line before the pulse, not only the craft.",
+        "difficulty": {
+          "band": 6,
+          "coordination": 0,
+          "execution": 4,
+          "mechanicLoad": 6,
+          "planning": 6,
+          "threatDensity": 3,
+          "timePressure": 0
+        },
+        "durationSeconds": [50, 210],
+        "introduces": ["lane-emitter"],
+        "lesson": "Open the spacious race exhibit and distinguish a public sport from unrestricted flying. The interceptor commits to one observed heading after its warning. Change your route after the lock and close on the nearer return.",
+        "mastery": "Connect every required objective and complete the encounter without losing a life; optional learning remains separate from arcade progress.",
+        "memorableMoment": "Original fictional civilian drone-sport exhibition with stylized gates, viewing gallery and a large pause emblem; no real event photography.",
+        "pacingBeat": "breathe",
+        "practices": [
+          "foundations",
+          "enemy-seeded-closure",
+          "travelling-trail-impact",
+          "heading-interceptor",
+          "lane-emitter"
+        ],
+        "rewardRef": { "id": "fpv-drone-families-04-discovery", "revision": "4" },
+        "routeDecision": "Use the wide spectator-side return or capture the quiet course-map terrace. Keep a second return ready before the warning locks your trail or heading."
+      },
+      "format": "MissionDesignV2",
+      "id": "fpv-drone-families-04",
+      "map": { "id": "fpv-drone-families-04-map", "revision": "2" },
+      "modes": ["solo"],
+      "name": "A Sport Has a Setting",
+      "objectives": [
+        { "hidden": false, "id": "connection", "required": true, "x": 12.5, "y": 8.5 },
+        { "hidden": false, "id": "handoff", "required": true, "x": 55.5, "y": 25.5 }
+      ],
+      "presentation": {
+        "backgroundAssetId": "fpv-drone-families-04-picture",
+        "themeId": "fpv-drone-families-theme"
+      },
+      "relayLinks": [],
+      "revision": "2",
+      "spawnId": "home",
+      "timeLimitSeconds": 0
+    },
+    {
+      "actors": [
+        {
+          "heading": [-1, -1],
+          "id": "paper-drifter",
+          "role": "field-keeper",
+          "tier": "measured",
+          "x": 61.5,
+          "y": 28.5
+        },
+        {
+          "heading": [1, -1],
+          "id": "locked-demand",
+          "role": "heading-interceptor",
+          "tier": "measured",
+          "x": 13.5,
+          "y": 27.5
+        },
+        {
+          "axis": "vertical",
+          "id": "scheduled-wave",
+          "role": "lane-emitter",
+          "tier": "measured",
+          "x": 56.5,
+          "y": 27.5
+        }
+      ],
+      "bonuses": [{ "id": "steady-return", "kind": "extra-life", "x": 10.5, "y": 9.5 }],
+      "coverage": 0.6980000000000001,
+      "design": {
+        "captureConsequence": "This fictional reveal never changes a business record or a real-world delivery.",
+        "combines": ["heading-interceptor", "lane-emitter"],
+        "counterplay": "The interceptor commits to one observed heading after its warning. Change your route after the lock and close on the nearer return. The marked lane warns before firing; close the whole exposed line before the pulse, not only the craft.",
+        "difficulty": {
+          "band": 6,
+          "coordination": 0,
+          "execution": 4,
+          "mechanicLoad": 6,
+          "planning": 6,
+          "threatDensity": 3,
+          "timePressure": 0
+        },
+        "durationSeconds": [50, 210],
+        "introduces": [],
+        "lesson": "Connect the civilian task cards and choose evidence before claiming a best design. The interceptor commits to one observed heading after its warning. Change your route after the lock and close on the nearer return.",
+        "mastery": "Connect every required objective and complete the encounter without losing a life; optional learning remains separate from arcade progress.",
+        "memorableMoment": "Original triptych of classroom model, museum camera and fictional parcel-study station, with separate evidence labels and no technical delivery plan.",
+        "pacingBeat": "mastery",
+        "practices": [
+          "foundations",
+          "enemy-seeded-closure",
+          "travelling-trail-impact",
+          "heading-interceptor",
+          "lane-emitter"
+        ],
+        "rewardRef": { "id": "fpv-drone-families-05-discovery", "revision": "4" },
+        "routeDecision": "Join the three purpose islands one at a time or capture the paired research bays. Keep a second return ready before the warning locks your trail or heading."
+      },
+      "format": "MissionDesignV2",
+      "id": "fpv-drone-families-05",
+      "map": { "id": "fpv-drone-families-05-map", "revision": "2" },
+      "modes": ["solo"],
+      "name": "Purpose Changes the Questions",
+      "objectives": [
+        { "hidden": false, "id": "connection", "required": true, "x": 12.5, "y": 8.5 },
+        { "hidden": false, "id": "handoff", "required": true, "x": 55.5, "y": 25.5 }
+      ],
+      "presentation": {
+        "backgroundAssetId": "fpv-drone-families-05-picture",
+        "themeId": "fpv-drone-families-theme"
+      },
+      "relayLinks": [],
+      "revision": "2",
+      "spawnId": "home",
+      "timeLimitSeconds": 0
+    },
+    {
+      "actors": [
+        {
+          "heading": [-1, -1],
+          "id": "paper-drifter",
+          "role": "field-keeper",
+          "tier": "measured",
+          "x": 61.5,
+          "y": 28.5
+        },
+        {
+          "heading": [1, -1],
+          "id": "locked-demand",
+          "role": "heading-interceptor",
+          "tier": "measured",
+          "x": 13.5,
+          "y": 27.5
+        },
+        {
+          "axis": "horizontal",
+          "id": "scheduled-wave",
+          "role": "lane-emitter",
+          "tier": "measured",
+          "x": 56.5,
+          "y": 27.5
+        }
+      ],
+      "bonuses": [{ "id": "steady-return", "kind": "extra-life", "x": 10.5, "y": 22.5 }],
+      "coverage": 0.7380000000000001,
+      "design": {
+        "captureConsequence": "The captured relay opens its matching return. This fictional reveal never changes a business record or a real-world delivery.",
+        "combines": ["heading-interceptor", "lane-emitter", "relay-gates"],
+        "counterplay": "The interceptor commits to one observed heading after its warning. Change your route after the lock and close on the nearer return. The marked lane warns before firing; close the whole exposed line before the pulse, not only the craft. Each numbered objective opens its matching connector. Closed connectors block a cut; open ones become safe returns without another fill.",
+        "difficulty": {
+          "band": 6,
+          "coordination": 0,
+          "execution": 4,
+          "mechanicLoad": 6,
+          "planning": 6,
+          "threatDensity": 3,
+          "timePressure": 0
+        },
+        "durationSeconds": [50, 210],
+        "introduces": ["relay-gates"],
+        "lesson": "Complete the comparison hall using separate columns for view, structure and purpose. The interceptor commits to one observed heading after its warning. Change your route after the lock and close on the nearer return.",
+        "mastery": "Connect every required objective and complete the encounter without losing a life; optional learning remains separate from arcade progress.",
+        "memorableMoment": "Original completed classification atlas with aircraft silhouettes, camera icons, context cards and intentional unknown fields in a lavender museum hall.",
+        "pacingBeat": "resolve",
+        "practices": [
+          "foundations",
+          "enemy-seeded-closure",
+          "travelling-trail-impact",
+          "heading-interceptor",
+          "lane-emitter",
+          "relay-gates"
+        ],
+        "rewardRef": { "id": "fpv-drone-families-06-discovery", "revision": "4" },
+        "routeDecision": "Connect the four atlas columns through short returns or enclose the outer comparison court. Choose which numbered relay will open the most useful return connector first."
+      },
+      "format": "MissionDesignV2",
+      "id": "fpv-drone-families-06",
+      "map": { "id": "fpv-drone-families-06-map", "revision": "2" },
+      "modes": ["solo"],
+      "name": "Curate the Family Atlas",
+      "objectives": [
+        { "hidden": false, "id": "connection", "required": true, "x": 12.5, "y": 8.5 },
+        { "hidden": false, "id": "handoff", "required": true, "x": 55.5, "y": 25.5 }
+      ],
+      "presentation": {
+        "backgroundAssetId": "fpv-drone-families-06-picture",
+        "themeId": "fpv-drone-families-theme"
+      },
+      "relayLinks": [{ "gateId": "return-1", "objectiveId": "connection" }],
+      "revision": "2",
+      "spawnId": "home",
+      "timeLimitSeconds": 0
+    }
+  ],
+  "name": "Drone Families",
+  "packs": [
+    {
+      "campaignIds": ["fpv-drone-families"],
+      "format": "PackDesignV1",
+      "id": "fpv-drone-families-pack",
+      "name": "Drone Families",
+      "revision": "4"
+    }
+  ],
+  "policyId": "journey-trail-impact-v3",
+  "revision": "4"
+}

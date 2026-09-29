@@ -1,0 +1,1042 @@
+[
+  {
+    "brandId": "victory-drones",
+    "campaignId": "victory-drones-knowledge-connects",
+    "format": "revealline-completion-reward.v1",
+    "id": "victory-drones-knowledge-connects-01-discovery",
+    "locales": {
+      "en": {
+        "teaser": "Discover the public purpose behind a learning community.",
+        "title": "A Learning Compass"
+      },
+      "uk": {
+        "teaser": "Дізнайтеся про публічну мету навчальної спільноти.",
+        "title": "Навчальний компас"
+      }
+    },
+    "payloads": [
+      {
+        "asset": {
+          "assetId": "victory-drones-knowledge-connects-01-reveal-v1",
+          "sha256": "614c9a38f9c9233c01a649f4b59e9f638e5b9dd712cda0bb04b2bc2a25a184a7"
+        },
+        "id": "victory-drones-knowledge-connects-01-image",
+        "locales": {
+          "en": {
+            "alt": "Original illustrated learning observatory with a yellow compass-inspired floor, a simple wheel model and a single blank question card.",
+            "title": "A Learning Compass"
+          },
+          "uk": {
+            "alt": "Оригінальна ілюстрована навчальна обсерваторія з жовтою підлогою, натхненною компасом, простою моделлю колеса та порожньою карткою запитання.",
+            "title": "Навчальний компас"
+          }
+        },
+        "type": "image"
+      },
+      {
+        "id": "victory-drones-knowledge-connects-01-knowledge",
+        "locales": {
+          "en": {
+            "paragraphs": [
+              "Victory Drones describes a Ukrainian volunteer project for technology education, community support and advocacy. Its public activities include military and civilian audiences; this game’s practical examples remain civilian.",
+              "Choose a question for our fictional science club: “What role does this part have?” gives a clearer destination than “Learn everything.” A useful question helps you choose a suitable source."
+            ],
+            "sources": [
+              { "title": "Victory Drones — public overview", "url": "https://victory-drones.com/" }
+            ],
+            "title": "A Learning Compass"
+          },
+          "uk": {
+            "paragraphs": [
+              "Victory Drones описує український волонтерський проєкт технологічної освіти, підтримки спільноти та адвокації. Його публічні напрями охоплюють військову й цивільну аудиторії; практичні приклади гри залишаються цивільними.",
+              "Оберіть запитання для вигаданого гуртка: «Яка роль цієї деталі?» задає чіткішу мету, ніж «Вивчити все». Корисне запитання допомагає обрати доречне джерело."
+            ],
+            "sources": [
+              { "title": "Victory Drones — public overview", "url": "https://victory-drones.com/" }
+            ],
+            "title": "Навчальний компас"
+          }
+        },
+        "profiles": {
+          "beginners": {
+            "en": {
+              "paragraphs": [
+                "Turn “learn everything” into a question about one role or relationship. Name the kind of source that could answer it."
+              ],
+              "title": "Build the connection"
+            },
+            "uk": {
+              "paragraphs": [
+                "Перетворіть «дізнатися все» на запитання про одну роль або зв’язок. Назвіть тип джерела, яке допоможе."
+              ],
+              "title": "Зрозумійте зв’язок"
+            }
+          },
+          "families": {
+            "en": {
+              "paragraphs": [
+                "Choose one part in the imagined science room and ask what job it does. Keep the question small enough to explain together."
+              ],
+              "title": "Try it together"
+            },
+            "uk": {
+              "paragraphs": [
+                "Оберіть деталь в уявній науковій кімнаті й запитайте про її роль. Нехай запитання буде достатньо конкретним для спільного пояснення."
+              ],
+              "title": "Спробуйте разом"
+            }
+          },
+          "hobbyists": {
+            "en": {
+              "paragraphs": [
+                "Define a learning question, an appropriate source and a stopping point. Explain what evidence would count as an answer."
+              ],
+              "title": "Question the evidence"
+            },
+            "uk": {
+              "paragraphs": [
+                "Визначте навчальне запитання, доречне джерело й межу дослідження. Поясніть, які докази дадуть відповідь."
+              ],
+              "title": "Дослідіть докази"
+            }
+          }
+        },
+        "type": "knowledge"
+      }
+    ],
+    "requirements": {
+      "learning": [],
+      "mastery": [],
+      "missions": [
+        {
+          "bindings": [
+            { "difficulty": "gentle", "gameplayId": "64d9efa29bf12336" },
+            { "difficulty": "standard", "gameplayId": "4a22f70cb8070032" },
+            { "difficulty": "expert", "gameplayId": "0a56f1aa04c8d95b" }
+          ],
+          "missionId": "victory-drones-knowledge-connects-01"
+        }
+      ]
+    },
+    "revision": "5",
+    "scope": { "id": "victory-drones-knowledge-connects-01", "kind": "mission" },
+    "teaserImage": {
+      "asset": {
+        "assetId": "victory-drones-knowledge-connects-key-v1",
+        "sha256": "19978dc032a20d171108a80d630845d30ff74658c1b0ab6bb7d8f3d1399b2f9f"
+      },
+      "locales": {
+        "en": {
+          "alt": "A fictional blue-and-gold learning observatory links reading alcoves, open question cards and a central compass-like sculpture."
+        },
+        "uk": {
+          "alt": "Уявна синьо-золота обсерваторія навчання поєднує читальні ніші, картки запитань і центральну скульптуру, схожу на компас."
+        }
+      }
+    }
+  },
+  {
+    "brandId": "victory-drones",
+    "campaignId": "victory-drones-knowledge-connects",
+    "format": "revealline-completion-reward.v1",
+    "id": "victory-drones-knowledge-connects-02-discovery",
+    "locales": {
+      "en": { "teaser": "Compare an explanation with an example.", "title": "Two Ways to Explain" },
+      "uk": { "teaser": "Порівняйте пояснення з прикладом.", "title": "Два способи пояснити" }
+    },
+    "payloads": [
+      {
+        "asset": {
+          "assetId": "victory-drones-knowledge-connects-02-reveal-v1",
+          "sha256": "794cca9930fae791df22caef7e2caa3a5379557396974585c17986609a1140de"
+        },
+        "id": "victory-drones-knowledge-connects-02-image",
+        "locales": {
+          "en": {
+            "alt": "Original illustrated twin learning pavilions comparing a simple bookshelf drawing with a small physical bookshelf, joined by a yellow bridge.",
+            "title": "Two Ways to Explain"
+          },
+          "uk": {
+            "alt": "Оригінальні ілюстровані навчальні павільйони, з’єднані жовтим містком, зіставляють простий малюнок книжкової полиці та невелику фізичну модель.",
+            "title": "Два способи пояснити"
+          }
+        },
+        "type": "image"
+      },
+      {
+        "id": "victory-drones-knowledge-connects-02-knowledge",
+        "locales": {
+          "en": {
+            "paragraphs": [
+              "Victory Drones’ public overview brings education and community into the same project. Our fictional gallery asks what a useful explanation can look like.",
+              "A diagram shows a relationship; an example shows its application. Explain one everyday idea twice: describe how a bookshelf supports books, then sketch it. Neither format automatically proves a claim."
+            ],
+            "sources": [
+              { "title": "Victory Drones — public overview", "url": "https://victory-drones.com/" }
+            ],
+            "title": "Two Ways to Explain"
+          },
+          "uk": {
+            "paragraphs": [
+              "У публічному описі Victory Drones освіта й спільнота є частинами одного проєкту. Наша вигадана галерея запитує, яким буває корисне пояснення.",
+              "Схема показує зв’язок, а приклад — його застосування. Двічі поясніть повсякденну думку: опишіть, як полиця тримає книжки, а потім намалюйте це. Жоден формат сам по собі не доводить твердження."
+            ],
+            "sources": [
+              { "title": "Victory Drones — public overview", "url": "https://victory-drones.com/" }
+            ],
+            "title": "Два способи пояснити"
+          }
+        },
+        "profiles": {
+          "beginners": {
+            "en": {
+              "paragraphs": [
+                "Choose one relationship and show it two ways. Identify what the diagram highlights and what the everyday example adds."
+              ],
+              "title": "Build the connection"
+            },
+            "uk": {
+              "paragraphs": [
+                "Оберіть зв’язок і покажіть його двома способами. Визначте, що підкреслює схема й що додає побутовий приклад."
+              ],
+              "title": "Зрозумійте зв’язок"
+            }
+          },
+          "families": {
+            "en": {
+              "paragraphs": [
+                "Explain a bookshelf with words, then a simple sketch. Ask a partner what became clearer in each version."
+              ],
+              "title": "Try it together"
+            },
+            "uk": {
+              "paragraphs": [
+                "Поясніть книжкову полицю словами, потім простим малюнком. Запитайте партнера, що стало зрозумілішим у кожному варіанті."
+              ],
+              "title": "Спробуйте разом"
+            }
+          },
+          "hobbyists": {
+            "en": {
+              "paragraphs": [
+                "Compare the explanatory value and evidential limits of a diagram and an example. Add a source rather than treating either format as proof."
+              ],
+              "title": "Question the evidence"
+            },
+            "uk": {
+              "paragraphs": [
+                "Порівняйте пояснювальну цінність і доказові межі схеми та прикладу. Додайте джерело замість сприйняття форми як доказу."
+              ],
+              "title": "Дослідіть докази"
+            }
+          }
+        },
+        "type": "knowledge"
+      }
+    ],
+    "requirements": {
+      "learning": [],
+      "mastery": [],
+      "missions": [
+        {
+          "bindings": [
+            { "difficulty": "gentle", "gameplayId": "657e4d6b855234d4" },
+            { "difficulty": "standard", "gameplayId": "ae6b65d9fa16dd31" },
+            { "difficulty": "expert", "gameplayId": "ff004e41761efa82" }
+          ],
+          "missionId": "victory-drones-knowledge-connects-02"
+        }
+      ]
+    },
+    "revision": "5",
+    "scope": { "id": "victory-drones-knowledge-connects-02", "kind": "mission" },
+    "teaserImage": {
+      "asset": {
+        "assetId": "victory-drones-knowledge-connects-key-v1",
+        "sha256": "19978dc032a20d171108a80d630845d30ff74658c1b0ab6bb7d8f3d1399b2f9f"
+      },
+      "locales": {
+        "en": {
+          "alt": "A fictional blue-and-gold learning observatory links reading alcoves, open question cards and a central compass-like sculpture."
+        },
+        "uk": {
+          "alt": "Уявна синьо-золота обсерваторія навчання поєднує читальні ніші, картки запитань і центральну скульптуру, схожу на компас."
+        }
+      }
+    }
+  },
+  {
+    "brandId": "victory-drones",
+    "campaignId": "victory-drones-knowledge-connects",
+    "format": "revealline-completion-reward.v1",
+    "id": "victory-drones-knowledge-connects-03-discovery",
+    "locales": {
+      "en": {
+        "teaser": "A source and a limit make a claim easier to inspect.",
+        "title": "Ask and Verify"
+      },
+      "uk": {
+        "teaser": "Джерело й межі допомагають перевірити твердження.",
+        "title": "Запитайте й перевірте"
+      }
+    },
+    "payloads": [
+      {
+        "asset": {
+          "assetId": "victory-drones-knowledge-connects-03-reveal-v1",
+          "sha256": "3be987f6c3072b1de39b9cdfb7c38c95a3808e4657765fea1cfbd3bf4990287e"
+        },
+        "id": "victory-drones-knowledge-connects-03-image",
+        "locales": {
+          "en": {
+            "alt": "Original illustrated research hall with a still wheel model, a linked blank source notebook and an empty card holder for an unresolved question.",
+            "title": "Ask and Verify"
+          },
+          "uk": {
+            "alt": "Оригінальна ілюстрована дослідницька зала з нерухомою моделлю колеса, пов’язаним порожнім джерельним зошитом і порожнім місцем для невирішеного запитання.",
+            "title": "Запитайте й перевірте"
+          }
+        },
+        "type": "image"
+      },
+      {
+        "id": "victory-drones-knowledge-connects-03-knowledge",
+        "locales": {
+          "en": {
+            "paragraphs": [
+              "A fictional club card says a demonstration worked. Ask what was demonstrated, where the record came from and what it does not establish before repeating that claim.",
+              "The public project overview supports a statement about Victory Drones’ stated mission. It does not by itself prove that an invented game character completed a course or achieved a particular outcome."
+            ],
+            "sources": [
+              { "title": "Victory Drones — public overview", "url": "https://victory-drones.com/" }
+            ],
+            "title": "Ask and Verify"
+          },
+          "uk": {
+            "paragraphs": [
+              "Картка вигаданого гуртка каже, що демонстрація вдалася. Перш ніж повторювати це, з’ясуйте, що демонстрували, звідки запис і чого він не доводить.",
+              "Публічний опис проєкту підтверджує заявлену місію Victory Drones. Сам по собі він не доводить, що вигаданий персонаж завершив курс або досяг певного результату."
+            ],
+            "sources": [
+              { "title": "Victory Drones — public overview", "url": "https://victory-drones.com/" }
+            ],
+            "title": "Запитайте й перевірте"
+          }
+        },
+        "profiles": {
+          "beginners": {
+            "en": {
+              "paragraphs": [
+                "Separate a reported result from the evidence supporting it. List one missing detail before repeating the claim."
+              ],
+              "title": "Build the connection"
+            },
+            "uk": {
+              "paragraphs": [
+                "Відокремте повідомлений результат від його доказів. Назвіть одну відсутню деталь, перш ніж повторити твердження."
+              ],
+              "title": "Зрозумійте зв’язок"
+            }
+          },
+          "families": {
+            "en": {
+              "paragraphs": [
+                "A card says “it worked.” Ask together: what worked, and how do we know?"
+              ],
+              "title": "Try it together"
+            },
+            "uk": {
+              "paragraphs": [
+                "Картка каже «це спрацювало». Разом запитайте: що саме й звідки ми знаємо?"
+              ],
+              "title": "Спробуйте разом"
+            }
+          },
+          "hobbyists": {
+            "en": {
+              "paragraphs": [
+                "Trace a claim to its source and identify the gap between a project’s stated mission and a particular outcome. Keep that gap explicit."
+              ],
+              "title": "Question the evidence"
+            },
+            "uk": {
+              "paragraphs": [
+                "Простежте твердження до джерела й визначте різницю між заявленою місією проєкту та конкретним результатом. Явно збережіть цю відмінність."
+              ],
+              "title": "Дослідіть докази"
+            }
+          }
+        },
+        "type": "knowledge"
+      }
+    ],
+    "requirements": {
+      "learning": [],
+      "mastery": [],
+      "missions": [
+        {
+          "bindings": [
+            { "difficulty": "gentle", "gameplayId": "a44b6da1aa75f921" },
+            { "difficulty": "standard", "gameplayId": "9e0988af65e2d8b8" },
+            { "difficulty": "expert", "gameplayId": "b9394b014753baab" }
+          ],
+          "missionId": "victory-drones-knowledge-connects-03"
+        }
+      ]
+    },
+    "revision": "5",
+    "scope": { "id": "victory-drones-knowledge-connects-03", "kind": "mission" },
+    "teaserImage": {
+      "asset": {
+        "assetId": "victory-drones-knowledge-connects-key-v1",
+        "sha256": "19978dc032a20d171108a80d630845d30ff74658c1b0ab6bb7d8f3d1399b2f9f"
+      },
+      "locales": {
+        "en": {
+          "alt": "A fictional blue-and-gold learning observatory links reading alcoves, open question cards and a central compass-like sculpture."
+        },
+        "uk": {
+          "alt": "Уявна синьо-золота обсерваторія навчання поєднує читальні ніші, картки запитань і центральну скульптуру, схожу на компас."
+        }
+      }
+    }
+  },
+  {
+    "brandId": "victory-drones",
+    "campaignId": "victory-drones-knowledge-connects",
+    "format": "revealline-completion-reward.v1",
+    "id": "victory-drones-knowledge-connects-04-discovery",
+    "locales": {
+      "en": {
+        "teaser": "Discover a calmer way to make an explanation useful.",
+        "title": "Room for Questions"
+      },
+      "uk": {
+        "teaser": "Дізнайтеся, як спокійно зробити пояснення кориснішим.",
+        "title": "Місце для запитань"
+      }
+    },
+    "payloads": [
+      {
+        "asset": {
+          "assetId": "victory-drones-knowledge-connects-04-reveal-v1",
+          "sha256": "fcf58c0d74e131fa7a9163285512cf77c66ffc2d7c793dc013f714bde27368b6"
+        },
+        "id": "victory-drones-knowledge-connects-04-image",
+        "locales": {
+          "en": {
+            "alt": "Original illustrated quiet learning courtyard with yellow seating, blank question wall and separate geometric study pieces on a low table.",
+            "title": "Room for Questions"
+          },
+          "uk": {
+            "alt": "Оригінальний ілюстрований спокійний навчальний двір із жовтими сидіннями, порожньою стіною запитань та окремими геометричними навчальними формами на низькому столі.",
+            "title": "Місце для запитань"
+          }
+        },
+        "type": "image"
+      },
+      {
+        "id": "victory-drones-knowledge-connects-04-knowledge",
+        "locales": {
+          "en": {
+            "paragraphs": [
+              "This original scene imagines a learner pausing an explanation. A useful response asks what is unclear instead of turning reading speed into a score.",
+              "Try “I can name the parts, but cannot explain their relationship yet.” That identifies a next step. Read every discovery at your own pace and revisit it in Collection."
+            ],
+            "sources": [
+              { "title": "Victory Drones — public overview", "url": "https://victory-drones.com/" }
+            ],
+            "title": "Room for Questions"
+          },
+          "uk": {
+            "paragraphs": [
+              "Оригінальна сцена уявляє, як учасник зупиняє пояснення. Корисна відповідь уточнює незрозуміле, а не оцінює швидкість читання.",
+              "Спробуйте: «Я можу назвати частини, але ще не пояснюю їхній зв’язок». Це визначає наступний крок. Читайте відкриття у власному темпі та повертайтеся до них у колекції."
+            ],
+            "sources": [
+              { "title": "Victory Drones — public overview", "url": "https://victory-drones.com/" }
+            ],
+            "title": "Місце для запитань"
+          }
+        },
+        "profiles": {
+          "beginners": {
+            "en": {
+              "paragraphs": [
+                "Name a part you recognize and a relationship you cannot yet explain. That distinction gives your next question a useful focus."
+              ],
+              "title": "Build the connection"
+            },
+            "uk": {
+              "paragraphs": [
+                "Назвіть деталь, яку впізнаєте, і зв’язок, який ще не можете пояснити. Це допоможе сформулювати наступне запитання."
+              ],
+              "title": "Зрозумійте зв’язок"
+            }
+          },
+          "families": {
+            "en": {
+              "paragraphs": [
+                "Take turns finishing “I understand this part, but wonder about…” There is no reading race."
+              ],
+              "title": "Try it together"
+            },
+            "uk": {
+              "paragraphs": [
+                "По черзі завершіть фразу «Цю частину я розумію, але хочу з’ясувати…». Це не змагання зі швидкості читання."
+              ],
+              "title": "Спробуйте разом"
+            }
+          },
+          "hobbyists": {
+            "en": {
+              "paragraphs": [
+                "Design a feedback question that reveals uncertainty without grading a person’s confidence. Explain how the answer would change the next explanation."
+              ],
+              "title": "Question the evidence"
+            },
+            "uk": {
+              "paragraphs": [
+                "Складіть запитання для зворотного зв’язку, що виявляє невизначеність без оцінювання впевненості людини. Поясніть, як відповідь змінить наступне пояснення."
+              ],
+              "title": "Дослідіть докази"
+            }
+          }
+        },
+        "type": "knowledge"
+      }
+    ],
+    "requirements": {
+      "learning": [],
+      "mastery": [],
+      "missions": [
+        {
+          "bindings": [
+            { "difficulty": "gentle", "gameplayId": "8c975df4c6b93c05" },
+            { "difficulty": "standard", "gameplayId": "2141631e7b8461a5" },
+            { "difficulty": "expert", "gameplayId": "14f96f5281acfb03" }
+          ],
+          "missionId": "victory-drones-knowledge-connects-04"
+        }
+      ]
+    },
+    "revision": "5",
+    "scope": { "id": "victory-drones-knowledge-connects-04", "kind": "mission" },
+    "teaserImage": {
+      "asset": {
+        "assetId": "victory-drones-knowledge-connects-key-v1",
+        "sha256": "19978dc032a20d171108a80d630845d30ff74658c1b0ab6bb7d8f3d1399b2f9f"
+      },
+      "locales": {
+        "en": {
+          "alt": "A fictional blue-and-gold learning observatory links reading alcoves, open question cards and a central compass-like sculpture."
+        },
+        "uk": {
+          "alt": "Уявна синьо-золота обсерваторія навчання поєднує читальні ніші, картки запитань і центральну скульптуру, схожу на компас."
+        }
+      }
+    }
+  },
+  {
+    "brandId": "victory-drones",
+    "campaignId": "victory-drones-knowledge-connects",
+    "format": "revealline-completion-reward.v1",
+    "id": "victory-drones-knowledge-connects-05-discovery",
+    "locales": {
+      "en": {
+        "teaser": "Two different examples can share a useful principle.",
+        "title": "Compare Before Concluding"
+      },
+      "uk": {
+        "teaser": "Два різні приклади можуть мати спільний принцип.",
+        "title": "Порівняйте перед висновком"
+      }
+    },
+    "payloads": [
+      {
+        "asset": {
+          "assetId": "victory-drones-knowledge-connects-05-reveal-v1",
+          "sha256": "04e343285fbad88d8c4e32ad365652c29c51aa1927b6be4ba7f751c126fbd4e6"
+        },
+        "id": "victory-drones-knowledge-connects-05-image",
+        "locales": {
+          "en": {
+            "alt": "Original illustrated comparison library with a simple bicycle-wheel drawing, a more detailed original wheel illustration and one shared blank question card.",
+            "title": "Compare Before Concluding"
+          },
+          "uk": {
+            "alt": "Оригінальна ілюстрована бібліотека порівнянь із простим малюнком велосипедного колеса, детальнішою оригінальною ілюстрацією та спільною порожньою карткою запитання.",
+            "title": "Порівняйте перед висновком"
+          }
+        },
+        "type": "image"
+      },
+      {
+        "id": "victory-drones-knowledge-connects-05-knowledge",
+        "locales": {
+          "en": {
+            "paragraphs": [
+              "Compare a labelled diagram with an unlabelled photograph in this fictional exercise. The photograph looks realistic; the diagram may explain a selected relationship more clearly. Decide what question each can answer.",
+              "A fair comparison asks both examples the same question and states what remains unknown. Attractive presentation and reliable evidence are different properties."
+            ],
+            "sources": [
+              { "title": "Victory Drones — public overview", "url": "https://victory-drones.com/" }
+            ],
+            "title": "Compare Before Concluding"
+          },
+          "uk": {
+            "paragraphs": [
+              "У вигаданій вправі порівняйте підписану схему та фотографію без підписів. Фото реалістичне, а схема може ясніше пояснювати обраний зв’язок. На яке запитання відповідає кожен приклад?",
+              "Справедливе порівняння ставить обом прикладам те саме запитання й називає невідоме. Привабливе оформлення та надійні докази — різні властивості."
+            ],
+            "sources": [
+              { "title": "Victory Drones — public overview", "url": "https://victory-drones.com/" }
+            ],
+            "title": "Порівняйте перед висновком"
+          }
+        },
+        "profiles": {
+          "beginners": {
+            "en": {
+              "paragraphs": [
+                "Choose whether you need appearance or a relationship. Match the source to that question and state what stays unknown."
+              ],
+              "title": "Build the connection"
+            },
+            "uk": {
+              "paragraphs": [
+                "Визначте, що вам потрібно: зовнішній вигляд чи зв’язок. Доберіть джерело до запитання й назвіть невідоме."
+              ],
+              "title": "Зрозумійте зв’язок"
+            }
+          },
+          "families": {
+            "en": {
+              "paragraphs": [
+                "Look at a diagram and a photograph. Ask the same question about both and compare what each lets you answer."
+              ],
+              "title": "Try it together"
+            },
+            "uk": {
+              "paragraphs": [
+                "Розгляньте схему та фотографію. Поставте до них однакове запитання й порівняйте можливі відповіді."
+              ],
+              "title": "Спробуйте разом"
+            }
+          },
+          "hobbyists": {
+            "en": {
+              "paragraphs": [
+                "Evaluate two representations against the same question, scale and assumptions. Separate visual realism from the reliability of the claim."
+              ],
+              "title": "Question the evidence"
+            },
+            "uk": {
+              "paragraphs": [
+                "Оцініть два зображення за однаковим запитанням, масштабом і припущеннями. Відокремте візуальну реалістичність від надійності твердження."
+              ],
+              "title": "Дослідіть докази"
+            }
+          }
+        },
+        "type": "knowledge"
+      }
+    ],
+    "requirements": {
+      "learning": [],
+      "mastery": [],
+      "missions": [
+        {
+          "bindings": [
+            { "difficulty": "gentle", "gameplayId": "ed2e788adb9b27fa" },
+            { "difficulty": "standard", "gameplayId": "861b88b0ec9e3cd3" },
+            { "difficulty": "expert", "gameplayId": "2246243fb69f5b01" }
+          ],
+          "missionId": "victory-drones-knowledge-connects-05"
+        }
+      ]
+    },
+    "revision": "5",
+    "scope": { "id": "victory-drones-knowledge-connects-05", "kind": "mission" },
+    "teaserImage": {
+      "asset": {
+        "assetId": "victory-drones-knowledge-connects-key-v1",
+        "sha256": "19978dc032a20d171108a80d630845d30ff74658c1b0ab6bb7d8f3d1399b2f9f"
+      },
+      "locales": {
+        "en": {
+          "alt": "A fictional blue-and-gold learning observatory links reading alcoves, open question cards and a central compass-like sculpture."
+        },
+        "uk": {
+          "alt": "Уявна синьо-золота обсерваторія навчання поєднує читальні ніші, картки запитань і центральну скульптуру, схожу на компас."
+        }
+      }
+    }
+  },
+  {
+    "brandId": "victory-drones",
+    "campaignId": "victory-drones-knowledge-connects",
+    "format": "revealline-completion-reward.v1",
+    "id": "victory-drones-knowledge-connects-06-discovery",
+    "locales": {
+      "en": {
+        "teaser": "Complete a learning compass for another subject.",
+        "title": "Teach It Forward"
+      },
+      "uk": {
+        "teaser": "Завершіть навчальний компас для іншої теми.",
+        "title": "Поясніть наступному"
+      }
+    },
+    "payloads": [
+      {
+        "asset": {
+          "assetId": "victory-drones-knowledge-connects-06-reveal-v1",
+          "sha256": "494447b8b5ba6af10d8eaa4dcc7497ac480cb754104f6f36ac1d7d76885aa350"
+        },
+        "id": "victory-drones-knowledge-connects-06-image",
+        "locales": {
+          "en": {
+            "alt": "Original illustrated learning-network finale with a bicycle display, empty discussion seats and yellow bridges connecting earlier discovery spaces.",
+            "title": "Teach It Forward"
+          },
+          "uk": {
+            "alt": "Оригінальний ілюстрований фінал навчальної мережі з моделлю велосипеда, вільними місцями для обговорення та жовтими містками між попередніми просторами відкриттів.",
+            "title": "Поясніть наступному"
+          }
+        },
+        "type": "image"
+      },
+      {
+        "id": "victory-drones-knowledge-connects-06-knowledge",
+        "locales": {
+          "en": {
+            "paragraphs": [
+              "You collected questions, explanations, evidence, uncertainty and comparisons. Put them together by explaining a new everyday system, such as a bicycle, to an imaginary newcomer.",
+              "State the question, explain one relationship, attach a source and name one limit. Invite a question in return. This transferable learning routine is not an official Victory Drones qualification."
+            ],
+            "sources": [
+              { "title": "Victory Drones — public overview", "url": "https://victory-drones.com/" }
+            ],
+            "title": "Teach It Forward"
+          },
+          "uk": {
+            "paragraphs": [
+              "Ви зібрали запитання, пояснення, докази, невизначеність і порівняння. Поєднайте їх, пояснюючи уявному новачку іншу повсякденну систему, наприклад велосипед.",
+              "Сформулюйте запитання, поясніть один зв’язок, додайте джерело й назвіть обмеження. Запросіть запитання у відповідь. Цей спосіб навчання не є офіційною кваліфікацією Victory Drones."
+            ],
+            "sources": [
+              { "title": "Victory Drones — public overview", "url": "https://victory-drones.com/" }
+            ],
+            "title": "Поясніть наступному"
+          }
+        },
+        "profiles": {
+          "beginners": {
+            "en": {
+              "paragraphs": [
+                "Use four steps: question, relationship, source, limit. Try them on an everyday system different from the gallery example."
+              ],
+              "title": "Build the connection"
+            },
+            "uk": {
+              "paragraphs": [
+                "Скористайтеся чотирма кроками: запитання, зв’язок, джерело, межа. Застосуйте їх до іншої побутової системи."
+              ],
+              "title": "Зрозумійте зв’язок"
+            }
+          },
+          "families": {
+            "en": {
+              "paragraphs": [
+                "Explain one bicycle part to an imaginary newcomer. Invite them to ask one question back."
+              ],
+              "title": "Try it together"
+            },
+            "uk": {
+              "paragraphs": [
+                "Поясніть роль однієї деталі велосипеда уявному новачкові. Запропонуйте поставити запитання у відповідь."
+              ],
+              "title": "Спробуйте разом"
+            }
+          },
+          "hobbyists": {
+            "en": {
+              "paragraphs": [
+                "Build a short explanation, then test it with a counterexample or changed assumption. Revise the explanation without overstating what it establishes."
+              ],
+              "title": "Question the evidence"
+            },
+            "uk": {
+              "paragraphs": [
+                "Складіть коротке пояснення й перевірте його контрприкладом або зміненим припущенням. Уточніть його, не перебільшуючи висновків."
+              ],
+              "title": "Дослідіть докази"
+            }
+          }
+        },
+        "type": "knowledge"
+      }
+    ],
+    "requirements": {
+      "learning": [],
+      "mastery": [],
+      "missions": [
+        {
+          "bindings": [
+            { "difficulty": "gentle", "gameplayId": "50267b09c46b56d7" },
+            { "difficulty": "standard", "gameplayId": "c109d1c7fb98ccc8" },
+            { "difficulty": "expert", "gameplayId": "ebe9c6406a23e40f" }
+          ],
+          "missionId": "victory-drones-knowledge-connects-06"
+        }
+      ]
+    },
+    "revision": "5",
+    "scope": { "id": "victory-drones-knowledge-connects-06", "kind": "mission" },
+    "teaserImage": {
+      "asset": {
+        "assetId": "victory-drones-knowledge-connects-key-v1",
+        "sha256": "19978dc032a20d171108a80d630845d30ff74658c1b0ab6bb7d8f3d1399b2f9f"
+      },
+      "locales": {
+        "en": {
+          "alt": "A fictional blue-and-gold learning observatory links reading alcoves, open question cards and a central compass-like sculpture."
+        },
+        "uk": {
+          "alt": "Уявна синьо-золота обсерваторія навчання поєднує читальні ніші, картки запитань і центральну скульптуру, схожу на компас."
+        }
+      }
+    }
+  },
+  {
+    "brandId": "victory-drones",
+    "campaignId": "victory-drones-knowledge-connects",
+    "format": "revealline-completion-reward.v1",
+    "id": "victory-drones-knowledge-connects-finale",
+    "locales": {
+      "en": {
+        "teaser": "Win all six distinct missions to complete this discovery exhibit.",
+        "title": "Your Learning Compass"
+      },
+      "uk": {
+        "teaser": "Переможіть у всіх шести різних місіях, щоб завершити виставку відкриттів.",
+        "title": "Ваш навчальний компас"
+      }
+    },
+    "payloads": [
+      {
+        "id": "victory-drones-knowledge-connects-guide",
+        "locales": {
+          "en": {
+            "paragraphs": [
+              "Plan a fictional civilian learning session with the six cards. Start with a question, choose a source, ask for an explanation, compare ideas, identify what remains unknown and agree on a next step. A confident answer needs clear evidence and limits."
+            ],
+            "sources": [
+              { "title": "Victory Drones — public overview", "url": "https://victory-drones.com/" }
+            ],
+            "title": "Your Learning Compass"
+          },
+          "uk": {
+            "paragraphs": [
+              "За шістьма картками сплануйте вигадане цивільне заняття. Почніть із запитання, оберіть джерело, попросіть пояснення, порівняйте ідеї, визначте невідоме й узгодьте наступний крок. Упевнена відповідь потребує зрозумілих доказів і меж."
+            ],
+            "sources": [
+              { "title": "Victory Drones — public overview", "url": "https://victory-drones.com/" }
+            ],
+            "title": "Ваш навчальний компас"
+          }
+        },
+        "type": "knowledge"
+      },
+      {
+        "asset": {
+          "assetId": "victory-drones-knowledge-connects-01-reveal-v1",
+          "sha256": "614c9a38f9c9233c01a649f4b59e9f638e5b9dd712cda0bb04b2bc2a25a184a7"
+        },
+        "id": "victory-drones-knowledge-connects-01-image",
+        "locales": {
+          "en": {
+            "alt": "Original illustrated learning observatory with a yellow compass-inspired floor, a simple wheel model and a single blank question card.",
+            "title": "A Learning Compass"
+          },
+          "uk": {
+            "alt": "Оригінальна ілюстрована навчальна обсерваторія з жовтою підлогою, натхненною компасом, простою моделлю колеса та порожньою карткою запитання.",
+            "title": "Навчальний компас"
+          }
+        },
+        "type": "image"
+      },
+      {
+        "asset": {
+          "assetId": "victory-drones-knowledge-connects-02-reveal-v1",
+          "sha256": "794cca9930fae791df22caef7e2caa3a5379557396974585c17986609a1140de"
+        },
+        "id": "victory-drones-knowledge-connects-02-image",
+        "locales": {
+          "en": {
+            "alt": "Original illustrated twin learning pavilions comparing a simple bookshelf drawing with a small physical bookshelf, joined by a yellow bridge.",
+            "title": "Two Ways to Explain"
+          },
+          "uk": {
+            "alt": "Оригінальні ілюстровані навчальні павільйони, з’єднані жовтим містком, зіставляють простий малюнок книжкової полиці та невелику фізичну модель.",
+            "title": "Два способи пояснити"
+          }
+        },
+        "type": "image"
+      },
+      {
+        "asset": {
+          "assetId": "victory-drones-knowledge-connects-03-reveal-v1",
+          "sha256": "3be987f6c3072b1de39b9cdfb7c38c95a3808e4657765fea1cfbd3bf4990287e"
+        },
+        "id": "victory-drones-knowledge-connects-03-image",
+        "locales": {
+          "en": {
+            "alt": "Original illustrated research hall with a still wheel model, a linked blank source notebook and an empty card holder for an unresolved question.",
+            "title": "Ask and Verify"
+          },
+          "uk": {
+            "alt": "Оригінальна ілюстрована дослідницька зала з нерухомою моделлю колеса, пов’язаним порожнім джерельним зошитом і порожнім місцем для невирішеного запитання.",
+            "title": "Запитайте й перевірте"
+          }
+        },
+        "type": "image"
+      },
+      {
+        "asset": {
+          "assetId": "victory-drones-knowledge-connects-04-reveal-v1",
+          "sha256": "fcf58c0d74e131fa7a9163285512cf77c66ffc2d7c793dc013f714bde27368b6"
+        },
+        "id": "victory-drones-knowledge-connects-04-image",
+        "locales": {
+          "en": {
+            "alt": "Original illustrated quiet learning courtyard with yellow seating, blank question wall and separate geometric study pieces on a low table.",
+            "title": "Room for Questions"
+          },
+          "uk": {
+            "alt": "Оригінальний ілюстрований спокійний навчальний двір із жовтими сидіннями, порожньою стіною запитань та окремими геометричними навчальними формами на низькому столі.",
+            "title": "Місце для запитань"
+          }
+        },
+        "type": "image"
+      },
+      {
+        "asset": {
+          "assetId": "victory-drones-knowledge-connects-05-reveal-v1",
+          "sha256": "04e343285fbad88d8c4e32ad365652c29c51aa1927b6be4ba7f751c126fbd4e6"
+        },
+        "id": "victory-drones-knowledge-connects-05-image",
+        "locales": {
+          "en": {
+            "alt": "Original illustrated comparison library with a simple bicycle-wheel drawing, a more detailed original wheel illustration and one shared blank question card.",
+            "title": "Compare Before Concluding"
+          },
+          "uk": {
+            "alt": "Оригінальна ілюстрована бібліотека порівнянь із простим малюнком велосипедного колеса, детальнішою оригінальною ілюстрацією та спільною порожньою карткою запитання.",
+            "title": "Порівняйте перед висновком"
+          }
+        },
+        "type": "image"
+      },
+      {
+        "asset": {
+          "assetId": "victory-drones-knowledge-connects-06-reveal-v1",
+          "sha256": "494447b8b5ba6af10d8eaa4dcc7497ac480cb754104f6f36ac1d7d76885aa350"
+        },
+        "id": "victory-drones-knowledge-connects-06-image",
+        "locales": {
+          "en": {
+            "alt": "Original illustrated learning-network finale with a bicycle display, empty discussion seats and yellow bridges connecting earlier discovery spaces.",
+            "title": "Teach It Forward"
+          },
+          "uk": {
+            "alt": "Оригінальний ілюстрований фінал навчальної мережі з моделлю велосипеда, вільними місцями для обговорення та жовтими містками між попередніми просторами відкриттів.",
+            "title": "Поясніть наступному"
+          }
+        },
+        "type": "image"
+      },
+      {
+        "id": "victory-drones-knowledge-connects-official-source",
+        "locales": {
+          "en": { "title": "Explore the official source" },
+          "uk": { "title": "Відкрити офіційне джерело" }
+        },
+        "qr": true,
+        "type": "url",
+        "url": "https://victory-drones.com/"
+      }
+    ],
+    "requirements": {
+      "learning": [],
+      "mastery": [],
+      "missions": [
+        {
+          "bindings": [
+            { "difficulty": "gentle", "gameplayId": "64d9efa29bf12336" },
+            { "difficulty": "standard", "gameplayId": "4a22f70cb8070032" },
+            { "difficulty": "expert", "gameplayId": "0a56f1aa04c8d95b" }
+          ],
+          "missionId": "victory-drones-knowledge-connects-01"
+        },
+        {
+          "bindings": [
+            { "difficulty": "gentle", "gameplayId": "657e4d6b855234d4" },
+            { "difficulty": "standard", "gameplayId": "ae6b65d9fa16dd31" },
+            { "difficulty": "expert", "gameplayId": "ff004e41761efa82" }
+          ],
+          "missionId": "victory-drones-knowledge-connects-02"
+        },
+        {
+          "bindings": [
+            { "difficulty": "gentle", "gameplayId": "a44b6da1aa75f921" },
+            { "difficulty": "standard", "gameplayId": "9e0988af65e2d8b8" },
+            { "difficulty": "expert", "gameplayId": "b9394b014753baab" }
+          ],
+          "missionId": "victory-drones-knowledge-connects-03"
+        },
+        {
+          "bindings": [
+            { "difficulty": "gentle", "gameplayId": "8c975df4c6b93c05" },
+            { "difficulty": "standard", "gameplayId": "2141631e7b8461a5" },
+            { "difficulty": "expert", "gameplayId": "14f96f5281acfb03" }
+          ],
+          "missionId": "victory-drones-knowledge-connects-04"
+        },
+        {
+          "bindings": [
+            { "difficulty": "gentle", "gameplayId": "ed2e788adb9b27fa" },
+            { "difficulty": "standard", "gameplayId": "861b88b0ec9e3cd3" },
+            { "difficulty": "expert", "gameplayId": "2246243fb69f5b01" }
+          ],
+          "missionId": "victory-drones-knowledge-connects-05"
+        },
+        {
+          "bindings": [
+            { "difficulty": "gentle", "gameplayId": "50267b09c46b56d7" },
+            { "difficulty": "standard", "gameplayId": "c109d1c7fb98ccc8" },
+            { "difficulty": "expert", "gameplayId": "ebe9c6406a23e40f" }
+          ],
+          "missionId": "victory-drones-knowledge-connects-06"
+        }
+      ]
+    },
+    "revision": "5",
+    "scope": { "id": "victory-drones-knowledge-connects", "kind": "campaign" },
+    "teaserImage": {
+      "asset": {
+        "assetId": "victory-drones-knowledge-connects-key-v1",
+        "sha256": "19978dc032a20d171108a80d630845d30ff74658c1b0ab6bb7d8f3d1399b2f9f"
+      },
+      "locales": {
+        "en": {
+          "alt": "A fictional blue-and-gold learning observatory links reading alcoves, open question cards and a central compass-like sculpture."
+        },
+        "uk": {
+          "alt": "Уявна синьо-золота обсерваторія навчання поєднує читальні ніші, картки запитань і центральну скульптуру, схожу на компас."
+        }
+      }
+    }
+  }
+]
