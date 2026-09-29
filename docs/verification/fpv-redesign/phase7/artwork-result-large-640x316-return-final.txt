@@ -1,1 +1,0 @@
-"{\"state\":\"result\",\"active\":\"view-picture\",\"viewport\":[640,316,1],\"reading\":{\"height\":170,\"scroll\":240},\"actions\":{\"height\":91,\"scroll\":246},\"focused\":{\"x\":359.8125,\"y\":102.1875,\"width\":117,\"height\":74,\"top\":102.1875,\"right\":476.8125,\"bottom\":176.1875,\"left\":359.8125}}"

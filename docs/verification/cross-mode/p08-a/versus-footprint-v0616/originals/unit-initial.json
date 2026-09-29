@@ -1,9 +1,0 @@
-{
-  "command": [
-    "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/20.19.5/bin/node",
-    "--test",
-    "game/test/board-footprint.test.mjs"
-  ],
-  "exitCode": 1,
-  "note": "Repeated original unchanged unit run to retain evidence. Failure is floating-point strict equality133.33333333333331vs133.33333333333334; not host regression proof."
-}
