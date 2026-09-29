@@ -53,8 +53,8 @@ export function publishedReleaseIndex(
   return {
     json: { formatVersion: 1, latest, releases },
     html: catalogShell(
-      'Reveal Line · Playable versions',
-      `<p class="field-kit-eyebrow">Reveal Line / Release archive</p><h1>Playable versions</h1><p>Current: ${escapeHTML(latest)}. Every edition keeps its original gameplay, saves and artwork.</p><ul class="release-list">${releases.map((r) => `<li class="release-card" data-current="${r.version === latest}"><h2>${escapeHTML(r.version)}${r.version === latest ? ' · Current' : ''}</h2><code>${escapeHTML(r.sourceRevision)}</code><nav aria-label="${escapeHTML(r.version)} actions"><a class="button primary" href="${escapeHTML(r.canonicalPlay || `./${r.play}`)}">Play</a><a class="button" href="${escapeHTML(r.download)}">Download ZIP</a><a class="button" href="./${escapeHTML(r.version)}/release.json">Manifest</a></nav></li>`).join('')}</ul>`,
+      'FPV / LINE · Playable versions',
+      `<p class="field-kit-eyebrow">FPV / LINE / Release archive</p><h1>Playable versions</h1><p>Current: ${escapeHTML(latest)}. Every edition keeps its original gameplay, saves and artwork.</p><ul class="release-list">${releases.map((r) => `<li class="release-card" data-current="${r.version === latest}"><h2>${escapeHTML(r.version)}${r.version === latest ? ' · Current' : ''}</h2><code>${escapeHTML(r.sourceRevision)}</code><nav aria-label="${escapeHTML(r.version)} actions"><a class="button primary" href="${escapeHTML(r.canonicalPlay || `./${r.play}`)}">Play</a><a class="button" href="${escapeHTML(r.download)}">Download ZIP</a><a class="button" href="./${escapeHTML(r.version)}/release.json">Manifest</a></nav></li>`).join('')}</ul>`,
       options,
     ),
   };
@@ -176,8 +176,8 @@ export async function buildPages({
       await fs.writeFile(
         path.join(dist, 'index.html'),
         catalogShell(
-          'Reveal Line · Archive',
-          '<p class="field-kit-eyebrow">Reveal Line / Archive</p><h1>Return to a flight</h1><p>Play the original editions with their own artwork and progress.</p><nav aria-label="Archive"><a class="button primary" href="./releases/">Browse archived versions</a></nav>',
+          'FPV / LINE · Archive',
+          '<p class="field-kit-eyebrow">FPV / LINE / Archive</p><h1>Return to a flight</h1><p>Play the original editions with their own artwork and progress.</p><nav aria-label="Archive"><a class="button primary" href="./releases/">Browse archived versions</a></nav>',
           { presentation: Boolean(catalogPresentation), prefix: './' },
         ),
       );

@@ -298,7 +298,7 @@ test('preparations within the same millisecond have distinct safe common filenam
       const suffix = '-' + suffixes[file.id],
         prefix = file.filename.slice(0, -suffix.length);
       assert.equal(file.filename.endsWith(suffix), true);
-      assert.match(prefix, /^RevealLine-backup-20260915T123456789Z-[a-f0-9]{32}$/);
+      assert.match(prefix, /^fpv-line-backup-20260915T123456789Z-[a-f0-9]{32}$/);
       assert.match(file.filename, /^[A-Za-z0-9._-]+$/);
       assert.ok(file.filename.length <= 128);
       setPrefixes.add(prefix);

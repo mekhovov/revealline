@@ -1,0 +1,75 @@
+TAP version 13
+# Subtest: B/N routing yields to composition, editing, modifiers, repeats and priority owners
+ok 1 - B/N routing yields to composition, editing, modifiers, repeats and priority owners
+  ---
+  duration_ms: 1.6465
+  ...
+# Subtest: main/pause buttons share transport, preserve focus and do not change master sound
+ok 2 - main/pause buttons share transport, preserve focus and do not change master sound
+  ---
+  duration_ms: 3.510291
+  ...
+# Subtest: couch Audio keeps its full transport without an extra landing transport
+ok 3 - couch Audio keeps its full transport without an extra landing transport
+  ---
+  duration_ms: 0.573208
+  ...
+# Subtest: passive landing metadata clears a stale song when no recording is selected
+ok 4 - passive landing metadata clears a stale song when no recording is selected
+  ---
+  duration_ms: 0.654375
+  ...
+# Subtest: keyboard Play starts synchronously and Pause cancels loading intent without waiting
+ok 5 - keyboard Play starts synchronously and Pause cancels loading intent without waiting
+  ---
+  duration_ms: 4.803541
+  ...
+# Subtest: Next while paused selects a song without introducing Play or changing focus
+ok 6 - Next while paused selects a song without introducing Play or changing focus
+  ---
+  duration_ms: 0.777458
+  ...
+# Subtest: Audio settings expose Previous, Play or Pause, and Next above advanced controls
+ok 7 - Audio settings expose Previous, Play or Pause, and Next above advanced controls
+  ---
+  duration_ms: 0.730334
+  ...
+# Subtest: blocked browser state offers Play retry instead of silently cancelling its intent
+ok 8 - blocked browser state offers Play retry instead of silently cancelling its intent
+  ---
+  duration_ms: 0.4665
+  ...
+# Subtest: shortcut opt-out persists independently and leaves touch/controller buttons usable
+ok 9 - shortcut opt-out persists independently and leaves touch/controller buttons usable
+  ---
+  duration_ms: 0.985917
+  ...
+# Subtest: current storage notifications synchronize shortcut opt-out but stale notifications cannot
+ok 10 - current storage notifications synchronize shortcut opt-out but stale notifications cannot
+  ---
+  duration_ms: 0.461541
+  ...
+# Subtest: inactive practice parent, background and custom game bindings retain keyboard ownership
+ok 11 - inactive practice parent, background and custom game bindings retain keyboard ownership
+  ---
+  duration_ms: 0.344875
+  ...
+# Subtest: dispose releases rows and handlers, including callbacks from previously mounted controls
+ok 12 - dispose releases rows and handlers, including callbacks from previously mounted controls
+  ---
+  duration_ms: 0.22
+  ...
+# Subtest: capture owners can yield exclusively to eligible quick shortcuts
+ok 13 - capture owners can yield exclusively to eligible quick shortcuts
+  ---
+  duration_ms: 0.585166
+  ...
+1..13
+# tests 13
+# suites 0
+# pass 13
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 209.484625

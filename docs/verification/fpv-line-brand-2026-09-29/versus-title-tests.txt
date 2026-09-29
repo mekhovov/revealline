@@ -1,0 +1,41 @@
+✔ edition display names gain one shared suffix without changing stable identifiers (0.611083ms)
+✔ wordmark has a real text fallback, preserves focus and survives a locale change (1.748208ms)
+✔ an edition replaces the default wordmark and releases its stale image callbacks (0.271167ms)
+✔ the generated wordmark is an alpha PNG packaged within the active image budget (2.974958ms)
+✔ real Versus ready renders and locale changes keep one wordmark; pause owns its localized status (3930.000167ms)
+✔ Versus busy/ready transitions replace only retired brand owners and destroy releases the latest image (111.532042ms)
+✔ ordinary running frames retain the Pause label node between pointer edges (3404.962709ms)
+✔ Couch return reveal cannot outlive a focus callback's other-focus (2928.013834ms)
+✔ Couch return reveal cannot outlive a focus callback's new-screen (2168.253041ms)
+✔ Couch return reveal cannot outlive a focus callback's background (1949.852083ms)
+✔ Couch return reveal cannot outlive a focus callback's hidden (2063.8425ms)
+✔ Couch return reveal cannot outlive a focus callback's destroyed (1957.583625ms)
+✔ Couch return reveal cannot outlive a focus callback's detached (3701.815375ms)
+✔ Couch main Back reveals the same already-focused action without activating it (1976.672541ms)
+✔ lobby, setup and children use reachable native controls and Back restores the actual opener (6839.311875ms)
+✔ Versus Extras keeps secondary destinations reachable by keyboard and controller (5576.580584ms)
+✔ Versus More exposes native touch targets without changing Start focus (4740.593375ms)
+✔ Versus More departures retain the paused match until a separate decision (4941.632458ms)
+✔ an embedded Couch route stays loading until its actual setup is prepared (2518.39775ms)
+✔ pause children and cancelled new match preserve two different continuations; reset is explicit (9480.800583ms)
+✔ per-seat Auto expands on touch and defers collapse until pause without changing movement (2220.834875ms)
+✔ Always supports independent pointer players; Off wins over coarse and later touch (3010.776667ms)
+✔ authored Arcade removes equipment controls and hints; Tactical reflects the equipped recipe (2170.703709ms)
+✔ controller setup/help and repeated keyboard Confirm cannot leak through the flight boundary (5766.895458ms)
+✔ markup keeps touch crosses outside both arenas and uses separate screen roots (0.702459ms)
+✔ controller can read and scroll Help without starting; Back exits reading then the child (2691.085125ms)
+✔ a real finished draw exposes both frozen boards, Results returns without a new round (6123.470666ms)
+✔ an old held controller cannot reclaim a seat from accepted touch across pause and resume (2179.124083ms)
+✔ blocked pad input and held keyboard repeats never replace newer touch modality (1956.268917ms)
+✔ accepted-input observer is optional and observer failures cannot reject or replay commands (1.638541ms)
+✔ Couch timed clock retains accessible meaning in its compact display (1998.311084ms)
+✔ Couch language changes translate the lobby and paused help without changing the match (3893.285208ms)
+✔ controller edits the single Settings language choice and synchronizes retained controls without starting either board (6415.952708ms)
+ℹ tests 33
+ℹ suites 0
+ℹ pass 33
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 83314.544333

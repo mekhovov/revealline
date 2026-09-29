@@ -14,6 +14,7 @@ import {
 } from '../mission-library/library.mjs';
 import { paintMissionThumbnail } from '../content-design/mission-card.mjs';
 import { trackMissionLibraryOpening } from '../mission-library/opening-intent.mjs';
+import { commitMenuRetune, menuRetuneOrigin } from './menu-retune.mjs';
 
 const LIBRARY_TAG_KEYS = Object.freeze({
   Journey: 'common:collections.journey',
@@ -72,6 +73,7 @@ export function attachMissionLibraryChooser({
     return result;
   };
   const dialog = node('dialog', 'journey-chooser');
+  let retuneOrigin = null;
   dialog.className = 'journey-chooser mission-library-chooser';
   dialog.setAttribute('aria-labelledby', 'journey-chooser-title');
   const heading = node(
@@ -505,7 +507,7 @@ export function attachMissionLibraryChooser({
       });
       if (accepted === false && mayRestore()) {
         message = localizedMessage('interface:missionNotOpenedYourCurrentGameIsKept');
-        open(opener, { returnLabel: back.textContent });
+        open(opener, { returnLabel: back.textContent, retune: false });
       }
     } catch (error) {
       if (mayRestore()) {
@@ -514,7 +516,7 @@ export function attachMissionLibraryChooser({
             name: displayName(row),
             error: error.message,
           });
-        open(opener, { returnLabel: back.textContent });
+        open(opener, { returnLabel: back.textContent, retune: false });
       }
     }
   }
@@ -900,7 +902,7 @@ export function attachMissionLibraryChooser({
     )
       filterDetails.open = false;
   });
-  function close() {
+  function close({ retune = true } = {}) {
     retirePendingSelection();
     cancelResizeScroll();
     ++visit;
@@ -914,12 +916,15 @@ export function attachMissionLibraryChooser({
     dialog.close();
     if (onReturn) onReturn(opener);
     else if (opener?.isConnected) opener.focus({ preventScroll: true });
+    if (retune && !dialog.open) commitMenuRetune(dialog, retuneOrigin);
   }
   function open(
     origin = doc.activeElement,
-    { returnLabel = t('common:navigation.backToGame') } = {},
+    { returnLabel = t('common:navigation.backToGame'), retune = true } = {},
   ) {
     if (destroyed) return;
+    const changed = !dialog.open;
+    const landing = retune && changed ? menuRetuneOrigin(origin) : null;
     retirePendingSelection();
     cancelResizeScroll();
     ++visit;
@@ -936,6 +941,10 @@ export function attachMissionLibraryChooser({
     dialog.showModal();
     observeDiagrams();
     restoreSelection();
+    if (landing) {
+      retuneOrigin = landing;
+      commitMenuRetune(landing, dialog);
+    } else if (changed) retuneOrigin = null;
   }
   search.addEventListener('input', () => {
     retirePendingSelection();
@@ -1011,7 +1020,7 @@ export function attachMissionLibraryChooser({
     open,
     primary,
     restore() {
-      open(opener, { returnLabel: back.textContent });
+      open(opener, { returnLabel: back.textContent, retune: false });
     },
     close,
     state,
@@ -1047,7 +1056,7 @@ export function attachMissionLibraryChooser({
       }
     },
     destroy() {
-      close();
+      close({ retune: false });
       destroyed = true;
       unsubscribe();
       observer?.disconnect();

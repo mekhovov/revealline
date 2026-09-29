@@ -350,6 +350,299 @@ function setup(t, overrides = {}) {
   };
 }
 
+test('semantic menu rows keep horizontal edges and move vertically into adjacent action groups', (context) => {
+  const h = setup(context),
+    modes = h.control('nav'),
+    actions = h.control('nav');
+  modes.setAttribute('data-menu-layout', 'horizontal');
+  actions.setAttribute('data-menu-layout', 'vertical');
+  const solo = h.control(
+      'button',
+      { id: 'solo', _rect: { x: 0, y: 0, width: 90, height: 44 } },
+      modes,
+    ),
+    versus = h.control(
+      'button',
+      { id: 'versus', _rect: { x: 100, y: 0, width: 90, height: 44 } },
+      modes,
+    ),
+    start = h.control(
+      'button',
+      { id: 'start', _rect: { x: 0, y: 100, width: 200, height: 44 } },
+      actions,
+    ),
+    options = h.control(
+      'button',
+      { id: 'options', _rect: { x: 0, y: 150, width: 200, height: 44 } },
+      actions,
+    );
+  solo.focus();
+  h.api.handle({ direction: 'right' });
+  assert.equal(h.document.activeElement, versus);
+  h.api.handle({ direction: 'right' });
+  assert.equal(h.document.activeElement, versus, 'row edge does not jump to Start');
+  h.api.handle({ direction: 'down' });
+  assert.equal(h.document.activeElement, start);
+  actions.setAttribute('data-menu-edge-exit', 'true');
+  h.api.handle({ direction: 'up' });
+  assert.equal(h.document.activeElement, versus, 'the first action can return to the mode row');
+  h.api.handle({ direction: 'down' });
+  assert.equal(h.document.activeElement, start);
+  h.api.handle({ direction: 'down' });
+  assert.equal(h.document.activeElement, options);
+  options.setAttribute('data-menu-right', 'solo');
+  h.api.handle({ direction: 'right' });
+  assert.equal(h.document.activeElement, solo);
+  versus.disabled = true;
+  solo.setAttribute('data-menu-right', 'versus');
+  h.api.handle({ direction: 'right' });
+  assert.equal(h.document.activeElement, solo, 'explicit links cannot reach disabled controls');
+});
+
+function editorAction(h, key) {
+  const button = h.document
+    .querySelectorAll('button')
+    .find((element) => element.getAttribute('data-editor-action') === key);
+  assert.ok(button, `editor action ${key} exists`);
+  button.focus();
+  h.api.handle({ confirmStart: true });
+  h.api.handle({ confirmCommit: true });
+}
+
+test('passive input hints follow accepted device changes and restore host attributes on disposal', (context) => {
+  let confirm = 'R1';
+  const h = setup(context, {
+      keyboard: true,
+      getControlLabels: () => ({ confirm, back: 'Circle' }),
+    }),
+    root = h.control('section'),
+    button = h.control('button', {}, root),
+    hint = h.control('span', {}, root),
+    second = h.control('section', {}, root),
+    secondButton = h.control('button', {}, second);
+  hint.setAttribute('data-menu-controller-hint', '');
+  root.setAttribute('data-menu-input', 'host');
+  h.setScope('main', root);
+  button.focus();
+  h.api.handle({ direction: 'down' });
+  assert.equal(root.getAttribute('data-menu-input'), 'controller');
+  assert.equal(root.getAttribute('data-menu-confirm'), 'R1');
+  assert.equal(root.getAttribute('data-menu-back'), 'Circle');
+  assert.equal(hint.textContent, 'R1 · Confirm / Circle · Back');
+  confirm = 'Triangle';
+  button.emit('keydown', { key: 'ArrowUp' });
+  assert.equal(root.getAttribute('data-menu-input'), 'keyboard');
+  assert.equal(hint.textContent, 'Triangle · Confirm / Circle · Back');
+  button.emit('pointerdown', { pointerType: 'touch', button: 0 });
+  assert.equal(root.getAttribute('data-menu-input'), 'touch');
+  h.setScope('settings', second);
+  h.api.sync();
+  assert.equal(second.getAttribute('data-menu-input'), 'touch');
+  secondButton.focus();
+  h.api.handle({ direction: 'down' });
+  assert.equal(second.getAttribute('data-menu-input'), 'controller');
+  secondButton.emit('keydown', { key: 'ArrowUp' });
+  assert.equal(second.getAttribute('data-menu-input'), 'keyboard');
+  assert.equal(root.getAttribute('data-menu-input'), 'keyboard');
+  h.api.destroy();
+  assert.equal(root.getAttribute('data-menu-input'), 'host');
+  assert.equal(root.getAttribute('data-menu-confirm'), null);
+  assert.equal(root.getAttribute('data-menu-back'), null);
+  assert.equal(second.getAttribute('data-menu-input'), null);
+});
+
+test('controller text edits a Ukrainian draft and commits through input/change exactly once', (context) => {
+  const activated = [],
+    h = setup(context, {
+      activateControl(element) {
+        activated.push(element.getAttribute('data-editor-action'));
+        element.click();
+      },
+    }),
+    input = h.control('input', { id: 'search', type: 'search', value: 'old' });
+  let changes = 0,
+    inputs = 0;
+  input.addEventListener('input', () => inputs++);
+  input.addEventListener('change', () => changes++);
+  input.focus();
+  h.api.handle({ confirm: true });
+  assert.equal(h.api.editorState().element, input);
+  editorAction(h, 'all');
+  editorAction(h, 'uk');
+  editorAction(h, 'ї');
+  editorAction(h, 'ж');
+  editorAction(h, 'а');
+  editorAction(h, 'к');
+  assert.equal(input.value, 'old');
+  assert.equal(inputs + changes, 0);
+  editorAction(h, 'done');
+  assert.equal(input.value, 'їжак');
+  assert.equal(inputs, 1);
+  assert.equal(changes, 1);
+  assert.equal(h.document.activeElement, input);
+  assert.equal(h.api.editorState(), null);
+  h.api.handle({ confirmCommit: true });
+  assert.equal(changes, 1);
+  assert.deepEqual(
+    activated,
+    ['all', 'uk', 'ї', 'ж', 'а', 'к', 'done'],
+    'Virtual keys retain the host controller activation guard.',
+  );
+});
+
+test('captured Confirm tracks the current field-editor owner and exact focused key', (context) => {
+  const h = setup(context, { accept: (element) => element.id === 'owned-search' }),
+    input = h.control('input', { id: 'owned-search', type: 'search', value: '' });
+  input.focus();
+  assert.equal(h.api.beginConfirm(input), input);
+  assert.equal(h.api.confirmCurrent(), true);
+  h.api.commitConfirm();
+  const key = h.document
+    .querySelectorAll('button')
+    .find((element) => element.getAttribute('data-editor-action') === 'q');
+  key.focus();
+  assert.equal(h.api.beginConfirm(key), key);
+  assert.equal(h.api.confirmCurrent(), true, 'owned editor keys bypass the host menu allowlist');
+  h.api.commitConfirm();
+  assert.equal(h.document.querySelector('[data-editor-draft]').value, 'q');
+  assert.equal(input.value, '', 'Confirm on a key changes only the draft');
+  h.api.beginConfirm(key);
+  h.document.querySelector('[data-editor-draft]').focus();
+  assert.equal(h.api.confirmCurrent(), false, 'focus movement invalidates the captured key');
+  h.api.cancelConfirm();
+  key.focus();
+  h.api.beginConfirm(key);
+  input.value = 'replacement';
+  assert.equal(h.api.confirmCurrent(), false, 'a new source value retires the editor owner');
+  h.api.sync();
+  assert.equal(h.api.commitConfirm(), null);
+  assert.equal(input.value, 'replacement');
+});
+
+test('text editor retains native multiline editing and Cancel discards the whole draft', (context) => {
+  const h = setup(context, { keyboard: true }),
+    input = h.control('textarea', { value: '{"old":true}' });
+  const root = h.control('section');
+  root.append(input);
+  h.setScope('settings', root);
+  input.focus();
+  h.api.handle({ confirm: true });
+  const draft = h.document.querySelector('[data-editor-draft]');
+  draft.focus();
+  draft.value = '{\n\t"name":"ї"\n}';
+  draft.selectionStart = draft.selectionEnd = draft.value.length;
+  draft.emit('input');
+  assert.equal(
+    draft.emit('keydown', { key: 'Enter' }).defaultPrevented,
+    false,
+    'physical multiline Enter remains native',
+  );
+  assert.ok(h.api.editorState());
+  const escape = draft.emit('keydown', { key: 'Escape' });
+  assert.equal(escape.defaultPrevented, true);
+  assert.equal(input.value, '{"old":true}');
+  assert.equal(h.document.activeElement, input);
+});
+
+test('number and color drafts reject invalid values without publishing them', (context) => {
+  const h = setup(context),
+    input = h.control('input', { type: 'number', value: '2', min: '0', max: '10', step: '2' });
+  input.focus();
+  h.api.handle({ confirm: true });
+  editorAction(h, 'all');
+  editorAction(h, '3');
+  editorAction(h, 'done');
+  assert.ok(h.api.editorState(), 'step-invalid value keeps draft open');
+  assert.equal(input.value, '2');
+  editorAction(h, 'all');
+  editorAction(h, '8');
+  editorAction(h, 'done');
+  assert.equal(input.value, '8');
+  const color = h.control('input', { type: 'color', value: '#ffffff' });
+  color.focus();
+  h.api.handle({ confirm: true });
+  editorAction(h, 'all');
+  editorAction(h, '1');
+  editorAction(h, 'done');
+  assert.ok(h.api.editorState());
+  assert.equal(color.value, '#ffffff');
+  editorAction(h, '#00ffff');
+  editorAction(h, 'done');
+  assert.equal(color.value, '#00ffff');
+});
+
+test('host scope, source replacement and explicit clear invalidate drafts without stale writes', (context) => {
+  for (const kind of ['scope', 'value', 'remove', 'clear']) {
+    const h = setup(context),
+      input = h.control('input', { value: 'original' });
+    input.focus();
+    h.api.handle({ confirm: true });
+    editorAction(h, 'q');
+    if (kind === 'scope') h.setScope('next');
+    if (kind === 'value') input.value = 'new owner';
+    if (kind === 'remove') input.remove();
+    if (kind === 'clear') h.api.clear();
+    h.api.sync();
+    assert.equal(h.api.editorState(), null, kind);
+    assert.equal(input.value, kind === 'value' ? 'new owner' : 'original', kind);
+    assert.equal(h.document.querySelector('.controller-field-editor'), null);
+  }
+});
+
+test('tool adapters own canvas commands and cancel pending work before returning focus', (context) => {
+  let pending = true,
+    entered = 0;
+  const events = [];
+  const adapter = {
+    enter() {
+      entered++;
+    },
+    isCurrent: () => true,
+    handle(command) {
+      events.push(command);
+      if (command.back) {
+        if (pending) pending = false;
+        else return 'cancel';
+      }
+    },
+    exit(options) {
+      events.push(options);
+    },
+  };
+  const h = setup(context, {
+      resolveEditor: (element) => (element.id === 'canvas' ? adapter : null),
+    }),
+    canvas = h.control('canvas', { id: 'canvas' });
+  canvas.setAttribute('data-controller-editor', 'pixels');
+  canvas.setAttribute('tabindex', '0');
+  canvas.focus();
+  h.api.handle({ confirm: true });
+  assert.equal(entered, 1);
+  h.api.handle({ direction: 'right' });
+  h.api.handle({ back: true });
+  assert.ok(h.api.editorState());
+  h.api.handle({ back: true });
+  assert.equal(h.api.editorState(), null);
+  assert.deepEqual(events.at(-1), { commit: false });
+  assert.equal(h.document.activeElement, canvas);
+});
+
+test('file activation delegates to the in-game source chooser without opening an OS picker', (context) => {
+  let chosen = null;
+  const h = setup(context, {
+      activateFileInput: (element) => {
+        chosen = element;
+      },
+    }),
+    input = h.control('input', { type: 'file' });
+  let native = 0;
+  input.addEventListener('click', () => native++);
+  input.focus();
+  h.api.handle({ confirm: true });
+  assert.equal(chosen, input);
+  assert.equal(native, 0);
+});
+
 test('Confirm captures the focused control on press and activates it once on release', (t) => {
   let activations = 0;
   const h = setup(t, {
