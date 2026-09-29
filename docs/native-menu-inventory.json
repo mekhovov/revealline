@@ -384,15 +384,16 @@
     {
       "name": "Motion Lab",
       "route": "/authoring/motion-lab/",
-      "verification": "Current virtual-pad workflow4/4 passes on97433cc62: cancel/commit controls, source handling, isolated collection save validation, arena/ability/direction/hold ownership. Native keyboard edit/save and real Workshop return/reopen passed on e77284e78, with final Clear focus retry on97433cc62. Bounded Ukrainian Sections focus passed; shared dialog accessible-name locale follow-up and physical/published acceptance remain open. No design export exists.",
+      "verification": "Current virtual-pad workflow4/4 passes on97433cc62: cancel/commit controls, source handling, isolated collection save validation, arena/ability/direction/hold ownership. Native keyboard edit/save and real Workshop return/reopen passed on e77284e78, with final Clear focus retry on97433cc62. Bounded Ukrainian Sections focus passed; shared dialog accessible names are fixed in the later authoring locale batch; physical/published acceptance remains open. No design export exists.",
       "historicalVerification": "keyboard and virtual-controller browser workflow passed; physical controller not tested",
       "evidence": "docs/verification/motion-lab-input-2026-09-29.md"
     },
     {
       "name": "Pictures & Stories",
       "route": "/authoring/still-media/",
-      "verification": "pending exact-candidate browser qualification; historical observations do not establish current acceptance",
-      "historicalVerification": "keyboard and virtual-controller browser workflow passed; physical controller not tested"
+      "verification": "Current e73b8a690 focus fixes pass 175 tests. Native keyboard bundled picture/story cancel, invalid provenance/segment, explicit Save, preview, close/reopen and actual OS exports pass without pointer reset. Full PNG and production metadata/hash/canonical backup validation pass. Complete current virtual-pad journey passes 3/3 stages, preserving prior records with matching actual OS export pairs; separate soundtrack recovery, target restore, full video playback and physical/published acceptance remain open.",
+      "historicalVerification": "keyboard and virtual-controller browser workflow passed; physical controller not tested",
+      "evidence": "docs/verification/still-media-input-2026-09-29.md"
     },
     {
       "name": "Video Poster",
