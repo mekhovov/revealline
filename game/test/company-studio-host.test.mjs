@@ -51,6 +51,19 @@ function sourcePacket(name = 'Acme') {
   };
 }
 
+// Native form controls inherit disabled fieldsets except through their first
+// direct legend. A refused browser focus must not look successful in this host.
+function effectivelyDisabled(node) {
+  if (!['BUTTON', 'INPUT', 'SELECT', 'TEXTAREA', 'FIELDSET'].includes(node.tagName)) return false;
+  if (node.disabled) return true;
+  for (let parent = node.parentElement; parent; parent = parent.parentElement) {
+    if (parent.tagName !== 'FIELDSET' || !parent.disabled) continue;
+    const firstLegend = parent.children.find((child) => child.tagName === 'LEGEND');
+    if (!firstLegend?.contains(node)) return true;
+  }
+  return false;
+}
+
 // Load the production entry and real markup. Only browser I/O, time and finite
 // DOM geometry are supplied here; no Studio callbacks are extracted or replaced.
 async function fixture(t, { controller = false, practice = false } = {}) {
@@ -104,6 +117,13 @@ async function fixture(t, { controller = false, practice = false } = {}) {
   const create = doc.createElement.bind(doc);
   doc.createElement = (tag) => {
     const node = create(tag);
+    const matches = node.matches.bind(node),
+      nativeFocus = node.focus.bind(node);
+    node.matches = (selector) =>
+      selector === ':disabled' ? effectivelyDisabled(node) : matches(selector);
+    node.focus = (...args) => {
+      if (!effectivelyDisabled(node)) nativeFocus(...args);
+    };
     let value = '',
       disabled = false;
     Object.defineProperty(node, 'value', {
@@ -139,6 +159,7 @@ async function fixture(t, { controller = false, practice = false } = {}) {
     node.before = (sibling) => node.parentNode.insertBefore(sibling, node);
     const click = node.click.bind(node);
     node.click = () => {
+      if (effectivelyDisabled(node)) return;
       if (node.tagName === 'A' && node.download)
         downloads.push({ name: node.download, href: node.href });
       return click();
@@ -722,4 +743,36 @@ test('leaving transfer practice removes its readers and clears in-memory answers
   assert.equal(h.$('company-read-practice-region').getAttribute('data-controller-reading'), 'true');
   await h.pulse(1);
   assert.equal(h.doc.activeElement.id, 'company-read-practice');
+});
+
+test('completed practice controller navigation skips inherited disabled fields and reaches Restart', async (t) => {
+  const h = await fixture(t, { controller: true, practice: true });
+  const task = await openPractice(h);
+  for (const record of task.lesson.records) await activatePractice(h, `inspect-${record.id}`);
+  for (const field of task.lesson.fields) {
+    const select = h.$('practice-workbench').querySelector(`[data-control="field-${field.id}"]`);
+    select.value = field.expected;
+    select.emit('change');
+  }
+  await activatePractice(h, 'commit');
+  assert.equal(h.doc.activeElement.id, 'company-read-feedback');
+  for (const select of h.$('practice-workbench').querySelectorAll('select')) {
+    assert.equal(select.disabled, false);
+    assert.equal(select.matches(':disabled'), true);
+    select.focus();
+    assert.equal(
+      h.doc.activeElement.id,
+      'company-read-feedback',
+      'The browser refuses inherited-disabled focus.',
+    );
+  }
+  for (let i = 0; i < 30 && h.doc.activeElement.id !== 'restart-practice'; i++) {
+    await h.pulse(12);
+    h.tick();
+    assert.equal(h.doc.activeElement.matches(':disabled'), false);
+  }
+  assert.equal(h.doc.activeElement.id, 'restart-practice');
+  await h.pulse(0);
+  assert.equal(h.doc.activeElement.id, 'company-read-practice');
+  assert.equal(h.$('practice-workbench').querySelector('fieldset').disabled, false);
 });
