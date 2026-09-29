@@ -335,6 +335,62 @@ restore-target UI, OS file-picker import, complete story playback, timed
 in-flight operation cancellation, physical controllers or native platforms.
 These remain separate checks, even when their underlying domain tests pass.
 
+## Video Poster
+
+Use the dedicated qualification origin:
+`http://127.0.0.1:8990/game/test/manual/authoring-controller.html?tool=videoPosterCurrent`.
+Run in English and keep the workshop foreground. The current receipt parser
+reads the actual English requested-time, observed-frame or approximate-playhead
+evidence. The runner supplies the workshop's initial controller join edge.
+The fixture never opens IndexedDB and compares the complete local/session
+storage snapshots before and after; it does not clear or restore origin data.
+
+The case cancels the bundled-source chooser, then selects Dawn Signal video
+through the real file/change boundary. It cancels requested-time, slider and
+output-plan drafts. An empty requested time must be rejected without a captured
+PNG, leaving focus on the time field. An empty playback segment must preserve
+the prior applied range and focus Playback starts. Corrected range/time values
+are committed through the shared numeric editor before Capture.
+
+Capture must focus Download exact PNG. The real displayed image must load at
+the inspected source dimensions, and the actual captured Blob passes
+`prepareStillAsset` with its production image decoder and `validateStillAsset`
+checks. Visible PNG and original SHA-256 values must match authenticated bytes.
+The requested seek must match the committed input; observed/playhead timestamps
+must be finite and within the source duration. Presented-frame evidence enables
+the frame-step controls; approximate playhead evidence keeps them disabled.
+The case records which evidence the browser actually provided. It does not
+claim arbitrary frame-number accuracy or execute a frame-step sequence.
+
+Two explicit Download activations must reference the same captured PNG URL and
+unchanged bytes. A canceled source replacement must retain that source and
+poster. Clear must remove the preview/download and focus the source input.
+Selecting the same bundled video again must authenticate the same original
+bytes while starting without a saved poster. Capturing at the same requested
+time produces another independently validated PNG and an explicit third
+download. The receipt reports whether its hash matches the first capture;
+different pixels or observed timestamps after a fresh seek are not suppressed
+or treated as a product failure.
+
+There is no product evidence-JSON download, editable provenance/text field,
+project Save or persistent project reload in this tool. The JSON output belongs
+to the verification runner. Its supported local reopening path is Clear then
+source reselection; this case does not exercise browser reload or Workshop
+navigation. PNG validation uses test-supplied attribution solely to authenticate
+the downloaded image; it does not imply that the PNG embeds product provenance.
+
+For the separate native keyboard journey add `&keyboard=1`. Use Tab/Shift+Tab,
+Enter, native number/select/range keys and Escape. Cancel a source chooser,
+select the bundled video through the adjacent Choose source action, and enter an
+invalid time or playback range natively. Verify correction focus, correct it,
+Capture, inspect
+the visible timing qualifier, then Download twice. Clear, reselect the same
+source, set the same requested time and capture/download again. Retain actual
+PNG files, sizes, hashes and full decoder receipts separately from the in-page
+Blob/link observations. OS file-picker import, timed in-flight cancellation,
+complete video playback, frame-step behavior, physical trim/conversion,
+physical controllers and native platforms remain separate checks.
+
 ## Automated boundary coverage
 
 `asset-studio-sprite-input.test.mjs` runs the actual Sprite panel with its shared
@@ -399,3 +455,12 @@ selectors and reading controls with native keys, activate the real download
 anchor, and record Workshop return and actual clipboard/file receipts
 independently. Physical controllers, native platforms and release delivery
 remain separate gates.
+## Separate soundtrack recovery on the preserved origin
+
+Open `http://127.0.0.1:8989/game/test/manual/authoring-controller.html?tool=soundtrackRecoveryCurrent` after starting the source server on port 8989. The case intentionally requires the origin retaining the current picture/story qualification records; do not substitute a player's production address.
+
+The real shared pad opens and verifies local media, closes the workshop, prepares and explicitly downloads a soundtrack backup twice, then closes connections. A passive link observer checks completed download activation. Production import/export validates exact prepared bytes; read-only domain snapshots must stay identical. The actual OS files must be validated separately with the production importer. This origin's audio library is empty, while picture/story generations are retained: this case cannot establish MP3 playback, nonempty audio recovery or target-store restore.
+
+While preparation is pending, the visible Cancel preparation action owns neutral controller polling. Confirm/Back/Escape cancellation and newer-focus/lifecycle vetoes have dedicated automated host regressions. The empty real backup completes too quickly to claim a timed browser cancellation check. Repeat the same Prepare/Download/Close path with unbound native keyboard input; no programmatic focus or pointer reset is permitted for the keyboard-only claim.
+
+See [the source and artifact receipt](../../../docs/verification/soundtrack-recovery-input-2026-09-29.md). The earlier failed neutral-poll browser check is retained in that report rather than counted as a pass.
