@@ -1,1 +1,0 @@
-"{\"width\":768,\"height\":1024,\"dpr\":1,\"text\":\"standard\",\"overflow\":0}"

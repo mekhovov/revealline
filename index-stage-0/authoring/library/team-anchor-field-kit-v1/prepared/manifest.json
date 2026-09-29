@@ -1,0 +1,75 @@
+{
+  "format": "revealline-team-anchor-art.v1",
+  "revision": 1,
+  "sourceSha256": "ee4568b5b44e4efaca1de6f0f5cb700412a22a0da7b40ae2a83fc8b7d8b4f65e",
+  "assets": [
+    {
+      "slot": "team.anchor.available",
+      "file": "available.png",
+      "bytes": 194,
+      "sha256": "e4b2ae934b66821bf1ba9db755a23f11df2470d48ad47f549eb2a2aeebbd0353",
+      "width": 24,
+      "height": 24,
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      },
+      "opaquePixels": 266,
+      "transparentPixels": 310,
+      "colors": ["#070b12", "#101923", "#f3f0db", "#f4bf62"],
+      "occupiedBounds": {
+        "x": 0.16666666666666666,
+        "y": 0.08333333333333333,
+        "width": 0.6666666666666666,
+        "height": 0.8333333333333334
+      },
+      "quality": "produced",
+      "description": "The same radio receiver with two separated amber connector jaws.",
+      "provenance": {
+        "creator": "Reveal Line",
+        "license": "Original project artwork",
+        "source": "authoring/library/team-anchor-field-kit-v1/source.mjs",
+        "sourceSha256": "ee4568b5b44e4efaca1de6f0f5cb700412a22a0da7b40ae2a83fc8b7d8b4f65e",
+        "method": "Original integer-pixel drawing; no AI image, reference pixels or sampled artwork.",
+        "prompt": "Create an original team relay anchor: available marker for Reveal Line's resolved theme. Export a 24 by 24 transparent PNG with crisp pixel clusters, centred pivot and no text, blur, baked glow or background. Keep a silhouette distinct from pickups, Support and Scan. Preserve objective semantics and review available/captured as one pair at actual Team playing sizes. Retain original, prepared derivative, provenance and alpha/dimension validation. Artwork never changes capture geometry or gameplay.\nMATCHED FAMILY: Field Kit relay radio v1. Preserve two upright receiver ears, central mast, pale case rim and two feet. Available uses two separated connector jaws; captured uses one closed linked frame and a joined centre. Retain this non-colour distinction. Never bake anchor letters, checks, capture perimeter or progress into either image. Palette: #070b12, #101923, #f3f0db, #78dce8, #f4bf62. Verify both states together at 24 CSS pixels over concealment and light/dark terrain; review in Relay Yard and an imported multi-stronghold map."
+      }
+    },
+    {
+      "slot": "team.anchor.captured",
+      "file": "captured.png",
+      "bytes": 192,
+      "sha256": "fad4a744dfdfb9bd328494e9ffff0440c6ed520695d89aa8ca9a5aee3c3ee9d6",
+      "width": 24,
+      "height": 24,
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      },
+      "opaquePixels": 266,
+      "transparentPixels": 310,
+      "colors": ["#070b12", "#101923", "#78dce8", "#f3f0db"],
+      "occupiedBounds": {
+        "x": 0.16666666666666666,
+        "y": 0.08333333333333333,
+        "width": 0.6666666666666666,
+        "height": 0.8333333333333334
+      },
+      "quality": "produced",
+      "description": "Braced radio receiver with a closed cyan connector and joined pale centre.",
+      "provenance": {
+        "creator": "Reveal Line",
+        "license": "Original project artwork",
+        "source": "authoring/library/team-anchor-field-kit-v1/source.mjs",
+        "sourceSha256": "ee4568b5b44e4efaca1de6f0f5cb700412a22a0da7b40ae2a83fc8b7d8b4f65e",
+        "method": "Original integer-pixel drawing; no AI image, reference pixels or sampled artwork.",
+        "prompt": "Create an original team relay anchor: captured marker for Reveal Line's resolved theme. Export a 24 by 24 transparent PNG with crisp pixel clusters, centred pivot and no text, blur, baked glow or background. Keep a silhouette distinct from pickups, Support and Scan. Preserve objective semantics and review available/captured as one pair at actual Team playing sizes. Retain original, prepared derivative, provenance and alpha/dimension validation. Artwork never changes capture geometry or gameplay.\nMATCHED FAMILY: Field Kit relay radio v1. Preserve two upright receiver ears, central mast, pale case rim and two feet. Available uses two separated connector jaws; captured uses one closed linked frame and a joined centre. Retain this non-colour distinction. Never bake anchor letters, checks, capture perimeter or progress into either image. Palette: #070b12, #101923, #f3f0db, #78dce8, #f4bf62. Verify both states together at 24 CSS pixels over concealment and light/dark terrain; review in Relay Yard and an imported multi-stronghold map."
+      }
+    }
+  ],
+  "requirements": [
+    "Production candidates only: full Studio and live-map visual review remains explicit.",
+    "Install available/captured as one pair; preserve source and upload derivatives.",
+    "Runtime owns objective letters, checks, capture geometry and timing.",
+    "First Connection has no anchors; do not invent them for a preview."
+  ]
+}
