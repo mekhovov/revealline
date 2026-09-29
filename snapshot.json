@@ -1,0 +1,28 @@
+{
+  "format": "revealline-recovery-fragment-v1",
+  "capturedAt": "2026-09-29T15:10:18.062386+00:00",
+  "worktree": "<home>/work/my_projects/go_test/.cache/worktrees/pages-v0840-20260922",
+  "branch": "refs/heads/codex/pages-v0840-20260922",
+  "head": "6b358553b359dbc3b3a2253bf761a81dc1ff6c05",
+  "excluded": [],
+  "changes": [
+    {
+      "status": "??",
+      "path": ".gstack/deploy-reports/2026-09-22-pr274-deploy.md",
+      "object": "d19e9ea096c9d7892dfd2c43c4bfbcd6144cf54b",
+      "sha256": "4f28e1430426591d13d1fec72e84f4fa759ebf4002b245f2d46c14c8871a1157",
+      "bytes": 3880,
+      "mode": "100644"
+    },
+    {
+      "status": "??",
+      "path": ".gstack/deploy-reports/2026-09-22-pr276-deploy.md",
+      "object": "c2f627aeecdb5e308576b8d8f8c5ed38c687cc68",
+      "sha256": "d7e80d0349b530149f4d2365de03b826f3203189285c6643e973d25576f20ff0",
+      "bytes": 1297,
+      "mode": "100644"
+    }
+  ],
+  "indexEntries": [],
+  "purpose": "Recovery only. These bytes are not release admission. Missing files, conflict stages and obsolete generated outputs are preserved as observations, not deletion or merge instructions."
+}
