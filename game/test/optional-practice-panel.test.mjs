@@ -45,6 +45,10 @@ test('optional navigation resolves source and frozen default/edition hosts witho
 
 test('unqualified source previews are limited to the loopback source entry', () => {
   for (const host of ['localhost', '127.0.0.1', '[::1]']) {
+    assert.equal(
+      optionalPracticeSourcePreviews(`http://${host}:8768/game/?journey=legacy`).length,
+      2,
+    );
     const previews = optionalPracticeSourcePreviews(
       `http://${host}:8768/game/index.html?edition=fpv-learning`,
     );

@@ -1,3 +1,4 @@
+import { fpvLaunchURL } from '../fpv-entry.mjs';
 import { localizedText, t } from '../i18n/index.mjs';
 import { attachModalNavigation } from './modal-navigation.mjs';
 import { attachFieldKitSurfaces } from './field-kit-surfaces.mjs';
@@ -61,6 +62,17 @@ export function attachGameShell({
         href: doc.defaultView?.location?.href ?? globalThis.location?.href,
       })
     : null;
+  const homeFPV = $('shell-home-fpv');
+  if (homeFPV && !isolated) {
+    homeFPV.hidden = false;
+    homeFPV.onclick = () => {
+      const win = doc.defaultView ?? globalThis.window;
+      const target = fpvLaunchURL(win.location.href, doc.documentElement.lang);
+      if (!target) return;
+      pause();
+      win.location.assign(target);
+    };
+  }
   const homePractice = $('shell-home-practice');
   if (homePractice && optionalPractice?.open) {
     homePractice.hidden = false;
@@ -809,6 +821,10 @@ export function attachGameShell({
       modalNavigation?.destroy();
       surfaces.destroy();
       optionalPractice?.dispose();
+      if (homeFPV) {
+        homeFPV.onclick = null;
+        homeFPV.hidden = true;
+      }
       if (homePractice) {
         homePractice.onclick = null;
         homePractice.hidden = true;
