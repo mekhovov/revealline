@@ -1,0 +1,97 @@
+{
+  "format": "revealline-recovery-fragment-v1",
+  "capturedAt": "2026-09-29T15:09:58.183616+00:00",
+  "worktree": "<home>/work/my_projects/go_test/.cache/worktrees/p03-enemy-reading-next",
+  "branch": "refs/heads/codex/p03-enemy-reading-next",
+  "head": "2f1074a37ade9c731ea7be37a6e56e533b51d1ac",
+  "excluded": [],
+  "changes": [
+    {
+      "status": " M",
+      "path": "authoring/enemy-catalog/index.html",
+      "object": "86e6a1bddd07db53ee54f27e072fecab383a06e7",
+      "sha256": "8d6ae8d12da8ed6550b7c765996f89f742a07a9133abec252846f28fed0fa0dc",
+      "bytes": 2836,
+      "mode": "100644"
+    },
+    {
+      "status": " M",
+      "path": "authoring/enemy-catalog/workshop.mjs",
+      "object": "8931877bcf93c6611f560c18f8d481040ae5f148",
+      "sha256": "169bc8e86a7c2d1889b1f4d2ac57b1e73993919f9465357aab1a0cded794483f",
+      "bytes": 8204,
+      "mode": "100644"
+    },
+    {
+      "status": " M",
+      "path": "authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "object": "0feff3d73fe66ba802abf79f35b0089321f71856",
+      "sha256": "a6ad14eb2bf631c5f1260a2c13c6f2cddcb833fade3e5309317368f06d6699e1",
+      "bytes": 226491,
+      "mode": "100644"
+    },
+    {
+      "status": " M",
+      "path": "docs/enemy-catalog.md",
+      "object": "e07ffc23eb1dba9df6e4bfe8ce87b894d42ddf1a",
+      "sha256": "f37c750e3d176c56f105ae06d4e4be02576185d1f504542dbef0d370fa2c15d4",
+      "bytes": 16470,
+      "mode": "100644"
+    },
+    {
+      "status": " M",
+      "path": "game/test/enemy-workshop-host.test.mjs",
+      "object": "c52ac6e05824fa13b8aa4565f212aa41ba8ef66e",
+      "sha256": "bda421f2515b11e695815c008bf327363d04b1bb589ab754aa8141fb3920004c",
+      "bytes": 28877,
+      "mode": "100644"
+    },
+    {
+      "status": " M",
+      "path": "game/ui/enemy-catalog-panel.css",
+      "object": "9081116a12b308a45ad14e0a9a8e53bffa8777af",
+      "sha256": "0b82f10d58810b9e498446fcf23d77f9e06b5b5a065019b52a7aad6a69608181",
+      "bytes": 1604,
+      "mode": "100644"
+    }
+  ],
+  "indexEntries": [
+    {
+      "path": "authoring/enemy-catalog/index.html",
+      "mode": "100644",
+      "object": "d5751e85e9b6dd13b1a4b973aad3ec5ae367c252",
+      "stage": 0
+    },
+    {
+      "path": "authoring/enemy-catalog/workshop.mjs",
+      "mode": "100644",
+      "object": "00bbfee650dc9ad726e894127f99c98e0439fe1d",
+      "stage": 0
+    },
+    {
+      "path": "authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "mode": "100644",
+      "object": "8f12347634abd992ec2116f1919880f5c4c1d332",
+      "stage": 0
+    },
+    {
+      "path": "docs/enemy-catalog.md",
+      "mode": "100644",
+      "object": "a4de23ab452d4bed19e3384249cdaa55cf67c8e1",
+      "stage": 0
+    },
+    {
+      "path": "game/test/enemy-workshop-host.test.mjs",
+      "mode": "100644",
+      "object": "8d216bc733e848df48dfc4fd7debee82719546af",
+      "stage": 0
+    },
+    {
+      "path": "game/ui/enemy-catalog-panel.css",
+      "mode": "100644",
+      "object": "ff91723b7416d7d7a7c88eff44eca697e0b45820",
+      "stage": 0
+    }
+  ],
+  "purpose": "Recovery only. These bytes are not release admission. Missing files, conflict stages and obsolete generated outputs are preserved as observations, not deletion or merge instructions."
+}
