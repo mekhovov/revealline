@@ -773,7 +773,7 @@ export function attachStillMediaPanel({
         if (candidate !== null) URLImpl.revokeObjectURL(candidate);
       }
       downloadOriginals.href = bundleURL;
-      downloadOriginals.download = 'RevealLine-originals.rlmedia';
+      downloadOriginals.download = 'fpv-line-originals.rlmedia';
       downloadOriginals.hidden = false;
       setStatus(
         `Originals backup prepared from generation ${latest.generation} (${blob.size} bytes, ${latest.assets.length} distinct originals). Choose Download originals. Preparation has not saved a file to disk.`,

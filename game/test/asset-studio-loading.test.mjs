@@ -185,7 +185,7 @@ function previewBoundary(t) {
     geometry: false,
     statusTarget: target,
     cancelButton,
-    label: 'Draft preview',
+    label: () => 'Draft preview',
   };
   const draw = () => drawAssetPreview(surface, slot, asset, resolved, bytes, settings);
   return { doc, surface, target, cancelButton, bytes, draw };
@@ -220,7 +220,7 @@ test('preview labels precede decode; superseded bitmaps close without replacing 
   });
   await first;
   assert.equal(surface.children[0], canvas);
-  assert.equal(label(target), 'Draft preview: ready.');
+  assert.equal(label(target), 'Draft preview: Ready');
   assert.equal(target.hidden, false);
   assert.equal(newClosed, 1);
   assert.equal(oldClosed, 1);

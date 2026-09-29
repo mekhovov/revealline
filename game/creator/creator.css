@@ -101,7 +101,8 @@ a:focus-visible,
 input:focus-visible,
 select:focus-visible,
 summary:focus-visible,
-#arena:focus-visible {
+#arena:focus-visible,
+.creator-player .controller-focus {
   outline: 3px solid #ffdc84;
   outline-offset: 4px;
 }
@@ -347,6 +348,19 @@ img {
 .creator-mission-review-card h3,
 .creator-mission-review-card p {
   margin-top: 0;
+}
+.creator-review-reading {
+  max-height: min(60svh, 40rem);
+  overflow: auto;
+  overscroll-behavior: contain;
+  scrollbar-gutter: stable;
+  margin-block: 0.75rem;
+  padding: 0.35rem;
+}
+.creator-review-reading:focus-visible,
+.creator-review-reading[data-controller-reading] {
+  outline: 3px solid currentColor;
+  outline-offset: 2px;
 }
 .creator-mission-validation {
   color: #8aefcd;

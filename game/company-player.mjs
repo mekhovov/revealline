@@ -1,6 +1,6 @@
 import { loadEditionBootstrap } from './editions/bootstrap.mjs';
 import { verifyEditionAssets } from './editions/assets.mjs';
-import { resolveEditionContext } from './edition-context.mjs';
+import { editionPublicSlug, resolveEditionContext } from './edition-context.mjs';
 import { createCompanyStorage } from './company-storage.mjs';
 import { createCandidateSoloHost } from './content-design/solo-host.mjs';
 import { createJourneyProfileStore } from './journey/profile.mjs';
@@ -821,7 +821,7 @@ async function main() {
     }
     const url = new URL(location.href);
     url.search = '';
-    url.searchParams.set('edition', editionId);
+    url.searchParams.set('edition', editionPublicSlug(editionId));
     location.assign(url.href);
   });
   for (const [button, id] of [

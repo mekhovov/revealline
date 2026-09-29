@@ -804,6 +804,48 @@ test('actual Studio handlers show startup/read/encode stages, cancel a late uplo
   assert.equal($('slot-id').textContent, preparedSelection);
   assert.equal($('current-preview').previewMarker, preparedCurrentMarker);
   assert.equal($('draft-preview').previewMarker, preparedDraftMarker);
+  // Native inert drops focus and refuses focus() on the first invalid field.
+  // Correction must occur after unlock, without stealing a newer owner's focus.
+  const replacement = $('replacement-panel'),
+    missingCreator = $('asset-creator'),
+    nativeCreatorFocus = missingCreator.focus.bind(missingCreator);
+  let replacementInert = replacement.inert;
+  Object.defineProperty(replacement, 'inert', {
+    configurable: true,
+    get: () => replacementInert,
+    set(value) {
+      replacementInert = value;
+      if (value && replacement.contains(doc.activeElement)) doc.activeElement.blur();
+    },
+  });
+  missingCreator.focus = (...args) => {
+    assert.equal(replacement.inert, false, 'invalid correction waits for the native inert lock');
+    nativeCreatorFocus(...args);
+  };
+  $('stage-asset').focus();
+  await $('stage-asset').onclick();
+  assert.equal(
+    doc.activeElement,
+    missingCreator,
+    'failed Stage focuses the missing field after unlock',
+  );
+  assert.equal($('workspace-summary').textContent, summary, 'failed Stage never adopts a revision');
+  assert.equal($('stage-asset').disabled, false);
+  $('stage-asset').focus();
+  const invalidWithNewOwner = $('stage-asset').onclick();
+  $('studio-interface-size').focus();
+  await invalidWithNewOwner;
+  assert.equal(
+    doc.activeElement,
+    $('studio-interface-size'),
+    'validation cannot replace a newer focus owner',
+  );
+  $('stage-asset').focus();
+  doc.focused = false;
+  await $('stage-asset').onclick();
+  assert.equal(doc.activeElement, doc.body, 'background completion does not reclaim focus');
+  doc.focused = true;
+  missingCreator.focus = nativeCreatorFocus;
   $('asset-creator').value = 'Fixture author';
   $('asset-source').value = 'Owned original fixture';
   $('asset-license').value = 'Fixture rights';

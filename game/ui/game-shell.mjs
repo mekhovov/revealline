@@ -8,6 +8,7 @@ import { mountModeChoices } from './mode-choice.mjs';
 import { WORKSHOP_TOOLS } from './workshop-return.mjs';
 import { releaseExplorerHref } from '../release-explorer.mjs';
 import { guardInstallOfflineBlur } from './install-offline-panel.mjs';
+import { commitMenuRetune } from './menu-retune.mjs';
 
 /** Game navigation owns presentation only; the host owns pause, save and start. */
 export function attachGameShell({
@@ -172,6 +173,7 @@ export function attachGameShell({
   };
   const openMissions = ({ opener = null } = {}) => {
     if (destroyed) return;
+    const fromHome = home.open;
     if (practiceReturn) {
       if (!practiceReturn.disabled) openBrief(opener);
       return;
@@ -201,6 +203,7 @@ export function attachGameShell({
     syncPreparation();
     focusClearance.refresh();
     if (!focusMissions?.()) $('pack-select').focus();
+    if (fromHome && visit.home && missions.open) commitMenuRetune(home, missions);
   };
   const primary = () => {
     const preferred = isolated
@@ -273,12 +276,14 @@ export function attachGameShell({
     const entry = tool ? WORKSHOP_TOOLS.find((item) => item.id === tool) : null;
     if (tool && (!entry || !$(entry.opener)?.isConnected)) return false;
     const previousFocus = doc.activeElement;
+    const parent = topDialog();
     pause(true);
     // A pause callback or boot handoff may have established a newer screen.
     if (
       destroyed ||
-      !home.open ||
-      topDialog() !== home ||
+      !parent?.open ||
+      ![home, $('settings-dialog')].includes(parent) ||
+      topDialog() !== parent ||
       doc.activeElement !== previousFocus ||
       doc.hidden ||
       doc.hasFocus?.() === false
@@ -309,6 +314,7 @@ export function attachGameShell({
   workshop?.addEventListener('cancel', cancelWorkshop);
   const backFromMissions = () => {
     if (destroyed || !missions.open) return;
+    const reading = missions.dataset.view === 'brief';
     const visit = missionsVisit,
       previousFocus = doc.activeElement;
     retireMissionsVisit();
@@ -372,6 +378,7 @@ export function attachGameShell({
       availableReturn(node, parent),
     );
     target?.focus({ preventScroll: true });
+    if (!reading && visit?.home && !missions.open && home.open) commitMenuRetune(missions, home);
   };
   if ($('shell-missions-back')) $('shell-missions-back').onclick = backFromMissions;
   const cancelMissions = (event) => {
@@ -755,6 +762,9 @@ export function attachGameShell({
     openHome,
     openMissions,
     openWorkshop,
+    refreshHome() {
+      if (!destroyed) refreshHomeCopy();
+    },
     refreshLocale() {
       if (!destroyed && home.open) refreshHomeCopy();
     },

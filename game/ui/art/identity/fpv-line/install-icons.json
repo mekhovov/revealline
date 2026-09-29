@@ -1,0 +1,45 @@
+{
+  "format": "fpv-line-install-icons.v1",
+  "source": "game/ui/art/identity/fpv-line/icon-master.png",
+  "sourceSha256": "978ac6d8f979558f1f9341d4f92823e92b639d4cf9d8281fdd45f792e3c3682f",
+  "derivation": "nearest-neighbour-rgb-png-bounded-quantization.v1",
+  "note": "Full composition retained with nearest-neighbour sizing. RGB8 is retained unless an install derivative exceeds 128 KiB; then 6-bit, followed if necessary by 5-bit, channel quantization is tried. Master and original remain unchanged; no artwork is redrawn.",
+  "quantization": "round(round(channel * (2^bits - 1) / 255) * 255 / (2^bits - 1)); applied only when needed to meet the unchanged install-file cap",
+  "files": [
+    {
+      "name": "icon-16.png",
+      "bytes": 469,
+      "sha256": "2a436d1404a2e0fef86ce2cb80fc0bbf866aea8fc038ab7b3390b52a29df86e5",
+      "channelBits": 8,
+      "maxChannelError": 0
+    },
+    {
+      "name": "icon-32.png",
+      "bytes": 1386,
+      "sha256": "ca87e21a649eb91cd125b873af7f30ae9d252feaffe6edef7d3cfb21e2ad2c4b",
+      "channelBits": 8,
+      "maxChannelError": 0
+    },
+    {
+      "name": "icon-180.png",
+      "bytes": 29773,
+      "sha256": "a11433dc760210294c61f16191ba6ebdbd11143c7c0aa5b094cba2f94842571e",
+      "channelBits": 8,
+      "maxChannelError": 0
+    },
+    {
+      "name": "icon-192.png",
+      "bytes": 33508,
+      "sha256": "5bc0f892cc5c13a7b1564cca9ef3ee0799a38b7b5fb63ccc9d7559dc2bf3a34d",
+      "channelBits": 8,
+      "maxChannelError": 0
+    },
+    {
+      "name": "icon-512.png",
+      "bytes": 82577,
+      "sha256": "47f0661543ba686911027a8005c8b318c4f9146958f1736ee32fb056e5bfea91",
+      "channelBits": 6,
+      "maxChannelError": 2
+    }
+  ]
+}

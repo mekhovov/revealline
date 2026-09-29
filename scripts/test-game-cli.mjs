@@ -51,6 +51,24 @@ async function fixture(t) {
   return { root, directory, out: path.join(directory, 'dist') };
 }
 
+test('build binds the same release version into Solo, Versus and Team landing HTML', async (t) => {
+  const { root, out } = await fixture(t);
+  await fs.mkdir(path.join(root, 'game/couch'));
+  const pages = ['game/index.html', 'game/couch/index.html', 'game/couch/relay-rescue.html'];
+  for (const page of pages)
+    await fs.writeFile(
+      path.join(root, page),
+      '<html data-build-version="__REVEALLINE_VERSION__"><head></head><body>__REVEALLINE_VERSION__</body></html>',
+    );
+  await buildProject({ root, out, version: '0.142.1' });
+  for (const page of pages) {
+    const html = await fs.readFile(path.join(out, page), 'utf8');
+    assert.ok(!html.includes('__REVEALLINE_VERSION__'), page);
+    assert.match(html, /data-build-version="v0\.142\.1"/, page);
+    assert.match(html, /<body>v0\.142\.1<\/body>/, page);
+  }
+});
+
 test('strict command parsing rejects typos, duplicates and absent values', () => {
   assert.deepEqual(parseArguments(['build', '--version', '0.1.0']), {
     action: 'build',
@@ -644,7 +662,7 @@ test('class validation accepts current data and rejects unsupported mechanics th
   await assert.rejects(validateClasses(root), /Invalid class recipes/);
 });
 
-test('packaged offline builds generate scoped metadata, original icons, complete integrity inventory and reproducible bytes', async (t) => {
+test('packaged offline builds generate scoped metadata, generated brand icons, complete integrity inventory and reproducible bytes', async (t) => {
   const { root, out, directory } = await fixture(t);
   await fs.mkdir(path.join(root, 'game/offline'));
   await fs.copyFile(
@@ -765,7 +783,19 @@ test('packaged offline builds generate scoped metadata, original icons, complete
     const icon = await fs.readFile(path.join(out, `icons/icon-${size}.png`));
     assert.equal(icon.readUInt32BE(16), size);
     assert.equal(icon.readUInt32BE(20), size);
+    assert.ok(icon.length <= 128 * 1024);
   }
+  const installManifest = JSON.parse(
+    await fs.readFile(path.join(out, 'manifest.webmanifest'), 'utf8'),
+  );
+  assert.equal(installManifest.name, 'FPV / LINE');
+  assert.equal(installManifest.short_name, 'FPV / LINE');
+  assert.equal(installManifest.id, './');
+  assert.equal(installManifest.scope, './');
+  assert.match(
+    await fs.readFile(path.join(out, 'credits.html'), 'utf8'),
+    /href="\.\/icons\/icon-192\.png"/,
+  );
   assert.equal(await fs.readFile(path.join(root, 'game/index.html'), 'utf8'), source);
   await assert.rejects(fs.access(path.join(out, 'game/offline/service-worker.template.js')));
   await fs.writeFile(path.join(root, 'game/core.mjs'), 'export const value=42;');

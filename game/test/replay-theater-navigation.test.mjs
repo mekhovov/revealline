@@ -171,7 +171,7 @@ async function harness(t, source = recording(), { expectLoadFailure = false } = 
     frame(now);
     return snapshots.at(-1);
   };
-  const pad = (buttons = [], id = 'Test pad') => {
+  const pad = (buttons = [], id = 'Test pad', sampled = true) => {
     pads = [
       {
         id,
@@ -185,11 +185,12 @@ async function harness(t, source = recording(), { expectLoadFailure = false } = 
         })),
       },
     ];
-    return tick();
+    if (sampled) return tick();
   };
   const press = (button) => {
     pad();
-    return pad([button]);
+    const pressed = pad([button]);
+    return button === 0 ? pad() : pressed;
   };
   const key = (node, name, extra = {}) => {
     node.focus();
@@ -603,10 +604,11 @@ test('controller joins without activation, previews native speed, cancels once a
   pad([0]);
   assert.equal($('playback-phase').textContent, 'paused');
   press(0);
-  pad([0]);
   assert.equal(doc.activeElement, $('play-pause'));
   assert.equal($('playback-phase').textContent, 'paused');
-  press(0);
+  pad([0]);
+  assert.equal($('playback-phase').textContent, 'paused', 'Confirm waits for release');
+  pad();
   assert.equal($('playback-phase').textContent, 'playing');
   $('speed').focus();
   press(0);
@@ -784,4 +786,21 @@ test('Classic replay import stays paused and controller completion checks the ex
   assert.equal($('playback-phase').textContent, 'complete');
   assert.deepEqual(h.snapshots.at(-1).checkpoint, source.checkpoint);
   assert.equal(h.snapshots.at(-1).run.ruleset, 'xonix-core.v5');
+});
+
+test('Replay Theater native Confirm commits between frames without a second playback toggle', async (t) => {
+  const h = await harness(t);
+  h.pad();
+  h.press(0);
+  const play = h.$('play-pause');
+  play.focus();
+  h.pad([0], undefined, false);
+  assert.equal(play.emit('keydown', { key: 'Enter', isTrusted: true }).defaultPrevented, true);
+  assert.equal(h.$('playback-phase').textContent, 'paused');
+  h.pad([], undefined, false);
+  play.emit('keyup', { key: 'Enter', isTrusted: true });
+  assert.equal(h.$('playback-phase').textContent, 'playing');
+  play.emit('click', { isTrusted: true });
+  h.tick();
+  assert.equal(h.$('playback-phase').textContent, 'playing');
 });

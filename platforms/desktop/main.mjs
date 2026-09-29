@@ -16,7 +16,7 @@ protocol.registerSchemesAsPrivileged([
   { scheme: APP_SCHEME, privileges: { ...SCHEME_PRIVILEGES } },
 ]);
 app.enableSandbox();
-app.setName('Reveal Line');
+app.setName('FPV / LINE');
 const directories = desktopDirectories({
   appPath: app.getAppPath(),
   appData: app.getPath('appData'),
@@ -32,7 +32,7 @@ let mainWindow = null,
   activeDownload = null;
 
 function failure(message) {
-  dialog.showErrorBox('Reveal Line could not continue', message);
+  dialog.showErrorBox('FPV / LINE could not continue', message);
 }
 function foreground() {
   if (!mainWindow || mainWindow.isDestroyed()) return;
@@ -47,7 +47,7 @@ function createWindow() {
     height: 840,
     minWidth: 360,
     minHeight: 480,
-    title: 'Reveal Line',
+    title: 'FPV / LINE',
     backgroundColor: '#091324',
     show: false,
     webPreferences: { ...WEB_PREFERENCES, session: appSession },
@@ -132,11 +132,11 @@ else {
         }
         activeDownload = item;
         item.setSaveDialogOptions({
-          title: 'Save Reveal Line export',
+          title: 'Save FPV / LINE export',
           defaultPath: decision.filename,
           filters: [
             {
-              name: decision.extension === 'json' ? 'Reveal Line JSON export' : 'ZIP archive',
+              name: decision.extension === 'json' ? 'FPV / LINE JSON export' : 'ZIP archive',
               extensions: [decision.extension],
             },
           ],

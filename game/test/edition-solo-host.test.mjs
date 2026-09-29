@@ -14,6 +14,17 @@ import { retainedEditionFixture } from './helpers/retained-edition-fixture.mjs';
 import { getLocale, setLocale } from '../i18n/index.mjs';
 import { DISPLAY_PREFERENCES_KEY } from '../display-preferences.mjs';
 
+function openEditionSettings(page, category) {
+  page.$('shell-options').click();
+  assert.equal(page.$('settings-dialog').open, true);
+  page.$(`settings-tab-${category}`).click();
+  assert.equal(page.$(`settings-panel-${category}`).hidden, false);
+  if (category === 'data') {
+    const details = page.$('edition-presentation-select')?.closest('details');
+    if (details && !details.open) details.querySelector('summary').click();
+  }
+}
+
 test('artwork update offers explicit exact-snapshot recovery and Continue retains the original save', async (t) => {
   const f = await retainedEditionFixture(),
     storage = memoryStorage(),
@@ -57,6 +68,7 @@ test('artwork update offers explicit exact-snapshot recovery and Continue retain
     assert.ok(recover, 'The exact registered receipt offers an explicit recovery action.');
     const before = page.win.location.href;
     assert.equal(storage.getItem(key), original);
+    openEditionSettings(page, 'data');
     await recover.onclick();
     assert.notEqual(page.win.location.href, before);
     assert.equal(new URL(page.win.location.href).searchParams.get('presentation'), f.descriptor.id);
@@ -87,6 +99,7 @@ test('artwork update offers explicit exact-snapshot recovery and Continue retain
       page.$('shell-featured').click();
       await settle(() => page.doc.body.dataset.flightState === 'running');
       page.$('shell-menu').click();
+      openEditionSettings(page, 'data');
       const href = page.win.location.href;
       const choice = page.$('edition-presentation-select');
       choice.value = f.descriptor.id;
@@ -129,6 +142,7 @@ test('artwork update offers explicit exact-snapshot recovery and Continue retain
     assert.deepEqual(resumed.actorAppearancePin, saved.actorAppearancePin);
     assert.deepEqual(resumed.replay, saved.replay);
     page.$('shell-menu').click();
+    openEditionSettings(page, 'data');
     const choice = page.$('edition-presentation-select'),
       href = page.win.location.href;
     choice.value = '';
@@ -153,6 +167,22 @@ test('artwork update offers explicit exact-snapshot recovery and Continue retain
     assert.equal(page.$('mode-leave-dialog').open, false);
     assert.deepEqual(page.errors, []);
   });
+});
+
+test('retained edition branding never requests the newer catalog-only logo', async (t) => {
+  const f = await retainedEditionFixture();
+  const logo = f.replacePicture('new-brand-logo');
+  f.catalog.brands[0].logoAssetId = logo.id;
+  f.catalog.brands[0].assetIds.push(logo.id);
+  const page = await soloPage(t, {
+    search: `?edition=sample-public&presentation=${f.descriptor.id}`,
+    titleScreen: true,
+    journeyIndexedDB: managedIndexedDB().indexedDB,
+    fetchResponse: f.fetcher,
+  });
+  assert.equal(page.$('edition-presentation-select').value, f.descriptor.id);
+  assert.equal(page.$('shell-home').querySelector('.edition-home-logo'), null);
+  assert.deepEqual(page.errors, []);
 });
 
 async function editionSwitchHost(t, { occupied = false, start = true } = {}) {
@@ -267,6 +297,7 @@ for (const saving of ['verified', 'quota', 'occupied'])
       };
     }
     page.$('shell-menu').click();
+    openEditionSettings(page, 'content');
     const before = authoritativeCheckpoint(page.rendered.run),
       origin = page.win.location.href,
       picker = page.$('edition-select');
@@ -314,6 +345,7 @@ for (const saving of ['verified', 'quota', 'occupied'])
 test('edition switch cancellation retires pending retention and cannot navigate after a late completion', async (t) => {
   const page = await editionSwitchHost(t);
   page.$('shell-menu').click();
+  openEditionSettings(page, 'content');
   const origin = page.win.location.href,
     key = 'revealline.suspended.journey-sample-public.v1.solo-v2',
     retained = page.storage.getItem(key),
@@ -351,6 +383,7 @@ test('edition switch permits only its company destinations and does not prompt w
   const page = await editionSwitchHost(t, { start: false }),
     origin = page.win.location.href,
     picker = page.$('edition-select');
+  openEditionSettings(page, 'content');
   assert.deepEqual(
     [...picker.options].map((option) => option.value),
     ['sample-public', 'sample-other'],
@@ -801,6 +834,78 @@ test('edition controller practice reconstructs only its selected mission without
   assert.deepEqual(page.errors, []);
 });
 
+test('official DroneAid wordmark belongs only to the aggregate landing and keeps a text fallback', async (t) => {
+  const bytes = new Map();
+  const fetchResponse = async (value) => {
+    const request = new URL(String(value), 'http://localhost/game/');
+    const pathname =
+      request.protocol === 'file:'
+        ? request.pathname.slice(new URL('../../', import.meta.url).pathname.length)
+        : request.pathname.slice(1);
+    if (!/^game\/(?:editions\/|content\/company-)/.test(pathname)) return undefined;
+    if (!bytes.has(pathname))
+      bytes.set(pathname, await readFile(new URL(`../../${pathname}`, import.meta.url)));
+    return new Response(bytes.get(pathname));
+  };
+  for (const edition of ['droneaid', 'droneaid-nl-workshop-lights'])
+    await t.test(edition, async (t) => {
+      const locale = getLocale();
+      t.after(() => setLocale(locale, { persist: false }));
+      const page = await soloPage(t, {
+        search: `?edition=${edition}`,
+        titleScreen: true,
+        journeyIndexedDB: managedIndexedDB().indexedDB,
+        pictures: { Image: PNGImage },
+        fetchResponse,
+      });
+      const home = page.$('shell-home');
+      const title = page.$('shell-title');
+      const wordmark = title.querySelector('.droneaid-landing-wordmark');
+      const compact = page.doc.querySelector('.edition-brand-logo');
+      assert.ok(compact.src.endsWith('/editions/assets/droneaid-nl/propeller.png'));
+      const icon = [...page.doc.head.querySelectorAll('link')].find((link) => link.rel === 'icon');
+      assert.ok(icon.href.endsWith('/droneaid-nl/icon-512.png'));
+      if (edition === 'droneaid') {
+        assert.equal(page.doc.body.dataset.editionId, 'droneaid-nl-community');
+        assert.equal(home.dataset.landingIdentity, 'droneaid');
+        assert.ok(wordmark.src.endsWith('/ui/art/menu-scenes/droneaid-wordmark-light.svg'));
+        assert.equal(wordmark.alt, '');
+        assert.equal(wordmark.getAttribute('aria-hidden'), 'true');
+        assert.equal(home.querySelector('.edition-home-logo'), null);
+        assert.equal(title.textContent, 'DroneAid / LINE');
+        assert.equal(title.dataset.wordmarkLoaded, 'false');
+        const action = page.$('shell-featured');
+        action.focus();
+        wordmark.emit('load');
+        assert.equal(title.dataset.wordmarkLoaded, 'true');
+        setLocale('uk', { persist: false });
+        assert.equal(title.querySelector('.droneaid-landing-wordmark'), wordmark);
+        assert.equal(title.textContent, 'DroneAid / LINE');
+        assert.equal(page.doc.activeElement, action);
+        wordmark.emit('error');
+        assert.equal(title.dataset.wordmarkLoaded, 'false');
+        assert.equal(title.querySelector('.native-brand-fallback').textContent, 'DroneAid');
+        wordmark.emit('load');
+        assert.equal(title.dataset.wordmarkLoaded, 'true');
+        page.win.emit('pagehide', { persisted: false });
+        assert.equal(wordmark.listeners.get('load').size, 0);
+        assert.equal(wordmark.listeners.get('error').size, 0);
+        assert.equal(title.querySelector('.droneaid-landing-wordmark'), null);
+        assert.equal(title.dataset.wordmarkLoaded, undefined);
+        wordmark.emit('load');
+        assert.equal(title.dataset.wordmarkLoaded, undefined);
+      } else {
+        assert.equal(wordmark, null);
+        assert.equal(home.dataset.landingIdentity, undefined);
+        const logo = home.querySelector('.edition-home-logo');
+        assert.ok(logo.classList.contains('edition-propeller'));
+        assert.ok(logo.src.endsWith('/droneaid-nl/propeller.png'));
+        assert.equal(title.textContent, 'Workshop Lights / LINE');
+      }
+      assert.deepEqual(page.errors, []);
+    });
+});
+
 // The actual entry, provider, canonical catalogue and first attempt for every
 // declared audience. Only browser DOM/canvas/PNG decoding are modeled.
 test('every declared edition boots and starts through the canonical Solo host', async (t) => {
@@ -829,6 +934,13 @@ test('every declared edition boots and starts through the canonical Solo host', 
         fetchResponse,
       });
       assert.equal(page.doc.body.dataset.editionId, edition.id);
+      if (edition.brandId === 'droneaid-nl') {
+        const options = [...page.$('theme-select').options];
+        assert.ok(options.length > 0);
+        assert.ok(options.every((option) => option.textContent.startsWith('DroneAid')));
+        assert.ok(options.every((option) => !option.textContent.includes('Netherlands')));
+        assert.ok(options.every((option) => option.value.startsWith('droneaid-nl-')));
+      }
       page.$('shell-worlds').click();
       await settle(() => page.$('journey-chooser')?.open === true);
       const count = catalog.campaigns
