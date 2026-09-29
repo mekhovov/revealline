@@ -4,9 +4,14 @@ import { attachArtworkMotion } from '../../ui/menu-scene-motion.mjs';
 import { resolveMenuScene } from '../../ui/menu-scene-catalog.mjs';
 
 const parameters = new URL(window.location.href).searchParams;
-const modeSuite = parameters.get('suite') === 'fpv';
+const modeWorld = ['fpv', 'ukraine'].includes(parameters.get('suite'))
+  ? parameters.get('suite')
+  : null;
+const modeSuite = Boolean(modeWorld);
 const ids = modeSuite
-  ? ['fpv-versus-landscape', 'fpv-versus-portrait', 'fpv-team-landscape', 'fpv-team-portrait']
+  ? ['versus-landscape', 'versus-portrait', 'team-landscape', 'team-portrait'].map(
+      (id) => `${modeWorld}-${id}`,
+    )
   : [
       'workshop-lights',
       'parts-in-motion',
@@ -19,7 +24,8 @@ const delay = (ms) => new Promise((resolve) => window.setTimeout(resolve, ms));
 const status = document.getElementById('status');
 const output = document.getElementById('results');
 if (modeSuite) {
-  document.querySelector('h1').textContent = 'FPV Versus and Team artwork';
+  document.querySelector('h1').textContent =
+    `${modeWorld === 'fpv' ? 'FPV' : 'Ukraine'} Versus and Team artwork`;
   document.querySelector('#controls p').textContent =
     'Measures four production compositions at 1280 × 800 and 390 × 844. No player preferences or saves are changed.';
   document.getElementById('run').textContent = 'Run four compositions';
@@ -53,7 +59,7 @@ async function runPortrait(id) {
   root.hidden = false;
   document.getElementById('controls').hidden = true;
   const context = {
-    themeId: modeSuite ? 'fpv' : id,
+    themeId: modeSuite ? modeWorld : id,
     mode: modeSuite ? (id.includes('-versus-') ? 'versus' : 'team') : 'solo',
     active: true,
     reduced: false,
@@ -66,6 +72,29 @@ async function runPortrait(id) {
   const sampled = new Promise((resolve) => {
     complete = resolve;
   });
+  let samplingFrame = null,
+    previousFrame = null,
+    finishTiming;
+  const intervals = [];
+  const timed = new Promise((resolve) => {
+    finishTiming = resolve;
+  });
+  function sampleTiming(stamp) {
+    if (previousFrame !== null) intervals.push(stamp - previousFrame);
+    previousFrame = stamp;
+    if (intervals.length === 120) {
+      samplingFrame = null;
+      const sorted = [...intervals].sort((a, b) => a - b);
+      finishTiming({
+        samples: intervals.length,
+        medianMs: (sorted[59] + sorted[60]) / 2,
+        p95Ms: sorted[113],
+        maxMs: sorted[119],
+        meaning:
+          'Browser requestAnimationFrame callback intervals; not GPU time or physical-device qualification.',
+      });
+    } else samplingFrame = window.requestAnimationFrame(sampleTiming);
+  }
   const owner = attachMenuScene({
     root,
     getContext: () => context,
@@ -89,6 +118,7 @@ async function runPortrait(id) {
           if (!first) {
             first = pixels;
             started = performance.now();
+            samplingFrame = window.requestAnimationFrame(sampleTiming);
           } else {
             second = pixels;
             complete({ canvas, intervalMs: performance.now() - started });
@@ -99,14 +129,28 @@ async function runPortrait(id) {
       return attachArtworkMotion(options);
     },
   });
-  window.addEventListener('pagehide', () => owner.dispose(), { once: true });
-  const measurement = await Promise.race([sampled, delay(8000).then(() => null)]);
-  if (!measurement)
+  window.addEventListener(
+    'pagehide',
+    () => {
+      if (samplingFrame !== null) window.cancelAnimationFrame(samplingFrame);
+      owner.dispose();
+    },
+    { once: true },
+  );
+  const measured = await Promise.race([
+    Promise.all([sampled, timed]),
+    delay(8000).then(() => null),
+  ]);
+  if (!measured) {
+    if (samplingFrame !== null) window.cancelAnimationFrame(samplingFrame);
     return {
       id,
       pass: false,
-      error: 'No two rendered frames; check motion preference or WebGL availability.',
+      error:
+        'No two rendered frames and 120 callback samples; check foreground visibility, motion preference or WebGL availability.',
     };
+  }
+  const [measurement, callbackTiming] = measured;
   const { canvas, intervalMs } = measurement;
   const plane = root.querySelector('.menu-scene-art-plane');
   const pw = parseFloat(plane.style.width),
@@ -170,6 +214,7 @@ async function runPortrait(id) {
     source: root.querySelector('.menu-scene-art').getAttribute('src').split('/').at(-1),
     canvas: [canvas.width, canvas.height],
     intervalMs,
+    callbackTiming,
     regions,
     paused,
     reduced,
@@ -205,7 +250,7 @@ if (ids.includes(profileId)) {
           resolve(message.data.portraitMotion);
         };
         window.addEventListener('message', receive);
-        frame.src = `./portrait-motion-check.html?profile=${encodeURIComponent(id)}${modeSuite ? '&suite=fpv' : ''}`;
+        frame.src = `./portrait-motion-check.html?profile=${encodeURIComponent(id)}${modeSuite ? `&suite=${modeWorld}` : ''}`;
       });
       results.push(result);
       output.textContent = JSON.stringify(results, null, 2);

@@ -310,6 +310,46 @@ export const MENU_SCENE_COMPOSITIONS = Object.freeze({
       ]),
     }),
   }),
+  ukraine: Object.freeze({
+    versus: Object.freeze({
+      composition: 'ukraine-versus',
+      landscape: './art/menu-scenes/ukraine-versus.webp',
+      portrait: './art/menu-scenes/ukraine-versus-portrait.webp',
+      landscapePosition: '70% 50%',
+      portraitPosition: '50% 50%',
+      environment: freezeEnvironment([
+        ['cloud', 64, 3, 33, 18, -4, 16],
+        ['lamp', 40, 19, 5, 13, -1, 4.8],
+        ['water', 87, 66, 9, 4, -2, 5.2],
+        ['foliage', 34, 34, 7, 20, -2, 7],
+      ]),
+      portraitEnvironment: freezeEnvironment([
+        ['cloud', 67, 20, 30, 9, -4, 16],
+        ['lamp', 38, 33, 6, 4, -1, 4.8],
+        ['water', 55, 60, 10, 4, -2, 5.2],
+        ['foliage', 28, 43, 8, 8, -2, 7],
+      ]),
+    }),
+    team: Object.freeze({
+      composition: 'ukraine-team',
+      landscape: './art/menu-scenes/ukraine-team.webp',
+      portrait: './art/menu-scenes/ukraine-team-portrait.webp',
+      landscapePosition: '70% 50%',
+      portraitPosition: '50% 50%',
+      environment: freezeEnvironment([
+        ['cloud', 68, 3, 29, 17, -4, 16],
+        ['lamp', 39, 24, 4, 8, -1, 4.8],
+        ['water', 79, 68, 12, 5, -2, 5.2],
+        ['foliage', 28, 31, 7, 20, -2, 7],
+      ]),
+      portraitEnvironment: freezeEnvironment([
+        ['cloud', 68, 14, 29, 10, -4, 16],
+        ['lamp', 26, 28, 7, 7, -1, 4.8],
+        ['water', 82, 60, 12, 4, -2, 5.2],
+        ['foliage', 24, 40, 10, 11, -2, 7],
+      ]),
+    }),
+  }),
 });
 const compositionProfiles = new WeakMap();
 

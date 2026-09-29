@@ -141,8 +141,8 @@
   {
     "id": "runtime-menu-scene-provenance",
     "path": "game/ui/art/menu-scenes/provenance.json",
-    "sha256": "37d56a5e0e532cac828c10ee1c67855dcf9c142a13c3819e0203c4cc4fbd788f",
-    "bytes": 12155,
+    "sha256": "897f9145c25735cd3fb300fb05360b7d0aa6dc6c30cf9d8ea37a9d208a0c8e35",
+    "bytes": 15059,
     "publication": "public",
     "approved": true,
     "dependencies": []
@@ -449,6 +449,42 @@
     "path": "game/ui/art/menu-scenes/fpv-team-portrait.webp",
     "sha256": "658ebdb4b4088997cce3251a55f8409ed9f0514d379f46e125815fd5a94a43a2",
     "bytes": 293974,
+    "publication": "public",
+    "approved": true,
+    "dependencies": ["runtime-menu-scene-provenance"]
+  },
+  {
+    "id": "runtime-menu-scene-ukraine-versus",
+    "path": "game/ui/art/menu-scenes/ukraine-versus.webp",
+    "sha256": "21d3e4a7dfd9abe379017dc1088ec875946c58a1a35c8a923ef1abec865d7ab6",
+    "bytes": 1887892,
+    "publication": "public",
+    "approved": true,
+    "dependencies": ["runtime-menu-scene-provenance"]
+  },
+  {
+    "id": "runtime-menu-scene-ukraine-versus-portrait",
+    "path": "game/ui/art/menu-scenes/ukraine-versus-portrait.webp",
+    "sha256": "c9eb5d49f8a9c5fab9969a4abfd0bf557ef2a8c28f415da2779687d1da9707ea",
+    "bytes": 579008,
+    "publication": "public",
+    "approved": true,
+    "dependencies": ["runtime-menu-scene-provenance"]
+  },
+  {
+    "id": "runtime-menu-scene-ukraine-team",
+    "path": "game/ui/art/menu-scenes/ukraine-team.webp",
+    "sha256": "c14e3169d45cdef51fcba3cee5da88a23071b861b7c906450cf5644e3df85569",
+    "bytes": 1848324,
+    "publication": "public",
+    "approved": true,
+    "dependencies": ["runtime-menu-scene-provenance"]
+  },
+  {
+    "id": "runtime-menu-scene-ukraine-team-portrait",
+    "path": "game/ui/art/menu-scenes/ukraine-team-portrait.webp",
+    "sha256": "7670db78d5d46fe4be95367ebb20c8ed2d39f007c501be621b5907d864164cfe",
+    "bytes": 546480,
     "publication": "public",
     "approved": true,
     "dependencies": ["runtime-menu-scene-provenance"]

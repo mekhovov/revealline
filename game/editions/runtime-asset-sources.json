@@ -125,6 +125,18 @@
       "source": "game/ui/art/menu-scenes/provenance.json",
       "promptSource": "authoring/library/menu-scenes/fpv-mode-prompts.json",
       "description": "Four original built-in image_gen FPV Versus/Team compositions, landscape and portrait. Generated sources and exact prompts are retained; WebP encoding preserves dimensions, with no cropping or retouching. They remain default-game artwork and are excluded from Solo-only company edition packages."
+    },
+    {
+      "assetIds": [
+        "runtime-menu-scene-ukraine-versus",
+        "runtime-menu-scene-ukraine-versus-portrait",
+        "runtime-menu-scene-ukraine-team",
+        "runtime-menu-scene-ukraine-team-portrait"
+      ],
+      "kind": "generated-project-artwork-and-encoding-derivatives",
+      "source": "game/ui/art/menu-scenes/provenance.json",
+      "promptSource": "authoring/library/menu-scenes/ukraine-mode-prompts.json",
+      "description": "Four original built-in image_gen Ukraine Versus/Team compositions, with separate landscape and portrait originals. Complete prompts and source/reference hashes are retained. Landscapes use verified lossless WebP; portraits use quality 94 WebP without cropping, resizing or retouching. Default-game mode artwork is excluded from all Solo-only company edition packages."
     }
   ]
 }
