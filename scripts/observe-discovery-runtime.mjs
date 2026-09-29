@@ -50,11 +50,14 @@ export const DISCOVERY_SHOWCASE_PROTOCOLS = Object.freeze(
         missionNameUK: 'Спільний задум',
         nextNameEN: 'Count What Is Here',
         nextNameUK: 'Порахуйте наявне',
+        routeRevision: 2,
+        // Reach both outer safe borders before a wider interior cut. The first
+        // browser candidate crossed a narrower enemy corridor and lost a life.
         ticks: [
-          ['ArrowRight', 692],
-          ['ArrowDown', 475],
-          ['ArrowLeft', 162],
-          ['ArrowUp', 469],
+          ['ArrowRight', 750],
+          ['ArrowDown', 535],
+          ['ArrowLeft', 300],
+          ['ArrowUp', 600],
         ],
       },
       {
@@ -86,9 +89,12 @@ export const DISCOVERY_SHOWCASE_PROTOCOLS = Object.freeze(
         missionNameUK: 'Прочитайте тканину',
         nextNameEN: 'Stitch Paths',
         nextNameUK: 'Шляхи стібків',
+        routeRevision: 2,
+        // Leave a fixed closing-leg margin before observing the result. A prior
+        // immediate read preceded the genuine win visible in its failure capture.
         ticks: [
           ['ArrowRight', 163],
-          ['ArrowDown', 469],
+          ['ArrowDown', 600],
         ],
       },
     ].map(({ ticks, ...item }) => [
@@ -264,11 +270,42 @@ export function verifyDiscoveryRuntimeArtifact(planInput, { archive, manifest: m
           }),
         )
       : null;
+  let showcaseSelection = null;
+  if (plan.mode === 'showcase') {
+    const project = JSON.parse(
+      new TextDecoder('utf-8', { fatal: true }).decode(
+        files.get(protocol.rewardPath.replace('.rewards.json', '.json')),
+      ),
+    );
+    const campaign = project.campaigns?.find((item) => item.id === protocol.campaignId);
+    const mission = project.missions?.find((item) => item.id === protocol.missionId);
+    const packs = project.packs?.filter(
+      (item) => !item.archived && item.campaignIds?.includes(protocol.campaignId),
+    );
+    if (
+      !campaign ||
+      campaign.archived ||
+      campaign.missionIds?.[0] !== protocol.missionId ||
+      mission?.archived ||
+      mission?.name !== protocol.missionName ||
+      !packs?.length ||
+      packs.length > 32
+    )
+      fail('The selected source does not expose the exact first showcase mission.');
+    showcaseSelection = {
+      editionId: protocol.editionId,
+      name: protocol.missionName,
+      aliases: packs.map((pack) => ({
+        campaign: JSON.stringify(['candidate', pack.id, campaign.id]),
+        mission: ['candidate', pack.id, campaign.id, mission.id].map(encodeURIComponent).join('/'),
+      })),
+    };
+  }
   return {
     plan,
     files,
     manifest,
-    ...(showcaseCopy ? { showcaseCopy } : {}),
+    ...(showcaseCopy ? { showcaseCopy, showcaseSelection } : {}),
     identity: {
       sourceRevision: wanted.sourceRevision,
       sourceTree: wanted.sourceTree,
@@ -441,6 +478,7 @@ export async function recordDiscoveryFailureEvidence({
  * the other owners and preserve failure evidence before returning to the caller. */
 export async function finishDiscoveryObservation({
   page,
+  context,
   cdp,
   browser,
   server,
@@ -481,6 +519,11 @@ export async function finishDiscoveryObservation({
         }),
     ],
     ['cdp', cdp, () => cdp.detach()],
+    // Release the explicitly created page/context before closing the browser.
+    // Do not run page unload prompts, and never treat a later owner closing as
+    // proof that an earlier timed-out operation completed within its deadline.
+    ['page', page, () => page.close({ runBeforeUnload: false })],
+    ['context', context, () => context.close()],
     ['browser', browser, () => browser.close()],
     ['server', server, () => server.close()],
   ]) {
@@ -570,6 +613,8 @@ export async function executeDiscoveryShowcaseRoute({ protocolId, read, press, s
     await save(`showcase-attempt-${attempt}.json`, {
       protocolId,
       routeStatus: protocol.routeStatus,
+      routeRevision: protocol.routeRevision ?? 1,
+      declaredRoute: protocol.route,
       attempt,
       won: isWon(),
       states,
@@ -604,6 +649,39 @@ export function validateDiscoveryShowcaseState(
   return state;
 }
 
+/** Interpret the existing public Library row ID, not an engine identity or a
+ * guessed suffix. The aliases come from the exact selected archive source. */
+export function selectDiscoveryShowcaseCard(capture, selection) {
+  if (
+    !capture ||
+    !Array.isArray(capture.rows) ||
+    capture.rows.length > 128 ||
+    capture.total !== capture.rows.length ||
+    !selection?.aliases?.length
+  )
+    fail('Public showcase chooser metadata is missing or exceeds its bound.');
+  const matches = capture.rows.filter((row) => {
+    if (!row.visible || row.disabled || row.name !== selection.name || !text(row.id, 8192))
+      return false;
+    try {
+      const id = JSON.parse(row.id);
+      return (
+        Array.isArray(id) &&
+        id.length === 5 &&
+        id[0] === `journey:${selection.editionId}` &&
+        id[1] === selection.editionId &&
+        id[4] === '' &&
+        selection.aliases.some((alias) => id[2] === alias.campaign && id[3] === alias.mission)
+      );
+    } catch {
+      return false;
+    }
+  });
+  if (matches.length !== 1)
+    fail('Exact showcase mission is not uniquely available in the public chooser.');
+  return matches[0];
+}
+
 export function validateDiscoveryShowcaseCopy(expected, observed, locale) {
   if (
     !['en', 'uk'].includes(locale) ||
@@ -615,12 +693,38 @@ export function validateDiscoveryShowcaseCopy(expected, observed, locale) {
   return observed;
 }
 
+/** Use the existing public compact header or native Home path. A viewport
+ * change may hide header actions; it never authorizes clicking hidden controls. */
+export async function visitDiscoveryShowcaseCollection({ page, click, visit, record, onRoute }) {
+  const route = (await page.locator('#shell-collection').isVisible()) ? 'header' : 'home';
+  await onRoute(route);
+  if (route === 'home') {
+    await click('#shell-menu');
+    await page.locator('#shell-home').waitFor({ state: 'visible' });
+    await click('#shell-home #shell-gallery');
+  } else await click('#shell-collection');
+  await page.locator('#collection-dialog').waitFor({ state: 'visible' });
+  await visit(route);
+  await click('#collection-back');
+  await page.locator('#collection-dialog').waitFor({ state: 'hidden' });
+  if (route === 'home') {
+    // Native dialog cancel restores the existing won result; it does not start a run.
+    await page.keyboard.press('Escape');
+    await page.locator('#shell-home').waitFor({ state: 'hidden' });
+  }
+  const state = await record(`collection ${route} return to won result`);
+  if (state.overlay.kind !== 'won' || state.overlay.hidden !== false || state.openDialogs.length)
+    fail('Closing Collection did not restore the underlying won result.');
+  return route;
+}
+
 /** Functional showcase navigation is intentionally separate from timing samples.
  * DOM evaluation below reads surfaces only; all choices use native public controls. */
 export async function observeDiscoveryShowcase({
   page,
   protocolId,
   showcaseCopy,
+  showcaseSelection,
   origin,
   record,
   screenshot,
@@ -710,43 +814,50 @@ export async function observeDiscoveryShowcase({
     )
       fail('Closing the discovery did not restore its public opener focus.');
   };
-  const collection = async (label, locale) => {
-    await click('#collection-button');
-    await page.locator('#collection-dialog').waitFor({ state: 'visible' });
-    await page.locator('#completion-reward-exhibit-select').selectOption(protocol.campaignId);
-    await page.waitForFunction(
-      (rewardId) =>
-        globalThis.document.querySelector(
-          `#completion-reward-shelf article[data-reward-id="${rewardId}"]`,
-        )?.dataset.earned === 'true',
-      protocol.rewardId,
-    );
-    const progress = await page.evaluate(
-      (rewardId) => ({
-        earned: globalThis.document.querySelector(
-          `#completion-reward-shelf article[data-reward-id="${rewardId}"]`,
-        )?.dataset.earned,
-        finales: [
-          ...globalThis.document.querySelectorAll(
-            '#completion-reward-shelf article[data-scope="campaign"]',
-          ),
-        ].map((node) => ({ id: node.dataset.rewardId, earned: node.dataset.earned })),
-      }),
-      protocol.rewardId,
-    );
-    await save(`${label}-progress.json`, progress);
-    if (
-      progress.earned !== 'true' ||
-      !progress.finales.length ||
-      progress.finales.some((row) => row.earned !== 'false')
-    )
-      fail('The first mission discovery or still-locked campaign promise is inaccurate.');
-    await viewer(collectionButton, label, locale);
-    await click('#collection-back');
-    await page.waitForFunction(
-      () => !globalThis.document.getElementById('collection-dialog')?.open,
-    );
-  };
+  const collection = async (label, locale) =>
+    visitDiscoveryShowcaseCollection({
+      page,
+      click,
+      record,
+      onRoute: (route) =>
+        save(`${label}-navigation.json`, {
+          route,
+          locale,
+          underlying: 'won-result',
+          requestedAt: new Date().toISOString(),
+        }),
+      visit: async () => {
+        await page.locator('#completion-reward-exhibit-select').selectOption(protocol.campaignId);
+        await page.waitForFunction(
+          (rewardId) =>
+            globalThis.document.querySelector(
+              `#completion-reward-shelf article[data-reward-id="${rewardId}"]`,
+            )?.dataset.earned === 'true',
+          protocol.rewardId,
+        );
+        const progress = await page.evaluate(
+          (rewardId) => ({
+            earned: globalThis.document.querySelector(
+              `#completion-reward-shelf article[data-reward-id="${rewardId}"]`,
+            )?.dataset.earned,
+            finales: [
+              ...globalThis.document.querySelectorAll(
+                '#completion-reward-shelf article[data-scope="campaign"]',
+              ),
+            ].map((node) => ({ id: node.dataset.rewardId, earned: node.dataset.earned })),
+          }),
+          protocol.rewardId,
+        );
+        await save(`${label}-progress.json`, progress);
+        if (
+          progress.earned !== 'true' ||
+          !progress.finales.length ||
+          progress.finales.some((row) => row.earned !== 'false')
+        )
+          fail('The first mission discovery or still-locked campaign promise is inaccurate.');
+        await viewer(collectionButton, label, locale);
+      },
+    });
   await page.goto(`${origin}/game/index.html?edition=${protocol.editionId}`, {
     waitUntil: 'domcontentloaded',
   });
@@ -774,9 +885,34 @@ export async function observeDiscoveryShowcase({
   await click('#shell-play');
   await page.locator('#journey-chooser').waitFor({ state: 'visible' });
   await page.locator('#journey-search').fill(protocol.missionName);
-  const card = page.locator(`button.journey-card[data-mission-id$="/${protocol.missionId}"]`);
-  if ((await card.count()) !== 1)
-    fail('Exact showcase mission is not uniquely available in the public chooser.');
+  await page.locator('#journey-cards button.journey-card').first().waitFor({ state: 'attached' });
+  const chooser = await page.locator('#journey-cards button.journey-card').evaluateAll((nodes) => ({
+    total: nodes.length,
+    rows: nodes.slice(0, 128).map((node) => {
+      const bounds = node.getBoundingClientRect();
+      const style = globalThis.getComputedStyle(node);
+      return {
+        id: (node.dataset.missionId ?? '').slice(0, 8192),
+        name: node.querySelector('strong')?.textContent?.slice(0, 256),
+        text: node.textContent?.slice(0, 512),
+        disabled: node.disabled,
+        visible:
+          !node.closest('[hidden],[inert],[aria-hidden="true"]') &&
+          style.display !== 'none' &&
+          style.visibility !== 'hidden' &&
+          Number(style.opacity) !== 0 &&
+          bounds.width > 0 &&
+          bounds.height > 0,
+        bounds: { x: bounds.x, y: bounds.y, width: bounds.width, height: bounds.height },
+      };
+    }),
+  }));
+  await save('showcase-chooser.json', { selection: showcaseSelection, ...chooser });
+  const chosen = selectDiscoveryShowcaseCard(chooser, showcaseSelection);
+  const card = page.locator(
+    `#journey-cards button.journey-card[data-mission-id=${JSON.stringify(chosen.id)}]`,
+  );
+  if ((await card.count()) !== 1) fail('The exact public chooser row changed before activation.');
   await card.scrollIntoViewIfNeeded();
   await card.focus();
   await page.keyboard.press('Enter');
@@ -859,6 +995,7 @@ export async function observeDiscoveryRuntime({
   const events = [],
     errors = [];
   let browser,
+    context,
     page,
     server,
     cdp,
@@ -1073,7 +1210,7 @@ export async function observeDiscoveryRuntime({
     });
     const { chromium } = await import(pathToFileURL(path.resolve(playwrightModule)).href);
     browser = await chromium.launch({ channel: 'chrome', headless: true });
-    const context = await browser.newContext({
+    context = await browser.newContext({
       viewport: { width: 1280, height: 633 },
       deviceScaleFactor: 1,
       locale: 'en-US',
@@ -1138,6 +1275,7 @@ export async function observeDiscoveryRuntime({
         page,
         protocolId: plan.protocol,
         showcaseCopy: checked.showcaseCopy,
+        showcaseSelection: checked.showcaseSelection,
         origin: server.origin,
         record,
         screenshot,
@@ -1327,6 +1465,7 @@ export async function observeDiscoveryRuntime({
   } finally {
     await finishDiscoveryObservation({
       page,
+      context,
       cdp,
       browser,
       server,
