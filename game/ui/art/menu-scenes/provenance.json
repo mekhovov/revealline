@@ -1,7 +1,7 @@
 {
   "format": "revealline-menu-scenes.v1",
   "created": "2026-09-28",
-  "encoding": "Pillow 12.1.1, libwebp",
+  "encoding": "Pillow 12.1.1, libwebp; supplied DroneAid main PNG copied unchanged",
   "assets": [
     {
       "id": "fpv",
@@ -211,6 +211,62 @@
       "width": 640,
       "height": 320,
       "process": "WebP lossless; decoded RGBA verified identical"
+    },
+    {
+      "id": "fpv-versus",
+      "file": "fpv-versus.webp",
+      "bytes": 286552,
+      "sha256": "ad084d205c1d246309f8b8c841db0ba4d49fd9e82d65c8a4a851a99c51fe546a",
+      "source": "authoring/library/menu-scenes/fpv-versus-v1.png",
+      "sourceSha256": "f83aeadae7832b0f50fd78465bd4f71e3e9750f6f5792191a9524f39ffcdaa95",
+      "width": 1536,
+      "height": 1024,
+      "process": "WebP quality 94; no cropping, resizing or retouching",
+      "promptSource": "authoring/library/menu-scenes/fpv-mode-prompts.json",
+      "generator": "OpenAI built-in image_gen",
+      "rights": "Original generated project artwork; existing FPV project art used as reference"
+    },
+    {
+      "id": "fpv-versus-portrait",
+      "file": "fpv-versus-portrait.webp",
+      "bytes": 285890,
+      "sha256": "678fa69cdd4490d669ab941be176ee1ed495dac3e129e3889427ff42b32e5170",
+      "source": "authoring/library/menu-scenes/fpv-versus-portrait-v1.png",
+      "sourceSha256": "7065a6b6392bbb308aeca8a64a4e5782abc08b919fb120097ab02873497badfe",
+      "width": 941,
+      "height": 1672,
+      "process": "WebP quality 94; no cropping, resizing or retouching",
+      "promptSource": "authoring/library/menu-scenes/fpv-mode-prompts.json",
+      "generator": "OpenAI built-in image_gen",
+      "rights": "Original generated project artwork; existing FPV project art used as reference"
+    },
+    {
+      "id": "fpv-team",
+      "file": "fpv-team.webp",
+      "bytes": 361554,
+      "sha256": "989ed6ff4d81da4b41d850aa692eeae39330cb03fa6d4167efbb7652cf4b1c38",
+      "source": "authoring/library/menu-scenes/fpv-team-v1.png",
+      "sourceSha256": "12e0441e48e25ab418cf49fae754146d5e8f8f2251d3097c728f4434e699e1f5",
+      "width": 1536,
+      "height": 1024,
+      "process": "WebP quality 94; no cropping, resizing or retouching",
+      "promptSource": "authoring/library/menu-scenes/fpv-mode-prompts.json",
+      "generator": "OpenAI built-in image_gen",
+      "rights": "Original generated project artwork; existing FPV project art used as reference"
+    },
+    {
+      "id": "fpv-team-portrait",
+      "file": "fpv-team-portrait.webp",
+      "bytes": 293974,
+      "sha256": "658ebdb4b4088997cce3251a55f8409ed9f0514d379f46e125815fd5a94a43a2",
+      "source": "authoring/library/menu-scenes/fpv-team-portrait-v1.png",
+      "sourceSha256": "ad1188957c019213e696c16ef964cfae67062e36e3302bb31e085b68e6b6d715",
+      "width": 941,
+      "height": 1672,
+      "process": "WebP quality 94; no cropping, resizing or retouching",
+      "promptSource": "authoring/library/menu-scenes/fpv-mode-prompts.json",
+      "generator": "OpenAI built-in image_gen",
+      "rights": "Original generated project artwork; existing FPV project art used as reference"
     }
   ]
 }

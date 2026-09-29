@@ -141,8 +141,8 @@
   {
     "id": "runtime-menu-scene-provenance",
     "path": "game/ui/art/menu-scenes/provenance.json",
-    "sha256": "598853d6053f01942157c71c81d4ac03d716715fb2df3e7c2bc22c0f0280e145",
-    "bytes": 9374,
+    "sha256": "37d56a5e0e532cac828c10ee1c67855dcf9c142a13c3819e0203c4cc4fbd788f",
+    "bytes": 12155,
     "publication": "public",
     "approved": true,
     "dependencies": []
@@ -413,6 +413,42 @@
     "path": "game/ui/art/menu-scenes/droneaid-wordmark-light.svg",
     "sha256": "cecf8a67c455d4a7f931594e2ffc4481c473c3475a3316b8cdd876c39abb1e5b",
     "bytes": 119252,
+    "publication": "public",
+    "approved": true,
+    "dependencies": ["runtime-menu-scene-provenance"]
+  },
+  {
+    "id": "runtime-menu-scene-fpv-versus",
+    "path": "game/ui/art/menu-scenes/fpv-versus.webp",
+    "sha256": "ad084d205c1d246309f8b8c841db0ba4d49fd9e82d65c8a4a851a99c51fe546a",
+    "bytes": 286552,
+    "publication": "public",
+    "approved": true,
+    "dependencies": ["runtime-menu-scene-provenance"]
+  },
+  {
+    "id": "runtime-menu-scene-fpv-versus-portrait",
+    "path": "game/ui/art/menu-scenes/fpv-versus-portrait.webp",
+    "sha256": "678fa69cdd4490d669ab941be176ee1ed495dac3e129e3889427ff42b32e5170",
+    "bytes": 285890,
+    "publication": "public",
+    "approved": true,
+    "dependencies": ["runtime-menu-scene-provenance"]
+  },
+  {
+    "id": "runtime-menu-scene-fpv-team",
+    "path": "game/ui/art/menu-scenes/fpv-team.webp",
+    "sha256": "989ed6ff4d81da4b41d850aa692eeae39330cb03fa6d4167efbb7652cf4b1c38",
+    "bytes": 361554,
+    "publication": "public",
+    "approved": true,
+    "dependencies": ["runtime-menu-scene-provenance"]
+  },
+  {
+    "id": "runtime-menu-scene-fpv-team-portrait",
+    "path": "game/ui/art/menu-scenes/fpv-team-portrait.webp",
+    "sha256": "658ebdb4b4088997cce3251a55f8409ed9f0514d379f46e125815fd5a94a43a2",
+    "bytes": 293974,
     "publication": "public",
     "approved": true,
     "dependencies": ["runtime-menu-scene-provenance"]

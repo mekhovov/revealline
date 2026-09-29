@@ -9,12 +9,17 @@ from pathlib import Path
 from PIL import Image
 import hashlib
 import json
+import argparse
 
 ROOT = Path(__file__).resolve().parents[1]
 OUT = ROOT / 'game/ui/art/menu-scenes'
 SOURCES = {
     'fpv': 'game/ui/art/field-kit/prepared/title-hangar-v1.png',
     'fpv-portrait': 'game/ui/art/field-kit/prepared/title-hangar-portrait-v1.png',
+    'fpv-versus': 'authoring/library/menu-scenes/fpv-versus-v1.png',
+    'fpv-versus-portrait': 'authoring/library/menu-scenes/fpv-versus-portrait-v1.png',
+    'fpv-team': 'authoring/library/menu-scenes/fpv-team-v1.png',
+    'fpv-team-portrait': 'authoring/library/menu-scenes/fpv-team-portrait-v1.png',
     'ukraine': 'authoring/library/menu-scenes/ukraine-dawn-v1.png',
     'retro': 'authoring/library/menu-scenes/retro-rainy-arcade-v1.png',
     'coupa': 'game/editions/assets/coupa/home.png',
@@ -31,8 +36,14 @@ for slug in ['workshop-lights', 'parts-in-motion', 'makers-together', 'careful-h
     SOURCES[f'droneaid-nl-{slug}-theme'] = f'game/editions/assets/droneaid-nl/artwork-v2/droneaid-nl-{slug}-01.png'
 
 OUT.mkdir(parents=True, exist_ok=True)
-rows = []
+parser = argparse.ArgumentParser(description=__doc__)
+parser.add_argument('--only', action='append', choices=SOURCES, help='Encode only this scene; retain all other recorded bytes.')
+selected = parser.parse_args().only
+previous = json.loads((OUT / 'provenance.json').read_text()) if selected else {}
+rows = [row for row in previous.get('assets', []) if row['id'] not in selected] if selected else []
 for name, source in SOURCES.items():
+    if selected and name not in selected:
+        continue
     preserve_original = name == 'droneaid-nl-community'
     output = OUT / ('droneaid-main-background.png' if preserve_original else name + '.webp')
     with Image.open(ROOT / source) as original:
@@ -58,6 +69,10 @@ for name, source in SOURCES.items():
         'sourceSha256': hashlib.sha256((ROOT / source).read_bytes()).hexdigest(),
         'width': size[0], 'height': size[1],
         'process': process,
+        **({'promptSource': 'authoring/library/menu-scenes/fpv-mode-prompts.json',
+            'generator': 'OpenAI built-in image_gen',
+            'rights': 'Original generated project artwork; existing FPV project art used as reference'}
+           if name.startswith(('fpv-versus', 'fpv-team')) else {}),
     })
     print(name, len(data))
 (OUT / 'provenance.json').write_text(json.dumps({

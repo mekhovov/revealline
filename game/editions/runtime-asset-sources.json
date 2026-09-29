@@ -113,6 +113,18 @@
       "kind": "user-supplied-brand-original",
       "source": "authoring/library/droneaid-brand-kit-2026-09-29/wordmark-dark.svg",
       "description": "Unmodified official white-letter wordmark supplied by the user. Source filename denotes its dark-background use; runtime filename denotes light lettering. Existing shared propeller/logo receipts and install icons are unchanged."
+    },
+    {
+      "assetIds": [
+        "runtime-menu-scene-fpv-versus",
+        "runtime-menu-scene-fpv-versus-portrait",
+        "runtime-menu-scene-fpv-team",
+        "runtime-menu-scene-fpv-team-portrait"
+      ],
+      "kind": "generated-project-artwork-and-encoding-derivatives",
+      "source": "game/ui/art/menu-scenes/provenance.json",
+      "promptSource": "authoring/library/menu-scenes/fpv-mode-prompts.json",
+      "description": "Four original built-in image_gen FPV Versus/Team compositions, landscape and portrait. Generated sources and exact prompts are retained; WebP encoding preserves dimensions, with no cropping or retouching. They remain default-game artwork and are excluded from Solo-only company edition packages."
     }
   ]
 }

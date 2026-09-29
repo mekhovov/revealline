@@ -14,7 +14,7 @@ import {
 } from '../ui/menu-scenes.mjs';
 import { Document, Events } from './helpers/couch-dom.mjs';
 
-function fixture(context = {}) {
+function fixture(context = {}, mode = 'solo') {
   const doc = new Document();
   const win = new Events();
   win.CustomEvent = class extends Event {
@@ -122,7 +122,7 @@ function fixture(context = {}) {
   };
   const api = attachMenuScene({
     root,
-    mode: 'solo',
+    mode,
     getContext: () => context,
     createMotion,
     createSignalLoss,
@@ -190,6 +190,68 @@ test('all 18 themes resolve explicitly, company mapping works, unknown IDs safel
   );
   assert.equal(resolveMenuScene({ themeId: '__proto__', editionId: 'constructor' }).id, 'fpv');
   assert.equal(resolveMenuScene({ themeId: '../../private.png' }).id, 'fpv');
+});
+
+test('FPV mode compositions keep the theme identity, safe mode fallback and Solo-only edition boundary', () => {
+  for (const mode of ['versus', 'team']) {
+    const profile = resolveMenuScene({ themeId: 'fpv', mode });
+    assert.equal(profile.id, 'fpv');
+    assert.equal(profile.composition, `fpv-${mode}`);
+    assert.equal(
+      profile,
+      resolveMenuScene({ themeId: 'fpv', mode }),
+      'Stable profile identity avoids renderer churn.',
+    );
+    assert.notEqual(profile.landscape, MENU_SCENES.fpv.landscape);
+    assert.notEqual(profile.portrait, MENU_SCENES.fpv.portrait);
+    assert.equal(
+      resolveMenuScene({ themeId: 'fpv', editionId: 'coupa-all', mode }),
+      MENU_SCENES.fpv,
+    );
+    for (const themeId of ['ukraine', 'retro', 'coupa'])
+      assert.equal(resolveMenuScene({ themeId, mode }), MENU_SCENES[themeId]);
+  }
+  for (const mode of ['solo', '__proto__', 'constructor', '../../private'])
+    assert.equal(resolveMenuScene({ themeId: 'fpv', mode }), MENU_SCENES.fpv);
+  assert.equal(Object.keys(MENU_SCENES).length, 18);
+});
+
+test('FPV mode and orientation choose one authored bitmap, reset reception and preserve focus and renderer', () => {
+  const f = fixture({ themeId: 'fpv' }, 'versus');
+  f.menu.focus();
+  f.load(1536, 1024);
+  const image = f.scene.querySelector('.menu-scene-art');
+  const renderer = f.renderer,
+    receiver = f.receiver;
+  assert.ok(
+    image.src.endsWith('/fpv-versus.webp'),
+    'Host mode works without a duplicate context mode.',
+  );
+  for (const [mode, vertical, suffix] of [
+    ['team', false, 'fpv-team.webp'],
+    ['team', true, 'fpv-team-portrait.webp'],
+    ['versus', true, 'fpv-versus-portrait.webp'],
+    ['solo', true, 'fpv-portrait.webp'],
+  ]) {
+    const resets = receiver.resets;
+    f.context.mode = mode;
+    f.portrait.matches = vertical;
+    f.api.update();
+    assert.ok(image.src.endsWith(`/${suffix}`));
+    assert.equal(receiver.resets, resets + 1);
+    assert.equal(renderer.runs.at(-1), false, 'New artwork must decode before animation resumes.');
+    f.load(vertical ? 941 : 1536, vertical ? 1672 : 1024);
+    assert.equal(f.renderer, renderer);
+    assert.equal(f.receiver, receiver);
+    assert.equal(renderer.runs.at(-1), true);
+    assert.equal(f.scene.querySelectorAll('img').length, 1);
+    assert.equal(f.doc.activeElement, f.menu);
+    f.api.update();
+    assert.equal(receiver.resets, resets + 1);
+  }
+  f.api.dispose();
+  assert.equal(renderer.disposed, 1);
+  assert.equal(receiver.disposed, 1);
 });
 
 test('every scene retains bounded artwork anchors and one shared image/canvas plane without moving stickers', () => {
@@ -269,11 +331,15 @@ test('actual portrait and landscape crops retain a visible full-strength artwork
     bounds = { width, height };
     const vertical = height > width;
     f.portrait.matches = vertical;
-    for (const profile of Object.values(MENU_SCENES)) {
+    for (const profile of [
+      ...Object.values(MENU_SCENES),
+      ...['versus', 'team'].map((mode) => resolveMenuScene({ themeId: 'fpv', mode })),
+    ]) {
       // The supplied DroneAid poster intentionally preserves its photographed
       // geometry and uses only the shared arrival and receiver treatment.
       if (profile.id === 'droneaid-nl-community') continue;
       f.context.themeId = profile.id;
+      f.context.mode = profile.composition?.slice(4) ?? 'solo';
       f.api.update();
       const source = (vertical ? profile.portrait : profile.landscape).split('/').at(-1);
       const asset = assets.get(source);
@@ -399,7 +465,10 @@ test('scene files and provenance exist, match checksums and stay below 2 MiB per
     18,
     'Each theme, including both aggregate overviews, has its own distinct composition.',
   );
-  for (const scene of Object.values(MENU_SCENES)) {
+  for (const scene of [
+    ...Object.values(MENU_SCENES),
+    ...['versus', 'team'].map((mode) => resolveMenuScene({ themeId: 'fpv', mode })),
+  ]) {
     for (const path of [scene.landscape, scene.portrait]) {
       const file = path.split('/').at(-1),
         asset = assets.get(file);
@@ -414,6 +483,49 @@ test('scene files and provenance exist, match checksums and stay below 2 MiB per
       } else assert.equal(bytes.toString('ascii', 8, 12), 'WEBP');
     }
   }
+});
+
+test('FPV mode originals, style references and prompts are bound to their delivered derivatives', async () => {
+  const root = new URL('../../', import.meta.url);
+  const prompts = JSON.parse(
+    await readFile(new URL('authoring/library/menu-scenes/fpv-mode-prompts.json', root)),
+  );
+  const provenance = JSON.parse(
+    await readFile(new URL('../ui/art/menu-scenes/provenance.json', import.meta.url)),
+  );
+  assert.equal(prompts.generator, 'OpenAI built-in image_gen');
+  assert.deepEqual(prompts.images.map((entry) => entry.id).sort(), [
+    'fpv-team',
+    'fpv-team-portrait',
+    'fpv-versus',
+    'fpv-versus-portrait',
+  ]);
+  const sources = new Set();
+  for (const entry of prompts.images) {
+    const record = provenance.assets.find((asset) => asset.id === entry.id);
+    assert.ok(record);
+    const original = await readFile(new URL(record.source, root));
+    const digest = createHash('sha256').update(original).digest('hex');
+    assert.equal(digest, entry.sourceSha256);
+    assert.equal(digest, record.sourceSha256);
+    assert.equal(record.width, original.readUInt32BE(16));
+    assert.equal(record.height, original.readUInt32BE(20));
+    assert.ok(entry.prompt.length > 300, 'Retain the complete generation specification.');
+    for (const [reference, hash] of Object.entries(entry.referenceSha256)) {
+      assert.equal(
+        createHash('sha256')
+          .update(await readFile(new URL(reference, root)))
+          .digest('hex'),
+        hash,
+      );
+    }
+    sources.add(digest);
+  }
+  assert.equal(
+    sources.size,
+    4,
+    'Landscape/portrait and opposing/linked arrangements are distinct originals.',
+  );
 });
 
 test('DroneAid aggregate uses the exact supplied photograph and records its unchanged source', async () => {
@@ -622,13 +734,12 @@ test('receiver interference samples the original artwork into its own canvas and
   f.api.dispose();
 });
 
-test('receiver source generation resets on changed artwork but not mode, resize, pause or repeated load', () => {
+test('receiver source generation resets on changed artwork but not resize, pause or repeated load', () => {
   const f = fixture({ themeId: 'fpv' });
   f.load();
   const receiver = f.receiver;
   const initialResets = receiver.resets;
   const sameSourceUpdates = () => {
-    f.context.mode = f.context.mode === 'team' ? 'solo' : 'team';
     f.api.update();
     f.api.update();
     f.resizer.callback();

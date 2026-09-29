@@ -267,6 +267,52 @@ const indoorActors = new Set([
   'droneaid-nl-shared-horizon-theme',
 ]);
 
+// Mode artwork belongs to its existing world; it is not a theme, campaign or
+// capability. Selected Solo editions project this map to an empty object.
+export const MENU_SCENE_COMPOSITIONS = Object.freeze({
+  fpv: Object.freeze({
+    versus: Object.freeze({
+      composition: 'fpv-versus',
+      landscape: './art/menu-scenes/fpv-versus.webp',
+      portrait: './art/menu-scenes/fpv-versus-portrait.webp',
+      landscapePosition: '70% 50%',
+      portraitPosition: '50% 50%',
+      environment: freezeEnvironment([
+        ['cloud', 64, 8, 28, 16, -4, 16],
+        ['lamp', 51, 15, 7, 5, -1, 4.8],
+        ['foliage', 82, 3, 16, 17, -2, 7],
+        ['beam', 74, 46, 18, 9, -2, 8],
+      ]),
+      portraitEnvironment: freezeEnvironment([
+        ['cloud', 75, 35, 21, 10, -4, 16],
+        ['lamp', 11, 39, 10, 3, -1, 4.8],
+        ['foliage', 84, 31, 14, 9, -2, 7],
+        ['beam', 64, 65, 21, 7, -2, 8],
+      ]),
+    }),
+    team: Object.freeze({
+      composition: 'fpv-team',
+      landscape: './art/menu-scenes/fpv-team.webp',
+      portrait: './art/menu-scenes/fpv-team-portrait.webp',
+      landscapePosition: '70% 50%',
+      portraitPosition: '50% 50%',
+      environment: freezeEnvironment([
+        ['cloud', 68, 10, 24, 15, -4, 16],
+        ['lamp', 38, 20, 7, 4, -1, 4.8],
+        ['foliage', 82, 3, 15, 18, -2, 7],
+        ['beam', 58, 49, 12, 10, -2, 8],
+      ]),
+      portraitEnvironment: freezeEnvironment([
+        ['cloud', 82, 37, 15, 10, -4, 16],
+        ['lamp', 4, 43, 11, 3, -1, 4.8],
+        ['foliage', 77, 32, 11, 12, -2, 7],
+        ['beam', 60, 63, 13, 6, -2, 8],
+      ]),
+    }),
+  }),
+});
+const compositionProfiles = new WeakMap();
+
 export const MENU_SCENES = Object.freeze(
   Object.fromEntries(
     rows.map(
@@ -335,10 +381,18 @@ const EDITION_SCENES = Object.freeze({
   ),
 });
 
-export function resolveMenuScene({ themeId, editionId } = {}) {
-  if (Object.hasOwn(MENU_SCENES, themeId)) return MENU_SCENES[themeId];
+export function resolveMenuScene({ themeId, editionId, mode } = {}) {
   const edition = Object.hasOwn(EDITION_SCENES, editionId) ? EDITION_SCENES[editionId] : null;
-  return (edition && MENU_SCENES[edition]) || MENU_SCENES.fpv;
+  const profile = Object.hasOwn(MENU_SCENES, themeId)
+    ? MENU_SCENES[themeId]
+    : (edition && MENU_SCENES[edition]) || MENU_SCENES.fpv;
+  // Editions support Solo only. Worlds without authored mode artwork retain
+  // their base composition; an unknown world uses the approved FPV fallback.
+  const composition = !editionId && MENU_SCENE_COMPOSITIONS[profile.id]?.[menuSceneMode(mode)];
+  if (!composition) return profile;
+  if (!compositionProfiles.has(composition))
+    compositionProfiles.set(composition, Object.freeze({ ...profile, ...composition }));
+  return compositionProfiles.get(composition);
 }
 
 export function menuSceneMode(mode) {
