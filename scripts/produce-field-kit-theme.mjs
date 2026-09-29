@@ -179,8 +179,9 @@ const REVIEWED_RECIPE_INPUTS = {
     ],
   },
   audio: {
-    sha256: 'd9650ffde4c938064703de7c1e8ec987ac1efc1b6470ebcad4ca4ab459a32018',
+    sha256: '5af8c806642d4ce914a680897f0c62ac1d21bf0921cbb97894a8e841017c5f89',
     evidence: [
+      'Scoped saved-style persistence continuation: docs/verification/audio-style-persistence-2026-09-29/review.json sha256:b34368c87ad3b8c0ef348fba4f7fd5da2de235a500b7f36fe27c9d28f0a58c61; exact28 inputs sha256:5af8c806642d4ce914a680897f0c62ac1d21bf0921cbb97894a8e841017c5f89. The feature changes only soundtrack-style-taxonomy.mjs and soundtrack-panel.mjs; the exact closure also carries accepted main’s game/app.mjs Steam Deck input. The top-level Audio controls now derive their visible selection from the authoritative saved listening mode and genres after reload. Focused tests include an actual dispose/remount persistence regression. Eight existing procedural recipes, routing and payloads remain unchanged; exact-source CI, frozen/public, listening and physical-device acceptance remain separate.',
       'Scoped PR #770 Audio playback correction continuation: docs/verification/audio-style-menu-correction-2026-09-28/review.json sha256:62c1dac1be4286acdb8201aab99b6d3c5e2e2b282e1c88cb34d88af527172e09; exact28 inputs sha256:d9650ffde4c938064703de7c1e8ec987ac1efc1b6470ebcad4ca4ab459a32018. Only soundtrack-player.mjs and soundtrack-panel.mjs changed: saved listening preferences are isolated from unsaved Music Studio drafts, newer transport intent wins delayed playback, identity-owned catalogue retry survives close, and queue-capacity copy is corrected. The associated test-evidence repair pins the exact accepted-main production97 predecessor oracle. Exact production98/audio50 predecessor fixture sha256:e397af798928a72502c970276fe212eaad8d2a4889f5afe02587559244496714 is bound separately. Eight existing procedural recipes, routing and payloads remain unchanged; production generation, hosted, frozen/public, listening and physical-device acceptance remain separate.',
       'Scoped v0.142.1 Audio menu and style taxonomy continuation: docs/verification/audio-style-menu-2026-09-28/review.json sha256:bc87031d46ded1ace2cc62c6ca87e2ce90ccbb043db7c5fdb653d262c3b94f49; exact28 inputs sha256:9f0bf41c491a44b4ac585975fd444f7e2e5822534914f36b0213157861173344. Audio settings expose transport and broad style selection, automatically mix matching archive and local music, separate Synth/Electronic, combine UA/Ukrainian and require exact Cyrillic ФПВ. The dependency closure binds the quick controls and taxonomy modules. Eight existing procedural recipes and payloads remain unchanged; hosted, frozen/public, listening and physical-device acceptance remain separate.',
       'Scoped player-readiness17 ownership source continuation: docs/verification/player-readiness17-audio-continuation-2026-09-28/review.json sha256:0584016a71b220780cc8912666638c468550c7167c2c1084b28b7952f27fa608; exact26 inputs sha256:124a7d186850bd1175bfc45bafba2f19912c89bcb271b5a0c2773e9ad5441b34. Existing eight recipes, routing and payloads unchanged; theme96/audio48 and all predecessors retained. Append-only production and all hosted/frozen/public/listening/device/human acceptance remain separate.',
@@ -369,6 +370,13 @@ export function verifyFieldKitAudioStyleMenuCorrectionReview(
   );
 }
 
+export function verifyFieldKitAudioStylePersistenceReview(currentBytes, priorBytes) {
+  return (
+    hash(currentBytes) === 'b34368c87ad3b8c0ef348fba4f7fd5da2de235a500b7f36fe27c9d28f0a58c61' &&
+    hash(priorBytes) === '62c1dac1be4286acdb8201aab99b6d3c5e2e2b282e1c88cb34d88af527172e09'
+  );
+}
+
 /** Explicit dependency fingerprints; a helper change must reopen its review group. */
 export async function fieldKitRecipeSources(read) {
   return Object.fromEntries(
@@ -487,6 +495,15 @@ export async function createFieldKitProduction({ projectRoot = root } = {}) {
   )
     throw new Error(
       'Audio style-menu correction review or production98 predecessor oracle bytes changed; production approval must reopen.',
+    );
+  if (
+    !verifyFieldKitAudioStylePersistenceReview(
+      await read('docs/verification/audio-style-persistence-2026-09-29/review.json'),
+      await read('docs/verification/audio-style-menu-correction-2026-09-28/review.json'),
+    )
+  )
+    throw new Error(
+      'Audio saved-style persistence review bytes changed; production approval must reopen.',
     );
   if (
     !verifyFieldKitAudioStyleMenuReview(
