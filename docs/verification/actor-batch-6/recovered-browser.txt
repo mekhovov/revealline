@@ -1,9 +1,0 @@
-Browser tab: 24, Title: "Playable comparison — Reveal Line", URL: "http://127.0.0.1:8807/authoring/playable-benchmark/".
-The following is a diff from the previous accessibility tree with ~ and + representing changed and added elements, respectively. Removed elements are summarized by ID range.
-Removed element IDs: 49-50
-~				9 button Resume, ID: start
-~				10 button (disabled) Pause, ID: pause
-+			46 text Paused. Resume requires a fresh steering press.
-+			47 text Paused · 0.0% / 30% target · 2 lives · 0 points · 11.42 s · tick 1370
-~			48 text Recovered. 2 lives remain. Continue this attempt.
-The focused UI element is 0 AXWebArea Playable comparison — Reveal Line, URL: 127.0.0.1:8807/authoring/playable-benchmark/

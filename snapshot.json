@@ -1,0 +1,87 @@
+{
+  "format": "revealline-recovery-fragment-v1",
+  "capturedAt": "2026-09-29T15:27:53.723352+00:00",
+  "worktree": "<home>/.codex/worktrees/actor-loader-regression/go_test",
+  "branch": "refs/heads/codex/actor-rotor-motion",
+  "head": "752df72d66c1a1bbbebb95e9db72fe8de0e1f332",
+  "excluded": [],
+  "changes": [
+    {
+      "status": " M",
+      "path": "authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "object": "ecc292191e3bd4c0dab327528da45f155618959e",
+      "sha256": "e1f09e89979e7f7ad79d605af3e704a16ace6459b3c0810ad1105dcecef07d2a",
+      "bytes": 373346,
+      "mode": "100644"
+    },
+    {
+      "status": " M",
+      "path": "docs/character-game-feel-plan.md",
+      "object": "e19218f5ae63007ef16955e7257aaac6d7134185",
+      "sha256": "8ed0e395f486298d7e23d9fe55d407620279f8290d6dca75b4baf01e62fddae7",
+      "bytes": 42187,
+      "mode": "100644"
+    },
+    {
+      "status": " M",
+      "path": "game/app.mjs",
+      "object": "aeb728d1cfc3c41f0ea0bb1e5749c6ee56c15671",
+      "sha256": "273833163b8ad00950e83ecc97363a9e2d74551075ac170cfe1700394139e092",
+      "bytes": 461298,
+      "mode": "100644"
+    },
+    {
+      "status": "??",
+      "path": "docs/verification/actor-batch-24/README.md",
+      "object": "00e07570dcb8624a451556ea21c7bfaea5dcb743",
+      "sha256": "a3b6bcc8789fcb5793c66f7b1eaff153048dc350fe1383080fd7fc77ec831f4a",
+      "bytes": 4805,
+      "mode": "100644"
+    },
+    {
+      "status": "??",
+      "path": "game/test/hud-numeric-values.test.mjs",
+      "object": "e068480ec26de0aa12686ee871a48d431d1a38c3",
+      "sha256": "2144b959a74c6e2be4cd6f2d561bca075e7eff71bc5421d69ec686e451c6ea53",
+      "bytes": 3305,
+      "mode": "100644"
+    },
+    {
+      "status": "??",
+      "path": "game/test/sentry-impact-recovery-host.test.mjs",
+      "object": "f34b99a443ee94c4c82b946c4c0e45de91d39353",
+      "sha256": "07a47cb6427106d0d6530ad78cb186438c116d3a9d5c2f4037e0560ccbf12f1a",
+      "bytes": 13105,
+      "mode": "100644"
+    },
+    {
+      "status": "??",
+      "path": "game/test/solo-continue-freeze-presentation.test.mjs",
+      "object": "c133f65b8004602149338f8a58b4e96d6ddf5f38",
+      "sha256": "64d4b369622a5fd3b88e2e5b12e4518568c07f4a0eec20fa4ecbc9564c7b6052",
+      "bytes": 11532,
+      "mode": "100644"
+    }
+  ],
+  "indexEntries": [
+    {
+      "path": "authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "mode": "100644",
+      "object": "346570dd787852f808dc7a3cefc3691279a874e2",
+      "stage": 0
+    },
+    {
+      "path": "docs/character-game-feel-plan.md",
+      "mode": "100644",
+      "object": "5285cddb641ed6e1aa94a06409fff237b9b7f45d",
+      "stage": 0
+    },
+    {
+      "path": "game/app.mjs",
+      "mode": "100644",
+      "object": "39bee632076e53d8d3471371e5d051c7a9dee360",
+      "stage": 0
+    }
+  ],
+  "purpose": "Recovery only. These bytes are not release admission. Missing files, conflict stages and obsolete generated outputs are preserved as observations, not deletion or merge instructions."
+}

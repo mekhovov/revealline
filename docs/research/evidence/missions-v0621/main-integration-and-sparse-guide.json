@@ -1,8 +1,0 @@
-{
-  "worktree": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-missions-next",
-  "base": "4eb25587c566346204e6bb1d58a182acc0414872",
-  "tree": "709005c7064dc93e06a0bc19b72a33c0e3e73438",
-  "change": "Explicitly retain previously hydrated and edited controller-navigation guide in worktree sparse selection. No reapply/reset or new hydration.",
-  "beforeSha256": "13ea259f3ec342e6d6c51cc95c1067d8a684b9e2213dcc499e2c4a9ef44586da",
-  "afterSha256": "a4be2ac4f4bd8798595cc264c21139d6fa94adba8f5218e3f1877f33c4700e98"
-}
