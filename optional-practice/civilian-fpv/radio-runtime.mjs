@@ -160,7 +160,10 @@ export function createRadioRuntime({ getGamepads, onFreeze = () => {}, onReset =
       let next;
       try {
         next = Object.fromEntries(
-          ['arm', 'pause', 'reset'].map((key) => [key, radioSwitch(profile, pad, key)]),
+          ['arm', 'pause', 'reset'].map((key) => [
+            key,
+            radioSwitch(profile, pad, key, previous[key]),
+          ]),
         );
       } catch {
         freeze('invalid-sample');
@@ -175,8 +178,12 @@ export function createRadioRuntime({ getGamepads, onFreeze = () => {}, onReset =
         pickup = null;
         onReset();
       } else if (edges.pause) freeze('paused');
-      else if (active && profile.switches.arm && !next.arm) freeze('disarmed');
-      else if (!active && edges.arm && armOffSeen) requestArm();
+      else if (active && profile.switches.arm && !next.arm) {
+        freeze('disarmed');
+        // This sample already observed the deliberate OFF position. Preserve
+        // it so a subsequent ON edge does not require an extra OFF frame.
+        armOffSeen = true;
+      } else if (!active && edges.arm && armOffSeen) requestArm();
       previous = next;
       if (active) live = command;
       else
