@@ -36,7 +36,9 @@ failed on unchanged source: joining a controller activates the compatibility-cli
 shield, so its immediate synthetic mouse click never opened Settings. The test now
 uses a fresh modeled South press on the actual Options control; all following
 assertions remain. No runtime guard or timeout was weakened. Details and logs are
-linked in this directory and hashed in `manifest.json`.
+linked in this directory and hashed in `manifest.json`. Committed red TAP copies
+remove trailing whitespace only; the manifest records original and prepared hashes,
+and local `.cache/team-readability` retains the raw failures.
 
 ## Browser review
 

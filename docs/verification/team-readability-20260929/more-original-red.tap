@@ -8,9 +8,9 @@ not ok 1 - Team More exposes every global destination and returns collapsed acro
   failureType: 'testCodeFailure'
   error: |-
     Starting play retires the lobby disclosure.
-    
+
     true !== false
-    
+
   code: 'ERR_ASSERTION'
   name: 'AssertionError'
   expected: false
