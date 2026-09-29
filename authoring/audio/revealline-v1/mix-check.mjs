@@ -102,7 +102,7 @@ export async function inspectMixedEffects(buffers) {
   }
   return {
     method:
-      'Native OfflineAudioContext, real FeedbackDirector, six overlapping SFX scenarios with four movement layers, full buses and no compressor; no music or physical listening claim.',
+      'Native OfflineAudioContext, real FeedbackDirector, seven overlapping SFX scenarios with four movement layers, full buses and no compressor; no music or physical listening claim.',
     sampleRate: 48000,
     results,
   };
