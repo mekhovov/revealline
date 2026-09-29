@@ -242,9 +242,23 @@ export function attachDemoHost({
   async function prepare(source, { signal }) {
     const player = await source.create({ signal });
     let nextPicture = null,
-      nextPainter = null;
-    try {
+      nextPainter = null,
+      released = false;
+    const release = () => {
+      if (released) return;
+      released = true;
+      player.dispose?.();
+      nextPicture?.dispose();
+      nextPainter?.dispose?.();
+    };
+    const check = () => {
       if (signal.aborted) throw new DOMException('Cancelled', 'AbortError');
+    };
+    // A scene deadline must retire its live Worker and painter immediately,
+    // even when image/media loading never settles or ignores cancellation.
+    signal.addEventListener('abort', release, { once: true });
+    try {
+      check();
       const current = getContext(),
         entry = source.entry;
       const theme =
@@ -268,6 +282,7 @@ export function attachDemoHost({
         theme.classBodies?.[player.state.activeClassId] || theme.player,
         overrides,
       );
+      check();
       nextPicture = await resolveDemoPicture({
         entry,
         level: source.level,
@@ -277,7 +292,9 @@ export function attachDemoHost({
         readMedia,
         signal,
       });
-      if (signal.aborted) throw new DOMException('Cancelled', 'AbortError');
+      // A media decoder may have completed after the abort cleanup ran.
+      if (released) nextPicture.dispose();
+      check();
       if (nextPicture.artSeed !== null)
         nextPainter.setLevel(source.level, { seed: nextPicture.artSeed });
       const wrapper = {
@@ -299,11 +316,7 @@ export function attachDemoHost({
         advance: (dt) => player.advance(dt),
         exportRecording: () => player.exportRecording(),
         forkForPractice: (options) => player.forkForPractice(options),
-        dispose() {
-          player.dispose?.();
-          nextPicture.dispose();
-          nextPainter.dispose?.();
-        },
+        dispose: release,
       };
       owners.set(wrapper, {
         painter: nextPainter,
@@ -314,10 +327,10 @@ export function attachDemoHost({
       });
       return wrapper;
     } catch (failure) {
-      player.dispose?.();
-      nextPicture?.dispose();
-      nextPainter?.dispose?.();
+      release();
       throw failure;
+    } finally {
+      signal.removeEventListener('abort', release);
     }
   }
   function changed(snapshot) {

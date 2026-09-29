@@ -9,6 +9,7 @@ import { collectBuildFiles } from '../../scripts/game-cli.mjs';
 import { demoIdentity } from '../demo-catalog.mjs';
 import { applyGameplayTuning, resolveGameplayTuning } from '../gameplay-tuning.mjs';
 import { verifyReplay } from '../replay.mjs';
+import { demoLoadingClock, settleDemoLoading } from './helpers/demo-loading-clock.mjs';
 
 const json = async (relative) =>
   JSON.parse(await readFile(new URL(relative, import.meta.url), 'utf8'));
@@ -185,8 +186,9 @@ test('cancelled source discovery cannot return a late catalogue whose fetch igno
     },
   });
   controller.abort();
-  release();
   await assert.rejects(pending, { name: 'AbortError' });
+  release();
+  await settleDemoLoading();
 });
 
 test('frozen runtime variants are selected only after strict verification of the identical pinned input trace', async () => {
@@ -268,6 +270,7 @@ test('the ordinary game build includes every dynamic demo asset and Worker modul
     'game/demo-library.mjs',
     'game/demo-sources.mjs',
     'game/demo-director.mjs',
+    'game/demo-loading.mjs',
     'game/demo-bot.mjs',
     'game/demo-bot-player.mjs',
     'game/demo-bot-worker.mjs',
@@ -282,4 +285,74 @@ test('the ordinary game build includes every dynamic demo asset and Worker modul
       `${path} must be included under nested static hosting and offline packaging.`,
     );
   assert.equal(files.has('game/test/demo-sources.test.mjs'), false);
+});
+
+test('a personal cache that never settles times out without discarding bundled sources', async () => {
+  const clock = demoLoadingClock();
+  const catalogText = JSON.stringify(await json('../demo-data/catalog.json'));
+  let librarySignal;
+  const pending = loadDemoSources({
+    entries,
+    WorkerClass: null,
+    loading: clock.options,
+    fetch: async () => ({
+      ok: true,
+      text: async () => catalogText,
+    }),
+    library: {
+      list: (_, { signal }) => {
+        librarySignal = signal;
+        return new Promise(() => {});
+      },
+    },
+  });
+  await settleDemoLoading();
+  assert.ok(librarySignal);
+  clock.advance(15000);
+  const sources = await pending;
+  assert.equal(sources.length, 6);
+  assert.ok(sources.every((source) => source.kind === 'replay'));
+  assert.equal(librarySignal.aborted, true);
+  assert.equal(clock.pending, 0);
+});
+
+test('a never-settling catalogue falls through to local sources and cancellation settles a hung cache', async () => {
+  const clock = demoLoadingClock();
+  let signal;
+  const pending = loadDemoSources({
+    entries: [],
+    WorkerClass: null,
+    loading: clock.options,
+    fetch: () => new Promise(() => {}),
+    library: { list: async () => [{ id: 'local-owner', levelId: 'one', campaignKey: 'local' }] },
+  });
+  clock.advance(15000);
+  assert.deepEqual(
+    (await pending).map((source) => source.id),
+    ['local-owner'],
+  );
+  assert.equal(clock.pending, 0);
+  const controller = new AbortController();
+  const cancelled = loadDemoSources({
+    entries: [],
+    WorkerClass: null,
+    loading: clock.options,
+    signal: controller.signal,
+    fetch: async () => ({
+      ok: true,
+      text: async () => '{"format":"revealline-demo-catalog.v1","clips":[]}',
+    }),
+    library: {
+      list: (_, options) => {
+        signal = options.signal;
+        return new Promise(() => {});
+      },
+    },
+  });
+  await settleDemoLoading();
+  assert.ok(signal);
+  controller.abort();
+  await assert.rejects(cancelled, { name: 'AbortError' });
+  assert.equal(signal.aborted, true);
+  assert.equal(clock.pending, 0);
 });

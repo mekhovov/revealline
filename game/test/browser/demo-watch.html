@@ -109,18 +109,26 @@
         </li>
         <li>
           Move to another tab or application and return during the run. Record physical audio/device
-          findings separately. Do not reload or edit served sources while observing.
+          findings separately. Do not edit served sources while observing. Reloading interrupts the
+          run; its latest saved checkpoint can be recovered, but never resumed or certified
+          complete.
         </li>
         <li>
-          After automatic completion or <strong>Stop observation</strong>, download the JSON.
-          Leaving this page discards the in-memory report.
+          Download JSON at any time. While running, it is explicitly incomplete and lacks terminal
+          source/storage checks. After automatic completion or <strong>Stop observation</strong>,
+          download the finalized report.
         </li>
       </ol>
       <p class="note">
         Five-second samples are bounded to 1,500. Long callback gaps are recorded as unobserved
         time, never invented activity. A completed duration is observation evidence, not automatic
         release acceptance, proof of audible output, or proof of execution while an OS freezes
-        JavaScript.
+        JavaScript. Automatic recovery uses the dedicated
+        <code>revealline-demo-watch-observer-v1</code> IndexedDB database, separate from all game
+        saves and profiles. It keeps two bounded reports: the latest incomplete checkpoint and last
+        finalized report. Starting a new observation replaces the incomplete slot. Periodic saves
+        are attempted every 15 seconds; page exit is best effort. A browser crash may lose newer
+        samples. Stored game keys/values are represented only by hashes, never raw storage data.
       </p>
       <nav aria-label="Observation controls">
         <label
@@ -137,6 +145,31 @@
       <pre id="observer-status" role="status">
 Waiting for the game. No observation has started.</pre
       >
+      <p id="observation-checkpoint-status" class="note" role="status">
+        Checking observer checkpoint availability…
+      </p>
+      <details>
+        <summary>Recovered reports from a previous run — never automatically resumed</summary>
+        <nav aria-label="Recovered observation controls">
+          <label
+            >Saved report
+            <select id="observation-recovered-kind">
+              <option value="checkpoint">Previous incomplete checkpoint</option>
+              <option value="final">Last finalized report</option>
+            </select>
+          </label>
+          <button id="observation-recovered-download" type="button" disabled>
+            Download recovered JSON
+          </button>
+          <button id="observation-clear-saved" type="button">Clear saved observer reports</button>
+        </nav>
+        <p id="observation-recovered-status" role="status">Reading previous observer reports…</p>
+        <textarea
+          id="observation-recovered-report"
+          readonly
+          aria-label="Recovered observation JSON"
+        ></textarea>
+      </details>
       <details>
         <summary>Current labels on the actual game controls</summary>
         <pre id="observer-controls">Waiting for game controls.</pre>
@@ -149,7 +182,7 @@ Waiting for the game. No observation has started.</pre
         allowfullscreen
       ></iframe>
       <details>
-        <summary>Completed report</summary>
+        <summary>Current report — incomplete while running or comparing terminal hashes</summary>
         <textarea id="observation-report" readonly aria-label="Observation JSON"></textarea>
       </details>
     </main>

@@ -89,6 +89,7 @@ const sourceFiles = [
   'game/demo-director.mjs',
   'game/demo-sources.mjs',
   'game/demo-catalog.mjs',
+  'game/demo-loading.mjs',
   'game/demo-bot.mjs',
   'game/demo-bot-player.mjs',
   'game/demo-bot-worker.mjs',
