@@ -2,24 +2,26 @@
 
 This is the current status register. It supersedes queue/status estimates in
 [28 September](plan-status-2026-09-28.md), without rewriting historical evidence.
-The approved order remains **C3 / C4 / C5 / C6 in parallel**, necessary C0/C1
-support, then C7/UX6 and **C2 last**. The [active plan](character-game-feel-plan.md)
-retains its compatibility, artwork and release requirements.
+The user has now approved **A → B → C → remaining work**:
+current characters and reliable play first, optional encounter variety second,
+one finished Ukrainian/FPV artwork cohort third. Necessary authoring and checks
+travel with their feature; broad tooling and additional editions follow later.
+**C2's formal human/game-feel study remains last.** This supersedes equal-priority
+C3/C4/C5/C6 expansion. The [active plan](character-game-feel-plan.md) retains its
+compatibility, artwork and release requirements.
 
 ## Public and queued
 
-- The live ordinary selector reports **v0.142.1**, game source
-  `7138e7b6187bf69991d50313c3f9ac1620427778`. This is verified version/source identity,
-  not another exhaustive player-flow qualification.
-- Fresh main is `a5859df784314556072f9215f9b293962e4f2ea4`. The canonical publisher
-  has frozen and published **v0.142.2** on GitHub at
-  `2026-09-28T23:25:58Z` after upload review. The ordinary Pages URL still points
-  to v0.142.1 at this check. Selector admission, deployment and public player
-  acceptance remain separate from GitHub publication.
+- Fresh main is `67f6dc7df5cef6489a810411a878c307c81f1ae8`. The canonical publisher
+  reports **v0.142.2 deployed**, PR774 merged, and a hosted byte audit of
+  **2,240 files / zero failures**. Public player-behavior acceptance remains
+  pending; this source-development check does not repeat or broaden that evidence.
+- A separate v0.142.3 PR exists but has not been adopted by the canonical publisher.
+  Do not allocate versions or start another publisher from this branch.
 - [PR761](https://github.com/mekhovov/revealline/pull/761) is a draft source batch,
-  not a public release. Batch 12 is pushed at
-  `2192818e7ec19c70cc76465ab09d608f0d6cf6d0`; batch 13 extends that input
-  with paused optional-patrol guidance and a complete production-review map.
+  not a public release. Batch 13 is pushed at
+  `396ad4cf901b3fb99951ff02beff57f9bad19f52`, including batch 12,
+  paused optional-patrol guidance and a complete production-review map.
   It conflicts with newer main and needs publisher-owned reconciliation.
   Do not rebase the shared worker branch or allocate a competing version.
 - Compatible features continue in one PR, with separate evidence and reversible
@@ -62,21 +64,34 @@ The actual source model/bridge cohort passes 49/49 and the application-host coho
 See [batch 13 evidence](verification/actor-batch-13/README.md). This closes that
 bounded Details gap, not full Field Guide or human encounter qualification.
 
+The new A-first batch adds an exact-source continuation reader, without a current
+approval or production caller. Its **27/27** focused checks authenticate nine
+real immutable ancestors using synthetic successor manifests, reject altered
+inputs and keep group subsets independent. This prepares A1 adoption; the existing
+production review gap remains open. See [batch 14](verification/actor-batch-14/README.md).
+
 ## Remaining work and planning ranges
 
-Ranges are effort after each item starts, not publication promises. Independent
-tracks run concurrently. Reconciliation, failed gates and publisher availability
-add delivery time; dates cannot be claimed from queue position alone.
+Ranges are effort after each item starts, not publication promises. Necessary
+prerequisites and independent review may run concurrently. Reconciliation,
+failed gates and publisher availability add delivery time.
 
-| Priority      | Remaining acceptance                                                                                                                   | Effort range                                          |
-| ------------- | -------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------- |
-| C3            | Complete native roster/enemy/Team state review; adopt exact new production revisions; check all applicable modes and preserved history | 3–5 days                                              |
-| C4            | Finish optional Field Guide and cross-mode counterplay; qualify full missions/combinations, fairness, difficulty and replay identities | 3–5 days                                              |
-| C5            | Finish pixel-grid/cultural/contrast review, approved mission bindings and complete community/edition cohorts                           | 2–4 days per cohort                                   |
-| C6            | Complete state/rig tooling, artwork-policy adoption, exact themed restoration and real community workflow                              | 2–3 days, parallel                                    |
-| C0/C1 support | Regenerate affected coverage on integrated source; close cohort-specific rig, bounds, frame cost and history checks                    | Within each batch; ½–1 day for broader baseline later |
-| C7 / UX6      | Every current binding and player journey, terrain/equipment/effects, offline/performance/accessibility and device checks               | 4–7 days plus devices                                 |
-| C2 — last     | Three-mission experience benchmark, audio/haptics comparison and two consented rounds with six players                                 | 2–3 days plus participants/listening                  |
+| Order                                | Work and player benefit                                                                                  | Completion boundary                                                                                                                                    | Effort range                                                                                           |
+| ------------------------------------ | -------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------ |
+| **A1 — first**                       | Deliver already implemented character/control corrections so players actually receive the improvements   | Reconcile PR761; complete exact renderer/equipment/audio successors without changing old approvals; final build, immutable publication and public play | Publisher admission and scoped final review; no reliable date until capacity/integration are available |
+| **A2 — current characters**          | Convincing player/common-enemy bodies, propellers, scale, facing and reactions across Solo/Versus/Team   | Current roster/state review and reviewed native-body adoption; retained originals and core behavior unchanged                                          | 3–5 days for remaining C3 scope; existing fixes do not need to wait for the whole roster               |
+| **A3 — reliable play**               | Resolve any demonstrated Start/Pause/Retry/controller defects encountered in these routes                | Focused reproduction, deliberate input, exact return and full board/control readability; integrate existing queue fixes once                           | Size each proven defect; no speculative whole-menu rewrite                                             |
+| **B — encounter variety**            | Optional pursuit/interception/patrol/sentry encounters teach distinct decisions and readable counterplay | Finish Field Guide/cross-mode guidance, full missions/combinations, difficulty/fairness/replay qualification; preserve original editions               | 3–5 days                                                                                               |
+| **C — one finished cohort**          | Complete a coherent Ukrainian/FPV artwork set that players can actually select and play                  | Native pixel/cultural/contrast review, exact approved mission bindings, retained ownership and complete preview/runtime presentation                   | 2–4 days for the first accepted cohort                                                                 |
+| **Supporting C0/C1/C6**              | Only the rig, source coverage and Studio changes required to deliver A/B/C                               | Bounded geometry, state, history, resource and real import/edit/export checks alongside the consuming feature                                          | Included per slice; broader C6 2–3 days later                                                          |
+| **Rest — further cohorts and tools** | DroneAid and other communities, broader authoring workflow, offline/history and guide closure            | Separate reviewed cohort and workflow acceptance; no bulk production added before the priority work                                                    | 2–4 days per cohort; refine wider scope from accepted inventory                                        |
+| **C7 / UX6**                         | Whole-content and player-journey reliability                                                             | Every current binding; terrain/equipment/effects, offline/performance/accessibility and device checks                                                  | 4–7 days plus devices                                                                                  |
+| **C2 — last**                        | Formal game-feel comparison and directional human feedback                                               | Three missions, audio/haptics comparison, two consented rounds with six players                                                                        | 2–3 days plus participants/listening                                                                   |
+
+A is not a dependency on shipping every new sprite before B can be prepared.
+Finish bounded A corrections first; independent B/C references or test preparation
+may continue when they do not displace A. Do not expand comparison tools or broad
+new artwork while current-character delivery still needs this work.
 
 The wider programme still includes complete map/theme consistency, campaign-specific
 offline dependencies, backup/history recovery, community production and independently
@@ -103,7 +118,11 @@ is added to this bounded actor batch.
 3. **Artwork quality:** generated cultural scenes remain candidates. Native
    export and valid hashes establish preparation, not consistent pixel clusters,
    museum accuracy, composition over gameplay, permission or production approval.
-4. **Evidence limits:** long suites are waived under the committed temporary
+4. **Local capacity:** this check found 1,199,255,552 bytes available, below the
+   publisher's 1,275,068,416-byte reserve. Small source/doc edits and bounded checks
+   may continue; no new builds, asset downloads or release materialization until
+   a fresh check has enough space. Preserve all existing evidence and user files.
+5. **Evidence limits:** long suites are waived under the committed temporary
    policy, not passed. Browser keyboard/layout and modeled controllers are not
    physical touch/controller, listening, whole-game offline or human fairness checks.
 
