@@ -138,7 +138,7 @@ test('enemy movement survives repeated render frames and stops on freeze and pau
   director.update(true, {}, state);
   assert.equal(director.boards.get('solo').loops.get('enemy:enemy'), loop);
   assert.equal(loop.volume.gain.constant, 0.027);
-  assert.equal(loop.source.offset, 0.25);
+  assert.equal(loop.source.offset, (sound.context.currentTime * 0.86) % 1);
   state.tick++;
   state.enemies[0].stunnedUntil = 3;
   director.update(true, {}, state);
@@ -560,4 +560,42 @@ test('authoritative freeze and dormant details suppress movement despite a posit
     director.update(true, { family: 'fpv' }, state, { silentStart: true });
     assert.equal(director.boards.get('solo').loops.size, 0);
   }
+});
+
+test('retry and backward seek clear only the affected board gameplay tails and cooldowns', () => {
+  for (const seek of [false, true]) {
+    const { director } = harness();
+    const state = run();
+    state.tick = 10;
+    director.update(true, {}, state, { silentStart: true });
+    const old = director.play('pickup');
+    const other = director.play('impact', { board: 'other' });
+    const menu = director.play('confirm', { ui: true });
+    const next = seek ? state : run();
+    next.tick = 0;
+    director.update(true, {}, next, { silentStart: true });
+    assert.equal(old.ended, true);
+    assert.equal(other.ended, false);
+    assert.equal(menu.ended, false);
+    assert.ok(director.play('pickup'), 'fresh board does not inherit the old cooldown');
+  }
+});
+test('pause clears gameplay tails while a terminal update preserves the victory ending', () => {
+  const { director } = harness();
+  const state = run();
+  director.update(true, {}, state, { silentStart: true });
+  const impact = director.play('impact');
+  director.update(false, {}, state, { silentStart: true });
+  assert.equal(impact.ended, true);
+  state.status = 'won';
+  const win = director.play('win');
+  director.update(false, {}, state, { silentStart: true });
+  assert.equal(win.ended, false);
+});
+test('retired movement rejoins its playback-rate-adjusted phase without restarting the recording', () => {
+  const { director, sound } = harness();
+  director.buffers.set('rotor', { duration: 6 });
+  sound.context.currentTime = 14;
+  const voice = director.play('rotor', { loop: true, rate: 0.72, movement: true });
+  assert.equal(voice.source.offset, (14 * 0.72) % 6);
 });
