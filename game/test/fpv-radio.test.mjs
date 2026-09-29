@@ -244,3 +244,43 @@ test('profiles have validated export/import and failed writes are visible sessio
   assert.throws(() => failed.import('{"format":"FlightProfiles.v1"}'));
   assert.equal(failed.snapshot().radio.name, 'My radio');
 });
+
+test('radio arm switch disarms on OFF and held reset restarts only once, requiring a fresh arm edge', () => {
+  const p = pad(),
+    config = profile(p);
+  config.switches.arm = { button: 0, threshold: 0.5, invert: false };
+  config.switches.reset = { button: 1, threshold: 0.5, invert: false };
+  let resets = 0;
+  const radio = createRadioRuntime({
+    getGamepads: () => [null, p],
+    onReset: () => {
+      resets++;
+    },
+  });
+  radio.select(p.index);
+  radio.setProfile(config);
+  radio.verify();
+  radio.poll();
+  p.buttons[0].value = 1;
+  radio.poll();
+  assert.equal(radio.status().active, true);
+  p.buttons[0].value = 0;
+  radio.poll();
+  assert.equal(radio.status().active, false);
+  p.buttons[0].value = 1;
+  radio.poll();
+  assert.equal(radio.status().active, true);
+  p.buttons[1].value = 1;
+  radio.poll();
+  radio.poll();
+  assert.equal(resets, 1);
+  assert.equal(radio.status().active, false);
+  p.buttons[1].value = 0;
+  radio.poll();
+  assert.equal(radio.status().active, false);
+  p.buttons[0].value = 0;
+  radio.poll();
+  p.buttons[0].value = 1;
+  radio.poll();
+  assert.equal(radio.status().active, true);
+});
