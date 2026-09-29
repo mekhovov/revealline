@@ -127,7 +127,13 @@ async function syncSelectorFixture(t, options = {}) {
     for (const [name, content] of fixture.files) {
       const id = nextId++,
         route = `${root}/releases/assets/${id}`;
-      assets.push({ id, name, state: 'uploaded', size: content.length });
+      assets.push({
+        id,
+        name,
+        state: 'uploaded',
+        size: content.length,
+        digest: `sha256:${editionHash(content)}`,
+      });
       responses[route] = content.toString('base64');
       assetRoutes.set(`${fixture.envelope.version}/${name}`, route);
     }
@@ -161,6 +167,14 @@ const route = args.find(value => value.startsWith('repos/'));
 if (process.env.EDITION_TEST_EDIT_ROUTE === route) fs.writeFileSync(process.env.EDITION_TEST_SELECTOR, process.env.EDITION_TEST_EDIT_BYTES);
 const data = JSON.parse(fs.readFileSync(process.env.EDITION_TEST_RESPONSES));
 if (!data[route]) process.exit(91);
+if (process.env.EDITION_TEST_GROW_ROUTE === route) {
+  const reads = fs.readFileSync(process.env.EDITION_TEST_CALLS, 'utf8').trim().split('\\n').map(JSON.parse).filter(call => call.includes(route)).length;
+  if (reads >= Number(process.env.EDITION_TEST_GROW_READ)) {
+    const response = JSON.parse(Buffer.from(data[route], 'base64'));
+    response.assets.push({ id: 999999, name: 'source-optional-extra.zip', size: 950000000, state: 'uploaded', digest: 'sha256:' + 'a'.repeat(64) });
+    data[route] = Buffer.from(JSON.stringify(response)).toString('base64');
+  }
+}
 process.stdout.write(Buffer.from(data[route], 'base64'));
 `,
     { mode: 0o755 },
@@ -754,6 +768,33 @@ test('upload tag binding uses the qualified tag before any release mutation', as
   assert.ok(routes.includes(`${f.root}/commits/tags/${f.newer.envelope.version}`));
   assert.ok(!routes.includes(`${f.root}/commits/${f.newer.envelope.version}`));
 });
+
+for (const phase of ['initial', 'before-first-upload', 'final-refresh'])
+  test(`edition upload rejects combined budget overflow at ${phase} without any upload`, async (t) => {
+    const f = await syncSelectorFixture(t);
+    const route = `${f.root}/releases/tags/${f.newer.envelope.version}`;
+    const release = json(Buffer.from(f.responses[route], 'base64'));
+    release.draft = true;
+    if (phase !== 'final-refresh') release.assets = [];
+    f.responses[route] = bytes(release).toString('base64');
+    const result = await f.run(
+      undefined,
+      {
+        EDITION_TEST_GROW_ROUTE: route,
+        EDITION_TEST_GROW_READ: String(
+          phase === 'initial' ? 1 : phase === 'before-first-upload' ? 2 : f.newer.files.size + 2,
+        ),
+      },
+      'upload-draft',
+    );
+    assert.notEqual(result.status, 0);
+    assert.match(result.stderr, /exceed byte budget/);
+    const calls = (await fs.readFile(f.callsPath, 'utf8')).trim().split('\n').map(JSON.parse);
+    assert(
+      calls.every((args) => args[0] === 'api'),
+      'No upload or mutation can precede budget admission.',
+    );
+  });
 
 test('sync-selector refuses changed retained ZIPs, source identities, evidence and missing assets without staging', async (t) => {
   const f = await syncSelectorFixture(t),
