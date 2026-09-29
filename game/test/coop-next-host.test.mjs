@@ -61,6 +61,9 @@ test('earned First Connection focuses Next and one explicit action prepares and 
   assert.equal(f.$('coop-menu').hidden, false);
   assert.equal(f.$('coop-play').hidden, true);
   assert.equal(f.doc.activeElement.id, 'coop-start');
+  assert.equal(Boolean(f.$('coop-menu-goal').closest('[hidden],[inert]')), false);
+  f.$('coop-settings-open').click();
+  f.$('coop-settings-tab-extras').click();
   f.disclose('coop-help');
   assertYardBriefing(f, { visible: true });
 });
@@ -73,7 +76,7 @@ function assertYardBriefing(f, { visible = false } = {}) {
   assert.equal(f.$('coop-briefing-title').textContent, 'TAKE THE STRONGHOLD TOGETHER');
   assert.match(f.$('coop-menu-goal').textContent, /both anchors, then the exposed core/i);
   if (visible) {
-    for (const node of [help, f.$('coop-briefing-title'), f.$('coop-menu-goal')])
+    for (const node of [help, f.$('coop-briefing-title')])
       assert.equal(Boolean(node.closest('[hidden],[inert]')), false);
   }
 }
