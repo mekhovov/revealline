@@ -1,0 +1,63 @@
+{
+  "format": "revealline-recovery-fragment-v1",
+  "capturedAt": "2026-09-29T15:10:05.650624+00:00",
+  "worktree": "<home>/work/my_projects/go_test/.cache/worktrees/p05-file-control-contrast",
+  "branch": "refs/heads/codex/p05-file-control-contrast",
+  "head": "628e95daf403082768cdcf900a8ea1d1ef4629a2",
+  "excluded": [],
+  "changes": [
+    {
+      "status": " M",
+      "path": "authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "object": "facfa71c29b9211750b6aee0f84fdaaa8a6eb7ad",
+      "sha256": "7c954ef3f8eb97a0d6e73de34d63ae4cca896ac4c7de2d37b2448b7ef618270a",
+      "bytes": 203110,
+      "mode": "100644"
+    },
+    {
+      "status": " M",
+      "path": "game/ui/field-kit-components.css",
+      "object": "c03b9825b58e2510049d4a7bfa07674c41e4366e",
+      "sha256": "ab7e3291bf517c8eae031bf55015bbaf13ab13cc7f6f69fafa516d1cf714f497",
+      "bytes": 11317,
+      "mode": "100644"
+    },
+    {
+      "status": " M",
+      "path": "game/ui/still-media-panel.css",
+      "object": "17ce5f7b6aae08b0e8d95d9ff1a0319b3ddb8703",
+      "sha256": "9264a0ca9760c693507b8f32dbb8bc3cbfc48e3b0206a7d47539e92111b2e1c7",
+      "bytes": 3076,
+      "mode": "100644"
+    },
+    {
+      "status": "??",
+      "path": "docs/native-file-controls.md",
+      "object": "97fda43ed7561473b77954a924d9f670f96c1eb0",
+      "sha256": "8796116b4ff6173f7421fa4b8c320e8d97316f1945df168c5916005b710a95f2",
+      "bytes": 7352,
+      "mode": "100644"
+    }
+  ],
+  "indexEntries": [
+    {
+      "path": "authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "mode": "100644",
+      "object": "62d0e1c2b180659156f1d3214a8341038e4e0326",
+      "stage": 0
+    },
+    {
+      "path": "game/ui/field-kit-components.css",
+      "mode": "100644",
+      "object": "ed989f088e1e0a36407a1bafd361ed69fe46e888",
+      "stage": 0
+    },
+    {
+      "path": "game/ui/still-media-panel.css",
+      "mode": "100644",
+      "object": "1ad6b3c94666090b897ea2f0c1abdfc4bd1e0940",
+      "stage": 0
+    }
+  ],
+  "purpose": "Recovery only. These bytes are not release admission. Missing files, conflict stages and obsolete generated outputs are preserved as observations, not deletion or merge instructions."
+}
