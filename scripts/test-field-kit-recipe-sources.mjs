@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import {
   fieldKitRecipeSources,
+  verifyFieldKitSteamDeckAudioContinuationReview,
   verifyFieldKitAudioStyleMenuCorrectionReview,
   verifyFieldKitAudioStyleMenuReview,
   verifyFieldKitPlayerReadinessAudioReview,
@@ -440,4 +441,22 @@ test('Audio style-menu correction and production98 predecessor oracle fail close
     assert.equal(verifyFieldKitAudioStyleMenuCorrectionReview(...changed), false);
   }
   assert.equal(verifyFieldKitAudioStyleMenuCorrectionReview(...bytes.toReversed()), false);
+});
+
+test('Steam Deck audio continuation and exact production99 predecessor fail closed', async () => {
+  const paths = [
+    'docs/verification/v0.142.3-steamdeck-confirm-audio-continuation/review.json',
+    'docs/verification/audio-style-menu-correction-2026-09-28/review.json',
+    'game/test/fixtures/production-v01422-a585-fpv99.json',
+  ];
+  const bytes = await Promise.all(
+    paths.map((path) => readFile(new URL('../' + path, import.meta.url))),
+  );
+  assert.equal(verifyFieldKitSteamDeckAudioContinuationReview(...bytes), true);
+  for (let index = 0; index < bytes.length; index++) {
+    const changed = [...bytes];
+    changed[index] = Buffer.concat([changed[index], Buffer.from(' ')]);
+    assert.equal(verifyFieldKitSteamDeckAudioContinuationReview(...changed), false);
+  }
+  assert.equal(verifyFieldKitSteamDeckAudioContinuationReview(...bytes.toReversed()), false);
 });
