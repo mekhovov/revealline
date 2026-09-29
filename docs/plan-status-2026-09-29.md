@@ -188,6 +188,32 @@ roots and their authenticated ancestry; audio is excluded. This corrects the
 preparation gap described by the older 27-case record, and is not a 59-slot
 production approval. See [reader evidence](verification/actor-a1-current-main-20260929/predecessor-reader.md).
 
+## Latest bounded source work
+
+- **A3 implemented:** PR757 `f09146837cfcc5191c89e54d7f9afea56b2ef8e9`
+  now gives timed enemy-slow pickups the existing Slowed ring/caption, matching
+  Support, core movement and the details reader. **70/70** focused rendering/bonus
+  checks pass with independent source review; actual collection, expiry, pause,
+  freeze, Support overlap and Hunter state cues are covered. Legacy no-bonus draw
+  hashes remain unchanged. See [the scoped receipt](https://github.com/mekhovov/revealline/blob/f09146837cfcc5191c89e54d7f9afea56b2ef8e9/docs/verification/team-bonus-slow-cue-20260929/README.md).
+  Static edition collection did not run in the sparse checkout; integrated
+  source/build/provenance and production review remain open.
+- **B implemented:** the existing Sentry detour now passes both complete
+  Standard/seed1 practice-host routes (**2/2**). Actual keyboard commands preserve
+  historical checkpoints and real exported replay inputs; warning Pause, victory,
+  no awards/writes, retained terminal state and deliberate Retry pass. Grid-center
+  evades a fired shot; Immediate cancels one warning and ends another by ram.
+  The test corrects a post-capture key-gesture mismatch without changing runtime,
+  routes or held-input safety. See [batch19](verification/actor-batch-19/README.md).
+  Existing 21 core route proofs, this host journey and human fairness remain
+  distinct evidence; no new mission is authored.
+- **C:** source inspection confirms the existing exact-slot import, separately
+  retained board derivative, actual BoardPainter preview and immutable theme
+  export path already support the first cohort. Additional comparison/handoff
+  tooling is unnecessary. Exact cohort binding choices plus native-grid,
+  cultural/contrast and production admission remain deferred; no candidate is
+  silently installed. This is a capability finding, not new end-to-end approval.
+
 ## Remaining work and planning ranges
 
 Ranges are effort after each item starts, not publication promises. Necessary

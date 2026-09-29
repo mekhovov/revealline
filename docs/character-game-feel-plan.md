@@ -384,3 +384,20 @@ lessons remain available. The 73-case cohort preserves exact parent state and
 covers background-ready illustration restoration. Older catalogue exercises in
 editions remain explicitly unavailable, not silently admitted. No production
 review, new artwork adoption or release is implied.
+
+## Nineteenth batch: complete Sentry practice journeys
+
+[Batch19](verification/actor-batch-19/README.md) qualifies the unchanged Sentry
+Detour Standard/seed1 routes through actual Solo practice, warning Pause, win,
+verified recorder export and retained Retry. Both supported turn policies pass
+with exact historical checkpoints and zero award/storage writes. Native input
+requires a fresh gesture after capture; the test translates the next historical
+command accordingly without changing that safety behavior or adding ticks.
+
+This closes a bounded B host-qualification gap. Human fairness, native rendering,
+physical devices and broader mission combinations remain open; production review
+stays deferred. Parallel PR757 now includes the timed enemy-slow cue correction
+at `f09146837cfcc5191c89e54d7f9afea56b2ef8e9`, with 70/70 focused checks.
+The first C cohort already has import, derivative, real-board preview and export
+support; remaining binding/native-grid/cultural review requires no new comparison
+tool. Keep A → B → C priority and C2 last.

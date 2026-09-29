@@ -69,6 +69,16 @@ cancellation on an earlier return, and scout removal by contact or enclosure.
 These are deterministic counterplay checks, not human fairness or physical-device
 qualification.
 
+The [Sentry practice qualification](../game/test/sentry-practice-qualification.test.mjs)
+also completes both existing Standard/seed1 Sentry detour routes through the actual
+Solo application, including warning Pause, verified export and retained Retry.
+Grid-center evades a fired shot; Immediate performs one capture cancellation and
+later ram removal. Their exact historical checkpoints and recorder inputs remain
+unchanged. When translating a direct-core trace, a post-capture movement command
+requires a fresh native key gesture: the host intentionally clears held movement.
+Do not remove that safety rule or force input/state to reproduce a trace. See
+[the bounded evidence and fixture correction](verification/actor-batch-19/README.md).
+
 The live presentation is additive. Absent or disabled combat preserves the
 existing drawing commands. Bodies and warnings sit below exposed trails and
 ordinary keepers; fired projectiles remain above keepers and below the craft.

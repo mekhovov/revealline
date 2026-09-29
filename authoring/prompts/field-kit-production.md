@@ -59,3 +59,17 @@ compare EN/UK labels, selection changes and cancellation without changing the
 collection or exporting altered originals. Retain failed decode evidence. This
 prepares a later art decision; when production review is deferred, leave the
 candidate unapproved and continue independent implementation.
+
+## Qualify an existing optional encounter through play
+
+Use the unchanged authored mission and its exact legal route, recipes, seed,
+difficulty and steering. Launch its isolated Solo practice through the existing
+preview admission and drive ordinary input. Pause during warning, complete the
+mission, export and verify the actual replay, then deliberately Retry. Compare
+historical checkpoints and every recorded direction; retain artwork/setup and
+assert zero campaign/profile writes. Translate a route command after capture
+into a fresh key gesture where required, without adding ticks or bypassing held
+input safety. Distinguish capture cancellation, ram removal and fired-shot evasion
+in the findings. Preserve fixture errors separately from product failures. Follow
+[the Sentry example](../../docs/verification/actor-batch-19/README.md); this source
+qualification does not approve art, human fairness, hardware or a release.
