@@ -5,6 +5,7 @@ import path from 'node:path';
 import { tmpdir } from 'node:os';
 import { createHash } from 'node:crypto';
 import { createEditionZip } from '../publishing/edition-zip.mjs';
+import { PREVIEW_SECURITY_HEADERS } from './game-cli.mjs';
 import {
   validateDiscoveryRuntimePlan,
   verifyDiscoveryRuntimeArtifact,
@@ -156,6 +157,7 @@ test('plans select only the reviewed public-control protocol and bounded indepen
     { ...plan, deviceLabel: '' },
     { ...plan, quietWindow: '' },
     { ...plan, serverPort: -1 },
+    { ...plan, headerPolicy: 'relaxed-csp' },
     { ...plan, artifact: { ...plan.artifact, sourceRevision: 'unknown' } },
   ])
     assert.throws(() => validateDiscoveryRuntimePlan(invalid));
@@ -223,6 +225,8 @@ test('server owns immutable copies, serves only checked members, and closes clea
   const response = await fetch(server.origin + '/game/app.mjs');
   assert.equal(response.status, 200);
   assert.equal(response.headers.get('content-type'), 'text/javascript');
+  assert.equal(response.headers.get('cache-control'), 'no-store');
+  assert.equal(response.headers.get('content-security-policy'), null);
   assert.equal(await response.text(), 'export const fixture = true;');
   assert.equal(
     (await fetch(server.origin + '/docs/verification/discovery-observer.mjs')).status,
@@ -231,6 +235,37 @@ test('server owns immutable copies, serves only checked members, and closes clea
   for (const name of ['/scripts/game-cli.mjs', '/private-sentinel.txt', '/%2e%2e/package.json'])
     assert.equal((await fetch(server.origin + name)).status, 404);
   assert.equal((await fetch(server.origin + '/game/app.mjs', { method: 'POST' })).status, 404);
+});
+
+test('packaged-preview observation reuses exact preview headers without relaxing the player policy', async (t) => {
+  const input = fixture();
+  const plan = validateDiscoveryRuntimePlan({ ...input.plan, headerPolicy: 'packaged-preview' });
+  const { files } = verifyDiscoveryRuntimeArtifact(plan, input);
+  const server = await serveDiscoveryRuntime(files, Buffer.from('export const passive = true;'), {
+    reviewModel: Buffer.from('export const model = true;'),
+    headerPolicy: plan.headerPolicy,
+  });
+  t.after(() => server.close());
+  assert.deepEqual(server.headers, PREVIEW_SECURITY_HEADERS);
+  for (const [name, method, status] of [
+    ['/game/index.html', 'GET', 200],
+    ['/game/app.mjs', 'HEAD', 200],
+    ['/docs/verification/discovery-observer.mjs', 'GET', 200],
+    ['/not-admitted.txt', 'GET', 404],
+    ['/game/app.mjs', 'POST', 404],
+  ]) {
+    const response = await fetch(server.origin + name, { method });
+    assert.equal(response.status, status);
+    for (const [key, value] of Object.entries(PREVIEW_SECURITY_HEADERS))
+      assert.equal(response.headers.get(key), value, `${method} ${name}: ${key}`);
+    if (name === '/game/index.html')
+      assert.equal(await response.text(), input.files.get(name.slice(1)).toString());
+    else await response.arrayBuffer();
+  }
+  await assert.rejects(
+    serveDiscoveryRuntime(files, Buffer.from(''), { headerPolicy: 'relaxed-csp' }),
+    /Unknown observation header policy/,
+  );
 });
 
 test('failed preparation retains declared source pins and never overwrites prior evidence or loads browser tools', async (t) => {
