@@ -1,3 +1,0 @@
-# Replay history-restoration prompt
-
-“Repair Replay Theater's browser-restored font, size and effects controls by reading the existing shared display owner. Reuse the preference-restoration adapter after the owner's listeners. Cover stale controls before and after pageshow, unchanged saved values, denied-save session intent and terminal departure. Preserve raw versus system-capped motion choice, warnings, focus, input text, recording checkpoint and explicit paused playback. Do not infer preference intent from browser-restored form values or write storage while repainting. Test the real Theater host and record actual browser history evidence separately from modeled lifecycle events.”
