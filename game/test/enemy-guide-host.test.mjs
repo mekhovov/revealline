@@ -359,13 +359,16 @@ async function liveCut(page) {
 function openGuide(page) {
   page.$('overlay-menu').click();
   assert.equal(page.$('shell-home').open, true);
-  page.$('shell-workshop').focus();
+  page.$('shell-options').focus();
   nativeKey(page, 'Enter');
-  assert.equal(page.$('shell-workshop-dialog').open, true);
+  assert.equal(page.$('settings-dialog').open, true);
+  page.$('settings-tab-extras').focus();
+  nativeKey(page, 'Enter');
+  assert.equal(page.$('settings-panel-extras').hidden, false);
   page.$('shell-guide').focus();
   nativeKey(page, 'Enter');
-  assert.equal(page.$('shell-home').open, true, 'Main menu stays beneath Workshop and its guide');
-  assert.equal(page.$('shell-workshop-dialog').open, true, 'Workshop retains its Guide opener');
+  assert.equal(page.$('shell-home').open, true, 'Main menu stays beneath Settings and its guide');
+  assert.equal(page.$('settings-dialog').open, true, 'Settings Extras retains its Guide opener');
   assert.equal(page.$('enemy-guide-dialog').open, true);
 }
 async function launch(page) {
@@ -480,12 +483,12 @@ for (const turnPolicy of ['immediate', 'grid-center']) {
     assert.equal(page.$('enemy-guide-dialog').open, false, 'fresh controller Back closes guide');
     assert.equal(page.$('shell-home').open, true);
     assert.equal(page.doc.activeElement.id, 'shell-guide');
-    assert.equal(page.$('shell-workshop-dialog').open, true);
+    assert.equal(page.$('settings-dialog').open, true);
     controls.pulse(1);
     await Promise.resolve();
-    assert.equal(page.$('shell-workshop-dialog').open, false, 'a separate Back leaves Workshop');
+    assert.equal(page.$('settings-dialog').open, false, 'a separate Back leaves Settings');
     assert.equal(page.$('shell-home').open, true);
-    assert.equal(page.doc.activeElement.id, 'shell-workshop');
+    assert.equal(page.doc.activeElement.id, 'shell-options');
     controls.pulse(1);
     await Promise.resolve();
     assert.equal(page.$('shell-home').open, false, 'a separate Back leaves Main menu');

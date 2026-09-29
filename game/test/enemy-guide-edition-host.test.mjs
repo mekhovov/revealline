@@ -46,9 +46,12 @@ function nativeKey(page, key) {
 
 function openGuide(page) {
   page.$('overlay-menu').click();
-  page.$('shell-workshop').focus();
+  page.$('shell-options').focus();
   nativeKey(page, 'Enter');
-  assert.equal(page.$('shell-workshop-dialog').open, true);
+  assert.equal(page.$('settings-dialog').open, true);
+  page.$('settings-tab-extras').focus();
+  nativeKey(page, 'Enter');
+  assert.equal(page.$('settings-panel-extras').hidden, false);
   page.$('shell-guide').focus();
   nativeKey(page, 'Enter');
   assert.equal(page.$('enemy-guide-dialog').open, true);
@@ -201,7 +204,7 @@ for (const compiled of [false, true])
     page.$('enemy-guide-back').focus();
     nativeKey(page, 'Enter');
     assert.equal(page.$('enemy-guide-dialog').open, false);
-    assert.equal(page.$('shell-workshop-dialog').open, true);
+    assert.equal(page.$('settings-dialog').open, true);
     assert.equal(page.doc.activeElement, page.$('shell-guide'));
     page.frame(0);
     assert.equal(page.rendered.paused, true);
