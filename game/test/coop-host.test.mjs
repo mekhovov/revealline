@@ -76,12 +76,23 @@ test('the same Team mode choices belong to the lobby and active pause panel, nev
   assert.equal(f.$('coop-overlay').hidden, true);
 });
 
-test('Team More exposes every global destination and returns collapsed across input and play states', async (t) => {
+test('Team Extras exposes every global destination and retires More across input and play states', async (t) => {
   const f = await page(t, { nativeFocus: true }),
     more = f.$('coop-more'),
-    toggle = f.$('coop-more-toggle');
-  assert.equal(more.parentNode, f.$('coop-tools'));
+    toggle = f.$('coop-more-toggle'),
+    settings = f.$('coop-options'),
+    opener = f.$('coop-settings-open'),
+    extras = f.$('coop-settings-panel-extras');
+  assert.equal(more.parentNode, extras);
+  assert.equal(f.$('coop-menu').contains(more), false);
   assert.equal(f.$('coop-tools').parentNode, f.$('coop-lobby-tools'));
+  assert.equal(f.doc.activeElement.id, 'coop-start');
+  opener.click();
+  assert.equal(settings.open, true);
+  f.$('coop-settings-tab-extras').click();
+  assert.equal(extras.hidden, false);
+  assert.equal(extras.inert, false);
+  assert.equal(toggle.closest('[hidden],[inert]'), null);
   toggle.emit('pointerdown', { pointerType: 'touch', pointerId: 51, button: 0 });
   toggle.emit('pointerup', { pointerType: 'touch', pointerId: 51, button: 0 });
   toggle.click();
@@ -97,11 +108,9 @@ test('Team More exposes every global destination and returns collapsed across in
   assert.equal(f.$('coop-release-explorer').href, 'http://localhost/releases/');
   f.$('coop-release-explorer').focus();
   f.tap('Escape');
-  assert.equal(more.open, false);
-  assert.equal(f.doc.activeElement, toggle);
+  assert.equal(settings.open, false, 'Native Escape retires the Settings owner.');
+  assert.equal(f.doc.activeElement, opener);
 
-  toggle.click();
-  assert.equal(more.open, true);
   f.$('coop-start').click();
   f.tick(2);
   assert.equal(more.open, false, 'Starting play retires the lobby disclosure.');
@@ -124,14 +133,26 @@ test('Team More exposes every global destination and returns collapsed across in
     f.tick();
   };
   f.tick(2);
+  tabToTeamAction(f, 'coop-settings-open');
   button(0);
+  assert.equal(settings.open, true, 'Controller Confirm opens the paused Settings owner.');
+  for (let i = 0; i < 40 && f.doc.activeElement.id !== 'coop-settings-tab-extras'; i++)
+    button(13);
+  assert.equal(f.doc.activeElement.id, 'coop-settings-tab-extras');
+  assert.equal(extras.hidden, false);
+  button(15); // Leave the category rail for its visible controls.
   for (let i = 0; i < 40 && f.doc.activeElement !== toggle; i++) button(13);
   assert.equal(f.doc.activeElement, toggle);
+  assert.equal(toggle.closest('[hidden],[inert]'), null);
   button(0);
   assert.equal(more.open, true);
   button(1);
-  assert.equal(more.open, false);
-  assert.equal(f.doc.activeElement, toggle);
+  assert.equal(settings.open, false, 'Controller Back retires the same Settings owner.');
+  assert.equal(f.doc.activeElement, opener);
+  assert.equal(f.$('coop-overlay').hidden, false, 'Closing Settings does not resume play.');
+  f.$('coop-resume').click();
+  assert.equal(more.open, false, 'Resuming retires the paused disclosure.');
+  assert.equal(f.$('coop-overlay').hidden, true);
 });
 
 test('a file selected before Start cannot replace setup after returning from an attempt', async (t) => {
