@@ -114,3 +114,16 @@ never multiply ordinary travel/body clocks into a repeating accent that appears
 to reverse. Preserve the accepted body, part rectangles/rates, movement and
 contact cues. Separate actual painter-command checks from native pixel approval,
 and keep original artwork unchanged while production review is deferred.
+
+## Preserve real recovery boundaries
+
+Collect an authored enemy-freeze pickup through the real Solo host, save, close
+the page and Continue using the same persisted pack/art stores. Check the exact
+replayed state, prepared image identity and frozen pose before crossing the core
+expiry tick; do not require cosmetic clocks to persist across a new page. For
+Sentry contact, keep the authored three lives and use legal directions into an
+actual warned shot. Verify impact identity, retained territory, cleared trail,
+paused recovery, fresh-input resumption and exact nonterminal replay. Preserve
+fixture diagnostics separately from runtime failures and report modeled browser
+boundaries plainly. These checks do not qualify production artwork or human
+fairness.
