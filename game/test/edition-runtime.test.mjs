@@ -39,6 +39,16 @@ test('standalone branding projects only the image fallback to an approved select
   for (const edition of catalog.editions) {
     const brand = catalog.brands.find((item) => item.id === edition.brandId);
     const logo = catalog.assets.find((item) => item.id === brand.logoAssetId);
+    assert.ok(brand, edition.id);
+    if (!brand.logoAssetId) {
+      assert.equal(logo, undefined);
+      assert.deepEqual(
+        projectEditionRuntimeImports('game/ui/brand-identity.mjs', original),
+        original,
+      );
+      assert.match(original.toString(), /art\/identity\/fpv-line\/wordmark\.png/);
+      continue;
+    }
     assert.ok(logo?.approved && logo.publication === 'public');
     const projected = projectEditionBrandIdentity(original, logo.path);
     const expected = path.posix.relative('game/ui', logo.path);
@@ -176,7 +186,10 @@ test('standalone menu projection preserves selected profile data and fallback wi
     const projected = await import(
       `data:text/javascript;base64,${projectEditionMenuScenes(original, [id]).toString('base64')}`
     );
-    assert.deepEqual(Object.keys(projected.MENU_SCENES).sort(), ['fpv', selected.id].sort());
+    assert.deepEqual(
+      Object.keys(projected.MENU_SCENES).sort(),
+      [...new Set(['fpv', selected.id])].sort(),
+    );
     assert.deepEqual(projected.resolveMenuScene({ editionId: id }), selected);
     assert.deepEqual(projected.resolveMenuScene({ themeId: 'retro', editionId: id }), selected);
     assert.deepEqual(projected.resolveMenuScene({ editionId: 'unrecognized' }), MENU_SCENES.fpv);
@@ -187,10 +200,19 @@ test('standalone menu projection preserves selected profile data and fallback wi
       projected.MENU_SCENES.fpv,
     );
     const resources = editionMenuSceneResources([id]);
-    assert.equal(
-      resources.filter((name) => /\.(webp|png)$/.test(name)).length,
-      3,
-      'Selected background plus landscape/portrait fallback are retained.',
+    const expectedRaster = [
+      ...new Set(
+        [MENU_SCENES.fpv, selected].flatMap((scene) =>
+          [scene.landscape, scene.portrait, scene.wordmark]
+            .filter((asset) => asset && /\.(webp|png)$/.test(asset))
+            .map((asset) => 'game/ui/' + asset.slice(2)),
+        ),
+      ),
+    ].sort();
+    assert.deepEqual(
+      resources.filter((name) => /\.(webp|png)$/.test(name)).sort(),
+      expectedRaster,
+      'Selected originals and the shared fallback are retained exactly once.',
     );
     assert.ok(resources.includes(`game/ui/${selected.landscape.slice(2)}`));
     assert.ok(resources.includes('game/ui/art/menu-scenes/fpv-portrait.webp'));
