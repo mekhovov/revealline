@@ -1,0 +1,49 @@
+{
+  "sourceCommit": "ca34b2917c6ad5188756347a967e44cc259f1fd8",
+  "baseMain": "3dbf92d39",
+  "pullRequest": 817,
+  "scope": "audio only; supersedes closed PR794/796 delivery",
+  "focusedTests": {
+    "passed": 136,
+    "failed": 0
+  },
+  "lint": "passed",
+  "format": {
+    "state": "three baseline warnings",
+    "files": [
+      "game/editions/runtime-assets.json",
+      "scripts/edition-offline.mjs",
+      "scripts/game-cli.mjs"
+    ],
+    "baselineCompared": "origin/main blobs checked with the same Prettier version"
+  },
+  "nativeAudio": {
+    "decoded": 56,
+    "scenarios": 7,
+    "highestStereoPeakDbfs": -19.463839324532383,
+    "allStereoAndMonoUnclipped": true,
+    "movementToggle": "stops and restores player/enemy voices",
+    "browserWarningsErrors": 0,
+    "musicIncluded": false,
+    "humanListening": false,
+    "evidence": "main-native-mix.json"
+  },
+  "crossModeBaseline": {
+    "baseMain": "3dbf92d39",
+    "reproduced": [
+      "Team picture unavailable in fresh Team master-settings fixture",
+      "Versus controller master-slider ownership assertion"
+    ],
+    "method": "read-only baseline overlay with original main blobs and Node preserve-symlinks",
+    "fullCohortPass": false
+  },
+  "environment": {
+    "diskFullInterruptedExtendedTests": true,
+    "dependenciesRestoredWith": "npm ci --ignore-scripts"
+  },
+  "remaining": [
+    "Finish build inspection and current package/offline qualification",
+    "Sustained human listening and physical-device qualification (deferred)",
+    "Canonical release review/publication"
+  ]
+}
