@@ -22,7 +22,16 @@ const html = parse(
     'utf8',
   ),
 );
-function fixture(t, { available = true, storage, ...factories } = {}) {
+function fixture(
+  t,
+  {
+    available = true,
+    storage,
+    url = 'https://example.test/optional-practice/civilian-fpv/?lang=en',
+    serviceWorker,
+    ...factories
+  } = {},
+) {
   const doc = new Document(),
     win = new Events(),
     frames = new Map(),
@@ -50,8 +59,8 @@ function fixture(t, { available = true, storage, ...factories } = {}) {
     disposed = false,
     pads = [];
   Object.assign(win, {
-    location: new URL('https://example.test/optional-practice/civilian-fpv/?lang=en'),
-    navigator: { getGamepads: () => pads },
+    location: new URL(url),
+    navigator: { getGamepads: () => pads, ...(serviceWorker ? { serviceWorker } : {}) },
     requestAnimationFrame: (fn) => {
       frames.set(++id, fn);
       return id;
@@ -773,6 +782,87 @@ test('cached radio restore requires a fresh arm edge and matching control pickup
   assert.equal(f.view.snapshot().status, 'active');
   assert(f.view.snapshot().ticks > paused.ticks);
   assert.equal(f.view.snapshot().lastInput.throttle, 600);
+});
+
+test('game return keeps scoped offline controls available and serializes preparation/removal', async (t) => {
+  const base = 'https://example.test/optional-practice/civilian-fpv/',
+    registrations = [],
+    removed = [];
+  let complete,
+    unregisters = 0;
+  const registration = {
+    scope: base,
+    active: { state: 'activated' },
+    unregister: async () => {
+      unregisters++;
+    },
+  };
+  const f = fixture(t, {
+    url: base + 'index.html?lang=en&game-return=%2Fgame%2Findex.html',
+    notebookFactory: null,
+    studioFactory: null,
+    serviceWorker: {
+      register: (url, options) => {
+        registrations.push({ url: String(url), scope: options.scope });
+        return new Promise((resolve) => (complete = () => resolve(registration)));
+      },
+      getRegistration: async () => registration,
+    },
+  });
+  const ownedCache = 'revealline.optional.package.v1:/optional-practice/civilian-fpv/:exact';
+  f.win.caches = {
+    keys: async () => [ownedCache, 'main-game', 'another-installation'],
+    delete: async (key) => removed.push(key),
+  };
+  assert.equal(f.$('game-return').hidden, false);
+  assert.equal(f.$('install-offline').hidden, false);
+  assert.equal(f.$('install-offline').disabled, false);
+  f.$('arm').click();
+  f.$('install-offline').click();
+  assert.equal(f.view.snapshot().status, 'paused');
+  assert.equal(f.$('install-offline').disabled, true);
+  assert.equal(f.$('remove-offline').disabled, true);
+  f.$('install-offline').click();
+  f.$('remove-offline').click();
+  assert.deepEqual(registrations, [{ url: base + 'worker.js', scope: new URL(base).pathname }]);
+  assert.equal(unregisters, 0);
+  assert.deepEqual(removed, []);
+  complete();
+  await new Promise((resolve) => setImmediate(resolve));
+  assert.equal(f.$('transfer-status').textContent, 'This exact optional package is ready offline.');
+  assert.equal(f.$('install-offline').disabled, false);
+  assert.equal(f.view.snapshot().status, 'paused');
+  f.$('remove-offline').click();
+  await new Promise((resolve) => setImmediate(resolve));
+  assert.equal(unregisters, 1);
+  assert.deepEqual(removed, [ownedCache]);
+  assert.equal(f.$('remove-offline').disabled, false);
+});
+
+test('unavailable offline capability stays explanatory and a failed prepare never reports ready', async (t) => {
+  for (const options of [
+    {},
+    { url: 'file:///optional-practice/civilian-fpv/index.html', serviceWorker: {} },
+  ]) {
+    const f = fixture(t, { notebookFactory: null, studioFactory: null, ...options });
+    assert.equal(f.$('install-offline').disabled, true);
+    assert.equal(f.$('remove-offline').disabled, true);
+    assert.equal(f.$('offline-unavailable').hidden, false);
+  }
+  const f = fixture(t, {
+    notebookFactory: null,
+    studioFactory: null,
+    serviceWorker: {
+      register: async () => {
+        throw new Error('Offline package unavailable');
+      },
+    },
+  });
+  f.$('install-offline').click();
+  await new Promise((resolve) => setImmediate(resolve));
+  assert.equal(f.$('transfer-status').textContent, 'Offline package unavailable');
+  assert.equal(f.$('install-offline').disabled, false);
+  assert.equal(f.$('remove-offline').disabled, false);
 });
 
 test('ordinary unload disposes permanently and a late pageshow cannot revive it', (t) => {

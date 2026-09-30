@@ -109,6 +109,78 @@ function workerSource(files, revision, packageRoot, installWorker) {
   return `// Generated exact optional-package cache.\n(${installWorker.toString()})(self, ${JSON.stringify(pins)}, ${JSON.stringify(revision)});\n`;
 }
 
+/** Bind a separately installed package to the final bytes of a containing build.
+ * Shared modules must not use the standalone archive's projected byte hashes. */
+export function buildBundledOptionalPractice(entries, { packageId = 'civilian-fpv' } = {}) {
+  const policy =
+    typeof packageId === 'string' && Object.hasOwn(OPTIONAL_PACKAGE_POLICIES, packageId)
+      ? OPTIONAL_PACKAGE_POLICIES[packageId]
+      : null;
+  requireValid(policy, 'Optional package is not admitted by policy');
+  const emitted = new Map(entries.map((entry) => [entry.name, entry.bytes]));
+  requireValid(emitted.size === entries.length, 'Duplicate emitted optional dependency path');
+  if (!emitted.has(policy.entry)) return null;
+  const installWorker = workers.get(policy.template),
+    vendorPins = new Map((policy.vendorPins ?? []).map((pin) => [pin.path, pin])),
+    icons = new Map(
+      offlineIcons([192, 512])
+        .filter((entry) => entry.name.endsWith('.png'))
+        .map((entry) => [policy.root + entry.name, entry.bytes]),
+    );
+  requireValid(installWorker, 'Optional package worker is not registered');
+  const allowed = new Set([
+      ...policy.localFiles.map((name) => policy.root + name),
+      ...policy.sharedFiles,
+      ...icons.keys(),
+    ]),
+    selected = new Map(),
+    pending = [...allowed];
+  while (pending.length) {
+    const name = pending.shift();
+    if (selected.has(name)) continue;
+    requireValid(allowed.has(name), `Optional practice dependency is not admitted: ${name}`);
+    const bytes = emitted.get(name) ?? icons.get(name),
+      icon = icons.get(name),
+      vendor = vendorPins.get(name);
+    requireValid(
+      Buffer.isBuffer(bytes) && bytes.length > 0 && bytes.length <= policy.limits.bytes,
+      `Bundled optional dependency is missing or exceeds byte limit: ${name}`,
+    );
+    requireValid(!icon || bytes.equals(icon), `Bundled optional icon differs: ${name}`);
+    requireValid(
+      !vendor || (bytes.length === vendor.bytes && hash(bytes) === vendor.sha256),
+      `Optional vendor bytes differ from the reviewed dependency: ${name}`,
+    );
+    selected.set(name, bytes);
+    pending.push(...staticImports(name, bytes, !!vendor), ...resourceReferences(name, bytes));
+  }
+  const files = [...selected]
+      .sort(([a], [b]) => a.localeCompare(b))
+      .map(([name, bytes]) => ({ path: name, bytes: bytes.length, sha256: hash(bytes) })),
+    workerTemplateSha256 = hash(Buffer.from(installWorker.toString())),
+    revision = hash(Buffer.from(JSON.stringify({ files, workerTemplateSha256 }))),
+    worker = {
+      name: `${policy.root}worker.js`,
+      bytes: Buffer.from(workerSource(files, revision, policy.root, installWorker)),
+    };
+  requireValid(!emitted.has(worker.name), 'Bundled optional worker must be generated once');
+  requireValid(
+    files.length + 1 <= policy.limits.files &&
+      files.reduce((total, file) => total + file.bytes, worker.bytes.length) <= policy.limits.bytes,
+    'Complete bundled optional output exceeds package limits',
+  );
+  return {
+    files,
+    revision,
+    entries: [
+      ...[...icons]
+        .filter(([name]) => !emitted.has(name))
+        .map(([name, bytes]) => ({ name, bytes })),
+      worker,
+    ],
+  };
+}
+
 /** Separate opt-in archive. Nothing is added to default build/core inventories.
  * Explicit shared-module admission prevents pulling an edition or authoring tree
  * into this package merely because a source file acquired another import. */
