@@ -1319,6 +1319,172 @@
       "packVersion": "1.0.0"
     },
     {
+      "id": "classic/bundled/neon-reference-pack/neon-reference%2F1%2F281862e047adce8a/neon-channels-pack/1",
+      "source": "bundled",
+      "packId": "neon-reference-pack",
+      "campaignId": "neon-reference",
+      "campaignRevision": "1",
+      "campaignKey": "neon-reference/1/281862e047adce8a",
+      "levelId": "neon-channels-pack",
+      "levelRevision": "1",
+      "levelIndex": 0,
+      "name": "Neon Channels",
+      "campaignTitle": "Neon Reference Pack",
+      "edition": "Neon Reference Pack",
+      "themeId": "retro",
+      "modes": ["solo", "versus"],
+      "tags": ["Classic", "Arcade"],
+      "rules": "75% coverage · 3 lives · 10 cells/s · No mission countdown · Direction-only Arcade · 6 enemies",
+      "ruleDetails": {
+        "ruleset": "xonix-core.v6",
+        "coverage": 0.75,
+        "lives": 3,
+        "moveSpeed": 10,
+        "timeLimitSeconds": 0,
+        "enemies": [
+          { "type": "bouncer", "count": 2 },
+          { "type": "eroder", "count": 1 },
+          { "type": "border-patrol", "count": 3 }
+        ],
+        "requiredObjectives": 0
+      },
+      "difficultiesByMode": { "solo": ["standard", "gentle"], "versus": ["standard"] },
+      "sourceFile": {
+        "path": "game/content/packs/neon-reference-pack.json",
+        "bytes": 65205,
+        "sha256": "375fa1ef79f751f2e26ba978d86f3eaedbc92f7c2480d7c90e563ff0d5752ac7"
+      },
+      "packIdentity": {
+        "bytes": 27032,
+        "sha256": "3345b10c152a0b74846a12088927bc9460b4e8a250360e5ca8698bab8e181f69"
+      },
+      "packVersion": "1.0.0"
+    },
+    {
+      "id": "classic/bundled/neon-reference-pack/neon-reference%2F1%2F281862e047adce8a/neon-crossroads-pack/1",
+      "source": "bundled",
+      "packId": "neon-reference-pack",
+      "campaignId": "neon-reference",
+      "campaignRevision": "1",
+      "campaignKey": "neon-reference/1/281862e047adce8a",
+      "levelId": "neon-crossroads-pack",
+      "levelRevision": "1",
+      "levelIndex": 1,
+      "name": "Neon Crossroads",
+      "campaignTitle": "Neon Reference Pack",
+      "edition": "Neon Reference Pack",
+      "themeId": "retro",
+      "modes": ["solo", "versus"],
+      "tags": ["Classic", "Arcade"],
+      "rules": "75% coverage · 3 lives · 10 cells/s · No mission countdown · Direction-only Arcade · 10 enemies",
+      "ruleDetails": {
+        "ruleset": "xonix-core.v6",
+        "coverage": 0.75,
+        "lives": 3,
+        "moveSpeed": 10,
+        "timeLimitSeconds": 0,
+        "enemies": [
+          { "type": "bouncer", "count": 4 },
+          { "type": "eroder", "count": 2 },
+          { "type": "border-patrol", "count": 4 }
+        ],
+        "requiredObjectives": 0
+      },
+      "difficultiesByMode": { "solo": ["standard", "gentle"], "versus": ["standard"] },
+      "sourceFile": {
+        "path": "game/content/packs/neon-reference-pack.json",
+        "bytes": 65205,
+        "sha256": "375fa1ef79f751f2e26ba978d86f3eaedbc92f7c2480d7c90e563ff0d5752ac7"
+      },
+      "packIdentity": {
+        "bytes": 27032,
+        "sha256": "3345b10c152a0b74846a12088927bc9460b4e8a250360e5ca8698bab8e181f69"
+      },
+      "packVersion": "1.0.0"
+    },
+    {
+      "id": "classic/bundled/neon-reference-pack/neon-reference%2F1%2F281862e047adce8a/neon-hearts-pack/1",
+      "source": "bundled",
+      "packId": "neon-reference-pack",
+      "campaignId": "neon-reference",
+      "campaignRevision": "1",
+      "campaignKey": "neon-reference/1/281862e047adce8a",
+      "levelId": "neon-hearts-pack",
+      "levelRevision": "1",
+      "levelIndex": 2,
+      "name": "Neon Hearts",
+      "campaignTitle": "Neon Reference Pack",
+      "edition": "Neon Reference Pack",
+      "themeId": "retro",
+      "modes": ["solo", "versus"],
+      "tags": ["Classic", "Arcade"],
+      "rules": "75% coverage · 3 lives · 10 cells/s · No mission countdown · Direction-only Arcade · 10 enemies",
+      "ruleDetails": {
+        "ruleset": "xonix-core.v6",
+        "coverage": 0.75,
+        "lives": 3,
+        "moveSpeed": 10,
+        "timeLimitSeconds": 0,
+        "enemies": [
+          { "type": "bouncer", "count": 8 },
+          { "type": "border-patrol", "count": 2 }
+        ],
+        "requiredObjectives": 0
+      },
+      "difficultiesByMode": { "solo": ["standard", "gentle"], "versus": ["standard"] },
+      "sourceFile": {
+        "path": "game/content/packs/neon-reference-pack.json",
+        "bytes": 65205,
+        "sha256": "375fa1ef79f751f2e26ba978d86f3eaedbc92f7c2480d7c90e563ff0d5752ac7"
+      },
+      "packIdentity": {
+        "bytes": 27032,
+        "sha256": "3345b10c152a0b74846a12088927bc9460b4e8a250360e5ca8698bab8e181f69"
+      },
+      "packVersion": "1.0.0"
+    },
+    {
+      "id": "classic/bundled/neon-reference-pack/neon-reference%2F1%2F281862e047adce8a/neon-labyrinth-pack/1",
+      "source": "bundled",
+      "packId": "neon-reference-pack",
+      "campaignId": "neon-reference",
+      "campaignRevision": "1",
+      "campaignKey": "neon-reference/1/281862e047adce8a",
+      "levelId": "neon-labyrinth-pack",
+      "levelRevision": "1",
+      "levelIndex": 3,
+      "name": "Neon Labyrinth",
+      "campaignTitle": "Neon Reference Pack",
+      "edition": "Neon Reference Pack",
+      "themeId": "retro",
+      "modes": ["solo", "versus"],
+      "tags": ["Classic", "Arcade"],
+      "rules": "75% coverage · 3 lives · 10 cells/s · No mission countdown · Direction-only Arcade · 8 enemies",
+      "ruleDetails": {
+        "ruleset": "xonix-core.v6",
+        "coverage": 0.75,
+        "lives": 3,
+        "moveSpeed": 10,
+        "timeLimitSeconds": 0,
+        "enemies": [
+          { "type": "bouncer", "count": 6 },
+          { "type": "border-patrol", "count": 2 }
+        ],
+        "requiredObjectives": 0
+      },
+      "difficultiesByMode": { "solo": ["standard", "gentle"], "versus": ["standard"] },
+      "sourceFile": {
+        "path": "game/content/packs/neon-reference-pack.json",
+        "bytes": 65205,
+        "sha256": "375fa1ef79f751f2e26ba978d86f3eaedbc92f7c2480d7c90e563ff0d5752ac7"
+      },
+      "packIdentity": {
+        "bytes": 27032,
+        "sha256": "3345b10c152a0b74846a12088927bc9460b4e8a250360e5ca8698bab8e181f69"
+      },
+      "packVersion": "1.0.0"
+    },
+    {
       "id": "classic/archived/fpv-arcade-r4/fpv-first-light-r4%2F4%2F0295a1eae3e180ec/orchard-window/4",
       "source": "archived",
       "packId": "fpv-arcade-r4",

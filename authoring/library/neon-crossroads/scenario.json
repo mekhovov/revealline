@@ -1,0 +1,239 @@
+{
+  "format": "xonix-playground.v5",
+  "level": {
+    "version": "xonix-level.v4",
+    "id": "neon-crossroads-reference",
+    "revision": "1",
+    "name": "Neon Crossroads",
+    "width": 72,
+    "height": 36,
+    "encounter": null,
+    "spawn": {
+      "x": 36.5,
+      "y": 35.5
+    },
+    "goal": {
+      "coverage": 0.75
+    },
+    "walls": [
+      {
+        "x": 35,
+        "y": 1,
+        "w": 2,
+        "h": 34
+      },
+      {
+        "x": 1,
+        "y": 17,
+        "w": 34,
+        "h": 2
+      },
+      {
+        "x": 37,
+        "y": 17,
+        "w": 34,
+        "h": 2
+      }
+    ],
+    "objectives": [],
+    "supplies": [],
+    "signalZones": [],
+    "hangars": [],
+    "classic": {
+      "version": "classic.v1",
+      "terrain": [],
+      "powerups": [],
+      "arcadeActions": {
+        "version": "arcade-actions.v1"
+      }
+    },
+    "enemies": [
+      {
+        "id": "yellow-upper-inner",
+        "type": "bouncer",
+        "x": 39.3,
+        "y": 12.3,
+        "vx": 4.1,
+        "vy": 2.4,
+        "radius": 0.3
+      },
+      {
+        "id": "yellow-upper-outer",
+        "type": "bouncer",
+        "x": 56.2,
+        "y": 13.6,
+        "vx": -3.8,
+        "vy": 3.1,
+        "radius": 0.3
+      },
+      {
+        "id": "yellow-lower-outer",
+        "type": "bouncer",
+        "x": 11.5,
+        "y": 19.5,
+        "vx": 2,
+        "vy": -4.5,
+        "radius": 0.3
+      },
+      {
+        "id": "yellow-lower-inner",
+        "type": "bouncer",
+        "x": 25.3,
+        "y": 19.8,
+        "vx": -1.1,
+        "vy": -4.5,
+        "radius": 0.3
+      },
+      {
+        "id": "pink-upper-left",
+        "type": "eroder",
+        "x": 9.1,
+        "y": 7.2,
+        "vx": -3.4,
+        "vy": -0.3,
+        "radius": 0.4
+      },
+      {
+        "id": "pink-lower-right",
+        "type": "eroder",
+        "x": 60.8,
+        "y": 25.1,
+        "vx": 3.1,
+        "vy": -1.6,
+        "radius": 0.4
+      },
+      {
+        "id": "cyan-top-left",
+        "type": "border-patrol",
+        "x": 13,
+        "y": 0.5,
+        "speed": 5,
+        "clockwise": true,
+        "radius": 0.35
+      },
+      {
+        "id": "cyan-top-right",
+        "type": "border-patrol",
+        "x": 59,
+        "y": 0.5,
+        "speed": 5,
+        "clockwise": false,
+        "radius": 0.35
+      },
+      {
+        "id": "cyan-left",
+        "type": "border-patrol",
+        "x": 0.5,
+        "y": 23,
+        "speed": 4.5,
+        "clockwise": true,
+        "radius": 0.35
+      },
+      {
+        "id": "cyan-right",
+        "type": "border-patrol",
+        "x": 71.5,
+        "y": 23,
+        "speed": 4.5,
+        "clockwise": false,
+        "radius": 0.35
+      }
+    ],
+    "rules": {
+      "lives": 3,
+      "moveSpeed": 10,
+      "respawnSeconds": 0.7,
+      "graceSeconds": 0.8,
+      "timeLimitSeconds": 0,
+      "stopOnCapture": true
+    },
+    "metadata": {
+      "description": "Four chambers divided by solid cyan walls. Yellow bouncers occupy the upper-right and lower-left chambers; pink diamond eroders occupy the other two. Four cyan patrols travel the outer safe border. Start at bottom center, move sideways before entering a chamber, and reconnect each cut to the outer safe border. Walls block movement and do not close a cut. Reveal 75%. Layout and actor positions follow the supplied screenshot; speeds and behaviors use existing Classic rules."
+    }
+  },
+  "theme": {
+    "id": "retro",
+    "name": "1994 Forever",
+    "subtitle": "One more credit",
+    "family": "retro",
+    "player": "retro-craft",
+    "enemyShape": "orb",
+    "patrolShape": "spark",
+    "bossShape": "core",
+    "scene": "arcade",
+    "labels": {
+      "objective": "Cartridge",
+      "supply": "Dock",
+      "enemy": "Glitch",
+      "boss": "Mainframe",
+      "currency": "Score",
+      "ability": "Power-up"
+    },
+    "palette": {
+      "ink": "#242a41",
+      "paper": "#eee8df",
+      "muted": "#aaa1b1",
+      "accent": "#efeb68",
+      "safe": "#39c7e8",
+      "danger": "#ee66bc",
+      "field": "#000000",
+      "grid": "#101020",
+      "sky": "#e49c95",
+      "land": "#565270"
+    },
+    "classBodies": {
+      "scout": "retro-craft",
+      "bomber": "retro-craft",
+      "carrier": "retro-craft",
+      "interceptor": "retro-craft",
+      "fiber": "retro-craft",
+      "impact": "retro-craft",
+      "trapper": "retro-craft"
+    }
+  },
+  "classRecipes": [
+    {
+      "id": "scout",
+      "label": "FPV Scout",
+      "description": "A nimble FPV quad. Scan shows enemy direction hints for four seconds; it never captures territory or slows an enemy.",
+      "primitive": "scan",
+      "capacity": 0,
+      "cooldown": 6,
+      "duration": 4,
+      "radius": 48,
+      "revision": "1"
+    }
+  ],
+  "settings": {
+    "classId": "scout",
+    "turnPolicy": "immediate",
+    "seed": 1
+  },
+  "visualOverrides": {
+    "enemy": {
+      "name": "Crossroads enemy",
+      "dataUrl": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAa0lEQVR42u3WSw4AEAwEUCd0JweVOAYrtixQ/5HMJF3PW7VVimF+S/Am5mOdLuZacQ1wBFIrbwG2IVrlPcAyolcuAUwjJOVSwBTiKUBaPgIYQhBAAAHPAdyEEMcI4hxDPCQQLxnEU8owp5IAO6H2aVCy5VEAAAAASUVORK5CYII="
+    },
+    "eroder": {
+      "name": "Crossroads eroder",
+      "dataUrl": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAnUlEQVR42u3X6w2AIAxGUdZyP6dxJuMq9RcJIZQ+ePSLkQXuSVAoKf1rYNH50H1cFBbPgO2IHC8B2xBlvAYsR9TxFmAZohXnANMRXLwHmIboxSXAMEKKawBuhCauBZgR2rgFoEZY4laAiLDGPQAW4Yl7AU1EOCB8CyA+QojfEOIggjiKIS4jiOsYYiCBGMkghlKIsRziYQLxNPvMegEkUwToHb7SvQAAAABJRU5ErkJggg=="
+    },
+    "patrol": {
+      "name": "Crossroads patrol",
+      "dataUrl": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAbklEQVR42mNgIBG4P3n/Hx9moDUYdcCoA+jmAFwGkuoAsh2Gy1BSHEBxyGAzgFgHUC1a0A0ixgFUTxOELKVLjqCZ5eT6jlp41AGjDhh1wMA7YMALokFfFA9oZTSg1fGAN0gGvEk22ioedcCIcQAA6l0yW47rJ5YAAAAASUVORK5CYII="
+    },
+    "player": {
+      "name": "Crossroads player",
+      "dataUrl": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAdklEQVR42u3WywkAIQwEUCu0JwtdsAw9uSdBxB8YzQgzDcwDNdEYhmFeTgwufd4mtfIMuI7I5SXgGqIsrwHHEXV5C3AM0SrvAcQRvfIRQAwxKp8BthGz8hXAFkIdoH4EEJcQ4hlCDCKIUQyxjCDWMcSHhGEYqfxr2EddvqTOcAAAAABJRU5ErkJggg=="
+    },
+    "wall": {
+      "name": "Crossroads wall",
+      "dataUrl": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAP0lEQVR42mMQia7+P5CYAURob7qOE9NaftQBow4YdQDDaDkw6oBRB4w6YLQcGHXAqANGHTBaDow6YNQBI94BAJ5cDzcS0yPLAAAAAElFTkSuQmCC"
+    }
+  },
+  "masteryDefinition": null,
+  "presentation": {
+    "style": "microtile",
+    "showGrid": false
+  }
+}

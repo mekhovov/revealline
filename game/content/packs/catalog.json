@@ -204,6 +204,36 @@
           ]
         }
       ]
+    },
+    {
+      "id": "neon-reference-pack",
+      "path": "neon-reference-pack.json",
+      "name": "Neon Reference Pack",
+      "campaigns": [
+        {
+          "id": "neon-reference",
+          "revision": "1",
+          "title": "Neon Reference Pack",
+          "levels": [
+            {
+              "id": "neon-channels-pack",
+              "name": "Neon Channels"
+            },
+            {
+              "id": "neon-crossroads-pack",
+              "name": "Neon Crossroads"
+            },
+            {
+              "id": "neon-hearts-pack",
+              "name": "Neon Hearts"
+            },
+            {
+              "id": "neon-labyrinth-pack",
+              "name": "Neon Labyrinth"
+            }
+          ]
+        }
+      ]
     }
   ]
 }

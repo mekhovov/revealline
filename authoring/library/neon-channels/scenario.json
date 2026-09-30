@@ -1,0 +1,411 @@
+{
+  "format": "xonix-playground.v6",
+  "level": {
+    "version": "xonix-level.v5",
+    "id": "neon-channels-reference",
+    "revision": "1",
+    "name": "Neon Channels",
+    "width": 72,
+    "height": 36,
+    "encounter": null,
+    "spawn": {
+      "x": 0.5,
+      "y": 35.5
+    },
+    "goal": {
+      "coverage": 0.75
+    },
+    "walls": [],
+    "foundations": [
+      {
+        "x": 30,
+        "y": 5,
+        "w": 1,
+        "h": 1
+      },
+      {
+        "x": 30,
+        "y": 6,
+        "w": 2,
+        "h": 1
+      },
+      {
+        "x": 31,
+        "y": 7,
+        "w": 1,
+        "h": 1
+      },
+      {
+        "x": 41,
+        "y": 5,
+        "w": 1,
+        "h": 1
+      },
+      {
+        "x": 40,
+        "y": 6,
+        "w": 2,
+        "h": 1
+      },
+      {
+        "x": 40,
+        "y": 7,
+        "w": 1,
+        "h": 1
+      },
+      {
+        "x": 34,
+        "y": 9,
+        "w": 4,
+        "h": 1
+      },
+      {
+        "x": 33,
+        "y": 10,
+        "w": 6,
+        "h": 1
+      },
+      {
+        "x": 32,
+        "y": 11,
+        "w": 8,
+        "h": 1
+      },
+      {
+        "x": 31,
+        "y": 12,
+        "w": 10,
+        "h": 1
+      },
+      {
+        "x": 31,
+        "y": 13,
+        "w": 2,
+        "h": 1
+      },
+      {
+        "x": 40,
+        "y": 13,
+        "w": 1,
+        "h": 1
+      },
+      {
+        "x": 32,
+        "y": 14,
+        "w": 1,
+        "h": 2
+      },
+      {
+        "x": 39,
+        "y": 14,
+        "w": 1,
+        "h": 2
+      },
+      {
+        "x": 32,
+        "y": 20,
+        "w": 1,
+        "h": 3
+      },
+      {
+        "x": 39,
+        "y": 20,
+        "w": 1,
+        "h": 3
+      },
+      {
+        "x": 31,
+        "y": 23,
+        "w": 5,
+        "h": 2
+      },
+      {
+        "x": 37,
+        "y": 23,
+        "w": 4,
+        "h": 2
+      },
+      {
+        "x": 36,
+        "y": 24,
+        "w": 1,
+        "h": 1
+      },
+      {
+        "x": 31,
+        "y": 25,
+        "w": 10,
+        "h": 1
+      }
+    ],
+    "objectives": [],
+    "supplies": [],
+    "signalZones": [],
+    "hangars": [],
+    "classic": {
+      "version": "classic.v1",
+      "terrain": [
+        {
+          "id": "north-west",
+          "kind": "slow",
+          "x": 5,
+          "y": 5,
+          "w": 14,
+          "h": 4
+        },
+        {
+          "id": "west-column",
+          "kind": "slow",
+          "x": 5,
+          "y": 13,
+          "w": 4,
+          "h": 18
+        },
+        {
+          "id": "inner-west-column",
+          "kind": "slow",
+          "x": 24,
+          "y": 5,
+          "w": 4,
+          "h": 18
+        },
+        {
+          "id": "south-center",
+          "kind": "slow",
+          "x": 24,
+          "y": 27,
+          "w": 15,
+          "h": 4
+        },
+        {
+          "id": "north-east",
+          "kind": "slow",
+          "x": 44,
+          "y": 5,
+          "w": 14,
+          "h": 4
+        },
+        {
+          "id": "inner-east-column",
+          "kind": "slow",
+          "x": 44,
+          "y": 13,
+          "w": 4,
+          "h": 18
+        },
+        {
+          "id": "east-column",
+          "kind": "slow",
+          "x": 63,
+          "y": 5,
+          "w": 4,
+          "h": 26
+        },
+        {
+          "id": "west-tower",
+          "kind": "lethal",
+          "x": 15,
+          "y": 13,
+          "w": 4,
+          "h": 10
+        },
+        {
+          "id": "west-foot",
+          "kind": "lethal",
+          "x": 15,
+          "y": 27,
+          "w": 4,
+          "h": 4
+        },
+        {
+          "id": "north-center",
+          "kind": "lethal",
+          "x": 34,
+          "y": 5,
+          "w": 4,
+          "h": 4
+        },
+        {
+          "id": "center-tower",
+          "kind": "lethal",
+          "x": 33,
+          "y": 13,
+          "w": 6,
+          "h": 10
+        },
+        {
+          "id": "east-tower",
+          "kind": "lethal",
+          "x": 54,
+          "y": 13,
+          "w": 4,
+          "h": 10
+        },
+        {
+          "id": "east-foot",
+          "kind": "lethal",
+          "x": 54,
+          "y": 27,
+          "w": 4,
+          "h": 4
+        }
+      ],
+      "powerups": [],
+      "arcadeActions": {
+        "version": "arcade-actions.v1"
+      }
+    },
+    "enemies": [
+      {
+        "id": "pink-north-west",
+        "type": "bouncer",
+        "x": 15.3,
+        "y": 2.2,
+        "vx": -4.2,
+        "vy": -1.8,
+        "radius": 0.3
+      },
+      {
+        "id": "pink-south-east",
+        "type": "bouncer",
+        "x": 53.1,
+        "y": 26.4,
+        "vx": 3.1,
+        "vy": 4.1,
+        "radius": 0.3
+      },
+      {
+        "id": "pink-center-diamond",
+        "type": "eroder",
+        "x": 35.6,
+        "y": 19.8,
+        "vx": -0.6,
+        "vy": -3.4,
+        "radius": 0.4
+      },
+      {
+        "id": "cyan-north",
+        "type": "border-patrol",
+        "x": 21.5,
+        "y": 0.5,
+        "speed": 5,
+        "clockwise": false,
+        "radius": 0.35
+      },
+      {
+        "id": "cyan-west",
+        "type": "border-patrol",
+        "x": 0.5,
+        "y": 14.5,
+        "speed": 4.5,
+        "clockwise": true,
+        "radius": 0.35
+      },
+      {
+        "id": "cyan-east",
+        "type": "border-patrol",
+        "x": 71.5,
+        "y": 21.5,
+        "speed": 5.5,
+        "clockwise": true,
+        "radius": 0.35
+      }
+    ],
+    "rules": {
+      "lives": 3,
+      "moveSpeed": 10,
+      "respawnSeconds": 0.7,
+      "graceSeconds": 0.8,
+      "timeLimitSeconds": 0,
+      "stopOnCapture": true
+    },
+    "metadata": {
+      "description": "Recreate the supplied neon arena: seven blue slowing regions, six red lethal regions, two roaming pink orbs, a central diamond eroder and three cyan perimeter patrols. Capture 75%. Blue ground slows your craft; red ground is lethal until captured. The central revealed islands are safe return surfaces. Grid and starting positions are scaled from the picture; enemy behaviors and speeds are authored approximations."
+    }
+  },
+  "theme": {
+    "id": "retro",
+    "name": "1994 Forever",
+    "subtitle": "One more credit",
+    "family": "retro",
+    "player": "retro-craft",
+    "enemyShape": "orb",
+    "patrolShape": "spark",
+    "bossShape": "core",
+    "scene": "arcade",
+    "labels": {
+      "objective": "Cartridge",
+      "supply": "Dock",
+      "enemy": "Glitch",
+      "boss": "Mainframe",
+      "currency": "Score",
+      "ability": "Power-up"
+    },
+    "palette": {
+      "ink": "#242a41",
+      "paper": "#eee8df",
+      "muted": "#aaa1b1",
+      "accent": "#ffe654",
+      "safe": "#39c7e8",
+      "danger": "#ff548b",
+      "field": "#000000",
+      "grid": "#101020",
+      "sky": "#e49c95",
+      "land": "#565270"
+    },
+    "classBodies": {
+      "scout": "retro-craft",
+      "bomber": "retro-craft",
+      "carrier": "retro-craft",
+      "interceptor": "retro-craft",
+      "fiber": "retro-craft",
+      "impact": "retro-craft",
+      "trapper": "retro-craft"
+    }
+  },
+  "classRecipes": [
+    {
+      "id": "scout",
+      "label": "FPV Scout",
+      "description": "A nimble FPV quad. Scan shows enemy direction hints for four seconds; it never captures territory or slows an enemy.",
+      "primitive": "scan",
+      "capacity": 0,
+      "cooldown": 6,
+      "duration": 4,
+      "radius": 48,
+      "revision": "1"
+    }
+  ],
+  "settings": {
+    "classId": "scout",
+    "turnPolicy": "immediate",
+    "seed": 1
+  },
+  "visualOverrides": {
+    "enemy": {
+      "name": "Neon enemy",
+      "dataUrl": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAZUlEQVR42mNgGAWjYBSQCP4vPPEfhj/7T8DAdLEYnwNo4hBslhNyANUcgctyYhxAsSPwWU6sAyhyxIA6gJDlpDiALEeMOmDUAaMOGHAHjJaEg6IyGhTV8aBokAyKJtkoGAXDFgAA3Nz8xu33rKgAAAAASUVORK5CYII="
+    },
+    "eroder": {
+      "name": "Neon eroder",
+      "dataUrl": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAmklEQVR42u3X0Q2AIAxFUTZ0NVdwG/dxgBI+SAyB0tYCz4Qmft+TqFhD2PPneY6T0rUkTtdNGTAdkeIlYBoix2uA4Yh3vAUYhijjHMAdUYv3AG6IVlwC+Izg4lKAGdGLawBqhCSuBYgR0rgF0EVo4lYAi1gOWH4LIB5CiNcQ4iCCOIohPkYQn2OIhQRiJYNYSiHWcogfkz1eEwG1g1zRo0kWyQAAAABJRU5ErkJggg=="
+    },
+    "patrol": {
+      "name": "Neon patrol",
+      "dataUrl": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAeklEQVR42mNgIANY3v/2HxtmoAfAZTndHDHqgJHlAGwGkuoAsh2Fy1BSHEBxyGAzgFgHUC1a0A0ixgFUTxOELKVbgqSZ5eT6kFI8oJbDHTHqgFEHDLgDBjwbDoqCaFAXxQNaGQ1odTxoGiQD1iQbbRWPOmDQOoDa3XMA/Gz1sONLA88AAAAASUVORK5CYII="
+    },
+    "player": {
+      "name": "Neon player",
+      "dataUrl": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAaElEQVR42u2WyQkAIAwEU5/912Abil9BPHItsgO+Z0CNihBCFLRa2lip8pSIWR4asZKHROzkrhGncpeIW7lpxKvcJEIrV0VYyZ8j0gPStwDiEEJcQ4hBBDGKIR4jiOcY4kMC8SUj5Bs6li+7p9bSiY0AAAAASUVORK5CYII="
+    },
+    "slowTerrain": {
+      "name": "Neon slowTerrain",
+      "dataUrl": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAANklEQVR42mNgGAWjYBSMgsEMnBLu/KcGHnXA0HUAKY4b8AQ66oBRB4w6YLTiGgWjYBSMgiELAMa7Atjf3Ar7AAAAAElFTkSuQmCC"
+    }
+  },
+  "masteryDefinition": null,
+  "presentation": {
+    "style": "microtile",
+    "showGrid": false
+  }
+}
