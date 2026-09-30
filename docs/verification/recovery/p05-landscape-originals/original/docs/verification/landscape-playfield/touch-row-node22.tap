@@ -1,0 +1,124 @@
+TAP version 13
+# Subtest: short row tap sends left and release does not invent another command
+ok 1 - short row tap sends left and release does not invent another command
+  ---
+  duration_ms: 4.623542
+  type: 'test'
+  ...
+# Subtest: short row tap sends up and release does not invent another command
+ok 2 - short row tap sends up and release does not invent another command
+  ---
+  duration_ms: 0.882541
+  type: 'test'
+  ...
+# Subtest: short row tap sends down and release does not invent another command
+ok 3 - short row tap sends down and release does not invent another command
+  ---
+  duration_ms: 0.361917
+  type: 'test'
+  ...
+# Subtest: short row tap sends right and release does not invent another command
+ok 4 - short row tap sends right and release does not invent another command
+  ---
+  duration_ms: 0.21775
+  type: 'test'
+  ...
+# Subtest: sliding row follows labelled buttons, retaining intent through gaps and outside bounds
+ok 5 - sliding row follows labelled buttons, retaining intent through gaps and outside bounds
+  ---
+  duration_ms: 3.628458
+  type: 'test'
+  ...
+# Subtest: cancelled or inactive row cannot keep steering; another finger cannot steal it
+ok 6 - cancelled or inactive row cannot keep steering; another finger cannot steal it
+  ---
+  duration_ms: 0.26825
+  type: 'test'
+  ...
+# Subtest: square D-pad retains radial sliding through its four directions
+ok 7 - square D-pad retains radial sliding through its four directions
+  ---
+  duration_ms: 0.191417
+  type: 'test'
+  ...
+# Subtest: cardinal touch directions reject jitter and retain heading at diagonal boundaries
+ok 8 - cardinal touch directions reject jitter and retain heading at diagonal boundaries
+  ---
+  duration_ms: 2.09125
+  type: 'test'
+  ...
+# Subtest: floating stick starts where the finger lands, turns through four directions, releases capture
+ok 9 - floating stick starts where the finger lands, turns through four directions, releases capture
+  ---
+  duration_ms: 1.874291
+  type: 'test'
+  ...
+# Subtest: floating stick follows a drifting thumb and can reverse without returning to original contact
+ok 10 - floating stick follows a drifting thumb and can reverse without returning to original contact
+  ---
+  duration_ms: 0.159083
+  type: 'test'
+  ...
+# Subtest: swipe uses recent travel so a short reverse flick turns immediately
+ok 11 - swipe uses recent travel so a short reverse flick turns immediately
+  ---
+  duration_ms: 0.212792
+  type: 'test'
+  ...
+# Subtest: sliding D-pad fills gaps and accepts direction changes without lifting
+ok 12 - sliding D-pad fills gaps and accepts direction changes without lifting
+  ---
+  duration_ms: 0.246042
+  type: 'test'
+  ...
+# Subtest: D-pad mode does not intercept board touches or scrolling
+ok 13 - D-pad mode does not intercept board touches or scrolling
+  ---
+  duration_ms: 0.192916
+  type: 'test'
+  ...
+# Subtest: one steering finger cannot be stolen by a second finger
+ok 14 - one steering finger cannot be stolen by a second finger
+  ---
+  duration_ms: 0.137667
+  type: 'test'
+  ...
+# Subtest: pointercancel ends steering; stale moves cannot turn the craft
+ok 15 - pointercancel ends steering; stale moves cannot turn the craft
+  ---
+  duration_ms: 0.123125
+  type: 'test'
+  ...
+# Subtest: lostpointercapture ends steering; stale moves cannot turn the craft
+ok 16 - lostpointercapture ends steering; stale moves cannot turn the craft
+  ---
+  duration_ms: 0.114
+  type: 'test'
+  ...
+# Subtest: pause and modality reset require a new gesture
+ok 17 - pause and modality reset require a new gesture
+  ---
+  duration_ms: 0.277709
+  type: 'test'
+  ...
+# Subtest: mouse can use the visible stick but does not capture ordinary board clicks
+ok 18 - mouse can use the visible stick but does not capture ordinary board clicks
+  ---
+  duration_ms: 0.097083
+  type: 'test'
+  ...
+# Subtest: touch preferences survive export/import; old libraries migrate without losing other preferences
+ok 19 - touch preferences survive export/import; old libraries migrate without losing other preferences
+  ---
+  duration_ms: 1.147167
+  type: 'test'
+  ...
+1..19
+# tests 19
+# suites 0
+# pass 19
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 108.76225
