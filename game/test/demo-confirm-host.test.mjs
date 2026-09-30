@@ -71,6 +71,62 @@ async function deckDemo(t, phase = 'watching') {
   return { page, pad, elapse, frame, hold, open, exits: () => exits };
 }
 
+for (const phase of ['watching', 'practice']) {
+  test(`${phase} Demo Back commits a pure Gamepad tap or five-second hold only on release`, async (t) => {
+    const h = await deckDemo(t, phase),
+      { page, frame, hold } = h;
+    for (const duration of [40, 5000]) {
+      await h.open();
+      const before = h.exits();
+      hold(true);
+      frame();
+      assert.equal(page.$('demo-dialog').open, true, 'A-down cannot invoke Back');
+      assert.equal(h.exits(), before);
+      assert.equal(page.$('demo-back').getAttribute('data-controller-pressed'), 'true');
+      h.elapse(duration);
+      frame();
+      assert.equal(page.$('demo-dialog').open, true, 'held A keeps Back pending');
+      assert.equal(h.exits(), before);
+      hold(false);
+      frame();
+      assert.equal(page.$('demo-dialog').open, false, 'A-up invokes the captured Back');
+      assert.equal(h.exits(), before + 1);
+      frame();
+      frame(1500);
+      assert.equal(page.$('demo-dialog').open, false);
+      assert.equal(h.exits(), before + 1, 'neutral frames cannot repeat the release commit');
+    }
+    assert.deepEqual(page.errors, []);
+  });
+
+  test(`${phase} Demo Back release does not send a simultaneous UI edge into Home`, async (t) => {
+    const h = await deckDemo(t, phase),
+      { page, pad, frame, hold } = h;
+    for (const secondary of [1, 13]) {
+      await h.open();
+      const before = h.exits();
+      hold(true);
+      frame();
+      assert.equal(page.$('demo-dialog').open, true);
+      hold(false);
+      pad.buttons[secondary] = { pressed: true, value: 1 };
+      frame();
+      assert.equal(h.exits(), before + 1);
+      assert.equal(page.$('demo-dialog').open, false);
+      assert.equal(page.$('shell-home').open, true, 'the old Demo frame cannot dismiss Home');
+      assert.equal(
+        page.doc.activeElement,
+        page.$('shell-options'),
+        'the old Demo direction cannot move the restored Home focus',
+      );
+      pad.buttons[secondary] = { pressed: false, value: 0 };
+      frame();
+      assert.equal(h.exits(), before + 1);
+    }
+    assert.deepEqual(page.errors, []);
+  });
+}
+
 for (const phase of ['watching', 'practice'])
   for (const order of ['gamepad-first', 'native-before-RAF'])
     test(`${phase} Demo Back uses one release commit for ${order} Enter/Space echoes`, async (t) => {
