@@ -356,6 +356,35 @@ test('viewport reflow preserves the visible anchor without scrolling the focused
   assert.equal(f.view.listeners.get('blur')?.size, 0);
 });
 
+test('coalesced resize signals retain the pre-reflow anchor through layout scroll events', () => {
+  const f = resizeFixture(),
+    list = f.$('journey-cards'),
+    first = list.children[0],
+    second = list.children[1],
+    beforeFirstScroll = first.scrolled ?? 0,
+    beforeSecondScroll = second.scrolled ?? 0;
+  list._rect = { x: 0, y: 100, width: 320, height: 240 };
+  first._rect = { x: 0, y: 112, width: 150, height: 155 };
+  second._rect = { x: 0, y: 280, width: 150, height: 155 };
+  list.scrollTop = 96;
+  list.emit('scroll');
+
+  f.view.emit('resize');
+  assert.equal(f.frames.size, 1);
+  first._rect.y = -200;
+  second._rect.y = 110;
+  list.scrollTop = 999;
+  list.emit('scroll');
+  f.media.emit('change', { matches: true });
+  assert.equal(f.frames.size, 1, 'A later media signal replaces only the queued frame.');
+
+  f.frame();
+  assert.equal(list.scrollTop, 687, 'The original first-card offset wins over reflow scrolling.');
+  assert.equal(first.scrolled ?? 0, beforeFirstScroll);
+  assert.equal(second.scrolled ?? 0, beforeSecondScroll);
+  f.chooser.destroy();
+});
+
 test('phone viewport and rotation matrix retains the exact top mission, offset and focus', () => {
   const f = resizeFixture(),
     list = f.$('journey-cards'),

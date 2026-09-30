@@ -1,0 +1,195 @@
+* {
+  box-sizing: border-box;
+}
+body {
+  margin: 0;
+  padding: clamp(12px, 3vw, 24px);
+  color: #f3f0db;
+  background: #070b12;
+  font:
+    18px/1.5 'Field Kit UI',
+    sans-serif;
+}
+header,
+main,
+footer {
+  max-width: 1440px;
+  margin-inline: auto;
+  min-width: 0;
+}
+header {
+  scroll-margin-top: 5rem;
+}
+h1 {
+  font:
+    600 clamp(28px, 5vw, 48px) / 1.1 'Field Kit Display',
+    sans-serif;
+}
+h2 {
+  font-size: 20px;
+  overflow-wrap: anywhere;
+}
+a {
+  color: #78dce8;
+}
+header > a,
+.title-source {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 44px;
+  padding-block: 8px;
+  max-width: 100%;
+  overflow-wrap: anywhere;
+}
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 24px;
+}
+figure {
+  margin: 0;
+  padding: 16px;
+  min-width: 0;
+  border: 2px solid #213647;
+  background: #101923;
+}
+figure img {
+  width: 100%;
+  height: auto;
+  display: block;
+  image-rendering: pixelated;
+}
+.portrait img {
+  max-width: 360px;
+}
+figcaption {
+  margin-top: 12px;
+}
+.title-source {
+  margin-top: 12px;
+  padding-inline: 10px;
+  border: 1px solid currentColor;
+}
+.status {
+  color: #f4bf62;
+}
+button,
+select {
+  min-height: 44px;
+  max-width: 100%;
+  padding: 8px;
+  font: inherit;
+}
+#title-language label {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+}
+a:focus-visible,
+button:focus-visible,
+select:focus-visible {
+  outline: 3px solid #ffd659;
+  outline-offset: 3px;
+}
+.reveal-source-dialog {
+  width: min(1100px, calc(100vw - 24px));
+  max-height: calc(100svh - 24px);
+  padding: clamp(12px, 3vw, 28px);
+  overflow: auto;
+  color: #f3f0db;
+  background: #101923;
+  border: 2px solid #78dce8;
+}
+.reveal-source-dialog::backdrop {
+  background: rgb(0 0 0 / 75%);
+}
+.reveal-source-dialog h2 {
+  margin: 0 0 12px;
+  font-size: clamp(22px, 4vw, 32px);
+}
+.reveal-source-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 12px 0;
+}
+.reveal-source-actions button {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+.reveal-source-actions [hidden] {
+  display: none;
+}
+.title-source[data-menu-icon]::before,
+.reveal-source-actions [data-menu-icon]::before {
+  content: '';
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  flex: 0 0 16px;
+  background: currentColor;
+  mask: var(--native-menu-icon) center / contain no-repeat;
+}
+#reveal-source-region {
+  max-height: min(60svh, 640px);
+  min-height: 44px;
+  overflow: auto;
+  overscroll-behavior: contain;
+  background: #070b12;
+  border: 1px solid #425563;
+}
+#reveal-source-region pre {
+  padding: 12px;
+  margin: 0;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  font:
+    16px/1.6 'Field Kit Mono',
+    monospace;
+}
+#reveal-source-region img {
+  display: block;
+  max-width: 100%;
+  max-height: min(calc(60svh - 2px), 638px);
+  height: auto;
+  margin-inline: auto;
+  image-rendering: pixelated;
+}
+#reveal-source-region img[data-size='actual'] {
+  width: auto;
+  height: auto;
+  max-width: none;
+  max-height: none;
+}
+#reveal-source-status {
+  overflow-wrap: anywhere;
+}
+#reveal-source-region:focus-visible,
+#reveal-source-region[data-reveal-source-reading] {
+  outline: 3px solid #78dce8;
+  outline-offset: 2px;
+}
+@media (max-width: 700px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+}
+@media (forced-colors: active) {
+  figure,
+  .reveal-source-dialog,
+  #reveal-source-region {
+    border-color: CanvasText;
+    color: CanvasText;
+    background: Canvas;
+  }
+  a:focus-visible,
+  button:focus-visible,
+  select:focus-visible,
+  #reveal-source-region:focus-visible,
+  #reveal-source-region[data-reveal-source-reading] {
+    outline-color: Highlight;
+  }
+}
