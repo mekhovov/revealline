@@ -247,6 +247,7 @@ import {
 } from './ui/picture-identity.mjs';
 import { createSoundtrackPlayer } from './ui/soundtrack-player.mjs';
 import { attachSoundtrackPanel } from './ui/soundtrack-panel.mjs';
+import { availableCommunitySoundtrackStyles } from './community-soundtrack-styles.mjs';
 import { attachLibraryPanel } from './ui/library-panel.mjs';
 import { masteryFor, masteryText } from './ui/mastery-view.mjs';
 import { createMasteryObserver, captureMasterySetup, captureMasteryFacts } from './mastery.mjs';
@@ -1956,6 +1957,9 @@ try {
         store: soundtrackStore,
         player: soundtrackPlayer,
         catalogue,
+        availableStyles: availableCommunitySoundtrackStyles(
+          runtimeContent?.selection.brand.id ?? null,
+        ),
         bundled: SOUNDTRACK_BUNDLED_ASSETS,
         readAsset: source.readAsset,
         getContext: soundtrackContext,
