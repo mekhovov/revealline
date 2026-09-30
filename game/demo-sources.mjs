@@ -7,6 +7,7 @@ import {
 } from './demo-catalog.mjs';
 import { prepareReplayPlayer, prepareReviewedReplayPlayer } from './replay-player.mjs';
 import { prepareBotPlayer } from './demo-bot-player.mjs';
+import { prepareImprovPlayer } from './demo-improv-player.mjs';
 import { LIVE_BOT_LEVEL_IDS, supportsDemoBot } from './demo-bot.mjs';
 import { campaignKey } from './library.mjs';
 import { applyGameplayTuning, resolveGameplayTuning } from './gameplay-tuning.mjs';
@@ -109,5 +110,40 @@ export async function loadDemoSources({
           });
       }
     }
+  const represented = new Set(sources.map((source) => source.levelKey));
+  for (const entry of entries) {
+    if (entry.difficulty && entry.difficulty !== 'standard') continue;
+    const recipes = entry.classRecipes ?? entry.campaign.classRecipes;
+    if (!Array.isArray(recipes) || !recipes.length) continue;
+    for (const [levelIndex, level] of entry.campaign.levels.entries()) {
+      const key = `${campaignKey(entry.campaign)}/${level.id}`;
+      if (represented.has(key)) continue;
+      const simulationLevel = applyGameplayTuning(level, resolveGameplayTuning('standard')),
+        classId = recipes[levelIndex % recipes.length].id,
+        baseSeed = (levelIndex + 1) * 2654435761;
+      let performance = 0;
+      sources.push({
+        id: `improv-${campaignKey(entry.campaign)}-${level.id}`,
+        kind: 'improv',
+        levelId: level.id,
+        level,
+        entry,
+        identity: demoIdentity(level, recipes),
+        recordingIdentity: demoIdentity(simulationLevel, recipes),
+        campaignKey: campaignKey(entry.campaign),
+        levelKey: key,
+        create: ({ signal }) => {
+          performance++;
+          const seed = (baseSeed ^ Math.imul(performance, 2246822519)) >>> 0;
+          return prepareImprovPlayer(
+            simulationLevel,
+            { seed, turnPolicy, classId, classRecipes: recipes },
+            { signal, performanceSeed: seed },
+          );
+        },
+      });
+      represented.add(key);
+    }
+  }
   return sources;
 }
