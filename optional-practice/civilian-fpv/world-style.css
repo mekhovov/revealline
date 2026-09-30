@@ -662,7 +662,8 @@ dialog header small {
   pointer-events: none;
 }
 .world-touch .touch-stick {
-  pointer-events: auto;
+  position: relative;
+  pointer-events: none;
   width: 100px;
   height: 100px;
   border: 1px solid #ffffff66;
@@ -674,9 +675,42 @@ dialog header small {
   display: block;
   width: 16px;
   height: 16px;
-  margin: 42px;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  margin: -8px;
   background: var(--accent);
   border-radius: 50%;
+}
+.world-touch.touch-active .touch-stick {
+  pointer-events: auto;
+}
+.world-touch .touch-stick span {
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 10px;
+  white-space: nowrap;
+  padding: 2px 4px;
+  border-radius: 3px;
+  background: #102027df;
+}
+.world-touch.compact-sticks {
+  inset: auto 16px 72px auto;
+  gap: 16px;
+}
+.world-touch.compact-sticks .touch-stick {
+  width: 62px;
+  height: 62px;
+}
+.world-touch.input-unavailable {
+  opacity: 0.45;
+}
+.world-input-status {
+  font-size: 12px;
+  margin: 0 0 8px;
+  color: var(--muted);
 }
 [hidden] {
   display: none !important;
@@ -762,6 +796,10 @@ dialog header small {
   .flight-coaching {
     bottom: 42px;
     font-size: 12px;
+  }
+  .world-touch,
+  .world-touch.compact-sticks {
+    bottom: 140px;
   }
   .flight-brief {
     left: 6px;
