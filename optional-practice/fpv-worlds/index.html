@@ -38,6 +38,32 @@
             ><strong>8</strong><span data-i18n="worlds">worlds</span>
           </div>
         </div>
+        <aside class="first-flight-card" aria-labelledby="first-flight-title">
+          <div>
+            <p class="eyebrow" data-i18n="firstFlight">YOUR FIRST FLIGHT</p>
+            <h2 id="first-flight-title" data-i18n="firstFlightTitle">
+              Watch a hover. Then try it yourself.
+            </h2>
+            <p data-i18n="firstFlightHelp">
+              Start with the Academy: raise throttle gently, hold inside the marker, then land.
+              Self-level helps you stay upright; Acro keeps the angle you set.
+            </p>
+            <small data-i18n="demoCoverage"
+              >24 recorded examples cover the 12 Academy challenges in both modes. Examples for the
+              new worlds are still in production.</small
+            >
+          </div>
+          <div class="button-row">
+            <select id="first-flight-mode" aria-label="First flight mode">
+              <option value="self-level">Self-level</option>
+              <option value="acro">Acro</option>
+            </select>
+            <button id="watch-first-flight" data-i18n="watchFirst">Watch first flight</button>
+            <button id="try-first-flight" class="primary" data-i18n="tryFirst">
+              Try first flight
+            </button>
+          </div>
+        </aside>
         <div id="theme-tabs" class="theme-tabs" aria-label="Collections"></div>
         <div class="library-tools">
           <input
@@ -266,6 +292,19 @@
           <option value="high" data-i18n="quality">Quality</option>
         </select>
       </div>
+      <div id="world-replay-controls" class="replay-controls" hidden>
+        <strong id="world-replay-label"></strong>
+        <label
+          ><span data-i18n="playbackSpeed">Playback speed</span>
+          <select id="world-replay-rate">
+            <option value="0.5">0.5×</option>
+            <option value="1" selected>1×</option>
+          </select>
+        </label>
+        <button id="fly-after-replay" class="primary" data-i18n="flyThis">
+          Fly this challenge
+        </button>
+      </div>
       <section id="world-viewport" tabindex="0">
         <canvas id="world-canvas"></canvas>
         <div class="flight-brief"><p id="flight-brief"></p></div>
@@ -286,6 +325,7 @@
           <button id="world-arm" class="primary" data-i18n="arm">Arm / resume</button
           ><button id="world-pause" data-i18n="pause">Pause</button
           ><button id="world-retry" data-i18n="retry">Retry</button
+          ><button id="world-watch-demo" data-i18n="watchDemo" hidden>Watch demonstration</button
           ><button id="world-fire" data-i18n="fire">Fire · Space</button
           ><button id="world-next" data-i18n="next">Next in playlist</button
           ><button id="export-flight" data-i18n="exportProof">Export recording</button>
