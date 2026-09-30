@@ -1,5 +1,9 @@
 # Reveal Line cross-mode execution register
 
+> **Current whole-product status:** [completed and remaining delivery](delivery-status.md).
+> Use that dated rollup for current priorities, release status and acceptance limits.
+> The older checkpoints below retain their historical scope.
+
 > **Current status:** use the
 > [30 September plan and source audit](plan-status-2026-09-30.md).
 > Immutable v0.142.3, current main and active source inputs have separate
