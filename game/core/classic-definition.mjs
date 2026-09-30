@@ -86,8 +86,8 @@ export function resolveClassicDefinition(level, foundationGeometry = null) {
   required(value.version === 'classic.v1', 'unsupported classic definition');
   validateEnemyPressure(level);
   required(
-    Array.isArray(value.terrain) && value.terrain.length <= 100,
-    'at most 100 terrain rectangles',
+    Array.isArray(value.terrain) && value.terrain.length <= 256,
+    'at most 256 terrain rectangles',
   );
   required(Array.isArray(value.powerups) && value.powerups.length <= 64, 'at most 64 powerups');
   const walls = new Uint8Array(width * height),

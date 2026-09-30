@@ -230,6 +230,10 @@
             {
               "id": "neon-labyrinth-pack",
               "name": "Neon Labyrinth"
+            },
+            {
+              "id": "neon-arrows-pack",
+              "name": "Neon Arrows"
             }
           ]
         }
