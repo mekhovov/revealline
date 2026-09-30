@@ -54,6 +54,7 @@ import {
   publicSoundtrackSelection,
 } from '../soundtrack-style-selection.mjs';
 import {
+  DEFAULT_PUBLIC_SOUNDTRACK_STYLE_IDS,
   PUBLIC_SOUNDTRACK_STYLE_IDS,
   localGenresForPublicStyles,
   matchesPublicSoundtrackStyle,
@@ -111,12 +112,27 @@ export function attachSoundtrackPanel({
   albumDownload = {},
   onlineCatalogueDownload = {},
   catalogue = null,
+  availableStyles = PUBLIC_SOUNDTRACK_STYLE_IDS,
   readAsset,
 } = {}) {
   if (!doc?.body || !store?.read || !store?.commit || !player?.snapshot)
     throw new Error(t('interface:soundtrackPanelRequiresADocumentStoreAndPlayer'));
   if (adoptLibrary !== null && typeof adoptLibrary !== 'function')
     throw new TypeError(t('errors:soundtrack.adoptLibraryFunction'));
+  if (
+    !Array.isArray(availableStyles) ||
+    !availableStyles.length ||
+    new Set(availableStyles).size !== availableStyles.length ||
+    availableStyles.some((style) => !PUBLIC_SOUNDTRACK_STYLE_IDS.includes(style))
+  )
+    throw new TypeError('Available public soundtrack styles are invalid.');
+  const availableStyleSet = new Set(availableStyles);
+  const availableStyleIds = PUBLIC_SOUNDTRACK_STYLE_IDS.filter((style) =>
+    availableStyleSet.has(style),
+  );
+  const defaultStyleIds = DEFAULT_PUBLIC_SOUNDTRACK_STYLE_IDS.filter((style) =>
+    availableStyleSet.has(style),
+  );
   if (
     musicSession &&
     (typeof musicSession.play !== 'function' || typeof musicSession.pause !== 'function')
@@ -551,12 +567,14 @@ export function attachSoundtrackPanel({
   });
   onlineStyles.append(node('legend', null, localizedMessage('interface:musicStylesChooseAnyMix')));
   const onlineStyleInputs = new Map();
-  for (const [value, label] of ONLINE_STYLE_CHOICES) {
+  for (const [value, label] of ONLINE_STYLE_CHOICES.filter(([value]) =>
+    availableStyleSet.has(value),
+  )) {
     const checkbox = node('input', `online-style-${value}`, null, {
       type: 'checkbox',
       value,
     });
-    checkbox.checked = true;
+    checkbox.checked = defaultStyleIds.includes(value);
     const choice = node('label', null, null, { class: 'soundtrack-online-style' });
     choice.append(checkbox, node('span', null, label));
     onlineStyles.append(choice);
@@ -588,12 +606,12 @@ export function attachSoundtrackPanel({
       class: 'soundtrack-settings-styles',
     });
     picker.append(node('legend', null, localizedMessage('interface:musicStylesChooseAnyMix')));
-    for (const value of PUBLIC_SOUNDTRACK_STYLE_IDS) {
+    for (const value of availableStyleIds) {
       const checkbox = node('input', `settings-style-${value}`, null, {
         type: 'checkbox',
         value,
       });
-      checkbox.checked = true;
+      checkbox.checked = defaultStyleIds.includes(value);
       const choice = node('label', null, null, { class: 'soundtrack-online-style' });
       choice.append(checkbox, node('span', null, labels.get(value) ?? value));
       picker.append(choice);
@@ -710,12 +728,13 @@ export function attachSoundtrackPanel({
       saved?.publicStyles &&
       sameSoundtrackListening(draft, adopt(saved.library))
     )
-      return saved.publicStyles;
-    if (!draft.listening || draft.listening.mode === 'auto') return PUBLIC_SOUNDTRACK_STYLE_IDS;
+      return saved.publicStyles.filter((style) => availableStyleSet.has(style));
+    if (saved?.generation === 0) return defaultStyleIds;
+    if (!draft.listening || draft.listening.mode === 'auto') return defaultStyleIds;
     if (draft.listening.mode === 'fusion') return ['fusion'];
     return publicSoundtrackStylesForLocalGenres(
       draft.listening.mode === 'mix' ? draft.listening.genres : [draft.listening.mode],
-    );
+    ).filter((style) => availableStyleSet.has(style));
   }
   function renderSettingsStyleStatus(message = null) {
     if (!settingsStyleStatus) return;
