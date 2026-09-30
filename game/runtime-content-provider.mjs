@@ -4,7 +4,10 @@ import { verifyEditionAssets } from './editions/assets.mjs';
 import { resolveEditionAssets } from './editions/model.mjs';
 import { editionIdentityId, editionPublicSlug, resolveEditionContext } from './edition-context.mjs';
 import { required } from './data-json.mjs';
+import { validateCompletionRewards } from './rewards/model.mjs';
+import { isStudioPreview, STUDIO_PREVIEW_PARAMETER } from './studio-preview-session.mjs';
 import { projectEditionThemeSelection } from './editions/selected-presentation.mjs';
+import { installEditionLocalization } from './editions/localization-runtime.mjs';
 import {
   editionPresentationSha256,
   loadRetainedPresentation,
@@ -176,6 +179,8 @@ export async function loadRuntimeContentProvider({
     rootURL: rootURL.href,
     themes: projected.themes.themes,
     lessons: Object.values(bootstrap.lessons).flat(),
+    rewards: validateCompletionRewards(Object.values(bootstrap.rewards ?? {}).flat()),
+    installLocalization: () => installEditionLocalization(bootstrap),
     // The canonical host owns and augments its boot data; the immutable source
     // registry must remain untouched for session/presentation identities.
     boot: ['campaign', 'themes', 'presets', 'classes', 'packs', 'archives'].map((name) =>
@@ -202,6 +207,7 @@ export async function loadRuntimeContentProvider({
         if (value != null)
           target.searchParams.set(key, key === 'edition' ? editionPublicSlug(value) : value);
         else target.searchParams.delete(key);
+      if (isStudioPreview(url.href)) target.searchParams.set(STUDIO_PREVIEW_PARAMETER, '1');
       return target.href;
     },
   });

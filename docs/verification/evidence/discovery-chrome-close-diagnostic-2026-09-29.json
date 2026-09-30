@@ -1,0 +1,370 @@
+{
+  "format": "revealline-chrome-close-diagnostic.v1",
+  "observedAt": "2026-09-29",
+  "qualified": false,
+  "publicEligible": false,
+  "scope": "Local diagnostic of a browser-close timeout. Blank fixtures isolate process lifecycle from game execution; real showcase outcomes remain separately recorded. No release, game performance, human or physical-device qualification is granted.",
+  "environment": {
+    "playwright": "1.58.2",
+    "browser": "Google Chrome 154.0.8037.57",
+    "node": "v20.19.5",
+    "platform": "darwin",
+    "launch": {
+      "channel": "chrome",
+      "headless": true
+    },
+    "context": {
+      "viewport": {
+        "width": 1280,
+        "height": 633
+      },
+      "deviceScaleFactor": 1,
+      "locale": "en-US",
+      "timezoneId": "Europe/Berlin"
+    },
+    "cleanupOrder": ["page.close({runBeforeUnload:false})", "context.close()", "browser.close()"],
+    "perOwnerDeadlineMs": 10000,
+    "deadlineChanged": false,
+    "browserLaunchOptionsChanged": false
+  },
+  "probe01": {
+    "fixture": "Blank data-URL page; immediate cleanup; no game, game server or player state.",
+    "failed": false,
+    "script": {
+      "name": "discovery-chrome-close-probe.mjs",
+      "bytes": 2009,
+      "sha256": "2084dc4e4fc86753c510bc0bbf4aa74c44cb388e4b320fa27b4f65c956e03347"
+    },
+    "result": {
+      "name": "discovery-chrome-close-probe-01.json",
+      "bytes": 1065,
+      "sha256": "e8e89a6850ef83b834ef86f5966ba9807a5e00e5a1af571e45632cbf7d093f3d"
+    },
+    "debugLog": {
+      "name": "discovery-chrome-close-probe-01.log",
+      "bytes": 5332,
+      "sha256": "e7ffd752bbdb59d7332ee813b4a86fcd6041eab4dc5faf7611ec6a49ddfaa1d2"
+    },
+    "events": [
+      {
+        "type": "launched",
+        "atMs": 673.245375,
+        "browserVersion": "154.0.8037.57",
+        "node": "v20.19.5",
+        "platform": "darwin"
+      },
+      {
+        "type": "page-ready",
+        "atMs": 892.0622910000001
+      },
+      {
+        "type": "page-close-start",
+        "atMs": 892.275583
+      },
+      {
+        "type": "page-close-success",
+        "atMs": 901.859666,
+        "durationMs": 9.578042000000096
+      },
+      {
+        "type": "context-close-start",
+        "atMs": 901.98375
+      },
+      {
+        "type": "context-close-success",
+        "atMs": 942.0146659999999,
+        "durationMs": 40.03008299999988
+      },
+      {
+        "type": "browser-close-start",
+        "atMs": 942.082916
+      },
+      {
+        "type": "browser-disconnected",
+        "atMs": 957.0160830000001
+      },
+      {
+        "type": "browser-close-success",
+        "atMs": 1429.6781250000001,
+        "durationMs": 487.592083
+      }
+    ],
+    "debugOutcome": "Native process completion and temporary-directory cleanup were observed; browser.close resolved."
+  },
+  "probe02": {
+    "fixture": "Same blank data-URL page and options, with 25000 ms of page lifetime before cleanup. This wait does not change any cleanup deadline.",
+    "failed": true,
+    "exitCode": 1,
+    "script": {
+      "name": "discovery-chrome-close-probe-v2.mjs",
+      "bytes": 2826,
+      "sha256": "2ccf1e81b87ab383c4999a2e946c6e0e05a2a97a667b1c7f68cac0d149427b47"
+    },
+    "result": {
+      "name": "discovery-chrome-close-probe-02.json",
+      "bytes": 1755,
+      "sha256": "32ee427c66b59036eba787ad7901efa1f0fd909e59618d5211811f75593df3dd"
+    },
+    "debugLog": {
+      "name": "discovery-chrome-close-probe-02.log",
+      "bytes": 18974,
+      "sha256": "3a31d9e4d45d3b325ee832f30ce4d051fc1ff426a3cbb038776c3ae81a990673"
+    },
+    "instrumentation": "The diagnostic spawn wrapper returned the original child unchanged and only subscribed to exit, close, stdout-end and stderr-end events. It did not close pipes or alter browser processes.",
+    "events": [
+      {
+        "type": "native-spawn",
+        "atMs": 431.290625
+      },
+      {
+        "type": "launched",
+        "atMs": 1184.081167,
+        "browserVersion": "154.0.8037.57",
+        "node": "v20.19.5",
+        "platform": "darwin"
+      },
+      {
+        "type": "page-ready",
+        "atMs": 1408.939292
+      },
+      {
+        "type": "blank-lifetime-finished",
+        "atMs": 26410.467084,
+        "waitMs": 25000
+      },
+      {
+        "type": "page-close-start",
+        "atMs": 26410.606792000002
+      },
+      {
+        "type": "page-close-success",
+        "atMs": 26414.879584000002,
+        "durationMs": 4.269167000002199
+      },
+      {
+        "type": "context-close-start",
+        "atMs": 26414.965042
+      },
+      {
+        "type": "context-close-success",
+        "atMs": 26430.607042,
+        "durationMs": 15.641250000000582
+      },
+      {
+        "type": "browser-close-start",
+        "atMs": 26430.668917000003
+      },
+      {
+        "type": "browser-disconnected",
+        "atMs": 26445.717209000002
+      },
+      {
+        "type": "native-exit",
+        "atMs": 26770.811459,
+        "code": 0,
+        "signal": null
+      },
+      {
+        "type": "native-stdout-end",
+        "atMs": 36372.40275
+      },
+      {
+        "type": "browser-close-failure",
+        "atMs": 36431.208,
+        "durationMs": 10000.451165999999,
+        "error": "browser-close exceeded 10000ms"
+      }
+    ],
+    "relativeToBrowserCloseMs": {
+      "browserDisconnected": 15.048292,
+      "nativeParentExitCode0": 340.142542,
+      "nativeStdoutEnd": 9941.733833,
+      "deadlineFailure": 10000.451166
+    },
+    "notObservedBeforeDeadline": ["native-stderr-end", "native-close"],
+    "debugOutcome": "GoogleUpdater output continued on captured stderr after the Chrome parent exit. After the failed probe exited, Playwright attempted owned process-group cleanup, reported ESRCH, and completed temporary-directory cleanup in 37 ms. A subsequent process check found no running original Chrome parent."
+  },
+  "implementationEvidence": {
+    "files": [
+      {
+        "name": "playwright/package.json",
+        "bytes": 2238,
+        "sha256": "718c91812946dcfbb4b724cfa0084ee3be205c571df09094f218bc4571f43c2b"
+      },
+      {
+        "name": "playwright-core/lib/server/utils/processLauncher.js",
+        "bytes": 9325,
+        "sha256": "da9cb41cc1605fca1e26c6a6212f01ef0af0125a9e97eecb70671bb3a8f1fd07"
+      },
+      {
+        "name": "playwright-core/lib/server/browser.js",
+        "bytes": 5788,
+        "sha256": "4f461d840a29f0eac9fe2a0f10f7cf97c06b2d5ee37f17988540abbb85fae19d"
+      }
+    ],
+    "observedDependencyBehavior": "This Playwright process launcher resolves its graceful-close cleanup wait after the native child close event, which includes stdio closure. Browser disconnection or native parent exit alone does not complete that wait.",
+    "references": [
+      "https://playwright.dev/docs/api/class-browser#browser-close",
+      "https://playwright.dev/docs/api/class-page#page-close",
+      "https://nodejs.org/api/child_process.html#event-close"
+    ]
+  },
+  "preservedShowcaseFailures": [
+    {
+      "case": "ukraine-showcase-05",
+      "cleanup": {
+        "name": "cleanup.json",
+        "bytes": 1241,
+        "sha256": "8aa73f1237c424dccec35c6b908712e2b7bdf807c0ebe345a5dcea7221b534c5"
+      },
+      "showcase": {
+        "name": "showcase.json",
+        "bytes": 18743,
+        "sha256": "bebc6fdad288674064f22d4cfe506a15acd98b8c2a4393a3b4a2f3a6e778d3a7"
+      },
+      "ordinaryWins": 2,
+      "distinctMissionsWon": 1,
+      "functionalPhases": 11,
+      "completed": false,
+      "pageClosed": true,
+      "contextClosed": true,
+      "browserTimedOut": true,
+      "observerAndServerClosed": true,
+      "completeReceiptPublished": false
+    },
+    {
+      "case": "social-showcase-01",
+      "cleanup": {
+        "name": "cleanup.json",
+        "bytes": 2060,
+        "sha256": "2e080ef7de355b77efdde4224720199c4b5a7f9d39a47016261a7b0b3d616db7"
+      },
+      "debugLog": {
+        "name": "discovery-social-showcase-01.log",
+        "bytes": 17661,
+        "sha256": "44e6b5fd8e61c8c238c0e7959d50c84a0ca52fef7e7739e82d2a8b1b4a91d39a"
+      },
+      "completed": false,
+      "primaryFailure": "The first gameplay route failed; browser cleanup independently timed out.",
+      "gracefulCloseStartedAt": "2026-09-29T02:50:59.705Z",
+      "processExitHookKillAttemptAt": "2026-09-29T02:51:09.713Z",
+      "temporaryDirectoryCleanupMs": 42,
+      "observation": "No native close-completion debug event occurred before the deadline. Temporary-directory cleanup followed the exit-hook attempt and was short."
+    }
+  ],
+  "successfulSameHarnessContrast": {
+    "case": "victory-showcase-01",
+    "source": {
+      "sourceRevision": "4689753f6af7dbc5bc6a7fe37161b08a511599b7",
+      "sourceTree": "b61f31b0993cd71ec1c98bfc649ae02787df0b08",
+      "editionId": "victory-drones",
+      "distribution": {
+        "sha256": "b19d5f37caf068139f4e1d2d54c648fc54910856aa35ad8d6b63c773a371d448",
+        "bytes": 21755651
+      },
+      "manifest": {
+        "sha256": "b06846f3cf55bc53e4e89117bb23826790906ded96f72760247b96d68fa85c40",
+        "bytes": 81728
+      },
+      "runtimeFiles": 612,
+      "runtimeBytes": 21670093,
+      "contentSha256": "3dd01aaa9cb80900003a6bad1787651cd1d09a34df9a9a26fc97fc5c1629033b",
+      "gameplayId": "8d8dce4d47fd5912",
+      "gameplayBindingAuthority": "Exact admitted authored reward requirement, not an independent engine recomputation."
+    },
+    "instrumentation": {
+      "path": "scripts/observe-discovery-runtime.mjs",
+      "bytes": 57160,
+      "sha256": "e85830036fca92d762907cafa1c1e8cb86448207a950bd3b724442df591a5634"
+    },
+    "caseReceipt": {
+      "name": "case.json",
+      "bytes": 5061,
+      "sha256": "206f00d4058226fece7edd1e6fec17223911eec6cf21d59f77df7e37061328a6"
+    },
+    "completeReceipt": {
+      "name": "complete.json",
+      "bytes": 101431,
+      "sha256": "fb5af304c4a4330bbbccdf511c177fe509abd698b621f71029cfc27aaac2db02"
+    },
+    "cleanupReceipt": {
+      "name": "cleanup.json",
+      "bytes": 920,
+      "sha256": "08b059d7993a77d99229aee880691ef892f68e83a8513813f3b589184e44832a"
+    },
+    "showcaseReceipt": {
+      "name": "showcase.json",
+      "bytes": 17872,
+      "sha256": "e1d4564f756f2c1db8140f647553ee04ab68ba841550a4ee92c70e9ca6a82efa"
+    },
+    "completed": true,
+    "qualified": false,
+    "ordinaryWins": 2,
+    "distinctMissionsWon": 1,
+    "functionalPhases": 11,
+    "cleanup": [
+      {
+        "name": "observer",
+        "requested": true,
+        "closed": true,
+        "timedOut": false,
+        "error": null
+      },
+      {
+        "name": "cdp",
+        "requested": false,
+        "closed": false,
+        "timedOut": false,
+        "error": null
+      },
+      {
+        "name": "page",
+        "requested": true,
+        "closed": true,
+        "timedOut": false,
+        "error": null
+      },
+      {
+        "name": "context",
+        "requested": true,
+        "closed": true,
+        "timedOut": false,
+        "error": null
+      },
+      {
+        "name": "browser",
+        "requested": true,
+        "closed": true,
+        "timedOut": false,
+        "error": null
+      },
+      {
+        "name": "server",
+        "requested": true,
+        "closed": true,
+        "timedOut": false,
+        "error": null
+      }
+    ],
+    "journalFailures": [],
+    "diagnosticFailures": [],
+    "comparison": "The Ukraine05, Social01 and Victory01 receipts pin the same runtime-observer source bytes, including explicit page/context teardown. Victory01 completed without a cleanup timeout; this does not erase the other failures."
+  },
+  "conclusions": {
+    "observed": "The 25-second blank-page probe reproduced the unchanged 10-second browser-close timeout without loading the game, despite successful page/context close and an early native Chrome parent exit. The timeout can therefore arise independently of game execution in this environment.",
+    "inference": "The delayed inherited-stdio completion, together with continuing updater stderr output and the dependency close-event wait, is consistent with a Chrome/updater pipe-lifecycle cause. Exact operating-system file-descriptor ownership was not traced.",
+    "notEstablished": [
+      "That every showcase timeout has the same cause.",
+      "That game resource cleanup or browser reliability is fully qualified.",
+      "That a launch-option, browser-channel or deadline change is safe or necessary.",
+      "Any performance, retained-memory, human-device or release qualification."
+    ],
+    "unchanged": [
+      "All failed showcase and probe receipts remain failures.",
+      "No game or observer cleanup deadline was increased.",
+      "No browser launch option or dependency version was changed for this diagnostic."
+    ]
+  },
+  "rawEvidence": "Raw scripts, results and logs are retained locally by exact hashes. Private machine paths, process IDs and diagnostic log content are not published here.",
+  "nextAction": "Stop diagnostic browser work; retain the current deadlines and report subsequent showcase outcomes independently."
+}

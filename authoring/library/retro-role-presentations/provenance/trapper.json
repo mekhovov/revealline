@@ -1,0 +1,47 @@
+{
+  "format": "retro-player-body-original.v1",
+  "role": "trapper",
+  "proposedSourceId": "retro-trapper-v1",
+  "tool": "image_gen.imagegen",
+  "generationMode": "Fresh text-only built-in original, no image reference input",
+  "toolModel": "Not exposed; not inferred",
+  "toolOriginalPath": "/Users/oleksandr.mekhovov/.codex/generated_images/01a09357-2b06-77f1-b001-1afd50d8bc73/exec-d3ff9643-d8f8-463b-bc32-3f8ececc4225.png",
+  "original": {
+    "path": "originals/trapper.png",
+    "bytes": 733320,
+    "sha256": "dfcfc5b571a175b27ba95708bbe5ee4793ab73a2e9a1b0c12843acf1bdd4da0b",
+    "width": 1254,
+    "height": 1254,
+    "bitDepth": 8,
+    "pngColorType": 6,
+    "pngChunks": [
+      "IHDR",
+      "caBX",
+      "IDAT",
+      "IDAT",
+      "IDAT",
+      "IDAT",
+      "IDAT",
+      "IDAT",
+      "IDAT",
+      "IDAT",
+      "IDAT",
+      "IDAT",
+      "IDAT",
+      "IEND"
+    ],
+    "allChunkCRCsValid": true
+  },
+  "prompt": {
+    "path": "prompts/trapper.txt",
+    "sha256": "a644f0e82a08f489337af2c740d8955c13252b5392bab546c780919d238ca2f5"
+  },
+  "copy": {
+    "mode": "APFS fclonefileat, exclusive destination, no fallback or transformation",
+    "toolInode": 76071107,
+    "worktreeInode": 76071268
+  },
+  "transforms": [],
+  "runtimeBinding": null,
+  "inspection": "Full source and alpha checks recorded in full-image-inspection.json and alpha-inspection.json; completed native CSS compositing and its limits are in ../inspection/game-scale-receipt.json."
+}

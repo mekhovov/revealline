@@ -87,7 +87,8 @@
       "pathPatterns": [
         "^scripts/(content-inventory|content-artwork-screening|artwork-screening)\\.mjs$",
         "^game/content-design/content-lifecycle\\.mjs$",
-        "^game/test/(content-lifecycle|artwork-screening)\\.test\\.mjs$"
+        "^game/test/(content-lifecycle|artwork-screening)\\.test\\.mjs$",
+        "^scripts/(test-)?company-artwork-screening\\.mjs$"
       ],
       "commands": [
         {
@@ -96,7 +97,24 @@
           "args": [
             "--test",
             "game/test/content-lifecycle.test.mjs",
-            "game/test/artwork-screening.test.mjs"
+            "game/test/artwork-screening.test.mjs",
+            "scripts/test-company-artwork-screening.mjs"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "company-content-inventory",
+      "pathPatterns": ["^scripts/(test-)?company-content-inventory\\.mjs$"],
+      "commands": [
+        {
+          "id": "company-content-inventory",
+          "command": "node",
+          "args": [
+            "--test",
+            "scripts/test-company-content-inventory.mjs",
+            "game/test/edition-retained-presentation.test.mjs",
+            "game/test/edition-profile-compatibility.test.mjs"
           ]
         }
       ]
@@ -327,6 +345,29 @@
             "--test",
             "scripts/test-offline-finalize.mjs",
             "publishing/frozen-offline.test.mjs"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "journey-star-compatibility",
+      "pathPatterns": [
+        "^game/journey/(profile|stars)\\.mjs$",
+        "^game/mission-library/(journey-source|creator-source)\\.mjs$",
+        "^game/test/journey-stars\\.test\\.mjs$"
+      ],
+      "commands": [
+        {
+          "id": "journey-star-compatibility",
+          "command": "node",
+          "args": [
+            "--test",
+            "game/test/journey-stars.test.mjs",
+            "game/test/journey-backup.test.mjs",
+            "game/test/journey-pictures.test.mjs",
+            "game/test/journey-profile-editions.test.mjs",
+            "game/test/journey.test.mjs",
+            "game/test/creator-bundle.test.mjs"
           ]
         }
       ]

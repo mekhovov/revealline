@@ -36,7 +36,9 @@ function harness(
       this.listeners.delete(type);
     },
   });
-  const outer = new Map(['game', 'status', 'log', 'load', 'mode'].map((id) => [id, element(id)]));
+  const outer = new Map(
+    ['game', 'status', 'log', 'load', 'mode', 'sample', 'edition'].map((id) => [id, element(id)]),
+  );
   const nodes = new Map(
     [
       'shell-continue',
@@ -69,6 +71,7 @@ function harness(
   const win = {
     ...element('win'),
     performance: {
+      now: () => clock,
       getEntriesByType: (type) => performanceEntries[type] || [],
       ...(memory ? { memory } : {}),
     },
@@ -459,4 +462,95 @@ test('title fresh mission errors and visible focus departure discard the pending
   h.frame();
   assert.match(h.records().at(-1).outcome, /focus left/);
   assert.equal(h.records().at(-1).ms, null);
+});
+
+test('bounded passive frame samples record distributions without pretending unsupported counters are zero', () => {
+  const h = harness();
+  h.frame();
+  h.frame();
+  h.outer.get('sample').listeners.get('click')();
+  assert.equal(h.outer.get('sample').disabled, true);
+  for (let i = 0; i < 1876; i++) h.frame(16);
+  const sample = h.records().at(-1);
+  assert.equal(sample.action, 'Frame sample');
+  assert.equal(sample.frameIntervals.p95Ms, 16);
+  assert.equal(sample.frameIntervals.medianMs, 16);
+  assert.ok(sample.frameIntervals.count >= 1800);
+  assert.deepEqual(sample.longTasks, { supported: false });
+  assert.equal(h.outer.get('sample').disabled, false);
+  assert.deepEqual(h.doc.body.dataset, {});
+});
+
+test('frame observation discards hidden and navigation samples and detaches its controls', () => {
+  for (const reason of ['visibility', 'navigation']) {
+    const h = harness();
+    h.frame();
+    h.frame();
+    h.outer.get('sample').listeners.get('click')();
+    for (let i = 0; i < 100; i++) h.frame();
+    if (reason === 'visibility') {
+      h.doc.hidden = true;
+      h.doc.listeners.get('visibilitychange')();
+    } else h.outer.get('game').onload();
+    const samples = h.records().filter((entry) => entry.action === 'Frame sample');
+    assert.equal(samples.length, 1);
+    assert.match(samples[0].outcome, /discarded/);
+    assert.equal(samples[0].frameIntervals, undefined);
+    if (reason === 'navigation') assert.equal(h.outer.get('sample').listeners.has('click'), false);
+  }
+});
+
+test('observer edition selection is bounded and cannot change versus navigation', () => {
+  const h = harness();
+  h.outer.get('edition').value = 'fpv-learning';
+  h.outer.get('load').listeners.get('click')();
+  assert.equal(h.outer.get('game').src, '../../game/?journey=1&edition=fpv-learning');
+  h.outer.get('edition').value = 'https://unrelated.invalid/';
+  h.outer.get('load').listeners.get('click')();
+  assert.equal(h.outer.get('game').src, '../../game/?journey=1');
+  h.outer.get('edition').value = 'fpv-learning';
+  h.outer.get('mode').value = 'versus';
+  h.outer.get('load').listeners.get('click')();
+  assert.equal(h.outer.get('game').src, '../../game/couch/?journey=1');
+});
+
+test('supported long-task observations include only this sample and disconnect on completion', () => {
+  const h = harness();
+  h.frame();
+  h.frame();
+  let callback,
+    disconnected = false,
+    options;
+  h.win.PerformanceObserver = class {
+    static supportedEntryTypes = ['longtask'];
+    constructor(fn) {
+      callback = fn;
+    }
+    observe(value) {
+      options = value;
+    }
+    takeRecords() {
+      return [{ startTime: 250, duration: 51 }];
+    }
+    disconnect() {
+      disconnected = true;
+    }
+  };
+  h.outer.get('sample').listeners.get('click')();
+  assert.equal(options.type, 'longtask');
+  assert.equal(options.buffered, false);
+  callback({
+    getEntries: () => [
+      { startTime: 0, duration: 200 },
+      { startTime: 100, duration: 75 },
+    ],
+  });
+  for (let i = 0; i < 1876; i++) h.frame(16);
+  assert.deepEqual(h.records().at(-1).longTasks, {
+    supported: true,
+    count: 2,
+    over50Ms: 2,
+    maxMs: 75,
+  });
+  assert.equal(disconnected, true);
 });

@@ -1,3 +1,4 @@
+import { mountRewardVideoExport } from '../studio/reward-video-export.mjs';
 import {
   formatNumber,
   localizedAttribute,
@@ -48,6 +49,15 @@ export function attachVideoPosterWorkshop({
     trimCapability = null,
     frame = null;
 
+  const rewardExport = mountRewardVideoExport({
+    container: $('reward-export'),
+    URLImpl,
+    getOriginal() {
+      if (disposed || doc.hidden || task || !source || !result)
+        throw new TypeError(t('tools:studio.videoHandoff.chooseSource'));
+      return { source, poster: result };
+    },
+  });
   const feedback = createOperationStatus(status);
   let activity = null;
   function setStatus(message, state = 'ready') {
@@ -211,6 +221,7 @@ export function attachVideoPosterWorkshop({
     if (foreground()) navigation.sync();
   }
   function discardPreview() {
+    rewardExport.reset();
     $('preview').hidden = true;
     $('image').removeAttribute('src');
     $('download').hidden = true;
@@ -293,6 +304,7 @@ export function attachVideoPosterWorkshop({
     if (foreground()) navigation.sync();
   }
   function begin(label, opener) {
+    rewardExport.reset();
     stopTask();
     const current = {
       id: serial,
@@ -725,6 +737,7 @@ export function attachVideoPosterWorkshop({
   const blur = clearMenuInput;
   const visibility = () => {
     if (doc.hidden) {
+      rewardExport.reset();
       cancel();
       clearMenuInput();
     }
@@ -745,6 +758,7 @@ export function attachVideoPosterWorkshop({
     disposed = true;
     clear({ focus: false });
     feedback.dispose();
+    rewardExport.dispose();
     win.cancelAnimationFrame(frame);
     lifecycle.destroy();
     navigation.destroy();

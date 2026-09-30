@@ -18,6 +18,7 @@ import {
   installedCreatorManifests,
 } from '../creator/installed.mjs';
 import { pngBytes } from './helpers/media-fixtures.mjs';
+import { rasterFixtures } from './helpers/raster-fixtures.mjs';
 import { memoryIndexedDB } from './helpers/soundtrack-fixtures.mjs';
 import { prepareManagedMediaBytes } from '../managed-media-store.mjs';
 import { verifiedPreviewBackground } from '../content-design/assets.mjs';
@@ -38,10 +39,13 @@ const themes = JSON.parse(
   await readFile(new URL('../content-design/themes.json', import.meta.url)),
 ).themes;
 const decodeImage = async () => ({ naturalWidth: 1, naturalHeight: 1 });
-async function fixture(name = 'My picture') {
+async function fixture(
+  name = 'My picture',
+  raster = { extension: 'png', mime: 'image/png', bytes: pngBytes() },
+) {
   const generated = generateCreatorProject({ id: 'my-picture', name, seed: 8 });
   const project = structuredClone(generated.project);
-  const blob = new Blob([pngBytes()], { type: 'image/png' });
+  const blob = new Blob([raster.bytes], { type: raster.mime });
   const sha256 = await creatorSHA256(await blob.arrayBuffer());
   project.assets = [
     {
@@ -49,7 +53,7 @@ async function fixture(name = 'My picture') {
       id: 'picture',
       revision: '1',
       kind: 'reveal-background',
-      path: `content-design/assets/creator/${sha256}.png`,
+      path: `content-design/assets/creator/${sha256}.${raster.extension}`,
       sha256,
       bytes: blob.size,
       width: 1,
@@ -78,6 +82,38 @@ async function prepared(name) {
   const f = await fixture(name);
   return prepareCreatorBundle(f.content, f.assets, { decodeImage });
 }
+test('compact raster backgrounds roundtrip creator packages, source drafts and installed artwork', async () => {
+  for (const raster of rasterFixtures().filter((item) => item.extension !== 'png')) {
+    const f = await fixture('Compact original', raster);
+    const pack = await prepareCreatorBundle(f.content, f.assets, { decodeImage });
+    assert.equal(pack.manifest.assets[0].mime, raster.mime);
+    const restored = await importCreatorBundle(
+      exportCreatorBundle(pack, approveCreatorBundle(pack)),
+      { decodeImage },
+    );
+    assert.equal(restored.editionId, pack.editionId);
+    assert.deepEqual(restored.manifest.content.project.assets, f.content.project.assets);
+    assert.deepEqual(Buffer.from(await restored.assets[0].blob.arrayBuffer()), raster.bytes);
+    const media = await creatorArtworkLoader(restored)(restored.manifest.content.project.assets[0]);
+    assert.equal(media.dataUrl, `data:${raster.mime};base64,${raster.bytes.toString('base64')}`);
+    const source = await prepareCreatorSource(
+      { draftId: 'compact-raster', content: f.content, editing: { fit: 'contain' } },
+      f.assets,
+    );
+    const reopened = await importCreatorSource(exportCreatorSource(source));
+    assert.deepEqual(reopened.document, source.document);
+    assert.deepEqual(Buffer.from(await reopened.assets[0].blob.arrayBuffer()), raster.bytes);
+    const mismatched = structuredClone(f.content);
+    mismatched.project.assets[0].path = mismatched.project.assets[0].path.replace(
+      /\.[a-z]+$/,
+      '.png',
+    );
+    await assert.rejects(
+      prepareCreatorBundle(mismatched, f.assets, { decodeImage }),
+      /project pin/,
+    );
+  }
+});
 test('portable roundtrip preserves exact edition and editable source, excluding unrelated media and themes', async () => {
   const f = await fixture();
   f.assets.push({ sha256: 'a'.repeat(64), blob: new Blob(['private original']) });
@@ -461,4 +497,46 @@ test('installed project sources remain Custom and do not require decoding media 
   assert.equal(versusLaunch.context.libraryMissionId, versus[0].id);
   assert.equal(library.search('', { collection: 'Journey', mode: 'solo' }).length, 0);
   store.close();
+});
+
+test('installed Creator stars read the separate profile record without changing saved v1 receipts', async (t) => {
+  const creatorDisk = memoryIndexedDB();
+  const store = createCreatorStore({ indexedDB: creatorDisk.indexedDB });
+  const pack = await prepared('Star sidecar');
+  const approval = approveCreatorBundle(pack);
+  await installPreparedCreatorBundle(
+    store,
+    pack,
+    approval,
+    await reviewCreatorInstallation(store, pack, approval),
+    { decodeImage },
+  );
+  const disk = managedIndexedDB();
+  const backend = createJourneyBackend({ ...disk, profileKey: creatorProfileKey(pack.editionId) });
+  await backend.commit([
+    {
+      type: 'complete',
+      mode: 'solo',
+      missionId: 'picture-1',
+      runId: 'run-stars',
+      gameplayId: 'gameplay-stars',
+      difficulty: 'standard',
+      stars: 2,
+    },
+  ]);
+  const original = Object.getOwnPropertyDescriptor(globalThis, 'indexedDB');
+  Object.defineProperty(globalThis, 'indexedDB', { configurable: true, value: disk.indexedDB });
+  t.after(() => {
+    if (original) Object.defineProperty(globalThis, 'indexedDB', original);
+    else delete globalThis.indexedDB;
+  });
+  const sources = await installedCreatorLibrarySources({ store });
+  const library = createMissionLibrary(sources);
+  const [row] = library.search('', { collection: 'Custom', mode: 'solo' });
+  assert.deepEqual(library.progressState(row, 'solo'), { state: 'completed', bestStars: 2 });
+  assert.deepEqual(Object.keys((await backend.read()).clears.solo['picture-1']), [
+    'runId',
+    'gameplayId',
+    'difficulty',
+  ]);
 });
