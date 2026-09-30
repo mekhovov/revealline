@@ -1,5 +1,6 @@
 // Current qualification cases; legacy cases in the parent runner remain attributed
 // to their historical receipts. Every edit below uses the real controller owner.
+import { ukraineWideCurrent } from './ukraine-wide-current-workflow.mjs';
 import { preparedTitleCurrent } from './prepared-title-current-workflow.mjs';
 import {
   nativeLandingDefaultCurrent,
@@ -52,6 +53,7 @@ const value = (p, css) => p.doc.querySelector(css).value;
 
 export const currentAuthoringCases = {
   preparedTitleCurrent,
+  ukraineWideCurrent,
   nativeLandingDefaultCurrent,
   nativeLandingDroneAidCurrent,
   fpvRoleGalleryCurrent,
