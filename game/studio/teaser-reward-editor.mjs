@@ -131,6 +131,8 @@ export function createTeaserRewardEditor({
   }
   return {
     sync,
+    // Stop transient playback without rebuilding or removing draft controls.
+    suspend: stop,
     dispose() {
       disposed = true;
       stop();
