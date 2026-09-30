@@ -1,0 +1,59 @@
+{
+  "method": "PCM sample inspection; five recorded movement edits and unchanged environmental flow. Not a subjective listening certificate.",
+  "files": [
+    {
+      "file": "rotor.wav",
+      "sha256": "5a83472891a17b29bed900c37d5dad4d070e17702bc00cf9e0ccb9a35153105b",
+      "duration": 6.0,
+      "rmsDbfs": -27.000267853855668,
+      "peak": 0.156402587890625,
+      "boundaryStep": 0.004364013671875,
+      "silentSampleFraction": 0.0019166666666666666
+    },
+    {
+      "file": "wings.wav",
+      "sha256": "0c8b6b52ba06ed4ff63a6549af64ee7860ec367a6d61d650518f93f949be587d",
+      "duration": 5.6,
+      "rmsDbfs": -30.00027531985829,
+      "peak": 0.15667724609375,
+      "boundaryStep": 0.0,
+      "silentSampleFraction": 0.3668080357142857
+    },
+    {
+      "file": "grain.wav",
+      "sha256": "c7a1fdd820db10501b465b6c715cffe77c7adbc02f96becb8ebd9daad7adba59",
+      "duration": 6.4,
+      "rmsDbfs": -33.00026170553326,
+      "peak": 0.132843017578125,
+      "boundaryStep": 0.0,
+      "silentSampleFraction": 0.7295703125
+    },
+    {
+      "file": "wheels.wav",
+      "sha256": "7d646506c3f2b5ea5710e2d74c84a59739bc7def17cd30604c5bd44c8d2544ba",
+      "duration": 2.25,
+      "rmsDbfs": -28.00027035574557,
+      "peak": 0.170684814453125,
+      "boundaryStep": 0.002655029296875,
+      "silentSampleFraction": 0.0028472222222222223
+    },
+    {
+      "file": "motor.wav",
+      "sha256": "96a8436fe34569f33b60f8512b7b592de430ab36672bea044e7908db52a04615",
+      "duration": 3.3,
+      "rmsDbfs": -28.00027004841723,
+      "peak": 0.170257568359375,
+      "boundaryStep": 0.014312744140625,
+      "silentSampleFraction": 0.0023768939393939395
+    },
+    {
+      "file": "flow.wav",
+      "sha256": "cbef5a45bd7f85bc781f9e1acb8b39a43724029c6d08fc0ae0b0a0a835cf7fe6",
+      "duration": 3.92,
+      "rmsDbfs": -29.000265336780153,
+      "peak": 0.142120361328125,
+      "boundaryStep": 0.0201416015625,
+      "silentSampleFraction": 0.002383609693877551
+    }
+  ]
+}

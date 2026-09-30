@@ -1,0 +1,886 @@
+{
+  "focus": {
+    "previous": {
+      "rmsDbfs": -36.000357937900716,
+      "max50msDbfs": -36.000357937900716,
+      "samplePeakDbfs": -19.32402756211324,
+      "duration": 0.045
+    },
+    "current": {
+      "rmsDbfs": -37.00023975896803,
+      "max50msDbfs": -37.00023975896803,
+      "samplePeakDbfs": -24.68833135423981,
+      "duration": 0.045
+    },
+    "oversampledPeakDbfs": -24.65278955357654,
+    "target50msDbfs": -37,
+    "change50msDb": -0.9998818210673122
+  },
+  "confirm": {
+    "previous": {
+      "rmsDbfs": -34.80117935742216,
+      "max50msDbfs": -32.20383882009517,
+      "samplePeakDbfs": -14.894903334878773,
+      "duration": 0.0909375
+    },
+    "current": {
+      "rmsDbfs": -36.597159375814094,
+      "max50msDbfs": -34.00019011994392,
+      "samplePeakDbfs": -23.188481555331904,
+      "duration": 0.0909375
+    },
+    "oversampledPeakDbfs": -23.186273444998783,
+    "target50msDbfs": -34,
+    "change50msDb": -1.7963512998487516
+  },
+  "cancel": {
+    "previous": {
+      "rmsDbfs": -35.61467352768365,
+      "max50msDbfs": -34.82203650811266,
+      "samplePeakDbfs": -14.894903334878773,
+      "duration": 0.061
+    },
+    "current": {
+      "rmsDbfs": -34.647656852959926,
+      "max50msDbfs": -34.000338506258515,
+      "samplePeakDbfs": -21.0162275172937,
+      "duration": 0.061
+    },
+    "oversampledPeakDbfs": -21.010410423568374,
+    "target50msDbfs": -34,
+    "change50msDb": 0.8216980018541449
+  },
+  "contact-metal": {
+    "previous": {
+      "rmsDbfs": -31.50145706129797,
+      "max50msDbfs": -25.63663272716711,
+      "samplePeakDbfs": -14.894903334878773,
+      "duration": 0.217125
+    },
+    "current": {
+      "rmsDbfs": -38.71255479050441,
+      "max50msDbfs": -33.00024049890392,
+      "samplePeakDbfs": -25.388880617673774,
+      "duration": 0.217125
+    },
+    "oversampledPeakDbfs": -25.369116270139305,
+    "target50msDbfs": -33,
+    "change50msDb": -7.36360777173681
+  },
+  "contact-wood": {
+    "previous": {
+      "rmsDbfs": -34.753240300951724,
+      "max50msDbfs": -28.408519611911103,
+      "samplePeakDbfs": -14.894903334878773,
+      "duration": 0.217125
+    },
+    "current": {
+      "rmsDbfs": -39.32093820163362,
+      "max50msDbfs": -33.00016131142098,
+      "samplePeakDbfs": -23.839831362205004,
+      "duration": 0.217125
+    },
+    "oversampledPeakDbfs": -23.838009023884247,
+    "target50msDbfs": -33,
+    "change50msDb": -4.5916416995098785
+  },
+  "contact-glass": {
+    "previous": {
+      "rmsDbfs": -33.2810181255968,
+      "max50msDbfs": -26.723153193461396,
+      "samplePeakDbfs": -14.894903334878773,
+      "duration": 0.23075
+    },
+    "current": {
+      "rmsDbfs": -39.516856055520655,
+      "max50msDbfs": -33.00023462751032,
+      "samplePeakDbfs": -24.724788447166457,
+      "duration": 0.23075
+    },
+    "oversampledPeakDbfs": -24.724788447166457,
+    "target50msDbfs": -33,
+    "change50msDb": -6.277081434048927
+  },
+  "contact-soft": {
+    "previous": {
+      "rmsDbfs": -29.000281855643948,
+      "max50msDbfs": -25.39224550292939,
+      "samplePeakDbfs": -15.18997787911172,
+      "duration": 0.115125
+    },
+    "current": {
+      "rmsDbfs": -36.600743052375655,
+      "max50msDbfs": -33.00037040299593,
+      "samplePeakDbfs": -25.06472458966602,
+      "duration": 0.115125
+    },
+    "oversampledPeakDbfs": -25.06449850577824,
+    "target50msDbfs": -33,
+    "change50msDb": -7.608124900066535
+  },
+  "gate": {
+    "previous": {
+      "rmsDbfs": -22.41091004185597,
+      "max50msDbfs": -16.807323264771767,
+      "samplePeakDbfs": -8.980243770114512,
+      "duration": 0.528625
+    },
+    "current": {
+      "rmsDbfs": -37.07031759862802,
+      "max50msDbfs": -32.00033445447617,
+      "samplePeakDbfs": -26.156311351415127,
+      "duration": 0.528625
+    },
+    "oversampledPeakDbfs": -24.671577188788206,
+    "target50msDbfs": -32,
+    "change50msDb": -15.1930111897044
+  },
+  "impact": {
+    "previous": {
+      "rmsDbfs": -17.71735714494162,
+      "max50msDbfs": -10.878602639509731,
+      "samplePeakDbfs": -3.7426300813178965,
+      "duration": 0.26
+    },
+    "current": {
+      "rmsDbfs": -37.71589355565523,
+      "max50msDbfs": -31.000283867145512,
+      "samplePeakDbfs": -25.67451103262403,
+      "duration": 0.26
+    },
+    "oversampledPeakDbfs": -25.67451103262403,
+    "target50msDbfs": -31,
+    "change50msDb": -20.121681227635783
+  },
+  "paper": {
+    "previous": {
+      "rmsDbfs": -41.24006765352515,
+      "max50msDbfs": -39.39587213405685,
+      "samplePeakDbfs": -14.894903334878773,
+      "duration": 0.16
+    },
+    "current": {
+      "rmsDbfs": -37.583822757579874,
+      "max50msDbfs": -36.46544121208911,
+      "samplePeakDbfs": -19.999469871546843,
+      "duration": 0.16
+    },
+    "oversampledPeakDbfs": -19.317932588784014,
+    "target50msDbfs": -36,
+    "change50msDb": 2.9304309219677407
+  },
+  "deploy": {
+    "previous": {
+      "rmsDbfs": -10.937287643462286,
+      "max50msDbfs": -8.385967595056803,
+      "samplePeakDbfs": -3.735699470363855,
+      "duration": 0.45
+    },
+    "current": {
+      "rmsDbfs": -34.3835623585555,
+      "max50msDbfs": -32.000183016020365,
+      "samplePeakDbfs": -28.124179327430294,
+      "duration": 0.45
+    },
+    "oversampledPeakDbfs": -28.120208685072477,
+    "target50msDbfs": -32,
+    "change50msDb": -23.61421542096356
+  },
+  "attack": {
+    "previous": {
+      "rmsDbfs": -23.995747584728623,
+      "max50msDbfs": -18.059301923259774,
+      "samplePeakDbfs": -7.626732102347874,
+      "duration": 0.24446875
+    },
+    "current": {
+      "rmsDbfs": -36.61940667413342,
+      "max50msDbfs": -31.000264796574513,
+      "samplePeakDbfs": -24.775168122293564,
+      "duration": 0.24446875
+    },
+    "oversampledPeakDbfs": -22.785548251550082,
+    "target50msDbfs": -31,
+    "change50msDb": -12.940962873314739
+  },
+  "interference": {
+    "previous": {
+      "rmsDbfs": -9.168564364600815,
+      "max50msDbfs": -7.376259292760247,
+      "samplePeakDbfs": -3.741406630419604,
+      "duration": 0.35
+    },
+    "current": {
+      "rmsDbfs": -34.65909317047347,
+      "max50msDbfs": -33.00028221427431,
+      "samplePeakDbfs": -29.77833340872842,
+      "duration": 0.35
+    },
+    "oversampledPeakDbfs": -29.777972339363103,
+    "target50msDbfs": -33,
+    "change50msDb": -25.62402292151406
+  },
+  "erosion": {
+    "previous": {
+      "rmsDbfs": -24.354750526296787,
+      "max50msDbfs": -16.748862922774517,
+      "samplePeakDbfs": -8.121478071106838,
+      "duration": 0.36
+    },
+    "current": {
+      "rmsDbfs": -39.15488413316427,
+      "max50msDbfs": -32.00023344817396,
+      "samplePeakDbfs": -25.18908416474632,
+      "duration": 0.36
+    },
+    "oversampledPeakDbfs": -25.188439664514128,
+    "target50msDbfs": -32,
+    "change50msDb": -15.251370525399441
+  },
+  "switch": {
+    "previous": {
+      "rmsDbfs": -33.46971518024183,
+      "max50msDbfs": -29.959597479304826,
+      "samplePeakDbfs": -14.894903334878773,
+      "duration": 0.217125
+    },
+    "current": {
+      "rmsDbfs": -38.11753506458162,
+      "max50msDbfs": -34.00015890275562,
+      "samplePeakDbfs": -23.90191804284092,
+      "duration": 0.217125
+    },
+    "oversampledPeakDbfs": -23.89942360279102,
+    "target50msDbfs": -34,
+    "change50msDb": -4.0405614234507965
+  },
+  "pickup": {
+    "previous": {
+      "rmsDbfs": -32.35780826653598,
+      "max50msDbfs": -27.476575892410914,
+      "samplePeakDbfs": -14.894903334878773,
+      "duration": 0.157125
+    },
+    "current": {
+      "rmsDbfs": -38.84177277339006,
+      "max50msDbfs": -34.00027617792764,
+      "samplePeakDbfs": -24.989071289292774,
+      "duration": 0.157125
+    },
+    "oversampledPeakDbfs": -24.964464938631018,
+    "target50msDbfs": -34,
+    "change50msDb": -6.523700285516725
+  },
+  "closure": {
+    "previous": {
+      "rmsDbfs": -34.00025017424546,
+      "max50msDbfs": -34.00025017424546,
+      "samplePeakDbfs": -18.374858105565433,
+      "duration": 0.03775
+    },
+    "current": {
+      "rmsDbfs": -35.0003586837763,
+      "max50msDbfs": -35.0003586837763,
+      "samplePeakDbfs": -24.904741601269507,
+      "duration": 0.03775
+    },
+    "oversampledPeakDbfs": -24.808096060813885,
+    "target50msDbfs": -35,
+    "change50msDb": -1.0001085095308397
+  },
+  "confirm-1": {
+    "previous": {
+      "rmsDbfs": -32.000168550926,
+      "max50msDbfs": -31.76250133134851,
+      "samplePeakDbfs": -19.328933458678602,
+      "duration": 0.0528125
+    },
+    "current": {
+      "rmsDbfs": -34.23779340675737,
+      "max50msDbfs": -34.00012618717988,
+      "samplePeakDbfs": -24.441747604965446,
+      "duration": 0.0528125
+    },
+    "oversampledPeakDbfs": -24.430128350533376,
+    "target50msDbfs": -34,
+    "change50msDb": -2.2376248558313705
+  },
+  "confirm-2": {
+    "previous": {
+      "rmsDbfs": -38.76644209148056,
+      "max50msDbfs": -36.55314543451803,
+      "samplePeakDbfs": -14.894903334878773,
+      "duration": 0.08325
+    },
+    "current": {
+      "rmsDbfs": -36.21147815848957,
+      "max50msDbfs": -34.00013806178777,
+      "samplePeakDbfs": -20.848022597423604,
+      "duration": 0.08325
+    },
+    "oversampledPeakDbfs": -20.532306104579476,
+    "target50msDbfs": -34,
+    "change50msDb": 2.5530073727302565
+  },
+  "paper-1": {
+    "previous": {
+      "rmsDbfs": -37.143880897383255,
+      "max50msDbfs": -35.42808516394836,
+      "samplePeakDbfs": -14.894903334878773,
+      "duration": 0.16
+    },
+    "current": {
+      "rmsDbfs": -36.950546816114304,
+      "max50msDbfs": -36.00011271650041,
+      "samplePeakDbfs": -21.136241718681372,
+      "duration": 0.16
+    },
+    "oversampledPeakDbfs": -21.136241718681372,
+    "target50msDbfs": -36,
+    "change50msDb": -0.5720275525520506
+  },
+  "paper-2": {
+    "previous": {
+      "rmsDbfs": -35.76509280088446,
+      "max50msDbfs": -34.05489592794756,
+      "samplePeakDbfs": -14.894903334878773,
+      "duration": 0.16
+    },
+    "current": {
+      "rmsDbfs": -37.035707475993114,
+      "max50msDbfs": -36.00032884881751,
+      "samplePeakDbfs": -21.933032887387288,
+      "duration": 0.16
+    },
+    "oversampledPeakDbfs": -21.93083174224844,
+    "target50msDbfs": -36,
+    "change50msDb": -1.9454329208699477
+  },
+  "pickup-1": {
+    "previous": {
+      "rmsDbfs": -31.569121162465827,
+      "max50msDbfs": -28.6017914854706,
+      "samplePeakDbfs": -14.894903334878773,
+      "duration": 0.09953125
+    },
+    "current": {
+      "rmsDbfs": -36.954268449775945,
+      "max50msDbfs": -34.000280521513346,
+      "samplePeakDbfs": -24.35816534283116,
+      "duration": 0.09953125
+    },
+    "oversampledPeakDbfs": -24.349930095054646,
+    "target50msDbfs": -34,
+    "change50msDb": -5.398489036042747
+  },
+  "pickup-2": {
+    "previous": {
+      "rmsDbfs": -33.77663963572559,
+      "max50msDbfs": -29.557597129056845,
+      "samplePeakDbfs": -14.894903334878773,
+      "duration": 0.13209375
+    },
+    "current": {
+      "rmsDbfs": -38.21923896459583,
+      "max50msDbfs": -34.00026938314584,
+      "samplePeakDbfs": -23.444766895599408,
+      "duration": 0.13209375
+    },
+    "oversampledPeakDbfs": -23.443397864093896,
+    "target50msDbfs": -34,
+    "change50msDb": -4.442672254088997
+  },
+  "contact-metal-1": {
+    "previous": {
+      "rmsDbfs": -32.18316317238539,
+      "max50msDbfs": -25.990800003701796,
+      "samplePeakDbfs": -14.894903334878773,
+      "duration": 0.217125
+    },
+    "current": {
+      "rmsDbfs": -39.118658281528965,
+      "max50msDbfs": -33.00032734500593,
+      "samplePeakDbfs": -25.117121121475385,
+      "duration": 0.217125
+    },
+    "oversampledPeakDbfs": -25.092110309928014,
+    "target50msDbfs": -33,
+    "change50msDb": -7.009527341304132
+  },
+  "contact-metal-2": {
+    "previous": {
+      "rmsDbfs": -33.23030438100406,
+      "max50msDbfs": -27.0037594091419,
+      "samplePeakDbfs": -14.894903334878773,
+      "duration": 0.217125
+    },
+    "current": {
+      "rmsDbfs": -39.161251464238205,
+      "max50msDbfs": -33.00030324361353,
+      "samplePeakDbfs": -24.793560695895735,
+      "duration": 0.217125
+    },
+    "oversampledPeakDbfs": -24.76238117654296,
+    "target50msDbfs": -33,
+    "change50msDb": -5.99654383447163
+  },
+  "contact-wood-1": {
+    "previous": {
+      "rmsDbfs": -33.929813128559864,
+      "max50msDbfs": -27.57452666742873,
+      "samplePeakDbfs": -14.894903334878773,
+      "duration": 0.217125
+    },
+    "current": {
+      "rmsDbfs": -39.33786286774093,
+      "max50msDbfs": -33.00017455715329,
+      "samplePeakDbfs": -23.815120421958866,
+      "duration": 0.217125
+    },
+    "oversampledPeakDbfs": -23.815120421958866,
+    "target50msDbfs": -33,
+    "change50msDb": -5.425647889724555
+  },
+  "contact-wood-2": {
+    "previous": {
+      "rmsDbfs": -34.63456838340938,
+      "max50msDbfs": -28.28769755599801,
+      "samplePeakDbfs": -14.894903334878773,
+      "duration": 0.217125
+    },
+    "current": {
+      "rmsDbfs": -39.32377473772913,
+      "max50msDbfs": -33.00024282930462,
+      "samplePeakDbfs": -23.77818532886312,
+      "duration": 0.217125
+    },
+    "oversampledPeakDbfs": -23.775711173095672,
+    "target50msDbfs": -33,
+    "change50msDb": -4.712545273306606
+  },
+  "contact-glass-1": {
+    "previous": {
+      "rmsDbfs": -33.52284770857487,
+      "max50msDbfs": -27.43029848074331,
+      "samplePeakDbfs": -14.894903334878773,
+      "duration": 0.20671875
+    },
+    "current": {
+      "rmsDbfs": -39.05733096508422,
+      "max50msDbfs": -33.000252554453475,
+      "samplePeakDbfs": -24.597852519038884,
+      "duration": 0.20671875
+    },
+    "oversampledPeakDbfs": -24.58871247215587,
+    "target50msDbfs": -33,
+    "change50msDb": -5.569954073710164
+  },
+  "contact-glass-2": {
+    "previous": {
+      "rmsDbfs": -32.35279716638144,
+      "max50msDbfs": -26.25867558786205,
+      "samplePeakDbfs": -14.894903334878773,
+      "duration": 0.20671875
+    },
+    "current": {
+      "rmsDbfs": -39.05614467375062,
+      "max50msDbfs": -33.000276398310476,
+      "samplePeakDbfs": -24.697431291832835,
+      "duration": 0.20671875
+    },
+    "oversampledPeakDbfs": -24.662919954579614,
+    "target50msDbfs": -33,
+    "change50msDb": -6.741600810448425
+  },
+  "contact-soft-1": {
+    "previous": {
+      "rmsDbfs": -29.000295249567287,
+      "max50msDbfs": -23.498122110691856,
+      "samplePeakDbfs": -15.261882616124343,
+      "duration": 0.18040625
+    },
+    "current": {
+      "rmsDbfs": -38.47483937212984,
+      "max50msDbfs": -33.00027627724974,
+      "samplePeakDbfs": -26.28652075504677,
+      "duration": 0.18040625
+    },
+    "oversampledPeakDbfs": -26.28610906028832,
+    "target50msDbfs": -33,
+    "change50msDb": -9.502154166557883
+  },
+  "contact-soft-2": {
+    "previous": {
+      "rmsDbfs": -29.00028445480228,
+      "max50msDbfs": -24.794662351533763,
+      "samplePeakDbfs": -15.613002107417419,
+      "duration": 0.1323125
+    },
+    "current": {
+      "rmsDbfs": -37.196958253063485,
+      "max50msDbfs": -33.000230329897356,
+      "samplePeakDbfs": -25.77184729341989,
+      "duration": 0.1323125
+    },
+    "oversampledPeakDbfs": -25.77132722641551,
+    "target50msDbfs": -33,
+    "change50msDb": -8.205567978363593
+  },
+  "flow": {
+    "previous": {
+      "rmsDbfs": -29.000265336780153,
+      "max50msDbfs": -27.578065494860237,
+      "samplePeakDbfs": -16.94687394053973,
+      "duration": 3.92
+    },
+    "current": {
+      "rmsDbfs": -30.422578373513865,
+      "max50msDbfs": -29.000247422600314,
+      "samplePeakDbfs": -18.37046241233495,
+      "duration": 3.92
+    },
+    "oversampledPeakDbfs": -18.328685772039634,
+    "target50msDbfs": -29,
+    "change50msDb": -1.422181927740077
+  },
+  "warning": {
+    "previous": {
+      "rmsDbfs": -35.541590364216546,
+      "max50msDbfs": -27.978234234313017,
+      "samplePeakDbfs": -19.679420358349255,
+      "duration": 0.42
+    },
+    "current": {
+      "rmsDbfs": -36.01198505525592,
+      "max50msDbfs": -29.000339644384546,
+      "samplePeakDbfs": -24.288398785914733,
+      "duration": 0.42
+    },
+    "oversampledPeakDbfs": -24.281460903968185,
+    "target50msDbfs": -29,
+    "change50msDb": -1.0221054100715286
+  },
+  "start": {
+    "previous": {
+      "rmsDbfs": -34.01752114745632,
+      "max50msDbfs": -27.111848455256975,
+      "samplePeakDbfs": -20.18431150695184,
+      "duration": 0.45
+    },
+    "current": {
+      "rmsDbfs": -38.539180797993694,
+      "max50msDbfs": -32.000225142274104,
+      "samplePeakDbfs": -26.723709412413854,
+      "duration": 0.45
+    },
+    "oversampledPeakDbfs": -26.723709412413854,
+    "target50msDbfs": -32,
+    "change50msDb": -4.888376687017129
+  },
+  "retry": {
+    "previous": {
+      "rmsDbfs": -33.92524407202118,
+      "max50msDbfs": -26.94844334553833,
+      "samplePeakDbfs": -20.227741045620526,
+      "duration": 0.45
+    },
+    "current": {
+      "rmsDbfs": -38.61479932802076,
+      "max50msDbfs": -32.00036338769128,
+      "samplePeakDbfs": -26.82780254469385,
+      "duration": 0.45
+    },
+    "oversampledPeakDbfs": -26.82611391590364,
+    "target50msDbfs": -32,
+    "change50msDb": -5.05192004215295
+  },
+  "loss": {
+    "previous": {
+      "rmsDbfs": -34.23123413625906,
+      "max50msDbfs": -26.811354071980592,
+      "samplePeakDbfs": -19.933457320658864,
+      "duration": 0.6
+    },
+    "current": {
+      "rmsDbfs": -37.910383462804155,
+      "max50msDbfs": -31.000315713148847,
+      "samplePeakDbfs": -26.03864355926826,
+      "duration": 0.6
+    },
+    "oversampledPeakDbfs": -26.03864355926826,
+    "target50msDbfs": -31,
+    "change50msDb": -4.188961641168255
+  },
+  "respawn": {
+    "previous": {
+      "rmsDbfs": -33.45179985075323,
+      "max50msDbfs": -27.111848455256975,
+      "samplePeakDbfs": -20.18431150695184,
+      "duration": 0.45
+    },
+    "current": {
+      "rmsDbfs": -37.96653992587862,
+      "max50msDbfs": -32.000225142274104,
+      "samplePeakDbfs": -26.723709412413854,
+      "duration": 0.45
+    },
+    "oversampledPeakDbfs": -26.723709412413854,
+    "target50msDbfs": -32,
+    "change50msDb": -4.888376687017129
+  },
+  "win": {
+    "previous": {
+      "rmsDbfs": -36.10988772007926,
+      "max50msDbfs": -26.54923743371306,
+      "samplePeakDbfs": -19.991521824960778,
+      "duration": 1.35
+    },
+    "current": {
+      "rmsDbfs": -39.96507087944159,
+      "max50msDbfs": -31.000287091200587,
+      "samplePeakDbfs": -26.22659904607586,
+      "duration": 1.35
+    },
+    "oversampledPeakDbfs": -26.22659904607586,
+    "target50msDbfs": -31,
+    "change50msDb": -4.451049657487527
+  },
+  "reveal-small": {
+    "previous": {
+      "rmsDbfs": -37.00018328725632,
+      "max50msDbfs": -33.5486434620243,
+      "samplePeakDbfs": -22.33284409512907,
+      "duration": 0.2
+    },
+    "current": {
+      "rmsDbfs": -38.23207293671882,
+      "max50msDbfs": -35.00049804114189,
+      "samplePeakDbfs": -26.897897528770187,
+      "duration": 0.2
+    },
+    "oversampledPeakDbfs": -26.84555299563911,
+    "target50msDbfs": -35,
+    "change50msDb": -1.4518545791175868
+  },
+  "reveal-medium": {
+    "previous": {
+      "rmsDbfs": -37.00029468965968,
+      "max50msDbfs": -33.099455430713206,
+      "samplePeakDbfs": -23.708844681739176,
+      "duration": 0.4
+    },
+    "current": {
+      "rmsDbfs": -38.60589767222959,
+      "max50msDbfs": -35.00012560564815,
+      "samplePeakDbfs": -27.619081582500886,
+      "duration": 0.4
+    },
+    "oversampledPeakDbfs": -27.531582014871084,
+    "target50msDbfs": -35,
+    "change50msDb": -1.9006701749349446
+  },
+  "reveal-large": {
+    "previous": {
+      "rmsDbfs": -37.000257351181844,
+      "max50msDbfs": -31.425990886049657,
+      "samplePeakDbfs": -21.684941008064026,
+      "duration": 0.65
+    },
+    "current": {
+      "rmsDbfs": -39.894189157860055,
+      "max50msDbfs": -35.00013656576091,
+      "samplePeakDbfs": -27.153820978257084,
+      "duration": 0.65
+    },
+    "oversampledPeakDbfs": -27.149713513040577,
+    "target50msDbfs": -35,
+    "change50msDb": -3.574145679711254
+  },
+  "neutralized": {
+    "previous": {
+      "rmsDbfs": -34.59885997189311,
+      "max50msDbfs": -26.94844334553833,
+      "samplePeakDbfs": -20.227741045620526,
+      "duration": 0.45
+    },
+    "current": {
+      "rmsDbfs": -40.37999159940237,
+      "max50msDbfs": -33.000381056585105,
+      "samplePeakDbfs": -27.574587356066225,
+      "duration": 0.45
+    },
+    "oversampledPeakDbfs": -27.572207835696382,
+    "target50msDbfs": -33,
+    "change50msDb": -6.051937711046776
+  },
+  "reactivated": {
+    "previous": {
+      "rmsDbfs": -34.7175773451997,
+      "max50msDbfs": -27.121694530139877,
+      "samplePeakDbfs": -19.988874091473406,
+      "duration": 0.45
+    },
+    "current": {
+      "rmsDbfs": -39.259408751154254,
+      "max50msDbfs": -32.00040745902596,
+      "samplePeakDbfs": -26.632217958065937,
+      "duration": 0.45
+    },
+    "oversampledPeakDbfs": -26.62463329343964,
+    "target50msDbfs": -32,
+    "change50msDb": -4.878712928886081
+  },
+  "rotor": {
+    "previous": {
+      "rmsDbfs": -27.000267853855668,
+      "max50msDbfs": -25.411288860408593,
+      "samplePeakDbfs": -16.11512130463852,
+      "duration": 6.0
+    },
+    "current": {
+      "rmsDbfs": -27.589222008733962,
+      "max50msDbfs": -26.000247747867565,
+      "samplePeakDbfs": -16.704101958342203,
+      "duration": 6.0
+    },
+    "oversampledPeakDbfs": -16.689377996322325,
+    "target50msDbfs": -26,
+    "change50msDb": -0.588958887458972
+  },
+  "motor": {
+    "previous": {
+      "rmsDbfs": -28.00027004841723,
+      "max50msDbfs": -22.794159644946927,
+      "samplePeakDbfs": -15.377871470986975,
+      "duration": 3.3
+    },
+    "current": {
+      "rmsDbfs": -31.206433167402142,
+      "max50msDbfs": -26.000263214912913,
+      "samplePeakDbfs": -18.58400592187352,
+      "duration": 3.3
+    },
+    "oversampledPeakDbfs": -18.559331890153356,
+    "target50msDbfs": -26,
+    "change50msDb": -3.206103569965986
+  },
+  "wheels": {
+    "previous": {
+      "rmsDbfs": -28.00027035574557,
+      "max50msDbfs": -23.47228915629842,
+      "samplePeakDbfs": -15.356102312629394,
+      "duration": 2.25
+    },
+    "current": {
+      "rmsDbfs": -31.52825423201117,
+      "max50msDbfs": -27.000266336646234,
+      "samplePeakDbfs": -18.88414168798988,
+      "duration": 2.25
+    },
+    "oversampledPeakDbfs": -18.878782136895367,
+    "target50msDbfs": -27,
+    "change50msDb": -3.527977180347815
+  },
+  "wings": {
+    "previous": {
+      "rmsDbfs": -30.00027531985829,
+      "max50msDbfs": -22.309339579216765,
+      "samplePeakDbfs": -16.099881412485868,
+      "duration": 5.6
+    },
+    "current": {
+      "rmsDbfs": -32.6912453196732,
+      "max50msDbfs": -25.000268469010194,
+      "samplePeakDbfs": -18.79139238558144,
+      "duration": 5.6
+    },
+    "oversampledPeakDbfs": -18.776039369774548,
+    "target50msDbfs": -25,
+    "change50msDb": -2.6909288897934296
+  },
+  "grain": {
+    "previous": {
+      "rmsDbfs": -33.00026170553326,
+      "max50msDbfs": -20.841815697595422,
+      "samplePeakDbfs": -17.53322535604639,
+      "duration": 6.4
+    },
+    "current": {
+      "rmsDbfs": -38.15868254801661,
+      "max50msDbfs": -26.000233022623306,
+      "samplePeakDbfs": -22.69030943258032,
+      "duration": 6.4
+    },
+    "oversampledPeakDbfs": -19.977013158392488,
+    "target50msDbfs": -26,
+    "change50msDb": -5.158417325027884
+  },
+  "esc-start": {
+    "previous": {
+      "rmsDbfs": -22.699600448978373,
+      "max50msDbfs": -18.68759252100625,
+      "samplePeakDbfs": -16.907794349731674,
+      "duration": 0.785
+    },
+    "current": {
+      "rmsDbfs": -35.941500306202165,
+      "max50msDbfs": -32.00022032221505,
+      "samplePeakDbfs": -30.370013729286732,
+      "duration": 0.785
+    },
+    "oversampledPeakDbfs": -30.3697136928951,
+    "target50msDbfs": -32,
+    "change50msDb": -13.312627801208802
+  },
+  "esc-retry": {
+    "previous": {
+      "rmsDbfs": -23.084498968498405,
+      "max50msDbfs": -19.21477859189469,
+      "samplePeakDbfs": -16.92824268149124,
+      "duration": 0.285
+    },
+    "current": {
+      "rmsDbfs": -35.79358115011007,
+      "max50msDbfs": -32.0003455012439,
+      "samplePeakDbfs": -29.9017730462402,
+      "duration": 0.285
+    },
+    "oversampledPeakDbfs": -29.898396559891896,
+    "target50msDbfs": -32,
+    "change50msDb": -12.78556690934921
+  },
+  "radio-armed-en": {
+    "previous": {
+      "rmsDbfs": -25.479031221398195,
+      "max50msDbfs": -15.602162513309397,
+      "samplePeakDbfs": -10.032038781757732,
+      "duration": 1.512
+    },
+    "current": {
+      "rmsDbfs": -40.61782877409303,
+      "max50msDbfs": -31.00019403695835,
+      "samplePeakDbfs": -26.706481195913277,
+      "duration": 1.512
+    },
+    "oversampledPeakDbfs": -26.701513123844357,
+    "target50msDbfs": -31,
+    "change50msDb": -15.398031523648955
+  },
+  "radio-armed-uk": {
+    "previous": {
+      "rmsDbfs": -22.342151373498943,
+      "max50msDbfs": -12.351776377714806,
+      "samplePeakDbfs": -5.671454952264794,
+      "duration": 2.2
+    },
+    "current": {
+      "rmsDbfs": -40.304624654691054,
+      "max50msDbfs": -31.000221420248828,
+      "samplePeakDbfs": -26.043957655266425,
+      "duration": 2.2
+    },
+    "oversampledPeakDbfs": -26.043447641255835,
+    "target50msDbfs": -31,
+    "change50msDb": -18.64844504253402
+  }
+}

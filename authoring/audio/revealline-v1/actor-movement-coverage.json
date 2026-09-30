@@ -1,0 +1,182 @@
+{
+  "players": {
+    "fpv-body": "rotor",
+    "neutral-marker": "motor",
+    "ukrainian-bird": "wings",
+    "retro-craft": "motor",
+    "navi-avatar": "grain",
+    "fpv-racer": "rotor",
+    "fpv-night": "rotor",
+    "ukrainian-falcon": "wings",
+    "retro-vector": "motor",
+    "navi-auditor": "grain",
+    "scout-quad": "rotor",
+    "heavy-lift": "rotor",
+    "fixedwing-body": "motor",
+    "delta-interceptor": "motor",
+    "fpv-scout-v1": "rotor",
+    "fpv-light-carrier-v1": "rotor",
+    "fpv-heavy-carrier-v1": "rotor",
+    "fpv-interceptor-v1": "rotor",
+    "fpv-fiber-relay-v1": "rotor",
+    "fpv-impact-v1": "rotor",
+    "fpv-trapper-v1": "rotor",
+    "atlas-swallow-v3": "wings",
+    "atlas-pottery-courier-v1": "ceramic",
+    "atlas-carved-chest-v1": "wood",
+    "atlas-falcon-crest-v3": "wings",
+    "atlas-weaver-shuttle-v3": "grain",
+    "atlas-bell-warden-v1": "bell",
+    "atlas-woven-basket-v1": "wood"
+  },
+  "worldEnemies": {
+    "fpv": {
+      "bouncer": "wheels",
+      "border-patrol": "rotor",
+      "contour-patrol": "rotor",
+      "claimed-rover": "wheels",
+      "eroder": "ratchet",
+      "lane-boss": "motor",
+      "relay-sentinel": "motor"
+    },
+    "ukraine": {
+      "bouncer": "grain",
+      "border-patrol": "wings",
+      "contour-patrol": "grain",
+      "claimed-rover": "wheels",
+      "eroder": "wheels",
+      "lane-boss": "wings",
+      "relay-sentinel": "grain"
+    },
+    "retro": {
+      "bouncer": "motor",
+      "border-patrol": "motor",
+      "contour-patrol": "wheels",
+      "claimed-rover": "wheels",
+      "eroder": "ratchet",
+      "lane-boss": "motor",
+      "relay-sentinel": "motor"
+    },
+    "coupa": {
+      "bouncer": "grain",
+      "border-patrol": "grain",
+      "contour-patrol": "grain",
+      "claimed-rover": "wheels",
+      "eroder": "motor",
+      "lane-boss": "grain",
+      "relay-sentinel": "grain"
+    }
+  },
+  "journey": {
+    "horizon-enamel-v1": {
+      "bouncer": "ceramic",
+      "border-patrol": "ceramic",
+      "contour-patrol": "ceramic",
+      "claimed-rover": "ceramic",
+      "eroder": "ceramic",
+      "lane-boss": "ceramic",
+      "relay-sentinel": "ceramic"
+    },
+    "border-seedpod-v1": {
+      "bouncer": "grain",
+      "border-patrol": "grain",
+      "contour-patrol": "grain",
+      "claimed-rover": "grain",
+      "eroder": "grain",
+      "lane-boss": "grain",
+      "relay-sentinel": "grain"
+    },
+    "signal-porcelain-v1": {
+      "bouncer": "ceramic",
+      "border-patrol": "ceramic",
+      "contour-patrol": "ceramic",
+      "claimed-rover": "ceramic",
+      "eroder": "ceramic",
+      "lane-boss": "ceramic",
+      "relay-sentinel": "ceramic"
+    },
+    "neon-glass-v1": {
+      "bouncer": "motor",
+      "border-patrol": "motor",
+      "contour-patrol": "wheels",
+      "claimed-rover": "wheels",
+      "eroder": "motor",
+      "lane-boss": "motor",
+      "relay-sentinel": "motor"
+    },
+    "rover-rivets-v1": {
+      "bouncer": "ratchet",
+      "border-patrol": "ratchet",
+      "contour-patrol": "ratchet",
+      "claimed-rover": "ratchet",
+      "eroder": "ratchet",
+      "lane-boss": "ratchet",
+      "relay-sentinel": "ratchet"
+    },
+    "fracture-basalt-v1": {
+      "bouncer": "motor",
+      "border-patrol": "motor",
+      "contour-patrol": "wheels",
+      "claimed-rover": "wheels",
+      "eroder": "motor",
+      "lane-boss": "motor",
+      "relay-sentinel": "motor"
+    },
+    "phase-prism-v1": {
+      "bouncer": "motor",
+      "border-patrol": "motor",
+      "contour-patrol": "wheels",
+      "claimed-rover": "wheels",
+      "eroder": "motor",
+      "lane-boss": "motor",
+      "relay-sentinel": "motor"
+    },
+    "livewire-copper-v1": {
+      "bouncer": "motor",
+      "border-patrol": "motor",
+      "contour-patrol": "wheels",
+      "claimed-rover": "wheels",
+      "eroder": "motor",
+      "lane-boss": "motor",
+      "relay-sentinel": "motor"
+    },
+    "relay-lacquer-v1": {
+      "bouncer": "grain",
+      "border-patrol": "grain",
+      "contour-patrol": "grain",
+      "claimed-rover": "grain",
+      "eroder": "grain",
+      "lane-boss": "grain",
+      "relay-sentinel": "grain"
+    },
+    "crosswind-sail-v1": {
+      "bouncer": "wings",
+      "border-patrol": "wings",
+      "contour-patrol": "wings",
+      "claimed-rover": "wings",
+      "eroder": "wings",
+      "lane-boss": "wings",
+      "relay-sentinel": "wings"
+    },
+    "sentinel-gilt-v1": {
+      "bouncer": "motor",
+      "border-patrol": "motor",
+      "contour-patrol": "wheels",
+      "claimed-rover": "wheels",
+      "eroder": "motor",
+      "lane-boss": "motor",
+      "relay-sentinel": "motor"
+    },
+    "apex-ice-v1": {
+      "bouncer": "motor",
+      "border-patrol": "motor",
+      "contour-patrol": "wheels",
+      "claimed-rover": "wheels",
+      "eroder": "motor",
+      "lane-boss": "motor",
+      "relay-sentinel": "motor"
+    }
+  },
+  "stationaryPolicy": "Lane emitters and relay sentinels stay quiet at rest; existing authoritative warnings, attacks, openings and defeat cues remain active.",
+  "fallback": "Unknown uploaded appearances retain a recorded role/family fallback. No visual-content inference or simulation changes."
+}

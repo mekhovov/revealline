@@ -30,7 +30,7 @@ const PUBLISHED_SOLO_BOUNDARIES = new Set([
 function targets(value, owner, byPath) {
   if (typeof value !== 'string' || /^(?:[a-z]+:|\/|#)/i.test(value)) return [];
   const clean = value.split(/[?#]/)[0];
-  if (!/\.(?:m?js|json|css|html|png|webp|jpe?g|svg|woff2?|ttf)$/i.test(clean)) return [];
+  if (!/\.(?:m?js|json|css|html|png|webp|jpe?g|svg|woff2?|ttf|wav)$/i.test(clean)) return [];
   return [
     ...new Set([
       path.posix.normalize(path.posix.join(path.posix.dirname(owner), clean)),
@@ -104,6 +104,9 @@ export function selectOfflineCore(entries, excluded, { mode = 'solo' } = {}) {
       name.startsWith('icons/') ||
       name === 'manifest.webmanifest' ||
       name === 'game/build-info.json' ||
+      // Redistribution notices and editable radio sources must remain available offline.
+      name === 'game/audio/effects/licenses.html' ||
+      name === 'game/audio/effects/edgetx-source.json' ||
       /^game\/i18n\/.*\.(?:mjs|json)$/.test(name) ||
       /^game\/assets\//.test(name) ||
       /^game\/ui\/(?:art|fonts)\//.test(name) ||

@@ -1,3 +1,4 @@
+import { attachMenuAudioSettings } from './menu-audio.mjs';
 import { t } from '../i18n/index.mjs';
 const cueNames = new Set(['focus', 'confirm', 'cancel', 'capture', 'failure', 'victory', 'pickup']);
 
@@ -25,7 +26,8 @@ export function createPublishedCues({ sound, readAudio }) {
         !sound.context ||
         sound.context.state !== 'running' ||
         !sound.settings.master ||
-        !sound.settings.sfx ||
+        (!ui && !sound.settings.sfx) ||
+        (ui && sound.menuSettings?.enabled === false) ||
         (!ui && sound.persistentMusic && sound.gameplayPaused)
       )
         return false;
@@ -65,10 +67,10 @@ export function createPublishedCues({ sound, readAudio }) {
       recent.set(name, now);
       const source = sound.context.createBufferSource();
       source.buffer = buffer;
-      source.connect(sound.sfxBus);
+      source.connect(ui ? (sound.menuBus ?? sound.sfxBus) : sound.sfxBus);
       let stopped = false;
       const voice = {
-        bus: 'sfx',
+        bus: ui ? 'menu' : 'sfx',
         stop() {
           if (stopped) return;
           stopped = true;
@@ -149,7 +151,16 @@ export function attachPublishedAudio({
       syncPlayer();
     })
     .catch(() => {});
+  const detachMenuSettings = attachMenuAudioSettings(sound, doc);
+  let keyboardFocus = false;
+  const onKey = (event) => {
+    keyboardFocus = event.key === 'Tab' || event.key.startsWith('Arrow');
+  };
+  const onPointer = () => {
+    keyboardFocus = false;
+  };
   const onFocus = (event) => {
+    if (!keyboardFocus) return;
     if (event.target?.closest?.('button, a[href], input, select, textarea'))
       sound.publishedCue('focus');
   };
@@ -161,7 +172,16 @@ export function attachPublishedAudio({
     );
     sound.publishedCue(cancel ? 'cancel' : 'confirm');
   };
+  const onChange = (event) => {
+    if (
+      event.target?.matches?.('select, input[type=checkbox], input[type=radio], input[type=range]')
+    )
+      sound.publishedCue('confirm');
+  };
   if (cues) {
+    doc?.addEventListener?.('change', onChange);
+    doc?.addEventListener?.('keydown', onKey);
+    doc?.addEventListener?.('pointerdown', onPointer);
     doc?.addEventListener?.('focusin', onFocus);
     doc?.addEventListener?.('click', onClick);
   }
@@ -183,6 +203,10 @@ export function attachPublishedAudio({
       closed = true;
       syncPlayer();
       if (cues) sound.setPublishedAudio(null);
+      detachMenuSettings();
+      doc?.removeEventListener?.('change', onChange);
+      doc?.removeEventListener?.('keydown', onKey);
+      doc?.removeEventListener?.('pointerdown', onPointer);
       doc?.removeEventListener?.('focusin', onFocus);
       doc?.removeEventListener?.('click', onClick);
     },

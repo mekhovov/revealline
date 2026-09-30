@@ -1,6 +1,7 @@
 import { COUCH_RESTORE_KEY } from './controller-restore.mjs';
 import { createControllerSession } from './controller-session.mjs';
 import { mountControllerSetup } from './controller-setup.mjs';
+import { boardPlacement } from '../ui/feedback-cues.mjs';
 import {
   gameplayTuningDescription,
   gameplayStatusLabel,
@@ -4216,6 +4217,15 @@ try {
                 : command,
           );
           stepDuel(match, commands);
+          match.runs.forEach((run, i) =>
+            sound.feedback(true, theme, run, {
+              board: i,
+              mode: 'versus',
+              command: commands[i],
+              actorStyle: actorAppearance?.style,
+              placement: boardPlacement(contexts[i].canvas),
+            }),
+          );
           neutralResumeTick = false;
           for (let i = 0; i < 2; i++)
             if (
@@ -4228,20 +4238,12 @@ try {
           for (let i = 0; i < 2; i++)
             if (match.runs[i].tick !== before[i]) {
               painters[i].effectsFor(match.runs[i].events, match.runs[i]);
-              for (const event of match.runs[i].events)
-                sound.event(
-                  event,
-                  {},
-                  event.type === 'run.completed' && candidateJourney?.owns(roundRecipe?.entry)
-                    ? {
-                        owned: true,
-                        mode: 'versus',
-                        outcome: match.runs[i].status,
-                        missionId: roundRecipe.entry.mission.id,
-                        feedback: roundRecipe.entry.campaignFeedback,
-                      }
-                    : null,
-                );
+              sound.events(match.runs[i].events, match.runs[i], theme, {
+                board: i,
+                mode: 'versus',
+                actorStyle: actorAppearance?.style,
+                placement: boardPlacement(contexts[i].canvas),
+              });
               const run = match.runs[i],
                 caption = foundationReturnCaption(run);
               if (caption)
@@ -4258,6 +4260,29 @@ try {
       }
     }
     if (match.status === 'finished' && !finished) {
+      sound.events(
+        [
+          {
+            type: 'run.completed',
+            tick: Math.max(...match.runs.map((run) => run.tick)),
+            status: 'won',
+          },
+        ],
+        match,
+        theme,
+        {
+          board: 'duel-result',
+          resultContext: candidateJourney?.owns(roundRecipe?.entry)
+            ? {
+                owned: true,
+                mode: 'versus',
+                outcome: match.runs.filter((r) => r.status === 'won').length === 2 ? 'draw' : 'won',
+                missionId: roundRecipe.entry.mission.id,
+                feedback: roundRecipe.entry.campaignFeedback,
+              }
+            : null,
+        },
+      );
       finished = true;
       clear();
       if (match.winner !== null) won[match.winner]++;
@@ -4505,6 +4530,14 @@ try {
         actorAppearance,
       });
     }
+    match.runs.forEach((run, i) =>
+      sound.feedback(match.status === 'running', theme, run, {
+        board: i,
+        mode: 'versus',
+        actorStyle: actorAppearance?.style,
+        placement: boardPlacement(contexts[i].canvas),
+      }),
+    );
     (music || sound).update(
       match.status === 'running',
       theme,

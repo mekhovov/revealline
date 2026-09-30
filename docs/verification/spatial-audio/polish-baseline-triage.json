@@ -1,0 +1,245 @@
+{
+  "base": "321408a3cfd75ae230d760f39fb692503652601a",
+  "method": "Targeted exact-name reruns in read-only symlink mirror with base versions of modified files; 180 second per-file limit; no complete baseline suite claim",
+  "results": [
+    {
+      "file": "game/test/actor-appearance-solo-host.test.mjs",
+      "exit": 1,
+      "requestedFailures": [
+        "a same-ID modified Custom pack retains authored actors through selector with unavailable authority"
+      ],
+      "baselineFailures": [
+        "a same-ID modified Custom pack retains authored actors through selector with unavailable authority"
+      ]
+    },
+    {
+      "file": "game/test/authored-mode-bootstrap.test.mjs",
+      "exit": 1,
+      "requestedFailures": [
+        "whole-spatial-v34: native boot escape matches ready destinations before any host modules load",
+        "whole-spatial-v35: native boot escape matches ready destinations before any host modules load",
+        "whole-spatial-v36: native boot escape matches ready destinations before any host modules load",
+        "whole-spatial-v37: native boot escape matches ready destinations before any host modules load"
+      ],
+      "baselineFailures": [
+        "whole-spatial-v34: native boot escape matches ready destinations before any host modules load",
+        "whole-spatial-v35: native boot escape matches ready destinations before any host modules load",
+        "whole-spatial-v36: native boot escape matches ready destinations before any host modules load",
+        "whole-spatial-v37: native boot escape matches ready destinations before any host modules load"
+      ]
+    },
+    {
+      "file": "game/test/backup-content-feedback-host.test.mjs",
+      "exit": 0,
+      "requestedFailures": [
+        "blur during the actual held backup lock does not announce a pack cancellation or autoplay"
+      ],
+      "baselineFailures": []
+    },
+    {
+      "file": "game/test/boot-build.test.mjs",
+      "exit": 1,
+      "requestedFailures": [
+        "the actual game has a static dark guard before resources and a single caught module entry",
+        "build rewrites native root paths, preserves extras and includes boot bytes in reproducible offline inventory"
+      ],
+      "baselineFailures": [
+        "the actual game has a static dark guard before resources and a single caught module entry",
+        "build rewrites native root paths, preserves extras and includes boot bytes in reproducible offline inventory"
+      ]
+    },
+    {
+      "file": "game/test/border-timed-detour-pair.test.mjs",
+      "exit": 1,
+      "requestedFailures": [
+        "two optional successors preserve current geometry, actors, goals, pictures, order and untouched introduction"
+      ],
+      "baselineFailures": [
+        "two optional successors preserve current geometry, actors, goals, pictures, order and untouched introduction"
+      ]
+    },
+    {
+      "file": "game/test/collection-records-return-host.test.mjs",
+      "exit": 0,
+      "requestedFailures": [
+        "actual Flight records return waits for still metadata success before revealing"
+      ],
+      "baselineFailures": []
+    },
+    {
+      "file": "game/test/combat-board-adapter.test.mjs",
+      "exit": 1,
+      "requestedFailures": [
+        "held patch pins its exact base, applies to both renderers and preserves all unrelated newer bytes",
+        "absent and disabled combat preserve pinned historical command streams and authority exactly",
+        "malformed active combat throws before canvas, caches, animation or painter state changes",
+        "actual warning bodies and rays sit below the live trail, ordinary keepers and craft",
+        "actual fired projectiles draw above keepers and below the craft with a readable diamond",
+        "real ram and terminal capture place inert scrap over the picture with no terminal live threats",
+        "small and reduced viewports retain warning and shot cues, including real freeze pickups and pause",
+        "the cosmetic scrap toggle cannot hide live warning bodies or projectiles",
+        "a real terminal capture is immediately static even unreduced, while surviving sentries stay hidden",
+        "one painter reuses a bounded sprite cache and resets it on setLevel and setLook"
+      ],
+      "baselineFailures": [
+        "held patch pins its exact base, applies to both renderers and preserves all unrelated newer bytes",
+        "absent and disabled combat preserve pinned historical command streams and authority exactly",
+        "malformed active combat throws before canvas, caches, animation or painter state changes",
+        "actual warning bodies and rays sit below the live trail, ordinary keepers and craft",
+        "actual fired projectiles draw above keepers and below the craft with a readable diamond",
+        "real ram and terminal capture place inert scrap over the picture with no terminal live threats",
+        "small and reduced viewports retain warning and shot cues, including real freeze pickups and pause",
+        "the cosmetic scrap toggle cannot hide live warning bodies or projectiles",
+        "a real terminal capture is immediately static even unreduced, while surviving sentries stay hidden",
+        "one painter reuses a bounded sprite cache and resets it on setLevel and setLook"
+      ]
+    },
+    {
+      "file": "game/test/continuous-host.test.mjs",
+      "exit": 1,
+      "requestedFailures": [
+        "immediate: tap/release, same direction, exact pause/load and explicit resume through the actual host",
+        "grid-center: tap/release, same direction, exact pause/load and explicit resume through the actual host"
+      ],
+      "baselineFailures": [
+        "immediate: tap/release, same direction, exact pause/load and explicit resume through the actual host",
+        "grid-center: tap/release, same direction, exact pause/load and explicit resume through the actual host"
+      ]
+    },
+    {
+      "file": "game/test/coop-entry-memory.test.mjs",
+      "exit": 1,
+      "requestedFailures": [
+        "a fresh first visit shows and starts the exact First Connection without creating a bookmark",
+        "BFCache and Settings retain this attempt when another tab changes the bookmark",
+        "same-value pointerdown  retains visible First Connection without manufacturing a change",
+        "same-value click  retains visible First Connection without manufacturing a change",
+        "same-value keydown Enter retains visible First Connection without manufacturing a change",
+        "same-value keydown f retains visible First Connection without manufacturing a change",
+        "same-value keydown F4 retains visible First Connection without manufacturing a change",
+        "failed Start after a claim-only selection leaves the existing bookmark unchanged",
+        "starting an imported pack after claiming the built-in selector never saves imported identity"
+      ],
+      "baselineFailures": [
+        "a fresh first visit shows and starts the exact First Connection without creating a bookmark",
+        "BFCache and Settings retain this attempt when another tab changes the bookmark",
+        "same-value pointerdown  retains visible First Connection without manufacturing a change",
+        "same-value click  retains visible First Connection without manufacturing a change",
+        "same-value keydown Enter retains visible First Connection without manufacturing a change",
+        "same-value keydown f retains visible First Connection without manufacturing a change",
+        "same-value keydown F4 retains visible First Connection without manufacturing a change",
+        "failed Start after a claim-only selection leaves the existing bookmark unchanged",
+        "starting an imported pack after claiming the built-in selector never saves imported identity"
+      ]
+    },
+    {
+      "file": "game/test/coop-import-artwork-host.test.mjs",
+      "exit": 1,
+      "requestedFailures": [
+        "hidden while an imported image loads retires its authority"
+      ],
+      "baselineFailures": [
+        "hidden while an imported image loads retires its authority"
+      ]
+    },
+    {
+      "file": "game/test/coop-import-next.test.mjs",
+      "exit": 1,
+      "requestedFailures": [
+        "imported Next hidden retains earned Results until another deliberate action"
+      ],
+      "baselineFailures": [
+        "imported Next hidden retains earned Results until another deliberate action"
+      ]
+    },
+    {
+      "file": "game/test/coop-lobby-focus.test.mjs",
+      "exit": 1,
+      "requestedFailures": [
+        "confirmed Change setup reveals the offscreen focused Start after rendering its retained teaser",
+        "return to an already visible Start preserves the current viewport"
+      ],
+      "baselineFailures": [
+        "confirmed Change setup reveals the offscreen focused Start after rendering its retained teaser",
+        "return to an already visible Start preserves the current viewport"
+      ]
+    },
+    {
+      "file": "game/test/coop-lobby-preview.test.mjs",
+      "exit": 1,
+      "requestedFailures": [
+        "relay-yard ready lobby hides the picture centre until an earned win",
+        "first-connection ready lobby hides the picture centre until an earned win",
+        "held artwork completes behind Settings without reclaiming its selector or starting an arena",
+        "historical import prepares shared artwork, loss keeps preview outside Results, and reset restores exact starter art",
+        "earned First Connection victory keeps preview in the hidden lobby and Change setup reuses its exact lease"
+      ],
+      "baselineFailures": [
+        "relay-yard ready lobby hides the picture centre until an earned win",
+        "first-connection ready lobby hides the picture centre until an earned win",
+        "held artwork completes behind Settings without reclaiming its selector or starting an arena",
+        "historical import prepares shared artwork, loss keeps preview outside Results, and reset restores exact starter art",
+        "earned First Connection victory keeps preview in the hidden lobby and Change setup reuses its exact lease"
+      ]
+    },
+    {
+      "file": "game/test/coop-picture-host.test.mjs",
+      "exit": 1,
+      "requestedFailures": [
+        "paused menu/display edits retain HUD continuity and the accepted picture with only shared preference reads/writes"
+      ],
+      "baselineFailures": [
+        "paused menu/display edits retain HUD continuity and the accepted picture with only shared preference reads/writes"
+      ]
+    },
+    {
+      "file": "game/test/coop-shared-settings.test.mjs",
+      "exit": 1,
+      "requestedFailures": [
+        "a controller selects Team Settings and paused quick sound without resuming",
+        "paused keyboard quick Sound and Settings mute share one owner without resuming",
+        "terminal disposal retires Settings controls without reopening, refocusing, saving or retaining pictures"
+      ],
+      "baselineFailures": [
+        "a controller selects Team Settings and paused quick sound without resuming",
+        "paused keyboard quick Sound and Settings mute share one owner without resuming",
+        "terminal disposal retires Settings controls without reopening, refocusing, saving or retaining pictures"
+      ]
+    },
+    {
+      "file": "game/test/coop-startup-selection.test.mjs",
+      "exit": 1,
+      "requestedFailures": [
+        "native setup chosen before module attachment matches the ordinary Expert First Connection flight",
+        "queryless Team adopts the early Expert preset before preparing its owned original and retains it on Retry"
+      ],
+      "baselineFailures": [
+        "native setup chosen before module attachment matches the ordinary Expert First Connection flight",
+        "queryless Team adopts the early Expert preset before preparing its owned original and retains it on Retry"
+      ]
+    },
+    {
+      "file": "game/test/coop-terrain-trail.test.mjs",
+      "exit": 1,
+      "requestedFailures": [
+        "a complete snapshot without a wall keeps flat backing and a missing reader fails closed"
+      ],
+      "baselineFailures": [
+        "a complete snapshot without a wall keeps flat backing and a missing reader fails closed"
+      ]
+    }
+  ],
+  "interpretation": "45/47 original diagnostic failures reproduce on main. Both remaining cases pass in targeted main and candidate reruns; consistent with timing sensitivity, not proof that no intermittent bug exists.",
+  "candidateRecheck": {
+    "passed": 2,
+    "failed": 0,
+    "skippedByNameFilter": 25,
+    "logSha256": "5d223e2938020c09c8cf6250e9a7a1675a61a4636a3658a75a1d949e432f4efb"
+  },
+  "additionalFoundationFailure": {
+    "name": "real Team import explains a return without a menu or a compulsory partner action",
+    "baselineReproduced": true,
+    "cause": "Existing Team support-ready caption appended to expected foundation-only text",
+    "baselineLogSha256": "3142d6110ef0d7fac0ce6ea11aa75d00b64a6135ba2d9314fc19aa1afc4c18cf"
+  }
+}

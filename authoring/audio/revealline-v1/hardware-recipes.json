@@ -1,0 +1,6 @@
+{
+  "selection": "Previous original ESC-style synthesis restored on user request, 2026-09-29",
+  "production": "produce.py; original notes and envelopes restored unchanged, followed by normalize_bank.py",
+  "rejectedCandidate": "Orqa launch excerpt, esc-recording in originals/freesound/sources.json; preserved for research, not used in runtime bank",
+  "identity": "Original synthesis; not an authentic hardware recording or verified branded melody"
+}
