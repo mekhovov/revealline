@@ -1,0 +1,58 @@
+import { titleReviewText } from './review-copy.mjs';
+
+// Exact historical preparations, not runtime adoption or package admission.
+export const PREPARED_TITLE_SOURCES = Object.freeze([
+  Object.freeze({
+    id: 'landscape-v1',
+    kind: 'image',
+    title: () => titleReviewText('landscape-v1'),
+    path: 'game/ui/art/field-kit/prepared/title-hangar-v1.png',
+    href: '../../../../../game/ui/art/field-kit/prepared/title-hangar-v1.png',
+    bytes: 866080,
+    sha256: '57744cbfe744bd50d932b1dba963539c11dbb176dc1e3171de46c34ea74d48a0',
+    width: 960,
+    height: 540,
+  }),
+  Object.freeze({
+    id: 'landscape-v2',
+    kind: 'image',
+    title: () => titleReviewText('landscape-v2'),
+    path: 'authoring/library/fpv-field-kit/prepared/titles/title-hangar-v2.png',
+    href: 'title-hangar-v2.png',
+    bytes: 25969,
+    sha256: '72b6c93f47090f3a3724223477e22cbc461132329768e70b82cdb87d85a72052',
+    width: 960,
+    height: 540,
+  }),
+  Object.freeze({
+    id: 'portrait-v1',
+    kind: 'image',
+    title: () => titleReviewText('portrait-v1'),
+    path: 'game/ui/art/field-kit/prepared/title-hangar-portrait-v1.png',
+    href: '../../../../../game/ui/art/field-kit/prepared/title-hangar-portrait-v1.png',
+    bytes: 790579,
+    sha256: '4f56a78772cd7363a2992a8252e4dc629638dad705a9b981d4561830117f511e',
+    width: 540,
+    height: 960,
+  }),
+  Object.freeze({
+    id: 'portrait-v2',
+    kind: 'image',
+    title: () => titleReviewText('portrait-v2'),
+    path: 'authoring/library/fpv-field-kit/prepared/titles/title-hangar-portrait-v2.png',
+    href: 'title-hangar-portrait-v2.png',
+    bytes: 23827,
+    sha256: '8fe3df81db48bf682862a06c8f7434365ff49151a2a72a94c0a85ea85a3adf27',
+    width: 540,
+    height: 960,
+  }),
+  Object.freeze({
+    id: 'manifest',
+    kind: 'text',
+    title: () => titleReviewText('manifest'),
+    path: 'authoring/library/fpv-field-kit/prepared-scenes-v2.json',
+    href: '../../prepared-scenes-v2.json',
+    bytes: 8116,
+    sha256: '199c8b23990af731377560e0f70f1469338ed68239986a47bd852f91dcbbac55',
+  }),
+]);
