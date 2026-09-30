@@ -1223,8 +1223,12 @@ async function main() {
     const pendingPreview = previewController;
     previewController = null;
     pendingPreview?.abort();
+    discoveryEditor.suspend();
     if (event.persisted) lessonEditor.suspend();
-    else lessonEditor.dispose();
+    else {
+      discoveryEditor.dispose();
+      lessonEditor.dispose();
+    }
   });
   $('add-reward').onclick = guarded(addRewardDraft);
   $('preview-reward').onclick = guarded(previewRewardDraft);
