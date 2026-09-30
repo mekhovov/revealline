@@ -42,6 +42,17 @@ export function mountFlightApp({
     target.addEventListener(type, handler);
     listeners.push(() => target.removeEventListener(type, handler));
   };
+  if ($('worlds-button'))
+    $('worlds-button').hidden =
+      !fpvReturnURL(win.location.href) &&
+      !['localhost', '127.0.0.1', '[::1]'].includes(new URL(win.location.href).hostname);
+  if ($('worlds-button'))
+    listen($('worlds-button'), 'click', () => {
+      const target = new URL('../fpv-worlds/index.html', win.location.href);
+      const language = $('language')?.value;
+      if (language) target.searchParams.set('lang', language);
+      win.location.href = target.href;
+    });
   const gameReturn = fpvReturnURL(win.location.href);
   if (gameReturn && $('game-return')) {
     $('game-return').href = gameReturn;

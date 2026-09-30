@@ -589,10 +589,12 @@ export async function addOfflineEntries(
       entry.bytes = Buffer.from(source.replace('</head>', `${favicon}</head>`));
   }
   // Project only the containing build's manifest; standalone archives keep local icons.
-  const practiceManifest = entries.find(
-    (entry) => entry.name === 'optional-practice/civilian-fpv/app.webmanifest',
-  );
-  if (practiceManifest) {
+  for (const practiceManifest of entries.filter((entry) =>
+    [
+      'optional-practice/civilian-fpv/app.webmanifest',
+      'optional-practice/fpv-worlds/app.webmanifest',
+    ].includes(entry.name),
+  )) {
     const manifest = JSON.parse(practiceManifest.bytes);
     if (
       !Array.isArray(manifest.icons) ||
@@ -614,8 +616,10 @@ export async function addOfflineEntries(
   // The bundled simulator owns a separate opt-in cache. Its HTML and shared
   // modules are final here; later offline-marker injection changes game HTML only.
   const { buildBundledOptionalPractice } = await import('./build-optional-practice.mjs');
-  const bundledPractice = buildBundledOptionalPractice(entries);
-  if (bundledPractice) entries.push(...bundledPractice.entries);
+  for (const packageId of ['civilian-fpv', 'fpv-worlds']) {
+    const bundledPractice = buildBundledOptionalPractice(entries, { packageId });
+    if (bundledPractice) entries.push(...bundledPractice.entries);
+  }
   const optional = new Set([...(buildConfig.optionalOffline ?? []), ...optionalDownloads]);
   const optionalPacks = entries
     .filter((entry) => optional.has(entry.name))
