@@ -1,5 +1,15 @@
 # Native menus: plan status and release batches
 
+## September 30 — FPV role source gallery
+
+Runtime `a3547f368` starts from accepted main `1ea63c0f2`, after Releases merged the enemy-gallery batch #833 with its focused and edition-candidate checks. The new role gallery has seven stable bounded canvas readers, three pinned document readers, atomic cancelable loading and an animation owner that stops background work while paused, reduced, hidden or covered by a modal. It preserves the exact renderer, rigs and **360 × 190 CSS-pixel** comparison. Follow-up `a803186bb` puts source identity and the Read action on separate rows after portrait review.
+
+The scoped cohort passes **84/84**, including **2/2 inventory** checks; localization passes **11,916 messages / 8,825 references**. The first complete virtual workflow passes **4/4**, including all sizing/arena pairs, every selector, cancellation, exact documents, motion observations and real Return. Native portrait keys qualify all readers, all selector options and controlled delayed Cancel/503/Retry without a pointer reset. The final layout repeat and full native run retain separate cutoffs in the [role-gallery evidence](verification/fpv-role-gallery-input-2026-09-30.md). A separate Couch host test remains **8/9**, reproduces on unchanged main and has been handed to Releases; it is not counted as passing.
+
+The seven original images (**5,772,788 bytes**) already ship and are unchanged. Gallery chrome/documents remain source-only; the default collector stays at **2,479 paths** with no new admission. **18/18 in-memory edition compiles** pass at `a3547f368`; largest output **66,898,267 bytes**, with **210,597 bytes** headroom. The CSS-only follow-up preserves all compiler/edition pins, with fresh source attribution instead of a redundant compile. No physical-device, native-build, installed-offline, full shared Ukrainian status or published acceptance is implied.
+
+Next bounded route is the **Reserve illustration catalog**. Its sparse server misses a current controller dependency; source loading, raw document handoffs, bounded image reading and return consistency need a separate batch. Preserve its allowlist boundary, 40 source images and exclusion from release packages. All global acceptance gates remain open, and Releases remains the sole integrator/publisher. Historical evidence below retains its original cutoff.
+
 ## September 30 — FPV enemy source gallery
 
 Runtime `92131cea9` starts from accepted main `dc37f277e`, after Releases integrated Guide #827 and Countercurrent #832. The enemy gallery now has seven stable Sections targets, useful Page actions and nine owned image/document readers. Loading has explicit Retry/Cancel, verified atomic measurements and lifecycle protection. A controlled browser check reproduced the old error: changing the enlarged body during initial decoding left “Original load failed” even after all 57 samples loaded. The corrected source reaches Ready and retains measurements through pending cancellation and server failure/retry.
