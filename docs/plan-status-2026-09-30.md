@@ -31,7 +31,7 @@ historical evidence; it is not silently enrolled as a runtime feature.
 
 ## Remaining — current release inputs
 
-All seven open inputs below have the existing
+The current source inputs below have the existing
 [v0.150.0 milestone](https://github.com/mekhovov/revealline/milestone/57).
 Source owners retain their branches and the release coordinator owns cumulative
 integration, version allocation, immutable publication and Pages deployment.
@@ -47,9 +47,10 @@ integration, version allocation, immutable publication and Pages deployment.
 | 7 | [Demo clock continuity, #821](https://github.com/mekhovov/revealline/pull/821) | Draft source input | Verify visible-frame stalls and lifecycle behavior without accepting unrelated Demo gaps. |
 | 8 | [Company budget/practice, #822](https://github.com/mekhovov/revealline/pull/822) | Draft source input | Pass edition capacity and actual cached-practice checks. |
 | 9 | [Steam Deck Confirm checks, #823](https://github.com/mekhovov/revealline/pull/823) | Open source input | Qualify current-menu Confirm behavior; modeled checks do not certify hardware. |
-| 10 | Pause/Skip and other current-main ports | Active owner work | Finish conflict review; push each scoped successor and assign its release target. Never stage another owner's unfinished rebase. |
-| 11 | Deferred failures and missing closed-source hunks | Reconciliation continues | Resolve [#813](https://github.com/mekhovov/revealline/issues/813); port missing intended Team/Community/source behavior without merging stale branches wholesale. |
-| 12 | Publish the cumulative candidate | Coordinator-owned | Freeze qualified main, publish the allocated version, deploy, verify inventory and player journeys, retain rollback. |
+| 10 | [Creator documents, #827](https://github.com/mekhovov/revealline/pull/827) | Draft, stacked on #815 | Preserve the parent dependency and qualify document-reader return/downloads before cumulative integration. |
+| 11 | Pause/Skip and other current-main ports | Active owner work | Finish conflict review; push each scoped successor and assign its release target. Never stage another owner's unfinished rebase. |
+| 12 | Deferred failures and missing closed-source hunks | Reconciliation continues | Resolve [#813](https://github.com/mekhovov/revealline/issues/813); port missing intended Team/Community/source behavior without merging stale branches wholesale. |
+| 13 | Publish the cumulative candidate | Coordinator-owned | Freeze qualified main, publish the allocated version, deploy, verify inventory and player journeys, retain rollback. |
 
 This order prioritizes startup and safe current-game delivery; it does not create
 a competing release queue. Do not hold ready player fixes for this documentation
@@ -79,6 +80,11 @@ The [approved Xposed Journey contract](xposed-journey-plan.md) describes 242 Sol
 candidates, 12 finale Remixes and 12 purpose-built Team missions as an authoring
 backlog, not shipped counts or remaining minimum quotas. Reconcile accepted
 content before promising additional production quantities.
+
+[Studio history-restoration follow-up #826](https://github.com/mekhovov/revealline/issues/826)
+records one inherited lifecycle investigation for shared editor suspension and
+Content/Company Studio. It is scheduled after current release repairs, not a
+reason to copy an old branch or block ready player fixes.
 
 The next bounded, unowned display task identified here is Enemy Workshop shared
 preferences: its current host omits the shared display adapter and reads only

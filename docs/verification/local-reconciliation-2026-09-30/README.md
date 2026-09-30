@@ -63,3 +63,27 @@ relative links and absence of workstation paths in the new packet. Independent
 without executing the app; [its PR receipt](https://github.com/mekhovov/revealline/pull/816#issuecomment-5904286436)
 states the limits. No full runtime suite, browser/device acceptance or immutable
 release was completed by this reconciliation task.
+
+## Final semantic disposition
+
+Review of the historical reachability deltas covered 583 objects / 278 readable
+blobs (17,210,134 bytes), including intermediate commits. No actual credentials
+or private audio were identified. The four binaries were inspected game Demo
+screenshots. Example/test credential strings were not treated as real secrets.
+
+- Capture-pulse/audio changes belong to #817; civilian FPV lifecycle belongs to
+  #822; current menu assertions are merged through #819.
+- Extra Motion test and Design Atlas blocks are duplicates, not missing features.
+- Earlier version numbers, weakened catalogue assertions, workflow removals and
+  obsolete documentation are preservation-only. Do not restore them wholesale.
+- The remaining inherited Studio lifecycle concern is tracked separately in
+  [#826](https://github.com/mekhovov/revealline/issues/826), including required
+  nested-editor suspension APIs before any host wiring.
+
+At the final primary check, HEAD and origin/main both equal
+`4d9d70237506e51a877e5df3f4e6b6b91e20bb76` and the original shared branch is
+clean and synchronized with its upstream. A later Pause-owner check found five
+modified files after its conflicts had been resolved; that active work is still
+owned by the Pause task and is not silently counted as pushed. New #827 has been
+assigned v0.150.0 while retaining its #815 dependency and draft state. All current
+open PRs have a release target at this checkpoint. Later edits need a new check.
