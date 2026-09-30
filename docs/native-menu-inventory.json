@@ -319,6 +319,78 @@
         }
       },
       "publicSlug": "droneaid-nl-shared-horizon"
+    },
+    {
+      "id": "social-drone-ua",
+      "title": "Social Drone UA / LINE",
+      "brand": "social-drone-ua",
+      "modes": ["solo"],
+      "scene": "fpv",
+      "routes": ["/game/?edition=social-drone-ua", "/editions/social-drone-ua/app/"],
+      "menus": "shared-native",
+      "verification": {
+        "automated": "Current integrated source catalog, supported modes, public slug, scene resolver and launch routes checked; source-only inventory reconciliation.",
+        "physicalController": "not tested",
+        "publishedBuild": "not tested",
+        "browser": "Pending current-edition layout and keyboard/controller browser qualification; not covered by the historical 14-edition menu matrix.",
+        "standalonePackage": "Pending current-edition standalone compilation, installed-offline and native qualification; not covered by the historical 14-edition package receipts.",
+        "scene": "Current resolveMenuScene selects the shared fpv fallback for this edition ID; deliberate edition artwork review remains pending."
+      },
+      "publicSlug": "social-drone-ua"
+    },
+    {
+      "id": "victory-drones",
+      "title": "Victory Drones / LINE",
+      "brand": "victory-drones",
+      "modes": ["solo"],
+      "scene": "fpv",
+      "routes": ["/game/?edition=victory-drones", "/editions/victory-drones/app/"],
+      "menus": "shared-native",
+      "verification": {
+        "automated": "Current integrated source catalog, supported modes, public slug, scene resolver and launch routes checked; source-only inventory reconciliation.",
+        "physicalController": "not tested",
+        "publishedBuild": "not tested",
+        "browser": "Pending current-edition layout and keyboard/controller browser qualification; not covered by the historical 14-edition menu matrix.",
+        "standalonePackage": "Pending current-edition standalone compilation, installed-offline and native qualification; not covered by the historical 14-edition package receipts.",
+        "scene": "Current resolveMenuScene selects the shared fpv fallback for this edition ID; deliberate edition artwork review remains pending."
+      },
+      "publicSlug": "victory-drones"
+    },
+    {
+      "id": "ukraine-culture",
+      "title": "Ukraine: Living Culture / LINE",
+      "brand": "ukraine-culture",
+      "modes": ["solo"],
+      "scene": "fpv",
+      "routes": ["/game/?edition=ukraine-culture", "/editions/ukraine-culture/app/"],
+      "menus": "shared-native",
+      "verification": {
+        "automated": "Current integrated source catalog, supported modes, public slug, scene resolver and launch routes checked; source-only inventory reconciliation.",
+        "physicalController": "not tested",
+        "publishedBuild": "not tested",
+        "browser": "Pending current-edition layout and keyboard/controller browser qualification; not covered by the historical 14-edition menu matrix.",
+        "standalonePackage": "Pending current-edition standalone compilation, installed-offline and native qualification; not covered by the historical 14-edition package receipts.",
+        "scene": "Current resolveMenuScene selects the shared fpv fallback for this edition ID; deliberate edition artwork review remains pending."
+      },
+      "publicSlug": "ukraine-culture"
+    },
+    {
+      "id": "fpv-learning",
+      "title": "FPV Learning / LINE",
+      "brand": "fpv-learning",
+      "modes": ["solo"],
+      "scene": "fpv",
+      "routes": ["/game/?edition=fpv-learning", "/editions/fpv-learning/app/"],
+      "menus": "shared-native",
+      "verification": {
+        "automated": "Current integrated source catalog, supported modes, public slug, scene resolver and launch routes checked; source-only inventory reconciliation.",
+        "physicalController": "not tested",
+        "publishedBuild": "not tested",
+        "browser": "Pending current-edition layout and keyboard/controller browser qualification; not covered by the historical 14-edition menu matrix.",
+        "standalonePackage": "Pending current-edition standalone compilation, installed-offline and native qualification; not covered by the historical 14-edition package receipts.",
+        "scene": "Current resolveMenuScene selects the shared fpv fallback for this edition ID; deliberate edition artwork review remains pending."
+      },
+      "publicSlug": "fpv-learning"
     }
   ],
   "evidence": {
@@ -470,8 +542,11 @@
     {
       "name": "Creator Guide",
       "route": "/authoring/community/index.html",
-      "verification": "pending exact-candidate browser qualification; historical observations do not establish current acceptance",
-      "historicalVerification": "browser mount verified; shared keyboard and virtual-controller reader/navigation; physical controller not tested"
+      "verification": "At a6ac18d51, 35 focused tests and the first complete 4/4 virtual-controller workflow pass. Seven safe section and contents targets, bounded readers, exact Back/Confirm restoration, canceled language and live EN/UK labels, and real Content Studio return/reentry are qualified. Native pointerless keyboard traverses all seven sections at 390x844 (maximum 656px) and returns through the real Studio guide link. Virtual whole-page reading reaches 3286px. Guide-only interactions preserve unrelated storage; explicit locale persists, while ordinary native Studio startup created checkpoint1 and the virtual repeat preserved its exact head/revision. No raw Markdown or example download was activated. Source closure and direct document/sample admission match 68 Git/disk pins; no full package build or offline acceptance. Raw documents, actual example artifacts, full Ukrainian reading, hardware and publication remain separate.",
+      "historicalVerification": "browser mount verified; shared keyboard and virtual-controller reader/navigation; physical controller not tested",
+      "evidence": "docs/verification/creator-guide-input-2026-09-30.md",
+      "documentVerification": "At 928bbfd31 (byte-equivalent runtime to qualified 8b5f4a9b1), 87 overlapping focused checks, localization, fresh 3/3 controller document workflow and native keys across all ten readers at390x844 pass. Ten exact literal Markdown sources retain source language, bounded reading and two-step Back. Four actual sample downloads pass production round-trip/model validation. Package admission has82 exact pins, no generated build or offline acceptance. Browser sample installation, physical devices, controlled network failures and published Guide acceptance remain open.",
+      "documentEvidence": "docs/verification/creator-guide-documents-input-2026-09-30.md"
     },
     {
       "name": "FPV reveal source audit",
@@ -483,8 +558,9 @@
     {
       "name": "Countercurrent art",
       "route": "/authoring/library/countercurrent-art/index.html",
-      "verification": "pending exact-candidate browser qualification; historical observations do not establish current acceptance",
-      "historicalVerification": "browser mount verified; shared keyboard and virtual-controller reader/navigation; physical controller not tested"
+      "verification": "At 7080b238d, final 38/38 viewer/gallery checks and separate 62/62 reference/domain/inventory checks pass. Four stable world targets and thirteen owned pinned sources (twelve original PNGs plus literal README) retain one shared input owner. Fresh committed-source virtual workflow passes 4/4: all twelve displayed Blobs match exact original bytes/hash and fully decode 1774x887, real Retry, bounded two-axis reading/Fit, README, canceled sections/language, EN/UK labels, exact two-step Back and real Asset Studio Return. Native unindexed keys at390x844 traverse all twelve readers and four targets without pointer reset; representative image reaches X1456/Y380.5 of381, README reaches5225px with zero horizontal overflow, and UK names/Retry update before restoring English. Browser Back was used once after page Escape correctly returned to Studio; no reciprocal product reentry is claimed. Historical source/metadata remain unchanged. Gallery is source-served only and remains excluded from distribution; no Save/import/export/adoption/approval exists. All18 current editions compile in memory within64MiB; this does not qualify offline/native/physical/published support. Controlled browser faults, pending cancellation and broader device gates remain open.",
+      "historicalVerification": "browser mount verified; shared keyboard and virtual-controller reader/navigation; physical controller not tested",
+      "evidence": "docs/verification/countercurrent-gallery-input-2026-09-30.md"
     },
     {
       "name": "FPV enemy presentation",
@@ -644,6 +720,22 @@
     {
       "route": "/editions/droneaid-nl-community/app/",
       "generator": "publishing/edition-promotion.mjs"
+    },
+    {
+      "route": "/editions/social-drone-ua/app/",
+      "generator": "scripts/compile-edition.mjs"
+    },
+    {
+      "route": "/editions/victory-drones/app/",
+      "generator": "scripts/compile-edition.mjs"
+    },
+    {
+      "route": "/editions/ukraine-culture/app/",
+      "generator": "scripts/compile-edition.mjs"
+    },
+    {
+      "route": "/editions/fpv-learning/app/",
+      "generator": "scripts/compile-edition.mjs"
     }
   ],
   "customPlayer": {

@@ -1,10 +1,10 @@
 # RevealLine: detailed delivery history
 
-> **Current reconciliation and remaining delivery order:** use the
-> [30 September plan and source audit](plan-status-2026-09-30.md).
-> It separates immutable v0.142.3, current main, active v0.150.0 inputs and
-> historical preservation. Source integration does not establish whole-game
-> acceptance. All dated checkpoints below remain historical evidence.
+> **Current status and execution order:** use the
+> [30 September source reconciliation and remaining delivery plan](plan-status-2026-09-30.md).
+> It separates merged source, the publisher's pending queue, retained local work
+> and deferred qualification. Every dated checkpoint and “next” label below is
+> preserved historical evidence, not today's release queue.
 
 ## Current scoped handoff — 28 September 2026
 
