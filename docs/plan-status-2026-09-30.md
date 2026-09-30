@@ -1,5 +1,55 @@
 # Source reconciliation and remaining delivery — 30 September 2026
 
+## Latest reconciliation — 16:30 UTC
+
+Baseline refreshed to main `908bc6b08d1999edafa79d1581d2bab9395285b7`.
+The owned actor checkout was clean at detached `20622ef66`, already an ancestor
+of main; a fresh owned branch rebased successfully without conflicts or replaying
+old commits. The primary checkout is also clean at this observed main. The
+morning checkpoint below remains historical evidence.
+
+**Completed source:** PR828 is merged (`35dd7f191`): Team downed-player Resume
+retains rescue guidance, the plan is reconciled, and unique historical proposals
+are preserved. Subsequent accepted source includes Pause/menu corrections
+(PR831), FPV role/enemy galleries (PR833/836), Team difficulty/import/cues/text-size
+and Resume coverage (PR834/838/839/843/845), optional offline/audio work
+(PR817/818/830/837), community routes (PR835), and Demo continuity/iPhone/variety
+(PR821/841/847). This is integration evidence, not whole-phase acceptance.
+
+**Current input queue:** PR846 (Ukraine role gallery), PR849 (Discovery editor
+suspension), and PR850 (radio qualification status) target milestone 57/v0.150.0
+at this snapshot. The landing-menu owner also has an active 12-path local batch;
+it must be pushed through its own reviewed PR. The publisher owns admission and
+public checks. Latest immutable GitHub release remains v0.142.3; this lane has
+not verified a new deployed version or public-play result.
+
+**This follow-up:** adapt issue824's missing Enemy workshop wrapping to all five
+current actions, preserving localization and return ownership; recover the 49-line
+Still Media close/focus/data-preservation assertions on the current host. See the
+[scoped evidence](verification/enemy-actions-recovery-20260930/README.md). Test
+execution remains waived. Historical Team 38/50 envelope compatibility remains
+open, with exact source evidence recorded there; the newer manifest resolver is
+not proof that those older imports are supported.
+
+**Fresh local inventory:** at 16:22 UTC, 269 registered roots, 267 present, 106 dirty,
+zero status errors. 105 dirty roots retain the morning HEAD/status/path inventory;
+this is not a byte-level or semantic equivalence claim. All differing current
+September 30 committed tips examined were remote-advertised or ancestral to main.
+The only newly active dirty root was the landing-menu owner's checkout, before
+this follow-up's edits. Historical unresolved proposals remain with the canonical
+publisher's audit; no foreign cleanup, reset or bulk upload is authorized by a
+clean primary checkout. Ignored bodies/private media were not uploaded.
+
+**Remaining order:** A/C3 roster and reliable native play; B/C4 optional encounter
+combinations; C/C5 first Ukrainian/FPV cohort and required C6 authoring support;
+C7/UX6 cross-content qualification; C2 formal player comparison last. Production
+review remains explicitly deferred. This source batch is ready for a bounded
+release input after required checks; publication timing belongs to the single
+publisher's queue. Do not manufacture an ETA for hardware/human qualification
+without participants/devices or turn waived suites into passes.
+
+## Morning reconciliation checkpoint
+
 Current rebase baseline: main `451b82dc13dc8a8545ff964ffb724d3d756ac62a`.
 The earlier inventory observed `3dbf92d39f0e254d8925cd44e806866a0cf71cd6`;
 the resumed rebase includes PR816's Ready/startup correction.
