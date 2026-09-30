@@ -11,6 +11,11 @@ This supersedes claims that the assisted overhead gym completes the immersive
 flight-simulator phase. The historical `civilian-flight` / `assisted-gym.v1` stays
 unchanged. New first-person flight belongs to the separate `civilian-fpv` package.
 
+For the current source status and remaining release work, see the
+[30 September FPV offline continuation](verification/fpv-offline-navigation-20260930.md).
+The older PR/queue references below are retained delivery history. PR #822 has
+merged; this continuation starts from refreshed main and uses a new bounded input.
+
 ## Order and compatibility
 
 Deliver Phase 2 → 3 → 4 → 6, with qualification in every batch, through integration
