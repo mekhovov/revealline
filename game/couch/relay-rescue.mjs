@@ -1273,8 +1273,10 @@ export function bootCoop({
     }
     if (difficulty) {
       settingsPanels.select('coop-settings-tab-gameplay');
-      if (!$('coop-difficulty').disabled)
-        settingsDialog.setAttribute('data-settings-view', 'panel');
+      settingsDialog.setAttribute(
+        'data-settings-view',
+        $('coop-difficulty').disabled ? 'categories' : 'panel',
+      );
     }
     settingsDialog.showModal();
     const active = document.activeElement;
