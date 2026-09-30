@@ -270,6 +270,10 @@
             {
               "id": "neon-spines-pack",
               "name": "Neon Spines"
+            },
+            {
+              "id": "neon-prism-pack",
+              "name": "Neon Prism"
             }
           ]
         }

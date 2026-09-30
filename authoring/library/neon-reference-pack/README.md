@@ -1,8 +1,8 @@
 # Neon Reference Pack
 
-Fifteen screenshot reconstructions. Word and symbol designs live separately in **Neon Words & Symbols**.
+Sixteen screenshot reconstructions. Word and symbol designs live separately in **Neon Words & Symbols**.
 
-The fifteen original layouts, in submission order:
+The sixteen original layouts, in submission order:
 
 1. **Neon Channels** — alternating slow and lethal lanes around a central refuge;
    two pink bouncers, one diamond eroder and three cyan border patrols.
@@ -45,10 +45,13 @@ The fifteen original layouts, in submission order:
 15. **Neon Spines** — five red spines through blue lanes, a horizontal crossing with an open central pocket, and broken cyan perimeter walls;
     four pink bouncers and two cyan patrols.
 
+16. **Neon Prism** — a mirrored red-and-blue tapestry, side diamonds, diagonal red borders and small chevrons;
+    five pink ring bouncers and four cyan patrols.
+
 The separate [Words & Symbols pack](../neon-mosaic/README.md) contains 38 varied arenas and its own preview gallery.
 
 Open the main game's **Missions** catalog and search **Neon Reference Pack**.
-All fifteen levels are bundled and available offline in Solo and Versus. They also
+All sixteen levels are bundled and available offline in Solo and Versus. They also
 have a pack selector entry and a launch card on the About page. The catalog's
 Current rules edition is projected by the existing Classic adapter; original
 authored rules remain available in Archive.
