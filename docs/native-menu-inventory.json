@@ -541,18 +541,26 @@
     {
       "name": "Ukraine role presentation",
       "route": "/authoring/library/ukraine-role-presentations/index.html",
-      "verification": "Bounded keyboard and virtual-controller donor workflow evidence recorded in PR #846; integration/source attribution and physical/offline/public acceptance remain pending at 2026-09-30 18:47 UTC. Do not label the donor implementation absent or transfer its evidence to later main without attribution.",
+      "verification": "At runtime 09a3c21a1, seven stable Sections/readers preserve 600 × 190 canvases and all four sample placements; verified atomic loading, Retry/Cancel/timeout, exact document Back and inactive animation ownership are implemented. 92/92 focused checks, first complete 4/4 virtual-controller journey and native 390 × 844 keyboard workflow pass within documented bounds. Virtual input covers all eight role choices, eight board/arena pairs, other controls/cancellation, motion pixel observations, exact three documents, live UK/EN and real Studio Return. Native input covers every selector, seven Sections and readers at X 256/256, literal sources, exact Back, delayed Cancel, HTTP 503/Retry and ready Studio return without pointer reset. No project Save/import/export or adoption exists. Original artwork/model/rig/renderer/derivatives remain unchanged; collector admits no gallery/source files. 18/18 in-memory edition compiles and 1,290-path attribution pass at actual source revision. Source-language prose, native popup cancellation, OS preference changes, device performance, installed offline and publication remain separate.",
       "historicalVerification": "browser mount verified; shared keyboard and virtual-controller reader/navigation; physical controller not tested",
-      "delivery": "https://github.com/mekhovov/revealline/pull/846",
-      "evidenceReport": "https://github.com/mekhovov/revealline/blob/8a49d835a826e59e0cf4584a3ee9cb5066d5507f/docs/verification/ukraine-role-gallery-input-2026-09-30.md"
+      "evidence": "docs/verification/ukraine-role-gallery-input-2026-09-30.md",
+      "documentationCheckpoint20260930": {
+        "verification": "Bounded keyboard and virtual-controller donor workflow evidence recorded in PR #846; integration/source attribution and physical/offline/public acceptance remain pending at 2026-09-30 18:47 UTC. Do not label the donor implementation absent or transfer its evidence to later main without attribution.",
+        "delivery": "https://github.com/mekhovov/revealline/pull/846",
+        "evidenceReport": "https://github.com/mekhovov/revealline/blob/8a49d835a826e59e0cf4584a3ee9cb5066d5507f/docs/verification/ukraine-role-gallery-input-2026-09-30.md"
+      }
     },
     {
       "name": "Ukraine wide role variants",
       "route": "/authoring/library/ukraine-role-wide-variants/index.html",
-      "verification": "Bounded keyboard and virtual-controller donor workflow evidence recorded in PR #857; integration/source attribution and physical/offline/public acceptance remain pending at 2026-09-30 18:47 UTC. Do not label the donor implementation absent or transfer its evidence to later main without attribution.",
+      "verification": "source7bcd7152e / rebased5381b570a: 74 focused checks, current4/4 virtual-controller and native portrait reading/phase/cancel/return; physical/offline/published acceptance pending",
       "historicalVerification": "browser mount verified; shared keyboard and virtual-controller reader/navigation; physical controller not tested",
-      "delivery": "https://github.com/mekhovov/revealline/pull/857",
-      "evidenceReport": "https://github.com/mekhovov/revealline/blob/2ab940b781c0adbc7c4da3e706271628736090f1/docs/verification/ukraine-wide-gallery-input-2026-09-30.md"
+      "evidence": "docs/verification/ukraine-wide-gallery-input-2026-09-30.md",
+      "documentationCheckpoint20260930": {
+        "verification": "Bounded keyboard and virtual-controller donor workflow evidence recorded in PR #857; integration/source attribution and physical/offline/public acceptance remain pending at 2026-09-30 18:47 UTC. Do not label the donor implementation absent or transfer its evidence to later main without attribution.",
+        "delivery": "https://github.com/mekhovov/revealline/pull/857",
+        "evidenceReport": "https://github.com/mekhovov/revealline/blob/2ab940b781c0adbc7c4da3e706271628736090f1/docs/verification/ukraine-wide-gallery-input-2026-09-30.md"
+      }
     },
     {
       "name": "Prepared reveal review",
