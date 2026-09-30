@@ -50,6 +50,8 @@ async function deckDemo(t, phase = 'watching') {
   page.$('demo-dialog').addEventListener('close', () => exits++);
   async function open() {
     frame(1500);
+    page.$('shell-options').click();
+    page.$('settings-tab-extras').click();
     page.$('shell-demo').focus();
     await page.open();
     if (phase === 'practice') {
@@ -84,7 +86,11 @@ for (const phase of ['watching', 'practice'])
           hold(true);
           if (order === 'gamepad-first') frame();
           assert.equal(nativeKey(back, 'keydown', key).defaultPrevented, true);
-          assert.equal(page.$('demo-dialog').open, true, 'Back cannot run at A-down');
+          assert.equal(
+            page.$('demo-dialog').open,
+            true,
+            `Back cannot run at A-down\n${page.$('controller-confirm-trace').querySelector('pre').textContent}`,
+          );
           assert.equal(h.exits(), before);
           elapse(duration);
           if (order === 'gamepad-first' || duration === 5000) frame();
@@ -96,19 +102,20 @@ for (const phase of ['watching', 'practice'])
           frame();
           assert.equal(page.$('demo-dialog').open, false);
           assert.equal(h.exits(), before + 1);
-          const home = page.doc.activeElement;
-          assert.equal(page.$('shell-home').contains(home), true, 'focus returns inside Home');
-          assert.equal(nativeClick(home).defaultPrevented, true);
+          const launcher = page.doc.activeElement;
+          assert.equal(launcher, page.$('shell-demo'), 'focus returns to the Settings launcher');
+          assert.equal(page.$('settings-dialog').open, true);
+          assert.equal(nativeClick(launcher).defaultPrevented, true);
           frame();
           assert.equal(page.$('demo-dialog').open, false, 'release click cannot reopen Demo');
-          assert.equal(page.$('settings-dialog').open, false, 'release click cannot open Settings');
+          assert.equal(page.$('settings-dialog').open, true, 'release click preserves Settings');
           assert.equal(h.exits(), before + 1);
         }
       assert.deepEqual(page.errors, []);
     });
 
 for (const phase of ['watching', 'practice'])
-  test(`native-first ${phase} Demo Back stays the winner after Home restores and A is held for five seconds`, async (t) => {
+  test(`native-first ${phase} Demo Back stays the winner after Settings restores and A is held for five seconds`, async (t) => {
     const h = await deckDemo(t, phase),
       { page, hold, elapse, frame } = h;
     for (const key of ['Enter', ' ']) {
@@ -129,24 +136,23 @@ for (const phase of ['watching', 'practice'])
       elapse(5000);
       frame();
       hold(false);
-      const home = page.$('shell-demo');
-      assert.equal(nativeKey(home, 'keydown', key, { repeat: true }).defaultPrevented, true);
-      assert.equal(nativeKey(home, 'keyup', key).defaultPrevented, true);
-      assert.equal(nativeClick(home).defaultPrevented, true);
+      const launcher = page.$('shell-demo');
+      assert.equal(nativeKey(launcher, 'keydown', key, { repeat: true }).defaultPrevented, true);
+      assert.equal(nativeKey(launcher, 'keyup', key).defaultPrevented, true);
+      assert.equal(nativeClick(launcher).defaultPrevented, true);
       await Promise.resolve();
       frame();
       assert.equal(
         page.$('demo-dialog').open,
         false,
-        'later controller release cannot reopen Home',
+        'later controller release cannot reopen Demo',
       );
       assert.equal(h.exits(), before + 1);
       frame(1500);
-      const sound = page.$('shell-sound'),
-        original = sound.getAttribute('aria-pressed');
-      sound.focus();
-      assert.equal(nativeClick(sound).defaultPrevented, false);
-      assert.notEqual(sound.getAttribute('aria-pressed'), original, 'a later native gesture works');
+      const audioTab = page.$('settings-tab-audio');
+      audioTab.focus();
+      assert.equal(nativeClick(audioTab).defaultPrevented, false);
+      assert.equal(audioTab.getAttribute('aria-selected'), 'true', 'a later native gesture works');
     }
     assert.deepEqual(page.errors, []);
   });
@@ -198,6 +204,6 @@ test('touch-derived Demo Back uses the same Confirm owner and native-only touch 
   frame();
   assert.equal(h.exits(), 2);
   assert.equal(page.$('demo-dialog').open, false);
-  assert.equal(page.$('settings-dialog').open, false);
+  assert.equal(page.$('settings-dialog').open, true);
   assert.deepEqual(page.errors, []);
 });

@@ -12590,7 +12590,10 @@ try {
     onFreshStart: (source, current) => prepareDemoFresh(source, current),
     clearInput,
     menu: (commands) => {
-      const target = controllerNavigation.handle(commands);
+      // Confirm is release-owned by the shared coordinator. Navigation still
+      // applies directional edges and returns its current target, but must not
+      // synthesize the native click before the guard begins the transaction.
+      const target = controllerNavigation.handle({ ...commands, confirm: false });
       if (commands.confirmStart) {
         if (target)
           controllerConfirmGuard.begin(target, {
