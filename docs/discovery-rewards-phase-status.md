@@ -2,7 +2,16 @@
 
 Implementation ledger for **Make every level a discovery and every campaign a memorable journey**. Candidate code, generated content and engineering checks are distinguished from released artifacts. Human and physical-device evidence remains deferred at the user's request.
 
-## Revised priority batches: current work
+## Current reviewed plan — 30 September 2026
+
+Use [the current polished-journeys and FPV plan](polished-journeys-current-plan.md)
+for completed work, genuine remaining implementation, qualification priorities
+and publication status. The review corrects the earlier blanket claim that Phase 6
+is implemented: attempt-specific coaching, compatible previous-flight comparison,
+full Flight Studio authoring, optional stick visibility and simulator sound remain.
+Earlier measurements and queue references below stay historical and source-bound.
+
+## Revised priority batches: historical delivery context
 
 The new [polished journeys and real-radio delivery ledger](polished-flight-delivery.md)
 tracks the user-approved **2 → 3 → 4 → 6** revision. The original 108-mission
