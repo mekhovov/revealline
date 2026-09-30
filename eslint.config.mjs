@@ -6,6 +6,7 @@ export default [
     ignores: [
       '**/node_modules/**',
       'game/vendor/**',
+      'optional-practice/civilian-fpv/vendor/**',
       'dist/**',
       'releases/**',
       'platforms/desktop/site/**',
