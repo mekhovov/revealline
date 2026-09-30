@@ -582,10 +582,7 @@ export async function addOfflineEntries(
   for (const entry of entries.filter((item) => item.name.endsWith('.html'))) {
     const source = entry.bytes.toString();
     if (/<link\b[^>]*\brel=(["'])(?:icon|shortcut icon)\1/i.test(source)) continue;
-    const relativeRoot =
-      entry.name === 'optional-practice/civilian-fpv/index.html'
-        ? '.'
-        : path.posix.relative(path.posix.dirname(entry.name), '.') || '.';
+    const relativeRoot = path.posix.relative(path.posix.dirname(entry.name), '.') || '.';
     const favicon = `<link rel="icon" type="image/png" sizes="192x192" href="${relativeRoot}/icons/icon-192.png">`;
     if (source.includes('</head>'))
       entry.bytes = Buffer.from(source.replace('</head>', `${favicon}</head>`));
