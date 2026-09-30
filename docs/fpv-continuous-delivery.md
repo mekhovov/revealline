@@ -150,3 +150,22 @@ feature handoffs are retained in `/tmp/fpv-reimport-data-loss-20261001/`,
 `/tmp/fpv-operations-readable-20261001/garage/` and the sparse worktree
 `/tmp/fpv-local-ghost-20261001` (commit `a4bff27e3429d1da9a24a6f2772baf6c7ec80836`).
 Do not discard these unpublished artifacts or disturb active agent work.
+
+### Guided radio setup and fullscreen follow-up
+
+The owner next requested a player-friendly calibration screen and immersive flight
+in every level. Branch `codex/fpv-radio-setup-ux` is based on radio fix #899 and
+contains that focused follow-up. Known profiles open on a live confirmation;
+unknown devices get directed calibration, with advanced tools behind disclosures.
+Both simulators share native fullscreen and an explicit full-window fallback.
+See `fpv-radio-setup-ux.md` for the design references and verification receipt.
+
+Publish against `codex/fpv-radio-worlds` while #899 remains open and create a
+separate native stack for those two radio PRs. Existing content stack #889 stays
+held for reimport correction. Parent #899 received a main merge and the additional
+USB-disconnect isolation fix at `dc85a3bda021`; this feature was rebased onto that
+head without rewriting the concurrently updated parent. Refresh current heads
+before publication or any coordinated history change. Continue preserving prepared Garage
+and local-ghost work while the publication-size repair and reimport correction
+receive their own verified increments. Additional unit coverage stays in the
+final phase; functional checks remain required throughout.

@@ -24,6 +24,7 @@ import { createFlightInput } from './input.mjs';
 import { createRadioRuntime } from './radio-runtime.mjs';
 import { restoreVerifiedRadio } from './radio-session.mjs';
 import { mountRadioSetup } from './radio-setup.mjs';
+import { mountFlightFullscreen } from './flight-fullscreen.mjs';
 import {
   DEFAULT_RESPONSE,
   createFlightProfileStore,
@@ -825,6 +826,8 @@ export function mountWorldApp({
     for (const { node, key, fallback } of translatedNodes)
       node.textContent =
         (locale === 'uk' ? COPY_UK[key] : COPY_EN[key]) ?? COPY_EN[key] ?? fallback;
+    $('world-radio-title').textContent = txt('Radio setup', 'Налаштування пульта');
+    immersive.refresh();
     updateSoundLabel();
     ghostButton.textContent = txt('Show best line', 'Показати найкращий маршрут');
   }
@@ -2494,6 +2497,7 @@ export function mountWorldApp({
     abortSectorLookup();
     sceneReady = false;
     pauseFlight();
+    await immersive.exit({ focus: false });
     await saveRecovery();
     if (token !== flightToken || disposed) return;
     flight?.dispose?.();
@@ -2829,6 +2833,18 @@ export function mountWorldApp({
         : txt('Flight active.', 'Політ триває.');
     $('world-viewport').focus();
   });
+  const immersive = mountFlightFullscreen({
+    document: doc,
+    window: win,
+    surface: $('flight-dialog'),
+    viewport: $('world-viewport'),
+    button: $('world-fullscreen'),
+    setupButton: $('radio-setup-button'),
+    kind: 'worlds',
+    locale: () => locale,
+    onPause: () => pauseFlight(),
+    secondaryDialogOpen: () => !!doc.querySelector('dialog[open]:not(#flight-dialog)'),
+  });
   on($('world-pause'), 'click', () => pauseFlight());
   on($('world-retry'), 'click', () =>
     startFlight(current, {
@@ -2865,7 +2881,8 @@ export function mountWorldApp({
   on($('leave-flight'), 'click', closeFlight);
   on($('flight-dialog'), 'cancel', (e) => {
     e.preventDefault();
-    void closeFlight().catch(reportError);
+    if (immersive.active()) void immersive.exit();
+    else void closeFlight().catch(reportError);
   });
   on($('export-flight'), 'click', async () => {
     if (recorder && current) {
@@ -2950,6 +2967,13 @@ export function mountWorldApp({
       window: win,
       runtime: radio,
       locale,
+      onDone() {
+        if ($('flight-source').value !== 'radio') {
+          $('flight-source').value = 'radio';
+          $('flight-source').dispatchEvent(new win.Event('change', { bubbles: true }));
+        }
+        closeRadio();
+      },
       onResponse: (rates) => {
         response = rates;
         if (current)
@@ -2975,8 +2999,7 @@ export function mountWorldApp({
   });
   on(win, 'gamepadconnected', () => restoreRadio());
   on(win, 'gamepaddisconnected', (e) => {
-    if (!replayProof && $('flight-source').value === 'radio')
-      radio.disconnect(e.gamepad.index);
+    if (!replayProof && $('flight-source').value === 'radio') radio.disconnect(e.gamepad.index);
   });
   on(win, 'focus', () => restoreRadio());
   on(win, 'pagehide', () => pauseFlight());
@@ -3043,6 +3066,7 @@ export function mountWorldApp({
       records: clone(records),
       catalogue: catalogue.length,
       radio: radio.status(),
+      immersive: immersive.snapshot(),
       inputDisplay: {
         source: $('world-touch').dataset.source,
         style: $('flight-stick-display').value,
@@ -3050,6 +3074,9 @@ export function mountWorldApp({
     }),
     async dispose() {
       if (disposed) return;
+      pauseFlight();
+      immersive.dispose();
+      await saveRecovery();
       disposed = true;
       ++flightToken;
       abortSectorLookup();

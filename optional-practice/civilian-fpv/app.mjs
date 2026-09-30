@@ -19,6 +19,7 @@ import {
 import { createRadioRuntime } from './radio-runtime.mjs';
 import { restoreVerifiedRadio } from './radio-session.mjs';
 import { mountRadioSetup } from './radio-setup.mjs';
+import { mountFlightFullscreen } from './flight-fullscreen.mjs';
 import { createFlightInput } from './input.mjs';
 import { createFlightRenderer } from './renderer.mjs';
 import { COPY } from './copy.mjs';
@@ -283,6 +284,14 @@ export function mountFlightApp({
         onProfile() {
           message = 'radioReady';
         },
+        onDone() {
+          if ($('input-source').value !== 'radio') {
+            $('input-source').value = 'radio';
+            $('input-source').dispatchEvent(new win.Event('change', { bubbles: true }));
+          }
+          closeDialog('setup-dialog');
+          pause();
+        },
         onResponse(value) {
           response = value;
           reset();
@@ -367,6 +376,8 @@ export function mountFlightApp({
   function translated() {
     doc.documentElement.lang = locale;
     $('language').value = locale;
+    $('radio-setup-title').textContent = locale === 'uk' ? 'Налаштування пульта' : 'Radio setup';
+    immersive.refresh();
     for (const node of doc.querySelectorAll('[data-copy]'))
       if (c()[node.dataset.copy]) node.textContent = c()[node.dataset.copy];
     for (const button of courseButtons) button.onclick = null;
@@ -651,13 +662,17 @@ export function mountFlightApp({
   listen(win, 'gamepadconnected', () => {
     if (!replay && !modalOpen()) restoreRadio();
   });
-  listen($('fullscreen'), 'click', async () => {
-    try {
-      if (doc.fullscreenElement) await doc.exitFullscreen();
-      else await $('flight-app').requestFullscreen();
-    } catch {
-      /* browser keeps the normal full-width surface */
-    }
+  const immersive = mountFlightFullscreen({
+    document: doc,
+    window: win,
+    surface: $('flight-app'),
+    viewport: $('viewport'),
+    button: $('fullscreen'),
+    setupButton: $('setup'),
+    kind: 'academy',
+    locale: () => locale,
+    onPause: () => pause(),
+    secondaryDialogOpen: modalOpen,
   });
   listen($('watch'), 'click', () => {
     const proof = demonstrations.find(
@@ -787,6 +802,7 @@ export function mountFlightApp({
       studio?.dispose();
       input.dispose();
       renderer.dispose();
+      immersive.dispose();
       for (const remove of listeners) remove();
       for (const button of courseButtons) {
         button.onclick = null;
