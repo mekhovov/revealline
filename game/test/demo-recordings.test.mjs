@@ -30,7 +30,7 @@ campaign.classRecipes = classRecipes;
 const entry = { campaign, classRecipes };
 const catalog = await json('../demo-data/catalog.json');
 
-test('curated wins and human mistakes reproduce current Standard tuning across every installed base map', async () => {
+test('curated wins and authored mistakes reproduce current Standard tuning across every installed base map', async () => {
   const generated = await buildDemoRecordings();
   assert.equal(generated.length, 16);
   assert.equal(
@@ -66,6 +66,7 @@ test('curated wins and human mistakes reproduce current Standard tuning across e
     const mistake = descriptor.tags.includes('failure');
     if (mistake) {
       assert.ok(metrics.failures >= 1);
+      assert.ok(replay.ticks / 120 >= 12 && replay.ticks / 120 <= 30);
       assert.ok(['running', 'lost'].includes(replay.summary.status));
       assert.ok(replay.summary.lives < 3);
       assert.ok(descriptor.tags.includes(replay.options.classId));
