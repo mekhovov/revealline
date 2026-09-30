@@ -2987,5 +2987,22 @@
   "reserveCatalog.footer": "Only the selected original loads. Inspect opens a verified copy in a bounded reader. Downloads preserve its PNG bytes. Equipment and cultural details are qualified in each wave’s notes.",
   "reserveCatalog.excluded": "Two unselected early outputs remain preserved in Git and are outside this 40-work chooser. Source documents retain their original language.",
   "reserveCatalog.manifest": "Catalog manifest",
-  "reserveCatalog.readme": "Catalog usage and verification"
+  "reserveCatalog.readme": "Catalog usage and verification",
+  "ukraineRoleInput.loading": "Loading verified originals…",
+  "ukraineRoleInput.ready": "All seven originals are ready.",
+  "ukraineRoleInput.error": "Originals could not be loaded. Retry when ready.",
+  "ukraineRoleInput.cancelled": "Loading canceled. Choose Retry to load the originals.",
+  "ukraineRoleInput.playing": "Wing animation is playing.",
+  "ukraineRoleInput.paused": "Animation is paused.",
+  "ukraineRoleInput.suspended": "Animation is suspended while this page is inactive.",
+  "ukraineRoleInput.reducedState": "Reduced motion: static previews.",
+  "ukraineRoleInput.static": "Wings hidden: static previews.",
+  "ukraineRoleInput.notes": "Pink cross: source center; green circles: authored shoulder sockets. Guides are an inspection overlay, not a hit area. Use each preview’s reader to inspect it without scaling. Browser zoom can change physical display size.",
+  "ukraineRoleInput.roles.scout": "Courier swallow",
+  "ukraineRoleInput.roles.bomber": "Pottery courier",
+  "ukraineRoleInput.roles.carrier": "Carved chest",
+  "ukraineRoleInput.roles.interceptor": "Falcon crest",
+  "ukraineRoleInput.roles.fiber": "Weaver shuttle",
+  "ukraineRoleInput.roles.impact": "Bell warden",
+  "ukraineRoleInput.roles.trapper": "Woven basket"
 }
