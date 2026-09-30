@@ -1,0 +1,52 @@
+{
+  "schemaVersion": 1,
+  "retainedExactFiles": 5,
+  "sourceBytes": 48273,
+  "payloadFiles": 11,
+  "payloadBytes": 193706,
+  "archive": {
+    "path": "historical-branch-donors-2026-09-29.tar.gz",
+    "bytes": 47288,
+    "sha256": "c90106797fa9061cfeaaf630594fbb696c7ff5909600da0ed0f508594fee65a4",
+    "format": "gzip-compressed USTAR",
+    "roundTripMembers": 11,
+    "byteIdentical": true,
+    "regularRelativeMembersOnly": true
+  },
+  "sourceGitBlobChecks": 5,
+  "textScan": {
+    "filesScanned": 11,
+    "patterns": [
+      "private-key",
+      "github-token",
+      "cloud-access-key",
+      "openai-token",
+      "local-absolute-path"
+    ],
+    "findings": []
+  },
+  "patchRoundTrips": [
+    {
+      "patch": "patches/chapter-residency-selected-files.patch",
+      "fileCount": 2,
+      "exactParentToDonorRoundTrip": true
+    },
+    {
+      "patch": "patches/classic-race-tour-selected-files.patch",
+      "fileCount": 3,
+      "exactParentToDonorRoundTrip": true
+    },
+    {
+      "patch": "patches/classic-race-tour-game-integration.patch",
+      "fileCount": 11,
+      "exactParentToDonorRoundTrip": true
+    },
+    {
+      "patch": "patches/optional-inspection-job-regression.patch",
+      "fileCount": 1,
+      "exactParentToDonorRoundTrip": true
+    }
+  ],
+  "testsOrBuildsRun": false,
+  "repositoryMutated": false
+}
