@@ -140,6 +140,8 @@ jobs:
           sparse-checkout: |
             publishing/focused-test-map.json
             publishing/focused-tests.mjs
+            publishing/test-policy.json
+            publishing/test-policy.mjs
             scripts/check-source-identity.mjs
           sparse-checkout-cone-mode: false
 
@@ -181,6 +183,7 @@ jobs:
             --root source \
             --paths "$RUNNER_TEMP/focused-paths.txt" \
             --manifest automation/publishing/focused-test-map.json \
+            --test-policy automation/publishing/test-policy.json \
             --plan-only \
             "${extra[@]}"
 
@@ -209,6 +212,7 @@ jobs:
             --root source \
             --paths "$RUNNER_TEMP/focused-paths.txt" \
             --manifest automation/publishing/focused-test-map.json \
+            --test-policy automation/publishing/test-policy.json \
             "${extra[@]}"
 
       - name: Verify exact tracked source after commands
@@ -402,11 +406,11 @@ jobs:
             fi
           fi
           if [ "$ADMISSION" = maintenance ]; then
-            echo 'Bounded documentation/controller maintenance: selected focused gates passed; product build not required.'
+            echo 'Bounded documentation/controller maintenance: selected validation passed under the explicit test policy; waived suites are not passed. Product build not required.'
             exit 0
           fi
           if [ "$ADMISSION" = scheduled ]; then
-            echo 'Explicit milestone schedule: focused checks passed; the promoted release remains the sole artifact build and publication gate.'
+            echo 'Explicit milestone schedule: selected validation passed under the explicit test policy; waived suites are not passed. Main Pages builds independently after merge.'
             exit 0
           fi
           if [ "$ADMISSION" = release-evidence ]; then
