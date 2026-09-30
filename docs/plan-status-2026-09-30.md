@@ -37,6 +37,15 @@ not waived or marked passed. The publisher must reconcile current source
 fingerprints, any required reviewed successors and byte reproduction before
 public acceptance. See the [bounded verification record](verification/actor-recovery-20260930/README.md).
 
+**Scheduled input:** [PR868](https://github.com/mekhovov/revealline/pull/868)
+is pushed and held for milestone57. Its committed-source build completed at
+`deb4a4e97`, but the 951,900,757-byte default payload exceeds Pages capacity by
+1,900,757 bytes before publication metadata. Both DroneAid edition checks fit
+their budgets. Do not admit this batch until capacity and stale production
+fingerprints are reconciled. Two unchanged-base formatting failures also remain
+explicit aggregate corrections. All release-relevant owned edits are on GitHub;
+this is source readiness work, not a newly published version.
+
 **Integrated follow-up:** PR852 (Enemy workshop focus and preserved Still Media
 assertions) merged as `4174ec00a2bf79714c1023754b90e053ac70ce67`.
 
