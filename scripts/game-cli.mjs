@@ -688,7 +688,12 @@ export async function addOfflineEntries(
     const appMode = source.includes('name="apple-mobile-web-app-capable"')
       ? ''
       : '<meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">';
-    const head = `${entries.some((entry) => entry.name === 'game/ui/install-entry.mjs') ? `<script type="module" src="${relativeRoot}/game/ui/install-entry.mjs"></script>` : ''}<link rel="manifest" href="${relativeRoot}/manifest.webmanifest"><link rel="apple-touch-icon" href="${relativeRoot}/icons/icon-180.png"><meta name="theme-color" content="#091324">${appMode}<meta name="revealline-offline" content='${html(JSON.stringify(marker))}'>`;
+    // Friendly shells replace their document: install listeners must belong to
+    // the shared host, not the discarded shell's cached module instance.
+    const installEntry =
+      !/<html\b[^>]*\bdata-community-entry\b/i.test(source) &&
+      entries.some((entry) => entry.name === 'game/ui/install-entry.mjs');
+    const head = `${installEntry ? `<script type="module" src="${relativeRoot}/game/ui/install-entry.mjs"></script>` : ''}<link rel="manifest" href="${relativeRoot}/manifest.webmanifest"><link rel="apple-touch-icon" href="${relativeRoot}/icons/icon-180.png"><meta name="theme-color" content="#091324">${appMode}<meta name="revealline-offline" content='${html(JSON.stringify(marker))}'>`;
     entry.bytes = Buffer.from(
       source.includes('</head>') ? source.replace('</head>', `${head}</head>`) : head + source,
     );
