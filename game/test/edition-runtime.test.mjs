@@ -135,7 +135,7 @@ test('standalone and public offline menus retain every dynamically attached pane
       `Missing dynamically attached offline stylesheet: ${name}`,
     );
 });
-test('actual landing closure retains artwork motion, receiver loss and signal atlas offline', async () => {
+test('actual landing closure retains executable dependencies and preserves optional artwork', async () => {
   const files = await collectEditionEngineFiles({
     root: fileURLToPath(new URL('../../', import.meta.url)),
     entries: ['game/ui/menu-scenes.mjs', 'game/ui/native-menus.mjs'],
@@ -173,8 +173,16 @@ test('actual landing closure retains artwork motion, receiver loss and signal at
     [...publicFiles].map(([name, bytes]) => ({ name, bytes })),
     new Set(),
   );
-  for (const name of required)
-    assert.ok(selected.retained.has(name), `Missing offline dependency: ${name}`);
+  const optional = new Set(selected.optional);
+  for (const name of required) {
+    if (/\.(?:png|webp)$/.test(name)) {
+      assert.ok(!selected.retained.has(name), `Decorative raster entered startup cache: ${name}`);
+      assert.ok(optional.has(name), `Missing optional menu artwork: ${name}`);
+      assert.deepEqual(publicFiles.get(name), files.get(name), `Menu artwork changed: ${name}`);
+    } else {
+      assert.ok(selected.retained.has(name), `Missing offline executable/style/logo: ${name}`);
+    }
+  }
 });
 test('standalone menu projection preserves selected profile data and fallback without unrelated images', async () => {
   const original = await fs.readFile(new URL('../ui/menu-scene-catalog.mjs', import.meta.url));
