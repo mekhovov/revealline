@@ -1,5 +1,13 @@
 # Native menus: plan status and release batches
 
+## September 30 — Prepared title source comparison
+
+Runtime `5142ed883` rebases the browser-qualified `be5f49c00` patch onto latest observed accepted main `39bfd307e` without conflicts. Four stable Sections and five pinned, owned image/manifest readers preserve native image sizes, exact Back, live English/Ukrainian names and the existing Reveal-review/referrer/Asset Studio navigation. This is a static historical comparison; original artwork, manifest and runtime adoption stay unchanged.
+
+Overlapping **49/49** focused cohorts pass, including a fresh **49/49** after rebase. The first current **4/4 virtual-controller workflow** verifies all four displayed PNGs by exact bytes/hash/full decoding, the exact **8,116-byte** literal manifest, canceled choices, Retry, both locales and real Studio Return. Native keys at **390 × 844** traverse every reader and Section, pan both axes, read the manifest to **9,322px**, cancel a real delayed request, recover HTTP503 and return without a pointer reset. Native referrer navigation and direct Studio arrival retain their precise boundaries in the [evidence report](verification/prepared-title-input-2026-09-30.md).
+
+All **15 protected baseline pins** and **60 captured source paths** are unchanged through rebase. The **2,503-path** default collector admits no title-review files, v2 candidates/manifest or fixtures; this batch changes no packaged paths. No fresh edition compile or installed-offline/device/published acceptance is claimed. Landing correction **#854 remains the publication priority**, exclusively reconciled by Releases. After its publication, recheck public default and DroneAid. The next bounded reference route is Runtime sprite comparison; its historical mapped-server contract must be established before edits. The whole plan remains incomplete.
+
 ## September 30 — Reserve illustration catalog
 
 Runtime `fa31dcc69` starts from accepted main `7d4779d3`, after the role-gallery batch #836 merged with its focused and packaging checks. The restricted catalog server now includes the exact missing controller dependency and the reviewed source-reader dependencies. The page verifies its immutable manifest before publishing source links, owns Retry/Cancel and stale-response cleanup, retains a completed original only for retries of that same selection, and provides three stable section targets. The last/first navigation buttons hand focus to their enabled counterpart. The source viewer keeps all original PNG and literal document inspection inside the existing input owner. Follow-up `140289734` adds the bounded viewer styles after the first browser run found an unbounded image region.
