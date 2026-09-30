@@ -1383,7 +1383,7 @@
   "neonReference03": "Neon Crossroads",
   "neonReference04": "Neon Hearts",
   "neonReference05": "Neon Labyrinth",
-  "neonReference06": "Twelve screenshot-based Arcade levels: Channels, Crossroads, Hearts, Labyrinth, Arrows, Chambers, Crossgrid, Switchback, Spirals, Crossfire, Pinwheels and Wavebands. Custom reveal images are planned; these levels currently use the existing procedural retro artwork.",
+  "neonReference06": "Thirteen screenshot-based Arcade levels: Channels, Crossroads, Hearts, Labyrinth, Arrows, Chambers, Crossgrid, Switchback, Spirals, Crossfire, Pinwheels, Wavebands and Conduit. Custom reveal images are planned; these levels currently use the existing procedural retro artwork.",
   "neonReference07": "Recreate the supplied neon arena: seven blue slowing regions, six red lethal regions, two roaming pink orbs, a central diamond eroder and three cyan perimeter patrols. Capture 75%. Blue ground slows your craft; red ground is lethal until captured. The central revealed islands are safe return surfaces. Grid and starting positions are scaled from the picture; enemy behaviors and speeds are authored approximations.",
   "neonReference08": "Four chambers divided by solid cyan walls. Yellow bouncers occupy the upper-right and lower-left chambers; pink diamond eroders occupy the other two. Four cyan patrols travel the outer safe border. Start at bottom center, move sideways before entering a chamber, and reconnect each cut to the outer safe border. Walls block movement and do not close a cut. Reveal 75%. Layout and actor positions follow the supplied screenshot; speeds and behaviors use existing Classic rules.",
   "neonReference09": "Seven red heart hazards surround a broken cyan heart wall. Red tiles are lethal until captured; cyan walls block movement and cannot close a cut. Enter through the side openings to reach the central revealed safe ground. Eight pink field bouncers threaten unfinished lines; two cyan patrols travel the border. Start at bottom center and reveal 75%. Geometry and initial positions follow the supplied picture, scaled to 72 × 36; motion uses existing Classic behavior.",
@@ -1546,5 +1546,13 @@
   "neonWavebandsPatrol": "Wavebands patrol",
   "neonWavebandsPlayer": "Wavebands player",
   "neonWavebandsLethalTerrain": "Wavebands lethalTerrain",
-  "neonWavebandsSlowTerrain": "Wavebands slowTerrain"
+  "neonWavebandsSlowTerrain": "Wavebands slowTerrain",
+  "neonConduitTitle": "Neon Conduit",
+  "neonConduitDescription": "Three cyan chambers are crossed by a continuous blue slowing lane and three vertical blue branches. Twelve red lethal blocks flank the branches. Three yellow ring bouncers start together near the center-right lane and at the lower-right corner of the left chamber; three pink diamond eroders start above the center chamber and inside the right-upper and left-lower chambers. No border patrols. Start at bottom center, use the open outer field to route around the chambers, and reveal 75%.",
+  "neonConduitWall": "Conduit wall",
+  "neonConduitEnemy": "Conduit enemy",
+  "neonConduitEroder": "Conduit eroder",
+  "neonConduitPlayer": "Conduit player",
+  "neonConduitLethalTerrain": "Conduit lethalTerrain",
+  "neonConduitSlowTerrain": "Conduit slowTerrain"
 }

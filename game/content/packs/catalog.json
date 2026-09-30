@@ -262,6 +262,10 @@
             {
               "id": "neon-wavebands-pack",
               "name": "Neon Wavebands"
+            },
+            {
+              "id": "neon-conduit-pack",
+              "name": "Neon Conduit"
             }
           ]
         }
