@@ -241,6 +241,14 @@ navigator.serviceWorker?.register('./service-worker.js',{scope:'./',updateViaCac
   };
   put('app/service-worker.js', Buffer.from(workerSource(launcherInventory)));
   const inventory = [...result]
+    // These optional bodies remain in the hosted edition and its ZIP, but do not
+    // belong to the mandatory offline core. This matches the root Pages cache
+    // boundary without deleting source, media, recordings, or their public URLs.
+    .filter(
+      ([path]) =>
+        !((path.startsWith('game/demo-data/') && path.endsWith('.replay.json')) ||
+          path === 'game/ui/art/menu-scenes/droneaid-main-background.webp'),
+    )
     .sort(([a], [b]) => (a < b ? -1 : a > b ? 1 : 0))
     .map(([path, bytes]) => {
       if (!safe(path) || !(bytes instanceof Uint8Array))
