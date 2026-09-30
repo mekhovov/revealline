@@ -1,0 +1,551 @@
+{
+  "format": "xonix-playground.v6",
+  "level": {
+    "version": "xonix-level.v5",
+    "id": "neon-conduit-reference",
+    "revision": "1",
+    "name": "Neon Conduit",
+    "width": 72,
+    "height": 36,
+    "encounter": null,
+    "spawn": {
+      "x": 36.5,
+      "y": 35.5
+    },
+    "goal": {
+      "coverage": 0.75
+    },
+    "walls": [
+      {
+        "x": 1,
+        "y": 8,
+        "w": 8,
+        "h": 1
+      },
+      {
+        "x": 13,
+        "y": 8,
+        "w": 8,
+        "h": 1
+      },
+      {
+        "x": 26,
+        "y": 8,
+        "w": 8,
+        "h": 1
+      },
+      {
+        "x": 38,
+        "y": 8,
+        "w": 8,
+        "h": 1
+      },
+      {
+        "x": 51,
+        "y": 8,
+        "w": 8,
+        "h": 1
+      },
+      {
+        "x": 63,
+        "y": 8,
+        "w": 8,
+        "h": 1
+      },
+      {
+        "x": 1,
+        "y": 9,
+        "w": 1,
+        "h": 7
+      },
+      {
+        "x": 20,
+        "y": 9,
+        "w": 1,
+        "h": 7
+      },
+      {
+        "x": 26,
+        "y": 9,
+        "w": 1,
+        "h": 7
+      },
+      {
+        "x": 45,
+        "y": 9,
+        "w": 1,
+        "h": 7
+      },
+      {
+        "x": 51,
+        "y": 9,
+        "w": 1,
+        "h": 7
+      },
+      {
+        "x": 70,
+        "y": 9,
+        "w": 1,
+        "h": 7
+      },
+      {
+        "x": 1,
+        "y": 20,
+        "w": 1,
+        "h": 7
+      },
+      {
+        "x": 20,
+        "y": 20,
+        "w": 1,
+        "h": 7
+      },
+      {
+        "x": 26,
+        "y": 20,
+        "w": 1,
+        "h": 7
+      },
+      {
+        "x": 45,
+        "y": 20,
+        "w": 1,
+        "h": 7
+      },
+      {
+        "x": 51,
+        "y": 20,
+        "w": 1,
+        "h": 7
+      },
+      {
+        "x": 70,
+        "y": 20,
+        "w": 1,
+        "h": 7
+      },
+      {
+        "x": 1,
+        "y": 27,
+        "w": 8,
+        "h": 1
+      },
+      {
+        "x": 13,
+        "y": 27,
+        "w": 8,
+        "h": 1
+      },
+      {
+        "x": 26,
+        "y": 27,
+        "w": 8,
+        "h": 1
+      },
+      {
+        "x": 38,
+        "y": 27,
+        "w": 8,
+        "h": 1
+      },
+      {
+        "x": 51,
+        "y": 27,
+        "w": 8,
+        "h": 1
+      },
+      {
+        "x": 63,
+        "y": 27,
+        "w": 8,
+        "h": 1
+      }
+    ],
+    "foundations": [],
+    "objectives": [],
+    "supplies": [],
+    "signalZones": [],
+    "hangars": [],
+    "classic": {
+      "version": "classic.v1",
+      "terrain": [
+        {
+          "id": "hazard-1",
+          "kind": "lethal",
+          "x": 3,
+          "y": 10,
+          "w": 6,
+          "h": 6
+        },
+        {
+          "id": "hazard-2",
+          "kind": "lethal",
+          "x": 13,
+          "y": 10,
+          "w": 6,
+          "h": 6
+        },
+        {
+          "id": "hazard-3",
+          "kind": "lethal",
+          "x": 28,
+          "y": 10,
+          "w": 6,
+          "h": 6
+        },
+        {
+          "id": "hazard-4",
+          "kind": "lethal",
+          "x": 38,
+          "y": 10,
+          "w": 6,
+          "h": 6
+        },
+        {
+          "id": "hazard-5",
+          "kind": "lethal",
+          "x": 53,
+          "y": 10,
+          "w": 6,
+          "h": 6
+        },
+        {
+          "id": "hazard-6",
+          "kind": "lethal",
+          "x": 63,
+          "y": 10,
+          "w": 6,
+          "h": 6
+        },
+        {
+          "id": "hazard-7",
+          "kind": "lethal",
+          "x": 3,
+          "y": 20,
+          "w": 6,
+          "h": 6
+        },
+        {
+          "id": "hazard-8",
+          "kind": "lethal",
+          "x": 13,
+          "y": 20,
+          "w": 6,
+          "h": 6
+        },
+        {
+          "id": "hazard-9",
+          "kind": "lethal",
+          "x": 28,
+          "y": 20,
+          "w": 6,
+          "h": 6
+        },
+        {
+          "id": "hazard-10",
+          "kind": "lethal",
+          "x": 38,
+          "y": 20,
+          "w": 6,
+          "h": 6
+        },
+        {
+          "id": "hazard-11",
+          "kind": "lethal",
+          "x": 53,
+          "y": 20,
+          "w": 6,
+          "h": 6
+        },
+        {
+          "id": "hazard-12",
+          "kind": "lethal",
+          "x": 63,
+          "y": 20,
+          "w": 6,
+          "h": 6
+        },
+        {
+          "id": "slow-1",
+          "kind": "slow",
+          "x": 9,
+          "y": 8,
+          "w": 4,
+          "h": 1
+        },
+        {
+          "id": "slow-2",
+          "kind": "slow",
+          "x": 34,
+          "y": 8,
+          "w": 4,
+          "h": 8
+        },
+        {
+          "id": "slow-3",
+          "kind": "slow",
+          "x": 59,
+          "y": 8,
+          "w": 4,
+          "h": 1
+        },
+        {
+          "id": "slow-4",
+          "kind": "slow",
+          "x": 8,
+          "y": 9,
+          "w": 5,
+          "h": 1
+        },
+        {
+          "id": "slow-5",
+          "kind": "slow",
+          "x": 59,
+          "y": 9,
+          "w": 5,
+          "h": 1
+        },
+        {
+          "id": "slow-6",
+          "kind": "slow",
+          "x": 9,
+          "y": 10,
+          "w": 4,
+          "h": 6
+        },
+        {
+          "id": "slow-7",
+          "kind": "slow",
+          "x": 59,
+          "y": 10,
+          "w": 4,
+          "h": 6
+        },
+        {
+          "id": "slow-8",
+          "kind": "slow",
+          "x": 1,
+          "y": 16,
+          "w": 70,
+          "h": 4
+        },
+        {
+          "id": "slow-9",
+          "kind": "slow",
+          "x": 9,
+          "y": 20,
+          "w": 4,
+          "h": 6
+        },
+        {
+          "id": "slow-10",
+          "kind": "slow",
+          "x": 34,
+          "y": 20,
+          "w": 4,
+          "h": 8
+        },
+        {
+          "id": "slow-11",
+          "kind": "slow",
+          "x": 59,
+          "y": 20,
+          "w": 4,
+          "h": 6
+        },
+        {
+          "id": "slow-12",
+          "kind": "slow",
+          "x": 8,
+          "y": 26,
+          "w": 5,
+          "h": 1
+        },
+        {
+          "id": "slow-13",
+          "kind": "slow",
+          "x": 59,
+          "y": 26,
+          "w": 5,
+          "h": 1
+        },
+        {
+          "id": "slow-14",
+          "kind": "slow",
+          "x": 9,
+          "y": 27,
+          "w": 4,
+          "h": 1
+        },
+        {
+          "id": "slow-15",
+          "kind": "slow",
+          "x": 59,
+          "y": 27,
+          "w": 4,
+          "h": 1
+        }
+      ],
+      "powerups": [],
+      "arcadeActions": {
+        "version": "arcade-actions.v1"
+      }
+    },
+    "enemies": [
+      {
+        "id": "yellow-center-lane-left",
+        "type": "bouncer",
+        "x": 46.40837696335078,
+        "y": 17.39539748953975,
+        "vx": 3,
+        "vy": 3,
+        "radius": 0.4
+      },
+      {
+        "id": "yellow-center-lane-right",
+        "type": "bouncer",
+        "x": 49.7434554973822,
+        "y": 16.435146443514647,
+        "vx": -4,
+        "vy": -1.6,
+        "radius": 0.4
+      },
+      {
+        "id": "yellow-left-chamber-bottom",
+        "type": "bouncer",
+        "x": 18.994764397905758,
+        "y": 25.682008368200837,
+        "vx": 3.5,
+        "vy": 2.5,
+        "radius": 0.4
+      },
+      {
+        "id": "pink-above-center",
+        "type": "eroder",
+        "x": 37.539267015706805,
+        "y": 6.2280334728033475,
+        "vx": 1,
+        "vy": -3.8,
+        "radius": 0.4
+      },
+      {
+        "id": "pink-right-chamber-upper",
+        "type": "eroder",
+        "x": 53.66492146596859,
+        "y": 13.376569037656903,
+        "vx": 3.5,
+        "vy": -1.4,
+        "radius": 0.4
+      },
+      {
+        "id": "pink-left-chamber-lower",
+        "type": "eroder",
+        "x": 18.51832460732984,
+        "y": 21.947698744769873,
+        "vx": 3,
+        "vy": 2.5,
+        "radius": 0.4
+      }
+    ],
+    "rules": {
+      "lives": 3,
+      "moveSpeed": 10,
+      "respawnSeconds": 0.7,
+      "graceSeconds": 0.8,
+      "timeLimitSeconds": 0,
+      "stopOnCapture": true
+    },
+    "metadata": {
+      "description": "Three cyan chambers are crossed by a continuous blue slowing lane and three vertical blue branches. Twelve red lethal blocks flank the branches. Three yellow ring bouncers start together near the center-right lane and at the lower-right corner of the left chamber; three pink diamond eroders start above the center chamber and inside the right-upper and left-lower chambers. No border patrols. Start at bottom center, use the open outer field to route around the chambers, and reveal 75%."
+    }
+  },
+  "theme": {
+    "id": "retro",
+    "name": "1994 Forever",
+    "subtitle": "One more credit",
+    "family": "retro",
+    "player": "retro-craft",
+    "enemyShape": "orb",
+    "patrolShape": "spark",
+    "bossShape": "core",
+    "scene": "arcade",
+    "labels": {
+      "objective": "Cartridge",
+      "supply": "Dock",
+      "enemy": "Glitch",
+      "boss": "Mainframe",
+      "currency": "Score",
+      "ability": "Power-up"
+    },
+    "palette": {
+      "ink": "#242a41",
+      "paper": "#eee8df",
+      "muted": "#aaa1b1",
+      "accent": "#efeb68",
+      "safe": "#39c7e8",
+      "danger": "#e02862",
+      "field": "#000000",
+      "grid": "#101020",
+      "sky": "#e49c95",
+      "land": "#565270"
+    },
+    "classBodies": {
+      "scout": "retro-craft",
+      "bomber": "retro-craft",
+      "carrier": "retro-craft",
+      "interceptor": "retro-craft",
+      "fiber": "retro-craft",
+      "impact": "retro-craft",
+      "trapper": "retro-craft"
+    }
+  },
+  "classRecipes": [
+    {
+      "id": "scout",
+      "label": "FPV Scout",
+      "description": "A nimble FPV quad. Scan shows enemy direction hints for four seconds; it never captures territory or slows an enemy.",
+      "primitive": "scan",
+      "capacity": 0,
+      "cooldown": 6,
+      "duration": 4,
+      "radius": 48,
+      "revision": "1"
+    }
+  ],
+  "settings": {
+    "classId": "scout",
+    "turnPolicy": "immediate",
+    "seed": 1
+  },
+  "visualOverrides": {
+    "wall": {
+      "name": "Conduit wall",
+      "dataUrl": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAP0lEQVR42mMQia7+P5CYAURob7qOE9NaftQBow4YdQDDaDkw6oBRB4w6YLQcGHXAqANGHTBaDow6YNQBI94BAJ5cDzcS0yPLAAAAAElFTkSuQmCC"
+    },
+    "enemy": {
+      "name": "Conduit enemy",
+      "dataUrl": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAhUlEQVR42u2XSw7AIAhEPWqP3kN0Xy9QqTDojAkmrlTmgQmf1k5bz3291qaILoWJisMQiDEYJMuLkJ2/R96QuyFGl5G/nwbIEg9BZIu7Ib4OUXHL3hAg03vL5jbvp6JQAAVQAHQAeiKSSsW0YkQvxxINiURLRm9KJdpyicFEZjSTGE5Xrg5zHwzGPraU6QAAAABJRU5ErkJggg=="
+    },
+    "eroder": {
+      "name": "Conduit eroder",
+      "dataUrl": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAlklEQVR42u3X6w2AIAxGUSZ0NydwHDdxjfqLhBDoAwv9TOgC9yQq1JT2/Hnouuk5TgqLZ8ByRI6XgGWIMl4DpiPqeAswDdGK9wDuiF6cA7ghuLgE+IyQ4hrAMEIT1wLMCG3cAlAjLHErQERY4yMAFhEOCH8EEC8hxGcIcRBBHMUQlxHEdQyxkECsZBBLKcRaDvFjssdrXmfLYK0m4pBJAAAAAElFTkSuQmCC"
+    },
+    "player": {
+      "name": "Conduit player",
+      "dataUrl": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAYklEQVR42u2WWwoAEBQFrdP+yxp8kV8lj/s66kz5nilcUiKE/EwtuY0VKg+JmOWuESu5S8RObhpxKjeJuJWrRrzKVSKkcnFEeED4FkAcQohrCDGIIEYxxGME8RxDfEgIIVp0LrhEMwepglQAAAAASUVORK5CYII="
+    },
+    "lethalTerrain": {
+      "name": "Conduit lethalTerrain",
+      "dataUrl": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAbUlEQVR42u2WQQ4AEAwEPce7vNxPiIsTgra6kZ17dyqiFQIhZEGOqbhmtGJJgLS+B9yESGrFQWrym0B1+UmwmXxHYC5fiZ7JR8Ln8lkTLlMS5vRu9w/xAiBmAMQUhNgDEJtQtQmIDwnCt46Qv6lSX/qpet2+5AAAAABJRU5ErkJggg=="
+    },
+    "slowTerrain": {
+      "name": "Conduit slowTerrain",
+      "dataUrl": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAANklEQVR42mNgGAWjYBSMgsEMnBLu/KcGHnXA0HUAKY4b8AQ66oBRB4w6YLTiGgWjYBSMgiELAMa7Atjf3Ar7AAAAAElFTkSuQmCC"
+    }
+  },
+  "masteryDefinition": null,
+  "presentation": {
+    "style": "microtile",
+    "showGrid": false
+  }
+}

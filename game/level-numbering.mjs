@@ -289,7 +289,8 @@ const OFFICIAL_LEVEL_KEYS = Object.freeze(['["mission","journey-opening","prolog
 '["mission","neon-reference-pack","neon-reference","neon-spirals-pack"]',
 '["mission","neon-reference-pack","neon-reference","neon-crossfire-pack"]',
 '["mission","neon-reference-pack","neon-reference","neon-pinwheels-pack"]',
-'["mission","neon-reference-pack","neon-reference","neon-wavebands-pack"]']);
+'["mission","neon-reference-pack","neon-reference","neon-wavebands-pack"]',
+'["mission","neon-reference-pack","neon-reference","neon-conduit-pack"]']);
 
 const numbers = new Map(OFFICIAL_LEVEL_KEYS.map((key, index) => [key, index + 1]));
 if (numbers.size !== OFFICIAL_LEVEL_KEYS.length)
