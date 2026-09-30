@@ -1,5 +1,7 @@
 # Two controllers in Versus and Team
 
+Current delivery status and remaining acceptance criteria: [controller/radio plan](controller-radio-plan.md).
+
 ## Playing
 
 Connect each controller to the operating system using USB, Bluetooth or its receiver. Open Versus or Team in a browser or host that exposes the devices through the Gamepad API. Keep the page visible and operate each controller once if it has not appeared yet. The game does not pair Bluetooth devices or install drivers.
@@ -79,7 +81,7 @@ USB/Bluetooth/dongle support means the host exposes the device as a Gamepad. Uns
 - Local browser: inspected Settings → Controls, reachable scrolling, labels, disabled empty-device actions and English/Ukrainian switching. Two identical Sony DualSense controllers connected over USB were detected and deliberately joined separate seats. Both player HUDs reported Controller. The user subsequently confirmed that both PS5 controllers work. Disconnect/rejoin, other transports and device types remain separate qualification checks.
 - Full release build **passed** after restoring omitted sparse-checkout inputs: version `0.142.4`, 1,775 files, source revision `f1dc76c3119a608a9c8dbdcdd3bb688cc0dc8fb6`. Archive SHA-256: `f13feff05be22d38912fd2b6d34cb851f1a8abe2eb0dce2f22394e0c190bd7b0`. Archive digest and all three packaged controller modules were verified. The generated ZIP was removed afterward to recover disk space; the loose playable distribution remains.
 - Desktop native staging **passed**, including complete inventory/hash verification: 1,775 files, 741,852,156 bytes; source/staged manifest SHA-256 `54e731be96ea4f54fa84e3052ea2c2139e7fe8c48f67a1a7d6ade987c9214b45`. The temporary stage was removed afterward for space. This does not qualify an Electron installer or native runtime.
-- Historical iOS staging stopped at `game/assets/field-kit/sprites/review.html` because it lacked an explicit head. Current main fixes that structure; the 30 September source-policy validation accepts the page and the FPV entry. Complete current iOS staging/device qualification remains unverified; see [current delivery boundaries](radio-integration-review.md#current-delivery-checkpoint--30-september-2026).
+- Historical iOS staging stopped at `game/assets/field-kit/sprites/review.html` because it lacked an explicit head. Current main fixes that structure; the 30 September source-policy validation accepts the page and the FPV entry. Complete current iOS staging/device qualification remains unverified; see [current delivery boundaries](controller-radio-plan.md).
 - `scripts/two-controller-browser-fixture.mjs` serves a local distribution unchanged unless a couch URL explicitly includes `fixture=two-pads`. HTTP checks verified that opt-in isolation; its simulated controls are a manual acceptance aid, not physical-device evidence.
 
 ### Solo / TX15 follow-up
