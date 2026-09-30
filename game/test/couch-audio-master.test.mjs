@@ -1,3 +1,4 @@
+import { installActorAppearanceTransport } from './helpers/actor-appearance-transport.mjs';
 import { memoryStorage } from './helpers/solo-dom.mjs';
 import { managedIndexedDB } from './helpers/managed-idb.mjs';
 import { authoritativeCheckpoint } from '../replay.mjs';
@@ -211,6 +212,14 @@ async function teamPage(t, store, { audio = null, assetDatabase, pads = [] } = {
       Object.defineProperty(globalThis, key, { configurable: true, ...descriptor });
     },
   });
+  installActorAppearanceTransport({
+    baseURL: new URL('../presentation/compiled/', globals.location.href),
+    install(name, descriptor) {
+      if (!originals.has(name))
+        originals.set(name, Object.getOwnPropertyDescriptor(globalThis, name));
+      Object.defineProperty(globalThis, name, { configurable: true, ...descriptor });
+    },
+  });
   await import(`../couch/relay-rescue.mjs?audio-host=${++sequence}`);
   await waitForTeamPicture(
     () => $('coop-picture-status').dataset.state === 'ready',
@@ -328,6 +337,8 @@ test('Versus controller edits the actual master slider without starting either b
   };
   const page = await couchPage(t, { storage: saved, pads: [pad] });
   page.join(0);
+  // Switch deliberately from controller join to keyboard after its native echo window.
+  page.frame(1500);
   enter(page, 'race-options');
   enter(page, 'race-settings-tab-audio');
   page.frame();
