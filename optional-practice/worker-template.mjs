@@ -74,6 +74,19 @@ export function installPracticeWorker(scope, pins, revision) {
   );
   scope.addEventListener('fetch', (event) => {
     const url = new URL(event.request.url);
+    // Language and return links belong to the page, not a different HTML body.
+    // Only the package entry navigation may use its canonical pinned document;
+    // resource requests keep their exact URL matching and integrity boundary.
+    const documentURL = new URL(url);
+    documentURL.search = '';
+    documentURL.hash = '';
+    if (
+      event.request.mode === 'navigate' &&
+      [base, new URL('index.html', base).href].includes(documentURL.href)
+    ) {
+      url.search = '';
+      url.hash = '';
+    }
     if (url.href === base) url.pathname += 'index.html';
     if (event.request.method === 'GET' && urls.has(url.href))
       event.respondWith(
