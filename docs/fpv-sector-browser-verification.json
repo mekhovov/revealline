@@ -1,0 +1,342 @@
+{
+  "format": "FPVSectorBrowserVerification.v1",
+  "createdAt": "2026-09-30T22:34:02.088476+00:00",
+  "browser": "Google Chrome, headless Chromium via Playwright on macOS",
+  "scope": "Focused built browser verification with actual runtime recordings; no unit coverage or target-device performance qualification.",
+  "sourceHashes": [
+    {
+      "path": "optional-practice/civilian-fpv/world-app.mjs",
+      "sha256": "ecb88b168e1f24ff4f61dab857b8d0260c3be99ef628b844a612e3c9df27b096"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/world-style.css",
+      "sha256": "6117f09e7ed317b394514cbae87be215c49744a45b9f1ef50c063e0a8718e4b0"
+    },
+    {
+      "path": "optional-practice/fpv-worlds/index.html",
+      "sha256": "d5294a39d79641dda8d41606d348bd60e850696b580da47d23f592f3b9e21d81"
+    }
+  ],
+  "build": {
+    "format": "FPVPlaytestBuild.v1",
+    "entry": "optional-practice/fpv-worlds/index.html",
+    "files": 75,
+    "bytes": 10182556,
+    "zipSha256": "5c5076ed6aa7acac9ea6a248b4ae2ea7e9d6f2d0e0f76f227a8d60d118c60fd4",
+    "qualification": "development-playtest",
+    "unitTests": "deferred-to-final-phase",
+    "releaseQualified": false
+  },
+  "fixture": {
+    "course": "woodland-01",
+    "mode": "self-level",
+    "recipe": "Convert the frozen demonstration to a genuine practice recording; record a second run with 100 zero-command launch-pad ticks before the same commands. Recompute each proof through the unchanged runtime. Recover exported active prefixes for UI verification.",
+    "fastTicks": 1184,
+    "slowTicks": 1284,
+    "fastSectors": [
+      {
+        "index": 0,
+        "ticks": 210,
+        "endTick": 210
+      },
+      {
+        "index": 1,
+        "ticks": 184,
+        "endTick": 394
+      },
+      {
+        "index": 2,
+        "ticks": 790,
+        "endTick": 1184
+      }
+    ],
+    "slowSectors": [
+      {
+        "index": 0,
+        "ticks": 310,
+        "endTick": 310
+      },
+      {
+        "index": 1,
+        "ticks": 184,
+        "endTick": 494
+      },
+      {
+        "index": 2,
+        "ticks": 790,
+        "endTick": 1284
+      }
+    ]
+  },
+  "checks": {
+    "firstAttempt": {
+      "status": "none",
+      "reference": null,
+      "referenceId": null,
+      "sectors": [],
+      "latest": null
+    },
+    "invalidFastestFallback": {
+      "invalidCandidate": "f326d3ca1c8b839f",
+      "selected": "dc9f980540f4a669",
+      "expected": "dc9f980540f4a669"
+    },
+    "faster": {
+      "latest": {
+        "index": 0,
+        "ticks": 210,
+        "endTick": 210,
+        "referenceTicks": 310,
+        "referenceEndTick": 310,
+        "sectorDelta": -100,
+        "cumulativeDelta": -100
+      },
+      "hud": "Sector 1 · 4.20 s\nPersonal best · 25.68 s\nSplit −2.00 s\nTotal −2.00 s"
+    },
+    "slower": {
+      "latest": {
+        "index": 0,
+        "ticks": 310,
+        "endTick": 310,
+        "referenceTicks": 210,
+        "referenceEndTick": 210,
+        "sectorDelta": 100,
+        "cumulativeDelta": 100
+      },
+      "hud": "Sector 1 · 6.20 s\nPersonal best · 23.68 s\nSplit +2.00 s\nTotal +2.00 s"
+    },
+    "frozenAcrossNewBestAndReload": {
+      "originalId": "dc9f980540f4a669",
+      "newBestId": "d1b6a070da274849",
+      "recoveredId": "dc9f980540f4a669"
+    },
+    "middleSectorRecovery": {
+      "ticks": 700,
+      "timing": {
+        "status": "ready",
+        "reference": {
+          "id": "d1b6a070da274849",
+          "ticks": 1184,
+          "sectors": [
+            {
+              "index": 0,
+              "ticks": 210,
+              "endTick": 210
+            },
+            {
+              "index": 1,
+              "ticks": 184,
+              "endTick": 394
+            },
+            {
+              "index": 2,
+              "ticks": 790,
+              "endTick": 1184
+            }
+          ]
+        },
+        "referenceId": "d1b6a070da274849",
+        "sectors": [
+          {
+            "index": 0,
+            "ticks": 310,
+            "endTick": 310
+          },
+          {
+            "index": 1,
+            "ticks": 184,
+            "endTick": 494
+          }
+        ],
+        "latest": {
+          "index": 1,
+          "ticks": 184,
+          "endTick": 494,
+          "referenceTicks": 184,
+          "referenceEndTick": 394,
+          "sectorDelta": 0,
+          "cumulativeDelta": 100
+        }
+      }
+    },
+    "nullOriginalReference": {
+      "status": "none",
+      "reference": null,
+      "referenceId": null,
+      "sectors": [
+        {
+          "index": 0,
+          "ticks": 210,
+          "endTick": 210
+        },
+        {
+          "index": 1,
+          "ticks": 184,
+          "endTick": 394
+        }
+      ],
+      "latest": {
+        "index": 1,
+        "ticks": 184,
+        "endTick": 394,
+        "referenceTicks": null,
+        "referenceEndTick": null,
+        "sectorDelta": null,
+        "cumulativeDelta": null
+      }
+    },
+    "missingOriginalReference": {
+      "status": "unavailable",
+      "reference": null,
+      "referenceId": "missing-reference",
+      "sectors": [
+        {
+          "index": 0,
+          "ticks": 210,
+          "endTick": 210
+        },
+        {
+          "index": 1,
+          "ticks": 184,
+          "endTick": 394
+        }
+      ],
+      "latest": {
+        "index": 1,
+        "ticks": 184,
+        "endTick": 394,
+        "referenceTicks": null,
+        "referenceEndTick": null,
+        "sectorDelta": null,
+        "cumulativeDelta": null
+      }
+    },
+    "closeDuringLookup": {
+      "pendingLookupObserved": true,
+      "nextCourse": "courtyard-01",
+      "reference": null,
+      "method": "Delay only cooperative replay scheduler timers, observe Checking saved best, close, immediately start a different course, then await both starts."
+    },
+    "disposeDuringLookup": {
+      "pendingLookupObserved": true,
+      "reference": null
+    },
+    "flightModeIsolation": {
+      "status": "none",
+      "reference": null,
+      "referenceId": null,
+      "sectors": [],
+      "latest": null
+    },
+    "responseIsolation": {
+      "status": "none",
+      "reference": null,
+      "referenceId": null,
+      "sectors": [],
+      "latest": null
+    },
+    "demonstrationTimingOnly": {
+      "reference": null,
+      "hud": "Sector 1 · 4.20 s\nPlayback · timing only\nSplit —\nTotal —",
+      "recordCount": 3
+    },
+    "unscoredTimingOnly": {
+      "reference": null,
+      "hud": "Sector timing · no split yet\nUnscored practice · timing only\nSplit —\nTotal —",
+      "recordCount": 3
+    },
+    "finalResult": {
+      "ticks": 1284,
+      "table": "Completed sector times\nSector\tTime\tSplit Δ\tTotal Δ\n1\t6.20 s\t+2.00 s\t+2.00 s\n2\t3.68 s\t0.00 s\t+2.00 s\n3\t15.80 s\t0.00 s\t+2.00 s",
+      "relativeLossPracticeOpensUnscored": true
+    },
+    "ukrainianMobile": {
+      "width": 390,
+      "scroll": 390,
+      "dialogWidth": 380,
+      "dialogScroll": 380,
+      "panelWidth": 305,
+      "panelScroll": 305,
+      "hud": "Ділянка 3 · 15.80 с\nОсобистий рекорд · 23.68 с\nДілянка 0.00 с\nРазом +2.00 с",
+      "table": "Час пройдених ділянок\nДілянка\tЧас\tΔ ділянки\tΔ разом\n1\t6.20 с\t+2.00 с\t+2.00 с\n2\t3.68 с\t0.00 с\t+2.00 с\n3\t15.80 с\t0.00 с\t+2.00 с"
+    },
+    "offlineReloadRecovery": {
+      "offline": true,
+      "ticks": 600,
+      "timing": {
+        "status": "ready",
+        "reference": {
+          "id": "dc9f980540f4a669",
+          "ticks": 1284,
+          "sectors": [
+            {
+              "index": 0,
+              "ticks": 310,
+              "endTick": 310
+            },
+            {
+              "index": 1,
+              "ticks": 184,
+              "endTick": 494
+            },
+            {
+              "index": 2,
+              "ticks": 790,
+              "endTick": 1284
+            }
+          ]
+        },
+        "referenceId": "dc9f980540f4a669",
+        "sectors": [
+          {
+            "index": 0,
+            "ticks": 210,
+            "endTick": 210
+          },
+          {
+            "index": 1,
+            "ticks": 184,
+            "endTick": 394
+          }
+        ],
+        "latest": {
+          "index": 1,
+          "ticks": 184,
+          "endTick": 394,
+          "referenceTicks": 184,
+          "referenceEndTick": 494,
+          "sectorDelta": 0,
+          "cumulativeDelta": -100
+        }
+      },
+      "hud": "Ділянка 2 · 3.68 с\nОсобистий рекорд · 25.68 с\nДілянка 0.00 с\nРазом −2.00 с"
+    },
+    "legacyPersonalBest": {
+      "course": "flight-01",
+      "status": "ready",
+      "reference": {
+        "id": "07e7cdc0edb0790a",
+        "ticks": 239,
+        "sectors": [
+          {
+            "index": 0,
+            "ticks": 90,
+            "endTick": 90
+          },
+          {
+            "index": 1,
+            "ticks": 149,
+            "endTick": 239
+          }
+        ]
+      },
+      "hud": "Sector timing · no split yet\nPersonal best · 4.78 s\nSplit —\nTotal —"
+    }
+  },
+  "pageErrors": [],
+  "limitations": [
+    "Mobile viewport emulation, not physical mobile hardware.",
+    "No broad controller/browser performance qualification.",
+    "Unit coverage deferred to the final phase."
+  ]
+}
