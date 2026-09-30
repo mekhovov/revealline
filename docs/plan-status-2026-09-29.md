@@ -1,6 +1,11 @@
 # Character and player-experience delivery — 29 September 2026
 
-This is the current status register. It supersedes queue/status estimates in
+This is a historical status register. The [30 September reconciliation](plan-status-2026-09-30.md)
+supersedes its queue and publication estimates: PR761 has merged and must not
+receive another integration replay. The implementation receipts below remain
+evidence for their recorded source, not passing qualification of newer main.
+
+At its observation date, this register superseded queue/status estimates in
 [28 September](plan-status-2026-09-28.md), without rewriting historical evidence.
 The user has now approved **A → B → C → remaining work**:
 current characters and reliable play first, optional encounter variety second,
