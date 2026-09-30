@@ -1,6 +1,6 @@
 # Neon Reference Pack
 
-Five screenshot-based levels, in submission order:
+Six screenshot-based levels, in submission order:
 
 1. **Neon Channels** — alternating slow and lethal lanes around a central refuge;
    two pink bouncers, one diamond eroder and three cyan border patrols.
@@ -13,8 +13,11 @@ Five screenshot-based levels, in submission order:
 5. **Neon Arrows** — forty-five red arrow/cross hazards and fourteen short cyan
    walls; four yellow bouncers and four cyan border patrols.
 
+6. **Neon Chambers** — three stepped cyan chambers with nested open boxes;
+   six yellow bouncers and four cyan border patrols.
+
 Open the main game's **Missions** catalog and search **Neon Reference Pack**.
-All five levels are bundled and available offline in Solo and Versus. They also
+All six levels are bundled and available offline in Solo and Versus. They also
 have a pack selector entry and a launch card on the About page. The catalog's
 Current rules edition is projected by the existing Classic adapter; original
 authored rules remain available in Archive.
@@ -35,7 +38,7 @@ Layouts are adapted to the engine's 72 × 36 board and continuous safe outer rai
 Enemy types are matched to existing behaviors using appearance and trails;
 speeds, lives and coverage goals are authored defaults because still images do
 not establish them. See each level's README for specific projection choices.
-Tests cover source reproduction, import, discovery, opening captures and replay.
+Earlier checks for the first four levels cover source reproduction, import, discovery, opening captures and replay.
 Full-clear balance, device qualification and public deployment are unverified.
 
 Ukrainian localization is deferred. Neon entries currently display English in both

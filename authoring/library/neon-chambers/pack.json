@@ -1,0 +1,739 @@
+{
+  "format": "xonix-pack.v5",
+  "id": "neon-chambers-reference",
+  "version": "1.0.0",
+  "name": "Neon Chambers",
+  "description": "Three stepped cyan chambers contain nested open boxes, narrow passages and offset crossbars. Cyan walls block movement and cannot close a cut. Six yellow bouncers roam the field and four cyan patrols start along the top border. Start at bottom center, move sideways around the central wall, and reconnect to the safe outer rail to reveal 75%.",
+  "engine": "xonix-core.v5",
+  "dependencies": [],
+  "metadata": {
+    "author": "RevealLine",
+    "license": "Project content",
+    "rightsStatus": "Tile layout traced from a user-supplied screenshot. Original procedural sprites and existing retro reveal art; no source image pixels or music embedded."
+  },
+  "themes": [
+    {
+      "id": "retro",
+      "name": "1994 Forever",
+      "subtitle": "One more credit",
+      "family": "retro",
+      "player": "retro-craft",
+      "enemyShape": "orb",
+      "patrolShape": "spark",
+      "bossShape": "core",
+      "scene": "arcade",
+      "labels": {
+        "objective": "Cartridge",
+        "supply": "Dock",
+        "enemy": "Glitch",
+        "boss": "Mainframe",
+        "currency": "Score",
+        "ability": "Power-up"
+      },
+      "palette": {
+        "ink": "#242a41",
+        "paper": "#eee8df",
+        "muted": "#aaa1b1",
+        "accent": "#efeb68",
+        "safe": "#39c7e8",
+        "danger": "#e02862",
+        "field": "#000000",
+        "grid": "#101020",
+        "sky": "#e49c95",
+        "land": "#565270"
+      },
+      "classBodies": {
+        "scout": "retro-craft",
+        "bomber": "retro-craft",
+        "carrier": "retro-craft",
+        "interceptor": "retro-craft",
+        "fiber": "retro-craft",
+        "impact": "retro-craft",
+        "trapper": "retro-craft"
+      }
+    }
+  ],
+  "classRecipes": [
+    {
+      "id": "scout",
+      "label": "FPV Scout",
+      "description": "A nimble FPV quad. Scan shows enemy direction hints for four seconds; it never captures territory or slows an enemy.",
+      "primitive": "scan",
+      "capacity": 0,
+      "cooldown": 6,
+      "duration": 4,
+      "radius": 48,
+      "revision": "1"
+    }
+  ],
+  "campaigns": [
+    {
+      "version": "xonix-campaign.v1",
+      "id": "neon-chambers",
+      "revision": "1",
+      "title": "Neon Chambers",
+      "themeId": "retro",
+      "classIds": ["scout"],
+      "levels": [
+        {
+          "version": "xonix-level.v4",
+          "id": "neon-chambers-reference",
+          "revision": "1",
+          "name": "Neon Chambers",
+          "width": 72,
+          "height": 36,
+          "encounter": null,
+          "spawn": {
+            "x": 36.5,
+            "y": 35.5
+          },
+          "goal": {
+            "coverage": 0.75
+          },
+          "walls": [
+            {
+              "x": 36,
+              "y": 1,
+              "w": 1,
+              "h": 8
+            },
+            {
+              "x": 6,
+              "y": 5,
+              "w": 16,
+              "h": 1
+            },
+            {
+              "x": 28,
+              "y": 5,
+              "w": 6,
+              "h": 1
+            },
+            {
+              "x": 38,
+              "y": 5,
+              "w": 6,
+              "h": 1
+            },
+            {
+              "x": 50,
+              "y": 5,
+              "w": 16,
+              "h": 1
+            },
+            {
+              "x": 5,
+              "y": 6,
+              "w": 2,
+              "h": 1
+            },
+            {
+              "x": 21,
+              "y": 6,
+              "w": 3,
+              "h": 1
+            },
+            {
+              "x": 26,
+              "y": 6,
+              "w": 3,
+              "h": 1
+            },
+            {
+              "x": 43,
+              "y": 6,
+              "w": 3,
+              "h": 1
+            },
+            {
+              "x": 48,
+              "y": 6,
+              "w": 3,
+              "h": 1
+            },
+            {
+              "x": 65,
+              "y": 6,
+              "w": 2,
+              "h": 1
+            },
+            {
+              "x": 5,
+              "y": 7,
+              "w": 1,
+              "h": 7
+            },
+            {
+              "x": 23,
+              "y": 7,
+              "w": 1,
+              "h": 3
+            },
+            {
+              "x": 26,
+              "y": 7,
+              "w": 1,
+              "h": 9
+            },
+            {
+              "x": 45,
+              "y": 7,
+              "w": 1,
+              "h": 9
+            },
+            {
+              "x": 48,
+              "y": 7,
+              "w": 1,
+              "h": 3
+            },
+            {
+              "x": 66,
+              "y": 7,
+              "w": 1,
+              "h": 7
+            },
+            {
+              "x": 10,
+              "y": 10,
+              "w": 8,
+              "h": 1
+            },
+            {
+              "x": 20,
+              "y": 10,
+              "w": 4,
+              "h": 1
+            },
+            {
+              "x": 32,
+              "y": 10,
+              "w": 8,
+              "h": 1
+            },
+            {
+              "x": 48,
+              "y": 10,
+              "w": 4,
+              "h": 1
+            },
+            {
+              "x": 54,
+              "y": 10,
+              "w": 8,
+              "h": 1
+            },
+            {
+              "x": 10,
+              "y": 11,
+              "w": 1,
+              "h": 6
+            },
+            {
+              "x": 17,
+              "y": 11,
+              "w": 1,
+              "h": 6
+            },
+            {
+              "x": 23,
+              "y": 11,
+              "w": 1,
+              "h": 5
+            },
+            {
+              "x": 32,
+              "y": 11,
+              "w": 1,
+              "h": 6
+            },
+            {
+              "x": 39,
+              "y": 11,
+              "w": 1,
+              "h": 6
+            },
+            {
+              "x": 48,
+              "y": 11,
+              "w": 1,
+              "h": 5
+            },
+            {
+              "x": 54,
+              "y": 11,
+              "w": 1,
+              "h": 6
+            },
+            {
+              "x": 61,
+              "y": 11,
+              "w": 1,
+              "h": 6
+            },
+            {
+              "x": 5,
+              "y": 14,
+              "w": 2,
+              "h": 1
+            },
+            {
+              "x": 13,
+              "y": 14,
+              "w": 1,
+              "h": 9
+            },
+            {
+              "x": 20,
+              "y": 14,
+              "w": 1,
+              "h": 4
+            },
+            {
+              "x": 29,
+              "y": 14,
+              "w": 1,
+              "h": 4
+            },
+            {
+              "x": 36,
+              "y": 14,
+              "w": 1,
+              "h": 9
+            },
+            {
+              "x": 42,
+              "y": 14,
+              "w": 1,
+              "h": 4
+            },
+            {
+              "x": 51,
+              "y": 14,
+              "w": 1,
+              "h": 4
+            },
+            {
+              "x": 58,
+              "y": 14,
+              "w": 1,
+              "h": 4
+            },
+            {
+              "x": 65,
+              "y": 14,
+              "w": 2,
+              "h": 1
+            },
+            {
+              "x": 6,
+              "y": 15,
+              "w": 1,
+              "h": 2
+            },
+            {
+              "x": 65,
+              "y": 15,
+              "w": 1,
+              "h": 2
+            },
+            {
+              "x": 1,
+              "y": 18,
+              "w": 4,
+              "h": 1
+            },
+            {
+              "x": 20,
+              "y": 18,
+              "w": 10,
+              "h": 1
+            },
+            {
+              "x": 42,
+              "y": 18,
+              "w": 17,
+              "h": 1
+            },
+            {
+              "x": 67,
+              "y": 18,
+              "w": 4,
+              "h": 1
+            },
+            {
+              "x": 6,
+              "y": 19,
+              "w": 1,
+              "h": 2
+            },
+            {
+              "x": 10,
+              "y": 19,
+              "w": 1,
+              "h": 6
+            },
+            {
+              "x": 17,
+              "y": 19,
+              "w": 1,
+              "h": 6
+            },
+            {
+              "x": 20,
+              "y": 19,
+              "w": 1,
+              "h": 4
+            },
+            {
+              "x": 29,
+              "y": 19,
+              "w": 1,
+              "h": 4
+            },
+            {
+              "x": 32,
+              "y": 19,
+              "w": 1,
+              "h": 6
+            },
+            {
+              "x": 39,
+              "y": 19,
+              "w": 1,
+              "h": 6
+            },
+            {
+              "x": 42,
+              "y": 19,
+              "w": 1,
+              "h": 4
+            },
+            {
+              "x": 51,
+              "y": 19,
+              "w": 1,
+              "h": 4
+            },
+            {
+              "x": 54,
+              "y": 19,
+              "w": 1,
+              "h": 6
+            },
+            {
+              "x": 58,
+              "y": 19,
+              "w": 1,
+              "h": 4
+            },
+            {
+              "x": 61,
+              "y": 19,
+              "w": 1,
+              "h": 6
+            },
+            {
+              "x": 65,
+              "y": 19,
+              "w": 1,
+              "h": 2
+            },
+            {
+              "x": 23,
+              "y": 20,
+              "w": 1,
+              "h": 5
+            },
+            {
+              "x": 26,
+              "y": 20,
+              "w": 1,
+              "h": 9
+            },
+            {
+              "x": 45,
+              "y": 20,
+              "w": 1,
+              "h": 9
+            },
+            {
+              "x": 48,
+              "y": 20,
+              "w": 1,
+              "h": 5
+            },
+            {
+              "x": 5,
+              "y": 21,
+              "w": 2,
+              "h": 1
+            },
+            {
+              "x": 65,
+              "y": 21,
+              "w": 2,
+              "h": 1
+            },
+            {
+              "x": 5,
+              "y": 22,
+              "w": 1,
+              "h": 7
+            },
+            {
+              "x": 66,
+              "y": 22,
+              "w": 1,
+              "h": 7
+            },
+            {
+              "x": 10,
+              "y": 25,
+              "w": 8,
+              "h": 1
+            },
+            {
+              "x": 20,
+              "y": 25,
+              "w": 4,
+              "h": 1
+            },
+            {
+              "x": 32,
+              "y": 25,
+              "w": 8,
+              "h": 1
+            },
+            {
+              "x": 48,
+              "y": 25,
+              "w": 4,
+              "h": 1
+            },
+            {
+              "x": 54,
+              "y": 25,
+              "w": 8,
+              "h": 1
+            },
+            {
+              "x": 23,
+              "y": 26,
+              "w": 1,
+              "h": 3
+            },
+            {
+              "x": 48,
+              "y": 26,
+              "w": 1,
+              "h": 3
+            },
+            {
+              "x": 36,
+              "y": 27,
+              "w": 1,
+              "h": 8
+            },
+            {
+              "x": 5,
+              "y": 29,
+              "w": 2,
+              "h": 1
+            },
+            {
+              "x": 21,
+              "y": 29,
+              "w": 3,
+              "h": 1
+            },
+            {
+              "x": 26,
+              "y": 29,
+              "w": 3,
+              "h": 1
+            },
+            {
+              "x": 43,
+              "y": 29,
+              "w": 3,
+              "h": 1
+            },
+            {
+              "x": 48,
+              "y": 29,
+              "w": 3,
+              "h": 1
+            },
+            {
+              "x": 65,
+              "y": 29,
+              "w": 2,
+              "h": 1
+            },
+            {
+              "x": 6,
+              "y": 30,
+              "w": 16,
+              "h": 1
+            },
+            {
+              "x": 28,
+              "y": 30,
+              "w": 6,
+              "h": 1
+            },
+            {
+              "x": 38,
+              "y": 30,
+              "w": 6,
+              "h": 1
+            },
+            {
+              "x": 50,
+              "y": 30,
+              "w": 16,
+              "h": 1
+            }
+          ],
+          "objectives": [],
+          "supplies": [],
+          "signalZones": [],
+          "hangars": [],
+          "classic": {
+            "version": "classic.v1",
+            "terrain": [],
+            "powerups": [],
+            "arcadeActions": {
+              "version": "arcade-actions.v1"
+            }
+          },
+          "enemies": [
+            {
+              "id": "yellow-upper-left",
+              "type": "bouncer",
+              "x": 13.35,
+              "y": 4.23,
+              "vx": 4.3,
+              "vy": 1.8,
+              "radius": 0.3
+            },
+            {
+              "id": "yellow-upper-center",
+              "type": "bouncer",
+              "x": 39.52,
+              "y": 7.34,
+              "vx": 4.3,
+              "vy": 1.5,
+              "radius": 0.3
+            },
+            {
+              "id": "yellow-inner-right",
+              "type": "bouncer",
+              "x": 37.5,
+              "y": 13.1,
+              "vx": 4.2,
+              "vy": 1.5,
+              "radius": 0.3
+            },
+            {
+              "id": "yellow-inner-left",
+              "type": "bouncer",
+              "x": 34.53,
+              "y": 13.49,
+              "vx": 2,
+              "vy": -4,
+              "radius": 0.3
+            },
+            {
+              "id": "yellow-lower-center",
+              "type": "bouncer",
+              "x": 42.6,
+              "y": 25,
+              "vx": 3.3,
+              "vy": 3.3,
+              "radius": 0.3
+            },
+            {
+              "id": "yellow-lower-right",
+              "type": "bouncer",
+              "x": 70.5,
+              "y": 29.78,
+              "vx": 0.9,
+              "vy": 4.6,
+              "radius": 0.3
+            },
+            {
+              "id": "cyan-top-left",
+              "type": "border-patrol",
+              "x": 4.1,
+              "y": 0.5,
+              "speed": 4.5,
+              "clockwise": true,
+              "radius": 0.35
+            },
+            {
+              "id": "cyan-top-center-left",
+              "type": "border-patrol",
+              "x": 32.25,
+              "y": 0.5,
+              "speed": 4.5,
+              "clockwise": false,
+              "radius": 0.35
+            },
+            {
+              "id": "cyan-top-center-right",
+              "type": "border-patrol",
+              "x": 39.82,
+              "y": 0.5,
+              "speed": 4.5,
+              "clockwise": true,
+              "radius": 0.35
+            },
+            {
+              "id": "cyan-top-right",
+              "type": "border-patrol",
+              "x": 67.93,
+              "y": 0.5,
+              "speed": 4.5,
+              "clockwise": false,
+              "radius": 0.35
+            }
+          ],
+          "rules": {
+            "lives": 3,
+            "moveSpeed": 10,
+            "respawnSeconds": 0.7,
+            "graceSeconds": 0.8,
+            "timeLimitSeconds": 0,
+            "stopOnCapture": true
+          },
+          "metadata": {
+            "description": "Three stepped cyan chambers contain nested open boxes, narrow passages and offset crossbars. Cyan walls block movement and cannot close a cut. Six yellow bouncers roam the field and four cyan patrols start along the top border. Start at bottom center, move sideways around the central wall, and reconnect to the safe outer rail to reveal 75%."
+          }
+        }
+      ]
+    }
+  ],
+  "visualOverrides": {
+    "enemy": {
+      "name": "Chambers enemy",
+      "dataUrl": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAbElEQVR42u3WOxIAEAwEUEdzMkdzCtfQamkpEP81szuTel+VRCmG+S3Bm5iPs7qYa8U1wBFIrbwF2IZolfcAy4heuQQwjZCUSwFTiKcAafkIYAhBAAEEPAdwE0IcI4hzDPGQQLxkEE8pw5xKAoM4vcHzH54kAAAAAElFTkSuQmCC"
+    },
+    "patrol": {
+      "name": "Chambers patrol",
+      "dataUrl": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAbklEQVR42mNgIBG4P3n/Hx9moDUYdcCoA+jmAFwGkuoAsh2Gy1BSHEBxyGAzgFgHUC1a0A0ixgFUTxOELKVLjqCZ5eT6jlp41AGjDhh1wMA7YMALokFfFA9oZTSg1fGAN0gGvEk22ioedcCIcQAA6l0yW47rJ5YAAAAASUVORK5CYII="
+    },
+    "player": {
+      "name": "Chambers player",
+      "dataUrl": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAYklEQVR42u2WWwoAEBQFrdP+yxp8kV8lj/s66kz5nilcUiKE/EwtuY0VKg+JmOWuESu5S8RObhpxKjeJuJWrRrzKVSKkcnFEeED4FkAcQohrCDGIIEYxxGME8RxDfEgIIVp0LrhEMwepglQAAAAASUVORK5CYII="
+    },
+    "wall": {
+      "name": "Chambers wall",
+      "dataUrl": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAP0lEQVR42mMQia7+P5CYAURob7qOE9NaftQBow4YdQDDaDkw6oBRB4w6YLQcGHXAqANGHTBaDow6YNQBI94BAJ5cDzcS0yPLAAAAAElFTkSuQmCC"
+    }
+  },
+  "levelVisuals": [],
+  "music": [],
+  "masteries": []
+}
