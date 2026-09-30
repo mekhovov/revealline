@@ -6,6 +6,7 @@ import { buildNeonCrossroads } from './build-neon-crossroads.mjs';
 import { buildNeonHearts } from './build-neon-hearts.mjs';
 import { buildNeonLabyrinth } from './build-neon-labyrinth.mjs';
 import { buildNeonArrows } from './build-neon-arrows.mjs';
+import { buildNeonChambers } from './build-neon-chambers.mjs';
 
 export async function buildNeonReferencePack() {
   const sources = await Promise.all([
@@ -14,6 +15,7 @@ export async function buildNeonReferencePack() {
     buildNeonHearts(),
     buildNeonLabyrinth(),
     buildNeonArrows(),
+    buildNeonChambers(),
   ]);
   // A pack uses one simulation family. The wall-only standalone studies
   // get new bundled identities and explicit empty foundations in this edition.
@@ -29,7 +31,7 @@ export async function buildNeonReferencePack() {
     version: '1.0.0',
     name: 'Neon Reference Pack',
     description:
-      'Five screenshot-based Arcade levels: Channels, Crossroads, Hearts, Labyrinth and Arrows. Custom reveal images are planned; these levels currently use the existing procedural retro artwork.',
+      'Six screenshot-based Arcade levels: Channels, Crossroads, Hearts, Labyrinth, Arrows and Chambers. Custom reveal images are planned; these levels currently use the existing procedural retro artwork.',
     metadata: {
       author: 'RevealLine',
       license: 'Project content',
@@ -68,5 +70,5 @@ if (process.argv[1] && new URL(process.argv[1], 'file:').href === import.meta.ur
       parser: 'json',
     }),
   );
-  console.log('Neon Reference Pack: five valid levels; reveal images deferred.');
+  console.log('Neon Reference Pack: six valid levels; reveal images deferred.');
 }
