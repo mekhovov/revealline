@@ -173,6 +173,8 @@ export function createExplorationEditor({
   }
   return {
     sync,
+    // Stop transient playback without rebuilding or removing draft controls.
+    suspend: stopPreview,
     dispose() {
       disposed = true;
       stopPreview();
