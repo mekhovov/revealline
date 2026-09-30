@@ -1,5 +1,15 @@
 # Native menus: plan status and release batches
 
+## September 30 — FPV enemy source gallery
+
+Runtime `92131cea9` starts from accepted main `dc37f277e`, after Releases integrated Guide #827 and Countercurrent #832. The enemy gallery now has seven stable Sections targets, useful Page actions and nine owned image/document readers. Loading has explicit Retry/Cancel, verified atomic measurements and lifecycle protection. A controlled browser check reproduced the old error: changing the enlarged body during initial decoding left “Original load failed” even after all 57 samples loaded. The corrected source reaches Ready and retains measurements through pending cancellation and server failure/retry.
+
+**70/70 focused tests**, separate **2/2 inventory checks**, localization **11,850 / 8,824**, the first complete **4/4 virtual-controller workflow**, and native portrait reader/navigation checks pass. Virtual input covers all 28 role/heading combinations; actual displayed original images match pinned bytes/hash and fully decode. Native popup Escape committed its highlighted heading, so only the application-owned virtual selector has qualified cancellation restoration. See the [FPV enemy evidence](verification/fpv-enemy-gallery-input-2026-09-30.md) for this and other exact boundaries.
+
+The seven originals (**6,522,849 bytes**) and historical metadata remain unchanged and source-only. The seven separately shipped 128px sprites are untouched. The default collector stays at **2,412 paths**, without gallery admission. **18/18 fresh in-memory edition compiles** pass at this runtime; the largest output is **66,827,065 bytes**, with **281,799 bytes** headroom. These are source/compiler results, not offline or published acceptance.
+
+Next bounded work is **FPV role presentation**: its continuously scheduled animation, missing section targets, narrow canvas overflow and three raw document handoffs need a separate input/lifecycle batch. Keep original rigs/rendering/artwork intact and preserve the current distinction between admitted originals and unadmitted gallery chrome. All broader device, native preview, recovery, Ukrainian, forced-colors, zoom and publication gates remain open. Releases remains the sole integrator/publisher; historical entries below retain their own cutoffs.
+
 ## September 30 — Countercurrent reference gallery
 
 Runtime `7080b238d` on `codex/countercurrent-gallery-input` adds four stable world destinations and thirteen owned, pinned source readers to the Countercurrent gallery. It is a separate follow-up to frozen Guide PR #827 at `55cf072b0`; the Guide branch has not been changed. **38/38 final viewer/gallery tests**, a separate **62/62 reference/domain/inventory cohort**, the fresh committed-source **4/4 virtual-controller journey**, and portrait native keyboard checks pass. All twelve displayed originals match their recorded bytes/hash and fully decode. Read, Retry, Fit/Actual Size, two-axis movement and two-step Back retain the existing input owner. See the [gallery evidence](verification/countercurrent-gallery-input-2026-09-30.md).
