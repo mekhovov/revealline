@@ -1,4 +1,5 @@
 import { localizedText, t } from '../i18n/index.mjs';
+import { resolveEditionAssets } from '../editions/model.mjs';
 import { mountEditionNavigation } from './edition-navigation.mjs';
 import { mountEditionLessons } from './edition-lessons.mjs';
 import { mountEditionMastery } from './edition-mastery.mjs';
@@ -76,8 +77,8 @@ export async function mountEditionSoloUI({
   );
   const brandName = currentBrand?.name ?? selection.brand.name;
   // Current chrome may use a renamed mark around retained gameplay, but only
-  // artwork already present in that receipt's catalog can be requested.
-  const logoAsset = provider.catalog?.assets?.some(
+  // artwork admitted by that selected edition's receipt can be requested.
+  const logoAsset = resolveEditionAssets(provider.catalog, { editionId: provider.editionId }).some(
     (asset) => asset.id === currentBrand?.logoAssetId,
   )
     ? currentBrand.logoAssetId
@@ -190,7 +191,9 @@ export async function mountEditionSoloUI({
     select = node('select');
   picker.className = 'field edition-switcher';
   select.id = 'edition-select';
-  const availableEditions = (provider.currentCatalog ?? provider.catalog).editions;
+  const availableEditions = (provider.currentCatalog ?? provider.catalog).editions.filter(
+    (edition) => edition.brandId === selection.brand.id,
+  );
   for (const edition of availableEditions) {
     const option = node('option', edition.name);
     option.value = edition.id;
@@ -206,7 +209,11 @@ export async function mountEditionSoloUI({
     // This remains the active edition until the shared host has retained the
     // attempt and the player explicitly leaves. Stay/cancel needs no rollback.
     select.value = provider.editionId;
-    if (requested === provider.editionId) return false;
+    if (
+      requested === provider.editionId ||
+      !availableEditions.some((edition) => edition.id === requested)
+    )
+      return false;
     return onEditionChange(requested, select);
   };
   let retainedPanel;

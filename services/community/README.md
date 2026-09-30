@@ -6,6 +6,12 @@ exact `.rlpack` validation, automatic publication, immutable downloads and previ
 owner/admin unlisting. Docker Compose is a development deployment fixture, not evidence of a
 production launch.
 
+The browser marketplace entry is [`game/community/store.html`](../../game/community/store.html).
+Host it with `/v1/*` and `/api/auth/*` on the same origin; accounts use HttpOnly session cookies.
+The separate [`game/communities/index.html`](../../game/communities/index.html) is a static company
+directory and does not call this service. A GitHub Pages deployment can serve the directory,
+but cannot provide the marketplace API or account service.
+
 ## Local development
 
 The service requires Node 20.19 or newer. Install and run its credential-free tests independently:

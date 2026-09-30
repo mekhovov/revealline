@@ -106,6 +106,71 @@ test('desktop staging preserves verified asset/manifest bytes and never rewrites
   assert.deepEqual(await snapshot(f.site), before);
   assert.equal((await verifySite(f.out, { native: true })).marker.platform, 'desktop');
 });
+
+test('public community routes and shared loader retain exact native inventory ownership under the existing CSP', async (t) => {
+  const f = await fixture(t);
+  const names = [
+    'game/communities/index.html',
+    'game/communities/coupa/index.html',
+    'game/communities/droneaid/index.html',
+    'game/communities/droneaid-community/index.html',
+    'game/communities/social-drone-ua/index.html',
+    'game/communities/victory-drones/index.html',
+    'game/communities/ukraine-culture/index.html',
+    'game/communities/fpv-learning/index.html',
+    'game/communities/entry.mjs',
+    'game/communities/directory.css',
+    'game/community-routes.mjs',
+    'game/edition-context.mjs',
+    'game/community/index.html',
+    'game/community/redirect.mjs',
+  ];
+  for (const name of names) {
+    const bytes = await fs.readFile(new URL(`../${name}`, import.meta.url));
+    if (name.endsWith('.html')) assert.doesNotMatch(bytes.toString(), /<base\b/i, name);
+    f.files.set(name, bytes);
+    await fs.mkdir(path.dirname(path.join(f.site, name)), { recursive: true });
+    await fs.writeFile(path.join(f.site, name), bytes);
+    f.manifest.files.push({ path: name, bytes: bytes.length, sha256: hash(bytes) });
+    f.manifest.totalBytes += bytes.length;
+  }
+  await f.writeManifest();
+  const before = await snapshot(f.site);
+  for (const platform of ['desktop', 'ios']) {
+    const out = path.join(f.root, `community-${platform}`);
+    await stageNative({ site: f.site, out, platform, bridge: f.bridge });
+    const verified = await verifySite(out, { native: true });
+    for (const name of names) {
+      const bytes = await fs.readFile(path.join(out, name));
+      const expected =
+        platform === 'ios' && name.endsWith('.html')
+          ? iosHTMLPolicy(f.files.get(name), name)
+          : f.files.get(name);
+      assert.deepEqual(bytes, expected, `${platform}: ${name}`);
+      assert.deepEqual(
+        verified.manifest.files.find((entry) => entry.path === name),
+        {
+          path: name,
+          bytes: bytes.length,
+          sha256: hash(bytes),
+        },
+      );
+    }
+    if (platform === 'desktop') {
+      const native = await loadNativeSite(out);
+      for (const name of names.filter((name) => name.endsWith('/index.html'))) {
+        const url = `revealline://app/${name.slice(0, -'index.html'.length)}?campaign=retained#saved`;
+        assert.equal(native.isNavigationAllowed(url), true, name);
+        const response = await native.handle(new Request(url));
+        assert.equal(response.status, 200, name);
+        assert.equal(await response.text(), f.files.get(name).toString(), name);
+        assert.match(response.headers.get('Content-Security-Policy'), /base-uri 'none'/);
+      }
+    }
+  }
+  assert.deepEqual(await snapshot(f.site), before);
+});
+
 test('current-sized native inventories stage and load without dropping localization files', async (t) => {
   const f = await fixture(t);
   const additional = new Map(
