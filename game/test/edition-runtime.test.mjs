@@ -248,7 +248,10 @@ test('standalone menu projection preserves selected profile data and fallback wi
     );
     assert.deepEqual(projected.resolveMenuScene({ editionId: id }), selected);
     assert.deepEqual(projected.resolveMenuScene({ themeId: 'retro', editionId: id }), selected);
-    assert.deepEqual(projected.resolveMenuScene({ editionId: 'unrecognized' }), MENU_SCENES.fpv);
+    assert.deepEqual(projected.resolveMenuScene({ editionId: 'unrecognized' }), selected);
+    assert.deepEqual(projected.resolveMenuScene(), selected);
+    assert.equal(projected.MENU_SCENES.fpv, projected.MENU_SCENES[selected.id]);
+    assert.ok(Object.isFrozen(projected.MENU_SCENES));
     assert.equal(projected.menuSceneMode('team'), 'team');
     assert.deepEqual(projected.MENU_SCENE_COMPOSITIONS, {});
     assert.equal(
@@ -258,7 +261,7 @@ test('standalone menu projection preserves selected profile data and fallback wi
     const resources = editionMenuSceneResources([id]);
     const expectedRaster = [
       ...new Set(
-        [MENU_SCENES.fpv, selected].flatMap((scene) =>
+        [selected].flatMap((scene) =>
           [scene.landscape, scene.portrait, scene.wordmark]
             .filter((asset) => asset && /\.(webp|png)$/.test(asset))
             .map((asset) => 'game/ui/' + asset.slice(2)),
@@ -268,10 +271,13 @@ test('standalone menu projection preserves selected profile data and fallback wi
     assert.deepEqual(
       resources.filter((name) => /\.(webp|png)$/.test(name)).sort(),
       expectedRaster,
-      'Selected originals and the shared fallback are retained exactly once.',
+      'The selected scene is also the fallback, with each original retained exactly once.',
     );
     assert.ok(resources.includes(`game/ui/${selected.landscape.slice(2)}`));
-    assert.ok(resources.includes('game/ui/art/menu-scenes/fpv-portrait.webp'));
+    assert.equal(
+      resources.includes('game/ui/art/menu-scenes/fpv-portrait.webp'),
+      selected.id === 'fpv',
+    );
     assert.ok(!resources.includes('game/ui/art/menu-scenes/retro.webp'));
     assert.ok(!resources.some((name) => /(?:fpv|ukraine|retro|coupa)-(versus|team)/.test(name)));
     assert.doesNotMatch(
@@ -283,6 +289,28 @@ test('standalone menu projection preserves selected profile data and fallback wi
   assert.throws(
     () => projectEditionMenuScenes(bytes('export const noLookup = {};'), ['coupa-all']),
     /explicit profile lookup/,
+  );
+});
+test('multi-edition menu builds retain their neutral FPV fallback and every selected scene', async () => {
+  const original = await fs.readFile(new URL('../ui/menu-scene-catalog.mjs', import.meta.url));
+  const ids = ['coupa-all', 'droneaid-nl-community'];
+  const projected = await import(
+    `data:text/javascript;base64,${projectEditionMenuScenes(original, ids).toString('base64')}`
+  );
+  assert.deepEqual(projected.resolveMenuScene(), MENU_SCENES.fpv);
+  assert.deepEqual(projected.resolveMenuScene({ editionId: 'unrecognized' }), MENU_SCENES.fpv);
+  const resources = editionMenuSceneResources(ids);
+  assert.ok(resources.includes('game/ui/art/menu-scenes/fpv.webp'));
+  assert.ok(resources.includes('game/ui/art/menu-scenes/fpv-portrait.webp'));
+  for (const id of ids) {
+    const selected = resolveMenuScene({ editionId: id });
+    assert.deepEqual(projected.resolveMenuScene({ editionId: id }), selected);
+    assert.ok(resources.includes(`game/ui/${selected.landscape.slice(2)}`));
+    assert.ok(resources.includes(`game/ui/${selected.portrait.slice(2)}`));
+  }
+  assert.deepEqual(
+    projectEditionMenuScenes(original, ids),
+    projectEditionMenuScenes(original, ids),
   );
 });
 test('DroneAid aggregate uses only its lossless derivative while retaining original source files', async () => {
