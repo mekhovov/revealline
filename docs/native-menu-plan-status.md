@@ -22,6 +22,14 @@ The **5,228,557 original image bytes remain source-only**. The collector retains
 
 Next bounded route is **Ukraine wide-role variants**. Preserve its exact held wing phases and **780 × 215** comparisons while adding reachable row readers, owned loading and inactive-animation handling. Its rejected RGB attempts remain lineage-only. The overall plan remains incomplete, and Releases retains reconciliation, scheduling and publication ownership.
 
+## September 30 — Ukraine wide-role comparison
+
+Draft [PR #857](https://github.com/mekhovov/revealline/pull/857) contains source `7bcd7152e`, rebased as `5381b570a` onto accepted main `e39b4197a`. It adds three stable bounded readers and two exact literal document viewers to the source-only wide-role comparison. It preserves the true **780 × 215** canvases, held quarter-turn phase semantics and original artwork/models. Verified atomic Retry/Cancel and motion lifecycle stop inactive animation work without changing shared input ownership.
+
+The final **74/74** focused cohort, first current **4/4 virtual-controller** journey and native portrait readers, source Back, all held phases, delayed Cancel/503/recovery and real Studio Return pass. **18/18** in-memory edition compiles pass at the original runtime; largest DroneAid has **125,128 bytes** headroom. Both Ukraine source folders remain excluded from distribution. See the [wide-gallery evidence](verification/ukraine-wide-gallery-input-2026-09-30.md) for exact source cutoffs, initial fixture failures and browser limitations.
+
+Delivery/public verification of landing correction **#854 remains the immediate priority**, through Releases. This gallery is a separate reviewable follow-up, not a new player feature or artwork adoption. The next reference route is the prepared-reveal review, after current intake is safely handed off. Global device/offline/zoom/forced-colors/Ukrainian and remaining authoring acceptance gates remain open.
+
 ## September 30 — Prepared reveal review
 
 Runtime `573d357fe` preserves the 44 prepared frames, 38 compositions and 56 owner bindings while adding stable Sections, bounded specimen/native/provenance readers, captured Retry/Cancel and exact source return. The immutable 266,665-byte manifest has its own exact bounded reader; the shared 256 KiB source-viewer limit remains unchanged. Public compiled assets remain separate from the local-only original/prepared fallback. See the [prepared-review evidence](verification/prepared-reveal-input-2026-09-30.md).
