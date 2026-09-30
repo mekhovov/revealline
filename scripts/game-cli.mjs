@@ -616,6 +616,18 @@ export async function addOfflineEntries(
   const excluded = new Set([
     ...optional,
     ...excludedBodyPaths,
+    // Demo recordings and the large landing photograph remain published for
+    // online playback, but they are optional bodies rather than core offline boot.
+    // Excluding only their bodies preserves URLs, provenance and on-demand tests
+    // while keeping the unchanged 64 MiB service-worker cache bound.
+    ...entries
+      .filter(
+        (entry) =>
+          (entry.name.startsWith('game/demo-data/') &&
+            entry.name.endsWith('.replay.json')) ||
+          entry.name === 'game/ui/art/menu-scenes/droneaid-main-background.webp',
+      )
+      .map((entry) => entry.name),
     ...(optionalArtwork?.files.map((file) => file.path) ?? []),
     // Recorded music is an optional enhancement. Keep even locally shipped
     // recordings out of the bounded gameplay cache so procedural music and

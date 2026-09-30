@@ -1,0 +1,30 @@
+{
+  "format": "revealline-retained-historical-excerpt.v1",
+  "scope": "Retained historical excerpt after an ownership migration. Original bytes are preserved separately. Historical counts, hashes and approvals inside the excerpt describe the original record only; this derived document is not a release qualification, executable restore plan, or complete original inventory.",
+  "originalSHA256": "ef296a229873eebc1633178411d3fa900f0dc7062204feb9d45a73d5d8542814",
+  "originalGitBlob": "38db8795fe66316fd06cbc2c4dd1e87d54829c6a",
+  "removedRecordsOrFields": 6,
+  "excerpt": {
+    "complete": false,
+    "failedEdition": "droneaid-nl-community",
+    "remainingEditionsNotAttempted": 6,
+    "version": "0.142.3",
+    "editions": [
+      {
+        "id": "droneaid-community",
+        "scene": "droneaid-community",
+        "bootBrandTheme": "droneaid-community",
+        "files": 620,
+        "offlineFiles": 617,
+        "offlineBytes": 27548211,
+        "sceneImages": [
+          "game/ui/art/menu-scenes/fpv.webp",
+          "game/ui/art/menu-scenes/fpv-portrait.webp",
+          "game/ui/art/menu-scenes/droneaid-community.webp"
+        ],
+        "manifestSha256": "7340c0ce80734f26bb195086699f49e9a48bf664edb5215278fd13d83154745d",
+        "site": "editions/droneaid-community/releases/v0.142.3/site"
+      }
+    ]
+  }
+}

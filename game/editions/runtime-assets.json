@@ -151,8 +151,8 @@
   {
     "id": "runtime-menu-scene-provenance",
     "path": "game/ui/art/menu-scenes/provenance.json",
-    "sha256": "baaee31dedd103ee88a84776531469202b17cee5f0c735a056ea165c76028df3",
-    "bytes": 21119,
+    "sha256": "92bd0e5a43f92dbc4bab270a86332b16b26e638b5935a956e6d7788f3b514cfc",
+    "bytes": 21201,
     "publication": "public",
     "approved": true,
     "dependencies": []
@@ -532,6 +532,17 @@
     "path": "game/ui/art/menu-scenes/retro-team-portrait.webp",
     "sha256": "3a235ff27b250595b6e95100bf7306d8962a4592ef6b02cc0ec690f4839de3a3",
     "bytes": 545932,
+    "publication": "public",
+    "approved": true,
+    "dependencies": [
+      "runtime-menu-scene-provenance"
+    ]
+  },
+  {
+    "id": "runtime-menu-scene-droneaid-main-background-lossless",
+    "path": "game/ui/art/menu-scenes/droneaid-main-background.webp",
+    "sha256": "378741b03c221c08ead77ee4af8f0a65a7d2b15088363898bfb8b79dfebc6000",
+    "bytes": 493598,
     "publication": "public",
     "approved": true,
     "dependencies": [
