@@ -68,7 +68,7 @@ const COPY_EN = {
   watchFirst: 'Watch first flight',
   tryFirst: 'Try first flight',
   demoCoverage:
-    '88 recorded examples cover all 44 Academy, Woodland Park, Ukrainian Courtyard, Warehouse and Racing Stadium challenges in both modes. Examples for the remaining worlds are still in production.',
+    '104 recorded examples cover all 52 Academy, Woodland Park, Ukrainian Courtyard, Warehouse, Racing Stadium and Container Yard challenges in both modes. Parking Garage examples are still in production.',
   watchDemo: 'Watch demonstration',
   playbackSpeed: 'Playback speed',
   flyThis: 'Fly this challenge',
@@ -173,7 +173,7 @@ const COPY_UK = {
   watchFirst: 'Переглянути перший політ',
   tryFirst: 'Спробувати перший політ',
   demoCoverage:
-    '88 записаних прикладів охоплюють усі 44 завдання Академії, Лісопарку, Українського подвір’я, Складу та Перегонового стадіону в обох режимах. Приклади для решти світів ще готуються.',
+    '104 записані приклади охоплюють усі 52 завдання Академії, Лісопарку, Українського подвір’я, Складу, Перегонового стадіону та Контейнерного двору в обох режимах. Приклади для Паркінгу ще готуються.',
   watchDemo: 'Переглянути демонстрацію',
   playbackSpeed: 'Швидкість відтворення',
   flyThis: 'Виконати це завдання',
