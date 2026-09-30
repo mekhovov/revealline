@@ -1,5 +1,9 @@
 # Reveal Line: player-first UX execution
 
+> **Current whole-product status:** [completed and remaining delivery](delivery-status.md).
+> Use that dated rollup for current priorities, release status and acceptance limits.
+> The older checkpoints below retain their historical scope.
+
 > **Current status:** use the [30 September completed/remaining review](plan-review-2026-09-30.md)
 > and [daily source register](plan-status-2026-09-30.md). These distinguish integrated
 > UX foundations, current owner corrections, continuous-main Pages, immutable
