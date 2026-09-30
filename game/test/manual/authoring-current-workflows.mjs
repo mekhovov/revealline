@@ -13,6 +13,8 @@ import { atlasCurrent } from './design-atlas-current-workflow.mjs';
 import { contentStudioCurrent } from './content-studio-current-workflow.mjs';
 import { productionCurrent } from './production-current-workflow.mjs';
 import { viewportCurrent } from './viewport-current-workflow.mjs';
+import { revealAuditCurrent } from './reveal-audit-current-workflow.mjs';
+import { revealAuditSourcesCurrent } from './reveal-audit-source-current-workflow.mjs';
 import {
   companyStudioCurrent,
   companyPracticeCurrent,
@@ -33,6 +35,8 @@ async function fingerprint(blob) {
 const value = (p, css) => p.doc.querySelector(css).value;
 
 export const currentAuthoringCases = {
+  revealAuditSourcesCurrent,
+  revealAuditCurrent,
   viewportCurrent,
   productionCurrent,
   companyStudioCurrent,
