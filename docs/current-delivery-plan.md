@@ -1,11 +1,10 @@
 # RevealLine: detailed delivery history
 
-> **Current status and execution order:** use the
-> [28 September completion and remaining delivery plan](plan-status-2026-09-28.md).
-> It records deployed v0.141.7, the remaining acceptance gates, the active touch
-> follow-up and independently owned PR #716, and the sole coordinator's current
-> main-only batching policy. Every dated checkpoint and “next” label below is
-> preserved historical evidence, not today's release queue.
+> **Current reconciliation and remaining delivery order:** use the
+> [30 September plan and source audit](plan-status-2026-09-30.md).
+> It separates immutable v0.142.3, current main, active v0.150.0 inputs and
+> historical preservation. Source integration does not establish whole-game
+> acceptance. All dated checkpoints below remain historical evidence.
 
 ## Current scoped handoff — 28 September 2026
 
