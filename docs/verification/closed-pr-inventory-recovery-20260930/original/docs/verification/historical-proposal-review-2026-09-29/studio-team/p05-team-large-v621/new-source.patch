@@ -1,0 +1,3403 @@
+diff --git a/game/couch/coop-cue-semantics.mjs b/game/couch/coop-cue-semantics.mjs
+new file mode 100644
+index 0000000000000000000000000000000000000000..b692c842f56ae247ecd35052f957e71dd170a6d5
+--- /dev/null
++++ b/game/couch/coop-cue-semantics.mjs
+@@ -0,0 +1,68 @@
++const record = (value) => value !== null && typeof value === 'object' && !Array.isArray(value);
++const playerTarget = (value) => value === 0 || value === 1;
++
++/** Read actual Team state only; a cue never owns a phase, timer or target. */
++export function describeCoopEnemyCue(enemy, time) {
++  if (!record(enemy) || typeof enemy.type !== 'string' || enemy.active === false) return null;
++  const slowed =
++    Number.isFinite(time) &&
++    time >= 0 &&
++    Number.isFinite(enemy.speedScale) &&
++    enemy.speedScale > 0 &&
++    enemy.speedScale < 1 &&
++    Number.isFinite(enemy.slowUntil) &&
++    enemy.slowUntil > time;
++  if (enemy.type !== 'hunter') return Object.freeze({ text: '', mark: null, priority: 2, slowed });
++  const target = playerTarget(enemy.target) ? `P${enemy.target + 1}` : 'H';
++  if (enemy.phase === 'warning')
++    return Object.freeze({ text: target, mark: 'hunter-lock', priority: 1, slowed });
++  if (enemy.phase === 'commit')
++    return Object.freeze({ text: target, mark: 'hunter-charge', priority: 1, slowed });
++  return Object.freeze({
++    text: 'H',
++    mark: enemy.phase === 'recovery' ? 'hunter-recovery' : 'hunter',
++    priority: 2,
++    slowed,
++  });
++}
++
++/** Compact current threats for the existing advisory; rescue and terminal copy keep priority. */
++export function coopThreatSummary(run) {
++  if (
++    !record(run) ||
++    !['running', 'paused'].includes(run.status) ||
++    !Array.isArray(run.players) ||
++    !Array.isArray(run.enemies) ||
++    run.players.some((player) => player?.status === 'downed')
++  )
++    return null;
++  const activePlayers = new Set(
++      run.players
++        .filter((player) => player?.status === 'active' && playerTarget(player.id))
++        .map((player) => player.id),
++    ),
++    locks = new Set(),
++    charges = new Set();
++  for (const enemy of run.enemies) {
++    if (
++      !record(enemy) ||
++      enemy.active === false ||
++      enemy.type !== 'hunter' ||
++      !playerTarget(enemy.target) ||
++      !activePlayers.has(enemy.target)
++    )
++      continue;
++    if (enemy.phase === 'warning') locks.add(enemy.target + 1);
++    else if (enemy.phase === 'commit') charges.add(enemy.target + 1);
++  }
++  const describe = (targets) =>
++    `${targets.size === 1 ? 'Player' : 'Players'} ${[...targets].sort().join(' and ')}`;
++  return (
++    [
++      locks.size ? `Hunter lock: ${describe(locks)}` : null,
++      charges.size ? `Hunter charge: ${describe(charges)}` : null,
++    ]
++      .filter(Boolean)
++      .join(' · ') || null
++  );
++}
+diff --git a/game/couch/coop-cue-symbols.mjs b/game/couch/coop-cue-symbols.mjs
+new file mode 100644
+index 0000000000000000000000000000000000000000..64aa84d2a7d18644a5bf5c7c4d838a535fdefd4a
+--- /dev/null
++++ b/game/couch/coop-cue-symbols.mjs
+@@ -0,0 +1,231 @@
++const MARKS = new Set([
++  'hunter',
++  'hunter-lock',
++  'hunter-charge',
++  'hunter-recovery',
++  'drifter',
++  'shielded',
++  'exposed',
++  'secured',
++  'anchor-a',
++  'anchor-b',
++]);
++const METHODS = [
++  'save',
++  'restore',
++  'beginPath',
++  'moveTo',
++  'lineTo',
++  'closePath',
++  'arc',
++  'fill',
++  'stroke',
++  'setLineDash',
++];
++const opaqueHex = (value) =>
++  typeof value === 'string' && /^#(?:[\da-f]{3}|[\da-f]{6})$/i.test(value);
++
++/**
++ * Draw an owner-anchored cue in local CSS pixels, centred at (0, 0).
++ * The caller owns its world translation/scale; size never describes collision.
++ *
++ * mark: hunter / hunter-lock / hunter-charge / hunter-recovery / drifter /
++ * shielded / exposed / secured / anchor-a / anchor-b.
++ * size (8..64, default 14): primary symbol extent including its dark outline.
++ * color/backing: opaque RGB hex colours; changing colour never changes geometry.
++ * captured: adds a check to anchor-a/b, retaining its one/two-notch identity.
++ * target: exact 0/1 adds a circle/diamond to lock/charge only. Other values omit it.
++ *
++ * Returns frozen conservative stroke bounds. Hunter bounds reserve the same
++ * upper-right target-badge space in every phase, including an absent target.
++ * Own paths are begun here; drawing attributes are restored even if drawing fails.
++ * No fonts, text, clocks, motion preferences or gameplay objects are consulted.
++ */
++export function drawCoopCueSymbol(ctx, options = {}) {
++  if (!options || typeof options !== 'object' || Array.isArray(options))
++    throw new TypeError('Cue symbol options must be a record.');
++  const {
++    mark,
++    size = 14,
++    color = '#f1f7ed',
++    backing = '#07111c',
++    target = null,
++    captured = false,
++  } = options;
++  if (!MARKS.has(mark)) throw new TypeError('Unknown Team cue symbol.');
++  if (!Number.isFinite(size) || size < 8 || size > 64)
++    throw new TypeError('Cue symbol size must be between 8 and 64 CSS pixels.');
++  if (!opaqueHex(color) || !opaqueHex(backing))
++    throw new TypeError('Cue symbol colours must be opaque RGB hex values.');
++  if (typeof captured !== 'boolean') throw new TypeError('Captured cue state must be boolean.');
++  if (!ctx || METHODS.some((method) => typeof ctx[method] !== 'function'))
++    throw new TypeError('Cue symbol needs a Canvas drawing context.');
++
++  const half = size / 2,
++    h = half - 1.5,
++    hunter = mark.startsWith('hunter'),
++    bounds = Object.freeze({
++      left: -half,
++      top: -half - (hunter ? 7.75 : 0),
++      right: half + (hunter ? 7.75 : 0),
++      bottom: half,
++    });
++  const path = (points, closed = false) => {
++    ctx.beginPath();
++    points.forEach(([x, y], index) => {
++      if (index) ctx.lineTo(x * h, y * h);
++      else ctx.moveTo(x * h, y * h);
++    });
++    if (closed) ctx.closePath();
++  };
++  const outline = (closed = false) => {
++    if (closed) {
++      ctx.fillStyle = backing;
++      ctx.fill();
++    }
++    ctx.strokeStyle = backing;
++    ctx.lineWidth = 3;
++    ctx.stroke();
++    ctx.strokeStyle = color;
++    ctx.lineWidth = 1.5;
++    ctx.stroke();
++  };
++  const check = () => {
++    path([
++      [-0.5, 0.1],
++      [-0.15, 0.5],
++      [0.55, -0.4],
++    ]);
++    outline();
++  };
++
++  ctx.save();
++  try {
++    ctx.globalAlpha = 1;
++    ctx.globalCompositeOperation = 'source-over';
++    ctx.lineJoin = 'round';
++    ctx.lineCap = 'round';
++    ctx.setLineDash([]);
++    if (mark === 'hunter') {
++      path(
++        [
++          [0, -1],
++          [1, 0],
++          [0, 1],
++          [-1, 0],
++        ],
++        true,
++      );
++      outline(true);
++    } else if (mark === 'hunter-lock') {
++      ctx.beginPath();
++      for (const [x, y] of [
++        [-1, -1],
++        [1, -1],
++        [1, 1],
++        [-1, 1],
++      ]) {
++        ctx.moveTo((x * h) / 3, y * h);
++        ctx.lineTo(x * h, y * h);
++        ctx.lineTo(x * h, (y * h) / 3);
++      }
++      outline();
++    } else if (mark === 'hunter-charge') {
++      ctx.beginPath();
++      for (const x of [-0.5, 0.5]) {
++        ctx.moveTo((x - 0.5) * h, -h);
++        ctx.lineTo((x + 0.5) * h, 0);
++        ctx.lineTo((x - 0.5) * h, h);
++      }
++      outline();
++    } else if (mark === 'hunter-recovery') {
++      path(
++        [
++          [-1, -1],
++          [1, -1],
++          [-1, 1],
++          [1, 1],
++        ],
++        true,
++      );
++      outline(true);
++    } else if (mark === 'drifter') {
++      path(
++        [
++          [0, -1],
++          [1, 1],
++          [-1, 1],
++        ],
++        true,
++      );
++      outline(true);
++    } else if (mark === 'shielded') {
++      path(
++        [
++          [-1, -1],
++          [1, -1],
++          [1, 1 / 3],
++          [0, 1],
++          [-1, 1 / 3],
++        ],
++        true,
++      );
++      outline(true);
++    } else if (mark === 'exposed') {
++      ctx.beginPath();
++      for (const y of [-1, 1]) {
++        ctx.moveTo(-h, (y * h) / 3);
++        ctx.lineTo(-h, y * h);
++        ctx.lineTo(h, y * h);
++        ctx.lineTo(h, (y * h) / 3);
++      }
++      outline();
++    } else if (mark === 'secured') {
++      path(
++        [
++          [-0.5, -1],
++          [0.5, -1],
++          [1, 0],
++          [0.5, 1],
++          [-0.5, 1],
++          [-1, 0],
++        ],
++        true,
++      );
++      outline(true);
++      check();
++    } else {
++      const notches =
++        mark === 'anchor-a'
++          ? [[-0.25, 0.25]]
++          : [
++              [-0.6, -0.2],
++              [0.2, 0.6],
++            ];
++      const points = [[-1, -1]];
++      for (const [left, right] of notches)
++        points.push([left, -1], [left, -0.55], [right, -0.55], [right, -1]);
++      points.push([1, -1], [1, 1], [-1, 1]);
++      path(points, true);
++      outline(true);
++      if (captured) check();
++    }
++    if ((mark === 'hunter-lock' || mark === 'hunter-charge') && (target === 0 || target === 1)) {
++      const x = half + 3,
++        y = -half - 3;
++      ctx.beginPath();
++      if (target === 0) ctx.arc(x, y, 2.5, 0, Math.PI * 2);
++      else {
++        ctx.moveTo(x, y - 3.25);
++        ctx.lineTo(x + 3.25, y);
++        ctx.lineTo(x, y + 3.25);
++        ctx.lineTo(x - 3.25, y);
++        ctx.closePath();
++      }
++      outline(true);
++    }
++  } finally {
++    ctx.restore();
++  }
++  return bounds;
++}
+diff --git a/game/couch/coop-objectives.css b/game/couch/coop-objectives.css
+new file mode 100644
+index 0000000000000000000000000000000000000000..013ef55b6555429ff287b41c31282ceb316f9e5a
+--- /dev/null
++++ b/game/couch/coop-objectives.css
+@@ -0,0 +1,108 @@
++#coop-objectives-dialog {
++  width: min(52rem, calc(100vw - 2rem));
++  max-height: calc(100dvh - 2rem);
++  overflow: auto;
++  color: var(--fk-text, #f5f1df);
++  background: var(--fk-panel, #142236);
++  border: 2px solid var(--fk-cyan, #78dce8);
++  padding: 1rem;
++}
++#coop-objectives-dialog header {
++  display: flex;
++  justify-content: space-between;
++  align-items: center;
++  gap: 1rem;
++  flex-wrap: wrap;
++}
++#coop-objectives-dialog button {
++  min-height: 44px;
++}
++#coop-objectives-list {
++  display: grid;
++  gap: 0.5rem;
++  grid-template-columns: repeat(auto-fit, minmax(min(100%, 17rem), 1fr));
++}
++#coop-objectives-list button[aria-pressed='true'] {
++  outline: 2px solid var(--fk-cyan, #78dce8);
++  outline-offset: 2px;
++}
++#coop-objectives-dialog canvas {
++  display: block;
++  width: 100%;
++  height: auto;
++  max-width: 600px;
++  margin: 0.5rem auto;
++}
++#coop-objectives-dialog #coop-objectives-location {
++  max-width: 360px;
++}
++#coop-objectives-description {
++  font-size: 1.125em;
++  line-height: 1.5;
++}
++
++/* Standard keeps the original paragraph as the layout item. Large relay state
++   uses that same objective row, never an extra grid row over the arena. */
++#coop-objective-area {
++  display: contents;
++}
++#coop-objective-area[data-relay-hud='true'] {
++  display: block;
++  grid-column: 1 / -1;
++  grid-row: 2;
++  min-width: 0;
++  margin: 0 0 8px;
++}
++#coop-objective-area[data-relay-hud='true'] > .live-objective {
++  margin: 0 0 4px;
++  font-size: max(16px, var(--fk-text-secondary, 16px));
++  line-height: 1.25;
++}
++#coop-relay-hud:not([hidden]) {
++  display: grid;
++  grid-template-columns: repeat(3, minmax(0, 1fr));
++  margin: 0;
++  color: var(--fk-text, #f5f1df);
++  background: var(--fk-panel, #142236);
++  border-block: 1px solid var(--fk-line, #43596e);
++  font-size: max(16px, var(--fk-text-secondary, 16px));
++  line-height: 1.25;
++}
++#coop-relay-hud > div {
++  min-width: 0;
++  padding: 2px;
++  text-align: center;
++}
++#coop-relay-hud > div + div {
++  border-left: 1px solid var(--fk-line, #43596e);
++}
++#coop-relay-hud dt {
++  display: flex;
++  align-items: center;
++  justify-content: center;
++  gap: 4px;
++  font-weight: 600;
++}
++#coop-relay-hud dd {
++  margin: 0;
++  overflow-wrap: anywhere;
++}
++#coop-relay-hud canvas {
++  flex: 0 0 14px;
++  width: 14px;
++  height: 14px;
++}
++@media (orientation: landscape) and (max-height: 500px) {
++  #coop-objective-area[data-relay-hud='true'] {
++    margin: 0;
++  }
++}
++@media (min-width: 600px) {
++  #coop-relay-hud > div {
++    display: flex;
++    align-items: baseline;
++    justify-content: center;
++    flex-wrap: wrap;
++    gap: 0 6px;
++  }
++}
+diff --git a/game/couch/coop-objectives.mjs b/game/couch/coop-objectives.mjs
+new file mode 100644
+index 0000000000000000000000000000000000000000..2d80c1a6cb6e3eee3e818d3ca9df03d0c2ce3113
+--- /dev/null
++++ b/game/couch/coop-objectives.mjs
+@@ -0,0 +1,391 @@
++import { drawCoopCueSymbol } from './coop-cue-symbols.mjs';
++
++// Cosmetic relay selection and a read-only planning surface. Never edits a level or run.
++const position = (point, level) => {
++  const x = point.x / level.width,
++    y = point.y / level.height;
++  const horizontal = x < 1 / 3 ? 'left' : x > 2 / 3 ? 'right' : 'center';
++  const vertical = y < 1 / 3 ? 'upper' : y > 2 / 3 ? 'lower' : 'middle';
++  return horizontal === 'center' && vertical === 'middle'
++    ? 'near the center'
++    : `in the ${vertical} ${horizontal}`;
++};
++const relative = (point, core) => {
++  const vertical = point.y < core.y ? 'above' : point.y > core.y ? 'below' : '';
++  const horizontal = point.x < core.x ? 'left' : point.x > core.x ? 'right' : '';
++  return [vertical, horizontal].filter(Boolean).join(' and ') || 'at the core';
++};
++export function coopObjectivesSnapshot(source, selectedRelayId = null) {
++  const level = source?.level || source;
++  const relays = (source?.strongholds || []).map((hold, index) => ({
++    id: hold.id,
++    number: index + 1,
++    required: level.goal.cores?.includes(hold.id) === true,
++    state: hold.defeated ? 'secured' : hold.shielded === false ? 'exposed' : 'shielded',
++    core: { x: hold.core.x, y: hold.core.y },
++    anchors: hold.anchors.map((anchor, index) => ({
++      letter: index === 0 ? 'A' : 'B',
++      x: anchor.x,
++      y: anchor.y,
++      captured: Boolean(anchor.captured),
++      relationship: relative(anchor, hold.core),
++    })),
++    location: position(hold.core, level),
++  }));
++  const required = relays.filter((relay) => relay.required);
++  const selected =
++    relays.find((relay) => relay.id === selectedRelayId) ||
++    required.find((relay) => relay.state !== 'secured') ||
++    required[0] ||
++    relays.find((relay) => relay.state !== 'secured') ||
++    relays[0] ||
++    null;
++  const instruction = !selected
++    ? ''
++    : selected.state === 'secured'
++      ? 'This relay is complete.'
++      : selected.state === 'exposed'
++        ? 'Capture its core in a new cut.'
++        : 'Capture both anchors to expose its core.';
++  const summary = selected
++    ? `${required.length > 1 ? `${required.filter((r) => r.state === 'secured').length} / ${required.length} secured · ` : ''}${selected.required ? '' : 'Optional '}Relay ${selected.number} ${selected.location} · ${selected.state}. ${instruction}`
++    : '';
++  const description = selected
++    ? `${selected.required ? '' : 'Optional '}Relay ${selected.number} ${selected.location} · ${selected.state}. ${instruction} ${selected.anchors.map((a) => `${a.letter} ${a.captured ? 'captured' : 'available'}, ${a.relationship} of the core`).join('; ')}.`
++    : '';
++  return {
++    width: level?.width || 0,
++    height: level?.height || 0,
++    relays,
++    selected,
++    description,
++    summary,
++  };
++}
++
++// Diagrams disclose only the selected relay's authored positions. No picture, actor,
++// simulation, crop, decoder or earned-artwork ownership is involved.
++export function paintCoopObjectiveDiagram(canvas, snapshot, overview = false) {
++  const ctx = canvas.getContext('2d');
++  if (!ctx || !snapshot.selected) return false;
++  canvas.width = overview ? 360 : 600;
++  canvas.height = overview ? 180 : 300;
++  const { selected, width, height } = snapshot;
++  const points = [selected.core, ...selected.anchors];
++  const bounds = overview
++    ? { left: 0, top: 0, right: width, bottom: height }
++    : {
++        left: Math.max(0, Math.min(...points.map((p) => p.x)) - 1),
++        top: Math.max(0, Math.min(...points.map((p) => p.y)) - 1),
++        right: Math.min(width, Math.max(...points.map((p) => p.x)) + 1),
++        bottom: Math.min(height, Math.max(...points.map((p) => p.y)) + 1),
++      };
++  const scale = Math.min(
++    (canvas.width - 72) / (bounds.right - bounds.left),
++    (canvas.height - 72) / (bounds.bottom - bounds.top),
++  );
++  const point = (p) => ({
++    x: canvas.width / 2 + (p.x - (bounds.left + bounds.right) / 2) * scale,
++    y: canvas.height / 2 + (p.y - (bounds.top + bounds.bottom) / 2) * scale,
++  });
++  const style = canvas.ownerDocument?.defaultView?.getComputedStyle?.(canvas);
++  const color = (key, fallback) => style?.getPropertyValue?.(key)?.trim() || fallback;
++  const ink = color('--fk-bg', '#0b1425'),
++    navigation = color('--fk-cyan', '#a7dce8'),
++    active = color('--fk-amber', '#ffd766');
++  ctx.fillStyle = ink;
++  ctx.fillRect(0, 0, canvas.width, canvas.height);
++  ctx.strokeStyle = navigation;
++  ctx.lineWidth = 2;
++  if (overview) {
++    const a = point({ x: 0, y: 0 }),
++      b = point({ x: width, y: height });
++    ctx.strokeRect(a.x, a.y, b.x - a.x, b.y - a.y);
++    const core = point(selected.core);
++    ctx.fillStyle = active;
++    ctx.fillRect(core.x - 6, core.y - 6, 12, 12);
++    return true;
++  }
++  const core = point(selected.core);
++  for (const anchor of selected.anchors) {
++    const p = point(anchor);
++    ctx.beginPath();
++    ctx.moveTo(core.x, core.y);
++    ctx.lineTo(p.x, p.y);
++    ctx.stroke();
++    ctx.fillStyle = anchor.captured ? color('--fk-text', '#f5f1df') : navigation;
++    ctx.fillRect(p.x - 20, p.y - 20, 40, 40);
++    ctx.fillStyle = ink;
++    ctx.font = `600 36px ${color('--fk-font-ui', 'sans-serif')}`;
++    ctx.textAlign = 'center';
++    ctx.textBaseline = 'middle';
++    ctx.fillText(anchor.letter, p.x, p.y);
++  }
++  ctx.fillStyle = active;
++  ctx.fillRect(core.x - 24, core.y - 24, 48, 48);
++  ctx.fillStyle = ink;
++  ctx.font = `600 36px ${color('--fk-font-ui', 'sans-serif')}`;
++  ctx.textAlign = 'center';
++  ctx.textBaseline = 'middle';
++  ctx.fillText(String(selected.number), core.x, core.y);
++  return true;
++}
++
++export function mountCoopObjectives({
++  document,
++  getState,
++  canOpen,
++  foreground,
++  visible,
++  clearInput,
++  onSelect = () => {},
++  onError = () => {},
++}) {
++  const $ = (id) => document.getElementById(id);
++  const dialog = $('coop-objectives-dialog'),
++    opener = $('coop-objectives-open'),
++    close = $('coop-objectives-close'),
++    list = $('coop-objectives-list');
++  let disposed = false,
++    owner = null,
++    visit = 0,
++    source = null,
++    generation = null,
++    selectedId = null,
++    hudKey = null;
++  const snapshot = () => {
++    const state = getState();
++    if (source !== state.source || generation !== state.generation) {
++      source = state.source;
++      generation = state.generation;
++      selectedId = null;
++    }
++    return coopObjectivesSnapshot(source, selectedId);
++  };
++  const current = (ticket) =>
++    !disposed &&
++    owner === ticket &&
++    visit === ticket.visit &&
++    foreground() &&
++    getState().source === ticket.source &&
++    getState().generation === ticket.generation;
++  function renderDetails() {
++    const data = snapshot();
++    $('coop-objectives-description').textContent = data.description;
++    for (const button of list.querySelectorAll('button'))
++      button.setAttribute('aria-pressed', String(button.dataset.relayId === data.selected?.id));
++    let available = false;
++    try {
++      available =
++        paintCoopObjectiveDiagram($('coop-objectives-detail'), data) &&
++        paintCoopObjectiveDiagram($('coop-objectives-location'), data, true);
++    } catch {
++      // The equivalent text remains usable if this optional diagram fails.
++      $('coop-objectives-detail').width = $('coop-objectives-location').width = 0;
++    }
++    $('coop-objectives-diagram-status').textContent = available
++      ? 'Gold square: core. A and B: its two anchors. The small board locates this core in the arena.'
++      : 'Diagram unavailable. Relay position and anchor relationships are described above.';
++  }
++  function closed() {
++    if (dialog.open || !owner) return;
++    const ticket = owner,
++      restore = ticket.restore && current(ticket);
++    owner = null;
++    const closedVisit = ++visit;
++    const currentReturn = () =>
++      !disposed &&
++      !dialog.open &&
++      !owner &&
++      visit === closedVisit &&
++      foreground() &&
++      getState().source === ticket.source &&
++      getState().generation === ticket.generation;
++    $('coop-objectives-detail').width = $('coop-objectives-location').width = 0;
++    clearInput();
++    const active = document.activeElement;
++    if (
++      restore &&
++      !disposed &&
++      !dialog.open &&
++      !owner &&
++      foreground() &&
++      getState().source === ticket.source &&
++      getState().generation === ticket.generation &&
++      visible(opener) &&
++      currentReturn() &&
++      document.activeElement === active &&
++      (!active ||
++        active === document.body ||
++        active === document.documentElement ||
++        dialog.contains(active))
++    ) {
++      opener.focus({ preventScroll: true });
++      if (currentReturn() && document.activeElement === opener)
++        opener.scrollIntoView({ block: 'nearest', inline: 'nearest', behavior: 'instant' });
++    }
++  }
++  function closeDialog({ restore = true } = {}) {
++    if (!dialog.open) return;
++    if (owner) owner.restore = restore && foreground();
++    dialog.close();
++  }
++  function open() {
++    if (disposed || owner || dialog.open || !foreground() || !canOpen() || !visible(opener)) return;
++    const data = snapshot();
++    if (!data.selected) return;
++    const ticket = { source, generation, visit: ++visit, restore: true };
++    owner = ticket;
++    clearInput();
++    try {
++      list.replaceChildren(
++        ...data.relays.map((relay) => {
++          const button = document.createElement('button');
++          button.type = 'button';
++          button.dataset.relayId = relay.id;
++          button.textContent = `${relay.required ? '' : 'Optional '}Relay ${relay.number} · ${relay.state} · ${relay.anchors.map((a) => `${a.letter} ${a.captured ? 'captured' : 'available'}`).join(' · ')}`;
++          button.onclick = () => {
++            if (!current(ticket) || !dialog.open) return;
++            selectedId = relay.id;
++            renderDetails();
++            if (current(ticket) && dialog.open) onSelect(selectedId);
++          };
++          return button;
++        }),
++      );
++      renderDetails();
++      if (!current(ticket) || !canOpen()) {
++        owner = null;
++        return;
++      }
++      dialog.showModal();
++      const active = document.activeElement;
++      if (
++        current(ticket) &&
++        dialog.open &&
++        (!active ||
++          active === opener ||
++          active === document.body ||
++          active === dialog ||
++          active === close)
++      )
++        close.focus({ preventScroll: true });
++    } catch {
++      if (owner === ticket) {
++        owner = null;
++        visit++;
++        if (dialog.open) dialog.close();
++        onError('Objectives view unavailable. Your Team attempt is unchanged.');
++      }
++    }
++  }
++  const cancel = (event) => {
++    event.preventDefault();
++    closeDialog();
++  };
++  const keydown = (event) => {
++    if (event.key === 'Escape') event.stopPropagation();
++  };
++  opener.onclick = open;
++  close.onclick = () => closeDialog();
++  dialog.addEventListener('close', closed);
++  dialog.addEventListener('cancel', cancel);
++  dialog.addEventListener('keydown', keydown);
++  return {
++    get selectedRelayId() {
++      return snapshot().selected?.id ?? null;
++    },
++    describe() {
++      return snapshot().summary;
++    },
++    // Passive state for the same selected relay as the inspector. The arena's
++    // exact-position markers are locators; this strip supplies readable states.
++    renderHud({ large = false } = {}) {
++      const area = $('coop-objective-area'),
++        hud = $('coop-relay-hud'),
++        state = disposed ? null : snapshot(),
++        selected = state?.selected,
++        show = Boolean(large && selected);
++      const mode = String(show);
++      if (area.dataset.relayHud !== mode) area.dataset.relayHud = mode;
++      hud.hidden = !show;
++      if (!show) return null;
++      const roles = [
++        {
++          id: 'a',
++          mark: 'anchor-a',
++          captured: selected.anchors[0].captured,
++          text: selected.anchors[0].captured ? 'Captured' : 'Needed',
++        },
++        {
++          id: 'core',
++          mark: selected.state,
++          captured: false,
++          text: selected.state[0].toUpperCase() + selected.state.slice(1),
++        },
++        {
++          id: 'b',
++          mark: 'anchor-b',
++          captured: selected.anchors[1].captured,
++          text: selected.anchors[1].captured ? 'Captured' : 'Needed',
++        },
++      ];
++      const key = JSON.stringify([
++        selected.id,
++        ...roles.map(({ mark, captured }) => [mark, captured]),
++      ]);
++      if (key !== hudKey) {
++        for (const role of roles) {
++          const label = $(`coop-relay-${role.id}-state`),
++            canvas = $(`coop-relay-${role.id}-symbol`);
++          if (label.textContent !== role.text) label.textContent = role.text;
++          // Decorative symbols are supplementary to the complete DOM labels.
++          // A missing canvas context must not prevent reading or playing.
++          let ctx;
++          try {
++            ctx = canvas.getContext('2d');
++            if (ctx) {
++              ctx.save();
++              try {
++                ctx.setTransform(2, 0, 0, 2, 14, 14);
++                ctx.clearRect(-7, -7, 14, 14);
++                drawCoopCueSymbol(ctx, { mark: role.mark, captured: role.captured, size: 14 });
++              } finally {
++                ctx.restore();
++              }
++            }
++            canvas.hidden = !ctx;
++          } catch {
++            canvas.hidden = true;
++          }
++        }
++        hudKey = key;
++      }
++      const required = state.relays.filter((relay) => relay.required),
++        secured = required.filter((relay) => relay.state === 'secured').length;
++      return `${selected.required ? '' : 'Optional '}Relay ${selected.number}${required.length ? ` · ${secured}/${required.length} required secured` : ''}`;
++    },
++    refresh() {
++      if (owner && !current(owner)) closeDialog({ restore: false });
++      opener.hidden = !canOpen() || !snapshot().relays.length;
++    },
++    close: closeDialog,
++    suspend() {
++      if (owner) owner.restore = false;
++      closeDialog({ restore: false });
++    },
++    dispose() {
++      disposed = true;
++      owner = null;
++      visit++;
++      opener.onclick = null;
++      close.onclick = null;
++      dialog.removeEventListener('close', closed);
++      dialog.removeEventListener('cancel', cancel);
++      dialog.removeEventListener('keydown', keydown);
++      if (dialog.open) dialog.close();
++      list.replaceChildren();
++      $('coop-objectives-detail').width = $('coop-objectives-location').width = 0;
++    },
++  };
++}
+diff --git a/game/test/coop-cue-semantics.test.mjs b/game/test/coop-cue-semantics.test.mjs
+new file mode 100644
+index 0000000000000000000000000000000000000000..ca979d20dd8816a0560b8f8851eb0eb35438c3a1
+--- /dev/null
++++ b/game/test/coop-cue-semantics.test.mjs
+@@ -0,0 +1,203 @@
++import test from 'node:test';
++import assert from 'node:assert/strict';
++import { createCoop, startCoop, pauseCoop, resumeCoop } from '../coop/core.mjs';
++import { FIRST_CONNECTION } from '../coop/first-connection.mjs';
++import { updateThreatClocks, useSupport } from '../coop/threats.mjs';
++import { describeCoopEnemyCue, coopThreatSummary } from '../couch/coop-cue-semantics.mjs';
++
++const hunter = (phase = 'patrol', target = null, extra = {}) => ({
++  type: 'hunter',
++  active: true,
++  phase,
++  target,
++  speedScale: 1,
++  slowUntil: 0,
++  ...extra,
++});
++function activeRun(enemies) {
++  const run = startCoop(createCoop(FIRST_CONNECTION));
++  run.enemies = enemies;
++  return run;
++}
++function freeze(value) {
++  if (value && typeof value === 'object' && !ArrayBuffer.isView(value)) {
++    Object.values(value).forEach(freeze);
++    Object.freeze(value);
++  }
++  return value;
++}
++
++test('hunter cue uses actual phase and exact zero-based player target', () => {
++  for (const [phase, target, text, mark, priority] of [
++    ['warning', 0, 'P1', 'hunter-lock', 1],
++    ['warning', 1, 'P2', 'hunter-lock', 1],
++    ['commit', 0, 'P1', 'hunter-charge', 1],
++    ['commit', 1, 'P2', 'hunter-charge', 1],
++    ['recovery', 1, 'H', 'hunter-recovery', 2],
++    ['patrol', 1, 'H', 'hunter', 2],
++    ['unknown', 0, 'H', 'hunter', 2],
++  ]) {
++    const enemy = freeze(hunter(phase, target)),
++      cue = describeCoopEnemyCue(enemy, 3);
++    assert.deepEqual(cue, { text, mark, priority, slowed: false });
++    assert.ok(Object.isFrozen(cue));
++  }
++});
++
++test('invalid targets never invent a player or change the actual hunter phase', () => {
++  for (const target of [null, undefined, '0', '1', false, true, -1, 2, 0.5, NaN, Infinity])
++    for (const [phase, mark] of [
++      ['warning', 'hunter-lock'],
++      ['commit', 'hunter-charge'],
++    ])
++      assert.deepEqual(describeCoopEnemyCue(hunter(phase, target), 0), {
++        text: 'H',
++        mark,
++        priority: 1,
++        slowed: false,
++      });
++});
++
++test('inactive and malformed actors are absent; nonhunters retain only applicable slowdown', () => {
++  for (const enemy of [null, undefined, [], {}, 'hunter', hunter('warning', 0, { active: false })])
++    assert.equal(describeCoopEnemyCue(enemy, 0), null);
++  assert.deepEqual(describeCoopEnemyCue({ type: 'drifter', speedScale: 0.5, slowUntil: 4 }, 3), {
++    text: '',
++    mark: null,
++    priority: 2,
++    slowed: true,
++  });
++  assert.deepEqual(describeCoopEnemyCue({ type: 'unknown' }, 0), {
++    text: '',
++    mark: null,
++    priority: 2,
++    slowed: false,
++  });
++});
++
++test('slow cue requires a finite active support interval and expires exactly at its endpoint', () => {
++  const enemy = freeze(hunter('recovery', null, { speedScale: 0.5, slowUntil: 4 }));
++  assert.equal(describeCoopEnemyCue(enemy, 3.999).slowed, true);
++  assert.equal(describeCoopEnemyCue(enemy, 4).slowed, false);
++  assert.equal(describeCoopEnemyCue(enemy, 5).slowed, false);
++  for (const time of [undefined, null, '3', NaN, Infinity, -1])
++    assert.equal(describeCoopEnemyCue(enemy, time).slowed, false);
++  for (const speedScale of [undefined, '0.5', 0, -0.5, 1, 2, NaN, Infinity])
++    assert.equal(describeCoopEnemyCue({ ...enemy, speedScale }, 3).slowed, false);
++  for (const slowUntil of [undefined, '4', NaN, Infinity])
++    assert.equal(describeCoopEnemyCue({ ...enemy, slowUntil }, 3).slowed, false);
++});
++
++test('real Team threat transitions determine cues without any presentation-owned timing', () => {
++  const run = startCoop(createCoop(FIRST_CONNECTION)),
++    enemy = run.enemies.find((item) => item.type === 'hunter');
++  run.time = 10;
++  Object.assign(enemy, {
++    phase: 'warning',
++    phaseUntil: run.time,
++    target: 0,
++    targetPoint: { x: enemy.x + 4, y: enemy.y },
++  });
++  assert.equal(describeCoopEnemyCue(enemy, run.time).mark, 'hunter-lock');
++  updateThreatClocks(run, () => {});
++  assert.equal(enemy.phase, 'commit');
++  assert.equal(describeCoopEnemyCue(enemy, run.time).mark, 'hunter-charge');
++  run.time = enemy.phaseUntil;
++  updateThreatClocks(run, () => {});
++  assert.equal(enemy.phase, 'recovery');
++  const before = structuredClone(run);
++  assert.equal(describeCoopEnemyCue(enemy, run.time).mark, 'hunter-recovery');
++  assert.deepEqual(run, before);
++});
++
++test('real Support slowdown and paused time remain cosmetic read-only inputs', () => {
++  const run = startCoop(createCoop(FIRST_CONNECTION)),
++    enemy = run.enemies.find((item) => item.type === 'hunter'),
++    player = run.players[0];
++  enemy.x = player.x + 1;
++  enemy.y = player.y;
++  useSupport(run, player, () => {});
++  assert.equal(enemy.speedScale, 0.5);
++  assert.ok(enemy.slowUntil > run.time);
++  pauseCoop(run);
++  const before = structuredClone(run);
++  for (let i = 0; i < 3; i++) assert.equal(describeCoopEnemyCue(enemy, run.time).slowed, true);
++  assert.deepEqual(run, before);
++});
++
++test('summary preserves both targets and both phases while deduplicating repeated hunters', () => {
++  const run = freeze(
++    activeRun([
++      hunter('commit', 1),
++      hunter('warning', 1),
++      hunter('warning', 0),
++      hunter('warning', 1),
++      hunter('commit', 0),
++      hunter('commit', 1),
++    ]),
++  );
++  const before = structuredClone(run);
++  assert.equal(
++    coopThreatSummary(run),
++    'Hunter lock: Players 1 and 2 · Hunter charge: Players 1 and 2',
++  );
++  assert.deepEqual(run, before);
++  assert.equal(
++    coopThreatSummary({ ...run, enemies: [...run.enemies].reverse() }),
++    coopThreatSummary(run),
++  );
++});
++
++test('summary distinguishes a single lock, a single charge and simultaneous different targets', () => {
++  assert.equal(coopThreatSummary(activeRun([hunter('warning', 0)])), 'Hunter lock: Player 1');
++  assert.equal(coopThreatSummary(activeRun([hunter('commit', 1)])), 'Hunter charge: Player 2');
++  assert.equal(
++    coopThreatSummary(activeRun([hunter('warning', 0), hunter('commit', 1)])),
++    'Hunter lock: Player 1 · Hunter charge: Player 2',
++  );
++});
++
++test('summary excludes inactive, invalid, nonhunter and non-immediate threats', () => {
++  const run = activeRun([
++    null,
++    {},
++    hunter('warning', 0, { active: false }),
++    hunter('warning', '0'),
++    hunter('warning', 2),
++    hunter('commit', null),
++    hunter('recovery', 0),
++    hunter('patrol', 1),
++    { type: 'drifter', phase: 'commit', target: 1 },
++  ]);
++  assert.equal(coopThreatSummary(run), null);
++  run.enemies.push(hunter('warning', 1));
++  assert.equal(coopThreatSummary(run), 'Hunter lock: Player 2');
++  run.players[1].status = 'unavailable';
++  assert.equal(coopThreatSummary(run), null);
++});
++
++test('either downed player keeps rescue guidance ahead of every hunter summary', () => {
++  for (const player of [0, 1]) {
++    const run = activeRun([hunter('warning', 0), hunter('commit', 1)]);
++    run.players[player].status = 'downed';
++    freeze(run);
++    const before = structuredClone(run);
++    assert.equal(coopThreatSummary(run), null);
++    assert.deepEqual(run, before);
++  }
++});
++
++test('pause retains actual threats while ready, terminal and malformed runs have no advisory', () => {
++  const run = activeRun([hunter('warning', 0), hunter('commit', 1)]),
++    expected = coopThreatSummary(run);
++  pauseCoop(run);
++  const paused = structuredClone(run);
++  assert.equal(coopThreatSummary(run), expected);
++  assert.deepEqual(run, paused);
++  resumeCoop(run);
++  assert.equal(coopThreatSummary(run), expected);
++  for (const status of ['ready', 'won', 'lost', 'unknown'])
++    assert.equal(coopThreatSummary({ ...run, status }), null);
++  for (const invalid of [null, undefined, [], {}, { status: 'running' }])
++    assert.equal(coopThreatSummary(invalid), null);
++});
+diff --git a/game/test/coop-cue-symbols.test.mjs b/game/test/coop-cue-symbols.test.mjs
+new file mode 100644
+index 0000000000000000000000000000000000000000..b7eb0bf914ecf99eb29129fe3ed201848bb0caf9
+--- /dev/null
++++ b/game/test/coop-cue-symbols.test.mjs
+@@ -0,0 +1,360 @@
++import test from 'node:test';
++import assert from 'node:assert/strict';
++import { drawCoopCueSymbol } from '../couch/coop-cue-symbols.mjs';
++
++function context() {
++  const initial = {
++    globalAlpha: 0.4,
++    globalCompositeOperation: 'multiply',
++    lineJoin: 'bevel',
++    lineCap: 'butt',
++    lineWidth: 9,
++    fillStyle: '#fedcba',
++    strokeStyle: '#123456',
++    dash: [3, 1],
++  };
++  let state = structuredClone(initial),
++    path = [];
++  const stack = [],
++    calls = [],
++    drawings = [];
++  const methods = {
++    save() {
++      stack.push(structuredClone(state));
++    },
++    restore() {
++      state = stack.pop();
++    },
++    beginPath() {
++      path = [];
++    },
++    moveTo(...args) {
++      path.push(['M', ...args]);
++    },
++    lineTo(...args) {
++      path.push(['L', ...args]);
++    },
++    closePath() {
++      path.push(['Z']);
++    },
++    arc(...args) {
++      path.push(['A', ...args]);
++    },
++    setLineDash(value) {
++      state.dash = [...value];
++    },
++    fill() {
++      drawings.push({ method: 'fill', state: structuredClone(state), path: structuredClone(path) });
++    },
++    stroke() {
++      drawings.push({
++        method: 'stroke',
++        state: structuredClone(state),
++        path: structuredClone(path),
++      });
++    },
++  };
++  const ctx = new Proxy(
++    {},
++    {
++      get(_, key) {
++        if (key in methods)
++          return (...args) => {
++            calls.push([key, ...args]);
++            return methods[key](...args);
++          };
++        if (key in state) return state[key];
++        throw new Error(`Unexpected Canvas access: ${String(key)}`);
++      },
++      set(_, key, value) {
++        if (!(key in state)) throw new Error(`Unexpected Canvas assignment: ${String(key)}`);
++        state[key] = value;
++        return true;
++      },
++    },
++  );
++  return { ctx, calls, drawings, initial, state: () => structuredClone(state), stack, methods };
++}
++const shapes = {
++  hunter: [['M', 0, -1], ['L', 1, 0], ['L', 0, 1], ['L', -1, 0], ['Z']],
++  'hunter-lock': [
++    ['M', -1 / 3, -1],
++    ['L', -1, -1],
++    ['L', -1, -1 / 3],
++    ['M', 1 / 3, -1],
++    ['L', 1, -1],
++    ['L', 1, -1 / 3],
++    ['M', 1 / 3, 1],
++    ['L', 1, 1],
++    ['L', 1, 1 / 3],
++    ['M', -1 / 3, 1],
++    ['L', -1, 1],
++    ['L', -1, 1 / 3],
++  ],
++  'hunter-charge': [
++    ['M', -1, -1],
++    ['L', 0, 0],
++    ['L', -1, 1],
++    ['M', 0, -1],
++    ['L', 1, 0],
++    ['L', 0, 1],
++  ],
++  'hunter-recovery': [['M', -1, -1], ['L', 1, -1], ['L', -1, 1], ['L', 1, 1], ['Z']],
++  drifter: [['M', 0, -1], ['L', 1, 1], ['L', -1, 1], ['Z']],
++  shielded: [['M', -1, -1], ['L', 1, -1], ['L', 1, 1 / 3], ['L', 0, 1], ['L', -1, 1 / 3], ['Z']],
++  exposed: [
++    ['M', -1, -1 / 3],
++    ['L', -1, -1],
++    ['L', 1, -1],
++    ['L', 1, -1 / 3],
++    ['M', -1, 1 / 3],
++    ['L', -1, 1],
++    ['L', 1, 1],
++    ['L', 1, 1 / 3],
++  ],
++  secured: [
++    ['M', -0.5, -1],
++    ['L', 0.5, -1],
++    ['L', 1, 0],
++    ['L', 0.5, 1],
++    ['L', -0.5, 1],
++    ['L', -1, 0],
++    ['Z'],
++  ],
++  'anchor-a': [
++    ['M', -1, -1],
++    ['L', -0.25, -1],
++    ['L', -0.25, -0.55],
++    ['L', 0.25, -0.55],
++    ['L', 0.25, -1],
++    ['L', 1, -1],
++    ['L', 1, 1],
++    ['L', -1, 1],
++    ['Z'],
++  ],
++  'anchor-b': [
++    ['M', -1, -1],
++    ['L', -0.6, -1],
++    ['L', -0.6, -0.55],
++    ['L', -0.2, -0.55],
++    ['L', -0.2, -1],
++    ['L', 0.2, -1],
++    ['L', 0.2, -0.55],
++    ['L', 0.6, -0.55],
++    ['L', 0.6, -1],
++    ['L', 1, -1],
++    ['L', 1, 1],
++    ['L', -1, 1],
++    ['Z'],
++  ],
++};
++const check = [
++  ['M', -0.5, 0.1],
++  ['L', -0.15, 0.5],
++  ['L', 0.55, -0.4],
++];
++const normalized = (path, half = 5.5) =>
++  path.map(([command, ...coordinates]) => [command, ...coordinates.map((n) => n / half)]);
++function samePath(actual, expected) {
++  assert.equal(actual.length, expected.length);
++  actual.forEach((command, index) => {
++    assert.equal(command[0], expected[index][0]);
++    assert.equal(command.length, expected[index].length);
++    command
++      .slice(1)
++      .forEach((n, position) => assert.ok(Math.abs(n - expected[index][position + 1]) < 1e-10));
++  });
++}
++for (const [mark, expected] of Object.entries(shapes))
++  test(`${mark} retains its exact nonverbal shape with dark and light identical paths`, () => {
++    const f = context(),
++      bounds = drawCoopCueSymbol(f.ctx, Object.freeze({ mark }));
++    const strokes = f.drawings.filter((call) => call.method === 'stroke');
++    samePath(normalized(strokes[0].path), expected);
++    assert.equal(strokes.length, mark === 'secured' ? 4 : 2);
++    for (let i = 0; i < strokes.length; i += 2) {
++      assert.deepEqual(strokes[i].path, strokes[i + 1].path);
++      assert.equal(strokes[i].state.strokeStyle, '#07111c');
++      assert.equal(strokes[i].state.lineWidth, 3);
++      assert.equal(strokes[i + 1].state.strokeStyle, '#f1f7ed');
++      assert.equal(strokes[i + 1].state.lineWidth, 1.5);
++      assert.deepEqual(strokes[i].state.dash, []);
++      assert.equal(strokes[i].state.globalAlpha, 1);
++    }
++    if (mark === 'secured') samePath(normalized(strokes[2].path), check);
++    assert.ok(Object.isFrozen(bounds));
++    assert.deepEqual(f.state(), f.initial);
++    assert.equal(f.stack.length, 0);
++  });
++
++test('captured anchors retain one/two-notch identity and add the same check', () => {
++  for (const mark of ['anchor-a', 'anchor-b']) {
++    const f = context();
++    drawCoopCueSymbol(f.ctx, { mark, captured: true });
++    const strokes = f.drawings.filter((call) => call.method === 'stroke');
++    assert.equal(strokes.length, 4);
++    samePath(normalized(strokes[0].path), shapes[mark]);
++    samePath(normalized(strokes[2].path), check);
++    assert.deepEqual(strokes[2].path, strokes[3].path);
++  }
++  for (const mark of Object.keys(shapes).filter((name) => !name.startsWith('anchor'))) {
++    const a = context(),
++      b = context();
++    drawCoopCueSymbol(a.ctx, { mark });
++    drawCoopCueSymbol(b.ctx, { mark, captured: true });
++    assert.deepEqual(a.drawings, b.drawings);
++  }
++});
++
++test('only warning/charge show exact player circle/diamond targets in fixed reserved bounds', () => {
++  for (const mark of ['hunter-lock', 'hunter-charge']) {
++    const none = context(),
++      a = context(),
++      b = context();
++    const bounds = drawCoopCueSymbol(none.ctx, { mark });
++    assert.deepEqual(drawCoopCueSymbol(a.ctx, { mark, target: 0 }), bounds);
++    assert.deepEqual(drawCoopCueSymbol(b.ctx, { mark, target: 1 }), bounds);
++    const circle = a.drawings.filter((d) => d.method === 'stroke').at(-1).path;
++    const diamond = b.drawings.filter((d) => d.method === 'stroke').at(-1).path;
++    assert.deepEqual(circle, [['A', 10, -10, 2.5, 0, Math.PI * 2]]);
++    assert.deepEqual(diamond, [
++      ['M', 10, -13.25],
++      ['L', 13.25, -10],
++      ['L', 10, -6.75],
++      ['L', 6.75, -10],
++      ['Z'],
++    ]);
++    for (const target of [
++      null,
++      undefined,
++      false,
++      true,
++      '0',
++      '1',
++      -1,
++      2,
++      0.5,
++      NaN,
++      Infinity,
++      {},
++      [],
++    ]) {
++      const f = context();
++      assert.deepEqual(drawCoopCueSymbol(f.ctx, { mark, target }), bounds);
++      assert.deepEqual(f.drawings, none.drawings, 'Invalid target cannot fabricate an identity.');
++    }
++  }
++  for (const mark of Object.keys(shapes).filter(
++    (name) => !['hunter-lock', 'hunter-charge'].includes(name),
++  )) {
++    const a = context(),
++      b = context();
++    drawCoopCueSymbol(a.ctx, { mark });
++    drawCoopCueSymbol(b.ctx, { mark, target: 1 });
++    assert.deepEqual(
++      a.drawings,
++      b.drawings,
++      'Non-targeted phases and objectives do not imply a player target.',
++    );
++  }
++});
++
++test('every path and complete dark stroke stays within fixed bounds at all supported scales', () => {
++  for (const size of [8, 14, 24, 64])
++    for (const mark of Object.keys(shapes))
++      for (const target of [null, 0, 1])
++        for (const captured of [false, true]) {
++          const f = context(),
++            bounds = drawCoopCueSymbol(f.ctx, { mark, size, target, captured });
++          for (const call of f.drawings) {
++            const margin = call.method === 'stroke' ? call.state.lineWidth / 2 : 0;
++            for (const [command, x, y, radius] of call.path) {
++              if (command === 'Z') continue;
++              const r = command === 'A' ? radius : 0;
++              assert.ok(
++                x - r - margin >= bounds.left - 1e-9 && x + r + margin <= bounds.right + 1e-9,
++                `${mark} complete horizontal stroke`,
++              );
++              assert.ok(
++                y - r - margin >= bounds.top - 1e-9 && y + r + margin <= bounds.bottom + 1e-9,
++                `${mark} complete vertical stroke`,
++              );
++            }
++          }
++          assert.deepEqual(f.state(), f.initial);
++        }
++});
++
++test('palette and pause/reduced-effect data cannot change geometry or mutate supplied records', () => {
++  const a = context(),
++    b = context();
++  const options = Object.freeze({
++    mark: 'hunter-charge',
++    target: 1,
++    captured: false,
++    get time() {
++      throw new Error('No clock access');
++    },
++    get run() {
++      throw new Error('No gameplay access');
++    },
++    get reduced() {
++      throw new Error('No effects-dependent meaning');
++    },
++    get paused() {
++      throw new Error('No pause-dependent meaning');
++    },
++  });
++  const bounds = drawCoopCueSymbol(a.ctx, options);
++  assert.deepEqual(
++    drawCoopCueSymbol(b.ctx, { mark: 'hunter-charge', target: 1, color: '#000', backing: '#FFF' }),
++    bounds,
++  );
++  assert.deepEqual(
++    a.drawings.map(({ method, path }) => ({ method, path })),
++    b.drawings.map(({ method, path }) => ({ method, path })),
++  );
++  assert.deepEqual(a.state(), a.initial);
++  assert.deepEqual(b.state(), b.initial);
++  assert.ok(
++    !a.calls.some(([name]) =>
++      ['fillText', 'strokeText', 'translate', 'scale', 'rotate'].includes(name),
++    ),
++  );
++});
++
++test('malformed drawing inputs fail before any context mutation', () => {
++  for (const options of [
++    null,
++    [],
++    1,
++    'hunter',
++    {},
++    { mark: 'unknown' },
++    ...[null, '14', NaN, Infinity, 0, 7.999, 64.001].map((size) => ({ mark: 'hunter', size })),
++    ...['red', 'rgba(1,2,3,0)', '#1234', '#12345678', '', null].map((color) => ({
++      mark: 'hunter',
++      color,
++    })),
++    { mark: 'hunter', backing: 'transparent' },
++    { mark: 'anchor-a', captured: 1 },
++  ]) {
++    const f = context();
++    assert.throws(() => drawCoopCueSymbol(f.ctx, options), TypeError);
++    assert.deepEqual(f.calls, []);
++    assert.deepEqual(f.state(), f.initial);
++  }
++  for (const ctx of [null, {}, []])
++    assert.throws(() => drawCoopCueSymbol(ctx, { mark: 'hunter' }), TypeError);
++});
++
++test('drawing failure restores caller attributes without a state or clock dependency', () => {
++  const f = context();
++  f.methods.stroke = () => {
++    throw new Error('Canvas lost');
++  };
++  assert.throws(() => drawCoopCueSymbol(f.ctx, { mark: 'hunter-lock', target: 0 }), /Canvas lost/);
++  assert.deepEqual(f.state(), f.initial);
++  assert.equal(f.stack.length, 0);
++  assert.equal(f.calls.at(-1)[0], 'restore');
++});
+diff --git a/game/test/coop-large-objective-identity.test.mjs b/game/test/coop-large-objective-identity.test.mjs
+new file mode 100644
+index 0000000000000000000000000000000000000000..eb77c8b30e636ba4d05e17d1bd60812c2c0a63b9
+--- /dev/null
++++ b/game/test/coop-large-objective-identity.test.mjs
+@@ -0,0 +1,785 @@
++import test from 'node:test';
++import assert from 'node:assert/strict';
++import { readFile } from 'node:fs/promises';
++import { createCoop } from '../coop/core.mjs';
++import { FIRST_CONNECTION } from '../coop/first-connection.mjs';
++import { createCoopPainter } from '../couch/coop-view.mjs';
++import { imagePresentation } from '../presentation/runtime.mjs';
++import { validateCompiledPresentation } from '../presentation/host.mjs';
++import { page } from './helpers/coop-host.mjs';
++import { placeCoopCue } from '../couch/coop-actor-layout.mjs';
++import { drawCoopCueSymbol } from '../couch/coop-cue-symbols.mjs';
++import { createCoopActorPresentation } from '../couch/coop-actor-presentation.mjs';
++
++const compiled = validateCompiledPresentation(
++  JSON.parse(await readFile(new URL('../presentation/compiled/runtime.json', import.meta.url))),
++);
++const palette = {
++  ink: '#f6f3e8',
++  paper: '#071527',
++  muted: '#a8b8cc',
++  accent: '#ffd64a',
++  safe: '#67aaff',
++  danger: '#ff7169',
++  field: '#10243e',
++  grid: '#182b43',
++  sky: '#233950',
++  land: '#526e67',
++};
++const snapshot = {
++  canvas: { palette, motionScale: 1 },
++  fonts: { ui: 'Prepared UI', numeric: 'Prepared Mono' },
++  image(slot) {
++    const asset = compiled.resolved.assets[slot];
++    return asset ? { image: { slot }, geometry: imagePresentation(asset) } : null;
++  },
++};
++function surface(width = 362) {
++  const calls = [],
++    stack = [];
++  let path = [];
++  let state = {
++    matrix: [1, 0, 0, 1, 0, 0],
++    globalAlpha: 1,
++    imageSmoothingEnabled: true,
++    font: '10px sans-serif',
++    dash: [],
++  };
++  const multiply = ([a, b, c, d, e, f]) => {
++    const [g, h, i, j, k, l] = state.matrix;
++    state.matrix = [
++      g * a + i * b,
++      h * a + j * b,
++      g * c + i * d,
++      h * c + j * d,
++      g * e + i * f + k,
++      h * e + j * f + l,
++    ];
++  };
++  const ctx = new Proxy(
++    {},
++    {
++      get(_, name) {
++        if (name in state) return state[name];
++        return (...args) => {
++          calls.push({
++            name,
++            args,
++            state: { ...state, matrix: [...state.matrix] },
++            ...(name === 'stroke' ? { path: [...path] } : {}),
++          });
++          if (name === 'beginPath') path = [];
++          if (name === 'setLineDash') state.dash = [...args[0]];
++          if (['moveTo', 'lineTo'].includes(name)) {
++            const [a, b, c, d, e, f] = state.matrix;
++            path.push({
++              name,
++              x: ((a * args[0] + c * args[1] + e) * width) / 1152,
++              y: ((b * args[0] + d * args[1] + f) * width) / 1152,
++            });
++          }
++          if (name === 'closePath') path.push({ name });
++          if (name === 'arc') {
++            const [a, b, c, d, e, f] = state.matrix;
++            path.push({
++              name,
++              x: ((a * args[0] + c * args[1] + e) * width) / 1152,
++              y: ((b * args[0] + d * args[1] + f) * width) / 1152,
++              radius: (args[2] * Math.hypot(a, b) * width) / 1152,
++              start: args[3],
++              end: args[4],
++            });
++          }
++          if (name === 'save') stack.push({ ...state, matrix: [...state.matrix] });
++          if (name === 'restore') state = stack.pop();
++          if (name === 'translate') multiply([1, 0, 0, 1, ...args]);
++          if (name === 'scale') multiply([args[0], 0, 0, args[1], 0, 0]);
++          if (name === 'rotate') {
++            const c = Math.cos(args[0]),
++              s = Math.sin(args[0]);
++            multiply([c, s, -s, c, 0, 0]);
++          }
++          if (name === 'measureText')
++            return {
++              width: String(args[0]).length * Number(state.font.match(/([\d.]+)px/)[1]) * 0.64,
++            };
++        };
++      },
++      set(_, name, value) {
++        state[name] = value;
++        return true;
++      },
++    },
++  );
++  return {
++    canvas: { width: 1152, height: 576, clientWidth: width, getContext: () => ctx },
++    calls,
++    ctx,
++  };
++}
++function bounds(call, rectangle = call.args.slice(1)) {
++  const [a, b, c, d, e, f] = call.state.matrix;
++  const [x, y, w, h] = rectangle;
++  const corners = [
++    [x, y],
++    [x + w, y],
++    [x, y + h],
++    [x + w, y + h],
++  ].map(([px, py]) => [a * px + c * py + e, b * px + d * py + f]);
++  return {
++    left: Math.min(...corners.map((p) => p[0])),
++    right: Math.max(...corners.map((p) => p[0])),
++    top: Math.min(...corners.map((p) => p[1])),
++    bottom: Math.max(...corners.map((p) => p[1])),
++  };
++}
++
++// Actual painter and prepared slot geometry. Finite text metrics/Canvas commands
++// establish these fixture contracts, not native glyph readability or playability.
++const near = (a, b) => Math.abs(a - b) < 1e-7;
++const fontPx = (call, width) =>
++  (Number(call.state.font.match(/([\d.]+)px/)[1]) *
++    Math.hypot(call.state.matrix[2], call.state.matrix[3]) *
++    width) /
++  1152;
++const cssBounds = (call, rectangle, width) =>
++  Object.fromEntries(
++    Object.entries(bounds(call, rectangle)).map(([key, value]) => [key, (value * width) / 1152]),
++  );
++function makeRun(kind) {
++  const level = structuredClone(FIRST_CONNECTION);
++  level.id = `large-${kind}-eight-relays`;
++  level.walls = [];
++  const xs = kind === 'spread' ? [10.5, 27.5, 44.5, 61.5] : [31.5, 34.5, 37.5, 40.5];
++  const ys = kind === 'spread' ? [10.5, 25.5] : [16.5, 21.5];
++  const dx = kind === 'spread' ? 4 : 1,
++    dy = kind === 'spread' ? 3 : 1;
++  level.strongholds = ys
++    .flatMap((y) =>
++      xs.map((x) => ({
++        core: { x, y },
++        anchors: [
++          { x: x - dx, y: y - dy },
++          { x: x + dx, y: y + dy },
++        ],
++      })),
++    )
++    .map((hold, index) => ({ ...hold, id: `relay-${index + 1}` }));
++  level.goal = { cores: level.strongholds.map((hold) => hold.id) };
++  const run = createCoop(level); // Authoritative strict validation precedes visual state setup.
++  Object.assign(run.players[0], { x: 35.5, y: 19.5 });
++  Object.assign(run.players[1], { x: 38.5, y: 19.5, graceUntil: 10 });
++  return run;
++}
++function setStage(run, stage) {
++  // These are explicit renderer snapshots, not invented successful player inputs.
++  run.players[0].status = stage === 2 ? 'active' : 'downed';
++  const hunter = run.enemies.find((enemy) => enemy.type === 'hunter');
++  Object.assign(hunter, {
++    phase: ['warning', 'commit', 'recovery'][stage],
++    target: 0,
++    targetPoint: { x: 25, y: 10 },
++    speedScale: stage ? 0.6 : 1,
++    slowUntil: stage ? 10 : 0,
++  });
++  if (stage)
++    for (const [index, hold] of run.strongholds.entries()) {
++      if (index > 1) continue;
++      for (const anchor of hold.anchors) anchor.captured = true;
++      hold.shielded = false;
++      hold.defeated = index === 1 || stage === 2;
++    }
++}
++function paint(run, width, textFace, options = {}) {
++  const before = JSON.stringify(run),
++    view = surface(width),
++    painter = createCoopPainter(view.canvas);
++  painter.setPresentation(snapshot);
++  painter.paint(run, { textSize: 'large', textFace, reduced: true, ...options });
++  assert.equal(JSON.stringify(run), before, 'Painting must preserve every serialized run byte.');
++  return view;
++}
++function maximalRun(kind, stage) {
++  const original = makeRun(kind),
++    level = structuredClone(original.level),
++    template = FIRST_CONNECTION.enemies.find((enemy) => enemy.type === 'hunter');
++  level.enemies = [5.5, 12.5, 23.5, 30.5]
++    .flatMap((y) => [8.5, 22.5, 49.5, 63.5].map((x) => ({ ...template, x, y })))
++    .map((enemy, index) => ({ ...enemy, id: `pressure-${index}` }));
++  const run = createCoop(level);
++  run.players = structuredClone(original.players);
++  setStage(run, stage);
++  for (const [index, enemy] of run.enemies.entries())
++    Object.assign(enemy, {
++      phase: ['warning', 'commit', 'recovery', 'cooldown'][index % 4],
++      target: (index + stage) % 2,
++      targetPoint: { x: 25 + index, y: 10 },
++      speedScale: stage && index % 3 === 0 ? 0.6 : 1,
++      slowUntil: stage && index % 3 === 0 ? 10 : 0,
++    });
++  return run;
++}
++
++test('explicit objective rows share a pitch without changing ordinary placement or caller geometry', () => {
++  const options = {
++    x: 40,
++    y: 42,
++    width: 30,
++    height: 16,
++    arenaWidth: 200,
++    arenaHeight: 100,
++    heads: [],
++    occupied: [],
++    preferClear: true,
++  };
++  const before = structuredClone(options),
++    ordinary = placeCoopCue(options);
++  assert.deepEqual(placeCoopCue({ ...options, rowPitch: null }), ordinary);
++  const aligned = placeCoopCue({ ...options, rowPitch: 22.4 });
++  assert.ok(near(aligned.x, 40));
++  assert.ok(near(aligned.y, 34.6), 'Rows use the shared pitch, not this shorter plate height.');
++  assert.equal(aligned.height, 16);
++  assert.deepEqual(options, before);
++  for (const rowPitch of [0, -1, 15, Infinity, NaN, '22.4'])
++    assert.throws(() => placeCoopCue({ ...options, rowPitch }), /row pitch/);
++});
++test('unavailable row slots retain the ordinary non-dropping fallback', () => {
++  const betweenRows = {
++    x: 50,
++    y: 23.4,
++    width: 10,
++    height: 20,
++    arenaWidth: 100,
++    arenaHeight: 50,
++    heads: [
++      { left: 0, right: 100, top: 11.2, bottom: 13.2 },
++      { left: 0, right: 100, top: 33.6, bottom: 35.6 },
++    ],
++    occupied: [],
++    preferClear: true,
++  };
++  const ordinary = placeCoopCue(betweenRows);
++  assert.ok(ordinary);
++  assert.deepEqual(placeCoopCue({ ...betweenRows, rowPitch: 22.4 }), ordinary);
++  const full = {
++    ...betweenRows,
++    heads: [],
++    occupied: [{ left: 0, right: 100, top: 0, bottom: 50 }],
++  };
++  assert.deepEqual(
++    placeCoopCue({ ...full, rowPitch: 22.4 }),
++    placeCoopCue(full),
++    'Impossible clear capacity stays explicit overlap, not a missing cue.',
++  );
++  const tall = { ...betweenRows, heads: [], height: 1, arenaHeight: 1000 };
++  assert.deepEqual(
++    placeCoopCue({ ...tall, rowPitch: 1 }),
++    placeCoopCue(tall),
++    'Oversized row search stays bounded without discarding the cue.',
++  );
++});
++
++test('fractional neighboring rows admit shared edges but reject genuine intersections', () => {
++  const first = placeCoopCue({
++    x: 20,
++    y: 12.2,
++    width: 30,
++    height: 22.4,
++    arenaWidth: 42,
++    arenaHeight: 70,
++    heads: [],
++    occupied: [],
++    rowPitch: 22.4,
++  });
++  const options = {
++    x: 20,
++    y: 34.6,
++    width: 30,
++    height: 22.4,
++    arenaWidth: 42,
++    arenaHeight: 70,
++    heads: [],
++    occupied: [first],
++    rowPitch: 22.4,
++  };
++  const adjacent = placeCoopCue(options);
++  assert.ok(near(adjacent.y, 34.6));
++  assert.ok(Math.abs(first.bottom - adjacent.top) < 1e-12);
++  const genuinelyOverlapping = placeCoopCue({
++    ...options,
++    occupied: [{ ...first, bottom: first.bottom + 0.001 }],
++  });
++  assert.ok(near(genuinelyOverlapping.y, 57));
++  assert.ok(genuinelyOverlapping.top > first.bottom + 0.001);
++});
++
++const cssScale = (call, width) =>
++  (Math.hypot(call.state.matrix[0], call.state.matrix[1]) * width) / 1152;
++function samePath(a, b) {
++  return (
++    a.length === b.length &&
++    a.every((point, index) => {
++      const other = b[index];
++      return (
++        Object.keys(point).length === Object.keys(other).length &&
++        Object.entries(point).every(([key, value]) =>
++          typeof value === 'number' ? near(value, other[key]) : value === other[key],
++        )
++      );
++    })
++  );
++}
++function symbolPairs(view, size = 14) {
++  const width = view.canvas.clientWidth,
++    strokes = view.calls.filter((call) => call.name === 'stroke'),
++    pairs = [];
++  for (let i = 1; i < strokes.length; i++) {
++    const dark = strokes[i - 1],
++      light = strokes[i];
++    if (
++      dark.state.strokeStyle === '#07111c' &&
++      near(dark.state.lineWidth * cssScale(dark, width), (3 * size) / 14) &&
++      near(light.state.lineWidth * cssScale(light, width), (1.5 * size) / 14) &&
++      samePath(dark.path, light.path)
++    )
++      pairs.push({ dark, light });
++  }
++  return pairs;
++}
++function roles(run) {
++  const result = [];
++  for (const hold of run.strongholds) {
++    for (const [index, anchor] of hold.anchors.entries())
++      result.push({
++        id: `anchor:${hold.id}:${index}`,
++        owner: anchor,
++        mark: index === 0 ? 'anchor-a' : 'anchor-b',
++        captured: anchor.captured,
++        size: 3,
++      });
++    result.push({
++      id: `core:${hold.id}`,
++      owner: hold.core,
++      size: 5,
++      mark: hold.defeated ? 'secured' : hold.shielded ? 'shielded' : 'exposed',
++    });
++  }
++  for (const enemy of run.enemies) {
++    if (enemy.active === false) continue;
++    result.push({
++      id: `enemy:${enemy.id}`,
++      owner: enemy,
++      target: enemy.target,
++      size: 14,
++      mark:
++        enemy.type !== 'hunter'
++          ? 'drifter'
++          : enemy.phase === 'warning'
++            ? 'hunter-lock'
++            : enemy.phase === 'commit'
++              ? 'hunter-charge'
++              : enemy.phase === 'recovery'
++                ? 'hunter-recovery'
++                : 'hunter',
++    });
++  }
++  return result;
++}
++const sameNumbers = (actual, expected) =>
++  actual.length === expected.length && actual.every((value, index) => near(value, expected[index]));
++function assertOwnedSymbols(run, view) {
++  const width = view.canvas.clientWidth,
++    cell = width / run.width,
++    actual = [14, 5, 3].flatMap((size) => symbolPairs(view, size)),
++    used = new Set();
++  for (const role of roles(run)) {
++    // Symbol unit tests establish exact local geometry independently. Here its
++    // actual drawing is the oracle for host scale, ownership and integration.
++    const reference = surface(width);
++    reference.ctx.scale(1152 / width, 1152 / width);
++    reference.ctx.translate(role.owner.x * cell, role.owner.y * cell);
++    reference.ctx.scale(role.size / 14, role.size / 14);
++    drawCoopCueSymbol(reference.ctx, {
++      mark: role.mark,
++      size: 14,
++      target: role.target,
++      captured: role.captured ?? false,
++    });
++    for (const pair of symbolPairs(reference, role.size)) {
++      const at = actual.findIndex(
++        (candidate, index) => !used.has(index) && samePath(candidate.light.path, pair.light.path),
++      );
++      assert.ok(
++        at >= 0,
++        `${role.id} ${role.mark} must be drawn at its exact owner with ${role.size} CSS-pixel geometry`,
++      );
++      used.add(at);
++      const found = actual[at];
++      assert.equal(found.light.state.globalAlpha, 1);
++      assert.ok(near((found.light.state.matrix[4] * width) / 1152, role.owner.x * cell));
++      assert.ok(near((found.light.state.matrix[5] * width) / 1152, role.owner.y * cell));
++      assert.notEqual(
++        found.light.state.strokeStyle,
++        '#07111c',
++        'Foreground retains contrast to its dark backing.',
++      );
++      assert.deepEqual(found.light.state.dash, []);
++    }
++  }
++  assert.equal(used.size, actual.length, 'No duplicate, stale, or unowned anchored symbols.');
++  for (const hold of run.strongholds) {
++    for (const anchor of hold.anchors)
++      assert.equal(
++        view.calls.some(
++          (call) =>
++            call.name === 'fillRect' &&
++            sameNumbers(call.args, [anchor.x - 0.7, anchor.y - 0.7, 1.4, 1.4]),
++        ),
++        false,
++        'The old large anchor backing cannot remain beneath the tiny locator.',
++      );
++    assert.equal(
++      view.calls.some(
++        (call) =>
++          call.name === 'arc' &&
++          sameNumbers(call.args.slice(0, 3), [hold.core.x, hold.core.y, 0.48]),
++      ),
++      false,
++      'The old filled core cannot remain beneath the tiny locator.',
++    );
++  }
++  const leaders = view.calls.filter(
++    (call) =>
++      call.name === 'stroke' &&
++      call.state.strokeStyle === '#a8b8cc' &&
++      call.path.length === 2 &&
++      call.path[0].name === 'moveTo' &&
++      call.path[1].name === 'lineTo',
++  );
++  assert.equal(leaders.length, 0, 'Anchored roles do not acquire long label leaders.');
++}
++function pilotRows(view) {
++  const result = new Map(),
++    calls = view.calls,
++    width = view.canvas.clientWidth;
++  for (let index = 0; index < calls.length; index++) {
++    const call = calls[index];
++    if (call.name !== 'fillText') continue;
++    const text = String(call.args[0]);
++    assert.ok(['1', '2', '+'].includes(text), `No redundant Large caption ${text}`);
++    let rect;
++    if (text === '+') {
++      const backing = calls[index - 1];
++      assert.equal(backing.name, 'fillRect');
++      rect = cssBounds(backing, backing.args, width);
++    } else {
++      assert.equal(result.has(text), false, `Pilot ${text} appears once.`);
++      let start = index;
++      while (start >= 0 && calls[start].name !== 'beginPath') start--;
++      const path = calls.slice(start, index),
++        arc = path.find((entry) => entry.name === 'arc');
++      if (arc) {
++        const [x, y, r] = arc.args;
++        rect = cssBounds(arc, [x - r, y - r, 2 * r, 2 * r], width);
++      } else {
++        const points = path.filter((entry) => ['moveTo', 'lineTo'].includes(entry.name));
++        assert.equal(points.length, 4, 'Pilot 2 retains a diamond.');
++        const xs = points.map((entry) => entry.args[0]),
++          ys = points.map((entry) => entry.args[1]);
++        rect = cssBounds(
++          points[0],
++          [
++            Math.min(...xs),
++            Math.min(...ys),
++            Math.max(...xs) - Math.min(...xs),
++            Math.max(...ys) - Math.min(...ys),
++          ],
++          width,
++        );
++      }
++    }
++    if (text === '+') {
++      const owner = [...result.keys()].at(-1);
++      result.get(owner).plus = { call, rect };
++    } else result.set(text, { call, rect, index });
++  }
++  assert.deepEqual([...result.keys()], ['1', '2']);
++  return result;
++}
++function assertPilots(run, view, { reduced = true } = {}) {
++  const width = view.canvas.clientWidth,
++    cell = width / run.width,
++    rows = pilotRows(view),
++    actors = createCoopActorPresentation();
++  actors.setPresentation(snapshot);
++  actors.update(run, {
++    reduced,
++    motionScale: reduced ? 0 : 1,
++    canvasCSSWidth: width,
++    style: 'hybrid',
++  });
++  const clamp = (n, lo, hi) => Math.max(lo, Math.min(hi, n));
++  const lastSymbol = Math.max(
++    -1,
++    ...symbolPairs(view).map(({ light }) => view.calls.indexOf(light)),
++  );
++  for (const player of run.players) {
++    const row = rows.get(String(player.id + 1)),
++      shape = player.id === 0 ? 27 : 32,
++      frame = actors.frame('pilot', player.id),
++      offset = frame?.bodyOffset,
++      bodyX = (player.x + (offset?.x ?? 0) / 16) * cell,
++      bodyY = (player.y + (offset?.y ?? 0) / 16) * cell,
++      groupWidth = shape + (player.status === 'downed' ? 14 : 0),
++      groupX = clamp(bodyX, groupWidth / 2 + 1, width - groupWidth / 2 - 1),
++      y = clamp(
++        bodyY +
++          (player.id === 1 ? 1 : -1) * ((frame ? frame.diameter / 32 : 0.7) * cell + shape / 2 + 4),
++        shape / 2 + 1,
++        width / 2 - shape / 2 - 1,
++      );
++    assert.ok(
++      near(row.rect.left, groupX - groupWidth / 2),
++      `Pilot ${player.id + 1} stays beside its own body, with only perimeter clamping.`,
++    );
++    assert.ok(
++      near((row.rect.top + row.rect.bottom) / 2, y),
++      `Pilot ${player.id + 1} keeps its above/below-body anchor.`,
++    );
++    assert.ok(near(row.rect.right - row.rect.left, shape));
++    assert.ok(near(row.rect.bottom - row.rect.top, shape));
++    assert.ok(fontPx(row.call, width) >= (14 * 4) / 3 - 1e-7, 'Pilot numerals retain Large text.');
++    assert.ok(row.index > lastSymbol, 'Player identities remain above dense non-player symbols.');
++    assert.ok(
++      row.rect.left >= 1 - 1e-7 &&
++        row.rect.top >= 1 - 1e-7 &&
++        row.rect.right <= width - 1 + 1e-7 &&
++        row.rect.bottom <= width / 2 - 1 + 1e-7,
++    );
++    if (player.status === 'downed') {
++      assert.ok(row.plus);
++      assert.ok(near(row.plus.rect.right - row.plus.rect.left, 14));
++      assert.ok(near(row.plus.rect.bottom - row.plus.rect.top, 22));
++      assert.ok(fontPx(row.plus.call, width) >= 16 - 1e-7);
++      assert.ok(near(row.plus.rect.left, row.rect.right));
++      assert.ok(row.plus.rect.right <= width - 1 + 1e-7);
++    } else assert.equal(row.plus, undefined);
++    assert.ok(
++      view.calls.some(
++        (call) =>
++          call.name === 'arc' &&
++          call.args[0] === player.x &&
++          call.args[1] === player.y &&
++          call.args[2] === player.radius,
++      ),
++      'True cutting head and radius remain unchanged.',
++    );
++    if (offset && (offset.x !== 0 || offset.y !== 0)) {
++      const tether = view.calls.find(
++        (call) =>
++          call.name === 'stroke' &&
++          call.state.strokeStyle === '#f1f7ed' &&
++          call.state.dash.length === 2 &&
++          call.path.length === 2 &&
++          near(call.path[0].x, player.x * cell) &&
++          near(call.path[0].y, player.y * cell) &&
++          near(call.path[1].x, bodyX) &&
++          near(call.path[1].y, bodyY),
++      );
++      assert.ok(tether, 'A perimeter-shifted cosmetic body keeps its exact true-head tether.');
++    }
++  }
++  return rows;
++}
++function assertSlowHalos(run, view) {
++  const width = view.canvas.clientWidth,
++    cell = width / run.width,
++    halos = view.calls.filter(
++      (call) =>
++        call.name === 'arc' && call.args[2] === 0.88 && call.state.strokeStyle === '#e6f8ff',
++    ),
++    slowed = run.enemies.filter(
++      (enemy) => enemy.active !== false && enemy.speedScale < 1 && enemy.slowUntil > run.time,
++    );
++  assert.equal(halos.length, slowed.length);
++  for (const enemy of slowed) {
++    const halo = halos.find(
++      (call) =>
++        near((call.state.matrix[4] * width) / 1152, enemy.x * cell) &&
++        near((call.state.matrix[5] * width) / 1152, enemy.y * cell),
++    );
++    assert.ok(halo, `${enemy.id} retains its own slow halo`);
++    assert.deepEqual(halo.state.dash, [0.16, 0.12]);
++  }
++}
++function assertSelectedRelay(run, view, id) {
++  const selected =
++      run.strongholds.find((hold) => hold.id === id) ??
++      run.strongholds.find((hold) => !hold.defeated) ??
++      run.strongholds[0],
++    cell = view.canvas.clientWidth / run.width;
++  const brackets = view.calls.filter(
++    (call) =>
++      call.name === 'stroke' && call.state.strokeStyle === '#f1f7ed' && call.path.length === 12,
++  );
++  assert.equal(brackets.length, 0, 'No 22px selection brackets remain around tiny objectives.');
++  const links = view.calls.filter(
++    (call) =>
++      call.name === 'stroke' &&
++      call.state.strokeStyle === '#f1f7ed' &&
++      near(call.state.lineWidth * cssScale(call, view.canvas.clientWidth), 0.75),
++  );
++  assert.equal(
++    links.length,
++    selected ? 1 : 0,
++    'Only one selected relay receives its two relation segments.',
++  );
++  if (!selected) return;
++  const expected = selected.anchors.flatMap((anchor) => [
++    { name: 'moveTo', x: selected.core.x * cell, y: selected.core.y * cell },
++    { name: 'lineTo', x: anchor.x * cell, y: anchor.y * cell },
++  ]);
++  assert.ok(
++    samePath(links[0].path, expected),
++    'Both segments terminate at the selected core and its exact A/B positions.',
++  );
++  assert.deepEqual(links[0].state.dash, []);
++  const backing = view.calls.find(
++    (call) =>
++      call.name === 'stroke' &&
++      call.state.strokeStyle === '#07111c' &&
++      near(call.state.lineWidth * cssScale(call, view.canvas.clientWidth), 2) &&
++      samePath(call.path, expected),
++  );
++  assert.ok(backing, 'The selected relation stays outlined over light or dark art.');
++  assert.ok(view.calls.indexOf(backing) < view.calls.indexOf(links[0]));
++  for (const enemy of run.enemies.filter((e) => e.active !== false && e.phase === 'warning')) {
++    const warning = view.calls.find(
++      (call) =>
++        call.name === 'stroke' &&
++        call.path.some(
++          (point) =>
++            point.name === 'moveTo' &&
++            near(point.x, enemy.x * cell) &&
++            near(point.y, enemy.y * cell),
++        ) &&
++        call.path.some(
++          (point) =>
++            point.name === 'lineTo' &&
++            near(point.x, enemy.targetPoint.x * cell) &&
++            near(point.y, enemy.targetPoint.y * cell),
++        ),
++    );
++    assert.ok(
++      warning && view.calls.indexOf(warning) > view.calls.indexOf(links[0]),
++      'Threat trajectories remain above objective relation links.',
++    );
++  }
++}
++for (const [kind, width] of [
++  ['spread', 292],
++  ['dense', 304],
++])
++  for (const textFace of ['pixel', 'plain'])
++    for (const maximal of [false, true])
++      for (let stage = 0; stage < 3; stage++)
++        test(`${maximal ? 'maximum' : 'ordinary'} ${width}px ${kind} ${textFace} stage${stage}: tiny exact objective positions, full enemy roles and nearby pilots`, () => {
++          const run = maximal ? maximalRun(kind, stage) : makeRun(kind);
++          if (!maximal) setStage(run, stage);
++          const view = paint(run, width, textFace);
++          assertOwnedSymbols(run, view);
++          assertPilots(run, view);
++          assertSlowHalos(run, view);
++          assertSelectedRelay(run, view);
++        });
++
++test('adding or reordering the maximum encounter cannot move either pilot identity', () => {
++  for (const width of [292, 304, 1152])
++    for (const downed of [false, true]) {
++      const run = maximalRun('dense', 2);
++      if (downed) for (const player of run.players) player.status = 'downed';
++      const dense = assertPilots(run, paint(run, width, 'plain'));
++      const reordered = structuredClone(run);
++      reordered.enemies.reverse();
++      reordered.strongholds.reverse();
++      const reversed = assertPilots(reordered, paint(reordered, width, 'plain'));
++      const sparse = structuredClone(run);
++      sparse.enemies = [];
++      sparse.strongholds = [];
++      const empty = assertPilots(sparse, paint(sparse, width, 'plain'));
++      for (const id of ['1', '2']) {
++        assert.deepEqual(dense.get(id).rect, reversed.get(id).rect);
++        assert.deepEqual(dense.get(id).rect, empty.get(id).rect);
++      }
++    }
++});
++test('both active and downed pilots keep their own identities at every board corner', () => {
++  for (const width of [292, 1152])
++    for (const [x, y] of [
++      [0.5, 0.5],
++      [71.5, 0.5],
++      [0.5, 35.5],
++      [71.5, 35.5],
++    ])
++      for (const downed of [false, true]) {
++        const run = makeRun('spread');
++        run.enemies = [];
++        for (const player of run.players)
++          Object.assign(player, { x, y, status: downed ? 'downed' : 'active' });
++        assertPilots(run, paint(run, width, 'plain'));
++      }
++});
++test('selected relay links track its exact group without moving owners or numbered pilots', () => {
++  const run = makeRun('dense');
++  setStage(run, 1);
++  let previous;
++  for (const id of ['relay-1', 'relay-8', 'missing', null]) {
++    const view = paint(run, 304, 'pixel', { selectedRelayId: id });
++    assertOwnedSymbols(run, view);
++    assertSelectedRelay(run, view, id);
++    const rows = assertPilots(run, view);
++    if (previous)
++      for (const key of ['1', '2']) assert.deepEqual(rows.get(key).rect, previous.get(key).rect);
++    previous = rows;
++  }
++});
++test('actual hunter symbols preserve both target shapes and omit invalid target identities', () => {
++  for (const phase of ['warning', 'commit'])
++    for (const target of [0, 1, -1, 2, null]) {
++      const run = makeRun('spread');
++      setStage(run, 0);
++      Object.assign(
++        run.enemies.find((enemy) => enemy.type === 'hunter'),
++        { phase, target },
++      );
++      assertOwnedSymbols(run, paint(run, 292, 'plain'));
++    }
++});
++test('symbol state and slow halos remain visible while paused and honor active-time expiry', () => {
++  const run = makeRun('spread');
++  setStage(run, 1);
++  Object.assign(
++    run.enemies.find((enemy) => enemy.type !== 'hunter'),
++    { speedScale: 0.6, slowUntil: 10 },
++  );
++  run.status = 'paused';
++  for (const time of [9, 10])
++    for (const reduced of [true, false]) {
++      run.time = time;
++      const view = paint(run, 292, 'plain', { reduced });
++      assertOwnedSymbols(run, view);
++      assertSlowHalos(run, view);
++      assertPilots(run, view, { reduced });
++    }
++});
++test('the real Team host shows its relay key only for stronghold selection', async (t) => {
++  const f = await page(t);
++  assert.equal(f.$('coop-level').value, 'relay-yard');
++  assert.equal(f.$('coop-relay-key').hidden, false);
++  assert.match(f.$('coop-relay-key').textContent, /shield/i);
++  assert.match(f.$('coop-relay-key').textContent, /anchor/i);
++  await f.choose('coop-level', 'first-connection');
++  assert.equal(f.$('coop-relay-key').hidden, true);
++  await f.choose('coop-level', 'relay-yard');
++  assert.equal(f.$('coop-relay-key').hidden, false);
++});
+diff --git a/game/test/coop-large-text-host.test.mjs b/game/test/coop-large-text-host.test.mjs
+new file mode 100644
+index 0000000000000000000000000000000000000000..dae221422f293852f2ae93ca2a179c5227c41fce
+--- /dev/null
++++ b/game/test/coop-large-text-host.test.mjs
+@@ -0,0 +1,298 @@
++import test from 'node:test';
++import assert from 'node:assert/strict';
++import { page } from './helpers/coop-host.mjs';
++import { COOP_PICTURE_BINDINGS } from '../couch/coop-picture-bindings.mjs';
++import { COOP_STARTER_PACK } from '../coop/library.mjs';
++
++// Real Team host, Settings, preferences and painter; finite DOM/Canvas commands
++// and image decode are not native glyph/layout or physical-input qualification.
++const cssFont = (call, width) => (Number(call.state.font.match(/([\d.]+)px/)[1]) * width) / 72;
++const labels = (f) => f.lastDrawing.filter((call) => call.name === 'fillText');
++const close = (actual, expected, message) =>
++  assert.ok(Math.abs(actual - expected) < 1e-8, `${message}: ${actual} != ${expected}`);
++const hud = (f) =>
++  [
++    'coop-stage',
++    'coop-clock',
++    'coop-coverage',
++    'coop-reserves',
++    'coop-objective',
++    'coop-state-0',
++    'coop-state-1',
++  ].map((id) => f.$(id).textContent);
++const artCounts = (f) =>
++  Object.fromEntries(
++    Object.entries(f.artwork.calls).map(([key, value]) => [
++      key,
++      Array.isArray(value) ? value.length : value,
++    ]),
++  );
++function badge(f, id, width) {
++  const end = f.lastDrawing.findIndex((call) => call.name === 'fillText' && call.args[0] === id);
++  assert.ok(end >= 0, `Missing pilot ${id}`);
++  const start = f.lastDrawing.slice(0, end).findLastIndex((call) => call.name === 'beginPath');
++  const path = f.lastDrawing.slice(start, end);
++  const cell = width / 72;
++  if (id === '1') {
++    const circle = path.find((call) => call.name === 'arc');
++    assert.ok(circle, 'Pilot 1 retains its circle marker.');
++    return circle.args[2] * 2 * cell;
++  }
++  const vertices = path.filter((call) => ['moveTo', 'lineTo'].includes(call.name));
++  assert.equal(vertices.length, 4, 'Pilot 2 retains its four-point diamond.');
++  const xs = vertices.map((call) => call.args[0]);
++  const ys = vertices.map((call) => call.args[1]);
++  close(Math.max(...xs) - Math.min(...xs), Math.max(...ys) - Math.min(...ys), 'Diamond aspect');
++  return (Math.max(...xs) - Math.min(...xs)) * cell;
++}
++
++function symbols(f, width) {
++  const found = [];
++  const calls = f.lastDrawing;
++  for (let index = 1; index < calls.length - 3; index++) {
++    const call = calls[index];
++    if (
++      call.name !== 'scale' ||
++      ![1, 5 / 14, 3 / 14].some((scale) => Math.abs((call.args[0] * width) / 72 - scale) < 1e-8) ||
++      call.args[0] !== call.args[1] ||
++      calls[index - 1].name !== 'translate' ||
++      calls[index + 1].name !== 'save' ||
++      calls[index + 2].name !== 'setLineDash' ||
++      calls[index + 3].name !== 'beginPath'
++    )
++      continue;
++    const end = calls.findIndex((item, next) => next > index && item.name === 'fill');
++    assert.ok(end > index, 'The initial idle/objective symbol has an opaque backing.');
++    const path = calls.slice(index + 3, end);
++    const points = path.filter((item) => ['moveTo', 'lineTo'].includes(item.name));
++    const role = { 3: 'drifter', 4: 'hunter', 5: 'shielded', 8: 'anchor-a', 12: 'anchor-b' }[
++      points.length
++    ];
++    assert.ok(role, `Unexpected idle/objective path with ${points.length} points`);
++    assert.equal(path.at(-1).name, 'closePath', `${role} keeps its closed backing.`);
++    const xs = points.map((point) => point.args[0]),
++      ys = points.map((point) => point.args[1]);
++    const scale = (call.args[0] * width) / 72,
++      size = role.startsWith('anchor-') ? 3 : role === 'shielded' ? 5 : 14;
++    close(
++      (Math.max(...xs) - Math.min(...xs) + 3) * scale,
++      size,
++      `${role} CSS symbol width with outline`,
++    );
++    close(
++      (Math.max(...ys) - Math.min(...ys) + 3) * scale,
++      size,
++      `${role} CSS symbol height with outline`,
++    );
++    found.push({ role, owner: calls[index - 1].args });
++  }
++  return found;
++}
++
++for (const [level, width, textFace, reduced] of [
++  ['first-connection', 362, 'pixel', false],
++  ['first-connection', 1152, 'plain', true],
++  ['relay-yard', 362, 'plain', true],
++  ['relay-yard', 1152, 'pixel', false],
++]) {
++  test(`${level} ${width}px ${textFace}: actual Settings scales Team cues and badges without replacing or resuming the paused attempt`, async (t) => {
++    const storageReads = [],
++      writes = [],
++      values = new Map();
++    const f = await page(t, {
++      nativeFocus: true,
++      nativeVisibility: true,
++      capturePaint: true,
++      captureDrawing: true,
++      beforeImport: ({ $, install }) => {
++        $('coop-canvas').clientWidth = width;
++        install('localStorage', {
++          value: {
++            getItem: (key) => {
++              storageReads.push(key);
++              return values.get(key) ?? null;
++            },
++            setItem: (key, value) => {
++              writes.push(key);
++              values.set(key, value);
++            },
++          },
++        });
++      },
++    });
++    if (f.$('coop-level').value !== level) await f.choose('coop-level', level);
++    f.$('coop-start').focus();
++    f.tap('Enter');
++    assert.equal(f.$('coop-menu').hidden, true);
++    f.tick(180);
++    assert.notEqual(
++      f.$('coop-clock').textContent,
++      '0:00',
++      'The attempt has advanced before its display changes.',
++    );
++    f.$('coop-pause').click();
++    f.$('coop-settings-open').focus();
++    f.tap('Enter');
++    assert.equal(f.$('coop-options').open, true);
++    assert.equal(f.$('coop-overlay').hidden, false);
++    f.$('coop-settings-tab-display').click();
++    f.$('coop-text-face').focus();
++    f.choose('coop-text-face', textFace);
++    f.$('coop-reduced').checked = reduced;
++    f.$('coop-reduced').onchange();
++    f.tick(2);
++    const before = hud(f),
++      standardPaint = f.lastPaint,
++      standard = labels(f),
++      image = f.drawImages.at(-1);
++    const counts = artCounts(f),
++      snapshot = f.artwork.snapshot;
++    assert.equal(
++      image.sha256,
++      COOP_PICTURE_BINDINGS.find((row) => row.levelId === level).picture.sha256,
++    );
++    assert.ok(standard.some((call) => call.args[0] === '1'));
++    assert.ok(standard.some((call) => call.args[0] === '2'));
++    if (level === 'relay-yard') {
++      for (const text of ['A', 'B', 'SHIELD'])
++        assert.ok(
++          standard.some((call) => call.args[0] === text),
++          text,
++        );
++    }
++    for (const call of standard) {
++      const minimum = ['1', '2'].includes(call.args[0]) ? 14 : 12;
++      assert.ok(cssFont(call, width) >= minimum - 1e-8);
++      assert.ok(cssFont(call, width) <= 18 + 1e-8);
++      const numeric = ['1', '2', '+'].includes(call.args[0]);
++      if (textFace === 'pixel')
++        assert.ok(call.state.font.endsWith(snapshot.fonts[numeric ? 'numeric' : 'ui']));
++      else
++        assert.ok(
++          call.state.font.includes(
++            numeric ? 'ui-monospace, \"SFMono-Regular\"' : 'system-ui, -apple-system',
++          ),
++        );
++    }
++    close(badge(f, '1', width), 20, 'Standard circle');
++    close(badge(f, '2', width), 24, 'Standard diamond');
++    f.$('coop-text-size').focus();
++    f.choose('coop-text-size', 'large');
++    f.tick(2);
++    assert.equal(f.doc.body.dataset.textSize, 'large');
++    assert.equal(
++      f.doc.activeElement.id,
++      'coop-text-size',
++      'Preference rendering does not steal the active control.',
++    );
++    const large = labels(f);
++    assert.deepEqual(
++      large.map((call) => call.args[0]),
++      ['1', '2'],
++      'Only the two active pilot numbers remain Canvas text in Large.',
++    );
++    for (const call of large) {
++      const original = standard.find((item) => item.args[0] === call.args[0]);
++      assert.ok(original, `Standard retains pilot ${call.args[0]}.`);
++      close(cssFont(call, width), (cssFont(original, width) * 4) / 3, `Large ${call.args[0]}`);
++    }
++    const visualSymbols = symbols(f, width),
++      authored = COOP_STARTER_PACK.levels.find((item) => item.id === level);
++    assert.deepEqual(
++      visualSymbols.map((item) => item.role).sort(),
++      [
++        ...authored.enemies.map((enemy) => enemy.type),
++        ...authored.strongholds.flatMap(() => ['anchor-a', 'anchor-b', 'shielded']),
++      ].sort(),
++      'Every idle threat, available anchor and shielded core has its semantic symbol.',
++    );
++    for (const hold of authored.strongholds)
++      for (const [role, owner] of [
++        ['anchor-a', hold.anchors[0]],
++        ['anchor-b', hold.anchors[1]],
++        ['shielded', hold.core],
++      ])
++        assert.ok(
++          visualSymbols.some(
++            (item) => item.role === role && item.owner[0] === owner.x && item.owner[1] === owner.y,
++          ),
++          `${role} stays centred on its real authored objective.`,
++        );
++    const largeHud = [...before];
++    if (authored.strongholds.length) {
++      largeHud[4] = 'Relay 1 · 0/1 required secured';
++      assert.equal(f.$('coop-relay-hud').hidden, false);
++      assert.deepEqual(
++        ['a', 'core', 'b'].map((role) => f.$(`coop-relay-${role}-state`).textContent),
++        ['Needed', 'Shielded', 'Needed'],
++      );
++    } else assert.equal(f.$('coop-relay-hud').hidden, true);
++    close(badge(f, '1', width), 27, 'Large circle');
++    close(badge(f, '2', width), 32, 'Large diamond');
++    assert.notEqual(
++      f.lastPaint,
++      standardPaint,
++      'The Canvas drawing changes, not only a DOM preference.',
++    );
++    assert.deepEqual(
++      hud(f),
++      largeHud,
++      'Only the objective sentence changes to the compact Large HUD.',
++    );
++    assert.equal(f.drawImages.at(-1), image);
++    assert.equal(f.artwork.snapshot, snapshot);
++    assert.deepEqual(
++      artCounts(f),
++      counts,
++      'Display changes do not prepare, decode or release another picture.',
++    );
++    f.choose('coop-text-size', 'standard');
++    f.tick(2);
++    assert.equal(
++      f.lastPaint,
++      standardPaint,
++      'Returning to Standard exactly restores the paused Canvas trace.',
++    );
++    assert.deepEqual(hud(f), before);
++    f.choose('coop-text-size', 'large');
++    f.tick(2);
++    f.$('coop-settings-close').focus();
++    f.tap('Enter');
++    assert.equal(f.$('coop-options').open, false);
++    assert.equal(
++      f.doc.activeElement.id,
++      'coop-settings-open',
++      'Back restores the actual Settings opener.',
++    );
++    assert.equal(f.$('coop-overlay').hidden, false);
++    f.tick(180);
++    assert.deepEqual(
++      hud(f),
++      largeHud,
++      'Closing Settings does not implicitly resume either player.',
++    );
++    assert.deepEqual(artCounts(f), counts);
++    assert.deepEqual([...new Set(storageReads)].sort(), [
++      'revealline.audio-master.v1',
++      'revealline.display.v1',
++      'revealline.menu-style.v1',
++    ]);
++    assert.deepEqual(
++      [...new Set(writes)],
++      ['revealline.display.v1'],
++      'Only global display preferences are written; no Solo save/progress writes.',
++    );
++    assert.equal(JSON.parse(values.get('revealline.display.v1')).textSize, 'large');
++    f.$('coop-resume').focus();
++    f.tap('Enter');
++    assert.equal(f.$('coop-overlay').hidden, true);
++    f.tick(180);
++    assert.notDeepEqual(
++      hud(f),
++      largeHud,
++      'Only the deliberate Resume advances the retained attempt.',
++    );
++    assert.equal(f.drawImages.at(-1), image);
++    assert.deepEqual(artCounts(f), counts);
++  });
++}
+diff --git a/game/test/coop-objectives-host.test.mjs b/game/test/coop-objectives-host.test.mjs
+new file mode 100644
+index 0000000000000000000000000000000000000000..fa8a643c5677042a2d5b0ad023734e8ff4a2c399
+--- /dev/null
++++ b/game/test/coop-objectives-host.test.mjs
+@@ -0,0 +1,431 @@
++import test from 'node:test';
++import assert from 'node:assert/strict';
++import { page } from './helpers/coop-host.mjs';
++import { FIRST_CONNECTION } from '../coop/first-connection.mjs';
++import { COOP_RULESET } from '../coop/core.mjs';
++import { COOP_PACK_VERSION } from '../coop/recipes.mjs';
++import { yardOpening } from './helpers/coop-route-search.mjs';
++const activate = (f, id) => {
++  f.$(id).focus();
++  f.tap('Enter');
++};
++const held = (f) =>
++  ['coop-clock', 'coop-coverage', 'coop-reserves', 'coop-state-0', 'coop-state-1'].map(
++    (id) => f.$(id).textContent,
++  );
++async function fixture(t, options = {}) {
++  const diagrams = [];
++  const f = await page(t, {
++    nativeFocus: true,
++    nativeVisibility: true,
++    capturePaint: true,
++    ...options,
++    beforeImport({ $ }) {
++      for (const id of [
++        'coop-objectives-detail',
++        'coop-objectives-location',
++        'coop-relay-a-symbol',
++        'coop-relay-core-symbol',
++        'coop-relay-b-symbol',
++      ])
++        $(id).getContext = () =>
++          new Proxy(
++            {},
++            {
++              get: (o, k) => o[k] || ((...args) => diagrams.push([id, k, ...args])),
++              set: (o, k, v) => ((o[k] = v), true),
++            },
++          );
++    },
++  });
++  return Object.assign(f, { diagrams });
++}
++function pack() {
++  const level = structuredClone(FIRST_CONNECTION);
++  level.walls = [];
++  level.strongholds = [
++    {
++      id: 'west',
++      core: { x: 10.5, y: 10.5 },
++      anchors: [
++        { x: 6.5, y: 7.5 },
++        { x: 14.5, y: 13.5 },
++      ],
++    },
++    {
++      id: 'east',
++      core: { x: 61.5, y: 25.5 },
++      anchors: [
++        { x: 57.5, y: 22.5 },
++        { x: 65.5, y: 28.5 },
++      ],
++    },
++  ];
++  level.goal = { cores: ['west', 'east'] };
++  return JSON.stringify({
++    version: COOP_PACK_VERSION,
++    ruleset: COOP_RULESET,
++    id: 'objectives-test',
++    revision: 1,
++    name: 'Objectives test',
++    levels: [level],
++  });
++}
++test('optional lobby inspector handles actual imported relays, keyboard selection and native Escape without launching or decoding artwork', async (t) => {
++  const f = await fixture(t);
++  await f.selectFile(pack());
++  const images = f.drawImages.length,
++    earned = f.earnedDrawImages.length;
++  activate(f, 'coop-objectives-open');
++  assert.equal(f.$('coop-objectives-dialog').open, true);
++  assert.equal(f.doc.activeElement.id, 'coop-objectives-close');
++  const buttons = f.$('coop-objectives-list').querySelectorAll('button');
++  assert.equal(buttons.length, 2);
++  assert.match(buttons[0].textContent, /Relay 1 · shielded · A available · B available/);
++  buttons[1].focus();
++  f.tap('Enter');
++  assert.equal(f.doc.activeElement, buttons[1]);
++  assert.equal(buttons[1].getAttribute('aria-pressed'), 'true');
++  assert.match(f.$('coop-objectives-description').textContent, /Relay 2 in the lower right/);
++  assert.ok(f.diagrams.some((c) => c[1] === 'fillText' && c[2] === '2'));
++  f.$('coop-start').onclick();
++  assert.equal(f.$('coop-play').hidden, true, 'No cross-modal launch');
++  f.tap('Escape');
++  assert.equal(f.$('coop-objectives-dialog').open, false);
++  assert.equal(f.doc.activeElement.id, 'coop-objectives-open');
++  f.tick(30);
++  assert.equal(f.$('coop-play').hidden, true);
++  assert.equal(f.drawImages.length, images);
++  assert.equal(f.earnedDrawImages.length, earned);
++  await f.choose('coop-level', 'first-connection'); // Imported identity remains selected.
++});
++test('paused selection retains core, picture, input release and explicit Resume', async (t) => {
++  const f = await fixture(t);
++  await f.selectFile(pack());
++  activate(f, 'coop-start');
++  f.tick(2);
++  assert.equal(f.$('coop-objectives-open').hidden, true);
++  f.$('coop-objectives-open').onclick();
++  assert.equal(f.$('coop-objectives-dialog').open, false);
++  activate(f, 'coop-pause');
++  const before = held(f),
++    image = f.drawImages.at(-1),
++    earned = f.earnedDrawImages.length;
++  activate(f, 'coop-objectives-open');
++  const second = f.$('coop-objectives-list').querySelectorAll('button')[1];
++  second.focus();
++  f.tap('Enter');
++  assert.match(f.$('coop-objective').textContent, /Relay 2 in the lower right/);
++  f.$('coop-resume').onclick();
++  f.$('coop-retry').onclick();
++  f.$('coop-settings-open').onclick();
++  assert.equal(f.$('coop-options').open, false);
++  assert.equal(f.$('coop-discard-dialog').open, false);
++  f.tick(30);
++  assert.deepEqual(held(f), before);
++  assert.equal(f.drawImages.at(-1), image);
++  activate(f, 'coop-objectives-close');
++  assert.equal(f.doc.activeElement.id, 'coop-objectives-open');
++  f.tick(60);
++  assert.deepEqual(held(f), before);
++  assert.equal(f.earnedDrawImages.length, earned);
++  activate(f, 'coop-resume');
++  f.tick(2);
++  assert.equal(f.$('coop-overlay').hidden, true);
++});
++for (const kind of ['blur', 'persisted', 'terminal'])
++  test(`${kind} retires inspector callbacks without focus theft or implicit resume`, async (t) => {
++    const f = await fixture(t);
++    activate(f, 'coop-start');
++    f.tick(2);
++    activate(f, 'coop-pause');
++    activate(f, 'coop-objectives-open');
++    const old = f.$('coop-objectives-list').querySelectorAll('button')[0],
++      before = held(f);
++    if (kind === 'blur') f.win.emit('blur');
++    else f.win.emit('pagehide', { persisted: kind === 'persisted' });
++    assert.equal(f.$('coop-objectives-dialog').open, false);
++    f.$('coop-home').focus();
++    const count = f.focusAttempts.length;
++    old.onclick?.();
++    f.$('coop-objectives-dialog').emit('close', { bubbles: false });
++    f.win.emit('pageshow', { persisted: true });
++    f.win.emit('focus');
++    if (kind !== 'terminal') f.tick(3);
++    assert.equal(f.focusAttempts.length, count);
++    assert.equal(f.doc.activeElement.id, 'coop-home');
++    assert.deepEqual(held(f), before);
++    assert.equal(f.$('coop-overlay').hidden, false);
++  });
++test('controller closes inspector only after neutral ownership and keeps Resume explicit', async (t) => {
++  const f = await fixture(t);
++  activate(f, 'coop-start');
++  f.tick(2);
++  activate(f, 'coop-pause');
++  activate(f, 'coop-objectives-open');
++  const pad = {
++    index: 0,
++    id: 'Objectives controller',
++    connected: true,
++    mapping: 'standard',
++    axes: [0, 0, 0, 0],
++    buttons: Array.from({ length: 17 }, () => ({ pressed: false, value: 0 })),
++  };
++  const button = (index) => {
++    pad.buttons[index] = { pressed: true, value: 1 };
++    f.tick();
++    pad.buttons[index] = { pressed: false, value: 0 };
++    f.tick();
++  };
++  f.pads.push(pad);
++  f.tick(2);
++  button(0); // join does not activate Close
++  assert.equal(f.$('coop-objectives-dialog').open, true);
++  button(13);
++  assert.ok(f.$('coop-objectives-dialog').contains(f.doc.activeElement));
++  button(1);
++  assert.equal(f.$('coop-objectives-dialog').open, false);
++  assert.equal(f.doc.activeElement.id, 'coop-objectives-open');
++  assert.equal(f.$('coop-overlay').hidden, false);
++});
++test('coverage arenas hide optional Objectives, and an inspector failure preserves the attempt', async (t) => {
++  const f = await fixture(t);
++  await f.choose('coop-level', 'first-connection');
++  assert.equal(f.$('coop-objectives-open').hidden, true);
++  await f.choose('coop-level', 'relay-yard');
++  activate(f, 'coop-start');
++  f.tick(2);
++  activate(f, 'coop-pause');
++  const before = held(f);
++  t.mock.method(f.$('coop-objectives-dialog'), 'showModal', () => {
++    throw new Error('dialog failed');
++  });
++  activate(f, 'coop-objectives-open');
++  assert.equal(f.$('coop-objectives-dialog').open, false);
++  assert.match(f.$('coop-message').textContent, /Objectives view unavailable/);
++  f.tick(2);
++  assert.deepEqual(held(f), before);
++});
++
++test('queued close and old relay actions cannot overwrite a reopened inspector or changed lobby selection', async (t) => {
++  const f = await fixture(t);
++  await f.selectFile(pack());
++  activate(f, 'coop-objectives-open');
++  const stale = f.$('coop-objectives-list').querySelectorAll('button')[1];
++  activate(f, 'coop-objectives-close');
++  activate(f, 'coop-objectives-open');
++  f.$('coop-objectives-dialog').emit('close', { bubbles: false });
++  stale.onclick();
++  assert.equal(f.$('coop-objectives-dialog').open, true);
++  assert.match(f.$('coop-objectives-description').textContent, /Relay 1 in the upper left/);
++  activate(f, 'coop-objectives-close');
++  f.$('coop-pack-reset').click();
++  // Reset preparation is asynchronous, but opening Objectives must remain optional.
++  activate(f, 'coop-objectives-open');
++  assert.equal(f.$('coop-objectives-dialog').open, true);
++  const retired = f.$('coop-objectives-list').querySelectorAll('button')[0];
++  await f.choose('coop-level', 'first-connection');
++  assert.equal(f.$('coop-objectives-dialog').open, false);
++  assert.equal(f.$('coop-objectives-open').hidden, true);
++  const focused = f.doc.activeElement;
++  retired.onclick();
++  f.$('coop-objectives-dialog').emit('close', { bubbles: false });
++  assert.equal(f.doc.activeElement, focused);
++  assert.equal(f.$('coop-play').hidden, true);
++});
++
++test('optional imported strongholds retain coverage victory guidance and a diagram failure leaves readable objectives', async (t) => {
++  const f = await fixture(t);
++  const imported = JSON.parse(pack());
++  imported.levels[0].goal = { coverage: 0.65 };
++  await f.selectFile(JSON.stringify(imported));
++  activate(f, 'coop-start');
++  f.tick(2);
++  activate(f, 'coop-pause');
++  assert.match(f.$('coop-objective').textContent, /^Reveal 65% together · Optional Relay/);
++  f.$('coop-objectives-detail').getContext = () => null;
++  activate(f, 'coop-objectives-open');
++  assert.equal(f.$('coop-objectives-dialog').open, true);
++  assert.match(f.$('coop-objectives-list').querySelector('button').textContent, /^Optional Relay/);
++  assert.match(f.$('coop-objectives-diagram-status').textContent, /Diagram unavailable/);
++  assert.match(f.$('coop-objectives-description').textContent, /A available, above and left/);
++  activate(f, 'coop-objectives-close');
++  assert.equal(f.doc.activeElement.id, 'coop-objectives-open');
++});
++
++const relayHud = (f) =>
++  ['a', 'core', 'b'].map((role) => f.$(`coop-relay-${role}-state`).textContent);
++const hudPaints = (f) =>
++  f.diagrams.filter((call) => call[0].startsWith('coop-relay-') && call[1] === 'setTransform');
++function textSize(f, value) {
++  activate(f, 'coop-settings-open');
++  activate(f, 'coop-settings-tab-display');
++  f.choose('coop-text-size', value);
++  f.tick(2);
++  activate(f, 'coop-settings-close');
++}
++test('Large selected A/Core/B HUD preserves actual required subsets, optional selection, pause and Standard restoration', async (t) => {
++  const f = await fixture(t);
++  const imported = JSON.parse(pack());
++  imported.levels[0].goal = { cores: ['east'] };
++  await f.selectFile(JSON.stringify(imported));
++  activate(f, 'coop-start');
++  f.tick(2);
++  activate(f, 'coop-pause');
++  const before = held(f),
++    standard = f.$('coop-objective').textContent,
++    image = f.drawImages.at(-1);
++  assert.match(standard, /^Relay 2/);
++  textSize(f, 'large');
++  assert.equal(f.$('coop-objective-area').dataset.relayHud, 'true');
++  assert.equal(f.$('coop-relay-hud').hidden, false);
++  assert.equal(f.$('coop-objective').textContent, 'Relay 2 · 0/1 required secured');
++  assert.deepEqual(relayHud(f), ['Needed', 'Shielded', 'Needed']);
++  assert.deepEqual(
++    f
++      .$('coop-relay-hud')
++      .querySelectorAll('dt')
++      .map((n) => n.textContent.trim()),
++    ['A', 'Core', 'B'],
++  );
++  assert.equal(
++    f.$('coop-relay-hud').querySelector('button,input,select,a[href],[tabindex]'),
++    null,
++    'The HUD adds no compulsory input or focus stop.',
++  );
++  const paintCount = hudPaints(f).length;
++  assert.equal(paintCount, 3, 'The actual helper paints three separate state symbols.');
++  const focusCount = f.focusAttempts.length;
++  f.tick(20);
++  assert.equal(hudPaints(f).length, paintCount, 'Stable frames do not repaint passive symbols.');
++  assert.equal(f.focusAttempts.length, focusCount);
++  assert.deepEqual(held(f), before);
++  textSize(f, 'standard');
++  assert.equal(f.$('coop-relay-hud').hidden, true);
++  assert.equal(f.$('coop-objective-area').dataset.relayHud, 'false');
++  assert.equal(f.$('coop-objective').textContent, standard);
++  textSize(f, 'large');
++  assert.equal(
++    hudPaints(f).length,
++    paintCount,
++    'Unchanged state can reuse its decorative symbol backing.',
++  );
++  activate(f, 'coop-objectives-open');
++  const optional = f.$('coop-objectives-list').querySelectorAll('button')[0];
++  optional.focus();
++  f.tap('Enter');
++  assert.equal(f.$('coop-objective').textContent, 'Optional Relay 1 · 0/1 required secured');
++  assert.deepEqual(relayHud(f), ['Needed', 'Shielded', 'Needed']);
++  assert.equal(hudPaints(f).length, paintCount + 3);
++  activate(f, 'coop-objectives-close');
++  assert.equal(f.doc.activeElement.id, 'coop-objectives-open');
++  f.tick(20);
++  assert.deepEqual(held(f), before);
++  assert.equal(f.drawImages.at(-1), image);
++  assert.equal(f.$('coop-overlay').hidden, false);
++});
++
++test('Large coverage missions keep their victory target, optional relay states and graceful symbol failure', async (t) => {
++  const f = await fixture(t);
++  const imported = JSON.parse(pack());
++  imported.levels[0].goal = { coverage: 0.65 };
++  await f.selectFile(JSON.stringify(imported));
++  activate(f, 'coop-start');
++  f.tick(2);
++  activate(f, 'coop-pause');
++  const before = held(f);
++  f.$('coop-relay-a-symbol').getContext = () => null;
++  f.$('coop-relay-core-symbol').getContext = () => {
++    throw new Error('decorative context unavailable');
++  };
++  textSize(f, 'large');
++  assert.equal(f.$('coop-objective').textContent, 'Reveal 65% together · Optional Relay 1');
++  assert.deepEqual(relayHud(f), ['Needed', 'Shielded', 'Needed']);
++  assert.equal(f.$('coop-relay-a-symbol').hidden, true);
++  assert.equal(f.$('coop-relay-core-symbol').hidden, true);
++  assert.equal(f.$('coop-relay-b-symbol').hidden, false);
++  assert.equal(f.$('coop-resume').hidden, false, 'Decorative failure cannot stop the arena.');
++  assert.doesNotMatch(f.$('coop-message').textContent, /stopped|unavailable/);
++  f.tick(20);
++  assert.deepEqual(held(f), before);
++});
++
++test('Large coverage-only arena introduces no empty objective strip', async (t) => {
++  const f = await fixture(t);
++  await f.choose('coop-level', 'first-connection');
++  textSize(f, 'large');
++  activate(f, 'coop-start');
++  f.tick(2);
++  assert.equal(f.$('coop-relay-hud').hidden, true);
++  assert.equal(f.$('coop-objective-area').dataset.relayHud, 'false');
++  assert.equal(f.$('coop-objective').textContent, 'Reveal 65% together');
++  assert.equal(hudPaints(f).length, 0);
++});
++
++test('ordinary Relay Yard commands update Large A/Core/B through exposure and earned victory without changing artwork ownership', async (t) => {
++  const f = await fixture(t);
++  textSize(f, 'large');
++  activate(f, 'coop-start');
++  f.tick(2);
++  const image = f.drawImages.at(-1),
++    initialReads = f.artwork.calls.reads.length;
++  assert.deepEqual(relayHud(f), ['Needed', 'Shielded', 'Needed']);
++  const keys = [
++    { up: 'KeyW', down: 'KeyS', left: 'KeyA', right: 'KeyD', boost: 'ShiftLeft', support: 'KeyQ' },
++    {
++      up: 'ArrowUp',
++      down: 'ArrowDown',
++      left: 'ArrowLeft',
++      right: 'ArrowRight',
++      boost: 'ShiftRight',
++      support: 'Enter',
++    },
++  ];
++  const route = yardOpening('standard', { boost: true, cover: true });
++  assert.equal(
++    route.run.status,
++    'won',
++    'Only the existing validated public-command route is replayed.',
++  );
++  const seen = new Set([relayHud(f).join('|')]);
++  for (const commands of route.log) {
++    commands.forEach((command, seat) => {
++      if (command.direction) f.tap(keys[seat][command.direction]);
++      if (command.boost) f.press(keys[seat].boost);
++      if (command.support) f.press(keys[seat].support);
++    });
++    f.tick();
++    seen.add(relayHud(f).join('|'));
++    commands.forEach((command, seat) => {
++      for (const name of ['boost', 'support'])
++        if (command[name])
++          f.doc.activeElement.emit('keyup', { key: keys[seat][name], code: keys[seat][name] });
++    });
++    if (!f.$('coop-overlay').hidden) break;
++  }
++  assert.ok(seen.has('Captured|Exposed|Captured'), JSON.stringify([...seen]));
++  assert.ok(seen.has('Captured|Secured|Captured'), JSON.stringify([...seen]));
++  assert.equal(f.$('coop-overlay-kicker').textContent, 'A WORLD YOU REVEALED TOGETHER');
++  assert.equal(f.$('coop-objective').textContent, 'Relay 1 · 1/1 required secured');
++  assert.equal(f.$('coop-resume').hidden, true);
++  assert.equal(f.drawImages.at(-1), image);
++  assert.equal(f.artwork.calls.reads.length, initialReads);
++  const won = held(f),
++    paintCount = hudPaints(f).length;
++  f.tick(20);
++  assert.deepEqual(held(f), won);
++  assert.equal(hudPaints(f).length, paintCount);
++  activate(f, 'coop-view-picture');
++  assert.deepEqual(f.earnedDrawImages.at(-1), [image, 0, 0, 1152, 576]);
++  activate(f, 'coop-picture-return');
++  assert.equal(f.doc.activeElement.id, 'coop-view-picture');
++  assert.deepEqual(held(f), won);
++  t.diagnostic(
++    JSON.stringify({
++      boundary:
++        'Actual host/public keyboard commands; finite Canvas, not native or human qualification',
++      referenceTicks: route.log.length,
++      observedStates: [...seen],
++    }),
++  );
++});
+diff --git a/game/test/coop-objectives.test.mjs b/game/test/coop-objectives.test.mjs
+new file mode 100644
+index 0000000000000000000000000000000000000000..9a65e7ba614f7d1834478ea4796aa7e52331aeff
+--- /dev/null
++++ b/game/test/coop-objectives.test.mjs
+@@ -0,0 +1,149 @@
++import test from 'node:test';
++import assert from 'node:assert/strict';
++import { createCoop } from '../coop/core.mjs';
++import { FIRST_CONNECTION } from '../coop/first-connection.mjs';
++import { coopObjectivesSnapshot, paintCoopObjectiveDiagram } from '../couch/coop-objectives.mjs';
++
++function level() {
++  const value = structuredClone(FIRST_CONNECTION);
++  value.walls = [];
++  value.strongholds = [
++    {
++      id: 'west',
++      core: { x: 31.5, y: 16.5 },
++      anchors: [
++        { x: 30.5, y: 15.5 },
++        { x: 32.5, y: 17.5 },
++      ],
++    },
++    {
++      id: 'east',
++      core: { x: 61.5, y: 25.5 },
++      anchors: [
++        { x: 57.5, y: 22.5 },
++        { x: 65.5, y: 28.5 },
++      ],
++    },
++  ];
++  value.goal = { cores: ['west', 'east'] };
++  return value;
++}
++test('authored and live relay snapshots preserve identity, exact statuses and meaningful relationships without mutating source', () => {
++  const authored = level(),
++    run = createCoop(authored);
++  run.strongholds[0].defeated = true;
++  run.strongholds[0].anchors[0].captured = true;
++  run.strongholds[1].shielded = false;
++  const before = structuredClone(run);
++  const selected = coopObjectivesSnapshot(run);
++  assert.equal(selected.selected.id, 'east');
++  assert.equal(selected.selected.state, 'exposed');
++  assert.match(selected.description, /Relay 2 in the lower right/);
++  assert.deepEqual(
++    selected.selected.anchors.map((a) => [a.letter, a.relationship, a.captured]),
++    [
++      ['A', 'above and left', false],
++      ['B', 'below and right', false],
++    ],
++  );
++  const first = coopObjectivesSnapshot(run, 'west');
++  assert.equal(first.selected.state, 'secured');
++  assert.equal(first.selected.anchors[0].captured, true);
++  assert.deepEqual(run, before);
++  first.selected.core.x = 0;
++  assert.equal(run.strongholds[0].core.x, 31.5, 'No borrowed geometry references');
++  assert.equal(coopObjectivesSnapshot(authored).selected.state, 'shielded');
++  assert.equal(coopObjectivesSnapshot(FIRST_CONNECTION).selected, null);
++  assert.equal(coopObjectivesSnapshot(run, 'missing').selected.id, 'east');
++});
++test('magnified dense relay and whole-board locator retain positions and distinct bounded symbols', () => {
++  const snapshot = coopObjectivesSnapshot(level()),
++    before = structuredClone(snapshot),
++    calls = [];
++  const ctx = new Proxy(
++    {},
++    {
++      get: (obj, key) => obj[key] || ((...args) => calls.push({ key, args })),
++      set: (obj, key, value) => ((obj[key] = value), true),
++    },
++  );
++  const canvas = { getContext: () => ctx };
++  assert.equal(paintCoopObjectiveDiagram(canvas, snapshot), true);
++  const symbols = calls
++    .filter((c) => c.key === 'fillRect')
++    .slice(1)
++    .map((c) => c.args);
++  assert.equal(symbols.length, 3);
++  for (const [x, y, w, h] of symbols) assert.ok(x >= 0 && y >= 0 && x + w <= 600 && y + h <= 300);
++  for (let i = 0; i < symbols.length; i++)
++    for (let j = i + 1; j < symbols.length; j++) {
++      const [x, y, w, h] = symbols[i],
++        [a, b, c, d] = symbols[j];
++      assert.ok(x + w <= a || a + c <= x || y + h <= b || b + d <= y);
++    }
++  assert.deepEqual(
++    calls.filter((c) => c.key === 'fillText').map((c) => c.args[0]),
++    ['A', 'B', '1'],
++  );
++  assert.equal(paintCoopObjectiveDiagram(canvas, snapshot, true), true);
++  assert.equal(canvas.width, 360);
++  assert.equal(canvas.height, 180);
++  assert.deepEqual(snapshot, before);
++  assert.equal(paintCoopObjectiveDiagram({ getContext: () => null }, snapshot), false);
++});
++
++test('required cores retain priority and optional strongholds do not become victory requirements', () => {
++  const authored = level();
++  authored.goal = { cores: ['east'] };
++  const run = createCoop(authored),
++    before = structuredClone(run);
++  const goal = coopObjectivesSnapshot(run);
++  assert.equal(goal.selected.id, 'east');
++  assert.equal(goal.relays[0].required, false);
++  assert.equal(goal.relays[1].required, true);
++  assert.match(coopObjectivesSnapshot(run, 'west').description, /^Optional Relay 1/);
++  assert.deepEqual(run, before);
++  authored.goal = { coverage: 0.65 };
++  const coverage = coopObjectivesSnapshot(createCoop(authored));
++  assert.ok(coverage.relays.every((r) => !r.required));
++  assert.match(coverage.summary, /^Optional Relay/);
++});
++
++test('all eight supported relays retain stable numbers and individual A/B states', () => {
++  const authored = level();
++  authored.strongholds = [10.5, 25.5]
++    .flatMap((y) =>
++      [10.5, 27.5, 44.5, 61.5].map((x) => ({
++        core: { x, y },
++        anchors: [
++          { x: x - 4, y: y - 3 },
++          { x: x + 4, y: y + 3 },
++        ],
++      })),
++    )
++    .map((s, index) => ({ ...s, id: `relay-${index + 1}` }));
++  authored.goal = { cores: authored.strongholds.map((s) => s.id) };
++  const run = createCoop(authored);
++  run.strongholds[0].defeated = true;
++  run.strongholds[0].anchors.forEach((a) => (a.captured = true));
++  run.strongholds[1].shielded = false;
++  run.strongholds[1].anchors.forEach((a) => (a.captured = true));
++  run.strongholds[7].anchors[1].captured = true;
++  const before = structuredClone(run),
++    snapshot = coopObjectivesSnapshot(run);
++  assert.deepEqual(
++    snapshot.relays.map((r) => r.number),
++    [1, 2, 3, 4, 5, 6, 7, 8],
++  );
++  assert.equal(snapshot.selected.id, 'relay-2');
++  assert.equal(snapshot.selected.state, 'exposed');
++  assert.deepEqual(
++    snapshot.relays[7].anchors.map((a) => [a.letter, a.captured]),
++    [
++      ['A', false],
++      ['B', true],
++    ],
++  );
++  assert.match(snapshot.summary, /^1 \/ 8 secured/);
++  assert.deepEqual(run, before);
++});
+diff --git a/game/test/coop-threat-summary-host.test.mjs b/game/test/coop-threat-summary-host.test.mjs
+new file mode 100644
+index 0000000000000000000000000000000000000000..6471a4fb4fba2fd902a797c65bb1d59f462a42ad
+--- /dev/null
++++ b/game/test/coop-threat-summary-host.test.mjs
+@@ -0,0 +1,313 @@
++import test from 'node:test';
++import assert from 'node:assert/strict';
++import { page } from './helpers/coop-host.mjs';
++
++// Real entry, core, input, Settings and message owner with the established finite
++// DOM/Canvas fixture. No app-state injection, wall-clock timer or native-input claim.
++const message = (f) => f.$('coop-message').textContent;
++const labels = (f) =>
++  f.lastDrawing.filter((call) => call.name === 'fillText').map((call) => call.args[0]);
++// Observe the real painter's outlined target marks, not a symbol stub. Targets
++// sit above/right of the owner in local cue space: P1 is a circle and P2 a
++// closed four-point diamond. Other arena circles/diamonds remain owner-centred
++// or use world coordinates, so they cannot stand in for these target marks.
++const targetShapes = (f) => {
++  let path = [];
++  const shapes = [];
++  for (const call of f.lastDrawing) {
++    if (call.name === 'beginPath') path = [];
++    else if (['arc', 'moveTo', 'lineTo', 'closePath'].includes(call.name)) path.push(call);
++    else if (call.name === 'stroke' && call.state.lineWidth === 1.5) {
++      if (path.length === 1 && path[0].name === 'arc') {
++        const [x, y, radius] = path[0].args;
++        if (x > 0 && y < 0 && radius > 0) shapes.push('circle');
++      } else if (path.length === 5 && path[4].name === 'closePath') {
++        const points = path.slice(0, 4).map((point) => point.args);
++        const [[x, top], [right, y], [bottomX, bottom], [left, leftY]] = points;
++        if (
++          points.every(([px, py]) => px > 0 && py < 0) &&
++          bottomX === x &&
++          leftY === y &&
++          left < x &&
++          x < right &&
++          top < y &&
++          y < bottom
++        )
++          shapes.push('diamond');
++      }
++    }
++  }
++  return shapes.sort();
++};
++const hud = (f) =>
++  [
++    'coop-clock',
++    'coop-coverage',
++    'coop-reserves',
++    'coop-state-0',
++    'coop-state-1',
++    'coop-objective',
++  ].map((id) => f.$(id).textContent);
++const activate = (f, id) => {
++  f.$(id).focus();
++  f.tap('Enter');
++};
++function until(f, predicate, maximum, label) {
++  for (let tick = 0; tick < maximum; tick++) {
++    if (predicate()) return tick;
++    f.tick();
++  }
++  assert.ok(predicate(), `${label}: ${JSON.stringify({ hud: hud(f), message: message(f) })}`);
++  return maximum;
++}
++async function start(t) {
++  const f = await page(t, {
++    nativeFocus: true,
++    nativeVisibility: true,
++    capturePaint: true,
++    captureDrawing: true,
++  });
++  await f.choose('coop-level', 'first-connection');
++  activate(f, 'coop-start');
++  f.tick(2);
++  assert.equal(f.$('coop-overlay').hidden, true);
++  assert.equal(f.doc.activeElement.id, 'coop-canvas');
++  return f;
++}
++function settings(f) {
++  activate(f, 'coop-pause');
++  activate(f, 'coop-settings-open');
++  activate(f, 'coop-settings-tab-display');
++  assert.equal(f.$('coop-options').open, true);
++  assert.equal(f.$('coop-overlay').hidden, false);
++  f.$('coop-text-size').focus();
++}
++function size(f, value) {
++  f.choose('coop-text-size', value);
++  f.tick(2);
++  assert.equal(f.doc.body.dataset.textSize, value);
++  assert.equal(f.doc.activeElement.id, 'coop-text-size');
++}
++
++test('Large without an immediate threat preserves the ordinary advisory and paused focus', async (t) => {
++  const f = await start(t);
++  const ordinary = message(f);
++  assert.equal(
++    ordinary,
++    'Watch the Hunter warnings. Cover a crossing or join after the charge passes.',
++  );
++  settings(f);
++  const before = hud(f),
++    standardPaint = f.lastPaint;
++  size(f, 'large');
++  assert.equal(message(f), ordinary);
++  const focusCount = f.focusAttempts.length;
++  f.tick(120);
++  assert.deepEqual(hud(f), before);
++  assert.equal(f.focusAttempts.length, focusCount, 'Advisory rendering does not request focus.');
++  size(f, 'standard');
++  assert.equal(message(f), ordinary);
++  assert.equal(f.lastPaint, standardPaint);
++  activate(f, 'coop-settings-close');
++  assert.equal(f.doc.activeElement.id, 'coop-settings-open');
++  f.tick(120);
++  assert.deepEqual(hud(f), before, 'Settings close never resumes flight.');
++});
++
++test('ordinary two-player cuts produce lock and charge summaries; Settings retains the attempt and message owner', async (t) => {
++  const f = await start(t),
++    ordinary = message(f);
++  f.tap('KeyD');
++  f.tap('ArrowLeft');
++  const warningTicks = until(
++    f,
++    () => labels(f).includes('LOCK 1') && labels(f).includes('LOCK 2'),
++    240,
++    'Both real hunters warn against the two opened cuts',
++  );
++  assert.equal(message(f), ordinary, 'Standard retains its original advisory during warnings.');
++  settings(f);
++  const stopped = hud(f),
++    standardPaint = f.lastPaint,
++    image = f.drawImages.at(-1),
++    summary = 'Hunter lock: Players 1 and 2';
++  size(f, 'large');
++  assert.equal(message(f), summary);
++  assert.deepEqual(
++    targetShapes(f),
++    ['circle', 'diamond'],
++    'Both live Hunter targets retain distinct nonverbal identities.',
++  );
++  assert.ok(
++    !labels(f).includes('P1') && !labels(f).includes('P2'),
++    'Large does not reintroduce displaced target captions.',
++  );
++  const focusCount = f.focusAttempts.length;
++  f.tick(120);
++  assert.equal(message(f), summary);
++  assert.deepEqual(hud(f), stopped);
++  assert.equal(f.focusAttempts.length, focusCount);
++  size(f, 'standard');
++  assert.equal(message(f), ordinary, 'Standard restores the last ordinary message verbatim.');
++  assert.equal(f.lastPaint, standardPaint, 'The identical retained warning frame is restored.');
++  size(f, 'large');
++  assert.equal(message(f), summary);
++  activate(f, 'coop-settings-close');
++  assert.equal(f.doc.activeElement.id, 'coop-settings-open');
++  f.tick(120);
++  assert.deepEqual(hud(f), stopped);
++  assert.equal(message(f), summary);
++  assert.equal(f.drawImages.at(-1), image);
++
++  activate(f, 'coop-resume');
++  assert.equal(f.$('coop-overlay').hidden, true);
++  assert.equal(f.doc.activeElement.id, 'coop-canvas');
++  const resumedFocusCount = f.focusAttempts.length;
++  const chargeTicks = until(
++    f,
++    () => message(f).includes('Hunter charge: Player 1'),
++    240,
++    'Only explicit Resume advances the warning into a committed charge',
++  );
++  assert.match(message(f), /Hunter charge: Player 1/);
++  assert.equal(f.focusAttempts.length, resumedFocusCount);
++  assert.notDeepEqual(hud(f), stopped);
++  settings(f);
++  const chargeFrame = hud(f);
++  size(f, 'standard');
++  assert.equal(
++    message(f),
++    'Choose fresh directions when you are ready.',
++    'Resume becomes the latest ordinary message; the initial briefing is not resurrected.',
++  );
++  size(f, 'large');
++  assert.match(message(f), /Hunter charge: Player 1/);
++  assert.deepEqual(hud(f), chargeFrame);
++  t.diagnostic(
++    JSON.stringify({ warningTicks, chargeTicks, boundary: 'ordinary input, finite host' }),
++  );
++});
++
++test('a Hunter-caused knockdown keeps rescue guidance ahead of Large threat summaries', async (t) => {
++  const f = await start(t);
++  settings(f);
++  size(f, 'large');
++  activate(f, 'coop-settings-close');
++  activate(f, 'coop-resume');
++  f.tick(2);
++  f.tap('KeyD');
++  f.tap('ArrowLeft');
++  until(f, () => message(f).includes('Hunter lock:'), 240, 'A cut creates an actual lock');
++  const downTicks = until(
++    f,
++    () =>
++      [f.$('coop-state-0').textContent, f.$('coop-state-1').textContent].some((text) =>
++        /^(Rescue|Down)/.test(text),
++      ),
++    720,
++    'An unprotected live cut receives a real knockdown',
++  );
++  const rescue = message(f);
++  assert.match(rescue, /needs a rescue/);
++  assert.doesNotMatch(rescue, /Hunter lock:|Hunter charge:/);
++  settings(f);
++  const stopped = hud(f);
++  size(f, 'standard');
++  assert.equal(message(f), rescue);
++  size(f, 'large');
++  assert.equal(message(f), rescue);
++  f.tick(120);
++  assert.equal(message(f), rescue);
++  assert.deepEqual(hud(f), stopped);
++  assert.equal(f.doc.activeElement.id, 'coop-text-size');
++  t.diagnostic(
++    JSON.stringify({ downTicks, boundary: 'ordinary input, finite host; not a playtest' }),
++  );
++});
++
++for (const failure of ['confirmation', 'navigation'])
++  test(`a ${failure} failure retains its explanation over a paused Large threat until explicit recovery`, async (t) => {
++    const f = await start(t);
++    f.tap('KeyD');
++    f.tap('ArrowLeft');
++    until(
++      f,
++      () => labels(f).includes('LOCK 1') && labels(f).includes('LOCK 2'),
++      240,
++      'Ordinary input creates both real Hunter warnings',
++    );
++    settings(f);
++    size(f, 'large');
++    assert.equal(message(f), 'Hunter lock: Players 1 and 2');
++    activate(f, 'coop-settings-close');
++    const paused = hud(f);
++    if (failure === 'confirmation') {
++      const unavailable = t.mock.method(f.$('coop-discard-dialog'), 'showModal', () => {
++        throw new Error('Confirmation unavailable');
++      });
++      activate(f, 'coop-retry');
++      unavailable.mock.restore();
++    } else {
++      const unavailable = t.mock.method(globalThis.location, 'assign', () => {
++        throw new Error('Navigation unavailable');
++      });
++      activate(f, 'coop-versus');
++      assert.equal(f.$('coop-discard-dialog').open, true);
++      activate(f, 'coop-discard-confirm');
++      unavailable.mock.restore();
++    }
++    const explanation = message(f),
++      focus = f.doc.activeElement.id,
++      focusCount = f.focusAttempts.length;
++    assert.match(
++      explanation,
++      failure === 'confirmation'
++        ? /Could not open the confirmation.*paused: Confirmation unavailable/
++        : /could not be replaced: Navigation unavailable/,
++    );
++    assert.equal(f.$('coop-discard-dialog').open, false);
++    f.tick(120);
++    assert.equal(message(f), explanation, 'The next frame cannot erase the failed-action reason.');
++    assert.deepEqual(hud(f), paused);
++    assert.equal(f.doc.activeElement.id, focus);
++    assert.equal(f.focusAttempts.length, focusCount);
++
++    activate(f, 'coop-settings-open');
++    activate(f, 'coop-settings-tab-display');
++    f.$('coop-text-size').focus();
++    size(f, 'standard');
++    assert.equal(message(f), explanation);
++    size(f, 'large');
++    assert.equal(
++      message(f),
++      explanation,
++      'Changing appearance does not resolve the failed action.',
++    );
++    activate(f, 'coop-settings-close');
++    assert.deepEqual(hud(f), paused);
++
++    if (failure === 'confirmation') {
++      activate(f, 'coop-resume');
++      f.tick(2);
++      assert.equal(message(f), 'Hunter lock: Players 1 and 2');
++    } else {
++      activate(f, 'coop-retry');
++      activate(f, 'coop-discard-confirm');
++      f.tick(2);
++      assert.equal(
++        message(f),
++        'Watch the Hunter warnings. Cover a crossing or join after the charge passes.',
++        'A successfully started Retry owns new ordinary guidance.',
++      );
++      f.tap('KeyD');
++      f.tap('ArrowLeft');
++      until(
++        f,
++        () => message(f) === 'Hunter lock: Players 1 and 2',
++        240,
++        'The replacement attempt can again show current threat summaries',
++      );
++    }
++    assert.equal(f.$('coop-overlay').hidden, true);
++    assert.equal(f.doc.activeElement.id, 'coop-canvas');
++  });

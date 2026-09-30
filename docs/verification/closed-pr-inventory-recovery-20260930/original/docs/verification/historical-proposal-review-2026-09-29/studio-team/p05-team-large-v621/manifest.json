@@ -1,0 +1,342 @@
+{
+  "format": "revealline-historical-source-preservation.v1",
+  "cohort": "p05-team-large-v621",
+  "purpose": "Historical exact-byte source evidence only; runtime adoption deferred.",
+  "donor_relative_worktree": ".cache/worktrees/p05-team-large-v621",
+  "base_head": "ef1430174dfd35a9df441233988b8737d0401851",
+  "base_is_ancestor_of_pinned_main": true,
+  "capture_started_utc": "2026-09-29T15:12:38.165982+00:00",
+  "tracked_modified_files": 10,
+  "new_untracked_files": 11,
+  "excluded": [
+    "node_modules"
+  ],
+  "files": [
+    {
+      "path": "authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "status": " M",
+      "preimage": {
+        "git_blob": "8948eb3a222119fe12e7554a45c2d2d75ef93430",
+        "git_mode": "100644",
+        "sha256": "74929ef8613c770d261a367a8e326751c140dd69982a79d9c037aa86267eba64",
+        "bytes": 223843
+      },
+      "postimage": {
+        "git_blob": "a0a13dba51da5544118b8e319f129227ba1828f1",
+        "source_file_mode": "0644",
+        "sha256": "8635bafc97d1282818ff121c394da68ead0a8da06d94235971d7412baf2f2e73",
+        "bytes": 227988,
+        "encoding": "UTF-8"
+      }
+    },
+    {
+      "path": "docs/team-actor-presentation.md",
+      "status": " M",
+      "preimage": {
+        "git_blob": "42120063e8d9d0be245b7796772f0a445d30c7fe",
+        "git_mode": "100644",
+        "sha256": "efe074ac10b5bedb413a3fa58c119c2d7d304879ee6c6773996025347107f1cd",
+        "bytes": 8950
+      },
+      "postimage": {
+        "git_blob": "d3f0ab85051803dc47aed7ccc45a3cf0600b3e88",
+        "source_file_mode": "0644",
+        "sha256": "3ff3f43f6ddab151b53934e89702885395d0760804c11f7c699548cd2eb9cba4",
+        "bytes": 16650,
+        "encoding": "UTF-8"
+      }
+    },
+    {
+      "path": "game/couch/coop-actor-layout.mjs",
+      "status": " M",
+      "preimage": {
+        "git_blob": "78e7c365173042bf82435bcf3a9b7f95d949a307",
+        "git_mode": "100644",
+        "sha256": "a244c145cf791634c0724365ca6b4f58b259dedadaf913997beec67956bbf02d",
+        "bytes": 4245
+      },
+      "postimage": {
+        "git_blob": "9b854c4d004e2ea7246e9ebe2082bbb055ccf23e",
+        "source_file_mode": "0644",
+        "sha256": "b3129272fc8e2c48ab13c904ed396436b8d8834fbae03f0938f4825a2d1d902d",
+        "bytes": 9600,
+        "encoding": "UTF-8"
+      }
+    },
+    {
+      "path": "game/couch/coop-view.mjs",
+      "status": " M",
+      "preimage": {
+        "git_blob": "162320b9abf93fc050d07bf412d842dc54556ae0",
+        "git_mode": "100644",
+        "sha256": "f54b0a83047606aa845209716cdd4ee6a952c892808606d2597539927b76e342",
+        "bytes": 21420
+      },
+      "postimage": {
+        "git_blob": "ddfaf13f6cb15a625aa97524d32a465e39f7a33d",
+        "source_file_mode": "0644",
+        "sha256": "8dd1082815d4ab7c95387781cea3bdc16652b52ccf3418031e5da92e74330b76",
+        "bytes": 27603,
+        "encoding": "UTF-8"
+      }
+    },
+    {
+      "path": "game/couch/relay-rescue.css",
+      "status": " M",
+      "preimage": {
+        "git_blob": "f1bb33a69232d83d031555897f7791f586904714",
+        "git_mode": "100644",
+        "sha256": "a3003767f3ed6ff827d6b2dd75f1c0bff6430ce5f846a7fe12deaf33291c3794",
+        "bytes": 20685
+      },
+      "postimage": {
+        "git_blob": "3986e5dd739076f46d98039f59f69cbe616daa2a",
+        "source_file_mode": "0644",
+        "sha256": "1f31ff90c006e035272ae8c440cdc89443752fc70d3d63eccd9021991b2d4b3a",
+        "bytes": 23703,
+        "encoding": "UTF-8"
+      }
+    },
+    {
+      "path": "game/couch/relay-rescue.html",
+      "status": " M",
+      "preimage": {
+        "git_blob": "3723dc22f6d15a462068642773d5df4111216979",
+        "git_mode": "100644",
+        "sha256": "5f1d52d59f9577be5a12c46cca79160f87c134758e13f1b5521fa519ce0a7798",
+        "bytes": 22851
+      },
+      "postimage": {
+        "git_blob": "3a49f4b04e494bb1a229563712247f6ad478f146",
+        "source_file_mode": "0644",
+        "sha256": "c329457334e10e9dee3ecdd86c3a6b2abf1ddc185671641529d062504b6f611e",
+        "bytes": 26668,
+        "encoding": "UTF-8"
+      }
+    },
+    {
+      "path": "game/couch/relay-rescue.mjs",
+      "status": " M",
+      "preimage": {
+        "git_blob": "af68fbfbb830176927a5078b156919d713782ffd",
+        "git_mode": "100644",
+        "sha256": "aa2d87099a591a992a7193b452dbfa73f3aa3dbfc2cd2b2e57c269108eb1a379",
+        "bytes": 68270
+      },
+      "postimage": {
+        "git_blob": "e7b20a2c8745e778305bceec31901cf89d107d50",
+        "source_file_mode": "0644",
+        "sha256": "9568debf58df54170a43ce282d09b8640037ace6667b952c3227ab47f9d77f3e",
+        "bytes": 70230,
+        "encoding": "UTF-8"
+      }
+    },
+    {
+      "path": "game/test/coop-actor-layout.test.mjs",
+      "status": " M",
+      "preimage": {
+        "git_blob": "5d8f420abb4de15c5ddb476b759b45f59b688e70",
+        "git_mode": "100644",
+        "sha256": "9b7af83ffe7539bb9a358be2d8ebcf1f93f765cab71d880787e4b7efef3b6224",
+        "bytes": 12308
+      },
+      "postimage": {
+        "git_blob": "36dbf4d80a6bf0342cbfd516f205d17e85cd2798",
+        "source_file_mode": "0644",
+        "sha256": "99b5d74db7c40821d88593e12702535b5f8e476746de01355eca3657e8371917",
+        "bytes": 25729,
+        "encoding": "UTF-8"
+      }
+    },
+    {
+      "path": "game/test/display-preferences-host.test.mjs",
+      "status": " M",
+      "preimage": {
+        "git_blob": "b52469389d05ede9a6885ecd862a0af18208b48e",
+        "git_mode": "100644",
+        "sha256": "a40629beaf260bbaa7195ba571f780202a647e36aa3963c2bf6764a9518809d4",
+        "bytes": 13915
+      },
+      "postimage": {
+        "git_blob": "61197db74eb89be022f87ce4df52fe90dd74520a",
+        "source_file_mode": "0644",
+        "sha256": "e0128029b5fdcacc7f6e288e19f4b860729b8c21e4b7a42460ed6dc28d7b6a10",
+        "bytes": 17677,
+        "encoding": "UTF-8"
+      }
+    },
+    {
+      "path": "game/test/helpers/coop-host.mjs",
+      "status": " M",
+      "preimage": {
+        "git_blob": "6aca98365d6581ab7f1513c02788663447ccb4e4",
+        "git_mode": "100644",
+        "sha256": "8db69a7a6b1a311b9e8d7634c0a946a7e9823bf0a2e1e2d59c860d98abd8d6d0",
+        "bytes": 11787
+      },
+      "postimage": {
+        "git_blob": "bda5ee411b421c98e564a7b75a3848715ce30827",
+        "source_file_mode": "0644",
+        "sha256": "45570282905ef17a30fe1d8f0804c86b7d4ff6167f3f3c807e9c034c3a578dc4",
+        "bytes": 12614,
+        "encoding": "UTF-8"
+      }
+    },
+    {
+      "path": "game/couch/coop-cue-semantics.mjs",
+      "status": "??",
+      "preimage": null,
+      "postimage": {
+        "git_blob": "b692c842f56ae247ecd35052f957e71dd170a6d5",
+        "source_file_mode": "0644",
+        "sha256": "61b08cfc0b27d00dbc84733297a773059208ac0db2ad0061265fc2def8452ad3",
+        "bytes": 2471,
+        "encoding": "UTF-8"
+      }
+    },
+    {
+      "path": "game/couch/coop-cue-symbols.mjs",
+      "status": "??",
+      "preimage": null,
+      "postimage": {
+        "git_blob": "64aa84d2a7d18644a5bf5c7c4d838a535fdefd4a",
+        "source_file_mode": "0644",
+        "sha256": "bf22c1467d13b6d6c4f758aa8910d438ba0c627acb3a3639c245a9cfc7e4865f",
+        "bytes": 6084,
+        "encoding": "UTF-8"
+      }
+    },
+    {
+      "path": "game/couch/coop-objectives.css",
+      "status": "??",
+      "preimage": null,
+      "postimage": {
+        "git_blob": "013ef55b6555429ff287b41c31282ceb316f9e5a",
+        "source_file_mode": "0644",
+        "sha256": "3d15e4b306a78444298740df02fcb19509cebc05773d4e43234242c39a13bbb9",
+        "bytes": 2528,
+        "encoding": "UTF-8"
+      }
+    },
+    {
+      "path": "game/couch/coop-objectives.mjs",
+      "status": "??",
+      "preimage": null,
+      "postimage": {
+        "git_blob": "2d80c1a6cb6e3eee3e818d3ca9df03d0c2ce3113",
+        "source_file_mode": "0644",
+        "sha256": "6423bb3a62ccaaaca5d188dc141b400b1a3c7fb8457a2045758ff1e0ea0adf4e",
+        "bytes": 14375,
+        "encoding": "UTF-8"
+      }
+    },
+    {
+      "path": "game/test/coop-cue-semantics.test.mjs",
+      "status": "??",
+      "preimage": null,
+      "postimage": {
+        "git_blob": "ca979d20dd8816a0560b8f8851eb0eb35438c3a1",
+        "source_file_mode": "0644",
+        "sha256": "6b38b7a0c1cd34e7914b791c50274ba778a703d8b27c3d2677b2df178466a281",
+        "bytes": 7580,
+        "encoding": "UTF-8"
+      }
+    },
+    {
+      "path": "game/test/coop-cue-symbols.test.mjs",
+      "status": "??",
+      "preimage": null,
+      "postimage": {
+        "git_blob": "b7eb0bf914ecf99eb29129fe3ed201848bb0caf9",
+        "source_file_mode": "0644",
+        "sha256": "a41f3ce2ea2221448677f1d475ad334c441c30584211ff97f2172346901139e1",
+        "bytes": 10944,
+        "encoding": "UTF-8"
+      }
+    },
+    {
+      "path": "game/test/coop-large-objective-identity.test.mjs",
+      "status": "??",
+      "preimage": null,
+      "postimage": {
+        "git_blob": "eb77c8b30e636ba4d05e17d1bd60812c2c0a63b9",
+        "source_file_mode": "0644",
+        "sha256": "a26e622a950ad51e4355bf685711c843ff1c1819face9a22551c34e3a2c9897f",
+        "bytes": 28196,
+        "encoding": "UTF-8"
+      }
+    },
+    {
+      "path": "game/test/coop-large-text-host.test.mjs",
+      "status": "??",
+      "preimage": null,
+      "postimage": {
+        "git_blob": "dae221422f293852f2ae93ca2a179c5227c41fce",
+        "source_file_mode": "0644",
+        "sha256": "779313dbe50df98b0edcc9cd3dc184b1b228119c7b42f3377a8f10d1012e83bb",
+        "bytes": 11095,
+        "encoding": "UTF-8"
+      }
+    },
+    {
+      "path": "game/test/coop-objectives-host.test.mjs",
+      "status": "??",
+      "preimage": null,
+      "postimage": {
+        "git_blob": "fa8a643c5677042a2d5b0ad023734e8ff4a2c399",
+        "source_file_mode": "0644",
+        "sha256": "9513a8d8636039945a244dc97171a10870a3188980e34f6cf26f534854bcf7cb",
+        "bytes": 17108,
+        "encoding": "UTF-8"
+      }
+    },
+    {
+      "path": "game/test/coop-objectives.test.mjs",
+      "status": "??",
+      "preimage": null,
+      "postimage": {
+        "git_blob": "9a65e7ba614f7d1834478ea4796aa7e52331aeff",
+        "source_file_mode": "0644",
+        "sha256": "d6eeea1dbd0d71d521f7f4d41a30dad1f3793c1a60c0736d23e04728114579d9",
+        "bytes": 5526,
+        "encoding": "UTF-8"
+      }
+    },
+    {
+      "path": "game/test/coop-threat-summary-host.test.mjs",
+      "status": "??",
+      "preimage": null,
+      "postimage": {
+        "git_blob": "6471a4fb4fba2fd902a797c65bb1d59f462a42ad",
+        "source_file_mode": "0644",
+        "sha256": "1c6849de40d475c5a261c18884f1bb5bd4be7cb859ea37b97d2f72f4b373184b",
+        "bytes": 10943,
+        "encoding": "UTF-8"
+      }
+    }
+  ],
+  "artifacts": {
+    "candidate-files.tar.gz": {
+      "bytes": 166135,
+      "sha256": "2d342dea369f9022ebd2037b6f214799e1ac66423eff2b1b4cb3c5b7665c5a4f"
+    },
+    "tracked.diff": {
+      "bytes": 92080,
+      "sha256": "d1484e27479e04d144508832f9df10a00ee111f58535d1c3cf32cbf0d3e2455e"
+    },
+    "new-source.patch": {
+      "bytes": 123209,
+      "sha256": "a5f5aa8c0255e93a490b38b34a9a15e13691b3e2ee78bb7584083bdfe08fd9a2"
+    }
+  },
+  "checks": {
+    "source_only_regular_utf8_files": true,
+    "credential_path_conflict_scan_flags": [],
+    "tracked_diff_reconstructs_every_postimage": true,
+    "archive_contents_equal_captured_sources": true,
+    "source_reread_stable_during_capture": true,
+    "tests_run": false,
+    "prototype_code_executed": false,
+    "runtime_adopted": false
+  }
+}

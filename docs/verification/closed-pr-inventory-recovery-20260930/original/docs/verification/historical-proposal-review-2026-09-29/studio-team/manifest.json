@@ -1,0 +1,112 @@
+{
+  "format": "revealline-historical-source-intake.v1",
+  "purpose": "Preserve three historical source proposals; no runtime adoption or qualification.",
+  "capture_started_utc": "2026-09-29T15:12:38.165982+00:00",
+  "capture_finished_utc": "2026-09-29T15:12:40.782462+00:00",
+  "comparison_refs": {
+    "origin/main": "321408a3cfd75ae230d760f39fb692503652601a",
+    "origin/codex/local-release-reconciliation": "014cd13e888c4b498f6a6acce27244f29bd93e73",
+    "PR795 head": "81df80dda259ba8e1cef5378af1cec91260eb51e",
+    "PR796 head": "c99fbbac348691bb91bd16a7e1e281f5a9e2b69b"
+  },
+  "comparison_scope": "Pinned locally available Git commits only; no network fetch or claim about subsequent remote state. Exact donor blobs are absent from all four pinned trees and their reachable histories. The original main/PR780 comparison scanned 51 distinct verification patch/patch-source blobs, including gzip, with no new donor module-path hits. Each corrected PR795/PR796 head separately has 49 distinct such blobs and no hits for any of the 18 distinct new-source paths.",
+  "cohorts": [
+    {
+      "cohort": "p04-reference-prototype-r1",
+      "base_head": "17e0a455f76c3f4a72f2e596397a0e73463335a5",
+      "file_count": 20,
+      "source_bytes": 330585,
+      "archive_bytes": 86582,
+      "manifest_sha256": "f76d9dd56d9eb5bbd79375ee186a1de667d694fa7d00c871a4918df255fab8f5",
+      "new_source_paths": [
+        "game/presentation/reference-bundle.mjs",
+        "game/presentation/reference-model.mjs",
+        "game/presentation/reference-session.mjs",
+        "game/presentation/reference-store.mjs",
+        "game/presentation/studio-formats.mjs",
+        "game/test/presentation-references.test.mjs",
+        "game/test/presentation-studio-formats.test.mjs"
+      ]
+    },
+    {
+      "cohort": "p05-team-large-v621",
+      "base_head": "ef1430174dfd35a9df441233988b8737d0401851",
+      "file_count": 21,
+      "source_bytes": 575312,
+      "archive_bytes": 166135,
+      "manifest_sha256": "d3610c56a4bc640fedaefc1ee8b2b9615d3ce28db894a574b85e5492ef45ba1c",
+      "new_source_paths": [
+        "game/couch/coop-cue-semantics.mjs",
+        "game/couch/coop-cue-symbols.mjs",
+        "game/couch/coop-objectives.css",
+        "game/couch/coop-objectives.mjs",
+        "game/test/coop-cue-semantics.test.mjs",
+        "game/test/coop-cue-symbols.test.mjs",
+        "game/test/coop-large-objective-identity.test.mjs",
+        "game/test/coop-large-text-host.test.mjs",
+        "game/test/coop-objectives-host.test.mjs",
+        "game/test/coop-objectives.test.mjs",
+        "game/test/coop-threat-summary-host.test.mjs"
+      ]
+    },
+    {
+      "cohort": "p05-team-large-cues-next",
+      "base_head": "d51acab59232edc4e7f77ab5df491f2c403de709",
+      "file_count": 9,
+      "source_bytes": 388552,
+      "archive_bytes": 120696,
+      "manifest_sha256": "f52a673d9a2ea6a29eabe06799fb387fa7ac5db727d2a559e4df12d3242b2c9f",
+      "new_source_paths": [
+        "game/test/coop-large-text-host.test.mjs"
+      ]
+    }
+  ],
+  "totals": {
+    "files": 50,
+    "source_bytes": 1294449,
+    "compressed_archive_bytes": 373413
+  },
+  "checks": {
+    "all_fifty_sources_reread_after_archiving": true,
+    "head_and_porcelain_status_stable": true,
+    "tracked_patches_reconstruct_original_postimages": true,
+    "archives_have_exact_declared_regular_source_members": true,
+    "no_symlinks_binary_media_credentials_or_private_absolute_paths_detected": true,
+    "tests_run": false,
+    "builds_run": false,
+    "runtime_adopted": false,
+    "shared_checkout_or_git_refs_modified": false,
+    "corrected_candidate_heads_resolved_and_inspected": true,
+    "all_fifty_sources_head_and_status_reread_after_metadata_correction": true,
+    "cohort_archives_patches_and_manifests_unchanged_by_metadata_correction": true,
+    "recursive_metadata_and_readable_patch_private_path_scan_flags": []
+  },
+  "candidate_reference_correction": "The first packet incorrectly combined PR numbers with abbreviated heads and reported those malformed identifiers as unavailable objects. Correct full PR795 and PR796 commit IDs were supplied, resolved locally, and inspected; the unavailability claim is withdrawn.",
+  "candidate_comparisons": [
+    {
+      "pr": 795,
+      "head": "81df80dda259ba8e1cef5378af1cec91260eb51e",
+      "resolves_locally": true,
+      "donor_files_compared": 50,
+      "exact_donor_blob_matches_in_tree": 0,
+      "exact_donor_blob_matches_in_reachable_history": 0,
+      "distinct_new_source_paths": 18,
+      "new_source_paths_present_in_tree": 0,
+      "distinct_verification_patch_blobs_scanned": 49,
+      "verification_patch_new_source_path_hits": 0
+    },
+    {
+      "pr": 796,
+      "head": "c99fbbac348691bb91bd16a7e1e281f5a9e2b69b",
+      "resolves_locally": true,
+      "donor_files_compared": 50,
+      "exact_donor_blob_matches_in_tree": 0,
+      "exact_donor_blob_matches_in_reachable_history": 0,
+      "distinct_new_source_paths": 18,
+      "new_source_paths_present_in_tree": 0,
+      "distinct_verification_patch_blobs_scanned": 49,
+      "verification_patch_new_source_path_hits": 0
+    }
+  ],
+  "audit_updated_utc": "2026-09-29T15:15:47.334618+00:00"
+}

@@ -1,0 +1,1954 @@
+diff --git a/authoring/skills/xonix-runtime-maintainer/SKILL.md b/authoring/skills/xonix-runtime-maintainer/SKILL.md
+index 8948eb3a222119fe12e7554a45c2d2d75ef93430..a0a13dba51da5544118b8e319f129227ba1828f1 100644
+--- a/authoring/skills/xonix-runtime-maintainer/SKILL.md
++++ b/authoring/skills/xonix-runtime-maintainer/SKILL.md
+@@ -511,6 +511,12 @@ When checkpointing a sparse integration, name its entire staged composition and
+ 
+ ### Team actor presentation boundaries
+ 
++For the [Team Large-text contract](../../../docs/team-actor-presentation.md#global-large-text-in-the-team-arena), forward one shared display snapshot into the painter and enlarge resolved CSS fonts after their existing clamps. Scale the complete pilot badge, downed-plus backing, caption padding and clearance with the text; keep Standard commands, actor geometry and gameplay state unchanged. Exercise actual Settings changes and explicit Resume with retained decoded-picture identity. Count required glyphs and inspect complete plates/head exclusions, but keep crowded-import overlap and role association as distinct native/readability checks; an emitted label is not proof it can be read. Preserve baseline failures and independently captured Standard traces, and use the guide's maintenance prompt.
++
++For dense Team imports, reserve player identity and active warnings before persistent objectives. Large uses exact-position 5-pixel core and 3-pixel anchor locators, with full A/Core/B state text and 14-pixel symbols in the existing objective HUD region. Tiny map marks do not prove independently readable states. Keep selected core-to-anchor links distinct from dashed cosmetic body tethers and paint them before hunter warning trajectories. Preserve actual required-core subsets, optional relay status and coverage goals. Recheck the original 292-pixel eight-relay owner-clutter failure in motion with actual fonts. Do not call compact symbols accepted solely because every path is emitted or rectangle overlap decreases.
++
++Large enemy state symbols must keep exact phase and target semantics: H/diamond, P1 or P2/reticle, P1 or P2/chevrons, H/hourglass. Invalid targets never become invented player targets. Support retains world-space slow halos even when redundant prose is removed. Keep the Help key and existing live advisory synchronized; restore ordinary copy after threats or a Standard switch, and preserve downed/rescue, terminal and actionable recovery messages over ambient threat summaries. Test real steering through lock/charge/recovery and failure paths before accepting the host. Keep maximum-density imports, actual ink bounds and owner association separate from ordinary starter-arena checks.
++
+ For the [Team actor checkpoint](../../../docs/team-actor-presentation.md), map actual strict `drifter`/`hunter` identities explicitly to borrowed prepared slots; source-image names are not behavior types. Preserve Team's authored radius, including 0.01, when a shared cosmetic sampler normalizes values. Paint every body before functional overlays and restore each real contact marker after overlapping art. Derive readable labels and number/shape badges from canvas CSS pixels, not board cells; bound full plates away from both pilot heads without shrinking text. An inward cosmetic body offset must include rotated/banked source, motor and nose bounds, restore before contact drawing, and visibly connect to the unchanged cutting head. Keep the shared default drawing path unchanged. Test plain/theme fonts, compact/detailed frames, pause/reduction and exact run preservation, then inspect actual desktop/phone edges, warning and bright-art cases. Source previews, token ratios and command tests do not establish native readability. Retain failed enum/radius/readability evidence and scoped native successes; no new Team sets, catalog surface-motion, full-win/rescue, hardware or P08 completion claim follows automatically.
+ 
+ ### Qualifying a composed host and its finite inputs
+@@ -686,3 +692,7 @@ Prompt: “Open Still Media after selecting Large and Plain in the same-origin g
+ The retained combined preview is exact v0.61.8 plus the reading-entry HTML: Plain/Large/reduced settings applied before media access, the body measured 22 px, and the picker measured 20 px with its label and outline clear in portrait and short landscape. Keep that scoped browser result separate from final v0.61.9/public acceptance, a complete dialog traversal, actual background return and physical devices. Preserve the raw observation and request-log snapshot; inline-only screenshots have no exported image hashes. Do not equate the pre-existing authored picture record with a save performed by this preview.
+ 
+ When a workshop HTML entry gains a script, update the real build fixture's explicit HTML-entry dependencies as well as the shipped allowlist. `still-workshop-build.test.mjs` follows JavaScript imports recursively, but does not discover HTML script references. Include `game/ui/tool-display-entry.mjs` in that fixture graph, then retain the strict loose-file, ZIP, offline and Pages-route assertions. An ordinary build passing does not qualify a fixture whose declared graph is stale; preserve both hosted failures and the corrected Node 20/22 results.
++
++For Team Large presentation, retain the failed R9/R10 packing and R11 dense-symbol receipts. R12 separates compact objective location from readable selected state. Keep exact world positions, 3/5-pixel anchor/core locators, 14-pixel enemy and HUD symbols, valid target circle/diamond, captured A/B paths and selected core-to-anchor links testable in the actual painter. Test the real host HUD as well as the map: switching Large or selection must update the existing objective region without a second selection owner. Both sizes read the shared selected-relay summary: Standard uses the full location/state/instruction sentence, while Large uses the compact heading and A/Core/B strip. Pilot badges stay beside their own craft; adding enemies or relays cannot displace a player's identity across the board. Exact Standard draw traces remain a separate invariant. The optional Objectives inspector is read-only and available in lobby/Pause, preserves authored required-core subsets and coverage goals, borrows no reveal image, and closes without resuming or stealing focus. Keep action-error authority, earned-image identity and terminal cleanup intact. A finite owner/path test does not prove native density readability.
++
++Prompt: “Qualify Team's Large cue contract on both starter maps and maximum legal imported layouts. Compare real symbol owners and pilot association before/after added enemies, not just counts. Verify the selected A/Core/B HUD text, coverage goal and optional/required subset progress against the map and inspector; tiny objective marks are location cues rather than full readable state. Inspect Standard/Large and Theme/Plain in actual narrow browser play; retain failures. Exercise Objectives via keyboard and modeled controller, selection, Escape, explicit Resume, blur and stale departure callbacks. Report physical input, touch geometry, public byte identity and full-release gates separately.”
+diff --git a/docs/team-actor-presentation.md b/docs/team-actor-presentation.md
+index 42120063e8d9d0be245b7796772f0a445d30c7fe..d3f0ab85051803dc47aed7ccc45a3cf0600b3e88 100644
+--- a/docs/team-actor-presentation.md
++++ b/docs/team-actor-presentation.md
+@@ -44,3 +44,25 @@ Command tests characterize the original two failures and then check CSS sizes, c
+ [XAG 102](https://learn.microsoft.com/en-us/xbox/accessibility/xbox-accessibility-guidelines/102) motivates checking gameplay symbols against changing backgrounds, and [XAG 103](https://learn.microsoft.com/en-us/xbox/accessibility/xbox-accessibility-guidelines/103) motivates shape and text cues in addition to color. Token contrast and source-sheet previews do not establish actual-size readability or full accessibility.
+ 
+ The [checkpoint evidence](verification/cross-mode/p08-team-actors/README.md) retains the source sheet, incorrect-type and minimum-radius failures, the held05 159/159 pair and failed native readability group, the two-case size/clipping characterization, and corrected 167/167 pair with before/after HTTP pins. These groups qualify different source boundaries and are not additive coverage. The final source remains an internal P08-A checkpoint; catalog surface-motion work and broader Team/P08 acceptance remain separate.
++
++## Global Large text in the Team arena
++
++The shared text-size preference now reaches the Team painter alongside the font family and effects preference in one display snapshot. Standard retains the preceding drawing sizes. Large multiplies each resolved CSS font size by 4/3 after its existing clamp: 12-pixel role labels and downed plus become 16 pixels, 14-pixel pilot numerals become 18⅔ pixels, and the 18-pixel ceiling becomes 24. Omitting the painter option selects Standard; unsupported explicit values fail the existing text-size validation contract.
++
++Text-owned geometry grows with those glyphs. Large pilot circle/diamond badges are 27/32 CSS pixels; the downed-plus backing is 14×22. Caption padding, spacing from actor bodies and badge gaps scale together. These are cosmetic dimensions: actor frames, contact radii, cutting heads, terrain and simulation remain unchanged. Settings edits keep the accepted picture and current attempt, and closing Settings still requires explicit Resume.
++
++The R12 candidate separates exact map location from readable objective state. Large cores use 5-CSS-pixel position symbols and anchors use 3-pixel symbols, centred on their actual world positions. They reuse the shield/open/check and captured A/B paths at reduced scale; these small markers do not claim independently readable state. The selected relay has a readable A / Core / B strip in the existing objective region, with 14-pixel symbols and real Needed / Captured and Shielded / Exposed / Secured text. Large enemies retain 14-pixel symbols: hunter diamond, lock reticle, double chevron and hourglass show the actual phase, with a circle/diamond target mark only for a valid target. Drifters use triangles. Dark outlines separate these cues from artwork. Path dimensions alone do not establish native recognition.
++
++Large pilot numbers remain 18⅔-pixel text in 27/32-pixel circle/diamond badges. P1's badge stays above its cosmetic body and P2's below, with perimeter clamping only. Enemy or objective density cannot push either badge across the arena. Player and enemy contact rings remain at the authoritative simulation coordinates, and shifted cosmetic craft retain their short body tether. Long caption connectors and packed non-player text plates are retired in Large; Standard retains its prior commands.
++
++The selected relay has two short, solid dark-backed links from its real core position to its real anchors. These links are painted before hunter warning trajectories; they do not replace a warning or move an objective. Large no longer stacks the earlier world rectangles, core hexagon or selected corner marks beneath its compact locators. The HUD names the selected relay and preserves required-core counts, optional status and the authored coverage goal. Optional Objectives remains available from the lobby and Pause: a read-only magnified diagram and full text explain relay/anchor relationships without exposing reveal artwork. Selection is transient; closing returns to the opener and never resumes play. Both display sizes use the shared selected-relay summary: Standard shows its full location, state and instruction sentence; Large uses the compact relay/count heading and A/Core/B state strip. Standard canvas command traces remain unchanged. Under the shipped shared styles, the Large HUD state values render at 22 pixels with a 33-pixel line height; its heading and A/Core/B labels use the 18-pixel secondary size. The R12 source requires complete composed tests and native dense-map and HUD-layout review before acceptance.
++
++The existing polite advisory names current hunter targets in Large mode, deduplicating players within each actual phase. It restores the last ordinary message when a threat ends or Standard is selected. Downed/rescue and terminal guidance take priority. Actionable preparation/navigation errors must also retain authority until deliberate successful recovery; a frozen paused threat must never overwrite an error on the next animation frame. Real-host tests reach locks, charge and knockdown with ordinary steering and check Settings return, paused state and explicit Resume.
++
++The separate non-touch short-landscape shell correction fits the whole 2:1 board into the remaining height after the full HUD, objective, advisory and Pause control. Native 640×320 Large checks on both starter arenas show the board and a 47-pixel Pause control inside the viewport. This establishes fit only: small-body recognition and comfortable play remain separate. Touch rules are unchanged; the combined Large text and two touch pads at this height remain unfinished.
++
++Maintenance prompt: “Change Team arena presentation through the shared Standard/Large preference. Keep exact Standard canvas traces, real contact geometry, accepted picture and paused state unchanged. In Large, verify every symbol's actual owner, phase, valid target and captured A/B identity; preserve complete pilot numbers/shape/downed cues beside their own craft, independent of enemy density. Check the selected relay's exact short links and 3/5-pixel map locators against its readable A/Core/B HUD and optional Objectives diagram, including optional relays and subset goals. Test keyboard/controller Back, blur, stale callbacks and explicit Resume. Inspect the maximum valid eight-relay/sixteen-hunter imports at 292/304 CSS pixels, light/dark artwork and moving warnings. Report native recognition, overlap, owner association and touch layout separately from finite path assertions.”
++
++The earlier area-first candidate retained all glyphs but failed native owner association on a 292-pixel eight-relay import: long SHIELD plates dominated the arena and displaced a player badge toward the other player. That failure and its original screenshots remain evidence for this semantic correction. R9 passes ordinary six-snapshot checks and retained Standard traces, but maximum legal eight-core/sixteen-hunter fixtures still overlap at 292/304 pixels. Its native Large/Plain ordinary eight-relay screenshot has readable compact text; tiny bodies, distant owner association and maximum density remain unaccepted. Neither board width nor imported-map complexity is silently restricted to make this check pass. A complete set of emitted labels alone is not readable layout evidence. Qualify crowding, actual font metrics, light/dark artwork, the combined HUD/board/touch layout, Large/Plain, zoom and physical devices separately. R10 subsequently passed finite rectangle packing but failed native review again: captions dominated the board and P2 remained far from its craft. Its source and raw screenshots remain frozen. R11 then passed its complete 125-test cohort on both supported Node versions, but native review still found overlapping 14-pixel objectives on the densest legal import. Its original source, test and screenshot receipts remain frozen. R12 addresses that observed failure with compact map locators and the readable selected-relay HUD; it is not accepted merely because it emits fewer or smaller marks. The local source proposal does not close P05, Team presentation parity or public-release qualification.
++
++Research rechecked during this correction: [Xbox text display guidance](https://learn.microsoft.com/en-us/xbox/accessibility/xbox-accessibility-guidelines/101) treats in-game instructions and HUD text as part of readability and recommends measuring actual rendered glyphs, not relying on a configured font size. [Additional cue channels](https://learn.microsoft.com/en-us/xbox/accessibility/xbox-accessibility-guidelines/103) inform the shape-plus-colour state key. These support the review method; this candidate has no blanket accessibility certification.
+diff --git a/game/couch/coop-actor-layout.mjs b/game/couch/coop-actor-layout.mjs
+index 78e7c365173042bf82435bcf3a9b7f95d949a307..9b854c4d004e2ea7246e9ebe2082bbb055ccf23e 100644
+--- a/game/couch/coop-actor-layout.mjs
++++ b/game/couch/coop-actor-layout.mjs
+@@ -1,12 +1,20 @@
++import { resolveTextSize } from '../text-size.mjs';
++
+ // Cosmetic geometry only. All positions passed to the core remain untouched.
+ const clamp = (value, low, high) => Math.max(low, Math.min(high, value));
+-export function coopCueScale(width, columns = 72) {
++export function coopCueScale(width, columns = 72, textSize = 'standard') {
++  const factor = resolveTextSize(textSize) === 'large' ? 4 / 3 : 1;
+   const cssWidth = Number.isFinite(width) && width > 0 ? width : 1152;
+   const cell = cssWidth / columns;
+   return Object.freeze({
+     width: cssWidth,
+     cell,
+-    font: (cells, minimum = 12, maximum = 18) => clamp(cells * cell, minimum, maximum) / cell,
++    factor,
++    // Enlarge the resolved CSS text and its backing geometry together. The
++    // arena/collision scale and ordinary actor sizes do not belong to this role.
++    px: (value) => value * factor,
++    font: (cells, minimum = 12, maximum = 18) =>
++      (clamp(cells * cell, minimum, maximum) * factor) / cell,
+   });
+ }
+ 
+@@ -68,6 +76,41 @@ export function coopPilotBodyOffset(frame, geometry, width, height, margin = 0)
+ 
+ const intersects = (a, b) =>
+   a.left < b.right && a.right > b.left && a.top < b.bottom && a.bottom > b.top;
++
++/** CSS-pixel owner connector; nearby plates need no extra line. Invalid cosmetics stay inert. */
++export function coopCueConnector(rect, owner, threshold = 10) {
++  if (
++    !rect ||
++    !owner ||
++    Array.isArray(rect) ||
++    Array.isArray(owner) ||
++    ![rect.left, rect.top, rect.right, rect.bottom, owner.x, owner.y, threshold].every(
++      Number.isFinite,
++    ) ||
++    threshold < 10 ||
++    !Number.isFinite(rect.right - rect.left) ||
++    !Number.isFinite(rect.bottom - rect.top) ||
++    rect.right <= rect.left ||
++    rect.bottom <= rect.top
++  )
++    return null;
++  const from = {
++      x: clamp(owner.x, rect.left, rect.right),
++      y: clamp(owner.y, rect.top, rect.bottom),
++    },
++    dx = owner.x - from.x,
++    dy = owner.y - from.y,
++    distance = Math.hypot(dx, dy);
++  if (!Number.isFinite(distance) || distance <= threshold) return null;
++  return Object.freeze({
++    from: Object.freeze(from),
++    to: Object.freeze({
++      x: owner.x - (dx / distance) * 3,
++      y: owner.y - (dy / distance) * 3,
++    }),
++  });
++}
++
+ /** Bounded label placement in CSS pixels; true heads are hard exclusions. */
+ export function placeCoopCue({
+   x,
+@@ -79,8 +122,12 @@ export function placeCoopCue({
+   heads,
+   occupied = [],
+   avoid = [],
++  preferClear = false,
++  rowPitch = null,
+ }) {
+   if (width > arenaWidth - 2 || height > arenaHeight - 2) return null;
++  if (rowPitch !== null && (!Number.isFinite(rowPitch) || rowPitch <= 0 || rowPitch < height))
++    throw new TypeError('Cue row pitch must contain the complete plate height.');
+   const margin = 1,
+     halfWidth = width / 2,
+     halfHeight = height / 2,
+@@ -100,6 +147,54 @@ export function placeCoopCue({
+       };
+       if (!heads.some((head) => intersects(rect, head))) candidates.push(rect);
+     };
++  if (rowPitch !== null) {
++    const rowCount = Math.floor((arenaHeight - margin * 2) / rowPitch);
++    // Only explicit persistent-objective callers align to shared rows. Unusual
++    // oversized surfaces retain the bounded ordinary search below.
++    if (rowCount > 0 && rowCount <= 256) {
++      const obstacles = [...heads, ...occupied],
++        // Shared fractional row edges can differ by a few machine ulps. Ignore
++        // only that arithmetic noise, not a visible geometric intersection.
++        epsilon = Number.EPSILON * 8 * Math.max(arenaWidth, arenaHeight),
++        rowIntersects = (a, b) =>
++          a.left < b.right - epsilon &&
++          a.right > b.left + epsilon &&
++          a.top < b.bottom - epsilon &&
++          a.bottom > b.top + epsilon,
++        minimumX = margin + halfWidth,
++        maximumX = arenaWidth - margin - halfWidth,
++        columns = new Set([
++          clamp(x, minimumX, maximumX),
++          minimumX,
++          maximumX,
++          ...obstacles.flatMap((rect) => [
++            clamp(rect.left - halfWidth - margin, minimumX, maximumX),
++            clamp(rect.right + halfWidth + margin, minimumX, maximumX),
++          ]),
++        ]),
++        clearRows = [];
++      for (let row = 0; row < rowCount; row++) {
++        const cy = margin + rowPitch / 2 + row * rowPitch;
++        for (const cx of columns) {
++          const rect = {
++            x: cx,
++            y: cy,
++            left: cx - halfWidth,
++            right: cx + halfWidth,
++            top: cy - halfHeight,
++            bottom: cy + halfHeight,
++            width,
++            height,
++          };
++          if (!obstacles.some((other) => rowIntersects(rect, other))) clearRows.push(rect);
++        }
++      }
++      clearRows.sort((a, b) => (a.x - x) ** 2 + (a.y - y) ** 2 - (b.x - x) ** 2 - (b.y - y) ** 2);
++      if (clearRows.length) return clearRows[0];
++    }
++    // Insufficient row capacity must not discard a required cue. The existing
++    // placement fallback remains explicit, including its possible overlap.
++  }
+   add(x, y);
+   for (let ring = 1; ring <= 3; ring++) {
+     const dx = (width + 3) * ring,
+@@ -118,11 +213,52 @@ export function placeCoopCue({
+   }
+   for (const cx of [halfWidth + margin, arenaWidth - halfWidth - margin])
+     for (const cy of [halfHeight + margin, arenaHeight - halfHeight - margin]) add(cx, cy);
++  const clear = (rect) => !occupied.some((other) => intersects(rect, other));
++  if (preferClear && !candidates.some(clear)) {
++    // Larger captions can fit between existing plates even when none of the
++    // ordinary radial positions do. Sweep obstacle edges, not arena pixels.
++    const obstacles = [...heads, ...occupied],
++      minimumX = margin + halfWidth,
++      maximumX = arenaWidth - margin - halfWidth,
++      minimumY = margin + halfHeight,
++      maximumY = arenaHeight - margin - halfHeight,
++      columns = new Set([
++        clamp(x, minimumX, maximumX),
++        minimumX,
++        maximumX,
++        ...obstacles.flatMap((rect) => [
++          clamp(rect.left - halfWidth - margin, minimumX, maximumX),
++          clamp(rect.right + halfWidth + margin, minimumX, maximumX),
++        ]),
++      ]);
++    for (const cx of columns) {
++      const intervals = obstacles
++        .filter((rect) => cx - halfWidth < rect.right && cx + halfWidth > rect.left)
++        .map((rect) => [rect.top - halfHeight - margin, rect.bottom + halfHeight + margin])
++        .sort((a, b) => a[0] - b[0]);
++      let start = minimumY,
++        nearest = null;
++      const gap = (end) => {
++        if (end < start) return;
++        const cy = clamp(y, start, end);
++        if (nearest === null || Math.abs(cy - y) < Math.abs(nearest - y)) nearest = cy;
++      };
++      for (const [low, high] of intervals) {
++        gap(Math.min(low, maximumY));
++        start = Math.max(start, high);
++        if (start > maximumY) break;
++      }
++      if (start <= maximumY) gap(maximumY);
++      if (nearest !== null) add(cx, nearest);
++    }
++  }
++  const available = preferClear ? candidates.filter(clear) : [];
+   const score = (rect) =>
+     occupied.filter((other) => intersects(rect, other)).length * 100000 +
+     avoid.filter((other) => intersects(rect, other)).length * 10000 +
+     (rect.x - x) ** 2 +
+     (rect.y - y) ** 2;
+-  candidates.sort((a, b) => score(a) - score(b));
+-  return candidates[0] ?? null;
++  const ranked = available.length ? available : candidates;
++  ranked.sort((a, b) => score(a) - score(b));
++  return ranked[0] ?? null;
+ }
+diff --git a/game/couch/coop-view.mjs b/game/couch/coop-view.mjs
+index 162320b9abf93fc050d07bf412d842dc54556ae0..ddfaf13f6cb15a625aa97524d32a465e39f7a33d 100644
+--- a/game/couch/coop-view.mjs
++++ b/game/couch/coop-view.mjs
+@@ -1,6 +1,8 @@
+ import { canvasTextFonts } from '../text-face.mjs';
+ import { createCoopActorPresentation } from './coop-actor-presentation.mjs';
+ import { coopCueScale, placeCoopCue } from './coop-actor-layout.mjs';
++import { describeCoopEnemyCue } from './coop-cue-semantics.mjs';
++import { drawCoopCueSymbol } from './coop-cue-symbols.mjs';
+ 
+ const THEME_FONTS = Object.freeze({
+   ui: '"Field Kit UI", "Field Kit Mono", system-ui, sans-serif',
+@@ -56,7 +58,14 @@ export function createCoopPainter(canvas) {
+   }
+   function paint(
+     run,
+-    { reduced = false, textFace = 'pixel', picture = null, actorStyle = 'hybrid' } = {},
++    {
++      reduced = false,
++      textFace = 'pixel',
++      textSize = 'standard',
++      picture = null,
++      actorStyle = 'hybrid',
++      selectedRelayId = null,
++    } = {},
+   ) {
+     // This is a defensive arena guard, not full content-hash authority. The
+     // picture lease verifies the pack/level hashes; the host owns attempt intent.
+@@ -85,6 +94,8 @@ export function createCoopPainter(canvas) {
+     const palette = look?.palette;
+     const colors = palette ? [palette.accent, palette.safe] : COLORS;
+     const motionScale = reduced ? 0 : (look?.motionScale ?? 1);
++    const cueScale = coopCueScale(canvas.clientWidth, run.width, textSize),
++      cssCell = cueScale.cell;
+     reduced ||= motionScale === 0;
+     actors.update(run, {
+       reduced,
+@@ -93,9 +104,9 @@ export function createCoopPainter(canvas) {
+       style: actorStyle,
+     });
+     const unit = canvas.width / run.width;
+-    const cueScale = coopCueScale(canvas.clientWidth, run.width),
+-      cssCell = cueScale.cell,
+-      occupied = [],
++    const occupied = [],
++      cueRequests = [],
++      symbolRequests = [],
+       heads = run.players.map((player) => {
+         const radius = player.radius * cssCell + 2;
+         return {
+@@ -105,7 +116,11 @@ export function createCoopPainter(canvas) {
+           bottom: player.y * cssCell + radius,
+         };
+       });
+-    const place = (x, y, width, height) => {
++    const selectedRelay =
++      (run.strongholds || []).find((hold) => hold.id === selectedRelayId) ??
++      (run.strongholds || []).find((hold) => !hold.defeated) ??
++      run.strongholds?.[0];
++    const place = (x, y, width, height, rowPitch = null) => {
+       const rect = placeCoopCue({
+         x: x * cssCell,
+         y: y * cssCell,
+@@ -115,6 +130,8 @@ export function createCoopPainter(canvas) {
+         arenaHeight: run.height * cssCell,
+         heads,
+         occupied,
++        preferClear: cueScale.factor > 1,
++        rowPitch,
+       });
+       if (rect) occupied.push(rect);
+       return rect;
+@@ -192,11 +209,26 @@ export function createCoopPainter(canvas) {
+       ])
+         for (const actor of list)
+           if (actors.draw(ctx, kind, actor.id, palette)) bodies.add(`${kind}:${actor.id}`);
+-      const clearance = (kind, id, minimum) =>
+-        body(kind, id)
+-          ? Math.max(minimum, actors.frame(kind, id).diameter / 32 + 9 / cssCell)
+-          : minimum;
+-      function cue(text, x, y, size, font, backed = false, color = '#f1f7ed') {
++      const clearance = (kind, id, minimum) => {
++        const gap = minimum * cueScale.factor;
++        return body(kind, id)
++          ? Math.max(gap, actors.frame(kind, id).diameter / 32 + cueScale.px(9) / cssCell)
++          : gap;
++      };
++      function cue(text, x, y, size, font, backed = false, color = '#f1f7ed', role = null) {
++        if (cueScale.factor > 1) {
++          // Keep objective state at its real location. Full relay identity and
++          // relationships live in the shared HUD and optional paused inspector.
++          if (role?.ownerKey.startsWith('anchor:') || role?.ownerKey.startsWith('core:'))
++            symbolRequests.push({
++              owner: role.owner,
++              mark: role.mark,
++              captured: role.captured ?? false,
++              mapScale: role.ownerKey.startsWith('core:') ? 5 / 14 : 3 / 14,
++              color,
++            });
++          return;
++        }
+         ctx.save();
+         size = cueScale.font(size, 12, 18);
+         ctx.font = `600 ${size}px ${font}`;
+@@ -204,7 +236,8 @@ export function createCoopPainter(canvas) {
+         ctx.textBaseline = 'middle';
+         const measured = ctx.measureText(text)?.width;
+         const width =
+-          (Number.isFinite(measured) ? measured : size * text.length * 0.7) * cssCell + 6;
++          (Number.isFinite(measured) ? measured : size * text.length * 0.7) * cssCell +
++          cueScale.px(6);
+         const rect = place(x, y, width, size * cssCell * 1.4);
+         if (rect) {
+           if (backed) {
+@@ -221,123 +254,161 @@ export function createCoopPainter(canvas) {
+         }
+         ctx.restore();
+       }
++
+       function pilotBadge(player, pilotBody) {
+         const frame = actors.frame('pilot', player.id),
+           offset = frame?.bodyOffset,
+           x = player.x + (offset?.x ?? 0) / 16,
+           y = player.y + (offset?.y ?? 0) / 16,
+-          shape = player.id === 0 ? 20 : 24,
++          shape = Math.ceil(cueScale.px(player.id === 0 ? 20 : 24)),
+           downed = player.status === 'downed',
+-          width = shape + (downed ? 10 : 0),
+-          rect = place(
+-            x,
+-            y - (frame ? frame.diameter / 32 : 0.7) - (shape / 2 + 3) / cssCell,
+-            width,
+-            shape,
+-          );
+-        if (!rect) return;
+-        const cx = (rect.left + shape / 2) / cssCell,
+-          cy = rect.y / cssCell,
+-          radius = shape / 2 / cssCell;
+-        ctx.save();
+-        ctx.fillStyle = '#07111c';
+-        ctx.strokeStyle = colors[player.id];
+-        ctx.lineWidth = 1.5 / cssCell;
+-        if (!downed && player.graceUntil > run.time) ctx.setLineDash([2 / cssCell, 2 / cssCell]);
+-        ctx.beginPath();
+-        if (player.id === 0) ctx.arc(cx, cy, radius, 0, Math.PI * 2);
+-        else {
+-          ctx.moveTo(cx, cy - radius);
+-          ctx.lineTo(cx + radius, cy);
+-          ctx.lineTo(cx, cy + radius);
+-          ctx.lineTo(cx - radius, cy);
+-          ctx.closePath();
+-        }
+-        ctx.fill();
+-        ctx.stroke();
+-        ctx.setLineDash([]);
+-        ctx.font = `600 ${cueScale.font(0.66, 14, 18)}px ${fonts.numeric}`;
+-        ctx.textAlign = 'center';
+-        ctx.textBaseline = 'middle';
+-        ctx.fillStyle = '#f1f7ed';
+-        ctx.fillText(String(player.id + 1), cx, cy);
+-        if (downed) {
++          plusWidth = Math.ceil(cueScale.px(10)),
++          plusHeight = Math.ceil(cueScale.px(16)),
++          width = shape + (downed ? plusWidth : 0),
++          badgeY =
++            y +
++            (cueScale.factor > 1 && player.id === 1 ? 1 : -1) *
++              ((frame ? frame.diameter / 32 : 0.7) + (shape / 2 + cueScale.px(3)) / cssCell);
++        const draw = (rect) => {
++          if (!rect) return;
++          const cx = (rect.left + shape / 2) / cssCell,
++            cy = rect.y / cssCell,
++            radius = shape / 2 / cssCell;
++          ctx.save();
+           ctx.fillStyle = '#07111c';
+-          ctx.fillRect(
+-            (rect.right - 10) / cssCell,
+-            (rect.y - 8) / cssCell,
+-            10 / cssCell,
+-            16 / cssCell,
+-          );
+-          ctx.fillStyle = '#f1f7ed';
+-          ctx.font = `600 ${12 / cssCell}px ${fonts.numeric}`;
+-          ctx.fillText('+', (rect.right - 5) / cssCell, cy);
+-        }
+-        if (pilotBody && offset && (offset.x !== 0 || offset.y !== 0)) {
+-          // Dashed cosmetic tether ends at the true cutting head; it is not a trail.
+-          ctx.strokeStyle = '#07111c';
+-          ctx.lineWidth = 3 / cssCell;
++          ctx.strokeStyle = colors[player.id];
++          ctx.lineWidth = 1.5 / cssCell;
++          if (!downed && player.graceUntil > run.time) ctx.setLineDash([2 / cssCell, 2 / cssCell]);
+           ctx.beginPath();
+-          ctx.moveTo(player.x, player.y);
+-          ctx.lineTo(x, y);
+-          ctx.stroke();
+-          ctx.strokeStyle = '#f1f7ed';
+-          ctx.lineWidth = 1 / cssCell;
+-          ctx.setLineDash([2 / cssCell, 2 / cssCell]);
++          if (player.id === 0) ctx.arc(cx, cy, radius, 0, Math.PI * 2);
++          else {
++            ctx.moveTo(cx, cy - radius);
++            ctx.lineTo(cx + radius, cy);
++            ctx.lineTo(cx, cy + radius);
++            ctx.lineTo(cx - radius, cy);
++            ctx.closePath();
++          }
++          ctx.fill();
+           ctx.stroke();
+           ctx.setLineDash([]);
+-        }
+-        ctx.restore();
++          ctx.font = `600 ${cueScale.font(0.66, 14, 18)}px ${fonts.numeric}`;
++          ctx.textAlign = 'center';
++          ctx.textBaseline = 'middle';
++          ctx.fillStyle = '#f1f7ed';
++          ctx.fillText(String(player.id + 1), cx, cy);
++          if (downed) {
++            ctx.fillStyle = '#07111c';
++            ctx.fillRect(
++              (rect.right - plusWidth) / cssCell,
++              (rect.y - plusHeight / 2) / cssCell,
++              plusWidth / cssCell,
++              plusHeight / cssCell,
++            );
++            ctx.fillStyle = '#f1f7ed';
++            ctx.font = `600 ${cueScale.px(12) / cssCell}px ${fonts.numeric}`;
++            ctx.fillText('+', (rect.right - plusWidth / 2) / cssCell, cy);
++          }
++          if (pilotBody && offset && (offset.x !== 0 || offset.y !== 0)) {
++            // Dashed cosmetic tether ends at the true cutting head; it is not a trail.
++            ctx.strokeStyle = '#07111c';
++            ctx.lineWidth = 3 / cssCell;
++            ctx.beginPath();
++            ctx.moveTo(player.x, player.y);
++            ctx.lineTo(x, y);
++            ctx.stroke();
++            ctx.strokeStyle = '#f1f7ed';
++            ctx.lineWidth = 1 / cssCell;
++            ctx.setLineDash([2 / cssCell, 2 / cssCell]);
++            ctx.stroke();
++            ctx.setLineDash([]);
++          }
++          ctx.restore();
++        };
++        if (cueScale.factor > 1)
++          cueRequests.push({
++            x,
++            y: badgeY,
++            width,
++            height: shape,
++            draw,
++            ownerKey: `pilot:${player.id}`,
++            owner: { x: player.x, y: player.y },
++            priority: 0,
++          });
++        else draw(place(x, badgeY, width, shape));
+       }
+       for (const stronghold of run.strongholds || []) {
+         const coreBody = body('core', stronghold.id);
+-        const relayLabel =
+-          run.strongholds.length > 1 ? `${run.strongholds.indexOf(stronghold) + 1}` : '';
++        const relayNumber = run.strongholds.indexOf(stronghold) + 1,
++          relayLabel = run.strongholds.length > 1 ? `${relayNumber}` : '';
+         for (const [i, anchor] of stronghold.anchors.entries()) {
+-          ctx.strokeStyle = anchor.captured ? '#c9e4a0' : '#ffd279';
+-          ctx.fillStyle = anchor.captured ? '#315744' : '#604b30';
+-          ctx.lineWidth = 0.1;
+-          ctx.fillRect(anchor.x - 0.7, anchor.y - 0.7, 1.4, 1.4);
+-          ctx.strokeRect(anchor.x - 0.7, anchor.y - 0.7, 1.4, 1.4);
++          if (cueScale.factor === 1) {
++            ctx.strokeStyle = anchor.captured ? '#c9e4a0' : '#ffd279';
++            ctx.fillStyle = anchor.captured ? '#315744' : '#604b30';
++            ctx.lineWidth = 0.1;
++            ctx.fillRect(anchor.x - 0.7, anchor.y - 0.7, 1.4, 1.4);
++            ctx.strokeRect(anchor.x - 0.7, anchor.y - 0.7, 1.4, 1.4);
++          }
+           ctx.fillStyle = '#fff1c8';
+           ctx.font = `600 0.85px ${fonts.ui}`;
+           ctx.textAlign = 'center';
+           ctx.textBaseline = 'middle';
+           cue(
+-            anchor.captured ? '✓' : `${relayLabel}${String.fromCharCode(65 + i)}`,
++            cueScale.factor > 1
++              ? `${relayNumber}${String.fromCharCode(65 + i)}`
++              : anchor.captured
++                ? '✓'
++                : `${relayLabel}${String.fromCharCode(65 + i)}`,
+             anchor.x,
+             anchor.y,
+             0.85,
+             fonts.ui,
+             true,
+             '#fff1c8',
++            {
++              ownerKey: `anchor:${stronghold.id}:${i}`,
++              owner: anchor,
++              priority: 3,
++              mark: i === 0 ? 'anchor-a' : 'anchor-b',
++              captured: anchor.captured,
++            },
+           );
+         }
+         const core = stronghold.core;
+-        ctx.fillStyle = stronghold.defeated ? '#a0c887' : '#ffc1a4';
+-        ctx.strokeStyle = stronghold.shielded ? '#f1b860' : '#f48885';
+-        ctx.lineWidth = stronghold.shielded ? 0.2 : 0.08;
+-        ctx.beginPath();
+-        for (let i = 0; i < 6; i++) {
+-          const angle = (i * Math.PI) / 3;
+-          const x = core.x + Math.cos(angle) * 1.2,
+-            y = core.y + Math.sin(angle) * 1.2;
+-          if (i === 0) ctx.moveTo(x, y);
+-          else ctx.lineTo(x, y);
++        if (cueScale.factor === 1) {
++          ctx.fillStyle = stronghold.defeated ? '#a0c887' : '#ffc1a4';
++          ctx.strokeStyle = stronghold.shielded ? '#f1b860' : '#f48885';
++          ctx.lineWidth = stronghold.shielded ? 0.2 : 0.08;
++          ctx.beginPath();
++          for (let i = 0; i < 6; i++) {
++            const angle = (i * Math.PI) / 3;
++            const x = core.x + Math.cos(angle) * 1.2,
++              y = core.y + Math.sin(angle) * 1.2;
++            if (i === 0) ctx.moveTo(x, y);
++            else ctx.lineTo(x, y);
++          }
++          ctx.closePath();
++          ctx.stroke();
++          ctx.beginPath();
++          ctx.arc(core.x, core.y, 0.48, 0, Math.PI * 2);
++          ctx.fill();
+         }
+-        ctx.closePath();
+-        ctx.stroke();
+-        ctx.beginPath();
+-        ctx.arc(core.x, core.y, 0.48, 0, Math.PI * 2);
+-        ctx.fill();
+         cue(
+-          `${relayLabel ? `${relayLabel} ` : ''}${stronghold.defeated ? 'SECURED' : stronghold.shielded ? 'SHIELD' : 'CAPTURE'}`,
++          cueScale.factor > 1
++            ? `R${relayNumber}`
++            : `${relayLabel ? `${relayLabel} ` : ''}${stronghold.defeated ? 'SECURED' : stronghold.shielded ? 'SHIELD' : 'CAPTURE'}`,
+           core.x,
+           Math.max(0.6, core.y - clearance('core', stronghold.id, 1.75)),
+           0.64,
+           fonts.ui,
+           coreBody,
+           stronghold.defeated ? '#a0c887' : '#ffc1a4',
++          {
++            ownerKey: `core:${stronghold.id}`,
++            owner: core,
++            priority: 3,
++            mark: stronghold.defeated ? 'secured' : stronghold.shielded ? 'shielded' : 'exposed',
++          },
+         );
+         const emitter = stronghold.emitter;
+         if (emitter?.phase === 'warning' && Number.isInteger(emitter.cellIndex)) {
+@@ -354,6 +425,24 @@ export function createCoopPainter(canvas) {
+           ctx.strokeRect(x - 0.7, y - 0.7, 1.4, 1.4);
+         }
+       }
++      if (cueScale.factor > 1 && selectedRelay) {
++        // These two short links relate the selected map positions. Its full A /
++        // Core / B state is readable in the HUD; no tiny marker claims to be text.
++        ctx.save();
++        ctx.setLineDash([]);
++        ctx.beginPath();
++        for (const anchor of selectedRelay.anchors) {
++          ctx.moveTo(selectedRelay.core.x, selectedRelay.core.y);
++          ctx.lineTo(anchor.x, anchor.y);
++        }
++        ctx.strokeStyle = '#07111c';
++        ctx.lineWidth = 2 / cssCell;
++        ctx.stroke();
++        ctx.strokeStyle = '#f1f7ed';
++        ctx.lineWidth = 0.75 / cssCell;
++        ctx.stroke();
++        ctx.restore();
++      }
+       for (const enemy of run.enemies) {
+         if (
+           enemy.active === false ||
+@@ -376,14 +465,16 @@ export function createCoopPainter(canvas) {
+         ctx.fillStyle = '#ffd279';
+         ctx.font = `600 0.65px ${fonts.ui}`;
+         ctx.textAlign = 'center';
++        const enemyCue = cueScale.factor > 1 ? describeCoopEnemyCue(enemy, run.time) : null;
+         cue(
+-          `LOCK ${enemy.target + 1}`,
++          enemyCue?.text ?? `LOCK ${enemy.target + 1}`,
+           enemy.x,
+           Math.max(0.6, enemy.y - clearance('enemy', enemy.id, 1.1)),
+           0.65,
+           fonts.ui,
+           body('enemy', enemy.id),
+           '#ffd279',
++          { ...enemyCue, ownerKey: `warning:${enemy.id}`, owner: enemy, priority: 1 },
+         );
+       }
+       for (const [i, spawn] of run.level.spawns.entries()) {
+@@ -452,7 +543,15 @@ export function createCoopPainter(canvas) {
+       }
+       for (const enemy of run.enemies) {
+         if (enemy.active === false) continue;
+-        const enemyBody = body('enemy', enemy.id);
++        const enemyBody = body('enemy', enemy.id),
++          enemyCue = cueScale.factor > 1 ? describeCoopEnemyCue(enemy, run.time) : null;
++        if (cueScale.factor > 1)
++          symbolRequests.push({
++            owner: enemy,
++            mark: enemyCue?.mark ?? 'drifter',
++            target: enemy.target,
++            color: enemy.phase === 'warning' ? '#ffd279' : '#eee7c8',
++          });
+         ctx.save();
+         ctx.translate(enemy.x, enemy.y);
+         if (enemyBody) {
+@@ -503,13 +602,24 @@ export function createCoopPainter(canvas) {
+           ctx.textAlign = 'center';
+           ctx.restore();
+           cue(
+-            enemy.phase === 'commit' ? 'CHARGE' : enemy.phase === 'recovery' ? 'RECOVER' : 'HUNTER',
++            enemyCue?.text ??
++              (enemy.phase === 'commit'
++                ? 'CHARGE'
++                : enemy.phase === 'recovery'
++                  ? 'RECOVER'
++                  : 'HUNTER'),
+             enemy.x,
+             Math.max(0.6, enemy.y - clearance('enemy', enemy.id, 1.05)),
+             0.57,
+             fonts.ui,
+             enemyBody,
+             '#eee7c8',
++            {
++              ...enemyCue,
++              ownerKey: `status:${enemy.id}`,
++              owner: enemy,
++              priority: enemy.phase === 'commit' ? 1 : 2,
++            },
+           );
+           ctx.save();
+           ctx.translate(enemy.x, enemy.y);
+@@ -528,20 +638,71 @@ export function createCoopPainter(canvas) {
+           ctx.textAlign = 'center';
+           ctx.textBaseline = 'middle';
+           ctx.restore();
+-          cue(
+-            'SLOWED',
+-            enemy.x,
+-            Math.min(run.height - 0.6, enemy.y + clearance('enemy', enemy.id, 1.25)),
+-            0.6,
+-            fonts.ui,
+-            enemyBody,
+-            '#e6f8ff',
+-          );
++          if (cueScale.factor === 1)
++            cue(
++              'SLOWED',
++              enemy.x,
++              Math.min(run.height - 0.6, enemy.y + clearance('enemy', enemy.id, 1.25)),
++              0.6,
++              fonts.ui,
++              enemyBody,
++              '#e6f8ff',
++              { ownerKey: `slowed:${enemy.id}`, owner: enemy, priority: 2 },
++            );
+           ctx.save();
+           ctx.translate(enemy.x, enemy.y);
+         }
+         ctx.restore();
+       }
++      for (const request of symbolRequests) {
++        ctx.save();
++        ctx.translate(request.owner.x, request.owner.y);
++        const scale = request.mapScale ?? 1;
++        ctx.scale(scale / cssCell, scale / cssCell);
++        drawCoopCueSymbol(ctx, {
++          mark: request.mark,
++          size: 14,
++          color: request.color,
++          target: request.target,
++          captured: request.captured ?? false,
++        });
++        ctx.restore();
++      }
++      // Pilot badges stay beside their own craft. Enemy/objective density must
++      // never push a player number across the board. P1 sits above, P2 below;
++      // only perimeter clamping moves the preferred badge anchor.
++      for (const request of cueRequests) {
++        const x = Math.max(
++          request.width / 2 + 1,
++          Math.min(cueScale.width - request.width / 2 - 1, request.x * cssCell),
++        );
++        const y = Math.max(
++          request.height / 2 + 1,
++          Math.min(run.height * cssCell - request.height / 2 - 1, request.y * cssCell),
++        );
++        request.draw({
++          x,
++          y,
++          width: request.width,
++          height: request.height,
++          left: x - request.width / 2,
++          right: x + request.width / 2,
++          top: y - request.height / 2,
++          bottom: y + request.height / 2,
++        });
++      }
++      if (cueScale.factor > 1)
++        for (const enemy of run.enemies) {
++          if (enemy.active === false) continue;
++          ctx.strokeStyle = '#07111c';
++          ctx.lineWidth = 3 / cssCell;
++          ctx.beginPath();
++          ctx.arc(enemy.x, enemy.y, enemy.radius, 0, Math.PI * 2);
++          ctx.stroke();
++          ctx.strokeStyle = '#f1f7ed';
++          ctx.lineWidth = 1 / cssCell;
++          ctx.stroke();
++        }
+       for (const player of run.players) {
+         ctx.fillStyle = colors[player.id];
+         ctx.strokeStyle = '#07111c';
+diff --git a/game/couch/relay-rescue.css b/game/couch/relay-rescue.css
+index f1bb33a69232d83d031555897f7791f586904714..3986e5dd739076f46d98039f59f69cbe616daa2a 100644
+--- a/game/couch/relay-rescue.css
++++ b/game/couch/relay-rescue.css
+@@ -976,3 +976,102 @@ kbd {
+   margin-block: var(--fk-space-2);
+   color: var(--fk-text);
+ }
++
++/* Keyboard/controller landscape has no touch gutters. Let the unchanged HUD,
++   objective and advisory text size their rows; fit the whole 2:1 board into the
++   remaining space. Touch's separate layout and all paused screens stay intact. */
++@media (orientation: landscape) and (min-width: 640px) and (max-height: 500px) {
++  .field-kit[data-field-kit-page='relay-rescue'].playing:not([data-coop-touch='visible']):has(
++      #coop-overlay[hidden]
++    ) {
++    --coop-landscape-edge: 8px;
++  }
++  .field-kit[data-field-kit-page='relay-rescue'].playing:not([data-coop-touch='visible']):has(
++      #coop-overlay[hidden]
++    )
++    #coop-app {
++    display: grid;
++    grid-template-rows: auto auto minmax(0, 1fr) auto;
++    gap: 4px;
++    height: 100svh;
++    max-width: none;
++    padding: max(var(--coop-landscape-edge), env(safe-area-inset-top))
++      max(12px, env(safe-area-inset-right))
++      max(var(--coop-landscape-edge), env(safe-area-inset-bottom))
++      max(12px, env(safe-area-inset-left));
++  }
++  .field-kit[data-field-kit-page='relay-rescue'].playing:not([data-coop-touch='visible']):has(
++      #coop-overlay[hidden]
++    )
++    #coop-play {
++    display: contents;
++  }
++  .field-kit[data-field-kit-page='relay-rescue'].playing:not([data-coop-touch='visible']):has(
++      #coop-overlay[hidden]
++    )
++    .hud {
++    grid-row: 1;
++    padding-block: 0;
++  }
++  .field-kit[data-field-kit-page='relay-rescue'].playing:not([data-coop-touch='visible']):has(
++      #coop-overlay[hidden]
++    )
++    .live-objective {
++    grid-row: 2;
++    margin: 0;
++  }
++  .field-kit[data-field-kit-page='relay-rescue'].playing:not([data-coop-touch='visible']):has(
++      #coop-overlay[hidden]
++    )
++    .arena-wrap {
++    grid-row: 3;
++    display: grid;
++    place-items: center;
++    container-type: size;
++    min-width: 0;
++    min-height: 0;
++    width: 100%;
++    height: 100%;
++    max-width: none;
++    margin: 0;
++    border: 0;
++    background: transparent;
++  }
++  .field-kit[data-field-kit-page='relay-rescue'].playing:not([data-coop-touch='visible']):has(
++      #coop-overlay[hidden]
++    )
++    .arena-wrap
++    canvas {
++    box-sizing: content-box;
++    width: max(
++      0px,
++      min(calc(100cqw - 2 * var(--fk-border-width)), calc(200cqh - 4 * var(--fk-border-width)))
++    );
++    height: auto;
++    border: var(--fk-border-width) solid var(--fk-line);
++    border-radius: var(--fk-corner);
++    background: var(--fk-bg);
++  }
++  .field-kit[data-field-kit-page='relay-rescue'].playing:not([data-coop-touch='visible']):has(
++      #coop-overlay[hidden]
++    )
++    .board-footer {
++    grid-row: 4;
++    min-height: var(--fk-target-size);
++    gap: 8px;
++  }
++  .field-kit[data-field-kit-page='relay-rescue'].playing:not([data-coop-touch='visible']):has(
++      #coop-overlay[hidden]
++    )
++    #coop-pause {
++    min-width: var(--fk-target-size);
++    min-height: var(--fk-target-size);
++  }
++  .field-kit[data-field-kit-page='relay-rescue'].playing:not([data-coop-touch='visible']):has(
++      #coop-overlay[hidden]
++    )
++    .board-footer
++    p {
++    margin: 0;
++  }
++}
+diff --git a/game/couch/relay-rescue.html b/game/couch/relay-rescue.html
+index 3723dc22f6d15a462068642773d5df4111216979..3a49f4b04e494bb1a229563712247f6ad478f146 100644
+--- a/game/couch/relay-rescue.html
++++ b/game/couch/relay-rescue.html
+@@ -8,6 +8,7 @@
+     <link rel="stylesheet" href="../ui/field-kit-fonts.css" />
+     <link rel="stylesheet" href="../ui/field-kit-tokens.css" />
+     <link rel="stylesheet" href="relay-rescue.css" />
++    <link rel="stylesheet" href="coop-objectives.css" />
+     <link rel="stylesheet" href="../ui/field-kit-components.css" />
+     <link rel="stylesheet" href="../ui/field-kit-compiled.css" />
+     <link rel="stylesheet" href="../ui/operation-status.css" />
+@@ -128,7 +129,9 @@
+             <li id="coop-stronghold-help" hidden>
+               <strong>Open both approaches.</strong> Capture anchors A and B to expose the core.
+               Then make a new cut that captures the core itself. The shield blocks entry. Bait the
+-              Hunter’s warning and cut during recovery; banking its cell clears it.
++              Hunter’s warning and cut during recovery; banking its cell clears it. For relay
++              identities and anchor relationships, open Objectives here or from Pause. It is an
++              optional planning view; closing it never starts or resumes the arena.
+             </li>
+           </ol>
+           <p class="objective">
+@@ -155,7 +158,37 @@
+             <span id="coop-charge-1" class="charge-state">Support ready</span>
+           </div>
+         </div>
+-        <p id="coop-objective" class="live-objective">Reveal 65% together</p>
++        <div id="coop-objective-area">
++          <p id="coop-objective" class="live-objective">Reveal 65% together</p>
++          <dl id="coop-relay-hud" aria-label="Selected relay states" hidden>
++            <div>
++              <dt>
++                <canvas id="coop-relay-a-symbol" width="28" height="28" aria-hidden="true"></canvas
++                >A
++              </dt>
++              <dd id="coop-relay-a-state">Needed</dd>
++            </div>
++            <div>
++              <dt>
++                <canvas
++                  id="coop-relay-core-symbol"
++                  width="28"
++                  height="28"
++                  aria-hidden="true"
++                ></canvas
++                >Core
++              </dt>
++              <dd id="coop-relay-core-state">Shielded</dd>
++            </div>
++            <div>
++              <dt>
++                <canvas id="coop-relay-b-symbol" width="28" height="28" aria-hidden="true"></canvas
++                >B
++              </dt>
++              <dd id="coop-relay-b-state">Needed</dd>
++            </div>
++          </dl>
++        </div>
+         <div class="arena-wrap">
+           <canvas
+             id="coop-canvas"
+@@ -269,7 +302,7 @@
+           <button id="coop-discard-confirm" type="button">Discard this attempt</button>
+         </div>
+       </dialog>
+-      <aside id="coop-tools" class="coop-tools" aria-label="Help, Settings and sound">
++      <aside id="coop-tools" class="coop-tools" aria-label="Objectives, Help, Settings and sound">
+         <section class="coop-picture" aria-label="Arena picture">
+           <p id="coop-picture-status" role="status" aria-live="polite">
+             Preparing the Team picture…
+@@ -279,6 +312,7 @@
+             <button id="coop-picture-retry" type="button" hidden>Retry picture</button>
+           </div>
+         </section>
++        <button id="coop-objectives-open" type="button" hidden>Objectives</button>
+         <details id="coop-help">
+           <summary id="coop-help-toggle">How to play and controls</summary>
+           <div id="coop-help-unit">
+@@ -318,6 +352,26 @@
+                 partner on safe ground for one second to rescue them. A new direction cancels a
+                 rescue. A downed player can crawl along safe ground to meet their partner.
+               </p>
++              <p id="coop-relay-key" hidden>
++                <strong>Relay cues with Large text:</strong> small marks show each core and anchor’s
++                actual position. Short lines connect the selected core to its anchors. Read that
++                relay’s A, Core and B states above the arena: anchors are Needed or Captured; the
++                core is Shielded, Exposed or Secured. Capture both anchors, then capture the exposed
++                core in a new cut. The strip pairs these words with a closed shield, open frame or
++                check for the core, and one-notch A or two-notch B frames with a check when
++                captured. Required progress counts only the mission’s required relays; other relays
++                are labelled Optional. For crowded relays, pause and open Objectives to choose a
++                relay and see its magnified diagram and board location. Standard text keeps its
++                existing labels.
++              </p>
++              <p>
++                <strong>Threat cues with Large text:</strong> a diamond identifies a patrolling
++                Hunter; a reticle marks its lock, double chevrons its charge, and an hourglass its
++                recovery. A small circle identifies Player 1 as its target; a small diamond
++                identifies Player 2. These marks stay with the Hunter. A dashed halo marks an enemy
++                slowed by Support. Current locks and charges are also named below the arena. Cross
++                during recovery or use Support to protect a crossing.
++              </p>
+               <p id="coop-support-0" class="support-status">Sunflower: Support ready</p>
+               <p id="coop-support-1" class="support-status">Skyline: Support ready</p>
+             </div>
+@@ -326,6 +380,23 @@
+         <button id="coop-settings-open" type="button">Settings</button>
+         <button id="coop-quick-sound" type="button" aria-pressed="false">Sound: off</button>
+       </aside>
++      <dialog id="coop-objectives-dialog" aria-labelledby="coop-objectives-title">
++        <header>
++          <h2 id="coop-objectives-title">Relay objectives</h2>
++          <button id="coop-objectives-close" type="button">Close objectives</button>
++        </header>
++        <p>
++          Choose a relay to plan its two approaches. This view never starts or resumes play. Close
++          it, then choose Start or Resume when ready.
++        </p>
++        <div id="coop-objectives-list" aria-label="Choose a relay"></div>
++        <p id="coop-objectives-description" role="status"></p>
++        <h3>Core and anchors · magnified diagram</h3>
++        <canvas id="coop-objectives-detail" aria-hidden="true"></canvas>
++        <h3>Core location on the whole board</h3>
++        <canvas id="coop-objectives-location" aria-hidden="true"></canvas>
++        <p id="coop-objectives-diagram-status"></p>
++      </dialog>
+       <dialog id="coop-earned-picture" aria-labelledby="coop-earned-picture-title">
+         <header class="earned-picture-header">
+           <h2 id="coop-earned-picture-title">Your shared picture</h2>
+diff --git a/game/couch/relay-rescue.mjs b/game/couch/relay-rescue.mjs
+index af68fbfbb830176927a5078b156919d713782ffd..e7b20a2c8745e778305bceec31901cf89d107d50 100644
+--- a/game/couch/relay-rescue.mjs
++++ b/game/couch/relay-rescue.mjs
+@@ -13,6 +13,8 @@ import { COOP_STARTER_PACK, readCoopPack, coopGoalText } from '../coop/library.m
+ import { COOP_PACK_MAX_BYTES } from '../coop/recipes.mjs';
+ import { attachCouchInput } from './couch-input.mjs';
+ import { createCoopPainter } from './coop-view.mjs';
++import { mountCoopObjectives } from './coop-objectives.mjs';
++import { coopThreatSummary } from './coop-cue-semantics.mjs';
+ import { mountPresentationPage } from '../presentation/page.mjs';
+ import { createCoopPresentation } from './coop-presentation.mjs';
+ import { COOP_PICTURE_BINDINGS } from './coop-picture-bindings.mjs';
+@@ -177,6 +179,8 @@ export function bootCoop() {
+   const departureDialog = $('coop-discard-dialog');
+   const settingsDialog = $('coop-options');
+   const earnedDialog = $('coop-earned-picture');
++  const objectivesDialog = $('coop-objectives-dialog');
++  let objectives = null;
+   const earnedCanvas = $('coop-earned-picture-canvas');
+   let earnedOwner = null;
+   let settingsOwner = null,
+@@ -264,9 +268,14 @@ export function bootCoop() {
+     if (tools.hidden) {
+       $('coop-help').open = false;
+     }
++    objectives?.refresh();
+     showTouch();
+   }
+   function back() {
++    if (objectivesDialog.open) {
++      objectives.close();
++      return;
++    }
+     if (settingsDialog.open) {
+       closeSettings();
+       return;
+@@ -298,33 +307,37 @@ export function bootCoop() {
+   }
+   const running = () => run?.status === 'running';
+   const scope = () =>
+-    settingsDialog.open
+-      ? `coop-settings:${settingsPanels?.selected() || 'display'}`
+-      : earnedDialog.open
+-        ? 'coop-earned-picture'
+-        : departure
+-          ? 'coop-discard'
+-          : running()
+-            ? 'flight'
+-            : run
+-              ? `coop-${run.status}`
+-              : 'coop-lobby';
++    objectivesDialog.open
++      ? 'coop-objectives'
++      : settingsDialog.open
++        ? `coop-settings:${settingsPanels?.selected() || 'display'}`
++        : earnedDialog.open
++          ? 'coop-earned-picture'
++          : departure
++            ? 'coop-discard'
++            : running()
++              ? 'flight'
++              : run
++                ? `coop-${run.status}`
++                : 'coop-lobby';
+   const primary = () =>
+-    settingsDialog.open
+-      ? settingsPanels?.primary() || $('coop-settings-close')
+-      : earnedDialog.open
+-        ? $('coop-picture-return')
+-        : departure
+-          ? $('coop-discard-stay')
+-          : pictureOperation
+-            ? $('coop-picture-cancel')
+-            : !run && pictureSelection?.state !== 'ready'
+-              ? $('coop-picture-retry')
+-              : !run
+-                ? $('coop-start')
+-                : run.status === 'paused' && !loopStopped
+-                  ? $('coop-resume')
+-                  : $('coop-retry');
++    objectivesDialog.open
++      ? $('coop-objectives-close')
++      : settingsDialog.open
++        ? settingsPanels?.primary() || $('coop-settings-close')
++        : earnedDialog.open
++          ? $('coop-picture-return')
++          : departure
++            ? $('coop-discard-stay')
++            : pictureOperation
++              ? $('coop-picture-cancel')
++              : !run && pictureSelection?.state !== 'ready'
++                ? $('coop-picture-retry')
++                : !run
++                  ? $('coop-start')
++                  : run.status === 'paused' && !loopStopped
++                    ? $('coop-resume')
++                    : $('coop-retry');
+   // Preference updates can reflow a focused select beyond the Settings scroller
+   // without a window resize. Keep only that current action visible, never focus
+   // it again or resume. Initial display application runs before this owner exists.
+@@ -392,15 +405,17 @@ export function bootCoop() {
+   const navigation = attachControllerNavigation({
+     getScope: scope,
+     getRoot: () =>
+-      settingsDialog.open
+-        ? settingsDialog
+-        : earnedDialog.open
+-          ? earnedDialog
+-          : departure
+-            ? departureDialog
+-            : run
+-              ? $('coop-overlay')
+-              : $('coop-app'),
++      objectivesDialog.open
++        ? objectivesDialog
++        : settingsDialog.open
++          ? settingsDialog
++          : earnedDialog.open
++            ? earnedDialog
++            : departure
++              ? departureDialog
++              : run
++                ? $('coop-overlay')
++                : $('coop-app'),
+     accept: (element) => !element.closest('.race-pad'),
+     getDefaultFocus: primary,
+     keyboard: true,
+@@ -410,7 +425,14 @@ export function bootCoop() {
+     onNativeInput: (event) => setReadingModality(nextInputModality(readingModality, event)),
+     onBack: back,
+     onMenu: () => {
+-      if (settingsDialog.open || earnedDialog.open || departure || run?.status === 'paused') back();
++      if (
++        objectivesDialog.open ||
++        settingsDialog.open ||
++        earnedDialog.open ||
++        departure ||
++        run?.status === 'paused'
++      )
++        back();
+     },
+     onHint: (message, context) => {
+       if (
+@@ -442,6 +464,29 @@ export function bootCoop() {
+     if (run) releaseCoopInputs(run);
+     accumulator = 0;
+   }
++  objectives = mountCoopObjectives({
++    document,
++    getState: () => ({ source: run || selectedLevel(), generation }),
++    canOpen: () =>
++      !disposed &&
++      !departure &&
++      !settingsDialog.open &&
++      !earnedDialog.open &&
++      (!run || run.status === 'paused'),
++    foreground,
++    visible: visibleAction,
++    clearInput: clear,
++    onSelect: () => {
++      if (run && !loopStopped) {
++        try {
++          render();
++        } catch (error) {
++          stopArena(error);
++        }
++      }
++    },
++    onError: (text) => message(text, { actionError: true }),
++  });
+   settingsPanels = attachSettingsPanels({
+     root: settingsDialog,
+     document,
+@@ -461,6 +506,7 @@ export function bootCoop() {
+       departure ||
+       settingsDialog.open ||
+       earnedDialog.open ||
++      objectivesDialog.open ||
+       !foreground() ||
+       !visibleAction(opener)
+     )
+@@ -547,6 +593,7 @@ export function bootCoop() {
+       !foreground() ||
+       settingsDialog.open ||
+       earnedDialog.open ||
++      objectivesDialog.open ||
+       departure ||
+       loopStopped ||
+       run?.status !== 'won' ||
+@@ -627,7 +674,11 @@ export function bootCoop() {
+   earnedDialog.addEventListener('close', earnedClosed);
+   earnedDialog.addEventListener('cancel', earnedCancelled);
+   earnedDialog.addEventListener('keydown', settingsKeydown);
+-  function message(text) {
++  let ordinaryMessage = $('coop-message').textContent,
++    actionErrorMessage = null;
++  function message(text, { actionError = false } = {}) {
++    ordinaryMessage = text;
++    if (actionError) actionErrorMessage = text;
+     if ($('coop-message').textContent !== text) $('coop-message').textContent = text;
+   }
+   function overlay({ focus = true } = {}) {
+@@ -659,24 +710,31 @@ export function bootCoop() {
+   }
+   function render() {
+     if (!run) return;
++    const display = displayPreferences.snapshot();
+     painter.paint(run, {
+-      reduced: displayPreferences.snapshot().effectiveReducedEffects,
+-      textFace: displayPreferences.snapshot().textFace,
++      reduced: display.effectiveReducedEffects,
++      textFace: display.textFace,
++      textSize: display.textSize,
+       picture: acceptedPicture?.binding ?? null,
++      selectedRelayId: objectives.selectedRelayId,
+     });
++    // A paused threat cannot replace the reason an action failed. Appearance or
++    // dialog changes do not resolve it; only accepted Start/Retry or Resume do.
++    const advisory =
++      (display.textSize === 'large' ? (actionErrorMessage ?? coopThreatSummary(run)) : null) ??
++      ordinaryMessage;
++    if ($('coop-message').textContent !== advisory) $('coop-message').textContent = advisory;
+     const coverage = run.coverage * 100;
+     $('coop-coverage').textContent = `${coverage.toFixed(1)}%`;
+     $('coop-progress').value = coverage;
+     $('coop-reserves').textContent =
+       `${run.team.reserves} reserve${run.team.reserves === 1 ? '' : 's'}`;
+     $('coop-clock').textContent = clock(run.time);
+-    const strongholds = run.strongholds.filter((item) => run.level.goal.cores?.includes(item.id));
+-    const stronghold = strongholds.find((item) => !item.defeated);
+-    $('coop-objective').textContent = stronghold
+-      ? `${strongholds.length > 1 ? `${strongholds.filter((item) => item.defeated).length} / ${strongholds.length} secured · Relay ${run.strongholds.indexOf(stronghold) + 1} · ` : ''}${stronghold.shielded ? `Capture the shield anchors · ${stronghold.anchors.filter((anchor) => anchor.captured).length} / 2 secured` : 'Shield down · capture the exposed core in a new cut'}`
+-      : strongholds.length
+-        ? 'Strongholds secured together'
+-        : coopGoalText(run.level);
++    const relayDescription =
++      objectives.renderHud({ large: display.textSize === 'large' }) ?? objectives.describe();
++    $('coop-objective').textContent = run.level.goal.cores
++      ? relayDescription
++      : `${coopGoalText(run.level)}${relayDescription ? ` · ${relayDescription}` : ''}`;
+     for (const player of run.players) {
+       $('coop-state-' + player.id).textContent =
+         player.status === 'downed'
+@@ -1044,6 +1102,7 @@ export function bootCoop() {
+       inactive ||
+       departure ||
+       earnedDialog.open ||
++      objectivesDialog.open ||
+       pictureOperation ||
+       (!run && !startPermitted) ||
+       !foreground()
+@@ -1084,6 +1143,7 @@ export function bootCoop() {
+     $('coop-play').hidden = false;
+     $('coop-stage').textContent = level.name.toUpperCase();
+     $('coop-progress').max = level.goal.coverage ? level.goal.coverage * 100 : 100;
++    actionErrorMessage = null;
+     message(
+       run.config.jointCuts
+         ? 'Watch the Hunter warnings. Cover a crossing or join after the charge passes.'
+@@ -1119,6 +1179,7 @@ export function bootCoop() {
+     // is cancelled before showing the stopped attempt's recovery actions.
+     loopStopped = true;
+     closeEarnedPicture({ restore: false });
++    objectives.close({ restore: false });
+     cancelPicture({ restore: false });
+     if (running()) pauseCoop(run);
+     clear();
+@@ -1141,6 +1202,7 @@ export function bootCoop() {
+       !foreground() ||
+       departure ||
+       settingsDialog.open ||
++      objectivesDialog.open ||
+       run?.status !== 'paused' ||
+       loopStopped
+     )
+@@ -1151,6 +1213,7 @@ export function bootCoop() {
+     last = null;
+     overlay();
+     input.focus();
++    actionErrorMessage = null;
+     message('Choose fresh directions when you are ready.');
+   }
+   // This synchronous handoff owns only the return from an attempt to its lobby.
+@@ -1230,7 +1293,7 @@ export function bootCoop() {
+     };
+   }
+   function lobby() {
+-    if (disposed || departure) return;
++    if (disposed || departure || objectivesDialog.open) return;
+     const focus = lobbyFocus();
+     try {
+       cancelImport();
+@@ -1298,6 +1361,7 @@ export function bootCoop() {
+       departure ||
+       settingsDialog.open ||
+       earnedDialog.open ||
++      objectivesDialog.open ||
+       pictureOperation ||
+       !Object.hasOwn(departureLabels, kind)
+     )
+@@ -1340,6 +1404,7 @@ export function bootCoop() {
+       closeDeparture(ticket);
+       message(
+         `Could not open the confirmation. The Team attempt stays ${loopStopped ? 'stopped' : 'paused'}: ${error.message}`,
++        { actionError: true },
+       );
+     }
+   }
+@@ -1370,7 +1435,7 @@ export function bootCoop() {
+       else if (ticket.kind === 'retry') start(ticket.recipe, prepared);
+       else location.assign(destination);
+     } catch (error) {
+-      message(`The Team attempt could not be replaced: ${error.message}`);
++      message(`The Team attempt could not be replaced: ${error.message}`, { actionError: true });
+       if (departure === ticket)
+         $('coop-discard-copy').textContent =
+           `The Team attempt is still here and is not saved. ${error.message} Stay keeps it on screen.`;
+@@ -1421,6 +1486,7 @@ export function bootCoop() {
+     if (disposed) return;
+     if (settingsOwner) settingsOwner.restore = false;
+     inactive = true;
++    objectives.suspend();
+     pause({ focus: false });
+     cancelDeparture({ restore: false });
+     // Losing foreground also retires menu ownership while already paused.
+@@ -1566,6 +1632,8 @@ export function bootCoop() {
+       ? 'Steer both moving heads together to bank a shared cut. Crossing an old part of a partner’s line is harmless.'
+       : 'Return to safe ground to bank your cut. Crossing a partner’s line is harmless; meeting their head does not join your lines.';
+     $('coop-stronghold-help').hidden = !stronghold;
++    $('coop-relay-key').hidden = !stronghold;
++    objectives?.refresh();
+     $('coop-menu-goal').textContent = coopGoalText(level);
+     $('coop-briefing-title').textContent = stronghold
+       ? 'TAKE THE STRONGHOLD TOGETHER'
+@@ -1699,6 +1767,7 @@ export function bootCoop() {
+     if (disposed) return;
+     // Retire dialog callbacks before native close or preference disposal can
+     // reenter. No terminal cleanup restores focus or resumes the attempt.
++    objectives.dispose();
+     settingsOwner = null;
+     settingsVisit++;
+     earnedOwner = null;
+diff --git a/game/test/coop-actor-layout.test.mjs b/game/test/coop-actor-layout.test.mjs
+index 5d8f420abb4de15c5ddb476b759b45f59b688e70..36dbf4d80a6bf0342cbfd516f205d17e85cd2798 100644
+--- a/game/test/coop-actor-layout.test.mjs
++++ b/game/test/coop-actor-layout.test.mjs
+@@ -1,8 +1,10 @@
+ import test from 'node:test';
+ import assert from 'node:assert/strict';
++import { createHash } from 'node:crypto';
+ import { readFile } from 'node:fs/promises';
+ import { createCoop } from '../coop/core.mjs';
+ import { FIRST_CONNECTION } from '../coop/first-connection.mjs';
++import { RELAY_YARD } from '../coop/relay-yard.mjs';
+ import { createCoopPainter } from '../couch/coop-view.mjs';
+ import { imagePresentation } from '../presentation/runtime.mjs';
+ import { validateCompiledPresentation } from '../presentation/host.mjs';
+@@ -137,11 +139,129 @@ test('pilot complete image frames remain within the arena at the true boundary',
+ // Pure layout cases complement command observations; neither proves native glyph readability.
+ import {
+   coopCueScale,
++  coopCueConnector,
+   coopBodyBounds,
+   coopPilotBodyOffset,
+   placeCoopCue,
+ } from '../couch/coop-actor-layout.mjs';
+ import { createCoopActorPresentation } from '../couch/coop-actor-presentation.mjs';
++
++test('cue connector reaches each plate edge and stops three CSS pixels before its owner', () => {
++  const rect = Object.freeze({ left: 10, top: 20, right: 30, bottom: 40 });
++  for (const [owner, from, to] of [
++    [
++      { x: -10, y: 30 },
++      { x: 10, y: 30 },
++      { x: -7, y: 30 },
++    ],
++    [
++      { x: 50, y: 30 },
++      { x: 30, y: 30 },
++      { x: 47, y: 30 },
++    ],
++    [
++      { x: 20, y: 0 },
++      { x: 20, y: 20 },
++      { x: 20, y: 3 },
++    ],
++    [
++      { x: 20, y: 60 },
++      { x: 20, y: 40 },
++      { x: 20, y: 57 },
++    ],
++  ]) {
++    Object.freeze(owner);
++    const actual = coopCueConnector(rect, owner);
++    assert.deepEqual(actual, { from, to });
++    assert.deepEqual(coopCueConnector(rect, owner), actual, 'Repeated geometry is deterministic.');
++    assert.ok(Object.isFrozen(actual));
++    assert.ok(Object.isFrozen(actual.from));
++    assert.ok(Object.isFrozen(actual.to));
++  }
++});
++
++test('cue connector uses the nearest corner and keeps its owner gap on diagonal segments', () => {
++  const rect = { left: 10, top: 20, right: 30, bottom: 40 };
++  for (const [owner, from, to] of [
++    [
++      { x: -2, y: 4 },
++      { x: 10, y: 20 },
++      { x: -0.2, y: 6.4 },
++    ],
++    [
++      { x: 42, y: 4 },
++      { x: 30, y: 20 },
++      { x: 40.2, y: 6.4 },
++    ],
++    [
++      { x: -2, y: 56 },
++      { x: 10, y: 40 },
++      { x: -0.2, y: 53.6 },
++    ],
++    [
++      { x: 42, y: 56 },
++      { x: 30, y: 40 },
++      { x: 40.2, y: 53.6 },
++    ],
++  ]) {
++    const before = structuredClone({ rect, owner });
++    const actual = coopCueConnector(rect, owner);
++    assert.deepEqual(actual.from, from);
++    assert.ok(Math.abs(actual.to.x - to.x) < 1e-10);
++    assert.ok(Math.abs(actual.to.y - to.y) < 1e-10);
++    assert.ok(Math.abs(Math.hypot(owner.x - actual.to.x, owner.y - actual.to.y) - 3) < 1e-10);
++    assert.deepEqual({ rect, owner }, before);
++  }
++});
++
++test('cue connector stays absent inside, on an edge, and within the configured distance', () => {
++  const rect = { left: 10, top: 20, right: 30, bottom: 40 };
++  for (const owner of [
++    { x: 20, y: 30 },
++    { x: 10, y: 30 },
++    { x: 30, y: 40 },
++    { x: 39, y: 30 },
++    { x: 40, y: 30 },
++    { x: 36, y: 48 },
++  ])
++    assert.equal(coopCueConnector(rect, owner), null);
++  assert.notEqual(coopCueConnector(rect, { x: 40.01, y: 30 }), null);
++  assert.equal(coopCueConnector(rect, { x: 50, y: 30 }, 20), null);
++  assert.deepEqual(coopCueConnector(rect, { x: 51, y: 30 }, 20), {
++    from: { x: 30, y: 30 },
++    to: { x: 48, y: 30 },
++  });
++});
++
++test('cue connector rejects malformed, degenerate and non-finite cosmetic geometry', () => {
++  const rect = { left: 10, top: 20, right: 30, bottom: 40 },
++    owner = { x: 50, y: 30 };
++  for (const invalid of [
++    null,
++    undefined,
++    [],
++    {},
++    { ...rect, left: NaN },
++    { ...rect, top: -Infinity },
++    { ...rect, right: Infinity },
++    { ...rect, bottom: '40' },
++    { ...rect, right: 10 },
++    { ...rect, bottom: 19 },
++    { ...rect, left: -Number.MAX_VALUE, right: Number.MAX_VALUE },
++  ])
++    assert.equal(coopCueConnector(invalid, owner), null);
++  for (const invalid of [null, undefined, [], {}, { x: '50', y: 30 }, { x: 50, y: NaN }])
++    assert.equal(coopCueConnector(rect, invalid), null);
++  for (const threshold of [null, '10', NaN, Infinity, -1, 0, 9.99])
++    assert.equal(coopCueConnector(rect, owner, threshold), null);
++  assert.equal(
++    coopCueConnector(
++      { left: -Number.MAX_VALUE, top: 0, right: -1e307, bottom: 10 },
++      { x: Number.MAX_VALUE, y: 5 },
++    ),
++    null,
++  );
++});
+ import { drawPresentedActor } from '../ui/actor-presentation.mjs';
+ 
+ for (const detail of ['compact', 'detailed']) {
+@@ -333,3 +453,265 @@ test('complete CSS cue plates avoid both pilot heads and remain in the 362 by181
+   assert.equal(scale.font(0.66, 14) * scale.cell, 14);
+   assert.equal(scale.font(0.57, 12) * scale.cell, 12);
+ });
++
++function largeCueRun(level) {
++  const run = createCoop(level);
++  // Cosmetic renderer fixture, prepared before the preservation checkpoint.
++  run.players[0].status = 'downed';
++  run.players[1].graceUntil = 10;
++  Object.assign(
++    run.enemies.find((enemy) => enemy.type === 'hunter'),
++    {
++      phase: 'warning',
++      target: 0,
++      targetPoint: { x: 25, y: 10 },
++    },
++  );
++  return run;
++}
++function paintLargeCueRun(
++  run,
++  { prepared = true, textFace = 'pixel', textSize, width = 362 } = {},
++) {
++  const view = surface(width),
++    painter = createCoopPainter(view.canvas);
++  if (prepared) painter.setPresentation(snapshot);
++  const options = { textFace, reduced: true };
++  if (textSize !== undefined) options.textSize = textSize;
++  painter.paint(run, options);
++  return view;
++}
++function cueTrace(calls) {
++  return createHash('sha256').update(JSON.stringify(calls)).digest('hex');
++}
++
++// Recorded before the feature from exact d51acab59232edc4e7f77ab5df491f2c403de709.
++// Provenance: retained P05 Team Large renderer-tests/standard-baseline-* receipts.
++// These full finite Canvas2D traces preserve Standard, not native raster appearance.
++const STANDARD_CUE_TRACES = {
++  'connection:false:pixel': '5b64885d16375872f6aec07aa09a1fdd36d49f6b3d41ca8e9f7e2f7ce5581c4b',
++  'connection:false:plain': '9e1f00dce78d01c378f2a3ee2d34d274db96d11cd0298ff458abb5cd61131d69',
++  'connection:true:pixel': '6db3ca2fbfe1a3d07dfa4db417e85dc1792d3b712767359bd13e4c0c5a4a01f0',
++  'connection:true:plain': 'e14b5f0075bb1ad251e37466920353afad1598208b410b666b13deb2d9c0d926',
++  'yard:false:pixel': '676d46a1ae79f687750fb6c23b6b3187ce5fd07fe147a49abee9cb130af4106b',
++  'yard:false:plain': 'b5c066613e515e33b36bf9713ae67ce7efa529d3ba34f0a816e27dc53f6923cd',
++  'yard:true:pixel': '65ff19cf1f53e791a74c3683b1441b9fab7ee3911f62a82e8bd4e11006e0014f',
++  'yard:true:plain': 'c7afa0890489fd6cf83ec1619c21a880c6d027083761f93a5316850cfe7943c7',
++};
++const projectedFont = (call, width = 362) =>
++  (Number(call.state.font.match(/([\d.]+)px/)[1]) *
++    Math.hypot(call.state.matrix[2], call.state.matrix[3]) *
++    width) /
++  1152;
++function cssBounds(call, rectangle, width = 362) {
++  const result = bounds(call, rectangle);
++  for (const key of ['left', 'right', 'top', 'bottom']) result[key] *= width / 1152;
++  return result;
++}
++function assertFunctionalCueLayout(run, view, factor = 1) {
++  const width = view.canvas.clientWidth,
++    cell = width / run.width,
++    heads = run.players.map((player) => ({
++      left: player.x * cell - player.radius * cell - 2,
++      right: player.x * cell + player.radius * cell + 2,
++      top: player.y * cell - player.radius * cell - 2,
++      bottom: player.y * cell + player.radius * cell + 2,
++    }));
++  const clear = (rect, label) => {
++    assert.ok(
++      rect.left >= -1e-8 &&
++        rect.top >= -1e-8 &&
++        rect.right <= width + 1e-8 &&
++        rect.bottom <= run.height * cell + 1e-8,
++      `${label}: outside board`,
++    );
++    for (const head of heads)
++      assert.equal(
++        rect.left < head.right &&
++          rect.right > head.left &&
++          rect.top < head.bottom &&
++          rect.bottom > head.top,
++        false,
++        `${label}: covers real head`,
++      );
++  };
++  for (let index = 0; index < view.calls.length; index++) {
++    const call = view.calls[index];
++    if (call.name !== 'fillText') continue;
++    const text = String(call.args[0]),
++      identity = ['1', '2'].includes(text);
++    assert.ok(
++      projectedFont(call, width) >= (identity ? 14 : 12) * factor - 1e-8,
++      `${text}: text minimum`,
++    );
++    const previous = view.calls[index - 1];
++    if (previous?.name === 'fillRect' && previous.state.fillStyle === '#07111c') {
++      const rect = cssBounds(previous, previous.args, width);
++      clear(rect, `${text} plate`);
++      if (text === '+') {
++        assert.ok(rect.right - rect.left >= 10 * factor - 1e-8);
++        assert.ok(rect.bottom - rect.top >= 16 * factor - 1e-8);
++      }
++    }
++    if (!identity) continue;
++    let start = index;
++    while (start >= 0 && view.calls[start].name !== 'beginPath') start--;
++    const path = view.calls.slice(start, index),
++      arc = path.find((c) => c.name === 'arc');
++    let rect;
++    if (arc) {
++      const [x, y, r] = arc.args;
++      rect = cssBounds(arc, [x - r, y - r, r * 2, r * 2], width);
++    } else {
++      const points = path.filter((c) => ['moveTo', 'lineTo'].includes(c.name));
++      assert.equal(points.length, 4, 'Player 2 retains its diamond identity.');
++      const xs = points.map((c) => c.args[0]),
++        ys = points.map((c) => c.args[1]);
++      rect = cssBounds(
++        points[0],
++        [
++          Math.min(...xs),
++          Math.min(...ys),
++          Math.max(...xs) - Math.min(...xs),
++          Math.max(...ys) - Math.min(...ys),
++        ],
++        width,
++      );
++    }
++    assert.ok(
++      rect.right - rect.left >= (text === '1' ? 20 : 24) * factor - 1e-8,
++      `${text}: badge scales with its text`,
++    );
++    clear(rect, `${text} badge`);
++  }
++  for (const player of run.players)
++    assert.ok(
++      view.calls.some(
++        (c) =>
++          c.name === 'arc' &&
++          c.args[0] === player.x &&
++          c.args[1] === player.y &&
++          c.args[2] === player.radius,
++      ),
++      'Final contact marker retains the authored head/radius.',
++    );
++}
++for (const [arena, level] of [
++  ['connection', FIRST_CONNECTION],
++  ['yard', RELAY_YARD],
++])
++  for (const prepared of [false, true])
++    for (const textFace of ['pixel', 'plain'])
++      test(`Large ${arena} ${prepared ? 'prepared' : 'legacy'} ${textFace} cues grow without losing roles or moving contacts`, () => {
++        const run = largeCueRun(level),
++          before = structuredClone(run),
++          options = { prepared, textFace },
++          standard = paintLargeCueRun(run, { ...options, textSize: 'standard' }),
++          implicit = paintLargeCueRun(run, options),
++          large = paintLargeCueRun(run, { ...options, textSize: 'large' });
++        assert.equal(
++          cueTrace(standard.calls),
++          STANDARD_CUE_TRACES[`${arena}:${prepared}:${textFace}`],
++          'Standard matches the exact pre-feature trace.',
++        );
++        assert.deepEqual(implicit.calls, standard.calls);
++        const labels = (view) =>
++          view.calls.filter((c) => c.name === 'fillText').map((c) => c.args[0]);
++        const required = [
++          ...(arena === 'yard' ? ['A', 'B', 'SHIELD'] : []),
++          'LOCK 1',
++          '1',
++          '+',
++          '2',
++          'HUNTER',
++        ];
++        assert.deepEqual(labels(standard), required);
++        assert.deepEqual(
++          labels(large),
++          ['1', '+', '2'],
++          'Large retains numbered pilot text; anchored role paths are verified by the owner-identity suite.',
++        );
++        assertFunctionalCueLayout(run, standard);
++        assertFunctionalCueLayout(run, large, 4 / 3);
++        assert.deepEqual(run, before);
++      });
++
++test('Large imported two-core states retain every objective and contact at portrait scale', () => {
++  const level = structuredClone(FIRST_CONNECTION);
++  level.id = 'two-relays-large-cues';
++  level.walls = [];
++  level.strongholds = [
++    [16.5, 14.5],
++    [54.5, 20.5],
++  ].map(([x, y], i) => ({
++    id: `relay-${i + 1}`,
++    core: { x, y },
++    anchors: [
++      { x: x - 4, y: y - 3 },
++      { x: x + 4, y: y + 3 },
++    ],
++  }));
++  level.goal = { cores: level.strongholds.map((s) => s.id) };
++  const run = largeCueRun(level);
++  run.players[0].x = 35.5;
++  run.players[0].y = 19.5;
++  run.players[1].x = 38.5;
++  run.players[1].y = 19.5;
++  run.strongholds[0].anchors[0].captured = true;
++  run.strongholds[0].shielded = false;
++  run.strongholds[1].defeated = true;
++  const before = structuredClone(run);
++  for (const prepared of [false, true])
++    for (const textFace of ['pixel', 'plain']) {
++      const view = paintLargeCueRun(run, { prepared, textFace, textSize: 'large' });
++      const labels = view.calls.filter((c) => c.name === 'fillText').map((c) => c.args[0]);
++      assert.deepEqual(labels, ['1', '+', '2']);
++      assertFunctionalCueLayout(run, view, 4 / 3);
++      assert.deepEqual(run, before);
++    }
++});
++
++test('invalid Team text size rejects before any drawing and preserves the run', () => {
++  const run = largeCueRun(RELAY_YARD),
++    before = structuredClone(run);
++  for (const textSize of ['giant', null, 0, {}]) {
++    const view = surface(),
++      painter = createCoopPainter(view.canvas);
++    painter.setPresentation(snapshot);
++    assert.throws(() => painter.paint(run, { textSize }), /text size/i);
++    assert.equal(view.calls.length, 0);
++    assert.deepEqual(run, before);
++  }
++  assert.throws(() => coopCueScale(362, 72, 'giant'), /text size/i);
++});
++
++test('won prepared artwork remains clean and identical under Standard and Large text', () => {
++  for (const level of [FIRST_CONNECTION, RELAY_YARD]) {
++    const run = createCoop(level);
++    run.status = 'won';
++    const before = structuredClone(run),
++      image = { naturalWidth: 1152, naturalHeight: 576, id: 'accepted-original' },
++      picture = {
++        snapshot,
++        choice: { levelId: level.id, levelRevision: level.revision, kind: 'image' },
++        fit: 'contain',
++        sampling: 'nearest',
++        image,
++      };
++    const traces = [];
++    for (const textSize of ['standard', 'large']) {
++      const view = surface(),
++        painter = createCoopPainter(view.canvas);
++      painter.setPresentation(snapshot);
++      painter.paint(run, { textSize, picture });
++      assert.equal(view.calls.filter((c) => c.name === 'fillText').length, 0);
++      assert.deepEqual(
++        view.calls.filter((c) => c.name === 'drawImage').map((c) => c.args[0]),
++        [image],
++      );
++      traces.push(view.calls);
++      assert.deepEqual(run, before);
++    }
++    assert.deepEqual(traces[0], traces[1]);
++  }
++});
+diff --git a/game/test/display-preferences-host.test.mjs b/game/test/display-preferences-host.test.mjs
+index b52469389d05ede9a6885ecd862a0af18208b48e..61197db74eb89be022f87ce4df52fe90dd74520a 100644
+--- a/game/test/display-preferences-host.test.mjs
++++ b/game/test/display-preferences-host.test.mjs
+@@ -219,21 +219,123 @@ test('Solo to Team to Versus and back restores one display record without Couch
+     assert.equal(store.writes.length, before);
+     reflects(page, 'plain', 'large', true);
+     page.$('coop-start').click();
+-    page.tick(10);
++    page.tick(180);
+     page.$('coop-pause').click();
+     page.tick();
+-    const geometry = page.geometry(),
++    const largeGeometry = page.geometry(),
++      largeFonts = page.fonts(),
+       clock = page.$('coop-clock').textContent;
++    const hud = () =>
++      [
++        'coop-stage',
++        'coop-clock',
++        'coop-coverage',
++        'coop-reserves',
++        'coop-objective',
++        'coop-state-0',
++        'coop-state-1',
++      ].map((id) => page.$(id).textContent);
++    const beforeHud = hud();
++    assert.equal(beforeHud[4], 'Relay 1 · 0/1 required secured');
++    const labels = () =>
++      page
++        .geometry()
++        .filter((call) => call.method === 'fillText')
++        .map((call) => call.args[0]);
++    const requiredLabels = labels();
++    assert.deepEqual(requiredLabels, ['1', '2'], 'Large keeps both active pilot identities.');
++    const images = () =>
++      page
++        .geometry()
++        .filter((call) => call.method === 'drawImage')
++        .map((call) => call.args[0]);
++    const acceptedImages = images();
++    assert.equal(acceptedImages.length, 1, 'The actual Team painter uses its accepted original.');
++    const preparation = () =>
++      Object.fromEntries(
++        Object.entries(page.artwork.calls).map(([key, value]) => [
++          key,
++          Array.isArray(value) ? value.length : value,
++        ]),
++      );
++    const acceptedPreparation = preparation();
++    const fontSize = (font) => Number(font.match(/([\d.]+)px/)[1]);
++    page.$('coop-settings-open').focus();
+     page.$('coop-settings-open').click();
+     page.$('coop-settings-tab-display').focus();
+     for (const id of ['coop-text-face', 'coop-text-size', 'coop-reduced']) reaches(page, id);
+     change(page, 'coop-text-face', 'pixel');
++    page.tick();
++    assert.deepEqual(
++      page.geometry(),
++      largeGeometry,
++      'Font-family selection alone keeps geometry in this finite-metrics fixture.',
++    );
++    assert.deepEqual(page.fonts().map(fontSize), largeFonts.map(fontSize));
+     change(page, 'coop-text-size', 'standard');
+     page.tick(120);
+-    assert.deepEqual(page.geometry(), geometry);
+-    assert.ok(page.fonts().some((font) => font.includes(page.artwork.snapshot.fonts.numeric)));
++    const standardGeometry = page.geometry(),
++      standardFonts = page.fonts(),
++      standardHud = hud();
++    const expectedStandardHud = [...beforeHud];
++    expectedStandardHud[4] =
++      'Relay 1 in the upper center · shielded. Capture both anchors to expose its core.';
++    assert.deepEqual(
++      standardHud,
++      expectedStandardHud,
++      'Standard restores its full objective sentence without advancing either player.',
++    );
++    assert.equal(page.$('coop-relay-hud').hidden, true);
++    assert.notDeepEqual(
++      standardGeometry,
++      largeGeometry,
++      'Text size changes rendered cue and badge geometry.',
++    );
++    assert.deepEqual(
++      labels(),
++      ['A', 'B', 'SHIELD', '1', '2', 'HUNTER', 'HUNTER'],
++      'Standard retains the same anchors, shielded core, two pilots and two idle Hunters.',
++    );
++    assert.equal(largeFonts.length, 2);
++    const standardLabels = labels();
++    largeFonts.forEach((font, index) =>
++      assert.ok(
++        Math.abs(
++          (fontSize(standardFonts[standardLabels.indexOf(requiredLabels[index])]) * 4) / 3 -
++            fontSize(font),
++        ) < 1e-8,
++        `${requiredLabels[index]} retains the agreed Standard/Large size ratio`,
++      ),
++    );
++    assert.ok(standardFonts.some((font) => font.includes(page.artwork.snapshot.fonts.numeric)));
++    change(page, 'coop-text-size', 'large');
++    change(page, 'coop-text-face', 'plain');
++    page.tick();
++    assert.deepEqual(
++      page.geometry(),
++      largeGeometry,
++      'Restoring Large/Plain exactly restores the paused drawing.',
++    );
++    assert.deepEqual(page.fonts(), largeFonts);
++    assert.deepEqual(hud(), beforeHud);
++    change(page, 'coop-text-face', 'pixel');
++    change(page, 'coop-text-size', 'standard');
++    page.tick();
++    assert.deepEqual(page.geometry(), standardGeometry);
++    assert.deepEqual(page.fonts(), standardFonts);
+     assert.equal(page.$('coop-clock').textContent, clock);
+     assert.equal(page.$('coop-overlay-title').textContent, 'Both players paused');
++    assert.deepEqual(preparation(), acceptedPreparation);
++    images().forEach((image, index) => assert.strictEqual(image, acceptedImages[index]));
++    page.$('coop-settings-close').click();
++    assert.equal(page.doc.activeElement.id, 'coop-settings-open');
++    page.tick(120);
++    assert.deepEqual(
++      hud(),
++      standardHud,
++      'Back leaves both players paused with the chosen Standard presentation.',
++    );
++    assert.equal(page.$('coop-overlay').hidden, false);
+     assert.equal(store.getItem(profileKey), profile);
+     assert.equal(store.getItem(sessionKey), session);
+   });
+diff --git a/game/test/helpers/coop-host.mjs b/game/test/helpers/coop-host.mjs
+index 6aca98365d6581ab7f1513c02788663447ccb4e4..bda5ee411b421c98e564a7b75a3848715ce30827 100644
+--- a/game/test/helpers/coop-host.mjs
++++ b/game/test/helpers/coop-host.mjs
+@@ -46,6 +46,7 @@ export async function page(
+     expectError = false,
+     readyStartDisabled = false,
+     capturePaint = false,
++    captureDrawing = false,
+     presentation = {},
+     waitPicture = true,
+     previewContextAvailable = true,
+@@ -144,6 +145,12 @@ export async function page(
+     paintHash = null,
+     lastPaint = null;
+   const visits = [];
++  // Opt-in observations of real painter commands. Do not alter the finite
++  // context's return values, legacy paint hashes, or image ownership records.
++  let drawing = [],
++    lastDrawing = [],
++    drawingState = { font: '10px sans-serif' };
++  const drawingStack = [];
+ 
+   $('coop-canvas').width = 1152;
+   $('coop-canvas').height = 576;
+@@ -153,6 +160,15 @@ export async function page(
+       get(target, key) {
+         if (Object.hasOwn(target, key)) return target[key];
+         return (...args) => {
++          if (captureDrawing) {
++            if (key === 'save' && paintDepth === 0) drawing = [];
++            drawing.push({ name: key, args, state: { ...drawingState } });
++            if (key === 'save') drawingStack.push({ ...drawingState });
++            if (key === 'restore') {
++              drawingState = drawingStack.pop();
++              if (paintDepth === 1) lastDrawing = drawing;
++            }
++          }
+           if (key === 'drawImage') drawImages.push(args[0]);
+           if (key === 'save') {
+             if (paintDepth === 0) {
+@@ -173,6 +189,7 @@ export async function page(
+       },
+       set(target, key, value) {
+         target[key] = value;
++        if (captureDrawing) drawingState[key] = value;
+         paintHash?.update(JSON.stringify(['set', key, value]));
+         return true;
+       },
+@@ -337,6 +354,9 @@ export async function page(
+     doc,
+     win,
+     visits,
++    get lastDrawing() {
++      return lastDrawing;
++    },
+     get lastPaint() {
+       return lastPaint;
+     },
