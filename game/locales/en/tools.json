@@ -987,7 +987,7 @@
   "sourceAudit56ExactOwnersNoProductionApproval": "SOURCE AUDIT · 56 EXACT OWNERS · NO PRODUCTION APPROVAL",
   "thePicturesBehindTheField": "The pictures behind the field",
   "twentyOneUniqueRasterOriginalsAndSeventeenExistingProceduralScenes": "Twenty-one unique raster originals and seventeen existing procedural scenes. This review keeps the exact source artwork intact and records which subjects the new Field Kit compositions must preserve.",
-  "sourceCheckoutReviewOnlyOriginalPngsLoadFromTheirExisting": "Source checkout review only. Original PNGs load from their existing authoring paths as you scroll; they are not copied into this page or a release. Procedural previews use the real scene renderer at seed 0. Missing originals stay explicitly unavailable.",
+  "sourceCheckoutReviewOnlyOriginalPngsLoadFromTheirExisting": "Historical source snapshot. Originals load from recorded authoring paths; some already ship for other features. Missing originals stay explicitly unavailable. Source documents open in an in-app reader. Procedural previews use the recorded seed 0 descriptors.",
   "readTheCompleteAuditAndProductionPlan": "Read the complete audit and production plan",
   "inspectOwnerHashAndFrameRecords": "Inspect owner, hash and frame records",
   "loadingTheAudit": "Loading the audit…",
@@ -2734,5 +2734,15 @@
   "studio.videoHandoff.downloadPoster": "Download exact captured poster",
   "studio.videoHandoff.exportHelp": "Inspect a clip and capture a poster first. This transfers the complete original, regardless of playback range. To use a transformed clip, download it, inspect that file and capture a new poster. Captions, transcripts and publication rights are checked in the receiving reward editor.",
   "studio.videoHandoff.exportReady": "The complete original and its captured poster are ready for explicit download. No video has been played, assigned or published.",
-  "studio.videoHandoff.chooseSource": "Inspect a local clip and capture its poster first."
+  "studio.videoHandoff.chooseSource": "Inspect a local clip and capture its poster first.",
+  "revealAuditSummary": "Historical snapshot: {{owners}} recorded owners · {{rasters}} raster originals · {{procedural}} procedural records. No production approval.",
+  "revealAuditUnavailable": "Audit unavailable: {{reason}}. Retry when the matching source checkout is available.",
+  "revealAuditCancelled": "Audit loading cancelled. Previously shown records are unchanged.",
+  "revealSourceLoading": "Loading recorded source…",
+  "revealSourceReady": "Verified source · {{bytes}} bytes",
+  "revealSourceUnavailable": "Source unavailable: {{reason}}. Return to the audit or retry from its recorded link.",
+  "revealSourceMismatch": "The source differs from the recorded historical file.",
+  "revealSourceCancelled": "Source loading cancelled. Close this reader and open the source again to retry.",
+  "revealSourceFit": "Fit image",
+  "revealSourceActualSize": "Actual size"
 }
