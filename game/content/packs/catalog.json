@@ -270,6 +270,10 @@
             {
               "id": "neon-switchyards-pack",
               "name": "Neon Switchyards"
+            },
+            {
+              "id": "neon-spines-pack",
+              "name": "Neon Spines"
             }
           ]
         }
