@@ -544,7 +544,9 @@
       "route": "/authoring/community/index.html",
       "verification": "At a6ac18d51, 35 focused tests and the first complete 4/4 virtual-controller workflow pass. Seven safe section and contents targets, bounded readers, exact Back/Confirm restoration, canceled language and live EN/UK labels, and real Content Studio return/reentry are qualified. Native pointerless keyboard traverses all seven sections at 390x844 (maximum 656px) and returns through the real Studio guide link. Virtual whole-page reading reaches 3286px. Guide-only interactions preserve unrelated storage; explicit locale persists, while ordinary native Studio startup created checkpoint1 and the virtual repeat preserved its exact head/revision. No raw Markdown or example download was activated. Source closure and direct document/sample admission match 68 Git/disk pins; no full package build or offline acceptance. Raw documents, actual example artifacts, full Ukrainian reading, hardware and publication remain separate.",
       "historicalVerification": "browser mount verified; shared keyboard and virtual-controller reader/navigation; physical controller not tested",
-      "evidence": "docs/verification/creator-guide-input-2026-09-30.md"
+      "evidence": "docs/verification/creator-guide-input-2026-09-30.md",
+      "documentVerification": "At 928bbfd31 (byte-equivalent runtime to qualified 8b5f4a9b1), 87 overlapping focused checks, localization, fresh 3/3 controller document workflow and native keys across all ten readers at390x844 pass. Ten exact literal Markdown sources retain source language, bounded reading and two-step Back. Four actual sample downloads pass production round-trip/model validation. Package admission has82 exact pins, no generated build or offline acceptance. Browser sample installation, physical devices, controlled network failures and published Guide acceptance remain open.",
+      "documentEvidence": "docs/verification/creator-guide-documents-input-2026-09-30.md"
     },
     {
       "name": "FPV reveal source audit",
