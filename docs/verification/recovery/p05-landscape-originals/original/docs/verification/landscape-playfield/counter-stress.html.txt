@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="en" data-boot-state="ready">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>HUD counter stress fixture</title>
+    <link rel="stylesheet" href="/game/boot.css" />
+    <link rel="stylesheet" href="/game/style.css" />
+    <link rel="stylesheet" href="/game/ui/controller-settings.css" />
+    <link rel="stylesheet" href="/game/ui/game-shell.css" />
+    <link rel="stylesheet" href="/game/ui/flight-information-details.css" />
+    <link rel="stylesheet" href="/game/ui/mode-choice.css" />
+    <link rel="stylesheet" href="/game/ui/pixel-theme.css" />
+    <link rel="stylesheet" href="/game/ui/mission-picker.css" />
+    <link rel="stylesheet" href="/game/ui/journey.css" />
+    <link rel="stylesheet" href="/game/ui/mission-brief.css" />
+    <link rel="stylesheet" href="/game/ui/enemy-guide.css" />
+    <link rel="stylesheet" href="/game/ui/story-dialog.css" />
+    <link rel="stylesheet" href="/game/ui/optional-chapters-panel.css" />
+    <link rel="stylesheet" href="/game/ui/device-controls.css" />
+    <link rel="stylesheet" href="/game/ui/field-kit-fonts.css" />
+    <link rel="stylesheet" href="/game/ui/field-kit-tokens.css" />
+    <link rel="stylesheet" href="/game/ui/field-kit-components.css" />
+    <link rel="stylesheet" href="/game/ui/field-kit-flow.css" />
+    <link rel="stylesheet" href="/game/ui/field-kit-surfaces.css" />
+    <link rel="stylesheet" href="/game/ui/settings.css" />
+    <link rel="stylesheet" href="/game/ui/field-kit-compiled.css" />
+    <link rel="stylesheet" href="/game/ui/profile-recovery-dialog.css" />
+    <link rel="stylesheet" href="/game/ui/backup-set.css" />
+    <link rel="stylesheet" href="/game/ui/operation-status.css" />
+    <link rel="stylesheet" href="/game/ui/menu-appearance.css" />
+  </head>
+  <body
+    class="field-kit game-shell"
+    data-flight-state="running"
+    data-screen-controls="shown"
+    data-arena-chrome="compact"
+    data-text-face="plain"
+    data-text-size="large"
+    data-touch-size="large"
+    data-touch-side="left"
+    data-touch-mode="dpad"
+    style="--board-aspect: 2; --board-ratio: 2 / 1"
+  >
+    <header class="shell-bar">
+      <button id="shell-menu">Menu</button><button id="pause-button">Pause</button>
+    </header>
+    <main>
+      <div class="game-layout">
+        <section class="arena-panel">
+          <div class="telemetry">
+            <div class="coverage">
+              <span>REVEALED</span
+              ><strong id="coverage" data-presentation-hud="coverage">99.9<small>%</small></strong
+              ><em id="target">TARGET 100%</em>
+            </div>
+            <div>
+              <span>LIVES</span
+              ><strong id="lives" aria-label="99 lives" data-presentation-hud="life">◆ ×99</strong>
+            </div>
+            <div>
+              <span>TIME</span><strong id="time" data-presentation-hud="time">99:59</strong>
+            </div>
+            <div>
+              <span id="score-label">SCORE</span
+              ><strong id="score" data-presentation-hud="score">999999999</strong>
+            </div>
+          </div>
+          <div id="arena-shell" class="arena-shell">
+            <div
+              id="game-canvas"
+              tabindex="0"
+              style="background: #0b1627; border: 2px solid #78dcf2"
+            ></div>
+          </div>
+          <div class="play-controls">
+            <div class="direction-controls" aria-label="Direction controls">
+              <button data-move="up" aria-label="Move up">↑</button
+              ><button data-move="left" aria-label="Move left">←</button
+              ><button data-move="right" aria-label="Move right">→</button
+              ><button data-move="down" aria-label="Move down">↓</button>
+            </div>
+            <div class="ability-buttons"></div>
+          </div>
+          <p id="run-message" class="run-message">
+            Counter stress fixture: layout only, not a simulated run or reward.
+          </p>
+        </section>
+      </div>
+    </main>
+  </body>
+</html>
