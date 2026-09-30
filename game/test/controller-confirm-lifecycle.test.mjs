@@ -158,6 +158,43 @@ test('native winner survives router clear, changed scope, removed target and a l
   assert.equal(h.lifecycle.owned(), false);
 });
 
+for (const type of ['keydown', 'pointerdown'])
+  test(`a host-owned native ${type} activation remains the winner across a scope change and long hold`, () => {
+    const h = harness();
+    h.lifecycle.beforeNativeActivation(
+      { type, target: h.target, isTrusted: true },
+      { activated: true },
+    );
+    h.lifecycle.cancel('input-clear');
+    h.current.scope = 'restored-home';
+    h.current.root = {};
+    h.valid(false);
+    h.at(40);
+    h.sample([0], { eligible: false });
+    assert.equal(h.lifecycle.phase(), 'native');
+    h.at(5040);
+    h.sample([0], { eligible: false });
+    h.sample([], { eligible: false });
+    assert.equal(h.commits().length, 0);
+    assert.equal(h.entries.find((entry) => entry.event === 'release').winner, 'native');
+  });
+
+test('a host activation cannot bypass an already-held Confirm or make an untrusted native winner', () => {
+  for (const held of [false, true]) {
+    const h = harness();
+    h.state(held ? [0] : []);
+    h.lifecycle.beforeNativeActivation(
+      { type: 'keydown', target: h.target, isTrusted: held },
+      { activated: true },
+    );
+    h.sample([0]);
+    assert.equal(h.lifecycle.phase(), 'controller');
+    assert.equal(h.commits().length, 0);
+    h.sample([]);
+    assert.equal(h.commits().length, 1);
+  }
+});
+
 test('native click refreshes its lead window without replacing the original menu target', () => {
   const h = harness();
   h.native('keydown');

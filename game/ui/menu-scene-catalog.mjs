@@ -453,11 +453,11 @@ export const MENU_SCENES = Object.freeze(
             id === 'fpv' ? fpvPortraitEnvironment : (portraitEnvironments[id] ?? environments[id]),
           landscape:
             id === 'droneaid-nl-community'
-              ? './art/menu-scenes/droneaid-main-background.png'
+              ? './art/menu-scenes/droneaid-main-background.webp'
               : `./art/menu-scenes/${id}.webp`,
           portrait:
             id === 'droneaid-nl-community'
-              ? './art/menu-scenes/droneaid-main-background.png'
+              ? './art/menu-scenes/droneaid-main-background.webp'
               : `./art/menu-scenes/${id === 'fpv' ? 'fpv-portrait' : id}.webp`,
           ...(id === 'droneaid-nl-community'
             ? { wordmark: './art/menu-scenes/droneaid-wordmark-light.svg' }

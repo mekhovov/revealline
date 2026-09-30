@@ -5,6 +5,9 @@ import { canvasTextFonts } from '../text-face.mjs';
 import { presentationEvent, drawEventFeedback, drawRecoveryCue } from './event-feedback.mjs';
 import { geometryForLevel, geometryForRun } from '../core/geometry.mjs';
 import { drawPresentationImage } from './presentation-draw-image.mjs';
+import { createDemoPictureFilter } from './demo-picture.mjs';
+import { createJammerPictureFilter, jammerPictureStrength } from './jammer-picture.mjs';
+import { createSignalReception } from './signal-reception.mjs';
 import { drawEncounterLane, drawEncounterCore } from './encounter-view.mjs';
 import { drawLaneAttack } from './lane-presentation.mjs';
 import {
@@ -117,7 +120,16 @@ const imageLoad = (src) =>
   });
 
 export class BoardPainter {
-  constructor(presets, { onAsset = () => {}, onAssetStatus = () => {} } = {}) {
+  constructor(
+    presets,
+    {
+      onAsset = () => {},
+      onAssetStatus = () => {},
+      pictureCanvasFactory,
+      jammerCanvasFactory,
+      signalCanvasFactory,
+    } = {},
+  ) {
     this.presets = presets;
     this.onAsset = onAsset;
     this.onAssetStatus = onAssetStatus;
@@ -139,6 +151,27 @@ export class BoardPainter {
     this._winState = null;
     this._celebrationPrepared = false;
     this.presentation = null;
+    this.pictureFilter = createDemoPictureFilter({ canvasFactory: pictureCanvasFactory });
+    this.jammerPictureFilter = createJammerPictureFilter({ canvasFactory: jammerCanvasFactory });
+    this.signalReception = createSignalReception({ canvasFactory: signalCanvasFactory });
+  }
+  dispose() {
+    // Retired scenes cannot adopt a late decode or retain shared enemy leases.
+    ++this.loadToken;
+    this.enemyBodies.clear();
+    this.pictureFilter.clear();
+    this.jammerPictureFilter.clear();
+    this.signalReception.dispose();
+    this.images = {};
+    this.overrides = {};
+    this.image = null;
+    this.background = null;
+    this.theme = null;
+    this.presentation = null;
+    this.effects = [];
+    this.celebration = null;
+    this._winState = null;
+    this.actorPresentation.reset();
   }
   // A read-only compiled release snapshot is cosmetic. It never replaces the
   // source theme, picture, body preset or any simulation-owned reference.
@@ -146,6 +179,8 @@ export class BoardPainter {
     this.presentation = snapshot;
   }
   async setLook(theme, bodyId, overrides = {}) {
+    this.pictureFilter.clear();
+    this.jammerPictureFilter.clear();
     const token = ++this.loadToken;
     this.enemyBodies.clear();
     this.lookWarning = '';
@@ -236,6 +271,8 @@ export class BoardPainter {
     return createSceneArt(theme, level, seed, () => makeCanvas(384, 288));
   }
   setLevel(level = {}, { seed = 0 } = {}) {
+    this.pictureFilter.clear();
+    this.jammerPictureFilter.clear();
     this.levelInfo = { id: level.id || 'gallery', revision: level.revision || '1' };
     this.artSeed = seed;
     if (this.theme) this.background = this.makeArt(this.theme);
@@ -277,16 +314,24 @@ export class BoardPainter {
       height = ctx.canvas?.height || 576,
       image = null,
       fit = 'cover',
+      pictureVisibility = 'clear',
     } = {},
   ) {
     if (!theme) return;
-    const source = image || this.makeArt(theme, level, seed);
+    const source = this.pictureFilter.select(
+      image || this.makeArt(theme, level, seed),
+      pictureVisibility,
+    );
     ctx.save();
     ctx.imageSmoothingEnabled = false;
     ctx.globalAlpha = 1;
     ctx.clearRect(0, 0, width, height);
     ctx.fillStyle = theme.palette.field;
     ctx.fillRect(0, 0, width, height);
+    if (!source) {
+      ctx.restore();
+      return;
+    }
     const ratio =
       fit === 'contain'
         ? Math.min(width / source.width, height / source.height)
@@ -329,6 +374,10 @@ export class BoardPainter {
       actorAppearance = null,
       backdrop = null,
       feedbackComparison = null,
+      pictureVisibility = 'clear',
+      demoTransition = 0,
+      signalReception = 'off',
+      signalEffectsRunning = false,
     } = {},
   ) {
     if (!this.theme || !state) return;
@@ -360,6 +409,11 @@ export class BoardPainter {
     const { width: columns, height: rows } = geometryForRun(state);
     const W = columns * CELL,
       H = rows * CELL;
+    const reception = this.signalReception.advance(state, dt, {
+      mode: fullReveal ? 'off' : signalReception,
+      running: signalEffectsRunning,
+      reduced,
+    });
     if (fullReveal && state.status === 'won') {
       if (this._winState !== state) {
         if (!this._celebrationPrepared)
@@ -501,11 +555,35 @@ export class BoardPainter {
     // The host owns a fully decoded binding and its lifetime. Select its image
     // and fit together for this frame; never reset rigs/effects or replace the
     // authored fallback. Sampling remains nearest throughout this pixel painter.
-    const picture = backdrop?.image || this.images.background || this.background;
+    // Filter only the picture before masks, terrain and actors are composited.
+    // Pending or unreadable artwork paints the neutral field until protected.
+    const protectedPicture = this.pictureFilter.select(
+      backdrop?.image || this.images.background || this.background,
+      pictureVisibility,
+      { time: this.time, animate: !reduced },
+    );
+    // Reception affects only the picture. The covered-cell mask and every
+    // terrain, trail, enemy and player cue are painted sharply afterward.
+    // Demo transitions receive only the protected picture. Their 300ms clock
+    // belongs to the host; this normalized envelope cannot sample raw artwork.
+    const transitionStrength =
+      !reduced && Number.isFinite(demoTransition)
+        ? Math.max(0, Math.min(1, demoTransition)) * 0.35
+        : 0;
+    const picture = this.jammerPictureFilter.select(protectedPicture, {
+      strength: Math.max(
+        transitionStrength,
+        pictureVisibility === 'clear'
+          ? jammerPictureStrength(state, { fullReveal }) * (reduced ? 0.65 : 1)
+          : 0,
+      ),
+      time: this.time,
+      animate: !reduced,
+    });
     const fit = backdrop?.image ? backdrop.fit : this.overrides.background?.fit || 'cover';
     ctx.fillStyle = p.field;
     ctx.fillRect(0, 0, W, H);
-    if (fit === 'contain') {
+    if (picture && fit === 'contain') {
       const r = Math.min(W / picture.width, H / picture.height);
       ctx.drawImage(
         picture,
@@ -514,7 +592,7 @@ export class BoardPainter {
         picture.width * r,
         picture.height * r,
       );
-    } else {
+    } else if (picture) {
       const r = Math.max(W / picture.width, H / picture.height);
       ctx.drawImage(
         picture,
@@ -541,6 +619,9 @@ export class BoardPainter {
       }
       ctx.globalAlpha = 1;
     }
+    // Degrade only the already-masked feed. Covered pixels stay secret;
+    // terrain, live cuts and actors below remain sharp from the first tick.
+    if (reception.kind === 'acquire') this.signalReception.draw(ctx, W, H, reception);
     drawClassicTerrain(ctx, classic, p, images);
     if (combat) drawCombatScrap(ctx, combat, p, combatOptions);
     // Reveal decoration belongs below current hazards, actors and live cuts.
@@ -1036,6 +1117,9 @@ export class BoardPainter {
       });
     this.effects = this.effects.filter((f) => f.age < 0.7);
     if (fullReveal) drawCelebration(ctx, finale, p, W, H);
+    // A terminal loss degrades the completed, already-masked feed. DOM results
+    // and controls sit outside this canvas; raw concealed art is never sampled.
+    if (reception.kind === 'lost') this.signalReception.draw(ctx, W, H, reception);
   }
   drawActor(c, shape, x, y, size, color, img, t, reduced) {
     if (img) {

@@ -1,5 +1,7 @@
 import path from 'node:path';
+import { readFileSync } from 'node:fs';
 import { parse } from 'acorn';
+import { validateDemoCatalog } from '../game/demo-catalog.mjs';
 import {
   MENU_SCENES,
   MENU_SCENE_COMPOSITIONS,
@@ -34,6 +36,21 @@ export function projectEditionBrandIdentity(bytes, logoPath) {
   return Buffer.from(
     source.slice(0, literal.start) + JSON.stringify(target) + source.slice(literal.end),
   );
+}
+
+/** Resolve only the reviewed catalogue's bounded local recording paths. Keep
+ * this build inventory derived from the same data the runtime will select. */
+export function editionDemoResources(source) {
+  const catalog = validateDemoCatalog(source);
+  return [
+    'game/demo-data/catalog.json',
+    'game/demo-data/variant-provenance.json',
+    ...new Set(
+      catalog.clips.flatMap(({ replayURL, replayVariants = [] }) =>
+        [replayURL, ...replayVariants].map((relative) => `game/${relative.slice(2)}`),
+      ),
+    ),
+  ];
 }
 
 function sceneAssets(scene) {
@@ -117,6 +134,10 @@ export const EDITION_RUNTIME_RESOURCES = Object.freeze({
     'game/vendor/QRCODEGEN-LICENSE.txt',
     'game/vendor/qrcodegen-1.8.0.json',
   ],
+  'game/demo-bot-player.mjs': ['game/demo-bot-worker.mjs'],
+  'game/demo-catalog.mjs': editionDemoResources(
+    readFileSync(new URL('../game/demo-data/catalog.json', import.meta.url), 'utf8'),
+  ),
   'game/ui/native-menus.mjs': ['game/ui/native-menu.css'],
   'game/ui/controller-field-editor.mjs': ['game/ui/controller-field-editor.css'],
   'game/ui/brand-identity.mjs': ['game/ui/art/identity/fpv-line/wordmark.png'],

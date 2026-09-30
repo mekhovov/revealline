@@ -484,10 +484,7 @@ test('scene files and provenance match checksums and fit 2 MiB including the sha
       assert.equal(bytes.length, asset.bytes);
       assert.equal(createHash('sha256').update(bytes).digest('hex'), asset.sha256);
       assert.ok(bytes.length + atlasBytes <= 2 * 1024 * 1024, `${file} plus receiver atlas`);
-      if (scene.id === 'droneaid-nl-community') {
-        assert.equal(file, 'droneaid-main-background.png');
-        assert.deepEqual([...bytes.subarray(0, 8)], [137, 80, 78, 71, 13, 10, 26, 10]);
-      } else assert.equal(bytes.toString('ascii', 8, 12), 'WEBP');
+      assert.equal(bytes.toString('ascii', 8, 12), 'WEBP');
     }
   }
 });
@@ -537,35 +534,47 @@ for (const world of modeWorlds)
     );
   });
 
-test('DroneAid aggregate uses the exact supplied photograph and records its unchanged source', async () => {
+test('DroneAid lossless runtime derivative retains the exact supplied original and pixel provenance', async () => {
   const profile = MENU_SCENES['droneaid-nl-community'];
-  const path = './art/menu-scenes/droneaid-main-background.png';
+  const path = './art/menu-scenes/droneaid-main-background.webp';
   assert.equal(profile.landscape, path);
   assert.equal(profile.portrait, path);
   assert.equal(resolveMenuScene({ editionId: 'droneaid-nl-community' }), profile);
   const source = 'authoring/library/droneaid-brand-kit-2026-09-29/background-original.png';
-  const [original, supplied, ledgerText] = await Promise.all([
+  const [original, retained, runtime, ledgerText, assetText] = await Promise.all([
     readFile(new URL(`../../${source}`, import.meta.url)),
+    readFile(new URL('../ui/art/menu-scenes/droneaid-main-background.png', import.meta.url)),
     readFile(new URL(`../ui/${path}`, import.meta.url)),
     readFile(new URL('../ui/art/menu-scenes/provenance.json', import.meta.url), 'utf8'),
+    readFile(new URL('../editions/runtime-assets.json', import.meta.url), 'utf8'),
   ]);
-  assert.deepEqual(
-    supplied,
-    original,
-    'No transcoding, crop, retouching or embedded mark is permitted.',
-  );
-  assert.equal(supplied.length, 880307);
-  const hash = createHash('sha256').update(supplied).digest('hex');
+  assert.deepEqual(retained, original, 'Both supplied PNG originals remain byte-identical.');
+  assert.equal(original.length, 880307);
+  const hash = createHash('sha256').update(original).digest('hex');
   assert.equal(hash, '836c883d4eee658aab610f113eb4fec34f40ed1c963b4a759c52ec37990a8515');
-  assert.equal(supplied.readUInt32BE(16), 2000);
-  assert.equal(supplied.readUInt32BE(20), 1545);
+  assert.equal(original.readUInt32BE(16), 2000);
+  assert.equal(original.readUInt32BE(20), 1545);
+  assert.equal(runtime.toString('ascii', 8, 12), 'WEBP');
+  assert.equal(runtime.toString('ascii', 12, 16), 'VP8L', 'The runtime encoding must be lossless.');
+  assert.equal(runtime[20], 0x2f);
+  const dimensions = runtime.readUInt32LE(21);
+  assert.equal((dimensions & 0x3fff) + 1, 2000);
+  assert.equal(((dimensions >>> 14) & 0x3fff) + 1, 1545);
+  assert.equal(runtime.length, 493598);
+  const runtimeHash = createHash('sha256').update(runtime).digest('hex');
+  assert.equal(runtimeHash, '378741b03c221c08ead77ee4af8f0a65a7d2b15088363898bfb8b79dfebc6000');
   const record = JSON.parse(ledgerText).assets.find((asset) => asset.id === profile.id);
   assert.equal(record.source, source);
   assert.equal(record.sourceSha256, hash);
-  assert.equal(record.sha256, hash);
+  assert.equal(record.sha256, runtimeHash);
+  assert.equal(record.bytes, runtime.length);
   assert.equal(record.width, 2000);
   assert.equal(record.height, 1545);
-  assert.equal(record.process, 'Original supplied PNG; byte-for-byte copy, no raster changes');
+  assert.equal(record.process, 'WebP lossless; decoded RGBA verified identical');
+  assert.match(record.decodedRgbaSha256, /^[0-9a-f]{64}$/);
+  const admitted = JSON.parse(assetText).find((asset) => asset.path === `game/ui/${path.slice(2)}`);
+  assert.equal(admitted.sha256, runtimeHash);
+  assert.equal(admitted.bytes, runtime.length);
 });
 
 test('DroneAid photograph keeps a full static source in both orientations and WebGL fallback', () => {

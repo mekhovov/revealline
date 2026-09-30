@@ -1,0 +1,624 @@
+{
+  "format": "revealline-demo-browser-final-review.v1",
+  "verdict": "wall-duration-complete; qualification-held-for-visible-return-anomaly-and-remaining-gates",
+  "report": {
+    "path": "browser-observation-final.json",
+    "bytes": 3193397,
+    "sha256": "2c943ad9352dcb1022f0c9cc93bf9c1d07fcdad5d8119214a719201452a4cc1e",
+    "sourceRuntimeRevision": "55c5ec57cc1ed478b44e065951073c0bdd3c3ead",
+    "reviewCheckoutHead": "279d6b67f66a7add88df66ab09e4995e7bdc775a",
+    "sourceBinding": "Parent task frozen runtime designation plus equal initial/final served-byte inventory; report does not itself contain a Git revision.",
+    "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/154.0.0.0 Safari/537.36",
+    "serviceWorkerControlled": false,
+    "buildLabelValues": ["__REVEALLINE_VERSION__"]
+  },
+  "method": {
+    "input": "One saved final JSON; light read-only aggregation plus inspection of the matching frozen clock source. No browser interaction, replay execution, test or new observation.",
+    "sceneCounting": "Count the initial observed scene, then a non-preparation DOM phase after a preparation event or source/level change; ignore pause/music-only changes. These are scene visits, not proofs of complete clips or distinct seed/variant identity.",
+    "hashing": "Raw final JSON SHA-256 above; canonical subset hashes below use UTF-8 JSON with sorted keys, compact separators and unescaped Unicode."
+  },
+  "timing": {
+    "startedAt": "2026-09-29T03:30:56.950Z",
+    "finishedAt": "2026-09-29T05:31:01.342Z",
+    "stopReason": "requested-duration",
+    "requestedSeconds": 7200,
+    "elapsedSeconds": 7204.141,
+    "sampledIntervalSeconds": 7204.141000000005,
+    "unobservedLongGapSeconds": 0,
+    "calendarDiscontinuitySeconds": 0,
+    "longGaps": 0,
+    "maxGapSeconds": 5.412300000011921,
+    "droppedSamples": 0,
+    "droppedEvents": 0,
+    "calendarElapsedSeconds": 7204.392,
+    "totalActualSimulationTicks": null,
+    "aggregateSimulationSeconds": null,
+    "simulationNote": "Wall/observer time includes explicit pause and apparent stall. Resetting/coarsely sampled per-level timer labels are not summed into simulation time."
+  },
+  "counts": {
+    "samples": 1430,
+    "events": 345,
+    "sceneVisitsIncludingInitial": 163,
+    "newSceneAdoptions": 162,
+    "recordedSceneVisits": 84,
+    "liveSceneVisits": 79,
+    "immediateSameLevelSceneRepeats": 0,
+    "sceneCounts": [
+      {
+        "source": "Live autoplay",
+        "level": "Courtyard Exits",
+        "visits": 41,
+        "samples": 319
+      },
+      {
+        "source": "Live autoplay",
+        "level": "Orchard Crossing",
+        "visits": 38,
+        "samples": 306
+      },
+      {
+        "source": "Recorded play",
+        "level": "Crosswind",
+        "visits": 14,
+        "samples": 142
+      },
+      {
+        "source": "Recorded play",
+        "level": "First Signal",
+        "visits": 28,
+        "samples": 202
+      },
+      {
+        "source": "Recorded play",
+        "level": "Night Patrol",
+        "visits": 14,
+        "samples": 156
+      },
+      {
+        "source": "Recorded play",
+        "level": "Relay Orchard",
+        "visits": 28,
+        "samples": 288
+      }
+    ],
+    "preparationSamples": 17,
+    "availableSamples": 1430,
+    "demoOpenSamples": 1430,
+    "practiceSamples": 0,
+    "observedPreparationIntervals": 162,
+    "preparationIntervalMinimumSeconds": 0.40609999999401225,
+    "preparationIntervalMaximumSeconds": 1.1983999999756634
+  },
+  "hidden": {
+    "intervals": [
+      {
+        "startElapsedSeconds": 1759.2854,
+        "endElapsedSeconds": 2045.5994,
+        "durationSeconds": 286.314,
+        "hiddenSamples": 58,
+        "newSceneAdoptions": 6,
+        "maxObserverGapSeconds": 5.0949000000059605,
+        "firstReturnSamples": [
+          {
+            "elapsedSeconds": 2045.5993999999762,
+            "level": "Courtyard Exits",
+            "statusAndTimer": "0% captured · 3 lives · 0s",
+            "canvas": {
+              "sampled": true,
+              "algorithm": "fnv1a32-scaled-rgba-12x8",
+              "checksum": "25e26bc5",
+              "width": 1152,
+              "height": 576
+            }
+          },
+          {
+            "elapsedSeconds": 2050.3212999999823,
+            "level": "Courtyard Exits",
+            "statusAndTimer": "71% captured · 3 lives · 31s",
+            "canvas": {
+              "sampled": true,
+              "algorithm": "fnv1a32-scaled-rgba-12x8",
+              "checksum": "89985de3",
+              "width": 1152,
+              "height": 576
+            }
+          }
+        ]
+      },
+      {
+        "startElapsedSeconds": 2067.0066,
+        "endElapsedSeconds": 2117.7242,
+        "durationSeconds": 50.7176,
+        "hiddenSamples": 11,
+        "newSceneAdoptions": 1,
+        "maxObserverGapSeconds": 5.073299999982119,
+        "firstReturnSamples": [
+          {
+            "elapsedSeconds": 2117.7241999999883,
+            "level": "Orchard Crossing",
+            "statusAndTimer": "0% captured · 3 lives · 0s",
+            "canvas": {
+              "sampled": true,
+              "algorithm": "fnv1a32-scaled-rgba-12x8",
+              "checksum": "25e26bc5",
+              "width": 1152,
+              "height": 576
+            }
+          },
+          {
+            "elapsedSeconds": 2121.356699999988,
+            "level": "Orchard Crossing",
+            "statusAndTimer": "39% captured · 3 lives · 29s",
+            "canvas": {
+              "sampled": true,
+              "algorithm": "fnv1a32-scaled-rgba-12x8",
+              "checksum": "e8cce38a",
+              "width": 1152,
+              "height": 576
+            }
+          }
+        ]
+      },
+      {
+        "startElapsedSeconds": 3560.1434,
+        "endElapsedSeconds": 4164.3734,
+        "durationSeconds": 604.23,
+        "hiddenSamples": 120,
+        "newSceneAdoptions": 15,
+        "maxObserverGapSeconds": 5.273800000011921,
+        "firstReturnSamples": [
+          {
+            "elapsedSeconds": 4164.373599999994,
+            "level": "First Signal",
+            "statusAndTimer": "0% captured · 3 lives · 0s",
+            "canvas": {
+              "sampled": true,
+              "algorithm": "fnv1a32-scaled-rgba-12x8",
+              "checksum": "25e26bc5",
+              "width": 768,
+              "height": 576
+            }
+          },
+          {
+            "elapsedSeconds": 4166.576699999988,
+            "level": "First Signal",
+            "statusAndTimer": "11% captured · 3 lives · 12s",
+            "canvas": {
+              "sampled": true,
+              "algorithm": "fnv1a32-scaled-rgba-12x8",
+              "checksum": "a54a9370",
+              "width": 768,
+              "height": 576
+            }
+          }
+        ]
+      },
+      {
+        "startElapsedSeconds": 4193.1983,
+        "endElapsedSeconds": 4440.9921,
+        "durationSeconds": 247.7938,
+        "hiddenSamples": 49,
+        "newSceneAdoptions": 6,
+        "maxObserverGapSeconds": 5.106600000023842,
+        "firstReturnSamples": [
+          {
+            "elapsedSeconds": 4440.992199999988,
+            "level": "Orchard Crossing",
+            "statusAndTimer": "0% captured · 3 lives · 0s",
+            "canvas": {
+              "sampled": true,
+              "algorithm": "fnv1a32-scaled-rgba-12x8",
+              "checksum": "25e26bc5",
+              "width": 1152,
+              "height": 576
+            }
+          },
+          {
+            "elapsedSeconds": 4441.4215,
+            "level": "Orchard Crossing",
+            "statusAndTimer": "0% captured · 3 lives · 0s",
+            "canvas": {
+              "sampled": true,
+              "algorithm": "fnv1a32-scaled-rgba-12x8",
+              "checksum": "25e26bc5",
+              "width": 1152,
+              "height": 576
+            }
+          }
+        ]
+      },
+      {
+        "startElapsedSeconds": 4600.1276,
+        "endElapsedSeconds": 5069.6895,
+        "durationSeconds": 469.5619,
+        "hiddenSamples": 93,
+        "newSceneAdoptions": 10,
+        "maxObserverGapSeconds": 5.135699999988079,
+        "firstReturnSamples": [
+          {
+            "elapsedSeconds": 5069.689599999994,
+            "level": "Night Patrol",
+            "statusAndTimer": "69% captured · 3 lives · 46s",
+            "canvas": {
+              "sampled": true,
+              "algorithm": "fnv1a32-scaled-rgba-12x8",
+              "checksum": "25e26bc5",
+              "width": 768,
+              "height": 576
+            }
+          },
+          {
+            "elapsedSeconds": 5073.092099999994,
+            "level": "Courtyard Exits",
+            "statusAndTimer": "0% captured · 3 lives · 0s",
+            "canvas": {
+              "sampled": true,
+              "algorithm": "fnv1a32-scaled-rgba-12x8",
+              "checksum": "4e0b84c5",
+              "width": 1152,
+              "height": 576
+            }
+          }
+        ]
+      },
+      {
+        "startElapsedSeconds": 5107.5928,
+        "endElapsedSeconds": 5963.0127,
+        "durationSeconds": 855.4199,
+        "hiddenSamples": 168,
+        "newSceneAdoptions": 21,
+        "maxObserverGapSeconds": 5.412300000011921,
+        "firstReturnSamples": [
+          {
+            "elapsedSeconds": 5963.013,
+            "level": "Courtyard Exits",
+            "statusAndTimer": "0% captured · 3 lives · 0s",
+            "canvas": {
+              "sampled": true,
+              "algorithm": "fnv1a32-scaled-rgba-12x8",
+              "checksum": "25e26bc5",
+              "width": 1152,
+              "height": 576
+            }
+          },
+          {
+            "elapsedSeconds": 5964.992799999982,
+            "level": "Courtyard Exits",
+            "statusAndTimer": "41% captured · 3 lives · 24s",
+            "canvas": {
+              "sampled": true,
+              "algorithm": "fnv1a32-scaled-rgba-12x8",
+              "checksum": "fe3675a5",
+              "width": 1152,
+              "height": 576
+            }
+          }
+        ]
+      },
+      {
+        "startElapsedSeconds": 5995.5112,
+        "endElapsedSeconds": 6868.4518,
+        "durationSeconds": 872.9406,
+        "hiddenSamples": 171,
+        "newSceneAdoptions": 21,
+        "maxObserverGapSeconds": 5.411200000017882,
+        "firstReturnSamples": [
+          {
+            "elapsedSeconds": 6868.452,
+            "level": "Relay Orchard",
+            "statusAndTimer": "0% captured · 3 lives · 0s",
+            "canvas": {
+              "sampled": true,
+              "algorithm": "fnv1a32-scaled-rgba-12x8",
+              "checksum": "25e26bc5",
+              "width": 768,
+              "height": 576
+            }
+          },
+          {
+            "elapsedSeconds": 6870.0955,
+            "level": "Relay Orchard",
+            "statusAndTimer": "29% captured · 3 lives · 19s",
+            "canvas": {
+              "sampled": true,
+              "algorithm": "fnv1a32-scaled-rgba-12x8",
+              "checksum": "0057d20e",
+              "width": 768,
+              "height": 576
+            }
+          }
+        ]
+      }
+    ],
+    "totalVisibilityEventDurationSeconds": 3386.9778,
+    "samples": 670,
+    "visibleSamples": 760,
+    "newSceneAdoptions": 80,
+    "explicitDemoPausedSamples": 0,
+    "audioStates": {
+      "playing": 669,
+      "loading": 1
+    },
+    "interpretation": "Evidence of actual hidden execution and rotation during these intervals in this Chromium session, not OS-freeze, native, universal background or audible-output qualification."
+  },
+  "independentPause": {
+    "demoPauseEventElapsedSeconds": 43.94279999998212,
+    "demoResumeEventElapsedSeconds": 89.503,
+    "pausedSamples": 9,
+    "boardStatusValues": ["13% captured · 3 lives · 17s"],
+    "canvasChecksums": ["d0e5afb7"],
+    "musicStatesDuringDemoPause": ["playing"],
+    "musicPausedSampleCount": 4,
+    "musicPausedSampleRangeSeconds": [25.3995, 40.6005],
+    "demoStatesWhileMusicPaused": ["false"],
+    "musicPauseExample": "Night Patrol advances from displayed4s to14s while music status is paused; First Signal-to-Night Patrol transition also occurs."
+  },
+  "audio": {
+    "titles": ["Carol of the Bells (Metal Version)"],
+    "states": {
+      "playing": 1421,
+      "paused": 4,
+      "loading": 5
+    },
+    "audibilityMeasured": false,
+    "songBoundariesVerified": false,
+    "limitation": "One unchanged title and transport labels cannot distinguish playback repetition, restarts, silent/blocked output or verify physical audio continuity."
+  },
+  "rendering": {
+    "sampledVisibleCanvases": 760,
+    "hiddenCanvasesSkipped": 670,
+    "uniqueScaledChecksums": 604,
+    "method": "12x8 scaled RGBA FNV-1a32; a coarse state-change witness, not screenshot/video, FPS, presentation latency, or proof no hidden painting occurred."
+  },
+  "actionableAnomaly": {
+    "status": "unresolved; qualification held",
+    "kind": "apparent visible-unfocused playback/presentation stall after hidden return",
+    "source": "Live autoplay",
+    "level": "Orchard Crossing",
+    "sceneAdoptedWhileHiddenAtSeconds": 4422.1717,
+    "precedingScene": "Recorded First Signal adopted4386.4842s; preparation4421.0326s",
+    "firstStaleVisibleSampleSeconds": 4440.992199999988,
+    "lastStaleVisibleSampleSeconds": 4599.09,
+    "spanSeconds": 158.0978,
+    "samples": 33,
+    "bothDocumentsVisible": true,
+    "neitherDocumentFocused": true,
+    "demoPaused": false,
+    "unchangedStatus": "0% captured · 3 lives · 0s",
+    "unchangedCanvasChecksum": "25e26bc5",
+    "rehiddenEventSeconds": 4600.1276,
+    "hiddenRecoverySample": {
+      "elapsedSeconds": 4614.3441,
+      "status": "85% captured · 3 lives · 31s"
+    },
+    "nextSceneAdoption": {
+      "elapsedSeconds": 4617.4492,
+      "source": "Recorded play",
+      "level": "First Signal"
+    },
+    "followingSceneAdoption": {
+      "elapsedSeconds": 4654.339,
+      "source": "Live autoplay",
+      "level": "Courtyard Exits"
+    },
+    "hypothesis": "Frozen clock schedules only requestAnimationFrame for ordinary visible wakes, with no pending-frame timer watchdog. RAF starvation while visible/unfocused could leave that ticket pending until a visibility reset switches to hidden timers. Report does not record RAF delivery or authoritative core ticks, so causation is not established.",
+    "sourcePointer": "game/ui/demo-clock.mjs:51-68",
+    "clockSourceMatchesFinalInventory": true,
+    "nextInvestigation": "Focused visible-return/unfocused RAF-delivery measurement and starvation regression; retain this source-bound report and do not relabel this run as uninterrupted playback."
+  },
+  "memory": {
+    "usedJSHeap": {
+      "samples": 1430,
+      "firstBytes": 145228241,
+      "minimumBytes": 105390902,
+      "maximumBytes": 564341085,
+      "finalBytes": 453027701,
+      "medianBytes": 140226410.5
+    },
+    "allocatedJSHeap": {
+      "samples": 1430,
+      "firstBytes": 270741373,
+      "minimumBytes": 109639888,
+      "maximumBytes": 609079058,
+      "finalBytes": 524013173,
+      "medianBytes": 286039846.0
+    },
+    "reportedHeapLimit": {
+      "samples": 1430,
+      "firstBytes": 4395630592,
+      "minimumBytes": 4395630592,
+      "maximumBytes": 4395630592,
+      "finalBytes": 4395630592,
+      "medianBytes": 4395630592.0
+    },
+    "tenMinuteUsedHeapWindows": [
+      {
+        "fromElapsedSeconds": 0,
+        "toElapsedSecondsExclusive": 600,
+        "samples": 119,
+        "minBytes": 118933658,
+        "medianBytes": 213334021,
+        "maxBytes": 325759383
+      },
+      {
+        "fromElapsedSeconds": 600,
+        "toElapsedSecondsExclusive": 1200,
+        "samples": 118,
+        "minBytes": 111942299,
+        "medianBytes": 208366009.5,
+        "maxBytes": 363687908
+      },
+      {
+        "fromElapsedSeconds": 1200,
+        "toElapsedSecondsExclusive": 1800,
+        "samples": 120,
+        "minBytes": 125067325,
+        "medianBytes": 220691642.5,
+        "maxBytes": 353254711
+      },
+      {
+        "fromElapsedSeconds": 1800,
+        "toElapsedSecondsExclusive": 2400,
+        "samples": 121,
+        "minBytes": 105932412,
+        "medianBytes": 180484992,
+        "maxBytes": 446306819
+      },
+      {
+        "fromElapsedSeconds": 2400,
+        "toElapsedSecondsExclusive": 3000,
+        "samples": 119,
+        "minBytes": 126062286,
+        "medianBytes": 282839149,
+        "maxBytes": 425183925
+      },
+      {
+        "fromElapsedSeconds": 3000,
+        "toElapsedSecondsExclusive": 3600,
+        "samples": 119,
+        "minBytes": 124978333,
+        "medianBytes": 280422412,
+        "maxBytes": 426239396
+      },
+      {
+        "fromElapsedSeconds": 3600,
+        "toElapsedSecondsExclusive": 4200,
+        "samples": 120,
+        "minBytes": 108073636,
+        "medianBytes": 109205324.5,
+        "maxBytes": 425223627
+      },
+      {
+        "fromElapsedSeconds": 4200,
+        "toElapsedSecondsExclusive": 4800,
+        "samples": 120,
+        "minBytes": 108925358,
+        "medianBytes": 109679553.5,
+        "maxBytes": 147865696
+      },
+      {
+        "fromElapsedSeconds": 4800,
+        "toElapsedSecondsExclusive": 5400,
+        "samples": 119,
+        "minBytes": 105390902,
+        "medianBytes": 110886357,
+        "maxBytes": 559319702
+      },
+      {
+        "fromElapsedSeconds": 5400,
+        "toElapsedSecondsExclusive": 6000,
+        "samples": 119,
+        "minBytes": 109772117,
+        "medianBytes": 110674181,
+        "maxBytes": 357327232
+      },
+      {
+        "fromElapsedSeconds": 6000,
+        "toElapsedSecondsExclusive": 6600,
+        "samples": 117,
+        "minBytes": 110501031,
+        "medianBytes": 111990860,
+        "maxBytes": 524266173
+      },
+      {
+        "fromElapsedSeconds": 6600,
+        "toElapsedSecondsExclusive": 7200,
+        "samples": 117,
+        "minBytes": 110790636,
+        "medianBytes": 159489302,
+        "maxBytes": 564341085
+      },
+      {
+        "fromElapsedSeconds": 7200,
+        "toElapsedSecondsExclusive": 7205,
+        "samples": 2,
+        "minBytes": 434885542,
+        "medianBytes": 443956621.5,
+        "maxBytes": 453027701
+      }
+    ],
+    "leakFreedomEstablished": false,
+    "limitation": "Uncontrolled browser-reported heap series, with a high visible tail. No forced collection, ownership attribution, total-process/Worker/GPU accounting, post-close recovery, battery or thermal measurement."
+  },
+  "sources": {
+    "initialFiles": 204,
+    "finalFiles": 204,
+    "initialBytes": 17222640,
+    "finalBytes": 17222640,
+    "fileRecordsExactlyEqual": true,
+    "changes": {
+      "changed": [],
+      "removed": [],
+      "added": []
+    },
+    "canonicalFileRecordsSha256": "b0e78d0c95a0c27d573cb45dba9d01076a616454abf1f2a179eef0301b627968",
+    "scope": "Served-byte inventory of explicit roots, literal local imports, shared HTML scripts/styles and frozen clips. Not runtime execution coverage; computed imports/media are not exhaustive."
+  },
+  "storage": {
+    "kind": "Game-frame localStorage hashed snapshot only",
+    "initialAvailable": true,
+    "finalAvailable": true,
+    "entries": 3,
+    "valueBytes": 870,
+    "snapshotsExactlyEqual": true,
+    "changes": {
+      "changed": [],
+      "removed": [],
+      "added": []
+    },
+    "canonicalSnapshotSha256": "8ecd9a403f0cc80add63dc65ed6c50d3c3ca04346fb5a098370fe215ff1f2ccb",
+    "rawKeysOrValuesRetained": false,
+    "doesNotVerify": "IndexedDB content, observer database durability, or absence of writes that restore the same final values."
+  },
+  "observer": {
+    "health": {
+      "attached": true,
+      "targets": 5,
+      "failures": 0,
+      "error": null
+    },
+    "childNavigations": 0,
+    "diagnostics": [
+      {
+        "scope": "observer-window",
+        "type": "checkpoint-storage-unavailable",
+        "at": "2026-09-29T05:22:57.506Z",
+        "elapsedSeconds": 6720.5555,
+        "name": "DataError",
+        "message": "Failed to write blobs (IOError)",
+        "stack": ""
+      }
+    ],
+    "droppedDiagnostics": 0,
+    "samplesAfterStorageFailure": 95,
+    "elapsedSecondsAfterStorageFailure": 483.58549999999923,
+    "reportTruncation": null,
+    "persistenceLimitation": "After the observer-only DataError, automatic persistence is disabled for this session; the final DOM/export remains available. This independently retained file does not prove the final IndexedDB slot committed or survived reload."
+  },
+  "reportedFlags": {
+    "sourceInventoryStable": true,
+    "observerComplete": true,
+    "observationValidForPinnedSources": true,
+    "requestedDurationReached": true,
+    "observationComplete": true,
+    "releaseQualified": false,
+    "status": "finalized",
+    "terminalChecks": {
+      "sourceInventory": "complete",
+      "storage": "complete"
+    }
+  },
+  "flagLimitations": "observerComplete checks attachment failures; pinned-source validity adds source equality and no child navigation; observationComplete adds requested duration and available localStorage snapshots. These flags do not reject captured diagnostics, persistence failure, stale rendering, high memory, long gaps or report truncation.",
+  "cleanup": {
+    "observerTimerAndMutationObserver": "Normal finalization releases the sampling timer, mutation observer and scratch canvas; this is a source-contract statement, not a measured resource count.",
+    "gameOwnership": "Normal finalization observes and does not close the embedded demo; final sample still shows it running. Root owns later tab/server cleanup.",
+    "postCloseWorkersAudioHeapMeasured": false
+  },
+  "remainingGates": [
+    "Investigate and resolve the visible-return stall; no uninterrupted-playback pass claimed.",
+    "Physical audio continuity/song boundaries, keyboard/touch/controller and native/device lifecycle remain separate.",
+    "No unfamiliar-viewer comprehension or attraction result.",
+    "No post-close resource/heap, frame-pacing, battery or thermal qualification.",
+    "No release admission; releaseQualified remains false."
+  ]
+}

@@ -1,0 +1,75 @@
+{
+  "kind": "audit-helper-metadata-history",
+  "scope": "c5e3419eecd564621470a654ce071f0f83d5984f",
+  "executionVariant": "uncertain only for the one report-label literal; all assertion statements and paths identical",
+  "helperDiff": "integrated/native-helper-label.diff",
+  "reconstructedPriorHelper": "integrated/audit-integrated-native.before-label-fix.mjs",
+  "retainedCurrentHelper": "integrated/audit-integrated-native.mjs",
+  "explicitlyRelabeledReceipt": {
+    "path": "integrated-c5e3419ee/web-native-static-audit.json",
+    "currentBytes": 24771,
+    "currentSha256": "facb6d9f4d9b6e0dc884565ecb8fd44dc054fff4ef69a964570902c10b394116",
+    "removedProperty": "limits.newerConfirmIntegrationQualified",
+    "removedValue": false,
+    "addedProperty": "limits.scopeIsIntegratedSource",
+    "addedValue": true,
+    "operation": "report['limits'].pop('newerConfirmIntegrationQualified', None); report['limits']['scopeIsIntegratedSource'] = True; write JSON with indent=2 and trailing newline",
+    "originalReceiptRetained": false,
+    "limitation": "Pre-normalization receipt bytes were not separately retained; because the helper edit may have preceded its read, the emitted receipt may already have used the current label. No original receipt hash is asserted."
+  },
+  "otherReceiptsRelabeled": [],
+  "assertionsRerunForLabelChange": false,
+  "canonicalCommandReceipt": "integrated-c5e3419ee/native-command-results.json",
+  "retainedIndependentManifestAndSnapshotEvidence": [
+    {
+      "originalPath": "integrated-c5e3419ee/web-manifest.json",
+      "archivePath": "integrated-c5e3419ee/web-manifest.json.gz",
+      "bytes": 345655,
+      "sha256": "cc9a329986242fc136d3a68efe283f3a645625df6e90192e93e5650ee782a515",
+      "archiveBytes": 98166,
+      "archiveSha256": "ebbc197786dfd92e32bd22e25d84742ce599169c3649791c484f3f33c1619cc2"
+    },
+    {
+      "originalPath": "integrated-c5e3419ee/desktop-manifest.json",
+      "archivePath": "integrated-c5e3419ee/desktop-manifest.json.gz",
+      "bytes": 345655,
+      "sha256": "cc9a329986242fc136d3a68efe283f3a645625df6e90192e93e5650ee782a515",
+      "archiveBytes": 98166,
+      "archiveSha256": "ebbc197786dfd92e32bd22e25d84742ce599169c3649791c484f3f33c1619cc2"
+    },
+    {
+      "originalPath": "integrated-c5e3419ee/ios-manifest.json",
+      "archivePath": "integrated-c5e3419ee/ios-manifest.json.gz",
+      "bytes": 346430,
+      "sha256": "45f89abcff078a12bdb0c38ecd46b4e8a66019b90d06a8c0de486627d4a930f3",
+      "archiveBytes": 98425,
+      "archiveSha256": "9df062e3a150b0169f0417e9764b23d1228d1eafe3e3e9f6391de71c5a3a0f05"
+    },
+    {
+      "originalPath": "integrated-c5e3419ee/source-before.json",
+      "archivePath": "integrated-c5e3419ee/source-before.json.gz",
+      "bytes": 359288,
+      "sha256": "dcd3d37277bff1c169b1f17b716edbd957a82b9bb41ded68b9565202027b09c5",
+      "archiveBytes": 103188,
+      "archiveSha256": "2e622b98c72ed8dae6ff9d492125df696649912e08c19d2043d6c24b82152eb9"
+    },
+    {
+      "originalPath": "integrated-c5e3419ee/source-after.json",
+      "archivePath": "integrated-c5e3419ee/source-after.json.gz",
+      "bytes": 359288,
+      "sha256": "97e291bc9784cf17890416dce296a633c564260cae9bde0297adedd7dae3ff05",
+      "archiveBytes": 103188,
+      "archiveSha256": "235eb01a6e2b925a64ad599a93d91960e41df43f20db59bc3fa5ea7d741cf5dc"
+    },
+    {
+      "originalPath": "integrated-c5e3419ee/edition-audit.json",
+      "archivePath": "integrated-c5e3419ee/edition-audit.json.gz",
+      "bytes": 100607,
+      "sha256": "b7e399e559ca019f7953bec7007d16da65fb3c1b68a9c62adca3bbcf2bc00f2c",
+      "archiveBytes": 4240,
+      "archiveSha256": "bb9c1f019b8e44409e0ac6a29c41a25350931a8a5252cd46d8b43b4e2a790c90"
+    }
+  ],
+  "compressionReceipt": "compressed-evidence.json",
+  "note": "This archival task adds files only under audit-scripts. Existing receipts, archives, runtime and browser harness are unchanged."
+}

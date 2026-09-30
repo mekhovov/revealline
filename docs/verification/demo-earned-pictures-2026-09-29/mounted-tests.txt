@@ -1,0 +1,36 @@
+TAP version 13
+# Subtest: mounted demo uses an earned release original without a durable assignment and never earns practice rewards
+    # Subtest: ordinary Ready materializes the release still without an assignment
+    ok 1 - ordinary Ready materializes the release still without an assignment
+      ---
+      duration_ms: 2725.205916
+      ...
+    # Subtest: standard host: earned original stays clear during takeover and completed playback
+    ok 2 - standard host: earned original stays clear during takeover and completed playback
+      ---
+      duration_ms: 10480.238833
+      ...
+    # Subtest: gentle host: earned original stays clear during takeover and completed playback
+    ok 3 - gentle host: earned original stays clear during takeover and completed playback
+      ---
+      duration_ms: 10161.089417
+      ...
+    # Subtest: another unearned level stays obscured in fresh practice despite the existing receipt
+    ok 4 - another unearned level stays obscured in fresh practice despite the existing receipt
+      ---
+      duration_ms: 1597.771041
+      ...
+    1..4
+ok 1 - mounted demo uses an earned release original without a durable assignment and never earns practice rewards
+  ---
+  duration_ms: 25528.500167
+  ...
+1..1
+# tests 5
+# suites 0
+# pass 5
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 26113.109834

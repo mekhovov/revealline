@@ -14,6 +14,8 @@ import {
 } from '../../scripts/compile-edition.mjs';
 import {
   EDITION_RUNTIME_ADAPTERS,
+  EDITION_RUNTIME_RESOURCES,
+  editionDemoResources,
   projectEditionRuntimeImports,
   validateEditionHostRequests,
   editionMenuSceneResources,
@@ -28,7 +30,7 @@ import { fileURLToPath } from 'node:url';
 
 const bytes = (text) => Buffer.from(text);
 const droneAidLandingFiles = [
-  'game/ui/art/menu-scenes/droneaid-main-background.png',
+  'game/ui/art/menu-scenes/droneaid-main-background.webp',
   'game/ui/art/menu-scenes/droneaid-wordmark-light.svg',
 ];
 test('standalone branding projects only the image fallback to an approved selected logo', async () => {
@@ -108,6 +110,35 @@ test('support page closure retains navigation without authoring sample media or 
     new Map([...files].map(([name, source]) => [name, projectEditionRuntimeImports(name, source)])),
   );
 });
+test('edition recording inventory follows validated catalogue additions and runtime variants', async () => {
+  const catalog = JSON.parse(
+    await fs.readFile(new URL('../demo-data/catalog.json', import.meta.url)),
+  );
+  assert.deepEqual(
+    EDITION_RUNTIME_RESOURCES['game/demo-catalog.mjs'],
+    editionDemoResources(catalog),
+  );
+  const additional = structuredClone(catalog.clips[0]);
+  additional.id = 'additional-reviewed-scene';
+  additional.replayURL = './demo-data/additional-reviewed-scene.replay.json';
+  additional.replayVariants = [
+    './demo-data/additional-reviewed-scene.chromium-macos.replay.json',
+    './demo-data/additional-reviewed-scene.second-runtime.replay.json',
+  ];
+  catalog.clips.push(additional);
+  const paths = editionDemoResources(catalog);
+  for (const relative of [additional.replayURL, ...additional.replayVariants])
+    assert.ok(paths.includes(`game/${relative.slice(2)}`));
+  assert.equal(new Set(paths).size, paths.length);
+  for (const invalid of [
+    'https://example.com/scene.replay.json',
+    './demo-data/../private.replay.json',
+    './demo-data/scene.replay.json?unreviewed=1',
+  ]) {
+    additional.replayVariants[0] = invalid;
+    assert.throws(() => editionDemoResources(catalog), /bundled relative URLs/);
+  }
+});
 test('standalone and public offline menus retain every dynamically attached panel stylesheet', async () => {
   const modules = [
     'game/ui/controller-field-editor.mjs',
@@ -140,6 +171,13 @@ test('actual landing closure retains executable dependencies and preserves optio
     root: fileURLToPath(new URL('../../', import.meta.url)),
     entries: ['game/ui/menu-scenes.mjs', 'game/ui/native-menus.mjs'],
   });
+  const catalog = JSON.parse(files.get('game/demo-data/catalog.json'));
+  const recordings = catalog.clips.flatMap(({ replayURL, replayVariants = [] }) =>
+    [replayURL, ...replayVariants].map((relative) => `game/${relative.slice(2)}`),
+  );
+  assert.equal(catalog.clips.length, 10);
+  assert.equal(recordings.length, 20);
+  assert.equal(new Set(recordings).size, 20);
   const required = [
     ...['fpv', 'ukraine', 'retro', 'coupa'].flatMap((world) =>
       ['versus', 'versus-portrait', 'team', 'team-portrait'].map(
@@ -147,6 +185,16 @@ test('actual landing closure retains executable dependencies and preserves optio
       ),
     ),
     'game/ui/analog-signal.mjs',
+    'game/demo-loading.mjs',
+    'game/ui/demo-clock.mjs',
+    'game/ui/demo-journey-picture.mjs',
+    'game/ui/demo-audio.mjs',
+    'game/ui/signal-reception.mjs',
+    'game/ui/music-credit.mjs',
+    'game/soundtrack.mjs',
+    'game/demo-bot-worker.mjs',
+    'game/demo-data/catalog.json',
+    'game/demo-data/variant-provenance.json',
     'game/ui/menu-scenes.css',
     'game/ui/menu-scene-motion.mjs',
     'game/ui/menu-signal-loss.mjs',
@@ -237,7 +285,7 @@ test('standalone menu projection preserves selected profile data and fallback wi
     /explicit profile lookup/,
   );
 });
-test('DroneAid aggregate originals are selected alone while campaigns keep their existing artwork', async () => {
+test('DroneAid aggregate uses only its lossless derivative while retaining original source files', async () => {
   const catalog = JSON.parse(
     await fs.readFile(new URL('../editions/catalog.json', import.meta.url)),
   );
@@ -246,6 +294,7 @@ test('DroneAid aggregate originals are selected alone while campaigns keep their
     'game/ui/art/menu-scenes/provenance.json',
     'game/ui/art/menu-scenes/analog-noise-atlas.png',
     'game/ui/art/menu-scenes/droneaid-nl-community.webp',
+    'game/ui/art/menu-scenes/droneaid-main-background.png',
     ...Object.values(MENU_SCENES).flatMap((scene) =>
       [scene.landscape, scene.portrait, scene.wordmark]
         .filter(Boolean)
@@ -258,6 +307,7 @@ test('DroneAid aggregate originals are selected alone while campaigns keep their
     for (const file of droneAidLandingFiles)
       assert.equal(selected.has(file), aggregate, `${id}: ${file}`);
     assert.equal(selected.has('game/ui/art/menu-scenes/droneaid-nl-community.webp'), false);
+    assert.equal(selected.has('game/ui/art/menu-scenes/droneaid-main-background.png'), false);
     assert.ok(selected.has('game/ui/art/menu-scenes/analog-noise-atlas.png'));
     assert.ok(selected.has('game/ui/art/menu-scenes/provenance.json'));
     assert.ok(selected.has('game/ui/menu-scenes.mjs'));
@@ -271,7 +321,11 @@ test('DroneAid aggregate originals are selected alone while campaigns keep their
     'authoring/library/droneaid-brand-kit-2026-09-29/background-original.png',
     'authoring/library/droneaid-brand-kit-2026-09-29/wordmark-dark.svg',
   ];
-  for (const [index, file] of droneAidLandingFiles.entries()) {
+  const retainedOriginals = [
+    'game/ui/art/menu-scenes/droneaid-main-background.png',
+    droneAidLandingFiles[1],
+  ];
+  for (const [index, file] of retainedOriginals.entries()) {
     const runtime = await fs.readFile(new URL(`../../${file}`, import.meta.url));
     assert.deepEqual(
       runtime,

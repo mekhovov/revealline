@@ -137,14 +137,15 @@
     },
     {
       "id": "droneaid-nl-community",
-      "file": "droneaid-main-background.png",
-      "bytes": 880307,
-      "sha256": "836c883d4eee658aab610f113eb4fec34f40ed1c963b4a759c52ec37990a8515",
+      "file": "droneaid-main-background.webp",
+      "bytes": 493598,
+      "sha256": "378741b03c221c08ead77ee4af8f0a65a7d2b15088363898bfb8b79dfebc6000",
       "source": "authoring/library/droneaid-brand-kit-2026-09-29/background-original.png",
       "sourceSha256": "836c883d4eee658aab610f113eb4fec34f40ed1c963b4a759c52ec37990a8515",
       "width": 2000,
       "height": 1545,
-      "process": "Original supplied PNG; byte-for-byte copy, no raster changes"
+      "process": "WebP lossless; decoded RGBA verified identical",
+      "decodedRgbaSha256": "d8cf9394dea5f031425e3cccd1065d4d58f8cf72586fa74cb1509ecf47e65f47"
     },
     {
       "id": "droneaid-nl-workshop-lights-theme",

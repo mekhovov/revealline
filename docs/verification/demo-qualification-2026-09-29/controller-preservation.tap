@@ -1,0 +1,201 @@
+TAP version 13
+# Subtest: Gamepad-first keyboard, pointer, and click echoes are consumed until release commit
+ok 1 - Gamepad-first keyboard, pointer, and click echoes are consumed until release commit
+  ---
+  duration_ms: 2.963541
+  ...
+# Subtest: a release-only trusted click cannot reverse a committed controller action
+ok 2 - a release-only trusted click cannot reverse a committed controller action
+  ---
+  duration_ms: 0.804875
+  ...
+# Subtest: click activation uses the primary button, not the PointerEvent isPrimary default
+ok 3 - click activation uses the primary button, not the PointerEvent isPrimary default
+  ---
+  duration_ms: 0.312291
+  ...
+# Subtest: a primary mouse representation is owned by the transaction
+ok 4 - a primary mouse representation is owned by the transaction
+  ---
+  duration_ms: 0.422875
+  ...
+# Subtest: a primary touch representation is owned by the transaction
+ok 5 - a primary touch representation is owned by the transaction
+  ---
+  duration_ms: 0.171459
+  ...
+# Subtest: a primary pen representation is owned by the transaction
+ok 6 - a primary pen representation is owned by the transaction
+  ---
+  duration_ms: 0.139083
+  ...
+# Subtest: a primary mouse representation is owned by the transaction
+ok 7 - a primary mouse representation is owned by the transaction
+  ---
+  duration_ms: 0.306459
+  ...
+# Subtest: a trusted native-first activation remains the winner for a five-second hold
+ok 8 - a trusted native-first activation remains the winner for a five-second hold
+  ---
+  duration_ms: 0.257291
+  ...
+# Subtest: an unrelated or stale native activation does not suppress release commit
+ok 9 - an unrelated or stale native activation does not suppress release commit
+  ---
+  duration_ms: 0.484917
+  ...
+# Subtest: rapid deliberate transactions each activate once
+ok 10 - rapid deliberate transactions each activate once
+  ---
+  duration_ms: 0.45375
+  ...
+# Subtest: legacy observed hosts activate once per press without opening a release transaction
+ok 11 - legacy observed hosts activate once per press without opening a release transaction
+  ---
+  duration_ms: 0.367459
+  ...
+# Subtest: synchronous host input cleanup cannot split a committed release transaction
+ok 12 - synchronous host input cleanup cannot split a committed release transaction
+  ---
+  duration_ms: 0.69125
+  ...
+# Subtest: cancel and blur retire a transaction without activation
+ok 13 - cancel and blur retire a transaction without activation
+  ---
+  duration_ms: 0.146
+  ...
+# Subtest: touchscreen and keyboard work after the release grace period
+ok 14 - touchscreen and keyboard work after the release grace period
+  ---
+  duration_ms: 0.140583
+  ...
+# Subtest: modified keys and secondary clicks are never treated as Confirm echoes
+ok 15 - modified keys and secondary clicks are never treated as Confirm echoes
+  ---
+  duration_ms: 0.154042
+  ...
+# Subtest: native probes capture and release a whole tap between render frames
+ok 16 - native probes capture and release a whole tap between render frames
+  ---
+  duration_ms: 1.0395
+  ...
+# Subtest: a five-second hold and overlapping aliases release as one gesture
+ok 17 - a five-second hold and overlapping aliases release as one gesture
+  ---
+  duration_ms: 0.585417
+  ...
+# Subtest: cross-alias echoes drain while deliberate original-button repeats are accepted
+ok 18 - cross-alias echoes drain while deliberate original-button repeats are accepted
+  ---
+  duration_ms: 0.117042
+  ...
+# Subtest: native winner survives router clear, changed scope, removed target and a long hold
+ok 19 - native winner survives router clear, changed scope, removed target and a long hold
+  ---
+  duration_ms: 0.237958
+  ...
+# Subtest: native click refreshes its lead window without replacing the original menu target
+ok 20 - native click refreshes its lead window without replacing the original menu target
+  ---
+  duration_ms: 0.387209
+  ...
+# Subtest: delayed Gamepad adopts the original target before the native click
+ok 21 - delayed Gamepad adopts the original target before the native click
+  ---
+  duration_ms: 0.102833
+  ...
+# Subtest: expired and unrelated native candidates do not win activation
+ok 22 - expired and unrelated native candidates do not win activation
+  ---
+  duration_ms: 0.213583
+  ...
+# Subtest: scope change and target removal cancel but own the entire remaining hold
+ok 23 - scope change and target removal cancel but own the entire remaining hold
+  ---
+  duration_ms: 0.162917
+  ...
+# Subtest: hard loss, replacement and inactive document cannot commit stale holds or candidates
+ok 24 - hard loss, replacement and inactive document cannot commit stale holds or candidates
+  ---
+  duration_ms: 0.187166
+  ...
+# Subtest: neutral native input remains unowned; blocked controller cannot invent a press
+ok 25 - neutral native input remains unowned; blocked controller cannot invent a press
+  ---
+  duration_ms: 0.119542
+  ...
+# Subtest: invalid alias timing and trace callbacks are rejected
+ok 26 - invalid alias timing and trace callbacks are rejected
+  ---
+  duration_ms: 0.233292
+  ...
+# Subtest: native winner survives its own same-scope focus change but yields to separate controller navigation
+ok 27 - native winner survives its own same-scope focus change but yields to separate controller navigation
+  ---
+  duration_ms: 0.080875
+  ...
+# Subtest: Steam Deck A owns its delayed Chrome activation across quick actions and dialogs
+ok 28 - Steam Deck A owns its delayed Chrome activation across quick actions and dialogs
+  ---
+  duration_ms: 3751.211959
+  ...
+# Subtest: Steam Deck trusted click tails cannot undo Start or paused-menu actions
+ok 29 - Steam Deck trusted click tails cannot undo Start or paused-menu actions
+  ---
+  duration_ms: 3550.182166
+  ...
+# Subtest: every primary Pause action ignores a touch-derived A release echo
+    # Subtest: Resume
+    ok 1 - Resume
+      ---
+      duration_ms: 2245.1425
+      ...
+    # Subtest: Restart mission
+    ok 2 - Restart mission
+      ---
+      duration_ms: 2639.960917
+      ...
+    # Subtest: Missions
+    ok 3 - Missions
+      ---
+      duration_ms: 8709.084833
+      ...
+    # Subtest: How to play
+    ok 4 - How to play
+      ---
+      duration_ms: 1947.700459
+      ...
+    # Subtest: Settings
+    ok 5 - Settings
+      ---
+      duration_ms: 1782.841042
+      ...
+    # Subtest: Mission info
+    ok 6 - Mission info
+      ---
+      duration_ms: 1766.542667
+      ...
+    # Subtest: Home
+    ok 7 - Home
+      ---
+      duration_ms: 2052.559625
+      ...
+    # Subtest: Sound
+    ok 8 - Sound
+      ---
+      duration_ms: 2103.246666
+      ...
+    1..8
+ok 30 - every primary Pause action ignores a touch-derived A release echo
+  ---
+  duration_ms: 23248.136375
+  ...
+1..30
+# tests 38
+# suites 0
+# pass 38
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 30987.05575

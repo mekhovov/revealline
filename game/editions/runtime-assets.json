@@ -15,7 +15,9 @@
     "bytes": 132124,
     "publication": "public",
     "approved": true,
-    "dependencies": ["runtime-tiny5-license"]
+    "dependencies": [
+      "runtime-tiny5-license"
+    ]
   },
   {
     "id": "runtime-handjet-license",
@@ -33,7 +35,9 @@
     "bytes": 38120,
     "publication": "public",
     "approved": true,
-    "dependencies": ["runtime-handjet-license"]
+    "dependencies": [
+      "runtime-handjet-license"
+    ]
   },
   {
     "id": "runtime-exo2-license",
@@ -51,7 +55,9 @@
     "bytes": 76652,
     "publication": "public",
     "approved": true,
-    "dependencies": ["runtime-exo2-license"]
+    "dependencies": [
+      "runtime-exo2-license"
+    ]
   },
   {
     "id": "runtime-plex-license",
@@ -69,7 +75,9 @@
     "bytes": 40080,
     "publication": "public",
     "approved": true,
-    "dependencies": ["runtime-plex-license"]
+    "dependencies": [
+      "runtime-plex-license"
+    ]
   },
   {
     "id": "runtime-shell-background",
@@ -123,7 +131,9 @@
     "bytes": 84480,
     "publication": "public",
     "approved": true,
-    "dependencies": ["runtime-departure-license"]
+    "dependencies": [
+      "runtime-departure-license"
+    ]
   },
   {
     "id": "runtime-departure",
@@ -141,8 +151,8 @@
   {
     "id": "runtime-menu-scene-provenance",
     "path": "game/ui/art/menu-scenes/provenance.json",
-    "sha256": "baaee31dedd103ee88a84776531469202b17cee5f0c735a056ea165c76028df3",
-    "bytes": 21119,
+    "sha256": "92bd0e5a43f92dbc4bab270a86332b16b26e638b5935a956e6d7788f3b514cfc",
+    "bytes": 21201,
     "publication": "public",
     "approved": true,
     "dependencies": []
@@ -154,7 +164,9 @@
     "bytes": 514190,
     "publication": "public",
     "approved": true,
-    "dependencies": ["runtime-menu-scene-provenance"]
+    "dependencies": [
+      "runtime-menu-scene-provenance"
+    ]
   },
   {
     "id": "runtime-menu-scene-fpv-portrait",
@@ -163,7 +175,9 @@
     "bytes": 482136,
     "publication": "public",
     "approved": true,
-    "dependencies": ["runtime-menu-scene-provenance"]
+    "dependencies": [
+      "runtime-menu-scene-provenance"
+    ]
   },
   {
     "id": "runtime-menu-scene-ukraine",
@@ -172,7 +186,9 @@
     "bytes": 475598,
     "publication": "public",
     "approved": true,
-    "dependencies": ["runtime-menu-scene-provenance"]
+    "dependencies": [
+      "runtime-menu-scene-provenance"
+    ]
   },
   {
     "id": "runtime-menu-scene-retro",
@@ -181,7 +197,9 @@
     "bytes": 554888,
     "publication": "public",
     "approved": true,
-    "dependencies": ["runtime-menu-scene-provenance"]
+    "dependencies": [
+      "runtime-menu-scene-provenance"
+    ]
   },
   {
     "id": "runtime-menu-scene-coupa",
@@ -190,7 +208,9 @@
     "bytes": 389078,
     "publication": "public",
     "approved": true,
-    "dependencies": ["runtime-menu-scene-provenance"]
+    "dependencies": [
+      "runtime-menu-scene-provenance"
+    ]
   },
   {
     "id": "runtime-menu-scene-coupa-village",
@@ -199,7 +219,9 @@
     "bytes": 540732,
     "publication": "public",
     "approved": true,
-    "dependencies": ["runtime-menu-scene-provenance"]
+    "dependencies": [
+      "runtime-menu-scene-provenance"
+    ]
   },
   {
     "id": "runtime-menu-scene-coupa-spend-in-motion-theme",
@@ -208,7 +230,9 @@
     "bytes": 700570,
     "publication": "public",
     "approved": true,
-    "dependencies": ["runtime-menu-scene-provenance"]
+    "dependencies": [
+      "runtime-menu-scene-provenance"
+    ]
   },
   {
     "id": "runtime-menu-scene-coupa-inside-village-theme",
@@ -217,7 +241,9 @@
     "bytes": 356686,
     "publication": "public",
     "approved": true,
-    "dependencies": ["runtime-menu-scene-provenance"]
+    "dependencies": [
+      "runtime-menu-scene-provenance"
+    ]
   },
   {
     "id": "runtime-menu-scene-coupa-source-to-pay-theme",
@@ -226,7 +252,9 @@
     "bytes": 375148,
     "publication": "public",
     "approved": true,
-    "dependencies": ["runtime-menu-scene-provenance"]
+    "dependencies": [
+      "runtime-menu-scene-provenance"
+    ]
   },
   {
     "id": "runtime-menu-scene-coupa-product-operations-theme",
@@ -235,7 +263,9 @@
     "bytes": 405702,
     "publication": "public",
     "approved": true,
-    "dependencies": ["runtime-menu-scene-provenance"]
+    "dependencies": [
+      "runtime-menu-scene-provenance"
+    ]
   },
   {
     "id": "runtime-menu-scene-coupa-developer-integration-theme",
@@ -244,7 +274,9 @@
     "bytes": 612326,
     "publication": "public",
     "approved": true,
-    "dependencies": ["runtime-menu-scene-provenance"]
+    "dependencies": [
+      "runtime-menu-scene-provenance"
+    ]
   },
   {
     "id": "runtime-menu-scene-droneaid-community",
@@ -253,7 +285,9 @@
     "bytes": 280518,
     "publication": "public",
     "approved": true,
-    "dependencies": ["runtime-menu-scene-provenance"]
+    "dependencies": [
+      "runtime-menu-scene-provenance"
+    ]
   },
   {
     "id": "runtime-menu-scene-droneaid-nl-community",
@@ -262,7 +296,9 @@
     "bytes": 408122,
     "publication": "public",
     "approved": true,
-    "dependencies": ["runtime-menu-scene-provenance"]
+    "dependencies": [
+      "runtime-menu-scene-provenance"
+    ]
   },
   {
     "id": "runtime-menu-scene-droneaid-nl-workshop-lights-theme",
@@ -271,7 +307,9 @@
     "bytes": 258060,
     "publication": "public",
     "approved": true,
-    "dependencies": ["runtime-menu-scene-provenance"]
+    "dependencies": [
+      "runtime-menu-scene-provenance"
+    ]
   },
   {
     "id": "runtime-menu-scene-droneaid-nl-parts-in-motion-theme",
@@ -280,7 +318,9 @@
     "bytes": 273258,
     "publication": "public",
     "approved": true,
-    "dependencies": ["runtime-menu-scene-provenance"]
+    "dependencies": [
+      "runtime-menu-scene-provenance"
+    ]
   },
   {
     "id": "runtime-menu-scene-droneaid-nl-makers-together-theme",
@@ -289,7 +329,9 @@
     "bytes": 266786,
     "publication": "public",
     "approved": true,
-    "dependencies": ["runtime-menu-scene-provenance"]
+    "dependencies": [
+      "runtime-menu-scene-provenance"
+    ]
   },
   {
     "id": "runtime-menu-scene-droneaid-nl-careful-handoff-theme",
@@ -298,7 +340,9 @@
     "bytes": 259130,
     "publication": "public",
     "approved": true,
-    "dependencies": ["runtime-menu-scene-provenance"]
+    "dependencies": [
+      "runtime-menu-scene-provenance"
+    ]
   },
   {
     "id": "runtime-menu-scene-droneaid-nl-signals-of-support-theme",
@@ -307,7 +351,9 @@
     "bytes": 230008,
     "publication": "public",
     "approved": true,
-    "dependencies": ["runtime-menu-scene-provenance"]
+    "dependencies": [
+      "runtime-menu-scene-provenance"
+    ]
   },
   {
     "id": "runtime-menu-scene-droneaid-nl-shared-horizon-theme",
@@ -316,7 +362,9 @@
     "bytes": 243248,
     "publication": "public",
     "approved": true,
-    "dependencies": ["runtime-menu-scene-provenance"]
+    "dependencies": [
+      "runtime-menu-scene-provenance"
+    ]
   },
   {
     "id": "runtime-analog-noise-atlas",
@@ -343,7 +391,9 @@
     "bytes": 1691,
     "publication": "public",
     "approved": true,
-    "dependencies": ["runtime-fpv-line-provenance"]
+    "dependencies": [
+      "runtime-fpv-line-provenance"
+    ]
   },
   {
     "id": "runtime-fpv-line-wordmark",
@@ -352,7 +402,9 @@
     "bytes": 485216,
     "publication": "public",
     "approved": true,
-    "dependencies": ["runtime-fpv-line-provenance"]
+    "dependencies": [
+      "runtime-fpv-line-provenance"
+    ]
   },
   {
     "id": "runtime-fpv-line-icon-16",
@@ -361,7 +413,9 @@
     "bytes": 469,
     "publication": "public",
     "approved": true,
-    "dependencies": ["runtime-fpv-line-install-recipe"]
+    "dependencies": [
+      "runtime-fpv-line-install-recipe"
+    ]
   },
   {
     "id": "runtime-fpv-line-icon-32",
@@ -370,7 +424,9 @@
     "bytes": 1386,
     "publication": "public",
     "approved": true,
-    "dependencies": ["runtime-fpv-line-install-recipe"]
+    "dependencies": [
+      "runtime-fpv-line-install-recipe"
+    ]
   },
   {
     "id": "runtime-fpv-line-icon-180",
@@ -379,7 +435,9 @@
     "bytes": 29773,
     "publication": "public",
     "approved": true,
-    "dependencies": ["runtime-fpv-line-install-recipe"]
+    "dependencies": [
+      "runtime-fpv-line-install-recipe"
+    ]
   },
   {
     "id": "runtime-fpv-line-icon-192",
@@ -388,7 +446,9 @@
     "bytes": 33508,
     "publication": "public",
     "approved": true,
-    "dependencies": ["runtime-fpv-line-install-recipe"]
+    "dependencies": [
+      "runtime-fpv-line-install-recipe"
+    ]
   },
   {
     "id": "runtime-fpv-line-icon-512",
@@ -397,7 +457,9 @@
     "bytes": 82577,
     "publication": "public",
     "approved": true,
-    "dependencies": ["runtime-fpv-line-install-recipe"]
+    "dependencies": [
+      "runtime-fpv-line-install-recipe"
+    ]
   },
   {
     "id": "runtime-menu-scene-droneaid-main-background",
@@ -406,7 +468,9 @@
     "bytes": 880307,
     "publication": "public",
     "approved": true,
-    "dependencies": ["runtime-menu-scene-provenance"]
+    "dependencies": [
+      "runtime-menu-scene-provenance"
+    ]
   },
   {
     "id": "runtime-droneaid-wordmark-light",
@@ -415,7 +479,9 @@
     "bytes": 119252,
     "publication": "public",
     "approved": true,
-    "dependencies": ["runtime-menu-scene-provenance"]
+    "dependencies": [
+      "runtime-menu-scene-provenance"
+    ]
   },
   {
     "id": "runtime-menu-scene-fpv-versus",
@@ -424,7 +490,9 @@
     "bytes": 286552,
     "publication": "public",
     "approved": true,
-    "dependencies": ["runtime-menu-scene-provenance"]
+    "dependencies": [
+      "runtime-menu-scene-provenance"
+    ]
   },
   {
     "id": "runtime-menu-scene-fpv-versus-portrait",
@@ -433,7 +501,9 @@
     "bytes": 285890,
     "publication": "public",
     "approved": true,
-    "dependencies": ["runtime-menu-scene-provenance"]
+    "dependencies": [
+      "runtime-menu-scene-provenance"
+    ]
   },
   {
     "id": "runtime-menu-scene-fpv-team",
@@ -442,7 +512,9 @@
     "bytes": 361554,
     "publication": "public",
     "approved": true,
-    "dependencies": ["runtime-menu-scene-provenance"]
+    "dependencies": [
+      "runtime-menu-scene-provenance"
+    ]
   },
   {
     "id": "runtime-menu-scene-fpv-team-portrait",
@@ -451,7 +523,9 @@
     "bytes": 293974,
     "publication": "public",
     "approved": true,
-    "dependencies": ["runtime-menu-scene-provenance"]
+    "dependencies": [
+      "runtime-menu-scene-provenance"
+    ]
   },
   {
     "id": "runtime-menu-scene-ukraine-versus",
@@ -460,7 +534,9 @@
     "bytes": 1887892,
     "publication": "public",
     "approved": true,
-    "dependencies": ["runtime-menu-scene-provenance"]
+    "dependencies": [
+      "runtime-menu-scene-provenance"
+    ]
   },
   {
     "id": "runtime-menu-scene-ukraine-versus-portrait",
@@ -469,7 +545,9 @@
     "bytes": 579008,
     "publication": "public",
     "approved": true,
-    "dependencies": ["runtime-menu-scene-provenance"]
+    "dependencies": [
+      "runtime-menu-scene-provenance"
+    ]
   },
   {
     "id": "runtime-menu-scene-ukraine-team",
@@ -478,7 +556,9 @@
     "bytes": 1848324,
     "publication": "public",
     "approved": true,
-    "dependencies": ["runtime-menu-scene-provenance"]
+    "dependencies": [
+      "runtime-menu-scene-provenance"
+    ]
   },
   {
     "id": "runtime-menu-scene-ukraine-team-portrait",
@@ -487,7 +567,9 @@
     "bytes": 546480,
     "publication": "public",
     "approved": true,
-    "dependencies": ["runtime-menu-scene-provenance"]
+    "dependencies": [
+      "runtime-menu-scene-provenance"
+    ]
   },
   {
     "id": "runtime-menu-scene-retro-versus",
@@ -496,7 +578,9 @@
     "bytes": 1929216,
     "publication": "public",
     "approved": true,
-    "dependencies": ["runtime-menu-scene-provenance"]
+    "dependencies": [
+      "runtime-menu-scene-provenance"
+    ]
   },
   {
     "id": "runtime-menu-scene-retro-versus-portrait",
@@ -505,7 +589,9 @@
     "bytes": 580790,
     "publication": "public",
     "approved": true,
-    "dependencies": ["runtime-menu-scene-provenance"]
+    "dependencies": [
+      "runtime-menu-scene-provenance"
+    ]
   },
   {
     "id": "runtime-menu-scene-retro-team",
@@ -514,7 +600,9 @@
     "bytes": 1937786,
     "publication": "public",
     "approved": true,
-    "dependencies": ["runtime-menu-scene-provenance"]
+    "dependencies": [
+      "runtime-menu-scene-provenance"
+    ]
   },
   {
     "id": "runtime-menu-scene-retro-team-portrait",
@@ -523,7 +611,9 @@
     "bytes": 545932,
     "publication": "public",
     "approved": true,
-    "dependencies": ["runtime-menu-scene-provenance"]
+    "dependencies": [
+      "runtime-menu-scene-provenance"
+    ]
   },
   {
     "id": "runtime-menu-scene-coupa-versus",
@@ -532,7 +622,9 @@
     "bytes": 1620118,
     "publication": "public",
     "approved": true,
-    "dependencies": ["runtime-menu-scene-provenance"]
+    "dependencies": [
+      "runtime-menu-scene-provenance"
+    ]
   },
   {
     "id": "runtime-menu-scene-coupa-versus-portrait",
@@ -541,7 +633,9 @@
     "bytes": 1669344,
     "publication": "public",
     "approved": true,
-    "dependencies": ["runtime-menu-scene-provenance"]
+    "dependencies": [
+      "runtime-menu-scene-provenance"
+    ]
   },
   {
     "id": "runtime-menu-scene-coupa-team",
@@ -550,7 +644,9 @@
     "bytes": 1580074,
     "publication": "public",
     "approved": true,
-    "dependencies": ["runtime-menu-scene-provenance"]
+    "dependencies": [
+      "runtime-menu-scene-provenance"
+    ]
   },
   {
     "id": "runtime-menu-scene-coupa-team-portrait",
@@ -559,6 +655,19 @@
     "bytes": 1744888,
     "publication": "public",
     "approved": true,
-    "dependencies": ["runtime-menu-scene-provenance"]
+    "dependencies": [
+      "runtime-menu-scene-provenance"
+    ]
+  },
+  {
+    "id": "runtime-menu-scene-droneaid-main-background-lossless",
+    "path": "game/ui/art/menu-scenes/droneaid-main-background.webp",
+    "sha256": "378741b03c221c08ead77ee4af8f0a65a7d2b15088363898bfb8b79dfebc6000",
+    "bytes": 493598,
+    "publication": "public",
+    "approved": true,
+    "dependencies": [
+      "runtime-menu-scene-provenance"
+    ]
   }
 ]

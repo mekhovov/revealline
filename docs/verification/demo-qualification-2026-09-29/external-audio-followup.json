@@ -1,0 +1,187 @@
+{
+  "format": "revealline-external-audio-followup.v1",
+  "date": "2026-09-29",
+  "scope": "Read-only investigation of Raspberry Jam failing through the shared soundtrack transport while Demo was open. No runtime or test changes, browser actions, or qualification test runs.",
+  "reportedError": "Album download needs direct HTTP 200 at its declared URL.",
+  "recording": {
+    "id": "builtin.catalog.congusbongus.raspberry-jam",
+    "title": "Raspberry Jam",
+    "artist": "congusbongus",
+    "archiveId": "licensed-preview-01",
+    "bytes": 5586442,
+    "sha256": "7b1a78a001d69aa47d75b2f55d647836ea445355065a3df3b0cebd2e978863fa",
+    "url": "https://mekhovov.github.io/revealline-soundtracks/objects/7b1a78a001d69aa47d75b2f55d647836ea445355065a3df3b0cebd2e978863fa.mp3"
+  },
+  "inventory": {
+    "url": "https://mekhovov.github.io/revealline-soundtracks/inventory.json",
+    "format": "revealline-soundtrack-archive.v1",
+    "id": "licensed-preview-01",
+    "bytes": 15081,
+    "files": 70,
+    "expectedSha256": "2706445dafe995f6c4dc044ad5e92031cae60627699f6a72985e67a972064ccd",
+    "observedSha256": "2706445dafe995f6c4dc044ad5e92031cae60627699f6a72985e67a972064ccd",
+    "recordingEntry": {
+      "path": "objects/7b1a78a001d69aa47d75b2f55d647836ea445355065a3df3b0cebd2e978863fa.mp3",
+      "bytes": 5586442,
+      "sha256": "7b1a78a001d69aa47d75b2f55d647836ea445355065a3df3b0cebd2e978863fa"
+    },
+    "entryMatchesCatalogue": true
+  },
+  "observations": [
+    {
+      "request": "recording HEAD",
+      "observedAt": "2026-09-29T03:04:17Z",
+      "transport": "curl",
+      "status": 200,
+      "protocol": "HTTP/2",
+      "headers": {
+        "content-type": "audio/mp3",
+        "content-length": "5586442",
+        "access-control-allow-origin": "*",
+        "accept-ranges": "bytes",
+        "last-modified": "Tue, 29 Sep 2026 02:55:09 GMT"
+      },
+      "mediaBodyConsumed": false
+    },
+    {
+      "request": "inventory HEAD",
+      "transport": "curl",
+      "status": 200,
+      "protocol": "HTTP/2",
+      "headers": {
+        "content-length": "15081",
+        "access-control-allow-origin": "*",
+        "last-modified": "Tue, 29 Sep 2026 02:55:08 GMT"
+      }
+    },
+    {
+      "request": "inventory GET",
+      "bodyBytesRead": 15081,
+      "purpose": "Verify the pinned inventory SHA and recording entry; results are in inventory above."
+    },
+    {
+      "request": "recording GET",
+      "transport": "Node fetch",
+      "options": {
+        "redirect": "error",
+        "credentials": "omit",
+        "mode": "cors",
+        "cache": "no-store",
+        "timeoutMs": 15000
+      },
+      "status": 200,
+      "redirected": false,
+      "finalUrl": "https://mekhovov.github.io/revealline-soundtracks/objects/7b1a78a001d69aa47d75b2f55d647836ea445355065a3df3b0cebd2e978863fa.mp3",
+      "urlExactlyMatchesDeclaredUrl": true,
+      "headers": {
+        "content-length": "5586442",
+        "access-control-allow-origin": "*",
+        "last-modified": "Tue, 29 Sep 2026 02:55:08 GMT"
+      },
+      "mediaBodyConsumed": false,
+      "bodyHandling": "response.body.cancel() immediately after inspecting response metadata; no MP3 body read, saved, hashed, or decoded. Transport buffering before cancellation was not measured."
+    }
+  ],
+  "historicalFailure": {
+    "evidence": "docs/verification/demo-qualification-2026-09-29/browser-observation-audio-preliminary.json",
+    "startedAt": "2026-09-29T02:25:36.540Z",
+    "finishedAt": "2026-09-29T02:27:50.027Z",
+    "gameUrl": "http://127.0.0.1:8820/game/index.html?journey=legacy",
+    "browser": "Chrome 154 on macIntel",
+    "errorSamples": 15,
+    "firstErrorElapsedSeconds": 60.9452,
+    "lastErrorElapsedSeconds": 131.7286,
+    "approximateFirstErrorAt": "2026-09-29T02:26:37Z",
+    "approximateLastErrorAt": "2026-09-29T02:27:48Z",
+    "originalRequestUrlCaptured": false,
+    "originalHttpStatusCaptured": false
+  },
+  "publicationRuns": [
+    {
+      "id": 36512479050,
+      "url": "https://github.com/mekhovov/revealline-soundtracks/actions/runs/36512479050",
+      "workflow": "Verify, publish audio volumes, and deploy soundtracks",
+      "createdAt": "2026-09-29T02:24:54Z",
+      "updatedAt": "2026-09-29T02:28:24Z",
+      "conclusion": "success",
+      "headSha": "535a6318cce53e9df0e7d28da5e50f608285d898",
+      "relationship": "Run interval overlaps the recorded browser errors; this does not establish causation."
+    },
+    {
+      "id": 36514554418,
+      "url": "https://github.com/mekhovov/revealline-soundtracks/actions/runs/36514554418",
+      "workflow": "Verify, publish audio volumes, and deploy soundtracks",
+      "createdAt": "2026-09-29T02:51:44Z",
+      "updatedAt": "2026-09-29T02:55:12Z",
+      "conclusion": "success",
+      "headSha": "8b2e4aeb929f8590dc77bc5e9db55b6eb8f78bc0",
+      "relationship": "Current resource Last-Modified times fall within this later successful deployment."
+    }
+  ],
+  "codePath": [
+    {
+      "file": "game/ui/demo-audio.mjs",
+      "lines": "150-154",
+      "role": "Displays the shared soundtrack snapshot notice; Demo does not own the failing download."
+    },
+    {
+      "file": "game/app.mjs",
+      "lines": "1752-1770",
+      "role": "Creates the production soundtrack source from catalogue, archives, bundled assets, and local cache."
+    },
+    {
+      "file": "game/content/soundtrack-catalogue.mjs",
+      "lines": "1338-1367; 3866-3871",
+      "role": "Declares Raspberry Jam's immutable recording identity and the licensed-preview-01 archive inventory pin."
+    },
+    {
+      "file": "game/soundtrack-source.mjs",
+      "lines": "80-102",
+      "role": "Absent an owned local blob or bundled original, resolves the admitted archive URL and downloads with exact byte and metadata/hash checks."
+    },
+    {
+      "file": "game/soundtrack-archive.mjs",
+      "lines": "89-135",
+      "role": "Fetches and validates pinned inventory before authorizing the object; only successfully verified inventory is cached."
+    },
+    {
+      "file": "game/soundtrack-album-download.mjs",
+      "lines": "90-97; 126-128",
+      "role": "Shared bounded downloader uses redirect:error and cache:no-store. The direct-response guard requires status 200, redirected false, and response.url equal to the declared URL. Both inventory and recording requests use this guard."
+    },
+    {
+      "file": "game/ui/soundtrack-error-copy.mjs",
+      "lines": "17",
+      "role": "Maps the generic direct-response error to errors:soundtrack.album.directResponse; the Album wording does not identify whether inventory or recording failed."
+    }
+  ],
+  "conclusion": {
+    "proven": "The current declared recording URL passes the direct-response metadata guard. The downloaded inventory exactly matches its shipped SHA and contains the exact admitted recording identity. No current stale pin, missing inventory entry, or redirected recording URL was reproduced.",
+    "inference": "A transient publication or CDN response is plausible because the historical failures overlap a deployment and a later deployment now serves healthy endpoints.",
+    "notEstablished": [
+      "Which historical request failed, its status, and the definitive root cause.",
+      "Full current MP3 integrity, decoding, or successful browser playback.",
+      "Browser CORS enforcement from the Node metadata probe.",
+      "That deployment overlap itself caused the failure."
+    ]
+  },
+  "proposedFollowup": {
+    "runtimePolicy": "Retain direct HTTP 200, exact URL, redirect rejection, size, inventory pin, and recording hash guards.",
+    "diagnostics": "Attach inventory-versus-recording phase, requested URL, status, redirected flag, and final URL to failures; use appropriate localized recording-unavailable wording.",
+    "tests": [
+      "Inventory 404 cancels its body and authorizes no recording request; later explicit retry on the same resolver with a valid 200 inventory succeeds.",
+      "Recording 404 after verified inventory leaves no cached blob; later explicit retry can recover.",
+      "Existing redirected response, exact URL, size, hash, and metadata rejection cases remain fail-closed."
+    ],
+    "existingRetryBehavior": "Explicit user retry or selection resets failed track IDs. Failed archive inventory validation is not cached.",
+    "browserFollowup": "Retry separately in the actual browser; if successful, retain the prior incident as an unreproduced historical transport/publication failure."
+  },
+  "requestsPerformed": [
+    "curl --head --silent --show-error --max-time 20 https://mekhovov.github.io/revealline-soundtracks/objects/7b1a78a001d69aa47d75b2f55d647836ea445355065a3df3b0cebd2e978863fa.mp3",
+    "curl --head --silent --show-error --max-time 20 https://mekhovov.github.io/revealline-soundtracks/inventory.json",
+    "Bounded 15,081-byte inventory GET piped to JSON and SHA inspection.",
+    "Node fetch of the recording with the documented options, followed immediately by response.body.cancel().",
+    "gh api 'repos/mekhovov/revealline-soundtracks/actions/runs?per_page=12'"
+  ],
+  "evidenceLimit": "This report transcribes the original read-only observations. Requests were not repeated when these files were written. No full media download, integrity/decode test, or browser retry was performed."
+}

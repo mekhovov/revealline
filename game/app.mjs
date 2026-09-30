@@ -87,6 +87,7 @@ import {
   createMissionLibrarySessionState,
   missionLibraryHref,
   readMissionLibraryHandoff,
+  readMissionLibraryReady,
   readMissionLibraryReturn,
 } from './mission-library/handoff.mjs';
 import { createDuel } from './multiplayer.mjs';
@@ -153,6 +154,10 @@ import { resolveTouchControls } from './touch-controls.mjs';
 import { attachFullscreen } from './ui/fullscreen.mjs';
 import { editionThemeLabel } from './ui/edition-theme-label.mjs';
 import { attachGameShell } from './ui/game-shell.mjs';
+import { attachDemoHost } from './ui/demo-host.mjs';
+import { createDemoLibrary } from './demo-library.mjs';
+import { loadDemoSources } from './demo-sources.mjs';
+import { demoIdentity } from './demo-catalog.mjs';
 import { authoredModeDestinations } from './ui/authored-mode-routes.mjs';
 import {
   mountWorkshopLinks,
@@ -216,7 +221,8 @@ import { settingsTabOwnsKey } from './ui/settings-panels.mjs';
 import { attachPublishedAudio } from './ui/published-audio.mjs';
 import { prepareSavedVisualTheme } from './presentation/saved-visual-theme.mjs';
 import { createSoundtrackStore } from './soundtrack-store.mjs';
-import { upgradeSoundtrackLibrary, setCatalogueTracks } from './soundtrack.mjs';
+import { upgradeSoundtrackLibrary, setCatalogueTracks, SOUNDTRACK_MODES } from './soundtrack.mjs';
+import { prepareSoundtrackLibrary } from './soundtrack-bundle.mjs';
 import { createSoundtrackSource } from './soundtrack-source.mjs';
 import { prepareOpeningTheme, usesOpeningThemeDefault } from './opening-soundtrack.mjs';
 import {
@@ -494,6 +500,7 @@ try {
     version: versionLabel,
   });
   const libraryHandoff = readMissionLibraryHandoff(params);
+  const libraryReady = readMissionLibraryReady(params);
   let courseRequest = resolveCourseRequest(params);
   const courseSession = !!courseRequest;
   const courseEmbedded = window.parent !== window;
@@ -1011,6 +1018,9 @@ try {
     : difficultyNavigation.selection(activeEntry, library.campaigns, progress, {
         levelId: rememberedSelection?.levelId,
       });
+  // Restored attempts already acquired their signal in the original session.
+  // Keep this presentation identity separate from Pause and first-frame timing.
+  const restoredSignalRuns = new WeakSet();
   let levelIndex = initialSelection.levelIndex,
     campaignOverview = !scenario && initialSelection.overview,
     theme = themesFile.themes[0],
@@ -1090,6 +1100,8 @@ try {
     },
   });
   const packLaunchGuard = createPackLaunchGuard();
+  let demoHost = null;
+  const demoLibrary = createDemoLibrary();
   const courseVisit = Object.create(null);
   const masteryAwards = createMasteryAwards({
     getGeneration: () => libraryGeneration,
@@ -1286,6 +1298,12 @@ try {
     missionPicker = null,
     enemyGuide = null,
     optionalWorlds = null;
+  const demoAudioListeners = new Set();
+  let demoAudioOperation = 0,
+    demoAudioController = null;
+  const notifyDemoAudio = () => {
+    for (const listener of demoAudioListeners) listener();
+  };
   let guideMusicWasPlaying = false;
   let soundtrackPlayer = null,
     quickMusicControls = null,
@@ -1851,6 +1869,7 @@ try {
         onChange: (state) => {
           soundtrackPanel?.update(state);
           quickMusicControls?.render();
+          notifyDemoAudio();
           musicPreviewState = state;
           renderMusicPreview();
           if (soundtrackLoading) return;
@@ -1878,12 +1897,14 @@ try {
         conflicts: (event) =>
           !!actionForKey(resolveKeyBindings(library.preferences.keyboardBindings), event),
         play: () => {
+          cancelDemoAudio();
           soundtrackMenuGesture = true;
           const waking = soundtrackPlayer.wake();
           const playing = activateAudio({ explicit: true });
           return Promise.all([waking, playing]).then(([, result]) => result);
         },
         pause: () => {
+          cancelDemoAudio();
           soundtrackMenuGesture = true;
           soundtrackPlayer.pause();
         },
@@ -1892,6 +1913,7 @@ try {
           return soundtrackPlayer.previous();
         },
         next: () => {
+          cancelDemoAudio();
           soundtrackMenuGesture = true;
           return soundtrackPlayer.next();
         },
@@ -2044,6 +2066,7 @@ try {
     )
       return;
     if (
+      demoHost?.active ||
       quickMusicControls?.contains(event.target) ||
       event.target?.closest?.(
         '#soundtrack-dialog, #sound-button, #music-preview, #soundtrack-open, #shell-music',
@@ -2540,6 +2563,7 @@ try {
     refreshControllerBoostCue();
   }
   function controllerScope() {
+    if (demoHost?.active) return demoHost.scope;
     const dialog = controllerDialog();
     if (dialog) return `modal:${dialog.id}`;
     if (courseBlocked()) return `course:${coursePhase}`;
@@ -2619,6 +2643,10 @@ try {
     );
   }
   function controllerBack() {
+    if (demoHost?.active) {
+      demoHost.close();
+      return;
+    }
     if (installOfflinePanel?.isOpen()) {
       installOfflinePanel.close();
       return;
@@ -2756,6 +2784,7 @@ try {
     getRoot: controllerMenuRoot,
     keyboard: true,
     ownsKeyboardEvent: (event) => {
+      if (demoHost?.inputExclusive) return true;
       const dialog = $('settings-dialog'),
         cancel = $('cancel-key-capture');
       return (
@@ -2984,6 +3013,8 @@ try {
     enemyGuide.open();
   };
   handlePageHide = (event) => {
+    const demoActive = demoHost?.active;
+    demoHost?.suspend();
     cancelUnifiedOpening?.();
     ++unifiedOpenRevision;
     ++unifiedLaunchRevision;
@@ -2995,7 +3026,7 @@ try {
     invalidateRestart(t('interface:restartCancelledWhenLeavingThisPage'));
     optionalWorlds?.close(false);
     invalidateContentSwitch();
-    pause(true);
+    if (!demoActive) pause(true);
     masteryAwards.cancelAll();
     cancelRestore();
     cancelPictureStart({ retirePrewarm: true });
@@ -3010,6 +3041,8 @@ try {
     persistenceReady = false;
     controllerPreview?.clear();
     if (!event.persisted) {
+      demoHost?.destroy();
+      demoLibrary.dispose();
       stopLocaleView();
       editionUI?.dispose();
       titleCharacter?.dispose();
@@ -3557,6 +3590,11 @@ try {
     modeDeparture = null;
     if (clearHint) clearModeHint(ticket);
     if (close && $('mode-leave-dialog').open) $('mode-leave-dialog').close();
+    if (restore && ticket.libraryReady && !document.hidden && document.hasFocus?.() !== false) {
+      if (!$('shell-home').open) $('shell-home').showModal();
+      $('shell-demo')?.focus({ preventScroll: true });
+      return;
+    }
     if (
       restore &&
       ticket.kind === 'library' &&
@@ -3714,6 +3752,7 @@ try {
       isCurrent = null,
       libraryTarget = null,
       libraryMode = 'solo',
+      libraryReady = false,
       editionId = null,
       presentationId = undefined,
     } = {},
@@ -3733,7 +3772,8 @@ try {
       editionId === null
         ? null
         : (runtimeContent?.currentCatalog ?? runtimeContent?.catalog).editions.find(
-            (edition) => edition.id === editionId,
+            (edition) =>
+              edition.id === editionId && edition.brandId === runtimeContent.selection.brand.id,
           );
     const presentationChange = presentationId !== undefined;
     if (
@@ -3809,6 +3849,7 @@ try {
       journeyRouteId: currentAuthoredModeRoute(),
       libraryTarget,
       libraryMode,
+      libraryReady,
       libraryHref:
         kind === 'library'
           ? missionLibraryHref({
@@ -3817,6 +3858,7 @@ try {
               mode: libraryMode,
               journey: libraryTarget.collection === 'Journey' ? libraryTarget.editionId : 'legacy',
               missionId: libraryTarget.id,
+              ready: libraryReady,
               sourceJourney: currentAuthoredModeRoute() || 'legacy',
             })
           : null,
@@ -4132,7 +4174,16 @@ try {
   }
   async function requestWorldPlay(
     pack,
-    { signal, launch, onStatus, campaignId, levelId, levelRevision, rulesEdition },
+    {
+      signal,
+      launch,
+      onStatus,
+      campaignId,
+      levelId,
+      levelRevision,
+      rulesEdition,
+      prepareOnly = false,
+    },
   ) {
     assertWorldPlay(launch);
     if (signal?.aborted || (pack !== null && !packs.packs.includes(pack)))
@@ -4149,6 +4200,7 @@ try {
       signal,
       onStatus,
       rulesEdition,
+      prepareOnly,
       ...(levelId !== undefined ? { levelId } : {}),
       ...(levelRevision !== undefined ? { levelRevision } : {}),
     };
@@ -4260,6 +4312,8 @@ try {
       progressFor(library, entry.campaign),
     );
     const destinationIndex = installedMissionExecutionIndex(target, entry, selection.levelIndex);
+    if (request.prepareOnly && !missionAvailable(destinationIndex, entry))
+      throw new Error(t('interface:thatMissionIsUnavailableOrStillLocked'));
     const level = entry.campaign.levels[destinationIndex];
     const nextTheme =
       entry.themes.find((item) => item.id === (level.themeId || entry.campaign.themeId)) ||
@@ -4433,6 +4487,10 @@ try {
     // The accepted attempt owns its decoded pictures before closing aborts the
     // panel's operation signal. Closing alone never authorizes a newer attempt.
     request.launch.onStarted();
+    if (request.prepareOnly) {
+      if (current()) request.launch.onSelected();
+      return current();
+    }
     if (current() && !dialogOpen()) resume();
     return started && run === prepared.run;
   }
@@ -4502,6 +4560,7 @@ try {
       return {
         ...target,
         same:
+          !request.prepareOnly &&
           unfinishedFlight() &&
           activeEntry.sourcePackId === request.sourcePackId &&
           modeSelection().campaignKey === campaignKey(target.entry.campaign) &&
@@ -4685,7 +4744,7 @@ try {
     return true;
   }
   function missionReplacementMessage(ticket) {
-    const play = ticket.request.kind === 'world-play';
+    const play = ticket.request.kind === 'world-play' && !ticket.request.prepareOnly;
     const setup = isSetupRequest(ticket.request);
     const action = () =>
       isSetupRequest(ticket.request)
@@ -4822,7 +4881,7 @@ try {
         ? courseSession
           ? t('interface:prepareFreshLesson')
           : t('interface:prepareFreshAttempt')
-        : request.kind === 'world-play'
+        : request.kind === 'world-play' && !request.prepareOnly
           ? t('interface:replacePlay')
           : t('interface:replace'),
     );
@@ -6321,6 +6380,7 @@ try {
       flightPictures = stagedPictures;
       stagedPictures = null;
       run = restored.run;
+      restoredSignalRuns.add(run);
       recorder = restored.recorder;
       runId = restored.session.runId;
       const informationOwner = flightInformation.adopt(run, runId);
@@ -9567,12 +9627,15 @@ try {
     else gameWakeLock.dispose();
   });
   function update(elapsed) {
-    gameWakeLock.setActive(started && !paused && run.status === 'running' && !document.hidden);
+    gameWakeLock.setActive(
+      !demoHost?.active && started && !paused && run.status === 'running' && !document.hidden,
+    );
     if (document.hidden || !document.hasFocus()) {
       if (!controllerInactive) {
         controllerInactive = true;
         clearInput();
-        pause(true);
+        if (demoHost?.active) demoHost.foregroundLost();
+        else pause(true);
       }
       return;
     }
@@ -9589,13 +9652,24 @@ try {
     const scope = controllerScope();
     const controllerTime = performance.now();
     controllerFrame = controller.sample({
-      scope,
+      scope: demoHost?.gameplayInputActive ? 'flight' : scope,
+      spectator: demoHost?.active && !demoHost?.practiceArmed,
       timeMs: controllerTime,
-      toggleBoostEligible: run?.status === 'running',
+      toggleBoostEligible: demoHost?.active
+        ? demoHost.toggleBoostEligible
+        : run?.status === 'running',
     });
     soloRadioSetup.refresh();
     refreshControllerBoostCue();
     const { status, assigned, disconnected } = controllerFrame;
+    if (demoHost?.active) {
+      demoHost.controller(controllerFrame);
+      demoHost.update(elapsed);
+      return;
+    }
+    if (Object.values(controllerFrame.ui).some(Boolean)) demoHost?.activity();
+    demoHost?.update(elapsed);
+    if (demoHost?.active) return;
     const flightModality = JSON.stringify(controllerFrame.flight);
     if (
       status.code === 'joined' ||
@@ -9693,15 +9767,13 @@ try {
       }
       accumulator += elapsed;
       while (accumulator + 1e-9 >= FIXED_DT && !['won', 'lost'].includes(run.status)) {
-        const command = demo
-          ? { direction: 'down', boost: false, action: false, pickup: false }
-          : {
-              direction: controls.direction,
-              boost: controls.boost,
-              action: pendingAction || controls.action,
-              pickup: pendingPickup || controls.pickup,
-              switchClass: pendingSwitch,
-            };
+        const command = {
+          direction: controls.direction,
+          boost: controls.boost,
+          action: pendingAction || controls.action,
+          pickup: pendingPickup || controls.pickup,
+          switchClass: pendingSwitch,
+        };
         const resuming = neutralResumeTick;
         if (resuming) {
           command.boost = false;
@@ -9801,6 +9873,7 @@ try {
         clearInput();
         refreshCourse();
         if (run.status === 'won' && !practice && !recoverGameplayTuning(run.level)?.adminOverride) {
+          void retainDemoRun(false);
           const mission = journeyEnabled && !scenario && journeyMission();
           if (mission) {
             const acceptedPicture = flightPictures?.current();
@@ -10365,16 +10438,7 @@ try {
     prepare();
     rememberSelection();
   };
-  $('demo-button').onclick = () => {
-    if (courseSession || courseEntry) return;
-    leavePractice();
-    levelIndex = 0;
-    practice = true;
-    demo = true;
-    prepare();
-    resume();
-    warning(localizedMessage('interface:demonstrationThisIsARealSimulatedCutItGrantsNo'));
-  };
+  $('demo-button').onclick = () => void demoHost?.open();
   $('sound-button').onclick = () => setMasterMuted(!audioMaster.snapshot().muted);
   $('settings-master-mute').onclick = () => setMasterMuted(!audioMaster.snapshot().muted);
   $('shell-sound').onclick = () => setMasterMuted(!audioMaster.snapshot().muted);
@@ -10624,8 +10688,9 @@ try {
       cancelCourseEntry(t('interface:courseEntryCancelledWhenFocusChangedYourFlightRemainsPaused'));
     clearInput();
     controllerPreview?.clear();
-    suspendAudio();
-    pause(true);
+    if (demoHost?.active) demoHost.foregroundLost();
+    if (!demoHost?.backgroundAudio) suspendAudio();
+    if (!demoHost?.active) pause(true);
   }
   onNativeInactive(suspendInteraction).catch((error) =>
     warning(`App lifecycle adapter unavailable: ${error.message}`, null, 'host.lifecycle'),
@@ -10645,6 +10710,7 @@ try {
   }
   const restoreAudioOnGesture = (event) => {
     if (
+      demoHost?.containsAudio(event.target) ||
       quickMusicControls?.contains(event.target) ||
       quickMusicControls?.handlesKey(event) ||
       document.hidden ||
@@ -10742,6 +10808,9 @@ try {
       try {
         const dt = clamp(delta / 1000, 0, 1);
         update(dt);
+        // The modal owns its visible board. Keep the covered ordinary renderer
+        // and its presentation clock untouched until the demo hands back control.
+        if (demoHost?.active) return;
         editionUI?.refresh();
         titleCharacter?.update(dt, {
           visible:
@@ -10773,6 +10842,20 @@ try {
           backdrop: flightPictures?.current(),
           celebrationPaused: document.hidden || dialogOpen(),
           defeatEffectsRunning: defeatEffectsRunning(),
+          signalReception:
+            run.status === 'won'
+              ? 'off'
+              : run.status === 'lost'
+                ? 'lost'
+                : restoredSignalRuns.has(run)
+                  ? 'off'
+                  : started
+                    ? 'playing'
+                    : 'ready',
+          signalEffectsRunning:
+            run.status === 'lost'
+              ? defeatEffectsRunning()
+              : started && !paused && !document.hidden && document.hasFocus() && !dialogOpen(),
         });
         advanceDefeatPresentation(Math.min(dt, 0.1));
       } catch (error) {
@@ -10833,14 +10916,21 @@ try {
       }
     }
   }
-  function departLibraryMission(context) {
+  async function departLibraryMission(context) {
     if (context.isCurrent?.() === false) return false;
     if (context.transferContinuation && !context.transferContinuation()) return false;
     const target = unifiedLibrary.library.find(context.libraryMissionId);
-    return requestModeDeparture('library', { preventDefault() {} }, $('shell-play'), {
+    const result = await requestModeDeparture('library', { preventDefault() {} }, $('shell-play'), {
       libraryTarget: target,
       libraryMode: context.mode,
+      libraryReady: context.prepareOnly === true,
+      ...(context.prepareOnly
+        ? { origin: 'solo-title', isCurrent: context.intentCurrent ?? context.isCurrent }
+        : {}),
     });
+    return context.prepareOnly
+      ? result !== false && modeDeparture?.libraryTarget === target
+      : result;
   }
   async function launchLibraryClassic(pack, selection, context) {
     if (context.isCurrent?.() === false) return false;
@@ -10899,7 +10989,11 @@ try {
     const revision = unifiedLaunchRevision;
     const launch = {
       opener: $('shell-play'),
-      isCurrent: () => revision === unifiedLaunchRevision && !document.hidden,
+      isCurrent: () =>
+        revision === unifiedLaunchRevision &&
+        !document.hidden &&
+        document.hasFocus?.() !== false &&
+        context.intentCurrent?.() !== false,
       onStarted: () => {
         const row = unifiedLibrary?.library.find(context.libraryMissionId);
         if (row)
@@ -10911,9 +11005,16 @@ try {
           };
         unifiedChooser?.close();
       },
-      onSelected: () => {},
+      onSelected: () => {
+        if (context.prepareOnly && !$('demo-dialog')?.open) focusMission();
+      },
       onCancelled: () => {
         if (!launch.isCurrent() || document.hasFocus?.() === false) return false;
+        if (context.prepareOnly) {
+          if (!$('shell-home').open) $('shell-home').showModal();
+          $('shell-demo')?.focus({ preventScroll: true });
+          return true;
+        }
         unifiedChooser?.restore();
         unifiedChooser?.reveal(context.libraryMissionId);
         return true;
@@ -10923,6 +11024,7 @@ try {
     const selected = await requestWorldPlay(pack, {
       launch,
       ...selection,
+      prepareOnly: context.prepareOnly === true,
       onStatus: (status) => {
         if (launch.isCurrent())
           contentStatus(status.message, false, { busy: status.stage !== 'ready' });
@@ -10931,6 +11033,57 @@ try {
     // An unfinished-flight replacement owns the pending action. Do not reopen
     // the library on top of its explicit Stay / Replace & play confirmation.
     return selected || missionReplacement?.launch === launch;
+  }
+  async function prepareDemoFresh(source, isCurrent) {
+    const assertIntent = () => {
+      if (!isCurrent() || document.hidden || document.hasFocus?.() === false)
+        throw new DOMException(t('interface:preparationCancelled'), 'AbortError');
+    };
+    assertIntent();
+    const entry = executionEntries().find(
+      (item) => campaignKey(item.campaign) === campaignKey(source.entry.campaign),
+    );
+    const level = entry?.campaign.levels.find((item) => item.id === source.levelId);
+    if (!level || demoIdentity(level, entry.classRecipes) !== source.identity)
+      throw new Error(t('interface:thatExactInstalledCampaignIsNoLongerAvailable'));
+    if (!missionAvailable(entry.campaign.levels.indexOf(level), entry)) return false;
+    // A compiled Journey has a different preparation and progression owner.
+    // The first source catalogue contains exact installed Classic originals.
+    if (candidateHost?.owns(entry))
+      throw new Error(t('interface:thisMissionBelongsToADifferentGameplayHostSelectIt'));
+    const host = await getUnifiedMissionLibrary();
+    assertIntent();
+    const baseKey = entry.baseCampaignKey || campaignKey(entry.baseCampaign ?? entry.campaign);
+    const row = host.library
+      .forMode('solo')
+      .find(
+        (item) =>
+          item.collection !== 'Journey' &&
+          item.runtimeId === level.id &&
+          JSON.parse(item.campaignKey)[2] === baseKey,
+      );
+    if (!row || host.library.availability(row, 'solo').state !== 'ready')
+      throw new Error(t('interface:thisExactMissionEditionIsNotAvailableInSoloNo'));
+    const context = libraryActivationContext(),
+      revision = unifiedLaunchRevision;
+    let handedOff = false;
+    const intentCurrent = () =>
+      revision === unifiedLaunchRevision &&
+      (handedOff || isCurrent()) &&
+      !document.hidden &&
+      document.hasFocus?.() !== false;
+    const selected = await host.library.launch(row, {
+      mode: 'solo',
+      ...context,
+      prepareOnly: true,
+      intentCurrent,
+    });
+    if (selected !== true || !intentCurrent())
+      throw new DOMException(t('interface:preparationCancelled'), 'AbortError');
+    // Once the checked replacement/departure dialog owns the action, closing
+    // the demo must not invalidate its later explicit confirmation.
+    handedOff = true;
+    return true;
   }
   async function getUnifiedMissionLibrary() {
     if (unifiedLibrary) return unifiedLibrary;
@@ -11793,6 +11946,254 @@ try {
           })
       : undefined,
   });
+  function cancelDemoAudio() {
+    ++demoAudioOperation;
+    demoAudioController?.abort();
+    demoAudioController = null;
+  }
+  const demoAudio = {
+    snapshot: () => ({
+      ...(soundtrackPlayer?.snapshot() ?? { status: 'unavailable', desired: false }),
+      playbackAvailable: !!soundtrackPlayer,
+      ...audioMaster.snapshot(),
+      style: soundtrackLibrary?.listening?.mode ?? 'auto',
+    }),
+    subscribe(listener) {
+      demoAudioListeners.add(listener);
+      const unsubscribe = audioMaster.subscribe(listener);
+      return () => {
+        demoAudioListeners.delete(listener);
+        unsubscribe();
+      };
+    },
+    setMuted: setMasterMuted,
+    setVolume: setMasterVolume,
+    wake() {
+      soundtrackMenuGesture = true;
+      soundtrackSuspended = false;
+      return soundtrackPlayer?.wake() ?? sound.enable();
+    },
+    play() {
+      cancelDemoAudio();
+      soundtrackMenuGesture = true;
+      return soundtrackPlayer?.play() ?? sound.resumeMusic();
+    },
+    pause() {
+      cancelDemoAudio();
+      soundtrackMenuGesture = true;
+      if (soundtrackPlayer) soundtrackPlayer.pause();
+      else sound.pauseMusic();
+    },
+    next() {
+      cancelDemoAudio();
+      soundtrackMenuGesture = true;
+      return soundtrackPlayer?.next();
+    },
+    async selectStyle(mode) {
+      cancelDemoAudio();
+      if (!SOUNDTRACK_MODES.includes(mode) || !soundtrackPlayer || !soundtrackStore)
+        throw new Error(t('demo:audio.unavailable'));
+      const operation = demoAudioOperation;
+      const pending = new AbortController();
+      demoAudioController = pending;
+      const signal = pending.signal;
+      const current = () =>
+        !signal.aborted && operation === demoAudioOperation && !soundtrackDisposed;
+      const saved = await soundtrackStore.read({ signal });
+      const draft = structuredClone(upgradeSoundtrackLibrary(saved.library));
+      draft.selection.playlistId = null;
+      draft.listening.mode = mode;
+      const prepared = await prepareSoundtrackLibrary(draft, saved.assets, {
+        signal,
+        catalogue: SOUNDTRACK_CATALOGUE,
+      });
+      if (!current()) return false;
+      const committed = await soundtrackStore.commit(prepared, {
+        signal,
+        expectedGeneration: saved.generation,
+      });
+      // An atomic save remains authoritative even if a later Pause cancels playback.
+      if (committed.generation >= soundtrackGeneration) {
+        soundtrackGeneration = committed.generation;
+        soundtrackLibrary = setCatalogueTracks(
+          upgradeSoundtrackLibrary(committed.library),
+          SOUNDTRACK_CATALOGUE.tracks,
+        );
+        soundtrackAssets = new Map(prepared.assets.map(({ sha256, blob }) => [sha256, blob]));
+      }
+      if (!soundtrackDisposed) {
+        soundtrackPlayer?.setLibrary(soundtrackLibrary);
+        notifyDemoAudio();
+      }
+      if (!current()) return false;
+      await soundtrackPlayer.selectListening(soundtrackLibrary.listening);
+      if (!current()) return false;
+      return soundtrackPlayer.play();
+    },
+    cancelPending: cancelDemoAudio,
+    setScene({ source, theme: demoTheme }) {
+      const edition = source.entry.baseCampaignKey || campaignKey(source.entry.campaign);
+      soundtrackPlayer?.setContext(
+        {
+          scene: 'gameplay',
+          themeId: demoTheme.id,
+          campaignKey: edition,
+          mapKey: JSON.stringify([edition, source.level.id, source.level.revision, demoTheme.id]),
+        },
+        { deferUntilNextTrack: true },
+      );
+    },
+    update({ active, theme: demoTheme, state }) {
+      if (soundtrackPlayer) soundtrackPlayer.update(active, demoTheme ?? theme, state ?? {});
+      else sound.update(active, demoTheme ?? theme, state ?? {});
+    },
+    events(events) {
+      for (const event of events) sound.event(event);
+    },
+  };
+  let demoReturnSettings = false;
+  demoHost = attachDemoHost({
+    presets,
+    audio: demoAudio,
+    getContext: () => ({
+      entries: executionEntries(),
+      library,
+      preferences: library.preferences,
+      themeId: theme.id,
+      reduced: displayPreferences.snapshot().effectiveReducedEffects,
+      controller: controllerFrame?.assigned,
+      touchSettings: touchPreferences.snapshot(),
+      tapSteering: $('tap-steering').checked,
+    }),
+    loadSources: ({ signal }) =>
+      loadDemoSources({ entries: executionEntries(), library: demoLibrary, turnPolicy, signal }),
+    readMedia: async (options) =>
+      createSessionPictureView(await pictureMedia(options), sessionPictures),
+    getJourneyPictureContext: ({ entry, level }) => {
+      if (!candidateHost?.owns(entry)) return null;
+      const index = entry.campaign.levels.findIndex((item) => item.id === level.id);
+      return {
+        editionId: authoredRoute.id,
+        missionId: candidateHost.mission(entry, index)?.id,
+        entries: candidateHost.entries,
+        profile: journeyProfile.snapshot(),
+        pictures: journeyProfile.pictures(),
+      };
+    },
+    canOpen: () =>
+      !practiceSession &&
+      !courseSession &&
+      !courseBlocked() &&
+      !courseEntry &&
+      !courseEntryHold &&
+      !contentSwitchBusy &&
+      !sessionBusy &&
+      !backupBusy &&
+      !titleFlight &&
+      !modeDeparture &&
+      !missionReplacement &&
+      !restartRequest &&
+      !pictureThemePending &&
+      !document.hidden,
+    canAutoStart: () =>
+      $('shell-home').open &&
+      controllerDialog()?.id === 'shell-home' &&
+      (!started || ['won', 'lost'].includes(run.status)) &&
+      !practiceSession &&
+      !courseSession &&
+      !courseBlocked() &&
+      !courseEntry &&
+      !courseEntryHold &&
+      !contentSwitchBusy &&
+      !sessionBusy &&
+      !backupBusy &&
+      !titleFlight &&
+      !modeDeparture &&
+      !missionReplacement &&
+      !restartRequest &&
+      !pictureThemePending &&
+      storedStateAdopted &&
+      recovery === null &&
+      !document.hidden &&
+      document.hasFocus(),
+    onEnter: () => {
+      clearInput();
+      paused = true;
+      if (started && !['won', 'lost'].includes(run.status)) overlay('pause');
+      demoReturnSettings = $('settings-dialog').open;
+      if (demoReturnSettings) $('settings-dialog').close();
+      if ($('shell-home').open) $('shell-home').close();
+    },
+    onExit: ({ handoff, origin }) => {
+      clearInput();
+      sound.pause();
+      if (handoff) {
+        if (!controllerDialog()) $('start-button').focus({ preventScroll: true });
+      } else {
+        // Reopening the presentation must leave the suspended save unchanged.
+        if (!$('shell-home').open) $('shell-home').showModal();
+        gameShell?.refreshHome();
+        if (demoReturnSettings && !$('settings-dialog').open) $('settings-dialog').showModal();
+        (origin?.isConnected && origin.getClientRects().length ? origin : $('shell-options')).focus(
+          {
+            preventScroll: true,
+          },
+        );
+      }
+      soundtrackPlayer?.setContext(soundtrackContext(), { deferUntilNextTrack: true });
+    },
+    onFreshStart: (source, current) => prepareDemoFresh(source, current),
+    clearInput,
+    menu: (commands) => {
+      const target = controllerNavigation.handle(commands);
+      if (commands.confirmStart) {
+        if (target)
+          controllerConfirmGuard.begin(target, {
+            buttons:
+              controllerFrame?.confirmTransaction?.buttons || controllerFrame?.confirmButtons,
+            gamepadTimestamp: controllerFrame?.gamepadTimestamp,
+          });
+        else controllerConfirmLifecycle.reset('unavailable-target');
+      } else if (commands.confirmCancel) controllerConfirmGuard.cancel('lifecycle-cancel');
+      else if (commands.confirmCommit) {
+        if (target) controllerConfirmGuard.finish('release');
+        else controllerConfirmGuard.cancel('invalid-target');
+      }
+    },
+    nativeConfirmOwned: (event) => {
+      controllerConfirmLifecycle.beforeNativeActivation(event, { activated: true });
+      return controllerConfirmGuard.owned();
+    },
+    canWrite: () => writer.writable && persistenceReady && !backupBusy,
+    settingsKey: `revealline.demo.${channel}.v1`,
+    setCollect: (enabled) => demoLibrary.setEnabled(enabled),
+    clearRecordings: () => demoLibrary.clear(),
+  });
+  async function retainDemoRun(manual) {
+    if (
+      !recorder ||
+      practice ||
+      run.status !== 'won' ||
+      recoverGameplayTuning(run.level)?.adminOverride
+    ) {
+      if (manual) $('demo-keep-status').textContent = t('demo:notKept');
+      return;
+    }
+    try {
+      const result = await demoLibrary.keep(exportReplay(recorder, run), {
+        entry: activeEntry,
+        practice: false,
+        manual,
+      });
+      if (manual)
+        $('demo-keep-status').textContent = t(result.saved ? 'demo:kept' : 'demo:notKept');
+    } catch {
+      if (manual) $('demo-keep-status').textContent = t('demo:cacheError');
+    }
+  }
+  $('demo-keep').onclick = () => void retainDemoRun(true);
+  $('shell-demo').hidden = practiceSession;
+  $('demo-button').hidden = practiceSession;
   for (const id of ['shell-catalogue', 'missions-catalogue']) {
     const link = $(id);
     link.hidden = practiceSession;
@@ -11966,6 +12367,7 @@ try {
         const selected = await host.library.launch(row, {
           mode: 'solo',
           ...context,
+          prepareOnly: libraryReady,
         });
         if (selected === false && revision === unifiedOpenRevision && context.isCurrent()) {
           unifiedChooser.open($('shell-missions'));
