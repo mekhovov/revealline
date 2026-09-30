@@ -1,0 +1,21 @@
+{
+  "format": "revealline-soundtrack-batch-technical.v1",
+  "batchId": "runner2088-game-mix-20260930",
+  "tracks": [
+    {
+      "id": "builtin.catalog.wekont.runner2088-game-mix",
+      "sha256": "528e7ebe15c91bc686ab9cdfadb4085ebd64b907f795282f7f9c817a46c672ba",
+      "bytes": 3887378,
+      "decoder": "FFmpeg",
+      "decoderVersion": "9.0.2",
+      "fullFileDecoded": true,
+      "integratedLUFS": -16.94,
+      "truePeakDbTP": -1.14,
+      "evidence": {
+        "path": "authoring/library/soundtrack-batches/runner2088-game-mix-20260930/measurements.json",
+        "bytes": 5939,
+        "sha256": "f08478a57b2198271dfe289b3c1103713eeac3918e65cd646d28b12fda72a30e"
+      }
+    }
+  ]
+}

@@ -58,7 +58,10 @@ function keyboardTo(doc, target) {
       choices[(choices.indexOf(active) + 1) % choices.length]?.focus();
     }
   }
-  assert.equal(doc.activeElement, target, 'the landing utility belongs to the keyboard menu');
+  assert.ok(
+    doc.activeElement === target,
+    `the landing utility belongs to the keyboard menu; actual ${doc.activeElement?.id}`,
+  );
 }
 async function enter(doc) {
   const target = doc.activeElement;
@@ -72,7 +75,8 @@ async function enter(doc) {
 const hosts = [
   {
     mode: 'solo',
-    settings: 'shell-fullscreen',
+    landing: 'shell-fullscreen',
+    settings: null,
     open: 'shell-options',
     display: 'settings-tab-display',
     create: (t, setup) => soloPage(t, { titleScreen: true, browserSetup: setup }),
@@ -95,25 +99,26 @@ const hosts = [
 ];
 
 for (const host of hosts) {
-  test(`${host.mode} landing and Display share fullscreen state and native keyboard access`, async (t) => {
+  test(`${host.mode} ${host.settings ? 'landing and Display share' : 'landing retains'} fullscreen state and native keyboard access`, async (t) => {
     let browser;
     const page = await host.create(t, ({ document, window }) => {
       browser = fullscreenBrowser(document, { window });
     });
     const { doc, $ } = page;
-    const landing = $(`${host.mode}-landing-fullscreen`),
-      settings = $(host.settings);
-    assert(landing && settings);
+    const landing = $(host.landing ?? `${host.mode}-landing-fullscreen`),
+      settings = host.settings ? $(host.settings) : null;
+    assert(landing);
+    if (host.settings) assert(settings);
     assert.equal(landing.hidden, false);
     assert.equal(landing.dataset.menuIcon, 'fullscreen');
-    assert.equal(landing.textContent, 'Enter fullscreen');
-    assert.equal(settings.textContent, 'Enter fullscreen');
+    assert.equal(landing.getAttribute('aria-label'), 'Enter fullscreen');
+    if (settings) assert.equal(settings.textContent, 'Enter fullscreen');
     keyboardTo(doc, landing);
     await enter(doc);
     assert.equal(browser.requests(), 1);
-    assert.equal(doc.fullscreenElement, doc.documentElement);
-    assert.equal(landing.textContent, 'Exit fullscreen');
-    assert.equal(settings.getAttribute('aria-pressed'), 'true');
+    assert.ok(doc.fullscreenElement === doc.documentElement);
+    assert.equal(landing.getAttribute('aria-label'), 'Exit fullscreen');
+    if (settings) assert.equal(settings.getAttribute('aria-pressed'), 'true');
     const landingRoot = landing.closest('.native-landing'),
       initialFlightState = doc.body.dataset.flightState;
     const escape = landing.emit('keydown', { key: 'Escape', code: 'Escape', repeat: false });
@@ -127,18 +132,25 @@ for (const host of hosts) {
     assert.equal(landingRoot.hidden, false);
     if (landingRoot.tagName === 'DIALOG') assert.equal(landingRoot.open, true);
     assert.equal(doc.body.dataset.flightState, initialFlightState);
-    assert.equal(doc.activeElement, landing);
-    assert.equal(landing.textContent, 'Enter fullscreen');
-    assert.equal(settings.getAttribute('aria-pressed'), 'false');
+    assert.ok(doc.activeElement === landing, doc.activeElement?.id);
+    assert.equal(landing.getAttribute('aria-label'), 'Enter fullscreen');
+    if (settings) assert.equal(settings.getAttribute('aria-pressed'), 'false');
     await enter(doc);
-    $(host.open).click();
-    $(host.display).click();
-    keyboardTo(doc, settings);
+    if (settings) {
+      $(host.open).click();
+      $(host.display).click();
+      keyboardTo(doc, settings);
+    } else {
+      // Solo retains the existing landing fullscreen control. Display does not
+      // manufacture a second action inside its Settings panel.
+      assert.equal($('settings-panel-display').contains(landing), false);
+      assert.ok(landingRoot.contains(landing));
+    }
     await enter(doc);
     assert.equal(doc.fullscreenElement, null);
     assert.equal(landing.getAttribute('aria-pressed'), 'false');
-    assert.equal(settings.textContent, 'Enter fullscreen');
-    assert.equal(browser.requests(), 2, 'the mirrored Exit calls only the native exit API');
+    if (settings) assert.equal(settings.textContent, 'Enter fullscreen');
+    assert.equal(browser.requests(), 2, 'Exit calls only the native exit API');
   });
 }
 
@@ -161,7 +173,7 @@ test('the Versus controller can reach the landing utility and a denied request r
   page.join(0);
   const landing = page.$('versus-landing-fullscreen');
   for (let step = 0; step < 16 && page.doc.activeElement !== landing; step++) page.pulse(0, 13);
-  assert.equal(page.doc.activeElement, landing, 'D-pad navigation reaches the landing utility');
+  assert.ok(page.doc.activeElement === landing, 'D-pad navigation reaches the landing utility');
   page.pulse(0, 0);
   await Promise.resolve();
   assert.equal(
