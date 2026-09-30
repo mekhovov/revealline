@@ -89,9 +89,46 @@ export async function publishOfflineLauncher(source, output, version) {
     await fs.mkdir(path.dirname(target), { recursive: true });
     await fs.writeFile(target, bytes);
   }
+  // Historical launchers did not include an update surface. New ones share the
+  // exact frozen download document while staying under the narrow app worker.
+  let update;
+  try {
+    update = await fs.readFile(path.join(source, 'app/update.html'), 'utf8');
+  } catch (error) {
+    if (error.code !== 'ENOENT') throw error;
+  }
+  if (update !== undefined) {
+    // A historical missing updater is allowed. Once supplied, its bridge is
+    // required: do not publish a new update control whose destination is absent.
+    const bridge = await fs.readFile(path.join(source, 'game-update.html'));
+    if (!update.includes('<base href="../game/" />') || Buffer.byteLength(update) > FILE_LIMIT)
+      throw new Error('Frozen updater has an invalid candidate base or file budget.');
+    if (bridge.length > FILE_LIMIT)
+      throw new Error('Frozen update bridge exceeded its file budget.');
+    await fs.writeFile(
+      path.join(output, 'app/update.html'),
+      update.replace(
+        '<base href="../game/" />',
+        `<base href="../releases/${version}/site/game/" />`,
+      ),
+    );
+    await fs.writeFile(path.join(output, 'game-update.html'), bridge);
+  }
+  let sourceRevision;
+  try {
+    sourceRevision = JSON.parse(
+      await fs.readFile(path.join(source, 'app/current.json'), 'utf8'),
+    ).sourceRevision;
+  } catch (error) {
+    if (error.code !== 'ENOENT') throw error;
+  }
   await fs.writeFile(
     path.join(output, 'app/current.json'),
-    JSON.stringify({ version, scope: '../releases/' + version + '/site/' }),
+    JSON.stringify({
+      version,
+      scope: '../releases/' + version + '/site/',
+      ...(sourceRevision ? { sourceRevision } : {}),
+    }),
   );
   return true;
 }

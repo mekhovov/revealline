@@ -1,4 +1,5 @@
 import { nativePlatform } from './platform.mjs';
+import { readGameUpdateContext } from './game-updates.mjs';
 import { CONTENT_PROJECT_ITEM_LIMITS, CONTENT_ASSET_MAX_BYTES } from './content-design/limits.mjs';
 /** Explicit preparation of a generated distribution's declared core cache. */
 const MARKER = 'meta[name="revealline-offline"]';
@@ -60,7 +61,8 @@ function configFromPage(documentRef = globalThis.document, locationRef = globalT
   if (
     scope.origin !== page.origin ||
     worker.origin !== page.origin ||
-    !page.pathname.startsWith(scope.pathname) ||
+    (!page.pathname.startsWith(scope.pathname) &&
+      readGameUpdateContext(documentRef, locationRef)?.scope !== scope.href) ||
     worker.pathname !== `${scope.pathname}service-worker.js`
   )
     return null;
@@ -207,7 +209,12 @@ function requestReport(worker, registration, config, options) {
     };
     const aborted = () => {
       if (preparing && config.downloadCatalogue && options.cancelPreparation)
-        worker.postMessage({ type: 'revealline.offline-pause', buildId: config.buildId });
+        worker.postMessage({
+          type: 'revealline.offline-pause',
+          protocol: PROTOCOL,
+          scope: config.scope,
+          buildId: config.buildId,
+        });
       finish(null, abortError());
     };
     const changed = () => {
@@ -374,6 +381,8 @@ export async function prepareOffline(options = {}) {
         if (options.signal?.aborted)
           selectedWorker(registration)?.postMessage({
             type: 'revealline.offline-pause',
+            protocol: PROTOCOL,
+            scope: config.scope,
             buildId: config.buildId,
           });
       })

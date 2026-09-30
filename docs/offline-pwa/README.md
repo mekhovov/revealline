@@ -5,6 +5,10 @@ Install & offline play is an optional menu action. See
 [online play and optional preparation](../optional-offline-play.md) for the
 updated behavior; the implementation and release details below are historical.
 
+For the new in-game update and community controls, see
+[installed-app updates and communities](updates-and-communities.md), including
+publication and device-verification limitations.
+
 For current completion status and priorities, use the
 [reviewed offline/content plan](../content-offline/PLAN-REVIEW-2026-09-30.md).
 The manual Verify / Use this edition sequence below records the original

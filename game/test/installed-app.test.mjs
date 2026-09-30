@@ -258,3 +258,70 @@ test('rollback selects the preserved earlier profile without overwriting either 
     /previous edition changed/,
   );
 });
+
+test('same-URL worker preparation waits for migration, recovery and profile ownership', async () => {
+  const h = setup(),
+    scope = 'https://game.example/revealline/',
+    previous = { ...a, scope },
+    candidate = { ...b, scope };
+  await activateInstalledEdition(previous, h);
+  h.storage.setItem(profile(a.version), 'saved progress');
+  await stageInstalledEdition(candidate, h);
+  let calls = 0;
+  const options = { ...h, prepare: async () => calls++ };
+  assert.equal((await activateInstalledEdition(candidate, options)).activated, false);
+  assert.equal(calls, 0, 'An unreviewed transfer must never replace the old worker.');
+  h.assets.set(`${profile(a.version)}.backup-journal`, { pending: true });
+  await assert.rejects(activateInstalledEdition(candidate, options), /recovery/);
+  assert.equal(calls, 0);
+  h.assets.clear();
+  h.held.add(`${profile(a.version)}.writer`);
+  await assert.rejects(activateInstalledEdition(candidate, options), /Close the game window/);
+  assert.equal(calls, 0);
+  assert.deepEqual(readInstalledState(h.storage).active, previous);
+});
+
+test('verified core preparation holds profile locks until activation and a failure keeps the old selection', async () => {
+  const h = setup(),
+    held = new Set();
+  await activateInstalledEdition(a, h);
+  const locks = {
+    async request(name, options, callback) {
+      held.add(name);
+      try {
+        return await (callback || options)({ name });
+      } finally {
+        held.delete(name);
+      }
+    },
+  };
+  const prepare = async () => {
+    assert.deepEqual(
+      held,
+      new Set([
+        'revealline.installed-app.switch',
+        `${profile(a.version)}.writer`,
+        `${profile(b.version)}.writer`,
+      ]),
+    );
+    assert.deepEqual(readInstalledState(h.storage).active, a);
+    await Promise.resolve();
+    assert.equal(held.size, 3);
+  };
+  await assert.rejects(
+    activateInstalledEdition(b, {
+      ...h,
+      locks,
+      prepare: async () => {
+        await prepare();
+        throw new Error('Core verification failed.');
+      },
+    }),
+    /Core verification failed/,
+  );
+  assert.deepEqual(readInstalledState(h.storage).active, a);
+  assert.equal(held.size, 0);
+  assert.equal((await activateInstalledEdition(b, { ...h, locks, prepare })).activated, true);
+  assert.deepEqual(readInstalledState(h.storage).active, b);
+  assert.equal(held.size, 0);
+});

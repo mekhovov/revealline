@@ -61,6 +61,8 @@ const soloActions = [
   'shell-options',
   'shell-fullscreen',
   'shell-sound',
+  'solo-communities',
+  'solo-updates',
 ];
 const soloSettings = {
   'shell-gallery': 'data',
@@ -176,6 +178,8 @@ test('Versus and Team keep their complete lobby actions within the same whitelis
         'race-options',
         'race-quick-sound',
         'versus-landing-fullscreen',
+        'versus-communities',
+        'versus-updates',
       ],
       modes: ['solo', 'versus', 'team'],
     });
@@ -200,6 +204,8 @@ test('Versus and Team keep their complete lobby actions within the same whitelis
         'coop-settings-open',
         'coop-quick-sound',
         'team-landing-fullscreen',
+        'team-communities',
+        'team-updates',
       ],
       modes: ['solo', 'versus', 'team'],
     });
