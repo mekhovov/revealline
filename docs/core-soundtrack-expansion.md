@@ -230,7 +230,7 @@ a broken external file followed by successful local playback, dynamic catalogue
 pickup and hash-checked offline installation. A stable public S3 URL is suitable;
 expiring presigned URLs are not. Current hosting provisioning remains out of scope.
 
-The exact deployed archive manifest is **924,661,311 bytes (881.83 MiB)** against
+The manifest-listed Pages payload is **924,661,311 bytes (881.83 MiB)** against
 the repository's **950 MiB** guard, leaving **71,485,889 bytes (68.17 MiB)**.
 It includes 203 MP3 compatibility files plus UI/metadata. Release assets preserve
 the wider archive; materializing compatible audio into Pages still consumes this
