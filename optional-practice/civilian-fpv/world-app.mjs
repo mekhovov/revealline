@@ -579,7 +579,11 @@ export function mountWorldApp({
     recovery = null,
     replayProof = null,
     replayKind = 'recording',
-    replayRate = 1;
+    replayRate = 1,
+    sectorReference = null,
+    sectorReferenceId = null,
+    sectorReferenceStatus = 'none',
+    sectorLookup = null;
   const sectors = createSectorTracker();
   let storage;
   try {
@@ -1527,7 +1531,11 @@ export function mountWorldApp({
               'Для відновлення встановіть точний пакунок світу.',
             ),
           );
-        await startFlight(entry, { preview: recovery.preview, recover: recovery.proof });
+        await startFlight(entry, {
+          preview: recovery.preview,
+          recover: recovery.proof,
+          sectorReferenceId: recovery.sectorReferenceId,
+        });
       });
       b.id = 'resume-flight';
       $('proof-records').prepend(b);
@@ -1672,6 +1680,7 @@ export function mountWorldApp({
       proof: recorder.export(),
       packIdentity: current.packIdentity,
       preview,
+      sectorReferenceId,
     };
     await recordStore.saveSession(saved);
     recovery = saved;
@@ -1701,7 +1710,144 @@ export function mountWorldApp({
       void saveRecovery().catch(reportError);
     }
   }
+  function abortSectorLookup() {
+    sectorLookup?.abort();
+    sectorLookup = null;
+  }
+  const seconds = (ticks) => `${(ticks / 50).toFixed(2)} ${txt('s', 'с')}`;
+  const deltaSeconds = (ticks) =>
+    ticks === null ? '—' : `${ticks < 0 ? '−' : ticks > 0 ? '+' : ''}${seconds(Math.abs(ticks))}`;
+  function paintDelta(node, label, value) {
+    const text = `${label} ${deltaSeconds(value)}`;
+    if (node.textContent !== text) node.textContent = text;
+    node.classList.toggle('sector-ahead', value !== null && value < 0);
+    node.classList.toggle('sector-behind', value !== null && value > 0);
+  }
+  function updateSectorHUD() {
+    const latest = sectors.latest(sectorReference?.sectors),
+      title = latest
+        ? `${txt('Sector', 'Ділянка')} ${latest.index + 1} · ${seconds(latest.ticks)}`
+        : txt('Sector timing · no split yet', 'Час ділянок · ще немає відміток'),
+      description = replayProof
+        ? txt('Playback · timing only', 'Перегляд · лише час')
+        : preview || sectorReferenceStatus === 'unscored'
+          ? txt('Unscored practice · timing only', 'Тренування без заліку · лише час')
+          : sectorReferenceStatus === 'checking'
+            ? txt('Checking saved best…', 'Перевірка найкращого запису…')
+            : sectorReference
+              ? `${txt('Personal best', 'Особистий рекорд')} · ${seconds(sectorReference.ticks)}`
+              : sectorReferenceStatus === 'unavailable'
+                ? txt('Saved comparison unavailable.', 'Збережене порівняння недоступне.')
+                : txt(
+                    'No verified personal best for these settings.',
+                    'Для цих налаштувань ще немає перевіреного рекорду.',
+                  );
+    if ($('sector-latest').textContent !== title) $('sector-latest').textContent = title;
+    if ($('sector-reference').textContent !== description)
+      $('sector-reference').textContent = description;
+    paintDelta($('sector-delta'), txt('Split', 'Ділянка'), latest?.sectorDelta ?? null);
+    paintDelta($('sector-total-delta'), txt('Total', 'Разом'), latest?.cumulativeDelta ?? null);
+    $('sector-panel').setAttribute('aria-label', txt('Sector timing', 'Час ділянок'));
+  }
+  async function resolveSectorReference(entry, identity, token, requestedId) {
+    const controller = new AbortController();
+    sectorLookup = controller;
+    const isCurrent = () => !disposed && token === flightToken && sectorLookup === controller;
+    // Saved summaries are only a shortlist. Every selected reference must reproduce
+    // a complete flight against this attempt's exact dependencies and controls.
+    const candidates = records
+      .filter(
+        (record) =>
+          record?.proof &&
+          typeof record.id === 'string' &&
+          Array.isArray(record.proof.frames) &&
+          Number.isSafeInteger(record.proof.frames.length) &&
+          record.proof.frames.length > 0 &&
+          record.proof.frames.length <= 36000 &&
+          record.packIdentity === entry.packIdentity &&
+          record.proof.course === entry.course.id &&
+          compatibleGhost(record, identity) &&
+          Object.entries(identity).every(([key, value]) => record.proof[key] === value) &&
+          (requestedId === undefined || record.id === requestedId),
+      )
+      .map((record) => ({ id: record.id, proof: clone(record.proof) }))
+      .sort((a, b) => a.proof.frames.length - b.proof.frames.length || a.id.localeCompare(b.id));
+    try {
+      for (const candidate of candidates) {
+        try {
+          const checked = await (entry.legacy ? replayFlightCooperatively : replayWorldFlight)(
+            entry.course,
+            candidate.proof,
+            { includeSectors: true, signal: controller.signal },
+          );
+          if (!isCurrent()) return;
+          if (
+            checked.state.status !== 'complete' ||
+            checked.state.ticks !== candidate.proof.frames.length ||
+            checked.state.step !== entry.course.steps[identity.mode].length ||
+            checked.sectors.length !== checked.state.step ||
+            checked.sectors.at(-1)?.endTick !== checked.state.ticks
+          )
+            continue;
+          sectorReference = {
+            id: candidate.id,
+            ticks: checked.state.ticks,
+            sectors: checked.sectors,
+          };
+          sectorReferenceId = candidate.id;
+          sectorReferenceStatus = 'ready';
+          return;
+        } catch {
+          if (!isCurrent() || controller.signal.aborted) return;
+          // Imported metadata can claim verification; try the next genuine proof.
+        }
+      }
+      if (isCurrent()) sectorReferenceStatus = requestedId === undefined ? 'none' : 'unavailable';
+    } finally {
+      if (isCurrent()) {
+        sectorLookup = null;
+        updateSectorHUD();
+      }
+    }
+  }
+  function splitSummary(rows, reference) {
+    const details = el('details', undefined, 'sector-summary');
+    details.append(el('summary', txt('Completed sector times', 'Час пройдених ділянок')));
+    const table = el('table'),
+      heading = el('tr');
+    for (const title of [
+      txt('Sector', 'Ділянка'),
+      txt('Time', 'Час'),
+      txt('Split Δ', 'Δ ділянки'),
+      txt('Total Δ', 'Δ разом'),
+    ]) {
+      const th = el('th', title);
+      th.scope = 'col';
+      heading.append(th);
+    }
+    const head = el('thead'),
+      body = el('tbody');
+    head.append(heading);
+    for (const sector of rows) {
+      const row = el('tr'),
+        baseline = reference?.sectors[sector.index];
+      row.append(el('td', String(sector.index + 1)), el('td', seconds(sector.ticks)));
+      for (const value of [
+        baseline ? sector.ticks - baseline.ticks : null,
+        baseline ? sector.endTick - baseline.endTick : null,
+      ]) {
+        const cell = el('td');
+        paintDelta(cell, '', value);
+        row.append(cell);
+      }
+      body.append(row);
+    }
+    table.append(head, body);
+    details.append(table);
+    return details;
+  }
   function updateHUD(state) {
+    updateSectorHUD();
     const target = current.course.steps[$('flight-mode').value][state.step];
     $('flight-instruments').textContent =
       `${(state.position.y / 1000).toFixed(1)} m · ${(Math.hypot(state.velocity.x, state.velocity.y, state.velocity.z) / 1000) | 0} m/s · ${(state.ticks / 50).toFixed(1)} s${state.health !== undefined ? ` · ♥ ${state.health}` : ''}`;
@@ -1740,6 +1886,7 @@ export function mountWorldApp({
       proof = recorder.export(),
       state = flight.snapshot(),
       isPreview = preview,
+      completedReference = sectorReference,
       completedPlaylist = playingPlaylist,
       completedPlaylistIndex = playlistIndex,
       resultSummary = evaluateWorldResult(current.course, proof, state, {
@@ -1815,17 +1962,36 @@ export function mountWorldApp({
           `${resultSummary.medal ? `${txt('Medal', 'Медаль')}: ${resultSummary.medal} · ` : ''}${txt('Score', 'Бали')}: ${resultSummary.score}${resultSummary.accuracy === null ? '' : ` · ${Math.round(resultSummary.accuracy * 100)}%`}`,
         ),
       );
+      if (resultSummary.sectors.length)
+        $('result-panel').append(splitSummary(resultSummary.sectors, completedReference));
+      const lostSector = completedReference
+        ? resultSummary.sectors
+            .map((sector) => ({
+              index: sector.index,
+              loss: sector.ticks - completedReference.sectors[sector.index].ticks,
+            }))
+            .filter((sector) => sector.loss > 0)
+            .sort((a, b) => b.loss - a.loss)[0]
+        : null;
       if (!entry.legacy)
         $('result-panel').append(
-          button(txt('Practise weakest section', 'Тренувати найскладнішу ділянку'), () =>
-            startFlight(
-              {
-                ...entry,
-                course: checkpointPractice(entry.course, proof.mode, resultSummary.weakest),
-                legacy: false,
-              },
-              { preview: true },
-            ),
+          button(
+            lostSector
+              ? txt('Practise biggest time loss', 'Тренувати ділянку з найбільшою втратою часу')
+              : txt('Practise longest section', 'Тренувати найдовшу ділянку'),
+            () =>
+              startFlight(
+                {
+                  ...entry,
+                  course: checkpointPractice(
+                    entry.course,
+                    proof.mode,
+                    lostSector?.index ?? resultSummary.weakest,
+                  ),
+                  legacy: false,
+                },
+                { preview: true },
+              ),
           ),
         );
       $('result-panel').append(
@@ -1964,9 +2130,14 @@ export function mountWorldApp({
     if (terminal(state)) void finishFlight(flightToken).catch(reportError);
   }
   async function startFlight(entry, options = {}) {
+    if (disposed) return;
+    const token = ++flightToken;
+    abortSectorLookup();
+    sceneReady = false;
     pauseFlight();
     await saveRecovery();
-    const token = ++flightToken;
+    await ready;
+    if (disposed || token !== flightToken) return;
     flight?.dispose?.();
     flight = null;
     current = entry;
@@ -1991,6 +2162,15 @@ export function mountWorldApp({
     $('radio-setup-button').disabled = Boolean(replayProof);
     $('world-touch').hidden = Boolean(replayProof) || $('flight-source').value !== 'touch';
     sectors.reset();
+    sectorReference = null;
+    sectorReferenceId = options.recover ? (options.sectorReferenceId ?? null) : null;
+    sectorReferenceStatus =
+      preview || (options.recover && options.recover.session !== 'practice')
+        ? 'unscored'
+        : options.recover && options.sectorReferenceId === null
+          ? 'none'
+          : 'checking';
+    updateSectorHUD();
     fire = false;
     lastTime = null;
     accumulator = 0;
@@ -2044,13 +2224,16 @@ export function mountWorldApp({
       $('flight-mode').value = proof.mode;
     }
     if (options.recover) {
-      const recovered = await recoverWorldFlight(entry.course, options.recover);
+      const recovered = await recoverWorldFlight(entry.course, options.recover, {
+        includeSectors: true,
+      });
       if (token !== flightToken) {
         recovered.flight.dispose();
         return;
       }
       flight = recovered.flight;
       recorder = recovered.recorder;
+      sectors.reset(recovered.sectors);
       $('flight-mode').value = options.recover.mode;
     } else {
       flight = (entry.legacy ? createFlight : createWorldFlight)({
@@ -2094,6 +2277,16 @@ export function mountWorldApp({
     model ??= builtinWorldScene(entry.course);
     if (model) await renderer.loadScene(model);
     if (token !== flightToken) return;
+    if (sectorReferenceStatus === 'checking') {
+      $('flight-status').textContent = txt('Checking saved best…', 'Перевірка найкращого запису…');
+      await resolveSectorReference(
+        entry,
+        flight.identity,
+        token,
+        options.recover ? options.sectorReferenceId : undefined,
+      );
+    }
+    if (disposed || token !== flightToken) return;
     sceneReady = true;
     $('flight-status').textContent = txt(
       'Ready. Choose your controls, then arm.',
@@ -2116,9 +2309,12 @@ export function mountWorldApp({
     }
   }
   async function closeFlight() {
+    const token = ++flightToken;
+    abortSectorLookup();
+    sceneReady = false;
     pauseFlight();
     await saveRecovery();
-    ++flightToken;
+    if (token !== flightToken || disposed) return;
     flight?.dispose?.();
     flight = null;
     current = null;
@@ -2641,15 +2837,23 @@ export function mountWorldApp({
             finished,
           }
         : null,
+      sectorTiming: {
+        status: sectorReferenceStatus,
+        reference: clone(sectorReference),
+        referenceId: sectorReferenceId,
+        sectors: sectors.snapshot(),
+        latest: sectors.latest(sectorReference?.sectors),
+      },
       records: clone(records),
       catalogue: catalogue.length,
     }),
     async dispose() {
       if (disposed) return;
-      pauseFlight();
-      await saveRecovery();
       disposed = true;
       ++flightToken;
+      abortSectorLookup();
+      pauseFlight();
+      await saveRecovery();
       win.cancelAnimationFrame(raf);
       for (const remove of listeners) remove();
       input.dispose();
