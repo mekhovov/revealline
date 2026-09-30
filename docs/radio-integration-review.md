@@ -1,6 +1,39 @@
 # Radio integration review
 
-## Bundled simulator and latest-main update
+## Current delivery checkpoint — 30 September 2026
+
+Reviewed main: `908bc6b08`. The controller/radio and bundled FPV implementation
+entered main through [PR #797](https://github.com/mekhovov/revealline/pull/797);
+the updated menu assertions entered through
+[PR #819](https://github.com/mekhovov/revealline/pull/819). Their v0.150.0
+milestone is a planning target, not proof of a published or device-qualified build.
+The older branch, build and test records below are historical checkpoints.
+
+The previously reported iOS blocker in
+`game/assets/field-kit/sprites/review.html` is resolved in current source: the
+page has an explicit head, and the current `iosHTMLPolicy` staging transform
+accepts both that page and `optional-practice/civilian-fpv/index.html`. This
+source-policy validation does not certify a complete staged distribution,
+Xcode compilation, native launch or physical controller access in WKWebView.
+
+### Remaining boundaries
+
+| Priority         | Item                                                                                  | Next action / status                                                                                                                                                                                                         |
+| ---------------- | ------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 1                | Publication of the integrated game                                                    | Release owner verifies current built/hosted bytes; use the current release queue rather than historical local ZIPs.                                                                                                          |
+| 1                | Host picture-readiness failures                                                       | Keep with the existing deferred verification work in [issue #813](https://github.com/mekhovov/revealline/issues/813). The previous broad host rerun had 15 passes and 10 readiness timeouts; it was not a passing full gate. |
+| 2                | Native packaging and device qualification                                             | Current source no longer has the reported missing-head blocker. Full current iOS packaging/launch and controller access remain unverified.                                                                                   |
+| Deferred by user | Two physical radios, mixed radio/gamepad, Bluetooth/dongle, mobile and native devices | Do not repeat hardware requests or infer physical support from modeled Gamepad cases.                                                                                                                                        |
+| Player setup     | Extra radio action switches                                                           | Map and verify each desired channel in Controls. Movement-only presets retain keyboard/touch actions; never guess unmeasured switches.                                                                                       |
+
+The last focused source run at this main checkpoint passed 40 controller session,
+restoration, Solo adapter, FPV radio-action and launch/return checks. Earlier
+package verification passed seven checks after restoring local dependencies and
+the sparse icon asset. These are dated evidence, not public-release acceptance.
+Further automated test-only execution follows the current
+[focused-suite waiver](focused-test-waiver-20260930.md); waived work is not passed.
+
+## Historical bundled simulator and main update
 
 At the user's request, the reviewed integration was consolidated and rebased
 onto main `9957a6820ae9cc7b37942e21473948ea70752095`. The complete original
@@ -134,7 +167,7 @@ radio/gamepad combinations have automated coverage, while the previously
 confirmed physical results are TX15 FPV flight/arm/reset, regular Solo right-stick
 movement, shared-radio Team movement and two USB PS5 controllers.
 
-The previous iOS staging blocker and native installation/device qualification
-remain outside this recommendation pass. Publication and actual user-specific
+The historical iOS missing-head blocker is superseded by the source-policy
+validation above. Full native installation/device qualification remains open. Publication and actual user-specific
 action-switch capture remain separate steps; keyboard/touch actions remain
 available until switches are configured.
