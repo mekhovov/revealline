@@ -1,5 +1,10 @@
 # Levels: current-main restoration and remaining plan — 30 September 2026
 
+> **Current detailed review:** [completed work, remaining items, priorities and explanations](levels-plan-review-2026-09-30.md).
+> PR820, PR829 and PR860 are merged; the observed continuous Pages build includes
+> main `09a43d833`. The named release, default-content promotion and final balance
+> acceptance remain separate. The checkpoint and queue below are preserved history.
+
 ## Current checkpoint: preset-route authoring
 
 This section supersedes the delivery and queue statements in the historical
