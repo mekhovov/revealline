@@ -65,6 +65,9 @@ export function attachQuickMusicControls({
     settingsRoot?.querySelector?.('[data-couch-music]');
   const rows = after
     .filter(Boolean)
+    // Late soundtrack initialization must not add actions to a prepared landing.
+    // Keep pause/in-game anchors and the host's Audio transport unchanged.
+    .filter((anchor) => !settingsRoot || !anchor.closest?.('.native-landing'))
     .filter((anchor) => !couchTransport || !['race-start', 'coop-start'].includes(anchor.id))
     .map((anchor, index) => {
       const root = doc.createElement('div'),
