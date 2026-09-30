@@ -255,7 +255,7 @@ test('combined Journey opt-in preserves original bytes and historical single-cam
     navigatorRef: { serviceWorker: {} },
   });
   assert.equal(availability.available, true);
-  assert.match(availability.note, /Journey candidate artwork/);
+  assert.match(availability.note, /Game and soundtrack downloads/);
   assert.deepEqual(await readFile(path.join(out, imagePath)), image);
   assert(!offline.files.some((entry) => entry.path === imagePath));
   assert.equal(validateOptionalArtworkConfig(option), option);
