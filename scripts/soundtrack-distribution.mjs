@@ -7,6 +7,8 @@ import { applySoundtrackArchiveAdmissions } from './soundtrack-archive-admission
 import { compileHostedSoundtracks } from './hosted-soundtrack-publication.mjs';
 import { compileReviewedSoundtrackBatches } from './reviewed-soundtrack-batches.mjs';
 import { compileCoreSoundtrack } from './core-soundtrack-publication.mjs';
+import { resolveSoundtrackArchives } from '../game/soundtrack-archive.mjs';
+import { resolveSoundtrackCollections } from '../game/soundtrack.mjs';
 
 export function validateSoundtrackDistributionConfig(value) {
   exactKeys(value, ['format', 'catalog', 'originalCatalogue'], 'Soundtrack distribution config');
@@ -284,12 +286,16 @@ export async function compilePublishedSoundtracks(root, { delivery = 'runtime' }
   return {
     ...delivered,
     catalogue: combined,
-    archives: [...delivered.archives, ...hosted.archives, ...reviewed.archives],
-    collections: [
+    archives: resolveSoundtrackArchives([
+      ...delivered.archives,
+      ...hosted.archives,
+      ...reviewed.archives,
+    ]),
+    collections: resolveSoundtrackCollections([
       ...hosted.collections,
       ...reviewed.collections,
       { ...core.collection, trackIds: admittedUkrainianTrackIds },
-    ],
+    ]),
     bundled: [core.bundled],
   };
 }

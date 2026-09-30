@@ -1,6 +1,6 @@
 # Content ownership and uniqueness review
 
-See the [current phased status and delivery batches](STATUS-2026-09-28.md),
+See the [current phased status and delivery batches](STATUS-2026-09-30.md),
 [historical implementation evidence](implementation.md) and the
 [measured package sizes](packages.md) for the accompanying offline changes.
 
