@@ -16,6 +16,11 @@ const clamp = (n, low, high) => Math.max(low, Math.min(high, n));
 const editable = (target) =>
   ['INPUT', 'TEXTAREA', 'SELECT', 'BUTTON', 'A'].includes(target?.tagName) ||
   target?.isContentEditable;
+const textEntry = (target) =>
+  target?.isContentEditable ||
+  target?.tagName === 'TEXTAREA' ||
+  (target?.tagName === 'INPUT' &&
+    !['range', 'checkbox', 'radio', 'button', 'submit', 'reset'].includes(target.type));
 
 /** One active owner. Throttle is a position, not an automatic altitude command.
  * Losing ownership releases all local controls; radio pickup is owned by its adapter. */
@@ -39,12 +44,26 @@ export function createFlightInput({ window: win, document: doc, onPause = () => 
     for (const release of releases) release();
   };
   listen(win, 'keydown', (event) => {
-    if (disposed || (event.repeat && event.code === 'KeyP') || editable(event.target)) return;
+    if (disposed || event.defaultPrevented || event.isComposing) return;
     if (event.code === 'KeyP' || event.code === 'Escape') {
+      // Pause belongs to every movement source, even while a camera/menu control
+      // has focus. Text entry and native dialog dismissal keep their own keys.
+      if (
+        event.repeat ||
+        event.ctrlKey ||
+        event.metaKey ||
+        event.altKey ||
+        textEntry(event.target) ||
+        doc.querySelector?.('dialog[open]')
+      )
+        return;
       event.preventDefault();
+      enabled = false;
+      clear();
       onPause('paused');
       return;
     }
+    if (editable(event.target)) return;
     if (owner !== 'keyboard' || !enabled || !MOVE_KEYS.has(event.code)) return;
     event.preventDefault();
     keys.add(event.code);
