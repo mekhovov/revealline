@@ -3,6 +3,7 @@ import * as fs from 'node:fs/promises';
 import path from 'node:path';
 import { spawnSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
+import { parseTestPolicy, readTestPolicy } from './test-policy.mjs';
 
 const here = path.dirname(fileURLToPath(import.meta.url));
 
@@ -170,6 +171,33 @@ function packageNodeTestPatterns(script) {
   return patterns;
 }
 
+// Waive only unambiguous test-only commands. Mixed scripts, lifecycle hooks,
+// validation, generation and unknown syntax stay mandatory.
+export function applyFocusedTestPolicy(commands, policy, { packageScripts = {} } = {}) {
+  if (policy === null || policy === undefined) return { commands: [...commands], waivedTests: [] };
+  const parsed = parseTestPolicy(policy);
+  if (parsed.mode !== 'waived') return { commands: [...commands], waivedTests: [] };
+  const waivedTests = [];
+  const retained = commands.filter((command) => {
+    validateCommand(command);
+    const directTests =
+      command.command === 'node' &&
+      command.args.every((argument) => !/\s/u.test(argument)) &&
+      packageNodeTestPatterns(['node', ...command.args].join(' '));
+    const scriptName = packageScriptName(command);
+    const packageTests =
+      scriptName &&
+      Object.hasOwn(packageScripts, scriptName) &&
+      !Object.hasOwn(packageScripts, 'pre' + scriptName) &&
+      !Object.hasOwn(packageScripts, 'post' + scriptName) &&
+      packageNodeTestPatterns(packageScripts[scriptName]);
+    if (!directTests && !packageTests) return true;
+    waivedTests.push({ ...command, verdict: 'WAIVED_SKIPPED_NOT_PASSED' });
+    return false;
+  });
+  return { commands: retained, waivedTests };
+}
+
 function escapeRegularExpression(value) {
   let escaped = '';
   for (const character of value) {
@@ -219,7 +247,11 @@ export function focusedCommandExecutionPlan(
     const scriptName = packageScriptName(command);
     if (!scriptName) continue;
     if (!Object.hasOwn(packageScripts, scriptName)) {
-      diagnostics.push({ id: command.id, script: scriptName, reason: 'missing-package-script' });
+      diagnostics.push({
+        id: command.id,
+        script: scriptName,
+        reason: 'missing-package-script',
+      });
       continue;
     }
     const script = packageScripts[scriptName];
@@ -341,7 +373,9 @@ export async function loadFocusedExecutionInputs(
     }
     const directory = path.dirname(pattern);
     try {
-      const entries = await readDirectory(path.join(root, directory), { withFileTypes: true });
+      const entries = await readDirectory(path.join(root, directory), {
+        withFileTypes: true,
+      });
       for (const entry of entries) {
         const candidate = path.posix.join(directory, entry.name);
         if (entry.isFile()) {
@@ -359,7 +393,11 @@ export async function loadFocusedExecutionInputs(
       // An incomplete glob cannot authorize deduplication.
     }
   }
-  return { packageScripts, repositoryFiles: [...repositoryFiles], shellSemantics };
+  return {
+    packageScripts,
+    repositoryFiles: [...repositoryFiles],
+    shellSemantics,
+  };
 }
 
 export function runFocusedCommands(
@@ -430,6 +468,10 @@ async function main() {
     .split(/\r?\n/u)
     .map((item) => item.trim())
     .filter(Boolean);
+  const policyFile = argument('--test-policy');
+  if (process.argv.includes('--test-policy') && (!policyFile || policyFile.startsWith('--')))
+    throw new Error('An explicit test policy path is required; no waiver granted.');
+  const testPolicy = policyFile ? await readTestPolicy(path.resolve(policyFile)) : null;
   const fallbackHandled = process.argv.includes('--fallback-handled');
   const plan = focusedTestPlan(paths, manifest, { fallbackHandled });
   const summary = [
@@ -458,12 +500,26 @@ async function main() {
     }
     return;
   }
-  const execution = focusedCommandExecutionPlan(
-    plan.commands,
-    await loadFocusedExecutionInputs(plan.commands, root, {
-      shellSemantics: packageScriptShellSemantics(root),
-    }),
-  );
+  const inputs = await loadFocusedExecutionInputs(plan.commands, root, {
+    shellSemantics: packageScriptShellSemantics(root),
+  });
+  const selected = applyFocusedTestPolicy(plan.commands, testPolicy, inputs);
+  if (selected.waivedTests.length) {
+    const statement =
+      'Automated test commands are WAIVED_SKIPPED_NOT_PASSED by explicit user policy. ' +
+      'Non-test validation and source-identity guards remain required.';
+    const waiverSummary =
+      [
+        '',
+        statement,
+        'Deferred commands: ' + selected.waivedTests.map(({ id }) => id).join(', '),
+      ].join('\n') + '\n';
+    process.stdout.write('::warning::' + statement + '\n');
+    process.stdout.write(waiverSummary);
+    if (process.env.GITHUB_STEP_SUMMARY)
+      await fs.appendFile(process.env.GITHUB_STEP_SUMMARY, waiverSummary);
+  }
+  const execution = focusedCommandExecutionPlan(selected.commands, inputs);
   for (const diagnostic of execution.diagnostics)
     process.stderr.write(`[focused:coverage] ${JSON.stringify(diagnostic)}\n`);
   if (execution.deduplicated.length)
