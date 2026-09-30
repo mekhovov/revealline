@@ -324,6 +324,21 @@ test('compact controls override inherited dialog panel spacing without shrinking
     compact,
     /#journey-chooser\.mission-library-chooser \.journey-footer > button \{[^}]*min-block-size: 44px;[^}]*margin: 0;/s,
   );
+  assert.match(
+    css,
+    /#journey-chooser\.mission-library-chooser \.journey-footer > \.journey-goal \{[^}]*flex: 0 0 auto;[^}]*flex-wrap: nowrap !important;[^}]*width: max-content !important;[^}]*min-block-size: 44px;/s,
+    'Mission-goal controls stay in the footer scroll strip instead of making the compact footer taller.',
+  );
+  assert.match(
+    css,
+    /#journey-chooser\.mission-library-chooser \.journey-footer > \.mission-library-setup \{[^}]*flex-basis: auto;[^}]*margin: 0;[^}]*padding: 0;[^}]*border: 0;/s,
+    'The setup disclosure cannot restore the legacy two-row footer at wider breakpoints.',
+  );
+  assert.match(
+    css,
+    /#journey-chooser\.mission-library-chooser \.journey-goal > p \{[^}]*max-width: 14rem;[^}]*text-overflow: ellipsis;[^}]*white-space: nowrap;/s,
+    'A long pinned mission remains accessible without consuming gallery height.',
+  );
 });
 
 test('narrow large-text and forced-colour layouts keep one readable column and native state cues', async () => {
