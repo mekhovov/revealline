@@ -2976,7 +2976,7 @@ export function bootCoop({
     );
   }
   function discoveryControls() {
-    for (const id of ['coop-discovery-open', 'coop-discovery-paused']) {
+    for (const id of ['coop-discovery-open', 'coop-discovery-paused', 'coop-random-level']) {
       const button = $(id);
       if (button) button.disabled = !canOpenDiscovery();
     }
@@ -4214,7 +4214,7 @@ export function bootCoop({
   discovery = {
     isOpen: () => Boolean($('journey-chooser')?.open),
     primary: () => libraryChooser?.primary() ?? $('coop-discovery-open'),
-    async open(opener) {
+    async open(opener, { random = false } = {}) {
       if (!canOpenDiscovery()) return;
       libraryOpening?.dispose();
       const opening = trackMissionLibraryOpening({ document });
@@ -4228,6 +4228,7 @@ export function bootCoop({
         mountTeamLibrary();
         ++libraryOtherModesVisit;
         libraryChooser.open(opener);
+        if (random && libraryChooser.playRandom({ resetFilters: true })) return;
         libraryPreview.refresh();
         if (installedTeamStorageError)
           libraryStatus(
@@ -4288,6 +4289,7 @@ export function bootCoop({
   };
   $('coop-discovery-open').onclick = () => discovery.open($('coop-discovery-open'));
   $('coop-discovery-paused').onclick = () => discovery.open($('coop-discovery-paused'));
+  $('coop-random-level').onclick = () => discovery.open($('coop-random-level'), { random: true });
 
   function freshRecipe(level, options) {
     return {
@@ -5985,6 +5987,7 @@ export function bootCoop({
     cancelDiscoveryPreparation();
     $('coop-discovery-open').onclick = null;
     $('coop-discovery-paused').onclick = null;
+    $('coop-random-level').onclick = null;
     $('coop-home-paused').onclick = null;
     cancelNext({ announce: false });
     $('coop-next').onclick = null;
