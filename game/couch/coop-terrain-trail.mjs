@@ -1,3 +1,4 @@
+import { captureRecipe } from '../ui/feedback-cues.mjs';
 import { t } from '../i18n/index.mjs';
 import { drawActiveTrail, drawCapturePulse } from '../ui/actor-presentation.mjs';
 import { drawPresentationImage } from '../ui/presentation-draw-image.mjs';
@@ -52,6 +53,7 @@ export function createCoopCaptureFeedback() {
         if (!indices.length) continue;
         records.push(
           Object.freeze({
+            revealDuration: captureRecipe(event, run).duration,
             tick: event.tick,
             time: event.time,
             indices: Object.freeze(indices),

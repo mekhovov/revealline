@@ -250,6 +250,9 @@ test('page cue listeners use native actions only and cleanup leaves no active au
     },
   };
   document.emit('focusin', { target: control });
+  assert.deepEqual(calls, [], 'programmatic focus is quiet');
+  document.emit('keydown', { key: 'Tab' });
+  document.emit('focusin', { target: control });
   document.emit('click', { target: control });
   control.matches = () => true;
   document.emit('click', { target: control });
