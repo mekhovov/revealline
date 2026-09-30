@@ -1,6 +1,6 @@
 # RevealLine — consolidated soundtrack master plan
 
-Updated 29 September 2026. This is the durable source of truth for all soundtrack
+Updated 30 September 2026. This is the durable source of truth for all soundtrack
 work. It replaces the separate conversational plans without removing completed,
 blocked, rejected or deferred requirements. The user approved implementation of
 this consolidated plan.
@@ -20,12 +20,97 @@ milestone; append decisions and history instead of replacing the plan with the
 latest subplan. Archive publication, rights clearance, musical approval, game
 admission and public game verification are separate states.
 
-A track is delivered only after admission, an immutable game release and direct
-public verification. An MP3 preview or a passing transport test is insufficient.
+A track is delivered only after admission, a published game source and direct
+public verification. Current releases use protected main merges and automatic Pages
+deployment; immutable historical editions remain preserved. An MP3 preview or a
+passing transport test is insufficient.
 Keep historical immutable files and failed/partial evidence. Never manufacture
 reviewer names, listening approval or device results.
 
-## Current execution checkpoint — 29 September 2026 (v0.142.3 public)
+## Current execution checkpoint — 30 September 2026
+
+The current public main deployment is source `451b82dc13dc8a8545ff964ffb724d3d756ac62a`
+(build label 0.142.4), following [PR #816](https://github.com/mekhovov/revealline/pull/816).
+The release owner verified automatic Pages run
+[36670887347](https://github.com/mekhovov/revealline/actions/runs/36670887347).
+Historical v0.142.3 remains immutable. The former #779/v0.142.4 release hold is
+superseded: current source already includes the reconciled Audio controls and
+style persistence. Closed recovery PRs are not pending release inputs.
+
+The publisher now merges independent reviewed PRs through branch protection and
+lets main deploy automatically. **Milestone v0.150.0 is planning, not a reason to
+hold an independently ready change.** Deferred broad checks are recorded in
+[issue #813](https://github.com/mekhovov/revealline/issues/813); waived or skipped
+suites remain unverified. No second publisher or replacement historical tag is needed.
+
+### Completed and preserved
+
+- Canonical archive: **260 recordings, 196 public and 64 review-only**. Search,
+  styles, collections, shareable URLs, upload intake and automatic publication are
+  already present. Expressly hidden/rejected songs stay out of normal queues.
+- The current game already discovers the canonical catalogue dynamically and has
+  top-level Audio playback/style controls, mixed remote/local queues, uploaded
+  tracks, offline albums, recovery and the bundled Shchedryk opening track.
+- Owner musical approval is recorded for the eleven active review recordings in
+  [archive #63](https://github.com/mekhovov/revealline-soundtracks/pull/63).
+- [Archive #64](https://github.com/mekhovov/revealline-soundtracks/pull/64) merged
+  as `5a835e54cf333b35e37d3cbd956cfa1914c6da58`. It adds an immutable seven-object
+  admission inventory without copying or changing audio. Exact-head verification
+  passed **47/47** tests plus full staged payload verification. Pages run
+  [36672000939](https://github.com/mekhovov/revealline-soundtracks/actions/runs/36672000939)
+  passed; the public admission inventory returns HTTP 200 with exactly 1,607 bytes
+  and SHA-256 `64f0e2ac28718af710fc20702519dfa171fe4020a56037242795027c8f1d5caa`.
+- The soundtrack branch was refreshed to latest accepted main without conflicts.
+  A read-only audit covered **23 relevant worktrees and 78 local branches**.
+  Historical unpushed tip `1c70bc3a92cc6e36247badb80d17e9371b40c46d` is now preserved
+  on GitHub as `codex/preserved-combined-native-spatial-audio-20260930`.
+  Old `team-after-music` working files are already represented in remote history;
+  they remain untouched. Spatial-audio work belongs to [PR #817](https://github.com/mekhovov/revealline/pull/817).
+
+### Next batches, estimates and exact limits
+
+| ID                 | Status / next action                                                                                                                                                                                                                                                                                                                   | Remaining effort and dependency                                                                                                                                                                         |
+| ------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **M5 + M6**        | **Priority: six-track game admission in progress.** Retroracing Nightlife; Agony Space-deep; God of Darkness; Suffocation; Pixel Damnation; Revenge's Waiting. Exact public hashes and full decoding verified; all six meet −17..−15 LUFS and ≤−1 dBTP. One Synth album and one five-track Metal album reuse existing immutable files. | About **half to one working day** for source/fingerprint review, protected PR gates and direct public verification; CI/publication time additional. Full human/device checks remain separately pending. |
+| **M5 follow-up**   | runner2088 remains approved musically and publicly streamable, but its existing MP3 measures **+0.45 dBTP**. It is excluded from trusted admission until a permitted peak-controlled derivative is published and verified with a new hash.                                                                                             | **2–4 hours** of derivative work and verification, then archive/game PR delivery; storage guard applies. Existing bytes stay intact.                                                                    |
+| **M4**             | Shchedryk is already bundled. Three approved Commons recordings still need Ukrainian cultural review and scene/energy assignments before trusted admission.                                                                                                                                                                            | Several hours of reviewer time, then **1–2 working days** for a cleared subset. A review date cannot be promised.                                                                                       |
+| **M9**             | Curate metadata only for accepted batches; avoid restarting a full catalogue retag. Six-track scene/energy assignments are included with M5/M6.                                                                                                                                                                                        | **1–3 hours per further accepted batch**.                                                                                                                                                               |
+| **M8**             | Physical iPhone/controller and cold-offline acceptance remains **deferred by the user**. Keep software regressions separate.                                                                                                                                                                                                           | About **half a day** when restored and devices are available.                                                                                                                                           |
+| External URL proof | URL intake and external support exist; one real stable, rights-cleared public S3-style URL is still needed for end-to-end proof.                                                                                                                                                                                                       | **1–2 hours after a valid URL is supplied**; cloud provisioning remains deferred.                                                                                                                       |
+| Legacy archives    | Keep numbered repositories and Pages compatibility payloads. Retirement notices/archival follow physical/offline acceptance; deletion is not authorized by a successful current-client test alone.                                                                                                                                     | About **half a day after M8**.                                                                                                                                                                          |
+| Capacity / M10     | Add catalogue pagination before about 450 recordings; broader genres follow core-family delivery.                                                                                                                                                                                                                                      | Pagination **1–2 working days** when approaching the limit; currently 260. New albums **1–2 days per cleared batch**.                                                                                   |
+| M7 / M11           | **UA-FPV skipped by user direction. AI originals paused, 0/36 approved.** Preserve files, rights holds, rejected recordings and brief.                                                                                                                                                                                                 | Unscheduled; neither blocks ready licensed batches.                                                                                                                                                     |
+
+The admission compiler now distinguishes the owner's exact-hash musical decision
+from full listening qualification. The six-track proposal explicitly leaves
+full-track, repeated-session, transitions, warning audibility, mono, small-speaker
+and physical-device checks pending; it does not fabricate those results.
+Content ID and gameplay-video permission remain unknown, so these tracks stay
+excluded from Recording mode. Revenge's Waiting is a **48-second boss cue**, not a
+full-length gameplay composition. Public archive publication and these game
+admissions do not count toward the paused 36-original-composition milestone.
+
+A local dependency install failed with ENOSPC during this audit. Source files and
+historical evidence were preserved. Use hosted full builds, bounded measurements
+in memory, and check the **1 GiB free-space floor** before production writes.
+Space has fluctuated as parallel tasks work; no other task's caches or user data
+may be deleted to bypass the guard.
+
+The six-track game proposal remains **draft, not release-ready**. Independent
+review confirms 77 catalogue tracks and exact preservation of all previous 71
+recordings, archive entries, collections and bundled opening assets. However,
+`produce-field-kit-theme.mjs --check` reports a stale production ledger already
+present on the accepted base. The base includes material Demo audio routing
+changes absent from its earlier review fingerprint; an in-memory production
+comparison also finds 59 pre-existing non-audio successors plus eight audio
+successors. This cannot be described as a catalogue-only ledger refresh.
+[The blocked review](verification/approved-synth-metal-20260930/review.json)
+records the evidence and pending qualification. No old approval, ledger or
+fingerprint was overwritten. Resolving that shared baseline and passing the
+exact-source gates is a release dependency; its elapsed completion time is not
+yet established.
+
+## Superseded execution checkpoint — 29 September 2026 (v0.142.3 public)
 
 The immutable game release **v0.142.3** is published from exact source
 `b5ab06e12542f72e33c45b973ba693a5e1509c1c`. Pages selector PR

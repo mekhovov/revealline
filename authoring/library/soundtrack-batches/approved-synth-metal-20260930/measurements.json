@@ -1,0 +1,79 @@
+{
+  "format": "revealline-soundtrack-measurements.v1",
+  "decoder": "FFmpeg",
+  "decoderVersion": "9.0.2",
+  "command": "ffmpeg -hide_banner -v info -xerror -i pipe:0 -af loudnorm=I=-16:TP=-1:LRA=11:print_format=json -f null -",
+  "method": "Downloaded each exact public object into memory, verified its byte count and SHA-256, decoded all bytes through FFmpeg; report uses input_i and input_tp, not the discarded normalized output. No audio was changed or written. Non-seekable Xing inputs report an estimated-duration warning. This is technical measurement, not listening or device acceptance.",
+  "tracks": [
+    {
+      "id": "bogart-vgm.retroracing-nightlife",
+      "url": "https://mekhovov.github.io/revealline-soundtracks/objects/24bfa4c75bcf80b3a81c3329a414221eebb8db650309aeb14935104d7ad36f70.mp3",
+      "sha256": "24bfa4c75bcf80b3a81c3329a414221eebb8db650309aeb14935104d7ad36f70",
+      "bytes": 5199456,
+      "verifiedAt": "2026-09-30T05:06:33.279018+00:00",
+      "fullFileDecoded": true,
+      "integratedLUFS": -16,
+      "truePeakDbTP": -2.59
+    },
+    {
+      "id": "davidkbd.agony-space-deep",
+      "url": "https://mekhovov.github.io/revealline-soundtracks/objects/991084035ebf50e3a27833148f57de8db7930e54b6ab549162f825efcfeae94d.mp3",
+      "sha256": "991084035ebf50e3a27833148f57de8db7930e54b6ab549162f825efcfeae94d",
+      "bytes": 9048860,
+      "verifiedAt": "2026-09-30T05:06:45.399487+00:00",
+      "fullFileDecoded": true,
+      "integratedLUFS": -16,
+      "truePeakDbTP": -5.06
+    },
+    {
+      "id": "davidkbd.god-of-darkness",
+      "url": "https://mekhovov.github.io/revealline-soundtracks/objects/ccd3b29e315ca6db5871f709baeea9b9a08bc1d5915382f44338d592402e32c0.mp3",
+      "sha256": "ccd3b29e315ca6db5871f709baeea9b9a08bc1d5915382f44338d592402e32c0",
+      "bytes": 6281970,
+      "verifiedAt": "2026-09-30T05:06:51.668777+00:00",
+      "fullFileDecoded": true,
+      "integratedLUFS": -16,
+      "truePeakDbTP": -5.92
+    },
+    {
+      "id": "davidkbd.suffocation",
+      "url": "https://mekhovov.github.io/revealline-soundtracks/objects/c3efaac83f71f4fcd9d2e5d3a752507893c1950ac5db6be7bced5e1bb71e2fae.mp3",
+      "sha256": "c3efaac83f71f4fcd9d2e5d3a752507893c1950ac5db6be7bced5e1bb71e2fae",
+      "bytes": 6880488,
+      "verifiedAt": "2026-09-30T05:07:01.133372+00:00",
+      "fullFileDecoded": true,
+      "integratedLUFS": -16,
+      "truePeakDbTP": -5.28
+    },
+    {
+      "id": "yannz.pixel-damnation",
+      "url": "https://mekhovov.github.io/revealline-soundtracks/objects/a4f87f13d432a75d9bd852f88ab575ad1b0bec050e23650cef1c817ad4328bde.mp3",
+      "sha256": "a4f87f13d432a75d9bd852f88ab575ad1b0bec050e23650cef1c817ad4328bde",
+      "bytes": 4302515,
+      "verifiedAt": "2026-09-30T05:07:05.888649+00:00",
+      "fullFileDecoded": true,
+      "integratedLUFS": -16,
+      "truePeakDbTP": -5.81
+    },
+    {
+      "id": "yannz.revenges-waiting",
+      "url": "https://mekhovov.github.io/revealline-soundtracks/objects/a5d0198843a7cef37f1919a094e99dc7b33c5fcac799f265eeaac647db9effec.mp3",
+      "sha256": "a5d0198843a7cef37f1919a094e99dc7b33c5fcac799f265eeaac647db9effec",
+      "bytes": 1538133,
+      "verifiedAt": "2026-09-30T05:07:07.682028+00:00",
+      "fullFileDecoded": true,
+      "integratedLUFS": -16,
+      "truePeakDbTP": -2.52
+    },
+    {
+      "id": "wekont.runner2088",
+      "url": "https://mekhovov.github.io/revealline-soundtracks/objects/9924c6163116b0db94cc0c1878542d2576aac02051dd25f6ebb3b9767869cef9.mp3",
+      "sha256": "9924c6163116b0db94cc0c1878542d2576aac02051dd25f6ebb3b9767869cef9",
+      "bytes": 3884999,
+      "verifiedAt": "2026-09-30T05:06:37.115991+00:00",
+      "fullFileDecoded": true,
+      "integratedLUFS": -15.34,
+      "truePeakDbTP": 0.45
+    }
+  ]
+}
