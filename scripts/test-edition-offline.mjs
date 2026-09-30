@@ -6,6 +6,27 @@ import { buildEditionOfflineFiles } from './edition-offline.mjs';
 import { validateCompanyInstallationReference } from '../game/edition-context.mjs';
 import { validateEditionCodeClosure } from './compile-edition.mjs';
 
+const STORED_RESPONSE = Symbol('stored-response');
+
+async function storeResponse(response) {
+  return {
+    [STORED_RESPONSE]: true,
+    bytes: new Uint8Array(await response.clone().arrayBuffer()),
+    status: response.status,
+    statusText: response.statusText,
+    headers: [...response.headers],
+  };
+}
+
+function readStoredResponse(value) {
+  if (!value?.[STORED_RESPONSE]) return value?.clone();
+  return new Response(value.bytes.slice(), {
+    status: value.status,
+    statusText: value.statusText,
+    headers: value.headers,
+  });
+}
+
 async function build(editionId = 'coupa', options = {}) {
   return buildEditionOfflineFiles({
     files: new Map([
@@ -54,11 +75,11 @@ function worker(
       return {
         match: async (key) => {
           storageOperation('match', name, key);
-          return target.get(key)?.clone();
+          return readStoredResponse(target.get(key));
         },
         put: async (key, response) => {
           storageOperation('put', name, key);
-          target.set(key, response.clone());
+          target.set(key, await storeResponse(response));
         },
       };
     },
@@ -113,7 +134,12 @@ async function workerReceipt(runtime, type = 'verify-company-edition') {
 
 const storedBytes = (cache) =>
   Promise.all(
-    [...cache].map(async ([url, response]) => [url, await response.clone().arrayBuffer()]),
+    [...cache].map(async ([url, response]) => [
+      url,
+      response?.[STORED_RESPONSE]
+        ? response.bytes.slice().buffer
+        : await response.clone().arrayBuffer(),
+    ]),
   );
 
 test('offline artifacts are reproducible with distinct stable app IDs and scoped workers', async () => {
@@ -362,7 +388,11 @@ test('cache storage failures never certify a partial game or launcher and repair
       blocked = false;
       runtime.requests.length = 0;
       const repaired = await workerReceipt(runtime, 'repair-company-edition');
-      assert.equal(repaired.status, 'ready');
+      assert.equal(
+        repaired.status,
+        'ready',
+        `repair failed after ${operation} fault for ${launcher ? 'launcher' : 'game'}: ${JSON.stringify(repaired)}`,
+      );
       assert.equal(repaired.buildId, runtime.inventory.buildId);
       assert.equal(repaired.count, runtime.inventory.files.length);
       assert.equal(repaired.bytes, runtime.inventory.totalBytes);
@@ -427,13 +457,17 @@ test('failed update and foreign-client repair cannot change a retained release o
   await old.dispatch('install');
   const retained = new Map(
     await Promise.all(
-      [...old.cache].map(async ([url, response]) => [url, await response.clone().text()]),
+      [...old.cache].map(async ([url, response]) => [
+        url,
+        await readStoredResponse(response).text(),
+      ]),
     ),
   );
   const update = worker(await build('coupa', { version: '0.141.0' }), { stores, corrupt: true });
   await assert.rejects(update.dispatch('install'), /differs/);
   assert.equal(stores.size, 2);
-  for (const [url, body] of retained) assert.equal(await old.cache.get(url).clone().text(), body);
+  for (const [url, body] of retained)
+    assert.equal(await readStoredResponse(old.cache.get(url)).text(), body);
   const response = await old.dispatch('fetch', {
     request: { method: 'GET', url: `${old.scope}game/company.html` },
   });
@@ -457,7 +491,8 @@ test('failed update and foreign-client repair cannot change a retained release o
   });
   assert.equal(receipt.status, 'error');
   assert.equal(foreign.requests.length, 0);
-  for (const [url, body] of retained) assert.equal(await old.cache.get(url).clone().text(), body);
+  for (const [url, body] of retained)
+    assert.equal(await readStoredResponse(old.cache.get(url)).text(), body);
 });
 
 test('generated stable launcher opens verified active and retained release links and rejects foreign update pointers', async () => {
