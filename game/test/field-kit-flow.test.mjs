@@ -126,10 +126,10 @@ test('title keeps its game destinations and quick sound; Workshop and unified Mi
     'shell-options',
     'shell-home-fpv',
     'shell-home-practice',
-    'shell-offline',
-    'shell-offline-status',
     'shell-sound',
   ]);
+  for (const id of ['shell-offline', 'shell-offline-status'])
+    assert.equal(page.$(id).closest('[role="tabpanel"]').id, 'settings-panel-content');
   assert.equal(
     page.doc.querySelector('.home-actions').querySelector('[data-release-explorer]'),
     null,
@@ -253,8 +253,6 @@ test('visible title Start launches directly and Continue explicitly resumes the 
     'shell-options',
     'shell-home-fpv',
     'shell-home-practice',
-    'shell-offline',
-    'shell-offline-status',
     'shell-sound',
   ]);
   assert.match(page.$('shell-destination').textContent, /Continue/);

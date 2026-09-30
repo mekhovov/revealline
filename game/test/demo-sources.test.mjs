@@ -215,6 +215,99 @@ test('manually kept local recordings join the catalogue without enabling automat
   library.dispose();
 });
 
+test('uncached optional bundled replays fall back to a retained recording or stay unavailable offline', async () => {
+  const catalog = await json('../demo-data/catalog.json');
+  const recording = await json('../demo-data/first-signal-left.replay.json');
+  // A fresh main installation has the base owner, without an installed bot pack.
+  // The catalogue remains available offline; its optional recording bodies do not.
+  const installedEntries = createExecutionCatalog([base]).entries;
+  for (const retained of [true, false]) {
+    const clock = demoLoadingClock();
+    const requested = [];
+    let stored = null;
+    const library = createDemoLibrary({
+      storage: {
+        read: async () => structuredClone(stored),
+        update: async (fn) => {
+          stored = fn(stored);
+          return structuredClone(stored);
+        },
+      },
+    });
+    let director;
+    try {
+      if (retained) await library.keep(recording, { entry: base, practice: false, manual: true });
+      const storedBefore = structuredClone(stored);
+      const sources = await loadDemoSources({
+        entries: installedEntries,
+        library,
+        WorkerClass: LazyWorker,
+        loading: clock.options,
+        fetch: async (url) => {
+          requested.push(url.href);
+          if (url.pathname.endsWith('/demo-data/catalog.json')) return assetFetch(url);
+          throw new TypeError('Failed to fetch: optional recording is not cached offline.');
+        },
+      });
+      const bundled = sources.filter((source) => source.source !== 'local');
+      assert.equal(bundled.length, catalog.clips.length);
+      assert.ok(sources.every((source) => source.kind === 'replay'));
+      director = createDemoDirector({ sources, random: () => 0, loading: clock.options });
+      assert.equal(await director.start(), retained);
+      assert.deepEqual(
+        director.failedSourceIds,
+        bundled.map((source) => source.id),
+      );
+      assert.deepEqual(
+        requested,
+        [
+          new URL('../demo-data/catalog.json', import.meta.url).href,
+          ...catalog.clips.map(
+            (clip) => new URL(`../${clip.replayURL.slice(2)}`, import.meta.url).href,
+          ),
+        ],
+        'Each unavailable bundled source is attempted once; no variant, pack or media download is attempted.',
+      );
+      const requestCount = requested.length;
+      if (retained) {
+        assert.equal(director.phase, 'playing');
+        assert.equal(director.source.source, 'local');
+        assert.deepEqual(director.player.exportRecording(), recording);
+        assert.equal(director.advance(0.25).ticks, 30);
+        assert.equal(director.player.state.tick, 30);
+        director.pause();
+        assert.equal(await director.next(), true);
+        assert.equal(director.phase, 'paused', 'Offline fallback retains explicit Pause.');
+        assert.equal(director.source.source, 'local');
+        assert.equal(director.player.state.tick, 0);
+      } else {
+        assert.equal(director.phase, 'unavailable');
+        assert.equal(director.player, null);
+        assert.equal(director.source, null);
+        assert.equal(director.advance(0.25).reason, 'inactive');
+        assert.equal(await director.next(), false);
+        assert.equal(await director.start(), false);
+        assert.equal(director.phase, 'unavailable');
+      }
+      assert.equal(
+        requested.length,
+        requestCount,
+        'Quarantined recordings do not form a retry loop.',
+      );
+      assert.deepEqual(
+        stored,
+        storedBefore,
+        'Playback never rewrites the personal recording cache.',
+      );
+      assert.equal(library.enabled, false);
+    } finally {
+      director?.dispose();
+      library.dispose();
+    }
+    assert.equal(clock.pending, 0, 'All source/director deadline timers are released.');
+  }
+});
+
 test('scene creation rejects a valid but wrong bundled recording and respects cancellation', async () => {
   const sources = await loadDemoSources({
     entries,

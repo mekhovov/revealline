@@ -73,6 +73,7 @@ export function mountFlightApp({
     lastHUD = -Infinity,
     terminalHandled = false,
     disposed = false,
+    suspended = false,
     graphicsLost = false,
     focused = typeof doc.hasFocus === 'function' ? doc.hasFocus() : true,
     epoch = 0,
@@ -182,6 +183,7 @@ export function mountFlightApp({
   function arm() {
     if (
       disposed ||
+      suspended ||
       !renderer.available ||
       graphicsLost ||
       modalOpen() ||
@@ -449,7 +451,7 @@ export function mountFlightApp({
     pendingAttempt = Promise.all([previous, operation]).then(() => {});
   }
   function frame(now) {
-    if (disposed) return;
+    if (disposed || suspended) return;
     const delta = lastTime === null ? 0 : now - lastTime,
       executedAt = win.performance?.now?.() ?? now,
       executionDelta = lastExecutionTime === null ? 0 : executedAt - lastExecutionTime;
@@ -721,7 +723,29 @@ export function mountFlightApp({
       courseButtons = [];
     },
   };
-  listen(win, 'pagehide', () => api.dispose());
+  listen(win, 'pagehide', (event) => {
+    if (!event.persisted) {
+      api.dispose();
+      return;
+    }
+    // History caching retains this exact attempt and its resources, but releases
+    // live input. Restoring the page must never resume or arm it automatically.
+    suspended = true;
+    focused = false;
+    pause('focusLost');
+    if (frameId !== null) win.cancelAnimationFrame(frameId);
+    frameId = null;
+  });
+  listen(win, 'pageshow', (event) => {
+    if (!event.persisted || disposed || !suspended) return;
+    suspended = false;
+    focused = typeof doc.hasFocus === 'function' ? doc.hasFocus() : true;
+    lastTime = null;
+    lastExecutionTime = null;
+    accumulator = 0;
+    frameId = win.requestAnimationFrame(frame);
+    paint(true);
+  });
   return api;
 }
 

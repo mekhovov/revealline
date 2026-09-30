@@ -160,8 +160,19 @@ body.field-kit.game-shell:is([data-flight-state='running'], [data-flight-state='
   min-width: 0;
   max-width: 100%;
 }
+.game-shell .game-overlay:not([data-kind='pause']) .pause-secondary-groups,
+.game-shell .game-overlay:not([data-kind='pause']):not([data-kind='ready']) .pause-menu-section,
+.game-shell .game-overlay[data-kind='ready'] .pause-menu-section:not(.pause-missions-section),
+.game-shell .game-overlay[data-kind='ready'] .pause-missions-section > h3 {
+  display: none;
+}
+.game-shell .game-overlay[data-kind='ready'] .pause-missions-section .pause-action-grid {
+  display: block;
+}
 .game-shell .game-overlay[data-kind='pause'] .pause-mission-info {
-  width: 100%;
+  display: grid;
+  gap: 6px;
+  min-width: 0;
 }
 .game-shell .game-overlay[data-kind='ready'] .pause-mission-info {
   width: 100%;
@@ -172,7 +183,7 @@ body.field-kit.game-shell:is([data-flight-state='running'], [data-flight-state='
 .game-shell .game-overlay[data-kind='ready'] .pause-mission-info > div {
   display: grid;
   grid-template-columns: 1fr;
-  gap: 8px;
+  gap: 6px;
 }
 .game-shell .game-overlay[data-kind='pause'] .pause-mission-info > summary {
   min-height: 44px;
@@ -184,9 +195,15 @@ body.field-kit.game-shell:is([data-flight-state='running'], [data-flight-state='
 }
 .game-shell .game-overlay[data-kind='pause'] .pause-mission-info > div {
   display: grid;
-  grid-template-columns: 1fr;
-  gap: 8px;
-  margin-top: 8px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 6px;
+  margin: 0;
+  position: relative;
+  inset-inline-start: calc(-100% - 6px);
+  width: calc(200% + 6px);
+}
+.game-shell .game-overlay[data-kind='pause'] .pause-mission-info:not([open]) > div {
+  display: none;
 }
 .game-shell #controller-ui-hint {
   display: none;
@@ -231,16 +248,10 @@ body.field-kit.game-shell:is([data-flight-state='running'], [data-flight-state='
 }
 @media (max-width: 680px) {
   .game-shell .game-overlay[data-kind='pause'] .overlay-card {
-    width: min(360px, 100%);
-    gap: 18px;
+    width: min(700px, 100%);
+    gap: 8px;
   }
-  .game-shell .game-overlay[data-kind='pause'] .overlay-actions {
-    display: grid;
-    grid-template-columns: 1fr;
-    min-width: 0;
-    width: 100%;
-  }
-  .game-shell .game-overlay[data-kind='pause'] .overlay-actions .button {
+  .game-shell .game-overlay[data-kind='pause'] .overlay-actions :is(.button, summary) {
     min-width: 0;
     max-width: 100%;
     white-space: normal;
@@ -260,25 +271,95 @@ body.field-kit.game-shell:is([data-flight-state='running'], [data-flight-state='
     height: auto;
   }
 }
+@media (min-width: 520px) {
+  .game-shell .game-overlay[data-kind='pause'] .pause-missions-section .pause-action-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+  .game-shell .game-overlay[data-kind='pause'] .pause-secondary-groups {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .game-shell .game-overlay[data-kind='pause'] .pause-mission-info > div {
+    inset-inline-start: calc(-300% - 18px);
+    width: calc(400% + 18px);
+  }
+}
+@media (max-width: 340px) {
+  .game-shell .game-overlay[data-kind='pause'] {
+    padding: max(8px, var(--safe-top)) max(8px, var(--safe-right)) max(8px, var(--safe-bottom))
+      max(8px, var(--safe-left));
+  }
+  .game-shell .game-overlay[data-kind='pause'] .overlay-card {
+    padding: 10px;
+    gap: 6px;
+  }
+  body.field-kit.game-shell .game-overlay[data-kind='pause'] .pause-label {
+    font-size: 13px;
+  }
+  .game-shell .game-overlay[data-kind='pause'] .overlay-actions {
+    gap: 6px;
+  }
+  body.field-kit.game-shell
+    .game-overlay[data-kind='pause']
+    .overlay-actions
+    :is(.button, summary) {
+    padding-inline: 8px;
+    font-size: 15px;
+    text-align: center;
+  }
+  .game-shell .game-overlay[data-kind='pause'] .overlay-actions :is(.button, summary)::before {
+    display: none;
+  }
+}
 @media (orientation: landscape) and (max-height: 540px) {
   .game-shell .game-overlay[data-kind='pause'] {
     position: fixed;
     inset: 48px 0 0;
-    padding: 10px max(16px, var(--safe-right)) max(10px, var(--safe-bottom))
-      max(16px, var(--safe-left));
+    padding: max(4px, var(--safe-top)) max(12px, var(--safe-right)) max(4px, var(--safe-bottom))
+      max(12px, var(--safe-left));
   }
   .game-shell .game-overlay[data-kind='pause'] .overlay-card {
-    width: min(680px, 100%);
-    padding: 14px 18px;
-    gap: 12px;
+    width: min(700px, 100%);
+    padding: 4px 10px;
+    gap: 0;
+  }
+  body.field-kit.game-shell .game-overlay[data-kind='pause'] .pause-label {
+    display: none;
   }
   .game-shell .game-overlay[data-kind='pause'] .overlay-actions {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    width: 100%;
+    gap: 4px;
   }
-  .game-shell .game-overlay[data-kind='pause'] :is(#start-button, #overlay-menu) {
-    grid-column: 1 / -1;
+  .game-shell .game-overlay[data-kind='pause'] .pause-menu-section {
+    position: relative;
+    gap: 0;
+  }
+  .game-shell .game-overlay[data-kind='pause'] .pause-menu-section > h3 {
+    position: absolute;
+    z-index: 2;
+    top: -5px;
+    inset-inline-start: 4px;
+    padding-inline: 3px;
+    background: #050a14;
+    font-size: 10px;
+    line-height: 1;
+    pointer-events: none;
+  }
+  .game-shell .game-overlay[data-kind='pause'] :is(.pause-action-grid, .pause-secondary-groups) {
+    gap: 4px;
+  }
+  body.field-kit.game-shell
+    .game-overlay[data-kind='pause']
+    .overlay-actions
+    :is(.button, summary) {
+    padding-inline: 6px;
+    font-size: 13px;
+    line-height: 1.1;
+    text-align: center;
+  }
+  body.field-kit.game-shell
+    .game-overlay[data-kind='pause']
+    .overlay-actions
+    :is(.button, summary)::before {
+    display: none;
   }
   .game-shell[data-screen-controls='shown'] {
     --touch-gutter: 0px;
@@ -316,6 +397,16 @@ body.field-kit.game-shell:is([data-flight-state='running'], [data-flight-state='
   }
   .game-shell .run-message {
     font-size: 14px;
+  }
+}
+@media (max-width: 280px) {
+  .game-shell .game-overlay[data-kind='pause'] .pause-action-grid,
+  .game-shell .game-overlay[data-kind='pause'] .pause-mission-info > div {
+    grid-template-columns: 1fr;
+  }
+  .game-shell .game-overlay[data-kind='pause'] .pause-mission-info > div {
+    inset-inline-start: 0;
+    width: 100%;
   }
 }
 /* Hidden HTML controls must not regain boxes through a flex/grid rule. */
@@ -545,11 +636,6 @@ body.field-kit.game-shell:is([data-flight-state='running'], [data-flight-state='
 .game-shell .play-controls .ability-buttons .button {
   min-width: 52px;
   min-height: 52px;
-}
-.game-shell .shell-fullscreen {
-  min-width: 44px;
-  min-height: 44px;
-  font: 22px var(--fk-font-ui, sans-serif);
 }
 @media (any-pointer: coarse) {
   .game-shell dialog :is(button, select, input:not([type='checkbox']), summary, a) {

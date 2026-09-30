@@ -1,0 +1,110 @@
+TAP version 13
+# Subtest: visible spectator clock ignores focus, keeps one owner and emits fresh ordinary frames
+ok 1 - visible spectator clock ignores focus, keeps one owner and emits fresh ordinary frames
+  ---
+  duration_ms: 2.020084
+  ...
+# Subtest: withheld visible RAF cannot stop spectator simulation, recap rotation, audio or painting
+ok 2 - withheld visible RAF cannot stop spectator simulation, recap rotation, audio or painting
+  ---
+  duration_ms: 2.095
+  ...
+# Subtest: frame wins the visible wake once and retires its queued sibling
+ok 3 - frame wins the visible wake once and retires its queued sibling
+  ---
+  duration_ms: 0.29925
+  ...
+# Subtest: timer wins the visible wake once and retires its queued sibling
+ok 4 - timer wins the visible wake once and retires its queued sibling
+  ---
+  duration_ms: 0.082
+  ...
+# Subtest: visible timer recovery preserves explicit pause and pumps audio without stale effects
+ok 5 - visible timer recovery preserves explicit pause and pumps audio without stale effects
+  ---
+  duration_ms: 0.199417
+  ...
+# Subtest: reset invalidates both pending visible callbacks
+ok 6 - reset invalidates both pending visible callbacks
+  ---
+  duration_ms: 0.145
+  ...
+# Subtest: visibilitychange invalidates both pending visible callbacks
+ok 7 - visibilitychange invalidates both pending visible callbacks
+  ---
+  duration_ms: 0.146834
+  ...
+# Subtest: freeze invalidates both pending visible callbacks
+ok 8 - freeze invalidates both pending visible callbacks
+  ---
+  duration_ms: 0.07125
+  ...
+# Subtest: stop invalidates both pending visible callbacks
+ok 9 - stop invalidates both pending visible callbacks
+  ---
+  duration_ms: 0.144458
+  ...
+# Subtest: destroy invalidates both pending visible callbacks
+ok 10 - destroy invalidates both pending visible callbacks
+  ---
+  duration_ms: 0.1585
+  ...
+# Subtest: 1000ms hidden delay admits at most two seconds with one quarter-second per task
+ok 11 - 1000ms hidden delay admits at most two seconds with one quarter-second per task
+  ---
+  duration_ms: 0.474125
+  ...
+# Subtest: 60000ms hidden delay admits at most two seconds with one quarter-second per task
+ok 12 - 60000ms hidden delay admits at most two seconds with one quarter-second per task
+  ---
+  duration_ms: 0.154709
+  ...
+# Subtest: visibility switches invalidate stale RAF and message callbacks without double stepping
+ok 13 - visibility switches invalidate stale RAF and message callbacks without double stepping
+  ---
+  duration_ms: 0.155459
+  ...
+# Subtest: explicit pause stops catch-up while audio and visible painting continue until close
+ok 14 - explicit pause stops catch-up while audio and visible painting continue until close
+  ---
+  duration_ms: 0.120792
+  ...
+# Subtest: loading and freeze discard debt; resume preserves paused intent and resets timestamps
+ok 15 - loading and freeze discard debt; resume preserves paused intent and resets timestamps
+  ---
+  duration_ms: 0.080292
+  ...
+# Subtest: planner budget reserves a boundary without polling or spinning and cannot bank unlimited debt
+ok 16 - planner budget reserves a boundary without polling or spinning and cannot bank unlimited debt
+  ---
+  duration_ms: 0.073208
+  ...
+# Subtest: fallback timer works without RAF or MessageChannel and stale work cannot survive destroy
+ok 17 - fallback timer works without RAF or MessageChannel and stale work cannot survive destroy
+  ---
+  duration_ms: 0.065
+  ...
+# Subtest: close during an advance cancels the remaining burst and does not schedule another owner
+ok 18 - close during an advance cancels the remaining burst and does not schedule another owner
+  ---
+  duration_ms: 0.599792
+  ...
+# Subtest: clock samples never move its elapsed origin backward
+ok 19 - clock samples never move its elapsed origin backward
+  ---
+  duration_ms: 0.2635
+  ...
+# Subtest: two accelerated hours rotate hidden scenes across focus, pause and freeze generations
+ok 20 - two accelerated hours rotate hidden scenes across focus, pause and freeze generations
+  ---
+  duration_ms: 32.444458
+  ...
+1..20
+# tests 20
+# suites 0
+# pass 20
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 356.951666

@@ -508,30 +508,227 @@ body.field-kit[data-field-kit-page]
   background-color: var(--fk-amber);
   border-color: var(--fk-amber);
 }
-/* Recovery adds a complete explanation and actions outside the reading pane.
-   Keep them reachable when that pane gives up its remaining space. */
-.field-kit.game-shell .overlay-card:has(#flight-preparation-status:not([hidden])) {
+
+/* Briefing, Pause and Title share one non-reflowing progress rail. Preparation
+   remains cancellable with Back/Escape, so an extra temporary command never
+   appears in the action hierarchy or steals controller focus. */
+.field-kit.game-shell .preparation-cancel-hook {
+  display: none !important;
+}
+.field-kit.game-shell .menu-progress-status:not([hidden]) {
+  position: fixed;
+  z-index: 120;
+  inset-inline-start: 50%;
+  inset-block-end: max(10px, var(--safe-bottom, 0px));
+  translate: -50% 0;
+  display: flex;
+  width: min(640px, calc(100vw - var(--safe-left, 0px) - var(--safe-right, 0px) - 20px));
+  min-height: 38px;
+  max-height: min(30dvh, 160px);
+  margin: 0;
+  padding: 7px 10px;
+  overflow: auto;
+  color: var(--fk-text);
+  background: #07101ef5;
+  border: 1px solid #3f6486;
+  box-shadow:
+    0 0 0 1px #02040a,
+    0 10px 30px #000a;
+  font-size: 14px;
+  line-height: 1.3;
+  pointer-events: none;
+}
+.field-kit.game-shell .menu-progress-status .operation-status-label {
+  min-width: 0;
+}
+.field-kit.game-shell .menu-progress-status .operation-status-progress {
+  flex-basis: 90px;
+  max-width: 160px;
+}
+
+/* Ready and Pause are two states of the same command deck. The content changes,
+   but the panel surface, edge, width and command sizing do not. */
+.field-kit.game-shell .game-overlay:is([data-kind='ready'], [data-kind='pause']) .overlay-card {
+  width: min(680px, 100%);
+  max-width: 680px;
+  padding: clamp(10px, 2vw, 16px);
+  background: #050a14fa;
+  border-color: #30496d;
+  box-shadow:
+    0 0 0 1px #02040a,
+    0 20px 60px #000c;
+}
+
+/* Ready owns a real command grid. The legacy flex row gave every direct child
+   (including the Pause-only mission group) an equal shrinking share; long
+   translated labels could consequently collapse to a single character wide
+   while a picture or font was being prepared. */
+.field-kit.game-shell .game-overlay[data-kind='ready'] .overlay-card {
+  overflow-x: hidden;
   overflow-y: auto;
+  overscroll-behavior: contain;
+  scroll-padding-block: 12px;
 }
-.field-kit.game-shell #flight-preparation-status {
-  flex-shrink: 0;
-  margin-block: 8px;
-  font-size: var(--fk-text-control);
-  line-height: 1.5;
+.field-kit.game-shell .game-overlay[data-kind='ready'] .overlay-actions {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  align-items: stretch;
+  width: 100%;
+  min-width: 0;
+  gap: 8px;
 }
-@media (max-height: 500px) and (orientation: landscape) {
-  .field-kit.game-shell .game-overlay:has(#flight-preparation-status:not([hidden])) {
-    padding: 12px;
+.field-kit.game-shell .game-overlay[data-kind='ready'] .overlay-actions > * {
+  min-width: 0;
+}
+.field-kit.game-shell
+  .game-overlay[data-kind='ready']
+  .overlay-actions
+  > :is(#flight-preparation-cancel, #continue-saved, #start-button, #next-button, #overlay-menu) {
+  grid-column: 1 / -1;
+}
+.field-kit.game-shell .game-overlay[data-kind='ready'] .overlay-actions .button {
+  width: 100%;
+  min-width: 0;
+  min-height: 44px;
+  flex: none;
+  white-space: normal;
+  word-break: normal;
+  overflow-wrap: break-word;
+}
+.field-kit.game-shell .game-overlay[data-kind='ready'] #start-button {
+  min-height: 48px;
+  font-size: 17px;
+}
+.field-kit.game-shell
+  .game-overlay[data-kind='ready']
+  .pause-missions-section
+  .pause-mission-info
+  > div {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+/* Pause is a compact command deck: one dominant continuation, labeled rows of
+   related actions, then a quiet exit. Side labels preserve hierarchy without
+   consuming another line on phones or shallow landscape screens. */
+.field-kit.game-shell .game-overlay[data-kind='pause'] .overlay-card {
+  gap: 6px;
+}
+.field-kit.game-shell .game-overlay[data-kind='pause'] .pause-label {
+  align-self: stretch;
+  margin: 0;
+  padding: 0 2px 6px;
+  color: var(--fk-amber);
+  border-bottom: 1px solid #263b5b;
+  font-family: var(--fk-font-mono);
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+.field-kit.game-shell .game-overlay[data-kind='pause'] .overlay-actions {
+  gap: 6px;
+}
+.field-kit.game-shell .game-overlay[data-kind='pause'] .pause-menu-section {
+  display: grid;
+  grid-template-columns: 72px minmax(0, 1fr);
+  align-items: stretch;
+  gap: 6px;
+}
+.field-kit.game-shell .game-overlay[data-kind='pause'] .pause-menu-section > h3 {
+  display: flex;
+  align-items: center;
+  min-width: 0;
+  margin: 0;
+  padding: 4px 8px;
+  color: #9bb1c9;
+  background: #0a1220;
+  border-inline-start: 3px solid #36587d;
+  font: 700 11px/1.15 var(--fk-font-mono);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.field-kit.game-shell .game-overlay[data-kind='pause'] .pause-action-grid {
+  gap: 5px;
+}
+.field-kit.game-shell .game-overlay[data-kind='pause'] .pause-secondary-groups {
+  gap: 6px;
+}
+.field-kit.game-shell .game-overlay[data-kind='pause'] .overlay-actions :is(.button, summary) {
+  min-height: 44px;
+  padding: 6px 8px;
+  font-size: 15px;
+  line-height: 1.15;
+  text-align: center;
+  overflow-wrap: break-word;
+}
+.field-kit.game-shell
+  .game-overlay[data-kind='pause']
+  .overlay-actions
+  :is(.button:not([data-presentation-icon]), summary)::before {
+  display: none;
+}
+.field-kit.game-shell .game-overlay[data-kind='pause'] #start-button {
+  min-height: 48px;
+  font-size: 17px;
+}
+.field-kit.game-shell .game-overlay[data-kind='pause'] #overlay-menu {
+  color: #c1cfdd;
+  background: transparent;
+  border-color: #30496d;
+}
+.field-kit.game-shell[data-text-size='large'] .game-overlay[data-kind='pause'] .pause-menu-section {
+  grid-template-columns: 1fr;
+}
+
+@media (max-width: 380px) {
+  .field-kit.game-shell .game-overlay[data-kind='ready'] .overlay-actions {
+    grid-template-columns: minmax(0, 1fr);
   }
-  .field-kit.game-shell .overlay-card:has(#flight-preparation-status:not([hidden])) {
-    width: min(960px, 100%);
-    max-width: 960px;
+  .field-kit.game-shell .game-overlay[data-kind='pause'] .pause-menu-section {
+    grid-template-columns: 62px minmax(0, 1fr);
+  }
+  .field-kit.game-shell .game-overlay[data-kind='pause'] .pause-menu-section > h3 {
+    padding-inline: 5px;
+    font-size: 10px;
+    letter-spacing: 0.04em;
+  }
+}
+
+@media (orientation: landscape) and (max-height: 540px) {
+  .field-kit.game-shell .game-overlay[data-kind='pause'] .overlay-card {
+    gap: 4px;
+    padding: 6px 10px;
+  }
+  .field-kit.game-shell .game-overlay[data-kind='pause'] .overlay-actions {
+    gap: 4px;
+  }
+  .field-kit.game-shell .game-overlay[data-kind='pause'] .pause-menu-section {
+    grid-template-columns: 64px minmax(0, 1fr);
+    gap: 4px;
+  }
+  .field-kit.game-shell .game-overlay[data-kind='pause'] .pause-menu-section > h3 {
+    position: static;
+    padding: 3px 6px;
+    background: #0a1220;
+    font-size: 10px;
   }
   .field-kit.game-shell
-    .overlay-card:has(#flight-preparation-status:not([hidden]))
-    .reading-toolbar {
-    margin-block: 6px;
-    padding: 6px;
+    .game-overlay[data-kind='pause']
+    :is(.pause-action-grid, .pause-secondary-groups) {
+    gap: 4px;
+  }
+}
+@media (max-height: 500px) and (orientation: landscape) {
+  .field-kit.game-shell .menu-progress-status:not([hidden]) {
+    inset-inline-start: auto;
+    inset-inline-end: max(6px, var(--safe-right, 0px));
+    inset-block-end: max(6px, var(--safe-bottom, 0px));
+    translate: 0 0;
+    width: min(420px, calc(100vw - var(--safe-left, 0px) - var(--safe-right, 0px) - 12px));
+    max-height: 72px;
+    padding: 5px 8px;
+    font-size: 12px;
   }
 }
 @media (max-width: 600px) {

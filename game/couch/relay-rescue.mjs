@@ -1445,6 +1445,16 @@ export function bootCoop({
     else delete $('coop-message').dataset.coach;
     localizedText($('coop-message'), typeof text === 'function' ? text : () => text);
   }
+  function rescueMessage(event) {
+    return () =>
+      t('interface:team.playerNeedsRescue', {
+        cause: coopFailureFeedback(run, event).cause,
+        player: names()[event.player],
+        alternative: run.config.advancedCooperation
+          ? ' ' + t('interface:orCapture2NewTerritory')
+          : '',
+      });
+  }
   function overlay({ focus = true } = {}) {
     const reactionRow = acceptedPicture?.journeyRow;
     journeyReactions.present({
@@ -4436,7 +4446,12 @@ export function bootCoop({
     last = null;
     overlay();
     input.focus();
-    message(localizedMessage('interface:chooseFreshDirectionsWhenYouAreReady'));
+    const downed = run.players.find((player) => player.status === 'downed');
+    message(
+      downed
+        ? rescueMessage(knockdowns[downed.id] ?? { type: 'player.downed', player: downed.id })
+        : localizedMessage('interface:chooseFreshDirectionsWhenYouAreReady'),
+    );
   }
   // This synchronous handoff owns only the return from an attempt to its lobby.
   // Do not let focus/layout callbacks revive it after a newer action or lifecycle.
@@ -4905,15 +4920,7 @@ export function bootCoop({
         knockdowns[event.player] = event;
         input.clearPlayer(event.player);
         batch.release(event.player);
-        announce(() =>
-          t('interface:team.playerNeedsRescue', {
-            cause: coopFailureFeedback(run, event).cause,
-            player: names()[event.player],
-            alternative: run.config.advancedCooperation
-              ? ' ' + t('interface:orCapture2NewTerritory')
-              : '',
-          }),
-        );
+        announce(rescueMessage(event));
       }
       if (event.type === 'player.revived') {
         const cause =
