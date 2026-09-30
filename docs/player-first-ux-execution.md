@@ -1,5 +1,9 @@
 # Reveal Line: player-first UX execution
 
+> **Current whole-product status:** [completed and remaining delivery](delivery-status.md).
+> Use that dated rollup for current priorities, release status and acceptance limits.
+> The older checkpoints below retain their historical scope.
+
 > **Current status:** use the
 > [28 September completion and remaining delivery plan](plan-status-2026-09-28.md)
 > for v0.141.7 deployment, remaining player acceptance, current owners, compatible
