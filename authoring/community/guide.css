@@ -102,6 +102,26 @@ aside {
 code {
   overflow-wrap: anywhere;
 }
+.creator-guide-reading-tools {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-block: 0.75rem;
+}
+.creator-guide-reading-region {
+  max-height: min(65svh, 42rem);
+  overflow-y: auto;
+  overflow-x: hidden;
+  overflow-wrap: break-word;
+  overscroll-behavior: contain;
+  padding: 0.25rem 0.5rem;
+  border: 2px solid transparent;
+}
+.creator-guide-reading-region[data-controller-reading='true'],
+.creator-guide-reading-region:focus-visible {
+  outline: 3px solid #ffd377;
+  outline-offset: 2px;
+}
 footer {
   color: #b4c7ca;
   font-size: 0.9rem;
@@ -120,5 +140,18 @@ footer {
   aside {
     background: #eee;
     border-color: #555;
+  }
+  .creator-guide-reading-tools {
+    display: none;
+  }
+  .creator-guide-reading-region {
+    max-height: none;
+    overflow: visible;
+  }
+}
+@media (forced-colors: active) {
+  .creator-guide-reading-region[data-controller-reading='true'],
+  .creator-guide-reading-region:focus-visible {
+    outline-color: Highlight;
   }
 }
