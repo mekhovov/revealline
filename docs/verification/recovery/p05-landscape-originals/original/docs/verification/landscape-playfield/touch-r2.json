@@ -1,0 +1,52 @@
+{
+  "status": "isolated development; not release ready",
+  "source": "6c51b7e9bda575ac9e7e329784a3db0edfa8ddbd",
+  "cssSha256": "d3a16a58b4a6c879032f963b5336c1d0157200dd3faeb6fb4e91e1f7d760771d",
+  "sourceParent": "409cdd5d1d5c165f8167c677f283e5453fe43987",
+  "viewport": [
+    521,
+    300
+  ],
+  "preferences": "Large/Plain; Always; left Large D-pad",
+  "arena": {
+    "x": 228,
+    "y": 146.34375,
+    "width": 285,
+    "height": 142.5
+  },
+  "hud": {
+    "x": 228,
+    "y": 8,
+    "width": 285,
+    "height": 130.1875
+  },
+  "paintedCounterBounds": {
+    "coverage": [
+      248,
+      313.03125
+    ],
+    "lives": [
+      374.6328125,
+      412.75
+    ],
+    "time": [
+      440.75,
+      513
+    ],
+    "score": [
+      318.3515625,
+      408.6640625
+    ]
+  },
+  "finding": "Intrinsic column sizing corrects clipped time. Decorative icons remain visible; attempted icon selector does not match current rendered counters. Remove dead selector before final qualification.",
+  "remaining": [
+    "Final source and formatter gates",
+    "Recheck final CSS after cleanup",
+    "First-flight tutorial and warning presentation",
+    "Longer clock/high lives and score",
+    "Pointer steering journey and portrait transition with shown controls",
+    "Physical touch/controller acceptance"
+  ],
+  "consoleWarningsErrors": [],
+  "cleanup": "tab126 closed, viewport reset,18814 stopped"
+}

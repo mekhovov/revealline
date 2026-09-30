@@ -1,0 +1,184 @@
+{
+  "format": "revealline-scoped-native-verification.v1",
+  "observedAt": "2026-09-21T00:35:44.423678+00:00",
+  "baseSource": "6c51b7e9bda575ac9e7e329784a3db0edfa8ddbd",
+  "observedRuntime": {
+    "css": "26619610809de8627f9acad850fcf2b4cb26ccc54fe679f82f851178ce289e6f",
+    "touchSteering": "aac53c71fec56137f2c304e1c62c860995df35a0cd548aa40a7aa5ded24ce953"
+  },
+  "retainedFailures": [
+    {
+      "viewport": [
+        320,
+        480
+      ],
+      "beforeCss": "c90b860621aa747f7036264b8b5e89191c005a3a0012af6e8f3feb60f963bffa",
+      "canvas": [
+        12.03125,
+        6.015625
+      ],
+      "failure": "Large text plus192pxDpad reduced arena to an unreadable sliver."
+    },
+    {
+      "cssOnlyRow": "720a7968c2367d34d1e8ab41132383b7a3046a665965c655daafbc9e5b840d8e",
+      "failure": "Radial Dpad input interpreted row Up/Down as horizontal;4of7newtests fail old input.",
+      "tests": "touch-row-negative.tap.gz"
+    }
+  ],
+  "fix": "Preserve64pxLarge/52pxRegular button targets in a four-button row through620CSSpxportraitheight; use labelled hit regions for row input and retain direction through gaps. Cross Dpad keeps radial sliding.",
+  "native": [
+    {
+      "viewport": [
+        320,
+        480
+      ],
+      "canvas": [
+        268.03125,
+        134.015625
+      ],
+      "pad": [
+        268,
+        64
+      ],
+      "button": [
+        64,
+        64
+      ],
+      "captionToPadGap": 8,
+      "documentWidth": 320,
+      "play": "FreshRestart then pointerDown opened1.4%,340points,3lives. A laterDown continued to outer edge; no full-win claim."
+    },
+    {
+      "viewport": [
+        320,
+        568
+      ],
+      "canvas": [
+        296,
+        148
+      ],
+      "pad": [
+        268,
+        64
+      ],
+      "captionToPadGap": 8
+    },
+    {
+      "actualCssViewport": [
+        320,
+        620
+      ],
+      "requestedViewport": [
+        288,
+        558
+      ],
+      "dpr": 0.9,
+      "canvas": [
+        295.998291,
+        147.994797
+      ],
+      "pad": [
+        267.994812,
+        63.993057
+      ]
+    },
+    {
+      "actualCssViewport": [
+        320,
+        621
+      ],
+      "requestedViewport": [
+        288,
+        559
+      ],
+      "dpr": 0.9,
+      "canvas": [
+        294.279541,
+        147.135422
+      ],
+      "pad": [
+        191.996536,
+        191.996536
+      ],
+      "captionToPadGap": 8.003475,
+      "rowMediaQuery": false
+    }
+  ],
+  "scaleBoundary": "Initial requests320x620/621 produced355x689/690 atDPR0.9; these do not count as requested-breakpoint checks. Cause unproven, another task reported nozoomchange. Super+0 didnotchange scale. Subsequent viewport requests calibrated to observed CSS dimensions.",
+  "navigation": "ExplicitPause retained1.4%,340points,3lives andfocusedResume at1:14.",
+  "consoleWarningsAndErrors": [],
+  "tests": {
+    "positiveNode20.19.5": {
+      "pass": 19,
+      "fail": 0
+    },
+    "positiveNode22.22.2": {
+      "pass": 19,
+      "fail": 0
+    },
+    "negativeOldInput": {
+      "pass": 3,
+      "fail": 4
+    }
+  },
+  "remaining": [
+    "regular/right/largecounter variants",
+    "FirstFlight warning/Tactical andgesturepadshortheight",
+    "sourceintegration/fullrelease/public/physicalhardwaregates"
+  ],
+  "files": [
+    {
+      "path": "touch-row-node20.tap",
+      "bytes": 3904,
+      "sha256": "b25d5a3c29df99ffe097c5fdd99b9ccff714508ec4061c98c373bc80cf25c6c5"
+    },
+    {
+      "path": "touch-row-node22.tap",
+      "bytes": 4188,
+      "sha256": "ce44f437d610293067f5982c52afdb4e114b25ad01726634559ca0ac0ff09db7"
+    },
+    {
+      "path": "touch-row-negative.tap.gz",
+      "bytes": 976,
+      "sha256": "1b6e3e4826e992d60a45d32fdf3f0dd6f9c79407f317fb22837fbab246fbe44a",
+      "uncompressed": {
+        "bytes": 5683,
+        "sha256": "e2313b4a35a4f88c60aa404c85ced21d68f48afd3eb60b16a7ea915bf02cff2a"
+      },
+      "reason": "Unchanged Node TAP preserved compressed, including diagnostic whitespace."
+    }
+  ],
+  "finalCss": {
+    "sha256": "f330b868d74aa847a860917aa825b5d1a6b891b9401f8f4d3daca304935e2def",
+    "bytes": 35911,
+    "supportGuard": "The same container-unit support guard owns row geometry and reserved-height rules."
+  },
+  "finalCounterFixture": {
+    "viewport": [
+      320,
+      480
+    ],
+    "dpr": 1,
+    "values": {
+      "lives": 99,
+      "time": "99:59",
+      "score": 999999999,
+      "target": "100%"
+    },
+    "canvas": [
+      268.03125,
+      134.015625
+    ],
+    "button": [
+      64,
+      64
+    ],
+    "pad": [
+      268,
+      64
+    ],
+    "captionToPadGap": 8,
+    "documentWidth": 320,
+    "scope": "Real native DOM/CSS fixture, no simulation or rewards; final support-guarded stylesheet loaded by hash-pinned source preview."
+  }
+}
