@@ -45,7 +45,9 @@ function readiness(value) {
   if (value.state === 'unavailable') text(value.reason, 'unavailableReason');
   return Object.freeze({
     state: value.state,
-    ...(value.state === 'download' ? { bytes: value.bytes } : {}),
+    ...(value.state === 'download'
+      ? { bytes: value.bytes, ...(value.included === true ? { included: true } : {}) }
+      : {}),
     ...(value.state === 'unavailable' ? { reason: value.reason, retry: value.retry === true } : {}),
   });
 }

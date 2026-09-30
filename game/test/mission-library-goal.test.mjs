@@ -144,3 +144,14 @@ test('Studio goal preferences are isolated and fresh on the next preview visit',
   assert.equal(reopened.$('journey-goal-find').disabled, true);
   reopened.chooser.destroy();
 });
+
+test('goal actions share a dedicated responsive group without inline layout overrides', () => {
+  const f = setup(),
+    goal = f.$('journey-goal'),
+    actions = f.$('journey-goal-pin').parentElement;
+  assert.equal(actions.className, 'journey-goal-actions');
+  assert.equal(actions.parentElement, goal);
+  assert.equal(goal.getAttribute('style'), null);
+  assert.equal(f.$('journey-goal-status').getAttribute('style'), null);
+  f.chooser.destroy();
+});
