@@ -190,3 +190,19 @@ footer {
     width: 100%;
   }
 }
+.chooser > h2 {
+  grid-column: 1 / -1;
+  font-size: 22px;
+}
+.load-controls {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.links [aria-disabled='true'] {
+  opacity: 0.5;
+  pointer-events: none;
+}
+#catalog-status[data-state='loading'] .operation-status-signal {
+  display: inline-flex;
+}

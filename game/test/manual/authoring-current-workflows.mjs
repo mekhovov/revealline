@@ -19,6 +19,7 @@ import { creatorGuideCurrent } from './creator-guide-current-workflow.mjs';
 import { countercurrentGalleryCurrent } from './countercurrent-gallery-current-workflow.mjs';
 import { fpvEnemyGalleryCurrent } from './fpv-enemy-gallery-current-workflow.mjs';
 import { fpvRoleGalleryCurrent } from './fpv-role-gallery-current-workflow.mjs';
+import { reserveCatalogCurrent } from './reserve-catalog-current-workflow.mjs';
 import {
   creatorGuideDocumentsCurrent,
   creatorGuidePackDownloadCurrent,
@@ -45,6 +46,7 @@ const value = (p, css) => p.doc.querySelector(css).value;
 
 export const currentAuthoringCases = {
   fpvRoleGalleryCurrent,
+  reserveCatalogCurrent,
   fpvEnemyGalleryCurrent,
   countercurrentGalleryCurrent,
   creatorGuideDocumentsCurrent,
