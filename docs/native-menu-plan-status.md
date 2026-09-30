@@ -1,5 +1,15 @@
 # Native menus: plan status and release batches
 
+## September 30 — Restore the approved landing action list
+
+Runtime `f260e87f0` starts from accepted main `908bc6b08`. The fresh public default and DroneAid regression is corrected in source: Collection moves to **Progress & Collection**, while How to play, FPV simulator and Flight practice move to **Help & Extras**. The original nodes, handlers and feature capabilities remain intact. Late Solo soundtrack initialization no longer appends Play/Next actions to the landing; the shared adapter also rejects native-landing anchors whenever a Settings transport exists. Audio transport, passive song information, music shortcuts and Pause Next remain available. Collection opened from Settings now accurately labels its return.
+
+The first complete local virtual-controller workflows pass **4/4 separately for default and DroneAid**, including the full landing whitelist after real music initialization, focus-only mode traversal, Audio reachability and exact nested Collection/Help/Flight practice Back. Native unindexed keys verify the default at **1280 × 720** and DroneAid at **390 × 844**, including compact category Back. English/Ukrainian DroneAid labels fit portrait with no horizontal overflow; default **844 × 390** retains all five action rows at 44px within the viewport. The [restoration evidence](verification/landing-whitelist-restoration-2026-09-30.md) records automated checks, package results and exact limitations separately.
+
+Draft [PR #854](https://github.com/mekhovov/revealline/pull/854) is rebased cleanly onto accepted main `5c12b4028`; runtime is now `8a503259a` with the identical patch and 1,261 package pins unchanged. The fresh post-rebase cohort passes **51/51**, and the original **18/18** in-memory edition compiles remain attributable. Largest DroneAid has only **124,505 bytes** of headroom under 64 MiB. Releases has the corrective-slot request; subsequent main reconciliation and publication remain publisher-owned.
+
+**Next priority is integration and public re-verification**, through Releases. This is a local correction, not proof that the public regression is fixed. Verify the actual default and canonical DroneAid routes after publication without clearing saves, caches or workers. Ukraine gallery #846 remains a separate donor; its history is not replayed or changed here. After the landing correction is safely delivered, continue the pending Ukraine wide-role source gallery and remaining global acceptance gates. The overall native-menu plan remains incomplete.
+
 ## September 30 — Ukraine wide-role comparison
 
 Draft [PR #857](https://github.com/mekhovov/revealline/pull/857) contains source `7bcd7152e`, rebased as `5381b570a` onto accepted main `e39b4197a`. It adds three stable bounded readers and two exact literal document viewers to the source-only wide-role comparison. It preserves the true **780 × 215** canvases, held quarter-turn phase semantics and original artwork/models. Verified atomic Retry/Cancel and motion lifecycle stop inactive animation work without changing shared input ownership.

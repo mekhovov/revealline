@@ -405,7 +405,8 @@
     "editionLayouts": "docs/verification/edition-menu-matrix-2026-09-29.md",
     "accessibility": "docs/verification/menu-accessibility-2026-09-29.md",
     "currentAuthoring": "docs/verification/authoring-workflows-2026-09-29.md",
-    "editionPackages": "docs/verification/edition-packaging-2026-09-29.md"
+    "editionPackages": "docs/verification/edition-packaging-2026-09-29.md",
+    "landingRestoration": "docs/verification/landing-whitelist-restoration-2026-09-30.md"
   },
   "hosts": [
     {
