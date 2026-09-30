@@ -1,5 +1,10 @@
 # Levels: current-main restoration and remaining plan — 30 September 2026
 
+Follow-on implementation: [three additional complete routes](verification/pressure-corridor-expanded-routes-2026-09-30.md)
+extend seed and steering coverage on a separate successor branch, rebased onto
+main `4d9d7023`. PR820 remains the unchanged, release-targeted restoration input.
+The additional evidence does not complete all-preset or human qualification.
+
 ## Current delivery, not historical PR status
 
 Latest accepted main inspected for this batch is
