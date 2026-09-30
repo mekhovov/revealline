@@ -661,6 +661,199 @@ test('the stable updater can prepare and inspect its exact immutable worker only
   }
 });
 
+test('an explicit updater awaits discovery before addressing a same-URL worker and rejects other builds', async () => {
+  const candidateMarker = {
+    ...marker,
+    version: '2.0.0',
+    scope,
+    worker: `${scope}service-worker.js`,
+    downloadCatalogue: true,
+  };
+  const updateMarker = {
+    format: 'revealline-app-update.v1',
+    scope,
+    buildId: candidateMarker.buildId,
+  };
+  for (const [label, discoveredBuild] of [
+    ['candidate', candidateMarker.buildId],
+    ['stale', 'b'.repeat(64)],
+    ['newer publication', 'c'.repeat(64)],
+  ]) {
+    const calls = [];
+    const worker = (name, buildId) => ({
+      state: 'activated',
+      scriptURL: candidateMarker.worker,
+      postMessage(request, ports) {
+        calls.push(name);
+        ports[0].postMessage({
+          format: 'revealline.offline-progress.v1',
+          kind: 'terminal',
+          requestId: request.requestId,
+          scope,
+          buildId,
+          status: 'ready',
+        });
+        ports[0].close();
+      },
+    });
+    const registration = {
+      scope,
+      active: worker('old worker', 'b'.repeat(64)),
+      async update() {
+        calls.push('update');
+        registration.active = worker('discovered worker', discoveredBuild);
+        return registration;
+      },
+    };
+    const preparing = prepareOffline({
+      secure: true,
+      MessageChannelImpl: MessageChannel,
+      locationRef: { href: 'https://game.example/app/update.html' },
+      documentRef: {
+        querySelector: (selector) => ({
+          content: JSON.stringify(
+            selector.includes('revealline-update') ? updateMarker : candidateMarker,
+          ),
+        }),
+      },
+      navigatorRef: {
+        serviceWorker: {
+          async register() {
+            calls.push('register');
+            return registration;
+          },
+        },
+      },
+    });
+    if (label === 'candidate') assert.equal((await preparing).status, 'ready');
+    else await assert.rejects(preparing, { offlineCode: 'differentBuild' }, label);
+    assert.deepEqual(calls, ['register', 'update', 'discovered worker'], label);
+  }
+});
+
+test('updater activation waits naturally and preserves bounded failure outcomes', async (t) => {
+  for (const outcome of [
+    'activated',
+    'waiting',
+    'activating',
+    'redundant',
+    'replaced',
+    'aborted',
+  ]) {
+    await t.test(outcome, async (t) => {
+      t.mock.timers.enable({ apis: ['setTimeout'] });
+      const observed = deferred();
+      const controller = new AbortController();
+      const pauses = [];
+      const candidate = {
+        ...marker,
+        version: '2.0.0',
+        scope,
+        worker: `${scope}service-worker.js`,
+        downloadCatalogue: true,
+      };
+      const worker = Object.assign(new EventTarget(), {
+        state: 'installed',
+        scriptURL: candidate.worker,
+        postMessage(request, ports) {
+          if (request.type === 'revealline.offline-pause') return pauses.push(request);
+          ports[0].postMessage({
+            format: 'revealline.offline-progress.v1',
+            kind: 'terminal',
+            requestId: request.requestId,
+            scope,
+            buildId: candidate.buildId,
+            status: 'ready',
+          });
+          ports[0].close();
+        },
+      });
+      const listen = worker.addEventListener.bind(worker);
+      let subscriptions = 0;
+      worker.addEventListener = (type, ...args) => {
+        listen(type, ...args);
+        if (type === 'statechange' && ++subscriptions === 2) observed.resolve();
+      };
+      const registration = Object.assign(new EventTarget(), {
+        scope,
+        active: { old: true },
+        waiting: worker,
+        async update() {},
+      });
+      const preparing = prepareOffline({
+        secure: true,
+        cancelPreparation: true,
+        signal: controller.signal,
+        activationTimeout: 30000,
+        MessageChannelImpl: MessageChannel,
+        locationRef: { href: 'https://game.example/app/update.html' },
+        documentRef: {
+          querySelector: (selector) => ({
+            content: JSON.stringify(
+              selector.includes('revealline-update')
+                ? { format: 'revealline-app-update.v1', scope, buildId: candidate.buildId }
+                : candidate,
+            ),
+          }),
+        },
+        navigatorRef: { serviceWorker: { register: async () => registration } },
+      });
+      let settled = false;
+      void preparing.then(
+        () => {
+          settled = true;
+        },
+        () => {
+          settled = true;
+        },
+      );
+      await observed.promise;
+      assert.equal(settled, false, 'Verified installed bytes are not active yet.');
+      if (outcome === 'activated' || outcome === 'activating') {
+        registration.waiting = null;
+        registration.active = worker;
+        worker.state = 'activating';
+        worker.dispatchEvent(new Event('statechange'));
+        await nextTurn();
+        assert.equal(settled, false, 'Activation itself must finish before readiness.');
+        if (outcome === 'activated') {
+          worker.state = 'activated';
+          worker.dispatchEvent(new Event('statechange'));
+          assert.equal((await preparing).status, 'ready');
+        } else {
+          t.mock.timers.tick(30001);
+          assert.equal((await preparing).status, 'unconfirmed');
+        }
+      } else if (outcome === 'waiting') {
+        t.mock.timers.tick(30001);
+        assert.equal((await preparing).status, 'waiting');
+        assert.equal(registration.active.old, true);
+      } else {
+        const rejected = assert.rejects(
+          preparing,
+          outcome === 'aborted'
+            ? { name: 'AbortError' }
+            : { offlineCode: outcome === 'redundant' ? 'downloadFailed' : 'workerChanged' },
+        );
+        if (outcome === 'aborted') controller.abort();
+        else if (outcome === 'redundant') {
+          worker.state = 'redundant';
+          worker.dispatchEvent(new Event('statechange'));
+        } else {
+          registration.installing = { another: true };
+          registration.dispatchEvent(new Event('updatefound'));
+        }
+        await rejected;
+        if (outcome === 'aborted') {
+          assert.equal(pauses.length, 1);
+          assert.equal(pauses[0].buildId, candidate.buildId);
+          assert.equal(pauses[0].scope, scope);
+        }
+      }
+    });
+  }
+});
+
 test('outside-scope updater pause requires the exact streaming worker binding', async () => {
   for (const valid of [false, true]) {
     const h = host({ downloadFiles: [] }, new Map(), {
