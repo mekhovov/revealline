@@ -1,6 +1,6 @@
 # Neon Reference Pack
 
-Four screenshot-based levels, in submission order:
+Five screenshot-based levels, in submission order:
 
 1. **Neon Channels** — alternating slow and lethal lanes around a central refuge;
    two pink bouncers, one diamond eroder and three cyan border patrols.
@@ -10,9 +10,11 @@ Four screenshot-based levels, in submission order:
    safe foundations; eight pink bouncers and two cyan border patrols.
 4. **Neon Labyrinth** — stepped cyan walls and red hazard corridors; six purple
    bouncers and two cyan border patrols.
+5. **Neon Arrows** — forty-five red arrow/cross hazards and fourteen short cyan
+   walls; four yellow bouncers and four cyan border patrols.
 
 Open the main game's **Missions** catalog and search **Neon Reference Pack**.
-All four levels are bundled and available offline in Solo and Versus. They also
+All five levels are bundled and available offline in Solo and Versus. They also
 have a pack selector entry and a launch card on the About page. The catalog's
 Current rules edition is projected by the existing Classic adapter; original
 authored rules remain available in Archive.
