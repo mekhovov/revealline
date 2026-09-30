@@ -43,7 +43,11 @@ test('empty installed library lists every Classic without fetching, and base is 
   assert.equal(library.progress(base, 'solo'), '');
   const row = classic(library),
     raw = index.missions.find((entry) => entry.packId === recipe.id);
-  assert.deepEqual(library.availability(row), { state: 'download', bytes: raw.sourceFile.bytes });
+  assert.deepEqual(library.availability(row), {
+    state: 'download',
+    bytes: raw.sourceFile.bytes,
+    included: true,
+  });
   const optional = index.missions.find((entry) => entry.source === 'optional');
   const optionalRow = library.missions.find((entry) => entry.runtimeId === optional.levelId);
   assert.deepEqual(library.availability(optionalRow), {
