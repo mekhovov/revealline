@@ -4,9 +4,9 @@
   "ruleset": "xonix-core.v2",
   "level": {
     "version": "xonix-level.v1",
-    "id": "signal-11",
-    "revision": "gp4s-3ff00000000000003ff00000000000003ff0000000000000-b840aeef861b36de",
-    "name": "Short Fuse",
+    "id": "signal-06",
+    "revision": "gp4s-3ff00000000000003ff00000000000003ff0000000000000-f2fd952c2f9eb5e2",
+    "name": "Hidden Frequency",
     "width": 48,
     "height": 36,
     "spawn": {
@@ -16,25 +16,42 @@
     "walls": [],
     "enemies": [
       {
-        "id": "field",
+        "id": "west",
         "type": "bouncer",
-        "x": 36.5,
-        "y": 22.5,
-        "vx": -8.576059701284734,
-        "vy": 6.9680485072938465,
+        "x": 10.5,
+        "y": 20.5,
+        "vx": 8.53862511250384,
+        "vy": 7.013870628128155,
         "radius": 0.3,
         "course": "field-course.v2"
       },
       {
-        "id": "patrol",
-        "type": "border-patrol",
-        "x": 0.5,
-        "y": 35.5,
-        "speed": 8.16,
-        "clockwise": true
+        "id": "east",
+        "type": "bouncer",
+        "x": 38.5,
+        "y": 25.5,
+        "vx": -8.576059701284734,
+        "vy": -6.9680485072938465,
+        "radius": 0.3,
+        "course": "field-course.v2"
       }
     ],
-    "objectives": [],
+    "objectives": [
+      {
+        "id": "hidden-relay",
+        "x": 8.5,
+        "y": 10.5,
+        "required": true,
+        "hidden": true
+      },
+      {
+        "id": "bonus",
+        "x": 37.5,
+        "y": 30.5,
+        "required": false,
+        "hidden": false
+      }
+    ],
     "supplies": [
       {
         "id": "home",
@@ -44,7 +61,7 @@
       }
     ],
     "goal": {
-      "coverage": 0.7
+      "coverage": 0.68
     },
     "rules": {
       "lives": 3,
@@ -55,11 +72,11 @@
       "playerRadius": 0.18,
       "pointsPerCell": 10,
       "objectivePoints": 500,
-      "timeMedals": [60, 105],
+      "timeMedals": [65, 113],
       "switchCooldownSeconds": 2,
-      "timeLimitSeconds": 70,
-      "cutTimeLimitSeconds": 6,
-      "maxTrailCells": 50
+      "timeLimitSeconds": 0,
+      "cutTimeLimitSeconds": 0,
+      "maxTrailCells": 0
     },
     "signalZones": [],
     "hangars": [
@@ -72,9 +89,9 @@
     ]
   },
   "options": {
-    "seed": 271,
+    "seed": 186,
     "turnPolicy": "immediate",
-    "classId": "interceptor",
+    "classId": "impact",
     "classRecipes": [
       {
         "id": "scout",
@@ -160,7 +177,7 @@
   },
   "segments": [
     {
-      "ticks": 66,
+      "ticks": 144,
       "input": {
         "direction": null,
         "boost": false,
@@ -171,40 +188,7 @@
       "releaseBefore": false
     },
     {
-      "ticks": 39,
-      "input": {
-        "direction": "down",
-        "boost": false,
-        "action": false,
-        "pickup": false,
-        "switchClass": null
-      },
-      "releaseBefore": false
-    },
-    {
-      "ticks": 1,
-      "input": {
-        "direction": "up",
-        "boost": false,
-        "action": false,
-        "pickup": false,
-        "switchClass": null
-      },
-      "releaseBefore": false
-    },
-    {
-      "ticks": 167,
-      "input": {
-        "direction": null,
-        "boost": false,
-        "action": false,
-        "pickup": false,
-        "switchClass": null
-      },
-      "releaseBefore": false
-    },
-    {
-      "ticks": 217,
+      "ticks": 285,
       "input": {
         "direction": "right",
         "boost": false,
@@ -215,7 +199,18 @@
       "releaseBefore": false
     },
     {
-      "ticks": 46,
+      "ticks": 68,
+      "input": {
+        "direction": "left",
+        "boost": false,
+        "action": false,
+        "pickup": false,
+        "switchClass": null
+      },
+      "releaseBefore": false
+    },
+    {
+      "ticks": 32,
       "input": {
         "direction": "down",
         "boost": false,
@@ -248,7 +243,7 @@
       "releaseBefore": false
     },
     {
-      "ticks": 113,
+      "ticks": 323,
       "input": {
         "direction": null,
         "boost": false,
@@ -259,9 +254,20 @@
       "releaseBefore": false
     },
     {
-      "ticks": 94,
+      "ticks": 272,
       "input": {
-        "direction": "left",
+        "direction": "right",
+        "boost": false,
+        "action": false,
+        "pickup": false,
+        "switchClass": null
+      },
+      "releaseBefore": false
+    },
+    {
+      "ticks": 360,
+      "input": {
+        "direction": null,
         "boost": false,
         "action": false,
         "pickup": false,
@@ -271,33 +277,33 @@
     }
   ],
   "releaseAfter": false,
-  "ticks": 760,
+  "ticks": 1501,
   "summary": {
     "ruleset": "xonix-core.v2",
-    "levelId": "signal-11",
-    "revision": "gp4s-3ff00000000000003ff00000000000003ff0000000000000-b840aeef861b36de",
-    "seed": 271,
+    "levelId": "signal-06",
+    "revision": "gp4s-3ff00000000000003ff00000000000003ff0000000000000-f2fd952c2f9eb5e2",
+    "seed": 186,
     "turnPolicy": "immediate",
-    "classId": "interceptor",
-    "activeClassId": "interceptor",
+    "classId": "impact",
+    "activeClassId": "impact",
     "rosterHash": "roster-v1-e159e435",
     "classHistory": [
       {
-        "classId": "interceptor",
+        "classId": "impact",
         "classRevision": "1",
-        "loadoutHash": "loadout-v1-1443c455",
+        "loadoutHash": "loadout-v1-ac8eb5df",
         "tick": 0
       }
     ],
     "switches": 0,
-    "failureCause": "enemy-player",
+    "failureCause": "self-contact",
     "classRevision": "1",
-    "loadoutHash": "loadout-v1-1443c455",
-    "status": "lost",
+    "loadoutHash": "loadout-v1-ac8eb5df",
+    "status": "running",
     "won": false,
-    "tick": 760,
-    "time": 6.331294117646769,
-    "lives": 0,
+    "tick": 1501,
+    "time": 12.508333333333264,
+    "lives": 2,
     "score": 0,
     "coverage": 0,
     "claimedCount": 0,
@@ -305,26 +311,26 @@
     "medal": null,
     "objectives": {
       "captured": 0,
-      "total": 0,
-      "required": 0
+      "total": 2,
+      "required": 1
     }
   },
   "checkpoint": {
     "algorithm": "fnv1a64-state-v2",
-    "hash": "0894a058cc6db617",
+    "hash": "144e97b6d1150d25",
     "sections": {
-      "identity": "26d34d928c6967c2",
-      "configuration": "fe8f565613182355",
+      "identity": "16c6e89ee73bcf67",
+      "configuration": "8d2415e49666b39a",
       "board": "fdfff9d1d17aa722",
-      "player": "b414cc1135ab2d24",
+      "player": "6dd46fa5241e88c1",
       "trail": "f0ca473df9efdcc8",
-      "enemies": "06e768555c3bfe57",
-      "objectives": "09612b07b5ecb5a5",
+      "enemies": "ab961114f753d12a",
+      "objectives": "de763ee94d2a48e5",
       "supplies": "e1b45854413ff5f8",
-      "ability": "3b14ed94fb37a5b5",
-      "clock": "2ebeeb2c9996ccfd",
-      "continuation": "a9d828ced6380d30",
-      "result": "fa4ce8578a08a063"
+      "ability": "961bece3fc7c0676",
+      "clock": "53449fc3a247503d",
+      "continuation": "a1e7286b42b404e7",
+      "result": "5b9bc4ba528108e4"
     }
   }
 }
