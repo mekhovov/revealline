@@ -694,6 +694,102 @@ test('stale queued animation timestamps cannot advance after a long execution ga
     }
 });
 
+test('cached Back restore preserves paused flight and requires explicit resume without duplicate frames', (t) => {
+  const f = fixture(t, { notebookFactory: null, studioFactory: null });
+  f.$('arm').click();
+  f.key('KeyE');
+  f.tick(5);
+  assert(f.view.snapshot().ticks > 0);
+  const proof = f.view.exportAttempt(),
+    queuedFrame = f.frames.values().next().value;
+  f.win.emit('pagehide', { persisted: true });
+  const paused = f.view.snapshot();
+  assert.equal(paused.status, 'paused');
+  assert.equal(f.rendererDisposed(), false, 'cached page must retain its renderer');
+  assert.equal(f.frames.size, 0, 'cached page has no scheduled frame');
+  assert.equal(f.view.arm(), false, 'suspended page cannot rearm');
+  queuedFrame(10000);
+  assert.equal(f.frames.size, 0, 'late frame cannot revive a suspended page');
+  assert.deepEqual(f.view.snapshot(), paused);
+  f.win.emit('pageshow', { persisted: true });
+  f.win.emit('pageshow', { persisted: true });
+  assert.equal(f.frames.size, 1, 'restore schedules exactly one frame');
+  assert.deepEqual(f.view.snapshot(), paused);
+  assert.deepEqual(f.view.exportAttempt(), proof, 'original attempt retained');
+  f.tick(5);
+  assert.deepEqual(f.view.snapshot(), paused, 'restore never resumes physics automatically');
+  f.$('arm').click();
+  f.tick(3);
+  assert(f.view.snapshot().ticks > paused.ticks, 'explicit resume remains functional');
+  assert.equal(f.view.snapshot().lastInput.yaw, 0, 'held keyboard input was cleared');
+  assert.equal(f.deliveries.length, 0);
+});
+
+test('cached radio restore requires a fresh arm edge and matching control pickup', (t) => {
+  const f = fixture(t, { notebookFactory: null, studioFactory: null }),
+    pad = {
+      id: 'Cached radio fixture',
+      index: 0,
+      connected: true,
+      mapping: '',
+      axes: [0, 0, 0, -1],
+      buttons: [{ value: 0 }],
+    },
+    profile = radioProfile(pad);
+  profile.switches.arm = { button: 0, threshold: 0.5, invert: false };
+  f.setPads([pad]);
+  f.$('input-source').value = 'radio';
+  f.$('input-source').emit('change');
+  f.view.radio.select(0);
+  f.view.radio.setProfile(profile);
+  f.view.radio.verify();
+  f.tick();
+  pad.buttons[0].value = 1;
+  f.tick(3);
+  pad.axes[3] = 0.2;
+  f.tick(5);
+  assert.equal(f.view.snapshot().status, 'active');
+  const proof = f.view.exportAttempt();
+  f.win.emit('pagehide', { persisted: true });
+  const paused = f.view.snapshot();
+  f.win.emit('pageshow', { persisted: true });
+  assert.equal(f.frames.size, 1, 'radio controls resume polling after cached restore');
+  f.tick(3);
+  assert.deepEqual(f.view.snapshot(), paused, 'held arm switch cannot resume');
+  assert.deepEqual(f.view.exportAttempt(), proof);
+  assert.equal(f.view.radio.status().reason, 'arm-off-first');
+  pad.axes[3] = -1;
+  pad.buttons[0].value = 0;
+  f.tick();
+  pad.buttons[0].value = 1;
+  f.tick(3);
+  assert.deepEqual(f.view.snapshot(), paused, 'lowered throttle cannot resume airborne flight');
+  assert.equal(f.view.radio.status().reason, 'pickup-controls');
+  pad.axes[3] = 0.2;
+  pad.buttons[0].value = 0;
+  f.tick();
+  pad.buttons[0].value = 1;
+  f.tick(3);
+  assert.equal(f.view.snapshot().status, 'active');
+  assert(f.view.snapshot().ticks > paused.ticks);
+  assert.equal(f.view.snapshot().lastInput.throttle, 600);
+});
+
+test('ordinary unload disposes permanently and a late pageshow cannot revive it', (t) => {
+  const f = fixture(t, { notebookFactory: null, studioFactory: null });
+  f.$('arm').click();
+  f.tick(2);
+  f.win.emit('pagehide', { persisted: false });
+  assert.equal(f.rendererDisposed(), true);
+  assert.equal(f.frames.size, 0);
+  const stopped = f.view.snapshot();
+  f.win.emit('pageshow', { persisted: true });
+  f.$('arm').click();
+  assert.equal(f.frames.size, 0);
+  assert.equal(f.view.arm(), false);
+  assert.deepEqual(f.view.snapshot(), stopped);
+});
+
 test('selecting USB radio restores saved axis arm and button reset after reload', (t) => {
   const data = new Map();
   const storage = {

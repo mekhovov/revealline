@@ -42,6 +42,11 @@ test('Next crosses campaigns, packs and collections without using filters or com
     assert.equal(librarySuccessor(library, rows[i], 'solo'), rows[i + 1]);
   assert.equal(librarySuccessor(library, rows.at(-1), 'solo'), null);
   assert.equal(
+    librarySuccessor(library, rows.at(-1), 'solo', { wrap: true }),
+    rows[0],
+    'an explicit wrap continues from the final eligible mission to the first',
+  );
+  assert.equal(
     retainedLibraryMission(library, {
       mode: 'solo',
       levelId: 'a',
@@ -75,6 +80,22 @@ test('Next stays in the current mode and retains an unavailable successor for ex
   assert.equal(librarySuccessor(library, library.missions[0], 'solo'), library.missions[2]);
   assert.throws(() => librarySuccessor(library, library.missions[0], 'team'), /mode/);
   assert.equal(librarySuccessor(library, library.missions[1], 'team'), null);
+});
+test('wrapped successors stay mode-filtered and exclude practice/non-continuing rows', () => {
+  const practice = source('journey:practice', 'Journey', [
+    { id: 'practice', campaignKey: 'training', modes: ['solo'], tags: ['Practice'] },
+  ]);
+  const stopped = source('journey:stopped', 'Journey', [
+    { id: 'stopped', campaignKey: 'stopped', modes: ['solo'] },
+  ]);
+  stopped.automaticContinuation = false;
+  const normal = source('journey:normal', 'Journey', [
+    { id: 'solo', campaignKey: 'solo', modes: ['solo'] },
+    { id: 'team', campaignKey: 'team', modes: ['team'] },
+  ]);
+  const library = createMissionLibrary([practice, stopped, normal]);
+  const solo = library.forMode('solo');
+  assert.equal(librarySuccessor(library, solo.at(-1), 'solo', { wrap: true }), null);
 });
 test('Classic Next retains Current or Original rules across owners before leaving the collection', () => {
   const current = 'current-line-impact.v1';

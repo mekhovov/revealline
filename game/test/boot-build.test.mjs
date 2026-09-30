@@ -131,6 +131,20 @@ test('build rewrites native root paths, preserves extras and includes boot bytes
     ...playerPresentationFiles,
     ...ambientRuntimeFiles,
     'game/offline.mjs',
+    'game/offline/app.html',
+    'game/offline/app-worker.template.js',
+    'game/downloads.css',
+    'game/installed-app.mjs',
+    'game/edition-context.mjs',
+    'game/profile-writer.mjs',
+    'game/i18n/index.mjs',
+    'game/i18n/bootstrap.mjs',
+    'game/i18n/style.css',
+    'game/vendor/i18next-26.4.2.min.js',
+    'game/locales/en/common.json',
+    'game/locales/en/interface.json',
+    'game/locales/uk/common.json',
+    'game/locales/uk/interface.json',
     'game/platform.mjs',
     'game/offline/service-worker.template.js',
     'site/index.html',
@@ -141,6 +155,9 @@ test('build rewrites native root paths, preserves extras and includes boot bytes
     'site/landing.css',
   ])
     await copy(name);
+  // The frozen launcher module is authored for its generated `app/` directory,
+  // so its relative imports intentionally do not resolve in the source tree.
+  await put('game/offline/app.mjs', await fs.readFile(new URL('offline/app.mjs', sourceRoot)));
   const html = await fs.readFile(path.join(root, 'game/index.html'), 'utf8');
   for (const [, relative] of html.matchAll(/<link[^>]*href="([^"]+\.css)"/g))
     if (!copied.has(`game/${relative}`))

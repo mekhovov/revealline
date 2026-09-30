@@ -226,7 +226,7 @@ test('pending decoded original blocks every fixed tick; background return never 
   await new Promise((resolve) => setTimeout(resolve, 10));
   assert.equal(decoding, 1, 'Start observes the existing prewarm instead of decoding again.');
   assert.equal(p.$('flight-preparation-status').dataset.state, 'busy');
-  assert.equal(p.$('flight-preparation-cancel').hidden, false);
+  assert.equal(p.$('flight-preparation-cancel').hidden, true);
   assert.deepEqual(authoritativeCheckpoint(p.rendered.run), before);
   p.doc.hidden = true;
   p.doc.emit('visibilitychange');
@@ -289,7 +289,7 @@ test('a failed picture prewarm can be retried without reusing its rejected promi
   assert.deepEqual(p.errors, []);
 });
 
-test('cancelling picture preparation restores keyboard focus before native hiding drops it', async (t) => {
+test('cancelling picture preparation keeps keyboard focus on the launch command', async (t) => {
   const f = await setup(t),
     gate = deferred();
   let decoding = 0;
@@ -304,17 +304,7 @@ test('cancelling picture preparation restores keyboard focus before native hidin
   p.$('start-button').click();
   const before = authoritativeCheckpoint(p.rendered.run),
     cancel = p.$('flight-preparation-cancel');
-  let hidden = cancel.hidden;
-  Object.defineProperty(cancel, 'hidden', {
-    configurable: true,
-    get: () => hidden,
-    set(value) {
-      hidden = value;
-      // A browser drops focus when its current action becomes display:none.
-      if (value && p.doc.activeElement === cancel) p.doc.body.focus();
-    },
-  });
-  cancel.focus();
+  p.$('start-button').focus();
   cancel.click();
   assert.equal(p.doc.activeElement, p.$('start-button'));
   assert.equal(p.$('flight-preparation-status').dataset.state, 'cancelled');
@@ -426,7 +416,7 @@ for (const launch of ['start', 'retry', 'restart'])
         library = p.storage.getItem('revealline.library.dev.v1'),
         selected = [p.$('pack-select').value, p.$('level-select').value, p.$('theme-select').value],
         media = await f.store.read();
-      p.$('flight-preparation-cancel').focus();
+      p.$(launch === 'retry' ? 'retry-button' : 'start-button').focus();
       backInput(p, mode, pad);
       assert.equal(p.$('flight-preparation-status').dataset.state, 'cancelled');
       assert.equal(p.$('flight-preparation-cancel').hidden, true);

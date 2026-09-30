@@ -559,12 +559,6 @@
   clip-path: none;
   vertical-align: middle;
 }
-.field-kit.game-shell #shell-fullscreen[data-presentation-icon][aria-label] {
-  font-size: 0;
-  display: grid;
-  place-items: center;
-}
-
 /* Numeric telemetry is one unit; glyphs must not force a value onto another line. */
 .field-kit.game-shell .telemetry strong {
   white-space: nowrap;
@@ -622,12 +616,6 @@
     grid-template-columns: 1.4fr 1fr 1fr 1fr;
     border-radius: 0;
     background: var(--fk-bg);
-  }
-  .field-kit.game-shell[data-flight-state='running'] #shell-fullscreen {
-    position: absolute;
-    right: max(64px, calc(var(--safe-right) + 52px));
-    top: max(2px, var(--safe-top));
-    width: 44px;
   }
   .field-kit.game-shell[data-flight-state='running'] .telemetry #target {
     white-space: nowrap;
