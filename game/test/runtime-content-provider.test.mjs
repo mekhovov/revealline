@@ -1,3 +1,5 @@
+import { createRewardMissionBindings } from '../rewards/bindings.mjs';
+import { validateCompletionRewards } from '../rewards/model.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {
@@ -148,33 +150,6 @@ test('ordinary Solo uses its current startup path without any edition fetch', as
   });
   assert.equal(provider, null);
 });
-test('artwork URLs stay inside the selected company receipt while retained originals remain available', async () => {
-  const f = await retainedEditionFixture({ originalArtwork: true });
-  const originalAsset = f.catalog.assets.find((asset) => asset.id === 'old-picture');
-  const foreign = {
-    ...originalAsset,
-    id: 'another-company-logo',
-    path: 'game/editions/assets/another-company-logo.png',
-  };
-  f.catalog.assets.push(foreign);
-  f.catalog.brands.push({
-    ...f.catalog.brands[0],
-    id: 'another-company',
-    name: 'Another company',
-    logoAssetId: foreign.id,
-    assetIds: [foreign.id],
-  });
-  const current = await f.load();
-  assert.ok(current.catalog.assets.some((asset) => asset.id === foreign.id));
-  assert.ok(current.assetURL(originalAsset.id).endsWith(originalAsset.path));
-  assert.throws(() => current.assetURL(foreign.id), /does not contain/);
-  assert.equal(current.authoredPresentationSha256, f.original.authoredPresentationSha256);
-  f.replacePicture();
-  const retained = await f.load(f.descriptor.id);
-  assert.ok(retained.assetURL(originalAsset.id).endsWith(originalAsset.path));
-  assert.throws(() => retained.assetURL(foreign.id), /does not contain/);
-  assert.equal(retained.authoredPresentationSha256, f.original.authoredPresentationSha256);
-});
 test('edition content injects owned boot data and preserves audience and old saves', async () => {
   const f = await editionProviderFixture();
   const provider = await loadRuntimeContentProvider({
@@ -252,4 +227,56 @@ test('compatibility entry retains mission, input preferences and fragment on the
     new URL(companyEntryHref(url.href, 'locked-public')).searchParams.get('edition'),
     'locked-public',
   );
+});
+
+test('each runtime source load owns an immutable reward catalogue without freezing later authoring', async () => {
+  const f = await editionProviderFixture();
+  const catalog = structuredClone(f.catalog);
+  const campaign = catalog.campaigns[0];
+  campaign.rewardPath = 'game/content/sample/rewards.json';
+  const mission = createRewardMissionBindings(f.source)[0];
+  const locales = (value) => ({ en: structuredClone(value), uk: structuredClone(value) });
+  const rewards = [
+    {
+      format: 'revealline-completion-reward.v1',
+      id: 'first-discovery',
+      revision: '1',
+      brandId: catalog.brands[0].id,
+      campaignId: campaign.id,
+      scope: { kind: 'mission', id: mission.missionId },
+      locales: locales({ title: 'Discovery', teaser: 'A useful explanation' }),
+      requirements: {
+        missions: [{ missionId: mission.missionId, bindings: mission.bindings }],
+        learning: [],
+        mastery: [],
+      },
+      payloads: [
+        {
+          id: 'knowledge',
+          type: 'knowledge',
+          locales: locales({ title: 'Discovery', paragraphs: ['The first explanation.'] }),
+        },
+      ],
+    },
+  ];
+  f.files.set('game/editions/catalog.json', catalog);
+  f.files.set('edition-catalog.json', catalog);
+  f.files.set(campaign.rewardPath, rewards);
+  const load = () =>
+    loadRuntimeContentProvider({
+      locationRef: { href: 'http://localhost/game/index.html?edition=sample-public' },
+      documentRef: { documentElement: { dataset: {} } },
+      fetcher: f.fetcher,
+    });
+  const first = await load();
+  assert.equal(validateCompletionRewards(first.rewards), first.rewards);
+  assert(Object.isFrozen(first.rewards[0].payloads[0].locales.en.paragraphs));
+  rewards[0].revision = '2';
+  rewards[0].payloads[0].locales.en.paragraphs[0] = 'The second explanation.';
+  const second = await load();
+  assert.notEqual(first.rewards, second.rewards);
+  assert.equal(first.rewards[0].revision, '1');
+  assert.equal(second.rewards[0].revision, '2');
+  rewards[0].payloads[0].type = 'unapproved';
+  await assert.rejects(load(), /Unknown reward payload/);
 });

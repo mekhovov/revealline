@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import { Document, Element, Events } from './helpers/couch-dom.mjs';
 import { deferred } from './helpers/media-fixtures.mjs';
+import { resolveAuthoringEditor } from '../ui/authoring-editors.mjs';
 
 const read = async (path) => JSON.parse(await readFile(new URL(path, import.meta.url), 'utf8'));
 const settle = async () => {
@@ -230,6 +231,57 @@ async function harness(t, { deferImage = false, classicRole = false, tacticalRes
     },
   };
 }
+
+test('actual Playground controller map edit/Undo and rejected complete JSON preserve model, preview, and saved scenario until explicit launch', async (t) => {
+  const f = await harness(t),
+    original = structuredClone(f.current()),
+    saved = [...f.storage.entries()],
+    preview = f.$('preview-frame').src,
+    writes = f.writes.length,
+    adapter = resolveAuthoringEditor(f.$('map-editor'));
+  assert.equal(adapter.enter(), true);
+  adapter.handle({ direction: 'right' });
+  adapter.handle({ direction: 'down' });
+  assert.deepEqual(f.current(), original, 'cursor navigation alone does not edit');
+  adapter.handle({ confirm: true });
+  const edited = structuredClone(f.current());
+  assert.notDeepEqual(edited, original, 'Confirm reaches the actual paint command');
+  assert.equal(adapter.handle({ back: true }), 'cancel');
+  adapter.exit();
+  f.$('undo-button').click();
+  assert.deepEqual(f.current(), original);
+  assert.equal(adapter.enter(), true);
+  adapter.handle({ confirm: true });
+  adapter.exit();
+  assert.deepEqual(f.current(), edited, 'same cell edit can be repeated after Undo');
+  f.$('show-pack').click();
+  const complete = f.$('pack-json').value;
+  f.$('pack-json').value = `${complete}a`;
+  await f.$('apply-pack').onclick();
+  assert.equal(f.$('editor-status').classList.contains('error'), true);
+  assert.deepEqual(f.current(), edited, 'invalid JSON does not replace the model');
+  assert.equal(f.$('preview-frame').src, preview);
+  assert.deepEqual([...f.storage.entries()], saved);
+  assert.equal(f.writes.length, writes);
+  f.$('show-pack').click();
+  assert.equal(
+    f.$('pack-json').value,
+    complete,
+    'authoritative complete JSON survives rejected text',
+  );
+  await f.$('apply-pack').onclick();
+  assert.equal(f.$('editor-status').classList.contains('error'), false);
+  assert.deepEqual(f.current(), edited, 'valid complete source reopens the exact edit');
+  assert.equal(
+    f.$('preview-frame').src,
+    preview,
+    'validated source does not implicitly start preview',
+  );
+  assert.equal(f.writes.length, writes);
+  f.$('preview-button').click();
+  assert.notEqual(f.$('preview-frame').src, preview);
+  assert.deepEqual(f.saved().level, edited, 'only explicit Play updates the practice handoff');
+});
 
 test('actual Playground entry blocks Play/open/mode launch during chosen pack decode, then paints and launches Classic Lab', async (t) => {
   const f = await harness(t, { deferImage: true }),

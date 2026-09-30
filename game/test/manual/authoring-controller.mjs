@@ -1,7 +1,10 @@
+// Restored from preserved shared snapshot 517df7649; Demo case omitted until its owning input integrates.
 // Browser-only verification fixture, excluded from player builds. Commands below
 // are controller pulses; selectors identify expected targets, never focus them.
+import { currentAuthoringCases } from './authoring-current-workflows.mjs';
 const { document, location, Option } = globalThis;
 const cases = {
+  ...currentAuthoringCases,
   reference: [
     'Reference gallery reading',
     '/game/assets/field-kit/sprites/review.html',
@@ -312,16 +315,6 @@ const cases = {
       p.record('viewport preset changed and selected game loaded', '#dimensions');
     },
   ],
-  demo: [
-    'Demo recording variants',
-    '/authoring/demo-recording-variants.html',
-    async (p) => {
-      await p.choose('#run');
-      await p.wait(() => !p.doc.querySelector('#export').disabled, 90000);
-      await p.choose('#export');
-      p.record('six recordings verified and bundle exported', '#status');
-    },
-  ],
 };
 
 const selector = document.getElementById('tool'),
@@ -331,15 +324,104 @@ for (const [id, [name]] of Object.entries(cases)) selector.add(new Option(name, 
 if (cases[new URL(location.href).searchParams.get('tool')])
   selector.value = new URL(location.href).searchParams.get('tool');
 const wait = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+let stopFocusTrace = () => {};
+function traceKeyboardFocus(win) {
+  const output = document.getElementById('focus-evidence'),
+    records = [],
+    removers = [],
+    seen = new WeakSet();
+  let tracing = true;
+  const identify = (element) => element?.id || element?.tagName || null;
+  const describe = (element) => ({
+    id: element?.id || null,
+    tag: element?.tagName || null,
+    className: element?.className || null,
+    text: element?.textContent?.trim().slice(0, 100) || null,
+  });
+  const state = (target, depth = 0) => {
+    try {
+      const doc = target.document;
+      return {
+        path: target.location.pathname,
+        active: identify(doc.activeElement),
+        activeControl: describe(doc.activeElement),
+        hasFocus: doc.hasFocus(),
+        hidden: doc.hidden,
+        children:
+          depth < 2
+            ? [...doc.querySelectorAll('iframe')].map((frame) =>
+                state(frame.contentWindow, depth + 1),
+              )
+            : [],
+      };
+    } catch {
+      return { inaccessible: true };
+    }
+  };
+  const record = (label, event) => {
+    if (!tracing) return;
+    records.push({
+      label,
+      type: event?.type,
+      key: event?.key,
+      target: identify(event?.target),
+      phase: event?.eventPhase,
+      prevented: event?.defaultPrevented,
+      state: state(win),
+    });
+    if (records.length > 80) records.shift();
+    output.textContent = JSON.stringify(records, null, 2);
+  };
+  const listen = (target, type, handler) => {
+    target.addEventListener(type, handler, true);
+    removers.push(() => target.removeEventListener(type, handler, true));
+  };
+  const attach = (target, depth = 0) => {
+    try {
+      if (seen.has(target.document)) return;
+      seen.add(target.document);
+      for (const type of ['focus', 'focusin', 'keydown'])
+        listen(target, type, (event) => {
+          record(`capture:${depth}`, event);
+          // Native event listeners may checkpoint microtasks between callbacks.
+          // A later task observes the settled propagation/default state.
+          setTimeout(() => record(`after-dispatch:${depth}`, event), 0);
+        });
+      for (const child of target.document.querySelectorAll('iframe')) {
+        listen(child, 'load', () => {
+          attach(child.contentWindow, depth + 1);
+          record(`load:${depth + 1}`);
+        });
+        attach(child.contentWindow, depth + 1);
+      }
+    } catch {
+      /* The trace never crosses an origin boundary. */
+    }
+  };
+  attach(win);
+  record('initial');
+  return () => {
+    tracing = false;
+    removers.forEach((remove) => remove());
+  };
+}
 document.getElementById('run').onclick = async () => {
+  stopFocusTrace();
+  document.getElementById('focus-evidence').textContent = '';
   const [name, path, workflow] = cases[selector.value],
     rows = [];
   status.textContent = `Running ${name}…`;
   const loaded = new Promise((resolve) => frame.addEventListener('load', resolve, { once: true }));
   frame.src = path;
   await loaded;
-  const win = frame.contentWindow,
-    doc = frame.contentDocument;
+  const win = frame.contentWindow;
+  let doc = frame.contentDocument;
+  if (new URL(location.href).searchParams.has('keyboard') && selector.value !== 'referenceMedia') {
+    stopFocusTrace = traceKeyboardFocus(win);
+    status.textContent =
+      'Native keyboard fixture ready; no virtual pad installed. Follow the current workflow checklist and retain its separate keyboard receipt.';
+    return;
+  }
   if (selector.value === 'referenceMedia' && new URL(location.href).searchParams.has('keyboard')) {
     const media = doc.querySelector('audio');
     media.src =
@@ -377,6 +459,33 @@ document.getElementById('run').onclick = async () => {
     }
   };
   installPad(win);
+  // Observe exports in each real document reached through a tool's own links.
+  // A WindowProxy survives navigation; its document/URL object do not.
+  const downloads = [],
+    observedDocuments = new WeakSet(),
+    restoreDownloadObservers = [];
+  const observeDownloads = () => {
+    if (observedDocuments.has(doc)) return;
+    observedDocuments.add(doc);
+    const api = win.URL,
+      createObjectURL = api.createObjectURL;
+    const observe = function (blob) {
+      const url = createObjectURL.call(this, blob);
+      downloads.push({ blob, url, path: win.location.pathname });
+      return url;
+    };
+    api.createObjectURL = observe;
+    restoreDownloadObservers.push(() => {
+      if (api.createObjectURL === observe) api.createObjectURL = createObjectURL;
+    });
+  };
+  const followHostDocument = () => {
+    doc = frame.contentDocument;
+    installPad(win);
+    observeDownloads();
+  };
+  observeDownloads();
+  frame.addEventListener('load', followHostDocument);
   frame.focus();
   win.focus();
   const visible = (e) =>
@@ -403,10 +512,15 @@ document.getElementById('run').onclick = async () => {
     );
   const navigate = async (css, label) => {
     await until(() => target(css, label));
-    const element = target(css, label);
-    const seen = new Set();
+    const element = target(css, label),
+      started = performance.now();
+    const seen = new Map();
     for (let step = 0; step < 1500 && doc.activeElement !== element; step++) {
       const active = doc.activeElement;
+      if (performance.now() - started > 30000)
+        throw new Error(
+          `Controller traversal exceeded 30 seconds for ${css}; current ${active.id || active.textContent?.slice(0, 80)}`,
+        );
       if (active.tagName === 'IFRAME') {
         const child = active.contentDocument;
         installPad(active.contentWindow);
@@ -439,11 +553,14 @@ document.getElementById('run').onclick = async () => {
               : 'up',
         );
       } else {
-        if (seen.has(active))
+        // A child-focus/lifecycle handoff may consume one direction while the
+        // real router waits for neutral. Permit one retry, not an endless loop
+        // or a fixture focus override; persistent cycles remain a failure.
+        if ((seen.get(active) || 0) >= 2)
           throw new Error(
             `Controller cannot reach ${css} (${label || ''}) from ${active.id || active.textContent?.slice(0, 40)}`,
           );
-        seen.add(active);
+        seen.set(active, (seen.get(active) || 0) + 1);
         await pulse(active.compareDocumentPosition(element) & 2 ? 'up' : 'down');
       }
     }
@@ -457,24 +574,91 @@ document.getElementById('run').onclick = async () => {
   };
   try {
     await wait(150);
-    if (['enemy', 'video', 'still'].includes(selector.value)) await pulse('confirm'); // Existing workshop hosts consume their join edge.
+    if (
+      [
+        'enemy',
+        'enemyCurrent',
+        'video',
+        'still',
+        'stillCurrent',
+        'videoPosterCurrent',
+        'soundtrackRecoveryCurrent',
+      ].includes(selector.value)
+    )
+      await pulse('confirm'); // Existing workshop hosts consume their join edge.
     await wait(100);
     const p = {
-      doc,
+      get doc() {
+        return doc;
+      },
       visible,
       pulse,
+      navigate,
       choose,
+      downloads,
       wait: until,
+      async follow(css, pathname) {
+        const previous = doc;
+        await choose(css);
+        await until(() => doc !== previous && win.location.pathname === pathname, 30000);
+      },
+      async returnPreview(frameSelector, returnSelector) {
+        const preview = doc.querySelector(frameSelector);
+        await until(() => preview.contentDocument?.querySelector(returnSelector), 30000);
+        const child = preview.contentDocument,
+          back = child.querySelector(returnSelector);
+        installPad(preview.contentWindow);
+        for (let i = 0; i < 4 && !visible(back); i++) await pulse('back');
+        await until(() => visible(back));
+        for (let i = 0; i < 100 && child.activeElement !== back; i++) await pulse('down');
+        if (child.activeElement !== back) throw new Error('Secure preview Return unreachable');
+        await pulse('confirm');
+        await until(() => preview.hidden);
+      },
+      async expand(css) {
+        if (!doc.querySelector(css).open) await choose(`${css} > summary`);
+      },
+      async section(heading) {
+        await pulse('menu');
+        await choose(
+          '.authoring-sections-dialog button',
+          doc.querySelector(heading).textContent.trim(),
+        );
+      },
+      async pageActions() {
+        await pulse('menu');
+        await choose('.authoring-sections-dialog button:nth-of-type(2)');
+      },
+      async select(css, value) {
+        const element = doc.querySelector(css),
+          options = [...element.options].filter((option) => !option.disabled),
+          current = options.findIndex((option) => option.value === element.value),
+          next = options.findIndex((option) => option.value === value);
+        if (next < 0) throw new Error(`Missing select choice ${css}: ${value}`);
+        await choose(css);
+        for (let n = 0; n < Math.abs(current - next); n++)
+          await pulse(next > current ? 'down' : 'up');
+        await pulse('confirm');
+        if (element.value !== value) throw new Error(`Select did not commit ${css}: ${value}`);
+      },
+      async edit(css, keys, { cancel = false } = {}) {
+        await choose(css);
+        await choose('[data-editor-action="en"]');
+        for (const key of keys) await choose(`[data-editor-action="${key}"]`);
+        if (cancel) await pulse('back');
+        else await choose('[data-editor-action="done"]');
+      },
       async field(css, key) {
         await choose(css);
         await choose(`[data-editor-action="${key}"]`);
         await choose('[data-editor-action="done"]');
       },
-      record(message, css) {
+      record(message, css, evidence = {}) {
         rows.push({
           message,
           focused: doc.activeElement?.id || doc.activeElement?.textContent?.slice(0, 80),
           state: doc.querySelector(css)?.textContent?.trim().slice(0, 1000),
+          ...evidence,
         });
         status.textContent = JSON.stringify(rows, null, 2);
       },
@@ -488,12 +672,24 @@ document.getElementById('run').onclick = async () => {
         tool: name,
         error: error.message,
         focused: doc.activeElement?.outerHTML?.slice(0, 600),
+        ownership: {
+          foreground: doc.hasFocus(),
+          hidden: doc.hidden,
+          dialogs: [...doc.querySelectorAll('dialog[open]')].map((dialog) => dialog.id),
+          child: [...doc.querySelectorAll('iframe')].map((child) => ({
+            id: child.id,
+            hidden: child.hidden,
+            active: child.contentDocument?.activeElement?.id,
+          })),
+        },
         rows,
       },
       null,
       2,
     );
   } finally {
+    frame.removeEventListener('load', followHostDocument);
+    restoreDownloadObservers.forEach((restore) => restore());
     for (let i = 0; i < buttons.length; i++)
       buttons[i] = { pressed: false, touched: false, value: 0 };
   }

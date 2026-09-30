@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" data-build-version="__REVEALLINE_VERSION__">
   <head>
     <meta charset="utf-8" />
     <link rel="stylesheet" href="../i18n/style.css" />
@@ -9,6 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title data-i18n="interface:creator.playerPageTitle">Custom campaign · FPV / LINE</title>
     <link rel="stylesheet" href="./creator.css" />
+    <link rel="stylesheet" href="./player-menu.css" />
     <script type="module" src="./player.mjs"></script>
     <link
       rel="icon"
@@ -19,141 +20,335 @@
     <link rel="stylesheet" href="../ui/brand-identity.css" />
   </head>
   <body class="creator-player">
-    <div data-language-control></div>
-    <header>
-      <a href="./" data-i18n="interface:creator.backToMyCreations">← My creations</a
-      ><a class="fpv-line-brand fpv-line-brand--compact" href="../"
-        ><img
-          class="fpv-line-wordmark"
-          src="../ui/art/identity/fpv-line/wordmark.png"
-          alt="FPV / LINE" /></a
-      ><span data-i18n="interface:creator.customCampaign">Custom campaign</span>
-    </header>
-    <main>
-      <p class="eyebrow" data-i18n="interface:creator.yourPicturesCampaign">
-        YOUR PICTURES, YOUR CAMPAIGN
-      </p>
-      <h1 id="title" data-i18n="interface:creator.openingCampaign">Opening campaign…</h1>
-      <p
-        id="status"
-        role="status"
-        aria-live="polite"
-        data-i18n="interface:creator.checkingInstalledEdition"
-      >
-        Checking the installed edition and its picture.
-      </p>
-      <p id="save-status" role="status"></p>
-      <section
-        class="panel controls"
-        aria-label="Mission controls"
-        data-i18n-aria-label="interface:creator.missionControls"
-      >
-        <label
-          ><span data-i18n="interface:difficulty">Difficulty</span>
-          <select id="difficulty">
-            <option value="gentle" data-i18n="interface:gentle">Gentle</option>
-            <option value="standard" selected data-i18n="interface:standard">Standard</option>
-            <option value="expert" data-i18n="interface:expert">Expert</option>
-          </select></label
-        >
-        <label
-          ><span data-i18n="interface:steering">Steering</span>
-          <select id="steering">
-            <option value="immediate" data-i18n="interface:immediate">Immediate</option>
-            <option value="grid-center" data-i18n="interface:creator.gridCenter">
-              Grid center
-            </option>
-          </select></label
-        >
-        <button id="start" disabled data-i18n="interface:startMission">Start mission</button>
-        <button id="resume" hidden data-i18n="interface:creator.resumeSavedAttempt">
-          Resume saved attempt
-        </button>
-        <button id="pause" disabled data-i18n="common:actions.pause">Pause</button>
-        <button id="retry" disabled data-i18n="common:actions.retry">Retry</button>
-        <button id="next" hidden data-i18n="common:actions.next">Next</button>
-      </section>
-      <p id="hud" data-i18n="interface:creator.playerHelp">
-        Move with arrow keys or WASD. Close a line on safe ground to reveal your picture.
-      </p>
-      <div
-        id="arena"
-        tabindex="0"
-        aria-label="Game board. Arrow keys or WASD to move; Escape to pause."
-        data-i18n-aria-label="interface:creator.gameBoardHelp"
-      >
-        <canvas
-          id="board"
-          width="1296"
-          height="648"
-          aria-label="Territory capture board"
-          data-i18n-aria-label="interface:creator.territoryCaptureBoard"
-        ></canvas>
-      </div>
-      <div
-        class="touch-controls"
-        aria-label="Direction controls"
-        data-i18n-aria-label="interface:directionControls"
-      >
-        <button data-move="up" aria-label="Move up" data-i18n-aria-label="common:controls.moveUp">
-          ↑</button
-        ><button
-          data-move="left"
-          aria-label="Move left"
-          data-i18n-aria-label="common:controls.moveLeft"
-        >
-          ←</button
-        ><button
-          data-move="down"
-          aria-label="Move down"
-          data-i18n-aria-label="common:controls.moveDown"
-        >
-          ↓</button
-        ><button
-          data-move="right"
-          aria-label="Move right"
-          data-i18n-aria-label="common:controls.moveRight"
-        >
-          →
-        </button>
-      </div>
-      <section id="earned" class="panel" hidden>
-        <h2 data-i18n="interface:creator.yourEarnedPicture">Your earned picture</h2>
-        <div id="creator-story-stage" class="creator-story-stage">
-          <img id="earned-picture" alt="" />
+    <main id="creator-player">
+      <section id="creator-home" aria-labelledby="title">
+        <div class="creator-menu-copy">
+          <img
+            class="fpv-line-wordmark"
+            src="../ui/art/identity/fpv-line/wordmark.png"
+            alt="FPV / LINE"
+          />
+          <h1 id="title" data-i18n="interface:creator.openingCampaign">Opening campaign…</h1>
+          <div
+            id="creator-modes"
+            data-menu-layout="horizontal"
+            aria-label="Game mode"
+            data-i18n-aria-label="interface:creatorMenu.mode"
+          >
+            <button
+              id="creator-mode-solo"
+              aria-current="page"
+              data-i18n="interface:nativeMenu.solo"
+            >
+              Solo
+            </button>
+            <a id="creator-mode-versus" hidden data-i18n="interface:nativeMenu.versus">Versus</a>
+          </div>
+          <div id="creator-home-actions" data-menu-layout="vertical" data-menu-edge-exit="true">
+            <div id="creator-primary-actions"></div>
+            <button id="creator-select-mission" disabled data-i18n="interface:nativeMenu.missions">
+              Select Mission
+            </button>
+            <button id="creator-open-settings" data-i18n="common:navigation.settings">
+              Settings
+            </button>
+          </div>
+          <button id="creator-fullscreen" hidden data-i18n="interface:enterFullscreen">
+            Enter fullscreen
+          </button>
+          <p
+            id="status"
+            role="status"
+            aria-live="polite"
+            data-i18n="interface:creator.checkingInstalledEdition"
+          >
+            Checking the installed edition and its picture.
+          </p>
+          <p id="creator-save-warning" class="error" role="status" hidden></p>
         </div>
-        <p id="earned-caption"></p>
-        <p id="creator-story-status" role="status" aria-live="polite"></p>
-        <button
-          id="creator-story-retry"
-          type="button"
-          hidden
-          data-i18n="interface:creator.retryVictoryVideo"
-        >
-          Try victory video again
-        </button>
+        <footer class="creator-menu-footer">
+          <span data-menu-keyboard-hint
+            >Enter · <span data-i18n="common:controls.confirm">Confirm</span> / Esc ·
+            <span data-i18n="common:actions.back">Back</span></span
+          >
+          <span data-menu-controller-hint hidden></span>
+          <span id="creator-version">DEV</span>
+        </footer>
       </section>
-      <details class="panel">
-        <summary data-i18n="interface:creator.savesRecovery">Saves and recovery</summary>
-        <p data-i18n="interface:creator.editionProgressHelp">
-          Attempts and earned pictures belong to this exact installed edition. A new edition keeps
-          its own progress.
+      <section id="creator-game" hidden>
+        <div id="creator-flight-actions"></div>
+        <p id="hud" data-i18n="interface:creator.playerHelp">
+          Move with arrow keys or WASD. Close a line on safe ground to reveal your picture.
         </p>
-        <button id="export-attempt" disabled data-i18n="interface:creator.downloadAttempt">
-          Download unfinished attempt
-        </button>
-        <label
-          ><span data-i18n="interface:creator.restoreAttempt">Restore an attempt</span>
-          <input id="import-attempt" type="file" accept=".json,application/json" disabled
-        /></label>
-        <button id="export-progress" disabled data-i18n="interface:creator.backupProgress">
-          Back up campaign progress
-        </button>
-        <label
-          ><span data-i18n="interface:creator.restoreProgress">Restore campaign progress</span>
-          <input id="import-progress" type="file" accept=".json,application/json" disabled
-        /></label>
-      </details>
+        <div
+          id="arena"
+          tabindex="0"
+          aria-label="Game board. Arrow keys or WASD to move; Escape to pause."
+          data-i18n-aria-label="interface:creator.gameBoardHelp"
+        >
+          <canvas
+            id="board"
+            width="1296"
+            height="648"
+            aria-label="Territory capture board"
+            data-i18n-aria-label="interface:creator.territoryCaptureBoard"
+          ></canvas>
+        </div>
+        <div
+          class="touch-controls"
+          aria-label="Direction controls"
+          data-i18n-aria-label="interface:directionControls"
+        >
+          <button data-move="up" aria-label="Move up" data-i18n-aria-label="common:controls.moveUp">
+            ↑</button
+          ><button
+            data-move="left"
+            aria-label="Move left"
+            data-i18n-aria-label="common:controls.moveLeft"
+          >
+            ←</button
+          ><button
+            data-move="down"
+            aria-label="Move down"
+            data-i18n-aria-label="common:controls.moveDown"
+          >
+            ↓</button
+          ><button
+            data-move="right"
+            aria-label="Move right"
+            data-i18n-aria-label="common:controls.moveRight"
+          >
+            →
+          </button>
+        </div>
+        <section id="earned" class="panel" hidden>
+          <h2 data-i18n="interface:creator.yourEarnedPicture">Your earned picture</h2>
+          <div id="creator-story-stage" class="creator-story-stage">
+            <img id="earned-picture" alt="" />
+          </div>
+          <p id="earned-caption"></p>
+          <p id="creator-story-status" role="status" aria-live="polite"></p>
+          <button
+            id="creator-story-retry"
+            type="button"
+            hidden
+            data-i18n="interface:creator.retryVictoryVideo"
+          >
+            Try victory video again
+          </button>
+        </section>
+      </section>
     </main>
+    <dialog
+      id="creator-settings"
+      class="creator-menu-dialog native-settings"
+      aria-labelledby="creator-settings-title"
+    >
+      <header>
+        <h2 id="creator-settings-title" data-i18n="common:navigation.settings">Settings</h2>
+        <button id="creator-settings-back" data-settings-back data-i18n="common:actions.back">
+          Back
+        </button>
+      </header>
+      <p id="creator-settings-status" class="error" role="status" hidden></p>
+      <div class="creator-settings-layout">
+        <div
+          class="field-kit-settings-tabs"
+          role="tablist"
+          aria-orientation="vertical"
+          data-menu-layout="vertical"
+        >
+          <button
+            id="creator-tab-gameplay"
+            role="tab"
+            aria-controls="creator-panel-gameplay"
+            aria-selected="true"
+            data-i18n="interface:nativeMenu.gameplay"
+          >
+            Gameplay
+          </button>
+          <button
+            id="creator-tab-display"
+            role="tab"
+            aria-controls="creator-panel-display"
+            aria-selected="false"
+            data-i18n="interface:nativeMenu.display"
+          >
+            Display &amp; Language
+          </button>
+          <button
+            id="creator-tab-data"
+            role="tab"
+            aria-controls="creator-panel-data"
+            aria-selected="false"
+            data-i18n="interface:nativeMenu.data"
+          >
+            Progress &amp; Collection
+          </button>
+          <button
+            id="creator-tab-help"
+            role="tab"
+            aria-controls="creator-panel-help"
+            aria-selected="false"
+            data-i18n="interface:nativeMenu.extras"
+          >
+            Help &amp; Extras
+          </button>
+        </div>
+        <section
+          id="creator-panel-gameplay"
+          role="tabpanel"
+          aria-labelledby="creator-tab-gameplay"
+          data-menu-layout="vertical"
+        >
+          <div id="creator-runtime-controls">
+            <label
+              ><span data-i18n="interface:difficulty">Difficulty</span>
+              <select id="difficulty">
+                <option value="gentle" data-i18n="interface:gentle">Gentle</option>
+                <option value="standard" selected data-i18n="interface:standard">Standard</option>
+                <option value="expert" data-i18n="interface:expert">Expert</option>
+              </select></label
+            >
+            <label
+              ><span data-i18n="interface:steering">Steering</span>
+              <select id="steering">
+                <option value="immediate" data-i18n="interface:immediate">Immediate</option>
+                <option value="grid-center" data-i18n="interface:creator.gridCenter">
+                  Grid center
+                </option>
+              </select></label
+            >
+            <button id="start" disabled data-i18n="interface:startMission">Start mission</button>
+            <button id="resume" hidden data-i18n="common:actions.continue">
+              Resume saved attempt
+            </button>
+            <button id="pause" disabled data-i18n="common:actions.pause">Pause</button>
+            <button id="retry" disabled data-i18n="common:actions.retry">Retry</button>
+            <button id="next" hidden data-i18n="common:actions.next">Next</button>
+          </div>
+        </section>
+        <section
+          id="creator-panel-display"
+          role="tabpanel"
+          aria-labelledby="creator-tab-display"
+          hidden
+          data-menu-layout="vertical"
+        >
+          <div data-language-control></div>
+          <label
+            ><span data-i18n="interface:textStyle">Text style</span
+            ><select id="creator-text-face">
+              <option value="pixel" data-i18n="interface:themeFont">Theme font</option>
+              <option value="plain" data-i18n="common:text.plain">Plain</option>
+            </select></label
+          >
+          <label
+            ><span data-i18n="interface:textSize">Text size</span
+            ><select id="creator-text-size">
+              <option value="standard" data-i18n="interface:display.textSize.standard">
+                Standard
+              </option>
+              <option value="large" data-i18n="interface:large">Large</option>
+            </select></label
+          >
+          <label
+            ><input type="checkbox" id="creator-reduced-effects" /><span
+              data-i18n="interface:reducedEffects"
+              >Reduced effects</span
+            ></label
+          >
+          <p id="creator-display-status" role="status"></p>
+          <label
+            ><input type="checkbox" id="creator-background-animation" checked /><span
+              data-i18n="interface:nativeMenu.backgroundAnimation"
+              >Animated backgrounds</span
+            ></label
+          >
+          <button id="creator-settings-fullscreen" hidden data-i18n="interface:enterFullscreen">
+            Enter fullscreen
+          </button>
+          <p id="creator-fullscreen-status" role="status"></p>
+        </section>
+        <section
+          id="creator-panel-data"
+          role="tabpanel"
+          aria-labelledby="creator-tab-data"
+          hidden
+          data-menu-layout="vertical"
+        >
+          <p id="save-status" role="status"></p>
+          <p data-i18n="interface:creator.editionProgressHelp">
+            Attempts and earned pictures belong to this exact installed edition. A new edition keeps
+            its own progress.
+          </p>
+          <button id="export-attempt" disabled data-i18n="interface:creator.downloadAttempt">
+            Download unfinished attempt
+          </button>
+          <label
+            ><span data-i18n="interface:creator.restoreAttempt">Restore an attempt</span>
+            <input id="import-attempt" type="file" accept=".json,application/json" disabled
+          /></label>
+          <button id="export-progress" disabled data-i18n="interface:creator.backupProgress">
+            Back up campaign progress
+          </button>
+          <label
+            ><span data-i18n="interface:creator.restoreProgress">Restore campaign progress</span>
+            <input id="import-progress" type="file" accept=".json,application/json" disabled
+          /></label>
+        </section>
+        <section
+          id="creator-panel-help"
+          role="tabpanel"
+          aria-labelledby="creator-tab-help"
+          hidden
+          data-menu-layout="vertical"
+        >
+          <p data-i18n="interface:creator.playerHelp">
+            Move with arrow keys or WASD. Close a line on safe ground to reveal your picture.
+          </p>
+          <a
+            id="creator-back-library"
+            href="./#installed"
+            data-i18n="interface:creator.backToMyCreations"
+            >← My creations</a
+          >
+          <a id="creator-back-game" href="../" data-i18n="common:navigation.mainMenu">Main menu</a>
+        </section>
+      </div>
+    </dialog>
+    <dialog
+      id="creator-missions"
+      class="creator-menu-dialog"
+      aria-labelledby="creator-missions-title"
+    >
+      <header>
+        <h2 id="creator-missions-title" data-i18n="interface:nativeMenu.missions">
+          Select Mission
+        </h2>
+        <button id="creator-missions-back" data-i18n="common:actions.back">Back</button>
+      </header>
+      <p data-i18n="interface:creatorMenu.chooseMission">
+        Choose a mission to start in this installed campaign.
+      </p>
+      <div id="creator-mission-list" data-menu-layout="vertical" data-menu-edge-exit="true"></div>
+    </dialog>
+    <dialog
+      id="creator-replace-attempt"
+      class="creator-menu-dialog"
+      aria-labelledby="creator-replace-title"
+    >
+      <h2 id="creator-replace-title" data-i18n="interface:creatorMenu.replaceTitle">
+        Start another attempt?
+      </h2>
+      <p id="creator-replace-copy" data-i18n="interface:creatorMenu.replaceBody">
+        This replaces your unfinished attempt when the selected mission is ready. Cancel keeps it
+        paused. Export it from Settings to keep a separate copy.
+      </p>
+      <div data-menu-layout="vertical">
+        <button id="creator-replace-cancel" data-i18n="common:actions.cancel">Cancel</button
+        ><button id="creator-replace-confirm" data-i18n="common:actions.play">Play</button>
+      </div>
+    </dialog>
   </body>
 </html>

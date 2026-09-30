@@ -6,6 +6,7 @@ import {
   formatNumber,
 } from '../../game/i18n/index.mjs';
 import { assetStudioErrorMessage } from './error-copy.mjs';
+import { mountRewardAssetExport } from '../../game/studio/reward-asset-export.mjs';
 import { createStudioDownload } from './download.mjs';
 import { isTeamPreviewScenarioAvailable } from './team-preview-fixture.mjs';
 import {
@@ -51,6 +52,9 @@ import { mountInterfacePreferences } from './interface-preferences.mjs';
 import { mountStudioGuide } from './guide.mjs';
 import { attachStudioAuditionLifecycle } from './audition-lifecycle.mjs';
 import { createStudioViewMemory, resolveStudioView } from './view-memory.mjs';
+import { mountStudioRotorControls } from './rotor-controls.mjs';
+import { mountArtworkCollectionPanel } from './artwork-panel.mjs';
+mountArtworkCollectionPanel({ document, window });
 const $ = (id) => document.getElementById(id);
 const node = (tag, value = '', className = '', hostRole = null) => {
   const el = document.createElement(tag);
@@ -65,6 +69,7 @@ let working = { document: createDefaultThemeBundle(), assets: new Map() },
   saved = working,
   generation = 0,
   storageReady = false;
+let assetHandoffExport = null;
 let selected = working.document.slots[0].id,
   pending = null,
   undo = [],
@@ -104,12 +109,16 @@ document.querySelectorAll('[data-studio-startup-disabled]').forEach((control) =>
   control.disabled = false;
   control.removeAttribute('data-studio-startup-disabled');
 });
-let operationFocus = null;
+let operationFocus = null,
+  invalidOperationFocus = null;
 const operations = createStudioOperations({
   target: $('studio-status'),
   cancelButton: $('cancel-studio-operation'),
   setBusy(value) {
-    if (value) operationFocus = document.activeElement;
+    if (value) {
+      operationFocus = document.activeElement;
+      invalidOperationFocus = null;
+    }
     // Escape and preview observation controls stay outside these mutation regions.
     document
       .querySelectorAll(
@@ -123,13 +132,16 @@ const operations = createStudioOperations({
     // Preserve the ordinary return owner on errors; only a consumed Stage
     // advances to the next available authoring action.
     const returnTarget =
-      operationFocus === $('stage-asset') && operationFocus.disabled
+      invalidOperationFocus ||
+      (operationFocus === $('stage-asset') && operationFocus.disabled
         ? $('save-workspace')
-        : operationFocus;
+        : operationFocus);
     if (
       !value &&
       document.hasFocus() &&
-      [document.body, $('cancel-studio-operation')].includes(document.activeElement) &&
+      [document.body, $('cancel-studio-operation'), operationFocus].includes(
+        document.activeElement,
+      ) &&
       returnTarget?.isConnected &&
       !returnTarget.disabled
     )
@@ -205,6 +217,7 @@ function discardPreparation() {
   localizedText($('upload-summary'), () => t('tools:noReplacementSelected'));
   $('image-preparation').hidden = true;
   $('geometry-panel').hidden = true;
+  rotorControls.refresh();
   $('stage-asset').disabled = true;
   $('discard-asset').disabled = true;
 }
@@ -320,6 +333,7 @@ function refresh() {
   updateCollectionCount();
 }
 function refreshInspector() {
+  assetHandoffExport?.reset();
   const slot = currentSlot(),
     view = resolved(),
     asset = view.assets[slot.id];
@@ -603,6 +617,20 @@ function fileMime(file) {
   );
 }
 const preparedDownload = createStudioDownload({ document, target: $('prepared-download') });
+assetHandoffExport = mountRewardAssetExport({
+  container: $('asset-history').parentElement,
+  getOriginal() {
+    requireSettled();
+    const asset = resolved().assets[selected];
+    if (!asset?.file) throw new Error(t('tools:fileBytesAreUnavailable'));
+    return {
+      blob: working.assets.get(asset.file.sha256),
+      sha256: asset.file.sha256,
+      mime: asset.file.mime,
+      name: `${asset.id}-${asset.revision}`,
+    };
+  },
+});
 function download(blob, filename) {
   if (!blob) {
     report(new Error(t('tools:fileBytesAreUnavailable')));
@@ -850,7 +878,10 @@ async function prepareCrop(task) {
 function populateGeometry() {
   const geometry = pending?.candidate?.geometry;
   $('geometry-panel').hidden = !geometry;
-  if (!geometry) return;
+  if (!geometry) {
+    rotorControls.refresh();
+    return;
+  }
   const controls = presentationGeometryControls(currentSlot());
   $('pivot-x').disabled = $('pivot-y').disabled = !controls.pivot;
   $('rotor-anchors').disabled = !controls.rotors;
@@ -864,7 +895,25 @@ function populateGeometry() {
   $('pivot-y').value = geometry.pivot.y;
   $('rotor-anchors').value = JSON.stringify(geometry.rotorAnchors, null, 2);
   $('nine-slice').value = JSON.stringify(geometry.nineSlice);
+  rotorControls.refresh();
 }
+const rotorControls = mountStudioRotorControls({
+  document,
+  getContext: () => ({
+    owner: pending,
+    asset: pending?.candidate,
+    slot: currentSlot(),
+    geometryText: JSON.stringify(
+      ['pivot-x', 'pivot-y', 'rotor-anchors', 'nine-slice'].map((id) => $(id).value),
+    ),
+  }),
+  onApply: (anchors, checkCurrent) =>
+    operation(t('tools:checkingPreviewGeometry'), (task) => {
+      checkCurrent();
+      return validatePending(true, task, anchors);
+    }),
+  onError: report,
+});
 function editedGeometry() {
   const current = pending.candidate.geometry;
   return {
@@ -874,7 +923,7 @@ function editedGeometry() {
     nineSlice: JSON.parse($('nine-slice').value),
   };
 }
-async function validatePending(geometryOnly = false, task) {
+async function validatePending(geometryOnly = false, task, rotorAnchors = null) {
   if (!pending?.candidate) throw new Error(t('tools:prepareAnImageCropOrChooseMediaFirst'));
   if (pending.bitmap) {
     const crop = getCrop();
@@ -883,10 +932,13 @@ async function validatePending(geometryOnly = false, task) {
   }
   const asset = structuredClone(pending.candidate);
   if (asset.geometry) asset.geometry = editedGeometry();
+  if (rotorAnchors !== null) asset.geometry.rotorAnchors = rotorAnchors;
   if (!geometryOnly) {
     for (const id of ['asset-creator', 'asset-source', 'asset-license'])
       if (!$(id).value.trim()) {
-        $(id).focus();
+        // The operation has made this panel inert. Defer the correction target
+        // until unlock, which also checks foreground and current focus ownership.
+        invalidOperationFocus = $(id);
         throw new Error(t('tools:enterTheActualCreatorSourceAndLicenseRightsStatement'));
       }
     asset.description = $('asset-description').value.trim() || currentSlot().label;
@@ -910,7 +962,9 @@ async function validatePending(geometryOnly = false, task) {
     bindings: { [selected]: ref(asset) },
   });
   if (geometryOnly) {
+    task.check();
     pending.candidate = asset;
+    populateGeometry();
     refreshPreviews();
     status(t('tools:geometryCheckedAndAppliedToTheDraftPreview'));
     return;
@@ -1357,6 +1411,7 @@ $('load-release').onclick = () =>
   });
 window.addEventListener('pagehide', (event) => {
   rememberView();
+  assetHandoffExport?.reset();
   copyRequest++;
   if (event.persisted) {
     operations.cancel();
@@ -1368,6 +1423,8 @@ window.addEventListener('pagehide', (event) => {
   }
   for (const id of ['current-preview', 'draft-preview']) $(id).previewCleanup?.();
   if (!event.persisted) {
+    assetHandoffExport?.dispose();
+    rotorControls.dispose();
     auditionLifecycle.dispose();
     studioGuide.dispose();
     interfacePreferences.dispose();

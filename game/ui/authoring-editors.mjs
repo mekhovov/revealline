@@ -98,7 +98,12 @@ export function createGridEditorAdapter({
     isCurrent: () => active && available() && element.isConnected,
     focus: () => element.focus(),
     handle(command) {
-      if (command.back || command.menu) return cancel() ? undefined : 'cancel';
+      if (command.back || command.menu) {
+        const retained = cancel();
+        changed();
+        showCursor();
+        return retained ? undefined : 'cancel';
+      }
       if (command.confirm || command.confirmCommit) apply();
       else if (vectors[command.direction]) {
         const [dx, dy] = vectors[command.direction],

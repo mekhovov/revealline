@@ -167,7 +167,7 @@ test('session-only Next prepares a new exact original without persistent writes'
   page.win.emit('pagehide', { persisted: true });
   await settle(() => !locks.held.has(writerKey));
   const suspended = JSON.parse(page.storage.getItem('revealline.suspended.dev.v1'));
-  assert.equal(suspended.format, 'xonix-session.v6');
+  assert.equal(suspended.format, 'xonix-session.v5');
   assert.deepEqual(suspended.visualThemePin.selection, FRESH_SOLO_VISUAL_RELEASE.selection);
   assert.equal(suspended.visualThemePin.presentation.sha256, selected.presentation.sha256);
   assert.ok(suspended.presentationPins, 'The retained visual pin accompanies the exact picture');
@@ -210,7 +210,10 @@ test('session-only Next prepares a new exact original without persistent writes'
   page.$('prepare-session-originals').click();
   await settle(() => !page.$('download-session-originals').hidden);
   assert.match(page.$('download-session-originals').href, /^blob:/);
-  assert.equal(page.$('download-session-originals').download, 'fpv-line-session-originals.rlmedia');
+  assert.equal(
+    page.$('download-session-originals').download,
+    'RevealLine-session-originals.rlmedia',
+  );
   assert.match(page.$('save-status').textContent, /originals verified/);
   const exported = await (await fetchBlob(page.$('download-session-originals').href)).blob();
   const imported = await importMediaBundle(exported, {

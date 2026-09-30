@@ -246,21 +246,56 @@ export function attachEnemyCatalogPanel({
         const file = upload.files?.[0];
         if (!file) throw new Error(t('interface:chooseACatalogJsonFile'));
         if (file.size > 65536) throw new Error(t('interface:catalogChoicesAreLimitedTo64Kib'));
-        const candidate = validateEnemyCatalogDraft(JSON.parse(await file.text()));
+        const candidate = parseChoices(await file.text());
         context.check();
         draft = structuredClone(candidate);
       },
       t('interface:importedIntoTheDraftApplyWhenReady'),
       t('interface:readingAndValidatingCatalogChoices'),
     );
+  function parseChoices(text) {
+    if (new TextEncoder().encode(text).byteLength > 65536)
+      throw new Error(t('interface:catalogChoicesAreLimitedTo64Kib'));
+    return validateEnemyCatalogDraft(JSON.parse(text));
+  }
+  const json = node('details', 'json-section'),
+    jsonSummary = node('summary', null, localizedMessage('interface:enemyCatalog.json')),
+    jsonLabel = node('label', null, localizedMessage('interface:enemyCatalog.json')),
+    source = node('textarea', 'json');
+  source.rows = 10;
+  source.spellcheck = false;
+  source.value = JSON.stringify(draft, null, 2);
+  jsonLabel.append(source);
+  const showCurrent = button(
+    'show-json',
+    localizedMessage('interface:enemyCatalog.showCurrent'),
+    () => {
+      if (!busy) source.value = JSON.stringify(draft, null, 2);
+    },
+  );
+  const importJson = button(
+    'apply-json',
+    localizedMessage('interface:enemyCatalog.validateImport'),
+    () =>
+      perform(
+        (context) => {
+          const candidate = parseChoices(source.value);
+          context.check();
+          draft = structuredClone(candidate);
+        },
+        t('interface:importedIntoTheDraftApplyWhenReady'),
+        t('interface:readingAndValidatingCatalogChoices'),
+      ),
+  );
+  json.append(jsonSummary, showCurrent, jsonLabel, importJson);
   const back = button('back', localizedMessage('common:actions.back'), close),
     actions = node('div');
   actions.className = 'enemy-catalog-actions';
   actions.append(apply, undo, play, exportButton, upload, back);
-  dialog.append(title, note, fields, preview, read, reading, status, actions);
+  dialog.append(title, note, fields, preview, read, reading, json, status, actions);
   doc.body.append(dialog);
   function syncBusy() {
-    for (const el of dialog.querySelectorAll('button,input,select'))
+    for (const el of dialog.querySelectorAll('button,input,select,textarea'))
       el.disabled = busy && el !== back;
     localizedText(back, () =>
       busy

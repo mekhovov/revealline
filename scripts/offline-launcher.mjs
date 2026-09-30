@@ -12,6 +12,7 @@ export const LAUNCHER_NAVIGATION_FILES = Object.freeze([
   'ui/controller-confirm-lifecycle.mjs',
   'ui/controller-navigation.mjs',
   'ui/controller-router.mjs',
+  'couch/controller-profiles.mjs',
   'ui/controller-field-editor.mjs',
   'ui/controller-field-editor.css',
   'ui/controller-text-draft.mjs',
@@ -51,7 +52,7 @@ async function buildLauncherCatalog(root) {
   for (const file of LAUNCHER_NAVIGATION_FILES) {
     const source = await fs.readFile(path.join(root, 'game', file), 'utf8');
     for (const match of source.matchAll(
-      /['"`](common|interface|gameplay|controllerEditor):([A-Za-z0-9_.]+)['"`]/g,
+      /['"`](common|interface|gameplay|controllerEditor|errors):([A-Za-z0-9_.]+)['"`]/g,
     )) {
       (selectedKeys[match[1]] ??= new Set()).add(match[2]);
     }

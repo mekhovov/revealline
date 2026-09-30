@@ -272,7 +272,6 @@ async function main() {
   let current = null,
     pendingSession = null,
     paused = true,
-    signalStarted = false,
     preparing = false,
     generation = 0,
     accumulator = 0,
@@ -316,10 +315,9 @@ async function main() {
     arcadeCleared(id) && (!lessonFor(id) || assignment(id)?.status === 'complete');
   const progressState = (id) => {
     if (!completed(id)) return { state: 'new', bestStars: null };
-    const receipt = profile.snapshot().clears.solo[missionFor(id)?.id];
     return {
       state: 'completed',
-      bestStars: receipt?.bestStars ?? null,
+      bestStars: profile.bestStars('solo', missionFor(id)?.id),
     };
   };
   const unlocked = (id) => {
@@ -425,7 +423,6 @@ async function main() {
   function resume() {
     if (!current || preparing || ['won', 'lost'].includes(current.run.status)) return;
     input.clear();
-    signalStarted = true;
     paused = false;
     accumulator = 0;
     last = performance.now();
@@ -537,7 +534,6 @@ async function main() {
       canvas.width = size.width;
       canvas.height = size.height;
       paused = true;
-      signalStarted = false;
       awarded = arcadeCleared(run.levelId);
       accumulator = 0;
       if (learning) rememberLearning(learning);
@@ -1120,21 +1116,6 @@ async function main() {
         fullReveal: current.run.status === 'won',
         displayCSSWidth: canvas.clientWidth,
         textFace: 'plain',
-        signalReception:
-          current.run.status === 'won'
-            ? 'off'
-            : current.run.status === 'lost'
-              ? 'lost'
-              : !signalStarted
-                ? 'ready'
-                : 'playing',
-        signalEffectsRunning:
-          !document.hidden &&
-          document.hasFocus?.() !== false &&
-          !preparing &&
-          !$('play-screen').hidden &&
-          !document.querySelector('dialog[open]') &&
-          (isPlaying() || current.run.status === 'lost'),
       });
       sound.update(isPlaying(), current.theme, current.run);
       refresh();

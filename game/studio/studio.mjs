@@ -1,4 +1,10 @@
 import { editorMessageError, editorErrorText } from './editor-copy.mjs';
+import { createSourceDiscardGate } from './source-discard.mjs';
+import {
+  disableStudioControl,
+  syncStudioHistory,
+  captureStudioActionFocus,
+} from './action-focus.mjs';
 import { createGridEditorAdapter, registerAuthoringEditor } from '../ui/authoring-editors.mjs';
 import { platformExportText } from '../ui/export-copy.mjs';
 import { localizedMessage, localizedText, onLocaleChange, t } from '../i18n/index.mjs';
@@ -129,6 +135,7 @@ import {
   inspectStudioSpatialReview,
   mountStudioSpatialReviews,
 } from './spatial-editions.mjs';
+import { createDiscoveryEditor } from './discovery-editor.mjs';
 
 const $ = (id) => document.getElementById(id);
 const creatorDraftId = new URLSearchParams(location.search).get('creator-draft');
@@ -170,14 +177,31 @@ const inspections = createInspectionRequests(() =>
     $('checkpoint').value,
   ]),
 );
+const sourceDiscard = createSourceDiscardGate({
+  document,
+  isDirty: () => sourceChanged,
+  getContext: () => ({
+    owner: session,
+    signature: JSON.stringify([
+      session.export(),
+      $('source').value,
+      [...document.querySelectorAll('main input,main select,main textarea')].map((node) => [
+        node.id,
+        node.value,
+        node.checked,
+      ]),
+    ]),
+  }),
+  onStale: () => status(localizedMessage('tools:studio.source.changed'), true),
+});
 const imageWorkbench = createImageWorkbench({
   document,
   getSource: () => session.current(),
   getMission: () => currentMission(),
   getDifficulty: () => $('difficulty').value,
   redraw: () => inspectBoard(inspectedTrail),
-  apply: (candidate) => {
-    if (!discardSource()) return false;
+  apply: (candidate, retry) => {
+    if (!discardSource(retry)) return false;
     session.replace(candidate);
     render();
     queueSave();
@@ -197,8 +221,8 @@ const actorEditor = createActorEditor({
   getSource: () => session.current(),
   getMission: currentMission,
   getDifficulty: () => $('difficulty').value,
-  apply: (candidate) => {
-    if (!discardSource()) return false;
+  apply: (candidate, retry) => {
+    if (!discardSource(retry)) return false;
     session.replace(candidate);
     render();
     queueSave();
@@ -209,8 +233,8 @@ const combatEditor = createCombatEditor({
   document,
   getSource: () => session.current(),
   getMission: currentMission,
-  apply: (candidate) => {
-    if (!discardSource()) return false;
+  apply: (candidate, retry) => {
+    if (!discardSource(retry)) return false;
     session.replace(candidate);
     render();
     queueSave();
@@ -221,8 +245,8 @@ const geometryEditor = createGeometryEditor({
   document,
   getSource: () => session.current(),
   getMission: currentMission,
-  apply: (candidate) => {
-    if (!discardSource()) return false;
+  apply: (candidate, retry) => {
+    if (!discardSource(retry)) return false;
     session.replace(candidate);
     render();
     queueSave();
@@ -233,8 +257,8 @@ const bonusEditor = createBonusEditor({
   document,
   getSource: () => session.current(),
   getMission: currentMission,
-  apply: (candidate) => {
-    if (!discardSource()) return false;
+  apply: (candidate, retry) => {
+    if (!discardSource(retry)) return false;
     session.replace(candidate);
     render();
     queueSave();
@@ -245,8 +269,8 @@ const timedBonusEditor = createTimedBonusEditor({
   document,
   getSource: () => session.current(),
   getMission: currentMission,
-  apply: (candidate) => {
-    if (!discardSource()) return false;
+  apply: (candidate, retry) => {
+    if (!discardSource(retry)) return false;
     session.replace(candidate);
     render();
     queueSave();
@@ -257,8 +281,8 @@ const objectiveEditor = createObjectiveEditor({
   document,
   getSource: () => session.current(),
   getMission: currentMission,
-  apply: (candidate) => {
-    if (!discardSource()) return false;
+  apply: (candidate, retry) => {
+    if (!discardSource(retry)) return false;
     session.replace(candidate);
     render();
     queueSave();
@@ -269,8 +293,8 @@ const relayEditor = createRelayEditor({
   document,
   getSource: () => session.current(),
   getMission: currentMission,
-  apply: (candidate) => {
-    if (!discardSource()) return false;
+  apply: (candidate, retry) => {
+    if (!discardSource(retry)) return false;
     session.replace(candidate);
     render();
     queueSave();
@@ -281,8 +305,8 @@ const directionalEditor = createDirectionalEditor({
   document,
   getSource: () => session.current(),
   getMission: currentMission,
-  apply: (candidate) => {
-    if (!discardSource()) return false;
+  apply: (candidate, retry) => {
+    if (!discardSource(retry)) return false;
     session.replace(candidate);
     render();
     queueSave();
@@ -290,6 +314,18 @@ const directionalEditor = createDirectionalEditor({
   },
 });
 const encounterEditor = createEncounterEditor({
+  document,
+  getSource: () => session.current(),
+  getMission: currentMission,
+  apply: (candidate, retry) => {
+    if (!discardSource(retry)) return false;
+    session.replace(candidate);
+    render();
+    queueSave();
+    return true;
+  },
+});
+const discoveryEditor = createDiscoveryEditor({
   document,
   getSource: () => session.current(),
   getMission: currentMission,
@@ -306,14 +342,27 @@ function status(text, error = false) {
   $('status').dataset.error = String(error);
 }
 function guarded(action) {
-  return async (event) => {
+  const handler = async (event) => {
     try {
-      await action(event);
+      await sourceDiscard.run(
+        () => action(event),
+        () => handler(event),
+      );
     } catch (error) {
       if (error.name === 'AbortError') return;
       status(() => editorErrorText(error), true);
     }
   };
+  return handler;
+}
+function syncHistory() {
+  syncStudioHistory({
+    undo: $('undo'),
+    redo: $('redo'),
+    fallback: $('save'),
+    canUndo: !!session?.canUndo(),
+    canRedo: !!session?.canRedo(),
+  });
 }
 function showStorage(state) {
   if (state.error)
@@ -328,8 +377,7 @@ function showStorage(state) {
         ? localizedMessage('tools:studio.storage.unsaved')
         : localizedMessage('tools:studio.storage.saved', { revision: state.revision }),
     );
-  $('undo').disabled = !session?.canUndo();
-  $('redo').disabled = !session?.canRedo();
+  syncHistory();
 }
 function setSession(project, revision = null) {
   inspections.invalidate();
@@ -355,8 +403,8 @@ function queueSave() {
     owner.save().catch(() => {});
   }, 300);
 }
-function discardSource() {
-  return !sourceChanged || window.confirm(t('tools:studio.source.discard'));
+function discardSource(retry) {
+  return sourceDiscard.allow(retry);
 }
 function currentMission() {
   return session.current().missions.find((m) => m.id === $('mission').value);
@@ -379,6 +427,8 @@ function draw(preview) {
   canvas.setAttribute('aria-describedby', 'geometry capture-summary');
 }
 function inspectBoard(trailCells = []) {
+  $('preview-remains-options').hidden = true;
+  $('preview-show-remains').disabled = true;
   const project = freezeDesign(session.current());
   const mission = project.missions.find((entry) => entry.id === $('mission').value);
   syncStudioDifficulty($('difficulty'), project.difficultyCatalogId, {
@@ -394,6 +444,7 @@ function inspectBoard(trailCells = []) {
   relayEditor.sync();
   directionalEditor.sync();
   encounterEditor.sync();
+  discoveryEditor.sync();
   imageWorkbench.sync();
   traceRecovery.sync();
   setBoardAvailability(document, !!mission);
@@ -476,7 +527,11 @@ function inspectBoard(trailCells = []) {
       return li;
     }),
   );
-  $('play').disabled = !mission.modes.includes('solo') || !!mission.combat?.enabled;
+  $('play').disabled = !mission.modes.includes('solo');
+  const optionalSolo =
+    manifest.mode === 'solo' && manifest.level.classic?.combatPatrols?.enabled === true;
+  $('preview-remains-options').hidden = !optionalSolo;
+  $('preview-show-remains').disabled = !optionalSolo;
   $('export-team').hidden = !mission.modes.includes('team');
   $('team-sequence-tools').hidden = !mission.modes.includes('team');
   const selectedTeamCampaign = $('team-test-campaign').value;
@@ -534,7 +589,7 @@ function render(selected = $('mission').value) {
   sourceChanged = false;
   inspected = null;
   candidateLibrary.clearInspection();
-  $('apply').disabled = true;
+  disableStudioControl($('apply'), $('validate'));
   localizedText(
     $('validation'),
     localizedMessage('tools:studio.source.current', {
@@ -542,8 +597,7 @@ function render(selected = $('mission').value) {
       missions: project.missions.length,
     }),
   );
-  $('undo').disabled = !session.canUndo();
-  $('redo').disabled = !session.canRedo();
+  syncHistory();
   localizedText($('structure-result'), localizedMessage('tools:studio.structure.current'));
   syncStructure();
   inspectBoard();
@@ -654,19 +708,20 @@ function inspectSource({ head, selectedRevision } = {}) {
   inspections.invalidate();
   inspected = null;
   candidateLibrary.clearInspection();
-  $('apply').disabled = true;
+  disableStudioControl($('apply'), $('validate'));
   const text = $('source').value,
     project = compileContentProject(text).source;
   inspected = { text, project, head };
-  localizedText($('validation'), () =>
+  const report = () =>
     t(head ? 'tools:studio.source.checkpointInspected' : 'tools:studio.source.inspected', {
       name: contentText(project, 'name'),
       maps: project.maps.length,
       missions: project.missions.length,
       selectedRevision,
       latestRevision: head?.revision,
-    }),
-  );
+    });
+  localizedText($('validation'), report);
+  status(report);
   $('apply').disabled = false;
   candidateLibrary.reportInspection(() =>
     t('tools:studio.library.inspected', {
@@ -680,7 +735,7 @@ $('source').addEventListener('input', () => {
   sourceChanged = true;
   inspected = null;
   candidateLibrary.clearInspection();
-  $('apply').disabled = true;
+  disableStudioControl($('apply'), $('validate'));
   localizedText($('validation'), localizedMessage('tools:studio.source.unapplied'));
 });
 $('validate').onclick = guarded(() => inspectSource());
@@ -731,7 +786,7 @@ $('pressure-edition').onclick = guarded(() => {
   inspections.invalidate();
   inspected = null;
   candidateLibrary.clearInspection();
-  $('apply').disabled = true;
+  disableStudioControl($('apply'), $('validate'));
   $('source').value = JSON.stringify(withPressureDifficulty(session.current()), null, 2);
   sourceChanged = true;
   inspectSource();
@@ -1224,6 +1279,7 @@ $('play').onclick = guarded(() =>
   launchPreview(session.current(), $('mission').value, $('difficulty').value),
 );
 async function launchPreview(source, missionId, difficulty) {
+  const focusIntent = captureStudioActionFocus(document.activeElement);
   previewController?.abort();
   const controller = new AbortController();
   previewController = controller;
@@ -1232,13 +1288,19 @@ async function launchPreview(source, missionId, difficulty) {
   $('preview').src = 'about:blank';
   $('preview-panel').hidden = false;
   localizedText($('preview-status'), localizedMessage('tools:studio.preview.preparing'));
-  let result, previewProject;
+  let result,
+    previewProject,
+    showCombatScrap = null;
   try {
     // Own one immutable edition across asynchronous media loading and reuse its
     // validated projections; never compile the whole library twice per launch.
     const project = compileContentProject(source);
     previewProject = project.source;
     const manifest = prepareContentPreview(project, missionId, { difficulty }).manifest;
+    // Snapshot only a validated optional Solo mission's cosmetic launch choice.
+    // Later control changes apply to the next preview, never the pending one.
+    if (manifest.mode === 'solo' && manifest.level.classic?.combatPatrols?.enabled === true)
+      showCombatScrap = $('preview-show-remains').checked;
     const pin = manifest.background;
     const [theme, artwork] = await Promise.all([
       loadPreviewTheme({ themeId: manifest.presentation.themeId, signal: controller.signal }),
@@ -1251,22 +1313,31 @@ async function launchPreview(source, missionId, difficulty) {
           })()
         : null,
     ]);
-    if (ticket !== previewRevision) return;
+    if (ticket !== previewRevision) {
+      focusIntent.cancel();
+      return;
+    }
     result = prepareContentPreview(project, missionId, { difficulty, theme, artwork });
     sessionStorage.setItem('revealline.playground.current', JSON.stringify(result.scenario));
   } catch (error) {
+    focusIntent.cancel();
     if (ticket === previewRevision && error.name !== 'AbortError')
       localizedText($('preview-status'), () => studioPreviewFailureText(error));
     return;
   }
-  const url = new URL(`../?practice=1&revision=studio-${ticket}`, location.href).href;
+  const target = new URL(`../?practice=1&revision=studio-${ticket}`, location.href);
+  if (showCombatScrap !== null)
+    target.searchParams.set('preview-remains', showCombatScrap ? 'show' : 'hide');
+  const url = target.href;
   $('preview').src = url;
   localizedText($('preview-status'), () =>
     studioPreviewLoadingText(previewProject, missionId, difficulty),
   );
-  $('preview-panel').scrollIntoView({ block: 'start' });
+  focusIntent.reveal($('preview-panel'));
+  focusIntent.cancel();
   stopPreviewReadiness = observePreviewReadiness({
     expectedURL: url,
+    watchPractice: true,
     readDocument: () => $('preview').contentDocument,
     isCurrent: () => ticket === previewRevision,
     notify: (state) => {
@@ -1283,12 +1354,17 @@ async function launchPreview(source, missionId, difficulty) {
     },
   });
 }
-function closePreview() {
+function retirePreview() {
+  // Invalidate before aborting: a late or reentrant asset completion cannot
+  // revive an iframe retired by Close or by entry into the back/forward cache.
   previewRevision++;
   previewController?.abort();
   stopPreviewReadiness();
   $('preview').src = 'about:blank';
   $('preview-panel').hidden = true;
+}
+function closePreview() {
+  retirePreview();
   $('play').focus();
 }
 $('close-preview').onclick = closePreview;
@@ -1300,7 +1376,11 @@ window.addEventListener('beforeunload', (event) => {
   }
 });
 window.addEventListener('pagehide', (event) => {
+  // A restored Studio keeps its draft, but needs a deliberate new preview.
+  // Retire without moving focus, before any asynchronous completion can revive it.
+  retirePreview();
   if (!event.persisted) {
+    sourceDiscard.destroy();
     stopSpatialReviews();
     stopGameplayTuning();
     gameplayTuning.dispose();
@@ -1308,9 +1388,7 @@ window.addEventListener('pagehide', (event) => {
     paintedPreview = null;
   }
   imageWorkbench.dispose();
-  previewController?.abort();
   clearTimeout(saveTimer);
-  stopPreviewReadiness();
 });
 window.addEventListener('pageshow', (event) => {
   if (event.persisted && session) imageWorkbench.sync();

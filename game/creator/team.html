@@ -28,7 +28,7 @@
       >
       <span data-i18n="interface:creator.teamStudio.header">Team campaign creator</span>
     </header>
-    <main>
+    <main id="team-creator-form">
       <p class="eyebrow" data-i18n="interface:creator.teamStudio.eyebrow">
         CREATE / VERIFY / PLAY TOGETHER
       </p>
@@ -48,6 +48,23 @@
         Name the campaign, then generate its verified levels.
       </p>
 
+      <section class="panel" aria-labelledby="team-installed-title">
+        <h2 id="team-installed-title" data-i18n="interface:creator.teamStudio.installedHeading">
+          Installed Team packages
+        </h2>
+        <p
+          id="team-installed-status"
+          class="muted"
+          data-i18n="interface:creator.teamStudio.installedHelp"
+        >
+          Reopen verified runtime pictures, videos and public package fields. Original picture
+          sources, descriptions and crop settings are not stored.
+        </p>
+        <button id="refresh-installed" data-i18n="interface:creator.teamStudio.refreshInstalled">
+          Show installed packages
+        </button>
+        <div id="team-installed-list" class="actions"></div>
+      </section>
       <section class="panel" aria-labelledby="team-setup-title">
         <h2 id="team-setup-title" data-i18n="interface:creator.teamStudio.setupHeading">
           1. Generate cooperative levels
@@ -140,10 +157,11 @@
             class="button-link"
             href="../couch/relay-rescue.html"
             hidden
-            data-i18n="interface:creator.teamStudio.play"
-            >Play installed Team campaign</a
+            data-i18n="interface:creator.teamStudio.openTeam"
+            >Open Team</a
           >
         </div>
+        <p id="team-play-help" class="muted" hidden></p>
       </section>
     </main>
     <script type="module" src="../ui/authoring-input-entry.mjs"></script>

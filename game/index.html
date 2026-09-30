@@ -114,6 +114,7 @@
     <link rel="stylesheet" data-boot-href="style.css" />
     <link rel="stylesheet" data-boot-href="ui/controller-settings.css" />
     <link rel="stylesheet" data-boot-href="ui/game-shell.css" />
+    <link rel="stylesheet" data-boot-href="ui/optional-practice-panel.css" />
     <link rel="stylesheet" data-boot-href="ui/demo.css" />
     <link rel="stylesheet" data-boot-href="ui/flight-information-details.css" />
     <link rel="stylesheet" data-boot-href="ui/mode-choice.css" />
@@ -1939,6 +1940,29 @@
           ><input id="settings-reduced-effects" type="checkbox" />
           <span data-i18n="interface:reducedEffects">Reduced effects</span></label
         >
+        <label class="settings-check"
+          ><input id="enemy-remains" type="checkbox" aria-describedby="enemy-remains-hint" /><span
+            data-i18n="common:preferences.enemyRemains"
+            >Show enemy remains</span
+          ></label
+        >
+        <p
+          id="enemy-remains-hint"
+          class="micro-note"
+          data-i18n="common:preferences.enemyRemainsHint"
+        >
+          Show defeated optional enemies where supported. Warnings, shots and brief hit effects stay
+          visible.
+        </p>
+        <p id="enemy-remains-status" class="micro-note" role="status" hidden></p>
+        <button
+          id="enemy-remains-retry"
+          type="button"
+          data-i18n="common:preferences.retryEncounterSave"
+          hidden
+        >
+          Retry saving
+        </button>
         <p id="display-system-reduction" class="micro-note"></p>
         <p id="display-preferences-status" class="micro-note" role="status"></p>
         <label
@@ -3001,6 +3025,24 @@ No offline check yet.</pre
             data-i18n="common:navigation.settings"
           >
             Settings
+          </button>
+          <button
+            id="shell-home-fpv"
+            type="button"
+            class="button secondary"
+            hidden
+            data-i18n="interface:optionalPractice.fpvGameAction"
+          >
+            FPV flight simulator
+          </button>
+          <button
+            id="shell-home-practice"
+            type="button"
+            class="button secondary"
+            hidden
+            data-i18n="interface:optionalPractice.homeAction"
+          >
+            Flight practice
           </button>
           <button
             id="shell-offline"

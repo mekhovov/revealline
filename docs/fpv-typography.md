@@ -4,15 +4,15 @@ Field Kit uses readable interface text over pixel artwork. Departure Mono 1.500 
 
 ## Font roles and sizes
 
-| Role      | CSS family / token                        | Standard     | Large        | Use                                                              |
-| --------- | ----------------------------------------- | ------------ | ------------ | ---------------------------------------------------------------- |
-| Display   | `Reveal Line Pixel` / `--fk-font-display` | 40px minimum | 48px minimum | Existing screen titles and pause/result labels; Departure Mono 400 |
-| Menu action | `Reveal Line Pixel` / `--fk-text-menu` | 22px | 33px | Landing actions; Departure Mono 400 |
-| Menu title | `Reveal Line Pixel` / `--fk-text-menu-title` | 66px | 77px | Landing wordmark; Departure Mono 400 |
-| Body      | `Field Kit UI` / `--fk-font-ui`           | 18px / 1.5   | 22px / 1.5   | Instructions, descriptions, help and narrative; Exo 2 400        |
-| Control   | `Field Kit UI` / `--fk-font-ui`           | 16px / 1.35  | 20px / 1.35  | Buttons and form fields; Exo 2 500, primary emphasis 600         |
-| Secondary | `Field Kit UI` / `--fk-font-ui`           | 14px / 1.45  | 18px / 1.45  | Supporting labels, hints and release identity                    |
-| Numeric   | `Field Kit Mono` / `--fk-font-mono`       | 26px         | 30px         | Score, coverage and timer; IBM Plex Mono 500, equal-width digits |
+| Role        | CSS family / token                           | Standard     | Large        | Use                                                                |
+| ----------- | -------------------------------------------- | ------------ | ------------ | ------------------------------------------------------------------ |
+| Display     | `Reveal Line Pixel` / `--fk-font-display`    | 40px minimum | 48px minimum | Existing screen titles and pause/result labels; Departure Mono 400 |
+| Menu action | `Reveal Line Pixel` / `--fk-text-menu`       | 22px         | 33px         | Landing actions; Departure Mono 400                                |
+| Menu title  | `Reveal Line Pixel` / `--fk-text-menu-title` | 66px         | 77px         | Landing wordmark; Departure Mono 400                               |
+| Body        | `Field Kit UI` / `--fk-font-ui`              | 18px / 1.5   | 22px / 1.5   | Instructions, descriptions, help and narrative; Exo 2 400          |
+| Control     | `Field Kit UI` / `--fk-font-ui`              | 16px / 1.35  | 20px / 1.35  | Buttons and form fields; Exo 2 500, primary emphasis 600           |
+| Secondary   | `Field Kit UI` / `--fk-font-ui`              | 14px / 1.45  | 18px / 1.45  | Supporting labels, hints and release identity                      |
+| Numeric     | `Field Kit Mono` / `--fk-font-mono`          | 26px         | 30px         | Score, coverage and timer; IBM Plex Mono 500, equal-width digits   |
 
 New landing typography uses 11px multiples for Departure Mono's grid; narrow layouts can use a 44px wordmark. Keep short menu labels at 22px or larger, explanatory text in Exo 2, and do not simulate bold on the regular-only pixel face. The retained Handjet face is instantiated at `ELSH=2`, `ELGR=1`, `wght=600`; Exo 2 retains only its 400–600 weight range. Small keycaps and compact counters can use Mono at the secondary size.
 

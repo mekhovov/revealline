@@ -1,4 +1,5 @@
-// Read-only validation of the exact September 29 browser acceptance downloads.
+// Historical verifier restored from 517df7649: validates only the recorded September 29 downloads.
+// It is not evidence for the current candidate and is not a current batch runner.
 // Usage: node game/test/manual/verify-authoring-downloads.mjs <download-directory>
 // JSON goes to stdout; no input file or application storage is modified.
 import assert from 'node:assert/strict';

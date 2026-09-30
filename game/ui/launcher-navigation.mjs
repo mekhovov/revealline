@@ -19,11 +19,10 @@ export function attachLauncherNavigation({
       .map((id) => doc.getElementById(id))
       .find((element) => element && !element.hidden && !element.disabled);
   const router = createControllerRouter({ eventTarget: win, autoJoin: true, readPads, now });
-  let lifecycle;
   const guard = attachControllerConfirmGuard({
     document: doc,
     confirmPressed: () => foreground() && router.menuConfirmPressed(),
-    beforeNativeActivation: (event) => lifecycle?.beforeNativeActivation(event),
+    beforeNativeActivation: (event) => lifecycle.beforeNativeActivation(event),
     now,
   });
   const navigation = attachControllerNavigation({
@@ -33,14 +32,11 @@ export function attachLauncherNavigation({
     getDefaultFocus: preferred,
     keyboard: true,
     ownsKeyboardEvent: () => !foreground(),
+    onNativeInput: (event) => lifecycle.nativeInput(event),
     activateControl: (element) => guard.activate(element),
-    onNativeInput: (event) => {
-      lifecycle?.nativeInput(event);
-      router.clear();
-    },
     onBack: () => preferred()?.focus(),
   });
-  lifecycle = createControllerConfirmLifecycle({
+  const lifecycle = createControllerConfirmLifecycle({
     document: doc,
     readConfirm: (options) => router.readMenuConfirm(options),
     getContext: () => ({
@@ -49,18 +45,13 @@ export function attachLauncherNavigation({
       focused: doc.activeElement,
       active: foreground(),
     }),
-    navigation: {
-      beginConfirm: (target) => navigation.beginConfirm(target),
-      commitConfirm: () => navigation.commitConfirm(),
-      cancelConfirm: () => navigation.cancelConfirm(),
-      confirmCurrent: () => navigation.confirmCurrent(),
-    },
+    navigation,
     guard,
     now,
   });
   const clear = () => {
-    router.clear();
     lifecycle.cancel('launcher-lifecycle', { hard: true });
+    router.clear();
     navigation.clear();
   };
   const sample = (timeMs) => {
@@ -70,7 +61,15 @@ export function attachLauncherNavigation({
       const state = router.sample({ scope: 'launcher', timeMs });
       if (state.status.code === 'joined') navigation.engage();
       lifecycle.sample(state.confirmSnapshot);
-      navigation.handle({ ...state.ui, confirm: false });
+      // Native-event probes and the frame share one Confirm owner. Other
+      // controller edges still reach the menu once through its usual handler.
+      navigation.handle({
+        ...state.ui,
+        confirm: false,
+        confirmStart: false,
+        confirmCommit: false,
+        confirmCancel: false,
+      });
     } else clear();
     frame = win.requestAnimationFrame(sample);
   };

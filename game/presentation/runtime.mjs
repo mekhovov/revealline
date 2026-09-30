@@ -183,8 +183,8 @@ export function imagePresentation(source) {
       x: anchor.x - g.pivot.x,
       y: anchor.y - g.pivot.y,
       radiusScale: anchor.radius / 0.16,
-      direction: i % 2 ? -1 : 1,
-      phaseDegrees: i * 23,
+      direction: anchor.direction ?? (i % 2 ? -1 : 1),
+      phaseDegrees: anchor.phaseDegrees ?? i * 23,
       bladeCount: anchor.blades,
     })),
   });

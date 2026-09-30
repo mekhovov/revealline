@@ -60,15 +60,11 @@ export function attachQuickMusicControls({
     }
   };
   enabled = readPreference();
-  const ownsCouchMusic =
-    settingsRoot?.matches?.('[data-couch-music]') ||
-    settingsRoot?.querySelector('[data-couch-music]');
   const rows = after
     .filter(Boolean)
     .filter(
       (anchor) =>
-        // Couch Audio already owns a complete transport. Keep its existing commands.
-        !(['race-start', 'coop-start'].includes(anchor.id) && ownsCouchMusic),
+        !settingsRoot || !['shell-continue', 'race-start', 'coop-start'].includes(anchor.id),
     )
     .map((anchor, index) => {
       const root = doc.createElement('div'),
@@ -88,14 +84,15 @@ export function attachQuickMusicControls({
       toggle.onclick = () => run('toggle');
       skip.onclick = () => run('next');
       root.append(title, toggle, skip);
-      // Landing metadata is passive. The same live transport belongs to Audio.
-      const landing = ['shell-continue', 'race-start', 'coop-start'].includes(anchor.id);
-      if (landing && settingsRoot) settingsRoot.append(root);
-      else anchor.after(root);
+      anchor.after(root);
       return { root, title, toggle, skip };
     });
   let settingsTransport = null;
-  if (settingsRoot && !ownsCouchMusic) {
+  if (
+    settingsRoot &&
+    !settingsRoot.matches?.('[data-couch-music]') &&
+    !settingsRoot.querySelector('[data-couch-music]')
+  ) {
     const root = doc.createElement('div'),
       title = doc.createElement('span'),
       back = doc.createElement('button'),

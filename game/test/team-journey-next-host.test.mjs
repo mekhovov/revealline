@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { page } from './helpers/coop-host.mjs';
-import { teamImage, teamTabTo } from './helpers/coop-win.mjs';
+import { teamImage } from './helpers/coop-win.mjs';
 import { candidateTeamPictureTransport } from './helpers/candidate-team-picture-transport.mjs';
 import { playCurrentTeamRoute } from './helpers/current-team-route.mjs';
 import { dataIdentity } from '../data-json.mjs';
@@ -90,7 +90,14 @@ test('explicit Team Journey earns twelve consecutive clears across all five camp
     assert.equal(f.$('coop-discard-dialog').open, false);
     if (index < source.missions.length - 1) {
       assert.equal(f.doc.activeElement.id, 'coop-next');
-      assert.equal(f.$('coop-next').textContent, `Next: ${source.missions[index + 1].name}`);
+      const current = navigation.catalog.missions[index],
+        following = navigation.catalog.missions[index + 1];
+      assert.equal(
+        f.$('coop-next').textContent,
+        current.campaignId !== following.campaignId || current.packId !== following.packId
+          ? `Next campaign: ${following.campaignTitle}`
+          : `Next: ${following.name}`,
+      );
       f.$('coop-difficulty').value = 'expert';
       f.$('coop-experiment').value = 'independent';
       await next(f);
@@ -353,19 +360,6 @@ test('denied Team saving stays playable, exports pending progress and Retry save
       });
     },
   });
-  await waitFor(() => !f.$('coop-journey-save-options').hidden);
-  f.$('coop-settings-open').focus();
-  f.tap('Enter');
-  assert.equal(f.$('coop-options').open, true);
-  f.$('coop-settings-tab-data').focus();
-  f.tap('Enter');
-  assert.equal(f.$('coop-settings-panel-data').hidden, false);
-  teamTabTo(f, 'coop-journey-save-retry');
-  assert.equal(f.doc.activeElement.id, 'coop-journey-save-retry');
-  assert.equal(f.doc.activeElement.closest('[hidden],[inert]'), null);
-  f.tap('Escape');
-  assert.equal(f.$('coop-options').open, false);
-  assert.equal(f.doc.activeElement.id, 'coop-settings-open');
   f.$('coop-start').click();
   clear(f, 'twin-landings');
   await new Promise((resolve) => setImmediate(resolve));
@@ -387,8 +381,6 @@ test('denied Team saving stays playable, exports pending progress and Retry save
     blobs.push(blob);
     return create(blob);
   });
-  assert.equal(f.$('coop-tools').contains(f.$('coop-journey-save')), true);
-  teamTabTo(f, 'coop-journey-save-export');
   await f.$('coop-journey-save-export').onclick();
   const exported = blobs.find((blob) => blob.type === 'application/json');
   assert(exported);

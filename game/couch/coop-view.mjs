@@ -24,6 +24,7 @@ import { prepareTeamAnchors, drawTeamAnchor } from './coop-anchor-presentation.m
 import { canvasTextFonts } from '../text-face.mjs';
 import { drawTrailImpactFront } from '../ui/actor-presentation.mjs';
 import { createCoopActorPresentation } from './coop-actor-presentation.mjs';
+import { drawPreparedPilotContact } from './coop-pilot-cues.mjs';
 import { coopCueScale, placeCoopCue } from './coop-actor-layout.mjs';
 import {
   createCoopCaptureFeedback,
@@ -35,7 +36,6 @@ import {
 import { paintMaterialMarker } from '../content-design/material-markers.mjs';
 import { candidateTeamPictureFrame } from './candidate-team-pictures.mjs';
 import { coopBonusView, drawCoopBonuses } from './coop-bonus-view.mjs';
-import { createSignalReception } from '../ui/signal-reception.mjs';
 import {
   TEAM_PILOT_SLOTS,
   TEAM_ENEMY_SLOTS,
@@ -112,15 +112,14 @@ function prepareActorAppearance(snapshot) {
 }
 
 /** Draw the authoritative board once. Rendering never advances game state. */
-export function createCoopPainter(canvas, { signalCanvasFactory } = {}) {
+export function createCoopPainter(canvas) {
   const ctx = canvas.getContext('2d');
   if (!ctx) throw new Error(t('interface:relayRescueNeedsABrowserWithCanvas2dSupport'));
   let actors = createCoopActorPresentation(),
     actorPresentation = null,
     actorAppearanceStyle = null;
   const outcomes = createTeamOutcomeFeedback(),
-    captures = createCoopCaptureFeedback(),
-    receptionEffect = createSignalReception({ canvasFactory: signalCanvasFactory });
+    captures = createCoopCaptureFeedback();
   let presentation = null,
     look = null,
     wall = null,
@@ -196,9 +195,7 @@ export function createCoopPainter(canvas, { signalCanvasFactory } = {}) {
       actorAppearance = null,
       feedback = null,
       previousRun = null,
-      signalReception = 'off',
-      signalEffectsRunning = false,
-      signalDelta = 0,
+      feedbackComparison = null,
     } = {},
   ) {
     if (actorAppearance !== null && !['fpv', 'campaign'].includes(actorAppearance?.style))
@@ -269,11 +266,6 @@ export function createCoopPainter(canvas, { signalCanvasFactory } = {}) {
     const colors = palette ? [palette.accent, palette.safe] : COLORS;
     const motionScale = reduced ? 0 : (look?.motionScale ?? 1);
     reduced ||= motionScale === 0;
-    const reception = receptionEffect.advance(run, signalDelta, {
-      mode: run.status === 'won' ? 'off' : signalReception,
-      running: signalEffectsRunning,
-      reduced,
-    });
     actors.update(run, {
       reduced,
       motionScale,
@@ -282,12 +274,6 @@ export function createCoopPainter(canvas, { signalCanvasFactory } = {}) {
       previousRun,
     });
     const unit = canvas.width / run.width;
-    const drawReception = () => {
-      ctx.save();
-      ctx.scale(1 / unit, 1 / unit);
-      receptionEffect.draw(ctx, canvas.width, run.height * unit, reception);
-      ctx.restore();
-    };
     const cueScale = coopCueScale(canvas.clientWidth, run.width),
       cssCell = cueScale.cell,
       occupied = [],
@@ -340,18 +326,6 @@ export function createCoopPainter(canvas, { signalCanvasFactory } = {}) {
         // cells and score intact while retiring the live arena's concealment/cues.
         if (run.status === 'won') return;
       }
-      const acquiring = reception.kind === 'acquire';
-      if (acquiring) {
-        // Mask first, then degrade only that permitted feed. The normal pass
-        // paints terrain and all actionable cues sharply over the reception.
-        if (picture?.image) {
-          ctx.fillStyle = '#000000';
-          for (let y = 0; y < run.height; y++)
-            for (let x = 0; x < run.width; x++)
-              if (run.cells[y * run.width + x] === 0) ctx.fillRect(x, y, 1, 1);
-        }
-        drawReception();
-      }
       for (let y = 0; y < run.height; y++) {
         for (let x = 0; x < run.width; x++) {
           const cell = run.cells[y * run.width + x];
@@ -376,7 +350,7 @@ export function createCoopPainter(canvas, { signalCanvasFactory } = {}) {
               ctx.fill();
             }
           } else {
-            if (picture?.image && !acquiring) {
+            if (picture?.image) {
               // Required picture concealment is opaque black in every theme.
               ctx.fillStyle = '#000000';
               ctx.fillRect(x, y, 1, 1);
@@ -612,6 +586,7 @@ export function createCoopPainter(canvas, { signalCanvasFactory } = {}) {
         ctx.arc(spawn.x, spawn.y, 0.9, 0, Math.PI * 2);
         ctx.stroke();
       }
+      const preparedPilotContacts = new Map();
       for (const player of run.players) {
         ctx.strokeStyle = colors[player.id];
         ctx.fillStyle = colors[player.id];
@@ -655,23 +630,36 @@ export function createCoopPainter(canvas, { signalCanvasFactory } = {}) {
           ctx.fill();
           ctx.globalAlpha = 1;
         }
-        ctx.fillStyle = '#172c34';
-        ctx.lineWidth = 0.12;
-        ctx.beginPath();
-        if (player.id === 0) ctx.arc(0, 0, 0.58, 0, Math.PI * 2);
-        else {
-          ctx.moveTo(0, -0.72);
-          ctx.lineTo(0.67, 0);
-          ctx.lineTo(0, 0.72);
-          ctx.lineTo(-0.67, 0);
-          ctx.closePath();
+        if (!pilotBody) {
+          ctx.fillStyle = '#172c34';
+          ctx.lineWidth = 0.12;
+          ctx.beginPath();
+          if (player.id === 0) ctx.arc(0, 0, 0.58, 0, Math.PI * 2);
+          else {
+            ctx.moveTo(0, -0.72);
+            ctx.lineTo(0.67, 0);
+            ctx.lineTo(0, 0.72);
+            ctx.lineTo(-0.67, 0);
+            ctx.closePath();
+          }
+          ctx.fill();
+          ctx.stroke();
         }
-        if (!pilotBody) ctx.fill();
-        ctx.stroke();
-        ctx.fillStyle = colors[player.id];
-        ctx.beginPath();
-        ctx.arc(0, 0, player.radius, 0, Math.PI * 2);
-        ctx.fill();
+        if (pilotBody) {
+          // Retain exact physical geometry for the final foreground pass. A
+          // filled marker here or later would hide the prepared battery/camera.
+          preparedPilotContacts.set(player.id, {
+            x: player.x,
+            y: player.y,
+            radius: player.radius,
+            color: colors[player.id],
+          });
+        } else {
+          ctx.beginPath();
+          ctx.arc(0, 0, player.radius, 0, Math.PI * 2);
+          ctx.fillStyle = colors[player.id];
+          ctx.fill();
+        }
         ctx.restore();
         pilotBadge(player, pilotBody);
       }
@@ -785,13 +773,29 @@ export function createCoopPainter(canvas, { signalCanvasFactory } = {}) {
         ctx.restore();
       }
       for (const player of run.players) {
-        ctx.fillStyle = colors[player.id];
-        ctx.strokeStyle = '#07111c';
-        ctx.lineWidth = 1 / cssCell;
-        ctx.beginPath();
-        ctx.arc(player.x, player.y, player.radius, 0, Math.PI * 2);
-        ctx.fill();
-        ctx.stroke();
+        const contact = preparedPilotContacts.get(player.id);
+        if (contact) {
+          // Keep the unfilled pilot footprint above every actor and enemy cue.
+          // The separate number/shape badge and recovery ring retain their roles.
+          ctx.save();
+          ctx.translate(contact.x, contact.y);
+          drawPreparedPilotContact(
+            ctx,
+            contact.radius,
+            contact.color,
+            cssCell,
+            feedbackComparison?.contactStyle,
+          );
+          ctx.restore();
+        } else {
+          ctx.fillStyle = colors[player.id];
+          ctx.strokeStyle = '#07111c';
+          ctx.lineWidth = 1 / cssCell;
+          ctx.beginPath();
+          ctx.arc(player.x, player.y, player.radius, 0, Math.PI * 2);
+          ctx.fill();
+          ctx.stroke();
+        }
       }
       for (const [index, outcome] of recentOutcomes.entries()) {
         if (!['running', 'paused'].includes(run.status)) break;
@@ -846,14 +850,12 @@ export function createCoopPainter(canvas, { signalCanvasFactory } = {}) {
           ctx.restore();
         } else drawTeamEmitterSpark(ctx, emitterFrames, { x, y }, palette);
       }
-      if (reception.kind === 'lost') drawReception();
     } finally {
       ctx.restore();
     }
   }
   return {
     paint,
-    dispose: () => receptionEffect.dispose(),
     observe(run) {
       outcomes.observe(run);
       captures.observe(run);

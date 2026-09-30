@@ -884,7 +884,7 @@ test('private folder quick add reviews, saves, plays and exports one exact-byte 
 
   await app.click('export-bundle');
   await app.click('download-prepared');
-  assert.equal(app.downloads.at(-1).filename, 'fpv-line-soundtrack.rlsound');
+  assert.equal(app.downloads.at(-1).filename, 'RevealLine-soundtrack.rlsound');
   const portable = await importSoundtrackBundle(app.downloads.at(-1).blob, {
     probeMedia: structuralProbe,
     catalogue: SOUNDTRACK_CATALOGUE,
@@ -1049,7 +1049,7 @@ test('binary download and replacement draft preserve exact original audio; Undo 
   await app.click('export-bundle');
   assert.equal(app.downloads.length, 0, 'Preparation never calls the injected download adapter.');
   await app.click('download-prepared');
-  assert.equal(app.downloads[0].filename, 'fpv-line-soundtrack.rlsound');
+  assert.equal(app.downloads[0].filename, 'RevealLine-soundtrack.rlsound');
   const bundle = app.downloads[0].blob;
   const checked = await importSoundtrackBundle(bundle, { probeMedia: structuralProbe });
   assert.deepEqual(
@@ -1375,8 +1375,8 @@ test('preparing a visible native link is read-only and retains exact saved bytes
   app.click('download-prepared');
   app.click('download-prepared');
   assert.deepEqual(app.doc.nativeDownloads, [
-    { href: url, filename: 'fpv-line-soundtrack.rlsound' },
-    { href: url, filename: 'fpv-line-soundtrack.rlsound' },
+    { href: url, filename: 'RevealLine-soundtrack.rlsound' },
+    { href: url, filename: 'RevealLine-soundtrack.rlsound' },
   ]);
   assert.equal(app.urls.size, 1, 'Retry reuses one bounded Blob and handle.');
   assert.equal(app.revoked.length, 0, 'The browser may consume its link asynchronously.');
@@ -1512,7 +1512,7 @@ test('native adapter receives prepared bytes synchronously on explicit activatio
   await retry;
   assert.equal(requests.length, 2);
   assert.equal(requests[0].blob, requests[1].blob);
-  assert.equal(requests[1].filename, 'fpv-line-soundtrack.rlsound');
+  assert.equal(requests[1].filename, 'RevealLine-soundtrack.rlsound');
   assert.match(app.node('status').textContent, /request handed to the host/);
   assert.equal((await app.store.read()).generation, 1);
 });
@@ -3595,6 +3595,107 @@ test('original MP3 download is explicit and preserves exact bytes', async (t) =>
     new Uint8Array(await raw.assets[0].blob.arrayBuffer()),
   );
 });
+
+test('discovery recording handoff downloads one exact original without changing playback, assignments or saved library', async (t) => {
+  const raw = await fixture('discovery-original'),
+    app = await setup(t, { initial: raw });
+  app.choose('tracks', raw.track.id);
+  const before = await app.store.read(),
+    calls = [...app.calls];
+  await app.click('discovery-recording');
+  assert.equal(app.downloads.length, 0, 'Preparation never downloads automatically.');
+  assert.deepEqual(app.calls, calls, 'Preparation never plays or selects music.');
+  assert.deepEqual(await app.store.read(), before);
+  await app.click('download-prepared');
+  assert.equal(app.downloads.length, 1);
+  assert.deepEqual(
+    new Uint8Array(await app.downloads[0].blob.arrayBuffer()),
+    new Uint8Array(await raw.blob.arrayBuffer()),
+  );
+  assert.deepEqual(await app.store.read(), before);
+});
+
+for (const ending of ['cancel', 'escape', 'dispose'])
+  test(`pending discovery recording ${ending} rejects late original bytes without effects or library writes`, async (t) => {
+    const raw = await fixture(`discovery-pending-${ending}`),
+      id = `builtin.catalog.discovery-pending-${ending}`,
+      track = resolveCatalogueTrack({
+        ...raw.track,
+        id,
+        edition: 'rights-1',
+        path: `optional/soundtracks/discovery-pending-${ending}.mp3`,
+        tags: { genres: ['ambient'], role: 'menu', energy: 1, themes: [] },
+        policy: {
+          id,
+          sha256: raw.track.asset.sha256,
+          webPlayback: 'allowed',
+          offlineCache: 'allowed',
+          redistribute: 'allowed',
+          modify: 'allowed',
+          gameplayVideo: 'allowed',
+          contentId: 'not-registered',
+        },
+      });
+    let finish,
+      signal,
+      reads = 0;
+    const app = await setup(t, {
+      callbacks: {
+        download: undefined,
+        catalogue: {
+          format: 'revealline-soundtrack-catalogue.v2',
+          edition: 'rights-1',
+          tracks: [track],
+        },
+        readAsset: (sha, options) => {
+          assert.equal(sha, track.asset.sha256);
+          assert.equal(options.purpose, 'export');
+          reads++;
+          signal = options.signal;
+          return new Promise((resolve) => (finish = resolve));
+        },
+      },
+    });
+    app.choose('tracks', id);
+    await app.click('export-bundle');
+    const originalLink = app.node('download-prepared').getAttribute('href'),
+      before = await app.store.read(),
+      beforeCalls = [...app.calls],
+      beforeNotices = [...app.notices];
+    assert(originalLink, 'A previous explicit prepared backup is available.');
+    const preparing = app.click('discovery-recording');
+    assert.equal(reads, 1);
+    assert.equal(app.panel.close(), false, 'Busy Close cannot strand an unfinished operation.');
+    if (ending === 'dispose') app.panel.dispose();
+    else if (ending === 'escape') {
+      const event = app.node('dialog').emit('cancel');
+      assert.equal(event.defaultPrevented, true);
+    } else app.click('cancel');
+    assert.equal(signal.aborted, true);
+    finish(raw.blob); // The external source ignores cancellation; the real panel must still reject it.
+    assert.equal(await preparing, false);
+    assert.equal(app.urls.size, 1, 'No URL may be allocated for a late prepared recording.');
+    assert.equal(app.doc.nativeDownloads.length, 0);
+    assert.equal(app.downloads.length, 0);
+    assert.deepEqual(app.calls, beforeCalls, 'Preparation/cancellation never alters playback.');
+    assert.deepEqual(app.notices, beforeNotices);
+    assert.deepEqual(await app.store.read(), before);
+    assert.equal(app.node('audition').plays ?? 0, 0);
+    if (ending === 'dispose') {
+      assert.deepEqual(app.revoked, [originalLink]);
+      assert.equal(app.node('download-prepared').getAttribute('href'), null);
+      assert.equal(app.node('backup-ready').hidden, true);
+    } else {
+      assert.deepEqual(app.revoked, []);
+      assert.equal(app.node('download-prepared').getAttribute('href'), originalLink);
+      assert.equal(app.node('dialog').open, true);
+      assert.equal(
+        app.node('discovery-recording').disabled,
+        false,
+        'A cancelled task leaves retry available.',
+      );
+    }
+  });
 
 test('cached restricted recordings cannot audition through either UI or direct handler', async (t) => {
   for (const webPlayback of ['denied', 'unknown']) {

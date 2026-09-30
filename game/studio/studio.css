@@ -83,6 +83,23 @@ h2 {
   gap: 8px;
   align-items: center;
 }
+.preview-remains-options {
+  flex-basis: 100%;
+}
+.preview-remains-toggle {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 44px;
+  margin: 0;
+}
+.preview-remains-toggle input {
+  flex: 0 0 20px;
+  width: 20px;
+  height: 20px;
+  margin: 0;
+  padding: 0;
+}
 .toolbar {
   padding: 8px 0 24px;
 }
@@ -402,7 +419,8 @@ textarea {
 }
 iframe {
   width: 100%;
-  height: 720px;
+  height: min(720px, calc(100vh - 4px));
+  height: min(720px, calc(100dvh - 4px));
   border: 1px solid var(--line);
 }
 footer {
@@ -459,4 +477,53 @@ footer {
 #timed-bonus-form select,
 #timed-bonus-form textarea {
   scroll-margin: 8px;
+}
+/* The same data remains an ordered, keyboard-readable list in every exhibit. */
+.discovery-exhibit {
+  padding-left: 1.5rem;
+}
+.discovery-exhibit li {
+  padding: 0.8rem;
+  border: 1px solid currentColor;
+  border-radius: 0.6rem;
+  margin-bottom: 0.7rem;
+}
+.discovery-exhibit small {
+  display: block;
+  margin-top: 0.35rem;
+}
+.discovery-exhibit-gallery,
+.discovery-exhibit-mosaic {
+  display: grid;
+  gap: 0.7rem;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 14rem), 1fr));
+}
+.discovery-exhibit-mosaic li:nth-child(3n) {
+  border-width: 3px;
+}
+#discovery-tools {
+  display: grid;
+  gap: 0.75rem;
+}
+#discovery-tools label {
+  display: grid;
+  gap: 0.3rem;
+}
+
+.studio-source-discard {
+  max-width: min(36rem, calc(100vw - 32px));
+  color: var(--ink);
+  background: var(--paper);
+  border: 2px solid currentColor;
+  padding: 24px;
+}
+.studio-source-discard::backdrop {
+  background: #000b;
+}
+.studio-source-discard h2 {
+  margin: 0 0 20px;
+  font-size: 1.1rem;
+}
+.studio-source-discard button + button {
+  margin-inline-start: 12px;
 }

@@ -38,7 +38,7 @@ test('the same Team mode choices belong to the lobby and active pause panel, nev
   assert.equal(modes.hidden, false);
   const current = modes.querySelector('[aria-current="page"]');
   assert.equal(current.tagName, 'BUTTON');
-  assert.equal(current.tabIndex, 0);
+  assert.equal(current.tabIndex, 0, 'The current mode remains reachable by native keyboard focus.');
   assert.equal(current.getAttribute('href'), null);
   assert.equal(solo.getAttribute('href'), '../?journey=legacy');
   assert.equal(versus.getAttribute('href'), './?journey=legacy');
@@ -59,6 +59,13 @@ test('the same Team mode choices belong to the lobby and active pause panel, nev
   tabToTeamAction(f, 'coop-solo');
   f.tap('Tab');
   assert.equal(f.doc.activeElement, versus, 'visible mode order is keyboard order');
+  f.tap('Tab');
+  assert.equal(f.doc.activeElement, current, 'Keyboard traversal also reaches the current mode.');
+  f.tap('Enter');
+  assert.equal(f.$('coop-overlay').hidden, false);
+  assert.equal(f.$('coop-discard-dialog').open, false);
+  assert.equal(f.visits.length, 0, 'Confirming the current mode does not depart or resume.');
+  tabToTeamAction(f, 'coop-versus');
   f.tap('Enter');
   assert.equal(f.$('coop-discard-dialog').open, true);
   f.tap('Escape');
@@ -427,6 +434,15 @@ test('Auto touch uses actual controller seats while menu hiding and explicit ove
     buttons: Array.from({ length: 17 }, () => ({ pressed: false, value: 0 })),
   });
   f.tick(2);
+  assert.equal(f.touchPads[0].hidden, false, 'Connecting alone never claims a seat.');
+  f.$('coop-pause').click();
+  f.tick();
+  f.pads[0].buttons[3] = { pressed: true, value: 1 };
+  f.tick();
+  f.pads[0].buttons[3] = { pressed: false, value: 0 };
+  f.tick();
+  f.$('coop-resume').click();
+  f.tick();
   assert.deepEqual(
     f.touchPads.map((p) => p.hidden),
     [true, false],
@@ -529,6 +545,15 @@ test('assigning a controller releases hidden held touch; disconnect stays paused
     buttons: Array.from({ length: 17 }, () => ({ pressed: false, value: 0 })),
   });
   f.tick(2);
+  assert.equal(f.touchPads[0].hidden, false, 'Connecting alone never claims a seat.');
+  f.$('coop-pause').click();
+  f.tick();
+  f.pads[0].buttons[3] = { pressed: true, value: 1 };
+  f.tick();
+  f.pads[0].buttons[3] = { pressed: false, value: 0 };
+  f.tick();
+  f.$('coop-resume').click();
+  f.tick();
   assert.equal(f.touchPads[0].hidden, true);
   assert.equal(boost.getAttribute('aria-pressed'), 'false');
   f.pads[0].connected = false;
@@ -1327,7 +1352,17 @@ for (const [id, path] of modePanelLinks)
     f.tick(2);
     button(0); // South adoption/release has no departure action.
     for (let i = 0; i < 20 && f.doc.activeElement.id !== 'coop-solo'; i++) button(13);
-    if (id === 'coop-versus') button(15);
+    assert.equal(f.doc.activeElement.id, 'coop-solo', 'Down reaches the horizontal mode group.');
+    button(15); // D-pad Right moves between the visible mode choices.
+    assert.equal(f.doc.activeElement.id, 'coop-versus');
+    button(15);
+    assert.equal(f.doc.activeElement.id, 'team-current-mode');
+    button(0);
+    assert.equal(f.$('coop-discard-dialog').open, false);
+    assert.equal(f.$('coop-overlay').hidden, false);
+    assert.equal(f.visits.length, 0, 'Confirming the current mode cannot depart or resume.');
+    button(14);
+    if (id === 'coop-solo') button(14);
     assert.equal(f.doc.activeElement.id, id);
     unchangedPaused(f, before);
     button(0);

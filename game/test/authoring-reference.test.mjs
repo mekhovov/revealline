@@ -2,6 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { Document, Element } from './helpers/couch-dom.mjs';
 import { createReferenceScrollAdapter, attachReferenceMedia } from '../ui/authoring-reference.mjs';
+import { getLocale, setLocale } from '../i18n/index.mjs';
 
 test('reference reading scrolls by bounded viewport steps, exits, and invalidates when hidden', () => {
   const doc = new Document(),
@@ -95,4 +96,39 @@ test('reference media releases a pending playback request when its scope is paus
   await next;
   assert.equal(media.paused, true);
   assert.equal(media.controls, true);
+});
+
+test('reference media position and state labels follow EN/UK/EN without seeking or changing playback', async () => {
+  const previous = getLocale();
+  setLocale('en', { persist: false });
+  const { doc, media, owner, play, mute, seek } = mediaFixture();
+  try {
+    await play.onclick();
+    mute.onclick();
+    seek.focus();
+    seek.value = '42';
+    for (const locale of ['en', 'uk', 'en']) {
+      setLocale(locale, { persist: false });
+      assert.equal(
+        seek.getAttribute('aria-label'),
+        locale === 'uk' ? 'Позиція відтворення' : 'Playback position',
+      );
+      assert.equal(play.textContent, locale === 'uk' ? 'Пауза' : 'Pause');
+      assert.equal(mute.textContent, locale === 'uk' ? 'Увімкнути звук' : 'Unmute');
+      assert.equal(doc.activeElement, seek);
+      assert.equal(seek.value, '42');
+      assert.equal(media.currentTime, 0);
+      assert.equal(media.paused, false);
+      assert.equal(media.muted, true);
+      assert.equal(media.playCalls, 1);
+      assert.equal(media.pauseCalls, 0);
+    }
+    seek.oninput();
+    assert.equal(media.currentTime, 42);
+    await play.onclick();
+    assert.equal(media.paused, true);
+  } finally {
+    owner.destroy();
+    setLocale(previous, { persist: false });
+  }
 });

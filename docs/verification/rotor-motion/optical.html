@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Reveal Line — Scout optical body comparison</title>
+    <link rel="stylesheet" href="../../../game/ui/field-kit-fonts.css" />
+    <style>
+      body {
+        margin: 24px;
+        max-width: 1160px;
+        background: #07111c;
+        color: #edf3e8;
+        font:
+          16px 'Field Kit UI',
+          sans-serif;
+      }
+      h1 {
+        font:
+          600 44px 'Field Kit Display',
+          sans-serif;
+      }
+      a {
+        color: #78dce8;
+      }
+      .controls {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+      }
+      button,
+      select,
+      label {
+        min-height: 44px;
+        font: inherit;
+      }
+      button,
+      select {
+        color: inherit;
+        background: #182b43;
+        border: 1px solid #738d91;
+        padding: 8px;
+      }
+      label {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+      }
+      :focus-visible {
+        outline: 3px solid #ffd64a;
+        outline-offset: 3px;
+      }
+      #grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(min(100%, 410px), 1fr));
+        gap: 16px;
+      }
+      figure {
+        min-width: 0;
+        margin: 0;
+        padding: 12px;
+        border: 1px solid #334f68;
+      }
+      .pixels {
+        overflow-x: auto;
+      }
+      figcaption {
+        margin-bottom: 8px;
+      }
+      canvas {
+        display: block;
+        width: 384px;
+        height: 302px;
+        image-rendering: pixelated;
+      }
+      .legend {
+        display: flex;
+        justify-content: space-around;
+        width: 384px;
+        gap: 12px;
+        margin: 8px 0;
+      }
+      output {
+        display: block;
+        color: #ffd64a;
+        margin: 16px 0;
+      }
+      pre {
+        white-space: pre-wrap;
+        overflow-wrap: anywhere;
+      }
+    </style>
+  </head>
+  <body data-study="optical">
+    <h1>Scout · readable body, retained propellers</h1>
+    <p>
+      Left: the retained V4 contrast study. Right: the V5 body with broader central equipment. Both
+      use exactly the same motor centres, rotor sizes and spin directions. The outer actor envelope
+      and gameplay contact point remain unchanged.
+    </p>
+    <p>
+      Rows show 20/24/32 CSS-pixel occupied-size targets in four headings. The bottom enlarges the
+      32px raster 3×. These are original 32/64px source candidates, not released assets. The Solo
+      pane isolates the body and rotor painter; the playable benchmark includes the final contact
+      overlay. The Team pane also draws its contact outline. Neither pane is a full-board
+      acceptance.
+    </p>
+    <nav>
+      <a href="./proportions.html">Full rotor roster</a> ·
+      <a href="./body-detail.html">Earlier body studies</a> ·
+      <a href="../../../authoring/library/fpv-proportion-candidates/roster-concept-v1.png"
+        >Approved art direction</a
+      >
+      · <a href="../../../authoring/playable-benchmark/">Playable benchmark</a>
+    </nav>
+    <div class="controls">
+      <button id="pause" disabled>Play</button>
+      <label><input id="reduced" type="checkbox" />Reduced effects</label>
+      <label><input id="body-only" type="checkbox" />Inspect body without propellers</label>
+      <label
+        >Renderer
+        <select id="mode">
+          <option value="solo">Solo / Versus</option>
+          <option value="team">Team</option>
+        </select></label
+      >
+      <button id="check" disabled>Check rendered frames</button>
+    </div>
+    <output id="status" role="status">Loading exact native candidates…</output>
+    <div id="grid"></div>
+    <pre id="report"></pre>
+    <script type="module" src="./body-detail.mjs"></script>
+  </body>
+</html>

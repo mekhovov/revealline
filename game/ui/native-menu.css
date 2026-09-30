@@ -896,6 +896,81 @@ body.field-kit #coop-menu.native-landing #coop-discovery-status[data-state='read
   min-height: 18px;
 }
 
+/* Availability must outrank the primary/edition paints without hiding the control. */
+body.field-kit
+  :is(
+    :is(#shell-home, #race-main, #coop-menu).native-landing,
+    :is(#settings-dialog, #race-options-panel, #coop-options).native-settings
+  )
+  :is(button, a, input, select, textarea):is(:disabled, [aria-disabled='true']) {
+  color: var(--fk-muted) !important;
+  background: var(--fk-panel) !important;
+  border: 1px dashed var(--fk-control-line) !important;
+  opacity: 1;
+  cursor: not-allowed;
+  transform: none;
+}
+
+@media (forced-colors: active) {
+  body.field-kit
+    :is(
+      :is(#shell-home, #race-main, #coop-menu).native-landing,
+      :is(#settings-dialog, #race-options-panel, #coop-options).native-settings
+    ) {
+    /* Keep the browser's chosen text and surface palette for the real controls. */
+    forced-color-adjust: auto;
+  }
+  body.field-kit
+    :is(
+      :is(#shell-home, #race-main, #coop-menu).native-landing,
+      :is(#settings-dialog, #race-options-panel, #coop-options).native-settings
+    )
+    [data-menu-icon]::before {
+    /* Only the monochrome mask opts out: it inherits its parent's system color. */
+    forced-color-adjust: none;
+    background: currentColor !important;
+  }
+  body.field-kit
+    :is(
+      :is(#shell-home, #race-main, #coop-menu).native-landing,
+      :is(#settings-dialog, #race-options-panel, #coop-options).native-settings
+    )
+    :is([aria-selected='true'], [aria-current]:not([aria-current='false'])) {
+    border: 3px double Highlight !important;
+    box-shadow: none;
+  }
+  body.field-kit
+    :is(
+      :is(#shell-home, #race-main, #coop-menu).native-landing,
+      :is(#settings-dialog, #race-options-panel, #coop-options).native-settings
+    )
+    :is(:focus-visible, .controller-focus) {
+    outline-color: Highlight !important;
+  }
+  body.field-kit
+    :is(
+      :is(#shell-home, #race-main, #coop-menu).native-landing,
+      :is(#settings-dialog, #race-options-panel, #coop-options).native-settings
+    )
+    :is(button, a, input, select, textarea):is(:disabled, [aria-disabled='true']) {
+    color: GrayText !important;
+    background: Canvas !important;
+    border-color: GrayText !important;
+  }
+  body.field-kit .native-landing :is(.fpv-line-wordmark, .droneaid-landing-wordmark) {
+    display: none !important;
+  }
+  body.field-kit .native-landing .native-brand-fallback {
+    position: static !important;
+    width: auto !important;
+    height: auto !important;
+    margin: 0 !important;
+    overflow: visible !important;
+    clip-path: none !important;
+    white-space: normal !important;
+  }
+}
+
 @media (max-width: 700px) {
   body.field-kit[data-text-size='large']
     :is(#shell-home, #race-main, #coop-menu).native-landing

@@ -20,13 +20,17 @@ test('Solo startup graph retains boot styles and production assets while mode ho
     'game/couch/index.html': '<script src="launcher.js" data-module="./couch.mjs"></script>',
     'game/couch/launcher.js': 'globalThis.boot = true;',
     'game/couch/couch.mjs': 'import "../shared.mjs";',
-    'authoring/motion-lab/presets.json': { characters: { src: '../library/player.png' } },
+    'authoring/motion-lab/presets.json': {
+      characters: { src: '../library/player.png' },
+    },
     'authoring/library/player.png': 'runtime body',
     'authoring/library/editor-reference.png': 'unused editor reference',
     'authoring/tool.html': '<script src="tool.mjs"></script>',
     'authoring/tool.mjs': 'export const tool = true;',
     'game/presentation/compiled/studio.json': { editable: true },
-    'game/presentation/compiled/manifest.json': { files: [{ path: 'studio.json' }] },
+    'game/presentation/compiled/manifest.json': {
+      files: [{ path: 'studio.json' }],
+    },
     'game/presentation/compiled/runtime.json': { compiled: true },
     'game/presentation/visual-themes.json': { themes: [] },
   });
@@ -59,7 +63,10 @@ test('Solo startup graph retains boot styles and production assets while mode ho
 test('catalogue references never pull selected chapter or soundtrack bytes back into core', () => {
   const files = entries({
     'game/index.html': '',
-    'game/content/catalog.json': { chapter: 'packs/one.json', soundtrack: 'music/one.mp3' },
+    'game/content/catalog.json': {
+      chapter: 'packs/one.json',
+      soundtrack: 'music/one.mp3',
+    },
     'game/content/packs/one.json': { art: '../chapter.png' },
     'game/content/chapter.png': 'chapter original',
     'game/content/music/one.mp3': 'recording',
@@ -75,32 +82,52 @@ test('catalogue references never pull selected chapter or soundtrack bytes back 
   assert.equal(result.optional.length, 0);
 });
 
-test('nested string arrays retain frozen runtime variants while excluded and remote paths stay outside core', () => {
-  const files = entries({
-    'game/index.html': '<script src="demo.mjs"></script>',
-    'game/demo.mjs': 'const catalog = new URL("./demo-data/catalog.json", import.meta.url);',
-    'game/demo-data/catalog.json': {
-      clips: [
-        {
-          replayURL: './demo-data/primary.json',
-          replayVariants: ['./demo-data/chromium.json', './demo-data/excluded.json'],
-          nested: [['./demo-data/other-engine.json', 'https://example.test/private.json']],
-        },
-      ],
-    },
-    'game/demo-data/primary.json': { checkpoint: 'primary' },
-    'game/demo-data/chromium.json': { checkpoint: 'chromium' },
-    'game/demo-data/other-engine.json': { checkpoint: 'other' },
-    'game/demo-data/excluded.json': { checkpoint: 'excluded' },
-    'game/demo-data/unreferenced.json': { checkpoint: 'unused' },
-  });
-  const result = selectOfflineCore(files, new Set(['game/demo-data/excluded.json']));
-  for (const name of ['primary', 'chromium', 'other-engine'])
-    assert(result.retained.has(`game/demo-data/${name}.json`), name);
-  assert(!result.retained.has('game/demo-data/excluded.json'));
-  assert.deepEqual(result.optional, ['game/demo-data/unreferenced.json']);
-  assert.equal(
-    result.references.get('game/demo-data/chromium.json'),
-    'game/demo-data/catalog.json',
+test('decorative menu rasters and the icon source stay optional without dropping runtime or install icons', () => {
+  const originals = {
+    'game/index.html':
+      '<link rel="stylesheet" href="./ui/menu-scenes.css"><script type="module" src="./ui/menu-scene-catalog.mjs"></script>',
+    'game/couch/index.html': '<script type="module" src="../ui/menu-scene-catalog.mjs"></script>',
+    'game/couch/relay-rescue.html':
+      '<script type="module" src="../ui/menu-scene-catalog.mjs"></script>',
+    'game/ui/menu-scene-catalog.mjs':
+      'export const background = "./art/menu-scenes/fpv-team.webp";',
+    'game/ui/menu-scenes.css':
+      '.menu { background: #080e18 url("./art/menu-scenes/analog-noise-atlas.png"); }',
+    'game/ui/art/menu-scenes/fpv-team.webp': 'original scene',
+    'game/ui/art/menu-scenes/analog-noise-atlas.png': 'original atlas',
+    'game/ui/art/menu-scenes/renderer.mjs': 'export const renderer = true;',
+    'game/ui/art/menu-scenes/wordmark.svg': '<svg/>',
+    'game/ui/art/identity/fpv-line/icon-master.png': 'original install master',
+    'game/ui/art/identity/fpv-line/icon-192.png': 'shipped install derivative',
+    'game/ui/fonts/menu.woff2': 'font',
+    'icons/icon-192.png': 'installed icon',
+  };
+  const files = entries(originals);
+  const before = files.map(({ name, bytes }) => [name, Buffer.from(bytes)]);
+  const optional = [
+    'game/ui/art/menu-scenes/fpv-team.webp',
+    'game/ui/art/menu-scenes/analog-noise-atlas.png',
+    'game/ui/art/identity/fpv-line/icon-master.png',
+  ];
+  for (const mode of ['solo', 'versus', 'team']) {
+    const result = selectOfflineCore(files, new Set(), { mode });
+    for (const name of optional) {
+      assert(!result.retained.has(name), name);
+      assert(result.optional.includes(name), name);
+    }
+    for (const name of [
+      'game/ui/menu-scene-catalog.mjs',
+      'game/ui/art/menu-scenes/renderer.mjs',
+      'game/ui/art/menu-scenes/wordmark.svg',
+      'game/ui/art/identity/fpv-line/icon-192.png',
+      'game/ui/fonts/menu.woff2',
+      'icons/icon-192.png',
+    ])
+      assert(result.retained.has(name), name);
+  }
+  assert.deepEqual(
+    files.map(({ name, bytes }) => [name, bytes]),
+    before,
+    'Selection must not modify or remove any shipped original.',
   );
 });

@@ -1,0 +1,20 @@
+
+> revealline@0.141.7 validate
+> npm run i18n:check && node scripts/game-cli.mjs validate && node scripts/check-presentation-metadata.mjs
+
+
+> revealline@0.141.7 i18n:check
+> node scripts/localization.mjs check
+
+{
+  "localization": {
+    "locales": [
+      "en",
+      "uk"
+    ],
+    "messages": 10593,
+    "references": 8357
+  }
+}
+Game CLI error: Missing distribution references:
+authoring/motion-lab/app.js → ./parts-editor.mjs

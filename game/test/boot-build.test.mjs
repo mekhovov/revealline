@@ -11,7 +11,6 @@ import { loadNativeSite } from '../../platforms/desktop/resources.mjs';
 const sourceRoot = new URL('../', import.meta.url);
 const digest = (bytes) => createHash('sha256').update(bytes).digest('hex');
 const playerPresentationFiles = [
-  'game/ui/demo.css',
   'game/ui/handheld-play.css',
   'game/ui/field-kit-fonts.css',
   'game/ui/brand-identity.css',
@@ -41,28 +40,6 @@ const playerPresentationFiles = [
   'game/ui/fonts/METADATA.pb',
   'game/ui/fonts/provenance.json',
 ];
-const demoRuntimeFiles = [
-  'game/demo-catalog.mjs',
-  'game/demo-library.mjs',
-  'game/demo-sources.mjs',
-  'game/demo-director.mjs',
-  'game/demo-experience.mjs',
-  'game/demo-bot.mjs',
-  'game/demo-bot-player.mjs',
-  'game/demo-bot-worker.mjs',
-  'game/replay-player.mjs',
-  'game/ui/demo-host.mjs',
-  'game/ui/demo-clock.mjs',
-  'game/ui/demo-audio.mjs',
-  'game/ui/demo-input.mjs',
-  'game/ui/demo-fullscreen.mjs',
-  'game/ui/demo-picture.mjs',
-  'game/ui/demo-journey-picture.mjs',
-  'game/ui/analog-signal.mjs',
-  'game/ui/signal-reception.mjs',
-  'game/ui/jammer-picture.mjs',
-  'game/ui/demo.css',
-];
 const ambientRuntimeFiles = [
   'game/ui/menu-retune.mjs',
   'game/ui/menu-retune.css',
@@ -73,7 +50,6 @@ const ambientRuntimeFiles = [
   'game/ui/menu-scenes.css',
   'game/ui/art/menu-scenes/analog-noise-atlas.png',
   'game/ui/art/menu-scenes/droneaid-main-background.png',
-  'game/ui/art/menu-scenes/droneaid-main-background.webp',
   'game/ui/art/menu-scenes/droneaid-wordmark-light.svg',
 ];
 
@@ -94,7 +70,6 @@ test('the actual game has a static dark guard before resources and a single caug
   assert.doesNotMatch(html, /<link\b[^>]*\shref="[^\"]+\.css"/);
   assert.match(html, /data-boot-href="ui\/operation-status.css"/);
   assert.match(html, /data-boot-href="ui\/handheld-play.css"/);
-  assert.match(html, /data-boot-href="ui\/demo.css"/);
   assert.match(html, /data-boot-href="ui\/quick-music-controls.css"/);
   assert.doesNotMatch(html, /<script\b[^>]*src="app.mjs"/);
   assert.equal([...html.matchAll(/id="boot-status"/g)].length, 1);
@@ -146,17 +121,7 @@ test('build rewrites native root paths, preserves extras and includes boot bytes
       await copy(path.posix.normalize(path.posix.join(path.posix.dirname(name), match[1])));
     }
   };
-  const demoCatalog = JSON.parse(await fs.readFile(new URL('demo-data/catalog.json', sourceRoot)));
-  assert.equal(demoCatalog.clips.length, 10);
-  const demoFiles = [
-    ...demoRuntimeFiles,
-    'game/demo-data/catalog.json',
-    'game/demo-data/variant-provenance.json',
-    ...demoCatalog.clips.flatMap(({ replayURL, replayVariants }) =>
-      [replayURL, ...replayVariants].map((url) => `game/${url.slice(2)}`),
-    ),
-  ];
-  // The HTML, boot, presentation and complete demo import/asset closure are
+  // The HTML, boot, presentation and menu import/asset closure are
   // actual source. The app entry and unrelated styles remain inert fixtures:
   // this verifies packaging and offline bytes, not rendered/native gameplay.
   await copy('game/index.html');
@@ -164,7 +129,6 @@ test('build rewrites native root paths, preserves extras and includes boot bytes
     'game/boot.mjs',
     'game/boot.css',
     ...playerPresentationFiles,
-    ...demoFiles,
     ...ambientRuntimeFiles,
     'game/offline.mjs',
     'game/platform.mjs',
@@ -233,7 +197,6 @@ test('build rewrites native root paths, preserves extras and includes boot bytes
     'game/boot.mjs',
     'game/boot.css',
     'game/ui/handheld-play.css',
-    ...demoFiles,
     ...ambientRuntimeFiles,
     'authoring/motion-lab/animation.mjs',
     'site/launch.mjs',
@@ -246,18 +209,10 @@ test('build rewrites native root paths, preserves extras and includes boot bytes
     const bytes = await fs.readFile(path.join(out, name));
     assert.equal(record.bytes, bytes.length);
     assert.equal(record.sha256, digest(bytes));
-    if (demoFiles.includes(name) || ambientRuntimeFiles.includes(name))
+    if (ambientRuntimeFiles.includes(name))
       assert.deepEqual(bytes, await fs.readFile(new URL(`../${name}`, sourceRoot)));
   }
-  const nativeFiles = [
-    'game/ui/demo-clock.mjs',
-    'game/ui/demo-journey-picture.mjs',
-    'game/ui/demo-audio.mjs',
-    'game/ui/signal-reception.mjs',
-    'game/ui/music-credit.mjs',
-    'game/demo-bot-worker.mjs',
-    ...ambientRuntimeFiles,
-  ];
+  const nativeFiles = [...ambientRuntimeFiles];
   const bridge = path.join(directory, 'fixture-bridge.mjs');
   await fs.writeFile(bridge, 'export const fixture = true;\n');
   for (const platform of ['desktop', 'ios']) {

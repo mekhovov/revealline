@@ -194,23 +194,12 @@ async function setup(
     assetIndexedDB: assets.indexedDB,
     soundtrackIndexedDB: media.indexedDB,
     pictures: { Image: Picture },
-    fetchResponse: async (url, options) => {
-      const assetPath = String(url).match(/(?:^|\/)(content-design\/assets\/[^?#]+)$/)?.[1];
-      if (!assetPath) return;
-      // Current presentation preparation authenticates shipped PNG originals.
-      // Keep their actual bytes, hashes and dimensions at this finite boundary.
-      return new Response(await readFile(new URL(assetPath, root), { signal: options?.signal }));
-    },
   });
   const fetchBefore = globalThis.fetch;
   const requests = [];
   let holdBody = null;
   globalThis.fetch = async (url, options) => {
     if (!String(url).startsWith('http')) return fetchBefore(url, options);
-    // Presentation/actor loading is shared with ordinary Solo boot and launch.
-    // Only the optional catalogue/pack transport belongs to this scenario gate.
-    if (/\/game\/presentation\/|\/content-design\/assets\//.test(String(url)))
-      return fetchBefore(url, options);
     requests.push(String(url));
     if (String(url).endsWith('game/content/optional-worlds.json'))
       return new Response(JSON.stringify(optional));

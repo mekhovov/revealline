@@ -1683,7 +1683,14 @@
           aria-label="Project and missions"
           data-i18n-aria-label="interface:projectAndMissions"
         >
-          <p class="eyebrow" data-i18n="interface:project">PROJECT</p>
+          <h2
+            class="eyebrow"
+            id="studio-project-title"
+            data-authoring-target="project-id"
+            data-i18n="interface:project"
+          >
+            PROJECT
+          </h2>
           <label
             ><span data-i18n="common:editor.localProjectId">Local project ID</span
             ><input id="project-id" value="my-journey" maxlength="80"
@@ -2790,6 +2797,27 @@
             ><span data-i18n="interface:practiceOnlyNoAwardsCandidatePresentation"
               >Practice only · no awards · candidate presentation</span
             >
+            <div id="preview-remains-options" class="preview-remains-options" hidden>
+              <label class="preview-remains-toggle"
+                ><input
+                  id="preview-show-remains"
+                  type="checkbox"
+                  checked
+                  disabled
+                  aria-describedby="preview-remains-hint"
+                /><span data-i18n="tools:studio.preview.showRemains"
+                  >Show enemy remains</span
+                ></label
+              >
+              <p
+                id="preview-remains-hint"
+                class="note"
+                data-i18n="tools:studio.preview.remainsHint"
+              >
+                For the next Solo preview only. Hides inert remains when off; live enemies, aim
+                warnings, shots and brief sparks stay visible. Does not change the draft or replay.
+              </p>
+            </div>
             <button id="export-team" hidden data-i18n="interface:exportExactTeamTestMission">
               Export exact Team test mission
             </button>
@@ -2940,6 +2968,58 @@
               <pre id="acceptance-report"></pre>
             </details>
           </details>
+          <details id="discovery-editor">
+            <summary data-i18n="tools:studio.discovery.title">
+              Discoveries, pacing and campaign exhibits
+            </summary>
+            <p class="note" data-i18n="tools:studio.discovery.help">
+              Choose a beat and exact reward references. Import the campaign reward sidecar first;
+              keep it alongside the project backup. Previews never earn progress.
+            </p>
+            <label class="file-button"
+              ><span data-i18n="tools:studio.discovery.import">Inspect reward sidecar</span
+              ><input id="discovery-import" type="file" accept="application/json,.json"
+            /></label>
+            <form id="discovery-form">
+              <fieldset id="discovery-tools">
+                <label
+                  ><span data-i18n="tools:studio.discovery.campaign">Campaign</span
+                  ><select id="discovery-campaign"></select
+                ></label>
+                <label
+                  ><span data-i18n="tools:studio.discovery.pacing">Mission beat</span
+                  ><select id="discovery-beat"></select
+                ></label>
+                <label
+                  ><span data-i18n="tools:studio.discovery.reward">First-win discovery</span
+                  ><select id="discovery-reward"></select
+                ></label>
+                <label
+                  ><span data-i18n="tools:studio.discovery.exhibit">Campaign exhibit layout</span
+                  ><select id="discovery-layout"></select
+                ></label>
+                <label
+                  ><span data-i18n="tools:studio.discovery.finale">Campaign finale</span
+                  ><select id="discovery-finale"></select
+                ></label>
+                <label
+                  ><span data-i18n="tools:studio.discovery.language">Preview language</span
+                  ><select id="discovery-locale">
+                    <option value="en">English</option>
+                    <option value="uk">Українська</option>
+                  </select></label
+                >
+                <button id="discovery-apply" type="submit" data-i18n="tools:studio.discovery.apply">
+                  Apply discovery design
+                </button>
+                <button id="discovery-show" type="button" data-i18n="tools:studio.discovery.show">
+                  Preview route and exhibit
+                </button>
+              </fieldset>
+            </form>
+            <p id="discovery-result" class="note" role="status"></p>
+            <div id="discovery-preview" aria-live="polite"></div>
+          </details>
           <details id="structure-editor">
             <summary data-i18n="common:editor.organizeContent">
               Organize missions, campaigns & packs
@@ -3060,9 +3140,14 @@
               data-i18n-aria-label="tools:studio.structure.orderLabel"
             ></pre>
           </details>
-          <p class="eyebrow" data-i18n="interface:sourceAllMapsCampaigns">
+          <h2
+            class="eyebrow"
+            id="studio-source-title"
+            data-authoring-target="source"
+            data-i18n="interface:sourceAllMapsCampaigns"
+          >
             SOURCE / ALL MAPS & CAMPAIGNS
-          </p>
+          </h2>
           <p class="note" data-i18n="interface:editNamesOrderActorsAndDesignNotesHereInspectFirst">
             Edit names, order, actors and design notes here. Inspect first; applying is explicit.
             Published editions are never overwritten.

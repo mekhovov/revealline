@@ -193,14 +193,8 @@ for (const adapter of ['keyboard', 'controller']) {
             if (!event.defaultPrevented)
               f.visits.push(new URL(this.getAttribute('href'), globalThis.location.href).href);
           });
-      const checkpoint = () => ({
-          hud: teamHud(f),
-          // Signal loss intentionally remains alive on the terminal screen;
-          // controller navigation advances its visual clock without advancing play.
-          ...(state === 'lost' ? {} : { paint: f.lastPaint }),
-        }),
-        nav = navigation(f, adapter, true),
-        held = checkpoint();
+      const nav = navigation(f, adapter, true),
+        held = { hud: teamHud(f), paint: f.lastPaint };
       nav.adopt();
       nav.reach('coop-settings-open');
       nav.confirm();
@@ -211,7 +205,7 @@ for (const adapter of ['keyboard', 'controller']) {
       nav.back();
       assert.equal(f.$('coop-options').open, false);
       assert.equal(f.doc.activeElement.id, 'coop-settings-open');
-      assert.deepEqual(checkpoint(), held);
+      assert.deepEqual({ hud: teamHud(f), paint: f.lastPaint }, held);
       for (const id of ['coop-race', 'coop-home']) {
         nav.reach(id);
         if (state === 'paused') {
@@ -231,6 +225,6 @@ for (const adapter of ['keyboard', 'controller']) {
       }
       assert.equal(f.$('coop-discard-dialog').open, false);
       assert.deepEqual(f.visits, ['http://localhost/game/?journey=legacy']);
-      assert.deepEqual(checkpoint(), held);
+      assert.deepEqual({ hud: teamHud(f), paint: f.lastPaint }, held);
     });
 }

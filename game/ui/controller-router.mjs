@@ -1,3 +1,4 @@
+import { mapProfile, descriptorKey, deviceDescriptor } from '../couch/controller-profiles.mjs';
 import { t } from '../i18n/index.mjs';
 import {
   resolveControllerBindings,
@@ -72,6 +73,7 @@ function compileBindings(config) {
  */
 export function createControllerRouter({
   readPads = defaultRead,
+  rawProfile = () => null,
   now = () => globalThis.performance?.now?.() ?? Date.now(),
   eventTarget = globalThis.window,
   bindings = null,
@@ -247,6 +249,7 @@ export function createControllerRouter({
       candidate.armed = false;
       candidate.previousJoin.clear();
       candidate.stickActive = { flight: false, menu: false };
+      candidate.rawState = new Map();
     }
   }
   function setBindings(value) {
@@ -297,9 +300,51 @@ export function createControllerRouter({
   eventTarget?.addEventListener?.('gamepaddisconnected', disconnectedEvent);
 
   function snapshot(pad, fallbackIndex) {
-    if (!pad?.connected || pad.mapping !== 'standard') return null;
+    if (!pad?.connected) return null;
+    if (pad.mapping !== 'standard') {
+      if (pad.mapping !== '') return null;
+      const profile = rawProfile(pad.index);
+      if (
+        !profile ||
+        Object.entries(deviceDescriptor(pad)).some(([key, value]) => profile.device[key] !== value)
+      )
+        return null;
+      const signature = JSON.stringify([descriptorKey(pad), profile]);
+      const old = seen.get(pad.index);
+      const mapped = mapProfile(
+        profile,
+        pad,
+        old?.signature === signature ? old.rawState : undefined,
+      );
+      if (!mapped.valid) return null;
+      const context = lastScope === 'flight' ? 'flight' : 'menu';
+      const buttons = new Set();
+      for (const [action, value] of Object.entries(mapped[context])) {
+        const key = action === 'action' ? 'ability' : action;
+        if (
+          value &&
+          !['direction', 'up', 'down', 'left', 'right'].includes(key) &&
+          compiled[context].buttons[key] !== undefined
+        )
+          buttons.add(compiled[context].buttons[key]);
+      }
+      return {
+        index: pad.index,
+        id: pad.id,
+        mapping: '',
+        signature,
+        buttons,
+        direction: { flight: mapped.flight.direction, menu: mapped.menu.direction },
+        stickActive: {},
+        rawState: mapped.state,
+        neutral: mapped.neutral,
+        timestamp: Number.isFinite(pad.timestamp) ? pad.timestamp : 0,
+      };
+    }
     const index = pad.index ?? fallbackIndex;
-    if (!Number.isInteger(index) || index < 0 || index > 1023) return null;
+    // Shared-radio seats use internal virtual indexes beyond physical Gamepad slots.
+    const sharedSeat = index <= 3071 && typeof pad.id === 'string' && pad.id.startsWith('couch:');
+    if (!Number.isInteger(index) || index < 0 || (index > 1023 && !sharedSeat)) return null;
     const usedButtons =
       navigationAliases && defaultLayout ? [...Array(16).keys()] : compiled.usedButtons;
     const buttons = new Set(usedButtons.filter((i) => pressed(pad.buttons?.[i])));
@@ -381,7 +426,7 @@ export function createControllerRouter({
     disconnected,
   });
 
-  function sample({ scope, timeMs, toggleBoostEligible = true, spectator = false } = {}) {
+  function sample({ scope, timeMs, toggleBoostEligible = true } = {}) {
     sampledConfirmPad = null;
     sampledRawGamepads = undefined;
     if (destroyed) return result('disposed', t('interface:controllerInputIsStopped'));
@@ -389,7 +434,6 @@ export function createControllerRouter({
       throw new TypeError(t('interface:controllerScopeMustBeAStableNonemptyString'));
     if (typeof toggleBoostEligible !== 'boolean')
       throw new TypeError(t('interface:controllerBoostEligibilityMustBeBoolean'));
-    if (typeof spectator !== 'boolean') throw new TypeError('Spectator input must be boolean.');
     const clock = timeMs ?? now();
     const time = Number.isFinite(clock) ? Math.max(lastTime, clock) : lastTime;
     lastTime = time;
@@ -397,7 +441,7 @@ export function createControllerRouter({
       clear();
       lastScope = scope;
     }
-    if (scope !== 'flight' || spectator || !toggleBoostEligible) cancelToggleBoost();
+    if (scope !== 'flight' || !toggleBoostEligible) cancelToggleBoost();
     let raw;
     try {
       raw = readPads();
@@ -440,6 +484,7 @@ export function createControllerRouter({
         seen.set(pad.index, candidate);
       }
       candidate.stickActive = pad.stickActive;
+      candidate.rawState = pad.rawState;
       if (pad.neutral) candidate.armed = true;
     }
     if (pendingDisconnect) {
@@ -503,7 +548,7 @@ export function createControllerRouter({
     menuGamepadTimestamp = pad.timestamp;
     // The same physical-neutral sample may lift both gates. A latched command
     // is not physical input and must not prevent a later ordinary release.
-    if (mode === 'toggle' && scope === 'flight' && !spectator && toggleBoostEligible && pad.neutral)
+    if (mode === 'toggle' && scope === 'flight' && toggleBoostEligible && pad.neutral)
       boostArmed = true;
     if (blocked) {
       if (pad.neutral) blocked = false;
@@ -520,32 +565,20 @@ export function createControllerRouter({
       ui = neutralControllerUI();
     if (scope === 'flight') {
       const buttons = compiled.flight.buttons;
-      // A spectator can use the actual configured flight controls to join in,
-      // while the explicitly configured Back/Menu retain their visible meaning.
-      // This opt-in does not reinterpret ordinary/practice flight bindings.
-      if (spectator && edge(compiled.menu.buttons.back)) ui.back = true;
-      else if (spectator && edge(compiled.menu.buttons.menu)) ui.menu = true;
-      else if (edge(buttons.pause) || (navigationAliases && defaultLayout && edge(8)))
+      if (edge(buttons.pause) || (navigationAliases && defaultLayout && edge(8)))
         flight.pause = true;
       else if (edge(buttons.hangar)) flight.hangar = true;
       else if (edge(buttons.stop)) flight.stop = true;
       else {
-        if (!spectator && mode === 'toggle' && boostArmed && edge(buttons.boost))
-          boostLatched = !boostLatched;
+        if (mode === 'toggle' && boostArmed && edge(buttons.boost)) boostLatched = !boostLatched;
         Object.assign(flight, {
           direction: pad.direction.flight,
-          // Joining practice is a physical edge, even when normal Toggle Boost
-          // is ineligible. Watching must never arm or retain a flight latch.
-          boost: spectator
-            ? edge(buttons.boost)
-            : mode === 'toggle'
-              ? boostLatched
-              : pad.buttons.has(buttons.boost),
+          boost: mode === 'toggle' ? boostLatched : pad.buttons.has(buttons.boost),
           action: pad.buttons.has(buttons.ability),
           pickup: pad.buttons.has(buttons.pickup),
         });
       }
-      if (flight.pause || flight.hangar || flight.stop || ui.back || ui.menu) clear();
+      if (flight.pause || flight.hangar || flight.stop) clear();
     } else {
       const buttons = compiled.menu.buttons,
         aliases = navigationAliases && defaultLayout,
