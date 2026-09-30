@@ -1,0 +1,47 @@
+{
+  "base": "321408a3cfd75ae230d760f39fb692503652601a",
+  "method": "Targeted dependency mirror: base-tracked files linked read-only when unchanged; changed files replaced by exact base blobs; Node preserve-symlinks. No complete baseline-suite claim.",
+  "reports": [
+    {
+      "log": "radio-baseline-tests",
+      "sha256": "74abb57766420089f0dc37fbb5e472979a166537243dad27ffafe36d537b6c00",
+      "failures": [
+        "whole-spatial-v34: native boot escape matches ready destinations before any host modules load",
+        "whole-spatial-v35: native boot escape matches ready destinations before any host modules load",
+        "whole-spatial-v36: native boot escape matches ready destinations before any host modules load",
+        "whole-spatial-v37: native boot escape matches ready destinations before any host modules load",
+        "immediate: tap/release, same direction, exact pause/load and explicit resume through the actual host",
+        "grid-center: tap/release, same direction, exact pause/load and explicit resume through the actual host",
+        "a fresh first visit shows and starts the exact First Connection without creating a bookmark",
+        "BFCache and Settings retain this attempt when another tab changes the bookmark",
+        "same-value pointerdown  retains visible First Connection without manufacturing a change",
+        "same-value click  retains visible First Connection without manufacturing a change",
+        "same-value keydown Enter retains visible First Connection without manufacturing a change",
+        "same-value keydown f retains visible First Connection without manufacturing a change",
+        "same-value keydown F4 retains visible First Connection without manufacturing a change",
+        "failed Start after a claim-only selection leaves the existing bookmark unchanged",
+        "starting an imported pack after claiming the built-in selector never saves imported identity"
+      ],
+      "summary": {
+        "tests": 84,
+        "pass": 69,
+        "fail": 15,
+        "skipped": 0
+      }
+    },
+    {
+      "log": "radio-baseline-master",
+      "sha256": "c60ccd7ccbb744d8a3baf46476170f5739ffeaa4794a3730db620309cedf03b8",
+      "failures": [
+        "Versus controller edits the actual master slider without starting either board",
+        "Team keyboard master edits remain accessible while paused and preserve its live board and unrelated feedback"
+      ],
+      "summary": {
+        "tests": 21,
+        "pass": 0,
+        "fail": 2,
+        "skipped": 19
+      }
+    }
+  ]
+}

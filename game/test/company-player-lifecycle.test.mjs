@@ -181,6 +181,7 @@ test('company pagehide uses real preference teardown APIs and preserves a cached
     audioMaster,
     sound,
     pause: () => calls.push('pause'),
+    menuAudio: { close: () => calls.push('menu-audio') },
     writer: { release: () => calls.push('release') },
     frame: 123,
     cancelAnimationFrame: (id) => calls.push(`cancel-${id}`),
@@ -220,6 +221,7 @@ test('company pagehide uses real preference teardown APIs and preserves a cached
     'input',
     'picture',
     'preparer',
+    'menu-audio',
   ]);
 });
 
