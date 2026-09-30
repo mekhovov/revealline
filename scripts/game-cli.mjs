@@ -17,6 +17,7 @@ import {
 import { SOUNDTRACK_BUNDLED_ASSETS } from '../game/content/soundtrack-catalogue.mjs';
 import { generatedBrandIcons } from './brand-icons.mjs';
 import { isOptionalSpatialAudioBody } from './offline-core-closure.mjs';
+import { isIncludedBundledMission } from '../game/mission-library/included-bundled-pack.mjs';
 
 export const PROJECT_ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const MARKER = '.xonix-build.json';
@@ -588,10 +589,12 @@ export async function addOfflineEntries(
       entry.bytes = Buffer.from(source.replace('</head>', `${favicon}</head>`));
   }
   // Project only the containing build's manifest; standalone archives keep local icons.
-  const practiceManifest = entries.find(
-    (entry) => entry.name === 'optional-practice/civilian-fpv/app.webmanifest',
-  );
-  if (practiceManifest) {
+  for (const practiceManifest of entries.filter((entry) =>
+    [
+      'optional-practice/civilian-fpv/app.webmanifest',
+      'optional-practice/fpv-worlds/app.webmanifest',
+    ].includes(entry.name),
+  )) {
     const manifest = JSON.parse(practiceManifest.bytes);
     if (
       !Array.isArray(manifest.icons) ||
@@ -613,8 +616,10 @@ export async function addOfflineEntries(
   // The bundled simulator owns a separate opt-in cache. Its HTML and shared
   // modules are final here; later offline-marker injection changes game HTML only.
   const { buildBundledOptionalPractice } = await import('./build-optional-practice.mjs');
-  const bundledPractice = buildBundledOptionalPractice(entries);
-  if (bundledPractice) entries.push(...bundledPractice.entries);
+  for (const packageId of ['civilian-fpv', 'fpv-worlds']) {
+    const bundledPractice = buildBundledOptionalPractice(entries, { packageId });
+    if (bundledPractice) entries.push(...bundledPractice.entries);
+  }
   const optional = new Set([...(buildConfig.optionalOffline ?? []), ...optionalDownloads]);
   const optionalPacks = entries
     .filter((entry) => optional.has(entry.name))
@@ -673,14 +678,16 @@ export async function addOfflineEntries(
     // essential sound effects remain the complete offline baseline.
     ...SOUNDTRACK_BUNDLED_ASSETS.map((asset) => asset.path),
   ]);
-  // Every official chapter uses the same durable store, even when its JSON is small.
-  // Otherwise opening a small chapter would consume a user-import slot.
+  // Small first-party chapter bodies are part of the mandatory offline game.
+  // Larger, optional, external and archived bodies retain explicit package
+  // ownership and download consent.
   const missionIndex = entries.find(
     (entry) => entry.name === 'game/content/mission-library-index.json',
   );
   if (missionIndex)
     for (const mission of JSON.parse(missionIndex.bytes).missions)
-      if (mission.packId) excluded.add(mission.sourceFile.path);
+      if (mission.packId && !isIncludedBundledMission(mission))
+        excluded.add(mission.sourceFile.path);
   const { buildOfflineContent } = await import('./offline-content.mjs');
   const contentCatalogue = await buildOfflineContent(entries, excluded, info.version);
   const { finalizeOfflineContent } = await import('./offline-finalize.mjs');
