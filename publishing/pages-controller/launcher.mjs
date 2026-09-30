@@ -24,6 +24,7 @@ const OPTIONAL_CLOSURE = [
     './controller-confirm-lifecycle.mjs',
   ],
   ['ui/controller-router.mjs', 'ui/launcher-navigation.mjs', './controller-router.mjs'],
+  ['couch/controller-profiles.mjs', 'ui/controller-router.mjs', '../couch/controller-profiles.mjs'],
   ['ui/menu-navigation-groups.mjs', 'ui/controller-navigation.mjs', './menu-navigation-groups.mjs'],
   [
     'ui/controller-field-editor.mjs',
