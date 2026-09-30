@@ -319,6 +319,78 @@
         }
       },
       "publicSlug": "droneaid-nl-shared-horizon"
+    },
+    {
+      "id": "social-drone-ua",
+      "title": "Social Drone UA / LINE",
+      "brand": "social-drone-ua",
+      "modes": ["solo"],
+      "scene": "fpv",
+      "routes": ["/game/?edition=social-drone-ua", "/editions/social-drone-ua/app/"],
+      "menus": "shared-native",
+      "verification": {
+        "automated": "Current integrated source catalog, supported modes, public slug, scene resolver and launch routes checked; source-only inventory reconciliation.",
+        "physicalController": "not tested",
+        "publishedBuild": "not tested",
+        "browser": "Pending current-edition layout and keyboard/controller browser qualification; not covered by the historical 14-edition menu matrix.",
+        "standalonePackage": "Pending current-edition standalone compilation, installed-offline and native qualification; not covered by the historical 14-edition package receipts.",
+        "scene": "Current resolveMenuScene selects the shared fpv fallback for this edition ID; deliberate edition artwork review remains pending."
+      },
+      "publicSlug": "social-drone-ua"
+    },
+    {
+      "id": "victory-drones",
+      "title": "Victory Drones / LINE",
+      "brand": "victory-drones",
+      "modes": ["solo"],
+      "scene": "fpv",
+      "routes": ["/game/?edition=victory-drones", "/editions/victory-drones/app/"],
+      "menus": "shared-native",
+      "verification": {
+        "automated": "Current integrated source catalog, supported modes, public slug, scene resolver and launch routes checked; source-only inventory reconciliation.",
+        "physicalController": "not tested",
+        "publishedBuild": "not tested",
+        "browser": "Pending current-edition layout and keyboard/controller browser qualification; not covered by the historical 14-edition menu matrix.",
+        "standalonePackage": "Pending current-edition standalone compilation, installed-offline and native qualification; not covered by the historical 14-edition package receipts.",
+        "scene": "Current resolveMenuScene selects the shared fpv fallback for this edition ID; deliberate edition artwork review remains pending."
+      },
+      "publicSlug": "victory-drones"
+    },
+    {
+      "id": "ukraine-culture",
+      "title": "Ukraine: Living Culture / LINE",
+      "brand": "ukraine-culture",
+      "modes": ["solo"],
+      "scene": "fpv",
+      "routes": ["/game/?edition=ukraine-culture", "/editions/ukraine-culture/app/"],
+      "menus": "shared-native",
+      "verification": {
+        "automated": "Current integrated source catalog, supported modes, public slug, scene resolver and launch routes checked; source-only inventory reconciliation.",
+        "physicalController": "not tested",
+        "publishedBuild": "not tested",
+        "browser": "Pending current-edition layout and keyboard/controller browser qualification; not covered by the historical 14-edition menu matrix.",
+        "standalonePackage": "Pending current-edition standalone compilation, installed-offline and native qualification; not covered by the historical 14-edition package receipts.",
+        "scene": "Current resolveMenuScene selects the shared fpv fallback for this edition ID; deliberate edition artwork review remains pending."
+      },
+      "publicSlug": "ukraine-culture"
+    },
+    {
+      "id": "fpv-learning",
+      "title": "FPV Learning / LINE",
+      "brand": "fpv-learning",
+      "modes": ["solo"],
+      "scene": "fpv",
+      "routes": ["/game/?edition=fpv-learning", "/editions/fpv-learning/app/"],
+      "menus": "shared-native",
+      "verification": {
+        "automated": "Current integrated source catalog, supported modes, public slug, scene resolver and launch routes checked; source-only inventory reconciliation.",
+        "physicalController": "not tested",
+        "publishedBuild": "not tested",
+        "browser": "Pending current-edition layout and keyboard/controller browser qualification; not covered by the historical 14-edition menu matrix.",
+        "standalonePackage": "Pending current-edition standalone compilation, installed-offline and native qualification; not covered by the historical 14-edition package receipts.",
+        "scene": "Current resolveMenuScene selects the shared fpv fallback for this edition ID; deliberate edition artwork review remains pending."
+      },
+      "publicSlug": "fpv-learning"
     }
   ],
   "evidence": {
@@ -470,8 +542,9 @@
     {
       "name": "Creator Guide",
       "route": "/authoring/community/index.html",
-      "verification": "pending exact-candidate browser qualification; historical observations do not establish current acceptance",
-      "historicalVerification": "browser mount verified; shared keyboard and virtual-controller reader/navigation; physical controller not tested"
+      "verification": "At a6ac18d51, 35 focused tests and the first complete 4/4 virtual-controller workflow pass. Seven safe section and contents targets, bounded readers, exact Back/Confirm restoration, canceled language and live EN/UK labels, and real Content Studio return/reentry are qualified. Native pointerless keyboard traverses all seven sections at 390x844 (maximum 656px) and returns through the real Studio guide link. Virtual whole-page reading reaches 3286px. Guide-only interactions preserve unrelated storage; explicit locale persists, while ordinary native Studio startup created checkpoint1 and the virtual repeat preserved its exact head/revision. No raw Markdown or example download was activated. Source closure and direct document/sample admission match 68 Git/disk pins; no full package build or offline acceptance. Raw documents, actual example artifacts, full Ukrainian reading, hardware and publication remain separate.",
+      "historicalVerification": "browser mount verified; shared keyboard and virtual-controller reader/navigation; physical controller not tested",
+      "evidence": "docs/verification/creator-guide-input-2026-09-30.md"
     },
     {
       "name": "FPV reveal source audit",
@@ -644,6 +717,22 @@
     {
       "route": "/editions/droneaid-nl-community/app/",
       "generator": "publishing/edition-promotion.mjs"
+    },
+    {
+      "route": "/editions/social-drone-ua/app/",
+      "generator": "scripts/compile-edition.mjs"
+    },
+    {
+      "route": "/editions/victory-drones/app/",
+      "generator": "scripts/compile-edition.mjs"
+    },
+    {
+      "route": "/editions/ukraine-culture/app/",
+      "generator": "scripts/compile-edition.mjs"
+    },
+    {
+      "route": "/editions/fpv-learning/app/",
+      "generator": "scripts/compile-edition.mjs"
     }
   ],
   "customPlayer": {
