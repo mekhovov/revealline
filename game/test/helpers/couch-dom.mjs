@@ -1,6 +1,15 @@
 // Minimal DOM boundary for the actual couch entry, input and navigation tests.
 // Geometry is deterministic test data, not a browser layout claim.
 import assert from 'node:assert/strict';
+const datasetKeys = new Map();
+const datasetKey = (name) => {
+  if (!datasetKeys.has(name))
+    datasetKeys.set(
+      name,
+      name.slice(5).replace(/-([a-z])/g, (_match, letter) => letter.toUpperCase()),
+    );
+  return datasetKeys.get(name);
+};
 
 export class Events {
   listeners = new Map();
@@ -16,24 +25,47 @@ export class Events {
   }
   dispatchEvent(event) {
     if (!event.target) Object.defineProperty(event, 'target', { configurable: true, value: this });
+    const priorImmediate = Object.getOwnPropertyDescriptor(event, 'stopImmediatePropagation'),
+      stopImmediate = event.stopImmediatePropagation;
+    let immediateStopped = false;
+    Object.defineProperty(event, 'stopImmediatePropagation', {
+      configurable: true,
+      value() {
+        immediateStopped = true;
+        stopImmediate?.call(this);
+        this.cancelBubble = true;
+      },
+    });
     const ancestors = [];
     for (let node = this.parentNode; node; node = node.parentNode) ancestors.push(node);
-    for (const node of [...ancestors].reverse()) {
-      for (const fn of [...(node.captureListeners.get(event.type) || [])]) fn(event);
-      if (event.cancelBubble) return !event.defaultPrevented;
-    }
-    for (const fn of [...(this.captureListeners.get(event.type) || [])]) fn(event);
-    const bubble = (node) => {
-      for (const fn of [...(node.listeners.get(event.type) || [])]) fn(event);
-      node[`on${event.type}`]?.(event);
-    };
-    bubble(this);
-    if (event.bubbles)
-      for (const node of ancestors) {
-        if (event.cancelBubble) break;
-        bubble(node);
+    const invoke = (callbacks) => {
+      for (const fn of [...(callbacks || [])]) {
+        fn(event);
+        if (immediateStopped) break;
       }
-    return !event.defaultPrevented;
+    };
+    const bubble = (node) => {
+      invoke(node.listeners.get(event.type));
+      if (!immediateStopped) node[`on${event.type}`]?.(event);
+    };
+    try {
+      for (const node of [...ancestors].reverse()) {
+        invoke(node.captureListeners.get(event.type));
+        if (event.cancelBubble) return !event.defaultPrevented;
+      }
+      invoke(this.captureListeners.get(event.type));
+      if (immediateStopped) return !event.defaultPrevented;
+      bubble(this);
+      if (event.bubbles)
+        for (const node of ancestors) {
+          if (event.cancelBubble) break;
+          bubble(node);
+        }
+      return !event.defaultPrevented;
+    } finally {
+      if (priorImmediate) Object.defineProperty(event, 'stopImmediatePropagation', priorImmediate);
+      else delete event.stopImmediatePropagation;
+    }
   }
   emit(type, extra = {}) {
     const event = {
@@ -45,6 +77,9 @@ export class Events {
         this.defaultPrevented = true;
       },
       stopPropagation() {
+        this.cancelBubble = true;
+      },
+      stopImmediatePropagation() {
         this.cancelBubble = true;
       },
       ...extra,
@@ -112,6 +147,12 @@ export class Element extends Events {
   get lastElementChild() {
     return this.children.at(-1) ?? null;
   }
+  get firstChild() {
+    return this.children[0] ?? null;
+  }
+  get nextSibling() {
+    return this.parentNode?.children[this.parentNode.children.indexOf(this) + 1] ?? null;
+  }
   get textContent() {
     return (this._text || '') + this.children.map((child) => child.textContent).join('');
   }
@@ -152,6 +193,21 @@ export class Element extends Events {
       }
     }
   }
+  prepend(...nodes) {
+    for (const node of [...nodes].reverse()) {
+      node.remove?.();
+      this.children.unshift(node);
+      node.parentNode = this;
+    }
+  }
+  insertBefore(node, next) {
+    if (!next) return this.appendChild(node);
+    assert.equal(next.parentNode, this);
+    node.remove?.();
+    this.children.splice(this.children.indexOf(next), 0, node);
+    node.parentNode = this;
+    return node;
+  }
   replaceChildren(...nodes) {
     this._text = '';
     for (const child of [...this.children]) child.remove();
@@ -181,6 +237,13 @@ export class Element extends Events {
     siblings.splice(siblings.indexOf(this) + 1, 0, node);
     node.parentNode = this.parentNode;
   }
+  before(node) {
+    if (!this.parentNode) return;
+    const siblings = this.parentNode.children;
+    node.remove?.();
+    siblings.splice(siblings.indexOf(this), 0, node);
+    node.parentNode = this.parentNode;
+  }
   insertAdjacentElement(position, node) {
     assert.equal(position, 'afterend');
     this.after(node);
@@ -196,13 +259,12 @@ export class Element extends Events {
     this.attributes.set(name, String(value));
     if (name === 'id') this.id = String(value);
     if (name === 'tabindex') this.tabIndex = Number(value);
-    if (name.startsWith('data-'))
-      this.dataset[name.slice(5).replace(/-([a-z])/g, (_match, letter) => letter.toUpperCase())] =
-        String(value);
+    if (name.startsWith('data-')) this.dataset[datasetKey(name)] = String(value);
   }
   getAttribute(name) {
     if (name === 'id') return this.id || null;
     if (name === 'type') return this.type || null;
+    if (name.startsWith('data-')) return this.dataset[datasetKey(name)] ?? null;
     return this.attributes.get(name) ?? null;
   }
   hasAttribute(name) {
@@ -210,14 +272,25 @@ export class Element extends Events {
   }
   removeAttribute(name) {
     this.attributes.delete(name);
-    if (name.startsWith('data-'))
-      delete this.dataset[
-        name.slice(5).replace(/-([a-z])/g, (_match, letter) => letter.toUpperCase())
-      ];
+    if (name.startsWith('data-')) delete this.dataset[datasetKey(name)];
   }
   matches(selector) {
     return selector.split(',').some((part) => {
       part = part.trim();
+      if (/\s/.test(part)) {
+        let depth = 0,
+          split = -1;
+        for (let index = 0; index < part.length; index++) {
+          if (['[', '('].includes(part[index])) depth++;
+          if ([']', ')'].includes(part[index])) depth--;
+          if (depth === 0 && /\s/.test(part[index])) split = index;
+        }
+        if (split >= 0) {
+          const ancestor = part.slice(0, split).trim(),
+            descendant = part.slice(split + 1);
+          return this.matches(descendant) && !!this.parentElement?.closest(ancestor);
+        }
+      }
       if (part === '.race-pad button')
         return this.tagName === 'BUTTON' && !!this.parentElement?.closest('.race-pad');
       if (part === ':disabled') return this.disabled;
@@ -228,8 +301,8 @@ export class Element extends Events {
       part = part.replace(/:not\([^)]+\)/g, '');
       const tag = part.match(/^[a-z][a-z0-9-]*/i)?.[0];
       if (tag && this.tagName !== tag.toUpperCase()) return false;
-      for (const match of part.matchAll(/\[([^=\]]+)(?:=["']?([^"'\]]+)["']?)?\]/g)) {
-        const [, key, value] = match;
+      for (const match of part.matchAll(/\[([^=*\]]+)(?:(\*?=)["']?([^"'\]]+)["']?)?\]/g)) {
+        const [, key, operator, value] = match;
         const actual =
           key === 'hidden'
             ? this.hidden
@@ -248,7 +321,11 @@ export class Element extends Events {
                     ? ''
                     : null
                   : this.getAttribute(key);
-        if (actual === null || (value !== undefined && actual !== value)) return false;
+        if (
+          actual === null ||
+          (value !== undefined && (operator === '*=' ? !actual.includes(value) : actual !== value))
+        )
+          return false;
       }
       return !!tag || part.startsWith('[') || part === '*';
     });
@@ -259,13 +336,23 @@ export class Element extends Events {
     return null;
   }
   querySelectorAll(selector) {
+    if (selector.startsWith(':scope > '))
+      return this.children.filter((child) => child.matches(selector.slice(9)));
     return this.children.flatMap((child) => [
       ...(child.matches(selector) ? [child] : []),
       ...child.querySelectorAll(selector),
     ]);
   }
   querySelector(selector) {
-    return this.querySelectorAll(selector)[0] ?? null;
+    if (selector.startsWith(':scope > '))
+      return this.children.find((child) => child.matches(selector.slice(9))) ?? null;
+    // Match native first-result traversal without allocating every later match.
+    for (const child of this.children) {
+      if (child.matches(selector)) return child;
+      const descendant = child.querySelector(selector);
+      if (descendant) return descendant;
+    }
+    return null;
   }
   getBoundingClientRect() {
     const r = this._rect;
@@ -355,13 +442,20 @@ export class Document extends Events {
     this.modalDialogs = [];
     this.hidden = false;
     this.focused = true;
-    this.defaultView = {
+    this.defaultView = Object.assign(new Events(), {
       Event,
+      CustomEvent,
       getComputedStyle: (element) => ({
         display: element.style.display || 'block',
         visibility: element.style.visibility || 'visible',
       }),
-    };
+    });
+    // Browser capabilities are sometimes copied onto the host's existing
+    // window. Its event subscriptions must remain private to each target.
+    Object.defineProperties(this.defaultView, {
+      listeners: { enumerable: false },
+      captureListeners: { enumerable: false },
+    });
   }
   hasFocus() {
     return this.focused;
@@ -376,7 +470,7 @@ export class Document extends Events {
     return this.documentElement.querySelectorAll(selector);
   }
   querySelector(selector) {
-    return this.querySelectorAll(selector)[0] ?? null;
+    return this.documentElement.querySelector(selector);
   }
   getElementById(id) {
     return this.querySelector(`#${id}`);

@@ -75,7 +75,10 @@ async function setup(t) {
   async function start() {
     release();
     press(0);
+    release();
     await settle(() => page.doc.body.dataset.flightState === 'running', 'Flight starts');
+    await new Promise((resolve) => setImmediate(resolve));
+    page.frame(0);
     release();
   }
   return { page, pad, press, release, start };
@@ -194,6 +197,9 @@ test('cold Steam Deck-style discovery: fresh A starts the selected flight after 
     pad.buttons[index].pressed = true;
     pad.buttons[index].value = 1;
     page.frame();
+    pad.buttons[index].pressed = false;
+    pad.buttons[index].value = 0;
+    page.frame();
   };
   assert.equal(page.$('shell-home').open, true);
   connected = true;
@@ -273,6 +279,9 @@ test('modeled controller: Missions selection, Deploy, Pause and explicit Resume 
     pad.buttons[index].pressed = true;
     pad.buttons[index].value = 1;
     page.frame();
+    pad.buttons[index].pressed = false;
+    pad.buttons[index].value = 0;
+    page.frame();
   };
   const navigate = (id) => {
     const visited = [];
@@ -350,6 +359,7 @@ for (const mode of ['stick', 'swipe', 'dpad'])
     page.change('touch-mode', mode);
     page.change('screen-controls', 'always');
     await start();
+    await new Promise((resolve) => setTimeout(resolve, 1300));
     const surface =
       mode === 'dpad' ? page.doc.querySelector('.direction-controls') : page.$('touch-surface');
     surface._rect = { x: 0, y: 0, width: 156, height: 156 };
@@ -399,6 +409,7 @@ for (const mode of ['stick', 'swipe', 'dpad'])
       'Interrupted finger and held stick cannot resume',
     );
     press(0);
+    release();
     await settle(() => {
       page.frame(0);
       return page.doc.body.dataset.flightState === 'running';
@@ -444,6 +455,9 @@ for (const turnPolicy of ['immediate', 'grid-center'])
     assert.deepEqual(authoritativeCheckpoint(page.rendered.run), checkpoint);
     pad.buttons[0].pressed = true;
     pad.buttons[0].value = 1;
+    page.frame(0);
+    pad.buttons[0].pressed = false;
+    pad.buttons[0].value = 0;
     page.frame(0);
     await settle(() => {
       page.frame(0);

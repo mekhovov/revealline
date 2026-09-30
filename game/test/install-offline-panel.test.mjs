@@ -6,6 +6,7 @@ import {
   installOfflineFrameFocused,
 } from '../ui/install-offline-panel.mjs';
 import { captureInstallPrompt, installInstructions } from '../ui/pwa-install.mjs';
+import { setLocale } from '../i18n/index.mjs';
 import { Document, Events } from './helpers/couch-dom.mjs';
 
 function setup(options = {}) {
@@ -64,6 +65,28 @@ test('menu remains lightweight until opened; closing restores focus without any 
   h.panel.open();
   assert.equal(h.panel.root()?.open, true);
   h.panel.dispose();
+});
+test('the open chooser and its menu label switch locale without remounting', () => {
+  const h = setup();
+  try {
+    h.panel.open();
+    const root = h.panel.root();
+    assert.equal(root.querySelector('h2').textContent, 'Install & offline play');
+    assert.equal(
+      root.querySelector('iframe').getAttribute('title'),
+      'Offline game and optional soundtrack downloads',
+    );
+    setLocale('uk', { persist: false });
+    assert.equal(root.querySelector('h2').textContent, 'Встановлення та гра офлайн');
+    assert.equal(
+      root.querySelector('iframe').getAttribute('title'),
+      'Офлайн-гра та необов’язкові завантаження саундтреків',
+    );
+    assert.equal(h.panel.label(), 'Встановлення та гра офлайн');
+  } finally {
+    h.panel.dispose();
+    setLocale('en', { persist: false });
+  }
 });
 test('a requested package resolves only for the exact embedded source after verified readiness', async () => {
   const h = setup();
@@ -137,7 +160,7 @@ test('late native install opportunity is suggested once at a safe menu boundary'
   safe = true;
   h.window.emit('beforeinstallprompt', { prompt() {} });
   assert.equal(h.statuses.length, 1);
-  assert.match(h.statuses[0], /Install Reveal Line/);
+  assert.match(h.statuses[0], /Install FPV \/ LINE/);
   assert.equal(h.panel.suggest(), false);
   assert.equal(h.document.querySelector('iframe'), null);
   h.panel.dispose();
@@ -153,6 +176,7 @@ test('cold menu reports saved metadata without treating it as verified readiness
             JSON.stringify({
               edition: 'https://game.example/revealline/releases/v2.0.0/site/',
               group: 'gameplay',
+              hashes: ['a'.repeat(64)],
               complete: true,
             }),
           ),
@@ -163,6 +187,34 @@ test('cold menu reports saved metadata without treating it as verified readiness
   assert.deepEqual(h.statuses, ['Saved offline selection · open Offline play to verify.']);
   assert.equal(h.document.querySelector('iframe'), null);
   h.panel.dispose();
+});
+
+test('cold menu ignores malformed ownership metadata without claiming saved readiness', async () => {
+  for (const hashes of [undefined, null, ['not-a-sha256']]) {
+    const h = setup({
+      caches: {
+        open: async () => ({
+          keys: async () => ['checkpoint'],
+          match: async () =>
+            new Response(
+              JSON.stringify({
+                edition: 'https://game.example/revealline/releases/v2.0.0/site/',
+                group: 'gameplay',
+                hashes,
+                complete: true,
+              }),
+            ),
+        }),
+      },
+    });
+    try {
+      await new Promise((resolve) => setImmediate(resolve));
+      assert.deepEqual(h.statuses, []);
+      assert.equal(h.document.querySelector('iframe'), null);
+    } finally {
+      h.panel.dispose();
+    }
+  }
 });
 
 test('owned iframe focus keeps a pending package request; actual window loss still cancels it', async () => {

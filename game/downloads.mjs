@@ -248,16 +248,42 @@ async function estimates({ signal } = {}) {
   const remaining =
     report.remainingBytes + coreRemaining + (launcherHealth.status === 'ready' ? 0 : launcherBytes);
   lastEstimate = { ...report, remainingBytes: remaining };
-  $('game-size').textContent =
-    `Up to ${size(totalDownloadBytes + launcherBytes)} including runtime, ${navigationRequest ? '' : 'app launcher and '}original artwork; ${size(remaining)} remain. Allow ${size(report.requiredBytes + coreRemaining + launcherBytes)} additional storage while keeping an existing edition.${report.availableBytes === null ? ' Free space estimate unavailable.' : ` Estimated free: ${size(report.availableBytes)}.`} Actual network transfer may be smaller with compression.`;
+  localizedText($('game-size'), () =>
+    t(
+      navigationRequest
+        ? 'interface:downloads.gameSize'
+        : 'interface:downloads.gameSizeWithLauncher',
+      {
+        total: size(totalDownloadBytes + launcherBytes),
+        remaining: size(remaining),
+        required: size(report.requiredBytes + coreRemaining + launcherBytes),
+        free:
+          report.availableBytes === null
+            ? t('interface:downloads.freeUnavailableSentence')
+            : t('interface:downloads.freeEstimateSentence', { size: size(report.availableBytes) }),
+      },
+    ),
+  );
   const setupComplete = ready && activationResult?.paused !== true;
-  $('download-game').textContent = navigationRequest
-    ? ready
-      ? 'Open requested mode'
-      : `${savedDownload ? 'Resume download' : 'Download'} and open · up to ${size(remaining)}`
-    : setupComplete
-      ? 'Offline setup complete'
-      : `${savedDownload ? 'Resume' : 'Download selected'} · up to ${size(remaining)}`;
+  localizedText($('download-game'), () =>
+    navigationRequest
+      ? ready
+        ? t('interface:downloads.openRequestedMode')
+        : t(
+            savedDownload
+              ? 'interface:downloads.resumeAndOpen'
+              : 'interface:downloads.downloadAndOpen',
+            { size: size(remaining) },
+          )
+      : setupComplete
+        ? t('interface:downloads.offlineSetupComplete')
+        : t(
+            savedDownload
+              ? 'interface:downloads.resumeWithSize'
+              : 'interface:downloads.downloadSelectedWithSize',
+            { size: size(remaining) },
+          ),
+  );
   $('download-game').disabled = Boolean(controller) || (!navigationRequest && setupComplete);
 }
 async function health({ verify = true, signal } = {}) {
@@ -302,9 +328,10 @@ async function health({ verify = true, signal } = {}) {
           : t('interface:downloads.freeEstimate', { size: size(musicEstimate.availableBytes) }),
     }),
   );
-  localizedText(
-    $('all-music'),
-    `Download all soundtracks · up to ${size(musicEstimate.remainingBytes)}`,
+  localizedText($('all-music'), () =>
+    t('interface:downloads.downloadAllMusicSize', {
+      size: size(musicEstimate.remainingBytes),
+    }),
   );
   let count = 0;
   for (const file of catalogue.files.filter((file) => file.kind === 'soundtrack'))
@@ -328,8 +355,14 @@ async function health({ verify = true, signal } = {}) {
         required: size(report.requiredBytes),
       }),
     );
-    albumDownloads.get(id).textContent =
-      `${report.ready ? 'Downloaded' : 'Download / resume'} · up to ${size(report.remainingBytes)}`;
+    localizedText(albumDownloads.get(id), () =>
+      t(
+        report.ready
+          ? 'interface:downloads.albumDownloaded'
+          : 'interface:downloads.albumDownloadResume',
+        { size: size(report.remainingBytes) },
+      ),
+    );
     albumDownloads.get(id).disabled = Boolean(controller) || report.ready;
   }
   if (sequence !== healthSequence) return;
@@ -599,8 +632,7 @@ async function selectEdition({
               cleanup();
               resolve({
                 activated: false,
-                message:
-                  'Game is downloaded. Reopen Offline play from the main menu to finish app selection.',
+                message: t('interface:downloads.activationDeferred'),
               });
             }, 10000);
             channel.port1.onmessage = (event) => {

@@ -4,7 +4,9 @@ import {
   installedPresentation,
 } from './installed-app.mjs';
 import { localizedText, t } from './i18n/index.mjs';
+import { attachLauncherNavigation } from './ui/launcher-navigation.mjs';
 const $ = (id) => document.getElementById(id);
+attachLauncherNavigation();
 localizedText($('status'), () => t('interface:launcher.opening'));
 const localError = (key, values) =>
   Object.assign(new Error(t(key, values)), { localization: { key, values } });
@@ -21,8 +23,13 @@ $('install').onclick = async () => {
   installPrompt = null;
   $('install').hidden = true;
 };
-const game = (edition, page = '') =>
-  new URL(`game/${page}`, validateInstalledEdition(edition).scope).href;
+const game = (edition, page = '') => {
+  const destination = new URL(`game/${page}`, validateInstalledEdition(edition).scope);
+  // Diagnostics are opt-in for this launch; the selected installed edition stays pinned.
+  if (new URL(location.href).searchParams.get('controllerTrace') === '1')
+    destination.searchParams.set('controllerTrace', '1');
+  return destination.href;
+};
 async function check() {
   $('updates').disabled = true;
   try {

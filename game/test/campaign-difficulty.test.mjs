@@ -8,6 +8,7 @@ import {
   resolveCampaignDifficulty,
   createDifficultyContext,
   findDifficultyContext,
+  ownedDifficultyCampaignKey,
 } from '../campaign-difficulty.mjs';
 import { normalizedLevel } from '../core/level.mjs';
 import { createRun, stepRun, releaseInputs, getSummary, FIXED_DT } from '../core/index.mjs';
@@ -366,3 +367,35 @@ for (const policy of ['immediate', 'grid-center']) {
     );
   });
 }
+
+test('only owned difficulty campaigns reuse exact identity while caller clones and edits stay live', () => {
+  const source = single();
+  const standard = createDifficultyContext(source);
+  const gentle = createDifficultyContext(source, 'gentle');
+  assert.equal(ownedDifficultyCampaignKey(source), undefined);
+  assert.equal(ownedDifficultyCampaignKey(standard.campaign), standard.campaignKey);
+  assert.equal(ownedDifficultyCampaignKey(gentle.campaign), gentle.campaignKey);
+  assert.equal(campaignKey(standard.campaign), standard.campaignKey);
+  assert.equal(campaignKey(gentle.campaign), gentle.campaignKey);
+  source.levels[0].goal.coverage += 0.01;
+  assert.notEqual(campaignKey(source), standard.campaignKey);
+  assert.equal(campaignKey(standard.campaign), standard.campaignKey);
+  const callerFrozen = Object.freeze(clone(standard.campaign));
+  assert.equal(ownedDifficultyCampaignKey(callerFrozen), undefined);
+  assert.equal(campaignKey(callerFrozen), standard.campaignKey);
+  callerFrozen.levels[0].goal.coverage += 0.02;
+  assert.notEqual(campaignKey(callerFrozen), standard.campaignKey);
+  callerFrozen.levels[0].width = 0;
+  assert.throws(() => campaignKey(callerFrozen), /Invalid level/);
+  assert.throws(() => {
+    standard.campaign.levels[0].goal.coverage = 0.9;
+  }, TypeError);
+  const reinterpreted = createDifficultyContext(gentle.campaign, 'standard');
+  assert.equal(reinterpreted.campaignKey, gentle.campaignKey);
+  assert.equal(reinterpreted.baseCampaignKey, gentle.campaignKey);
+  assert.equal(
+    reinterpreted.mode,
+    'standard',
+    'Exact gentle input remains its own base; it must not return the original authored context.',
+  );
+});

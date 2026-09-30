@@ -192,7 +192,7 @@ output {
   padding: 24px;
   color: var(--muted);
 }
-.empty-preview h2 {
+.empty-preview-title {
   font-size: 20px;
   color: #e7edf7;
   margin: 16px 0 0;
@@ -210,13 +210,37 @@ output {
   box-shadow: 6px 6px 0 #202c40;
 }
 .notes {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 16px 32px;
   margin-top: 20px;
   font-size: 13px;
   line-height: 1.65;
   color: var(--muted);
+}
+#viewport-notes-region {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px 32px;
+  max-height: 60svh;
+  overflow: auto;
+}
+#viewport-controls-title {
+  flex-basis: 100%;
+  margin: 0;
+}
+.preview-section > h2,
+.notes > h2 {
+  margin-bottom: 12px;
+}
+.viewport-read-control {
+  margin: 0 12px 12px 0;
+}
+.viewport-read-help {
+  display: inline-block;
+  color: var(--muted);
+  margin-bottom: 12px;
+}
+[data-viewport-reading='true'] {
+  outline: 3px solid var(--accent);
+  outline-offset: 3px;
 }
 .notes p {
   margin: 0;
@@ -247,7 +271,7 @@ output {
   .target-controls {
     grid-template-columns: minmax(0, 1fr);
   }
-  .notes {
+  #viewport-notes-region {
     grid-template-columns: 1fr;
   }
   .stage {
@@ -294,7 +318,7 @@ body.field-kit[data-authoring-host='viewport'] label {
 body.field-kit[data-authoring-host='viewport'] .eyebrow {
   font-weight: 400;
 }
-body.field-kit[data-authoring-host='viewport'] .empty-preview h2 {
+body.field-kit[data-authoring-host='viewport'] .empty-preview-title {
   font-size: calc(var(--fk-text-body) + 6px);
   line-height: var(--fk-leading-control);
 }

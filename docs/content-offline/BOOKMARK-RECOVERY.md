@@ -1,3 +1,10 @@
+# Current policy
+
+Ordinary bookmarks now load online without an automatic download redirect.
+[Optional offline play](../optional-offline-play.md) supersedes the automatic
+consent gate described below. The explicit recovery tools and historical evidence
+remain documented here.
+
 # Direct bookmark recovery
 
 Package editions keep optional mode documents out of the Solo core. When a direct

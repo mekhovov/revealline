@@ -50,6 +50,8 @@ test('generated public pages use complete messages and retain original attributi
   const entries = [
     ...assets,
     'game/vendor/LZ-STRING-LICENSE.txt',
+    'game/vendor/QRCODEGEN-LICENSE.txt',
+    'game/vendor/qrcodegen-1.8.0.json',
     'game/ui/fonts/field-kit/provenance.json',
   ].map((name) => entry(name));
   addPublicEntries(entries, {
@@ -278,5 +280,69 @@ test('offline runtime-owned captions have one live binding owner', async () => {
         file + ': no stale binding ' + id,
       );
     }
+  }
+});
+
+test('company entry and launch links use live catalogs and preserve bilingual fallback', async () => {
+  const companySource = await fs.readFile(new URL('../game/company.html', import.meta.url), 'utf8');
+  const companyNodes = descendants(parse(companySource));
+  assert.ok(
+    companyNodes.some((node) => attribute(node, 'data-language-control') !== undefined),
+    'game/company.html: language control',
+  );
+  assert.ok(companySource.includes('"i18n/style.css"'), 'game/company.html: language styles');
+  assert.ok(
+    companySource.includes('type="module" src="company-entry.mjs"'),
+    'game/company.html: localized module entry',
+  );
+  const companyKeys = companyNodes.map((node) => attribute(node, 'data-i18n')).filter(Boolean);
+  assert.ok(companyKeys.length >= 4, 'game/company.html: catalog coverage');
+  for (const key of companyKeys) {
+    assert.match(key, /^interface:/, `game/company.html: ${key}`);
+    for (const locale of ['en', 'uk'])
+      assert.equal(
+        typeof interfaceResources[locale][key.slice('interface:'.length)],
+        'string',
+        `game/company.html: ${locale}: ${key}`,
+      );
+  }
+  assert.match(companySource, /<noscript>[\s\S]*lang="uk"/);
+  assert.match(companySource, /<noscript>[\s\S]*index\.html\?company=1/);
+
+  const entrySource = await fs.readFile(
+    new URL('../game/company-entry.mjs', import.meta.url),
+    'utf8',
+  );
+  assert.match(entrySource, /from ['"]\.\/i18n\/index\.mjs['"]/);
+  assert.match(entrySource, /translateDOM\(document\)/);
+  assert.match(entrySource, /attachLanguageControls\(document\)/);
+
+  const siteSource = await fs.readFile(new URL('../site/index.html', import.meta.url), 'utf8');
+  const siteLink = descendants(parse(siteSource)).find(
+    (node) => attribute(node, 'href') === '../game/company.html',
+  );
+  assert.equal(attribute(siteLink, 'data-i18n'), 'website:companyJourneys');
+  for (const locale of ['en', 'uk'])
+    assert.equal(typeof resources[locale].companyJourneys, 'string', `${locale}: companyJourneys`);
+
+  const gameSource = await fs.readFile(new URL('../game/index.html', import.meta.url), 'utf8');
+  const gameNodes = descendants(parse(gameSource));
+  const gameLink = gameNodes.find((node) => attribute(node, 'href') === 'company.html');
+  assert.equal(attribute(gameLink, 'data-i18n'), 'interface:companyJourneys');
+  const communityLink = gameNodes.find((node) => attribute(node, 'id') === 'shell-community');
+  assert.equal(attribute(communityLink, 'data-i18n-rich'), 'interface:creator.communityCard');
+  const communitySlots = descendants(communityLink)
+    .map((node) => attribute(node, 'data-i18n-slot'))
+    .filter(Boolean)
+    .sort();
+  for (const locale of ['en', 'uk']) {
+    const message = interfaceResources[locale]['creator.communityCard'];
+    const placeholders = [...message.matchAll(/\[\[([^\]]+)\]\]/g)].map((match) => match[1]).sort();
+    assert.deepEqual(placeholders, communitySlots, `${locale}: creator.communityCard`);
+    assert.equal(
+      typeof interfaceResources[locale]['creator.communityDescription'],
+      'string',
+      `${locale}: creator.communityDescription`,
+    );
   }
 });

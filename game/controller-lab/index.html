@@ -9,9 +9,11 @@
 
     <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
     <title data-i18n="interface:revealLineControllerPractice">
-      Reveal / Line — Controller practice
+      FPV / LINE — Controller practice
     </title>
     <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="../ui/control-lab.css" />
+    <link rel="stylesheet" href="../ui/optional-practice-panel.css" />
     <link rel="stylesheet" href="../ui/pixel-theme.css" />
     <link rel="stylesheet" href="../ui/field-kit-fonts.css" />
     <link rel="stylesheet" href="../ui/field-kit-tokens.css" />
@@ -23,7 +25,14 @@
     <script type="module" src="../ui/field-kit-surfaces.mjs"></script>
     <link rel="stylesheet" href="../ui/operation-status.css" />
     <script type="module" src="../ui/workshop-return-entry.mjs"></script>
+    <script type="module" src="../ui/support-input-entry.mjs"></script>
     <link rel="stylesheet" href="../ui/workshop-return.css" />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="../ui/art/identity/fpv-line/icon-32.png"
+    />
   </head>
   <body
     data-workshop-tool="controller-lab"
@@ -33,7 +42,16 @@
     <div data-language-control></div>
 
     <header>
-      <a href="../" data-workshop-return="game" data-i18n="interface:revealLine">◩ REVEAL / LINE</a>
+      <a
+        class="fpv-line-brand fpv-line-brand--compact"
+        href="../"
+        data-workshop-return="game"
+        data-support-return
+        ><img
+          class="fpv-line-wordmark"
+          src="../ui/art/identity/fpv-line/wordmark.png"
+          alt="FPV / LINE"
+      /></a>
       <a
         data-workshop-return="workshop"
         inert
@@ -69,6 +87,15 @@
           scores or unlocks. The three First Flight choices teach the capture loop with Scout and
           leave your Playground configuration intact. This lab does not verify physical controller
           support.
+        </p>
+      </section>
+      <section class="control-concepts-entry">
+        <div id="control-practice-packages"></div>
+        <button id="control-concepts-open" type="button" data-i18n="interface:controlLab.open">
+          Explore four controls
+        </button>
+        <p data-i18n="interface:controlLab.entry">
+          Untimed control diagrams · no flight simulation or progress awards
         </p>
       </section>
       <p
@@ -442,7 +469,7 @@
             <iframe
               id="game-frame"
               name="revealline-controller-practice"
-              title="Reveal Line practice game controlled by the virtual pad"
+              title="FPV / LINE practice game controlled by the virtual pad"
               tabindex="0"
               allow="gamepad; fullscreen"
               allowfullscreen

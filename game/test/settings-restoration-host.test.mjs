@@ -71,7 +71,7 @@ async function host(t, mode) {
   advance();
   if (!solo) f.$(`${prefix}pause`).click();
   f.$(solo ? 'settings-button' : team ? 'coop-settings-open' : 'race-options').click();
-  f.$(`${prefix}settings-tab-display`).click();
+  f.$(`${prefix}settings-tab-accessibility`).click();
   advance();
   controls.face.focus();
   assert.equal(f.doc.activeElement, controls.face);
@@ -117,6 +117,9 @@ async function host(t, mode) {
     storage,
     controls,
     read,
+    neutralInput: () => {
+      if (team) f.tick();
+    },
     effects: () => ({ focus: [...focusEvents], scroll: [...scrollEvents] }),
     corrupt(record = stale) {
       for (const [key, value] of Object.entries(record))
@@ -124,7 +127,13 @@ async function host(t, mode) {
     },
     change(key, value) {
       const control = controls[key],
-        tab = f.$(`${prefix}settings-tab-${key === 'volume' ? 'audio' : 'display'}`);
+        category =
+          key === 'volume'
+            ? 'audio'
+            : ['face', 'size', 'reduced'].includes(key)
+              ? 'accessibility'
+              : 'display',
+        tab = f.$(`${prefix}settings-tab-${category}`);
       tab.click();
       assert.equal(tab.getAttribute('aria-selected'), 'true');
       assert.equal(control.closest('[hidden],[inert]'), null);
@@ -178,9 +187,9 @@ for (const mode of ['Solo', 'Versus', 'Team']) {
     const f = await host(t, mode),
       latest = { ...stale, volume: 0.22, ornaments: 'subtle' };
     f.win.emit('pageshow', { persisted: true });
-    // Team deliberately gates Confirm after restoration until a neutral input
-    // sample. This synchronous frame still precedes the deferred form repair.
-    if (mode === 'Team') f.tick();
+    // Team's lifecycle guard first samples released controls. A synchronous
+    // frame does not run the deferred pageshow task that this action supersedes.
+    f.neutralInput();
     for (const [key, value] of Object.entries(latest)) f.change(key, value);
     const writes = [...f.storage.writes],
       records = [...f.storage.map],

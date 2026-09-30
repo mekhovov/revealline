@@ -2,12 +2,23 @@ import { offlineAvailability } from './offline.mjs';
 import { createOfficialDownloads } from './official-downloads.mjs';
 import { downloadFiles } from './download-catalogue.mjs';
 import { resolveJourneyRequest } from './content-design/default-entry.mjs';
+import { t } from './i18n/index.mjs';
 
-/** Gameplay may consume local packages, but only the download UI may authorize
- * their transfer. Readiness is checked against actual files, never onLine or a
- * saved checkbox. The source checkout and immutable v1 editions keep their
- * existing loading contract. */
-export function createOfflineDownloadAccess({
+export const OFFLINE_PACKAGE_REQUIRED = 'offline-package-required';
+
+export function isOfflinePackageRequired(error) {
+  return error?.code === OFFLINE_PACKAGE_REQUIRED;
+}
+
+function offlinePackageRequired() {
+  const error = new Error(t('interface:downloads.downloadChapterBeforePlaying'));
+  error.code = OFFLINE_PACKAGE_REQUIRED;
+  return error;
+}
+
+/** Explicit offline preparation requires complete verified packages. Ordinary
+ * gameplay uses the optional access helper below instead of this consent gate. */
+export function createRequiredOfflineDownloadAccess({
   availability = offlineAvailability(),
   fetch: request = globalThis.fetch,
   store,
@@ -29,8 +40,7 @@ export function createOfflineDownloadAccess({
       controller.signal.addEventListener('abort', rejectAbort, { once: true });
     });
     const timer = setTimeout(
-      () =>
-        controller.abort(new Error('The offline package catalogue timed out. Retry the request.')),
+      () => controller.abort(new Error(t('interface:downloads.catalogueTimedOut'))),
       catalogueTimeout,
     );
     try {
@@ -43,14 +53,14 @@ export function createOfflineDownloadAccess({
             signal: controller.signal,
           });
           if (!response.ok || response.redirected)
-            throw new Error('The offline package catalogue is unavailable.');
+            throw new Error(t('interface:downloads.catalogueUnavailable'));
           const value = await response.json();
           controller.signal.throwIfAborted();
           if (
             value.format !== 'revealline-offline-content.v2' ||
             value.version !== availability.version
           )
-            throw new Error('The offline package catalogue differs from this edition.');
+            throw new Error(t('interface:downloads.catalogueMismatch'));
           return value;
         })(),
         aborted,
@@ -75,16 +85,13 @@ export function createOfflineDownloadAccess({
       store ||= createOfficialDownloads();
       if (!(await store.inspect(files, { verify: true, signal })).ready) {
         check(signal);
-        if (!prompt)
-          throw new Error('Download this chapter in Install & offline play before playing it.');
+        if (!prompt) throw offlinePackageRequired();
         if (typeof requestPackage !== 'function')
-          throw new Error('Open Install & offline play to download this chapter first.');
+          throw new Error(t('interface:downloads.openInstallToDownloadChapter'));
         await requestPackage({ groupId, signal });
         check(signal);
         if (!(await store.inspect(files, { verify: true, signal })).ready)
-          throw new Error(
-            'This chapter is not ready offline. Resume its download in Install & offline play.',
-          );
+          throw new Error(t('interface:downloads.chapterNotReady'));
       }
       check(signal);
       if (retain) {
@@ -109,7 +116,7 @@ export function createOfflineDownloadAccess({
           mission.modes.includes(mode),
       );
       if (matches.length !== 1 || !matches[0].groups.length)
-        throw new Error('This exact mission edition has no offline package.');
+        throw new Error(t('interface:downloads.exactMissionNoPackage'));
       for (const group of matches[0].groups) await this.ensure(group, { signal, prompt, retain });
     },
     async ensureURL(destination, options = {}) {
@@ -141,7 +148,7 @@ export function createOfflineDownloadAccess({
       const routeId = resolveJourneyRequest(url.searchParams, { mode }) || 'legacy';
       const libraryIds = url.searchParams.getAll('library-mission');
       if (libraryIds.length > 1 || (libraryIds.length && !libraryIds[0]))
-        throw new Error('The destination mission request is invalid.');
+        throw new Error(t('interface:downloads.invalidDestinationMissionRequest'));
       const current = await getCatalogue(signal);
       check(signal);
       // Destination rows are generated from exact published owner metadata. Never
@@ -154,7 +161,8 @@ export function createOfflineDownloadAccess({
           ? row.libraryId === undefined
           : row.libraryId === libraryIds[0],
       );
-      if (matching.length !== 1) throw new Error('This exact destination has no offline package.');
+      if (matching.length !== 1)
+        throw new Error(t('interface:downloads.exactDestinationNoPackage'));
       // Imported packs, practice and authenticated return tokens carry their own
       // local content authority. Preparing a host must not replace those owners
       // with a similarly named official chapter.
@@ -173,8 +181,68 @@ export function createOfflineDownloadAccess({
         ].some((key) => url.searchParams.has(key));
       const groups =
         runtimeOnly || carriesLocalContent ? matching[0].runtimeGroups : matching[0].groups;
-      if (!Array.isArray(groups)) throw new Error('The destination package is incomplete.');
+      if (!Array.isArray(groups))
+        throw new Error(t('interface:downloads.destinationPackageIncomplete'));
       for (const group of groups) await this.ensure(group, { signal, prompt });
     },
   });
+}
+
+/** Ordinary play loads its requested assets through the normal verified loaders.
+ * Offline preparation is never an admission requirement. Retain an already
+ * downloaded chapter when possible, using only local metadata and bounded work. */
+export function createOfflineDownloadAccess({
+  availability = offlineAvailability(),
+  caches: cacheStorage = globalThis.caches,
+  store,
+  retentionTimeout = 1000,
+} = {}) {
+  const local = createRequiredOfflineDownloadAccess({
+    availability,
+    store,
+    fetch: async (url) => {
+      for (const name of (await cacheStorage?.keys()) ?? []) {
+        const hit = await (await cacheStorage.open(name)).match(url.href);
+        if (hit) return hit;
+      }
+      throw new Error('No locally prepared catalogue.');
+    },
+  });
+  return Object.freeze(
+    Object.fromEntries(
+      Object.keys(local).map((method) => [
+        method,
+        async (target, options = {}) => {
+          options.signal?.throwIfAborted();
+          if (!options.retain) return;
+          const controller = new AbortController();
+          let finish;
+          const deadline = new Promise((resolve) => {
+            finish = resolve;
+          });
+          const abort = () => {
+            controller.abort(options.signal.reason);
+            finish();
+          };
+          options.signal?.addEventListener('abort', abort, { once: true });
+          const timer = setTimeout(() => {
+            controller.abort();
+            finish();
+          }, retentionTimeout);
+          try {
+            await Promise.race([
+              local[method](target, { ...options, prompt: false, signal: controller.signal }).catch(
+                () => {}, // Missing packages or unavailable storage cannot block online play.
+              ),
+              deadline,
+            ]);
+          } finally {
+            clearTimeout(timer);
+            options.signal?.removeEventListener('abort', abort);
+          }
+          options.signal?.throwIfAborted();
+        },
+      ]),
+    ),
+  );
 }

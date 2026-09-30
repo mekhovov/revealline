@@ -1,6 +1,7 @@
 import { createLearningAttempt } from '../company-campaigns/learning.mjs';
 import { mountCompanyWorkbench } from '../company-campaigns/workbench.mjs';
 import { createCompanyLearningProofStore } from '../company-campaigns/learning-proofs.mjs';
+import { createCompanyLearningDraftStore } from '../company-campaigns/learning-drafts.mjs';
 import { createCompanyStorage } from '../company-storage.mjs';
 import { companySimulationIdentity } from '../company-session.mjs';
 import { compileContentProject, resolveMission } from '../content-design/project.mjs';
@@ -8,7 +9,16 @@ import { journeyDifficultyCatalog } from '../content-design/catalogs.mjs';
 import { applyGameplayTuning, resolveGameplayTuning } from '../gameplay-tuning.mjs';
 import { createRun } from '../core/index.mjs';
 import { exportReplay } from '../replay.mjs';
-import { boundedJSON, required } from '../data-json.mjs';
+import { boundedJSON, exactKeys } from '../data-json.mjs';
+import { journeyMissionId } from '../journey/catalog.mjs';
+import { getLocale, localizedText, render, t } from '../i18n/index.mjs';
+import { localizeCompanyLesson } from '../company-campaigns/lesson-localization.mjs';
+
+const localizedIssue = (key) =>
+  Object.assign(new TypeError(t(key)), { localizedMessage: () => t(key) });
+const requireLocalized = (condition, key) => {
+  if (!condition) throw localizedIssue(key);
+};
 
 /** A result-only bonus. This module cannot select a mission, award an arcade
  * clear, change a run, or control the availability of Next. */
@@ -17,6 +27,7 @@ export async function mountEditionLessons({
   document: doc,
   window: win,
   writer,
+  previewSession = null,
   getRun,
   getRecorder,
   getPictureVisible,
@@ -24,6 +35,8 @@ export async function mountEditionLessons({
 }) {
   if (!provider.lessons.length)
     return {
+      rewardEvidence: () => EMPTY_REWARD_EVIDENCE,
+      onRewardEvidenceChange: () => () => {},
       refresh() {},
       pictureReady() {
         return null;
@@ -51,8 +64,8 @@ export async function mountEditionLessons({
     importRequest = null;
   const reportData = (message) => {
     if (disposed) return;
-    dataStatus.textContent = message;
-    report(message);
+    const rendered = localizedText(dataStatus, message);
+    report(rendered);
   };
   // Storage operations are synchronous, but their owning replay/import may
   // finish later. Keep storage failures on that operation's live surface.
@@ -67,23 +80,36 @@ export async function mountEditionLessons({
     }
   };
   const simulations = new Map(),
+    pictureBindings = new Map(),
     compiled = compileContentProject(provider.route.source);
   for (const lesson of provider.lessons) {
-    const identities = new Set();
+    const identities = new Set(),
+      acceptedPictures = new Set();
     for (const difficulty of Object.keys(
       journeyDifficultyCatalog(compiled.source.difficultyCatalogId).presets,
     )) {
       const manifest = resolveMission(compiled, lesson.missionId, { difficulty });
-      identities.add(
-        companySimulationIdentity(
-          createRun(applyGameplayTuning(manifest.level, resolveGameplayTuning(difficulty))),
-        ),
-      );
+      const run = createRun(applyGameplayTuning(manifest.level, resolveGameplayTuning(difficulty)));
+      const identity = companySimulationIdentity(run);
+      identities.add(identity);
+      acceptedPictures.add(`${difficulty}:${identity}`);
     }
     simulations.set(lesson.missionId, identities);
+    for (const pack of compiled.source.packs.filter((item) =>
+      item.campaignIds.includes(lesson.campaignId),
+    ))
+      pictureBindings.set(
+        journeyMissionId({
+          source: 'candidate',
+          packId: pack.id,
+          campaignId: lesson.campaignId,
+          levelId: lesson.missionId,
+        }),
+        { lesson, acceptedPictures },
+      );
   }
   const storage = createCompanyStorage({
-    getStorage: () => win.localStorage ?? globalThis.localStorage,
+    getStorage: () => previewSession?.storage ?? win.localStorage ?? globalThis.localStorage,
     onError: (error) => storageReport(error.message),
   });
   const proofs = createCompanyLearningProofStore({
@@ -93,17 +119,31 @@ export async function mountEditionLessons({
     storage: {
       getItem: storage.getItem,
       setItem(key, value) {
-        required(writer.writable, writer.reason || 'Optional learning is kept in this tab only.');
+        if (!writer.writable) {
+          if (writer.reason) throw new TypeError(writer.reason);
+          throw localizedIssue('errors:editionLearning.keptInTab');
+        }
         storage.setItem(key, value);
       },
     },
   });
-  const hydration = await proofs.hydrate();
-  if (hydration.rejected)
-    reportData(
-      'Earlier learning records need their matching revision. They remain available in the learning backup.',
-    );
-  const button = node('button', 'Optional bonus · explore this connection');
+  const hydration = await proofs.hydrate({ signal: lifetime.signal });
+  if (hydration.rejected) reportData(() => t('interface:editionLessons.revisionMismatch'));
+  const drafts = createCompanyLearningDraftStore({
+    editionId: provider.editionId,
+    lessons: provider.lessons,
+    simulations,
+    storage: {
+      getItem: storage.getItem,
+      setItem(key, value) {
+        if (!writer.writable) throw localizedIssue('errors:editionLearning.keptInTab');
+        storage.setItem(key, value);
+      },
+    },
+  });
+  if (drafts.hydrate().rejected) reportData(() => t('interface:editionLessons.draftMismatch'));
+  const button = node('button');
+  localizedText(button, () => t('interface:editionLessons.exploreConnection'));
   button.id = 'edition-lesson-open';
   button.type = 'button';
   button.className = 'button secondary';
@@ -114,7 +154,15 @@ export async function mountEditionLessons({
   dialog.className = 'edition-lesson-dialog';
   const content = node('div');
   content.setAttribute('data-game-reading', '');
-  dialog.append(content, lessonStatus);
+  const draftNotice = node('p'),
+    freshAttempt = node('button');
+  draftNotice.id = 'edition-lesson-draft-notice';
+  freshAttempt.id = 'edition-lesson-fresh';
+  freshAttempt.type = 'button';
+  freshAttempt.className = 'button secondary';
+  localizedText(freshAttempt, () => t('interface:editionLessons.draftFresh'));
+  freshAttempt.hidden = true;
+  dialog.append(draftNotice, content, freshAttempt, lessonStatus);
   doc.body.append(dialog);
   const seen = new WeakSet(),
     attempts = new WeakMap();
@@ -128,27 +176,40 @@ export async function mountEditionLessons({
   };
   dialog.addEventListener('close', close);
   let lessonOpener = button;
-  function openLesson(lesson, run = null) {
+  function openLesson(lesson, run = null, pictureIdentity = null, fresh = false) {
     if (disposed) return;
     const visit = ++lessonVisit;
-    lessonStatus.textContent = '';
+    localizedText(lessonStatus, '');
     const current = () => !disposed && lessonVisit === visit && dialog.open;
     const reportLesson = (message) => {
       if (disposed) return;
-      const visible = current();
-      if (visible) lessonStatus.textContent = message;
+      const visible = current(),
+        rendered = render(message);
+      if (visible) localizedText(lessonStatus, message);
       // The proof still owns a real saved result after its dialog closes. Keep
       // recovery warnings, naming that lesson without replacing a newer modal.
-      report(visible ? message : `${lesson.title}: ${message}`);
+      report(
+        visible
+          ? rendered
+          : t('interface:editionLessons.namedReport', {
+              title: localizeCompanyLesson(lesson, getLocale()).title,
+              message: rendered,
+            }),
+      );
     };
     const recorder = run ? getRecorder() : null;
-    const identity = run ? companySimulationIdentity(run) : null;
+    const identity = run ? companySimulationIdentity(run) : pictureIdentity;
     const pinned = recorder && simulations.get(lesson.missionId)?.has(identity);
+    const cached = !fresh && run ? attempts.get(run) : null;
+    const recovered = !fresh && !cached ? drafts.load(lesson, identity) : null;
+    const resumed = recovered?.actions.length ? recovered : null;
+    const replayEligible = cached ? cached.replayEligible : !!pinned && !resumed;
     const attempt =
-      (run ? attempts.get(run) : null) ??
+      cached?.attempt ??
+      resumed ??
       createLearningAttempt(
         lesson,
-        pinned
+        replayEligible
           ? {
               attemptId: `bonus-${crypto.randomUUID()}`,
               simulationIdentity: identity,
@@ -156,18 +217,52 @@ export async function mountEditionLessons({
             }
           : {},
       );
+    if (run) attempts.set(run, { attempt, replayEligible });
+    localizedText(
+      draftNotice,
+      replayEligible
+        ? ''
+        : () =>
+            resumed || cached
+              ? t('interface:editionLessons.draftRecovered')
+              : t('interface:editionLessons.draftPractice'),
+    );
+    draftNotice.hidden = replayEligible;
+    const refreshDraftAction = (next) => {
+      freshAttempt.hidden = replayEligible || (!pinned && next.status !== 'complete');
+    };
+    refreshDraftAction(attempt);
+    localizedText(freshAttempt, () =>
+      pinned
+        ? t('interface:editionLessons.draftFresh')
+        : t('interface:editionLessons.draftRestartPractice'),
+    );
+    freshAttempt.onclick = () => {
+      if (run && (getRun() !== run || run.status !== 'won' || !seen.has(run))) return;
+      openLesson(lesson, run, identity, true);
+    };
+    if (fresh && !persistWithReport(reportLesson, () => drafts.save(lesson, identity, attempt)))
+      reportLesson(() => t('interface:editionLessons.draftInTab'));
     // Snapshot the accepted terminal replay before any asynchronous proof work.
-    const replay = pinned ? exportReplay(recorder, run) : null;
-    const boundary = run ? { tick: run.tick, kind: 'result' } : null;
+    const replay = replayEligible ? exportReplay(recorder, run) : null;
+    const boundary = replayEligible ? { tick: run.tick, kind: 'result' } : null;
     workbench?.destroy();
     workbench = mountCompanyWorkbench(content, {
       lesson,
       attempt,
       evidence: { availableRecordIds: lesson.records.map((record) => record.id), boundary },
       onChange: (next) => {
-        if (run) attempts.set(run, next);
+        if (run) attempts.set(run, { attempt: next, replayEligible });
+        refreshDraftAction(next);
+        try {
+          if (!persistWithReport(reportLesson, () => drafts.save(lesson, identity, next)))
+            reportLesson(() => t('interface:editionLessons.draftInTab'));
+        } catch (error) {
+          reportLesson(error.localizedMessage || error.message);
+        }
         if (next.status !== 'complete' || !replay) return;
-        if (current()) lessonStatus.textContent = 'Checking this completed bonus before saving…';
+        if (current())
+          localizedText(lessonStatus, () => t('interface:editionLessons.checkingCompletedBonus'));
         // Each completed lesson owns its captured replay. Opening or finishing
         // another bonus cannot revoke an earlier independently verified result.
         void proofs
@@ -175,21 +270,22 @@ export async function mountEditionLessons({
           .then((proof) => {
             if (disposed) return;
             const durable = persistWithReport(reportLesson, () => proofs.saveVerified(proof));
-            if (!durable)
-              reportLesson(
-                'The optional bonus is complete in this tab. Export learning records before leaving.',
-              );
-            else if (current()) lessonStatus.textContent = 'Optional learning record saved.';
+            if (!durable) reportLesson(() => t('interface:editionLessons.completedInTab'));
+            else if (current())
+              localizedText(lessonStatus, () => t('interface:editionLessons.recordSaved'));
           })
           .catch((error) => {
-            reportLesson(error.message);
+            reportLesson(error.localizedMessage || error.message);
           });
       },
       onClose: () => dialog.close(),
     });
     const title = content.querySelector('h2');
     dialog.setAttribute('aria-labelledby', title.id);
-    dialog.showModal();
+    if (!dialog.open) dialog.showModal();
+    if (fresh) content.querySelector('[data-control]')?.focus({ preventScroll: true });
+    if (!replayEligible && attempt.actions.length && !drafts.isDurable(lesson, identity))
+      reportLesson(() => t('interface:editionLessons.draftInTab'));
   }
   button.onclick = () => {
     const run = getRun();
@@ -201,18 +297,22 @@ export async function mountEditionLessons({
   };
   const section = node('section');
   section.className = 'edition-learning-data';
-  section.append(
-    node('h3', 'Optional learning records'),
-    node('p', 'Learning is a separate bonus. Missions and pictures never depend on completing it.'),
-  );
-  const download = node('button', 'Export optional learning'),
+  const heading = node('h3'),
+    explanation = node('p');
+  localizedText(heading, () => t('interface:editionLessons.recordsHeading'));
+  localizedText(explanation, () => t('interface:editionLessons.separateBonus'));
+  section.append(heading, explanation);
+  const download = node('button'),
     upload = node('input');
+  localizedText(download, () => t('interface:editionLessons.exportRecords'));
   download.type = 'button';
   download.className = 'button secondary';
-  const label = node('label', 'Import matching learning records');
+  const label = node('label'),
+    labelText = node('span');
+  localizedText(labelText, () => t('interface:editionLessons.importMatchingRecords'));
   upload.type = 'file';
   upload.accept = 'application/json,.json';
-  label.append(upload);
+  label.append(labelText, upload);
   section.append(download, label, dataStatus);
   doc.getElementById('settings-panel-data').append(section);
   download.onclick = () => {
@@ -220,10 +320,11 @@ export async function mountEditionLessons({
       new Blob(
         [
           JSON.stringify({
-            format: 'revealline-edition-learning-backup.v1',
+            format: 'revealline-edition-learning-backup.v2',
             editionId: provider.editionId,
             proofs: proofs.exportProofs(),
             recovery: proofs.exportRecovery(),
+            drafts: drafts.exportDrafts(),
           }),
         ],
         { type: 'application/json' },
@@ -242,11 +343,11 @@ export async function mountEditionLessons({
     importRequest = request;
     const current = () => !disposed && importRequest === request && !request.signal.aborted;
     try {
-      dataStatus.textContent = '';
+      localizedText(dataStatus, '');
       const file = upload.files?.[0];
       if (!file) return;
-      dataStatus.textContent = 'Checking learning records…';
-      required(file.size <= 48 * 1024 * 1024, 'Learning backup is too large.');
+      localizedText(dataStatus, () => t('interface:editionLessons.checkingRecords'));
+      requireLocalized(file.size <= 48 * 1024 * 1024, 'errors:editionLearning.backupTooLarge');
       const text = await file.text();
       if (!current()) return;
       const backup = boundedJSON(text, {
@@ -256,26 +357,46 @@ export async function mountEditionLessons({
         maxArray: 216000,
         maxDepth: 40,
       });
-      required(
-        backup.format === 'revealline-edition-learning-backup.v1' &&
-          backup.editionId === provider.editionId,
-        'This learning backup belongs to another edition.',
+      requireLocalized(
+        ['revealline-edition-learning-backup.v1', 'revealline-edition-learning-backup.v2'].includes(
+          backup.format,
+        ) && backup.editionId === provider.editionId,
+        'errors:editionLearning.otherEdition',
+      );
+      exactKeys(
+        backup,
+        backup.format === 'revealline-edition-learning-backup.v2'
+          ? ['format', 'editionId', 'proofs', 'recovery', 'drafts']
+          : ['format', 'editionId', 'proofs', 'recovery'],
+        'optional learning backup',
+      );
+      // Drafts are checked before any completion proof is imported. They never
+      // enter the proof verifier or reward-evidence projection.
+      const checkedDrafts = drafts.inspect(
+        backup.format === 'revealline-edition-learning-backup.v2' ? backup.drafts : [],
       );
       const recovery = proofs.inspectRecovery(backup.recovery);
       const checked = await proofs.inspectProofs(backup.proofs, { signal: request.signal });
       if (!current()) return;
-      required(writer.writable, writer.reason || 'This tab cannot write learning records.');
+      if (!writer.writable) {
+        if (writer.reason) throw new TypeError(writer.reason);
+        throw localizedIssue('errors:editionLearning.cannotWriteRecords');
+      }
       const durable = persistWithReport(reportData, () => {
+        const draftDurable = drafts.import(checkedDrafts);
         proofs.importRecovery(recovery);
-        return proofs.importVerified(checked);
+        return proofs.importVerified(checked) && draftDurable;
       });
       reportData(
         durable
-          ? 'Optional learning records imported.'
-          : 'Learning records are available in this tab. Export them before leaving.',
+          ? () =>
+              checkedDrafts.length
+                ? t('interface:editionLessons.recordsImportedWithDrafts')
+                : t('interface:editionLessons.recordsImported')
+          : () => t('interface:editionLessons.importedInTab'),
       );
     } catch (error) {
-      if (current()) reportData(error.message);
+      if (current()) reportData(error.localizedMessage || error.message);
     } finally {
       if (current()) {
         upload.value = '';
@@ -284,22 +405,41 @@ export async function mountEditionLessons({
     }
   };
   return {
+    rewardEvidence: proofs.rewardEvidence,
+    onRewardEvidenceChange: proofs.onRewardEvidenceChange,
     pictureReady(record) {
-      if (disposed || record.editionId !== provider.editionId) return null;
-      const lesson = provider.lessons.find((entry) => entry.missionId === record.missionId);
-      if (!lesson) return null;
-      const revisit = node('button', 'Optional bonus · revisit this connection');
+      if (disposed || record.editionId !== provider.editionId || record.mode !== 'solo')
+        return null;
+      // Journey pictures retain their composite catalog identity. Resolve that
+      // exact owned binding rather than trusting a display name or bare level ID.
+      // Retained presentations mount their own source and therefore their own pins.
+      const binding = pictureBindings.get(record.missionId);
+      if (
+        !binding ||
+        binding.lesson.missionId !== record.levelId ||
+        !binding.acceptedPictures.has(`${record.difficulty}:${record.gameplayId}`)
+      )
+        return null;
+      const { lesson } = binding;
+      const revisit = node('button');
+      localizedText(revisit, () => t('interface:editionLessons.revisitConnection'));
       revisit.type = 'button';
       revisit.className = 'button secondary';
       revisit.onclick = () => {
         lessonOpener = revisit;
-        openLesson(lesson);
+        openLesson(lesson, null, record.gameplayId);
       };
       return revisit;
     },
     refresh() {
       const run = getRun();
-      if (run?.status === 'won' && getPictureVisible()) seen.add(run);
+      if (run?.status === 'won' && !seen.has(run) && getPictureVisible()) {
+        try {
+          if (simulations.get(run.levelId)?.has(companySimulationIdentity(run))) seen.add(run);
+        } catch {
+          // A foreign or incomplete run cannot expose this edition's activity.
+        }
+      }
       const visible =
         !!run &&
         run.status === 'won' &&
@@ -319,3 +459,9 @@ export async function mountEditionLessons({
     },
   };
 }
+
+const EMPTY_REWARD_EVIDENCE = Object.freeze({
+  revision: 0,
+  learning: Object.freeze([]),
+  durableLearning: Object.freeze([]),
+});

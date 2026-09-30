@@ -2,6 +2,7 @@ import { isAuthoredJourneyRouteId } from '../content-design/mode-href.mjs';
 import { LIBRARY_COLLECTIONS, LIBRARY_LIFECYCLES, LIBRARY_MODES } from './library.mjs';
 
 export const MISSION_LIBRARY_HANDOFF_PARAM = 'library-mission';
+export const MISSION_LIBRARY_INTENT_PARAM = 'library-intent';
 export const MISSION_LIBRARY_STATE_PREFIX = 'revealline.mission-library.selector.v1';
 const CONTROL_CHARACTERS = /[\u0000-\u001f\u007f-\u009f]/u;
 const UNPAIRED_SURROGATE = /[\ud800-\udfff]/u;
@@ -63,6 +64,17 @@ export function readMissionLibraryHandoff(params) {
   return missionId(values[0]);
 }
 
+/** Existing links are explicit Play requests. A mode switch may only select a
+ * row; malformed intent never silently upgrades that request into Play. */
+export function readMissionLibraryIntent(params) {
+  const id = readMissionLibraryHandoff(params),
+    values = params.getAll(MISSION_LIBRARY_INTENT_PARAM);
+  if (!values.length) return 'play';
+  if (!id || values.length !== 1 || !['play', 'select'].includes(values[0]))
+    throw new TypeError('Mission handoff needs one valid intent and an exact mission identity.');
+  return values[0];
+}
+
 /** Independent, finite source navigation for an exact library handoff. Invalid
  * hints fall back normally; they never change the selected destination owner.
  * Token authenticity still belongs to the existing mode-return reader, not here.
@@ -114,12 +126,15 @@ export function missionLibraryHref({
   mode,
   journey,
   missionId: id,
+  intent = 'play',
   sourceJourney,
   returnToken,
 }) {
   modeId(currentMode);
   modeId(mode);
   missionId(id);
+  if (!['play', 'select'].includes(intent) || (intent === 'select' && mode !== 'versus'))
+    throw new TypeError('Select-only mission handoff is supported in Versus.');
   if (!journeyForMode(journey, mode))
     throw new TypeError('Mission handoff needs a registered destination Journey route.');
   if (sourceJourney !== undefined && !isMissionLibrarySourceJourney(sourceJourney, currentMode))
@@ -142,6 +157,7 @@ export function missionLibraryHref({
   );
   target.searchParams.set('journey', journey);
   target.searchParams.set(MISSION_LIBRARY_HANDOFF_PARAM, id);
+  if (intent === 'select') target.searchParams.set(MISSION_LIBRARY_INTENT_PARAM, intent);
   if (sourceJourney !== undefined && currentMode !== mode) {
     target.searchParams.set('return', currentMode);
     target.searchParams.set('journey-return', sourceJourney);

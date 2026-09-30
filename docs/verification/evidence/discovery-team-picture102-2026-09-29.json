@@ -1,0 +1,210 @@
+{
+  "format": "revealline-team-picture-association-continuation-evidence.v1",
+  "publicEligible": false,
+  "qualified": false,
+  "scope": "Local software-only continuation of the exact Team picture association. This records a finite runtime association and actual core/host tests with modeled DOM/Canvas, not new artwork, human, physical-device, performance, deployed-byte or release-promotion approval.",
+  "source": {
+    "head": "db8e45e0e4dcfb9c57a4d942c424ae04ee147b16",
+    "tree": "f8ed1672eaa332d2086eae859324cff70a34a7d0",
+    "workingTreeModified": true,
+    "changedSourceAndTestPins": [
+      {
+        "path": "game/couch/coop-picture-bindings.mjs",
+        "bytes": 4100,
+        "sha256": "9a2f948729a6a3c6c3bb22598fb4060e834b0b55d9fd0da1beb85b456c49a4e0"
+      },
+      {
+        "path": "game/couch/coop-presentation.mjs",
+        "bytes": 23138,
+        "sha256": "e0b540ff564de76e0be7f4c20f58a88a03cabc416fbf0b4e4d7e4ef0cc540752"
+      },
+      {
+        "path": "game/test/coop-picture-bindings.test.mjs",
+        "bytes": 14390,
+        "sha256": "f9b5309291a8533a4d992ebcc7d8f59caf21d0d03c316053381f1df3e92ea44c"
+      },
+      {
+        "path": "game/test/coop-historical-import-picture.test.mjs",
+        "bytes": 16496,
+        "sha256": "fb8f4bcb270a190a9313e01b9cd8658ebfee108173b51555412746aee4f71345"
+      },
+      {
+        "path": "game/test/coop-reviewed-successor-picture.test.mjs",
+        "bytes": 15149,
+        "sha256": "903f885eb9e3fb51976aeca057a7715e848afbd9bbfc91c6bef86f1b89f8a383"
+      }
+    ],
+    "unchangedAdditionalTestPins": [
+      {
+        "path": "game/test/coop-presentation.test.mjs",
+        "bytes": 21663,
+        "sha256": "d50bd82a03ac92abe6c4a661e72fd21dc016a59f539be8cf4d076d7432c08064"
+      },
+      {
+        "path": "game/test/team-result-continuation-host.test.mjs",
+        "bytes": 3189,
+        "sha256": "649a31ce49a35b933f0450389c8a0a49fb42f53a60033cce72c298c40a109b56"
+      }
+    ]
+  },
+  "compiledInputs": [
+    {
+      "path": "authoring/library/fpv-field-kit/production.rltheme",
+      "bytes": 8405354,
+      "sha256": "171c41569a07bb187f1954a0e986fae4b4b57af3340958fe3a0375b33c109495"
+    },
+    {
+      "path": "game/presentation/compiled/manifest.json",
+      "bytes": 29119,
+      "sha256": "82f1fb008cf58706c4667d18389ced47e5859d979123515bf1a1bd52eadda5f2"
+    },
+    {
+      "path": "game/presentation/compiled/runtime.json",
+      "bytes": 1247371,
+      "sha256": "2706697f90141845bad18c9d47bac82ef0648ceb0bf12834e7ee7c07e1e42262"
+    }
+  ],
+  "cause": {
+    "initialCompanyRun": {
+      "tests": 971,
+      "pass": 969,
+      "fail": 2,
+      "cancelled": 0,
+      "skipped": 0,
+      "todo": 0,
+      "duration_ms": 266936.921792,
+      "log": {
+        "name": "discovery-company-current-tests.log",
+        "bytes": 235347,
+        "sha256": "ff781082791c3e68f1273d1a153d8b2783753136d44401466504eddd6d93e9a2",
+        "rawKeptLocal": true
+      }
+    },
+    "focusedBeforeFix": {
+      "tests": 2,
+      "pass": 0,
+      "fail": 2,
+      "cancelled": 0,
+      "skipped": 0,
+      "todo": 0,
+      "duration_ms": 10940.328625,
+      "log": {
+        "name": "discovery-team-result-baseline.log",
+        "bytes": 4506,
+        "sha256": "eaff7e3a7b8aa6c9b32943918bd939d5902fb32380f9df4e6f4af9dcdfb0905f",
+        "rawKeptLocal": true
+      }
+    },
+    "finding": "Compiled presentation selected fpv102 while the finite Team association table selected 100. Both Team result-continuation tests failed with picture unavailable before reading media. Both original files existed and matched their selected hashes; this was an association compatibility defect, not a missing sparse file."
+  },
+  "association": {
+    "currentTheme": {
+      "id": "fpv",
+      "revision": 102
+    },
+    "pack": {
+      "id": "relay-rescue-starter",
+      "revision": 2,
+      "sha256": "51735f71d1ac5c7f9dfe72d3032ea78d48a8113179385132fb4aec03078a32d5"
+    },
+    "collection": null,
+    "originals": [
+      {
+        "levelId": "first-connection",
+        "levelRevision": 2,
+        "levelSha256": "31041ad693f59418fb34e91f6f7bdae4d46fb6294b5e4ba49f8035aab4e79246",
+        "picture": {
+          "slot": "scene.reveal.wide",
+          "assetId": "scene.reveal.wide.field-kit",
+          "assetRevision": 2,
+          "bytes": 52720,
+          "height": 576,
+          "mime": "image/png",
+          "sha256": "53f1206a11a8791892f5c844c0641529acbc2c09c8d558676d0d801d72113850",
+          "width": 1152
+        },
+        "compiledOriginal": {
+          "path": "game/presentation/compiled/assets/53f1206a11a8791892f5c844c0641529acbc2c09c8d558676d0d801d72113850.png",
+          "bytes": 52720,
+          "sha256": "53f1206a11a8791892f5c844c0641529acbc2c09c8d558676d0d801d72113850"
+        },
+        "comparison": "Exact compiled original bytes, SHA-256, image metadata and selected asset revision match the finite binding."
+      },
+      {
+        "levelId": "relay-yard",
+        "levelRevision": 2,
+        "levelSha256": "fcb1014f8b2c60047a2d10e4c0558b9ca03dcfe50c23ad48a5d2dabf9852c2a7",
+        "picture": {
+          "slot": "picture.fpv.adf5c9eea274ba7f",
+          "assetId": "picture.fpv.adf5c9eea274ba7f.field-kit",
+          "assetRevision": 2,
+          "bytes": 38090,
+          "height": 576,
+          "mime": "image/png",
+          "sha256": "d76f309d8385cd5d20fc2fff72b7f3abc19299cccdde767d76dd9f4a4960929d",
+          "width": 1152
+        },
+        "compiledOriginal": {
+          "path": "game/presentation/compiled/assets/d76f309d8385cd5d20fc2fff72b7f3abc19299cccdde767d76dd9f4a4960929d.png",
+          "bytes": 38090,
+          "sha256": "d76f309d8385cd5d20fc2fff72b7f3abc19299cccdde767d76dd9f4a4960929d"
+        },
+        "comparison": "Exact compiled original bytes, SHA-256, image metadata and selected asset revision match the finite binding."
+      }
+    ],
+    "retainedRevisions": [
+      58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80,
+      81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 99, 100
+    ],
+    "explicitlyUnadmittedRevisions": [98, 101, 103],
+    "supportedBindingRows": 86,
+    "historicalPolicyRows": 43,
+    "bounds": {
+      "historicalPolicyMaxRows": 43,
+      "historicalPolicyMaxBytes": 43008,
+      "starterBindingMaxRows": 128
+    },
+    "limits": "Only the finite historical policy row count changes from 42 to 43. Its 42 KiB byte limit and 128 starter-binding row limit remain unchanged. Unknown revisions, themes, collections and altered picture pins remain rejected before reads. Source-stage 101 has no association. No package, media, core offline or deployment cap changes."
+  },
+  "validation": {
+    "focusedCohort": {
+      "tests": 156,
+      "pass": 156,
+      "fail": 0,
+      "cancelled": 0,
+      "skipped": 0,
+      "todo": 0,
+      "duration_ms": 212665.520416,
+      "command": "node --test --test-concurrency=2 game/test/team-result-continuation-host.test.mjs game/test/coop-picture-bindings.test.mjs game/test/coop-historical-import-picture.test.mjs game/test/coop-reviewed-successor-picture.test.mjs game/test/coop-presentation.test.mjs",
+      "suites": [
+        "game/test/coop-picture-bindings.test.mjs",
+        "game/test/coop-historical-import-picture.test.mjs",
+        "game/test/coop-reviewed-successor-picture.test.mjs",
+        "game/test/coop-presentation.test.mjs",
+        "game/test/team-result-continuation-host.test.mjs"
+      ],
+      "log": {
+        "name": "discovery-team-picture102-tests.log",
+        "bytes": 34221,
+        "sha256": "a0a83b5ffffef548fff2d45ac8c1a6d164dcb2b221730d37f48220752ff81c7c",
+        "rawKeptLocal": true
+      }
+    },
+    "covered": [
+      "Unmodified Team final-results Next/Browse/Back continuation cases now pass.",
+      "Current 102 actual host preparation and start use exact accepted originals.",
+      "Every retained 58–97, 99, 100 revision has an exact lease and actual Team host start; old 100 coverage remains.",
+      "Unadmitted 98, 101, future 103 and altered pins fail before media reads.",
+      "The finite 43-policy table is accepted; a 44-row table is rejected.",
+      "Original asset, actor and historical record preservation assertions remain."
+    ],
+    "eslint": "passed for all five changed files",
+    "prettier": "passed for all five changed files",
+    "diffCheck": "passed"
+  },
+  "independentReview": {
+    "scope": "Five-file mapping/parser/test diff and production source closure",
+    "result": "No actionable findings reported by an independent implementation agent. Neither association module is a production recipe fingerprint input; no historical review JSON, producer recipe, compiled media, gameplay identity or simulation rule was changed."
+  },
+  "remaining": "The earlier full company result remains 971 tests with 969 pass and 2 fail. This receipt establishes the 156-test focused correction only; it does not relabel that earlier full run as passing."
+}

@@ -42,7 +42,7 @@ const inventory = {
 const inventoryJSON = JSON.stringify(inventory);
 const admission = {
   id: 'music-01',
-  baseURL: 'https://mekhovov.github.io/revealline-soundtracks-01/',
+  baseURL: 'https://mekhovov.github.io/revealline-soundtracks/',
   inventorySha256: createHash('sha256').update(inventoryJSON).digest('hex'),
 };
 const source = (options = {}) =>
@@ -133,10 +133,10 @@ test('batch admission rejects unsupported prefixes, encoded paths, credentials a
       /admitted/,
     );
   for (const baseURL of [
-    'https://other.github.io/revealline-soundtracks-01/batches/core/',
+    'https://other.github.io/revealline-soundtracks/batches/core/',
     'https://mekhovov.github.io/other/batches/core/',
-    'http://mekhovov.github.io/revealline-soundtracks-01/batches/core/',
-    'https://user@mekhovov.github.io/revealline-soundtracks-01/batches/core/',
+    'http://mekhovov.github.io/revealline-soundtracks/batches/core/',
+    'https://user@mekhovov.github.io/revealline-soundtracks/batches/core/',
   ])
     assert.throws(() => resolveSoundtrackArchives([{ ...admission, baseURL }]), /admitted/);
   assert.equal(
@@ -149,9 +149,9 @@ test('batch admission rejects unsupported prefixes, encoded paths, credentials a
 
 test('unknown archives, foreign owners, hashes, redirects and mismatched inventory facts cannot fetch objects', async () => {
   for (const baseURL of [
-    'https://evil.test/revealline-soundtracks-01/',
-    'https://mekhovov.github.io/revealline-soundtracks-01/../',
-    'https://user@mekhovov.github.io/revealline-soundtracks-01/',
+    'https://evil.test/revealline-soundtracks/',
+    'https://mekhovov.github.io/revealline-soundtracks/../',
+    'https://user@mekhovov.github.io/revealline-soundtracks/',
   ])
     assert.throws(() => resolveSoundtrackArchives([{ ...admission, baseURL }]), /admitted/);
   const calls = [];

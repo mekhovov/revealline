@@ -21,6 +21,7 @@ import {
 } from '../content-design/uniqueness-pilot-player.mjs';
 import { createRun, stepRun, FIXED_DT } from '../core/index.mjs';
 import { createCoop, startCoop } from '../coop/core.mjs';
+import { setLocale, t } from '../i18n/index.mjs';
 
 test('pilot successors own new identities and leave current content and originals untouched', () => {
   const before = JSON.stringify(CURRENT_ART_SOURCES);
@@ -179,4 +180,29 @@ test('the complete generated pilot report matches the canonical CLI byte check',
     [fileURLToPath(new URL('../../scripts/uniqueness-pilot.mjs', import.meta.url)), '--check'],
     { maxBuffer: 1024 * 1024 },
   );
+});
+
+test('generated pilot review owns complete English and Ukrainian live-switch copy', async () => {
+  const html = await fs.readFile(
+    new URL('../../docs/content-offline/pilot.html', import.meta.url),
+    'utf8',
+  );
+  assert.match(html, /data-language-control/u);
+  assert.match(html, /data-i18n="tools:neutralPilot\.report\.heading"/u);
+  assert.match(html, /data-successful-openings="20"/u);
+  assert.match(html, /data-percent=/u);
+  try {
+    setLocale('uk', { persist: false });
+    assert.equal(t('tools:neutralPilot.report.heading'), 'Пілот унікальних місій');
+    assert.match(
+      t('tools:neutralPilot.report.successfulOpenings', { count: 5 }),
+      /5 випробуваних початкових маршрутів/u,
+    );
+    assert.match(
+      t('tools:neutralPilot.report.pilots.horizonTwoBankRace.artBrief'),
+      /канатного порома/u,
+    );
+  } finally {
+    setLocale('en', { persist: false });
+  }
 });

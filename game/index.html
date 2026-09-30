@@ -9,7 +9,7 @@
     <meta name="mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-    <title>Reveal / Line</title>
+    <title>FPV / LINE</title>
     <style>
       html {
         background: #070914;
@@ -41,6 +41,13 @@
         padding: 24px;
         background: #101923;
         border: 2px solid #425563;
+      }
+      #boot-screen .fpv-line-wordmark {
+        display: block;
+        width: min(100%, 510px);
+        aspect-ratio: 5.7;
+        object-fit: cover;
+        object-position: center 42%;
       }
       #boot-screen .launch-signal {
         display: flex;
@@ -107,6 +114,7 @@
     <link rel="stylesheet" data-boot-href="style.css" />
     <link rel="stylesheet" data-boot-href="ui/controller-settings.css" />
     <link rel="stylesheet" data-boot-href="ui/game-shell.css" />
+    <link rel="stylesheet" data-boot-href="ui/optional-practice-panel.css" />
     <link rel="stylesheet" data-boot-href="ui/flight-information-details.css" />
     <link rel="stylesheet" data-boot-href="ui/mode-choice.css" />
     <link rel="stylesheet" data-boot-href="ui/pixel-theme.css" />
@@ -129,14 +137,23 @@
     <link rel="stylesheet" data-boot-href="ui/operation-status.css" />
     <link rel="stylesheet" data-boot-href="ui/menu-appearance.css" />
     <link rel="stylesheet" data-boot-href="ui/handheld-play.css" />
-    <link rel="stylesheet" href="ui/quick-music-controls.css" />
+    <link rel="stylesheet" data-boot-href="ui/quick-music-controls.css" />
     <link rel="stylesheet" data-boot-href="ui/edition-solo.css" />
     <link rel="stylesheet" data-boot-href="ui/edition-play.css" />
+    <link rel="stylesheet" data-boot-href="ui/menu-scenes.css" />
+    <link rel="stylesheet" data-boot-href="ui/native-menu.css" />
+    <link rel="icon" type="image/png" sizes="32x32" href="ui/art/identity/fpv-line/icon-32.png" />
   </head>
   <body class="field-kit">
     <section id="boot-screen" class="launch-screen" aria-labelledby="boot-title">
       <div class="launch-card">
-        <p class="launch-kicker">REVEAL / LINE</p>
+        <p class="launch-kicker fpv-line-brand">
+          <img
+            class="fpv-line-wordmark"
+            src="ui/art/identity/fpv-line/wordmark.png"
+            alt="FPV / LINE"
+          />
+        </p>
         <div class="launch-signal" aria-hidden="true"><i></i><i></i><i></i></div>
         <h1 class="field-kit-display" id="boot-title" data-i18n="interface:findYourLine">
           Find your line.
@@ -211,7 +228,12 @@
         aria-label="Game menu"
         data-i18n-aria-label="interface:gameMenu"
       >
-        ◩ <span>REVEAL / LINE</span>
+        <span class="fpv-line-brand fpv-line-brand--compact"
+          ><img
+            class="fpv-line-wordmark"
+            src="ui/art/identity/fpv-line/wordmark.png"
+            alt="FPV / LINE"
+        /></span>
         <span id="journey-save-badge" class="journey-save-badge" aria-hidden="true" hidden>!</span>
       </button>
       <span id="shell-edition" class="shell-edition"></span>
@@ -279,7 +301,7 @@
           >.
         </li>
         <li data-i18n="interface:launchRevealLineFromItsNewHomeScreenIcon">
-          Launch Reveal / Line from its new Home Screen icon.
+          Launch FPV / LINE from its new Home Screen icon.
         </li>
       </ol>
       <p
@@ -303,7 +325,7 @@
     </dialog>
     <header class="masthead" data-boot-inert inert>
       <a class="wordmark" href="./" data-i18n-rich="interface:revealLine2"
-        ><span class="brand-mark" aria-hidden="true" data-i18n-slot="slot0">◩</span> REVEAL
+        ><span class="brand-mark" aria-hidden="true" data-i18n-slot="slot0">◩</span> FPV
         <span class="slash" data-i18n-slot="slot1">/</span> LINE</a
       >
       <nav>
@@ -1660,6 +1682,23 @@
           <p id="controller-navigation-help"></p>
           <p id="controller-connection-hint" class="micro-note" role="status"></p>
         </details>
+        <label class="field">
+          <input
+            id="controller-trace-enabled"
+            type="checkbox"
+            aria-describedby="controller-trace-session-help"
+          />
+          <span data-i18n="interface:controller.confirmTrace.toggle">
+            Show temporary controller diagnostics
+          </span>
+        </label>
+        <p
+          id="controller-trace-session-help"
+          class="micro-note"
+          data-i18n="interface:controller.confirmTrace.sessionOnly"
+        >
+          Shown only for this session. No input is saved or sent.
+        </p>
         <section
           id="controller-boost-setting"
           class="controller-boost-settings"
@@ -2710,14 +2749,13 @@ No offline check yet.</pre
           FPV FIELD KIT / FLIGHT READY
         </p>
         <h1 id="shell-title" data-i18n-rich="interface:reveal">
-          REVEAL<span data-i18n="interface:line" data-i18n-slot="slot0">/ LINE</span>
+          FPV<span data-i18n="interface:line" data-i18n-slot="slot0">/ LINE</span>
         </h1>
         <nav
           id="shell-title-modes"
           aria-label="Choose play mode"
           data-i18n-aria-label="common:game.chooseMode"
         >
-          <a href="company.html">Company journeys</a>
           <a id="shell-title-versus" href="couch/?return=solo" data-i18n="common:game.couchVersus"
             >Couch Versus</a
           >
@@ -2791,6 +2829,24 @@ No offline check yet.</pre
             data-i18n="common:navigation.settings"
           >
             Settings
+          </button>
+          <button
+            id="shell-home-fpv"
+            type="button"
+            class="button secondary"
+            hidden
+            data-i18n="interface:optionalPractice.fpvGameAction"
+          >
+            FPV flight simulator
+          </button>
+          <button
+            id="shell-home-practice"
+            type="button"
+            class="button secondary"
+            hidden
+            data-i18n="interface:optionalPractice.homeAction"
+          >
+            Flight practice
           </button>
           <button
             id="shell-offline"
@@ -2906,7 +2962,7 @@ No offline check yet.</pre
     >
       <div class="shell-dialog-heading">
         <div>
-          <p class="eyebrow" data-i18n="interface:revealLineMenu">REVEAL LINE / MENU</p>
+          <p class="eyebrow" data-i18n="interface:revealLineMenu">FPV / LINE / MENU</p>
           <h2 id="shell-workshop-title" data-i18n="common:navigation.more">More</h2>
         </div>
         <button
@@ -2963,8 +3019,15 @@ No offline check yet.</pre
             >Review a recorded flight</span
           ></a
         >
-        <a id="shell-community" href="community/" class="button secondary"
-          >Community campaigns <span>Discover, install and play creator editions</span></a
+        <a
+          id="shell-community"
+          href="community/"
+          class="button secondary"
+          data-i18n-rich="interface:creator.communityCard"
+          >Community campaigns
+          <span data-i18n="interface:creator.communityDescription" data-i18n-slot="slot0"
+            >Discover, install and play creator editions</span
+          ></a
         >
         <button id="shell-library" type="button" class="button secondary">
           <span data-i18n="interface:scoresSaves">Scores & saves</span>

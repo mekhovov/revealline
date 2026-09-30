@@ -1,7 +1,11 @@
-import { localizedText } from '../i18n/index.mjs';
+import { localizedText, t } from '../i18n/index.mjs';
 import { mountEditionNavigation } from './edition-navigation.mjs';
 import { mountEditionLessons } from './edition-lessons.mjs';
+import { mountEditionMastery } from './edition-mastery.mjs';
+import { mountEditionRewards } from './edition-rewards.mjs';
+import { mountEditionExpedition } from './edition-expedition.mjs';
 import { mountEditionPlayLayout } from './edition-play-layout.mjs';
+import { editionDisplayName, mountLandingBrand } from './brand-identity.mjs';
 import {
   prepareEditionOffline,
   verifyEditionOffline,
@@ -18,20 +22,38 @@ export async function mountEditionSoloUI({
   version,
   pause,
   getRun,
+  getRunId,
   getRecorder,
   getPictureVisible,
+  getJourneyProfile,
+  getJourneyRevision,
+  getJourneyDurable,
+  getReducedMotion,
+  audioMaster,
+  musicDucker,
+  motionPreferences,
+  onCosmeticBodiesChange,
+  onChooseCosmetic,
+  onRecoverCosmetic,
   report,
   onMissions,
   onEditionChange,
   getSavedPresentation = () => null,
   onPresentationChange,
+  previewSession = null,
 }) {
   const { selection, theme } = provider;
+  let disposed = false;
   mountEditionNavigation({ provider, document: doc, href: win.location.href });
   const node = (tag, text) => {
     const value = doc.createElement(tag);
     if (text !== undefined) value.textContent = text;
     return value;
+  };
+  const copy = (tag, key, values) => {
+    const element = node(tag);
+    localizedText(element, () => t('interface:editionShell.' + key, values));
+    return element;
   };
   const root = doc.documentElement;
   doc.body.dataset.brandId = selection.brand.id;
@@ -46,18 +68,65 @@ export async function mountEditionSoloUI({
     doc.fonts.add(await font.load());
     root.style.setProperty('--brand-font', '"Company Brand", system-ui, sans-serif');
   }
-  doc.title =
-    selection.edition.name === selection.brand.name
-      ? selection.edition.name
-      : `${selection.edition.name} · ${selection.brand.name}`;
+  const currentEdition = (provider.currentCatalog ?? provider.catalog)?.editions?.find(
+    (edition) => edition.id === provider.editionId,
+  );
+  const currentBrand = (provider.currentCatalog ?? provider.catalog)?.brands?.find(
+    (brand) => brand.id === selection.brand.id,
+  );
+  const brandName = currentBrand?.name ?? selection.brand.name;
+  // Current chrome may use a renamed mark around retained gameplay, but only
+  // artwork already present in that receipt's catalog can be requested.
+  const logoAsset = provider.catalog?.assets?.some(
+    (asset) => asset.id === currentBrand?.logoAssetId,
+  )
+    ? currentBrand.logoAssetId
+    : selection.brand.logoAssetId;
+  const displayName = editionDisplayName(
+    currentEdition?.name ?? selection.edition.name,
+    provider.editionId,
+  );
+  doc.title = displayName;
   const color = doc.querySelector('meta[name="theme-color"]');
   if (color) color.content = theme.palette.ink;
   for (const id of ['shell-title', 'landing-title'])
-    if (doc.getElementById(id)) localizedText(doc.getElementById(id), () => selection.edition.name);
+    if (doc.getElementById(id))
+      mountLandingBrand(doc.getElementById(id), { name: displayName, edition: true });
   for (const id of ['shell-title-edition', 'shell-edition'])
-    if (doc.getElementById(id)) localizedText(doc.getElementById(id), () => selection.brand.name);
+    if (doc.getElementById(id)) localizedText(doc.getElementById(id), () => brandName);
   const home = doc.getElementById('shell-home');
-  if (selection.brand.heroAssetId) {
+  const homeContent = home.querySelector('.home-content') ?? home;
+  const editionMenu = doc.getElementById('shell-workshop-dialog') ?? homeContent;
+  const titleEdition = doc.getElementById('shell-title-edition');
+  if (titleEdition && selection.edition.name === selection.brand.name) titleEdition.hidden = true;
+  const previewNotice = previewSession ? node('p') : null;
+  if (previewNotice) {
+    previewNotice.id = 'edition-studio-preview';
+    previewNotice.className = 'completion-reward-save-note';
+    previewNotice.setAttribute('role', 'status');
+    localizedText(previewNotice, () => t('interface:studioPreview.sessionOnly'));
+    (home.querySelector('.home-content') ?? home).prepend(previewNotice);
+  }
+  const droneAidLanding =
+    provider.editionId === 'droneaid-nl-community' && home.classList.contains('native-landing');
+  let disposeLandingWordmark = () => {};
+  const iconAsset = selection.brand.iconAssetId ?? selection.brand.logoAssetId;
+  if (iconAsset) {
+    for (const rel of ['icon', 'apple-touch-icon']) {
+      let icon = doc.querySelector(`link[rel="${rel}"]`);
+      if (!icon && doc.head) {
+        icon = node('link');
+        icon.rel = rel;
+        doc.head.append(icon);
+      }
+      if (icon) {
+        icon.href = provider.assetURL(iconAsset);
+        icon.removeAttribute('sizes');
+      }
+    }
+  }
+  const propeller = logoAsset === 'droneaid-nl-propeller';
+  if (selection.brand.heroAssetId && !home.classList.contains('native-landing')) {
     const hero = node('img');
     hero.id = 'edition-home-art';
     hero.className = 'edition-home-art';
@@ -65,22 +134,59 @@ export async function mountEditionSoloUI({
     hero.alt = '';
     home.prepend(hero);
   }
-  if (selection.brand.logoAssetId)
-    for (const mark of doc.querySelectorAll('.brand-mark')) {
+  if (logoAsset)
+    for (const mark of doc.querySelectorAll('.brand-mark, #shell-menu .fpv-line-brand')) {
       const logo = node('img');
       logo.className = 'edition-brand-logo';
-      logo.src = provider.assetURL(selection.brand.logoAssetId);
-      logo.alt = selection.brand.name;
+      // Compact in-game marks stay still; the landing owns the ambient motion.
+      logo.src = provider.assetURL(logoAsset);
+      logo.alt = brandName;
+      if (mark.classList.contains('fpv-line-brand')) {
+        mark.classList.remove('fpv-line-brand', 'fpv-line-brand--compact');
+        mark.classList.add('edition-compact-logo');
+      }
       mark.replaceChildren(logo);
     }
-  if (selection.brand.logoAssetId) {
+  if (droneAidLanding) {
+    home.dataset.landingIdentity = 'droneaid';
+    const title = doc.getElementById('shell-title');
+    if (title) {
+      const wordmark = node('img');
+      wordmark.className = 'droneaid-landing-wordmark';
+      wordmark.alt = '';
+      wordmark.draggable = false;
+      wordmark.decoding = 'async';
+      wordmark.setAttribute('aria-hidden', 'true');
+      title.dataset.wordmarkLoaded = 'false';
+      const loaded = () => {
+        if (!disposed) title.dataset.wordmarkLoaded = 'true';
+      };
+      const failed = () => {
+        if (!disposed) title.dataset.wordmarkLoaded = 'false';
+      };
+      wordmark.addEventListener('load', loaded);
+      wordmark.addEventListener('error', failed);
+      wordmark.src = new URL('./art/menu-scenes/droneaid-wordmark-light.svg', import.meta.url).href;
+      title.insertBefore(wordmark, title.firstChild);
+      if (wordmark.complete && wordmark.naturalWidth > 0) loaded();
+      disposeLandingWordmark = () => {
+        wordmark.removeEventListener('load', loaded);
+        wordmark.removeEventListener('error', failed);
+        wordmark.remove();
+        delete title.dataset.wordmarkLoaded;
+        delete home.dataset.landingIdentity;
+      };
+    }
+  } else if (logoAsset) {
     const logo = node('img');
     logo.className = 'edition-home-logo';
-    logo.src = provider.assetURL(selection.brand.logoAssetId);
-    logo.alt = selection.brand.name;
+    if (propeller) logo.classList.add('edition-propeller');
+    logo.src = provider.assetURL(logoAsset);
+    logo.alt = brandName;
     (home.querySelector('.home-content') ?? home).prepend(logo);
   }
-  const picker = node('label', 'Company & campaign edition'),
+  const picker = node('label'),
+    pickerTitle = copy('span', 'chooseEdition'),
     select = node('select');
   picker.className = 'field edition-switcher';
   select.id = 'edition-select';
@@ -92,8 +198,9 @@ export async function mountEditionSoloUI({
   }
   select.value = provider.editionId;
   select.disabled = availableEditions.length === 1;
-  picker.append(select);
-  (home.querySelector('.home-content') ?? home).append(picker);
+  picker.append(pickerTitle, select);
+  picker.hidden = availableEditions.length === 1;
+  (doc.getElementById('settings-panel-content') ?? editionMenu).append(picker);
   select.onchange = () => {
     const requested = select.value;
     // This remains the active edition until the shared host has retained the
@@ -102,18 +209,21 @@ export async function mountEditionSoloUI({
     if (requested === provider.editionId) return false;
     return onEditionChange(requested, select);
   };
+  let retainedPanel;
   if (provider.presentationHistory?.length) {
     const retained = node('details'),
-      title = node('summary', 'Original artwork & saved-flight recovery'),
+      title = copy('summary', 'originalArt'),
       choice = node('select'),
-      label = node('label', 'Artwork snapshot');
+      label = node('label');
+    label.append(copy('span', 'snapshot'));
     retained.className = 'edition-about';
+    retainedPanel = retained;
     choice.id = 'edition-presentation-select';
-    const current = node('option', 'Current artwork');
+    const current = copy('option', 'currentArt');
     current.value = '';
     choice.append(current);
     for (const record of provider.presentationHistory) {
-      const option = node('option', `Retained original · ${record.id.slice(0, 12)}`);
+      const option = copy('option', 'retainedOriginal', { revision: record.id.slice(0, 12) });
       option.value = record.id;
       choice.append(option);
     }
@@ -124,20 +234,13 @@ export async function mountEditionSoloUI({
       return onPresentationChange(requested, choice);
     };
     label.append(choice);
-    retained.append(
-      title,
-      node(
-        'p',
-        'Older flights and imports need their exact original campaign and artwork. Opening a retained snapshot keeps the same game and progress; it does not rewrite a save or substitute newer images.',
-      ),
-      label,
-    );
+    retained.append(title, copy('p', 'recoveryExplanation'), label);
     const saved = getSavedPresentation();
     if (
       saved !== provider.authoredPresentationSha256 &&
       provider.presentationHistory.some((item) => item.id === saved)
     ) {
-      const recover = node('button', 'Open artwork matching saved flight');
+      const recover = copy('button', 'recoverSaved');
       recover.type = 'button';
       recover.id = 'edition-recover-presentation';
       recover.className = 'button secondary';
@@ -147,24 +250,20 @@ export async function mountEditionSoloUI({
     }
     if (provider.retainedPresentationId)
       retained.append(
-        node(
-          'p',
-          `This page uses retained original ${provider.retainedPresentationId.slice(0, 12)}. New flights here also use that snapshot. Choose Current artwork to return to the latest campaign presentation.`,
-        ),
+        copy('p', 'retainedExplanation', {
+          revision: provider.retainedPresentationId.slice(0, 12),
+        }),
       );
-    (home.querySelector('.home-content') ?? home).append(retained);
+    // A known saved-flight mismatch remains immediately reachable at home.
+    (retained.open
+      ? homeContent
+      : (doc.getElementById('settings-panel-data') ?? editionMenu)
+    ).append(retained);
   }
   const about = node('details'),
-    aboutTitle = node('summary', 'About this edition & artwork');
+    aboutTitle = copy('summary', 'about');
   about.className = 'edition-about';
-  about.append(
-    aboutTitle,
-    node('p', selection.brand.description),
-    node(
-      'p',
-      'Optional learning uses fictional records. It does not connect to company accounts or award a professional qualification.',
-    ),
-  );
+  about.append(aboutTitle, node('p', selection.brand.description), copy('p', 'learningContext'));
   for (const source of new Map(
     [
       ...(selection.brand.sources ?? []),
@@ -179,11 +278,10 @@ export async function mountEditionSoloUI({
     p.append(link);
     about.append(p);
   }
-  (home.querySelector('.home-content') ?? home).append(about);
+  (doc.getElementById('settings-panel-extras') ?? editionMenu).append(about);
   // Mode controls stay on the common template, but this delivery contains only
   // Solo. The mission library itself derives availability from selected sources.
   for (const id of [
-    'shell-title-modes',
     'shell-mode-choice',
     'shell-team',
     'shell-versus',
@@ -197,10 +295,8 @@ export async function mountEditionSoloUI({
     for (const option of actorStyle.options) option.disabled = option.value !== 'campaign';
   }
   if (doc.getElementById('menu-actor-note'))
-    localizedText(
-      doc.getElementById('menu-actor-note'),
-      () =>
-        'This edition uses its campaign artwork. Gameplay and enemy behavior follow the shared Solo rules.',
+    localizedText(doc.getElementById('menu-actor-note'), () =>
+      t('interface:editionShell.sharedRules'),
     );
   const worlds = doc.getElementById('shell-worlds');
   if (worlds) {
@@ -231,19 +327,66 @@ export async function mountEditionSoloUI({
     getRecorder,
     getPictureVisible,
     report,
+    previewSession,
+  });
+  const mastery = await mountEditionMastery({
+    provider,
+    document: doc,
+    window: win,
+    writer,
+    getRun,
+    getRunId,
+    getRecorder,
+    getJourneyProfile,
+    getJourneyRevision,
+    getJourneyDurable,
+    previewSession,
+    report,
+  });
+  const rewards = await mountEditionRewards({
+    provider,
+    document: doc,
+    window: win,
+    writer,
+    pause,
+    getRun,
+    getJourneyProfile,
+    getJourneyRevision,
+    getJourneyDurable,
+    getLearningEvidence: lessons.rewardEvidence,
+    getMasteryEvidence: mastery.rewardEvidence,
+    motionPreferences,
+    onCosmeticBodiesChange,
+    onChooseCosmetic,
+    onRecoverCosmetic,
+    getReducedMotion,
+    audioMaster,
+    musicDucker,
+    previewSession,
+  });
+  const stopLearningRewards = lessons.onRewardEvidenceChange(() => rewards.refresh());
+  const stopMasteryRewards = mastery.onRewardEvidenceChange(() => rewards.refresh());
+  const expedition = mountEditionExpedition({
+    provider,
+    document: doc,
+    window: win,
+    getJourneyProfile,
+    getJourneyRevision,
+    getRewards: () => rewards.snapshot?.(),
   });
   const legacy = node('section');
   try {
-    const raw = (win.localStorage ?? globalThis.localStorage).getItem(provider.legacySessionKey);
+    const raw = (previewSession?.storage ?? win.localStorage ?? globalThis.localStorage).getItem(
+      provider.legacySessionKey,
+    );
     if (raw) {
-      legacy.append(
-        node('h3', 'Earlier preview save retained'),
-        node(
-          'p',
-          'This edition now uses the full Solo game. Its earlier preview save uses different pinned rules and remains untouched. Export it for recovery with the matching earlier preview.',
-        ),
-      );
-      const exportOld = node('button', 'Export earlier preview save');
+      const legacyHeading = node('h3'),
+        legacyExplanation = node('p');
+      localizedText(legacyHeading, () => t('interface:editionSolo.legacyHeading'));
+      localizedText(legacyExplanation, () => t('interface:editionSolo.legacyExplanation'));
+      legacy.append(legacyHeading, legacyExplanation);
+      const exportOld = node('button');
+      localizedText(exportOld, () => t('interface:editionSolo.exportLegacy'));
       exportOld.type = 'button';
       exportOld.className = 'button secondary';
       exportOld.onclick = () => {
@@ -258,17 +401,16 @@ export async function mountEditionSoloUI({
       doc.getElementById('settings-panel-data').append(legacy);
     }
   } catch {
-    report(
-      'Earlier preview storage could not be read. Existing saved records have not been changed.',
-    );
+    report(t('errors:editionSolo.legacyStorageUnreadable'));
   }
-  let disposed = false;
   const offline = node('section');
   offline.className = 'edition-offline';
-  if (root.dataset.editionId && version !== 'DEV') {
-    const prepare = node('button', 'Prepare this edition for offline play'),
-      install = node('button', 'Use this edition in the installed app'),
+  if (!previewSession && root.dataset.editionId && version !== 'DEV') {
+    const prepare = node('button'),
+      install = node('button'),
       status = node('p');
+    localizedText(prepare, () => t('interface:editionSolo.prepareOffline'));
+    localizedText(install, () => t('interface:downloads.useEdition'));
     prepare.type = install.type = 'button';
     prepare.className = install.className = 'button secondary';
     install.disabled = true;
@@ -283,24 +425,24 @@ export async function mountEditionSoloUI({
           version,
           onStatus: (value) => {
             if (!disposed)
-              status.textContent =
+              localizedText(status, () =>
                 value.status === 'downloading'
-                  ? 'Downloading and checking this edition…'
-                  : 'Verifying the saved files…';
+                  ? t('interface:editionSolo.downloading')
+                  : t('interface:editionSolo.verifying'),
+              );
           },
         });
         if (disposed) return;
         if (checked.status === 'waiting') {
-          status.textContent =
-            'Close this edition’s tabs and reopen it to activate the checked update.';
+          localizedText(status, () => t('interface:editionSolo.activateCheckedUpdate'));
           return;
         }
         await verifyEditionOffline({ editionId: provider.editionId, version });
         if (disposed) return;
-        status.textContent = 'This edition is verified for offline play.';
+        localizedText(status, () => t('interface:editionSolo.offlineVerified'));
         install.disabled = false;
       } catch (error) {
-        if (!disposed) status.textContent = error.message;
+        if (!disposed) localizedText(status, error.message);
       } finally {
         if (!disposed) prepare.disabled = false;
       }
@@ -309,29 +451,45 @@ export async function mountEditionSoloUI({
       install.disabled = true;
       try {
         await selectPreparedEdition({ editionId: provider.editionId, version });
-        if (!disposed)
-          status.textContent =
-            'The installed launcher will open this edition. Its previous release is retained.';
+        if (!disposed) localizedText(status, () => t('interface:downloads.activationReady'));
       } catch (error) {
-        if (!disposed) status.textContent = error.message;
+        if (!disposed) localizedText(status, error.message);
       } finally {
         if (!disposed) install.disabled = false;
       }
     };
     offline.append(prepare, install, status);
-    doc.getElementById('settings-panel-data').append(offline);
+    (
+      doc.getElementById('settings-panel-content') ?? doc.getElementById('settings-panel-data')
+    ).append(offline);
   }
   return {
-    refresh: lessons.refresh,
+    refresh() {
+      lessons.refresh();
+      mastery.refresh();
+      rewards.refresh();
+      expedition.refresh();
+    },
     pictureReady: lessons.pictureReady,
+    cosmeticBodies: rewards.cosmeticBodies,
+    closeResultDetails: rewards.closeResultDetails,
     dispose() {
+      if (disposed) return;
       disposed = true;
+      stopLearningRewards();
+      stopMasteryRewards();
+      disposeLandingWordmark();
       lessons.dispose();
+      mastery.dispose();
+      rewards.dispose();
+      expedition.dispose();
       typeof layout === 'function' ? layout() : layout.disconnect?.();
       picker.remove();
       about.remove();
+      retainedPanel?.remove();
       offline.remove();
       legacy.remove();
+      previewNotice?.remove();
     },
   };
 }

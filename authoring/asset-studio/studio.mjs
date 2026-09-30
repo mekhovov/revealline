@@ -6,6 +6,7 @@ import {
   formatNumber,
 } from '../../game/i18n/index.mjs';
 import { assetStudioErrorMessage } from './error-copy.mjs';
+import { mountRewardAssetExport } from '../../game/studio/reward-asset-export.mjs';
 import { createStudioDownload } from './download.mjs';
 import { isTeamPreviewScenarioAvailable } from './team-preview-fixture.mjs';
 import {
@@ -68,6 +69,7 @@ let working = { document: createDefaultThemeBundle(), assets: new Map() },
   saved = working,
   generation = 0,
   storageReady = false;
+let assetHandoffExport = null;
 let selected = working.document.slots[0].id,
   pending = null,
   undo = [],
@@ -107,12 +109,16 @@ document.querySelectorAll('[data-studio-startup-disabled]').forEach((control) =>
   control.disabled = false;
   control.removeAttribute('data-studio-startup-disabled');
 });
-let operationFocus = null;
+let operationFocus = null,
+  invalidOperationFocus = null;
 const operations = createStudioOperations({
   target: $('studio-status'),
   cancelButton: $('cancel-studio-operation'),
   setBusy(value) {
-    if (value) operationFocus = document.activeElement;
+    if (value) {
+      operationFocus = document.activeElement;
+      invalidOperationFocus = null;
+    }
     // Escape and preview observation controls stay outside these mutation regions.
     document
       .querySelectorAll(
@@ -126,13 +132,16 @@ const operations = createStudioOperations({
     // Preserve the ordinary return owner on errors; only a consumed Stage
     // advances to the next available authoring action.
     const returnTarget =
-      operationFocus === $('stage-asset') && operationFocus.disabled
+      invalidOperationFocus ||
+      (operationFocus === $('stage-asset') && operationFocus.disabled
         ? $('save-workspace')
-        : operationFocus;
+        : operationFocus);
     if (
       !value &&
       document.hasFocus() &&
-      [document.body, $('cancel-studio-operation')].includes(document.activeElement) &&
+      [document.body, $('cancel-studio-operation'), operationFocus].includes(
+        document.activeElement,
+      ) &&
       returnTarget?.isConnected &&
       !returnTarget.disabled
     )
@@ -324,6 +333,7 @@ function refresh() {
   updateCollectionCount();
 }
 function refreshInspector() {
+  assetHandoffExport?.reset();
   const slot = currentSlot(),
     view = resolved(),
     asset = view.assets[slot.id];
@@ -607,6 +617,20 @@ function fileMime(file) {
   );
 }
 const preparedDownload = createStudioDownload({ document, target: $('prepared-download') });
+assetHandoffExport = mountRewardAssetExport({
+  container: $('asset-history').parentElement,
+  getOriginal() {
+    requireSettled();
+    const asset = resolved().assets[selected];
+    if (!asset?.file) throw new Error(t('tools:fileBytesAreUnavailable'));
+    return {
+      blob: working.assets.get(asset.file.sha256),
+      sha256: asset.file.sha256,
+      mime: asset.file.mime,
+      name: `${asset.id}-${asset.revision}`,
+    };
+  },
+});
 function download(blob, filename) {
   if (!blob) {
     report(new Error(t('tools:fileBytesAreUnavailable')));
@@ -912,7 +936,9 @@ async function validatePending(geometryOnly = false, task, rotorAnchors = null) 
   if (!geometryOnly) {
     for (const id of ['asset-creator', 'asset-source', 'asset-license'])
       if (!$(id).value.trim()) {
-        $(id).focus();
+        // The operation has made this panel inert. Defer the correction target
+        // until unlock, which also checks foreground and current focus ownership.
+        invalidOperationFocus = $(id);
         throw new Error(t('tools:enterTheActualCreatorSourceAndLicenseRightsStatement'));
       }
     asset.description = $('asset-description').value.trim() || currentSlot().label;
@@ -1385,6 +1411,7 @@ $('load-release').onclick = () =>
   });
 window.addEventListener('pagehide', (event) => {
   rememberView();
+  assetHandoffExport?.reset();
   copyRequest++;
   if (event.persisted) {
     operations.cancel();
@@ -1396,6 +1423,7 @@ window.addEventListener('pagehide', (event) => {
   }
   for (const id of ['current-preview', 'draft-preview']) $(id).previewCleanup?.();
   if (!event.persisted) {
+    assetHandoffExport?.dispose();
     rotorControls.dispose();
     auditionLifecycle.dispose();
     studioGuide.dispose();

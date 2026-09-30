@@ -6,6 +6,7 @@ import { Document, Events } from './helpers/couch-dom.mjs';
 import { entryScenario } from '../playground/model.mjs';
 import { authoritativeCheckpoint } from '../replay.mjs';
 import { attachControllerPracticeExit } from '../ui/controller-practice-exit.mjs';
+import { CONTROLLER_PREVIEW_FORMAT } from '../ui/controller-preview.mjs';
 
 function key(page, value, extra = {}) {
   const target = page.doc.activeElement;
@@ -52,6 +53,9 @@ async function embeddedPractice(t) {
     search: `?practice=1&controller-preview=1&controller-session=${session}`,
     parentWindow: parent,
     previewStorage: memoryStorage({ 'revealline.playground.current': JSON.stringify(scenario) }),
+    browserSetup: ({ window }) => {
+      window.name = 'revealline-controller-practice';
+    },
   });
   const frame = parentDoc.createElement('iframe'),
     mission = parentDoc.createElement('select'),
@@ -96,12 +100,14 @@ async function embeddedPractice(t) {
       page.win.emit('blur', { bubbles: false });
     };
   }
-  let releases = 0;
+  let releases = 0,
+    currentSession = session,
+    ready = true;
   const handoff = attachControllerPracticeExit({
     frame,
     document: parentDoc,
-    getSession: () => session,
-    isReady: () => true,
+    getSession: () => currentSession,
+    isReady: () => ready,
     getTarget: (backward) => (backward ? focusGame : mission),
     releaseInputs: () => {
       releases++;
@@ -115,6 +121,10 @@ async function embeddedPractice(t) {
     mission,
     focusGame,
     calls,
+    parent,
+    session,
+    setSession: (value) => (currentSession = value),
+    setReady: (value) => (ready = value),
     get releases() {
       return releases;
     },
@@ -123,6 +133,7 @@ async function embeddedPractice(t) {
 
 test('repeated forced Pause keeps the chosen menu action after Settings closes', async (t) => {
   const page = await soloPage(t);
+  assert.equal(page.$('controller-practice-return'), null);
   await startCut(page);
   page.$('pause-button').click();
   const run = page.rendered.run,
@@ -147,6 +158,97 @@ test('repeated forced Pause keeps the chosen menu action after Settings closes',
   assert.deepEqual(page.errors, []);
 });
 
+test('practice controller Return commits on release through the registered parent boundary', async (t) => {
+  const f = await embeddedPractice(t),
+    { page } = f;
+  await startCut(page);
+  let now = 1000,
+    sequence = 0;
+  const previous = Object.getOwnPropertyDescriptor(performance, 'now');
+  Object.defineProperty(performance, 'now', { configurable: true, value: () => now });
+  page.win.performance = { now: () => now };
+  t.after(() =>
+    previous ? Object.defineProperty(performance, 'now', previous) : delete performance.now,
+  );
+  const buttons = Array(16).fill(false);
+  const tick = () => {
+    now += 20;
+    page.win.emit('message', {
+      source: f.parent,
+      origin: 'http://localhost',
+      data: {
+        format: CONTROLLER_PREVIEW_FORMAT,
+        session: f.session,
+        sequence: ++sequence,
+        pad: { index: 0, connected: true, axes: [0, 0, 0, 0], buttons: [...buttons] },
+      },
+    });
+    page.frame(20);
+  };
+  const press = (index, held) => {
+    buttons[index] = held;
+    tick();
+  };
+  tick();
+  tick();
+  press(9, true);
+  press(9, false);
+  assert.equal(page.$('game-overlay').dataset.kind, 'pause');
+  const run = page.rendered.run,
+    checkpoint = authoritativeCheckpoint(run),
+    profile = new Map(page.storage.map);
+  for (
+    let count = 0;
+    count < 32 && page.doc.activeElement.id !== 'controller-practice-return';
+    count++
+  ) {
+    press(13, true);
+    press(13, false);
+  }
+  assert.equal(page.doc.activeElement.id, 'controller-practice-return');
+  press(0, true);
+  assert.equal(f.parentDoc.activeElement, f.frame, 'Held Confirm cannot leave practice.');
+  assert.equal(f.releases, 0);
+  press(0, false);
+  assert.equal(f.parentDoc.activeElement, f.mission);
+  assert.equal(f.releases, 1);
+  unchangedPaused(page, run, checkpoint);
+  assert.deepEqual(page.storage.map, profile);
+  assert.deepEqual(page.errors, []);
+  page.win.emit('pagehide', { persisted: false });
+  assert.equal(page.$('controller-practice-return'), null);
+});
+
+test('practice Return preserves stale-session rejection and the shell uses the same checked action', async (t) => {
+  const f = await embeddedPractice(t),
+    { page } = f;
+  await startCut(page);
+  page.$('pause-button').click();
+  const run = page.rendered.run,
+    checkpoint = authoritativeCheckpoint(run),
+    profile = new Map(page.storage.map);
+  f.setSession('00000000000000000000000000000000');
+  page.$('controller-practice-return').focus();
+  page.$('controller-practice-return').click();
+  assert.equal(f.parentDoc.activeElement, f.frame);
+  assert.equal(f.releases, 0);
+  unchangedPaused(page, run, checkpoint);
+  f.setSession(f.session);
+  f.setReady(false);
+  page.$('controller-practice-return').click();
+  assert.equal(f.parentDoc.activeElement, f.frame);
+  assert.equal(f.releases, 0);
+  f.setReady(true);
+  page.$('shell-menu').focus();
+  key(page, 'Enter');
+  assert.equal(f.parentDoc.activeElement, f.mission);
+  assert.equal(f.releases, 1);
+  assert.equal(page.$('shell-home').open, false);
+  unchangedPaused(page, run, checkpoint);
+  assert.deepEqual(page.storage.map, profile);
+  assert.deepEqual(page.errors, []);
+});
+
 test('paused Controller practice exits both boundaries through the real app blur handler', async (t) => {
   const f = await embeddedPractice(t),
     { page } = f;
@@ -157,7 +259,7 @@ test('paused Controller practice exits both boundaries through the real app blur
     pausedTime = run.time,
     profile = new Map(page.storage.map);
   for (const [id, backward, target] of [
-    ['overlay-menu', false, f.mission],
+    ['controller-practice-return', false, f.mission],
     ['shell-menu', true, f.focusGame],
   ]) {
     page.$(id).focus();

@@ -86,6 +86,30 @@ test('published Solo materializes only Horizon and preserves full navigation, ca
   }
 });
 
+test('published chapters load online without an offline preparation integration', async () => {
+  const fetched = [];
+  const host = await createSoloRouteHost(route, {
+    themes,
+    fetchAsset: async (path) => {
+      fetched.push(path);
+      return transport(path);
+    },
+  });
+  try {
+    for (const descriptor of route.navigation.chapters) {
+      const mission = host.catalog.missions.find((item) => item.packId === descriptor.packId);
+      assert(mission, `Published chapter ${descriptor.packId} must have a mission`);
+      await host.ensureMission(mission);
+      const expected = original.select(original.catalog.find(mission.id), 'standard');
+      assert.deepEqual(host.select(mission, 'standard'), expected);
+      await host.ensureExecution(expected.executionKey);
+    }
+    assert.equal(fetched.length, route.navigation.chapters.length);
+  } finally {
+    host.preparer.dispose();
+  }
+});
+
 test('chapter visual identity retains original whole-project authority for saved pins and replays', async () => {
   const host = await createSoloRouteHost(route, {
     themes,

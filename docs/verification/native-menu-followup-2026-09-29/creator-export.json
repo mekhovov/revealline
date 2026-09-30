@@ -1,0 +1,14 @@
+{
+  "verifiedAt": "2026-09-29T01:23:48.485Z",
+  "sourceBase": "10f9bf21e",
+  "source": "working follow-up batch",
+  "artifact": "creation-5d1c54fd-5a08-4fe6-83ef-f2a4b0e6dcb2.rlpack",
+  "bytes": 1464809,
+  "sha256": "dfb5c0741215b752142e66d44116c240d3a35fe39daae85c75b057b1ae174974",
+  "format": "revealline-content-bundle.v1",
+  "editionId": "a3ed86f46295e404f10af8f5eb6218ed1e7d03895afc46f919e9127313af6d49",
+  "assets": 1,
+  "imagesDecoded": 1,
+  "validation": "current importCreatorBundle, exact route verification and ImageIO full pixel decode",
+  "inputWrites": false
+}

@@ -240,13 +240,20 @@ export function createPresentationHost({
   decodeImage = browserDecode,
   cropImage = cropBitmap,
   document = globalThis.document,
+  skipTitleArtwork = false,
   createObjectURL = (blob) => URL.createObjectURL(blob),
   revokeObjectURL = (url) => URL.revokeObjectURL(url),
   fontFactory = (name, bytes, descriptors) => new FontFace(name, bytes, descriptors),
 } = {}) {
   required(['full', 'actors'].includes(profile), 'Use a registered presentation host profile.');
   const loadsSlot = (id, asset) =>
-    profile === 'full' ? visibleSlot(id, asset) : actorSlots.has(id) && asset.kind === 'image';
+    profile === 'full'
+      ? visibleSlot(id, asset) &&
+        !(
+          (id === 'screen.title.background' || id === 'screen.title.portrait') &&
+          (skipTitleArtwork || document?.querySelector?.('.native-landing'))
+        )
+      : actorSlots.has(id) && asset.kind === 'image';
   const manifestPath = presentationManifestPath(retainedManifestSha256);
   const base = new URL(baseURL);
   required(
@@ -413,12 +420,12 @@ export function createPresentationHost({
       const file = asset.file,
         frame = asset.geometry.frame;
       required(
-        ['image/png', 'image/jpeg'].includes(file.mime) &&
+        ['image/png', 'image/jpeg', 'image/webp'].includes(file.mime) &&
           frame.x === 0 &&
           frame.y === 0 &&
           frame.width === file.width &&
           frame.height === file.height,
-        'A picture original requires its complete PNG/JPEG frame.',
+        'A picture original requires its complete PNG/JPEG/WebP frame.',
       );
       const controller = new AbortController(),
         abort = () => controller.abort();

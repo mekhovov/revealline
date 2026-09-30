@@ -1,6 +1,8 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { attachFullscreen } from '../ui/fullscreen.mjs';
+import { getLocale, setLocale } from '../i18n/index.mjs';
+import { Document } from './helpers/couch-dom.mjs';
 
 class Target {
   listeners = new Map();
@@ -252,3 +254,156 @@ for (const outcome of ['resolve', 'reject']) {
     assert.equal(doc.listeners.size, 0);
   });
 }
+
+test('landing and Settings share one pending browser request and follow native Escape', async (t) => {
+  const landing = new Button(),
+    settings = new Button(),
+    doc = fullscreenDocument();
+  const gate = deferred();
+  let requests = 0;
+  doc.documentElement.requestFullscreen = () => {
+    requests++;
+    return gate.promise;
+  };
+  const detachLanding = attachFullscreen(landing, doc),
+    detachSettings = attachFullscreen(settings, doc),
+    detachExistingHost = attachFullscreen(settings, doc);
+  t.after(() => {
+    detachLanding();
+    detachSettings();
+    detachExistingHost();
+  });
+  const first = landing.emit('click');
+  await settings.emit('click');
+  await landing.emit('click');
+  assert.equal(requests, 1, 'different controls and repeated Enter share the pending operation');
+  doc.fullscreenElement = doc.documentElement;
+  await doc.emit('fullscreenchange');
+  gate.resolve();
+  await first;
+  for (const button of [landing, settings]) {
+    assert.equal(button.getAttribute('aria-pressed'), 'true');
+    assert.equal(button.getAttribute('aria-label'), 'Exit fullscreen');
+  }
+  // Escape is owned by the browser; no game menu event must fabricate this state.
+  doc.fullscreenElement = null;
+  await doc.emit('fullscreenchange');
+  assert.equal(landing.getAttribute('aria-pressed'), 'false');
+  assert.equal(settings.getAttribute('aria-label'), 'Enter fullscreen');
+  detachSettings();
+  assert.equal(settings.listeners.size, 1, 'the original host still owns its registration');
+  detachExistingHost();
+  assert.equal(settings.listeners.size, 0);
+  assert.equal(doc.listeners.size, 1, 'the landing keeps one shared fullscreen listener');
+  detachLanding();
+  assert.equal(doc.listeners.size, 0);
+});
+
+test('mirrored controls expose the same denied request without claiming fullscreen succeeded', async (t) => {
+  const landing = new Button(),
+    settings = new Button(),
+    doc = fullscreenDocument();
+  const states = [];
+  doc.documentElement.requestFullscreen = async () => {
+    throw new TypeError('No transient activation');
+  };
+  t.after(attachFullscreen(landing, doc, { onState: (state) => states.push(state) }));
+  t.after(attachFullscreen(settings, doc));
+  await landing.emit('click');
+  assert.equal(doc.fullscreenElement, null);
+  assert.equal(landing.getAttribute('aria-pressed'), 'false');
+  assert.equal(settings.getAttribute('aria-pressed'), 'false');
+  assert.equal(landing.title, settings.title);
+  assert.match(states.at(-1).message, /unavailable/);
+});
+
+test('locale changes refresh every registered label and status without another browser request', async (t) => {
+  const locale = getLocale(),
+    doc = fullscreenDocument(),
+    landing = new Button(),
+    settings = new Button();
+  t.after(() => setLocale(locale));
+  t.after(attachFullscreen(landing, doc));
+  t.after(attachFullscreen(settings, doc));
+  await setLocale('uk');
+  assert.equal(landing.getAttribute('aria-label'), 'На повний екран');
+  assert.equal(settings.getAttribute('aria-label'), 'На повний екран');
+  assert.equal(doc.fullscreenElement, null);
+});
+
+test('document teardown releases shared registrations while a retained page keeps its owner', async () => {
+  const doc = fullscreenDocument(),
+    win = new Target(),
+    landing = new Button(),
+    settings = new Button();
+  doc.defaultView = win;
+  attachFullscreen(landing, doc);
+  attachFullscreen(settings, doc);
+  win.listeners.get('pagehide')({ persisted: true });
+  assert.equal(landing.listeners.size, 1);
+  win.listeners.get('pagehide')({ persisted: false });
+  assert.equal(landing.listeners.size, 0);
+  assert.equal(settings.listeners.size, 0);
+  assert.equal(doc.listeners.size, 0);
+  assert.equal(win.listeners.size, 0);
+});
+
+test('landing Escape never takes ownership of gameplay, Settings or a hidden menu', async (t) => {
+  const doc = new Document();
+  doc.parentNode = doc.defaultView;
+  const landing = doc.createElement('section'),
+    button = doc.createElement('button'),
+    outside = doc.createElement('button');
+  landing.append(button);
+  doc.body.append(landing, outside);
+  doc.fullscreenEnabled = true;
+  doc.fullscreenElement = doc.documentElement;
+  doc.documentElement.requestFullscreen = async () => {};
+  let exits = 0;
+  doc.exitFullscreen = async () => {
+    exits++;
+  };
+  t.after(attachFullscreen(button, doc, { escapeRoot: landing }));
+  outside.focus();
+  assert.equal(outside.emit('keydown', { key: 'Escape' }).defaultPrevented, false);
+  button.focus();
+  landing.hidden = true;
+  assert.equal(button.emit('keydown', { key: 'Escape' }).defaultPrevented, false);
+  landing.hidden = false;
+  doc.fullscreenElement = null;
+  assert.equal(button.emit('keydown', { key: 'Escape' }).defaultPrevented, false);
+  assert.equal(exits, 0);
+});
+
+test('landing Escape during a pending entrance exits once after that request settles', async (t) => {
+  const doc = new Document();
+  doc.parentNode = doc.defaultView;
+  const landing = doc.createElement('section'),
+    button = doc.createElement('button');
+  landing.append(button);
+  doc.body.append(landing);
+  doc.fullscreenEnabled = true;
+  const gate = deferred();
+  doc.documentElement.requestFullscreen = () => {
+    doc.fullscreenElement = doc.documentElement;
+    return gate.promise;
+  };
+  let exits = 0;
+  doc.exitFullscreen = async () => {
+    exits++;
+    doc.fullscreenElement = null;
+    doc.emit('fullscreenchange');
+  };
+  t.after(attachFullscreen(button, doc, { escapeRoot: landing }));
+  button.focus();
+  button.click();
+  assert.equal(button.emit('keydown', { key: 'Escape', repeat: false }).defaultPrevented, true);
+  assert.equal(button.emit('keydown', { key: 'Escape', repeat: true }).defaultPrevented, true);
+  assert.equal(exits, 0, 'the current browser operation retains its single owner');
+  gate.resolve();
+  await Promise.resolve();
+  await Promise.resolve();
+  assert.equal(exits, 1);
+  assert.equal(doc.fullscreenElement, null);
+  assert.equal(button.emit('keyup', { key: 'Escape' }).defaultPrevented, true);
+});

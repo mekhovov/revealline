@@ -2,12 +2,9 @@ import assert from 'node:assert/strict';
 import test from 'node:test';
 import {
   ONLINE_SOUNDTRACK_CATALOGUE_URL,
-  ONLINE_SOUNDTRACK_DIRECTORY_URL,
   fetchOnlineSoundtrackCatalogue,
-  fetchOnlineSoundtrackCatalogues,
-  fetchOnlineSoundtrackDirectory,
+  fetchVerifiedOnlineSoundtrack,
   resolveOnlineSoundtrackCatalogue,
-  resolveOnlineSoundtrackDirectory,
 } from '../online-soundtrack-catalogue.mjs';
 import { setLocale } from '../i18n/index.mjs';
 import { soundtrackErrorText } from '../ui/soundtrack-error-copy.mjs';
@@ -26,46 +23,29 @@ const track = {
   fileName: 'song.mp3',
   archiveId: 'creator-album',
   collection: 'Creator album',
+  collections: ['Creator album', 'Metal action'],
   status: 'licensed-preview',
   listeningApproval: 'not-reviewed',
   gameCatalogueAdmission: false,
   contentId: true,
   recordingModeEligible: false,
-  audio: { path: `batches/creator-album/objects/${sha256}.mp3`, bytes: 1234, sha256 },
+  audio: {
+    path: `https://github.com/mekhovov/revealline-soundtracks/releases/download/audio-test/${sha256}.mp3`,
+    bytes: 1234,
+    sha256,
+  },
   aliases: [],
 };
 const catalogue = {
   format: 'revealline-public-soundtrack-catalogue.v1',
   archive: {
-    id: 'revealline-soundtracks-01',
-    baseURL: 'https://mekhovov.github.io/revealline-soundtracks-01/',
+    id: 'revealline-soundtracks',
+    baseURL: 'https://mekhovov.github.io/revealline-soundtracks/',
   },
   sources: [],
   counts: { declaredTracks: 1, uniqueRecordings: 1, duplicateAliases: 0, audioBytes: 1234 },
   tracks: [track],
 };
-const directory = {
-  format: 'revealline-public-soundtrack-directory.v1',
-  catalogues: [
-    {
-      id: 'revealline-soundtracks-01',
-      url: ONLINE_SOUNDTRACK_CATALOGUE_URL,
-      baseURL: 'https://mekhovov.github.io/revealline-soundtracks-01/',
-      required: true,
-    },
-  ],
-};
-
-function response(url, value, { status = 200, redirected = false } = {}) {
-  const bytes = new TextEncoder().encode(JSON.stringify(value));
-  return {
-    status,
-    redirected,
-    url,
-    headers: new Headers({ 'content-length': String(bytes.byteLength) }),
-    body: new Response(bytes).body,
-  };
-}
 
 test('online catalogue creates a bounded immutable remote playback entry', () => {
   const resolved = resolveOnlineSoundtrackCatalogue({
@@ -75,12 +55,110 @@ test('online catalogue creates a bounded immutable remote playback entry', () =>
   assert.equal(resolved.tracks[0].id, `online.${sha256}`);
   assert.equal(
     resolved.tracks[0].url,
-    `https://mekhovov.github.io/revealline-soundtracks-01/batches/creator-album/objects/${sha256}.mp3`,
+    `https://github.com/mekhovov/revealline-soundtracks/releases/download/audio-test/${sha256}.mp3`,
   );
   assert(Object.isFrozen(resolved));
   assert(Object.isFrozen(resolved.tracks));
   assert.equal(resolved.tracks[0].contentId, true);
   assert.equal(resolved.tracks[0].recordingModeEligible, false);
+});
+
+test('online catalogue preserves an exact original filename with leading whitespace', () => {
+  const value = resolveOnlineSoundtrackCatalogue({
+    ...catalogue,
+    tracks: [{ ...track, fileName: ' Song.mp3' }],
+  }).tracks[0];
+  assert.equal(value.fileName, ' Song.mp3');
+});
+
+test('online catalogue validates but excludes unlisted review recordings from game queues', () => {
+  const publicTrack = {
+    ...track,
+    collections: ['Base Game Playlist'],
+  };
+  const heldHash = 'b'.repeat(64);
+  const held = {
+    ...track,
+    id: 'creator.held-song',
+    collections: ['Base Game Review'],
+    visibility: 'review-only',
+    audio: {
+      ...track.audio,
+      path: `https://github.com/mekhovov/revealline-soundtracks/releases/download/audio-test/${heldHash}.mp3`,
+      sha256: heldHash,
+    },
+  };
+  const resolved = resolveOnlineSoundtrackCatalogue({
+    ...catalogue,
+    counts: {
+      declaredTracks: 2,
+      uniqueRecordings: 2,
+      duplicateAliases: 0,
+      audioBytes: publicTrack.audio.bytes + held.audio.bytes,
+    },
+    tracks: [publicTrack, held],
+  });
+  assert.equal(resolved.tracks.length, 1);
+  assert.equal(resolved.tracks[0].archiveTrackId, publicTrack.id);
+  assert.equal(
+    resolved.tracks.some(({ archiveTrackId }) => archiveTrackId === held.id),
+    false,
+  );
+});
+
+test('online catalogue accepts hash-bound external delivery without a domain allowlist', async () => {
+  const bytes = new Uint8Array([0xff, 0xfb, 0x90, 0x64]);
+  const digest = [...new Uint8Array(await crypto.subtle.digest('SHA-256', bytes))]
+    .map((byte) => byte.toString(16).padStart(2, '0'))
+    .join('');
+  const url = 'https://example-bucket.s3.eu-central-1.amazonaws.com/music/song.mp3';
+  const externalTrack = {
+    ...track,
+    audio: {
+      path: url,
+      bytes: bytes.length,
+      sha256: digest,
+      delivery: {
+        type: 'external-url',
+        verifiedAt: '2026-09-27T00:00:00.000Z',
+        rangeRequests: true,
+        cors: true,
+      },
+    },
+  };
+  const resolved = resolveOnlineSoundtrackCatalogue({
+    ...catalogue,
+    counts: { ...catalogue.counts, audioBytes: bytes.length },
+    tracks: [externalTrack],
+  }).tracks[0];
+  assert.equal(resolved.url, url);
+  assert.equal(resolved.delivery.type, 'external-url');
+  const blob = await fetchVerifiedOnlineSoundtrack(resolved, {
+    fetch: async (_url, options) => {
+      assert.equal(options.credentials, 'omit');
+      assert.equal(options.headers.Range, `bytes=0-${bytes.length - 1}`);
+      return {
+        status: 206,
+        redirected: false,
+        url,
+        headers: new Headers({ 'content-length': String(bytes.length) }),
+        body: new Response(bytes).body,
+      };
+    },
+  });
+  assert.equal(blob.size, bytes.length);
+  for (const path of [
+    'http://cdn.example/song.mp3',
+    'https://127.0.0.1/song.mp3',
+    `${url}?X-Amz-Signature=temporary`,
+  ])
+    assert.throws(() =>
+      resolveOnlineSoundtrackCatalogue({
+        ...catalogue,
+        counts: { ...catalogue.counts, audioBytes: bytes.length },
+        tracks: [{ ...externalTrack, audio: { ...externalTrack.audio, path } }],
+      }),
+    );
 });
 
 test('online catalogue accepts legacy entries and validates mirrored structured rights', () => {
@@ -125,6 +203,77 @@ test('online catalogue accepts legacy entries and validates mirrored structured 
         resolveOnlineSoundtrackCatalogue({ ...catalogue, tracks: [{ ...track, rights: invalid }] }),
       /rights|share-alike/i,
     );
+});
+
+test('online catalogue preserves uploader-confirmed unknown rights without forging a licence', () => {
+  const credit = 'Song by Creator. Rights confirmed by uploader.';
+  const rights = {
+    licenseId: 'UNKNOWN',
+    licenseVersion: null,
+    licenseURL: null,
+    rightsEvidenceURL: track.source,
+    attribution: credit,
+    derivativeChangeNotice: 'Exact submitted MP3 bytes retained.',
+    permissionBasis: 'uploader-confirmed-public-redistribution-and-web-playback',
+    shareAlike: {
+      required: null,
+      deliveryLicenseId: null,
+      deliveryLicenseVersion: null,
+      deliveryLicenseURL: null,
+    },
+  };
+  const resolved = resolveOnlineSoundtrackCatalogue({
+    ...catalogue,
+    tracks: [
+      {
+        ...track,
+        license: 'Unknown — uploader-confirmed rights',
+        licenseURL: null,
+        credit,
+        rights,
+        recordingModeEligible: false,
+      },
+    ],
+  }).tracks[0];
+  assert.equal(resolved.rights.license, 'Unknown — uploader-confirmed rights');
+  assert.equal(resolved.rights.evidence.permissionBasis, rights.permissionBasis);
+  assert.equal(resolved.websites.length, 1);
+  assert.deepEqual(resolved.collections, ['Creator album', 'Metal action']);
+});
+
+test('online catalogue normalizes accidental edge whitespace in source and credit metadata', () => {
+  const credit = 'Song by Creator. Rights confirmed by uploader.';
+  const source = 'https://creator.example/song';
+  const resolved = resolveOnlineSoundtrackCatalogue({
+    ...catalogue,
+    tracks: [
+      {
+        ...track,
+        source: `${source}\n`,
+        credit: `${credit}\n`,
+        license: 'Unknown — uploader-confirmed rights',
+        licenseURL: null,
+        rights: {
+          licenseId: 'UNKNOWN',
+          licenseVersion: null,
+          licenseURL: null,
+          rightsEvidenceURL: `${source}\n`,
+          attribution: `${credit}\n`,
+          derivativeChangeNotice: 'Exact submitted bytes retained.',
+          permissionBasis: 'uploader-confirmed-public-redistribution-and-web-playback',
+          shareAlike: {
+            required: null,
+            deliveryLicenseId: null,
+            deliveryLicenseVersion: null,
+            deliveryLicenseURL: null,
+          },
+        },
+      },
+    ],
+  }).tracks[0];
+  assert.equal(resolved.rights.source, source);
+  assert.equal(resolved.rights.credit, credit);
+  assert.equal(resolved.rights.evidence.evidence, source);
 });
 
 test('online catalogue requires compatible delivery terms for share-alike recordings', () => {
@@ -262,8 +411,99 @@ test('online catalogue fetch is direct, credential-free and bounded', async () =
   );
 });
 
+test('online catalogue accepts a valid 512-recording payload above the legacy limits', async () => {
+  const tracks = Array.from({ length: 512 }, (_, index) => {
+    const hash = index.toString(16).padStart(64, '0');
+    const credit = `Song ${index} by Creator. ${'Attribution details. '.repeat(32)}`.trim();
+    return {
+      ...track,
+      id: `creator.song-${index}`,
+      credit,
+      audio: {
+        ...track.audio,
+        path: `https://github.com/mekhovov/revealline-soundtracks/releases/download/audio-test/${hash}.mp3`,
+        sha256: hash,
+      },
+      rights: {
+        licenseId: 'CC-BY',
+        licenseVersion: '4.0',
+        licenseURL: track.licenseURL,
+        rightsEvidenceURL: track.source,
+        attribution: credit,
+        derivativeChangeNotice: 'Converted from the creator recording to a verified MP3.',
+        shareAlike: {
+          required: false,
+          deliveryLicenseId: null,
+          deliveryLicenseVersion: null,
+          deliveryLicenseURL: null,
+        },
+      },
+    };
+  });
+  const value = {
+    ...catalogue,
+    counts: {
+      declaredTracks: tracks.length,
+      uniqueRecordings: tracks.length,
+      duplicateAliases: 0,
+      audioBytes: tracks.reduce((sum, item) => sum + item.audio.bytes, 0),
+    },
+    tracks,
+  };
+  const bytes = new TextEncoder().encode(JSON.stringify(value));
+  assert.ok(bytes.byteLength > 512 * 1024, 'fixture crosses the retired 512 KiB limit');
+  const resolved = await fetchOnlineSoundtrackCatalogue({
+    fetch: async (url) => ({
+      status: 200,
+      redirected: false,
+      url,
+      headers: new Headers({ 'content-length': String(bytes.byteLength) }),
+      body: new Response(bytes).body,
+    }),
+  });
+  assert.equal(resolved.tracks.length, 512);
+});
+
+test('online catalogue rejects a 513th recording before queue construction', () => {
+  const tracks = Array.from({ length: 513 }, (_, index) => {
+    const hash = index.toString(16).padStart(64, '0');
+    return {
+      ...track,
+      id: `creator.song-${index}`,
+      audio: {
+        ...track.audio,
+        path: `https://github.com/mekhovov/revealline-soundtracks/releases/download/audio-test/${hash}.mp3`,
+        sha256: hash,
+      },
+    };
+  });
+  assert.throws(
+    () =>
+      resolveOnlineSoundtrackCatalogue({
+        ...catalogue,
+        counts: {
+          declaredTracks: tracks.length,
+          uniqueRecordings: tracks.length,
+          duplicateAliases: 0,
+          audioBytes: tracks.reduce((sum, item) => sum + item.audio.bytes, 0),
+        },
+        tracks,
+      }),
+    /item budget|structural budget|list is too large/,
+  );
+});
+
+test('online catalogue retains an independent structural-node ceiling', () => {
+  const oversizedStructure = {
+    ...catalogue,
+    sources: Array.from({ length: 32 }, () => Array.from({ length: 512 }, () => [1, 2, 3, 4])),
+  };
+  assert.ok(JSON.stringify(oversizedStructure).length < 2 * 1024 * 1024);
+  assert.throws(() => resolveOnlineSoundtrackCatalogue(oversizedStructure), /structural budget/);
+});
+
 test('online catalogue stops reading a streamed response at its byte limit', async () => {
-  const chunk = new Uint8Array(256 * 1024),
+  const chunk = new Uint8Array(1024 * 1024),
     source = [chunk, chunk, new Uint8Array(1), chunk];
   let reads = 0,
     cancelled = false;
@@ -295,189 +535,4 @@ test('online catalogue stops reading a streamed response at its byte limit', asy
   );
   assert.equal(reads, 3);
   assert.equal(cancelled, true);
-});
-
-test('online archive directory is exact, bounded and keeps the primary archive required first', async () => {
-  const resolved = resolveOnlineSoundtrackDirectory(directory);
-  assert.equal(resolved.catalogues[0].id, 'revealline-soundtracks-01');
-  assert(Object.isFrozen(resolved.catalogues));
-  const fetched = await fetchOnlineSoundtrackDirectory({
-    fetch: async (url, options) => {
-      assert.equal(url, ONLINE_SOUNDTRACK_DIRECTORY_URL);
-      assert.equal(options.credentials, 'omit');
-      assert.equal(options.mode, 'cors');
-      return response(url, directory);
-    },
-  });
-  assert.equal(fetched.catalogues.length, 1);
-  for (const invalid of [
-    { ...directory, unexpected: true },
-    {
-      ...directory,
-      catalogues: [{ ...directory.catalogues[0], required: false }],
-    },
-    {
-      ...directory,
-      catalogues: [
-        directory.catalogues[0],
-        {
-          ...directory.catalogues[0],
-          id: 'revealline-soundtracks-02',
-          url: 'https://evil.example/catalogue.json',
-          baseURL: 'https://evil.example/',
-        },
-      ],
-    },
-    { ...directory, catalogues: Array(9).fill(directory.catalogues[0]) },
-  ])
-    assert.throws(() => resolveOnlineSoundtrackDirectory(invalid));
-});
-
-test('online archive directory merges trusted shards and records optional failures', async () => {
-  const secondHash = 'b'.repeat(64),
-    secondArchive = {
-      id: 'revealline-soundtracks-02',
-      url: 'https://mekhovov.github.io/revealline-soundtracks-02/catalogue.json',
-      baseURL: 'https://mekhovov.github.io/revealline-soundtracks-02/',
-      required: false,
-    },
-    secondCatalogue = {
-      ...catalogue,
-      archive: { id: secondArchive.id, baseURL: secondArchive.baseURL },
-      tracks: [
-        {
-          ...track,
-          id: 'creator.second-song',
-          title: 'Second song',
-          audio: {
-            path: `objects/${secondHash}.mp3`,
-            bytes: 4321,
-            sha256: secondHash,
-          },
-        },
-      ],
-      counts: { declaredTracks: 1, uniqueRecordings: 1, duplicateAliases: 0, audioBytes: 4321 },
-    },
-    twoArchives = { ...directory, catalogues: [...directory.catalogues, secondArchive] };
-  const merged = await fetchOnlineSoundtrackCatalogues({
-    fetch: async (url) => {
-      if (url === ONLINE_SOUNDTRACK_DIRECTORY_URL) return response(url, twoArchives);
-      if (url === ONLINE_SOUNDTRACK_CATALOGUE_URL) return response(url, catalogue);
-      return response(url, secondCatalogue);
-    },
-  });
-  assert.equal(merged.tracks.length, 2);
-  assert.equal(merged.counts.audioBytes, 5555);
-  assert.equal(merged.unavailable.length, 0);
-  assert.equal(merged.tracks[1].url, `${secondArchive.baseURL}objects/${secondHash}.mp3`);
-
-  const partial = await fetchOnlineSoundtrackCatalogues({
-    fetch: async (url) => {
-      if (url === ONLINE_SOUNDTRACK_DIRECTORY_URL) return response(url, twoArchives);
-      if (url === ONLINE_SOUNDTRACK_CATALOGUE_URL) return response(url, catalogue);
-      return response(url, {}, { status: 503 });
-    },
-  });
-  assert.equal(partial.tracks.length, 1);
-  assert.deepEqual(
-    partial.unavailable.map(({ id }) => id),
-    ['revealline-soundtracks-02'],
-  );
-});
-
-test('online archive loading falls back to the hardcoded primary and rejects cross-shard duplicates', async () => {
-  const fallback = await fetchOnlineSoundtrackCatalogues({
-    fetch: async (url) => {
-      if (url === ONLINE_SOUNDTRACK_DIRECTORY_URL) return response(url, {}, { status: 503 });
-      return response(url, catalogue);
-    },
-  });
-  assert.equal(fallback.tracks.length, 1);
-
-  const secondArchive = {
-      id: 'revealline-soundtracks-02',
-      url: 'https://mekhovov.github.io/revealline-soundtracks-02/catalogue.json',
-      baseURL: 'https://mekhovov.github.io/revealline-soundtracks-02/',
-      required: true,
-    },
-    duplicateCatalogue = {
-      ...catalogue,
-      archive: { id: secondArchive.id, baseURL: secondArchive.baseURL },
-    };
-  await assert.rejects(
-    fetchOnlineSoundtrackCatalogues({
-      fetch: async (url) => {
-        if (url === ONLINE_SOUNDTRACK_DIRECTORY_URL)
-          return response(url, {
-            ...directory,
-            catalogues: [...directory.catalogues, secondArchive],
-          });
-        if (url === ONLINE_SOUNDTRACK_CATALOGUE_URL) return response(url, catalogue);
-        return response(url, duplicateCatalogue);
-      },
-    }),
-    /duplicate recording/,
-  );
-});
-
-test('online archive fallback retains a localized directory diagnostic', async () => {
-  const loaded = await fetchOnlineSoundtrackCatalogues({
-    fetch: async (url) =>
-      url === ONLINE_SOUNDTRACK_DIRECTORY_URL
-        ? response(url, {}, { status: 503 })
-        : response(url, catalogue),
-  });
-  assert.equal(loaded.tracks.length, 1);
-  assert.equal(loaded.unavailable[0].id, 'archive-directory');
-  assert.equal(
-    loaded.unavailable[0].error.localization.key,
-    'errors:soundtrack.catalogue.directoryDirectResponseRequired',
-  );
-});
-test('optional shard validation is transactional on a late conflict', async () => {
-  const archive = {
-      id: 'revealline-soundtracks-02',
-      url: 'https://mekhovov.github.io/revealline-soundtracks-02/catalogue.json',
-      baseURL: 'https://mekhovov.github.io/revealline-soundtracks-02/',
-      required: false,
-    },
-    b = 'b'.repeat(64),
-    c = 'c'.repeat(64),
-    other = {
-      ...catalogue,
-      archive: { id: archive.id, baseURL: archive.baseURL },
-      tracks: [
-        {
-          ...track,
-          id: 'creator.unique',
-          audio: { path: `objects/${b}.mp3`, bytes: 2, sha256: b },
-        },
-        { ...track, audio: { path: `objects/${c}.mp3`, bytes: 3, sha256: c } },
-      ],
-      counts: { declaredTracks: 2, uniqueRecordings: 2, duplicateAliases: 0, audioBytes: 5 },
-    },
-    both = { ...directory, catalogues: [...directory.catalogues, archive] },
-    loaded = await fetchOnlineSoundtrackCatalogues({
-      fetch: async (url) =>
-        url === ONLINE_SOUNDTRACK_DIRECTORY_URL
-          ? response(url, both)
-          : url === ONLINE_SOUNDTRACK_CATALOGUE_URL
-            ? response(url, catalogue)
-            : response(url, other),
-    });
-  assert.deepEqual(
-    loaded.tracks.map((x) => x.archiveTrackId),
-    ['creator.song'],
-  );
-  assert.deepEqual(loaded.counts, {
-    declaredTracks: 1,
-    uniqueRecordings: 1,
-    duplicateAliases: 0,
-    audioBytes: 1234,
-  });
-  assert.equal(loaded.unavailable[0].id, archive.id);
-  assert.equal(
-    loaded.unavailable[0].error.localization.key,
-    'errors:soundtrack.catalogue.duplicateRecording',
-  );
 });

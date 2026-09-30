@@ -1,0 +1,117 @@
+{
+  "format": "revealline-earned-artwork-recovery-observation.v1",
+  "qualified": false,
+  "scenario": "Same compiled-artifact earned Frame image request denied and restored",
+  "source": {
+    "sourceRevision": "61a31509008da07d0163bfd9aa693014cc7c8f8f",
+    "sourceTree": "047223919bc9f96b50f91c3c9def829a4f3bcb42",
+    "editionId": "fpv-learning",
+    "editionRevision": 8,
+    "distribution": {
+      "bytes": 32414728,
+      "path": "distribution-fpv-learning.zip",
+      "sha256": "efb0dd74f216ac46ea68f8b205e5608075883e530dbb84885bb167909b64dbc1"
+    },
+    "manifest": {
+      "bytes": 92255,
+      "path": "manifest-fpv-learning.json",
+      "sha256": "5400cab03af90d058352ceae0b51b00e37584d7830ee9a175ce38d703a7e6617"
+    },
+    "reproducibleBuilds": 2,
+    "publicEligible": false,
+    "sourceKind": "compiled-artifact"
+  },
+  "environment": {
+    "browser": "HeadlessChrome154.0.0.0",
+    "tool": "agent-browser0.27.0 documented network route/unroute and UI download",
+    "viewport": {
+      "width": 1280,
+      "height": 633,
+      "dpr": 1
+    },
+    "language": "en",
+    "serviceWorkerControlled": false,
+    "pwaInstalled": false
+  },
+  "earnedState": {
+    "origin": "Retained isolated profile from ordinary keyboard first Frame win recorded in the61a desktop performance evidence; no progress import or fabricated state.",
+    "rewardId": "fpv-meet-aircraft-01-discovery",
+    "definitionRevision": "6",
+    "definitionIdentity": "d6bb156afe39e662",
+    "receiptCount": 1,
+    "backupPayloadEmbedded": false
+  },
+  "selectedAsset": {
+    "assetId": "fpv-meet-aircraft-01-art-v1",
+    "path": "game/editions/assets/discovery/fpv-meet-aircraft-01-v1.jpg",
+    "sha256": "8b79d705bb064333eefece3c6acdd0f9f0a4a9079cab8ab2939401ae47689fe8",
+    "bytes": 193494,
+    "failedUrl": "http://127.0.0.1:54429/current-61a315090/game/editions/assets/discovery/fpv-meet-aircraft-01-v1.jpg"
+  },
+  "method": [
+    "Reopen retained genuinely earned profile at exact compiled61a mount; export discoveries through visible Settings > Game data > Export discoveries.",
+    "Open earned Frame through Collection; verify both original/diagram images decode960x640 and direct source bytes match receipt/compiled manifest hash.",
+    "Close viewer; install documented network route for the single exact observed image URL with --abort; clear request log and reopen earned discovery.",
+    "Observe missing exact-artwork message, retained knowledge/list and absent image/save-picture link. Two actual viewer fetch requests are logged without responses; separate read-only fetch probe rejects with TypeError Failed to fetch.",
+    "Close viewer and export discoveries while route remains blocked; compare its bytes with the original export.",
+    "Remove only that route with documented network unroute. Reopen earned Frame normally; both viewer requests return200 and HTMLImageElement.decode resolves for both960x640 original/diagram images.",
+    "Export discoveries after recovery, compare all three backups byte-for-byte, close owned browser. No PWA install, progress mutation or rollback was performed."
+  ],
+  "blocked": {
+    "actualViewerRequests": 2,
+    "requestResponsesObserved": 0,
+    "readOnlyProbe": {
+      "errorName": "TypeError",
+      "errorMessage": "Failed to fetch"
+    },
+    "decodedImages": 0,
+    "retainedKnowledge": true,
+    "retainedSelectableText": true,
+    "savePictureLink": false,
+    "fallback": "This exact artwork revision is unavailable. Your discovery is retained. Restore the matching edition release or original artwork snapshot to see it."
+  },
+  "restored": {
+    "actualViewerRequests": 2,
+    "responseStatus": 200,
+    "decodedImages": [
+      {
+        "alt": "The Frame — original mission illustration. Not a documentary photograph or technical plan.",
+        "width": 960,
+        "height": 640,
+        "complete": true
+      },
+      {
+        "alt": "Original illustrated bare X-shaped frame on a museum worktable. Point 1 marks the central plates, point 2 the near-left arm, and point 3 the empty near-right motor position. No motors, propellers or connected electronics are shown.",
+        "width": 960,
+        "height": 640,
+        "complete": true
+      }
+    ],
+    "savePictureLink": true
+  },
+  "backupComparison": {
+    "before": {
+      "bytes": 385716,
+      "sha256": "b25e1181602a0632d3dccbb1da1795b578bc0b55716c36c81236e45122f0ed8e",
+      "receiptCount": 1
+    },
+    "blocked": {
+      "bytes": 385716,
+      "sha256": "b25e1181602a0632d3dccbb1da1795b578bc0b55716c36c81236e45122f0ed8e",
+      "receiptCount": 1
+    },
+    "restored": {
+      "bytes": 385716,
+      "sha256": "b25e1181602a0632d3dccbb1da1795b578bc0b55716c36c81236e45122f0ed8e",
+      "receiptCount": 1
+    },
+    "byteIdentical": true,
+    "validatedWithExactCandidateRewardModel": true
+  },
+  "limitations": [
+    "One desktop English Frame image fault on the same immutable local compiled artifact, using retained real earned progress.",
+    "Network denial exercised despite warm caches and no service-worker controller; this is not offline/PWA installation, interrupted download, cross-version rollback or cross-edition isolation evidence.",
+    "Does not test every reward/media type, failed writes, quota exhaustion, physical devices, human review or release qualification.",
+    "Backup/browser state is retained only in ignored local evidence. Public summary contains hashes/counts and no backup payload."
+  ]
+}

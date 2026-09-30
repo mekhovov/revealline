@@ -6,6 +6,8 @@ import { authoredModeDestinations } from '../ui/authored-mode-routes.mjs';
 import { DEFAULT_JOURNEY_ROUTES } from '../content-design/default-entry.mjs';
 import { arcadeActionCapabilities } from '../core/arcade-actions.mjs';
 import { attachSettingsPanels } from '../ui/settings-panels.mjs';
+import { prepareNativeMenus } from '../ui/native-menus.mjs';
+import { commitMenuRetune } from '../ui/menu-retune.mjs';
 import { authoredJourneyModeHref, isAuthoredJourneyRouteId } from '../content-design/mode-href.mjs';
 import { isMissionLibrarySourceJourney } from '../mission-library/handoff.mjs';
 
@@ -68,7 +70,10 @@ export function createCouchShell({
   getSoloJourneyRoute = () => null,
   getTeamJourneyRoute = () => null,
   onMissions = null,
+  controllerNeedsTouch = () => false,
+  getSceneContext = () => ({}),
 } = {}) {
+  const nativeMenu = prepareNativeMenus({ document: doc, mode: 'versus', getSceneContext });
   const $ = (id) => doc.getElementById(id),
     view = doc.defaultView,
     pads = [...doc.querySelectorAll('.race-pad')],
@@ -100,10 +105,6 @@ export function createCouchShell({
     separateTeam: isJourney,
     actions: { solo: $('race-solo-return'), team: $('race-coop') },
   });
-  if (authoredRoute === DEFAULT_JOURNEY_ROUTES.versus)
-    localizedText($('race-coop').querySelector('.game-mode-description'), () =>
-      t('common:counts.teamMissions', { count: 12 }),
-    );
   let screen = 'main',
     status = null,
     opener = null,
@@ -111,6 +112,7 @@ export function createCouchShell({
     destroyed = false,
     revealingResize = false,
     equipment = [];
+  const returnScreens = new Map();
   const setText = (id, text) => {
     localizedText($(id), text);
   };
@@ -237,7 +239,9 @@ export function createCouchShell({
   function renderPads() {
     for (let i = 0; i < 2; i++) {
       const wanted =
-        preferences[i] === 'always' || (preferences[i] === 'auto' && modality[i] === 'touch');
+        preferences[i] === 'always' ||
+        (preferences[i] === 'auto' &&
+          (modality[i] === 'touch' || (coarse && controllerNeedsTouch(i))));
       // A held physical control may not vanish mid-round. Collapse at pause,
       // after the host has called its existing clearPhysical lifecycle guard.
       shown[i] = status === 'running' && (wanted || shown[i]);
@@ -272,28 +276,40 @@ export function createCouchShell({
   function show(next, { restore = null, remember = false, restoreFocus = true } = {}) {
     if (destroyed || status === 'running' || (!Object.hasOwn(SCREENS, next) && next !== 'review'))
       return;
-    if (remember) opener = remember === true ? doc.activeElement : remember;
+    if (remember) {
+      opener = remember === true ? doc.activeElement : remember;
+      returnScreens.set(next, { screen, opener });
+    }
+    const previous = screen;
     onTransition({ from: screen, to: next });
     screen = next;
     renderScreens();
     renderPads();
     if (restoreFocus) focus(restore || primary());
+    if (
+      status === 'ready' &&
+      ((previous === 'main' && next === 'setup') || (previous === 'setup' && next === 'main'))
+    )
+      commitMenuRetune($(SCREENS[previous][0]), $(SCREENS[next][0]));
   }
   function back() {
     departure = null;
+    const more = $('race-more');
+    if (more.open && actionCurrent($('race-more-toggle'))()) {
+      more.open = false;
+      $('race-more-toggle').focus({ preventScroll: true });
+      return;
+    }
     if (screen === 'main') {
-      const more = $('race-more');
-      if (more.open) {
-        more.open = false;
-        $('race-more-toggle').focus({ preventScroll: true });
-        return;
-      }
       onTransition({ from: screen, to: screen, back: true });
       return focus();
     }
-    const target = opener;
+    const previous = returnScreens.get(screen);
+    returnScreens.delete(screen);
+    const target = previous?.opener ?? opener;
     opener = null;
-    show('main', { restore: target });
+    const returnScreen = previous?.screen ?? 'main';
+    show(returnScreen, { restore: target });
   }
   function setup() {
     show(status === 'ready' ? 'setup' : 'confirm', { remember: $('race-focus') });
@@ -354,8 +370,11 @@ export function createCouchShell({
     const target = departure.opener;
     departure = null;
     opener = null;
-    if (screen === 'leave')
-      show('main', { restore: target, restoreFocus: restore && foreground() });
+    if (screen === 'leave') {
+      const previous = returnScreens.get('leave');
+      returnScreens.delete('leave');
+      show(previous?.screen ?? 'main', { restore: target, restoreFocus: restore && foreground() });
+    }
   }
   function requestLeave(kind, element, event) {
     if (
@@ -369,7 +388,8 @@ export function createCouchShell({
       return;
     if (kind === 'library' && onMissions) {
       event.preventDefault();
-      if (!destroyed && screen === 'main' && foreground()) return onMissions(element);
+      if (['main', 'options'].includes(screen) && actionCurrent(element)())
+        return onMissions(element);
       return;
     }
     // Fixed routes are owned here; no target is accepted from a URL or control.
@@ -381,7 +401,13 @@ export function createCouchShell({
       destinationHref(kind, returnToken, journeyRouteId, teamJourneyRouteId),
     );
     const before = getDepartureState();
-    if (destroyed || departure || screen !== 'main' || !foreground() || !before?.match) {
+    if (
+      destroyed ||
+      departure ||
+      !['main', 'options'].includes(screen) ||
+      !actionCurrent(element)() ||
+      !before?.match
+    ) {
       event.preventDefault();
       return;
     }
@@ -558,28 +584,30 @@ export function createCouchShell({
       () =>
         `${series ? t('interface:couch.firstClearRound') : t('interface:couch.firstClearRace')} ${match.limitTicks === null ? t('interface:noRaceCountdownIfBothFlightsEndCoverageThenLives') : t('interface:atTheTimeLimitCoverageThenLivesThenScoreDecide')} ${series ? t('interface:firstToTwoRoundWinsTakesTheMatchDrawsAward') : t('interface:oneRaceEndsAfterThisResultRematchPlaysTheSame')}`,
     );
-    setText('race-title', () =>
-      contentBusy
-        ? t('interface:loadingTheSharedPicture')
-        : status === 'paused'
-          ? t('interface:bothBoardsPaused')
-          : status === 'finished'
-            ? !series
-              ? t('interface:raceComplete')
-              : won.some((n) => n >= 2)
-                ? t('interface:matchComplete')
-                : t('interface:roundComplete')
-            : t('interface:twoBoardsOneRace2'),
-    );
+    if (status === 'ready' && !contentBusy && nativeMenu) nativeMenu.showBrandTitle();
+    else {
+      nativeMenu?.hideBrandTitle();
+      setText('race-title', () =>
+        contentBusy
+          ? t('interface:loadingTheSharedPicture')
+          : status === 'paused'
+            ? t('interface:bothBoardsPaused')
+            : status === 'finished'
+              ? !series
+                ? t('interface:raceComplete')
+                : won.some((n) => n >= 2)
+                  ? t('interface:matchComplete')
+                  : t('interface:roundComplete')
+              : 'FPV / LINE',
+      );
+    }
     $('race-review').hidden = status !== 'finished';
     const paused = status === 'paused';
     $('race-retry').hidden = !paused;
     $('race-retry').disabled = !paused || contentBusy;
     $('race-home').hidden = !paused;
     $('race-optional-setup').hidden = paused;
-    setText('race-chapters', () =>
-      paused ? t('interface:missions') : t('interface:browseMissions'),
-    );
+    setText('race-chapters', () => t('interface:nativeMenu.missions'));
     $('race-pause').disabled = status !== 'running' && screen !== 'review';
     // Do not replace the native click target's content on every flight frame.
     setText('race-pause', () =>
@@ -651,6 +679,7 @@ export function createCouchShell({
       departure = null;
       destroyed = true;
       settings.destroy();
+      nativeMenu?.destroy();
       for (const remove of removers) remove();
     },
   };

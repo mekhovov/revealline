@@ -1,3 +1,6 @@
+import { COUCH_RESTORE_KEY } from './controller-restore.mjs';
+import { createControllerSession } from './controller-session.mjs';
+import { mountControllerSetup } from './controller-setup.mjs';
 import { gameplayTuningDescription } from '../ui/gameplay-copy.mjs';
 import {
   t,
@@ -13,6 +16,7 @@ import { contentText } from '../i18n/content.mjs';
 import { coopGoalLabel, coopObjectiveLabel } from './coop-copy.mjs';
 import { attachCouchTouch } from '../ui/couch-touch.mjs';
 import { attachJourneyReactions } from '../ui/journey-reactions.mjs';
+import { resultContinuationLabel } from '../ui/result-continuation.mjs';
 import { attachJourneySaveCue } from '../ui/journey-save-cue.mjs';
 import { attachJourneyModePictures } from '../ui/journey-mode-pictures.mjs';
 import {
@@ -30,6 +34,7 @@ import { attachCouchMusicHost } from './couch-music-host.mjs';
 import { prepareTeamMusicContext } from './couch-music-context.mjs';
 import { attachPublishedAudio } from '../ui/published-audio.mjs';
 import { mountModeChoices } from '../ui/mode-choice.mjs';
+import { prepareNativeMenus } from '../ui/native-menus.mjs';
 import { authoredTeamReturn } from '../ui/authored-mode-routes.mjs';
 import { resolveJourneyRequest } from '../content-design/default-entry.mjs';
 import { attachOfflineModeNavigation } from '../ui/offline-tool-navigation.mjs';
@@ -110,7 +115,10 @@ import {
   guardInstallOfflineBlur,
   installOfflineOwnsElement,
 } from '../ui/install-offline-panel.mjs';
-import { createOfflineDownloadAccess } from '../offline-download-access.mjs';
+import {
+  createOfflineDownloadAccess,
+  isOfflinePackageRequired,
+} from '../offline-download-access.mjs';
 
 import { createTeamArenaPreference } from './team-arena-preference.mjs';
 import { createMissionLibrary } from '../mission-library/library.mjs';
@@ -516,7 +524,6 @@ export function bootCoop({
       (run ? gameplayPreferences.snapshot().difficulty : $('coop-difficulty').value),
   });
   let inactive = !foreground();
-  let previousPads = new Map();
   let pack = COOP_STARTER_PACK;
   let packArtworkSource = null;
   let installedTeamStore = null,
@@ -728,7 +735,9 @@ export function bootCoop({
       const visible =
         running() &&
         (mode === 'on' ||
-          (mode === 'auto' && touchQuery.matches && assignedSlots[player] === null));
+          (mode === 'auto' &&
+            touchQuery.matches &&
+            (assignedSlots[player] === null || !controllerSession.completeFlight(player))));
       if (!pad.hidden && !visible) input?.clearPhysical(player);
       pad.hidden = !visible;
       pad.closest('.control-card').dataset.touchVisible = String(visible);
@@ -754,11 +763,25 @@ export function bootCoop({
       pauseCore.append(settings);
       pauseCore.append(sound);
       pauseCore.append($('coop-home-paused'));
+    } else if (paused) {
+      // Results still own these tools. The landing page is hidden while the
+      // completed attempt is retained, so it cannot host their only entry.
+      tools.append(help, settings, sound);
     } else {
-      tools.append(help);
-      tools.append(settings);
-      tools.append(sound);
+      if ($('coop-menu').classList.contains('native-landing')) {
+        $('coop-settings-panel-extras').append(help);
+        const actions = $('coop-menu').querySelector('.native-menu-actions');
+        actions.append(settings, sound);
+      } else {
+        tools.append(help, settings, sound);
+      }
     }
+    // Failed saves are operational recovery, so Pause and Results keep their
+    // live actions visible. The lobby gives them a stable home under Data.
+    const recoveryDestination = paused ? tools : $('coop-settings-panel-data');
+    if (recoveryDestination)
+      for (const id of ['coop-journey-save', 'coop-journey-preferences'])
+        recoveryDestination.append($(id));
     tools.hidden = running();
     if (tools.hidden) {
       $('coop-help').open = false;
@@ -960,7 +983,19 @@ export function bootCoop({
     controls: $('coop-touch').parentElement,
     clear: () => input?.clearPhysical(),
   });
+  const controllerSession = createControllerSession({
+    restoreKey: COUCH_RESTORE_KEY,
+    onLoss: () => {
+      pause();
+      clear();
+    },
+  });
+  const controllerSetup = mountControllerSetup({
+    root: $('coop-settings-panel-controls'),
+    session: controllerSession,
+  });
   input = attachCouchInput({
+    controllerSession,
     getTouchSettings: () => couchTouch.snapshot(),
     ...COOP_INPUT_CAPABILITIES,
     arena: $('coop-canvas'),
@@ -979,9 +1014,13 @@ export function bootCoop({
       if ($('coop-pads').textContent !== text()) localizedText($('coop-pads'), text);
     },
   });
-  const router = createControllerRouter({ readPads: () => framePads });
+  const router = createControllerRouter({
+    readPads: () => controllerSession.frame().menuPads,
+    autoJoin: true,
+    eventTarget: null,
+  });
   const controllerConfirmGuard = attachControllerConfirmGuard({
-    confirmPressed: () => router.menuConfirmPressed(),
+    confirmPressed: () => router.menuConfirmPressed() || controllerSession.frame().confirmHeld,
   });
   const menuMasthead = $('coop-home').closest('.masthead');
   let compositeMenu = false;
@@ -1128,6 +1167,7 @@ export function bootCoop({
   }
   window.addEventListener('resize', revealMenuAction);
   function clear() {
+    controllerSession.clear();
     input.clear();
     batch.release();
     router.clear();
@@ -1135,6 +1175,14 @@ export function bootCoop({
     if (run) releaseCoopInputs(run);
     accumulator = 0;
   }
+  const nativeMenu = prepareNativeMenus({
+    document,
+    mode: 'team',
+    getSceneContext: () => ({
+      themeId: acceptedPicture?.request?.themeId ?? 'fpv',
+      active: !running(),
+    }),
+  });
   settingsPanels = attachSettingsPanels({
     root: settingsDialog,
     document,
@@ -1398,6 +1446,7 @@ export function bootCoop({
       mode: 'team',
       outcome: run?.status,
       missionId: reactionRow?.mission?.id,
+      feedback: candidateJourney?.owns(reactionRow) ? reactionRow.campaignFeedback : null,
     });
     const show = run && !running();
     $('coop-overlay').hidden = !show;
@@ -1421,8 +1470,12 @@ export function bootCoop({
     $('coop-next').hidden = !destination?.next && !destination?.error;
     localizedText($('coop-next'), () =>
       destination?.next
-        ? t('interface:team.nextMission', {
+        ? resultContinuationLabel(t, {
             mission: contentText(destination.next, 'name'),
+            campaign: destination.nextRow?.mission
+              ? contentText(destination.nextRow.mission, 'campaignTitle')
+              : '',
+            crossesCampaign: destination.crossesCampaign === true,
           })
         : t('interface:nextArena'),
     );
@@ -1882,7 +1935,11 @@ export function bootCoop({
     $('coop-picture-cancel').hidden = !busy;
     $('coop-picture-retry').hidden = busy || (ready && !retryPreview);
     localizedText($('coop-picture-retry'), () =>
-      retryPreview ? t('common:preview.retry') : t('interface:retryPicture2'),
+      retryPreview
+        ? t('common:preview.retry')
+        : pictureSelection?.downloadRequired
+          ? t('interface:downloadPlay')
+          : t('interface:retryPicture2'),
     );
     $('coop-picture-status').dataset.state = busy
       ? 'preparing'
@@ -1973,6 +2030,7 @@ export function bootCoop({
             }),
       binding: null,
       actorAppearance: null,
+      downloadRequired: false,
       state: 'new',
     };
     // Ownership, not matching IDs/bytes, authorizes this cosmetic overlay.
@@ -2205,9 +2263,10 @@ export function bootCoop({
         });
         if (!current()) return;
         selection.binding = binding;
+        selection.downloadRequired = false;
         selection.state = 'ready';
         pictureOperation = null;
-        if (onPrepared?.(selection) === true) {
+        if (onPrepared?.(selection, focus) === true) {
           focus.finish(null, false);
           return;
         }
@@ -2230,6 +2289,9 @@ export function bootCoop({
           console.error(t('interface:teamPicturePreparationFailed'), error);
         } catch {}
         if (!current()) return;
+        selection.downloadRequired =
+          isOfflinePackageRequired(error) ||
+          (error?.name === 'AbortError' && selection.downloadRequired);
         selection.state = 'error';
         pictureOperation = null;
         pictureUI(
@@ -2253,7 +2315,35 @@ export function bootCoop({
       );
       return;
     }
-    return preparePicture({ retry: true });
+    if (!pictureSelection?.downloadRequired) return preparePicture({ retry: true });
+    const selection = pictureSelection,
+      attempt = run,
+      epoch = generation,
+      recipe = currentRecipe();
+    return preparePicture({
+      retry: true,
+      onPrepared(prepared, actionFocus) {
+        if (
+          prepared !== selection ||
+          run !== attempt ||
+          generation !== epoch ||
+          pictureSelection !== selection ||
+          disposed ||
+          inactive ||
+          !foreground() ||
+          !actionFocus?.current()
+        )
+          return false;
+        // The package panel returns to the temporary Cancel control. Publish
+        // readiness and transfer this same admitted action to Start before the
+        // retention gate; hiding a focused Cancel must not strand the launch.
+        pictureUI(localizedMessage('interface:teamPictureReadyStartRemainsASeparateAction'));
+        actionFocus.pending($('coop-start'));
+        if (document.activeElement !== $('coop-start')) return false;
+        start(recipe);
+        return true;
+      },
+    });
   };
   // Follow the accepted content snapshot. Imports retain their own order and
   // recipes even when IDs match built-ins or a source catalogue later changes.
@@ -3316,6 +3406,14 @@ export function bootCoop({
         })}${receipt.reward ? ` · ${t('interface:pictureEarned')}` : ''}`
       : t('interface:missionLibrary.team.notClearedInstalledEdition');
   }
+  function installedProgressState(row) {
+    const clears = installedTeamProgress.get(row.installedEditionId)?.clears;
+    return {
+      state: Object.hasOwn(clears ?? {}, row.levelId) ? 'completed' : 'new',
+      // Installed Team v1 receipts record exact clears, but no star grade.
+      bestStars: null,
+    };
+  }
   async function launchInstalledTeamRow(edition, row, context) {
     if (
       !installedTeamStore ||
@@ -3392,6 +3490,7 @@ export function bootCoop({
               isCurrent: (row) =>
                 installedTeamEditions.get(edition.editionId) === edition && rows.includes(row),
               progress: installedProgressText,
+              progressState: installedProgressState,
               launch: (row, context) => launchInstalledTeamRow(edition, row, context),
             }),
             (row) => row,
@@ -4019,10 +4118,12 @@ export function bootCoop({
           );
         void libraryOtherModesLoad();
       } catch (error) {
-        if (opening.current() && !disposed)
+        if (opening.current() && !disposed) {
+          $('coop-discovery-status').dataset.state = 'error';
           localizedText($('coop-discovery-status'), () =>
             t('interface:team.libraryUnavailable', { error: error.message }),
           );
+        }
       } finally {
         opening.dispose();
       }
@@ -4759,6 +4860,24 @@ export function bootCoop({
     for (const event of run.events)
       if (event.type === 'player.downed') recoveryFailures[event.player] = event;
     for (const event of run.events) {
+      const feedbackRow = acceptedPicture?.journeyRow;
+      if (
+        event.type === 'run.completed' &&
+        run.status === 'won' &&
+        candidateJourney?.owns(feedbackRow) &&
+        feedbackRow.campaignFeedback
+      )
+        music?.sound.event(
+          event,
+          {},
+          {
+            owned: true,
+            mode: 'team',
+            outcome: run.status,
+            missionId: feedbackRow.mission.id,
+            feedback: feedbackRow.campaignFeedback,
+          },
+        );
       if (event.type === 'cells.claimed' && captureCaption)
         announce(captureCaption, { foundationPlayers });
       if (event.type === 'cut.closed') {
@@ -5051,27 +5170,19 @@ export function bootCoop({
       acceptMusic(acceptedPicture);
       if (!loopStopped)
         music?.update(running(), { family: acceptedPicture?.request.themeId ?? 'fpv' });
+      let readError = null;
       try {
-        framePads = [...(navigator.getGamepads?.() || [])];
-      } catch {
+        if (typeof navigator.getGamepads !== 'function') throw new Error('Gamepad API unavailable');
+        framePads = [...navigator.getGamepads()];
+      } catch (error) {
         framePads = [];
+        readError = error;
       }
-      const signatures = new Map(
-        framePads
-          .filter((pad) => pad?.connected)
-          .map((pad) => [
-            pad.index,
-            `${pad.id}:${pad.mapping}:${pad.buttons?.length}:${pad.axes?.length}`,
-          ]),
-      );
-      if ([...previousPads].some(([index, signature]) => signatures.get(index) !== signature)) {
-        pause();
-        clear();
-      }
-      previousPads = signatures;
+      framePads = controllerSession.sample(framePads, { active: running(), error: readError }).pads;
+      controllerSetup.refresh();
       input.poll();
       const routed = router.sample({ scope: scope(), timeMs: now });
-      controllerConfirmGuard.observe(routed.confirmHeld);
+      controllerConfirmGuard.observe(routed.confirmHeld || controllerSession.frame().confirmHeld);
       if (!running()) {
         if (routed.status.code === 'joined' || Object.values(routed.ui).some(Boolean))
           setReadingModality('controller');
@@ -5756,6 +5867,7 @@ export function bootCoop({
     settingsDialog.removeEventListener('close', settingsClosed);
     settingsDialog.removeEventListener('keydown', settingsKeydown);
     settingsPanels.destroy();
+    nativeMenu?.destroy();
     if (settingsDialog.open) settingsDialog.close();
     // The shared page may already have retired its painter snapshot. Stop the
     // core without repainting during terminal cleanup. BFCache uses suspend.
@@ -5789,6 +5901,8 @@ export function bootCoop({
     cancelAnimationFrame(frame);
     clear();
     couchTouch.destroy();
+    controllerSetup.dispose();
+    controllerSession.dispose();
     input.destroy();
     controllerConfirmGuard.destroy();
     router.destroy();

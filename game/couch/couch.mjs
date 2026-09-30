@@ -1,3 +1,6 @@
+import { COUCH_RESTORE_KEY } from './controller-restore.mjs';
+import { createControllerSession } from './controller-session.mjs';
+import { mountControllerSetup } from './controller-setup.mjs';
 import {
   gameplayTuningDescription,
   gameplayStatusLabel,
@@ -64,6 +67,7 @@ import {
   createMissionLibrarySessionState,
   missionLibraryHref,
   readMissionLibraryHandoff,
+  readMissionLibraryIntent,
   readMissionLibraryReturn,
 } from '../mission-library/handoff.mjs';
 import { createCouchChapterInstaller } from './couch-chapter-install.mjs';
@@ -120,7 +124,10 @@ import {
   guardInstallOfflineBlur,
   installOfflineOwnsElement,
 } from '../ui/install-offline-panel.mjs';
-import { createOfflineDownloadAccess } from '../offline-download-access.mjs';
+import {
+  createOfflineDownloadAccess,
+  isOfflinePackageRequired,
+} from '../offline-download-access.mjs';
 import { ensureVersusEntryPackage } from './versus-package-readiness.mjs';
 import { attachCouchMusicHost } from './couch-music-host.mjs';
 import { soloCompatibleMusicContext } from './couch-music-context.mjs';
@@ -366,7 +373,8 @@ try {
     { fullSource: true },
   );
   const authoredJourney = !!authoredRoute;
-  const libraryHandoff = readMissionLibraryHandoff(new URL(location.href).searchParams);
+  const libraryHandoff = readMissionLibraryHandoff(new URL(location.href).searchParams),
+    libraryIntent = readMissionLibraryIntent(new URL(location.href).searchParams);
   let incomingContinuation = null;
   if (libraryHandoff) {
     const values = new URL(location.href).searchParams.getAll('versus-next');
@@ -393,7 +401,11 @@ try {
         Array.isArray(value.slots) &&
         value.slots.length === 2 &&
         value.slots.every(
-          (slot) => slot === null || (Number.isInteger(slot) && slot >= 0 && slot <= 255),
+          (slot) =>
+            slot === null ||
+            (Number.isInteger(slot) &&
+              slot >= 0 &&
+              (slot <= 255 || (slot >= 1024 && slot <= 3071))),
         ) &&
         (value.slots[0] === null || value.slots[0] !== value.slots[1])
       )
@@ -832,6 +844,7 @@ try {
     contentReady = true,
     contentBusy = false,
     contentError = null,
+    contentDownloadRequired = false,
     contentController = null,
     contentScope = null,
     accumulator = 0,
@@ -851,7 +864,6 @@ try {
     startIntentEpoch = 0,
     framePads = [],
     frameReadError = null,
-    padDescriptors = new Map(),
     slots = [null, null],
     assignmentsChanged = false,
     pendingPadLoss = false,
@@ -1091,6 +1103,7 @@ try {
     if (resetDirection) input.clear();
     else input.clearPhysical();
     accumulator = 0;
+    controllerSession.clear();
     menuRouter?.clear();
     navigation?.clear();
     if (match?.status === 'running') menuScope = 'flight';
@@ -1105,7 +1118,10 @@ try {
       pendingTarget = null;
     const observe = (event) => {
       if (installOfflineOwnsElement(event.target)) return;
-      if (!shifting && ![origin, document.body, document.documentElement].includes(event.target))
+      if (
+        !shifting &&
+        ![origin, pendingTarget, document.body, document.documentElement].includes(event.target)
+      )
         moved = true;
     };
     const hidden = () => {
@@ -1197,6 +1213,7 @@ try {
     cancelAllPictures();
     contentBusy = false;
     contentReady = retainedResult;
+    contentDownloadRequired = false;
     contentError = retainedResult
       ? () =>
           t('interface:couch.continuationPictureLoadingCancelled', {
@@ -1274,6 +1291,7 @@ try {
     contentController = new AbortController();
     contentScope = shell?.scope() || 'main';
     contentError = null;
+    contentDownloadRequired = false;
     contentBusy = false;
     contentReady = false;
     clear({ resetDirection: true });
@@ -1323,7 +1341,7 @@ try {
     paintRound(roundRecipe);
     finished = false;
     localizedText($('race-start'), () =>
-      roundRecipe.format === 'single' ? t('interface:startRace2') : t('interface:startRound2'),
+      roundRecipe.format === 'single' ? t('interface:startRace') : t('interface:startRound'),
     );
     return loadPreparedPicture(entry);
   }
@@ -1413,10 +1431,11 @@ try {
       isOfficialPack,
     });
   }
-  function loadPreparedPicture(entry, { prompt = false } = {}) {
+  function loadPreparedPicture(entry, { prompt = false, preserveDownloadOnCancel = false } = {}) {
     contentReady = false;
     contentBusy = true;
     contentError = null;
+    contentDownloadRequired = false;
     const staticEntry = shippedMaps.includes(entry),
       owner = pictureOwner(entry),
       message = staticEntry
@@ -1470,6 +1489,9 @@ try {
       } catch (error) {
         if (disposed || controller.signal.aborted || match !== selectedRun || ticket !== generation)
           return false;
+        contentDownloadRequired =
+          isOfflinePackageRequired(error) ||
+          (preserveDownloadOnCancel && error?.name === 'AbortError');
         contentError = localizedMessage(
           staticEntry
             ? 'interface:couch.mapPictureOrActorAppearanceCouldNotLoad'
@@ -1503,7 +1525,7 @@ try {
   async function prepareNext(
     destination = null,
     focusOrigin = $('race-start'),
-    { configured = null, fresh = false, rulesEdition } = {},
+    { configured = null, fresh = false, rulesEdition, ownsStart = null } = {},
   ) {
     const target = destination ?? roundRecipe.entry;
     const sameMission =
@@ -1584,6 +1606,7 @@ try {
     let adopted = false;
     const current = () =>
       !disposed &&
+      (!ownsStart || (ownsStart() && restoreFocus.current(true))) &&
       !controller.signal.aborted &&
       contentController === controller &&
       nextAttempt === attempt &&
@@ -1698,7 +1721,7 @@ try {
           missionId: attempt.recipe.entry.mission.id,
         });
       localizedText($('race-start'), () =>
-        roundRecipe.format === 'single' ? t('interface:startRace2') : t('interface:startRound2'),
+        roundRecipe.format === 'single' ? t('interface:startRace') : t('interface:startRound'),
       );
       localizedText($('race-message'), () =>
         [lease.picture?.notice, t('interface:bothBoardsUseThePreparedNextPictureStartWhenYou')]
@@ -1716,6 +1739,7 @@ try {
       return prepared;
     } catch (error) {
       if (current()) {
+        contentDownloadRequired = false;
         contentError = () => {
           const retryAction = continuationAction();
           return t('interface:couch.continuationPictureOrActorsCouldNotBePrepared', {
@@ -1741,6 +1765,7 @@ try {
         ) {
           preparationStatus.clear();
           preparationDisplay = null;
+          contentDownloadRequired = false;
           contentError = t('interface:actorChoiceChangedBothPreviousBoardsAreKeptChooseStart');
           localizedText($('race-message'), () => contentError);
         }
@@ -1779,7 +1804,19 @@ try {
     }
     updateMenu();
   }
-  async function startRace(destination = null, { rulesEdition, focusOrigin = null } = {}) {
+  async function startRace(
+    destination = null,
+    { rulesEdition, focusOrigin = null, libraryStart = null } = {},
+  ) {
+    // A confirmed library selection may originate from Settings. Its captured
+    // scope remains authoritative through preparation; ordinary Start/Retry
+    // still belong to main, and the running-state update leaves Settings only
+    // after the exact prepared match has been accepted.
+    const startScope = shell.scope(),
+      libraryAdmission =
+        destination &&
+        libraryStart?.isCurrent() === true &&
+        libraryStart.attempt?.scope === startScope;
     if (
       disposed ||
       contentBusy ||
@@ -1787,7 +1824,8 @@ try {
       document.hidden ||
       !document.hasFocus() ||
       match.status === 'running' ||
-      shell.scope() !== 'main'
+      (libraryStart && !libraryAdmission) ||
+      (startScope !== 'main' && !(startScope === 'options' && libraryAdmission))
     )
       return;
     // A ready preview is not a resumed attempt. A preference changed after its
@@ -1844,7 +1882,7 @@ try {
         generation !== previousGeneration ||
         contentController !== previousController ||
         contentBusy ||
-        shell.scope() !== 'main'
+        shell.scope() !== startScope
       )
         return;
     }
@@ -1854,7 +1892,11 @@ try {
       // origin until the new attempt makes Start available again.
       const start =
           focusOrigin ||
-          (destination && !contentReady ? $('race-library-switch') : $('race-start')),
+          (libraryAdmission
+            ? $(startScope === 'options' ? 'race-library-switch' : 'race-chapters')
+            : destination && !contentReady
+              ? $('race-library-switch')
+              : $('race-start')),
         previousRun = match,
         previousGeneration = generation,
         previousController = contentController;
@@ -1870,10 +1912,13 @@ try {
         generation !== previousGeneration ||
         contentController !== previousController ||
         contentBusy ||
-        shell.scope() !== 'main'
+        shell.scope() !== startScope
       )
         return;
-      const prepared = await prepareNext(destination, start, { rulesEdition });
+      const prepared = await prepareNext(destination, start, {
+        rulesEdition,
+        ownsStart: libraryAdmission ? ownsStartIntent : null,
+      });
       // Preparation may finish after blur, but only this uninterrupted foreground
       // action may start it. Installed pictures pass the same confirmation boundary.
       if (
@@ -1883,7 +1928,7 @@ try {
         match !== prepared.match ||
         contentController !== prepared.controller ||
         prepared.controller.signal.aborted ||
-        shell.scope() !== 'main'
+        shell.scope() !== startScope
       ) {
         prepared?.releaseFocus();
         return;
@@ -1906,7 +1951,7 @@ try {
           match === selectedRun &&
           ticket === generation &&
           match.status === 'ready' &&
-          shell.scope() === 'main';
+          shell.scope() === startScope;
       const display = preparationStatus.begin({
         message: t('interface:confirmingThePreparedPictureBeforeStarting'),
         stage: 'verifying',
@@ -1950,6 +1995,7 @@ try {
           !controller.signal.aborted
         ) {
           contentReady = false;
+          contentDownloadRequired = isOfflinePackageRequired(error);
           contentError = shippedMaps.includes(entry)
             ? localizedMessage('interface:couch.preparedPictureCouldNotBeConfirmed', {
                 error: error.message,
@@ -2010,7 +2056,9 @@ try {
   };
   $('race-chapter-retry').onclick = async () => {
     if (disposed || contentBusy || match.status !== 'ready') return;
-    const restoreFocus = actionFocus($('race-chapter-retry'));
+    const retry = $('race-chapter-retry'),
+      downloadAndPlay = contentDownloadRequired,
+      restoreFocus = actionFocus(retry);
     preparationStatus.clear();
     contentController?.abort();
     contentController = new AbortController();
@@ -2019,13 +2067,30 @@ try {
     // Retry the same untouched attempt and picture choice; only setup changes
     // establish a new race identity and may resolve a new assignment.
     const controller = contentController,
-      ready = loadPreparedPicture(entry, { prompt: true });
+      ready = loadPreparedPicture(entry, {
+        prompt: true,
+        preserveDownloadOnCancel: downloadAndPlay,
+      });
     restoreFocus.pending(
       $('race-picture-cancel'),
       controller === contentController && !controller.signal.aborted,
     );
     try {
-      return await ready;
+      const prepared = await ready,
+        current =
+          prepared &&
+          controller === contentController &&
+          !controller.signal.aborted &&
+          match.status === 'ready';
+      if (downloadAndPlay && current && restoreFocus.current(true)) {
+        const start = $('race-start');
+        restoreFocus.pending(start, true);
+        if (document.activeElement === start) {
+          restoreFocus.close();
+          return startRace(null, { focusOrigin: start });
+        }
+      }
+      return prepared;
     } finally {
       restoreFocus(
         contentReady ? $('race-start') : $('race-chapter-retry'),
@@ -2076,6 +2141,7 @@ try {
     } catch (error) {
       if (disposed || controller.signal.aborted || controller !== contentController) return;
       installedRefreshPending = false;
+      contentDownloadRequired = false;
       contentError = localizedMessage('gameplay:installedChaptersUnavailable', {
         value1: error.message,
       });
@@ -2279,7 +2345,20 @@ try {
     controls: $('race-touch-0').closest('.race-fields'),
     clear: () => input?.clearPhysical(),
   });
+  const controllerSession = createControllerSession({
+    restoreKey: COUCH_RESTORE_KEY,
+    onLoss: () => {
+      pendingPadLoss = true;
+      pause();
+      clear();
+    },
+  });
+  const controllerSetup = mountControllerSetup({
+    root: $('race-settings-panel-controls'),
+    session: controllerSession,
+  });
   const input = attachCouchInput({
+    controllerSession,
     initialSlots: incomingContinuation?.slots ?? [null, null],
     getTouchSettings: () => couchTouch.snapshot(),
     continuousSteering: () => true,
@@ -2295,10 +2374,9 @@ try {
       assignmentsChanged = nextSlots.some((slot, i) => slot !== slots[i]);
       slots = [...nextSlots];
       const message = () =>
-        t('gameplay:standardControllerAssignedKeyboardAndTouchRemainAvailableEscapePauses', {
-          value1: count,
-          value2: count === 1 ? '' : 's',
-          value3: slots
+        t('interface:multiplayerControllers.assigned', {
+          count,
+          players: slots
             .map((slot, i) =>
               t('gameplay:player', {
                 value1: i + 1,
@@ -2325,6 +2403,11 @@ try {
     getLevels: () => match?.runs?.map((run) => run.level) ?? [],
   });
   shell = createCouchShell({
+    controllerNeedsTouch: (seat) => slots[seat] !== null && !controllerSession.completeFlight(seat),
+    getSceneContext: () => ({
+      themeId: theme?.id ?? 'fpv',
+      active: match?.status !== 'running',
+    }),
     authoredRoute: authoredRoute?.id ?? 'legacy',
     coarse: matchMedia('(pointer: coarse)').matches,
     getDepartureState: () => ({ match, generation }),
@@ -2649,7 +2732,10 @@ try {
       if (!entry) throw new Error(t('interface:thisExactBaseMissionIsUnavailable'));
       if (!(await confirmLibraryReplacement(context, `Play ${entry.level.name}?`))) return false;
       if (!context.isCurrent()) return false;
-      await startRace(entry, { rulesEdition: selection.rulesEdition });
+      await startRace(entry, {
+        rulesEdition: selection.rulesEdition,
+        libraryStart: context.continuousNext ? null : context,
+      });
       const started = roundRecipe.entry === entry && match.status === 'running';
       if (started) currentLibrarySelection = { match, id: context.libraryMissionId };
       return started;
@@ -2936,7 +3022,7 @@ try {
     if (!entry) throw new Error('This exact creator mission is unavailable in Versus.');
     if (!(await confirmLibraryReplacement(context, `Play ${mission.name}?`))) return false;
     if (!context.isCurrent()) return false;
-    await startRace(entry);
+    await startRace(entry, { libraryStart: context.continuousNext ? null : context });
     const started = roundRecipe.entry === entry && match.status === 'running';
     if (started) currentLibrarySelection = { match, id: context.libraryMissionId };
     return started;
@@ -3054,7 +3140,7 @@ try {
                   if (!(await confirmLibraryReplacement(context, `Play ${mission.name}?`)))
                     return false;
                   if (!context.isCurrent()) return false;
-                  await startRace(entry);
+                  await startRace(entry, { libraryStart: context.continuousNext ? null : context });
                   const started = roundRecipe.entry === entry && match.status === 'running';
                   if (started)
                     currentLibrarySelection = {
@@ -3476,6 +3562,7 @@ try {
           contentReady = true;
           contentBusy = false;
           contentError = null;
+          contentDownloadRequired = false;
           contentScope = 'main';
           maps.splice(0, maps.length, ...shippedMaps, ...rows);
           adopted = true;
@@ -3514,7 +3601,7 @@ try {
             $('race-theme').value = nextTheme.id;
             paintRound(recipe);
             localizedText($('race-start'), () =>
-              recipe.format === 'single' ? t('interface:startRace2') : t('interface:startRound2'),
+              recipe.format === 'single' ? t('interface:startRace') : t('interface:startRound'),
             );
             localizedText($('race-message'), () =>
               t('interface:couch.sharedPictureReady', {
@@ -3595,7 +3682,8 @@ try {
   }
   function readAssignedMenuPads() {
     // Keep sparse browser positions. The router also receives the physical index.
-    return readCachedPads().map((pad) => (slots.includes(pad?.index) ? pad : null));
+    if (frameReadError) throw frameReadError;
+    return controllerSession.frame().menuPads;
   }
   function capturePads() {
     framePads = [];
@@ -3609,35 +3697,14 @@ try {
     } catch (error) {
       frameReadError = error || new Error(t('interface:controllerReadFailed'));
     }
-    const next = new Map();
-    for (const pad of framePads) {
-      if (!pad?.connected || pad.mapping !== 'standard') continue;
-      next.set(
-        pad.index,
-        JSON.stringify([
-          typeof pad.id === 'string' ? pad.id.slice(0, 512) : '',
-          pad.mapping,
-          pad.buttons?.length ?? 0,
-          pad.axes?.length ?? 0,
-        ]),
-      );
-    }
-    for (const index of slots) {
-      if (
-        index === null ||
-        !padDescriptors.has(index) ||
-        next.get(index) === padDescriptors.get(index)
-      )
-        continue;
-      // Couch flight allocation is index-based. A changed descriptor is a new
-      // device even if a disconnect event was missed between animation frames.
-      menuRouter.disconnect(index);
-      pendingPadLoss = true;
-      pause();
-      clear();
-    }
-    padDescriptors = next;
+    const sample = controllerSession.sample(framePads, {
+      active: match?.status === 'running',
+      error: frameReadError,
+    });
+    framePads = sample.pads;
+    controllerSetup.refresh();
   }
+
   function focusPrimaryAction() {
     if (!match || match.status === 'running' || disposed) return;
     shell.focus();
@@ -3690,6 +3757,9 @@ try {
             : 'won'
           : null,
       missionId: roundRecipe?.entry?.mission?.id,
+      feedback: candidateJourney?.owns(roundRecipe?.entry)
+        ? roundRecipe.entry.campaignFeedback
+        : null,
     });
     const running = match.status === 'running';
     $('race-journey-controls').hidden = !!shell && shell.scope() !== 'main' && !running;
@@ -3725,6 +3795,9 @@ try {
     $('race-chapters').disabled = running || contentBusy;
     $('race-chapter-retry').hidden = !contentError || match.status !== 'ready';
     $('race-chapter-retry').disabled = contentBusy;
+    localizedText($('race-chapter-retry'), () =>
+      contentDownloadRequired ? t('interface:downloadPlay') : t('interface:retryPicture2'),
+    );
     $('race-picture-cancel').hidden = !contentBusy && !libraryContinuation;
     $('race-installed-refresh').disabled = match.status !== 'ready' || contentBusy || !installed;
     localizedText($('race-installed-status'), () =>
@@ -3767,9 +3840,13 @@ try {
     if ($('race-menu-status').textContent !== text)
       localizedText($('race-menu-status'), () => text);
   }
-  menuRouter = createControllerRouter({ readPads: readAssignedMenuPads });
+  menuRouter = createControllerRouter({
+    readPads: readAssignedMenuPads,
+    autoJoin: true,
+    eventTarget: null,
+  });
   const controllerConfirmGuard = attachControllerConfirmGuard({
-    confirmPressed: () => menuRouter.menuConfirmPressed(),
+    confirmPressed: () => menuRouter.menuConfirmPressed() || controllerSession.frame().confirmHeld,
   });
   const menuIds = new Set([
     'race-offline',
@@ -3880,13 +3957,14 @@ try {
     ownsKeyboardEvent: (event) =>
       !music?.root() && settingsTabOwnsKey(event, $('race-options-panel')),
     accept: (element) =>
+      !!element.closest('[data-menu-scope]') ||
       music?.contains(element) ||
       (element.tagName === 'A' &&
         !!element.closest('#race-music-now-playing, #race-music-menu-now-playing')) ||
       element.hasAttribute('data-language-select') ||
       menuIds.has(element.id) ||
       !!element.closest(
-        '#journey-chooser, #journey-backup, #race-gameplay-tuning, [data-journey-mode-pictures]',
+        '#journey-chooser, #journey-backup, #race-gameplay-tuning, [data-journey-mode-pictures], .multiplayer-controllers',
       ),
     getControlLabels: () => ({
       directions: t('interface:dPadLeftStick'),
@@ -3959,6 +4037,7 @@ try {
   });
   $('race-menu-release').onclick = () => {
     if (match.status === 'running' || !menuOwner) return;
+    controllerSession.menu(null);
     menuRouter.invalidate();
     menuOwner = null;
     clear();
@@ -3974,7 +4053,7 @@ try {
     const result = menuRouter.sample({ scope, timeMs: now });
     // Joining consumes the controller edge as assignment, but Steam may still
     // mirror that same physical press as a delayed native Enter/click.
-    controllerConfirmGuard.observe(result.confirmHeld || result.status.code === 'joined');
+    controllerConfirmGuard.observe(result.confirmHeld || controllerSession.frame().confirmHeld);
     if (result.status.code === 'joined' || Object.values(result.ui).some(Boolean))
       setReadingModality('controller');
     const released = !menuOwner && result.disconnected;
@@ -3992,9 +4071,8 @@ try {
     }
     menuStatus = frameReadError
       ? t('interface:controllerAccessIsUnavailable')
-      : !framePads.some((pad) => pad?.connected && pad.mapping === 'standard') &&
-          framePads.some((pad) => pad?.connected)
-        ? t('interface:thisControllerHasNoStandardMapping')
+      : controllerSession.state().devices.some((device) => !device.profile)
+        ? t('interface:multiplayerControllers.needsSetup')
         : result.status.message;
     if (assignmentsChanged || pendingPadLoss) {
       shell.cancelDeparture();
@@ -4068,6 +4146,8 @@ try {
     preparationStatus.dispose();
     couchTouch.destroy();
     journeyReactions.dispose();
+    controllerSetup.dispose();
+    controllerSession.dispose();
     input.destroy();
     controllerConfirmGuard.destroy();
     menuRouter.destroy();
@@ -4110,7 +4190,10 @@ try {
       input.poll();
       if (!wasRunning) sampleMenu(now);
       if (wasRunning || match.status === 'running')
-        controllerConfirmGuard.observe(menuRouter.menuConfirmPressed(framePads));
+        controllerConfirmGuard.observe(
+          menuRouter.menuConfirmPressed(controllerSession.frame().menuPads) ||
+            controllerSession.frame().confirmHeld,
+        );
       pendingPadLoss = false;
     }
     if (available && wasRunning && match.status === 'running' && !cueState.blocksPlay) {
@@ -4145,7 +4228,20 @@ try {
           for (let i = 0; i < 2; i++)
             if (match.runs[i].tick !== before[i]) {
               painters[i].effectsFor(match.runs[i].events, match.runs[i]);
-              for (const event of match.runs[i].events) sound.event(event);
+              for (const event of match.runs[i].events)
+                sound.event(
+                  event,
+                  {},
+                  event.type === 'run.completed' && candidateJourney?.owns(roundRecipe?.entry)
+                    ? {
+                        owned: true,
+                        mode: 'versus',
+                        outcome: match.runs[i].status,
+                        missionId: roundRecipe.entry.mission.id,
+                        feedback: roundRecipe.entry.campaignFeedback,
+                      }
+                    : null,
+                );
               const run = match.runs[i],
                 caption = foundationReturnCaption(run);
               if (caption)
@@ -4451,6 +4547,7 @@ try {
           throw new Error(t('interface:thisMissionBelongsToADifferentGameplayHostChooseIt'));
         const paired = libraryExternalSelections.get(row.id);
         if (
+          libraryIntent !== 'select' &&
           paired &&
           libraryInventory.state().ready &&
           libraryInventory.getInventory().packs.some((pack) => pack.id === paired.packId)
@@ -4467,8 +4564,13 @@ try {
         // The metadata request relinquishes input before the exact launch or
         // chooser adopts focus. Later staged work owns its own cancellation.
         opening.dispose();
-        if (owner.library.availability(row, 'versus').state !== 'ready') {
-          journeyChooser.open($('race-library-switch'));
+        if (
+          libraryIntent === 'select' ||
+          owner.library.availability(row, 'versus').state !== 'ready'
+        ) {
+          // A mode choice reveals this exact row. Only its explicit Play action
+          // may prepare/adopt a replacement or start either simulation.
+          journeyChooser.open($('race-chapters'));
           journeyChooser.reveal(row.id);
         } else {
           const started = await owner.library.launch(row, {
@@ -4476,7 +4578,7 @@ try {
             ...context,
           });
           if (started === false && epoch === libraryOpenEpoch && context.isCurrent()) {
-            journeyChooser.open($('race-library-switch'));
+            journeyChooser.open($('race-chapters'));
             journeyChooser.reveal(row.id);
           }
         }

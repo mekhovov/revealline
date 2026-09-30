@@ -1,6 +1,10 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { createOfflineDownloadAccess } from '../offline-download-access.mjs';
+import {
+  createRequiredOfflineDownloadAccess as createOfflineDownloadAccess,
+  isOfflinePackageRequired,
+  OFFLINE_PACKAGE_REQUIRED,
+} from '../offline-download-access.mjs';
 import { DEFAULT_JOURNEY_ROUTES } from '../content-design/default-entry.mjs';
 
 const hash = 'a'.repeat(64);
@@ -108,13 +112,16 @@ test('passive previews never open a download prompt for missing assets', async (
       prompts++;
     },
   });
-  await assert.rejects(
-    access.ensureMission(
-      { routeId: 'current', missionId: 'first', mode: 'solo' },
-      { prompt: false },
-    ),
-    /Download this chapter/,
-  );
+  const error = await access
+    .ensureMission({ routeId: 'current', missionId: 'first', mode: 'solo' }, { prompt: false })
+    .then(
+      () => null,
+      (reason) => reason,
+    );
+  assert.match(error.message, /Download this chapter/);
+  assert.equal(error.code, OFFLINE_PACKAGE_REQUIRED);
+  assert.equal(isOfflinePackageRequired(error), true);
+  assert.equal(isOfflinePackageRequired(new Error(error.message)), false);
   assert.equal(prompts, 0);
 });
 

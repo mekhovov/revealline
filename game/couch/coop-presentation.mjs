@@ -23,6 +23,19 @@ const fields = (value, names, label) => {
     `${label} is incomplete.`,
   );
 };
+function identityFields(value, names, label) {
+  const pinned = Object.hasOwn(value, 'manifestSha256');
+  fields(value, names + (pinned ? ' manifestSha256' : ''), label);
+  required(
+    !pinned || digest(value.manifestSha256),
+    'Invalid exact presentation manifest identity.',
+  );
+}
+function matchesManifest(candidate, theme) {
+  return (
+    !Object.hasOwn(candidate, 'manifestSha256') || candidate.manifestSha256 === theme.manifestSha256
+  );
+}
 function pictureIdentity(picture) {
   fields(
     picture,
@@ -36,7 +49,7 @@ function pictureIdentity(picture) {
       digest(picture.sha256) &&
       revision(picture.bytes) &&
       picture.bytes <= LIMITS.assetBytes &&
-      ['image/png', 'image/jpeg'].includes(picture.mime) &&
+      ['image/png', 'image/jpeg', 'image/webp'].includes(picture.mime) &&
       picture.width === 1152 &&
       picture.height === 576,
     t('interface:teamPictureRequiresABoundedComplete1152576PngJpeg'),
@@ -45,7 +58,7 @@ function pictureIdentity(picture) {
 function historicalPolicy(source) {
   if (source === null || source === undefined) return null;
   const policy = boundedJSON(source, { maxBytes: 4096, maxArray: 20 });
-  fields(
+  identityFields(
     policy,
     'version themeId themeRevision collection picture',
     t('interface:teamHistoricalImportPolicy'),
@@ -67,9 +80,9 @@ function historicalPolicy(source) {
 function historicalPolicies(source) {
   if (source === null || source === undefined) return [];
   const entries = Array.isArray(source)
-    ? // Current93 plus the thirty-five explicitly preserved58–92 policies.
+    ? // Current canonical104 and45 retained identities, including manifest-pinned published101.
       // Another supported edition must deliberately revisit this finite bound.
-      boundedJSON(source, { maxBytes: 36 * 1024, maxArray: 36 })
+      boundedJSON(source, { maxBytes: 43 * 1024, maxArray: 46 })
     : [source];
   const seen = new Set();
   return freezePresentation(
@@ -80,6 +93,9 @@ function historicalPolicies(source) {
         themeId: policy.themeId,
         themeRevision: policy.themeRevision,
         collection: policy.collection,
+        ...(Object.hasOwn(policy, 'manifestSha256')
+          ? { manifestSha256: policy.manifestSha256 }
+          : {}),
       });
       required(!seen.has(key), t('interface:duplicateTeamHistoricalPictureIdentity'));
       seen.add(key);
@@ -92,7 +108,7 @@ function bindingTable(source) {
   required(Array.isArray(rows), t('interface:teamPictureBindingsMustBeAFiniteList'));
   const seen = new Set();
   for (const row of rows) {
-    fields(
+    identityFields(
       row,
       'packId packRevision packSha256 levelId levelRevision levelSha256 themeId themeRevision collection picture',
       t('interface:teamBinding'),
@@ -179,6 +195,7 @@ function snapshotIdentity(snapshot, themeId) {
   return freezePresentation({
     themeId: theme.id,
     themeRevision: theme.revision,
+    manifestSha256: digest(snapshot.manifestSha256) ? snapshot.manifestSha256 : null,
     collection: collection === null ? null : { id: collection.id, revision: collection.revision },
   });
 }
@@ -331,12 +348,14 @@ export function createCoopPresentation({
         candidate.levelSha256 === levelSha256 &&
         candidate.themeId === state.theme.themeId &&
         candidate.themeRevision === state.theme.themeRevision &&
+        matchesManifest(candidate, state.theme) &&
         canonicalJSON(candidate.collection) === canonicalJSON(state.theme.collection),
     );
     const policy = policies.find(
       (candidate) =>
         state.theme.themeId === candidate.themeId &&
         state.theme.themeRevision === candidate.themeRevision &&
+        matchesManifest(candidate, state.theme) &&
         canonicalJSON(state.theme.collection) === canonicalJSON(candidate.collection),
     );
     const policyMatches = Boolean(policy);
@@ -395,6 +414,9 @@ export function createCoopPresentation({
         themeId: policy.themeId,
         themeRevision: policy.themeRevision,
         collection: policy.collection,
+        ...(Object.hasOwn(policy, 'manifestSha256')
+          ? { manifestSha256: policy.manifestSha256 }
+          : {}),
         picture: policy.picture,
       });
     }

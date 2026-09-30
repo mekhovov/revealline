@@ -113,6 +113,25 @@ async function currentJourneySources(root) {
       );
     }
   }
+  // Optional first-party routes remain launchable by their explicit Journey
+  // URL before they become the default or enter retained history. Register
+  // their presentation identities now without changing authored route data.
+  for (const routeId of ['whole-spatial-v34']) {
+    if (
+      history.has(routeId) ||
+      [DEFAULT_JOURNEY_ROUTES.solo, DEFAULT_JOURNEY_ROUTES.versus].includes(routeId)
+    )
+      continue;
+    const route = await loadAuthoredJourneyRoute(routeId);
+    if (!route) throw new Error(`Unregistered optional Journey route: ${routeId}`);
+    add(`game/content-design/route-definition.mjs#${routeId}`, route);
+    registerExecution(`game/content-design/route-definition.mjs#${routeId}`, route.source, 'solo');
+    registerExecution(
+      `game/content-design/route-definition.mjs#${routeId}`,
+      route.source,
+      'versus',
+    );
+  }
   const themes = JSON.parse(
     await fs.readFile(path.join(root, 'game/content-design/themes.json'), 'utf8'),
   );

@@ -389,6 +389,11 @@ body.field-kit.game-shell,
   scroll-margin-block: var(--fk-space-4);
 }
 
+.field-kit [data-controller-pressed='true'] {
+  transform: translateY(2px);
+  filter: brightness(1.18);
+}
+
 @media (prefers-reduced-motion: reduce) {
   .field-kit :is(button, .button, .field-kit-control) {
     transition: none;
