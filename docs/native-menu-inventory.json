@@ -594,8 +594,9 @@
     {
       "name": "Ukraine wide role variants",
       "route": "/authoring/library/ukraine-role-wide-variants/index.html",
-      "verification": "pending exact-candidate browser qualification; historical observations do not establish current acceptance",
-      "historicalVerification": "browser mount verified; shared keyboard and virtual-controller reader/navigation; physical controller not tested"
+      "verification": "source7bcd7152e / rebased5381b570a: 74 focused checks, current4/4 virtual-controller and native portrait reading/phase/cancel/return; physical/offline/published acceptance pending",
+      "historicalVerification": "browser mount verified; shared keyboard and virtual-controller reader/navigation; physical controller not tested",
+      "evidence": "docs/verification/ukraine-wide-gallery-input-2026-09-30.md"
     },
     {
       "name": "Prepared reveal review",
