@@ -579,8 +579,9 @@
     {
       "name": "Reserve illustration catalog",
       "route": "/authoring/library/reserve-illustrations-catalog/index.html",
-      "verification": "pending exact-candidate browser qualification; historical observations do not establish current acceptance",
-      "historicalVerification": "browser mount verified; shared keyboard and virtual-controller reader/navigation; physical controller not tested"
+      "verification": "At runtime fa31dcc69 and bounded-layout follow-up 140289734, restricted-server dependencies, verified atomic manifest/image loading, Retry/Cancel, endpoint focus and three stable Sections are implemented. Scoped 88/88 and overlapping final 77/77 plus Python 2/2 pass. Fresh final virtual 4/4 verifies all 40 displayed original Blobs, exact bytes/hash/full 1774 × 887 decoding, four filters/canceled choices, bounded image and six literal source types, UK/EN, Download activation and actual Studio Return. Native keys at 390 × 844 traverse all 40 originals, all six document types, pan/Fit, exact Back and sparse catalog-home return without pointer reset. Four actual OS downloads match original bytes and full RGB decoding; observer timeouts and input attribution remain explicit in the report. Separate native checks qualify HTTP 503, static README reading, delayed Cancel, ignored late response, Retry and ordinary-host Studio Return. Source-only read-only catalog: no Save/import/install/adoption contract. All 103 source references, two local documents and two excluded originals stay exact; zero Reserve package admission. 18/18 in-memory edition compiles pass at fa31; final CSS attribution preserves all 1,251 inputs and original metadata. Physical/native controllers, installed offline, full source-language translation, mobile performance and publication remain open.",
+      "historicalVerification": "browser mount verified; shared keyboard and virtual-controller reader/navigation; physical controller not tested",
+      "evidence": "docs/verification/reserve-catalog-input-2026-09-30.md"
     },
     {
       "name": "Ukraine role presentation",

@@ -3,7 +3,9 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Reserve illustrations · Authoring catalog</title>
+    <title data-i18n="tools:reserveCatalog.pageTitle">
+      Reserve illustrations · Authoring catalog
+    </title>
     <link rel="stylesheet" href="catalog.css" />
     <script
       defer
@@ -16,81 +18,126 @@
   <body>
     <main>
       <header>
-        <a class="return-link" href="../../../game/">Return to game</a>
-        <p class="eyebrow">FPV / LINE · Authoring library</p>
-        <h1>Reserve illustrations</h1>
-        <p>40 selected source works · 4 themes · 10 waves</p>
-        <p class="notice">
+        <div data-language-control></div>
+        <a class="return-link" href="../../../game/" data-i18n="tools:reserveCatalog.openGame"
+          >Open game</a
+        >
+        <p class="eyebrow">FPV / LINE</p>
+        <h1 data-i18n="tools:reserveCatalog.title">Reserve illustrations</h1>
+        <p data-i18n="tools:reserveCatalog.subtitle">
+          40 selected source works · 4 themes · 10 waves
+        </p>
+        <p class="notice" data-i18n="tools:reserveCatalog.notice">
           Source art for future authoring. These illustrations are not earned pictures or released
           levels. Nothing is installed into the game here.
         </p>
+        <div class="load-controls">
+          <button id="reserve-retry" type="button" data-i18n="common:actions.retry">Retry</button>
+          <button id="reserve-cancel" type="button" data-i18n="common:actions.cancel" hidden>
+            Cancel
+          </button>
+        </div>
       </header>
       <p id="catalog-status" class="operation-status" data-state="busy">
         <span class="operation-status-signal" aria-hidden="true"><i></i><i></i><i></i></span
-        ><span class="operation-status-label" role="status">Loading catalog…</span>
+        ><span class="operation-status-label" role="status" data-i18n="tools:reserveCatalog.loading"
+          >Loading and verifying the reserve catalog…</span
+        >
       </p>
-      <p id="image-status" role="status" hidden></p>
       <noscript
         >This catalog needs JavaScript. The <a href="manifest.json">manifest</a> records all
         selected source paths.</noscript
       >
       <div id="catalog" hidden>
-        <section class="chooser" aria-label="Choose an illustration">
-          <label for="theme">Theme</label>
+        <section class="chooser" aria-labelledby="chooser-title">
+          <h2
+            id="chooser-title"
+            data-authoring-target="theme"
+            data-i18n="tools:reserveCatalog.choose"
+          >
+            Choose an illustration
+          </h2>
+          <label for="theme" data-i18n="tools:reserveCatalog.theme">Theme</label>
           <select id="theme">
-            <option value="all">All themes</option>
+            <option value="all" data-i18n="tools:reserveCatalog.allThemes">All themes</option>
           </select>
-          <label for="selection">Illustration</label>
+          <label for="selection" data-i18n="tools:reserveCatalog.illustration">Illustration</label>
           <select id="selection" aria-describedby="selection-help"></select>
-          <p id="selection-help">
-            Use the arrow keys in either list, or the Previous and Next buttons.
+          <p id="selection-help" data-i18n="tools:reserveCatalog.help">
+            Use the lists or Previous and Next. Open Sections to jump between the chooser, image and
+            source identity.
           </p>
           <div class="steps">
-            <button id="previous" type="button">← Previous</button>
+            <button id="previous" type="button" data-i18n="tools:reserveCatalog.previous">
+              Previous
+            </button>
             <span id="position" aria-live="polite"></span>
-            <button id="next" type="button">Next →</button>
+            <button id="next" type="button" data-i18n="tools:reserveCatalog.next">Next</button>
           </div>
         </section>
         <section class="viewer" aria-labelledby="title">
           <p class="eyebrow" id="theme-wave"></p>
-          <h2 id="title"></h2>
+          <h2 id="title" data-authoring-target="image-read"></h2>
           <p id="dimensions"></p>
-          <figure>
-            <div id="image-slot"></div>
-          </figure>
-          <nav class="links" aria-label="Selected source files">
-            <a id="download">Download original PNG</a>
-            <a id="prompt">Read generation prompt</a>
-            <a id="cleanup" hidden>Read cleanup prompt</a>
-            <a id="provenance">Read provenance</a>
-            <a id="notes">Read wave notes &amp; limitations</a>
+          <figure><div id="image-slot"></div></figure>
+          <nav class="links">
+            <button id="image-read" type="button" disabled data-i18n="tools:reserveCatalog.inspect">
+              Inspect original
+            </button>
+            <a
+              id="download"
+              aria-disabled="true"
+              tabindex="-1"
+              data-i18n="tools:reserveCatalog.download"
+              >Download original PNG</a
+            >
+            <a id="prompt" data-i18n="tools:reserveCatalog.prompt">Read generation prompt</a>
+            <a id="cleanup" hidden data-i18n="tools:reserveCatalog.cleanup">Read cleanup prompt</a>
+            <a id="provenance" data-i18n="tools:reserveCatalog.provenance">Read provenance</a>
+            <a id="notes" data-i18n="tools:reserveCatalog.notes">Read wave notes and limitations</a>
           </nav>
+          <h3
+            id="identity-title"
+            data-authoring-target="identity-toggle"
+            data-i18n="tools:reserveCatalog.identity"
+          >
+            Source identity
+          </h3>
           <details>
-            <summary>Source identity</summary>
+            <summary id="identity-toggle" data-i18n="tools:reserveCatalog.identity">
+              Source identity
+            </summary>
             <dl>
-              <dt>Recorded SHA-256</dt>
+              <dt data-i18n="tools:reserveCatalog.sha">Recorded SHA-256</dt>
               <dd id="sha"></dd>
-              <dt>Git blob</dt>
+              <dt data-i18n="tools:reserveCatalog.blob">Git blob</dt>
               <dd id="blob"></dd>
-              <dt>Original path</dt>
+              <dt data-i18n="tools:reserveCatalog.path">Original path</dt>
               <dd id="path"></dd>
             </dl>
           </details>
         </section>
       </div>
       <footer>
-        <p>
-          Only the selected original loads. Downloads preserve its PNG bytes; no thumbnails or
-          resized files are created. Source artwork is imaginative, with equipment and cultural
-          details qualified in each wave’s notes.
+        <p data-i18n="tools:reserveCatalog.footer">
+          Only the selected original loads. Inspect opens a verified copy in a bounded reader.
+          Downloads preserve its PNG bytes. Equipment and cultural details are qualified in each
+          wave’s notes.
+        </p>
+        <p data-i18n="tools:reserveCatalog.excluded">
+          Two unselected early outputs remain preserved in Git and are outside this 40-work chooser.
+          Source documents retain their original language.
         </p>
         <p>
-          Two unselected early outputs remain preserved in Git and are outside this 40-work chooser.
-          <a href="manifest.json">Catalog manifest</a> ·
-          <a href="README.md">Catalog usage and verification</a>
+          <a id="catalog-manifest" href="manifest.json" data-i18n="tools:reserveCatalog.manifest"
+            >Catalog manifest</a
+          >
+          ·
+          <a id="catalog-readme" href="README.md" data-i18n="tools:reserveCatalog.readme"
+            >Catalog usage and verification</a
+          >
         </p>
       </footer>
     </main>
-    <script type="module" src="../../../game/ui/authoring-reference-entry.mjs"></script>
   </body>
 </html>
