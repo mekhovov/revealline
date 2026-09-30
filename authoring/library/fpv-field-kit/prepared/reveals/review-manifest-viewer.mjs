@@ -57,6 +57,7 @@ export function mountPreparedRevealManifestViewer({
   let disposed = false,
     visit = 0,
     operation = null,
+    retryFocusOwner = null,
     source = null,
     origin = null,
     ready = false,
@@ -104,6 +105,7 @@ export function mountPreparedRevealManifestViewer({
     timeout = null;
     operation?.abort();
     operation = null;
+    retryFocusOwner = null;
   }
   function close({ restoreFocus = true } = {}) {
     const target = origin,
@@ -134,12 +136,19 @@ export function mountPreparedRevealManifestViewer({
     refresh();
   }
   async function prepare() {
+    const ownsRetry = current() && doc.activeElement === retry;
     abort();
     release();
     const controller = new AbortController(),
       generation = visit,
       selected = source;
     operation = controller;
+    // Retry becomes disabled while loading. Give its captured focus to the
+    // reachable Back action before neutral polling chooses another control.
+    if (ownsRetry) {
+      retryFocusOwner = controller;
+      back.focus();
+    }
     show('documentLoading');
     refresh();
     const valid = () =>
@@ -148,12 +157,16 @@ export function mountPreparedRevealManifestViewer({
       visit === generation &&
       operation === controller &&
       !controller.signal.aborted;
+    const restoreRetry = () =>
+      retryFocusOwner === controller && valid() && doc.activeElement === back;
     timeout = win.setTimeout(() => {
       if (valid()) {
+        const restore = restoreRetry();
         abort();
         release();
         show('documentUnavailable', true);
         refresh();
+        if (restore && current()) retry.focus();
       }
     }, 30000);
     try {
@@ -172,10 +185,13 @@ export function mountPreparedRevealManifestViewer({
       }
     } finally {
       if (operation === controller) {
+        const restore = restoreRetry();
         if (timeout !== null) win.clearTimeout(timeout);
         timeout = null;
         operation = null;
+        retryFocusOwner = null;
         refresh();
+        if (restore && current()) retry.focus();
       }
     }
   }
@@ -226,6 +242,7 @@ export function mountPreparedRevealManifestViewer({
     if (!dialog.open && source) close({ restoreFocus: false });
   };
   const focus = () => {
+    if (retryFocusOwner && doc.activeElement !== back) retryFocusOwner = null;
     if (operation && !dialog.contains(doc.activeElement)) interrupted();
   };
   const hidden = () => {

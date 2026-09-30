@@ -1,6 +1,9 @@
 // Current qualification cases; legacy cases in the parent runner remain attributed
 // to their historical receipts. Every edit below uses the real controller owner.
-import { preparedRevealCurrent } from './prepared-reveal-current-workflow.mjs';
+import {
+  preparedRevealCurrent,
+  preparedRevealDocumentsCurrent,
+} from './prepared-reveal-current-workflow.mjs';
 import { importThemeBundle } from '../../presentation/bundle.mjs';
 import { validateScenario } from '../../content.mjs';
 import { validateEnemyCatalogDraft } from '../../enemy-catalog.mjs';
@@ -47,6 +50,7 @@ const value = (p, css) => p.doc.querySelector(css).value;
 
 export const currentAuthoringCases = {
   preparedRevealCurrent,
+  preparedRevealDocumentsCurrent,
   fpvRoleGalleryCurrent,
   reserveCatalogCurrent,
   fpvEnemyGalleryCurrent,

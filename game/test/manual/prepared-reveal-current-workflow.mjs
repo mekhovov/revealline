@@ -49,7 +49,7 @@ const bounds = (region) => ({
 export const preparedRevealCurrent = [
   'Current prepared reveals: 44 exact frames, bounded provenance/documents and unchanged-source return',
   '/authoring/library/fpv-field-kit/prepared/reveals/review.html',
-  async (p) => {
+  async (p, { imageMatrix = true } = {}) => {
     const doc = p.doc,
       win = doc.defaultView,
       $ = (selector) => doc.querySelector(selector);
@@ -390,139 +390,143 @@ export const preparedRevealCurrent = [
       unchanged();
       await p.pageActions();
       assert(doc.activeElement === $('[data-language-select]'), 'Page actions missed the header.');
-      const visits = [];
-      for (const [index, asset] of assets.entries()) {
-        await p.section(`#prepared-reveal-${asset.id}`);
-        assert(
-          doc.activeElement === $(id('read', asset)) &&
-            !$(id('native-details', asset)).open &&
-            !$(id('provenance-details', asset)).open,
-          'Sections did not reach the specimen safely without opening another view.',
-        );
-        if ([0, 21, 43].includes(index)) {
-          const opener = doc.activeElement;
-          await p.pulse('menu');
-          await p.wait(() => $('.authoring-sections-dialog').open);
-          await p.pulse('back');
-          assert(doc.activeElement === opener, 'Canceled Sections lost its exact card.');
+      if (imageMatrix) {
+        const visits = [];
+        for (const [index, asset] of assets.entries()) {
+          await p.section(`#prepared-reveal-${asset.id}`);
+          assert(
+            doc.activeElement === $(id('read', asset)) &&
+              !$(id('native-details', asset)).open &&
+              !$(id('provenance-details', asset)).open,
+            'Sections did not reach the specimen safely without opening another view.',
+          );
+          if ([0, 21, 43].includes(index)) {
+            const opener = doc.activeElement;
+            await p.pulse('menu');
+            await p.wait(() => $('.authoring-sections-dialog').open);
+            await p.pulse('back');
+            assert(doc.activeElement === opener, 'Canceled Sections lost its exact card.');
+          }
+          const specimen = $(id('specimen', asset)),
+            image = specimen.querySelector('img'),
+            observed = await decode(image, asset.file, { specimen: true });
+          await enterReader(id('read', asset));
+          const reading = await pan(specimen);
+          await exitReader(id('read', asset), index % 2 ? 'confirm' : 'back');
+          visits.push({ id: asset.id, ...observed, reading });
+          unchanged();
         }
-        const specimen = $(id('specimen', asset)),
-          image = specimen.querySelector('img'),
-          observed = await decode(image, asset.file, { specimen: true });
-        await enterReader(id('read', asset));
-        const reading = await pan(specimen);
-        await exitReader(id('read', asset), index % 2 ? 'confirm' : 'back');
-        visits.push({ id: asset.id, ...observed, reading });
-        unchanged();
-      }
-      p.record(
-        'All 44 stable Sections reach their real 240px specimens; every displayed Blob matches preserved bytes and fully decodes, with bounded reader exits and canceled Sections',
-        '#status',
-        {
-          viewport: [win.innerWidth, win.innerHeight],
-          produced: manifest.produced,
-          visits,
-          boundary:
-            'No art generation/adoption or runtime quality approval. Zero-overflow readers are not scrolling evidence.',
-        },
-      );
-
-      const nativeVisits = [],
-        representative = new Set(),
-        provenance = [];
-      for (const [index, asset] of assets.entries()) {
-        await p.section(`#prepared-reveal-${asset.id}`);
-        await p.choose(id('native-toggle', asset));
-        assert($(id('native-details', asset)).open, 'Native disclosure did not open.');
-        const native = $(id('native', asset)),
-          image = native.querySelector('img'),
-          displayed = await decode(image, asset.file);
-        assert(
-          displayed.url === $(id('specimen', asset)).querySelector('img').src,
-          'Native inspection diverged from its verified specimen Blob.',
+        p.record(
+          'All 44 stable Sections reach their real 240px specimens; every displayed Blob matches preserved bytes and fully decodes, with bounded reader exits and canceled Sections',
+          '#status',
+          {
+            viewport: [win.innerWidth, win.innerHeight],
+            produced: manifest.produced,
+            visits,
+            boundary:
+              'No art generation/adoption or runtime quality approval. Zero-overflow readers are not scrolling evidence.',
+          },
         );
-        await enterReader(id('native-read', asset));
-        const size = `${asset.file.width}x${asset.file.height}`,
-          reading = representative.has(size) ? bounds(native) : await pan(native);
-        const firstSize = !representative.has(size);
-        representative.add(size);
-        await exitReader(id('native-read', asset), index % 2 ? 'back' : 'confirm');
-        await p.choose(id('native-toggle', asset));
-        assert(!$(id('native-details', asset)).open, 'Native disclosure retained its open state.');
-        nativeVisits.push({ id: asset.id, ...displayed, reading, panned: firstSize });
-        if (firstSize) {
-          await p.choose(id('provenance-toggle', asset));
-          assert($(id('provenance-details', asset)).open, 'Provenance disclosure did not open.');
-          const region = $(id('provenance', asset)),
-            pre = region.querySelector('pre'),
-            content = JSON.parse(pre?.textContent ?? region.textContent);
+
+        const nativeVisits = [],
+          representative = new Set(),
+          provenance = [];
+        for (const [index, asset] of assets.entries()) {
+          await p.section(`#prepared-reveal-${asset.id}`);
+          await p.choose(id('native-toggle', asset));
+          assert($(id('native-details', asset)).open, 'Native disclosure did not open.');
+          const native = $(id('native', asset)),
+            image = native.querySelector('img'),
+            displayed = await decode(image, asset.file);
           assert(
-            content.prompt === asset.provenance.prompt &&
-              same(content.source, asset.provenance.source) &&
-              same(content.owners, asset.slotIds) &&
-              same(content.crop, asset.preparation.sourceCrop),
-            'Provenance reader omitted original prompt, identity or owners.',
+            displayed.url === $(id('specimen', asset)).querySelector('img').src,
+            'Native inspection diverged from its verified specimen Blob.',
           );
+          await enterReader(id('native-read', asset));
+          const size = `${asset.file.width}x${asset.file.height}`,
+            reading = representative.has(size) ? bounds(native) : await pan(native);
+          const firstSize = !representative.has(size);
+          representative.add(size);
+          await exitReader(id('native-read', asset), index % 2 ? 'back' : 'confirm');
+          await p.choose(id('native-toggle', asset));
           assert(
-            !region.querySelector('textarea,input'),
-            'Provenance review exposed an editing surface.',
+            !$(id('native-details', asset)).open,
+            'Native disclosure retained its open state.',
           );
-          await enterReader(id('provenance-read', asset));
-          const readBounds = await pan(region);
-          await exitReader(id('provenance-read', asset));
+          nativeVisits.push({ id: asset.id, ...displayed, reading, panned: firstSize });
+          if (firstSize) {
+            await p.choose(id('provenance-toggle', asset));
+            assert($(id('provenance-details', asset)).open, 'Provenance disclosure did not open.');
+            const region = $(id('provenance', asset)),
+              pre = region.querySelector('pre'),
+              content = JSON.parse(pre?.textContent ?? region.textContent);
+            assert(
+              content.prompt === asset.provenance.prompt &&
+                same(content.source, asset.provenance.source) &&
+                same(content.owners, asset.slotIds) &&
+                same(content.crop, asset.preparation.sourceCrop),
+              'Provenance reader omitted original prompt, identity or owners.',
+            );
+            assert(
+              !region.querySelector('textarea,input'),
+              'Provenance review exposed an editing surface.',
+            );
+            await enterReader(id('provenance-read', asset));
+            const readBounds = await pan(region);
+            await exitReader(id('provenance-read', asset));
+            assert(
+              $(id('provenance-details', asset)).open,
+              'Reader Back closed its parent disclosure.',
+            );
+            await p.choose(id('provenance-toggle', asset));
+            provenance.push({
+              id: asset.id,
+              promptCharacters: asset.provenance.prompt.length,
+              ...readBounds,
+            });
+          }
+          unchanged();
+        }
+        const retainedNodes = assets.map((asset) => ({
+          specimen: $(id('specimen', asset)),
+          native: $(id('native', asset)),
+          provenance: $(id('provenance', asset)),
+          image: $(id('specimen', asset)).querySelector('img'),
+        }));
+        await p.pageActions();
+        await p.choose('#prepared-reveal-retry');
+        await p.wait(
+          () =>
+            $('#status').dataset.state === 'ready' &&
+            $(id('specimen', assets[0])).querySelector('img') !== retainedNodes[0].image,
+          30000,
+        );
+        assert(
+          doc.activeElement === $('#prepared-reveal-retry'),
+          'Page Retry completion lost ownership.',
+        );
+        for (const [index, asset] of assets.entries()) {
+          const retained = retainedNodes[index];
           assert(
-            $(id('provenance-details', asset)).open,
-            'Reader Back closed its parent disclosure.',
+            retained.specimen === $(id('specimen', asset)) &&
+              retained.native === $(id('native', asset)) &&
+              retained.provenance === $(id('provenance', asset)) &&
+              !$(id('native-details', asset)).open &&
+              !$(id('provenance-details', asset)).open,
+            'Retry replaced a reading destination or changed a disclosure.',
           );
-          await p.choose(id('provenance-toggle', asset));
-          provenance.push({
-            id: asset.id,
-            promptCharacters: asset.provenance.prompt.length,
-            ...readBounds,
-          });
         }
         unchanged();
-      }
-      const retainedNodes = assets.map((asset) => ({
-        specimen: $(id('specimen', asset)),
-        native: $(id('native', asset)),
-        provenance: $(id('provenance', asset)),
-        image: $(id('specimen', asset)).querySelector('img'),
-      }));
-      await p.pageActions();
-      await p.choose('#prepared-reveal-retry');
-      await p.wait(
-        () =>
-          $('#status').dataset.state === 'ready' &&
-          $(id('specimen', assets[0])).querySelector('img') !== retainedNodes[0].image,
-        30000,
-      );
-      assert(
-        doc.activeElement === $('#prepared-reveal-retry'),
-        'Page Retry completion lost ownership.',
-      );
-      for (const [index, asset] of assets.entries()) {
-        const retained = retainedNodes[index];
-        assert(
-          retained.specimen === $(id('specimen', asset)) &&
-            retained.native === $(id('native', asset)) &&
-            retained.provenance === $(id('provenance', asset)) &&
-            !$(id('native-details', asset)).open &&
-            !$(id('provenance-details', asset)).open,
-          'Retry replaced a reading destination or changed a disclosure.',
+        p.record(
+          'All 44 native disclosures retain exact 1:1 frames; three dimension families and provenance readers reach bounded edges and return, while Retry preserves every destination',
+          '#status',
+          {
+            nativeVisits,
+            provenance,
+            retry: { focus: doc.activeElement.id, stableCards: assets.length },
+          },
         );
       }
-      unchanged();
-      p.record(
-        'All 44 native disclosures retain exact 1:1 frames; three dimension families and provenance readers reach bounded edges and return, while Retry preserves every destination',
-        '#status',
-        {
-          nativeVisits,
-          provenance,
-          retry: { focus: doc.activeElement.id, stableCards: assets.length },
-        },
-      );
-
       const documents = [];
       for (const sourceId of ['manifest', 'guide']) {
         const { surface, opener } = await openSource(sourceId),
@@ -713,4 +717,13 @@ export const preparedRevealCurrent = [
       stopDiagnostics();
     }
   },
+];
+
+// A separately reported, smaller diagnostic journey. It uses exactly the same
+// document/locale/return commands and assertions as stages 3–4 of the full case.
+// Its two stages do not qualify the omitted 44-specimen/native-frame matrices.
+export const preparedRevealDocumentsCurrent = [
+  'Current prepared reveal documents: exact sources, Retry, locale and real return (two stages only)',
+  preparedRevealCurrent[1],
+  (p) => preparedRevealCurrent[2](p, { imageMatrix: false }),
 ];
