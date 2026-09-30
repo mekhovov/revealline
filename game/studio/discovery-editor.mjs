@@ -39,7 +39,9 @@ export function createDiscoveryEditor({
   apply,
 }) {
   const $ = (id) => document.getElementById(`discovery-${id}`);
-  let mediaPreviews = [];
+  let mediaPreviews = [],
+    disposed = false,
+    generation = 0;
   const disposeMediaPreviews = () => {
     mediaPreviews.forEach((viewer) => viewer.dispose());
     mediaPreviews = [];
@@ -216,6 +218,7 @@ export function createDiscoveryEditor({
     return viewer.button;
   }
   function sync() {
+    if (disposed) return;
     const mission = getMission();
     $('tools').disabled = !mission;
     if (key === context()) return;
@@ -348,29 +351,52 @@ export function createDiscoveryEditor({
   if ($('import')) {
     $('import').disabled = !!getRewards;
     $('import').onchange = async () => {
+      const visit = ++generation;
+      if (disposed) return;
       try {
         const file = $('import').files[0];
         if (!file) return;
         required(file.size <= 8 * 1024 * 1024, 'Reward sidecar exceeds 8 MiB.');
-        imported = validateCompletionRewards(
+        const candidate = validateCompletionRewards(
           boundedJSON(await file.text(), {
             maxBytes: 8 * 1024 * 1024,
             maxNodes: 500000,
             maxArray: 512,
           }),
         );
+        if (disposed || visit !== generation) return;
+        imported = candidate;
         key = null;
         sync();
         localizedText($('result'), localizedMessage('tools:studio.discovery.imported'));
       } catch (error) {
-        showEditorFailure($('result'), error);
+        if (!disposed && visit === generation) showEditorFailure($('result'), error);
       }
     };
   }
+  function suspend() {
+    if (disposed) return;
+    generation++;
+    disposeMediaPreviews();
+    for (const editor of [
+      exploration,
+      teasers,
+      cosmetics,
+      assetHandoff,
+      audioHandoff,
+      videoHandoff,
+      audioGroups,
+      feedback,
+    ])
+      editor.suspend();
+  }
   return {
     sync,
+    suspend,
     dispose() {
-      disposeMediaPreviews();
+      if (disposed) return;
+      suspend();
+      disposed = true;
       exploration.dispose();
       resources.dispose();
       teasers.dispose();

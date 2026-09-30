@@ -1379,7 +1379,9 @@ window.addEventListener('pagehide', (event) => {
   // A restored Studio keeps its draft, but needs a deliberate new preview.
   // Retire without moving focus, before any asynchronous completion can revive it.
   retirePreview();
+  discoveryEditor.suspend();
   if (!event.persisted) {
+    discoveryEditor.dispose();
     sourceDiscard.destroy();
     stopSpatialReviews();
     stopGameplayTuning();
