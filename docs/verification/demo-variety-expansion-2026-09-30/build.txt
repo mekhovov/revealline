@@ -1,0 +1,10 @@
+> revealline@0.142.4 build
+> node scripts/game-cli.mjs build
+
+{
+  "out": "/Users/oleksandr.mekhovov/.codex/worktrees/community-admission/go_test/dist",
+  "version": "0.142.4",
+  "files": 2660,
+  "sha256": "ba9e89b118ea490873ad97ba582a743e639d4c5ba78ba0f2e05d84e506b09c43",
+  "sourceRevision": null
+}
