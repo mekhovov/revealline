@@ -565,8 +565,9 @@
     {
       "name": "FPV enemy presentation",
       "route": "/authoring/library/fpv-enemy-presentations/index.html",
-      "verification": "pending exact-candidate browser qualification; historical observations do not establish current acceptance",
-      "historicalVerification": "browser mount verified; shared keyboard and virtual-controller reader/navigation; physical controller not tested"
+      "verification": "At 92131cea9, 70/70 focused checks and separate 2/2 inventory checks pass. Seven stable role targets and nine pinned source readers retain shared input ownership. The first complete virtual workflow passes 4/4: all 28 role-heading combinations, canceled choices, Retry, 57 stable samples, seven byte-exact fully decoded originals, two literal documents, bounded reading, UK/EN labels and exact Back/Asset Studio Return. Native keys at verified 390x844 reach all nine readers and seven sections without pointer reset; a complete selector repeat covers all roles/headings and pivots. Native popup Escape committed its highlighted heading, so cancellation restoration is virtual-controller evidence only. Controlled delayed loading reproduces the old mutable-image failure and confirms the fix; pending Cancel and 503/Retry preserve measurements and focus. Original artwork, provenance and separately shipped sprites are unchanged; the gallery remains source-only. Fresh 18/18 in-memory edition compiles pass with 281,799-byte minimum headroom. Physical controllers, native builds, installed offline, publication and translated source prose remain separate.",
+      "historicalVerification": "browser mount verified; shared keyboard and virtual-controller reader/navigation; physical controller not tested",
+      "evidence": "docs/verification/fpv-enemy-gallery-input-2026-09-30.md"
     },
     {
       "name": "FPV role presentation",
