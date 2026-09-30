@@ -8125,6 +8125,7 @@ try {
     show('retry-button', kind === 'won' || kind === 'lost');
     show('start-button', kind === 'ready' || kind === 'pause');
     show('overlay-restart', kind === 'pause');
+    show('overlay-random-level', kind === 'pause' && !practiceSession);
     show('overlay-missions', kind === 'pause');
     show('overlay-settings', kind === 'pause');
     show('overlay-sound', kind === 'pause');
@@ -10620,6 +10621,9 @@ try {
     mission?.focus();
     mission?.scrollIntoView({ block: 'nearest', behavior: 'auto' });
   };
+  $('overlay-random-level').onclick = () => {
+    if (!practiceSession) void openUnifiedMissions($('overlay-random-level'), { random: true });
+  };
   $('pause-button').onclick = () => pause();
   const restartDialog = $('restart-dialog');
   const restartCopy = $('restart-dialog-copy').textContent;
@@ -12027,6 +12031,10 @@ try {
       )
         return;
       unifiedChooser.open(opener, options);
+      if (options?.random) {
+        unifiedChooser.playRandom({ resetFilters: true });
+        return;
+      }
       if (options?.focusSetup) {
         const setup = $('mission-picker-setup');
         const control = $(options.focusSetup);
