@@ -1,5 +1,11 @@
 # Levels, gameplay and presentation — 29 September 2026
 
+Historical snapshot retained with the source donor. For current integration,
+verification and release status, use [the 30 September checkpoint](plan-status-2026-09-30-levels.md).
+Later 29 September reconciliation is preserved at
+[PR780 head 5d942540](https://github.com/mekhovov/revealline/blob/5d942540e5720d739568d8580ae35d5551253481/docs/plan-status-2026-09-29-levels.md).
+Do not treat the dated queue or pending holds below as current release state.
+
 This is the Levels lane's current implementation and acceptance checkpoint.
 Preserve earlier dated plans as history. The original **Journey P00–P15** and
 the broader **whole-game P00–P18** are different programmes, not interchangeable
