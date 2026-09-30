@@ -1,0 +1,303 @@
+{
+  "version": "xonix-replay.v3",
+  "build": "authored-attract-mistake.v1",
+  "ruleset": "xonix-core.v2",
+  "level": {
+    "version": "xonix-level.v1",
+    "id": "signal-06",
+    "revision": "gp4s-3ff00000000000003ff00000000000003ff0000000000000-f2fd952c2f9eb5e2",
+    "name": "Hidden Frequency",
+    "width": 48,
+    "height": 36,
+    "spawn": {
+      "x": 24.5,
+      "y": 0.5
+    },
+    "walls": [],
+    "enemies": [
+      {
+        "id": "west",
+        "type": "bouncer",
+        "x": 10.5,
+        "y": 20.5,
+        "vx": 8.53862511250384,
+        "vy": 7.013870628128155,
+        "radius": 0.3,
+        "course": "field-course.v2"
+      },
+      {
+        "id": "east",
+        "type": "bouncer",
+        "x": 38.5,
+        "y": 25.5,
+        "vx": -8.576059701284734,
+        "vy": -6.9680485072938465,
+        "radius": 0.3,
+        "course": "field-course.v2"
+      }
+    ],
+    "objectives": [
+      {
+        "id": "hidden-relay",
+        "x": 8.5,
+        "y": 10.5,
+        "required": true,
+        "hidden": true
+      },
+      {
+        "id": "bonus",
+        "x": 37.5,
+        "y": 30.5,
+        "required": false,
+        "hidden": false
+      }
+    ],
+    "supplies": [
+      {
+        "id": "home",
+        "x": 24.5,
+        "y": 0.5,
+        "radius": 2
+      }
+    ],
+    "goal": {
+      "coverage": 0.68
+    },
+    "rules": {
+      "lives": 3,
+      "moveSpeed": 8.84,
+      "boostMultiplier": 1.5,
+      "respawnSeconds": 0.7,
+      "graceSeconds": 0.7,
+      "playerRadius": 0.18,
+      "pointsPerCell": 10,
+      "objectivePoints": 500,
+      "timeMedals": [65, 113],
+      "switchCooldownSeconds": 2,
+      "timeLimitSeconds": 0,
+      "cutTimeLimitSeconds": 0,
+      "maxTrailCells": 0
+    },
+    "signalZones": [],
+    "hangars": [
+      {
+        "id": "home-hangar",
+        "x": 24.5,
+        "y": 0.5,
+        "radius": 2
+      }
+    ]
+  },
+  "options": {
+    "seed": 186,
+    "turnPolicy": "immediate",
+    "classId": "impact",
+    "classRecipes": [
+      {
+        "id": "scout",
+        "label": "Scout",
+        "description": "Mark hidden objectives permanently; show enemy direction hints for four seconds. No slowing.",
+        "primitive": "scan",
+        "capacity": 0,
+        "cooldown": 6,
+        "duration": 4,
+        "radius": 48,
+        "revision": "1"
+      },
+      {
+        "id": "bomber",
+        "label": "Light carrier",
+        "description": "Pick up one charge at a supply pad; drop a field that stuns nearby field enemies.",
+        "primitive": "stun-field",
+        "capacity": 1,
+        "cooldown": 2,
+        "duration": 2.5,
+        "radius": 3,
+        "revision": "1"
+      },
+      {
+        "id": "carrier",
+        "label": "Heavy carrier",
+        "description": "Carry two charges; each creates the same temporary stun field.",
+        "primitive": "stun-field",
+        "capacity": 2,
+        "cooldown": 2,
+        "duration": 2.5,
+        "radius": 3,
+        "revision": "1"
+      },
+      {
+        "id": "interceptor",
+        "label": "Interceptor",
+        "description": "Absorb one enemy or lane contact: cancel the cut and recover at spawn without losing a life. Self-crossing remains dangerous.",
+        "primitive": "shield",
+        "capacity": 0,
+        "cooldown": 9,
+        "duration": 1.5,
+        "radius": 0,
+        "revision": "1"
+      },
+      {
+        "id": "fiber",
+        "label": "Fiber relay",
+        "description": "Ignore signal interference and scan for hidden relays. Your cable is the live trail: enemy contact still breaks it.",
+        "primitive": "scan",
+        "capacity": 0,
+        "cooldown": 7,
+        "duration": 3,
+        "radius": 30,
+        "signalResistance": true,
+        "moveSpeedMultiplier": 1,
+        "revision": "1"
+      },
+      {
+        "id": "impact",
+        "label": "Impact craft",
+        "description": "Release a close-range stun pulse, abandon the unfinished cut and redeploy at home without losing a life. The pulse never captures territory.",
+        "primitive": "impact-pulse",
+        "capacity": 0,
+        "cooldown": 10,
+        "duration": 3,
+        "radius": 5,
+        "revision": "1"
+      },
+      {
+        "id": "trapper",
+        "label": "Trapper",
+        "description": "Pick up one charge and place a four-second field that slows field enemies to one quarter speed.",
+        "primitive": "slow-field",
+        "capacity": 1,
+        "cooldown": 2,
+        "duration": 4,
+        "radius": 4,
+        "slowFactor": 0.25,
+        "revision": "1"
+      }
+    ]
+  },
+  "segments": [
+    {
+      "ticks": 48,
+      "input": {
+        "direction": null,
+        "boost": false,
+        "action": false,
+        "pickup": false,
+        "switchClass": null
+      },
+      "releaseBefore": false
+    },
+    {
+      "ticks": 217,
+      "input": {
+        "direction": "right",
+        "boost": false,
+        "action": false,
+        "pickup": false,
+        "switchClass": null
+      },
+      "releaseBefore": false
+    },
+    {
+      "ticks": 32,
+      "input": {
+        "direction": "down",
+        "boost": false,
+        "action": false,
+        "pickup": false,
+        "switchClass": null
+      },
+      "releaseBefore": false
+    },
+    {
+      "ticks": 16,
+      "input": {
+        "direction": "left",
+        "boost": false,
+        "action": false,
+        "pickup": false,
+        "switchClass": null
+      },
+      "releaseBefore": false
+    },
+    {
+      "ticks": 1,
+      "input": {
+        "direction": "right",
+        "boost": false,
+        "action": false,
+        "pickup": false,
+        "switchClass": null
+      },
+      "releaseBefore": false
+    },
+    {
+      "ticks": 233,
+      "input": {
+        "direction": null,
+        "boost": false,
+        "action": false,
+        "pickup": false,
+        "switchClass": null
+      },
+      "releaseBefore": false
+    }
+  ],
+  "releaseAfter": false,
+  "ticks": 547,
+  "summary": {
+    "ruleset": "xonix-core.v2",
+    "levelId": "signal-06",
+    "revision": "gp4s-3ff00000000000003ff00000000000003ff0000000000000-f2fd952c2f9eb5e2",
+    "seed": 186,
+    "turnPolicy": "immediate",
+    "classId": "impact",
+    "activeClassId": "impact",
+    "rosterHash": "roster-v1-e159e435",
+    "classHistory": [
+      {
+        "classId": "impact",
+        "classRevision": "1",
+        "loadoutHash": "loadout-v1-ac8eb5df",
+        "tick": 0
+      }
+    ],
+    "switches": 0,
+    "failureCause": "self-contact",
+    "classRevision": "1",
+    "loadoutHash": "loadout-v1-ac8eb5df",
+    "status": "running",
+    "won": false,
+    "tick": 547,
+    "time": 4.55833333333335,
+    "lives": 2,
+    "score": 0,
+    "coverage": 0,
+    "claimedCount": 0,
+    "totalClaimable": 1564,
+    "medal": null,
+    "objectives": {
+      "captured": 0,
+      "total": 2,
+      "required": 1
+    }
+  },
+  "checkpoint": {
+    "algorithm": "fnv1a64-state-v2",
+    "hash": "31fa4eda28a0fa11",
+    "sections": {
+      "identity": "16c6e89ee73bcf67",
+      "configuration": "8d2415e49666b39a",
+      "board": "fdfff9d1d17aa722",
+      "player": "56d8337036cbf482",
+      "trail": "f0ca473df9efdcc8",
+      "enemies": "4687f35014459ee3",
+      "objectives": "de763ee94d2a48e5",
+      "supplies": "e1b45854413ff5f8",
+      "ability": "961bece3fc7c0676",
+      "clock": "2179be809ad6f26f",
+      "continuation": "a1e7286b42b404e7",
+      "result": "5b9bc4ba528108e4"
+    }
+  }
+}

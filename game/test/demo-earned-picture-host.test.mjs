@@ -209,6 +209,30 @@ test('mounted demo uses an earned release original without a durable assignment 
     );
 
   await t.test(
+    'picture privacy replaces an earned original only inside demo and practice',
+    async (t) => {
+      const storage = memoryStorage();
+      assert.equal(saveLibrary(storage, PROFILE, earned).ok, true);
+      const page = await demoPage(t, { storage, soundtrackIndexedDB: database.indexedDB });
+      page.$('demo-hide-pictures').checked = true;
+      page.$('demo-hide-pictures').emit('change');
+      await page.open();
+      assert.equal(page.demoFrame.options.pictureVisibility, 'blurred');
+      assert.equal(
+        page.$('demo-picture-note').textContent,
+        'Picture hidden by your demo privacy setting.',
+      );
+      page.$('demo-interrupt').click();
+      page.frame(0);
+      page.$('demo-takeover').click();
+      await settle(() => !page.$('demo-practice-controls').hidden);
+      page.frame(0);
+      assert.equal(page.demoFrame.options.pictureVisibility, 'blurred');
+      assert.equal(loadLibrary(storage, PROFILE).library.gallery.length, 1);
+    },
+  );
+
+  await t.test(
     'another unearned level stays obscured in fresh practice despite the existing receipt',
     async (t) => {
       const storage = memoryStorage();

@@ -19,6 +19,15 @@ import { attachDemoAudio } from './demo-audio.mjs';
 import { bindingLabels } from '../key-bindings.mjs';
 import { controllerBindingLabels } from '../controller-bindings.mjs';
 
+export function resolveDemoTheme(entry, level, preferredThemeId) {
+  return (
+    entry.themes.find((item) => item.id === level.themeId) ||
+    entry.themes.find((item) => item.id === entry.campaign.themeId) ||
+    entry.themes.find((item) => item.id === preferredThemeId) ||
+    entry.themes[0]
+  );
+}
+
 /** In-page spectator/practice owner. All campaign mutations are outside this host. */
 export function attachDemoHost({
   document: doc = globalThis.document,
@@ -84,6 +93,8 @@ export function attachDemoHost({
     if ($(id).textContent !== value) $(id).textContent = value;
   };
   const currentRun = () => practice?.state ?? director?.player?.state;
+  const pictureVisibility = () =>
+    settings.hidePictures ? 'blurred' : (picture?.pictureVisibility ?? 'blurred');
   const foreground = () => !doc.hidden && doc.hasFocus();
   const ownsUI = () => !!doc.activeElement?.closest?.('[data-demo-ui]');
   const watching = () => active && !practice && !interrupted && !busy;
@@ -98,7 +109,15 @@ export function attachDemoHost({
     const loading = busy || !director?.player;
     text(
       'demo-source',
-      t(practice ? 'demo:practice' : source?.kind === 'bot' ? 'demo:live' : 'demo:recorded'),
+      t(
+        practice
+          ? 'demo:practice'
+          : source?.kind === 'bot'
+            ? 'demo:live'
+            : source?.kind === 'improv'
+              ? 'demo:improv'
+              : 'demo:recorded',
+      ),
     );
     text('demo-level', source ? contentText(source.level, 'name') : t('demo:loading'));
     text(
@@ -112,7 +131,9 @@ export function attachDemoHost({
               : 'demo:practicePaused'
           : state?.status === 'won'
             ? 'demo:recapWin'
-            : caption,
+            : state?.status === 'lost'
+              ? 'demo:recapLoss'
+              : caption,
         { percent: Math.round((state?.coverage ?? 0) * 100) },
       ),
     );
@@ -131,7 +152,13 @@ export function attachDemoHost({
     );
     text(
       'demo-picture-note',
-      t(picture?.pictureVisibility === 'clear' ? 'demo:earnedPicture' : 'demo:blurredPicture'),
+      t(
+        settings.hidePictures
+          ? 'demo:hiddenPicture'
+          : pictureVisibility() === 'clear'
+            ? 'demo:earnedPicture'
+            : 'demo:blurredPicture',
+      ),
     );
     $('demo-actions').hidden = !interrupted && !practice;
     $('demo-takeover').hidden = !!practice;
@@ -263,10 +290,7 @@ export function attachDemoHost({
       check();
       const current = getContext(),
         entry = source.entry;
-      const theme =
-        entry.themes.find((item) => item.id === source.level.themeId) ||
-        entry.themes.find((item) => item.id === entry.campaign.themeId) ||
-        entry.themes[0];
+      const theme = resolveDemoTheme(entry, source.level, current.themeId);
       nextPainter = new BoardPainter(presets);
       nextPainter.setLevel(source.level, { seed: player.info.seed });
       const overrides = {
@@ -605,7 +629,12 @@ export function attachDemoHost({
   for (const type of ['keydown', 'pointerdown', 'wheel'])
     listen(doc, type, () => idle.activity(), true);
   const saveSettings = () => {
-    settings = { ...settings, auto: $('demo-auto').checked, collect: $('demo-collect').checked };
+    settings = {
+      ...settings,
+      auto: $('demo-auto').checked,
+      collect: $('demo-collect').checked,
+      hidePictures: $('demo-hide-pictures').checked,
+    };
     setCollect(settings.collect);
     idle.activity();
     try {
@@ -616,9 +645,11 @@ export function attachDemoHost({
   };
   $('demo-auto').checked = settings.auto;
   $('demo-collect').checked = settings.collect;
+  $('demo-hide-pictures').checked = settings.hidePictures;
   setCollect(settings.collect);
   listen($('demo-auto'), 'change', saveSettings);
   listen($('demo-collect'), 'change', saveSettings);
+  listen($('demo-hide-pictures'), 'change', saveSettings);
   listen($('demo-clear'), 'click', async () => {
     try {
       await clearRecordings();
@@ -655,7 +686,11 @@ export function attachDemoHost({
       clear();
     if (result?.events?.length && fresh) {
       if (!doc.hidden) painter.effectsFor(result.events, state);
-      if (settings.gameSounds) audio?.events?.(result.events, state, look.theme);
+      if (settings.gameSounds)
+        audio?.events?.(result.events, state, look.theme, {
+          bodyId: look.theme.classBodies?.[state.activeClassId] || look.theme.player,
+          source,
+        });
     }
     if (!practice && !interrupted) caption = captions.advance(seconds, result?.events);
     if (!doc.hidden) renderControls();
@@ -682,7 +717,7 @@ export function attachDemoHost({
         reduced: getContext().reduced,
         fullReveal: state.status === 'won',
         backdrop: picture?.backdrop,
-        pictureVisibility: picture?.pictureVisibility ?? 'blurred',
+        pictureVisibility: pictureVisibility(),
         celebrationPaused: interrupted,
         demoTransition: getContext().reduced ? 0 : Math.max(0, 1 - transitionAge / 0.3),
       });
@@ -694,6 +729,8 @@ export function attachDemoHost({
       active: settings.gameSounds && (practice ? practice.phase === 'playing' : watching()),
       state,
       theme: look?.theme,
+      bodyId: look?.theme.classBodies?.[state?.activeClassId] || look?.theme.player,
+      source,
     });
   }
   const clock = attachDemoClock({

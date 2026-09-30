@@ -158,6 +158,7 @@ import { attachDemoHost } from './ui/demo-host.mjs';
 import { createDemoLibrary } from './demo-library.mjs';
 import { loadDemoSources } from './demo-sources.mjs';
 import { demoIdentity } from './demo-catalog.mjs';
+import { emitDemoEvents, updateDemoFeedback } from './demo-audio-feedback.mjs';
 import { authoredModeDestinations } from './ui/authored-mode-routes.mjs';
 import {
   mountWorkshopLinks,
@@ -12474,12 +12475,23 @@ try {
         { deferUntilNextTrack: true },
       );
     },
-    update({ active, theme: demoTheme, state }) {
-      if (soundtrackPlayer) soundtrackPlayer.update(active, demoTheme ?? theme, state ?? {});
-      else sound.update(active, demoTheme ?? theme, state ?? {});
+    update({ active, theme: demoTheme, state, bodyId: demoBodyId }) {
+      const currentTheme = demoTheme ?? theme,
+        currentState = state ?? {};
+      if (soundtrackPlayer) soundtrackPlayer.update(active, currentTheme, currentState);
+      else sound.update(active, currentTheme, currentState);
+      updateDemoFeedback(sound, {
+        active,
+        theme: currentTheme,
+        state: currentState,
+        bodyId: demoBodyId,
+      });
     },
-    events(events) {
-      for (const event of events) sound.event(event);
+    events(events, state, demoTheme, { bodyId: demoBodyId, source } = {}) {
+      emitDemoEvents(sound, events, state, demoTheme ?? theme, {
+        bodyId: demoBodyId,
+        source,
+      });
     },
   };
   let demoReturnSettings = false;
