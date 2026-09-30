@@ -654,6 +654,10 @@ export function mountWorldApp({
     replayKind = 'recording',
     replayRate = 1,
     sectorReference = null,
+    sectorReferenceProof = null,
+    ghostEnabled = false,
+    ghostLookup = null,
+    ghostError = false,
     sectorReferenceId = null,
     sectorReferenceStatus = 'none',
     sectorLookup = null;
@@ -854,23 +858,18 @@ export function mountWorldApp({
   });
   folderLabel.after(newWorldButton);
   translatedNodes.push({ node: newWorldButton, key: 'newWorld', fallback: 'Start a new world' });
-  const ghostButton = button(txt('Show best line', 'Показати найкращий маршрут'), async () => {
-    if (!flight) return;
-    pauseFlight();
-    const best = records
-      .filter((r) => compatibleGhost(r, flight.identity))
-      .sort((a, b) => a.proof.frames.length - b.proof.frames.length)[0];
-    if (!best)
-      throw new Error(
-        txt('No compatible verified best flight yet.', 'Ще немає сумісного перевіреного польоту.'),
-      );
-    const token = flightToken,
-      result = current.legacy
-        ? await replayFlightCooperatively(current.course, best.proof, { sampleEvery: 5 })
-        : await replayWorldFlight(current.course, best.proof, { sampleEvery: 5 });
-    if (token === flightToken) renderer.setPath(result.path);
+  const ghostButton = button('', async () => {
+    if (!flight || preview || replayProof || !sectorReference) return;
+    ghostEnabled = !ghostEnabled;
+    if (ghostEnabled) {
+      pauseFlight();
+      await loadGhost();
+    } else clearGhost();
+    updateGhostHUD();
+    await saveRecovery();
   });
   ghostButton.id = 'show-ghost';
+  ghostButton.setAttribute('aria-describedby', 'sector-reference ghost-status');
   doc.querySelector('.flight-controls').append(ghostButton);
   function download(data, name, type = 'application/json') {
     const blob =
@@ -911,7 +910,7 @@ export function mountWorldApp({
     $('world-radio-title').textContent = txt('Radio setup', 'Налаштування пульта');
     immersive.refresh();
     updateSoundLabel();
-    ghostButton.textContent = txt('Show best line', 'Показати найкращий маршрут');
+    updateGhostHUD();
     for (const id of ['flight-mode', 'first-flight-mode']) {
       $(id).options[0].textContent = txt('Self-level', 'Самовирівнювання');
       $(id).options[1].textContent = 'Acro';
@@ -1837,6 +1836,7 @@ export function mountWorldApp({
           preview: recovery.preview,
           recover: recovery.proof,
           sectorReferenceId: recovery.sectorReferenceId,
+          ghostEnabled: recovery.ghostEnabled,
         });
       });
       b.id = 'resume-flight';
@@ -1983,6 +1983,7 @@ export function mountWorldApp({
       packIdentity: current.packIdentity,
       preview,
       sectorReferenceId,
+      ghostEnabled,
     };
     await recordStore.saveSession(saved);
     recovery = saved;
@@ -2016,6 +2017,86 @@ export function mountWorldApp({
   function abortSectorLookup() {
     sectorLookup?.abort();
     sectorLookup = null;
+    clearGhost();
+  }
+  function clearGhost() {
+    ghostLookup?.abort();
+    ghostLookup = null;
+    ghostError = false;
+    renderer?.setGhost?.([]);
+    // Also clear any older static route when replacing a course.
+    renderer?.setPath?.([]);
+  }
+  function updateGhostHUD() {
+    const loading = Boolean(ghostLookup),
+      available = Boolean(sectorReference && !preview && !replayProof),
+      shown = ghostEnabled && available,
+      ended = shown && flight && flight.snapshot().ticks >= sectorReference.ticks;
+    ghostButton.disabled = !available || (!sceneReady && !loading);
+    ghostButton.textContent = loading
+      ? txt('Cancel ghost loading', 'Скасувати завантаження примари')
+      : shown
+        ? txt('Hide personal best', 'Сховати особистий рекорд')
+        : txt('Show personal best', 'Показати особистий рекорд');
+    ghostButton.setAttribute('aria-pressed', String(shown));
+    const description = loading
+      ? txt('Loading personal best… Flight paused.', 'Завантаження рекорду… Політ на паузі.')
+      : ghostError
+        ? txt(
+            'Ghost unavailable. Sector timing still works.',
+            'Примара недоступна. Час ділянок працює.',
+          )
+        : shown
+          ? ended
+            ? txt(
+                'Personal best finished · ghost holds its final position.',
+                'Рекорд завершено · примара залишається на фініші.',
+              )
+            : txt(
+                'Cyan ghost · same personal best as sector timing. No collision.',
+                'Блакитна примара · той самий рекорд, що й для ділянок. Без зіткнень.',
+              )
+          : '';
+    $('ghost-status').hidden = !description;
+    if ($('ghost-status').textContent !== description) $('ghost-status').textContent = description;
+  }
+  async function loadGhost() {
+    if (!ghostEnabled || !sectorReferenceProof || !sectorReference || preview || replayProof)
+      return;
+    clearGhost();
+    const controller = new AbortController(),
+      token = flightToken,
+      reference = sectorReference,
+      entry = current,
+      proof = sectorReferenceProof;
+    ghostLookup = controller;
+    const isCurrent = () =>
+      !disposed && token === flightToken && ghostLookup === controller && ghostEnabled;
+    updateGhostHUD();
+    try {
+      const checked = await (entry.legacy ? replayFlightCooperatively : replayWorldFlight)(
+        entry.course,
+        proof,
+        { sampleEvery: 5, signal: controller.signal },
+      );
+      if (!isCurrent()) return;
+      if (checked.state.status !== 'complete' || checked.state.ticks !== reference.ticks)
+        throw new Error('Personal best no longer reproduces its completed flight');
+      renderer.setGhost([
+        { tick: 0, position: entry.course.spawn, orientation: [0, 0, 0, 1000000] },
+        ...checked.path,
+      ]);
+    } catch {
+      if (isCurrent()) {
+        ghostEnabled = false;
+        ghostError = true;
+      }
+    } finally {
+      if (isCurrent() || ghostLookup === controller) {
+        ghostLookup = null;
+        updateGhostHUD();
+      }
+    }
   }
   const seconds = (ticks) => `${(ticks / 50).toFixed(2)} ${txt('s', 'с')}`;
   const deltaSeconds = (ticks) =>
@@ -2097,6 +2178,7 @@ export function mountWorldApp({
             ticks: checked.state.ticks,
             sectors: checked.sectors,
           };
+          sectorReferenceProof = candidate.proof;
           sectorReferenceId = candidate.id;
           sectorReferenceStatus = 'ready';
           return;
@@ -2156,13 +2238,15 @@ export function mountWorldApp({
   }
   function updateHUD(state) {
     updateSectorHUD();
+    updateGhostHUD();
     const target = current.course.steps[$('flight-mode').value][state.step];
     $('flight-instruments').textContent =
       `${(state.position.y / 1000).toFixed(1)} m · ${(Math.hypot(state.velocity.x, state.velocity.y, state.velocity.z) / 1000) | 0} m/s · ${(state.ticks / 50).toFixed(1)} s${state.health !== undefined ? ` · ♥ ${state.health}` : ''}`;
     $('flight-objective').textContent = terminal(state)
       ? txt('Flight ended', 'Політ завершено')
       : `${Math.min(state.step + 1, state.total ?? current.course.steps[$('flight-mode').value].length)}/${current.course.steps[$('flight-mode').value].length} · ${target ? stepName(target) : state.status}${state.hold ? ` · ${state.hold}/${target?.ticks ?? 0}` : ''}`;
-    $('world-arm').disabled = !sceneReady || terminal(state) || (Boolean(replayProof) && finished);
+    $('world-arm').disabled =
+      !sceneReady || Boolean(ghostLookup) || terminal(state) || (Boolean(replayProof) && finished);
     $('world-arm').textContent = replayProof
       ? txt('Resume playback', 'Продовжити перегляд')
       : txt('Arm / resume', 'Увімкнути / продовжити');
@@ -2394,6 +2478,7 @@ export function mountWorldApp({
     // therefore cannot resume a flight simply because the tab regained focus.
     if (
       sceneReady &&
+      !ghostLookup &&
       !replayProof &&
       $('flight-source').value === 'radio' &&
       ['paused', 'disarmed'].includes(flight.snapshot().status) &&
@@ -2501,6 +2586,8 @@ export function mountWorldApp({
     $('world-touch').hidden = Boolean(replayProof) || $('flight-source').value !== 'touch';
     sectors.reset();
     sectorReference = null;
+    sectorReferenceProof = null;
+    ghostEnabled = !preview && (options.recover ? options.ghostEnabled === true : ghostEnabled);
     sectorReferenceId = options.recover ? (options.sectorReferenceId ?? null) : null;
     sectorReferenceStatus =
       preview || (options.recover && options.recover.session !== 'practice')
@@ -2636,6 +2723,8 @@ export function mountWorldApp({
       );
     }
     if (disposed || token !== flightToken) return;
+    if (ghostEnabled) await loadGhost();
+    if (token !== flightToken || disposed) return;
     sceneReady = true;
     $('flight-status').textContent = txt(
       'Ready. Choose your controls, then arm.',
@@ -2670,6 +2759,7 @@ export function mountWorldApp({
     flight?.dispose?.();
     flight = null;
     current = null;
+    sectorReferenceProof = null;
     $('flight-dialog').close();
     replayProof = null;
     $('flight-mode').disabled =
@@ -3042,7 +3132,14 @@ export function mountWorldApp({
     $('flight-dialog').dataset.optionsOpen = 'false';
     $('flight-options').setAttribute('aria-expanded', 'false');
     immersive.closeControls();
-    if (!sceneReady || !flight || terminal(flight.snapshot()) || (replayProof && finished)) return;
+    if (
+      !sceneReady ||
+      ghostLookup ||
+      !flight ||
+      terminal(flight.snapshot()) ||
+      (replayProof && finished)
+    )
+      return;
     if (!replayProof && $('flight-source').value === 'radio') {
       restoreRadio();
       radio.poll();
@@ -3298,6 +3395,13 @@ export function mountWorldApp({
         sectors: sectors.snapshot(),
         latest: sectors.latest(sectorReference?.sectors),
       },
+      ghost: {
+        enabled: ghostEnabled,
+        loading: Boolean(ghostLookup),
+        referenceId: ghostEnabled ? (sectorReference?.id ?? null) : null,
+        presentation: renderer?.ghostSnapshot?.() ?? null,
+        resources: renderer?.resources?.() ?? null,
+      },
       records: clone(records),
       catalogue: catalogue.length,
       radio: radio.status(),
@@ -3322,6 +3426,11 @@ export function mountWorldApp({
       input.dispose();
       radioSetup?.dispose();
       flight?.dispose?.();
+      flight = null;
+      recorder = null;
+      current = null;
+      sectorReferenceProof = null;
+      ghostEnabled = false;
       renderer?.dispose();
       hangar.dispose();
       actorEditor?.dispose();
