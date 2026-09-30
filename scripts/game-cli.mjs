@@ -16,6 +16,7 @@ import {
 } from './pack-indexes.mjs';
 import { SOUNDTRACK_BUNDLED_ASSETS } from '../game/content/soundtrack-catalogue.mjs';
 import { generatedBrandIcons } from './brand-icons.mjs';
+import { isOptionalSpatialAudioBody } from './offline-core-closure.mjs';
 
 export const PROJECT_ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const MARKER = '.xonix-build.json';
@@ -631,11 +632,13 @@ export async function addOfflineEntries(
     ...entries
       .filter(
         (entry) =>
-          (entry.name.startsWith('game/demo-data/') &&
-            entry.name.endsWith('.replay.json')) ||
+          (entry.name.startsWith('game/demo-data/') && entry.name.endsWith('.replay.json')) ||
           entry.name === 'game/ui/art/menu-scenes/droneaid-main-background.webp',
       )
       .map((entry) => entry.name),
+    // Recorded spatial effects stay hosted for online play and exact optional
+    // download, but are not charged to every installation's 64 MiB core.
+    ...entries.filter((entry) => isOptionalSpatialAudioBody(entry.name)).map((entry) => entry.name),
     ...(optionalArtwork?.files.map((file) => file.path) ?? []),
     // Recorded music is an optional enhancement. Keep even locally shipped
     // recordings out of the bounded gameplay cache so procedural music and
