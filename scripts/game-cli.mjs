@@ -17,6 +17,7 @@ import {
 import { SOUNDTRACK_BUNDLED_ASSETS } from '../game/content/soundtrack-catalogue.mjs';
 import { generatedBrandIcons } from './brand-icons.mjs';
 import { isOptionalSpatialAudioBody } from './offline-core-closure.mjs';
+import { isIncludedBundledMission } from '../game/mission-library/included-bundled-pack.mjs';
 
 export const PROJECT_ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const MARKER = '.xonix-build.json';
@@ -673,14 +674,16 @@ export async function addOfflineEntries(
     // essential sound effects remain the complete offline baseline.
     ...SOUNDTRACK_BUNDLED_ASSETS.map((asset) => asset.path),
   ]);
-  // Every official chapter uses the same durable store, even when its JSON is small.
-  // Otherwise opening a small chapter would consume a user-import slot.
+  // Small first-party chapter bodies are part of the mandatory offline game.
+  // Larger, optional, external and archived bodies retain explicit package
+  // ownership and download consent.
   const missionIndex = entries.find(
     (entry) => entry.name === 'game/content/mission-library-index.json',
   );
   if (missionIndex)
     for (const mission of JSON.parse(missionIndex.bytes).missions)
-      if (mission.packId) excluded.add(mission.sourceFile.path);
+      if (mission.packId && !isIncludedBundledMission(mission))
+        excluded.add(mission.sourceFile.path);
   const { buildOfflineContent } = await import('./offline-content.mjs');
   const contentCatalogue = await buildOfflineContent(entries, excluded, info.version);
   const { finalizeOfflineContent } = await import('./offline-finalize.mjs');
