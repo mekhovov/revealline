@@ -622,6 +622,66 @@ test('explicit pause stops durable preparation after its atomic file checkpoint'
   assert.equal((await resume.report()).status, 'ready');
 });
 
+test('the stable updater can prepare and inspect its exact immutable worker only', async () => {
+  const source = 'https://game.example/app/update.html?return=%2Fgame%2F';
+  const request = {
+    protocol: 'revealline.offline-progress.v1',
+    requestId: 'stable-update',
+    scope,
+    buildId: marker.buildId,
+  };
+  const h = host({ downloadFiles: [] });
+  for (const type of ['revealline.offline-prepare', 'revealline.offline-check']) {
+    const reports = [];
+    await h.dispatch('message', {
+      source: { url: source },
+      data: { ...request, type },
+      ports: [{ postMessage: (report) => reports.push(report), close() {} }],
+    });
+    assert.equal(reports.at(-1).status, 'ready');
+    assert.equal(reports.at(-1).buildId, marker.buildId);
+  }
+  for (const [url, patch] of [
+    ['https://other.example/app/update.html', {}],
+    ['https://game.example/app/other.html', {}],
+    [source, { protocol: undefined }],
+    [source, { scope: 'https://game.example/' }],
+    [source, { buildId: 'b'.repeat(64) }],
+  ]) {
+    const rejected = host({ downloadFiles: [] });
+    const reports = [];
+    await rejected.dispatch('message', {
+      source: { url },
+      data: { ...request, type: 'revealline.offline-prepare', ...patch },
+      ports: [{ postMessage: (report) => reports.push(report), close() {} }],
+    });
+    assert.deepEqual(reports, []);
+    assert.deepEqual(rejected.calls, []);
+    assert.equal(rejected.storage.size, 0);
+  }
+});
+
+test('outside-scope updater pause requires the exact streaming worker binding', async () => {
+  for (const valid of [false, true]) {
+    const h = host({ downloadFiles: [] }, new Map(), {
+      async beforePut({ url }) {
+        if (url.endsWith('/game/index.html'))
+          await h.dispatch('message', {
+            source: { url: 'https://game.example/app/update.html' },
+            data: {
+              type: 'revealline.offline-pause',
+              buildId: marker.buildId,
+              ...(valid ? { protocol: 'revealline.offline-progress.v1', scope } : {}),
+            },
+          });
+      },
+    });
+    if (valid) await assert.rejects(h.dispatch('install'), { name: 'AbortError' });
+    else await h.dispatch('install');
+    assert.equal((await h.report()).status, valid ? 'not-ready' : 'ready');
+  }
+});
+
 test('complete cached files serve audio byte ranges without caching a partial response', async () => {
   const h = host({ downloadFiles: [] }, new Map(), { entries: [['game/tone.mp3', '0123456789']] });
   await h.dispatch('install');

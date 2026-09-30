@@ -113,6 +113,162 @@ export async function buildLauncherNavigationFiles(root) {
   return files;
 }
 
+/** This explicit online update surface belongs to the narrow launcher scope.
+ * Derive it after the gameplay build identity is final: it must never become an
+ * old edition's cached download screen or participate in its own build hash. */
+export function addOfflineUpdater(entries, { sourceRevision = null } = {}, buildId) {
+  const downloads = entries.find((entry) => entry.name === 'game/downloads.html');
+  if (!downloads || !entries.some((entry) => entry.name === 'app/index.html')) return;
+  if (!/^[a-f0-9]{64}$/.test(buildId)) throw new Error('Updater needs the final gameplay build.');
+  const marker = JSON.stringify({
+    format: 'revealline-app-update.v1',
+    scope: '../',
+    buildId,
+    ...(sourceRevision ? { sourceRevision } : {}),
+  });
+  const launcherWorker = entries.find((entry) => entry.name === 'app/service-worker.js');
+  const launcherId = JSON.parse(
+    launcherWorker?.bytes.toString().match(/const CONFIG = (\{[^\n]+\});/)?.[1] || 'null',
+  )?.id;
+  if (!/^[a-f0-9]{64}$/.test(launcherId))
+    throw new Error('Updater needs an exact launcher build identity.');
+  const identity = `function retainedReturn() {
+  const raw = new URL(location.href).searchParams.get('return');
+  if (!raw || raw.length > 2048) return null;
+  try {
+    const destination = new URL(raw, location.href);
+    return destination.origin === location.origin && !destination.username && !destination.password &&
+      destination.pathname.includes('/game/') && destination.href.length <= 2048 ? destination.href : null;
+  } catch { return null; }
+}
+async function observe(operation, milliseconds = 30000) {
+  return new Promise((resolve, reject) => {
+    const finish = (value, error) => { clearTimeout(timer); lifecycle.signal.removeEventListener('abort', abort); error ? reject(error) : resolve(value); };
+    const abort = () => finish(null, new DOMException('Update closed.', 'AbortError'));
+    const timer = setTimeout(() => finish(null, new Error('App update timed out. Try again online.')), milliseconds);
+    lifecycle.signal.addEventListener('abort', abort, { once: true });
+    operation.then((value) => finish(value), (error) => finish(null, error));
+    if (lifecycle.signal.aborted) abort();
+  });
+}
+async function identify(worker, { repair = false } = {}) {
+  return new Promise((resolve, reject) => {
+    const channel = new MessageChannel();
+    const finish = (value, error) => { clearTimeout(timer); lifecycle.signal.removeEventListener('abort', abort); channel.port1.close(); channel.port2.close(); error ? reject(error) : resolve(value); };
+    const abort = () => finish(null, new DOMException('Update closed.', 'AbortError'));
+    const timer = setTimeout(() => finish(null, new Error('The app launcher did not respond.')), repair ? 30000 : 10000);
+    channel.port1.onmessage = (event) => {
+      if (event.data?.format === 'revealline.launcher-health.v1' && event.data.requestId === 'app-update-identity') finish(event.data);
+    };
+    lifecycle.signal.addEventListener('abort', abort, { once: true });
+    if (lifecycle.signal.aborted) return abort();
+    try { worker.postMessage({ type: repair ? 'revealline.launcher-prepare' : 'revealline.launcher-check', requestId: 'app-update-identity' }, [channel.port2]); }
+    catch (error) { finish(null, error); }
+  });
+}`;
+  const bridge = `<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>FPV / LINE · App update</title><style>body{margin:0;padding:32px;background:#091324;color:#edf2e8;font:18px/1.5 system-ui}main{max-width:640px;margin:auto}a{display:inline-block;padding:12px;color:#7fdbeb}</style><main><h1>App update / Оновлення гри</h1><p id="status" role="status">Preparing the updater. Close other app update windows if this takes longer.<br>Готуємо оновлення. Якщо це триває довго, закрийте інші вікна оновлення гри.</p><a href="./app/?manage">Back to game / Назад до гри</a></main><script type="module">
+const lifecycle = new AbortController();
+window.addEventListener('pagehide', () => lifecycle.abort(), { once: true });
+try {
+  const app = new URL('./app/', location.href);
+  const registration = await observe(navigator.serviceWorker.getRegistration(app.href));
+  if (!registration || registration.scope !== app.href) throw new Error('App launcher is unavailable.');
+  const deadline = Date.now() + 30000;
+  for (;;) {
+    lifecycle.signal.throwIfAborted();
+    if (Date.now() >= deadline) throw new Error('Close other app update windows and try again.');
+    if (!registration.installing && !registration.waiting && registration.active?.state === 'activated') {
+      const active = registration.active;
+      let report = await identify(active);
+      lifecycle.signal.throwIfAborted();
+      if (report.launcherBuildId !== '${launcherId}') throw new Error('The latest app launcher is not ready.');
+      if (report.status !== 'ready') report = await identify(active, { repair: true });
+      lifecycle.signal.throwIfAborted();
+      if (report.launcherBuildId !== '${launcherId}' || report.status !== 'ready') throw new Error('The latest app launcher could not be repaired.');
+      if (registration.active !== active || registration.installing || registration.waiting) continue;
+      const destination = new URL('update.html', app);
+      const returnTo = retainedReturn();
+      if (returnTo) destination.searchParams.set('return', returnTo);
+      location.replace(destination);
+      break;
+    }
+    await new Promise((resolve) => setTimeout(resolve, 250));
+  }
+} catch (error) {
+  if (error.name !== 'AbortError') document.getElementById('status').textContent = navigator.language?.startsWith('uk')
+    ? 'Оновлення ще не готове. Закрийте інші вікна оновлення та повторіть спробу з інтернетом. Завантажена гра збережена.'
+    : 'The updater is not ready. Close other app update windows and try again online. Your downloaded game is kept.';
+}
+${identity}
+</script></html>`;
+  const bridgeId = createHash('sha256').update(bridge).digest('hex');
+  const bootstrap = `<script type="module">
+const status = document.getElementById('game-status');
+const lifecycle = new AbortController();
+window.addEventListener('pagehide', () => lifecycle.abort(), { once: true });
+try {
+  const app = new URL('./', location.href);
+  const workerURL = new URL('service-worker.js', app);
+  const worker = navigator.serviceWorker;
+  const owned = () => worker?.controller?.scriptURL === workerURL.href && worker.controller === registration.active;
+  if (!worker) throw new Error('App updates need service worker support.');
+  const registration = await observe(worker.register(workerURL, { scope: app.href, updateViaCache: 'none' }));
+  await observe(registration.update());
+  lifecycle.signal.throwIfAborted();
+  const active = registration.active;
+  let report = !registration.installing && !registration.waiting && active
+    ? await identify(active) : null;
+  lifecycle.signal.throwIfAborted();
+  if (report?.launcherBuildId === '${launcherId}' && report.status !== 'ready') {
+    report = await identify(active, { repair: true });
+    lifecycle.signal.throwIfAborted();
+    if (report.launcherBuildId !== '${launcherId}' || report.status !== 'ready') throw new Error('The app launcher could not be repaired.');
+  }
+  if (!owned() || registration.active !== active || registration.installing || registration.waiting || report?.launcherBuildId !== '${launcherId}' || report?.status !== 'ready') {
+    // Leaving this narrow scope lets a waiting launcher activate naturally.
+    // The bridge has no game imports and cannot reload another live game.
+    const destination = new URL('../game-update.html?build=${bridgeId}', app);
+    const returnTo = retainedReturn();
+    if (returnTo) destination.searchParams.set('return', returnTo);
+    location.replace(destination);
+  } else { await openDownloads(); }
+  async function openDownloads() {
+    const scope = new URL('../', document.baseURI);
+    for (const name of ['revealline-offline', 'revealline-update']) {
+      const element = document.querySelector('meta[name="' + name + '"]');
+      const value = JSON.parse(element.content);
+      value.scope = scope.href;
+      if (name === 'revealline-offline') value.worker = new URL('service-worker.js', scope).href;
+      element.content = JSON.stringify(value);
+    }
+    await import(new URL('downloads.mjs', document.baseURI).href);
+  }
+} catch (error) {
+  if (error.name !== 'AbortError') {
+    status.textContent = navigator.language?.startsWith('uk')
+    ? 'Не вдалося відкрити оновлення. Підключіться до інтернету та повторіть спробу. Завантажена гра збережена.'
+    : 'Could not open updates. Connect to the internet and try again. Your downloaded game is kept.';
+    console.error(error);
+  }
+}
+${identity}
+</script>`;
+  let source = downloads.bytes.toString();
+  if (!source.includes('<script type="module" src="downloads.mjs"></script>'))
+    throw new Error('Updater cannot find the shared downloads entry.');
+  source = source
+    .replace(
+      '<head>',
+      `<head>\n    <base href="../game/" />\n    <meta name="revealline-update" content='${marker}' />`,
+    )
+    .replace('<script type="module" src="downloads.mjs"></script>', bootstrap)
+    .replace(/<script type="module" src="[^"]*\/game\/ui\/install-entry\.mjs"><\/script>/g, '');
+  if (Buffer.byteLength(source) > LAUNCHER_FILE_LIMIT)
+    throw new Error('App updater exceeded its file budget.');
+  entries.push({ name: 'app/update.html', bytes: Buffer.from(source) });
+  entries.push({ name: 'game-update.html', bytes: Buffer.from(bridge) });
+}
+
 export async function addOfflineLauncher(root, entries, version, options = {}) {
   if (!entries.some((entry) => entry.name === 'game/installed-app.mjs')) return;
   const launcher = [];
@@ -197,6 +353,7 @@ export async function addOfflineLauncher(root, entries, version, options = {}) {
       JSON.stringify({
         version,
         scope: '../',
+        ...(options.sourceRevision ? { sourceRevision: options.sourceRevision } : {}),
         ...(options.editionId === undefined ? {} : { editionId: options.editionId }),
       }),
     ),
