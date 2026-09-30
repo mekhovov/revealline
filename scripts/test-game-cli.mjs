@@ -10,7 +10,7 @@ import { fileURLToPath, pathToFileURL } from 'node:url';
 import { generatePackCatalogs } from './generate-pack-catalogs.mjs';
 import { buildOfflineContent, buildOfflineInventory } from './offline-content.mjs';
 import { downloadFiles } from '../game/download-catalogue.mjs';
-import { LAUNCHER_CATALOG_KEYS } from './offline-launcher.mjs';
+import { LAUNCHER_CATALOG_KEYS, LAUNCHER_NAVIGATION_FILES } from './offline-launcher.mjs';
 import {
   buildProject,
   collectBuildFiles,
@@ -176,6 +176,7 @@ test('real Git snapshot runs an older frozen entry through an aliased temp root 
   // resolve back into the current working tree during the frozen build.
   for (const relative of [
     'scripts/pack-indexes.mjs',
+    'scripts/brand-icons.mjs',
     'game/data-json.mjs',
     'game/content-launch.mjs',
   ])
@@ -870,6 +871,13 @@ test('compact offline catalogue and inventory preserve reader results, source te
     'game/offline/app-worker.template.js': 'const CONFIG = __REVEALLINE_LAUNCHER_CONFIG__;',
     'game/offline/app.html': '<html><head></head><body>Installer</body></html>',
     'game/offline/app.mjs': 'export {};',
+    'game/offline/navigation.css': 'body { color: navy; }',
+    ...Object.fromEntries(
+      LAUNCHER_NAVIGATION_FILES.map((file) => [
+        'game/' + file,
+        file.endsWith('.css') ? 'body { color: navy; }' : 'export {};',
+      ]),
+    ),
     'game/downloads.css': 'body { color: navy; }',
     'game/edition-context.mjs': 'export {};',
     'game/profile-writer.mjs': 'export {};',
@@ -880,7 +888,10 @@ test('compact offline catalogue and inventory preserve reader results, source te
     'game/historical-original.json': '{"title":"Retained  original\\nОригінал","revision":1}',
   };
   for (const language of ['en', 'uk'])
-    for (const [namespace, keys] of Object.entries(LAUNCHER_CATALOG_KEYS))
+    for (const [namespace, keys] of Object.entries({
+      ...LAUNCHER_CATALOG_KEYS,
+      controllerEditor: ['fixture'],
+    }))
       sources[`game/locales/${language}/${namespace}.json`] = JSON.stringify(
         Object.fromEntries(keys.map((key) => [key, `${language}: ${key}  unchanged\ntext`])),
       );
