@@ -166,8 +166,7 @@ async function identify(worker, { repair = false } = {}) {
     catch (error) { finish(null, error); }
   });
 }`;
-  const bridge = `<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>FPV / LINE · App update</title><style>body{margin:0;padding:32px;background:#091324;color:#edf2e8;font:18px/1.5 system-ui}main{max-width:640px;margin:auto}a{display:inline-block;padding:12px;color:#7fdbeb}</style><main><h1>App update / Оновлення гри</h1><p id="status" role="status">Preparing the updater. Close other app update windows if this takes longer.<br>Готуємо оновлення. Якщо це триває довго, закрийте інші вікна оновлення гри.</p><a href="./app/?manage">Back to game / Назад до гри</a></main><script type="module">
-const lifecycle = new AbortController();
+  const bridgeScript = `const lifecycle = new AbortController();
 window.addEventListener('pagehide', () => lifecycle.abort(), { once: true });
 try {
   const app = new URL('./app/', location.href);
@@ -200,10 +199,11 @@ try {
     : 'The updater is not ready. Close other app update windows and try again online. Your downloaded game is kept.';
 }
 ${identity}
-</script></html>`;
+`;
+  const bridgeScriptId = createHash('sha256').update(bridgeScript).digest('hex');
+  const bridge = `<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>FPV / LINE · App update</title><style>body{margin:0;padding:32px;background:#091324;color:#edf2e8;font:18px/1.5 system-ui}main{max-width:640px;margin:auto}a{display:inline-block;padding:12px;color:#7fdbeb}</style><main><h1>App update / Оновлення гри</h1><p id="status" role="status">Preparing the updater. Close other app update windows if this takes longer.<br>Готуємо оновлення. Якщо це триває довго, закрийте інші вікна оновлення гри.</p><a href="./app/?manage">Back to game / Назад до гри</a></main><script type="module" src="./game-update.mjs?build=${bridgeScriptId}"></script></html>`;
   const bridgeId = createHash('sha256').update(bridge).digest('hex');
-  const bootstrap = `<script type="module">
-const status = document.getElementById('game-status');
+  const bootstrap = `let status = document.getElementById('game-status');
 const lifecycle = new AbortController();
 window.addEventListener('pagehide', () => lifecycle.abort(), { once: true });
 try {
@@ -233,15 +233,37 @@ try {
     location.replace(destination);
   } else { await openDownloads(); }
   async function openDownloads() {
-    const scope = new URL('../', document.baseURI);
-    for (const name of ['revealline-offline', 'revealline-update']) {
-      const element = document.querySelector('meta[name="' + name + '"]');
-      const value = JSON.parse(element.content);
-      value.scope = scope.href;
-      if (name === 'revealline-offline') value.worker = new URL('service-worker.js', scope).href;
-      element.content = JSON.stringify(value);
+    const update = JSON.parse(document.querySelector('meta[name="revealline-update"]').content);
+    const scope = new URL(update.scope, location.href);
+    if (scope.origin !== location.origin) throw new Error('The update candidate must belong to this app.');
+    const pageURL = new URL('game/downloads.html', scope);
+    const response = await observe(fetch(pageURL, { cache: 'no-store', redirect: 'error', signal: lifecycle.signal }));
+    if (!response.ok) throw new Error('The update screen could not be downloaded.');
+    const parsed = new DOMParser().parseFromString(await observe(response.text()), 'text/html');
+    const config = JSON.parse(parsed.querySelector('meta[name="revealline-offline"]')?.content || 'null');
+    if (config?.format !== 'revealline-offline.v1' || config.buildId !== update.buildId ||
+        !parsed.getElementById('game-status') || !parsed.getElementById('download-game'))
+      throw new Error('The published game changed. Check for updates again.');
+    lifecycle.signal.throwIfAborted();
+    parsed.querySelectorAll('script').forEach((element) => element.remove());
+    for (const element of parsed.body.querySelectorAll('[href], [src]')) {
+      for (const attribute of ['href', 'src']) {
+        const value = element.getAttribute(attribute);
+        if (value !== null) element.setAttribute(attribute, new URL(value, pageURL).href);
+      }
     }
-    await import(new URL('downloads.mjs', document.baseURI).href);
+    const marker = document.createElement('meta');
+    marker.name = 'revealline-offline';
+    marker.content = JSON.stringify({ ...config, scope: scope.href, worker: new URL('service-worker.js', scope).href });
+    document.head.append(marker);
+    document.querySelector('meta[name="revealline-update"]').content = JSON.stringify({ ...update, scope: scope.href });
+    for (const file of ['game/downloads.css', 'game/i18n/style.css']) {
+      const link = document.createElement('link'); link.rel = 'stylesheet'; link.href = new URL(file, scope).href; document.head.append(link);
+    }
+    document.body.replaceChildren(...Array.from(parsed.body.childNodes, (node) => document.importNode(node, true)));
+    status = document.getElementById('game-status');
+    document.title = parsed.title;
+    await import(new URL('game/downloads.mjs', scope).href);
   }
 } catch (error) {
   if (error.name !== 'AbortError') {
@@ -252,21 +274,19 @@ try {
   }
 }
 ${identity}
-</script>`;
-  let source = downloads.bytes.toString();
-  if (!source.includes('<script type="module" src="downloads.mjs"></script>'))
-    throw new Error('Updater cannot find the shared downloads entry.');
-  source = source
-    .replace(
-      '<head>',
-      `<head>\n    <base href="../game/" />\n    <meta name="revealline-update" content='${marker}' />`,
-    )
-    .replace('<script type="module" src="downloads.mjs"></script>', bootstrap)
-    .replace(/<script type="module" src="[^"]*\/game\/ui\/install-entry\.mjs"><\/script>/g, '');
-  if (Buffer.byteLength(source) > LAUNCHER_FILE_LIMIT)
-    throw new Error('App updater exceeded its file budget.');
-  entries.push({ name: 'app/update.html', bytes: Buffer.from(source) });
-  entries.push({ name: 'game-update.html', bytes: Buffer.from(bridge) });
+`;
+  const bootstrapId = createHash('sha256').update(bootstrap).digest('hex');
+  const source = `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#091324"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><link rel="manifest" href="./manifest.webmanifest"><link rel="apple-touch-icon" href="./icon-180.png"><meta name="revealline-update" content='${marker}' /><title>FPV / LINE · Game updates</title><style>body{margin:0;padding:32px;background:#091324;color:#edf2e8;font:18px/1.5 system-ui}main{max-width:640px;margin:auto}a{display:inline-block;padding:12px;color:#7fdbeb}</style><script type="module" src="./update.mjs?build=${bootstrapId}"></script></head><body><main><h1>Game updates / Оновлення гри</h1><p id="game-status" role="status">Opening the latest update screen…<br>Відкриваємо останні оновлення…</p><a href="./?manage">Back to game / Назад до гри</a></main></body></html>`;
+  for (const [name, body] of [
+    ['app/update.html', source],
+    ['app/update.mjs', bootstrap],
+    ['game-update.html', bridge],
+    ['game-update.mjs', bridgeScript],
+  ]) {
+    if (Buffer.byteLength(body) > LAUNCHER_FILE_LIMIT)
+      throw new Error('App updater exceeded its file budget: ' + name);
+    entries.push({ name, bytes: Buffer.from(body) });
+  }
 }
 
 export async function addOfflineLauncher(root, entries, version, options = {}) {
