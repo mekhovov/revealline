@@ -240,7 +240,11 @@ const OFFICIAL_LEVEL_KEYS = Object.freeze(['["mission","journey-opening","prolog
 '["company","droneaid-nl-shared-horizon","droneaid-nl-shared-horizon-03"]',
 '["company","droneaid-nl-shared-horizon","droneaid-nl-shared-horizon-04"]',
 '["company","droneaid-nl-shared-horizon","droneaid-nl-shared-horizon-05"]',
-'["company","droneaid-nl-shared-horizon","droneaid-nl-shared-horizon-06"]']);
+'["company","droneaid-nl-shared-horizon","droneaid-nl-shared-horizon-06"]',
+'["mission","neon-reference-pack","neon-reference","neon-channels-pack"]',
+'["mission","neon-reference-pack","neon-reference","neon-crossroads-pack"]',
+'["mission","neon-reference-pack","neon-reference","neon-hearts-pack"]',
+'["mission","neon-reference-pack","neon-reference","neon-labyrinth-pack"]']);
 
 const numbers = new Map(OFFICIAL_LEVEL_KEYS.map((key, index) => [key, index + 1]));
 if (numbers.size !== OFFICIAL_LEVEL_KEYS.length)

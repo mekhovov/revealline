@@ -34,8 +34,8 @@ test('checked-in library reconciles with every retained authority and is determi
   assert.equal(expected.format, MISSION_LIBRARY_INDEX_FORMAT);
   assert.deepEqual(published, expected);
   assert.deepEqual(await buildMissionLibraryIndex({ root, externalEntries }), expected);
-  assert.equal((await generateMissionLibraryIndex({ root, externalEntries })).missions, 110);
-  assert.equal(expected.missions.length, 110);
+  assert.equal((await generateMissionLibraryIndex({ root, externalEntries })).missions, 114);
+  assert.equal(expected.missions.length, 114);
   assert.deepEqual(
     Object.fromEntries(
       ['base', 'bundled', 'archived', 'optional', 'external'].map((source) => [
@@ -45,13 +45,13 @@ test('checked-in library reconciles with every retained authority and is determi
     ),
     {
       base: 12,
-      bundled: 23,
+      bundled: 27,
       archived: 12,
       optional: 15,
       external: 48,
     },
   );
-  assert.equal(new Set(expected.missions.map((row) => row.id)).size, 110);
+  assert.equal(new Set(expected.missions.map((row) => row.id)).size, 114);
 });
 
 test('base, active and archived campaigns preserve exact IDs, revisions, order and equipment identity', async () => {

@@ -455,11 +455,12 @@ test('historical nine packs retain their budget boundary; optional pressure chap
   const archiveIndex = JSON.parse(
     await readFile(path.join(ROOT, 'game/content/packs/archive-index.json')),
   );
-  assert.equal(index.packs.length, 8);
+  assert.equal(index.packs.length, 9);
   assert.equal(archiveIndex.packs.length, 4);
   const historicalRefs = [
     ...index.packs.filter(
-      (entry) => !['fpv-arcade-r5', 'fpv-pressure-frontier'].includes(entry.id),
+      (entry) =>
+        !['fpv-arcade-r5', 'fpv-pressure-frontier', 'neon-reference-pack'].includes(entry.id),
     ),
     ...archiveIndex.packs.filter((entry) => entry.id !== 'fpv-arcade-r4'),
   ];
@@ -523,7 +524,7 @@ test('historical nine packs retain their budget boundary; optional pressure chap
   let decoded = 0;
   const decodeImage = async (dataUrl) => {
     const info = known.get(dataUrl);
-    assert.ok(info, 'Only exact Homeward, Workshop and First Light originals');
+    assert.ok(info, 'Only exact shipped originals and Neon placeholder sprites');
     decoded++;
     return { naturalWidth: info.width, naturalHeight: info.height };
   };
@@ -551,6 +552,15 @@ test('historical nine packs retain their budget boundary; optional pressure chap
       'Rejected ninth pack never evicts or changes the installed library.',
     );
   }
+  const neon = JSON.parse(
+    await readFile(path.join(ROOT, 'game/content/packs/neon-reference-pack.json')),
+  );
+  for (const entry of neon.levelVisuals)
+    for (const { dataUrl } of Object.values(entry.visualOverrides)) {
+      const dimensions = inspectImageDataUrl(dataUrl);
+      assert.equal(dimensions.valid, true);
+      known.set(dataUrl, dimensions);
+    }
   const active = [];
   for (const entry of index.packs) {
     const source = JSON.parse(await readFile(path.join(ROOT, 'game/content/packs', entry.path)));
@@ -559,7 +569,7 @@ test('historical nine packs retain their budget boundary; optional pressure chap
   const activeText = JSON.stringify({ format: 'xonix-pack-library.v1', packs: active });
   assert.ok(Buffer.byteLength(activeText) < PACK_LIMITS.libraryBytes);
   const installed = await importPackLibrary(activeText, { decodeImage });
-  assert.equal(installed.packs.length, 8);
+  assert.equal(installed.packs.length, 9);
   for (const { id, path: packPath } of archiveIndex.packs) {
     const archived = (
       await preparePack(
@@ -567,13 +577,13 @@ test('historical nine packs retain their budget boundary; optional pressure chap
         { decodeImage },
       )
     ).pack;
-    // All eight active chapters fit; another image-heavy edition cannot silently
+    // All nine active chapters fit; another image-heavy edition cannot silently
     // evict a chapter or raise the 48 MiB library cap. A deliberate removal makes room.
     assert.throws(() => installPack(installed, archived), /byte budget/);
     assert.equal(exportPackLibrary(installed), activeText);
     const smaller = removePack(installed, 'fpv-pressure-frontier');
     const withArchive = installPack(smaller, archived);
-    assert.equal(withArchive.packs.length, 8);
+    assert.equal(withArchive.packs.length, 9);
     const bytes = exportPackLibrary(withArchive);
     assert.ok(Buffer.byteLength(bytes) <= PACK_LIMITS.libraryBytes);
     assert.equal(exportPackLibrary(await importPackLibrary(bytes, { decodeImage })), bytes);

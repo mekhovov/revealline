@@ -58,12 +58,12 @@ test('Archive retains superseded content and original rules once a current-rules
     );
   }
   const library = createMissionLibrary(sources);
-  assert.equal(library.search('', { lifecycle: 'current' }).length, 95);
-  assert.equal(library.search('', { lifecycle: 'archive' }).length, 93);
-  assert.equal(library.search('', { lifecycle: '' }).length, 188);
+  assert.equal(library.search('', { lifecycle: 'current' }).length, 99);
+  assert.equal(library.search('', { lifecycle: 'archive' }).length, 97);
+  assert.equal(library.search('', { lifecycle: '' }).length, 196);
   assert.equal(
     new Set(library.search('', { lifecycle: 'current' }).map(classicMissionKey)).size,
-    95,
+    99,
   );
   assert.equal(dataIdentity(index), identity);
 });
@@ -73,7 +73,7 @@ test('Classic dedupe collapses actual rules editions without merging unrelated m
   const projected = library.missions.filter(
     (row) => JSON.parse(row.ownerId)[3] === CLASSIC_RULES_CURRENT,
   );
-  assert.equal(projected.length, 78);
+  assert.equal(projected.length, 82);
   for (const row of projected) {
     const owner = JSON.parse(row.ownerId).slice(0, 3);
     const original = library.missions.find(
@@ -83,7 +83,7 @@ test('Classic dedupe collapses actual rules editions without merging unrelated m
     assert.notEqual(row.ownerId, original.ownerId);
     assert.equal(classicMissionKey(row), classicMissionKey(original));
   }
-  assert.equal(new Set(library.missions.map(classicMissionKey)).size, 110);
+  assert.equal(new Set(library.missions.map(classicMissionKey)).size, 114);
 
   const current = library.search('', { lifecycle: 'current' });
   const row = current.find((item) => JSON.parse(item.ownerId)[3] === CLASSIC_RULES_CURRENT);
@@ -94,8 +94,8 @@ test('Classic dedupe collapses actual rules editions without merging unrelated m
   const unrelated = current.find((item) => classicMissionKey(item) !== classicMissionKey(row));
   // Preserve the row count while injecting the exact duplicate the guard must catch.
   const duplicated = [...current.filter((item) => item !== unrelated), original];
-  assert.equal(duplicated.length, 95);
-  assert.equal(new Set(duplicated.map(classicMissionKey)).size, 94);
+  assert.equal(duplicated.length, 99);
+  assert.equal(new Set(duplicated.map(classicMissionKey)).size, 98);
 
   for (const distinct of [
     { ...row, ownerId: JSON.stringify([owner[0], 'other-source', owner[2]]) },
@@ -202,12 +202,12 @@ test('shared lives and enemy counts use Ukrainian case agreement, including deci
   }
 });
 
-test('110 originals and 78 compatible Current-rules editions are distinct and ordered safely', () => {
+test('114 originals and 82 compatible Current-rules editions are distinct and ordered safely', () => {
   const library = createMissionLibrary(classicLibrarySources(index, adapters));
-  assert.equal(library.missions.length, 188);
-  assert.equal(new Set(library.missions.map((row) => row.id)).size, 188);
-  assert.equal(library.forMode('solo').length, 188);
-  assert.equal(library.forMode('versus').length, 188);
+  assert.equal(library.missions.length, 196);
+  assert.equal(new Set(library.missions.map((row) => row.id)).size, 196);
+  assert.equal(library.forMode('solo').length, 196);
+  assert.equal(library.forMode('versus').length, 196);
   assert.equal(library.forMode('team').length, 0);
   assert.equal(
     library.missions.filter((row) => library.availability(row).state === 'download').length,

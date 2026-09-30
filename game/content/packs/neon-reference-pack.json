@@ -1,0 +1,2474 @@
+{
+  "format": "xonix-pack.v6",
+  "id": "neon-reference-pack",
+  "version": "1.0.0",
+  "name": "Neon Reference Pack",
+  "description": "Four screenshot-based Arcade levels: Channels, Crossroads, Hearts and Labyrinth. Custom reveal images are planned; these levels currently use the existing procedural retro artwork.",
+  "engine": "xonix-core.v6",
+  "dependencies": [],
+  "metadata": {
+    "author": "RevealLine",
+    "license": "Project content",
+    "rightsStatus": "User-supplied layout references with original procedural placeholder sprites. Custom reveal images are deferred; no source screenshot artwork or music embedded."
+  },
+  "themes": [
+    {
+      "id": "retro",
+      "name": "1994 Forever",
+      "subtitle": "One more credit",
+      "family": "retro",
+      "player": "retro-craft",
+      "enemyShape": "orb",
+      "patrolShape": "spark",
+      "bossShape": "core",
+      "scene": "arcade",
+      "labels": {
+        "objective": "Cartridge",
+        "supply": "Dock",
+        "enemy": "Glitch",
+        "boss": "Mainframe",
+        "currency": "Score",
+        "ability": "Power-up"
+      },
+      "palette": {
+        "ink": "#242a41",
+        "paper": "#eee8df",
+        "muted": "#aaa1b1",
+        "accent": "#ffe654",
+        "safe": "#39c7e8",
+        "danger": "#ff548b",
+        "field": "#000000",
+        "grid": "#101020",
+        "sky": "#e49c95",
+        "land": "#565270"
+      },
+      "classBodies": {
+        "scout": "retro-craft",
+        "bomber": "retro-craft",
+        "carrier": "retro-craft",
+        "interceptor": "retro-craft",
+        "fiber": "retro-craft",
+        "impact": "retro-craft",
+        "trapper": "retro-craft"
+      }
+    }
+  ],
+  "classRecipes": [
+    {
+      "id": "scout",
+      "label": "FPV Scout",
+      "description": "A nimble FPV quad. Scan shows enemy direction hints for four seconds; it never captures territory or slows an enemy.",
+      "primitive": "scan",
+      "capacity": 0,
+      "cooldown": 6,
+      "duration": 4,
+      "radius": 48,
+      "revision": "1"
+    }
+  ],
+  "campaigns": [
+    {
+      "version": "xonix-campaign.v1",
+      "id": "neon-reference",
+      "revision": "1",
+      "title": "Neon Reference Pack",
+      "themeId": "retro",
+      "classIds": ["scout"],
+      "levels": [
+        {
+          "version": "xonix-level.v5",
+          "id": "neon-channels-pack",
+          "revision": "1",
+          "name": "Neon Channels",
+          "width": 72,
+          "height": 36,
+          "encounter": null,
+          "spawn": {
+            "x": 0.5,
+            "y": 35.5
+          },
+          "goal": {
+            "coverage": 0.75
+          },
+          "walls": [],
+          "foundations": [
+            {
+              "x": 30,
+              "y": 5,
+              "w": 1,
+              "h": 1
+            },
+            {
+              "x": 30,
+              "y": 6,
+              "w": 2,
+              "h": 1
+            },
+            {
+              "x": 31,
+              "y": 7,
+              "w": 1,
+              "h": 1
+            },
+            {
+              "x": 41,
+              "y": 5,
+              "w": 1,
+              "h": 1
+            },
+            {
+              "x": 40,
+              "y": 6,
+              "w": 2,
+              "h": 1
+            },
+            {
+              "x": 40,
+              "y": 7,
+              "w": 1,
+              "h": 1
+            },
+            {
+              "x": 34,
+              "y": 9,
+              "w": 4,
+              "h": 1
+            },
+            {
+              "x": 33,
+              "y": 10,
+              "w": 6,
+              "h": 1
+            },
+            {
+              "x": 32,
+              "y": 11,
+              "w": 8,
+              "h": 1
+            },
+            {
+              "x": 31,
+              "y": 12,
+              "w": 10,
+              "h": 1
+            },
+            {
+              "x": 31,
+              "y": 13,
+              "w": 2,
+              "h": 1
+            },
+            {
+              "x": 40,
+              "y": 13,
+              "w": 1,
+              "h": 1
+            },
+            {
+              "x": 32,
+              "y": 14,
+              "w": 1,
+              "h": 2
+            },
+            {
+              "x": 39,
+              "y": 14,
+              "w": 1,
+              "h": 2
+            },
+            {
+              "x": 32,
+              "y": 20,
+              "w": 1,
+              "h": 3
+            },
+            {
+              "x": 39,
+              "y": 20,
+              "w": 1,
+              "h": 3
+            },
+            {
+              "x": 31,
+              "y": 23,
+              "w": 5,
+              "h": 2
+            },
+            {
+              "x": 37,
+              "y": 23,
+              "w": 4,
+              "h": 2
+            },
+            {
+              "x": 36,
+              "y": 24,
+              "w": 1,
+              "h": 1
+            },
+            {
+              "x": 31,
+              "y": 25,
+              "w": 10,
+              "h": 1
+            }
+          ],
+          "objectives": [],
+          "supplies": [],
+          "signalZones": [],
+          "hangars": [],
+          "classic": {
+            "version": "classic.v1",
+            "terrain": [
+              {
+                "id": "north-west",
+                "kind": "slow",
+                "x": 5,
+                "y": 5,
+                "w": 14,
+                "h": 4
+              },
+              {
+                "id": "west-column",
+                "kind": "slow",
+                "x": 5,
+                "y": 13,
+                "w": 4,
+                "h": 18
+              },
+              {
+                "id": "inner-west-column",
+                "kind": "slow",
+                "x": 24,
+                "y": 5,
+                "w": 4,
+                "h": 18
+              },
+              {
+                "id": "south-center",
+                "kind": "slow",
+                "x": 24,
+                "y": 27,
+                "w": 15,
+                "h": 4
+              },
+              {
+                "id": "north-east",
+                "kind": "slow",
+                "x": 44,
+                "y": 5,
+                "w": 14,
+                "h": 4
+              },
+              {
+                "id": "inner-east-column",
+                "kind": "slow",
+                "x": 44,
+                "y": 13,
+                "w": 4,
+                "h": 18
+              },
+              {
+                "id": "east-column",
+                "kind": "slow",
+                "x": 63,
+                "y": 5,
+                "w": 4,
+                "h": 26
+              },
+              {
+                "id": "west-tower",
+                "kind": "lethal",
+                "x": 15,
+                "y": 13,
+                "w": 4,
+                "h": 10
+              },
+              {
+                "id": "west-foot",
+                "kind": "lethal",
+                "x": 15,
+                "y": 27,
+                "w": 4,
+                "h": 4
+              },
+              {
+                "id": "north-center",
+                "kind": "lethal",
+                "x": 34,
+                "y": 5,
+                "w": 4,
+                "h": 4
+              },
+              {
+                "id": "center-tower",
+                "kind": "lethal",
+                "x": 33,
+                "y": 13,
+                "w": 6,
+                "h": 10
+              },
+              {
+                "id": "east-tower",
+                "kind": "lethal",
+                "x": 54,
+                "y": 13,
+                "w": 4,
+                "h": 10
+              },
+              {
+                "id": "east-foot",
+                "kind": "lethal",
+                "x": 54,
+                "y": 27,
+                "w": 4,
+                "h": 4
+              }
+            ],
+            "powerups": [],
+            "arcadeActions": {
+              "version": "arcade-actions.v1"
+            }
+          },
+          "enemies": [
+            {
+              "id": "pink-north-west",
+              "type": "bouncer",
+              "x": 15.3,
+              "y": 2.2,
+              "vx": -4.2,
+              "vy": -1.8,
+              "radius": 0.3
+            },
+            {
+              "id": "pink-south-east",
+              "type": "bouncer",
+              "x": 53.1,
+              "y": 26.4,
+              "vx": 3.1,
+              "vy": 4.1,
+              "radius": 0.3
+            },
+            {
+              "id": "pink-center-diamond",
+              "type": "eroder",
+              "x": 35.6,
+              "y": 19.8,
+              "vx": -0.6,
+              "vy": -3.4,
+              "radius": 0.4
+            },
+            {
+              "id": "cyan-north",
+              "type": "border-patrol",
+              "x": 21.5,
+              "y": 0.5,
+              "speed": 5,
+              "clockwise": false,
+              "radius": 0.35
+            },
+            {
+              "id": "cyan-west",
+              "type": "border-patrol",
+              "x": 0.5,
+              "y": 14.5,
+              "speed": 4.5,
+              "clockwise": true,
+              "radius": 0.35
+            },
+            {
+              "id": "cyan-east",
+              "type": "border-patrol",
+              "x": 71.5,
+              "y": 21.5,
+              "speed": 5.5,
+              "clockwise": true,
+              "radius": 0.35
+            }
+          ],
+          "rules": {
+            "lives": 3,
+            "moveSpeed": 10,
+            "respawnSeconds": 0.7,
+            "graceSeconds": 0.8,
+            "timeLimitSeconds": 0,
+            "stopOnCapture": true
+          },
+          "metadata": {
+            "description": "Recreate the supplied neon arena: seven blue slowing regions, six red lethal regions, two roaming pink orbs, a central diamond eroder and three cyan perimeter patrols. Capture 75%. Blue ground slows your craft; red ground is lethal until captured. The central revealed islands are safe return surfaces. Grid and starting positions are scaled from the picture; enemy behaviors and speeds are authored approximations."
+          }
+        },
+        {
+          "version": "xonix-level.v5",
+          "id": "neon-crossroads-pack",
+          "revision": "1",
+          "name": "Neon Crossroads",
+          "width": 72,
+          "height": 36,
+          "encounter": null,
+          "spawn": {
+            "x": 36.5,
+            "y": 35.5
+          },
+          "goal": {
+            "coverage": 0.75
+          },
+          "walls": [
+            {
+              "x": 35,
+              "y": 1,
+              "w": 2,
+              "h": 34
+            },
+            {
+              "x": 1,
+              "y": 17,
+              "w": 34,
+              "h": 2
+            },
+            {
+              "x": 37,
+              "y": 17,
+              "w": 34,
+              "h": 2
+            }
+          ],
+          "objectives": [],
+          "supplies": [],
+          "signalZones": [],
+          "hangars": [],
+          "classic": {
+            "version": "classic.v1",
+            "terrain": [],
+            "powerups": [],
+            "arcadeActions": {
+              "version": "arcade-actions.v1"
+            }
+          },
+          "enemies": [
+            {
+              "id": "yellow-upper-inner",
+              "type": "bouncer",
+              "x": 39.3,
+              "y": 12.3,
+              "vx": 4.1,
+              "vy": 2.4,
+              "radius": 0.3
+            },
+            {
+              "id": "yellow-upper-outer",
+              "type": "bouncer",
+              "x": 56.2,
+              "y": 13.6,
+              "vx": -3.8,
+              "vy": 3.1,
+              "radius": 0.3
+            },
+            {
+              "id": "yellow-lower-outer",
+              "type": "bouncer",
+              "x": 11.5,
+              "y": 19.5,
+              "vx": 2,
+              "vy": -4.5,
+              "radius": 0.3
+            },
+            {
+              "id": "yellow-lower-inner",
+              "type": "bouncer",
+              "x": 25.3,
+              "y": 19.8,
+              "vx": -1.1,
+              "vy": -4.5,
+              "radius": 0.3
+            },
+            {
+              "id": "pink-upper-left",
+              "type": "eroder",
+              "x": 9.1,
+              "y": 7.2,
+              "vx": -3.4,
+              "vy": -0.3,
+              "radius": 0.4
+            },
+            {
+              "id": "pink-lower-right",
+              "type": "eroder",
+              "x": 60.8,
+              "y": 25.1,
+              "vx": 3.1,
+              "vy": -1.6,
+              "radius": 0.4
+            },
+            {
+              "id": "cyan-top-left",
+              "type": "border-patrol",
+              "x": 13,
+              "y": 0.5,
+              "speed": 5,
+              "clockwise": true,
+              "radius": 0.35
+            },
+            {
+              "id": "cyan-top-right",
+              "type": "border-patrol",
+              "x": 59,
+              "y": 0.5,
+              "speed": 5,
+              "clockwise": false,
+              "radius": 0.35
+            },
+            {
+              "id": "cyan-left",
+              "type": "border-patrol",
+              "x": 0.5,
+              "y": 23,
+              "speed": 4.5,
+              "clockwise": true,
+              "radius": 0.35
+            },
+            {
+              "id": "cyan-right",
+              "type": "border-patrol",
+              "x": 71.5,
+              "y": 23,
+              "speed": 4.5,
+              "clockwise": false,
+              "radius": 0.35
+            }
+          ],
+          "rules": {
+            "lives": 3,
+            "moveSpeed": 10,
+            "respawnSeconds": 0.7,
+            "graceSeconds": 0.8,
+            "timeLimitSeconds": 0,
+            "stopOnCapture": true
+          },
+          "metadata": {
+            "description": "Four chambers divided by solid cyan walls. Yellow bouncers occupy the upper-right and lower-left chambers; pink diamond eroders occupy the other two. Four cyan patrols travel the outer safe border. Start at bottom center, move sideways before entering a chamber, and reconnect each cut to the outer safe border. Walls block movement and do not close a cut. Reveal 75%. Layout and actor positions follow the supplied screenshot; speeds and behaviors use existing Classic rules."
+          },
+          "foundations": []
+        },
+        {
+          "version": "xonix-level.v5",
+          "id": "neon-hearts-pack",
+          "revision": "1",
+          "name": "Neon Hearts",
+          "width": 72,
+          "height": 36,
+          "encounter": null,
+          "spawn": {
+            "x": 36.5,
+            "y": 35.5
+          },
+          "goal": {
+            "coverage": 0.75
+          },
+          "walls": [
+            {
+              "x": 30,
+              "y": 9,
+              "w": 5,
+              "h": 1
+            },
+            {
+              "x": 38,
+              "y": 9,
+              "w": 5,
+              "h": 1
+            },
+            {
+              "x": 29,
+              "y": 10,
+              "w": 15,
+              "h": 1
+            },
+            {
+              "x": 28,
+              "y": 11,
+              "w": 3,
+              "h": 1
+            },
+            {
+              "x": 34,
+              "y": 11,
+              "w": 4,
+              "h": 1
+            },
+            {
+              "x": 41,
+              "y": 11,
+              "w": 4,
+              "h": 1
+            },
+            {
+              "x": 27,
+              "y": 12,
+              "w": 4,
+              "h": 1
+            },
+            {
+              "x": 35,
+              "y": 12,
+              "w": 3,
+              "h": 1
+            },
+            {
+              "x": 42,
+              "y": 12,
+              "w": 3,
+              "h": 1
+            },
+            {
+              "x": 27,
+              "y": 13,
+              "w": 2,
+              "h": 2
+            },
+            {
+              "x": 44,
+              "y": 13,
+              "w": 2,
+              "h": 2
+            },
+            {
+              "x": 27,
+              "y": 17,
+              "w": 2,
+              "h": 3
+            },
+            {
+              "x": 44,
+              "y": 17,
+              "w": 2,
+              "h": 2
+            },
+            {
+              "x": 44,
+              "y": 19,
+              "w": 1,
+              "h": 1
+            },
+            {
+              "x": 29,
+              "y": 20,
+              "w": 2,
+              "h": 1
+            },
+            {
+              "x": 42,
+              "y": 20,
+              "w": 2,
+              "h": 1
+            },
+            {
+              "x": 30,
+              "y": 21,
+              "w": 1,
+              "h": 1
+            },
+            {
+              "x": 41,
+              "y": 21,
+              "w": 2,
+              "h": 1
+            },
+            {
+              "x": 31,
+              "y": 22,
+              "w": 1,
+              "h": 1
+            },
+            {
+              "x": 41,
+              "y": 22,
+              "w": 1,
+              "h": 1
+            },
+            {
+              "x": 32,
+              "y": 23,
+              "w": 2,
+              "h": 1
+            },
+            {
+              "x": 39,
+              "y": 23,
+              "w": 2,
+              "h": 1
+            },
+            {
+              "x": 33,
+              "y": 24,
+              "w": 1,
+              "h": 1
+            },
+            {
+              "x": 38,
+              "y": 24,
+              "w": 2,
+              "h": 1
+            },
+            {
+              "x": 34,
+              "y": 25,
+              "w": 1,
+              "h": 1
+            },
+            {
+              "x": 38,
+              "y": 25,
+              "w": 1,
+              "h": 1
+            },
+            {
+              "x": 34,
+              "y": 26,
+              "w": 2,
+              "h": 1
+            },
+            {
+              "x": 37,
+              "y": 26,
+              "w": 1,
+              "h": 1
+            },
+            {
+              "x": 36,
+              "y": 27,
+              "w": 1,
+              "h": 1
+            }
+          ],
+          "foundations": [
+            {
+              "x": 31,
+              "y": 11,
+              "w": 3,
+              "h": 1
+            },
+            {
+              "x": 38,
+              "y": 11,
+              "w": 3,
+              "h": 1
+            },
+            {
+              "x": 31,
+              "y": 12,
+              "w": 4,
+              "h": 1
+            },
+            {
+              "x": 38,
+              "y": 12,
+              "w": 4,
+              "h": 1
+            },
+            {
+              "x": 29,
+              "y": 13,
+              "w": 15,
+              "h": 2
+            },
+            {
+              "x": 29,
+              "y": 15,
+              "w": 5,
+              "h": 1
+            },
+            {
+              "x": 35,
+              "y": 15,
+              "w": 3,
+              "h": 1
+            },
+            {
+              "x": 39,
+              "y": 15,
+              "w": 5,
+              "h": 1
+            },
+            {
+              "x": 29,
+              "y": 16,
+              "w": 3,
+              "h": 4
+            },
+            {
+              "x": 41,
+              "y": 16,
+              "w": 3,
+              "h": 4
+            },
+            {
+              "x": 31,
+              "y": 20,
+              "w": 3,
+              "h": 2
+            },
+            {
+              "x": 39,
+              "y": 20,
+              "w": 3,
+              "h": 1
+            },
+            {
+              "x": 38,
+              "y": 21,
+              "w": 3,
+              "h": 2
+            },
+            {
+              "x": 32,
+              "y": 22,
+              "w": 3,
+              "h": 1
+            },
+            {
+              "x": 34,
+              "y": 23,
+              "w": 5,
+              "h": 1
+            },
+            {
+              "x": 34,
+              "y": 24,
+              "w": 4,
+              "h": 1
+            },
+            {
+              "x": 35,
+              "y": 25,
+              "w": 3,
+              "h": 1
+            },
+            {
+              "x": 36,
+              "y": 26,
+              "w": 1,
+              "h": 1
+            }
+          ],
+          "objectives": [],
+          "supplies": [],
+          "signalZones": [],
+          "hangars": [],
+          "classic": {
+            "version": "classic.v1",
+            "terrain": [
+              {
+                "id": "heart-hazard-1",
+                "kind": "lethal",
+                "x": 12,
+                "y": 11,
+                "w": 1,
+                "h": 1
+              },
+              {
+                "id": "heart-hazard-2",
+                "kind": "lethal",
+                "x": 15,
+                "y": 11,
+                "w": 1,
+                "h": 1
+              },
+              {
+                "id": "heart-hazard-3",
+                "kind": "lethal",
+                "x": 56,
+                "y": 11,
+                "w": 2,
+                "h": 1
+              },
+              {
+                "id": "heart-hazard-4",
+                "kind": "lethal",
+                "x": 59,
+                "y": 11,
+                "w": 2,
+                "h": 1
+              },
+              {
+                "id": "heart-hazard-5",
+                "kind": "lethal",
+                "x": 11,
+                "y": 12,
+                "w": 6,
+                "h": 1
+              },
+              {
+                "id": "heart-hazard-6",
+                "kind": "lethal",
+                "x": 56,
+                "y": 12,
+                "w": 6,
+                "h": 1
+              },
+              {
+                "id": "heart-hazard-7",
+                "kind": "lethal",
+                "x": 10,
+                "y": 13,
+                "w": 8,
+                "h": 2
+              },
+              {
+                "id": "heart-hazard-8",
+                "kind": "lethal",
+                "x": 55,
+                "y": 13,
+                "w": 8,
+                "h": 2
+              },
+              {
+                "id": "heart-hazard-9",
+                "kind": "lethal",
+                "x": 11,
+                "y": 15,
+                "w": 6,
+                "h": 1
+              },
+              {
+                "id": "heart-hazard-10",
+                "kind": "lethal",
+                "x": 34,
+                "y": 15,
+                "w": 1,
+                "h": 1
+              },
+              {
+                "id": "heart-hazard-11",
+                "kind": "lethal",
+                "x": 38,
+                "y": 15,
+                "w": 1,
+                "h": 1
+              },
+              {
+                "id": "heart-hazard-12",
+                "kind": "lethal",
+                "x": 56,
+                "y": 15,
+                "w": 6,
+                "h": 1
+              },
+              {
+                "id": "heart-hazard-13",
+                "kind": "lethal",
+                "x": 4,
+                "y": 16,
+                "w": 1,
+                "h": 1
+              },
+              {
+                "id": "heart-hazard-14",
+                "kind": "lethal",
+                "x": 7,
+                "y": 16,
+                "w": 2,
+                "h": 1
+              },
+              {
+                "id": "heart-hazard-15",
+                "kind": "lethal",
+                "x": 13,
+                "y": 16,
+                "w": 3,
+                "h": 1
+              },
+              {
+                "id": "heart-hazard-16",
+                "kind": "lethal",
+                "x": 20,
+                "y": 16,
+                "w": 1,
+                "h": 1
+              },
+              {
+                "id": "heart-hazard-17",
+                "kind": "lethal",
+                "x": 23,
+                "y": 16,
+                "w": 1,
+                "h": 1
+              },
+              {
+                "id": "heart-hazard-18",
+                "kind": "lethal",
+                "x": 32,
+                "y": 16,
+                "w": 9,
+                "h": 4
+              },
+              {
+                "id": "heart-hazard-19",
+                "kind": "lethal",
+                "x": 49,
+                "y": 16,
+                "w": 1,
+                "h": 1
+              },
+              {
+                "id": "heart-hazard-20",
+                "kind": "lethal",
+                "x": 52,
+                "y": 16,
+                "w": 1,
+                "h": 1
+              },
+              {
+                "id": "heart-hazard-21",
+                "kind": "lethal",
+                "x": 57,
+                "y": 16,
+                "w": 3,
+                "h": 1
+              },
+              {
+                "id": "heart-hazard-22",
+                "kind": "lethal",
+                "x": 64,
+                "y": 16,
+                "w": 2,
+                "h": 1
+              },
+              {
+                "id": "heart-hazard-23",
+                "kind": "lethal",
+                "x": 67,
+                "y": 16,
+                "w": 2,
+                "h": 1
+              },
+              {
+                "id": "heart-hazard-24",
+                "kind": "lethal",
+                "x": 3,
+                "y": 17,
+                "w": 6,
+                "h": 1
+              },
+              {
+                "id": "heart-hazard-25",
+                "kind": "lethal",
+                "x": 13,
+                "y": 17,
+                "w": 2,
+                "h": 1
+              },
+              {
+                "id": "heart-hazard-26",
+                "kind": "lethal",
+                "x": 19,
+                "y": 17,
+                "w": 6,
+                "h": 1
+              },
+              {
+                "id": "heart-hazard-27",
+                "kind": "lethal",
+                "x": 48,
+                "y": 17,
+                "w": 6,
+                "h": 1
+              },
+              {
+                "id": "heart-hazard-28",
+                "kind": "lethal",
+                "x": 58,
+                "y": 17,
+                "w": 1,
+                "h": 1
+              },
+              {
+                "id": "heart-hazard-29",
+                "kind": "lethal",
+                "x": 63,
+                "y": 17,
+                "w": 7,
+                "h": 4
+              },
+              {
+                "id": "heart-hazard-30",
+                "kind": "lethal",
+                "x": 2,
+                "y": 18,
+                "w": 8,
+                "h": 2
+              },
+              {
+                "id": "heart-hazard-31",
+                "kind": "lethal",
+                "x": 18,
+                "y": 18,
+                "w": 8,
+                "h": 2
+              },
+              {
+                "id": "heart-hazard-32",
+                "kind": "lethal",
+                "x": 47,
+                "y": 18,
+                "w": 8,
+                "h": 2
+              },
+              {
+                "id": "heart-hazard-33",
+                "kind": "lethal",
+                "x": 3,
+                "y": 20,
+                "w": 6,
+                "h": 1
+              },
+              {
+                "id": "heart-hazard-34",
+                "kind": "lethal",
+                "x": 19,
+                "y": 20,
+                "w": 6,
+                "h": 1
+              },
+              {
+                "id": "heart-hazard-35",
+                "kind": "lethal",
+                "x": 34,
+                "y": 20,
+                "w": 5,
+                "h": 1
+              },
+              {
+                "id": "heart-hazard-36",
+                "kind": "lethal",
+                "x": 48,
+                "y": 20,
+                "w": 6,
+                "h": 1
+              },
+              {
+                "id": "heart-hazard-37",
+                "kind": "lethal",
+                "x": 4,
+                "y": 21,
+                "w": 5,
+                "h": 1
+              },
+              {
+                "id": "heart-hazard-38",
+                "kind": "lethal",
+                "x": 20,
+                "y": 21,
+                "w": 4,
+                "h": 1
+              },
+              {
+                "id": "heart-hazard-39",
+                "kind": "lethal",
+                "x": 34,
+                "y": 21,
+                "w": 4,
+                "h": 1
+              },
+              {
+                "id": "heart-hazard-40",
+                "kind": "lethal",
+                "x": 49,
+                "y": 21,
+                "w": 4,
+                "h": 1
+              },
+              {
+                "id": "heart-hazard-41",
+                "kind": "lethal",
+                "x": 64,
+                "y": 21,
+                "w": 5,
+                "h": 1
+              },
+              {
+                "id": "heart-hazard-42",
+                "kind": "lethal",
+                "x": 5,
+                "y": 22,
+                "w": 3,
+                "h": 1
+              },
+              {
+                "id": "heart-hazard-43",
+                "kind": "lethal",
+                "x": 20,
+                "y": 22,
+                "w": 3,
+                "h": 1
+              },
+              {
+                "id": "heart-hazard-44",
+                "kind": "lethal",
+                "x": 35,
+                "y": 22,
+                "w": 3,
+                "h": 1
+              },
+              {
+                "id": "heart-hazard-45",
+                "kind": "lethal",
+                "x": 49,
+                "y": 22,
+                "w": 3,
+                "h": 1
+              },
+              {
+                "id": "heart-hazard-46",
+                "kind": "lethal",
+                "x": 65,
+                "y": 22,
+                "w": 3,
+                "h": 1
+              }
+            ],
+            "powerups": [],
+            "arcadeActions": {
+              "version": "arcade-actions.v1"
+            }
+          },
+          "enemies": [
+            {
+              "id": "pink-north-west",
+              "type": "bouncer",
+              "x": 9.1,
+              "y": 5.5,
+              "vx": -3.5,
+              "vy": 2.6,
+              "radius": 0.3
+            },
+            {
+              "id": "pink-west-upper",
+              "type": "bouncer",
+              "x": 9,
+              "y": 11.9,
+              "vx": 2.6,
+              "vy": 3.9,
+              "radius": 0.3
+            },
+            {
+              "id": "pink-west-heart",
+              "type": "bouncer",
+              "x": 13.2,
+              "y": 14.4,
+              "vx": -1.3,
+              "vy": 4.1,
+              "radius": 0.3
+            },
+            {
+              "id": "pink-south-west",
+              "type": "bouncer",
+              "x": 1.9,
+              "y": 26.5,
+              "vx": -2,
+              "vy": 4.3,
+              "radius": 0.3
+            },
+            {
+              "id": "pink-east-upper",
+              "type": "bouncer",
+              "x": 66.1,
+              "y": 15.4,
+              "vx": -3.4,
+              "vy": -2.6,
+              "radius": 0.3
+            },
+            {
+              "id": "pink-east-lower",
+              "type": "bouncer",
+              "x": 47.3,
+              "y": 25.1,
+              "vx": -4,
+              "vy": -1.8,
+              "radius": 0.3
+            },
+            {
+              "id": "pink-south-inner",
+              "type": "bouncer",
+              "x": 49.5,
+              "y": 33.6,
+              "vx": 2.8,
+              "vy": -3.5,
+              "radius": 0.3
+            },
+            {
+              "id": "pink-south-east",
+              "type": "bouncer",
+              "x": 70.3,
+              "y": 32.3,
+              "vx": 3.3,
+              "vy": -2.7,
+              "radius": 0.3
+            },
+            {
+              "id": "cyan-west",
+              "type": "border-patrol",
+              "x": 0.5,
+              "y": 21.5,
+              "speed": 4.5,
+              "clockwise": true,
+              "radius": 0.35
+            },
+            {
+              "id": "cyan-east",
+              "type": "border-patrol",
+              "x": 71.5,
+              "y": 21.5,
+              "speed": 4.5,
+              "clockwise": false,
+              "radius": 0.35
+            }
+          ],
+          "rules": {
+            "lives": 3,
+            "moveSpeed": 10,
+            "respawnSeconds": 0.7,
+            "graceSeconds": 0.8,
+            "timeLimitSeconds": 0,
+            "stopOnCapture": true
+          },
+          "metadata": {
+            "description": "Seven red heart hazards surround a broken cyan heart wall. Red tiles are lethal until captured; cyan walls block movement and cannot close a cut. Enter through the side openings to reach the central revealed safe ground. Eight pink field bouncers threaten unfinished lines; two cyan patrols travel the border. Start at bottom center and reveal 75%. Geometry and initial positions follow the supplied picture, scaled to 72 × 36; motion uses existing Classic behavior."
+          }
+        },
+        {
+          "version": "xonix-level.v5",
+          "id": "neon-labyrinth-pack",
+          "revision": "1",
+          "name": "Neon Labyrinth",
+          "width": 72,
+          "height": 36,
+          "encounter": null,
+          "spawn": {
+            "x": 36.5,
+            "y": 35.5
+          },
+          "goal": {
+            "coverage": 0.75
+          },
+          "walls": [
+            {
+              "x": 3,
+              "y": 1,
+              "w": 28,
+              "h": 1
+            },
+            {
+              "x": 34,
+              "y": 1,
+              "w": 1,
+              "h": 2
+            },
+            {
+              "x": 37,
+              "y": 1,
+              "w": 1,
+              "h": 2
+            },
+            {
+              "x": 41,
+              "y": 1,
+              "w": 28,
+              "h": 1
+            },
+            {
+              "x": 3,
+              "y": 2,
+              "w": 1,
+              "h": 1
+            },
+            {
+              "x": 68,
+              "y": 2,
+              "w": 1,
+              "h": 1
+            },
+            {
+              "x": 1,
+              "y": 3,
+              "w": 3,
+              "h": 1
+            },
+            {
+              "x": 34,
+              "y": 3,
+              "w": 4,
+              "h": 1
+            },
+            {
+              "x": 68,
+              "y": 3,
+              "w": 3,
+              "h": 1
+            },
+            {
+              "x": 1,
+              "y": 4,
+              "w": 1,
+              "h": 9
+            },
+            {
+              "x": 36,
+              "y": 4,
+              "w": 1,
+              "h": 10
+            },
+            {
+              "x": 70,
+              "y": 4,
+              "w": 1,
+              "h": 9
+            },
+            {
+              "x": 36,
+              "y": 14,
+              "w": 4,
+              "h": 1
+            },
+            {
+              "x": 39,
+              "y": 15,
+              "w": 1,
+              "h": 3
+            },
+            {
+              "x": 1,
+              "y": 16,
+              "w": 3,
+              "h": 1
+            },
+            {
+              "x": 68,
+              "y": 16,
+              "w": 3,
+              "h": 1
+            },
+            {
+              "x": 3,
+              "y": 17,
+              "w": 1,
+              "h": 1
+            },
+            {
+              "x": 68,
+              "y": 17,
+              "w": 1,
+              "h": 1
+            },
+            {
+              "x": 3,
+              "y": 18,
+              "w": 30,
+              "h": 1
+            },
+            {
+              "x": 39,
+              "y": 18,
+              "w": 30,
+              "h": 1
+            },
+            {
+              "x": 1,
+              "y": 19,
+              "w": 3,
+              "h": 1
+            },
+            {
+              "x": 32,
+              "y": 19,
+              "w": 1,
+              "h": 3
+            },
+            {
+              "x": 68,
+              "y": 19,
+              "w": 3,
+              "h": 1
+            },
+            {
+              "x": 32,
+              "y": 22,
+              "w": 5,
+              "h": 1
+            },
+            {
+              "x": 1,
+              "y": 23,
+              "w": 1,
+              "h": 9
+            },
+            {
+              "x": 36,
+              "y": 23,
+              "w": 1,
+              "h": 2
+            },
+            {
+              "x": 70,
+              "y": 23,
+              "w": 1,
+              "h": 9
+            },
+            {
+              "x": 36,
+              "y": 27,
+              "w": 1,
+              "h": 5
+            },
+            {
+              "x": 1,
+              "y": 32,
+              "w": 3,
+              "h": 1
+            },
+            {
+              "x": 34,
+              "y": 32,
+              "w": 4,
+              "h": 1
+            },
+            {
+              "x": 68,
+              "y": 32,
+              "w": 3,
+              "h": 1
+            },
+            {
+              "x": 3,
+              "y": 33,
+              "w": 1,
+              "h": 1
+            },
+            {
+              "x": 34,
+              "y": 33,
+              "w": 1,
+              "h": 2
+            },
+            {
+              "x": 37,
+              "y": 33,
+              "w": 1,
+              "h": 2
+            },
+            {
+              "x": 68,
+              "y": 33,
+              "w": 1,
+              "h": 1
+            },
+            {
+              "x": 3,
+              "y": 34,
+              "w": 28,
+              "h": 1
+            },
+            {
+              "x": 41,
+              "y": 34,
+              "w": 28,
+              "h": 1
+            }
+          ],
+          "objectives": [],
+          "supplies": [],
+          "signalZones": [],
+          "hangars": [],
+          "classic": {
+            "version": "classic.v1",
+            "terrain": [
+              {
+                "id": "hazard-1",
+                "kind": "lethal",
+                "x": 4,
+                "y": 2,
+                "w": 2,
+                "h": 2
+              },
+              {
+                "id": "hazard-2",
+                "kind": "lethal",
+                "x": 13,
+                "y": 2,
+                "w": 4,
+                "h": 1
+              },
+              {
+                "id": "hazard-3",
+                "kind": "lethal",
+                "x": 28,
+                "y": 2,
+                "w": 3,
+                "h": 1
+              },
+              {
+                "id": "hazard-4",
+                "kind": "lethal",
+                "x": 41,
+                "y": 2,
+                "w": 3,
+                "h": 1
+              },
+              {
+                "id": "hazard-5",
+                "kind": "lethal",
+                "x": 53,
+                "y": 2,
+                "w": 2,
+                "h": 1
+              },
+              {
+                "id": "hazard-6",
+                "kind": "lethal",
+                "x": 63,
+                "y": 2,
+                "w": 3,
+                "h": 1
+              },
+              {
+                "id": "hazard-7",
+                "kind": "lethal",
+                "x": 8,
+                "y": 3,
+                "w": 2,
+                "h": 3
+              },
+              {
+                "id": "hazard-8",
+                "kind": "lethal",
+                "x": 19,
+                "y": 3,
+                "w": 2,
+                "h": 3
+              },
+              {
+                "id": "hazard-9",
+                "kind": "lethal",
+                "x": 24,
+                "y": 3,
+                "w": 2,
+                "h": 3
+              },
+              {
+                "id": "hazard-10",
+                "kind": "lethal",
+                "x": 46,
+                "y": 3,
+                "w": 5,
+                "h": 3
+              },
+              {
+                "id": "hazard-11",
+                "kind": "lethal",
+                "x": 58,
+                "y": 3,
+                "w": 3,
+                "h": 5
+              },
+              {
+                "id": "hazard-12",
+                "kind": "lethal",
+                "x": 2,
+                "y": 4,
+                "w": 4,
+                "h": 2
+              },
+              {
+                "id": "hazard-13",
+                "kind": "lethal",
+                "x": 34,
+                "y": 4,
+                "w": 2,
+                "h": 2
+              },
+              {
+                "id": "hazard-14",
+                "kind": "lethal",
+                "x": 8,
+                "y": 6,
+                "w": 4,
+                "h": 2
+              },
+              {
+                "id": "hazard-15",
+                "kind": "lethal",
+                "x": 14,
+                "y": 6,
+                "w": 7,
+                "h": 2
+              },
+              {
+                "id": "hazard-16",
+                "kind": "lethal",
+                "x": 24,
+                "y": 6,
+                "w": 7,
+                "h": 2
+              },
+              {
+                "id": "hazard-17",
+                "kind": "lethal",
+                "x": 41,
+                "y": 6,
+                "w": 3,
+                "h": 5
+              },
+              {
+                "id": "hazard-18",
+                "kind": "lethal",
+                "x": 46,
+                "y": 6,
+                "w": 2,
+                "h": 2
+              },
+              {
+                "id": "hazard-19",
+                "kind": "lethal",
+                "x": 53,
+                "y": 6,
+                "w": 2,
+                "h": 2
+              },
+              {
+                "id": "hazard-20",
+                "kind": "lethal",
+                "x": 63,
+                "y": 6,
+                "w": 6,
+                "h": 2
+              },
+              {
+                "id": "hazard-21",
+                "kind": "lethal",
+                "x": 3,
+                "y": 8,
+                "w": 3,
+                "h": 2
+              },
+              {
+                "id": "hazard-22",
+                "kind": "lethal",
+                "x": 9,
+                "y": 8,
+                "w": 3,
+                "h": 2
+              },
+              {
+                "id": "hazard-23",
+                "kind": "lethal",
+                "x": 14,
+                "y": 8,
+                "w": 3,
+                "h": 7
+              },
+              {
+                "id": "hazard-24",
+                "kind": "lethal",
+                "x": 28,
+                "y": 8,
+                "w": 3,
+                "h": 1
+              },
+              {
+                "id": "hazard-25",
+                "kind": "lethal",
+                "x": 51,
+                "y": 8,
+                "w": 4,
+                "h": 2
+              },
+              {
+                "id": "hazard-26",
+                "kind": "lethal",
+                "x": 63,
+                "y": 8,
+                "w": 3,
+                "h": 2
+              },
+              {
+                "id": "hazard-27",
+                "kind": "lethal",
+                "x": 28,
+                "y": 9,
+                "w": 8,
+                "h": 2
+              },
+              {
+                "id": "hazard-28",
+                "kind": "lethal",
+                "x": 37,
+                "y": 9,
+                "w": 2,
+                "h": 2
+              },
+              {
+                "id": "hazard-29",
+                "kind": "lethal",
+                "x": 3,
+                "y": 10,
+                "w": 4,
+                "h": 3
+              },
+              {
+                "id": "hazard-30",
+                "kind": "lethal",
+                "x": 19,
+                "y": 10,
+                "w": 7,
+                "h": 3
+              },
+              {
+                "id": "hazard-31",
+                "kind": "lethal",
+                "x": 46,
+                "y": 10,
+                "w": 2,
+                "h": 3
+              },
+              {
+                "id": "hazard-32",
+                "kind": "lethal",
+                "x": 53,
+                "y": 10,
+                "w": 13,
+                "h": 3
+              },
+              {
+                "id": "hazard-33",
+                "kind": "lethal",
+                "x": 69,
+                "y": 10,
+                "w": 1,
+                "h": 3
+              },
+              {
+                "id": "hazard-34",
+                "kind": "lethal",
+                "x": 9,
+                "y": 13,
+                "w": 3,
+                "h": 2
+              },
+              {
+                "id": "hazard-35",
+                "kind": "lethal",
+                "x": 24,
+                "y": 13,
+                "w": 2,
+                "h": 2
+              },
+              {
+                "id": "hazard-36",
+                "kind": "lethal",
+                "x": 47,
+                "y": 13,
+                "w": 4,
+                "h": 2
+              },
+              {
+                "id": "hazard-37",
+                "kind": "lethal",
+                "x": 58,
+                "y": 13,
+                "w": 3,
+                "h": 2
+              },
+              {
+                "id": "hazard-38",
+                "kind": "lethal",
+                "x": 28,
+                "y": 14,
+                "w": 3,
+                "h": 4
+              },
+              {
+                "id": "hazard-39",
+                "kind": "lethal",
+                "x": 19,
+                "y": 15,
+                "w": 2,
+                "h": 3
+              },
+              {
+                "id": "hazard-40",
+                "kind": "lethal",
+                "x": 43,
+                "y": 15,
+                "w": 2,
+                "h": 3
+              },
+              {
+                "id": "hazard-41",
+                "kind": "lethal",
+                "x": 53,
+                "y": 15,
+                "w": 2,
+                "h": 3
+              },
+              {
+                "id": "hazard-42",
+                "kind": "lethal",
+                "x": 63,
+                "y": 15,
+                "w": 3,
+                "h": 3
+              },
+              {
+                "id": "hazard-43",
+                "kind": "lethal",
+                "x": 4,
+                "y": 16,
+                "w": 3,
+                "h": 2
+              },
+              {
+                "id": "hazard-44",
+                "kind": "lethal",
+                "x": 34,
+                "y": 16,
+                "w": 4,
+                "h": 4
+              },
+              {
+                "id": "hazard-45",
+                "kind": "lethal",
+                "x": 6,
+                "y": 19,
+                "w": 3,
+                "h": 2
+              },
+              {
+                "id": "hazard-46",
+                "kind": "lethal",
+                "x": 17,
+                "y": 19,
+                "w": 2,
+                "h": 2
+              },
+              {
+                "id": "hazard-47",
+                "kind": "lethal",
+                "x": 27,
+                "y": 19,
+                "w": 2,
+                "h": 2
+              },
+              {
+                "id": "hazard-48",
+                "kind": "lethal",
+                "x": 41,
+                "y": 19,
+                "w": 3,
+                "h": 3
+              },
+              {
+                "id": "hazard-49",
+                "kind": "lethal",
+                "x": 51,
+                "y": 19,
+                "w": 2,
+                "h": 2
+              },
+              {
+                "id": "hazard-50",
+                "kind": "lethal",
+                "x": 65,
+                "y": 19,
+                "w": 3,
+                "h": 1
+              },
+              {
+                "id": "hazard-51",
+                "kind": "lethal",
+                "x": 11,
+                "y": 21,
+                "w": 3,
+                "h": 2
+              },
+              {
+                "id": "hazard-52",
+                "kind": "lethal",
+                "x": 21,
+                "y": 21,
+                "w": 4,
+                "h": 2
+              },
+              {
+                "id": "hazard-53",
+                "kind": "lethal",
+                "x": 46,
+                "y": 21,
+                "w": 2,
+                "h": 2
+              },
+              {
+                "id": "hazard-54",
+                "kind": "lethal",
+                "x": 55,
+                "y": 21,
+                "w": 3,
+                "h": 7
+              },
+              {
+                "id": "hazard-55",
+                "kind": "lethal",
+                "x": 60,
+                "y": 21,
+                "w": 3,
+                "h": 2
+              },
+              {
+                "id": "hazard-56",
+                "kind": "lethal",
+                "x": 2,
+                "y": 23,
+                "w": 1,
+                "h": 3
+              },
+              {
+                "id": "hazard-57",
+                "kind": "lethal",
+                "x": 6,
+                "y": 23,
+                "w": 13,
+                "h": 3
+              },
+              {
+                "id": "hazard-58",
+                "kind": "lethal",
+                "x": 24,
+                "y": 23,
+                "w": 2,
+                "h": 3
+              },
+              {
+                "id": "hazard-59",
+                "kind": "lethal",
+                "x": 46,
+                "y": 23,
+                "w": 7,
+                "h": 3
+              },
+              {
+                "id": "hazard-60",
+                "kind": "lethal",
+                "x": 65,
+                "y": 23,
+                "w": 4,
+                "h": 3
+              },
+              {
+                "id": "hazard-61",
+                "kind": "lethal",
+                "x": 28,
+                "y": 25,
+                "w": 3,
+                "h": 5
+              },
+              {
+                "id": "hazard-62",
+                "kind": "lethal",
+                "x": 33,
+                "y": 25,
+                "w": 11,
+                "h": 2
+              },
+              {
+                "id": "hazard-63",
+                "kind": "lethal",
+                "x": 6,
+                "y": 26,
+                "w": 3,
+                "h": 2
+              },
+              {
+                "id": "hazard-64",
+                "kind": "lethal",
+                "x": 17,
+                "y": 26,
+                "w": 4,
+                "h": 2
+              },
+              {
+                "id": "hazard-65",
+                "kind": "lethal",
+                "x": 60,
+                "y": 26,
+                "w": 3,
+                "h": 2
+              },
+              {
+                "id": "hazard-66",
+                "kind": "lethal",
+                "x": 66,
+                "y": 26,
+                "w": 3,
+                "h": 2
+              },
+              {
+                "id": "hazard-67",
+                "kind": "lethal",
+                "x": 41,
+                "y": 27,
+                "w": 3,
+                "h": 1
+              },
+              {
+                "id": "hazard-68",
+                "kind": "lethal",
+                "x": 3,
+                "y": 28,
+                "w": 6,
+                "h": 2
+              },
+              {
+                "id": "hazard-69",
+                "kind": "lethal",
+                "x": 11,
+                "y": 28,
+                "w": 3,
+                "h": 5
+              },
+              {
+                "id": "hazard-70",
+                "kind": "lethal",
+                "x": 17,
+                "y": 28,
+                "w": 2,
+                "h": 2
+              },
+              {
+                "id": "hazard-71",
+                "kind": "lethal",
+                "x": 24,
+                "y": 28,
+                "w": 2,
+                "h": 2
+              },
+              {
+                "id": "hazard-72",
+                "kind": "lethal",
+                "x": 41,
+                "y": 28,
+                "w": 7,
+                "h": 2
+              },
+              {
+                "id": "hazard-73",
+                "kind": "lethal",
+                "x": 51,
+                "y": 28,
+                "w": 7,
+                "h": 2
+              },
+              {
+                "id": "hazard-74",
+                "kind": "lethal",
+                "x": 60,
+                "y": 28,
+                "w": 4,
+                "h": 2
+              },
+              {
+                "id": "hazard-75",
+                "kind": "lethal",
+                "x": 21,
+                "y": 30,
+                "w": 5,
+                "h": 3
+              },
+              {
+                "id": "hazard-76",
+                "kind": "lethal",
+                "x": 37,
+                "y": 30,
+                "w": 1,
+                "h": 2
+              },
+              {
+                "id": "hazard-77",
+                "kind": "lethal",
+                "x": 46,
+                "y": 30,
+                "w": 2,
+                "h": 3
+              },
+              {
+                "id": "hazard-78",
+                "kind": "lethal",
+                "x": 51,
+                "y": 30,
+                "w": 2,
+                "h": 3
+              },
+              {
+                "id": "hazard-79",
+                "kind": "lethal",
+                "x": 62,
+                "y": 30,
+                "w": 2,
+                "h": 3
+              },
+              {
+                "id": "hazard-80",
+                "kind": "lethal",
+                "x": 66,
+                "y": 30,
+                "w": 4,
+                "h": 2
+              },
+              {
+                "id": "hazard-81",
+                "kind": "lethal",
+                "x": 66,
+                "y": 32,
+                "w": 2,
+                "h": 2
+              },
+              {
+                "id": "hazard-82",
+                "kind": "lethal",
+                "x": 6,
+                "y": 33,
+                "w": 3,
+                "h": 1
+              },
+              {
+                "id": "hazard-83",
+                "kind": "lethal",
+                "x": 17,
+                "y": 33,
+                "w": 2,
+                "h": 1
+              },
+              {
+                "id": "hazard-84",
+                "kind": "lethal",
+                "x": 28,
+                "y": 33,
+                "w": 3,
+                "h": 1
+              },
+              {
+                "id": "hazard-85",
+                "kind": "lethal",
+                "x": 41,
+                "y": 33,
+                "w": 3,
+                "h": 1
+              },
+              {
+                "id": "hazard-86",
+                "kind": "lethal",
+                "x": 55,
+                "y": 33,
+                "w": 4,
+                "h": 1
+              }
+            ],
+            "powerups": [],
+            "arcadeActions": {
+              "version": "arcade-actions.v1"
+            }
+          },
+          "enemies": [
+            {
+              "id": "purple-upper-center",
+              "type": "bouncer",
+              "x": 29.7,
+              "y": 9.2,
+              "vx": -2.7,
+              "vy": -3.6,
+              "radius": 0.3
+            },
+            {
+              "id": "purple-center-left",
+              "type": "bouncer",
+              "x": 34.3,
+              "y": 13.2,
+              "vx": -1.4,
+              "vy": 4.2,
+              "radius": 0.3
+            },
+            {
+              "id": "purple-west-middle",
+              "type": "bouncer",
+              "x": 21.7,
+              "y": 16.8,
+              "vx": 4.3,
+              "vy": 0.9,
+              "radius": 0.3
+            },
+            {
+              "id": "purple-east-middle",
+              "type": "bouncer",
+              "x": 68.1,
+              "y": 14.7,
+              "vx": -0.8,
+              "vy": 4.2,
+              "radius": 0.3
+            },
+            {
+              "id": "purple-lower-center",
+              "type": "bouncer",
+              "x": 37.6,
+              "y": 22.7,
+              "vx": 1.5,
+              "vy": -4.1,
+              "radius": 0.3
+            },
+            {
+              "id": "purple-lower-west",
+              "type": "bouncer",
+              "x": 5.5,
+              "y": 31.6,
+              "vx": -1.8,
+              "vy": 4.1,
+              "radius": 0.3
+            },
+            {
+              "id": "cyan-top-center",
+              "type": "border-patrol",
+              "x": 34.7,
+              "y": 0.5,
+              "speed": 4.5,
+              "clockwise": true,
+              "radius": 0.35
+            },
+            {
+              "id": "cyan-top-right",
+              "type": "border-patrol",
+              "x": 71.5,
+              "y": 1,
+              "speed": 4.5,
+              "clockwise": true,
+              "radius": 0.35
+            }
+          ],
+          "rules": {
+            "lives": 3,
+            "moveSpeed": 10,
+            "respawnSeconds": 0.7,
+            "graceSeconds": 0.8,
+            "timeLimitSeconds": 0,
+            "stopOnCapture": true
+          },
+          "metadata": {
+            "description": "A dense red-hazard labyrinth with cyan stepped dividers, corner recesses and central U-shaped bays. Cyan walls block movement and do not close a cut. Red ground is lethal until captured. Six purple bouncers threaten unfinished lines; two cyan patrols travel the outer safe rail. Start at bottom center, move sideways out of the bay, and find a clear entry before cutting. Reveal 75%. Layout follows the supplied screenshot; tile scaling and enemy motion use existing Classic rules."
+          },
+          "foundations": []
+        }
+      ]
+    }
+  ],
+  "visualOverrides": {},
+  "levelVisuals": [
+    {
+      "levelId": "neon-channels-pack",
+      "visualOverrides": {
+        "enemy": {
+          "name": "Neon enemy",
+          "dataUrl": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAZUlEQVR42mNgGAWjYBSQCP4vPPEfhj/7T8DAdLEYnwNo4hBslhNyANUcgctyYhxAsSPwWU6sAyhyxIA6gJDlpDiALEeMOmDUAaMOGHAHjJaEg6IyGhTV8aBokAyKJtkoGAXDFgAA3Nz8xu33rKgAAAAASUVORK5CYII="
+        },
+        "eroder": {
+          "name": "Neon eroder",
+          "dataUrl": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAmklEQVR42u3X0Q2AIAxFUTZ0NVdwG/dxgBI+SAyB0tYCz4Qmft+TqFhD2PPneY6T0rUkTtdNGTAdkeIlYBoix2uA4Yh3vAUYhijjHMAdUYv3AG6IVlwC+Izg4lKAGdGLawBqhCSuBYgR0rgF0EVo4lYAi1gOWH4LIB5CiNcQ4iCCOIohPkYQn2OIhQRiJYNYSiHWcogfkz1eEwG1g1zRo0kWyQAAAABJRU5ErkJggg=="
+        },
+        "patrol": {
+          "name": "Neon patrol",
+          "dataUrl": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAeklEQVR42mNgIANY3v/2HxtmoAfAZTndHDHqgJHlAGwGkuoAsh2Fy1BSHEBxyGAzgFgHUC1a0A0ixgFUTxOELKVbgqSZ5eT6kFI8oJbDHTHqgFEHDLgDBjwbDoqCaFAXxQNaGQ1odTxoGiQD1iQbbRWPOmDQOoDa3XMA/Gz1sONLA88AAAAASUVORK5CYII="
+        },
+        "player": {
+          "name": "Neon player",
+          "dataUrl": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAaElEQVR42u2WyQkAIAwEU5/912Abil9BPHItsgO+Z0CNihBCFLRa2lip8pSIWR4asZKHROzkrhGncpeIW7lpxKvcJEIrV0VYyZ8j0gPStwDiEEJcQ4hBBDGKIR4jiOcY4kMC8SUj5Bs6li+7p9bSiY0AAAAASUVORK5CYII="
+        },
+        "slowTerrain": {
+          "name": "Neon slowTerrain",
+          "dataUrl": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAANklEQVR42mNgGAWjYBSMgsEMnBLu/KcGHnXA0HUAKY4b8AQ66oBRB4w6YLTiGgWjYBSMgiELAMa7Atjf3Ar7AAAAAElFTkSuQmCC"
+        }
+      }
+    },
+    {
+      "levelId": "neon-crossroads-pack",
+      "visualOverrides": {
+        "enemy": {
+          "name": "Crossroads enemy",
+          "dataUrl": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAa0lEQVR42u3WSw4AEAwEUCd0JweVOAYrtixQ/5HMJF3PW7VVimF+S/Am5mOdLuZacQ1wBFIrbwG2IVrlPcAyolcuAUwjJOVSwBTiKUBaPgIYQhBAAAHPAdyEEMcI4hxDPCQQLxnEU8owp5IAO6H2aVCy5VEAAAAASUVORK5CYII="
+        },
+        "eroder": {
+          "name": "Crossroads eroder",
+          "dataUrl": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAnUlEQVR42u3X6w2AIAxGUdZyP6dxJuMq9RcJIZQ+ePSLkQXuSVAoKf1rYNH50H1cFBbPgO2IHC8B2xBlvAYsR9TxFmAZohXnANMRXLwHmIboxSXAMEKKawBuhCauBZgR2rgFoEZY4laAiLDGPQAW4Yl7AU1EOCB8CyA+QojfEOIggjiKIS4jiOsYYiCBGMkghlKIsRziYQLxNPvMegEkUwToHb7SvQAAAABJRU5ErkJggg=="
+        },
+        "patrol": {
+          "name": "Crossroads patrol",
+          "dataUrl": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAbklEQVR42mNgIBG4P3n/Hx9moDUYdcCoA+jmAFwGkuoAsh2Gy1BSHEBxyGAzgFgHUC1a0A0ixgFUTxOELKVLjqCZ5eT6jlp41AGjDhh1wMA7YMALokFfFA9oZTSg1fGAN0gGvEk22ioedcCIcQAA6l0yW47rJ5YAAAAASUVORK5CYII="
+        },
+        "player": {
+          "name": "Crossroads player",
+          "dataUrl": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAdklEQVR42u3WywkAIQwEUCu0JwtdsAw9uSdBxB8YzQgzDcwDNdEYhmFeTgwufd4mtfIMuI7I5SXgGqIsrwHHEXV5C3AM0SrvAcQRvfIRQAwxKp8BthGz8hXAFkIdoH4EEJcQ4hlCDCKIUQyxjCDWMcSHhGEYqfxr2EddvqTOcAAAAABJRU5ErkJggg=="
+        },
+        "wall": {
+          "name": "Crossroads wall",
+          "dataUrl": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAP0lEQVR42mMQia7+P5CYAURob7qOE9NaftQBow4YdQDDaDkw6oBRB4w6YLQcGHXAqANGHTBaDow6YNQBI94BAJ5cDzcS0yPLAAAAAElFTkSuQmCC"
+        }
+      }
+    },
+    {
+      "levelId": "neon-hearts-pack",
+      "visualOverrides": {
+        "enemy": {
+          "name": "Hearts enemy",
+          "dataUrl": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAa0lEQVR42u3WyxEAEAwEUCUqzklHqlECVw6I+K2Z3Zmc952SGMMwvyW5kMqJ1ldzrbgFOAJplfcA2xC98hFgGTEqlwDUCEm5FKBCPAVIy2cAUwgCCCDgOYCbEOIYQZxjiIcE4iWDeEoZ5lQyy/2/SXwi9+wAAAAASUVORK5CYII="
+        },
+        "patrol": {
+          "name": "Hearts patrol",
+          "dataUrl": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAbklEQVR42mNgIBG4P3n/Hx9moDUYdcCoA+jmAFwGkuoAsh2Gy1BSHEBxyGAzgFgHUC1a0A0ixgFUTxOELKVLjqCZ5eT6jlp41AGjDhh1wMA7YMALokFfFA9oZTSg1fGAN0gGvEk22ioedcCIcQAA6l0yW47rJ5YAAAAASUVORK5CYII="
+        },
+        "player": {
+          "name": "Hearts player",
+          "dataUrl": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAYklEQVR42u2WWwoAEBQFrdP+yxp8kV8lj/s66kz5nilcUiKE/EwtuY0VKg+JmOWuESu5S8RObhpxKjeJuJWrRrzKVSKkcnFEeED4FkAcQohrCDGIIEYxxGME8RxDfEgIIVp0LrhEMwepglQAAAAASUVORK5CYII="
+        },
+        "wall": {
+          "name": "Hearts wall",
+          "dataUrl": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAP0lEQVR42mMQia7+P5CYAURob7qOE9NaftQBow4YdQDDaDkw6oBRB4w6YLQcGHXAqANGHTBaDow6YNQBI94BAJ5cDzcS0yPLAAAAAElFTkSuQmCC"
+        },
+        "lethalTerrain": {
+          "name": "Hearts lethalTerrain",
+          "dataUrl": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAbUlEQVR42u2WQQ4AEAwEPce7vNxPiIsTgra6kZ17dyqiFQIhZEGOqbhmtGJJgLS+B9yESGrFQWrym0B1+UmwmXxHYC5fiZ7JR8Ln8lkTLlMS5vRu9w/xAiBmAMQUhNgDEJtQtQmIDwnCt46Qv6lSX/qpet2+5AAAAABJRU5ErkJggg=="
+        }
+      }
+    },
+    {
+      "levelId": "neon-labyrinth-pack",
+      "visualOverrides": {
+        "enemy": {
+          "name": "Labyrinth enemy",
+          "dataUrl": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAa0lEQVR42u3WywkAIAwDUOdxPecTXEgcQa96UOs/QgI9553aKsUwvyUYH/Ox2hVzrbgGOAKplbcA2xCt8h5gGdErlwCmEZJyKWAK8RQgLR8BDCEIIICA5wBuQohjBHGOIR4SiJcM4illmFNJZ+qPDXD69MsAAAAASUVORK5CYII="
+        },
+        "patrol": {
+          "name": "Labyrinth patrol",
+          "dataUrl": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAbklEQVR42mNgIBG4P3n/Hx9moDUYdcCoA+jmAFwGkuoAsh2Gy1BSHEBxyGAzgFgHUC1a0A0ixgFUTxOELKVLjqCZ5eT6jlp41AGjDhh1wMA7YMALokFfFA9oZTSg1fGAN0gGvEk22ioedcCIcQAA6l0yW47rJ5YAAAAASUVORK5CYII="
+        },
+        "player": {
+          "name": "Labyrinth player",
+          "dataUrl": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAYklEQVR42u2WWwoAEBQFrdP+yxp8kV8lj/s66kz5nilcUiKE/EwtuY0VKg+JmOWuESu5S8RObhpxKjeJuJWrRrzKVSKkcnFEeED4FkAcQohrCDGIIEYxxGME8RxDfEgIIVp0LrhEMwepglQAAAAASUVORK5CYII="
+        },
+        "wall": {
+          "name": "Labyrinth wall",
+          "dataUrl": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAP0lEQVR42mMQia7+P5CYAURob7qOE9NaftQBow4YdQDDaDkw6oBRB4w6YLQcGHXAqANGHTBaDow6YNQBI94BAJ5cDzcS0yPLAAAAAElFTkSuQmCC"
+        },
+        "lethalTerrain": {
+          "name": "Labyrinth lethalTerrain",
+          "dataUrl": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAbUlEQVR42u2WQQ4AEAwEPce7vNxPiIsTgra6kZ17dyqiFQIhZEGOqbhmtGJJgLS+B9yESGrFQWrym0B1+UmwmXxHYC5fiZ7JR8Ln8lkTLlMS5vRu9w/xAiBmAMQUhNgDEJtQtQmIDwnCt46Qv6lSX/qpet2+5AAAAABJRU5ErkJggg=="
+        }
+      }
+    }
+  ],
+  "music": [],
+  "masteries": []
+}

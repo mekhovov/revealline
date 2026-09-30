@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Neon Crossroads · RevealLine</title>
+  <style>
+    :root {
+      color-scheme: dark;
+      font: 18px/1.6 system-ui;
+      background: #060911;
+      color: #e2edf5;
+    }
+    body {
+      max-width: 760px;
+      margin: 10vh auto;
+      padding: 24px;
+    }
+    h1 {
+      color: #39c7e8;
+      font-size: 2.8rem;
+      margin-bottom: 8px;
+    }
+    button,
+    select,
+    a {
+      font: inherit;
+      color: #75ddf5;
+    }
+    button,
+    select {
+      padding: 12px 20px;
+      background: #122434;
+      border: 1px solid #39c7e8;
+      border-radius: 6px;
+    }
+    button {
+      cursor: pointer;
+      margin: 20px 0;
+    }
+    label {
+      display: block;
+    }
+    small {
+      display: block;
+      color: #a3b5c9;
+    }
+  </style>
+  <h1>Neon Crossroads</h1>
+  <p>
+    Four chambers. Four yellow bouncers, two pink diamond eroders, and four cyan perimeter patrols.
+  </p>
+  <p>
+    Reveal 75%. Start at bottom center and move sideways to enter a chamber. Cyan walls block
+    movement; return your line to the outer safe border to capture territory.
+  </p>
+  <label
+    >Turning
+    <select id="turn">
+      <option value="immediate">Immediate</option>
+      <option value="grid-center">Grid-center buffered</option>
+    </select></label
+  >
+  <button id="play" type="button">Play Neon Crossroads</button>
+  <p id="status" role="status"></p>
+  <p>
+    <a href="scenario.json" download>Download editable level</a> ·
+    <a href="pack.json" download>Download level pack</a>
+  </p>
+  <p><a href="../neon-channels/">Play Neon Channels</a></p>
+  <small
+    >Reconstructed on a 72 × 36 grid. Enemy placements follow the picture using existing Classic
+    behaviors; speeds are authored approximations.</small
+  >
+  <script type="module" src="./launch.mjs"></script>
+</html>
