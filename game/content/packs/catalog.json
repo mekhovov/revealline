@@ -242,6 +242,10 @@
             {
               "id": "neon-crossgrid-pack",
               "name": "Neon Crossgrid"
+            },
+            {
+              "id": "neon-switchback-pack",
+              "name": "Neon Switchback"
             }
           ]
         }

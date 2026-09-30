@@ -1,8 +1,8 @@
 # Neon Reference Pack
 
-Seven screenshot reconstructions. Word and symbol designs live separately in **Neon Words & Symbols**.
+Eight screenshot reconstructions. Word and symbol designs live separately in **Neon Words & Symbols**.
 
-The seven original layouts, in submission order:
+The eight original layouts, in submission order:
 
 1. **Neon Channels** — alternating slow and lethal lanes around a central refuge;
    two pink bouncers, one diamond eroder and three cyan border patrols.
@@ -21,10 +21,13 @@ The seven original layouts, in submission order:
 7. **Neon Crossgrid** — eighteen red cross hazards and staggered cyan partitions;
    six yellow ring bouncers clustered at opposite corners and four cyan perimeter patrols.
 
+8. **Neon Switchback** — angular red hazard corridors and a stepped cyan divider with a central safe bridge;
+   six pink ring bouncers and four cyan perimeter patrols.
+
 The separate [Words & Symbols pack](../neon-mosaic/README.md) contains 38 varied arenas and its own preview gallery.
 
 Open the main game's **Missions** catalog and search **Neon Reference Pack**.
-All seven levels are bundled and available offline in Solo and Versus. They also
+All eight levels are bundled and available offline in Solo and Versus. They also
 have a pack selector entry and a launch card on the About page. The catalog's
 Current rules edition is projected by the existing Classic adapter; original
 authored rules remain available in Archive.

@@ -1383,7 +1383,7 @@
   "neonReference03": "Neon Crossroads",
   "neonReference04": "Neon Hearts",
   "neonReference05": "Neon Labyrinth",
-  "neonReference06": "Seven screenshot-based Arcade levels: Channels, Crossroads, Hearts, Labyrinth, Arrows, Chambers and Crossgrid. Custom reveal images are planned; these levels currently use the existing procedural retro artwork.",
+  "neonReference06": "Eight screenshot-based Arcade levels: Channels, Crossroads, Hearts, Labyrinth, Arrows, Chambers, Crossgrid and Switchback. Custom reveal images are planned; these levels currently use the existing procedural retro artwork.",
   "neonReference07": "Recreate the supplied neon arena: seven blue slowing regions, six red lethal regions, two roaming pink orbs, a central diamond eroder and three cyan perimeter patrols. Capture 75%. Blue ground slows your craft; red ground is lethal until captured. The central revealed islands are safe return surfaces. Grid and starting positions are scaled from the picture; enemy behaviors and speeds are authored approximations.",
   "neonReference08": "Four chambers divided by solid cyan walls. Yellow bouncers occupy the upper-right and lower-left chambers; pink diamond eroders occupy the other two. Four cyan patrols travel the outer safe border. Start at bottom center, move sideways before entering a chamber, and reconnect each cut to the outer safe border. Walls block movement and do not close a cut. Reveal 75%. Layout and actor positions follow the supplied screenshot; speeds and behaviors use existing Classic rules.",
   "neonReference09": "Seven red heart hazards surround a broken cyan heart wall. Red tiles are lethal until captured; cyan walls block movement and cannot close a cut. Enter through the side openings to reach the central revealed safe ground. Eight pink field bouncers threaten unfinished lines; two cyan patrols travel the border. Start at bottom center and reveal 75%. Geometry and initial positions follow the supplied picture, scaled to 72 × 36; motion uses existing Classic behavior.",
@@ -1512,5 +1512,12 @@
   "neonCrossgridPatrol": "Crossgrid patrol",
   "neonCrossgridPlayer": "Crossgrid player",
   "neonCrossgridWall": "Crossgrid wall",
-  "neonCrossgridLethalTerrain": "Crossgrid lethalTerrain"
+  "neonCrossgridLethalTerrain": "Crossgrid lethalTerrain",
+  "neonSwitchbackTitle": "Neon Switchback",
+  "neonSwitchbackDescription": "Red angular hazard corridors and small square islands surround a stepped cyan divider. A revealed safe bridge interrupts its center. Six pink ring bouncers start at the upper-left, left middle, lower-left and upper-right positions; four cyan patrols follow the perimeter. Start at bottom center, weave through the open corridors, and close cuts on the outer rail or central bridge to reveal 75%.",
+  "neonSwitchbackEnemy": "Switchback enemy",
+  "neonSwitchbackPatrol": "Switchback patrol",
+  "neonSwitchbackPlayer": "Switchback player",
+  "neonSwitchbackWall": "Switchback wall",
+  "neonSwitchbackLethalTerrain": "Switchback lethalTerrain"
 }
