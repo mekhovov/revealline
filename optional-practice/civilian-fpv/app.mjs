@@ -11,12 +11,13 @@ import { FLIGHT_COURSES } from './catalogue.mjs';
 import { FLIGHT_DEMONSTRATIONS } from './demonstrations.mjs';
 import {
   createFlightProfileStore,
-  defaultRadioProfile,
   DEFAULT_RESPONSE,
   FLIGHT_CONTROLS,
+  STICK_LAYOUTS,
   neutralFlightInput,
 } from './radio-profile.mjs';
 import { createRadioRuntime } from './radio-runtime.mjs';
+import { restoreVerifiedRadio } from './radio-session.mjs';
 import { mountRadioSetup } from './radio-setup.mjs';
 import { createFlightInput } from './input.mjs';
 import { createFlightRenderer } from './renderer.mjs';
@@ -97,8 +98,15 @@ export function mountFlightApp({
     graphicsLost = false,
     focused = typeof doc.hasFocus === 'function' ? doc.hasFocus() : true,
     epoch = 0,
+    lastRadioDiscovery = -Infinity,
     message = null;
   const c = () => COPY[locale],
+    messageText = (key) =>
+      key === 'arm-switch-off'
+        ? locale === 'uk'
+          ? 'Перемкніть озброєння в УВІМК, щоб почати.'
+          : 'Move the arm switch ON to start.'
+        : (c()[key] ?? key),
     say = (value) => {
       if ($('status').textContent !== value) $('status').textContent = value;
     };
@@ -144,6 +152,16 @@ export function mountFlightApp({
       reset();
     },
   });
+  const restoreRadio = () => {
+    if (input.owner() !== 'radio') return;
+    let store;
+    try {
+      store = createFlightProfileStore({ storage: win.localStorage });
+    } catch {
+      // The tested built-in mapping remains usable when storage is unavailable.
+    }
+    return restoreVerifiedRadio(radio, store);
+  };
   const renderer = rendererFactory({
     canvas: $('flight-canvas'),
     window: win,
@@ -225,6 +243,7 @@ export function mountFlightApp({
     }
     if (!['disarmed', 'paused'].includes(flight.snapshot().status)) return false;
     if (input.owner() === 'radio') {
+      restoreRadio();
       radio.poll();
       if (!radio.requestArm()) {
         message = radio.status().reason;
@@ -407,11 +426,25 @@ export function mountFlightApp({
     $('step-progress').max = state.total;
     $('step-progress').value = state.step;
     $('step-progress').setAttribute('aria-label', `${c().progress} ${state.step} / ${state.total}`);
-    const values = state.lastInput;
-    $('left-dot').style.transform =
-      `translate(${(values.yaw / 1000) * 22}px, ${(1 - values.throttle / 500) * 22}px)`;
-    $('right-dot').style.transform =
-      `translate(${(values.roll / 1000) * 22}px, ${(-values.pitch / 1000) * 22}px)`;
+    const radioPreview = !replay && input.owner() === 'radio' ? radio.preview() : null,
+      values = state.lastInput,
+      monitor = radioPreview
+        ? radioPreview.controls
+        : Object.fromEntries(FLIGHT_CONTROLS.map((key) => [key, values[key] / 1000])),
+      stickMode = radioPreview?.stickMode ?? 2,
+      layout = STICK_LAYOUTS[stickMode];
+    $('sticks').setAttribute(
+      'aria-label',
+      `${locale === 'uk' ? 'Органи керування' : 'Flight controls'} · Mode ${stickMode}`,
+    );
+    for (const [i, id] of ['left-dot', 'right-dot'].entries()) {
+      const dot = $(id),
+        horizontal = layout[i * 2],
+        vertical = layout[i * 2 + 1],
+        y = monitor ? (vertical === 'throttle' ? monitor.throttle * 2 - 1 : monitor[vertical]) : 0;
+      dot.hidden = !monitor;
+      dot.style.transform = `translate(${(monitor?.[horizontal] ?? 0) * 22}px, ${-y * 22}px)`;
+    }
     if (input.owner() === 'touch') {
       $('touch-throttle').value = String(Math.round(values.throttle / 10));
       $('left-stick').querySelector('i').style.transform =
@@ -423,7 +456,7 @@ export function mountFlightApp({
       reviewAbort
         ? c().verifying
         : message
-          ? (c()[message] ?? message)
+          ? messageText(message)
           : replay
             ? replay.at >= replay.proof.frames.length
               ? c().endReplay
@@ -487,6 +520,10 @@ export function mountFlightApp({
     if (!reviewAbort && inputAvailable() && !modalOpen() && renderer.available && !graphicsLost) {
       let radioInput = neutralFlightInput();
       if (!replay && input.owner() === 'radio') {
+        if (!radio.status().active && now - lastRadioDiscovery >= 500) {
+          lastRadioDiscovery = now;
+          restoreRadio();
+        }
         radioInput = radio.poll();
         if (!radio.status().active && ['paused', 'disarmed'].includes(flight.snapshot().status))
           message = radio.status().reason === 'ready' ? 'radioReady' : radio.status().reason;
@@ -544,6 +581,7 @@ export function mountFlightApp({
   });
   listen(win, 'focus', () => {
     focused = true;
+    if (!replay && !modalOpen()) restoreRadio();
   });
   listen(doc, 'visibilitychange', () => {
     if (doc.visibilityState === 'hidden') pause('focusLost');
@@ -578,26 +616,7 @@ export function mountFlightApp({
   listen($('mode'), 'change', () => reset(selected, $('mode').value));
   listen($('input-source'), 'change', () => {
     input.select($('input-source').value);
-    if (input.owner() === 'radio' && !radio.status().profile) {
-      try {
-        const saved =
-          createFlightProfileStore({ storage: win.localStorage }).snapshot().radio ??
-          defaultRadioProfile();
-        const matches = saved?.verified
-          ? radio
-              .devices()
-              .devices.filter(
-                ({ index, ...identity }) => canonicalJSON(identity) === canonicalJSON(saved.device),
-              )
-          : [];
-        if (matches.length === 1 && radio.select(matches[0].index)) {
-          radio.setProfile(saved);
-          radio.verify();
-        }
-      } catch {
-        // Unavailable storage or unmatched hardware requires explicit setup.
-      }
-    }
+    restoreRadio();
     reset();
     $('touch-controls').hidden = input.owner() !== 'touch';
     doc.body.classList.toggle('touch-mode', input.owner() === 'touch');
@@ -626,7 +645,12 @@ export function mountFlightApp({
       setup = null;
       pause();
     });
-  listen(win, 'gamepaddisconnected', (event) => radio.disconnect(event.gamepad.index));
+  listen(win, 'gamepaddisconnected', (event) => {
+    if (!replay && input.owner() === 'radio') radio.disconnect(event.gamepad.index);
+  });
+  listen(win, 'gamepadconnected', () => {
+    if (!replay && !modalOpen()) restoreRadio();
+  });
   listen($('fullscreen'), 'click', async () => {
     try {
       if (doc.fullscreenElement) await doc.exitFullscreen();

@@ -183,6 +183,7 @@
     "optional-practice/civilian-fpv/radio-controls.mjs",
     "optional-practice/civilian-fpv/radio-profile.mjs",
     "optional-practice/civilian-fpv/radio-runtime.mjs",
+    "optional-practice/civilian-fpv/radio-session.mjs",
     "optional-practice/civilian-fpv/radio-setup.mjs",
     "optional-practice/civilian-fpv/math.mjs",
     "optional-practice/civilian-fpv/rotation-table.mjs",

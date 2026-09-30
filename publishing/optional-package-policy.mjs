@@ -62,6 +62,7 @@ const BASE_OPTIONAL_PACKAGE_POLICIES = Object.freeze({
       'radio-controls.mjs',
       'radio-profile.mjs',
       'radio-runtime.mjs',
+      'radio-session.mjs',
       'radio-setup.mjs',
       'math.mjs',
       'rotation-table.mjs',
