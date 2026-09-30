@@ -473,6 +473,39 @@
                   data-i18n-aria-label="tools:enlargedInspectionOfTheSelectedCharacterAndItsCosmeticAnimation"
                 ></canvas>
                 <p id="inspection-status" class="setting-note" role="status" hidden></p>
+                <label class="field"
+                  ><span data-i18n="tools:motionLab.inspectionTravel.label"
+                    >Inspection travel response</span
+                  ><select id="inspection-travel" aria-describedby="inspection-travel-hint">
+                    <option
+                      value="follow"
+                      selected
+                      data-i18n="tools:motionLab.inspectionTravel.follow"
+                    >
+                      Follow arena
+                    </option>
+                    <option value="idle" data-i18n="tools:motionLab.inspectionTravel.idle">
+                      Idle
+                    </option>
+                    <option value="cruise" data-i18n="tools:motionLab.inspectionTravel.cruise">
+                      Cruise
+                    </option>
+                    <option value="boost" data-i18n="tools:motionLab.inspectionTravel.boost">
+                      Boost
+                    </option>
+                    <option value="slow" data-i18n="tools:motionLab.inspectionTravel.slow">
+                      Slow
+                    </option>
+                  </select></label
+                >
+                <p
+                  id="inspection-travel-hint"
+                  class="setting-note"
+                  data-i18n="tools:motionLab.inspectionTravel.hint"
+                >
+                  Cosmetic preview only; arena travel stays unchanged. Pause freezes animation. Slow
+                  inspection can make rotor speeds look alike. Pulses and lights ignore travel.
+                </p>
                 <label class="check"
                   ><input id="inspection-slow" type="checkbox" checked /><span
                     data-i18n="tools:slowInspectionMotion"
@@ -518,6 +551,239 @@
                     value="0.16"
                   />
                 </div>
+              </div>
+              <div id="rotor-editor-root" class="rotor-editor full-width" hidden>
+                <label class="field full-width"
+                  ><span data-i18n="tools:motionLab.rotorEditor.hub">Motor hub</span>
+                  <select id="rotor-editor-hub"></select
+                ></label>
+                <label class="field"
+                  ><span data-i18n="tools:motionLab.rotorEditor.direction">Hub direction</span>
+                  <select id="rotor-editor-direction">
+                    <option value="1" data-i18n="tools:motionLab.rotorEditor.cw">Clockwise</option>
+                    <option value="-1" data-i18n="tools:motionLab.rotorEditor.ccw">
+                      Counterclockwise
+                    </option>
+                  </select></label
+                >
+                <label class="field"
+                  ><span data-i18n="tools:motionLab.rotorEditor.phase">Hub phase (degrees)</span>
+                  <input
+                    id="rotor-editor-phase"
+                    type="number"
+                    min="-360"
+                    max="360"
+                    step="any"
+                    value="0"
+                /></label>
+                <label class="field"
+                  ><span data-i18n="tools:motionLab.rotorEditor.x">Hub X (from center)</span>
+                  <input
+                    id="rotor-editor-x"
+                    type="number"
+                    min="-0.5"
+                    max="0.5"
+                    step="any"
+                    value="0"
+                    disabled
+                    aria-describedby="rotor-editor-coordinates rotor-editor-envelope"
+                /></label>
+                <label class="field"
+                  ><span data-i18n="tools:motionLab.rotorEditor.y">Hub Y (from center)</span>
+                  <input
+                    id="rotor-editor-y"
+                    type="number"
+                    min="-0.5"
+                    max="0.5"
+                    step="any"
+                    value="0"
+                    disabled
+                    aria-describedby="rotor-editor-coordinates rotor-editor-envelope"
+                /></label>
+                <label class="field full-width"
+                  ><span data-i18n="tools:motionLab.rotorEditor.radius"
+                    >Hub radius (fraction of image width)</span
+                  >
+                  <input
+                    id="rotor-editor-radius"
+                    type="number"
+                    min="0"
+                    max="0.5"
+                    step="any"
+                    value="0"
+                    disabled
+                    aria-describedby="rotor-editor-limits rotor-editor-envelope"
+                /></label>
+                <p
+                  id="rotor-editor-coordinates"
+                  class="setting-note full-width"
+                  data-i18n="tools:motionLab.rotorEditor.coordinates"
+                >
+                  X and Y are relative to the body origin: X uses image width, Y uses image height.
+                  Radius uses image width. The complete circular sweep must fit inside the source
+                  image.
+                </p>
+                <p id="rotor-editor-limits" class="setting-note full-width"></p>
+                <p id="rotor-editor-envelope" class="setting-note full-width"></p>
+                <label class="check full-width"
+                  ><input id="rotor-editor-guides" type="checkbox" />
+                  <span data-i18n="tools:motionLab.rotorEditor.guides"
+                    >Show selected hub and sweep</span
+                  ></label
+                >
+                <p id="rotor-editor-summary" class="setting-note full-width"></p>
+                <details class="full-width">
+                  <summary data-i18n="tools:motionLab.rotorEditor.jsonTitle">
+                    Rig JSON import and export
+                  </summary>
+                  <label class="field"
+                    ><span data-i18n="tools:motionLab.rotorEditor.jsonLabel"
+                      >Selected body's rotors array</span
+                    >
+                    <textarea
+                      id="rotor-editor-json"
+                      rows="7"
+                      spellcheck="false"
+                      aria-describedby="rotor-editor-status"
+                    ></textarea>
+                  </label>
+                  <div class="rotor-editor-actions">
+                    <button
+                      id="rotor-editor-apply"
+                      class="button"
+                      type="button"
+                      data-i18n="tools:motionLab.rotorEditor.apply"
+                    >
+                      Apply JSON
+                    </button>
+                    <button
+                      id="rotor-editor-export"
+                      class="button"
+                      type="button"
+                      data-i18n="tools:motionLab.rotorEditor.export"
+                    >
+                      Export applied rig
+                    </button>
+                    <button
+                      id="rotor-editor-reset"
+                      class="button"
+                      type="button"
+                      data-i18n="tools:motionLab.rotorEditor.restore"
+                    >
+                      Restore source rig
+                    </button>
+                  </div>
+                </details>
+                <p id="rotor-editor-status" class="setting-note full-width" role="status"></p>
+              </div>
+              <div id="parts-editor-root" class="rotor-editor full-width" hidden>
+                <h3 class="full-width" data-i18n="tools:motionLab.partsEditor.title">
+                  Other moving parts
+                </h3>
+                <p class="setting-note full-width" data-i18n="tools:motionLab.partsEditor.scope">
+                  Edit existing wings, exhaust, pulses and lights. These are cosmetic drafts for
+                  this inspected body; no gameplay states or production assets change.
+                </p>
+                <label class="field full-width"
+                  ><span data-i18n="tools:motionLab.partsEditor.component">Attachment</span>
+                  <select id="parts-editor-component"></select
+                ></label>
+                <label class="field full-width"
+                  ><span data-i18n="tools:motionLab.partsEditor.anchor">Attachment anchor</span>
+                  <select id="parts-editor-anchor"></select
+                ></label>
+                <label class="field"
+                  ><span data-i18n="tools:motionLab.partsEditor.x"
+                    >Anchor X (from body origin)</span
+                  >
+                  <input
+                    id="parts-editor-x"
+                    type="number"
+                    min="-1"
+                    max="1"
+                    step="0.01"
+                    value="0"
+                    aria-describedby="parts-editor-coordinates"
+                /></label>
+                <label class="field"
+                  ><span data-i18n="tools:motionLab.partsEditor.y"
+                    >Anchor Y (from body origin)</span
+                  >
+                  <input
+                    id="parts-editor-y"
+                    type="number"
+                    min="-1"
+                    max="1"
+                    step="0.01"
+                    value="0"
+                    aria-describedby="parts-editor-coordinates"
+                /></label>
+                <p
+                  id="parts-editor-coordinates"
+                  class="setting-note full-width"
+                  data-i18n="tools:motionLab.partsEditor.coordinates"
+                >
+                  X uses fitted image width; Y uses fitted image height, both from the body's
+                  presentation origin. Wings rotate at their anchors. Effects can extend beyond the
+                  image.
+                </p>
+                <label class="field full-width"
+                  ><span data-i18n="tools:motionLab.partsEditor.rate"
+                    >Base animation rate (Hz)</span
+                  >
+                  <input
+                    id="parts-editor-rate"
+                    type="number"
+                    min="0.1"
+                    max="12"
+                    step="0.01"
+                    value="1"
+                    aria-describedby="parts-editor-limits"
+                /></label>
+                <p id="parts-editor-limits" class="setting-note full-width"></p>
+                <details class="full-width">
+                  <summary data-i18n="tools:motionLab.partsEditor.jsonTitle">
+                    Attachment JSON
+                  </summary>
+                  <label class="field"
+                    ><span data-i18n="tools:motionLab.partsEditor.jsonLabel"
+                      >Non-rotor components of the current recipe</span
+                    >
+                    <textarea
+                      id="parts-editor-json"
+                      rows="9"
+                      spellcheck="false"
+                      aria-describedby="parts-editor-status"
+                    ></textarea>
+                  </label>
+                  <div class="rotor-editor-actions">
+                    <button
+                      id="parts-editor-apply"
+                      class="button"
+                      type="button"
+                      data-i18n="tools:motionLab.partsEditor.apply"
+                    >
+                      Apply JSON
+                    </button>
+                    <button
+                      id="parts-editor-export"
+                      class="button"
+                      type="button"
+                      data-i18n="tools:motionLab.partsEditor.export"
+                    >
+                      Export applied attachments
+                    </button>
+                    <button
+                      id="parts-editor-reset"
+                      class="button"
+                      type="button"
+                      data-i18n="tools:motionLab.partsEditor.restore"
+                    >
+                      Restore recipe attachments
+                    </button>
+                  </div>
+                </details>
+                <p id="parts-editor-status" class="setting-note full-width" role="status"></p>
               </div>
               <p
                 id="animation-status"

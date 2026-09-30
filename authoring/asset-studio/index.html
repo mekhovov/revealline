@@ -300,6 +300,168 @@
         </div>
       </details>
     </header>
+    <details class="artwork-collection-panel">
+      <summary data-i18n="tools:studio.artwork.title">
+        Artwork collections · source candidates
+      </summary>
+      <p data-i18n="tools:studio.artwork.description">
+        Review a versioned artwork packet with its original files. Pixel art is the default;
+        photographic reveals need an explicit collection choice. This separate authoring draft does
+        not change the saved .rltheme workspace or approve runtime artwork.
+      </p>
+      <div class="artwork-collection-controls">
+        <label
+          ><span data-i18n="tools:studio.artwork.import"
+            >Import .rlart, or JSON and its original images together</span
+          >
+          <input
+            id="artwork-files"
+            type="file"
+            multiple
+            accept=".rlart,.json,image/png,image/jpeg,image/webp"
+          />
+        </label>
+        <label
+          ><span data-i18n="tools:studio.artwork.treatment">Collection treatment</span>
+          <select id="artwork-treatment" disabled>
+            <option value="pixel-art" data-i18n="tools:studio.artwork.pixelArt">Pixel art</option>
+            <option
+              value="photographic-reveals"
+              data-i18n="tools:studio.artwork.photographicReveals"
+            >
+              Photographic reveals
+            </option>
+          </select>
+        </label>
+        <label
+          ><span data-i18n="tools:studio.artwork.artwork">Artwork</span>
+          <select id="artwork-item" disabled></select
+        ></label>
+        <button
+          type="button"
+          id="artwork-preview-source"
+          disabled
+          data-i18n="tools:studio.artwork.showSource"
+        >
+          Show source
+        </button>
+        <button type="button" id="artwork-export" disabled data-i18n="tools:studio.artwork.export">
+          Export .rlart
+        </button>
+        <button
+          type="button"
+          id="artwork-download-file"
+          disabled
+          aria-describedby="artwork-download-file-help"
+          data-i18n="tools:studio.artwork.downloadFile"
+        >
+          Download selected verified file
+        </button>
+        <button type="button" id="artwork-cancel" disabled data-i18n="common:actions.cancel">
+          Cancel
+        </button>
+      </div>
+      <p id="artwork-download-file-help" data-i18n="tools:studio.artwork.downloadFileHelp">
+        Downloads the selected original or derivative without resizing or re-encoding. Keep the
+        .rlart packet for its full provenance. This does not bind, install or approve artwork.
+      </p>
+      <details>
+        <summary data-i18n="tools:studio.artwork.prepareTitle">Prepare board image</summary>
+        <p data-i18n="tools:studio.artwork.prepareHelp">
+          Keeps the original and adds a separate PNG candidate. Fit preserves the whole picture with
+          ink borders; centre crop removes outer edges. Pixel art uses nearest-pixel sampling;
+          photographs use smooth sampling. Inspect the result before production approval.
+        </p>
+        <div class="artwork-collection-controls">
+          <label
+            ><span data-i18n="tools:studio.artwork.boardSize">Board image size</span>
+            <select id="artwork-board" disabled>
+              <option value="wide">1152 × 576 · 2:1</option>
+              <option value="classic">768 × 576 · 4:3</option>
+            </select>
+          </label>
+          <label
+            ><span data-i18n="tools:studio.artwork.boardFit">Image fitting</span>
+            <select id="artwork-fit" disabled>
+              <option value="contain" data-i18n="tools:studio.artwork.fitContain">
+                Fit whole picture
+              </option>
+              <option value="cover" data-i18n="tools:studio.artwork.fitCover">Centre crop</option>
+            </select>
+          </label>
+          <button
+            type="button"
+            id="artwork-prepare"
+            disabled
+            data-i18n="tools:studio.artwork.prepareBoard"
+          >
+            Create board candidate
+          </button>
+        </div>
+      </details>
+      <p id="artwork-status" role="status" data-i18n="tools:studio.artwork.choosePacket">
+        Choose a packet. Reference links are never fetched automatically.
+      </p>
+      <div class="artwork-collection-controls">
+        <label
+          ><span data-i18n="tools:studio.artwork.inspectionView">Image view</span>
+          <select id="artwork-view" disabled>
+            <option value="fit" data-i18n="tools:studio.artwork.fitView">Fit whole image</option>
+            <option value="native" data-i18n="tools:studio.artwork.nativeView">
+              Native pixels · scroll
+            </option>
+          </select>
+        </label>
+        <button
+          id="artwork-compare"
+          type="button"
+          aria-pressed="false"
+          aria-controls="artwork-parent"
+          disabled
+          data-i18n="tools:studio.artwork.compareParent"
+        >
+          Compare retained parent
+        </button>
+      </div>
+      <p data-i18n="tools:studio.artwork.comparisonHelp">
+        Compare the selected file with its declared retained parent. Native pixels shows one image
+        pixel per CSS pixel in a scrollable frame; device scaling may differ. This is artwork
+        inspection, not a mission or approval.
+      </p>
+      <p id="artwork-comparison-status" role="status"></p>
+      <div id="artwork-review" class="artwork-review-grid" data-view="fit">
+        <figure>
+          <figcaption id="artwork-selected-caption"></figcaption>
+          <div
+            id="artwork-preview"
+            class="artwork-source-preview"
+            role="region"
+            aria-labelledby="artwork-selected-caption"
+            aria-label="Scrollable artwork preview"
+            data-i18n-aria-label="tools:studio.artwork.nativeFrame"
+            tabindex="-1"
+          ></div>
+          <p id="artwork-selected-facts" class="artwork-source-provenance"></p>
+        </figure>
+        <figure id="artwork-parent" hidden>
+          <figcaption id="artwork-parent-caption"></figcaption>
+          <div
+            id="artwork-parent-preview"
+            class="artwork-source-preview"
+            role="region"
+            aria-labelledby="artwork-parent-caption"
+            aria-label="Scrollable artwork preview"
+            data-i18n-aria-label="tools:studio.artwork.nativeFrame"
+            tabindex="-1"
+          ></div>
+          <p id="artwork-parent-facts" class="artwork-source-provenance"></p>
+          <p id="artwork-parent-rights" class="artwork-source-provenance"></p>
+        </figure>
+      </div>
+      <div id="artwork-provenance" class="artwork-source-provenance"></div>
+      <div id="artwork-download" hidden></div>
+      <div id="artwork-file-download" hidden></div>
+    </details>
     <div
       class="studio-audio"
       role="group"
@@ -801,6 +963,101 @@
           </div>
           <div id="geometry-panel" hidden>
             <p data-studio-host="body" id="geometry-usage" class="hint"></p>
+            <section id="rotor-controls" hidden aria-labelledby="rotor-controls-heading">
+              <h3
+                data-studio-host="control"
+                id="rotor-controls-heading"
+                data-i18n="tools:studio.rotors.heading"
+              >
+                Motor hubs
+              </h3>
+              <p
+                data-studio-host="body"
+                id="rotor-controls-help"
+                class="support-copy"
+                data-i18n="tools:studio.rotors.help"
+              >
+                Centers use 0–1 from the frame's top-left corner. Radius uses the existing
+                normalized geometry. Apply checks every complete rotor envelope and the slot's
+                required motor count. No image pixels or saved revisions change.
+              </p>
+              <div class="field-grid">
+                <label data-studio-host="control"
+                  ><span data-i18n="tools:studio.rotors.hub">Motor hub</span
+                  ><select
+                    data-studio-host="control"
+                    id="rotor-hub"
+                    disabled
+                    aria-describedby="rotor-controls-help rotor-controls-status"
+                  ></select
+                ></label>
+                <label data-studio-host="control"
+                  ><span data-i18n="tools:studio.rotors.radius">Radius (normalized)</span
+                  ><input
+                    data-studio-host="control"
+                    id="rotor-radius"
+                    type="number"
+                    min="0"
+                    max="0.5"
+                    step="0.001"
+                    disabled
+                /></label>
+                <label data-studio-host="control"
+                  ><span data-i18n="tools:studio.rotors.x">Hub X (0–1)</span
+                  ><input
+                    data-studio-host="control"
+                    id="rotor-x"
+                    type="number"
+                    min="0"
+                    max="1"
+                    step="0.01"
+                    disabled
+                /></label>
+                <label data-studio-host="control"
+                  ><span data-i18n="tools:studio.rotors.y">Hub Y (0–1)</span
+                  ><input
+                    data-studio-host="control"
+                    id="rotor-y"
+                    type="number"
+                    min="0"
+                    max="1"
+                    step="0.01"
+                    disabled
+                /></label>
+                <label data-studio-host="control"
+                  ><span data-i18n="tools:studio.rotors.direction">Direction</span
+                  ><select data-studio-host="control" id="rotor-direction" disabled>
+                    <option value="inherit" data-i18n="tools:studio.rotors.inherit">
+                      Inherit historical default
+                    </option>
+                    <option value="1" data-i18n="tools:studio.rotors.cw">Clockwise</option>
+                    <option value="-1" data-i18n="tools:studio.rotors.ccw">Counterclockwise</option>
+                  </select></label
+                >
+                <label data-studio-host="control"
+                  ><span data-i18n="tools:studio.rotors.phase">Phase ° (blank inherits)</span
+                  ><input
+                    data-studio-host="control"
+                    id="rotor-phase"
+                    type="number"
+                    min="0"
+                    max="359.999"
+                    step="1"
+                    disabled
+                    aria-describedby="rotor-controls-status"
+                /></label>
+              </div>
+              <p data-studio-host="body" id="rotor-controls-status" class="support-copy"></p>
+              <button
+                data-studio-host="control"
+                id="rotor-apply"
+                type="button"
+                disabled
+                data-i18n="tools:studio.rotors.apply"
+              >
+                Apply hub to preview
+              </button>
+            </section>
             <div class="field-grid">
               <label data-studio-host="control"
                 ><span data-i18n="tools:pivotX01">Pivot X (0–1)</span

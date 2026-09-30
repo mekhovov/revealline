@@ -15,6 +15,11 @@ const ids = [
   'content',
   'extras',
 ];
+const teachingKey = 'revealline.team-contextual-teaching.v1';
+const firstCutWrite = [
+  teachingKey,
+  JSON.stringify({ format: teachingKey, introduced: ['cut'], completed: [] }),
+];
 const tab = (f, id) => f.$(`coop-settings-tab-${id}`);
 const open = (f) => {
   f.$('coop-settings-open').focus();
@@ -62,12 +67,14 @@ const state = (f) => ({
   stored: [...f.values],
 });
 const pause = (f) => {
+  assert.deepEqual(f.writes, [], 'The lobby does not save preferences or teaching progress.');
   f.$('coop-start').click();
   f.tap('KeyD');
   f.tap('ArrowLeft');
   f.tick(45);
   f.$('coop-pause').click();
   f.tick();
+  assert.deepEqual(f.writes, [firstCutWrite], 'Starting introduces only the first-cut lesson.');
 };
 
 test('Team Settings has all eight categories, original controls, and exact lobby return without preparing or saving', async (t) => {
@@ -180,6 +187,8 @@ test('a controller selects Team Settings and paused quick sound without resuming
   pause(f);
   const before = state(f);
   const writesBefore = f.writes.length;
+  const beforeWrites = [...f.writes],
+    volume = Number(f.$('coop-master-volume').value);
   const pad = {
     index: 0,
     id: 'Settings controller',
@@ -225,6 +234,10 @@ test('a controller selects Team Settings and paused quick sound without resuming
     [...new Set(f.writes.slice(writesBefore).map(([key]) => key))],
     [AUDIO_PREFERENCES_KEY],
   );
+  assert.deepEqual(f.writes, [
+    ...beforeWrites,
+    [AUDIO_PREFERENCES_KEY, JSON.stringify({ muted: false, volume })],
+  ]);
   assert.deepEqual(state(f), { ...before, stored: [...f.values] });
 });
 
@@ -313,6 +326,8 @@ test('paused keyboard quick Sound and Settings mute share one owner without resu
   pause(f);
   const before = state(f);
   const writesBefore = f.writes.length;
+  const beforeWrites = [...f.writes],
+    volume = Number(f.$('coop-master-volume').value);
   const note = f.$('coop-audio-note').textContent;
   for (let i = 0; i < 30 && f.doc.activeElement.id !== 'coop-quick-sound'; i++) f.tap('Tab');
   assert.equal(f.doc.activeElement.id, 'coop-quick-sound');
@@ -333,6 +348,11 @@ test('paused keyboard quick Sound and Settings mute share one owner without resu
     [...new Set(f.writes.slice(writesBefore).map(([key]) => key))],
     [AUDIO_PREFERENCES_KEY],
   );
+  assert.deepEqual(f.writes, [
+    ...beforeWrites,
+    [AUDIO_PREFERENCES_KEY, JSON.stringify({ muted: false, volume })],
+    [AUDIO_PREFERENCES_KEY, JSON.stringify({ muted: true, volume })],
+  ]);
   assert.equal(f.values.get('revealline.library.test.v1'), 'preserved solo profile');
   assert.equal(f.values.get('revealline.suspended.test.v1'), 'preserved solo flight');
   f.$('coop-settings-close').click();
@@ -356,7 +376,7 @@ test('terminal disposal retires Settings controls without reopening, refocusing,
   f.$('coop-options').emit('close', { bubbles: false });
   assert.equal(f.$('coop-options').open, false);
   assert.equal(f.doc.activeElement, focus);
-  assert.deepEqual(f.writes, writes);
+  assert.deepEqual(f.writes, writes, 'Disposal and late controls add no writes.');
   assert.equal(f.artwork.calls.reads.length, reads);
   assert.equal(f.artwork.calls.closes, 1);
   assert.deepEqual(f.artwork.calls.releases, f.artwork.calls.urls);

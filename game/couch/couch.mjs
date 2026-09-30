@@ -93,6 +93,7 @@ import { attachControllerConfirmGuard } from '../ui/controller-confirm-guard.mjs
 import { attachControllerNavigation } from '../ui/controller-navigation.mjs';
 import { playgroundTabBoundary } from '../ui/playground-tab-boundary.mjs';
 import { attachControllerReading } from '../ui/controller-reading.mjs';
+import { attachEncounterHelp } from '../ui/encounter-help.mjs';
 import { readingInputPrompt } from '../ui/reading-input-prompt.mjs';
 import { nextInputModality } from '../input-presentation.mjs';
 import { BoardPainter, boardPaintSizeForLevel } from '../ui/render.mjs';
@@ -100,6 +101,7 @@ import { encounterView } from '../ui/encounter-view.mjs';
 import { Soundscape, DEFAULT_TRACKS } from '../ui/audio.mjs';
 import { createAudioMaster } from '../ui/audio-master.mjs';
 import { createAudioPreferences } from '../audio-preferences.mjs';
+import { attachEncounterDisplayControls } from '../ui/encounter-display-controls.mjs';
 import { createDisplayPreferences } from '../display-preferences.mjs';
 import { createActorStylePreferences } from '../actor-style-preferences.mjs';
 import { prepareActorAppearanceLease } from '../presentation/actor-appearance-lease.mjs';
@@ -206,6 +208,12 @@ const renderDisplayPreferences = (state) => {
   );
 };
 const stopDisplayView = displayPreferences.subscribe(renderDisplayPreferences);
+const encounterDisplay = attachEncounterDisplayControls({
+  document,
+  window,
+  getStorage: () => localStorage,
+  prefix: 'race-',
+});
 const displayRestoration = attachPreferenceRestoration({
   window,
   getSnapshot: () => displayPreferences.snapshot(),
@@ -307,6 +315,7 @@ const releaseArtwork = (event) => {
   audioRestoration.dispose();
   displayRestoration.dispose();
   displayPreferences.dispose();
+  encounterDisplay.dispose();
   menuStyle.dispose();
   audioPreferences.dispose();
   artworkLifetime.abort();
@@ -2389,6 +2398,10 @@ try {
   } catch {
     /* The fixed Solo title route remains available. */
   }
+  const encounterHelp = attachEncounterHelp({
+    root: $('race-encounter-help'),
+    getLevels: () => match?.runs?.map((run) => run.level) ?? [],
+  });
   shell = createCouchShell({
     controllerNeedsTouch: (seat) => slots[seat] !== null && !controllerSession.completeFlight(seat),
     getSceneContext: () => ({
@@ -2421,6 +2434,7 @@ try {
       cancelLibraryDecision();
       clear();
       if (back || to !== contentScope) cancelContent();
+      if (to === 'help') encounterHelp.refresh();
     },
     onNewMatch: () => {
       if (match?.status === 'running' || disposed) return;
@@ -3888,6 +3902,8 @@ try {
     'race-touch-1',
     'race-tap',
     'race-reduced',
+    'race-enemy-remains',
+    'race-enemy-remains-retry',
     'race-journey-reactions-enabled',
     'race-journey-reactions-retry',
     'race-text-face',
@@ -4136,6 +4152,7 @@ try {
     controllerConfirmGuard.destroy();
     menuRouter.destroy();
     reading.destroy();
+    encounterHelp.dispose();
     navigation.destroy();
     shell.destroy();
     stopNative();
@@ -4478,6 +4495,7 @@ try {
       const run = match.runs[i];
       painters[i].draw(contexts[i], run, Math.min(dt, 0.1), {
         displayCSSWidth: boardFootprints.width(i),
+        showCombatScrap: encounterDisplay.snapshot().showRemains,
         textFace: displayPreferences.snapshot().textFace,
         paused: match.status !== 'running',
         reduced: displayPreferences.snapshot().effectiveReducedEffects,

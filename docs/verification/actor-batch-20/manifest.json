@@ -1,0 +1,105 @@
+{
+  "parent": "7147ed7556168b73cf9cbfd2b802f0d0b5847582",
+  "productionReview": "deferred-not-passed",
+  "tests": {
+    "pass": 45,
+    "fail": 0,
+    "skipped": 0,
+    "cancelled": 0,
+    "durationMs": 13343.629958
+  },
+  "files": [
+    {
+      "path": "game/enemy-guide.mjs",
+      "bytes": 5264,
+      "sha256": "1680f5c3dd1e5103d0e8b371a3c28daf5418307b912601623e844bba1f0187a4"
+    },
+    {
+      "path": "game/ui/enemy-guide.mjs",
+      "bytes": 22554,
+      "sha256": "0f550cb707ebb6f2c1a305071f8f6d9c6633a152bf22674d7de67433db1b2a5d"
+    },
+    {
+      "path": "game/locales/en/interface.json",
+      "bytes": 432388,
+      "sha256": "91edf0acae61b4cf3d0a56498a74013caf9cd38462d65f3f3a1f5a7412d205a0"
+    },
+    {
+      "path": "game/locales/uk/interface.json",
+      "bytes": 706059,
+      "sha256": "e90e5e693ccd760cb671f3af1ce37df82cc2fc26fef74073bc67c41b7ccdbb86"
+    },
+    {
+      "path": "game/i18n/catalogs.mjs",
+      "bytes": 983447,
+      "sha256": "86ace202ce91e6d264ebafe7c442329d854912e496fe92d60008462f6a75ef51"
+    },
+    {
+      "path": "game/test/enemy-guide.test.mjs",
+      "bytes": 6379,
+      "sha256": "b5184aa938d82114e254c10d37e7aab7ffd0113489db4b8957cfdae86c5cf5d9"
+    },
+    {
+      "path": "game/test/enemy-guide-host.test.mjs",
+      "bytes": 30575,
+      "sha256": "c419a6958f905871c5fead1cf63d859c6b0e91e3dec163dd27c96df9384b8834"
+    },
+    {
+      "path": "docs/enemy-guide.md",
+      "bytes": 14976,
+      "sha256": "76bf765f2bb01a7069d055f611a67a499150ea2807863956283991e8fccf31c8"
+    },
+    {
+      "path": "docs/plan-status-2026-09-29.md",
+      "bytes": 24878,
+      "sha256": "d2b545158e6d59f64e04961459b8490b2e222915a80b1e3972d8beaef5d6b622"
+    },
+    {
+      "path": "docs/character-game-feel-plan.md",
+      "bytes": 38406,
+      "sha256": "838661f0c1ebfcb878069b127c1816e49dcff018d45b417b0c0b72533d873967"
+    },
+    {
+      "path": "authoring/prompts/field-kit-production.md",
+      "bytes": 9684,
+      "sha256": "25e9eb83fa99d82818a4662b464d8eca2349784ae068f6327e315eca15ac43fa"
+    },
+    {
+      "path": "docs/verification/actor-batch-20/README.md",
+      "bytes": 3429,
+      "sha256": "f7c2e840af066eb1ac1dc44ab402a56fa07829baff57656434e0b18e02c83641"
+    },
+    {
+      "path": "docs/verification/actor-batch-20/catalog-check.txt",
+      "bytes": 248,
+      "sha256": "47df0afca274792f99c515f58cc87e9ee73900cdb1a4d3df58c23cb1c623bda3"
+    },
+    {
+      "path": "docs/verification/actor-batch-20/focused.tap",
+      "bytes": 11499,
+      "sha256": "3259a2de2189846cdf41109fe4fd8ed2b7129be8f5d8659b2bf0a95540ac80c9"
+    },
+    {
+      "path": "docs/verification/actor-batch-20/intermediate-fixture-red.tap.gz",
+      "bytes": 584,
+      "sha256": "c5b215d799bbb802317cd6cafea946be7c758788a9f35028be5618713c489848"
+    },
+    {
+      "path": "docs/verification/actor-batch-20/parent-locale-red.tap.gz",
+      "bytes": 904,
+      "sha256": "49ae17bec9e52faaf9360a6c76d15f453a951f77b3d78813f5a531fa6d0cc856"
+    }
+  ],
+  "preservedLogDecoding": [
+    {
+      "path": "docs/verification/actor-batch-20/intermediate-fixture-red.tap.gz",
+      "decodedBytes": 1245,
+      "decodedSha256": "1f12dcd8cf600ed46050b23a3820ccc84203bc293a86c3074bf6749a4f0c90c0"
+    },
+    {
+      "path": "docs/verification/actor-batch-20/parent-locale-red.tap.gz",
+      "decodedBytes": 3111,
+      "decodedSha256": "ef89193b4dbdef1da5176c156271eedc6535b2db2ea71af25d242bfa2a4d90af"
+    }
+  ]
+}

@@ -15,6 +15,7 @@ import { createDefaultThemeBundle } from '../presentation/catalog.mjs';
 import { reviseStudioTheme } from '../presentation/studio-session.mjs';
 import { resolvePresentation } from '../presentation/model.mjs';
 import { STUDIO_VIEW_KEY } from '../../authoring/asset-studio/view-memory.mjs';
+import { getLocale, setLocale, translateDOM } from '../i18n/index.mjs';
 
 const flush = () => new Promise((resolve) => setImmediate(resolve));
 const deferred = () => {
@@ -96,12 +97,50 @@ test('actual Studio handlers show startup/read/encode stages, cancel a late uplo
       evidence: ['Fixture slot geometry and exact PNG bytes checked.'],
     },
   };
+  const rotorSlot = base.slots.find((slot) => slot.id === 'player.scout.compact'),
+    rotorPixels = new Uint8ClampedArray(32 * 32 * 4);
+  for (let y = 8; y < 24; y++)
+    for (let x = 8; x < 24; x++) rotorPixels.set([120, 220, 232, 255], (y * 32 + x) * 4);
+  const rotorBytes = encodeSpritePNG({ width: 32, height: 32, rgba: rotorPixels }),
+    rotorHash = await hashPresentationBytes(rotorBytes),
+    rotorProduced = {
+      ...structuredClone(resolvePresentation(base).assets[rotorSlot.id]),
+      id: `${rotorSlot.id}.field-kit`,
+      kind: 'image',
+      recipe: null,
+      geometry: structuredClone(rotorSlot.geometry),
+      file: {
+        sha256: rotorHash,
+        bytes: rotorBytes.length,
+        mime: 'image/png',
+        width: 32,
+        height: 32,
+      },
+      quality: { stage: 'produced', evidence: [] },
+    },
+    rotorApproved = {
+      ...structuredClone(rotorProduced),
+      revision: 2,
+      quality: {
+        stage: 'reviewed',
+        evidence: ['Fixture historical rotor geometry and exact PNG bytes checked.'],
+      },
+    };
   const published = reviseStudioTheme(
     reviseStudioTheme(base, {
-      assets: [produced],
-      bindings: { [publishedSlot.id]: { id: produced.id, revision: 1 } },
+      assets: [produced, rotorProduced],
+      bindings: {
+        [publishedSlot.id]: { id: produced.id, revision: 1 },
+        [rotorSlot.id]: { id: rotorProduced.id, revision: 1 },
+      },
     }),
-    { assets: [approved], bindings: { [publishedSlot.id]: { id: approved.id, revision: 2 } } },
+    {
+      assets: [approved, rotorApproved],
+      bindings: {
+        [publishedSlot.id]: { id: approved.id, revision: 2 },
+        [rotorSlot.id]: { id: rotorApproved.id, revision: 2 },
+      },
+    },
   );
   const doc = new Document(),
     window = new Events();
@@ -183,7 +222,7 @@ test('actual Studio handlers show startup/read/encode stages, cancel a late uplo
           getImageData: () => ({
             width: this.width,
             height: this.height,
-            data: new Uint8ClampedArray(pixels.rgba),
+            data: new Uint8ClampedArray(this.width === 32 ? rotorPixels : pixels.rgba),
           }),
         },
         {
@@ -194,9 +233,10 @@ test('actual Studio handlers show startup/read/encode stages, cancel a late uplo
       );
     }
     toBlob(callback) {
+      const encoded = this.width === 32 ? rotorBytes : bytes;
       if (delayEncode)
-        encodeGate.promise.then(() => callback(new Blob([bytes], { type: 'image/png' })));
-      else callback(new Blob([bytes], { type: 'image/png' }));
+        encodeGate.promise.then(() => callback(new Blob([encoded], { type: 'image/png' })));
+      else callback(new Blob([encoded], { type: 'image/png' }));
     }
     toDataURL() {
       return `data:image/png;base64,${Buffer.from(bytes).toString('base64')}`;
@@ -273,20 +313,25 @@ test('actual Studio handlers show startup/read/encode stages, cancel a late uplo
         ? new Response(JSON.stringify(published))
         : String(url).endsWith(`/compiled/assets/${publishedHash}.png`)
           ? new Response(publishedBytes)
-          : new Response('', { status: 404 }),
+          : String(url).endsWith(`/compiled/assets/${rotorHash}.png`)
+            ? new Response(rotorBytes)
+            : new Response('', { status: 404 }),
     createImageBitmap: async (blob) => {
+      const header = Buffer.from(await blob.arrayBuffer()),
+        width = header.readUInt32BE(16),
+        height = header.readUInt32BE(20);
       if (delayDecode) {
         await decodeGate.promise;
         return {
-          width: 24,
-          height: 24,
+          width,
+          height,
           blob,
           close() {
             lateClosed++;
           },
         };
       }
-      return { width: 24, height: 24, blob, close() {} };
+      return { width, height, blob, close() {} };
     },
     cancelAnimationFrame() {},
   };
@@ -1121,6 +1166,254 @@ test('actual Studio handlers show startup/read/encode stages, cancel a late uplo
     'A metadata edit preserves the original encoded image.',
   );
   assert.ok(bindButton(approved.id, 2), 'The approved original can still be rebound explicitly.');
+  const rotorControlIds = ['hub', 'x', 'y', 'radius', 'direction', 'phase', 'apply'],
+    rotorAnchors = () => JSON.parse($('rotor-anchors').value),
+    selectHub = (index) => {
+      $('rotor-hub').value = String(index);
+      $('rotor-hub').emit('change');
+    },
+    rotorStoreBefore = await createStudioStore({ indexedDB: db.indexedDB }).load();
+  let acceptedRotors;
+  await t.test(
+    'actual rotor controls preserve inherited motion while editing one existing hub',
+    async () => {
+      await $('edit-geometry').onclick();
+      assert.equal($('rotor-controls').hidden, true, 'Interface images have no rotor editor.');
+      for (const id of rotorControlIds) assert.equal($(`rotor-${id}`).disabled, true);
+      $('discard-asset').onclick();
+      inventoryButton('font.ui').click();
+      for (const id of rotorControlIds)
+        assert.equal(
+          $(`rotor-${id}`).disabled,
+          true,
+          'Nonimage slots cannot apply stale rotor values.',
+        );
+      inventoryButton(rotorSlot.id).click();
+      await $('edit-geometry').onclick();
+      await flush();
+      assert.equal($('rotor-controls').hidden, false);
+      assert.equal($('rotor-hub').options.length, 4);
+      for (const id of rotorControlIds) assert.equal($(`rotor-${id}`).disabled, false);
+      assert.equal($('rotor-direction').value, 'inherit');
+      assert.equal($('rotor-phase').value, '');
+      assert.deepEqual(rotorAnchors(), rotorApproved.geometry.rotorAnchors);
+      const priorPreview = $('draft-preview').previewMarker;
+      $('rotor-x').value = '0.28';
+      $('rotor-y').value = '0.27';
+      $('rotor-radius').value = '0.11';
+      await $('rotor-apply').onclick();
+      assert.match(message(), /Geometry checked and applied/);
+      assert.notEqual($('draft-preview').previewMarker, priorPreview);
+      acceptedRotors = structuredClone(rotorApproved.geometry.rotorAnchors);
+      Object.assign(acceptedRotors[0], { x: 0.28, y: 0.27, radius: 0.11 });
+      assert.deepEqual(rotorAnchors(), acceptedRotors, 'Other hubs and blade counts stay exact.');
+      for (const anchor of rotorAnchors()) {
+        assert.equal(Object.hasOwn(anchor, 'direction'), false);
+        assert.equal(Object.hasOwn(anchor, 'phaseDegrees'), false);
+      }
+      selectHub(1);
+      assert.equal($('rotor-direction').value, 'inherit');
+      assert.equal($('rotor-phase').value, '');
+      assert.match($('rotor-controls-status').textContent, /23/);
+      $('rotor-direction').value = '1';
+      $('rotor-phase').value = '0';
+      await $('rotor-apply').onclick();
+      Object.assign(acceptedRotors[1], { direction: 1, phaseDegrees: 0 });
+      assert.deepEqual(rotorAnchors(), acceptedRotors, 'An explicit zero phase is retained.');
+      assert.deepEqual(
+        (await createStudioStore({ indexedDB: db.indexedDB }).load()).document,
+        rotorStoreBefore.document,
+        'Preview application does not save a workspace revision.',
+      );
+    },
+  );
+  await t.test(
+    'actual rotor handlers reject invalid fields and unapplied advanced geometry without replacing the preview',
+    async () => {
+      const acceptedJSON = $('rotor-anchors').value,
+        acceptedPreview = $('draft-preview').previewMarker;
+      for (const [id, invalid] of [
+        ['rotor-x', ''],
+        ['rotor-radius', '0'],
+        ['rotor-direction', '0'],
+        ['rotor-phase', '360'],
+      ]) {
+        const previousValue = $(id).value;
+        $(id).value = invalid;
+        await $('rotor-apply').onclick();
+        assert.equal(
+          $('studio-status').dataset.kind,
+          'error',
+          `${id} rejects ${JSON.stringify(invalid)}.`,
+        );
+        assert.equal($('rotor-anchors').value, acceptedJSON);
+        assert.equal($('draft-preview').previewMarker, acceptedPreview);
+        $(id).value = previousValue;
+      }
+      for (const invalidJSON of [
+        '{',
+        JSON.stringify(
+          acceptedRotors.map((anchor, index) => (index ? anchor : { ...anchor, speed: 20 })),
+        ),
+      ]) {
+        $('rotor-anchors').value = invalidJSON;
+        await $('rotor-apply').onclick();
+        assert.match(message(), /Apply the advanced geometry edits first/);
+        assert.equal(
+          $('rotor-anchors').value,
+          invalidJSON,
+          'A rejected edit leaves raw JSON recoverable.',
+        );
+        assert.equal($('draft-preview').previewMarker, acceptedPreview);
+        await $('apply-geometry').onclick();
+        assert.equal($('studio-status').dataset.kind, 'error');
+        assert.equal($('draft-preview').previewMarker, acceptedPreview);
+      }
+      const advancedRotors = structuredClone(acceptedRotors);
+      Object.assign(advancedRotors[2], { direction: -1, phaseDegrees: 17.5 });
+      $('rotor-anchors').value = JSON.stringify(advancedRotors);
+      selectHub(2);
+      assert.match(message(), /Apply the advanced geometry edits first/);
+      assert.equal(
+        $('rotor-hub').value,
+        '1',
+        'Unapplied JSON cannot silently change the selected hub.',
+      );
+      await $('rotor-apply').onclick();
+      assert.equal($('draft-preview').previewMarker, acceptedPreview);
+      await $('apply-geometry').onclick();
+      assert.match(message(), /Geometry checked and applied/);
+      selectHub(2);
+      assert.equal($('rotor-direction').value, '-1');
+      assert.equal(Number($('rotor-phase').value), 17.5);
+      acceptedRotors = advancedRotors;
+      assert.deepEqual(rotorAnchors(), acceptedRotors);
+    },
+  );
+  await t.test(
+    'actual rotor controls translate EN/UK labels without rewriting a prepared draft',
+    () => {
+      const locale = getLocale(),
+        beforeJSON = $('rotor-anchors').value,
+        beforePreview = $('draft-preview').previewMarker;
+      try {
+        translateDOM($('rotor-controls'));
+        setLocale('en', { persist: false });
+        const english = [
+          'rotor-controls-heading',
+          'rotor-controls-help',
+          'rotor-controls-status',
+          'rotor-apply',
+        ].map((id) => $(id).textContent);
+        setLocale('uk', { persist: false });
+        for (const [index, id] of [
+          'rotor-controls-heading',
+          'rotor-controls-help',
+          'rotor-controls-status',
+          'rotor-apply',
+        ].entries()) {
+          assert.notEqual(
+            $(id).textContent,
+            english[index],
+            `${id} follows the selected language.`,
+          );
+          assert.match($(id).textContent, /[А-Яа-яІіЇїЄєҐґ]/);
+        }
+        assert.match($('rotor-hub').options[2].textContent, /[А-Яа-яІіЇїЄєҐґ]/);
+        assert.equal($('rotor-anchors').value, beforeJSON);
+        assert.equal($('draft-preview').previewMarker, beforePreview);
+        assert.equal($('rotor-direction').value, '-1');
+        assert.equal(Number($('rotor-phase').value), 17.5);
+      } finally {
+        setLocale(locale, { persist: false });
+      }
+    },
+  );
+  await t.test(
+    'staging and saving rotor geometry retain the reviewed original and exact source bytes',
+    async () => {
+      await $('stage-asset').onclick();
+      assert.match(message(), /validated and staged/);
+      assert.deepEqual(
+        (await createStudioStore({ indexedDB: db.indexedDB }).load()).document,
+        rotorStoreBefore.document,
+        'Staging rotor metadata alone does not save.',
+      );
+      await $('save-workspace').onclick();
+      assert.match(message(), /saved atomically/);
+      const rotorSaved = await createStudioStore({ indexedDB: db.indexedDB }).load(),
+        editedRotorAsset = resolvePresentation(rotorSaved.document).assets[rotorSlot.id];
+      assert.deepEqual(editedRotorAsset.geometry.rotorAnchors, acceptedRotors);
+      assert.deepEqual(editedRotorAsset.file, rotorApproved.file);
+      assert.deepEqual(editedRotorAsset.quality, { stage: 'produced', evidence: [] });
+      assert.deepEqual(editedRotorAsset.provenance.parent, { id: rotorApproved.id, revision: 2 });
+      assert.deepEqual(
+        rotorSaved.document.assets.slice(0, rotorStoreBefore.document.assets.length),
+        rotorStoreBefore.document.assets,
+        'All earlier immutable asset revisions survive the edit.',
+      );
+      assert.deepEqual(
+        rotorSaved.document.assets.find(
+          (asset) => asset.id === rotorApproved.id && asset.revision === 2,
+        ),
+        rotorApproved,
+      );
+      for (const [storedHash, originalBlob] of rotorStoreBefore.assets)
+        assert.deepEqual(
+          Buffer.from(await rotorSaved.assets.get(storedHash).arrayBuffer()),
+          Buffer.from(await originalBlob.arrayBuffer()),
+          'Every retained source and derivative keeps its exact encoded bytes.',
+        );
+      assert.deepEqual(
+        Buffer.from(await rotorSaved.assets.get(rotorHash).arrayBuffer()),
+        Buffer.from(rotorBytes),
+      );
+      await $('reload-workspace').onclick();
+      await $('edit-geometry').onclick();
+      assert.deepEqual(rotorAnchors(), acceptedRotors, 'Reload reaches the saved rotor edit.');
+      assert.equal($('rotor-direction').value, 'inherit');
+      assert.equal($('rotor-phase').value, '');
+      $('discard-asset').onclick();
+    },
+  );
+  await t.test(
+    'actual rotor Apply rejects a changed crop and disables unavailable hub controls',
+    async () => {
+      $('asset-upload').files = [new File([rotorBytes], 'rotor-source.png', { type: 'image/png' })];
+      $('asset-upload').onchange();
+      await until(() => /Replacement prepared/.test(message()));
+      const preparedJSON = $('rotor-anchors').value,
+        preparedPreview = $('draft-preview').previewMarker;
+      $('crop-width').value = '31';
+      $('rotor-x').value = '0.3';
+      await $('rotor-apply').onclick();
+      assert.match(message(), /crop has changed.*Prepare derivative/);
+      assert.equal($('rotor-anchors').value, preparedJSON);
+      assert.equal($('draft-preview').previewMarker, preparedPreview);
+      $('discard-asset').onclick();
+      const discardedPreview = $('draft-preview').previewMarker;
+      await $('rotor-apply').onclick();
+      assert.equal($('studio-status').dataset.kind, 'error');
+      assert.equal($('draft-preview').previewMarker, discardedPreview);
+      for (const id of rotorControlIds) assert.equal($(`rotor-${id}`).disabled, true);
+      inventoryButton('enemy.bouncer').click();
+      $('asset-upload').files = [new File([rotorBytes], 'no-rotors.png', { type: 'image/png' })];
+      $('asset-upload').onchange();
+      await until(() => /Replacement prepared/.test(message()));
+      assert.equal($('rotor-controls').hidden, false);
+      assert.deepEqual(rotorAnchors(), []);
+      for (const id of rotorControlIds)
+        assert.equal(
+          $(`rotor-${id}`).disabled,
+          true,
+          'An actor without authored hubs cannot invent one.',
+        );
+      assert.match($('rotor-controls-status').textContent, /no.*hub/i);
+      $('discard-asset').onclick();
+    },
+  );
+  inventoryButton(originalSlot).click();
+  await flush();
   $('new-sprite').onclick();
   const originalSpritePixels = new Uint8ClampedArray($('sprite-canvas').paintedPixels);
   $('sprite-canvas').emit('keydown', { code: 'Space' });

@@ -4,6 +4,7 @@ import { isClassicRuleset } from '../core/versions.mjs';
 import { classicEffectActive } from '../core/classic-state.mjs';
 import { foundationCompatibleView as classicView } from './foundation-view.mjs';
 import { encounterView } from './encounter-view.mjs';
+import { combatView } from './combat-view.mjs';
 
 const ordinaryEvents = new Set([
   'class.switched',
@@ -36,6 +37,11 @@ const ordinaryEvents = new Set([
   'encounter.stageChanged',
   'encounter.phaseChanged',
   'encounter.defeated',
+  'combat.cancelled',
+  'combat.eliminated',
+  'combat.expired',
+  'combat.projectileRemoved',
+  'combat.shotSkipped',
 ]);
 const criticalEvents = new Set([
   'cut.started',
@@ -49,6 +55,9 @@ const criticalEvents = new Set([
   'boss.warning',
   'pressure.warning',
   'pressure.committed',
+  'combat.locked',
+  'combat.fired',
+  'combat.impact',
 ]);
 const statuses = new Set(['running', 'respawning', 'won', 'lost']);
 const rulesets = new Set([
@@ -94,6 +103,10 @@ export function flightInformationSnapshot(run, { started, paused }) {
   const classicExpected = isClassicRuleset(run.ruleset);
   const encounterExpected = Boolean(run.level?.encounter);
   const classic = classicView(run);
+  // This richer geometry projection belongs to paused reading. Live event
+  // capture does not need another board/actor validation on every fixed step.
+  const combat = paused ? combatView(run) : null;
+  if (combat?.valid === false) issues.push('combat-projection');
   let encounter = null;
   try {
     encounter = encounterView(run);
@@ -205,6 +218,7 @@ export function flightInformationSnapshot(run, { started, paused }) {
     classicExpected,
     encounterExpected,
     classic,
+    ...(combat === null ? {} : { combat }),
     encounter,
     laneBosses,
     encounterLane,

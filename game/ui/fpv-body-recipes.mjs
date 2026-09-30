@@ -108,10 +108,14 @@ function motor(ctx, spec, [x, y], index, frame, colors) {
     ctx.lineWidth = 1.2;
     ctx.stroke();
   }
-  const phase = frame.reduced || !Number.isFinite(frame.phase) ? 0 : frame.phase * 7;
+  // Use the same alias-safe clock and props-in diagonal pairs as the shared
+  // FPV renderer. Legacy frames without that clock retain a finite stopped pose.
+  const phase = frame.reduced || !Number.isFinite(frame.rotorPhase) ? 0 : frame.rotorPhase,
+    direction = x * y > 0 ? 1 : -1;
   ctx.save();
   ctx.translate(x, y);
-  ctx.rotate(phase * (index % 2 ? -1 : 1) + index * 0.7);
+  ctx.rotate(phase * direction + index * 0.7);
+  ctx.scale(1, direction);
   for (let blade = 0; blade < 3; blade++) {
     ctx.rotate(TAU / 3);
     ctx.fillStyle = index < 2 ? colors.light : colors.trim;

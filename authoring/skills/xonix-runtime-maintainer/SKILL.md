@@ -5,6 +5,39 @@ description: Maintain, test, build and archive this project's playable Xonix run
 
 # Xonix Runtime Maintainer
 
+For the current character programme, use the approved **A → B → C → rest** order
+in [the current register](../../../docs/plan-status-2026-09-29.md): deliver current
+character/reliable-play corrections, qualify optional encounters, then finish one
+Ukrainian/FPV artwork cohort. Necessary tooling/checks travel with the feature;
+broader editions/tools and the formal C2 human benchmark follow later. A pending
+release does not block independent source work, but the single publisher retains
+integration, version and public-acceptance ownership. Existing approval hashes
+cannot be edited to admit changed renderer bytes. Source or imported candidates
+remain unapproved until scoped review and exact production adoption.
+For [current-character admission](../../../docs/actor-presentation-adoption.md),
+`readActorPresentationContinuation` takes a code-owned reviewed pin, never bundle
+authority. Keep group subsets independent, snapshot shared bytes once, reject
+draft/stale inputs and preserve original Team/equipment semantic guards. Its
+synthetic tests confer no production, human or release approval. Audio retains
+its separate review route.
+
+The latest user instruction defers production review, not correctness. Continue
+independent A/B/C implementation without manufacturing new production approvals.
+Keep fractional score formatting confined to the localized HUD callback: use the
+selected game locale, at most three decimal places and no grouping, with minimum
+five-place padding only for integer raw scores. Never round the run, saved replay
+or awards to shorten a label. Exercise a legal fractional capture and paused
+EN/UK refresh while checking exact saved bytes and replay score. Historical HUD
+CSS must be reproduced against current handheld geometry before reuse.
+For current-mission encounter Guide lessons, use `game/encounter-guide.mjs` and
+[the Guide contract](../../../docs/enemy-guide.md): validate role availability,
+clone the effective level and starting craft/seed/recipes before async work,
+retain no-awards practice and reject stale source. Edition hosts reconstruct only
+admitted content and compare exact normalized rules; never double-tune or use
+Playground storage to bypass the edition boundary. Localize native select captions
+without replacing their child controls. Host tests must wait for actual Start
+preparation and use a monotonic clock through neutral/echo input guards.
+
 For player-menu changes, follow the approved [player-first execution order](../../../docs/player-first-ux-execution.md)
 and [navigation maintenance prompt](../../prompts/player-menu-navigation.md).
 Use one menu-key owner and rendered grid geometry; expose chooser `primary()` to
@@ -1526,6 +1559,21 @@ Use the [reviewed successor prompt](../../prompts/team-reviewed-successor.md). E
 
 The current Team discovery contract permits an explicit full picture preview; it supersedes the older card-teaser and locked enlarged-teaser rule. Keep the passive lobby on a meaningful broad-border concealed teaser while unified mission-library cards remain metadata-only and artwork-lazy. Reuse the authenticated original and existing transient preview owner; full viewing is not gameplay, completion or an earned-picture receipt. Preserve accepted attempts, progress/profile bytes and independent image leases. Exercise cancellation, foreground loss, newer visits, decode failure and shared chooser Back returning directly to its exact game opener. Assert actual full-detail centre versus concealed lobby pixels, plus no simulation/start/award/write side effects. Keep native layout and visual recognition separate from finite Canvas tests; no renderer, recipe fingerprint or production-art change is implied.
 
+## Optional encounter practice and render recovery
+
+Follow [the optional encounter maintenance contract](../../../docs/combat-pressure-authoring.md).
+Enabled Solo practice uses the actual additive BoardPainter; absent/disabled
+combat must preserve historical draw commands and exact simulation identity.
+Validate before mutating drawing state. Keep Team and paired-race Studio admission
+closed until their own qualification passes. A post-startup practice failure is
+terminal for that child: stop ticks/drawing/input/audio, destroy held-Confirm
+suppression, expose the failure in the scrollable reading area and retain native
+Return/parent Close. Do not count blur as proof that released Confirm can recover.
+Retire pending loads, monitoring and the iframe on pagehide without stealing
+focus; a deliberate launch gets a fresh owner. Bound the frame to the viewport.
+Reopen exact recipe provenance when a consumed rendering helper changes; never
+rewrite old approvals or claim candidate practice as production/public proof.
+
 ## Bounded presentation metadata and immutable history
 
 Keep serialized metadata, expanded logical history and original-payload budgets separate. See [the metadata contract](../../../docs/presentation-metadata.md) and [bounded-history prompt](../../prompts/bounded-theme-history.md). Preserve fitting historical bytes and every retained logical record. Decode compact metadata before semantic validation; do not treat reconstructed objects as trusted. Require encodability before an edit or atomic save is accepted.
@@ -1649,3 +1697,83 @@ enabled tabs and one-action ownership with the shared controller navigator. Nati
 text/select editing and modified shortcuts must remain excluded. A Settings visit
 must preserve a paused flight and require explicit Resume. Follow the regression
 prompt in [Settings native keys](../../../docs/settings-native-key-navigation.md).
+
+For the A2 [playable roster review](../../playable-benchmark/README.md), select a
+real registered class when preparing the existing scene; never imitate it with
+only a label or sprite. Retry retains the captured class/effective level. V6 uses
+the code-owned exact manifest digest and original construction hashes, validates
+all fourteen records and fetches only the selected pair. Keep Scout v3–v5 and the
+approved actor pin separate. Respect authored Arcade action capabilities: these
+three missions disable Boost/E/R regardless of chosen class. Test native setup
+ownership, stale/cancelled/failed replacement, ordinary-core parity and exact
+optional package membership. Review prompt: “Select each of seven classes, compare
+approved/V6 at real board sizes, record class and exact provenance, exercise Retry
+and failed/cancelled switching; do not add equipment actions to Arcade missions or
+promote loaded candidates to approved art.” See batch15 evidence.
+
+## Global optional-enemy remains and exact practice override
+
+Use the separate `EncounterDisplayPreferencesV1` controller and shared Settings
+controls; never append fields to strict historical display/profile/replay records.
+Ordinary Solo, both Versus boards and Replay read only the cosmetic residue flag.
+Team shares the preference UI but has no new combat mechanic. Preserve invalid or
+future raw bytes, session-only/read-only behavior, verified retry, cross-tab and
+BFCache authority, and disposal. Live enemies, warnings, shots and brief hits stay.
+Studio snapshots explicit Show/Hide only for validated optional Solo previews;
+owned exact practice parameters override the global choice, and ambiguity falls
+back to the global preference. No preview writes player settings or scenario data.
+
+Fixture guidance: open collapsed Mission info before entering its brief; use a
+monotonic controller clock and real neutral release interval. Team starts may
+write the first-cut teaching receipt: assert that exact write separately, then
+measure Settings/disposal writes from their actual boundary. A restored page needs
+its neutral sample before deliberate tab input, even when testing an edit before
+its deferred preference restore. See batch11 evidence; do not relax these guards.
+
+### Optional-encounter teaching
+
+The authoring design card is not part of a compiled playable scenario. Build
+ready-card and full-brief scout/sentry guidance from the enabled versioned actor
+roles. Preserve authored prose and byte-identical no-encounter output. Verify
+fixed aim, early-return cancellation and still-live shots during sentry recovery
+against real core/replay traces; do not describe bracketed optional robots as
+ordinary dangerous region-keeping enemies. New copy alone does not finish Field
+Guide, paused details, full-mission fairness or production review.
+
+Paused patrol details now reuse the strict `combatView` only when paused. Keep
+live event collection free of another geometry validation, absent/off output
+unchanged and invalid active data visibly unavailable. Count live projectiles
+separately from sentry recovery. Enemy freeze holds both warning and shot clocks;
+ended runs must not describe surviving or removed patrols as current danger.
+Allowlist event urgency by exact emitted type, never by prefix. The ordinary
+opener's existing pause may refresh only `savedAt`; reading and Back must preserve
+checkpoint, replay, continuation, focus and Pause. Practice stays write-free.
+See the updated optional encounter maintenance contract and batch13 evidence.
+
+### Current-board encounter Help
+
+Couch guidance reads accepted run.level values at Help entry, never uncommitted
+setup selectors. Preserve per-seat applicability and actual mode semantics. Use
+existing paused reading/return ownership; no per-frame rebuild or live telemetry
+announcements. A missing prepared match is not invalid content. Team two-front
+trail advice requires its explicit runtime edition; Legacy relay guidance stays
+unchanged. Keep reproduced baseline test defects separate from feature passes.
+
+### Edition Field Guide capabilities
+
+An edition may reconstruct only admitted missions. Set the explicit catalog
+practice capability false where generic role/impact lessons cannot enter that
+loader; keep their readable guidance with localized explanation, and preserve
+supported current-mission practice through its exact edition adapter. Guard the
+activation handler before preparation or handoff writes, not only the button.
+Missing canonical palettes cannot be dereferenced or trigger unrelated artwork
+loads; use a valid selected compiled role or an unavailable illustration state.
+Preserve ordinary hosts' captured canonical catalog and restored-pack behavior.
+
+Regression prompt: “Open the guide in custom-theme source and compiled editions,
+change roles/appearances with a working canvas, attempt catalog/impact practice,
+and verify no child or storage changes. Then launch a supported current-mission
+lesson, return to the unchanged paused parent, and repeat in an ordinary restored
+pack. Check both languages, Close/Back and fresh controller input.” Source tests
+and honest unavailable states do not establish new edition lesson support or
+production/device acceptance.

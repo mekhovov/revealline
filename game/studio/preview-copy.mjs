@@ -61,11 +61,11 @@ export function bindStudioPreviewCopy(document, project, mission, preview) {
   localizedText($('rules'), () => studioRulesText(project, mission, preview));
   localizedText($('geometry'), () => studioGeometryText(mission, preview));
   localizedAttribute($('play'), 'title', () =>
-    mission.combat?.enabled
-      ? t('tools:studio.preview.combatUnavailable')
-      : mission.modes.includes('solo')
-        ? ''
-        : t('tools:studio.preview.soloUnavailable'),
+    !mission.modes.includes('solo')
+      ? t('tools:studio.preview.soloUnavailable')
+      : mission.combat?.enabled
+        ? t('tools:studio.preview.combatCandidate')
+        : '',
   );
 }
 export function studioRulesText(project, mission, preview) {
