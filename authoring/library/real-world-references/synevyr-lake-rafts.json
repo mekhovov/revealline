@@ -1,0 +1,25 @@
+{
+  "format": "revealline.reference-artwork.v1",
+  "id": "synevyr-lake-rafts-2018",
+  "title": "Rafts on Synevyr Lake in Ukraine",
+  "creator": "Jan Pešula (Sapfan)",
+  "sourcePage": "https://commons.wikimedia.org/wiki/File:Synevyr_Lake_rafts.jpg",
+  "sourceRevision": "https://commons.wikimedia.org/w/index.php?title=File:Synevyr_Lake_rafts.jpg&oldid=1197575995",
+  "originalURL": "https://upload.wikimedia.org/wikipedia/commons/0/01/Synevyr_Lake_rafts.jpg",
+  "license": "CC0-1.0",
+  "licenseURL": "https://creativecommons.org/publicdomain/zero/1.0/",
+  "reviewedOn": "2026-09-28",
+  "use": "incorporated-original-for-opt-in-authoring-preview",
+  "artworkTreatment": "photographic-reveals",
+  "file": {
+    "path": "authoring/library/real-world-references/synevyr-lake-rafts.jpg",
+    "mime": "image/jpeg",
+    "width": 5312,
+    "height": 2988,
+    "bytes": 4590659,
+    "sha256": "8c80f050ed422be5f8ac323c78b22143007d579289aeb0b1ce8327aa3f6a87c8"
+  },
+  "derivatives": [],
+  "presentation": "Original bytes preserved; full image contain-fit at draw time through secured cells. No photographic gameplay sprites, source crop, permanent contrast edit or production mission binding.",
+  "limits": "Decoded image RGBA estimate is width × height × 4; excludes decoder/browser/GPU copies. Source-only authoring example; not a production/offline asset approval."
+}

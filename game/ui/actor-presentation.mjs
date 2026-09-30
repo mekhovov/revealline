@@ -1,5 +1,7 @@
+import { aliasSafePhase } from '../../authoring/motion-lab/animation.mjs';
+import { paintRotor } from './rotor-presentation.mjs';
 import { enemyCatalogRecord, resolveEnemySkin } from '../enemy-catalog.mjs';
-import { drawEnemyBodyMotion } from './enemy-body-motion.mjs';
+import { advanceEnemySurfacePhase, drawEnemyBodyMotion } from './enemy-body-motion.mjs';
 import { drawActorRecipe, resolveActorRecipe } from './actor-recipes.mjs';
 import {
   journeyActorThemeMaterial,
@@ -218,8 +220,23 @@ export function createActorPresentation() {
           heading = reduced ? target : heading + clamp(delta, -elapsed * 12, elapsed * 12);
         const phase =
           (old?.phase ?? 0) + (locked || reduced ? 0 : elapsed * (1 + Math.min(speed, 12) * 0.13));
+        // Separate from idle/tread clocks. Four blades bound the densest
+        // supported repeating pattern, including mixed-anchor sprite rigs.
+        const rotorPhase =
+          locked || reduced
+            ? (old?.rotorPhase ?? 0)
+            : aliasSafePhase(old?.rotorPhase ?? 0, 1.1 + Math.min(speed, 12) * 0.1, elapsed, 4)
+                .phase;
         const travelPhase =
           (old?.travelPhase ?? 0) + (locked || reduced ? 0 : elapsed * Math.min(speed, 12) * 0.45);
+        const surfacePhase = advanceEnemySurfacePhase(
+          old?.surfacePhase ?? 0,
+          locked || reduced ? 0 : elapsed * (1 + Math.min(speed, 12) * 0.13),
+        );
+        const surfaceTravelPhase = advanceEnemySurfacePhase(
+          old?.surfaceTravelPhase ?? 0,
+          locked || reduced ? 0 : elapsed * Math.min(speed, 12) * 0.45,
+        );
         const tail = old?.tail ? [...old.tail] : [];
         if (
           !locked &&
@@ -241,6 +258,9 @@ export function createActorPresentation() {
           time,
           phase,
           travelPhase,
+          surfacePhase,
+          surfaceTravelPhase,
+          rotorPhase,
           heading,
           target,
           speed,
@@ -268,6 +288,9 @@ export function createActorPresentation() {
             heading,
             phase,
             travelPhase,
+            surfacePhase,
+            surfaceTravelPhase,
+            rotorPhase,
             speed: locked ? 0 : speed,
             bank,
             locked,
@@ -290,18 +313,18 @@ const rect = (c, color, x, y, w, h) => {
   c.fillStyle = color;
   c.fillRect(Math.round(x), Math.round(y), w, h);
 };
-function rotor(c, x, y, phase, colors, compact, blades = 3) {
-  rect(c, colors.dark, x - 4, y - 4, 8, 8);
+function rotor(c, x, y, phase, colors, compact, blades = 3, direction = 1) {
   c.save();
   c.translate(x, y);
-  c.rotate(phase % TAU);
-  for (let i = 0; i < blades; i++) {
-    c.rotate(TAU / blades);
-    rect(c, colors.light, -1, -5, 2, compact ? 3 : 4);
-    rect(c, colors.body, -1, -5, 1, 2);
-  }
+  paintRotor(c, {
+    radius: 5,
+    phase,
+    direction,
+    bladeCount: blades,
+    bladeWidth: compact ? 0.4 : 0.34,
+    blurOpacity: 0,
+  });
   c.restore();
-  rect(c, colors.light, x - 1, y - 1, 2, 2);
 }
 function treads(c, colors, phase, compact) {
   for (const x of [-13, 9]) {
@@ -319,7 +342,8 @@ function fpv(c, f, colors) {
     for (const x of [-7, 7])
       for (const y of [-7, 7]) {
         rect(c, colors.body, Math.min(0, x), Math.min(0, y), Math.abs(x) + 1, 2);
-        rotor(c, x, y, phase * 7 * (x * y > 0 ? 1 : -1), colors, compact);
+        const direction = x * y > 0 ? 1 : -1;
+        rotor(c, x, y, (f.rotorPhase ?? 0) * direction, colors, compact, 3, direction);
       }
     rect(c, colors.dark, -4, -7, 8, 14);
     rect(c, colors.body, -3, -6, 6, 12);
@@ -524,8 +548,8 @@ function distinctBody(c, f, k) {
       rect(c, k.dark, -4, -13, 8, 25);
       rect(c, k.body, -3, -12, 6, 23);
       rect(c, k.trim, -10, -2, 20, 3);
-      rotor(c, -8, 0, f.phase * 8, k, f.style === 'microtile');
-      rotor(c, 8, 0, -f.phase * 8, k, f.style === 'microtile');
+      rotor(c, -8, 0, f.rotorPhase ?? 0, k, f.style === 'microtile', 3, 1);
+      rotor(c, 8, 0, -(f.rotorPhase ?? 0), k, f.style === 'microtile', 3, -1);
       rect(c, k.light, -2, -11, 4, 3);
       rect(c, k.body, -6, 9, 12, 3);
     } else if (f.themeId === 'ukraine') {
@@ -689,7 +713,7 @@ export function drawPresentedActor(
   image = null,
   geometry = null,
   bodyRecord = null,
-  { bodyOffset = null, showRotors = true } = {},
+  { bodyOffset = null, showRotors = true, showBodyCues = true } = {},
 ) {
   if (!frame) return;
   const colors = {
@@ -734,19 +758,16 @@ export function drawPresentedActor(
     for (const anchor of showRotors ? geometry.rotors : []) {
       ctx.save();
       ctx.translate(anchor.x * width, anchor.y * height);
-      const scale = (0.16 * anchor.radiusScale * width) / 5;
-      ctx.scale(scale, scale);
-      rotor(
-        ctx,
-        0,
-        0,
-        frame.reduced
-          ? 0
-          : frame.phase * 7 * anchor.direction + (anchor.phaseDegrees * Math.PI) / 180,
-        colors,
-        frame.style === 'microtile',
-        anchor.bladeCount,
-      );
+      paintRotor(ctx, {
+        radius: 0.16 * anchor.radiusScale * width,
+        phase:
+          (frame.reduced ? 0 : (frame.rotorPhase ?? 0)) * anchor.direction +
+          (anchor.phaseDegrees * Math.PI) / 180,
+        direction: anchor.direction,
+        bladeCount: anchor.bladeCount,
+        pixel: Math.max(width / 64, 0.1),
+        blurOpacity: frame.reduced || !frame.rotorPhase ? 0 : 0.08,
+      });
       ctx.restore();
     }
   } else if (image) ctx.drawImage(image, -d / 2, -d / 2, d, d);
@@ -758,7 +779,7 @@ export function drawPresentedActor(
   if (image) ctx.scale(d / 28, d / 28);
   // Two small nose pixels give rounded/compact and uploaded bodies a stable
   // heading cue. They remain within the body envelope, never a targeting ray.
-  if (frame.role !== 'boss') {
+  if (showBodyCues && frame.role !== 'boss') {
     rect(ctx, colors.dark, -4, -13, 8, 4);
     rect(ctx, colors.light, -3, -12, 2, 2);
     rect(ctx, colors.light, 1, -12, 2, 2);
@@ -766,18 +787,22 @@ export function drawPresentedActor(
   ctx.restore();
   drawRoleBadge(ctx, frame, colors);
   if (offset) ctx.restore();
-  // The luminous center is the contact footprint; larger body art is cosmetic.
-  ctx.globalAlpha = 0.8;
-  ctx.strokeStyle = colors.dark;
-  ctx.lineWidth = 3;
-  ctx.beginPath();
-  ctx.arc(0, 0, frame.radius, 0, TAU);
-  ctx.stroke();
-  ctx.strokeStyle = colors.light;
-  ctx.lineWidth = 1;
-  ctx.stroke();
-  rect(ctx, colors.dark, -2, -2, 4, 4);
-  rect(ctx, colors.light, -1, -1, 2, 2);
+  // Ordinary callers retain the complete heading/contact treatment. A host may
+  // own these cues itself (Team pilots), avoiding duplicate ink over equipment.
+  // That host must keep its true contact position/radius and player identity.
+  if (showBodyCues) {
+    ctx.globalAlpha = 0.8;
+    ctx.strokeStyle = colors.dark;
+    ctx.lineWidth = 3;
+    ctx.beginPath();
+    ctx.arc(0, 0, frame.radius, 0, TAU);
+    ctx.stroke();
+    ctx.strokeStyle = colors.light;
+    ctx.lineWidth = 1;
+    ctx.stroke();
+    rect(ctx, colors.dark, -2, -2, 4, 4);
+    rect(ctx, colors.light, -1, -1, 2, 2);
+  }
   ctx.restore();
 }
 

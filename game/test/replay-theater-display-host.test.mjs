@@ -6,6 +6,7 @@ import { createRun, stepRun, FIXED_DT } from '../core/index.mjs';
 import { createRecorder, recordInput, exportReplay, authoritativeCheckpoint } from '../replay.mjs';
 import { BoardPainter } from '../ui/render.mjs';
 import { attachFieldKitSurfaces } from '../ui/field-kit-surfaces.mjs';
+import { ENCOUNTER_DISPLAY_PREFERENCES_KEY } from '../encounter-display-preferences.mjs';
 import { DISPLAY_PREFERENCES_KEY } from '../display-preferences.mjs';
 import { Document, Element, Events } from './helpers/couch-dom.mjs';
 import { editionProviderFixture } from './helpers/edition-provider-fixture.mjs';
@@ -307,7 +308,11 @@ function raw(page) {
   return JSON.parse(page.data.get(DISPLAY_PREFERENCES_KEY));
 }
 function noPlayerAccess(page) {
-  assert.ok(page.reads.every((key) => key === DISPLAY_PREFERENCES_KEY));
+  assert.ok(
+    page.reads.every((key) =>
+      [DISPLAY_PREFERENCES_KEY, ENCOUNTER_DISPLAY_PREFERENCES_KEY].includes(key),
+    ),
+  );
   assert.ok(page.writes.every(({ key }) => key === DISPLAY_PREFERENCES_KEY));
   assert.equal(page.data.get('revealline.library.dev.v1'), 'untouched player profile');
   assert.equal(page.data.get('revealline.suspended.dev.v1'), 'untouched saved flight');
@@ -594,4 +599,25 @@ test('recorded company receipt restores selected actors and rejects changed artw
       /fieldcraft|content-design\/themes|mission-library-index/.test(path),
     ),
   );
+});
+
+test('Theater adopts global remains without rewriting recordings or advancing a paused replay', async (t) => {
+  const p = fixture(t);
+  await ready(p);
+  const before = p.frame(0),
+    original = JSON.stringify(p.original);
+  assert.equal(before.showCombatScrap, true);
+  const raw = JSON.stringify({ format: 'EncounterDisplayPreferencesV1', showRemains: false });
+  p.data.set(ENCOUNTER_DISPLAY_PREFERENCES_KEY, raw);
+  p.win.emit('storage', {
+    key: ENCOUNTER_DISPLAY_PREFERENCES_KEY,
+    storageArea: p.storage,
+    newValue: raw,
+  });
+  const after = p.frame(16);
+  assert.equal(after.showCombatScrap, false);
+  assert.deepEqual(after.checkpoint, before.checkpoint);
+  assert.equal(JSON.stringify(p.original), original);
+  assert.deepEqual(p.writes, []);
+  noPlayerAccess(p);
 });

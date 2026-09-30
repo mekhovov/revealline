@@ -16,8 +16,16 @@ import { createOperationStatus } from '../../game/ui/operation-status.mjs';
 import { DIRECTIONS, clamp, createMotionState, validatePresets } from './motion.mjs';
 import { createManualSteering } from './steering.mjs';
 import { nextGridCenter } from './grid-motion.mjs';
-import { createAnimationState, advanceAnimation, validateAnimationRecipes } from './animation.mjs';
-import { paintCharacter } from './render-character.mjs';
+import {
+  createAnimationState,
+  advanceAnimation,
+  validateAnimationRecipes,
+  rotorAnchors,
+} from './animation.mjs';
+import { paintCharacter, fittedBodySize } from './render-character.mjs';
+import { createRotorEditor, rotorSamplingRecipe } from './rotor-editor.mjs';
+import { createPartsEditor } from './parts-editor.mjs';
+import { inspectionTravelRatio } from './inspection-travel.mjs';
 import {
   validateCollection,
   createProfile,
@@ -136,7 +144,11 @@ function mountMotionLab() {
   let liveAnimation = createAnimationState(),
     inspectionAnimation = createAnimationState();
   const recipeOverrides = new Map(),
-    rotorOverrides = new Map();
+    rotorOverrides = new Map(),
+    partsOverrides = new Map(),
+    rigOverrides = new Map();
+  let rotorEditor = null,
+    partsEditor = null;
   const storageKey = 'xonix.motion-lab.collection.v1';
   const profileOptions = { mode: 'lab', profileId: 'local-design' };
   let recoveryRaw = null,
@@ -212,6 +224,7 @@ function mountMotionLab() {
       record.state = 'loaded';
       record.image = image;
       updateAssetStatus();
+      rotorEditor?.refresh();
       if (state) {
         render();
         readouts();
@@ -600,9 +613,19 @@ function mountMotionLab() {
     return {
       ...recipe,
       components: recipe.components.map((component) =>
-        component.type === 'rotors' ? { ...component, ...overrides } : component,
+        component.type === 'rotors'
+          ? { ...component, ...overrides }
+          : (partsOverrides.get(characterId)?.find((part) => part.id === component.id) ??
+            component),
       ),
     };
+  }
+
+  function bodyFor(characterId) {
+    const body = presets.characters[characterId];
+    return rigOverrides.has(characterId)
+      ? { ...body, rotors: rigOverrides.get(characterId) }
+      : body;
   }
 
   function saveProfile() {
@@ -646,7 +669,7 @@ function mountMotionLab() {
   }
 
   function updateAnimationControls() {
-    const body = presets.characters[inspectedCharacter];
+    const body = bodyFor(inspectedCharacter);
     $('animation-recipe').value = recipeOverrides.get(inspectedCharacter) || body.animationRecipe;
     const recipe = recipeFor(inspectedCharacter),
       rotor = recipe.components.find((component) => component.type === 'rotors');
@@ -681,6 +704,8 @@ function mountMotionLab() {
             : 'tools:motionLab.cosmeticRecipe',
       ),
     );
+    rotorEditor?.refresh();
+    partsEditor?.refresh();
   }
 
   function componentName(type) {
@@ -790,6 +815,90 @@ function mountMotionLab() {
   }
 
   function setupCollection() {
+    partsEditor = createPartsEditor({
+      elements: Object.fromEntries(
+        [
+          'root',
+          'component',
+          'anchor',
+          'x',
+          'y',
+          'rate',
+          'limits',
+          'json',
+          'apply',
+          'reset',
+          'export',
+          'status',
+        ].map((key) => [key, $(`parts-editor-${key}`)]),
+      ),
+      getSelection: () => ({ id: inspectedCharacter, recipe: recipeFor(inspectedCharacter) }),
+      apply: (parts) => {
+        if (parts === null) partsOverrides.delete(inspectedCharacter);
+        else partsOverrides.set(inspectedCharacter, parts);
+        updateAnimationControls();
+        render();
+        readouts();
+      },
+      listen,
+      text: (key, values) => t(`tools:motionLab.partsEditor.${key}`, values),
+      componentName,
+      download: (json, name) => {
+        const url = URL.createObjectURL(new Blob([json], { type: 'application/json' })),
+          link = document.createElement('a');
+        link.href = url;
+        link.download = name;
+        link.click();
+        setTimeout(() => URL.revokeObjectURL(url), 0);
+      },
+    });
+    rotorEditor = createRotorEditor({
+      elements: Object.fromEntries(
+        [
+          'root',
+          'hub',
+          'direction',
+          'phase',
+          'x',
+          'y',
+          'radius',
+          'envelope',
+          'limits',
+          'json',
+          'apply',
+          'reset',
+          'export',
+          'status',
+          'summary',
+        ].map((key) => [key, $(`rotor-editor-${key}`)]),
+      ),
+      getSelection: () => ({
+        id: inspectedCharacter,
+        body: bodyFor(inspectedCharacter),
+        recipe: recipeFor(inspectedCharacter),
+        image: assetRecord(bodyFor(inspectedCharacter).src).image,
+      }),
+      apply: (rotors) => {
+        if (rotors === null) rigOverrides.delete(inspectedCharacter);
+        else rigOverrides.set(inspectedCharacter, rotors);
+        // Cosmetic edits retain both animation clocks, pause and steering intent.
+        updateAnimationControls();
+        render();
+        readouts();
+      },
+      listen,
+      text: (key, values) => t(`tools:motionLab.rotorEditor.${key}`, values),
+      review: render,
+      download: (json, name) => {
+        const url = URL.createObjectURL(new Blob([json], { type: 'application/json' })),
+          link = document.createElement('a');
+        link.href = url;
+        link.download = name;
+        link.click();
+        setTimeout(() => URL.revokeObjectURL(url), 0);
+      },
+    });
+    listen($('rotor-editor-guides'), 'change', render);
     setOptions(
       'collection-context',
       Object.fromEntries(collection.contexts.map((item) => [item.id, item])),
@@ -881,6 +990,7 @@ function mountMotionLab() {
     listen($('animation-recipe'), 'change', (event) => {
       recipeOverrides.set(inspectedCharacter, event.target.value);
       rotorOverrides.delete(inspectedCharacter);
+      partsOverrides.delete(inspectedCharacter);
       inspectionAnimation = createAnimationState();
       if (inspectedCharacter === selection.character) liveAnimation = createAnimationState();
       updateAnimationControls();
@@ -906,6 +1016,7 @@ function mountMotionLab() {
       inspectionAnimation = createAnimationState();
       render();
     });
+    listen($('inspection-travel'), 'change', () => render());
     listen($('apply-family-look'), 'click', () => {
       selection.terrainLayer = presets.familyLooks[selection.theme].terrainLayer;
       $('terrain-layer').value = selection.terrainLayer;
@@ -953,18 +1064,18 @@ function mountMotionLab() {
       const file = event.target.files[0];
       event.target.value = '';
       if (!file) return;
+      // A real replacement selection owns the result, even if rejected before
+      // decode. Retire the previous request while retaining accepted artwork.
+      cancelPendingBackground();
       if (
         !['image/png', 'image/jpeg', 'image/webp', 'image/gif'].includes(file.type) ||
         file.size > PNG_PREVIEW_MAX_BYTES
       ) {
+        $('clear-background').disabled = !background;
         backgroundMessage(localizedMessage('tools:motionLab.chooseImage'), 'error');
         return;
       }
-      const token = ++backgroundToken;
-      if (pendingBackground) {
-        pendingBackground.image?.removeAttribute('src');
-        if (pendingBackground.url) URL.revokeObjectURL(pendingBackground.url);
-      }
+      const token = backgroundToken;
       pendingBackground = { image: null, url: null };
       $('clear-background').disabled = false;
       const current = () => !disposed && token === backgroundToken;
@@ -1420,7 +1531,7 @@ function mountMotionLab() {
       ctx.fillStyle = rgba(colors.accent, (particle.life / 0.42) * 0.55);
       ctx.fillRect(particle.x, particle.y, particle.size, particle.size);
     }
-    const body = presets.characters[selection.character],
+    const body = bodyFor(selection.character),
       image = assetRecord(body.src);
     paintCharacter(ctx, {
       body,
@@ -1489,7 +1600,7 @@ function mountMotionLab() {
       inspectionCtx.stroke();
     }
     inspectionCtx.setTransform(155, 0, 0, 155, 200, 160);
-    const body = presets.characters[inspectedCharacter],
+    const body = bodyFor(inspectedCharacter),
       image = assetRecord(body.src);
     paintCharacter(inspectionCtx, {
       body,
@@ -1497,12 +1608,37 @@ function mountMotionLab() {
       recipe: recipeFor(inspectedCharacter),
       animation: inspectionAnimation,
       colors,
-      speedRatio: state.visualSpeed / motion.cruiseSpeed,
+      speedRatio: inspectionTravelRatio($('inspection-travel').value, state, motion),
       reducedMotion,
       showRotors,
       pixel: 1 / 155,
       inspectionSlow: $('inspection-slow').checked,
     });
+    if (image.image && $('rotor-editor-guides').checked) {
+      const anchor = rotorAnchors(body)[rotorEditor?.selectedHub() ?? 0],
+        component = recipeFor(inspectedCharacter).components.find((item) => item.type === 'rotors');
+      if (anchor && component) {
+        const { width, height } = fittedBodySize(body, image.image);
+        const pivot = body.presentationPivot || { x: 0.5, y: 0.5 };
+        inspectionCtx.save();
+        inspectionCtx.rotate((body.headingOffsetDegrees * Math.PI) / 180);
+        inspectionCtx.lineWidth = 1.5 / 155;
+        inspectionCtx.strokeStyle = colors.accent;
+        inspectionCtx.strokeRect(-pivot.x * width, -pivot.y * height, width, height);
+        inspectionCtx.translate(anchor.x * width, anchor.y * height);
+        inspectionCtx.beginPath();
+        for (const rotor of recipeFor(inspectedCharacter).components.filter(
+          (item) => item.type === 'rotors',
+        )) {
+          const radius = rotor.radius * anchor.radiusScale * width;
+          inspectionCtx.moveTo(radius, 0);
+          inspectionCtx.arc(0, 0, radius, 0, Math.PI * 2);
+        }
+        inspectionCtx.stroke();
+        inspectionCtx.strokeRect(-0.025, -0.025, 0.05, 0.05);
+        inspectionCtx.restore();
+      }
+    }
     inspectionCtx.setTransform(1, 0, 0, 1, 0, 0);
     const status = $('inspection-status');
     status.hidden = image.state === 'loaded';
@@ -2069,14 +2205,23 @@ function mountMotionLab() {
     );
     updateParticles(dt);
     const travel = { visualSpeed: state.visualSpeed, cruiseSpeed: motion.cruiseSpeed };
-    liveAnimation = advanceAnimation(liveAnimation, recipeFor(selection.character), travel, dt, {
-      paused,
-      reducedMotion,
-    });
+    liveAnimation = advanceAnimation(
+      liveAnimation,
+      rotorSamplingRecipe(bodyFor(selection.character), recipeFor(selection.character)),
+      travel,
+      dt,
+      {
+        paused,
+        reducedMotion,
+      },
+    );
     inspectionAnimation = advanceAnimation(
       inspectionAnimation,
-      recipeFor(inspectedCharacter),
-      travel,
+      rotorSamplingRecipe(bodyFor(inspectedCharacter), recipeFor(inspectedCharacter)),
+      {
+        visualSpeed: inspectionTravelRatio($('inspection-travel').value, state, motion),
+        cruiseSpeed: 1,
+      },
       dt,
       { paused, reducedMotion, inspectionSlow: $('inspection-slow').checked },
     );
@@ -2230,6 +2375,8 @@ function mountMotionLab() {
   const stopLocale = onLocaleChange(() => {
     if (!disposed && state) {
       updateReduced();
+      rotorEditor?.refresh();
+      partsEditor?.refresh();
     }
   });
   const stopDisplay = display.subscribe((value) => {

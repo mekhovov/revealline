@@ -64,6 +64,14 @@ For an exact repeatable starting point, use **Inspect import** on `example-proje
 5. Choose **Play exact Solo preview**, then **Start mission**. The starter's island provides a safe first exercise: travel down from the starting boundary to the reclaimed island. Our native trial closed a legal line at 0.6% coverage and 140 practice score with all three lives retained.
 6. Press Escape to pause; Resume stays explicit. **Close preview** returns focus to the Play opener and retains the project. Reload and confirm the saved campaign remains.
 
+Explicitly enabled optional scout/sentry editions can use this same exact Solo
+practice preview; follow the [optional patrol authoring guide](../../docs/combat-pressure-authoring.md).
+The preview awards no campaign progress and keeps authored rules. If a frame
+fails after startup, a persistent message stops that child’s play and input;
+Close/Return, correct the draft if necessary, then choose **Play exact Solo preview** again.
+Team combat and paired-race Studio launches remain unsupported. This source
+workflow does not establish production approval or public availability.
+
 This starter is a greybox. Its disconnected-foundation and missing-background warnings are meaningful authoring diagnostics, not proof that it is a finished community mission. Add one deliberate route decision at a time; record the lesson, threat, counterplay, mastery opportunity and playtest findings before expanding the campaign.
 
 ## 2. Recover an earlier checkpoint safely

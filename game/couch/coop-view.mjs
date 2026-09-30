@@ -24,6 +24,7 @@ import { prepareTeamAnchors, drawTeamAnchor } from './coop-anchor-presentation.m
 import { canvasTextFonts } from '../text-face.mjs';
 import { drawTrailImpactFront } from '../ui/actor-presentation.mjs';
 import { createCoopActorPresentation } from './coop-actor-presentation.mjs';
+import { drawPreparedPilotContact } from './coop-pilot-cues.mjs';
 import { coopCueScale, placeCoopCue } from './coop-actor-layout.mjs';
 import {
   createCoopCaptureFeedback,
@@ -194,6 +195,7 @@ export function createCoopPainter(canvas) {
       actorAppearance = null,
       feedback = null,
       previousRun = null,
+      feedbackComparison = null,
     } = {},
   ) {
     if (actorAppearance !== null && !['fpv', 'campaign'].includes(actorAppearance?.style))
@@ -584,6 +586,7 @@ export function createCoopPainter(canvas) {
         ctx.arc(spawn.x, spawn.y, 0.9, 0, Math.PI * 2);
         ctx.stroke();
       }
+      const preparedPilotContacts = new Map();
       for (const player of run.players) {
         ctx.strokeStyle = colors[player.id];
         ctx.fillStyle = colors[player.id];
@@ -627,23 +630,36 @@ export function createCoopPainter(canvas) {
           ctx.fill();
           ctx.globalAlpha = 1;
         }
-        ctx.fillStyle = '#172c34';
-        ctx.lineWidth = 0.12;
-        ctx.beginPath();
-        if (player.id === 0) ctx.arc(0, 0, 0.58, 0, Math.PI * 2);
-        else {
-          ctx.moveTo(0, -0.72);
-          ctx.lineTo(0.67, 0);
-          ctx.lineTo(0, 0.72);
-          ctx.lineTo(-0.67, 0);
-          ctx.closePath();
+        if (!pilotBody) {
+          ctx.fillStyle = '#172c34';
+          ctx.lineWidth = 0.12;
+          ctx.beginPath();
+          if (player.id === 0) ctx.arc(0, 0, 0.58, 0, Math.PI * 2);
+          else {
+            ctx.moveTo(0, -0.72);
+            ctx.lineTo(0.67, 0);
+            ctx.lineTo(0, 0.72);
+            ctx.lineTo(-0.67, 0);
+            ctx.closePath();
+          }
+          ctx.fill();
+          ctx.stroke();
         }
-        if (!pilotBody) ctx.fill();
-        ctx.stroke();
-        ctx.fillStyle = colors[player.id];
-        ctx.beginPath();
-        ctx.arc(0, 0, player.radius, 0, Math.PI * 2);
-        ctx.fill();
+        if (pilotBody) {
+          // Retain exact physical geometry for the final foreground pass. A
+          // filled marker here or later would hide the prepared battery/camera.
+          preparedPilotContacts.set(player.id, {
+            x: player.x,
+            y: player.y,
+            radius: player.radius,
+            color: colors[player.id],
+          });
+        } else {
+          ctx.beginPath();
+          ctx.arc(0, 0, player.radius, 0, Math.PI * 2);
+          ctx.fillStyle = colors[player.id];
+          ctx.fill();
+        }
         ctx.restore();
         pilotBadge(player, pilotBody);
       }
@@ -757,13 +773,29 @@ export function createCoopPainter(canvas) {
         ctx.restore();
       }
       for (const player of run.players) {
-        ctx.fillStyle = colors[player.id];
-        ctx.strokeStyle = '#07111c';
-        ctx.lineWidth = 1 / cssCell;
-        ctx.beginPath();
-        ctx.arc(player.x, player.y, player.radius, 0, Math.PI * 2);
-        ctx.fill();
-        ctx.stroke();
+        const contact = preparedPilotContacts.get(player.id);
+        if (contact) {
+          // Keep the unfilled pilot footprint above every actor and enemy cue.
+          // The separate number/shape badge and recovery ring retain their roles.
+          ctx.save();
+          ctx.translate(contact.x, contact.y);
+          drawPreparedPilotContact(
+            ctx,
+            contact.radius,
+            contact.color,
+            cssCell,
+            feedbackComparison?.contactStyle,
+          );
+          ctx.restore();
+        } else {
+          ctx.fillStyle = colors[player.id];
+          ctx.strokeStyle = '#07111c';
+          ctx.lineWidth = 1 / cssCell;
+          ctx.beginPath();
+          ctx.arc(player.x, player.y, player.radius, 0, Math.PI * 2);
+          ctx.fill();
+          ctx.stroke();
+        }
       }
       for (const [index, outcome] of recentOutcomes.entries()) {
         if (!['running', 'paused'].includes(run.status)) break;

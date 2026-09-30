@@ -1,0 +1,520 @@
+TAP version 13
+# Subtest: BoardPainter keeps separate default boss bodies beneath the shared explicit boss upload
+ok 1 - BoardPainter keeps separate default boss bodies beneath the shared explicit boss upload
+  ---
+  duration_ms: 0.844833
+  type: 'test'
+  ...
+# Subtest: facing uses newly observed tick positions instead of a stale velocity field
+ok 2 - facing uses newly observed tick positions instead of a stale velocity field
+  ---
+  duration_ms: 0.388125
+  type: 'test'
+  ...
+# Subtest: contour and outer patrols face their measured path without velocity fields
+ok 3 - contour and outer patrols face their measured path without velocity fields
+  ---
+  duration_ms: 0.2895
+  type: 'test'
+  ...
+# Subtest: pause and classic freeze retain heading, banking and animation clocks
+ok 4 - pause and classic freeze retain heading, banking and animation clocks
+  ---
+  duration_ms: 0.284458
+  type: 'test'
+  ...
+# Subtest: stun and dormancy stop active motion; reduced effects keep direction but no moving accents
+ok 5 - stun and dormancy stop active motion; reduced effects keep direction but no moving accents
+  ---
+  duration_ms: 0.100708
+  type: 'test'
+  ...
+# Subtest: stationary tread/walking phase stays still while idle rotor/antenna clock can continue
+ok 6 - stationary tread/walking phase stays still while idle rotor/antenna clock can continue
+  ---
+  duration_ms: 0.07425
+  type: 'test'
+  ...
+# Subtest: cosmetic size targets desktop/phone readability without altering contact radius
+ok 7 - cosmetic size targets desktop/phone readability without altering contact radius
+  ---
+  duration_ms: 0.12575
+  type: 'test'
+  ...
+# Subtest: prepared sprite sizing uses occupied pixels plus rotor sweep, not transparent frame padding
+ok 8 - prepared sprite sizing uses occupied pixels plus rotor sweep, not transparent frame padding
+  ---
+  duration_ms: 0.152625
+  type: 'test'
+  ...
+# Subtest: minimum-aware normal, boss and compact player frames remain finite and bounded
+ok 9 - minimum-aware normal, boss and compact player frames remain finite and bounded
+  ---
+  duration_ms: 0.418209
+  type: 'test'
+  ...
+# Subtest: four themes have distinct geometric silhouettes even with identical colors
+ok 10 - four themes have distinct geometric silhouettes even with identical colors
+  ---
+  duration_ms: 1.001208
+  type: 'test'
+  ...
+# Subtest: compact and detailed recipes differ; custom families resolve to the matching visual theme
+ok 11 - compact and detailed recipes differ; custom families resolve to the matching visual theme
+  ---
+  duration_ms: 0.169084
+  type: 'test'
+  ...
+# Subtest: every actor override keeps its own body slot, facing and unscaled collision cue
+ok 12 - every actor override keeps its own body slot, facing and unscaled collision cue
+  ---
+  duration_ms: 0.306375
+  type: 'test'
+  ...
+# Subtest: history is bounded and reset removes old headings; published frames cannot mutate history
+ok 13 - history is bounded and reset removes old headings; published frames cannot mutate history
+  ---
+  duration_ms: 0.71025
+  type: 'test'
+  ...
+# Subtest: trail core and head remain visible with reduced effects; animated packet stays on the cut
+ok 14 - trail core and head remain visible with reduced effects; animated packet stays on the cut
+  ---
+  duration_ms: 0.324791
+  type: 'test'
+  ...
+# Subtest: capture pulse touches only newly secured cells and is absent for reduced motion
+ok 15 - capture pulse touches only newly secured cells and is absent for reduced motion
+  ---
+  duration_ms: 0.132125
+  type: 'test'
+  ...
+# Subtest: integrated renderer animates observed actors and capture effects without changing replay authority
+ok 16 - integrated renderer animates observed actors and capture effects without changing replay authority
+  ---
+  duration_ms: 19.003708
+  type: 'test'
+  ...
+# Subtest: prepared player rotor paths visibly advance and hold on pause/reduced effects at 240px
+ok 17 - prepared player rotor paths visibly advance and hold on pause/reduced effects at 240px
+  ---
+  duration_ms: 11.252834
+  type: 'test'
+  ...
+# Subtest: prepared player rotor paths visibly advance and hold on pause/reduced effects at 390px
+ok 18 - prepared player rotor paths visibly advance and hold on pause/reduced effects at 390px
+  ---
+  duration_ms: 8.050416
+  type: 'test'
+  ...
+# Subtest: prepared player rotor paths visibly advance and hold on pause/reduced effects at 1152px
+ok 19 - prepared player rotor paths visibly advance and hold on pause/reduced effects at 1152px
+  ---
+  duration_ms: 5.988
+  type: 'test'
+  ...
+# Subtest: explicit original player pixels never inherit the prepared snapshot rotor rig
+ok 20 - explicit original player pixels never inherit the prepared snapshot rotor rig
+  ---
+  duration_ms: 4.300958
+  type: 'test'
+  ...
+# Subtest: foundation craft keeps its contact cue without detached corner brackets
+ok 21 - foundation craft keeps its contact cue without detached corner brackets
+  ---
+  duration_ms: 156.34825
+  type: 'test'
+  ...
+# Subtest: legacy: all four player rigs keep a readable bounded size across phone and desktop canvases
+ok 22 - legacy: all four player rigs keep a readable bounded size across phone and desktop canvases
+  ---
+  duration_ms: 23.488208
+  type: 'test'
+  ...
+# Subtest: wide: all four player rigs keep a readable bounded size across phone and desktop canvases
+ok 23 - wide: all four player rigs keep a readable bounded size across phone and desktop canvases
+  ---
+  duration_ms: 28.729
+  type: 'test'
+  ...
+# Subtest: custom player art retains its aspect ratio without detached rotor overlays or enemy-slot coupling
+ok 24 - custom player art retains its aspect ratio without detached rotor overlays or enemy-slot coupling
+  ---
+  duration_ms: 1.301375
+  type: 'test'
+  ...
+# Subtest: player scale is cosmetic, independent of actor scale, and bounded even on very small canvases
+ok 25 - player scale is cosmetic, independent of actor scale, and bounded even on very small canvases
+  ---
+  duration_ms: 2.727834
+  type: 'test'
+  ...
+# Subtest: the larger player keeps direction response and animated rotors while pause and reduced effects freeze their clocks
+ok 26 - the larger player keeps direction response and animated rotors while pause and reduced effects freeze their clocks
+  ---
+  duration_ms: 2.5325
+  type: 'test'
+  ...
+# Subtest: explicit display width supports detached textures while invalid widths preserve direct-canvas and logical fallbacks
+ok 27 - explicit display width supports detached textures while invalid widths preserve direct-canvas and logical fallbacks
+  ---
+  duration_ms: 6.038
+  type: 'test'
+  ...
+# Subtest: Team pilot 1 paints spinning blades and freezes them when paused, downed or reduced
+ok 28 - Team pilot 1 paints spinning blades and freezes them when paused, downed or reduced
+  ---
+  duration_ms: 15.6465
+  type: 'test'
+  ...
+# Subtest: Team pilot 2 paints spinning blades and freezes them when paused, downed or reduced
+ok 29 - Team pilot 2 paints spinning blades and freezes them when paused, downed or reduced
+  ---
+  duration_ms: 2.266834
+  type: 'test'
+  ...
+# Subtest: Team rendered 2-blade hubs keep a forward bounded phase at 4FPS
+ok 30 - Team rendered 2-blade hubs keep a forward bounded phase at 4FPS
+  ---
+  duration_ms: 2.357167
+  type: 'test'
+  ...
+# Subtest: Team rendered 2-blade hubs keep a forward bounded phase at 30FPS
+ok 31 - Team rendered 2-blade hubs keep a forward bounded phase at 30FPS
+  ---
+  duration_ms: 6.909458
+  type: 'test'
+  ...
+# Subtest: Team rendered 2-blade hubs keep a forward bounded phase at 60FPS
+ok 32 - Team rendered 2-blade hubs keep a forward bounded phase at 60FPS
+  ---
+  duration_ms: 11.970209
+  type: 'test'
+  ...
+# Subtest: Team rendered 2-blade hubs keep a forward bounded phase at 120FPS
+ok 33 - Team rendered 2-blade hubs keep a forward bounded phase at 120FPS
+  ---
+  duration_ms: 19.006583
+  type: 'test'
+  ...
+# Subtest: Team rendered 3-blade hubs keep a forward bounded phase at 4FPS
+ok 34 - Team rendered 3-blade hubs keep a forward bounded phase at 4FPS
+  ---
+  duration_ms: 1.481084
+  type: 'test'
+  ...
+# Subtest: Team rendered 3-blade hubs keep a forward bounded phase at 30FPS
+ok 35 - Team rendered 3-blade hubs keep a forward bounded phase at 30FPS
+  ---
+  duration_ms: 5.511625
+  type: 'test'
+  ...
+# Subtest: Team rendered 3-blade hubs keep a forward bounded phase at 60FPS
+ok 36 - Team rendered 3-blade hubs keep a forward bounded phase at 60FPS
+  ---
+  duration_ms: 9.937459
+  type: 'test'
+  ...
+# Subtest: Team rendered 3-blade hubs keep a forward bounded phase at 120FPS
+ok 37 - Team rendered 3-blade hubs keep a forward bounded phase at 120FPS
+  ---
+  duration_ms: 18.226
+  type: 'test'
+  ...
+# Subtest: Team rendered 4-blade hubs keep a forward bounded phase at 4FPS
+ok 38 - Team rendered 4-blade hubs keep a forward bounded phase at 4FPS
+  ---
+  duration_ms: 1.528416
+  type: 'test'
+  ...
+# Subtest: Team rendered 4-blade hubs keep a forward bounded phase at 30FPS
+ok 39 - Team rendered 4-blade hubs keep a forward bounded phase at 30FPS
+  ---
+  duration_ms: 5.233667
+  type: 'test'
+  ...
+# Subtest: Team rendered 4-blade hubs keep a forward bounded phase at 60FPS
+ok 40 - Team rendered 4-blade hubs keep a forward bounded phase at 60FPS
+  ---
+  duration_ms: 8.78025
+  type: 'test'
+  ...
+# Subtest: Team rendered 4-blade hubs keep a forward bounded phase at 120FPS
+ok 41 - Team rendered 4-blade hubs keep a forward bounded phase at 120FPS
+  ---
+  duration_ms: 16.667541
+  type: 'test'
+  ...
+# Subtest: tuned Team revisions keep both prepared pilot bodies and every extra keeper visible
+ok 42 - tuned Team revisions keep both prepared pilot bodies and every extra keeper visible
+  ---
+  duration_ms: 7.979833
+  type: 'test'
+  ...
+# Subtest: six approved source frames retain exact IDs, revisions, PNG hashes and dimensions
+ok 43 - six approved source frames retain exact IDs, revisions, PNG hashes and dimensions
+  ---
+  duration_ms: 5.7665
+  type: 'test'
+  ...
+# Subtest: explicit Team roles reuse prepared slots without changing actual types or run state
+ok 44 - explicit Team roles reuse prepared slots without changing actual types or run state
+  ---
+  duration_ms: 1.2225
+  type: 'test'
+  ...
+# Subtest: Team prepared enemies reuse catalog surface motion without loading another body image
+ok 45 - Team prepared enemies reuse catalog surface motion without loading another body image
+  ---
+  duration_ms: 1.017375
+  type: 'test'
+  ...
+# Subtest: qualified Team roamers borrow the tracked body and its bounded motion treatment
+ok 46 - qualified Team roamers borrow the tracked body and its bounded motion treatment
+  ---
+  duration_ms: 18.401625
+  type: 'test'
+  ...
+# Subtest: Team 240px hybrid source detail and CSS body size stay separate from contact radii
+ok 47 - Team 240px hybrid source detail and CSS body size stay separate from contact radii
+  ---
+  duration_ms: 1.065667
+  type: 'test'
+  ...
+# Subtest: Team 200px props source detail and CSS body size stay separate from contact radii
+ok 48 - Team 200px props source detail and CSS body size stay separate from contact radii
+  ---
+  duration_ms: 0.895958
+  type: 'test'
+  ...
+# Subtest: Team 1152px hybrid source detail and CSS body size stay separate from contact radii
+ok 49 - Team 1152px hybrid source detail and CSS body size stay separate from contact radii
+  ---
+  duration_ms: 0.941208
+  type: 'test'
+  ...
+# Subtest: Team 479px hybrid source detail and CSS body size stay separate from contact radii
+ok 50 - Team 479px hybrid source detail and CSS body size stay separate from contact radii
+  ---
+  duration_ms: 0.840791
+  type: 'test'
+  ...
+# Subtest: Team 1152px microtile source detail and CSS body size stay separate from contact radii
+ok 51 - Team 1152px microtile source detail and CSS body size stay separate from contact radii
+  ---
+  duration_ms: 0.799125
+  type: 'test'
+  ...
+# Subtest: Team 640px props source detail and CSS body size stay separate from contact radii
+ok 52 - Team 640px props source detail and CSS body size stay separate from contact radii
+  ---
+  duration_ms: 0.841875
+  type: 'test'
+  ...
+# Subtest: real successive ticks animate pilots; pause and repeated paints preserve every cosmetic clock
+ok 53 - real successive ticks animate pilots; pause and repeated paints preserve every cosmetic clock
+  ---
+  duration_ms: 3.337833
+  type: 'test'
+  ...
+# Subtest: heading follows observed movement even when stale enemy velocity points elsewhere
+ok 54 - heading follows observed movement even when stale enemy velocity points elsewhere
+  ---
+  duration_ms: 1.0085
+  type: 'test'
+  ...
+# Subtest: reduced motion and zero motion scale keep poses static while real movement still advances
+ok 55 - reduced motion and zero motion scale keep poses static while real movement still advances
+  ---
+  duration_ms: 3.966291
+  type: 'test'
+  ...
+# Subtest: downed pilots freeze cosmetic motion and fresh attempts or replacement snapshots reset it
+ok 56 - downed pilots freeze cosmetic motion and fresh attempts or replacement snapshots reset it
+  ---
+  duration_ms: 1.23125
+  type: 'test'
+  ...
+# Subtest: prepared image and pivot geometry are borrowed once; reset and replacement never close shared images
+ok 57 - prepared image and pivot geometry are borrowed once; reset and replacement never close shared images
+  ---
+  duration_ms: 1.013833
+  type: 'test'
+  ...
+# Subtest: absent prepared roles keep truthful geometric fallback and failed snapshot reads leave old art usable
+ok 58 - absent prepared roles keep truthful geometric fallback and failed snapshot reads leave old art usable
+  ---
+  duration_ms: 0.935125
+  type: 'test'
+  ...
+# Subtest: actual painter places body images below 1/2, down/grace, lock/recovery/slow and stronghold cues (current slots)
+ok 59 - actual painter places body images below 1/2, down/grace, lock/recovery/slow and stronghold cues (current slots)
+  ---
+  duration_ms: 7.414084
+  type: 'test'
+  ...
+# Subtest: actual painter places body images below 1/2, down/grace, lock/recovery/slow and stronghold cues (optional slots absent)
+ok 60 - actual painter places body images below 1/2, down/grace, lock/recovery/slow and stronghold cues (optional slots absent)
+  ---
+  duration_ms: 5.972792
+  type: 'test'
+  ...
+# Subtest: stronghold boss body stays beneath authored anchors and marker labels clear its envelope (current slots)
+ok 61 - stronghold boss body stays beneath authored anchors and marker labels clear its envelope (current slots)
+  ---
+  duration_ms: 1.760458
+  type: 'test'
+  ...
+# Subtest: stronghold boss body stays beneath authored anchors and marker labels clear its envelope (optional slots absent)
+ok 62 - stronghold boss body stays beneath authored anchors and marker labels clear its envelope (optional slots absent)
+  ---
+  duration_ms: 1.387417
+  type: 'test'
+  ...
+# Subtest: bright required picture stays exact beneath actors while painting and body detail never change gameplay
+ok 63 - bright required picture stays exact beneath actors while painting and body detail never change gameplay
+  ---
+  duration_ms: 22.965625
+  type: 'test'
+  ...
+# Subtest: overlapping actor images cannot cover the final real enemy contact rings
+ok 64 - overlapping actor images cannot cover the final real enemy contact rings
+  ---
+  duration_ms: 1.562834
+  type: 'test'
+  ...
+# Subtest: charging hunters keep explicit phase text and slow pattern above their borrowed quad image
+ok 65 - charging hunters keep explicit phase text and slow pattern above their borrowed quad image
+  ---
+  duration_ms: 2.390917
+  type: 'test'
+  ...
+# Subtest: exposed and secured strongholds retain functional labels and anchors over stationary body art (current slots)
+ok 66 - exposed and secured strongholds retain functional labels and anchors over stationary body art (current slots)
+  ---
+  duration_ms: 2.381875
+  type: 'test'
+  ...
+# Subtest: exposed and secured strongholds retain functional labels and anchors over stationary body art (optional slots absent)
+ok 67 - exposed and secured strongholds retain functional labels and anchors over stationary body art (optional slots absent)
+  ---
+  duration_ms: 2.024125
+  type: 'test'
+  ...
+# Subtest: minimum authored Team radius stays exact in the sampled frame and final footprint
+ok 68 - minimum authored Team radius stays exact in the sampled frame and final footprint
+  ---
+  duration_ms: 3.251917
+  type: 'test'
+  ...
+# Subtest: actual rescue of player 1 has one legible cue (current progress)
+ok 69 - actual rescue of player 1 has one legible cue (current progress)
+  ---
+  duration_ms: 51.151333
+  type: 'test'
+  ...
+# Subtest: actual rescue of player 1 has one legible cue (legacy static role)
+ok 70 - actual rescue of player 1 has one legible cue (legacy static role)
+  ---
+  duration_ms: 40.478458
+  type: 'test'
+  ...
+# Subtest: actual rescue of player 2 has one legible cue (current progress)
+ok 71 - actual rescue of player 2 has one legible cue (current progress)
+  ---
+  duration_ms: 37.845042
+  type: 'test'
+  ...
+# Subtest: actual rescue of player 2 has one legible cue (legacy static role)
+ok 72 - actual rescue of player 2 has one legible cue (legacy static role)
+  ---
+  duration_ms: 34.833042
+  type: 'test'
+  ...
+# Subtest: seven exact image objects paint before retained heading badges and physical contact rings
+ok 73 - seven exact image objects paint before retained heading badges and physical contact rings
+  ---
+  duration_ms: 2.126083
+  type: 'test'
+  ...
+# Subtest: surface marks remain contained at16/24/32 and use held frame clocks under pause/freeze
+ok 74 - surface marks remain contained at16/24/32 and use held frame clocks under pause/freeze
+  ---
+  duration_ms: 0.689917
+  type: 'test'
+  ...
+# Subtest: travel and idle treatments use separate clocks; baked rotors and relay have no false parts
+ok 75 - travel and idle treatments use separate clocks; baked rotors and relay have no false parts
+  ---
+  duration_ms: 0.135833
+  type: 'test'
+  ...
+# Subtest: actual painted surface accents retain forward sampling at 10 FPS
+ok 76 - actual painted surface accents retain forward sampling at 10 FPS
+  ---
+  duration_ms: 19.629125
+  type: 'test'
+  ...
+# Subtest: actual painted surface accents retain forward sampling at 30 FPS
+ok 77 - actual painted surface accents retain forward sampling at 30 FPS
+  ---
+  duration_ms: 8.572083
+  type: 'test'
+  ...
+# Subtest: actual painted surface accents retain forward sampling at 60 FPS
+ok 78 - actual painted surface accents retain forward sampling at 60 FPS
+  ---
+  duration_ms: 8.014583
+  type: 'test'
+  ...
+# Subtest: actual painted surface accents retain forward sampling at 120 FPS
+ok 79 - actual painted surface accents retain forward sampling at 120 FPS
+  ---
+  duration_ms: 8.104042
+  type: 'test'
+  ...
+# Subtest: surface sampling supports every admitted rate through the exact catalog bound
+ok 80 - surface sampling supports every admitted rate through the exact catalog bound
+  ---
+  duration_ms: 1.722125
+  type: 'test'
+  ...
+# Subtest: surface clocks hold through pause, freeze, stun, reduced effects and background return
+ok 81 - surface clocks hold through pause, freeze, stun, reduced effects and background return
+  ---
+  duration_ms: 1.764459
+  type: 'test'
+  ...
+# Subtest: stationary surface travel stays still while its independent idle accents continue
+ok 82 - stationary surface travel stays still while its independent idle accents continue
+  ---
+  duration_ms: 0.639542
+  type: 'test'
+  ...
+# Subtest: legacy direct frames preserve finite clocks and missing/nonfinite clocks cannot paint NaN
+ok 83 - legacy direct frames preserve finite clocks and missing/nonfinite clocks cannot paint NaN
+  ---
+  duration_ms: 0.166667
+  type: 'test'
+  ...
+# Subtest: the real prepared BoardPainter retains the original image and bounded surface motion without core changes
+ok 84 - the real prepared BoardPainter retains the original image and bounded surface motion without core changes
+  ---
+  duration_ms: 17.3
+  type: 'test'
+  ...
+# Subtest: non-surface FPV body, gait, rotor, badge and contact command streams stay unchanged
+ok 85 - non-surface FPV body, gait, rotor, badge and contact command streams stay unchanged
+  ---
+  duration_ms: 4.816208
+  type: 'test'
+  ...
+1..85
+# tests 85
+# suites 0
+# pass 85
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 645.992167

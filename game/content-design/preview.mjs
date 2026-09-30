@@ -36,10 +36,6 @@ export function prepareContentPreview(
   const capture = inspectCaptureSnapshot(run, { trailCells });
   let scenario = null;
   if (theme) {
-    if (manifest.level.classic?.combatPatrols?.enabled)
-      throw new Error(
-        'Enabled combat gameplay preview requires qualified actor/projectile presentation. Use static inspection or explicitly disable combat in a new draft edition.',
-      );
     if (mode !== 'solo')
       throw new Error(
         'Only Solo has a Studio gameplay preview; Team and paired-race launches are not substituted.',

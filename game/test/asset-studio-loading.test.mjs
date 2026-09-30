@@ -6,7 +6,7 @@ import { drawAssetPreview } from '../../authoring/asset-studio/preview.mjs';
 import { createDefaultThemeBundle } from '../presentation/catalog.mjs';
 import { resolvePresentation } from '../presentation/model.mjs';
 import { exportThemeBundle, importThemeBundle } from '../presentation/bundle.mjs';
-import { setLocale } from '../i18n/index.mjs';
+import { setLocale, t as translate } from '../i18n/index.mjs';
 
 const deferred = () => {
   let resolve, reject;
@@ -187,8 +187,9 @@ function previewBoundary(t) {
     cancelButton,
     label: () => 'Draft preview',
   };
-  const draw = () => drawAssetPreview(surface, slot, asset, resolved, bytes, settings);
-  return { doc, surface, target, cancelButton, bytes, draw };
+  const draw = (candidate = asset) =>
+    drawAssetPreview(surface, slot, candidate, resolved, bytes, settings);
+  return { doc, surface, target, cancelButton, bytes, settings, draw };
 }
 
 test('preview labels precede decode; superseded bitmaps close without replacing the newer canvas or status', async (t) => {
@@ -259,4 +260,58 @@ test('Stop waiting and retry preserve preview ownership through late success and
   await cancelButton.onclick();
   assert.equal(target.dataset.state, 'ready');
   assert.equal(surface.children[0].tagName, 'CANVAS');
+});
+
+test('callback preview labels and completed status follow locale without another decode or repaint', async (context) => {
+  context.after(() => setLocale('en', { persist: false }));
+  const { surface, target, bytes, settings, draw } = previewBoundary(context);
+  settings.label = () => translate('tools:savedPreview');
+  const pending = deferred();
+  let decoded = 0;
+  globalThis.createImageBitmap = () => {
+    decoded++;
+    return pending.promise;
+  };
+  const rendering = draw();
+  assert.match(label(target), /^Saved preview: /);
+  assert.doesNotMatch(label(target), /=>|tools:/);
+  setLocale('uk', { persist: false });
+  assert.ok(label(target).startsWith(`${translate('tools:savedPreview')}: `));
+  pending.resolve({ close() {} });
+  await rendering;
+  const canvas = surface.children[0];
+  assert.equal(
+    label(target),
+    translate('tools:studio.preview.status', {
+      label: translate('tools:savedPreview'),
+      message: translate('common:status.ready'),
+    }),
+  );
+  setLocale('en', { persist: false });
+  assert.equal(label(target), 'Saved preview: Ready');
+  assert.equal(surface.children[0], canvas);
+  assert.equal(decoded, 1);
+  assert.equal(await bytes.get('fixture').text(), 'unchanged-original');
+  surface.previewCleanup();
+});
+
+test('default preview label and no-asset outcome stay localized after completion', async (context) => {
+  context.after(() => setLocale('en', { persist: false }));
+  const { surface, target, cancelButton, settings, draw } = previewBoundary(context);
+  delete settings.label;
+  await draw(null);
+  assert.equal(label(target), 'Asset preview: no asset bound.');
+  const specimen = surface.children[0];
+  setLocale('uk', { persist: false });
+  assert.equal(
+    label(target),
+    translate('tools:studio.preview.status', {
+      label: translate('tools:assetPreview'),
+      message: translate('tools:noAssetBound'),
+    }),
+  );
+  assert.doesNotMatch(label(target), /=>|tools:/);
+  assert.equal(surface.children[0], specimen);
+  assert.equal(cancelButton.hidden, true);
+  surface.previewCleanup();
 });

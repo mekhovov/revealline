@@ -1,0 +1,206 @@
+{
+  "format": "revealline.reference-inventory.v1",
+  "reviewedAt": "2026-09-28",
+  "directory": "docs/research/drones-examples",
+  "records": [
+    {
+      "file": "EMJ A-22.jpg",
+      "bytes": 5777085,
+      "sha256": "c6913ad25190e2725811793cf42f92aca7c77d39ded97395247079bd6b2add2c",
+      "usage": "reference-only",
+      "visualInspection": "all22 inspected with view_image",
+      "incorporatedPixels": false,
+      "license": "not established"
+    },
+    {
+      "file": "EMJ ATACMS.jpg",
+      "bytes": 2089846,
+      "sha256": "63c33a4598ac42ad38a59e6cc84d96ed56963bfc0301e663d22187df91d7c23f",
+      "usage": "reference-only",
+      "visualInspection": "all22 inspected with view_image",
+      "incorporatedPixels": false,
+      "license": "not established"
+    },
+    {
+      "file": "EMJ Geran-3.jpg",
+      "bytes": 1889466,
+      "sha256": "72dd84b4f58a6a70d74a43f7e26f6f175c7bfe602976f15a78f3ec742049525e",
+      "usage": "reference-only",
+      "visualInspection": "all22 inspected with view_image",
+      "incorporatedPixels": false,
+      "license": "not established"
+    },
+    {
+      "file": "EMJ Geran-4.jpg",
+      "bytes": 12767670,
+      "sha256": "efe06821d6f10892d05bb2dea88dcd726db51b110c34caa22ea2a4f982b48583",
+      "usage": "reference-only",
+      "visualInspection": "all22 inspected with view_image",
+      "incorporatedPixels": false,
+      "license": "not established"
+    },
+    {
+      "file": "EMJ Gerbera.jpg",
+      "bytes": 12974580,
+      "sha256": "d1d4af496994426f78e40b6dfd6bc5f5d9beb60bd6e9c869bd41cf6b12d4600d",
+      "usage": "reference-only",
+      "visualInspection": "all22 inspected with view_image",
+      "incorporatedPixels": false,
+      "license": "not established"
+    },
+    {
+      "file": "EMJ ISKANDER-K.jpg",
+      "bytes": 1923909,
+      "sha256": "f65ec9a6e30c7abda41f40878631cd0f0eba5e7c174699868f3469d5258e2e66",
+      "usage": "reference-only",
+      "visualInspection": "all22 inspected with view_image",
+      "incorporatedPixels": false,
+      "license": "not established"
+    },
+    {
+      "file": "EMJ ISKANDER-M.jpg",
+      "bytes": 1998089,
+      "sha256": "f04422a9dd2b5024865f1e1564f79d3bbc882f3e4b081fa85b0c582493e62e76",
+      "usage": "reference-only",
+      "visualInspection": "all22 inspected with view_image",
+      "incorporatedPixels": false,
+      "license": "not established"
+    },
+    {
+      "file": "EMJ MAVIC3.jpg",
+      "bytes": 1754457,
+      "sha256": "39071b52af6f0c2a1dc12f3fa05368eb85618fcdbcca33b387c20c0b1d5a08b3",
+      "usage": "reference-only",
+      "visualInspection": "all22 inspected with view_image",
+      "incorporatedPixels": false,
+      "license": "not established"
+    },
+    {
+      "file": "EMJ MIRAGE 2000-5F.jpg",
+      "bytes": 2449386,
+      "sha256": "b363f269bd3c2715aac44116b6ef3e06bf53f52eea87cbb0baa1cf83ae66e3eb",
+      "usage": "reference-only",
+      "visualInspection": "all22 inspected with view_image",
+      "incorporatedPixels": false,
+      "license": "not established"
+    },
+    {
+      "file": "EMJ ORION.jpg",
+      "bytes": 2082861,
+      "sha256": "2acdb2fe68dcf2f85c64e42d8dfa36b136d517ced60453ba753606069463cdba",
+      "usage": "reference-only",
+      "visualInspection": "all22 inspected with view_image",
+      "incorporatedPixels": false,
+      "license": "not established"
+    },
+    {
+      "file": "EMJ Vampire.jpg",
+      "bytes": 1962673,
+      "sha256": "2a6daef1df081888a5db9bc08f4cebe9ea6ea399c23ffac9d69b618a4cb16a66",
+      "usage": "reference-only",
+      "visualInspection": "all22 inspected with view_image",
+      "incorporatedPixels": false,
+      "license": "not established"
+    },
+    {
+      "file": "EMJ X-22.jpg",
+      "bytes": 1949718,
+      "sha256": "9c1d465b760141471dc0462b37d9cc7cd7f241887573869dcbcc8efde53104a5",
+      "usage": "reference-only",
+      "visualInspection": "all22 inspected with view_image",
+      "incorporatedPixels": false,
+      "license": "not established"
+    },
+    {
+      "file": "EMJ X-47M2.jpg",
+      "bytes": 5462880,
+      "sha256": "4bf26bd5f8b760cf6d2bbbb2c3709ec3d1ea5b718ca9f1b355ae2e0ccd599a8a",
+      "usage": "reference-only",
+      "visualInspection": "all22 inspected with view_image",
+      "incorporatedPixels": false,
+      "license": "not established"
+    },
+    {
+      "file": "EMJ Zircon.jpg",
+      "bytes": 14777078,
+      "sha256": "68d711c81d8ed6a542b97ff947e8db3a4ec0a77fcdfc5a5c24c99e81fd3d3457",
+      "usage": "reference-only",
+      "visualInspection": "all22 inspected with view_image",
+      "incorporatedPixels": false,
+      "license": "not established"
+    },
+    {
+      "file": "EMJ БАНДЕРОЛЬ.jpg",
+      "bytes": 13982514,
+      "sha256": "98dc135a39b278e41402f28e4d1fd003cb4ba8bb3f1e85c935c24aa103e5c4d6",
+      "usage": "reference-only",
+      "visualInspection": "all22 inspected with view_image",
+      "incorporatedPixels": false,
+      "license": "not established"
+    },
+    {
+      "file": "EMJ МОЛНІЯ.jpg",
+      "bytes": 2224131,
+      "sha256": "39f70cd5b440987c2c01d36ee2866a12e8298175b6a42375e6631433786e1ea1",
+      "usage": "reference-only",
+      "visualInspection": "all22 inspected with view_image",
+      "incorporatedPixels": false,
+      "license": "not established"
+    },
+    {
+      "file": "EMJ ПУ БРСД ОРЕШНІК.jpg",
+      "bytes": 1944856,
+      "sha256": "c2499d3c0a20a304fa11a183a23fb96e811c08fcaf26f9c9eb35fe7f51fc08c4",
+      "usage": "reference-only",
+      "visualInspection": "all22 inspected with view_image",
+      "incorporatedPixels": false,
+      "license": "not established"
+    },
+    {
+      "file": "EMJ ЧЕРНІКА.jpg",
+      "bytes": 1889931,
+      "sha256": "565deb6ebfaaefaf14b3b20e725551fe44a77fdb0ca7487804ecd57d2c9dbe25",
+      "usage": "reference-only",
+      "visualInspection": "all22 inspected with view_image",
+      "incorporatedPixels": false,
+      "license": "not established"
+    },
+    {
+      "file": "FP-1 EMJ.jpg",
+      "bytes": 14356735,
+      "sha256": "199d8a8e1290fdc64973fd551ff9ddf4a8ab4a644fc167c72fa4c51d025aba89",
+      "usage": "reference-only",
+      "visualInspection": "all22 inspected with view_image",
+      "incorporatedPixels": false,
+      "license": "not established"
+    },
+    {
+      "file": "STING EMJ.jpg",
+      "bytes": 13589541,
+      "sha256": "bf58abfdd48d2b15ae3425db523a2bff78e3c3af57c4c49bfa66a7e4b7149157",
+      "usage": "reference-only",
+      "visualInspection": "all22 inspected with view_image",
+      "incorporatedPixels": false,
+      "license": "not established"
+    },
+    {
+      "file": "drone-example-skin.png",
+      "bytes": 7977268,
+      "sha256": "d67ed37652e1a907e82a70db80cdfa6dfca514a10154137e5096f8495c1b85a2",
+      "usage": "reference-only",
+      "visualInspection": "all22 inspected with view_image",
+      "incorporatedPixels": false,
+      "license": "not established"
+    },
+    {
+      "file": "drone_sign.png",
+      "bytes": 5101496,
+      "sha256": "8647556134fe4c46b96429a6d5a83dd0e7c6d7b1575619070fef6ba4e04a2389",
+      "usage": "reference-only",
+      "visualInspection": "all22 inspected with view_image",
+      "incorporatedPixels": false,
+      "license": "not established"
+    }
+  ],
+  "scope": "Supplied stills establish visible shape only; not motion, allegiance, licensing or real-world performance."
+}

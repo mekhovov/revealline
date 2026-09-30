@@ -1,0 +1,166 @@
+{
+  "parent": "e8fcaa365380d1b64a4aab17f83862c3c69793fd",
+  "productionReview": "deferred-not-passed",
+  "files": [
+    {
+      "path": "authoring/asset-studio/artwork-panel.mjs",
+      "bytes": 18551,
+      "sha256": "2433372d264cad615903d9b8889c6f7394ef111e2cb62db9b8bbdf7d2a251e55"
+    },
+    {
+      "path": "authoring/asset-studio/index.html",
+      "bytes": 61210,
+      "sha256": "6aff2b5eb2c6ebfdeb4f88202b0daa8590693ca1907a65f36c2c0888d683de8b"
+    },
+    {
+      "path": "authoring/skills/xonix-asset-creator/SKILL.md",
+      "bytes": 27495,
+      "sha256": "3052a9edcc8f013a086546b3d49b37984e5bc46fcfcf756ebd09d366bbdbd6cb"
+    },
+    {
+      "path": "authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "bytes": 371689,
+      "sha256": "33b16c46991ab9f9ea9b7554816fce38a631936c22700bdb90baf02737f5477e"
+    },
+    {
+      "path": "docs/artwork-collection-packets.md",
+      "bytes": 13440,
+      "sha256": "fa5a124ec0fe83cfb16f356f21dc058a30933d70708cfd68a6e01e4824238c49"
+    },
+    {
+      "path": "docs/character-game-feel-plan.md",
+      "bytes": 35765,
+      "sha256": "116663c1b867569c8ad789a57d9b08e2c25899d7756db98db820c59b8fe74a1b"
+    },
+    {
+      "path": "docs/enemy-guide.md",
+      "bytes": 13117,
+      "sha256": "cf85d4fff5c43c88a7f6f1cb9b32f303bd312c33b8a1545b578f099f7da8aa08"
+    },
+    {
+      "path": "docs/plan-status-2026-09-29.md",
+      "bytes": 21259,
+      "sha256": "411dd49dea74af61e1b1aefa2e918f19eb19eba431e40558021210b882f4daed"
+    },
+    {
+      "path": "game/couch/couch.mjs",
+      "bytes": 176193,
+      "sha256": "b6c5913db5921cbf7331b1c2f9141206cd3dd3940a1d3ef7c172f3aebbb4deb2"
+    },
+    {
+      "path": "game/couch/index.html",
+      "bytes": 42585,
+      "sha256": "ebb0a5b1bcd8d0cb5fbff7f01850d1e3fc7fb9a13a5e8b7a9f570641a69e87ba"
+    },
+    {
+      "path": "game/ui/encounter-help.mjs",
+      "bytes": 2993,
+      "sha256": "f1a50d3c688ced53153da1797cd653fb791c0bf2faa016736753d415ff01308f"
+    },
+    {
+      "path": "game/test/encounter-help.test.mjs",
+      "bytes": 7895,
+      "sha256": "8a034d666079865072937f72db8aadf7c7f083c92fd88be4438235bc49ed1a3a"
+    },
+    {
+      "path": "game/test/couch-encounter-help.test.mjs",
+      "bytes": 11071,
+      "sha256": "02665cd4dd93ac3f52be5037ef42b6a238d94c777f228a9be07383f3083419bc"
+    },
+    {
+      "path": "game/test/artwork-file-handoff.test.mjs",
+      "bytes": 11800,
+      "sha256": "e9234f2ffdc0789ac514c00b169e1b2aa71b8cc02ea023c604bf19cc101cf5c7"
+    },
+    {
+      "path": "game/i18n/catalogs.mjs",
+      "bytes": 983143,
+      "sha256": "cc2e188845d4c8faf087c82678e406d282b118982ce00fdd67086e71b22453c8"
+    },
+    {
+      "path": "game/locales/en/interface.json",
+      "bytes": 431602,
+      "sha256": "adc33a56d88d5c3ff975fc130a12148d56c9ea0a775f340ef94541740a34297f"
+    },
+    {
+      "path": "game/locales/uk/interface.json",
+      "bytes": 704795,
+      "sha256": "0dac3cacf4f9a3e2aecc9f45aa98d64eb2cd775a5dcf9262a84337a048a85639"
+    },
+    {
+      "path": "game/locales/en/tools.json",
+      "bytes": 231618,
+      "sha256": "c9eaadadd58f51e8768e19f4519d9312db69f7a0993d2d9a2d7c851e61ab3973"
+    },
+    {
+      "path": "game/locales/uk/tools.json",
+      "bytes": 385046,
+      "sha256": "36c814241d9e43808244ec889ffc5b695f3b9492ea5436cc70269fdecc3f73dc"
+    },
+    {
+      "path": "docs/verification/actor-batch-17/README.md",
+      "bytes": 4272,
+      "sha256": "6cd10f3af6cabe75c02f6744d936ab4f9b0e9a88f644af541fc91e81f3d64f7d"
+    },
+    {
+      "path": "docs/verification/actor-batch-17/artwork-focused.tap",
+      "bytes": 9196,
+      "sha256": "ae07c36b701dcec6d27dc1457a51dd4bd654f7e3eb84874af6570195d631e21c"
+    },
+    {
+      "path": "docs/verification/actor-batch-17/exact-file-handoff.png",
+      "bytes": 103411,
+      "sha256": "4508c7e9469ca38a2bb493d8cd89171aea6925fc6a7cda0b315934d2eda5724b"
+    },
+    {
+      "path": "docs/verification/actor-batch-17/neighbor-shell-head.tap",
+      "bytes": 1441,
+      "sha256": "60c600eb5c4611035966b98015005a7534b788c4965ac80244db53f8fe47e2d8"
+    },
+    {
+      "path": "docs/verification/actor-batch-17/neighbor-shell.tap",
+      "bytes": 6509,
+      "sha256": "34c71c44f259fa88fda352dbf40ebffe3c6136b327d14df72ae67fc3a0b41e61"
+    },
+    {
+      "path": "docs/verification/actor-batch-17/versus-encounter-help-baseline-loader.mjs",
+      "bytes": 535,
+      "sha256": "44a6d8f81e679780c54884f29f09f41e66dfbc869af0cad0f1647e44487b2c70"
+    },
+    {
+      "path": "docs/verification/actor-batch-17/versus-focused.tap",
+      "bytes": 3874,
+      "sha256": "af7ebfcc372c5c205946e7592be54b889d4366fe1cf0fe6d3a9d483cc4f2ffb0"
+    },
+    {
+      "path": "docs/verification/actor-batch-17/versus-initial-red.tap",
+      "bytes": 1011,
+      "sha256": "8cc4ab28c48065ec276ab4645ec0f122b0a1efb24d939c479e356abb29f0e3c1"
+    },
+    {
+      "path": "docs/verification/actor-batch-17/versus-reading-baseline-bounded.tap",
+      "bytes": 468,
+      "sha256": "e189b1494de4bb36081197b87dc680d9bf81b3e94bac4f0dd5705fe3f96cba27"
+    },
+    {
+      "path": "docs/verification/actor-batch-17/versus-reading-baseline-diagnostic.tap",
+      "bytes": 1607,
+      "sha256": "48e40521c7b5953b0a2a9eeb1bdca2d6b79298a6dd5798960a1162741be77107"
+    },
+    {
+      "path": "docs/verification/actor-batch-17/versus-reading-current-bounded.tap",
+      "bytes": 81,
+      "sha256": "a638b10cc1143512724493edad217d07ee7e4440eae86bf093084dbb71d694e7"
+    },
+    {
+      "path": "docs/verification/actor-batch-17/versus-reading-current-diagnostic.tap",
+      "bytes": 1526,
+      "sha256": "9b9330c463ce6d6936bfc41f7a11804944421e3544a1e4f2fc94bbea34b403a3"
+    },
+    {
+      "path": "docs/verification/actor-batch-17/versus-reading-diagnostic-loader.mjs",
+      "bytes": 480,
+      "sha256": "ad4045fd10b67094d0be995b450bdf4f8ec906d53594650a7ef0e42cbcf74fad"
+    }
+  ]
+}

@@ -49,3 +49,81 @@ validated file metadata and reject conflicting facts for one hash. Do not raise
 budgets, compress opaque metadata, truncate history or edit evidence to pass.
 Check the real current collection and byte-identical import/export round trips;
 record older-reader compatibility separately from production/art approval.
+
+## Compare an artwork candidate with its retained source
+
+Import the verified `.rlart` packet and select the declared board derivative.
+Use Compare retained parent, then Fit whole image and Native pixels. Record both
+exact IDs, dimensions and hashes. Confirm only the declared parent is shown;
+compare EN/UK labels, selection changes and cancellation without changing the
+collection or exporting altered originals. Retain failed decode evidence. This
+prepares a later art decision; when production review is deferred, leave the
+candidate unapproved and continue independent implementation.
+
+## Qualify an existing optional encounter through play
+
+Use the unchanged authored mission and its exact legal route, recipes, seed,
+difficulty and steering. Launch its isolated Solo practice through the existing
+preview admission and drive ordinary input. Pause during warning, complete the
+mission, export and verify the actual replay, then deliberately Retry. Compare
+historical checkpoints and every recorded direction; retain artwork/setup and
+assert zero campaign/profile writes. Translate a route command after capture
+into a fresh key gesture where required, without adding ticks or bypassing held
+input safety. Distinguish capture cancellation, ram removal and fired-shot evasion
+in the findings. Preserve fixture errors separately from product failures. Follow
+[the Sentry example](../../docs/verification/actor-batch-19/README.md); this source
+qualification does not approve art, human fairness, hardware or a release.
+
+## Keep live Guide translations attached to the current lesson
+
+Translate player-facing threat advice, row labels and practice instructions through
+existing locale authorities, including the actual visible state names. Change EN/UK
+while reading a selected lesson and while its practice child is active. Preserve
+the same text nodes, selection, focus, child URL/window, handoff and complete paused
+checkpoint; translation must not recreate or resume a lesson. Regenerate only the
+required catalog and verify its exact bytes and placeholders. Keep existing
+messages and authored scenario identities unchanged, and retain original failures.
+
+## Preserve a controller escape from failed practice
+
+Launch the real admitted practice child and fail its boot before readiness.
+Observe only that owned generation, URL and Window with the existing readiness
+helper. Keep slow loading and ready-child recovery independent. Offer the existing
+Return action with localized status; move focus only while foreground and still
+owned by the same failed Document. Test hidden and visible-blurred returns, newer
+focus, stale navigation, close/dispose and held Confirm. Preserve exact paused
+state, handoff bytes and the return-token protocol. Keep valid failure evidence,
+fixture corrections and physical-device limitations separate.
+
+## Keep procedural community propellers consistent
+
+Use the shared alias-safe rotor phase for registered quad body recipes. Preserve
+motor anchors, radii, static geometry and phase offsets; derive the established
+props-in diagonal pair from actual hub quadrants and mirror local blade handedness
+once. Compare actual transformed blade vertices at 10/30/60/120 FPS, paused/frozen
+and reduced states. Keep missing-clock fallback finite and contact/role overlays
+unchanged. Verify a real company-theme BoardPainter and ordinary play separately
+from native low-frame-rate motion or art approval. Do not infer direction from a
+manufacturer name or create another phase multiplier.
+
+## Current non-rotor surface-motion correction
+
+For an existing prepared enemy, inspect wheel/tread glints and phase sweeps at
+10/30/60/120 FPS. Use the shared sampled surface clocks and admitted rate limit;
+never multiply ordinary travel/body clocks into a repeating accent that appears
+to reverse. Preserve the accepted body, part rectangles/rates, movement and
+contact cues. Separate actual painter-command checks from native pixel approval,
+and keep original artwork unchanged while production review is deferred.
+
+## Preserve real recovery boundaries
+
+Collect an authored enemy-freeze pickup through the real Solo host, save, close
+the page and Continue using the same persisted pack/art stores. Check the exact
+replayed state, prepared image identity and frozen pose before crossing the core
+expiry tick; do not require cosmetic clocks to persist across a new page. For
+Sentry contact, keep the authored three lives and use legal directions into an
+actual warned shot. Verify impact identity, retained territory, cleared trail,
+paused recovery, fresh-input resumption and exact nonterminal replay. Preserve
+fixture diagnostics separately from runtime failures and report modeled browser
+boundaries plainly. These checks do not qualify production artwork or human
+fairness.

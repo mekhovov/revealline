@@ -247,5 +247,10 @@
   "counts.videos_one": "{{count}} відео",
   "counts.videos_few": "{{count}} відео",
   "counts.videos_many": "{{count}} відео",
-  "counts.videos_other": "{{count}} відео"
+  "counts.videos_other": "{{count}} відео",
+  "preferences.enemyRemains": "Показувати уламки ворогів",
+  "preferences.enemyRemainsHint": "Показувати знищених додаткових ворогів, де це підтримується. Попередження, постріли й короткі ефекти влучань залишаються видимими.",
+  "preferences.retryEncounterSave": "Повторити збереження",
+  "preferences.encounterSessionOnly": "Показ уламків змінено лише для цього сеансу; збереження тут вимкнено.",
+  "preferences.encounterSaveFailed": "Показ уламків змінено лише для цього сеансу. Не вдалося зберегти вибір; наявні налаштування залишено без змін."
 }

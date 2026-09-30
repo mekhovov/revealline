@@ -443,6 +443,14 @@ body.field-kit {
 #geometry-panel > label {
   margin-top: 16px;
 }
+#rotor-controls {
+  margin-bottom: 20px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid var(--fk-line);
+}
+#rotor-controls :is(input, select) {
+  min-height: 44px;
+}
 .provenance-fields {
   margin-top: 22px;
 }
@@ -977,4 +985,75 @@ body.field-kit[data-effects='reduced'] .preview-surface {
     grid-template-columns: minmax(0, 1fr);
     justify-items: start;
   }
+}
+/* Source artwork packets are independent of the saved presentation workspace. */
+.artwork-collection-panel {
+  margin: 12px;
+  padding: 12px;
+  border: 1px solid var(--line, #425563);
+}
+.artwork-collection-panel summary,
+.artwork-collection-panel button,
+.artwork-collection-panel select,
+.artwork-collection-panel input {
+  min-height: 44px;
+}
+.artwork-collection-controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: end;
+  gap: 12px;
+}
+.artwork-collection-controls label {
+  display: grid;
+  gap: 4px;
+  min-width: 0;
+  max-width: 100%;
+}
+.artwork-collection-controls input,
+.artwork-collection-controls select {
+  min-width: 0;
+  max-width: 100%;
+}
+.artwork-source-preview:empty {
+  display: none;
+}
+.artwork-source-preview {
+  height: min(50dvh, 420px);
+  max-width: 100%;
+  overflow: auto;
+  background: #070b12;
+}
+.artwork-source-preview img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  image-rendering: auto;
+}
+.artwork-source-preview img[data-medium='pixel-art'] {
+  image-rendering: pixelated;
+}
+.artwork-source-provenance {
+  overflow-wrap: anywhere;
+}
+.artwork-review-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 360px), 1fr));
+  gap: 16px;
+}
+.artwork-review-grid figure {
+  margin: 0;
+  min-width: 0;
+}
+.artwork-review-grid figcaption {
+  overflow-wrap: anywhere;
+  margin-bottom: 8px;
+}
+.artwork-review-grid[data-view='native'] .artwork-source-preview img {
+  width: auto;
+  height: auto;
+  max-width: none;
+  max-height: none;
+  object-fit: initial;
+  display: block;
 }

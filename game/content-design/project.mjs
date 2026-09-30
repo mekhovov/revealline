@@ -16,7 +16,6 @@ import {
   journeyPreset,
   journeyPressureTiming,
   freezeDesign,
-  COMBAT_ACTOR_CATALOG,
 } from './catalogs.mjs';
 
 const compiledProjects = new WeakSet();
@@ -259,8 +258,9 @@ export function compileContentProject(source) {
         'Mission combat requires an explicit version and enabled boolean.',
       );
       required(
-        actors.id === COMBAT_ACTOR_CATALOG.id,
-        'Mission combat requires the v8 actor catalogue.',
+        actors.roles['optional-scout']?.combatRole === 'scout' &&
+          actors.roles['optional-sentry']?.combatRole === 'sentry',
+        'Mission combat requires a registered optional-combat actor catalogue.',
       );
       required(
         !mission.modes.includes('team'),
@@ -522,7 +522,7 @@ export function resolveMission(project, id, { mode = 'solo', difficulty = 'stand
               severity: 'warning',
               code: 'candidate-combat-not-presentation-qualified',
               message:
-                'Optional combat authoring is a test candidate. Live actor/projectile presentation, player preferences and human qualification are pending.',
+                'Optional encounters can be tested in Solo practice. Production presentation, player preferences and human qualification are pending.',
             },
           ]
         : []),

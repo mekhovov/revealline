@@ -1238,6 +1238,54 @@ h1 {
   }
 }
 
+.rotor-editor {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  border-top: 1px solid var(--line);
+  padding-top: 12px;
+}
+.rotor-editor[hidden] {
+  display: none;
+}
+.rotor-editor textarea {
+  box-sizing: border-box;
+  width: 100%;
+  resize: vertical;
+  font: inherit;
+}
+.rotor-editor input[type='number'],
+.rotor-editor select,
+.rotor-editor button,
+.rotor-editor .check,
+.rotor-editor summary {
+  min-height: 44px;
+}
+.rotor-editor input[type='number'] {
+  box-sizing: border-box;
+  width: 100%;
+  min-width: 0;
+  margin-top: 6px;
+  padding: 8px;
+  color: var(--fk-text, var(--ink));
+  background: var(--fk-panel, var(--paper));
+  border: 1px solid var(--fk-line, var(--line));
+}
+.rotor-editor textarea:focus-visible,
+.rotor-editor summary:focus-visible {
+  outline: 3px solid #4b849d;
+  outline-offset: 4px;
+}
+.rotor-editor-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.rotor-editor summary {
+  cursor: pointer;
+  margin-bottom: 12px;
+}
+
 /* Motion Lab host reading roles. The arena and inspection artwork retain their
    existing bitmap dimensions, CSS scale and authored visual controls. */
 body.field-kit.field-kit-support[data-field-kit-page='motion-lab']

@@ -1,0 +1,23 @@
+{
+  "format": "revealline-source-handoff.v1",
+  "base": "64c8b9d81604984363666abadae236d9f2f76f7f",
+  "donor": "d9f37b57066b97add90b0ac96d0b5efe834d58e0",
+  "status": "prepared-not-admitted",
+  "files": [
+    {
+      "path": "README.md",
+      "bytes": 4332,
+      "sha256": "b4a539692c55b0022aeb52a2b0a8799a3b31aec18f844cff94b7970c91da213a"
+    },
+    {
+      "path": "evidence.tar.gz",
+      "bytes": 56711,
+      "sha256": "3f6d9084f2a4f7aaffe96c0c5bc4db84278d28520dcc9688115f13da0d55e7e6"
+    },
+    {
+      "path": "report.md",
+      "bytes": 5063,
+      "sha256": "75b7bb6dd6abbfa84370a38521fbfe76d93f5d56a66abfe294b5a2949def8d4a"
+    }
+  ]
+}

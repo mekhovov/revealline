@@ -4,7 +4,11 @@ import { editionDepartureDestinationAllowed } from './editions/departure-destina
 import { mountEditionSoloUI } from './ui/edition-solo.mjs';
 import { focusEditionPresentationRecovery } from './ui/edition-presentation-recovery.mjs';
 import { mountTitleCharacter } from './ui/title-character.mjs';
-import { createEditionPracticeScenario } from './ui/edition-controller-practice.mjs';
+import {
+  createEditionPracticeScenario,
+  editionGuidePracticeURL,
+  readEditionGuideSeed,
+} from './ui/edition-controller-practice.mjs';
 import { projectEditionGuideScenario } from './editions/selected-presentation.mjs';
 import { installedPresentation, invalidateInstalledMigration } from './installed-app.mjs';
 import { createGameWakeLock } from './ui/game-wake-lock.mjs';
@@ -179,6 +183,8 @@ import { attachControllerNavigation } from './ui/controller-navigation.mjs';
 import { attachControllerReading } from './ui/controller-reading.mjs';
 import { attachControllerPreview } from './ui/controller-preview.mjs';
 import { attachPracticeNavigation } from './ui/practice-navigation.mjs';
+import { createPracticeRenderFailure } from './ui/practice-render-failure.mjs';
+import { readPracticeRemainsOverride } from './ui/practice-presentation.mjs';
 import {
   attachControllerPracticeReturn,
   requestControllerPracticeExit,
@@ -194,6 +200,7 @@ import { actionForKey, bindingLabels, keyLabel, resolveKeyBindings } from './key
 import { Soundscape, DEFAULT_TRACKS } from './ui/audio.mjs';
 import { createAudioMaster } from './ui/audio-master.mjs';
 import { createAudioPreferences } from './audio-preferences.mjs';
+import { attachEncounterDisplayControls } from './ui/encounter-display-controls.mjs';
 import { createDisplayPreferences } from './display-preferences.mjs';
 import { createActorStylePreferences } from './actor-style-preferences.mjs';
 import {
@@ -511,12 +518,34 @@ try {
           difficulty: params.get('difficulty') ?? 'standard',
         })
       : JSON.parse(raw);
+    if (runtimeContent) {
+      const guideSeed = readEditionGuideSeed(params);
+      if (guideSeed !== null) requested.settings.seed = guideSeed;
+    }
     const prepared = await prepareScenario(requested, { classRecipes: classRegistry });
     scenario = prepared.scenario;
   }
   // Switching source maps inside an authored preview must not turn the same
   // session into an awarding game, even when the configured scenario is cleared.
   const practiceSession = !!scenario;
+  const practiceRemains = readPracticeRemainsOverride(location.search, {
+    practice: practiceSession && !courseSession,
+  });
+  const practiceRenderFailure = createPracticeRenderFailure({
+    enabled: practiceSession,
+    document,
+    stop: () => {
+      paused = true;
+      document.body.dataset.flightState = 'paused';
+      clearInput();
+      input.destroy();
+      controllerNavigation.destroy();
+      controllerConfirmGuard.destroy();
+      controllerPreview?.clear();
+      gameWakeLock.setActive(false);
+      suspendAudio();
+    },
+  });
   const journeyRequest = resolveJourneyRequest(params, {
     mode: 'solo',
     auxiliary: practiceSession,
@@ -1127,6 +1156,13 @@ try {
     onWarning: (message, key) => {
       localizedText($('display-preferences-status'), () => (key ? t(key) : message));
     },
+  });
+  const encounterDisplay = attachEncounterDisplayControls({
+    document,
+    window,
+    getStorage: () => localStorage,
+    writable: () =>
+      !practice && !courseSession && !courseEntry && persistenceReady && writer.writable,
   });
   const stopDisplayView = displayPreferences.subscribe(applyDisplayPreferences);
   const actorPreferences = createActorStylePreferences({
@@ -2657,6 +2693,7 @@ try {
     touchEnabled: () => library.preferences.screenControls !== 'off',
     tapMode: () => $('tap-steering').checked,
     active: () =>
+      !practiceRenderFailure.failed &&
       started &&
       !paused &&
       !courseBlocked() &&
@@ -2894,9 +2931,28 @@ try {
   });
   enemyGuide = attachEnemyGuide({
     themes: guideThemes,
+    catalogPracticeAvailable: !runtimeContent,
     getPresentation: () => presentationSnapshot,
     getThemeId: () => theme.id,
     getTurnPolicy: () => turnPolicy,
+    getLevel: () => run?.level,
+    getRunOptions: () =>
+      run
+        ? {
+            seed: run.seed,
+            classId: run.classId,
+            classRecipes: run.classRecipes,
+          }
+        : undefined,
+    getMissionTheme: () => theme,
+    resolveEncounterPracticeURL: ({ scenario, returnURL }) =>
+      runtimeContent
+        ? editionGuidePracticeURL(runtimeContent, {
+            scenario,
+            returnURL,
+            difficulty: activeEntry.difficulty || 'standard',
+          })
+        : null,
     loadImpactScenario: async () => {
       const source = await getJSON('content/scenarios/line-impact-demo.json');
       return runtimeContent
@@ -2978,6 +3034,7 @@ try {
       audioRestoration.dispose();
       displayRestoration.dispose();
       displayPreferences.dispose();
+      encounterDisplay.dispose();
       menuStyle.dispose();
       audioPreferences.dispose();
       audioMaster.dispose();
@@ -7758,6 +7815,7 @@ try {
     );
   }
   function overlay(kind, { preserveFocus = false } = {}) {
+    if (practiceRenderFailure.failed) return;
     // Repeated suspension may repaint Pause, but does not own a new focus
     // choice. An inactive child must not pull focus back from its parent.
     const repeatedPause =
@@ -8547,6 +8605,7 @@ try {
     preparedAttempt = null,
     retainAttemptAppearance = false,
   } = {}) {
+    if (practiceRenderFailure.failed) return false;
     if (courseEntry || (courseSession && ['leaving', 'ended'].includes(coursePhase))) return;
     if (preparedAttempt) {
       const current = () =>
@@ -8865,6 +8924,7 @@ try {
     return true;
   }
   function resume({ alignCourseBoard = true, contentSwitchTicket = null } = {}) {
+    if (practiceRenderFailure.failed) return;
     // A queued activation may arrive after blur even when the picture is cached.
     // Use actual foreground state: a fresh Resume need not wait for another frame.
     if (document.hidden || !document.hasFocus()) return;
@@ -9058,6 +9118,7 @@ try {
     if (defeatRemaining <= 1e-9) finishDefeatPresentation();
   }
   function pause(force, { preserveWorld = false } = {}) {
+    if (practiceRenderFailure.failed) return;
     cancelPictureStart({ preserveRecovery: true, preserveWorld });
     if (courseBlocked()) {
       clearInput();
@@ -9108,6 +9169,7 @@ try {
     refreshHUD();
   }
   function refreshHUD() {
+    if (practiceRenderFailure.failed) return;
     profileRecovery?.refresh();
     refreshJourneySkip();
     const reactionMission = journeySkipMission();
@@ -9174,7 +9236,11 @@ try {
     );
     $('lives').dataset.compactValue = `♥ ${run.lives}`;
     localizedText($('time'), () => timeLabel(run.time));
-    localizedText($('score'), () => String(run.score).padStart(5, '0'));
+    localizedText($('score'), () => {
+      // Keep raw score precision in the run/save/replay; only compact the HUD.
+      const label = formatNumber(run.score, { useGrouping: false, maximumFractionDigits: 3 });
+      return Number.isInteger(run.score) ? label.padStart(5, '0') : label;
+    });
     const required = run.objectives.filter((o) => o.required),
       done = required.filter((o) => o.captured);
     localizedText($('objective-state'), () =>
@@ -10670,41 +10736,48 @@ try {
       this.game.canvas.setAttribute('aria-hidden', 'true');
     }
     update(now, delta) {
+      if (practiceRenderFailure.failed) return;
       if (globalThis.RevealLineBoot && document.documentElement.dataset.bootState !== 'ready')
         return;
-      const dt = clamp(delta / 1000, 0, 1);
-      update(dt);
-      editionUI?.refresh();
-      titleCharacter?.update(dt, {
-        visible: !document.hidden && document.hasFocus() && controllerDialog() === $('shell-home'),
-        reduced: displayPreferences.snapshot().effectiveReducedEffects,
-      });
-      const { width, height } = boardPaintSizeForRun(run);
-      if (width !== this.boardSize.width || height !== this.boardSize.height) {
-        this.boardTexture.setSize(width, height);
-        this.boardImage.setSizeToFrame();
-        this.scale.resize(width, height);
-        this.cameras.main.setSize(width, height);
-        this.boardSize = { width, height };
-        document.documentElement.style.setProperty('--board-ratio', `${width} / ${height}`);
-        document.documentElement.style.setProperty('--board-aspect', String(width / height));
+      try {
+        const dt = clamp(delta / 1000, 0, 1);
+        update(dt);
+        editionUI?.refresh();
+        titleCharacter?.update(dt, {
+          visible:
+            !document.hidden && document.hasFocus() && controllerDialog() === $('shell-home'),
+          reduced: displayPreferences.snapshot().effectiveReducedEffects,
+        });
+        const { width, height } = boardPaintSizeForRun(run);
+        if (width !== this.boardSize.width || height !== this.boardSize.height) {
+          this.boardTexture.setSize(width, height);
+          this.boardImage.setSizeToFrame();
+          this.scale.resize(width, height);
+          this.cameras.main.setSize(width, height);
+          this.boardSize = { width, height };
+          document.documentElement.style.setProperty('--board-ratio', `${width} / ${height}`);
+          document.documentElement.style.setProperty('--board-aspect', String(width / height));
+        }
+        painter.draw(this.boardTexture.context, run, Math.min(dt, 0.1), {
+          actorAppearance: flightActorLease
+            ? { style: flightActorLease.pin().style, snapshot: flightActorLease.snapshot }
+            : null,
+          textFace: displayPreferences.snapshot().textFace,
+          // The texture is detached; only the displayed Phaser canvas has a CSS size.
+          displayCSSWidth: this.game.canvas.clientWidth,
+          paused,
+          reduced: displayPreferences.snapshot().effectiveReducedEffects,
+          fullReveal: run.status === 'won',
+          showGrid: scenario?.presentation?.showGrid || library.preferences.showGrid,
+          showCombatScrap: practiceRemains ?? encounterDisplay.snapshot().showRemains,
+          backdrop: flightPictures?.current(),
+          celebrationPaused: document.hidden || dialogOpen(),
+          defeatEffectsRunning: defeatEffectsRunning(),
+        });
+        advanceDefeatPresentation(Math.min(dt, 0.1));
+      } catch (error) {
+        if (!practiceRenderFailure.fail(error)) throw error;
       }
-      painter.draw(this.boardTexture.context, run, Math.min(dt, 0.1), {
-        actorAppearance: flightActorLease
-          ? { style: flightActorLease.pin().style, snapshot: flightActorLease.snapshot }
-          : null,
-        textFace: displayPreferences.snapshot().textFace,
-        // The texture is detached; only the displayed Phaser canvas has a CSS size.
-        displayCSSWidth: this.game.canvas.clientWidth,
-        paused,
-        reduced: displayPreferences.snapshot().effectiveReducedEffects,
-        fullReveal: run.status === 'won',
-        showGrid: scenario?.presentation?.showGrid || library.preferences.showGrid,
-        backdrop: flightPictures?.current(),
-        celebrationPaused: document.hidden || dialogOpen(),
-        defeatEffectsRunning: defeatEffectsRunning(),
-      });
-      advanceDefeatPresentation(Math.min(dt, 0.1));
     }
   }
   new Phaser.Game({

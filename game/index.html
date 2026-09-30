@@ -1944,6 +1944,29 @@
           ><input id="settings-reduced-effects" type="checkbox" />
           <span data-i18n="interface:reducedEffects">Reduced effects</span></label
         >
+        <label class="settings-check"
+          ><input id="enemy-remains" type="checkbox" aria-describedby="enemy-remains-hint" /><span
+            data-i18n="common:preferences.enemyRemains"
+            >Show enemy remains</span
+          ></label
+        >
+        <p
+          id="enemy-remains-hint"
+          class="micro-note"
+          data-i18n="common:preferences.enemyRemainsHint"
+        >
+          Show defeated optional enemies where supported. Warnings, shots and brief hit effects stay
+          visible.
+        </p>
+        <p id="enemy-remains-status" class="micro-note" role="status" hidden></p>
+        <button
+          id="enemy-remains-retry"
+          type="button"
+          data-i18n="common:preferences.retryEncounterSave"
+          hidden
+        >
+          Retry saving
+        </button>
         <p id="display-system-reduction" class="micro-note"></p>
         <p id="display-preferences-status" class="micro-note" role="status"></p>
         <label

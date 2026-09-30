@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Feedback comparison — Reveal Line</title>
+    <link rel="stylesheet" href="../../game/ui/field-kit-fonts.css" />
+    <link rel="stylesheet" href="./workshop.css" />
+  </head>
+  <body>
+    <main>
+      <nav>
+        <a href="../enemy-catalog/">Enemy workshop</a>
+        <a href="../playable-benchmark/">Play a real mission</a>
+        <a href="../../game/playground/">Level playground</a>
+      </nav>
+      <h1>Feedback comparison</h1>
+      <p>
+        Watch the same six-second sequence with different visual accents. Both views keep the live
+        line, warning, contact cue and secured territory.
+      </p>
+      <section class="controls" aria-label="Sequence controls">
+        <button id="play" type="button">Play</button>
+        <button id="restart" type="button">Restart</button>
+        <button id="step" type="button">Step one frame</button>
+        <label for="timeline">Sequence position <output id="time">0.00 / 6.00 s</output></label>
+        <input id="timeline" type="range" min="0" max="359" value="0" step="1" />
+        <div id="cues" class="cue-buttons" aria-label="Jump to a cue"></div>
+      </section>
+      <fieldset id="settings">
+        <legend>Comparison view</legend>
+        <label><input id="capture" type="checkbox" checked /> Capture pulse</label>
+        <label><input id="actors" type="checkbox" checked /> Actor motion accents</label>
+        <label><input id="trail" type="checkbox" checked /> Trail motion accent</label>
+        <label><input id="reduced" type="checkbox" /> Reduced effects in both views</label>
+        <label class="background-control"
+          >Background
+          <select id="background">
+            <option value="dark">Dark</option>
+            <option value="light">Light</option>
+            <option value="synevyr">Synevyr · licensed photograph</option>
+          </select></label
+        >
+      </fieldset>
+      <p id="background-status" role="status"></p>
+      <p id="photo-attribution" class="note" hidden>
+        Synevyr Lake · Jan Pešula (Sapfan) ·
+        <a href="https://creativecommons.org/publicdomain/zero/1.0/">CC0</a> ·
+        <a href="https://commons.wikimedia.org/wiki/File:Synevyr_Lake_rafts.jpg"
+          >Source and attribution</a
+        >. Original photograph fitted through secured cells. Authoring example only.
+      </p>
+      <p class="note">
+        Actor accents control banking, tails and moving parts. Heading, position, contact and stun
+        cues stay visible. Capture and stun are separate authored events.
+      </p>
+      <p id="cue" class="current-cue">Cut in progress</p>
+      <div class="panes">
+        <figure>
+          <figcaption>Reference · all accents enabled</figcaption>
+          <canvas
+            id="reference"
+            width="384"
+            height="224"
+            aria-label="Reference view of the authored sequence"
+          ></canvas>
+        </figure>
+        <figure>
+          <figcaption>Comparison · selected accents</figcaption>
+          <canvas
+            id="comparison"
+            width="384"
+            height="224"
+            aria-label="Comparison view of the same authored sequence"
+          ></canvas>
+        </figure>
+      </div>
+      <section class="measurement" aria-label="Render measurement">
+        <button id="measure" type="button">Measure draw cost</button>
+        <p id="measurement" role="status">
+          20 warmup frames, then 120 timed draws of both views. Measurements run only when
+          requested.
+        </p>
+        <p class="note" id="memory"></p>
+        <p class="note" id="photo-memory" hidden></p>
+      </section>
+      <p class="note">
+        Authoring fixture using the game's presentation primitives. This is an authored visual
+        sequence, not a playable attempt, recorded replay, audio/haptic test or device
+        qualification. <a href="./README.md">Method and limits</a>
+      </p>
+      <noscript>This comparison requires JavaScript.</noscript>
+    </main>
+    <script type="module" src="./workshop.mjs"></script>
+  </body>
+</html>
