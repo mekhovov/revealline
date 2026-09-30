@@ -2961,5 +2961,7 @@
   "creatorGuide.documentNote": "Мову оригінального документа збережено. Вкладені посилання та приклади показано як текст.",
   "countercurrentOriginalArt": "Countercurrent / оригінальні ілюстрації винагород",
   "countercurrentGalleryIntroduction": "Дванадцять вихідних варіантів. Виберіть мініатюру, щоб переглянути тут незмінений оригінальний PNG. Ці сцени відтворюють композиційні мотиви; вони не є картами зіткнень або доказом використання у грі чи повної якості.",
-  "countercurrentGuideAndCaveats": "Опис і застереження"
+  "countercurrentGuideAndCaveats": "Опис і застереження",
+  "fpvEnemySourceReview.cancelled": "Завантаження скасовано. Виберіть «Повторити», щоб знову перевірити зразки.",
+  "fpvEnemySourceReview.viewOriginal": "Переглянути оригінал"
 }

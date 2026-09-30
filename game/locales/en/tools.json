@@ -2899,5 +2899,7 @@
   "creatorGuide.documentNote": "Original document language is preserved. Embedded links and examples are displayed as text.",
   "countercurrentOriginalArt": "Countercurrent / original reward art",
   "countercurrentGalleryIntroduction": "Twelve source candidates. Select a preview to inspect its untouched original PNG here. These scenes echo composition cues; they are not collision maps or evidence of runtime adoption or full quality.",
-  "countercurrentGuideAndCaveats": "Guide and caveats"
+  "countercurrentGuideAndCaveats": "Guide and caveats",
+  "fpvEnemySourceReview.cancelled": "Loading cancelled. Choose Retry to check the samples again.",
+  "fpvEnemySourceReview.viewOriginal": "View original"
 }
