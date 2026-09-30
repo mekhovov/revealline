@@ -582,11 +582,19 @@ export async function addOfflineEntries(
   for (const entry of entries.filter((item) => item.name.endsWith('.html'))) {
     const source = entry.bytes.toString();
     if (/<link\b[^>]*\brel=(["'])(?:icon|shortcut icon)\1/i.test(source)) continue;
-    const relativeRoot = path.posix.relative(path.posix.dirname(entry.name), '.') || '.';
+    const relativeRoot =
+      entry.name === 'optional-practice/civilian-fpv/index.html'
+        ? '.'
+        : path.posix.relative(path.posix.dirname(entry.name), '.') || '.';
     const favicon = `<link rel="icon" type="image/png" sizes="192x192" href="${relativeRoot}/icons/icon-192.png">`;
     if (source.includes('</head>'))
       entry.bytes = Buffer.from(source.replace('</head>', `${favicon}</head>`));
   }
+  // The bundled simulator owns a separate opt-in cache. Its HTML and shared
+  // modules are final here; later offline-marker injection changes game HTML only.
+  const { buildBundledOptionalPractice } = await import('./build-optional-practice.mjs');
+  const bundledPractice = buildBundledOptionalPractice(entries);
+  if (bundledPractice) entries.push(...bundledPractice.entries);
   const optional = new Set([...(buildConfig.optionalOffline ?? []), ...optionalDownloads]);
   const optionalPacks = entries
     .filter((entry) => optional.has(entry.name))
