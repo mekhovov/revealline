@@ -46,10 +46,18 @@ export function mountFlightApp({
   if (gameReturn && $('game-return')) {
     $('game-return').href = gameReturn;
     $('game-return').hidden = false;
-    // The containing game provides the offline cache for bundled practice.
-    $('install-offline').hidden = true;
-    $('remove-offline').hidden = true;
   }
+  const offlineAvailable =
+    /^https?:$/.test(new URL(win.location.href).protocol) &&
+    win.isSecureContext !== false &&
+    !!win.navigator?.serviceWorker;
+  let offlineBusy = false;
+  const refreshOfflineControls = () => {
+    for (const id of ['install-offline', 'remove-offline'])
+      $(id).disabled = !offlineAvailable || offlineBusy;
+    $('offline-unavailable').hidden = offlineAvailable;
+  };
+  refreshOfflineControls();
   const requestedLocale = new URL(win.location.href).searchParams.get('lang');
   let locale = ['en', 'uk'].includes(requestedLocale) ? requestedLocale : getLocale(),
     selected = 0,
@@ -665,7 +673,12 @@ export function mountFlightApp({
     ['remove-offline', removePracticeOffline],
   ])
     listen($(id), 'click', async () => {
+      if (!offlineAvailable || offlineBusy || disposed || suspended) return;
       pause();
+      offlineBusy = true;
+      refreshOfflineControls();
+      $('transfer-status').textContent =
+        c()[id === 'install-offline' ? 'offlinePreparing' : 'offlineRemoving'];
       try {
         let storage;
         try {
@@ -684,6 +697,9 @@ export function mountFlightApp({
             c()[id === 'install-offline' ? 'offlineReady' : 'offlineRemoved'];
       } catch (error) {
         if (!disposed) $('transfer-status').textContent = error.message;
+      } finally {
+        offlineBusy = false;
+        if (!disposed) refreshOfflineControls();
       }
     });
   reset();
