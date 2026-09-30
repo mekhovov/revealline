@@ -9,7 +9,10 @@ import {
   editionPracticeChoices,
   createEditionPracticeScenario,
   editionPracticePreviewURL,
+  editionGuidePracticeURL,
+  readEditionGuideSeed,
 } from '../ui/edition-controller-practice.mjs';
+import { normalizedLevel } from '../core/level.mjs';
 
 async function providerFor(editionId) {
   const requests = [];
@@ -128,4 +131,106 @@ test('advanced relay, flow and sentinel missions pass the real Controller Practi
     }
     assert(byVersion.has('MissionDesignV4'));
   }
+});
+
+test('edition Guide practice reconstructs exact admitted rules and class recipes with a retained seed', async () => {
+  const { provider } = await providerFor('droneaid-nl-workshop-lights'),
+    missionId = editionPracticeChoices(provider)[0].missionId,
+    options = { missionId, classId: 'carrier', turnPolicy: 'grid-center', difficulty: 'gentle' },
+    scenario = createEditionPracticeScenario(provider, options),
+    returnURL =
+      'http://localhost/game/?practice=1&practice-return=enemy-guide&enemy-workshop-session=0123456789abcdef0123456789abcdef';
+  scenario.level = normalizedLevel(scenario.level);
+  scenario.settings.seed = 0xffffffff;
+  const before = structuredClone(scenario),
+    url = new URL(editionGuidePracticeURL(provider, { scenario, returnURL, difficulty: 'gentle' }));
+  assert.equal(url.searchParams.get('edition'), provider.editionId);
+  assert.equal(url.searchParams.get('edition-mission'), missionId);
+  assert.equal(url.searchParams.get('practice-return'), 'enemy-guide');
+  assert.equal(url.searchParams.get('controller-preview'), null);
+  assert.equal(readEditionGuideSeed(url.searchParams), 0xffffffff);
+  const child = createEditionPracticeScenario(provider, {
+    missionId: url.searchParams.get('edition-mission'),
+    classId: url.searchParams.get('class'),
+    turnPolicy: url.searchParams.get('turn-policy'),
+    difficulty: url.searchParams.get('difficulty'),
+  });
+  child.settings.seed = readEditionGuideSeed(url.searchParams);
+  assert.deepEqual(normalizedLevel(child.level), scenario.level);
+  assert.deepEqual(child.settings, scenario.settings);
+  assert.deepEqual(child.classRecipes, scenario.classRecipes);
+  assert.deepEqual(scenario, before);
+  assert.equal(createEditionPracticeScenario(provider, options).settings.seed, 1);
+
+  for (const change of [
+    (value) => {
+      value.level.goal.coverage = 0.99;
+    },
+    (value) => {
+      value.level.id = 'outside-selected-audience';
+    },
+    (value) => {
+      value.classRecipes[0].label = 'Unadmitted class copy';
+    },
+    (value) => {
+      value.settings.classId = 'outside-roster';
+    },
+    (value) => {
+      value.settings.seed = 0x100000000;
+    },
+  ]) {
+    const changed = structuredClone(before);
+    change(changed);
+    assert.throws(() =>
+      editionGuidePracticeURL(provider, { scenario: changed, returnURL, difficulty: 'gentle' }),
+    );
+  }
+  assert.throws(
+    () => editionGuidePracticeURL(provider, { scenario, returnURL, difficulty: 'expert' }),
+    /no longer matches/,
+  );
+  for (const invalid of [
+    returnURL.replace('http://localhost', 'https://elsewhere.example'),
+    `${returnURL}&enemy-workshop-session=0123456789abcdef0123456789abcdef`,
+    returnURL.replace('practice-return=enemy-guide', 'practice-return=workshop'),
+  ])
+    assert.throws(() =>
+      editionGuidePracticeURL(provider, { scenario, returnURL: invalid, difficulty: 'gentle' }),
+    );
+});
+
+test('retained Guide seeds require one bounded decimal and the exact practice return route', () => {
+  const base =
+    'practice=1&practice-return=enemy-guide&enemy-workshop-session=0123456789abcdef0123456789abcdef&edition-mission=loaded-mission';
+  assert.equal(readEditionGuideSeed(new URLSearchParams(base)), null);
+  for (const seed of ['0', '1', '4294967295'])
+    assert.equal(
+      readEditionGuideSeed(new URLSearchParams(`${base}&guide-seed=${seed}`)),
+      Number(seed),
+    );
+  for (const seed of [
+    '',
+    '-1',
+    '1.1',
+    '01',
+    'NaN',
+    'Infinity',
+    '4294967296',
+    '1e2',
+    '1&guide-seed=2',
+  ])
+    assert.throws(() => readEditionGuideSeed(new URLSearchParams(`${base}&guide-seed=${seed}`)));
+  for (const route of [
+    base.replace('practice=1', 'practice=0'),
+    `${base}&practice=1`,
+    base.replace('practice-return=enemy-guide', 'practice-return=workshop'),
+    `${base}&practice-return=enemy-guide`,
+    base.replace(
+      'enemy-workshop-session=0123456789abcdef0123456789abcdef',
+      'enemy-workshop-session=bad',
+    ),
+    `${base}&edition-mission=other`,
+    `${base}&controller-preview=1`,
+  ])
+    assert.throws(() => readEditionGuideSeed(new URLSearchParams(`${route}&guide-seed=7`)));
 });

@@ -1,3 +1,6 @@
+import { COUCH_RESTORE_KEY } from './controller-restore.mjs';
+import { createControllerSession } from './controller-session.mjs';
+import { mountControllerSetup } from './controller-setup.mjs';
 import {
   gameplayTuningDescription,
   gameplayStatusLabel,
@@ -64,6 +67,7 @@ import {
   createMissionLibrarySessionState,
   missionLibraryHref,
   readMissionLibraryHandoff,
+  readMissionLibraryIntent,
   readMissionLibraryReturn,
 } from '../mission-library/handoff.mjs';
 import { createCouchChapterInstaller } from './couch-chapter-install.mjs';
@@ -89,6 +93,7 @@ import { attachControllerConfirmGuard } from '../ui/controller-confirm-guard.mjs
 import { attachControllerNavigation } from '../ui/controller-navigation.mjs';
 import { playgroundTabBoundary } from '../ui/playground-tab-boundary.mjs';
 import { attachControllerReading } from '../ui/controller-reading.mjs';
+import { attachEncounterHelp } from '../ui/encounter-help.mjs';
 import { readingInputPrompt } from '../ui/reading-input-prompt.mjs';
 import { nextInputModality } from '../input-presentation.mjs';
 import { BoardPainter, boardPaintSizeForLevel } from '../ui/render.mjs';
@@ -96,6 +101,7 @@ import { encounterView } from '../ui/encounter-view.mjs';
 import { Soundscape, DEFAULT_TRACKS } from '../ui/audio.mjs';
 import { createAudioMaster } from '../ui/audio-master.mjs';
 import { createAudioPreferences } from '../audio-preferences.mjs';
+import { attachEncounterDisplayControls } from '../ui/encounter-display-controls.mjs';
 import { createDisplayPreferences } from '../display-preferences.mjs';
 import { createActorStylePreferences } from '../actor-style-preferences.mjs';
 import { prepareActorAppearanceLease } from '../presentation/actor-appearance-lease.mjs';
@@ -202,6 +208,12 @@ const renderDisplayPreferences = (state) => {
   );
 };
 const stopDisplayView = displayPreferences.subscribe(renderDisplayPreferences);
+const encounterDisplay = attachEncounterDisplayControls({
+  document,
+  window,
+  getStorage: () => localStorage,
+  prefix: 'race-',
+});
 const displayRestoration = attachPreferenceRestoration({
   window,
   getSnapshot: () => displayPreferences.snapshot(),
@@ -303,6 +315,7 @@ const releaseArtwork = (event) => {
   audioRestoration.dispose();
   displayRestoration.dispose();
   displayPreferences.dispose();
+  encounterDisplay.dispose();
   menuStyle.dispose();
   audioPreferences.dispose();
   artworkLifetime.abort();
@@ -360,7 +373,8 @@ try {
     { fullSource: true },
   );
   const authoredJourney = !!authoredRoute;
-  const libraryHandoff = readMissionLibraryHandoff(new URL(location.href).searchParams);
+  const libraryHandoff = readMissionLibraryHandoff(new URL(location.href).searchParams),
+    libraryIntent = readMissionLibraryIntent(new URL(location.href).searchParams);
   let incomingContinuation = null;
   if (libraryHandoff) {
     const values = new URL(location.href).searchParams.getAll('versus-next');
@@ -387,7 +401,11 @@ try {
         Array.isArray(value.slots) &&
         value.slots.length === 2 &&
         value.slots.every(
-          (slot) => slot === null || (Number.isInteger(slot) && slot >= 0 && slot <= 255),
+          (slot) =>
+            slot === null ||
+            (Number.isInteger(slot) &&
+              slot >= 0 &&
+              (slot <= 255 || (slot >= 1024 && slot <= 3071))),
         ) &&
         (value.slots[0] === null || value.slots[0] !== value.slots[1])
       )
@@ -846,7 +864,6 @@ try {
     startIntentEpoch = 0,
     framePads = [],
     frameReadError = null,
-    padDescriptors = new Map(),
     slots = [null, null],
     assignmentsChanged = false,
     pendingPadLoss = false,
@@ -1086,6 +1103,7 @@ try {
     if (resetDirection) input.clear();
     else input.clearPhysical();
     accumulator = 0;
+    controllerSession.clear();
     menuRouter?.clear();
     navigation?.clear();
     if (match?.status === 'running') menuScope = 'flight';
@@ -1507,7 +1525,7 @@ try {
   async function prepareNext(
     destination = null,
     focusOrigin = $('race-start'),
-    { configured = null, fresh = false, rulesEdition } = {},
+    { configured = null, fresh = false, rulesEdition, ownsStart = null } = {},
   ) {
     const target = destination ?? roundRecipe.entry;
     const sameMission =
@@ -1588,6 +1606,7 @@ try {
     let adopted = false;
     const current = () =>
       !disposed &&
+      (!ownsStart || (ownsStart() && restoreFocus.current(true))) &&
       !controller.signal.aborted &&
       contentController === controller &&
       nextAttempt === attempt &&
@@ -1785,7 +1804,19 @@ try {
     }
     updateMenu();
   }
-  async function startRace(destination = null, { rulesEdition, focusOrigin = null } = {}) {
+  async function startRace(
+    destination = null,
+    { rulesEdition, focusOrigin = null, libraryStart = null } = {},
+  ) {
+    // A confirmed library selection may originate from Settings. Its captured
+    // scope remains authoritative through preparation; ordinary Start/Retry
+    // still belong to main, and the running-state update leaves Settings only
+    // after the exact prepared match has been accepted.
+    const startScope = shell.scope(),
+      libraryAdmission =
+        destination &&
+        libraryStart?.isCurrent() === true &&
+        libraryStart.attempt?.scope === startScope;
     if (
       disposed ||
       contentBusy ||
@@ -1793,7 +1824,8 @@ try {
       document.hidden ||
       !document.hasFocus() ||
       match.status === 'running' ||
-      shell.scope() !== 'main'
+      (libraryStart && !libraryAdmission) ||
+      (startScope !== 'main' && !(startScope === 'options' && libraryAdmission))
     )
       return;
     // A ready preview is not a resumed attempt. A preference changed after its
@@ -1850,7 +1882,7 @@ try {
         generation !== previousGeneration ||
         contentController !== previousController ||
         contentBusy ||
-        shell.scope() !== 'main'
+        shell.scope() !== startScope
       )
         return;
     }
@@ -1860,7 +1892,11 @@ try {
       // origin until the new attempt makes Start available again.
       const start =
           focusOrigin ||
-          (destination && !contentReady ? $('race-library-switch') : $('race-start')),
+          (libraryAdmission
+            ? $(startScope === 'options' ? 'race-library-switch' : 'race-chapters')
+            : destination && !contentReady
+              ? $('race-library-switch')
+              : $('race-start')),
         previousRun = match,
         previousGeneration = generation,
         previousController = contentController;
@@ -1876,10 +1912,13 @@ try {
         generation !== previousGeneration ||
         contentController !== previousController ||
         contentBusy ||
-        shell.scope() !== 'main'
+        shell.scope() !== startScope
       )
         return;
-      const prepared = await prepareNext(destination, start, { rulesEdition });
+      const prepared = await prepareNext(destination, start, {
+        rulesEdition,
+        ownsStart: libraryAdmission ? ownsStartIntent : null,
+      });
       // Preparation may finish after blur, but only this uninterrupted foreground
       // action may start it. Installed pictures pass the same confirmation boundary.
       if (
@@ -1889,7 +1928,7 @@ try {
         match !== prepared.match ||
         contentController !== prepared.controller ||
         prepared.controller.signal.aborted ||
-        shell.scope() !== 'main'
+        shell.scope() !== startScope
       ) {
         prepared?.releaseFocus();
         return;
@@ -1912,7 +1951,7 @@ try {
           match === selectedRun &&
           ticket === generation &&
           match.status === 'ready' &&
-          shell.scope() === 'main';
+          shell.scope() === startScope;
       const display = preparationStatus.begin({
         message: t('interface:confirmingThePreparedPictureBeforeStarting'),
         stage: 'verifying',
@@ -2306,7 +2345,20 @@ try {
     controls: $('race-touch-0').closest('.race-fields'),
     clear: () => input?.clearPhysical(),
   });
+  const controllerSession = createControllerSession({
+    restoreKey: COUCH_RESTORE_KEY,
+    onLoss: () => {
+      pendingPadLoss = true;
+      pause();
+      clear();
+    },
+  });
+  const controllerSetup = mountControllerSetup({
+    root: $('race-settings-panel-controls'),
+    session: controllerSession,
+  });
   const input = attachCouchInput({
+    controllerSession,
     initialSlots: incomingContinuation?.slots ?? [null, null],
     getTouchSettings: () => couchTouch.snapshot(),
     continuousSteering: () => true,
@@ -2322,10 +2374,9 @@ try {
       assignmentsChanged = nextSlots.some((slot, i) => slot !== slots[i]);
       slots = [...nextSlots];
       const message = () =>
-        t('gameplay:standardControllerAssignedKeyboardAndTouchRemainAvailableEscapePauses', {
-          value1: count,
-          value2: count === 1 ? '' : 's',
-          value3: slots
+        t('interface:multiplayerControllers.assigned', {
+          count,
+          players: slots
             .map((slot, i) =>
               t('gameplay:player', {
                 value1: i + 1,
@@ -2347,7 +2398,12 @@ try {
   } catch {
     /* The fixed Solo title route remains available. */
   }
+  const encounterHelp = attachEncounterHelp({
+    root: $('race-encounter-help'),
+    getLevels: () => match?.runs?.map((run) => run.level) ?? [],
+  });
   shell = createCouchShell({
+    controllerNeedsTouch: (seat) => slots[seat] !== null && !controllerSession.completeFlight(seat),
     getSceneContext: () => ({
       themeId: theme?.id ?? 'fpv',
       active: match?.status !== 'running',
@@ -2378,6 +2434,7 @@ try {
       cancelLibraryDecision();
       clear();
       if (back || to !== contentScope) cancelContent();
+      if (to === 'help') encounterHelp.refresh();
     },
     onNewMatch: () => {
       if (match?.status === 'running' || disposed) return;
@@ -2675,7 +2732,10 @@ try {
       if (!entry) throw new Error(t('interface:thisExactBaseMissionIsUnavailable'));
       if (!(await confirmLibraryReplacement(context, `Play ${entry.level.name}?`))) return false;
       if (!context.isCurrent()) return false;
-      await startRace(entry, { rulesEdition: selection.rulesEdition });
+      await startRace(entry, {
+        rulesEdition: selection.rulesEdition,
+        libraryStart: context.continuousNext ? null : context,
+      });
       const started = roundRecipe.entry === entry && match.status === 'running';
       if (started) currentLibrarySelection = { match, id: context.libraryMissionId };
       return started;
@@ -2962,7 +3022,7 @@ try {
     if (!entry) throw new Error('This exact creator mission is unavailable in Versus.');
     if (!(await confirmLibraryReplacement(context, `Play ${mission.name}?`))) return false;
     if (!context.isCurrent()) return false;
-    await startRace(entry);
+    await startRace(entry, { libraryStart: context.continuousNext ? null : context });
     const started = roundRecipe.entry === entry && match.status === 'running';
     if (started) currentLibrarySelection = { match, id: context.libraryMissionId };
     return started;
@@ -3080,7 +3140,7 @@ try {
                   if (!(await confirmLibraryReplacement(context, `Play ${mission.name}?`)))
                     return false;
                   if (!context.isCurrent()) return false;
-                  await startRace(entry);
+                  await startRace(entry, { libraryStart: context.continuousNext ? null : context });
                   const started = roundRecipe.entry === entry && match.status === 'running';
                   if (started)
                     currentLibrarySelection = {
@@ -3622,7 +3682,8 @@ try {
   }
   function readAssignedMenuPads() {
     // Keep sparse browser positions. The router also receives the physical index.
-    return readCachedPads().map((pad) => (slots.includes(pad?.index) ? pad : null));
+    if (frameReadError) throw frameReadError;
+    return controllerSession.frame().menuPads;
   }
   function capturePads() {
     framePads = [];
@@ -3636,35 +3697,14 @@ try {
     } catch (error) {
       frameReadError = error || new Error(t('interface:controllerReadFailed'));
     }
-    const next = new Map();
-    for (const pad of framePads) {
-      if (!pad?.connected || pad.mapping !== 'standard') continue;
-      next.set(
-        pad.index,
-        JSON.stringify([
-          typeof pad.id === 'string' ? pad.id.slice(0, 512) : '',
-          pad.mapping,
-          pad.buttons?.length ?? 0,
-          pad.axes?.length ?? 0,
-        ]),
-      );
-    }
-    for (const index of slots) {
-      if (
-        index === null ||
-        !padDescriptors.has(index) ||
-        next.get(index) === padDescriptors.get(index)
-      )
-        continue;
-      // Couch flight allocation is index-based. A changed descriptor is a new
-      // device even if a disconnect event was missed between animation frames.
-      menuRouter.disconnect(index);
-      pendingPadLoss = true;
-      pause();
-      clear();
-    }
-    padDescriptors = next;
+    const sample = controllerSession.sample(framePads, {
+      active: match?.status === 'running',
+      error: frameReadError,
+    });
+    framePads = sample.pads;
+    controllerSetup.refresh();
   }
+
   function focusPrimaryAction() {
     if (!match || match.status === 'running' || disposed) return;
     shell.focus();
@@ -3717,6 +3757,9 @@ try {
             : 'won'
           : null,
       missionId: roundRecipe?.entry?.mission?.id,
+      feedback: candidateJourney?.owns(roundRecipe?.entry)
+        ? roundRecipe.entry.campaignFeedback
+        : null,
     });
     const running = match.status === 'running';
     $('race-journey-controls').hidden = !!shell && shell.scope() !== 'main' && !running;
@@ -3797,9 +3840,13 @@ try {
     if ($('race-menu-status').textContent !== text)
       localizedText($('race-menu-status'), () => text);
   }
-  menuRouter = createControllerRouter({ readPads: readAssignedMenuPads });
+  menuRouter = createControllerRouter({
+    readPads: readAssignedMenuPads,
+    autoJoin: true,
+    eventTarget: null,
+  });
   const controllerConfirmGuard = attachControllerConfirmGuard({
-    confirmPressed: () => menuRouter.menuConfirmPressed(),
+    confirmPressed: () => menuRouter.menuConfirmPressed() || controllerSession.frame().confirmHeld,
   });
   const menuIds = new Set([
     'race-offline',
@@ -3855,6 +3902,8 @@ try {
     'race-touch-1',
     'race-tap',
     'race-reduced',
+    'race-enemy-remains',
+    'race-enemy-remains-retry',
     'race-journey-reactions-enabled',
     'race-journey-reactions-retry',
     'race-text-face',
@@ -3915,7 +3964,7 @@ try {
       element.hasAttribute('data-language-select') ||
       menuIds.has(element.id) ||
       !!element.closest(
-        '#journey-chooser, #journey-backup, #race-gameplay-tuning, [data-journey-mode-pictures]',
+        '#journey-chooser, #journey-backup, #race-gameplay-tuning, [data-journey-mode-pictures], .multiplayer-controllers',
       ),
     getControlLabels: () => ({
       directions: t('interface:dPadLeftStick'),
@@ -3988,6 +4037,7 @@ try {
   });
   $('race-menu-release').onclick = () => {
     if (match.status === 'running' || !menuOwner) return;
+    controllerSession.menu(null);
     menuRouter.invalidate();
     menuOwner = null;
     clear();
@@ -4003,7 +4053,7 @@ try {
     const result = menuRouter.sample({ scope, timeMs: now });
     // Joining consumes the controller edge as assignment, but Steam may still
     // mirror that same physical press as a delayed native Enter/click.
-    controllerConfirmGuard.observe(result.confirmHeld || result.status.code === 'joined');
+    controllerConfirmGuard.observe(result.confirmHeld || controllerSession.frame().confirmHeld);
     if (result.status.code === 'joined' || Object.values(result.ui).some(Boolean))
       setReadingModality('controller');
     const released = !menuOwner && result.disconnected;
@@ -4021,9 +4071,8 @@ try {
     }
     menuStatus = frameReadError
       ? t('interface:controllerAccessIsUnavailable')
-      : !framePads.some((pad) => pad?.connected && pad.mapping === 'standard') &&
-          framePads.some((pad) => pad?.connected)
-        ? t('interface:thisControllerHasNoStandardMapping')
+      : controllerSession.state().devices.some((device) => !device.profile)
+        ? t('interface:multiplayerControllers.needsSetup')
         : result.status.message;
     if (assignmentsChanged || pendingPadLoss) {
       shell.cancelDeparture();
@@ -4097,10 +4146,13 @@ try {
     preparationStatus.dispose();
     couchTouch.destroy();
     journeyReactions.dispose();
+    controllerSetup.dispose();
+    controllerSession.dispose();
     input.destroy();
     controllerConfirmGuard.destroy();
     menuRouter.destroy();
     reading.destroy();
+    encounterHelp.dispose();
     navigation.destroy();
     shell.destroy();
     stopNative();
@@ -4138,7 +4190,10 @@ try {
       input.poll();
       if (!wasRunning) sampleMenu(now);
       if (wasRunning || match.status === 'running')
-        controllerConfirmGuard.observe(menuRouter.menuConfirmPressed(framePads));
+        controllerConfirmGuard.observe(
+          menuRouter.menuConfirmPressed(controllerSession.frame().menuPads) ||
+            controllerSession.frame().confirmHeld,
+        );
       pendingPadLoss = false;
     }
     if (available && wasRunning && match.status === 'running' && !cueState.blocksPlay) {
@@ -4173,7 +4228,20 @@ try {
           for (let i = 0; i < 2; i++)
             if (match.runs[i].tick !== before[i]) {
               painters[i].effectsFor(match.runs[i].events, match.runs[i]);
-              for (const event of match.runs[i].events) sound.event(event);
+              for (const event of match.runs[i].events)
+                sound.event(
+                  event,
+                  {},
+                  event.type === 'run.completed' && candidateJourney?.owns(roundRecipe?.entry)
+                    ? {
+                        owned: true,
+                        mode: 'versus',
+                        outcome: match.runs[i].status,
+                        missionId: roundRecipe.entry.mission.id,
+                        feedback: roundRecipe.entry.campaignFeedback,
+                      }
+                    : null,
+                );
               const run = match.runs[i],
                 caption = foundationReturnCaption(run);
               if (caption)
@@ -4427,6 +4495,7 @@ try {
       const run = match.runs[i];
       painters[i].draw(contexts[i], run, Math.min(dt, 0.1), {
         displayCSSWidth: boardFootprints.width(i),
+        showCombatScrap: encounterDisplay.snapshot().showRemains,
         textFace: displayPreferences.snapshot().textFace,
         paused: match.status !== 'running',
         reduced: displayPreferences.snapshot().effectiveReducedEffects,
@@ -4434,20 +4503,6 @@ try {
         celebrationPaused: document.hidden,
         backdrop,
         actorAppearance,
-        signalReception:
-          run.status === 'lost'
-            ? 'lost'
-            : run.status === 'won' || match.status === 'finished'
-              ? 'off'
-              : match.status === 'ready' || cueState.blocksPlay
-                ? 'ready'
-                : 'playing',
-        signalEffectsRunning:
-          available &&
-          shell.scope() === 'main' &&
-          !document.querySelector('dialog[open]') &&
-          ((match.status === 'running' && !cueState.blocksPlay) ||
-            (match.status === 'finished' && run.status === 'lost')),
       });
     }
     (music || sound).update(
@@ -4492,6 +4547,7 @@ try {
           throw new Error(t('interface:thisMissionBelongsToADifferentGameplayHostChooseIt'));
         const paired = libraryExternalSelections.get(row.id);
         if (
+          libraryIntent !== 'select' &&
           paired &&
           libraryInventory.state().ready &&
           libraryInventory.getInventory().packs.some((pack) => pack.id === paired.packId)
@@ -4508,8 +4564,13 @@ try {
         // The metadata request relinquishes input before the exact launch or
         // chooser adopts focus. Later staged work owns its own cancellation.
         opening.dispose();
-        if (owner.library.availability(row, 'versus').state !== 'ready') {
-          journeyChooser.open($('race-library-switch'));
+        if (
+          libraryIntent === 'select' ||
+          owner.library.availability(row, 'versus').state !== 'ready'
+        ) {
+          // A mode choice reveals this exact row. Only its explicit Play action
+          // may prepare/adopt a replacement or start either simulation.
+          journeyChooser.open($('race-chapters'));
           journeyChooser.reveal(row.id);
         } else {
           const started = await owner.library.launch(row, {
@@ -4517,7 +4578,7 @@ try {
             ...context,
           });
           if (started === false && epoch === libraryOpenEpoch && context.isCurrent()) {
-            journeyChooser.open($('race-library-switch'));
+            journeyChooser.open($('race-chapters'));
             journeyChooser.reveal(row.id);
           }
         }

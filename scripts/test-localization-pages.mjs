@@ -50,6 +50,8 @@ test('generated public pages use complete messages and retain original attributi
   const entries = [
     ...assets,
     'game/vendor/LZ-STRING-LICENSE.txt',
+    'game/vendor/QRCODEGEN-LICENSE.txt',
+    'game/vendor/qrcodegen-1.8.0.json',
     'game/ui/fonts/field-kit/provenance.json',
   ].map((name) => entry(name));
   addPublicEntries(entries, {
@@ -281,7 +283,7 @@ test('offline runtime-owned captions have one live binding owner', async () => {
   }
 });
 
-test('company entry and public directory localize independently of the main game menu', async () => {
+test('company entry and launch links use live catalogs and preserve bilingual fallback', async () => {
   const companySource = await fs.readFile(new URL('../game/company.html', import.meta.url), 'utf8');
   const companyNodes = descendants(parse(companySource));
   assert.ok(
@@ -317,7 +319,7 @@ test('company entry and public directory localize independently of the main game
 
   const siteSource = await fs.readFile(new URL('../site/index.html', import.meta.url), 'utf8');
   const siteLink = descendants(parse(siteSource)).find(
-    (node) => attribute(node, 'href') === '../game/community/',
+    (node) => attribute(node, 'href') === '../game/company.html',
   );
   assert.equal(attribute(siteLink, 'data-i18n'), 'website:companyJourneys');
   for (const locale of ['en', 'uk'])
@@ -325,53 +327,22 @@ test('company entry and public directory localize independently of the main game
 
   const gameSource = await fs.readFile(new URL('../game/index.html', import.meta.url), 'utf8');
   const gameNodes = descendants(parse(gameSource));
-  assert.ok(
-    !gameNodes.some((node) =>
-      /^(?:\.\/)?(?:company\.html|community\/)/.test(attribute(node, 'href') ?? ''),
-    ),
-    'game/index.html: company and community browsing stays outside the main game menu',
-  );
-  assert.ok(!gameNodes.some((node) => attribute(node, 'id') === 'shell-community'));
-
-  const directorySource = await fs.readFile(
-    new URL('../game/community/index.html', import.meta.url),
-    'utf8',
-  );
-  const directoryNodes = descendants(parse(directorySource));
-  assert.ok(directoryNodes.some((node) => attribute(node, 'data-language-control') !== undefined));
-  for (const edition of ['droneaid', 'coupa-all']) {
-    const link = directoryNodes.find(
-      (node) => attribute(node, 'href') === `../company.html?edition=${edition}`,
-    );
-    assert.ok(link, `company directory: ${edition} launch link`);
-    assert.ok(
-      descendants(link).some((node) => attribute(node, 'data-i18n')),
-      `company directory: ${edition} localized launch label`,
-    );
-  }
-  const directoryKeys = directoryNodes.flatMap((node) =>
-    (node.attrs ?? [])
-      .filter(({ name }) => name === 'data-i18n' || name.startsWith('data-i18n-aria-'))
-      .map(({ value }) => value),
-  );
-  assert.ok(directoryKeys.length >= 3, 'company directory: heading and launch labels use catalogs');
+  const gameLink = gameNodes.find((node) => attribute(node, 'href') === 'company.html');
+  assert.equal(attribute(gameLink, 'data-i18n'), 'interface:companyJourneys');
+  const communityLink = gameNodes.find((node) => attribute(node, 'id') === 'shell-community');
+  assert.equal(attribute(communityLink, 'data-i18n-rich'), 'interface:creator.communityCard');
+  const communitySlots = descendants(communityLink)
+    .map((node) => attribute(node, 'data-i18n-slot'))
+    .filter(Boolean)
+    .sort();
   for (const locale of ['en', 'uk']) {
-    const catalogs = new Map([['interface', interfaceResources[locale]]]);
-    for (const key of directoryKeys) {
-      const [namespace, messageKey] = key.split(':');
-      assert.match(namespace, /^[a-z]+$/);
-      if (!catalogs.has(namespace))
-        catalogs.set(
-          namespace,
-          JSON.parse(
-            await fs.readFile(
-              new URL(`../game/locales/${locale}/${namespace}.json`, import.meta.url),
-            ),
-          ),
-        );
-      const message = catalogs.get(namespace)[messageKey];
-      assert.equal(typeof message, 'string', `company directory: ${locale}: ${key}`);
-      assert.ok(message.trim(), `company directory: ${locale}: ${key}`);
-    }
+    const message = interfaceResources[locale]['creator.communityCard'];
+    const placeholders = [...message.matchAll(/\[\[([^\]]+)\]\]/g)].map((match) => match[1]).sort();
+    assert.deepEqual(placeholders, communitySlots, `${locale}: creator.communityCard`);
+    assert.equal(
+      typeof interfaceResources[locale]['creator.communityDescription'],
+      'string',
+      `${locale}: creator.communityDescription`,
+    );
   }
 });

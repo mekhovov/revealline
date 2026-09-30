@@ -1,0 +1,454 @@
+{
+  "format": "revealline-candidate-capacity-observation.v1",
+  "sourceRevision": "83706c9924e3972b106966a9bfffe542d1fde5e3",
+  "sourceTree": "b8d5f16792a15e457d7ef7844bbbcff1e3fb1d1c",
+  "version": "v0.142.2",
+  "publicEligible": false,
+  "promotable": false,
+  "completeHostedOutput": false,
+  "ci": {
+    "runId": 36498701748,
+    "url": "https://github.com/mekhovov/revealline/actions/runs/36498701748",
+    "status": "completed",
+    "conclusion": "success",
+    "jobs": [
+      {
+        "id": 109184187213,
+        "name": "candidate",
+        "url": "https://github.com/mekhovov/revealline/actions/runs/36498701748/job/109184187213",
+        "conclusion": "success",
+        "log": {
+          "path": "candidate-job-raw.log",
+          "bytes": 516056,
+          "sha256": "80e09dbf8b4d5896a8b60fdbb5dbd8f3da3e8467d91d65ebec088f724bda9219"
+        },
+        "summaries": [
+          {
+            "cohort": "company:test",
+            "tests": 945,
+            "suites": 0,
+            "pass": 945,
+            "fail": 0,
+            "cancelled": 0,
+            "skipped": 0,
+            "todo": 0,
+            "duration_ms": 507126.062214
+          },
+          {
+            "cohort": "company-review",
+            "tests": 16,
+            "suites": 0,
+            "pass": 16,
+            "fail": 0,
+            "cancelled": 0,
+            "skipped": 0,
+            "todo": 0,
+            "duration_ms": 147.663522
+          },
+          {
+            "cohort": "actor-appearance/replay",
+            "tests": 54,
+            "suites": 0,
+            "pass": 54,
+            "fail": 0,
+            "cancelled": 0,
+            "skipped": 0,
+            "todo": 0,
+            "duration_ms": 21782.684
+          },
+          {
+            "cohort": "installed/profile/offline-publication",
+            "tests": 45,
+            "suites": 0,
+            "pass": 45,
+            "fail": 0,
+            "cancelled": 0,
+            "skipped": 0,
+            "todo": 0,
+            "duration_ms": 3993.228703
+          },
+          {
+            "cohort": "soundtrack",
+            "tests": 119,
+            "suites": 0,
+            "pass": 119,
+            "fail": 0,
+            "cancelled": 0,
+            "skipped": 0,
+            "todo": 0,
+            "duration_ms": 4944.787933
+          },
+          {
+            "cohort": "publisher-source-boundaries",
+            "tests": 80,
+            "suites": 0,
+            "pass": 80,
+            "fail": 0,
+            "cancelled": 0,
+            "skipped": 0,
+            "todo": 0,
+            "duration_ms": 926.218202
+          }
+        ]
+      },
+      {
+        "id": 109184186888,
+        "name": "optional-practice",
+        "url": "https://github.com/mekhovov/revealline/actions/runs/36498701748/job/109184186888",
+        "conclusion": "success",
+        "log": {
+          "path": "optional-job-raw.log",
+          "bytes": 88704,
+          "sha256": "f0d8d414f5704e52c2c4d3bdd7f7562f0702cbc780fb4b1db2c35729a4c209ea"
+        },
+        "summaries": [
+          {
+            "cohort": "practice:test",
+            "tests": 165,
+            "suites": 0,
+            "pass": 165,
+            "fail": 0,
+            "cancelled": 0,
+            "skipped": 0,
+            "todo": 0,
+            "duration_ms": 22114.602718
+          }
+        ]
+      }
+    ],
+    "sourceEligibility": {
+      "assets": 294,
+      "files": 20638,
+      "format": "revealline-public-source-eligibility.v1",
+      "status": "verified"
+    },
+    "reproducibleBuilds": 2,
+    "verifiedPresentationReceipts": 18
+  },
+  "artifact": {
+    "id": 11005780188,
+    "name": "company-capacity-83706c9924e3972b106966a9bfffe542d1fde5e3",
+    "compressedBytes": 586886,
+    "sha256": "4b8e95de566e51d9c5ed81f5292fd55a11736eef13392273e89ab7a296a28d02",
+    "githubDigestVerified": true,
+    "expandedBytes": 1545799,
+    "files": 22,
+    "crcVerified": true,
+    "metadataPacketValidated": true
+  },
+  "packet": [
+    {
+      "path": "editions.json",
+      "bytes": 18568,
+      "sha256": "c77e6f459a019b6f3bf7b016d4dbf18c820a9691cf12f5b89bd0a66cec00049d"
+    },
+    {
+      "path": "candidate-verification.json",
+      "bytes": 13692,
+      "sha256": "028402fa7af640c7fe70a57c382b302197f67eda7d4f20b525cfd9254d7d0961"
+    },
+    {
+      "path": "capacity-inventory.json",
+      "bytes": 11094,
+      "sha256": "2542bb38a542433ec9e61f775fda08af74bf45057351d34e7752bfc9722a39e1"
+    },
+    {
+      "path": "manifest-coupa-adventure.json",
+      "bytes": 79980,
+      "sha256": "cf7d78bbec1c813accd5932d7160c54e5e83f64e3ba5b804f8acef40e397b4a7"
+    },
+    {
+      "path": "manifest-coupa-all.json",
+      "bytes": 85530,
+      "sha256": "9655ebe50c0102db0caee7b8ca348e3d5bf84024b7a6cc97a440a284bd8a954b"
+    },
+    {
+      "path": "manifest-coupa-culture.json",
+      "bytes": 79795,
+      "sha256": "dae54d054e09d5f19b0bb0629d3ba7e9bf6c3f6efe4657fb23806b03d4747c58"
+    },
+    {
+      "path": "manifest-coupa-developers.json",
+      "bytes": 79969,
+      "sha256": "688b2ffa4819cc39290bd3cd0cdf8f1fadfaf92ac91bf7ae2d5c3b373c99a186"
+    },
+    {
+      "path": "manifest-coupa-foundations.json",
+      "bytes": 80299,
+      "sha256": "bc3e6f9f7a3897bf0d02927ba761c4a2fd67b56cad5f8286ddf4a76d94bd89a1"
+    },
+    {
+      "path": "manifest-coupa-operations.json",
+      "bytes": 79988,
+      "sha256": "1fc397fa52bc3f6424244cb08f9d3ac64675c5e45986f64126771bd2cb4630b4"
+    },
+    {
+      "path": "manifest-droneaid-community.json",
+      "bytes": 78884,
+      "sha256": "afb2088368769d8cc50b461ee5dbd956843f071c1dde0d9f83f6775e83c2f0ac"
+    },
+    {
+      "path": "manifest-droneaid-nl-careful-handoff.json",
+      "bytes": 80945,
+      "sha256": "992299c672c901a8acea36611f8ec5a5088d1f837293b59128051c3b20a22879"
+    },
+    {
+      "path": "manifest-droneaid-nl-community.json",
+      "bytes": 93122,
+      "sha256": "27693135721a9143546d8668285b2e17a2fcb28750d684d01b16b675617ca6b0"
+    },
+    {
+      "path": "manifest-droneaid-nl-makers-together.json",
+      "bytes": 80939,
+      "sha256": "a9b00786a7e59d60e82abf614637a346cd4b5c2e0b84cf55f24877b50d7578d2"
+    },
+    {
+      "path": "manifest-droneaid-nl-parts-in-motion.json",
+      "bytes": 81287,
+      "sha256": "96d0082481742543fb3257912285e44156b210f8d7846b876eb5ce5037d7ddb8"
+    },
+    {
+      "path": "manifest-droneaid-nl-shared-horizon.json",
+      "bytes": 80923,
+      "sha256": "828a42e824d7c71bd6a750ea5160e1d228a496de293cba1004bd4d099142d351"
+    },
+    {
+      "path": "manifest-droneaid-nl-signals-of-support.json",
+      "bytes": 81011,
+      "sha256": "a656bd095c94326f0be99d51f37066a8697f11eb2fa8fae770ebf393ffcd802d"
+    },
+    {
+      "path": "manifest-droneaid-nl-workshop-lights.json",
+      "bytes": 80926,
+      "sha256": "44564574df54b65050a4775eac95d65735b50aeffd9e45d703af8f218499ef9c"
+    },
+    {
+      "path": "manifest-fpv-learning.json",
+      "bytes": 93740,
+      "sha256": "28858f5070857674f2bd8435738c40c69d4c7e196d295d777ab962b86edff3b2"
+    },
+    {
+      "path": "manifest-social-drone-ua.json",
+      "bytes": 83003,
+      "sha256": "c876be203be3cb3405803367d2265d855ff6b75e3fcc9da1e53f302f2cb4b3fe"
+    },
+    {
+      "path": "manifest-ukraine-culture.json",
+      "bytes": 89964,
+      "sha256": "5bf5542fada7bcf88517f40a03ad8d5f0c4771d9a57dc518b6891cfc3561b309"
+    },
+    {
+      "path": "manifest-victory-drones.json",
+      "bytes": 81728,
+      "sha256": "76feaad74b457761d0990dc0960d705b5d1a7bc6fb11aa88695c4abbca203578"
+    },
+    {
+      "path": "checksums.json",
+      "bytes": 10412,
+      "sha256": "d753b514a5d1896aa78dd7b68b6d0782f482da768952b957b3023c25b604953a"
+    }
+  ],
+  "selectedFpvDescriptorsEqualLocalFrozenCandidate": true,
+  "editions": [
+    {
+      "id": "coupa-adventure",
+      "immutableBytes": 26070372,
+      "stableLauncherBytes": 237439,
+      "immutableAndActiveLauncherBytes": 26307811
+    },
+    {
+      "id": "coupa-all",
+      "immutableBytes": 60470173,
+      "stableLauncherBytes": 237387,
+      "immutableAndActiveLauncherBytes": 60707560
+    },
+    {
+      "id": "coupa-culture",
+      "immutableBytes": 24794953,
+      "stableLauncherBytes": 237440,
+      "immutableAndActiveLauncherBytes": 25032393
+    },
+    {
+      "id": "coupa-developers",
+      "immutableBytes": 27938741,
+      "stableLauncherBytes": 237466,
+      "immutableAndActiveLauncherBytes": 28176207
+    },
+    {
+      "id": "coupa-foundations",
+      "immutableBytes": 27261775,
+      "stableLauncherBytes": 237468,
+      "immutableAndActiveLauncherBytes": 27499243
+    },
+    {
+      "id": "coupa-operations",
+      "immutableBytes": 26320077,
+      "stableLauncherBytes": 237441,
+      "immutableAndActiveLauncherBytes": 26557518
+    },
+    {
+      "id": "droneaid-community",
+      "immutableBytes": 25645764,
+      "stableLauncherBytes": 226287,
+      "immutableAndActiveLauncherBytes": 25872051
+    },
+    {
+      "id": "droneaid-nl-careful-handoff",
+      "immutableBytes": 27892831,
+      "stableLauncherBytes": 41866,
+      "immutableAndActiveLauncherBytes": 27934697
+    },
+    {
+      "id": "droneaid-nl-community",
+      "immutableBytes": 64937191,
+      "stableLauncherBytes": 41829,
+      "immutableAndActiveLauncherBytes": 64979020
+    },
+    {
+      "id": "droneaid-nl-makers-together",
+      "immutableBytes": 27760601,
+      "stableLauncherBytes": 41846,
+      "immutableAndActiveLauncherBytes": 27802447
+    },
+    {
+      "id": "droneaid-nl-parts-in-motion",
+      "immutableBytes": 28272639,
+      "stableLauncherBytes": 41846,
+      "immutableAndActiveLauncherBytes": 28314485
+    },
+    {
+      "id": "droneaid-nl-shared-horizon",
+      "immutableBytes": 28095117,
+      "stableLauncherBytes": 41834,
+      "immutableAndActiveLauncherBytes": 28136951
+    },
+    {
+      "id": "droneaid-nl-signals-of-support",
+      "immutableBytes": 27908808,
+      "stableLauncherBytes": 41882,
+      "immutableAndActiveLauncherBytes": 27950690
+    },
+    {
+      "id": "droneaid-nl-workshop-lights",
+      "immutableBytes": 26578780,
+      "stableLauncherBytes": 41846,
+      "immutableAndActiveLauncherBytes": 26620626
+    },
+    {
+      "id": "fpv-learning",
+      "immutableBytes": 33182828,
+      "stableLauncherBytes": 12685,
+      "immutableAndActiveLauncherBytes": 33195513
+    },
+    {
+      "id": "social-drone-ua",
+      "immutableBytes": 25377414,
+      "stableLauncherBytes": 12721,
+      "immutableAndActiveLauncherBytes": 25390135
+    },
+    {
+      "id": "ukraine-culture",
+      "immutableBytes": 42066369,
+      "stableLauncherBytes": 12761,
+      "immutableAndActiveLauncherBytes": 42079130
+    },
+    {
+      "id": "victory-drones",
+      "immutableBytes": 21651219,
+      "stableLauncherBytes": 12709,
+      "immutableAndActiveLauncherBytes": 21663928
+    }
+  ],
+  "allEditionComponentsBytes": 574220405,
+  "defaultInspection": {
+    "path": "default-capacity.json",
+    "bytes": 425562,
+    "sha256": "d5222c1bd1cdb5d02d16eef23b10b21d3e774afa08047d8e7756398b26bd5ff2"
+  },
+  "defaultPayloadBytesIncludingManifest": 798254741,
+  "optionalKnownComponents": [
+    {
+      "id": "civilian-flight",
+      "immutableBytes": 179026,
+      "stableLauncherOriginalsBytes": 19045,
+      "manifest": {
+        "bytes": 5631,
+        "path": "manifest-optional-civilian-flight.json",
+        "sha256": "bab68bff054f90eada4990875f751fa095e025f78a931e227d8941c129e7fe81"
+      }
+    },
+    {
+      "id": "civilian-fpv",
+      "immutableBytes": 2748526,
+      "stableLauncherOriginalsBytes": 19014,
+      "manifest": {
+        "bytes": 9242,
+        "path": "manifest-optional-civilian-fpv.json",
+        "sha256": "25cb24f8a1541097cba8ed8bea71dc9a179ecb6afb797cfaa11d7b5ca4e0bc17"
+      }
+    }
+  ],
+  "knownDefaultAndOptionalBytes": 801220352,
+  "subsets": [
+    {
+      "id": "four-new",
+      "ids": ["social-drone-ua", "victory-drones", "ukraine-culture", "fpv-learning"],
+      "editionComponentsBytes": 122328706,
+      "knownLowerBound": 923549058,
+      "remainingTo950000000": 26450942
+    },
+    {
+      "id": "six-company-community",
+      "ids": [
+        "coupa-all",
+        "droneaid-nl-community",
+        "social-drone-ua",
+        "victory-drones",
+        "ukraine-culture",
+        "fpv-learning"
+      ],
+      "editionComponentsBytes": 248015286,
+      "knownLowerBound": 1049235638,
+      "remainingTo950000000": -99235638
+    },
+    {
+      "id": "all18",
+      "ids": [
+        "coupa-adventure",
+        "coupa-all",
+        "coupa-culture",
+        "coupa-developers",
+        "coupa-foundations",
+        "coupa-operations",
+        "droneaid-community",
+        "droneaid-nl-careful-handoff",
+        "droneaid-nl-community",
+        "droneaid-nl-makers-together",
+        "droneaid-nl-parts-in-motion",
+        "droneaid-nl-shared-horizon",
+        "droneaid-nl-signals-of-support",
+        "droneaid-nl-workshop-lights",
+        "fpv-learning",
+        "social-drone-ua",
+        "ukraine-culture",
+        "victory-drones"
+      ],
+      "editionComponentsBytes": 574220405,
+      "knownLowerBound": 1375440757,
+      "remainingTo950000000": -425440757
+    }
+  ],
+  "limits": {
+    "defaultArchiveBytes": 800000000,
+    "wholeHostedSiteBytes": 950000000
+  },
+  "hostingPolicy": "main-repository-only; explicit selected editions on the main site, omitted/historical editions available through verified GitHub Release downloads; no new hosting targets or cap increases",
+  "limitations": [
+    "The metadata packet binds the successful CI source/admission/reproducibility receipts. All 18 archive bodies were not downloaded or independently extracted locally.",
+    "Subsets are capacity examples, not deployment selections. Lower bounds omit root routes/publication metadata, retained hosted versions, company/optional hubs, optional current pointers and other generated files.",
+    "The exact same-source default STORE archive separately projects to798633041 bytes; this is a size check, not default archive hash/extraction or merged-main release qualification.",
+    "These figures belong only to83706c992. Later observer-only commits retain separate source identities and need their own CI evidence; no automatic new-head qualification is inferred.",
+    "Initial log reads were refused by the gh terminal-escape filter; retries explicitly retained ANSI bytes in raw log files. This was a retrieval-tool limitation, not a CI failure.",
+    "Human/device review, publication approval and version allocation are not implied."
+  ]
+}

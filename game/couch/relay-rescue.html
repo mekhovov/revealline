@@ -1201,6 +1201,30 @@
             ><input id="coop-reduced" type="checkbox" />
             <span data-i18n="interface:reduceEffects">Reduce effects</span></label
           >
+          <label class="settings-check"
+            ><input
+              id="coop-enemy-remains"
+              type="checkbox"
+              aria-describedby="coop-enemy-remains-hint"
+            /><span data-i18n="common:preferences.enemyRemains">Show enemy remains</span></label
+          >
+          <p
+            id="coop-enemy-remains-hint"
+            class="micro-note"
+            data-i18n="common:preferences.enemyRemainsHint"
+          >
+            Show defeated optional enemies where supported. Warnings, shots and brief hit effects
+            stay visible.
+          </p>
+          <p id="coop-enemy-remains-status" class="micro-note" role="status" hidden></p>
+          <button
+            id="coop-enemy-remains-retry"
+            type="button"
+            data-i18n="common:preferences.retryEncounterSave"
+            hidden
+          >
+            Retry saving
+          </button>
           <p id="coop-system-reduction" class="setting-note"></p>
           <p id="coop-display-status" class="setting-note" role="status"></p>
           <label

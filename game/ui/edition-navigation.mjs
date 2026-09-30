@@ -1,4 +1,5 @@
 import { localizedText } from '../i18n/index.mjs';
+import { isStudioPreview, STUDIO_PREVIEW_PARAMETER } from '../studio-preview-session.mjs';
 import { editionPublicSlug } from '../edition-context.mjs';
 
 const onlineRoot = 'https://mekhovov.github.io/revealline/';
@@ -50,6 +51,7 @@ export function mountEditionNavigation({ provider, document: doc, href }) {
       const destination = new URL(game.href);
       destination.search = target.search;
       destination.searchParams.set('edition', editionPublicSlug(provider.editionId));
+      if (isStudioPreview(href)) destination.searchParams.set(STUDIO_PREVIEW_PARAMETER, '1');
       if (provider.retainedPresentationId)
         destination.searchParams.set('presentation', provider.retainedPresentationId);
       else destination.searchParams.delete('presentation');

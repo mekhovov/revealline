@@ -1,0 +1,232 @@
+{
+  "format": "revealline-showcase-candidate-evidence.v1",
+  "recordedAt": "2026-09-29T02:39:51.381763+00:00",
+  "publicEligible": false,
+  "sourceRevision": "4689753f6af7dbc5bc6a7fe37161b08a511599b7",
+  "sourceTree": "b61f31b0993cd71ec1c98bfc649ae02787df0b08",
+  "version": "v0.142.3",
+  "editionIds": ["social-drone-ua", "ukraine-culture", "victory-drones"],
+  "reproducibleBuilds": 2,
+  "sourceEligibility": {
+    "assets": 294,
+    "files": 5039,
+    "format": "revealline-public-source-eligibility.v1",
+    "status": "verified"
+  },
+  "admission": {
+    "editions": [
+      {
+        "distributionSha256": "2a1b75c4bd79638f4f034f4e77dbb27a9576870566281f4507e7287eba32f065",
+        "files": 619,
+        "id": "social-drone-ua",
+        "sourceArchiveSha256": "bc7b32e6d34262e6411775d72bcf09b01c6b08bf9489d82210bdb2909019b364",
+        "totalBytes": 25313285
+      },
+      {
+        "distributionSha256": "5981194fdd06d0b6bb9f05366742f20b064b6c13e29544268f535cc3920357d0",
+        "files": 662,
+        "id": "ukraine-culture",
+        "sourceArchiveSha256": "6419beacd4aebf04c4d99f57e4af3fc803557be7daaefa68ace041d356a51c20",
+        "totalBytes": 41995279
+      },
+      {
+        "distributionSha256": "b19d5f37caf068139f4e1d2d54c648fc54910856aa35ad8d6b63c773a371d448",
+        "files": 611,
+        "id": "victory-drones",
+        "sourceArchiveSha256": "4d3854a74d083c4e34f80ff13ebacd983e0e21c43c3088f6d85ac988eb066aea",
+        "totalBytes": 21588365
+      }
+    ],
+    "format": "revealline-editions-admission.v1",
+    "publicEligible": false,
+    "sourceRevision": "4689753f6af7dbc5bc6a7fe37161b08a511599b7",
+    "sourceTree": "b61f31b0993cd71ec1c98bfc649ae02787df0b08",
+    "status": "verified-candidate-members",
+    "version": "v0.142.3",
+    "zipMembersVerified": true
+  },
+  "presentationReceipts": [
+    {
+      "authoredPresentationSha256": "7a5367fe55d1b22621662ac29d4c1224a1635fa0b40d0a8cb6e24d620b19a826",
+      "editionId": "social-drone-ua",
+      "retained": [
+        {
+          "authoredPresentationSha256": "3a82bd8aa3306adf9f02be6f56945985b7e54e1606fc3156a2271ba19bbd16a6"
+        },
+        {
+          "authoredPresentationSha256": "985d7722d69526a98abc1d7026c2279ace2a64443362dcc861aab6cd92fb608b"
+        },
+        {
+          "authoredPresentationSha256": "b082d3766168bd305e235adad284813b2a8578de5de009f8ca985aaf1a2e5bd6"
+        },
+        {
+          "authoredPresentationSha256": "9ae68b77e05e8b2a0dc934510e080af89ee5223a3304a0197c3b53a2e61af1b0"
+        },
+        {
+          "authoredPresentationSha256": "943441d44205dfced2e89cf47738d2fd6cc22e886cbd0fbea5bb24d77177e0de"
+        },
+        {
+          "authoredPresentationSha256": "776e569d90c869e8cdf96beb046d21d9f5439fde57c9fbe991119e4029e0dcd6"
+        },
+        {
+          "authoredPresentationSha256": "95c2f3c78f07732c3d804e042b5c5a1bb56d9c38f79330b1d09135f46affecd5"
+        }
+      ]
+    },
+    {
+      "authoredPresentationSha256": "2dd69ecc1f96478c028aa621629aa6555c1175d540783b05a38320ed86074f29",
+      "editionId": "ukraine-culture",
+      "retained": [
+        {
+          "authoredPresentationSha256": "3e868c83c369a31d78e3a551e8b83b6179bba80543dca9df19cbb73566deb295"
+        },
+        {
+          "authoredPresentationSha256": "430cb1cb0c5231f9c42dc9fd9d2b0e55b35a49c676e09c0df8effa17f9a396b2"
+        },
+        {
+          "authoredPresentationSha256": "95915f9348a50bb93f6c5d234624f85fc1a758f59d1db2bb4f804876257a3c25"
+        },
+        {
+          "authoredPresentationSha256": "004d6874394bf5d37967eb841fa0004c4980d40169f7154b425ab3fcdea83e58"
+        },
+        {
+          "authoredPresentationSha256": "b056de12bcb25f16bc3ed5324b5a0e1a7e30f2614a37eb244675ef02a8c2a805"
+        },
+        {
+          "authoredPresentationSha256": "976af38b7451ae581864ff9baef4975cab0c3feb385fa73ea8d3680e43ed5742"
+        },
+        {
+          "authoredPresentationSha256": "c92804d620efc050f08aacc1428bf20a5517d5f89488daf07abc67c336815e7f"
+        }
+      ]
+    },
+    {
+      "authoredPresentationSha256": "a26b277283688b02459ae3af631b313d0983abebcffba1d5681f4b74a1b3781f",
+      "editionId": "victory-drones",
+      "retained": [
+        {
+          "authoredPresentationSha256": "9685f48ccc6c053c69aebb695a1f31e66e54a839806e8956d816258cc07906d8"
+        },
+        {
+          "authoredPresentationSha256": "abcba1ea9574640497faf043f8caf26a039f1355d34df68f3e2f8546690439b4"
+        },
+        {
+          "authoredPresentationSha256": "afeb4333ec165a3ecbaa01bce74822744e2f56238f7608701284bcbd436638b3"
+        },
+        {
+          "authoredPresentationSha256": "6de52c0aa1ae09a7f9699adb5d73f69c779a5220e003434cb6dfe5c6333bff9f"
+        },
+        {
+          "authoredPresentationSha256": "36e42f75903c47abf1c23da0f22f46b74498284cdf84abd0b5f36b10d5838037"
+        }
+      ]
+    }
+  ],
+  "originals": [
+    {
+      "editionId": "social-drone-ua",
+      "distribution": {
+        "bytes": 25483370,
+        "path": "distribution-social-drone-ua.zip",
+        "sha256": "2a1b75c4bd79638f4f034f4e77dbb27a9576870566281f4507e7287eba32f065"
+      },
+      "manifest": {
+        "bytes": 83003,
+        "path": "manifest-social-drone-ua.json",
+        "sha256": "9f484f89e3ffa7b8ff6f9f7498aa8b19a893715f1bae5acb15f9cb365d380cad"
+      },
+      "sourceArchive": {
+        "bytes": 25213532,
+        "path": "source-social-drone-ua.zip",
+        "sha256": "bc7b32e6d34262e6411775d72bcf09b01c6b08bf9489d82210bdb2909019b364"
+      },
+      "sourceInventory": {
+        "bytes": 94939,
+        "path": "source-inventory-social-drone-ua.json",
+        "sha256": "4bf23f47e9eb98cd1ca53998309af933f20e1346458cc7f40d5175ae1ee6bee5"
+      },
+      "contentSha256": "ef4d2c0f8e77972fdcfb1cddf1f3f4f67615cc07d6e939c86aef9581bc45e294"
+    },
+    {
+      "editionId": "ukraine-culture",
+      "distribution": {
+        "bytes": 42180665,
+        "path": "distribution-ukraine-culture.zip",
+        "sha256": "5981194fdd06d0b6bb9f05366742f20b064b6c13e29544268f535cc3920357d0"
+      },
+      "manifest": {
+        "bytes": 89964,
+        "path": "manifest-ukraine-culture.json",
+        "sha256": "0682d1b68e9da600343c8b882c60182f9a2889d331767aae52861bcd0c446980"
+      },
+      "sourceArchive": {
+        "bytes": 41883997,
+        "path": "source-ukraine-culture.zip",
+        "sha256": "6419beacd4aebf04c4d99f57e4af3fc803557be7daaefa68ace041d356a51c20"
+      },
+      "sourceInventory": {
+        "bytes": 109826,
+        "path": "source-inventory-ukraine-culture.json",
+        "sha256": "195b71fe823d1789378c420d078510a8612626ddf5b80c1ea9e8c6f7f1e05247"
+      },
+      "contentSha256": "4e2fde15b5d2dac63cd49c49a786ba7c3eda5bb818e4168ce8c144cecf2bf867"
+    },
+    {
+      "editionId": "victory-drones",
+      "distribution": {
+        "bytes": 21755651,
+        "path": "distribution-victory-drones.zip",
+        "sha256": "b19d5f37caf068139f4e1d2d54c648fc54910856aa35ad8d6b63c773a371d448"
+      },
+      "manifest": {
+        "bytes": 81728,
+        "path": "manifest-victory-drones.json",
+        "sha256": "b06846f3cf55bc53e4e89117bb23826790906ded96f72760247b96d68fa85c40"
+      },
+      "sourceArchive": {
+        "bytes": 21490804,
+        "path": "source-victory-drones.zip",
+        "sha256": "4d3854a74d083c4e34f80ff13ebacd983e0e21c43c3088f6d85ac988eb066aea"
+      },
+      "sourceInventory": {
+        "bytes": 92145,
+        "path": "source-inventory-victory-drones.json",
+        "sha256": "cd4686a0f20fe64c8cb3bee79a52265a8356def16d60d477ce3eb33eb2aa5ff9"
+      },
+      "contentSha256": "3dd01aaa9cb80900003a6bad1787651cd1d09a34df9a9a26fc97fc5c1629033b"
+    }
+  ],
+  "metadata": [
+    {
+      "name": "editions.json",
+      "bytes": 3602,
+      "sha256": "f6bd1fb3d0e33a16c1475bd7c3e8c46bb7acdc6887ccb14b42442d2c0048f15a"
+    },
+    {
+      "name": "candidate-verification.json",
+      "bytes": 3977,
+      "sha256": "dcbfdb62410584e76fff86bf4cbb59e79361050331c721389405d5f54da3b4c9"
+    },
+    {
+      "name": "checksums.json",
+      "bytes": 2032,
+      "sha256": "f620dd5a666114c5924716e2b2a75aa612ef57f64c45e234e5517ba4dcf03270"
+    },
+    {
+      "name": "capacity-inventory.json",
+      "bytes": 2801,
+      "sha256": "43384a40421785ad366c4c02ad599458bf4a6b3a86cb8fb78719dbcd38d7514f"
+    }
+  ],
+  "buildLog": {
+    "name": "discovery-showcase-4689753f6-build.log",
+    "bytes": 554,
+    "sha256": "43ae0355354ca7794d10286d557d6a35a948d1aa445c2cf1ad654002d46b817f",
+    "rawKeptLocal": true
+  },
+  "limitations": [
+    "Three selected editions only; no full eighteen-edition/default archive or hosted-output qualification.",
+    "v0.142.3 is the existing package version used for local candidates; these private artifacts are not replacements or additions to the published release. Release coordination owns the later target version and promotion.",
+    "Browser, performance, device and human reviews remain separate; candidate admission does not approve publication."
+  ]
+}

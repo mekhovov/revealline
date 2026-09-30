@@ -1,5 +1,6 @@
 // Minimal browser boundary for the actual solo entry. No layout or pixel claims.
 import assert from 'node:assert/strict';
+import { rasterDimensions } from './raster-image.mjs';
 import { readFile } from 'node:fs/promises';
 import { BoardPainter } from '../../ui/render.mjs';
 import { Document, Element, Events } from './couch-dom.mjs';
@@ -174,7 +175,6 @@ export async function soloPage(
     parentWindow,
     pictures,
     waitForPictures = true,
-    animationFrames = false,
     initialReadyTimeoutMs = 5000,
     browserSetup,
     readPads = () => [],
@@ -378,21 +378,10 @@ export async function soloPage(
       },
     },
   };
-  if (animationFrames) {
-    win.performance = { now: () => now };
-    win.requestAnimationFrame = globals.requestAnimationFrame;
-    win.cancelAnimationFrame = globals.cancelAnimationFrame;
-  }
   // Presentation bytes, manifests and header/hash validation remain real. Only
   // browser codecs are modeled, as they are unavailable in the Node DOM host.
-  const pngDimensions = async (blob) => {
-    const bytes = new Uint8Array(await blob.arrayBuffer());
-    const view = new DataView(bytes.buffer, bytes.byteOffset, bytes.byteLength);
-    assert.deepEqual([...bytes.subarray(0, 8)], [137, 80, 78, 71, 13, 10, 26, 10]);
-    return { width: view.getUint32(16), height: view.getUint32(20) };
-  };
   if (typeof globalThis.createImageBitmap !== 'function')
-    globals.createImageBitmap = async (blob) => ({ ...(await pngDimensions(blob)), close() {} });
+    globals.createImageBitmap = async (blob) => ({ ...(await rasterDimensions(blob)), close() {} });
   if (typeof globalThis.FontFace !== 'function')
     globals.FontFace = class {
       constructor(family) {
@@ -422,16 +411,15 @@ export async function soloPage(
     globals.Image = class {
       set src(value) {
         this.source = value;
+        const data = /^data:(image\/(?:png|jpeg|webp));base64,/.exec(value);
         const blob =
           codecBlobs.get(value) ??
-          (/^data:image\/png;base64,/.test(value)
-            ? new Blob([Buffer.from(value.split(',')[1], 'base64')], { type: 'image/png' })
-            : null);
+          (data ? new Blob([Buffer.from(value.split(',')[1], 'base64')], { type: data[1] }) : null);
         if (!blob) {
           queueMicrotask(() => this.onerror?.());
           return;
         }
-        void pngDimensions(blob).then(
+        void rasterDimensions(blob).then(
           ({ width, height }) => {
             if (this.source !== value) return;
             this.naturalWidth = this.width = width;
@@ -531,13 +519,6 @@ export async function soloPage(
   function frame(ms = 1000 / 120) {
     now += ms;
     scene.update(now, ms);
-    if (animationFrames && !doc.hidden) {
-      const queued = [...frames];
-      for (const [id, callback] of queued) {
-        if (!frames.delete(id)) continue;
-        callback(now);
-      }
-    }
   }
   if (waitForPictures)
     await initialReady(

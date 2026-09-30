@@ -16,7 +16,7 @@ INVENTORY = 'authoring/library/reserve-illustrations-wave-10/provenance/selected
 THEMES = {'fpv': 'FPV Front', 'ukraine': 'Ukraine Atlas', 'retro': '1994 Forever', 'coupa': 'Spend Network'}
 LOCAL = {'index.html': 'text/html', 'catalog.css': 'text/css', 'catalog.mjs': 'text/javascript', 'manifest.json': 'application/json', 'README.md': 'text/plain'}
 # Reviewed runtime closure for this catalog's launcher and controller reader.
-# These are application code/fonts only: original art still comes exclusively
+# These are application code/fonts and one compact identity icon: original art comes exclusively
 # from the pinned Git routes below. New imports require an explicit review.
 CONTROLLER_FILES = (
     'game/controller-bindings.mjs',
@@ -34,6 +34,10 @@ CONTROLLER_FILES = (
     'game/ui/authoring-reference-entry.mjs',
     'game/ui/authoring-reference.mjs',
     'game/ui/authoring-sources.mjs',
+    'game/ui/brand-identity.css',
+    'game/ui/art/identity/fpv-line/icon-192.png',
+    'game/ui/controller-confirm-guard.mjs',
+    'game/ui/controller-confirm-lifecycle.mjs',
     'game/ui/controller-field-editor.css',
     'game/ui/controller-field-editor.mjs',
     'game/ui/controller-navigation.mjs',
@@ -49,13 +53,14 @@ CONTROLLER_FILES = (
     'game/ui/native-menu-icons.mjs',
     'game/ui/operation-status.css',
     'game/ui/operation-status.mjs',
+    'game/ui/page-input-host.mjs',
     'game/ui/settings-panels.mjs',
     'game/vendor/i18next-26.4.2.min.js',
 )
 
 
 def controller_routes(root=ROOT):
-    mime_types = {'.js': 'text/javascript', '.mjs': 'text/javascript', '.css': 'text/css', '.woff2': 'font/woff2'}
+    mime_types = {'.js': 'text/javascript', '.mjs': 'text/javascript', '.css': 'text/css', '.woff2': 'font/woff2', '.png': 'image/png'}
     routes = {}
     total = 0
     for name in CONTROLLER_FILES:

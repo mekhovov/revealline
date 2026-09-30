@@ -1,0 +1,140 @@
+{
+  "format": "revealline.game-feel-batch-evidence.v1",
+  "date": "2026-09-28",
+  "parentSource": "21dd36e2a22aff0d4db590e789cb1887a02b9729",
+  "publicationStatus": "draft-source-not-released",
+  "sourceAndBuiltAssets": [
+    {
+      "path": "authoring/game-feel-lab/README.md",
+      "bytes": 3839,
+      "sha256": "45629e25fb51ebb018154ec4470dd6eabc34b68f4fe253789c88d6fc72051b7b"
+    },
+    {
+      "path": "authoring/game-feel-lab/background.mjs",
+      "bytes": 5061,
+      "sha256": "25928e3b89c32561dfc817e94c77638d7f39887178c61806a68f10a8974c76d2"
+    },
+    {
+      "path": "authoring/game-feel-lab/index.html",
+      "bytes": 4149,
+      "sha256": "51de014235bd45621761e0cc982171410145dfb91ed406531dd981f2e2f567f5"
+    },
+    {
+      "path": "authoring/game-feel-lab/lifecycle.mjs",
+      "bytes": 2369,
+      "sha256": "ed771c147fddc8abfae46cf181d033b36a5281428c58ee221ff4738080e43852"
+    },
+    {
+      "path": "authoring/game-feel-lab/render.mjs",
+      "bytes": 5426,
+      "sha256": "30b99640c772f37b43efb70fc51038f1b2613924e7b6e6e148d9af207bef66b7"
+    },
+    {
+      "path": "authoring/game-feel-lab/sequence.mjs",
+      "bytes": 4659,
+      "sha256": "2d16d7f40134c75920c39ab42ec06c07cf2cd7d1037181ed37563e9897a6cfcb"
+    },
+    {
+      "path": "authoring/game-feel-lab/workshop.css",
+      "bytes": 2432,
+      "sha256": "2c23311b960f8dd6511996fbfe6e6eff91d0aacd8cb1680d60be5838164e4883"
+    },
+    {
+      "path": "authoring/game-feel-lab/workshop.mjs",
+      "bytes": 6887,
+      "sha256": "6828fa27641867ac205715f962ca08931abcfae517838953c30abca6c9b6a763"
+    },
+    {
+      "path": "authoring/library/real-world-references/synevyr-lake-rafts.jpg",
+      "bytes": 4590659,
+      "sha256": "8c80f050ed422be5f8ac323c78b22143007d579289aeb0b1ce8327aa3f6a87c8"
+    },
+    {
+      "path": "authoring/library/real-world-references/synevyr-lake-rafts.json",
+      "bytes": 1364,
+      "sha256": "ebd2674c5be5c99c9c9a986066b69d20f43ef72f7458030633745199eac517a7"
+    },
+    {
+      "path": "authoring/motion-lab/app.js",
+      "bytes": 77731,
+      "sha256": "1ba55f952aeef61ebee6c0f4f7d05d34f87f7ce0f8c6318088176ba2fac87b62"
+    },
+    {
+      "path": "authoring/motion-lab/rotor-editor.mjs",
+      "bytes": 7011,
+      "sha256": "6f8c1dc7d00da8c80ea9aaaa37734c7f54b06c6381cecdff3e62707e898dcaec"
+    },
+    {
+      "path": "game/couch/coop-actor-presentation.mjs",
+      "bytes": 12820,
+      "sha256": "a0d5a80041f138e293be5f64007d641808316b41c00ab8625d70a9b26799e5ba"
+    },
+    {
+      "path": "game/couch/coop-pilot-cues.mjs",
+      "bytes": 559,
+      "sha256": "faa4a2415f788abe5f4c98d2b1b8f9517c1982cbb2330335903e673d461e00e7"
+    },
+    {
+      "path": "game/couch/coop-view.mjs",
+      "bytes": 31974,
+      "sha256": "f08a8a0223d586fbd9147c7b16d89a081446430afb3becf135a5c39678ac6bd5"
+    },
+    {
+      "path": "game/i18n/catalogs.mjs",
+      "bytes": 965651,
+      "sha256": "a2a094d6ef610c13a94bfb53cc427f3b7f42da4d39949cea33b433e273a06cfe"
+    },
+    {
+      "path": "game/ui/actor-presentation.mjs",
+      "bytes": 35351,
+      "sha256": "dd57c1d5e27bc3e0b382eeb4a08bb470eaffa8415adf826a4892fbea908ad157"
+    }
+  ],
+  "sourceBuiltMismatchCount": 0,
+  "focusedTests": {
+    "cohort": 155,
+    "lab": 14,
+    "failed": 0,
+    "skipped": 0
+  },
+  "productionReview": {
+    "pass": 1,
+    "fail": 1,
+    "reason": "Changed Team source fingerprint awaits canonical reviewed adoption."
+  },
+  "build": {
+    "out": "/Users/oleksandr.mekhovov/.codex/worktrees/actor-loader-regression/go_test/dist",
+    "version": "0.141.7",
+    "files": 1766,
+    "sha256": "4709550213fdba55db0e07958918f81c05546ce754a9588ba4855b93fb5edc87",
+    "sourceRevision": null
+  },
+  "browser": {
+    "desktop": {
+      "width": 1280,
+      "height": 720,
+      "dpr": 2
+    },
+    "labPhone": {
+      "width": 390,
+      "height": 844,
+      "scrollWidth": 390,
+      "minButtonHeight": 44
+    },
+    "photoTwoViewDraw": {
+      "medianMs": 0.1,
+      "p95Ms": 0.2,
+      "samples": 120,
+      "warmup": 20,
+      "qualification": "local draw calls only, not FPS"
+    },
+    "physicalDevices": false,
+    "wholeMissionCompletion": false
+  },
+  "limitations": [
+    "Unregistered sprite candidates require production adoption",
+    "Current Team production-review guard remains blocking",
+    "Full roster/artwork and three playable benchmarks unfinished",
+    "Human play sessions, physical input, full offline and public qualification incomplete"
+  ]
+}

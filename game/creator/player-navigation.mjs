@@ -2,6 +2,7 @@ import { attachControllerNavigation } from '../ui/controller-navigation.mjs';
 import { createControllerRouter } from '../ui/controller-router.mjs';
 import { attachControllerConfirmGuard } from '../ui/controller-confirm-guard.mjs';
 import { createControllerConfirmLifecycle } from '../ui/controller-confirm-lifecycle.mjs';
+import { settingsTabOwnsKey } from '../ui/settings-panels.mjs';
 import { createAuthoringSourcePicker } from '../ui/authoring-sources.mjs';
 
 /** One menu owner sampled by the player's existing RAF. Flight keeps its own
@@ -11,6 +12,8 @@ export function attachCreatorPlayerNavigation({
   window: win = globalThis.window,
   getScope,
   getDefaultFocus,
+  getRoot = () => doc.body,
+  onBack = () => false,
   readPads = () => win.navigator.getGamepads?.() || [],
   now = () => win.performance?.now?.() ?? Date.now(),
 } = {}) {
@@ -45,6 +48,7 @@ export function attachCreatorPlayerNavigation({
   sources.dialog.id = 'creator-player-sources';
   const primary = () => topDialog()?.querySelector('button:not(:disabled)') || getDefaultFocus();
   const back = () => {
+    if (onBack() === true) return;
     const dialog = topDialog();
     if (dialog === sources.dialog) sources.close();
     else if (dialog) {
@@ -61,8 +65,9 @@ export function attachCreatorPlayerNavigation({
   navigation = attachControllerNavigation({
     document: doc,
     keyboard: true,
+    ownsKeyboardEvent: (event) => settingsTabOwnsKey(event, topDialog()),
     getScope: scope,
-    getRoot: () => topDialog() || doc.body,
+    getRoot: () => topDialog() || getRoot(),
     getDefaultFocus: primary,
     accept: (element) => !element.closest('#arena,.touch-controls'),
     activateControl: (element) => guard.activate(element),
@@ -79,7 +84,7 @@ export function attachCreatorPlayerNavigation({
     readConfirm: (options) => router.readMenuConfirm(options),
     getContext: () => ({
       scope: scope(),
-      root: topDialog() || doc.body,
+      root: topDialog() || getRoot(),
       focused: doc.activeElement,
       active:
         !disposed &&

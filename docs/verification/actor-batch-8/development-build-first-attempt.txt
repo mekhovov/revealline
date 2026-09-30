@@ -1,0 +1,5 @@
+
+> revealline@0.141.7 build
+> node scripts/game-cli.mjs build --out /tmp/revealline-actor-batch-8-build
+
+Game CLI error: Build output parent may not traverse symbolic links

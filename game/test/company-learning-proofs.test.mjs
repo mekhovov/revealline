@@ -10,6 +10,9 @@ import { applyGameplayTuning } from '../gameplay-tuning.mjs';
 import { createRun, stepRun, FIXED_DT } from '../core/index.mjs';
 import { createRecorder, recordInput, exportReplay } from '../replay.mjs';
 import { companySimulationIdentity } from '../company-session.mjs';
+import { completionLearningReference } from '../rewards/learning.mjs';
+import { canonicalJSON } from '../data-json.mjs';
+import { createHash } from 'node:crypto';
 
 const lesson = COMPANY_LESSONS.find((entry) => entry.missionId === 'coupa-source-to-pay-01');
 const row = JSON.parse(
@@ -74,11 +77,43 @@ test('historical mastery retains independently replayed proof across retries, re
   const f = fixture(),
     store = createCompanyLearningProofStore(f.config);
   assert.equal(store.load(lesson.missionId), null);
+  const initial = store.rewardEvidence();
+  let changes = 0;
+  const stop = store.onRewardEvidenceChange(() => changes++);
   const proof = await store.prove(f);
+  assert.equal(store.rewardEvidence(), initial, 'Verification alone does not adopt completion.');
   assert.equal(store.saveVerified(proof), true);
+  assert.equal(store.key, 'revealline.company-learning-proofs.coupa-foundations.v1');
+  assert.equal(store.recoveryKey, store.key + '.recovery');
+  const originalBody = {
+    format: 'revealline-learning-proof.v1',
+    editionId: f.config.editionId,
+    attempt: f.attempt,
+    replay: f.replay,
+  };
+  const originalProof = {
+    ...originalBody,
+    proofId: createHash('sha256').update(canonicalJSON(originalBody)).digest('hex'),
+  };
+  assert.equal(
+    f.data.get(store.key),
+    JSON.stringify({
+      format: 'revealline-learning-proof-store.v1',
+      editionId: f.config.editionId,
+      proofs: [originalProof],
+    }),
+    'The shared evidence lifecycle preserves the original learning wire bytes and keys.',
+  );
+  assert.equal(changes, 1);
+  assert.deepEqual(store.rewardEvidence().learning, [
+    { ...completionLearningReference(lesson), attemptId: f.attempt.id },
+  ]);
+  assert.deepEqual(store.rewardEvidence().durableLearning, store.rewardEvidence().learning);
+  stop();
   const reopened = createCompanyLearningProofStore(f.config);
   assert.deepEqual(await reopened.hydrate(), { verified: 1, rejected: 0 });
   assert.equal(reopened.load(lesson.missionId).status, 'complete');
+  assert.deepEqual(reopened.rewardEvidence().durableLearning, store.rewardEvidence().learning);
   const backup = JSON.parse(JSON.stringify(store.exportProofs()));
   assert.throws(() => reopened.saveVerified(backup[0]), /replay-verified/);
   assert.equal(reopened.importVerified(await reopened.inspectProofs(backup)), true);
@@ -141,6 +176,8 @@ test('storage failure and read-only tabs preserve verified in-memory backup evid
   assert.equal(store.saveVerified(proof), false);
   assert.equal(store.load(lesson.missionId).status, 'complete');
   assert.equal(store.exportProofs()[0].proofId, proof.proofId);
+  assert.equal(store.rewardEvidence().learning.length, 1);
+  assert.deepEqual(store.rewardEvidence().durableLearning, []);
   const writable = createCompanyLearningProofStore(f.config);
   writable.saveVerified(await writable.prove(f));
   const reader = createCompanyLearningProofStore({
@@ -149,6 +186,25 @@ test('storage failure and read-only tabs preserve verified in-memory backup evid
   });
   assert.equal((await reader.hydrate()).verified, 1);
   assert.equal(reader.load(lesson.missionId).status, 'complete');
+});
+
+test('a changed lesson does not inherit reward evidence, while restoring the exact retained lesson re-verifies its original proof', async () => {
+  const f = fixture(),
+    store = createCompanyLearningProofStore(f.config);
+  store.saveVerified(await store.prove(f));
+  const original = f.data.get(store.key);
+  const newer = createCompanyLearningProofStore({
+    ...f.config,
+    lessons: [{ ...lesson, fixtureRevision: '2' }],
+  });
+  assert.equal((await newer.hydrate()).rejected, 1);
+  assert.deepEqual(newer.rewardEvidence().learning, []);
+  assert.deepEqual(newer.rewardEvidence().durableLearning, []);
+  assert(newer.exportRecovery().sources.includes(original));
+  assert.equal(f.data.get(store.key), original);
+  const retained = createCompanyLearningProofStore(f.config);
+  assert.equal((await retained.hydrate()).verified, 1);
+  assert.deepEqual(retained.rewardEvidence().learning, store.rewardEvidence().learning);
 });
 
 test('unrecognized historical proof bytes survive a later valid save in a recovery journal', async () => {

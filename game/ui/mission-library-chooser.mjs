@@ -1,3 +1,4 @@
+import { attachMissionLibraryGoal } from './mission-library-goal.mjs';
 import { createJourneyArtworkView } from './journey-artwork.mjs';
 import {
   t,
@@ -14,12 +15,12 @@ import {
 } from '../mission-library/library.mjs';
 import { paintMissionThumbnail } from '../content-design/mission-card.mjs';
 import { trackMissionLibraryOpening } from '../mission-library/opening-intent.mjs';
-import { commitMenuRetune, menuRetuneOrigin } from './menu-retune.mjs';
 import {
   applyLevelCardPresentation,
   createLevelCardView,
   levelCardPresentation,
 } from './level-card.mjs';
+import { commitMenuRetune, menuRetuneOrigin } from './menu-retune.mjs';
 
 const LIBRARY_TAG_KEYS = Object.freeze({
   Journey: 'common:collections.journey',
@@ -54,6 +55,7 @@ export function attachMissionLibraryChooser({
   getCurrentId = () => null,
   supportedModes = LIBRARY_MODES,
   availableCollectionsOnly = false,
+  goalPreferenceOptions = {},
   description = localizedMessage('interface:allMissionsOneLibraryJourneyClassicAndCustomKeepTheir'),
 }) {
   if (
@@ -210,6 +212,7 @@ export function attachMissionLibraryChooser({
     resizeFrame = null,
     viewportAnchor = null,
     message = '';
+  let goal = null;
   let initialOpen = true;
   let saved = null;
   try {
@@ -586,6 +589,7 @@ export function attachMissionLibraryChooser({
     button.addEventListener('focusin', () => {
       selectedId = row.id;
       updateCampaignRailSelection(row.id);
+      goal?.refresh();
     });
     return {
       row,
@@ -724,11 +728,12 @@ export function attachMissionLibraryChooser({
       card.button.dataset.current = String(row.id === getCurrentId());
       card.campaignHeading.hidden = previousCampaign === row.campaignKey;
       localizedText(card.progress, () =>
-        progressState.state === 'completed' && progressState.bestStars === null
-          ? t('interface:missionLibrary.completedStarsUnknown')
-          : card.completion?.state === 'unavailable'
-            ? card.completion.reason
-            : library.progress(row, modeFilter.value),
+        card.completion?.state === 'unavailable'
+          ? card.completion.reason
+          : library.progress(row, modeFilter.value) ||
+            (progressState.state === 'completed' && progressState.bestStars === null
+              ? t('interface:missionLibrary.completedStarsUnknown')
+              : ''),
       );
       card.progress.hidden = !card.progress.textContent;
       localizedText(card.action, () =>
@@ -755,7 +760,11 @@ export function attachMissionLibraryChooser({
             : progressState.state === 'skipped'
               ? t('interface:skippedTryAgain')
               : t('interface:missionLibrary.notCompleted');
-        return `${card.number.textContent} · ${displayName(row)} · ${display().campaignTitle} · ${card.campaignPosition.textContent} · ${progressLabel}`;
+        const ownerProgress =
+          progressState.state === 'completed' && progressState.bestStars === null
+            ? library.progress(row, modeFilter.value)
+            : '';
+        return `${card.number.textContent} · ${displayName(row)} · ${display().campaignTitle} · ${card.campaignPosition.textContent} · ${progressLabel}${ownerProgress ? ` · ${ownerProgress}` : ''}`;
       });
       card.button.disabled = availability.state === 'unavailable' && !availability.retry;
       card.button.setAttribute('aria-busy', String(availability.state === 'preparing'));
@@ -798,6 +807,7 @@ export function attachMissionLibraryChooser({
       }
     restorePendingSelection();
     updateCampaignRailSelection();
+    goal?.refresh();
     observeDiagrams();
   }
   // Decode only near the viewport. An earned picture owns the same exact
@@ -1091,6 +1101,45 @@ export function attachMissionLibraryChooser({
       render();
     }
   });
+  function revealExisting(id, targetMode = mode) {
+    const row = library.find(id);
+    if (!row || !modes.includes(targetMode) || !row.modes.includes(targetMode)) return false;
+    retirePendingSelection();
+    const modeChanged = modeFilter.value !== targetMode;
+    modeFilter.value = targetMode;
+    lifecycle.value = row.lifecycle;
+    pendingCampaign = '';
+    if (modeChanged || !list.contains(cards.get(id)?.button)) {
+      search.value = '';
+      collection.value = '';
+      campaign.value = '';
+      rebuildCampaigns();
+      if (modeChanged) invalidateDiagrams();
+      render();
+    }
+    selectedId = id;
+    cards.get(id)?.button.focus({ preventScroll: true });
+    cards.get(id)?.button.scrollIntoView?.({ block: 'nearest' });
+    goal?.refresh();
+    remember();
+    return true;
+  }
+  goal = attachMissionLibraryGoal({
+    container: footer,
+    library,
+    modes,
+    getMode: () => modeFilter.value,
+    getSelectedId: () => (currentSelectionButton(selectedId) ? selectedId : null),
+    isActive: () => !destroyed && dialog.open && !doc.hidden && doc.hasFocus?.() !== false,
+    reveal: revealExisting,
+    onIntent() {
+      retirePendingSelection();
+      retirePreparations();
+      ++visit;
+    },
+    ...goalPreferenceOptions,
+    window: view,
+  });
   return {
     open,
     primary,
@@ -1099,30 +1148,8 @@ export function attachMissionLibraryChooser({
     },
     close,
     state,
-    reveal(id) {
-      const row = library.find(id);
-      if (!row || !row.modes.includes(mode)) return false;
-      retirePendingSelection();
-      // Exact incoming selections belong to this host, even when its last
-      // browsing session was looking at a different mode.
-      const modeChanged = modeFilter.value !== mode;
-      modeFilter.value = mode;
-      lifecycle.value = row.lifecycle;
-      pendingCampaign = '';
-      if (modeChanged || !list.contains(cards.get(id)?.button)) {
-        search.value = '';
-        collection.value = '';
-        campaign.value = '';
-        rebuildCampaigns();
-        if (modeChanged) invalidateDiagrams();
-        render();
-      }
-      selectedId = id;
-      cards.get(id)?.button.focus({ preventScroll: true });
-      cards.get(id)?.button.scrollIntoView?.({ block: 'nearest' });
-      remember();
-      return true;
-    },
+    // Incoming launch intent keeps its existing host-mode ownership rule.
+    reveal: (id) => revealExisting(id, mode),
     refresh() {
       if (dialog.open) {
         invalidateDiagrams();
@@ -1133,6 +1160,7 @@ export function attachMissionLibraryChooser({
     destroy() {
       close({ retune: false });
       destroyed = true;
+      goal.dispose();
       unsubscribe();
       observer?.disconnect();
       media?.removeEventListener?.('change', resizeFilters);

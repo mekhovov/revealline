@@ -1,8 +1,6 @@
-name: Build and deploy GitHub Pages
+name: Validate source for continuous main Pages
 
 on:
-  release:
-    types: [published]
   pull_request:
     branches: [main]
     # Draft promotion does not change source bytes. The exact-head gate already
@@ -10,12 +8,6 @@ on:
     # admission metadata, so ready_for_review would duplicate the exact-head
     # gate. Keep edited because release admission is intentionally title-based.
     types: [opened, synchronize, reopened, edited, labeled, unlabeled, milestoned, demilestoned]
-  workflow_dispatch:
-    inputs:
-      release_tag:
-        description: Latest stable release tag to deploy (for example, v0.46.0)
-        required: true
-        type: string
 
 permissions:
   contents: read
@@ -31,39 +23,6 @@ concurrency:
 # pending forever. Maintenance is classified in preflight and exits quickly.
 
 jobs:
-  release_gate:
-    if: github.event_name == 'release' || (github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/main')
-    runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      actions: write
-    steps:
-      - name: Read publication ownership from main, not the historical tag
-        uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
-        with:
-          ref: main
-          fetch-depth: 1
-
-      - name: Set up publishing policy runtime
-        uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v5
-        with:
-          package-manager-cache: false
-          node-version: 22.22.2
-
-      - name: Match latest stable release to the reviewed frozen selector
-        id: gate
-        env:
-          GH_TOKEN: ${{ github.token }}
-          REQUESTED_RELEASE: ${{ github.event_name == 'release' && github.event.release.tag_name || inputs.release_tag }}
-        run: node publishing/pages-controller/release-policy.mjs route
-
-      - name: Dispatch the sole Pages publisher on main
-        if: steps.gate.outputs.should_dispatch == 'true'
-        env:
-          GH_TOKEN: ${{ github.token }}
-          REQUESTED_RELEASE: ${{ github.event_name == 'release' && github.event.release.tag_name || inputs.release_tag }}
-        run: gh workflow run publish-frozen-pages.yml --repo mekhovov/revealline --ref main -f "release_tag=$REQUESTED_RELEASE"
-
   preflight:
     if: github.event_name == 'pull_request'
     outputs:
@@ -120,7 +79,7 @@ jobs:
           if-no-files-found: error
           retention-days: 7
 
-      - name: Require the previous stable release on public Pages
+      - name: Require the exact protected main base on public Pages
         if: steps.admission.outputs.mode == 'release'
         env:
           GH_TOKEN: ${{ github.token }}
@@ -181,6 +140,8 @@ jobs:
           sparse-checkout: |
             publishing/focused-test-map.json
             publishing/focused-tests.mjs
+            publishing/test-policy.json
+            publishing/test-policy.mjs
             scripts/check-source-identity.mjs
           sparse-checkout-cone-mode: false
 
@@ -222,6 +183,7 @@ jobs:
             --root source \
             --paths "$RUNNER_TEMP/focused-paths.txt" \
             --manifest automation/publishing/focused-test-map.json \
+            --test-policy automation/publishing/test-policy.json \
             --plan-only \
             "${extra[@]}"
 
@@ -250,6 +212,7 @@ jobs:
             --root source \
             --paths "$RUNNER_TEMP/focused-paths.txt" \
             --manifest automation/publishing/focused-test-map.json \
+            --test-policy automation/publishing/test-policy.json \
             "${extra[@]}"
 
       - name: Verify exact tracked source after commands
@@ -443,11 +406,11 @@ jobs:
             fi
           fi
           if [ "$ADMISSION" = maintenance ]; then
-            echo 'Bounded documentation/controller maintenance: selected focused gates passed; product build not required.'
+            echo 'Bounded documentation/controller maintenance: selected validation passed under the explicit test policy; waived suites are not passed. Product build not required.'
             exit 0
           fi
           if [ "$ADMISSION" = scheduled ]; then
-            echo 'Explicit milestone schedule: focused checks passed; the promoted release remains the sole artifact build and publication gate.'
+            echo 'Explicit milestone schedule: selected validation passed under the explicit test policy; waived suites are not passed. Main Pages builds independently after merge.'
             exit 0
           fi
           if [ "$ADMISSION" = release-evidence ]; then

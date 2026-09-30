@@ -1,6 +1,6 @@
 # FPV / LINE icon packaging — 2026-09-29
 
-The new default-game install identity uses the original generated quadcopter mark. The 1254×1254 master and retained original remain byte-identical, SHA-256 `978ac6d8f979558f1f9341d4f92823e92b639d4cf9d8281fdd45f792e3c3682f`. The transparent 2172×724 wordmark remains unchanged at 430,422 bytes.
+The new default-game install identity uses the original generated quadcopter mark. The 1254×1254 master and retained original remain byte-identical, SHA-256 `978ac6d8f979558f1f9341d4f92823e92b639d4cf9d8281fdd45f792e3c3682f`. The final contrast-refined transparent 2172×724 wordmark is retained unchanged at 485,216 bytes.
 
 ## Required sizes and budgets
 

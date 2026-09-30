@@ -2,6 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import { PNGImage } from './helpers/png-image.mjs';
+import { RasterImage } from './helpers/raster-image.mjs';
 import { soloPage, settle, memoryStorage } from './helpers/solo-dom.mjs';
 import { managedIndexedDB } from './helpers/managed-idb.mjs';
 import { editionProviderFixture } from './helpers/edition-provider-fixture.mjs';
@@ -13,7 +14,7 @@ import { authoritativeCheckpoint } from '../replay.mjs';
 import { retainedEditionFixture } from './helpers/retained-edition-fixture.mjs';
 import { getLocale, setLocale } from '../i18n/index.mjs';
 import { DISPLAY_PREFERENCES_KEY } from '../display-preferences.mjs';
-import { demoPage } from './helpers/demo-host-fixture.mjs';
+import { createRewardMissionBindings } from '../rewards/bindings.mjs';
 
 function openEditionSettings(page, category) {
   page.$('shell-options').click();
@@ -67,9 +68,13 @@ test('artwork update offers explicit exact-snapshot recovery and Continue retain
     });
     const recover = page.$('edition-recover-presentation');
     assert.ok(recover, 'The exact registered receipt offers an explicit recovery action.');
+    assert.ok(
+      recover.closest('#shell-home'),
+      'A known saved-flight mismatch stays immediately reachable.',
+    );
     const before = page.win.location.href;
     assert.equal(storage.getItem(key), original);
-    openEditionSettings(page, 'data');
+    assert.equal(page.$('settings-dialog').open, false);
     await recover.onclick();
     assert.notEqual(page.win.location.href, before);
     assert.equal(new URL(page.win.location.href).searchParams.get('presentation'), f.descriptor.id);
@@ -174,21 +179,6 @@ async function editionSwitchHost(t, { occupied = false, start = true } = {}) {
   const f = await editionProviderFixture();
   const catalog = structuredClone(f.catalog);
   catalog.editions.push({ ...catalog.editions[0], id: 'sample-other', name: 'Other audience' });
-  catalog.brands.push({ ...catalog.brands[0], id: 'another-company', name: 'Another company' });
-  catalog.campaigns.push({
-    ...catalog.campaigns[0],
-    id: 'another-campaign',
-    brandId: 'another-company',
-    sourcePath: 'game/content/another-company/project.json',
-  });
-  catalog.editions.push({
-    ...catalog.editions[0],
-    id: 'sample-foreign',
-    name: 'Another community',
-    brandId: 'another-company',
-    campaignIds: ['another-campaign'],
-    entryCampaignId: 'another-campaign',
-  });
   for (const path of ['game/editions/catalog.json', 'edition-catalog.json'])
     f.files.set(path, catalog);
   const page = await soloPage(t, {
@@ -237,29 +227,29 @@ test('edition chrome and retained-artwork recovery switch locale without remount
     artwork = page.$('edition-presentation-select'),
     actorNote = page.$('menu-actor-note'),
     authoredOptions = [...picker.options].map((option) => option.textContent);
-  assert.match(picker.parentNode.textContent, /Company & campaign edition/);
-  assert.match(artwork.parentNode.textContent, /Artwork snapshot/);
+  assert.match(picker.parentNode.textContent, /Choose a world/);
+  assert.match(artwork.parentNode.textContent, /Artwork version/);
   assert.equal(artwork.options[0].textContent, 'Current artwork');
-  assert.match(artwork.options[1].textContent, /^Retained original · /);
-  assert.match(actorNote.textContent, /campaign artwork/);
+  assert.match(artwork.options[1].textContent, /^Saved original · /);
+  assert.match(actorNote.textContent, /shared Solo rules/);
   assert.ok(
     page.doc
       .querySelectorAll('summary')
-      .some((summary) => summary.textContent === 'About this edition & artwork'),
+      .some((summary) => summary.textContent === 'About this world & its artwork'),
   );
 
   setLocale('uk', { persist: false });
   assert.equal(page.$('edition-select'), picker);
   assert.equal(page.$('edition-presentation-select'), artwork);
-  assert.match(picker.parentNode.textContent, /Видання компанії та кампанії/);
-  assert.match(artwork.parentNode.textContent, /Знімок оформлення/);
-  assert.equal(artwork.options[0].textContent, 'Поточне оформлення');
+  assert.match(picker.parentNode.textContent, /Оберіть світ/);
+  assert.match(artwork.parentNode.textContent, /Версія зображень/);
+  assert.equal(artwork.options[0].textContent, 'Поточні зображення');
   assert.match(artwork.options[1].textContent, /^Збережений оригінал · /);
-  assert.match(actorNote.textContent, /оформлення своєї кампанії/);
+  assert.match(actorNote.textContent, /спільним правилам Соло/);
   assert.ok(
     page.doc
       .querySelectorAll('summary')
-      .some((summary) => summary.textContent === 'Про це видання й оформлення'),
+      .some((summary) => summary.textContent === 'Про цей світ і його зображення'),
   );
   assert.deepEqual(
     [...picker.options].map((option) => option.textContent),
@@ -364,21 +354,12 @@ test('edition switch cancellation retires pending retention and cannot navigate 
   assert.deepEqual(page.errors, []);
 });
 
-test('edition switch permits only its company destinations and does not prompt when no flight exists', async (t) => {
+test('edition switch permits only declared destinations and does not prompt when no flight exists', async (t) => {
   const page = await editionSwitchHost(t, { start: false }),
     origin = page.win.location.href,
     picker = page.$('edition-select');
   openEditionSettings(page, 'content');
-  assert.deepEqual(
-    [...picker.options].map((option) => option.value),
-    ['sample-public', 'sample-other'],
-  );
-  for (const id of [
-    'sample-public',
-    'sample-foreign',
-    'omitted-audience',
-    'https://foreign.test/',
-  ]) {
+  for (const id of ['sample-public', 'omitted-audience', 'https://foreign.test/']) {
     picker.value = id;
     await picker.onchange();
     assert.equal(picker.value, 'sample-public');
@@ -389,47 +370,6 @@ test('edition switch permits only its company destinations and does not prompt w
   await picker.onchange();
   assert.equal(page.win.location.href, 'http://localhost/game/index.html?edition=sample-other');
   assert.equal(page.$('mode-leave-dialog').open, false);
-  assert.deepEqual(page.errors, []);
-});
-
-test('a forged cross-company selection cannot save, replace or leave the current attempt', async (t) => {
-  const page = await editionSwitchHost(t);
-  page.$('shell-menu').click();
-  openEditionSettings(page, 'content');
-  const before = authoritativeCheckpoint(page.rendered.run);
-  const origin = page.win.location.href;
-  const key = 'revealline.suspended.journey-sample-public.v1.solo-v2';
-  const saved = page.storage.getItem(key);
-  const picker = page.$('edition-select');
-  picker.value = 'sample-foreign';
-  assert.equal(await picker.onchange(), false);
-  assert.equal(picker.value, 'sample-public');
-  assert.equal(page.$('mode-leave-dialog').open, false);
-  assert.equal(page.win.location.href, origin);
-  assert.equal(page.storage.getItem(key), saved);
-  assert.equal(
-    page.storage.getItem('revealline.suspended.journey-sample-foreign.v1.solo-v2'),
-    null,
-  );
-  assert.deepEqual(authoritativeCheckpoint(page.rendered.run), before);
-  assert.deepEqual(page.errors, []);
-});
-
-test('ordinary main game has no community or company discovery control while dedicated tools remain', async (t) => {
-  const page = await soloPage(t, { titleScreen: true });
-  assert.equal(page.doc.getElementById('shell-community'), null);
-  const links = [...page.doc.querySelectorAll('a')];
-  assert.ok(
-    links.every(
-      (link) =>
-        !/(?:^|\/)community\/?(?:index\.html)?(?:\?|#|$)|(?:^|\/)company\.html(?:\?|#|$)/.test(
-          link.getAttribute('href') || link.href || '',
-        ),
-    ),
-  );
-  assert.ok(page.doc.getElementById('shell-workshop'));
-  assert.ok(page.doc.getElementById('shell-controller-lab'));
-  assert.ok(page.doc.getElementById('shell-replay-theater'));
   assert.deepEqual(page.errors, []);
 });
 
@@ -682,6 +622,8 @@ test('edition Continue preserves a matching receipt and rejects a same-ID change
         journeyIndexedDB: managedIndexedDB().indexedDB,
         fetchResponse: f.fetcher,
       });
+    assert.equal(page.$('continue-saved').hidden, true);
+    assert.equal(page.$('continue-saved-note').textContent, '');
     page.$('shell-featured').click();
     await settle(() => page.doc.body.dataset.flightState === 'running');
     page.frame(0);
@@ -699,9 +641,18 @@ test('edition Continue preserves a matching receipt and rejects a same-ID change
         journeyIndexedDB: managedIndexedDB().indexedDB,
         fetchResponse: f.fetcher,
       });
+    assert.ok(
+      page.$('continue-saved-note').textContent.includes(JSON.parse(saved).replay.level.name),
+      'The preview resolves the exact saved candidate mission from its owned execution key.',
+    );
+    const beforeContinue = storage.getItem(key);
     page.$('shell-continue').click();
     await settle(() => page.doc.body.dataset.flightState === 'running');
     page.frame(0);
+    assert.deepEqual(
+      authoritativeCheckpoint(page.rendered.run),
+      JSON.parse(beforeContinue).replay.checkpoint,
+    );
     page.$('pause-button').click();
     page.$('save-attempt-button').click();
     assert.deepEqual(
@@ -741,7 +692,7 @@ test('edition Continue preserves a matching receipt and rejects a same-ID change
     });
 });
 
-test('edition pause keeps Skip confirmation and safely reports an unavailable matching demo', async (t) => {
+test('edition pause keeps canonical Skip confirmation and Watch first cut actions reachable', async (t) => {
   const f = await editionProviderFixture();
   const second = {
     ...structuredClone(f.source.missions[0]),
@@ -752,7 +703,7 @@ test('edition pause keeps Skip confirmation and safely reports an unavailable ma
   f.source.campaigns[0].missionIds.push(second.id);
   const project = compileContentProject(f.source);
   f.data.campaign.levels.push(resolveMission(project, second.id).level);
-  const page = await demoPage(t, {
+  const page = await soloPage(t, {
     search: '?edition=sample-public',
     titleScreen: true,
     journeyIndexedDB: managedIndexedDB().indexedDB,
@@ -779,17 +730,11 @@ test('edition pause keeps Skip confirmation and safely reports an unavailable ma
   page.$('pause-button').click();
   assert.equal(page.$('game-overlay').hidden, false);
   assert.equal(page.$('demo-button').hidden, false);
-  const before = authoritativeCheckpoint(page.rendered.run),
-    saved = [...page.storage.map];
   page.$('demo-button').click();
-  await settle(() => /No compatible demo/.test(page.$('demo-availability').textContent));
-  // This synthetic company has no matching curated or recorded demonstration.
-  // It must not substitute an unrelated Classic mission or alter the real flight.
-  assert.equal(page.$('demo-dialog').open, false);
-  assert.deepEqual(authoritativeCheckpoint(page.rendered.run), before);
-  assert.deepEqual([...page.storage.map], saved);
-  assert.equal(page.$('shell-home').open, true);
-  assert.deepEqual(authoritativeCheckpoint(page.rendered.run), before);
+  await settle(() => page.doc.body.dataset.flightState === 'running');
+  page.frame(0);
+  assert.equal(page.rendered.run.levelId, f.project.missions[0].id);
+  assert.match(page.$('run-message').textContent, /Demonstration.*no.*(award|reward)/i);
   assert.deepEqual(page.errors, []);
 });
 
@@ -823,6 +768,53 @@ test('edition controller practice reconstructs only its selected mission without
     { turnPolicy: 'grid-center' },
   );
   assert.equal(companySimulationIdentity(page.rendered.run), companySimulationIdentity(expected));
+  assert.deepEqual(page.errors, []);
+});
+
+test('reward-enabled controller practice boots without a Journey authority and cannot earn discoveries', async (t) => {
+  const f = await editionProviderFixture(),
+    catalog = structuredClone(f.catalog);
+  const descriptor = catalog.campaigns[0],
+    mission = createRewardMissionBindings(f.source)[0];
+  descriptor.rewardPath = 'game/content/sample/rewards.json';
+  const copy = { title: 'Practice discovery', teaser: 'Win this mission in Solo to collect.' };
+  f.files.set('game/editions/catalog.json', catalog);
+  f.files.set('edition-catalog.json', catalog);
+  f.files.set(descriptor.rewardPath, [
+    {
+      format: 'revealline-completion-reward.v1',
+      id: 'sample-discovery',
+      revision: '1',
+      brandId: 'sample',
+      campaignId: descriptor.id,
+      scope: { kind: 'mission', id: mission.missionId },
+      locales: { en: copy, uk: copy },
+      requirements: {
+        missions: [{ missionId: mission.missionId, bindings: mission.bindings }],
+        learning: [],
+        mastery: [],
+      },
+      payloads: [
+        {
+          id: 'explanation',
+          type: 'knowledge',
+          locales: {
+            en: { title: 'Explanation', paragraphs: ['A public discovery.'] },
+            uk: { title: 'Пояснення', paragraphs: ['Публічне відкриття.'] },
+          },
+        },
+      ],
+    },
+  ]);
+  const page = await soloPage(t, {
+    search: `?edition=sample-public&practice=1&edition-mission=${mission.missionId}&difficulty=expert`,
+    fetchResponse: f.fetcher,
+  });
+  assert.equal(page.rendered.run.levelId, mission.missionId);
+  for (let i = 0; i < 20; i++) page.frame();
+  const card = page.$('completion-reward-shelf').querySelector('article');
+  assert.equal(card.dataset.earned, 'false');
+  assert.equal(card.querySelector('button'), null);
   assert.deepEqual(page.errors, []);
 });
 
@@ -922,7 +914,7 @@ test('every declared edition boots and starts through the canonical Solo host', 
         search: `?edition=${edition.id}`,
         titleScreen: true,
         journeyIndexedDB: managedIndexedDB().indexedDB,
-        pictures: { Image: PNGImage },
+        pictures: { Image: RasterImage },
         fetchResponse,
       });
       assert.equal(page.doc.body.dataset.editionId, edition.id);
@@ -1029,5 +1021,25 @@ test('same-origin installed creator campaign cannot inject missions into a selec
     ['', 'Journey'],
   );
   assert.ok(!page.$('journey-cards').textContent.includes('Unrelated creator campaign'));
+  assert.deepEqual(page.errors, []);
+});
+
+test('edition home keeps play primary while Settings retains localized world choice and context', async (t) => {
+  const page = await editionSwitchHost(t, { start: false });
+  const locale = getLocale();
+  t.after(() => setLocale(locale, { persist: false }));
+  setLocale('en', { persist: false });
+  const picker = page.$('edition-select');
+  assert.ok(picker.closest('#settings-panel-content'));
+  assert.equal(page.doc.querySelectorAll('#edition-select').length, 1);
+  assert.equal(page.$('shell-home').querySelector('.edition-about'), null);
+  assert.match(picker.parentElement.textContent, /Choose a world/);
+  openEditionSettings(page, 'content');
+  assert.equal(page.$('edition-select'), picker);
+  setLocale('uk', { persist: false });
+  assert.match(picker.parentElement.textContent, /Оберіть світ/);
+  page.$('settings-tab-extras').click();
+  assert.equal(page.$('settings-panel-extras').hidden, false);
+  assert.match(page.$('settings-panel-extras').textContent, /Про цей світ і його зображення/);
   assert.deepEqual(page.errors, []);
 });

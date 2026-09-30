@@ -6,6 +6,28 @@ import { getLocale, t } from './index.mjs';
  * a display name alone as identity: edited/imported variants keep authored text.
  * Mutable authoring drafts are rechecked on every read. */
 const records = new WeakMap();
+const scopes = new Set();
+let registryRevision = 0;
+
+/** Explicit host-owned presentation scope. Disposing an edition removes its
+ * translations, including cached exact-record lookups. No content is mutated. */
+export function installContentTranslations({ entries, resolve = () => null }) {
+  const owned = new Map(entries.map(({ record, fields }) => [dataIdentity(record), { fields }]));
+  const scope = { owned, resolve };
+  scopes.add(scope);
+  registryRevision++;
+  return () => {
+    if (scopes.delete(scope)) registryRevision++;
+  };
+}
+
+function entryFor(record, identity) {
+  for (const scope of [...scopes].reverse()) {
+    const entry = scope.owned.get(identity) ?? scope.resolve(record, identity);
+    if (entry) return entry;
+  }
+  return registry[identity] || null;
+}
 function deeplyFrozen(value, visited = new WeakSet()) {
   if (!value || typeof value !== 'object' || visited.has(value)) return true;
   if (!Object.isFrozen(value)) return false;
@@ -15,16 +37,17 @@ function deeplyFrozen(value, visited = new WeakSet()) {
 function registeredRecord(record) {
   if (!record || typeof record !== 'object') return null;
   let cached = records.get(record);
-  if (!cached?.immutable) {
+  if (!cached?.immutable || cached.registryRevision !== registryRevision) {
     try {
       // Mutable editor records must be checked after edits, including nested
       // geometry changes. Reuse the digest when their exact JSON is unchanged:
       // hashing an entire campaign again for every HUD label is prohibitively slow.
       const json = canonicalJSON(record);
-      if (!cached || cached.json !== json) {
+      if (!cached || cached.json !== json || cached.registryRevision !== registryRevision) {
         cached = {
           json,
-          entry: registry[dataIdentity(record)] || null,
+          entry: entryFor(record, dataIdentity(record)),
+          registryRevision,
           immutable: deeplyFrozen(record),
         };
         records.set(record, cached);
@@ -48,7 +71,9 @@ export function contentText(record, field) {
   if (typeof original !== 'string' || typeof record !== 'object') return original;
   if (getLocale() === 'en') return original;
   const registered = registeredRecord(record)?.fields[field];
-  return registered?.source === original ? t(registered.key) : original;
+  return registered?.source === original
+    ? (registered.locales?.[getLocale()] ?? (registered.key ? t(registered.key) : original))
+    : original;
 }
 export function contentList(record, field) {
   return record?.[field]?.map((_, index) => contentText(record, `${field}.${index}`)) || [];

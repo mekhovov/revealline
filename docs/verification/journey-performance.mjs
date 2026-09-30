@@ -4,6 +4,17 @@ const frame = document.querySelector('#game');
 const status = document.querySelector('#status');
 const log = document.querySelector('#log');
 const records = [];
+const sampleButton = document.querySelector('#sample');
+const editionSelect = document.querySelector('#edition');
+const editionIds = new Set([
+  '',
+  'coupa-all',
+  'droneaid-nl-community',
+  'social-drone-ua',
+  'victory-drones',
+  'ukraine-culture',
+  'fpv-learning',
+]);
 let dispose = () => {};
 const report = (record) => {
   records.push(record);
@@ -31,6 +42,9 @@ const actions = new Map([
 document.querySelector('#load').addEventListener('click', () => {
   dispose();
   const mode = document.querySelector('#mode').value;
+  const edition =
+    mode === 'solo' && editionIds.has(editionSelect?.value) ? editionSelect.value : '';
+  if (sampleButton) sampleButton.disabled = true;
   const path = mode === 'solo' ? '../../game/' : '../../game/couch/';
   const began = performance.now();
   let attached = false,
@@ -103,6 +117,108 @@ document.querySelector('#load').addEventListener('click', () => {
           : { supported: false },
       };
     };
+    let stopSample = () => {};
+    const sample = () => {
+      stopSample();
+      if (document.hidden || doc.hidden) {
+        report({ action: 'Frame sample', mode, edition, outcome: 'hidden page; sample discarded' });
+        return;
+      }
+      const beganAt = win.performance.now();
+      const before = browserSnapshot();
+      const beforeResources = win.performance.getEntriesByType('resource').length;
+      const intervals = [];
+      const tasks = [];
+      let previous = null,
+        sampleRaf,
+        observer,
+        stopped = false,
+        taskSupported = false;
+      const finish = (reason) => {
+        if (stopped) return;
+        stopped = true;
+        win.cancelAnimationFrame(sampleRaf);
+        clearTimeout(sampleTimer);
+        if (observer) {
+          collectTasks(observer.takeRecords());
+          observer.disconnect();
+        }
+        doc.removeEventListener('visibilitychange', sampleVisibility);
+        document.removeEventListener('visibilitychange', sampleVisibility);
+        if (sampleButton) sampleButton.disabled = false;
+        if (reason || intervals.length < 60) {
+          report({
+            action: 'Frame sample',
+            mode,
+            edition,
+            outcome: reason || 'too few frames; sample discarded',
+          });
+          return;
+        }
+        const sorted = [...intervals].sort((a, b) => a - b);
+        const percentile = (fraction) => sorted[Math.ceil(sorted.length * fraction) - 1];
+        report({
+          action: 'Frame sample',
+          mode,
+          edition,
+          mission: mission(),
+          outcome: 'passive desktop sample; compare equivalent baseline before qualification',
+          durationMs: win.performance.now() - beganAt,
+          frameIntervals: {
+            count: intervals.length,
+            medianMs: percentile(0.5),
+            p95Ms: percentile(0.95),
+            maxMs: sorted.at(-1),
+          },
+          longTasks: taskSupported
+            ? {
+                supported: true,
+                count: tasks.length,
+                over50Ms: tasks.filter((t) => t > 50).length,
+                maxMs: tasks.length ? Math.max(...tasks) : 0,
+              }
+            : { supported: false },
+          viewport: { width: win.innerWidth, height: win.innerHeight, dpr: win.devicePixelRatio },
+          browserBefore: before,
+          browserAfter: browserSnapshot(),
+          newResourceEntries: win.performance.getEntriesByType('resource').length - beforeResources,
+        });
+      };
+      const collectTasks = (entries) => {
+        for (const entry of entries)
+          if (entry.startTime >= beganAt && Number.isFinite(entry.duration) && tasks.length < 2000)
+            tasks.push(entry.duration);
+      };
+      try {
+        if (win.PerformanceObserver?.supportedEntryTypes?.includes('longtask')) {
+          observer = new win.PerformanceObserver((list) => collectTasks(list.getEntries()));
+          observer.observe({ type: 'longtask', buffered: false });
+          taskSupported = true;
+        }
+      } catch {
+        observer?.disconnect();
+        observer = null;
+      }
+      const sampleVisibility = () => {
+        if (document.hidden || doc.hidden) finish('visibility changed; sample discarded');
+      };
+      const sampleTick = () => {
+        const now = win.performance.now();
+        if (previous !== null && intervals.length < 10000) intervals.push(now - previous);
+        previous = now;
+        sampleRaf = win.requestAnimationFrame(sampleTick);
+      };
+      const sampleTimer = setTimeout(() => finish(), 30000);
+      doc.addEventListener('visibilitychange', sampleVisibility);
+      document.addEventListener('visibilitychange', sampleVisibility);
+      if (sampleButton) sampleButton.disabled = true;
+      sampleRaf = win.requestAnimationFrame(sampleTick);
+      stopSample = () => finish('navigation/disposal; sample discarded');
+    };
+    if (sampleButton) {
+      sampleButton.disabled = false;
+      sampleButton.addEventListener('click', sample);
+    }
     let pending = null,
       raf,
       attemptTimer,
@@ -284,6 +400,8 @@ document.querySelector('#load').addEventListener('click', () => {
     });
     dispose = () => {
       fail('navigation/disposal; sample discarded');
+      stopSample();
+      sampleButton?.removeEventListener('click', sample);
       cancelled = true;
       win.cancelAnimationFrame(raf);
       doc.removeEventListener('click', click, true);
@@ -294,6 +412,6 @@ document.querySelector('#load').addEventListener('click', () => {
       window.removeEventListener('pagehide', pagehide);
     };
   };
-  frame.src = `${path}?journey=1`;
+  frame.src = `${path}?journey=1${edition ? `&edition=${encodeURIComponent(edition)}` : ''}`;
   status.textContent = `Loading ${mode}…`;
 });

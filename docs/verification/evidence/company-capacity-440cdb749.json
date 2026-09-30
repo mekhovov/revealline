@@ -1,0 +1,343 @@
+{
+  "format": "revealline-candidate-capacity-observation.v1",
+  "sourceRevision": "440cdb749179837fba358a0d46d94d1ab18e6afe",
+  "sourceTree": "4bd5e63f6d66fddd354cce8ac66c3c838ebf5653",
+  "version": "v0.142.2",
+  "publicEligible": false,
+  "promotable": false,
+  "completeHostedOutput": false,
+  "ci": {
+    "runId": 36496111065,
+    "url": "https://github.com/mekhovov/revealline/actions/runs/36496111065",
+    "status": "completed",
+    "conclusion": "success",
+    "jobs": [
+      {
+        "name": "candidate",
+        "conclusion": "success"
+      },
+      {
+        "name": "optional-practice",
+        "conclusion": "success"
+      }
+    ]
+  },
+  "artifact": {
+    "id": 11004620690,
+    "name": "company-capacity-440cdb749179837fba358a0d46d94d1ab18e6afe",
+    "compressedBytes": 586830,
+    "sha256": "e0eb9a426271516866d8fc94429ebc0d41fa422ddaf62c84e05889dfbd2811fb",
+    "githubDigestVerified": true,
+    "expandedBytes": 1545799,
+    "files": 22,
+    "crcVerified": true,
+    "metadataPacketValidated": true
+  },
+  "packet": [
+    {
+      "path": "editions.json",
+      "bytes": 18568,
+      "sha256": "6b21b26a3adc759c768b86621ffb544bc535f4eaa29f85af90bcdb0673885750"
+    },
+    {
+      "path": "candidate-verification.json",
+      "bytes": 13692,
+      "sha256": "0aa605743570b1fdd6d99d505668bc4509c9ea792e952ac37e9df5ca3a4af226"
+    },
+    {
+      "path": "capacity-inventory.json",
+      "bytes": 11094,
+      "sha256": "a8e34ea16738f4da12090b42eb0fd7ff9c937c13dbf6b6e330c118a6215de5ce"
+    },
+    {
+      "path": "manifest-coupa-adventure.json",
+      "bytes": 79980,
+      "sha256": "2ce40174548bd03bf7c2160d58650d9a95fca65b557d8b714714bd02841689fe"
+    },
+    {
+      "path": "manifest-coupa-all.json",
+      "bytes": 85530,
+      "sha256": "5b966d44c41e18eaa273dac723eaad008f6a1ebb662f6e1814fcf802ef4f0fbf"
+    },
+    {
+      "path": "manifest-coupa-culture.json",
+      "bytes": 79795,
+      "sha256": "a8299637a482955523203bb823fb8e22b534d68b8a43f1e946d0e7eef93540c6"
+    },
+    {
+      "path": "manifest-coupa-developers.json",
+      "bytes": 79969,
+      "sha256": "4b192d930cc5746abc861cba40014bffb79919d58546cdb172177255f6a7f5fb"
+    },
+    {
+      "path": "manifest-coupa-foundations.json",
+      "bytes": 80299,
+      "sha256": "559a97ed509abde3690bb40845c9ab9c24b911d73f3c03a7ebfe514b83649f08"
+    },
+    {
+      "path": "manifest-coupa-operations.json",
+      "bytes": 79988,
+      "sha256": "76cdc5deb47be58e8bf2207a47dcba2c2f7d2c9fb198c95a31c45af1617468a0"
+    },
+    {
+      "path": "manifest-droneaid-community.json",
+      "bytes": 78884,
+      "sha256": "4c4a8bc2af2ffaeacf3c08bc1a83a1121b72bb73e7ac86258d359a5a901e5aaf"
+    },
+    {
+      "path": "manifest-droneaid-nl-careful-handoff.json",
+      "bytes": 80945,
+      "sha256": "82bd13ce242658f69193e8551b6fb832708f4accc12c8fafa071f6e189a51d09"
+    },
+    {
+      "path": "manifest-droneaid-nl-community.json",
+      "bytes": 93122,
+      "sha256": "3c7ef4afddaf78043fd731e742ac6254e016951fd0dd5eccc477f68487724e81"
+    },
+    {
+      "path": "manifest-droneaid-nl-makers-together.json",
+      "bytes": 80939,
+      "sha256": "7d8ad4d15aa8babe33106c97de93d0e59a7e75aaf7b8a1fe89ae0e95be2da689"
+    },
+    {
+      "path": "manifest-droneaid-nl-parts-in-motion.json",
+      "bytes": 81287,
+      "sha256": "c0485f25489ee07477afcda1110d7226ba4f78ae90807cf235ceabbe36411593"
+    },
+    {
+      "path": "manifest-droneaid-nl-shared-horizon.json",
+      "bytes": 80923,
+      "sha256": "1f97b421da416cc1e83b3530c6ec3dfc74ad3277db3d280f468193bf6c959d11"
+    },
+    {
+      "path": "manifest-droneaid-nl-signals-of-support.json",
+      "bytes": 81011,
+      "sha256": "8155c645a2defb630c84b51290b2d79df713541042de4487761df7df6ca653c7"
+    },
+    {
+      "path": "manifest-droneaid-nl-workshop-lights.json",
+      "bytes": 80926,
+      "sha256": "f1cbb4d4962d0c4fe063a8060005ed2f82fd670380c5fa11617f24e5cfe77079"
+    },
+    {
+      "path": "manifest-fpv-learning.json",
+      "bytes": 93740,
+      "sha256": "3de551950eac0fcd5a7868ff87c8eed956c9addafd9ff2d27d7d1a0e65babffb"
+    },
+    {
+      "path": "manifest-social-drone-ua.json",
+      "bytes": 83003,
+      "sha256": "11234ee04471fd926fed02b693980bfc3886d34eb19379526cff376eb53cd21c"
+    },
+    {
+      "path": "manifest-ukraine-culture.json",
+      "bytes": 89964,
+      "sha256": "a42023c64c16faa1bcfd999fbc0ef861ce3135640fdff7f1073f2113188a494c"
+    },
+    {
+      "path": "manifest-victory-drones.json",
+      "bytes": 81728,
+      "sha256": "55ecb4b58a78eb1141f1f504fac7a8b6a592e7a31f269f1a1c6499e0a7e91a4d"
+    },
+    {
+      "path": "checksums.json",
+      "bytes": 10412,
+      "sha256": "c36d3447caa225e300ad2c0b9143a3a54f8d29f7d583c861758475acf0865047"
+    }
+  ],
+  "editions": [
+    {
+      "id": "coupa-adventure",
+      "immutableBytes": 26069069,
+      "stableLauncherBytes": 237439,
+      "immutableAndActiveLauncherBytes": 26306508
+    },
+    {
+      "id": "coupa-all",
+      "immutableBytes": 60468870,
+      "stableLauncherBytes": 237387,
+      "immutableAndActiveLauncherBytes": 60706257
+    },
+    {
+      "id": "coupa-culture",
+      "immutableBytes": 24793650,
+      "stableLauncherBytes": 237440,
+      "immutableAndActiveLauncherBytes": 25031090
+    },
+    {
+      "id": "coupa-developers",
+      "immutableBytes": 27937438,
+      "stableLauncherBytes": 237466,
+      "immutableAndActiveLauncherBytes": 28174904
+    },
+    {
+      "id": "coupa-foundations",
+      "immutableBytes": 27260472,
+      "stableLauncherBytes": 237468,
+      "immutableAndActiveLauncherBytes": 27497940
+    },
+    {
+      "id": "coupa-operations",
+      "immutableBytes": 26318774,
+      "stableLauncherBytes": 237441,
+      "immutableAndActiveLauncherBytes": 26556215
+    },
+    {
+      "id": "droneaid-community",
+      "immutableBytes": 25644461,
+      "stableLauncherBytes": 226287,
+      "immutableAndActiveLauncherBytes": 25870748
+    },
+    {
+      "id": "droneaid-nl-careful-handoff",
+      "immutableBytes": 27891528,
+      "stableLauncherBytes": 41866,
+      "immutableAndActiveLauncherBytes": 27933394
+    },
+    {
+      "id": "droneaid-nl-community",
+      "immutableBytes": 64935888,
+      "stableLauncherBytes": 41829,
+      "immutableAndActiveLauncherBytes": 64977717
+    },
+    {
+      "id": "droneaid-nl-makers-together",
+      "immutableBytes": 27759298,
+      "stableLauncherBytes": 41846,
+      "immutableAndActiveLauncherBytes": 27801144
+    },
+    {
+      "id": "droneaid-nl-parts-in-motion",
+      "immutableBytes": 28271336,
+      "stableLauncherBytes": 41846,
+      "immutableAndActiveLauncherBytes": 28313182
+    },
+    {
+      "id": "droneaid-nl-shared-horizon",
+      "immutableBytes": 28093814,
+      "stableLauncherBytes": 41834,
+      "immutableAndActiveLauncherBytes": 28135648
+    },
+    {
+      "id": "droneaid-nl-signals-of-support",
+      "immutableBytes": 27907505,
+      "stableLauncherBytes": 41882,
+      "immutableAndActiveLauncherBytes": 27949387
+    },
+    {
+      "id": "droneaid-nl-workshop-lights",
+      "immutableBytes": 26577477,
+      "stableLauncherBytes": 41846,
+      "immutableAndActiveLauncherBytes": 26619323
+    },
+    {
+      "id": "fpv-learning",
+      "immutableBytes": 33181525,
+      "stableLauncherBytes": 12685,
+      "immutableAndActiveLauncherBytes": 33194210
+    },
+    {
+      "id": "social-drone-ua",
+      "immutableBytes": 25376111,
+      "stableLauncherBytes": 12721,
+      "immutableAndActiveLauncherBytes": 25388832
+    },
+    {
+      "id": "ukraine-culture",
+      "immutableBytes": 42065066,
+      "stableLauncherBytes": 12761,
+      "immutableAndActiveLauncherBytes": 42077827
+    },
+    {
+      "id": "victory-drones",
+      "immutableBytes": 21649916,
+      "stableLauncherBytes": 12709,
+      "immutableAndActiveLauncherBytes": 21662625
+    }
+  ],
+  "allEditionComponentsBytes": 574196951,
+  "defaultPayloadBytesIncludingManifest": 799939192,
+  "optionalKnownComponents": [
+    {
+      "id": "civilian-flight",
+      "immutableBytes": 178540,
+      "stableLauncherOriginalsBytes": 19045,
+      "manifest": {
+        "path": "manifest-optional-civilian-flight.json",
+        "bytes": 5631,
+        "sha256": "4d0b27480bd30c14dfb118e3a8ee94d7022af189da263898ec4105ac81f30e7c"
+      }
+    },
+    {
+      "id": "civilian-fpv",
+      "immutableBytes": 2748040,
+      "stableLauncherOriginalsBytes": 19014,
+      "manifest": {
+        "path": "manifest-optional-civilian-fpv.json",
+        "bytes": 9242,
+        "sha256": "f3ba22bf921e607aa142ba664574e310cafb8ec638fb63901b2c9ec5d05a5fc0"
+      }
+    }
+  ],
+  "knownDefaultAndOptionalBytes": 802903831,
+  "subsets": [
+    {
+      "id": "four-new",
+      "ids": ["social-drone-ua", "victory-drones", "ukraine-culture", "fpv-learning"],
+      "editionComponentsBytes": 122323494,
+      "knownLowerBound": 925227325,
+      "remainingTo950000000": 24772675
+    },
+    {
+      "id": "six-company-community",
+      "ids": [
+        "coupa-all",
+        "droneaid-nl-community",
+        "social-drone-ua",
+        "victory-drones",
+        "ukraine-culture",
+        "fpv-learning"
+      ],
+      "editionComponentsBytes": 248007468,
+      "knownLowerBound": 1050911299,
+      "remainingTo950000000": -100911299
+    },
+    {
+      "id": "all18",
+      "ids": [
+        "coupa-adventure",
+        "coupa-all",
+        "coupa-culture",
+        "coupa-developers",
+        "coupa-foundations",
+        "coupa-operations",
+        "droneaid-community",
+        "droneaid-nl-careful-handoff",
+        "droneaid-nl-community",
+        "droneaid-nl-makers-together",
+        "droneaid-nl-parts-in-motion",
+        "droneaid-nl-shared-horizon",
+        "droneaid-nl-signals-of-support",
+        "droneaid-nl-workshop-lights",
+        "fpv-learning",
+        "social-drone-ua",
+        "ukraine-culture",
+        "victory-drones"
+      ],
+      "editionComponentsBytes": 574196951,
+      "knownLowerBound": 1377100782,
+      "remainingTo950000000": -427100782
+    }
+  ],
+  "limits": {
+    "defaultArchiveBytes": 800000000,
+    "wholeHostedSiteBytes": 950000000
+  },
+  "limitations": [
+    "The small metadata packet binds the successful CI admission and reproducible-build receipt; all18 archive bodies were not downloaded or independently re-extracted locally.",
+    "Subsets are capacity examples, not configured deployment selections. Lower bounds omit root routes and publication metadata, retained hosted versions, company/optional hubs, optional current pointers and other generated files.",
+    "The exact440c default STORE archive is separately projected317492bytes above the unchanged800000000-byte archive cap. Passing component metadata does not close that gate.",
+    "This observation belongs only to440c. Later working-tree optimizations and source revisions need their own exact inspection and artifacts.",
+    "No public eligibility, human/device approval, release allocation or publication is implied."
+  ]
+}

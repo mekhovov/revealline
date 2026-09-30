@@ -148,6 +148,7 @@
           aria-label="Configuration"
           data-i18n-aria-label="tools:configuration"
         >
+          <h2 class="playground-section-heading" data-i18n="tools:configuration">Configuration</h2>
           <label class="field"
             ><span data-i18n="tools:campaignSource">Campaign source</span
             ><select id="campaign-select"></select
@@ -200,8 +201,14 @@
             >
           </div>
           <div class="section-line">
-            <span data-i18n="tools:tryAnInteraction">TRY AN INTERACTION</span
-            ><span data-i18n="tools:safePracticeRecipes">SAFE PRACTICE RECIPES</span>
+            <h2
+              class="playground-section-heading"
+              data-authoring-target="preset-fiber"
+              data-i18n="tools:tryAnInteraction"
+            >
+              TRY AN INTERACTION
+            </h2>
+            <span data-i18n="tools:safePracticeRecipes">SAFE PRACTICE RECIPES</span>
           </div>
           <div
             class="preset-buttons"
@@ -209,7 +216,12 @@
             aria-label="Interaction preset"
             data-i18n-aria-label="tools:interactionPreset"
           >
-            <button class="button" data-preset="fiber" data-i18n="tools:fiberRelay">
+            <button
+              id="preset-fiber"
+              class="button"
+              data-preset="fiber"
+              data-i18n="tools:fiberRelay"
+            >
               Fiber relay
             </button>
             <button class="button" data-preset="bomber" data-i18n="tools:bomberSupply">
@@ -388,8 +400,14 @@
             /></label>
           </div>
           <div class="section-line">
-            <span data-i18n="tools:paintTheBoard">PAINT THE BOARD</span
-            ><button id="undo-button" class="text-button" disabled data-i18n="tools:undo">
+            <h2
+              class="playground-section-heading"
+              data-authoring-target="map-editor"
+              data-i18n="tools:paintTheBoard"
+            >
+              PAINT THE BOARD
+            </h2>
+            <button id="undo-button" class="text-button" disabled data-i18n="tools:undo">
               Undo
             </button>
           </div>
@@ -491,8 +509,14 @@
             </ul>
           </details>
           <div class="section-line">
-            <span data-i18n="tools:replaceOneVisualRole">REPLACE ONE VISUAL ROLE</span
-            ><span data-i18n="tools:originalFilesPreserved">ORIGINAL FILES PRESERVED</span>
+            <h2
+              class="playground-section-heading"
+              data-authoring-target="asset-role"
+              data-i18n="tools:replaceOneVisualRole"
+            >
+              REPLACE ONE VISUAL ROLE
+            </h2>
+            <span data-i18n="tools:originalFilesPreserved">ORIGINAL FILES PRESERVED</span>
           </div>
           <div class="settings-row">
             <label class="field"
@@ -681,8 +705,14 @@
           data-i18n-aria-label="tools:playablePreview"
         >
           <div class="section-line">
-            <span data-i18n="tools:liveEnginePractice">LIVE ENGINE / PRACTICE</span
-            ><a
+            <h2
+              class="playground-section-heading"
+              data-authoring-target="preview-mode"
+              data-i18n="tools:liveEnginePractice"
+            >
+              LIVE ENGINE / PRACTICE
+            </h2>
+            <a
               id="open-preview"
               href="../?practice=1"
               target="_blank"

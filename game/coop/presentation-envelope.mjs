@@ -131,10 +131,10 @@ function manifestShape(manifest) {
       'Invalid, unordered or duplicate Team artwork asset.',
     );
     required(
-      ['image/png', 'image/jpeg'].includes(row.mime) &&
+      ['image/png', 'image/jpeg', 'image/webp'].includes(row.mime) &&
         row.width === COOP_PRESENTATION_LIMITS.width &&
         row.height === COOP_PRESENTATION_LIMITS.height,
-      'Team artwork requires complete 1152×576 PNG or JPEG images.',
+      'Team artwork requires complete 1152×576 PNG, JPEG or WebP images.',
     );
     fields(row.provenance, 'kind attribution source', 'Team artwork provenance');
     required(

@@ -83,7 +83,7 @@ const rows = [
     '#f0b887',
     '#8eded7',
     '63% 50%',
-    '61% 50%',
+    '10% 50%',
     'parcel',
   ],
   [
@@ -231,6 +231,30 @@ const fpvPortraitEnvironment = freezeEnvironment([
   ['lamp', 5, 49, 12, 3, -1, 4.8],
   ['foliage', 79, 58, 12, 10, -2, 7],
 ]);
+// These narrow crops keep the drones/workbenches as their focal subjects, but
+// exclude the large windows and desk lamps at the edges of the full picture.
+// Measure alternate regions on the scenery that is actually visible: the rear
+// pendant, sunlit work surfaces/walls, and the makers' trailing plant. Parts is
+// reframed toward its lamp, window and assembled drone instead of the empty mat.
+// Lighting changes brightness only; it must not bend drones, tools or their geometry.
+const portraitEnvironments = Object.fromEntries(
+  Object.entries({
+    'droneaid-nl-workshop-lights-theme': [
+      ['lamp', 60, 0, 5, 8, -1, 5.2],
+      ['beam', 53, 27, 20, 10, -2, 8],
+    ],
+    'droneaid-nl-parts-in-motion-theme': [
+      ['lamp', 4, 12, 10, 18, -1, 5.6],
+      ['beam', 22, 4, 24, 38, -2, 8],
+    ],
+    'droneaid-nl-makers-together-theme': [
+      ['foliage', 48, 7, 8, 26, -2, 7],
+      ['beam', 46, 41, 18, 12, -3, 8.6],
+    ],
+    'droneaid-nl-signals-of-support-theme': [['beam', 51, 22, 20, 18, -3, 8.4]],
+    'droneaid-nl-shared-horizon-theme': [['beam', 54, 26, 17, 14, -3, 8.6]],
+  }).map(([id, values]) => [id, freezeEnvironment(values)]),
+);
 const indoorActors = new Set([
   'coupa-product-operations-theme',
   'coupa-developer-integration-theme',
@@ -242,6 +266,172 @@ const indoorActors = new Set([
   'droneaid-nl-signals-of-support-theme',
   'droneaid-nl-shared-horizon-theme',
 ]);
+
+// Mode artwork belongs to its existing world; it is not a theme, campaign or
+// capability. Selected Solo editions project this map to an empty object.
+export const MENU_SCENE_COMPOSITIONS = Object.freeze({
+  fpv: Object.freeze({
+    versus: Object.freeze({
+      composition: 'fpv-versus',
+      landscape: './art/menu-scenes/fpv-versus.webp',
+      portrait: './art/menu-scenes/fpv-versus-portrait.webp',
+      landscapePosition: '70% 50%',
+      portraitPosition: '50% 50%',
+      environment: freezeEnvironment([
+        ['cloud', 64, 8, 28, 16, -4, 16],
+        ['lamp', 51, 15, 7, 5, -1, 4.8],
+        ['foliage', 82, 3, 16, 17, -2, 7],
+        ['beam', 74, 46, 18, 9, -2, 8],
+      ]),
+      portraitEnvironment: freezeEnvironment([
+        ['cloud', 75, 35, 21, 10, -4, 16],
+        ['lamp', 11, 39, 10, 3, -1, 4.8],
+        ['foliage', 84, 31, 14, 9, -2, 7],
+        ['beam', 64, 65, 21, 7, -2, 8],
+      ]),
+    }),
+    team: Object.freeze({
+      composition: 'fpv-team',
+      landscape: './art/menu-scenes/fpv-team.webp',
+      portrait: './art/menu-scenes/fpv-team-portrait.webp',
+      landscapePosition: '70% 50%',
+      portraitPosition: '50% 50%',
+      environment: freezeEnvironment([
+        ['cloud', 68, 10, 24, 15, -4, 16],
+        ['lamp', 38, 20, 7, 4, -1, 4.8],
+        ['foliage', 82, 3, 15, 18, -2, 7],
+        ['beam', 58, 49, 12, 10, -2, 8],
+      ]),
+      portraitEnvironment: freezeEnvironment([
+        ['cloud', 82, 37, 15, 10, -4, 16],
+        ['lamp', 4, 43, 11, 3, -1, 4.8],
+        ['foliage', 77, 32, 11, 12, -2, 7],
+        ['beam', 60, 63, 13, 6, -2, 8],
+      ]),
+    }),
+  }),
+  ukraine: Object.freeze({
+    versus: Object.freeze({
+      composition: 'ukraine-versus',
+      landscape: './art/menu-scenes/ukraine-versus.webp',
+      portrait: './art/menu-scenes/ukraine-versus-portrait.webp',
+      landscapePosition: '70% 50%',
+      portraitPosition: '50% 50%',
+      environment: freezeEnvironment([
+        ['cloud', 64, 3, 33, 18, -4, 16],
+        ['lamp', 40, 19, 5, 13, -1, 4.8],
+        ['water', 87, 66, 9, 4, -2, 5.2],
+        ['foliage', 34, 34, 7, 20, -2, 7],
+      ]),
+      portraitEnvironment: freezeEnvironment([
+        ['cloud', 67, 20, 30, 9, -4, 16],
+        ['lamp', 38, 33, 6, 4, -1, 4.8],
+        ['water', 55, 60, 10, 4, -2, 5.2],
+        ['foliage', 28, 43, 8, 8, -2, 7],
+      ]),
+    }),
+    team: Object.freeze({
+      composition: 'ukraine-team',
+      landscape: './art/menu-scenes/ukraine-team.webp',
+      portrait: './art/menu-scenes/ukraine-team-portrait.webp',
+      landscapePosition: '70% 50%',
+      portraitPosition: '50% 50%',
+      environment: freezeEnvironment([
+        ['cloud', 68, 3, 29, 17, -4, 16],
+        ['lamp', 39, 24, 4, 8, -1, 4.8],
+        ['water', 79, 68, 12, 5, -2, 5.2],
+        ['foliage', 28, 31, 7, 20, -2, 7],
+      ]),
+      portraitEnvironment: freezeEnvironment([
+        ['cloud', 68, 14, 29, 10, -4, 16],
+        ['lamp', 26, 28, 7, 7, -1, 4.8],
+        ['water', 82, 60, 12, 4, -2, 5.2],
+        ['foliage', 24, 40, 10, 11, -2, 7],
+      ]),
+    }),
+  }),
+  retro: Object.freeze({
+    versus: Object.freeze({
+      composition: 'retro-versus',
+      landscape: './art/menu-scenes/retro-versus.webp',
+      portrait: './art/menu-scenes/retro-versus-portrait.webp',
+      landscapePosition: '70% 50%',
+      portraitPosition: '50% 50%',
+      environment: freezeEnvironment([
+        ['water', 64, 88, 20, 8, -1.2, 4.8],
+        ['lamp', 61, 27, 5, 7, -1, 4.2],
+        ['lamp', 68, 19, 14, 4, -3, 5.6],
+        ['foliage', 44, 45, 5, 16, -2, 7],
+      ]),
+      portraitEnvironment: freezeEnvironment([
+        ['water', 54, 84, 26, 9, -1.2, 4.8],
+        ['lamp', 61, 31, 7, 4, -1, 4.2],
+        ['lamp', 73, 33, 6, 5, -3, 5.6],
+        ['foliage', 31, 42, 11, 12, -2, 7],
+      ]),
+    }),
+    team: Object.freeze({
+      composition: 'retro-team',
+      landscape: './art/menu-scenes/retro-team.webp',
+      portrait: './art/menu-scenes/retro-team-portrait.webp',
+      landscapePosition: '70% 50%',
+      portraitPosition: '50% 50%',
+      environment: freezeEnvironment([
+        ['water', 67, 87, 20, 9, -1.2, 4.8],
+        ['lamp', 61, 27, 5, 7, -1, 4.2],
+        ['lamp', 68, 19, 14, 4, -3, 5.6],
+        ['foliage', 44, 45, 5, 17, -2, 7],
+      ]),
+      portraitEnvironment: freezeEnvironment([
+        ['water', 55, 82, 24, 11, -1.2, 4.8],
+        ['lamp', 63, 29, 6, 4, -1, 4.2],
+        ['lamp', 70, 31, 6, 5, -3, 5.6],
+        ['foliage', 44, 44, 9, 10, -2, 7],
+      ]),
+    }),
+  }),
+  coupa: Object.freeze({
+    versus: Object.freeze({
+      composition: 'coupa-versus',
+      landscape: './art/menu-scenes/coupa-versus.webp',
+      portrait: './art/menu-scenes/coupa-versus-portrait.webp',
+      landscapePosition: '70% 50%',
+      portraitPosition: '50% 50%',
+      environment: freezeEnvironment([
+        ['cloud', 79, 4, 20, 10, -4, 16],
+        ['lamp', 39, 24, 3, 6, -1, 4.8],
+        ['water', 85, 28, 9, 4, -2, 5.2],
+        ['foliage', 32, 38, 5, 12, -2, 7],
+      ]),
+      portraitEnvironment: freezeEnvironment([
+        ['cloud', 56, 40, 37, 5, -4, 16],
+        ['lamp', 17, 49, 5, 3, -1, 4.8],
+        ['water', 81, 54, 10, 3, -2, 5.2],
+        ['foliage', 78, 85, 15, 10, -2, 7],
+      ]),
+    }),
+    team: Object.freeze({
+      composition: 'coupa-team',
+      landscape: './art/menu-scenes/coupa-team.webp',
+      portrait: './art/menu-scenes/coupa-team-portrait.webp',
+      landscapePosition: '70% 50%',
+      portraitPosition: '50% 50%',
+      environment: freezeEnvironment([
+        ['cloud', 78, 9, 20, 14, -4, 16],
+        ['lamp', 39, 19, 3, 7, -1, 4.8],
+        ['water', 84, 33, 7, 5, -2, 5.2],
+        ['foliage', 42, 30, 5, 18, -2, 7],
+      ]),
+      portraitEnvironment: freezeEnvironment([
+        ['cloud', 57, 40, 39, 7, -4, 16],
+        ['lamp', 7, 34, 7, 5, -1, 4.8],
+        ['water', 78, 53, 8, 3, -2, 5.2],
+        ['foliage', 80, 87, 12, 10, -2, 7],
+      ]),
+    }),
+  }),
+});
+const compositionProfiles = new WeakMap();
 
 export const MENU_SCENES = Object.freeze(
   Object.fromEntries(
@@ -259,7 +449,8 @@ export const MENU_SCENES = Object.freeze(
           actor,
           actorVisible: !indoorActors.has(id),
           environment: environments[id],
-          portraitEnvironment: id === 'fpv' ? fpvPortraitEnvironment : environments[id],
+          portraitEnvironment:
+            id === 'fpv' ? fpvPortraitEnvironment : (portraitEnvironments[id] ?? environments[id]),
           landscape:
             id === 'droneaid-nl-community'
               ? './art/menu-scenes/droneaid-main-background.webp'
@@ -310,10 +501,18 @@ const EDITION_SCENES = Object.freeze({
   ),
 });
 
-export function resolveMenuScene({ themeId, editionId } = {}) {
-  if (Object.hasOwn(MENU_SCENES, themeId)) return MENU_SCENES[themeId];
+export function resolveMenuScene({ themeId, editionId, mode } = {}) {
   const edition = Object.hasOwn(EDITION_SCENES, editionId) ? EDITION_SCENES[editionId] : null;
-  return (edition && MENU_SCENES[edition]) || MENU_SCENES.fpv;
+  const profile = Object.hasOwn(MENU_SCENES, themeId)
+    ? MENU_SCENES[themeId]
+    : (edition && MENU_SCENES[edition]) || MENU_SCENES.fpv;
+  // Editions support Solo only. Worlds without authored mode artwork retain
+  // their base composition; an unknown world uses the approved FPV fallback.
+  const composition = !editionId && MENU_SCENE_COMPOSITIONS[profile.id]?.[menuSceneMode(mode)];
+  if (!composition) return profile;
+  if (!compositionProfiles.has(composition))
+    compositionProfiles.set(composition, Object.freeze({ ...profile, ...composition }));
+  return compositionProfiles.get(composition);
 }
 
 export function menuSceneMode(mode) {

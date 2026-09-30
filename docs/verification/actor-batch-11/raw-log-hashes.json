@@ -1,0 +1,110 @@
+{
+  "scope": "Unmodified command output preserved in raw-logs.zip. Plain text copies trim trailing whitespace for Git review only. No outcomes/assertions removed.",
+  "files": [
+    {
+      "path": "build.txt",
+      "bytes": 321,
+      "sha256": "6073f0af1b74123c5ffb42cc8689b3fbb0004e1a88af477414544996ff99dafc"
+    },
+    {
+      "path": "controls-final.tap",
+      "bytes": 1874,
+      "sha256": "00f61376782fa4db4e69488bef92929bc9c4b15572241d4551c43afef681c600"
+    },
+    {
+      "path": "controls-focused.tap",
+      "bytes": 1875,
+      "sha256": "077a0efc50786f8fc275dad69ca530f43f69063c885988e3f1d4e960de6fb0d0"
+    },
+    {
+      "path": "format.txt",
+      "bytes": 216,
+      "sha256": "546026481d5775f491de85cfb08571c5dded91e55565ecc1293188f4ba42bca2"
+    },
+    {
+      "path": "global-before-css-assertion.tap",
+      "bytes": 26293,
+      "sha256": "511ef047ecbe42978b827b7c3b89ef902f778f4477b273cc6cb89cb844ab86e0"
+    },
+    {
+      "path": "global-before-focus-fixture.tap",
+      "bytes": 10785,
+      "sha256": "953e36a7962c915ce4432565ec3ce77fd51807573b57051f4737db4002ad592b"
+    },
+    {
+      "path": "global-before-team-fixtures.tap",
+      "bytes": 28042,
+      "sha256": "788d4735ff0e9d41d0e138aa5251ddb4ea7570d453ec8568bfe8e64decb3d9a2"
+    },
+    {
+      "path": "global-remains-final.tap",
+      "bytes": 24275,
+      "sha256": "8a4861fb0d2d8e7540268f3a9a14072aec42edbbb4c9e1c783f15079bbbc6bf1"
+    },
+    {
+      "path": "independent-host-review.tap",
+      "bytes": 4984,
+      "sha256": "e7668ba17ba02a9bfe8cd94e3555098c5cc6b1f016fb6d21bd5a88bd3a808597"
+    },
+    {
+      "path": "lint.txt",
+      "bytes": 167,
+      "sha256": "e370760101251ff05f1cd882320d73cd50099f4b574ab292d4da3e38b10d74f5"
+    },
+    {
+      "path": "motion-syntax.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "native-format.txt",
+      "bytes": 255,
+      "sha256": "074b697b506d8b888ba2b284391a2aec86c3c70b9432a93e981bc65d2f58e08c"
+    },
+    {
+      "path": "practice-brief-focused.tap",
+      "bytes": 27854,
+      "sha256": "f1e2b8dcd651ec4c4c1514d4b126f3ea70d4f1d5232fa11105fe030c11b1b0d9"
+    },
+    {
+      "path": "practice-global-precedence.tap",
+      "bytes": 836,
+      "sha256": "f57c081e961e976db7168c8a0a75431ef07fb361a70dc86d65e7377fce2dd010"
+    },
+    {
+      "path": "preferences-focused.tap",
+      "bytes": 16113,
+      "sha256": "c4e1c81c44e1f001b036aa41ee24d5b318897d9b366a10ecc5abbb52ef3b7316"
+    },
+    {
+      "path": "production-guard.tap",
+      "bytes": 3330,
+      "sha256": "a64314e4fb2da0eeb9dc54b2163182573a3f693bcdf394a44af008fb9a1fea54"
+    },
+    {
+      "path": "team-freeze-focused.tap",
+      "bytes": 20186,
+      "sha256": "dbdab366103ada8e07104555dd95d20c7cc0ba19c3ec10cb48fdf5bb06523621"
+    },
+    {
+      "path": "team-settings-baseline-after.tap",
+      "bytes": 6305,
+      "sha256": "0ff5e9d08ad72dedd8c1992be279647cd6eced4f135804de2ec2dabe7d112c29"
+    },
+    {
+      "path": "team-settings-baseline-before.tap",
+      "bytes": 10299,
+      "sha256": "6b2808bb6b25c608d694279e49aeace4eee887287e82dd33454c89d0723749e1"
+    },
+    {
+      "path": "team-settings-current-after.tap",
+      "bytes": 6301,
+      "sha256": "603bea05715b2b5308511cc59e15edfdd0e99271f336cdebd1c9be9fc533461f"
+    },
+    {
+      "path": "validate.txt",
+      "bytes": 1182,
+      "sha256": "089584ed05a3893c32f7f16ec8d6305b540dddf563607d2083c00f1fe319a2b9"
+    }
+  ]
+}

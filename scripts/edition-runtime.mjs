@@ -2,7 +2,41 @@ import path from 'node:path';
 import { readFileSync } from 'node:fs';
 import { parse } from 'acorn';
 import { validateDemoCatalog } from '../game/demo-catalog.mjs';
-import { MENU_SCENES, resolveMenuScene } from '../game/ui/menu-scene-catalog.mjs';
+import {
+  MENU_SCENES,
+  MENU_SCENE_COMPOSITIONS,
+  resolveMenuScene,
+} from '../game/ui/menu-scene-catalog.mjs';
+
+export const DEFAULT_GAME_WORDMARK = 'game/ui/art/identity/fpv-line/wordmark.png';
+
+/** Standalone company chrome already uses its selected brand. Keep the shared
+ * helper's image fallback local to that same approved logo instead of shipping
+ * an otherwise unused default-game wordmark. Source/default-game bytes stay put. */
+export function projectEditionBrandIdentity(bytes, logoPath) {
+  if (!/^game\/[A-Za-z0-9_.\/-]+$/.test(logoPath) || logoPath.split('/').includes('..'))
+    throw new Error('Edition branding needs an approved local logo path.');
+  const source = new TextDecoder('utf-8', { fatal: true }).decode(bytes);
+  const tree = parse(source, { ecmaVersion: 'latest', sourceType: 'module' });
+  const declarations = tree.body.flatMap((node) => (node.declaration ?? node).declarations ?? []);
+  const declaration = declarations.find((node) => node.id?.name === 'GAME_WORDMARK_URL');
+  const url = declaration?.init?.object;
+  const literal = url?.arguments?.[0];
+  if (
+    declaration?.init?.type !== 'MemberExpression' ||
+    declaration.init.property?.name !== 'href' ||
+    url?.type !== 'NewExpression' ||
+    url.callee?.name !== 'URL' ||
+    literal?.type !== 'Literal' ||
+    literal.value !== './art/identity/fpv-line/wordmark.png'
+  )
+    throw new Error('Unknown shared brand image fallback.');
+  const relative = path.posix.relative('game/ui', logoPath);
+  const target = relative.startsWith('.') ? relative : './' + relative;
+  return Buffer.from(
+    source.slice(0, literal.start) + JSON.stringify(target) + source.slice(literal.end),
+  );
+}
 
 /** Resolve only the reviewed catalogue's bounded local recording paths. Keep
  * this build inventory derived from the same data the runtime will select. */
@@ -50,19 +84,28 @@ export function projectEditionMenuResourcePaths(paths, editionIds) {
 export function projectEditionMenuScenes(bytes, editionIds) {
   const source = new TextDecoder('utf-8', { fatal: true }).decode(bytes);
   const tree = parse(source, { ecmaVersion: 'latest', sourceType: 'module' });
-  const declaration = tree.body
-    .flatMap((node) => (node.declaration ?? node).declarations ?? [])
-    .find((node) => node.id?.name === 'MENU_SCENES');
+  const declarations = tree.body.flatMap((node) => (node.declaration ?? node).declarations ?? []);
+  const declaration = declarations.find((node) => node.id?.name === 'MENU_SCENES');
+  const compositions = declarations.find((node) => node.id?.name === 'MENU_SCENE_COMPOSITIONS');
   if (!declaration?.init) throw new Error('Menu scene catalog lacks its explicit profile lookup.');
+  if (!compositions?.init)
+    throw new Error('Menu scene catalog lacks its explicit composition lookup.');
   const ids = [
     ...new Set(['fpv', ...editionIds.map((editionId) => resolveMenuScene({ editionId }).id)]),
   ];
   const { start, end } = declaration.init;
-  return Buffer.from(
-    source.slice(0, start) +
-      `Object.freeze(Object.fromEntries(Object.entries(${source.slice(start, end)}).filter(([id]) => ${JSON.stringify(ids)}.includes(id))))` +
-      source.slice(end),
-  );
+  const edits = [
+    {
+      start,
+      end,
+      text: `Object.freeze(Object.fromEntries(Object.entries(${source.slice(start, end)}).filter(([id]) => ${JSON.stringify(ids)}.includes(id))))`,
+    },
+    { start: compositions.init.start, end: compositions.init.end, text: 'Object.freeze({})' },
+  ];
+  let projected = source;
+  for (const edit of edits.sort((a, b) => b.start - a.start))
+    projected = projected.slice(0, edit.start) + edit.text + projected.slice(edit.end);
+  return Buffer.from(projected);
 }
 
 // These are release-owned adapters, not content-supplied scripts. Original
@@ -85,20 +128,24 @@ export const EDITION_RUNTIME_RESOURCES = Object.freeze({
   'game/company-entry.mjs': ['game/index.html'],
   'game/index.html': EDITION_RUNTIME_PAGES,
   'game/app.mjs': ['game/content/scenarios/line-impact-demo.json'],
+  'game/ui/soundtrack-panel.mjs': ['game/ui/soundtrack-panel.css'],
+  'game/ui/install-offline-panel.mjs': ['game/ui/install-offline-panel.css'],
+  'game/vendor/qrcodegen-1.8.0.mjs': [
+    'game/vendor/QRCODEGEN-LICENSE.txt',
+    'game/vendor/qrcodegen-1.8.0.json',
+  ],
   'game/demo-bot-player.mjs': ['game/demo-bot-worker.mjs'],
   'game/demo-catalog.mjs': editionDemoResources(
     readFileSync(new URL('../game/demo-data/catalog.json', import.meta.url), 'utf8'),
   ),
   'game/ui/native-menus.mjs': ['game/ui/native-menu.css'],
   'game/ui/controller-field-editor.mjs': ['game/ui/controller-field-editor.css'],
-  'game/ui/soundtrack-panel.mjs': ['game/ui/soundtrack-panel.css'],
-  'game/ui/install-offline-panel.mjs': ['game/ui/install-offline-panel.css'],
   'game/ui/brand-identity.mjs': ['game/ui/art/identity/fpv-line/wordmark.png'],
   'game/ui/menu-scenes.mjs': [
     'game/ui/menu-scenes.css',
     'game/ui/art/menu-scenes/analog-noise-atlas.png',
   ],
-  'game/ui/authoring-input-host.mjs': ['game/ui/authoring-input.css'],
+  'game/ui/page-input-host.mjs': ['game/ui/authoring-input.css'],
   'game/ui/authoring-sources.mjs': [
     'game/ui/authoring-input.css',
     'authoring/shared/samples/dawn-signal.png',
@@ -108,6 +155,9 @@ export const EDITION_RUNTIME_RESOURCES = Object.freeze({
   ],
   'game/ui/menu-scene-catalog.mjs': [
     ...new Set(Object.values(MENU_SCENES).flatMap(sceneAssets)),
+    ...Object.values(MENU_SCENE_COMPOSITIONS).flatMap((modes) =>
+      Object.values(modes).flatMap(sceneAssets),
+    ),
     'game/ui/art/menu-scenes/provenance.json',
   ],
   'game/content/soundtrack-catalogue.mjs': [

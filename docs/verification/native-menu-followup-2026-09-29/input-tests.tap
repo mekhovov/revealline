@@ -1,0 +1,745 @@
+TAP version 13
+# Subtest: grid editing bounds its cursor, commits only on confirm, and cancels an unfinished anchor before leaving
+ok 1 - grid editing bounds its cursor, commits only on confirm, and cancels an unfinished anchor before leaving
+  ---
+  duration_ms: 1.190125
+  ...
+# Subtest: keyboard and controller registration share domain commands without synthetic key dispatch
+ok 2 - keyboard and controller registration share domain commands without synthetic key dispatch
+  ---
+  duration_ms: 0.395833
+  ...
+# Subtest: source chooser respects accept types and passes the exact File through the existing change handler
+ok 3 - source chooser respects accept types and passes the exact File through the existing change handler
+  ---
+  duration_ms: 0.334875
+  ...
+# Subtest: a cancelled source download cannot deliver after the chooser closes
+ok 4 - a cancelled source download cannot deliver after the chooser closes
+  ---
+  duration_ms: 4.088958
+  ...
+# Subtest: one authoring host owns one poller, suspends for preview focus, and releases all input on disposal
+ok 5 - one authoring host owns one poller, suspends for preview focus, and releases all input on disposal
+  ---
+  duration_ms: 1.076083
+  ...
+# Subtest: preview boot cannot steal input before explicit entry, and Return restores the editor
+ok 6 - preview boot cannot steal input before explicit entry, and Return restores the editor
+  ---
+  duration_ms: 0.370166
+  ...
+# Subtest: authoring menus coordinate native Confirm before frames and retain the captured modal handoff
+ok 7 - authoring menus coordinate native Confirm before frames and retain the captured modal handoff
+  ---
+  duration_ms: 5.258458
+  ...
+# Subtest: authoring page arrows and Escape use menu navigation while text keeps native caret keys
+ok 8 - authoring page arrows and Escape use menu navigation while text keeps native caret keys
+  ---
+  duration_ms: 2.450458
+  ...
+# Subtest: a host with its own preview protocol can opt out of generic iframe controls
+ok 9 - a host with its own preview protocol can opt out of generic iframe controls
+  ---
+  duration_ms: 0.397083
+  ...
+# Subtest: Gamepad-first keyboard, pointer, and click echoes are consumed until release commit
+ok 10 - Gamepad-first keyboard, pointer, and click echoes are consumed until release commit
+  ---
+  duration_ms: 1.691584
+  ...
+# Subtest: a release-only trusted click cannot reverse a committed controller action
+ok 11 - a release-only trusted click cannot reverse a committed controller action
+  ---
+  duration_ms: 0.362333
+  ...
+# Subtest: click activation uses the primary button, not the PointerEvent isPrimary default
+ok 12 - click activation uses the primary button, not the PointerEvent isPrimary default
+  ---
+  duration_ms: 0.232667
+  ...
+# Subtest: a primary mouse representation is owned by the transaction
+ok 13 - a primary mouse representation is owned by the transaction
+  ---
+  duration_ms: 0.180541
+  ...
+# Subtest: a primary touch representation is owned by the transaction
+ok 14 - a primary touch representation is owned by the transaction
+  ---
+  duration_ms: 0.116667
+  ...
+# Subtest: a primary pen representation is owned by the transaction
+ok 15 - a primary pen representation is owned by the transaction
+  ---
+  duration_ms: 0.105833
+  ...
+# Subtest: a primary mouse representation is owned by the transaction
+ok 16 - a primary mouse representation is owned by the transaction
+  ---
+  duration_ms: 0.152084
+  ...
+# Subtest: a trusted native-first activation remains the winner for a five-second hold
+ok 17 - a trusted native-first activation remains the winner for a five-second hold
+  ---
+  duration_ms: 0.166458
+  ...
+# Subtest: an unrelated or stale native activation does not suppress release commit
+ok 18 - an unrelated or stale native activation does not suppress release commit
+  ---
+  duration_ms: 0.230584
+  ...
+# Subtest: rapid deliberate transactions each activate once
+ok 19 - rapid deliberate transactions each activate once
+  ---
+  duration_ms: 0.312
+  ...
+# Subtest: legacy observed hosts activate once per press without opening a release transaction
+ok 20 - legacy observed hosts activate once per press without opening a release transaction
+  ---
+  duration_ms: 0.135708
+  ...
+# Subtest: synchronous host input cleanup cannot split a committed release transaction
+ok 21 - synchronous host input cleanup cannot split a committed release transaction
+  ---
+  duration_ms: 0.413916
+  ...
+# Subtest: a synchronous blur inside activation cannot poison the next Confirm
+ok 22 - a synchronous blur inside activation cannot poison the next Confirm
+  ---
+  duration_ms: 0.136625
+  ...
+# Subtest: a synchronous visibilitychange inside activation cannot poison the next Confirm
+ok 23 - a synchronous visibilitychange inside activation cannot poison the next Confirm
+  ---
+  duration_ms: 0.088584
+  ...
+# Subtest: cancel and blur retire a transaction without activation
+ok 24 - cancel and blur retire a transaction without activation
+  ---
+  duration_ms: 0.128583
+  ...
+# Subtest: touchscreen and keyboard work after the release grace period
+ok 25 - touchscreen and keyboard work after the release grace period
+  ---
+  duration_ms: 0.099042
+  ...
+# Subtest: modified keys and secondary clicks are never treated as Confirm echoes
+ok 26 - modified keys and secondary clicks are never treated as Confirm echoes
+  ---
+  duration_ms: 0.079416
+  ...
+# Subtest: native probes capture and release a whole tap between render frames
+ok 27 - native probes capture and release a whole tap between render frames
+  ---
+  duration_ms: 0.928417
+  ...
+# Subtest: a five-second hold and overlapping aliases release as one gesture
+ok 28 - a five-second hold and overlapping aliases release as one gesture
+  ---
+  duration_ms: 1.72925
+  ...
+# Subtest: cross-alias echoes drain while deliberate original-button repeats are accepted
+ok 29 - cross-alias echoes drain while deliberate original-button repeats are accepted
+  ---
+  duration_ms: 0.405042
+  ...
+# Subtest: native winner survives router clear, changed scope, removed target and a long hold
+ok 30 - native winner survives router clear, changed scope, removed target and a long hold
+  ---
+  duration_ms: 0.705375
+  ...
+# Subtest: native click refreshes its lead window without replacing the original menu target
+ok 31 - native click refreshes its lead window without replacing the original menu target
+  ---
+  duration_ms: 0.3575
+  ...
+# Subtest: delayed Gamepad adopts the original target before the native click
+ok 32 - delayed Gamepad adopts the original target before the native click
+  ---
+  duration_ms: 0.19125
+  ...
+# Subtest: expired and unrelated native candidates do not win activation
+ok 33 - expired and unrelated native candidates do not win activation
+  ---
+  duration_ms: 0.331041
+  ...
+# Subtest: scope change and target removal cancel but own the entire remaining hold
+ok 34 - scope change and target removal cancel but own the entire remaining hold
+  ---
+  duration_ms: 0.205416
+  ...
+# Subtest: hard loss, replacement and inactive document cannot commit stale holds or candidates
+ok 35 - hard loss, replacement and inactive document cannot commit stale holds or candidates
+  ---
+  duration_ms: 0.215625
+  ...
+# Subtest: neutral native input remains unowned; blocked controller cannot invent a press
+ok 36 - neutral native input remains unowned; blocked controller cannot invent a press
+  ---
+  duration_ms: 0.132625
+  ...
+# Subtest: invalid alias timing and trace callbacks are rejected
+ok 37 - invalid alias timing and trace callbacks are rejected
+  ---
+  duration_ms: 0.232291
+  ...
+# Subtest: native winner survives its own same-scope focus change but yields to separate controller navigation
+ok 38 - native winner survives its own same-scope focus change but yields to separate controller navigation
+  ---
+  duration_ms: 0.088
+  ...
+# Subtest: Downloads Confirm waits for release and suppresses compatibility clicks
+ok 39 - Downloads Confirm waits for release and suppresses compatibility clicks
+  ---
+  duration_ms: 22.522042
+  ...
+# Subtest: Downloads captures a complete native Confirm tap between frames
+ok 40 - Downloads captures a complete native Confirm tap between frames
+  ---
+  duration_ms: 1.116708
+  ...
+# Subtest: Downloads hidden ownership cancels a held action and disposal retires its poller
+ok 41 - Downloads hidden ownership cancels a held action and disposal retires its poller
+  ---
+  duration_ms: 1.157958
+  ...
+# Subtest: Downloads can Confirm again after activation synchronously blurs the page
+ok 42 - Downloads can Confirm again after activation synchronously blurs the page
+  ---
+  duration_ms: 2.63375
+  ...
+# Subtest: catalog close preserves the actual invoker and an explicit startup return target
+ok 43 - catalog close preserves the actual invoker and an explicit startup return target
+  ---
+  duration_ms: 4.323542
+  ...
+# Subtest: catalog return target cannot override hidden
+ok 44 - catalog return target cannot override hidden
+  ---
+  duration_ms: 1.650125
+  ...
+# Subtest: catalog return target cannot override blurred
+ok 45 - catalog return target cannot override blurred
+  ---
+  duration_ms: 1.097875
+  ...
+# Subtest: catalog return target cannot override newer close focus
+ok 46 - catalog return target cannot override newer close focus
+  ---
+  duration_ms: 4.6195
+  ...
+# Subtest: a close callback that reopens the catalog retains the newer visit and return target
+ok 47 - a close callback that reopens the catalog retains the newer visit and return target
+  ---
+  duration_ms: 0.960667
+  ...
+# Subtest: actual catalog handlers isolate unsaved choices, save enabled/skin selections, restore and preview the chosen role
+ok 48 - actual catalog handlers isolate unsaved choices, save enabled/skin selections, restore and preview the chosen role
+  ---
+  duration_ms: 5.447917
+  ...
+# Subtest: failed Apply retains the last saved draft; malformed or oversize imports cannot replace it
+ok 49 - failed Apply retains the last saved draft; malformed or oversize imports cannot replace it
+  ---
+  duration_ms: 1.862959
+  ...
+# Subtest: cancelled catalog file reads cannot replace a draft or unlock a newer operation
+ok 50 - cancelled catalog file reads cannot replace a draft or unlock a newer operation
+  ---
+  duration_ms: 2.483084
+  ...
+# Subtest: Stop waiting keeps an authoring save locked and reconciles its actual outcome
+ok 51 - Stop waiting keeps an authoring save locked and reconciles its actual outcome
+  ---
+  duration_ms: 5.007416
+  ...
+# Subtest: shared keyboard/controller navigation reaches native catalog controls; Back cancels select edit before closing
+ok 52 - shared keyboard/controller navigation reaches native catalog controls; Back cancels select edit before closing
+  ---
+  duration_ms: 59.934791
+  ...
+# Subtest: workshop native input clears held D-pad repeats until neutral and a fresh press
+ok 53 - workshop native input clears held D-pad repeats until neutral and a fresh press
+  ---
+  duration_ms: 15.490084
+  ...
+# Subtest: workshop ignores a focused game iframe even when parent hasFocus is true, and requires neutral on return
+ok 54 - workshop ignores a focused game iframe even when parent hasFocus is true, and requires neutral on return
+  ---
+  duration_ms: 7.096416
+  ...
+# Subtest: role detail reader stays controller scrollable and Back returns to its own button
+ok 55 - role detail reader stays controller scrollable and Back returns to its own button
+  ---
+  duration_ms: 1.920667
+  ...
+# Subtest: file picker cancellation keeps Enemy Catalog choices and an in-flight save; dialog Escape still stops waiting
+ok 56 - file picker cancellation keeps Enemy Catalog choices and an in-flight save; dialog Escape still stops waiting
+  ---
+  duration_ms: 1.805167
+  ...
+# Subtest: return authority rejects outsiders, stale launches, malformed messages and repeats
+ok 57 - return authority rejects outsiders, stale launches, malformed messages and repeats
+  ---
+  duration_ms: 3.945667
+  ...
+# Subtest: actual practice controller pause and Return reopens the unsaved parent draft with no flight progress
+ok 58 - actual practice controller pause and Return reopens the unsaved parent draft with no flight progress
+  ---
+  duration_ms: 2709.893666
+  ...
+# Subtest: ordinary and unrelated embedded game pages never receive a workshop return action
+ok 59 - ordinary and unrelated embedded game pages never receive a workshop return action
+  ---
+  duration_ms: 1096.715583
+  ...
+# Subtest: Enemy Workshop captures native Confirm before navigation clears the sampled device
+ok 60 - Enemy Workshop captures native Confirm before navigation clears the sampled device
+  ---
+  duration_ms: 3.499625
+  ...
+# Subtest: controller Back cancels held Recovery startup before any profile read or late adoption
+ok 61 - controller Back cancels held Recovery startup before any profile read or late adoption
+  ---
+  duration_ms: 560.000334
+  ...
+# Subtest: failed startup keeps controller Reload reachable and retains one router through readiness
+ok 62 - failed startup keeps controller Reload reachable and retains one router through readiness
+  ---
+  duration_ms: 205.865166
+  ...
+# Subtest: Reload during a held catalog retires its late completion without replacing the newer view
+ok 63 - Reload during a held catalog retires its late completion without replacing the newer view
+  ---
+  duration_ms: 104.078042
+  ...
+# Subtest: timed-out startup keeps Reload active and late failed work cannot replace its successor
+ok 64 - timed-out startup keeps Reload active and late failed work cannot replace its successor
+  ---
+  duration_ms: 94.206583
+  ...
+# Subtest: startup completion preserves newer focus instead of moving it from Back
+ok 65 - startup completion preserves newer focus instead of moving it from Back
+  ---
+  duration_ms: 84.239291
+  ...
+# Subtest: background completion cannot autofocus now or on foreground return
+ok 66 - background completion cannot autofocus now or on foreground return
+  ---
+  duration_ms: 91.061958
+  ...
+# Subtest: hidden input stays neutral and returning foreground requires a fresh controller command
+ok 67 - hidden input stays neutral and returning foreground requires a fresh controller command
+  ---
+  duration_ms: 13.245042
+  ...
+# Subtest: cached return starts one read and one navigation loop while terminal departure cannot revive either
+ok 68 - cached return starts one read and one navigation loop while terminal departure cannot revive either
+  ---
+  duration_ms: 105.544042
+  ...
+# Subtest: ready Back waits for the actual reader transaction and overlapping Back closes it once
+ok 69 - ready Back waits for the actual reader transaction and overlapping Back closes it once
+  ---
+  duration_ms: 88.256584
+  ...
+# Subtest: old ready Back cannot navigate or focus after persisted departure and return
+ok 70 - old ready Back cannot navigate or focus after persisted departure and return
+  ---
+  duration_ms: 177.189833
+  ...
+# Subtest: ready Back cleanup completed in the background cannot navigate or later autofocus
+ok 71 - ready Back cleanup completed in the background cannot navigate or later autofocus
+  ---
+  duration_ms: 80.988084
+  ...
+# Subtest: terminal departure invalidates a ready Back still awaiting its reader
+ok 72 - terminal departure invalidates a ready Back still awaiting its reader
+  ---
+  duration_ms: 77.677583
+  ...
+# Subtest: terminal departure also invalidates startup Back final navigation continuation
+ok 73 - terminal departure also invalidates startup Back final navigation continuation
+  ---
+  duration_ms: 6.576208
+  ...
+# Subtest: completed startup Back supports a real persisted departure and fresh return
+ok 74 - completed startup Back supports a real persisted departure and fresh return
+  ---
+  duration_ms: 97.533084
+  ...
+# Subtest: completed ready Back supports a real persisted departure and fresh return
+ok 75 - completed ready Back supports a real persisted departure and fresh return
+  ---
+  duration_ms: 154.262791
+  ...
+# Subtest: completed Back followed by terminal departure cannot revive on stale persisted pageshow or late startup
+ok 76 - completed Back followed by terminal departure cannot revive on stale persisted pageshow or late startup
+  ---
+  duration_ms: 10.12
+  ...
+# Subtest: Recovery native Confirm commits one Reload between frames and drains its compatibility click
+ok 77 - Recovery native Confirm commits one Reload between frames and drains its compatibility click
+  ---
+  duration_ms: 10.638084
+  ...
+# Subtest: Replay Theater refreshes code-owned controller and example labels in both locale directions
+ok 78 - Replay Theater refreshes code-owned controller and example labels in both locale directions
+  ---
+  duration_ms: 217.92375
+  ...
+# Subtest: native fragment Jump hands off to playback and the next Tab reaches Restart without changing the recording
+ok 79 - native fragment Jump hands off to playback and the next Tab reaches Restart without changing the recording
+  ---
+  duration_ms: 127.830292
+  ...
+# Subtest: Jump chooses Cancel for a held import and preserves the prior recording after rejection
+ok 80 - Jump chooses Cancel for a held import and preserves the prior recording after rejection
+  ---
+  duration_ms: 50.433125
+  ...
+# Subtest: Jump with no loaded recording reaches Load example without retrying the failed import
+ok 81 - Jump with no loaded recording reaches Load example without retrying the failed import
+  ---
+  duration_ms: 16.401833
+  ...
+# Subtest: Jump preserves modified clicks and yields to newer focus, input, background and terminal disposal
+ok 82 - Jump preserves modified clicks and yields to newer focus, input, background and terminal disposal
+  ---
+  duration_ms: 65.946875
+  ...
+# Subtest: completed Play and Step hand off to Restart with exact final checkpoints and local next Tab
+ok 83 - completed Play and Step hand off to Restart with exact final checkpoints and local next Tab
+  ---
+  duration_ms: 282.500458
+  ...
+# Subtest: completion preserves unrelated editor focus and does not steal background focus
+ok 84 - completion preserves unrelated editor focus and does not steal background focus
+  ---
+  duration_ms: 67.252625
+  ...
+# Subtest: immediate: keyboard transport, focus and Back preserve the real recorded cut through completion
+ok 85 - immediate: keyboard transport, focus and Back preserve the real recorded cut through completion
+  ---
+  duration_ms: 87.525458
+  ...
+# Subtest: grid-center: keyboard transport, focus and Back preserve the real recorded cut through completion
+ok 86 - grid-center: keyboard transport, focus and Back preserve the real recorded cut through completion
+  ---
+  duration_ms: 68.710666
+  ...
+# Subtest: controller joins without activation, previews native speed, cancels once and pauses before leaving
+ok 87 - controller joins without activation, previews native speed, cancels once and pauses before leaving
+  ---
+  duration_ms: 103.597333
+  ...
+# Subtest: Back cancels a deferred import without adoption; native text editing and file choice remain native
+ok 88 - Back cancels a deferred import without adoption; native text editing and file choice remain native
+  ---
+  duration_ms: 47.891042
+  ...
+# Subtest: blur, controller loss and page disposal pause exact playback and reject a late import
+ok 89 - blur, controller loss and page disposal pause exact playback and reject a late import
+  ---
+  duration_ms: 49.709708
+  ...
+# Subtest: real replay verification reports exact ticks and a cancelled artwork decode cannot adopt its candidate
+ok 90 - real replay verification reports exact ticks and a cancelled artwork decode cannot adopt its candidate
+  ---
+  duration_ms: 57.484292
+  ...
+# Subtest: Classic replay import stays paused and controller completion checks the exact v6 checkpoint
+ok 91 - Classic replay import stays paused and controller completion checks the exact v6 checkpoint
+  ---
+  duration_ms: 114.15575
+  ...
+# Subtest: Replay Theater native Confirm commits between frames without a second playback toggle
+ok 92 - Replay Theater native Confirm commits between frames without a second playback toggle
+  ---
+  duration_ms: 27.654375
+  ...
+# Subtest: actual classic entry gives file-URL guidance before module/storage access
+ok 93 - actual classic entry gives file-URL guidance before module/storage access
+  ---
+  duration_ms: 10.506667
+  ...
+# Subtest: actual authoring entry opens no DB until explicit activation and shares one real manager for audio and media
+ok 94 - actual authoring entry opens no DB until explicit activation and shares one real manager for audio and media
+  ---
+  duration_ms: 268.412709
+  ...
+# Subtest: cold workshop Escape restores the invoker blurred by its disabled loading state
+ok 95 - cold workshop Escape restores the invoker blurred by its disabled loading state
+  ---
+  duration_ms: 50.430542
+  ...
+# Subtest: closing a pending workshop read restores the invoker before settling and preserves later focus
+ok 96 - closing a pending workshop read restores the invoker before settling and preserves later focus
+  ---
+  duration_ms: 41.999334
+  ...
+# Subtest: v1 MP3 bytes remain exact through shared v5 upgrade and explicit native backup preparation
+ok 97 - v1 MP3 bytes remain exact through shared v5 upgrade and explicit native backup preparation
+  ---
+  duration_ms: 118.855541
+  ...
+# Subtest: actual host omits unused trusted online pins from an importable backup without fetching or changing storage
+ok 98 - actual host omits unused trusted online pins from an importable backup without fetching or changing storage
+  ---
+  duration_ms: 109.720417
+  ...
+# Subtest: actual host preserves installed permitted originals and their metadata byte-for-byte
+ok 99 - actual host preserves installed permitted originals and their metadata byte-for-byte
+  ---
+  duration_ms: 27.16625
+  ...
+# Subtest: actual host names restricted references before preparing and retains that notice through download
+ok 100 - actual host names restricted references before preparing and retains that notice through download
+  ---
+  duration_ms: 14.771375
+  ...
+# Subtest: missing permitted music stops preparation visibly and discards the earlier prepared URL
+ok 101 - missing permitted music stops preparation visibly and discards the earlier prepared URL
+  ---
+  duration_ms: 19.813084
+  ...
+# Subtest: closing pending audio recovery prevents late status, notices or download ownership
+ok 102 - closing pending audio recovery prevents late status, notices or download ownership
+  ---
+  duration_ms: 13.387125
+  ...
+# Subtest: file URL and cancelled late source load do not open or upgrade media
+ok 103 - file URL and cancelled late source load do not open or upgrade media
+  ---
+  duration_ms: 43.222375
+  ...
+# Subtest: rejected shared-store access remains visible and cannot become an empty media save
+ok 104 - rejected shared-store access remains visible and cannot become an empty media save
+  ---
+  duration_ms: 19.843625
+  ...
+# Subtest: persisted pagehide cancels a pending first Open before it can create or upgrade a manager
+ok 105 - persisted pagehide cancels a pending first Open before it can create or upgrade a manager
+  ---
+  duration_ms: 28.966833
+  ...
+# Subtest: existing host navigation owns Back and neutralizes native handoff; hidden page cancels the edit context
+ok 106 - existing host navigation owns Back and neutralizes native handoff; hidden page cancels the edit context
+  ---
+  duration_ms: 35.030208
+  ...
+# Subtest: actual shared router prevents held Confirm across modal close and native pointer handoff
+ok 107 - actual shared router prevents held Confirm across modal close and native pointer handoff
+  ---
+  duration_ms: 76.6405
+  ...
+# Subtest: opening announces the held catalogue read and Close fences its late failure
+ok 108 - opening announces the held catalogue read and Close fences its late failure
+  ---
+  duration_ms: 14.341959
+  ...
+# Subtest: classic picture workshop exposes loading and Back before storage explanation
+ok 109 - classic picture workshop exposes loading and Back before storage explanation
+  ---
+  duration_ms: 0.927542
+  ...
+# Subtest: successful in-dialog reload reconciles the failed host opening without moving focus or writing media
+ok 110 - successful in-dialog reload reconciles the failed host opening without moving focus or writing media
+  ---
+  duration_ms: 22.5075
+  ...
+# Subtest: failed in-dialog reload retains the host failure and the current panel error
+ok 111 - failed in-dialog reload retains the host failure and the current panel error
+  ---
+  duration_ms: 26.61025
+  ...
+# Subtest: cancelled reload after hide cannot reconcile a late read as success
+ok 112 - cancelled reload after hide cannot reconcile a late read as success
+  ---
+  duration_ms: 26.597125
+  ...
+# Subtest: cancelled reload after close cannot reconcile a late read as success
+ok 113 - cancelled reload after close cannot reconcile a late read as success
+  ---
+  duration_ms: 20.1535
+  ...
+# Subtest: successful reload cannot overwrite a newer host status owner
+ok 114 - successful reload cannot overwrite a newer host status owner
+  ---
+  duration_ms: 25.17975
+  ...
+# Subtest: retired reload cannot change a newer successful opening
+ok 115 - retired reload cannot change a newer successful opening
+  ---
+  duration_ms: 26.316125
+  ...
+# Subtest: retired reload cannot change a newer failed opening
+ok 116 - retired reload cannot change a newer failed opening
+  ---
+  duration_ms: 24.074583
+  ...
+# Subtest: workshop initial successful load and reopen restore Reload after native disabled blur
+ok 117 - workshop initial successful load and reopen restore Reload after native disabled blur
+  ---
+  duration_ms: 27.899792
+  ...
+# Subtest: workshop initial failed load and reopen restore Reload after native disabled blur
+ok 118 - workshop initial failed load and reopen restore Reload after native disabled blur
+  ---
+  duration_ms: 20.953125
+  ...
+# Subtest: Picture Workshop native Confirm closes once on release and cannot reopen the parent
+ok 119 - Picture Workshop native Confirm closes once on release and cannot reopen the parent
+  ---
+  duration_ms: 21.978417
+  ...
+# Subtest: support pages mount the shared owner and preserve their own home/preview links
+ok 120 - support pages mount the shared owner and preserve their own home/preview links
+  ---
+  duration_ms: 11.6545
+  ...
+# Subtest: dynamic catalog actions are reachable without re-registering the page
+ok 121 - dynamic catalog actions are reachable without re-registering the page
+  ---
+  duration_ms: 26.0505
+  ...
+# Subtest: controller search opens the shared field editor and Back restores the original draft
+ok 122 - controller search opens the shared field editor and Back restores the original draft
+  ---
+  duration_ms: 5.850041
+  ...
+# Subtest: parent controller owner is neutral while the practice frame owns focus
+ok 123 - parent controller owner is neutral while the practice frame owns focus
+  ---
+  duration_ms: 1.918125
+  ...
+# Subtest: support Confirm suppresses a native compatibility click and commits on release once
+ok 124 - support Confirm suppresses a native compatibility click and commits on release once
+  ---
+  duration_ms: 2.627625
+  ...
+# Subtest: Confirm can enter the practice frame, then activate a parent action after neutral return
+ok 125 - Confirm can enter the practice frame, then activate a parent action after neutral return
+  ---
+  duration_ms: 2.359042
+  ...
+# Subtest: keyboard preserves search caret movement and routes page Back through the home action
+ok 126 - keyboard preserves search caret movement and routes page Back through the home action
+  ---
+  duration_ms: 1.633083
+  ...
+# Subtest: standalone entry has native file/time controls, dark local styles and file failure before modules
+ok 127 - standalone entry has native file/time controls, dark local styles and file failure before modules
+  ---
+  duration_ms: 9.264375
+  ...
+# Subtest: actual workshop handlers inspect/select/capture and retain exact PNG until native explicit download
+ok 128 - actual workshop handlers inspect/select/capture and retain exact PNG until native explicit download
+  ---
+  duration_ms: 37.368208
+  ...
+# Subtest: fallback timing is explicitly unavailable, never substituted with requested time
+ok 129 - fallback timing is explicitly unavailable, never substituted with requested time
+  ---
+  duration_ms: 8.282167
+  ...
+# Subtest: presented-frame evidence enables bounded directional seek and publishes only changed decoded time
+ok 130 - presented-frame evidence enables bounded directional seek and publishes only changed decoded time
+  ---
+  duration_ms: 20.391458
+  ...
+# Subtest: playback range stays separate from explicitly unavailable physical trim
+ok 131 - playback range stays separate from explicitly unavailable physical trim
+  ---
+  duration_ms: 9.415416
+  ...
+# Subtest: verified optional trim publishes the adapter output URL and explicit audio provenance
+ok 132 - verified optional trim publishes the adapter output URL and explicit audio provenance
+  ---
+  duration_ms: 6.405791
+  ...
+# Subtest: bounded resize/compression plan supports whole-video conversion and invalidates stale support
+ok 133 - bounded resize/compression plan supports whole-video conversion and invalidates stale support
+  ---
+  duration_ms: 11.303458
+  ...
+# Subtest: invalid numeric times do not clamp, allocate or disturb an existing poster
+ok 134 - invalid numeric times do not clamp, allocate or disturb an existing poster
+  ---
+  duration_ms: 10.933625
+  ...
+# Subtest: cancelled late inspection is disposed and cannot enable capture
+ok 135 - cancelled late inspection is disposed and cannot enable capture
+  ---
+  duration_ms: 6.314875
+  ...
+# Subtest: older inspection completion cannot replace a newer successfully inspected source
+ok 136 - older inspection completion cannot replace a newer successfully inspected source
+  ---
+  duration_ms: 9.237584
+  ...
+# Subtest: fixture generator explains usage and refuses output outside its exclusive cache boundary
+ok 137 - fixture generator explains usage and refuses output outside its exclusive cache boundary
+  ---
+  duration_ms: 110.845625
+  ...
+# Subtest: fixture generator refuses symlink ancestors before writing outside its cache and preserves existing directories
+ok 138 - fixture generator refuses symlink ancestors before writing outside its cache and preserves existing directories
+  ---
+  duration_ms: 89.462042
+  ...
+# Subtest: Cancel and source change reject late capture publication while retaining prior result only for same source
+ok 139 - Cancel and source change reject late capture publication while retaining prior result only for same source
+  ---
+  duration_ms: 6.463666
+  ...
+# Subtest: failed capture preserves exact prior preview and allows retry
+ok 140 - failed capture preserves exact prior preview and allows retry
+  ---
+  duration_ms: 5.39475
+  ...
+# Subtest: native file-picker blur keeps selection while hidden/pagehide cancels and releases work
+ok 141 - native file-picker blur keeps selection while hidden/pagehide cancels and releases work
+  ---
+  duration_ms: 5.22025
+  ...
+# Subtest: controller native range editing and confirmation reaches explicit PNG action without mouse
+ok 142 - controller native range editing and confirmation reaches explicit PNG action without mouse
+  ---
+  duration_ms: 18.634333
+  ...
+# Subtest: native keyboard editing/activation preserves input defaults and no repeated capture during work
+ok 143 - native keyboard editing/activation preserves input defaults and no repeated capture during work
+  ---
+  duration_ms: 4.910875
+  ...
+# Subtest: focused page owns polling; held pad must neutralize after native input and focus loss
+ok 144 - focused page owns polling; held pad must neutralize after native input and focus loss
+  ---
+  duration_ms: 3.209333
+  ...
+# Subtest: disposal revokes prepared PNG and late callbacks cannot restart the standalone page
+ok 145 - disposal revokes prepared PNG and late callbacks cannot restart the standalone page
+  ---
+  duration_ms: 3.795291
+  ...
+# Subtest: classic video workshop exposes loading immediately after its title
+ok 146 - classic video workshop exposes loading immediately after its title
+  ---
+  duration_ms: 0.799916
+  ...
+# Subtest: Video Poster native Confirm is captured before a frame and cannot clear the newly captured result
+ok 147 - Video Poster native Confirm is captured before a frame and cannot clear the newly captured result
+  ---
+  duration_ms: 8.918792
+  ...
+1..147
+# tests 147
+# suites 0
+# pass 147
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 4378.716666

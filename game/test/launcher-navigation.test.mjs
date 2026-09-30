@@ -157,3 +157,27 @@ test('company launcher defaults and Back focus its Check action until preparatio
   assert.deepEqual(f.calls, ['check'], 'Back changes focus without starting preparation.');
   f.host.dispose();
 });
+
+test('launcher native Confirm probes the held pad before the next animation frame', () => {
+  const f = fixture();
+  f.tick();
+  f.tick();
+  const target = f.doc.getElementById('play');
+  target.focus();
+  f.pad.buttons[0] = { pressed: true, value: 1 };
+  assert.equal(
+    target.emit('keydown', { key: 'Enter', code: 'Enter', isTrusted: true }).defaultPrevented,
+    true,
+  );
+  assert.equal(
+    target.emit('click', { button: 0, detail: 0, isTrusted: true }).defaultPrevented,
+    true,
+  );
+  assert.deepEqual(f.calls, []);
+  f.pad.buttons[0] = { pressed: false, value: 0 };
+  f.tick();
+  assert.deepEqual(f.calls, ['play']);
+  f.tick();
+  assert.deepEqual(f.calls, ['play']);
+  f.host.dispose();
+});

@@ -14,12 +14,13 @@ Fullscreen has one browser-state owner per document, so the landing and Settings
 
 ## Routes and capability matrix
 
-| Host             | Current route                   | Additional supported entry                           | Mode      | Branding / scene                            |
-| ---------------- | ------------------------------- | ---------------------------------------------------- | --------- | ------------------------------------------- |
-| Solo             | `/game/`                        | `?journey=legacy`, mission-library/custom handoffs   | Solo      | FPV / LINE; selected theme or FPV fallback  |
-| Versus           | `/game/couch/`                  | `?journey=legacy`, supported imported Versus content | Versus    | FPV / LINE; selected theme; opposing actors |
-| Team             | `/game/couch/relay-rescue.html` | `?journey=legacy`, Team creator/import handoffs      | Team      | FPV / LINE; accepted theme; linked actors   |
-| Company editions | `/game/?edition=<slug>`         | `/editions/<slug>/app/`; legacy company launcher     | Solo only | Edition title/logo; explicit edition scene  |
+| Host             | Current route                                   | Additional supported entry                           | Mode                           | Branding / scene                                    |
+| ---------------- | ----------------------------------------------- | ---------------------------------------------------- | ------------------------------ | --------------------------------------------------- |
+| Solo             | `/game/`                                        | `?journey=legacy`, mission-library/custom handoffs   | Solo                           | FPV / LINE; selected theme or FPV fallback          |
+| Versus           | `/game/couch/`                                  | `?journey=legacy`, supported imported Versus content | Versus                         | FPV / LINE; distinct FPV opposing-drone composition |
+| Team             | `/game/couch/relay-rescue.html`                 | `?journey=legacy`, Team creator/import handoffs      | Team                           | FPV / LINE; distinct FPV linked-drone composition   |
+| Custom Solo      | `/game/creator/player.html?edition=<stable-id>` | Installed picture-campaign player                    | Solo; qualified Versus handoff | Campaign identity; approved FPV fallback            |
+| Company editions | `/game/?edition=<slug>`                         | `/editions/<slug>/app/`; legacy company launcher     | Solo only                      | Edition title/logo; explicit edition scene          |
 
 Current title and logo behavior is documented in [FPV / LINE branding](fpv-line-branding.md); DroneAid uses the public slug `droneaid` while retaining its saved internal identity.
 
@@ -40,6 +41,8 @@ The complete edition table is in `docs/native-menu-inventory.json`, generated fr
 
 Edition pickers live in Content & Offline; original-art recovery lives in Progress & Collection; edition sources/about live in Help & Extras. The language picker has one visible home. Runtime music transport is rendered in Audio; landing song metadata is passive. Existing Apply/Cancel behavior remains owned by each original control. Demo entry closes its Settings parent temporarily and restores the same section when leaving without a gameplay handoff.
 
+The installed Custom Solo player exposes four populated sections: Gameplay, Display & Language (including its accessibility preferences), Progress & Collection and Help & Extras. Its runtime has no audio owner, so it has no inactive sound/track controls. It preserves its verified runtime and saves, supports in-pack mission selection with replacement confirmation, and hands qualified Versus content to the ordinary multiplayer host.
+
 ## Visual specification
 
 - Desktop: a 510px menu area beside scenery; generated game wordmark or 44px edition title (66px game text fallback), 22px action labels, 56px action rows; primary action warm yellow, other actions quiet dark surfaces.
@@ -58,10 +61,12 @@ See `menu-scenes.md` for all 18 profiles, composition source/provenance, active 
 
 ## Delivery status
 
-Phases 1–6 are implemented in active source: the inventory and destination map; shared landing/Settings; directional navigation and field editing; fonts/icons; 18 scene profiles; and shared creator input adapters. The authoring inventory includes 16 active tools and 16 owned reference pages. Custom-content player menus and default/company offline launchers use the same input infrastructure.
+The main implementation exists for all six source phases, but their exit criteria are not all complete. The inventory, shared landing/Settings, fonts/icons, 18 scene profiles and creator adapters are present. The inventory lists 15 existing tools, one pending Demo tool dependency and 16 owned reference pages. FPV has distinct Versus/Team actor arrangements in both orientations; Ukraine, Retro and Coupa still need those mode compositions. The separate installed Custom Solo player now uses a native landing and capability-backed Settings. Full creator workflow acceptance on the reconciled branch and physical-device checks remain open.
+
+Use the [phase and release-batch ledger](native-menu-plan-status.md) for the current item-level status and next work. Historical screenshots and export receipts remain useful evidence for their recorded snapshot, not proof for a later PR head.
 
 Phase 7 local web/edition/native staging and verification results are recorded in the evidence report. Physical-controller, mobile performance, native Xcode/device and published-build acceptance must remain separate from local browser and modeled-input evidence. Release snapshots and public selectors remain under the established release coordinator.
 
 ## Verification levels
 
-Evidence is tracked separately for automated unit/host checks, local browser observation, physical hardware and published packages. A passing synthetic controller test is not evidence of a physical pad, Steam Deck, iOS or shipped desktop support. The current run's actual commands and observed screens are recorded in `verification/native-menus-2026-09-28.md`. Authoring tool coverage and boundaries are recorded with the authoring input implementation. Publication must use the repository release process; this implementation does not rewrite archived snapshots.
+Evidence is tracked separately for automated unit/host checks, local browser observation, physical hardware and published packages. A passing synthetic controller test is not evidence of a physical pad, Steam Deck, iOS or shipped desktop support. The September 28 report is historical evidence; current follow-up commands and browser observations are linked from `native-menu-plan-status.md`. Authoring tool coverage and boundaries are recorded with the authoring input implementation. Publication must use the repository release process; this implementation does not rewrite archived snapshots.

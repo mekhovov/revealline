@@ -512,8 +512,12 @@ Keep a crisp pixel grid, restrained highlights and a clear silhouette at native 
 Return the sprite or coordinated sheet with all required states, an unchanged slot contract and a short description of the variation. Preserve gameplay bounds. Review on the arena before publishing.</pre
           >
           <button type="button" id="copy-prompt" data-i18n="tools:copyExampleBrief">
-            Copy example brief</button
-          ><span id="copy-status" role="status"></span>
+            Copy example brief
+          </button>
+          <a id="download-prompt" hidden data-i18n="tools:downloadExampleBrief"
+            >Download example brief</a
+          >
+          <span id="copy-status" role="status"></span>
         </details>
       </section>
 
@@ -650,6 +654,14 @@ Return the sprite or coordinated sheet with all required states, an unchanged sl
         >
           Local screenshot previews are available when reviewing the source repository on localhost.
           Official source links remain available below.
+        </p>
+        <p>
+          <a
+            id="reveal-audit-link"
+            href="reveal-audit.html"
+            data-i18n="tools:fieldKitFpvRevealSourceAudit"
+            >Field Kit — FPV reveal source audit</a
+          >
         </p>
         <div class="reference-grid">
           <figure>

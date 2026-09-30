@@ -1,20 +1,4 @@
-# Community directory and creator store
-
-`index.html` is the static company directory linked from the repository guide and public
-website. It opens DroneAid and Coupa through portable relative company-entry URLs. It
-does not load catalog, account, publishing or upload clients, so it works on GitHub Pages
-without a server. Its English links still work when JavaScript is unavailable; the local
-i18n bootstrap adds English/Ukrainian selection.
-
-`store.html` preserves the separate creator marketplace previously served at `index.html`.
-Serve it only as a service-enabled entry, with this Node service and `/api/auth` behind a
-same-origin HTTPS proxy. GitHub Pages alone cannot operate that marketplace. The company
-directory does not link to the creator marketplace or instantiate its storage adapters.
-
-Company games do not link back to the directory or offer other companies in their campaign
-selector. Read [the routing and isolation contract](../../docs/company-communities.md).
-
-## Creator store browser boundary
+# Community store browser boundary
 
 This directory implements the Phase 5 browser client on top of the creator-layouts.v3 content
 history. Browsing, installing, and local creation remain account-free. Publishing and owner

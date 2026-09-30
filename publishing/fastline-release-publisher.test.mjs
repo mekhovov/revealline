@@ -14,6 +14,8 @@ import {
   normalizeAssetDigest,
   publishExactRelease,
   reconcileReleaseAssets,
+  additiveReleaseAssetBudget,
+  ADDITIVE_RELEASE_ASSET_BYTE_LIMIT,
 } from './fastline-release-publisher.mjs';
 
 const sourceSha = 'a'.repeat(40);
@@ -24,6 +26,92 @@ const expected = RELEASE_ASSET_NAMES.map((name, index) => ({
   size: index + 1,
   digest: `sha256:${String(index).padStart(64, '0')}`,
 }));
+
+test('additive metadata budget accepts the exact cap and rejects one more byte', () => {
+  const asset = {
+    name: 'distribution-coupa.zip',
+    size: ADDITIVE_RELEASE_ASSET_BYTE_LIMIT,
+    digest: `sha256:${'a'.repeat(64)}`,
+  };
+  const result = additiveReleaseAssetBudget({ proposed: [asset] });
+  assert.equal(result.bytes, 950_000_000);
+  assert.equal(result.remainingBytes, 0);
+  assert.equal(result.publicEligible, false);
+  assert.throws(
+    () =>
+      additiveReleaseAssetBudget({
+        proposed: [asset, { ...asset, name: 'review-shared.txt', size: 1 }],
+      }),
+    /exceed byte budget/,
+  );
+});
+
+test('additive budget deduplicates identical shared evidence and rejects conflicting pins', () => {
+  const asset = { name: 'review-shared.txt', size: 25, digest: `sha256:${'b'.repeat(64)}` };
+  assert.equal(
+    additiveReleaseAssetBudget({ existing: [asset], proposed: [asset, asset] }).bytes,
+    25,
+  );
+  for (const changed of [
+    { ...asset, size: 26 },
+    { ...asset, digest: `sha256:${'c'.repeat(64)}` },
+  ]) {
+    assert.throws(
+      () => additiveReleaseAssetBudget({ existing: [asset], proposed: [changed] }),
+      /overwrite is forbidden/,
+    );
+    assert.throws(
+      () => additiveReleaseAssetBudget({ proposed: [asset, changed] }),
+      /overwrite is forbidden/,
+    );
+  }
+  assert.throws(() => additiveReleaseAssetBudget({ existing: [asset, asset] }), /duplicate/);
+});
+
+test('additive budget counts the other envelope and unknown extras, excluding only the exact core contract', () => {
+  const pin = (name, size) => ({ name, size, digest: `sha256:${'d'.repeat(64)}` });
+  for (const format of [1, 2]) {
+    const existing = releaseAssetNames(format).map((name) => pin(name, 900_000_000));
+    existing.push(
+      pin('editions.json', 10),
+      pin('source-coupa.zip', 800_000_000),
+      pin('unrecognized-extra.bin', 20),
+    );
+    assert.equal(
+      additiveReleaseAssetBudget({ existing, proposed: [pin('optional-packages.json', 30)] }).bytes,
+      800_000_060,
+    );
+    assert.throws(
+      () =>
+        additiveReleaseAssetBudget({
+          existing,
+          proposed: [pin('distribution-optional-civilian-fpv.zip', 150_000_000)],
+        }),
+      /exceed byte budget/,
+    );
+  }
+  assert.throws(
+    () =>
+      additiveReleaseAssetBudget({
+        existing: [pin('source.tar', 10), pin('source-manifest.json', 10)],
+      }),
+    /mixed core source/,
+  );
+  for (const name of new Set([...releaseAssetNames(1), ...releaseAssetNames(2)]))
+    assert.throws(
+      () => additiveReleaseAssetBudget({ proposed: [pin(name, 10)] }),
+      /collides with the core/,
+    );
+  for (const change of [
+    { size: -1 },
+    { size: Number.MAX_SAFE_INTEGER + 1 },
+    { name: '../outside' },
+    { digest: null },
+  ])
+    assert.throws(() =>
+      additiveReleaseAssetBudget({ proposed: [{ ...pin('review-ok.txt', 10), ...change }] }),
+    );
+});
 
 test('v2 preserves nine immutable assets and rejects mixed source contracts', () => {
   const names = releaseAssetNames(2);

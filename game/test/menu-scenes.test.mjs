@@ -14,7 +14,13 @@ import {
 } from '../ui/menu-scenes.mjs';
 import { Document, Events } from './helpers/couch-dom.mjs';
 
-function fixture(context = {}) {
+const modeWorlds = ['fpv', 'ukraine', 'retro', 'coupa'];
+const modeProfiles = () =>
+  modeWorlds.flatMap((themeId) =>
+    ['versus', 'team'].map((mode) => resolveMenuScene({ themeId, mode })),
+  );
+
+function fixture(context = {}, mode = 'solo') {
   const doc = new Document();
   const win = new Events();
   win.CustomEvent = class extends Event {
@@ -122,7 +128,7 @@ function fixture(context = {}) {
   };
   const api = attachMenuScene({
     root,
-    mode: 'solo',
+    mode,
     getContext: () => context,
     createMotion,
     createSignalLoss,
@@ -192,6 +198,74 @@ test('all 18 themes resolve explicitly, company mapping works, unknown IDs safel
   assert.equal(resolveMenuScene({ themeId: '../../private.png' }).id, 'fpv');
 });
 
+for (const world of modeWorlds)
+  test(`${world} mode compositions keep the theme identity, safe mode fallback and Solo-only edition boundary`, () => {
+    for (const mode of ['versus', 'team']) {
+      const profile = resolveMenuScene({ themeId: world, mode });
+      assert.equal(profile.id, world);
+      assert.equal(profile.composition, `${world}-${mode}`);
+      assert.equal(
+        profile,
+        resolveMenuScene({ themeId: world, mode }),
+        'Stable profile identity avoids renderer churn.',
+      );
+      assert.notEqual(profile.landscape, MENU_SCENES[world].landscape);
+      assert.notEqual(profile.portrait, MENU_SCENES[world].portrait);
+      assert.equal(
+        resolveMenuScene({ themeId: world, editionId: 'coupa-all', mode }),
+        MENU_SCENES[world],
+      );
+      for (const themeId of Object.keys(MENU_SCENES).filter((id) => !modeWorlds.includes(id)))
+        assert.equal(resolveMenuScene({ themeId, mode }), MENU_SCENES[themeId]);
+    }
+    for (const mode of ['solo', '__proto__', 'constructor', '../../private'])
+      assert.equal(resolveMenuScene({ themeId: world, mode }), MENU_SCENES[world]);
+    assert.equal(Object.keys(MENU_SCENES).length, 18);
+  });
+
+for (const world of modeWorlds)
+  test(`${world} mode and orientation choose one authored bitmap, reset reception and preserve focus and renderer`, () => {
+    const f = fixture({ themeId: world }, 'versus');
+    f.menu.focus();
+    f.load(1536, 1024);
+    const image = f.scene.querySelector('.menu-scene-art');
+    const renderer = f.renderer,
+      receiver = f.receiver;
+    assert.ok(
+      image.src.endsWith(`/${world}-versus.webp`),
+      'Host mode works without a duplicate context mode.',
+    );
+    for (const [mode, vertical, suffix] of [
+      ['team', false, `${world}-team.webp`],
+      ['team', true, `${world}-team-portrait.webp`],
+      ['versus', true, `${world}-versus-portrait.webp`],
+      ['solo', true, MENU_SCENES[world].portrait.split('/').at(-1)],
+    ]) {
+      const resets = receiver.resets;
+      f.context.mode = mode;
+      f.portrait.matches = vertical;
+      f.api.update();
+      assert.ok(image.src.endsWith(`/${suffix}`));
+      assert.equal(receiver.resets, resets + 1);
+      assert.equal(
+        renderer.runs.at(-1),
+        false,
+        'New artwork must decode before animation resumes.',
+      );
+      f.load(vertical ? 941 : 1536, vertical ? 1672 : 1024);
+      assert.equal(f.renderer, renderer);
+      assert.equal(f.receiver, receiver);
+      assert.equal(renderer.runs.at(-1), true);
+      assert.equal(f.scene.querySelectorAll('img').length, 1);
+      assert.equal(f.doc.activeElement, f.menu);
+      f.api.update();
+      assert.equal(receiver.resets, resets + 1);
+    }
+    f.api.dispose();
+    assert.equal(renderer.disposed, 1);
+    assert.equal(receiver.disposed, 1);
+  });
+
 test('every scene retains bounded artwork anchors and one shared image/canvas plane without moving stickers', () => {
   const f = fixture();
   const plane = f.scene.querySelector('.menu-scene-art-plane');
@@ -246,6 +320,65 @@ test('every scene retains bounded artwork anchors and one shared image/canvas pl
     }
   }
   f.api.dispose();
+});
+
+test('actual portrait and landscape crops retain a visible full-strength artwork motion region', async () => {
+  const provenance = JSON.parse(
+    await readFile(new URL('../ui/art/menu-scenes/provenance.json', import.meta.url)),
+  );
+  const assets = new Map(provenance.assets.map((asset) => [asset.file, asset]));
+  const f = fixture();
+  let bounds;
+  f.scene.getBoundingClientRect = () => bounds;
+  const plane = f.scene.querySelector('.menu-scene-art-plane');
+  const missing = [];
+  for (const [width, height] of [
+    [320, 568],
+    [390, 844],
+    [430, 932],
+    [768, 1024],
+    [844, 390],
+    [1280, 800],
+  ]) {
+    bounds = { width, height };
+    const vertical = height > width;
+    f.portrait.matches = vertical;
+    for (const profile of [...Object.values(MENU_SCENES), ...modeProfiles()]) {
+      // The supplied DroneAid poster intentionally preserves its photographed
+      // geometry and uses only the shared arrival and receiver treatment.
+      if (profile.id === 'droneaid-nl-community') continue;
+      f.context.themeId = profile.id;
+      f.context.mode = profile.composition?.split('-').at(-1) ?? 'solo';
+      f.api.update();
+      const source = (vertical ? profile.portrait : profile.landscape).split('/').at(-1);
+      const asset = assets.get(source);
+      assert.ok(asset, `${source} has recorded source dimensions`);
+      f.load(asset.width, asset.height);
+      const pw = parseFloat(plane.style.width),
+        ph = parseFloat(plane.style.height);
+      const left = parseFloat(plane.style.left),
+        top = parseFloat(plane.style.top);
+      const layers = vertical ? profile.portraitEnvironment : profile.environment;
+      // Test the shader's fully weighted inner 60%, after both the GPU safety
+      // crop and the completed CSS arrival, rather than accepting a barely
+      // visible feather or a rectangle outside the real object-cover crop.
+      const zoom = 1.025 * 1.035;
+      const projects = (start, length, extent, offset) => [
+        offset + extent / 2 + ((start + length * 0.2) / 100 - 0.5) * extent * zoom,
+        offset + extent / 2 + ((start + length * 0.8) / 100 - 0.5) * extent * zoom,
+      ];
+      const visible = layers.some((region) => {
+        const [x1, x2] = projects(region.x, region.width, pw, left);
+        const [y1, y2] = projects(region.y, region.height, ph, top);
+        return (
+          Math.min(width, x2) - Math.max(0, x1) >= 8 && Math.min(height, y2) - Math.max(0, y1) >= 8
+        );
+      });
+      if (!visible) missing.push(`${profile.id} at ${width}×${height}`);
+    }
+  }
+  f.api.dispose();
+  assert.deepEqual(missing, [], 'Each crop must contain actual animated source artwork.');
 });
 
 test('every landing has restrained signal styling, with all drone and technical scenes stronger', () => {
@@ -328,8 +461,9 @@ test('the CSS noise atlas is reproducible, small, opaque monochrome and contains
   assert.equal(new Set(hashes).size, 4);
 });
 
-test('scene files and provenance exist, match checksums and stay below 2 MiB per active scene', async () => {
+test('scene files and provenance match checksums and fit 2 MiB including the shared atlas', async () => {
   const folder = new URL('../ui/art/menu-scenes/', import.meta.url);
+  const atlasBytes = (await readFile(new URL('analog-noise-atlas.png', folder))).length;
   const ledger = JSON.parse(await readFile(new URL('provenance.json', folder), 'utf8'));
   const assets = new Map(ledger.assets.map((asset) => [asset.file, asset]));
   assert.equal(
@@ -341,7 +475,7 @@ test('scene files and provenance exist, match checksums and stay below 2 MiB per
     18,
     'Each theme, including both aggregate overviews, has its own distinct composition.',
   );
-  for (const scene of Object.values(MENU_SCENES)) {
+  for (const scene of [...Object.values(MENU_SCENES), ...modeProfiles()]) {
     for (const path of [scene.landscape, scene.portrait]) {
       const file = path.split('/').at(-1),
         asset = assets.get(file);
@@ -349,11 +483,56 @@ test('scene files and provenance exist, match checksums and stay below 2 MiB per
       const bytes = await readFile(new URL(file, folder));
       assert.equal(bytes.length, asset.bytes);
       assert.equal(createHash('sha256').update(bytes).digest('hex'), asset.sha256);
-      assert.ok(bytes.length < 2 * 1024 * 1024);
+      assert.ok(bytes.length + atlasBytes <= 2 * 1024 * 1024, `${file} plus receiver atlas`);
       assert.equal(bytes.toString('ascii', 8, 12), 'WEBP');
     }
   }
 });
+
+for (const world of modeWorlds)
+  test(`${world} mode originals, style references and prompts are bound to their delivered derivatives`, async () => {
+    const root = new URL('../../', import.meta.url);
+    const provenance = JSON.parse(
+      await readFile(new URL('../ui/art/menu-scenes/provenance.json', import.meta.url)),
+    );
+    const promptSource = provenance.assets.find(
+      (asset) => asset.id === `${world}-versus`,
+    ).promptSource;
+    const prompts = JSON.parse(await readFile(new URL(promptSource, root)));
+    assert.equal(prompts.generator, 'OpenAI built-in image_gen');
+    assert.deepEqual(prompts.images.map((entry) => entry.id).sort(), [
+      `${world}-team`,
+      `${world}-team-portrait`,
+      `${world}-versus`,
+      `${world}-versus-portrait`,
+    ]);
+    const sources = new Set();
+    for (const entry of prompts.images) {
+      const record = provenance.assets.find((asset) => asset.id === entry.id);
+      assert.ok(record);
+      const original = await readFile(new URL(record.source, root));
+      const digest = createHash('sha256').update(original).digest('hex');
+      assert.equal(digest, entry.sourceSha256);
+      assert.equal(digest, record.sourceSha256);
+      assert.equal(record.width, original.readUInt32BE(16));
+      assert.equal(record.height, original.readUInt32BE(20));
+      assert.ok(entry.prompt.length > 300, 'Retain the complete generation specification.');
+      for (const [reference, hash] of Object.entries(entry.referenceSha256)) {
+        assert.equal(
+          createHash('sha256')
+            .update(await readFile(new URL(reference, root)))
+            .digest('hex'),
+          hash,
+        );
+      }
+      sources.add(digest);
+    }
+    assert.equal(
+      sources.size,
+      4,
+      'Landscape/portrait and opposing/linked arrangements are distinct originals.',
+    );
+  });
 
 test('DroneAid lossless runtime derivative retains the exact supplied original and pixel provenance', async () => {
   const profile = MENU_SCENES['droneaid-nl-community'];
@@ -425,8 +604,8 @@ test('DroneAid photograph keeps a full static source in both orientations and We
   f.api.dispose();
 });
 
-test('Solo, Versus and Team changes preserve focus, the artwork source and a single renderer', () => {
-  const f = fixture({ themeId: 'retro' });
+test('mode requests on a Solo-only edition preserve focus, the artwork source and a single renderer', () => {
+  const f = fixture({ themeId: 'coupa-village', editionId: 'coupa-all' });
   f.menu.focus();
   f.load();
   f.renderer.ready(true);
@@ -573,13 +752,12 @@ test('receiver interference samples the original artwork into its own canvas and
   f.api.dispose();
 });
 
-test('receiver source generation resets on changed artwork but not mode, resize, pause or repeated load', () => {
+test('receiver source generation resets on changed artwork but not resize, pause or repeated load', () => {
   const f = fixture({ themeId: 'fpv' });
   f.load();
   const receiver = f.receiver;
   const initialResets = receiver.resets;
   const sameSourceUpdates = () => {
-    f.context.mode = f.context.mode === 'team' ? 'solo' : 'team';
     f.api.update();
     f.api.update();
     f.resizer.callback();

@@ -237,6 +237,13 @@ export class Element extends Events {
     siblings.splice(siblings.indexOf(this) + 1, 0, node);
     node.parentNode = this.parentNode;
   }
+  before(node) {
+    if (!this.parentNode) return;
+    const siblings = this.parentNode.children;
+    node.remove?.();
+    siblings.splice(siblings.indexOf(this), 0, node);
+    node.parentNode = this.parentNode;
+  }
   insertAdjacentElement(position, node) {
     assert.equal(position, 'afterend');
     this.after(node);
@@ -337,7 +344,15 @@ export class Element extends Events {
     ]);
   }
   querySelector(selector) {
-    return this.querySelectorAll(selector)[0] ?? null;
+    if (selector.startsWith(':scope > '))
+      return this.children.find((child) => child.matches(selector.slice(9))) ?? null;
+    // Match native first-result traversal without allocating every later match.
+    for (const child of this.children) {
+      if (child.matches(selector)) return child;
+      const descendant = child.querySelector(selector);
+      if (descendant) return descendant;
+    }
+    return null;
   }
   getBoundingClientRect() {
     const r = this._rect;
@@ -455,7 +470,7 @@ export class Document extends Events {
     return this.documentElement.querySelectorAll(selector);
   }
   querySelector(selector) {
-    return this.querySelectorAll(selector)[0] ?? null;
+    return this.documentElement.querySelector(selector);
   }
   getElementById(id) {
     return this.querySelector(`#${id}`);

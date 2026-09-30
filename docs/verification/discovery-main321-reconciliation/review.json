@@ -1,0 +1,396 @@
+{
+  "format": "revealline-discovery-main321-audio-continuation.v1",
+  "status": "Reviewed exact-source software continuation for eight existing audio recipes; final source qualification, frozen/public and human/device approval remain separate.",
+  "source": {
+    "canonicalMainCommit": "321408a3cfd75ae230d760f39fb692503652601a",
+    "candidateCommit": "db4b2c8e89f3c9a3c0b67d6e7e5f64f08ea3c6ef",
+    "scope": "Merged working source is authenticated by each exact input hash and blob below. Parent commits identify immutable inputs; this does not claim a committed merge or release."
+  },
+  "scope": {
+    "groups": ["audio"],
+    "slots": [
+      "audio.focus.field-kit",
+      "audio.confirm.field-kit",
+      "audio.cancel.field-kit",
+      "audio.capture.field-kit",
+      "audio.failure.field-kit",
+      "audio.victory.field-kit",
+      "audio.pickup.field-kit",
+      "audio.music.field-kit"
+    ],
+    "reason": "Integrate main mission-selector star metadata and read-only progress adapters with reviewed discovery/GP4 audio source. The50-input candidate closure is unchanged except16 added lines in game/app.mjs."
+  },
+  "priorReviews": {
+    "mainSelector": {
+      "path": "docs/verification/v0.142.4-selector-audio-continuation/review.json",
+      "bytes": 15766,
+      "sha256": "f2cf0cc93f8de8e959eabf6e6313a0af306dfae87e2cb663bfe7bef805df6fe6"
+    },
+    "candidateGP4": {
+      "path": "docs/verification/discovery-gp4-restore-audio-continuation-2026-09-29/review.json",
+      "bytes": 22156,
+      "sha256": "27c3663b72c1ccf1b78b2bf641952ff5d011e10520f0044d981f5c8166741b0d"
+    },
+    "candidateDiscovery": {
+      "path": "docs/verification/discovery-audio-continuation-2026-09-29/review.json",
+      "bytes": 28249,
+      "sha256": "edeecf9fbafdabd7e4fdb653be58baf8deaa3483a6ee426552d611d2fff768ea"
+    }
+  },
+  "fingerprints": {
+    "audio": {
+      "orderedInputs": 50,
+      "bytes": 1322095,
+      "currentSHA256": "1776f2cd1edd169c15a7905650c8bc70be75f52773bb6d21abed3236b005c535",
+      "priorSHA256": "94c62d025dd9a8764baec87514d25083e0026caa7ed9c9cf5f71497ef447e1be",
+      "inputs": [
+        {
+          "path": "game/app.mjs",
+          "bytes": 472723,
+          "sha256": "0f98a674cc07dfa2bb7fcee0cbce53a1ad356788d45880d141b6720d4a1005f4",
+          "gitBlob": "73363f94f51c1487171766ced656e8d6fadb497e"
+        },
+        {
+          "path": "game/couch/couch-music-host.mjs",
+          "bytes": 16204,
+          "sha256": "6fc411e32d934a1e5b247a3a3b6497462f90f6b25827a5f1a8584ab7a3271a42",
+          "gitBlob": "5fd03365cff42d413cfd5202da6e0dcae405fd3e"
+        },
+        {
+          "path": "game/opening-soundtrack.mjs",
+          "bytes": 1959,
+          "sha256": "237ac4932d4baeee30f7a6e7e355294fe598832624b47017f29cce23437b310b",
+          "gitBlob": "146c5c8198ddbce2348534abe6c30918fd6379da"
+        },
+        {
+          "path": "game/ui/audio.mjs",
+          "bytes": 26996,
+          "sha256": "4df28559cf58864aafb5133af4d5d757c4adc0efe381282de57dcd9c2f45e698",
+          "gitBlob": "bdbabd2bb84697ce56c26cc6eef29dc9d92cbbfc"
+        },
+        {
+          "path": "game/ui/published-audio.mjs",
+          "bytes": 6659,
+          "sha256": "05939897e7dd78773e1a1fb84b1b5ef71b11ea93162a803b58b986689116cac0",
+          "gitBlob": "93b283003f8f0b7fdb3d92710f6662444045bc99"
+        },
+        {
+          "path": "game/ui/soundtrack-player.mjs",
+          "bytes": 49076,
+          "sha256": "cd1b478d6085803f491f8d644161e5b491a1b1dc113903d0a7c4083d65800718",
+          "gitBlob": "e7037146eb0df4f996e6c100c2f5862ff66af0a6"
+        },
+        {
+          "path": "game/ui/quick-music-controls.mjs",
+          "bytes": 10161,
+          "sha256": "87cb2da9fb75475a5eded73f932a0159a57568cd42235974524fe1d7f7307619",
+          "gitBlob": "5398f5a768be05e21de325b3d11f80ea68e8e5c3"
+        },
+        {
+          "path": "game/ui/audio-master.mjs",
+          "bytes": 5431,
+          "sha256": "6bf14bc5268c0eff8f38c21c819f398917712fdc2607c33977ac873111d1dca8",
+          "gitBlob": "c3c693f0244f9a112294e596335e5030530b58c2"
+        },
+        {
+          "path": "game/soundtrack.mjs",
+          "bytes": 39449,
+          "sha256": "6e5550281c928fc03704d1c743e01d600ba83d5b186d107b510de9bd0bd1610d",
+          "gitBlob": "e6857cd2035cebee759483efa13b63c3cd265de3"
+        },
+        {
+          "path": "game/soundtrack-style-taxonomy.mjs",
+          "bytes": 2160,
+          "sha256": "34dae503ba367d54f2078879c308832cc0ae07ad7533feaec24727a3d591f944",
+          "gitBlob": "fc8f343e54feac30546bfc7fd7708dd1e9df901c"
+        },
+        {
+          "path": "game/soundtrack-rights.mjs",
+          "bytes": 3755,
+          "sha256": "8c1c10927cf5c1f7360374ca1a4d64a7dec3c312b197ace89201c37d75793f04",
+          "gitBlob": "2bb01e1aaa14a4aec99699e3d6f4bd04b4facdb5"
+        },
+        {
+          "path": "game/soundtrack-bundle.mjs",
+          "bytes": 12028,
+          "sha256": "fa6a98e404ca7d169c2dc4fd5383065d79d69f2f8af25e3ca7c4ee6f67d745fd",
+          "gitBlob": "b5b02a135a502757bf745ce1bf03abf057adf5b9"
+        },
+        {
+          "path": "game/soundtrack-share.mjs",
+          "bytes": 5602,
+          "sha256": "6cc8878ca926476b236c0fb0f9544a5248ee627011787a14c2d1c00cad7a78ee",
+          "gitBlob": "3e3b8190791b422664fc2bf04029677c844e74b4"
+        },
+        {
+          "path": "game/soundtrack-source.mjs",
+          "bytes": 4918,
+          "sha256": "fb4930936a51c052dd5462fbd2f1178323dc59173b6a6556b6039c10dc9a4c83",
+          "gitBlob": "7a0d3b7d7d6fad7c9d545cfaa54afe892f155505"
+        },
+        {
+          "path": "game/soundtrack-bundled.mjs",
+          "bytes": 1980,
+          "sha256": "4603942591731b0bc214b0d27d0d8c957462485ba0dcd0dd074d7449a39c77ce",
+          "gitBlob": "fa36dd47a2d30cd0a77480149437e7ef1c74605a"
+        },
+        {
+          "path": "game/ui/soundtrack-panel.mjs",
+          "bytes": 132224,
+          "sha256": "bb6fb735eeb9400ef6629837cf2999ace2414b7cc2d03323725f9ff5a4384a2d",
+          "gitBlob": "4aebf2d8d970aee26aa1cbdf59256c6b5705ef44"
+        },
+        {
+          "path": "game/ui/soundtrack-panel.css",
+          "bytes": 9840,
+          "sha256": "b38d186fefe7d74255c0cbd41ca5b255701511f99195d261c1ad5925f882ebf6",
+          "gitBlob": "35735620dfba897bd3d47a65d7211391618de126"
+        },
+        {
+          "path": "game/soundtrack-albums.mjs",
+          "bytes": 11118,
+          "sha256": "632e82dfc0189fd0f11bbdfbbfc4c8ac468725ca967a76d0c478adc86b1645e1",
+          "gitBlob": "080b5577b586f1a0df3ddcae83d11b530a57cff0"
+        },
+        {
+          "path": "game/soundtrack-portable.mjs",
+          "bytes": 2891,
+          "sha256": "d5423f59dfd25ca6310d47d78e433d7ff1e32a8003bf313bb74968f2e07b1103",
+          "gitBlob": "97cca6252f3011ab4f430d471326c624e29b5831"
+        },
+        {
+          "path": "game/content/soundtrack-catalogue.mjs",
+          "bytes": 135438,
+          "sha256": "b712a11fa82bbd4b2c380a8ed7d50abb14b78642585c1a34f54450f9630f5ed2",
+          "gitBlob": "c16efc6fc377122acdbe194e64cd59433d47b968"
+        },
+        {
+          "path": "game/online-soundtrack-catalogue.mjs",
+          "bytes": 23469,
+          "sha256": "11d7fe13b71a9400f4f89b4deec16e2cbf39700fc30b598745565142d74bcda9",
+          "gitBlob": "9919c2cb3994a666614796664214910bf3ea3d7e"
+        },
+        {
+          "path": "game/official-downloads.mjs",
+          "bytes": 17757,
+          "sha256": "fae1a94813c7e2173280f7b0100298c8de267d64b31600dde09e6d347a638d43",
+          "gitBlob": "d96f55d136ddd7246f58e07429b52f45f17f7380"
+        },
+        {
+          "path": "game/soundtrack-download-volumes.mjs",
+          "bytes": 1710,
+          "sha256": "d85620f614ace6f91cb585e2068ed70c52fca55176fd24b1b2bef29a18369c49",
+          "gitBlob": "cf8ff53e56a91a1d5189771510ce6c11974f67ca"
+        },
+        {
+          "path": "game/installed-app.mjs",
+          "bytes": 16845,
+          "sha256": "36cd968913543c61e2d54ed303b23837c18414bda2be80526e1f22e16b8fac96",
+          "gitBlob": "5acfcbfebc654fd4442a915a554200fa681f28e4"
+        },
+        {
+          "path": "game/managed-media-store.mjs",
+          "bytes": 50203,
+          "sha256": "65d9249677045e7d7aad1d99003aeeac5adc9b72ea0b045be7a08b8480219885",
+          "gitBlob": "0f38804124737c7975b4e6f9785a5b487a61fa31"
+        },
+        {
+          "path": "game/media-storage-record.mjs",
+          "bytes": 17058,
+          "sha256": "8ac345221034ec28e9968942d86dfdd4cb33415f0e7319a62e9466e072a0b93a",
+          "gitBlob": "b03ae992435a475f236125832f0ef9ad1493432c"
+        },
+        {
+          "path": "game/soundtrack-private-intake.mjs",
+          "bytes": 3422,
+          "sha256": "0186af6e1d6ddc00b1494c527bc7dcce61393c4270e1b753c2f485be3595e7cc",
+          "gitBlob": "93986c9375f50594d05da699a108614229a169b1"
+        },
+        {
+          "path": "game/ui/soundtrack-error-copy.mjs",
+          "bytes": 6305,
+          "sha256": "1c7d1b7f070e30e7033d70bb87bf606451e61c9ef7f89190eb51faffbfc3b938",
+          "gitBlob": "a3f9c01332efec2fcdb520a0c2d686e972d9d783"
+        },
+        {
+          "path": "game/journey/campaign-feedback.mjs",
+          "bytes": 3512,
+          "sha256": "7b9b1df9c7cee0e7a6ac3d632ef53874e287054306c614453b37c767523b784e",
+          "gitBlob": "5eba52d5650e8143b059603f46f1d473414f3d83"
+        },
+        {
+          "path": "game/rewards/audio-original.mjs",
+          "bytes": 1943,
+          "sha256": "74dafb724bf6839abb209ceafc3a86af1710976646b8b0d481475ca7508cfb99",
+          "gitBlob": "d9092af54d5bd3d837126f03122914b8099e3cfe"
+        },
+        {
+          "path": "game/rewards/media-format.mjs",
+          "bytes": 5199,
+          "sha256": "6dd66b0406698a9e88952172b13642ef64369403dd42e085bdf0aa3e3299a0a7",
+          "gitBlob": "fedd15fffc162ca1694efae178b52e7ac413173a"
+        },
+        {
+          "path": "game/ui/edition-solo.mjs",
+          "bytes": 15070,
+          "sha256": "e8063df6e5fb1899b3b880f2e5898485f29168bd8a6b289a19f17fc995bc832a",
+          "gitBlob": "a8faa23554a16f4c5313b622d838aa4dea61105c"
+        },
+        {
+          "path": "game/ui/edition-rewards.mjs",
+          "bytes": 36337,
+          "sha256": "df4e0faae7f040e5582cc84c9fc81beeb2059bc96e139d078dfde590d5699203",
+          "gitBlob": "76fe12fd4f228f7eb23f29368b64a4e5fa0cac2c"
+        },
+        {
+          "path": "game/ui/reward-media.mjs",
+          "bytes": 15148,
+          "sha256": "95ef1828206089104ddf6f123f7f2b84e226e9ce01350dc903160d95acc24655",
+          "gitBlob": "0bb8dcf7c7924cf984c5114bb90765c873169861"
+        },
+        {
+          "path": "game/ui/reward-audio-group.mjs",
+          "bytes": 3964,
+          "sha256": "81ecd4c73c8ae97209bfdad1589a83efd140a7273deafd0912727830ae04fe41",
+          "gitBlob": "b3b66cd39c2577db3fe2917ac8e6a0bb40a67d41"
+        },
+        {
+          "path": "game/rewards/audio-groups.mjs",
+          "bytes": 2937,
+          "sha256": "85e1340e57dc925927830d6dd436d7b3da4b459f781e5f989d8efbbe54a44b6b",
+          "gitBlob": "e588d8c7d4e6afe962236f0082916c42566c5ac4"
+        },
+        {
+          "path": "game/studio-preview-session.mjs",
+          "bytes": 1655,
+          "sha256": "e2033e679e311a0c5d1330759302af228ba32d71d93e7eb5d369000f91608a14",
+          "gitBlob": "7236bfcdd06e7736d442f7e99cbb784a216b64d4"
+        },
+        {
+          "path": "game/audio-preferences.mjs",
+          "bytes": 5918,
+          "sha256": "9212831a3524c9e1ebe8c595783f9f53a112e02e3d51280d775ac103b94a9239",
+          "gitBlob": "a653a9eaa701103bd04e4434e03d368607ddf404"
+        },
+        {
+          "path": "game/ui/story-dialog.mjs",
+          "bytes": 8532,
+          "sha256": "d9b428559806f8ba17d3941669a36ee8fba5ca95197a8e6c4cda7571859059f5",
+          "gitBlob": "db14fb620724dc8b2ab5fc8aa30e393e95c73873"
+        },
+        {
+          "path": "game/ui/victory-story.mjs",
+          "bytes": 22046,
+          "sha256": "13108d2b4327dec95e1f698919dc40d6bad8bfff702b26b6529d4fe8dba984c8",
+          "gitBlob": "15795866fa7c5e07e9adefd074730e6f6e82cdaf"
+        },
+        {
+          "path": "game/ui/music.mjs",
+          "bytes": 7205,
+          "sha256": "cb52db174666ea9bc4448a71c56bc53cf593db58183f665705fa4727f93fef50",
+          "gitBlob": "8319400b9fd9e94ea3a7042d55d76a7baf21ef88"
+        },
+        {
+          "path": "game/data-json.mjs",
+          "bytes": 5594,
+          "sha256": "9ce33d6173f3cba8587ed7a7f1924c66e9d9c86ffa59b37a743764ea0b01f7bd",
+          "gitBlob": "d2bcdc57882777f6bb09b1fe5868e31c4e848780"
+        },
+        {
+          "path": "game/mp3.mjs",
+          "bytes": 8979,
+          "sha256": "d4f36f5f7760fc8d6482c716f944ff2e4df931a74e8c3f6f1684b90b7410d92a",
+          "gitBlob": "52fe87a55cf205a7f630b122b12be23cd6cbe47a"
+        },
+        {
+          "path": "game/media-audio.mjs",
+          "bytes": 936,
+          "sha256": "6d43c537a8c7010d755d469724f74985041f22a7a8becff90b8f1c327e968c84",
+          "gitBlob": "fe58560824a508f94687b65f837a76e10309b571"
+        },
+        {
+          "path": "game/video-poster.mjs",
+          "bytes": 18064,
+          "sha256": "facf02206ee18d6809615ded279ad79e5ceede82098ad1eb4ae90c45d2260f62",
+          "gitBlob": "cab65a30af19de1985f2cd851560b5f8b83573a5"
+        },
+        {
+          "path": "game/rewards/model.mjs",
+          "bytes": 34442,
+          "sha256": "1f7ac62d4c5e9a01d1435e93116d7b59eb9bac8c4714769a9abaaba98d790d92",
+          "gitBlob": "42a2fadfd21c806a3daef59387a7379aa4b7c7d0"
+        },
+        {
+          "path": "game/rewards/media.mjs",
+          "bytes": 3801,
+          "sha256": "9d0f7c87e469e788745601815dca209bc5043e94fb403ffccc032635749d040a",
+          "gitBlob": "7dc040e5faa00ec705f2c9856f7b37c5b7f49343"
+        },
+        {
+          "path": "game/editions/assets.mjs",
+          "bytes": 3405,
+          "sha256": "a018eff0d9db93fbb5feb12d10b40757b2ddd1631e8cc805d71ce2d2b447b859",
+          "gitBlob": "b5c6e1f7b29b181ae95ead9a75d2088289f2b871"
+        },
+        {
+          "path": "game/editions/model.mjs",
+          "bytes": 19158,
+          "sha256": "491153327ccf8b7b10667bffae052b4314fd19140fbcc6cccafe3867f5e2cc39",
+          "gitBlob": "f342f07a261c188682cffb618ab05e80e724141a"
+        },
+        {
+          "path": "game/editions/retained-presentation.mjs",
+          "bytes": 10869,
+          "sha256": "0f3ebb5d3385dd8f6ae8c208b62d5443d08dc53650cad70c20bd40adc9a2e872",
+          "gitBlob": "dd81a5ba2fa3b1aec6c1535b0ba25eea879cbdbe"
+        }
+      ],
+      "changedInputs": ["game/app.mjs"],
+      "group": "audio",
+      "algorithm": "SHA256 concatenation of ordered raw source bytes",
+      "paths": "game/app.mjs; game/couch/couch-music-host.mjs; game/opening-soundtrack.mjs; game/ui/audio.mjs; game/ui/published-audio.mjs; game/ui/soundtrack-player.mjs; game/ui/quick-music-controls.mjs; game/ui/audio-master.mjs; game/soundtrack.mjs; game/soundtrack-style-taxonomy.mjs; game/soundtrack-rights.mjs; game/soundtrack-bundle.mjs; game/soundtrack-share.mjs; game/soundtrack-source.mjs; game/soundtrack-bundled.mjs; game/ui/soundtrack-panel.mjs; game/ui/soundtrack-panel.css; game/soundtrack-albums.mjs; game/soundtrack-portable.mjs; game/content/soundtrack-catalogue.mjs; game/online-soundtrack-catalogue.mjs; game/official-downloads.mjs; game/soundtrack-download-volumes.mjs; game/installed-app.mjs; game/managed-media-store.mjs; game/media-storage-record.mjs; game/soundtrack-private-intake.mjs; game/ui/soundtrack-error-copy.mjs; game/journey/campaign-feedback.mjs; game/rewards/audio-original.mjs; game/rewards/media-format.mjs; game/ui/edition-solo.mjs; game/ui/edition-rewards.mjs; game/ui/reward-media.mjs; game/ui/reward-audio-group.mjs; game/rewards/audio-groups.mjs; game/studio-preview-session.mjs; game/audio-preferences.mjs; game/ui/story-dialog.mjs; game/ui/victory-story.mjs; game/ui/music.mjs; game/data-json.mjs; game/mp3.mjs; game/media-audio.mjs; game/video-poster.mjs; game/rewards/model.mjs; game/rewards/media.mjs; game/editions/assets.mjs; game/editions/model.mjs; game/editions/retained-presentation.mjs",
+      "addedInputs": []
+    }
+  },
+  "canonicalPredecessor": {
+    "path": "game/test/fixtures/production-v01424-main321-fpv101.json",
+    "bytes": 1639,
+    "sha256": "aeb03a91c4da24fe300a9312b79ef986265d6bc78ce6f1f3893549d5fb5a8daa"
+  },
+  "alternatePredecessor": {
+    "path": "game/test/fixtures/production-discovery-db4-fpv103.json",
+    "bytes": 1639,
+    "sha256": "9aac97ef9ded7270148887d8148fc01fec378f5e5ef612ca86b3353015263e91"
+  },
+  "alternateArchive": {
+    "path": "docs/verification/discovery-main321-reconciliation/discovery-production103.rltheme.gz",
+    "bytes": 3853676,
+    "sha256": "a11e83533645783b6e35fd815e4494480527febe45d1f3afca86754d5a9a43d6"
+  },
+  "retainedRuntimeInputs": {
+    "path": "docs/verification/discovery-main321-reconciliation/retained-inputs.json",
+    "bytes": 1813,
+    "sha256": "b4b40e42fc155e8bd7223654a1464332d535b6850de32d8b09b103b0184a9fd9"
+  },
+  "assessment": {
+    "independentReview": "Root independently inspected merged game/app.mjs against db4b2c8e8: only medal-to-stars metadata passed to existing accepted Journey completion and classic/custom chooser progress projection (16 added lines). No audio events, payloads, gain, synthesis, scheduling, routing or disposal changed. Approval is scoped software continuation; no new human/audio approval.",
+    "dependencyReview": "All50 input identities retain the priorGP4 ordered closure. Only game/app.mjs has changed; each other exact digest matches that authenticated prior review. New fingerprint is1776f2cd1edd169c15a7905650c8bc70be75f52773bb6d21abed3236b005c535.",
+    "history": "Canonical main101/audio53 and candidate101–103/audio53–54 are distinct immutable lineages. Canonical history appends one normal successor102. Candidate full103 is an authenticated inert archive; exact retained manifests restore prior runtime identities. No numeric reinterpretation, source rewriting, artificial padding or cap expansion."
+  },
+  "expectedProducerSemantics": {
+    "canonicalThemeRevision": 102,
+    "canonicalParentRevision": 101,
+    "appendAudioRecords": 8,
+    "audioRevision": 54,
+    "appendReviewedUIRecords": 24,
+    "uiRevision": 23,
+    "unchangedPayloads": 132,
+    "priorEvidence": "Keep main audio53 evidence strings exactly; combine one short current-review line with its first string within16-item/2048-character limits. Candidate review chain stays authenticated by this record and inert archive."
+  },
+  "limitations": [
+    "This continuation does not approve Journey migration, Team exact-manifest policy, visual layout, physical-radio/device or learning outcomes.",
+    "Human artwork/listening remains deferred. Fresh merged-source tests, reproducibility, archived-manifest restoration and capacity qualification remain separate.",
+    "No existing immutable source review or numeric revision is rewritten. Any input or pinned review change reopens the group."
+  ],
+  "decision": "Approve only the eight existing procedural audio recipes for the exact50-input fingerprint above and authenticated predecessor/lineage pins. UI reuses the existing exact7-input WebP software review. No release or human approval is implied."
+}

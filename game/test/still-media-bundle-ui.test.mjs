@@ -54,6 +54,7 @@ test('actual workshop reviews without writes, explicitly restores all originals,
   const store = h.store(),
     before = await store.read();
   h.choose(bundle);
+  h.$('review-originals').focus();
   assert.equal(await h.$('review-originals').onclick(), true);
   assert.deepEqual(await store.read(), before);
   assert.match(
@@ -86,6 +87,7 @@ test('actual workshop reviews without writes, explicitly restores all originals,
   assert.equal(h.paints.at(-1).asset.sha256, image.asset.sha256);
   let clicks = 0;
   h.$('download-originals').addEventListener('click', () => ++clicks);
+  h.$('prepare-originals').focus();
   assert.equal(await h.$('prepare-originals').onclick(), true);
   const link = h.$('download-originals');
   assert.equal(clicks, 0);
@@ -282,6 +284,10 @@ test('shared v3 MP3 recovery is byte-identical after originals restore', async (
 });
 
 test('actual controller router reaches download/review/restore and held Confirm cannot apply the newly reviewed file', async (t) => {
+  const reviewEntered = deferred(),
+    finishReview = deferred();
+  let holdReview = false,
+    now = 0;
   const pad = {
     index: 0,
     id: 'Workshop controller',
@@ -290,49 +296,96 @@ test('actual controller router reaches download/review/restore and held Confirm 
     axes: [0, 0, 0, 0],
     buttons: Array.from({ length: 17 }, () => ({ pressed: false, value: 0 })),
   };
-  const h = await workshop(t, { host: { readPads: () => [pad] } });
+  const h = await workshop(t, {
+    host: {
+      readPads: () => [pad],
+      decodeImage: async () => {
+        if (holdReview) {
+          reviewEntered.resolve();
+          await finishReview.promise;
+        }
+        return decodeImage();
+      },
+    },
+  });
+  h.win.performance = { now: () => now };
+  const frame = (time) => {
+    now = time;
+    h.frame(time);
+  };
   await h.open();
   const press = (id, down) => {
     pad.buttons[id] = { pressed: down, value: down ? 1 : 0 };
   };
-  h.frame(0);
+  frame(0);
   press(0, true);
-  h.frame(1);
+  frame(1);
   press(0, false);
-  h.frame(2);
+  frame(2);
+  h.$('prepare-originals').focus();
   await h.$('prepare-originals').onclick();
   let downloads = 0;
   h.$('download-originals').addEventListener('click', () => ++downloads);
   press(0, true);
-  h.frame(3);
-  assert.equal(downloads, 1);
-  h.frame(500);
-  assert.equal(downloads, 1);
+  frame(3);
+  assert.equal(downloads, 0, 'Download waits for Confirm release.');
+  frame(500);
+  assert.equal(downloads, 0, 'A held Confirm does not activate early.');
   press(0, false);
-  h.frame(501);
+  frame(501);
+  assert.equal(downloads, 1, 'Release commits the captured download exactly once.');
+  const echo = h.doc.emit('keydown', { key: 'Enter', target: h.$('download-originals') });
+  assert.equal(echo.defaultPrevented, true, 'Native compatibility tail cannot download twice.');
+  h.$('download-originals').click();
+  h.doc.emit('keyup', { key: 'Enter', target: h.$('download-originals') });
+  assert.equal(downloads, 1);
+  frame(1800); // Advance the host clock past the finite compatibility echo window.
   const key = h.doc.emit('keydown', { key: 'Enter', target: h.$('download-originals') });
   assert.equal(key.defaultPrevented, false, 'Browser owns Enter on the native anchor.');
   h.$('download-originals').click(); // Explicitly modeled native browser default.
+  h.doc.emit('keyup', { key: 'Enter', target: h.$('download-originals') });
   assert.equal(downloads, 2);
-  h.frame(501.5); // Native keyboard handoff requires a fresh physical-neutral sample.
+  frame(1801); // Native keyboard handoff requires a fresh physical-neutral sample.
   h.choose(bundle);
   h.$('review-originals').focus();
   h.host.navigation.sync();
   const reviewed = deferred();
+  let reviews = 0;
   const original = h.$('review-originals').onclick;
   h.$('review-originals').onclick = () => {
+    reviews++;
     const result = original();
     result.then(reviewed.resolve);
     return result;
   };
+  holdReview = true;
   press(0, true);
-  h.frame(502);
+  frame(2001);
+  frame(2500);
+  assert.equal(reviews, 0, 'Held Review has not begun validating or changed targets.');
+  press(0, false);
+  frame(2501);
+  await reviewEntered.promise;
+  assert.equal(reviews, 1);
+  h.$('cancel').focus();
+  press(0, true);
+  frame(2502); // Capture Cancel while the real image decode is outstanding.
+  finishReview.resolve();
   assert.equal(await reviewed.promise, true);
   assert.equal(h.doc.activeElement, h.$('restore-originals'));
-  h.frame(1000);
-  assert.equal((await h.store().read()).generation, 0, 'Held Review cannot confirm Restore.');
+  frame(3000);
+  assert.equal(
+    (await h.store().read()).generation,
+    0,
+    'Held old target cannot confirm newly focused Restore.',
+  );
   press(0, false);
-  h.frame(1001);
+  frame(3001);
+  assert.equal(
+    (await h.store().read()).generation,
+    0,
+    'Release of the replaced target stays cancelled.',
+  );
   const restored = deferred();
   const restore = h.$('restore-originals').onclick;
   h.$('restore-originals').onclick = () => {
@@ -341,7 +394,11 @@ test('actual controller router reaches download/review/restore and held Confirm 
     return result;
   };
   press(0, true);
-  h.frame(1002);
+  frame(3002);
+  frame(3500);
+  assert.equal((await h.store().read()).generation, 0, 'Explicit Restore also waits for release.');
+  press(0, false);
+  frame(3501);
   assert.equal(await restored.promise, true);
   assert.equal((await h.store().read()).generation, 1);
 });

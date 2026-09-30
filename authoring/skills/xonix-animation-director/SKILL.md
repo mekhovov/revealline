@@ -5,6 +5,22 @@ description: 'Plan, vary and inspect modular Xonix animation for avatars, enemie
 
 # Xonix Animation Director
 
+The current user-approved order is **A current characters/reliable play → B
+encounter variety → C one finished Ukrainian/FPV cohort**, with independent work
+in parallel and necessary C0/C1/C6 support alongside each feature. **C2 is last**.
+Follow the [current register](../../../docs/plan-status-2026-09-29.md). Production
+review is deferred, not passed; continue bounded implementation without silently
+adopting candidate artwork. A publishing queue does not block source work. Keep
+focused correctness, provenance, actual-size and retained-identity evidence.
+
+For the current FPV proportion correction, use [the reference review](../../../docs/drone-reference-review.md) and [side-by-side actual renderer comparison](../../../docs/verification/rotor-motion/proportions.html). A changed-pixel PASS is not visual approval: the first moving rig was rejected for tiny blades relative to motors/body. Use the explicit source-only candidate geometry, keep quad and six-rotor carrier envelopes separate, and adopt new bodies with matching rigs only after review. Do not multiply all historical radii globally or overlay blades on baked originals. Keep native exports, generated concept sheets, reviewed revisions and published defaults distinct.
+
+Prompt: “Recreate an original north-facing Field Kit craft with a slender centre frame, readable camera/battery and small motor bells. Preserve the selected candidate's exact anchors and full rotor envelope. Draw static bodies on 32/64px grids with binary alpha and at most 12 opaque colours; leave blades to the shared rotor layer. Compare at 20/24/32 CSS pixels, all headings and bright/dark art. Record sweep clearance, player/Team overlays, paused/reduced states and exact native PNG hashes. Manufacturer or monitorwar images are reference-only; do not copy logos, labels or pixels.”
+
+Spin direction belongs to each rig, not its nationality. From above with nose up, the original quad candidates use props-in: front-left/rear-right CW, front-right/rear-left CCW. The six-hub carrier alternates around its perimeter. Treat this as an original art convention, not proof of a named real machine's configuration. A still image does not establish spin. Keep explicit `direction` and `phaseDegrees` through the asset adapter; old rigs retain their historical fallback. The shared painter receives an already-signed phase and mirrors the local blade profile for negative direction; never sign phase twice or reverse the authored offset. Verify actual transformed geometry and pixels, not only an advancing clock. Aircraft propellers use their own plane, tracks/wheels follow travel, and boats use wakes. Never infer new attacks or collision rules from their appearance.
+
+The user-approved `roster-concept-v1.png` defines appearance, not native geometry. Generated body studies retain their originals and inspection metadata. South-facing cameras, partial alpha, missing sweep margins and fine textures must be prepared and reviewed before adoption; do not silently downscale a concept sheet and call it a native sprite.
+
 Read [Delivery priorities](../../../docs/delivery-priorities.md) first for the current scope, source/delivery status and remaining acceptance gates. Versioned milestones and older evidence below retain their original contracts; they are not current release certificates. Check the selected source before applying a historical instruction, and keep source assets, runtime adoption and native/device qualification distinct.
 
 Direct movement and feedback as replaceable presentation. Preserve the user's source art, family identity and gameplay contract. Animation reads simulation state; it never changes colliders, movement, damage, capture rules or input. A generated contact sheet is an animation concept, not a working animation.
@@ -20,6 +36,47 @@ Prompt: “Preserve actor sizing through each Versus seat’s actual 240→320�
 Keep light functional ink and a dark plate independent of theme `ink`/`paper`; dark themes may reverse those tokens. Preserve the roughly 3-CSS-pixel live-cut accent and 1-pixel light core, bounded head and short highlight. Capture sweep/inner-rim decoration stays beneath current actors, hazards and the live line, inside still-SAFE claimed cells. Microtile keeps locomotion. Body images, light heading ticks, type badges and exact physical contact rings remain independent.
 
 For the original optional pressure extension, read only the core's validated target, phase and actor-clock deadline through `classicView`. Keep static **AIM → CHASE → REST** cues distinguishable, with a dashed amber warning ray and actual locked-target brackets. Do not extrapolate a target, animate a damaging front beyond its authoritative position, turn a cosmetic ray into a collision line, or add pressure fields to legacy actors. Freeze and Pause hold the state; reduced effects retain the explanation. This extension is not evidence of XPOSED enemy intelligence.
+
+### Prepared body and final contact review
+
+Use the [foreground raster study](../../../docs/verification/rotor-motion/contact.html)
+and [batch 6 evidence](../../../docs/verification/actor-batch-6/README.md) when
+reviewing centre detail. Inspect the complete final frame: Team previously drew
+a second filled marker after the prepared body and outline, hiding detail despite
+passing narrower command checks. Prepared pilots now draw one complete outline
+after all actor images; legacy fallback markers remain filled. Never move the
+physical contact point with a visually inset body or hide it behind equipment.
+
+The optional Fine outline comparison changes only backing width, with each
+renderer retaining its existing coordinate units. Standard is the default;
+neither comparison is a new collision shape or an approved art revision. Check
+surviving bright pixels over light/dark art, edges and overlapping actors.
+Static fixture checks are separate from actual mission play, focus and recovery.
+
+Prompt: “Review every foreground pass at the exact simulation contact point.
+Keep one complete visible contact outline for prepared Team pilots and preserve
+fallback markers, identities and reduced effects. Compare real raster pixels
+after all actors/overlays, not only draw-call counts. Report calibrated size
+fixtures separately from default gameplay and retain failed evidence. In actual
+play, verify that loss advice changes on recovery/capture and that terminal
+announcements have one owner without stealing deliberate Retry focus.”
+
+## Effective gameplay benchmark identity
+
+Before using a playable art comparison as gameplay evidence, compare its actual
+attempt preparation with the ordinary mode host. Authored simulation identity
+and effective difficulty/tuning identity are different. Apply a fresh-attempt
+recipe exactly once, retain the owned result for Retry, and display source and
+runtime revisions separately. Do not read or overwrite player preferences merely
+to make an authoring fixture reproducible. An unchanged mission ID does not prove
+matching actor speed, trail-impact speed or threat timing.
+
+Prompt: “Compare the benchmark with ordinary fresh Standard preparation, including
+class recipes, seed and steering mode. Verify locked warning targets, commitment,
+capture cancellation and risky versus safe returns using real inputs. An enemy's
+cooldown does not retire existing projectiles or trail impacts. Preserve earlier
+untuned evidence under its actual scope, and keep modeled counterplay separate
+from human readability, hardware checks and public package acceptance.”
 
 ## Inputs and scope
 
@@ -99,3 +156,73 @@ contact, cut/head and ability-center geometry; keep interior fractional placemen
 unchanged. Verify actual paint commands across phases and reduced motion, then
 review the inset craft/contact association natively. Do not copy Team’s bounds
 formula or claim a new hitbox.”
+
+## Declared prepared rotor correction (C1-A)
+
+For the current implementation candidate, follow [the shared rotor evidence and prompt](../../../docs/verification/rotor-motion/README.md) and [live actor coverage](../../../docs/actor-motion-live-baseline.md). Prepared player rigs use their exact frame-normalized hub/radius geometry and the shared connected-blade painter; original/manual bitmaps retain their existing no-additional-blades path. Do not enable a moving layer based on an enemy name or assume the prepared patrol's missing anchors are supplied. Motion/source checks do not qualify a new rig or public release. Keep the canonical publisher's source-review and historical preservation gates intact.
+
+## Existing non-rotor components and hunter intent
+
+Motion Lab's **Other moving parts** edits existing wing/thruster/pulse/blink
+anchors and base rates through the current validator. Per-character drafts,
+JSON and Restore retain source identities; new attacks and gameplay states do
+not belong in attachment recipes. Check native keyboard commit, pause/reduced
+clocks, invalid retention and full export/import. Team hunters show the core's
+locked warning point, then actual charge velocity and held recovery heading;
+never turn a passed-target charge back towards a live target in presentation.
+See [batch10 evidence](../../../docs/verification/actor-batch-10/README.md).
+
+## Existing timed Team freeze
+
+The core retains velocity during enemy freeze. Project its actual `[from, until)`
+interval into the shared actor sampler rather than inferring motion from velocity.
+Combine freeze with rover dormancy without changing state/heading/contact cues or
+opacity. Use the real pickup, expiry, paused/reduced samples and unchanged parallel
+core runs. The source review's borrowed prepared Scout/drifter rig is a labelled
+compatibility specimen; current tank treads already follow displacement. Neither
+fixture establishes a new production binding. See batch11 and team-freeze study.
+
+### Recovery and inspection response
+
+A Team down/revive can occur inside one core step; never infer flight from the
+respawn displacement. Grace may clear on the next unsafe cut before a frame is
+painted. Use the existing observed reserve decrease or rescue count advance as a
+conservative one-sample presentation discontinuity when the recovered seat is
+unknown. Keep repeated paints stable, resume the unaffected partner next tick,
+and exclude reserve pickup increases. This is not detection across arbitrary
+unobserved histories or new gameplay state.
+
+Motion Lab's Inspection travel response affects only its enlarged image and
+attachment sampler. Follow arena is the default; Idle/Cruise/Boost/Slow use the
+existing validated response ratios. Editing must not reset clocks, start a
+paused study, alter arena steering or enter recipe exports. Slow inspection may
+cap all rotor responses alike; pulse and light recipes ignore speed by design.
+
+## Procedural community FPV rotor parity
+
+The six registered company quad recipes consume the shared `rotorPhase`, not
+body `phase` multiplied into another clock. Keep the existing props-in diagonal
+pairs from motor quadrants, preserve authored offsets, and reflect the local
+blade profile for negative direction without signing phase twice. All static
+body geometry, guards, hubs and host contact/role cues stay unchanged. Missing
+legacy rotor phase has a finite stopped pose. Inspect transformed blade vertices
+at degraded/30/60/120 FPS and held Pause/freeze/reduced states; advancing a clock
+alone cannot prove visible direction. See [batch22](../../../docs/verification/actor-batch-22/README.md).
+
+For local preview replacement, a nonempty new file choice supersedes earlier
+pending work even when its MIME type or size is rejected. Retain the accepted
+image, stop/release old pending reads and handlers through the existing owner,
+and prevent late callbacks from changing its status. An empty picker cancellation
+is not a replacement. Test actual draw selection, Clear, focus and playback;
+modeled URL revocation does not prove native decoder memory release.
+
+## Prepared enemy surface sampling
+
+Wheel/tread glints and phase sweeps use `surfaceTravelPhase` and `surfacePhase`
+from the shared sampler. Keep these independent of body/gait/travel/rotor clocks.
+The schema admits rates through 8; each accepted surface part advances at most
+0.22 cycles per observed paint. Preserve the finite legacy direct-frame fallback,
+held Pause/freeze/stun and reduced-effects omission. Verify painted mark positions
+at degraded/30/60/120 FPS and the real prepared BoardPainter, not clock changes
+alone. Keep the exact accepted images, rectangles, rates, badges/contact commands
+and authoritative core unchanged. Follow [batch23](../../../docs/verification/actor-batch-23/README.md).

@@ -1,0 +1,55 @@
+{
+  "format": "revealline-external-chapter.v1",
+  "id": "moving-edges-fpv",
+  "revision": 1,
+  "source": {
+    "id": "moving-edges",
+    "bytes": 9227,
+    "sha256": "048100f48c2406949639b86b540d17e26e5660e59879707dc913f52ac74fc33c"
+  },
+  "pack": {
+    "bytes": 8631,
+    "sha256": "df5309f0060a3694468bf550500b9ff1f1ecc3b39b01a838ed26d98258ab772d"
+  },
+  "media": {
+    "bytes": 8426152,
+    "sha256": "5a2a37652b18023a75c7a99ea3f7e45503343c430025b69a720d4c8a020b6d81"
+  },
+  "campaignKey": "moving-edges-fpv/1/7567486118d6248d",
+  "themeId": "fpv",
+  "originals": [
+    {
+      "assetId": "moving-edges-fpv-poster-1",
+      "presentationId": "moving-edges-fpv-poster-1-presentation",
+      "levelId": "moving-edges-terrace-stitch",
+      "levelRevision": "1",
+      "sha256": "3574e0abdc8beb4d89739524582f2588c4d59e74caf6a9c8b9e4a6ce9975ea68",
+      "bytes": 2949957,
+      "mime": "image/png",
+      "width": 1774,
+      "height": 887
+    },
+    {
+      "assetId": "moving-edges-fpv-poster-2",
+      "presentationId": "moving-edges-fpv-poster-2-presentation",
+      "levelId": "moving-edges-survey-wheel",
+      "levelRevision": "1",
+      "sha256": "1673efbcdff9bdab97576d94b0da18ec87492dc7e48340f1ce6b26ef3706a78a",
+      "bytes": 2642402,
+      "mime": "image/png",
+      "width": 1774,
+      "height": 887
+    },
+    {
+      "assetId": "moving-edges-fpv-poster-3",
+      "presentationId": "moving-edges-fpv-poster-3-presentation",
+      "levelId": "moving-edges-breakwater-return",
+      "levelRevision": "1",
+      "sha256": "592b96cf8aa0165fa1ea01bef7085e3f6ecee3ffdc553382432c7869871cd5aa",
+      "bytes": 2822472,
+      "mime": "image/png",
+      "width": 1774,
+      "height": 887
+    }
+  ]
+}

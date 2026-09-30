@@ -1,0 +1,10 @@
+authoring/playable-benchmark/README.md 42ms (unchanged)
+authoring/playable-benchmark/app.mjs 65ms (unchanged)
+authoring/playable-benchmark/index.html 31ms
+authoring/playable-benchmark/session.mjs 9ms (unchanged)
+authoring/skills/xonix-animation-director/SKILL.md 44ms (unchanged)
+game/test/playable-benchmark-focus-host.test.mjs 27ms (unchanged)
+game/test/playable-benchmark-outcome.test.mjs 9ms (unchanged)
+game/test/playable-benchmark.test.mjs 37ms
+docs/plan-status-2026-09-28.md 26ms (unchanged)
+docs/character-game-feel-plan.md 26ms (unchanged)

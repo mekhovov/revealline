@@ -41,7 +41,10 @@ class ControllerRoutes(unittest.TestCase):
                 self.assertIn(route, routes, f'{source.name} requires {route}')
                 pending.append(target)
         self.assertEqual(len(routes), len(catalog.CONTROLLER_FILES))
-        self.assertTrue(all(not path.endswith(('.png', '.jpg', '.webp', '.mp4')) for path in routes))
+        self.assertEqual(
+            [path for path in routes if path.endswith(('.png', '.jpg', '.webp', '.mp4'))],
+            ['/game/ui/art/identity/fpv-line/icon-192.png'],
+        )
 
     def test_live_server_serves_exact_ui_bytes_and_rejects_outside_paths(self):
         server = catalog.create_server({}, 0)
@@ -57,6 +60,8 @@ class ControllerRoutes(unittest.TestCase):
             for path, mime in (
                 ('game/ui/authoring-reference-entry.mjs', 'text/javascript'),
                 ('game/ui/authoring-input.css', 'text/css'),
+                ('game/ui/brand-identity.css', 'text/css'),
+                ('game/ui/art/identity/fpv-line/icon-192.png', 'image/png'),
                 ('game/ui/fonts/departure-mono/DepartureMono-Regular.woff2', 'font/woff2'),
             ):
                 with urlopen(base + '/' + path) as response:

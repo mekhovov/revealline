@@ -122,3 +122,11 @@ The final iOS preflight found one packaging structure error: generated sprite re
 ## Remaining external verification
 
 Test on actual standard-mapped Xbox/PlayStation controllers, disconnected/reconnected pads, controller remappings and native platform webviews before claiming hardware acceptance. Browser/OS file and save dialogs remain outside page controller ownership and are explicitly described in the source picker. Full screen-reader, all-browser and all-viewport authoring audits are not established by these checks. Long-form JSON authoring is supported by the field editor but remains more efficient with a keyboard.
+
+## Isolated current-main integration — 2026-09-29
+
+The authoring/navigation changes were ported onto `afb19ebd06db336d32dfe4660c43aa0f6711dca5` in the `codex/native-menus-fpv-line` checkout. Existing accepted Confirm router, guard and lifecycle implementations were preserved. The shared navigator retains captured-target and current-transaction checks; Creator and the new generic authoring host use the current lifecycle API. New regressions cover a complete native Confirm tap between frames, duplicate compatibility clicks after a modal handoff, field-editor target invalidation, and yielding controller reads to gameplay or an iframe preview.
+
+The isolated 14-file Node run passed **313 tests**: controller navigation/text drafts, Settings panels, authoring input/references, actual Creator player host, accepted Confirm lifecycle/guard/trace, sprite focus, Video Poster, Picture media host/bundle UI and story panel. The sparse reference server passed **2 Python tests**, including exact bytes/MIME for its explicitly allowed brand stylesheet/icon and denied outside/traversal paths. Scoped ESLint and formatting passed. These are automated DOM/device fixtures, not physical controller or browser acceptance. Earlier real-browser evidence above describes the shared-source candidate and is not presented as a new isolated browser run.
+
+No controller-router, Confirm guard/lifecycle or boost implementation was replaced from the older source tree. The independently developed Demo recording tool and company-directory work were excluded. No build, release archive, commit or publication was produced by this scoped integration step.

@@ -1,0 +1,145 @@
+{
+  "actorHead": "049bd1f7da058209119230aa4f60e5be0ce6884c",
+  "publisherHead": "81df80dda259ba8e1cef5378af1cec91260eb51e",
+  "result": "No new source defect demonstrated; no repository edits",
+  "inputs": [
+    {
+      "path": "authoring/library/community-art-cohort-v2/board-candidates-v1/collection.json",
+      "bytes": 22752,
+      "sha256": "a6cd12f00534fcc7c9adacc508c1f14ba37df50f262ea7eeb34d03e0e440a925"
+    },
+    {
+      "path": "authoring/library/community-art-cohort-v2/collection.json",
+      "bytes": 21242,
+      "sha256": "7a6fd35b20aee2521db6616a4d50ad3c764995f401c4b34c9a7bdbbc4bb8cc00"
+    },
+    {
+      "path": "authoring/library/community-art-cohort-v1/workshop-original.png",
+      "bytes": 2408056,
+      "sha256": "8782c3642af6866d09e441891b34876e0c8fa3197a018d9e0cef562699a79cf8"
+    },
+    {
+      "path": "authoring/library/community-art-cohort-v1/poltava-original.png",
+      "bytes": 2914645,
+      "sha256": "6e528a622b5bcd1fa2ed0b0ddf50404ecf7a433fee0a71ef400ae9f309dc13c5"
+    },
+    {
+      "path": "authoring/library/community-art-cohort-v1/synevyr-original.png",
+      "bytes": 2310897,
+      "sha256": "e4e66fcd65d54c560353ad8f08c42454a7b9ea187a81998dece04a6bd165d5c1"
+    },
+    {
+      "path": "authoring/library/community-art-cohort-v1/board-candidates-v1/workshop-original-wide-r2.png",
+      "bytes": 1590026,
+      "sha256": "140bba2cf410d092f8534c7d8286c566798e1d53483cb9ab879e41ac8ebc599a"
+    },
+    {
+      "path": "authoring/library/community-art-cohort-v1/board-candidates-v1/poltava-original-wide-r3.png",
+      "bytes": 1781810,
+      "sha256": "af591a5f1cc0befe3b8555841c903d4576cff59f2ec04b3ac5204050d3e0c978"
+    },
+    {
+      "path": "authoring/library/community-art-cohort-v1/board-candidates-v1/synevyr-original-wide-r4.png",
+      "bytes": 1534613,
+      "sha256": "62675863d6738930a1b8ec4872fe08d735ac43242af5d6f51b0f1d6005bc4199"
+    },
+    {
+      "path": "authoring/library/community-art-cohort-v1/board-candidates-v1/workshop-original-classic-r5.png",
+      "bytes": 762662,
+      "sha256": "7b298708666f3aabb6376fb706fadb28c4455fd7e841b6837ae347ad87e2c4c8"
+    },
+    {
+      "path": "authoring/library/community-art-cohort-v2/poltava-revised.png",
+      "bytes": 2825101,
+      "sha256": "6428a4d0f7d0e97c30cf565a68ae8bbc515c3de98343c34af2413cb200a5f07a"
+    },
+    {
+      "path": "authoring/library/community-art-cohort-v2/board-candidates-v1/poltava-revised-r6-wide-r7.png",
+      "bytes": 1756938,
+      "sha256": "aaafaaca7ad1ee916ceeb04338690178a10314d6b735fcbe63fd565ec672ac30"
+    }
+  ],
+  "nativePacket": {
+    "path": "/Users/oleksandr.mekhovov/Downloads/ukrainian-pixel-scenes-r7.rlart",
+    "bytes": 17904621,
+    "sha256": "942580e3d25345f24ee83509d719a3f4033c77d878aabe82b28a127f4aec4967"
+  },
+  "checks": {
+    "allNineBytesHeadersDimensionsMatch": true,
+    "allEightPredecessorDeclarationsUnchanged": true,
+    "allOtherCollectionDeclarationsUnchanged": true,
+    "sixExactParentRelationships": true,
+    "exportMatchesNativeDownload": true,
+    "importPreservesAllNinePayloads": true,
+    "badHashTruncationAndTrailingBytesRejectedBeforeDecode": true,
+    "unknownParentRejected": true
+  },
+  "reviewed": [
+    {
+      "path": "authoring/asset-studio/artwork-panel.mjs",
+      "actorSha256": "2433372d264cad615903d9b8889c6f7394ef111e2cb62db9b8bbdf7d2a251e55",
+      "publisherSha256": "2433372d264cad615903d9b8889c6f7394ef111e2cb62db9b8bbdf7d2a251e55",
+      "identical": true
+    },
+    {
+      "path": "authoring/asset-studio/artwork-collection.mjs",
+      "actorSha256": "7bc5aad3da5b67787a81d675cb940a8bd1b0c83f5689a64a65adcd98fcb84105",
+      "publisherSha256": "7bc5aad3da5b67787a81d675cb940a8bd1b0c83f5689a64a65adcd98fcb84105",
+      "identical": true
+    },
+    {
+      "path": "authoring/asset-studio/artwork-comparison.mjs",
+      "actorSha256": "e8ff78b41a3bb469dd5bdb76526c2a6512fde91e45e73ae46b22b8e3997beb3f",
+      "publisherSha256": "e8ff78b41a3bb469dd5bdb76526c2a6512fde91e45e73ae46b22b8e3997beb3f",
+      "identical": true
+    },
+    {
+      "path": "authoring/asset-studio/artwork-derivative.mjs",
+      "actorSha256": "adad85bf8f086ef3874712b638e07d78f22429a7217832d98ce9cd741f179198",
+      "publisherSha256": "adad85bf8f086ef3874712b638e07d78f22429a7217832d98ce9cd741f179198",
+      "identical": true
+    },
+    {
+      "path": "authoring/asset-studio/download.mjs",
+      "actorSha256": "df92ba014f69d347fbbe2860b3422b8bd4a75c2e59cf9b81dca0d491b5058cb2",
+      "publisherSha256": "df92ba014f69d347fbbe2860b3422b8bd4a75c2e59cf9b81dca0d491b5058cb2",
+      "identical": true
+    },
+    {
+      "path": "authoring/asset-studio/operation.mjs",
+      "actorSha256": "524540c021915a521ae1137b91b4164e4fce5018f2fbb31b758e1f5c0ac8ea65",
+      "publisherSha256": "524540c021915a521ae1137b91b4164e4fce5018f2fbb31b758e1f5c0ac8ea65",
+      "identical": true
+    },
+    {
+      "path": "authoring/asset-studio/picture-context.mjs",
+      "actorSha256": "407b3d0394524a70f83627a66ded6882c9eaa09143fd34c61142f881fe01edbc",
+      "publisherSha256": "407b3d0394524a70f83627a66ded6882c9eaa09143fd34c61142f881fe01edbc",
+      "identical": true
+    },
+    {
+      "path": "authoring/asset-studio/preview.mjs",
+      "actorSha256": "543999419326bebfb78b3f0d8d21f38e9e7c99e106920131edc39ab835674660",
+      "publisherSha256": "543999419326bebfb78b3f0d8d21f38e9e7c99e106920131edc39ab835674660",
+      "identical": true
+    },
+    {
+      "path": "authoring/asset-studio/scene-preview.mjs",
+      "actorSha256": "3a03247180b6347da722f56f43cb10f6c3f1bc703d74609d1db72316d97c0506",
+      "publisherSha256": "3a03247180b6347da722f56f43cb10f6c3f1bc703d74609d1db72316d97c0506",
+      "identical": true
+    },
+    {
+      "path": "authoring/asset-studio/studio.mjs",
+      "actorSha256": "13a0c555be09c4f21f6c64f66e5609d8c451cd2e96b5aeff7657bb61e9c9b7d9",
+      "publisherSha256": "6f123f28c8c7e4a14423fcd1d7d189f8808d8f0402fa924f9d06a0e5f3f2e25a",
+      "identical": false
+    }
+  ],
+  "limits": [
+    "PNG dimension adapter reads IHDR; no new native browser decoding or visual review.",
+    "No production or art admission.",
+    "No build or broad test run.",
+    "Publisher studio.mjs differs: separate reward export and invalid metadata focus recovery; not ported or duplicated."
+  ]
+}

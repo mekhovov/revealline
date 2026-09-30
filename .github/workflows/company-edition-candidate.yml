@@ -4,6 +4,7 @@ on:
   pull_request:
     paths:
       - 'game/**'
+      - 'optional-practice/**'
       - 'authoring/motion-lab/**'
       - 'authoring/company-studio/**'
       - 'scripts/**'
@@ -15,6 +16,7 @@ on:
     branches: [main]
     paths:
       - 'game/**'
+      - 'optional-practice/**'
       - 'authoring/motion-lab/**'
       - 'authoring/company-studio/**'
       - 'scripts/**'
@@ -27,7 +29,7 @@ on:
       editions:
         description: Comma-separated public edition IDs
         required: true
-        default: coupa-all,coupa-adventure,coupa-culture,coupa-foundations,coupa-operations,coupa-developers,droneaid-community,droneaid-nl-community,droneaid-nl-workshop-lights,droneaid-nl-parts-in-motion,droneaid-nl-signals-of-support,droneaid-nl-careful-handoff,droneaid-nl-makers-together,droneaid-nl-shared-horizon
+        default: coupa-all,coupa-adventure,coupa-culture,coupa-foundations,coupa-operations,coupa-developers,droneaid-community,droneaid-nl-community,droneaid-nl-workshop-lights,droneaid-nl-parts-in-motion,droneaid-nl-signals-of-support,droneaid-nl-careful-handoff,droneaid-nl-makers-together,droneaid-nl-shared-horizon,social-drone-ua,victory-drones,ukraine-culture,fpv-learning
         type: string
 
 permissions:
@@ -38,9 +40,9 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  candidate:
+  default-capacity:
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    timeout-minutes: 10
     steps:
       - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
         with:
@@ -52,9 +54,75 @@ jobs:
           node-version: '22.13.1'
           cache: npm
       - run: npm ci
+      - name: Inspect complete default-build dependencies and capacity
+        run: |
+          mkdir -p .cache/default-capacity
+          node scripts/inspect-default-build.mjs --out .cache/default-capacity/default-inspection.json
+      - uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6
+        with:
+          name: default-capacity-${{ github.event.pull_request.head.sha || github.sha }}
+          path: .cache/default-capacity/default-inspection.json
+          if-no-files-found: error
+          retention-days: 14
+      - name: Report inspection boundary
+        run: |
+          echo 'The complete checkout passed exact-source default dependency preparation and capacity inspection.' >> "$GITHUB_STEP_SUMMARY"
+          echo 'This small inventory is not a frozen default ZIP, installation receipt, full hosted-size verdict or permission to promote.' >> "$GITHUB_STEP_SUMMARY"
+  optional-practice:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+      - uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v5
+        with:
+          package-manager-cache: false
+          node-version: '22.13.1'
+          cache: npm
+      - name: Read explicit automated-suite policy
+        id: test_policy
+        run: node publishing/test-policy.mjs
+      - run: npm ci
+      - name: Verify optional routes, replay, input and installation isolation
+        if: steps.test_policy.outputs.runTests == 'true'
+        run: npm run practice:test
+      - name: Freeze twice and verify optional package artifacts
+        run: node scripts/bundle-optional-practice.mjs --out .cache/optional-flight-candidate --base-path /revealline/ --packages civilian-flight,civilian-fpv
+      - uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6
+        with:
+          name: optional-flight-candidate-${{ github.event.pull_request.head.sha || github.sha }}
+          path: .cache/optional-flight-candidate/
+          if-no-files-found: error
+          retention-days: 14
+      - name: Report optional-package boundary
+        run: |
+          echo 'The assisted orientation gym and FPV simulator are separately admitted optional candidates, independent of core and edition offline caches.' >> "$GITHUB_STEP_SUMMARY"
+          echo 'Archive integrity was checked. Automated route/replay tests follow the explicit test policy; waived suites are skipped, not passed. This is not publication, physical radio evidence or real flight proficiency.' >> "$GITHUB_STEP_SUMMARY"
+  candidate:
+    runs-on: ubuntu-latest
+    # All 18 editions compile twice. A slower runner completed checks and upload
+    # in 21m12s; retain those checks with a bounded finalization margin.
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+      - uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v5
+        with:
+          package-manager-cache: false
+          node-version: '22.13.1'
+          cache: npm
+      - name: Read explicit automated-suite policy
+        id: test_policy
+        run: node publishing/test-policy.mjs
+      - run: npm ci
       - name: Verify generated source and public media eligibility
         run: npm run company:check
       - name: Run focused company, persistence, offline and artifact tests
+        if: steps.test_policy.outputs.runTests == 'true'
         run: |
           npm run company:test
           node --test scripts/test-company-review.mjs
@@ -62,14 +130,27 @@ jobs:
           node --test game/test/installed-app.test.mjs game/test/profile-transfer.test.mjs game/test/profile-channel-reader.test.mjs scripts/test-offline-publication.mjs
           node --test game/test/soundtrack-private-intake.test.mjs game/test/soundtrack-panel.test.mjs
       - name: Verify both source release formats and edition admission
+        if: steps.test_policy.outputs.runTests == 'true'
         run: |
           node --test publishing/fastline-release-publisher.test.mjs publishing/fastline-release-inputs.test.mjs publishing/pages-controller/metadata.test.mjs publishing/pages-controller/workflow.test.mjs scripts/source-manifest-snapshot.test.mjs
           cd publishing/utility
           python3 -m unittest test_source_manifest test_release_artifact test_upload_source test_assemble_waived_qualification
       - name: Compile twice and inspect original candidate ZIP members
         env:
-          EDITION_IDS: ${{ inputs.editions || 'coupa-all,coupa-adventure,coupa-culture,coupa-foundations,coupa-operations,coupa-developers,droneaid-community,droneaid-nl-community,droneaid-nl-workshop-lights,droneaid-nl-parts-in-motion,droneaid-nl-signals-of-support,droneaid-nl-careful-handoff,droneaid-nl-makers-together,droneaid-nl-shared-horizon' }}
+          EDITION_IDS: ${{ inputs.editions || 'coupa-all,coupa-adventure,coupa-culture,coupa-foundations,coupa-operations,coupa-developers,droneaid-community,droneaid-nl-community,droneaid-nl-workshop-lights,droneaid-nl-parts-in-motion,droneaid-nl-signals-of-support,droneaid-nl-careful-handoff,droneaid-nl-makers-together,droneaid-nl-shared-horizon,social-drone-ua,victory-drones,ukraine-culture,fpv-learning' }}
         run: node scripts/bundle-editions.mjs --editions "$EDITION_IDS" --out .cache/company-candidate --base-path /revealline/
+      - name: Save small capacity metadata for review
+        uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6
+        with:
+          name: company-capacity-${{ github.event.pull_request.head.sha || github.sha }}
+          path: |
+            .cache/company-candidate/capacity-inventory.json
+            .cache/company-candidate/editions.json
+            .cache/company-candidate/candidate-verification.json
+            .cache/company-candidate/checksums.json
+            .cache/company-candidate/manifest-*.json
+          if-no-files-found: error
+          retention-days: 14
       - name: Save immutable candidates for review
         uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6
         with:
@@ -80,4 +161,5 @@ jobs:
       - name: Report qualification boundary
         run: |
           echo 'Company candidate compilation and original member checks passed.' >> "$GITHUB_STEP_SUMMARY"
+          echo 'The small capacity artifact contains exact candidate manifests and launcher component sizes. It excludes future default, retained, hub and optional output; it is not a complete hosted-size or promotion verdict.' >> "$GITHUB_STEP_SUMMARY"
           echo 'These artifacts are not promoted or published. Artwork, pacing, installation, offline recovery, accessibility, performance and downloaded-byte receipts remain separate release gates. Existing full-suite policy is unchanged.' >> "$GITHUB_STEP_SUMMARY"

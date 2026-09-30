@@ -8,25 +8,6 @@ The game includes local scores, replay-backed saved flights, a picture collectio
 
 The remaining production targets include broader map progression, every map/theme illustration, more story rewards, character presentation sets, finished auditioned music and physical-device qualification. The [feedback review](docs/feedback-and-next-steps.md) separates delivered changes from those remaining checks. Automated routes establish reproducibility and legal outcomes, not human enjoyment or hardware certification.
 
-## Company communities
-
-Open the [communities directory](https://mekhovov.github.io/revealline/game/community/)
-to choose a company outside the game, or use a direct entry:
-
-| Community | Public entry |
-| --- | --- |
-| DroneAid | [Play DroneAid](https://mekhovov.github.io/revealline/game/company.html?edition=droneaid) |
-| Coupa | [Play Coupa](https://mekhovov.github.io/revealline/game/company.html?edition=coupa-all) |
-
-The [source directory](game/community/index.html) also works on the local server at
-`/game/community/`. Company games only offer campaigns within their own company; the main
-game has no company switcher or link to this directory. Each edition retains its own saved
-flights and progress. See [community routing and isolation](docs/company-communities.md)
-for the boundary, creator-store deployment, and adding another community.
-
-The static directory fix is prepared in source. The published `v0.142.2` snapshot still has
-the older creator-store page; the stable directory link updates when the next release is promoted.
-
 ## Run locally
 
 Relay Rescue adds [two-player cooperative play](http://127.0.0.1:8768/game/couch/relay-rescue.html)

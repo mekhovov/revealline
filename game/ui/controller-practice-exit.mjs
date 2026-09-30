@@ -1,3 +1,6 @@
+import { localizedText, t } from '../i18n/index.mjs';
+import { setMenuIcon } from './native-menu-icons.mjs';
+
 // Synchronous, same-origin focus handoff for the registered Controller practice
 // frame. This is a UI boundary, not an application-state or input transport.
 const EXIT_EVENT = 'revealline-controller-practice-focus-exit';
@@ -33,6 +36,44 @@ export function requestControllerPracticeExit({
   } catch {
     return false;
   }
+}
+
+/** An ordinary menu action uses the same checked handoff as keyboard Tab. */
+export function attachControllerPracticeReturn({
+  enabled = false,
+  window: child = globalThis.window,
+  document: doc = globalThis.document,
+  session,
+  beforeExit = () => {},
+} = {}) {
+  const actions = doc.getElementById('game-overlay')?.querySelector('.overlay-actions');
+  if (
+    !enabled ||
+    child.parent === child ||
+    child.name !== 'revealline-controller-practice' ||
+    !validSession(session) ||
+    !actions
+  )
+    return { dispose() {} };
+  const button = doc.createElement('button');
+  button.id = 'controller-practice-return';
+  button.type = 'button';
+  button.className = 'button secondary';
+  localizedText(button, () => t('interface:returnToControllerPractice'));
+  setMenuIcon(button, 'back');
+  let disposed = false;
+  button.onclick = () => {
+    if (disposed || button.disabled) return;
+    requestControllerPracticeExit({ window: child, session, beforeExit });
+  };
+  actions.append(button);
+  return {
+    dispose() {
+      disposed = true;
+      button.onclick = null;
+      button.remove();
+    },
+  };
 }
 
 export function attachControllerPracticeExit({

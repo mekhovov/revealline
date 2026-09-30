@@ -3,7 +3,13 @@ import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import {
   fieldKitRecipeSources,
+  verifyFieldKitNativeMenuContinuationReview,
   verifyFieldKitSteamDeckAudioContinuationReview,
+  verifyFieldKitDiscoveryAudioContinuationReview,
+  verifyFieldKitDiscoveryWebPUIContinuationReview,
+  verifyFieldKitGP4RestoreAudioContinuationReview,
+  verifyFieldKitSelectorAudioContinuationReview,
+  verifyFieldKitMainReconciliationReview,
   verifyFieldKitAudioStyleMenuCorrectionReview,
   verifyFieldKitAudioStyleMenuReview,
   verifyFieldKitPlayerReadinessAudioReview,
@@ -42,11 +48,22 @@ test('every declared helper invalidates all sharing groups and leaves nonconsume
     ['game/content-design/actor-marker.mjs', ['effects', 'team']],
     ['game/ui/lane-presentation.mjs', ['effects']],
     ['game/ui/render.mjs', ['effects']],
+    ['game/ui/contact-cue.mjs', ['effects', 'team']],
+    ['game/ui/combat-view.mjs', ['effects']],
+    ['game/ui/combat-presentation.mjs', ['effects']],
+    ['game/core/registry.mjs', ['effects']],
+    ['game/core/combat-definition.mjs', ['effects']],
+    ['game/core/geometry.mjs', ['effects']],
+    ['game/core/classic-motion.mjs', ['effects']],
+    ['game/core/classic-topology.mjs', ['effects']],
+    ['game/core/movement.mjs', ['effects']],
+    ['game/core/versions.mjs', ['effects']],
     ['game/ui/relay-view.mjs', ['effects']],
     ['game/ui/directional-view.mjs', ['effects']],
     ['game/enemy-catalog.mjs', ['effects', 'team']],
     ['game/presentation/journey-actor-materials.mjs', ['motion', 'team']],
-    ['game/ui/actor-presentation.mjs', ['motion', 'team']],
+    ['game/ui/actor-presentation.mjs', ['effects', 'motion', 'team']],
+    ['game/ui/rotor-presentation.mjs', ['motion', 'team']],
     ['game/ui/actor-recipes.mjs', ['effects', 'motion', 'team']],
     ['game/ui/fpv-body-recipes.mjs', ['effects', 'motion', 'team']],
     ['game/ui/body-backing.mjs', ['effects', 'motion', 'team']],
@@ -74,6 +91,28 @@ test('every declared helper invalidates all sharing groups and leaves nonconsume
     ['game/media-storage-record.mjs', ['audio']],
     ['game/soundtrack-private-intake.mjs', ['audio']],
     ['game/ui/soundtrack-error-copy.mjs', ['audio']],
+    ['game/journey/campaign-feedback.mjs', ['audio']],
+    ['game/rewards/audio-original.mjs', ['audio']],
+    ['game/rewards/media-format.mjs', ['audio']],
+    ['game/ui/edition-solo.mjs', ['audio']],
+    ['game/ui/edition-rewards.mjs', ['audio']],
+    ['game/ui/reward-media.mjs', ['audio']],
+    ['game/ui/reward-audio-group.mjs', ['audio']],
+    ['game/rewards/audio-groups.mjs', ['audio']],
+    ['game/studio-preview-session.mjs', ['audio']],
+    ['game/audio-preferences.mjs', ['audio']],
+    ['game/ui/story-dialog.mjs', ['audio']],
+    ['game/ui/victory-story.mjs', ['audio']],
+    ['game/ui/music.mjs', ['audio']],
+    ['game/data-json.mjs', ['audio', 'effects']],
+    ['game/mp3.mjs', ['audio']],
+    ['game/media-audio.mjs', ['audio']],
+    ['game/video-poster.mjs', ['audio']],
+    ['game/rewards/model.mjs', ['audio']],
+    ['game/rewards/media.mjs', ['audio']],
+    ['game/editions/assets.mjs', ['audio']],
+    ['game/editions/model.mjs', ['audio']],
+    ['game/editions/retained-presentation.mjs', ['audio']],
   ])
     assert.deepEqual([...(consumers.get(name) ?? [])].sort(), groups, name);
   assert.equal(consumers.size, inputs.size, 'Every read belongs to a declared group');
@@ -89,7 +128,21 @@ test('every declared helper invalidates all sharing groups and leaves nonconsume
 
 test('missing helper bytes cannot produce a supposedly valid fingerprint', async () => {
   for (const missing of [
+    'game/ui/contact-cue.mjs',
+    'game/ui/combat-view.mjs',
+    'game/ui/combat-presentation.mjs',
+    'game/ui/actor-presentation.mjs',
+    'game/data-json.mjs',
+    'game/core/registry.mjs',
+    'game/core/combat-definition.mjs',
+    'game/core/geometry.mjs',
+    'game/core/classic-motion.mjs',
+    'game/core/classic-topology.mjs',
+    'game/core/movement.mjs',
+    'game/core/versions.mjs',
     'game/ui/lane-presentation.mjs',
+    'game/journey/campaign-feedback.mjs',
+    'game/rewards/audio-original.mjs',
     'authoring/library/fpv-role-presentations/originals/impact.png',
   ])
     await assert.rejects(
@@ -459,4 +512,141 @@ test('Steam Deck audio continuation and exact production99 predecessor fail clos
     assert.equal(verifyFieldKitSteamDeckAudioContinuationReview(...changed), false);
   }
   assert.equal(verifyFieldKitSteamDeckAudioContinuationReview(...bytes.toReversed()), false);
+});
+
+test('discovery audio continuation pins the new review, unchanged predecessors and independent production100 oracle', async () => {
+  const paths = [
+    'docs/verification/discovery-audio-continuation-2026-09-29/review.json',
+    'docs/verification/v0.142.3-steamdeck-confirm-audio-continuation/review.json',
+    'docs/verification/audio-style-menu-correction-2026-09-28/review.json',
+    'game/test/fixtures/production-v01423-6a67-fpv100.json',
+  ];
+  const originals = await Promise.all(
+    paths.map((name) => readFile(new URL('../' + name, import.meta.url))),
+  );
+  assert.equal(verifyFieldKitDiscoveryAudioContinuationReview(...originals), true);
+  for (const index of originals.keys()) {
+    for (const changed of [Buffer.alloc(0), Buffer.concat([originals[index], Buffer.from(' ')])]) {
+      const candidate = [...originals];
+      candidate[index] = changed;
+      assert.equal(
+        verifyFieldKitDiscoveryAudioContinuationReview(...candidate),
+        false,
+        paths[index],
+      );
+    }
+  }
+});
+
+test('discovery WebP UI continuation pins its review and immutable source-stage production101', async () => {
+  const paths = [
+    'docs/verification/discovery-webp-ui-continuation-2026-09-29/review.json',
+    'docs/verification/v0.141.8-steamdeck-confirm-presentation-continuation/review.json',
+    'game/test/fixtures/production-discovery-source-ui-fpv101.json',
+  ];
+  const originals = await Promise.all(
+    paths.map((name) => readFile(new URL('../' + name, import.meta.url))),
+  );
+  assert.equal(verifyFieldKitDiscoveryWebPUIContinuationReview(...originals), true);
+  for (const index of originals.keys()) {
+    for (const changed of [Buffer.alloc(0), Buffer.concat([originals[index], Buffer.from(' ')])]) {
+      const candidate = [...originals];
+      candidate[index] = changed;
+      assert.equal(
+        verifyFieldKitDiscoveryWebPUIContinuationReview(...candidate),
+        false,
+        paths[index],
+      );
+    }
+  }
+  assert.equal(verifyFieldKitDiscoveryWebPUIContinuationReview(...originals.toReversed()), false);
+});
+
+test('gp4 restore audio continuation pins the scoped review and complete production102 predecessor', async () => {
+  const paths = [
+    'docs/verification/discovery-gp4-restore-audio-continuation-2026-09-29/review.json',
+    'docs/verification/discovery-audio-continuation-2026-09-29/review.json',
+    'game/test/fixtures/production-discovery-reviewed-ui-fpv102.json',
+  ];
+  const originals = await Promise.all(
+    paths.map((name) => readFile(new URL('../' + name, import.meta.url))),
+  );
+  assert.equal(verifyFieldKitGP4RestoreAudioContinuationReview(...originals), true);
+  for (const index of originals.keys()) {
+    for (const changed of [Buffer.alloc(0), Buffer.concat([originals[index], Buffer.from(' ')])]) {
+      const candidate = [...originals];
+      candidate[index] = changed;
+      assert.equal(
+        verifyFieldKitGP4RestoreAudioContinuationReview(...candidate),
+        false,
+        paths[index],
+      );
+    }
+  }
+  assert.equal(verifyFieldKitGP4RestoreAudioContinuationReview(...originals.toReversed()), false);
+});
+
+test('Selector audio continuation and exact production100 predecessor fail closed', async () => {
+  const paths = [
+    'docs/verification/v0.142.4-selector-audio-continuation/review.json',
+    'docs/verification/v0.142.3-steamdeck-confirm-audio-continuation/review.json',
+    'game/test/fixtures/production-v01423-b5ab-fpv100.json',
+  ];
+  const bytes = await Promise.all(
+    paths.map((path) => readFile(new URL('../' + path, import.meta.url))),
+  );
+  assert.equal(verifyFieldKitSelectorAudioContinuationReview(...bytes), true);
+  for (let index = 0; index < bytes.length; index++) {
+    const changed = [...bytes];
+    changed[index] = Buffer.concat([changed[index], Buffer.from(' ')]);
+    assert.equal(verifyFieldKitSelectorAudioContinuationReview(...changed), false);
+  }
+  assert.equal(verifyFieldKitSelectorAudioContinuationReview(...bytes.toReversed()), false);
+});
+
+test('main reconciliation authenticates both review lineages, original archive and retained inputs', async () => {
+  const paths = [
+    'docs/verification/discovery-main321-reconciliation/review.json',
+    'docs/verification/v0.142.4-selector-audio-continuation/review.json',
+    'docs/verification/discovery-gp4-restore-audio-continuation-2026-09-29/review.json',
+    'game/test/fixtures/production-v01424-main321-fpv101.json',
+    'game/test/fixtures/production-discovery-db4-fpv103.json',
+    'docs/verification/discovery-main321-reconciliation/discovery-production103.rltheme.gz',
+    'docs/verification/discovery-main321-reconciliation/retained-inputs.json',
+  ];
+  const inputs = await Promise.all(
+    paths.map((name) => readFile(new URL('../' + name, import.meta.url))),
+  );
+  assert.equal(verifyFieldKitMainReconciliationReview(...inputs), true);
+  for (const index of inputs.keys()) {
+    const changed = [...inputs];
+    changed[index] = Buffer.concat([inputs[index], Buffer.from(' ')]);
+    assert.equal(verifyFieldKitMainReconciliationReview(...changed), false, paths[index]);
+  }
+  assert.equal(verifyFieldKitMainReconciliationReview(...inputs.toReversed()), false);
+});
+
+test('native-menu continuation requires all four exact historical/source pins', async () => {
+  const paths = [
+    'docs/verification/native-menu-ui-audio-20260930/review.json',
+    'docs/verification/discovery-webp-ui-continuation-2026-09-29/review.json',
+    'docs/verification/radio-audio-20260929/review.json',
+    'game/test/fixtures/production-native-main1b-fpv103.json',
+  ];
+  const inputs = await Promise.all(
+    paths.map((name) => readFile(new URL('../' + name, import.meta.url))),
+  );
+  assert.equal(verifyFieldKitNativeMenuContinuationReview(...inputs), true);
+  for (let index = 0; index < inputs.length; index += 1) {
+    const changed = inputs.map((bytes) => Buffer.from(bytes));
+    changed[index][changed[index].length - 1] ^= 1;
+    assert.equal(verifyFieldKitNativeMenuContinuationReview(...changed), false, paths[index]);
+    assert.equal(
+      verifyFieldKitNativeMenuContinuationReview(...inputs.filter((_, i) => i !== index)),
+      false,
+    );
+  }
+  assert.equal(verifyFieldKitNativeMenuContinuationReview(...inputs, inputs[0]), false);
+  assert.equal(verifyFieldKitNativeMenuContinuationReview(...inputs.toReversed()), false);
+  assert.equal(verifyFieldKitNativeMenuContinuationReview(), false);
 });

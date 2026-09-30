@@ -517,7 +517,11 @@ test('controller setup/help and repeated keyboard Confirm cannot leak through th
   f.pulse(0, 1);
   f.frame(0);
   f.focus('race-start');
-  f.pulse(0, 0);
+  f.button(0, 0, true);
+  f.frame();
+  // Keep Confirm held through the real three-second cue, then mirror its release.
+  f.frame();
+  f.button(0, 0, false);
   f.frame();
   assert.equal(
     f.state(),
@@ -537,8 +541,8 @@ test('controller setup/help and repeated keyboard Confirm cannot leak through th
   const release = f.key('Enter', false, start);
   assert.equal(
     release.defaultPrevented,
-    false,
-    'The fixture has settled the three-second start cue, so the old controller echo window is over.',
+    true,
+    'The echo window starts on controller release; its repeated Enter and matching keyup remain owned.',
   );
   assert.deepEqual(f.checkpoint(), held, 'The native key release cannot resume the paused match.');
   f.frames(151);
@@ -663,6 +667,8 @@ test('a real finished draw exposes both frozen boards, Results returns without a
 
 test('an old held controller cannot reclaim a seat from accepted touch across pause and resume', async (t) => {
   const f = await couchPage(t, { pads: [pad(0), pad(1)] });
+  f.frame();
+  f.pulse(0, 3);
   f.$('race-start').click();
   f.frame();
   f.pads()[0].axes[0] = 1;

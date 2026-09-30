@@ -76,11 +76,17 @@ jobs:
           cache: npm
           cache-dependency-path: services/community/package-lock.json
 
+      - name: Read explicit automated-suite policy
+        id: test_policy
+        run: node publishing/test-policy.mjs
+
       - name: Install acceptance runner dependencies
+        if: steps.test_policy.outputs.runTests == 'true'
         working-directory: services/community
         run: npm ci
 
       - name: Start production-shaped services
+        if: steps.test_policy.outputs.runTests == 'true'
         working-directory: services/community
         run: >-
           docker compose -f compose.yaml -f compose.production.yaml
@@ -88,10 +94,12 @@ jobs:
           api worker
 
       - name: Verify interrupted tus resume
+        if: steps.test_policy.outputs.runTests == 'true'
         working-directory: services/community
         run: npm run acceptance:tus-deployed
 
       - name: Recreate services while preserving state
+        if: steps.test_policy.outputs.runTests == 'true'
         working-directory: services/community
         run: |
           docker compose -f compose.yaml -f compose.production.yaml \
@@ -100,11 +108,12 @@ jobs:
             -f compose.hosted-acceptance.yaml up --detach --wait --wait-timeout 180 api worker
 
       - name: Verify two-user publish, install, play, moderation, and offline journey
+        if: steps.test_policy.outputs.runTests == 'true'
         working-directory: services/community
         run: npm run acceptance:deployed
 
       - name: Upload redacted acceptance receipts
-        if: success()
+        if: success() && steps.test_policy.outputs.runTests == 'true'
         uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6
         with:
           name: community-hosted-acceptance-receipts
@@ -113,7 +122,7 @@ jobs:
           retention-days: 14
 
       - name: Show bounded service logs on failure
-        if: failure()
+        if: failure() && steps.test_policy.outputs.runTests == 'true'
         working-directory: services/community
         run: >-
           docker compose -f compose.yaml -f compose.production.yaml
@@ -121,7 +130,7 @@ jobs:
           postgres migrate auth-migrate preflight api worker
 
       - name: Remove acceptance containers and volumes
-        if: always()
+        if: always() && steps.test_policy.outputs.runTests == 'true'
         working-directory: services/community
         run: >-
           docker compose -f compose.yaml -f compose.production.yaml

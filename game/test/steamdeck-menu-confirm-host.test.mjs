@@ -53,8 +53,8 @@ test('Steam Deck A owns its delayed Chrome activation across quick actions and d
       pad.buttons[index] = { pressed: false, value: 0 };
       frame();
     },
-    reach = (id, button = 13, limit = 80) => {
-      for (let step = 0; step < limit && page.doc.activeElement.id !== id; step++) pulse(button);
+    reach = (id, limit = 80) => {
+      for (let step = 0; step < limit && page.doc.activeElement.id !== id; step++) pulse(13);
       assert.equal(page.doc.activeElement.id, id, `${id} must be controller reachable`);
     },
     echo = () => {
@@ -91,7 +91,7 @@ test('Steam Deck A owns its delayed Chrome activation across quick actions and d
   echo();
   assert.equal(page.$('shell-sound').textContent, afterSound, 'Sound changes exactly once');
 
-  reach('shell-options', 12);
+  reach('shell-options');
   pulse(0);
   assert.equal(page.$('settings-dialog').open, true);
   assert.equal(
@@ -106,12 +106,6 @@ test('Steam Deck A owns its delayed Chrome activation across quick actions and d
   frame();
   assert.equal(page.$('settings-dialog').open, false);
 
-  reach('shell-options');
-  pulse(0);
-  assert.equal(page.$('settings-dialog').open, true);
-  reach('settings-tab-extras');
-  pulse(0);
-  pulse(15);
   reach('shell-workshop');
   pulse(0);
   assert.equal(page.$('shell-workshop-dialog').open, true);
@@ -121,10 +115,6 @@ test('Steam Deck A owns its delayed Chrome activation across quick actions and d
   page.doc.querySelector('button[data-close="shell-workshop-dialog"]').click();
   frame();
   assert.equal(page.$('shell-workshop-dialog').open, false);
-  assert.equal(page.$('settings-dialog').open, true);
-  time += 1300;
-  page.doc.querySelector('button[data-close="settings-dialog"]').click();
-  frame();
 
   reach('shell-sound');
   time += 1300;

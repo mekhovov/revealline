@@ -1,0 +1,267 @@
+:root {
+  color-scheme: dark;
+  font:
+    16px/1.5 'Field Kit UI',
+    system-ui,
+    sans-serif;
+  color: #e9f1ed;
+  background: #101b28;
+}
+* {
+  box-sizing: border-box;
+}
+body {
+  margin: 0;
+}
+main {
+  max-width: 1440px;
+  margin: auto;
+  padding: 12px 20px;
+}
+.heading,
+.telemetry {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px 16px;
+}
+.heading {
+  margin-bottom: 8px;
+}
+h1 {
+  font-family: 'Field Kit Display', 'Reveal Line Pixel', monospace;
+  font-size: clamp(1.3rem, 3vw, 1.8rem);
+  font-weight: 600;
+  margin: 0;
+}
+nav,
+.controls,
+.pad {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+}
+a {
+  color: #8fe0d8;
+  text-underline-offset: 3px;
+}
+button,
+select {
+  font: inherit;
+  color: inherit;
+  background: #253b4e;
+  border: 1px solid #72909b;
+  border-radius: 0;
+  min-height: 44px;
+  padding: 8px 12px;
+  max-width: 100%;
+  min-width: 0;
+}
+button {
+  cursor: pointer;
+}
+button:disabled {
+  opacity: 0.55;
+  cursor: wait;
+}
+label {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  min-height: 44px;
+  min-width: 0;
+  max-width: 100%;
+}
+input[type='checkbox'] {
+  width: 20px;
+  height: 20px;
+  accent-color: #ffd64a;
+}
+.controls {
+  padding: 6px 10px;
+  border: 1px solid #516e7b;
+  background: #182a3b;
+}
+.panes {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+.panes.primary-only {
+  grid-template-columns: minmax(0, 1fr);
+}
+/* Primary play reserves real space for the HUD and touch controls. The arena
+ * owns the remaining height, so wrapping copy cannot push the pad off screen. */
+#play-viewport.primary-only {
+  height: calc(100dvh - 24px);
+  display: grid;
+  grid-template-rows: auto auto auto auto auto minmax(0, 1fr);
+}
+.primary-only .play-stage {
+  min-height: 0;
+  display: grid;
+  grid-template-rows: minmax(0, 1fr) auto;
+  gap: 8px;
+}
+.primary-only #arena {
+  min-width: 0;
+  min-height: 0;
+  container-type: size;
+  display: grid;
+  place-items: center;
+}
+.primary-only .panes {
+  width: min(100cqw, calc((100cqh - 34px) * 2));
+}
+.primary-only .pad {
+  margin: 0;
+}
+figure {
+  margin: 0;
+  min-width: 0;
+}
+figcaption {
+  margin-bottom: 8px;
+  font-weight: 600;
+}
+canvas {
+  display: block;
+  width: 100%;
+  height: auto;
+  image-rendering: pixelated;
+  border: 1px solid #617987;
+  background: #152333;
+}
+#reference {
+  touch-action: none;
+}
+.pad {
+  margin: 8px 0;
+}
+.pad button {
+  min-width: 52px;
+  min-height: 48px;
+  touch-action: none;
+}
+.direction-controls {
+  display: grid;
+  grid-template-columns: repeat(3, 52px);
+  grid-template-rows: repeat(2, 48px);
+  touch-action: none;
+}
+.direction-controls [data-move='up'] {
+  grid-column: 2;
+  grid-row: 1;
+}
+.direction-controls [data-move='left'] {
+  grid-column: 1;
+  grid-row: 2;
+}
+.direction-controls [data-move='down'] {
+  grid-column: 2;
+  grid-row: 2;
+}
+.direction-controls [data-move='right'] {
+  grid-column: 3;
+  grid-row: 2;
+}
+.pressed {
+  background: #6b5720;
+  border-color: #ffd64a;
+}
+:focus-visible {
+  outline: 3px solid #ffd64a;
+  outline-offset: 3px;
+}
+.note {
+  color: #b0c3c9;
+  font-size: 0.9rem;
+}
+#loading[data-state='error'] {
+  color: #ffb49d;
+}
+#summary {
+  font-weight: 600;
+  color: #ffd64a;
+}
+#summary,
+#loading,
+#outcome {
+  margin: 4px 0;
+}
+#outcome {
+  min-height: 1.5em;
+  color: #ffd64a;
+}
+#instructions {
+  font-size: 0.85rem;
+  color: #b0c3c9;
+}
+details {
+  margin: 12px 0;
+}
+fieldset {
+  min-width: 0;
+  margin: 12px 0;
+  border: 1px solid #516e7b;
+}
+summary {
+  min-height: 44px;
+  padding: 10px 0;
+  cursor: pointer;
+}
+pre {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  font:
+    13px/1.5 'Field Kit Mono',
+    monospace;
+}
+[hidden] {
+  display: none !important;
+}
+@media (max-width: 720px) {
+  main {
+    padding: 10px;
+  }
+  .panes {
+    grid-template-columns: 1fr;
+  }
+  #play-viewport.primary-only {
+    height: calc(100dvh - 20px);
+  }
+}
+@media (max-height: 500px) and (orientation: landscape) {
+  main {
+    padding: 8px 12px;
+  }
+  #play-viewport.primary-only {
+    height: calc(100dvh - 16px);
+  }
+  .heading {
+    margin-bottom: 4px;
+  }
+  h1 {
+    font-size: 1.3rem;
+  }
+  #loading,
+  #summary,
+  #outcome {
+    font-size: 0.875rem;
+    line-height: 1.35;
+  }
+  .primary-only .play-stage {
+    grid-template-columns: minmax(0, 1fr) 156px;
+    grid-template-rows: minmax(0, 1fr);
+    gap: 16px;
+  }
+  .primary-only .pad {
+    flex-direction: column;
+    justify-content: center;
+    align-self: center;
+    gap: 8px;
+  }
+}

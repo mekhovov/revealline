@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Menu accessibility qualification</title>
+    <style>
+      body {
+        margin: 16px;
+        font: 16px/1.5 system-ui;
+      }
+      form {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+        align-items: end;
+      }
+      label {
+        display: grid;
+      }
+      button,
+      select,
+      a {
+        font: inherit;
+        min-height: 44px;
+      }
+      iframe {
+        display: block;
+        width: 100%;
+        height: 75vh;
+        margin-block: 16px;
+        border: 2px solid;
+        box-sizing: border-box;
+      }
+      pre {
+        white-space: pre-wrap;
+        overflow-wrap: anywhere;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Menu accessibility qualification</h1>
+    <p>
+      Production CSS and menu/input adapters, with fixture-owned content and memory-only
+      preferences. Use browser zoom (not CSS zoom) at 100% and 200%. Forced colors are qualified
+      only when the browser reports the real media query active. No physical controller or gameplay
+      is tested.
+    </p>
+    <form id="configuration">
+      <label
+        >Surface<select name="host">
+          <option value="creator">Custom player</option>
+          <option value="support">Support owner</option>
+          <option value="solo">Solo states</option>
+          <option value="versus">Versus states</option>
+          <option value="team">Team states</option>
+        </select></label
+      >
+      <label
+        >Language<select name="lang">
+          <option value="en">English</option>
+          <option value="uk">Українська</option>
+        </select></label
+      >
+      <label
+        >Text face<select name="face">
+          <option value="pixel">Theme</option>
+          <option value="plain">Plain</option>
+        </select></label
+      >
+      <label
+        >Text size<select name="size">
+          <option value="standard">Standard</option>
+          <option value="large">Large</option>
+        </select></label
+      >
+      <label
+        >Font responses<select name="fonts">
+          <option value="normal">Normal</option>
+          <option value="delayed">Hold for 6 seconds</option>
+          <option value="blocked">Fail local fonts</option>
+        </select></label
+      >
+      <button type="submit">Load fixture</button>
+      <button type="button" id="measure">Measure current view</button>
+      <a id="full-page" target="_blank" rel="noopener">Open full-page fixture</a>
+    </form>
+    <p id="status" role="status">Preparing isolated font-response worker…</p>
+    <iframe id="pane" title="Production menu styles under test" allow="fullscreen"></iframe>
+    <details open>
+      <summary>Measured evidence</summary>
+      <pre id="report"></pre>
+    </details>
+    <button id="cleanup" type="button">Unregister fixture font worker</button>
+    <script type="module" src="./index.mjs"></script>
+  </body>
+</html>
