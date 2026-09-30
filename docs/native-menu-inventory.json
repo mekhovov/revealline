@@ -319,6 +319,78 @@
         }
       },
       "publicSlug": "droneaid-nl-shared-horizon"
+    },
+    {
+      "id": "social-drone-ua",
+      "title": "Social Drone UA / LINE",
+      "brand": "social-drone-ua",
+      "modes": ["solo"],
+      "scene": "fpv",
+      "routes": ["/game/?edition=social-drone-ua", "/editions/social-drone-ua/app/"],
+      "menus": "shared-native",
+      "verification": {
+        "automated": "Current integrated source catalog, supported modes, public slug, scene resolver and launch routes checked; source-only inventory reconciliation.",
+        "physicalController": "not tested",
+        "publishedBuild": "not tested",
+        "browser": "Pending current-edition layout and keyboard/controller browser qualification; not covered by the historical 14-edition menu matrix.",
+        "standalonePackage": "Pending current-edition standalone compilation, installed-offline and native qualification; not covered by the historical 14-edition package receipts.",
+        "scene": "Current resolveMenuScene selects the shared fpv fallback for this edition ID; deliberate edition artwork review remains pending."
+      },
+      "publicSlug": "social-drone-ua"
+    },
+    {
+      "id": "victory-drones",
+      "title": "Victory Drones / LINE",
+      "brand": "victory-drones",
+      "modes": ["solo"],
+      "scene": "fpv",
+      "routes": ["/game/?edition=victory-drones", "/editions/victory-drones/app/"],
+      "menus": "shared-native",
+      "verification": {
+        "automated": "Current integrated source catalog, supported modes, public slug, scene resolver and launch routes checked; source-only inventory reconciliation.",
+        "physicalController": "not tested",
+        "publishedBuild": "not tested",
+        "browser": "Pending current-edition layout and keyboard/controller browser qualification; not covered by the historical 14-edition menu matrix.",
+        "standalonePackage": "Pending current-edition standalone compilation, installed-offline and native qualification; not covered by the historical 14-edition package receipts.",
+        "scene": "Current resolveMenuScene selects the shared fpv fallback for this edition ID; deliberate edition artwork review remains pending."
+      },
+      "publicSlug": "victory-drones"
+    },
+    {
+      "id": "ukraine-culture",
+      "title": "Ukraine: Living Culture / LINE",
+      "brand": "ukraine-culture",
+      "modes": ["solo"],
+      "scene": "fpv",
+      "routes": ["/game/?edition=ukraine-culture", "/editions/ukraine-culture/app/"],
+      "menus": "shared-native",
+      "verification": {
+        "automated": "Current integrated source catalog, supported modes, public slug, scene resolver and launch routes checked; source-only inventory reconciliation.",
+        "physicalController": "not tested",
+        "publishedBuild": "not tested",
+        "browser": "Pending current-edition layout and keyboard/controller browser qualification; not covered by the historical 14-edition menu matrix.",
+        "standalonePackage": "Pending current-edition standalone compilation, installed-offline and native qualification; not covered by the historical 14-edition package receipts.",
+        "scene": "Current resolveMenuScene selects the shared fpv fallback for this edition ID; deliberate edition artwork review remains pending."
+      },
+      "publicSlug": "ukraine-culture"
+    },
+    {
+      "id": "fpv-learning",
+      "title": "FPV Learning / LINE",
+      "brand": "fpv-learning",
+      "modes": ["solo"],
+      "scene": "fpv",
+      "routes": ["/game/?edition=fpv-learning", "/editions/fpv-learning/app/"],
+      "menus": "shared-native",
+      "verification": {
+        "automated": "Current integrated source catalog, supported modes, public slug, scene resolver and launch routes checked; source-only inventory reconciliation.",
+        "physicalController": "not tested",
+        "publishedBuild": "not tested",
+        "browser": "Pending current-edition layout and keyboard/controller browser qualification; not covered by the historical 14-edition menu matrix.",
+        "standalonePackage": "Pending current-edition standalone compilation, installed-offline and native qualification; not covered by the historical 14-edition package receipts.",
+        "scene": "Current resolveMenuScene selects the shared fpv fallback for this edition ID; deliberate edition artwork review remains pending."
+      },
+      "publicSlug": "fpv-learning"
     }
   ],
   "evidence": {
@@ -644,6 +716,22 @@
     {
       "route": "/editions/droneaid-nl-community/app/",
       "generator": "publishing/edition-promotion.mjs"
+    },
+    {
+      "route": "/editions/social-drone-ua/app/",
+      "generator": "scripts/compile-edition.mjs"
+    },
+    {
+      "route": "/editions/victory-drones/app/",
+      "generator": "scripts/compile-edition.mjs"
+    },
+    {
+      "route": "/editions/ukraine-culture/app/",
+      "generator": "scripts/compile-edition.mjs"
+    },
+    {
+      "route": "/editions/fpv-learning/app/",
+      "generator": "scripts/compile-edition.mjs"
     }
   ],
   "customPlayer": {
