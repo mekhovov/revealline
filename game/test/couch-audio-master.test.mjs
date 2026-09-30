@@ -170,6 +170,7 @@ async function teamPage(t, store, { audio = null, assetDatabase, pads = [] } = {
   let next = 0,
     now = 0;
   const globals = {
+    fetch: async () => new Response(null, { status: 503 }),
     document: doc,
     window: win,
     localStorage: store,
@@ -843,6 +844,7 @@ test('Couch music credits follow audible MP3 metadata without live position anno
   const create = doc.createElement.bind(doc);
   doc.createElement = (tag) => (tag === 'audio' ? a.createElement(doc) : create(tag));
   const host = attachCouchMusicHost({
+    onlineCatalogueDownload: { fetch: async () => new Response(null, { status: 503 }) },
     document: doc,
     root: doc.body,
     prefix: 'credits',
@@ -1059,6 +1061,7 @@ test('a failed music assignment replaces pending status with its actionable erro
   const create = doc.createElement.bind(doc);
   doc.createElement = (tag) => (tag === 'audio' ? a.createElement(doc) : create(tag));
   const host = attachCouchMusicHost({
+    onlineCatalogueDownload: { fetch: async () => new Response(null, { status: 503 }) },
     document: doc,
     root: doc.body,
     prefix: 'test',
@@ -1140,6 +1143,7 @@ test('Couch explicit scene keeps level music across inactive Pause, Settings, re
   doc.createElement = (tag) => (tag === 'audio' ? a.createElement(doc) : create(tag));
   let scene = 'menu';
   const host = attachCouchMusicHost({
+    onlineCatalogueDownload: { fetch: async () => new Response(null, { status: 503 }) },
     document: doc,
     root: doc.body,
     prefix: 'scene',
