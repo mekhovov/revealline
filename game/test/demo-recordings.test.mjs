@@ -30,10 +30,13 @@ campaign.classRecipes = classRecipes;
 const entry = { campaign, classRecipes };
 const catalog = await json('../demo-data/catalog.json');
 
-test('ten curated recordings reproduce current Standard tuning on eight installed maps with authored picture ownership', async () => {
+test('curated wins and human mistakes reproduce current Standard tuning across every installed base map', async () => {
   const generated = await buildDemoRecordings();
-  assert.equal(generated.length, 10);
-  assert.equal(new Set(generated.map(({ replay }) => replay.level.id)).size, 8);
+  assert.equal(generated.length, 16);
+  assert.equal(
+    new Set(generated.map(({ replay }) => replay.level.id)).size,
+    campaign.levels.length,
+  );
   assert.deepEqual(
     catalog.clips,
     generated.map(({ descriptor }) => descriptor),
@@ -60,8 +63,18 @@ test('ten curated recordings reproduce current Standard tuning on eight installe
       'At least one independently frozen strict recording must match this runtime.',
     );
     assert.ok(demoReplayMatchesEntry(replay, entry));
-    assert.ok(metrics.closedCuts >= 3 && metrics.bends >= 3);
-    assert.ok(replay.ticks / 120 >= 20 && replay.ticks / 120 <= 60);
+    const mistake = descriptor.tags.includes('failure');
+    if (mistake) {
+      assert.ok(metrics.failures >= 1);
+      assert.ok(['running', 'lost'].includes(replay.summary.status));
+      assert.ok(replay.summary.lives < 3);
+      assert.ok(descriptor.tags.includes(replay.options.classId));
+    } else {
+      assert.ok(metrics.closedCuts >= 3 && metrics.bends >= 3);
+      assert.ok(replay.ticks / 120 >= 20 && replay.ticks / 120 <= 60);
+      assert.equal(replay.summary.status, 'won');
+      assert.equal(replay.summary.lives, 3);
+    }
     assert.ok(replay.segments.every((segment) => !segment.input.boost));
     const player = await prepareReplayPlayer(frozen);
     const events = {};
@@ -91,11 +104,18 @@ test('ten curated recordings reproduce current Standard tuning on eight installe
       }
     }
     assert.equal(player.finalCheckpoint.hash, frozen.checkpoint.hash);
-    assert.equal(player.state.status, 'won');
-    assert.equal(player.state.lives, 3);
-    assert.equal(events['player.failed'] ?? 0, 0);
-    assert.ok(events['cut.closed'] >= 3);
-    if (descriptor.id === 'stone-lanes-detour') {
+    assert.equal(player.state.status, replay.summary.status);
+    assert.equal(player.state.lives, replay.summary.lives);
+    if (mistake) {
+      assert.equal(events['player.failed'], metrics.failures);
+      assert.ok(
+        metrics.fullLoss ? player.state.status === 'lost' : player.state.status === 'running',
+      );
+    } else {
+      assert.equal(events['player.failed'] ?? 0, 0);
+      assert.ok(events['cut.closed'] >= 3);
+    }
+    if (!mistake && descriptor.id === 'stone-lanes-detour') {
       assert.equal(
         takeoverChecked,
         true,
@@ -103,7 +123,7 @@ test('ten curated recordings reproduce current Standard tuning on eight installe
       );
       assert.ok(authored.walls.length > 0);
       assert.equal(events['objective.captured'], 1);
-    } else if (descriptor.id === 'hidden-frequency-search') {
+    } else if (!mistake && descriptor.id === 'hidden-frequency-search') {
       assert.ok(authored.objectives.some((objective) => objective.hidden && objective.required));
       assert.ok(events['ability.used'] >= 1);
       assert.equal(events['objective.captured'], 1);
@@ -111,13 +131,13 @@ test('ten curated recordings reproduce current Standard tuning on eight installe
         player.state.objectives.find((objective) => objective.id === 'hidden-relay').captured,
         true,
       );
-    } else if (descriptor.id === 'the-crossing-windows') {
+    } else if (!mistake && descriptor.id === 'the-crossing-windows') {
       assert.ok(
         events['boss.warning'] >= 2,
         'The lane threat must actually telegraph during playback.',
       );
       assert.equal(events['objective.captured'], 1);
-    } else if (descriptor.id === 'signal-garden-route') {
+    } else if (!mistake && descriptor.id === 'signal-garden-route') {
       assert.ok(events['signal.changed'] >= 2, 'The flight must enter and leave interference.');
       assert.ok(events['ability.used'] >= 1);
       assert.equal(events['objective.captured'], 1);
@@ -196,7 +216,7 @@ test('frozen browser variants preserve the exact reviewed trace and every non-en
 });
 
 test('catalogue admits only matching installed content and local bundled replay URLs', async () => {
-  assert.equal(resolveDemoCatalog(catalog, [entry]).length, 10);
+  assert.equal(resolveDemoCatalog(catalog, [entry]).length, 16);
   assert.equal(resolveDemoCatalog(catalog, []).length, 0);
   const changed = structuredClone(entry);
   changed.campaign.levels[0].rules.moveSpeed++;

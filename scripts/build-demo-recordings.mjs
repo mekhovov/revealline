@@ -161,7 +161,7 @@ export async function buildDemoRecordings() {
   ]);
   campaign.classRecipes = classRecipes;
   const entry = { campaign, classRecipes };
-  return clips.map((clip) => {
+  const reviewedWins = clips.map((clip) => {
     const level = applyGameplayTuning(
       campaign.levels[clip.level],
       resolveGameplayTuning('standard'),
@@ -222,6 +222,99 @@ export async function buildDemoRecordings() {
       metrics: { closedCuts, bends, events },
     };
   });
+  const classIds = classRecipes.map((recipe) => recipe.id);
+  // Failure scenes are deliberately occasional in the full rotation. The four
+  // previously uncovered late maps are included, plus two early mechanical
+  // examples; reviewed wins remain the majority of the catalogue.
+  const failureLevelIndexes = [2, 5, 7, 9, 10, 11];
+  const humanMistakes = failureLevelIndexes.map((index) => {
+    const authored = campaign.levels[index];
+    const id = `human-mistake-${authored.id}`,
+      level = applyGameplayTuning(authored, resolveGameplayTuning('standard')),
+      options = {
+        classId: classIds[index % classIds.length],
+        classRecipes,
+        seed: 101 + index * 17,
+        turnPolicy: 'immediate',
+      },
+      run = createRun(level, options),
+      recorder = createRecorder(level, options, 'authored-attract-mistake.v1'),
+      fullLoss = [2, 10].includes(index),
+      attempts = fullLoss ? 3 : 1;
+    let failures = 0,
+      bends = 0;
+    const events = {};
+    function input(command = {}, ticks = 1) {
+      for (let tick = 0; tick < ticks && !['won', 'lost'].includes(run.status); tick++) {
+        assert.ok(run.tick < 120 * 30, `${id}: mistake scene exceeded its duration budget.`);
+        const priorDirection = run.player.direction,
+          wasCutting = run.player.cutting;
+        stepRun(run, command, FIXED_DT);
+        recordInput(recorder, command);
+        if (wasCutting && priorDirection && run.player.direction !== priorDirection) bends++;
+        for (const event of run.events) {
+          events[event.type] = (events[event.type] ?? 0) + 1;
+          if (event.type === 'player.failed') failures++;
+        }
+      }
+    }
+    function moveSafeX(cell) {
+      const target = cell + 0.5,
+        sign = Math.sign(target - run.player.x),
+        direction = sign > 0 ? 'right' : 'left';
+      let ticks = 0;
+      while (
+        sign &&
+        (target - run.player.x) * sign > 0.02 &&
+        run.status === 'running' &&
+        !run.player.cutting
+      ) {
+        assert.ok(ticks++ < 1200, `${id}: safe repositioning stalled.`);
+        input({ direction });
+      }
+    }
+    for (let attempt = 0; attempt < attempts && run.status !== 'lost'; attempt++) {
+      while (run.status === 'respawning') input();
+      input({}, 30 + ((index + attempt) % 4) * 18);
+      moveSafeX([8, 24, 40][(index + attempt) % 3]);
+      let ticks = 0;
+      while (!run.player.cutting && run.status === 'running') {
+        assert.ok(ticks++ < 1200, `${id}: could not begin a mistake.`);
+        input({ direction: 'down' });
+      }
+      input({ direction: 'down' }, 18 + ((index + attempt) % 4) * 7);
+      if ((index + attempt) % 2) {
+        const across = run.player.x < level.width / 2 ? 'right' : 'left';
+        input({ direction: across }, 16);
+        input({ direction: across === 'right' ? 'left' : 'right' });
+      } else input({ direction: 'up' });
+      assert.equal(
+        failures,
+        attempt + 1,
+        `${id}: the authored mistake did not cost exactly one life.`,
+      );
+    }
+    if (!fullLoss) {
+      while (run.status === 'respawning') input();
+      input({}, 90 + (index % 3) * 30);
+      assert.equal(run.status, 'running');
+    } else assert.equal(run.status, 'lost', `${id}: the authored loss did not finish.`);
+    const replay = exportReplay(recorder, run);
+    assert.equal(verifyReplay(replay).match, true);
+    return {
+      replay,
+      descriptor: {
+        ...demoDescriptor(replay, entry, { id, provenance: 'authored' }),
+        replayURL: `./demo-data/${id}.replay.json`,
+        replayVariants: [],
+        tags: fullLoss
+          ? ['failure', 'loss', 'recovery', options.classId]
+          : ['failure', 'recovery', 'varied-route', options.classId],
+      },
+      metrics: { closedCuts: 0, bends, events, failures, fullLoss },
+    };
+  });
+  return [...reviewedWins, ...humanMistakes];
 }
 
 const fileOperations = { readFile, writeFile, mkdir, rename, unlink };
