@@ -1,5 +1,7 @@
 # Spatial sound implementation record
 
+> Current completion and remaining priorities: [audio plan reviewed 30 September 2026](../../spatial-audio-plan.md). The entries below are chronological evidence; older blockers and packaging policies may be superseded.
+
 ## Phases
 
 1. Baseline: isolated managed checkout of current main `321408a3cfd75ae230d760f39fb692503652601a`; preserve the original working directory. Inspected runtime actors, capture and terrain events, replay ownership, multiplayer hosts and existing audio transport. Acquired three official CC0 packs and preserved used originals/licenses.
