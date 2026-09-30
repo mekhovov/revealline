@@ -42,6 +42,40 @@
         "bytes": 3328,
         "sha256": "b66b67f6bb7f1e02beacbb2a880d780bf5eea7a88deb5911ff535fd314b38770"
       }
+    },
+    {
+      "id": "runner2088-game-mix-20260930",
+      "status": "pending",
+      "metadata": {
+        "path": "authoring/library/soundtrack-batches/runner2088-game-mix-20260930/metadata.json",
+        "bytes": 3219,
+        "sha256": "99f378d58c8131572b0dec883f2296588790acd553967c1a7fd28184dfff34d2"
+      },
+      "inventory": {
+        "path": "authoring/library/soundtrack-batches/runner2088-game-mix-20260930/inventory.json",
+        "bytes": 322,
+        "sha256": "16e36e2316a0b9685bcae326f03c30191823a86064f3e94d9b3aab08129ee6e8"
+      },
+      "rights": {
+        "path": "authoring/library/soundtrack-batches/runner2088-game-mix-20260930/rights.json",
+        "bytes": 1144,
+        "sha256": "77359165e6e2311a19e1aad3db282a81aafd1044780b3562bff38a4c97069008"
+      },
+      "technical": {
+        "path": "authoring/library/soundtrack-batches/runner2088-game-mix-20260930/technical.json",
+        "bytes": 692,
+        "sha256": "ea62ed76ddd898b00db1f24cfa012e1504c916aae93f74f58f1cdf80d07b470f"
+      },
+      "review": {
+        "path": "authoring/library/soundtrack-batches/runner2088-game-mix-20260930/review-dependency.json",
+        "bytes": 1485,
+        "sha256": "f8c64ab80fca96fb89d80a07f7d70b0fca6813ca45ebae49974a0a358e9c6465"
+      },
+      "delivery": {
+        "path": "authoring/library/soundtrack-batches/runner2088-game-mix-20260930/delivery.json",
+        "bytes": 408,
+        "sha256": "a6726a640610e408383146d554fa2a709eebf1be6939741d6fe342ea6bcc3915"
+      }
     }
   ]
 }
