@@ -315,6 +315,11 @@ export function createLessonEditor({
   }
   return {
     sync,
+    // Cached-page departure retires only the live preview. Keep guided fields,
+    // their unstaged values and the attempt for a deliberate Resume after return.
+    suspend() {
+      stop();
+    },
     dispose() {
       active = false;
       stop();
