@@ -4,61 +4,41 @@
   "ruleset": "xonix-core.v2",
   "level": {
     "version": "xonix-level.v1",
-    "id": "signal-08",
-    "revision": "gp4s-3ff00000000000003ff00000000000003ff0000000000000-f83d23849bda6546",
-    "name": "Last Light",
+    "id": "signal-10",
+    "revision": "gp4s-3ff00000000000003ff00000000000003ff0000000000000-3fad63fe98ab68e3",
+    "name": "Supply Circuit",
     "width": 48,
     "height": 36,
     "spawn": {
       "x": 24.5,
       "y": 0.5
     },
-    "walls": [
-      {
-        "x": 9,
-        "y": 11,
-        "w": 7,
-        "h": 2
-      }
-    ],
+    "walls": [],
     "enemies": [
       {
-        "id": "west",
+        "id": "roamer",
         "type": "bouncer",
-        "x": 11.5,
-        "y": 24.5,
-        "vx": 8.389785456136527,
-        "vy": -7.191244676688452,
+        "x": 36.5,
+        "y": 27.5,
+        "vx": -8.84,
+        "vy": 6.630000000000001,
         "radius": 0.3,
         "course": "field-course.v2"
       },
       {
-        "id": "east",
-        "type": "bouncer",
-        "x": 39.5,
-        "y": 29.5,
-        "vx": -8.466416551540007,
-        "vy": 7.100865494840006,
-        "radius": 0.3,
-        "course": "field-course.v2"
-      },
-      {
-        "id": "sentinel",
-        "type": "lane-boss",
-        "x": 34.5,
-        "y": 15.5,
-        "axis": "vertical",
-        "period": 6.512499999999999,
-        "warningSeconds": 2,
-        "activeSeconds": 1.2,
-        "laneWidth": 1.2
+        "id": "patrol",
+        "type": "border-patrol",
+        "x": 0.5,
+        "y": 35.5,
+        "speed": 8.16,
+        "clockwise": false
       }
     ],
     "objectives": [
       {
         "id": "relay",
         "x": 8.5,
-        "y": 29.5,
+        "y": 14.5,
         "required": true,
         "hidden": false
       }
@@ -69,10 +49,16 @@
         "x": 24.5,
         "y": 0.5,
         "radius": 2
+      },
+      {
+        "id": "west-pad",
+        "x": 0.5,
+        "y": 18.5,
+        "radius": 2
       }
     ],
     "goal": {
-      "coverage": 0.72
+      "coverage": 0.67
     },
     "rules": {
       "lives": 3,
@@ -83,26 +69,43 @@
       "playerRadius": 0.18,
       "pointsPerCell": 10,
       "objectivePoints": 500,
-      "timeMedals": [75, 129],
+      "timeMedals": [45, 81],
       "switchCooldownSeconds": 2,
       "timeLimitSeconds": 0,
       "cutTimeLimitSeconds": 0,
       "maxTrailCells": 0
     },
-    "signalZones": [],
+    "signalZones": [
+      {
+        "id": "west-emitter",
+        "x": 8,
+        "y": 12,
+        "w": 5,
+        "h": 5,
+        "speedFactor": 0.5,
+        "disableBoost": true,
+        "lockAbility": false
+      }
+    ],
     "hangars": [
       {
         "id": "home-hangar",
         "x": 24.5,
         "y": 0.5,
         "radius": 2
+      },
+      {
+        "id": "west-hangar",
+        "x": 0.5,
+        "y": 18.5,
+        "radius": 2
       }
     ]
   },
   "options": {
-    "seed": 220,
+    "seed": 254,
     "turnPolicy": "immediate",
-    "classId": "scout",
+    "classId": "carrier",
     "classRecipes": [
       {
         "id": "scout",
@@ -188,7 +191,7 @@
   },
   "segments": [
     {
-      "ticks": 84,
+      "ticks": 144,
       "input": {
         "direction": null,
         "boost": false,
@@ -199,7 +202,29 @@
       "releaseBefore": false
     },
     {
-      "ticks": 46,
+      "ticks": 285,
+      "input": {
+        "direction": "right",
+        "boost": false,
+        "action": false,
+        "pickup": false,
+        "switchClass": null
+      },
+      "releaseBefore": false
+    },
+    {
+      "ticks": 502,
+      "input": {
+        "direction": "left",
+        "boost": false,
+        "action": false,
+        "pickup": false,
+        "switchClass": null
+      },
+      "releaseBefore": false
+    },
+    {
+      "ticks": 32,
       "input": {
         "direction": "down",
         "boost": false,
@@ -212,7 +237,7 @@
     {
       "ticks": 16,
       "input": {
-        "direction": "left",
+        "direction": "right",
         "boost": false,
         "action": false,
         "pickup": false,
@@ -223,6 +248,28 @@
     {
       "ticks": 1,
       "input": {
+        "direction": "left",
+        "boost": false,
+        "action": false,
+        "pickup": false,
+        "switchClass": null
+      },
+      "releaseBefore": false
+    },
+    {
+      "ticks": 263,
+      "input": {
+        "direction": null,
+        "boost": false,
+        "action": false,
+        "pickup": false,
+        "switchClass": null
+      },
+      "releaseBefore": false
+    },
+    {
+      "ticks": 142,
+      "input": {
         "direction": "right",
         "boost": false,
         "action": false,
@@ -232,7 +279,7 @@
       "releaseBefore": false
     },
     {
-      "ticks": 203,
+      "ticks": 360,
       "input": {
         "direction": null,
         "boost": false,
@@ -244,37 +291,37 @@
     }
   ],
   "releaseAfter": false,
-  "ticks": 350,
+  "ticks": 1745,
   "summary": {
     "ruleset": "xonix-core.v2",
-    "levelId": "signal-08",
-    "revision": "gp4s-3ff00000000000003ff00000000000003ff0000000000000-f83d23849bda6546",
-    "seed": 220,
+    "levelId": "signal-10",
+    "revision": "gp4s-3ff00000000000003ff00000000000003ff0000000000000-3fad63fe98ab68e3",
+    "seed": 254,
     "turnPolicy": "immediate",
-    "classId": "scout",
-    "activeClassId": "scout",
+    "classId": "carrier",
+    "activeClassId": "carrier",
     "rosterHash": "roster-v1-e159e435",
     "classHistory": [
       {
-        "classId": "scout",
+        "classId": "carrier",
         "classRevision": "1",
-        "loadoutHash": "loadout-v1-aaa4aadd",
+        "loadoutHash": "loadout-v1-fec92391",
         "tick": 0
       }
     ],
     "switches": 0,
-    "failureCause": "self-contact",
+    "failureCause": "enemy-player",
     "classRevision": "1",
-    "loadoutHash": "loadout-v1-aaa4aadd",
+    "loadoutHash": "loadout-v1-fec92391",
     "status": "running",
     "won": false,
-    "tick": 350,
-    "time": 2.916666666666659,
-    "lives": 2,
+    "tick": 1745,
+    "time": 14.541666666666481,
+    "lives": 1,
     "score": 0,
     "coverage": 0,
     "claimedCount": 0,
-    "totalClaimable": 1550,
+    "totalClaimable": 1564,
     "medal": null,
     "objectives": {
       "captured": 0,
@@ -284,18 +331,18 @@
   },
   "checkpoint": {
     "algorithm": "fnv1a64-state-v2",
-    "hash": "e2c57ce8b125ac85",
+    "hash": "36696a5fee748851",
     "sections": {
-      "identity": "4745fba13b829021",
-      "configuration": "786bbd305565a787",
-      "board": "32f55c9537c9bc3b",
-      "player": "2195aa86ab4979fa",
+      "identity": "538d4656c280e8b1",
+      "configuration": "1dd0c330ea925187",
+      "board": "fdfff9d1d17aa722",
+      "player": "0d28213a65fc4331",
       "trail": "f0ca473df9efdcc8",
-      "enemies": "598506ece506548d",
-      "objectives": "07ea48484f26d13e",
-      "supplies": "e1b45854413ff5f8",
-      "ability": "f6b5aef539d929bb",
-      "clock": "83faae159a3c0c19",
+      "enemies": "5ed9536a0018241d",
+      "objectives": "d11fe845cc91952e",
+      "supplies": "c399bcd17d5eaa92",
+      "ability": "67ff0e167e744c7e",
+      "clock": "3ecbf676fc287e8c",
       "continuation": "a1e7286b42b404e7",
       "result": "5b9bc4ba528108e4"
     }
