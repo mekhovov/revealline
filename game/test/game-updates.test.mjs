@@ -56,6 +56,53 @@ test('only an explicit update carries selections between editions; music is neve
   );
 });
 
+test('updating a completed checkpoint retains later bookmarked modes and all-current intent', () => {
+  const withMode = {
+    groups: [...catalogue.groups, { id: 'team:bookmark', kind: 'gameplay' }],
+  };
+  const active = {
+    scope: old,
+    selection: ['base', 'team:bookmark', 'album:one', 'removed'],
+    allGameplay: false,
+  };
+  const saved = { selection: ['base'], allGameplay: false, complete: true };
+  assert.deepEqual(
+    restoredGameplaySelection(withMode, { active, saved, edition: current, updating: true }),
+    { selected: ['base', 'team:bookmark'], all: false },
+  );
+  assert.deepEqual(
+    restoredGameplaySelection(withMode, {
+      active: { ...active, allGameplay: true },
+      saved,
+      edition: current,
+      updating: true,
+    }),
+    { selected: ['base', 'team:bookmark'], all: true },
+  );
+  assert.deepEqual(
+    restoredGameplaySelection(withMode, { active, saved, edition: current }),
+    { selected: ['base'], all: false },
+    'Opening another download page does not merge old installation choices.',
+  );
+});
+
+test('unfinished update checkpoints preserve deliberate deselection instead of merging installed modes', () => {
+  const active = {
+    scope: old,
+    selection: ['base', 'new-chapter'],
+    allGameplay: true,
+  };
+  const saved = {
+    selection: ['base', 'extras:demo', 'album:one'],
+    allGameplay: false,
+    complete: false,
+  };
+  assert.deepEqual(
+    restoredGameplaySelection(catalogue, { active, saved, edition: current, updating: true }),
+    { selected: ['base', 'extras:demo'], all: false },
+  );
+});
+
 test('update entry is the stable app, with an allowlisted same-edition return', () => {
   const game = new URL(old + 'game/couch/relay-rescue.html');
   const update = gameUpdatesURL(game);

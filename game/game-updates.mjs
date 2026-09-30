@@ -78,20 +78,31 @@ export function updateReturnURL(
 export function restoredGameplaySelection(catalogue, { saved, active, edition, updating = false }) {
   const installed = updating || active?.scope === edition ? active : null;
   const retained = saved || installed;
+  // Preparing a bookmarked mode extends the active installation without
+  // rewriting its completed bulk-download checkpoint. Keep both selections
+  // during updates; an unfinished checkpoint still owns its explicit choices.
+  const mergeInstalled = updating && saved?.complete === true && installed;
   const available = new Set(catalogue.groups.filter((g) => g.kind === 'gameplay').map((g) => g.id));
-  const selected = (retained?.selection || []).filter((id) => available.has(id));
+  const selected = [
+    ...new Set([
+      ...(retained?.selection || []),
+      ...(mergeInstalled ? installed.selection || [] : []),
+    ]),
+  ].filter((id) => available.has(id));
   const all =
-    typeof saved?.allGameplay === 'boolean'
-      ? saved.allGameplay
-      : installed?.allGameplay === true ||
-        (selected.length > 0 &&
-          catalogue.groups
-            .filter(
-              (g) =>
-                g.kind === 'gameplay' &&
-                g.current !== false &&
-                !['archive', 'tooling'].includes(g.category),
-            )
-            .every((g) => selected.includes(g.id)));
+    mergeInstalled && installed.allGameplay === true
+      ? true
+      : typeof saved?.allGameplay === 'boolean'
+        ? saved.allGameplay
+        : installed?.allGameplay === true ||
+          (selected.length > 0 &&
+            catalogue.groups
+              .filter(
+                (g) =>
+                  g.kind === 'gameplay' &&
+                  g.current !== false &&
+                  !['archive', 'tooling'].includes(g.category),
+              )
+              .every((g) => selected.includes(g.id)));
   return { selected, all };
 }
