@@ -43,6 +43,18 @@ hold an independently ready change.** Deferred broad checks are recorded in
 [issue #813](https://github.com/mekhovov/revealline/issues/813); waived or skipped
 suites remain unverified. No second publisher or replacement historical tag is needed.
 
+
+The six-track admission is preserved in draft
+[game PR #830](https://github.com/mekhovov/revealline/pull/830), assigned to
+milestone **v0.150.0 — Unified native experience**. Both soundtrack commits were
+rebased byte-for-byte onto main `88f530402586da7937af1ff4cea09c96b9b40a23`;
+the subsequent `7c11e68180909b07d73d9499bb5970186773af24` update changes separate
+Steam Deck checks and is included by the final reconciliation. The focused
+catalogue, compiler, archive, source and player suites pass **157/157**, with
+no skipped tests. Scoped ESLint, pinned Prettier and diff checks also pass.
+This is queued work, not a new public game release. The release owner has the
+exact production-baseline hold described below.
+
 ### Completed and preserved
 
 - Canonical archive: **260 recordings, 196 public and 64 review-only**. Search,
