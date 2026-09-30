@@ -214,7 +214,7 @@ for (const action of [
     await settle(() => decoding > 0);
     const before = snapshot(h);
     activateTitle(h, 'shell-featured');
-    assert.equal(h.$('shell-flight-cancel').hidden, false);
+    assert.equal(h.$('shell-flight-cancel').hidden, true);
     assert.equal(h.doc.activeElement.id, 'shell-featured');
     assert.equal(h.$('shell-featured').getAttribute('aria-busy'), 'true');
     assert.equal(h.$('shell-flight-status').closest('dialog').id, 'shell-home');
@@ -267,7 +267,7 @@ test('held Confirm stays on Start and cannot turn into Stop loading', async (t) 
   activateTitle(h, 'shell-featured');
   assert.equal(h.doc.activeElement.id, 'shell-featured');
   assert.equal(h.$('shell-featured').getAttribute('aria-busy'), 'true');
-  assert.equal(h.$('shell-flight-cancel').hidden, false);
+  assert.equal(h.$('shell-flight-cancel').hidden, true);
 
   // Model repeat events from one held keyboard/controller activation. The
   // stable action remains the owner and no replacement launch is created.
@@ -275,7 +275,7 @@ test('held Confirm stays on Start and cannot turn into Stop loading', async (t) 
   h.$('shell-featured').click();
   assert.equal(h.doc.activeElement.id, 'shell-featured');
   assert.equal(h.$('shell-featured').getAttribute('aria-busy'), 'true');
-  assert.equal(h.$('shell-flight-cancel').hidden, false);
+  assert.equal(h.$('shell-flight-cancel').hidden, true);
 
   gate.resolve();
   await settle(() => h.doc.body.dataset.flightState === 'running');
@@ -321,7 +321,7 @@ for (const action of ['complete', 'cancel', 'escape', 'new-save', 'missions', 'b
         before = snapshot(h);
       activateTitle(h, 'shell-continue');
       await settle(() => decodes >= 2);
-      assert.equal(h.$('shell-flight-cancel').hidden, false);
+      assert.equal(h.$('shell-flight-cancel').hidden, true);
       assert.equal(h.doc.activeElement.id, 'shell-continue');
       assert.equal(h.$('shell-continue').getAttribute('aria-busy'), 'true');
       assert.equal(h.$('shell-home').open, true);

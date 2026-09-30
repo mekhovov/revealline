@@ -122,6 +122,50 @@ code {
   outline: 3px solid #ffd377;
   outline-offset: 2px;
 }
+.creator-guide-document-dialog {
+  width: min(70rem, calc(100vw - 2rem));
+  max-height: calc(100svh - 2rem);
+  color: inherit;
+  background: #142c33;
+  border: 2px solid #b9e4ef;
+  padding: 1rem;
+}
+.creator-guide-document-dialog[open] {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+.creator-guide-document-dialog::backdrop {
+  background: rgb(0 0 0 / 75%);
+}
+.creator-guide-document-dialog h2,
+.creator-guide-document-dialog p {
+  margin: 0;
+}
+.creator-guide-document-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+#creator-guide-document-region {
+  min-height: 3rem;
+  max-height: min(60svh, 40rem);
+  overflow: auto;
+  overscroll-behavior: contain;
+  border: 2px solid transparent;
+  padding: 0.5rem;
+}
+#creator-guide-document-region pre {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  font: inherit;
+  margin: 0;
+}
+#creator-guide-document-region[data-controller-reading='true'],
+#creator-guide-document-region:focus-visible {
+  outline: 3px solid #ffd377;
+  outline-offset: -3px;
+}
 footer {
   color: #b4c7ca;
   font-size: 0.9rem;
@@ -144,6 +188,9 @@ footer {
   .creator-guide-reading-tools {
     display: none;
   }
+  .creator-guide-document-dialog {
+    display: none;
+  }
   .creator-guide-reading-region {
     max-height: none;
     overflow: visible;
@@ -152,6 +199,10 @@ footer {
 @media (forced-colors: active) {
   .creator-guide-reading-region[data-controller-reading='true'],
   .creator-guide-reading-region:focus-visible {
+    outline-color: Highlight;
+  }
+  #creator-guide-document-region[data-controller-reading='true'],
+  #creator-guide-document-region:focus-visible {
     outline-color: Highlight;
   }
 }
