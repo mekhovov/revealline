@@ -14,13 +14,17 @@ SOURCE = '091936e27c3b9f1c061081ca93827014a927d963'
 PREFIX = 'authoring/library/reserve-illustrations-catalog/'
 INVENTORY = 'authoring/library/reserve-illustrations-wave-10/provenance/selected-inventory-40.json'
 THEMES = {'fpv': 'FPV Front', 'ukraine': 'Ukraine Atlas', 'retro': '1994 Forever', 'coupa': 'Spend Network'}
-LOCAL = {'index.html': 'text/html', 'catalog.css': 'text/css', 'catalog.mjs': 'text/javascript', 'manifest.json': 'application/json', 'README.md': 'text/plain'}
+LOCAL = {'index.html': 'text/html', 'catalog.css': 'text/css', 'catalog.mjs': 'text/javascript', 'presentation.mjs': 'text/javascript', 'sources.mjs': 'text/javascript', 'manifest.json': 'application/json', 'README.md': 'text/plain'}
 # Reviewed runtime closure for this catalog's launcher and controller reader.
 # These are application code/fonts and one compact identity icon: original art comes exclusively
 # from the pinned Git routes below. New imports require an explicit review.
 CONTROLLER_FILES = (
+    'authoring/design-atlas/reveal-audit-viewer.mjs',
+    'authoring/production/model.mjs',
+    'authoring/production/preview.mjs',
     'game/controller-bindings.mjs',
     'game/controller-boost.mjs',
+    'game/couch/controller-profiles.mjs',
     'game/data-json.mjs',
     'game/i18n/bootstrap.mjs',
     'game/i18n/catalogs.mjs',
