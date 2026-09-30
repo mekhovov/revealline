@@ -42,7 +42,7 @@ test('actual Solo host captures a raw radio axis, saves separately, flies, and p
   pad.axes[0] = 0;
   page.frame();
   page.frame();
-  page.$('settings-dialog').querySelector('button[aria-label="Close settings"]').click();
+  page.$('settings-dialog').querySelector('[data-close="settings-dialog"]').click();
   page.$('start-button').click();
   await settle(
     () => page.doc.body.dataset.flightState === 'running',
