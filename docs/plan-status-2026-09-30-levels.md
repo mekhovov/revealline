@@ -11,8 +11,8 @@ donor commits remain intact; no shared checkout, owner index or historical
 release was rewritten.
 
 The subsequent main change adds 21 lines only in the Legacy mission-library
-Ready handoff. It does not overlap this batch's source paths. Final integration
-must include that fix; the PR head and base record the exact final rebase.
+Ready handoff. The final rebase onto `451b82dc13` completed without conflicts and
+was pushed. Its 17 runtime/evidence files are unchanged by that rebase.
 
 The rebase exposed a real missing integration: main still has **v37**, not
 Cooling loop **v38**, and lacks the completed pressure-corridor route proofs.
@@ -51,6 +51,10 @@ journey has run at the eventual PR head.
   unchanged; no golden value was rewritten to obtain a pass.
 - Selected loader/history/Studio cohort: **11 passed**, **96 explicit
   name-filter skips**, zero failures, 24.11 seconds. This is not a full-suite run.
+- After the final rebase onto #816: **13 handoff/return-intent tests passed**;
+  the selected v38 archive case also passed, with **15 explicit name-filter
+  skips**. Independent review found no interaction with the added Legacy-only
+  Ready behavior. This small rerun does not replace the recorded wider checks.
 - Changed-file ESLint, Prettier and whitespace checks pass.
 - Independent read-only review found all 17 restored source/evidence files
   byte-identical to the donor and no missing registration or unrelated overwrite.
@@ -109,15 +113,15 @@ No independent version or duplicate publisher is created by this batch.
 
 At the bounded morning snapshot:
 
-| Item                   | State / next action                                                                            |
-| ---------------------- | ---------------------------------------------------------------------------------------------- |
-| #816 Ready handoff     | Merged as `451b82dc13`; actual public startup confirmation remains separate.                   |
-| #815 Creator Guide     | Open draft on current main; owner finishes its input/reading checks.                           |
-| #817 Spatial audio     | New owner PR on current main, targeted to v0.150.0; source and integrity report are pushed.    |
-| #818 Offline readiness | Open release input for v0.150.0; owned independently.                                          |
-| #819 Radio main menu   | Open verification input for v0.150.0; owned independently.                                     |
-| Levels v38 restoration | Rebased and focused checks passed; push and reviewed release-input PR are the current handoff. |
-| Pause rebase           | Active owner reconciliation, not an orphan patch or permission for this lane to edit it.       |
+| Item                   | State / next action                                                                                           |
+| ---------------------- | ------------------------------------------------------------------------------------------------------------- |
+| #816 Ready handoff     | Merged as `451b82dc13`; actual public startup confirmation remains separate.                                  |
+| #815 Creator Guide     | Open draft on current main; owner finishes its input/reading checks.                                          |
+| #817 Spatial audio     | New owner PR on current main, targeted to v0.150.0; source and integrity report are pushed.                   |
+| #818 Offline readiness | Open release input for v0.150.0; owned independently.                                                         |
+| #819 Radio main menu   | Open verification input for v0.150.0; owned independently.                                                    |
+| Levels v38 restoration | Rebased onto #816, focused checks passed and source pushed; reviewed release-input PR is the current handoff. |
+| Pause rebase           | Active owner reconciliation, not an orphan patch or permission for this lane to edit it.                      |
 
 Main's Pages workflow succeeded, but successful deployment alone does not prove
 startup. The Company candidate still failed its budget at **67,792,025 bytes /
