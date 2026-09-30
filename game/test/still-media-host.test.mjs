@@ -137,6 +137,21 @@ async function setup(t, options = {}) {
     $: (id) => doc.getElementById(id),
   };
 }
+test('Close before the first Open keeps focus on the enabled opener without opening storage', async (t) => {
+  const h = await setup(t),
+    opener = h.$('still-host-open');
+  h.$('still-host-close').focus();
+  h.$('still-host-close').click();
+  assert.equal(h.doc.activeElement, opener, 'Close restores its own available next action.');
+  assert.equal(opener.disabled, false);
+  assert.equal(opener.isConnected, true);
+  assert.equal(h.host.panel, null);
+  assert.match(h.$('still-host-status').textContent, /Local connections closed/);
+  await new Promise(setImmediate);
+  assert.equal(h.doc.activeElement, opener, 'Settled cleanup does not discard focus.');
+  assert.equal(h.memory.openCount, 0);
+  assert.equal(h.managers.length, 0);
+});
 test('actual authoring entry opens no DB until explicit activation and shares one real manager for audio and media', async (t) => {
   const h = await setup(t);
   assert.equal(h.memory.openCount, 0);
@@ -154,15 +169,38 @@ test('actual authoring entry opens no DB until explicit activation and shares on
   assert.equal(h.host.panel.snapshot().ready, true);
   assert.equal(await h.$('still-media-preview').onclick(), true);
   assert.equal(await h.$('still-media-save').onclick(), true);
-  h.host.panel.close();
-  assert.equal(h.doc.activeElement, h.$('still-host-open'));
-  const stills = createStillMediaStore({ managedStore: h.managers[0], decodeImage });
-  assert.equal((await stills.read()).document.library.assets.length, 1);
-  h.$('still-host-close').onclick();
+  const stills = createStillMediaStore({ managedStore: h.managers[0], decodeImage }),
+    before = await stills.read(),
+    hash = before.document.library.assets[0].sha256,
+    original = Buffer.from(await (await stills.readBlob(hash)).arrayBuffer()),
+    dialog = h.host.panel.dialog,
+    opener = h.$('still-host-open');
+  assert.equal(before.document.library.assets.length, 1);
+  h.$('still-media-show-saved').focus();
+  assert.equal(await h.$('still-media-show-saved').onclick(), true);
+  assert.deepEqual(await stills.read(), before, 'Preview does not save another revision.');
+  dialog.emit('cancel');
+  assert.equal(h.doc.activeElement, opener, 'Escape restores Open before the host Close action.');
+  h.$('still-host-close').focus();
+  h.$('still-host-close').click();
+  assert.equal(h.doc.activeElement, opener, 'Host cleanup immediately restores enabled Open.');
+  assert.equal(opener.disabled, false);
+  assert.equal(opener.isConnected, true);
   assert.equal(h.host.panel, null);
+  assert.equal(dialog.isConnected, false);
   await assert.rejects(h.managers[0].readDomain('audio'), /closed/);
   await new Promise(setImmediate);
+  assert.equal(h.doc.activeElement, opener, 'Storage cleanup settling preserves focus.');
   assert.ok(h.memory.closed > 0);
+  const reopened = createManagedMediaStore({ storyMedia: true, indexedDB: h.memory.indexedDB });
+  t.after(() => reopened.close());
+  const restored = createStillMediaStore({ managedStore: reopened, decodeImage });
+  assert.deepEqual(
+    await restored.read(),
+    before,
+    'Close preserves records, revisions and generation.',
+  );
+  assert.deepEqual(Buffer.from(await (await restored.readBlob(hash)).arrayBuffer()), original);
 });
 function modelNativeDisabledFocus(h, opener) {
   let disabled = opener.disabled;
@@ -914,6 +952,12 @@ test('opening announces the held catalogue read and Close fences its late failur
   assert.match(h.$('still-host-status').textContent, /Opening the picture workshop/);
   assert.equal(h.$('still-host-close').disabled, false);
   h.$('still-host-close').onclick();
+  assert.equal(
+    h.doc.activeElement,
+    h.$('still-host-open'),
+    'Close returns focus before late work settles.',
+  );
+  assert.equal(h.$('still-host-open').disabled, false);
   h.$('still-host-close').focus(); // Deliberate navigation after Close restored its own default.
   const closed = h.$('still-host-status').textContent;
   pending.reject(new Error('Late catalogue failure'));
