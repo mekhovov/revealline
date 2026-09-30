@@ -763,6 +763,20 @@ test('packaged offline builds generate scoped metadata, generated brand icons, c
     path.join(root, 'game/playground/index.html'),
     '<html><head><title>Nested</title><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"></head><body>Preview</body></html>',
   );
+  await fs.mkdir(path.join(root, 'game/ui'));
+  await fs.writeFile(
+    path.join(root, 'game/ui/install-entry.mjs'),
+    'export const installOwner = true;',
+  );
+  await fs.mkdir(path.join(root, 'game/communities/coupa'), { recursive: true });
+  await fs.writeFile(
+    path.join(root, 'game/communities/coupa/index.html'),
+    '<!doctype html><html data-community-entry="loading"><head><script type="module" src="../entry.mjs"></script></head><body>Opening community</body></html>',
+  );
+  await fs.writeFile(
+    path.join(root, 'game/communities/entry.mjs'),
+    'export const loadSharedHost = true;',
+  );
   // Canonical sources remain in the distribution; the complete runtime catalog
   // is the sole copy needed by a player preparing offline play.
   await fs.mkdir(path.join(root, 'game/i18n'));
@@ -778,8 +792,13 @@ test('packaged offline builds generate scoped metadata, generated brand icons, c
   const inspected = await inspectBuildProject({ root });
   const actualManifestBytes = await fs.readFile(path.join(out, 'manifest.json'));
   assert.deepEqual(inspected.manifest, JSON.parse(actualManifestBytes));
+  assert.equal(actualManifestBytes.toString(), `${JSON.stringify(inspected.manifest)}\n`);
   assert.equal(inspected.manifestDescriptor.sha256, hash(actualManifestBytes));
   const cache = JSON.parse(await fs.readFile(path.join(out, 'offline-cache.json'), 'utf8'));
+  assert.equal(
+    await fs.readFile(path.join(out, 'offline-cache.json'), 'utf8'),
+    `${JSON.stringify(cache)}\n`,
+  );
   const manifest = JSON.parse(await fs.readFile(path.join(out, 'manifest.webmanifest'), 'utf8'));
   assert.equal(manifest.start_url, './game/');
   assert.equal(manifest.scope, './');
@@ -815,6 +834,22 @@ test('packaged offline builds generate scoped metadata, generated brand icons, c
   assert.match(entry, new RegExp(cache.buildId));
   const nested = await fs.readFile(path.join(out, 'game/playground/index.html'), 'utf8');
   assert.match(nested, /\.\.\/\.\.\/manifest.webmanifest/);
+  for (const page of [entry, nested])
+    assert.equal(
+      [...page.matchAll(/<script\b[^>]*src="[^"]*\/ui\/install-entry\.mjs"/g)].length,
+      1,
+    );
+  const community = await fs.readFile(path.join(out, 'game/communities/coupa/index.html'), 'utf8');
+  assert.doesNotMatch(community, /install-entry\.mjs/);
+  assert.deepEqual(
+    [...community.matchAll(/<script\b[^>]*src="([^"]+)"/g)].map((match) => match[1]),
+    ['../entry.mjs'],
+    'Only the shared-host loader runs before document replacement; install listeners belong to the fetched main host.',
+  );
+  assert.match(community, /\.\.\/\.\.\/\.\.\/manifest.webmanifest/);
+  assert.match(community, /\.\.\/\.\.\/\.\.\/service-worker.js/);
+  assert.ok(cache.files.some((file) => file.path === 'game/communities/coupa/index.html'));
+  assert.ok(cache.files.some((file) => file.path === 'game/communities/entry.mjs'));
   // Both missing metadata and an already prepared page produce one declaration.
   for (const page of [entry, nested]) {
     for (const [name, content] of [
@@ -1064,6 +1099,11 @@ async function optionalPackFixture(t) {
 }
 test('optional indexed pack keeps exact shipped and ZIP bytes while core cache excludes only the declared source', async (t) => {
   const { root, out, directory } = await optionalPackFixture(t);
+  await fs.mkdir(path.join(root, 'game/communities/coupa'), { recursive: true });
+  await fs.writeFile(
+    path.join(root, 'game/communities/coupa/index.html'),
+    '<!doctype html><html data-community-entry="loading"><head></head><body>Opening community</body></html>',
+  );
   const result = await buildProject({ root, out });
   const again = await buildProject({ root, out: path.join(directory, 'same') });
   assert.equal(result.sha256, again.sha256);
@@ -1083,6 +1123,11 @@ test('optional indexed pack keeps exact shipped and ZIP bytes while core cache e
   ]);
   const page = await fs.readFile(path.join(out, 'game/index.html'), 'utf8');
   assert.match(page, /optionalPacks/);
+  const shell = await fs.readFile(path.join(out, 'game/communities/coupa/index.html'), 'utf8');
+  assert.doesNotMatch(shell, /optionalPacks|optionalArtwork/);
+  assert.match(shell, /revealline-offline/);
+  assert.match(shell, new RegExp(cache.buildId));
+  assert.ok(cache.files.some((file) => file.path === 'game/communities/coupa/index.html'));
   const zip = await fs.readFile(path.join(out, 'distribution.zip'));
   assert.ok(zip.includes(original), 'Stored ZIP entry retains exact optional pack payload.');
   const omitted = manifest.files

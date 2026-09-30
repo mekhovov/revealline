@@ -1,6 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { selectOfflineCore } from './offline-core-closure.mjs';
+import { COMMUNITY_ROUTES } from '../game/community-routes.mjs';
 
 const entries = (values) =>
   Object.entries(values).map(([name, value]) => ({
@@ -80,6 +81,56 @@ test('catalogue references never pull selected chapter or soundtrack bytes back 
   assert(result.retained.has('game/content/catalog.json'));
   for (const name of excluded) assert(!result.retained.has(name));
   assert.equal(result.optional.length, 0);
+});
+
+test('public community entries own their shared loader offline without opting into creator tools or company artwork', () => {
+  const pages = COMMUNITY_ROUTES.map(({ slug }) => `game/communities/${slug}/index.html`);
+  const files = entries({
+    'game/index.html': '<script src="boot.mjs"></script>',
+    'game/boot.mjs': 'import "./app.mjs";',
+    'game/app.mjs': 'export const ready = true;',
+    'game/communities/index.html':
+      '<link rel="stylesheet" href="directory.css"><a href="coupa/">Coupa</a>',
+    ...Object.fromEntries(
+      pages.map((name) => [name, '<script type="module" src="../entry.mjs"></script>']),
+    ),
+    'game/communities/entry.mjs':
+      'import "../community-routes.mjs"; const host = new URL("../index.html", import.meta.url);',
+    'game/community-routes.mjs': 'export const shared = "index.html";',
+    'game/communities/directory.css': 'body { color: white; }',
+    'game/community/index.html': '<script src="redirect.mjs"></script>',
+    'game/community/redirect.mjs':
+      'const destination = new URL("../communities/index.html", import.meta.url);',
+    'game/community/store.html': '<script src="page.mjs"></script>',
+    'game/community/page.mjs': 'export const marketplace = true;',
+    'game/community/moderation.html': '<script src="moderation-page.mjs"></script>',
+    'game/community/moderation-page.mjs': 'export const moderation = true;',
+    'game/communities/drafts/notes.html': '<p>Not a public entry</p>',
+    'game/editions/assets/company.png': 'original artwork',
+  });
+  const result = selectOfflineCore(files, new Set(['game/editions/assets/company.png']));
+  for (const name of [
+    'game/index.html',
+    'game/communities/index.html',
+    ...pages,
+    'game/communities/entry.mjs',
+    'game/community-routes.mjs',
+    'game/communities/directory.css',
+    'game/community/index.html',
+    'game/community/redirect.mjs',
+  ])
+    assert.ok(result.retained.has(name), name);
+  assert.ok(pages.includes(result.references.get('game/communities/entry.mjs')));
+  for (const name of [
+    'game/community/store.html',
+    'game/community/page.mjs',
+    'game/community/moderation.html',
+    'game/community/moderation-page.mjs',
+    'game/communities/drafts/notes.html',
+  ])
+    assert.ok(result.optional.includes(name), name);
+  assert.ok(!result.retained.has('game/editions/assets/company.png'));
+  assert.ok(!result.optional.includes('game/editions/assets/company.png'));
 });
 
 test('decorative menu rasters and the icon source stay optional without dropping runtime or install icons', () => {

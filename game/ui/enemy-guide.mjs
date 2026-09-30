@@ -12,6 +12,7 @@ import { prepareScenario } from '../imports.mjs';
 import { createActorPresentation, drawPresentedActor } from './actor-presentation.mjs';
 import { createEnemyBodyAssets } from './enemy-body-assets.mjs';
 import { attachEnemyWorkshopReturnHost } from './enemy-workshop-return.mjs';
+import { gameDocumentURL } from '../community-routes.mjs';
 import { observePreviewReadiness } from '../studio/preview-readiness.mjs';
 
 const HANDOFF = 'revealline.playground.current';
@@ -181,7 +182,7 @@ export function attachEnemyGuide({
     bridge = attachEnemyWorkshopReturnHost({
       window: host,
       frame,
-      gameURL: new URL('.', host.location.href).href,
+      gameURL: new URL('.', gameDocumentURL(host.location.href)).href,
       returnTo: 'enemy-guide',
       onReturn: returnFromPractice,
     });
