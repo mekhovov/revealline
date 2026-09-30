@@ -7,7 +7,11 @@ import { createCouchMusicLibrary } from '../couch/couch-music-library.mjs';
 import { createCouchMusicSession } from '../couch/couch-music-session.mjs';
 import { prepareSoundtrackLibrary } from '../soundtrack-bundle.mjs';
 import { emptySoundtrackLibrary, upgradeSoundtrackLibrary } from '../soundtrack.mjs';
-import { resolveOnlineSoundtrackCatalogue } from '../online-soundtrack-catalogue.mjs';
+import {
+  fetchOnlineSoundtrackCatalogue,
+  isResolvedOnlineSoundtrackTrack,
+  resolveOnlineSoundtrackCatalogue,
+} from '../online-soundtrack-catalogue.mjs';
 import {
   PUBLIC_SOUNDTRACK_STYLE_IDS,
   localGenresForPublicStyles,
@@ -341,4 +345,81 @@ test('a changed Recording policy rearms the saved exact choice rather than a pri
   assert.equal(h.player.snapshot().pendingPublicStyles, true);
   assert.equal(await h.player.play(), false);
   assert.equal(h.player.snapshot().track, null);
+});
+
+test('saved styles skip unlicensed archive recordings while retaining licensed matches', async (t) => {
+  const mixed = publicCatalogueFixture();
+  mixed.tracks[0].tags = ['ФПВ'];
+  mixed.tracks[1].license = 'Unknown — uploader-confirmed rights';
+  mixed.tracks[1].licenseURL = null;
+  const h = setup(t, { fetch: async () => publicCatalogueResponse(mixed) });
+  h.player.setLibrary(library, { publicStyles: ['fpv'] });
+  assert.equal(await h.player.play(), true);
+  assert.deepEqual(h.player.snapshot().queue, [`online.${mixed.tracks[0].audio.sha256}`]);
+  assert.equal(h.player.snapshot().track.title, 'Synth');
+  assert.equal(h.requests(), 1);
+});
+
+for (const state of ['removed', 'unknown', 'missing licence', 'review-only']) {
+  test(`a canonical refresh blocks a stale ${state} remote recording from resuming`, async (t) => {
+    const source = publicCatalogueFixture();
+    const before = await fetchOnlineSoundtrackCatalogue({
+      fetch: async () => publicCatalogueResponse(source),
+    });
+    const stale = before.tracks[1];
+    const h = setup(t);
+    assert.equal(await h.player.playRemotePlaylist([stale], { allowLibraryFallback: false }), true);
+    h.player.pause();
+    const plays = h.media.plays;
+    const fresh = structuredClone(source);
+    if (state === 'removed') {
+      fresh.tracks.splice(1, 1);
+      fresh.counts.declaredTracks--;
+      fresh.counts.uniqueRecordings--;
+      fresh.counts.audioBytes -= stale.bytes;
+    } else if (state === 'unknown') {
+      fresh.tracks[1].license = 'Unknown — uploader-confirmed rights';
+      fresh.tracks[1].licenseURL = null;
+    } else if (state === 'missing licence') delete fresh.tracks[1].licenseURL;
+    else fresh.tracks[1].visibility = 'review-only';
+    await fetchOnlineSoundtrackCatalogue({ fetch: async () => publicCatalogueResponse(fresh) });
+    assert.equal(isResolvedOnlineSoundtrackTrack(stale), false);
+    await assert.rejects(h.player.playRemotePlaylist([stale]), /resolved project catalogue/);
+    assert.equal(await h.player.play(), false);
+    assert.equal(h.media.plays, plays, 'stale media must not receive another play request');
+    assert.equal(h.player.snapshot().playing, false);
+  });
+}
+
+test('Next skips a freshly excluded remote recording and retains a licensed queue member', async (t) => {
+  const source = publicCatalogueFixture();
+  const before = await fetchOnlineSoundtrackCatalogue({
+    fetch: async () => publicCatalogueResponse(source),
+  });
+  const h = setup(t);
+  await h.player.playRemotePlaylist(before.tracks.slice(0, 2), { allowLibraryFallback: false });
+  source.tracks[1].visibility = 'review-only';
+  await fetchOnlineSoundtrackCatalogue({ fetch: async () => publicCatalogueResponse(source) });
+  await h.player.next();
+  assert.equal(h.player.snapshot().track.id, before.tracks[0].id);
+  assert.equal(h.media.src, before.tracks[0].url);
+  assert.equal(h.player.snapshot().playing, true);
+});
+
+test('independent parsing and failed catalogue refresh cannot revoke a fetched licensed recording', async (t) => {
+  const before = await fetchOnlineSoundtrackCatalogue({
+    fetch: async () => publicCatalogueResponse(),
+  });
+  const source = publicCatalogueFixture();
+  source.tracks[1].licenseURL = null;
+  resolveOnlineSoundtrackCatalogue(source);
+  assert.equal(isResolvedOnlineSoundtrackTrack(before.tracks[1]), true);
+  source.counts.audioBytes++;
+  await assert.rejects(
+    fetchOnlineSoundtrackCatalogue({ fetch: async () => publicCatalogueResponse(source) }),
+    /counts differ/,
+  );
+  assert.equal(isResolvedOnlineSoundtrackTrack(before.tracks[1]), true);
+  const h = setup(t);
+  assert.equal(await h.player.playRemotePlaylist([before.tracks[1]]), true);
 });

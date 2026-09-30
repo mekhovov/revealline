@@ -1,6 +1,6 @@
 # RevealLine — consolidated soundtrack master plan
 
-Updated 30 September 2026. This is the durable source of truth for all soundtrack
+Updated 1 October 2026. This is the durable source of truth for all soundtrack
 work. It replaces the separate conversational plans without removing completed,
 blocked, rejected or deferred requirements. The user approved implementation of
 this consolidated plan.
@@ -27,7 +27,73 @@ passing transport test is insufficient.
 Keep historical immutable files and failed/partial evidence. Never manufacture
 reviewer names, listening approval or device results.
 
-## Current execution checkpoint — 30 September 2026, evening
+## Current priority — licence separation, 1 October 2026
+
+The user's latest direction supersedes main-archive availability of recordings
+labelled unknown, including uploader-confirmed entries. It does not change the
+licences themselves or turn a source link into licence evidence. Previous Synth/
+Metal priorities remain queued behind this scoped separation.
+
+### Phase 1 — remove unlicensed recordings from the main experience
+
+**In progress; not yet deployed.** Audit of canonical source `9cc5274` finds
+**73 unknown-licence recordings / 207,941,311 audio bytes**, all currently in the
+normal public list. There are no additional missing-licence rows in this snapshot.
+The resulting licensed catalogue will contain **188 recordings: 123 normal-public
+and 65 existing review-only**. The trusted game catalogue's 77 records are unaffected.
+The [pre-change preservation inventory](verification/soundtrack-unlicensed-exclusion-20261001.json)
+binds every excluded ID to its exact audio hash, size, source and unchanged licence.
+
+- Exclude unknown/missing licence records from the deployed catalogue, public
+  search/playlists, direct track selection and review views, not only default shuffle.
+- Exclude their MP3s from the main Pages payload. Project legacy metadata using
+  canonical identities/hashes: seven older TRENCH ORDERLY entries still have
+  superseded CC0 labels and must not bypass the corrected unknown status.
+- Preserve licensed legacy installer endpoints, every licensed recording identity,
+  local uploads and existing saved player data. The game filters excluded remote
+  entries without rejecting the valid remainder of a mixed catalogue.
+- Retain source/history and existing immutable GitHub Release assets for phase 2.
+  This is removal from the main site and current game, not a purge of public Git
+  history or immutable releases. A new unknown-licence intake must not silently
+  publish audio back into the main archive.
+- Create scoped archive and game PRs with regression coverage and independent
+  review, then record actual deployment/public acceptance separately.
+
+**Estimate:** one working day for implementation, regression checks and both PRs;
+CI and the sole game publisher's queue are additional. The decisive checks are
+no excluded rows in the deployed JSON, no excluded Pages objects or legacy alias
+bypass, safe game filtering, and intact licensed playback/installer metadata.
+
+### Phase 2 — separate FPV archive and explicitly added music sources
+
+**Next, after phase-1 PRs are prepared.** The requested destination is
+`mekhovov/revealline-soundtracks-fpv` with Pages at
+`https://mekhovov.github.io/revealline-soundtracks-fpv/`. The repository did not
+exist at this audit. Preserve all 73 original recording identities, bytes,
+artist/title/source data, styles/collections and honest unknown licence labels;
+do not relabel them as CC0 or infer additional permissions from relocation.
+
+The game will allow the player to explicitly add a compatible catalogue URL,
+choose that source alone or mix enabled sources, and derive style options from
+the active catalogues. The main catalogue remains the default; adding a separate
+source must not re-enable those recordings there. Source-scoped policy, bounded
+HTTPS catalogue validation, duplicate identity/hash handling, saved source choices,
+independent failure recovery and mixed-queue behavior need their own regressions.
+User MP3 upload and existing library formats must remain intact.
+
+Prepare the separate repository and migration through exact-hash inventories and
+hosted byte-copy verification; local disk is about 3.7 GiB, with the existing 1 GiB
+reserve still enforced. Switch current ownership/intake references only after the
+new site serves verified files. Preserve historic references and immutable evidence.
+**Estimate:** 1–2 working days for migration plus 1–2 days for configurable-source
+integration/verification, excluding CI and publication queues; refine after phase-1
+review. This is separation of the already-published collection, not a restart of
+the skipped broader UA-FPV sourcing/clearance milestone.
+
+The 30 September checkpoint below is retained as history. Its counts describe the
+pre-exclusion public state and must not be presented as phase-1 delivery evidence.
+
+## Previous execution checkpoint — 30 September 2026, evening
 
 **M5/M6 are the active priority: Synth and Metal.** The first six-track batch is
 now merged and publicly available. [Game PR #830](https://github.com/mekhovov/revealline/pull/830)
