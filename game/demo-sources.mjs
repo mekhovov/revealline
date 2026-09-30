@@ -5,7 +5,7 @@ import {
   demoIdentity,
   loadDemoRecording,
 } from './demo-catalog.mjs';
-import { prepareReplayPlayer } from './replay-player.mjs';
+import { prepareReplayPlayer, prepareReviewedReplayPlayer } from './replay-player.mjs';
 import { prepareBotPlayer } from './demo-bot-player.mjs';
 import { LIVE_BOT_LEVEL_IDS, supportsDemoBot } from './demo-bot.mjs';
 import { campaignKey } from './library.mjs';
@@ -61,7 +61,10 @@ export async function loadDemoSources({
           { ...loading, fetch: fetcher, signal },
         );
         try {
-          return await prepareReplayPlayer(replay, { signal });
+          const isLastCandidate = index === candidates.length - 1;
+          return await (isLastCandidate && clip.source !== 'local'
+            ? prepareReviewedReplayPlayer(replay, { signal })
+            : prepareReplayPlayer(replay, { signal }));
         } catch (error) {
           if (
             error.name !== 'ReplayVerificationError' ||
