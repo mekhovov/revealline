@@ -3,7 +3,7 @@
   "id": "neon-reference-pack",
   "version": "1.0.0",
   "name": "Neon Reference Pack",
-  "description": "Fourteen screenshot-based Arcade levels: Channels, Crossroads, Hearts, Labyrinth, Arrows, Chambers, Crossgrid, Switchback, Spirals, Crossfire, Pinwheels, Wavebands, Conduit and Switchyards. Custom reveal images are planned; these levels currently use the existing procedural retro artwork.",
+  "description": "Fifteen screenshot-based Arcade levels: Channels, Crossroads, Hearts, Labyrinth, Arrows, Chambers, Crossgrid, Switchback, Spirals, Crossfire, Pinwheels, Wavebands, Conduit, Switchyards and Spines. Custom reveal images are planned; these levels currently use the existing procedural retro artwork.",
   "engine": "xonix-core.v6",
   "dependencies": [],
   "metadata": {
@@ -3315,6 +3315,170 @@
           "metadata": {
             "description": "Three tall cyan dividers and a double-width horizontal wall split eight red-and-blue switchback lanes. Broken cyan perimeter walls retain the screenshot openings. Red side rails and alternating crossbars flank blue slow terrain. Four yellow bouncers begin near the left outer lanes and on either side of the center wall at the far right. Two cyan patrols start along the bottom rail. Start at bottom center, move sideways to an opening, and reveal 75%."
           }
+        },
+        {
+          "version": "xonix-level.v5",
+          "id": "neon-spines-pack",
+          "revision": "1",
+          "name": "Neon Spines",
+          "width": 72,
+          "height": 36,
+          "encounter": null,
+          "spawn": { "x": 36.5, "y": 35.5 },
+          "goal": { "coverage": 0.75 },
+          "walls": [
+            { "x": 1, "y": 1, "w": 9, "h": 1 },
+            { "x": 15, "y": 1, "w": 7, "h": 1 },
+            { "x": 27, "y": 1, "w": 7, "h": 1 },
+            { "x": 38, "y": 1, "w": 7, "h": 1 },
+            { "x": 50, "y": 1, "w": 7, "h": 1 },
+            { "x": 62, "y": 1, "w": 9, "h": 1 },
+            { "x": 1, "y": 2, "w": 1, "h": 14 },
+            { "x": 70, "y": 2, "w": 1, "h": 14 },
+            { "x": 1, "y": 20, "w": 1, "h": 14 },
+            { "x": 70, "y": 20, "w": 1, "h": 14 },
+            { "x": 1, "y": 34, "w": 9, "h": 1 },
+            { "x": 15, "y": 34, "w": 7, "h": 1 },
+            { "x": 27, "y": 34, "w": 7, "h": 1 },
+            { "x": 38, "y": 34, "w": 7, "h": 1 },
+            { "x": 50, "y": 34, "w": 7, "h": 1 },
+            { "x": 62, "y": 34, "w": 9, "h": 1 }
+          ],
+          "foundations": [],
+          "objectives": [],
+          "supplies": [],
+          "signalZones": [],
+          "hangars": [],
+          "classic": {
+            "version": "classic.v1",
+            "terrain": [
+              { "id": "hazard-1", "kind": "lethal", "x": 12, "y": 2, "w": 1, "h": 15 },
+              { "id": "hazard-2", "kind": "lethal", "x": 24, "y": 2, "w": 1, "h": 15 },
+              { "id": "hazard-3", "kind": "lethal", "x": 35, "y": 2, "w": 2, "h": 14 },
+              { "id": "hazard-4", "kind": "lethal", "x": 47, "y": 2, "w": 1, "h": 15 },
+              { "id": "hazard-5", "kind": "lethal", "x": 59, "y": 2, "w": 1, "h": 15 },
+              { "id": "hazard-6", "kind": "lethal", "x": 2, "y": 17, "w": 32, "h": 2 },
+              { "id": "hazard-7", "kind": "lethal", "x": 38, "y": 17, "w": 32, "h": 2 },
+              { "id": "hazard-8", "kind": "lethal", "x": 12, "y": 19, "w": 1, "h": 15 },
+              { "id": "hazard-9", "kind": "lethal", "x": 24, "y": 19, "w": 1, "h": 15 },
+              { "id": "hazard-10", "kind": "lethal", "x": 47, "y": 19, "w": 1, "h": 15 },
+              { "id": "hazard-11", "kind": "lethal", "x": 59, "y": 19, "w": 1, "h": 15 },
+              { "id": "hazard-12", "kind": "lethal", "x": 35, "y": 20, "w": 2, "h": 14 },
+              { "id": "slow-1", "kind": "slow", "x": 10, "y": 1, "w": 5, "h": 1 },
+              { "id": "slow-2", "kind": "slow", "x": 22, "y": 1, "w": 5, "h": 1 },
+              { "id": "slow-3", "kind": "slow", "x": 34, "y": 1, "w": 4, "h": 1 },
+              { "id": "slow-4", "kind": "slow", "x": 45, "y": 1, "w": 5, "h": 1 },
+              { "id": "slow-5", "kind": "slow", "x": 57, "y": 1, "w": 5, "h": 1 },
+              { "id": "slow-6", "kind": "slow", "x": 10, "y": 2, "w": 2, "h": 14 },
+              { "id": "slow-7", "kind": "slow", "x": 13, "y": 2, "w": 2, "h": 14 },
+              { "id": "slow-8", "kind": "slow", "x": 22, "y": 2, "w": 2, "h": 14 },
+              { "id": "slow-9", "kind": "slow", "x": 25, "y": 2, "w": 2, "h": 14 },
+              { "id": "slow-10", "kind": "slow", "x": 34, "y": 2, "w": 1, "h": 14 },
+              { "id": "slow-11", "kind": "slow", "x": 37, "y": 2, "w": 1, "h": 14 },
+              { "id": "slow-12", "kind": "slow", "x": 45, "y": 2, "w": 2, "h": 14 },
+              { "id": "slow-13", "kind": "slow", "x": 48, "y": 2, "w": 2, "h": 14 },
+              { "id": "slow-14", "kind": "slow", "x": 57, "y": 2, "w": 2, "h": 14 },
+              { "id": "slow-15", "kind": "slow", "x": 60, "y": 2, "w": 2, "h": 14 },
+              { "id": "slow-16", "kind": "slow", "x": 1, "y": 16, "w": 11, "h": 1 },
+              { "id": "slow-17", "kind": "slow", "x": 13, "y": 16, "w": 11, "h": 1 },
+              { "id": "slow-18", "kind": "slow", "x": 25, "y": 16, "w": 22, "h": 1 },
+              { "id": "slow-19", "kind": "slow", "x": 48, "y": 16, "w": 11, "h": 1 },
+              { "id": "slow-20", "kind": "slow", "x": 60, "y": 16, "w": 11, "h": 1 },
+              { "id": "slow-21", "kind": "slow", "x": 1, "y": 17, "w": 1, "h": 2 },
+              { "id": "slow-22", "kind": "slow", "x": 34, "y": 17, "w": 1, "h": 2 },
+              { "id": "slow-23", "kind": "slow", "x": 37, "y": 17, "w": 1, "h": 2 },
+              { "id": "slow-24", "kind": "slow", "x": 70, "y": 17, "w": 1, "h": 2 },
+              { "id": "slow-25", "kind": "slow", "x": 1, "y": 19, "w": 11, "h": 1 },
+              { "id": "slow-26", "kind": "slow", "x": 13, "y": 19, "w": 11, "h": 1 },
+              { "id": "slow-27", "kind": "slow", "x": 25, "y": 19, "w": 22, "h": 1 },
+              { "id": "slow-28", "kind": "slow", "x": 48, "y": 19, "w": 11, "h": 1 },
+              { "id": "slow-29", "kind": "slow", "x": 60, "y": 19, "w": 11, "h": 1 },
+              { "id": "slow-30", "kind": "slow", "x": 10, "y": 20, "w": 2, "h": 14 },
+              { "id": "slow-31", "kind": "slow", "x": 13, "y": 20, "w": 2, "h": 14 },
+              { "id": "slow-32", "kind": "slow", "x": 22, "y": 20, "w": 2, "h": 14 },
+              { "id": "slow-33", "kind": "slow", "x": 25, "y": 20, "w": 2, "h": 14 },
+              { "id": "slow-34", "kind": "slow", "x": 34, "y": 20, "w": 1, "h": 14 },
+              { "id": "slow-35", "kind": "slow", "x": 37, "y": 20, "w": 1, "h": 14 },
+              { "id": "slow-36", "kind": "slow", "x": 45, "y": 20, "w": 2, "h": 14 },
+              { "id": "slow-37", "kind": "slow", "x": 48, "y": 20, "w": 2, "h": 14 },
+              { "id": "slow-38", "kind": "slow", "x": 57, "y": 20, "w": 2, "h": 14 },
+              { "id": "slow-39", "kind": "slow", "x": 60, "y": 20, "w": 2, "h": 14 },
+              { "id": "slow-40", "kind": "slow", "x": 10, "y": 34, "w": 5, "h": 1 },
+              { "id": "slow-41", "kind": "slow", "x": 22, "y": 34, "w": 5, "h": 1 },
+              { "id": "slow-42", "kind": "slow", "x": 34, "y": 34, "w": 4, "h": 1 },
+              { "id": "slow-43", "kind": "slow", "x": 45, "y": 34, "w": 5, "h": 1 },
+              { "id": "slow-44", "kind": "slow", "x": 57, "y": 34, "w": 5, "h": 1 }
+            ],
+            "powerups": [],
+            "arcadeActions": { "version": "arcade-actions.v1" }
+          },
+          "enemies": [
+            {
+              "id": "pink-upper-left-spine",
+              "type": "bouncer",
+              "x": 11.644992134242266,
+              "y": 7.835602094240838,
+              "vx": -3.1,
+              "vy": 2.8,
+              "radius": 0.4
+            },
+            {
+              "id": "pink-lower-left-field",
+              "type": "bouncer",
+              "x": 8.635028841111694,
+              "y": 33.21989528795812,
+              "vx": -4,
+              "vy": -0.8,
+              "radius": 0.4
+            },
+            {
+              "id": "pink-lower-right-inner",
+              "type": "bouncer",
+              "x": 56.28054535920294,
+              "y": 29.695287958115184,
+              "vx": 3.8,
+              "vy": 1.8,
+              "radius": 0.4
+            },
+            {
+              "id": "pink-lower-right-outer",
+              "type": "bouncer",
+              "x": 68.43051914001049,
+              "y": 25.921465968586386,
+              "vx": -4,
+              "vy": 0.6,
+              "radius": 0.4
+            },
+            {
+              "id": "cyan-top-center-left",
+              "type": "border-patrol",
+              "x": 28.1255899318301,
+              "y": 0.5,
+              "speed": 4.5,
+              "clockwise": true,
+              "radius": 0.35
+            },
+            {
+              "id": "cyan-right-upper",
+              "type": "border-patrol",
+              "x": 71.5,
+              "y": 8.12303664921466,
+              "speed": 4.5,
+              "clockwise": true,
+              "radius": 0.35
+            }
+          ],
+          "rules": {
+            "lives": 3,
+            "moveSpeed": 10,
+            "respawnSeconds": 0.7,
+            "graceSeconds": 0.8,
+            "timeLimitSeconds": 0,
+            "stopOnCapture": true
+          },
+          "metadata": {
+            "description": "Five blue slowing lanes carry narrow red lethal spines from top to bottom. A broad horizontal blue crossing surrounds two red bars and an open central pocket. Segmented cyan perimeter walls preserve the lane entrances. Four pink bouncers start at the upper-left spine, lower-left field and two lower-right positions; two cyan patrols begin along the top and upper-right rails. Start at bottom center, step sideways away from the red spine, and reveal 75%."
+          }
         }
       ]
     }
@@ -3667,6 +3831,35 @@
         },
         "slowTerrain": {
           "name": "Switchyards slowTerrain",
+          "dataUrl": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAANklEQVR42mNgGAWjYBSMgsEMnBLu/KcGHnXA0HUAKY4b8AQ66oBRB4w6YLTiGgWjYBSMgiELAMa7Atjf3Ar7AAAAAElFTkSuQmCC"
+        }
+      }
+    },
+    {
+      "levelId": "neon-spines-pack",
+      "visualOverrides": {
+        "wall": {
+          "name": "Spines wall",
+          "dataUrl": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAP0lEQVR42mMQia7+P5CYAURob7qOE9NaftQBow4YdQDDaDkw6oBRB4w6YLQcGHXAqANGHTBaDow6YNQBI94BAJ5cDzcS0yPLAAAAAElFTkSuQmCC"
+        },
+        "enemy": {
+          "name": "Spines enemy",
+          "dataUrl": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAX0lEQVR42u3XwQ0AIAgDQGZzejdxDB1BBBpq0ia+ez+qmfJT1pjb89qKIZBoeQkiW55CVJWHENXlTwhUuRvRCkCXXxECCCCAAO0A3QKKc0wxSCgmGcUopZjlFB8TBZkDSBphmxvdW58AAAAASUVORK5CYII="
+        },
+        "patrol": {
+          "name": "Spines patrol",
+          "dataUrl": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAbklEQVR42mNgIBG4P3n/Hx9moDUYdcCoA+jmAFwGkuoAsh2Gy1BSHEBxyGAzgFgHUC1a0A0ixgFUTxOELKVLjqCZ5eT6jlp41AGjDhh1wMA7YMALokFfFA9oZTSg1fGAN0gGvEk22ioedcCIcQAA6l0yW47rJ5YAAAAASUVORK5CYII="
+        },
+        "player": {
+          "name": "Spines player",
+          "dataUrl": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAYklEQVR42u2WWwoAEBQFrdP+yxp8kV8lj/s66kz5nilcUiKE/EwtuY0VKg+JmOWuESu5S8RObhpxKjeJuJWrRrzKVSKkcnFEeED4FkAcQohrCDGIIEYxxGME8RxDfEgIIVp0LrhEMwepglQAAAAASUVORK5CYII="
+        },
+        "lethalTerrain": {
+          "name": "Spines lethalTerrain",
+          "dataUrl": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAbUlEQVR42u2WQQ4AEAwEPce7vNxPiIsTgra6kZ17dyqiFQIhZEGOqbhmtGJJgLS+B9yESGrFQWrym0B1+UmwmXxHYC5fiZ7JR8Ln8lkTLlMS5vRu9w/xAiBmAMQUhNgDEJtQtQmIDwnCt46Qv6lSX/qpet2+5AAAAABJRU5ErkJggg=="
+        },
+        "slowTerrain": {
+          "name": "Spines slowTerrain",
           "dataUrl": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAANklEQVR42mNgGAWjYBSMgsEMnBLu/KcGHnXA0HUAKY4b8AQ66oBRB4w6YLTiGgWjYBSMgiELAMa7Atjf3Ar7AAAAAElFTkSuQmCC"
         }
       }
