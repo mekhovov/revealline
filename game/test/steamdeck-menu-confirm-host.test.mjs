@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { settle, soloPage } from './helpers/solo-dom.mjs';
+import { settle, SoloElement, soloPage } from './helpers/solo-dom.mjs';
 
 function nativeConfirmDown(target) {
   const down = target.emit('keydown', {
@@ -28,6 +28,13 @@ function nativeConfirm(page) {
 }
 
 test('Steam Deck A owns its delayed Chrome activation across quick actions and dialogs', async (t) => {
+  const showModal = SoloElement.prototype.showModal;
+  t.mock.method(SoloElement.prototype, 'showModal', function () {
+    if (this.open) return;
+    // Preserve native opening order when Creator Tools opens above Settings.
+    this.emit('beforetoggle', { oldState: 'closed', newState: 'open', bubbles: false });
+    showModal.call(this);
+  });
   let time = 1000;
   t.mock.method(performance, 'now', () => time);
   const pad = {
@@ -53,8 +60,8 @@ test('Steam Deck A owns its delayed Chrome activation across quick actions and d
       pad.buttons[index] = { pressed: false, value: 0 };
       frame();
     },
-    reach = (id, limit = 80) => {
-      for (let step = 0; step < limit && page.doc.activeElement.id !== id; step++) pulse(13);
+    reach = (id, direction = 13, limit = 30) => {
+      for (let step = 0; step < limit && page.doc.activeElement.id !== id; step++) pulse(direction);
       assert.equal(page.doc.activeElement.id, id, `${id} must be controller reachable`);
     },
     echo = () => {
@@ -91,7 +98,8 @@ test('Steam Deck A owns its delayed Chrome activation across quick actions and d
   echo();
   assert.equal(page.$('shell-sound').textContent, afterSound, 'Sound changes exactly once');
 
-  reach('shell-options');
+  // Native action lists stop at their edges: Settings is above Sound.
+  reach('shell-options', 12);
   pulse(0);
   assert.equal(page.$('settings-dialog').open, true);
   assert.equal(
@@ -101,20 +109,30 @@ test('Steam Deck A owns its delayed Chrome activation across quick actions and d
   );
   echo();
   assert.equal(page.$('settings-dialog').open, true, 'Settings stays open after the native echo');
-  time += 1300;
-  page.doc.querySelector('button[data-close="settings-dialog"]').click();
-  frame();
-  assert.equal(page.$('settings-dialog').open, false);
-
+  // The former Home More action now lives in Settings → Extras → Creator Tools.
+  reach('settings-tab-extras');
+  pulse(0);
+  assert.equal(page.$('settings-panel-extras').hidden, false);
+  pulse(15);
   reach('shell-workshop');
   pulse(0);
   assert.equal(page.$('shell-workshop-dialog').open, true);
   echo();
-  assert.equal(page.$('shell-workshop-dialog').open, true, 'More stays on its intended menu');
+  assert.equal(
+    page.$('shell-workshop-dialog').open,
+    true,
+    'Creator Tools stays on its intended menu',
+  );
   time += 1300;
-  page.doc.querySelector('button[data-close="shell-workshop-dialog"]').click();
+  pulse(1);
+  await Promise.resolve();
   frame();
   assert.equal(page.$('shell-workshop-dialog').open, false);
+  assert.equal(page.$('settings-dialog').open, true, 'Back restores the Settings parent');
+  pulse(1);
+  await Promise.resolve();
+  frame();
+  assert.equal(page.$('settings-dialog').open, false);
 
   reach('shell-sound');
   time += 1300;
