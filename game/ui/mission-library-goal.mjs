@@ -23,16 +23,10 @@ export function attachMissionLibraryGoal({
       return item;
     };
   const root = node('section', 'journey-goal'),
-    status = node('p', 'journey-goal-status');
+    status = node('p', 'journey-goal-status'),
+    actionGroup = node('div');
   root.className = 'journey-goal';
-  root.style.display = 'flex';
-  root.style.flexWrap = 'wrap';
-  root.style.alignItems = 'center';
-  root.style.gap = '0.4rem';
-  root.style.width = '100%';
-  status.style.flex = '1 1 12rem';
-  status.style.margin = '0';
-  status.style.overflowWrap = 'anywhere';
+  actionGroup.className = 'journey-goal-actions';
   status.setAttribute('role', 'status');
   status.setAttribute('aria-live', 'polite');
   const controls = {},
@@ -44,14 +38,14 @@ export function attachMissionLibraryGoal({
     const row = library.find(getSelectedId());
     return row?.modes.includes(getMode()) ? row : null;
   };
-  root.append(status);
+  root.append(status, actionGroup);
   for (const key of ['pin', 'find', 'clear', 'retry']) {
     const button = node('button', `journey-goal-${key}`);
     button.type = 'button';
     button.className = 'button secondary';
     localizedText(button, () => t('interface:missionGoal.' + key));
     controls[key] = button;
-    root.append(button);
+    actionGroup.append(button);
   }
   container.append(root);
   const current = () => stores.get(getMode());
