@@ -555,7 +555,7 @@ export function mountRadioSetup({
   });
   listen(select, 'change', () => {
     if (select.value === '') {
-      runtime.freeze('device-selected');
+      runtime.select(null);
       invalidate();
       status.textContent = copy.pick;
       return;
