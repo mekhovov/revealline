@@ -1,6 +1,6 @@
 # Neon Words & Symbols
 
-38 playable tile designs in their own **Neon Words & Symbols** pack (#291–328). The nine screenshot reconstructions remain in Neon Reference Pack (#285–290 and #329–331).
+38 playable tile designs in their own **Neon Words & Symbols** pack (#291–328). The ten screenshot reconstructions remain in Neon Reference Pack (#285–290 and #329–332).
 
 ## Designs
 
@@ -59,4 +59,4 @@ Custom reveal artwork and Ukrainian translation are deferred. These are playable
 
 Run `node scripts/build-neon-mosaic.mjs`, then `node scripts/build-neon-mosaic-pack.mjs`. The gallery launches editable scenarios using the normal practice importer. Metadata generation for the main catalog runs separately.
 
-Validation: all 38 scenarios and single-level packs validate; both the nine-level reference pack and 38-level words/symbols pack validate. All 38 surrounding layouts and all 38 lower layouts are unique. Archive and Current rules each initialize and run a 120-tick idle smoke check. Unit tests were not run, as requested. Full-clear balance is not qualified.
+Validation: all 38 scenarios and single-level packs validate; both the ten-level reference pack and 38-level words/symbols pack validate. All 38 surrounding layouts and all 38 lower layouts are unique. Archive and Current rules each initialize and run a 120-tick idle smoke check. Unit tests were not run, as requested. Full-clear balance is not qualified.
