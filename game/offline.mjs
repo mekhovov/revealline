@@ -375,20 +375,27 @@ export async function prepareOffline(options = {}) {
     scope: config.scope,
     updateViaCache: 'none',
   });
-  if (config.downloadCatalogue && options.cancelPreparation)
-    registering
-      .then((registration) => {
-        if (options.signal?.aborted)
-          selectedWorker(registration)?.postMessage({
-            type: 'revealline.offline-pause',
-            protocol: PROTOCOL,
-            scope: config.scope,
-            buildId: config.buildId,
-          });
-      })
-      .catch(() => {});
+  const pauseIfCancelled = (registration) => {
+    if (config.downloadCatalogue && options.cancelPreparation && options.signal?.aborted)
+      selectedWorker(registration)?.postMessage({
+        type: 'revealline.offline-pause',
+        protocol: PROTOCOL,
+        scope: config.scope,
+        buildId: config.buildId,
+      });
+  };
+  registering.then(pauseIfCancelled).catch(() => {});
   const registration = await observePromise(registering, options.signal);
   throwIfAborted(options.signal);
+  if (readGameUpdateContext(env.documentRef, env.locationRef)) {
+    // register() can return an existing same-URL worker before its background
+    // update check discovers this build. The explicit updater holds the profile
+    // locks here; await the real check before choosing the candidate worker.
+    const updating = registration.update();
+    updating.then(() => pauseIfCancelled(registration)).catch(() => {});
+    await observePromise(updating, options.signal);
+    throwIfAborted(options.signal);
+  }
   const worker = selectedWorker(registration);
   if (!worker || !workerMatches(worker, registration, config))
     throw offlineError(
