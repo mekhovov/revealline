@@ -1248,7 +1248,7 @@ export function bootCoop({
     }
     if (play) void music.start();
   }
-  function openSettings() {
+  function openSettings({ difficulty = false } = {}) {
     cancelNext();
     const opener = $('coop-settings-open');
     if (
@@ -1271,6 +1271,13 @@ export function bootCoop({
       if (settingsOwner === owner) settingsOwner = null;
       return;
     }
+    if (difficulty) {
+      settingsPanels.select('coop-settings-tab-gameplay');
+      settingsDialog.setAttribute(
+        'data-settings-view',
+        $('coop-difficulty').disabled ? 'categories' : 'panel',
+      );
+    }
     settingsDialog.showModal();
     const active = document.activeElement;
     if (
@@ -1281,7 +1288,10 @@ export function bootCoop({
         active === settingsDialog ||
         active === $('coop-settings-close'))
     ) {
-      const target = settingsPanels.primary();
+      const target =
+        difficulty && visibleAction($('coop-difficulty'))
+          ? $('coop-difficulty')
+          : settingsPanels.primary();
       if (visibleAction(target) && settingsCurrent(owner) && document.activeElement === active)
         target.focus({ preventScroll: true });
     }
@@ -1495,7 +1505,9 @@ export function bootCoop({
           })
         : t('interface:nextArena'),
     );
-    localizedText($('coop-lobby'), () => t('interface:changeSetup'));
+    localizedText($('coop-lobby'), () =>
+      lost ? t('interface:changeDifficulty') : t('interface:changeSetup'),
+    );
     $('coop-resume').hidden = won || lost;
     $('coop-view-picture').hidden = !won || loopStopped || !acceptedPicture?.binding?.image;
     let story = null;
@@ -4455,7 +4467,7 @@ export function bootCoop({
   }
   // This synchronous handoff owns only the return from an attempt to its lobby.
   // Do not let focus/layout callbacks revive it after a newer action or lifecycle.
-  function lobbyFocus() {
+  function lobbyFocus(revealDifficulty = false) {
     const origin = document.activeElement,
       epoch = generation + 1,
       visit = settingsVisit;
@@ -4504,6 +4516,10 @@ export function bootCoop({
             document.activeElement === target ||
             unclaimedFocus(document.activeElement));
         if (!owns() || !visibleAction(target) || !owns()) return;
+        if (revealDifficulty && settingsDialog.contains($('coop-difficulty'))) {
+          openSettings({ difficulty: true });
+          if (!owns()) return;
+        }
         if (document.activeElement !== target) target.focus({ preventScroll: true });
         const focused = () =>
           current() && primary() === target && document.activeElement === target;
@@ -4529,12 +4545,13 @@ export function bootCoop({
       },
     };
   }
-  function lobby() {
+  function lobby({ revealDifficulty = false } = {}) {
     discovery?.close({ restore: false });
     cancelNext();
     nextStatus('');
     if (disposed || departure) return;
-    const focus = lobbyFocus();
+    if (revealDifficulty) $('coop-optional-setup').open = true;
+    const focus = lobbyFocus(revealDifficulty);
     try {
       cancelImport({ forget: true });
       clear();
@@ -4610,7 +4627,7 @@ export function bootCoop({
   function cancelDeparture(options) {
     closeDeparture(departure, options);
   }
-  function requestDeparture(kind, opener) {
+  function requestDeparture(kind, opener, { revealDifficulty = false } = {}) {
     discovery?.close({ restore: false });
     cancelNext();
     if (
@@ -4623,7 +4640,7 @@ export function bootCoop({
     )
       return;
     if (!unfinished()) {
-      if (kind === 'setup') lobby();
+      if (kind === 'setup') lobby({ revealDifficulty });
       else if (kind === 'retry') {
         try {
           start();
@@ -5250,7 +5267,12 @@ export function bootCoop({
   $('coop-retry').onclick = () => requestDeparture('retry', $('coop-retry'));
   $('coop-resume').onclick = resume;
   $('coop-pause').onclick = pause;
-  $('coop-lobby').onclick = () => requestDeparture('setup', $('coop-lobby'));
+  $('coop-lobby').onclick = () => {
+    const changeDifficulty = run?.status === 'lost';
+    requestDeparture('setup', $('coop-lobby'), {
+      revealDifficulty: changeDifficulty,
+    });
+  };
   $('coop-home-paused').onclick = () => requestDeparture('home', $('coop-home-paused'));
   function supportGuidance(guidance, level) {
     localizedText($('coop-support-help'), () => guidance().supportText);
