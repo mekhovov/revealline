@@ -427,6 +427,16 @@ test('responsive action dock groups full-width goal controls without horizontal 
     /\.journey-goal-actions\s*>\s*:is\(#journey-goal-find, #journey-goal-clear\):disabled \{\s*display: none;/,
     'Unavailable goal actions do not consume compact browsing space.',
   );
+  assert.match(
+    dock,
+    /\.journey-footer > \.journey-goal \{[^}]*flex: 999 1 40rem;[^}]*width: auto !important;[^}]*max-width: 100%;/s,
+    'The responsive dock overrides the earlier max-content footer rule at equal specificity.',
+  );
+  assert.match(
+    dock,
+    /#journey-goal-status \{[^}]*max-width: none;[^}]*white-space: normal;/s,
+    'Goal text wraps instead of inheriting the earlier one-line footer constraint.',
+  );
 });
 
 test('selector shell owns safe areas, touch scrolling and reduced-motion behavior', async () => {

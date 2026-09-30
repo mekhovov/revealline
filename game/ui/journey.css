@@ -1204,13 +1204,15 @@
 #journey-chooser.mission-library-chooser .journey-footer > .mission-library-setup {
   flex: 1 1 13rem;
 }
-#journey-chooser.mission-library-chooser .journey-goal {
+#journey-chooser.mission-library-chooser .journey-footer > .journey-goal {
   order: 10;
   display: grid;
   grid-template-columns: minmax(10rem, 1fr) auto;
   align-items: center;
   gap: 0.45rem 0.65rem;
   flex: 999 1 40rem;
+  width: auto !important;
+  max-width: 100%;
   min-width: min(100%, 24rem);
   padding: 0.35rem;
   border: 1px solid var(--level-card-line);
@@ -1218,6 +1220,8 @@
 }
 #journey-chooser.mission-library-chooser #journey-goal-status {
   min-width: 0;
+  max-width: none;
+  white-space: normal;
   margin: 0;
   overflow-wrap: anywhere;
   color: var(--level-card-muted);
