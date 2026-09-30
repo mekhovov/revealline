@@ -80,6 +80,8 @@ test('hosted extras stay selectable without entering shared or all-current gamep
     'optional-practice/install-context.mjs',
     'game/demo-data/first-signal-left.replay.json',
     'game/ui/art/menu-scenes/droneaid-main-background.webp',
+    'game/audio/effects/warning.wav',
+    'game/audio/effects/contact.wav',
   ];
   const required = 'game/essential.json';
   const entries = [required, ...names].map((name) => ({ name, bytes: Buffer.from(name) }));
@@ -98,12 +100,12 @@ test('hosted extras stay selectable without entering shared or all-current gamep
   const extras = catalogue.groups.filter((group) => group.category === 'extra');
   assert.deepEqual(
     extras.map((group) => group.id),
-    ['extras:practice', 'extras:demo', 'extras:menu-art'],
+    ['extras:practice', 'extras:demo', 'extras:menu-art', 'extras:spatial-audio'],
   );
   assert.ok(extras.every((group) => group.current === false && group.titleKey));
   assert.deepEqual(
     extras.map((group) => group.requires),
-    [['shared'], ['shared'], ['shared']],
+    [['shared'], ['shared'], ['shared'], ['shared']],
     'Selecting one optional extra must not pull unrelated mode runtimes.',
   );
   assert.deepEqual(

@@ -132,7 +132,7 @@ test('decorative menu rasters and the icon source stay optional without dropping
   );
 });
 
-test('essential WAV recipes are followed from the bank without pulling optional music into core', () => {
+test('effect bank and metadata stay core while WAV bodies remain an optional hosted pack', () => {
   const files = entries({
     'game/index.html': '<script type="module" src="ui/audio.mjs"></script>',
     'game/ui/audio.mjs': 'import { BANK } from "../audio/effects/bank.mjs";',
@@ -140,17 +140,24 @@ test('essential WAV recipes are followed from the bank without pulling optional 
       'export const BANK = { warning: { file: "warning.wav" }, contact: { file: "contact.wav" } };',
     'game/audio/effects/warning.wav': 'essential warning PCM',
     'game/audio/effects/contact.wav': 'essential contact PCM',
+    'game/audio/effects/licenses.html': '<h1>Recorded effect licences</h1>',
+    'game/audio/effects/edgetx-source.json': { originals: [] },
     'game/audio/music/optional.mp3': 'optional music',
     'authoring/audio/original.wav': 'source recording, never shipped in core',
   });
   const result = selectOfflineCore(files, new Set());
-  assert.ok(result.retained.has('game/audio/effects/warning.wav'));
-  assert.ok(result.retained.has('game/audio/effects/contact.wav'));
+  assert.ok(result.retained.has('game/audio/effects/bank.mjs'));
+  assert.ok(result.retained.has('game/audio/effects/licenses.html'));
+  assert.ok(result.retained.has('game/audio/effects/edgetx-source.json'));
+  assert.ok(!result.retained.has('game/audio/effects/warning.wav'));
+  assert.ok(!result.retained.has('game/audio/effects/contact.wav'));
+  assert.ok(result.optional.includes('game/audio/effects/warning.wav'));
+  assert.ok(result.optional.includes('game/audio/effects/contact.wav'));
   assert.ok(!result.retained.has('game/audio/music/optional.mp3'));
   assert.ok(!result.retained.has('authoring/audio/original.wav'));
 });
 
-test('radio redistribution license and source recordings remain available in every offline mode', () => {
+test('radio redistribution metadata stays core while source recordings remain selectable', () => {
   const files = entries({
     'game/audio/effects/licenses.html': '<h1>GPL-2.0</h1>',
     'game/audio/effects/edgetx-source.json': JSON.stringify({
@@ -162,7 +169,11 @@ test('radio redistribution license and source recordings remain available in eve
   });
   for (const mode of ['solo', 'versus', 'team']) {
     const result = selectOfflineCore(files, new Set(), { mode });
-    assert.equal(result.retained.size, 4, mode);
+    assert.equal(result.retained.size, 2, mode);
+    assert.ok(result.retained.has('game/audio/effects/licenses.html'));
+    assert.ok(result.retained.has('game/audio/effects/edgetx-source.json'));
+    assert.ok(result.optional.includes('game/audio/effects/edgetx-armed-source-en.wav'));
+    assert.ok(result.optional.includes('game/audio/effects/edgetx-armed-source-uk.wav'));
     assert.ok(!result.retained.has('authoring/audio/unrelated.wav'));
   }
 });

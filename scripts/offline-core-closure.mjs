@@ -26,6 +26,12 @@ const PUBLISHED_SOLO_BOUNDARIES = new Set([
   'game/mission-library/spatial-next-editions.mjs',
 ]);
 
+/** Recorded effects stay hosted and can be selected as an offline extra. The
+ * runtime bank, credits and source manifest remain in the mandatory core so a
+ * missing pack degrades to the feedback director's existing silent fallback. */
+export const isOptionalSpatialAudioBody = (name) =>
+  /^game\/audio\/effects\/[a-z0-9][a-z0-9-]*\.wav$/i.test(name);
+
 /** Resolve local file references, never external addresses or speculative URLs. */
 function targets(value, owner, byPath) {
   if (typeof value !== 'string' || /^(?:[a-z]+:|\/|#)/i.test(value)) return [];
@@ -67,6 +73,7 @@ export function selectOfflineCore(entries, excluded, { mode = 'solo' } = {}) {
       // every player's 64 MiB startup cache. Never exclude code, fonts or icons.
       !/^game\/ui\/art\/menu-scenes\/[a-z0-9][a-z0-9-]*\.(?:png|webp)$/.test(name) &&
       name !== 'game/ui/art/identity/fpv-line/icon-master.png' &&
+      !isOptionalSpatialAudioBody(name) &&
       !retained.has(name) &&
       !(mode === 'solo' && PUBLISHED_SOLO_BOUNDARIES.has(name))
     ) {

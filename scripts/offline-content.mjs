@@ -6,7 +6,7 @@ import { soundtrackRights } from '../game/soundtrack.mjs';
 import { authoredPackageId } from '../game/content-design/offline-packages.mjs';
 import { classifyContent } from '../game/content-design/content-lifecycle.mjs';
 import { addAuthoredRuntimeSnapshots } from './authored-runtime-snapshots.mjs';
-import { selectOfflineCore } from './offline-core-closure.mjs';
+import { isOptionalSpatialAudioBody, selectOfflineCore } from './offline-core-closure.mjs';
 import { downloadFiles } from '../game/download-catalogue.mjs';
 import { buildOfflineDestinations, buildNavigationBootstraps } from './offline-destinations.mjs';
 import { readFileSync } from 'node:fs';
@@ -335,6 +335,7 @@ export async function buildOfflineContent(entries, excluded, version) {
       'Optional landing artwork',
       (name) => name === 'game/ui/art/menu-scenes/droneaid-main-background.webp',
     ],
+    ['spatial-audio', 'Optional spatial sound effects', isOptionalSpatialAudioBody],
   ]) {
     const owned = files.filter((file) => matches(file.path)).map((file) => file.path);
     if (!owned.length) continue;
