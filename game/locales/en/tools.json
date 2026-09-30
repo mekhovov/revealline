@@ -2896,5 +2896,8 @@
   "creatorGuide.documentReady": "Document verified · {{bytes}} bytes",
   "creatorGuide.documentUnavailable": "This document is unavailable or differs from the declared file. Return to the guide or retry.",
   "creatorGuide.documentCancelled": "Document loading cancelled. Retry when ready.",
-  "creatorGuide.documentNote": "Original document language is preserved. Embedded links and examples are displayed as text."
+  "creatorGuide.documentNote": "Original document language is preserved. Embedded links and examples are displayed as text.",
+  "countercurrentOriginalArt": "Countercurrent / original reward art",
+  "countercurrentGalleryIntroduction": "Twelve source candidates. Select a preview to inspect its untouched original PNG here. These scenes echo composition cues; they are not collision maps or evidence of runtime adoption or full quality.",
+  "countercurrentGuideAndCaveats": "Guide and caveats"
 }

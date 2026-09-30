@@ -558,8 +558,9 @@
     {
       "name": "Countercurrent art",
       "route": "/authoring/library/countercurrent-art/index.html",
-      "verification": "pending exact-candidate browser qualification; historical observations do not establish current acceptance",
-      "historicalVerification": "browser mount verified; shared keyboard and virtual-controller reader/navigation; physical controller not tested"
+      "verification": "At 7080b238d, final 38/38 viewer/gallery checks and separate 62/62 reference/domain/inventory checks pass. Four stable world targets and thirteen owned pinned sources (twelve original PNGs plus literal README) retain one shared input owner. Fresh committed-source virtual workflow passes 4/4: all twelve displayed Blobs match exact original bytes/hash and fully decode 1774x887, real Retry, bounded two-axis reading/Fit, README, canceled sections/language, EN/UK labels, exact two-step Back and real Asset Studio Return. Native unindexed keys at390x844 traverse all twelve readers and four targets without pointer reset; representative image reaches X1456/Y380.5 of381, README reaches5225px with zero horizontal overflow, and UK names/Retry update before restoring English. Browser Back was used once after page Escape correctly returned to Studio; no reciprocal product reentry is claimed. Historical source/metadata remain unchanged. Gallery is source-served only and remains excluded from distribution; no Save/import/export/adoption/approval exists. All18 current editions compile in memory within64MiB; this does not qualify offline/native/physical/published support. Controlled browser faults, pending cancellation and broader device gates remain open.",
+      "historicalVerification": "browser mount verified; shared keyboard and virtual-controller reader/navigation; physical controller not tested",
+      "evidence": "docs/verification/countercurrent-gallery-input-2026-09-30.md"
     },
     {
       "name": "FPV enemy presentation",
