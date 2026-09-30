@@ -333,7 +333,7 @@
         "physicalController": "not tested",
         "publishedBuild": "not tested",
         "browser": "Pending current-edition layout and keyboard/controller browser qualification; not covered by the historical 14-edition menu matrix.",
-        "standalonePackage": "Pending current-edition standalone compilation, installed-offline and native qualification; not covered by the historical 14-edition package receipts.",
+        "standalonePackage": "Included in 18/18 single in-memory production compiles at fa31dcc6996f5383989017f98f7ea51739924a06, recorded in docs/verification/reserve-catalog-input-2026-09-30.md. Historical 14-edition receipts exclude this edition. Current integrated-package, installed-offline, native and public qualification remain pending.",
         "scene": "Current resolveMenuScene selects the shared fpv fallback for this edition ID; deliberate edition artwork review remains pending."
       },
       "publicSlug": "social-drone-ua"
@@ -351,7 +351,7 @@
         "physicalController": "not tested",
         "publishedBuild": "not tested",
         "browser": "Pending current-edition layout and keyboard/controller browser qualification; not covered by the historical 14-edition menu matrix.",
-        "standalonePackage": "Pending current-edition standalone compilation, installed-offline and native qualification; not covered by the historical 14-edition package receipts.",
+        "standalonePackage": "Included in 18/18 single in-memory production compiles at fa31dcc6996f5383989017f98f7ea51739924a06, recorded in docs/verification/reserve-catalog-input-2026-09-30.md. Historical 14-edition receipts exclude this edition. Current integrated-package, installed-offline, native and public qualification remain pending.",
         "scene": "Current resolveMenuScene selects the shared fpv fallback for this edition ID; deliberate edition artwork review remains pending."
       },
       "publicSlug": "victory-drones"
@@ -369,7 +369,7 @@
         "physicalController": "not tested",
         "publishedBuild": "not tested",
         "browser": "Pending current-edition layout and keyboard/controller browser qualification; not covered by the historical 14-edition menu matrix.",
-        "standalonePackage": "Pending current-edition standalone compilation, installed-offline and native qualification; not covered by the historical 14-edition package receipts.",
+        "standalonePackage": "Included in 18/18 single in-memory production compiles at fa31dcc6996f5383989017f98f7ea51739924a06, recorded in docs/verification/reserve-catalog-input-2026-09-30.md. Historical 14-edition receipts exclude this edition. Current integrated-package, installed-offline, native and public qualification remain pending.",
         "scene": "Current resolveMenuScene selects the shared fpv fallback for this edition ID; deliberate edition artwork review remains pending."
       },
       "publicSlug": "ukraine-culture"
@@ -387,7 +387,7 @@
         "physicalController": "not tested",
         "publishedBuild": "not tested",
         "browser": "Pending current-edition layout and keyboard/controller browser qualification; not covered by the historical 14-edition menu matrix.",
-        "standalonePackage": "Pending current-edition standalone compilation, installed-offline and native qualification; not covered by the historical 14-edition package receipts.",
+        "standalonePackage": "Included in 18/18 single in-memory production compiles at fa31dcc6996f5383989017f98f7ea51739924a06, recorded in docs/verification/reserve-catalog-input-2026-09-30.md. Historical 14-edition receipts exclude this edition. Current integrated-package, installed-offline, native and public qualification remain pending.",
         "scene": "Current resolveMenuScene selects the shared fpv fallback for this edition ID; deliberate edition artwork review remains pending."
       },
       "publicSlug": "fpv-learning"
@@ -433,7 +433,16 @@
     "/game/downloads.html",
     "/game/profile-recovery.html",
     "/game/creator/player.html",
-    "/app/"
+    "/app/",
+    "/game/communities/",
+    "/game/community/store.html",
+    "/game/communities/coupa/",
+    "/game/communities/droneaid/",
+    "/game/communities/droneaid-community/",
+    "/game/communities/fpv-learning/",
+    "/game/communities/social-drone-ua/",
+    "/game/communities/ukraine-culture/",
+    "/game/communities/victory-drones/"
   ],
   "authoringRoutes": [
     {
@@ -481,14 +490,16 @@
       "route": "/authoring/design-atlas/",
       "verification": "Current 17fa81cb9 plus 2a42cc6c1 passes 52 focused tests. Complete current 4/4 virtual-pad review stages cover nine studies/eighteen states, cancellation, settled preview widths, EN/UK specimens, filters, owned reading and two explicit brief downloads. Native keyboard qualifies narrow matrix horizontal/vertical reading, short-landscape preview, long brief, EN/UK downloads and Workshop return/reentry without pointer reset. Actual downloaded UTF-8 text matches committed locale sources. This is a read-only design review tool: no project Save, import or real domain validator; illustrated error states are not runtime validation. Exact clipboard transfer, related reveal-audit browser qualification, hardware, offline and published acceptance remain separate.",
       "historicalVerification": "keyboard and virtual-controller browser workflow passed; physical controller not tested",
-      "evidence": "docs/verification/design-atlas-input-2026-09-29.md"
+      "evidence": "docs/verification/design-atlas-input-2026-09-29.md",
+      "followUpEvidence": "Follow-up: bounded Reveal Audit and owned raw-source workflows are recorded separately in docs/verification/reveal-audit-input-2026-09-29.md and docs/verification/reveal-source-viewer-input-2026-09-29.md; final aggregate, physical/offline/public qualification remains separate."
     },
     {
       "name": "Content Studio",
       "route": "/game/studio/",
       "verification": "Current eb45f1b65 plus e40d77773 and final 52a18ef97 pass overlapping 186/251/51 focused cohorts. Complete current 4/4 virtual-pad workflow qualifies new-project inspection/Apply, canceled drafts, invalid JSON, guarded discard/Undo/Redo, immutable geometry, numeric tuning, explicit exact-Solo preview Enter/Return/Close, checkpoint Save/Inspect saved/Apply and repeated backup export. Native keys qualify editing/history, two exact full-source reloads and Save/export without pointer reset. All four actual JSON backups pass production compilation, all six Solo/Versus presets and independently derived exact bytes. Fresh native preview remains unqualified at the IAB input-routing boundary; no guard was weakened. OS import, candidate libraries, remaining specialized editors, tracing/media recovery, guide reading, Team export, full Ukrainian workflow, physical/native/offline and published acceptance remain separate.",
       "historicalVerification": "keyboard and virtual-controller browser workflow passed; physical controller not tested",
-      "evidence": "docs/verification/content-studio-input-2026-09-29.md"
+      "evidence": "docs/verification/content-studio-input-2026-09-29.md",
+      "followUpEvidence": "Follow-up: Creator Guide and all ten document readers have bounded native/virtual qualification in docs/verification/creator-guide-input-2026-09-30.md and docs/verification/creator-guide-documents-input-2026-09-30.md. Browser sample installation remains pending; this does not qualify advanced Studio editors or full source-prose translation."
     },
     {
       "name": "Picture Campaign Creator",
@@ -537,6 +548,12 @@
       "route": "/game/community/moderation.html",
       "verification": "pending exact-candidate browser qualification; historical observations do not establish current acceptance",
       "historicalVerification": "shared navigation and fields mounted; no authenticated remote moderation action performed; physical controller not tested"
+    },
+    {
+      "name": "Demo recording variants",
+      "route": "/authoring/demo-recording-variants.html",
+      "verification": "Source present on reviewed main 09a43d833 with shared authoring input and 16 clips. Current pending-operation ownership, cancellation, localized controls and complete record/verify/export/artifact-equivalence workflows remain pending; historical six-clip evidence does not qualify this revision.",
+      "historicalVerification": "Previously tracked as a separate dependency; now integrated. Earlier cross-runtime replay mismatch received strict frozen variants and is not asserted as a current failure."
     }
   ],
   "referenceRoutes": [
@@ -587,26 +604,34 @@
     {
       "name": "Ukraine role presentation",
       "route": "/authoring/library/ukraine-role-presentations/index.html",
-      "verification": "pending exact-candidate browser qualification; historical observations do not establish current acceptance",
-      "historicalVerification": "browser mount verified; shared keyboard and virtual-controller reader/navigation; physical controller not tested"
+      "verification": "Bounded keyboard and virtual-controller donor workflow evidence recorded in PR #846; integration/source attribution and physical/offline/public acceptance remain pending at 2026-09-30 18:47 UTC. Do not label the donor implementation absent or transfer its evidence to later main without attribution.",
+      "historicalVerification": "browser mount verified; shared keyboard and virtual-controller reader/navigation; physical controller not tested",
+      "delivery": "https://github.com/mekhovov/revealline/pull/846",
+      "evidenceReport": "https://github.com/mekhovov/revealline/blob/8a49d835a826e59e0cf4584a3ee9cb5066d5507f/docs/verification/ukraine-role-gallery-input-2026-09-30.md"
     },
     {
       "name": "Ukraine wide role variants",
       "route": "/authoring/library/ukraine-role-wide-variants/index.html",
-      "verification": "pending exact-candidate browser qualification; historical observations do not establish current acceptance",
-      "historicalVerification": "browser mount verified; shared keyboard and virtual-controller reader/navigation; physical controller not tested"
+      "verification": "Bounded keyboard and virtual-controller donor workflow evidence recorded in PR #857; integration/source attribution and physical/offline/public acceptance remain pending at 2026-09-30 18:47 UTC. Do not label the donor implementation absent or transfer its evidence to later main without attribution.",
+      "historicalVerification": "browser mount verified; shared keyboard and virtual-controller reader/navigation; physical controller not tested",
+      "delivery": "https://github.com/mekhovov/revealline/pull/857",
+      "evidenceReport": "https://github.com/mekhovov/revealline/blob/2ab940b781c0adbc7c4da3e706271628736090f1/docs/verification/ukraine-wide-gallery-input-2026-09-30.md"
     },
     {
       "name": "Prepared reveal review",
       "route": "/authoring/library/fpv-field-kit/prepared/reveals/review.html",
-      "verification": "pending exact-candidate browser qualification; historical observations do not establish current acceptance",
-      "historicalVerification": "browser mount verified; shared keyboard and virtual-controller reader/navigation; physical controller not tested"
+      "verification": "Bounded keyboard and virtual-controller donor workflow evidence recorded in PR #863; integration/source attribution and physical/offline/public acceptance remain pending at 2026-09-30 18:47 UTC. Do not label the donor implementation absent or transfer its evidence to later main without attribution.",
+      "historicalVerification": "browser mount verified; shared keyboard and virtual-controller reader/navigation; physical controller not tested",
+      "delivery": "https://github.com/mekhovov/revealline/pull/863",
+      "evidenceReport": "https://github.com/mekhovov/revealline/blob/11299ceffbb5b48d7ee4fe8658ee4e6a0a12bfdc/docs/verification/prepared-reveal-input-2026-09-30.md"
     },
     {
       "name": "Prepared title review",
       "route": "/authoring/library/fpv-field-kit/prepared/titles/review.html",
-      "verification": "pending exact-candidate browser qualification; historical observations do not establish current acceptance",
-      "historicalVerification": "browser mount verified; shared keyboard and virtual-controller reader/navigation; physical controller not tested"
+      "verification": "Bounded keyboard and virtual-controller donor workflow evidence recorded in PR #870; integration/source attribution and physical/offline/public acceptance remain pending at 2026-09-30 18:47 UTC. Do not label the donor implementation absent or transfer its evidence to later main without attribution.",
+      "historicalVerification": "browser mount verified; shared keyboard and virtual-controller reader/navigation; physical controller not tested",
+      "delivery": "https://github.com/mekhovov/revealline/pull/870",
+      "evidenceReport": "https://github.com/mekhovov/revealline/blob/e778b2584cd5150cf64b347ca6e31a47bf3aca26/docs/verification/prepared-title-input-2026-09-30.md"
     },
     {
       "name": "Runtime sprite comparison",
@@ -646,19 +671,12 @@
     }
   ],
   "brandingRevision": "2026-09-29-fpv-line",
-  "verificationNote": "Existing browser/native package observations below predate the FPV / LINE rename. Rebranding evidence is recorded separately in docs/verification/fpv-line-brand-2026-09-29.md.",
+  "verificationNote": "Evidence entries retain their individual revisions and dates. Early observations predate FPV / LINE; later branding, workflow and package receipts have separate cutoffs. See docs/native-menu-roadmap.md for current priorities, not blanket acceptance of current main.",
   "evidenceScope": {
     "historical": "Browser and standalone-package observations below belong to the shared development snapshots recorded on 2026-09-28 and 2026-09-29, before main reconciliation. They do not qualify the current candidate.",
-    "currentCandidate": "Current source receipts separately record edition layouts, Asset/Playground/Enemy browser workflows, all four worlds mode-scene checks and all14 in-memory package compiles. Scope and exact revisions live in docs/native-menu-plan-status.md and linked verification reports. Final aggregate, installed-offline, physical-controller/native and published-build acceptance remain pending."
+    "currentCandidate": "Reviewed against main 09a43d833 on 2026-09-30. Dated receipts cover all four base-world mode compositions, original-14 browser layouts and meaningful creator workflows. All 18 editions compiled in memory at fa31dcc6996f5383989017f98f7ea51739924a06 (docs/verification/reserve-catalog-input-2026-09-30.md); later donor compiles retain separate attribution. These are not current aggregate, installed-offline, physical/native or published acceptance. See docs/native-menu-roadmap.md."
   },
-  "deferredRoutes": [
-    {
-      "name": "Demo recording variants",
-      "route": "/authoring/demo-recording-variants.html",
-      "status": "pending dependency",
-      "reason": "The separate Demo recording tool is not included in this candidate. Integrate its owning input before adding the shared navigation adapter and qualifying this route."
-    }
-  ],
+  "deferredRoutes": [],
   "generatedRoutes": [
     {
       "route": "/app/",
@@ -750,5 +768,13 @@
     "scene": "approved FPV Solo fallback",
     "audio": "No audio owner in this runtime; no placeholder Sound or track actions",
     "verification": "docs/verification/custom-menu-2026-09-29.md"
+  },
+  "currentRoadmap": "docs/native-menu-roadmap.md",
+  "supportRouteReview": {
+    "sourceRevision": "09a43d83351af276f184293ed3c72261575ed8bc",
+    "legacyCommunity": "/game/community/ redirects to /game/communities/.",
+    "communityDirectory": "The actual directory has localization but no shared support/controller input owner. Implement and qualify keyboard/controller navigation, failure/fallback and exact return on the listed friendly entry routes.",
+    "communityStore": "/game/community/store.html retains support input; moderation retains authoring input. Their old evidence does not transfer to the directory.",
+    "acceptance": "Source inventory only; no new browser, physical-device or published acceptance from this review."
   }
 }
