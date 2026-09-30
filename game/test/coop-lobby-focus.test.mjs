@@ -29,7 +29,7 @@ async function returning(t, rect = offscreen) {
   f.$('coop-discard-confirm').focus();
   const target = f.$('coop-start'),
     calls = [],
-    picture = f.drawImages.findLast((image) => image.sha256),
+    picture = f.drawImages.findLast((image) => f.artwork.calls.decodes.includes(image)),
     reads = f.artwork.calls.reads.length,
     urls = [...f.artwork.calls.urls],
     releases = [...f.artwork.calls.releases];
@@ -98,7 +98,7 @@ test('confirmed Change setup reveals the offscreen focused Start after rendering
   assert.equal(f.$('coop-coverage').textContent, '0.0%');
   assert.equal(f.$('coop-clock').textContent, '0:00');
   assert.equal(
-    f.drawImages.findLast((image) => image.sha256),
+    f.drawImages.findLast((image) => f.artwork.calls.decodes.includes(image)),
     f.picture,
   );
 });
@@ -128,7 +128,7 @@ for (const newer of [
     f.target.addEventListener('focusin', () => {
       if (changed) return;
       changed = true;
-      if (newer === 'focus' || newer === 'focus-then-body') f.$('coop-level').focus();
+      if (newer === 'focus' || newer === 'focus-then-body') f.$('coop-discovery-open').focus();
       if (newer === 'focus-then-body') f.doc.body.focus();
       if (newer === 'settings') f.$('coop-settings-open').click();
       if (newer === 'start') f.target.click();
@@ -149,7 +149,7 @@ for (const newer of [
     f.finish();
     assert.equal(changed, true);
     assert.deepEqual(f.calls, []);
-    if (newer === 'focus') assert.equal(f.doc.activeElement.id, 'coop-level');
+    if (newer === 'focus') assert.equal(f.doc.activeElement.id, 'coop-discovery-open');
     if (newer === 'focus-then-body') assert.equal(f.doc.activeElement, f.doc.body);
     if (newer === 'settings') assert.equal(f.$('coop-options').open, true);
     if (newer === 'start') {
@@ -165,13 +165,13 @@ test('a newer selection during layout prevents the lobby from taking focus back'
   t.mock.method(f.target, 'getBoundingClientRect', () => {
     if (!changed) {
       changed = true;
-      f.$('coop-level').focus();
+      f.$('coop-discovery-open').focus();
     }
     return read();
   });
   f.finish();
   assert.equal(changed, true);
-  assert.equal(f.doc.activeElement.id, 'coop-level');
+  assert.equal(f.doc.activeElement.id, 'coop-discovery-open');
   assert.deepEqual(f.calls, []);
 });
 
