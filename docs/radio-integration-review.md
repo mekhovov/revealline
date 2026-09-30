@@ -1,6 +1,10 @@
 # Radio integration review
 
-## Current delivery checkpoint — 30 September 2026
+For current phase status, priorities and acceptance criteria, use the
+[controller, radio and FPV delivery plan](controller-radio-plan.md).
+The checkpoints below preserve historical evidence and do not qualify later merges.
+
+## Historical delivery checkpoint — 30 September 2026
 
 Reviewed main: `908bc6b08`. The controller/radio and bundled FPV implementation
 entered main through [PR #797](https://github.com/mekhovov/revealline/pull/797);
