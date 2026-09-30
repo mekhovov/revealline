@@ -31,13 +31,13 @@ test('CLI inspection preserves explicit empty masteries for the foundation pack 
     packPath: new URL('../content/packs/neon-reference-pack.json', import.meta.url).pathname,
   });
   assert.equal(report.checks.structure, 'valid');
-  assert.equal(report.campaigns[0].maps.length, 9);
+  assert.equal(report.campaigns[0].maps.length, 10);
   assert.ok(report.campaigns[0].maps.every((map) => map.goalSource === 'none'));
 });
 
 test('bundled pack reproduces four ordered references and preserves geometry and actors', async () => {
   assert.deepEqual(source, await buildNeonReferencePack());
-  assert.equal(pack.campaigns[0].levels.length, 9);
+  assert.equal(pack.campaigns[0].levels.length, 10);
   for (const name of ['channels', 'crossroads', 'hearts', 'labyrinth']) {
     const standalone = await json(`../../authoring/library/neon-${name}/scenario.json`);
     const scenario = scenarioFromPack(pack, 'neon-reference', `neon-${name}-pack`);
@@ -51,14 +51,14 @@ test('bundled pack reproduces four ordered references and preserves geometry and
   }
 });
 
-test('main catalog discovers nine numbered levels and resolves bundled launch routes', async () => {
+test('main catalog discovers ten numbered levels and resolves bundled launch routes', async () => {
   const catalog = preparePackCatalog(await json('../content/packs/catalog.json'));
   const index = await json('../content/mission-library-index.json');
   const library = createMissionLibrary(
     classicLibrarySources(index, { availability: () => ({ state: 'ready' }), launch: () => true }),
   );
   const rows = library.search('Neon Reference Pack', { lifecycle: 'current' });
-  assert.equal(rows.length, 9);
+  assert.equal(rows.length, 10);
   for (const row of rows) {
     assert.equal(JSON.parse(row.ownerId)[2], pack.id);
     assert.equal(JSON.parse(row.ownerId)[3], CLASSIC_RULES_CURRENT);
@@ -75,7 +75,7 @@ test('main catalog discovers nine numbered levels and resolves bundled launch ro
     assert.equal(launch.levelId, row.runtimeId);
     assert.equal(library.launch(row, { mode: 'solo' }), true);
   }
-  assert.equal(library.search('Neon Reference Pack', { lifecycle: 'archive' }).length, 9);
+  assert.equal(library.search('Neon Reference Pack', { lifecycle: 'archive' }).length, 10);
 });
 
 test('catalog admits sixteen unique packs but rejects a seventeenth', () => {
