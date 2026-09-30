@@ -27,3 +27,23 @@ Original source lineage: closed PR #784 at
 `ff56e0881e7355ebe3e07e0804827dc9b256fb50`. Historical screenshots and test reports
 remain at that preserved commit; they do not qualify the current composition.
 No historical release, published asset or tag is rewritten by this recovery.
+
+## Recovery verification boundary
+
+This recovery adapts the old routes to current main instead of replaying its old
+host, catalog or production output. Targeted checks cover route rejection before
+fetch, same-brand departure, friendly-route gameplay/save ownership, retained-logo
+eligibility, localization, and synthetic offline/native packaging. The four newer
+community fixtures use the existing raster decoder so current WebP originals are
+not incorrectly treated as PNG. These are bounded automated checks, not a full
+suite, browser/hardware acceptance or listening approval.
+
+The production ledger and compiled manifest/runtime/Studio files remain byte-for-byte
+identical to the accepted predecessor. Of the 50 declared audio source inputs,
+only `app.mjs` URL resolution and `edition-solo.mjs` navigation/asset eligibility
+change. Neither change alters synthesis or audio recipes. The accepted predecessor
+already differs from the producer's approved source fingerprint; this recovery
+does not rewrite that fingerprint or claim fresh producer qualification. A future
+production regeneration must separately reconcile the complete current source and
+preserve all accepted history. Broad deferred verification remains skipped, not
+passed. Hosted Pages build and its existing capacity limits still gate deployment.
