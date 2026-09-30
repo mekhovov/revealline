@@ -16,6 +16,12 @@ accepts both that page and `optional-practice/civilian-fpv/index.html`. This
 source-policy validation does not certify a complete staged distribution,
 Xcode compilation, native launch or physical controller access in WKWebView.
 
+The subsequent [native staging checkpoint](verification/radio-native-staging-20260930.md)
+closes another explicit-head problem in sound credits and completes a current
+web build. Full native staging is now blocked by the existing 768 MiB inventory
+limit; [issue #865](https://github.com/mekhovov/revealline/issues/865) owns that
+capacity decision. It is not a native runtime or device pass.
+
 ### Remaining boundaries
 
 | Priority         | Item                                                                                  | Next action / status                                                                                                                                                                                                         |
