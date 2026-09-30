@@ -100,7 +100,7 @@ test('failed admission retains exact plan and observer authority pins without la
   assert.equal(report.qualified, false);
   assert.equal(report.functionalStatus, 'not-started');
   assert.match(report.failure, /Envelope differs/);
-  assert.equal(report.instrumentation.length, 6);
+  assert.equal(report.instrumentation.length, 7);
   assert(
     report.instrumentation.every((item) => item.bytes > 0 && /^[a-f0-9]{64}$/.test(item.sha256)),
   );
