@@ -64,6 +64,26 @@ test('bundled FPV pins final default bytes and has its own bounded cache outside
     first = await prepare(),
     second = await prepare();
   assert.deepEqual(first, second);
+  const manifestName = policy.root + 'app.webmanifest',
+    originalManifest = JSON.parse(source.find((entry) => entry.name === manifestName).bytes),
+    bundledManifest = JSON.parse(first.find((entry) => entry.name === manifestName).bytes);
+  assert.deepEqual(
+    originalManifest.icons.map((icon) => icon.src),
+    ['./icons/icon-192.png', './icons/icon-512.png'],
+  );
+  assert.deepEqual(bundledManifest, {
+    ...originalManifest,
+    icons: originalManifest.icons.map((icon) => ({ ...icon, src: '../../' + icon.src.slice(2) })),
+  });
+  const invalidManifestEntries = source.map((entry) => ({ ...entry }));
+  invalidManifestEntries.find((entry) => entry.name === manifestName).bytes = Buffer.from(
+    JSON.stringify({ ...originalManifest, icons: [{ src: 'https://example.test/icon.png' }] }),
+  );
+  invalidManifestEntries.push({ name: 'game/offline.mjs', bytes: Buffer.from('export {};') });
+  await assert.rejects(
+    addOfflineEntries(root, invalidManifestEntries, { version: 'v1.2.3' }, {}),
+    /Bundled FPV manifest icons differ/,
+  );
   const workerName = policy.root + 'worker.js',
     worker = first.find((entry) => entry.name === workerName),
     finalInputs = first.filter((entry) => entry.name !== workerName),
@@ -97,9 +117,7 @@ test('bundled FPV pins final default bytes and has its own bounded cache outside
     () =>
       buildBundledOptionalPractice(
         finalInputs.map((entry) =>
-          entry.name === 'icons/icon-192.png'
-            ? { ...entry, bytes: Buffer.from('changed') }
-            : entry,
+          entry.name === 'icons/icon-192.png' ? { ...entry, bytes: Buffer.from('changed') } : entry,
         ),
       ),
     /Bundled optional icon differs/,
@@ -109,7 +127,7 @@ test('bundled FPV pins final default bytes and has its own bounded cache outside
     rebuilt.files.reduce((total, file) => total + file.bytes, worker.bytes.length) <=
       policy.limits.bytes,
   );
-  for (const name of [policy.entry, 'game/i18n/catalogs.mjs']) {
+  for (const name of [policy.entry, manifestName, 'game/i18n/catalogs.mjs']) {
     const bytes = first.find((entry) => entry.name === name).bytes,
       pin = rebuilt.files.find((file) => file.path === name);
     assert.equal(pin.sha256, createHash('sha256').update(bytes).digest('hex'));
@@ -126,7 +144,19 @@ test('bundled FPV pins final default bytes and has its own bounded cache outside
 });
 
 test('bundled FPV rejects missing, unadmitted, changed-vendor and oversized dependencies', async () => {
-  const source = await bundledFPVEntries(),
+  const source = (await bundledFPVEntries()).map((entry) => {
+      if (!entry.name.endsWith('/civilian-fpv/app.webmanifest')) return entry;
+      const manifest = JSON.parse(entry.bytes);
+      return {
+        ...entry,
+        bytes: Buffer.from(
+          JSON.stringify({
+            ...manifest,
+            icons: manifest.icons.map((icon) => ({ ...icon, src: '../../' + icon.src.slice(2) })),
+          }),
+        ),
+      };
+    }),
     withBytes = (name, bytes) =>
       source.map((entry) => (entry.name === name ? { name, bytes } : entry));
   assert.equal(buildBundledOptionalPractice([]), null);
