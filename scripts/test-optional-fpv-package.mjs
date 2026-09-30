@@ -3,7 +3,10 @@ import assert from 'node:assert/strict';
 import { readFile, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { buildOptionalPractice } from './build-optional-practice.mjs';
+import { createHash } from 'node:crypto';
+import { buildBundledOptionalPractice, buildOptionalPractice } from './build-optional-practice.mjs';
+import { addOfflineEntries } from './game-cli.mjs';
+import { OPTIONAL_PACKAGE_POLICIES } from '../publishing/optional-package-policy.mjs';
 import { bundleOptionalPractice } from './bundle-optional-practice.mjs';
 import { optionalFPVSourceFixture } from '../publishing/optional-package-source-fixture.mjs';
 import { createOptionalPackageCandidate } from '../publishing/optional-package-candidate.mjs';
@@ -37,6 +40,156 @@ const assertSharedRadioClosure = (built, source) => {
     assert.deepEqual(source.get(name), runtime.bytes, name);
   }
 };
+
+async function bundledFPVEntries() {
+  const root = fileURLToPath(new URL('../', import.meta.url)),
+    policy = OPTIONAL_PACKAGE_POLICIES['civilian-fpv'];
+  return Promise.all(
+    [...policy.localFiles.map((name) => policy.root + name), ...policy.sharedFiles].map(
+      async (name) => ({ name, bytes: await readFile(path.join(root, name)) }),
+    ),
+  );
+}
+
+test('bundled FPV pins final default bytes and has its own bounded cache outside core', async () => {
+  const root = fileURLToPath(new URL('../', import.meta.url)),
+    policy = OPTIONAL_PACKAGE_POLICIES['civilian-fpv'],
+    source = await bundledFPVEntries(),
+    prepare = async () => {
+      const entries = source.map((entry) => ({ ...entry }));
+      entries.push({ name: 'game/offline.mjs', bytes: Buffer.from('export {};') });
+      await addOfflineEntries(root, entries, { version: 'v1.2.3' }, {});
+      return entries;
+    },
+    first = await prepare(),
+    second = await prepare();
+  assert.deepEqual(first, second);
+  const manifestName = policy.root + 'app.webmanifest',
+    originalManifest = JSON.parse(source.find((entry) => entry.name === manifestName).bytes),
+    bundledManifest = JSON.parse(first.find((entry) => entry.name === manifestName).bytes);
+  assert.deepEqual(
+    originalManifest.icons.map((icon) => icon.src),
+    ['./icons/icon-192.png', './icons/icon-512.png'],
+  );
+  assert.deepEqual(bundledManifest, {
+    ...originalManifest,
+    icons: originalManifest.icons.map((icon) => ({ ...icon, src: '../../' + icon.src.slice(2) })),
+  });
+  const invalidManifestEntries = source.map((entry) => ({ ...entry }));
+  invalidManifestEntries.find((entry) => entry.name === manifestName).bytes = Buffer.from(
+    JSON.stringify({ ...originalManifest, icons: [{ src: 'https://example.test/icon.png' }] }),
+  );
+  invalidManifestEntries.push({ name: 'game/offline.mjs', bytes: Buffer.from('export {};') });
+  await assert.rejects(
+    addOfflineEntries(root, invalidManifestEntries, { version: 'v1.2.3' }, {}),
+    /Bundled FPV manifest icons differ/,
+  );
+  const workerName = policy.root + 'worker.js',
+    worker = first.find((entry) => entry.name === workerName),
+    finalInputs = first.filter((entry) => entry.name !== workerName),
+    rebuilt = buildBundledOptionalPractice(finalInputs),
+    core = JSON.parse(first.find((entry) => entry.name === 'offline-cache.json').bytes),
+    catalogue = JSON.parse(first.find((entry) => entry.name === 'offline-content.json').bytes),
+    practice = catalogue.groups.find((group) => group.id === 'extras:practice');
+  assert.deepEqual(
+    worker,
+    rebuilt.entries.find((entry) => entry.name === workerName),
+  );
+  assert.ok(core.files.every((file) => !file.path.startsWith('optional-practice/')));
+  for (const name of [workerName]) {
+    const bytes = first.find((entry) => entry.name === name).bytes;
+    assert.ok(practice.files.includes(name));
+    assert.equal(
+      catalogue.files.find((file) => file.path === name).sha256,
+      createHash('sha256').update(bytes).digest('hex'),
+    );
+  }
+  for (const size of [192, 512]) {
+    const name = `icons/icon-${size}.png`,
+      bytes = first.find((entry) => entry.name === name).bytes,
+      pin = rebuilt.files.find((file) => file.path === name);
+    assert.equal(pin.sha256, createHash('sha256').update(bytes).digest('hex'));
+    assert.ok(worker.bytes.includes(Buffer.from(`../../${name}`)));
+    assert.equal(first.filter((entry) => entry.name === name).length, 1);
+    assert.ok(!first.some((entry) => entry.name === policy.root + name));
+  }
+  assert.throws(
+    () =>
+      buildBundledOptionalPractice(
+        finalInputs.map((entry) =>
+          entry.name === 'icons/icon-192.png' ? { ...entry, bytes: Buffer.from('changed') } : entry,
+        ),
+      ),
+    /Bundled optional icon differs/,
+  );
+  assert.ok(rebuilt.files.length + 1 <= policy.limits.files);
+  assert.ok(
+    rebuilt.files.reduce((total, file) => total + file.bytes, worker.bytes.length) <=
+      policy.limits.bytes,
+  );
+  for (const name of [policy.entry, manifestName, 'game/i18n/catalogs.mjs']) {
+    const bytes = first.find((entry) => entry.name === name).bytes,
+      pin = rebuilt.files.find((file) => file.path === name);
+    assert.equal(pin.sha256, createHash('sha256').update(bytes).digest('hex'));
+    assert.ok(worker.bytes.includes(Buffer.from(pin.sha256)));
+  }
+  assert.match(
+    first.find((entry) => entry.name === policy.entry).bytes.toString(),
+    /href="\.\.\/\.\.\/icons\/icon-192\.png"/,
+  );
+  assert.deepEqual(
+    first.find((entry) => entry.name === 'game/i18n/catalogs.mjs').bytes,
+    source.find((entry) => entry.name === 'game/i18n/catalogs.mjs').bytes,
+  );
+});
+
+test('bundled FPV rejects missing, unadmitted, changed-vendor and oversized dependencies', async () => {
+  const source = (await bundledFPVEntries()).map((entry) => {
+      if (!entry.name.endsWith('/civilian-fpv/app.webmanifest')) return entry;
+      const manifest = JSON.parse(entry.bytes);
+      return {
+        ...entry,
+        bytes: Buffer.from(
+          JSON.stringify({
+            ...manifest,
+            icons: manifest.icons.map((icon) => ({ ...icon, src: '../../' + icon.src.slice(2) })),
+          }),
+        ),
+      };
+    }),
+    withBytes = (name, bytes) =>
+      source.map((entry) => (entry.name === name ? { name, bytes } : entry));
+  assert.equal(buildBundledOptionalPractice([]), null);
+  assert.throws(
+    () =>
+      buildBundledOptionalPractice(source.filter((entry) => entry.name !== 'game/data-json.mjs')),
+    /dependency is missing/,
+  );
+  assert.throws(
+    () =>
+      buildBundledOptionalPractice(
+        withBytes(
+          'optional-practice/civilian-fpv/app.mjs',
+          Buffer.from("import '../../game/app.mjs';"),
+        ),
+      ),
+    /not admitted: game\/app.mjs/,
+  );
+  assert.throws(
+    () =>
+      buildBundledOptionalPractice(
+        withBytes('optional-practice/civilian-fpv/vendor/three.core.js', Buffer.from('changed')),
+      ),
+    /vendor bytes differ/,
+  );
+  assert.throws(
+    () =>
+      buildBundledOptionalPractice(
+        withBytes('optional-practice/civilian-fpv/README.md', Buffer.alloc(7 * 1024 * 1024, 32)),
+      ),
+    /Complete bundled optional output exceeds/,
+  );
+});
 
 test('actual FPV application, native notebook and installation launcher close inside unchanged runtime/source budgets', async () => {
   // Synthetic commit binding exercises archive admission only; the clean frozen
