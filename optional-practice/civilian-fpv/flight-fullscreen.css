@@ -1,0 +1,154 @@
+.flight-immersive-bar {
+  display: none;
+}
+html[data-fpv-immersive],
+html[data-fpv-immersive] body {
+  overflow: hidden;
+  overscroll-behavior: none;
+}
+html[data-fpv-immersive='academy'] #flight-app,
+html[data-fpv-immersive='worlds'] #flight-dialog[open] {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100vh;
+  height: 100dvh;
+  min-height: 0;
+  max-height: none;
+  max-width: none;
+  margin: 0;
+  border: 0;
+  border-radius: 0;
+  padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom)
+    env(safe-area-inset-left);
+  box-sizing: border-box;
+  background: #0c1920;
+  overflow: hidden;
+}
+html[data-fpv-immersive] .flight-immersive-bar {
+  display: flex;
+  flex: 0 0 auto;
+  align-items: center;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 6px;
+  padding: 6px 10px;
+  background: #10262f;
+  border-bottom: 1px solid #36505a;
+}
+.flight-immersive-bar button {
+  min-height: 36px;
+  white-space: nowrap;
+}
+.flight-immersive-notice {
+  margin-right: auto;
+  color: #c5d4d9;
+  font-size: 12px;
+}
+html[data-fpv-immersive='academy'] #viewport,
+html[data-fpv-immersive='worlds'] #world-viewport {
+  flex: 1 1 0;
+  width: 100%;
+  height: auto;
+  min-height: 0;
+  border: 0;
+  border-radius: 0;
+}
+html[data-fpv-immersive='academy'] .flight-header,
+html[data-fpv-immersive='academy'] #flight-app > footer,
+html[data-fpv-immersive='academy'] .flight-toolbar > :not(.transport),
+html[data-fpv-immersive='worlds'] #flight-dialog > header,
+html[data-fpv-immersive='worlds'] .flight-controls,
+html[data-fpv-immersive='worlds'] #world-replay-controls,
+html[data-fpv-immersive='worlds'] .camera-settings,
+html[data-fpv-immersive='worlds'] #world-keys-hint,
+html[data-fpv-immersive='worlds'] #world-watch-demo,
+html[data-fpv-immersive='worlds'] #world-next,
+html[data-fpv-immersive='worlds'] #export-flight {
+  display: none;
+}
+html[data-fpv-immersive='academy'] .flight-toolbar {
+  flex: 0 0 auto;
+  justify-content: center;
+  padding: 5px 10px;
+}
+html[data-fpv-immersive='worlds'] #flight-dialog > footer {
+  flex: 0 0 auto;
+  padding: 4px 10px 6px;
+}
+html[data-fpv-immersive='worlds'] #flight-dialog > footer .button-row {
+  justify-content: center;
+  margin: 0;
+}
+html[data-fpv-immersive='worlds'] #world-input-status {
+  display: block;
+  margin: 0 0 4px;
+  font-size: 12px;
+  text-align: center;
+}
+html[data-fpv-immersive='academy'] [data-immersive-controls='true'] .flight-header,
+html[data-fpv-immersive='academy'] [data-immersive-controls='true'] > footer,
+html[data-fpv-immersive='academy'] [data-immersive-controls='true'] .flight-toolbar > *,
+html[data-fpv-immersive='worlds'] [data-immersive-controls='true'] .flight-controls,
+html[data-fpv-immersive='worlds'] [data-immersive-controls='true'] .camera-settings,
+html[data-fpv-immersive='worlds']
+  [data-immersive-controls='true']
+  #world-replay-controls:not([hidden]) {
+  display: flex;
+}
+html[data-fpv-immersive='worlds'] [data-immersive-controls='true'] #world-watch-demo:not([hidden]),
+html[data-fpv-immersive='worlds'] [data-immersive-controls='true'] #world-next,
+html[data-fpv-immersive='worlds'] [data-immersive-controls='true'] #export-flight {
+  display: inline-block;
+}
+html[data-fpv-immersive] [data-immersive-controls='true'] .flight-controls {
+  flex: 0 0 auto;
+  max-height: 30dvh;
+  overflow: auto;
+  margin: 0;
+  padding: 6px 10px;
+}
+@media (max-width: 760px) {
+  html[data-fpv-immersive] .flight-immersive-bar {
+    gap: 4px;
+    padding: 4px 6px;
+  }
+  .flight-immersive-bar button {
+    padding: 7px 9px;
+    font-size: 12px;
+  }
+  .flight-immersive-notice {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+  }
+  html[data-fpv-immersive='worlds'] .world-touch,
+  html[data-fpv-immersive='worlds'] .world-touch.compact-sticks {
+    bottom: 110px;
+  }
+  html[data-fpv-immersive='academy'] .scene-heading {
+    right: 145px;
+    max-width: calc(100% - 160px);
+  }
+  html[data-fpv-immersive='academy'] .scene-heading h1 {
+    font-size: 16px;
+  }
+}
+@media (max-height: 500px) and (orientation: landscape) {
+  html[data-fpv-immersive] .flight-immersive-bar {
+    padding-block: 2px;
+  }
+  html[data-fpv-immersive] .flight-immersive-bar button {
+    min-height: 30px;
+    padding-block: 4px;
+  }
+  html[data-fpv-immersive='worlds'] .flight-brief,
+  html[data-fpv-immersive='academy'] .scene-heading #brief {
+    display: none;
+  }
+}

@@ -1,6 +1,7 @@
 import { radioControlLabel, captureRadioControlSwitch } from './radio-controls.mjs';
 import { canonicalJSON } from '../../game/data-json.mjs';
 import { restoreVerifiedRadio } from './radio-session.mjs';
+import { mountRadioGuide } from './radio-guide.mjs';
 import {
   DEFAULT_RESPONSE,
   FLIGHT_CONTROLS,
@@ -177,6 +178,7 @@ export function mountRadioSetup({
   locale = 'en',
   onProfile = () => {},
   onResponse = () => {},
+  onDone = () => {},
 }) {
   const doc = container.ownerDocument,
     copy = COPY[locale] ?? COPY.en;
@@ -196,6 +198,7 @@ export function mountRadioSetup({
     frame = null,
     disposed = false,
     lastPaint = -Infinity;
+  let guide = null;
   const listeners = [],
     rows = {},
     switchRows = {};
@@ -224,8 +227,8 @@ export function mountRadioSetup({
   };
   const status = el('p');
   status.setAttribute('role', 'status');
-  el('h2', copy.title);
-  el('p', copy.intro);
+  const heading = el('h2', copy.title);
+  const intro = el('p', copy.intro);
   const deviceLabel = el('label', copy.device),
     select = el('select', undefined, deviceLabel);
   const refresh = () => {
@@ -242,16 +245,18 @@ export function mountRadioSetup({
     select.replaceChildren();
     const empty = el(
       'option',
-      result.status === 'unavailable' ? copy.unavailable : copy.none,
+      result.status === 'unavailable'
+        ? copy.unavailable
+        : result.devices.length
+          ? locale === 'uk'
+            ? 'Виберіть пульт…'
+            : 'Choose your radio…'
+          : copy.none,
       select,
     );
     empty.value = '';
     for (const device of result.devices) {
-      const option = el(
-        'option',
-        `${device.id} · ${device.axes} axes / ${device.buttons} buttons · ${device.mapping || 'unmapped'}`,
-        select,
-      );
+      const option = el('option', device.id.replace(/\s*\(Vendor:.*\)$/i, ''), select);
       option.value = String(device.index);
     }
     if ([...select.options].some((option) => option.value === previous)) select.value = previous;
@@ -261,7 +266,7 @@ export function mountRadioSetup({
       loadProfile(JSON.parse(current.profile), { confirmed: current.verified });
     }
   };
-  button(copy.refresh, refresh);
+  const refreshButton = button(copy.refresh, refresh);
   const raw = el('pre', copy.raw);
   raw.setAttribute('aria-label', copy.raw);
   const layoutLabel = el('label', copy.layout),
@@ -280,7 +285,7 @@ export function mountRadioSetup({
     const option = el('option', text, throttle);
     option.value = id;
   }
-  el('p', copy.sign);
+  const sign = el('p', copy.sign);
   const channels = el('div');
   channels.className = 'radio-channels';
   for (const control of FLIGHT_CONTROLS) {
@@ -337,6 +342,15 @@ export function mountRadioSetup({
     if (markRuntime) runtime.editProfile();
     status.textContent = copy.incomplete;
   }
+  function stopCaptures() {
+    identifying = null;
+    recording = false;
+    travel = null;
+    switchCapture = null;
+    travelButton.textContent = copy.travel;
+    for (const row of Object.values(rows)) row.identify.textContent = copy.identify;
+    for (const row of Object.values(switchRows)) row.identify.textContent = copy.captureSwitch;
+  }
   const travelButton = button(copy.travel, () => {
     const pad = runtime.raw();
     if (!pad) {
@@ -348,7 +362,7 @@ export function mountRadioSetup({
     if (recording) travel = { min: [...pad.axes], max: [...pad.axes] };
     invalidate();
   });
-  button(copy.centre, () => {
+  const centreButton = button(copy.centre, () => {
     const pad = runtime.raw();
     if (!pad) return;
     for (const control of FLIGHT_CONTROLS)
@@ -359,10 +373,12 @@ export function mountRadioSetup({
       }
     invalidate();
   });
-  el('h3', copy.switches);
-  el('p', copy.switchStart);
+  const switchHeading = el('h3', copy.switches);
+  const switchIntro = el('p', copy.switchStart);
+  const switchFields = [];
   for (const action of ['arm', 'pause', 'reset']) {
     const field = el('fieldset');
+    switchFields.push(field);
     field.setAttribute('data-radio-switch', action);
     el('legend', copy[action === 'reset' ? 'resetAction' : action], field);
     const typeLabel = el('label', copy.switchType, field);
@@ -468,7 +484,7 @@ export function mountRadioSetup({
     const node = el('div', undefined, sticks);
     node.className = 'radio-stick';
     node.setAttribute('aria-label', copy[key]);
-    return { label: el('span', copy[key], node), dot: el('i', undefined, node) };
+    return { node, label: el('span', copy[key], node), dot: el('i', undefined, node) };
   });
   function readProfile(confirmed = verified) {
     const pad = runtime.raw();
@@ -550,30 +566,37 @@ export function mountRadioSetup({
       status.textContent = copy.verified;
     } else invalidate(false);
   }
-  button(copy.verify, () => {
+  function verifyProfile() {
     try {
-      if (recording || switchCapture) throw new Error(copy.incomplete);
+      if (recording || identifying || switchCapture) throw new Error(copy.incomplete);
       readProfile(true);
       verified = true;
       status.textContent = copy.verified;
+      return true;
     } catch (e) {
       status.textContent = e.message;
+      return false;
     }
-  });
-  button(copy.save, () => {
+  }
+  const verifyButton = button(copy.verify, verifyProfile);
+  function saveProfile() {
     try {
-      if (!verified || recording || switchCapture) throw new Error(copy.incomplete);
+      if (!verified || recording || identifying || switchCapture) throw new Error(copy.incomplete);
       const p = readProfile(true);
       runtime.setProfile(p);
       runtime.verify();
       const result = store.save({ ...store.snapshot(), radio: p });
       status.textContent = result.saved ? copy.saved : `${copy.session} ${result.error}`;
       onProfile(p);
+      return result;
     } catch (e) {
       status.textContent = e.message;
+      return null;
     }
-  });
+  }
+  const saveButton = button(copy.save, saveProfile);
   listen(select, 'change', () => {
+    guide?.reset();
     if (select.value === '') {
       runtime.select(null);
       invalidate();
@@ -585,7 +608,10 @@ export function mountRadioSetup({
     recording = false;
     identifying = null;
     switchCapture = null;
-    for (const row of Object.values(switchRows)) row.identify.textContent = copy.captureSwitch;
+    for (const row of Object.values(switchRows)) {
+      row.identify.textContent = copy.captureSwitch;
+      row.button.value = '';
+    }
     travelButton.textContent = copy.travel;
     for (const row of Object.values(rows)) {
       for (const key of ['axis', 'min', 'max', 'center']) row[key].value = '';
@@ -612,7 +638,7 @@ export function mountRadioSetup({
   ])
     listen(node, 'change', invalidate);
 
-  el('h2', copy.response);
+  const responseHeading = el('h2', copy.response);
   const responseNodes = {};
   for (const [key, text, min, max] of [
     ['maxRate', 'rate', 60, 720],
@@ -650,8 +676,8 @@ export function mountRadioSetup({
     for (const [key, node] of Object.entries(responseNodes)) node.value = String(p[key]);
     paintCurve();
   };
-  button(copy.reset, () => loadResponse(DEFAULT_RESPONSE));
-  button(copy.apply, () => {
+  const resetResponse = button(copy.reset, () => loadResponse(DEFAULT_RESPONSE));
+  const applyResponse = button(copy.apply, () => {
     try {
       const p = readResponse(),
         result = store.save({ ...store.snapshot(), response: p });
@@ -665,10 +691,10 @@ export function mountRadioSetup({
     transfer = el('textarea', undefined, transferLabel);
   transfer.rows = 5;
   transfer.maxLength = 16384;
-  button(copy.export, () => {
+  const exportButton = button(copy.export, () => {
     transfer.value = store.export();
   });
-  button(copy.import, () => {
+  const importButton = button(copy.import, () => {
     try {
       const result = store.import(transfer.value);
       loadProfile(store.snapshot().radio);
@@ -683,11 +709,7 @@ export function mountRadioSetup({
   function describeControls() {
     for (const control of FLIGHT_CONTROLS)
       rows[control].legend.textContent = radioControlLabel(control, Number(mode.value), locale);
-    throttleLabel.firstChild.textContent = radioControlLabel(
-      'throttle',
-      Number(mode.value),
-      locale,
-    );
+    throttleLabel.firstChild.textContent = locale === 'uk' ? 'Стік газу' : 'Throttle stick';
   }
   listen(mode, 'change', describeControls);
   function clearSticks() {
@@ -723,10 +745,13 @@ export function mountRadioSetup({
               vertical = layout[i * 2 + 1],
               y = vertical === 'throttle' ? input.throttle * 2 - 1 : input[vertical];
             stickNodes[i].dot.style.transform =
-              `translate(${input[horizontal] * 34}px, ${-y * 34}px)`;
+              `translate(${input[horizontal] * stickNodes[i].node.clientWidth * 0.34}px, ${-y * stickNodes[i].node.clientWidth * 0.34}px)`;
             stickNodes[i].dot.hidden = false;
-            stickNodes[i].label.textContent =
-              `${radioControlLabel(horizontal, Number(mode.value), locale)} · ${radioControlLabel(vertical, Number(mode.value), locale)}`;
+            stickNodes[i].label.textContent = `${copy[horizontal]} / ${copy[vertical]}`;
+            stickNodes[i].node.setAttribute(
+              'aria-label',
+              `${copy[i === 0 ? 'left' : 'right']}: ${copy[horizontal]} ${Math.round(input[horizontal] * 100)}%, ${copy[vertical]} ${Math.round(input[vertical] * 100)}%`,
+            );
           }
         } catch {
           clearSticks();
@@ -735,16 +760,57 @@ export function mountRadioSetup({
         raw.textContent = runtime.devices().status === 'unavailable' ? copy.unavailable : copy.none;
         clearSticks();
       }
+      guide?.update(pad);
     }
     frame = win.requestAnimationFrame(paint);
   }
   refresh();
   loadResponse(store.snapshot().response);
+  guide = mountRadioGuide({
+    container,
+    window: win,
+    runtime,
+    locale,
+    select,
+    refreshButton,
+    layoutLabel,
+    throttleLabel,
+    mode,
+    throttle,
+    status,
+    sticks,
+    rows,
+    switchRows,
+    readProfile,
+    loadProfile,
+    invalidate,
+    verifyProfile,
+    saveProfile,
+    stopCaptures,
+    onDone,
+    groups: {
+      manual: [sign, channels, travelButton, centreButton, verifyButton, saveButton],
+      switches: [switchIntro, ...switchFields],
+      response: [
+        ...Object.values(responseNodes).map((node) => node.parentNode),
+        curve,
+        resetResponse,
+        applyResponse,
+      ],
+      transfer: [transferLabel, exportButton, importButton],
+      diagnostics: [raw],
+    },
+  });
+  heading.remove();
+  intro.remove();
+  switchHeading.remove();
+  responseHeading.remove();
   frame = win.requestAnimationFrame(paint);
   return {
     store,
     dispose() {
       disposed = true;
+      guide?.dispose();
       runtime.endSetup();
       if (frame !== null) win.cancelAnimationFrame(frame);
       for (const remove of listeners) remove();
