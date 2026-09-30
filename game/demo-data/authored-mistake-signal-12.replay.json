@@ -4,9 +4,9 @@
   "ruleset": "xonix-core.v2",
   "level": {
     "version": "xonix-level.v1",
-    "id": "signal-03",
-    "revision": "gp4s-3ff00000000000003ff00000000000003ff0000000000000-3f32e7df15deb15a",
-    "name": "Crosswind",
+    "id": "signal-12",
+    "revision": "gp4s-3ff00000000000003ff00000000000003ff0000000000000-9c8079284ade3e63",
+    "name": "Relay Storm",
     "width": 48,
     "height": 36,
     "spawn": {
@@ -16,27 +16,46 @@
     "walls": [],
     "enemies": [
       {
-        "id": "west",
+        "id": "field",
         "type": "bouncer",
-        "x": 11.5,
-        "y": 24.5,
-        "vx": 8.461038755925204,
-        "vy": -7.107272554977171,
+        "x": 38.5,
+        "y": 25.5,
+        "vx": -9.238329414749542,
+        "vy": 6.062653678429387,
         "radius": 0.3,
         "course": "field-course.v2"
       },
       {
+        "id": "sentinel",
+        "type": "lane-boss",
+        "x": 35.5,
+        "y": 17.5,
+        "axis": "horizontal",
+        "period": 5.5,
+        "warningSeconds": 1.8,
+        "activeSeconds": 1.2,
+        "laneWidth": 1.2
+      },
+      {
         "id": "east",
         "type": "bouncer",
-        "x": 38.5,
-        "y": 12.5,
-        "vx": -7.299938238556873,
-        "vy": 8.295384361996446,
+        "x": 37.5,
+        "y": 29.5,
+        "vx": -8.193970359317671,
+        "vy": -7.413592229858845,
         "radius": 0.3,
         "course": "field-course.v2"
       }
     ],
-    "objectives": [],
+    "objectives": [
+      {
+        "id": "relay",
+        "x": 8.5,
+        "y": 27.5,
+        "required": true,
+        "hidden": false
+      }
+    ],
     "supplies": [
       {
         "id": "home",
@@ -46,7 +65,7 @@
       }
     ],
     "goal": {
-      "coverage": 0.62
+      "coverage": 0.74
     },
     "rules": {
       "lives": 3,
@@ -57,13 +76,34 @@
       "playerRadius": 0.18,
       "pointsPerCell": 10,
       "objectivePoints": 500,
-      "timeMedals": [50, 89],
+      "timeMedals": [70, 121],
       "switchCooldownSeconds": 2,
-      "timeLimitSeconds": 0,
-      "cutTimeLimitSeconds": 0,
-      "maxTrailCells": 0
+      "timeLimitSeconds": 95,
+      "cutTimeLimitSeconds": 8,
+      "maxTrailCells": 60
     },
-    "signalZones": [],
+    "signalZones": [
+      {
+        "id": "north-emitter",
+        "x": 5,
+        "y": 7,
+        "w": 8,
+        "h": 8,
+        "speedFactor": 0.5,
+        "disableBoost": true,
+        "lockAbility": true
+      },
+      {
+        "id": "east-emitter",
+        "x": 31,
+        "y": 20,
+        "w": 8,
+        "h": 8,
+        "speedFactor": 0.5,
+        "disableBoost": false,
+        "lockAbility": false
+      }
+    ],
     "hangars": [
       {
         "id": "home-hangar",
@@ -74,9 +114,9 @@
     ]
   },
   "options": {
-    "seed": 135,
+    "seed": 288,
     "turnPolicy": "immediate",
-    "classId": "carrier",
+    "classId": "fiber",
     "classRecipes": [
       {
         "id": "scout",
@@ -162,7 +202,7 @@
   },
   "segments": [
     {
-      "ticks": 66,
+      "ticks": 192,
       "input": {
         "direction": null,
         "boost": false,
@@ -173,7 +213,7 @@
       "releaseBefore": false
     },
     {
-      "ticks": 217,
+      "ticks": 285,
       "input": {
         "direction": "right",
         "boost": false,
@@ -184,40 +224,7 @@
       "releaseBefore": false
     },
     {
-      "ticks": 39,
-      "input": {
-        "direction": "down",
-        "boost": false,
-        "action": false,
-        "pickup": false,
-        "switchClass": null
-      },
-      "releaseBefore": false
-    },
-    {
-      "ticks": 1,
-      "input": {
-        "direction": "up",
-        "boost": false,
-        "action": false,
-        "pickup": false,
-        "switchClass": null
-      },
-      "releaseBefore": false
-    },
-    {
-      "ticks": 167,
-      "input": {
-        "direction": null,
-        "boost": false,
-        "action": false,
-        "pickup": false,
-        "switchClass": null
-      },
-      "releaseBefore": false
-    },
-    {
-      "ticks": 217,
+      "ticks": 68,
       "input": {
         "direction": "left",
         "boost": false,
@@ -241,7 +248,7 @@
     {
       "ticks": 16,
       "input": {
-        "direction": "right",
+        "direction": "left",
         "boost": false,
         "action": false,
         "pickup": false,
@@ -252,7 +259,7 @@
     {
       "ticks": 1,
       "input": {
-        "direction": "left",
+        "direction": "right",
         "boost": false,
         "action": false,
         "pickup": false,
@@ -261,7 +268,7 @@
       "releaseBefore": false
     },
     {
-      "ticks": 113,
+      "ticks": 268,
       "input": {
         "direction": null,
         "boost": false,
@@ -272,9 +279,9 @@
       "releaseBefore": false
     },
     {
-      "ticks": 73,
+      "ticks": 272,
       "input": {
-        "direction": "down",
+        "direction": "right",
         "boost": false,
         "action": false,
         "pickup": false,
@@ -283,9 +290,9 @@
       "releaseBefore": false
     },
     {
-      "ticks": 1,
+      "ticks": 360,
       "input": {
-        "direction": "up",
+        "direction": null,
         "boost": false,
         "action": false,
         "pickup": false,
@@ -295,33 +302,33 @@
     }
   ],
   "releaseAfter": false,
-  "ticks": 957,
+  "ticks": 1508,
   "summary": {
     "ruleset": "xonix-core.v2",
-    "levelId": "signal-03",
-    "revision": "gp4s-3ff00000000000003ff00000000000003ff0000000000000-3f32e7df15deb15a",
-    "seed": 135,
+    "levelId": "signal-12",
+    "revision": "gp4s-3ff00000000000003ff00000000000003ff0000000000000-9c8079284ade3e63",
+    "seed": 288,
     "turnPolicy": "immediate",
-    "classId": "carrier",
-    "activeClassId": "carrier",
+    "classId": "fiber",
+    "activeClassId": "fiber",
     "rosterHash": "roster-v1-e159e435",
     "classHistory": [
       {
-        "classId": "carrier",
+        "classId": "fiber",
         "classRevision": "1",
-        "loadoutHash": "loadout-v1-fec92391",
+        "loadoutHash": "loadout-v1-85870cc1",
         "tick": 0
       }
     ],
     "switches": 0,
-    "failureCause": "self-contact",
+    "failureCause": "boss-lane",
     "classRevision": "1",
-    "loadoutHash": "loadout-v1-fec92391",
-    "status": "lost",
+    "loadoutHash": "loadout-v1-85870cc1",
+    "status": "running",
     "won": false,
-    "tick": 957,
-    "time": 7.966666666666852,
-    "lives": 0,
+    "tick": 1508,
+    "time": 12.566666666666594,
+    "lives": 2,
     "score": 0,
     "coverage": 0,
     "claimedCount": 0,
@@ -329,26 +336,26 @@
     "medal": null,
     "objectives": {
       "captured": 0,
-      "total": 0,
-      "required": 0
+      "total": 1,
+      "required": 1
     }
   },
   "checkpoint": {
     "algorithm": "fnv1a64-state-v2",
-    "hash": "fdee75689e05b11b",
+    "hash": "a2606b00d75258e1",
     "sections": {
-      "identity": "194f1f2b78da449f",
-      "configuration": "61a6209fd8770362",
+      "identity": "8bd89998d12c6af4",
+      "configuration": "b0233d4bc795b91a",
       "board": "fdfff9d1d17aa722",
-      "player": "0ec87e65d989559d",
+      "player": "cb84996accfd153f",
       "trail": "f0ca473df9efdcc8",
-      "enemies": "11dd2861c8be3c9c",
-      "objectives": "09612b07b5ecb5a5",
+      "enemies": "6de7cada1fb460e5",
+      "objectives": "78aab013f053ee08",
       "supplies": "e1b45854413ff5f8",
-      "ability": "cd680eb98ef43120",
-      "clock": "25f357a414748ad3",
-      "continuation": "a9d828ced6380d30",
-      "result": "e29355a72e20f0b3"
+      "ability": "e258bef57b822d1a",
+      "clock": "330d0c9e60c9bd84",
+      "continuation": "a1e7286b42b404e7",
+      "result": "5b9bc4ba528108e4"
     }
   }
 }
