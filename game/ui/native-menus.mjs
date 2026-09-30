@@ -256,51 +256,34 @@ export function prepareNativeMenus({
     container: panels.content,
   });
   listeners.push(() => updates.dispose());
+  const communities = make('a', 'button secondary');
+  communities.id = `${mode}-communities`;
+  // A compiled company app contains only its own catalogue and has a narrow
+  // manifest scope. The main app's community routes share its broad scope.
+  const standaloneEdition = !!doc.documentElement?.dataset.editionId;
+  communities.href = standaloneEdition
+    ? 'https://mekhovov.github.io/revealline/game/communities/'
+    : communityDirectoryURL(
+        doc.defaultView?.location?.href || new URL('../index.html', import.meta.url),
+        new URL('../community-routes.mjs', import.meta.url),
+      ).href;
+  localizedText(communities, () =>
+    t(
+      standaloneEdition
+        ? 'interface:communityDirectory.onlineMenuLabel'
+        : 'interface:communityDirectory.menuLabel',
+    ),
+  );
+  setMenuIcon(communities, 'team');
+  communities.hidden = new URL(
+    doc.defaultView?.location?.href || 'https://local.invalid/',
+  ).searchParams.has('course');
+  panels.content.append(communities);
   if (actions) {
     actions.classList.add('native-menu-actions');
     actions.dataset.menuLayout = 'vertical';
     actions.dataset.menuEdgeExit = 'true';
     actions.dataset.menuScope = 'landing';
-    const communities = make('a', 'button secondary');
-    communities.id = `${mode}-communities`;
-    // A compiled company app contains only its own catalogue and has a narrow
-    // manifest scope. The main app's community routes share its broad scope.
-    const standaloneEdition = !!doc.documentElement?.dataset.editionId;
-    communities.href = standaloneEdition
-      ? 'https://mekhovov.github.io/revealline/game/communities/'
-      : communityDirectoryURL(
-          doc.defaultView?.location?.href || new URL('../index.html', import.meta.url),
-          new URL('../community-routes.mjs', import.meta.url),
-        ).href;
-    localizedText(communities, () =>
-      t(
-        standaloneEdition
-          ? 'interface:communityDirectory.onlineMenuLabel'
-          : 'interface:communityDirectory.menuLabel',
-      ),
-    );
-    setMenuIcon(communities, 'team');
-    const options = $(
-      mode === 'solo' ? 'shell-options' : mode === 'versus' ? 'race-options' : 'coop-settings-open',
-    );
-    actions.insertBefore(communities, options?.parentNode === actions ? options : null);
-    const checkUpdates = make('button', 'button secondary');
-    checkUpdates.id = `${mode}-updates`;
-    checkUpdates.type = 'button';
-    localizedText(checkUpdates, () => t('interface:updates.check'));
-    setMenuIcon(checkUpdates, 'content');
-    checkUpdates.onclick = () => {
-      options?.click();
-      $(`${prefix}-tab-content`)?.click();
-      updates.button.click();
-      updates.button.focus();
-    };
-    checkUpdates.hidden =
-      updates.button.hidden ||
-      new URL(doc.defaultView?.location?.href || 'https://local.invalid/').searchParams.has(
-        'course',
-      );
-    actions.insertBefore(checkUpdates, options?.parentNode === actions ? options : null);
   }
   const utilities = make('div', 'native-menu-utilities');
   utilities.dataset.menuLayout = 'horizontal';
