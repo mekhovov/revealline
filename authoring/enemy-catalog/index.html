@@ -14,6 +14,22 @@
     <script type="module" src="../../game/presentation/page-entry.mjs"></script>
     <link rel="stylesheet" href="../../game/ui/operation-status.css" />
     <style>
+      .catalog-host-actions {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 16px;
+      }
+      .catalog-host-actions > :is(button, a) {
+        box-sizing: border-box;
+        display: inline-flex;
+        align-items: center;
+        min-block-size: 44px;
+        min-inline-size: 44px;
+        max-inline-size: 100%;
+        white-space: normal;
+        overflow-wrap: anywhere;
+      }
       #catalog-host-status + .button {
         box-sizing: border-box;
         padding-block: 0;
@@ -50,33 +66,31 @@
       Preview every registered role, prepare future generator choices and try a separate practice
       map.
     </p>
-    <button id="open-catalog" disabled type="button" data-i18n="tools:openWorkshop">
-      Open workshop
-    </button>
-    <a
-      href="../../game/playground/"
-      style="display: inline-flex; align-items: center; min-height: 44px"
-      data-workshop-tool="playground"
-      data-i18n="tools:levelPlayground"
-      >Level playground</a
-    >
-    <a
-      id="return-game"
-      class="button"
-      href="../../game/?workshop=enemy-catalog"
-      style="display: inline-flex; align-items: center; min-height: 44px"
-      data-workshop-return="workshop"
-      inert
-      aria-disabled="true"
-      data-i18n="common:navigation.returnToWorkshop"
-      >Return to Workshop</a
-    >
-    <a data-workshop-return="game" href="../../game/" data-i18n="tools:returnToGame"
-      >Return to game</a
-    >
-    <a href="../game-feel-lab/" style="display: inline-flex; align-items: center; min-height: 44px"
-      >Feedback comparison</a
-    >
+    <div class="catalog-host-actions">
+      <button id="open-catalog" disabled type="button" data-i18n="tools:openWorkshop">
+        Open workshop
+      </button>
+      <a
+        href="../../game/playground/"
+        data-workshop-tool="playground"
+        data-i18n="tools:levelPlayground"
+        >Level playground</a
+      >
+      <a
+        id="return-game"
+        class="button"
+        href="../../game/?workshop=enemy-catalog"
+        data-workshop-return="workshop"
+        inert
+        aria-disabled="true"
+        data-i18n="common:navigation.returnToWorkshop"
+        >Return to Workshop</a
+      >
+      <a data-workshop-return="game" href="../../game/" data-i18n="tools:returnToGame"
+        >Return to game</a
+      >
+      <a href="../game-feel-lab/">Feedback comparison</a>
+    </div>
     <p id="catalog-host-status" class="operation-status" data-state="busy">
       <span class="operation-status-signal" aria-hidden="true"><i></i><i></i><i></i></span
       ><span class="operation-status-label" role="status" data-i18n="tools:loadingRegisteredThemes"

@@ -16,6 +16,20 @@ An untouched foreground visit opens the workshop automatically when registered t
 
 Back and Escape inside the catalog still close its dialog; they do not navigate away. When an untouched visit opened the catalog automatically, closing returns focus to the now-enabled Open workshop button, so forward page traversal can continue to Level playground and Return to game. Explicit opening retains its actual invoker. Only the current foreground close owns that restoration: an already closed panel, a reopened dialog, a newer close-listener focus choice or a child practice owner must not revive an earlier return target. The practice iframe retains its existing input and scoped Return to workshop bridge. The page's shared controller navigation can select Return to game after successful startup and once the dialog is closed; before startup completes or after it fails, the link remains an ordinary keyboard/pointer action.
 
+The five page actions stay in their existing order: Open workshop, Level playground,
+Return to Workshop, Return to game and Feedback comparison. They share a wrapping
+layout with a 16px gap on both axes and at least 44px targets. That gap clears the
+shared outward focus paint, including after Escape restores the Open action. Long
+labels wrap without shrinking the chosen text size. Preserve all current language
+and Workshop-return bindings when adapting earlier three-action proposals.
+
+Layout review prompt: “At 320/390 portrait and 844 landscape, open the catalog,
+move from Role to Presentation, then Escape. Verify the Open action owns visible
+focus; Tab through enabled actions in their unchanged order, and all five when a
+valid Workshop return context enables that link. Never remove its inert guard. Repeat in English
+and Ukrainian, Theme/Plain and Standard/Large. Check target bounds and horizontal
+overflow; record browser evidence separately from physical input and public play.”
+
 Maintenance prompt: “Hold the real theme request, focus Return to game, then succeed; verify readiness and neutral controller frames retain that focus without opening a modal. Repeat with an untouched visit, existing Return focus, keyboard/pointer intent and leave/return during loading. Then hold and fail the request and verify Return to game is still a usable same-edition link without running authoring handlers. On an untouched ready visit, close through Escape and Back, verify Open workshop owns focus, then traverse forward to Level playground and Return to game. Repeat Back after choosing Return and preserve that newer focus. With an explicitly opened workshop, close through Back, reach the link by keyboard and modeled controller, and verify activation neither applies the draft nor writes player progress. Keep modal and practice input ownership intact. Check target size, focus visibility and actual navigation in portrait/short landscape separately from DOM tests.”
 
 ## Role contracts and art bindings
