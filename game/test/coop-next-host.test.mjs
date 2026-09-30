@@ -1,3 +1,4 @@
+import { FIXED_DT } from '../coop/core.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { COOP_PICTURE_BINDINGS } from '../couch/coop-picture-bindings.mjs';
@@ -60,6 +61,10 @@ test('earned First Connection focuses Next and one explicit action prepares and 
   assert.equal(f.$('coop-menu').hidden, false);
   assert.equal(f.$('coop-play').hidden, true);
   assert.equal(f.doc.activeElement.id, 'coop-start');
+  assert.equal(Boolean(f.$('coop-menu-goal').closest('[hidden],[inert]')), false);
+  f.$('coop-settings-open').click();
+  f.$('coop-settings-tab-extras').click();
+  f.disclose('coop-help');
   assertYardBriefing(f, { visible: true });
 });
 
@@ -71,7 +76,7 @@ function assertYardBriefing(f, { visible = false } = {}) {
   assert.equal(f.$('coop-briefing-title').textContent, 'TAKE THE STRONGHOLD TOGETHER');
   assert.match(f.$('coop-menu-goal').textContent, /both anchors, then the exposed core/i);
   if (visible) {
-    for (const node of [help, f.$('coop-briefing-title'), f.$('coop-menu-goal')])
+    for (const node of [help, f.$('coop-briefing-title')])
       assert.equal(Boolean(node.closest('[hidden],[inert]')), false);
   }
 }
@@ -234,7 +239,9 @@ test('menu, lifecycle, mode departure and newer focus retire a pending Next with
         menuPad.buttons[0] = { pressed: true, value: 1 };
         f.tick(2);
         menuPad.buttons[0] = { pressed: false, value: 0 };
-        f.tick(2);
+        // This case joins by controller, then deliberately activates Next by
+        // keyboard. Advance beyond the 1250 ms native Confirm echo window.
+        f.tick(Math.ceil(1.5 / FIXED_DT));
         assertResult(f, result);
       }
       const held = control.hold();
