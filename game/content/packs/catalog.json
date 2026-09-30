@@ -246,6 +246,10 @@
             {
               "id": "neon-switchback-pack",
               "name": "Neon Switchback"
+            },
+            {
+              "id": "neon-spirals-pack",
+              "name": "Neon Spirals"
             }
           ]
         }

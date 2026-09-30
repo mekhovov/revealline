@@ -1319,12 +1319,12 @@
       "packVersion": "1.0.0"
     },
     {
-      "id": "classic/bundled/neon-reference-pack/neon-reference%2F1%2F9d7c4b27bce5f27c/neon-channels-pack/1",
+      "id": "classic/bundled/neon-reference-pack/neon-reference%2F1%2Fbfc147b3708f58e7/neon-channels-pack/1",
       "source": "bundled",
       "packId": "neon-reference-pack",
       "campaignId": "neon-reference",
       "campaignRevision": "1",
-      "campaignKey": "neon-reference/1/9d7c4b27bce5f27c",
+      "campaignKey": "neon-reference/1/bfc147b3708f58e7",
       "levelId": "neon-channels-pack",
       "levelRevision": "1",
       "levelIndex": 0,
@@ -1351,22 +1351,22 @@
       "difficultiesByMode": { "solo": ["standard", "gentle"], "versus": ["standard"] },
       "sourceFile": {
         "path": "game/content/packs/neon-reference-pack.json",
-        "bytes": 101299,
-        "sha256": "68c05a6b1b1add921d93f90cd1664e8754d50dc85299666582cc7eab75e15aa2"
+        "bytes": 108979,
+        "sha256": "b29bf41a748aca2b673b418400a4138a80ba03df98f4abe317ca91c127feddff"
       },
       "packIdentity": {
-        "bytes": 65673,
-        "sha256": "013dd36d2b96543018629094d90ba5193668dc233f251ed5c71f50b816bd35af"
+        "bytes": 70844,
+        "sha256": "776503ba58de98e0eee6afdc611f10dac65efe5284cd789de54113ad9d9d3f8c"
       },
       "packVersion": "1.0.0"
     },
     {
-      "id": "classic/bundled/neon-reference-pack/neon-reference%2F1%2F9d7c4b27bce5f27c/neon-crossroads-pack/1",
+      "id": "classic/bundled/neon-reference-pack/neon-reference%2F1%2Fbfc147b3708f58e7/neon-crossroads-pack/1",
       "source": "bundled",
       "packId": "neon-reference-pack",
       "campaignId": "neon-reference",
       "campaignRevision": "1",
-      "campaignKey": "neon-reference/1/9d7c4b27bce5f27c",
+      "campaignKey": "neon-reference/1/bfc147b3708f58e7",
       "levelId": "neon-crossroads-pack",
       "levelRevision": "1",
       "levelIndex": 1,
@@ -1393,22 +1393,22 @@
       "difficultiesByMode": { "solo": ["standard", "gentle"], "versus": ["standard"] },
       "sourceFile": {
         "path": "game/content/packs/neon-reference-pack.json",
-        "bytes": 101299,
-        "sha256": "68c05a6b1b1add921d93f90cd1664e8754d50dc85299666582cc7eab75e15aa2"
+        "bytes": 108979,
+        "sha256": "b29bf41a748aca2b673b418400a4138a80ba03df98f4abe317ca91c127feddff"
       },
       "packIdentity": {
-        "bytes": 65673,
-        "sha256": "013dd36d2b96543018629094d90ba5193668dc233f251ed5c71f50b816bd35af"
+        "bytes": 70844,
+        "sha256": "776503ba58de98e0eee6afdc611f10dac65efe5284cd789de54113ad9d9d3f8c"
       },
       "packVersion": "1.0.0"
     },
     {
-      "id": "classic/bundled/neon-reference-pack/neon-reference%2F1%2F9d7c4b27bce5f27c/neon-hearts-pack/1",
+      "id": "classic/bundled/neon-reference-pack/neon-reference%2F1%2Fbfc147b3708f58e7/neon-hearts-pack/1",
       "source": "bundled",
       "packId": "neon-reference-pack",
       "campaignId": "neon-reference",
       "campaignRevision": "1",
-      "campaignKey": "neon-reference/1/9d7c4b27bce5f27c",
+      "campaignKey": "neon-reference/1/bfc147b3708f58e7",
       "levelId": "neon-hearts-pack",
       "levelRevision": "1",
       "levelIndex": 2,
@@ -1434,22 +1434,22 @@
       "difficultiesByMode": { "solo": ["standard", "gentle"], "versus": ["standard"] },
       "sourceFile": {
         "path": "game/content/packs/neon-reference-pack.json",
-        "bytes": 101299,
-        "sha256": "68c05a6b1b1add921d93f90cd1664e8754d50dc85299666582cc7eab75e15aa2"
+        "bytes": 108979,
+        "sha256": "b29bf41a748aca2b673b418400a4138a80ba03df98f4abe317ca91c127feddff"
       },
       "packIdentity": {
-        "bytes": 65673,
-        "sha256": "013dd36d2b96543018629094d90ba5193668dc233f251ed5c71f50b816bd35af"
+        "bytes": 70844,
+        "sha256": "776503ba58de98e0eee6afdc611f10dac65efe5284cd789de54113ad9d9d3f8c"
       },
       "packVersion": "1.0.0"
     },
     {
-      "id": "classic/bundled/neon-reference-pack/neon-reference%2F1%2F9d7c4b27bce5f27c/neon-labyrinth-pack/1",
+      "id": "classic/bundled/neon-reference-pack/neon-reference%2F1%2Fbfc147b3708f58e7/neon-labyrinth-pack/1",
       "source": "bundled",
       "packId": "neon-reference-pack",
       "campaignId": "neon-reference",
       "campaignRevision": "1",
-      "campaignKey": "neon-reference/1/9d7c4b27bce5f27c",
+      "campaignKey": "neon-reference/1/bfc147b3708f58e7",
       "levelId": "neon-labyrinth-pack",
       "levelRevision": "1",
       "levelIndex": 3,
@@ -1475,22 +1475,22 @@
       "difficultiesByMode": { "solo": ["standard", "gentle"], "versus": ["standard"] },
       "sourceFile": {
         "path": "game/content/packs/neon-reference-pack.json",
-        "bytes": 101299,
-        "sha256": "68c05a6b1b1add921d93f90cd1664e8754d50dc85299666582cc7eab75e15aa2"
+        "bytes": 108979,
+        "sha256": "b29bf41a748aca2b673b418400a4138a80ba03df98f4abe317ca91c127feddff"
       },
       "packIdentity": {
-        "bytes": 65673,
-        "sha256": "013dd36d2b96543018629094d90ba5193668dc233f251ed5c71f50b816bd35af"
+        "bytes": 70844,
+        "sha256": "776503ba58de98e0eee6afdc611f10dac65efe5284cd789de54113ad9d9d3f8c"
       },
       "packVersion": "1.0.0"
     },
     {
-      "id": "classic/bundled/neon-reference-pack/neon-reference%2F1%2F9d7c4b27bce5f27c/neon-arrows-pack/1",
+      "id": "classic/bundled/neon-reference-pack/neon-reference%2F1%2Fbfc147b3708f58e7/neon-arrows-pack/1",
       "source": "bundled",
       "packId": "neon-reference-pack",
       "campaignId": "neon-reference",
       "campaignRevision": "1",
-      "campaignKey": "neon-reference/1/9d7c4b27bce5f27c",
+      "campaignKey": "neon-reference/1/bfc147b3708f58e7",
       "levelId": "neon-arrows-pack",
       "levelRevision": "1",
       "levelIndex": 4,
@@ -1516,22 +1516,22 @@
       "difficultiesByMode": { "solo": ["standard", "gentle"], "versus": ["standard"] },
       "sourceFile": {
         "path": "game/content/packs/neon-reference-pack.json",
-        "bytes": 101299,
-        "sha256": "68c05a6b1b1add921d93f90cd1664e8754d50dc85299666582cc7eab75e15aa2"
+        "bytes": 108979,
+        "sha256": "b29bf41a748aca2b673b418400a4138a80ba03df98f4abe317ca91c127feddff"
       },
       "packIdentity": {
-        "bytes": 65673,
-        "sha256": "013dd36d2b96543018629094d90ba5193668dc233f251ed5c71f50b816bd35af"
+        "bytes": 70844,
+        "sha256": "776503ba58de98e0eee6afdc611f10dac65efe5284cd789de54113ad9d9d3f8c"
       },
       "packVersion": "1.0.0"
     },
     {
-      "id": "classic/bundled/neon-reference-pack/neon-reference%2F1%2F9d7c4b27bce5f27c/neon-chambers-pack/1",
+      "id": "classic/bundled/neon-reference-pack/neon-reference%2F1%2Fbfc147b3708f58e7/neon-chambers-pack/1",
       "source": "bundled",
       "packId": "neon-reference-pack",
       "campaignId": "neon-reference",
       "campaignRevision": "1",
-      "campaignKey": "neon-reference/1/9d7c4b27bce5f27c",
+      "campaignKey": "neon-reference/1/bfc147b3708f58e7",
       "levelId": "neon-chambers-pack",
       "levelRevision": "1",
       "levelIndex": 5,
@@ -1557,22 +1557,22 @@
       "difficultiesByMode": { "solo": ["standard", "gentle"], "versus": ["standard"] },
       "sourceFile": {
         "path": "game/content/packs/neon-reference-pack.json",
-        "bytes": 101299,
-        "sha256": "68c05a6b1b1add921d93f90cd1664e8754d50dc85299666582cc7eab75e15aa2"
+        "bytes": 108979,
+        "sha256": "b29bf41a748aca2b673b418400a4138a80ba03df98f4abe317ca91c127feddff"
       },
       "packIdentity": {
-        "bytes": 65673,
-        "sha256": "013dd36d2b96543018629094d90ba5193668dc233f251ed5c71f50b816bd35af"
+        "bytes": 70844,
+        "sha256": "776503ba58de98e0eee6afdc611f10dac65efe5284cd789de54113ad9d9d3f8c"
       },
       "packVersion": "1.0.0"
     },
     {
-      "id": "classic/bundled/neon-reference-pack/neon-reference%2F1%2F9d7c4b27bce5f27c/neon-crossgrid-pack/1",
+      "id": "classic/bundled/neon-reference-pack/neon-reference%2F1%2Fbfc147b3708f58e7/neon-crossgrid-pack/1",
       "source": "bundled",
       "packId": "neon-reference-pack",
       "campaignId": "neon-reference",
       "campaignRevision": "1",
-      "campaignKey": "neon-reference/1/9d7c4b27bce5f27c",
+      "campaignKey": "neon-reference/1/bfc147b3708f58e7",
       "levelId": "neon-crossgrid-pack",
       "levelRevision": "1",
       "levelIndex": 6,
@@ -1598,22 +1598,22 @@
       "difficultiesByMode": { "solo": ["standard", "gentle"], "versus": ["standard"] },
       "sourceFile": {
         "path": "game/content/packs/neon-reference-pack.json",
-        "bytes": 101299,
-        "sha256": "68c05a6b1b1add921d93f90cd1664e8754d50dc85299666582cc7eab75e15aa2"
+        "bytes": 108979,
+        "sha256": "b29bf41a748aca2b673b418400a4138a80ba03df98f4abe317ca91c127feddff"
       },
       "packIdentity": {
-        "bytes": 65673,
-        "sha256": "013dd36d2b96543018629094d90ba5193668dc233f251ed5c71f50b816bd35af"
+        "bytes": 70844,
+        "sha256": "776503ba58de98e0eee6afdc611f10dac65efe5284cd789de54113ad9d9d3f8c"
       },
       "packVersion": "1.0.0"
     },
     {
-      "id": "classic/bundled/neon-reference-pack/neon-reference%2F1%2F9d7c4b27bce5f27c/neon-switchback-pack/1",
+      "id": "classic/bundled/neon-reference-pack/neon-reference%2F1%2Fbfc147b3708f58e7/neon-switchback-pack/1",
       "source": "bundled",
       "packId": "neon-reference-pack",
       "campaignId": "neon-reference",
       "campaignRevision": "1",
-      "campaignKey": "neon-reference/1/9d7c4b27bce5f27c",
+      "campaignKey": "neon-reference/1/bfc147b3708f58e7",
       "levelId": "neon-switchback-pack",
       "levelRevision": "1",
       "levelIndex": 7,
@@ -1639,12 +1639,53 @@
       "difficultiesByMode": { "solo": ["standard", "gentle"], "versus": ["standard"] },
       "sourceFile": {
         "path": "game/content/packs/neon-reference-pack.json",
-        "bytes": 101299,
-        "sha256": "68c05a6b1b1add921d93f90cd1664e8754d50dc85299666582cc7eab75e15aa2"
+        "bytes": 108979,
+        "sha256": "b29bf41a748aca2b673b418400a4138a80ba03df98f4abe317ca91c127feddff"
       },
       "packIdentity": {
-        "bytes": 65673,
-        "sha256": "013dd36d2b96543018629094d90ba5193668dc233f251ed5c71f50b816bd35af"
+        "bytes": 70844,
+        "sha256": "776503ba58de98e0eee6afdc611f10dac65efe5284cd789de54113ad9d9d3f8c"
+      },
+      "packVersion": "1.0.0"
+    },
+    {
+      "id": "classic/bundled/neon-reference-pack/neon-reference%2F1%2Fbfc147b3708f58e7/neon-spirals-pack/1",
+      "source": "bundled",
+      "packId": "neon-reference-pack",
+      "campaignId": "neon-reference",
+      "campaignRevision": "1",
+      "campaignKey": "neon-reference/1/bfc147b3708f58e7",
+      "levelId": "neon-spirals-pack",
+      "levelRevision": "1",
+      "levelIndex": 8,
+      "name": "Neon Spirals",
+      "campaignTitle": "Neon Reference Pack",
+      "edition": "Neon Reference Pack",
+      "themeId": "retro",
+      "modes": ["solo", "versus"],
+      "tags": ["Classic", "Arcade"],
+      "rules": "75% coverage · 3 lives · 10 cells/s · No mission countdown · Direction-only Arcade · 6 enemies",
+      "ruleDetails": {
+        "ruleset": "xonix-core.v6",
+        "coverage": 0.75,
+        "lives": 3,
+        "moveSpeed": 10,
+        "timeLimitSeconds": 0,
+        "enemies": [
+          { "type": "bouncer", "count": 4 },
+          { "type": "border-patrol", "count": 2 }
+        ],
+        "requiredObjectives": 0
+      },
+      "difficultiesByMode": { "solo": ["standard", "gentle"], "versus": ["standard"] },
+      "sourceFile": {
+        "path": "game/content/packs/neon-reference-pack.json",
+        "bytes": 108979,
+        "sha256": "b29bf41a748aca2b673b418400a4138a80ba03df98f4abe317ca91c127feddff"
+      },
+      "packIdentity": {
+        "bytes": 70844,
+        "sha256": "776503ba58de98e0eee6afdc611f10dac65efe5284cd789de54113ad9d9d3f8c"
       },
       "packVersion": "1.0.0"
     },
