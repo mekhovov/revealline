@@ -2,7 +2,11 @@ import { boundedJSON, canonicalJSON, dataIdentity, exactKeys, required } from '.
 import { normalizedLevel } from './core/level.mjs';
 import { foundationGeometry } from './core/foundations.mjs';
 import { validateCoopLevel } from './coop/core.mjs';
-import { compileCoopFoundationGeometry, isJourneyTeamLevel } from './coop/foundations.mjs';
+import {
+  compileCoopFoundationGeometry,
+  hasTeamLineImpacts,
+  isJourneyTeamLevel,
+} from './coop/foundations.mjs';
 import * as historical from './gameplay-tuning-v1.mjs';
 import * as v2 from './gameplay-tuning-v2.mjs';
 import * as v3 from './gameplay-tuning-v3.mjs';
@@ -481,7 +485,10 @@ function tuneGameplay(source, snapshot, vectorMagnitude) {
       1,
       7200,
     );
-  if (team && level.enemies.some((enemy) => enemy.type === 'hunter'))
+  // Team v6/v7 allow Hunters but forbid encounter overrides. Keep their native
+  // attack timing/speed instead of making an accepted import invalid at Start.
+  // Earlier successful outputs and frozen tuning adapters stay unchanged.
+  if (team && !hasTeamLineImpacts(level) && level.enemies.some((enemy) => enemy.type === 'hunter'))
     level.encounter = {
       ...level.encounter,
       hunterAttackSpeed: clamp((level.encounter?.hunterAttackSpeed ?? 8) * unmeasuredSpeed, 6, 14),
