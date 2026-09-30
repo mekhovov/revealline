@@ -1,0 +1,683 @@
+{
+  "format": "FPVAcademyDemonstrationVerification.v1",
+  "date": "2026-09-30",
+  "build": {
+    "format": "FPVPlaytestBuild.v1",
+    "entry": "optional-practice/fpv-worlds/index.html",
+    "files": 73,
+    "bytes": 8954056,
+    "zipSha256": "6783f9c1e7fa1549baaa4cda8b7d65b65e7c06275b5af8edc7d762944b10406f",
+    "qualification": "development-playtest",
+    "unitTests": "deferred-to-final-phase",
+    "releaseQualified": false
+  },
+  "browser": {
+    "catalogue": {
+      "replay": null,
+      "records": [],
+      "catalogue": 60
+    },
+    "examples": 12,
+    "storageBefore": {
+      "databases": {
+        "revealline-fpv-worlds-v1": {
+          "assets": 0,
+          "meta": 0,
+          "projects": 0,
+          "revisions": 0
+        },
+        "revealline-journey-v1": {
+          "profiles": 1
+        },
+        "revealline.fpv.world-records.v1": {
+          "records": 0,
+          "session": 0
+        }
+      },
+      "preferences": {}
+    },
+    "initialDemo": {
+      "course": "flight-01",
+      "state": {
+        "ticks": 7,
+        "status": "paused",
+        "position": {
+          "x": 0,
+          "y": 55,
+          "z": 0
+        },
+        "velocity": {
+          "x": 0,
+          "y": 654,
+          "z": 0
+        },
+        "orientation": [
+          0,
+          0,
+          0,
+          1000000
+        ],
+        "angular": {
+          "roll": 0,
+          "pitch": 0,
+          "yaw": 0
+        },
+        "step": 0,
+        "hold": 0,
+        "contacts": 0,
+        "landingSpeed": 0,
+        "landingTilt": 0,
+        "lastInput": {
+          "roll": 0,
+          "pitch": 0,
+          "yaw": 0,
+          "throttle": 707
+        },
+        "heightRange": {
+          "min": 0,
+          "max": 55
+        },
+        "total": 2,
+        "target": {
+          "type": "hold",
+          "min": {
+            "x": -1100,
+            "y": 1200,
+            "z": -1100
+          },
+          "max": {
+            "x": 1100,
+            "y": 2400,
+            "z": 1100
+          },
+          "ticks": 40,
+          "maxSpeed": 2200,
+          "maxTilt": 4500,
+          "minTilt": 0,
+          "centred": false,
+          "heading": null
+        },
+        "attitude": {
+          "roll": 0,
+          "pitch": 0,
+          "yaw": 0,
+          "up": {
+            "x": 0,
+            "y": 1000000,
+            "z": 0
+          }
+        }
+      },
+      "replay": {
+        "kind": "demonstration",
+        "mode": "self-level",
+        "rate": 1,
+        "frames": 239,
+        "finished": false
+      },
+      "records": [],
+      "catalogue": 60
+    },
+    "demoControls": "ACADEMY DEMONSTRATION\nPlayback speed\n0.5×\n1×\nFly this challenge",
+    "sourceDisabled": true,
+    "setupDisabled": true,
+    "pausedTicks": 7,
+    "halfSpeed": {
+      "course": "flight-01",
+      "state": {
+        "ticks": 32,
+        "status": "paused",
+        "position": {
+          "x": 0,
+          "y": 686,
+          "z": 0
+        },
+        "velocity": {
+          "x": 0,
+          "y": 1492,
+          "z": 0
+        },
+        "orientation": [
+          0,
+          0,
+          0,
+          1000000
+        ],
+        "angular": {
+          "roll": 0,
+          "pitch": 0,
+          "yaw": 0
+        },
+        "step": 0,
+        "hold": 0,
+        "contacts": 0,
+        "landingSpeed": 0,
+        "landingTilt": 0,
+        "lastInput": {
+          "roll": 0,
+          "pitch": 0,
+          "yaw": 0,
+          "throttle": 514
+        },
+        "heightRange": {
+          "min": 0,
+          "max": 686
+        },
+        "total": 2,
+        "target": {
+          "type": "hold",
+          "min": {
+            "x": -1100,
+            "y": 1200,
+            "z": -1100
+          },
+          "max": {
+            "x": 1100,
+            "y": 2400,
+            "z": 1100
+          },
+          "ticks": 40,
+          "maxSpeed": 2200,
+          "maxTilt": 4500,
+          "minTilt": 0,
+          "centred": false,
+          "heading": null
+        },
+        "attitude": {
+          "roll": 0,
+          "pitch": 0,
+          "yaw": 0,
+          "up": {
+            "x": 0,
+            "y": 1000000,
+            "z": 0
+          }
+        }
+      },
+      "replay": {
+        "kind": "demonstration",
+        "mode": "self-level",
+        "rate": 0.5,
+        "frames": 239,
+        "finished": false
+      },
+      "records": [],
+      "catalogue": 60
+    },
+    "restarted": {
+      "course": "flight-01",
+      "state": {
+        "ticks": 2,
+        "status": "paused",
+        "position": {
+          "x": 0,
+          "y": 6,
+          "z": 0
+        },
+        "velocity": {
+          "x": 0,
+          "y": 213,
+          "z": 0
+        },
+        "orientation": [
+          0,
+          0,
+          0,
+          1000000
+        ],
+        "angular": {
+          "roll": 0,
+          "pitch": 0,
+          "yaw": 0
+        },
+        "step": 0,
+        "hold": 0,
+        "contacts": 0,
+        "landingSpeed": 0,
+        "landingTilt": 0,
+        "lastInput": {
+          "roll": 0,
+          "pitch": 0,
+          "yaw": 0,
+          "throttle": 766
+        },
+        "heightRange": {
+          "min": 0,
+          "max": 6
+        },
+        "total": 2,
+        "target": {
+          "type": "hold",
+          "min": {
+            "x": -1100,
+            "y": 1200,
+            "z": -1100
+          },
+          "max": {
+            "x": 1100,
+            "y": 2400,
+            "z": 1100
+          },
+          "ticks": 40,
+          "maxSpeed": 2200,
+          "maxTilt": 4500,
+          "minTilt": 0,
+          "centred": false,
+          "heading": null
+        },
+        "attitude": {
+          "roll": 0,
+          "pitch": 0,
+          "yaw": 0,
+          "up": {
+            "x": 0,
+            "y": 1000000,
+            "z": 0
+          }
+        }
+      },
+      "replay": {
+        "kind": "demonstration",
+        "mode": "self-level",
+        "rate": 0.5,
+        "frames": 239,
+        "finished": false
+      },
+      "records": [],
+      "catalogue": 60
+    },
+    "completedAcro": {
+      "course": "flight-01",
+      "state": {
+        "ticks": 239,
+        "status": "complete",
+        "position": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "velocity": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "orientation": [
+          0,
+          0,
+          0,
+          1000000
+        ],
+        "angular": {
+          "roll": 0,
+          "pitch": 0,
+          "yaw": 0
+        },
+        "step": 2,
+        "hold": 0,
+        "contacts": 0,
+        "landingSpeed": 383,
+        "landingTilt": 0,
+        "lastInput": {
+          "roll": 0,
+          "pitch": 0,
+          "yaw": 0,
+          "throttle": 0
+        },
+        "heightRange": {
+          "min": 0,
+          "max": 1778
+        },
+        "total": 2,
+        "target": null,
+        "attitude": {
+          "roll": 0,
+          "pitch": 0,
+          "yaw": 0,
+          "up": {
+            "x": 0,
+            "y": 1000000,
+            "z": 0
+          }
+        }
+      },
+      "replay": {
+        "kind": "demonstration",
+        "mode": "acro",
+        "rate": 1,
+        "frames": 239,
+        "finished": true
+      },
+      "records": [],
+      "catalogue": 60
+    },
+    "result": "Demonstration complete\n\nWatching does not change your completion, medals or playlist progress.\n\nFly this challengeWatch again",
+    "storageAfter": {
+      "databases": {
+        "revealline-fpv-worlds-v1": {
+          "assets": 0,
+          "meta": 0,
+          "projects": 0,
+          "revisions": 0
+        },
+        "revealline-journey-v1": {
+          "profiles": 1
+        },
+        "revealline.fpv.world-records.v1": {
+          "records": 0,
+          "session": 0
+        }
+      },
+      "preferences": {}
+    },
+    "practice": {
+      "course": "flight-01",
+      "state": {
+        "ticks": 0,
+        "status": "disarmed",
+        "position": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "velocity": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "orientation": [
+          0,
+          0,
+          0,
+          1000000
+        ],
+        "angular": {
+          "roll": 0,
+          "pitch": 0,
+          "yaw": 0
+        },
+        "step": 0,
+        "hold": 0,
+        "contacts": 0,
+        "landingSpeed": 0,
+        "landingTilt": 0,
+        "lastInput": {
+          "roll": 0,
+          "pitch": 0,
+          "yaw": 0,
+          "throttle": 0
+        },
+        "heightRange": {
+          "min": 0,
+          "max": 0
+        },
+        "total": 2,
+        "target": {
+          "type": "hold",
+          "min": {
+            "x": -1100,
+            "y": 1200,
+            "z": -1100
+          },
+          "max": {
+            "x": 1100,
+            "y": 2400,
+            "z": 1100
+          },
+          "ticks": 40,
+          "maxSpeed": 2200,
+          "maxTilt": 4500,
+          "minTilt": 0,
+          "centred": false,
+          "heading": null
+        },
+        "attitude": {
+          "roll": 0,
+          "pitch": 0,
+          "yaw": 0,
+          "up": {
+            "x": 0,
+            "y": 1000000,
+            "z": 0
+          }
+        }
+      },
+      "replay": null,
+      "records": [],
+      "catalogue": 60
+    },
+    "practiceArmed": {
+      "course": "flight-01",
+      "state": {
+        "ticks": 21,
+        "status": "paused",
+        "position": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "velocity": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "orientation": [
+          0,
+          0,
+          0,
+          1000000
+        ],
+        "angular": {
+          "roll": 0,
+          "pitch": 0,
+          "yaw": 0
+        },
+        "step": 0,
+        "hold": 0,
+        "contacts": 0,
+        "landingSpeed": 0,
+        "landingTilt": 0,
+        "lastInput": {
+          "roll": 0,
+          "pitch": 0,
+          "yaw": 0,
+          "throttle": 140
+        },
+        "heightRange": {
+          "min": 0,
+          "max": 0
+        },
+        "total": 2,
+        "target": {
+          "type": "hold",
+          "min": {
+            "x": -1100,
+            "y": 1200,
+            "z": -1100
+          },
+          "max": {
+            "x": 1100,
+            "y": 2400,
+            "z": 1100
+          },
+          "ticks": 40,
+          "maxSpeed": 2200,
+          "maxTilt": 4500,
+          "minTilt": 0,
+          "centred": false,
+          "heading": null
+        },
+        "attitude": {
+          "roll": 0,
+          "pitch": 0,
+          "yaw": 0,
+          "up": {
+            "x": 0,
+            "y": 1000000,
+            "z": 0
+          }
+        }
+      },
+      "replay": null,
+      "records": [],
+      "catalogue": 60
+    },
+    "ukIntro": "ВАШ ПЕРШИЙ ПОЛІТ\n\nПодивіться зависання. Потім спробуйте самі.\n\nПочніть з Академії: плавно додайте газ, утримуйте дрон у маркері та сідайте. Самовирівнювання допомагає тримати горизонт; Acro зберігає заданий нахил.\n\n24 записані приклади охоплюють 12 завдань Академії в обох режимах. Приклади для нових світів ще готуються.\nSelf-level\nAcro\nПереглянути перший політ\nСпробувати перший політ",
+    "mobile": {
+      "width": 390,
+      "scroll": 390
+    },
+    "errors": []
+  },
+  "offline": {
+    "offline": true,
+    "before": {
+      "course": "flight-01",
+      "state": {
+        "ticks": 5,
+        "status": "paused",
+        "position": {
+          "x": 0,
+          "y": 30,
+          "z": 0
+        },
+        "velocity": {
+          "x": 0,
+          "y": 492,
+          "z": 0
+        },
+        "orientation": [
+          0,
+          0,
+          0,
+          1000000
+        ],
+        "angular": {
+          "roll": 0,
+          "pitch": 0,
+          "yaw": 0
+        },
+        "step": 0,
+        "hold": 0,
+        "contacts": 0,
+        "landingSpeed": 0,
+        "landingTilt": 0,
+        "lastInput": {
+          "roll": 0,
+          "pitch": 0,
+          "yaw": 0,
+          "throttle": 729
+        },
+        "heightRange": {
+          "min": 0,
+          "max": 30
+        },
+        "total": 2,
+        "target": {
+          "type": "hold",
+          "min": {
+            "x": -1100,
+            "y": 1200,
+            "z": -1100
+          },
+          "max": {
+            "x": 1100,
+            "y": 2400,
+            "z": 1100
+          },
+          "ticks": 40,
+          "maxSpeed": 2200,
+          "maxTilt": 4500,
+          "minTilt": 0,
+          "centred": false,
+          "heading": null
+        },
+        "attitude": {
+          "roll": 0,
+          "pitch": 0,
+          "yaw": 0,
+          "up": {
+            "x": 0,
+            "y": 1000000,
+            "z": 0
+          }
+        }
+      },
+      "replay": {
+        "kind": "demonstration",
+        "mode": "self-level",
+        "rate": 1,
+        "frames": 239,
+        "finished": false
+      },
+      "records": [],
+      "catalogue": 60
+    },
+    "final": {
+      "course": "flight-01",
+      "state": {
+        "ticks": 239,
+        "status": "complete",
+        "position": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "velocity": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "orientation": [
+          0,
+          0,
+          0,
+          1000000
+        ],
+        "angular": {
+          "roll": 0,
+          "pitch": 0,
+          "yaw": 0
+        },
+        "step": 2,
+        "hold": 0,
+        "contacts": 0,
+        "landingSpeed": 383,
+        "landingTilt": 0,
+        "lastInput": {
+          "roll": 0,
+          "pitch": 0,
+          "yaw": 0,
+          "throttle": 0
+        },
+        "heightRange": {
+          "min": 0,
+          "max": 1778
+        },
+        "total": 2,
+        "target": null,
+        "attitude": {
+          "roll": 0,
+          "pitch": 0,
+          "yaw": 0,
+          "up": {
+            "x": 0,
+            "y": 1000000,
+            "z": 0
+          }
+        }
+      },
+      "replay": {
+        "kind": "demonstration",
+        "mode": "self-level",
+        "rate": 1,
+        "frames": 239,
+        "finished": true
+      },
+      "records": [],
+      "catalogue": 60
+    },
+    "errors": []
+  },
+  "unitCoverage": "deferred-to-final-phase",
+  "releaseQualified": false
+}
