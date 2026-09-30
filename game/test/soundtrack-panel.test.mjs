@@ -25,7 +25,10 @@ import {
   exportSoundtrackBundle,
 } from '../soundtrack-bundle.mjs';
 import { soundtrackPlaylistShare } from '../soundtrack-share.mjs';
-import { PUBLIC_SOUNDTRACK_STYLE_IDS } from '../soundtrack-style-taxonomy.mjs';
+import {
+  DEFAULT_PUBLIC_SOUNDTRACK_STYLE_IDS,
+  PUBLIC_SOUNDTRACK_STYLE_IDS,
+} from '../soundtrack-style-taxonomy.mjs';
 import {
   fixture,
   memoryIndexedDB,
@@ -2320,6 +2323,15 @@ test('Audio settings expose streamed styles and play a selected style without op
   assert.match(app.settingsRoot.textContent, /Music styles/);
   assert.match(app.settingsRoot.textContent, /Ukrainian · UA/);
   assert.match(app.settingsRoot.textContent, /ФПВ/);
+  for (const style of PUBLIC_SOUNDTRACK_STYLE_IDS) {
+    const expected = DEFAULT_PUBLIC_SOUNDTRACK_STYLE_IDS.includes(style);
+    assert.equal(
+      app.node(`settings-style-${style}`).checked,
+      expected,
+      `${style} settings default`,
+    );
+    assert.equal(app.node(`online-style-${style}`).checked, expected, `${style} archive default`);
+  }
 
   await app.click('settings-styles-none');
   app.node('settings-style-synth').checked = true;
@@ -2341,6 +2353,32 @@ test('Audio settings expose streamed styles and play a selected style without op
   });
   assert.deepEqual((await app.store.read()).library.listening.genres, ['synth90s']);
   assert.match(app.node('settings-style-status').textContent, /Playing 1 matching/);
+});
+
+test('Audio settings render only the song styles available to the active community', async (t) => {
+  const availableStyles = [...DEFAULT_PUBLIC_SOUNDTRACK_STYLE_IDS, 'ukrainian'];
+  const app = await setup(t, {
+    open: false,
+    settings: true,
+    callbacks: {
+      availableStyles,
+      catalogue: emptyCatalogue,
+      onlineCatalogueDownload: {
+        fetch: async () => onlineCatalogueResponse(onlineCatalogueFixture()),
+      },
+    },
+  });
+  await settleOnlineCatalogue(
+    () => !app.node('settings-play-styles').disabled,
+    'the community settings catalogue preload',
+  );
+  assert.equal(app.doc.nodes.has('soundtrack-settings-style-fpv'), false);
+  assert.equal(app.doc.nodes.has('soundtrack-online-style-fpv'), false);
+  assert.equal(app.node('settings-style-ukrainian').checked, false);
+  assert.equal(app.node('online-style-ukrainian').checked, false);
+  await app.click('settings-styles-all');
+  assert.equal(app.node('settings-style-ukrainian').checked, true);
+  assert.equal(app.node('online-style-ukrainian').checked, true);
 });
 
 test('Audio settings restore a saved streamed-style selection after remount', async (t) => {

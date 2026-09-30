@@ -5,6 +5,7 @@ import {
   preparedRevealCurrent,
   preparedRevealDocumentsCurrent,
 } from './prepared-reveal-current-workflow.mjs';
+import { preparedTitleCurrent } from './prepared-title-current-workflow.mjs';
 import {
   nativeLandingDefaultCurrent,
   nativeLandingDroneAidCurrent,
@@ -57,6 +58,7 @@ const value = (p, css) => p.doc.querySelector(css).value;
 export const currentAuthoringCases = {
   preparedRevealCurrent,
   preparedRevealDocumentsCurrent,
+  preparedTitleCurrent,
   ukraineWideCurrent,
   nativeLandingDefaultCurrent,
   nativeLandingDroneAidCurrent,
