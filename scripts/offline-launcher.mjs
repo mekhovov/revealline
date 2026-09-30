@@ -12,6 +12,7 @@ export const LAUNCHER_NAVIGATION_FILES = Object.freeze([
   'ui/controller-confirm-lifecycle.mjs',
   'ui/controller-navigation.mjs',
   'ui/controller-router.mjs',
+  'couch/controller-profiles.mjs',
   'ui/controller-field-editor.mjs',
   'ui/controller-field-editor.css',
   'ui/controller-text-draft.mjs',
