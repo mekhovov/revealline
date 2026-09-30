@@ -63,6 +63,7 @@ async function setup(
   resume.id = `${prefix}-resume`;
   doc.body.append(start, resume, pause);
   const host = attachCouchMusicHost({
+    onlineCatalogueDownload: { fetch: async () => new Response(null, { status: 503 }) },
     document: doc,
     root: doc.body,
     prefix,
@@ -199,7 +200,6 @@ for (const prefix of ['race', 'coop']) {
   test(`${prefix}: quick buttons and B/N preserve music-only Pause through session Start and focus`, async (t) => {
     const f = await setup(t, { prefix, twoTracks: true });
     const toggle = f.doc.getElementById(`${prefix}-quick-music-0-toggle`);
-    const pausedToggle = f.doc.getElementById(`${prefix}-quick-music-1-toggle`);
     const master = f.master.snapshot(),
       writes = f.memory.allPuts.length;
     const resume = f.doc.getElementById(`${prefix}-resume`);
@@ -210,7 +210,7 @@ for (const prefix of ['race', 'coop']) {
     toggle.click();
     assert.equal(f.audio.media.plays, 1, 'Direct activation reaches media before awaiting');
     await settleUntil(() => f.host.player.snapshot().playing);
-    pausedToggle.click();
+    toggle.click();
     assert.equal(f.host.session.snapshot().transportChoice, 'pause');
     assert.equal(await f.host.session.start(), false);
     const plays = f.audio.media.plays;

@@ -35,6 +35,8 @@ export function attachCouchMusicHost({
   audioMaster,
   audioPreferences,
   soundscape,
+  onlineCatalogueDownload = {},
+  onlineSourceStore = null,
   canOpen = () => true,
   canControl = () => true,
   quickAfter = [],
@@ -222,6 +224,9 @@ export function attachCouchMusicHost({
   });
   panel = attachSoundtrackPanel({
     document: doc,
+    settingsRoot: section,
+    onlineCatalogueDownload,
+    onlineSourceStore,
     catalogue: source.catalogue,
     bundled: SOUNDTRACK_BUNDLED_ASSETS,
     readAsset: (hash, options) => source.readAsset(hash, options),

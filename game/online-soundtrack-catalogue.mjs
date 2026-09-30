@@ -1,10 +1,9 @@
-import { boundedJSON, exactKeys } from './data-json.mjs';
+import { boundedJSON, canonicalJSON, exactKeys } from './data-json.mjs';
 import { throwIfSoundtrackAborted } from './mp3.mjs';
 
 export const ONLINE_SOUNDTRACK_CATALOGUE_URL =
   'https://mekhovov.github.io/revealline-soundtracks/catalogue.json';
 const BASE_URL = 'https://mekhovov.github.io/revealline-soundtracks/';
-const BASE = new URL(BASE_URL);
 const FORMAT = 'revealline-public-soundtrack-catalogue.v1';
 // The canonical catalogue currently averages a little over 2 KiB per entry.
 // Keep the 512-recording schema ceiling usable while retaining a hard response
@@ -44,10 +43,17 @@ const AUDIO_PATH = /^(?:objects|batches\/[a-z0-9][a-z0-9-]{0,63}\/objects)\/[a-f
 const RELEASE_AUDIO =
   /^https:\/\/github\.com\/mekhovov\/revealline-soundtracks\/releases\/download\/audio-[a-z0-9-]+\/([a-f0-9]{64})\.mp3$/;
 const RESOLVED_TRACKS = new WeakSet();
-// Only a successful fetch of the canonical feed updates its current membership.
-// Pure parsing cannot revoke tracks from an independently resolved catalogue.
-const FETCHED_TRACKS = new WeakSet();
-let fetchedRecordingHashes = new Set();
+const TRACK_AUTHORITIES = new WeakMap();
+const MERGED_TRACKS = new WeakMap();
+const SOURCE_AUTHORITIES = new WeakMap();
+const MAIN_AUTHORITY = Object.freeze({});
+SOURCE_AUTHORITIES.set(MAIN_AUTHORITY, {
+  url: ONLINE_SOUNDTRACK_CATALOGUE_URL,
+  baseURL: BASE_URL,
+  allowUnknown: false,
+  active: true,
+  members: new Map(),
+});
 
 function catalogueFailure(key, message, values = Object.create(null), cause = null) {
   const error = cause instanceof Error ? cause : new TypeError(message);
@@ -85,22 +91,38 @@ function catalogueJSON(source) {
 }
 
 export function isResolvedOnlineSoundtrackTrack(value) {
+  if (typeof value !== 'object' || value === null || !RESOLVED_TRACKS.has(value)) return false;
+  const members = MERGED_TRACKS.get(value);
+  if (members) return members.every(isResolvedOnlineSoundtrackTrack);
+  const provenance = TRACK_AUTHORITIES.get(value);
   return (
-    typeof value === 'object' &&
-    value !== null &&
-    RESOLVED_TRACKS.has(value) &&
-    (!FETCHED_TRACKS.has(value) || fetchedRecordingHashes.has(value.sha256))
+    provenance.state.active &&
+    (!provenance.fetched || provenance.state.members.get(value.sha256) === provenance.identity)
+  );
+}
+
+export function onlineSoundtrackOfflineAllowed(value) {
+  return (
+    isResolvedOnlineSoundtrackTrack(value) &&
+    value.rights.kind === 'licensed' &&
+    value.rightsConflict !== true
   );
 }
 
 export function onlineSoundtrackRecordingAllowed(value) {
-  return value?.recordingModeEligible === true && value?.contentId === false;
+  return (
+    value?.rights?.kind === 'licensed' &&
+    value?.rightsConflict !== true &&
+    value?.recordingModeEligible === true &&
+    value?.contentId === false
+  );
 }
 
-export function onlineSoundtrackRecordingURL(value, sha256) {
+export function onlineSoundtrackRecordingURL(value, sha256, baseURL = BASE_URL) {
   try {
     const url = new URL(value),
-      prefix = BASE.pathname,
+      base = new URL(baseURL),
+      prefix = base.pathname,
       path = url.pathname.startsWith(prefix) ? url.pathname.slice(prefix.length) : '';
     const release = RELEASE_AUDIO.exec(url.href);
     return (
@@ -109,11 +131,11 @@ export function onlineSoundtrackRecordingURL(value, sha256) {
       !url.password &&
       !url.search &&
       !url.hash &&
-      ((url.origin === BASE.origin &&
+      ((url.origin === base.origin &&
         path.length > 0 &&
         AUDIO_PATH.test(path) &&
         path.endsWith(`/${sha256}.mp3`)) ||
-        release?.[1] === sha256)
+        (baseURL === BASE_URL && release?.[1] === sha256))
     );
   } catch {
     return false;
@@ -135,7 +157,10 @@ const EXPIRING_AUDIO_PARAMETERS = new Set([
 function externalRecordingURL(value) {
   try {
     const url = new URL(value),
-      host = url.hostname.toLowerCase().replace(/^\[|\]$/g, '');
+      host = url.hostname
+        .toLowerCase()
+        .replace(/^\[|\]$/g, '')
+        .replace(/\.$/, '');
     if (
       url.protocol !== 'https:' ||
       url.username ||
@@ -155,6 +180,141 @@ function externalRecordingURL(value) {
   } catch {
     return false;
   }
+}
+
+/** Lexical browser-side checks only; DNS resolution is not pinned here. */
+export function normalizeOnlineSoundtrackSourceURL(input) {
+  catalogueRequired(
+    typeof input === 'string' && input.trim().length > 0 && input.length <= 1024,
+    'urlInvalid',
+    'Invalid soundtrack source URL.',
+  );
+  let url;
+  try {
+    url = new URL(input.trim());
+  } catch {
+    throw catalogueFailure('urlInvalid', 'Invalid soundtrack source URL.');
+  }
+  const host = url.hostname.toLowerCase().replace(/\.$/, '');
+  catalogueRequired(
+    externalRecordingURL(url.href) &&
+      !url.search &&
+      !url.hash &&
+      !host.includes(':') &&
+      host.includes('.') &&
+      !host.endsWith('.localdomain') &&
+      !host.endsWith('.internal') &&
+      !host.endsWith('.lan') &&
+      !host.endsWith('.home') &&
+      !/^(?:192\.0\.|198\.(?:18|19)\.|(?:22[4-9]|23\d|24\d|25[0-5])\.)/.test(host) &&
+      !/^100\.(?:6[4-9]|[7-9]\d|1[01]\d|12[0-7])\./.test(host),
+    'urlInvalid',
+    'Soundtrack sources require a stable public HTTPS URL.',
+  );
+  if (!url.pathname.endsWith('.json')) {
+    url.pathname = url.pathname.replace(/\/?$/, '/') + 'catalogue.json';
+  }
+  return url.href;
+}
+
+export function createOnlineSoundtrackSourceAuthority(input, { allowUnknown = false } = {}) {
+  const url = normalizeOnlineSoundtrackSourceURL(input);
+  catalogueRequired(
+    typeof allowUnknown === 'boolean' && !(url === ONLINE_SOUNDTRACK_CATALOGUE_URL && allowUnknown),
+    'urlInvalid',
+    'The main soundtrack archive remains licensed-only.',
+  );
+  const authority = Object.freeze({});
+  SOURCE_AUTHORITIES.set(authority, {
+    url,
+    baseURL: new URL('.', url).href,
+    allowUnknown,
+    active: true,
+    members: new Map(),
+  });
+  return authority;
+}
+
+export function revokeOnlineSoundtrackSource(authority) {
+  const state = SOURCE_AUTHORITIES.get(authority);
+  catalogueRequired(
+    state && authority !== MAIN_AUTHORITY,
+    'urlInvalid',
+    'Unknown soundtrack source.',
+  );
+  state.active = false;
+  state.members.clear();
+}
+
+function sourceState(authority) {
+  const state = SOURCE_AUTHORITIES.get(authority);
+  catalogueRequired(state?.active, 'urlInvalid', 'Soundtrack source is no longer enabled.');
+  return state;
+}
+
+/** Only already-resolved tracks can create an exact-hash union. */
+export function mergeOnlineSoundtrackTracks(values) {
+  catalogueRequired(
+    Array.isArray(values) &&
+      values.length > 0 &&
+      values.length <= 4 &&
+      values.every(isResolvedOnlineSoundtrackTrack) &&
+      values.every((track) => track.sha256 === values[0].sha256 && track.bytes === values[0].bytes),
+    'audioIdentityInvalid',
+    'Conflicting soundtrack source identities.',
+  );
+  if (values.length === 1) return values[0];
+  const first = values[0],
+    licensed = values.every((track) => track.rights.kind === 'licensed');
+  const rightsConflict = values.some(
+    (track) =>
+      track.rightsConflict === true ||
+      track.rights.license !== first.rights.license ||
+      track.rights.credit !== first.rights.credit ||
+      track.rights.source !== first.rights.source,
+  );
+  const resolved = Object.freeze({
+    ...first,
+    tags: Object.freeze([...new Set(values.flatMap((track) => track.tags))]),
+    collections: Object.freeze([...new Set(values.flatMap((track) => track.collections))]),
+    websites: Object.freeze([
+      ...new Map(
+        values.flatMap((track) => track.websites).map((site) => [site.url, site]),
+      ).values(),
+    ]),
+    sourceURLs: Object.freeze([...new Set(values.flatMap((track) => track.sourceURLs))]),
+    sourceCredits: Object.freeze(
+      values.map((track) =>
+        Object.freeze({
+          sourceURL: track.sourceURLs[0],
+          title: track.title,
+          artist: track.artist,
+          license: track.rights.license,
+          licenseURL:
+            track.rights.evidence?.licenseURL ??
+            track.websites.find((site) => LICENSES.has(site.url))?.url ??
+            null,
+          rightsEvidenceURL: track.rights.source,
+          recordingURL: track.url,
+          credit: track.rights.credit ?? track.artist,
+        }),
+      ),
+    ),
+    rightsConflict,
+    contentId: values.every((track) => track.contentId === false) ? false : 'unknown',
+    recordingModeEligible: !rightsConflict && values.every(onlineSoundtrackRecordingAllowed),
+    rights: licensed
+      ? first.rights
+      : Object.freeze({
+          ...first.rights,
+          kind: 'unknown',
+          license: 'Unknown — uploader-confirmed rights',
+          evidence: null,
+        }),
+  });
+  RESOLVED_TRACKS.add(resolved);
+  MERGED_TRACKS.set(resolved, Object.freeze([...values]));
+  return resolved;
 }
 
 function externalDelivery(value, url) {
@@ -214,7 +374,44 @@ function originalFileName(value) {
   return value;
 }
 
-function structuredRights(value, legacy, id) {
+function structuredRights(value, legacy, id, allowUnknown) {
+  if (allowUnknown && legacy.licenseURL === null) {
+    catalogueExactKeys(
+      value,
+      [
+        'licenseId',
+        'licenseVersion',
+        'licenseURL',
+        'rightsEvidenceURL',
+        'attribution',
+        'derivativeChangeNotice',
+        'permissionBasis',
+        'shareAlike',
+      ],
+      'optional soundtrack rights',
+    );
+    catalogueExactKeys(
+      value?.shareAlike,
+      ['required', 'deliveryLicenseId', 'deliveryLicenseVersion', 'deliveryLicenseURL'],
+      'optional soundtrack share-alike rights',
+    );
+    catalogueRequired(
+      value?.licenseId === 'UNKNOWN' &&
+        value.licenseVersion === null &&
+        value.licenseURL === null &&
+        normalizedText(value.rightsEvidenceURL, 'rights evidence URL') === legacy.source &&
+        normalizedText(value.attribution, 'rights attribution') === legacy.credit &&
+        value.permissionBasis === 'uploader-confirmed-public-redistribution-and-web-playback' &&
+        Object.values(value.shareAlike).every((entry) => entry === null),
+      'rightsMismatch',
+      'Optional soundtrack uploader-confirmed rights are incomplete.',
+    );
+    return Object.freeze({
+      ...value,
+      derivativeChangeNotice: text(value.derivativeChangeNotice, 'derivative change notice'),
+      shareAlike: Object.freeze({ ...value.shareAlike }),
+    });
+  }
   const identity = LICENSE_IDENTITIES.get(legacy.licenseURL);
   catalogueRequired(
     identity,
@@ -293,7 +490,7 @@ function structuredRights(value, legacy, id) {
   });
 }
 
-function track(value, ids, hashes) {
+function track(value, ids, hashes, state) {
   catalogueExactKeys(
     value,
     [
@@ -355,14 +552,16 @@ function track(value, ids, hashes) {
     { id },
   );
   catalogueRequired(
-    LICENSES.has(value.licenseURL),
+    LICENSES.has(value.licenseURL) || (state.allowUnknown && value.licenseURL === null),
     'licenceUnsupported',
     `Online soundtrack licence is unsupported: ${id}.`,
     { id },
   );
   const licenseIdentity = LICENSE_IDENTITIES.get(value.licenseURL);
   catalogueRequired(
-    value.license === licenseIdentity.label,
+    licenseIdentity
+      ? value.license === licenseIdentity.label
+      : value.license === 'Unknown — uploader-confirmed rights',
     'licenceInvalid',
     `Online soundtrack licence is invalid: ${id}.`,
     { id },
@@ -400,10 +599,13 @@ function track(value, ids, hashes) {
   catalogueRequired(
     HASH.test(value.audio.sha256) &&
       (delivery
-        ? externalRecordingURL(value.audio.path)
+        ? externalRecordingURL(value.audio.path) &&
+          (state.baseURL === BASE_URL ||
+            onlineSoundtrackRecordingURL(value.audio.path, value.audio.sha256, state.baseURL))
         : onlineSoundtrackRecordingURL(
-            new URL(value.audio.path, BASE_URL).href,
+            new URL(value.audio.path, state.baseURL).href,
             value.audio.sha256,
+            state.baseURL,
           )) &&
       Number.isSafeInteger(value.audio.bytes) &&
       value.audio.bytes > 0 &&
@@ -449,6 +651,7 @@ function track(value, ids, hashes) {
     value.rights,
     { licenseURL: value.licenseURL, source, credit },
     id,
+    state.allowUnknown,
   );
   const resolved = Object.freeze({
     id: `online.${value.audio.sha256}`,
@@ -461,12 +664,13 @@ function track(value, ids, hashes) {
     collection,
     collections: Object.freeze([...collections]),
     fileName: originalFileName(value.fileName),
-    url: new URL(value.audio.path, BASE_URL).href,
+    url: new URL(value.audio.path, state.baseURL).href,
+    sourceURLs: Object.freeze([state.url]),
     bytes: value.audio.bytes,
     sha256: value.audio.sha256,
     delivery,
-    contentId: value.contentId,
-    recordingModeEligible: value.recordingModeEligible,
+    contentId: licenseIdentity ? value.contentId : 'unknown',
+    recordingModeEligible: Boolean(licenseIdentity) && value.recordingModeEligible,
     websites: Object.freeze([
       Object.freeze({ label: 'Creator source', url: source }),
       ...(value.licenseURL
@@ -474,13 +678,14 @@ function track(value, ids, hashes) {
         : []),
     ]),
     rights: Object.freeze({
-      kind: 'licensed',
+      kind: licenseIdentity ? 'licensed' : 'unknown',
       credit,
       license: value.license,
       source,
       evidence: rightsEvidence,
     }),
   });
+  TRACK_AUTHORITIES.set(resolved, { state, fetched: false, identity: canonicalJSON(resolved) });
   return { resolved, visibility: value.visibility };
 }
 
@@ -499,7 +704,11 @@ function hasDisclosedLicense(value) {
   );
 }
 
-export function resolveOnlineSoundtrackCatalogue(source) {
+export function resolveOnlineSoundtrackCatalogue(
+  source,
+  { sourceAuthority = MAIN_AUTHORITY } = {},
+) {
+  const state = sourceState(sourceAuthority);
   const value = catalogueJSON(source);
   catalogueExactKeys(
     value,
@@ -513,7 +722,11 @@ export function resolveOnlineSoundtrackCatalogue(source) {
   );
   catalogueExactKeys(value.archive, ['id', 'baseURL'], 'online soundtrack archive');
   catalogueRequired(
-    value.archive.id === 'revealline-soundtracks' && value.archive.baseURL === BASE_URL,
+    typeof value.archive.id === 'string' &&
+      /^[a-z0-9][a-z0-9-]{0,63}$/.test(value.archive.id) &&
+      (state.url !== ONLINE_SOUNDTRACK_CATALOGUE_URL ||
+        value.archive.id === 'revealline-soundtracks') &&
+      value.archive.baseURL === state.baseURL,
     'archiveInvalid',
     'Online soundtrack catalogue must use the project archive.',
   );
@@ -537,8 +750,14 @@ export function resolveOnlineSoundtrackCatalogue(source) {
     // Quarantine missing/unknown/unsupported licences before resolving playback
     // metadata. Uploader confirmation never substitutes for a source licence.
     parsedTracks = value.tracks
-      .filter(hasDisclosedLicense)
-      .map((entry) => track(entry, ids, hashes));
+      .filter(
+        (entry) =>
+          hasDisclosedLicense(entry) ||
+          (state.allowUnknown &&
+            entry?.licenseURL === null &&
+            entry.license === 'Unknown — uploader-confirmed rights'),
+      )
+      .map((entry) => track(entry, ids, hashes, state));
   catalogueRequired(
     value.tracks.every(
       (entry) =>
@@ -567,10 +786,12 @@ export function resolveOnlineSoundtrackCatalogue(source) {
 export async function fetchOnlineSoundtrackCatalogue({
   fetch: request = globalThis.fetch,
   signal,
-  url = ONLINE_SOUNDTRACK_CATALOGUE_URL,
+  sourceAuthority = MAIN_AUTHORITY,
+  url = SOURCE_AUTHORITIES.get(sourceAuthority)?.url,
 } = {}) {
+  const state = sourceState(sourceAuthority);
   catalogueRequired(
-    url === ONLINE_SOUNDTRACK_CATALOGUE_URL,
+    url === state.url,
     'urlInvalid',
     'Online soundtracks require the project catalogue URL.',
   );
@@ -644,9 +865,12 @@ export async function fetchOnlineSoundtrackCatalogue({
     );
   }
   throwIfSoundtrackAborted(signal);
-  const catalogue = resolveOnlineSoundtrackCatalogue(source);
-  fetchedRecordingHashes = new Set(catalogue.tracks.map((entry) => entry.sha256));
-  for (const entry of catalogue.tracks) FETCHED_TRACKS.add(entry);
+  sourceState(sourceAuthority);
+  const catalogue = resolveOnlineSoundtrackCatalogue(source, { sourceAuthority });
+  state.members = new Map(
+    catalogue.tracks.map((entry) => [entry.sha256, TRACK_AUTHORITIES.get(entry).identity]),
+  );
+  for (const entry of catalogue.tracks) TRACK_AUTHORITIES.get(entry).fetched = true;
   return catalogue;
 }
 
@@ -655,7 +879,7 @@ export async function fetchVerifiedOnlineSoundtrack(
   { fetch: request = globalThis.fetch, signal } = {},
 ) {
   catalogueRequired(
-    isResolvedOnlineSoundtrackTrack(track) && track.delivery?.type === 'external-url',
+    onlineSoundtrackOfflineAllowed(track) && track.delivery?.type === 'external-url',
     'audioDeliveryInvalid',
     'Only a verified external soundtrack recording can be installed directly.',
   );
@@ -739,6 +963,11 @@ export async function fetchVerifiedOnlineSoundtrack(
     actual === track.sha256,
     'audioIdentityInvalid',
     'External soundtrack SHA-256 changed.',
+  );
+  catalogueRequired(
+    onlineSoundtrackOfflineAllowed(track),
+    'audioDeliveryInvalid',
+    'The soundtrack source no longer permits this installation.',
   );
   return new Blob([bytes], { type: 'audio/mpeg' });
 }

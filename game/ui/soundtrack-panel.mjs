@@ -44,10 +44,16 @@ import {
   fetchSoundtrackAlbumCatalog,
 } from '../soundtrack-album-download.mjs';
 import {
-  fetchOnlineSoundtrackCatalogue,
   fetchVerifiedOnlineSoundtrack,
   onlineSoundtrackRecordingAllowed,
+  onlineSoundtrackOfflineAllowed,
 } from '../online-soundtrack-catalogue.mjs';
+import {
+  createOnlineSoundtrackSourceManager,
+  normalizeOnlineSoundtrackSourceURL,
+  resolveOnlineSoundtrackSources,
+} from '../online-soundtrack-sources.mjs';
+import { createOnlineSoundtrackSourceStore } from '../online-soundtrack-source-store.mjs';
 import { soundtrackErrorText } from './soundtrack-error-copy.mjs';
 import {
   sameSoundtrackListening,
@@ -111,6 +117,8 @@ export function attachSoundtrackPanel({
   settingsRoot = null,
   albumDownload = {},
   onlineCatalogueDownload = {},
+  onlineSourceManager = null,
+  onlineSourceStore = null,
   catalogue = null,
   availableStyles = PUBLIC_SOUNDTRACK_STYLE_IDS,
   readAsset,
@@ -133,6 +141,20 @@ export function attachSoundtrackPanel({
   const defaultStyleIds = DEFAULT_PUBLIC_SOUNDTRACK_STYLE_IDS.filter((style) =>
     availableStyleSet.has(style),
   );
+  const ownsSourceManager = !onlineSourceManager;
+  const ownsSourceStore = !onlineSourceStore;
+  const sourceStore =
+    onlineSourceStore ?? (globalThis.indexedDB ? createOnlineSoundtrackSourceStore() : null);
+  const sourceManager =
+    onlineSourceManager ??
+    createOnlineSoundtrackSourceManager({
+      ...onlineCatalogueDownload,
+    });
+  if (ownsSourceManager && sourceStore)
+    sourceManager.setSources(
+      sourceManager.snapshot().sources.map(({ url }) => ({ url, enabled: false })),
+    );
+  player.setOnlineSourceManager?.(sourceManager);
   if (
     musicSession &&
     (typeof musicSession.play !== 'function' || typeof musicSession.pause !== 'function')
@@ -165,6 +187,13 @@ export function attachSoundtrackPanel({
     onlineCataloguePromise = null,
     onlineCatalogueGeneration = 0;
   let settingsLibraryPromise = null;
+  let sourcePreferences = null,
+    sourcePreferencesPromise = null,
+    sourceSaving = false,
+    sourceFocus = null,
+    renderingSources = false;
+  const sourceControlOwners = new WeakMap();
+  const visibleStyleIds = new Set(defaultStyleIds);
   const albumControls = new Map();
   const node = (tag, id, text, attrs = {}) => {
     const element = doc.createElement(tag);
@@ -584,7 +613,8 @@ export function attachSoundtrackPanel({
     'online-styles-all',
     localizedMessage('interface:allStyles'),
     () => {
-      for (const checkbox of onlineStyleInputs.values()) checkbox.checked = true;
+      for (const [style, checkbox] of onlineStyleInputs)
+        if (visibleStyleIds.has(style)) checkbox.checked = true;
       renderOnlineCatalogue();
     },
   );
@@ -592,7 +622,8 @@ export function attachSoundtrackPanel({
     'online-styles-none',
     localizedMessage('interface:clear'),
     () => {
-      for (const checkbox of onlineStyleInputs.values()) checkbox.checked = false;
+      for (const [style, checkbox] of onlineStyleInputs)
+        if (visibleStyleIds.has(style)) checkbox.checked = false;
       renderOnlineCatalogue();
     },
   );
@@ -623,6 +654,7 @@ export function attachSoundtrackPanel({
     }
     const all = button('settings-styles-all', localizedMessage('interface:allStyles'), () => {
       for (const [value, checkbox] of settingsStyleInputs) {
+        if (!visibleStyleIds.has(value)) continue;
         checkbox.checked = true;
         onlineStyleInputs.get(value).checked = true;
       }
@@ -630,6 +662,7 @@ export function attachSoundtrackPanel({
     });
     const clear = button('settings-styles-none', localizedMessage('interface:clear'), () => {
       for (const [value, checkbox] of settingsStyleInputs) {
+        if (!visibleStyleIds.has(value)) continue;
         checkbox.checked = false;
         onlineStyleInputs.get(value).checked = false;
       }
@@ -660,6 +693,14 @@ export function attachSoundtrackPanel({
       }),
       row(all, clear, play),
       settingsStyleStatus,
+      button('settings-music-sources', localizedMessage('interface:musicSources'), async () => {
+        await open();
+        if (!dialog.open || disposed) return;
+        sourceDisclosure.querySelector('button').setAttribute('aria-expanded', 'true');
+        sourceDisclosure.setAttribute('data-open', 'true');
+        sourceDisclosure.lastElementChild.hidden = false;
+        sourceURL.element.focus();
+      }),
     );
     settingsStylesSection.classList.add('soundtrack-settings-style-card');
     const anchor =
@@ -719,7 +760,7 @@ export function attachSoundtrackPanel({
   };
   function selectedSettingsStyles() {
     return [...settingsStyleInputs]
-      .filter(([, checkbox]) => checkbox.checked)
+      .filter(([style, checkbox]) => visibleStyleIds.has(style) && checkbox.checked)
       .map(([style]) => style);
   }
   function savedSettingsStyles() {
@@ -765,27 +806,38 @@ export function attachSoundtrackPanel({
         throwIfSoundtrackAborted(signal);
         const loaded = await loadOnlineCatalogue();
         throwIfSoundtrackAborted(signal);
-        if (!loaded) throw new Error(t('interface:thePublicSoundtrackCatalogueIsUnavailable'));
-        const selection = publicSoundtrackSelection(loaded, selected, {
+        const localGenres = localGenresForPublicStyles(selected);
+        const selection = publicSoundtrackSelection(loaded ?? { tracks: [] }, selected, {
           recordingMode: Boolean(draft.listening?.recordingMode),
         });
-        if (!selection.tracks.length)
+        if (!selection.tracks.length && !localGenres.length)
           throw new Error(t('interface:soundtrack.chooseAtLeastOneStyle'));
-        const localGenres = localGenresForPublicStyles(selected);
-        const committed = await commitSettingsListening(localGenres, signal, selected);
+        const retainedStyles = new Set([
+          ...selected,
+          ...(saved?.publicStyles ?? []).filter((style) => !visibleStyleIds.has(style)),
+        ]);
+        const committed = await commitSettingsListening(
+          localGenres,
+          signal,
+          PUBLIC_SOUNDTRACK_STYLE_IDS.filter((style) => retainedStyles.has(style)),
+        );
         if (!committed.adopted || disposed) return;
         await stopAudition(false);
         throwIfSoundtrackAborted(signal);
         if ((player.intentRevision?.() ?? 0) !== launchIntentGeneration) return;
-        await player.playRemotePlaylist(selection.tracks, {
-          order: onlineOrder.element.value,
-          repeat: onlineRepeat.element.value,
-          mixWithLibrary: selection.mixWithLibrary,
-          allowLibraryFallback: false,
-        });
+        if (selection.tracks.length)
+          await player.playRemotePlaylist(selection.tracks, {
+            order: onlineOrder.element.value,
+            repeat: onlineRepeat.element.value,
+            mixWithLibrary: selection.mixWithLibrary,
+            allowLibraryFallback: false,
+          });
+        else await (musicSession ? musicSession.play() : player.play());
         await notifyPlayback();
         renderSettingsStyleStatus(
-          t('interface:soundtrack.playingSelectedStyles', { count: selection.count }),
+          selection.tracks.length
+            ? t('interface:soundtrack.playingSelectedStyles', { count: selection.count })
+            : t('interface:musicSourcesLocalPlayback'),
         );
       },
     );
@@ -817,6 +869,46 @@ export function attachSoundtrackPanel({
   const reloadOnline = button('online-reload', localizedMessage('interface:refreshCatalogue'), () =>
     loadOnlineCatalogue(true),
   );
+  const sourceURL = input('source-url', localizedMessage('interface:musicSourceURL'), {
+    type: 'url',
+    autocomplete: 'off',
+    placeholder: 'https://example.com/music/',
+  });
+  const sourceList = node('div', 'source-list', null, { class: 'soundtrack-source-list' });
+  const sourceStatus = node('p', 'source-status', null, {
+    class: 'micro-note',
+    role: 'status',
+    'aria-live': 'polite',
+  });
+  const sourceAdd = button('source-add', localizedMessage('interface:musicSourceAdd'), async () => {
+    try {
+      const url = normalizeOnlineSoundtrackSourceURL(sourceURL.element.value);
+      const current = sourceManager
+        .snapshot()
+        .sources.map(({ url, enabled }) => ({ url, enabled }));
+      const existing = current.find((source) => source.url === url);
+      if (existing) existing.enabled = true;
+      else current.push({ url, enabled: true });
+      if (await changeSources(current)) sourceURL.element.value = '';
+    } catch (error) {
+      showSourceError(error);
+    }
+  });
+  const sourceDisclosure = advancedSection(
+    'music-sources',
+    localizedMessage('interface:musicSources'),
+    localizedMessage('interface:musicSourcesDescription'),
+    sourceList,
+    row(sourceURL.field, sourceAdd),
+    sourceStatus,
+    node('p', null, localizedMessage('interface:musicSourcesPrivacy'), { class: 'micro-note' }),
+  );
+  const releaseSourceFocus = (event) => {
+    if (sourceFocus && !renderingSources && event.target !== sourceFocus.node) sourceFocus = null;
+  };
+  listen(doc, 'focusin', releaseSourceFocus);
+  listen(doc, 'pointerdown', releaseSourceFocus);
+  listen(doc, 'keydown', releaseSourceFocus);
   const onlineArchive = section(
     t('interface:playThePublicSoundtrackArchive'),
     node(
@@ -825,6 +917,7 @@ export function attachSoundtrackPanel({
       localizedMessage('interface:searchEveryPublishedRecordingAndPlayItHereSongsStream'),
       { class: 'soundtrack-lede' },
     ),
+    sourceDisclosure,
     row(onlineSearch.field, onlineCollection.field),
     onlineStyles,
     onlineMixLibraryChoice,
@@ -1938,8 +2031,209 @@ export function attachSoundtrackPanel({
   }
   function selectedOnlineStyles() {
     return new Set(
-      [...onlineStyleInputs].filter(([, checkbox]) => checkbox.checked).map(([style]) => style),
+      [...onlineStyleInputs]
+        .filter(([style, checkbox]) => visibleStyleIds.has(style) && checkbox.checked)
+        .map(([style]) => style),
     );
+  }
+  function refreshAvailableStyles() {
+    const next = new Set(defaultStyleIds);
+    for (const style of publicSoundtrackStylesForLocalGenres(
+      tracks()
+        .flatMap((track) => [track.genre, ...(track.genres ?? [])])
+        .filter(Boolean),
+    ))
+      if (availableStyleSet.has(style)) next.add(style);
+    for (const style of availableStyleIds)
+      if ((onlineCatalogue?.tracks ?? []).some((track) => matchesOnlineStyle(track, style)))
+        next.add(style);
+    visibleStyleIds.clear();
+    for (const style of next) visibleStyleIds.add(style);
+    for (const inputs of [onlineStyleInputs, settingsStyleInputs])
+      for (const [style, checkbox] of inputs)
+        checkbox.parentNode.hidden = !visibleStyleIds.has(style);
+  }
+  function showSourceError(error) {
+    localizedText(sourceStatus, () =>
+      t('interface:musicSourceSaveFailed', { error: message(error) }),
+    );
+  }
+  function renderSources(snapshot = sourceManager.snapshot()) {
+    if (disposed) return;
+    const focused = doc.activeElement;
+    const owner =
+      focused === sourceAdd
+        ? { role: 'add' }
+        : focused === sourceURL.element
+          ? { role: 'url' }
+          : sourceControlOwners.get(focused);
+    if (owner) sourceFocus = { ...owner, node: focused };
+    else if (
+      sourceFocus &&
+      focused !== sourceFocus.node &&
+      focused !== doc.body &&
+      focused !== null
+    )
+      sourceFocus = null;
+    const controls = new Map();
+    const rememberControl = (element, source, index, role) => {
+      sourceControlOwners.set(element, { url: source.url, index, role });
+      controls.set(`${role}:${source.url}`, element);
+    };
+    renderingSources = true;
+    sourceAdd.disabled = sourceSaving || !sourcePreferences;
+    sourceURL.element.disabled = sourceSaving;
+    sourceList.replaceChildren(
+      ...snapshot.sources.map((source, index) => {
+        const enabled = node('input', `source-enabled-${index}`, null, { type: 'checkbox' });
+        rememberControl(enabled, source, index, 'enabled');
+        enabled.checked = source.enabled;
+        enabled.disabled = sourceSaving || !sourcePreferences;
+        const label = node('label', null, null, { class: 'soundtrack-source-choice' });
+        label.append(
+          enabled,
+          node(
+            'span',
+            null,
+            source.isMain ? localizedMessage('interface:musicSourceMain') : source.url,
+          ),
+        );
+        enabled.onchange = () =>
+          changeSources(
+            snapshot.sources.map((entry) => ({
+              url: entry.url,
+              enabled: entry.url === source.url ? enabled.checked : entry.enabled,
+            })),
+          );
+        const status = node('small', null, null, { class: 'soundtrack-source-state' });
+        localizedText(status, () =>
+          !source.enabled
+            ? t('interface:musicSourceDisabled')
+            : source.status === 'loading'
+              ? t('interface:loadingThePublicSoundtrackCatalogue')
+              : source.status === 'error'
+                ? t('interface:musicSourceLoadFailed', { error: message(source.error) })
+                : source.status === 'ready'
+                  ? t('interface:musicSourceReady', { total: source.trackCount })
+                  : t('interface:musicSourceWaiting'),
+        );
+        const item = node('div', null, null, { class: 'soundtrack-source-row' });
+        item.append(label, status);
+        if (!source.isMain) {
+          const remove = button(
+            `source-remove-${index}`,
+            localizedMessage('interface:musicSourceRemove'),
+            () =>
+              changeSources(
+                snapshot.sources
+                  .filter((entry) => entry.url !== source.url)
+                  .map(({ url, enabled }) => ({ url, enabled })),
+              ),
+          );
+          remove.disabled = sourceSaving || !sourcePreferences;
+          rememberControl(remove, source, index, 'remove');
+          item.append(remove);
+        }
+        return item;
+      }),
+    );
+    renderingSources = false;
+    if (sourceFocus && !sourceSaving && sourcePreferences && dialog.open && !doc.hidden) {
+      const adjacent =
+        snapshot.sources[sourceFocus.index] ?? snapshot.sources[sourceFocus.index - 1];
+      const target =
+        sourceFocus.role === 'add'
+          ? sourceAdd
+          : sourceFocus.role === 'url'
+            ? sourceURL.element
+            : (controls.get(`${sourceFocus.role}:${sourceFocus.url}`) ??
+              (adjacent && controls.get(`enabled:${adjacent.url}`)) ??
+              sourceAdd);
+      sourceFocus = null;
+      if (target?.isConnected && !target.disabled && doc.activeElement !== target) target.focus();
+    }
+  }
+  function receiveSources(snapshot) {
+    if (disposed) return;
+    const enabled = snapshot.sources.filter((source) => source.enabled);
+    if (
+      snapshot.tracks.length ||
+      !enabled.length ||
+      enabled.some((source) => source.status === 'ready')
+    )
+      onlineCatalogue = {
+        tracks: snapshot.tracks,
+        limited: snapshot.limited,
+        conflicts: snapshot.conflicts,
+        unavailable: enabled
+          .filter((source) => source.status === 'error')
+          .map((source) => ({ id: source.url, error: source.error })),
+      };
+    else onlineCatalogue = null;
+    options(onlineCollection.element, [
+      ['', t('interface:allCollections')],
+      ...[...new Set(snapshot.tracks.flatMap((track) => track.collections ?? [track.collection]))]
+        .sort((a, b) => a.localeCompare(b))
+        .map((collection) => [collection, collection]),
+    ]);
+    refreshAvailableStyles();
+    renderSources(snapshot);
+    renderOnlineCatalogue();
+    renderSettingsStyleStatus();
+  }
+  function loadSourcePreferences(force = false) {
+    if (sourcePreferences && !force) return Promise.resolve(sourcePreferences);
+    if (sourcePreferencesPromise) return sourcePreferencesPromise;
+    sourcePreferencesPromise = (async () => {
+      try {
+        const value = sourceStore
+          ? await sourceStore.read()
+          : {
+              generation: 0,
+              sources: sourceManager
+                .snapshot()
+                .sources.map(({ url, enabled }) => ({ url, enabled })),
+            };
+        if (disposed) return null;
+        sourcePreferences = value;
+        sourceManager.setSources(value.sources);
+        renderSources();
+        return value;
+      } catch (error) {
+        if (!disposed) showSourceError(error);
+        return null;
+      } finally {
+        sourcePreferencesPromise = null;
+      }
+    })();
+    return sourcePreferencesPromise;
+  }
+  async function changeSources(sources) {
+    if (sourceSaving || disposed) return false;
+    sourceSaving = true;
+    let ownsSave = true;
+    renderSources();
+    try {
+      const next = resolveOnlineSoundtrackSources(sources);
+      const previous = await loadSourcePreferences();
+      if (!previous || !sourceStore) throw new Error(t('interface:musicSourceStorageUnavailable'));
+      const committed = await sourceStore.commit(next, { expectedGeneration: previous.generation });
+      if (disposed) return false;
+      sourcePreferences = committed;
+      sourceManager.setSources(committed.sources);
+      localizedText(sourceStatus, () => t('interface:musicSourcesSaved'));
+      sourceSaving = false;
+      ownsSave = false;
+      renderSources();
+      await loadOnlineCatalogue(true);
+      return true;
+    } catch (error) {
+      if (!disposed) showSourceError(error);
+      return false;
+    } finally {
+      if (ownsSave) sourceSaving = false;
+      if (!disposed) renderSources();
+    }
   }
   function onlineMatches() {
     const query = onlineSearch.element.value.trim().toLowerCase(),
@@ -1949,6 +2243,11 @@ export function attachSoundtrackPanel({
       const searchable = [
         track.title,
         track.artist,
+        ...(track.sourceCredits ?? []).flatMap((credit) => [
+          credit.title,
+          credit.artist,
+          credit.credit,
+        ]),
         ...(track.collections ?? [track.collection]),
         track.fileName,
         ...track.tags,
@@ -2003,6 +2302,15 @@ export function attachSoundtrackPanel({
             `${(track.collections ?? [track.collection]).join(' · ')} · ${track.tags.join(' · ')}`,
           ),
         );
+        if (track.rights?.kind === 'unknown')
+          details.append(
+            node('small', null, localizedMessage('interface:musicSourceUnknownLicense')),
+          );
+        if (track.sourceCredits?.length > 1) {
+          const provenance = node('div');
+          sourceLinks(provenance, track);
+          details.append(provenance);
+        }
         const source = node('a', null, localizedMessage('interface:source'), {
           href: track.websites[0].url,
           target: '_blank',
@@ -2010,7 +2318,7 @@ export function attachSoundtrackPanel({
           class: 'soundtrack-online-source',
         });
         const install =
-          track.delivery?.type === 'external-url'
+          track.delivery?.type === 'external-url' && onlineSoundtrackOfflineAllowed(track)
             ? button(
                 `online-install-${track.sha256}`,
                 localizedMessage('interface:downloadForOffline'),
@@ -2050,7 +2358,13 @@ export function attachSoundtrackPanel({
                   count: matches.length,
                 })
               : '';
-        return `${shown}${recording}${unavailable}${limited} ${t('interface:soundtrack.publicPlaybackHint')}`;
+        const sourceLimit = onlineCatalogue.limited
+          ? ' ' + t('interface:musicSourceResultLimit', { limit: SOUNDTRACK_LIMITS.onlineTracks })
+          : '';
+        const conflicts = onlineCatalogue.conflicts
+          ? ' ' + t('interface:musicSourceIdentityConflicts', { total: onlineCatalogue.conflicts })
+          : '';
+        return `${shown}${recording}${unavailable}${limited}${sourceLimit}${conflicts} ${t('interface:soundtrack.publicPlaybackHint')}`;
       });
   }
   async function installOnlineRecording(track) {
@@ -2086,6 +2400,9 @@ export function attachSoundtrackPanel({
         },
         { signal, probeMedia, catalogue: catalogue ?? undefined },
       );
+      // Source membership or rights can change while media decoding is pending.
+      if (!onlineSoundtrackOfflineAllowed(track))
+        throw new Error(t('interface:recordingDownloadsAreUnavailable'));
       const next = copy(draft);
       next.tracks.push(imported.track);
       const nextAssets = [...assets, { sha256: imported.track.asset.sha256, blob: imported.blob }];
@@ -2115,21 +2432,16 @@ export function attachSoundtrackPanel({
     let pending;
     pending = (async () => {
       try {
-        const loaded = await fetchOnlineSoundtrackCatalogue({
-          ...onlineCatalogueDownload,
-          signal: current.signal,
-        });
+        if (!(await loadSourcePreferences(force))) return null;
+        throwIfSoundtrackAborted(current.signal);
+        const snapshot = await sourceManager.refresh({ signal: current.signal });
         if (disposed || generation !== onlineCatalogueGeneration) return null;
-        onlineCatalogue = loaded;
-        options(onlineCollection.element, [
-          ['', t('interface:allCollections')],
-          ...[...new Set(loaded.tracks.flatMap((track) => track.collections ?? [track.collection]))]
-            .sort((a, b) => a.localeCompare(b))
-            .map((collection) => [collection, collection]),
-        ]);
-        renderOnlineCatalogue();
-        renderSettingsStyleStatus();
-        return loaded;
+        receiveSources(snapshot);
+        if (!onlineCatalogue) {
+          const error = snapshot.sources.find((source) => source.enabled && source.error)?.error;
+          throw new Error(error || t('interface:thePublicSoundtrackCatalogueIsUnavailable'));
+        }
+        return onlineCatalogue;
       } catch (error) {
         if (error?.name !== 'AbortError' && !disposed && generation === onlineCatalogueGeneration) {
           localizedText(onlineStatus, () =>
@@ -2697,6 +3009,7 @@ export function attachSoundtrackPanel({
     unassign.disabled = busy || !saved || !draft.assignments.length;
   }
   function render({ playlistId, trackId } = {}) {
+    refreshAvailableStyles();
     options(
       tracksSelect.element,
       tracks().map((item) => [
@@ -3288,7 +3601,16 @@ export function attachSoundtrackPanel({
   }
   const sourceSignatures = new WeakMap();
   function sourceLinks(container, track) {
-    const sites = [...(track?.websites ?? [])];
+    if (track?.sourceCredits?.length > 1) container.classList.add('soundtrack-source-provenance');
+    const sites = [
+      ...(track?.sourceCredits?.length > 1
+        ? track.sourceCredits.map((credit) => ({
+            label: `${credit.title} · ${credit.artist} · ${credit.credit} · ${credit.license}`,
+            url: credit.rightsEvidenceURL,
+          }))
+        : []),
+      ...(track?.websites ?? []),
+    ];
     if (!sites.length && track?.rights?.source)
       sites.push({ label: t('interface:sourceWebsite'), url: track.rights.source });
     const signature = JSON.stringify(sites);
@@ -3548,6 +3870,8 @@ export function attachSoundtrackPanel({
     onlineCatalogueController = null;
     onlineCatalogueGeneration++;
     disposed = true;
+    if (ownsSourceManager) sourceManager.dispose();
+    if (ownsSourceStore) sourceStore?.close();
     feedback.dispose();
     transportFeedback.dispose();
     auditionFeedback.dispose();
@@ -3560,7 +3884,10 @@ export function attachSoundtrackPanel({
     style.remove();
   }
   render();
+  bindings.push(sourceManager.subscribe(receiveSources));
+  renderSources();
   renderSettingsStyleStatus();
+  void loadSourcePreferences();
   if (settingsRoot) {
     void loadSettingsLibrary();
     void loadOnlineCatalogue();

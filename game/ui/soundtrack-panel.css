@@ -114,6 +114,39 @@
   border-radius: 3px;
   cursor: pointer;
 }
+.soundtrack-online-style[hidden] {
+  display: none;
+}
+.soundtrack-source-list {
+  display: grid;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+.soundtrack-source-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px 12px;
+  padding: 8px;
+  border: 1px solid #3b4868;
+  border-radius: 5px;
+}
+.soundtrack-source-choice {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex: 1 1 220px;
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+.soundtrack-source-state {
+  flex: 1 1 160px;
+  overflow-wrap: anywhere;
+  color: #b7c8de;
+}
+#soundtrack-advanced-music-sources-body > .soundtrack-actions > .soundtrack-field {
+  flex: 1 1 260px;
+}
 .soundtrack-online-style:focus-within {
   border-color: #a5f5ec;
   outline: 2px solid #a5f5ec55;
@@ -168,6 +201,13 @@
 }
 .soundtrack-online-source {
   color: #f4c552;
+}
+.soundtrack-source-provenance {
+  display: grid;
+  gap: 4px;
+  min-width: 0;
+  overflow-wrap: anywhere;
+  font-size: 0.8rem;
 }
 .soundtrack-lede {
   max-width: 62ch;
