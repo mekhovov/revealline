@@ -6,6 +6,7 @@ import { Document, Events } from './helpers/couch-dom.mjs';
 import { attachEnemyGuide } from '../ui/enemy-guide.mjs';
 import { managedIndexedDB } from './helpers/managed-idb.mjs';
 import { PNGImage } from './helpers/png-image.mjs';
+import { RasterImage } from './helpers/raster-image.mjs';
 import { authoritativeCheckpoint } from '../replay.mjs';
 import { COMMUNITY_ROUTES } from '../community-routes.mjs';
 import { editionPublicSlug } from '../edition-context.mjs';
@@ -129,6 +130,50 @@ test('actual friendly More and Workshop links compose at the canonical game root
     });
 });
 
+async function verifyFriendlyGameplay(t, slug, query, base) {
+  const route = COMMUNITY_ROUTES.find((item) => item.slug === slug);
+  const editionId = new URLSearchParams(query).get('edition') || route.editionId;
+  const href = `${base}game/communities/${slug}/${query}`;
+  const { page, requests } = await friendlyPage(t, href, { pictures: { Image: RasterImage } });
+  assert.equal(page.win.location.href, href);
+  assert.equal(page.doc.body.dataset.editionId, editionId);
+  assert.deepEqual(
+    [...page.$('edition-select').options].map((option) => option.value),
+    route.editionIds,
+  );
+  page.$('shell-featured').click();
+  await settle(() => page.doc.body.dataset.flightState === 'running');
+  page.frame(0);
+  assert.equal(page.rendered.actorAppearance.style, 'campaign');
+  assert.ok(page.rendered.backdrop?.image?.width > 0, 'Accepted original raster was decoded.');
+  const picture = page.rendered.backdrop;
+  const tick = page.rendered.run.tick;
+  page.key('ArrowDown');
+  for (let i = 0; i < 12; i++) page.frame();
+  page.key('ArrowDown', false);
+  assert.ok(page.rendered.run.tick > tick);
+  page.$('pause-button').click();
+  page.frame(0);
+  const before = authoritativeCheckpoint(page.rendered.run);
+  const picker = page.$('edition-select');
+  picker.value = route.brandId === 'coupa' ? 'droneaid-nl-community' : 'coupa-all';
+  assert.equal(await picker.onchange(), false);
+  assert.equal(picker.value, editionId);
+  for (let i = 0; i < 3; i++) page.frame();
+  assert.deepEqual(authoritativeCheckpoint(page.rendered.run), before);
+  assert.equal(page.rendered.backdrop, picture);
+  page.$('save-attempt-button').click();
+  const key = `revealline.suspended.journey-${editionId}.v1.solo-v2`;
+  await settle(() => !!page.storage.getItem(key));
+  assert.equal(
+    JSON.parse(page.storage.getItem(key)).actorAppearancePin.content.editionId,
+    editionId,
+  );
+  assert.equal(page.win.location.href, href);
+  assert.ok(requests.every((request) => !request.startsWith(`game/communities/${slug}/`)));
+  assert.deepEqual(page.errors, []);
+}
+
 test('real friendly communities run in the common host with their own artwork, saves and controls', async (t) => {
   const cases = [
     ['coupa', '', 'http://localhost/'],
@@ -137,49 +182,12 @@ test('real friendly communities run in the common host with their own artwork, s
     ['coupa', '?edition=coupa-culture', 'http://localhost/revealline/releases/v0.142.3/site/'],
   ];
   for (const [slug, query, base] of cases)
-    await t.test(`${slug}${query}`, async (t) => {
-      const route = COMMUNITY_ROUTES.find((item) => item.slug === slug);
-      const editionId = new URLSearchParams(query).get('edition') || route.editionId;
-      const href = `${base}game/communities/${slug}/${query}`;
-      const { page, requests } = await friendlyPage(t, href);
-      assert.equal(page.win.location.href, href);
-      assert.equal(page.doc.body.dataset.editionId, editionId);
-      assert.deepEqual(
-        [...page.$('edition-select').options].map((option) => option.value),
-        route.editionIds,
-      );
-      page.$('shell-featured').click();
-      await settle(() => page.doc.body.dataset.flightState === 'running');
-      page.frame(0);
-      assert.equal(page.rendered.actorAppearance.style, 'campaign');
-      assert.ok(page.rendered.backdrop?.image?.width > 0, 'Accepted original PNG was decoded.');
-      const picture = page.rendered.backdrop;
-      const tick = page.rendered.run.tick;
-      page.key('ArrowDown');
-      for (let i = 0; i < 12; i++) page.frame();
-      page.key('ArrowDown', false);
-      assert.ok(page.rendered.run.tick > tick);
-      page.$('pause-button').click();
-      page.frame(0);
-      const before = authoritativeCheckpoint(page.rendered.run);
-      const picker = page.$('edition-select');
-      picker.value = route.brandId === 'coupa' ? 'droneaid-nl-community' : 'coupa-all';
-      assert.equal(await picker.onchange(), false);
-      assert.equal(picker.value, editionId);
-      for (let i = 0; i < 3; i++) page.frame();
-      assert.deepEqual(authoritativeCheckpoint(page.rendered.run), before);
-      assert.equal(page.rendered.backdrop, picture);
-      page.$('save-attempt-button').click();
-      const key = `revealline.suspended.journey-${editionId}.v1.solo-v2`;
-      await settle(() => !!page.storage.getItem(key));
-      assert.equal(
-        JSON.parse(page.storage.getItem(key)).actorAppearancePin.content.editionId,
-        editionId,
-      );
-      assert.equal(page.win.location.href, href);
-      assert.ok(requests.every((request) => !request.startsWith(`game/communities/${slug}/`)));
-      assert.deepEqual(page.errors, []);
-    });
+    await t.test(`${slug}${query}`, (t) => verifyFriendlyGameplay(t, slug, query, base));
+});
+
+test('four newly added public communities preserve their current gameplay and save ownership at friendly routes', async (t) => {
+  for (const slug of ['social-drone-ua', 'victory-drones', 'ukraine-culture', 'fpv-learning'])
+    await t.test(slug, (t) => verifyFriendlyGameplay(t, slug, '', 'http://localhost/revealline/'));
 });
 
 test('the actual friendly host rejects a cross-company selector before content reads or flight setup', async (t) => {

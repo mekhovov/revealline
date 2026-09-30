@@ -420,6 +420,30 @@ test('a forged cross-company selection cannot save, replace or leave the current
   assert.deepEqual(page.errors, []);
 });
 
+test('retained edition chrome does not borrow a newly adopted logo outside its saved asset closure', async (t) => {
+  const f = await retainedEditionFixture({ originalArtwork: true });
+  const currentLogo = f.replacePicture('new-company-logo');
+  f.catalog.brands[0].logoAssetId = currentLogo.id;
+  f.catalog.brands[0].assetIds = [currentLogo.id];
+  const requests = [];
+  const page = await soloPage(t, {
+    search: `?edition=sample-public&presentation=${f.descriptor.id}`,
+    titleScreen: true,
+    journeyIndexedDB: managedIndexedDB().indexedDB,
+    pictures: { Image: PNGImage },
+    fetchResponse(url) {
+      requests.push(String(url));
+      return f.fetcher(url);
+    },
+  });
+  assert.equal(page.doc.body.dataset.editionId, 'sample-public');
+  assert.equal(page.$('edition-presentation-select').value, f.descriptor.id);
+  assert.ok(!requests.some((url) => url.endsWith(currentLogo.path)));
+  for (const image of page.doc.querySelectorAll('img'))
+    assert.ok(!String(image.src).includes('new-company-logo'));
+  assert.deepEqual(page.errors, []);
+});
+
 test('edition runs the complete Solo host with canonical rules, settings and mission library', async (t) => {
   const f = await editionProviderFixture();
   const legacyKey = 'revealline.suspended.journey-sample-public.v1';

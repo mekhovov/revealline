@@ -54,9 +54,9 @@ test('retained original preserves exact execution and receipt while new artwork 
     new URL(retained.href({ presentation: null })).searchParams.has('presentation'),
     false,
   );
-  assert.equal(
-    new URL(retained.href({ edition: 'another-edition' })).searchParams.has('presentation'),
-    false,
+  assert.throws(
+    () => retained.href({ edition: 'another-edition' }),
+    /cannot navigate to another company/,
   );
 });
 
