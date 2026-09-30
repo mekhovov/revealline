@@ -167,6 +167,11 @@ test('real Git snapshot runs an older frozen entry through an aliased temp root 
     path.join(root, 'game/content/soundtrack-catalogue.mjs'),
     'export const SOUNDTRACK_BUNDLED_ASSETS = [];\n',
   );
+  await fs.mkdir(path.join(root, 'game/mission-library'), { recursive: true });
+  await fs.writeFile(
+    path.join(root, 'game/mission-library/included-bundled-pack.mjs'),
+    'export function isIncludedBundledMission() { return false; }\n',
+  );
   await fs.mkdir(path.join(root, 'game/i18n'), { recursive: true });
   await fs.writeFile(
     path.join(root, 'game/i18n/index.mjs'),
@@ -181,6 +186,10 @@ test('real Git snapshot runs an older frozen entry through an aliased temp root 
     'game/content-launch.mjs',
   ])
     await fs.copyFile(new URL(`../${relative}`, import.meta.url), path.join(root, relative));
+  await fs.writeFile(
+    path.join(root, 'scripts/offline-core-closure.mjs'),
+    'export function isOptionalSpatialAudioBody() { return false; }\n',
+  );
   // Retain the historical argv/URL guard in the archived entry. The real build
   // implementation runs behind it, so fixing only the current entry guard would
   // still fail this old-revision snapshot when TMPDIR contains a symlink.
