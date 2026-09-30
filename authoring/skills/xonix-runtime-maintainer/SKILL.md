@@ -1777,3 +1777,44 @@ lesson, return to the unchanged paused parent, and repeat in an ordinary restore
 pack. Check both languages, Close/Back and fresh controller input.” Source tests
 and honest unavailable states do not establish new edition lesson support or
 production/device acceptance.
+
+## Recovered Team maintenance guidance
+
+Recovered from closed PR #757 without replacing newer guidance above. The linked
+2026-09-29 records are historical observations, not current test, production or
+device approval. Keep the current native menus; do not restore the former More
+disclosure or historical publication ordering. Apply the following checks to the
+current integrated source and report each remaining acceptance boundary honestly.
+
+## Team canvas text and recovery guidance
+
+Forward the global text-size preference to the Team painter. Apply Large once to
+CSS-sized labels and their measured backings after the existing size clamp; never
+scale actor bodies, contact circles, warning timing or board geometry with text.
+Keep Standard command-stream regression evidence, head exclusions and bounded
+cue placement. Include `game/text-size.mjs` in the Team recipe-source closure;
+changed renderer dependencies require a new reviewed production successor, not
+rewritten old fingerprints. DOM HUD/ability-label wrapping is a separate layout concern from canvas scaling.
+
+On Resume, derive rescue guidance from currently downed players and retained
+knockdown facts, resolving labels through the live locale. Revival and Retry must
+retire old guidance. Mark Support learned only when its emitted event reports an
+actual slowed enemy or intercepted impact; keep existing teaching records intact.
+Use a fresh controller press when opening Settings after assignment rather than
+injecting a mouse click into the compatibility-echo shield. Preserve the guard.
+See the [Team batch evidence](../../../docs/verification/pr757-historical-recovery-20260930/original/docs/verification/team-readability-20260929/README.md).
+
+For narrow Team play, measure intrinsic HUD/objective/message and complete control
+rows. Keep the direction surface separate from action-label width: all targets
+must retain at least 44px while long translations wrap. Qualify actual downed,
+zero-reserve and recovery states, not only safe ground. Compact labels may summarize
+state and action; preserve full accessible/desktop instructions and exact numeric
+facts. Verify both seats and live language switching. Compare decoded generated
+catalogues, not compressed-line diffs. Record incomplete sparse-content generation
+separately from successful catalogue reproduction. See [Team HUD wrapping](../../../docs/verification/pr757-historical-recovery-20260930/original/docs/verification/team-hud-wrap-20260929/README.md).
+
+Store departure translation keys rather than translated captions at host boot.
+Resolve the selected key inside the live localized callback; keep the departure
+allowlist, currentness checks and warnings unchanged. Test cold Ukrainian → English
+and language changes while the confirmation is open, including native Escape
+return and a stale Confirm after cancellation.

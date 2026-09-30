@@ -1,0 +1,106 @@
+{
+  "parent": "f067823fe8e2f76d061bd45d17b11787fe376a23",
+  "productionReview": "deferred-not-passed",
+  "files": [
+    {
+      "path": "game/couch/coop-cue-overflow.mjs",
+      "bytes": 4194,
+      "sha256": "0acb23d31aafe1ec9c4a2313bb598064be2d0eaf8ec1062b11751b3589440e23"
+    },
+    {
+      "path": "game/couch/relay-rescue.mjs",
+      "bytes": 232699,
+      "sha256": "a69924f8b08127d74199ab07cbda61b3a8c80fad4184eade1a7f1475cee13579"
+    },
+    {
+      "path": "game/couch/relay-rescue.html",
+      "bytes": 51910,
+      "sha256": "620eb2ecad449fc532eaf06d1e67ec717b8665c03e1790e87d44ba3c8b8ef004"
+    },
+    {
+      "path": "game/couch/relay-rescue.css",
+      "bytes": 38499,
+      "sha256": "31bbca1b67402b1a9ee0038ee80ff939cd018d181a8f59f67c13d5d9e5910618"
+    },
+    {
+      "path": "game/ui/handheld-play.css",
+      "bytes": 59414,
+      "sha256": "5ae09ae40c025a2409c740338258df7760b0906cd545c7bb614995016bda924e"
+    },
+    {
+      "path": "game/locales/en/interface.json",
+      "bytes": 445677,
+      "sha256": "64a8a1af1c6e8ef9b30cdefe54ebe3b96a42862d02c65f2bf56b134e374ba3df"
+    },
+    {
+      "path": "game/locales/uk/interface.json",
+      "bytes": 727231,
+      "sha256": "2230aae2a7f76d89212f759717b2d9017fffa03e98998328484ef9b4fe88fdb8"
+    },
+    {
+      "path": "game/i18n/catalogs.mjs",
+      "bytes": 999819,
+      "sha256": "f1b0ed580b19c6fbd53a2f6943ddb984a2c4522c1feee4627640e1e00eee166a"
+    },
+    {
+      "path": "game/test/coop-cue-overflow.test.mjs",
+      "bytes": 2969,
+      "sha256": "148c25f4ecfc2687f0bdc35264ccbf527780a42432157d19726514e1d8332787"
+    },
+    {
+      "path": "game/test/coop-cue-overflow-host.test.mjs",
+      "bytes": 6636,
+      "sha256": "3a5a8808d6b0bfa8c230c5c52ee9a9fdf1d76e2158fba6b5725fb7e098e25ca1"
+    },
+    {
+      "path": "docs/team-cue-overflow.md",
+      "bytes": 2702,
+      "sha256": "44982be387e47948dcb59aabb4772158790ebc16b3b6a5180d990db0aae97a8c"
+    },
+    {
+      "path": "authoring/prompts/team-responsive-layout.md",
+      "bytes": 2651,
+      "sha256": "bb493fa6c0835c9f97e78980ec503b3117239d538e17d6a34b7a2130e82c1f1c"
+    },
+    {
+      "path": "docs/verification/team-cue-overflow-20260929/README.md",
+      "bytes": 3293,
+      "sha256": "09db0aeeedfe6ca5b003464fb1ed919132850a0abe5bf372776c0ac5699a7605"
+    },
+    {
+      "path": "docs/verification/team-cue-overflow-20260929/adjacent-hosts.tap",
+      "bytes": 39500,
+      "sha256": "e03b070ca5df1bfe6abcb2114ea819bd4877bf424548543b233ff0a13e740994"
+    },
+    {
+      "path": "docs/verification/team-cue-overflow-20260929/dense-import.json",
+      "bytes": 6439,
+      "sha256": "9481fe22f9df8bd7de003ed549b84a2e57adb2465864d0af74aa106b3a2c5980"
+    },
+    {
+      "path": "docs/verification/team-cue-overflow-20260929/focused.tap",
+      "bytes": 12767,
+      "sha256": "a0fc7588f1bbeeea0a56da6bde5a0fc36635ed109e0558226706e4df3ee1fd2b"
+    },
+    {
+      "path": "docs/verification/team-cue-overflow-20260929/initial-focused.tap",
+      "bytes": 12765,
+      "sha256": "54752153d54abec74dbffaab0ebb7489027e8a330ac8198a2485e7191ea24c80"
+    },
+    {
+      "path": "docs/verification/team-cue-overflow-20260929/landscape-568.png",
+      "bytes": 34063,
+      "sha256": "d6ea5b48ee5fba004dbdb5dfc874607e07d6376b02c1ed11653c49c025624110"
+    },
+    {
+      "path": "docs/verification/team-cue-overflow-20260929/portrait-reader-390.png",
+      "bytes": 50488,
+      "sha256": "a498036e410d93740f5d5cf0a4a5acc2c842bc63e083d2a6451c768888fbfe67"
+    },
+    {
+      "path": "docs/verification/team-cue-overflow-20260929/rotation-reader.json",
+      "bytes": 1774,
+      "sha256": "bc654c95bbb19228692a36ea8bfb2f7beab4620d4bbbe2891b24ecf52e6f2001"
+    }
+  ]
+}

@@ -1,0 +1,419 @@
+TAP version 13
+# Subtest: portrait functional player numerals retain at least fourteen CSS pixels
+ok 1 - portrait functional player numerals retain at least fourteen CSS pixels
+  ---
+  duration_ms: 7.620417
+  type: 'test'
+  ...
+# Subtest: pilot complete image frames remain within the arena at the true boundary
+ok 2 - pilot complete image frames remain within the arena at the true boundary
+  ---
+  duration_ms: 3.654917
+  type: 'test'
+  ...
+# Subtest: compact full frame, motor and nose bounds stay inside every corner through heading and banking
+ok 3 - compact full frame, motor and nose bounds stay inside every corner through heading and banking
+  ---
+  duration_ms: 32.213875
+  type: 'test'
+  ...
+# Subtest: detailed full frame, motor and nose bounds stay inside every corner through heading and banking
+ok 4 - detailed full frame, motor and nose bounds stay inside every corner through heading and banking
+  ---
+  duration_ms: 22.027667
+  type: 'test'
+  ...
+# Subtest: body offset leaves shared default drawing exact and contact at its real pixel position
+ok 5 - body offset leaves shared default drawing exact and contact at its real pixel position
+  ---
+  duration_ms: 1.417917
+  type: 'test'
+  ...
+# Subtest: plain portrait cues and player identities retain CSS size without covering true heads
+ok 6 - plain portrait cues and player identities retain CSS size without covering true heads
+  ---
+  duration_ms: 3.229084
+  type: 'test'
+  ...
+# Subtest: pixel portrait cues and player identities retain CSS size without covering true heads
+ok 7 - pixel portrait cues and player identities retain CSS size without covering true heads
+  ---
+  duration_ms: 2.500292
+  type: 'test'
+  ...
+# Subtest: complete CSS cue plates avoid both pilot heads and remain in the 362 by181 arena
+ok 8 - complete CSS cue plates avoid both pilot heads and remain in the 362 by181 arena
+  ---
+  duration_ms: 0.303708
+  type: 'test'
+  ...
+# Subtest: Large scales Team canvas type after its CSS-size clamp without changing cell geometry
+ok 9 - Large scales Team canvas type after its CSS-size clamp without changing cell geometry
+  ---
+  duration_ms: 0.5535
+  type: 'test'
+  ...
+# Subtest: Standard Team commands retain the pre-Large-preference baseline
+ok 10 - Standard Team commands retain the pre-Large-preference baseline
+  ---
+  duration_ms: 21.303208
+  type: 'test'
+  ...
+# Subtest: Large enlarges actual player, downed and warning labels while preserving prepared bodies and contacts
+ok 11 - Large enlarges actual player, downed and warning labels while preserving prepared bodies and contacts
+  ---
+  duration_ms: 37.42
+  type: 'test'
+  ...
+# Subtest: crowded Team labels keep their measured size instead of covering a pilot or shrinking text
+ok 12 - crowded Team labels keep their measured size instead of covering a pilot or shrinking text
+  ---
+  duration_ms: 0.14025
+  type: 'test'
+  ...
+# Subtest: invalid canvas text size fails before drawing or mutating the Team run
+ok 13 - invalid canvas text size fails before drawing or mutating the Team run
+  ---
+  duration_ms: 0.59425
+  type: 'test'
+  ...
+# Subtest: 212 CSS px Ukrainian Large Relay patrol retains complete distinct cue plates
+not ok 14 - 212 CSS px Ukrainian Large Relay patrol retains complete distinct cue plates
+  ---
+  duration_ms: 4.8815
+  type: 'test'
+  location: '/Users/oleksandr.mekhovov/.codex/worktrees/gallery-v133-verify/go_test/game/test/coop-actor-layout.test.mjs:567:3'
+  failureType: 'testCodeFailure'
+  error: |-
+    {"phase":"patrol","textFace":"plain","reduced":false,"status":"running","conflicts":[{"first":{"text":"МИСЛИВЕЦЬ","cssFontSize":16,"textBounds":{"left":37.83666666666667,"right":129.99666666666667,"top":66.4388888888889,"bottom":82.4388888888889},"backing":{"left":33.836666666666666,"right":133.99666666666667,"top":63.23888888888889,"bottom":85.63888888888889}},"second":{"text":"МИСЛИВЕЦЬ","cssFontSize":16,"textBounds":{"left":82.00333333333334,"right":174.16333333333336,"top":66.4388888888889,"bottom":82.4388888888889},"backing":{"left":78.00333333333333,"right":178.16333333333336,"top":63.23888888888889,"bottom":85.63888888888889}}}]}
+    + actual - expected
+    
+    + [
+    +   {
+    +     first: {
+    +       backing: {
+    +         bottom: 85.63888888888889,
+    +         left: 33.836666666666666,
+    +         right: 133.99666666666667,
+    +         top: 63.23888888888889
+    +       },
+    +       cssFontSize: 16,
+    +       text: 'МИСЛИВЕЦЬ',
+    +       textBounds: {
+    +         bottom: 82.4388888888889,
+    +         left: 37.83666666666667,
+    +         right: 129.99666666666667,
+    +         top: 66.4388888888889
+    +       }
+    +     },
+    +     second: {
+    +       backing: {
+    +         bottom: 85.63888888888889,
+    +         left: 78.00333333333333,
+    +         right: 178.16333333333336,
+    +         top: 63.23888888888889
+    +       },
+    +       cssFontSize: 16,
+    +       text: 'МИСЛИВЕЦЬ',
+    +       textBounds: {
+    +         bottom: 82.4388888888889,
+    +         left: 82.00333333333334,
+    +         right: 174.16333333333336,
+    +         top: 66.4388888888889
+    +       }
+    +     }
+    +   }
+    + ]
+    - []
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual:
+    0:
+      first:
+        text: 'МИСЛИВЕЦЬ'
+        cssFontSize: 16
+        textBounds:
+          left: 37.83666666666667
+          right: 129.99666666666667
+          top: 66.4388888888889
+          bottom: 82.4388888888889
+        backing:
+          left: 33.836666666666666
+          right: 133.99666666666667
+          top: 63.23888888888889
+          bottom: 85.63888888888889
+      second:
+        text: 'МИСЛИВЕЦЬ'
+        cssFontSize: 16
+        textBounds:
+          left: 82.00333333333334
+          right: 174.16333333333336
+          top: 66.4388888888889
+          bottom: 82.4388888888889
+        backing:
+          left: 78.00333333333333
+          right: 178.16333333333336
+          top: 63.23888888888889
+          bottom: 85.63888888888889
+  operator: 'deepStrictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/.codex/worktrees/gallery-v133-verify/go_test/game/test/coop-actor-layout.test.mjs:621:18)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: 212 CSS px Ukrainian Large Relay warning retains complete distinct cue plates
+ok 15 - 212 CSS px Ukrainian Large Relay warning retains complete distinct cue plates
+  ---
+  duration_ms: 23.653125
+  type: 'test'
+  ...
+# Subtest: 212 CSS px Ukrainian Large Relay commit retains complete distinct cue plates
+ok 16 - 212 CSS px Ukrainian Large Relay commit retains complete distinct cue plates
+  ---
+  duration_ms: 20.395542
+  type: 'test'
+  ...
+# Subtest: 212 CSS px Ukrainian Large Relay recovery retains complete distinct cue plates
+not ok 17 - 212 CSS px Ukrainian Large Relay recovery retains complete distinct cue plates
+  ---
+  duration_ms: 2.351291
+  type: 'test'
+  location: '/Users/oleksandr.mekhovov/.codex/worktrees/gallery-v133-verify/go_test/game/test/coop-actor-layout.test.mjs:567:3'
+  failureType: 'testCodeFailure'
+  error: |-
+    {"phase":"recovery","textFace":"plain","reduced":false,"status":"running","conflicts":[{"first":{"text":"ВІДНОВЛЕННЯ","cssFontSize":16,"textBounds":{"left":27.596666666666675,"right":140.23666666666668,"top":66.4388888888889,"bottom":82.4388888888889},"backing":{"left":23.59666666666667,"right":144.23666666666665,"top":63.23888888888889,"bottom":85.63888888888889}},"second":{"text":"ВІДНОВЛЕННЯ","cssFontSize":16,"textBounds":{"left":71.76333333333335,"right":184.40333333333334,"top":66.4388888888889,"bottom":82.4388888888889},"backing":{"left":67.76333333333335,"right":188.40333333333336,"top":63.23888888888889,"bottom":85.63888888888889}}}]}
+    + actual - expected
+    
+    + [
+    +   {
+    +     first: {
+    +       backing: {
+    +         bottom: 85.63888888888889,
+    +         left: 23.59666666666667,
+    +         right: 144.23666666666665,
+    +         top: 63.23888888888889
+    +       },
+    +       cssFontSize: 16,
+    +       text: 'ВІДНОВЛЕННЯ',
+    +       textBounds: {
+    +         bottom: 82.4388888888889,
+    +         left: 27.596666666666675,
+    +         right: 140.23666666666668,
+    +         top: 66.4388888888889
+    +       }
+    +     },
+    +     second: {
+    +       backing: {
+    +         bottom: 85.63888888888889,
+    +         left: 67.76333333333335,
+    +         right: 188.40333333333336,
+    +         top: 63.23888888888889
+    +       },
+    +       cssFontSize: 16,
+    +       text: 'ВІДНОВЛЕННЯ',
+    +       textBounds: {
+    +         bottom: 82.4388888888889,
+    +         left: 71.76333333333335,
+    +         right: 184.40333333333334,
+    +         top: 66.4388888888889
+    +       }
+    +     }
+    +   }
+    + ]
+    - []
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual:
+    0:
+      first:
+        text: 'ВІДНОВЛЕННЯ'
+        cssFontSize: 16
+        textBounds:
+          left: 27.596666666666675
+          right: 140.23666666666668
+          top: 66.4388888888889
+          bottom: 82.4388888888889
+        backing:
+          left: 23.59666666666667
+          right: 144.23666666666665
+          top: 63.23888888888889
+          bottom: 85.63888888888889
+      second:
+        text: 'ВІДНОВЛЕННЯ'
+        cssFontSize: 16
+        textBounds:
+          left: 71.76333333333335
+          right: 184.40333333333334
+          top: 66.4388888888889
+          bottom: 82.4388888888889
+        backing:
+          left: 67.76333333333335
+          right: 188.40333333333336
+          top: 63.23888888888889
+          bottom: 85.63888888888889
+  operator: 'deepStrictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/.codex/worktrees/gallery-v133-verify/go_test/game/test/coop-actor-layout.test.mjs:621:18)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: 212 CSS px Ukrainian Large Relay slowed retains complete distinct cue plates
+not ok 18 - 212 CSS px Ukrainian Large Relay slowed retains complete distinct cue plates
+  ---
+  duration_ms: 2.651041
+  type: 'test'
+  location: '/Users/oleksandr.mekhovov/.codex/worktrees/gallery-v133-verify/go_test/game/test/coop-actor-layout.test.mjs:567:3'
+  failureType: 'testCodeFailure'
+  error: |-
+    {"phase":"slowed","textFace":"plain","reduced":false,"status":"running","conflicts":[{"first":{"text":"МИСЛИВЕЦЬ","cssFontSize":16,"textBounds":{"left":37.83666666666667,"right":129.99666666666667,"top":66.4388888888889,"bottom":82.4388888888889},"backing":{"left":33.836666666666666,"right":133.99666666666667,"top":63.23888888888889,"bottom":85.63888888888889}},"second":{"text":"УПОВІЛЬНЕНО","cssFontSize":16,"textBounds":{"left":27.596666666666675,"right":140.23666666666668,"top":59.638888888888886,"bottom":75.63888888888889},"backing":{"left":23.59666666666667,"right":144.23666666666665,"top":56.43888888888889,"bottom":78.83888888888889}}},{"first":{"text":"МИСЛИВЕЦЬ","cssFontSize":16,"textBounds":{"left":37.83666666666667,"right":129.99666666666667,"top":66.4388888888889,"bottom":82.4388888888889},"backing":{"left":33.836666666666666,"right":133.99666666666667,"top":63.23888888888889,"bottom":85.63888888888889}},"second":{"text":"МИСЛИВЕЦЬ","cssFontSize":16,"textBounds":{"left":82.00333333333334,"right":174.16333333333336,"top":85.8,"bottom":101.8},"backing":{"left":78.00333333333333,"right":178.16333333333336,"top":82.6,"bottom":105}}}]}
+    + actual - expected
+    
+    + [
+    +   {
+    +     first: {
+    +       backing: {
+    +         bottom: 85.63888888888889,
+    +         left: 33.836666666666666,
+    +         right: 133.99666666666667,
+    +         top: 63.23888888888889
+    +       },
+    +       cssFontSize: 16,
+    +       text: 'МИСЛИВЕЦЬ',
+    +       textBounds: {
+    +         bottom: 82.4388888888889,
+    +         left: 37.83666666666667,
+    +         right: 129.99666666666667,
+    +         top: 66.4388888888889
+    +       }
+    +     },
+    +     second: {
+    +       backing: {
+    +         bottom: 78.83888888888889,
+    +         left: 23.59666666666667,
+    +         right: 144.23666666666665,
+    +         top: 56.43888888888889
+    +       },
+    +       cssFontSize: 16,
+    +       text: 'УПОВІЛЬНЕНО',
+    +       textBounds: {
+    +         bottom: 75.63888888888889,
+    +         left: 27.596666666666675,
+    +         right: 140.23666666666668,
+    +         top: 59.638888888888886
+    +       }
+    +     }
+    +   },
+    +   {
+    +     first: {
+    +       backing: {
+    +         bottom: 85.63888888888889,
+    +         left: 33.836666666666666,
+    +         right: 133.99666666666667,
+    +         top: 63.23888888888889
+    +       },
+    +       cssFontSize: 16,
+    +       text: 'МИСЛИВЕЦЬ',
+    +       textBounds: {
+    +         bottom: 82.4388888888889,
+    +         left: 37.83666666666667,
+    +         right: 129.99666666666667,
+    +         top: 66.4388888888889
+    +       }
+    +     },
+    +     second: {
+    +       backing: {
+    +         bottom: 105,
+    +         left: 78.00333333333333,
+    +         right: 178.16333333333336,
+    +         top: 82.6
+    +       },
+    +       cssFontSize: 16,
+    +       text: 'МИСЛИВЕЦЬ',
+    +       textBounds: {
+    +         bottom: 101.8,
+    +         left: 82.00333333333334,
+    +         right: 174.16333333333336,
+    +         top: 85.8
+    +       }
+    +     }
+    +   }
+    + ]
+    - []
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual:
+    0:
+      first:
+        text: 'МИСЛИВЕЦЬ'
+        cssFontSize: 16
+        textBounds:
+          left: 37.83666666666667
+          right: 129.99666666666667
+          top: 66.4388888888889
+          bottom: 82.4388888888889
+        backing:
+          left: 33.836666666666666
+          right: 133.99666666666667
+          top: 63.23888888888889
+          bottom: 85.63888888888889
+      second:
+        text: 'УПОВІЛЬНЕНО'
+        cssFontSize: 16
+        textBounds:
+          left: 27.596666666666675
+          right: 140.23666666666668
+          top: 59.638888888888886
+          bottom: 75.63888888888889
+        backing:
+          left: 23.59666666666667
+          right: 144.23666666666665
+          top: 56.43888888888889
+          bottom: 78.83888888888889
+    1:
+      first: <Circular>
+      second:
+        text: 'МИСЛИВЕЦЬ'
+        cssFontSize: 16
+        textBounds:
+          left: 82.00333333333334
+          right: 174.16333333333336
+          top: 85.8
+          bottom: 101.8
+        backing:
+          left: 78.00333333333333
+          right: 178.16333333333336
+          top: 82.6
+          bottom: 105
+  operator: 'deepStrictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/.codex/worktrees/gallery-v133-verify/go_test/game/test/coop-actor-layout.test.mjs:621:18)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+1..18
+# tests 18
+# suites 0
+# pass 15
+# fail 3
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 449.459584

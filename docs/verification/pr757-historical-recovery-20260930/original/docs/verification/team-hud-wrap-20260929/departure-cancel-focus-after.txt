@@ -1,0 +1,57 @@
+Browser tab: 35, Title: "Рятувальний ретранслятор · RevealLine", URL: "http://127.0.0.1:52260/game/couch/relay-rescue.html?journey=legacy".
+1 AXWebArea Рятувальний ретранслятор · RevealLine, URL: 127.0.0.1:52260/game/couch/relay-rescue.html?journey=legacy
+	2 container coop-app
+		3 container
+			4 link Description: REVEAL LINE, Value: 127.0.0.1:52260/game/?journey=legacy, ID: coop-home
+			5 link Description: Режим перегонів ↗, Value: 127.0.0.1:52260/game/couch/?journey=legacy, ID: coop-race
+		6 container Description: Спільна арена рятувального ретранслятора, ID: coop-play
+			7 text 1
+			8 text СОНЯШНИК
+			9 text На безпечній території
+			10 text Підтримка: готово
+			11 text КОМАНДНА ТЕРИТОРІЯ
+			12 text 0,0%
+			13 text 3 резерви
+			14 progress indicator Description: Командна територія, Value: 0, ID: coop-progress
+			15 text 2
+			16 text ОБРІЙ
+			17 text На безпечній території
+			18 text Підтримка: готово
+			19 text Відкрийте 65% разом
+			20 container
+				21 image Description: Одна спільна арена. Соняшник позначений цифрою 1, Обрій — цифрою 2., ID: coop-canvas
+				22 container coop-overlay
+					23 heading Пауза для обох гравців, Value: 2, ID: coop-overlay-title
+						24 text Пауза для обох гравців
+					25 text Відпустіть елементи керування та оберіть «Продовжити разом».
+					26 button Продовжити разом, ID: coop-resume
+					27 container Description: Керування музикою, ID: coop-quick-music-1
+						28 text Carol of the Bells (Metal Version) · Alexander Nakarada · Звук вимкнено
+						29 button Призупинити музику, Help: Відтворити або призупинити музику (B), ID: coop-quick-music-1-toggle
+						30 button Наступна композиція, Help: Наступна композиція (N), ID: coop-quick-music-1-next
+					31 button Повторити ту саму арену, ID: coop-retry
+					32 button Переглянути командні арени, ID: coop-discovery-paused
+					33 container coop-pause-core
+						34 button (collapsed) Правила гри й керування, ID: coop-help-toggle, Secondary Actions: Expand
+							35 text Правила гри й керування
+						36 button Налаштування, ID: coop-settings-open
+						37 checkbox Звук: вимкнено, Value: 0, ID: coop-quick-sound
+						38 button Головна, ID: coop-home-paused
+					39 button Змінити налаштування, ID: coop-lobby
+					40 container Description: Режим гри, ID: coop-mode-actions
+						41 link Description: Одиночна Один гравець, Value: 127.0.0.1:52260/game/?journey=legacy, ID: coop-solo
+						42 link Description: Суперництво Два поля суперників, Value: 127.0.0.1:52260/game/couch/?journey=legacy, ID: coop-versus
+						43 container
+							44 text Команда Одна спільна арена
+					45 container Description: Подорожі, довідка, налаштування та звук, ID: coop-tools
+						46 link Description: Нова подорож, Value: 127.0.0.1:52260/game/couch/relay-rescue.html, ID: coop-catalogue
+						47 container Зображення арени
+							48 text Командне зображення готове для цієї спроби.
+						49 button (collapsed) Більше, ID: coop-more-toggle, Secondary Actions: Expand
+							50 text Більше
+						51 button Встановлення та гра офлайн, ID: coop-offline
+			52 text Виберіть нові напрямки, коли будете готові.
+			53 text 0:36
+			54 button (disabled) Пауза, ID: coop-pause
+
+The focused UI element is 39 button Змінити налаштування, ID: coop-lobby

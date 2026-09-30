@@ -1,0 +1,57 @@
+{
+  "parent": "29f899e23ac556dd623a02df401adbea151fc087",
+  "productionReview": "deferred-not-passed",
+  "tests": {
+    "pass": 70,
+    "fail": 0,
+    "skipped": 0,
+    "cancelled": 0
+  },
+  "files": [
+    {
+      "path": "game/couch/coop-view.mjs",
+      "bytes": 38164,
+      "sha256": "837373b19366aaa7be1aead1a0b3da667b0874801805a91df944a612b8db8de7"
+    },
+    {
+      "path": "game/test/coop-bonus-slow-cue.test.mjs",
+      "bytes": 10971,
+      "sha256": "bdcb6941bc527929973671a5b908d1ddf49d666fa01990be1789fa9e64d9e805"
+    },
+    {
+      "path": "game/coop/timed-bonuses.mjs",
+      "bytes": 6560,
+      "sha256": "93685cfa70a123e87f4e1ba7af71bccf99168a86f587efb1b69e971060173510"
+    },
+    {
+      "path": "game/couch/coop-cue-overflow.mjs",
+      "bytes": 4194,
+      "sha256": "0acb23d31aafe1ec9c4a2313bb598064be2d0eaf8ec1062b11751b3589440e23"
+    },
+    {
+      "path": "authoring/prompts/team-responsive-layout.md",
+      "bytes": 3933,
+      "sha256": "9de7e96b0f203437f5cf8c9bad44848d73c5ffa8a529580e2fac18901c81dbf8"
+    },
+    {
+      "path": "docs/verification/team-bonus-slow-cue-20260929/README.md",
+      "bytes": 3424,
+      "sha256": "036db161f9e90c8e581512d3c82fcdbd7c6a406dc0534e244d5ea59fa5d91100"
+    },
+    {
+      "path": "docs/verification/team-bonus-slow-cue-20260929/baseline-red.tap.gz",
+      "bytes": 917,
+      "sha256": "e4e98c9f9197ada7a771610febc6862028883a55c9d2cfaf6bde8ee43bced589"
+    },
+    {
+      "path": "docs/verification/team-bonus-slow-cue-20260929/focused.tap",
+      "bytes": 17216,
+      "sha256": "fa8924417db31a1ed9133512ec35675235aef5efe2c0cca20cfd21234bd82102"
+    }
+  ],
+  "preservedLogDecoding": {
+    "path": "docs/verification/team-bonus-slow-cue-20260929/baseline-red.tap.gz",
+    "bytes": 4266,
+    "sha256": "58c4d625e9d577bfcf822ae434e07f7d2b44f0d880c3a02cbb3eba82786adb12"
+  }
+}

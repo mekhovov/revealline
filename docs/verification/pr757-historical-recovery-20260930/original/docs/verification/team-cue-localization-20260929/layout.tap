@@ -1,0 +1,184 @@
+TAP version 13
+# Subtest: portrait functional player numerals retain at least fourteen CSS pixels
+ok 1 - portrait functional player numerals retain at least fourteen CSS pixels
+  ---
+  duration_ms: 7.677125
+  type: 'test'
+  ...
+# Subtest: pilot complete image frames remain within the arena at the true boundary
+ok 2 - pilot complete image frames remain within the arena at the true boundary
+  ---
+  duration_ms: 3.52725
+  type: 'test'
+  ...
+# Subtest: compact full frame, motor and nose bounds stay inside every corner through heading and banking
+ok 3 - compact full frame, motor and nose bounds stay inside every corner through heading and banking
+  ---
+  duration_ms: 29.878041
+  type: 'test'
+  ...
+# Subtest: detailed full frame, motor and nose bounds stay inside every corner through heading and banking
+ok 4 - detailed full frame, motor and nose bounds stay inside every corner through heading and banking
+  ---
+  duration_ms: 20.671375
+  type: 'test'
+  ...
+# Subtest: body offset leaves shared default drawing exact and contact at its real pixel position
+ok 5 - body offset leaves shared default drawing exact and contact at its real pixel position
+  ---
+  duration_ms: 1.139541
+  type: 'test'
+  ...
+# Subtest: plain portrait cues and player identities retain CSS size without covering true heads
+ok 6 - plain portrait cues and player identities retain CSS size without covering true heads
+  ---
+  duration_ms: 11.657291
+  type: 'test'
+  ...
+# Subtest: pixel portrait cues and player identities retain CSS size without covering true heads
+ok 7 - pixel portrait cues and player identities retain CSS size without covering true heads
+  ---
+  duration_ms: 2.443208
+  type: 'test'
+  ...
+# Subtest: complete CSS cue plates avoid both pilot heads and remain in the 362 by181 arena
+ok 8 - complete CSS cue plates avoid both pilot heads and remain in the 362 by181 arena
+  ---
+  duration_ms: 0.240834
+  type: 'test'
+  ...
+# Subtest: Large scales Team canvas type after its CSS-size clamp without changing cell geometry
+ok 9 - Large scales Team canvas type after its CSS-size clamp without changing cell geometry
+  ---
+  duration_ms: 0.42225
+  type: 'test'
+  ...
+# Subtest: Standard Team commands retain the pre-Large-preference baseline
+ok 10 - Standard Team commands retain the pre-Large-preference baseline
+  ---
+  duration_ms: 16.557375
+  type: 'test'
+  ...
+# Subtest: Large enlarges actual player, downed and warning labels while preserving prepared bodies and contacts
+ok 11 - Large enlarges actual player, downed and warning labels while preserving prepared bodies and contacts
+  ---
+  duration_ms: 25.929541
+  type: 'test'
+  ...
+# Subtest: crowded Team labels keep their measured size instead of covering a pilot or shrinking text
+ok 12 - crowded Team labels keep their measured size instead of covering a pilot or shrinking text
+  ---
+  duration_ms: 0.238417
+  type: 'test'
+  ...
+# Subtest: invalid canvas text size fails before drawing or mutating the Team run
+ok 13 - invalid canvas text size fails before drawing or mutating the Team run
+  ---
+  duration_ms: 0.807375
+  type: 'test'
+  ...
+# Subtest: 212 CSS px Ukrainian Large Relay patrol retains complete distinct cue plates
+ok 14 - 212 CSS px Ukrainian Large Relay patrol retains complete distinct cue plates
+  ---
+  duration_ms: 25.781416
+  type: 'test'
+  ...
+# Subtest: 212 CSS px Ukrainian Large Relay warning retains complete distinct cue plates
+ok 15 - 212 CSS px Ukrainian Large Relay warning retains complete distinct cue plates
+  ---
+  duration_ms: 18.961
+  type: 'test'
+  ...
+# Subtest: 212 CSS px Ukrainian Large Relay commit retains complete distinct cue plates
+ok 16 - 212 CSS px Ukrainian Large Relay commit retains complete distinct cue plates
+  ---
+  duration_ms: 18.433792
+  type: 'test'
+  ...
+# Subtest: 212 CSS px Ukrainian Large Relay recovery retains complete distinct cue plates
+ok 17 - 212 CSS px Ukrainian Large Relay recovery retains complete distinct cue plates
+  ---
+  duration_ms: 16.941458
+  type: 'test'
+  ...
+# Subtest: 212 CSS px Ukrainian Large Relay slowed retains complete distinct cue plates
+ok 18 - 212 CSS px Ukrainian Large Relay slowed retains complete distinct cue plates
+  ---
+  duration_ms: 18.787042
+  type: 'test'
+  ...
+# Subtest: 212 CSS px Ukrainian Large Relay both-slowed retains complete distinct cue plates
+ok 19 - 212 CSS px Ukrainian Large Relay both-slowed retains complete distinct cue plates
+  ---
+  duration_ms: 17.49725
+  type: 'test'
+  ...
+# Subtest: 362 CSS px Ukrainian Large Relay keeps legacy full role/danger and Slowed captions
+ok 20 - 362 CSS px Ukrainian Large Relay keeps legacy full role/danger and Slowed captions
+  ---
+  duration_ms: 70.466875
+  type: 'test'
+  ...
+# Subtest: 212 CSS px slowed warning Hunters retain full danger captions, arrows and dashed rings
+ok 21 - 212 CSS px slowed warning Hunters retain full danger captions, arrows and dashed rings
+  ---
+  duration_ms: 28.492291
+  type: 'test'
+  ...
+# Subtest: 212 CSS px slowed commit Hunters retain full danger captions, arrows and dashed rings
+ok 22 - 212 CSS px slowed commit Hunters retain full danger captions, arrows and dashed rings
+  ---
+  duration_ms: 23.084583
+  type: 'test'
+  ...
+# Subtest: 212 CSS px slowed recovery Hunters retain full danger captions, arrows and dashed rings
+ok 23 - 212 CSS px slowed recovery Hunters retain full danger captions, arrows and dashed rings
+  ---
+  duration_ms: 26.434084
+  type: 'test'
+  ...
+# Subtest: 212 CSS px required cues remain complete with an active cut.joint outcome
+ok 24 - 212 CSS px required cues remain complete with an active cut.joint outcome
+  ---
+  duration_ms: 33.426333
+  type: 'test'
+  ...
+# Subtest: 212 CSS px required cues remain complete with an active team.recovery outcome
+ok 25 - 212 CSS px required cues remain complete with an active team.recovery outcome
+  ---
+  duration_ms: 33.53675
+  type: 'test'
+  ...
+# Subtest: compact cue packing reuses identical geometry and invalidates changed arena or warnings
+ok 26 - compact cue packing reuses identical geometry and invalidates changed arena or warnings
+  ---
+  duration_ms: 7.03725
+  type: 'test'
+  ...
+# Subtest: a moved locked target invalidates warm packing without changing warning text
+ok 27 - a moved locked target invalidates warm packing without changing warning text
+  ---
+  duration_ms: 4.854333
+  type: 'test'
+  ...
+# Subtest: an accepted won picture clears the last compact cue layout
+ok 28 - an accepted won picture clears the last compact cue layout
+  ---
+  duration_ms: 1.74125
+  type: 'test'
+  ...
+# Subtest: replacing or removing presentation clears its previous compact cue layout
+ok 29 - replacing or removing presentation clears its previous compact cue layout
+  ---
+  duration_ms: 6.026042
+  type: 'test'
+  ...
+1..29
+# tests 29
+# suites 0
+# pass 29
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 732.366
