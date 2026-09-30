@@ -9992,8 +9992,24 @@ try {
     refreshControllerBoostCue();
     const { status, assigned, disconnected } = controllerFrame;
     if (demoHost?.active) {
-      demoHost.controller(controllerFrame);
-      demoHost.update(elapsed);
+      const sampledFrame = controllerFrame,
+        menuRoot = controllerMenuRoot(),
+        gameplayInputActive = demoHost.gameplayInputActive;
+      controllerConfirmLifecycle.sample(sampledFrame.confirmSnapshot);
+      // A release can close Demo or change its scope. Keep the old frame out
+      // of the newly focused screen, and leave Confirm to the shared owner.
+      if (
+        demoHost.active &&
+        controllerScope() === scope &&
+        controllerMenuRoot() === menuRoot &&
+        demoHost.gameplayInputActive === gameplayInputActive
+      ) {
+        demoHost.controller({
+          ...sampledFrame,
+          ui: { ...sampledFrame.ui, confirm: false },
+        });
+        demoHost.update(elapsed);
+      }
       return;
     }
     if (Object.values(controllerFrame.ui).some(Boolean)) demoHost?.activity();
@@ -12589,22 +12605,7 @@ try {
     },
     onFreshStart: (source, current) => prepareDemoFresh(source, current),
     clearInput,
-    menu: (commands) => {
-      const target = controllerNavigation.handle(commands);
-      if (commands.confirmStart) {
-        if (target)
-          controllerConfirmGuard.begin(target, {
-            buttons:
-              controllerFrame?.confirmTransaction?.buttons || controllerFrame?.confirmButtons,
-            gamepadTimestamp: controllerFrame?.gamepadTimestamp,
-          });
-        else controllerConfirmLifecycle.reset('unavailable-target');
-      } else if (commands.confirmCancel) controllerConfirmGuard.cancel('lifecycle-cancel');
-      else if (commands.confirmCommit) {
-        if (target) controllerConfirmGuard.finish('release');
-        else controllerConfirmGuard.cancel('invalid-target');
-      }
-    },
+    menu: (commands) => controllerNavigation.handle(commands),
     nativeConfirmOwned: (event) => {
       controllerConfirmLifecycle.beforeNativeActivation(event, { activated: true });
       return controllerConfirmGuard.owned();
