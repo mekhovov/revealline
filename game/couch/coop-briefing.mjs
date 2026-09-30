@@ -1,6 +1,7 @@
 import { t } from '../i18n/index.mjs';
 import { coopGroundContext, coopGroundLabel } from './coop-ground.mjs';
 import { teamBonusHelp } from './coop-bonus-view.mjs';
+import { hasTeamLineImpacts } from '../coop/foundations.mjs';
 
 /** Presentation advice for an already validated arena. Never changes its recipe. */
 export function coopArenaGuidance(level, { jointCuts = true } = {}) {
@@ -10,6 +11,7 @@ export function coopArenaGuidance(level, { jointCuts = true } = {}) {
   const drifters = level.enemies.some((enemy) => enemy.type === 'drifter');
   const roamers = level.enemies.some((enemy) => enemy.type === 'claimed-rover');
   const relays = Boolean(level.strongholds?.length);
+  const trailImpacts = hasTeamLineImpacts(level) && level.enemies.length > 0;
   const requiredCores = level.goal.cores?.length ?? 0;
   const threats = [];
   if (level.timedBonuses) threats.push(teamBonusHelp());
@@ -24,9 +26,11 @@ export function coopArenaGuidance(level, { jointCuts = true } = {}) {
     threats.push(t('interface:driftersPatrolContinuouslyAndCanHitYourCraftOrUnfinished'));
   if (roamers) threats.push(t('interface:trackedRoamersDoNotRetainFieldReclaimTheirFullFootprint'));
   if (relays) threats.push(t('interface:relayCoresWarnBeforeSendingASparkAlongAnUnfinished'));
+  if (trailImpacts)
+    threats.push(t('interface:team.trailImpactContact'), t('interface:team.trailImpactDirections'));
   const supportRoles = level.supportRoles ?? ['hybrid', 'hybrid'];
   const specialist = level.supportRoles?.length === 2;
-  const intercept = relays || (Boolean(level.lineImpact) && level.enemies.length > 0);
+  const intercept = relays || trailImpacts;
   const canSlow = hunters || drifters || roamers;
   const interceptorSeat = supportRoles.indexOf('interceptor') + 1;
   const disruptorSeat = supportRoles.indexOf('disruptor') + 1;
