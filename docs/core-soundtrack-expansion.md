@@ -7,10 +7,10 @@ this consolidated plan.
 
 PR #643's detailed historical snapshot is preserved in
 [the dated history file](history/core-soundtrack-expansion-pr643.md), including research leads
-that remain available for later revalidation. Active work follows this master plan and the
-latest-first, all-open bulk reconciliation policy: reconcile every open input with the accepted
-aggregate and publish only the final independently qualified aggregate. Intermediate green
-heads are not releases; historical deployment is not a prerequisite.
+that remain available for later revalidation. Active work follows this master plan
+and the current publisher's protected-main, automatic-Pages policy. Independently
+ready batches can ship without waiting for unrelated content or historical releases.
+Earlier aggregate-release holds below are historical, not active dependencies.
 
 ## Plan maintenance and status rules
 
@@ -37,15 +37,41 @@ The trusted game catalogue contains **77 recordings**, preserving all previous
 or **Metal — approved** in Music library & playlists, or include the tracks through
 Audio's style controls.
 
-The latest verified public source is `5e23fa8a62accf7a719cca5dd45c0702b52d37a5`
-(`main-5e23fa8a62ac`, package label 0.142.4), including merged evidence/plan
-[PR #855](https://github.com/mekhovov/revealline/pull/855). Automatic Pages
-[36748726410](https://github.com/mekhovov/revealline/actions/runs/36748726410)
-passed. At 17:13 UTC the public release marker and complete catalogue JSON/JavaScript
-matched accepted source and the previously verified 77-track catalogue exactly.
-The earlier 908bc6 delivery/transport receipts remain historical evidence. The
-soundtrack follow-up starts on this accepted main without conflicts; merged PRs
-are not rewritten.
+At the 30 September evening audit, accepted main and the public release marker both
+identify `09a43d83351af276f184293ed3c72261575ed8bc`
+(`main-09a43d83351a`, package label 0.142.4). Automatic
+[Pages 36759567741](https://github.com/mekhovov/revealline/actions/runs/36759567741)
+passed. The public catalogue JSON/JavaScript match this accepted source exactly.
+This is a metadata/deployment check, not a new browser or listening qualification.
+The earlier 908bc6 and 5e23fa8 delivery/transport receipts remain historical evidence.
+The plan-review branch starts on this accepted main without conflicts; merged PRs
+are not rewritten. See the [dated audit receipt](verification/soundtrack-plan-review-20260930.json).
+
+**Three counts describe different things:** the canonical archive preserves
+**261 recordings**, of which **196 appear in its normal public lists** and
+**65 are review-only**. The game has **77 trusted catalogue recordings** plus
+dynamic access to eligible public archive recordings. The 77 are not 77 extra
+files on top of the archive, nor are all 77 bundled into the game download.
+Publishing an eligible archive entry makes it discoverable for streaming without
+a per-song game release; standard game-album admission is a separate curation step.
+Recording mode and user filters can further reduce the playable selection.
+Review-only URLs are discoverability controls, not authentication or private storage.
+
+### Completed platform work — no rebuild required
+
+| Area                                       | Delivered behavior                                                                                                                                       | Qualification boundary                                                                                                              |
+| ------------------------------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------- |
+| M0 / M1: catalogue and delivery foundation | One canonical repository/site; preserved recording identities, rights and migration evidence; automatic archive discovery in the game.                   | Old numbered repositories remain for historical clients; deletion is not qualified.                                                 |
+| M2: opening music                          | The approved Shchedryk metal arrangement is bundled, with title/artist/source and saved mute/selection intent preserved.                                 | Full/repeated listening and cultural/device acceptance remain separate; Content ID excludes it from Recording mode.                 |
+| M3 / M8: player controls                   | Top-level Audio transport and styles, Previous/Play/Pause/Next, B/N shortcuts, mixed archive/bundled/uploaded queues and bounded media-failure recovery. | Desktop/software evidence exists; physical iPhone/controller and cold-offline acceptance is deferred.                               |
+| Archive browsing                           | Search, style/artist/collection filters, clickable metadata, shareable URLs, shuffle/order/repeat and same-page playback.                                | Hidden/rejected recordings remain outside normal queues.                                                                            |
+| Creator and storage tools                  | Local uploads, playlists, offline albums, rights-aware exact-byte backups, CLI file/folder intake, browser intake packages and PR publication.           | The whole-CLI interrupted-intake resume gap below remains. An unknown licence is not converted into an open licence.                |
+| External-URL implementation                | CLI/web URL metadata, validation, delivery inventory and archive/game playback support are implemented.                                                  | No real external object has entered the published inventory yet; end-to-end external-host proof remains.                            |
+| M5 / M6 first admissions                   | One Synth and five Metal recordings added through PR #830; public album/transport evidence retained.                                                     | Revenge's Waiting is a 48-second boss cue, not a full-length gameplay composition; broader listening/device checks remain explicit. |
+
+These delivered features are preserved while completing the smaller remaining
+steps below. A change in catalogue size is not evidence of new compositions or
+completed human listening review.
 
 ### Completed and verified in this batch
 
@@ -141,23 +167,130 @@ after a post-commit interruption remains
 a separate automation follow-up (about 2–4 hours); current volume-level retries
 reuse matching files and safely reject conflicts.
 
-### Remaining work in delivery order
+### Remaining work, purpose and recommended order
 
-Estimates are hands-on effort, excluding review, CI and publisher queues. Ready
-changes use protected PRs and automatic Pages; planning milestone v0.150.0 does
-not require holding them for an immutable tagged release.
+M5/M6 remain the user's priority. Estimates below are hands-on effort, not promised
+calendar dates: owner decisions, specialist review, CI and the publisher queue are
+additional. Parallel preparation must not duplicate a pending musical decision.
+The planning milestone v0.150.0 is not a release prerequisite.
 
-| Priority / item                      | Current state and next deliverable                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         | Remaining effort / dependency                                                                                                                    |
-| ------------------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------ |
-| **1 — M5: runner2088**               | The original is musically approved. [Archive PR #65](https://github.com/mekhovov/revealline-soundtracks/pull/65) is merged and its separate review-only derivative is published at **−16.94 LUFS / −1.14 dBTP**, preserving the original (+0.45 dBTP). A pending game batch in [PR #855](https://github.com/mekhovov/revealline/pull/855) records exact source, rights, technical and verified public delivery evidence. Trusted admission still needs an explicit decision for the derivative hash or a separately reviewed derivation contract; [the dependency is recorded](../authoring/library/soundtrack-batches/runner2088-game-mix-20260930/review-dependency.json). This remains one composition. | **2–4 hours** for remaining game admission, plus CI/publication and the exact-derivative decision. No date is promised for that decision. |
-| **2 — M6: further Metal**            | The first five-track trusted Metal album is delivered. Six further exact recordings are prepared in metal-next-20260930 with native/source/measurement evidence and fresh full public hashes. Inventory publication is verified; owner selection precedes activation; expressly hidden songs stay excluded. Revenge's Waiting remains a 48-second boss cue.                                                                                                                                                                                                                                                                                                                                                                                              | **Half to one working day** for this prepared batch after selection, plus CI/publication; further batches remain **1–2 days**.                                                                       |
-| **3 — M4: Ukrainian expansion**      | Shchedryk is bundled. Three approved Commons recordings still need cultural review and scene/energy assignments. This review does not block ready Synth/Metal changes.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     | Several hours of qualified review, then **1–2 days** integration; no reviewer date established.                                                  |
-| **M9: metadata**                     | Apply curation only to accepted batches, with stable IDs and hashes. Current six-track scene/energy assignments are shipped.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               | **1–3 hours per further batch**.                                                                                                                 |
-| **M8: device/offline qualification** | Physical iPhone/controller and cold-offline acceptance remains **deferred by the user**. Software tests cannot close it.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   | About **half a day** once resumed with devices available.                                                                                        |
-| **External URL proof**               | Intake and playback support exist. A real stable, rights-cleared public S3-style MP3 URL is still missing for the planned end-to-end proof. No cloud provisioning in this phase.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           | **1–2 hours after a usable URL is supplied**.                                                                                                    |
-| **Legacy archives**                  | Preserve numbered repositories and historical Pages payloads. Retirement depends on compatibility and deferred offline/device acceptance.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  | About **half a day after M8**; deletion remains unqualified.                                                                                     |
-| **Capacity / M10**                   | Canonical archive now has 261 recordings, 196 public and 65 review-only. The extra recording is the runner2088 technical variant, not another composition. Plan pagination before approximately 450. Broader genres follow core styles.                                                                                                                                                                                                                                                                                                                                                                                                                                                                    | Pagination **1–2 days** when needed; new albums **1–2 days per cleared batch**.                                                                  |
-| **M7 / M11**                         | **UA-FPV skipped. AI originals paused, 0/36 approved.** Preserve source files, prior decisions and the full original-composition brief.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    | Unscheduled; neither blocks the active batches.                                                                                                  |
+| Order / stable item                       | Concrete next result                                                                                                                                                             | Why it matters; impact of postponing                                                                                                                                                                          | Effort and dependency                                                                                                                                                           |
+| ----------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **1 — M5: runner2088 game mix**           | Admit the already-published peak-controlled derivative to the standard Synth album, retaining its original and exact identity.                                                   | Completes the approved Synth pair without using the original's over-target peak. Until then the original remains archive-streamable and the derivative stays review-only; neither is silently made a default. | **2–4 hours** after the exact-derivative decision or a reviewed derivation contract; CI/publication extra.                                                                      |
+| **1 — M6: next Metal album**              | Admit an explicitly selected subset of the six prepared tracks listed below, with scene/energy and content classification.                                                       | Adds sustained heavy gameplay choices to the standard Metal album. These files already stream from the archive; delay affects curated/default selection, not their existence.                                 | **Half to one working day** after the recorded selection; later researched batches **1–2 days** each.                                                                           |
+| **2 — M8.intake-resume**                  | Add whole-command recovery after intake commits files but push/PR creation is interrupted.                                                                                       | Makes repeated uploads predictable. Asset-level retries are safe now, but restarting the whole CLI can still stop at “Batch already exists” and need manual recovery.                                         | **2–4 hours**, independently implementable; no music reviewer or release version needed.                                                                                        |
+| **2 — M8.external-proof**                 | Publish one supplied stable public MP3 URL through a normal archive PR and prove mixed-source playback and exact-byte installation.                                              | Establishes that a real external host works end to end, allowing future audio to avoid Pages payload growth. Without it the code exists but the deployed host workflow is unproven.                           | **1–2 hours** after a rights-cleared URL with suitable CORS/range behavior exists; no bucket provisioning in this phase.                                                        |
+| **2 — M10.capacity**                      | Check deployed bytes before each new-audio batch; plan external delivery before the remaining space is exhausted.                                                                | Prevents a new album from failing deployment. Pagination does not reduce MP3 storage. No growth-related outage is established now.                                                                            | **1–2 hours** for a scoped capacity/preflight follow-up if current guards need better reporting; external proof above is the immediate prerequisite to exercising another host. |
+| **3 — M4: Ukrainian admission**           | Culturally review and classify the three approved Commons recordings, then admit a cleared subset.                                                                               | Expands authentic Ukrainian choices beyond the bundled Shchedryk adaptation. Delay keeps this standard collection small, but does not hold ready Synth/Metal work.                                            | Several hours of qualified review, then **1–2 working days** integration; reviewer availability unknown.                                                                        |
+| **Alongside each batch — M9**             | Review style, menu/gameplay role, energy and theme metadata, keyed to stable ID/hash.                                                                                            | Makes automatic selection and style filters useful without overwriting saved preferences or rights. Deferral leaves less suitable menu/level matching.                                                        | **1–3 hours per accepted batch**, folded into its admission rather than another broad retag release.                                                                            |
+| **Deferred — M2/M3/M8.acceptance**        | Complete full/repeated listening, transitions, warning audibility, mono/small-speaker checks; physical iPhone/controller and cold-offline acceptance remain explicitly deferred. | Confirms that controls, music balance and restoration work on the actual devices. Software/desktop checks cannot rule out device-specific silence, focus or offline failures.                                 | About **half a day** for the focused device/offline pass once resumed; full/repeated listening scales with track duration and reviewer availability.                            |
+| **Dependent — M8.legacy-retirement**      | Verify historical clients, publish retirement notices, freeze old intake, and archive numbered repositories read-only while retaining required Pages/assets.                     | Reduces maintenance and uploader confusion. Deleting them prematurely can break old immutable game releases and saved references.                                                                             | About **half a day after compatibility/device/offline acceptance**; deletion has not met its conditions.                                                                        |
+| **Shared concern — M8.release-assurance** | Close the deferred verification/provenance work tracked in issue #813 with the responsible release/feature owners.                                                               | Replaces waived evidence with actual results and catches broader regressions. Public deployment alone cannot close this quality gap.                                                                          | Diagnosis/owner scoping first; **no defensible fixed ETA**. Not a new blanket blocker on independently ready batches under current policy.                                      |
+| **Later — M10.variety/pagination**        | Add small accepted albums in other genres; add catalogue pagination before approximately 450 recordings.                                                                         | Broadens choice and keeps a growing list usable. Core Synth/Metal/Ukrainian value comes first; current 261-record list is below the 512-format bound.                                                         | Albums **1–2 days per cleared batch** plus review; pagination **1–2 days** when needed.                                                                                         |
+| **Ongoing — M0/M1**                       | Keep this ledger, admission contracts and regression coverage current after every delivery.                                                                                      | Prevents lost decisions, duplicate work and confusing “published” with “approved.” No foundation rewrite remains.                                                                                             | Documentation **under an hour per milestone**; regressions scoped to actual changes.                                                                                            |
+
+**M5 detail.** runner2088's original is musically approved and remains untouched;
+it measures +0.45 dBTP. Its separate game mix uses a constant gain reduction and
+MP3 re-encoding, measures **−16.94 LUFS / −1.14 dBTP**, and keeps the arrangement
+and duration. The exact derivative's recorded decision is pending; preparation
+and public transport verification are complete through archive #65 and game #855.
+The [review link](https://mekhovov.github.io/revealline-soundtracks/?collection=runner2088+Game+mix+%E2%80%94+technical+derivative&track=wekont.runner2088-game-mix&review=base-game-holdback-20260927#recordings)
+and [hash-bound dependency](../authoring/library/soundtrack-batches/runner2088-game-mix-20260930/review-dependency.json)
+remain available. It is one composition in two recordings, not another original.
+
+**M6 detail.** The next set is **Solar Storm, Galactic Battle, Orbital Assault,
+Mutilation's Melody, Bone Grinder's Ballad and City Limits Crash**: about 16 minutes
+41 seconds total. Public exact-byte verification, native-source/licence evidence,
+retained complete decoding/measurements and the admission inventory are ready.
+[Game PR #864](https://github.com/mekhovov/revealline/pull/864) merged as
+`144cbdd8a7143c8b8ece1c878f01a1a0c56bec2d`; its metadata preparation and intake
+receipt are now on public main. It **does not add six runtime recordings**.
+Exact-source [36753197285](https://github.com/mekhovov/revealline/actions/runs/36753197285)
+passed preflight/release-ready; focused/test/build jobs were skipped, not passed.
+Local compiler/admission checks passed 75/75 and independent review was retained.
+[Merged-source Pages](https://github.com/mekhovov/revealline/actions/runs/36753834198)
+passed. The [pending batch evidence](../authoring/library/soundtrack-batches/metal-next-20260930/EVIDENCE.md)
+separates owner selection, content/scene acceptance and deferred listening/device
+checks. Content ID/gameplay-video permission remains unknown, so Recording mode
+excludes these tracks. The larger **12–20 distinct Synth/Metal recordings** target
+remains; prepared auditions and alternate encodings do not complete it.
+
+**M4 detail.** The three approved recordings are **Oi u luzi chervona kalyna,
+A v kryvoho tantsia and Oi khodyt son kolo vikon**. Their permissions and owner
+musical decision are recorded; suitability of their cultural presentation,
+performance context and menu/gameplay role still needs review. This is not a
+request to approve them again. Additional sourcing should continue toward the
+six-additional-composition target only in small, cleared batches. Another Shchedryk
+arrangement provides variety but does not fill a distinct-composition slot.
+
+**External proof and capacity are different from managed hosting.** The public
+external-delivery inventory is currently empty. The first real-object pass must
+exercise external ↔ GitHub-backed ↔ bundled ↔ uploaded switching, Next/shuffle/repeat,
+a broken external file followed by successful local playback, dynamic catalogue
+pickup and hash-checked offline installation. A stable public S3 URL is suitable;
+expiring presigned URLs are not. Current hosting provisioning remains out of scope.
+
+The manifest-listed Pages payload is **924,661,311 bytes (881.83 MiB)** against
+the repository's **950 MiB** guard, leaving **71,485,889 bytes (68.17 MiB)**.
+It includes 203 MP3 compatibility files plus UI/metadata. Release assets preserve
+the wider archive; materializing compatible audio into Pages still consumes this
+budget. The catalogue contains 261 recording identities under a separate 512-entry
+bound. **The byte budget can be reached before the approximately-450 pagination
+trigger.** Assess new audio by bytes rather than predicting how many songs fit.
+Admitting the already-published runner/Metal batch does not add another audio copy.
+Never solve capacity by deleting immutable recordings, dropping compatibility
+files or silently lifting the guard.
+
+### Blockers, concerns and deliberate exclusions
+
+- **Owner-decision dependency:** the runner derivative and prepared Metal set lack
+  their exact recorded decision. Existing approvals and expressly hidden songs are
+  preserved; this status review creates no new musical approval.
+- **External input:** no real stable public external MP3 has been supplied/admitted.
+  The code is delivered; the real-host proof is incomplete, with no input date.
+- **Review/device availability:** cultural review and the user-deferred physical/
+  offline acceptance have no scheduled reviewer/device session. The shipped
+  Shchedryk and first six admissions retain pending full/repeated listening,
+  transition, warning, mono/small-speaker and relevant cultural evidence.
+- **Shared verification:** [issue #813](https://github.com/mekhovov/revealline/issues/813)
+  remains open for deferred focused/company/persistence/offline/artifact/i18n/edition
+  checks and preserved overlap/provenance reconciliation. Skipped jobs are not passes.
+- **Unresolved observation:** one desktop test saw master volume become zero.
+  The writer was not captured; another tab's shared preferences is only a hypothesis.
+  Isolate a profile and capture the writer if it recurs. No speculative fix or
+  claim of complete playback qualification follows from that observation.
+- **Local-work boundary:** the prior multi-worktree audit preserved remote source
+  and unrelated dirty work. This plan review verifies the current task checkout
+  and public metadata; it does not claim every other local worktree is now clean.
+- **M7 UA-FPV is skipped by user direction.** Preserve its private files and
+  earlier rights evidence. It is not an active permissions chase or a release hold.
+- **M11 originals remain paused at 0/36 approved.** Preserve scores, rejected
+  candidates and the complete brief. A better production method and accepted
+  pilots are prerequisites; no restart or completion date is scheduled.
+- **Hosting phases 2–4 are deferred design work:** managed S3/CloudFront/OIDC;
+  mirrors/backfill/failover and historical compatibility; provider adapters/custom
+  domain and game filter deep links. They could simplify uploads and increase
+  capacity, but introduce infrastructure and migration responsibilities. No
+  implementation ETA is assigned before design review. Archive filter links
+  already work; restoring those filters inside the game is the later feature.
+
+### Delivery batches from this review
+
+1. Commit this status review and receipt through a scoped documentation PR.
+2. Keep runner/Metal admission ready; release an accepted subset independently
+   when its existing decision dependency resolves. Implement intake-resume in
+   parallel rather than waiting on listening feedback.
+3. Prove external delivery when a usable URL exists, and check byte capacity before
+   further audio publication. Continue Ukrainian cultural/role preparation in parallel.
+4. Fold M9 metadata into each admitted batch; broaden styles afterward. Resume
+   device/offline acceptance and archive retirement only when their deferred work
+   is restored. Coordinate shared verification separately with the release owner.
+
+Each source batch is refreshed against accepted main, independently reviewed,
+submitted to the active required PR gates and published by the responsible owner.
+Automatic Pages completion and direct public verification distinguish a merged
+PR from a delivered feature. Update the ledger with that evidence; do not reserve
+or invent another immutable release version for this documentation update.
 
 ### Superseded morning checkpoint — 30 September 2026
 
@@ -472,9 +605,13 @@ plan**; keep its historical/private evidence only and do not spend release capac
 on public admission. The rejected AI-original method remains paused at 0/36 approved
 compositions.
 
-## Priority delivery — external MP3 URLs first (27 September 2026)
+## Historical external-URL checkpoint — 27 September 2026
 
-This is the active soundtrack transport priority. The canonical soundtrack
+**Superseded status snapshot:** the implementation below is now public. The real
+external-object proof remains open in M8.external-proof above. Old PR #716 release
+holds and immutable-release steps below are retained as history, not current work.
+
+At this checkpoint this was the active soundtrack transport priority. The canonical soundtrack
 repository remains the catalogue and rights control plane, while an uploader may
 bind one recording to a stable public HTTPS MP3 URL such as a direct S3 object URL.
 The first version does not provision buckets, upload objects, configure CloudFront,
@@ -542,7 +679,11 @@ still-pending real-object playback acceptance.
 These phases require a separate design review. The first release treats the
 uploader-supplied public URL as authoritative.
 
-## Completed and current baseline
+## Historical baseline and delivery checkpoints
+
+The dated entries below preserve what was known then. Current status and remaining
+work are the 30 September evening checkpoint above; old “active”, “blocked” or
+“draft” statements are not new release holds.
 
 ### Canonical library consolidation checkpoint — 27 September 2026
 
@@ -1646,7 +1787,10 @@ originals approved. No deadline is assigned to unresolved rights or paused music
   (CC BY 4.0 driving loop). They require exact-file acquisition and complete
   listening before publication; descriptive tags and licences do not establish fit.
 
-## Remaining delivery ledger
+## Historical M0–M11 delivery ledger
+
+Retained for traceability. Use the current remaining-work table above for priority,
+status and dependencies; the original contracts in the later M2–M11 sections remain.
 
 Estimates are hands-on effort, not promised dates. CI queues, listening reviewers,
 rights and actual failure diagnosis can extend elapsed time. No soundtrack game
