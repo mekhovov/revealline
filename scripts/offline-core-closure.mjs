@@ -85,6 +85,14 @@ export function selectOfflineCore(entries, excluded, { mode = 'solo' } = {}) {
   (MODE_ENTRIES[mode] || PLAY_ENTRIES).forEach((name) => add(name));
   for (const entry of entries) {
     const name = entry.name;
+    // Navigation does not create a dependency edge. Keep the small directory
+    // and entry shells offline; edition artwork keeps its optional ownership.
+    if (
+      mode === 'solo' &&
+      (name === 'game/community/index.html' ||
+        /^game\/communities\/(?:[a-z][a-z0-9-]*\/)?index\.html$/.test(name))
+    )
+      add(name);
     // Immutable compiled presentation metadata includes player-selected actor
     // themes, restore/backup pins and replay rendering. Keep its exact closure.
     if (
