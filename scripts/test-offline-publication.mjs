@@ -6,6 +6,7 @@ import path from 'node:path';
 import { createHash } from 'node:crypto';
 import { buildOfflineContent, buildOfflineInventory } from './offline-content.mjs';
 import { downloadFiles } from '../game/download-catalogue.mjs';
+import { gameplaySelection, offlineReadinessCode } from '../game/offline-download-session.mjs';
 import { soundtrackDownloadVolumes } from '../game/soundtrack-download-volumes.mjs';
 import { SOUNDTRACK_CATALOGUE } from '../game/content/soundtrack-catalogue.mjs';
 import {
@@ -70,6 +71,50 @@ test('all official missions have gameplay-only closure and soundtrack groups exa
     buildOfflineContent(broken, new Set(['game/pack.json']), '1.0.0'),
     /exact shipped dependency/,
   );
+});
+
+test('hosted extras stay selectable without entering shared or all-current gameplay downloads', async () => {
+  const names = [
+    'optional-practice/civilian-fpv/index.html',
+    'optional-practice/civilian-fpv/vendor/three.core.js',
+    'optional-practice/install-context.mjs',
+    'game/demo-data/first-signal-left.replay.json',
+    'game/ui/art/menu-scenes/droneaid-main-background.webp',
+  ];
+  const required = 'game/essential.json';
+  const entries = [required, ...names].map((name) => ({ name, bytes: Buffer.from(name) }));
+  const catalogue = await buildOfflineContent(entries, new Set([required, ...names]), '1.0.0');
+  assert.deepEqual(
+    downloadFiles(catalogue, ['shared']).map((file) => file.path),
+    [required],
+  );
+  const all = gameplaySelection(catalogue, { all: true });
+  assert.ok(all.every((id) => !id.startsWith('extras:')));
+  assert.deepEqual(
+    downloadFiles(catalogue, all).map((file) => file.path),
+    [required],
+  );
+  assert.equal(offlineReadinessCode(catalogue, all), 'gameReady');
+  const extras = catalogue.groups.filter((group) => group.category === 'extra');
+  assert.deepEqual(
+    extras.map((group) => group.id),
+    ['extras:practice', 'extras:demo', 'extras:menu-art'],
+  );
+  assert.ok(extras.every((group) => group.current === false && group.titleKey));
+  assert.deepEqual(
+    downloadFiles(
+      catalogue,
+      extras.map((group) => group.id),
+    )
+      .map((file) => file.path)
+      .sort(),
+    [required, ...names].sort(),
+  );
+  assert.equal(entries.length, names.length + 1, 'hosted files are retained');
+  for (const file of catalogue.files.filter((item) => names.includes(item.path))) {
+    assert.equal(file.bytes, Buffer.byteLength(file.path));
+    assert.equal(file.sha256, createHash('sha256').update(file.path).digest('hex'));
+  }
 });
 
 test('publisher copies only the frozen lightweight launcher and points at the immutable edition', async (t) => {
