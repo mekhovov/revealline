@@ -5002,7 +5002,7 @@
   "downloads.preparingLauncher": "Preparing and verifying the app launcher…",
   "downloads.preparationIncomplete": "Offline preparation did not finish. Resume to repair the missing files.",
   "downloads.selectionReady": "Your selected game is verified and ready offline. Recorded soundtracks remain optional.",
-  "downloads.activationReady": "This edition will open from the app icon at the next launch. Your previous edition and its progress are kept.",
+  "downloads.activationReady": "This edition will open from the app icon at the next launch. Your saved progress is kept.",
   "downloads.activationDeferred": "Game files are ready. Finish the current flight, then open Offline play from the main menu to select this edition safely.",
   "downloads.activationFailed": "The installed edition could not be selected. Your working edition is kept.",
   "downloads.activationFailedDetail": "The installed edition could not be selected. {{detail}}",
