@@ -39,20 +39,23 @@ test('reduced-motion default is manual; malformed preferences fail safely', () =
     auto: false,
     collect: false,
     gameSounds: false,
+    hidePictures: false,
   });
   assert.deepEqual(readDemoSettings(storage('{broken'), 'demo'), {
     auto: true,
     collect: false,
     gameSounds: false,
+    hidePictures: false,
   });
   assert.deepEqual(readDemoSettings(storage('{"version":1,"auto":false,"collect":true}'), 'demo'), {
     auto: false,
     collect: true,
     gameSounds: false,
+    hidePictures: false,
   });
   assert.deepEqual(
     readDemoSettings(storage('{"version":1,"auto":true,"collect":true,"extra":1}'), 'demo', true),
-    { auto: false, collect: false, gameSounds: false },
+    { auto: false, collect: false, gameSounds: false, hidePictures: false },
   );
 });
 
@@ -63,12 +66,32 @@ test('demo sound preference is opt-in and preserves existing v1 settings', () =>
     auto: false,
     collect: true,
     gameSounds: true,
+    hidePictures: false,
   });
   stored.gameSounds = 'yes';
   assert.deepEqual(readDemoSettings(storage, 'demo'), {
     auto: true,
     collect: false,
     gameSounds: false,
+    hidePictures: false,
+  });
+});
+
+test('demo picture privacy is opt-in and survives existing v1 settings', () => {
+  const stored = { version: 1, auto: true, collect: false, hidePictures: true };
+  const storage = { getItem: () => JSON.stringify(stored) };
+  assert.deepEqual(readDemoSettings(storage, 'demo'), {
+    auto: true,
+    collect: false,
+    gameSounds: false,
+    hidePictures: true,
+  });
+  stored.hidePictures = 'yes';
+  assert.deepEqual(readDemoSettings(storage, 'demo'), {
+    auto: true,
+    collect: false,
+    gameSounds: false,
+    hidePictures: false,
   });
 });
 
