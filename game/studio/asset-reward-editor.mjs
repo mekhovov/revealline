@@ -327,6 +327,13 @@ export function createAssetRewardEditor({
   }
   return {
     sync,
+    suspend() {
+      if (disposed) return;
+      generation++;
+      controller?.abort();
+      controller = null;
+      stopPreview();
+    },
     dispose() {
       if (disposed) return;
       disposed = true;

@@ -180,6 +180,8 @@ export function createCampaignFeedbackEditor({
   }
   return {
     sync,
+    // Stop transient playback without rebuilding or removing draft controls.
+    suspend: stop,
     dispose() {
       if (disposed) return;
       disposed = true;
