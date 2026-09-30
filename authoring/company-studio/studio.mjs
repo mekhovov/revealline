@@ -1086,7 +1086,9 @@ async function openPreview() {
       'Verified the complete artifact inventory and applied source. The preview runs the whole company game; this does not approve artwork or human playtesting.',
     );
   } catch (error) {
-    if (controller.signal.aborted && previewController === controller)
+    // A departed or superseded verification no longer owns any visible status.
+    if (previewController !== controller) return;
+    if (controller.signal.aborted)
       status(
         'Preview verification was cancelled or exceeded one minute. Retry the current report.',
         true,
@@ -1216,7 +1218,14 @@ async function main() {
   $('create-rewards').onclick = guarded(createRewardSidecar);
   $('create-learning').onclick = guarded(createLessonSidecar);
   $('learning-json').onchange = () => lessonEditor.sync();
-  window.addEventListener('pagehide', () => lessonEditor.dispose(), { once: true });
+  window.addEventListener('pagehide', (event) => {
+    // Retire ownership before aborting: late success or rejection cannot repaint.
+    const pendingPreview = previewController;
+    previewController = null;
+    pendingPreview?.abort();
+    if (event.persisted) lessonEditor.suspend();
+    else lessonEditor.dispose();
+  });
   $('add-reward').onclick = guarded(addRewardDraft);
   $('preview-reward').onclick = guarded(previewRewardDraft);
   $('reward-rule').onchange = () => {
