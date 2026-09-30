@@ -188,6 +188,7 @@ export const OPTIONAL_PACKAGE_POLICIES = Object.freeze({
       ...legacyFPV.sharedFiles,
       ...[
         'world-app.mjs',
+        'world-demonstrations.mjs',
         'world-assets.mjs',
         'world-hangar.mjs',
         'world-actor-editor.mjs',
