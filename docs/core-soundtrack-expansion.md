@@ -43,7 +43,6 @@ hold an independently ready change.** Deferred broad checks are recorded in
 [issue #813](https://github.com/mekhovov/revealline/issues/813); waived or skipped
 suites remain unverified. No second publisher or replacement historical tag is needed.
 
-
 The six-track admission is preserved in draft
 [game PR #830](https://github.com/mekhovov/revealline/pull/830), assigned to
 milestone **v0.150.0 — Unified native experience**. Both soundtrack commits were
