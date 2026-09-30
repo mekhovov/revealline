@@ -1,0 +1,176 @@
+TAP version 13
+# Subtest: attenuation matches design anchors, is monotonic, bounded and resolution independent
+ok 1 - attenuation matches design anchors, is monotonic, bounded and resolution independent # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.594917
+  ...
+# Subtest: capture tiers use unique new cells over claimable area
+ok 2 - capture tiers use unique new cells over claimable area # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.056
+  ...
+# Subtest: same events deduplicate within a run but not across boards; victory supersedes capture
+ok 3 - same events deduplicate within a run but not across boards; victory supersedes capture # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.039
+  ...
+# Subtest: enemy movement survives repeated render frames and stops on freeze and pause
+ok 4 - enemy movement survives repeated render frames and stops on freeze and pause # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.041667
+  ...
+# Subtest: Versus voice budget is fair and urgent cues remain foreground at any distance
+ok 5 - Versus voice budget is fair and urgent cues remain foreground at any distance # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.050584
+  ...
+# Subtest: storage failures and malformed menu settings retain safe defaults
+ok 6 - storage failures and malformed menu settings retain safe defaults # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.043458
+  ...
+# Subtest: bank assets match provenance and stay below transfer and decoded budgets
+ok 7 - bank assets match provenance and stay below transfer and decoded budgets # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.100042
+  ...
+# Subtest: Team shared source uses the nearest active player exactly once
+ok 8 - Team shared source uses the nearest active player exactly once # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.039
+  ...
+# Subtest: captured terrain stops its zone source and erosion restores it without duplicate tiles
+ok 9 - captured terrain stops its zone source and erosion restores it without duplicate tiles # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.137417
+  ...
+# Subtest: blocked held direction sounds once and can sound after release and a fresh contact
+ok 10 - blocked held direction sounds once and can sound after release and a fresh contact # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.10325
+  ...
+# Subtest: a decoded buffer becomes available for future events only, never replays a missed cue
+ok 11 - a decoded buffer becomes available for future events only, never replays a missed cue # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.051834
+  ...
+# Subtest: FPV boot schedules one localized radio voice after its ESC cue and urgent threats cancel it
+ok 12 - FPV boot schedules one localized radio voice after its ESC cue and urgent threats cancel it # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.036708
+  ...
+# Subtest: radio opt-out, non-FPV bodies, replay silent start and reset never leave speech scheduled
+ok 13 - radio opt-out, non-FPV bodies, replay silent start and reset never leave speech scheduled # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.035458
+  ...
+# Subtest: radio storage corruption and denied access keep independent safe defaults
+ok 14 - radio storage corruption and denied access keep independent safe defaults # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.086833
+  ...
+# Subtest: pending radio speech is retired by pause, suspension, disabling and disposal
+ok 15 - pending radio speech is retired by pause, suspension, disabling and disposal # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.036
+  ...
+# Subtest: radio volume is separate from menu volume and opting out stops pending speech
+ok 16 - radio volume is separate from menu volume and opting out stops pending speech # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.105792
+  ...
+# Subtest: twenty simulated minutes of two-board feedback stay bounded and reset cleanly
+ok 17 - twenty simulated minutes of two-board feedback stay bounded and reset cleanly # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.038625
+  ...
+# Subtest: crowded boards reserve a moving player and nearby enemy within the shared voice ceiling
+ok 18 - crowded boards reserve a moving player and nearby enemy within the shared voice ceiling # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.136792
+  ...
+# Subtest: rapid routine feedback shares a cooldown across variations without suppressing a warning
+ok 19 - rapid routine feedback shares a cooldown across variations without suppressing a warning # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.0415
+  ...
+# Subtest: a capture transaction uses its reveal seal without stacking a separate closure
+ok 20 - a capture transaction uses its reveal seal without stacking a separate closure # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.096417
+  ...
+# Subtest: movement opt-out retires both actor loops while warnings, rewards and radio remain enabled
+ok 21 - movement opt-out retires both actor loops while warnings, rewards and radio remain enabled # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.034542
+  ...
+# Subtest: movement settings keep session defaults on storage failure and use a separate mixer bus
+ok 22 - movement settings keep session defaults on storage failure and use a separate mixer bus # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.027958
+  ...
+# Subtest: all moving enemy roles receive recorded voices when near, including Team and combat actors
+ok 23 - all moving enemy roles receive recorded voices when near, including Team and combat actors # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.025042
+  ...
+# Subtest: authoritative freeze and dormant details suppress movement despite a position correction
+ok 24 - authoritative freeze and dormant details suppress movement despite a position correction # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.023958
+  ...
+# Subtest: retry and backward seek clear only the affected board gameplay tails and cooldowns
+ok 25 - retry and backward seek clear only the affected board gameplay tails and cooldowns # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.024125
+  ...
+# Subtest: pause clears gameplay tails while a terminal update preserves the victory ending
+ok 26 - pause clears gameplay tails while a terminal update preserves the victory ending # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.023291
+  ...
+# Subtest: retired movement rejoins its playback-rate-adjusted phase without restarting the recording
+ok 27 - retired movement rejoins its playback-rate-adjusted phase without restarting the recording # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.023667
+  ...
+# Subtest: hardware launch follows equipped FPV class and appearance, not just a name substring
+ok 28 - hardware launch follows equipped FPV class and appearance, not just a name substring # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.025583
+  ...
+# Subtest: owned campaign ending replaces capture and default victory once in every host
+ok 29 - owned campaign ending replaces capture and default victory once in every host # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.022375
+  ...
+# Subtest: unavailable recordings back off across frames and recover only for a fresh cue
+not ok 30 - unavailable recordings back off across frames and recover only for a fresh cue
+  ---
+  duration_ms: 4.462042
+  location: '/Users/oleksandr.mekhovov/.codex/worktrees/audio-qualification-main/go_test/game/test/feedback-director.test.mjs:658:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Missing optional WAV must not fetch once per render frame.
+
+    120 !== 1
+
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 1
+  actual: 120
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/.codex/worktrees/audio-qualification-main/go_test/game/test/feedback-director.test.mjs:672:10)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+1..30
+# tests 30
+# suites 0
+# pass 0
+# fail 1
+# cancelled 0
+# skipped 29
+# todo 0
+# duration_ms 262.993292
