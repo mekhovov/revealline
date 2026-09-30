@@ -1,0 +1,62 @@
+{
+  "method": "Native OfflineAudioContext, real FeedbackDirector, seven overlapping SFX scenarios with four movement layers, full buses and no compressor; no music or physical listening claim.",
+  "sampleRate": 48000,
+  "results": [
+    {
+      "name": "actions",
+      "voices": 11,
+      "stereoPeakDbfs": -21.347860551394618,
+      "monoPeakDbfs": -21.424850437611028,
+      "monoRmsDbfs": -37.969180604317955,
+      "unclipped": true
+    },
+    {
+      "name": "materials",
+      "voices": 10,
+      "stereoPeakDbfs": -21.371277544425887,
+      "monoPeakDbfs": -21.734441220591204,
+      "monoRmsDbfs": -38.475238980263114,
+      "unclipped": true
+    },
+    {
+      "name": "routine",
+      "voices": 12,
+      "stereoPeakDbfs": -21.80931976961301,
+      "monoPeakDbfs": -22.006247910714066,
+      "monoRmsDbfs": -38.50090517105916,
+      "unclipped": true
+    },
+    {
+      "name": "endings",
+      "voices": 12,
+      "stereoPeakDbfs": -19.477246856776713,
+      "monoPeakDbfs": -19.55958799991781,
+      "monoRmsDbfs": -37.302889405706324,
+      "unclipped": true
+    },
+    {
+      "name": "newMaterials",
+      "voices": 9,
+      "stereoPeakDbfs": -23.529409391249278,
+      "monoPeakDbfs": -23.529409391249278,
+      "monoRmsDbfs": -44.340995961704635,
+      "unclipped": true
+    },
+    {
+      "name": "radioEnglish",
+      "voices": 5,
+      "stereoPeakDbfs": -23.02134580578545,
+      "monoPeakDbfs": -24.422181556811037,
+      "monoRmsDbfs": -38.46687067325994,
+      "unclipped": true
+    },
+    {
+      "name": "radioUkrainian",
+      "voices": 5,
+      "stereoPeakDbfs": -23.81035946187494,
+      "monoPeakDbfs": -24.569525584175736,
+      "monoRmsDbfs": -38.32417957475656,
+      "unclipped": true
+    }
+  ]
+}
