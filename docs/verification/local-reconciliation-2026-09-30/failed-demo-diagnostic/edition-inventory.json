@@ -1,0 +1,173 @@
+{
+  "format": "revealline-demo-earned-picture-edition-inventory.v1",
+  "status": "failed",
+  "sourceScope": "Current working tree, including uncommitted earned-picture changes; not an immutable release or native launch.",
+  "sourceRevision": "e96a6a6405e9f245f588276e152ba9a8df254762",
+  "startedAt": "2026-09-29T15:28:56.350Z",
+  "command": "node --expose-gc docs/verification/demo-earned-pictures-2026-09-29/check-edition.mjs",
+  "scriptSha256": "e496d775a42518fbe39e294fa749961bdcc5f5727c090881e653c1fde22c54dd",
+  "releaseAdmitted": false,
+  "editions": [
+    {
+      "id": "droneaid-nl-community",
+      "status": "failed",
+      "error": "Changed game/app.mjs\n+ actual - expected\n\n+ 'ddc152f988c4ed389e3e68ad7d2f01e394c898b3ef6051c78a6a3e40ec9d1218'\n- '3af68adb6f977aafb9773b5b72d2c84ed6304fb3cc003310a95be270bf404977'"
+    }
+  ],
+  "version": "0.142.3",
+  "demoClips": 10,
+  "demoReplayFiles": 20,
+  "byteLimit": 67108864,
+  "fileLimit": 2000,
+  "inputFiles": 687,
+  "inputInventorySha256": "019cedcdd98f745a2068dfd8071250210bd92d65ba0578d476db1886d7faae7a",
+  "demoSourceInventory": [
+    {
+      "path": "game/app.mjs",
+      "bytes": 477073,
+      "sha256": "3af68adb6f977aafb9773b5b72d2c84ed6304fb3cc003310a95be270bf404977"
+    },
+    {
+      "path": "game/demo-bot-worker.mjs",
+      "bytes": 530,
+      "sha256": "135b0c9aefbef402be23fdbd91fd16a3549a30e68d34aabdd6998152a18dc837"
+    },
+    {
+      "path": "game/demo-data/catalog.json",
+      "bytes": 6839,
+      "sha256": "3d4fbe0437fb6dfc7e4140e72e597012e95ec82c007621e6dee358c38baf4078"
+    },
+    {
+      "path": "game/demo-data/crosswind-openings.chromium-macos.replay.json",
+      "bytes": 12340,
+      "sha256": "11dd1280e1f0899947d9697eb20e75c28b27bcc35d102eb4058a81256d18c94f"
+    },
+    {
+      "path": "game/demo-data/crosswind-openings.replay.json",
+      "bytes": 12332,
+      "sha256": "a8eb595988bd478a99bec31a4cc5a2c2f53413778a890fe8a7de36c93c841676"
+    },
+    {
+      "path": "game/demo-data/first-signal-left.chromium-macos.replay.json",
+      "bytes": 10801,
+      "sha256": "b18d9d343ffca2b7efec6c3ec0266d80ed0603804420f444159e4214533bd11e"
+    },
+    {
+      "path": "game/demo-data/first-signal-left.replay.json",
+      "bytes": 10793,
+      "sha256": "900f921146e37324dfefc90f55bfc60c03bd8a2954d53353ecae25df8a55c54a"
+    },
+    {
+      "path": "game/demo-data/first-signal-right.chromium-macos.replay.json",
+      "bytes": 10803,
+      "sha256": "c20c847103c652b3cf04f081b17bed8ddb1b0fca4b04e8e29cc72da23cf3849e"
+    },
+    {
+      "path": "game/demo-data/first-signal-right.replay.json",
+      "bytes": 10795,
+      "sha256": "1670c4dff98ebfb56d4b6a44bac010c3f796d98f16abb4abe71e56a2ec5c8fc7"
+    },
+    {
+      "path": "game/demo-data/hidden-frequency-search.chromium-macos.replay.json",
+      "bytes": 11525,
+      "sha256": "56c7600b96686d17e84b5e1292ca848112767a15a6d192d8b11accb0d242f89c"
+    },
+    {
+      "path": "game/demo-data/hidden-frequency-search.replay.json",
+      "bytes": 11517,
+      "sha256": "dd5e26c19ad433acf88b926ac1e595fa3f2e1df0d040d1879ca8190f7dd18537"
+    },
+    {
+      "path": "game/demo-data/night-patrol-loop.chromium-macos.replay.json",
+      "bytes": 12273,
+      "sha256": "2ac0bb990b4eca72e5854c1d56b59188a3cad2968a5049e8ee77900895410e2d"
+    },
+    {
+      "path": "game/demo-data/night-patrol-loop.replay.json",
+      "bytes": 12265,
+      "sha256": "f83e60de8f61ac2a44ba4bdc98228cc72abfdbc8e70fe3843946281a17d632e9"
+    },
+    {
+      "path": "game/demo-data/relay-orchard-loop.chromium-macos.replay.json",
+      "bytes": 12246,
+      "sha256": "58a4196d25f5759260e716d175e78c29c157ef5f366ffe833648bcc7c25f9ebc"
+    },
+    {
+      "path": "game/demo-data/relay-orchard-loop.replay.json",
+      "bytes": 12238,
+      "sha256": "d48bab6ab5f1fb1513d8261a8758519f0d9faccd91a0f334946f802260738627"
+    },
+    {
+      "path": "game/demo-data/relay-orchard-stairs.chromium-macos.replay.json",
+      "bytes": 12246,
+      "sha256": "605add619e47a1d7762813897ead1368c98048819874b1b84816dce69e2af358"
+    },
+    {
+      "path": "game/demo-data/relay-orchard-stairs.replay.json",
+      "bytes": 12238,
+      "sha256": "d145e8462f193a707e8bb3d8059a06fd1b0a407e8141a63101ebcf56b446cfb1"
+    },
+    {
+      "path": "game/demo-data/signal-garden-route.chromium-macos.replay.json",
+      "bytes": 11813,
+      "sha256": "8129f40d4713dc8f44c6023d09f2827ba4c98624ad6c88fa723d82f5c96959c1"
+    },
+    {
+      "path": "game/demo-data/signal-garden-route.replay.json",
+      "bytes": 11805,
+      "sha256": "a12a33a32a6583ae18680f891af2f4f0304569c024ef474d507041f6ad3e3572"
+    },
+    {
+      "path": "game/demo-data/stone-lanes-detour.chromium-macos.replay.json",
+      "bytes": 9160,
+      "sha256": "5081c6c54a80dd43954005a8eef2f79d8fe2019572d3b3328fecab95def25673"
+    },
+    {
+      "path": "game/demo-data/stone-lanes-detour.replay.json",
+      "bytes": 9152,
+      "sha256": "137b26ecdac3ea17780a293b961f93c4cb0722f50d5e19b3f6188ccbb8603b99"
+    },
+    {
+      "path": "game/demo-data/the-crossing-windows.chromium-macos.replay.json",
+      "bytes": 9895,
+      "sha256": "03fe9a5ea307d82093badf26968a06686605a01832d5ef6048a8fa38c13e9f2f"
+    },
+    {
+      "path": "game/demo-data/the-crossing-windows.replay.json",
+      "bytes": 9887,
+      "sha256": "b52aa84d5bcc15a75d998dc40ab91cf8c36dca5e25562873223d86ae33f9982c"
+    },
+    {
+      "path": "game/demo-data/variant-provenance.json",
+      "bytes": 4722,
+      "sha256": "701d0c04385779caa7c2660fa30216df9b856738f2da040e02434131e31f39b6"
+    },
+    {
+      "path": "game/demo-loading.mjs",
+      "bytes": 2305,
+      "sha256": "8b35db9e51774eb606af0904c762b5f206382a633aff7104932236944e5c7353"
+    },
+    {
+      "path": "game/ui/demo-host.mjs",
+      "bytes": 25114,
+      "sha256": "259ae76bc58ee538ac5bdbbac32d57aa831486bbeb635ac838f3a12479e07d6a"
+    },
+    {
+      "path": "game/ui/demo-journey-picture.mjs",
+      "bytes": 4595,
+      "sha256": "fe523986894dc4d25206d689bcece200653fbed4e9fd7153581edec5a9ef83ee"
+    },
+    {
+      "path": "game/ui/demo-picture.mjs",
+      "bytes": 13650,
+      "sha256": "eb51a0b79427ad05bb4095c2e0a86a7c3f859f0618a513a81b2b987acbf4c176"
+    }
+  ],
+  "changedInputsDuringCheck": [],
+  "finishedAt": "2026-09-29T15:29:02.914Z",
+  "elapsedSeconds": 6.584002541000001,
+  "limitations": [
+    "All compiled bytes existed only in memory; no ZIP or native output tree was emitted.",
+    "No service-worker execution, browser, physical device, audio, or release admission is established."
+  ]
+}
