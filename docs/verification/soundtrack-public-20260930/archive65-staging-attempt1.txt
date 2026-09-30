@@ -1,0 +1,19 @@
+verify	Stage the exact Pages payload	﻿2026-09-30T16:33:05.5186583Z ##[group]Run node verify.mjs --stage public
+verify	Stage the exact Pages payload	2026-09-30T16:33:05.5186984Z ^[[36;1mnode verify.mjs --stage public^[[0m
+verify	Stage the exact Pages payload	2026-09-30T16:33:05.5250200Z shell: /usr/bin/bash -e {0}
+verify	Stage the exact Pages payload	2026-09-30T16:33:05.5250469Z env:
+verify	Stage the exact Pages payload	2026-09-30T16:33:05.5253465Z   GITHUB_TOKEN: ***
+verify	Stage the exact Pages payload	2026-09-30T16:33:05.5253900Z ##[endgroup]
+verify	Stage the exact Pages payload	2026-09-30T16:33:34.8458177Z file:///home/runner/work/revealline-soundtracks/revealline-soundtracks/verify.mjs:161
+verify	Stage the exact Pages payload	2026-09-30T16:33:34.8459513Z const demand = (value, message) => { if (!value) throw new Error(message); };
+verify	Stage the exact Pages payload	2026-09-30T16:33:34.8473773Z                                                        ^
+verify	Stage the exact Pages payload	2026-09-30T16:33:34.8474076Z 
+verify	Stage the exact Pages payload	2026-09-30T16:33:34.8474398Z Error: Audio release is unavailable: audio-runner2088-game-mix-20260930
+verify	Stage the exact Pages payload	2026-09-30T16:33:34.8475109Z     at demand (file:///home/runner/work/revealline-soundtracks/revealline-soundtracks/verify.mjs:161:56)
+verify	Stage the exact Pages payload	2026-09-30T16:33:34.8475951Z     at releaseAssetBytes (file:///home/runner/work/revealline-soundtracks/revealline-soundtracks/verify.mjs:201:5)
+verify	Stage the exact Pages payload	2026-09-30T16:33:34.8476807Z     at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+verify	Stage the exact Pages payload	2026-09-30T16:33:34.8477567Z     at async stageArchive (file:///home/runner/work/revealline-soundtracks/revealline-soundtracks/verify.mjs:539:21)
+verify	Stage the exact Pages payload	2026-09-30T16:33:34.8478369Z     at async file:///home/runner/work/revealline-soundtracks/revealline-soundtracks/verify.mjs:554:94
+verify	Stage the exact Pages payload	2026-09-30T16:33:34.8478777Z 
+verify	Stage the exact Pages payload	2026-09-30T16:33:34.8478873Z Node.js v22.22.2
+verify	Stage the exact Pages payload	2026-09-30T16:33:34.8549155Z ##[error]Process completed with exit code 1.
