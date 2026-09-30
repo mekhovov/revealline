@@ -159,9 +159,17 @@ export function prepareNativeMenus({
       moveId(id, panels.content);
     move($('storage-retention-button')?.closest('section'), panels.content);
     moveId('shell-controller-lab', panels.controls);
+    moveId('shell-gallery', panels.data);
     moveId('shell-music', panels.audio);
     moveId('shell-worlds', panels.content);
-    for (const id of ['shell-demo', 'demo-availability', 'shell-workshop'])
+    for (const id of [
+      'shell-help',
+      'shell-home-fpv',
+      'shell-home-practice',
+      'shell-demo',
+      'demo-availability',
+      'shell-workshop',
+    ])
       moveId(id, panels.extras);
     move(settings.querySelector('.demo-settings'), panels.extras);
     move(doc.querySelector('.more-destinations a[href*="about.html"]'), panels.extras);
@@ -306,6 +314,9 @@ export function prepareNativeMenus({
           'shell-options': 'settings',
           'shell-sound': 'sound',
           'shell-gallery': 'collection',
+          'shell-help': 'help',
+          'shell-home-fpv': 'play',
+          'shell-home-practice': 'controls',
           'shell-workshop': 'controls',
         }
       : mode === 'versus'
