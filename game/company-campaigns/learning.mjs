@@ -7,6 +7,7 @@ import {
   stableId,
 } from '../data-json.mjs';
 import { freezeDesign } from '../content-design/catalogs.mjs';
+import { validateLessonLocalization } from './lesson-localization.mjs';
 
 const text = (value) => typeof value === 'string' && value.length > 0 && value.length <= 2048;
 const unique = (items) => new Set(items).size === items.length;
@@ -53,6 +54,7 @@ export function validateCompanyLesson(input) {
       'records',
       'fields',
       'success',
+      'locales',
     ],
     'lesson',
   );
@@ -138,6 +140,7 @@ export function validateCompanyLesson(input) {
     );
   }
   required(unique(lesson.fields.map((field) => field.id)), 'Duplicate configuration field.');
+  validateLessonLocalization(lesson);
   return freezeDesign(lesson);
 }
 

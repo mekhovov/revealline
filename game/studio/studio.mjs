@@ -135,6 +135,7 @@ import {
   inspectStudioSpatialReview,
   mountStudioSpatialReviews,
 } from './spatial-editions.mjs';
+import { createDiscoveryEditor } from './discovery-editor.mjs';
 
 const $ = (id) => document.getElementById(id);
 const creatorDraftId = new URLSearchParams(location.search).get('creator-draft');
@@ -324,6 +325,18 @@ const encounterEditor = createEncounterEditor({
     return true;
   },
 });
+const discoveryEditor = createDiscoveryEditor({
+  document,
+  getSource: () => session.current(),
+  getMission: currentMission,
+  apply: (candidate) => {
+    if (!discardSource()) return false;
+    session.replace(candidate);
+    render();
+    queueSave();
+    return true;
+  },
+});
 function status(text, error = false) {
   localizedText($('status'), text);
   $('status').dataset.error = String(error);
@@ -429,6 +442,7 @@ function inspectBoard(trailCells = []) {
   relayEditor.sync();
   directionalEditor.sync();
   encounterEditor.sync();
+  discoveryEditor.sync();
   imageWorkbench.sync();
   traceRecovery.sync();
   setBoardAvailability(document, !!mission);

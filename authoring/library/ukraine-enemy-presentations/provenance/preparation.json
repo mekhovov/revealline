@@ -1,0 +1,149 @@
+{
+  "format": "ukraine-enemy-source-preparation.v1",
+  "at": "2026-09-14T19:00:55.234881+00:00",
+  "base": "e9928cdaad2f55d912aadd2ef25f635fb99e938c",
+  "scope": "authoring/library/ukraine-enemy-presentations/** only",
+  "sourceTextPins": [
+    {
+      "sourcePath": "authoring/CONTRACT.md",
+      "cachePath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/ukraine-enemy-presentations/.cache/source-authority/authoring/CONTRACT.md",
+      "bytes": 13558,
+      "sha256": "6b8fbaa01949fa6c37098cebe68a12137528880ca2a50150aeb79b02d99ebd60",
+      "gitBlob": "da3ced1cb8fd30944f523b075b88284380ee66a9"
+    },
+    {
+      "sourcePath": "authoring/skills/xonix-asset-creator/SKILL.md",
+      "cachePath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/ukraine-enemy-presentations/.cache/source-authority/authoring/skills/xonix-asset-creator/SKILL.md",
+      "bytes": 14206,
+      "sha256": "c68a0e3138398c5277095c9698292a1bc194adcd0e152ed69bba48adf969b6a6",
+      "gitBlob": "f446c231732949fe541228ab01c98a5112af1fb2"
+    },
+    {
+      "sourcePath": "authoring/skills/xonix-character-collection/SKILL.md",
+      "cachePath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/ukraine-enemy-presentations/.cache/source-authority/authoring/skills/xonix-character-collection/SKILL.md",
+      "bytes": 13952,
+      "sha256": "0c26407d96636a942d470fc84c56ef6635ce81db8df1c69f777981e6f09a093c",
+      "gitBlob": "df9cd7906843add6a6fa23beda614fd469a7b53d"
+    },
+    {
+      "sourcePath": "authoring/prompts/enemy-workflows.json",
+      "cachePath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/ukraine-enemy-presentations/.cache/source-authority/authoring/prompts/enemy-workflows.json",
+      "bytes": 7306,
+      "sha256": "f2156c78fd8f0bbac1dd1571c3de34b9947a7305d6d4737221ea0e60e578e282",
+      "gitBlob": "79c45314ae393c26be30cd1b5465e401b9c411e3"
+    },
+    {
+      "sourcePath": "docs/enemy-catalog.md",
+      "cachePath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/ukraine-enemy-presentations/.cache/source-authority/docs/enemy-catalog.md",
+      "bytes": 11170,
+      "sha256": "a85fe032af8f5cae75602b645c64e46d8420acb1d4281d36461286c3390ac286",
+      "gitBlob": "c8d63df610caa0960e137e54c9c924318a4f6f46"
+    },
+    {
+      "sourcePath": "game/enemy-catalog.mjs",
+      "cachePath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/ukraine-enemy-presentations/.cache/source-authority/game/enemy-catalog.mjs",
+      "bytes": 5966,
+      "sha256": "46ce076af222227c5895bec7c8516f4e6e8098cfc81a9432d9fb0d6546e6c447",
+      "gitBlob": "ad9eb4659a16249934b6eefb8582f7b813b0c5b5"
+    },
+    {
+      "sourcePath": "game/content/themes.json",
+      "cachePath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/ukraine-enemy-presentations/.cache/source-authority/game/content/themes.json",
+      "bytes": 4266,
+      "sha256": "93582f7d9ba53753106df7b63928f086820fc0f68357d3c08f26c0b89fb84774",
+      "gitBlob": "ecf8ac03b979abd2228955522107254d4cd10491"
+    },
+    {
+      "sourcePath": "authoring/library/fpv-enemy-presentations/README.md",
+      "cachePath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/ukraine-enemy-presentations/.cache/source-authority/authoring/library/fpv-enemy-presentations/README.md",
+      "bytes": 4170,
+      "sha256": "4c5defe333fd03ab0a1c33511f506985ba6d42383f3764ef5e383211d7a26626",
+      "gitBlob": "065839c8c871409238352fabf2d09f4afa67a32f"
+    },
+    {
+      "sourcePath": "authoring/library/ukraine-role-presentations/README.md",
+      "cachePath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/ukraine-enemy-presentations/.cache/source-authority/authoring/library/ukraine-role-presentations/README.md",
+      "bytes": 7872,
+      "sha256": "dc0d270e899578017324844b894af9bf328c31ad9a73a3b2c9dfd74282083325",
+      "gitBlob": "a86ec6e3f21fc5aa90b58092d99410120f4b7e0e"
+    }
+  ],
+  "sourceExamplesViewed": [
+    "authoring/library/ukraine-role-presentations/originals/impact.png",
+    "authoring/library/ukraine-atlas-art/originals/petrykivka-sun-courtyard.png",
+    "authoring/library/fpv-enemy-presentations/originals/bouncer.png"
+  ],
+  "exampleSourceRoot": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/releases/source-e9928cdaad2f",
+  "skills": "System imagegen plus exact source Asset Creator, Character Collection, authoring contract and enemy workflow fully read before generation. User-authorized source-only scope controls; no runtime catalog or pack claim.",
+  "theme": {
+    "id": "ukraine",
+    "name": "Ukraine Atlas",
+    "subtitle": "Threads of belonging",
+    "palette": {
+      "ink": "#29343c",
+      "paper": "#f3ecdf",
+      "muted": "#aaa18e",
+      "accent": "#e5ba6c",
+      "safe": "#90b7bf",
+      "danger": "#d98277",
+      "field": "#252d3e",
+      "grid": "#344154",
+      "sky": "#dcb894",
+      "land": "#697d73"
+    }
+  },
+  "generation": {
+    "calls": 7,
+    "tool": "image_gen.imagegen",
+    "imageInputs": false,
+    "requestedSquarePixels": 1024,
+    "actualSquarePixels": 1254,
+    "format": "RGBA 8-bit PNG",
+    "originalBytes": 6441927,
+    "originalEditing": false,
+    "runtimeIntegration": false,
+    "completedAnimationRigs": 0
+  },
+  "inspection": {
+    "wholeOriginalsViewed": 7,
+    "alphaReadOnly": true,
+    "nativeCss": "Pending parent captures at exact24/32/56 CSS px; no native claim before separate receipt.",
+    "colorsAtAlpha128Range": [
+      79136,
+      133325
+    ],
+    "nonzeroAlphaMode": 253,
+    "substantialTouchesFrame": false,
+    "fringes": "Low nonzero alpha reaches some frame edges; substantial alpha128 bounds remain inside. Not strict palette or completely hard-edge alpha."
+  },
+  "background": {
+    "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/releases/source-e9928cdaad2f/authoring/library/ukraine-atlas-art/originals/petrykivka-sun-courtyard.png",
+    "sourceCommit": "e9928cdaad2f55d912aadd2ef25f635fb99e938c",
+    "sourceLedgerRow": {
+      "path": "authoring/library/ukraine-atlas-art/originals/petrykivka-sun-courtyard.png",
+      "bytes": 3286349,
+      "sha256": "523c5449a07811f806acd6448ada9d3c8fc7dbd621f0d5cae9944235d4e257a0"
+    },
+    "clone": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/ukraine-enemy-presentations/.cache/scene.png",
+    "sourceInode": 76054159,
+    "cloneInode": 76151935,
+    "method": "Exclusive independent APFS clone; no fallback, source unchanged, no image editing; existing body bytes shared initially. Preview uses this owned clone, so it does not consume the source-gate tree. Not included in Git.",
+    "freshFreeBeforeBytes": 1802555392
+  },
+  "budget": {
+    "limitBytes": 33554432,
+    "retainedToolOriginalBytes": 6441927,
+    "futureRawEqualSizeGitAllowance": 6441927,
+    "metadataAndCaptureReserveBytes": 2097152,
+    "conservativeOriginalGitAndReserveBytes": 14981006,
+    "existingSceneSharedCloneLogicalBytes": 3286349,
+    "conservativeAlsoChargingFullExistingSceneBytes": 18267355,
+    "copyMethod": "Tool originals kept; exclusive independent APFS clones share data initially. Existing scene clone is outside Git. Final actual new Git object bytes recorded after staging, no physical block-saving claim."
+  },
+  "limitations": [
+    "Static invented Ukrainian-inspired ornament, not documented historical patterns. No flag, real unit, place or operational reference.",
+    "Substantial complete silhouettes verified;8% margins not achieved on several, serpent only66.7%width. Wheel has5 visible outward teeth instead of6 brief.",
+    "North orientation and frame-center are proposals, no runtime anchor/hitbox/rig metadata. Wings/legs/segments/teeth/core all baked.",
+    "Palette aim16\u201320 is not achieved; exact high color counts and alpha histogram retained."
+  ]
+}

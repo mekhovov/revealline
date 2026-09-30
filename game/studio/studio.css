@@ -460,6 +460,37 @@ footer {
 #timed-bonus-form textarea {
   scroll-margin: 8px;
 }
+/* The same data remains an ordered, keyboard-readable list in every exhibit. */
+.discovery-exhibit {
+  padding-left: 1.5rem;
+}
+.discovery-exhibit li {
+  padding: 0.8rem;
+  border: 1px solid currentColor;
+  border-radius: 0.6rem;
+  margin-bottom: 0.7rem;
+}
+.discovery-exhibit small {
+  display: block;
+  margin-top: 0.35rem;
+}
+.discovery-exhibit-gallery,
+.discovery-exhibit-mosaic {
+  display: grid;
+  gap: 0.7rem;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 14rem), 1fr));
+}
+.discovery-exhibit-mosaic li:nth-child(3n) {
+  border-width: 3px;
+}
+#discovery-tools {
+  display: grid;
+  gap: 0.75rem;
+}
+#discovery-tools label {
+  display: grid;
+  gap: 0.3rem;
+}
 
 .studio-source-discard {
   max-width: min(36rem, calc(100vw - 32px));

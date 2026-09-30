@@ -1,0 +1,221 @@
+{
+  "format": "revealline-source-art-manifest.v1",
+  "images": [
+    {
+      "cellId": "moving-edges/terrace-stitch/fpv",
+      "themeId": "fpv",
+      "missionSlot": "terrace-stitch",
+      "sourceLevelId": "moving-edges-terrace-stitch",
+      "title": "The Hillside Flight Workshop",
+      "path": "originals/terrace-stitch-fpv.png",
+      "originalToolPath": "/Users/oleksandr.mekhovov/.codex/generated_images/01a09357-2b06-77f1-b001-1afd50d8bc73/exec-5e7f02f7-cf30-4f43-9f2c-d1306da3a589.png",
+      "bytes": 2949957,
+      "sha256": "3574e0abdc8beb4d89739524582f2588c4d59e74caf6a9c8b9e4a6ce9975ea68",
+      "width": 1774,
+      "height": 887,
+      "promptSha256": "96c343df0ec31b416ab19e0de2f2d4242f9ee98d2a5e20ffbee7bde18c393e1d",
+      "requestedDimensions": {
+        "width": 1774,
+        "height": 887
+      }
+    },
+    {
+      "cellId": "moving-edges/survey-wheel/fpv",
+      "themeId": "fpv",
+      "missionSlot": "survey-wheel",
+      "sourceLevelId": "moving-edges-survey-wheel",
+      "title": "Signals around the Old Depot",
+      "path": "originals/survey-wheel-fpv.png",
+      "originalToolPath": "/Users/oleksandr.mekhovov/.codex/generated_images/01a09357-2b06-77f1-b001-1afd50d8bc73/exec-d48b615a-b6ec-4baf-a74b-92534a79f1b7.png",
+      "bytes": 2642402,
+      "sha256": "1673efbcdff9bdab97576d94b0da18ec87492dc7e48340f1ce6b26ef3706a78a",
+      "width": 1774,
+      "height": 887,
+      "promptSha256": "a500e12dc509307a0b206aefb928534981178673761e2d52d8522ffe7e300bca",
+      "requestedDimensions": {
+        "width": 1774,
+        "height": 887
+      }
+    },
+    {
+      "cellId": "moving-edges/breakwater-return/fpv",
+      "themeId": "fpv",
+      "missionSlot": "breakwater-return",
+      "sourceLevelId": "moving-edges-breakwater-return",
+      "title": "The Coastal Watch Returns",
+      "path": "originals/breakwater-return-fpv.png",
+      "originalToolPath": "/Users/oleksandr.mekhovov/.codex/generated_images/01a09357-2b06-77f1-b001-1afd50d8bc73/exec-8a4eab19-fd34-4b49-ae81-dbc47d76af4c.png",
+      "bytes": 2822472,
+      "sha256": "592b96cf8aa0165fa1ea01bef7085e3f6ecee3ffdc553382432c7869871cd5aa",
+      "width": 1774,
+      "height": 887,
+      "promptSha256": "20962a6a78194af85be35a759cb7ec8ad30c8b69ccadc808741e1373ab8761cf",
+      "requestedDimensions": {
+        "width": 1774,
+        "height": 887
+      }
+    },
+    {
+      "cellId": "moving-edges/terrace-stitch/ukraine",
+      "themeId": "ukraine",
+      "missionSlot": "terrace-stitch",
+      "sourceLevelId": "moving-edges-terrace-stitch",
+      "title": "Threads above the Mountain River",
+      "path": "originals/terrace-stitch-ukraine.png",
+      "originalToolPath": "/Users/oleksandr.mekhovov/.codex/generated_images/01a09357-2b06-77f1-b001-1afd50d8bc73/exec-a2651f1d-d807-4078-8bd7-d80f51b80f19.png",
+      "bytes": 3116991,
+      "sha256": "2891cf3ec46f5f751b1779e7568bf1920f8c6903779879eb265ca8a9252c1897",
+      "width": 1774,
+      "height": 887,
+      "promptSha256": "f07c4595368f53f8b10416051d749b6866ec1942260fccc37269c41da4d8e840",
+      "requestedDimensions": {
+        "width": 1774,
+        "height": 887
+      }
+    },
+    {
+      "cellId": "moving-edges/survey-wheel/ukraine",
+      "themeId": "ukraine",
+      "missionSlot": "survey-wheel",
+      "sourceLevelId": "moving-edges-survey-wheel",
+      "title": "The Potter's Spring Courtyard",
+      "path": "originals/survey-wheel-ukraine.png",
+      "originalToolPath": "/Users/oleksandr.mekhovov/.codex/generated_images/01a09357-2b06-77f1-b001-1afd50d8bc73/exec-c5ef19b8-bdc0-492f-a356-88ce2ccfcd7a.png",
+      "bytes": 3373654,
+      "sha256": "403df334ca1db88b8536aedca8d056fc4f6b663184f8c02d5a8c19c0baa366d2",
+      "width": 1773,
+      "height": 887,
+      "promptSha256": "769c9196733af126820501cc75c6b356a13bea2c18d5dede9284bfe88546301f",
+      "requestedDimensions": {
+        "width": 1774,
+        "height": 887
+      }
+    },
+    {
+      "cellId": "moving-edges/breakwater-return/ukraine",
+      "themeId": "ukraine",
+      "missionSlot": "breakwater-return",
+      "sourceLevelId": "moving-edges-breakwater-return",
+      "title": "Boats beneath the Stone Lanterns",
+      "path": "originals/breakwater-return-ukraine.png",
+      "originalToolPath": "/Users/oleksandr.mekhovov/.codex/generated_images/01a09357-2b06-77f1-b001-1afd50d8bc73/exec-1748f128-8b9b-4b5a-837a-be8833893f96.png",
+      "bytes": 2766348,
+      "sha256": "9f6b3b8cdb68648efbe4d58614b70a6976d76eeffff0225fd25d6a668fa94ef3",
+      "width": 1774,
+      "height": 887,
+      "promptSha256": "89314a434e7acb01ab147a8987185bf84bfdd1214b41053386c0b7e628bdb2dc",
+      "requestedDimensions": {
+        "width": 1774,
+        "height": 887
+      }
+    },
+    {
+      "cellId": "moving-edges/terrace-stitch/retro",
+      "themeId": "retro",
+      "missionSlot": "terrace-stitch",
+      "sourceLevelId": "moving-edges-terrace-stitch",
+      "title": "Mixtapes on the Upper Walkways",
+      "path": "originals/terrace-stitch-retro.png",
+      "originalToolPath": "/Users/oleksandr.mekhovov/.codex/generated_images/01a09357-2b06-77f1-b001-1afd50d8bc73/exec-8331c582-cd43-4904-9273-d3c02624392f.png",
+      "bytes": 2883767,
+      "sha256": "209f3c08bb7df5d3fd3d450dd38a5854923083033150772265896c0f60552bdb",
+      "width": 1774,
+      "height": 887,
+      "promptSha256": "3f23e44999e4438200c644bcf6adc4ef05a40d22917c78a993093d72d6371568",
+      "requestedDimensions": {
+        "width": 1774,
+        "height": 887
+      }
+    },
+    {
+      "cellId": "moving-edges/survey-wheel/retro",
+      "themeId": "retro",
+      "missionSlot": "survey-wheel",
+      "sourceLevelId": "moving-edges-survey-wheel",
+      "title": "The Last Saturday at the Rotunda",
+      "path": "originals/survey-wheel-retro.png",
+      "originalToolPath": "/Users/oleksandr.mekhovov/.codex/generated_images/01a09357-2b06-77f1-b001-1afd50d8bc73/exec-3b4ee875-bce4-4906-afa6-c6fbe3f71299.png",
+      "bytes": 2696356,
+      "sha256": "8f479806a4bb953f592d6c2eec6a601bce429584ea132e99bcab09290144a2bc",
+      "width": 1774,
+      "height": 887,
+      "promptSha256": "976c74da03789cc062a44c4b1b68658f12dfeea13d086f1b55bf82b5bfe72cc8",
+      "requestedDimensions": {
+        "width": 1774,
+        "height": 887
+      }
+    },
+    {
+      "cellId": "moving-edges/breakwater-return/retro",
+      "themeId": "retro",
+      "missionSlot": "breakwater-return",
+      "sourceLevelId": "moving-edges-breakwater-return",
+      "title": "Summer's Last Lake Ferry",
+      "path": "originals/breakwater-return-retro.png",
+      "originalToolPath": "/Users/oleksandr.mekhovov/.codex/generated_images/01a09357-2b06-77f1-b001-1afd50d8bc73/exec-79bce732-b1f8-4c33-ad81-52251f048066.png",
+      "bytes": 2642886,
+      "sha256": "1a6cf10c89c674a52093390f798ab981a51023a5af772036ffd88c3ba6b99d96",
+      "width": 1774,
+      "height": 887,
+      "promptSha256": "7f38337d929d10ccfd783f91b39ec5d0a3af5a913f7f9747709949abca2006df",
+      "requestedDimensions": {
+        "width": 1774,
+        "height": 887
+      }
+    },
+    {
+      "cellId": "moving-edges/terrace-stitch/coupa",
+      "themeId": "coupa",
+      "missionSlot": "terrace-stitch",
+      "sourceLevelId": "moving-edges-terrace-stitch",
+      "title": "The Shared Goods Terraces",
+      "path": "originals/terrace-stitch-coupa.png",
+      "originalToolPath": "/Users/oleksandr.mekhovov/.codex/generated_images/01a09357-2b06-77f1-b001-1afd50d8bc73/exec-6746a2e4-e5a9-4123-9bab-ddd3dfac7b31.png",
+      "bytes": 2844215,
+      "sha256": "24d887954886059a5eacfe133e94caf59011fdef79cd98324581038c55b1c65f",
+      "width": 1774,
+      "height": 887,
+      "promptSha256": "2ce4db9ff2a53f2d895def86797819aa787e0576f8a2ff79607d8152196da0c8",
+      "requestedDimensions": {
+        "width": 1774,
+        "height": 887
+      }
+    },
+    {
+      "cellId": "moving-edges/survey-wheel/coupa",
+      "themeId": "coupa",
+      "missionSlot": "survey-wheel",
+      "sourceLevelId": "moving-edges-survey-wheel",
+      "title": "The Repair Exchange Rotunda",
+      "path": "originals/survey-wheel-coupa.png",
+      "originalToolPath": "/Users/oleksandr.mekhovov/.codex/generated_images/01a09357-2b06-77f1-b001-1afd50d8bc73/exec-5fce3dcc-4683-4a75-8db9-a361020d6a6a.png",
+      "bytes": 3151700,
+      "sha256": "d2e32f910fe3831f81be3a5f0a4985ab95f0b13f9f83bae098123dd344f5b753",
+      "width": 1774,
+      "height": 887,
+      "promptSha256": "d830f9b7eebed06318303d626097047e7235aad569ec4d2a00890c4a4a340ff8",
+      "requestedDimensions": {
+        "width": 1774,
+        "height": 887
+      }
+    },
+    {
+      "cellId": "moving-edges/breakwater-return/coupa",
+      "themeId": "coupa",
+      "missionSlot": "breakwater-return",
+      "sourceLevelId": "moving-edges-breakwater-return",
+      "title": "The Harbor Maintenance Round",
+      "path": "originals/breakwater-return-coupa.png",
+      "originalToolPath": "/Users/oleksandr.mekhovov/.codex/generated_images/01a09357-2b06-77f1-b001-1afd50d8bc73/exec-4d89079e-9281-408d-985a-f27d829ca4ed.png",
+      "bytes": 2635887,
+      "sha256": "e2eb3e89295a695f85d27d034457abd398749e7c1dc27ec07a9bdf7ed86cf56f",
+      "width": 1774,
+      "height": 887,
+      "promptSha256": "92e3a0abe7e7c7cc39b62698238acca9bbd393170344575615ccf6fc4a460e61",
+      "requestedDimensions": {
+        "width": 1774,
+        "height": 887
+      }
+    }
+  ]
+}

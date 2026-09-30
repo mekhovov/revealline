@@ -1,0 +1,632 @@
+{
+  "format": "revealline-source-art-verification.v1",
+  "baseCommit": "bd2b0533e8a6384e20b10b98b780cf815b3388c9",
+  "sourceCandidates": 12,
+  "newGeometries": 0,
+  "runtimeBindings": 0,
+  "totalOriginalBytes": 34526635,
+  "totalThumbnailBytes": 527184,
+  "originalMethod": "Unchanged bounded RGB8 PNG decoder: full chunk CRC/order, inflate and scanline reconstruction, exact original bytes/hash/dimensions. Record mode requires all default tool files to match.",
+  "thumbnailMethod": "Declared 384x192 full-frame proportional contain-fit nearest-neighbor JPEG review copies; exact bytes/hash/header/source identity here. The recorded Canvas production run decoded every JPEG and recorded its RGBA hash; portable verification does not replay an optional platform encoder.",
+  "limits": "Authoring candidates only. No runtime/catalog/production-count adoption, native/partial-reveal/gameplay/animation/device/human quality or rights certification. Root visual review is separate.",
+  "files": [
+    {
+      "path": "README.md",
+      "bytes": 5876,
+      "sha256": "b04d2ea6e16f29170d2fe1e0fb099d1c26753212f4e9603f32b801ed6e799cf7"
+    },
+    {
+      "path": "derivatives.json",
+      "bytes": 7353,
+      "sha256": "4a88240c4e61cead1f209069977a1f8a506c2429401e64f121afb46424a458c4"
+    },
+    {
+      "path": "generation-results.json",
+      "bytes": 16341,
+      "sha256": "a5f18cc48667235bbee8472b9729dbcb0f16806e7ff49c0cba838da1ed65eb87"
+    },
+    {
+      "path": "index.html",
+      "bytes": 6852,
+      "sha256": "adc4cb5692b75d8bd4b9b35faf11f93830febc10ac28eee39364613748c25118"
+    },
+    {
+      "path": "layout-briefs.json",
+      "bytes": 3871,
+      "sha256": "31be1df6632f9de1413104799a029f6e4c1ed8e2d0bd3f91e67dce260ca11042"
+    },
+    {
+      "path": "manifest.json",
+      "bytes": 9330,
+      "sha256": "c16bfec962cc8afa7e8717f4e39e1719b3ec9caa7911d54d409c067bdbb601e1"
+    },
+    {
+      "path": "originals/breakwater-return-coupa.png",
+      "bytes": 2635887,
+      "sha256": "e2eb3e89295a695f85d27d034457abd398749e7c1dc27ec07a9bdf7ed86cf56f"
+    },
+    {
+      "path": "originals/breakwater-return-fpv.png",
+      "bytes": 2822472,
+      "sha256": "592b96cf8aa0165fa1ea01bef7085e3f6ecee3ffdc553382432c7869871cd5aa"
+    },
+    {
+      "path": "originals/breakwater-return-retro.png",
+      "bytes": 2642886,
+      "sha256": "1a6cf10c89c674a52093390f798ab981a51023a5af772036ffd88c3ba6b99d96"
+    },
+    {
+      "path": "originals/breakwater-return-ukraine.png",
+      "bytes": 2766348,
+      "sha256": "9f6b3b8cdb68648efbe4d58614b70a6976d76eeffff0225fd25d6a668fa94ef3"
+    },
+    {
+      "path": "originals/survey-wheel-coupa.png",
+      "bytes": 3151700,
+      "sha256": "d2e32f910fe3831f81be3a5f0a4985ab95f0b13f9f83bae098123dd344f5b753"
+    },
+    {
+      "path": "originals/survey-wheel-fpv.png",
+      "bytes": 2642402,
+      "sha256": "1673efbcdff9bdab97576d94b0da18ec87492dc7e48340f1ce6b26ef3706a78a"
+    },
+    {
+      "path": "originals/survey-wheel-retro.png",
+      "bytes": 2696356,
+      "sha256": "8f479806a4bb953f592d6c2eec6a601bce429584ea132e99bcab09290144a2bc"
+    },
+    {
+      "path": "originals/survey-wheel-ukraine.png",
+      "bytes": 3373654,
+      "sha256": "403df334ca1db88b8536aedca8d056fc4f6b663184f8c02d5a8c19c0baa366d2"
+    },
+    {
+      "path": "originals/terrace-stitch-coupa.png",
+      "bytes": 2844215,
+      "sha256": "24d887954886059a5eacfe133e94caf59011fdef79cd98324581038c55b1c65f"
+    },
+    {
+      "path": "originals/terrace-stitch-fpv.png",
+      "bytes": 2949957,
+      "sha256": "3574e0abdc8beb4d89739524582f2588c4d59e74caf6a9c8b9e4a6ce9975ea68"
+    },
+    {
+      "path": "originals/terrace-stitch-retro.png",
+      "bytes": 2883767,
+      "sha256": "209f3c08bb7df5d3fd3d450dd38a5854923083033150772265896c0f60552bdb"
+    },
+    {
+      "path": "originals/terrace-stitch-ukraine.png",
+      "bytes": 3116991,
+      "sha256": "2891cf3ec46f5f751b1779e7568bf1920f8c6903779879eb265ca8a9252c1897"
+    },
+    {
+      "path": "prompts.json",
+      "bytes": 26517,
+      "sha256": "8a8fc29d73d5981c5185e6f3eeaae30b1efdd87841797a6479264c47b41b30b7"
+    },
+    {
+      "path": "provenance.json",
+      "bytes": 24925,
+      "sha256": "bdaac5fc8776c83a9e2201f36409b576478b835c708e97e335c8c2d7ee9006e1"
+    },
+    {
+      "path": "render-previews.mjs",
+      "bytes": 5075,
+      "sha256": "7224954af28d1449a2d72727d9df57645641e597e5a20618a5912f5ad89d7522"
+    },
+    {
+      "path": "thumbnails/breakwater-return-coupa.jpg",
+      "bytes": 39875,
+      "sha256": "28d3fbf4cc72949e38a01e836c5a0eaf7ec1a6d8d15ee921108926e3b9476da0"
+    },
+    {
+      "path": "thumbnails/breakwater-return-fpv.jpg",
+      "bytes": 40865,
+      "sha256": "149893d683a9a9b4f0892f1c0abed01f056fd7c0490e1fe707e3d75c67420150"
+    },
+    {
+      "path": "thumbnails/breakwater-return-retro.jpg",
+      "bytes": 40691,
+      "sha256": "9308ffb4722698386b65cc6bff879cfa8833d64f8bd9fc827a50cfe7e46de6bf"
+    },
+    {
+      "path": "thumbnails/breakwater-return-ukraine.jpg",
+      "bytes": 39805,
+      "sha256": "bec12603d32d6a96aa6c9a9e43c31675d5fdb51412661798c3a8bb19aab46b0e"
+    },
+    {
+      "path": "thumbnails/survey-wheel-coupa.jpg",
+      "bytes": 48660,
+      "sha256": "216da47b7285cd6d57edcc499d9f735d59cc87a1eaecec392deae5c0c958644a"
+    },
+    {
+      "path": "thumbnails/survey-wheel-fpv.jpg",
+      "bytes": 37822,
+      "sha256": "d322c45f12541613d0e4150cfc3e975e31a95b7bcc126061a52e1acd444ca426"
+    },
+    {
+      "path": "thumbnails/survey-wheel-retro.jpg",
+      "bytes": 40432,
+      "sha256": "7e7c6e575b4189cbb783695af4660f4c8e832148d69c97e05220765ad94cd5ce"
+    },
+    {
+      "path": "thumbnails/survey-wheel-ukraine.jpg",
+      "bytes": 53812,
+      "sha256": "c0b68b34be4aa3c7158216b9ecb669a3c36d3b09fc2907bf187fc281fb3170ed"
+    },
+    {
+      "path": "thumbnails/terrace-stitch-coupa.jpg",
+      "bytes": 47195,
+      "sha256": "fc6cc12f655cfaa778bd30584ae2b0c1e0698df95d639b1a03c5a6349b98496f"
+    },
+    {
+      "path": "thumbnails/terrace-stitch-fpv.jpg",
+      "bytes": 46679,
+      "sha256": "eb3820eff52cb1ee8b7f07e8f0825f6ead9e1ca63fce1f47187e3fff6f64ac73"
+    },
+    {
+      "path": "thumbnails/terrace-stitch-retro.jpg",
+      "bytes": 44532,
+      "sha256": "bf210f18a6a6368f0f202fc97c9dc9292756f00fa20f2da46ee1108a2b0f1a86"
+    },
+    {
+      "path": "thumbnails/terrace-stitch-ukraine.jpg",
+      "bytes": 46816,
+      "sha256": "1fe76a0a28e1d4ff6f14c43993601e8c3239889d93a7f603e16b7080f7c0fe8d"
+    },
+    {
+      "path": "verify.mjs",
+      "bytes": 10360,
+      "sha256": "20bfc048e14f630107632ef4acf3ef9d3bf1015aa692677b906cbc410ac97a31"
+    }
+  ],
+  "originals": [
+    {
+      "cellId": "moving-edges/terrace-stitch/fpv",
+      "naturalWidth": 1774,
+      "naturalHeight": 887,
+      "pixelBytes": 4720614,
+      "pixelsSha256": "f2c79ab0afcef452e8c56e0d335fe8783d9252e3513f0a3bf42a129cf0217176",
+      "bytes": 2949957,
+      "sha256": "3574e0abdc8beb4d89739524582f2588c4d59e74caf6a9c8b9e4a6ce9975ea68"
+    },
+    {
+      "cellId": "moving-edges/survey-wheel/fpv",
+      "naturalWidth": 1774,
+      "naturalHeight": 887,
+      "pixelBytes": 4720614,
+      "pixelsSha256": "b1c88cb1b515a7e48dbec4441c7d42e413a2a6d3cb0dafde12d8acc805b138c3",
+      "bytes": 2642402,
+      "sha256": "1673efbcdff9bdab97576d94b0da18ec87492dc7e48340f1ce6b26ef3706a78a"
+    },
+    {
+      "cellId": "moving-edges/breakwater-return/fpv",
+      "naturalWidth": 1774,
+      "naturalHeight": 887,
+      "pixelBytes": 4720614,
+      "pixelsSha256": "522f3eb2aa27de989e095199ea0ced9fc988f0544ca096acffaf63d82799c4dd",
+      "bytes": 2822472,
+      "sha256": "592b96cf8aa0165fa1ea01bef7085e3f6ecee3ffdc553382432c7869871cd5aa"
+    },
+    {
+      "cellId": "moving-edges/terrace-stitch/ukraine",
+      "naturalWidth": 1774,
+      "naturalHeight": 887,
+      "pixelBytes": 4720614,
+      "pixelsSha256": "6e68f406a4aebc27528ec432e4deb6525fff029173f91d4480116d214a20afc7",
+      "bytes": 3116991,
+      "sha256": "2891cf3ec46f5f751b1779e7568bf1920f8c6903779879eb265ca8a9252c1897"
+    },
+    {
+      "cellId": "moving-edges/survey-wheel/ukraine",
+      "naturalWidth": 1773,
+      "naturalHeight": 887,
+      "pixelBytes": 4717953,
+      "pixelsSha256": "d74c359e98fbc91883fae3791640d6fb086bba2db86092c1c509d774e85780be",
+      "bytes": 3373654,
+      "sha256": "403df334ca1db88b8536aedca8d056fc4f6b663184f8c02d5a8c19c0baa366d2"
+    },
+    {
+      "cellId": "moving-edges/breakwater-return/ukraine",
+      "naturalWidth": 1774,
+      "naturalHeight": 887,
+      "pixelBytes": 4720614,
+      "pixelsSha256": "170749e1d7a7392a41f26c87e021d2f184ba4c89dd83c0b76af5c3f1bbaa157f",
+      "bytes": 2766348,
+      "sha256": "9f6b3b8cdb68648efbe4d58614b70a6976d76eeffff0225fd25d6a668fa94ef3"
+    },
+    {
+      "cellId": "moving-edges/terrace-stitch/retro",
+      "naturalWidth": 1774,
+      "naturalHeight": 887,
+      "pixelBytes": 4720614,
+      "pixelsSha256": "ce3c9a95be32505c5c5ed77400d067eddfe5b4ed6543e1a04ccf10cc7f1f5a58",
+      "bytes": 2883767,
+      "sha256": "209f3c08bb7df5d3fd3d450dd38a5854923083033150772265896c0f60552bdb"
+    },
+    {
+      "cellId": "moving-edges/survey-wheel/retro",
+      "naturalWidth": 1774,
+      "naturalHeight": 887,
+      "pixelBytes": 4720614,
+      "pixelsSha256": "4fe920a872796432e9affbde85dfec0df77f33d0e5dd4443bece75774728265f",
+      "bytes": 2696356,
+      "sha256": "8f479806a4bb953f592d6c2eec6a601bce429584ea132e99bcab09290144a2bc"
+    },
+    {
+      "cellId": "moving-edges/breakwater-return/retro",
+      "naturalWidth": 1774,
+      "naturalHeight": 887,
+      "pixelBytes": 4720614,
+      "pixelsSha256": "8c43ffa6abeca1de5030fc6809f37b1493d4b36aebbb6aec9c0562f8bfd04738",
+      "bytes": 2642886,
+      "sha256": "1a6cf10c89c674a52093390f798ab981a51023a5af772036ffd88c3ba6b99d96"
+    },
+    {
+      "cellId": "moving-edges/terrace-stitch/coupa",
+      "naturalWidth": 1774,
+      "naturalHeight": 887,
+      "pixelBytes": 4720614,
+      "pixelsSha256": "4a1cb1da0d55488184fecc852f58c9843214c3b598b6ab043d3505a7bd5dc58e",
+      "bytes": 2844215,
+      "sha256": "24d887954886059a5eacfe133e94caf59011fdef79cd98324581038c55b1c65f"
+    },
+    {
+      "cellId": "moving-edges/survey-wheel/coupa",
+      "naturalWidth": 1774,
+      "naturalHeight": 887,
+      "pixelBytes": 4720614,
+      "pixelsSha256": "6592bbd9617241af27d056d47d36118d76053cd614d0e16163b5353855529231",
+      "bytes": 3151700,
+      "sha256": "d2e32f910fe3831f81be3a5f0a4985ab95f0b13f9f83bae098123dd344f5b753"
+    },
+    {
+      "cellId": "moving-edges/breakwater-return/coupa",
+      "naturalWidth": 1774,
+      "naturalHeight": 887,
+      "pixelBytes": 4720614,
+      "pixelsSha256": "1714c49f705228b2267c0781b0cb8eb0dc260a9b7f0319403b94a90fb40964a2",
+      "bytes": 2635887,
+      "sha256": "e2eb3e89295a695f85d27d034457abd398749e7c1dc27ec07a9bdf7ed86cf56f"
+    }
+  ],
+  "thumbnails": [
+    {
+      "cellId": "moving-edges/terrace-stitch/fpv",
+      "originalPath": "originals/terrace-stitch-fpv.png",
+      "originalSha256": "3574e0abdc8beb4d89739524582f2588c4d59e74caf6a9c8b9e4a6ce9975ea68",
+      "path": "thumbnails/terrace-stitch-fpv.jpg",
+      "mime": "image/jpeg",
+      "width": 384,
+      "height": 192,
+      "bytes": 46679,
+      "sha256": "eb3820eff52cb1ee8b7f07e8f0825f6ead9e1ca63fce1f47187e3fff6f64ac73",
+      "decodedRGBASha256": "6f6e3248ebbe20329629f29a0bf76a8db2d5a338a998937e303c2ae33806231c"
+    },
+    {
+      "cellId": "moving-edges/survey-wheel/fpv",
+      "originalPath": "originals/survey-wheel-fpv.png",
+      "originalSha256": "1673efbcdff9bdab97576d94b0da18ec87492dc7e48340f1ce6b26ef3706a78a",
+      "path": "thumbnails/survey-wheel-fpv.jpg",
+      "mime": "image/jpeg",
+      "width": 384,
+      "height": 192,
+      "bytes": 37822,
+      "sha256": "d322c45f12541613d0e4150cfc3e975e31a95b7bcc126061a52e1acd444ca426",
+      "decodedRGBASha256": "094a6d7d2688c9e61380111a4a6b7b7db6e3a92ef225794305edfca4bfb04727"
+    },
+    {
+      "cellId": "moving-edges/breakwater-return/fpv",
+      "originalPath": "originals/breakwater-return-fpv.png",
+      "originalSha256": "592b96cf8aa0165fa1ea01bef7085e3f6ecee3ffdc553382432c7869871cd5aa",
+      "path": "thumbnails/breakwater-return-fpv.jpg",
+      "mime": "image/jpeg",
+      "width": 384,
+      "height": 192,
+      "bytes": 40865,
+      "sha256": "149893d683a9a9b4f0892f1c0abed01f056fd7c0490e1fe707e3d75c67420150",
+      "decodedRGBASha256": "b7d46b400396a5bf60d99c6d7ed41fa6e67d9ff0ed74332bc4ee3d1ff659dde5"
+    },
+    {
+      "cellId": "moving-edges/terrace-stitch/ukraine",
+      "originalPath": "originals/terrace-stitch-ukraine.png",
+      "originalSha256": "2891cf3ec46f5f751b1779e7568bf1920f8c6903779879eb265ca8a9252c1897",
+      "path": "thumbnails/terrace-stitch-ukraine.jpg",
+      "mime": "image/jpeg",
+      "width": 384,
+      "height": 192,
+      "bytes": 46816,
+      "sha256": "1fe76a0a28e1d4ff6f14c43993601e8c3239889d93a7f603e16b7080f7c0fe8d",
+      "decodedRGBASha256": "9360377dc5aa3989d23daa0af6ad5977026dcfd2fb9f98c98ba25b6cbf9c3423"
+    },
+    {
+      "cellId": "moving-edges/survey-wheel/ukraine",
+      "originalPath": "originals/survey-wheel-ukraine.png",
+      "originalSha256": "403df334ca1db88b8536aedca8d056fc4f6b663184f8c02d5a8c19c0baa366d2",
+      "path": "thumbnails/survey-wheel-ukraine.jpg",
+      "mime": "image/jpeg",
+      "width": 384,
+      "height": 192,
+      "bytes": 53812,
+      "sha256": "c0b68b34be4aa3c7158216b9ecb669a3c36d3b09fc2907bf187fc281fb3170ed",
+      "decodedRGBASha256": "11e5585e240608bf4887efa53a2df7280f7598799cc74c9693015e4374f0eb15"
+    },
+    {
+      "cellId": "moving-edges/breakwater-return/ukraine",
+      "originalPath": "originals/breakwater-return-ukraine.png",
+      "originalSha256": "9f6b3b8cdb68648efbe4d58614b70a6976d76eeffff0225fd25d6a668fa94ef3",
+      "path": "thumbnails/breakwater-return-ukraine.jpg",
+      "mime": "image/jpeg",
+      "width": 384,
+      "height": 192,
+      "bytes": 39805,
+      "sha256": "bec12603d32d6a96aa6c9a9e43c31675d5fdb51412661798c3a8bb19aab46b0e",
+      "decodedRGBASha256": "2e0ac495479a520330e19424a95a1d4c96f63deb9f0c8d9416a6e7bcd8937b8b"
+    },
+    {
+      "cellId": "moving-edges/terrace-stitch/retro",
+      "originalPath": "originals/terrace-stitch-retro.png",
+      "originalSha256": "209f3c08bb7df5d3fd3d450dd38a5854923083033150772265896c0f60552bdb",
+      "path": "thumbnails/terrace-stitch-retro.jpg",
+      "mime": "image/jpeg",
+      "width": 384,
+      "height": 192,
+      "bytes": 44532,
+      "sha256": "bf210f18a6a6368f0f202fc97c9dc9292756f00fa20f2da46ee1108a2b0f1a86",
+      "decodedRGBASha256": "adb4466a1b6f4177e5b5b0cc02de3d739fc871733be79ce1bc95d8a2ca05a3ff"
+    },
+    {
+      "cellId": "moving-edges/survey-wheel/retro",
+      "originalPath": "originals/survey-wheel-retro.png",
+      "originalSha256": "8f479806a4bb953f592d6c2eec6a601bce429584ea132e99bcab09290144a2bc",
+      "path": "thumbnails/survey-wheel-retro.jpg",
+      "mime": "image/jpeg",
+      "width": 384,
+      "height": 192,
+      "bytes": 40432,
+      "sha256": "7e7c6e575b4189cbb783695af4660f4c8e832148d69c97e05220765ad94cd5ce",
+      "decodedRGBASha256": "2aa6c803201cecd63665f665a13d091b8eb27dfc478c0bbecad6b24ab05f8af3"
+    },
+    {
+      "cellId": "moving-edges/breakwater-return/retro",
+      "originalPath": "originals/breakwater-return-retro.png",
+      "originalSha256": "1a6cf10c89c674a52093390f798ab981a51023a5af772036ffd88c3ba6b99d96",
+      "path": "thumbnails/breakwater-return-retro.jpg",
+      "mime": "image/jpeg",
+      "width": 384,
+      "height": 192,
+      "bytes": 40691,
+      "sha256": "9308ffb4722698386b65cc6bff879cfa8833d64f8bd9fc827a50cfe7e46de6bf",
+      "decodedRGBASha256": "af4b4ee155476c01da33a73fd6aeeb51df04559a54a56cef902bc2899795f4ca"
+    },
+    {
+      "cellId": "moving-edges/terrace-stitch/coupa",
+      "originalPath": "originals/terrace-stitch-coupa.png",
+      "originalSha256": "24d887954886059a5eacfe133e94caf59011fdef79cd98324581038c55b1c65f",
+      "path": "thumbnails/terrace-stitch-coupa.jpg",
+      "mime": "image/jpeg",
+      "width": 384,
+      "height": 192,
+      "bytes": 47195,
+      "sha256": "fc6cc12f655cfaa778bd30584ae2b0c1e0698df95d639b1a03c5a6349b98496f",
+      "decodedRGBASha256": "88e7dfd1013859aa72651abc0ff78e2e8652a9fec3439ab10de30334f447a751"
+    },
+    {
+      "cellId": "moving-edges/survey-wheel/coupa",
+      "originalPath": "originals/survey-wheel-coupa.png",
+      "originalSha256": "d2e32f910fe3831f81be3a5f0a4985ab95f0b13f9f83bae098123dd344f5b753",
+      "path": "thumbnails/survey-wheel-coupa.jpg",
+      "mime": "image/jpeg",
+      "width": 384,
+      "height": 192,
+      "bytes": 48660,
+      "sha256": "216da47b7285cd6d57edcc499d9f735d59cc87a1eaecec392deae5c0c958644a",
+      "decodedRGBASha256": "53401005d197e868544a589d1825afd340197283bb27d016bdfd0c930fa3b039"
+    },
+    {
+      "cellId": "moving-edges/breakwater-return/coupa",
+      "originalPath": "originals/breakwater-return-coupa.png",
+      "originalSha256": "e2eb3e89295a695f85d27d034457abd398749e7c1dc27ec07a9bdf7ed86cf56f",
+      "path": "thumbnails/breakwater-return-coupa.jpg",
+      "mime": "image/jpeg",
+      "width": 384,
+      "height": 192,
+      "bytes": 39875,
+      "sha256": "28d3fbf4cc72949e38a01e836c5a0eaf7ec1a6d8d15ee921108926e3b9476da0",
+      "decodedRGBASha256": "b13d10c8ceb7c9eeca199b3aae75ea0f66e86f3a27d4bf0f3e887c9c19d0fe29"
+    }
+  ],
+  "protectedContext": [
+    {
+      "path": ".gitattributes",
+      "bytes": 485,
+      "sha256": "367c1353565ebf4b355e01413a282349d799716976daf32147c20d5de858038f"
+    },
+    {
+      "path": ".gitignore",
+      "bytes": 124,
+      "sha256": "38812e650ec5d06647adbf4a940526cb422f1b50ae44a73181ef35860c25b8d2"
+    },
+    {
+      "path": "authoring/library/four-worlds-chapters/verify-images.mjs",
+      "bytes": 3838,
+      "sha256": "100995d31bb65ed7797b0941988624cab76a2c37b297c81ec98ab8e16febcc34"
+    },
+    {
+      "path": "eslint.config.mjs",
+      "bytes": 1610,
+      "sha256": "418e718b4c0d2eff5092693fddebf57b553bfc45c1b40d9b5bfb144ea9447873"
+    },
+    {
+      "path": "game/campaign-contexts.mjs",
+      "bytes": 4403,
+      "sha256": "3243fc2fc9d0db9fb6cf913609a86105d87bf80270a24fde10ec3b46d5eb92b8"
+    },
+    {
+      "path": "game/campaign-difficulty.mjs",
+      "bytes": 7336,
+      "sha256": "7890880e30df503b69fef0e44e8d58bfa919243aa535ed33c6a1afaa83367b97"
+    },
+    {
+      "path": "game/content-launch.mjs",
+      "bytes": 9259,
+      "sha256": "cec26626541e3a7bb89ff07d7b787040668ff308c7833fd8e6636098d60c80a2"
+    },
+    {
+      "path": "game/content.mjs",
+      "bytes": 23214,
+      "sha256": "305dfa4d5fb4c4c27856b59abd0e71779d431f68221ac592989be8f828d75b38"
+    },
+    {
+      "path": "game/core/abilities.mjs",
+      "bytes": 3855,
+      "sha256": "bb7cb0df95beb6878878d77cac40b2cb6f2403f74e089db46432659098fb3cde"
+    },
+    {
+      "path": "game/core/arcade-actions.mjs",
+      "bytes": 848,
+      "sha256": "fa88d2371b6a6c889550ab196ac0cfbc5dced9ad8493cda126928f4cd53f2726"
+    },
+    {
+      "path": "game/core/capture.mjs",
+      "bytes": 8038,
+      "sha256": "960ebb9ecf19a656fd4fb0877cc5a1d967d1e83617b0262ba62dad4c2189aaef"
+    },
+    {
+      "path": "game/core/classic-contour.mjs",
+      "bytes": 7465,
+      "sha256": "39f096ad8a10605031eecf49227c06d77cf5032042325c0053439ed311ce5da8"
+    },
+    {
+      "path": "game/core/classic-definition.mjs",
+      "bytes": 7266,
+      "sha256": "fa49c1e2442a393b2be8e3d3b34a0eef188bbe158243f7c13cb824d18d1d3638"
+    },
+    {
+      "path": "game/core/classic-motion.mjs",
+      "bytes": 12271,
+      "sha256": "d593680e715467fd4ebfd50bf68bfdd2c3690e79ebbc579a64cdbab093c0a020"
+    },
+    {
+      "path": "game/core/classic-state.mjs",
+      "bytes": 2306,
+      "sha256": "1964712c73cbb2c793881ccf74a2899ef173eff6cc48251274cb738aa0473377"
+    },
+    {
+      "path": "game/core/classic-step.mjs",
+      "bytes": 16343,
+      "sha256": "c6078d7ce18dc8d5b4ecf3414bbf943bcb68dd80951d68e2cc7b8f1bf5b29fca"
+    },
+    {
+      "path": "game/core/classic-topology.mjs",
+      "bytes": 6357,
+      "sha256": "aae16753e999d4829dab13503f3ef603e42b73f4b44e782180881160651db3ff"
+    },
+    {
+      "path": "game/core/contacts.mjs",
+      "bytes": 5168,
+      "sha256": "aadd6aceee0380ff8e9389f305fe96b6642d553ee255ebfb7bcc1251c2c7c67b"
+    },
+    {
+      "path": "game/core/encounter.mjs",
+      "bytes": 8716,
+      "sha256": "7b98eb4ec29998ce902a62388b089a0a26b41675199bb9601e4b2a55f0df44ba"
+    },
+    {
+      "path": "game/core/enemy-pressure.mjs",
+      "bytes": 11725,
+      "sha256": "e66302eab2bc961c3328f0fc572f21d3ea67ee32132c4d0d8f15c1c08d04a2cb"
+    },
+    {
+      "path": "game/core/geometry.mjs",
+      "bytes": 3989,
+      "sha256": "8ca7877a89ea203f072fbf3b85f304844f3a3abcf992e8ba1a54f39957e6f331"
+    },
+    {
+      "path": "game/core/index.mjs",
+      "bytes": 17291,
+      "sha256": "787d7cdc759b04ae2a475e8d5ac49e0618dd26f153336ea71b5920232532e1a2"
+    },
+    {
+      "path": "game/core/level.mjs",
+      "bytes": 14178,
+      "sha256": "0a9fa39cdfa6bb6ed4c9b07a231491529777ab099f2cd6528c54fde84d5e41b8"
+    },
+    {
+      "path": "game/core/line-impact.mjs",
+      "bytes": 9000,
+      "sha256": "cf6e1b509d6789f3bd922f1374ba4ba7a80933bb8a117058dfe579bb95b547e6"
+    },
+    {
+      "path": "game/core/movement.mjs",
+      "bytes": 10912,
+      "sha256": "3f9ee5115eb94c001fe38595f39763b188ea276114ca21d1bc7a426be6e6922a"
+    },
+    {
+      "path": "game/core/registry.mjs",
+      "bytes": 6661,
+      "sha256": "ca7e365071ab3c49514343ea7683d8e552d2cd3f9fdbd0f317df64a57c0b7c2c"
+    },
+    {
+      "path": "game/core/systems.mjs",
+      "bytes": 4621,
+      "sha256": "ecfc946dbe6caf9feacab674730b8b1844e2f133c40566069d722206c6e546b6"
+    },
+    {
+      "path": "game/core/versions.mjs",
+      "bytes": 3074,
+      "sha256": "9bc39659dde70e76c63c9f9bfaa267b3cdfa07966d9096cc079383c71478eec3"
+    },
+    {
+      "path": "game/data-json.mjs",
+      "bytes": 4640,
+      "sha256": "e765ace4b34cc64d8948b73d896e5f8d4666ba5984385f6b2de81c1babefba0c"
+    },
+    {
+      "path": "game/mastery-catalog.mjs",
+      "bytes": 13632,
+      "sha256": "2d7d7679b084ff1dcf6c15579605a00dd71cf611f822b79e198703fc4ac045be"
+    },
+    {
+      "path": "game/mastery-equipment.mjs",
+      "bytes": 29233,
+      "sha256": "5d45dfb343754c728277ea83a6a32ff46547adf747da65eee5ec0aa30bd09d1a"
+    },
+    {
+      "path": "game/mastery.mjs",
+      "bytes": 16941,
+      "sha256": "2794850285f343ac3ea30dabd22bac1e80bc45e6a73734597e364272af9d8504"
+    },
+    {
+      "path": "game/media-library.mjs",
+      "bytes": 12188,
+      "sha256": "ed1f1abe0b95b9889741ec8929522f0fcaba29a5438b09df18016d3ffffc6eb4"
+    },
+    {
+      "path": "game/platform.mjs",
+      "bytes": 2524,
+      "sha256": "737f4e6dabcc08cd45ad5e5b1fb3b16792881897e89927ce5fe7fc609c0f3260"
+    },
+    {
+      "path": "game/ui/music.mjs",
+      "bytes": 7050,
+      "sha256": "a1ecafd319417d075ec584d8b2f54008a8b877e49848e364bd91603896c44fda"
+    },
+    {
+      "path": "package.json",
+      "bytes": 1819,
+      "sha256": "fc95490babde1090db3de255b114fd4e4282eae162d77fbb55e5ce3f5a117500"
+    },
+    {
+      "path": "scripts/game-cli.mjs",
+      "bytes": 58005,
+      "sha256": "93805cedc9abe70298df782504eacf352c68f258bcfe74157bc58b1736365b2e"
+    },
+    {
+      "path": "scripts/pack-indexes.mjs",
+      "bytes": 5421,
+      "sha256": "34ecdb35caecd581a5477e3972130f1ef67004fcd7add7f055126cb65a52a35e"
+    }
+  ]
+}

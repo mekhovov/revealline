@@ -8,6 +8,7 @@ import {
   createEditionRuntimeCatalog,
   validateEditionRuntimeCatalog,
   resolveEditionSelection,
+  resolveEditionAssets,
 } from '../editions/model.mjs';
 import { loadEditionBootstrap, mergeEditionProjects } from '../editions/bootstrap.mjs';
 import {
@@ -16,6 +17,7 @@ import {
   validateEditionCodeClosure,
   editionCodeDependencies,
   collectEditionSelectedFiles,
+  collectEditionEngineFiles,
 } from '../../scripts/compile-edition.mjs';
 import { createStarterProject } from '../content-design/starter.mjs';
 import { companyPresentationIdentity } from '../company-session.mjs';
@@ -254,6 +256,99 @@ async function retainedFixture() {
   return { ...f, catalog, original };
 }
 
+test('lazy shared panel styles retain exact bytes through selected compilation, archives and offline inventory', async (t) => {
+  const f = fixture(),
+    root = await fs.mkdtemp(path.join(os.tmpdir(), 'edition-panel-styles-')),
+    styles = ['soundtrack-panel', 'install-offline-panel'],
+    engine = new Map([
+      ['game/company.html', Buffer.from('<html><script src="company-entry.mjs"></script></html>')],
+      ['game/company-entry.mjs', Buffer.from('export const entry = "index.html";')],
+      [
+        'game/index.html',
+        Buffer.from(
+          '<html><script type="module" src="ui/soundtrack-panel.mjs"></script><script type="module" src="ui/install-offline-panel.mjs"></script></html>',
+        ),
+      ],
+      ['game/controller-lab/index.html', Buffer.from('<html></html>')],
+      ['game/replay-theater/index.html', Buffer.from('<html></html>')],
+      ['game/editions/runtime-assets.json', Buffer.from('[]')],
+      ['authoring/private/unselected.css', Buffer.from('UNSELECTED_PRIVATE_STYLE')],
+    ]);
+  t.after(() => fs.rm(root, { recursive: true, force: true }));
+  for (const name of styles) {
+    const owner = `game/ui/${name}.mjs`,
+      original = await fs.readFile(new URL(`../../${owner}`, import.meta.url), 'utf8'),
+      dynamicStyle = original.match(/style\.href = new URL\([^;]+;/)?.[0];
+    assert.ok(dynamicStyle?.includes(`${name}.css`), `${owner} still owns its dynamic stylesheet`);
+    // Keep the real non-import request; unrelated panel imports are not this
+    // fixture's authority. The collector must follow the declared owner edge.
+    engine.set(owner, Buffer.from(dynamicStyle));
+    engine.set(
+      `game/ui/${name}.css`,
+      await fs.readFile(new URL(`../../game/ui/${name}.css`, import.meta.url)),
+    );
+  }
+  for (const [name, contents] of engine) {
+    await fs.mkdir(path.dirname(path.join(root, name)), { recursive: true });
+    await fs.writeFile(path.join(root, name), contents);
+  }
+  const collected = await collectEditionEngineFiles({ root }),
+    selected = await collectEditionSelectedFiles({
+      catalog: f.catalog,
+      editionIds: ['coupa-public'],
+      read: async (name) => f.files.get(name),
+    }),
+    sourceFiles = new Map([...collected, ...selected]),
+    compiled = await compileEdition({
+      catalog: f.catalog,
+      editionIds: ['coupa-public'],
+      files: sourceFiles,
+      enginePaths: [...collected.keys()],
+      version: '1.0.0',
+      sourceRevision: 'a'.repeat(40),
+      offline: { basePath: '/game/' },
+    }),
+    candidate = createEditionCandidate({
+      compiled,
+      sourceFiles,
+      version: 'v1.0.0',
+      sourceRevision: 'a'.repeat(40),
+      sourceTree: 'b'.repeat(40),
+    }),
+    distribution = readEditionZip(candidate.files.get(candidate.edition.distribution.path)),
+    source = readEditionZip(candidate.files.get(candidate.edition.sourceArchive.path)),
+    dependencies = JSON.parse(compiled.files.get('runtime-dependencies.json')),
+    offline = JSON.parse(distribution.get('offline-cache.json')),
+    sourceInventory = JSON.parse(source.get('source-inventory.json'));
+  for (const name of styles) {
+    const file = `game/ui/${name}.css`,
+      original = engine.get(file),
+      pin = { path: file, bytes: original.length, sha256: digest(original) };
+    for (const output of [collected, compiled.files, distribution, source])
+      assert.deepEqual(output.get(file), original, file);
+    assert.ok(dependencies.resources.includes(file));
+    assert.deepEqual(
+      offline.files.find((row) => row.path === file),
+      pin,
+    );
+    assert.deepEqual(
+      sourceInventory.files.find((row) => row.path === file),
+      pin,
+    );
+    const missing = new Map(compiled.files);
+    missing.delete(file);
+    assert.throws(() => validateEditionCodeClosure(missing), /missing a declared runtime resource/);
+  }
+  for (const output of [collected, compiled.files, distribution, source])
+    assert.ok(
+      [...output.keys()].every(
+        (name) => !name.startsWith('authoring/') && !name.includes('droneaid'),
+      ),
+    );
+  await fs.rm(path.join(root, 'game/ui/soundtrack-panel.css'));
+  await assert.rejects(collectEditionEngineFiles({ root }), /ENOENT/);
+});
+
 test('selected retained presentation media stays exact in runtime, source and offline archives', async () => {
   const f = await retainedFixture(),
     requested = [];
@@ -401,6 +496,38 @@ test('whole-source eligibility includes registered historical-only originals bef
   await assert.rejects(checkEditionSourceEligibility(root), /no public eligibility/);
 });
 
+test('source admission retains an earlier campaign subset after expansion but rejects removed or duplicate permissions', async () => {
+  const f = await retainedFixture();
+  const originalEdition = f.catalog.editions.find((item) => item.id === 'coupa-public');
+  const added = {
+    ...f.catalog.campaigns.find((item) => item.id === originalEdition.campaignIds[0]),
+    id: 'coupa-later-campaign',
+  };
+  const catalog = structuredClone(f.catalog);
+  catalog.campaigns.push(added);
+  const edition = catalog.editions.find((item) => item.id === 'coupa-public');
+  edition.campaignIds.push(added.id);
+  const selected = structuredClone(catalog);
+  assert(
+    editionPublicationAssets(selected, f.files).some((asset) => asset.path === f.original.path),
+  );
+  const removed = structuredClone(selected);
+  removed.editions[0].campaignIds = [added.id];
+  assert.throws(() => editionPublicationAssets(removed, f.files), /audience/);
+  const descriptor = edition.presentationHistory[0];
+  const snapshot = JSON.parse(f.files.get(descriptor.path));
+  snapshot.catalog.editions[0].campaignIds.push(snapshot.catalog.editions[0].campaignIds[0]);
+  const value = bytes(snapshot);
+  Object.assign(selected.editions[0].presentationHistory[0], {
+    bytes: value.length,
+    sha256: digest(value),
+  });
+  assert.throws(
+    () => editionPublicationAssets(selected, new Map([...f.files, [descriptor.path, value]])),
+    /audience/,
+  );
+});
+
 test('sparse publisher rejects retained foreign branding, private JSON, unselected art and path conflicts', async () => {
   const f = await retainedFixture(),
     base = JSON.parse(f.files.get(f.catalog.editions[0].presentationHistory[0].path));
@@ -475,6 +602,93 @@ test('catalog validates generic brands, immutable selections and strict allowlis
   });
   assert.throws(() => validateEditionRuntimeCatalog(bad), /accessors/);
   assert.equal(invoked, false);
+});
+
+test('repeated asset reads reuse only fully validated immutable edition closures', () => {
+  const { catalog } = fixture();
+  assert.equal(validateEditionRuntimeCatalog(catalog), catalog);
+  const first = resolveEditionAssets(catalog);
+  assert.equal(resolveEditionAssets(catalog, { editionId: 'coupa-public' }), first);
+  assert.deepEqual(
+    first.map((asset) => asset.id),
+    ['coupa-hero'],
+  );
+  const other = resolveEditionAssets(catalog, { editionId: 'droneaid-public' });
+  assert.deepEqual(
+    other.map((asset) => asset.id),
+    ['droneaid-hero'],
+  );
+  assert.notEqual(other, first);
+  assert.throws(() => first.push(other[0]), TypeError);
+  assert.throws(() => first[0].dependencies.push('droneaid-hero'), TypeError);
+  assert.throws(() => {
+    first[0].approved = false;
+  }, TypeError);
+  assert.throws(() => resolveEditionAssets(catalog, { editionId: 'omitted' }), /not included/);
+});
+
+test('mutable imports, copied catalogues and caller-frozen data cannot inherit admission', () => {
+  const { catalog } = fixture();
+  const imported = structuredClone(catalog);
+  const admitted = validateEditionRuntimeCatalog(imported);
+  resolveEditionAssets(imported);
+  imported.assets[0].approved = false;
+  assert.throws(() => resolveEditionAssets(imported), /publication approval/);
+  assert.equal(resolveEditionAssets(admitted)[0].approved, true, 'Admitted snapshot stays exact.');
+
+  const shallowFrozen = Object.freeze(structuredClone(catalog));
+  resolveEditionAssets(shallowFrozen);
+  shallowFrozen.assets[0].dependencies.push('undeclared');
+  assert.throws(() => resolveEditionAssets(shallowFrozen), /dependency is missing/);
+
+  const rejected = structuredClone(catalog);
+  rejected.assets[0].publication = 'restricted';
+  Object.freeze(rejected.assets[0]);
+  Object.freeze(rejected.assets);
+  Object.freeze(rejected);
+  assert.throws(() => validateEditionRuntimeCatalog(rejected), /publication approval/);
+  const changed = structuredClone(catalog);
+  changed.assets[0].sha256 = 'd'.repeat(64);
+  const replacement = validateEditionRuntimeCatalog(changed);
+  assert.equal(resolveEditionAssets(replacement)[0].sha256, 'd'.repeat(64));
+  assert.notEqual(
+    resolveEditionAssets(replacement)[0].sha256,
+    resolveEditionAssets(catalog)[0].sha256,
+  );
+});
+
+test('shared-brand audience editions retain separate cached asset permissions', () => {
+  const source = structuredClone(fixture().catalog);
+  source.assets.push({
+    ...source.assets[0],
+    id: 'coupa-extended-picture',
+    path: 'game/editions/assets/coupa-extended.png',
+  });
+  source.campaigns.push({
+    ...source.campaigns[0],
+    id: 'coupa-extended-campaign',
+    sourcePath: 'game/content/coupa-extended.json',
+    assetIds: ['coupa-extended-picture'],
+  });
+  source.editions.push({
+    ...source.editions[0],
+    id: 'coupa-extended-audience',
+    audience: 'extended-learning',
+    campaignIds: ['coupa-adventure', 'coupa-extended-campaign'],
+  });
+  const catalog = validateEditionRuntimeCatalog(source);
+  const extended = resolveEditionAssets(catalog, { editionId: 'coupa-extended-audience' });
+  const basic = resolveEditionAssets(catalog, { editionId: 'coupa-public' });
+  assert.deepEqual(
+    extended.map((asset) => asset.id),
+    ['coupa-hero', 'coupa-extended-picture'],
+  );
+  assert.deepEqual(
+    basic.map((asset) => asset.id),
+    ['coupa-hero'],
+  );
+  assert.equal(resolveEditionAssets(catalog, { editionId: 'coupa-public' }), basic);
+  assert.equal(resolveEditionAssets(catalog, { editionId: 'coupa-extended-audience' }), extended);
 });
 
 test('dependency closure rejects cycles, undeclared assets and cross-brand campaigns', () => {

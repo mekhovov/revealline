@@ -9,6 +9,10 @@ import { attachPublishedAudio } from '../ui/published-audio.mjs';
 import { emptySoundtrackLibrary, BUILTIN_SOUNDTRACK_TRACKS } from '../soundtrack.mjs';
 import { audioHarness, settleUntil } from './helpers/soundtrack-audio.mjs';
 import { Events } from './helpers/couch-dom.mjs';
+import {
+  validateCampaignFeedback,
+  CAMPAIGN_FEEDBACK_FORMAT,
+} from '../journey/campaign-feedback.mjs';
 
 const bytes = new Uint8Array([82, 73, 70, 70, 0, 0, 0, 0, 87, 65, 86, 69]);
 const blob = new Blob([bytes], { type: 'audio/wav' });
@@ -149,6 +153,80 @@ test('published cue loading never enables audio, replays a stale cue, or survive
   assert.equal(h.soundscape.voices.size, 0);
   assert.equal(h.soundscape.publishedCue('focus'), false);
   await h.soundscape.dispose();
+});
+
+test('published victory owns an authored campaign win; only an unavailable cue uses its motif and existing gates still win', async (t) => {
+  const h = audioHarness(),
+    defaultCue = audioHarness(),
+    context = {
+      owned: true,
+      mode: 'solo',
+      outcome: 'won',
+      missionId: 'fixture-mission',
+      feedback: validateCampaignFeedback({
+        format: CAMPAIGN_FEEDBACK_FORMAT,
+        revision: 'r1',
+        lines: { en: ['Fixture connection.'], uk: ['Навчальне з’єднання.'] },
+        victoryMotif: 'shared-spark-v1',
+      }),
+    };
+  t.after(async () => {
+    await h.soundscape.dispose();
+    await defaultCue.soundscape.dispose();
+  });
+  let finishDecode,
+    reads = 0;
+  const decoded = { duration: 0.1, length: 800, numberOfChannels: 1 };
+  h.context.decodeAudioData = () => new Promise((resolve) => (finishDecode = resolve));
+  h.soundscape.setPublishedAudio(async (slot) => {
+    assert.equal(slot, 'audio.victory');
+    reads++;
+    return { blob };
+  });
+  const win = (tick) => ({ type: 'run.completed', won: true, tick, levelId: 'fixture-level' });
+  h.soundscape.event(win(1), {}, context);
+  assert.equal(reads, 0);
+  assert.equal(h.soundscape.context, null, 'A result never unlocks audio.');
+  await h.soundscape.enable();
+  await defaultCue.soundscape.enable();
+  h.soundscape.event(win(2), {}, context);
+  defaultCue.soundscape.event(win(2));
+  assert(h.sources.length > 0);
+  assert.equal(h.sources.length, defaultCue.sources.length);
+  assert.notDeepEqual(
+    h.sources.map((source) => source.frequency.value),
+    defaultCue.sources.map((source) => source.frequency.value),
+    'An unavailable published cue falls back to the accepted authored melody.',
+  );
+  await settleUntil(() => !!finishDecode);
+  const fallbackCount = h.sources.length;
+  finishDecode(decoded);
+  await new Promise((resolve) => setTimeout(resolve, 0));
+  assert.equal(h.sources.length, fallbackCount, 'Late decoding never replays the prior result.');
+  h.context.currentTime = 1;
+  h.soundscape.event(win(3), {}, context);
+  assert.equal(h.sources.length, fallbackCount + 1);
+  assert.equal(h.sources.at(-1).buffer, decoded, 'Only the exact published buffer is scheduled.');
+  h.soundscape.event(win(3), {}, context);
+  assert.equal(h.sources.length, fallbackCount + 1, 'One accepted result remains one cue.');
+  for (const [index, setting] of ['master', 'sfx'].entries()) {
+    h.soundscape.configure({ [setting]: 0 });
+    h.soundscape.event(win(10 + index), {}, context);
+    assert.equal(
+      h.sources.length,
+      fallbackCount + 1,
+      `${setting} gates both published and synth audio.`,
+    );
+    h.soundscape.configure({ [setting]: 0.5 });
+  }
+  h.soundscape.pause();
+  h.soundscape.event(win(4), {}, context);
+  assert.equal(h.sources.length, fallbackCount + 1);
+  await h.soundscape.resume();
+  h.soundscape.disable();
+  h.soundscape.event(win(5), {}, context);
+  assert.equal(h.sources.length, fallbackCount + 1);
+  assert.equal(reads, 1, 'Gated or repeated results do not request another original.');
 });
 
 test('page cue listeners use native actions only and cleanup leaves no active audio adapter', async () => {

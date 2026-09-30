@@ -3,10 +3,12 @@ import assert from 'node:assert/strict';
 import fs from 'node:fs/promises';
 import { createPresentationHost, validateCompiledPresentation } from '../presentation/host.mjs';
 import { createDefaultThemeBundle } from '../presentation/catalog.mjs';
-import { FORMATS } from '../presentation/model.mjs';
+import { FORMATS, LIMITS } from '../presentation/model.mjs';
 import { compilePresentation } from '../../scripts/compile-presentation.mjs';
 import { hashPresentationBytes } from '../presentation/bundle.mjs';
 import { CURRENT_PICTURES } from '../presentation/current-pictures.mjs';
+import { prepareStillAsset } from '../media-still.mjs';
+import { rasterFixtures } from './helpers/raster-fixtures.mjs';
 
 const baseURL = 'https://game.test/releases/v1/game/presentation/compiled/';
 const tick = () => new Promise((resolve) => setTimeout(resolve, 0));
@@ -637,6 +639,149 @@ test('picture originals remain lazy exact bytes and host close cancels a late or
   finish();
   await rejected;
   assert.equal(cancelled, 1);
+});
+
+async function webpPictureFixture({ bytes, width = 1, frameWidth = width, fileBytes } = {}) {
+  const f = await fixture(),
+    manifest = structuredClone(f.manifest),
+    slot = CURRENT_PICTURES.find((row) => row.owner.themeId === 'fpv').id,
+    asset = manifest.resolved.assets['player.scout.compact'];
+  bytes ??= rasterFixtures().find((row) => row.extension === 'webp').bytes;
+  const hash = await hashPresentationBytes(bytes);
+  delete manifest.resolved.assets['player.scout.compact'];
+  delete manifest.resolved.bindings['player.scout.compact'];
+  asset.file = {
+    sha256: hash,
+    bytes: fileBytes ?? bytes.length,
+    mime: 'image/webp',
+    width,
+    height: 1,
+  };
+  asset.geometry.frame = { x: 0, y: 0, width: frameWidth, height: 1 };
+  manifest.resolved.assets[slot] = asset;
+  manifest.resolved.bindings[slot] = { id: asset.id, revision: asset.revision };
+  manifest.urls = { [hash]: `./assets/${hash}.webp` };
+  const files = new Map([
+    ['runtime.json', new TextEncoder().encode(JSON.stringify(manifest))],
+    [`assets/${hash}.webp`, bytes],
+  ]);
+  return { files, manifest, slot, hash, bytes };
+}
+
+test('full-frame WebP picture reads keep exact lazy bytes and still require downstream complete decode', async () => {
+  const f = await webpPictureFixture(),
+    env = environment(f);
+  try {
+    const snapshot = await env.host.load();
+    assert.equal(env.requests.length, 1, 'Loading the presentation does not acquire originals.');
+    const picture = await env.host.readPicture(f.slot, { snapshot });
+    assert.deepEqual(Buffer.from(await picture.blob.arrayBuffer()), f.bytes);
+    assert.equal(picture.blob.type, 'image/webp');
+    assert.equal(picture.asset.file.sha256, f.hash);
+    assert.ok(Object.isFrozen(picture.asset.file));
+    assert.equal(env.requests.at(-1).url, baseURL + `assets/${f.hash}.webp`);
+    assert.equal(env.requests.at(-1).options.redirect, 'error');
+    assert.equal(env.decoded.length, 0, 'A verified header is not a complete browser decode.');
+    const metadata = {
+      id: 'webp-original',
+      provenance: { kind: 'original', credit: 'Test', source: 'Owned raster fixture' },
+    };
+    await assert.rejects(
+      prepareStillAsset(picture.blob, metadata, {
+        decodeImage: async () => {
+          throw new Error('Complete decoder refused fixture');
+        },
+      }),
+      /Complete decoder refused/,
+    );
+    const prepared = await prepareStillAsset(picture.blob, metadata, {
+      decodeImage: async () => ({ naturalWidth: 1, naturalHeight: 1 }),
+    });
+    assert.equal(prepared.asset.sha256, f.hash);
+    assert.deepEqual(Buffer.from(await prepared.blob.arrayBuffer()), f.bytes);
+  } finally {
+    env.host.close();
+  }
+});
+
+test('WebP picture admission rejects cropped, malformed, mismatched and oversized originals without replacing its snapshot', async () => {
+  const bytes = rasterFixtures().find((row) => row.extension === 'webp').bytes,
+    animated = Buffer.from(bytes);
+  animated.write('ANIM', 12);
+  for (const [name, options, response, expected] of [
+    ['cropped', { width: 2, frameWidth: 1 }, null, /complete PNG\/JPEG\/WebP/],
+    ['animated', { bytes: animated }, null, /header disagrees/],
+    ['truncated container', { bytes: bytes.subarray(0, -1) }, null, /header disagrees/],
+    ['dimensions', { width: 2 }, null, /header disagrees/],
+    ['wrong hash', {}, Buffer.from(bytes).fill(0), /hash mismatch/],
+    ['oversized body', {}, Buffer.concat([bytes, Buffer.from([0])]), /byte budget/],
+  ]) {
+    const f = await webpPictureFixture(options);
+    if (response) f.files.set(`assets/${f.hash}.webp`, response);
+    const env = environment(f);
+    try {
+      const snapshot = await env.host.load();
+      await assert.rejects(env.host.readPicture(f.slot), expected, name);
+      assert.equal(env.host.current(), snapshot, name);
+      assert.equal(env.decoded.length, 0, name);
+      assert.equal(env.urls.length, 0, name);
+      if (name === 'cropped') assert.equal(env.requests.length, 1, 'Crop rejected before fetch.');
+    } finally {
+      env.host.close();
+    }
+  }
+  const oversized = environment(await webpPictureFixture({ fileBytes: LIMITS.assetBytes + 1 }));
+  try {
+    await assert.rejects(oversized.host.load(), /identity\/budget/);
+    assert.equal(oversized.requests.length, 1);
+    assert.equal(oversized.host.current(), null);
+  } finally {
+    oversized.host.close();
+  }
+});
+
+test('aborted WebP original reads cancel late bodies and cannot retire the accepted snapshot', async () => {
+  const f = await webpPictureFixture();
+  let resolveBody,
+    began,
+    cancelled = 0;
+  const pendingBody = new Promise((resolve) => {
+      resolveBody = resolve;
+    }),
+    started = new Promise((resolve) => {
+      began = resolve;
+    }),
+    controller = new AbortController(),
+    env = environment(f, {
+      fetch: async (url) => {
+        if (url.endsWith('/runtime.json')) return new Response(f.files.get('runtime.json'));
+        began();
+        await pendingBody;
+        return {
+          ok: true,
+          body: {
+            cancel: async () => {
+              cancelled++;
+            },
+          },
+        };
+      },
+    });
+  try {
+    const snapshot = await env.host.load(),
+      pending = env.host.readPicture(f.slot, { signal: controller.signal }),
+      rejected = assert.rejects(pending, { name: 'AbortError' });
+    await started;
+    controller.abort();
+    resolveBody();
+    await rejected;
+    assert.equal(cancelled, 1);
+    assert.equal(env.host.current(), snapshot);
+    assert.equal(env.decoded.length, 0);
+    assert.equal(env.urls.length, 0);
+  } finally {
+    env.host.close();
+  }
 });
 
 test('retained hosts load exact historical bytes beside shared assets without selecting the current manifest', async () => {

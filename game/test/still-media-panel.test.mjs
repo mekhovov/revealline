@@ -976,3 +976,38 @@ test('closing and reopening while reload is pending keeps the newer load focus a
   assert.equal(h.$('status').textContent, accepted);
   assert.equal(h.doc.activeElement, h.$('close'));
 });
+
+test('Picture Workshop hands off exact draft and saved originals without writing media', async (t) => {
+  const blobs = new Map(),
+    revoked = [];
+  const h = await setup(t, {
+    panel: {
+      URLImpl: {
+        createObjectURL(blob) {
+          const url = 'blob:picture-' + (blobs.size + revoked.length);
+          blobs.set(url, blob);
+          return url;
+        },
+        revokeObjectURL(url) {
+          revoked.push(url);
+          blobs.delete(url);
+        },
+      },
+    },
+  });
+  h.choose();
+  assert.equal(await h.$('preview').onclick(), true);
+  const prepare = h.doc.querySelector('[data-asset-export-action="prepare"]');
+  assert.equal(await prepare.onclick(), true);
+  assert.equal((await h.store.read()).generation, 0);
+  assert.deepEqual(Buffer.from(await [...blobs.values()][0].arrayBuffer()), pngBytes());
+  assert.equal(await h.$('save').onclick(), true);
+  assert.equal(blobs.size, 0);
+  assert.equal(await prepare.onclick(), true);
+  assert.deepEqual(Buffer.from(await [...blobs.values()][0].arrayBuffer()), pngBytes());
+  assert.equal((await h.store.read()).generation, 1);
+  h.$('history').onchange();
+  assert.equal(blobs.size, 0);
+  h.panel.close();
+  assert.equal(blobs.size, 0);
+});

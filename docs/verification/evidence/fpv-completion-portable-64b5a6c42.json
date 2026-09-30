@@ -1,0 +1,273 @@
+{
+  "format": "revealline-fpv-completion-public-summary.v1",
+  "qualified": false,
+  "caseId": "portable-timeline-loaded-1",
+  "protocol": "civilian-fpv-airborne-completion.v1",
+  "artifact": {
+    "sourceRevision": "64b5a6c42a0bb261bf3a3c21dd1ec13196430d63",
+    "sourceTree": "d524b404bfc1468ecbdada1a4297a7be1aedd856",
+    "version": "v0.142.3",
+    "envelope": {
+      "path": "optional-packages.json",
+      "bytes": 1830,
+      "sha256": "a6a48db7e44c0deaf08a203230dd36186ee34109f109472025bdc49b40a215d7"
+    },
+    "package": {
+      "classification": "public",
+      "core": false,
+      "distribution": {
+        "bytes": 2755824,
+        "path": "distribution-optional-civilian-fpv.zip",
+        "sha256": "6436f18958f2c83fd9bba89fc15aa27b0c5d4546781a6147f09852a7bd7c3fd5"
+      },
+      "entry": "optional-practice/civilian-fpv/index.html",
+      "id": "civilian-fpv",
+      "manifest": {
+        "bytes": 9242,
+        "path": "manifest-optional-civilian-fpv.json",
+        "sha256": "06476391d57f431c8eb4e3213c48f36d99c647609a429d009cc2276e0d56aec8"
+      },
+      "revision": "e47740d3a2ea691d30cd80d625c47b84b3602abfe9e970d93b2ff58d48ffe815",
+      "sourceArchive": {
+        "bytes": 2770522,
+        "path": "source-optional-civilian-fpv.zip",
+        "sha256": "adc42be66bab6bb4a2b9b28bc92ff3b607bf4c5f4784cb935fd9c7ac7fd8eb62"
+      },
+      "sourceInventory": {
+        "bytes": 15182,
+        "path": "source-inventory-optional-civilian-fpv.json",
+        "sha256": "1398d6fd0bc9b6820e4180b6a3458377df3113ba667e1ae42c3e967b6be8d975"
+      }
+    }
+  },
+  "browser": {
+    "version": "154.0.8037.57",
+    "viewport": {
+      "width": 1440,
+      "height": 900
+    },
+    "deviceScaleFactor": 1,
+    "headless": true
+  },
+  "concurrency": "Functional and diagnostic run under concurrent builds in other tasks; no quiet benchmark or performance regression qualification. One bounded attempt authorized.",
+  "interaction": "One automated desktop Self-level drill using ordinary keyboard controls and read-only snapshots; no engine/progress injection.",
+  "completed": true,
+  "functionalStatus": "complete",
+  "functional": {
+    "proof": {
+      "path": "proof-backup.json",
+      "bytes": 6292,
+      "sha256": "85551f427e19a211ac035bde359a5cf078d36cf52dd3a1b09c52df917a9ff5b6"
+    },
+    "proofs": 1,
+    "retry": {
+      "course": "flight-01",
+      "status": "disarmed",
+      "ticks": 0,
+      "frames": 0
+    },
+    "proofUnchangedAfterRetry": true,
+    "proofUnchangedAfterReload": true
+  },
+  "attempt": {
+    "accepted": true,
+    "ticks": 493,
+    "maxHeightMm": 1744
+  },
+  "timingStatus": "observed",
+  "timing": {
+    "whole": {
+      "intervals": 656,
+      "p95Ms": 16.799999999999727,
+      "maximumMs": 16.80000000000109
+    },
+    "active": {
+      "intervals": 592,
+      "p95Ms": 16.799999999999727,
+      "maximumMs": 16.80000000000109
+    },
+    "passive": {
+      "intervals": 59,
+      "p95Ms": 16.700000000000728,
+      "maximumMs": 16.80000000000109
+    },
+    "allFramesVisible": true,
+    "allFramesFocused": true,
+    "maximumHeightMm": 1744,
+    "trustedKeyboardEvents": true,
+    "longTasks": []
+  },
+  "passiveMs": 1001.8000000119209,
+  "trace": {
+    "status": "complete",
+    "qualified": false,
+    "maxBytes": 41943040,
+    "timeoutMs": 15000,
+    "streamClosed": true,
+    "file": {
+      "path": "trace.json",
+      "bytes": 15101427,
+      "sha256": "0b4da9e36292fc7e51a299b06842774c1e7e206adaf2575b319998aaa469a082"
+    }
+  },
+  "traceAnalysis": {
+    "status": "analyzed",
+    "qualified": false,
+    "events": 61081,
+    "renderer": {
+      "pid": 60934,
+      "tid": 12449183
+    },
+    "taskName": "ThreadControllerImpl::RunTask",
+    "windows": {
+      "whole": {
+        "startUs": 177906741928,
+        "endUs": 177917700183,
+        "tasks": 4222,
+        "maximumMs": 49.276,
+        "over50": []
+      },
+      "completion": {
+        "startUs": 177916672287,
+        "endUs": 177917698336,
+        "tasks": 438,
+        "maximumMs": 4.433,
+        "over50": []
+      },
+      "passive": {
+        "startUs": 177916696559,
+        "endUs": 177917698336,
+        "tasks": 356,
+        "maximumMs": 0.942,
+        "over50": []
+      }
+    },
+    "limitation": "Inclusive tasks only. Boundary/startup tasks are retained; no exclusive reward, GPU or universal 50 ms qualification."
+  },
+  "cleanup": {
+    "completed": true,
+    "operations": [
+      {
+        "name": "input",
+        "closed": true
+      },
+      {
+        "name": "app",
+        "closed": true
+      },
+      {
+        "name": "browser",
+        "closed": true
+      },
+      {
+        "name": "server",
+        "closed": true
+      },
+      {
+        "name": "temporary-site",
+        "closed": true
+      }
+    ]
+  },
+  "disposedResources": {
+    "available": true,
+    "disposed": true,
+    "registered": {
+      "geometries": 0,
+      "materials": 0,
+      "textures": 0
+    },
+    "renderer": {
+      "geometries": 0,
+      "textures": 1,
+      "programs": 0,
+      "contextLost": true
+    }
+  },
+  "serverPolicy": "Existing packaged-preview headers, including its explicit soundtrack origins; not a deployed public origin.",
+  "headers": {
+    "cache-control": "no-cache",
+    "connection": "keep-alive",
+    "content-length": "7290",
+    "content-security-policy": "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; media-src 'self' data: blob: https://github.com https://release-assets.githubusercontent.com; font-src 'self'; connect-src 'self' https://mekhovov.github.io/revealline-soundtracks/; worker-src 'self'; manifest-src 'self'; frame-src 'self'; frame-ancestors 'self'; object-src 'none'; base-uri 'none'; form-action 'none'",
+    "content-type": "text/html; charset=utf-8",
+    "date": "Tue, 29 Sep 2026 01:16:18 GMT",
+    "keep-alive": "timeout=5",
+    "permissions-policy": "camera=(), microphone=(), geolocation=(), payment=(), usb=()",
+    "referrer-policy": "no-referrer",
+    "x-content-type-options": "nosniff"
+  },
+  "toolAuthorities": [
+    {
+      "path": "scripts/observe-fpv-completion.mjs",
+      "bytes": 31165,
+      "sha256": "0ffe6ec19713ea6f226ff5854229e6bcd99f557adcf1cdc0e62dab8805a824ee"
+    },
+    {
+      "path": "scripts/game-cli.mjs",
+      "bytes": 79596,
+      "sha256": "f7530f224ccce1e49c81aa70b438fdebfe76da47b90a09065ed29505cf32541b"
+    },
+    {
+      "path": "publishing/edition-zip.mjs",
+      "bytes": 6736,
+      "sha256": "437c01641e8cf8e6e4bf201f42eab19e035f9f5919ec70417331d51ef58f56c4"
+    },
+    {
+      "path": "publishing/optional-package-admission.mjs",
+      "bytes": 18387,
+      "sha256": "c4ad35ef3798940cee7eba854c536a39e1981967ca6a50785a61fd7cc7ff5dca"
+    },
+    {
+      "path": "publishing/optional-package-policy.mjs",
+      "bytes": 5160,
+      "sha256": "530e28fe8dcfd81a53c418db178a3e57e305c8fa6b31f2de336da37dbd4d3f1b"
+    },
+    {
+      "path": "publishing/edition-admission.mjs",
+      "bytes": 19877,
+      "sha256": "919783e9b41bfb80549793968699c69e880881132cf8bb3e91f03124047d8a02"
+    },
+    {
+      "path": "host.html",
+      "bytes": 7290,
+      "sha256": "06ca3bad0803eb872c2d44b6ec103e8662c47c7816e0f0f1173858928efd3b3c"
+    },
+    {
+      "path": "wrapper.mjs",
+      "bytes": 2808,
+      "sha256": "7c9cf4e5c09947fc1f4bdf9084a505e6599536bc0546151e5ddbf6970fc3c90b"
+    }
+  ],
+  "evidence": {
+    "directory": ".cache/phase7-64b5a6c42/fpv-completion-portable-1",
+    "observation": {
+      "path": "observation.json",
+      "bytes": 28263,
+      "sha256": "53c4353591235067ab4a8d5a15b8ad5b67e4f3265f215b8f057fc864fd19f6d8"
+    },
+    "raw": {
+      "path": "attempt-raw.json",
+      "bytes": 1073340,
+      "sha256": "891985c5a8002f51131a61554b8574f7ccc425233a0cb1471c1ae949e8dc85f3"
+    },
+    "trace": {
+      "path": "trace.json",
+      "bytes": 15101427,
+      "sha256": "0b4da9e36292fc7e51a299b06842774c1e7e206adaf2575b319998aaa469a082"
+    },
+    "proofBackupHashOnly": {
+      "path": "proof-backup.json",
+      "bytes": 6292,
+      "sha256": "85551f427e19a211ac035bde359a5cf078d36cf52dd3a1b09c52df917a9ff5b6"
+    }
+  },
+  "limits": [
+    "One automated desktop Self-level drill using ordinary keyboard controls and read-only snapshots; no engine/progress injection.",
+    "Observation and tracing add overhead. No matched 5% regression, cold launch, input-to-photon, physical radio or human-learning qualification.",
+    "Inclusive task observations do not attribute exclusive reward, GPU, heap or decoder costs. No universal 50 ms claim.",
+    "A single loaded functional/diagnostic run under concurrent builds; no quiet desktop benchmark or matched regression comparison.",
+    "Disposal reported one internal Three texture counter with WebGL context lost. No zero-native-resource or whole-heap claim.",
+    "No proof payload, local profile or raw browser state is included in this public summary. Original failed and earlier ad hoc observations remain retained separately."
+  ]
+}

@@ -12,55 +12,155 @@ import {
   createCompanyPresets,
 } from '../game/company-campaigns/brands.mjs';
 import { COMPANY_CAMPAIGNS } from '../game/company-campaigns/catalog.mjs';
+import { CURRICULUM_LESSONS } from '../game/company-campaigns/curriculum-lessons.mjs';
 import { COMPANY_LESSONS } from '../game/company-campaigns/lessons.mjs';
 import { createCompanyProject } from '../game/company-campaigns/content.mjs';
+import { selectCurrentCompanyArtwork } from '../game/company-campaigns/artwork.mjs';
+import { CURRICULUM_CAMPAIGNS } from '../game/company-campaigns/curriculum.mjs';
+import { createCurriculumProject } from '../game/company-campaigns/curriculum-content.mjs';
+import { createCurriculumRewards } from '../game/company-campaigns/curriculum-rewards.mjs';
+import { createCurriculumLocalization } from '../game/company-campaigns/curriculum-localization.mjs';
+import { campaignLocalizationSha256 } from '../game/editions/localization.mjs';
+import {
+  COMPANY_REWARD_CAMPAIGN_IDS,
+  createCompanyRewards,
+} from '../game/company-campaigns/rewards.mjs';
+import { createRewardMissionBindings } from '../game/rewards/bindings.mjs';
+import {
+  COMPANY_LEARNING_REWARD_CAMPAIGN_IDS,
+  createCompanyLearningRewards,
+} from '../game/company-campaigns/learning-rewards.mjs';
+import {
+  completionRewardAssetReferences,
+  validateCompletionRewards,
+} from '../game/rewards/model.mjs';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const bytes = (value) => Buffer.from(canonicalJSON(value) + '\n');
 
 /** Build-time authoring exports are projected to independent JSON. No runtime
  * import of this module, brand registry or complete lesson factory is necessary. */
-export async function produceCompanyContent({ assets, artwork = [], classes = [] }) {
+export async function produceCompanyContent({
+  assets,
+  artwork = [],
+  assetSources = [],
+  classes = [],
+}) {
   const files = new Map(),
     projects = new Map();
-  const campaigns = COMPANY_CAMPAIGNS.map((definition) => {
-    const source = createCompanyProject({
-      brandId: definition.brandId,
-      campaignId: definition.id,
-      artwork,
-    });
-    const project = compileContentProject(source);
-    projects.set(definition.id, project);
-    files.set(definition.sourcePath, bytes(source));
-    const selectedLessons = COMPANY_LESSONS.filter((lesson) =>
-      definition.missionIds.includes(lesson.missionId),
-    );
-    const lessonPath = selectedLessons.length
-      ? `game/content/company-campaigns/${definition.id}.lessons.json`
-      : null;
-    if (lessonPath) files.set(lessonPath, bytes(selectedLessons));
-    const assetIds = source.assets.map((asset) => {
-      const descriptor = assets.find(
-        (entry) =>
-          entry.path === `game/${asset.path}` &&
-          entry.sha256 === asset.sha256 &&
-          entry.bytes === asset.bytes,
+  const factories = new Map([
+    ...COMPANY_CAMPAIGNS.map((entry) => [
+      entry.id,
+      {
+        project: createCompanyProject,
+        rewards: COMPANY_REWARD_CAMPAIGN_IDS.includes(entry.id)
+          ? createCompanyRewards
+          : COMPANY_LEARNING_REWARD_CAMPAIGN_IDS.includes(entry.id)
+            ? createCompanyLearningRewards
+            : null,
+      },
+    ]),
+    ...CURRICULUM_CAMPAIGNS.map((entry) => [
+      entry.id,
+      {
+        project: createCurriculumProject,
+        rewards: createCurriculumRewards,
+        localization: createCurriculumLocalization,
+      },
+    ]),
+  ]);
+  const campaigns = await Promise.all(
+    [...COMPANY_CAMPAIGNS, ...CURRICULUM_CAMPAIGNS].map(async (definition) => {
+      const factory = factories.get(definition.id);
+      const source = factory.project({
+        brandId: definition.brandId,
+        campaignId: definition.id,
+        artwork,
+      });
+      const project = compileContentProject(source);
+      projects.set(definition.id, project);
+      files.set(definition.sourcePath, bytes(source));
+      const selectedLessons = [...COMPANY_LESSONS, ...CURRICULUM_LESSONS].filter((lesson) =>
+        definition.missionIds.includes(lesson.missionId),
       );
-      required(descriptor, `Campaign artwork has no exact public inventory entry: ${asset.id}.`);
-      return descriptor.id;
-    });
-    return {
-      id: definition.id,
-      revision: definition.revision,
-      name: definition.name,
-      brandId: definition.brandId,
-      publication: definition.publication,
-      sourcePath: definition.sourcePath,
-      assetIds: [...new Set(assetIds)],
-      modes: definition.modes,
-      ...(lessonPath ? { lessonPath } : {}),
-    };
-  });
+      const lessonPath = selectedLessons.length
+        ? `game/content/company-campaigns/${definition.id}.lessons.json`
+        : null;
+      if (lessonPath) files.set(lessonPath, bytes(selectedLessons));
+      const assetIds = source.assets.map((asset) => {
+        const descriptor = assets.find(
+          (entry) =>
+            entry.path === `game/${asset.path}` &&
+            entry.sha256 === asset.sha256 &&
+            entry.bytes === asset.bytes,
+        );
+        required(descriptor, `Campaign artwork has no exact public inventory entry: ${asset.id}.`);
+        return descriptor.id;
+      });
+      const keyPicture = selectCurrentCompanyArtwork(artwork).find(
+        (asset) => asset.id === `${definition.id}-key-picture`,
+      );
+      const heroAsset =
+        keyPicture &&
+        assets.find(
+          (asset) =>
+            asset.path === `game/${keyPicture.path}` &&
+            asset.sha256 === keyPicture.sha256 &&
+            asset.bytes === keyPicture.bytes,
+        );
+      required(!keyPicture || heroAsset, 'Campaign key art has no exact inventory entry.');
+      if (heroAsset && !assetIds.includes(heroAsset.id)) assetIds.push(heroAsset.id);
+      for (const assetId of definition.rewardAssetIds ?? []) {
+        required(
+          assets.some((asset) => asset.id === assetId),
+          `Missing declared reward dependency: ${assetId}.`,
+        );
+        if (!assetIds.includes(assetId)) assetIds.push(assetId);
+      }
+      const rewardPath = factory.rewards
+        ? `game/content/company-campaigns/${definition.id}.rewards.json`
+        : null;
+      if (rewardPath) {
+        const rewards = validateCompletionRewards(
+          factory.rewards({
+            definition,
+            source,
+            assets,
+            assetSources,
+            missionBindings: createRewardMissionBindings(source),
+            lessons: selectedLessons,
+          }),
+        );
+        for (const reference of completionRewardAssetReferences(rewards))
+          required(
+            assetIds.includes(reference.assetId),
+            `Reward artwork is not admitted by its campaign: ${reference.assetId}.`,
+          );
+        files.set(rewardPath, bytes(rewards));
+      }
+      const localizationPath = factory.localization
+        ? `game/content/company-campaigns/${definition.id}.localization.json`
+        : null;
+      const localization = factory.localization?.({ definition, source });
+      if (localizationPath) files.set(localizationPath, bytes(localization));
+      return {
+        id: definition.id,
+        revision: definition.revision,
+        name: definition.name,
+        brandId: definition.brandId,
+        publication: definition.publication,
+        sourcePath: definition.sourcePath,
+        assetIds: [...new Set(assetIds)],
+        ...(heroAsset ? { heroAssetId: heroAsset.id } : {}),
+        modes: definition.modes,
+        ...(lessonPath ? { lessonPath } : {}),
+        ...(rewardPath ? { rewardPath } : {}),
+        ...(localizationPath
+          ? { localizationPath, localizationSha256: await campaignLocalizationSha256(localization) }
+          : {}),
+      };
+    }),
+  );
   for (const edition of COMPANY_EDITIONS) {
     const project = projects.get(edition.entryCampaignId),
       themes = createCompanyThemes(edition.brandId);
@@ -125,7 +225,10 @@ async function main(args) {
   } catch (error) {
     if (error.code !== 'ENOENT') throw error;
   }
-  const result = await produceCompanyContent({ assets, artwork, classes });
+  const assetSources = JSON.parse(
+    await fs.readFile(path.join(root, 'game/editions/asset-sources.json'), 'utf8'),
+  ).assets;
+  const result = await produceCompanyContent({ assets, artwork, assetSources, classes });
   for (const [file, data] of result.files) {
     const target = path.join(root, file);
     if (args.includes('--check'))

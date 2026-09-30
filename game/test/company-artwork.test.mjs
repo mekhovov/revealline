@@ -124,7 +124,13 @@ test('the first artwork batch retains its four exact original public snapshots t
   assert.ok(registered.every((edition) => edition?.presentationHistory?.length));
   const newIds = new Set(batch.map(([, , id]) => id));
   for (const edition of registered) {
-    const descriptor = edition.presentationHistory[0];
+    const descriptor = edition.presentationHistory.find(
+      (item) => item.path === `game/editions/retained/${edition.id}.json`,
+    );
+    assert.ok(
+      descriptor,
+      'The first artwork snapshot remains registered independently of later snapshots.',
+    );
     assert.deepEqual(Object.keys(descriptor).sort(), ['bytes', 'id', 'path', 'sha256']);
     const bytes = await readFile(new URL(descriptor.path, root));
     assert.equal(bytes.length, descriptor.bytes);
