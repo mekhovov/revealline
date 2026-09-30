@@ -431,8 +431,20 @@
               </div>
             </div>
           </div>
+          <div id="coop-cue-overflow" aria-live="off" hidden>
+            <button id="coop-field-details" type="button" hidden>
+              <span data-i18n="interface:fieldDetails">Field details</span>
+              <span id="coop-cue-summary"></span>
+            </button>
+          </div>
         </div>
         <div class="board-footer">
+          <span
+            id="coop-cue-announcement"
+            class="coop-cue-announcement"
+            role="status"
+            aria-live="polite"
+          ></span>
           <p
             id="coop-message"
             role="status"
@@ -884,6 +896,10 @@
               data-game-reading
               data-i18n-aria-label="interface:relayRescueControls"
             >
+              <section id="coop-field-details-section" aria-live="off" hidden>
+                <h3 data-i18n="interface:fieldDetails">Field details</h3>
+                <ul id="coop-field-details-list"></ul>
+              </section>
               <div class="briefing field-kit-panel">
                 <p
                   class="eyebrow"
@@ -985,6 +1001,7 @@
               <p id="coop-help-support" data-i18n="interface:preparingSupportAndRescueGuidance">
                 Preparing Support and rescue guidance.
               </p>
+              <p id="coop-slowed-legend">↓ — <span data-i18n="interface:slowed">Slowed</span></p>
               <p
                 id="coop-support-0"
                 class="support-status"
