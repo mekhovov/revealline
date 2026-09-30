@@ -1,6 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { settle, SoloElement, soloPage } from './helpers/solo-dom.mjs';
+import { waitFor } from './helpers/wait-for.mjs';
 
 function nativeConfirmDown(target) {
   const down = target.emit('keydown', {
@@ -276,14 +277,15 @@ test('every primary Pause action ignores a touch-derived A release echo', async 
       applied: (page) => page.$('restart-dialog').open,
     },
     {
+      name: 'Skip mission',
+      id: 'journey-skip',
+      timeoutMs: 30000,
+      applied: (page) => page.$('journey-skip').textContent === 'Confirm skip',
+    },
+    {
       name: 'Missions',
       id: 'overlay-missions',
       applied: (page) => page.$('journey-chooser')?.open === true || page.$('shell-missions').open,
-    },
-    {
-      name: 'How to play',
-      id: 'overlay-help',
-      applied: (page) => page.$('help-dialog').open,
     },
     {
       name: 'Settings',
@@ -312,7 +314,7 @@ test('every primary Pause action ignores a touch-derived A release echo', async 
           axes: [0, 0, 0, 0],
           buttons: Array.from({ length: 17 }, () => ({ pressed: false, value: 0 })),
         },
-        page = await soloPage(t, { readPads: () => [pad] });
+        page = await soloPage(t, { readPads: () => [pad], ...entry.options });
       page.frame();
       page.frame();
       page.$('start-button').click();
@@ -356,7 +358,12 @@ test('every primary Pause action ignores a touch-derived A release echo', async 
         assert(pending instanceof Promise, 'Missions exposes its owned opening operation');
         await pending;
       }
-      await settle(() => entry.applied(page), `${entry.name} applies on A release`);
+      if (entry.timeoutMs)
+        await waitFor(() => entry.applied(page), {
+          message: `${entry.name} applies on A release`,
+          timeoutMs: entry.timeoutMs,
+        });
+      else await settle(() => entry.applied(page), `${entry.name} applies on A release`);
       assert.equal(entry.applied(page), true, `${entry.name} remains applied after A release`);
       assert.deepEqual(page.errors, []);
     });

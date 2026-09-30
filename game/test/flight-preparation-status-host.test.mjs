@@ -3,6 +3,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { soloPage, settle } from './helpers/solo-dom.mjs';
 import { authoritativeCheckpoint, verifyReplay } from '../replay.mjs';
+import { ACTOR_SESSION_FORMAT } from '../sessions.mjs';
 
 const sessionKey = 'revealline.suspended.dev.v1';
 const readyMessage = 'Flight assets ready. Press Resume to continue.';
@@ -12,7 +13,7 @@ async function restart(t) {
   await settle(() => h.doc.body.dataset.flightState === 'running');
   h.$('pause-button').click();
   const original = JSON.parse(h.storage.getItem(sessionKey));
-  assert.equal(original.format, 'xonix-session.v5');
+  assert.equal(original.format, ACTOR_SESSION_FORMAT);
   h.frame(0);
   const picture = structuredClone(h.rendered.backdrop.pin);
   h.$('overlay-restart').click();

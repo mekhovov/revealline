@@ -122,23 +122,23 @@ function playRoute(p, [id, authoredIdentity, gameplayIdentity, , segments]) {
   assertRouteEvidence(reference, expectedRouteEvidence(evidence, id), id);
 }
 
-test('the final authored core mission offers Find missions without recording a fictitious skip', async (t) => {
+test('the final authored core mission resolves the next unified-library owner without recording a skip', async (t) => {
   const { p, backend } = await setup(t);
   await openMissions(p);
   missionCard(p, 'opening', 'long-way-home').click();
   await running(p, 'long-way-home');
   const original = p.rendered.run;
   assert.equal(p.$('journey-skip').hidden, false);
-  assert.equal(p.$('journey-skip').textContent, 'Find missions');
+  assert.equal(p.$('journey-skip').textContent, 'Skip mission');
   p.$('journey-skip').click();
-  await settle(() => p.$('journey-chooser').open);
+  await settle(() => p.$('journey-skip').textContent === 'Confirm skip');
   p.frame(0);
-  assert.equal(p.$('journey-chooser').open, true);
+  assert.equal(p.$('journey-chooser').open, false);
   assert.equal(p.rendered.run, original);
   assert.deepEqual((await backend.read()).skipped.solo, []);
-  p.$('journey-back').click();
-  p.frame(0);
-  assert.equal(p.$('journey-skip').textContent, 'Find missions');
+  p.$('start-button').click();
+  await settle(() => p.doc.body.dataset.flightState === 'running');
+  assert.equal(p.$('journey-skip').textContent, 'Skip mission');
   assert.deepEqual(p.errors, []);
 });
 
