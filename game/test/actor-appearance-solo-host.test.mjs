@@ -10,6 +10,7 @@ import { authoritativeCheckpoint } from '../replay.mjs';
 import { createRun, stepRun, FIXED_DT } from '../core/index.mjs';
 import { ACTOR_STYLE_PREFERENCES_KEY } from '../actor-style-preferences.mjs';
 import { preparePack, emptyPackLibrary, installPack, exportPackLibrary } from '../packs.mjs';
+import { waitFor } from './helpers/wait-for.mjs';
 
 const root = fileURLToPath(new URL('../../', import.meta.url));
 const journeyKey = 'revealline.suspended.journey-whole-spatial.v5';
@@ -458,8 +459,9 @@ for (const entryPoint of ['selector', 'cold Classic setup'])
       return;
     }
     page.$('shell-play').click();
-    await settle(
+    await waitFor(
       () => page.$('journey-chooser')?.open && page.$('journey-collection')?.children.length > 0,
+      { timeoutMs: 30000 },
     );
     page.change('journey-collection', 'Custom');
     const levelId = source.campaigns[0].levels[0].id;
@@ -472,12 +474,17 @@ for (const entryPoint of ['selector', 'cold Classic setup'])
       url.includes('mission-library-index.json'),
     ).length;
     card.click();
-    await settle(() => {
-      page.frame(0);
-      return (
-        page.doc.body.dataset.flightState === 'running' && page.rendered.run.levelId === levelId
-      );
-    });
+    try {
+      await settle(() => {
+        page.frame(0);
+        return (
+          page.doc.body.dataset.flightState === 'running' && page.rendered.run.levelId === levelId
+        );
+      });
+    } catch (error) {
+      error.message += ` ${JSON.stringify({ state: page.doc.body.dataset.flightState, levelId: page.rendered.run.levelId, chooser: page.$('journey-chooser')?.open, status: page.$('shell-flight-status').textContent, preparation: page.$('flight-preparation-status').textContent, errors: page.errors.map(String), requests: page.requests.slice(-8) })}`;
+      throw error;
+    }
     assert.equal(page.$('menu-actor-style').value, 'fpv');
     assert.equal(page.rendered.actorAppearance, null);
     assert.equal(save(page, legacyKey).actorAppearancePin, undefined);
