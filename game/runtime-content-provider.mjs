@@ -3,6 +3,12 @@ import { loadEditionBootstrap } from './editions/bootstrap.mjs';
 import { verifyEditionAssets } from './editions/assets.mjs';
 import { resolveEditionAssets } from './editions/model.mjs';
 import { editionIdentityId, editionPublicSlug, resolveEditionContext } from './edition-context.mjs';
+import {
+  communityEntryURL,
+  communityHref,
+  communityRouteFromURL,
+  gameDocumentURL,
+} from './community-routes.mjs';
 import { required } from './data-json.mjs';
 import { validateCompletionRewards } from './rewards/model.mjs';
 import { isStudioPreview, STUDIO_PREVIEW_PARAMETER } from './studio-preview-session.mjs';
@@ -80,8 +86,14 @@ export async function loadRuntimeContentProvider({
   signal,
 } = {}) {
   signal?.throwIfAborted();
-  const url = new URL(locationRef.href);
+  const sourceURL = new URL(locationRef.href);
   const compiled = documentRef.documentElement.dataset.editionId;
+  const community = compiled ? null : communityRouteFromURL(sourceURL);
+  const url = compiled
+    ? sourceURL
+    : community
+      ? communityEntryURL(sourceURL)
+      : gameDocumentURL(sourceURL);
   const selector = url.searchParams.get('edition') ?? compiled;
   const requested = selector ? editionIdentityId(selector) : selector;
   if (!requested && url.searchParams.get('company') !== '1') return null;
@@ -97,6 +109,10 @@ export async function loadRuntimeContentProvider({
     campaignId: url.searchParams.get('campaign') ?? undefined,
     allowMissing: false,
   });
+  required(
+    !community || currentBootstrap.selection.brand.id === community.brandId,
+    'This community address cannot open another company edition.',
+  );
   const retainedPresentationId = url.searchParams.get('presentation');
   const history = currentBootstrap.selection.edition.presentationHistory ?? [];
   const retained = retainedPresentationId
@@ -155,8 +171,14 @@ export async function loadRuntimeContentProvider({
   required(theme, 'This edition is missing its selected presentation.');
   const authoredPresentationSha256 = await editionPresentationSha256(bootstrap);
   signal?.throwIfAborted();
+  const selectedAssets = new Map(
+    resolveEditionAssets(catalog, { editionId: selection.edition.id }).map((asset) => [
+      asset.id,
+      asset,
+    ]),
+  );
   const assetURL = (id) => {
-    const asset = catalog.assets.find((item) => item.id === id);
+    const asset = selectedAssets.get(id);
     required(asset, 'This edition does not contain the requested artwork.');
     return new URL(asset.path, rootURL).href;
   };
@@ -195,17 +217,27 @@ export async function loadRuntimeContentProvider({
     },
     assetURL,
     href(parameters = {}) {
-      const target = new URL('index.html', url);
-      target.search = '';
-      target.searchParams.set('edition', editionPublicSlug(selection.edition.id));
+      const destinationId =
+        parameters.edition == null ? selection.edition.id : editionIdentityId(parameters.edition);
+      const destination = currentBootstrap.catalog.editions.find(
+        (edition) => edition.id === destinationId && edition.brandId === selection.brand.id,
+      );
+      required(destination, 'This edition cannot navigate to another company.');
+      const friendly =
+        !compiled && communityHref(url, { brandId: selection.brand.id, editionId: destinationId });
+      const target = friendly || new URL('index.html', url);
+      if (!friendly) {
+        target.search = '';
+        target.searchParams.set('edition', editionPublicSlug(destinationId));
+      }
       if (
         retainedPresentationId &&
         (!parameters.edition || editionIdentityId(parameters.edition) === selection.edition.id)
       )
         target.searchParams.set('presentation', retainedPresentationId);
       for (const [key, value] of Object.entries(parameters))
-        if (value != null)
-          target.searchParams.set(key, key === 'edition' ? editionPublicSlug(value) : value);
+        if (key === 'edition') continue;
+        else if (value != null) target.searchParams.set(key, value);
         else target.searchParams.delete(key);
       if (isStudioPreview(url.href)) target.searchParams.set(STUDIO_PREVIEW_PARAMETER, '1');
       return target.href;

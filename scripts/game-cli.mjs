@@ -671,6 +671,8 @@ export async function addOfflineEntries(
     (e) => e.name.endsWith('.html') && e.name.startsWith('game/'),
   )) {
     const relativeRoot = path.posix.relative(path.posix.dirname(entry.name), '.') || '.';
+    const source = entry.bytes.toString();
+    const communityShell = /<html\b[^>]*\bdata-community-entry\b/i.test(source);
     const marker = {
       format: 'revealline-offline.v1',
       downloadCatalogue: true,
@@ -681,14 +683,20 @@ export async function addOfflineEntries(
       buildId: placeholder,
       scope: `${relativeRoot}/`,
       worker: `${relativeRoot}/service-worker.js`,
-      ...(optionalPacks.length ? { optionalPacks } : {}),
-      ...(optionalArtwork ? { optionalArtwork } : {}),
+      // The temporary shell is replaced by the complete shared host before any
+      // installer runs. Keep its scoped launch metadata, not seven redundant
+      // copies of the host's optional-download descriptors.
+      ...(!communityShell && optionalPacks.length ? { optionalPacks } : {}),
+      ...(!communityShell && optionalArtwork ? { optionalArtwork } : {}),
     };
-    const source = entry.bytes.toString();
     const appMode = source.includes('name="apple-mobile-web-app-capable"')
       ? ''
       : '<meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">';
-    const head = `${entries.some((entry) => entry.name === 'game/ui/install-entry.mjs') ? `<script type="module" src="${relativeRoot}/game/ui/install-entry.mjs"></script>` : ''}<link rel="manifest" href="${relativeRoot}/manifest.webmanifest"><link rel="apple-touch-icon" href="${relativeRoot}/icons/icon-180.png"><meta name="theme-color" content="#091324">${appMode}<meta name="revealline-offline" content='${html(JSON.stringify(marker))}'>`;
+    // Friendly shells replace their document: install listeners must belong to
+    // the shared host, not the discarded shell's cached module instance.
+    const installEntry =
+      !communityShell && entries.some((entry) => entry.name === 'game/ui/install-entry.mjs');
+    const head = `${installEntry ? `<script type="module" src="${relativeRoot}/game/ui/install-entry.mjs"></script>` : ''}<link rel="manifest" href="${relativeRoot}/manifest.webmanifest"><link rel="apple-touch-icon" href="${relativeRoot}/icons/icon-180.png"><meta name="theme-color" content="#091324">${appMode}<meta name="revealline-offline" content='${html(JSON.stringify(marker))}'>`;
     entry.bytes = Buffer.from(
       source.includes('</head>') ? source.replace('</head>', `${head}</head>`) : head + source,
     );
@@ -744,7 +752,7 @@ export async function addOfflineEntries(
     ...(optionalPacks.length ? { optionalPacks } : {}),
     ...(optionalArtwork ? { optionalArtwork } : {}),
   };
-  entries.push({ name: 'offline-cache.json', bytes: Buffer.from(json(config)) });
+  entries.push({ name: 'offline-cache.json', bytes: Buffer.from(`${JSON.stringify(config)}\n`) });
   entries.push({
     name: 'service-worker.js',
     bytes: Buffer.from(template.replace('__XONIX_OFFLINE_CONFIG__', JSON.stringify(config))),
@@ -886,7 +894,9 @@ async function prepareBuildProject({
     totalBytes: entries.reduce((n, e) => n + e.bytes.length, 0),
     files: entries.map((e) => ({ path: e.name, bytes: e.bytes.length, sha256: sha256(e.bytes) })),
   };
-  const manifestBytes = Buffer.from(json(manifest));
+  // Generated transport metadata is losslessly compact; authored inputs remain
+  // byte-exact and all descriptors still describe the final shipped bytes.
+  const manifestBytes = Buffer.from(`${JSON.stringify(manifest)}\n`);
   entries.push({ name: 'manifest.json', bytes: manifestBytes });
   return { root, out, version, sourceRevision, entries, manifest, manifestBytes };
 }
