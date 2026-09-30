@@ -2,7 +2,7 @@
 
 ## September 30 — Ukraine wide-role comparison
 
-Source `7bcd7152e`, rebased as `5381b570a` onto accepted main `e39b4197a`, adds three stable bounded readers and two exact literal document viewers to the source-only wide-role comparison. It preserves the true **780 × 215** canvases, held quarter-turn phase semantics and original artwork/models. Verified atomic Retry/Cancel and motion lifecycle stop inactive animation work without changing shared input ownership.
+Draft [PR #857](https://github.com/mekhovov/revealline/pull/857) contains source `7bcd7152e`, rebased as `5381b570a` onto accepted main `e39b4197a`. It adds three stable bounded readers and two exact literal document viewers to the source-only wide-role comparison. It preserves the true **780 × 215** canvases, held quarter-turn phase semantics and original artwork/models. Verified atomic Retry/Cancel and motion lifecycle stop inactive animation work without changing shared input ownership.
 
 The final **74/74** focused cohort, first current **4/4 virtual-controller** journey and native portrait readers, source Back, all held phases, delayed Cancel/503/recovery and real Studio Return pass. **18/18** in-memory edition compiles pass at the original runtime; largest DroneAid has **125,128 bytes** headroom. Both Ukraine source folders remain excluded from distribution. See the [wide-gallery evidence](verification/ukraine-wide-gallery-input-2026-09-30.md) for exact source cutoffs, initial fixture failures and browser limitations.
 
