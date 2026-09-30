@@ -1383,7 +1383,7 @@
   "neonReference03": "Neon Crossroads",
   "neonReference04": "Neon Hearts",
   "neonReference05": "Neon Labyrinth",
-  "neonReference06": "Fifteen screenshot-based Arcade levels: Channels, Crossroads, Hearts, Labyrinth, Arrows, Chambers, Crossgrid, Switchback, Spirals, Crossfire, Pinwheels, Wavebands, Conduit, Switchyards and Spines. Custom reveal images are planned; these levels currently use the existing procedural retro artwork.",
+  "neonReference06": "Sixteen screenshot-based Arcade levels: Channels, Crossroads, Hearts, Labyrinth, Arrows, Chambers, Crossgrid, Switchback, Spirals, Crossfire, Pinwheels, Wavebands, Conduit, Switchyards, Spines and Prism. Custom reveal images are planned; these levels currently use the existing procedural retro artwork.",
   "neonReference07": "Recreate the supplied neon arena: seven blue slowing regions, six red lethal regions, two roaming pink orbs, a central diamond eroder and three cyan perimeter patrols. Capture 75%. Blue ground slows your craft; red ground is lethal until captured. The central revealed islands are safe return surfaces. Grid and starting positions are scaled from the picture; enemy behaviors and speeds are authored approximations.",
   "neonReference08": "Four chambers divided by solid cyan walls. Yellow bouncers occupy the upper-right and lower-left chambers; pink diamond eroders occupy the other two. Four cyan patrols travel the outer safe border. Start at bottom center, move sideways before entering a chamber, and reconnect each cut to the outer safe border. Walls block movement and do not close a cut. Reveal 75%. Layout and actor positions follow the supplied screenshot; speeds and behaviors use existing Classic rules.",
   "neonReference09": "Seven red heart hazards surround a broken cyan heart wall. Red tiles are lethal until captured; cyan walls block movement and cannot close a cut. Enter through the side openings to reach the central revealed safe ground. Eight pink field bouncers threaten unfinished lines; two cyan patrols travel the border. Start at bottom center and reveal 75%. Geometry and initial positions follow the supplied picture, scaled to 72 × 36; motion uses existing Classic behavior.",
@@ -1570,5 +1570,12 @@
   "neonSpinesPatrol": "Spines patrol",
   "neonSpinesPlayer": "Spines player",
   "neonSpinesLethalTerrain": "Spines lethalTerrain",
-  "neonSpinesSlowTerrain": "Spines slowTerrain"
+  "neonSpinesSlowTerrain": "Spines slowTerrain",
+  "neonPrismTitle": "Neon Prism",
+  "neonPrismDescription": "A mirrored red-and-blue tapestry narrows at its center, with two side diamonds, long red diagonal borders and small top and bottom chevrons. Red tiles are lethal until captured; blue tiles slow the player. Five pink ring bouncers begin in the upper center notch, upper-right field, right diagonal and two lower-left positions. Four cyan patrols start on the top and side rails. Start at bottom center and reveal 75%.",
+  "neonPrismEnemy": "Prism enemy",
+  "neonPrismPatrol": "Prism patrol",
+  "neonPrismPlayer": "Prism player",
+  "neonPrismLethalTerrain": "Prism lethalTerrain",
+  "neonPrismSlowTerrain": "Prism slowTerrain"
 }
