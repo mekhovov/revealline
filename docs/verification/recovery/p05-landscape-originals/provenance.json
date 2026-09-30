@@ -1,0 +1,122 @@
+{
+  "format": "revealline-original-source-retention.v1",
+  "donor": "70fc927c71b521f77c0ee0eb769ae12ad27085a5",
+  "acceptedMain": "ff1f6d1a9b4d38dc77605c0a2156a1a27747901a",
+  "scope": "Historical byte-exact retention, NOT runtime adoption or current test/browser qualification",
+  "remaining": "Forward-port semantic D-pad row and short-portrait layout preserving current pointer cancellation, ownership, music/caption/full-field/First Flight guards; qualify exact integrated source separately.",
+  "files": [
+    {
+      "path": "authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "bytes": 289578,
+      "blob": "db1b8d3a4ca7732930326419623b042a71e35e6e",
+      "sha256": "eb09aeb387ce00d407f2b801f53675c90d6ff2e0cd5c457917903f0d99700e5f",
+      "destination": "docs/verification/recovery/p05-landscape-originals/original/authoring/skills/xonix-runtime-maintainer/SKILL.md.txt"
+    },
+    {
+      "path": "docs/landscape-playfield.md",
+      "bytes": 6312,
+      "blob": "5eba604fb44a3f0f1b2908be6e812ee0c2d6c72f",
+      "sha256": "86b511ab82ef9eb85d75535d6c95fda4c6f393447765bcfccc7b6f4c5a835bad",
+      "destination": "docs/verification/recovery/p05-landscape-originals/original/docs/landscape-playfield.md"
+    },
+    {
+      "path": "docs/verification/landscape-playfield/counter-stress.html",
+      "bytes": 4085,
+      "blob": "b23115bfa1c05a20f4b31a9e0036e97ee81d60e2",
+      "sha256": "2a462d5eeb9bfdd1fcee1bd030fe6edf256ef567794242749a4fc5aafb9a9a20",
+      "destination": "docs/verification/recovery/p05-landscape-originals/original/docs/verification/landscape-playfield/counter-stress.html.txt"
+    },
+    {
+      "path": "docs/verification/landscape-playfield/portrait-r1.json",
+      "bytes": 2922,
+      "blob": "c8be2d59848d8a7ea9d95de9f4623da8faf1142c",
+      "sha256": "a44b139e095320d7cc07f98ccaa7c9b94ee0cff2105b5bdf9de42725a601ed8e",
+      "destination": "docs/verification/recovery/p05-landscape-originals/original/docs/verification/landscape-playfield/portrait-r1.json"
+    },
+    {
+      "path": "docs/verification/landscape-playfield/portrait-r2.json",
+      "bytes": 1684,
+      "blob": "5168101ac33a84ff65851ee76941a74e118eac41",
+      "sha256": "b98886975e4c18fcd46ea6f6d0df7d28bb7c3d56e19e85f4a8bb21ae7bc30763",
+      "destination": "docs/verification/recovery/p05-landscape-originals/original/docs/verification/landscape-playfield/portrait-r2.json"
+    },
+    {
+      "path": "docs/verification/landscape-playfield/result.json",
+      "bytes": 2913,
+      "blob": "764bc5aae56a1985969ff01aa2fca068f357dc3f",
+      "sha256": "1a6489b74bee3afa5a61e3db5544a70b66c127f59b80a4c65c4808a84fdbacc9",
+      "destination": "docs/verification/recovery/p05-landscape-originals/original/docs/verification/landscape-playfield/result.json"
+    },
+    {
+      "path": "docs/verification/landscape-playfield/short-portrait-row-r1.json",
+      "bytes": 4722,
+      "blob": "14278908c6cedae0d49c71658001c51d432af6c3",
+      "sha256": "a3230efad4fc34df73b2b0c701d5e66792431c69081aecd76dc9b9a1e7319f87",
+      "destination": "docs/verification/recovery/p05-landscape-originals/original/docs/verification/landscape-playfield/short-portrait-row-r1.json"
+    },
+    {
+      "path": "docs/verification/landscape-playfield/touch-r1.json",
+      "bytes": 1436,
+      "blob": "993458a4059fbb6291c8ac33da0a522cbec4de83",
+      "sha256": "761e05981e59ab387862ed1b24da57d93429f20a5e636d477c66e270a3cc0ef3",
+      "destination": "docs/verification/recovery/p05-landscape-originals/original/docs/verification/landscape-playfield/touch-r1.json"
+    },
+    {
+      "path": "docs/verification/landscape-playfield/touch-r2.json",
+      "bytes": 1387,
+      "blob": "3ee4a791c0cc5e991278447acbef3f6561f23aba",
+      "sha256": "cadaa85e0aaa0764f10bf766d9b697ec5553a768800c0c3b96d6ad3fce9e6d78",
+      "destination": "docs/verification/recovery/p05-landscape-originals/original/docs/verification/landscape-playfield/touch-r2.json"
+    },
+    {
+      "path": "docs/verification/landscape-playfield/touch-r3.json",
+      "bytes": 1700,
+      "blob": "982cf9f888361d79c85bcfebf23c3c0f1737ae16",
+      "sha256": "27347f0070a33affbbc4e8445958fa1ebf3297816456137a15021e60673d6e4f",
+      "destination": "docs/verification/recovery/p05-landscape-originals/original/docs/verification/landscape-playfield/touch-r3.json"
+    },
+    {
+      "path": "docs/verification/landscape-playfield/touch-row-negative.tap.gz",
+      "bytes": 976,
+      "blob": "13124ef0d21b6ef12f9dfa3d2456576686291f42",
+      "sha256": "1b6e3e4826e992d60a45d32fdf3f0dd6f9c79407f317fb22837fbab246fbe44a",
+      "destination": "docs/verification/recovery/p05-landscape-originals/original/docs/verification/landscape-playfield/touch-row-negative.tap.gz"
+    },
+    {
+      "path": "docs/verification/landscape-playfield/touch-row-node20.tap",
+      "bytes": 3904,
+      "blob": "fc786514ff196ebf32a36e688e285995665418ed",
+      "sha256": "b25d5a3c29df99ffe097c5fdd99b9ccff714508ec4061c98c373bc80cf25c6c5",
+      "destination": "docs/verification/recovery/p05-landscape-originals/original/docs/verification/landscape-playfield/touch-row-node20.tap"
+    },
+    {
+      "path": "docs/verification/landscape-playfield/touch-row-node22.tap",
+      "bytes": 4188,
+      "blob": "5405170d613a0ce0085fb5e28ad43c5ba3e6ca3a",
+      "sha256": "ce44f437d610293067f5982c52afdb4e114b25ad01726634559ca0ac0ff09db7",
+      "destination": "docs/verification/recovery/p05-landscape-originals/original/docs/verification/landscape-playfield/touch-row-node22.tap"
+    },
+    {
+      "path": "game/test/touch-direction-row.test.mjs",
+      "bytes": 3305,
+      "blob": "c0132abd868a4d3a3aff46be23ab1cb4afa1f760",
+      "sha256": "9acece1227b0a4071c8e9085c45a7d9e3bcb3ef027dae27bd4b411f0b2646091",
+      "destination": "docs/verification/recovery/p05-landscape-originals/original/game/test/touch-direction-row.test.mjs.txt"
+    },
+    {
+      "path": "game/ui/device-controls.css",
+      "bytes": 35911,
+      "blob": "25b157ef5cfe20f977de0c0979c1d573c944f9ca",
+      "sha256": "f330b868d74aa847a860917aa825b5d1a6b891b9401f8f4d3daca304935e2def",
+      "destination": "docs/verification/recovery/p05-landscape-originals/original/game/ui/device-controls.css.txt"
+    },
+    {
+      "path": "game/ui/touch-steering.mjs",
+      "bytes": 4410,
+      "blob": "37c174b076f72871f2edbcc215afe1966de68c01",
+      "sha256": "aac53c71fec56137f2c304e1c62c860995df35a0cd548aa40a7aa5ded24ce953",
+      "destination": "docs/verification/recovery/p05-landscape-originals/original/game/ui/touch-steering.mjs.txt"
+    }
+  ],
+  "tests": "Original negative/positive TAP retained unchanged; no rerun and no current-pass claim"
+}

@@ -1,0 +1,157 @@
+{
+  "status": "prototype only; excluded from three queued corrections",
+  "source": "6c51b7e9bda575ac9e7e329784a3db0edfa8ddbd",
+  "cssSha256": "213b7a6a8305357e705cdf06b24535d2531c12870717dc3b8d528841385d04ce",
+  "preferences": "Large/Plain, Auto controls, keyboard, wide Orchard Window",
+  "measurements": [
+    {
+      "viewport": [
+        568,
+        320
+      ],
+      "arena": [
+        348,
+        174
+      ],
+      "hud": [
+        196,
+        275.96875
+      ],
+      "documentWidth": 568
+    },
+    {
+      "viewport": [
+        681,
+        320
+      ],
+      "arena": [
+        410.3984375,
+        205.1953125
+      ],
+      "hud": [
+        196,
+        275.96875
+      ],
+      "documentWidth": 681
+    },
+    {
+      "viewport": [
+        844,
+        390
+      ],
+      "arena": [
+        550.3984375,
+        275.1953125
+      ],
+      "hud": [
+        196,
+        275.96875
+      ],
+      "documentWidth": 844
+    },
+    {
+      "viewport": [
+        1024,
+        420
+      ],
+      "arena": [
+        610.3984375,
+        305.1953125
+      ],
+      "hud": [
+        196,
+        275.96875
+      ],
+      "documentWidth": 1024
+    },
+    {
+      "viewport": [
+        1025,
+        420
+      ],
+      "arena": [
+        568,
+        284
+      ],
+      "hud": [
+        680,
+        93.6875
+      ],
+      "documentWidth": 1025,
+      "note": "outside prototype; message remains hidden by original CSS"
+    }
+  ],
+  "consoleWarningsErrors": [],
+  "cleanup": "tabs123/124 closed; viewport reset; server18814 stopped",
+  "limits": [
+    "Touch controls use original layout; no touch improvement claimed",
+    "Only Large/Plain measured in r2 wide-board matrix",
+    "No physical hardware qualification",
+    "Not committed or released"
+  ],
+  "standardPixel": {
+    "sourceAndCss": "same exact pins as Large/Plain pass",
+    "measurements": [
+      {
+        "viewport": [
+          521,
+          300
+        ],
+        "arena": [
+          325,
+          162.5
+        ],
+        "hud": [
+          172,
+          232.546875
+        ],
+        "documentWidth": 521
+      },
+      {
+        "viewport": [
+          568,
+          320
+        ],
+        "arena": [
+          372,
+          186
+        ],
+        "hud": [
+          172,
+          232.546875
+        ],
+        "documentWidth": 568
+      },
+      {
+        "viewport": [
+          844,
+          390
+        ],
+        "arena": [
+          571.1953125,
+          285.59375
+        ],
+        "hud": [
+          172,
+          232.546875
+        ],
+        "documentWidth": 844
+      }
+    ],
+    "portrait": {
+      "viewport": [
+        320,
+        568
+      ],
+      "arena": [
+        296,
+        148
+      ],
+      "documentWidth": 320,
+      "pausedFocus": "start-button",
+      "pausedTime": "0:23"
+    },
+    "screenshot": "568x320 reviewed inline; no screenshot file claimed",
+    "consoleWarningsErrors": []
+  }
+}
