@@ -266,6 +266,10 @@
             {
               "id": "neon-conduit-pack",
               "name": "Neon Conduit"
+            },
+            {
+              "id": "neon-switchyards-pack",
+              "name": "Neon Switchyards"
             }
           ]
         }

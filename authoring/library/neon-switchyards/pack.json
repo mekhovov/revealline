@@ -1,0 +1,1155 @@
+{
+  "format": "xonix-pack.v6",
+  "id": "neon-switchyards-reference",
+  "version": "1.0.0",
+  "name": "Neon Switchyards",
+  "description": "Three tall cyan dividers and a double-width horizontal wall split eight red-and-blue switchback lanes. Broken cyan perimeter walls retain the screenshot openings. Red side rails and alternating crossbars flank blue slow terrain. Four yellow bouncers begin near the left outer lanes and on either side of the center wall at the far right. Two cyan patrols start along the bottom rail. Start at bottom center, move sideways to an opening, and reveal 75%.",
+  "engine": "xonix-core.v6",
+  "dependencies": [],
+  "metadata": {
+    "author": "RevealLine",
+    "license": "Project content",
+    "rightsStatus": "Tile layout traced from a user-supplied screenshot. Original procedural sprites and existing retro reveal art; no source image pixels or music embedded."
+  },
+  "themes": [
+    {
+      "id": "retro",
+      "name": "1994 Forever",
+      "subtitle": "One more credit",
+      "family": "retro",
+      "player": "retro-craft",
+      "enemyShape": "orb",
+      "patrolShape": "spark",
+      "bossShape": "core",
+      "scene": "arcade",
+      "labels": {
+        "objective": "Cartridge",
+        "supply": "Dock",
+        "enemy": "Glitch",
+        "boss": "Mainframe",
+        "currency": "Score",
+        "ability": "Power-up"
+      },
+      "palette": {
+        "ink": "#242a41",
+        "paper": "#eee8df",
+        "muted": "#aaa1b1",
+        "accent": "#efeb68",
+        "safe": "#39c7e8",
+        "danger": "#e02862",
+        "field": "#000000",
+        "grid": "#101020",
+        "sky": "#e49c95",
+        "land": "#565270"
+      },
+      "classBodies": {
+        "scout": "retro-craft",
+        "bomber": "retro-craft",
+        "carrier": "retro-craft",
+        "interceptor": "retro-craft",
+        "fiber": "retro-craft",
+        "impact": "retro-craft",
+        "trapper": "retro-craft"
+      }
+    }
+  ],
+  "classRecipes": [
+    {
+      "id": "scout",
+      "label": "FPV Scout",
+      "description": "A nimble FPV quad. Scan shows enemy direction hints for four seconds; it never captures territory or slows an enemy.",
+      "primitive": "scan",
+      "capacity": 0,
+      "cooldown": 6,
+      "duration": 4,
+      "radius": 48,
+      "revision": "1"
+    }
+  ],
+  "campaigns": [
+    {
+      "version": "xonix-campaign.v1",
+      "id": "neon-switchyards",
+      "revision": "1",
+      "title": "Neon Switchyards",
+      "themeId": "retro",
+      "classIds": ["scout"],
+      "levels": [
+        {
+          "version": "xonix-level.v5",
+          "id": "neon-switchyards-reference",
+          "revision": "1",
+          "name": "Neon Switchyards",
+          "width": 72,
+          "height": 36,
+          "encounter": null,
+          "spawn": {
+            "x": 36.5,
+            "y": 35.5
+          },
+          "goal": {
+            "coverage": 0.75
+          },
+          "walls": [
+            {
+              "x": 1,
+              "y": 1,
+              "w": 15,
+              "h": 1
+            },
+            {
+              "x": 18,
+              "y": 1,
+              "w": 1,
+              "h": 16
+            },
+            {
+              "x": 21,
+              "y": 1,
+              "w": 13,
+              "h": 1
+            },
+            {
+              "x": 35,
+              "y": 1,
+              "w": 2,
+              "h": 16
+            },
+            {
+              "x": 38,
+              "y": 1,
+              "w": 14,
+              "h": 1
+            },
+            {
+              "x": 53,
+              "y": 1,
+              "w": 2,
+              "h": 16
+            },
+            {
+              "x": 56,
+              "y": 1,
+              "w": 15,
+              "h": 1
+            },
+            {
+              "x": 1,
+              "y": 2,
+              "w": 1,
+              "h": 14
+            },
+            {
+              "x": 70,
+              "y": 2,
+              "w": 1,
+              "h": 14
+            },
+            {
+              "x": 1,
+              "y": 17,
+              "w": 70,
+              "h": 2
+            },
+            {
+              "x": 18,
+              "y": 19,
+              "w": 1,
+              "h": 16
+            },
+            {
+              "x": 35,
+              "y": 19,
+              "w": 2,
+              "h": 16
+            },
+            {
+              "x": 53,
+              "y": 19,
+              "w": 2,
+              "h": 16
+            },
+            {
+              "x": 1,
+              "y": 20,
+              "w": 1,
+              "h": 14
+            },
+            {
+              "x": 70,
+              "y": 20,
+              "w": 1,
+              "h": 14
+            },
+            {
+              "x": 1,
+              "y": 34,
+              "w": 15,
+              "h": 1
+            },
+            {
+              "x": 21,
+              "y": 34,
+              "w": 13,
+              "h": 1
+            },
+            {
+              "x": 38,
+              "y": 34,
+              "w": 14,
+              "h": 1
+            },
+            {
+              "x": 56,
+              "y": 34,
+              "w": 15,
+              "h": 1
+            }
+          ],
+          "foundations": [],
+          "objectives": [],
+          "supplies": [],
+          "signalZones": [],
+          "hangars": [],
+          "classic": {
+            "version": "classic.v1",
+            "terrain": [
+              {
+                "id": "hazard-1",
+                "kind": "lethal",
+                "x": 12,
+                "y": 2,
+                "w": 1,
+                "h": 9
+              },
+              {
+                "id": "hazard-2",
+                "kind": "lethal",
+                "x": 24,
+                "y": 2,
+                "w": 1,
+                "h": 9
+              },
+              {
+                "id": "hazard-3",
+                "kind": "lethal",
+                "x": 47,
+                "y": 2,
+                "w": 1,
+                "h": 9
+              },
+              {
+                "id": "hazard-4",
+                "kind": "lethal",
+                "x": 59,
+                "y": 2,
+                "w": 1,
+                "h": 9
+              },
+              {
+                "id": "hazard-5",
+                "kind": "lethal",
+                "x": 5,
+                "y": 4,
+                "w": 2,
+                "h": 2
+              },
+              {
+                "id": "hazard-6",
+                "kind": "lethal",
+                "x": 29,
+                "y": 4,
+                "w": 2,
+                "h": 2
+              },
+              {
+                "id": "hazard-7",
+                "kind": "lethal",
+                "x": 41,
+                "y": 4,
+                "w": 2,
+                "h": 2
+              },
+              {
+                "id": "hazard-8",
+                "kind": "lethal",
+                "x": 65,
+                "y": 4,
+                "w": 2,
+                "h": 2
+              },
+              {
+                "id": "hazard-9",
+                "kind": "lethal",
+                "x": 5,
+                "y": 6,
+                "w": 4,
+                "h": 2
+              },
+              {
+                "id": "hazard-10",
+                "kind": "lethal",
+                "x": 27,
+                "y": 6,
+                "w": 4,
+                "h": 2
+              },
+              {
+                "id": "hazard-11",
+                "kind": "lethal",
+                "x": 41,
+                "y": 6,
+                "w": 4,
+                "h": 2
+              },
+              {
+                "id": "hazard-12",
+                "kind": "lethal",
+                "x": 63,
+                "y": 6,
+                "w": 4,
+                "h": 2
+              },
+              {
+                "id": "hazard-13",
+                "kind": "lethal",
+                "x": 5,
+                "y": 8,
+                "w": 2,
+                "h": 9
+              },
+              {
+                "id": "hazard-14",
+                "kind": "lethal",
+                "x": 29,
+                "y": 8,
+                "w": 2,
+                "h": 9
+              },
+              {
+                "id": "hazard-15",
+                "kind": "lethal",
+                "x": 41,
+                "y": 8,
+                "w": 2,
+                "h": 9
+              },
+              {
+                "id": "hazard-16",
+                "kind": "lethal",
+                "x": 65,
+                "y": 8,
+                "w": 2,
+                "h": 9
+              },
+              {
+                "id": "hazard-17",
+                "kind": "lethal",
+                "x": 9,
+                "y": 11,
+                "w": 4,
+                "h": 2
+              },
+              {
+                "id": "hazard-18",
+                "kind": "lethal",
+                "x": 24,
+                "y": 11,
+                "w": 4,
+                "h": 2
+              },
+              {
+                "id": "hazard-19",
+                "kind": "lethal",
+                "x": 44,
+                "y": 11,
+                "w": 4,
+                "h": 2
+              },
+              {
+                "id": "hazard-20",
+                "kind": "lethal",
+                "x": 59,
+                "y": 11,
+                "w": 4,
+                "h": 2
+              },
+              {
+                "id": "hazard-21",
+                "kind": "lethal",
+                "x": 12,
+                "y": 13,
+                "w": 1,
+                "h": 2
+              },
+              {
+                "id": "hazard-22",
+                "kind": "lethal",
+                "x": 24,
+                "y": 13,
+                "w": 1,
+                "h": 2
+              },
+              {
+                "id": "hazard-23",
+                "kind": "lethal",
+                "x": 47,
+                "y": 13,
+                "w": 1,
+                "h": 2
+              },
+              {
+                "id": "hazard-24",
+                "kind": "lethal",
+                "x": 59,
+                "y": 13,
+                "w": 1,
+                "h": 2
+              },
+              {
+                "id": "hazard-25",
+                "kind": "lethal",
+                "x": 5,
+                "y": 19,
+                "w": 2,
+                "h": 9
+              },
+              {
+                "id": "hazard-26",
+                "kind": "lethal",
+                "x": 29,
+                "y": 19,
+                "w": 2,
+                "h": 9
+              },
+              {
+                "id": "hazard-27",
+                "kind": "lethal",
+                "x": 41,
+                "y": 19,
+                "w": 2,
+                "h": 9
+              },
+              {
+                "id": "hazard-28",
+                "kind": "lethal",
+                "x": 65,
+                "y": 19,
+                "w": 2,
+                "h": 9
+              },
+              {
+                "id": "hazard-29",
+                "kind": "lethal",
+                "x": 12,
+                "y": 21,
+                "w": 1,
+                "h": 2
+              },
+              {
+                "id": "hazard-30",
+                "kind": "lethal",
+                "x": 24,
+                "y": 21,
+                "w": 1,
+                "h": 2
+              },
+              {
+                "id": "hazard-31",
+                "kind": "lethal",
+                "x": 47,
+                "y": 21,
+                "w": 1,
+                "h": 2
+              },
+              {
+                "id": "hazard-32",
+                "kind": "lethal",
+                "x": 59,
+                "y": 21,
+                "w": 1,
+                "h": 2
+              },
+              {
+                "id": "hazard-33",
+                "kind": "lethal",
+                "x": 9,
+                "y": 23,
+                "w": 4,
+                "h": 2
+              },
+              {
+                "id": "hazard-34",
+                "kind": "lethal",
+                "x": 24,
+                "y": 23,
+                "w": 4,
+                "h": 2
+              },
+              {
+                "id": "hazard-35",
+                "kind": "lethal",
+                "x": 44,
+                "y": 23,
+                "w": 4,
+                "h": 2
+              },
+              {
+                "id": "hazard-36",
+                "kind": "lethal",
+                "x": 59,
+                "y": 23,
+                "w": 4,
+                "h": 2
+              },
+              {
+                "id": "hazard-37",
+                "kind": "lethal",
+                "x": 12,
+                "y": 25,
+                "w": 1,
+                "h": 9
+              },
+              {
+                "id": "hazard-38",
+                "kind": "lethal",
+                "x": 24,
+                "y": 25,
+                "w": 1,
+                "h": 9
+              },
+              {
+                "id": "hazard-39",
+                "kind": "lethal",
+                "x": 47,
+                "y": 25,
+                "w": 1,
+                "h": 9
+              },
+              {
+                "id": "hazard-40",
+                "kind": "lethal",
+                "x": 59,
+                "y": 25,
+                "w": 1,
+                "h": 9
+              },
+              {
+                "id": "hazard-41",
+                "kind": "lethal",
+                "x": 5,
+                "y": 28,
+                "w": 4,
+                "h": 2
+              },
+              {
+                "id": "hazard-42",
+                "kind": "lethal",
+                "x": 27,
+                "y": 28,
+                "w": 4,
+                "h": 2
+              },
+              {
+                "id": "hazard-43",
+                "kind": "lethal",
+                "x": 41,
+                "y": 28,
+                "w": 4,
+                "h": 2
+              },
+              {
+                "id": "hazard-44",
+                "kind": "lethal",
+                "x": 63,
+                "y": 28,
+                "w": 4,
+                "h": 2
+              },
+              {
+                "id": "hazard-45",
+                "kind": "lethal",
+                "x": 5,
+                "y": 30,
+                "w": 2,
+                "h": 2
+              },
+              {
+                "id": "hazard-46",
+                "kind": "lethal",
+                "x": 29,
+                "y": 30,
+                "w": 2,
+                "h": 2
+              },
+              {
+                "id": "hazard-47",
+                "kind": "lethal",
+                "x": 41,
+                "y": 30,
+                "w": 2,
+                "h": 2
+              },
+              {
+                "id": "hazard-48",
+                "kind": "lethal",
+                "x": 65,
+                "y": 30,
+                "w": 2,
+                "h": 2
+              },
+              {
+                "id": "slow-1",
+                "kind": "slow",
+                "x": 5,
+                "y": 2,
+                "w": 7,
+                "h": 2
+              },
+              {
+                "id": "slow-2",
+                "kind": "slow",
+                "x": 25,
+                "y": 2,
+                "w": 6,
+                "h": 2
+              },
+              {
+                "id": "slow-3",
+                "kind": "slow",
+                "x": 41,
+                "y": 2,
+                "w": 6,
+                "h": 2
+              },
+              {
+                "id": "slow-4",
+                "kind": "slow",
+                "x": 60,
+                "y": 2,
+                "w": 7,
+                "h": 2
+              },
+              {
+                "id": "slow-5",
+                "kind": "slow",
+                "x": 7,
+                "y": 4,
+                "w": 5,
+                "h": 2
+              },
+              {
+                "id": "slow-6",
+                "kind": "slow",
+                "x": 25,
+                "y": 4,
+                "w": 4,
+                "h": 2
+              },
+              {
+                "id": "slow-7",
+                "kind": "slow",
+                "x": 43,
+                "y": 4,
+                "w": 4,
+                "h": 2
+              },
+              {
+                "id": "slow-8",
+                "kind": "slow",
+                "x": 60,
+                "y": 4,
+                "w": 5,
+                "h": 2
+              },
+              {
+                "id": "slow-9",
+                "kind": "slow",
+                "x": 9,
+                "y": 6,
+                "w": 3,
+                "h": 2
+              },
+              {
+                "id": "slow-10",
+                "kind": "slow",
+                "x": 25,
+                "y": 6,
+                "w": 2,
+                "h": 2
+              },
+              {
+                "id": "slow-11",
+                "kind": "slow",
+                "x": 45,
+                "y": 6,
+                "w": 2,
+                "h": 2
+              },
+              {
+                "id": "slow-12",
+                "kind": "slow",
+                "x": 60,
+                "y": 6,
+                "w": 3,
+                "h": 2
+              },
+              {
+                "id": "slow-13",
+                "kind": "slow",
+                "x": 7,
+                "y": 8,
+                "w": 5,
+                "h": 3
+              },
+              {
+                "id": "slow-14",
+                "kind": "slow",
+                "x": 25,
+                "y": 8,
+                "w": 4,
+                "h": 3
+              },
+              {
+                "id": "slow-15",
+                "kind": "slow",
+                "x": 43,
+                "y": 8,
+                "w": 4,
+                "h": 3
+              },
+              {
+                "id": "slow-16",
+                "kind": "slow",
+                "x": 60,
+                "y": 8,
+                "w": 5,
+                "h": 3
+              },
+              {
+                "id": "slow-17",
+                "kind": "slow",
+                "x": 7,
+                "y": 11,
+                "w": 2,
+                "h": 2
+              },
+              {
+                "id": "slow-18",
+                "kind": "slow",
+                "x": 28,
+                "y": 11,
+                "w": 1,
+                "h": 2
+              },
+              {
+                "id": "slow-19",
+                "kind": "slow",
+                "x": 43,
+                "y": 11,
+                "w": 1,
+                "h": 2
+              },
+              {
+                "id": "slow-20",
+                "kind": "slow",
+                "x": 63,
+                "y": 11,
+                "w": 2,
+                "h": 2
+              },
+              {
+                "id": "slow-21",
+                "kind": "slow",
+                "x": 7,
+                "y": 13,
+                "w": 5,
+                "h": 2
+              },
+              {
+                "id": "slow-22",
+                "kind": "slow",
+                "x": 25,
+                "y": 13,
+                "w": 4,
+                "h": 2
+              },
+              {
+                "id": "slow-23",
+                "kind": "slow",
+                "x": 43,
+                "y": 13,
+                "w": 4,
+                "h": 2
+              },
+              {
+                "id": "slow-24",
+                "kind": "slow",
+                "x": 60,
+                "y": 13,
+                "w": 5,
+                "h": 2
+              },
+              {
+                "id": "slow-25",
+                "kind": "slow",
+                "x": 7,
+                "y": 15,
+                "w": 6,
+                "h": 2
+              },
+              {
+                "id": "slow-26",
+                "kind": "slow",
+                "x": 24,
+                "y": 15,
+                "w": 5,
+                "h": 2
+              },
+              {
+                "id": "slow-27",
+                "kind": "slow",
+                "x": 43,
+                "y": 15,
+                "w": 5,
+                "h": 2
+              },
+              {
+                "id": "slow-28",
+                "kind": "slow",
+                "x": 59,
+                "y": 15,
+                "w": 6,
+                "h": 2
+              },
+              {
+                "id": "slow-29",
+                "kind": "slow",
+                "x": 7,
+                "y": 19,
+                "w": 6,
+                "h": 2
+              },
+              {
+                "id": "slow-30",
+                "kind": "slow",
+                "x": 24,
+                "y": 19,
+                "w": 5,
+                "h": 2
+              },
+              {
+                "id": "slow-31",
+                "kind": "slow",
+                "x": 43,
+                "y": 19,
+                "w": 5,
+                "h": 2
+              },
+              {
+                "id": "slow-32",
+                "kind": "slow",
+                "x": 59,
+                "y": 19,
+                "w": 6,
+                "h": 2
+              },
+              {
+                "id": "slow-33",
+                "kind": "slow",
+                "x": 7,
+                "y": 21,
+                "w": 5,
+                "h": 2
+              },
+              {
+                "id": "slow-34",
+                "kind": "slow",
+                "x": 25,
+                "y": 21,
+                "w": 4,
+                "h": 2
+              },
+              {
+                "id": "slow-35",
+                "kind": "slow",
+                "x": 43,
+                "y": 21,
+                "w": 4,
+                "h": 2
+              },
+              {
+                "id": "slow-36",
+                "kind": "slow",
+                "x": 60,
+                "y": 21,
+                "w": 5,
+                "h": 2
+              },
+              {
+                "id": "slow-37",
+                "kind": "slow",
+                "x": 7,
+                "y": 23,
+                "w": 2,
+                "h": 2
+              },
+              {
+                "id": "slow-38",
+                "kind": "slow",
+                "x": 28,
+                "y": 23,
+                "w": 1,
+                "h": 2
+              },
+              {
+                "id": "slow-39",
+                "kind": "slow",
+                "x": 43,
+                "y": 23,
+                "w": 1,
+                "h": 2
+              },
+              {
+                "id": "slow-40",
+                "kind": "slow",
+                "x": 63,
+                "y": 23,
+                "w": 2,
+                "h": 2
+              },
+              {
+                "id": "slow-41",
+                "kind": "slow",
+                "x": 7,
+                "y": 25,
+                "w": 5,
+                "h": 3
+              },
+              {
+                "id": "slow-42",
+                "kind": "slow",
+                "x": 25,
+                "y": 25,
+                "w": 4,
+                "h": 3
+              },
+              {
+                "id": "slow-43",
+                "kind": "slow",
+                "x": 43,
+                "y": 25,
+                "w": 4,
+                "h": 3
+              },
+              {
+                "id": "slow-44",
+                "kind": "slow",
+                "x": 60,
+                "y": 25,
+                "w": 5,
+                "h": 3
+              },
+              {
+                "id": "slow-45",
+                "kind": "slow",
+                "x": 9,
+                "y": 28,
+                "w": 3,
+                "h": 2
+              },
+              {
+                "id": "slow-46",
+                "kind": "slow",
+                "x": 25,
+                "y": 28,
+                "w": 2,
+                "h": 2
+              },
+              {
+                "id": "slow-47",
+                "kind": "slow",
+                "x": 45,
+                "y": 28,
+                "w": 2,
+                "h": 2
+              },
+              {
+                "id": "slow-48",
+                "kind": "slow",
+                "x": 60,
+                "y": 28,
+                "w": 3,
+                "h": 2
+              },
+              {
+                "id": "slow-49",
+                "kind": "slow",
+                "x": 7,
+                "y": 30,
+                "w": 5,
+                "h": 2
+              },
+              {
+                "id": "slow-50",
+                "kind": "slow",
+                "x": 25,
+                "y": 30,
+                "w": 4,
+                "h": 2
+              },
+              {
+                "id": "slow-51",
+                "kind": "slow",
+                "x": 43,
+                "y": 30,
+                "w": 4,
+                "h": 2
+              },
+              {
+                "id": "slow-52",
+                "kind": "slow",
+                "x": 60,
+                "y": 30,
+                "w": 5,
+                "h": 2
+              },
+              {
+                "id": "slow-53",
+                "kind": "slow",
+                "x": 5,
+                "y": 32,
+                "w": 7,
+                "h": 2
+              },
+              {
+                "id": "slow-54",
+                "kind": "slow",
+                "x": 25,
+                "y": 32,
+                "w": 6,
+                "h": 2
+              },
+              {
+                "id": "slow-55",
+                "kind": "slow",
+                "x": 41,
+                "y": 32,
+                "w": 6,
+                "h": 2
+              },
+              {
+                "id": "slow-56",
+                "kind": "slow",
+                "x": 60,
+                "y": 32,
+                "w": 7,
+                "h": 2
+              }
+            ],
+            "powerups": [],
+            "arcadeActions": {
+              "version": "arcade-actions.v1"
+            }
+          },
+          "enemies": [
+            {
+              "id": "yellow-upper-left-outer",
+              "type": "bouncer",
+              "x": 2.8850336613153806,
+              "y": 15.80248190279214,
+              "vx": 0.8,
+              "vy": 4,
+              "radius": 0.4
+            },
+            {
+              "id": "yellow-lower-left-outer",
+              "type": "bouncer",
+              "x": 16.00776799585707,
+              "y": 32.6794208893485,
+              "vx": 4.1,
+              "vy": -0.5,
+              "radius": 0.4
+            },
+            {
+              "id": "yellow-upper-right-lane",
+              "type": "bouncer",
+              "x": 64.07612635939927,
+              "y": 16.47052740434333,
+              "vx": -1.7,
+              "vy": 3.8,
+              "radius": 0.4
+            },
+            {
+              "id": "yellow-lower-right-lane",
+              "type": "bouncer",
+              "x": 64.47488348006215,
+              "y": 19.459152016546017,
+              "vx": -0.7,
+              "vy": -4.1,
+              "radius": 0.4
+            },
+            {
+              "id": "cyan-bottom-left",
+              "type": "border-patrol",
+              "x": 17.303210771620922,
+              "y": 35.5,
+              "speed": 4.5,
+              "clockwise": true,
+              "radius": 0.35
+            },
+            {
+              "id": "cyan-bottom-right",
+              "type": "border-patrol",
+              "x": 54.660020714655616,
+              "y": 35.5,
+              "speed": 4.5,
+              "clockwise": false,
+              "radius": 0.35
+            }
+          ],
+          "rules": {
+            "lives": 3,
+            "moveSpeed": 10,
+            "respawnSeconds": 0.7,
+            "graceSeconds": 0.8,
+            "timeLimitSeconds": 0,
+            "stopOnCapture": true
+          },
+          "metadata": {
+            "description": "Three tall cyan dividers and a double-width horizontal wall split eight red-and-blue switchback lanes. Broken cyan perimeter walls retain the screenshot openings. Red side rails and alternating crossbars flank blue slow terrain. Four yellow bouncers begin near the left outer lanes and on either side of the center wall at the far right. Two cyan patrols start along the bottom rail. Start at bottom center, move sideways to an opening, and reveal 75%."
+          }
+        }
+      ]
+    }
+  ],
+  "visualOverrides": {
+    "wall": {
+      "name": "Switchyards wall",
+      "dataUrl": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAP0lEQVR42mMQia7+P5CYAURob7qOE9NaftQBow4YdQDDaDkw6oBRB4w6YLQcGHXAqANGHTBaDow6YNQBI94BAJ5cDzcS0yPLAAAAAElFTkSuQmCC"
+    },
+    "enemy": {
+      "name": "Switchyards enemy",
+      "dataUrl": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAX0lEQVR42u3XwQ0AIAgDQEZ1dIfwryOIQENN2sR370c1U37KmmN7XlsxBBItL0Fky1OIqvIQorr8CYEqdyNaAejyK0IAAQQQoB2gW0BxjikGCcUkoxilFLOc4mOiIHMADBHzH5C4N1IAAAAASUVORK5CYII="
+    },
+    "patrol": {
+      "name": "Switchyards patrol",
+      "dataUrl": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAbklEQVR42mNgIBG4P3n/Hx9moDUYdcCoA+jmAFwGkuoAsh2Gy1BSHEBxyGAzgFgHUC1a0A0ixgFUTxOELKVLjqCZ5eT6jlp41AGjDhh1wMA7YMALokFfFA9oZTSg1fGAN0gGvEk22ioedcCIcQAA6l0yW47rJ5YAAAAASUVORK5CYII="
+    },
+    "player": {
+      "name": "Switchyards player",
+      "dataUrl": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAYklEQVR42u2WWwoAEBQFrdP+yxp8kV8lj/s66kz5nilcUiKE/EwtuY0VKg+JmOWuESu5S8RObhpxKjeJuJWrRrzKVSKkcnFEeED4FkAcQohrCDGIIEYxxGME8RxDfEgIIVp0LrhEMwepglQAAAAASUVORK5CYII="
+    },
+    "lethalTerrain": {
+      "name": "Switchyards lethalTerrain",
+      "dataUrl": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAbUlEQVR42u2WQQ4AEAwEPce7vNxPiIsTgra6kZ17dyqiFQIhZEGOqbhmtGJJgLS+B9yESGrFQWrym0B1+UmwmXxHYC5fiZ7JR8Ln8lkTLlMS5vRu9w/xAiBmAMQUhNgDEJtQtQmIDwnCt46Qv6lSX/qpet2+5AAAAABJRU5ErkJggg=="
+    },
+    "slowTerrain": {
+      "name": "Switchyards slowTerrain",
+      "dataUrl": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAANklEQVR42mNgGAWjYBSMgsEMnBLu/KcGHnXA0HUAKY4b8AQ66oBRB4w6YLTiGgWjYBSMgiELAMa7Atjf3Ar7AAAAAElFTkSuQmCC"
+    }
+  },
+  "levelVisuals": [],
+  "music": [],
+  "masteries": []
+}
