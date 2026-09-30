@@ -85,14 +85,7 @@ const workflow = (edition) => async (p) => {
     );
     const primary = ['shell-featured', 'shell-continue'].map((id) => $(`#${id}`)).filter(shown);
     assert(primary.length === 1, 'Expected exactly one Start/Continue action.');
-    const actions = [
-      primary[0],
-      $('#shell-play'),
-      $('#solo-communities'),
-      $('#solo-updates'),
-      $('#shell-options'),
-      $('#shell-sound'),
-    ];
+    const actions = [primary[0], $('#shell-play'), $('#shell-options'), $('#shell-sound')];
     assert(actions.every(shown), 'A required landing action is missing.');
     if (shown($('#shell-fullscreen'))) actions.push($('#shell-fullscreen'));
     const expected = [...modes, ...actions],
@@ -200,8 +193,6 @@ const workflow = (edition) => async (p) => {
   for (const id of [
     initial.primary,
     'shell-play',
-    'solo-communities',
-    'solo-updates',
     'shell-options',
     'shell-sound',
     ...(initial.fullscreen ? ['shell-fullscreen'] : []),
@@ -215,6 +206,22 @@ const workflow = (edition) => async (p) => {
     'Real boot and late music mount retain the exact landing whitelist; every normal action and supported mode receives controller focus without activation',
     '#shell-title',
     initial,
+  );
+
+  await category('content');
+  const contentActions = ['#solo-communities', '#game-check-updates'];
+  for (const selector of contentActions) {
+    assert(
+      $('#settings-panel-content').contains($(selector)),
+      `${selector} escaped Content & Offline.`,
+    );
+    await navigate(selector);
+  }
+  await closeSettings();
+  p.record(
+    'Communities and Check for updates are controller reachable in Content & Offline without opening either destination or adding landing actions',
+    '#shell-title',
+    { actions: contentActions },
   );
 
   await category('audio');
