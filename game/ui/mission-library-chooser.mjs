@@ -750,7 +750,9 @@ export function attachMissionLibraryChooser({
       card.completion = library.completion(row, modeFilter.value);
       card.button.dataset.campaignKey = row.campaignKey;
       card.button.dataset.campaignStart = String(previousCampaign !== row.campaignKey);
-      card.button.dataset.availabilityState = availability.state;
+      card.button.dataset.availabilityState = availability.included
+        ? 'included'
+        : availability.state;
       card.button.dataset.pictureState = card.completion?.state ?? 'unfinished';
       card.button.dataset.current = String(row.id === getCurrentId());
       card.campaignHeading.hidden = previousCampaign === row.campaignKey;
@@ -764,7 +766,7 @@ export function attachMissionLibraryChooser({
       );
       card.progress.hidden = !card.progress.textContent;
       localizedText(card.action, () =>
-        availability.state === 'ready'
+        availability.state === 'ready' || availability.included
           ? ''
           : availability.state === 'download'
             ? `${t('interface:downloadPlay')} · ${sizeLabel(availability.bytes)}`
@@ -777,7 +779,7 @@ export function attachMissionLibraryChooser({
                   { reason: availability.reason },
                 ),
       );
-      card.action.hidden = availability.state === 'ready';
+      card.action.hidden = availability.state === 'ready' || availability.included;
       localizedAttribute(card.button, 'aria-label', () => {
         const progressLabel =
           progressState.state === 'completed'
