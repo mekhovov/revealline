@@ -60,8 +60,7 @@ async function preparePlayer(
   if (!verified.match) {
     const compatibleEnemyCheckpoint =
       allowReviewedEnemyCheckpoint &&
-      recording.summary.status === 'won' &&
-      verified.actual.summary.status === 'won' &&
+      recording.summary.status === verified.actual.summary.status &&
       verified.diagnostics.length === 1 &&
       verified.diagnostics[0].code === 'state-mismatch' &&
       verified.diagnostics[0].section === 'enemies';

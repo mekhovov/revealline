@@ -20,7 +20,7 @@ export function createDemoIdle(timeout = 60) {
 }
 
 export function readDemoSettings(storage, key, reduced = false) {
-  const defaults = { auto: !reduced, collect: false, gameSounds: false };
+  const defaults = { auto: !reduced, collect: false, gameSounds: false, hidePictures: false };
   try {
     const value = JSON.parse(storage.getItem(key));
     if (
@@ -28,12 +28,18 @@ export function readDemoSettings(storage, key, reduced = false) {
       typeof value.auto !== 'boolean' ||
       typeof value.collect !== 'boolean' ||
       (value.gameSounds !== undefined && typeof value.gameSounds !== 'boolean') ||
+      (value.hidePictures !== undefined && typeof value.hidePictures !== 'boolean') ||
       Object.keys(value).some(
-        (name) => !['version', 'auto', 'collect', 'gameSounds'].includes(name),
+        (name) => !['version', 'auto', 'collect', 'gameSounds', 'hidePictures'].includes(name),
       )
     )
       return defaults;
-    return { auto: value.auto, collect: value.collect, gameSounds: value.gameSounds === true };
+    return {
+      auto: value.auto,
+      collect: value.collect,
+      gameSounds: value.gameSounds === true,
+      hidePictures: value.hidePictures === true,
+    };
   } catch {
     return defaults;
   }
