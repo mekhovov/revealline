@@ -117,7 +117,7 @@ export function createActorEditor({ document, getSource, getMission, getDifficul
       const mission = getMission();
       if (!mission) throw editorMessageError('errors:studio.existingMission');
       const candidate = editContentActor(getSource(), mission.id, command);
-      if (apply(candidate) === false) return;
+      if (apply(candidate, () => commit(command)) === false) return;
       revision = null;
       sync();
       $('select').value = command.action === 'remove' ? '' : command.id;

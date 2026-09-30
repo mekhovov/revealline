@@ -20,6 +20,7 @@ import {
   editionCapacityPacket,
   EDITION_CAPACITY_REPORT,
 } from '../publishing/edition-capacity.mjs';
+import { editionIdentityId } from '../game/edition-context.mjs';
 
 import {
   sourceGit as git,
@@ -32,6 +33,7 @@ import {
  * qualification receipts; successful compilation is never human signoff. */
 export async function bundleEditions({ root = process.cwd(), editionIds, out, basePath = '/' }) {
   root = await fs.realpath(root);
+  if (Array.isArray(editionIds)) editionIds = editionIds.map(editionIdentityId);
   if (
     !Array.isArray(editionIds) ||
     !editionIds.length ||

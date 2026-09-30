@@ -15,6 +15,63 @@ PREFIX = 'authoring/library/reserve-illustrations-catalog/'
 INVENTORY = 'authoring/library/reserve-illustrations-wave-10/provenance/selected-inventory-40.json'
 THEMES = {'fpv': 'FPV Front', 'ukraine': 'Ukraine Atlas', 'retro': '1994 Forever', 'coupa': 'Spend Network'}
 LOCAL = {'index.html': 'text/html', 'catalog.css': 'text/css', 'catalog.mjs': 'text/javascript', 'manifest.json': 'application/json', 'README.md': 'text/plain'}
+# Reviewed runtime closure for this catalog's launcher and controller reader.
+# These are application code/fonts and one compact identity icon: original art comes exclusively
+# from the pinned Git routes below. New imports require an explicit review.
+CONTROLLER_FILES = (
+    'game/controller-bindings.mjs',
+    'game/controller-boost.mjs',
+    'game/data-json.mjs',
+    'game/i18n/bootstrap.mjs',
+    'game/i18n/catalogs.mjs',
+    'game/i18n/content-registry.mjs',
+    'game/i18n/content.mjs',
+    'game/i18n/index.mjs',
+    'game/ui/authoring-copy.mjs',
+    'game/ui/authoring-editors.mjs',
+    'game/ui/authoring-input-host.mjs',
+    'game/ui/authoring-input.css',
+    'game/ui/authoring-reference-entry.mjs',
+    'game/ui/authoring-reference.mjs',
+    'game/ui/authoring-sources.mjs',
+    'game/ui/brand-identity.css',
+    'game/ui/art/identity/fpv-line/icon-192.png',
+    'game/ui/controller-confirm-guard.mjs',
+    'game/ui/controller-confirm-lifecycle.mjs',
+    'game/ui/controller-field-editor.css',
+    'game/ui/controller-field-editor.mjs',
+    'game/ui/controller-navigation.mjs',
+    'game/ui/controller-router.mjs',
+    'game/ui/controller-text-draft.mjs',
+    'game/ui/direct-tool-launch.js',
+    'game/ui/field-kit-fonts.css',
+    'game/ui/fonts/departure-mono/DepartureMono-Regular.woff2',
+    'game/ui/fonts/field-kit/exo2-ui-400-600.woff2',
+    'game/ui/fonts/field-kit/handjet-display-600.woff2',
+    'game/ui/fonts/field-kit/ibm-plex-mono-500.woff2',
+    'game/ui/menu-navigation-groups.mjs',
+    'game/ui/native-menu-icons.mjs',
+    'game/ui/operation-status.css',
+    'game/ui/operation-status.mjs',
+    'game/ui/page-input-host.mjs',
+    'game/ui/settings-panels.mjs',
+    'game/vendor/i18next-26.4.2.min.js',
+)
+
+
+def controller_routes(root=ROOT):
+    mime_types = {'.js': 'text/javascript', '.mjs': 'text/javascript', '.css': 'text/css', '.woff2': 'font/woff2', '.png': 'image/png'}
+    routes = {}
+    total = 0
+    for name in CONTROLLER_FILES:
+        source = root / name
+        assert source.resolve() == source and source.is_file(), f'Ordinary controller dependency required: {name}'
+        size = source.stat().st_size
+        assert size <= 2 * 1024 * 1024, f'Controller dependency exceeds limit: {name}'
+        total += size
+        routes['/' + name] = (source, mime_types[source.suffix])
+    assert total <= 5 * 1024 * 1024, 'Controller dependency closure exceeds limit'
+    return routes
 
 
 def git(*args):
@@ -101,9 +158,10 @@ def check():
     return expected, pins
 
 
-def serve(pins, port):
+def create_server(pins, port):
     routes = {'/' + path: pin for path, pin in pins.items()}
     local = {'/' + PREFIX + name: (HERE / name, mime) for name, mime in LOCAL.items()}
+    local.update(controller_routes())
 
     class Handler(BaseHTTPRequestHandler):
         def do_GET(self):
@@ -122,6 +180,12 @@ def serve(pins, port):
             if path in local:
                 source, mime = local[path]
                 body = source.read_bytes()
+                if path == '/' + PREFIX + 'index.html':
+                    # This restricted preview has no Asset Studio/game routes.
+                    # Tell the shared reader its safe home without changing any
+                    # source document or pinned original on disk.
+                    marker = f'<meta name="revealline-reference-home" content="/{PREFIX}index.html">'.encode()
+                    body = body.replace(b'</head>', marker + b'\n</head>', 1)
             elif path in routes:
                 pin = routes[path]
                 mime = 'image/png' if path.endswith('.png') else 'application/json' if path.endswith('.json') else 'text/plain'
@@ -145,7 +209,13 @@ def serve(pins, port):
                     pass
 
     server = HTTPServer(('127.0.0.1', port), Handler)
-    print(json.dumps({'url': f'http://127.0.0.1:{server.server_port}/{PREFIX}index.html', 'sourceRevision': SOURCE, 'routes': len(routes) + len(local), 'imageRoutes': 40, 'writesOriginals': False}), flush=True)
+    server.catalog_route_count = len(routes) + len(local)
+    return server
+
+
+def serve(pins, port):
+    server = create_server(pins, port)
+    print(json.dumps({'url': f'http://127.0.0.1:{server.server_port}/{PREFIX}index.html', 'sourceRevision': SOURCE, 'routes': server.catalog_route_count, 'imageRoutes': 40, 'writesOriginals': False}), flush=True)
     try:
         server.serve_forever()
     finally:

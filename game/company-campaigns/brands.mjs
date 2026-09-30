@@ -93,7 +93,7 @@ export const COMPANY_BRANDS = Object.freeze([
     format: 'revealline-brand-pack.v1',
     id: 'droneaid-nl',
     revision: 2,
-    name: 'DroneAid Netherlands',
+    name: 'DroneAid',
     description:
       'Build FPV drones together. Fictional workshop and donation adventures inspired by DroneAid Netherlands and its support for Ukraine.',
     publication: 'public',
@@ -103,7 +103,7 @@ export const COMPANY_BRANDS = Object.freeze([
       ...COMPANY_CAMPAIGNS.filter((c) => c.brandId === 'droneaid-nl').map((c) => `${c.id}-theme`),
     ],
     actorSetId: 'droneaid-nl-propeller',
-    logoAssetId: 'droneaid-nl-logo',
+    logoAssetId: 'droneaid-nl-propeller',
     heroAssetId: 'droneaid-nl-workshop-lights-01-reveal-v2',
     iconAssetId: 'droneaid-nl-icon-512',
     fontAssetId: null,
@@ -159,7 +159,7 @@ const choices = [
   [
     'droneaid-nl-community',
     'droneaid-nl',
-    'DroneAid Netherlands',
+    'DroneAid',
     'public',
     COMPANY_CAMPAIGNS.filter((c) => c.brandId === 'droneaid-nl').map((c) => c.id),
   ],
@@ -601,7 +601,7 @@ export const COMPANY_EDITIONS = Object.freeze(
                               ].includes(id)
                             ? 5
                             : 1,
-    name,
+    name: `${name} / LINE`,
     brandId,
     audience,
     campaignIds,
@@ -664,7 +664,8 @@ export function createCompanyTheme(brandId) {
   const curriculum = CURRICULUM_IDENTITIES.find((item) => item.id === brandId);
   return {
     id: brand.themeId,
-    name: brand.name,
+    // Keep installed theme identity while public edition branding evolves.
+    name: brand.id === 'droneaid-nl' ? 'DroneAid Netherlands' : brand.name,
     subtitle: curriculum
       ? 'Explore, connect and discover something worth keeping.'
       : brandId === 'coupa'

@@ -183,7 +183,7 @@ class Element extends Events {
   matches(selector) {
     return selector.split(',').some((part) => {
       part = part.trim();
-      if (part === ':disabled') return this.disabled;
+      if (part === ':disabled') return this.effectivelyDisabled();
       if (part.startsWith('.')) return this.classList.contains(part.slice(1));
       if (part.startsWith('#')) return this.id === part.slice(1);
       const excluded = [...part.matchAll(/:not\(([^)]+)\)/g)].map((match) => match[1]);
@@ -239,7 +239,19 @@ class Element extends Events {
       if (node.hidden || node.style.display === 'none') return [];
     return this.isConnected ? [this.getBoundingClientRect()] : [];
   }
+  effectivelyDisabled() {
+    if (this.disabled) return true;
+    if (!['BUTTON', 'INPUT', 'SELECT', 'TEXTAREA', 'FIELDSET'].includes(this.tagName)) return false;
+    for (let parent = this.parentElement; parent; parent = parent.parentElement) {
+      if (parent.tagName !== 'FIELDSET' || !parent.disabled) continue;
+      const firstLegend = parent.children.find((child) => child.tagName === 'LEGEND');
+      if (!firstLegend?.contains(this)) return true;
+    }
+    return false;
+  }
   focus() {
+    // Model the native fieldset focus barrier, not just the reflected property.
+    if (this.effectivelyDisabled()) return;
     this.ownerDocument.activeElement = this;
     this.emit('focusin');
   }
@@ -250,7 +262,7 @@ class Element extends Events {
     this.scrolled = (this.scrolled ?? 0) + 1;
   }
   click() {
-    if (this.disabled) return;
+    if (this.effectivelyDisabled()) return;
     if (this.tagName === 'INPUT' && this.type === 'checkbox') this.checked = !this.checked;
     this.emit('click');
     if (this.tagName === 'INPUT' && this.type === 'checkbox') {
@@ -349,6 +361,498 @@ function setup(t, overrides = {}) {
     editors: () => document.querySelectorAll('.controller-editor'),
   };
 }
+
+test('semantic menu rows keep horizontal edges and move vertically into adjacent action groups', (context) => {
+  const h = setup(context),
+    modes = h.control('nav'),
+    actions = h.control('nav');
+  modes.setAttribute('data-menu-layout', 'horizontal');
+  actions.setAttribute('data-menu-layout', 'vertical');
+  const solo = h.control(
+      'button',
+      { id: 'solo', _rect: { x: 0, y: 0, width: 90, height: 44 } },
+      modes,
+    ),
+    versus = h.control(
+      'button',
+      { id: 'versus', _rect: { x: 100, y: 0, width: 90, height: 44 } },
+      modes,
+    ),
+    start = h.control(
+      'button',
+      { id: 'start', _rect: { x: 0, y: 100, width: 200, height: 44 } },
+      actions,
+    ),
+    options = h.control(
+      'button',
+      { id: 'options', _rect: { x: 0, y: 150, width: 200, height: 44 } },
+      actions,
+    );
+  solo.focus();
+  h.api.handle({ direction: 'right' });
+  assert.equal(h.document.activeElement, versus);
+  h.api.handle({ direction: 'right' });
+  assert.equal(h.document.activeElement, versus, 'row edge does not jump to Start');
+  h.api.handle({ direction: 'down' });
+  assert.equal(h.document.activeElement, start);
+  actions.setAttribute('data-menu-edge-exit', 'true');
+  h.api.handle({ direction: 'up' });
+  assert.equal(h.document.activeElement, versus, 'the first action can return to the mode row');
+  h.api.handle({ direction: 'down' });
+  assert.equal(h.document.activeElement, start);
+  h.api.handle({ direction: 'down' });
+  assert.equal(h.document.activeElement, options);
+  options.setAttribute('data-menu-right', 'solo');
+  h.api.handle({ direction: 'right' });
+  assert.equal(h.document.activeElement, solo);
+  versus.disabled = true;
+  solo.setAttribute('data-menu-right', 'versus');
+  h.api.handle({ direction: 'right' });
+  assert.equal(h.document.activeElement, solo, 'explicit links cannot reach disabled controls');
+});
+
+for (const input of ['controller', 'keyboard'])
+  for (const transposed of [false, true])
+    test(`semantic ${input} group crossing reaches overlapping wide actions ${transposed ? 'horizontally' : 'vertically'} before distant narrow utilities`, (t) => {
+      const h = setup(t, { keyboard: true }),
+        modes = h.control('nav'),
+        actions = h.control('nav'),
+        utilities = h.control('nav');
+      h.setScope('landing', h.document.body);
+      modes.setAttribute('data-menu-layout', transposed ? 'vertical' : 'horizontal');
+      actions.setAttribute('data-menu-layout', transposed ? 'horizontal' : 'vertical');
+      actions.setAttribute('data-menu-edge-exit', 'true');
+      utilities.setAttribute('data-menu-layout', transposed ? 'vertical' : 'horizontal');
+      utilities.setAttribute('data-menu-edge-exit', 'true');
+      const rect = (x, y, width, height) =>
+        transposed ? { x: y, y: x, width: height, height: width } : { x, y, width, height };
+      // Actual Solo geometry observed in the 1280x800 embedded Viewport lab:
+      // center-distance scoring skipped all three 510px-wide actions.
+      const mode = h.control('button', { id: 'mode', _rect: rect(64, 234, 164, 54) }, modes);
+      const start = h.control('button', { id: 'start', _rect: rect(64, 312, 510, 56) }, actions);
+      const mission = h.control(
+        'button',
+        { id: 'mission', _rect: rect(64, 376, 510, 56) },
+        actions,
+      );
+      const settings = h.control(
+        'button',
+        { id: 'settings', _rect: rect(64, 440, 510, 56) },
+        actions,
+      );
+      const fullscreen = h.control(
+        'button',
+        { id: 'fullscreen', _rect: rect(64, 572, 188, 44) },
+        utilities,
+      );
+      let activations = 0;
+      for (const item of [mode, start, mission, settings, fullscreen])
+        item.addEventListener('click', () => activations++);
+      const forward = transposed ? 'right' : 'down',
+        backward = transposed ? 'left' : 'up';
+      const move = (direction) => {
+        if (input === 'controller') h.api.handle({ direction });
+        else {
+          const event = h.document.activeElement.emit('keydown', {
+            key: { right: 'ArrowRight', down: 'ArrowDown', left: 'ArrowLeft', up: 'ArrowUp' }[
+              direction
+            ],
+          });
+          assert.equal(event.defaultPrevented, true);
+        }
+        return h.document.activeElement;
+      };
+      mode.focus();
+      for (const expected of [start, mission, settings, fullscreen])
+        assert.equal(move(forward), expected);
+      for (const expected of [settings, mission, start, mode])
+        assert.equal(move(backward), expected);
+      start.disabled = true;
+      mission.hidden = true;
+      assert.equal(
+        move(forward),
+        settings,
+        'The geometry fix uses only currently eligible controls.',
+      );
+      assert.equal(activations, 0, 'Directions never activate a mode or game action.');
+    });
+
+test('semantic grid keeps center scoring and document-order ties within its own members', (t) => {
+  const h = setup(t),
+    grid = h.control('nav');
+  grid.setAttribute('data-menu-layout', 'grid');
+  const first = h.control('button', { _rect: { x: 0, y: 0, width: 100, height: 44 } }, grid);
+  const diagonal = h.control('button', { _rect: { x: 100, y: 100, width: 100, height: 44 } }, grid);
+  h.control('button', { _rect: { x: 0, y: 400, width: 100, height: 44 } }, grid);
+  h.control('button', { _rect: { x: 0, y: 50, width: 100, height: 44 } });
+  first.focus();
+  h.api.handle({ direction: 'down' });
+  assert.equal(
+    h.document.activeElement,
+    diagonal,
+    'Equal grid scores retain DOM order and ignore outside actions.',
+  );
+});
+
+function editorAction(h, key) {
+  const button = h.document
+    .querySelectorAll('button')
+    .find((element) => element.getAttribute('data-editor-action') === key);
+  assert.ok(button, `editor action ${key} exists`);
+  button.focus();
+  h.api.handle({ confirmStart: true });
+  h.api.handle({ confirmCommit: true });
+}
+
+function labelCaption(h, text, parent = h.document.body) {
+  const node = h.control('span', { textContent: text }, parent);
+  Object.defineProperty(node, 'childNodes', {
+    get: () => [{ nodeType: 3, textContent: node.textContent }],
+  });
+  return node;
+}
+
+function assertFieldName(h, field, expected) {
+  field.focus();
+  h.api.handle({ confirm: true });
+  const panel = h.document.querySelector('.controller-field-editor');
+  assert.ok(panel);
+  assert.equal(panel.getAttribute('aria-label'), expected);
+  assert.equal(panel.children.find((node) => node.tagName === 'H2').textContent, expected);
+  assert.equal(panel.querySelector('textarea').getAttribute('aria-label'), expected);
+  h.api.handle({ back: true });
+  assert.equal(h.document.activeElement, field);
+}
+
+test('field names read localized nested captions on every EN/UK/EN editor opening', (context) => {
+  const locale = getLocale(),
+    h = setup(context),
+    label = h.control('label'),
+    caption = labelCaption(h, '', label),
+    field = h.control('input', { id: 'project-id', value: 'unchanged' }, label);
+  Object.defineProperty(label, 'childNodes', { get: () => label.children });
+  field.labels = [label];
+  localizedText(caption, () => translate('common:editor.localProjectId'));
+  context.after(() => setLocale(locale, { persist: false }));
+  for (const language of ['en', 'uk', 'en']) {
+    setLocale(language, { persist: false });
+    const expected = translate('common:editor.localProjectId');
+    assert.notEqual(expected, field.id);
+    assertFieldName(h, field, expected);
+    assert.equal(field.value, 'unchanged');
+  }
+});
+
+test('field names exclude nested controls, options and decorative label subtrees', (context) => {
+  const h = setup(context),
+    label = h.control('label'),
+    wrapper = h.control('span', {}, label),
+    field = h.control('input', { id: 'mission-name', value: 'old' }, label),
+    start = labelCaption(h, '  Mission\n ', wrapper),
+    number = labelCaption(h, ' 2 ', wrapper),
+    end = labelCaption(h, '\t name  ', wrapper);
+  for (const tag of ['input', 'select', 'textarea', 'button', 'option', 'optgroup', 'svg']) {
+    const ignored = h.control(tag, {}, wrapper);
+    const text = labelCaption(h, `Do not include ${tag}`, ignored);
+    Object.defineProperty(ignored, 'childNodes', { value: [text] });
+  }
+  const hidden = labelCaption(h, 'hidden caption', wrapper),
+    icon = labelCaption(h, 'decorative arrow', wrapper);
+  hidden.hidden = true;
+  icon.setAttribute('aria-hidden', 'true');
+  Object.defineProperty(wrapper, 'childNodes', { value: [...wrapper.children] });
+  Object.defineProperty(label, 'childNodes', { value: [wrapper, field] });
+  field.labels = [label];
+  assert.deepEqual(wrapper.childNodes.slice(0, 3), [start, number, end]);
+  assertFieldName(h, field, 'Mission 2 name');
+});
+
+test('aria-labelledby names take precedence and preserve ordered visible reference text', (context) => {
+  const h = setup(context),
+    first = labelCaption(h, ' Source\n'),
+    second = labelCaption(h, '\t JSON  '),
+    field = h.control('textarea', { id: 'source' });
+  first.id = 'source-name';
+  second.id = 'source-format';
+  field.setAttribute('aria-labelledby', 'source-name missing source-format');
+  field.setAttribute('aria-label', 'Explicit backup name');
+  assertFieldName(h, field, 'Source JSON');
+});
+
+test('explicit aria-labelledby retains intentionally hidden caption roots', (context) => {
+  const h = setup(context),
+    caption = labelCaption(h, 'Accessible source caption'),
+    field = h.control('textarea', { id: 'source' });
+  caption.id = 'hidden-source-caption';
+  caption.hidden = true;
+  caption.setAttribute('aria-hidden', 'true');
+  field.setAttribute('aria-labelledby', caption.id);
+  field.setAttribute('aria-label', 'Backup name');
+  assertFieldName(h, field, 'Accessible source caption');
+});
+
+test('explicit aria-label wins over associated labels when references are absent or empty', (context) => {
+  const h = setup(context),
+    label = labelCaption(h, 'Visible associated name'),
+    field = h.control('input', { id: 'field' });
+  field.labels = [label];
+  field.setAttribute('aria-labelledby', 'missing-reference');
+  field.setAttribute('aria-label', '  Explicit\n name  ');
+  assertFieldName(h, field, 'Explicit name');
+  field.removeAttribute('aria-label');
+  assertFieldName(h, field, 'Visible associated name');
+});
+
+test('multiple explicit associated labels combine without requiring an enclosing label', (context) => {
+  const h = setup(context),
+    first = labelCaption(h, 'Mission 3'),
+    second = labelCaption(h, 'title'),
+    field = h.control('input', { id: 'mission-3-title' });
+  field.labels = [first, second];
+  assertFieldName(h, field, 'Mission 3 title');
+});
+
+test('unnamed fields retain their ID and then localized value fallback', (context) => {
+  const h = setup(context),
+    field = h.control('input', { id: 'legacy-field' });
+  assertFieldName(h, field, 'legacy-field');
+  field.id = '';
+  assertFieldName(h, field, translate('interface:value'));
+});
+
+test('passive input hints follow accepted device changes and restore host attributes on disposal', (context) => {
+  let confirm = 'R1';
+  const h = setup(context, {
+      keyboard: true,
+      getControlLabels: () => ({ confirm, back: 'Circle' }),
+    }),
+    root = h.control('section'),
+    button = h.control('button', {}, root),
+    hint = h.control('span', {}, root),
+    second = h.control('section', {}, root),
+    secondButton = h.control('button', {}, second);
+  hint.setAttribute('data-menu-controller-hint', '');
+  root.setAttribute('data-menu-input', 'host');
+  h.setScope('main', root);
+  button.focus();
+  h.api.handle({ direction: 'down' });
+  assert.equal(root.getAttribute('data-menu-input'), 'controller');
+  assert.equal(root.getAttribute('data-menu-confirm'), 'R1');
+  assert.equal(root.getAttribute('data-menu-back'), 'Circle');
+  assert.equal(hint.textContent, 'R1 · Confirm / Circle · Back');
+  confirm = 'Triangle';
+  button.emit('keydown', { key: 'ArrowUp' });
+  assert.equal(root.getAttribute('data-menu-input'), 'keyboard');
+  assert.equal(hint.textContent, 'Triangle · Confirm / Circle · Back');
+  button.emit('pointerdown', { pointerType: 'touch', button: 0 });
+  assert.equal(root.getAttribute('data-menu-input'), 'touch');
+  h.setScope('settings', second);
+  h.api.sync();
+  assert.equal(second.getAttribute('data-menu-input'), 'touch');
+  secondButton.focus();
+  h.api.handle({ direction: 'down' });
+  assert.equal(second.getAttribute('data-menu-input'), 'controller');
+  secondButton.emit('keydown', { key: 'ArrowUp' });
+  assert.equal(second.getAttribute('data-menu-input'), 'keyboard');
+  assert.equal(root.getAttribute('data-menu-input'), 'keyboard');
+  h.api.destroy();
+  assert.equal(root.getAttribute('data-menu-input'), 'host');
+  assert.equal(root.getAttribute('data-menu-confirm'), null);
+  assert.equal(root.getAttribute('data-menu-back'), null);
+  assert.equal(second.getAttribute('data-menu-input'), null);
+});
+
+test('controller text edits a Ukrainian draft and commits through input/change exactly once', (context) => {
+  const activated = [],
+    h = setup(context, {
+      activateControl(element) {
+        activated.push(element.getAttribute('data-editor-action'));
+        element.click();
+      },
+    }),
+    input = h.control('input', { id: 'search', type: 'search', value: 'old' });
+  let changes = 0,
+    inputs = 0;
+  input.addEventListener('input', () => inputs++);
+  input.addEventListener('change', () => changes++);
+  input.focus();
+  h.api.handle({ confirm: true });
+  assert.equal(h.api.editorState().element, input);
+  editorAction(h, 'all');
+  editorAction(h, 'uk');
+  editorAction(h, 'ї');
+  editorAction(h, 'ж');
+  editorAction(h, 'а');
+  editorAction(h, 'к');
+  assert.equal(input.value, 'old');
+  assert.equal(inputs + changes, 0);
+  editorAction(h, 'done');
+  assert.equal(input.value, 'їжак');
+  assert.equal(inputs, 1);
+  assert.equal(changes, 1);
+  assert.equal(h.document.activeElement, input);
+  assert.equal(h.api.editorState(), null);
+  h.api.handle({ confirmCommit: true });
+  assert.equal(changes, 1);
+  assert.deepEqual(
+    activated,
+    ['all', 'uk', 'ї', 'ж', 'а', 'к', 'done'],
+    'Virtual keys retain the host controller activation guard.',
+  );
+});
+
+test('captured Confirm tracks the current field-editor owner and exact focused key', (context) => {
+  const h = setup(context, { accept: (element) => element.id === 'owned-search' }),
+    input = h.control('input', { id: 'owned-search', type: 'search', value: '' });
+  input.focus();
+  assert.equal(h.api.beginConfirm(input), input);
+  assert.equal(h.api.confirmCurrent(), true);
+  h.api.commitConfirm();
+  const key = h.document
+    .querySelectorAll('button')
+    .find((element) => element.getAttribute('data-editor-action') === 'q');
+  key.focus();
+  assert.equal(h.api.beginConfirm(key), key);
+  assert.equal(h.api.confirmCurrent(), true, 'owned editor keys bypass the host menu allowlist');
+  h.api.commitConfirm();
+  assert.equal(h.document.querySelector('[data-editor-draft]').value, 'q');
+  assert.equal(input.value, '', 'Confirm on a key changes only the draft');
+  h.api.beginConfirm(key);
+  h.document.querySelector('[data-editor-draft]').focus();
+  assert.equal(h.api.confirmCurrent(), false, 'focus movement invalidates the captured key');
+  h.api.cancelConfirm();
+  key.focus();
+  h.api.beginConfirm(key);
+  input.value = 'replacement';
+  assert.equal(h.api.confirmCurrent(), false, 'a new source value retires the editor owner');
+  h.api.sync();
+  assert.equal(h.api.commitConfirm(), null);
+  assert.equal(input.value, 'replacement');
+});
+
+test('text editor retains native multiline editing and Cancel discards the whole draft', (context) => {
+  const h = setup(context, { keyboard: true }),
+    input = h.control('textarea', { value: '{"old":true}' });
+  const root = h.control('section');
+  root.append(input);
+  h.setScope('settings', root);
+  input.focus();
+  h.api.handle({ confirm: true });
+  const draft = h.document.querySelector('[data-editor-draft]');
+  draft.focus();
+  draft.value = '{\n\t"name":"ї"\n}';
+  draft.selectionStart = draft.selectionEnd = draft.value.length;
+  draft.emit('input');
+  assert.equal(
+    draft.emit('keydown', { key: 'Enter' }).defaultPrevented,
+    false,
+    'physical multiline Enter remains native',
+  );
+  assert.ok(h.api.editorState());
+  const escape = draft.emit('keydown', { key: 'Escape' });
+  assert.equal(escape.defaultPrevented, true);
+  assert.equal(input.value, '{"old":true}');
+  assert.equal(h.document.activeElement, input);
+});
+
+test('number and color drafts reject invalid values without publishing them', (context) => {
+  const h = setup(context),
+    input = h.control('input', { type: 'number', value: '2', min: '0', max: '10', step: '2' });
+  input.focus();
+  h.api.handle({ confirm: true });
+  editorAction(h, 'all');
+  editorAction(h, '3');
+  editorAction(h, 'done');
+  assert.ok(h.api.editorState(), 'step-invalid value keeps draft open');
+  assert.equal(input.value, '2');
+  editorAction(h, 'all');
+  editorAction(h, '8');
+  editorAction(h, 'done');
+  assert.equal(input.value, '8');
+  const color = h.control('input', { type: 'color', value: '#ffffff' });
+  color.focus();
+  h.api.handle({ confirm: true });
+  editorAction(h, 'all');
+  editorAction(h, '1');
+  editorAction(h, 'done');
+  assert.ok(h.api.editorState());
+  assert.equal(color.value, '#ffffff');
+  editorAction(h, '#00ffff');
+  editorAction(h, 'done');
+  assert.equal(color.value, '#00ffff');
+});
+
+test('host scope, source replacement and explicit clear invalidate drafts without stale writes', (context) => {
+  for (const kind of ['scope', 'value', 'remove', 'clear']) {
+    const h = setup(context),
+      input = h.control('input', { value: 'original' });
+    input.focus();
+    h.api.handle({ confirm: true });
+    editorAction(h, 'q');
+    if (kind === 'scope') h.setScope('next');
+    if (kind === 'value') input.value = 'new owner';
+    if (kind === 'remove') input.remove();
+    if (kind === 'clear') h.api.clear();
+    h.api.sync();
+    assert.equal(h.api.editorState(), null, kind);
+    assert.equal(input.value, kind === 'value' ? 'new owner' : 'original', kind);
+    assert.equal(h.document.querySelector('.controller-field-editor'), null);
+  }
+});
+
+test('tool adapters own canvas commands and cancel pending work before returning focus', (context) => {
+  let pending = true,
+    entered = 0;
+  const events = [];
+  const adapter = {
+    enter() {
+      entered++;
+    },
+    isCurrent: () => true,
+    handle(command) {
+      events.push(command);
+      if (command.back) {
+        if (pending) pending = false;
+        else return 'cancel';
+      }
+    },
+    exit(options) {
+      events.push(options);
+    },
+  };
+  const h = setup(context, {
+      resolveEditor: (element) => (element.id === 'canvas' ? adapter : null),
+    }),
+    canvas = h.control('canvas', { id: 'canvas' });
+  canvas.setAttribute('data-controller-editor', 'pixels');
+  canvas.setAttribute('tabindex', '0');
+  canvas.focus();
+  h.api.handle({ confirm: true });
+  assert.equal(entered, 1);
+  h.api.handle({ direction: 'right' });
+  h.api.handle({ back: true });
+  assert.ok(h.api.editorState());
+  h.api.handle({ back: true });
+  assert.equal(h.api.editorState(), null);
+  assert.deepEqual(events.at(-1), { commit: false });
+  assert.equal(h.document.activeElement, canvas);
+});
+
+test('file activation delegates to the in-game source chooser without opening an OS picker', (context) => {
+  let chosen = null;
+  const h = setup(context, {
+      activateFileInput: (element) => {
+        chosen = element;
+      },
+    }),
+    input = h.control('input', { type: 'file' });
+  let native = 0;
+  input.addEventListener('click', () => native++);
+  input.focus();
+  h.api.handle({ confirm: true });
+  assert.equal(chosen, input);
+  assert.equal(native, 0);
+});
 
 test('Confirm captures the focused control on press and activates it once on release', (t) => {
   let activations = 0;
@@ -710,6 +1214,112 @@ test('linear navigation skips hidden, disabled, inert, closed disclosure and hos
   assert.equal(h.document.activeElement, first);
   h.api.handle({ direction: 'up' });
   assert.equal(h.document.activeElement, last);
+});
+
+test('controller traversal skips effectively disabled fieldset fields and recovers when enabled', (t) => {
+  const h = setup(t),
+    restart = h.control('button', { id: 'restart' }),
+    fieldset = h.control('fieldset', { disabled: true });
+  const fields = ['select', 'input', 'textarea'].map((tag) => h.control(tag, {}, fieldset));
+  const feedback = h.control('button', { id: 'read-feedback' });
+  for (const field of fields) {
+    assert.equal(field.disabled, false, 'The reflected own property remains false.');
+    assert.equal(field.matches(':disabled'), true);
+  }
+  feedback.focus();
+  fields[0].focus();
+  assert.equal(
+    h.document.activeElement,
+    feedback,
+    'Native focus refuses inherited-disabled fields.',
+  );
+  h.api.handle({ direction: 'up' });
+  assert.equal(h.document.activeElement, restart);
+  h.api.sync();
+  assert.equal(h.document.activeElement, restart);
+  h.api.handle({ direction: 'down' });
+  assert.equal(h.document.activeElement, feedback);
+  fieldset.disabled = false;
+  h.api.handle({ direction: 'up' });
+  assert.equal(h.document.activeElement, fields.at(-1));
+});
+
+test('effective disabled filtering preserves first-legend controls and ordinary links', (t) => {
+  const h = setup(t),
+    first = h.control(),
+    fieldset = h.control('fieldset', { disabled: true }),
+    legend = h.control('legend', {}, fieldset),
+    allowed = h.control('button', {}, legend),
+    nestedDisabled = h.control('fieldset', { disabled: true }, legend),
+    nested = h.control('input', {}, nestedDisabled),
+    secondLegend = h.control('legend', {}, fieldset),
+    excluded = h.control('button', {}, secondLegend);
+  h.control('select', {}, fieldset);
+  const link = h.control('a', {}, fieldset),
+    last = h.control();
+  link.setAttribute('href', '#details');
+  assert.equal(allowed.matches(':disabled'), false);
+  assert.equal(nested.matches(':disabled'), true);
+  assert.equal(excluded.matches(':disabled'), true);
+  first.focus();
+  h.api.handle({ direction: 'down' });
+  assert.equal(h.document.activeElement, allowed);
+  h.api.handle({ direction: 'down' });
+  assert.equal(h.document.activeElement, link, 'Fieldset disabling does not disable anchors.');
+  h.api.handle({ direction: 'down' });
+  assert.equal(h.document.activeElement, last);
+});
+
+test('inherited disabling cancels a captured Confirm without redirecting to another action', (t) => {
+  const h = setup(t),
+    fieldset = h.control('fieldset'),
+    original = h.control('button', {}, fieldset),
+    next = h.control();
+  let activations = 0;
+  original.addEventListener('click', () => activations++);
+  next.addEventListener('click', () => activations++);
+  original.focus();
+  h.api.handle({ confirmStart: true });
+  fieldset.disabled = true;
+  h.api.handle({ confirmCommit: true });
+  assert.equal(activations, 0);
+  assert.equal(original.hasAttribute('data-controller-pressed'), false);
+  h.api.sync();
+  assert.equal(h.document.activeElement, next);
+  assert.equal(activations, 0, 'Neutral recovery cannot activate the successor.');
+});
+
+test('native Tab navigation skips fields disabled by their fieldset', (t) => {
+  const h = setup(t, { keyboard: true }),
+    first = h.control(),
+    fieldset = h.control('fieldset', { disabled: true });
+  h.control('select', {}, fieldset);
+  const last = h.control();
+  h.setScope('authoring', h.document.body);
+  first.focus();
+  h.api.sync();
+  const forward = first.emit('keydown', { key: 'Tab' });
+  assert.equal(forward.defaultPrevented, true);
+  assert.equal(h.document.activeElement, last);
+  last.emit('keydown', { key: 'Tab', shiftKey: true });
+  assert.equal(h.document.activeElement, first);
+});
+
+test('reading accepts an initially disabled Done control before the host enables it', (t) => {
+  let done;
+  const h = setup(t, {
+      onReadingChange: (state) => {
+        if (done) done.disabled = !state;
+      },
+    }),
+    surface = readingSurface(h);
+  done = h.control('button', { disabled: true });
+  surface.origin.focus();
+  assert.equal(h.api.beginReading({ ...surface, exit: done }), true);
+  assert.equal(done.disabled, false, 'The existing allowDisabled entry contract remains intact.');
+  h.api.handle({ back: true });
+  assert.equal(done.disabled, true);
+  assert.equal(h.document.activeElement, surface.origin);
 });
 
 for (const id of ['gallery-grid', 'missions'])

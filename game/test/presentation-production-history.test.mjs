@@ -15,6 +15,7 @@ import {
   fieldKitEquipmentQuality,
   fieldKitEquipmentSource,
   verifyFieldKitRadioAudioContinuationReview,
+  verifyFieldKitNativeMenuContinuationReview,
 } from '../../scripts/produce-field-kit-theme.mjs';
 import { createHash } from 'node:crypto';
 import { gunzipSync } from 'node:zlib';
@@ -590,9 +591,19 @@ test('shared-host UI and managed-media audio bind only reviewed current inputs',
     .digest('hex');
   const currentReviewPath = 'docs/verification/radio-audio-20260929/review.json';
   const currentReviewSHA256 = '93fdb14773e7ef58cdcaebcf1db3d4a3100d77aa13081d25ff799aa0e24c84e3';
-  const current = await authenticatedCurrentReview(currentReviewPath, currentReviewSHA256, [
+  const nativeReviewPath = 'docs/verification/native-menu-ui-audio-20260930/review.json';
+  const nativeReviewSHA256 = '950d4dc78138e5c4ac9c9b529fcc11b0e0b3e631975f0cc44fe3b5ceef2d59c0';
+  const native = await authenticatedCurrentReview(nativeReviewPath, nativeReviewSHA256, [
+    'ui',
     'audio',
   ]);
+  const current = {
+    review: await authenticatedReviewRecord(currentReviewPath, currentReviewSHA256),
+  };
+  assert.equal(
+    native.review.fingerprints.audio.priorSHA256,
+    current.review.fingerprints.audio.currentSHA256,
+  );
   const mainReconciliation = await authenticatedReviewRecord(
     current.review.priorReviews.mainReconciliation.path,
     current.review.priorReviews.mainReconciliation.sha256,
@@ -604,7 +615,11 @@ test('shared-host UI and managed-media audio bind only reviewed current inputs',
   const mainUIReviewPath =
     'docs/verification/discovery-webp-ui-continuation-2026-09-29/review.json';
   const mainUIReviewSHA256 = '2496cbfe4e885a931f22cbf5287efac45344074bb14dc4cf96f09a2d5a0a366f';
-  const mainUI = await authenticatedCurrentReview(mainUIReviewPath, mainUIReviewSHA256, ['ui']);
+  const mainUI = { review: await authenticatedReviewRecord(mainUIReviewPath, mainUIReviewSHA256) };
+  assert.equal(
+    native.review.fingerprints.ui.priorSHA256,
+    mainUI.review.fingerprints.ui.currentSHA256,
+  );
   const priorUI = await authenticatedReviewRecord(
     mainUI.review.priorReviews.steamDeckPresentation.path,
     mainUI.review.priorReviews.steamDeckPresentation.sha256,
@@ -686,9 +701,15 @@ test('shared-host UI and managed-media audio bind only reviewed current inputs',
   assert.equal(reviewed.length, 32);
   for (const slot of reviewed) {
     const asset = resolved.assets[slot.id];
+    assert.ok(
+      asset.quality.evidence.some((entry) =>
+        entry.includes(nativeReviewPath + ' sha256:' + nativeReviewSHA256),
+      ),
+      slot.id,
+    );
     if (slot.group === 'ui') {
       assert.equal(asset.quality.stage, 'reviewed', slot.id);
-      assert.equal(asset.provenance.source, mainUI.sources.ui, slot.id);
+      assert.equal(asset.provenance.source, native.sources.ui, slot.id);
       assert.ok(
         asset.quality.evidence.some((entry) =>
           entry.includes(mainUIReviewPath + ' sha256:' + mainUIReviewSHA256),
@@ -715,7 +736,7 @@ test('shared-host UI and managed-media audio bind only reviewed current inputs',
         ),
         slot.id,
       );
-      assert.equal(asset.provenance.source, current.sources.audio, slot.id);
+      assert.equal(asset.provenance.source, native.sources.audio, slot.id);
       assert.ok(
         asset.quality.evidence.some((entry) =>
           entry.includes(currentReviewPath + ' sha256:' + currentReviewSHA256),
@@ -2114,10 +2135,18 @@ test('radio source continuation preserves canonical102 and appends exactly eight
   const read = (relative) => fs.readFile(new URL('../../' + relative, import.meta.url));
   const oraclePath = 'game/test/fixtures/production-radio-head280-fpv102.json';
   const oracleBytes = await read(oraclePath);
-  const current = await importThemeBundle(
+  const latest = await importThemeBundle(
     new Blob([await read('authoring/library/fpv-field-kit/production.rltheme')]),
     { decodeImage: null },
   );
+  const canonicalOracleBytes = await read(
+    'game/test/fixtures/production-native-main1b-fpv103.json',
+  );
+  assert.equal(
+    createHash('sha256').update(canonicalOracleBytes).digest('hex'),
+    '21e92eaf18e5ed619c91d47c734ef1602aa8dac5ae859d7c1837d71b0b161257',
+  );
+  const current = await reconstructPinnedProduction(JSON.parse(canonicalOracleBytes), latest);
   const prior = await reconstructPinnedProduction(JSON.parse(oracleBytes), current);
   assert.equal(prior.document.revision, 102);
   assert.equal(current.document.revision, 103);
@@ -2132,11 +2161,16 @@ test('radio source continuation preserves canonical102 and appends exactly eight
   assert.equal(current.document.slots.length, prior.document.slots.length);
   assert.equal(current.document.collections.length, prior.document.collections.length);
   const reviewPath = 'docs/verification/radio-audio-20260929/review.json';
-  const reviewed = await authenticatedCurrentReview(
+  const review = await authenticatedReviewRecord(
     reviewPath,
     '93fdb14773e7ef58cdcaebcf1db3d4a3100d77aa13081d25ff799aa0e24c84e3',
-    ['audio'],
   );
+  const reviewed = {
+    review,
+    sources: {
+      audio: review.fingerprints.audio.paths + ' sha256:' + review.fingerprints.audio.currentSHA256,
+    },
+  };
   assert.deepEqual(reviewed.review.fingerprints.audio.changedInputs, ['game/app.mjs']);
   const before = resolvePresentation(prior.document),
     after = resolvePresentation(current.document);
@@ -2182,4 +2216,112 @@ test('radio source continuation preserves canonical102 and appends exactly eight
       'changed evidence ' + index,
     );
   }
+});
+
+test('native menus preserve exact canonical103 and append only UI24 and audio56 source continuations', async () => {
+  const read = (relative) => fs.readFile(new URL('../../' + relative, import.meta.url));
+  const oraclePath = 'game/test/fixtures/production-native-main1b-fpv103.json';
+  const oracleBytes = await read(oraclePath);
+  const sha = (bytes) => createHash('sha256').update(bytes).digest('hex');
+  assert.equal(
+    sha(oracleBytes),
+    '21e92eaf18e5ed619c91d47c734ef1602aa8dac5ae859d7c1837d71b0b161257',
+  );
+  const current = await importThemeBundle(
+    new Blob([await read('authoring/library/fpv-field-kit/production.rltheme')]),
+    { decodeImage: null },
+  );
+  const prior = await reconstructPinnedProduction(JSON.parse(oracleBytes), current);
+  assert.equal(prior.document.revision, 103);
+  assert.equal(current.document.revision, 104);
+  validateThemeBundle(current.document, { previous: prior.document, expectedRevision: 103 });
+  for (const group of ['assets', 'themes', 'slots', 'collections'])
+    assert.deepEqual(
+      current.document[group].slice(0, prior.document[group].length),
+      prior.document[group],
+    );
+  assert.equal(current.document.assets.length, prior.document.assets.length + 32);
+  assert.equal(current.document.themes.length, prior.document.themes.length + 1);
+  assert.equal(current.document.slots.length, 335);
+  assert.equal(current.document.collections.length, 1);
+  const reviewPath = 'docs/verification/native-menu-ui-audio-20260930/review.json';
+  const review = await authenticatedCurrentReview(
+    reviewPath,
+    '950d4dc78138e5c4ac9c9b529fcc11b0e0b3e631975f0cc44fe3b5ceef2d59c0',
+    ['ui', 'audio'],
+  );
+  assert.deepEqual(review.review.fingerprints.ui.changedInputs, ['game/presentation/host.mjs']);
+  assert.deepEqual(review.review.fingerprints.audio.changedInputs, [
+    'game/app.mjs',
+    'game/ui/quick-music-controls.mjs',
+    'game/installed-app.mjs',
+    'game/ui/edition-solo.mjs',
+    'game/editions/model.mjs',
+  ]);
+  const before = resolvePresentation(prior.document),
+    after = resolvePresentation(current.document);
+  const changed = { ui: [], audio: [] };
+  for (const slot of current.document.slots) {
+    const original = before.assets[slot.id],
+      next = after.assets[slot.id];
+    if (!Object.hasOwn(changed, slot.group)) {
+      assert.deepEqual(next, original, slot.id);
+      continue;
+    }
+    changed[slot.group].push(slot.id);
+    assert.equal(next.revision, slot.group === 'ui' ? 24 : 56, slot.id);
+    assert.equal(next.quality.stage, 'reviewed', slot.id);
+    assert.equal(next.provenance.source, review.sources[slot.group], slot.id);
+    assert.deepEqual(next.provenance.parent, { id: original.id, revision: original.revision });
+    assert.deepEqual(next.recipe, original.recipe, slot.id);
+    assert.deepEqual(next.file, original.file, slot.id);
+    const evidence = next.quality.evidence,
+      old = original.quality.evidence;
+    if (slot.group === 'ui') {
+      assert.equal(old.length, 6);
+      assert.equal(evidence.length, 7);
+      assert.deepEqual(evidence.slice(1), old);
+      assert.ok(evidence[0].includes(reviewPath));
+    } else {
+      assert.equal(old.length, 16);
+      assert.equal(evidence.length, 16);
+      assert.equal(evidence[0], old[0]);
+      assert.ok(
+        evidence[1].startsWith('Scoped native-menu audio source continuation: ' + reviewPath),
+      );
+      assert.ok(evidence[1].endsWith('\n' + old[1]));
+      assert.deepEqual(evidence.slice(2), old.slice(2));
+    }
+    assert(evidence.every((entry) => entry.length <= 2048));
+  }
+  assert.equal(changed.ui.length, 24);
+  assert.equal(changed.audio.length, 8);
+  const last = current.document.themes.at(-1);
+  assert.deepEqual(last.parent, { id: 'fpv', revision: 103 });
+  assert.deepEqual(Object.keys(last.bindings).sort(), [...changed.ui, ...changed.audio].sort());
+  assert.equal(current.assets.size, 132);
+  for (const [hash, original] of prior.assets)
+    assert.deepEqual(
+      Buffer.from(await current.assets.get(hash).arrayBuffer()),
+      Buffer.from(await original.arrayBuffer()),
+      hash,
+    );
+  const inputs = [
+    await read(reviewPath),
+    await read('docs/verification/discovery-webp-ui-continuation-2026-09-29/review.json'),
+    await read('docs/verification/radio-audio-20260929/review.json'),
+    oracleBytes,
+  ];
+  assert.equal(verifyFieldKitNativeMenuContinuationReview(...inputs), true);
+  for (let index = 0; index < inputs.length; index++) {
+    const altered = [...inputs];
+    altered[index] = Buffer.concat([altered[index], Buffer.from('\n')]);
+    assert.equal(verifyFieldKitNativeMenuContinuationReview(...altered), false);
+    assert.equal(
+      verifyFieldKitNativeMenuContinuationReview(...inputs.filter((_, i) => i !== index)),
+      false,
+    );
+  }
+  assert.equal(verifyFieldKitNativeMenuContinuationReview(...inputs, inputs[0]), false);
+  assert.equal(verifyFieldKitNativeMenuContinuationReview(...[...inputs].reverse()), false);
 });

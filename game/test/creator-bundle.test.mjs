@@ -265,6 +265,11 @@ test('an interrupted creator installation rolls back its index and remains expor
     installPreparedCreatorBundle(store, pack, approval, review, { decodeImage }),
   );
   memory.failAnyPutAt = null;
+  await assert.rejects(
+    installPreparedCreatorBundle(store, pack, approval, review, { decodeImage }),
+    /review is stale/,
+    'a failed commit consumes its review; the editor must request a new Approve review',
+  );
   store.close();
   const reopened = createCreatorStore({ indexedDB: memory.indexedDB });
   assert.deepEqual(await installedCreatorManifests(reopened), []);
@@ -282,6 +287,45 @@ test('an interrupted creator installation rolls back its index and remains expor
   );
   assert.equal((await installedCreatorManifests(reopened))[0].editionId, pack.editionId);
   reopened.close();
+});
+
+test('cancellation after installation begins consumes only that review and fresh approval can retry', async () => {
+  const memory = memoryIndexedDB(),
+    backing = createCreatorStore({ indexedDB: memory.indexedDB }),
+    controller = new AbortController();
+  let cancelAfterRead = false;
+  const store = {
+    ...backing,
+    async readDomainMetadata(...args) {
+      const snapshot = await backing.readDomainMetadata(...args);
+      if (cancelAfterRead) controller.abort();
+      return snapshot;
+    },
+  };
+  const pack = await prepared(),
+    approval = approveCreatorBundle(pack),
+    review = await reviewCreatorInstallation(store, pack, approval),
+    original = await exportCreatorBundle(pack, approval).arrayBuffer();
+  cancelAfterRead = true;
+  await assert.rejects(
+    installPreparedCreatorBundle(store, pack, approval, review, {
+      signal: controller.signal,
+      decodeImage,
+    }),
+    { name: 'AbortError' },
+  );
+  cancelAfterRead = false;
+  assert.deepEqual(await installedCreatorManifests(store), []);
+  await assert.rejects(
+    installPreparedCreatorBundle(store, pack, approval, review, { decodeImage }),
+    /review is stale/,
+  );
+  assert.deepEqual(await exportCreatorBundle(pack, approval).arrayBuffer(), original);
+  const freshApproval = approveCreatorBundle(pack),
+    freshReview = await reviewCreatorInstallation(store, pack, freshApproval);
+  await installPreparedCreatorBundle(store, pack, freshApproval, freshReview, { decodeImage });
+  assert.equal((await installedCreatorManifests(store))[0].editionId, pack.editionId);
+  backing.close();
 });
 
 test('installed Custom attempts restore through the shared verifier and award only a completed exact edition', async () => {

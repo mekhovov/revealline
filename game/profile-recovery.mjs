@@ -3,6 +3,8 @@ import { createProfileChannelReader } from './profile-channel-reader.mjs';
 import { attachProfileRecoveryView } from './ui/profile-recovery.mjs';
 import { attachControllerNavigation } from './ui/controller-navigation.mjs';
 import { createControllerRouter } from './ui/controller-router.mjs';
+import { attachControllerConfirmGuard } from './ui/controller-confirm-guard.mjs';
+import { createControllerConfirmLifecycle } from './ui/controller-confirm-lifecycle.mjs';
 import { loadProfileRecoveryCatalogs } from './profile-recovery-catalogs.mjs';
 
 const presenter = createOperationStatus(document.getElementById('profile-recovery-status'));
@@ -16,7 +18,8 @@ let cleanup = null,
   leaving = false,
   suspended = false,
   focused = document.hasFocus?.() !== false,
-  frame = null;
+  frame = null,
+  lifecycle;
 const foreground = () =>
   !closed &&
   !leaving &&
@@ -26,6 +29,13 @@ const foreground = () =>
   document.hasFocus?.() !== false;
 // Startup and ready controls share one navigation owner. A retry only replaces
 // its read operation, never the controller's assignment or its physical edges.
+const router = createControllerRouter();
+const guard = attachControllerConfirmGuard({
+  confirmPressed: () => foreground() && router.menuConfirmPressed(),
+  beforeNativeActivation: (event) => {
+    if (foreground()) lifecycle?.beforeNativeActivation(event);
+  },
+});
 const navigation = attachControllerNavigation({
   getScope: () => 'menu',
   getRoot: () => root,
@@ -38,25 +48,50 @@ const navigation = attachControllerNavigation({
   },
   ownsKeyboardEvent: () => !foreground(),
   keyboard: true,
+  activateControl: (element) => guard.activate(element),
+  onNativeInput: (event) => {
+    lifecycle?.nativeInput(event);
+    router.clear();
+  },
 });
-const router = createControllerRouter();
+lifecycle = createControllerConfirmLifecycle({
+  readConfirm: (options) => router.readMenuConfirm(options),
+  getContext: () => ({
+    scope: 'menu',
+    root,
+    focused: document.activeElement,
+    active: foreground(),
+  }),
+  navigation,
+  guard,
+});
 function sample(timeMs) {
   frame = null;
   if (closed || leaving || suspended) return;
-  if (foreground()) navigation.handle(router.sample({ scope: 'menu', timeMs }).ui);
-  else router.clear();
+  if (foreground()) {
+    const state = router.sample({ scope: 'menu', timeMs });
+    if (state.status.code === 'joined') navigation.engage();
+    lifecycle.sample(state.confirmSnapshot);
+    if (foreground()) navigation.handle({ ...state.ui, confirm: false });
+  } else {
+    lifecycle.cancel('recovery-inactive', { hard: true });
+    router.clear();
+  }
   if (!closed && !leaving && !suspended) frame = requestAnimationFrame(sample);
 }
 function stopFrames() {
   cancelAnimationFrame(frame);
   frame = null;
+  lifecycle.cancel('recovery-input-clear');
   router.clear();
   navigation.clear();
 }
 function disposeNavigation() {
   stopFrames();
+  lifecycle.destroy();
   router.destroy();
   navigation.destroy();
+  guard.destroy();
   window.removeEventListener('blur', inactive);
   window.removeEventListener('focus', active);
   document.removeEventListener('visibilitychange', visibility);
@@ -64,6 +99,7 @@ function disposeNavigation() {
 const inactive = () => {
   focused = false;
   view?.cancel();
+  lifecycle.cancel('recovery-input-clear');
   router.clear();
   navigation.clear();
 };

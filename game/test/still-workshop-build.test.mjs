@@ -163,6 +163,25 @@ test('actual release allowlist ships the standalone still entry and exact existi
   );
 });
 
+test('the shipped Motion catalogue retains every selectable character image', async () => {
+  const files = new Set(await collectBuildFiles(sourceRoot, await readBuildConfig(sourceRoot)));
+  const presetPath = 'authoring/motion-lab/presets.json';
+  assert.ok(files.has(presetPath), 'The Motion catalogue must ship with the tool.');
+  const presets = JSON.parse(await fs.readFile(path.join(sourceRoot, presetPath), 'utf8'));
+  // The renderer reads character.src. derivation.source.src records provenance
+  // and must not pull unused high-resolution originals into player packages.
+  const references = new Set(
+    Object.values(presets.characters)
+      .filter((character) => character.src)
+      .map((character) =>
+        path.posix.normalize(path.posix.join(path.posix.dirname(presetPath), character.src)),
+      ),
+  );
+  assert.ok(references.size > 0, 'Exercise actual authored character artwork.');
+  for (const name of references)
+    assert.ok(files.has(name), `Missing selectable Motion character artwork: ${name}`);
+});
+
 async function fixture(t) {
   const directory = await fs.realpath(
     await fs.mkdtemp(path.join(os.tmpdir(), 'still-workshop-build-')),

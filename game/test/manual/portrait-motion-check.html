@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Portrait artwork motion check · FPV / LINE</title>
+    <link rel="stylesheet" href="../../ui/menu-scenes.css" />
+    <style>
+      body {
+        margin: 0;
+        background: #080e18;
+        color: #edf4ff;
+        font: 16px system-ui;
+      }
+      #controls {
+        padding: 16px;
+      }
+      button {
+        font: inherit;
+        padding: 12px;
+      }
+      iframe {
+        display: block;
+        width: 390px;
+        height: 844px;
+        border: 0;
+      }
+      #landing {
+        position: fixed;
+        inset: 0;
+      }
+      pre {
+        white-space: pre-wrap;
+        overflow-wrap: anywhere;
+      }
+      [hidden] {
+        display: none !important;
+      }
+    </style>
+  </head>
+  <body>
+    <section id="controls">
+      <h1>Dutch campaign portrait motion</h1>
+      <p>
+        Measures two production WebGL frames about two seconds apart inside each 390 × 844 crop. No
+        player preferences or saves are changed.
+      </p>
+      <button id="run">Run five portraits</button>
+      <output id="status" aria-live="polite">Ready</output>
+      <pre id="results"></pre>
+    </section>
+    <main id="landing" hidden></main>
+    <script type="module" src="./portrait-motion-check.mjs"></script>
+  </body>
+</html>

@@ -4,9 +4,29 @@ import { createHash } from 'node:crypto';
 import { editionAppIdentity } from '../game/edition-context.mjs';
 
 export const LAUNCHER_FILE_LIMIT = 128 * 1024;
+// Deliberately finite shared menu closure. No gameplay content, art, soundtrack
+// or complete content localization registry belongs in the stable launcher.
+export const LAUNCHER_NAVIGATION_FILES = Object.freeze([
+  'ui/launcher-navigation.mjs',
+  'ui/controller-confirm-guard.mjs',
+  'ui/controller-confirm-lifecycle.mjs',
+  'ui/controller-navigation.mjs',
+  'ui/controller-router.mjs',
+  'couch/controller-profiles.mjs',
+  'ui/controller-field-editor.mjs',
+  'ui/controller-field-editor.css',
+  'ui/controller-text-draft.mjs',
+  'ui/menu-navigation-groups.mjs',
+  'ui/settings-panels.mjs',
+  'controller-bindings.mjs',
+  'controller-boost.mjs',
+  'i18n/content.mjs',
+  'data-json.mjs',
+]);
 export const LAUNCHER_CATALOG_KEYS = Object.freeze({
   common: Object.freeze(['language.label', 'language.sessionOnly']),
   interface: Object.freeze([
+    'revealLine',
     'launcher.opening',
     'launcher.play',
     'launcher.install',
@@ -26,14 +46,29 @@ export const LAUNCHER_CATALOG_KEYS = Object.freeze({
 });
 
 async function buildLauncherCatalog(root) {
+  const selectedKeys = Object.fromEntries(
+    Object.entries(LAUNCHER_CATALOG_KEYS).map(([namespace, keys]) => [namespace, new Set(keys)]),
+  );
+  for (const file of LAUNCHER_NAVIGATION_FILES) {
+    const source = await fs.readFile(path.join(root, 'game', file), 'utf8');
+    for (const match of source.matchAll(
+      /['"`](common|interface|gameplay|controllerEditor|errors):([A-Za-z0-9_.]+)['"`]/g,
+    )) {
+      (selectedKeys[match[1]] ??= new Set()).add(match[2]);
+    }
+  }
+  // The shared field editor selects a finite key by edit action. Its own small
+  // namespace is included in full; unrelated application namespaces are not.
+  selectedKeys.controllerEditor = null;
   const resources = {};
   for (const language of ['en', 'uk']) {
     resources[language] = {};
-    for (const [namespace, keys] of Object.entries(LAUNCHER_CATALOG_KEYS)) {
+    for (const [namespace, selectedNames] of Object.entries(selectedKeys)) {
       const source = JSON.parse(
         await fs.readFile(path.join(root, 'game/locales', language, namespace + '.json'), 'utf8'),
       );
       const selected = {};
+      const keys = selectedNames ?? Object.keys(source);
       for (const key of keys) {
         if (!Object.hasOwn(source, key))
           throw new Error(
@@ -52,6 +87,32 @@ async function buildLauncherCatalog(root) {
   );
 }
 
+/** Shared, bounded launcher input closure, reusable by branded edition launchers. */
+export async function buildLauncherNavigationFiles(root) {
+  const files = new Map();
+  for (const file of [
+    ...LAUNCHER_NAVIGATION_FILES,
+    'i18n/index.mjs',
+    'i18n/bootstrap.mjs',
+    'i18n/style.css',
+    'vendor/i18next-26.4.2.min.js',
+  ])
+    files.set(file, await fs.readFile(path.join(root, 'game', file)));
+  files.set('navigation.css', await fs.readFile(path.join(root, 'game/offline/navigation.css')));
+  files.set(
+    'i18n/content-registry.mjs',
+    Buffer.from(
+      '// The stable launcher has no authored game-content records.\nexport default Object.freeze({});\n',
+    ),
+  );
+  files.set('i18n/catalogs.mjs', await buildLauncherCatalog(root));
+  for (const [file, bytes] of files) {
+    if (bytes.length > LAUNCHER_FILE_LIMIT)
+      throw new Error('Frozen launcher exceeded its file budget: ' + file);
+  }
+  return files;
+}
+
 export async function addOfflineLauncher(root, entries, version, options = {}) {
   if (!entries.some((entry) => entry.name === 'game/installed-app.mjs')) return;
   const launcher = [];
@@ -67,13 +128,9 @@ export async function addOfflineLauncher(root, entries, version, options = {}) {
     ['installed-app.mjs', 'game/installed-app.mjs'],
     ['edition-context.mjs', 'game/edition-context.mjs'],
     ['profile-writer.mjs', 'game/profile-writer.mjs'],
-    ['i18n/index.mjs', 'game/i18n/index.mjs'],
-    ['i18n/bootstrap.mjs', 'game/i18n/bootstrap.mjs'],
-    ['i18n/style.css', 'game/i18n/style.css'],
-    ['vendor/i18next-26.4.2.min.js', 'game/vendor/i18next-26.4.2.min.js'],
   ])
     add(target, await fs.readFile(path.join(root, source)));
-  add('i18n/catalogs.mjs', await buildLauncherCatalog(root));
+  for (const [file, bytes] of await buildLauncherNavigationFiles(root)) add(file, bytes);
   for (const size of [180, 192, 512])
     add(
       'icon-' + size + '.png',
@@ -84,8 +141,8 @@ export async function addOfflineLauncher(root, entries, version, options = {}) {
     Buffer.from(
       JSON.stringify({
         id: './',
-        name: 'Reveal Line',
-        short_name: 'Reveal Line',
+        name: 'FPV / LINE',
+        short_name: 'FPV / LINE',
         start_url: './',
         scope: '../',
         display: 'fullscreen',

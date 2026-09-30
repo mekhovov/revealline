@@ -21,6 +21,45 @@ const pad = (index) => ({
   buttons: Array.from({ length: 16 }, () => ({ pressed: false, value: 0 })),
 });
 
+function visibleControl(f, id) {
+  const control = f.$(id);
+  assert.ok(control?.getClientRects().length, `${id} must be rendered`);
+  assert.equal(control.closest('[hidden],[inert]'), null, `${id} must be in the active menu`);
+  assert.equal(control.disabled, false, `${id} must be enabled`);
+  return control;
+}
+
+function activateMenu(f, id, input = 'controller') {
+  const control = visibleControl(f, id);
+  f.focus(id);
+  assert.equal(f.doc.activeElement, control);
+  if (input === 'controller') f.pulse(0, 0);
+  else if (input === 'keyboard') {
+    f.key('Enter', true, control);
+    f.key('Enter', false, control);
+  } else control.click();
+  f.frame(0);
+}
+
+function openSettings(f, category, input = 'controller') {
+  if (f.$('race-options-panel').hidden) activateMenu(f, 'race-options', input);
+  activateMenu(f, `race-settings-tab-${category}`, input);
+  assert.equal(f.$(`race-settings-panel-${category}`).hidden, false);
+  assert.equal(f.$(`race-settings-panel-${category}`).inert, false);
+}
+
+function openSetup(f, input = 'controller') {
+  openSettings(f, 'gameplay', input);
+  activateMenu(f, 'race-focus', input);
+  visibleControl(f, 'race-level');
+}
+
+function closeSettings(f, input = 'controller') {
+  activateMenu(f, 'race-options-back', input);
+  assert.equal(f.$('race-options-panel').hidden, true);
+  visibleControl(f, 'race-start');
+}
+
 // Join the actual menu activation when Next prepares a fresh exact picture.
 // Keep controller dispatch and every core route/checkpoint assertion unchanged.
 async function nextAction(f, activate) {
@@ -79,11 +118,7 @@ test('actual select previews cancel without replacing the duel and commit once t
   f.join(0);
   const run = f.renders[0],
     original = f.$('race-level').value;
-  f.$('race-optional-setup').open = true;
-  f.$('race-optional-setup').setAttribute('open', '');
-  f.focus('race-focus');
-  f.pulse(0, 0);
-  f.frame();
+  openSetup(f);
   f.focus('race-level');
   f.pulse(0, 0);
   f.pulse(0, 13);
@@ -123,12 +158,8 @@ test('actual select previews cancel without replacing the duel and commit once t
 test('Back and Menu cancel previews or focus the primary action without starting or resetting', async (t) => {
   const f = await page(t, { pads: [pad(0)] });
   f.join(0);
-  f.$('race-optional-setup').open = true;
-  f.$('race-optional-setup').setAttribute('open', '');
   for (const button of [1, 9]) {
-    f.focus('race-focus');
-    f.pulse(0, 0);
-    f.frame();
+    openSetup(f);
     f.focus('race-turn');
     f.pulse(0, 0);
     f.pulse(0, 13);
@@ -139,6 +170,7 @@ test('Back and Menu cancel previews or focus the primary action without starting
     assert.equal(f.doc.activeElement.id, 'race-focus');
     assert.equal(f.state(), 'ready');
   }
+  closeSettings(f);
   f.focus('race-start');
   f.pulse(0, 0);
   f.frame();
@@ -160,11 +192,7 @@ test('Back and Menu cancel previews or focus the primary action without starting
 test('native menu focus cancels a held D-pad repeat until neutral without clearing either flight keyboard', async (t) => {
   const f = await page(t, { pads: [pad(0), pad(1)] });
   f.join(0);
-  f.$('race-optional-setup').open = true;
-  f.$('race-optional-setup').setAttribute('open', '');
-  f.focus('race-focus');
-  f.pulse(0, 0);
-  f.frame();
+  openSetup(f);
   f.button(0, 13, true);
   f.frame();
   f.focus('race-class');
@@ -174,6 +202,7 @@ test('native menu focus cancels a held D-pad repeat until neutral without cleari
   f.button(0, 13, false);
   f.frame();
   f.pulse(0, 1);
+  closeSettings(f);
   f.focus('race-start');
   f.pulse(0, 0);
   f.frame();
@@ -307,11 +336,7 @@ test('persisted return and Ready Escape preserve the true state and cancel a pen
   f.frame();
   assert.equal(f.state(), 'ready');
   assert.match(f.$('race-start').textContent, /Start race/);
-  f.$('race-optional-setup').open = true;
-  f.$('race-optional-setup').setAttribute('open', '');
-  f.focus('race-focus');
-  f.pulse(0, 0);
-  f.frame();
+  openSetup(f);
   f.focus('race-level');
   f.pulse(0, 0);
   assert.equal(f.editors().length, 1);
@@ -321,6 +346,7 @@ test('persisted return and Ready Escape preserve the true state and cancel a pen
   assert.equal(f.state(), 'ready');
   assert.equal(f.tick(), 0);
   f.pulse(0, 1);
+  closeSettings(f);
   f.focus('race-start');
   f.pulse(0, 0);
   f.frame();
@@ -353,15 +379,7 @@ for (const adapter of ['keyboard', 'controller']) {
       },
     });
     if (adapter === 'controller') f.join(0);
-    if (adapter === 'controller') {
-      f.focus('race-options');
-      f.pulse(0, 0);
-      f.focus('race-settings-tab-display');
-      f.pulse(0, 0);
-    } else {
-      f.$('race-options').click();
-      f.$('race-settings-tab-display').click();
-    }
+    openSettings(f, 'display', adapter);
     f.frame();
     const before = f.checkpoint();
     const next = () => {
@@ -391,7 +409,8 @@ for (const adapter of ['keyboard', 'controller']) {
         }
       }
     };
-    f.focus('race-reduced');
+    visibleControl(f, 'race-menu-ornaments');
+    f.focus('race-menu-ornaments');
     next();
     assert.equal(f.doc.activeElement.id, 'race-journey-reactions-enabled');
     assert.equal(f.doc.activeElement.checked, true);
@@ -406,7 +425,7 @@ for (const adapter of ['keyboard', 'controller']) {
     assert.equal(writes.length, 2);
     assert.equal(JSON.parse(values.get(preferenceKey)).enabled, false);
     assert.equal(f.$('race-journey-reactions-retry').hidden, true);
-    f.focus('race-reduced');
+    f.focus('race-menu-ornaments');
     next();
     next();
     assert.notEqual(
@@ -437,21 +456,28 @@ test('API errors and unsupported pads remain usable with keyboard and truthful R
 for (const turnPolicy of ['immediate', 'grid-center']) {
   test(`${turnPolicy}: actual Sentinel round win and First to two rematch retain legal core route results`, async (t) => {
     const f = await page(t, { campaign: sentinel.campaigns[0], turnPolicy, pads: [pad(0)] });
-    f.$('race-focus').click();
+    openSetup(f, 'pointer');
     f.$('race-format').value = 'first-to-two';
     await f.$('race-format').onchange();
     f.$('race-setup-back').click();
+    closeSettings(f, 'pointer');
     f.frame(0);
     f.join(0);
     const route = sentinelRoutes.routes.find(
       (r) => r.variant === 'ordinary' && r.classId === 'scout' && r.turnPolicy === turnPolicy,
     );
     for (let round = 1; round <= 2; round++) {
+      // Settings Back restores its opener. Deliberately choose Start rather
+      // than assuming controller ownership discards that native focus.
+      visibleControl(f, 'race-start');
+      f.focus('race-start');
+      assert.equal(f.doc.activeElement, f.$('race-start'));
       await nextAction(f, () => {
         f.button(0, 0, true);
         f.frame();
         f.button(0, 0, false);
       });
+      assert.equal(f.state(), 'running', 'The route starts only after the real Start action.');
       assert.equal(f.tick(), 0);
       const oracle = createRun(
         applyGameplayTuning(sentinel.campaigns[0].levels[0], resolveGameplayTuning()),
@@ -546,8 +572,9 @@ test('native checkboxes and both held touch pads stay independent after leaving 
     f.$(`race-touch-${i}`).value = 'always';
     f.$(`race-touch-${i}`).emit('change');
   }
-  f.$('race-settings-tab-display').click();
+  f.$('race-settings-tab-accessibility').click();
   f.frame();
+  visibleControl(f, 'race-reduced');
   f.focus('race-reduced');
   f.pulse(0, 0);
   assert.equal(f.$('race-reduced').checked, true);

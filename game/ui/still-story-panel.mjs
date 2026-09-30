@@ -403,33 +403,37 @@ export function createStillStoryPanel({
     if (disposed || busy || !ready || !videoFile.files?.[0]) return false;
     invalidate();
     const file = videoFile.files[0];
-    return guarded(t('interface:inspectingVideoSilently'), async (signal, check) => {
-      let next = null;
-      try {
-        next = await openVideoPosterSource(file, { ...inspection, URLImpl, signal });
-        check();
-        video?.dispose();
-        video = next;
-        next = null;
-        releaseFrame();
-        start.value = '0';
-        end.value = String(Math.min(video.info.durationSeconds, 30));
-        frameTime.value = '0';
-        for (const n of [start, end, frameTime]) n.max = String(video.info.durationSeconds);
-        for (const { numberField, range } of timeRanges) {
-          range.max = String(video.info.durationSeconds);
-          range.value = numberField.value;
+    return guarded(
+      t('interface:inspectingVideoSilently'),
+      async (signal, check) => {
+        let next = null;
+        try {
+          next = await openVideoPosterSource(file, { ...inspection, URLImpl, signal });
+          check();
+          video?.dispose();
+          video = next;
+          next = null;
+          releaseFrame();
+          start.value = '0';
+          end.value = String(Math.min(video.info.durationSeconds, 30));
+          frameTime.value = '0';
+          for (const n of [start, end, frameTime]) n.max = String(video.info.durationSeconds);
+          for (const { numberField, range } of timeRanges) {
+            range.max = String(video.info.durationSeconds);
+            range.value = numberField.value;
+          }
+          localizedText(
+            sourceFacts,
+            () =>
+              `${video.info.width} × ${video.info.height} · ${video.info.durationSeconds} seconds · ${video.info.bytes} original bytes`,
+          );
+          setStatus(t('interface:videoInspectedChooseASegmentAndPrepareAnOptionalStory'));
+        } finally {
+          next?.dispose();
         }
-        localizedText(
-          sourceFacts,
-          () =>
-            `${video.info.width} × ${video.info.height} · ${video.info.durationSeconds} seconds · ${video.info.bytes} original bytes`,
-        );
-        setStatus(t('interface:videoInspectedChooseASegmentAndPrepareAnOptionalStory'));
-      } finally {
-        next?.dispose();
-      }
-    });
+      },
+      { opener: inspectButton },
+    );
   }
   function number(input) {
     required(input.value.trim() !== '', t('interface:enterAnExplicitTimeInSeconds'));
@@ -442,36 +446,40 @@ export function createStillStoryPanel({
     invalidate();
     const owned = video,
       s = getSelection();
-    return guarded(t('interface:capturingTheRequestedFrameSilently'), async (signal, check) => {
-      const captured = await owned.capture(
-        number(frameTime),
-        { id: makeId(), provenance: s.provenance },
-        { signal },
-      );
-      check();
-      let url = null;
-      try {
-        url = URLImpl.createObjectURL(captured.blob);
-        check();
-        const adopted = await onCaptured(captured, s, signal, check);
-        check.adoptCapturedDraft(adopted);
-        check();
-        releaseFrame();
-        capturedURL = url;
-        url = null;
-        image.src = capturedURL;
-        image.hidden = false;
-        const facts = captured.capture;
-        localizedText(
-          frameFacts,
-          () =>
-            `Requested ${facts.requestedTime}s · ${facts.observedMediaTime === null ? 'observed timestamp unavailable' : `observed ${facts.observedMediaTime}s`} · playhead ${facts.playheadTime}s (${facts.timingEvidence}).`,
+    return guarded(
+      t('interface:capturingTheRequestedFrameSilently'),
+      async (signal, check) => {
+        const captured = await owned.capture(
+          number(frameTime),
+          { id: makeId(), provenance: s.provenance },
+          { signal },
         );
-        setStatus(t('interface:capturedPictureDraftSaveItsAssignmentThenPrepareItsStory'));
-      } finally {
-        if (url !== null) URLImpl.revokeObjectURL(url);
-      }
-    });
+        check();
+        let url = null;
+        try {
+          url = URLImpl.createObjectURL(captured.blob);
+          check();
+          const adopted = await onCaptured(captured, s, signal, check);
+          check.adoptCapturedDraft(adopted);
+          check();
+          releaseFrame();
+          capturedURL = url;
+          url = null;
+          image.src = capturedURL;
+          image.hidden = false;
+          const facts = captured.capture;
+          localizedText(
+            frameFacts,
+            () =>
+              `Requested ${facts.requestedTime}s · ${facts.observedMediaTime === null ? 'observed timestamp unavailable' : `observed ${facts.observedMediaTime}s`} · playhead ${facts.playheadTime}s (${facts.timingEvidence}).`,
+          );
+          setStatus(t('interface:capturedPictureDraftSaveItsAssignmentThenPrepareItsStory'));
+        } finally {
+          if (url !== null) URLImpl.revokeObjectURL(url);
+        }
+      },
+      { opener: captureButton },
+    );
   }
   async function prepare(existing) {
     if (disposed || busy || !ready) return false;
@@ -482,61 +490,68 @@ export function createStillStoryPanel({
       owned = video,
       caption = description.value,
       selectedHistory = history.value;
-    return guarded(t('interface:preparingTheExactStoryAndBinding'), async (signal, check) => {
-      let review = null;
-      try {
-        if (existing) {
-          const chosen = baseline.document.stories.find(
-            (p) =>
-              JSON.stringify([p.id, p.revision]) === selectedHistory &&
-              canonicalJSON(p.picturePin) === canonicalJSON(s.pin),
-          );
-          required(chosen, t('interface:chooseAnExactSavedStory'));
-          review = await storyStore.stageBinding(
-            { picturePin: s.pin, story: { id: chosen.id, revision: chosen.revision } },
-            { ...inspection, expectedGeneration: baseline.generation, signal },
-          );
-        } else {
-          required(owned, t('interface:inspectAVideoFirst'));
-          const descriptor = {
-            format: VICTORY_STORY_FORMAT,
-            id: makeId(),
-            revision: 1,
-            picturePin: s.pin,
-            source: owned.info,
-            segment: { startSeconds: number(start), endSeconds: number(end) },
-            description: caption,
-          };
-          const incoming = await changeStoredStoryBinding(
-            {
-              format: 'revealline-story-storage.v1',
-              stories: [descriptor],
-              originals: [owned.info.sha256],
-            },
-            { picturePin: s.pin, story: { id: descriptor.id, revision: descriptor.revision } },
-            s.saved.document,
-            { signal },
-          );
+    return guarded(
+      t('interface:preparingTheExactStoryAndBinding'),
+      async (signal, check) => {
+        let review = null;
+        try {
+          if (existing) {
+            const chosen = baseline.document.stories.find(
+              (p) =>
+                JSON.stringify([p.id, p.revision]) === selectedHistory &&
+                canonicalJSON(p.picturePin) === canonicalJSON(s.pin),
+            );
+            required(chosen, t('interface:chooseAnExactSavedStory'));
+            review = await storyStore.stageBinding(
+              { picturePin: s.pin, story: { id: chosen.id, revision: chosen.revision } },
+              { ...inspection, expectedGeneration: baseline.generation, signal },
+            );
+          } else {
+            required(owned, t('interface:inspectAVideoFirst'));
+            const descriptor = {
+              format: VICTORY_STORY_FORMAT,
+              id: makeId(),
+              revision: 1,
+              picturePin: s.pin,
+              source: owned.info,
+              segment: { startSeconds: number(start), endSeconds: number(end) },
+              description: caption,
+            };
+            const incoming = await changeStoredStoryBinding(
+              {
+                format: 'revealline-story-storage.v1',
+                stories: [descriptor],
+                originals: [owned.info.sha256],
+              },
+              { picturePin: s.pin, story: { id: descriptor.id, revision: descriptor.revision } },
+              s.saved.document,
+              { signal },
+            );
+            check();
+            review = await storyStore.stageRestore(
+              { document: incoming, assets: [{ sha256: owned.info.sha256, blob: owned.original }] },
+              { ...inspection, restoreBindings: true, signal },
+            );
+          }
           check();
-          review = await storyStore.stageRestore(
-            { document: incoming, assets: [{ sha256: owned.info.sha256, blob: owned.original }] },
-            { ...inspection, restoreBindings: true, signal },
+          required(
+            review.expectedGeneration === baseline.generation,
+            t('interface:storyHistoryChangedReloadAndPrepareAgain'),
           );
+          prepared = {
+            review,
+            selection: selectionKey(s),
+            ticket: s.ticket,
+            opener: existing ? prepareSaved : prepareButton,
+          };
+          review = null;
+          setStatus(`Ready to save for ${s.caption}. No binding has changed.`);
+        } finally {
+          if (review) await storyStore.cancel(review);
         }
-        check();
-        required(
-          review.expectedGeneration === baseline.generation,
-          t('interface:storyHistoryChangedReloadAndPrepareAgain'),
-        );
-        prepared = { review, selection: selectionKey(s), ticket: s.ticket };
-        review = null;
-        setStatus(`Ready to save for ${s.caption}. No binding has changed.`);
-        saveButton.disabled = false;
-        saveButton.focus();
-      } finally {
-        if (review) await storyStore.cancel(review);
-      }
-    });
+      },
+      { opener: existing ? prepareSaved : prepareButton, successTo: saveButton },
+    );
   }
   async function notified(result, check) {
     check();
@@ -553,23 +568,27 @@ export function createStillStoryPanel({
     if (disposed || busy || !ready || !prepared) return false;
     const chosen = prepared;
     prepared = null;
-    return guarded(t('interface:savingTheReviewedStoryBinding'), async (signal, check) => {
-      try {
-        required(
-          chosen.selection === selectionKey(getSelection()),
-          t('interface:pictureSelectionChangedPrepareAgain'),
-        );
-        const result = await catalog.withCurrent(
-          chosen.ticket,
-          () => storyStore.commit(chosen.review, { signal }),
-          { signal },
-        );
-        await notified(result, check);
-        releaseDownload();
-      } finally {
-        await storyStore.cancel(chosen.review);
-      }
-    });
+    return guarded(
+      t('interface:savingTheReviewedStoryBinding'),
+      async (signal, check) => {
+        try {
+          required(
+            chosen.selection === selectionKey(getSelection()),
+            t('interface:pictureSelectionChangedPrepareAgain'),
+          );
+          const result = await catalog.withCurrent(
+            chosen.ticket,
+            () => storyStore.commit(chosen.review, { signal }),
+            { signal },
+          );
+          await notified(result, check);
+          releaseDownload();
+        } finally {
+          await storyStore.cancel(chosen.review);
+        }
+      },
+      { opener: saveButton, restoreTo: chosen.opener, successTo: history },
+    );
   }
   async function clear() {
     if (disposed || busy || !ready) return false;
@@ -577,58 +596,65 @@ export function createStillStoryPanel({
     const s = getSelection();
     if (!s?.pin || !metadata) return false;
     const generation = metadata.generation;
-    return guarded(t('interface:clearingThisOptionalStoryBinding'), async (signal, check) => {
-      let review = null;
-      try {
-        review = await storyStore.stageBinding(
-          { picturePin: s.pin, story: null },
-          { ...inspection, expectedGeneration: generation, signal },
-        );
-        check();
-        const result = await catalog.withCurrent(
-          s.ticket,
-          () => storyStore.commit(review, { signal }),
-          { signal },
-        );
-        review = null;
-        await notified(result, check);
-      } finally {
-        if (review) await storyStore.cancel(review);
-      }
-    });
+    return guarded(
+      t('interface:clearingThisOptionalStoryBinding'),
+      async (signal, check) => {
+        let review = null;
+        try {
+          review = await storyStore.stageBinding(
+            { picturePin: s.pin, story: null },
+            { ...inspection, expectedGeneration: generation, signal },
+          );
+          check();
+          const result = await catalog.withCurrent(
+            s.ticket,
+            () => storyStore.commit(review, { signal }),
+            { signal },
+          );
+          review = null;
+          await notified(result, check);
+        } finally {
+          if (review) await storyStore.cancel(review);
+        }
+      },
+      { opener: clearButton },
+    );
   }
   async function prepareDownload() {
     if (disposed || busy || !ready || !metadata) return false;
     invalidate();
-    return guarded(t('interface:verifyingStoryOriginalsForDownload'), async (signal, check) => {
-      const inventory = await storyStore.exportInventory({ signal }),
-        still = await store.readMetadata({ signal });
-      check();
-      activity?.update({
-        message: t('interface:verifyingAndPackingStoryOriginals'),
-        stage: 'exporting',
-      });
-      const blob = await exportStoryBundle(inventory.document, inventory.assets, {
-        still: still.document,
-        signal,
-      });
-      check();
-      let url = null;
-      try {
-        url = URLImpl.createObjectURL(blob);
+    return guarded(
+      t('interface:verifyingStoryOriginalsForDownload'),
+      async (signal, check) => {
+        const inventory = await storyStore.exportInventory({ signal }),
+          still = await store.readMetadata({ signal });
         check();
-        downloadURL = url;
-        downloadBlob = blob;
-        url = null;
-        download.href = downloadURL;
-        download.download = 'RevealLine-stories.rlstory';
-        download.hidden = false;
-        setStatus(`Story backup prepared (${blob.size} bytes). Choose Download story originals.`);
-        download.focus();
-      } finally {
-        if (url !== null) URLImpl.revokeObjectURL(url);
-      }
-    });
+        activity?.update({
+          message: t('interface:verifyingAndPackingStoryOriginals'),
+          stage: 'exporting',
+        });
+        const blob = await exportStoryBundle(inventory.document, inventory.assets, {
+          still: still.document,
+          signal,
+        });
+        check();
+        let url = null;
+        try {
+          url = URLImpl.createObjectURL(blob);
+          check();
+          downloadURL = url;
+          downloadBlob = blob;
+          url = null;
+          download.href = downloadURL;
+          download.download = 'fpv-line-stories.rlstory';
+          download.hidden = false;
+          setStatus(`Story backup prepared (${blob.size} bytes). Choose Download story originals.`);
+        } finally {
+          if (url !== null) URLImpl.revokeObjectURL(url);
+        }
+      },
+      { opener: downloadPrepare, successTo: download },
+    );
   }
   download.onclick = (event) => {
     if (!downloadURL || busy || disposed) {
@@ -641,7 +667,7 @@ export function createStillStoryPanel({
       const own = downloadBlob,
         id = serial;
       try {
-        const result = requestDownload({ blob: own, filename: 'RevealLine-stories.rlstory' });
+        const result = requestDownload({ blob: own, filename: 'fpv-line-stories.rlstory' });
         Promise.resolve(result).catch((error) => {
           if (!disposed && id === serial) setStatus(`Download request failed: ${message(error)}`);
         });
@@ -656,36 +682,38 @@ export function createStillStoryPanel({
     const file = bundleFile.files[0],
       restore = mode.value === 'restore',
       ticket = getSelection()?.ticket;
-    return guarded(t('interface:reviewingCompleteStoryOriginals'), async (signal, check) => {
-      let review = null;
-      try {
-        const imported = await importStoryBundle(file, { ...inspection, signal });
-        check();
-        review = await prepareStoryBundleRestore(imported, {
-          store: storyStore,
-          ...inspection,
-          restoreBindings: restore,
-          signal,
-        });
-        check();
-        reviewed = { review, file, restore, ticket };
-        review = null;
-        localizedText(reviewText, () =>
-          t('gameplay:availableOriginalsRetainedStoriesNothingRestoredYet', {
-            value1: reviewed.review.originals,
-            value2: reviewed.review.document.stories.length,
-            value3: restore
-              ? t('interface:incomingBindingsWillBeRestored')
-              : t('interface:currentBindingsWillBeKept'),
-          }),
-        );
-        bundleRestore.disabled = false;
-        bundleRestore.focus();
-        setStatus(t('interface:reviewCompleteRestoreExplicitlyToSaveThisGenerationAndPolicy'));
-      } finally {
-        if (review) await cancelStoryBundleRestore(review);
-      }
-    });
+    return guarded(
+      t('interface:reviewingCompleteStoryOriginals'),
+      async (signal, check) => {
+        let review = null;
+        try {
+          const imported = await importStoryBundle(file, { ...inspection, signal });
+          check();
+          review = await prepareStoryBundleRestore(imported, {
+            store: storyStore,
+            ...inspection,
+            restoreBindings: restore,
+            signal,
+          });
+          check();
+          reviewed = { review, file, restore, ticket };
+          review = null;
+          localizedText(reviewText, () =>
+            t('gameplay:availableOriginalsRetainedStoriesNothingRestoredYet', {
+              value1: reviewed.review.originals,
+              value2: reviewed.review.document.stories.length,
+              value3: restore
+                ? t('interface:incomingBindingsWillBeRestored')
+                : t('interface:currentBindingsWillBeKept'),
+            }),
+          );
+          setStatus(t('interface:reviewCompleteRestoreExplicitlyToSaveThisGenerationAndPolicy'));
+        } finally {
+          if (review) await cancelStoryBundleRestore(review);
+        }
+      },
+      { opener: bundleReview, successTo: bundleRestore },
+    );
   }
   async function restoreBundle() {
     if (disposed || busy || !ready || !reviewed) return false;

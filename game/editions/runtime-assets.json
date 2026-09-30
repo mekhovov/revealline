@@ -97,5 +97,468 @@
     "publication": "public",
     "approved": true,
     "dependencies": []
+  },
+  {
+    "id": "runtime-departure-license",
+    "path": "game/ui/fonts/departure-mono/LICENSE",
+    "sha256": "b65e42750f3cb65437a97f4dfd781c58f199259949db2341012be60e32500e83",
+    "bytes": 4357,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "runtime-departure-provenance",
+    "path": "game/ui/fonts/departure-mono/provenance.json",
+    "sha256": "36932e33e4f97ee9e7887c2f3297d21cc82e4fc855209788d07ac53abea5c588",
+    "bytes": 828,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "runtime-departure-source",
+    "path": "game/ui/fonts/departure-mono/DepartureMono-Regular.otf",
+    "sha256": "4d53f663155cf8bf7ffc8e688776e719625f7bbb80a8d90073438b249261a2e0",
+    "bytes": 84480,
+    "publication": "public",
+    "approved": true,
+    "dependencies": ["runtime-departure-license"]
+  },
+  {
+    "id": "runtime-departure",
+    "path": "game/ui/fonts/departure-mono/DepartureMono-Regular.woff2",
+    "sha256": "5b4fed1daa90708aa9c6ee1190abca9dc22164a1c1def0020386e46b61038cfb",
+    "bytes": 22496,
+    "publication": "public",
+    "approved": true,
+    "dependencies": [
+      "runtime-departure-license",
+      "runtime-departure-provenance",
+      "runtime-departure-source"
+    ]
+  },
+  {
+    "id": "runtime-menu-scene-provenance",
+    "path": "game/ui/art/menu-scenes/provenance.json",
+    "sha256": "baaee31dedd103ee88a84776531469202b17cee5f0c735a056ea165c76028df3",
+    "bytes": 21119,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "runtime-menu-scene-fpv",
+    "path": "game/ui/art/menu-scenes/fpv.webp",
+    "sha256": "19f43cb1602e59a692d416d36d715e664765eecc24784b3b3e6516651c53df45",
+    "bytes": 514190,
+    "publication": "public",
+    "approved": true,
+    "dependencies": ["runtime-menu-scene-provenance"]
+  },
+  {
+    "id": "runtime-menu-scene-fpv-portrait",
+    "path": "game/ui/art/menu-scenes/fpv-portrait.webp",
+    "sha256": "3d651795fa7623b0200fadaed05a1127109a9c9c6cbd44d183a92a8e12c2ee24",
+    "bytes": 482136,
+    "publication": "public",
+    "approved": true,
+    "dependencies": ["runtime-menu-scene-provenance"]
+  },
+  {
+    "id": "runtime-menu-scene-ukraine",
+    "path": "game/ui/art/menu-scenes/ukraine.webp",
+    "sha256": "7db1eeb0dffc03405a013a810aabcb4e31e099c06b1a739e3f801acac3a615d2",
+    "bytes": 475598,
+    "publication": "public",
+    "approved": true,
+    "dependencies": ["runtime-menu-scene-provenance"]
+  },
+  {
+    "id": "runtime-menu-scene-retro",
+    "path": "game/ui/art/menu-scenes/retro.webp",
+    "sha256": "2d18104ba075c38e5e018b632ff8a7009697804dd1827725daa196057c680608",
+    "bytes": 554888,
+    "publication": "public",
+    "approved": true,
+    "dependencies": ["runtime-menu-scene-provenance"]
+  },
+  {
+    "id": "runtime-menu-scene-coupa",
+    "path": "game/ui/art/menu-scenes/coupa.webp",
+    "sha256": "393ebd9f3cf395598a79a43cd1277adfe4381cee177549be38fc027ec76afdc1",
+    "bytes": 389078,
+    "publication": "public",
+    "approved": true,
+    "dependencies": ["runtime-menu-scene-provenance"]
+  },
+  {
+    "id": "runtime-menu-scene-coupa-village",
+    "path": "game/ui/art/menu-scenes/coupa-village.webp",
+    "sha256": "b7a4113a200a956e207188e5e66a472539bbe5d29b7009039bc79e90ca551192",
+    "bytes": 540732,
+    "publication": "public",
+    "approved": true,
+    "dependencies": ["runtime-menu-scene-provenance"]
+  },
+  {
+    "id": "runtime-menu-scene-coupa-spend-in-motion-theme",
+    "path": "game/ui/art/menu-scenes/coupa-spend-in-motion-theme.webp",
+    "sha256": "22a53a8e40d2b7c8788d89d264ac946b0465895eb8e407b7b0745f5efdc0eff8",
+    "bytes": 700570,
+    "publication": "public",
+    "approved": true,
+    "dependencies": ["runtime-menu-scene-provenance"]
+  },
+  {
+    "id": "runtime-menu-scene-coupa-inside-village-theme",
+    "path": "game/ui/art/menu-scenes/coupa-inside-village-theme.webp",
+    "sha256": "01b291d818f0839722c02c5b72592ee752e0fda4d605a4cd048be43c7a21b34a",
+    "bytes": 356686,
+    "publication": "public",
+    "approved": true,
+    "dependencies": ["runtime-menu-scene-provenance"]
+  },
+  {
+    "id": "runtime-menu-scene-coupa-source-to-pay-theme",
+    "path": "game/ui/art/menu-scenes/coupa-source-to-pay-theme.webp",
+    "sha256": "fd4b66a8df11db0504aa05fb6000511c307e46b8bac68e461e3ad396bb8a6066",
+    "bytes": 375148,
+    "publication": "public",
+    "approved": true,
+    "dependencies": ["runtime-menu-scene-provenance"]
+  },
+  {
+    "id": "runtime-menu-scene-coupa-product-operations-theme",
+    "path": "game/ui/art/menu-scenes/coupa-product-operations-theme.webp",
+    "sha256": "2a58390914ff3bba6b21d68026a6cd21c5505de37d443f3e6760caba29deb401",
+    "bytes": 405702,
+    "publication": "public",
+    "approved": true,
+    "dependencies": ["runtime-menu-scene-provenance"]
+  },
+  {
+    "id": "runtime-menu-scene-coupa-developer-integration-theme",
+    "path": "game/ui/art/menu-scenes/coupa-developer-integration-theme.webp",
+    "sha256": "1da45a8b55412741155b8d10bb85e6a339cd95304eb253276669c2f8e707cadb",
+    "bytes": 612326,
+    "publication": "public",
+    "approved": true,
+    "dependencies": ["runtime-menu-scene-provenance"]
+  },
+  {
+    "id": "runtime-menu-scene-droneaid-community",
+    "path": "game/ui/art/menu-scenes/droneaid-community.webp",
+    "sha256": "925b826439a7c6029f87ddbe73a5182cce071ffbd992f2b639b4f2361da878c1",
+    "bytes": 280518,
+    "publication": "public",
+    "approved": true,
+    "dependencies": ["runtime-menu-scene-provenance"]
+  },
+  {
+    "id": "runtime-menu-scene-droneaid-nl-community",
+    "path": "game/ui/art/menu-scenes/droneaid-nl-community.webp",
+    "sha256": "27b8f8e60d4c95d662d3a6073fdce17930f176267634260adf4a718eb7a42262",
+    "bytes": 408122,
+    "publication": "public",
+    "approved": true,
+    "dependencies": ["runtime-menu-scene-provenance"]
+  },
+  {
+    "id": "runtime-menu-scene-droneaid-nl-workshop-lights-theme",
+    "path": "game/ui/art/menu-scenes/droneaid-nl-workshop-lights-theme.webp",
+    "sha256": "7ffb886cc805e0f20073ee3c48665210620b9d59efe0264b8230fba968ef3193",
+    "bytes": 258060,
+    "publication": "public",
+    "approved": true,
+    "dependencies": ["runtime-menu-scene-provenance"]
+  },
+  {
+    "id": "runtime-menu-scene-droneaid-nl-parts-in-motion-theme",
+    "path": "game/ui/art/menu-scenes/droneaid-nl-parts-in-motion-theme.webp",
+    "sha256": "ffe4a0d4b50cc3e4bb50dec8c4457f38abb1a1b99b196809e12ee78f1eb6cbf1",
+    "bytes": 273258,
+    "publication": "public",
+    "approved": true,
+    "dependencies": ["runtime-menu-scene-provenance"]
+  },
+  {
+    "id": "runtime-menu-scene-droneaid-nl-makers-together-theme",
+    "path": "game/ui/art/menu-scenes/droneaid-nl-makers-together-theme.webp",
+    "sha256": "8cf01b27f85fe3334ad3dda904bac757e6aa6f8fd244d5b0164e1a9394453c80",
+    "bytes": 266786,
+    "publication": "public",
+    "approved": true,
+    "dependencies": ["runtime-menu-scene-provenance"]
+  },
+  {
+    "id": "runtime-menu-scene-droneaid-nl-careful-handoff-theme",
+    "path": "game/ui/art/menu-scenes/droneaid-nl-careful-handoff-theme.webp",
+    "sha256": "d48114be51a7e8114238cfa4473bd84d8434ee19e20a9ceb94164fd0b086bbf6",
+    "bytes": 259130,
+    "publication": "public",
+    "approved": true,
+    "dependencies": ["runtime-menu-scene-provenance"]
+  },
+  {
+    "id": "runtime-menu-scene-droneaid-nl-signals-of-support-theme",
+    "path": "game/ui/art/menu-scenes/droneaid-nl-signals-of-support-theme.webp",
+    "sha256": "e8467ef9b613f8ca1fdadab5be8b2a121a6abd6732aa2c2760f8bbe37d9df401",
+    "bytes": 230008,
+    "publication": "public",
+    "approved": true,
+    "dependencies": ["runtime-menu-scene-provenance"]
+  },
+  {
+    "id": "runtime-menu-scene-droneaid-nl-shared-horizon-theme",
+    "path": "game/ui/art/menu-scenes/droneaid-nl-shared-horizon-theme.webp",
+    "sha256": "305eef95c78ec8cbd2b7000fde60aaeccd901ccf2bb0dddaf0b5ef943367affa",
+    "bytes": 243248,
+    "publication": "public",
+    "approved": true,
+    "dependencies": ["runtime-menu-scene-provenance"]
+  },
+  {
+    "id": "runtime-analog-noise-atlas",
+    "path": "game/ui/art/menu-scenes/analog-noise-atlas.png",
+    "sha256": "c2d184ff126006479ee8f18809e2f5c0c83e1793f61339e257b48505ee02921d",
+    "bytes": 147343,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "runtime-fpv-line-provenance",
+    "path": "game/ui/art/identity/fpv-line/provenance.json",
+    "sha256": "49c546e9d2111bbcf988fc8f084f2ad06465f533d1ca502ef20b0b32e9460eb7",
+    "bytes": 3489,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "runtime-fpv-line-install-recipe",
+    "path": "game/ui/art/identity/fpv-line/install-icons.json",
+    "sha256": "20e698a91aa34123672fa9e8947009fabf8b53948fa4412e2abb9cd4347308b6",
+    "bytes": 1691,
+    "publication": "public",
+    "approved": true,
+    "dependencies": ["runtime-fpv-line-provenance"]
+  },
+  {
+    "id": "runtime-fpv-line-wordmark",
+    "path": "game/ui/art/identity/fpv-line/wordmark.png",
+    "sha256": "1a0e6083ddc1147f20b374178c68618c4fc2ea1cb915664178f371ec055cc298",
+    "bytes": 485216,
+    "publication": "public",
+    "approved": true,
+    "dependencies": ["runtime-fpv-line-provenance"]
+  },
+  {
+    "id": "runtime-fpv-line-icon-16",
+    "path": "game/ui/art/identity/fpv-line/icon-16.png",
+    "sha256": "2a436d1404a2e0fef86ce2cb80fc0bbf866aea8fc038ab7b3390b52a29df86e5",
+    "bytes": 469,
+    "publication": "public",
+    "approved": true,
+    "dependencies": ["runtime-fpv-line-install-recipe"]
+  },
+  {
+    "id": "runtime-fpv-line-icon-32",
+    "path": "game/ui/art/identity/fpv-line/icon-32.png",
+    "sha256": "ca87e21a649eb91cd125b873af7f30ae9d252feaffe6edef7d3cfb21e2ad2c4b",
+    "bytes": 1386,
+    "publication": "public",
+    "approved": true,
+    "dependencies": ["runtime-fpv-line-install-recipe"]
+  },
+  {
+    "id": "runtime-fpv-line-icon-180",
+    "path": "game/ui/art/identity/fpv-line/icon-180.png",
+    "sha256": "a11433dc760210294c61f16191ba6ebdbd11143c7c0aa5b094cba2f94842571e",
+    "bytes": 29773,
+    "publication": "public",
+    "approved": true,
+    "dependencies": ["runtime-fpv-line-install-recipe"]
+  },
+  {
+    "id": "runtime-fpv-line-icon-192",
+    "path": "game/ui/art/identity/fpv-line/icon-192.png",
+    "sha256": "5bc0f892cc5c13a7b1564cca9ef3ee0799a38b7b5fb63ccc9d7559dc2bf3a34d",
+    "bytes": 33508,
+    "publication": "public",
+    "approved": true,
+    "dependencies": ["runtime-fpv-line-install-recipe"]
+  },
+  {
+    "id": "runtime-fpv-line-icon-512",
+    "path": "game/ui/art/identity/fpv-line/icon-512.png",
+    "sha256": "47f0661543ba686911027a8005c8b318c4f9146958f1736ee32fb056e5bfea91",
+    "bytes": 82577,
+    "publication": "public",
+    "approved": true,
+    "dependencies": ["runtime-fpv-line-install-recipe"]
+  },
+  {
+    "id": "runtime-menu-scene-droneaid-main-background",
+    "path": "game/ui/art/menu-scenes/droneaid-main-background.png",
+    "sha256": "836c883d4eee658aab610f113eb4fec34f40ed1c963b4a759c52ec37990a8515",
+    "bytes": 880307,
+    "publication": "public",
+    "approved": true,
+    "dependencies": ["runtime-menu-scene-provenance"]
+  },
+  {
+    "id": "runtime-droneaid-wordmark-light",
+    "path": "game/ui/art/menu-scenes/droneaid-wordmark-light.svg",
+    "sha256": "cecf8a67c455d4a7f931594e2ffc4481c473c3475a3316b8cdd876c39abb1e5b",
+    "bytes": 119252,
+    "publication": "public",
+    "approved": true,
+    "dependencies": ["runtime-menu-scene-provenance"]
+  },
+  {
+    "id": "runtime-menu-scene-fpv-versus",
+    "path": "game/ui/art/menu-scenes/fpv-versus.webp",
+    "sha256": "ad084d205c1d246309f8b8c841db0ba4d49fd9e82d65c8a4a851a99c51fe546a",
+    "bytes": 286552,
+    "publication": "public",
+    "approved": true,
+    "dependencies": ["runtime-menu-scene-provenance"]
+  },
+  {
+    "id": "runtime-menu-scene-fpv-versus-portrait",
+    "path": "game/ui/art/menu-scenes/fpv-versus-portrait.webp",
+    "sha256": "678fa69cdd4490d669ab941be176ee1ed495dac3e129e3889427ff42b32e5170",
+    "bytes": 285890,
+    "publication": "public",
+    "approved": true,
+    "dependencies": ["runtime-menu-scene-provenance"]
+  },
+  {
+    "id": "runtime-menu-scene-fpv-team",
+    "path": "game/ui/art/menu-scenes/fpv-team.webp",
+    "sha256": "989ed6ff4d81da4b41d850aa692eeae39330cb03fa6d4167efbb7652cf4b1c38",
+    "bytes": 361554,
+    "publication": "public",
+    "approved": true,
+    "dependencies": ["runtime-menu-scene-provenance"]
+  },
+  {
+    "id": "runtime-menu-scene-fpv-team-portrait",
+    "path": "game/ui/art/menu-scenes/fpv-team-portrait.webp",
+    "sha256": "658ebdb4b4088997cce3251a55f8409ed9f0514d379f46e125815fd5a94a43a2",
+    "bytes": 293974,
+    "publication": "public",
+    "approved": true,
+    "dependencies": ["runtime-menu-scene-provenance"]
+  },
+  {
+    "id": "runtime-menu-scene-ukraine-versus",
+    "path": "game/ui/art/menu-scenes/ukraine-versus.webp",
+    "sha256": "21d3e4a7dfd9abe379017dc1088ec875946c58a1a35c8a923ef1abec865d7ab6",
+    "bytes": 1887892,
+    "publication": "public",
+    "approved": true,
+    "dependencies": ["runtime-menu-scene-provenance"]
+  },
+  {
+    "id": "runtime-menu-scene-ukraine-versus-portrait",
+    "path": "game/ui/art/menu-scenes/ukraine-versus-portrait.webp",
+    "sha256": "c9eb5d49f8a9c5fab9969a4abfd0bf557ef2a8c28f415da2779687d1da9707ea",
+    "bytes": 579008,
+    "publication": "public",
+    "approved": true,
+    "dependencies": ["runtime-menu-scene-provenance"]
+  },
+  {
+    "id": "runtime-menu-scene-ukraine-team",
+    "path": "game/ui/art/menu-scenes/ukraine-team.webp",
+    "sha256": "c14e3169d45cdef51fcba3cee5da88a23071b861b7c906450cf5644e3df85569",
+    "bytes": 1848324,
+    "publication": "public",
+    "approved": true,
+    "dependencies": ["runtime-menu-scene-provenance"]
+  },
+  {
+    "id": "runtime-menu-scene-ukraine-team-portrait",
+    "path": "game/ui/art/menu-scenes/ukraine-team-portrait.webp",
+    "sha256": "7670db78d5d46fe4be95367ebb20c8ed2d39f007c501be621b5907d864164cfe",
+    "bytes": 546480,
+    "publication": "public",
+    "approved": true,
+    "dependencies": ["runtime-menu-scene-provenance"]
+  },
+  {
+    "id": "runtime-menu-scene-retro-versus",
+    "path": "game/ui/art/menu-scenes/retro-versus.webp",
+    "sha256": "587c3ca3efe91d906b1a5fa56993d125d0c533c11d7cfd15699bc12e59a37a20",
+    "bytes": 1929216,
+    "publication": "public",
+    "approved": true,
+    "dependencies": ["runtime-menu-scene-provenance"]
+  },
+  {
+    "id": "runtime-menu-scene-retro-versus-portrait",
+    "path": "game/ui/art/menu-scenes/retro-versus-portrait.webp",
+    "sha256": "a536925b458dfb1b0015328945e224eddf321ac877aa868fa9133d45617ccd8f",
+    "bytes": 580790,
+    "publication": "public",
+    "approved": true,
+    "dependencies": ["runtime-menu-scene-provenance"]
+  },
+  {
+    "id": "runtime-menu-scene-retro-team",
+    "path": "game/ui/art/menu-scenes/retro-team.webp",
+    "sha256": "0760ab82df934667efd69c14b778f4e6da862475db76ecf8fb8eacc6983e334b",
+    "bytes": 1937786,
+    "publication": "public",
+    "approved": true,
+    "dependencies": ["runtime-menu-scene-provenance"]
+  },
+  {
+    "id": "runtime-menu-scene-retro-team-portrait",
+    "path": "game/ui/art/menu-scenes/retro-team-portrait.webp",
+    "sha256": "3a235ff27b250595b6e95100bf7306d8962a4592ef6b02cc0ec690f4839de3a3",
+    "bytes": 545932,
+    "publication": "public",
+    "approved": true,
+    "dependencies": ["runtime-menu-scene-provenance"]
+  },
+  {
+    "id": "runtime-menu-scene-coupa-versus",
+    "path": "game/ui/art/menu-scenes/coupa-versus.webp",
+    "sha256": "7c10b3469f5bbabd6a704abb0900f9c9afd1d8755b830f2f0229c3370cf051dd",
+    "bytes": 1620118,
+    "publication": "public",
+    "approved": true,
+    "dependencies": ["runtime-menu-scene-provenance"]
+  },
+  {
+    "id": "runtime-menu-scene-coupa-versus-portrait",
+    "path": "game/ui/art/menu-scenes/coupa-versus-portrait.webp",
+    "sha256": "5e5aa3c392527b45757f4175639919544be598ad4140959f8c7297297e0af8e6",
+    "bytes": 1669344,
+    "publication": "public",
+    "approved": true,
+    "dependencies": ["runtime-menu-scene-provenance"]
+  },
+  {
+    "id": "runtime-menu-scene-coupa-team",
+    "path": "game/ui/art/menu-scenes/coupa-team.webp",
+    "sha256": "be7f79098d17957e598e7fd4a96004f2656a7459a08980b0bcd8ac757c30f136",
+    "bytes": 1580074,
+    "publication": "public",
+    "approved": true,
+    "dependencies": ["runtime-menu-scene-provenance"]
+  },
+  {
+    "id": "runtime-menu-scene-coupa-team-portrait",
+    "path": "game/ui/art/menu-scenes/coupa-team-portrait.webp",
+    "sha256": "41c42fefb39048fd1dadd790ef14225275ca99333c8b6383e8fc09f9763d0de7",
+    "bytes": 1744888,
+    "publication": "public",
+    "approved": true,
+    "dependencies": ["runtime-menu-scene-provenance"]
   }
 ]

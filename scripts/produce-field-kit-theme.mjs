@@ -169,8 +169,9 @@ const REVIEWED_RECIPE_INPUTS = {
     ],
   },
   ui: {
-    sha256: '96761947c99f18dda6af25b3eb109e9cee1460991420776822903daa9e465b9a',
+    sha256: 'c0038df428a29111169b2e3f852811bd0785410315c58981db2bb869e2639e5e',
     evidence: [
+      'Scoped native-menu UI source continuation: docs/verification/native-menu-ui-audio-20260930/review.json sha256:950d4dc78138e5c4ac9c9b529fcc11b0e0b3e631975f0cc44fe3b5ceef2d59c0; exact seven-input UI fingerprint sha256:c0038df428a29111169b2e3f852811bd0785410315c58981db2bb869e2639e5e. Existing24 UI recipes and payloads unchanged; canonical103 retained. Software only; full navigation, player, physical-device and public acceptance remain separate.',
       'Scoped discovery WebP UI software continuation: docs/verification/discovery-webp-ui-continuation-2026-09-29/review.json sha256:2496cbfe4e885a931f22cbf5287efac45344074bb14dc4cf96f09a2d5a0a366f; exact seven-input UI fingerprint sha256:96761947c99f18dda6af25b3eb109e9cee1460991420776822903daa9e465b9a. Only the complete-original MIME allowlist and error copy admit WebP beside PNG/JPEG; all24 UI recipe identities, payloads, input bounds, hash/source checks, decoding and cancellation ownership remain unchanged. Production101/UI23 source-stage checkpoint is retained exactly by oracle sha256:bb8ef5f69c674d36737dcfd8a23267eb5207fd0bc2757965ae841da552b2551c. This is software continuation only; human artwork, full navigation, screen-reader, physical-device, frozen/public, performance and release acceptance remain separate.',
       'Scoped v0.141.8 Steam Deck Confirm continuation: docs/verification/v0.141.8-steamdeck-confirm-presentation-continuation/review.json sha256:15b9ef304ba6e8ec6c2120e4e766fe630af327f2a54325bd0e9043ba875e9867; exact seven-input UI fingerprint sha256:2530c099cf3b9fc0d5d3dbd865a083b76368f51b95b357ece7209111434a3360. Only field-kit-components.css changes, adding bounded pressed feedback through existing Field Kit tokens while preserving all 24 UI recipe identities, DOM ownership and payloads.',
       'v0.131 English/Ukrainian presentation continuation: docs/verification/v0.131.0-localization-presentation-continuation/review.json sha256:92c63ed7f4eb6f79502cae2089836de1fbdabcb1cacd76b55e22596e49492445; exact UI fingerprint sha256:c7ebea5695fe1fbd7c17eafdd0035dcd4d1651b5d3ec91893c6575334da38d3a. Maintained copy and operation status are locale-bound while the24 UI recipes, Field Kit tokens and DOM ownership contracts remain unchanged.',
@@ -180,10 +181,10 @@ const REVIEWED_RECIPE_INPUTS = {
     ],
   },
   audio: {
-    sha256: 'fff70f818f10e5dffb08605a887025e0d68b1181dea5ad8813a32f596d374291',
+    sha256: 'b3ab688c9818ac2d35aff830a0700b0869c8065c08ebd49c0316cefe3faa7e2d',
     evidence: [
       'Radio source continuation: docs/verification/radio-audio-20260929/review.json sha256:93fdb14773e7ef58cdcaebcf1db3d4a3100d77aa13081d25ff799aa0e24c84e3; software only, listening/device pending.\nMerged main/candidate software continuation: docs/verification/discovery-main321-reconciliation/review.json sha256:f2b3a2724cf48455dbe98d5ca12a2b081ef1f982531e91838c0291a64bbed976. Exact50-source approval only; historical branch lineages and runtime pins remain separate. No listening, device, frozen/public approval.\nScoped v0.142.4 mission-selector audio continuation: docs/verification/v0.142.4-selector-audio-continuation/review.json sha256:f2cf0cc93f8de8e959eabf6e6313a0af306dfae87e2cb663bfe7bef805df6fe6; exact28 inputs sha256:fd3d7e347bc3a6e36bd884b508af8bbd8492cc3a4dac19bb745664a7fe90adc6. Only game/app.mjs changes, adding clear-star metadata and mission-card progress adapters; audio implementation, eight procedural recipes, routing and payloads remain unchanged. Exact published production100/audio52 predecessor fixture sha256:db9cc258d79aaa0caaf587fa3c73be5fcc55cea5f6129524c59255f04f3bbeb0 is retained. Selector/save compatibility, final qualification, frozen/public, listening and physical-device acceptance remain separate.\nScoped v0.142.3 Steam Deck Confirm audio continuation: docs/verification/v0.142.3-steamdeck-confirm-audio-continuation/review.json sha256:a059520f6ce0c394c3425355c711b641b4b23f9321e11c7d384317e7f814798c; exact28 inputs sha256:39fe40240f0475e471a52772060899d3e329e4d54d6b2bb6679e76dc745ee9a4. Only game/app.mjs changes, coordinating native and Gamepad Confirm ownership and opt-in local diagnostics; all audio implementation, eight existing procedural recipes, routing and payloads remain unchanged. Exact v0.142.2 production99/audio51 predecessor fixture sha256:528361f4e7823a23b02b261ca1de0c9b3157d1a17cbba643e4ff7e67073bc0a7 is retained. Final qualification, frozen/public, listening and physical Steam Deck acceptance remain separate.',
-      'Scoped PR #770 Audio playback correction continuation: docs/verification/audio-style-menu-correction-2026-09-28/review.json sha256:62c1dac1be4286acdb8201aab99b6d3c5e2e2b282e1c88cb34d88af527172e09; exact28 inputs sha256:d9650ffde4c938064703de7c1e8ec987ac1efc1b6470ebcad4ca4ab459a32018. Only soundtrack-player.mjs and soundtrack-panel.mjs changed: saved listening preferences are isolated from unsaved Music Studio drafts, newer transport intent wins delayed playback, identity-owned catalogue retry survives close, and queue-capacity copy is corrected. The associated test-evidence repair pins the exact accepted-main production97 predecessor oracle. Exact production98/audio50 predecessor fixture sha256:e397af798928a72502c970276fe212eaad8d2a4889f5afe02587559244496714 is bound separately. Eight existing procedural recipes, routing and payloads remain unchanged; production generation, hosted, frozen/public, listening and physical-device acceptance remain separate.',
+      'Scoped native-menu audio source continuation: docs/verification/native-menu-ui-audio-20260930/review.json sha256:950d4dc78138e5c4ac9c9b529fcc11b0e0b3e631975f0cc44fe3b5ceef2d59c0; exact50-input fingerprint sha256:b3ab688c9818ac2d35aff830a0700b0869c8065c08ebd49c0316cefe3faa7e2d. Existing eight recipes and payloads unchanged; canonical103 retained. Software only, not listening, device or public acceptance.\nScoped PR #770 Audio playback correction continuation: docs/verification/audio-style-menu-correction-2026-09-28/review.json sha256:62c1dac1be4286acdb8201aab99b6d3c5e2e2b282e1c88cb34d88af527172e09; exact28 inputs sha256:d9650ffde4c938064703de7c1e8ec987ac1efc1b6470ebcad4ca4ab459a32018. Only soundtrack-player.mjs and soundtrack-panel.mjs changed: saved listening preferences are isolated from unsaved Music Studio drafts, newer transport intent wins delayed playback, identity-owned catalogue retry survives close, and queue-capacity copy is corrected. The associated test-evidence repair pins the exact accepted-main production97 predecessor oracle. Exact production98/audio50 predecessor fixture sha256:e397af798928a72502c970276fe212eaad8d2a4889f5afe02587559244496714 is bound separately. Eight existing procedural recipes, routing and payloads remain unchanged; production generation, hosted, frozen/public, listening and physical-device acceptance remain separate.',
       'Scoped v0.142.1 Audio menu and style taxonomy continuation: docs/verification/audio-style-menu-2026-09-28/review.json sha256:bc87031d46ded1ace2cc62c6ca87e2ce90ccbb043db7c5fdb653d262c3b94f49; exact28 inputs sha256:9f0bf41c491a44b4ac585975fd444f7e2e5822534914f36b0213157861173344. Audio settings expose transport and broad style selection, automatically mix matching archive and local music, separate Synth/Electronic, combine UA/Ukrainian and require exact Cyrillic \u0424\u041f\u0412. The dependency closure binds the quick controls and taxonomy modules. Eight existing procedural recipes and payloads remain unchanged; hosted, frozen/public, listening and physical-device acceptance remain separate.',
       'Scoped player-readiness17 ownership source continuation: docs/verification/player-readiness17-audio-continuation-2026-09-28/review.json sha256:0584016a71b220780cc8912666638c468550c7167c2c1084b28b7952f27fa608; exact26 inputs sha256:124a7d186850bd1175bfc45bafba2f19912c89bcb271b5a0c2773e9ad5441b34. Existing eight recipes, routing and payloads unchanged; theme96/audio48 and all predecessors retained. Append-only production and all hosted/frozen/public/listening/device/human acceptance remain separate.',
       'Scoped localization14 Flight Details source continuation: docs/verification/localization14-audio-continuation-2026-09-28/review.json sha256:104e5cb33140537f9234fc26966d4a32f70927c89f1e4bfd1e3955432e1910da; exact26 inputs sha256:81a03fb4791564b775735a1cc977a2c63d492ac8221fb043fa9aa3008fcb9509. Existing eight recipes, routing and payloads unchanged; main95/audio47 and all predecessors retained. Append-only production, hosted/frozen/public/listening/device and human acceptance remain separate.',
@@ -462,6 +463,19 @@ export function verifyFieldKitRadioAudioContinuationReview(currentBytes, priorBy
   );
 }
 
+export function verifyFieldKitNativeMenuContinuationReview(...inputs) {
+  const expected = [
+    '950d4dc78138e5c4ac9c9b529fcc11b0e0b3e631975f0cc44fe3b5ceef2d59c0',
+    '2496cbfe4e885a931f22cbf5287efac45344074bb14dc4cf96f09a2d5a0a366f',
+    '93fdb14773e7ef58cdcaebcf1db3d4a3100d77aa13081d25ff799aa0e24c84e3',
+    '21e92eaf18e5ed619c91d47c734ef1602aa8dac5ae859d7c1837d71b0b161257',
+  ];
+  return (
+    inputs.length === expected.length &&
+    inputs.every((bytes, index) => hash(bytes) === expected[index])
+  );
+}
+
 /** Explicit dependency fingerprints; a helper change must reopen its review group. */
 export async function fieldKitRecipeSources(read) {
   return Object.fromEntries(
@@ -477,6 +491,17 @@ export async function fieldKitRecipeSources(read) {
 export async function createFieldKitProduction({ projectRoot = root } = {}) {
   const read = async (relative) => fs.readFile(path.join(projectRoot, relative));
   const json = async (relative) => JSON.parse(await read(relative));
+  if (
+    !verifyFieldKitNativeMenuContinuationReview(
+      await read('docs/verification/native-menu-ui-audio-20260930/review.json'),
+      await read('docs/verification/discovery-webp-ui-continuation-2026-09-29/review.json'),
+      await read('docs/verification/radio-audio-20260929/review.json'),
+      await read('game/test/fixtures/production-native-main1b-fpv103.json'),
+    )
+  )
+    throw new Error(
+      'Native menu UI/audio continuation or canonical production103 oracle changed; production approval must reopen.',
+    );
   const baseline = createDefaultThemeBundle();
   const recipeSources = await fieldKitRecipeSources(read);
   const bulkContinuationReviewBytes = await readBulkPresentationContinuation(read);

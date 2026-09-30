@@ -21,6 +21,12 @@
     <link rel="stylesheet" href="../../game/ui/operation-status.css" />
     <script type="module" src="../../game/ui/workshop-return-entry.mjs"></script>
     <link rel="stylesheet" href="../../game/ui/workshop-return.css" />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="../../game/ui/art/identity/fpv-line/icon-32.png"
+    />
   </head>
   <body
     data-workshop-tool="motion-lab"
@@ -99,6 +105,14 @@
           data-i18n-aria-label="tools:motionAndMaterialStudy"
         >
           <div class="preview-column">
+            <h2
+              id="motion-preview-heading"
+              class="section-index"
+              data-authoring-target="arena"
+              data-i18n="tools:motionAndMaterialStudy"
+            >
+              Motion and material study
+            </h2>
             <div class="arena-heading">
               <span id="palette-name" data-i18n="tools:fpvFront">FPV Front</span
               ><label class="movement-selector"
@@ -316,9 +330,13 @@
             data-i18n-aria-label="tools:studySettings"
           >
             <section class="control-section ability-controls">
-              <p class="section-index full-width" data-i18n="tools:00AbilityStudy">
+              <h2
+                id="motion-ability-heading"
+                class="section-index full-width"
+                data-i18n="tools:00AbilityStudy"
+              >
                 00 / Ability study
-              </p>
+              </h2>
               <label class="check full-width"
                 ><input id="ability-enabled" type="checkbox" checked /><span
                   data-i18n="tools:showToyAbilityStudy"
@@ -358,13 +376,13 @@
                 aria-labelledby="ability-stage-heading"
                 hidden
               >
-                <h2
+                <h3
                   id="ability-stage-heading"
                   data-field-kit-copy="motion.stageLabels"
                   data-i18n="common:preview.stageLabels"
                 >
                   Stage labels
-                </h2>
+                </h3>
                 <p
                   class="setting-note"
                   data-field-kit-copy="motion.stageLabelsHint"
@@ -391,9 +409,13 @@
               </p>
             </section>
             <section class="control-section">
-              <p class="section-index full-width" data-i18n="tools:01CharacterCollection">
+              <h2
+                id="motion-collection-heading"
+                class="section-index full-width"
+                data-i18n="tools:01CharacterCollection"
+              >
                 01 / Character collection
-              </p>
+              </h2>
               <label class="field full-width"
                 ><span data-i18n="tools:previewContext">Preview context</span
                 ><select id="collection-context"></select
@@ -506,7 +528,13 @@
               </p>
             </section>
             <section class="control-section">
-              <p class="section-index" data-i18n="tools:02PaletteScene">02 / Palette & scene</p>
+              <h2
+                id="motion-palette-heading"
+                class="section-index"
+                data-i18n="tools:02PaletteScene"
+              >
+                02 / Palette & scene
+              </h2>
               <label class="field"
                 ><span data-i18n="tools:palette">Palette</span
                 ><select id="theme"></select
@@ -622,7 +650,13 @@
               </p>
             </section>
             <section class="control-section">
-              <p class="section-index" data-i18n="tools:03TestProgression">03 / Test progression</p>
+              <h2
+                id="motion-progression-heading"
+                class="section-index"
+                data-i18n="tools:03TestProgression"
+              >
+                03 / Test progression
+              </h2>
               <label class="field"
                 ><span data-i18n="tools:simulatedResult">Simulated result</span
                 ><select id="reward-fixture"></select
@@ -653,7 +687,9 @@
               </p>
             </section>
             <section class="control-section">
-              <p class="section-index" data-i18n="tools:04Response">04 / Response</p>
+              <h2 id="motion-response-heading" class="section-index" data-i18n="tools:04Response">
+                04 / Response
+              </h2>
               <div class="range-field">
                 <span
                   ><label id="cruise-speed-label" for="cruise-speed" data-i18n="tools:cruiseSpeed"
@@ -707,7 +743,13 @@
               </p>
             </section>
             <section class="control-section">
-              <p class="section-index" data-i18n="tools:05LayersComfort">05 / Layers & comfort</p>
+              <h2
+                id="motion-comfort-heading"
+                class="section-index"
+                data-i18n="tools:05LayersComfort"
+              >
+                05 / Layers & comfort
+              </h2>
               <div class="layer-checks">
                 <label class="check"
                   ><input id="show-grid" type="checkbox" checked /><span data-i18n="tools:grid"
@@ -765,5 +807,6 @@
       data-module="app.js"
       data-status="motion-load-status"
     ></script>
+    <script type="module" src="../../game/ui/authoring-input-entry.mjs"></script>
   </body>
 </html>

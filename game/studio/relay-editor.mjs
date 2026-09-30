@@ -106,7 +106,7 @@ export function createRelayEditor({ document, getSource, getMission, apply }) {
         command.gate.objectiveId = $('objective').value;
       }
       const candidate = editContentRelay(getSource(), getMission()?.id, command);
-      if (apply(candidate) === false) return;
+      if (apply(candidate, () => commit(action)) === false) return;
       key = null;
       sync();
       $('select').value = ['enable', 'remove'].includes(action) ? '' : command.id;

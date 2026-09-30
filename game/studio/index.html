@@ -8,11 +8,17 @@
     <script src="../i18n/bootstrap.mjs"></script>
 
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title data-i18n="interface:contentStudioRevealLine">Content Studio · Reveal Line</title>
+    <title data-i18n="interface:contentStudioRevealLine">Content Studio · FPV / LINE</title>
     <link rel="stylesheet" href="../ui/field-kit-fonts.css" />
     <link rel="stylesheet" href="studio.css" />
     <script type="module" src="../ui/content-studio-navigation-entry.mjs"></script>
     <script type="module" src="studio.mjs"></script>
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="../ui/art/identity/fpv-line/icon-32.png"
+    />
   </head>
   <body>
     <div data-language-control></div>
@@ -23,8 +29,11 @@
         data-content-studio-route="game"
         inert
         aria-disabled="true"
-        data-i18n="interface:revealLine"
-        >◩ REVEAL / LINE</a
+        class="fpv-line-brand fpv-line-brand--compact"
+        ><img
+          class="fpv-line-wordmark"
+          src="../ui/art/identity/fpv-line/wordmark.png"
+          alt="FPV / LINE" /></a
       ><span data-i18n="interface:contentStudioLocalDrafts">CONTENT STUDIO / LOCAL DRAFTS</span
       ><a
         href="../playground/"
@@ -1674,7 +1683,14 @@
           aria-label="Project and missions"
           data-i18n-aria-label="interface:projectAndMissions"
         >
-          <p class="eyebrow" data-i18n="interface:project">PROJECT</p>
+          <h2
+            class="eyebrow"
+            id="studio-project-title"
+            data-authoring-target="project-id"
+            data-i18n="interface:project"
+          >
+            PROJECT
+          </h2>
           <label
             ><span data-i18n="common:editor.localProjectId">Local project ID</span
             ><input id="project-id" value="my-journey" maxlength="80"
@@ -3103,9 +3119,14 @@
               data-i18n-aria-label="tools:studio.structure.orderLabel"
             ></pre>
           </details>
-          <p class="eyebrow" data-i18n="interface:sourceAllMapsCampaigns">
+          <h2
+            class="eyebrow"
+            id="studio-source-title"
+            data-authoring-target="source"
+            data-i18n="interface:sourceAllMapsCampaigns"
+          >
             SOURCE / ALL MAPS & CAMPAIGNS
-          </p>
+          </h2>
           <p class="note" data-i18n="interface:editNamesOrderActorsAndDesignNotesHereInspectFirst">
             Edit names, order, actors and design notes here. Inspect first; applying is explicit.
             Published editions are never overwritten.
@@ -3150,5 +3171,6 @@
         required
       </footer>
     </main>
+    <script type="module" src="../ui/authoring-input-entry.mjs"></script>
   </body>
 </html>

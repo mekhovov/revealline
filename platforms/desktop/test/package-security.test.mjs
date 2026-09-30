@@ -25,7 +25,7 @@ test('packaged fuses disable executable injection and file privileges while pres
   assert.equal(result.OnlyLoadAppFromAsar, false);
   assert.equal(result.EnableEmbeddedAsarIntegrityValidation, false);
   assert.equal(api.calls.length, 1);
-  assert.equal(api.calls[0].target, path.join('/tmp/app', 'Reveal Line.app'));
+  assert.equal(api.calls[0].target, path.join('/tmp/app', 'FPV LINE.app'));
   assert.equal(api.calls[0].config.strictlyRequireAllFuses, true);
   assert.equal(api.calls[0].config.resetAdHocDarwinSignature, true);
 });
@@ -48,8 +48,8 @@ test('an unsupported fuse API fails before modifying a binary', async () => {
 });
 
 test('packaged binary selection is host explicit and refuses unsupported platforms', () => {
-  assert.equal(packagedExecutable('/tmp/app', 'linux'), path.join('/tmp/app', 'Reveal Line'));
-  assert.equal(packagedExecutable('/tmp/app', 'win32'), path.join('/tmp/app', 'Reveal Line.exe'));
+  assert.equal(packagedExecutable('/tmp/app', 'linux'), path.join('/tmp/app', 'FPV LINE'));
+  assert.equal(packagedExecutable('/tmp/app', 'win32'), path.join('/tmp/app', 'FPV LINE.exe'));
   assert.throws(() => packagedExecutable('/tmp/app', 'unknown'), /Unsupported/);
 });
 

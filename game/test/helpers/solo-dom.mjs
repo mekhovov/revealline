@@ -237,6 +237,8 @@ export async function soloPage(
       return element;
     };
   }
+  Object.assign(win, doc.defaultView);
+  doc.defaultView = win;
   win.parent = parentWindow ?? win;
   doc.parentNode = win;
   const html = await readFile(new URL('../../index.html', import.meta.url), 'utf8');

@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import {
   fieldKitRecipeSources,
+  verifyFieldKitNativeMenuContinuationReview,
   verifyFieldKitSteamDeckAudioContinuationReview,
   verifyFieldKitDiscoveryAudioContinuationReview,
   verifyFieldKitDiscoveryWebPUIContinuationReview,
@@ -600,4 +601,29 @@ test('main reconciliation authenticates both review lineages, original archive a
     assert.equal(verifyFieldKitMainReconciliationReview(...changed), false, paths[index]);
   }
   assert.equal(verifyFieldKitMainReconciliationReview(...inputs.toReversed()), false);
+});
+
+test('native-menu continuation requires all four exact historical/source pins', async () => {
+  const paths = [
+    'docs/verification/native-menu-ui-audio-20260930/review.json',
+    'docs/verification/discovery-webp-ui-continuation-2026-09-29/review.json',
+    'docs/verification/radio-audio-20260929/review.json',
+    'game/test/fixtures/production-native-main1b-fpv103.json',
+  ];
+  const inputs = await Promise.all(
+    paths.map((name) => readFile(new URL('../' + name, import.meta.url))),
+  );
+  assert.equal(verifyFieldKitNativeMenuContinuationReview(...inputs), true);
+  for (let index = 0; index < inputs.length; index += 1) {
+    const changed = inputs.map((bytes) => Buffer.from(bytes));
+    changed[index][changed[index].length - 1] ^= 1;
+    assert.equal(verifyFieldKitNativeMenuContinuationReview(...changed), false, paths[index]);
+    assert.equal(
+      verifyFieldKitNativeMenuContinuationReview(...inputs.filter((_, i) => i !== index)),
+      false,
+    );
+  }
+  assert.equal(verifyFieldKitNativeMenuContinuationReview(...inputs, inputs[0]), false);
+  assert.equal(verifyFieldKitNativeMenuContinuationReview(...inputs.toReversed()), false);
+  assert.equal(verifyFieldKitNativeMenuContinuationReview(), false);
 });

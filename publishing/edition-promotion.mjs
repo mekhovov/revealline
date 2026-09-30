@@ -1,6 +1,6 @@
 import { validateEditionAdmission } from './edition-admission.mjs';
 import { editionHash, inspectEditionZip } from './edition-zip.mjs';
-import { validateEditionId } from '../game/edition-context.mjs';
+import { editionAppIdentity, validateEditionId } from '../game/edition-context.mjs';
 
 export const EDITION_REVIEW_GATES = Object.freeze([
   'automated-validation',
@@ -291,13 +291,13 @@ export async function frozenEditionOverlay(
         ...manifest.files,
         { path: 'manifest.json', bytes: manifestBytes.length, sha256: editionHash(manifestBytes) },
       ]);
-      const base = `editions/${id}/`,
-        site = `${base}releases/${release.version}/site/`;
       const app = parse(members.get('app/manifest.webmanifest'));
+      const canonical = editionAppIdentity({ editionId: id, basePath: release.basePath });
+      const legacyRoot = `${release.basePath}editions/${id}/`;
       if (
-        app.id !== `${release.basePath}${base}` ||
-        app.scope !== app.id ||
-        app.start_url !== `${app.id}app/`
+        app.id !== canonical.id ||
+        ![canonical.scope, legacyRoot].includes(app.scope) ||
+        app.start_url !== `${app.scope}app/`
       )
         fail('Frozen installation identity differs from this deployment target.');
       if (!release.editionIds.includes(id)) {
@@ -311,6 +311,10 @@ export async function frozenEditionOverlay(
         });
         continue;
       }
+      // Old admitted releases remain at their exact original scopes. New builds
+      // can change the public address without changing the installed app ID.
+      const base = app.scope.slice(release.basePath.length),
+        site = `${base}releases/${release.version}/site/`;
       for (const [name, bytes] of members) put(`${site}${name}`, bytes);
       if (release.activeEditionIds.includes(id)) {
         for (const [name, bytes] of members)
@@ -323,7 +327,22 @@ export async function frozenEditionOverlay(
             entry: manifest.entry,
           }),
         );
-        launches.push({ id, name: app.name, href: `${id}/app/`, version: release.version });
+        if (canonical.scope !== legacyRoot) {
+          const destination = app.start_url;
+          const aliasRoot = app.scope === legacyRoot ? canonical.scope : legacyRoot;
+          put(
+            `${aliasRoot.slice(release.basePath.length)}app/index.html`,
+            Buffer.from(
+              `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Open edition</title></head><body><a href="${destination}">Open edition</a><script>const target=new URL(${JSON.stringify(destination)},location.href);target.search=location.search;target.hash=location.hash;location.replace(target.href);</script></body></html>\n`,
+            ),
+          );
+        }
+        launches.push({
+          id,
+          name: app.name,
+          href: canonical.start_url.slice(`${release.basePath}editions/`.length),
+          version: release.version,
+        });
       }
     }
   }

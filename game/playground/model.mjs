@@ -620,7 +620,7 @@ export function expansionFromScenario(
     id,
     version: '1.0.0',
     name,
-    description: 'A playable expansion authored in the Reveal Line playground.',
+    description: 'A playable expansion authored in the FPV / LINE playground.',
     engine: versionsForLevel(level).ruleset,
     dependencies: [],
     metadata: {

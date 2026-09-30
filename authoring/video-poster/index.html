@@ -9,7 +9,7 @@
 
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title data-i18n="tools:reveallineVideoPosterWorkshop">
-      RevealLine — video poster workshop
+      FPV / LINE — video poster workshop
     </title>
     <link rel="stylesheet" href="./workshop.css" />
     <link rel="stylesheet" href="../../game/ui/operation-status.css" />
@@ -20,6 +20,12 @@
     <script type="module" src="../../game/presentation/page-entry.mjs"></script>
     <script type="module" src="../../game/ui/workshop-return-entry.mjs"></script>
     <link rel="stylesheet" href="../../game/ui/workshop-return.css" />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="../../game/ui/art/identity/fpv-line/icon-32.png"
+    />
   </head>
   <body data-workshop-tool="video-poster" class="field-kit field-kit-support">
     <div data-language-control></div>
@@ -179,7 +185,7 @@
           Optional physical trim, resize and compression
         </legend>
         <p data-i18n="tools:videoPoster.physicalTrimHelp">
-          Choose a bounded output plan. RevealLine checks the exported hash, decoded duration, exact
+          Choose a bounded output plan. FPV / LINE checks the exported hash, decoded duration, exact
           output dimensions and codec, audio tracks, and fresh start/end frame comparisons before
           offering a download.
         </p>
@@ -240,9 +246,10 @@
       </section>
       <section id="video-poster-reward-export"></section>
       <p id="video-poster-hint" data-i18n="tools:tabArrowsAndEnterNavigateUseTheTimeSliderWith">
-        Tab/arrows and Enter navigate. Use the time slider with controller South, then D-pad; South
-        confirms and East cancels. File picking/text entry use browser or OS controls. Escape
-        cancels work or returns to Workshop.
+        Tab/arrows and Enter navigate. Controller South edits the selected field or slider; D-pad
+        changes it, South confirms and East cancels. Choose a source opens bundled examples and
+        current assets. New device files use the browser or operating system chooser. Escape cancels
+        work or returns to Workshop.
       </p>
       <details>
         <summary data-i18n="tools:whatTheTimestampsMean">What the timestamps mean</summary>
