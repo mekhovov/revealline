@@ -958,3 +958,88 @@ test('TX15 default does not match an unrelated joystick', (t) => {
   assert.equal(f.view.radio.status().profile, null);
   assert.equal(f.view.snapshot().status, 'disarmed');
 });
+
+test('camera focus preserves global pause for keyboard, touch and radio owners without resuming held input', (t) => {
+  for (const owner of ['keyboard', 'touch', 'radio']) {
+    for (const code of ['KeyP', 'Escape']) {
+      const f = fixture(t);
+      f.$('input-source').value = owner;
+      f.$('input-source').emit('change');
+      if (owner === 'radio') {
+        const pad = {
+          id: 'Pause fixture USB',
+          index: 0,
+          connected: true,
+          mapping: '',
+          axes: [0, 0, 0, -1],
+          buttons: [],
+        };
+        f.setPads([pad]);
+        f.view.radio.select(0);
+        f.view.radio.setProfile(radioProfile(pad));
+        f.view.radio.verify();
+      }
+      assert.equal(f.view.arm(), true);
+      f.tick(3);
+      f.$('camera').focus();
+      const event = f.win.emit('keydown', { code, target: f.doc.activeElement });
+      assert.equal(event.defaultPrevented, true, `${owner}: ${code}`);
+      assert.equal(f.view.snapshot().status, 'paused');
+      const paused = f.view.snapshot();
+      f.tick(4);
+      assert.deepEqual(f.view.snapshot(), paused);
+      f.key('KeyW');
+      assert.deepEqual(f.view.snapshot(), paused, 'movement cannot unpause');
+    }
+  }
+});
+
+test('pause shortcuts release local controls but preserve text, dialogs and modified browser keys', () => {
+  const doc = new Document(),
+    win = new Events(),
+    reasons = [];
+  const input = createFlightInput({
+    window: win,
+    document: doc,
+    onPause: (reason) => reasons.push(reason),
+  });
+  try {
+    for (const tag of ['button', 'a', 'select', 'input']) {
+      const target = doc.createElement(tag);
+      if (tag === 'input') target.type = 'range';
+      doc.body.append(target);
+      input.select('keyboard');
+      input.enable(true);
+      win.emit('keydown', { code: 'KeyW', target: doc.body });
+      win.emit('keydown', { code: 'ArrowUp', target: doc.body });
+      assert(input.sample(0.05).throttle > 0);
+      assert.equal(win.emit('keydown', { code: 'KeyP', target }).defaultPrevented, true);
+      assert.deepEqual(input.sample(0.05), { roll: 0, pitch: 0, yaw: 0, throttle: 0 });
+      input.enable(true);
+      assert.deepEqual(input.sample(0.05), { roll: 0, pitch: 0, yaw: 0, throttle: 0 });
+    }
+    assert.equal(reasons.length, 4);
+    const text = doc.createElement('input'),
+      textarea = doc.createElement('textarea'),
+      rich = doc.createElement('div');
+    text.type = 'text';
+    rich.isContentEditable = true;
+    for (const target of [text, textarea, rich])
+      for (const code of ['KeyP', 'Escape'])
+        assert.equal(win.emit('keydown', { code, target }).defaultPrevented, false);
+    for (const modifier of ['ctrlKey', 'metaKey', 'altKey', 'repeat', 'isComposing'])
+      assert.equal(
+        win.emit('keydown', { code: 'KeyP', target: doc.body, [modifier]: true }).defaultPrevented,
+        false,
+      );
+    const dialog = doc.createElement('dialog'),
+      close = doc.createElement('button');
+    dialog.append(close);
+    doc.body.append(dialog);
+    dialog.showModal();
+    assert.equal(win.emit('keydown', { code: 'Escape', target: close }).defaultPrevented, false);
+    assert.equal(reasons.length, 4, 'native dismissal and text input must not invoke pause');
+  } finally {
+    input.dispose();
+  }
+});
