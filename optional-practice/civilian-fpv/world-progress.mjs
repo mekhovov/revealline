@@ -1,5 +1,6 @@
 import { dataIdentity } from '../../game/data-json.mjs';
 import { validateWorldCourse } from './world-model.mjs';
+export { createSectorTracker } from './flight-sectors.mjs';
 
 const centre = (step) =>
   step.min
@@ -75,36 +76,13 @@ export function evaluateWorldResult(
       : Math.min(state.step, course.steps[proof.mode].length - 1),
   };
 }
-export function createSectorTracker() {
-  let step = 0,
-    last = 0,
-    sectors = [];
-  return {
-    consume(state) {
-      if (state.step > step) {
-        for (let i = step; i < state.step; i++)
-          sectors.push({ index: i, ticks: state.ticks - last, endTick: state.ticks });
-        step = state.step;
-        last = state.ticks;
-      }
-    },
-    snapshot() {
-      return structuredClone(sectors);
-    },
-    reset() {
-      step = 0;
-      last = 0;
-      sectors = [];
-    },
-  };
-}
 export function compatibleGhost(record, flightIdentity) {
   const a = record?.proof,
     b = flightIdentity;
   if (
     record?.status !== 'verified' ||
     record.diagnostic !== 'complete' ||
-    record.proof.session !== 'practice' ||
+    a?.session !== 'practice' ||
     !a ||
     !b
   )
