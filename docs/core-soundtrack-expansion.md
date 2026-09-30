@@ -37,12 +37,15 @@ The trusted game catalogue contains **77 recordings**, preserving all previous
 or **Metal — approved** in Music library & playlists, or include the tracks through
 Audio's style controls.
 
-The latest verified public source is `908bc6b08d1999edafa79d1581d2bab9395285b7`
-(`main-908bc6b08d19`, package label 0.142.4). Automatic Pages
-[36742307201](https://github.com/mekhovov/revealline/actions/runs/36742307201)
-passed build, deployment and public verification. The soundtrack worktree was
-fast-forwarded to this accepted main without conflicts; the follow-up uses a new
-branch instead of modifying merged PR #830.
+The latest verified public source is `5e23fa8a62accf7a719cca5dd45c0702b52d37a5`
+(`main-5e23fa8a62ac`, package label 0.142.4), including merged evidence/plan
+[PR #855](https://github.com/mekhovov/revealline/pull/855). Automatic Pages
+[36748726410](https://github.com/mekhovov/revealline/actions/runs/36748726410)
+passed. At 17:13 UTC the public release marker and complete catalogue JSON/JavaScript
+matched accepted source and the previously verified 77-track catalogue exactly.
+The earlier 908bc6 delivery/transport receipts remain historical evidence. The
+soundtrack follow-up starts on this accepted main without conflicts; merged PRs
+are not rewritten.
 
 ### Completed and verified in this batch
 
@@ -82,6 +85,62 @@ A browser started the review-only MP3 and advanced to 8.10 / 97.12 seconds witho
 a media error. An exact-derivative approval question is pending; it does not hold
 the already shipped six-track batch or the evidence/plan PR.
 
+### M6 next batch checkpoint — 30 September 2026
+
+Prepared [`metal-next-20260930`](../authoring/library/soundtrack-batches/metal-next-20260930/EVIDENCE.md)
+as a **pending metadata-only batch**: Solar Storm, Galactic Battle, Orbital Assault,
+Mutilation's Melody, Bone Grinder's Ballad and City Limits Crash. These six public
+recordings follow the accepted direction; their exact-file musical approval is
+not present in the retained evidence. The Slicing Strain is review-only and excluded.
+The trusted catalogue remains **77 recordings**; this checkpoint admits none.
+
+Six unchanged creator/licence observations and three historical FFmpeg 6.1.1
+receipts bind the exact native OGGs and published MP3s. All six retained final
+measurements meet −16 ±1 LUFS and ≤−1 dBTP. Fresh complete public responses matched
+all six hashes and **32,042,683 bytes** without saving or rendering audio. This is
+identity/transport proof, not new listening or device acceptance.
+
+[Archive PR #67](https://github.com/mekhovov/revealline-soundtracks/pull/67)
+published the separate six-object admission inventory after 69 passing tests and
+independent review. Merge `9cc5274ad0675d1411a12c16bb83ede3546889e3` passed
+[Pages 36750444819](https://github.com/mekhovov/revealline-soundtracks/actions/runs/36750444819).
+At 17:23 UTC its canonical URL returned HTTP 200, 1,383 bytes and the expected
+`9e92ce27…4c560` hash with public CORS. The earlier 404 is preserved as preparation
+history; [the publication receipt](../authoring/library/soundtrack-batches/metal-next-20260930/inventory-publication.json)
+records the completed delivery. No catalogue entry, recording bytes, approval or
+default changed in that archive PR.
+
+Next: obtain an explicit decision for these exact recordings or a selected subset,
+then use the existing owner-approved contract while preserving all deferred
+listening/device checks. Source-described energy/scene assignments, vocal/explicit
+content review and Content ID uncertainty stay visible. This batch has no game
+release version until admission and public game verification.
+
+### Intake reliability checkpoint — 30 September 2026
+
+[Archive PR #66](https://github.com/mekhovov/revealline-soundtracks/pull/66)
+fixes the draft-audio failure retained from PR #65. Local intake now verifies
+exact asset sets, sizes, upload states and SHA-256 digests, then makes the MP3
+volume a public non-latest prerelease before opening its catalogue PR. Read-only
+PR CI can inspect the complete files. Main promotes the same assets after merge;
+it never replaces audio. The CLI, README and web guide explain this visibility.
+Workflow permissions, all existing audio paths and catalogue decisions are unchanged.
+
+All 67 archive tests passed, independent review found no blockers, and live
+read-only checks matched all 42 existing volumes / 261 assets. PR #66 source
+[36749361288](https://github.com/mekhovov/revealline-soundtracks/actions/runs/36749361288)
+passed complete hosted staging. Merge `d90ba83687200637fefa9e7e0802f5336889e5eb`
+passed automatic Pages
+[36749654475](https://github.com/mekhovov/revealline-soundtracks/actions/runs/36749654475).
+The public README, Markdown/web guides and unchanged catalogue match reviewed
+bytes; [the verification receipt](verification/soundtrack-intake-20260930.json)
+retains exact hashes and the current game-source observation.
+The canonical local checkout was fast-forwarded to archive main `9cc5274` and its
+updated CLI help executed successfully. The user-facing resume of a whole intake
+after a post-commit interruption remains
+a separate automation follow-up (about 2–4 hours); current volume-level retries
+reuse matching files and safely reject conflicts.
+
 ### Remaining work in delivery order
 
 Estimates are hands-on effort, excluding review, CI and publisher queues. Ready
@@ -90,8 +149,8 @@ not require holding them for an immutable tagged release.
 
 | Priority / item                      | Current state and next deliverable                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         | Remaining effort / dependency                                                                                                                    |
 | ------------------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------ |
-| **1 — M5: runner2088**               | The original is musically approved. [Archive PR #65](https://github.com/mekhovov/revealline-soundtracks/pull/65) is merged and its separate review-only derivative is published at **−16.94 LUFS / −1.14 dBTP**, preserving the original (+0.45 dBTP). A pending game batch in [PR #855](https://github.com/mekhovov/revealline/pull/855) records exact source, rights, technical and verified public delivery evidence. Trusted admission still needs an explicit decision for the derivative hash or a separately reviewed derivation contract; [the dependency is recorded](../authoring/library/soundtrack-batches/runner2088-game-mix-20260930/review-dependency.json). This remains one composition. | **2–4 hours** for remaining archive/game delivery, plus CI/publication and the exact-derivative decision. No date is promised for that decision. |
-| **2 — M6: further Metal**            | The five-track trusted batch is delivered. Continue with a small subset of the previously approved Interstellar, Reckless and Purgatory direction; exclude expressly hidden songs. Verify exact rights/files and measure before proposing the next admission. Revenge's Waiting remains a 48-second boss cue.                                                                                                                                                                                                                                                                                                                                                                                              | **1–2 working days per cleared batch**, plus any remaining musical review.                                                                       |
+| **1 — M5: runner2088**               | The original is musically approved. [Archive PR #65](https://github.com/mekhovov/revealline-soundtracks/pull/65) is merged and its separate review-only derivative is published at **−16.94 LUFS / −1.14 dBTP**, preserving the original (+0.45 dBTP). A pending game batch in [PR #855](https://github.com/mekhovov/revealline/pull/855) records exact source, rights, technical and verified public delivery evidence. Trusted admission still needs an explicit decision for the derivative hash or a separately reviewed derivation contract; [the dependency is recorded](../authoring/library/soundtrack-batches/runner2088-game-mix-20260930/review-dependency.json). This remains one composition. | **2–4 hours** for remaining game admission, plus CI/publication and the exact-derivative decision. No date is promised for that decision. |
+| **2 — M6: further Metal**            | The first five-track trusted Metal album is delivered. Six further exact recordings are prepared in metal-next-20260930 with native/source/measurement evidence and fresh full public hashes. Inventory publication is verified; owner selection precedes activation; expressly hidden songs stay excluded. Revenge's Waiting remains a 48-second boss cue.                                                                                                                                                                                                                                                                                                                                                                                              | **Half to one working day** for this prepared batch after selection, plus CI/publication; further batches remain **1–2 days**.                                                                       |
 | **3 — M4: Ukrainian expansion**      | Shchedryk is bundled. Three approved Commons recordings still need cultural review and scene/energy assignments. This review does not block ready Synth/Metal changes.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     | Several hours of qualified review, then **1–2 days** integration; no reviewer date established.                                                  |
 | **M9: metadata**                     | Apply curation only to accepted batches, with stable IDs and hashes. Current six-track scene/energy assignments are shipped.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               | **1–3 hours per further batch**.                                                                                                                 |
 | **M8: device/offline qualification** | Physical iPhone/controller and cold-offline acceptance remains **deferred by the user**. Software tests cannot close it.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   | About **half a day** once resumed with devices available.                                                                                        |
