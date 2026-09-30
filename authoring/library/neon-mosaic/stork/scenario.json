@@ -1,0 +1,837 @@
+{
+  "format": "xonix-playground.v6",
+  "level": {
+    "version": "xonix-level.v5",
+    "id": "neon-stork-reference",
+    "revision": "1",
+    "name": "Neon Stork",
+    "width": 72,
+    "height": 36,
+    "encounter": null,
+    "spawn": {
+      "x": 36.5,
+      "y": 35.5
+    },
+    "goal": {
+      "coverage": 0.75
+    },
+    "walls": [
+      {
+        "x": 2,
+        "y": 9,
+        "w": 1,
+        "h": 2
+      }
+    ],
+    "foundations": [
+      {
+        "x": 3,
+        "y": 6,
+        "w": 2,
+        "h": 2
+      },
+      {
+        "x": 65,
+        "y": 10,
+        "w": 3,
+        "h": 2
+      },
+      {
+        "x": 37,
+        "y": 29,
+        "w": 3,
+        "h": 1
+      },
+      {
+        "x": 39,
+        "y": 30,
+        "w": 1,
+        "h": 1
+      },
+      {
+        "x": 8,
+        "y": 31,
+        "w": 5,
+        "h": 1
+      },
+      {
+        "x": 21,
+        "y": 31,
+        "w": 5,
+        "h": 1
+      },
+      {
+        "x": 38,
+        "y": 31,
+        "w": 2,
+        "h": 1
+      },
+      {
+        "x": 50,
+        "y": 31,
+        "w": 3,
+        "h": 1
+      },
+      {
+        "x": 12,
+        "y": 32,
+        "w": 1,
+        "h": 1
+      },
+      {
+        "x": 25,
+        "y": 32,
+        "w": 1,
+        "h": 1
+      },
+      {
+        "x": 52,
+        "y": 32,
+        "w": 1,
+        "h": 1
+      },
+      {
+        "x": 9,
+        "y": 33,
+        "w": 4,
+        "h": 1
+      },
+      {
+        "x": 22,
+        "y": 33,
+        "w": 4,
+        "h": 1
+      },
+      {
+        "x": 51,
+        "y": 33,
+        "w": 2,
+        "h": 1
+      }
+    ],
+    "objectives": [],
+    "supplies": [],
+    "signalZones": [],
+    "hangars": [],
+    "classic": {
+      "version": "classic.v1",
+      "terrain": [
+        {
+          "id": "mosaic-1",
+          "kind": "slow",
+          "x": 6,
+          "y": 3,
+          "w": 8,
+          "h": 8
+        },
+        {
+          "id": "mosaic-2",
+          "kind": "slow",
+          "x": 36,
+          "y": 3,
+          "w": 5,
+          "h": 8
+        },
+        {
+          "id": "mosaic-3",
+          "kind": "slow",
+          "x": 41,
+          "y": 3,
+          "w": 2,
+          "h": 2
+        },
+        {
+          "id": "mosaic-4",
+          "kind": "slow",
+          "x": 43,
+          "y": 3,
+          "w": 1,
+          "h": 1
+        },
+        {
+          "id": "mosaic-5",
+          "kind": "slow",
+          "x": 43,
+          "y": 5,
+          "w": 1,
+          "h": 6
+        },
+        {
+          "id": "mosaic-6",
+          "kind": "slow",
+          "x": 42,
+          "y": 6,
+          "w": 1,
+          "h": 1
+        },
+        {
+          "id": "mosaic-7",
+          "kind": "slow",
+          "x": 41,
+          "y": 7,
+          "w": 1,
+          "h": 3
+        },
+        {
+          "id": "mosaic-8",
+          "kind": "slow",
+          "x": 16,
+          "y": 9,
+          "w": 6,
+          "h": 8
+        },
+        {
+          "id": "mosaic-9",
+          "kind": "slow",
+          "x": 22,
+          "y": 9,
+          "w": 2,
+          "h": 4
+        },
+        {
+          "id": "mosaic-10",
+          "kind": "slow",
+          "x": 46,
+          "y": 9,
+          "w": 8,
+          "h": 8
+        },
+        {
+          "id": "mosaic-11",
+          "kind": "slow",
+          "x": 42,
+          "y": 10,
+          "w": 1,
+          "h": 1
+        },
+        {
+          "id": "mosaic-12",
+          "kind": "slow",
+          "x": 22,
+          "y": 14,
+          "w": 1,
+          "h": 3
+        },
+        {
+          "id": "mosaic-13",
+          "kind": "slow",
+          "x": 23,
+          "y": 15,
+          "w": 1,
+          "h": 2
+        },
+        {
+          "id": "mosaic-14",
+          "kind": "slow",
+          "x": 26,
+          "y": 15,
+          "w": 7,
+          "h": 1
+        },
+        {
+          "id": "mosaic-15",
+          "kind": "slow",
+          "x": 56,
+          "y": 15,
+          "w": 8,
+          "h": 8
+        },
+        {
+          "id": "mosaic-16",
+          "kind": "slow",
+          "x": 27,
+          "y": 16,
+          "w": 7,
+          "h": 1
+        },
+        {
+          "id": "mosaic-17",
+          "kind": "slow",
+          "x": 26,
+          "y": 17,
+          "w": 1,
+          "h": 6
+        },
+        {
+          "id": "mosaic-18",
+          "kind": "slow",
+          "x": 27,
+          "y": 18,
+          "w": 4,
+          "h": 5
+        },
+        {
+          "id": "mosaic-19",
+          "kind": "slow",
+          "x": 31,
+          "y": 18,
+          "w": 1,
+          "h": 3
+        },
+        {
+          "id": "mosaic-20",
+          "kind": "slow",
+          "x": 33,
+          "y": 18,
+          "w": 1,
+          "h": 5
+        },
+        {
+          "id": "mosaic-21",
+          "kind": "slow",
+          "x": 32,
+          "y": 21,
+          "w": 1,
+          "h": 2
+        },
+        {
+          "id": "mosaic-22",
+          "kind": "lethal",
+          "x": 43,
+          "y": 4,
+          "w": 2,
+          "h": 1
+        },
+        {
+          "id": "mosaic-23",
+          "kind": "lethal",
+          "x": 41,
+          "y": 5,
+          "w": 2,
+          "h": 1
+        },
+        {
+          "id": "mosaic-24",
+          "kind": "lethal",
+          "x": 45,
+          "y": 5,
+          "w": 2,
+          "h": 1
+        },
+        {
+          "id": "mosaic-25",
+          "kind": "lethal",
+          "x": 41,
+          "y": 6,
+          "w": 1,
+          "h": 1
+        },
+        {
+          "id": "mosaic-26",
+          "kind": "lethal",
+          "x": 47,
+          "y": 6,
+          "w": 4,
+          "h": 1
+        },
+        {
+          "id": "mosaic-27",
+          "kind": "lethal",
+          "x": 42,
+          "y": 7,
+          "w": 1,
+          "h": 3
+        },
+        {
+          "id": "mosaic-28",
+          "kind": "lethal",
+          "x": 44,
+          "y": 7,
+          "w": 11,
+          "h": 1
+        },
+        {
+          "id": "mosaic-29",
+          "kind": "lethal",
+          "x": 44,
+          "y": 8,
+          "w": 1,
+          "h": 1
+        },
+        {
+          "id": "mosaic-30",
+          "kind": "lethal",
+          "x": 45,
+          "y": 9,
+          "w": 1,
+          "h": 3
+        },
+        {
+          "id": "mosaic-31",
+          "kind": "lethal",
+          "x": 28,
+          "y": 10,
+          "w": 3,
+          "h": 1
+        },
+        {
+          "id": "mosaic-32",
+          "kind": "lethal",
+          "x": 41,
+          "y": 10,
+          "w": 1,
+          "h": 1
+        },
+        {
+          "id": "mosaic-33",
+          "kind": "lethal",
+          "x": 26,
+          "y": 11,
+          "w": 2,
+          "h": 1
+        },
+        {
+          "id": "mosaic-34",
+          "kind": "lethal",
+          "x": 31,
+          "y": 11,
+          "w": 6,
+          "h": 1
+        },
+        {
+          "id": "mosaic-35",
+          "kind": "lethal",
+          "x": 40,
+          "y": 11,
+          "w": 1,
+          "h": 1
+        },
+        {
+          "id": "mosaic-36",
+          "kind": "lethal",
+          "x": 24,
+          "y": 12,
+          "w": 2,
+          "h": 1
+        },
+        {
+          "id": "mosaic-37",
+          "kind": "lethal",
+          "x": 27,
+          "y": 12,
+          "w": 2,
+          "h": 1
+        },
+        {
+          "id": "mosaic-38",
+          "kind": "lethal",
+          "x": 37,
+          "y": 12,
+          "w": 3,
+          "h": 1
+        },
+        {
+          "id": "mosaic-39",
+          "kind": "lethal",
+          "x": 44,
+          "y": 12,
+          "w": 1,
+          "h": 1
+        },
+        {
+          "id": "mosaic-40",
+          "kind": "lethal",
+          "x": 22,
+          "y": 13,
+          "w": 2,
+          "h": 1
+        },
+        {
+          "id": "mosaic-41",
+          "kind": "lethal",
+          "x": 29,
+          "y": 13,
+          "w": 2,
+          "h": 1
+        },
+        {
+          "id": "mosaic-42",
+          "kind": "lethal",
+          "x": 43,
+          "y": 13,
+          "w": 1,
+          "h": 2
+        },
+        {
+          "id": "mosaic-43",
+          "kind": "lethal",
+          "x": 23,
+          "y": 14,
+          "w": 1,
+          "h": 1
+        },
+        {
+          "id": "mosaic-44",
+          "kind": "lethal",
+          "x": 31,
+          "y": 14,
+          "w": 2,
+          "h": 1
+        },
+        {
+          "id": "mosaic-45",
+          "kind": "lethal",
+          "x": 37,
+          "y": 14,
+          "w": 3,
+          "h": 1
+        },
+        {
+          "id": "mosaic-46",
+          "kind": "lethal",
+          "x": 24,
+          "y": 15,
+          "w": 2,
+          "h": 1
+        },
+        {
+          "id": "mosaic-47",
+          "kind": "lethal",
+          "x": 33,
+          "y": 15,
+          "w": 4,
+          "h": 1
+        },
+        {
+          "id": "mosaic-48",
+          "kind": "lethal",
+          "x": 42,
+          "y": 15,
+          "w": 1,
+          "h": 1
+        },
+        {
+          "id": "mosaic-49",
+          "kind": "lethal",
+          "x": 26,
+          "y": 16,
+          "w": 1,
+          "h": 1
+        },
+        {
+          "id": "mosaic-50",
+          "kind": "lethal",
+          "x": 35,
+          "y": 16,
+          "w": 7,
+          "h": 1
+        },
+        {
+          "id": "mosaic-51",
+          "kind": "lethal",
+          "x": 27,
+          "y": 17,
+          "w": 8,
+          "h": 1
+        },
+        {
+          "id": "mosaic-52",
+          "kind": "lethal",
+          "x": 38,
+          "y": 17,
+          "w": 1,
+          "h": 1
+        },
+        {
+          "id": "mosaic-53",
+          "kind": "lethal",
+          "x": 32,
+          "y": 18,
+          "w": 1,
+          "h": 3
+        },
+        {
+          "id": "mosaic-54",
+          "kind": "lethal",
+          "x": 39,
+          "y": 18,
+          "w": 1,
+          "h": 2
+        },
+        {
+          "id": "mosaic-55",
+          "kind": "lethal",
+          "x": 40,
+          "y": 20,
+          "w": 1,
+          "h": 2
+        },
+        {
+          "id": "mosaic-56",
+          "kind": "lethal",
+          "x": 31,
+          "y": 21,
+          "w": 1,
+          "h": 2
+        },
+        {
+          "id": "mosaic-57",
+          "kind": "lethal",
+          "x": 38,
+          "y": 22,
+          "w": 2,
+          "h": 1
+        },
+        {
+          "id": "mosaic-58",
+          "kind": "lethal",
+          "x": 27,
+          "y": 23,
+          "w": 5,
+          "h": 1
+        },
+        {
+          "id": "mosaic-59",
+          "kind": "lethal",
+          "x": 37,
+          "y": 23,
+          "w": 1,
+          "h": 1
+        },
+        {
+          "id": "mosaic-60",
+          "kind": "lethal",
+          "x": 35,
+          "y": 31,
+          "w": 1,
+          "h": 1
+        },
+        {
+          "id": "mosaic-61",
+          "kind": "lethal",
+          "x": 6,
+          "y": 33,
+          "w": 1,
+          "h": 1
+        }
+      ],
+      "powerups": [],
+      "arcadeActions": {
+        "version": "arcade-actions.v1"
+      }
+    },
+    "enemies": [
+      {
+        "id": "yellow-1",
+        "type": "bouncer",
+        "x": 18.5,
+        "y": 7.5,
+        "vx": -2.479042468483746,
+        "vy": -2.9931345079569893,
+        "radius": 0.3
+      },
+      {
+        "id": "yellow-2",
+        "type": "bouncer",
+        "x": 24.5,
+        "y": 23.5,
+        "vx": 4.054817449984737,
+        "vy": -1.2704204345224712,
+        "radius": 0.3
+      },
+      {
+        "id": "yellow-3",
+        "type": "bouncer",
+        "x": 25.5,
+        "y": 28.5,
+        "vx": 4.305482007661244,
+        "vy": -0.6734200413738719,
+        "radius": 0.3
+      },
+      {
+        "id": "cyan-top",
+        "type": "border-patrol",
+        "x": 40.5,
+        "y": 0.5,
+        "speed": 4.5,
+        "clockwise": true,
+        "radius": 0.35
+      },
+      {
+        "id": "cyan-right",
+        "type": "border-patrol",
+        "x": 71.5,
+        "y": 10.5,
+        "speed": 4.5,
+        "clockwise": false,
+        "radius": 0.35
+      },
+      {
+        "id": "cyan-island-1",
+        "type": "contour-patrol",
+        "edge": {
+          "x": 8,
+          "y": 30,
+          "side": "south"
+        },
+        "clockwise": true,
+        "speed": 3,
+        "radius": 0.3
+      },
+      {
+        "id": "cyan-island-2",
+        "type": "contour-patrol",
+        "edge": {
+          "x": 21,
+          "y": 30,
+          "side": "south"
+        },
+        "clockwise": false,
+        "speed": 3,
+        "radius": 0.3
+      },
+      {
+        "id": "cyan-island-3",
+        "type": "contour-patrol",
+        "edge": {
+          "x": 37,
+          "y": 28,
+          "side": "south"
+        },
+        "clockwise": true,
+        "speed": 3,
+        "radius": 0.3
+      },
+      {
+        "id": "cyan-island-4",
+        "type": "contour-patrol",
+        "edge": {
+          "x": 50,
+          "y": 30,
+          "side": "south"
+        },
+        "clockwise": false,
+        "speed": 3,
+        "radius": 0.3
+      },
+      {
+        "id": "cyan-island-5",
+        "type": "contour-patrol",
+        "edge": {
+          "x": 3,
+          "y": 5,
+          "side": "south"
+        },
+        "clockwise": true,
+        "speed": 3,
+        "radius": 0.3
+      },
+      {
+        "id": "cyan-island-6",
+        "type": "contour-patrol",
+        "edge": {
+          "x": 65,
+          "y": 9,
+          "side": "south"
+        },
+        "clockwise": false,
+        "speed": 3,
+        "radius": 0.3
+      }
+    ],
+    "rules": {
+      "lives": 3,
+      "moveSpeed": 10,
+      "respawnSeconds": 0.7,
+      "graceSeconds": 0.8,
+      "timeLimitSeconds": 0,
+      "stopOnCapture": true
+    },
+    "metadata": {
+      "description": "Red tiles form a long-legged bird in profile with a pointed beak. Blue ground slows the craft; red ground is lethal until captured. Diagonal stepping fields surround the motif, with braided channels along the lower route. 3 yellow bouncers, two outer patrols and 6 island-contour patrols guard the field. No horizontal barrier bars. Start at bottom center and reveal 75%."
+    }
+  },
+  "theme": {
+    "id": "retro",
+    "name": "1994 Forever",
+    "subtitle": "One more credit",
+    "family": "retro",
+    "player": "retro-craft",
+    "enemyShape": "orb",
+    "patrolShape": "spark",
+    "bossShape": "core",
+    "scene": "arcade",
+    "labels": {
+      "objective": "Cartridge",
+      "supply": "Dock",
+      "enemy": "Glitch",
+      "boss": "Mainframe",
+      "currency": "Score",
+      "ability": "Power-up"
+    },
+    "palette": {
+      "ink": "#242a41",
+      "paper": "#eee8df",
+      "muted": "#aaa1b1",
+      "accent": "#ffe654",
+      "safe": "#39c7e8",
+      "danger": "#ff548b",
+      "field": "#000000",
+      "grid": "#101020",
+      "sky": "#e49c95",
+      "land": "#565270"
+    },
+    "classBodies": {
+      "scout": "retro-craft",
+      "bomber": "retro-craft",
+      "carrier": "retro-craft",
+      "interceptor": "retro-craft",
+      "fiber": "retro-craft",
+      "impact": "retro-craft",
+      "trapper": "retro-craft"
+    }
+  },
+  "classRecipes": [
+    {
+      "id": "scout",
+      "label": "FPV Scout",
+      "description": "A nimble FPV quad. Scan shows enemy direction hints for four seconds; it never captures territory or slows an enemy.",
+      "primitive": "scan",
+      "capacity": 0,
+      "cooldown": 6,
+      "duration": 4,
+      "radius": 48,
+      "revision": "1"
+    }
+  ],
+  "settings": {
+    "classId": "scout",
+    "turnPolicy": "immediate",
+    "seed": 1
+  },
+  "visualOverrides": {
+    "enemy": {
+      "name": "Mosaic enemy",
+      "dataUrl": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAbElEQVR42u3WOxIAEAwEUEdzMkdzCtfQamkpEP81szuTel+VRCmG+S3Bm5iPs7qYa8U1wBFIrbwF2IZolfcAy4heuQQwjZCUSwFTiKcAafkIYAhBAAEEPAdwE0IcI4hzDPGQQLxkEE8pw5xKAoM4vcHzH54kAAAAAElFTkSuQmCC"
+    },
+    "patrol": {
+      "name": "Mosaic patrol",
+      "dataUrl": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAbklEQVR42mNgIBG4P3n/Hx9moDUYdcCoA+jmAFwGkuoAsh2Gy1BSHEBxyGAzgFgHUC1a0A0ixgFUTxOELKVLjqCZ5eT6jlp41AGjDhh1wMA7YMALokFfFA9oZTSg1fGAN0gGvEk22ioedcCIcQAA6l0yW47rJ5YAAAAASUVORK5CYII="
+    },
+    "player": {
+      "name": "Mosaic player",
+      "dataUrl": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAYklEQVR42u2WWwoAEBQFrdP+yxp8kV8lj/s66kz5nilcUiKE/EwtuY0VKg+JmOWuESu5S8RObhpxKjeJuJWrRrzKVSKkcnFEeED4FkAcQohrCDGIIEYxxGME8RxDfEgIIVp0LrhEMwepglQAAAAASUVORK5CYII="
+    },
+    "wall": {
+      "name": "Mosaic wall",
+      "dataUrl": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAP0lEQVR42mMQia7+P5CYAURob7qOE9NaftQBow4YdQDDaDkw6oBRB4w6YLQcGHXAqANGHTBaDow6YNQBI94BAJ5cDzcS0yPLAAAAAElFTkSuQmCC"
+    },
+    "contour": {
+      "name": "Mosaic contour",
+      "dataUrl": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAbklEQVR42mNgIBG4P3n/Hx9moDUYdcCoA+jmAFwGkuoAsh2Gy1BSHEBxyGAzgFgHUC1a0A0ixgFUTxOELKVLjqCZ5eT6jlp41AGjDhh1wMA7YMALokFfFA9oZTSg1fGAN0gGvEk22ioedcCIcQAA6l0yW47rJ5YAAAAASUVORK5CYII="
+    },
+    "slowTerrain": {
+      "name": "Mosaic slowTerrain",
+      "dataUrl": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAANklEQVR42mNgGAWjYBSMgsEMnBLu/KcGHnXA0HUAKY4b8AQ66oBRB4w6YLTiGgWjYBSMgiELAMa7Atjf3Ar7AAAAAElFTkSuQmCC"
+    },
+    "lethalTerrain": {
+      "name": "Mosaic lethalTerrain",
+      "dataUrl": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAbUlEQVR42u2WQQ4AEAwEPce7vNxPiIsTgra6kZ17dyqiFQIhZEGOqbhmtGJJgLS+B9yESGrFQWrym0B1+UmwmXxHYC5fiZ7JR8Ln8lkTLlMS5vRu9w/xAiBmAMQUhNgDEJtQtQmIDwnCt46Qv6lSX/qpet2+5AAAAABJRU5ErkJggg=="
+    }
+  },
+  "masteryDefinition": null,
+  "presentation": {
+    "style": "microtile",
+    "showGrid": false
+  }
+}

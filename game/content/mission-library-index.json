@@ -1567,6 +1567,1602 @@
       "packVersion": "1.0.0"
     },
     {
+      "id": "classic/bundled/neon-mosaic-pack/neon-mosaic%2F1%2F6195cab2099aacc9/neon-fpv-pack/1",
+      "source": "bundled",
+      "packId": "neon-mosaic-pack",
+      "campaignId": "neon-mosaic",
+      "campaignRevision": "1",
+      "campaignKey": "neon-mosaic/1/6195cab2099aacc9",
+      "levelId": "neon-fpv-pack",
+      "levelRevision": "1",
+      "levelIndex": 0,
+      "name": "Neon FPV",
+      "campaignTitle": "Neon Words & Symbols",
+      "edition": "Neon Words & Symbols",
+      "themeId": "retro",
+      "modes": ["solo", "versus"],
+      "tags": ["Classic", "Arcade"],
+      "rules": "75% coverage · 3 lives · 10 cells/s · No mission countdown · Direction-only Arcade · 12 enemies",
+      "ruleDetails": {
+        "ruleset": "xonix-core.v6",
+        "coverage": 0.75,
+        "lives": 3,
+        "moveSpeed": 10,
+        "timeLimitSeconds": 0,
+        "enemies": [
+          { "type": "bouncer", "count": 3 },
+          { "type": "border-patrol", "count": 2 },
+          { "type": "contour-patrol", "count": 7 }
+        ],
+        "requiredObjectives": 0
+      },
+      "difficultiesByMode": { "solo": ["standard", "gentle"], "versus": ["standard"] },
+      "sourceFile": {
+        "path": "game/content/packs/neon-mosaic-pack.json",
+        "bytes": 580176,
+        "sha256": "8653b45a17273d447e0a5cab4370b8f273b74d1fdbd02d4206f3e3202b8e669f"
+      },
+      "packIdentity": {
+        "bytes": 379220,
+        "sha256": "345674d27b1de48a323ce188ad09fda908d9cfdbfde680788c0dabadc13dcc4b"
+      },
+      "packVersion": "1.0.0"
+    },
+    {
+      "id": "classic/bundled/neon-mosaic-pack/neon-mosaic%2F1%2F6195cab2099aacc9/neon-ukraine-pack/1",
+      "source": "bundled",
+      "packId": "neon-mosaic-pack",
+      "campaignId": "neon-mosaic",
+      "campaignRevision": "1",
+      "campaignKey": "neon-mosaic/1/6195cab2099aacc9",
+      "levelId": "neon-ukraine-pack",
+      "levelRevision": "1",
+      "levelIndex": 1,
+      "name": "Neon UKRAINE",
+      "campaignTitle": "Neon Words & Symbols",
+      "edition": "Neon Words & Symbols",
+      "themeId": "retro",
+      "modes": ["solo", "versus"],
+      "tags": ["Classic", "Arcade"],
+      "rules": "75% coverage · 3 lives · 10 cells/s · No mission countdown · Direction-only Arcade · 11 enemies",
+      "ruleDetails": {
+        "ruleset": "xonix-core.v6",
+        "coverage": 0.75,
+        "lives": 3,
+        "moveSpeed": 10,
+        "timeLimitSeconds": 0,
+        "enemies": [
+          { "type": "bouncer", "count": 4 },
+          { "type": "border-patrol", "count": 2 },
+          { "type": "contour-patrol", "count": 5 }
+        ],
+        "requiredObjectives": 0
+      },
+      "difficultiesByMode": { "solo": ["standard", "gentle"], "versus": ["standard"] },
+      "sourceFile": {
+        "path": "game/content/packs/neon-mosaic-pack.json",
+        "bytes": 580176,
+        "sha256": "8653b45a17273d447e0a5cab4370b8f273b74d1fdbd02d4206f3e3202b8e669f"
+      },
+      "packIdentity": {
+        "bytes": 379220,
+        "sha256": "345674d27b1de48a323ce188ad09fda908d9cfdbfde680788c0dabadc13dcc4b"
+      },
+      "packVersion": "1.0.0"
+    },
+    {
+      "id": "classic/bundled/neon-mosaic-pack/neon-mosaic%2F1%2F6195cab2099aacc9/neon-drone-aid-pack/1",
+      "source": "bundled",
+      "packId": "neon-mosaic-pack",
+      "campaignId": "neon-mosaic",
+      "campaignRevision": "1",
+      "campaignKey": "neon-mosaic/1/6195cab2099aacc9",
+      "levelId": "neon-drone-aid-pack",
+      "levelRevision": "1",
+      "levelIndex": 2,
+      "name": "Neon DRONE AID",
+      "campaignTitle": "Neon Words & Symbols",
+      "edition": "Neon Words & Symbols",
+      "themeId": "retro",
+      "modes": ["solo", "versus"],
+      "tags": ["Classic", "Arcade"],
+      "rules": "75% coverage · 3 lives · 10 cells/s · No mission countdown · Direction-only Arcade · 14 enemies",
+      "ruleDetails": {
+        "ruleset": "xonix-core.v6",
+        "coverage": 0.75,
+        "lives": 3,
+        "moveSpeed": 10,
+        "timeLimitSeconds": 0,
+        "enemies": [
+          { "type": "bouncer", "count": 5 },
+          { "type": "border-patrol", "count": 2 },
+          { "type": "contour-patrol", "count": 7 }
+        ],
+        "requiredObjectives": 0
+      },
+      "difficultiesByMode": { "solo": ["standard", "gentle"], "versus": ["standard"] },
+      "sourceFile": {
+        "path": "game/content/packs/neon-mosaic-pack.json",
+        "bytes": 580176,
+        "sha256": "8653b45a17273d447e0a5cab4370b8f273b74d1fdbd02d4206f3e3202b8e669f"
+      },
+      "packIdentity": {
+        "bytes": 379220,
+        "sha256": "345674d27b1de48a323ce188ad09fda908d9cfdbfde680788c0dabadc13dcc4b"
+      },
+      "packVersion": "1.0.0"
+    },
+    {
+      "id": "classic/bundled/neon-mosaic-pack/neon-mosaic%2F1%2F6195cab2099aacc9/neon-coupa-pack/1",
+      "source": "bundled",
+      "packId": "neon-mosaic-pack",
+      "campaignId": "neon-mosaic",
+      "campaignRevision": "1",
+      "campaignKey": "neon-mosaic/1/6195cab2099aacc9",
+      "levelId": "neon-coupa-pack",
+      "levelRevision": "1",
+      "levelIndex": 3,
+      "name": "Neon COUPA",
+      "campaignTitle": "Neon Words & Symbols",
+      "edition": "Neon Words & Symbols",
+      "themeId": "retro",
+      "modes": ["solo", "versus"],
+      "tags": ["Classic", "Arcade"],
+      "rules": "75% coverage · 3 lives · 10 cells/s · No mission countdown · Direction-only Arcade · 9 enemies",
+      "ruleDetails": {
+        "ruleset": "xonix-core.v6",
+        "coverage": 0.75,
+        "lives": 3,
+        "moveSpeed": 10,
+        "timeLimitSeconds": 0,
+        "enemies": [
+          { "type": "bouncer", "count": 3 },
+          { "type": "border-patrol", "count": 2 },
+          { "type": "contour-patrol", "count": 4 }
+        ],
+        "requiredObjectives": 0
+      },
+      "difficultiesByMode": { "solo": ["standard", "gentle"], "versus": ["standard"] },
+      "sourceFile": {
+        "path": "game/content/packs/neon-mosaic-pack.json",
+        "bytes": 580176,
+        "sha256": "8653b45a17273d447e0a5cab4370b8f273b74d1fdbd02d4206f3e3202b8e669f"
+      },
+      "packIdentity": {
+        "bytes": 379220,
+        "sha256": "345674d27b1de48a323ce188ad09fda908d9cfdbfde680788c0dabadc13dcc4b"
+      },
+      "packVersion": "1.0.0"
+    },
+    {
+      "id": "classic/bundled/neon-mosaic-pack/neon-mosaic%2F1%2F6195cab2099aacc9/neon-social-drone-pack/1",
+      "source": "bundled",
+      "packId": "neon-mosaic-pack",
+      "campaignId": "neon-mosaic",
+      "campaignRevision": "1",
+      "campaignKey": "neon-mosaic/1/6195cab2099aacc9",
+      "levelId": "neon-social-drone-pack",
+      "levelRevision": "1",
+      "levelIndex": 4,
+      "name": "Neon SOCIAL DRONE",
+      "campaignTitle": "Neon Words & Symbols",
+      "edition": "Neon Words & Symbols",
+      "themeId": "retro",
+      "modes": ["solo", "versus"],
+      "tags": ["Classic", "Arcade"],
+      "rules": "75% coverage · 3 lives · 10 cells/s · No mission countdown · Direction-only Arcade · 13 enemies",
+      "ruleDetails": {
+        "ruleset": "xonix-core.v6",
+        "coverage": 0.75,
+        "lives": 3,
+        "moveSpeed": 10,
+        "timeLimitSeconds": 0,
+        "enemies": [
+          { "type": "bouncer", "count": 4 },
+          { "type": "border-patrol", "count": 2 },
+          { "type": "contour-patrol", "count": 7 }
+        ],
+        "requiredObjectives": 0
+      },
+      "difficultiesByMode": { "solo": ["standard", "gentle"], "versus": ["standard"] },
+      "sourceFile": {
+        "path": "game/content/packs/neon-mosaic-pack.json",
+        "bytes": 580176,
+        "sha256": "8653b45a17273d447e0a5cab4370b8f273b74d1fdbd02d4206f3e3202b8e669f"
+      },
+      "packIdentity": {
+        "bytes": 379220,
+        "sha256": "345674d27b1de48a323ce188ad09fda908d9cfdbfde680788c0dabadc13dcc4b"
+      },
+      "packVersion": "1.0.0"
+    },
+    {
+      "id": "classic/bundled/neon-mosaic-pack/neon-mosaic%2F1%2F6195cab2099aacc9/neon-sdua-pack/1",
+      "source": "bundled",
+      "packId": "neon-mosaic-pack",
+      "campaignId": "neon-mosaic",
+      "campaignRevision": "1",
+      "campaignKey": "neon-mosaic/1/6195cab2099aacc9",
+      "levelId": "neon-sdua-pack",
+      "levelRevision": "1",
+      "levelIndex": 5,
+      "name": "Neon SDUA",
+      "campaignTitle": "Neon Words & Symbols",
+      "edition": "Neon Words & Symbols",
+      "themeId": "retro",
+      "modes": ["solo", "versus"],
+      "tags": ["Classic", "Arcade"],
+      "rules": "75% coverage · 3 lives · 10 cells/s · No mission countdown · Direction-only Arcade · 14 enemies",
+      "ruleDetails": {
+        "ruleset": "xonix-core.v6",
+        "coverage": 0.75,
+        "lives": 3,
+        "moveSpeed": 10,
+        "timeLimitSeconds": 0,
+        "enemies": [
+          { "type": "bouncer", "count": 5 },
+          { "type": "border-patrol", "count": 2 },
+          { "type": "contour-patrol", "count": 7 }
+        ],
+        "requiredObjectives": 0
+      },
+      "difficultiesByMode": { "solo": ["standard", "gentle"], "versus": ["standard"] },
+      "sourceFile": {
+        "path": "game/content/packs/neon-mosaic-pack.json",
+        "bytes": 580176,
+        "sha256": "8653b45a17273d447e0a5cab4370b8f273b74d1fdbd02d4206f3e3202b8e669f"
+      },
+      "packIdentity": {
+        "bytes": 379220,
+        "sha256": "345674d27b1de48a323ce188ad09fda908d9cfdbfde680788c0dabadc13dcc4b"
+      },
+      "packVersion": "1.0.0"
+    },
+    {
+      "id": "classic/bundled/neon-mosaic-pack/neon-mosaic%2F1%2F6195cab2099aacc9/neon-victory-drones-pack/1",
+      "source": "bundled",
+      "packId": "neon-mosaic-pack",
+      "campaignId": "neon-mosaic",
+      "campaignRevision": "1",
+      "campaignKey": "neon-mosaic/1/6195cab2099aacc9",
+      "levelId": "neon-victory-drones-pack",
+      "levelRevision": "1",
+      "levelIndex": 6,
+      "name": "Neon VICTORY DRONES",
+      "campaignTitle": "Neon Words & Symbols",
+      "edition": "Neon Words & Symbols",
+      "themeId": "retro",
+      "modes": ["solo", "versus"],
+      "tags": ["Classic", "Arcade"],
+      "rules": "75% coverage · 3 lives · 10 cells/s · No mission countdown · Direction-only Arcade · 12 enemies",
+      "ruleDetails": {
+        "ruleset": "xonix-core.v6",
+        "coverage": 0.75,
+        "lives": 3,
+        "moveSpeed": 10,
+        "timeLimitSeconds": 0,
+        "enemies": [
+          { "type": "bouncer", "count": 3 },
+          { "type": "border-patrol", "count": 2 },
+          { "type": "contour-patrol", "count": 7 }
+        ],
+        "requiredObjectives": 0
+      },
+      "difficultiesByMode": { "solo": ["standard", "gentle"], "versus": ["standard"] },
+      "sourceFile": {
+        "path": "game/content/packs/neon-mosaic-pack.json",
+        "bytes": 580176,
+        "sha256": "8653b45a17273d447e0a5cab4370b8f273b74d1fdbd02d4206f3e3202b8e669f"
+      },
+      "packIdentity": {
+        "bytes": 379220,
+        "sha256": "345674d27b1de48a323ce188ad09fda908d9cfdbfde680788c0dabadc13dcc4b"
+      },
+      "packVersion": "1.0.0"
+    },
+    {
+      "id": "classic/bundled/neon-mosaic-pack/neon-mosaic%2F1%2F6195cab2099aacc9/neon-vd-pack/1",
+      "source": "bundled",
+      "packId": "neon-mosaic-pack",
+      "campaignId": "neon-mosaic",
+      "campaignRevision": "1",
+      "campaignKey": "neon-mosaic/1/6195cab2099aacc9",
+      "levelId": "neon-vd-pack",
+      "levelRevision": "1",
+      "levelIndex": 7,
+      "name": "Neon VD",
+      "campaignTitle": "Neon Words & Symbols",
+      "edition": "Neon Words & Symbols",
+      "themeId": "retro",
+      "modes": ["solo", "versus"],
+      "tags": ["Classic", "Arcade"],
+      "rules": "75% coverage · 3 lives · 10 cells/s · No mission countdown · Direction-only Arcade · 14 enemies",
+      "ruleDetails": {
+        "ruleset": "xonix-core.v6",
+        "coverage": 0.75,
+        "lives": 3,
+        "moveSpeed": 10,
+        "timeLimitSeconds": 0,
+        "enemies": [
+          { "type": "bouncer", "count": 4 },
+          { "type": "border-patrol", "count": 2 },
+          { "type": "contour-patrol", "count": 8 }
+        ],
+        "requiredObjectives": 0
+      },
+      "difficultiesByMode": { "solo": ["standard", "gentle"], "versus": ["standard"] },
+      "sourceFile": {
+        "path": "game/content/packs/neon-mosaic-pack.json",
+        "bytes": 580176,
+        "sha256": "8653b45a17273d447e0a5cab4370b8f273b74d1fdbd02d4206f3e3202b8e669f"
+      },
+      "packIdentity": {
+        "bytes": 379220,
+        "sha256": "345674d27b1de48a323ce188ad09fda908d9cfdbfde680788c0dabadc13dcc4b"
+      },
+      "packVersion": "1.0.0"
+    },
+    {
+      "id": "classic/bundled/neon-mosaic-pack/neon-mosaic%2F1%2F6195cab2099aacc9/neon-fpv-line-pack/1",
+      "source": "bundled",
+      "packId": "neon-mosaic-pack",
+      "campaignId": "neon-mosaic",
+      "campaignRevision": "1",
+      "campaignKey": "neon-mosaic/1/6195cab2099aacc9",
+      "levelId": "neon-fpv-line-pack",
+      "levelRevision": "1",
+      "levelIndex": 8,
+      "name": "Neon FPV LINE",
+      "campaignTitle": "Neon Words & Symbols",
+      "edition": "Neon Words & Symbols",
+      "themeId": "retro",
+      "modes": ["solo", "versus"],
+      "tags": ["Classic", "Arcade"],
+      "rules": "75% coverage · 3 lives · 10 cells/s · No mission countdown · Direction-only Arcade · 16 enemies",
+      "ruleDetails": {
+        "ruleset": "xonix-core.v6",
+        "coverage": 0.75,
+        "lives": 3,
+        "moveSpeed": 10,
+        "timeLimitSeconds": 0,
+        "enemies": [
+          { "type": "bouncer", "count": 5 },
+          { "type": "border-patrol", "count": 2 },
+          { "type": "contour-patrol", "count": 9 }
+        ],
+        "requiredObjectives": 0
+      },
+      "difficultiesByMode": { "solo": ["standard", "gentle"], "versus": ["standard"] },
+      "sourceFile": {
+        "path": "game/content/packs/neon-mosaic-pack.json",
+        "bytes": 580176,
+        "sha256": "8653b45a17273d447e0a5cab4370b8f273b74d1fdbd02d4206f3e3202b8e669f"
+      },
+      "packIdentity": {
+        "bytes": 379220,
+        "sha256": "345674d27b1de48a323ce188ad09fda908d9cfdbfde680788c0dabadc13dcc4b"
+      },
+      "packVersion": "1.0.0"
+    },
+    {
+      "id": "classic/bundled/neon-mosaic-pack/neon-mosaic%2F1%2F6195cab2099aacc9/neon-reveal-pack/1",
+      "source": "bundled",
+      "packId": "neon-mosaic-pack",
+      "campaignId": "neon-mosaic",
+      "campaignRevision": "1",
+      "campaignKey": "neon-mosaic/1/6195cab2099aacc9",
+      "levelId": "neon-reveal-pack",
+      "levelRevision": "1",
+      "levelIndex": 9,
+      "name": "Neon REVEAL",
+      "campaignTitle": "Neon Words & Symbols",
+      "edition": "Neon Words & Symbols",
+      "themeId": "retro",
+      "modes": ["solo", "versus"],
+      "tags": ["Classic", "Arcade"],
+      "rules": "75% coverage · 3 lives · 10 cells/s · No mission countdown · Direction-only Arcade · 11 enemies",
+      "ruleDetails": {
+        "ruleset": "xonix-core.v6",
+        "coverage": 0.75,
+        "lives": 3,
+        "moveSpeed": 10,
+        "timeLimitSeconds": 0,
+        "enemies": [
+          { "type": "bouncer", "count": 3 },
+          { "type": "border-patrol", "count": 2 },
+          { "type": "contour-patrol", "count": 6 }
+        ],
+        "requiredObjectives": 0
+      },
+      "difficultiesByMode": { "solo": ["standard", "gentle"], "versus": ["standard"] },
+      "sourceFile": {
+        "path": "game/content/packs/neon-mosaic-pack.json",
+        "bytes": 580176,
+        "sha256": "8653b45a17273d447e0a5cab4370b8f273b74d1fdbd02d4206f3e3202b8e669f"
+      },
+      "packIdentity": {
+        "bytes": 379220,
+        "sha256": "345674d27b1de48a323ce188ad09fda908d9cfdbfde680788c0dabadc13dcc4b"
+      },
+      "packVersion": "1.0.0"
+    },
+    {
+      "id": "classic/bundled/neon-mosaic-pack/neon-mosaic%2F1%2F6195cab2099aacc9/neon-fly-free-pack/1",
+      "source": "bundled",
+      "packId": "neon-mosaic-pack",
+      "campaignId": "neon-mosaic",
+      "campaignRevision": "1",
+      "campaignKey": "neon-mosaic/1/6195cab2099aacc9",
+      "levelId": "neon-fly-free-pack",
+      "levelRevision": "1",
+      "levelIndex": 10,
+      "name": "Neon FLY FREE",
+      "campaignTitle": "Neon Words & Symbols",
+      "edition": "Neon Words & Symbols",
+      "themeId": "retro",
+      "modes": ["solo", "versus"],
+      "tags": ["Classic", "Arcade"],
+      "rules": "75% coverage · 3 lives · 10 cells/s · No mission countdown · Direction-only Arcade · 14 enemies",
+      "ruleDetails": {
+        "ruleset": "xonix-core.v6",
+        "coverage": 0.75,
+        "lives": 3,
+        "moveSpeed": 10,
+        "timeLimitSeconds": 0,
+        "enemies": [
+          { "type": "bouncer", "count": 4 },
+          { "type": "border-patrol", "count": 2 },
+          { "type": "contour-patrol", "count": 8 }
+        ],
+        "requiredObjectives": 0
+      },
+      "difficultiesByMode": { "solo": ["standard", "gentle"], "versus": ["standard"] },
+      "sourceFile": {
+        "path": "game/content/packs/neon-mosaic-pack.json",
+        "bytes": 580176,
+        "sha256": "8653b45a17273d447e0a5cab4370b8f273b74d1fdbd02d4206f3e3202b8e669f"
+      },
+      "packIdentity": {
+        "bytes": 379220,
+        "sha256": "345674d27b1de48a323ce188ad09fda908d9cfdbfde680788c0dabadc13dcc4b"
+      },
+      "packVersion": "1.0.0"
+    },
+    {
+      "id": "classic/bundled/neon-mosaic-pack/neon-mosaic%2F1%2F6195cab2099aacc9/neon-fpv-drone-pack/1",
+      "source": "bundled",
+      "packId": "neon-mosaic-pack",
+      "campaignId": "neon-mosaic",
+      "campaignRevision": "1",
+      "campaignKey": "neon-mosaic/1/6195cab2099aacc9",
+      "levelId": "neon-fpv-drone-pack",
+      "levelRevision": "1",
+      "levelIndex": 11,
+      "name": "Neon FPV Drone",
+      "campaignTitle": "Neon Words & Symbols",
+      "edition": "Neon Words & Symbols",
+      "themeId": "retro",
+      "modes": ["solo", "versus"],
+      "tags": ["Classic", "Arcade"],
+      "rules": "75% coverage · 3 lives · 10 cells/s · No mission countdown · Direction-only Arcade · 14 enemies",
+      "ruleDetails": {
+        "ruleset": "xonix-core.v6",
+        "coverage": 0.75,
+        "lives": 3,
+        "moveSpeed": 10,
+        "timeLimitSeconds": 0,
+        "enemies": [
+          { "type": "bouncer", "count": 5 },
+          { "type": "border-patrol", "count": 2 },
+          { "type": "contour-patrol", "count": 7 }
+        ],
+        "requiredObjectives": 0
+      },
+      "difficultiesByMode": { "solo": ["standard", "gentle"], "versus": ["standard"] },
+      "sourceFile": {
+        "path": "game/content/packs/neon-mosaic-pack.json",
+        "bytes": 580176,
+        "sha256": "8653b45a17273d447e0a5cab4370b8f273b74d1fdbd02d4206f3e3202b8e669f"
+      },
+      "packIdentity": {
+        "bytes": 379220,
+        "sha256": "345674d27b1de48a323ce188ad09fda908d9cfdbfde680788c0dabadc13dcc4b"
+      },
+      "packVersion": "1.0.0"
+    },
+    {
+      "id": "classic/bundled/neon-mosaic-pack/neon-mosaic%2F1%2F6195cab2099aacc9/neon-tryzub-pack/1",
+      "source": "bundled",
+      "packId": "neon-mosaic-pack",
+      "campaignId": "neon-mosaic",
+      "campaignRevision": "1",
+      "campaignKey": "neon-mosaic/1/6195cab2099aacc9",
+      "levelId": "neon-tryzub-pack",
+      "levelRevision": "1",
+      "levelIndex": 12,
+      "name": "Neon Ukrainian Trident",
+      "campaignTitle": "Neon Words & Symbols",
+      "edition": "Neon Words & Symbols",
+      "themeId": "retro",
+      "modes": ["solo", "versus"],
+      "tags": ["Classic", "Arcade"],
+      "rules": "75% coverage · 3 lives · 10 cells/s · No mission countdown · Direction-only Arcade · 11 enemies",
+      "ruleDetails": {
+        "ruleset": "xonix-core.v6",
+        "coverage": 0.75,
+        "lives": 3,
+        "moveSpeed": 10,
+        "timeLimitSeconds": 0,
+        "enemies": [
+          { "type": "bouncer", "count": 3 },
+          { "type": "border-patrol", "count": 2 },
+          { "type": "contour-patrol", "count": 6 }
+        ],
+        "requiredObjectives": 0
+      },
+      "difficultiesByMode": { "solo": ["standard", "gentle"], "versus": ["standard"] },
+      "sourceFile": {
+        "path": "game/content/packs/neon-mosaic-pack.json",
+        "bytes": 580176,
+        "sha256": "8653b45a17273d447e0a5cab4370b8f273b74d1fdbd02d4206f3e3202b8e669f"
+      },
+      "packIdentity": {
+        "bytes": 379220,
+        "sha256": "345674d27b1de48a323ce188ad09fda908d9cfdbfde680788c0dabadc13dcc4b"
+      },
+      "packVersion": "1.0.0"
+    },
+    {
+      "id": "classic/bundled/neon-mosaic-pack/neon-mosaic%2F1%2F6195cab2099aacc9/neon-vyshyvanka-pack/1",
+      "source": "bundled",
+      "packId": "neon-mosaic-pack",
+      "campaignId": "neon-mosaic",
+      "campaignRevision": "1",
+      "campaignKey": "neon-mosaic/1/6195cab2099aacc9",
+      "levelId": "neon-vyshyvanka-pack",
+      "levelRevision": "1",
+      "levelIndex": 13,
+      "name": "Neon Vyshyvanka Diamonds",
+      "campaignTitle": "Neon Words & Symbols",
+      "edition": "Neon Words & Symbols",
+      "themeId": "retro",
+      "modes": ["solo", "versus"],
+      "tags": ["Classic", "Arcade"],
+      "rules": "75% coverage · 3 lives · 10 cells/s · No mission countdown · Direction-only Arcade · 13 enemies",
+      "ruleDetails": {
+        "ruleset": "xonix-core.v6",
+        "coverage": 0.75,
+        "lives": 3,
+        "moveSpeed": 10,
+        "timeLimitSeconds": 0,
+        "enemies": [
+          { "type": "bouncer", "count": 4 },
+          { "type": "border-patrol", "count": 2 },
+          { "type": "contour-patrol", "count": 7 }
+        ],
+        "requiredObjectives": 0
+      },
+      "difficultiesByMode": { "solo": ["standard", "gentle"], "versus": ["standard"] },
+      "sourceFile": {
+        "path": "game/content/packs/neon-mosaic-pack.json",
+        "bytes": 580176,
+        "sha256": "8653b45a17273d447e0a5cab4370b8f273b74d1fdbd02d4206f3e3202b8e669f"
+      },
+      "packIdentity": {
+        "bytes": 379220,
+        "sha256": "345674d27b1de48a323ce188ad09fda908d9cfdbfde680788c0dabadc13dcc4b"
+      },
+      "packVersion": "1.0.0"
+    },
+    {
+      "id": "classic/bundled/neon-mosaic-pack/neon-mosaic%2F1%2F6195cab2099aacc9/neon-ruzha-pack/1",
+      "source": "bundled",
+      "packId": "neon-mosaic-pack",
+      "campaignId": "neon-mosaic",
+      "campaignRevision": "1",
+      "campaignKey": "neon-mosaic/1/6195cab2099aacc9",
+      "levelId": "neon-ruzha-pack",
+      "levelRevision": "1",
+      "levelIndex": 14,
+      "name": "Neon Eight-Point Ruzha",
+      "campaignTitle": "Neon Words & Symbols",
+      "edition": "Neon Words & Symbols",
+      "themeId": "retro",
+      "modes": ["solo", "versus"],
+      "tags": ["Classic", "Arcade"],
+      "rules": "75% coverage · 3 lives · 10 cells/s · No mission countdown · Direction-only Arcade · 14 enemies",
+      "ruleDetails": {
+        "ruleset": "xonix-core.v6",
+        "coverage": 0.75,
+        "lives": 3,
+        "moveSpeed": 10,
+        "timeLimitSeconds": 0,
+        "enemies": [
+          { "type": "bouncer", "count": 5 },
+          { "type": "border-patrol", "count": 2 },
+          { "type": "contour-patrol", "count": 7 }
+        ],
+        "requiredObjectives": 0
+      },
+      "difficultiesByMode": { "solo": ["standard", "gentle"], "versus": ["standard"] },
+      "sourceFile": {
+        "path": "game/content/packs/neon-mosaic-pack.json",
+        "bytes": 580176,
+        "sha256": "8653b45a17273d447e0a5cab4370b8f273b74d1fdbd02d4206f3e3202b8e669f"
+      },
+      "packIdentity": {
+        "bytes": 379220,
+        "sha256": "345674d27b1de48a323ce188ad09fda908d9cfdbfde680788c0dabadc13dcc4b"
+      },
+      "packVersion": "1.0.0"
+    },
+    {
+      "id": "classic/bundled/neon-mosaic-pack/neon-mosaic%2F1%2F6195cab2099aacc9/neon-kalyna-pack/1",
+      "source": "bundled",
+      "packId": "neon-mosaic-pack",
+      "campaignId": "neon-mosaic",
+      "campaignRevision": "1",
+      "campaignKey": "neon-mosaic/1/6195cab2099aacc9",
+      "levelId": "neon-kalyna-pack",
+      "levelRevision": "1",
+      "levelIndex": 15,
+      "name": "Neon Kalyna",
+      "campaignTitle": "Neon Words & Symbols",
+      "edition": "Neon Words & Symbols",
+      "themeId": "retro",
+      "modes": ["solo", "versus"],
+      "tags": ["Classic", "Arcade"],
+      "rules": "75% coverage · 3 lives · 10 cells/s · No mission countdown · Direction-only Arcade · 12 enemies",
+      "ruleDetails": {
+        "ruleset": "xonix-core.v6",
+        "coverage": 0.75,
+        "lives": 3,
+        "moveSpeed": 10,
+        "timeLimitSeconds": 0,
+        "enemies": [
+          { "type": "bouncer", "count": 3 },
+          { "type": "border-patrol", "count": 2 },
+          { "type": "contour-patrol", "count": 7 }
+        ],
+        "requiredObjectives": 0
+      },
+      "difficultiesByMode": { "solo": ["standard", "gentle"], "versus": ["standard"] },
+      "sourceFile": {
+        "path": "game/content/packs/neon-mosaic-pack.json",
+        "bytes": 580176,
+        "sha256": "8653b45a17273d447e0a5cab4370b8f273b74d1fdbd02d4206f3e3202b8e669f"
+      },
+      "packIdentity": {
+        "bytes": 379220,
+        "sha256": "345674d27b1de48a323ce188ad09fda908d9cfdbfde680788c0dabadc13dcc4b"
+      },
+      "packVersion": "1.0.0"
+    },
+    {
+      "id": "classic/bundled/neon-mosaic-pack/neon-mosaic%2F1%2F6195cab2099aacc9/neon-tree-of-life-pack/1",
+      "source": "bundled",
+      "packId": "neon-mosaic-pack",
+      "campaignId": "neon-mosaic",
+      "campaignRevision": "1",
+      "campaignKey": "neon-mosaic/1/6195cab2099aacc9",
+      "levelId": "neon-tree-of-life-pack",
+      "levelRevision": "1",
+      "levelIndex": 16,
+      "name": "Neon Tree of Life",
+      "campaignTitle": "Neon Words & Symbols",
+      "edition": "Neon Words & Symbols",
+      "themeId": "retro",
+      "modes": ["solo", "versus"],
+      "tags": ["Classic", "Arcade"],
+      "rules": "75% coverage · 3 lives · 10 cells/s · No mission countdown · Direction-only Arcade · 14 enemies",
+      "ruleDetails": {
+        "ruleset": "xonix-core.v6",
+        "coverage": 0.75,
+        "lives": 3,
+        "moveSpeed": 10,
+        "timeLimitSeconds": 0,
+        "enemies": [
+          { "type": "bouncer", "count": 4 },
+          { "type": "border-patrol", "count": 2 },
+          { "type": "contour-patrol", "count": 8 }
+        ],
+        "requiredObjectives": 0
+      },
+      "difficultiesByMode": { "solo": ["standard", "gentle"], "versus": ["standard"] },
+      "sourceFile": {
+        "path": "game/content/packs/neon-mosaic-pack.json",
+        "bytes": 580176,
+        "sha256": "8653b45a17273d447e0a5cab4370b8f273b74d1fdbd02d4206f3e3202b8e669f"
+      },
+      "packIdentity": {
+        "bytes": 379220,
+        "sha256": "345674d27b1de48a323ce188ad09fda908d9cfdbfde680788c0dabadc13dcc4b"
+      },
+      "packVersion": "1.0.0"
+    },
+    {
+      "id": "classic/bundled/neon-mosaic-pack/neon-mosaic%2F1%2F6195cab2099aacc9/neon-pysanka-pack/1",
+      "source": "bundled",
+      "packId": "neon-mosaic-pack",
+      "campaignId": "neon-mosaic",
+      "campaignRevision": "1",
+      "campaignKey": "neon-mosaic/1/6195cab2099aacc9",
+      "levelId": "neon-pysanka-pack",
+      "levelRevision": "1",
+      "levelIndex": 17,
+      "name": "Neon Pysanka",
+      "campaignTitle": "Neon Words & Symbols",
+      "edition": "Neon Words & Symbols",
+      "themeId": "retro",
+      "modes": ["solo", "versus"],
+      "tags": ["Classic", "Arcade"],
+      "rules": "75% coverage · 3 lives · 10 cells/s · No mission countdown · Direction-only Arcade · 16 enemies",
+      "ruleDetails": {
+        "ruleset": "xonix-core.v6",
+        "coverage": 0.75,
+        "lives": 3,
+        "moveSpeed": 10,
+        "timeLimitSeconds": 0,
+        "enemies": [
+          { "type": "bouncer", "count": 5 },
+          { "type": "border-patrol", "count": 2 },
+          { "type": "contour-patrol", "count": 9 }
+        ],
+        "requiredObjectives": 0
+      },
+      "difficultiesByMode": { "solo": ["standard", "gentle"], "versus": ["standard"] },
+      "sourceFile": {
+        "path": "game/content/packs/neon-mosaic-pack.json",
+        "bytes": 580176,
+        "sha256": "8653b45a17273d447e0a5cab4370b8f273b74d1fdbd02d4206f3e3202b8e669f"
+      },
+      "packIdentity": {
+        "bytes": 379220,
+        "sha256": "345674d27b1de48a323ce188ad09fda908d9cfdbfde680788c0dabadc13dcc4b"
+      },
+      "packVersion": "1.0.0"
+    },
+    {
+      "id": "classic/bundled/neon-mosaic-pack/neon-mosaic%2F1%2F6195cab2099aacc9/neon-barvinok-pack/1",
+      "source": "bundled",
+      "packId": "neon-mosaic-pack",
+      "campaignId": "neon-mosaic",
+      "campaignRevision": "1",
+      "campaignKey": "neon-mosaic/1/6195cab2099aacc9",
+      "levelId": "neon-barvinok-pack",
+      "levelRevision": "1",
+      "levelIndex": 18,
+      "name": "Neon Barvinok",
+      "campaignTitle": "Neon Words & Symbols",
+      "edition": "Neon Words & Symbols",
+      "themeId": "retro",
+      "modes": ["solo", "versus"],
+      "tags": ["Classic", "Arcade"],
+      "rules": "75% coverage · 3 lives · 10 cells/s · No mission countdown · Direction-only Arcade · 12 enemies",
+      "ruleDetails": {
+        "ruleset": "xonix-core.v6",
+        "coverage": 0.75,
+        "lives": 3,
+        "moveSpeed": 10,
+        "timeLimitSeconds": 0,
+        "enemies": [
+          { "type": "bouncer", "count": 3 },
+          { "type": "border-patrol", "count": 2 },
+          { "type": "contour-patrol", "count": 7 }
+        ],
+        "requiredObjectives": 0
+      },
+      "difficultiesByMode": { "solo": ["standard", "gentle"], "versus": ["standard"] },
+      "sourceFile": {
+        "path": "game/content/packs/neon-mosaic-pack.json",
+        "bytes": 580176,
+        "sha256": "8653b45a17273d447e0a5cab4370b8f273b74d1fdbd02d4206f3e3202b8e669f"
+      },
+      "packIdentity": {
+        "bytes": 379220,
+        "sha256": "345674d27b1de48a323ce188ad09fda908d9cfdbfde680788c0dabadc13dcc4b"
+      },
+      "packVersion": "1.0.0"
+    },
+    {
+      "id": "classic/bundled/neon-mosaic-pack/neon-mosaic%2F1%2F6195cab2099aacc9/neon-wheat-pack/1",
+      "source": "bundled",
+      "packId": "neon-mosaic-pack",
+      "campaignId": "neon-mosaic",
+      "campaignRevision": "1",
+      "campaignKey": "neon-mosaic/1/6195cab2099aacc9",
+      "levelId": "neon-wheat-pack",
+      "levelRevision": "1",
+      "levelIndex": 19,
+      "name": "Neon Wheat Sheaf",
+      "campaignTitle": "Neon Words & Symbols",
+      "edition": "Neon Words & Symbols",
+      "themeId": "retro",
+      "modes": ["solo", "versus"],
+      "tags": ["Classic", "Arcade"],
+      "rules": "75% coverage · 3 lives · 10 cells/s · No mission countdown · Direction-only Arcade · 14 enemies",
+      "ruleDetails": {
+        "ruleset": "xonix-core.v6",
+        "coverage": 0.75,
+        "lives": 3,
+        "moveSpeed": 10,
+        "timeLimitSeconds": 0,
+        "enemies": [
+          { "type": "bouncer", "count": 4 },
+          { "type": "border-patrol", "count": 2 },
+          { "type": "contour-patrol", "count": 8 }
+        ],
+        "requiredObjectives": 0
+      },
+      "difficultiesByMode": { "solo": ["standard", "gentle"], "versus": ["standard"] },
+      "sourceFile": {
+        "path": "game/content/packs/neon-mosaic-pack.json",
+        "bytes": 580176,
+        "sha256": "8653b45a17273d447e0a5cab4370b8f273b74d1fdbd02d4206f3e3202b8e669f"
+      },
+      "packIdentity": {
+        "bytes": 379220,
+        "sha256": "345674d27b1de48a323ce188ad09fda908d9cfdbfde680788c0dabadc13dcc4b"
+      },
+      "packVersion": "1.0.0"
+    },
+    {
+      "id": "classic/bundled/neon-mosaic-pack/neon-mosaic%2F1%2F6195cab2099aacc9/neon-vinok-pack/1",
+      "source": "bundled",
+      "packId": "neon-mosaic-pack",
+      "campaignId": "neon-mosaic",
+      "campaignRevision": "1",
+      "campaignKey": "neon-mosaic/1/6195cab2099aacc9",
+      "levelId": "neon-vinok-pack",
+      "levelRevision": "1",
+      "levelIndex": 20,
+      "name": "Neon Vinok",
+      "campaignTitle": "Neon Words & Symbols",
+      "edition": "Neon Words & Symbols",
+      "themeId": "retro",
+      "modes": ["solo", "versus"],
+      "tags": ["Classic", "Arcade"],
+      "rules": "75% coverage · 3 lives · 10 cells/s · No mission countdown · Direction-only Arcade · 15 enemies",
+      "ruleDetails": {
+        "ruleset": "xonix-core.v6",
+        "coverage": 0.75,
+        "lives": 3,
+        "moveSpeed": 10,
+        "timeLimitSeconds": 0,
+        "enemies": [
+          { "type": "bouncer", "count": 5 },
+          { "type": "border-patrol", "count": 2 },
+          { "type": "contour-patrol", "count": 8 }
+        ],
+        "requiredObjectives": 0
+      },
+      "difficultiesByMode": { "solo": ["standard", "gentle"], "versus": ["standard"] },
+      "sourceFile": {
+        "path": "game/content/packs/neon-mosaic-pack.json",
+        "bytes": 580176,
+        "sha256": "8653b45a17273d447e0a5cab4370b8f273b74d1fdbd02d4206f3e3202b8e669f"
+      },
+      "packIdentity": {
+        "bytes": 379220,
+        "sha256": "345674d27b1de48a323ce188ad09fda908d9cfdbfde680788c0dabadc13dcc4b"
+      },
+      "packVersion": "1.0.0"
+    },
+    {
+      "id": "classic/bundled/neon-mosaic-pack/neon-mosaic%2F1%2F6195cab2099aacc9/neon-didukh-pack/1",
+      "source": "bundled",
+      "packId": "neon-mosaic-pack",
+      "campaignId": "neon-mosaic",
+      "campaignRevision": "1",
+      "campaignKey": "neon-mosaic/1/6195cab2099aacc9",
+      "levelId": "neon-didukh-pack",
+      "levelRevision": "1",
+      "levelIndex": 21,
+      "name": "Neon Didukh",
+      "campaignTitle": "Neon Words & Symbols",
+      "edition": "Neon Words & Symbols",
+      "themeId": "retro",
+      "modes": ["solo", "versus"],
+      "tags": ["Classic", "Arcade"],
+      "rules": "75% coverage · 3 lives · 10 cells/s · No mission countdown · Direction-only Arcade · 12 enemies",
+      "ruleDetails": {
+        "ruleset": "xonix-core.v6",
+        "coverage": 0.75,
+        "lives": 3,
+        "moveSpeed": 10,
+        "timeLimitSeconds": 0,
+        "enemies": [
+          { "type": "bouncer", "count": 3 },
+          { "type": "border-patrol", "count": 2 },
+          { "type": "contour-patrol", "count": 7 }
+        ],
+        "requiredObjectives": 0
+      },
+      "difficultiesByMode": { "solo": ["standard", "gentle"], "versus": ["standard"] },
+      "sourceFile": {
+        "path": "game/content/packs/neon-mosaic-pack.json",
+        "bytes": 580176,
+        "sha256": "8653b45a17273d447e0a5cab4370b8f273b74d1fdbd02d4206f3e3202b8e669f"
+      },
+      "packIdentity": {
+        "bytes": 379220,
+        "sha256": "345674d27b1de48a323ce188ad09fda908d9cfdbfde680788c0dabadc13dcc4b"
+      },
+      "packVersion": "1.0.0"
+    },
+    {
+      "id": "classic/bundled/neon-mosaic-pack/neon-mosaic%2F1%2F6195cab2099aacc9/neon-rushnyk-pack/1",
+      "source": "bundled",
+      "packId": "neon-mosaic-pack",
+      "campaignId": "neon-mosaic",
+      "campaignRevision": "1",
+      "campaignKey": "neon-mosaic/1/6195cab2099aacc9",
+      "levelId": "neon-rushnyk-pack",
+      "levelRevision": "1",
+      "levelIndex": 22,
+      "name": "Neon Rushnyk",
+      "campaignTitle": "Neon Words & Symbols",
+      "edition": "Neon Words & Symbols",
+      "themeId": "retro",
+      "modes": ["solo", "versus"],
+      "tags": ["Classic", "Arcade"],
+      "rules": "75% coverage · 3 lives · 10 cells/s · No mission countdown · Direction-only Arcade · 13 enemies",
+      "ruleDetails": {
+        "ruleset": "xonix-core.v6",
+        "coverage": 0.75,
+        "lives": 3,
+        "moveSpeed": 10,
+        "timeLimitSeconds": 0,
+        "enemies": [
+          { "type": "bouncer", "count": 4 },
+          { "type": "border-patrol", "count": 2 },
+          { "type": "contour-patrol", "count": 7 }
+        ],
+        "requiredObjectives": 0
+      },
+      "difficultiesByMode": { "solo": ["standard", "gentle"], "versus": ["standard"] },
+      "sourceFile": {
+        "path": "game/content/packs/neon-mosaic-pack.json",
+        "bytes": 580176,
+        "sha256": "8653b45a17273d447e0a5cab4370b8f273b74d1fdbd02d4206f3e3202b8e669f"
+      },
+      "packIdentity": {
+        "bytes": 379220,
+        "sha256": "345674d27b1de48a323ce188ad09fda908d9cfdbfde680788c0dabadc13dcc4b"
+      },
+      "packVersion": "1.0.0"
+    },
+    {
+      "id": "classic/bundled/neon-mosaic-pack/neon-mosaic%2F1%2F6195cab2099aacc9/neon-bandura-pack/1",
+      "source": "bundled",
+      "packId": "neon-mosaic-pack",
+      "campaignId": "neon-mosaic",
+      "campaignRevision": "1",
+      "campaignKey": "neon-mosaic/1/6195cab2099aacc9",
+      "levelId": "neon-bandura-pack",
+      "levelRevision": "1",
+      "levelIndex": 23,
+      "name": "Neon Bandura",
+      "campaignTitle": "Neon Words & Symbols",
+      "edition": "Neon Words & Symbols",
+      "themeId": "retro",
+      "modes": ["solo", "versus"],
+      "tags": ["Classic", "Arcade"],
+      "rules": "75% coverage · 3 lives · 10 cells/s · No mission countdown · Direction-only Arcade · 16 enemies",
+      "ruleDetails": {
+        "ruleset": "xonix-core.v6",
+        "coverage": 0.75,
+        "lives": 3,
+        "moveSpeed": 10,
+        "timeLimitSeconds": 0,
+        "enemies": [
+          { "type": "bouncer", "count": 5 },
+          { "type": "border-patrol", "count": 2 },
+          { "type": "contour-patrol", "count": 9 }
+        ],
+        "requiredObjectives": 0
+      },
+      "difficultiesByMode": { "solo": ["standard", "gentle"], "versus": ["standard"] },
+      "sourceFile": {
+        "path": "game/content/packs/neon-mosaic-pack.json",
+        "bytes": 580176,
+        "sha256": "8653b45a17273d447e0a5cab4370b8f273b74d1fdbd02d4206f3e3202b8e669f"
+      },
+      "packIdentity": {
+        "bytes": 379220,
+        "sha256": "345674d27b1de48a323ce188ad09fda908d9cfdbfde680788c0dabadc13dcc4b"
+      },
+      "packVersion": "1.0.0"
+    },
+    {
+      "id": "classic/bundled/neon-mosaic-pack/neon-mosaic%2F1%2F6195cab2099aacc9/neon-trembita-pack/1",
+      "source": "bundled",
+      "packId": "neon-mosaic-pack",
+      "campaignId": "neon-mosaic",
+      "campaignRevision": "1",
+      "campaignKey": "neon-mosaic/1/6195cab2099aacc9",
+      "levelId": "neon-trembita-pack",
+      "levelRevision": "1",
+      "levelIndex": 24,
+      "name": "Neon Trembita",
+      "campaignTitle": "Neon Words & Symbols",
+      "edition": "Neon Words & Symbols",
+      "themeId": "retro",
+      "modes": ["solo", "versus"],
+      "tags": ["Classic", "Arcade"],
+      "rules": "75% coverage · 3 lives · 10 cells/s · No mission countdown · Direction-only Arcade · 11 enemies",
+      "ruleDetails": {
+        "ruleset": "xonix-core.v6",
+        "coverage": 0.75,
+        "lives": 3,
+        "moveSpeed": 10,
+        "timeLimitSeconds": 0,
+        "enemies": [
+          { "type": "bouncer", "count": 3 },
+          { "type": "border-patrol", "count": 2 },
+          { "type": "contour-patrol", "count": 6 }
+        ],
+        "requiredObjectives": 0
+      },
+      "difficultiesByMode": { "solo": ["standard", "gentle"], "versus": ["standard"] },
+      "sourceFile": {
+        "path": "game/content/packs/neon-mosaic-pack.json",
+        "bytes": 580176,
+        "sha256": "8653b45a17273d447e0a5cab4370b8f273b74d1fdbd02d4206f3e3202b8e669f"
+      },
+      "packIdentity": {
+        "bytes": 379220,
+        "sha256": "345674d27b1de48a323ce188ad09fda908d9cfdbfde680788c0dabadc13dcc4b"
+      },
+      "packVersion": "1.0.0"
+    },
+    {
+      "id": "classic/bundled/neon-mosaic-pack/neon-mosaic%2F1%2F6195cab2099aacc9/neon-tsymbaly-pack/1",
+      "source": "bundled",
+      "packId": "neon-mosaic-pack",
+      "campaignId": "neon-mosaic",
+      "campaignRevision": "1",
+      "campaignKey": "neon-mosaic/1/6195cab2099aacc9",
+      "levelId": "neon-tsymbaly-pack",
+      "levelRevision": "1",
+      "levelIndex": 25,
+      "name": "Neon Tsymbaly",
+      "campaignTitle": "Neon Words & Symbols",
+      "edition": "Neon Words & Symbols",
+      "themeId": "retro",
+      "modes": ["solo", "versus"],
+      "tags": ["Classic", "Arcade"],
+      "rules": "75% coverage · 3 lives · 10 cells/s · No mission countdown · Direction-only Arcade · 14 enemies",
+      "ruleDetails": {
+        "ruleset": "xonix-core.v6",
+        "coverage": 0.75,
+        "lives": 3,
+        "moveSpeed": 10,
+        "timeLimitSeconds": 0,
+        "enemies": [
+          { "type": "bouncer", "count": 4 },
+          { "type": "border-patrol", "count": 2 },
+          { "type": "contour-patrol", "count": 8 }
+        ],
+        "requiredObjectives": 0
+      },
+      "difficultiesByMode": { "solo": ["standard", "gentle"], "versus": ["standard"] },
+      "sourceFile": {
+        "path": "game/content/packs/neon-mosaic-pack.json",
+        "bytes": 580176,
+        "sha256": "8653b45a17273d447e0a5cab4370b8f273b74d1fdbd02d4206f3e3202b8e669f"
+      },
+      "packIdentity": {
+        "bytes": 379220,
+        "sha256": "345674d27b1de48a323ce188ad09fda908d9cfdbfde680788c0dabadc13dcc4b"
+      },
+      "packVersion": "1.0.0"
+    },
+    {
+      "id": "classic/bundled/neon-mosaic-pack/neon-mosaic%2F1%2F6195cab2099aacc9/neon-kosiv-pitcher-pack/1",
+      "source": "bundled",
+      "packId": "neon-mosaic-pack",
+      "campaignId": "neon-mosaic",
+      "campaignRevision": "1",
+      "campaignKey": "neon-mosaic/1/6195cab2099aacc9",
+      "levelId": "neon-kosiv-pitcher-pack",
+      "levelRevision": "1",
+      "levelIndex": 26,
+      "name": "Neon Kosiv Pitcher",
+      "campaignTitle": "Neon Words & Symbols",
+      "edition": "Neon Words & Symbols",
+      "themeId": "retro",
+      "modes": ["solo", "versus"],
+      "tags": ["Classic", "Arcade"],
+      "rules": "75% coverage · 3 lives · 10 cells/s · No mission countdown · Direction-only Arcade · 16 enemies",
+      "ruleDetails": {
+        "ruleset": "xonix-core.v6",
+        "coverage": 0.75,
+        "lives": 3,
+        "moveSpeed": 10,
+        "timeLimitSeconds": 0,
+        "enemies": [
+          { "type": "bouncer", "count": 5 },
+          { "type": "border-patrol", "count": 2 },
+          { "type": "contour-patrol", "count": 9 }
+        ],
+        "requiredObjectives": 0
+      },
+      "difficultiesByMode": { "solo": ["standard", "gentle"], "versus": ["standard"] },
+      "sourceFile": {
+        "path": "game/content/packs/neon-mosaic-pack.json",
+        "bytes": 580176,
+        "sha256": "8653b45a17273d447e0a5cab4370b8f273b74d1fdbd02d4206f3e3202b8e669f"
+      },
+      "packIdentity": {
+        "bytes": 379220,
+        "sha256": "345674d27b1de48a323ce188ad09fda908d9cfdbfde680788c0dabadc13dcc4b"
+      },
+      "packVersion": "1.0.0"
+    },
+    {
+      "id": "classic/bundled/neon-mosaic-pack/neon-mosaic%2F1%2F6195cab2099aacc9/neon-opishnia-ram-pack/1",
+      "source": "bundled",
+      "packId": "neon-mosaic-pack",
+      "campaignId": "neon-mosaic",
+      "campaignRevision": "1",
+      "campaignKey": "neon-mosaic/1/6195cab2099aacc9",
+      "levelId": "neon-opishnia-ram-pack",
+      "levelRevision": "1",
+      "levelIndex": 27,
+      "name": "Neon Opishnia Ram",
+      "campaignTitle": "Neon Words & Symbols",
+      "edition": "Neon Words & Symbols",
+      "themeId": "retro",
+      "modes": ["solo", "versus"],
+      "tags": ["Classic", "Arcade"],
+      "rules": "75% coverage · 3 lives · 10 cells/s · No mission countdown · Direction-only Arcade · 11 enemies",
+      "ruleDetails": {
+        "ruleset": "xonix-core.v6",
+        "coverage": 0.75,
+        "lives": 3,
+        "moveSpeed": 10,
+        "timeLimitSeconds": 0,
+        "enemies": [
+          { "type": "bouncer", "count": 3 },
+          { "type": "border-patrol", "count": 2 },
+          { "type": "contour-patrol", "count": 6 }
+        ],
+        "requiredObjectives": 0
+      },
+      "difficultiesByMode": { "solo": ["standard", "gentle"], "versus": ["standard"] },
+      "sourceFile": {
+        "path": "game/content/packs/neon-mosaic-pack.json",
+        "bytes": 580176,
+        "sha256": "8653b45a17273d447e0a5cab4370b8f273b74d1fdbd02d4206f3e3202b8e669f"
+      },
+      "packIdentity": {
+        "bytes": 379220,
+        "sha256": "345674d27b1de48a323ce188ad09fda908d9cfdbfde680788c0dabadc13dcc4b"
+      },
+      "packVersion": "1.0.0"
+    },
+    {
+      "id": "classic/bundled/neon-mosaic-pack/neon-mosaic%2F1%2F6195cab2099aacc9/neon-petrykivka-pack/1",
+      "source": "bundled",
+      "packId": "neon-mosaic-pack",
+      "campaignId": "neon-mosaic",
+      "campaignRevision": "1",
+      "campaignKey": "neon-mosaic/1/6195cab2099aacc9",
+      "levelId": "neon-petrykivka-pack",
+      "levelRevision": "1",
+      "levelIndex": 28,
+      "name": "Neon Petrykivka Flower",
+      "campaignTitle": "Neon Words & Symbols",
+      "edition": "Neon Words & Symbols",
+      "themeId": "retro",
+      "modes": ["solo", "versus"],
+      "tags": ["Classic", "Arcade"],
+      "rules": "75% coverage · 3 lives · 10 cells/s · No mission countdown · Direction-only Arcade · 12 enemies",
+      "ruleDetails": {
+        "ruleset": "xonix-core.v6",
+        "coverage": 0.75,
+        "lives": 3,
+        "moveSpeed": 10,
+        "timeLimitSeconds": 0,
+        "enemies": [
+          { "type": "bouncer", "count": 4 },
+          { "type": "border-patrol", "count": 2 },
+          { "type": "contour-patrol", "count": 6 }
+        ],
+        "requiredObjectives": 0
+      },
+      "difficultiesByMode": { "solo": ["standard", "gentle"], "versus": ["standard"] },
+      "sourceFile": {
+        "path": "game/content/packs/neon-mosaic-pack.json",
+        "bytes": 580176,
+        "sha256": "8653b45a17273d447e0a5cab4370b8f273b74d1fdbd02d4206f3e3202b8e669f"
+      },
+      "packIdentity": {
+        "bytes": 379220,
+        "sha256": "345674d27b1de48a323ce188ad09fda908d9cfdbfde680788c0dabadc13dcc4b"
+      },
+      "packVersion": "1.0.0"
+    },
+    {
+      "id": "classic/bundled/neon-mosaic-pack/neon-mosaic%2F1%2F6195cab2099aacc9/neon-oak-pack/1",
+      "source": "bundled",
+      "packId": "neon-mosaic-pack",
+      "campaignId": "neon-mosaic",
+      "campaignRevision": "1",
+      "campaignKey": "neon-mosaic/1/6195cab2099aacc9",
+      "levelId": "neon-oak-pack",
+      "levelRevision": "1",
+      "levelIndex": 29,
+      "name": "Neon Oak and Acorns",
+      "campaignTitle": "Neon Words & Symbols",
+      "edition": "Neon Words & Symbols",
+      "themeId": "retro",
+      "modes": ["solo", "versus"],
+      "tags": ["Classic", "Arcade"],
+      "rules": "75% coverage · 3 lives · 10 cells/s · No mission countdown · Direction-only Arcade · 15 enemies",
+      "ruleDetails": {
+        "ruleset": "xonix-core.v6",
+        "coverage": 0.75,
+        "lives": 3,
+        "moveSpeed": 10,
+        "timeLimitSeconds": 0,
+        "enemies": [
+          { "type": "bouncer", "count": 5 },
+          { "type": "border-patrol", "count": 2 },
+          { "type": "contour-patrol", "count": 8 }
+        ],
+        "requiredObjectives": 0
+      },
+      "difficultiesByMode": { "solo": ["standard", "gentle"], "versus": ["standard"] },
+      "sourceFile": {
+        "path": "game/content/packs/neon-mosaic-pack.json",
+        "bytes": 580176,
+        "sha256": "8653b45a17273d447e0a5cab4370b8f273b74d1fdbd02d4206f3e3202b8e669f"
+      },
+      "packIdentity": {
+        "bytes": 379220,
+        "sha256": "345674d27b1de48a323ce188ad09fda908d9cfdbfde680788c0dabadc13dcc4b"
+      },
+      "packVersion": "1.0.0"
+    },
+    {
+      "id": "classic/bundled/neon-mosaic-pack/neon-mosaic%2F1%2F6195cab2099aacc9/neon-stork-pack/1",
+      "source": "bundled",
+      "packId": "neon-mosaic-pack",
+      "campaignId": "neon-mosaic",
+      "campaignRevision": "1",
+      "campaignKey": "neon-mosaic/1/6195cab2099aacc9",
+      "levelId": "neon-stork-pack",
+      "levelRevision": "1",
+      "levelIndex": 30,
+      "name": "Neon Stork",
+      "campaignTitle": "Neon Words & Symbols",
+      "edition": "Neon Words & Symbols",
+      "themeId": "retro",
+      "modes": ["solo", "versus"],
+      "tags": ["Classic", "Arcade"],
+      "rules": "75% coverage · 3 lives · 10 cells/s · No mission countdown · Direction-only Arcade · 11 enemies",
+      "ruleDetails": {
+        "ruleset": "xonix-core.v6",
+        "coverage": 0.75,
+        "lives": 3,
+        "moveSpeed": 10,
+        "timeLimitSeconds": 0,
+        "enemies": [
+          { "type": "bouncer", "count": 3 },
+          { "type": "border-patrol", "count": 2 },
+          { "type": "contour-patrol", "count": 6 }
+        ],
+        "requiredObjectives": 0
+      },
+      "difficultiesByMode": { "solo": ["standard", "gentle"], "versus": ["standard"] },
+      "sourceFile": {
+        "path": "game/content/packs/neon-mosaic-pack.json",
+        "bytes": 580176,
+        "sha256": "8653b45a17273d447e0a5cab4370b8f273b74d1fdbd02d4206f3e3202b8e669f"
+      },
+      "packIdentity": {
+        "bytes": 379220,
+        "sha256": "345674d27b1de48a323ce188ad09fda908d9cfdbfde680788c0dabadc13dcc4b"
+      },
+      "packVersion": "1.0.0"
+    },
+    {
+      "id": "classic/bundled/neon-mosaic-pack/neon-mosaic%2F1%2F6195cab2099aacc9/neon-swallow-pack/1",
+      "source": "bundled",
+      "packId": "neon-mosaic-pack",
+      "campaignId": "neon-mosaic",
+      "campaignRevision": "1",
+      "campaignKey": "neon-mosaic/1/6195cab2099aacc9",
+      "levelId": "neon-swallow-pack",
+      "levelRevision": "1",
+      "levelIndex": 31,
+      "name": "Neon Swallow",
+      "campaignTitle": "Neon Words & Symbols",
+      "edition": "Neon Words & Symbols",
+      "themeId": "retro",
+      "modes": ["solo", "versus"],
+      "tags": ["Classic", "Arcade"],
+      "rules": "75% coverage · 3 lives · 10 cells/s · No mission countdown · Direction-only Arcade · 14 enemies",
+      "ruleDetails": {
+        "ruleset": "xonix-core.v6",
+        "coverage": 0.75,
+        "lives": 3,
+        "moveSpeed": 10,
+        "timeLimitSeconds": 0,
+        "enemies": [
+          { "type": "bouncer", "count": 4 },
+          { "type": "border-patrol", "count": 2 },
+          { "type": "contour-patrol", "count": 8 }
+        ],
+        "requiredObjectives": 0
+      },
+      "difficultiesByMode": { "solo": ["standard", "gentle"], "versus": ["standard"] },
+      "sourceFile": {
+        "path": "game/content/packs/neon-mosaic-pack.json",
+        "bytes": 580176,
+        "sha256": "8653b45a17273d447e0a5cab4370b8f273b74d1fdbd02d4206f3e3202b8e669f"
+      },
+      "packIdentity": {
+        "bytes": 379220,
+        "sha256": "345674d27b1de48a323ce188ad09fda908d9cfdbfde680788c0dabadc13dcc4b"
+      },
+      "packVersion": "1.0.0"
+    },
+    {
+      "id": "classic/bundled/neon-mosaic-pack/neon-mosaic%2F1%2F6195cab2099aacc9/neon-horse-pack/1",
+      "source": "bundled",
+      "packId": "neon-mosaic-pack",
+      "campaignId": "neon-mosaic",
+      "campaignRevision": "1",
+      "campaignKey": "neon-mosaic/1/6195cab2099aacc9",
+      "levelId": "neon-horse-pack",
+      "levelRevision": "1",
+      "levelIndex": 32,
+      "name": "Neon Pysanka Horse",
+      "campaignTitle": "Neon Words & Symbols",
+      "edition": "Neon Words & Symbols",
+      "themeId": "retro",
+      "modes": ["solo", "versus"],
+      "tags": ["Classic", "Arcade"],
+      "rules": "75% coverage · 3 lives · 10 cells/s · No mission countdown · Direction-only Arcade · 14 enemies",
+      "ruleDetails": {
+        "ruleset": "xonix-core.v6",
+        "coverage": 0.75,
+        "lives": 3,
+        "moveSpeed": 10,
+        "timeLimitSeconds": 0,
+        "enemies": [
+          { "type": "bouncer", "count": 5 },
+          { "type": "border-patrol", "count": 2 },
+          { "type": "contour-patrol", "count": 7 }
+        ],
+        "requiredObjectives": 0
+      },
+      "difficultiesByMode": { "solo": ["standard", "gentle"], "versus": ["standard"] },
+      "sourceFile": {
+        "path": "game/content/packs/neon-mosaic-pack.json",
+        "bytes": 580176,
+        "sha256": "8653b45a17273d447e0a5cab4370b8f273b74d1fdbd02d4206f3e3202b8e669f"
+      },
+      "packIdentity": {
+        "bytes": 379220,
+        "sha256": "345674d27b1de48a323ce188ad09fda908d9cfdbfde680788c0dabadc13dcc4b"
+      },
+      "packVersion": "1.0.0"
+    },
+    {
+      "id": "classic/bundled/neon-mosaic-pack/neon-mosaic%2F1%2F6195cab2099aacc9/neon-deer-pack/1",
+      "source": "bundled",
+      "packId": "neon-mosaic-pack",
+      "campaignId": "neon-mosaic",
+      "campaignRevision": "1",
+      "campaignKey": "neon-mosaic/1/6195cab2099aacc9",
+      "levelId": "neon-deer-pack",
+      "levelRevision": "1",
+      "levelIndex": 33,
+      "name": "Neon Pysanka Deer",
+      "campaignTitle": "Neon Words & Symbols",
+      "edition": "Neon Words & Symbols",
+      "themeId": "retro",
+      "modes": ["solo", "versus"],
+      "tags": ["Classic", "Arcade"],
+      "rules": "75% coverage · 3 lives · 10 cells/s · No mission countdown · Direction-only Arcade · 11 enemies",
+      "ruleDetails": {
+        "ruleset": "xonix-core.v6",
+        "coverage": 0.75,
+        "lives": 3,
+        "moveSpeed": 10,
+        "timeLimitSeconds": 0,
+        "enemies": [
+          { "type": "bouncer", "count": 3 },
+          { "type": "border-patrol", "count": 2 },
+          { "type": "contour-patrol", "count": 6 }
+        ],
+        "requiredObjectives": 0
+      },
+      "difficultiesByMode": { "solo": ["standard", "gentle"], "versus": ["standard"] },
+      "sourceFile": {
+        "path": "game/content/packs/neon-mosaic-pack.json",
+        "bytes": 580176,
+        "sha256": "8653b45a17273d447e0a5cab4370b8f273b74d1fdbd02d4206f3e3202b8e669f"
+      },
+      "packIdentity": {
+        "bytes": 379220,
+        "sha256": "345674d27b1de48a323ce188ad09fda908d9cfdbfde680788c0dabadc13dcc4b"
+      },
+      "packVersion": "1.0.0"
+    },
+    {
+      "id": "classic/bundled/neon-mosaic-pack/neon-mosaic%2F1%2F6195cab2099aacc9/neon-fish-pack/1",
+      "source": "bundled",
+      "packId": "neon-mosaic-pack",
+      "campaignId": "neon-mosaic",
+      "campaignRevision": "1",
+      "campaignKey": "neon-mosaic/1/6195cab2099aacc9",
+      "levelId": "neon-fish-pack",
+      "levelRevision": "1",
+      "levelIndex": 34,
+      "name": "Neon Pysanka Fish",
+      "campaignTitle": "Neon Words & Symbols",
+      "edition": "Neon Words & Symbols",
+      "themeId": "retro",
+      "modes": ["solo", "versus"],
+      "tags": ["Classic", "Arcade"],
+      "rules": "75% coverage · 3 lives · 10 cells/s · No mission countdown · Direction-only Arcade · 13 enemies",
+      "ruleDetails": {
+        "ruleset": "xonix-core.v6",
+        "coverage": 0.75,
+        "lives": 3,
+        "moveSpeed": 10,
+        "timeLimitSeconds": 0,
+        "enemies": [
+          { "type": "bouncer", "count": 4 },
+          { "type": "border-patrol", "count": 2 },
+          { "type": "contour-patrol", "count": 7 }
+        ],
+        "requiredObjectives": 0
+      },
+      "difficultiesByMode": { "solo": ["standard", "gentle"], "versus": ["standard"] },
+      "sourceFile": {
+        "path": "game/content/packs/neon-mosaic-pack.json",
+        "bytes": 580176,
+        "sha256": "8653b45a17273d447e0a5cab4370b8f273b74d1fdbd02d4206f3e3202b8e669f"
+      },
+      "packIdentity": {
+        "bytes": 379220,
+        "sha256": "345674d27b1de48a323ce188ad09fda908d9cfdbfde680788c0dabadc13dcc4b"
+      },
+      "packVersion": "1.0.0"
+    },
+    {
+      "id": "classic/bundled/neon-mosaic-pack/neon-mosaic%2F1%2F6195cab2099aacc9/neon-berehynia-pack/1",
+      "source": "bundled",
+      "packId": "neon-mosaic-pack",
+      "campaignId": "neon-mosaic",
+      "campaignRevision": "1",
+      "campaignKey": "neon-mosaic/1/6195cab2099aacc9",
+      "levelId": "neon-berehynia-pack",
+      "levelRevision": "1",
+      "levelIndex": 35,
+      "name": "Neon Berehynia Motif",
+      "campaignTitle": "Neon Words & Symbols",
+      "edition": "Neon Words & Symbols",
+      "themeId": "retro",
+      "modes": ["solo", "versus"],
+      "tags": ["Classic", "Arcade"],
+      "rules": "75% coverage · 3 lives · 10 cells/s · No mission countdown · Direction-only Arcade · 14 enemies",
+      "ruleDetails": {
+        "ruleset": "xonix-core.v6",
+        "coverage": 0.75,
+        "lives": 3,
+        "moveSpeed": 10,
+        "timeLimitSeconds": 0,
+        "enemies": [
+          { "type": "bouncer", "count": 5 },
+          { "type": "border-patrol", "count": 2 },
+          { "type": "contour-patrol", "count": 7 }
+        ],
+        "requiredObjectives": 0
+      },
+      "difficultiesByMode": { "solo": ["standard", "gentle"], "versus": ["standard"] },
+      "sourceFile": {
+        "path": "game/content/packs/neon-mosaic-pack.json",
+        "bytes": 580176,
+        "sha256": "8653b45a17273d447e0a5cab4370b8f273b74d1fdbd02d4206f3e3202b8e669f"
+      },
+      "packIdentity": {
+        "bytes": 379220,
+        "sha256": "345674d27b1de48a323ce188ad09fda908d9cfdbfde680788c0dabadc13dcc4b"
+      },
+      "packVersion": "1.0.0"
+    },
+    {
+      "id": "classic/bundled/neon-mosaic-pack/neon-mosaic%2F1%2F6195cab2099aacc9/neon-bezkonechnyk-pack/1",
+      "source": "bundled",
+      "packId": "neon-mosaic-pack",
+      "campaignId": "neon-mosaic",
+      "campaignRevision": "1",
+      "campaignKey": "neon-mosaic/1/6195cab2099aacc9",
+      "levelId": "neon-bezkonechnyk-pack",
+      "levelRevision": "1",
+      "levelIndex": 36,
+      "name": "Neon Bezkonechnyk",
+      "campaignTitle": "Neon Words & Symbols",
+      "edition": "Neon Words & Symbols",
+      "themeId": "retro",
+      "modes": ["solo", "versus"],
+      "tags": ["Classic", "Arcade"],
+      "rules": "75% coverage · 3 lives · 10 cells/s · No mission countdown · Direction-only Arcade · 12 enemies",
+      "ruleDetails": {
+        "ruleset": "xonix-core.v6",
+        "coverage": 0.75,
+        "lives": 3,
+        "moveSpeed": 10,
+        "timeLimitSeconds": 0,
+        "enemies": [
+          { "type": "bouncer", "count": 3 },
+          { "type": "border-patrol", "count": 2 },
+          { "type": "contour-patrol", "count": 7 }
+        ],
+        "requiredObjectives": 0
+      },
+      "difficultiesByMode": { "solo": ["standard", "gentle"], "versus": ["standard"] },
+      "sourceFile": {
+        "path": "game/content/packs/neon-mosaic-pack.json",
+        "bytes": 580176,
+        "sha256": "8653b45a17273d447e0a5cab4370b8f273b74d1fdbd02d4206f3e3202b8e669f"
+      },
+      "packIdentity": {
+        "bytes": 379220,
+        "sha256": "345674d27b1de48a323ce188ad09fda908d9cfdbfde680788c0dabadc13dcc4b"
+      },
+      "packVersion": "1.0.0"
+    },
+    {
+      "id": "classic/bundled/neon-mosaic-pack/neon-mosaic%2F1%2F6195cab2099aacc9/neon-ornek-tulip-pack/1",
+      "source": "bundled",
+      "packId": "neon-mosaic-pack",
+      "campaignId": "neon-mosaic",
+      "campaignRevision": "1",
+      "campaignKey": "neon-mosaic/1/6195cab2099aacc9",
+      "levelId": "neon-ornek-tulip-pack",
+      "levelRevision": "1",
+      "levelIndex": 37,
+      "name": "Neon Crimean Tatar Ornek Tulip",
+      "campaignTitle": "Neon Words & Symbols",
+      "edition": "Neon Words & Symbols",
+      "themeId": "retro",
+      "modes": ["solo", "versus"],
+      "tags": ["Classic", "Arcade"],
+      "rules": "75% coverage · 3 lives · 10 cells/s · No mission countdown · Direction-only Arcade · 13 enemies",
+      "ruleDetails": {
+        "ruleset": "xonix-core.v6",
+        "coverage": 0.75,
+        "lives": 3,
+        "moveSpeed": 10,
+        "timeLimitSeconds": 0,
+        "enemies": [
+          { "type": "bouncer", "count": 4 },
+          { "type": "border-patrol", "count": 2 },
+          { "type": "contour-patrol", "count": 7 }
+        ],
+        "requiredObjectives": 0
+      },
+      "difficultiesByMode": { "solo": ["standard", "gentle"], "versus": ["standard"] },
+      "sourceFile": {
+        "path": "game/content/packs/neon-mosaic-pack.json",
+        "bytes": 580176,
+        "sha256": "8653b45a17273d447e0a5cab4370b8f273b74d1fdbd02d4206f3e3202b8e669f"
+      },
+      "packIdentity": {
+        "bytes": 379220,
+        "sha256": "345674d27b1de48a323ce188ad09fda908d9cfdbfde680788c0dabadc13dcc4b"
+      },
+      "packVersion": "1.0.0"
+    },
+    {
       "id": "classic/archived/fpv-arcade-r4/fpv-first-light-r4%2F4%2F0295a1eae3e180ec/orchard-window/4",
       "source": "archived",
       "packId": "fpv-arcade-r4",

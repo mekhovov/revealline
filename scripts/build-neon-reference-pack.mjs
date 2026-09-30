@@ -70,5 +70,5 @@ if (process.argv[1] && new URL(process.argv[1], 'file:').href === import.meta.ur
       parser: 'json',
     }),
   );
-  console.log('Neon Reference Pack: six valid levels; reveal images deferred.');
+  console.log('Neon Reference Pack: 6 valid levels; reveal images deferred.');
 }
