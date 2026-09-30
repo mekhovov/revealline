@@ -1,0 +1,888 @@
+{
+  "format": "xonix-playground.v5",
+  "level": {
+    "version": "xonix-level.v4",
+    "id": "neon-crossgrid-reference",
+    "revision": "1",
+    "name": "Neon Crossgrid",
+    "width": 72,
+    "height": 36,
+    "encounter": null,
+    "spawn": {
+      "x": 36.5,
+      "y": 35.5
+    },
+    "goal": {
+      "coverage": 0.75
+    },
+    "walls": [
+      {
+        "x": 1,
+        "y": 1,
+        "w": 9,
+        "h": 1
+      },
+      {
+        "x": 12,
+        "y": 1,
+        "w": 13,
+        "h": 1
+      },
+      {
+        "x": 27,
+        "y": 1,
+        "w": 10,
+        "h": 1
+      },
+      {
+        "x": 39,
+        "y": 1,
+        "w": 18,
+        "h": 1
+      },
+      {
+        "x": 59,
+        "y": 1,
+        "w": 10,
+        "h": 1
+      },
+      {
+        "x": 1,
+        "y": 2,
+        "w": 1,
+        "h": 8
+      },
+      {
+        "x": 24,
+        "y": 2,
+        "w": 1,
+        "h": 9
+      },
+      {
+        "x": 36,
+        "y": 2,
+        "w": 1,
+        "h": 8
+      },
+      {
+        "x": 47,
+        "y": 2,
+        "w": 1,
+        "h": 8
+      },
+      {
+        "x": 59,
+        "y": 2,
+        "w": 1,
+        "h": 9
+      },
+      {
+        "x": 70,
+        "y": 3,
+        "w": 1,
+        "h": 9
+      },
+      {
+        "x": 12,
+        "y": 4,
+        "w": 1,
+        "h": 8
+      },
+      {
+        "x": 1,
+        "y": 12,
+        "w": 1,
+        "h": 11
+      },
+      {
+        "x": 4,
+        "y": 12,
+        "w": 19,
+        "h": 1
+      },
+      {
+        "x": 26,
+        "y": 12,
+        "w": 11,
+        "h": 1
+      },
+      {
+        "x": 39,
+        "y": 12,
+        "w": 18,
+        "h": 1
+      },
+      {
+        "x": 61,
+        "y": 12,
+        "w": 10,
+        "h": 1
+      },
+      {
+        "x": 12,
+        "y": 13,
+        "w": 1,
+        "h": 9
+      },
+      {
+        "x": 36,
+        "y": 13,
+        "w": 1,
+        "h": 10
+      },
+      {
+        "x": 47,
+        "y": 13,
+        "w": 1,
+        "h": 9
+      },
+      {
+        "x": 24,
+        "y": 14,
+        "w": 1,
+        "h": 9
+      },
+      {
+        "x": 59,
+        "y": 14,
+        "w": 1,
+        "h": 9
+      },
+      {
+        "x": 70,
+        "y": 15,
+        "w": 1,
+        "h": 9
+      },
+      {
+        "x": 1,
+        "y": 23,
+        "w": 10,
+        "h": 1
+      },
+      {
+        "x": 15,
+        "y": 23,
+        "w": 18,
+        "h": 1
+      },
+      {
+        "x": 36,
+        "y": 23,
+        "w": 10,
+        "h": 1
+      },
+      {
+        "x": 49,
+        "y": 23,
+        "w": 19,
+        "h": 1
+      },
+      {
+        "x": 1,
+        "y": 24,
+        "w": 1,
+        "h": 9
+      },
+      {
+        "x": 59,
+        "y": 24,
+        "w": 1,
+        "h": 8
+      },
+      {
+        "x": 12,
+        "y": 25,
+        "w": 1,
+        "h": 9
+      },
+      {
+        "x": 47,
+        "y": 25,
+        "w": 1,
+        "h": 9
+      },
+      {
+        "x": 24,
+        "y": 26,
+        "w": 1,
+        "h": 8
+      },
+      {
+        "x": 36,
+        "y": 26,
+        "w": 1,
+        "h": 8
+      },
+      {
+        "x": 70,
+        "y": 26,
+        "w": 1,
+        "h": 8
+      },
+      {
+        "x": 3,
+        "y": 34,
+        "w": 10,
+        "h": 1
+      },
+      {
+        "x": 16,
+        "y": 34,
+        "w": 17,
+        "h": 1
+      },
+      {
+        "x": 36,
+        "y": 34,
+        "w": 9,
+        "h": 1
+      },
+      {
+        "x": 47,
+        "y": 34,
+        "w": 13,
+        "h": 1
+      },
+      {
+        "x": 62,
+        "y": 34,
+        "w": 9,
+        "h": 1
+      }
+    ],
+    "objectives": [],
+    "supplies": [],
+    "signalZones": [],
+    "hangars": [],
+    "classic": {
+      "version": "classic.v1",
+      "terrain": [
+        {
+          "id": "hazard-1",
+          "kind": "lethal",
+          "x": 6,
+          "y": 3,
+          "w": 2,
+          "h": 3
+        },
+        {
+          "id": "hazard-2",
+          "kind": "lethal",
+          "x": 18,
+          "y": 3,
+          "w": 2,
+          "h": 3
+        },
+        {
+          "id": "hazard-3",
+          "kind": "lethal",
+          "x": 29,
+          "y": 3,
+          "w": 2,
+          "h": 3
+        },
+        {
+          "id": "hazard-4",
+          "kind": "lethal",
+          "x": 41,
+          "y": 3,
+          "w": 2,
+          "h": 3
+        },
+        {
+          "id": "hazard-5",
+          "kind": "lethal",
+          "x": 52,
+          "y": 3,
+          "w": 2,
+          "h": 3
+        },
+        {
+          "id": "hazard-6",
+          "kind": "lethal",
+          "x": 64,
+          "y": 3,
+          "w": 2,
+          "h": 3
+        },
+        {
+          "id": "hazard-7",
+          "kind": "lethal",
+          "x": 3,
+          "y": 6,
+          "w": 8,
+          "h": 2
+        },
+        {
+          "id": "hazard-8",
+          "kind": "lethal",
+          "x": 15,
+          "y": 6,
+          "w": 8,
+          "h": 2
+        },
+        {
+          "id": "hazard-9",
+          "kind": "lethal",
+          "x": 26,
+          "y": 6,
+          "w": 8,
+          "h": 2
+        },
+        {
+          "id": "hazard-10",
+          "kind": "lethal",
+          "x": 38,
+          "y": 6,
+          "w": 8,
+          "h": 2
+        },
+        {
+          "id": "hazard-11",
+          "kind": "lethal",
+          "x": 49,
+          "y": 6,
+          "w": 8,
+          "h": 2
+        },
+        {
+          "id": "hazard-12",
+          "kind": "lethal",
+          "x": 61,
+          "y": 6,
+          "w": 8,
+          "h": 2
+        },
+        {
+          "id": "hazard-13",
+          "kind": "lethal",
+          "x": 6,
+          "y": 8,
+          "w": 2,
+          "h": 3
+        },
+        {
+          "id": "hazard-14",
+          "kind": "lethal",
+          "x": 18,
+          "y": 8,
+          "w": 2,
+          "h": 3
+        },
+        {
+          "id": "hazard-15",
+          "kind": "lethal",
+          "x": 29,
+          "y": 8,
+          "w": 2,
+          "h": 3
+        },
+        {
+          "id": "hazard-16",
+          "kind": "lethal",
+          "x": 41,
+          "y": 8,
+          "w": 2,
+          "h": 3
+        },
+        {
+          "id": "hazard-17",
+          "kind": "lethal",
+          "x": 52,
+          "y": 8,
+          "w": 2,
+          "h": 3
+        },
+        {
+          "id": "hazard-18",
+          "kind": "lethal",
+          "x": 64,
+          "y": 8,
+          "w": 2,
+          "h": 3
+        },
+        {
+          "id": "hazard-19",
+          "kind": "lethal",
+          "x": 6,
+          "y": 14,
+          "w": 2,
+          "h": 3
+        },
+        {
+          "id": "hazard-20",
+          "kind": "lethal",
+          "x": 18,
+          "y": 14,
+          "w": 2,
+          "h": 3
+        },
+        {
+          "id": "hazard-21",
+          "kind": "lethal",
+          "x": 29,
+          "y": 14,
+          "w": 2,
+          "h": 3
+        },
+        {
+          "id": "hazard-22",
+          "kind": "lethal",
+          "x": 41,
+          "y": 14,
+          "w": 2,
+          "h": 3
+        },
+        {
+          "id": "hazard-23",
+          "kind": "lethal",
+          "x": 52,
+          "y": 14,
+          "w": 2,
+          "h": 3
+        },
+        {
+          "id": "hazard-24",
+          "kind": "lethal",
+          "x": 64,
+          "y": 14,
+          "w": 2,
+          "h": 3
+        },
+        {
+          "id": "hazard-25",
+          "kind": "lethal",
+          "x": 3,
+          "y": 17,
+          "w": 8,
+          "h": 2
+        },
+        {
+          "id": "hazard-26",
+          "kind": "lethal",
+          "x": 15,
+          "y": 17,
+          "w": 8,
+          "h": 2
+        },
+        {
+          "id": "hazard-27",
+          "kind": "lethal",
+          "x": 26,
+          "y": 17,
+          "w": 8,
+          "h": 2
+        },
+        {
+          "id": "hazard-28",
+          "kind": "lethal",
+          "x": 38,
+          "y": 17,
+          "w": 8,
+          "h": 2
+        },
+        {
+          "id": "hazard-29",
+          "kind": "lethal",
+          "x": 49,
+          "y": 17,
+          "w": 8,
+          "h": 2
+        },
+        {
+          "id": "hazard-30",
+          "kind": "lethal",
+          "x": 61,
+          "y": 17,
+          "w": 8,
+          "h": 2
+        },
+        {
+          "id": "hazard-31",
+          "kind": "lethal",
+          "x": 6,
+          "y": 19,
+          "w": 2,
+          "h": 3
+        },
+        {
+          "id": "hazard-32",
+          "kind": "lethal",
+          "x": 18,
+          "y": 19,
+          "w": 2,
+          "h": 3
+        },
+        {
+          "id": "hazard-33",
+          "kind": "lethal",
+          "x": 29,
+          "y": 19,
+          "w": 2,
+          "h": 3
+        },
+        {
+          "id": "hazard-34",
+          "kind": "lethal",
+          "x": 41,
+          "y": 19,
+          "w": 2,
+          "h": 3
+        },
+        {
+          "id": "hazard-35",
+          "kind": "lethal",
+          "x": 52,
+          "y": 19,
+          "w": 2,
+          "h": 3
+        },
+        {
+          "id": "hazard-36",
+          "kind": "lethal",
+          "x": 64,
+          "y": 19,
+          "w": 2,
+          "h": 3
+        },
+        {
+          "id": "hazard-37",
+          "kind": "lethal",
+          "x": 6,
+          "y": 25,
+          "w": 2,
+          "h": 3
+        },
+        {
+          "id": "hazard-38",
+          "kind": "lethal",
+          "x": 18,
+          "y": 25,
+          "w": 2,
+          "h": 3
+        },
+        {
+          "id": "hazard-39",
+          "kind": "lethal",
+          "x": 29,
+          "y": 25,
+          "w": 2,
+          "h": 3
+        },
+        {
+          "id": "hazard-40",
+          "kind": "lethal",
+          "x": 41,
+          "y": 25,
+          "w": 2,
+          "h": 3
+        },
+        {
+          "id": "hazard-41",
+          "kind": "lethal",
+          "x": 52,
+          "y": 25,
+          "w": 2,
+          "h": 3
+        },
+        {
+          "id": "hazard-42",
+          "kind": "lethal",
+          "x": 64,
+          "y": 25,
+          "w": 2,
+          "h": 3
+        },
+        {
+          "id": "hazard-43",
+          "kind": "lethal",
+          "x": 3,
+          "y": 28,
+          "w": 8,
+          "h": 2
+        },
+        {
+          "id": "hazard-44",
+          "kind": "lethal",
+          "x": 15,
+          "y": 28,
+          "w": 8,
+          "h": 2
+        },
+        {
+          "id": "hazard-45",
+          "kind": "lethal",
+          "x": 26,
+          "y": 28,
+          "w": 8,
+          "h": 2
+        },
+        {
+          "id": "hazard-46",
+          "kind": "lethal",
+          "x": 38,
+          "y": 28,
+          "w": 8,
+          "h": 2
+        },
+        {
+          "id": "hazard-47",
+          "kind": "lethal",
+          "x": 49,
+          "y": 28,
+          "w": 8,
+          "h": 2
+        },
+        {
+          "id": "hazard-48",
+          "kind": "lethal",
+          "x": 61,
+          "y": 28,
+          "w": 8,
+          "h": 2
+        },
+        {
+          "id": "hazard-49",
+          "kind": "lethal",
+          "x": 6,
+          "y": 30,
+          "w": 2,
+          "h": 3
+        },
+        {
+          "id": "hazard-50",
+          "kind": "lethal",
+          "x": 18,
+          "y": 30,
+          "w": 2,
+          "h": 3
+        },
+        {
+          "id": "hazard-51",
+          "kind": "lethal",
+          "x": 29,
+          "y": 30,
+          "w": 2,
+          "h": 3
+        },
+        {
+          "id": "hazard-52",
+          "kind": "lethal",
+          "x": 41,
+          "y": 30,
+          "w": 2,
+          "h": 3
+        },
+        {
+          "id": "hazard-53",
+          "kind": "lethal",
+          "x": 52,
+          "y": 30,
+          "w": 2,
+          "h": 3
+        },
+        {
+          "id": "hazard-54",
+          "kind": "lethal",
+          "x": 64,
+          "y": 30,
+          "w": 2,
+          "h": 3
+        }
+      ],
+      "powerups": [],
+      "arcadeActions": {
+        "version": "arcade-actions.v1"
+      }
+    },
+    "enemies": [
+      {
+        "id": "yellow-upper-right-left",
+        "type": "bouncer",
+        "x": 60.63611111111111,
+        "y": 3.6822222222222223,
+        "vx": -4,
+        "vy": 1.3,
+        "radius": 0.4
+      },
+      {
+        "id": "yellow-upper-right-middle",
+        "type": "bouncer",
+        "x": 66.00277777777778,
+        "y": 3.72,
+        "vx": 3.6,
+        "vy": 2.1,
+        "radius": 0.4
+      },
+      {
+        "id": "yellow-upper-right-lower",
+        "type": "bouncer",
+        "x": 68.39444444444445,
+        "y": 10.708888888888888,
+        "vx": 4.1,
+        "vy": 0.4,
+        "radius": 0.4
+      },
+      {
+        "id": "yellow-lower-left-upper",
+        "type": "bouncer",
+        "x": 7.834722222222222,
+        "y": 24.97,
+        "vx": 3.1,
+        "vy": -3,
+        "radius": 0.4
+      },
+      {
+        "id": "yellow-lower-left-middle",
+        "type": "bouncer",
+        "x": 4.383333333333333,
+        "y": 28.04888888888889,
+        "vx": 3,
+        "vy": 3,
+        "radius": 0.4
+      },
+      {
+        "id": "yellow-lower-left-bottom",
+        "type": "bouncer",
+        "x": 4.4125,
+        "y": 29.144444444444446,
+        "vx": -2.4,
+        "vy": 3.5,
+        "radius": 0.4
+      },
+      {
+        "id": "cyan-top-left",
+        "type": "border-patrol",
+        "x": 4.65,
+        "y": 0.5,
+        "speed": 4.5,
+        "clockwise": true,
+        "radius": 0.35
+      },
+      {
+        "id": "cyan-top-center",
+        "type": "border-patrol",
+        "x": 41.05,
+        "y": 0.5,
+        "speed": 4.5,
+        "clockwise": true,
+        "radius": 0.35
+      },
+      {
+        "id": "cyan-top-right",
+        "type": "border-patrol",
+        "x": 67.31,
+        "y": 0.5,
+        "speed": 4.5,
+        "clockwise": false,
+        "radius": 0.35
+      },
+      {
+        "id": "cyan-bottom-left",
+        "type": "border-patrol",
+        "x": 4.65,
+        "y": 35.5,
+        "speed": 4.5,
+        "clockwise": false,
+        "radius": 0.35
+      }
+    ],
+    "rules": {
+      "lives": 3,
+      "moveSpeed": 10,
+      "respawnSeconds": 0.7,
+      "graceSeconds": 0.8,
+      "timeLimitSeconds": 0,
+      "stopOnCapture": true
+    },
+    "metadata": {
+      "description": "Eighteen red lethal crosses fill a six-by-three lattice divided by staggered cyan walls. Six yellow ring bouncers begin in two clusters: three at the upper right and three at the lower left. Three cyan patrols start on the top rail and one on the bottom-left rail. Start at bottom center, go sideways around the central divider, and enclose the hazards to reveal 75%."
+    }
+  },
+  "theme": {
+    "id": "retro",
+    "name": "1994 Forever",
+    "subtitle": "One more credit",
+    "family": "retro",
+    "player": "retro-craft",
+    "enemyShape": "orb",
+    "patrolShape": "spark",
+    "bossShape": "core",
+    "scene": "arcade",
+    "labels": {
+      "objective": "Cartridge",
+      "supply": "Dock",
+      "enemy": "Glitch",
+      "boss": "Mainframe",
+      "currency": "Score",
+      "ability": "Power-up"
+    },
+    "palette": {
+      "ink": "#242a41",
+      "paper": "#eee8df",
+      "muted": "#aaa1b1",
+      "accent": "#efeb68",
+      "safe": "#39c7e8",
+      "danger": "#e02862",
+      "field": "#000000",
+      "grid": "#101020",
+      "sky": "#e49c95",
+      "land": "#565270"
+    },
+    "classBodies": {
+      "scout": "retro-craft",
+      "bomber": "retro-craft",
+      "carrier": "retro-craft",
+      "interceptor": "retro-craft",
+      "fiber": "retro-craft",
+      "impact": "retro-craft",
+      "trapper": "retro-craft"
+    }
+  },
+  "classRecipes": [
+    {
+      "id": "scout",
+      "label": "FPV Scout",
+      "description": "A nimble FPV quad. Scan shows enemy direction hints for four seconds; it never captures territory or slows an enemy.",
+      "primitive": "scan",
+      "capacity": 0,
+      "cooldown": 6,
+      "duration": 4,
+      "radius": 48,
+      "revision": "1"
+    }
+  ],
+  "settings": {
+    "classId": "scout",
+    "turnPolicy": "immediate",
+    "seed": 1
+  },
+  "visualOverrides": {
+    "enemy": {
+      "name": "Crossgrid enemy",
+      "dataUrl": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAj0lEQVR42u3XwQ2AIAwFUEZzMkdzCtfw6hWveqClv1S+piQcyX8JgbalfG2dx1rve9+Wx34lVAIMx0jhGsCF0IJ7ARBECtTOuhFocC8EAqDXaAaMDDcjIsJNiKjwFoILYA1v/QMwwgLw1IIEJOAfgJBnmD8hRTGaXo4pGhKKlmx6U0rRllMMJjSjGcVwGrkuFjmk/aru2CAAAAAASUVORK5CYII="
+    },
+    "patrol": {
+      "name": "Crossgrid patrol",
+      "dataUrl": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAbklEQVR42mNgIBG4P3n/Hx9moDUYdcCoA+jmAFwGkuoAsh2Gy1BSHEBxyGAzgFgHUC1a0A0ixgFUTxOELKVLjqCZ5eT6jlp41AGjDhh1wMA7YMALokFfFA9oZTSg1fGAN0gGvEk22ioedcCIcQAA6l0yW47rJ5YAAAAASUVORK5CYII="
+    },
+    "player": {
+      "name": "Crossgrid player",
+      "dataUrl": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAYklEQVR42u2WWwoAEBQFrdP+yxp8kV8lj/s66kz5nilcUiKE/EwtuY0VKg+JmOWuESu5S8RObhpxKjeJuJWrRrzKVSKkcnFEeED4FkAcQohrCDGIIEYxxGME8RxDfEgIIVp0LrhEMwepglQAAAAASUVORK5CYII="
+    },
+    "wall": {
+      "name": "Crossgrid wall",
+      "dataUrl": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAP0lEQVR42mMQia7+P5CYAURob7qOE9NaftQBow4YdQDDaDkw6oBRB4w6YLQcGHXAqANGHTBaDow6YNQBI94BAJ5cDzcS0yPLAAAAAElFTkSuQmCC"
+    },
+    "lethalTerrain": {
+      "name": "Crossgrid lethalTerrain",
+      "dataUrl": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAbUlEQVR42u2WQQ4AEAwEPce7vNxPiIsTgra6kZ17dyqiFQIhZEGOqbhmtGJJgLS+B9yESGrFQWrym0B1+UmwmXxHYC5fiZ7JR8Ln8lkTLlMS5vRu9w/xAiBmAMQUhNgDEJtQtQmIDwnCt46Qv6lSX/qpet2+5AAAAABJRU5ErkJggg=="
+    }
+  },
+  "masteryDefinition": null,
+  "presentation": {
+    "style": "microtile",
+    "showGrid": false
+  }
+}

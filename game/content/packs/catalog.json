@@ -238,6 +238,10 @@
             {
               "id": "neon-chambers-pack",
               "name": "Neon Chambers"
+            },
+            {
+              "id": "neon-crossgrid-pack",
+              "name": "Neon Crossgrid"
             }
           ]
         }

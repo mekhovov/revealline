@@ -331,6 +331,7 @@ const OFFICIAL_LEVEL_KEYS = Object.freeze([
   '["mission","neon-mosaic-pack","neon-mosaic","neon-berehynia-pack"]',
   '["mission","neon-mosaic-pack","neon-mosaic","neon-bezkonechnyk-pack"]',
   '["mission","neon-mosaic-pack","neon-mosaic","neon-ornek-tulip-pack"]',
+  '["mission","neon-reference-pack","neon-reference","neon-crossgrid-pack"]',
 ]);
 
 const numbers = new Map(OFFICIAL_LEVEL_KEYS.map((key, index) => [key, index + 1]));
