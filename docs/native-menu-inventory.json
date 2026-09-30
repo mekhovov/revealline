@@ -587,8 +587,9 @@
     {
       "name": "Ukraine role presentation",
       "route": "/authoring/library/ukraine-role-presentations/index.html",
-      "verification": "pending exact-candidate browser qualification; historical observations do not establish current acceptance",
-      "historicalVerification": "browser mount verified; shared keyboard and virtual-controller reader/navigation; physical controller not tested"
+      "verification": "At runtime 09a3c21a1, seven stable Sections/readers preserve 600 × 190 canvases and all four sample placements; verified atomic loading, Retry/Cancel/timeout, exact document Back and inactive animation ownership are implemented. 92/92 focused checks, first complete 4/4 virtual-controller journey and native 390 × 844 keyboard workflow pass within documented bounds. Virtual input covers all eight role choices, eight board/arena pairs, other controls/cancellation, motion pixel observations, exact three documents, live UK/EN and real Studio Return. Native input covers every selector, seven Sections and readers at X 256/256, literal sources, exact Back, delayed Cancel, HTTP 503/Retry and ready Studio return without pointer reset. No project Save/import/export or adoption exists. Original artwork/model/rig/renderer/derivatives remain unchanged; collector admits no gallery/source files. 18/18 in-memory edition compiles and 1,290-path attribution pass at actual source revision. Source-language prose, native popup cancellation, OS preference changes, device performance, installed offline and publication remain separate.",
+      "historicalVerification": "browser mount verified; shared keyboard and virtual-controller reader/navigation; physical controller not tested",
+      "evidence": "docs/verification/ukraine-role-gallery-input-2026-09-30.md"
     },
     {
       "name": "Ukraine wide role variants",
