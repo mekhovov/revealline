@@ -1,16 +1,32 @@
 {
   "format": "revealline-native-menu-inventory.v1",
-  "palettes": ["Neon Arcade", "FPV Field Kit"],
-  "languages": ["en", "uk"],
-  "worlds": ["fpv", "ukraine", "retro", "coupa"],
+  "palettes": [
+    "Neon Arcade",
+    "FPV Field Kit"
+  ],
+  "languages": [
+    "en",
+    "uk"
+  ],
+  "worlds": [
+    "fpv",
+    "ukraine",
+    "retro",
+    "coupa"
+  ],
   "editions": [
     {
       "id": "coupa-all",
       "title": "Coupa Village / LINE",
       "brand": "coupa",
-      "modes": ["solo"],
+      "modes": [
+        "solo"
+      ],
       "scene": "coupa-village",
-      "routes": ["/game/?edition=coupa-all", "/editions/coupa-all/app/"],
+      "routes": [
+        "/game/?edition=coupa-all",
+        "/editions/coupa-all/app/"
+      ],
       "menus": "shared-native",
       "verification": {
         "automated": "catalogue, supported modes, scene and two launch routes checked",
@@ -29,9 +45,14 @@
       "id": "coupa-adventure",
       "title": "Spend in Motion / LINE",
       "brand": "coupa",
-      "modes": ["solo"],
+      "modes": [
+        "solo"
+      ],
       "scene": "coupa-spend-in-motion-theme",
-      "routes": ["/game/?edition=coupa-adventure", "/editions/coupa-adventure/app/"],
+      "routes": [
+        "/game/?edition=coupa-adventure",
+        "/editions/coupa-adventure/app/"
+      ],
       "menus": "shared-native",
       "verification": {
         "automated": "catalogue, supported modes, scene and two launch routes checked",
@@ -50,9 +71,14 @@
       "id": "coupa-culture",
       "title": "Inside the Village / LINE",
       "brand": "coupa",
-      "modes": ["solo"],
+      "modes": [
+        "solo"
+      ],
       "scene": "coupa-inside-village-theme",
-      "routes": ["/game/?edition=coupa-culture", "/editions/coupa-culture/app/"],
+      "routes": [
+        "/game/?edition=coupa-culture",
+        "/editions/coupa-culture/app/"
+      ],
       "menus": "shared-native",
       "verification": {
         "automated": "catalogue, supported modes, scene and two launch routes checked",
@@ -71,9 +97,14 @@
       "id": "coupa-foundations",
       "title": "From Need to Value / LINE",
       "brand": "coupa",
-      "modes": ["solo"],
+      "modes": [
+        "solo"
+      ],
       "scene": "coupa-source-to-pay-theme",
-      "routes": ["/game/?edition=coupa-foundations", "/editions/coupa-foundations/app/"],
+      "routes": [
+        "/game/?edition=coupa-foundations",
+        "/editions/coupa-foundations/app/"
+      ],
       "menus": "shared-native",
       "verification": {
         "automated": "catalogue, supported modes, scene and two launch routes checked",
@@ -92,9 +123,14 @@
       "id": "coupa-operations",
       "title": "A Day in Coupa / LINE",
       "brand": "coupa",
-      "modes": ["solo"],
+      "modes": [
+        "solo"
+      ],
       "scene": "coupa-product-operations-theme",
-      "routes": ["/game/?edition=coupa-operations", "/editions/coupa-operations/app/"],
+      "routes": [
+        "/game/?edition=coupa-operations",
+        "/editions/coupa-operations/app/"
+      ],
       "menus": "shared-native",
       "verification": {
         "automated": "catalogue, supported modes, scene and two launch routes checked",
@@ -113,9 +149,14 @@
       "id": "coupa-developers",
       "title": "Connect the Network / LINE",
       "brand": "coupa",
-      "modes": ["solo"],
+      "modes": [
+        "solo"
+      ],
       "scene": "coupa-developer-integration-theme",
-      "routes": ["/game/?edition=coupa-developers", "/editions/coupa-developers/app/"],
+      "routes": [
+        "/game/?edition=coupa-developers",
+        "/editions/coupa-developers/app/"
+      ],
       "menus": "shared-native",
       "verification": {
         "automated": "catalogue, supported modes, scene and two launch routes checked",
@@ -134,9 +175,14 @@
       "id": "droneaid-community",
       "title": "Community Relay / LINE",
       "brand": "droneaid",
-      "modes": ["solo"],
+      "modes": [
+        "solo"
+      ],
       "scene": "droneaid-community",
-      "routes": ["/game/?edition=droneaid-community", "/editions/droneaid-community/app/"],
+      "routes": [
+        "/game/?edition=droneaid-community",
+        "/editions/droneaid-community/app/"
+      ],
       "menus": "shared-native",
       "verification": {
         "automated": "catalogue, supported modes, scene and two launch routes checked",
@@ -155,9 +201,14 @@
       "id": "droneaid-nl-community",
       "title": "DroneAid / LINE",
       "brand": "droneaid-nl",
-      "modes": ["solo"],
+      "modes": [
+        "solo"
+      ],
       "scene": "droneaid-nl-community",
-      "routes": ["/game/?edition=droneaid", "/editions/droneaid/app/"],
+      "routes": [
+        "/game/?edition=droneaid",
+        "/editions/droneaid/app/"
+      ],
       "menus": "shared-native",
       "verification": {
         "automated": "catalogue, supported modes, scene and two launch routes checked",
@@ -180,7 +231,9 @@
       "id": "droneaid-nl-workshop-lights",
       "title": "Workshop Lights / LINE",
       "brand": "droneaid-nl",
-      "modes": ["solo"],
+      "modes": [
+        "solo"
+      ],
       "scene": "droneaid-nl-workshop-lights-theme",
       "routes": [
         "/game/?edition=droneaid-nl-workshop-lights",
@@ -204,7 +257,9 @@
       "id": "droneaid-nl-parts-in-motion",
       "title": "Parts in Motion / LINE",
       "brand": "droneaid-nl",
-      "modes": ["solo"],
+      "modes": [
+        "solo"
+      ],
       "scene": "droneaid-nl-parts-in-motion-theme",
       "routes": [
         "/game/?edition=droneaid-nl-parts-in-motion",
@@ -228,7 +283,9 @@
       "id": "droneaid-nl-makers-together",
       "title": "Makers Together / LINE",
       "brand": "droneaid-nl",
-      "modes": ["solo"],
+      "modes": [
+        "solo"
+      ],
       "scene": "droneaid-nl-makers-together-theme",
       "routes": [
         "/game/?edition=droneaid-nl-makers-together",
@@ -252,7 +309,9 @@
       "id": "droneaid-nl-careful-handoff",
       "title": "The Careful Handoff / LINE",
       "brand": "droneaid-nl",
-      "modes": ["solo"],
+      "modes": [
+        "solo"
+      ],
       "scene": "droneaid-nl-careful-handoff-theme",
       "routes": [
         "/game/?edition=droneaid-nl-careful-handoff",
@@ -276,7 +335,9 @@
       "id": "droneaid-nl-signals-of-support",
       "title": "Signals of Support / LINE",
       "brand": "droneaid-nl",
-      "modes": ["solo"],
+      "modes": [
+        "solo"
+      ],
       "scene": "droneaid-nl-signals-of-support-theme",
       "routes": [
         "/game/?edition=droneaid-nl-signals-of-support",
@@ -300,7 +361,9 @@
       "id": "droneaid-nl-shared-horizon",
       "title": "Shared Horizon / LINE",
       "brand": "droneaid-nl",
-      "modes": ["solo"],
+      "modes": [
+        "solo"
+      ],
       "scene": "droneaid-nl-shared-horizon-theme",
       "routes": [
         "/game/?edition=droneaid-nl-shared-horizon",
@@ -324,9 +387,14 @@
       "id": "social-drone-ua",
       "title": "Social Drone UA / LINE",
       "brand": "social-drone-ua",
-      "modes": ["solo"],
+      "modes": [
+        "solo"
+      ],
       "scene": "fpv",
-      "routes": ["/game/?edition=social-drone-ua", "/editions/social-drone-ua/app/"],
+      "routes": [
+        "/game/?edition=social-drone-ua",
+        "/editions/social-drone-ua/app/"
+      ],
       "menus": "shared-native",
       "verification": {
         "automated": "Current integrated source catalog, supported modes, public slug, scene resolver and launch routes checked; source-only inventory reconciliation.",
@@ -342,9 +410,14 @@
       "id": "victory-drones",
       "title": "Victory Drones / LINE",
       "brand": "victory-drones",
-      "modes": ["solo"],
+      "modes": [
+        "solo"
+      ],
       "scene": "fpv",
-      "routes": ["/game/?edition=victory-drones", "/editions/victory-drones/app/"],
+      "routes": [
+        "/game/?edition=victory-drones",
+        "/editions/victory-drones/app/"
+      ],
       "menus": "shared-native",
       "verification": {
         "automated": "Current integrated source catalog, supported modes, public slug, scene resolver and launch routes checked; source-only inventory reconciliation.",
@@ -360,9 +433,14 @@
       "id": "ukraine-culture",
       "title": "Ukraine: Living Culture / LINE",
       "brand": "ukraine-culture",
-      "modes": ["solo"],
+      "modes": [
+        "solo"
+      ],
       "scene": "fpv",
-      "routes": ["/game/?edition=ukraine-culture", "/editions/ukraine-culture/app/"],
+      "routes": [
+        "/game/?edition=ukraine-culture",
+        "/editions/ukraine-culture/app/"
+      ],
       "menus": "shared-native",
       "verification": {
         "automated": "Current integrated source catalog, supported modes, public slug, scene resolver and launch routes checked; source-only inventory reconciliation.",
@@ -378,9 +456,14 @@
       "id": "fpv-learning",
       "title": "FPV Learning / LINE",
       "brand": "fpv-learning",
-      "modes": ["solo"],
+      "modes": [
+        "solo"
+      ],
       "scene": "fpv",
-      "routes": ["/game/?edition=fpv-learning", "/editions/fpv-learning/app/"],
+      "routes": [
+        "/game/?edition=fpv-learning",
+        "/editions/fpv-learning/app/"
+      ],
       "menus": "shared-native",
       "verification": {
         "automated": "Current integrated source catalog, supported modes, public slug, scene resolver and launch routes checked; source-only inventory reconciliation.",
@@ -412,17 +495,29 @@
     {
       "mode": "solo",
       "route": "/game/",
-      "entries": ["current Journey", "legacy catalogue", "supported custom-content handoffs"]
+      "entries": [
+        "current Journey",
+        "legacy catalogue",
+        "supported custom-content handoffs"
+      ]
     },
     {
       "mode": "versus",
       "route": "/game/couch/",
-      "entries": ["current Journey", "legacy catalogue", "supported custom-content handoffs"]
+      "entries": [
+        "current Journey",
+        "legacy catalogue",
+        "supported custom-content handoffs"
+      ]
     },
     {
       "mode": "team",
       "route": "/game/couch/relay-rescue.html",
-      "entries": ["current Journey", "legacy catalogue", "supported custom-content handoffs"]
+      "entries": [
+        "current Journey",
+        "legacy catalogue",
+        "supported custom-content handoffs"
+      ]
     }
   ],
   "supportRoutes": [
@@ -604,18 +699,26 @@
     {
       "name": "Ukraine role presentation",
       "route": "/authoring/library/ukraine-role-presentations/index.html",
-      "verification": "Bounded keyboard and virtual-controller donor workflow evidence recorded in PR #846; integration/source attribution and physical/offline/public acceptance remain pending at 2026-09-30 18:47 UTC. Do not label the donor implementation absent or transfer its evidence to later main without attribution.",
+      "verification": "At runtime 09a3c21a1, seven stable Sections/readers preserve 600 × 190 canvases and all four sample placements; verified atomic loading, Retry/Cancel/timeout, exact document Back and inactive animation ownership are implemented. 92/92 focused checks, first complete 4/4 virtual-controller journey and native 390 × 844 keyboard workflow pass within documented bounds. Virtual input covers all eight role choices, eight board/arena pairs, other controls/cancellation, motion pixel observations, exact three documents, live UK/EN and real Studio Return. Native input covers every selector, seven Sections and readers at X 256/256, literal sources, exact Back, delayed Cancel, HTTP 503/Retry and ready Studio return without pointer reset. No project Save/import/export or adoption exists. Original artwork/model/rig/renderer/derivatives remain unchanged; collector admits no gallery/source files. 18/18 in-memory edition compiles and 1,290-path attribution pass at actual source revision. Source-language prose, native popup cancellation, OS preference changes, device performance, installed offline and publication remain separate.",
       "historicalVerification": "browser mount verified; shared keyboard and virtual-controller reader/navigation; physical controller not tested",
-      "delivery": "https://github.com/mekhovov/revealline/pull/846",
-      "evidenceReport": "https://github.com/mekhovov/revealline/blob/8a49d835a826e59e0cf4584a3ee9cb5066d5507f/docs/verification/ukraine-role-gallery-input-2026-09-30.md"
+      "evidence": "docs/verification/ukraine-role-gallery-input-2026-09-30.md",
+      "documentationCheckpoint20260930": {
+        "verification": "Bounded keyboard and virtual-controller donor workflow evidence recorded in PR #846; integration/source attribution and physical/offline/public acceptance remain pending at 2026-09-30 18:47 UTC. Do not label the donor implementation absent or transfer its evidence to later main without attribution.",
+        "delivery": "https://github.com/mekhovov/revealline/pull/846",
+        "evidenceReport": "https://github.com/mekhovov/revealline/blob/8a49d835a826e59e0cf4584a3ee9cb5066d5507f/docs/verification/ukraine-role-gallery-input-2026-09-30.md"
+      }
     },
     {
       "name": "Ukraine wide role variants",
       "route": "/authoring/library/ukraine-role-wide-variants/index.html",
-      "verification": "Bounded keyboard and virtual-controller donor workflow evidence recorded in PR #857; integration/source attribution and physical/offline/public acceptance remain pending at 2026-09-30 18:47 UTC. Do not label the donor implementation absent or transfer its evidence to later main without attribution.",
+      "verification": "source7bcd7152e / rebased5381b570a: 74 focused checks, current4/4 virtual-controller and native portrait reading/phase/cancel/return; physical/offline/published acceptance pending",
       "historicalVerification": "browser mount verified; shared keyboard and virtual-controller reader/navigation; physical controller not tested",
-      "delivery": "https://github.com/mekhovov/revealline/pull/857",
-      "evidenceReport": "https://github.com/mekhovov/revealline/blob/2ab940b781c0adbc7c4da3e706271628736090f1/docs/verification/ukraine-wide-gallery-input-2026-09-30.md"
+      "evidence": "docs/verification/ukraine-wide-gallery-input-2026-09-30.md",
+      "documentationCheckpoint20260930": {
+        "verification": "Bounded keyboard and virtual-controller donor workflow evidence recorded in PR #857; integration/source attribution and physical/offline/public acceptance remain pending at 2026-09-30 18:47 UTC. Do not label the donor implementation absent or transfer its evidence to later main without attribution.",
+        "delivery": "https://github.com/mekhovov/revealline/pull/857",
+        "evidenceReport": "https://github.com/mekhovov/revealline/blob/2ab940b781c0adbc7c4da3e706271628736090f1/docs/verification/ukraine-wide-gallery-input-2026-09-30.md"
+      }
     },
     {
       "name": "Prepared reveal review",
@@ -763,8 +866,15 @@
   "customPlayer": {
     "route": "/game/creator/player.html?edition=<stable-id>",
     "mode": "solo",
-    "supportedHandoffs": ["qualified installed Versus missions"],
-    "settings": ["Gameplay", "Display & Language", "Progress & Collection", "Help & Extras"],
+    "supportedHandoffs": [
+      "qualified installed Versus missions"
+    ],
+    "settings": [
+      "Gameplay",
+      "Display & Language",
+      "Progress & Collection",
+      "Help & Extras"
+    ],
     "scene": "approved FPV Solo fallback",
     "audio": "No audio owner in this runtime; no placeholder Sound or track actions",
     "verification": "docs/verification/custom-menu-2026-09-29.md"

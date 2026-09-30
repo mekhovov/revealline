@@ -1,5 +1,6 @@
 // Current qualification cases; legacy cases in the parent runner remain attributed
 // to their historical receipts. Every edit below uses the real controller owner.
+import { ukraineWideCurrent } from './ukraine-wide-current-workflow.mjs';
 import {
   nativeLandingDefaultCurrent,
   nativeLandingDroneAidCurrent,
@@ -24,6 +25,7 @@ import { countercurrentGalleryCurrent } from './countercurrent-gallery-current-w
 import { fpvEnemyGalleryCurrent } from './fpv-enemy-gallery-current-workflow.mjs';
 import { fpvRoleGalleryCurrent } from './fpv-role-gallery-current-workflow.mjs';
 import { reserveCatalogCurrent } from './reserve-catalog-current-workflow.mjs';
+import { ukraineRoleGalleryCurrent } from './authoring-current-ukraine-role-workflow.mjs';
 import {
   creatorGuideDocumentsCurrent,
   creatorGuidePackDownloadCurrent,
@@ -49,10 +51,12 @@ async function fingerprint(blob) {
 const value = (p, css) => p.doc.querySelector(css).value;
 
 export const currentAuthoringCases = {
+  ukraineWideCurrent,
   nativeLandingDefaultCurrent,
   nativeLandingDroneAidCurrent,
   fpvRoleGalleryCurrent,
   reserveCatalogCurrent,
+  ukraineRoleGalleryCurrent,
   fpvEnemyGalleryCurrent,
   countercurrentGalleryCurrent,
   creatorGuideDocumentsCurrent,
