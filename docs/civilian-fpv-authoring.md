@@ -169,9 +169,12 @@ exact upstream Three.js 0.186.1 core/module files and MIT licence. The optional 
 and applicable source archive each retain the 8 MiB/64-file limits. Playwright and
 its browsers are test tools and are not game dependencies.
 
-`node scripts/observe-fpv-runtime.mjs /absolute/path/to/playwright/index.mjs /tmp/fpv-observation.json`
-builds an isolated temporary runtime with production-style headers, checks twenty
-drill/reset cycles and four viewport layouts, samples final-circuit frame pacing,
-then verifies actual WebGL context loss during active practice. It uses installed
-Chrome and removes its own temporary host. The report pins both runtime and harness
-bytes; its scoped measurements do not establish radio hardware or learning transfer.
+`node scripts/observe-fpv-runtime.mjs plan.json /absolute/path/to/playwright/index.mjs /new/evidence/directory`
+admits an existing frozen optional candidate rather than rebuilding development
+source. It checks twenty drill/reset cycles and four viewport layouts, samples
+final-circuit frame pacing, then verifies actual WebGL context loss during active
+practice. It uses installed Chrome and an isolated instrumented host with
+packaged-preview headers. The report pins runtime, source and observer authority;
+its scoped measurements do not establish a matched performance regression, radio
+hardware or learning transfer. See the [frozen runtime plan](fpv-runtime-observer.md)
+and [separate retention procedure](fpv-retention-observer.md).
