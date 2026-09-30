@@ -346,10 +346,7 @@ export async function buildOfflineContent(entries, excluded, version) {
       category: 'extra',
       current: false,
       modes: [],
-      requires: [
-        'shared',
-        ...groups.filter((group) => group.category === 'mode').map((group) => group.id),
-      ],
+      requires: ['shared'],
       files: owned,
     });
   }

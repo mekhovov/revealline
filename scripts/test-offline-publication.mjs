@@ -102,6 +102,11 @@ test('hosted extras stay selectable without entering shared or all-current gamep
   );
   assert.ok(extras.every((group) => group.current === false && group.titleKey));
   assert.deepEqual(
+    extras.map((group) => group.requires),
+    [['shared'], ['shared'], ['shared']],
+    'Selecting one optional extra must not pull unrelated mode runtimes.',
+  );
+  assert.deepEqual(
     downloadFiles(
       catalogue,
       extras.map((group) => group.id),
