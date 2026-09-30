@@ -3,6 +3,7 @@ export const PRACTICE_CACHE_PREFIX = 'revealline.optional.package.v1:';
 export const practiceCachePrefix = (location) =>
   `${PRACTICE_CACHE_PREFIX}${new URL('./', location.href).pathname}:`;
 export async function preparePracticeOffline({
+  packageId = 'civilian-fpv',
   navigator = globalThis.navigator,
   location = globalThis.location,
   storage = globalThis.localStorage,
@@ -15,7 +16,7 @@ export async function preparePracticeOffline({
   const worker = registration.installing ?? registration.waiting ?? registration.active;
   if (!worker) throw new Error('Optional practice worker unavailable');
   const record = () => {
-    recordOptionalInstallation({ packageId: 'civilian-fpv', location, storage });
+    recordOptionalInstallation({ packageId, location, storage });
     return true;
   };
   if (worker.state === 'activated') return record();
@@ -43,6 +44,7 @@ export async function preparePracticeOffline({
   });
 }
 export async function removePracticeOffline({
+  packageId = 'civilian-fpv',
   navigator = globalThis.navigator,
   caches = globalThis.caches,
   location = globalThis.location,
@@ -53,5 +55,5 @@ export async function removePracticeOffline({
   if (registration?.scope === base.href) await registration.unregister();
   for (const name of (await caches?.keys?.()) ?? [])
     if (name.startsWith(practiceCachePrefix(location))) await caches.delete(name);
-  removeOptionalInstallation({ packageId: 'civilian-fpv', location, storage });
+  removeOptionalInstallation({ packageId, location, storage });
 }

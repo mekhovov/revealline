@@ -1,0 +1,15 @@
+{
+  "name": "revealline-fpv-world-authoring",
+  "private": true,
+  "type": "module",
+  "description": "Offline-only, pinned FPV scenery preparation and importer fixtures",
+  "dependencies": {
+    "@gltf-transform/core": "4.5.1",
+    "@gltf-transform/extensions": "4.5.1",
+    "@gltf-transform/functions": "4.5.1",
+    "gltf-validator": "2.0.0-dev.3.10",
+    "draco3dgltf": "1.5.7",
+    "meshoptimizer": "1.3.0"
+  },
+  "devDependencies": { "fake-indexeddb": "6.2.5" }
+}
