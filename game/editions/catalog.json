@@ -3526,7 +3526,7 @@
       "format": "revealline-edition.v1",
       "id": "social-drone-ua",
       "modes": ["solo"],
-      "name": "Social Drone UA",
+      "name": "Social Drone UA / LINE",
       "presentationHistory": [
         {
           "bytes": 176323,
@@ -3590,7 +3590,7 @@
       "format": "revealline-edition.v1",
       "id": "victory-drones",
       "modes": ["solo"],
-      "name": "Victory Drones",
+      "name": "Victory Drones / LINE",
       "presentationHistory": [
         {
           "bytes": 169999,
@@ -3649,7 +3649,7 @@
       "format": "revealline-edition.v1",
       "id": "ukraine-culture",
       "modes": ["solo"],
-      "name": "Ukraine: Living Culture",
+      "name": "Ukraine: Living Culture / LINE",
       "presentationHistory": [
         {
           "bytes": 599212,
@@ -3722,7 +3722,7 @@
       "format": "revealline-edition.v1",
       "id": "fpv-learning",
       "modes": ["solo"],
-      "name": "FPV Learning",
+      "name": "FPV Learning / LINE",
       "presentationHistory": [
         {
           "bytes": 734363,
