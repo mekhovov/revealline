@@ -89,16 +89,46 @@ export const preparedRevealCurrent = [
     let localeChosen = false;
     // Observe the actual child frame/pad and ownership transitions. This never
     // wraps the router, alters pulse timing or turns a failed step into a pass.
-    const diagnostics = { frames: 0, gamepadObservations: 0, maxFrameGap: 0, events: [] };
+    const diagnostics = {
+      frames: 0,
+      gamepadObservations: 0,
+      maxFrameGap: 0,
+      viewports: [],
+      events: [],
+    };
     let diagnosticFrame = null,
       diagnosticPrevious = null,
       diagnosticSignature = null,
-      diagnosticsStopped = false;
+      diagnosticsStopped = false,
+      diagnosticViewport = null;
+    const describe = (element) => {
+      if (!element?.getBoundingClientRect) return null;
+      const rect = element.getBoundingClientRect(),
+        dialog = element.closest('dialog');
+      return {
+        id: element.id,
+        tag: element.tagName,
+        text: element.textContent?.trim().slice(0, 100),
+        connected: element.isConnected,
+        disabled: element.matches(':disabled'),
+        rect: [rect.x, rect.y, rect.width, rect.height],
+        dialogIndex: dialog ? [...dialog.querySelectorAll('button')].indexOf(element) : null,
+      };
+    };
+    const dialogGeometry = () =>
+      [...doc.querySelectorAll('dialog[open]')].map((dialog) => ({
+        id: dialog.id || dialog.className,
+        scroll: [dialog.scrollLeft, dialog.scrollTop],
+        client: [dialog.clientWidth, dialog.clientHeight],
+        content: [dialog.scrollWidth, dialog.scrollHeight],
+      }));
     const note = (kind, detail = {}) => {
       diagnostics.events.push({
         at: Math.round(win.performance.now() * 10) / 10,
         kind,
         focused: doc.activeElement?.id || doc.activeElement?.tagName,
+        active: describe(doc.activeElement),
+        dialogs: dialogGeometry(),
         foreground: doc.hasFocus(),
         hidden: doc.hidden,
         ...detail,
@@ -113,6 +143,17 @@ export const preparedRevealCurrent = [
       diagnostics.maxFrameGap = Math.max(diagnostics.maxFrameGap, gap);
       const pads = [...win.navigator.getGamepads()].filter(Boolean);
       diagnostics.gamepadObservations++;
+      const viewport = [
+        win.innerWidth,
+        win.innerHeight,
+        win.visualViewport?.width,
+        win.visualViewport?.height,
+        win.visualViewport?.scale,
+      ];
+      if (JSON.stringify(viewport) !== diagnosticViewport) {
+        diagnosticViewport = JSON.stringify(viewport);
+        diagnostics.viewports.push({ at: Math.round(time * 10) / 10, geometry: viewport });
+      }
       const buttons = pads.flatMap((pad) =>
           pad.buttons.flatMap((button, index) => (button.pressed ? [`${pad.index}:${index}`] : [])),
         ),
@@ -121,11 +162,15 @@ export const preparedRevealCurrent = [
           buttons,
           editing: active?.getAttribute('data-controller-editing'),
           reading: active?.getAttribute('aria-pressed'),
-          dialogs: [...doc.querySelectorAll('dialog[open]')].map(
-            (dialog) => dialog.id || dialog.className,
-          ),
         },
-        signature = JSON.stringify([active?.id, doc.hasFocus(), doc.hidden, state]);
+        signature = JSON.stringify([
+          active?.id,
+          active?.textContent?.trim().slice(0, 100),
+          doc.hasFocus(),
+          doc.hidden,
+          viewport,
+          state,
+        ]);
       if (signature !== diagnosticSignature || gap > 80) note('frame', { gap, ...state });
       diagnosticSignature = signature;
       diagnosticFrame = win.requestAnimationFrame(sample);
@@ -151,12 +196,12 @@ export const preparedRevealCurrent = [
       [win, 'blur'],
       [win, 'focus'],
       [win, 'pagehide'],
+      [win, 'resize'],
       [doc, 'visibilitychange'],
       [doc, 'focusin'],
       [doc, 'focusout'],
     ].map(([target, event]) => {
-      const listener = (event) =>
-        note(event.type, { target: event.target?.id || event.target?.tagName });
+      const listener = (event) => note(event.type, { target: describe(event.target) });
       target.addEventListener(event, listener, true);
       return () => target.removeEventListener(event, listener, true);
     });
@@ -647,6 +692,18 @@ export const preparedRevealCurrent = [
         },
       );
     } catch (error) {
+      diagnostics.failureControls = [...doc.querySelectorAll('dialog[open]')].map((dialog) => ({
+        id: dialog.id || dialog.className,
+        controls: [...dialog.querySelectorAll('button,a[href],select,input,textarea,summary')].map(
+          (element) => ({
+            ...describe(element),
+            rectCount: element.getClientRects().length,
+            hiddenAncestor: element.closest('[hidden],[inert],[aria-hidden="true"]')?.tagName,
+            display: win.getComputedStyle(element).display,
+            visibility: win.getComputedStyle(element).visibility,
+          }),
+        ),
+      }));
       throw new Error(
         `${error.message}\nObservation-only child-frame/ownership diagnostics: ${JSON.stringify(diagnostics)}`,
         { cause: error },
