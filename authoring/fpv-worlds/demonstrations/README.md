@@ -1,6 +1,6 @@
 # World demonstration authoring
 
-`generate-woodland.mjs` and `generate-courtyard.mjs` are original offline authoring tools. They fly the actual
+`generate-woodland.mjs`, `generate-courtyard.mjs` and `generate-warehouse.mjs` are original offline authoring tools. They fly the actual
 fixed-step v2 runtime, record the quantized commands consumed by that runtime,
 and replay the result. They are not shipped with the player application and add no
 autopilot to gameplay.
@@ -15,11 +15,14 @@ node authoring/fpv-worlds/demonstrations/generate-woodland.mjs \
 node authoring/fpv-worlds/demonstrations/generate-courtyard.mjs \
   courtyard-01,courtyard-02,courtyard-03,courtyard-04,courtyard-05,courtyard-06,courtyard-07,courtyard-08 \
   /tmp/fpv-courtyard-recordings
+
+node authoring/fpv-worlds/demonstrations/generate-warehouse.mjs \
+  warehouse-01,warehouse-02,warehouse-03,warehouse-04,warehouse-05,warehouse-06,warehouse-07,warehouse-08 \
+  /tmp/fpv-warehouse-recordings
 ```
 
 Both arguments are optional. Each generator defaults to all eight courses in its
-world and a destination named `fpv-woodland-demonstrations` or
-`fpv-courtyard-demonstrations` in the current directory.
+world and a destination named `fpv-<world>-demonstrations` in the current directory.
 Each output is a JSON object containing the unchanged course and its v2 proof.
 The process exits unsuccessfully if an attempt does not complete with full health
 and zero contacts. Generation uses the response profile and piloting parameters
@@ -28,7 +31,7 @@ declared in the script.
 The recorded pilot turns toward its next leg before accelerating. Woodland 06
 returns at a 6.2 m cruise height to clear its moving hazards; Woodland 07 keeps its
 lower route beneath the branch. These are piloting choices in the recording,
-not course, collider, enemy or physics changes. These controllers are qualified for
+not course, collider, enemy or physics changes. The woodland and courtyard controllers are qualified for
 their current world-specific hold/land/hazard tasks only. Their gate handling is
 experimental, and combat objectives are deliberately unsupported.
 
@@ -38,7 +41,15 @@ descends to the original hold, then returns at 6.2 m. Its objectives and collisi
 geometry are unchanged. The other courtyard recordings use the authored routes
 directly.
 
-`woodland-provenance.json` and `courtyard-provenance.json` record the original source commit, generator hashes,
+The warehouse controller also handles its eight authored gate-racing routes.
+It stages 4 m before each directed gate and settles within 0.45 m at less than
+0.8 m/s before crossing toward a point 1.8 m beyond the plane. The flight line is
+0.9 m above the gate centre to separate it from the physical pace rival.
+Warehouse 07 returns above the moving freight lanes at 6.2 m, then descends onto
+the original pad. These are recorded control choices; gate dimensions, objectives,
+actors, collisions and physics remain unchanged. Combat is unsupported.
+
+`woodland-provenance.json`, `courtyard-provenance.json` and `warehouse-provenance.json` record the original source commit, generator hashes,
 per-artifact and per-proof SHA-256 hashes, exact runtime/course identities,
 completion evidence, and heading alignment measurements. The checked-in portable
 generators reproduce the artifact hashes after their imports and output paths
