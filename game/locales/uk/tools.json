@@ -3049,5 +3049,22 @@
   "reserveCatalog.footer": "Завантажується лише вибраний оригінал. Перегляд відкриває перевірену копію у вікні читання. Завантаження зберігає незмінний PNG. Деталі обладнання й культури пояснено у примітках кожної добірки.",
   "reserveCatalog.excluded": "Два невибрані ранні результати збережено в Git поза цим каталогом із 40 робіт. Документи зберігають мову оригіналу.",
   "reserveCatalog.manifest": "Маніфест каталогу",
-  "reserveCatalog.readme": "Використання й перевірка каталогу"
+  "reserveCatalog.readme": "Використання й перевірка каталогу",
+  "ukraineRoleInput.loading": "Завантаження перевірених оригіналів…",
+  "ukraineRoleInput.ready": "Усі сім оригіналів готові.",
+  "ukraineRoleInput.error": "Не вдалося завантажити оригінали. Спробуйте ще раз.",
+  "ukraineRoleInput.cancelled": "Завантаження скасовано. Виберіть «Повторити», щоб завантажити оригінали.",
+  "ukraineRoleInput.playing": "Анімація крил відтворюється.",
+  "ukraineRoleInput.paused": "Анімацію призупинено.",
+  "ukraineRoleInput.suspended": "Анімацію призупинено, поки сторінка неактивна.",
+  "ukraineRoleInput.reducedState": "Зменшений рух: статичні зразки.",
+  "ukraineRoleInput.static": "Крила приховано: статичні зразки.",
+  "ukraineRoleInput.notes": "Рожевий хрестик — центр оригіналу; зелені кола — задані точки кріплення крил. Позначки слугують для огляду, а не визначають зону зіткнення. Відкрийте огляд зразка, щоб прокручувати його без зміни масштабу. Масштаб браузера може змінювати фізичний розмір зображення.",
+  "ukraineRoleInput.roles.scout": "Ластівка-кур’єр",
+  "ukraineRoleInput.roles.bomber": "Гончарний кур’єр",
+  "ukraineRoleInput.roles.carrier": "Різьблена скриня",
+  "ukraineRoleInput.roles.interceptor": "Соколиний герб",
+  "ukraineRoleInput.roles.fiber": "Ткацький човник",
+  "ukraineRoleInput.roles.impact": "Вартовий дзвона",
+  "ukraineRoleInput.roles.trapper": "Плетений кошик"
 }
