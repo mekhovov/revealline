@@ -6,6 +6,7 @@ import { tmpdir } from 'node:os';
 import { execFileSync } from 'node:child_process';
 import { parse } from 'acorn';
 import { buildOptionalPractice } from './build-optional-practice.mjs';
+import { ICON_MASTER } from './brand-icons.mjs';
 import { optionalFPVSourceFixture } from '../publishing/optional-package-source-fixture.mjs';
 const root = new URL('../', import.meta.url).pathname;
 
@@ -55,6 +56,9 @@ test('frozen optional CLI builds twice from actual committed inputs and refuses 
     ...built.inputs,
     ...fpv.files,
   ]);
+  // The import closure finds builder modules, but not the PNG they read at runtime.
+  const iconMaster = await readFile(path.join(root, ICON_MASTER));
+  selected.set(ICON_MASTER, iconMaster);
   selected.set(
     'game/vendor/lz-string-1.5.0.min.js',
     await readFile(path.join(root, 'game/vendor/lz-string-1.5.0.min.js')),
@@ -124,6 +128,9 @@ test('frozen optional CLI builds twice from actual committed inputs and refuses 
     /unique registered package IDs/,
   );
   assert.throws(() => run('.cache/first'), /immutable outputs are never overwritten/);
+  await writeFile(path.join(fixture, ICON_MASTER), Buffer.concat([iconMaster, Buffer.from('\n')]));
+  assert.throws(() => run('.cache/dirty-icon'), /clean committed source/);
+  await writeFile(path.join(fixture, ICON_MASTER), iconMaster);
   await writeFile(path.join(fixture, 'optional-practice/civilian-flight/app.mjs'), '// changed\n');
   assert.throws(() => run('.cache/dirty'), /clean committed source/);
 });
