@@ -223,6 +223,11 @@ export function createCosmeticRewardEditor({
   }
   return {
     sync,
+    suspend() {
+      if (disposed) return;
+      generation++;
+      stop();
+    },
     preview(payload, container) {
       required(context, 'Select an exact Company Studio source draft for this character.');
       return mountLocalRewardCosmeticPreview({
