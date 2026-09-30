@@ -15,9 +15,9 @@ class Target {
     listeners?.delete(listener);
     if (listeners?.size === 0) this.listeners.delete(type);
   }
-  async emit(type) {
+  async emit(type, event) {
     const results = [];
-    for (const listener of this.listeners.get(type) ?? []) results.push(listener());
+    for (const listener of this.listeners.get(type) ?? []) results.push(listener(event));
     await Promise.all(results);
   }
 }
@@ -381,9 +381,9 @@ test('document teardown releases shared registrations while a retained page keep
   doc.defaultView = win;
   attachFullscreen(landing, doc);
   attachFullscreen(settings, doc);
-  win.listeners.get('pagehide')({ persisted: true });
+  await win.emit('pagehide', { persisted: true });
   assert.equal(landing.listeners.size, 1);
-  win.listeners.get('pagehide')({ persisted: false });
+  await win.emit('pagehide', { persisted: false });
   assert.equal(landing.listeners.size, 0);
   assert.equal(settings.listeners.size, 0);
   assert.equal(doc.listeners.size, 0);

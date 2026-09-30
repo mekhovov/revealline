@@ -60,12 +60,12 @@ export function attachQuickMusicControls({
     }
   };
   enabled = readPreference();
+  const couchTransport =
+    settingsRoot?.matches?.('[data-couch-music]') ||
+    settingsRoot?.querySelector?.('[data-couch-music]');
   const rows = after
     .filter(Boolean)
-    .filter(
-      (anchor) =>
-        !settingsRoot || !['shell-continue', 'race-start', 'coop-start'].includes(anchor.id),
-    )
+    .filter((anchor) => !couchTransport || !['race-start', 'coop-start'].includes(anchor.id))
     .map((anchor, index) => {
       const root = doc.createElement('div'),
         title = doc.createElement('span'),
@@ -88,11 +88,7 @@ export function attachQuickMusicControls({
       return { root, title, toggle, skip };
     });
   let settingsTransport = null;
-  if (
-    settingsRoot &&
-    !settingsRoot.matches?.('[data-couch-music]') &&
-    !settingsRoot.querySelector('[data-couch-music]')
-  ) {
+  if (settingsRoot && !couchTransport) {
     const root = doc.createElement('div'),
       title = doc.createElement('span'),
       back = doc.createElement('button'),
