@@ -20,6 +20,7 @@ import { countercurrentGalleryCurrent } from './countercurrent-gallery-current-w
 import { fpvEnemyGalleryCurrent } from './fpv-enemy-gallery-current-workflow.mjs';
 import { fpvRoleGalleryCurrent } from './fpv-role-gallery-current-workflow.mjs';
 import { reserveCatalogCurrent } from './reserve-catalog-current-workflow.mjs';
+import { ukraineRoleGalleryCurrent } from './authoring-current-ukraine-role-workflow.mjs';
 import {
   creatorGuideDocumentsCurrent,
   creatorGuidePackDownloadCurrent,
@@ -47,6 +48,7 @@ const value = (p, css) => p.doc.querySelector(css).value;
 export const currentAuthoringCases = {
   fpvRoleGalleryCurrent,
   reserveCatalogCurrent,
+  ukraineRoleGalleryCurrent,
   fpvEnemyGalleryCurrent,
   countercurrentGalleryCurrent,
   creatorGuideDocumentsCurrent,
