@@ -8,12 +8,17 @@ import {
 } from './deployed-tus-resume.mjs';
 
 const integer = (value, fallback) => (value === undefined ? fallback : Number(value));
-const accountHeaders = (prefix) => {
-  const authorization = process.env[`${prefix}_AUTHORIZATION`];
-  const cookie = process.env[`${prefix}_COOKIE`];
-  if (authorization && cookie) throw new Error('Choose one account credential form.');
-  return authorization ? { authorization } : { cookie };
-};
+const accountAuthentication = (prefix) =>
+  Object.freeze(
+    Object.fromEntries(
+      [
+        ['authorization', process.env[`${prefix}_AUTHORIZATION`]],
+        ['cookie', process.env[`${prefix}_COOKIE`]],
+        ['email', process.env[`${prefix}_EMAIL`]],
+        ['password', process.env[`${prefix}_PASSWORD`]],
+      ].filter(([, value]) => value !== undefined),
+    ),
+  );
 const namespace = process.env.COMMUNITY_TUS_ACCEPTANCE_NAMESPACE;
 const destination = path.resolve(
   process.env.COMMUNITY_TUS_ACCEPTANCE_RECEIPT ??
@@ -67,8 +72,8 @@ try {
       validatorVersion: process.env.COMMUNITY_TUS_ACCEPTANCE_EXPECTED_VALIDATOR_VERSION,
     },
     auth: {
-      creator: accountHeaders('COMMUNITY_TUS_ACCEPTANCE_CREATOR'),
-      admin: accountHeaders('COMMUNITY_TUS_ACCEPTANCE_ADMIN'),
+      creator: accountAuthentication('COMMUNITY_TUS_ACCEPTANCE_CREATOR'),
+      admin: accountAuthentication('COMMUNITY_TUS_ACCEPTANCE_ADMIN'),
     },
     dropAfterBytes: integer(process.env.COMMUNITY_TUS_ACCEPTANCE_DROP_AFTER_BYTES, 17),
     chunkBytes: integer(process.env.COMMUNITY_TUS_ACCEPTANCE_CHUNK_BYTES, 1024 * 1024),

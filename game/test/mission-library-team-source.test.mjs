@@ -89,6 +89,9 @@ test('Team imports retain exact pack, level and opaque artwork owner without ali
   assert.equal(library.missions.length, 4);
   const selected = library.missions[3];
   assert.notEqual(selected.id, library.missions[1].id);
+  assert(Number.isSafeInteger(library.missions[1].globalLevelNumber));
+  assert.equal(selected.canonicalLevelKey, null);
+  assert.equal(selected.globalLevelNumber, null, 'Matching imported IDs are not official levels.');
   await library.launch(selected, { mode: 'team' });
   assert.equal(received, localRows[1]);
   assert.equal(received.pack, pack);
@@ -118,13 +121,26 @@ test('installed Team source exposes progress only while its exact edition rows r
       collection: 'Custom',
       isCurrent: () => live,
       progress: (row) => (row === localRows[0] ? 'Cleared on Standard · Full teamwork' : ''),
+      progressState: (row) => ({
+        state: row === localRows[0] ? 'completed' : 'new',
+        bestStars: null,
+      }),
       launch: () => true,
     }),
   ]);
   const selected = library.missions[0];
   assert.equal(library.progress(selected, 'team'), 'Cleared on Standard · Full teamwork');
+  assert.deepEqual(library.progressState(selected, 'team'), {
+    state: 'completed',
+    bestStars: null,
+  });
+  assert.deepEqual(library.progressState(library.missions[1], 'team'), {
+    state: 'new',
+    bestStars: null,
+  });
   live = false;
   assert.equal(library.progress(selected, 'team'), '');
+  assert.deepEqual(library.progressState(selected, 'team'), { state: 'new', bestStars: null });
 });
 
 test('Team card receipts distinguish the selected preset from an earlier or different edition', () => {
@@ -152,6 +168,10 @@ test('Team card receipts distinguish the selected preset from an earlier or diff
   assert.equal(library.progress(selected, 'team'), 'Cleared on standard · selected edition');
   receipt.gameplayId = 'older-simulation';
   assert.match(library.progress(selected, 'team'), /^Earlier edition cleared.*no clear recorded/);
+  assert.deepEqual(library.progressState(selected, 'team'), {
+    state: 'completed',
+    bestStars: null,
+  });
 });
 
 test('a pressure host explicitly qualifies new Team receipt identity without upgrading historical clears', () => {

@@ -1,0 +1,676 @@
+{
+  "actorCatalogId": "journey-actors-v9",
+  "assets": [
+    {
+      "alt": "Original illustrated evening listening room with an abstract wooden string-instrument silhouette, separate empty performer seat and blank cards connected by warm light.",
+      "bytes": 160887,
+      "format": "AssetRevisionV1",
+      "height": 480,
+      "id": "ukraine-voices-travel-01-picture",
+      "kind": "reveal-background",
+      "path": "editions/assets/discovery/ukraine-voices-travel-01-v1.jpg",
+      "review": "candidate",
+      "revision": "1",
+      "sha256": "efb920278d7961fbffd8f13ec2cab5b81d6ec99353f3da24eef5f1b639ccffca",
+      "width": 960
+    },
+    {
+      "alt": "Original illustrated rehearsal library with three open connected rooms, empty seats, learning shelves and a small performance platform linked by warm light.",
+      "bytes": 184771,
+      "format": "AssetRevisionV1",
+      "height": 480,
+      "id": "ukraine-voices-travel-02-picture",
+      "kind": "reveal-background",
+      "path": "editions/assets/discovery/ukraine-voices-travel-02-v1.jpg",
+      "review": "candidate",
+      "revision": "1",
+      "sha256": "656e823c9d7f3189a68fa68f0473f06a8d2a2607a89d4b5aed013a06248eb888",
+      "width": 960
+    },
+    {
+      "alt": "Original illustrated song-archive courtyard with three separate blank group cards and equal abstract sound ribbons, beside an invented river landscape.",
+      "bytes": 196019,
+      "format": "AssetRevisionV1",
+      "height": 480,
+      "id": "ukraine-voices-travel-03-picture",
+      "kind": "reveal-background",
+      "path": "editions/assets/discovery/ukraine-voices-travel-03-v1.jpg",
+      "review": "candidate",
+      "revision": "1",
+      "sha256": "cc9dd354676ea8bfa74670b61a4a77eb8c20050f18f5ff8c9840f2805c629fa5",
+      "width": 960
+    },
+    {
+      "alt": "Original illustrated spacious concert foyer with an ocean-blue window, a distant imagined ship and three separate blank programme cards.",
+      "bytes": 177391,
+      "format": "AssetRevisionV1",
+      "height": 480,
+      "id": "ukraine-voices-travel-04-picture",
+      "kind": "reveal-background",
+      "path": "editions/assets/discovery/ukraine-voices-travel-04-v1.jpg",
+      "review": "candidate",
+      "revision": "1",
+      "sha256": "ba6a6aadc7859ace1865c0889b9215f1b8d264e85484e22a10a327568f0702e8",
+      "width": 960
+    },
+    {
+      "alt": "Original illustrated listening gallery with three separate headphones stations and equal illuminated sound ribbons leading together toward an arch.",
+      "bytes": 189714,
+      "format": "AssetRevisionV1",
+      "height": 480,
+      "id": "ukraine-voices-travel-05-picture",
+      "kind": "reveal-background",
+      "path": "editions/assets/discovery/ukraine-voices-travel-05-v1.jpg",
+      "review": "candidate",
+      "revision": "1",
+      "sha256": "919797b57a3374258d94292efca7cf835d45ebf34b404368ab3995993e013534",
+      "width": 960
+    },
+    {
+      "alt": "Original illustrated listening-library finale with six separate discovery-card islands, abstract sound ribbons and a bright open source-index cabinet.",
+      "bytes": 195867,
+      "format": "AssetRevisionV1",
+      "height": 480,
+      "id": "ukraine-voices-travel-06-picture",
+      "kind": "reveal-background",
+      "path": "editions/assets/discovery/ukraine-voices-travel-06-v1.jpg",
+      "review": "candidate",
+      "revision": "1",
+      "sha256": "62c3833fc32c79df5ddac7f113b57e4ce33ded59c1b1b4d3c161ec5621f0237a",
+      "width": 960
+    }
+  ],
+  "campaigns": [
+    {
+      "band": 7,
+      "discovery": {
+        "exhibitLayout": "route",
+        "feedback": {
+          "format": "revealline-campaign-feedback.v1",
+          "lines": {
+            "en": ["Another voice finds a place in your collection."],
+            "uk": ["Ще один голос знайшов місце у вашій колекції."]
+          },
+          "revision": "feedback-ae9664c7251fdff2",
+          "victoryMotif": "open-horizon-v1"
+        },
+        "finaleRewardRef": { "id": "ukraine-voices-travel-finale", "revision": "4" }
+      },
+      "format": "CampaignDesignV1",
+      "id": "ukraine-voices-travel",
+      "missionIds": [
+        "ukraine-voices-travel-01",
+        "ukraine-voices-travel-02",
+        "ukraine-voices-travel-03",
+        "ukraine-voices-travel-04",
+        "ukraine-voices-travel-05",
+        "ukraine-voices-travel-06"
+      ],
+      "name": "Voices That Travel",
+      "revision": "1"
+    }
+  ],
+  "difficultyCatalogId": "journey-difficulty-v2",
+  "format": "ContentProjectV1",
+  "id": "ukraine-voices-travel",
+  "maps": [
+    {
+      "format": "MapDesignV2",
+      "foundations": [
+        { "h": 5, "w": 12, "x": 16, "y": 12 },
+        { "h": 4, "w": 16, "x": 34, "y": 24 }
+      ],
+      "gates": [],
+      "height": 36,
+      "id": "ukraine-voices-travel-01-map",
+      "name": "An Instrument and a Voice",
+      "revision": "2",
+      "spawns": [{ "id": "home", "x": 21.5, "y": 0.5 }],
+      "terrain": [],
+      "walls": [{ "h": 13, "w": 2, "x": 47, "y": 7 }],
+      "width": 72
+    },
+    {
+      "format": "MapDesignV2",
+      "foundations": [
+        { "h": 5, "w": 10, "x": 10, "y": 12 },
+        { "h": 5, "w": 12, "x": 35, "y": 11 },
+        { "h": 4, "w": 13, "x": 23, "y": 25 }
+      ],
+      "gates": [],
+      "height": 36,
+      "id": "ukraine-voices-travel-02-map",
+      "name": "A Practice Kept Together",
+      "revision": "2",
+      "spawns": [{ "id": "home", "x": 14.5, "y": 0.5 }],
+      "terrain": [],
+      "walls": [
+        { "h": 10, "w": 2, "x": 27, "y": 9 },
+        { "h": 2, "w": 12, "x": 48, "y": 23 }
+      ],
+      "width": 72
+    },
+    {
+      "format": "MapDesignV2",
+      "foundations": [
+        { "h": 5, "w": 10, "x": 28, "y": 10 },
+        { "h": 4, "w": 10, "x": 10, "y": 25 },
+        { "h": 5, "w": 11, "x": 51, "y": 9 }
+      ],
+      "gates": [],
+      "height": 36,
+      "id": "ukraine-voices-travel-03-map",
+      "name": "A Region Has Many Voices",
+      "revision": "2",
+      "spawns": [{ "id": "home", "x": 32.5, "y": 0.5 }],
+      "terrain": [],
+      "walls": [
+        { "h": 13, "w": 2, "x": 19, "y": 9 },
+        { "h": 12, "w": 2, "x": 44, "y": 18 }
+      ],
+      "width": 72
+    },
+    {
+      "format": "MapDesignV2",
+      "foundations": [
+        { "h": 7, "w": 22, "x": 26, "y": 12 },
+        { "h": 5, "w": 10, "x": 10, "y": 23 },
+        { "h": 4, "w": 9, "x": 53, "y": 20 }
+      ],
+      "gates": [],
+      "height": 36,
+      "id": "ukraine-voices-travel-04-map",
+      "name": "Shchedryk Crosses an Ocean",
+      "revision": "2",
+      "spawns": [{ "id": "home", "x": 36.5, "y": 0.5 }],
+      "terrain": [],
+      "walls": [{ "h": 2, "w": 13, "x": 11, "y": 7 }],
+      "width": 72
+    },
+    {
+      "format": "MapDesignV2",
+      "foundations": [
+        { "h": 5, "w": 12, "x": 12, "y": 14 },
+        { "h": 5, "w": 12, "x": 46, "y": 14 },
+        { "h": 4, "w": 10, "x": 30, "y": 20 }
+      ],
+      "gates": [],
+      "height": 36,
+      "id": "ukraine-voices-travel-05-map",
+      "name": "One Voice, Then the Group",
+      "revision": "2",
+      "spawns": [{ "id": "home", "x": 17.5, "y": 0.5 }],
+      "terrain": [],
+      "walls": [
+        { "h": 2, "w": 13, "x": 28, "y": 8 },
+        { "h": 2, "w": 14, "x": 30, "y": 27 }
+      ],
+      "width": 72
+    },
+    {
+      "format": "MapDesignV2",
+      "foundations": [
+        { "h": 5, "w": 12, "x": 29, "y": 11 },
+        { "h": 4, "w": 11, "x": 35, "y": 25 },
+        { "h": 4, "w": 8, "x": 10, "y": 25 },
+        { "h": 4, "w": 9, "x": 54, "y": 9 }
+      ],
+      "gates": [{ "h": 6, "id": "return-1", "w": 1, "x": 14, "y": 29 }],
+      "height": 36,
+      "id": "ukraine-voices-travel-06-map",
+      "name": "Carry the Context",
+      "revision": "2",
+      "spawns": [{ "id": "home", "x": 34.5, "y": 0.5 }],
+      "terrain": [],
+      "walls": [
+        { "h": 13, "w": 2, "x": 21, "y": 9 },
+        { "h": 10, "w": 2, "x": 49, "y": 19 }
+      ],
+      "width": 72
+    }
+  ],
+  "missions": [
+    {
+      "actors": [
+        {
+          "heading": [-1, -1],
+          "id": "paper-drifter",
+          "role": "field-keeper",
+          "tier": "measured",
+          "x": 61.5,
+          "y": 28.5
+        },
+        {
+          "heading": [1, -1],
+          "id": "locked-demand",
+          "role": "trail-pursuer",
+          "tier": "measured",
+          "x": 13.5,
+          "y": 27.5
+        }
+      ],
+      "bonuses": [],
+      "coverage": 0.5780000000000001,
+      "design": {
+        "captureConsequence": "This fictional reveal never changes a business record or a real-world delivery.",
+        "combines": [],
+        "counterplay": "The pursuer commits to one observed point on the unfinished trail. Keep a short return ready and close before its finite approach reaches you.",
+        "difficulty": {
+          "band": 7,
+          "coordination": 0,
+          "execution": 6,
+          "mechanicLoad": 7,
+          "planning": 7,
+          "threatDensity": 2,
+          "timePressure": 0
+        },
+        "durationSeconds": [50, 210],
+        "introduces": ["trail-pursuer"],
+        "lesson": "Connect the instrument room to the listening court and discover the people behind the sound. The pursuer commits to one observed point on the unfinished trail. Keep a short return ready and close before its finite approach reaches you.",
+        "mastery": "Connect every required objective and complete the encounter without losing a life; optional learning remains separate from arcade progress.",
+        "memorableMoment": "Original evening music exhibition with unlabelled instrument silhouettes, separate performer cards and violet listening alcoves; no invented portrait of a tradition bearer or copied recording imagery.",
+        "pacingBeat": "discover",
+        "practices": [
+          "foundations",
+          "enemy-seeded-closure",
+          "travelling-trail-impact",
+          "trail-pursuer"
+        ],
+        "rewardRef": { "id": "ukraine-voices-travel-01-discovery", "revision": "4" },
+        "routeDecision": "Secure the instrument alcove first or connect two listening islands before taking the long audience court. Keep a second return ready before the warning locks your trail or heading."
+      },
+      "format": "MissionDesignV2",
+      "id": "ukraine-voices-travel-01",
+      "map": { "id": "ukraine-voices-travel-01-map", "revision": "2" },
+      "modes": ["solo"],
+      "name": "An Instrument and a Voice",
+      "objectives": [
+        { "hidden": false, "id": "connection", "required": true, "x": 12.5, "y": 8.5 },
+        { "hidden": false, "id": "handoff", "required": true, "x": 55.5, "y": 25.5 }
+      ],
+      "presentation": {
+        "backgroundAssetId": "ukraine-voices-travel-01-picture",
+        "themeId": "ukraine-voices-travel-theme"
+      },
+      "relayLinks": [],
+      "revision": "2",
+      "spawnId": "home",
+      "timeLimitSeconds": 0
+    },
+    {
+      "actors": [
+        {
+          "heading": [-1, -1],
+          "id": "paper-drifter",
+          "role": "field-keeper",
+          "tier": "measured",
+          "x": 61.5,
+          "y": 28.5
+        },
+        {
+          "heading": [1, -1],
+          "id": "locked-demand",
+          "role": "trail-pursuer",
+          "tier": "measured",
+          "x": 13.5,
+          "y": 27.5
+        }
+      ],
+      "bonuses": [],
+      "coverage": 0.6280000000000001,
+      "design": {
+        "captureConsequence": "This fictional reveal never changes a business record or a real-world delivery.",
+        "combines": [],
+        "counterplay": "The pursuer commits to one observed point on the unfinished trail. Keep a short return ready and close before its finite approach reaches you.",
+        "difficulty": {
+          "band": 7,
+          "coordination": 0,
+          "execution": 6,
+          "mechanicLoad": 7,
+          "planning": 7,
+          "threatDensity": 2,
+          "timePressure": 0
+        },
+        "durationSeconds": [50, 210],
+        "introduces": [],
+        "lesson": "Link the teaching rooms and keep a return open between learning and sharing. The pursuer commits to one observed point on the unfinished trail. Keep a short return ready and close before its finite approach reaches you.",
+        "mastery": "Connect every required objective and complete the encounter without losing a life; optional learning remains separate from arcade progress.",
+        "memorableMoment": "Original inclusive rehearsal-library with three well-spaced teaching rooms and accessible caption stands; represent learning through objects and empty seating, not invented documentary people.",
+        "pacingBeat": "choose",
+        "practices": [
+          "foundations",
+          "enemy-seeded-closure",
+          "travelling-trail-impact",
+          "trail-pursuer"
+        ],
+        "rewardRef": { "id": "ukraine-voices-travel-02-discovery", "revision": "4" },
+        "routeDecision": "Join the nearby teaching tables for short captures or use the outer gallery to connect all three rooms. Keep a second return ready before the warning locks your trail or heading."
+      },
+      "format": "MissionDesignV2",
+      "id": "ukraine-voices-travel-02",
+      "map": { "id": "ukraine-voices-travel-02-map", "revision": "2" },
+      "modes": ["solo"],
+      "name": "A Practice Kept Together",
+      "objectives": [
+        { "hidden": false, "id": "connection", "required": true, "x": 12.5, "y": 8.5 },
+        { "hidden": false, "id": "handoff", "required": true, "x": 55.5, "y": 25.5 }
+      ],
+      "presentation": {
+        "backgroundAssetId": "ukraine-voices-travel-02-picture",
+        "themeId": "ukraine-voices-travel-theme"
+      },
+      "relayLinks": [],
+      "revision": "2",
+      "spawnId": "home",
+      "timeLimitSeconds": 0
+    },
+    {
+      "actors": [
+        {
+          "heading": [-1, -1],
+          "id": "paper-drifter",
+          "role": "field-keeper",
+          "tier": "measured",
+          "x": 61.5,
+          "y": 28.5
+        },
+        {
+          "heading": [1, -1],
+          "id": "locked-demand",
+          "role": "heading-interceptor",
+          "tier": "measured",
+          "x": 13.5,
+          "y": 29.5
+        }
+      ],
+      "bonuses": [],
+      "coverage": 0.6580000000000001,
+      "design": {
+        "captureConsequence": "This fictional reveal never changes a business record or a real-world delivery.",
+        "combines": [],
+        "counterplay": "The interceptor commits to one observed heading after its warning. Change your route after the lock and close on the nearer return.",
+        "difficulty": {
+          "band": 7,
+          "coordination": 0,
+          "execution": 6,
+          "mechanicLoad": 7,
+          "planning": 7,
+          "threatDensity": 2,
+          "timePressure": 0
+        },
+        "durationSeconds": [50, 210],
+        "introduces": ["heading-interceptor"],
+        "lesson": "Reveal the regional song gallery while keeping each group’s record distinct. The interceptor commits to one observed heading after its warning. Change your route after the lock and close on the nearer return.",
+        "mastery": "Connect every required objective and complete the encounter without losing a life; optional learning remains separate from arcade progress.",
+        "memorableMoment": "Original regional song archive with separate group caption cards, abstract sound ribbons and a generous central courtyard; no combat scene, lyrics, or fabricated map boundary.",
+        "pacingBeat": "combine",
+        "practices": [
+          "foundations",
+          "enemy-seeded-closure",
+          "travelling-trail-impact",
+          "heading-interceptor"
+        ],
+        "rewardRef": { "id": "ukraine-voices-travel-03-discovery", "revision": "4" },
+        "routeDecision": "Read the warning from the narrow source aisle or cross the wider regional court with a nearer return prepared. Keep a second return ready before the warning locks your trail or heading."
+      },
+      "format": "MissionDesignV2",
+      "id": "ukraine-voices-travel-03",
+      "map": { "id": "ukraine-voices-travel-03-map", "revision": "2" },
+      "modes": ["solo"],
+      "name": "A Region Has Many Voices",
+      "objectives": [
+        { "hidden": false, "id": "connection", "required": true, "x": 12.5, "y": 8.5 },
+        { "hidden": false, "id": "handoff", "required": true, "x": 55.5, "y": 25.5 }
+      ],
+      "presentation": {
+        "backgroundAssetId": "ukraine-voices-travel-03-picture",
+        "themeId": "ukraine-voices-travel-theme"
+      },
+      "relayLinks": [],
+      "revision": "2",
+      "spawnId": "home",
+      "timeLimitSeconds": 0
+    },
+    {
+      "actors": [
+        {
+          "heading": [-1, -1],
+          "id": "paper-drifter",
+          "role": "field-keeper",
+          "tier": "measured",
+          "x": 61.5,
+          "y": 28.5
+        },
+        {
+          "heading": [1, -1],
+          "id": "locked-demand",
+          "role": "heading-interceptor",
+          "tier": "measured",
+          "x": 13.5,
+          "y": 28.5
+        },
+        {
+          "axis": "horizontal",
+          "id": "scheduled-wave",
+          "role": "lane-emitter",
+          "tier": "measured",
+          "x": 56.5,
+          "y": 27.5
+        }
+      ],
+      "bonuses": [{ "id": "steady-return", "kind": "extra-life", "x": 26.5, "y": 12.5 }],
+      "coverage": 0.5980000000000001,
+      "design": {
+        "captureConsequence": "This fictional reveal never changes a business record or a real-world delivery.",
+        "combines": ["heading-interceptor", "lane-emitter"],
+        "counterplay": "The interceptor commits to one observed heading after its warning. Change your route after the lock and close on the nearer return. The marked lane warns before firing; close the whole exposed line before the pulse, not only the craft.",
+        "difficulty": {
+          "band": 8,
+          "coordination": 0,
+          "execution": 6,
+          "mechanicLoad": 8,
+          "planning": 8,
+          "threatDensity": 3,
+          "timePressure": 0
+        },
+        "durationSeconds": [50, 210],
+        "introduces": ["lane-emitter"],
+        "lesson": "Open the broad concert foyer and connect the composition to its documented journey. The interceptor commits to one observed heading after its warning. Change your route after the lock and close on the nearer return.",
+        "mastery": "Connect every required objective and complete the encounter without losing a life; optional learning remains separate from arcade progress.",
+        "memorableMoment": "Original spacious concert foyer with an ocean-blue window, blank programme cards and warm lights; no recreation of the 1922 performers, protected programme facsimile or unlicensed musical score.",
+        "pacingBeat": "breathe",
+        "practices": [
+          "foundations",
+          "enemy-seeded-closure",
+          "travelling-trail-impact",
+          "heading-interceptor",
+          "lane-emitter"
+        ],
+        "rewardRef": { "id": "ukraine-voices-travel-04-discovery", "revision": "4" },
+        "routeDecision": "Take the open foyer in a wide loop or reveal the two programme alcoves before approaching the marked lane. Keep a second return ready before the warning locks your trail or heading."
+      },
+      "format": "MissionDesignV2",
+      "id": "ukraine-voices-travel-04",
+      "map": { "id": "ukraine-voices-travel-04-map", "revision": "2" },
+      "modes": ["solo"],
+      "name": "Shchedryk Crosses an Ocean",
+      "objectives": [
+        { "hidden": false, "id": "connection", "required": true, "x": 12.5, "y": 9.5 },
+        { "hidden": false, "id": "handoff", "required": true, "x": 55.5, "y": 25.5 }
+      ],
+      "presentation": {
+        "backgroundAssetId": "ukraine-voices-travel-04-picture",
+        "themeId": "ukraine-voices-travel-theme"
+      },
+      "relayLinks": [],
+      "revision": "2",
+      "spawnId": "home",
+      "timeLimitSeconds": 0
+    },
+    {
+      "actors": [
+        {
+          "heading": [-1, -1],
+          "id": "paper-drifter",
+          "role": "field-keeper",
+          "tier": "measured",
+          "x": 61.5,
+          "y": 28.5
+        },
+        {
+          "heading": [1, -1],
+          "id": "locked-demand",
+          "role": "heading-interceptor",
+          "tier": "measured",
+          "x": 13.5,
+          "y": 27.5
+        },
+        {
+          "axis": "vertical",
+          "id": "scheduled-wave",
+          "role": "lane-emitter",
+          "tier": "measured",
+          "x": 56.5,
+          "y": 27.5
+        }
+      ],
+      "bonuses": [{ "id": "steady-return", "kind": "extra-life", "x": 12.5, "y": 14.5 }],
+      "coverage": 0.6980000000000001,
+      "design": {
+        "captureConsequence": "This fictional reveal never changes a business record or a real-world delivery.",
+        "combines": ["heading-interceptor", "lane-emitter"],
+        "counterplay": "The interceptor commits to one observed heading after its warning. Change your route after the lock and close on the nearer return. The marked lane warns before firing; close the whole exposed line before the pulse, not only the craft.",
+        "difficulty": {
+          "band": 8,
+          "coordination": 0,
+          "execution": 6,
+          "mechanicLoad": 8,
+          "planning": 8,
+          "threatDensity": 3,
+          "timePressure": 0
+        },
+        "durationSeconds": [50, 210],
+        "introduces": [],
+        "lesson": "Connect the listening stations and discover how an archive can let you hear parts of a whole. The interceptor commits to one observed heading after its warning. Change your route after the lock and close on the nearer return.",
+        "mastery": "Connect every required objective and complete the encounter without losing a life; optional learning remains separate from arcade progress.",
+        "memorableMoment": "Original modern listening exhibit with separated illuminated voice-channel ribbons, accessible text panels and headphones on stands; no copied Polyphony user interface, audio or performer photography.",
+        "pacingBeat": "mastery",
+        "practices": [
+          "foundations",
+          "enemy-seeded-closure",
+          "travelling-trail-impact",
+          "heading-interceptor",
+          "lane-emitter"
+        ],
+        "rewardRef": { "id": "ukraine-voices-travel-05-discovery", "revision": "4" },
+        "routeDecision": "Secure the lower listening station for a quick return or connect the upper pair around the warning lane. Keep a second return ready before the warning locks your trail or heading."
+      },
+      "format": "MissionDesignV2",
+      "id": "ukraine-voices-travel-05",
+      "map": { "id": "ukraine-voices-travel-05-map", "revision": "2" },
+      "modes": ["solo"],
+      "name": "One Voice, Then the Group",
+      "objectives": [
+        { "hidden": false, "id": "connection", "required": true, "x": 12.5, "y": 8.5 },
+        { "hidden": false, "id": "handoff", "required": true, "x": 55.5, "y": 25.5 }
+      ],
+      "presentation": {
+        "backgroundAssetId": "ukraine-voices-travel-05-picture",
+        "themeId": "ukraine-voices-travel-theme"
+      },
+      "relayLinks": [],
+      "revision": "2",
+      "spawnId": "home",
+      "timeLimitSeconds": 0
+    },
+    {
+      "actors": [
+        {
+          "heading": [-1, -1],
+          "id": "paper-drifter",
+          "role": "field-keeper",
+          "tier": "measured",
+          "x": 61.5,
+          "y": 28.5
+        },
+        {
+          "heading": [1, -1],
+          "id": "locked-demand",
+          "role": "heading-interceptor",
+          "tier": "measured",
+          "x": 13.5,
+          "y": 29.5
+        },
+        {
+          "axis": "horizontal",
+          "id": "scheduled-wave",
+          "role": "lane-emitter",
+          "tier": "measured",
+          "x": 56.5,
+          "y": 27.5
+        }
+      ],
+      "bonuses": [{ "id": "steady-return", "kind": "extra-life", "x": 29.5, "y": 11.5 }],
+      "coverage": 0.7380000000000001,
+      "design": {
+        "captureConsequence": "The captured relay opens its matching return. This fictional reveal never changes a business record or a real-world delivery.",
+        "combines": ["heading-interceptor", "lane-emitter", "relay-gates"],
+        "counterplay": "The interceptor commits to one observed heading after its warning. Change your route after the lock and close on the nearer return. The marked lane warns before firing; close the whole exposed line before the pulse, not only the craft. Each numbered objective opens its matching connector. Closed connectors block a cut; open ones become safe returns without another fill.",
+        "difficulty": {
+          "band": 8,
+          "coordination": 0,
+          "execution": 6,
+          "mechanicLoad": 8,
+          "planning": 8,
+          "threatDensity": 3,
+          "timePressure": 0
+        },
+        "durationSeconds": [50, 210],
+        "introduces": ["relay-gates"],
+        "lesson": "Complete the listening trail and preserve the source with every discovery. The interceptor commits to one observed heading after its warning. Change your route after the lock and close on the nearer return.",
+        "mastery": "Connect every required objective and complete the encounter without losing a life; optional learning remains separate from arcade progress.",
+        "memorableMoment": "Original six-card listening-library finale with a bright source index and connected violet-gold galleries; abstract sound shapes only, no lyrics, unlicensed recordings or invented performer portraits.",
+        "pacingBeat": "resolve",
+        "practices": [
+          "foundations",
+          "enemy-seeded-closure",
+          "travelling-trail-impact",
+          "heading-interceptor",
+          "lane-emitter",
+          "relay-gates"
+        ],
+        "rewardRef": { "id": "ukraine-voices-travel-06-discovery", "revision": "4" },
+        "routeDecision": "Open the numbered source connector first or secure the wide archive wing before returning to the final listening island. Choose which numbered relay will open the most useful return connector first."
+      },
+      "format": "MissionDesignV2",
+      "id": "ukraine-voices-travel-06",
+      "map": { "id": "ukraine-voices-travel-06-map", "revision": "2" },
+      "modes": ["solo"],
+      "name": "Carry the Context",
+      "objectives": [
+        { "hidden": false, "id": "connection", "required": true, "x": 12.5, "y": 8.5 },
+        { "hidden": false, "id": "handoff", "required": true, "x": 55.5, "y": 25.5 }
+      ],
+      "presentation": {
+        "backgroundAssetId": "ukraine-voices-travel-06-picture",
+        "themeId": "ukraine-voices-travel-theme"
+      },
+      "relayLinks": [{ "gateId": "return-1", "objectiveId": "connection" }],
+      "revision": "2",
+      "spawnId": "home",
+      "timeLimitSeconds": 0
+    }
+  ],
+  "name": "Voices That Travel",
+  "packs": [
+    {
+      "campaignIds": ["ukraine-voices-travel"],
+      "format": "PackDesignV1",
+      "id": "ukraine-voices-travel-pack",
+      "name": "Voices That Travel",
+      "revision": "4"
+    }
+  ],
+  "policyId": "journey-trail-impact-v3",
+  "revision": "4"
+}

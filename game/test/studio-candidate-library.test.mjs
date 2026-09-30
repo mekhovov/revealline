@@ -242,8 +242,11 @@ test('Team pressure search keeps edition choice, original Inspect and bundled pl
 
 test('all review routes keep explicit external-tab safety and distinct accessible labels', () => {
   const { $ } = setup();
+  assert.equal($('spatial-review-links').hidden, true);
+  for (const id of ['spatial-review-solo', 'spatial-review-versus'])
+    assert.equal($(id).getAttribute('href'), null, 'dynamic routes wait for explicit selection');
   const links = [...$('candidate-library').querySelectorAll('a')].filter(
-    (link) => link.getAttribute('target') === '_blank',
+    (link) => link.getAttribute('target') === '_blank' && link.getAttribute('href'),
   );
   const journeys = [
     'whole-ornament-v2',

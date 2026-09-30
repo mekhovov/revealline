@@ -5,12 +5,17 @@ import path from 'node:path';
 import { DESTRUCTIVE_OPT_IN, runDeployedCommunityJourney } from './deployed-journey.mjs';
 
 const integer = (value, fallback) => (value === undefined ? fallback : Number(value));
-const accountHeaders = (prefix) => {
-  const authorization = process.env[`${prefix}_AUTHORIZATION`];
-  const cookie = process.env[`${prefix}_COOKIE`];
-  if (authorization && cookie) throw new Error('Choose one account credential form.');
-  return authorization ? { authorization } : { cookie };
-};
+const accountAuthentication = (prefix) =>
+  Object.freeze(
+    Object.fromEntries(
+      [
+        ['authorization', process.env[`${prefix}_AUTHORIZATION`]],
+        ['cookie', process.env[`${prefix}_COOKIE`]],
+        ['email', process.env[`${prefix}_EMAIL`]],
+        ['password', process.env[`${prefix}_PASSWORD`]],
+      ].filter(([, value]) => value !== undefined),
+    ),
+  );
 const namespace = process.env.COMMUNITY_ACCEPTANCE_NAMESPACE;
 const destination = path.resolve(
   process.env.COMMUNITY_ACCEPTANCE_RECEIPT ??
@@ -65,10 +70,11 @@ try {
       version: process.env.COMMUNITY_ACCEPTANCE_EXPECTED_VERSION,
       sourceRevision: process.env.COMMUNITY_ACCEPTANCE_EXPECTED_SOURCE_REVISION,
     },
+    moderationMode: process.env.COMMUNITY_ACCEPTANCE_MODERATION_MODE,
     auth: {
-      creatorA: accountHeaders('COMMUNITY_ACCEPTANCE_CREATOR_A'),
-      creatorB: accountHeaders('COMMUNITY_ACCEPTANCE_CREATOR_B'),
-      admin: accountHeaders('COMMUNITY_ACCEPTANCE_ADMIN'),
+      creatorA: accountAuthentication('COMMUNITY_ACCEPTANCE_CREATOR_A'),
+      creatorB: accountAuthentication('COMMUNITY_ACCEPTANCE_CREATOR_B'),
+      admin: accountAuthentication('COMMUNITY_ACCEPTANCE_ADMIN'),
     },
     requestTimeoutMs: integer(process.env.COMMUNITY_ACCEPTANCE_REQUEST_TIMEOUT_MS, 15_000),
     pollIntervalMs: integer(process.env.COMMUNITY_ACCEPTANCE_POLL_INTERVAL_MS, 1_000),
@@ -87,7 +93,11 @@ try {
 try {
   await writeReceipt(receipt);
   if (passed) {
-    process.stdout.write(`Deployed community acceptance passed. Receipt: ${destination}\n`);
+    process.stdout.write(
+      receipt.status === 'awaiting-browser'
+        ? `Deployed community acceptance is ready for browser moderation. Receipt: ${destination}\n`
+        : `Deployed community acceptance passed. Receipt: ${destination}\n`,
+    );
   } else {
     process.stderr.write(
       `Deployed community acceptance failed at ${receipt.failedStage}; see redacted receipt: ${destination}\n`,

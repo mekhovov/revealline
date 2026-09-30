@@ -70,17 +70,21 @@ export function attachProfileTransferPanel({
     checkSerial = 0;
 
   function showPreview(value) {
-    const p = value.preview;
+    const p = { ...value.preview, missingPackIds: [...value.preview.missingPackIds] },
+      sourceVersion = value.source.version,
+      currentVersion = api.profileTransfer.currentVersion;
     localizedText(preview, () =>
       t('gameplay:completedMapsPicturesScoreRecordsCampaignsPacks', {
-        value1: value.source.version,
-        value2: api.profileTransfer.currentVersion,
+        value1: sourceVersion,
+        value2: currentVersion,
         value3: p.completedLevels,
         value4: p.pictures,
         value5: p.scores,
         value6: p.campaigns,
         value7: p.packs,
-        value8: p.hasSession ? 'one saved flight' : 'no saved flight',
+        value8: p.hasSession
+          ? t('interface:profileTransfer.savedFlight')
+          : t('interface:profileTransfer.noSavedFlight'),
         value9: p.profileAbsent
           ? '' + t('interface:thisReleaseHasASavedFlightButNoSavedPlayer') + ' '
           : '',
@@ -98,19 +102,19 @@ export function attachProfileTransferPanel({
       const selected = source.value;
       const candidates = discoverProfileTransfers(api.profileTransfer);
       source.replaceChildren(
-        ...candidates.map((candidate) => {
-          const option = node(
-            'option',
-            localizedMessage('gameplay:needsReview', {
-              value1: candidate.version,
-              value2: candidate.legacy
-                ? ' (legacy)'
-                : candidates.filter((c) => c.version === candidate.version).length > 1
-                  ? ` (${candidate.channel})`
+        ...candidates.map(({ id, version, legacy, channel }) => {
+          const duplicateVersion = candidates.filter((c) => c.version === version).length > 1;
+          const option = node('option', () =>
+            t('gameplay:needsReview', {
+              value1: version,
+              value2: legacy
+                ? t('interface:profileTransfer.legacySuffix')
+                : duplicateVersion
+                  ? ` (${channel})`
                   : '',
             }),
           );
-          option.value = candidate.id;
+          option.value = id;
           return option;
         }),
       );
@@ -122,7 +126,7 @@ export function attachProfileTransferPanel({
       source.disabled = review.disabled = !candidates.length;
       copy.disabled = !reviewed;
       if (!candidates.length)
-        report(t('interface:noCompatibleEarlierCollectionWasFoundAtThisAddressUse'));
+        report(localizedMessage('interface:noCompatibleEarlierCollectionWasFoundAtThisAddressUse'));
     } catch (error) {
       source.disabled = review.disabled = copy.disabled = true;
       report(error.message, 'error');
@@ -131,12 +135,15 @@ export function attachProfileTransferPanel({
   source.onchange = () => {
     reviewed = null;
     localizedText(preview, () => '');
-    report(t('interface:reviewThisSourceBeforeCopying'));
+    report(localizedMessage('interface:reviewThisSourceBeforeCopying'));
     copy.disabled = true;
   };
   cancel.onclick = () => {
     controller?.abort();
-    report(t('interface:checkCancelledWaitingForItsCurrentReadToSettle'), 'cancelled');
+    report(
+      localizedMessage('interface:checkCancelledWaitingForItsCurrentReadToSettle'),
+      'cancelled',
+    );
   };
   async function check(andCopy) {
     await task('transfer-status', async (operation) => {
@@ -145,7 +152,9 @@ export function attachProfileTransferPanel({
       controller = operation.controller;
       cancel.hidden = false;
       cancel.disabled = false;
-      operation.phase(t('interface:checkingTheEarlierCollectionImagesAndSavedFlight'));
+      operation.phase(
+        localizedMessage('interface:checkingTheEarlierCollectionImagesAndSavedFlight'),
+      );
       try {
         const options = await backupOptions();
         operation.check();
@@ -164,15 +173,17 @@ export function attachProfileTransferPanel({
         if (!andCopy || !unchanged) {
           report(
             andCopy
-              ? t('interface:theSourceChangedSinceYourReviewTheSummaryIsUpdated')
-              : t('interface:verifiedCopyReplacesThisReleaseSCollectionWithTheReviewed'),
+              ? localizedMessage('interface:theSourceChangedSinceYourReviewTheSummaryIsUpdated')
+              : localizedMessage(
+                  'interface:verifiedCopyReplacesThisReleaseSCollectionWithTheReviewed',
+                ),
           );
           return;
         }
         controller = null;
         cancel.disabled = true;
         cancel.hidden = true;
-        operation.phase(t('interface:preparingTheVerifiedCollectionCopy'));
+        operation.phase(localizedMessage('interface:preparingTheVerifiedCollectionCopy'));
         const installedReview = api.profileTransfer.installedApp
           ? await reviewInstalledMigration(
               fresh.source.version,
@@ -182,7 +193,9 @@ export function attachProfileTransferPanel({
           : null;
         const result = await applyPrepared(fresh.prepared, operation, {
           verifySource: async () => {
-            operation.phase(t('interface:recheckingTheEarlierReleaseBeforeReplacement'));
+            operation.phase(
+              localizedMessage('interface:recheckingTheEarlierReleaseBeforeReplacement'),
+            );
             const latest = await prepareProfileTransfer(fresh.source.id, {
               ...api.profileTransfer,
               ...options,
@@ -200,8 +213,15 @@ export function attachProfileTransferPanel({
         });
         operation.check();
         await recordInstalledMigration(installedReview, api.profileTransfer);
+        const sourceVersion = fresh.source.version,
+          undoMessage = result.undo
+            ? 'interface:undoGameDataImportRestoresThePreviousCollection'
+            : 'interface:thePreviousCollectionCouldNotFormAVerifiedBackupUndo',
+          hasSession = fresh.preview.hasSession,
+          warning = result.warning || '';
         report(
-          `Copied from ${fresh.source.version}. ${result.undo ? t('interface:undoGameDataImportRestoresThePreviousCollection') : t('interface:thePreviousCollectionCouldNotFormAVerifiedBackupUndo')} ${fresh.preview.hasSession ? t('interface:yourSavedFlightIsReadyToLoadPaused') : ''} ${result.warning || ''}`,
+          () =>
+            `${t('interface:profileTransfer.copiedFrom', { version: sourceVersion })} ${t(undoMessage)} ${hasSession ? t('interface:yourSavedFlightIsReadyToLoadPaused') : ''} ${warning}`,
         );
         reviewed = null;
       } finally {

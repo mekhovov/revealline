@@ -142,11 +142,9 @@ const TEAM_FACTORIES = {
   ],
 };
 
-/** Shared inventory adapter. Unknown defaults fail visibly instead of borrowing
- * an older Team edition with the same mission labels. */
 export async function loadInventoryTeamRoute(id) {
-  const factory = TEAM_FACTORIES[id];
-  if (!factory) throw new Error(`No inventory factory for Team route: ${id}`);
+  const factory = Object.hasOwn(TEAM_FACTORIES, id) ? TEAM_FACTORIES[id] : null;
+  if (!factory) throw new Error(`Team route is missing from the content inventory: ${id}`);
   const [module, name, options] = factory;
   const source = (await import(`../game/content-design/${module}.mjs`))[name](options);
   const profileKey = ['team-greybox', 'team-originals'].includes(id)
@@ -181,6 +179,10 @@ export async function buildContentInventory({
   externalEntries,
   onProgress = () => {},
 } = {}) {
+  // Check coverage before compiling the much larger Classic and Journey inventories.
+  for (const { id } of TEAM_CONTENT_ROUTES)
+    if (!Object.hasOwn(TEAM_FACTORIES, id))
+      throw new Error(`Team route is missing from the content inventory: ${id}`);
   const rows = [],
     routes = [],
     artwork = new Map(),
@@ -512,8 +514,9 @@ export async function buildContentInventory({
       proceduralComparison:
         'Exact renderer command hash at seed0; different seeds do not establish different compositions.',
       coverage:
-        'All fixed Solo/Versus authored routes; all reachable Team route factories; Classic base/bundled/archived/optional/external; legacy Team arenas. Imported user content is not classified.',
+        'All registered fixed Solo/Versus authored routes and Team lifecycle routes; Classic base/bundled/archived/optional/external; legacy Team arenas. Company editions and their presentation overrides are not yet inventoried. Imported user content is not classified.',
       limitations: [
+        'Company-edition missions, presentation overrides and retained artwork revisions remain outside this inventory. The complete shipped-content inventory gate is not yet satisfied.',
         'Perceptual, crop, rotation/reflection and human visual checks remain required before uniqueness approval.',
         'Package artwork counts are not complete download totals; use the generated offline catalogue for dependency closures and full sizes.',
         'Archive policy changes discovery only. Historical readers, original bytes and saved identities remain unchanged.',

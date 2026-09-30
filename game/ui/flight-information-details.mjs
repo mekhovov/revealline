@@ -1,8 +1,59 @@
-import { t, localizedText, localizedMessage, formatNumber } from '../i18n/index.mjs';
-import { enemyCatalogRecord } from '../enemy-catalog.mjs';
+import { t, render, onLocaleChange, localizedMessage, formatNumber } from '../i18n/index.mjs';
+import { encounterCopy } from './encounter-copy.mjs';
 import { FIXED_DT } from '../core/registry.mjs';
 
-const roleName = (type) => enemyCatalogRecord(type)?.label || t('interface:unfamiliarEnemy');
+const roleName = (type) => {
+  const names = {
+    bouncer: 'bouncer',
+    'border-patrol': 'borderPatrol',
+    'contour-patrol': 'contourPatrol',
+    'claimed-rover': 'claimedRover',
+    eroder: 'eroder',
+    'lane-boss': 'laneBoss',
+    'relay-sentinel': 'relaySentinel',
+  };
+  return names[type]
+    ? t(`interface:flightDetails.roles.${names[type]}`)
+    : t('interface:unfamiliarEnemy');
+};
+const bonusName = (item) =>
+  ({
+    'extra-life': () => t('interface:life'),
+    'player-speed': () => t('interface:speed'),
+    'enemy-slow': () => t('interface:enemiesSlow'),
+    'enemy-freeze': () => t('interface:enemiesFrozen'),
+  })[item.kind]?.() || item.label;
+const encounterText = (view) => (view.copyFacts ? encounterCopy(view.copyFacts) : view);
+const laneDirection = (axis) =>
+  axis === 'horizontal'
+    ? t('interface:flightDetails.horizontal')
+    : t('interface:flightDetails.vertical');
+const fieldSummary = (classic) => {
+  if (!Array.isArray(classic.terrain))
+    return classic.summary || t('interface:noClassicFieldSummary');
+  const roles = new Map();
+  for (const enemy of classic.enemies) {
+    const role = enemy.impactCarrier ? 'impact-carrier' : enemy.type;
+    roles.set(role, (roles.get(role) || 0) + 1);
+  }
+  return (
+    [
+      ...[...roles].map(
+        ([type, count]) =>
+          `${count} × ${type === 'impact-carrier' ? t('interface:trailImpactCarrier') : roleName(type)}`,
+      ),
+      ...(classic.terrain.some((cell) => cell.kind === 'slow')
+        ? [t('interface:flightDetails.terrainSlow')]
+        : []),
+      ...(classic.terrain.some((cell) => cell.kind === 'lethal')
+        ? [t('interface:flightDetails.terrainLethal')]
+        : []),
+      ...(classic.powerups.length
+        ? [t('interface:flightDetails.contactPickups', { count: classic.powerups.length })]
+        : []),
+    ].join(' · ') || t('interface:noClassicFieldSummary')
+  );
+};
 const sentence = (text) => (/[.!?]$/.test(text) ? text : `${text}.`);
 const encounterClock = (phase) =>
   ({
@@ -14,7 +65,15 @@ const encounterClock = (phase) =>
     open: t('interface:coreOpeningCloses'),
   })[phase] || t('interface:currentEncounterPhase');
 const seconds = (n) =>
-  Number.isFinite(n) ? `${n.toFixed(1)}s remaining` : t('interface:timingUnavailable');
+  Number.isFinite(n)
+    ? t('interface:flightDetails.secondsRemaining', {
+        seconds: formatNumber(n, {
+          minimumFractionDigits: 1,
+          maximumFractionDigits: 1,
+          useGrouping: false,
+        }),
+      })
+    : t('interface:timingUnavailable');
 const section = (id, title, lines) => Object.freeze({ id, title, lines: Object.freeze(lines) });
 const group = (lines) => {
   const counts = new Map();
@@ -37,7 +96,7 @@ const enemyRole = (enemy) => {
 const enemyState = (enemy, snapshot) => {
   if (enemy.type === 'relay-sentinel')
     return snapshot.encounterLane?.id === enemy.id && snapshot.encounter
-      ? snapshot.encounter.instruction
+      ? encounterText(snapshot.encounter).instruction
       : t('interface:encounterGuidanceIsUnavailableWatchItsVisibleShieldAndLane');
   if (enemy.type === 'contour-patrol') {
     const state =
@@ -47,19 +106,29 @@ const enemyState = (enemy, snapshot) => {
         ),
         rejoining: t('interface:rejoiningTheChangingFrontierAlongReclaimedGround'),
         idle: t('interface:holdingPositionCapturesMayLeaveItInsideReclaimedGroundAway'),
-      }[enemy.mode] || 'watch the changing frontier';
-    return `${state}. A capture can change its route; check your next return before departing. ${enemy.frozen ? t('interface:whenFreezeEndsContactWithYourCraftOrUnfinishedLine') : t('interface:contactWithYourCraftOrUnfinishedLineIsStillDangerous')}`;
+      }[enemy.mode] || t('interface:flightDetails.frontierFallback');
+    return t('interface:flightDetails.frontierRoute', {
+      state,
+      contact: enemy.frozen
+        ? t('interface:whenFreezeEndsContactWithYourCraftOrUnfinishedLine')
+        : t('interface:contactWithYourCraftOrUnfinishedLineIsStillDangerous'),
+    });
   }
   if (enemy.pressure) {
     const state =
       {
-        patrol: 'patrolling hidden ground',
-        warning: `preparing a charge · ${seconds(enemy.pressure.seconds)}`,
-        committed: `charging toward its marked target · ${seconds(enemy.pressure.seconds)}`,
-        cooldown: `recovering from its last charge · ${seconds(enemy.pressure.seconds)}`,
+        patrol: t('interface:flightDetails.pressurePatrol'),
+        warning: t('interface:flightDetails.pressureWarning', {
+          time: seconds(enemy.pressure.seconds),
+        }),
+        committed: t('interface:flightDetails.pressureCommitted', {
+          time: seconds(enemy.pressure.seconds),
+        }),
+        cooldown: t('interface:flightDetails.pressureCooldown', {
+          time: seconds(enemy.pressure.seconds),
+        }),
       }[enemy.pressure.phase] || t('interface:watchItsMovementInTheField');
-    // Pressure and trail impact are independent abilities. Recovery from a
-    // charge does not clear travelling fronts or make the carrier harmless.
+    // Preserve both independent hazards, including while a charge recovers.
     return enemy.impactCarrier
       ? `${sentence(state)} ${t('interface:trailContactSendsVisibleFrontsAlongYourUnfinishedLineClose')}`
       : state;
@@ -69,25 +138,32 @@ const enemyState = (enemy, snapshot) => {
   return (
     {
       dormant: t('interface:waitingRevealingItsPositionCanWakeIt'),
-      warning: `${enemy.type === 'eroder' ? 'preparing to reopen marked ground' : t('interface:preparingToMoveAcrossRevealedGround')} · ${seconds(enemy.seconds)}`,
-      active: 'moving across revealed ground',
+      warning: `${enemy.type === 'eroder' ? t('interface:flightDetails.eroderWarning') : t('interface:preparingToMoveAcrossRevealedGround')} · ${seconds(enemy.seconds)}`,
+      active: t('interface:flightDetails.revealedActive'),
     }[enemy.mode] ||
     {
       bouncer: t('interface:threatensYouAndYourUnfinishedLineInHiddenTerritory'),
-      'border-patrol': `patrols the fixed outer perimeter, even after captures; leave before it reaches your craft. ${enemy.frozen ? t('interface:whenFreezeEndsReclaimedGroundDoesNotProtectYouFrom') : t('interface:reclaimedGroundDoesNotProtectYouFromContact')}`,
+      'border-patrol': t('interface:flightDetails.perimeter', {
+        contact: enemy.frozen
+          ? t('interface:whenFreezeEndsReclaimedGroundDoesNotProtectYouFrom')
+          : t('interface:reclaimedGroundDoesNotProtectYouFromContact'),
+      }),
       'lane-boss': t('interface:stationaryFieldAnchorWatchTheLockedLaneAndSecureAny'),
-      eroder: 'can reopen captured ground',
+      eroder: t('interface:flightDetails.eroder'),
     }[enemy.type] ||
     t('interface:watchItsMovementInTheField')
   );
 };
 const laneState = (value) => {
-  const direction = value.axis === 'horizontal' ? 'horizontal' : 'vertical';
+  const direction = laneDirection(value.axis);
   return (
     {
-      warning: `Leave the highlighted ${direction} lane before the attack · ${seconds(value.seconds)}.`,
-      active: `Stay outside the highlighted ${direction} lane · ${seconds(value.seconds)}.`,
-      idle: `Waiting for its next lane attack · ${seconds(value.seconds)}.`,
+      warning: t('interface:flightDetails.laneWarning', {
+        direction,
+        time: seconds(value.seconds),
+      }),
+      active: t('interface:flightDetails.laneActive', { direction, time: seconds(value.seconds) }),
+      idle: t('interface:flightDetails.laneIdle', { time: seconds(value.seconds) }),
     }[value.phase] || t('interface:watchTheHighlightedLane')
   );
 };
@@ -132,7 +208,9 @@ function optionalPatrolDetails(combat) {
 export function flightDetailsModel(information, context) {
   const s = information?.snapshot,
     parts = [];
-  parts.push(section('mission', context.mission, [context.goal, context.steering]));
+  parts.push(
+    section('mission', render(context.mission), [render(context.goal), render(context.steering)]),
+  );
   if (!s)
     return Object.freeze([
       ...parts,
@@ -146,7 +224,11 @@ export function flightDetailsModel(information, context) {
       ...(s.objectives
         ? s.objectives.total > 0
           ? [
-              `${context.objectiveLabel}: ${s.objectives.done} / ${s.objectives.total} required objectives.`,
+              t('interface:flightDetails.requiredObjectives', {
+                label: render(context.objectiveLabel),
+                done: s.objectives.done,
+                total: s.objectives.total,
+              }),
             ]
           : []
         : [t('interface:requiredObjectiveProgressIsUnavailable')]),
@@ -168,9 +250,7 @@ export function flightDetailsModel(information, context) {
   const classic = s.classic;
   if (classic) {
     parts.push(
-      section('field', localizedMessage('interface:fieldAndTerrain'), [
-        classic.summary || t('interface:noClassicFieldSummary'),
-      ]),
+      section('field', localizedMessage('interface:fieldAndTerrain'), [fieldSummary(classic)]),
     );
     const threats = [];
     for (const front of classic.lineImpacts)
@@ -192,7 +272,7 @@ export function flightDetailsModel(information, context) {
       threats.push(`${enemyRole(enemy)}: ${sentence(enemyState(enemy, s))}${effect}`);
     }
     for (const mark of classic.erosion)
-      threats.push(`Marked ground can reopen · ${seconds(mark.seconds)}.`);
+      threats.push(t('interface:flightDetails.erosion', { time: seconds(mark.seconds) }));
     if (threats.length)
       parts.push(
         section('threats', localizedMessage('interface:actorsAndLineDanger'), group(threats)),
@@ -202,9 +282,15 @@ export function flightDetailsModel(information, context) {
         section(
           'effects',
           localizedMessage('interface:bonuses'),
-          classic.effects.map(
-            (e) =>
-              `${e.label}: ${e.phase === 'active' ? 'active' : 'activates shortly'} · ${seconds(e.seconds)}.`,
+          classic.effects.map((e) =>
+            t('interface:flightDetails.effect', {
+              label: bonusName(e),
+              state:
+                e.phase === 'active'
+                  ? t('interface:flightDetails.effectActive')
+                  : t('interface:flightDetails.effectPending'),
+              time: seconds(e.seconds),
+            }),
           ),
         ),
       );
@@ -216,8 +302,11 @@ export function flightDetailsModel(information, context) {
           group(
             classic.powerups.map((p) =>
               p.timed
-                ? `${p.label}: touch before the ring expires (${seconds(p.seconds)}). Enclosure does not collect it; missed pickups may return elsewhere.`
-                : `${p.label}: collect its symbol to activate the bonus.`,
+                ? t('interface:flightDetails.timedPickup', {
+                    label: bonusName(p),
+                    time: seconds(p.seconds),
+                  })
+                : t('interface:flightDetails.pickup', { label: bonusName(p) }),
             ),
           ),
         ),
@@ -228,9 +317,11 @@ export function flightDetailsModel(information, context) {
         section(
           'timed-pickups',
           localizedMessage('interface:upcomingOptionalPickups'),
-          upcoming.map(
-            (p) =>
-              `${p.label}: solid symbol appears in ${seconds(p.seconds)}. Hollow symbols cannot be collected.`,
+          upcoming.map((p) =>
+            t('interface:flightDetails.upcoming', {
+              label: bonusName(p),
+              time: seconds(p.seconds),
+            }),
           ),
         ),
       );
@@ -271,27 +362,31 @@ export function flightDetailsModel(information, context) {
                   exposed: t('interface:releaseTheCore'),
                 }[e.stage] || t('interface:encounterInProgress'),
       lines = [
-        e.instruction,
+        encounterText(e).instruction,
         `${stage}.`,
         ...(s.status === 'lost' || e.phase === 'defeated'
           ? []
           : [`${encounterClock(e.phase)} · ${seconds(e.seconds)}.`]),
-        `Current cut: ${e.cutCells} / ${e.min} required cells. ${e.remaining} unrevealed cells remain on the board.`,
+        t('interface:flightDetails.cut', {
+          cells: e.cutCells,
+          minimum: e.min,
+          remaining: e.remaining,
+        }),
         ...(e.isolated ? [t('interface:coreIsolated')] : []),
         ...(e.suppressed ? [t('interface:theLaneAttackIsTemporarilySuppressed')] : []),
       ];
     if (s.encounterLane?.marked)
       lines.push(
-        `Watch the highlighted ${s.encounterLane.axis === 'horizontal' ? 'horizontal' : 'vertical'} lane.${s.encounterLane.clockFrozen ? ' ' + t('interface:enemyFreezeHoldsItsAttackCountdown') + '' : ''}`,
+        `${t('interface:flightDetails.markedLane', { direction: laneDirection(s.encounterLane.axis) })}${s.encounterLane.clockFrozen ? ' ' + t('interface:enemyFreezeHoldsItsAttackCountdown') : ''}`,
       );
-    parts.push(section('encounter', e.title, lines));
+    parts.push(section('encounter', encounterText(e).title, lines));
   }
   parts.push(
     section(
       'actions',
       localizedMessage('interface:controlsAfterResume'),
       context.actions.length
-        ? context.actions.map((a) => `${a.label}: ${a.detail}`)
+        ? context.actions.map((a) => `${render(a.label)}: ${render(a.detail)}`)
         : [t('interface:noManualEquipmentActionsBonusesActivateThroughPlay')],
     ),
   );
@@ -335,6 +430,26 @@ export function attachFlightDetails({
     const current = read()?.owner;
     return current?.attempt === owner?.attempt && current?.generation === owner?.generation;
   };
+  const paintVisit = (accepted) => {
+    const nodes = [];
+    for (const part of flightDetailsModel(accepted.information, accepted.context)) {
+      const heading = doc.createElement('h3');
+      heading.textContent = render(part.title);
+      nodes.push(heading);
+      for (const line of part.lines) {
+        const p = doc.createElement('p');
+        p.textContent = render(line);
+        nodes.push(p);
+      }
+    }
+    content.replaceChildren(...nodes);
+  };
+  // Refresh only the accepted paused facts. No current-run reads, input reset,
+  // focus changes or reader re-entry: the shared locale transaction retains the
+  // existing reading owner and scroll while its text is updated.
+  const stopLocale = onLocaleChange(() => {
+    if (!disposed && visit && dialog.open) paintVisit(visit);
+  });
   function open() {
     if (
       disposed ||
@@ -359,18 +474,20 @@ export function attachFlightDetails({
       doc.hasFocus?.() === false
     )
       return false;
-    content.replaceChildren();
-    for (const part of flightDetailsModel(information, getContext())) {
-      const heading = doc.createElement('h3');
-      localizedText(heading, () => part.title);
-      content.append(heading);
-      for (const line of part.lines) {
-        const p = doc.createElement('p');
-        localizedText(p, () => line);
-        content.append(p);
-      }
-    }
-    visit = { revision: ++revision, owner: initial, origin };
+    const context = getContext();
+    const accepted = {
+      revision: ++revision,
+      owner: initial,
+      origin,
+      information,
+      context: {
+        ...context,
+        actions: context.actions.map((action) => ({ ...action })),
+        actorRoles: context.actorRoles?.map((role) => ({ ...role })),
+      },
+    };
+    paintVisit(accepted);
+    visit = accepted;
     dialog.showModal();
     dialog.scrollTop = 0;
     readButton.focus({ preventScroll: true });
@@ -439,6 +556,7 @@ export function attachFlightDetails({
     },
     dispose() {
       disposed = true;
+      stopLocale();
       revision++;
       visit = null;
       close();

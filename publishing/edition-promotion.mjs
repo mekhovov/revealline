@@ -1,6 +1,6 @@
 import { validateEditionAdmission } from './edition-admission.mjs';
 import { editionHash, inspectEditionZip } from './edition-zip.mjs';
-import { validateEditionId } from '../game/edition-context.mjs';
+import { editionAppIdentity, validateEditionId } from '../game/edition-context.mjs';
 
 export const EDITION_REVIEW_GATES = Object.freeze([
   'automated-validation',
@@ -20,6 +20,16 @@ const sha = /^[a-f0-9]{64}$/;
 const version = /^v\d+\.\d+\.\d+$/;
 const text = (value) => typeof value === 'string' && value.trim().length > 0 && value.length <= 500;
 const parse = (bytes) => JSON.parse(new TextDecoder('utf-8', { fatal: true }).decode(bytes));
+
+/** Shared exact stable pointer bytes; capacity reports never invent a parallel recipe. */
+export function editionLauncherCurrentBytes({ editionId, version: releaseVersion, entry }) {
+  validateEditionId(editionId);
+  if (!version.test(releaseVersion) || entry !== 'game/company.html')
+    fail('Invalid edition launcher identity.');
+  return Buffer.from(
+    `${JSON.stringify({ editionId, version: releaseVersion, scope: `../releases/${releaseVersion}/site/`, entry })}\n`,
+  );
+}
 
 export async function verifyEditionReview(envelopeBytes, review, { read } = {}) {
   const envelope = parse(envelopeBytes);
@@ -120,6 +130,49 @@ export function validateEditionPublication(value) {
   return value;
 }
 
+/** Select a new published envelope's explicitly hosted subset. Every edition,
+ * including download-only editions, still needs the complete frozen review. */
+export async function selectPublishedEditionRelease(
+  selector,
+  { envelopeBytes, reviewBytes, editionIds, basePath } = {},
+  publication = {},
+) {
+  validateEditionPublication(selector);
+  const envelope = parse(envelopeBytes);
+  if (selector.releases.some((release) => release.version === envelope.version))
+    fail('This immutable version is already selected. Review a rollback using select-retained.');
+  const available = envelope.editions?.map((edition) => edition.id);
+  const ids = editionIds === undefined ? available : editionIds;
+  if (
+    !Array.isArray(available) ||
+    !Array.isArray(ids) ||
+    !ids.length ||
+    ids.length > 32 ||
+    new Set(ids).size !== ids.length ||
+    ids.some((id) => !available.includes(id))
+  )
+    fail('Hosted selection needs nonempty, unique edition IDs from this frozen envelope.');
+  const updated = validateEditionPublication({
+    ...selector,
+    releases: [
+      ...selector.releases.map((release) => ({
+        ...release,
+        activeEditionIds: release.activeEditionIds.filter((id) => !ids.includes(id)),
+      })),
+      {
+        version: envelope.version,
+        envelopeSha256: editionHash(envelopeBytes),
+        reviewSha256: editionHash(reviewBytes),
+        basePath,
+        editionIds: [...ids],
+        activeEditionIds: [...ids],
+      },
+    ],
+  });
+  await frozenEditionOverlay(updated, publication);
+  return updated;
+}
+
 /** Plan an explicit rollback/reselection of retained editions. The envelope,
  * release identities and all frozen paths stay immutable; only the requested
  * audiences' active launcher ownership can change. Return nothing until the
@@ -174,7 +227,8 @@ export async function frozenEditionOverlay(
   if (targetBasePath && selector.releases.some((release) => release.basePath !== targetBasePath))
     fail('An edition belongs to a different configured deployment target.');
   const output = new Map(),
-    launches = [];
+    launches = [],
+    downloadOnly = [];
   let overlayBytes = 0;
   const downloads = new Map();
   const download = async (version, name, limit) => {
@@ -221,39 +275,78 @@ export async function frozenEditionOverlay(
     )
       fail('Published edition source differs from the immutable release tag.');
     await verifyEditionReview(envelopeBytes, parse(reviewBytes), { read });
-    for (const id of release.editionIds) {
+    const selectedEditions = release.editionIds.map((id) => {
       const edition = envelope.editions.find((entry) => entry.id === id);
       if (!edition) fail('Selected edition is absent from the frozen envelope.');
+      return edition;
+    });
+    for (const edition of [
+      ...selectedEditions,
+      ...envelope.editions.filter((entry) => !release.editionIds.includes(entry.id)),
+    ]) {
+      const id = edition.id;
       const manifestBytes = await read(edition.manifest),
         manifest = parse(manifestBytes);
       const members = inspectEditionZip(await read(edition.distribution), [
         ...manifest.files,
         { path: 'manifest.json', bytes: manifestBytes.length, sha256: editionHash(manifestBytes) },
       ]);
-      const base = `editions/${id}/`,
-        site = `${base}releases/${release.version}/site/`;
       const app = parse(members.get('app/manifest.webmanifest'));
+      const canonical = editionAppIdentity({ editionId: id, basePath: release.basePath });
+      const legacyRoot = `${release.basePath}editions/${id}/`;
       if (
-        app.id !== `${release.basePath}${base}` ||
-        app.scope !== app.id ||
-        app.start_url !== `${app.id}app/`
+        app.id !== canonical.id ||
+        ![canonical.scope, legacyRoot].includes(app.scope) ||
+        app.start_url !== `${app.scope}app/`
       )
         fail('Frozen installation identity differs from this deployment target.');
+      if (!release.editionIds.includes(id)) {
+        downloadOnly.push({
+          id,
+          name: app.name,
+          version: release.version,
+          href: `https://github.com/mekhovov/revealline/releases/download/${release.version}/${encodeURIComponent(edition.distribution.path)}`,
+          bytes: edition.distribution.bytes,
+          sha256: edition.distribution.sha256,
+        });
+        continue;
+      }
+      // Old admitted releases remain at their exact original scopes. New builds
+      // can change the public address without changing the installed app ID.
+      const base = app.scope.slice(release.basePath.length),
+        site = `${base}releases/${release.version}/site/`;
       for (const [name, bytes] of members) put(`${site}${name}`, bytes);
       if (release.activeEditionIds.includes(id)) {
         for (const [name, bytes] of members)
           if (name.startsWith('app/') && name !== 'app/current.json') put(`${base}${name}`, bytes);
         put(
           `${base}app/current.json`,
-          Buffer.from(
-            `${JSON.stringify({ editionId: id, version: release.version, scope: `../releases/${release.version}/site/`, entry: manifest.entry })}\n`,
-          ),
+          editionLauncherCurrentBytes({
+            editionId: id,
+            version: release.version,
+            entry: manifest.entry,
+          }),
         );
-        launches.push({ id, name: app.name, href: `${id}/app/`, version: release.version });
+        if (canonical.scope !== legacyRoot) {
+          const destination = app.start_url;
+          const aliasRoot = app.scope === legacyRoot ? canonical.scope : legacyRoot;
+          put(
+            `${aliasRoot.slice(release.basePath.length)}app/index.html`,
+            Buffer.from(
+              `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Open edition</title></head><body><a href="${destination}">Open edition</a><script>const target=new URL(${JSON.stringify(destination)},location.href);target.search=location.search;target.hash=location.hash;location.replace(target.href);</script></body></html>\n`,
+            ),
+          );
+        }
+        launches.push({
+          id,
+          name: app.name,
+          href: canonical.start_url.slice(`${release.basePath}editions/`.length),
+          version: release.version,
+        });
       }
     }
   }
-  if (launches.length) {
+  if (launches.length || downloadOnly.length) {
     const escape = (value) =>
       String(value).replace(
         /[&<>"']/g,
@@ -262,7 +355,7 @@ export async function frozenEditionOverlay(
     put(
       'editions/index.html',
       Buffer.from(
-        `<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Company journeys</title><style>body{font:1.1rem system-ui;background:#f7f9fc;color:#12213b;max-width:60rem;margin:5rem auto;padding:1.5rem}a{color:#144dab}li{padding:1rem 0}</style><h1>Choose your company journey</h1><p>Each edition keeps its own campaigns, installation and progress.</p><ul>${launches.map((row) => `<li><a href="${escape(row.href)}">${escape(row.name)}</a> · ${escape(row.version)}</li>`).join('')}</ul></html>`,
+        `<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Company journeys</title><style>body{font:1.1rem system-ui;background:#f7f9fc;color:#12213b;max-width:60rem;margin:5rem auto;padding:1.5rem}a{color:#144dab}li{padding:1rem 0}</style><h1>Choose your company journey</h1><p>Each edition keeps its own campaigns, installation and progress.</p><ul>${launches.map((row) => `<li><a href="${escape(row.href)}">${escape(row.name)}</a> · ${escape(row.version)}</li>`).join('')}</ul>${downloadOnly.length ? `<h2>Download editions</h2><p>These reviewed editions are available as standalone ZIPs. This site does not host these exact versions.</p><ul>${downloadOnly.map((row) => `<li><a href="${escape(row.href)}">Download ${escape(row.name)} ZIP</a> · ${escape(row.id)} · ${escape(row.version)} · ${row.bytes} bytes<details><summary>Verify download</summary><p>SHA-256: <code style="overflow-wrap:anywhere">${escape(row.sha256)}</code></p></details></li>`).join('')}</ul>` : ''}</html>`,
       ),
     );
   }

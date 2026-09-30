@@ -178,16 +178,48 @@ node scripts/publish-editions.mjs review-template \
 
 `Company edition candidates` runs on relevant pull requests and main changes, storing
 the explicitly selected candidates as Actions artifacts for 14 days. The successful
-14-edition runs and exact downloaded-byte receipts are recorded in the qualification log. The workflow defaults to all 14 edition IDs; the command above builds only the two combined examples. It cannot publish releases. Each bundle
+14-edition runs and exact downloaded-byte receipts are recorded in the qualification log. The workflow now defaults to all 18 edition IDs; the command above builds only the two combined examples. It cannot publish releases. Each bundle
 includes `editions.json`, standalone ZIPs, selected-source ZIPs, manifests, checksums and a
 candidate verification receipt. The source ZIP is a selected input packet, not a full repository
 checkout. The legacy full-source archive separately runs the public-source eligibility gate.
+
+After the same source, double-build and archive-member checks, the existing job also uploads
+`company-capacity-<commit>`, a separate metadata-only artifact bounded to 16 MiB. It contains
+`capacity-inventory.json`, the exact envelope, candidate verification receipt, runtime manifests
+and checksums. It does not include media, distribution ZIPs or source archives. The report's own
+bytes are pinned by `checksums.json`, and every input manifest is pinned to the envelope and
+the admitted source commit/tree. The complete candidate artifact remains separately available;
+the report does not change its distribution or source archive bytes.
+
+The capacity report gives each edition's exact immutable-site size, including its manifest,
+and the additional stable launcher size using the publisher's shared pointer recipe. Its
+aggregate assumes every candidate edition is hosted and active once; it is not a selected
+deployment. Use individual rows to compare possible subsets. The report always states
+`publicEligible: false`, `promotable: false`, and `completeHostedOutput: false`. Future default
+output, retained editions, the generated hub and optional packages remain explicit unknowns.
+There is no whole-site fit verdict, and downloading this packet does not reverify the omitted
+ZIP bodies or establish human, device or publication evidence.
 
 The review template starts with every gate **pending**. Reviewers supply public, approved,
 hash-pinned evidence for automation, content, assets, human comprehension/pacing, accessibility,
 two installed PWAs, update/rollback, storage/backup recovery and same-device performance.
 Receipt structure and hashes provide traceability; they cannot establish the truth of a human
 observation. Review these receipts through the repository's normal review process.
+
+The qualification recorder exports one bounded record rather than a collection of manually
+assembled gate files. After every edition gate is complete, compile that record into the existing
+promotion schema and copy its exact bytes into the frozen bundle:
+
+```sh
+node docs/verification/compile-company-qualification.mjs \
+  --bundle .cache/company-candidate \
+  --qualification .cache/review-company-qualification-vX.Y.Z.json \
+  --review .cache/edition-review.json
+```
+
+The command refuses incomplete coverage, changed envelope identity and existing outputs. It does
+not allocate a version, upload an asset, alter a release or change the public selector. Deferred
+human or device gates therefore remain a hard promotion boundary rather than an implicit waiver.
 
 After those gates pass, `publish-editions.mjs verify` validates the exact bundle and evidence.
 `upload-draft` additionally requires `--repository mekhovov/revealline`, an existing draft
@@ -205,6 +237,26 @@ selector edits abort the write without replacing another writer's changes. The e
 Pages publisher composes these verified edition files with
 the default artifact and rechecks the combined 950 MB operational budget. Empty selection
 preserves default publication. `editions/index.html` links the same standalone artifacts.
+
+By default, `sync-selector` hosts every edition in the new envelope. An explicit `--editions`
+chooses a nonempty subset from that exact envelope, without changing any ZIP or its review:
+
+```sh
+node scripts/publish-editions.mjs sync-selector \
+  --bundle .cache/company-candidate --review .cache/edition-review.json \
+  --editions social-drone-ua,victory-drones,ukraine-culture,fpv-learning \
+  --selector publishing/pages-controller/editions.json \
+  --repository mekhovov/revealline --base-path /revealline/
+```
+
+This example does not establish that those editions fit the future target. All envelope editions,
+including omitted ones, must still pass the complete review, immutable tag and downloaded-byte
+checks. Omitted new versions appear in the hub as explicit GitHub release ZIP downloads with
+their exact byte size and SHA-256; they have no new hosted Play link. Existing versions' frozen
+paths remain, and an omitted edition's existing active launcher is preserved. The selected
+edition IDs determine hosted immutable files; changing only `activeEditionIds` does not save
+their storage. A previously selected immutable version cannot be respecified to prune it.
+
 Rollback changes the active edition selection to a retained version; it never rewrites frozen
 release bytes or changes another edition's launcher. Use the verified local-selector command:
 
@@ -218,6 +270,124 @@ It downloads and checks the retained published artifacts before writing the sele
 launcher choice. A failed check leaves the selector untouched. Review and deploy that selector
 through the ordinary pipeline; this command does not publish or deploy. Additional distribution targets require
 their own reviewed configuration. Restricted editions have no public promotion path.
+
+### Whole-site capacity before publication
+
+Per-edition asset budgets and ZIP sizes are not the complete deployed size. Count the default
+site, all retained edition versions, stable launchers, the hub, optional packages and every
+other generated route together. The main-only publisher retains its **950,000,000-byte** cap;
+an edition overlay passing its own check does not qualify the combined target.
+
+The small metadata packet from [candidate run 36447088737](https://github.com/mekhovov/revealline/actions/runs/36447088737)
+was validated with `editionCapacityPacket`. It describes the **pre-rebase** source
+`7acf6af53143c75f0ae99e09c25e326c1141c3e8`, tree
+`03f97d6086490c3e60843e0292622c07a2066205`, candidate version `v0.142.0`.
+It does not describe the later `v0.142.1` main merge or subsequent changes.
+Artifact `10982502592` was 577,457 downloaded bytes (1,520,512 bytes of whitelisted metadata).
+The 11,094-byte `capacity-inventory.json` SHA-256 is
+`12e0c8d5f7bb4fa7fb5fcb4879857e3b52b450797ee531182658cf16a4b9cf0c`.
+
+| Edition                   | Immutable site bytes | Active launcher bytes | Combined component bytes |
+| ------------------------- | -------------------: | --------------------: | -----------------------: |
+| `coupa-all`               |           60,368,706 |               237,387 |               60,606,093 |
+| `droneaid-nl-community`   |           64,835,724 |                41,829 |               64,877,553 |
+| `social-drone-ua`         |           25,064,550 |                12,721 |               25,077,271 |
+| `victory-drones`          |           21,341,397 |                12,709 |               21,354,106 |
+| `ukraine-culture`         |           39,573,383 |                12,761 |               39,586,144 |
+| `fpv-learning`            |           32,319,419 |                12,685 |               32,332,104 |
+| Four new editions alone   |          118,298,749 |                50,876 |              118,349,625 |
+| All six rows              |          243,503,179 |               330,092 |              243,833,271 |
+| All 18 candidate editions |          566,826,033 |             1,994,753 |              568,820,786 |
+
+Immutable site totals include each runtime manifest. These component sums assume each listed
+edition has one hosted immutable version and an active launcher. They exclude the hub,
+previously retained versions, optional packages and other hosted files; they are not a selector.
+The earlier published `v0.142.0` default manifest counted 740,350,558 content bytes
+(excluding its own manifest). That older default is not a current capacity estimate.
+
+The [committed default inspection summary](verification/evidence/discovery-2026-09-28-default-capacity.json)
+records a successful preparation of `v0.142.1` at source
+`8104e7bb0c4f52e4dc9bb1188b52361ac05cfc02`, tree
+`93541d0836f368f3cf21e6c958167a76d358f414`. Its exact prepared default payload is
+**795,373,867 bytes**: 794,976,856 content bytes across 2,150 manifest entries plus the
+397,011-byte manifest. The manifest SHA-256 is
+`a5a76dabec08d147982e726eafce2dc15c04ff1daff33f8aab9d8c60161d7a2c`.
+The full 420,280-byte local inspection report is pinned by SHA-256
+`4bd637d39d184da855285af43e4a5c6800ebf4f0a34cd75d8f5b42f2eb1bd47e`.
+Normal build validation and source eligibility passed; no ZIP, expanded site or
+reproducibility/publication receipt was produced.
+
+Combining that measured default with the **older, different-head** edition packet above gives
+only the following planning sums:
+
+| Older edition components added | Combined component bytes | Gap to cap before uncounted components |
+| ------------------------------ | -----------------------: | -------------------------------------: |
+| Four new editions              |              913,723,492 |                             36,276,508 |
+| Six selected editions          |            1,039,207,138 |                            -89,207,138 |
+| All 18 editions                |            1,364,194,653 |                           -414,194,653 |
+
+The four-edition gap is **not certified headroom**. These sums mix two source revisions and
+omit retained edition versions, the hub, optional packages and other hosted routes. No subset
+is cleared: exact frozen inputs from the selected release and the final combined publisher
+inventory are still required.
+
+A clean committed checkout can inspect its prospective default manifest without writing a
+full expanded site or allocating its STORE ZIP:
+
+```sh
+node scripts/inspect-default-build.mjs --check-inputs
+node scripts/inspect-default-build.mjs --out /tmp/revealline-default-capacity.json
+```
+
+The output path must be new and its parent must exist. Reports inside the checkout must be
+Git-ignored. The preflight rejects missing committed files, including unreferenced originals
+hidden by sparse-checkout flags, and reports the exact missing included-file byte count. It
+never hydrates source. Required transitive producer inputs are subsequently validated by the
+ordinary build preparation; the preflight's include count is not a complete hydration estimate.
+
+`inspectBuildProject` and `buildProject` share one preparation path: reference, localization,
+content, optional/download, soundtrack, snapshot and offline checks still run. The report
+contains the exact prepared manifest, its SHA-256, and the payload byte total including
+`manifest.json`. The wrapper binds the committed source/tree, verifies included originals
+before and after preparation, and streams every available tracked original through its Git
+blob hash, including compiler code and external/optional/soundtrack producer inputs outside
+the runtime include list. Its available-source inventory also counts absent historical files;
+required missing producer inputs remain errors in the normal preparation. It applies the
+existing edition source-eligibility check and returns a hash of the written report. It does not write a ZIP, expanded site, release receipt or selector,
+and makes no reproducibility or complete-hosted-output claim. The final publication inventory
+below is still required. A source-only failure stops the report; no validation is skipped to
+obtain a size.
+
+The first committed inspection attempt at `a991ac3eacf0557556b7d86552ddcd359d1ee7b2`
+(tree `ec5d0c0f7ae194c4849c311b57d807940e7d7c3c`) stopped at the ordinary reference gate:
+three shared reward editors imported `authoring/company-studio/model.mjs`, which existed in
+source but was absent from the default include list. No manifest report or size qualification
+was produced. The default now admits that one validator module explicitly; it does not admit
+the Company Studio folder or neighboring originals. The version and budgets are unchanged.
+A regression verifies that merely having an authoring dependency on disk is insufficient,
+and that admitting one module does not admit adjacent source files. A second attempt at
+`3c829b56cb5d20b92bea610e7bf34a44c60dc98a` reached soundtrack preparation and stopped because
+a tracked producer was absent from the sparse checkout. Four exact producer/evidence files
+(73,370 bytes), including the conditionally loaded UA-FPV producer, were restored from HEAD;
+the normal soundtrack preparation then verified all 71 catalogue tracks. Neither failed
+attempt produced a report or size claim. The subsequent `8104e7bb0` inspection passed as
+recorded above, with both failures preserved in the linked summary.
+
+With reviewed frozen inputs and selectors available, the existing local staging commands are:
+
+```sh
+node publishing/pages-controller/publish.mjs build --preview
+node publishing/pages-controller/publish.mjs verify-artifact --preview
+```
+
+They do not publish or allocate a release. They write `.cache/frozen-pages`, download the
+selected original release assets, and require the existing exact metadata, qualification,
+tag/source identities and edition/optional review evidence. The resulting
+`artifact-receipt.json` lists every hosted path and `totalBytes`; the second command rereads
+the complete staged output. Do not substitute candidates or fabricate pending review evidence
+to run this ahead of admission. Candidate manifest sums are useful for planning; the publisher's
+final exact combined inventory remains authoritative. The fast PR Pages authority check can
+succeed without building this full artifact, so its success alone is not capacity evidence.
 
 ## Evidence and outstanding human gates
 
@@ -331,6 +501,12 @@ endpoints, recorded in each observation, so do not compare them as identical tim
 It reports buffered resource entries, animation callback
 intervals and approximate shared heap, not complete network traffic, renderer timings or a
 memory-leak verdict. Every observation remains unqualified until reviewed.
+
+The [qualification recorder](verification/company-qualification.html) captures the separate
+human and device evidence against one immutable candidate. It validates exact envelope, source
+and downloaded-artifact identity, all nine promotion gates per edition, actual-device constraints
+and bounded scenario coverage. It starts with no passes and never edits the game, release metadata
+or public selector.
 
 ## Sources and asset boundaries
 

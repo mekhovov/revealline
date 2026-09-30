@@ -1,0 +1,123 @@
+{
+  "format": "fpv-line-edition-menu-matrix.v1",
+  "sourceRevision": "c0a8757501ed84d85e8f8054d3d351a6fd557f01",
+  "date": "2026-09-29",
+  "origin": "http://127.0.0.1:8984",
+  "scope": "Real default-package edition landing DOM and CSS in the Codex in-app browser, standard Theme font, reduced effects. No game starts or input-only journeys.",
+  "count": 112,
+  "passed": true,
+  "failures": [],
+  "languages": ["en", "uk"],
+  "palettes": ["Neon Arcade", "FPV Field Kit"],
+  "viewports": [
+    [390, 844],
+    [844, 390]
+  ],
+  "checks": [
+    "editionIdentity",
+    "sceneIdentity",
+    "locale",
+    "palette",
+    "fourActions",
+    "soloOnly",
+    "fullscreenReachable",
+    "icons",
+    "minimumTargets",
+    "essentialFit",
+    "noHorizontalOverflow",
+    "artworkDecoded",
+    "titleWrapping"
+  ],
+  "editions": [
+    {
+      "id": "coupa-all",
+      "route": "/game/?edition=coupa-all",
+      "passed": 8,
+      "failed": 0
+    },
+    {
+      "id": "coupa-adventure",
+      "route": "/game/?edition=coupa-adventure",
+      "passed": 8,
+      "failed": 0
+    },
+    {
+      "id": "coupa-culture",
+      "route": "/game/?edition=coupa-culture",
+      "passed": 8,
+      "failed": 0
+    },
+    {
+      "id": "coupa-foundations",
+      "route": "/game/?edition=coupa-foundations",
+      "passed": 8,
+      "failed": 0
+    },
+    {
+      "id": "coupa-operations",
+      "route": "/game/?edition=coupa-operations",
+      "passed": 8,
+      "failed": 0
+    },
+    {
+      "id": "coupa-developers",
+      "route": "/game/?edition=coupa-developers",
+      "passed": 8,
+      "failed": 0
+    },
+    {
+      "id": "droneaid-community",
+      "route": "/game/?edition=droneaid-community",
+      "passed": 8,
+      "failed": 0
+    },
+    {
+      "id": "droneaid-nl-community",
+      "route": "/game/?edition=droneaid",
+      "passed": 8,
+      "failed": 0
+    },
+    {
+      "id": "droneaid-nl-workshop-lights",
+      "route": "/game/?edition=droneaid-nl-workshop-lights",
+      "passed": 8,
+      "failed": 0
+    },
+    {
+      "id": "droneaid-nl-parts-in-motion",
+      "route": "/game/?edition=droneaid-nl-parts-in-motion",
+      "passed": 8,
+      "failed": 0
+    },
+    {
+      "id": "droneaid-nl-makers-together",
+      "route": "/game/?edition=droneaid-nl-makers-together",
+      "passed": 8,
+      "failed": 0
+    },
+    {
+      "id": "droneaid-nl-careful-handoff",
+      "route": "/game/?edition=droneaid-nl-careful-handoff",
+      "passed": 8,
+      "failed": 0
+    },
+    {
+      "id": "droneaid-nl-signals-of-support",
+      "route": "/game/?edition=droneaid-nl-signals-of-support",
+      "passed": 8,
+      "failed": 0
+    },
+    {
+      "id": "droneaid-nl-shared-horizon",
+      "route": "/game/?edition=droneaid-nl-shared-horizon",
+      "passed": 8,
+      "failed": 0
+    }
+  ],
+  "sourceHashes": {
+    "game/ui/native-menus.mjs": "1415cdac9cba2af48039eeff24d59ed836321ec050807756620bd935fbe3b0e2",
+    "game/ui/native-menu.css": "6605d9d3990cb053a7ad340eef2103b7171bb24af78409279fce9d0f3abc0067",
+    "game/ui/menu-scenes.mjs": "d288b3b0450848f89ce482cc7d94dbfc68038c7116d9e182d61184c9175956c1",
+    "game/test/manual/edition-menu-matrix.mjs": "d6657e5b0192cf3ed51f52a4773daa3e531fd67085ba406dc4d4264620e6a42f"
+  }
+}

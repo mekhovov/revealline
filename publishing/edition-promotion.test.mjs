@@ -4,14 +4,17 @@ import fs from 'node:fs/promises';
 import os from 'node:os';
 import path from 'node:path';
 import { spawnSync } from 'node:child_process';
+import vm from 'node:vm';
 import {
   EDITION_REVIEW_GATES,
   verifyEditionReview,
   validateEditionPublication,
   frozenEditionOverlay,
   selectRetainedEditionRelease,
+  selectPublishedEditionRelease,
 } from './edition-promotion.mjs';
 import { editionAdmissionFixture } from './edition-fixture.mjs';
+import { createEditionCandidate } from './edition-candidate.mjs';
 import { editionHash, inspectEditionZip } from './edition-zip.mjs';
 
 const bytes = (value) => Buffer.from(typeof value === 'string' ? value : JSON.stringify(value));
@@ -22,6 +25,24 @@ const selector = (...releases) => ({ format: 'revealline-edition-publication.v1'
 /** Synthetic test receipts only. These do not assert any real human validation. */
 function reviewedFixture(options = {}) {
   const fixture = editionAdmissionFixture(options);
+  if (options.displayName) {
+    const app = json(fixture.runtime.get('app/manifest.webmanifest'));
+    fixture.runtime.set('app/manifest.webmanifest', bytes({ ...app, name: options.displayName }));
+    const rebuilt = createEditionCandidate({
+      compiled: { files: fixture.runtime, runtimeCatalog: fixture.catalog },
+      sourceFiles: fixture.sourceFiles,
+      version: fixture.envelope.version,
+      sourceRevision: fixture.envelope.sourceRevision,
+      sourceTree: fixture.envelope.sourceTree,
+    });
+    fixture.envelope.editions = [rebuilt.edition];
+    for (const [name, source] of rebuilt.files) fixture.files.set(name, source);
+  }
+  for (const editionId of options.additionalEditionIds ?? []) {
+    const additional = editionAdmissionFixture({ ...options, editionId });
+    fixture.envelope.editions.push(...additional.envelope.editions);
+    for (const [name, source] of additional.files) fixture.files.set(name, source);
+  }
   const envelopeBytes = bytes(fixture.envelope);
   const review = {
     format: 'revealline-edition-review.v1',
@@ -89,11 +110,11 @@ function runtimeMembers(fixture) {
   ]);
 }
 
-async function syncSelectorFixture(t) {
+async function syncSelectorFixture(t, options = {}) {
   const directory = await fs.mkdtemp(path.join(os.tmpdir(), 'edition-sync-'));
   t.after(() => fs.rm(directory, { recursive: true, force: true }));
   const older = reviewedFixture({ version: 'v0.139.0' }),
-    newer = reviewedFixture({ version: 'v0.140.0' }),
+    newer = reviewedFixture({ version: 'v0.140.0', ...options }),
     other = reviewedFixture({ version: 'v0.141.0', editionId: 'droneaid' });
   const selectorPath = path.join(directory, 'selector.json'),
     responsePath = path.join(directory, 'responses.json'),
@@ -107,7 +128,13 @@ async function syncSelectorFixture(t) {
     for (const [name, content] of fixture.files) {
       const id = nextId++,
         route = `${root}/releases/assets/${id}`;
-      assets.push({ id, name, state: 'uploaded', size: content.length });
+      assets.push({
+        id,
+        name,
+        state: 'uploaded',
+        size: content.length,
+        digest: `sha256:${editionHash(content)}`,
+      });
       responses[route] = content.toString('base64');
       assetRoutes.set(`${fixture.envelope.version}/${name}`, route);
     }
@@ -141,6 +168,14 @@ const route = args.find(value => value.startsWith('repos/'));
 if (process.env.EDITION_TEST_EDIT_ROUTE === route) fs.writeFileSync(process.env.EDITION_TEST_SELECTOR, process.env.EDITION_TEST_EDIT_BYTES);
 const data = JSON.parse(fs.readFileSync(process.env.EDITION_TEST_RESPONSES));
 if (!data[route]) process.exit(91);
+if (process.env.EDITION_TEST_GROW_ROUTE === route) {
+  const reads = fs.readFileSync(process.env.EDITION_TEST_CALLS, 'utf8').trim().split('\\n').map(JSON.parse).filter(call => call.includes(route)).length;
+  if (reads >= Number(process.env.EDITION_TEST_GROW_READ)) {
+    const response = JSON.parse(Buffer.from(data[route], 'base64'));
+    response.assets.push({ id: 999999, name: 'source-optional-extra.zip', size: 950000000, state: 'uploaded', digest: 'sha256:' + 'a'.repeat(64) });
+    data[route] = Buffer.from(JSON.stringify(response)).toString('base64');
+  }
+}
 process.stdout.write(Buffer.from(data[route], 'base64'));
 `,
     { mode: 0o755 },
@@ -158,6 +193,7 @@ process.stdout.write(Buffer.from(data[route], 'base64'));
       input = selector(older.release, other.release),
       environment = {},
       command = 'sync-selector',
+      extraArgs = [],
     ) {
       const original = bytes(input);
       await fs.writeFile(selectorPath, original);
@@ -178,6 +214,7 @@ process.stdout.write(Buffer.from(data[route], 'base64'));
           'mekhovov/revealline',
           '--base-path',
           '/revealline/',
+          ...extraArgs,
         ],
         {
           encoding: 'utf8',
@@ -573,6 +610,154 @@ test('sync-selector verifies the complete retained publication before selecting 
   assert.deepEqual(json(empty.selected), selector(f.newer.release));
 });
 
+test('a hosted subset preserves retained paths and unrelated launchers; omitted editions expose exact ZIP downloads', async () => {
+  const older = reviewedFixture({ version: 'v0.139.0' });
+  const newer = reviewedFixture({
+    version: 'v0.140.0',
+    displayName: 'Example <img src=x onerror="alert(1)"> & edition',
+    additionalEditionIds: ['droneaid'],
+  });
+  const input = selector(older.release),
+    before = structuredClone(input);
+  const ports = {
+    readReleaseAsset: releaseReader(older, newer),
+    resolveReleaseIdentity: releaseIdentity(older, newer),
+    targetBasePath: '/revealline/',
+  };
+  const selected = await selectPublishedEditionRelease(
+    input,
+    {
+      envelopeBytes: newer.envelopeBytes,
+      reviewBytes: newer.reviewBytes,
+      basePath: '/revealline/',
+      editionIds: ['droneaid'],
+    },
+    ports,
+  );
+  assert.deepEqual(input, before);
+  assert.deepEqual(
+    selected.releases[0],
+    older.release,
+    'An omitted new version does not replace an old launcher.',
+  );
+  assert.deepEqual(selected.releases[1].editionIds, ['droneaid']);
+  assert.deepEqual(selected.releases[1].activeEditionIds, ['droneaid']);
+  const output = await frozenEditionOverlay(selected, ports);
+  assert.equal(json(output.get('editions/coupa/app/current.json')).version, 'v0.139.0');
+  assert.equal(json(output.get('editions/droneaid/app/current.json')).version, 'v0.140.0');
+  assert(![...output.keys()].some((name) => name.startsWith('editions/coupa/releases/v0.140.0/')));
+  for (const [name, source] of runtimeMembers(older))
+    assert.deepEqual(output.get(`editions/coupa/releases/v0.139.0/site/${name}`), source);
+  const html = output.get('editions/index.html').toString();
+  const distribution = newer.envelope.editions[0].distribution;
+  assert.match(
+    html,
+    /https:\/\/github.com\/mekhovov\/revealline\/releases\/download\/v0.140.0\/distribution-coupa.zip/,
+  );
+  assert(html.includes(distribution.sha256));
+  assert(html.includes(`${distribution.bytes} bytes`));
+  assert(
+    html.includes(
+      'Download Example &lt;img src=x onerror=&quot;alert(1)&quot;&gt; &amp; edition ZIP',
+    ),
+  );
+  assert(!html.includes('<img'));
+});
+
+test('hosted subset validation is explicit and preserves default all-edition selection', async () => {
+  const fixture = reviewedFixture({ additionalEditionIds: ['droneaid'] });
+  const request = {
+    envelopeBytes: fixture.envelopeBytes,
+    reviewBytes: fixture.reviewBytes,
+    basePath: '/revealline/',
+  };
+  for (const editionIds of [[], ['coupa', 'coupa'], ['unknown'], [''], 'coupa'])
+    await assert.rejects(
+      selectPublishedEditionRelease(
+        selector(),
+        { ...request, editionIds },
+        {
+          readReleaseAsset: () => assert.fail('Invalid subsets must fail before any download.'),
+        },
+      ),
+      /nonempty, unique edition IDs/,
+    );
+  const ports = {
+    readReleaseAsset: releaseReader(fixture),
+    resolveReleaseIdentity: releaseIdentity(fixture),
+  };
+  const selected = await selectPublishedEditionRelease(selector(), request, ports);
+  assert.deepEqual(selected, selector(fixture.release));
+  assert(
+    !Buffer.from((await frozenEditionOverlay(selected, ports)).get('editions/index.html'))
+      .toString()
+      .includes('Download editions'),
+  );
+  await assert.rejects(
+    selectPublishedEditionRelease(selected, { ...request, editionIds: ['coupa'] }, ports),
+    /immutable version is already selected/,
+  );
+  const reordered = structuredClone(selected);
+  reordered.releases[0].editionIds.reverse();
+  const reorderedHTML = Buffer.from(
+    (await frozenEditionOverlay(reordered, ports)).get('editions/index.html'),
+  ).toString();
+  assert(
+    reorderedHTML.indexOf('droneaid/app/') < reorderedHTML.indexOf('coupa/app/'),
+    'Existing explicit launcher order remains unchanged.',
+  );
+  const subset = await selectPublishedEditionRelease(
+    selector(),
+    { ...request, editionIds: ['coupa'] },
+    ports,
+  );
+  const subsetOutput = await frozenEditionOverlay(subset, ports);
+  assert(![...subsetOutput.keys()].some((name) => name.startsWith('editions/droneaid/')));
+  assert(!subsetOutput.get('editions/index.html').toString().includes('droneaid/app/'));
+});
+
+test('sync-selector explicit hosted subsets still verify download-only original bytes and all review gates', async (t) => {
+  const f = await syncSelectorFixture(t, { additionalEditionIds: ['droneaid'] });
+  const args = ['--editions', 'coupa'];
+  const result = await f.run(undefined, {}, 'sync-selector', args);
+  assert.equal(result.status, 0, result.stderr);
+  const selected = json(result.selected);
+  assert.deepEqual(selected.releases[2].editionIds, ['coupa']);
+  assert.deepEqual(selected.releases[1], f.other.release);
+  const excluded = f.newer.envelope.editions.find((edition) => edition.id === 'droneaid');
+  const route = f.assetRoutes.get(`${f.newer.envelope.version}/${excluded.distribution.path}`);
+  const original = f.responses[route];
+  const corrupt = Buffer.from(original, 'base64');
+  corrupt[0] ^= 1;
+  f.responses[route] = corrupt.toString('base64');
+  const rejected = await f.run(undefined, {}, 'sync-selector', args);
+  assert.notEqual(rejected.status, 0);
+  assert.match(rejected.stderr, /artifact bytes differ/);
+  assert.deepEqual(rejected.selected, rejected.original);
+  f.responses[route] = original;
+  const gateRoute = f.assetRoutes.get(
+    `${f.newer.envelope.version}/${f.newer.review.editions[1].gates[0].evidence.path}`,
+  );
+  delete f.responses[gateRoute];
+  const missing = await f.run(undefined, {}, 'sync-selector', args);
+  assert.notEqual(missing.status, 0);
+  assert.deepEqual(missing.selected, missing.original);
+});
+
+test('sync-selector rejects empty, duplicate and foreign hosted IDs without modifying the selector', async (t) => {
+  const f = await syncSelectorFixture(t);
+  for (const ids of [',', 'coupa,coupa', 'unknown']) {
+    const rejected = await f.run(undefined, {}, 'sync-selector', ['--editions', ids]);
+    assert.notEqual(rejected.status, 0);
+    assert.match(rejected.stderr, /nonempty, unique edition IDs/);
+    assert.deepEqual(rejected.selected, rejected.original);
+    assert.equal(await fs.readFile(f.callsPath, 'utf8'), '');
+  }
+  const wrongCommand = await f.run(undefined, {}, 'verify', ['--editions', 'coupa']);
+  assert.notEqual(wrongCommand.status, 0);
+  assert.match(wrongCommand.stderr, /editions belong to sync-selector or select-retained/);
+});
+
 test('upload tag binding uses the qualified tag before any release mutation', async (t) => {
   const f = await syncSelectorFixture(t);
   const rejected = await f.run(undefined, {}, 'upload-draft');
@@ -584,6 +769,33 @@ test('upload tag binding uses the qualified tag before any release mutation', as
   assert.ok(routes.includes(`${f.root}/commits/tags/${f.newer.envelope.version}`));
   assert.ok(!routes.includes(`${f.root}/commits/${f.newer.envelope.version}`));
 });
+
+for (const phase of ['initial', 'before-first-upload', 'final-refresh'])
+  test(`edition upload rejects combined budget overflow at ${phase} without any upload`, async (t) => {
+    const f = await syncSelectorFixture(t);
+    const route = `${f.root}/releases/tags/${f.newer.envelope.version}`;
+    const release = json(Buffer.from(f.responses[route], 'base64'));
+    release.draft = true;
+    if (phase !== 'final-refresh') release.assets = [];
+    f.responses[route] = bytes(release).toString('base64');
+    const result = await f.run(
+      undefined,
+      {
+        EDITION_TEST_GROW_ROUTE: route,
+        EDITION_TEST_GROW_READ: String(
+          phase === 'initial' ? 1 : phase === 'before-first-upload' ? 2 : f.newer.files.size + 2,
+        ),
+      },
+      'upload-draft',
+    );
+    assert.notEqual(result.status, 0);
+    assert.match(result.stderr, /exceed byte budget/);
+    const calls = (await fs.readFile(f.callsPath, 'utf8')).trim().split('\n').map(JSON.parse);
+    assert(
+      calls.every((args) => args[0] === 'api'),
+      'No upload or mutation can precede budget admission.',
+    );
+  });
 
 test('sync-selector refuses changed retained ZIPs, source identities, evidence and missing assets without staging', async (t) => {
   const f = await syncSelectorFixture(t),
@@ -752,4 +964,86 @@ test('publication requires an independently resolved tag matching both source co
       /source differs from the immutable release tag/,
     );
   }
+});
+
+test('renamed DroneAid publishes one canonical launcher and preserves legacy frozen releases and links', async () => {
+  const editionId = 'droneaid-nl-community';
+  const older = reviewedFixture({ editionId, version: 'v0.139.0', legacyPublicAddress: true });
+  older.release.activeEditionIds = [];
+  const newer = reviewedFixture({ editionId, version: 'v0.140.0' });
+  const output = await frozenEditionOverlay(selector(older.release, newer.release), {
+    readReleaseAsset: releaseReader(older, newer),
+    resolveReleaseIdentity: releaseIdentity(older, newer),
+    targetBasePath: '/revealline/',
+  });
+  for (const [fixture, slug] of [
+    [older, editionId],
+    [newer, 'droneaid'],
+  ])
+    for (const [name, source] of runtimeMembers(fixture))
+      assert.deepEqual(
+        output.get(`editions/${slug}/releases/${fixture.release.version}/site/${name}`),
+        source,
+      );
+  assert.equal(json(output.get('editions/droneaid/app/current.json')).editionId, editionId);
+  assert.equal(
+    json(output.get('editions/droneaid/app/manifest.webmanifest')).id,
+    `/revealline/editions/${editionId}/`,
+  );
+  assert.equal(
+    json(output.get('editions/droneaid/app/manifest.webmanifest')).scope,
+    '/revealline/editions/droneaid/',
+  );
+  const alias = output.get(`editions/${editionId}/app/index.html`).toString();
+  assert.match(alias, /href="\/revealline\/editions\/droneaid\/app\/"/);
+  let redirected;
+  vm.runInNewContext(alias.match(/<script>([\s\S]+)<\/script>/)[1], {
+    URL,
+    location: {
+      href: `https://example.test/revealline/editions/${editionId}/app/?language=uk#offline`,
+      search: '?language=uk',
+      hash: '#offline',
+      replace: (href) => {
+        redirected = href;
+      },
+    },
+  });
+  assert.equal(
+    redirected,
+    'https://example.test/revealline/editions/droneaid/app/?language=uk#offline',
+  );
+  assert.equal(output.has(`editions/${editionId}/app/current.json`), false);
+  const index = output.get('editions/index.html').toString();
+  assert.equal((index.match(/<li>/g) ?? []).length, 1);
+  assert.match(index, /href="droneaid\/app\/"/);
+});
+
+test('rollback to a frozen legacy DroneAid release keeps the canonical launcher address reachable', async () => {
+  const editionId = 'droneaid-nl-community';
+  const older = reviewedFixture({ editionId, version: 'v0.139.0', legacyPublicAddress: true });
+  const newer = reviewedFixture({ editionId, version: 'v0.140.0' });
+  newer.release.activeEditionIds = [];
+  const output = await frozenEditionOverlay(selector(older.release, newer.release), {
+    readReleaseAsset: releaseReader(older, newer),
+    resolveReleaseIdentity: releaseIdentity(older, newer),
+    targetBasePath: '/revealline/',
+  });
+  assert.match(
+    output.get('editions/droneaid/app/index.html').toString(),
+    /href="\/revealline\/editions\/droneaid-nl-community\/app\/"/,
+  );
+  assert.equal(
+    json(output.get(`editions/${editionId}/app/current.json`)).version,
+    older.release.version,
+  );
+  assert.match(output.get('editions/index.html').toString(), /href="droneaid\/app\/"/);
+  for (const [fixture, slug] of [
+    [older, editionId],
+    [newer, 'droneaid'],
+  ])
+    for (const [name, source] of runtimeMembers(fixture))
+      assert.deepEqual(
+        output.get(`editions/${slug}/releases/${fixture.release.version}/site/${name}`),
+        source,
+      );
 });

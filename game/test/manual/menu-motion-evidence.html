@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Menu motion evidence</title>
+    <link rel="stylesheet" href="../../ui/menu-scenes.css" />
+    <style>
+      body {
+        margin: 0;
+        background: #080e18;
+        color: #f6f5e9;
+        font: 16px system-ui;
+      }
+      #scene {
+        position: fixed;
+        inset: 0;
+      }
+      #controls {
+        position: relative;
+        z-index: 3;
+        margin: 24px;
+        padding: 20px;
+        width: min(420px, calc(100vw - 90px));
+        background: #080e18eb;
+      }
+      h1 {
+        font-size: 24px;
+        margin: 0 0 12px;
+      }
+      label {
+        display: block;
+        margin-block: 10px;
+      }
+      select,
+      button {
+        font: inherit;
+        margin: 4px;
+        padding: 8px;
+      }
+      button:focus-visible,
+      select:focus-visible {
+        outline: 3px solid #ffd45c;
+        outline-offset: 2px;
+      }
+      #report {
+        max-height: 34vh;
+        overflow: auto;
+        white-space: pre-wrap;
+        font: 11px monospace;
+      }
+      #status {
+        display: block;
+        margin-block: 12px;
+      }
+    </style>
+  </head>
+  <body>
+    <main id="scene" aria-label="Actual decorative scene under measurement"></main>
+    <section id="controls">
+      <h1>Menu motion evidence</h1>
+      <p>
+        Test-only host using the actual scene module and CSS. Sampling reads rendered rectangles,
+        computed transforms and animation times.
+      </p>
+      <label
+        >Scene
+        <select id="theme"></select
+      ></label>
+      <label
+        >Mode
+        <select id="mode">
+          <option>solo</option>
+          <option>versus</option>
+          <option>team</option>
+        </select></label
+      >
+      <label><input id="reduced" type="checkbox" /> Reduced motion</label>
+      <label><input id="enabled" type="checkbox" checked /> Background animation</label>
+      <button id="sample">Sample six seconds</button>
+      <button id="all-scenes">Sample all eighteen scenes</button>
+      <button id="pause">Pause host</button>
+      <button id="download">Download evidence</button>
+      <output id="status">Ready</output>
+      <output id="facts"></output>
+      <pre id="report" tabindex="0"></pre>
+    </section>
+    <script type="module" src="./menu-motion-evidence.mjs"></script>
+  </body>
+</html>

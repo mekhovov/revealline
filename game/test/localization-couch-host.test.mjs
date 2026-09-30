@@ -41,7 +41,7 @@ test('Couch language changes translate the lobby and paused help without changin
   }
 });
 
-test('controller edits the lobby and Settings language selectors without starting either board', async (context) => {
+test('controller edits the single Settings language choice and synchronizes retained controls without starting either board', async (context) => {
   const { attachLanguageControls } = await import('../i18n/index.mjs');
   const locale = getLocale();
   context.after(() => setLocale(locale, { persist: false }));
@@ -58,23 +58,24 @@ test('controller edits the lobby and Settings language selectors without startin
   attachLanguageControls(f.doc);
   const lobby = f.$('race-language-select');
   const settings = f.$('race-settings-language-select');
-  assert.ok(f.$('race-main').contains(lobby));
+  assert.equal(f.$('race-main').contains(lobby), false);
+  assert.ok(lobby.closest('[hidden]'), 'The retained lobby language control is hidden.');
   assert.ok(f.$('race-settings-panel-display').contains(settings));
   const checkpoint = f.checkpoint();
+  f.$('race-options').click();
+  f.$('race-settings-tab-display').click();
   f.join(0);
-  f.focus(lobby.id);
+  f.focus(settings.id);
   f.pulse(0, 0);
-  assert.equal(lobby.getAttribute('data-controller-editing'), 'true');
+  assert.equal(settings.getAttribute('data-controller-editing'), 'true');
   f.pulse(0, 13);
   f.pulse(0, 0);
   assert.equal(getLocale(), 'uk');
-  assert.equal(f.doc.activeElement, lobby);
+  assert.equal(f.doc.activeElement, settings);
   assert.equal(lobby.value, 'uk');
   assert.equal(settings.value, 'uk');
   assert.deepEqual(f.checkpoint(), checkpoint);
   f.frames(151, 1000 / 120);
-  f.$('race-options').click();
-  f.$('race-settings-tab-display').click();
   f.frame(0);
   f.focus(settings.id);
   f.pulse(0, 0);

@@ -61,15 +61,13 @@ export const REMIX_PRESSURE_PAIR_DISPOSITIONS = freezeDesign(
   })),
 );
 
-/** Copy-on-write Remix pair stacked on prior readable-pressure candidates.
- * It remains unregistered: defaults and history do not resolve this source. */
-export function createRemixPressurePairCandidates({ artwork = false } = {}) {
-  const source = createErosionPressurePairCandidates({ artwork });
-  source.id = artwork
-    ? 'whole-remix-pressure-pair-original-review'
-    : 'whole-remix-pressure-pair-greybox-review';
-  source.revision = 'remix-pressure-pair-review-1';
-  source.name = 'Whole Journey · Remix pressure pair review';
+/** Apply the reviewed actor-role substitutions to any compatible immutable
+ * Whole Journey source. The source is cloned so older editions stay exact. */
+export function applyRemixPressurePairCandidates(
+  input,
+  { missionRevision = 'remix-pressure-pair-1' } = {},
+) {
+  const source = structuredClone(input);
   source.missions = source.missions.map((mission) => {
     const design = pair[mission.id];
     if (!design) return mission;
@@ -79,7 +77,7 @@ export function createRemixPressurePairCandidates({ artwork = false } = {}) {
     const roles = new Set(actors.map((actor) => actor.role));
     return {
       ...mission,
-      revision: 'remix-pressure-pair-1',
+      revision: missionRevision,
       actors,
       design: {
         ...mission.design,
@@ -101,5 +99,17 @@ export function createRemixPressurePairCandidates({ artwork = false } = {}) {
       },
     };
   });
+  return source;
+}
+
+/** Copy-on-write Remix pair stacked on prior readable-pressure candidates.
+ * It remains unregistered: defaults and history do not resolve this source. */
+export function createRemixPressurePairCandidates({ artwork = false } = {}) {
+  const source = applyRemixPressurePairCandidates(createErosionPressurePairCandidates({ artwork }));
+  source.id = artwork
+    ? 'whole-remix-pressure-pair-original-review'
+    : 'whole-remix-pressure-pair-greybox-review';
+  source.revision = 'remix-pressure-pair-review-1';
+  source.name = 'Whole Journey · Remix pressure pair review';
   return source;
 }

@@ -488,7 +488,7 @@ test('generated stable launcher opens verified active and retained release links
   const script = files
     .get('app/app.mjs')
     .toString()
-    .replace(/^import[^\n]+\n/, '');
+    .replace(/^import[^\n]+\n/gm, '');
   vm.runInNewContext(script, {
     document,
     location: { href: `${root}app/`, origin: new URL(root).origin },
@@ -496,6 +496,7 @@ test('generated stable launcher opens verified active and retained release links
     URL,
     navigator: {},
     validateCompanyInstallationReference,
+    attachLauncherNavigation() {},
     fetch: async () => ({ ok: true, json: async () => candidate }),
   });
   assert.equal(nodes.get('play').href.href, `${state.active.scope}game/company.html`);
@@ -509,4 +510,63 @@ test('generated stable launcher opens verified active and retained release links
   await nodes.get('check').onclick();
   assert.match(nodes.get('status').textContent, /matching published edition/);
   assert.equal(values.get('revealline.company-installed.coupa.v1'), JSON.stringify(state));
+});
+
+test('canonical DroneAid launcher keeps its stable installed key and reopens saved legacy scopes', async () => {
+  const editionId = 'droneaid-nl-community';
+  const files = await build(editionId, { name: 'DroneAid / LINE' });
+  const manifest = JSON.parse(files.get('app/manifest.webmanifest'));
+  assert.equal(manifest.id, `/revealline/editions/${editionId}/`);
+  assert.equal(manifest.scope, '/revealline/editions/droneaid/');
+  assert.equal(manifest.start_url, '/revealline/editions/droneaid/app/');
+  assert.equal(manifest.name, 'DroneAid / LINE');
+  assert.equal(JSON.parse(files.get('app/current.json')).editionId, editionId);
+  const oldScope = `https://game.test/revealline/editions/${editionId}/releases/v0.139.0/site/`;
+  const state = JSON.stringify({
+    active: { editionId, version: '0.139.0', scope: oldScope, entry: 'game/company.html' },
+  });
+  const nodes = new Map();
+  const reads = [];
+  vm.runInNewContext(
+    files
+      .get('app/app.mjs')
+      .toString()
+      .replace(/^import[^\n]+\n/gm, ''),
+    {
+      document: {
+        getElementById(id) {
+          if (!nodes.has(id)) nodes.set(id, { hidden: true });
+          return nodes.get(id);
+        },
+      },
+      location: { href: 'https://game.test/revealline/editions/droneaid/app/' },
+      localStorage: {
+        getItem(key) {
+          reads.push(key);
+          return state;
+        },
+      },
+      URL,
+      navigator: {},
+      validateCompanyInstallationReference,
+      attachLauncherNavigation() {},
+      fetch: async () => ({
+        ok: true,
+        json: async () => ({
+          editionId,
+          version: '0.140.0',
+          scope: '../releases/v0.140.0/site/',
+          entry: 'game/company.html',
+        }),
+      }),
+    },
+  );
+  assert.deepEqual(reads, [`revealline.company-installed.${editionId}.v1`]);
+  assert.equal(nodes.get('play').href.href, `${oldScope}game/company.html`);
+  assert.equal(nodes.get('play').hidden, false);
+  await nodes.get('check').onclick();
+  assert.equal(
+    nodes.get('prepare').href.href,
+    'https://game.test/revealline/editions/droneaid/releases/v0.140.0/site/game/company.html',
+  );
 });

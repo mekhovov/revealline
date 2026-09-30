@@ -6,6 +6,9 @@ import { retryFixture } from './fixtures/retry-scenarios.mjs';
 import { deferred } from './helpers/media-fixtures.mjs';
 import { readFlightInformation } from '../ui/flight-information-host.mjs';
 import { Soundscape } from '../ui/audio.mjs';
+import { setLocale, t as translate } from '../i18n/index.mjs';
+import { bindingLabels, resolveKeyBindings } from '../key-bindings.mjs';
+import { controllerBindingLabels } from '../controller-bindings.mjs';
 import { authoritativeCheckpoint, verifyReplay } from '../replay.mjs';
 import { emptyLibrary, saveLibrary, updatePreferences } from '../library.mjs';
 import { createApexSpatialCandidates } from '../content-design/apex-spatial-candidates.mjs';
@@ -56,6 +59,8 @@ function open(p) {
 }
 for (const turnPolicy of ['immediate', 'grid-center'])
   test(`mounted ${turnPolicy}: Details reading and Back preserve flight; only Resume moves`, async (t) => {
+    setLocale('en', { persist: false });
+    t.after(() => setLocale('en', { persist: false }));
     const storage = memoryStorage();
     saveLibrary(
       storage,
@@ -90,6 +95,30 @@ for (const turnPolicy of ['immediate', 'grid-center'])
     assert.equal(p.doc.activeElement, p.$('flight-details-reading-done'));
     assert.equal(p.$('flight-details-read').getAttribute('aria-pressed'), 'true');
     assert.equal(p.$('flight-details-reading-done').disabled, false);
+    const readingText = p.$('flight-details-content').textContent;
+    p.$('flight-details-dialog').scrollTop = 84;
+    p.$('flight-details-reading').clientHeight = 100;
+    p.$('flight-details-reading').scrollHeight = 500;
+    p.$('flight-details-reading').scrollTop = 36;
+    for (const language of ['uk', 'en']) {
+      setLocale(language, { persist: false });
+      assert.equal(p.$('flight-details-dialog').open, true);
+      assert.equal(p.doc.activeElement, p.$('flight-details-reading-done'));
+      assert.equal(p.$('flight-details-read').getAttribute('aria-pressed'), 'true');
+      assert.equal(p.$('flight-details-reading-done').disabled, false);
+      assert.equal(p.$('flight-details-dialog').scrollTop, 84);
+      assert.equal(p.$('flight-details-reading').scrollTop, 36);
+      const translated = p.$('flight-details-content').textContent;
+      assert.ok(translated.includes(translate('interface:controlsAfterResume')));
+      assert.ok(translated.includes(bindingLabels(resolveKeyBindings()).boost));
+      assert.ok(translated.includes(controllerBindingLabels().flight.boost));
+      assert.doesNotMatch(translated, /flightDetails\.|undefined|NaN/);
+      if (language === 'en') assert.equal(translated, readingText);
+      else assert.notEqual(translated, readingText);
+      ticks(p, 8);
+      assert.deepEqual(authoritativeCheckpoint(p.rendered.run), before);
+      assert.deepEqual(info(p).owner, owner);
+    }
     p.doc.activeElement.emit('keydown', { code: 'ShiftLeft', key: 'Shift', shiftKey: true });
     assert.equal(keyboard(p, 'Tab', 'Tab', { shiftKey: true }).defaultPrevented, true);
     p.doc.activeElement.emit('keyup', { code: 'ShiftLeft', key: 'Shift', shiftKey: false });

@@ -28,14 +28,22 @@ import {
   decodeAcceptanceImage,
   inspectAcceptanceImage,
 } from './acceptance-fixture.mjs';
+import {
+  resolveDeployedAcceptanceAccount,
+  validateDeployedAcceptanceAccount,
+} from './deployed-acceptance-auth.mjs';
 
 export const DEPLOYED_ACCEPTANCE_FORMAT = 'revealline-community-deployed-acceptance.v1';
+export const DEPLOYED_BROWSER_MODERATION_FORMAT =
+  'revealline-community-browser-moderation-acceptance.v1';
 export const DESTRUCTIVE_OPT_IN = 'I_UNDERSTAND_THIS_PUBLISHES_AND_UNLISTS_TEST_CONTENT';
 
 const NAMESPACE = /^[a-z0-9](?:[a-z0-9-]{6,38}[a-z0-9])$/u;
 const REPORT_ID = /^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/u;
 const RELEASE_VERSION = /^v\d+\.\d+\.\d+(?:-[0-9A-Za-z.-]+)?$/u;
 const SOURCE_REVISION = /^[a-f0-9]{40}$/u;
+const EDITION_ID = /^ed_[a-f0-9]{64}$/u;
+const MODERATION_MODES = new Set(['automatic', 'browser']);
 const themesPromise = readFile(
   new URL('../../../game/content-design/themes.json', import.meta.url),
   'utf8',
@@ -43,21 +51,6 @@ const themesPromise = readFile(
 
 const required = (condition, message) => {
   if (!condition) throw new Error(message);
-};
-
-const exactAuth = (value, name) => {
-  required(value && typeof value === 'object' && !Array.isArray(value), `${name} is required.`);
-  const entries = Object.entries(value);
-  required(entries.length > 0 && entries.length <= 8, `${name} is invalid.`);
-  for (const [key, header] of entries)
-    required(
-      /^[a-z0-9-]{1,64}$/iu.test(key) &&
-        typeof header === 'string' &&
-        header.length <= 8192 &&
-        !/[\u0000-\u001f\u007f]/u.test(header),
-      `${name} is invalid.`,
-    );
-  return Object.freeze(Object.fromEntries(entries));
 };
 
 const boundedInteger = (value, name, minimum, maximum) => {
@@ -95,6 +88,8 @@ export function validateDeployedJourneyConfig(input = {}) {
       SOURCE_REVISION.test(input.expectedRelease?.sourceRevision ?? ''),
     'Exact expected release version and source revision are required.',
   );
+  const moderationMode = input.moderationMode ?? 'automatic';
+  required(MODERATION_MODES.has(moderationMode), 'Moderation acceptance mode is invalid.');
   return Object.freeze({
     baseURL: baseURL.href,
     namespace: input.namespace,
@@ -102,10 +97,11 @@ export function validateDeployedJourneyConfig(input = {}) {
       version: input.expectedRelease.version,
       sourceRevision: input.expectedRelease.sourceRevision,
     }),
+    moderationMode,
     auth: Object.freeze({
-      creatorA: exactAuth(input.auth?.creatorA, 'Creator A authentication'),
-      creatorB: exactAuth(input.auth?.creatorB, 'Creator B authentication'),
-      admin: exactAuth(input.auth?.admin, 'Administrator authentication'),
+      creatorA: validateDeployedAcceptanceAccount(input.auth?.creatorA, 'Creator A authentication'),
+      creatorB: validateDeployedAcceptanceAccount(input.auth?.creatorB, 'Creator B authentication'),
+      admin: validateDeployedAcceptanceAccount(input.auth?.admin, 'Administrator authentication'),
     }),
     requestTimeoutMs: boundedInteger(
       input.requestTimeoutMs ?? 15_000,
@@ -298,11 +294,11 @@ async function acceptancePackage({ namespace, runId }) {
   return exportCreatorBundle(prepared, approveCreatorBundle(prepared));
 }
 
-async function findAdminReport({ fetchImpl, baseURL, auth, reportId }) {
+async function findAdminReport({ fetchImpl, baseURL, auth, reportId, status = 'open' }) {
   let cursor = null;
   for (let page = 0; page < 10; page += 1) {
     const url = new URL('v1/admin/reports', baseURL);
-    url.searchParams.set('status', 'open');
+    url.searchParams.set('status', status);
     url.searchParams.set('limit', '50');
     if (cursor) url.searchParams.set('cursor', cursor);
     const body = await json(
@@ -335,14 +331,12 @@ async function adminPost({ fetchImpl, baseURL, auth, path, body, action }) {
 }
 
 /** Runs a real deployed-service journey. It publishes uniquely named test content,
- * verifies another creator cannot operate the owner's draft, then unlists the
- * resulting edition through the administrator boundary. */
+ * verifies another creator cannot operate the owner's draft, and either exercises
+ * moderation directly or leaves one exact report for the browser acceptance step. */
 export async function runDeployedCommunityJourney(input, adapters = {}) {
   const config = validateDeployedJourneyConfig(input);
-  const fetchImpl = createBoundedFetch(
-    adapters.fetchImpl ?? globalThis.fetch,
-    config.requestTimeoutMs,
-  );
+  const rawFetch = adapters.fetchImpl ?? globalThis.fetch;
+  const fetchImpl = createBoundedFetch(rawFetch, config.requestTimeoutMs);
   const now = adapters.now ?? (() => Date.now());
   const sleep =
     adapters.sleep ??
@@ -360,6 +354,7 @@ export async function runDeployedCommunityJourney(input, adapters = {}) {
   };
   let stage = 'identity';
   let editionId = null;
+  let auth = null;
   const creatorStore = adapters.creatorStore ?? createMemoryCreatorAcceptanceStore();
   const stateStore = adapters.stateStore ?? createMemoryCommunityStateStore();
   const downloadStore = adapters.downloadStore ?? createMemoryCommunityDownloadStore();
@@ -369,7 +364,7 @@ export async function runDeployedCommunityJourney(input, adapters = {}) {
       await adminPost({
         fetchImpl,
         baseURL: config.baseURL,
-        auth: config.auth.admin,
+        auth: auth.admin,
         path: `v1/admin/catalog/${editionId}/unlist`,
         body: { reason: `Acceptance cleanup ${config.namespace}/${runId}.` },
         action: 'Acceptance cleanup',
@@ -411,8 +406,31 @@ export async function runDeployedCommunityJourney(input, adapters = {}) {
     required(readiness?.status === 'ready', 'Deployment readiness check did not pass.');
     receipt.readiness = { status: 'ready' };
 
+    stage = 'authentication';
+    auth = Object.freeze({
+      creatorA: await resolveDeployedAcceptanceAccount(config.auth.creatorA, {
+        baseURL: config.baseURL,
+        fetchImpl: rawFetch,
+        timeoutMs: config.requestTimeoutMs,
+      }),
+      creatorB: await resolveDeployedAcceptanceAccount(config.auth.creatorB, {
+        baseURL: config.baseURL,
+        fetchImpl: rawFetch,
+        timeoutMs: config.requestTimeoutMs,
+      }),
+      admin: await resolveDeployedAcceptanceAccount(config.auth.admin, {
+        baseURL: config.baseURL,
+        fetchImpl: rawFetch,
+        timeoutMs: config.requestTimeoutMs,
+      }),
+    });
+
     stage = 'package';
-    const blob = await acceptancePackage({ namespace: config.namespace, runId });
+    const blob = await (adapters.createPackage ?? acceptancePackage)({
+      namespace: config.namespace,
+      runId,
+    });
+    required(blob instanceof Blob, 'Acceptance package builder returned invalid bytes.');
     const packageSha256 = await creatorSHA256(await blob.arrayBuffer());
     const title = `Acceptance ${config.namespace} ${runId}`;
     const slug = `acceptance-${config.namespace}-${runId}`;
@@ -428,13 +446,13 @@ export async function runDeployedCommunityJourney(input, adapters = {}) {
     const creatorA = createCommunityClient({
       baseURL: config.baseURL,
       fetchImpl,
-      authHeaders: authProvider(config.auth.creatorA),
+      authHeaders: authProvider(auth.creatorA),
       resumableUpload: tusUpload,
     });
     const creatorB = createCommunityClient({
       baseURL: config.baseURL,
       fetchImpl,
-      authHeaders: authProvider(config.auth.creatorB),
+      authHeaders: authProvider(auth.creatorB),
       resumableUpload: tusUpload,
     });
     const trackedCreatorA = Object.freeze({
@@ -466,7 +484,7 @@ export async function runDeployedCommunityJourney(input, adapters = {}) {
 
     stage = 'ownership';
     const isolated = await fetchImpl(new URL(`v1/submissions/${queued.id}`, config.baseURL), {
-      headers: config.auth.creatorB,
+      headers: auth.creatorB,
       cache: 'no-store',
     });
     const isolationBody = await isolated.text();
@@ -600,7 +618,7 @@ export async function runDeployedCommunityJourney(input, adapters = {}) {
     const queuedReport = await findAdminReport({
       fetchImpl,
       baseURL: config.baseURL,
-      auth: config.auth.admin,
+      auth: auth.admin,
       reportId,
     });
     required(
@@ -608,12 +626,25 @@ export async function runDeployedCommunityJourney(input, adapters = {}) {
       'Administrator report projection is invalid.',
     );
 
+    if (config.moderationMode === 'browser') {
+      receipt.moderation = {
+        reportId,
+        reportStatus: 'open',
+        editionStatus: 'published',
+        browserPath: '/game/community/moderation.html',
+      };
+      receipt.status = 'awaiting-browser';
+      receipt.completedAt = new Date(now()).toISOString();
+      receipt.durationMs = Math.max(0, now() - startedAtMs);
+      return Object.freeze(structuredClone(receipt));
+    }
+
     stage = 'moderation';
     const reason = `Acceptance removal ${config.namespace}/${runId}.`;
     const unlisted = await adminPost({
       fetchImpl,
       baseURL: config.baseURL,
-      auth: config.auth.admin,
+      auth: auth.admin,
       path: `v1/admin/catalog/${editionId}/unlist`,
       body: { reason },
       action: 'Administrator unlisting',
@@ -625,7 +656,7 @@ export async function runDeployedCommunityJourney(input, adapters = {}) {
     const resolved = await adminPost({
       fetchImpl,
       baseURL: config.baseURL,
-      auth: config.auth.admin,
+      auth: auth.admin,
       path: `v1/admin/reports/${reportId}/resolve`,
       body: { resolution: reason },
       action: 'Report resolution',
@@ -662,6 +693,134 @@ export async function runDeployedCommunityJourney(input, adapters = {}) {
     return Object.freeze(structuredClone(receipt));
   } catch (error) {
     receipt.cleanup = await adminCleanup();
+    receipt.completedAt = new Date(now()).toISOString();
+    receipt.durationMs = Math.max(0, now() - startedAtMs);
+    throw stageError(stage, error, receipt);
+  }
+}
+
+export function validateDeployedBrowserModerationConfig(input = {}) {
+  const baseURL = new URL(input.baseURL);
+  const loopback = ['127.0.0.1', 'localhost', '[::1]'].includes(baseURL.hostname);
+  required(
+    baseURL.protocol === 'https:' || (baseURL.protocol === 'http:' && loopback),
+    'Community service URL must use HTTPS outside loopback.',
+  );
+  required(
+    !baseURL.username && !baseURL.password && !baseURL.search && !baseURL.hash,
+    'Community service URL must not contain credentials, a query, or a fragment.',
+  );
+  baseURL.pathname = baseURL.pathname.endsWith('/') ? baseURL.pathname : `${baseURL.pathname}/`;
+  required(
+    RELEASE_VERSION.test(input.expectedRelease?.version ?? '') &&
+      SOURCE_REVISION.test(input.expectedRelease?.sourceRevision ?? ''),
+    'Exact expected release version and source revision are required.',
+  );
+  const seed = input.seedReceipt;
+  required(
+    seed?.format === DEPLOYED_ACCEPTANCE_FORMAT &&
+      seed.status === 'awaiting-browser' &&
+      typeof seed.runId === 'string' &&
+      /^[a-f0-9]{10}$/u.test(seed.runId) &&
+      seed.serviceOrigin === baseURL.origin &&
+      seed.release?.version === input.expectedRelease.version &&
+      seed.release?.sourceRevision === input.expectedRelease.sourceRevision &&
+      EDITION_ID.test(seed.editionId ?? '') &&
+      REPORT_ID.test(seed.moderation?.reportId ?? '') &&
+      seed.moderation?.reportStatus === 'open' &&
+      seed.moderation?.editionStatus === 'published' &&
+      seed.moderation?.browserPath === '/game/community/moderation.html',
+    'Browser moderation seed receipt is invalid or belongs to another deployment.',
+  );
+  return Object.freeze({
+    baseURL: baseURL.href,
+    expectedRelease: Object.freeze({ ...input.expectedRelease }),
+    admin: validateDeployedAcceptanceAccount(input.admin, 'Administrator authentication'),
+    requestTimeoutMs: boundedInteger(
+      input.requestTimeoutMs ?? 15_000,
+      'Request timeout',
+      100,
+      60_000,
+    ),
+    seed: Object.freeze({
+      runId: seed.runId,
+      editionId: seed.editionId,
+      reportId: seed.moderation.reportId,
+    }),
+  });
+}
+
+/** Verifies that the exact report seeded by browser moderation mode was resolved and
+ * its edition was unlisted through the deployed administrator UI. */
+export async function verifyDeployedBrowserModeration(input, adapters = {}) {
+  const config = validateDeployedBrowserModerationConfig(input);
+  const rawFetch = adapters.fetchImpl ?? globalThis.fetch;
+  const fetchImpl = createBoundedFetch(rawFetch, config.requestTimeoutMs);
+  const now = adapters.now ?? (() => Date.now());
+  const startedAtMs = now();
+  const receipt = {
+    format: DEPLOYED_BROWSER_MODERATION_FORMAT,
+    status: 'running',
+    serviceOrigin: new URL(config.baseURL).origin,
+    seedRunId: config.seed.runId,
+    startedAt: new Date(startedAtMs).toISOString(),
+  };
+  let stage = 'identity';
+  try {
+    const identity = await json(
+      await fetchImpl(new URL('version', config.baseURL), { cache: 'no-store' }),
+      'Release identity',
+    );
+    required(
+      identity?.format === 'revealline-community-release.v1' &&
+        identity.version === config.expectedRelease.version &&
+        identity.sourceRevision === config.expectedRelease.sourceRevision,
+      'Deployed release identity differs from the browser moderation seed.',
+    );
+    receipt.release = { ...config.expectedRelease };
+
+    stage = 'readiness';
+    const readiness = await json(
+      await fetchImpl(new URL('ready', config.baseURL), { cache: 'no-store' }),
+      'Readiness check',
+    );
+    required(readiness?.status === 'ready', 'Deployment readiness check did not pass.');
+    receipt.readiness = { status: 'ready' };
+
+    stage = 'authentication';
+    const admin = await resolveDeployedAcceptanceAccount(config.admin, {
+      baseURL: config.baseURL,
+      fetchImpl: rawFetch,
+      timeoutMs: config.requestTimeoutMs,
+    });
+
+    stage = 'moderation';
+    const resolved = await findAdminReport({
+      fetchImpl,
+      baseURL: config.baseURL,
+      auth: admin,
+      reportId: config.seed.reportId,
+      status: 'resolved',
+    });
+    required(
+      resolved.editionId === config.seed.editionId && !('reporterSubject' in resolved),
+      'Resolved report projection differs from the browser moderation seed.',
+    );
+    const hidden = await fetchImpl(new URL(`v1/catalog/${config.seed.editionId}`, config.baseURL), {
+      cache: 'no-store',
+    });
+    required(hidden.status === 404, 'Browser-moderated edition remains publicly available.');
+    receipt.moderation = {
+      reportId: config.seed.reportId,
+      reportStatus: 'resolved',
+      editionId: config.seed.editionId,
+      editionStatus: 'unlisted',
+    };
+    receipt.status = 'passed';
+    receipt.completedAt = new Date(now()).toISOString();
+    receipt.durationMs = Math.max(0, now() - startedAtMs);
+    return Object.freeze(structuredClone(receipt));
+  } catch (error) {
     receipt.completedAt = new Date(now()).toISOString();
     receipt.durationMs = Math.max(0, now() - startedAtMs);
     throw stageError(stage, error, receipt);

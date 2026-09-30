@@ -150,3 +150,10 @@ and Studio opener, then Back to Home. Separately exercise Return to game. Prove 
 run advancement or player-save writes, and verify hidden/blurred, disposed, newer
 focus/dialog, duplicate-hint and history-unavailable cases. Preserve each tool's
 unsaved-edit safeguards. Record native checks separately from modeled host tests.”
+
+## Exact raster handoff to rewards
+
+A selected bound raster revision can be prepared as its exact original file for
+Company or Level Studio. The destination still requires its approved selected
+asset inventory and an explicit teaser, reveal or registered-character binding.
+No asset store or approval path is added. See [the shared handoff](discovery-asset-handoff.md).

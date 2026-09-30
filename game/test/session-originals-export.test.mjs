@@ -82,7 +82,7 @@ test('offers a reusable real download without claiming durable save', async () =
   await f.prepare.onclick();
   assert.equal(f.download.href, 'blob:test-0');
   assert.equal(f.download.hidden, false);
-  assert.equal(f.download.download, 'RevealLine-session-originals.rlmedia');
+  assert.equal(f.download.download, 'fpv-line-session-originals.rlmedia');
   f.download.onclick({
     preventDefault() {
       assert.fail('Valid download blocked');

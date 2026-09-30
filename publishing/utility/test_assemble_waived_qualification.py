@@ -5,6 +5,7 @@ from pathlib import Path
 import tempfile
 import unittest
 from unittest.mock import patch
+import zipfile
 
 import assemble_waived_qualification as adapter
 import test_waived_qualification as waived
@@ -136,8 +137,26 @@ class AdapterTests(unittest.TestCase):
         self.assertNotIn('passed', q)
         self.assertEqual(len(q['gates']), 5)
         self.assertFalse((output / 'source.tar').exists())
+        pin = next(row for row in q['evidencePins']
+                   if row['path'] == adapter.HISTORICAL_AUDIO_EVIDENCE_ARCHIVE)
+        self.assertEqual(pin['sha256'], adapter.HISTORICAL_AUDIO_EVIDENCE_SHA256)
+        with zipfile.ZipFile(output / 'source-qualification-evidence.zip') as archive:
+            retained = archive.read(adapter.HISTORICAL_AUDIO_EVIDENCE_ARCHIVE)
+        self.assertEqual(adapter.sha(retained), adapter.HISTORICAL_AUDIO_EVIDENCE_SHA256)
         with self.assertRaisesRegex(ValueError, 'Fresh ordinary output'):
             adapter.assemble(self.config, output)
+
+    def test_changed_historical_audio_evidence_refuses_assembly(self):
+        original = self.blob
+
+        def changed(repo, revision, name):
+            if name == adapter.HISTORICAL_AUDIO_EVIDENCE_SOURCE:
+                return b'changed audit\n'
+            return original(repo, revision, name)
+
+        with patch.object(adapter, 'blob', side_effect=changed), \
+                self.assertRaisesRegex(ValueError, 'Historical audio retention evidence differs'):
+            adapter.assemble(self.config, self.root / 'out')
 
     def test_manifest_contract_runs_fresh_consumer_without_legacy_tar(self):
         name = 'qualified-artifact-verified/inspection.json'

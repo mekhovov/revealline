@@ -17,6 +17,10 @@ import {
   createAcceptancePng,
   inspectAcceptanceImage,
 } from './acceptance-fixture.mjs';
+import {
+  resolveDeployedAcceptanceAccount,
+  validateDeployedAcceptanceAccount,
+} from './deployed-acceptance-auth.mjs';
 
 export const DEPLOYED_TUS_ACCEPTANCE_FORMAT = 'revealline-community-deployed-tus-acceptance.v1';
 export const DEPLOYED_TUS_DESTRUCTIVE_OPT_IN =
@@ -33,21 +37,6 @@ const themesPromise = readFile(
 
 const required = (condition, message) => {
   if (!condition) throw new Error(message);
-};
-
-const exactAuth = (value, name) => {
-  required(value && typeof value === 'object' && !Array.isArray(value), `${name} is required.`);
-  const entries = Object.entries(value);
-  required(entries.length > 0 && entries.length <= 8, `${name} is invalid.`);
-  for (const [key, header] of entries)
-    required(
-      /^[a-z0-9-]{1,64}$/iu.test(key) &&
-        typeof header === 'string' &&
-        header.length <= 8192 &&
-        !/[\u0000-\u001f\u007f]/u.test(header),
-      `${name} is invalid.`,
-    );
-  return Object.freeze(Object.fromEntries(entries));
 };
 
 const boundedInteger = (value, name, minimum, maximum) => {
@@ -93,8 +82,8 @@ export function validateDeployedTusResumeConfig(input = {}) {
       validatorVersion: input.expectedRelease.validatorVersion,
     }),
     auth: Object.freeze({
-      creator: exactAuth(input.auth?.creator, 'Creator authentication'),
-      admin: exactAuth(input.auth?.admin, 'Administrator authentication'),
+      creator: validateDeployedAcceptanceAccount(input.auth?.creator, 'Creator authentication'),
+      admin: validateDeployedAcceptanceAccount(input.auth?.admin, 'Administrator authentication'),
     }),
     dropAfterBytes: boundedInteger(
       input.dropAfterBytes ?? 17,
@@ -245,14 +234,16 @@ export async function runDeployedTusResumeAcceptance(input, adapters = {}) {
   let stage = 'identity';
   let editionId = null;
   let proxy = null;
+  let rawFetch;
   let fetchImpl;
+  let auth = null;
   const cleanup = async () => {
     if (!editionId || !fetchImpl) return 'not-required';
     try {
       const admin = createCommunityClient({
         baseURL: proxy.origin,
         fetchImpl,
-        authHeaders: authProvider(config.auth.admin),
+        authHeaders: authProvider(auth.admin),
       });
       await admin.adminUnlistEdition(
         editionId,
@@ -265,7 +256,8 @@ export async function runDeployedTusResumeAcceptance(input, adapters = {}) {
   };
 
   try {
-    fetchImpl = boundedFetch(adapters.fetchImpl ?? globalThis.fetch, config.requestTimeoutMs);
+    rawFetch = adapters.fetchImpl ?? globalThis.fetch;
+    fetchImpl = boundedFetch(rawFetch, config.requestTimeoutMs);
     const identity = await json(
       await fetchImpl(new URL('version', config.baseURL), { cache: 'no-store' }),
       'Release identity',
@@ -298,6 +290,20 @@ export async function runDeployedTusResumeAcceptance(input, adapters = {}) {
     required(readiness?.status === 'ready', 'Deployment readiness check did not pass.');
     receipt.readiness = { status: 'ready' };
 
+    stage = 'authentication';
+    auth = Object.freeze({
+      creator: await resolveDeployedAcceptanceAccount(config.auth.creator, {
+        baseURL: config.baseURL,
+        fetchImpl: rawFetch,
+        timeoutMs: config.requestTimeoutMs,
+      }),
+      admin: await resolveDeployedAcceptanceAccount(config.auth.admin, {
+        baseURL: config.baseURL,
+        fetchImpl: rawFetch,
+        timeoutMs: config.requestTimeoutMs,
+      }),
+    });
+
     stage = 'proxy';
     proxy = await (adapters.startProxy ?? startTusFaultProxy)({
       upstreamURL: config.baseURL,
@@ -325,7 +331,7 @@ export async function runDeployedTusResumeAcceptance(input, adapters = {}) {
     const creator = createCommunityClient({
       baseURL: proxy.origin,
       fetchImpl,
-      authHeaders: authProvider(config.auth.creator),
+      authHeaders: authProvider(auth.creator),
       resumableUpload,
     });
     const trackedCreator = Object.freeze({

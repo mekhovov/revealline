@@ -4,6 +4,7 @@ import { AUTHORED_JOURNEY_ROUTE_IDS } from '../content-design/mode-href.mjs';
 import {
   missionLibraryHref,
   readMissionLibraryHandoff,
+  readMissionLibraryIntent,
   createMissionLibrarySessionState,
   MISSION_LIBRARY_STATE_PREFIX,
 } from '../mission-library/handoff.mjs';
@@ -221,4 +222,25 @@ test('a failed newer write cannot be replaced by older readable storage', () => 
   storage.setItem = originalSet;
   assert.equal(session.write(session.read()), true);
   assert.equal(JSON.parse(storage.values.get(session.key)).search, 'new');
+});
+
+test('select-only Versus mode links keep exact identity without upgrading malformed intent to Play', () => {
+  const target = new URL(href({ mode: 'versus', intent: 'select', journey: 'legacy' }));
+  assert.equal(readMissionLibraryHandoff(target.searchParams), opaque);
+  assert.equal(readMissionLibraryIntent(target.searchParams), 'select');
+  assert.equal(readMissionLibraryIntent(new URL(href()).searchParams), 'play');
+  for (const mode of ['solo', 'team'])
+    assert.throws(() => href({ mode, journey: 'legacy', intent: 'select' }), /Versus/);
+  assert.throws(() => href({ mode: 'versus', intent: 'unknown' }), /handoff/);
+  for (const value of ['', 'SELECT', 'launch', 'select&library-intent=play']) {
+    const params = new URLSearchParams({ 'library-mission': opaque, 'library-intent': value });
+    assert.throws(() => readMissionLibraryIntent(params), /intent/);
+  }
+  const duplicate = new URLSearchParams(target.searchParams);
+  duplicate.append('library-intent', 'play');
+  assert.throws(() => readMissionLibraryIntent(duplicate), /intent/);
+  assert.throws(
+    () => readMissionLibraryIntent(new URLSearchParams('library-intent=select')),
+    /identity/,
+  );
 });

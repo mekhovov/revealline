@@ -10,17 +10,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="color-scheme" content="dark" />
     <title data-i18n="tools:reveallineFpvFieldKitDesignAtlas">
-      RevealLine — FPV Field Kit design atlas
+      FPV / LINE — FPV Field Kit design atlas
     </title>
     <meta
       name="description"
-      content="Source-only review atlas for the RevealLine FPV redesign: screen studies, bilingual type, visual rules and reference evidence."
+      content="Source-only review atlas for the FPV / LINE FPV redesign: screen studies, bilingual type, visual rules and reference evidence."
       data-i18n-content="tools:sourceOnlyReviewAtlasForTheReveallineFpvRedesignScreen"
     />
     <link rel="stylesheet" href="./atlas.css" />
     <link rel="stylesheet" href="../../game/ui/operation-status.css" />
     <script type="module" src="../../game/ui/workshop-return-entry.mjs"></script>
     <link rel="stylesheet" href="../../game/ui/workshop-return.css" />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="../../game/ui/art/identity/fpv-line/icon-32.png"
+    />
+    <link rel="stylesheet" href="../../game/ui/brand-identity.css" />
   </head>
   <body data-workshop-tool="design-atlas">
     <div data-language-control></div>
@@ -37,18 +44,17 @@
     </p>
     <header class="atlas-header">
       <a
-        class="atlas-brand"
+        class="atlas-brand fpv-line-brand fpv-line-brand--compact"
         href="../../game/"
-        aria-label="Open the current RevealLine game"
+        aria-label="Open the current FPV / LINE game"
         data-workshop-return="game"
-        data-i18n-rich="tools:reveal"
         data-i18n-aria-label="tools:openTheCurrentReveallineGame"
       >
-        <span class="brand-mark" aria-hidden="true" data-i18n-slot="slot0">↗</span> REVEAL<span
-          data-i18n="tools:line2"
-          data-i18n-slot="slot1"
-          >LINE</span
-        >
+        <img
+          class="fpv-line-wordmark"
+          src="../../game/ui/art/identity/fpv-line/wordmark.png"
+          alt="FPV / LINE"
+        />
       </a>
       <a
         data-workshop-return="workshop"
@@ -500,14 +506,18 @@
             the selected registry slot.
           </p>
           <pre id="prompt-example-text" data-i18n="tools:atlas.exampleBrief">
-Create an original top-down FPV scout sprite for the RevealLine Pixel FPV Field Kit.
+Create an original top-down FPV scout sprite for the FPV / LINE Pixel FPV Field Kit.
 Use a compact charcoal quad frame, four separate propellers, a front camera and a small antenna. A warm amber center identifies the player. Use the selected slot’s exact dimensions, pivot, frame order and palette contract; do not invent these values.
 Keep a crisp pixel grid, restrained highlights and a clear silhouette at native size. Use a transparent background. Do not paint HUD text, glows, a collision outline, a trail, a logo or scenery into the body. Keep every required pose in the same scale and lighting direction.
 Return the sprite or coordinated sheet with all required states, an unchanged slot contract and a short description of the variation. Preserve gameplay bounds. Review on the arena before publishing.</pre
           >
           <button type="button" id="copy-prompt" data-i18n="tools:copyExampleBrief">
-            Copy example brief</button
-          ><span id="copy-status" role="status"></span>
+            Copy example brief
+          </button>
+          <a id="download-prompt" hidden data-i18n="tools:downloadExampleBrief"
+            >Download example brief</a
+          >
+          <span id="copy-status" role="status"></span>
         </details>
       </section>
 
@@ -645,6 +655,14 @@ Return the sprite or coordinated sheet with all required states, an unchanged sl
           Local screenshot previews are available when reviewing the source repository on localhost.
           Official source links remain available below.
         </p>
+        <p>
+          <a
+            id="reveal-audit-link"
+            href="reveal-audit.html"
+            data-i18n="tools:fieldKitFpvRevealSourceAudit"
+            >Field Kit — FPV reveal source audit</a
+          >
+        </p>
         <div class="reference-grid">
           <figure>
             <a
@@ -754,7 +772,7 @@ Return the sprite or coordinated sheet with all required states, an unchanged sl
       </section>
     </main>
     <footer class="atlas-footer">
-      <span data-i18n="tools:reveallinePixelFpvFieldKit">REVEALLINE / PIXEL FPV FIELD KIT</span>
+      <span data-i18n="tools:reveallinePixelFpvFieldKit">FPV / LINE / PIXEL FPV FIELD KIT</span>
       <p data-i18n="tools:originalLayoutStudiesReviewArtifactScreenTreatmentRemainsProposedUntil">
         Original layout studies. Review artifact. Screen treatment remains proposed until
         implemented and verified in the actual game.
@@ -767,5 +785,6 @@ Return the sprite or coordinated sheet with all required states, an unchanged sl
       data-module="./atlas.mjs"
       data-status="font-status"
     ></script>
+    <script type="module" src="../../game/ui/authoring-input-entry.mjs"></script>
   </body>
 </html>

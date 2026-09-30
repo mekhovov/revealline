@@ -185,7 +185,7 @@ function previewBoundary(t) {
     geometry: false,
     statusTarget: target,
     cancelButton,
-    label: 'Draft preview',
+    label: () => 'Draft preview',
   };
   const draw = (candidate = asset) =>
     drawAssetPreview(surface, slot, candidate, resolved, bytes, settings);

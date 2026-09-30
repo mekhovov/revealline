@@ -1554,7 +1554,7 @@ body.field-kit.field-kit-support[data-field-kit-page='motion-lab'] .ability-stag
   padding-block-start: 0.75rem;
   overflow-wrap: anywhere;
 }
-body.field-kit.field-kit-support[data-field-kit-page='motion-lab'] .ability-stage-legend h2 {
+body.field-kit.field-kit-support[data-field-kit-page='motion-lab'] #ability-stage-heading {
   margin: 0 0 0.5rem;
   font: 600 var(--fk-text-control) / var(--fk-leading-control) var(--fk-font-ui);
 }

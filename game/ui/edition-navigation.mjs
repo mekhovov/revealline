@@ -1,4 +1,6 @@
 import { localizedText } from '../i18n/index.mjs';
+import { isStudioPreview, STUDIO_PREVIEW_PARAMETER } from '../studio-preview-session.mjs';
+import { editionPublicSlug } from '../edition-context.mjs';
 
 const onlineRoot = 'https://mekhovov.github.io/revealline/';
 
@@ -48,14 +50,15 @@ export function mountEditionNavigation({ provider, document: doc, href }) {
     if (['game/', 'game/index.html', 'game/company.html'].includes(relative)) {
       const destination = new URL(game.href);
       destination.search = target.search;
-      destination.searchParams.set('edition', provider.editionId);
+      destination.searchParams.set('edition', editionPublicSlug(provider.editionId));
+      if (isStudioPreview(href)) destination.searchParams.set(STUDIO_PREVIEW_PARAMETER, '1');
       if (provider.retainedPresentationId)
         destination.searchParams.set('presentation', provider.retainedPresentationId);
       else destination.searchParams.delete('presentation');
       destination.hash = target.hash;
       link.href = destination.href;
     } else if (/^game\/(?:controller-lab|replay-theater)(?:\/|$)/.test(relative)) {
-      target.searchParams.set('edition', provider.editionId);
+      target.searchParams.set('edition', editionPublicSlug(provider.editionId));
       if (provider.retainedPresentationId)
         target.searchParams.set('presentation', provider.retainedPresentationId);
       else target.searchParams.delete('presentation');

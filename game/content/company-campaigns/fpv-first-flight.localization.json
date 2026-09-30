@@ -1,0 +1,206 @@
+{
+  "campaignId": "fpv-first-flight",
+  "campaignRevision": "1",
+  "format": "revealline-campaign-localization.v1",
+  "records": [
+    {
+      "fields": { "name": { "en": "First Flight Patterns", "uk": "Перші схеми польоту" } },
+      "id": "fpv-first-flight",
+      "identity": "0472d307e8ee2d3e",
+      "kind": "campaign"
+    },
+    {
+      "fields": {
+        "design.captureConsequence": {
+          "en": "This fictional reveal never changes a business record or a real-world delivery.",
+          "uk": "Це вигадане відкриття не змінює бізнес-записів чи справжньої доставки."
+        },
+        "design.counterplay": {
+          "en": "The pursuer commits to one observed point on the unfinished trail. Keep a short return ready and close before its finite approach reaches you.",
+          "uk": "Переслідувач обирає одну помічену точку на незавершеній лінії. Тримайте напоготові короткий шлях повернення й замкніть лінію до його наближення."
+        },
+        "design.lesson": {
+          "en": "Connect the fictional gym’s start and pause stations; this arcade map is not a flight simulator. The pursuer commits to one observed point on the unfinished trail. Keep a short return ready and close before its finite approach reaches you.",
+          "uk": "З’єднайте старт і паузу вигаданої зали; ця аркадна карта не є льотним симулятором. Переслідувач обирає одну помічену точку на незавершеній лінії. Тримайте напоготові короткий шлях повернення й замкніть лінію до його наближення."
+        },
+        "design.mastery": {
+          "en": "Connect every required objective and complete the encounter without losing a life; optional learning remains separate from arcade progress.",
+          "uk": "З’єднайте всі обов’язкові цілі й завершіть сутичку без втрати життя; необов’язкове навчання залишається окремим від аркадного прогресу."
+        },
+        "design.memorableMoment": {
+          "en": "Original civilian gym entrance with oversized pause and reset markers, soft floor lines and a fictional model parked on a mat.",
+          "uk": "Оригінальний вхід до цивільної спортивної зали з великими позначками паузи й скидання, м’якими лініями підлоги та вигаданою моделлю на килимку."
+        },
+        "design.routeDecision": {
+          "en": "Establish the pause island early or connect the start terrace by a shorter return. Keep a second return ready before the warning locks your trail or heading.",
+          "uk": "Спершу закріпіть острів паузи або приєднайте стартову терасу коротшим поверненням. Підготуйте другий шлях повернення до того, як попередження зафіксує вашу лінію або напрямок."
+        },
+        "name": { "en": "Start with a Stop", "uk": "Почніть із зупинки" }
+      },
+      "id": "fpv-first-flight-01",
+      "identity": "d27f235de735eb46",
+      "kind": "mission"
+    },
+    {
+      "fields": {
+        "design.captureConsequence": {
+          "en": "This fictional reveal never changes a business record or a real-world delivery.",
+          "uk": "Це вигадане відкриття не змінює бізнес-записів чи справжньої доставки."
+        },
+        "design.counterplay": {
+          "en": "The pursuer commits to one observed point on the unfinished trail. Keep a short return ready and close before its finite approach reaches you.",
+          "uk": "Переслідувач обирає одну помічену точку на незавершеній лінії. Тримайте напоготові короткий шлях повернення й замкніть лінію до його наближення."
+        },
+        "design.lesson": {
+          "en": "Connect the height markers without mistaking a top-down position for altitude. The pursuer commits to one observed point on the unfinished trail. Keep a short return ready and close before its finite approach reaches you.",
+          "uk": "З’єднайте позначки висоти, не плутаючи положення зверху з висотою. Переслідувач обирає одну помічену точку на незавершеній лінії. Тримайте напоготові короткий шлях повернення й замкніть лінію до його наближення."
+        },
+        "design.mastery": {
+          "en": "Connect every required objective and complete the encounter without losing a life; optional learning remains separate from arcade progress.",
+          "uk": "З’єднайте всі обов’язкові цілі й завершіть сутичку без втрати життя; необов’язкове навчання залишається окремим від аркадного прогресу."
+        },
+        "design.memorableMoment": {
+          "en": "Original paired top-down and side-view gym cards with a large height ruler, matching floor tile and two clearly different altitudes.",
+          "uk": "Оригінальні парні картки спортивної зали згори й збоку з великою лінійкою висоти, однаковою плиткою підлоги та двома чітко різними висотами."
+        },
+        "design.routeDecision": {
+          "en": "Climb the arcade’s marker chain or capture the wider observation bay first. Keep a second return ready before the warning locks your trail or heading.",
+          "uk": "Пройдіть аркадний ланцюг позначок або спершу захопіть ширшу зону спостереження. Підготуйте другий шлях повернення до того, як попередження зафіксує вашу лінію або напрямок."
+        },
+        "name": { "en": "Height Is a Separate Question", "uk": "Висота — окреме питання" }
+      },
+      "id": "fpv-first-flight-02",
+      "identity": "20329808b9657159",
+      "kind": "mission"
+    },
+    {
+      "fields": {
+        "design.captureConsequence": {
+          "en": "This fictional reveal never changes a business record or a real-world delivery.",
+          "uk": "Це вигадане відкриття не змінює бізнес-записів чи справжньої доставки."
+        },
+        "design.counterplay": {
+          "en": "The interceptor commits to one observed heading after its warning. Change your route after the lock and close on the nearer return.",
+          "uk": "Після попередження перехоплювач обирає один помічений напрямок руху. Змініть маршрут після фіксації й замкніть лінію біля ближчого виходу."
+        },
+        "design.lesson": {
+          "en": "Join the straight-route stations and compare direction with heading. The interceptor commits to one observed heading after its warning. Change your route after the lock and close on the nearer return.",
+          "uk": "З’єднайте станції прямого маршруту й порівняйте напрямок руху з курсом. Після попередження перехоплювач обирає один помічений напрямок руху. Змініть маршрут після фіксації й замкніть лінію біля ближчого виходу."
+        },
+        "design.mastery": {
+          "en": "Connect every required objective and complete the encounter without losing a life; optional learning remains separate from arcade progress.",
+          "uk": "З’єднайте всі обов’язкові цілі й завершіть сутичку без втрати життя; необов’язкове навчання залишається окремим від аркадного прогресу."
+        },
+        "design.memorableMoment": {
+          "en": "Original indoor gym diagram with a long floor arrow and an independently marked aircraft nose; inset overhead and oblique views.",
+          "uk": "Оригінальна схема спортивної зали з довгою стрілкою на підлозі й незалежно позначеним носом апарата; вставки виглядів згори та під кутом."
+        },
+        "design.routeDecision": {
+          "en": "Use the long straight island as a return or connect the two viewpoint alcoves. Keep a second return ready before the warning locks your trail or heading.",
+          "uk": "Поверніться через довгий прямий острів або з’єднайте дві ніші огляду. Підготуйте другий шлях повернення до того, як попередження зафіксує вашу лінію або напрямок."
+        },
+        "name": { "en": "A Straight Path, Two Views", "uk": "Прямий шлях, два види" }
+      },
+      "id": "fpv-first-flight-03",
+      "identity": "1f51b7fd2c3d897e",
+      "kind": "mission"
+    },
+    {
+      "fields": {
+        "design.captureConsequence": {
+          "en": "This fictional reveal never changes a business record or a real-world delivery.",
+          "uk": "Це вигадане відкриття не змінює бізнес-записів чи справжньої доставки."
+        },
+        "design.counterplay": {
+          "en": "The interceptor commits to one observed heading after its warning. Change your route after the lock and close on the nearer return. The marked lane warns before firing; close the whole exposed line before the pulse, not only the craft.",
+          "uk": "Після попередження перехоплювач обирає один помічений напрямок руху. Змініть маршрут після фіксації й замкніть лінію біля ближчого виходу. Позначена смуга попереджає перед пострілом; до імпульсу замкніть усю незахищену лінію — недостатньо лише відвести персонажа."
+        },
+        "design.lesson": {
+          "en": "Reveal a spacious lateral-travel scene with a fixed fictional viewpoint. The interceptor commits to one observed heading after its warning. Change your route after the lock and close on the nearer return.",
+          "uk": "Відкрийте простору сцену бокового руху зі сталою вигаданою точкою огляду. Після попередження перехоплювач обирає один помічений напрямок руху. Змініть маршрут після фіксації й замкніть лінію біля ближчого виходу."
+        },
+        "design.mastery": {
+          "en": "Connect every required objective and complete the encounter without losing a life; optional learning remains separate from arcade progress.",
+          "uk": "З’єднайте всі обов’язкові цілі й завершіть сутичку без втрати життя; необов’язкове навчання залишається окремим від аркадного прогресу."
+        },
+        "design.memorableMoment": {
+          "en": "Original sunlit civilian gym with giant window, blue floor mat and paired camera-framing cards; generous negative space.",
+          "uk": "Оригінальна залита сонцем цивільна спортивна зала з великим вікном, синім килимком і парними картками кадрування камери; багато вільного простору."
+        },
+        "design.routeDecision": {
+          "en": "Take the broad window terrace or make two short captures from the side mat. Keep a second return ready before the warning locks your trail or heading.",
+          "uk": "Оберіть широку терасу вікна або два короткі захоплення від бокового килимка. Підготуйте другий шлях повернення до того, як попередження зафіксує вашу лінію або напрямок."
+        },
+        "name": { "en": "Slide Past the Window", "uk": "Рух убік повз вікно" }
+      },
+      "id": "fpv-first-flight-04",
+      "identity": "ec922fc633ab58b5",
+      "kind": "mission"
+    },
+    {
+      "fields": {
+        "design.captureConsequence": {
+          "en": "This fictional reveal never changes a business record or a real-world delivery.",
+          "uk": "Це вигадане відкриття не змінює бізнес-записів чи справжньої доставки."
+        },
+        "design.counterplay": {
+          "en": "The interceptor commits to one observed heading after its warning. Change your route after the lock and close on the nearer return. The marked lane warns before firing; close the whole exposed line before the pulse, not only the craft.",
+          "uk": "Після попередження перехоплювач обирає один помічений напрямок руху. Змініть маршрут після фіксації й замкніть лінію біля ближчого виходу. Позначена смуга попереджає перед пострілом; до імпульсу замкніть усю незахищену лінію — недостатньо лише відвести персонажа."
+        },
+        "design.lesson": {
+          "en": "Connect the corner markers while separating a heading change from travel. The interceptor commits to one observed heading after its warning. Change your route after the lock and close on the nearer return.",
+          "uk": "З’єднайте кутові позначки, відділяючи зміну курсу від переміщення. Після попередження перехоплювач обирає один помічений напрямок руху. Змініть маршрут після фіксації й замкніть лінію біля ближчого виходу."
+        },
+        "design.mastery": {
+          "en": "Connect every required objective and complete the encounter without losing a life; optional learning remains separate from arcade progress.",
+          "uk": "З’єднайте всі обов’язкові цілі й завершіть сутичку без втрати життя; необов’язкове навчання залишається окремим від аркадного прогресу."
+        },
+        "design.memorableMoment": {
+          "en": "Original square gym floor with two contrasting route ribbons, repeated nose markers and separate heading-change cards.",
+          "uk": "Оригінальна квадратна підлога спортивної зали з двома контрастними стрічками маршрутів, повторними позначками носа й окремими картками зміни курсу."
+        },
+        "design.routeDecision": {
+          "en": "Secure opposite corner islands or follow neighbouring corners around the board. Keep a second return ready before the warning locks your trail or heading.",
+          "uk": "Закріпіть протилежні кутові острови або рухайтеся сусідніми кутами карти. Підготуйте другий шлях повернення до того, як попередження зафіксує вашу лінію або напрямок."
+        },
+        "name": { "en": "A Turn and a Translation", "uk": "Поворот і переміщення" }
+      },
+      "id": "fpv-first-flight-05",
+      "identity": "6d808a75321daf15",
+      "kind": "mission"
+    },
+    {
+      "fields": {
+        "design.captureConsequence": {
+          "en": "The captured relay opens its matching return. This fictional reveal never changes a business record or a real-world delivery.",
+          "uk": "Захоплене реле відкриває відповідний шлях повернення. Це вигадане відкриття не змінює бізнес-записів чи справжньої доставки."
+        },
+        "design.counterplay": {
+          "en": "The interceptor commits to one observed heading after its warning. Change your route after the lock and close on the nearer return. The marked lane warns before firing; close the whole exposed line before the pulse, not only the craft. Each numbered objective opens its matching connector. Closed connectors block a cut; open ones become safe returns without another fill.",
+          "uk": "Після попередження перехоплювач обирає один помічений напрямок руху. Змініть маршрут після фіксації й замкніть лінію біля ближчого виходу. Позначена смуга попереджає перед пострілом; до імпульсу замкніть усю незахищену лінію — недостатньо лише відвести персонажа. Кожна пронумерована ціль відкриває відповідний перехід. Закриті переходи блокують лінію; відкриті стають безпечними шляхами повернення без додаткового захоплення."
+        },
+        "design.lesson": {
+          "en": "Connect the gym landmarks into a route with readable checkpoints and an explicit finish. The interceptor commits to one observed heading after its warning. Change your route after the lock and close on the nearer return.",
+          "uk": "Поєднайте орієнтири зали в маршрут зі зрозумілими точками й явним завершенням. Після попередження перехоплювач обирає один помічений напрямок руху. Змініть маршрут після фіксації й замкніть лінію біля ближчого виходу."
+        },
+        "design.mastery": {
+          "en": "Connect every required objective and complete the encounter without losing a life; optional learning remains separate from arcade progress.",
+          "uk": "З’єднайте всі обов’язкові цілі й завершіть сутичку без втрати життя; необов’язкове навчання залишається окремим від аркадного прогресу."
+        },
+        "design.memorableMoment": {
+          "en": "Original finished civilian gym notebook spread with six route cards, separate height and heading markers and a clear resting finish mat.",
+          "uk": "Оригінальний завершений розворот зошита цивільної спортивної зали із шістьма картками маршрутів, окремими позначками висоти й курсу та чітким килимком завершення."
+        },
+        "design.routeDecision": {
+          "en": "Join the three landmark returns first or close the route’s outer envelope. Choose which numbered relay will open the most useful return connector first.",
+          "uk": "Спершу приєднайте три повернення орієнтирів або замкніть зовнішній контур маршруту. Оберіть пронумероване реле, яке першим відкриє найкорисніший перехід для повернення."
+        },
+        "name": { "en": "The Joined Practice Route", "uk": "Спільний навчальний маршрут" }
+      },
+      "id": "fpv-first-flight-06",
+      "identity": "c5a7ffc0521a8e4c",
+      "kind": "mission"
+    }
+  ],
+  "revision": "1"
+}

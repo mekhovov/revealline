@@ -5,13 +5,18 @@ import path from 'node:path';
 import os from 'node:os';
 import { createHash } from 'node:crypto';
 import { buildProject, PUBLIC_SECURITY_HEADERS } from '../../scripts/game-cli.mjs';
-import { iosHTMLPolicy, IOS_CSP } from '../../scripts/native-cli.mjs';
+import { iosHTMLPolicy, IOS_CSP, stageNative, verifySite } from '../../scripts/native-cli.mjs';
+import { loadNativeSite } from '../../platforms/desktop/resources.mjs';
 
 const sourceRoot = new URL('../', import.meta.url);
 const digest = (bytes) => createHash('sha256').update(bytes).digest('hex');
 const playerPresentationFiles = [
   'game/ui/handheld-play.css',
   'game/ui/field-kit-fonts.css',
+  'game/ui/brand-identity.css',
+  'game/ui/art/identity/fpv-line/wordmark.png',
+  'game/ui/art/identity/fpv-line/icon-32.png',
+  'game/ui/art/identity/fpv-line/icon-192.png',
   'game/ui/field-kit-tokens.css',
   'game/ui/field-kit-components.css',
   'game/ui/field-kit-flow.css',
@@ -29,10 +34,23 @@ const playerPresentationFiles = [
   'game/ui/fonts/field-kit/Exo2-OFL.txt',
   'game/ui/fonts/field-kit/IBMPlexMono-OFL.txt',
   'game/ui/fonts/field-kit/provenance.json',
+  'game/ui/fonts/departure-mono/DepartureMono-Regular.woff2',
   'game/ui/fonts/Tiny5-Regular.ttf',
   'game/ui/fonts/OFL.txt',
   'game/ui/fonts/METADATA.pb',
   'game/ui/fonts/provenance.json',
+];
+const ambientRuntimeFiles = [
+  'game/ui/menu-retune.mjs',
+  'game/ui/menu-retune.css',
+  'game/ui/native-menu.css',
+  'game/ui/menu-scenes.mjs',
+  'game/ui/menu-scene-motion.mjs',
+  'game/ui/menu-signal-loss.mjs',
+  'game/ui/menu-scenes.css',
+  'game/ui/art/menu-scenes/analog-noise-atlas.png',
+  'game/ui/art/menu-scenes/droneaid-main-background.png',
+  'game/ui/art/menu-scenes/droneaid-wordmark-light.svg',
 ];
 
 test('the actual game has a static dark guard before resources and a single caught module entry', async () => {
@@ -52,6 +70,7 @@ test('the actual game has a static dark guard before resources and a single caug
   assert.doesNotMatch(html, /<link\b[^>]*\shref="[^\"]+\.css"/);
   assert.match(html, /data-boot-href="ui\/operation-status.css"/);
   assert.match(html, /data-boot-href="ui\/handheld-play.css"/);
+  assert.match(html, /data-boot-href="ui\/quick-music-controls.css"/);
   assert.doesNotMatch(html, /<script\b[^>]*src="app.mjs"/);
   assert.equal([...html.matchAll(/id="boot-status"/g)].length, 1);
   assert.ok(
@@ -102,14 +121,15 @@ test('build rewrites native root paths, preserves extras and includes boot bytes
       await copy(path.posix.normalize(path.posix.join(path.posix.dirname(name), match[1])));
     }
   };
-  // The HTML, boot code, landing and offline generator inputs are actual source.
-  // Unrelated gameplay dependencies are inert fixture resources, not a claim
-  // that this small build runs the simulation or a native device.
+  // The HTML, boot, presentation and menu import/asset closure are
+  // actual source. The app entry and unrelated styles remain inert fixtures:
+  // this verifies packaging and offline bytes, not rendered/native gameplay.
   await copy('game/index.html');
   for (const name of [
     'game/boot.mjs',
     'game/boot.css',
     ...playerPresentationFiles,
+    ...ambientRuntimeFiles,
     'game/offline.mjs',
     'game/platform.mjs',
     'game/offline/service-worker.template.js',
@@ -130,7 +150,17 @@ test('build rewrites native root paths, preserves extras and includes boot bytes
   await put('game/content-launch.mjs', 'export {};');
   await put(
     'game/build-config.json',
-    JSON.stringify({ version: '0.29.0', entry: 'game/index.html', include: ['game', 'site'] }),
+    JSON.stringify({
+      version: '0.29.0',
+      entry: 'game/index.html',
+      include: [
+        'game',
+        'site',
+        // Presentation imports can cross into the shared motion primitives.
+        // Ship precisely those copied files, not the whole authoring tree.
+        ...[...copied].filter((name) => !name.startsWith('game/') && !name.startsWith('site/')),
+      ],
+    }),
   );
   const out = path.join(directory, 'build');
   const first = await buildProject({ root, out });
@@ -167,6 +197,8 @@ test('build rewrites native root paths, preserves extras and includes boot bytes
     'game/boot.mjs',
     'game/boot.css',
     'game/ui/handheld-play.css',
+    ...ambientRuntimeFiles,
+    'authoring/motion-lab/animation.mjs',
     'site/launch.mjs',
     'site/about.html',
     'game/presentation/page-entry.mjs',
@@ -177,5 +209,38 @@ test('build rewrites native root paths, preserves extras and includes boot bytes
     const bytes = await fs.readFile(path.join(out, name));
     assert.equal(record.bytes, bytes.length);
     assert.equal(record.sha256, digest(bytes));
+    if (ambientRuntimeFiles.includes(name))
+      assert.deepEqual(bytes, await fs.readFile(new URL(`../${name}`, sourceRoot)));
+  }
+  const nativeFiles = [...ambientRuntimeFiles];
+  const bridge = path.join(directory, 'fixture-bridge.mjs');
+  await fs.writeFile(bridge, 'export const fixture = true;\n');
+  for (const platform of ['desktop', 'ios']) {
+    const native = path.join(directory, `native-${platform}`);
+    await stageNative({
+      site: out,
+      out: native,
+      platform,
+      ...(platform === 'ios' ? { bridge } : {}),
+    });
+    const verified = await verifySite(native, { native: true });
+    for (const name of nativeFiles) {
+      const record = verified.manifest.files.find((entry) => entry.path === name);
+      const source = await fs.readFile(path.join(out, name));
+      assert.equal(record?.sha256, digest(source), `${platform} must retain exact ${name}`);
+      assert.deepEqual(await fs.readFile(path.join(native, name)), source);
+    }
+    if (platform === 'desktop') {
+      const site = await loadNativeSite(native);
+      for (const name of nativeFiles) {
+        const response = await site.handle(new Request(`revealline://app/${name}`));
+        assert.equal(response.status, 200, name);
+        assert.equal(
+          digest(Buffer.from(await response.arrayBuffer())),
+          digest(await fs.readFile(path.join(out, name))),
+          name,
+        );
+      }
+    }
   }
 });

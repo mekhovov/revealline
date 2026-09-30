@@ -1,0 +1,1098 @@
+[
+  {
+    "brandId": "ukraine-culture",
+    "campaignId": "ukraine-crimea-ornek",
+    "format": "revealline-completion-reward.v1",
+    "id": "ukraine-crimea-ornek-01-discovery",
+    "locales": {
+      "en": {
+        "teaser": "Örnek includes knowledge, people and composition—not just decoration.",
+        "title": "Name the Tradition"
+      },
+      "uk": {
+        "teaser": "Орьнек поєднує знання, людей і композицію, а не лише оздоблення.",
+        "title": "Назвіть традицію"
+      }
+    },
+    "payloads": [
+      {
+        "asset": {
+          "assetId": "ukraine-crimea-ornek-01-reveal-v1",
+          "sha256": "dc7fad1a463982a631b34151834fe71cd934972f65ffebe86e894b98edc02ae3"
+        },
+        "id": "ukraine-crimea-ornek-01-image",
+        "locales": {
+          "en": {
+            "alt": "Original illustrated heritage entrance with turquoise accents, blank source panels and separate plain textile, ceramic and thread displays.",
+            "title": "Name the Tradition"
+          },
+          "uk": {
+            "alt": "Оригінальний ілюстрований вхід до виставки спадщини з бірюзовими акцентами, порожніми панелями джерел та окремими простими зразками тканини, кераміки й ниток.",
+            "title": "Назвіть традицію"
+          }
+        },
+        "type": "image"
+      },
+      {
+        "id": "ukraine-crimea-ornek-01-knowledge",
+        "locales": {
+          "en": {
+            "paragraphs": [
+              "UNESCO inscribed Ornek, a Crimean Tatar ornament and knowledge about it, in 2021. Its record describes symbols arranged into meaningful compositions across several crafts, including embroidery, weaving and pottery.",
+              "Our first label names the community and practice before describing colour. Keep “Crimean Tatar” and “Örnek” beside the source, rather than relabelling any attractive pattern as generic Ukrainian ornament. The fictional arcade court is an invitation to learn, not an authentic Ornek design."
+            ],
+            "sources": [
+              {
+                "title": "UNESCO — Ornek, a Crimean Tatar ornament and knowledge about it, decision 2021",
+                "url": "https://ich.unesco.org/en/decisions/16.COM/8.B.45"
+              }
+            ],
+            "title": "Name the Tradition"
+          },
+          "uk": {
+            "paragraphs": [
+              "ЮНЕСКО внесло «Орьнек — кримськотатарський орнамент та знання про нього» до списку 2021 року. Запис описує символи, поєднані у змістовні композиції в різних ремеслах, зокрема вишивці, ткацтві й гончарстві.",
+              "Наш перший підпис називає спільноту та практику перед описом кольору. Збережіть слова «кримськотатарський» та «Орьнек» поруч із джерелом, не називаючи будь-який гарний візерунок узагальненим українським орнаментом. Вигадане ігрове подвір’я запрошує вчитися, а не представляє автентичний Орьнек."
+            ],
+            "sources": [
+              {
+                "title": "UNESCO — Ornek, a Crimean Tatar ornament and knowledge about it, decision 2021",
+                "url": "https://ich.unesco.org/en/decisions/16.COM/8.B.45"
+              }
+            ],
+            "title": "Назвіть традицію"
+          }
+        },
+        "profiles": {
+          "beginners": {
+            "en": {
+              "paragraphs": [
+                "Begin a label with the named community, practice and source. Do not classify the game’s invented decoration as an authentic Örnek composition."
+              ],
+              "title": "Make a distinction: Name the Tradition"
+            },
+            "uk": {
+              "paragraphs": [
+                "Почніть підпис із названої спільноти, практики й джерела. Не називайте вигадану декорацію гри автентичною композицією Örnek."
+              ],
+              "title": "Розрізнімо: Назвіть традицію"
+            }
+          },
+          "families": {
+            "en": {
+              "paragraphs": [
+                "Read “Crimean Tatar” and “Örnek” together. Explain why the name of a community belongs beside the name of a practice."
+              ],
+              "title": "Look together: Name the Tradition"
+            },
+            "uk": {
+              "paragraphs": [
+                "Прочитайте разом «кримськотатарський» і «Örnek». Поясніть, чому назва спільноти має бути поруч із назвою практики."
+              ],
+              "title": "Погляньмо разом: Назвіть традицію"
+            }
+          },
+          "hobbyists": {
+            "en": {
+              "paragraphs": [
+                "Compare a named UNESCO entry with a generic decorative caption. Which cultural attribution would the generic version erase, and what evidence would authentic identification require?"
+              ],
+              "title": "Explore the evidence: Name the Tradition"
+            },
+            "uk": {
+              "paragraphs": [
+                "Порівняйте іменований запис ЮНЕСКО із загальним декоративним підписом. Яке культурне авторство зникло б у другому й які докази потрібні для автентичної атрибуції?"
+              ],
+              "title": "Дослідімо докази: Назвіть традицію"
+            }
+          }
+        },
+        "type": "knowledge"
+      }
+    ],
+    "requirements": {
+      "learning": [],
+      "mastery": [],
+      "missions": [
+        {
+          "bindings": [
+            { "difficulty": "gentle", "gameplayId": "5fe2fee7c927c957" },
+            { "difficulty": "standard", "gameplayId": "b6a280cfc754779e" },
+            { "difficulty": "expert", "gameplayId": "465f7510d28ab25d" }
+          ],
+          "missionId": "ukraine-crimea-ornek-01"
+        }
+      ]
+    },
+    "revision": "3",
+    "scope": { "id": "ukraine-crimea-ornek-01", "kind": "mission" },
+    "teaserImage": {
+      "asset": {
+        "assetId": "ukraine-crimea-ornek-key-v1",
+        "sha256": "ee8f5544264c4e0c4d1cfd614f2c2791b7d9cb26b6d4f0c1dd2c68cc5453134b"
+      },
+      "locales": {
+        "en": {
+          "alt": "A fictional community craft courtyard with connected worktables, textiles, clay forms and blank composition studies."
+        },
+        "uk": {
+          "alt": "Уявне подвір’я спільної майстерні зі з’єднаними столами, тканинами, глиняними формами та чистими аркушами для композицій."
+        }
+      }
+    }
+  },
+  {
+    "brandId": "ukraine-culture",
+    "campaignId": "ukraine-crimea-ornek",
+    "format": "revealline-completion-reward.v1",
+    "id": "ukraine-crimea-ornek-02-discovery",
+    "locales": {
+      "en": {
+        "teaser": "An attributed embroidered panel begins with a conversation.",
+        "title": "A Composition for Someone"
+      },
+      "uk": {
+        "teaser": "Вишитий твір із зазначеною авторкою починається з розмови.",
+        "title": "Композиція для людини"
+      }
+    },
+    "payloads": [
+      {
+        "asset": {
+          "assetId": "ukraine-crimea-ornek-02-reveal-v1",
+          "sha256": "215c097a82066b44b65001c54db18a57bab0d56e72413cdec0d0348b1006802e"
+        },
+        "id": "ukraine-crimea-ornek-02-image",
+        "locales": {
+          "en": {
+            "alt": "Original illustrated consultation room with separate visitor and maker desks, plain thread and textile materials, and a blank paper ribbon connecting request and sketch.",
+            "title": "A Composition for Someone"
+          },
+          "uk": {
+            "alt": "Оригінальна ілюстрована кімната розмови з окремими столами відвідувача й майстра, простими нитками та тканиною і порожньою паперовою стрічкою між задумом та ескізом.",
+            "title": "Композиція для людини"
+          }
+        },
+        "type": "image"
+      },
+      {
+        "id": "ukraine-crimea-ornek-02-knowledge",
+        "locales": {
+          "en": {
+            "paragraphs": [
+              "UNESCO’s nomination photographs identify an embroidered panel by Elvira Osmanova, commissioned for an interior. The caption explains that customers can ask an artisan for a composition carrying a particular meaning.",
+              "In the MIRAS account, Esma Adzhiieva explains a tulip within a rose as marriage. Attribute that interpretation to its source; do not apply it to every floral picture. For our fictional visitor’s welcoming message, ask a knowledgeable maker how to express the request instead of selecting a random flower."
+            ],
+            "sources": [
+              {
+                "title": "UNESCO — Attributed Crimean Tatar Ornek works and makers",
+                "url": "https://ich.unesco.org/en/8b-representative-list-01191?call=slideshow&id=01601&include=slideshow_inc.php&mode=scroll"
+              },
+              {
+                "title": "Alem / National Museum of the History of Ukraine — MIRAS: Ornek and its makers",
+                "url": "https://www.ornek-crimea.com/stories-of-crimea-ua/stories-miras-ornek"
+              }
+            ],
+            "title": "A Composition for Someone"
+          },
+          "uk": {
+            "paragraphs": [
+              "Фотографії номінації ЮНЕСКО називають Ельвіру Османову авторкою вишитого панно на замовлення для інтер’єру. Підпис пояснює, що замовники можуть просити майстра створити композицію з певним змістом.",
+              "У розповіді MIRAS Есма Аджієва пояснює тюльпан усередині троянди як шлюб. Зазначте джерело цього тлумачення; не застосовуйте його до кожного квіткового малюнка. Щоб передати гостинність вигаданого відвідувача, запитайте обізнаного майстра, як висловити побажання, замість вибору випадкової квітки."
+            ],
+            "sources": [
+              {
+                "title": "UNESCO — Attributed Crimean Tatar Ornek works and makers",
+                "url": "https://ich.unesco.org/en/8b-representative-list-01191?call=slideshow&id=01601&include=slideshow_inc.php&mode=scroll"
+              },
+              {
+                "title": "Alem / National Museum of the History of Ukraine — MIRAS: Ornek and its makers",
+                "url": "https://www.ornek-crimea.com/stories-of-crimea-ua/stories-miras-ornek"
+              }
+            ],
+            "title": "Композиція для людини"
+          }
+        },
+        "profiles": {
+          "beginners": {
+            "en": {
+              "paragraphs": [
+                "Keep the source-specific interpretation attributed to Esma Adzhiieva. The same explanation cannot automatically be applied to any floral picture."
+              ],
+              "title": "Make a distinction: A Composition for Someone"
+            },
+            "uk": {
+              "paragraphs": [
+                "Збережіть тлумачення конкретного джерела з іменем Есми Аджієвої. Його не можна автоматично переносити на будь-який квітковий малюнок."
+              ],
+              "title": "Розрізнімо: Композиція для людини"
+            }
+          },
+          "families": {
+            "en": {
+              "paragraphs": [
+                "Imagine asking a maker for a welcoming message. What would you explain about the person receiving it before choosing a flower?"
+              ],
+              "title": "Look together: A Composition for Someone"
+            },
+            "uk": {
+              "paragraphs": [
+                "Уявіть прохання до майстрині про вітальне послання. Що розповісте про адресата перед вибором квітки?"
+              ],
+              "title": "Погляньмо разом: Композиція для людини"
+            }
+          },
+          "hobbyists": {
+            "en": {
+              "paragraphs": [
+                "Compare a commissioned panel’s caption with the MIRAS interpretation. Distinguish who made the object, who explains the composition and which claim remains specific to that account."
+              ],
+              "title": "Explore the evidence: A Composition for Someone"
+            },
+            "uk": {
+              "paragraphs": [
+                "Зіставте підпис замовленого панно з тлумаченням MIRAS. Розрізніть автора предмета, того, хто пояснює композицію, і твердження, що стосується саме цієї розповіді."
+              ],
+              "title": "Дослідімо докази: Композиція для людини"
+            }
+          }
+        },
+        "type": "knowledge"
+      }
+    ],
+    "requirements": {
+      "learning": [],
+      "mastery": [],
+      "missions": [
+        {
+          "bindings": [
+            { "difficulty": "gentle", "gameplayId": "9bf54d24ffbd7269" },
+            { "difficulty": "standard", "gameplayId": "c567e8ab9ffccb45" },
+            { "difficulty": "expert", "gameplayId": "2b349938a10b8d82" }
+          ],
+          "missionId": "ukraine-crimea-ornek-02"
+        }
+      ]
+    },
+    "revision": "4",
+    "scope": { "id": "ukraine-crimea-ornek-02", "kind": "mission" },
+    "teaserImage": {
+      "asset": {
+        "assetId": "ukraine-crimea-ornek-key-v1",
+        "sha256": "ee8f5544264c4e0c4d1cfd614f2c2791b7d9cb26b6d4f0c1dd2c68cc5453134b"
+      },
+      "locales": {
+        "en": {
+          "alt": "A fictional community craft courtyard with connected worktables, textiles, clay forms and blank composition studies."
+        },
+        "uk": {
+          "alt": "Уявне подвір’я спільної майстерні зі з’єднаними столами, тканинами, глиняними формами та чистими аркушами для композицій."
+        }
+      }
+    }
+  },
+  {
+    "brandId": "ukraine-culture",
+    "campaignId": "ukraine-crimea-ornek",
+    "format": "revealline-completion-reward.v1",
+    "id": "ukraine-crimea-ornek-03-discovery",
+    "locales": {
+      "en": {
+        "teaser": "A named Crimean belt has a place, period and museum collection.",
+        "title": "Read the Object Record"
+      },
+      "uk": {
+        "teaser": "Названий кримський пояс має місце, період і музейну колекцію.",
+        "title": "Прочитайте опис предмета"
+      }
+    },
+    "payloads": [
+      {
+        "asset": {
+          "assetId": "ukraine-crimea-ornek-03-reveal-v1",
+          "sha256": "b20f4074396bbf1095cb2c2acdc245816de51edd313cda74029662eada08b351"
+        },
+        "id": "ukraine-crimea-ornek-03-image",
+        "locales": {
+          "en": {
+            "alt": "Original illustrated material archive with separate plain textile, abstract metal belt-like form and woven panel cabinets, each retaining a blank record card.",
+            "title": "Read the Object Record"
+          },
+          "uk": {
+            "alt": "Оригінальний ілюстрований архів матеріалів з окремими вітринами простої тканини, абстрактної металевої поясоподібної форми й тканого панно, кожна зі своєю порожньою карткою.",
+            "title": "Прочитайте опис предмета"
+          }
+        },
+        "type": "image"
+      },
+      {
+        "id": "ukraine-crimea-ornek-03-knowledge",
+        "locales": {
+          "en": {
+            "paragraphs": [
+              "Alem and the National Museum of the History of Ukraine’s MIRAS account identifies a women’s qushaq belt from Crimea, dated to the late nineteenth or early twentieth century, in the museum’s Treasury collection.",
+              "Separate the documented record from your own observation: “The label dates this belt” is different from “I notice repeated shapes.” Do not infer a wearer’s biography from ornament alone. Our display silhouette is illustrative; the linked record holds the actual object image and attribution."
+            ],
+            "sources": [
+              {
+                "title": "Alem / National Museum of the History of Ukraine — MIRAS: Ornek and its makers",
+                "url": "https://www.ornek-crimea.com/stories-of-crimea-ua/stories-miras-ornek"
+              }
+            ],
+            "title": "Read the Object Record"
+          },
+          "uk": {
+            "paragraphs": [
+              "Розповідь про MIRAS від «Алєм» і Національного музею історії України описує жіночий пояс кушак із Криму кінця XIX — початку XX століття зі збірки Скарбниці музею.",
+              "Відокремте документований опис від власного спостереження: «Підпис датує пояс» — не те саме, що «Я бачу повторювані форми». Не виводьте біографію власниці лише з орнаменту. Силует у нашій вітрині ілюстративний; справжнє зображення та атрибуція містяться за посиланням."
+            ],
+            "sources": [
+              {
+                "title": "Alem / National Museum of the History of Ukraine — MIRAS: Ornek and its makers",
+                "url": "https://www.ornek-crimea.com/stories-of-crimea-ua/stories-miras-ornek"
+              }
+            ],
+            "title": "Прочитайте опис предмета"
+          }
+        },
+        "profiles": {
+          "beginners": {
+            "en": {
+              "paragraphs": [
+                "Use the qushaq record for place, period and collection. Leave a wearer’s life story unknown when the cited record does not establish it."
+              ],
+              "title": "Make a distinction: Read the Object Record"
+            },
+            "uk": {
+              "paragraphs": [
+                "Використайте запис про qushaq для місця, часу й колекції. Не дописуйте історію власниці, якщо цитований запис її не встановлює."
+              ],
+              "title": "Розрізнімо: Прочитайте опис предмета"
+            }
+          },
+          "families": {
+            "en": {
+              "paragraphs": [
+                "Take turns saying “the record tells us” and “I notice.” Which sentence can date the belt, and which describes what you see?"
+              ],
+              "title": "Look together: Read the Object Record"
+            },
+            "uk": {
+              "paragraphs": [
+                "По черзі починайте речення зі «запис повідомляє» та «я помічаю». Що може датувати пояс, а що описує побачене?"
+              ],
+              "title": "Погляньмо разом: Прочитайте опис предмета"
+            }
+          },
+          "hobbyists": {
+            "en": {
+              "paragraphs": [
+                "Draft two separate notes: a source-based object description and a visual observation. Identify the extra evidence needed before proposing a biography or occasion of use."
+              ],
+              "title": "Explore the evidence: Read the Object Record"
+            },
+            "uk": {
+              "paragraphs": [
+                "Складіть дві окремі примітки: опис предмета за джерелом і візуальне спостереження. Назвіть докази, потрібні для біографії чи нагоди використання."
+              ],
+              "title": "Дослідімо докази: Прочитайте опис предмета"
+            }
+          }
+        },
+        "type": "knowledge"
+      }
+    ],
+    "requirements": {
+      "learning": [],
+      "mastery": [],
+      "missions": [
+        {
+          "bindings": [
+            { "difficulty": "gentle", "gameplayId": "c84849253276936b" },
+            { "difficulty": "standard", "gameplayId": "c421b671449b5438" },
+            { "difficulty": "expert", "gameplayId": "6c2cd9fa6e1468a6" }
+          ],
+          "missionId": "ukraine-crimea-ornek-03"
+        }
+      ]
+    },
+    "revision": "4",
+    "scope": { "id": "ukraine-crimea-ornek-03", "kind": "mission" },
+    "teaserImage": {
+      "asset": {
+        "assetId": "ukraine-crimea-ornek-key-v1",
+        "sha256": "ee8f5544264c4e0c4d1cfd614f2c2791b7d9cb26b6d4f0c1dd2c68cc5453134b"
+      },
+      "locales": {
+        "en": {
+          "alt": "A fictional community craft courtyard with connected worktables, textiles, clay forms and blank composition studies."
+        },
+        "uk": {
+          "alt": "Уявне подвір’я спільної майстерні зі з’єднаними столами, тканинами, глиняними формами та чистими аркушами для композицій."
+        }
+      }
+    }
+  },
+  {
+    "brandId": "ukraine-culture",
+    "campaignId": "ukraine-crimea-ornek",
+    "format": "revealline-completion-reward.v1",
+    "id": "ukraine-crimea-ornek-04-discovery",
+    "locales": {
+      "en": {
+        "teaser": "A jeweller’s skill continues through people who learn it.",
+        "title": "Knowledge Has Teachers"
+      },
+      "uk": {
+        "teaser": "Майстерність ювеліра продовжується в людях, які її вивчають.",
+        "title": "У знань є вчителі"
+      }
+    },
+    "payloads": [
+      {
+        "asset": {
+          "assetId": "ukraine-crimea-ornek-04-reveal-v1",
+          "sha256": "bf62229d15c47d7960e1bac8995ba9cfac76f8b832debcd9ccb380a7d0d53020"
+        },
+        "id": "ukraine-crimea-ornek-04-image",
+        "locales": {
+          "en": {
+            "alt": "Original illustrated quiet learning courtyard with two empty craft tables and separate stands for a tool silhouette, a plain loop sculpture and a blank book.",
+            "title": "Knowledge Has Teachers"
+          },
+          "uk": {
+            "alt": "Оригінальне ілюстроване спокійне навчальне подвір’я з двома порожніми робочими столами та окремими підставками для силуету інструмента, простої кільцевої скульптури й порожньої книги.",
+            "title": "У знань є вчителі"
+          }
+        },
+        "type": "image"
+      },
+      {
+        "id": "ukraine-crimea-ornek-04-knowledge",
+        "locales": {
+          "en": {
+            "paragraphs": [
+              "The MIRAS account describes the Bakhchysarai jeweller Ayder Asanov teaching Crimean Tatar filigree to family members and other students. A finished object and the knowledge needed to make it are related parts of heritage.",
+              "Imagine an exhibit with a tool, a finished work and a maker’s explanation. Which helps you see the result, and which helps you understand the practice? Looking at the tool alone does not teach the skill. Follow a named teacher’s account instead of treating a decorative image as a complete lesson."
+            ],
+            "sources": [
+              {
+                "title": "Alem / National Museum of the History of Ukraine — MIRAS: Ornek and its makers",
+                "url": "https://www.ornek-crimea.com/stories-of-crimea-ua/stories-miras-ornek"
+              }
+            ],
+            "title": "Knowledge Has Teachers"
+          },
+          "uk": {
+            "paragraphs": [
+              "Розповідь MIRAS описує, як бахчисарайський ювелір Айдер Асанов передавав кримськотатарську філігрань рідним та іншим учням. Готовий предмет і знання для його створення — пов’язані частини спадщини.",
+              "Уявіть виставку з інструментом, готовим твором і поясненням майстра. Що показує результат, а що допомагає зрозуміти практику? Сам погляд на інструмент не навчає ремесла. Зверніться до розповіді названого вчителя, не сприймаючи декоративне зображення як повний урок."
+            ],
+            "sources": [
+              {
+                "title": "Alem / National Museum of the History of Ukraine — MIRAS: Ornek and its makers",
+                "url": "https://www.ornek-crimea.com/stories-of-crimea-ua/stories-miras-ornek"
+              }
+            ],
+            "title": "У знань є вчителі"
+          }
+        },
+        "profiles": {
+          "beginners": {
+            "en": {
+              "paragraphs": [
+                "Distinguish seeing a result from learning a practice. Keep Ayder Asanov’s named teaching account attached instead of presenting the illustration as a craft lesson."
+              ],
+              "title": "Make a distinction: Knowledge Has Teachers"
+            },
+            "uk": {
+              "paragraphs": [
+                "Розрізніть споглядання результату й вивчення практики. Збережіть іменовану розповідь про навчання Айдера Асанова, не видаючи ілюстрацію за урок ремесла."
+              ],
+              "title": "Розрізнімо: У знань є вчителі"
+            }
+          },
+          "families": {
+            "en": {
+              "paragraphs": [
+                "Choose a tool, a finished object and a maker’s explanation in the imagined exhibit. Tell each other what a picture alone cannot teach."
+              ],
+              "title": "Look together: Knowledge Has Teachers"
+            },
+            "uk": {
+              "paragraphs": [
+                "Оберіть інструмент, готовий предмет і пояснення майстра в уявній виставці. Розкажіть, чого саме зображення не навчає."
+              ],
+              "title": "Погляньмо разом: У знань є вчителі"
+            }
+          },
+          "hobbyists": {
+            "en": {
+              "paragraphs": [
+                "Plan a source-linked display about transmission of knowledge. What can the object show, and which question should remain with a culture bearer or teacher?"
+              ],
+              "title": "Explore the evidence: Knowledge Has Teachers"
+            },
+            "uk": {
+              "paragraphs": [
+                "Сплануйте виставку з джерелами про передавання знань. Що покаже предмет, а яке запитання варто залишити носієві культури чи вчителю?"
+              ],
+              "title": "Дослідімо докази: У знань є вчителі"
+            }
+          }
+        },
+        "type": "knowledge"
+      }
+    ],
+    "requirements": {
+      "learning": [],
+      "mastery": [],
+      "missions": [
+        {
+          "bindings": [
+            { "difficulty": "gentle", "gameplayId": "f2a5a5a7084168d1" },
+            { "difficulty": "standard", "gameplayId": "aceda3bd2e1224dc" },
+            { "difficulty": "expert", "gameplayId": "5c614486221bfd9d" }
+          ],
+          "missionId": "ukraine-crimea-ornek-04"
+        }
+      ]
+    },
+    "revision": "4",
+    "scope": { "id": "ukraine-crimea-ornek-04", "kind": "mission" },
+    "teaserImage": {
+      "asset": {
+        "assetId": "ukraine-crimea-ornek-key-v1",
+        "sha256": "ee8f5544264c4e0c4d1cfd614f2c2791b7d9cb26b6d4f0c1dd2c68cc5453134b"
+      },
+      "locales": {
+        "en": {
+          "alt": "A fictional community craft courtyard with connected worktables, textiles, clay forms and blank composition studies."
+        },
+        "uk": {
+          "alt": "Уявне подвір’я спільної майстерні зі з’єднаними столами, тканинами, глиняними формами та чистими аркушами для композицій."
+        }
+      }
+    }
+  },
+  {
+    "brandId": "ukraine-culture",
+    "campaignId": "ukraine-crimea-ornek",
+    "format": "revealline-completion-reward.v1",
+    "id": "ukraine-crimea-ornek-05-discovery",
+    "locales": {
+      "en": {
+        "teaser": "Rustem Skybin names a personal ceramic style rooted in research.",
+        "title": "A Living Author’s Voice"
+      },
+      "uk": {
+        "teaser": "Рустем Скибін називає власний керамічний стиль, що виріс із досліджень.",
+        "title": "Голос сучасного автора"
+      }
+    },
+    "payloads": [
+      {
+        "asset": {
+          "assetId": "ukraine-crimea-ornek-05-reveal-v1",
+          "sha256": "a449f2633c14c4a4681e36f23e1a6b9b647771211714545bb23e6d73c32348ca"
+        },
+        "id": "ukraine-crimea-ornek-05-image",
+        "locales": {
+          "en": {
+            "alt": "Original illustrated contemporary clay gallery with open research drawers, blank source cards, unornamented abstract ceramic forms and a separate maker panel.",
+            "title": "A Living Author’s Voice"
+          },
+          "uk": {
+            "alt": "Оригінальна ілюстрована галерея сучасної кераміки з відкритими архівними шухлядами, порожніми картками, абстрактними неорнаментованими формами та окремою панеллю автора.",
+            "title": "Голос сучасного автора"
+          }
+        },
+        "type": "image"
+      },
+      {
+        "id": "ukraine-crimea-ornek-05-knowledge",
+        "locales": {
+          "en": {
+            "paragraphs": [
+              "Rustem Skybin’s own biography describes developing his Quru Isar ceramic style using materials collected and interpreted by artist and researcher Mamut Churlu. The account places an individual artistic practice alongside Crimean Tatar heritage.",
+              "A careful label can name both: “a contemporary work by this artist” and “a practice informed by this tradition.” That is more useful than calling every new object ancient. Our fictional gallery celebrates authorship without copying Skybin’s designs or claiming his endorsement."
+            ],
+            "sources": [
+              {
+                "title": "Rustem Skybin — The artist on his practice and Quru Isar",
+                "url": "https://www.rustemskybin.com/pages/about"
+              }
+            ],
+            "title": "A Living Author’s Voice"
+          },
+          "uk": {
+            "paragraphs": [
+              "У власній біографії Рустем Скибін описує розвиток керамічного стилю Quru Isar на основі матеріалів, зібраних і осмислених художником та дослідником Мамутом Чурлу. Розповідь поєднує особисту творчу практику з кримськотатарською спадщиною.",
+              "Уважний підпис називає обидва: «сучасний твір цього автора» та «практика, пов’язана з цією традицією». Це корисніше, ніж називати кожен новий предмет стародавнім. Наша вигадана галерея цінує авторство, не копіюючи дизайни Скибіна й не заявляючи про його підтримку гри."
+            ],
+            "sources": [
+              {
+                "title": "Rustem Skybin — The artist on his practice and Quru Isar",
+                "url": "https://www.rustemskybin.com/pages/about"
+              }
+            ],
+            "title": "Голос сучасного автора"
+          }
+        },
+        "profiles": {
+          "beginners": {
+            "en": {
+              "paragraphs": [
+                "Keep Rustem Skybin’s artistic practice and Mamut Churlu’s research contribution distinct. Describe the relationship using the artist’s own account."
+              ],
+              "title": "Make a distinction: A Living Author’s Voice"
+            },
+            "uk": {
+              "paragraphs": [
+                "Розрізняйте мистецьку практику Рустема Скібіна та дослідницький внесок Мамута Чурлу. Опишіть зв’язок за розповіддю самого митця."
+              ],
+              "title": "Розрізнімо: Голос сучасного автора"
+            }
+          },
+          "families": {
+            "en": {
+              "paragraphs": [
+                "Find the living artist’s name in the account. Can a new work be connected to a tradition without being called ancient?"
+              ],
+              "title": "Look together: A Living Author’s Voice"
+            },
+            "uk": {
+              "paragraphs": [
+                "Знайдіть у розповіді ім’я сучасного митця. Чи може новий твір бути пов’язаним із традицією, не будучи давнім?"
+              ],
+              "title": "Погляньмо разом: Голос сучасного автора"
+            }
+          },
+          "hobbyists": {
+            "en": {
+              "paragraphs": [
+                "Compare “ancient object” with “contemporary work informed by heritage.” Which fits the cited biography, and what separate rights would reproducing an actual work require?"
+              ],
+              "title": "Explore the evidence: A Living Author’s Voice"
+            },
+            "uk": {
+              "paragraphs": [
+                "Порівняйте «давній предмет» із «сучасним твором, що спирається на спадщину». Що відповідає біографії та які окремі права потрібні для відтворення справжнього твору?"
+              ],
+              "title": "Дослідімо докази: Голос сучасного автора"
+            }
+          }
+        },
+        "type": "knowledge"
+      }
+    ],
+    "requirements": {
+      "learning": [],
+      "mastery": [],
+      "missions": [
+        {
+          "bindings": [
+            { "difficulty": "gentle", "gameplayId": "54376cadbef00df5" },
+            { "difficulty": "standard", "gameplayId": "6d69ef9ebce8f975" },
+            { "difficulty": "expert", "gameplayId": "de6c953d32f5efbb" }
+          ],
+          "missionId": "ukraine-crimea-ornek-05"
+        }
+      ]
+    },
+    "revision": "4",
+    "scope": { "id": "ukraine-crimea-ornek-05", "kind": "mission" },
+    "teaserImage": {
+      "asset": {
+        "assetId": "ukraine-crimea-ornek-key-v1",
+        "sha256": "ee8f5544264c4e0c4d1cfd614f2c2791b7d9cb26b6d4f0c1dd2c68cc5453134b"
+      },
+      "locales": {
+        "en": {
+          "alt": "A fictional community craft courtyard with connected worktables, textiles, clay forms and blank composition studies."
+        },
+        "uk": {
+          "alt": "Уявне подвір’я спільної майстерні зі з’єднаними столами, тканинами, глиняними формами та чистими аркушами для композицій."
+        }
+      }
+    }
+  },
+  {
+    "brandId": "ukraine-culture",
+    "campaignId": "ukraine-crimea-ornek",
+    "format": "revealline-completion-reward.v1",
+    "id": "ukraine-crimea-ornek-06-discovery",
+    "locales": {
+      "en": {
+        "teaser": "The finale is a route back to living Crimean Tatar knowledge.",
+        "title": "Keep the Voices Together"
+      },
+      "uk": {
+        "teaser": "Фінал повертає до живих кримськотатарських знань.",
+        "title": "Збережіть голоси разом"
+      }
+    },
+    "payloads": [
+      {
+        "asset": {
+          "assetId": "ukraine-crimea-ornek-06-reveal-v1",
+          "sha256": "1032314b0755ee10aeea0d317665b7b3dd932463ea3b9f64234f9c8f99126afd"
+        },
+        "id": "ukraine-crimea-ornek-06-image",
+        "locales": {
+          "en": {
+            "alt": "Original illustrated twilight reading court with six separate blank source-card stations connected by a brass path leading to a library.",
+            "title": "Keep the Voices Together"
+          },
+          "uk": {
+            "alt": "Оригінальний ілюстрований вечірній двір читання з шістьма окремими станціями порожніх карток, поєднаних латунною доріжкою до бібліотеки.",
+            "title": "Збережіть голоси разом"
+          }
+        },
+        "type": "image"
+      },
+      {
+        "id": "ukraine-crimea-ornek-06-knowledge",
+        "locales": {
+          "en": {
+            "paragraphs": [
+              "Alem describes its work as safeguarding the intangible cultural heritage of Crimean Tatars, an Indigenous people of Ukraine. Its work brings culture bearers, practitioners and researchers together.",
+              "Curate our six cards with four questions: who speaks, what object or practice is described, which source supports it, and what remains unknown? Keep the answers visible when sharing the collection. Completing an arcade campaign gives you a useful reading trail; community knowledge and individual image rights remain with their holders."
+            ],
+            "sources": [
+              {
+                "title": "Alem — Crimean Tatar heritage organization",
+                "url": "https://www.ornek-crimea.com/"
+              }
+            ],
+            "title": "Keep the Voices Together"
+          },
+          "uk": {
+            "paragraphs": [
+              "«Алєм» описує свою роботу як охорону нематеріальної культурної спадщини кримських татар, корінного народу України. Організація об’єднує носіїв культури, практиків і дослідників.",
+              "Упорядкуйте шість карток за чотирма запитаннями: хто говорить, який предмет чи практику описано, яке джерело це підтверджує і що невідомо? Збережіть відповіді під час поширення колекції. Завершення гри відкриває корисний маршрут читання; знання спільноти та права на зображення залишаються за їхніми носіями."
+            ],
+            "sources": [
+              {
+                "title": "Alem — Crimean Tatar heritage organization",
+                "url": "https://www.ornek-crimea.com/"
+              }
+            ],
+            "title": "Збережіть голоси разом"
+          }
+        },
+        "profiles": {
+          "beginners": {
+            "en": {
+              "paragraphs": [
+                "Use four headings for the collection: speaker, practice or object, source, unknown. Keep Crimean Tatar attribution visible on every relevant card."
+              ],
+              "title": "Make a distinction: Keep the Voices Together"
+            },
+            "uk": {
+              "paragraphs": [
+                "Використайте чотири рубрики: хто говорить, практика чи предмет, джерело, невідоме. Збережіть кримськотатарську атрибуцію на кожній відповідній картці."
+              ],
+              "title": "Розрізнімо: Збережіть голоси разом"
+            }
+          },
+          "families": {
+            "en": {
+              "paragraphs": [
+                "Choose two discoveries and name whose voice or record helped you learn. Leave room for one question you would still ask."
+              ],
+              "title": "Look together: Keep the Voices Together"
+            },
+            "uk": {
+              "paragraphs": [
+                "Оберіть два відкриття й назвіть, чий голос або запис допоміг дізнатися нове. Залиште місце для одного запитання."
+              ],
+              "title": "Погляньмо разом: Збережіть голоси разом"
+            }
+          },
+          "hobbyists": {
+            "en": {
+              "paragraphs": [
+                "Prepare a shareable reading trail that preserves individual attribution and rights. Explain why completing this collection does not confer authority to speak for culture bearers."
+              ],
+              "title": "Explore the evidence: Keep the Voices Together"
+            },
+            "uk": {
+              "paragraphs": [
+                "Підготуйте шлях читання для поширення, зберігши індивідуальне авторство й права. Поясніть, чому завершення колекції не надає права говорити від імені носіїв культури."
+              ],
+              "title": "Дослідімо докази: Збережіть голоси разом"
+            }
+          }
+        },
+        "type": "knowledge"
+      }
+    ],
+    "requirements": {
+      "learning": [],
+      "mastery": [],
+      "missions": [
+        {
+          "bindings": [
+            { "difficulty": "gentle", "gameplayId": "6d48b72a4f2e0bf7" },
+            { "difficulty": "standard", "gameplayId": "24d42ddac30c7bac" },
+            { "difficulty": "expert", "gameplayId": "b327db82ec5786cd" }
+          ],
+          "missionId": "ukraine-crimea-ornek-06"
+        }
+      ]
+    },
+    "revision": "4",
+    "scope": { "id": "ukraine-crimea-ornek-06", "kind": "mission" },
+    "teaserImage": {
+      "asset": {
+        "assetId": "ukraine-crimea-ornek-key-v1",
+        "sha256": "ee8f5544264c4e0c4d1cfd614f2c2791b7d9cb26b6d4f0c1dd2c68cc5453134b"
+      },
+      "locales": {
+        "en": {
+          "alt": "A fictional community craft courtyard with connected worktables, textiles, clay forms and blank composition studies."
+        },
+        "uk": {
+          "alt": "Уявне подвір’я спільної майстерні зі з’єднаними столами, тканинами, глиняними формами та чистими аркушами для композицій."
+        }
+      }
+    }
+  },
+  {
+    "brandId": "ukraine-culture",
+    "campaignId": "ukraine-crimea-ornek",
+    "format": "revealline-completion-reward.v1",
+    "id": "ukraine-crimea-ornek-finale",
+    "locales": {
+      "en": {
+        "teaser": "Win all six distinct missions to complete this discovery exhibit.",
+        "title": "Örnek: Makers, Objects and Voices"
+      },
+      "uk": {
+        "teaser": "Переможіть у всіх шести різних місіях, щоб завершити виставку відкриттів.",
+        "title": "Орьнек: майстри, предмети й голоси"
+      }
+    },
+    "payloads": [
+      {
+        "id": "ukraine-crimea-ornek-guide",
+        "locales": {
+          "en": {
+            "paragraphs": [
+              "Bring together the six Crimean Tatar discoveries: a named tradition, an artisan’s composition, an object record, a teaching relationship, contemporary authorship and community stewardship. Follow the sources to hear the makers themselves. This fictional exhibition acknowledges Crimean Tatar knowledge; its arcade artwork does not reproduce or authenticate an Ornek composition."
+            ],
+            "sources": [
+              {
+                "title": "Alem — Crimean Tatar heritage organization",
+                "url": "https://www.ornek-crimea.com/"
+              }
+            ],
+            "title": "Örnek: Makers, Objects and Voices"
+          },
+          "uk": {
+            "paragraphs": [
+              "Поєднайте шість відкриттів про кримських татар: названу традицію, композицію майстра, опис предмета, передачу знань, сучасне авторство та опіку спільноти. Перейдіть до джерел, щоб почути самих майстрів. Вигадана виставка визнає кримськотатарські знання; її ігрові ілюстрації не відтворюють і не засвідчують справжність композиції Орьнеку."
+            ],
+            "sources": [
+              {
+                "title": "Alem — Crimean Tatar heritage organization",
+                "url": "https://www.ornek-crimea.com/"
+              }
+            ],
+            "title": "Орьнек: майстри, предмети й голоси"
+          }
+        },
+        "type": "knowledge"
+      },
+      {
+        "asset": {
+          "assetId": "ukraine-crimea-ornek-01-reveal-v1",
+          "sha256": "dc7fad1a463982a631b34151834fe71cd934972f65ffebe86e894b98edc02ae3"
+        },
+        "id": "ukraine-crimea-ornek-01-image",
+        "locales": {
+          "en": {
+            "alt": "Original illustrated heritage entrance with turquoise accents, blank source panels and separate plain textile, ceramic and thread displays.",
+            "title": "Name the Tradition"
+          },
+          "uk": {
+            "alt": "Оригінальний ілюстрований вхід до виставки спадщини з бірюзовими акцентами, порожніми панелями джерел та окремими простими зразками тканини, кераміки й ниток.",
+            "title": "Назвіть традицію"
+          }
+        },
+        "type": "image"
+      },
+      {
+        "asset": {
+          "assetId": "ukraine-crimea-ornek-02-reveal-v1",
+          "sha256": "215c097a82066b44b65001c54db18a57bab0d56e72413cdec0d0348b1006802e"
+        },
+        "id": "ukraine-crimea-ornek-02-image",
+        "locales": {
+          "en": {
+            "alt": "Original illustrated consultation room with separate visitor and maker desks, plain thread and textile materials, and a blank paper ribbon connecting request and sketch.",
+            "title": "A Composition for Someone"
+          },
+          "uk": {
+            "alt": "Оригінальна ілюстрована кімната розмови з окремими столами відвідувача й майстра, простими нитками та тканиною і порожньою паперовою стрічкою між задумом та ескізом.",
+            "title": "Композиція для людини"
+          }
+        },
+        "type": "image"
+      },
+      {
+        "asset": {
+          "assetId": "ukraine-crimea-ornek-03-reveal-v1",
+          "sha256": "b20f4074396bbf1095cb2c2acdc245816de51edd313cda74029662eada08b351"
+        },
+        "id": "ukraine-crimea-ornek-03-image",
+        "locales": {
+          "en": {
+            "alt": "Original illustrated material archive with separate plain textile, abstract metal belt-like form and woven panel cabinets, each retaining a blank record card.",
+            "title": "Read the Object Record"
+          },
+          "uk": {
+            "alt": "Оригінальний ілюстрований архів матеріалів з окремими вітринами простої тканини, абстрактної металевої поясоподібної форми й тканого панно, кожна зі своєю порожньою карткою.",
+            "title": "Прочитайте опис предмета"
+          }
+        },
+        "type": "image"
+      },
+      {
+        "asset": {
+          "assetId": "ukraine-crimea-ornek-04-reveal-v1",
+          "sha256": "bf62229d15c47d7960e1bac8995ba9cfac76f8b832debcd9ccb380a7d0d53020"
+        },
+        "id": "ukraine-crimea-ornek-04-image",
+        "locales": {
+          "en": {
+            "alt": "Original illustrated quiet learning courtyard with two empty craft tables and separate stands for a tool silhouette, a plain loop sculpture and a blank book.",
+            "title": "Knowledge Has Teachers"
+          },
+          "uk": {
+            "alt": "Оригінальне ілюстроване спокійне навчальне подвір’я з двома порожніми робочими столами та окремими підставками для силуету інструмента, простої кільцевої скульптури й порожньої книги.",
+            "title": "У знань є вчителі"
+          }
+        },
+        "type": "image"
+      },
+      {
+        "asset": {
+          "assetId": "ukraine-crimea-ornek-05-reveal-v1",
+          "sha256": "a449f2633c14c4a4681e36f23e1a6b9b647771211714545bb23e6d73c32348ca"
+        },
+        "id": "ukraine-crimea-ornek-05-image",
+        "locales": {
+          "en": {
+            "alt": "Original illustrated contemporary clay gallery with open research drawers, blank source cards, unornamented abstract ceramic forms and a separate maker panel.",
+            "title": "A Living Author’s Voice"
+          },
+          "uk": {
+            "alt": "Оригінальна ілюстрована галерея сучасної кераміки з відкритими архівними шухлядами, порожніми картками, абстрактними неорнаментованими формами та окремою панеллю автора.",
+            "title": "Голос сучасного автора"
+          }
+        },
+        "type": "image"
+      },
+      {
+        "asset": {
+          "assetId": "ukraine-crimea-ornek-06-reveal-v1",
+          "sha256": "1032314b0755ee10aeea0d317665b7b3dd932463ea3b9f64234f9c8f99126afd"
+        },
+        "id": "ukraine-crimea-ornek-06-image",
+        "locales": {
+          "en": {
+            "alt": "Original illustrated twilight reading court with six separate blank source-card stations connected by a brass path leading to a library.",
+            "title": "Keep the Voices Together"
+          },
+          "uk": {
+            "alt": "Оригінальний ілюстрований вечірній двір читання з шістьма окремими станціями порожніх карток, поєднаних латунною доріжкою до бібліотеки.",
+            "title": "Збережіть голоси разом"
+          }
+        },
+        "type": "image"
+      },
+      {
+        "id": "ukraine-crimea-ornek-official-source",
+        "locales": {
+          "en": { "title": "Explore the official source" },
+          "uk": { "title": "Відкрити офіційне джерело" }
+        },
+        "qr": true,
+        "type": "url",
+        "url": "https://www.ornek-crimea.com/"
+      }
+    ],
+    "requirements": {
+      "learning": [],
+      "mastery": [],
+      "missions": [
+        {
+          "bindings": [
+            { "difficulty": "gentle", "gameplayId": "5fe2fee7c927c957" },
+            { "difficulty": "standard", "gameplayId": "b6a280cfc754779e" },
+            { "difficulty": "expert", "gameplayId": "465f7510d28ab25d" }
+          ],
+          "missionId": "ukraine-crimea-ornek-01"
+        },
+        {
+          "bindings": [
+            { "difficulty": "gentle", "gameplayId": "9bf54d24ffbd7269" },
+            { "difficulty": "standard", "gameplayId": "c567e8ab9ffccb45" },
+            { "difficulty": "expert", "gameplayId": "2b349938a10b8d82" }
+          ],
+          "missionId": "ukraine-crimea-ornek-02"
+        },
+        {
+          "bindings": [
+            { "difficulty": "gentle", "gameplayId": "c84849253276936b" },
+            { "difficulty": "standard", "gameplayId": "c421b671449b5438" },
+            { "difficulty": "expert", "gameplayId": "6c2cd9fa6e1468a6" }
+          ],
+          "missionId": "ukraine-crimea-ornek-03"
+        },
+        {
+          "bindings": [
+            { "difficulty": "gentle", "gameplayId": "f2a5a5a7084168d1" },
+            { "difficulty": "standard", "gameplayId": "aceda3bd2e1224dc" },
+            { "difficulty": "expert", "gameplayId": "5c614486221bfd9d" }
+          ],
+          "missionId": "ukraine-crimea-ornek-04"
+        },
+        {
+          "bindings": [
+            { "difficulty": "gentle", "gameplayId": "54376cadbef00df5" },
+            { "difficulty": "standard", "gameplayId": "6d69ef9ebce8f975" },
+            { "difficulty": "expert", "gameplayId": "de6c953d32f5efbb" }
+          ],
+          "missionId": "ukraine-crimea-ornek-05"
+        },
+        {
+          "bindings": [
+            { "difficulty": "gentle", "gameplayId": "6d48b72a4f2e0bf7" },
+            { "difficulty": "standard", "gameplayId": "24d42ddac30c7bac" },
+            { "difficulty": "expert", "gameplayId": "b327db82ec5786cd" }
+          ],
+          "missionId": "ukraine-crimea-ornek-06"
+        }
+      ]
+    },
+    "revision": "4",
+    "scope": { "id": "ukraine-crimea-ornek", "kind": "campaign" },
+    "teaserImage": {
+      "asset": {
+        "assetId": "ukraine-crimea-ornek-key-v1",
+        "sha256": "ee8f5544264c4e0c4d1cfd614f2c2791b7d9cb26b6d4f0c1dd2c68cc5453134b"
+      },
+      "locales": {
+        "en": {
+          "alt": "A fictional community craft courtyard with connected worktables, textiles, clay forms and blank composition studies."
+        },
+        "uk": {
+          "alt": "Уявне подвір’я спільної майстерні зі з’єднаними столами, тканинами, глиняними формами та чистими аркушами для композицій."
+        }
+      }
+    }
+  }
+]

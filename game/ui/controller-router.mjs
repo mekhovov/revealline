@@ -1,3 +1,4 @@
+import { mapProfile, descriptorKey, deviceDescriptor } from '../couch/controller-profiles.mjs';
 import { t } from '../i18n/index.mjs';
 import {
   resolveControllerBindings,
@@ -72,6 +73,7 @@ function compileBindings(config) {
  */
 export function createControllerRouter({
   readPads = defaultRead,
+  rawProfile = () => null,
   now = () => globalThis.performance?.now?.() ?? Date.now(),
   eventTarget = globalThis.window,
   bindings = null,
@@ -81,6 +83,7 @@ export function createControllerRouter({
   repeatIntervalMs = 120,
   autoJoin = false,
   navigationAliases = false,
+  diagnostics = false,
 } = {}) {
   if (typeof readPads !== 'function' || typeof now !== 'function')
     throw new TypeError(t('interface:controllerReadersMustBeFunctions'));
@@ -116,11 +119,107 @@ export function createControllerRouter({
     lastTime = 0,
     pendingDisconnect = false,
     menuConfirmActive = false,
+    menuConfirmButtons = [],
+    menuGamepadTimestamp = 0,
+    sampledConfirmPad = null,
+    sampledRawGamepads = undefined,
     destroyed = false;
 
-  const confirms = (buttons) =>
-    buttons.has(compiled.menu.buttons.confirm) ||
-    (navigationAliases && defaultLayout && buttons.has(2));
+  const confirmIndexes = (buttons) =>
+    [
+      ...new Set([
+        compiled.menu.buttons.confirm,
+        ...(navigationAliases && defaultLayout ? [2] : []),
+      ]),
+    ]
+      .filter((index) => buttons.has(index))
+      .sort((a, b) => a - b);
+  const confirms = (buttons) => confirmIndexes(buttons).length > 0;
+  const assignedIdentity = () =>
+    assigned
+      ? {
+          index: assigned.index,
+          id: assigned.id,
+          mapping: assigned.mapping,
+          generation: assigned.generation,
+        }
+      : null;
+  const diagnosticsEnabled = () =>
+    (typeof diagnostics === 'function' ? diagnostics() : diagnostics) === true;
+  function describePads(pads) {
+    const devices = [],
+      count = Number.isInteger(pads?.length) ? Math.max(0, Math.min(32, pads.length)) : 0;
+    for (let index = 0; index < count; index++) {
+      const device = pads[index];
+      if (!device) continue;
+      const buttonCount = Number.isInteger(device.buttons?.length)
+        ? Math.max(0, Math.min(1024, device.buttons.length))
+        : 0;
+      devices.push({
+        index: Number.isInteger(device.index) && device.index >= 0 ? device.index : index,
+        id: typeof device.id === 'string' ? device.id.slice(0, 512) : '',
+        mapping: typeof device.mapping === 'string' ? device.mapping.slice(0, 32) : '',
+        connected: device.connected === true,
+        timestamp: Number.isFinite(device.timestamp) ? device.timestamp : 0,
+        buttonCount,
+        buttons: Array.from({ length: Math.min(64, buttonCount) }, (_, index) => index).filter(
+          (index) => pressed(device.buttons[index]),
+        ),
+      });
+    }
+    return devices;
+  }
+  function confirmSnapshot(pad, scope, failure = null, rawGamepads) {
+    const live = !!assigned && pad?.signature === assigned.signature,
+      buttons = live ? confirmIndexes(pad.buttons) : [];
+    const reason = destroyed
+      ? 'disposed'
+      : failure ||
+        (!assigned
+          ? 'unassigned'
+          : !live
+            ? 'assignment-lost'
+            : scope !== lastScope
+              ? 'scope-change'
+              : scope === 'flight'
+                ? 'flight'
+                : blocked
+                  ? 'waiting-neutral'
+                  : 'ready');
+    return {
+      assigned: live ? assignedIdentity() : null,
+      buttons,
+      timestamp: live ? pad.timestamp : 0,
+      held: buttons.length > 0,
+      neutral: live ? pad.neutral : false,
+      eligible: reason === 'ready',
+      blocked,
+      reason,
+      scope,
+      routerScope: lastScope,
+      ...(rawGamepads ? { rawGamepads } : {}),
+    };
+  }
+  function readMenuConfirm({ scope = lastScope } = {}) {
+    // Native events may precede an animation frame. Observe only the current
+    // assignment: adopting a pad or sampling the router here would consume
+    // unrelated direction, Back, Menu, and flight edges before their host.
+    const diagnostics = diagnosticsEnabled();
+    if (destroyed || (!assigned && !diagnostics)) return confirmSnapshot(null, scope);
+    try {
+      const pads = readPads(),
+        rawGamepads = diagnostics ? describePads(pads) : undefined,
+        count = Number.isInteger(pads?.length) ? Math.max(0, Math.min(32, pads.length)) : 0;
+      if (!assigned) return confirmSnapshot(null, scope, null, rawGamepads);
+      for (let index = 0; index < count; index++) {
+        if ((pads[index]?.index ?? index) !== assigned.index) continue;
+        return confirmSnapshot(snapshot(pads[index], index), scope, null, rawGamepads);
+      }
+      return confirmSnapshot(null, scope, null, rawGamepads);
+    } catch {
+      return confirmSnapshot(null, scope, 'unavailable', diagnostics ? [] : undefined);
+    }
+  }
   function menuConfirmPressed(capturedPads = null) {
     if (destroyed || !assigned || (lastScope === 'flight' && !menuConfirmActive)) return false;
     // Native events may arrive before the next animation frame. This read-only
@@ -150,6 +249,7 @@ export function createControllerRouter({
       candidate.armed = false;
       candidate.previousJoin.clear();
       candidate.stickActive = { flight: false, menu: false };
+      candidate.rawState = new Map();
     }
   }
   function setBindings(value) {
@@ -177,6 +277,8 @@ export function createControllerRouter({
   const boostState = () => ({ mode, latched: boostLatched });
   function invalidate() {
     menuConfirmActive = false;
+    menuConfirmButtons = [];
+    menuGamepadTimestamp = 0;
     pendingDisconnect = pendingDisconnect || assigned !== null;
     assigned = null;
     clear();
@@ -187,6 +289,8 @@ export function createControllerRouter({
     seen.delete(index);
     if (assigned?.index === index) {
       menuConfirmActive = false;
+      menuConfirmButtons = [];
+      menuGamepadTimestamp = 0;
       pendingDisconnect = true;
       assigned = null;
       clear();
@@ -196,9 +300,51 @@ export function createControllerRouter({
   eventTarget?.addEventListener?.('gamepaddisconnected', disconnectedEvent);
 
   function snapshot(pad, fallbackIndex) {
-    if (!pad?.connected || pad.mapping !== 'standard') return null;
+    if (!pad?.connected) return null;
+    if (pad.mapping !== 'standard') {
+      if (pad.mapping !== '') return null;
+      const profile = rawProfile(pad.index);
+      if (
+        !profile ||
+        Object.entries(deviceDescriptor(pad)).some(([key, value]) => profile.device[key] !== value)
+      )
+        return null;
+      const signature = JSON.stringify([descriptorKey(pad), profile]);
+      const old = seen.get(pad.index);
+      const mapped = mapProfile(
+        profile,
+        pad,
+        old?.signature === signature ? old.rawState : undefined,
+      );
+      if (!mapped.valid) return null;
+      const context = lastScope === 'flight' ? 'flight' : 'menu';
+      const buttons = new Set();
+      for (const [action, value] of Object.entries(mapped[context])) {
+        const key = action === 'action' ? 'ability' : action;
+        if (
+          value &&
+          !['direction', 'up', 'down', 'left', 'right'].includes(key) &&
+          compiled[context].buttons[key] !== undefined
+        )
+          buttons.add(compiled[context].buttons[key]);
+      }
+      return {
+        index: pad.index,
+        id: pad.id,
+        mapping: '',
+        signature,
+        buttons,
+        direction: { flight: mapped.flight.direction, menu: mapped.menu.direction },
+        stickActive: {},
+        rawState: mapped.state,
+        neutral: mapped.neutral,
+        timestamp: Number.isFinite(pad.timestamp) ? pad.timestamp : 0,
+      };
+    }
     const index = pad.index ?? fallbackIndex;
-    if (!Number.isInteger(index) || index < 0 || index > 1023) return null;
+    // Shared-radio seats use internal virtual indexes beyond physical Gamepad slots.
+    const sharedSeat = index <= 3071 && typeof pad.id === 'string' && pad.id.startsWith('couch:');
+    if (!Number.isInteger(index) || index < 0 || (index > 1023 && !sharedSeat)) return null;
     const usedButtons =
       navigationAliases && defaultLayout ? [...Array(16).keys()] : compiled.usedButtons;
     const buttons = new Set(usedButtons.filter((i) => pressed(pad.buttons?.[i])));
@@ -254,6 +400,7 @@ export function createControllerRouter({
       direction,
       stickActive,
       neutral,
+      timestamp: Number.isFinite(pad.timestamp) ? pad.timestamp : 0,
     };
   }
   const result = (
@@ -266,19 +413,22 @@ export function createControllerRouter({
     flight,
     ui,
     status: { code, message },
-    assigned: assigned
-      ? {
-          index: assigned.index,
-          id: assigned.id,
-          mapping: assigned.mapping,
-          generation: assigned.generation,
-        }
-      : null,
+    assigned: assignedIdentity(),
     confirmHeld: menuConfirmActive,
+    confirmButtons: [...menuConfirmButtons],
+    gamepadTimestamp: menuGamepadTimestamp,
+    confirmSnapshot: confirmSnapshot(
+      sampledConfirmPad,
+      lastScope,
+      code === 'unavailable' ? 'unavailable' : null,
+      sampledRawGamepads,
+    ),
     disconnected,
   });
 
   function sample({ scope, timeMs, toggleBoostEligible = true } = {}) {
+    sampledConfirmPad = null;
+    sampledRawGamepads = undefined;
     if (destroyed) return result('disposed', t('interface:controllerInputIsStopped'));
     if (typeof scope !== 'string' || !scope || scope.length > 160)
       throw new TypeError(t('interface:controllerScopeMustBeAStableNonemptyString'));
@@ -295,6 +445,7 @@ export function createControllerRouter({
     let raw;
     try {
       raw = readPads();
+      if (diagnosticsEnabled()) sampledRawGamepads = describePads(raw);
     } catch {
       invalidate();
       const disconnected = pendingDisconnect;
@@ -333,6 +484,7 @@ export function createControllerRouter({
         seen.set(pad.index, candidate);
       }
       candidate.stickActive = pad.stickActive;
+      candidate.rawState = pad.rawState;
       if (pad.neutral) candidate.armed = true;
     }
     if (pendingDisconnect) {
@@ -359,7 +511,10 @@ export function createControllerRouter({
           // Enter/mouse echo after release. Expose held Confirm to the host guard
           // without turning this same press into a menu activation.
           menuConfirmActive = confirms(pad.buttons);
+          menuConfirmButtons = confirmIndexes(pad.buttons);
+          menuGamepadTimestamp = pad.timestamp;
           assigned = candidate;
+          sampledConfirmPad = pad;
           clear();
           if (autoJoin) blocked = false;
           return result(
@@ -387,7 +542,10 @@ export function createControllerRouter({
       invalidate();
       return sampleLoss();
     }
+    sampledConfirmPad = pad;
     menuConfirmActive = confirms(pad.buttons) && (scope !== 'flight' || menuConfirmActive);
+    menuConfirmButtons = menuConfirmActive ? confirmIndexes(pad.buttons) : [];
+    menuGamepadTimestamp = pad.timestamp;
     // The same physical-neutral sample may lift both gates. A latched command
     // is not physical input and must not prevent a later ordinary release.
     if (mode === 'toggle' && scope === 'flight' && toggleBoostEligible && pad.neutral)
@@ -470,6 +628,7 @@ export function createControllerRouter({
   }
   return {
     sample,
+    readMenuConfirm,
     menuConfirmPressed,
     setBindings,
     setBoostMode,

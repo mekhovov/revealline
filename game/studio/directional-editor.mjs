@@ -94,7 +94,7 @@ export function createDirectionalEditor({ document, getSource, getMission, apply
         command.zone.direction = $('direction').value;
       }
       const candidate = editContentDirectional(getSource(), getMission()?.id, command);
-      if (apply(candidate) === false) return;
+      if (apply(candidate, () => commit(action)) === false) return;
       key = null;
       sync();
       $('select').value = ['enable', 'remove'].includes(action) ? '' : command.id;

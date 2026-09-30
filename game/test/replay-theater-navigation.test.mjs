@@ -6,6 +6,7 @@ import { setImmediate, setTimeout as delay } from 'node:timers/promises';
 import { createRun, stepRun, FIXED_DT } from '../core/index.mjs';
 import { createRecorder, recordInput, exportReplay, authoritativeCheckpoint } from '../replay.mjs';
 import { BoardPainter } from '../ui/render.mjs';
+import { getLocale, setLocale, t as translate } from '../i18n/index.mjs';
 import { Document, Events } from './helpers/couch-dom.mjs';
 import { waitFor } from './helpers/wait-for.mjs';
 
@@ -170,7 +171,7 @@ async function harness(t, source = recording(), { expectLoadFailure = false } = 
     frame(now);
     return snapshots.at(-1);
   };
-  const pad = (buttons = [], id = 'Test pad') => {
+  const pad = (buttons = [], id = 'Test pad', sampled = true) => {
     pads = [
       {
         id,
@@ -184,11 +185,12 @@ async function harness(t, source = recording(), { expectLoadFailure = false } = 
         })),
       },
     ];
-    return tick();
+    if (sampled) return tick();
   };
   const press = (button) => {
     pad();
-    return pad([button]);
+    const pressed = pad([button]);
+    return button === 0 ? pad() : pressed;
   };
   const key = (node, name, extra = {}) => {
     node.focus();
@@ -273,6 +275,78 @@ function modelDisabledControlFocus(h, node) {
     },
   });
 }
+
+test('Replay Theater refreshes code-owned controller and example labels in both locale directions', async (t) => {
+  const priorLocale = getLocale();
+  setLocale('en', { persist: false });
+  const h = await harness(t),
+    { $, doc, pad, press, tick } = h;
+  try {
+    pad();
+    press(0);
+    pad();
+    $('load-example').focus();
+    const focus = doc.activeElement,
+      checkpoint = tick().checkpoint;
+    assert.equal(
+      $('navigation-status').textContent,
+      translate('interface:dPadMovesFocusSouthConfirmsEastGoesBackMenu'),
+    );
+    assert.match(
+      $('import-status').textContent,
+      new RegExp(translate('interface:copperCrossingExample')),
+    );
+
+    setLocale('uk', { persist: false });
+    assert.equal(
+      $('navigation-status').textContent,
+      translate('interface:dPadMovesFocusSouthConfirmsEastGoesBackMenu'),
+    );
+    assert.match(
+      $('import-status').textContent,
+      new RegExp(translate('interface:copperCrossingExample')),
+    );
+    assert.equal(doc.activeElement, focus);
+    assert.deepEqual(tick().checkpoint, checkpoint);
+
+    setLocale('en', { persist: false });
+    assert.equal(
+      $('navigation-status').textContent,
+      translate('interface:dPadMovesFocusSouthConfirmsEastGoesBackMenu'),
+    );
+    assert.match(
+      $('import-status').textContent,
+      new RegExp(translate('interface:copperCrossingExample')),
+    );
+    assert.equal(doc.activeElement, focus);
+    assert.deepEqual(tick().checkpoint, checkpoint);
+
+    const authoredLabel = 'Авторський запис.json';
+    $('replay-file').files = [
+      {
+        name: authoredLabel,
+        size: 100,
+        text: async () => JSON.stringify(h.source),
+      },
+    ];
+    $('replay-file').emit('change');
+    await until(
+      () =>
+        $('import-status').dataset.state === 'ready' &&
+        $('import-status').textContent.includes(authoredLabel),
+      'user-labelled replay loaded',
+    );
+    const authoredCheckpoint = tick().checkpoint;
+    setLocale('uk', { persist: false });
+    assert.match($('import-status').textContent, new RegExp(authoredLabel));
+    assert.deepEqual(tick().checkpoint, authoredCheckpoint);
+    setLocale('en', { persist: false });
+    assert.match($('import-status').textContent, new RegExp(authoredLabel));
+    assert.deepEqual(tick().checkpoint, authoredCheckpoint);
+  } finally {
+    setLocale(priorLocale, { persist: false });
+  }
+});
 
 test('native fragment Jump hands off to playback and the next Tab reaches Restart without changing the recording', async (t) => {
   const h = await harness(t),
@@ -530,10 +604,11 @@ test('controller joins without activation, previews native speed, cancels once a
   pad([0]);
   assert.equal($('playback-phase').textContent, 'paused');
   press(0);
-  pad([0]);
   assert.equal(doc.activeElement, $('play-pause'));
   assert.equal($('playback-phase').textContent, 'paused');
-  press(0);
+  pad([0]);
+  assert.equal($('playback-phase').textContent, 'paused', 'Confirm waits for release');
+  pad();
   assert.equal($('playback-phase').textContent, 'playing');
   $('speed').focus();
   press(0);
@@ -711,4 +786,21 @@ test('Classic replay import stays paused and controller completion checks the ex
   assert.equal($('playback-phase').textContent, 'complete');
   assert.deepEqual(h.snapshots.at(-1).checkpoint, source.checkpoint);
   assert.equal(h.snapshots.at(-1).run.ruleset, 'xonix-core.v5');
+});
+
+test('Replay Theater native Confirm commits between frames without a second playback toggle', async (t) => {
+  const h = await harness(t);
+  h.pad();
+  h.press(0);
+  const play = h.$('play-pause');
+  play.focus();
+  h.pad([0], undefined, false);
+  assert.equal(play.emit('keydown', { key: 'Enter', isTrusted: true }).defaultPrevented, true);
+  assert.equal(h.$('playback-phase').textContent, 'paused');
+  h.pad([], undefined, false);
+  play.emit('keyup', { key: 'Enter', isTrusted: true });
+  assert.equal(h.$('playback-phase').textContent, 'playing');
+  play.emit('click', { isTrusted: true });
+  h.tick();
+  assert.equal(h.$('playback-phase').textContent, 'playing');
 });

@@ -9,10 +9,7 @@ import { createManagedMediaStore } from '../managed-media-store.mjs';
 import { prepareSoundtrackLibrary } from '../soundtrack-bundle.mjs';
 import { BUILTIN_SOUNDTRACK_TRACKS } from '../soundtrack.mjs';
 import { SOUNDTRACK_CATALOGUE } from '../content/soundtrack-catalogue.mjs';
-import {
-  ONLINE_SOUNDTRACK_CATALOGUE_URL,
-  ONLINE_SOUNDTRACK_DIRECTORY_URL,
-} from '../online-soundtrack-catalogue.mjs';
+import { ONLINE_SOUNDTRACK_CATALOGUE_URL } from '../online-soundtrack-catalogue.mjs';
 import { AUDIO_PREFERENCES_KEY } from '../audio-preferences.mjs';
 import { emptyLibrary, updatePreferences, saveLibrary, loadLibrary } from '../library.mjs';
 import { retryFixture } from './fixtures/retry-scenarios.mjs';
@@ -138,6 +135,55 @@ async function setup(
   return { page, audio, db, original };
 }
 
+const onlineRecordingHash = 'a'.repeat(64);
+function onlineCatalogueResponse(status = 200) {
+  const source = {
+    format: 'revealline-public-soundtrack-catalogue.v1',
+    archive: {
+      id: 'revealline-soundtracks',
+      baseURL: 'https://mekhovov.github.io/revealline-soundtracks/',
+    },
+    sources: [],
+    counts: { declaredTracks: 1, uniqueRecordings: 1, duplicateAliases: 0, audioBytes: 1234 },
+    tracks: [
+      {
+        id: 'fixture.recording',
+        title: 'Metadata-only fixture recording',
+        artist: 'Test fixture',
+        durationSeconds: 12,
+        tags: ['ambient'],
+        source: 'https://creator.example/fixture',
+        license: 'CC BY 4.0 International',
+        licenseURL: 'https://creativecommons.org/licenses/by/4.0/',
+        credit: 'Synthetic catalogue metadata fixture, no recording supplied.',
+        fileName: 'fixture.mp3',
+        archiveId: 'fixture-album',
+        collection: 'Fixture album',
+        collections: ['Fixture album'],
+        status: 'licensed-preview',
+        listeningApproval: 'not-reviewed',
+        gameCatalogueAdmission: false,
+        contentId: false,
+        recordingModeEligible: true,
+        audio: {
+          path: `https://github.com/mekhovov/revealline-soundtracks/releases/download/audio-test/${onlineRecordingHash}.mp3`,
+          bytes: 1234,
+          sha256: onlineRecordingHash,
+        },
+        aliases: [],
+      },
+    ],
+  };
+  const response = new Response(JSON.stringify(source), {
+    status,
+    headers: { 'Content-Type': 'application/json' },
+  });
+  // Node's synthetic Response has no URL; the real catalogue requires a direct,
+  // exact-URL HTTP response and reads its bounded stream before admitting it.
+  Object.defineProperty(response, 'url', { value: ONLINE_SOUNDTRACK_CATALOGUE_URL });
+  return response;
+}
+
 test('muted fresh Solo menu and Studio do not acquire admitted hosted recordings before Play', async (t) => {
   assert(
     SOUNDTRACK_CATALOGUE.tracks.some((track) => track.archiveId),
@@ -147,19 +193,61 @@ test('muted fresh Solo menu and Studio do not acquire admitted hosted recordings
   const { page } = await setup(t, {
     emptyMusic: true,
     fetchResponse: async (url) => {
-      if (String(url).includes('revealline-soundtracks-')) requests.push(String(url));
+      requests.push(String(url));
+      if (String(url) === ONLINE_SOUNDTRACK_CATALOGUE_URL) return onlineCatalogueResponse();
     },
   });
   await waitFor(
     () => !page.$('soundtrack-summary').textContent.includes('Loading music library'),
     'Silent library preparation settles',
   );
+  await waitFor(
+    () => !!page.$(`soundtrack-online-play-${onlineRecordingHash}`),
+    'The real bounded catalogue reader admits the metadata before Studio opens',
+  );
   await openStudio(page);
-  assert.deepEqual(requests, [ONLINE_SOUNDTRACK_DIRECTORY_URL, ONLINE_SOUNDTRACK_CATALOGUE_URL]);
+  assert.deepEqual(
+    requests.filter((url) => url === ONLINE_SOUNDTRACK_CATALOGUE_URL),
+    [ONLINE_SOUNDTRACK_CATALOGUE_URL],
+  );
   assert.equal(
     requests.some((url) => /\.mp3(?:$|[?#])/.test(url)),
     false,
     'Silent catalogue discovery must not acquire recording bytes.',
+  );
+  assert(page.audioElements.every((media) => media.plays === 0));
+  assert.deepEqual(page.errors, []);
+});
+
+test('failed silent catalogue metadata is reported and Studio retries it once without acquiring recordings', async (t) => {
+  const requests = [];
+  let metadataRequests = 0;
+  const { page } = await setup(t, {
+    emptyMusic: true,
+    fetchResponse: async (url) => {
+      requests.push(String(url));
+      if (String(url) === ONLINE_SOUNDTRACK_CATALOGUE_URL)
+        return onlineCatalogueResponse(++metadataRequests === 1 ? 503 : 200);
+    },
+  });
+  await waitFor(
+    () => /unavailable/i.test(page.$('soundtrack-online-status').textContent),
+    'A rejected HTTP response stays visible before a fresh explicit Studio visit',
+  );
+  assert.equal(metadataRequests, 1);
+  assert.equal(page.$(`soundtrack-online-play-${onlineRecordingHash}`), null);
+  await openStudio(page);
+  await waitFor(
+    () => !!page.$(`soundtrack-online-play-${onlineRecordingHash}`),
+    'A normal Studio visit retries failed metadata and admits the successful response',
+  );
+  assert.deepEqual(
+    requests.filter((url) => url === ONLINE_SOUNDTRACK_CATALOGUE_URL),
+    [ONLINE_SOUNDTRACK_CATALOGUE_URL, ONLINE_SOUNDTRACK_CATALOGUE_URL],
+  );
+  assert.equal(
+    requests.some((url) => /\.mp3(?:$|[?#])/.test(url)),
+    false,
   );
   assert(page.audioElements.every((media) => media.plays === 0));
   assert.deepEqual(page.errors, []);
@@ -596,13 +684,15 @@ test('actual Studio prepares without downloading; controller, keyboard and touch
     return pending;
   };
   try {
-    // The prior Confirm opened backup tools; rearm its real 120 ms release lifecycle.
-    sample([], 121);
     sample([0]);
+    assert.equal(controllerPreparationCalls, 0, 'Prepare waits for Confirm release.');
+    sample([0], 1200);
+    assert.equal(controllerPreparationCalls, 0, 'Held Confirm cannot prepare a backup.');
+    sample([]);
     assert.equal(
       controllerPreparationCalls,
       1,
-      'Controller Confirm invokes the existing Prepare action exactly once.',
+      'Controller Confirm release invokes the existing Prepare action exactly once.',
     );
     assert.ok(controllerPreparation, 'Controller Confirm returns the real preparation operation.');
     assert.equal(
@@ -629,16 +719,16 @@ test('actual Studio prepares without downloading; controller, keyboard and touch
     Buffer.from(await recovered.assets[0].blob.arrayBuffer()),
     Buffer.from(await original.blob.arrayBuffer()),
   );
+  sample([]);
+  assert.equal(requested, 0, 'The Prepare release cannot activate its newly focused link.');
+  sample([0]);
+  assert.equal(requested, 0, 'A separate Download Confirm also waits for release.');
   sample([0], 1200);
   assert.equal(requested, 0, 'Held Confirm cannot activate the newly focused action.');
   sample([]);
-  sample([], 121); // A separate Confirm follows the real neutral-release interval.
-  sample([0]);
-  assert.equal(requested, 1);
-  sample([0], 1200);
-  assert.equal(requested, 1, 'Held Confirm does not request duplicate downloads.');
-  sample([]);
-  sample([], 121); // Observe release before measuring the separate native-echo window.
+  assert.equal(requested, 1, 'The separate Confirm release requests exactly one download.');
+  sample([], 121);
+  assert.equal(requested, 1, 'Further neutral samples cannot repeat the download.');
   const echoed = link.emit('keydown', { code: 'Enter', key: 'Enter', repeat: false });
   assert.equal(
     echoed.defaultPrevented,

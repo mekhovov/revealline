@@ -6,6 +6,7 @@ import { compileAssetRevision } from './assets.mjs';
 import { inspectMissionTopology } from './diagnostics.mjs';
 import { resolveTeamMission } from './team-runtime.mjs';
 import { CONTENT_PROJECT_JSON_LIMITS, CONTENT_PROJECT_ITEM_LIMITS } from './limits.mjs';
+import { validateMissionDiscovery, validateCampaignDiscovery } from './discovery-schema.mjs';
 import {
   journeyPolicy,
   journeyActors,
@@ -18,9 +19,34 @@ import {
 } from './catalogs.mjs';
 
 const compiledProjects = new WeakSet();
+const compiledSources = new WeakMap();
 // Only fully owned, frozen project revisions can reuse resolved manifests.
 // Weak ownership lets retired drafts and their projections be collected together.
 const resolvedMissions = new WeakMap();
+// A shallow freeze is insufficient: editable nested fields must still validate
+// on every compile. Inspect data descriptors without invoking imported getters.
+function immutableSource(source) {
+  const pending = [[source, 0]],
+    seen = new Set();
+  let nodes = 0;
+  while (pending.length) {
+    const [value, depth] = pending.pop();
+    if (
+      ++nodes > CONTENT_PROJECT_JSON_LIMITS.maxNodes ||
+      depth > CONTENT_PROJECT_JSON_LIMITS.maxDepth
+    )
+      return false;
+    if (!value || typeof value !== 'object') continue;
+    if (!Object.isFrozen(value)) return false;
+    if (seen.has(value)) continue;
+    seen.add(value);
+    for (const descriptor of Object.values(Object.getOwnPropertyDescriptors(value))) {
+      if (!Object.hasOwn(descriptor, 'value')) return false;
+      pending.push([descriptor.value, depth + 1]);
+    }
+  }
+  return source !== null && typeof source === 'object';
+}
 const text = (value, max = 512) =>
   typeof value === 'string' && value.trim().length > 0 && value.length <= max;
 const integer = (value, min, max) => Number.isInteger(value) && value >= min && value <= max;
@@ -73,9 +99,12 @@ function checkDesign(design) {
       'mastery',
       'durationSeconds',
       'difficulty',
+      'pacingBeat',
+      'rewardRef',
     ],
     'mission design',
   );
+  validateMissionDiscovery(design);
   for (const key of [
     'routeDecision',
     'lesson',
@@ -121,6 +150,8 @@ export function compileContentProject(source) {
   // Only this module can mint an owned, fully frozen compiled project. Reuse it
   // across preset projections; a copied or imported lookalike must validate anew.
   if (compiledProjects.has(source)) return source;
+  if (compiledSources.has(source)) return compiledSources.get(source);
+  const cacheable = immutableSource(source);
   const project = boundedJSON(source, CONTENT_PROJECT_JSON_LIMITS);
   identity(project, 'ContentProjectV1', [
     'policyId',
@@ -281,7 +312,8 @@ export function compileContentProject(source) {
     );
   }
   for (const campaign of project.campaigns) {
-    identity(campaign, 'CampaignDesignV1', ['band', 'missionIds', 'archived']);
+    identity(campaign, 'CampaignDesignV1', ['band', 'missionIds', 'archived', 'discovery']);
+    if (campaign.discovery !== undefined) validateCampaignDiscovery(campaign.discovery);
     archiveFlag(campaign);
     required(integer(campaign.band, 1, 12), 'Campaign needs a challenge band.');
     refs(campaign.missionIds, missionIds, 'Campaign missions');
@@ -322,6 +354,8 @@ export function compileContentProject(source) {
     resolvedMissions.delete(resolved);
     throw error;
   }
+  compiledSources.set(project, resolved);
+  if (cacheable) compiledSources.set(source, resolved);
   return resolved;
 }
 

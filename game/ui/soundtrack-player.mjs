@@ -182,6 +182,7 @@ export function createSoundtrackPlayer({
     volume = soundscape.getSettings().music,
     fade = 1,
     generation = 0,
+    intentGeneration = 0,
     operation = null,
     pendingSeek = null;
   let failed = new Set(),
@@ -558,7 +559,17 @@ export function createSoundtrackPlayer({
     });
     deck.media.preload = 'auto';
     deck.media.loop = false;
-    if (track.kind === 'remote') deck.media.crossOrigin = 'anonymous';
+    if (track.kind === 'remote') {
+      // Release assets stream through a signed redirect without CORS response
+      // headers. The trusted catalogue still pins repository, path and hash.
+      if (
+        track.delivery?.type !== 'external-url' &&
+        track.url.startsWith('https://github.com/mekhovov/revealline-soundtracks/releases/')
+      ) {
+        deck.media.removeAttribute?.('crossorigin');
+        deck.media.crossOrigin = null;
+      } else deck.media.crossOrigin = 'anonymous';
+    }
     deck.media.src = deck.url;
     deck.media.load();
     gains();
@@ -1107,6 +1118,7 @@ export function createSoundtrackPlayer({
         selectionContext(),
       );
     }
+    intentGeneration++;
     remoteSelection = null;
     remoteTracks = [];
     override = id;
@@ -1149,10 +1161,10 @@ export function createSoundtrackPlayer({
       t('interface:invalidOnlineSoundtrackStartRecording'),
     );
     const owned = boundedJSON(value, {
-      maxBytes: 512 * 1024,
-      maxNodes: 10000,
+      maxBytes: 1024 * 1024,
+      maxNodes: 65536,
       maxDepth: 5,
-      maxArray: 256,
+      maxArray: 512,
       maxString: 2048,
     });
     required(
@@ -1170,7 +1182,8 @@ export function createSoundtrackPlayer({
           [true, false, null, 'unknown'].includes(track.contentId) &&
           typeof track.recordingModeEligible === 'boolean' &&
           (!track.recordingModeEligible || track.contentId === false) &&
-          onlineSoundtrackRecordingURL(track.url, track.sha256) &&
+          (track.delivery?.type === 'external-url' ||
+            onlineSoundtrackRecordingURL(track.url, track.sha256)) &&
           !ids.has(track.id),
         t('interface:invalidOnlineSoundtrackRecording'),
       );
@@ -1188,6 +1201,7 @@ export function createSoundtrackPlayer({
       startTrackId === null || eligibleTracks.some((track) => track.id === startTrackId),
       t('interface:theChosenOnlineSoundtrackIsUnavailableInThisPlaybackMode'),
     );
+    intentGeneration++;
     const localSelection = mixWithLibrary ? resolveBase() : null;
     remoteTracks = eligibleTracks;
     const localTrackIds = localSelection
@@ -1225,6 +1239,7 @@ export function createSoundtrackPlayer({
   }
   async function play() {
     if (disposed || suspended) return false;
+    intentGeneration++;
     intentionallyPaused = false;
     desired = true;
     notice = null;
@@ -1332,6 +1347,7 @@ export function createSoundtrackPlayer({
       status !== 'playing' && status !== 'loading',
       t('interface:restoreListeningIntentOnlyWhileMusicIsInactive'),
     );
+    intentGeneration++;
     desired = value;
     intentionallyPaused = !value;
     emit();
@@ -1339,6 +1355,7 @@ export function createSoundtrackPlayer({
   }
   function pause() {
     if (disposed) return;
+    intentGeneration++;
     desired = false;
     intentionallyPaused = true;
     cancel();
@@ -1374,6 +1391,7 @@ export function createSoundtrackPlayer({
   }
   async function previous() {
     if (disposed || suspended) return false;
+    intentGeneration++;
     failed = new Set();
     fallbackUsed = false;
     if (position().positionSeconds > 3) {
@@ -1397,6 +1415,7 @@ export function createSoundtrackPlayer({
   }
   function suspend() {
     if (disposed) return;
+    intentGeneration++;
     cancel();
     suspended = true;
     clearTimeout(activeDeck.remoteWatchdog);
@@ -1444,6 +1463,7 @@ export function createSoundtrackPlayer({
   });
   return Object.freeze({
     setLibrary,
+    intentRevision: () => intentGeneration,
     setLocalRecordingIds,
     setContext,
     setAuthoredTrack,
@@ -1456,7 +1476,11 @@ export function createSoundtrackPlayer({
     play,
     pause,
     setIntent,
-    next: () => advance(false),
+    next: () => {
+      if (disposed || suspended) return false;
+      intentGeneration++;
+      return advance(false);
+    },
     previous,
     seek,
     setVolume,

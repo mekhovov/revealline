@@ -12,6 +12,7 @@ import {
   addOfflineLauncher,
   LAUNCHER_CATALOG_KEYS,
   LAUNCHER_FILE_LIMIT,
+  LAUNCHER_NAVIGATION_FILES,
 } from './offline-launcher.mjs';
 import { publishOfflineLauncher } from '../publishing/pages-controller/launcher.mjs';
 import { validateEditionCodeClosure } from './compile-edition.mjs';
@@ -30,7 +31,11 @@ test('all official missions have gameplay-only closure and soundtrack groups exa
               id: 'mission',
               packId: 'chapter',
               modes: ['solo'],
-              sourceFile: { path: 'game/pack.json', bytes: pack.length, sha256 },
+              sourceFile: {
+                path: 'game/pack.json',
+                bytes: pack.length,
+                sha256,
+              },
             },
           ],
         }),
@@ -56,7 +61,10 @@ test('all official missions have gameplay-only closure and soundtrack groups exa
     catalogue.files.filter((file) => file.kind === 'soundtrack').length,
   );
   assert.ok(inventory.sizes.soundtrackBytes > 330 * 1048576);
-  const broken = entries.map((entry) => ({ ...entry, bytes: Buffer.from(entry.bytes) }));
+  const broken = entries.map((entry) => ({
+    ...entry,
+    bytes: Buffer.from(entry.bytes),
+  }));
   broken[0].bytes = Buffer.from('wrong');
   await assert.rejects(
     buildOfflineContent(broken, new Set(['game/pack.json']), '1.0.0'),
@@ -68,7 +76,10 @@ test('publisher copies only the frozen lightweight launcher and points at the im
   const root = path.resolve(import.meta.dirname, '..'),
     entries = [{ name: 'game/installed-app.mjs', bytes: Buffer.from('') }];
   for (const size of [180, 192, 512])
-    entries.push({ name: `icons/icon-${size}.png`, bytes: Buffer.from('fixture icon') });
+    entries.push({
+      name: `icons/icon-${size}.png`,
+      bytes: Buffer.from('fixture icon'),
+    });
   await addOfflineLauncher(root, entries, '1.0.0');
   const launcher = new Map(
     entries
@@ -84,6 +95,9 @@ test('publisher copies only the frozen lightweight launcher and points at the im
     'i18n/catalogs.mjs',
     'i18n/style.css',
     'vendor/i18next-26.4.2.min.js',
+    ...LAUNCHER_NAVIGATION_FILES,
+    'i18n/content-registry.mjs',
+    'navigation.css',
   ];
   const workerSource = launcher.get('app/service-worker.js').toString();
   const workerConfig = JSON.parse(workerSource.match(/const CONFIG = (\{[^\n]+\});/)[1]);
@@ -105,13 +119,24 @@ test('publisher copies only the frozen lightweight launcher and points at the im
   );
   for (const language of ['en', 'uk'])
     for (const [namespace, keys] of Object.entries(LAUNCHER_CATALOG_KEYS))
-      assert.deepEqual(Object.keys(resources[language][namespace]), keys);
+      assert.ok(keys.every((key) => Object.hasOwn(resources[language][namespace], key)));
+  assert.ok(catalogSource.length < LAUNCHER_FILE_LIMIT);
+  assert.ok(launcher.get('app/i18n/content-registry.mjs').length < 256);
+  for (const language of ['en', 'uk']) {
+    assert.ok(resources[language].interface.controllerReady);
+    assert.ok(resources[language].common['controls.south']);
+    assert.ok(resources[language].controllerEditor.done);
+    assert.ok(resources[language].errors['controller.confirmTrace.function']);
+    assert.ok(!resources[language].content);
+  }
   const temp = await fs.mkdtemp(path.join(os.tmpdir(), 'revealline-launcher-test-'));
   t.after(() => fs.rm(temp, { recursive: true, force: true }));
   const source = path.join(temp, 'frozen'),
     output = path.join(temp, 'published');
   for (const entry of entries.filter((entry) => entry.name.startsWith('app/'))) {
-    await fs.mkdir(path.dirname(path.join(source, entry.name)), { recursive: true });
+    await fs.mkdir(path.dirname(path.join(source, entry.name)), {
+      recursive: true,
+    });
     await fs.writeFile(path.join(source, entry.name), entry.bytes);
   }
   assert.equal(await publishOfflineLauncher(source, output, 'v1.0.0'), true);
@@ -136,8 +161,30 @@ test('publisher copies only the frozen lightweight launcher and points at the im
     }
   }
   await collect(path.join(output, 'app'));
-  assert.equal(published.size, 17);
+  assert.equal(published.size, 17 + LAUNCHER_NAVIGATION_FILES.length + 2);
   validateEditionCodeClosure(published);
+  const controllerProfilesPath = path.join(source, 'app/couch/controller-profiles.mjs');
+  const controllerProfilesBytes = await fs.readFile(controllerProfilesPath);
+  assert.deepEqual(published.get('app/couch/controller-profiles.mjs'), controllerProfilesBytes);
+  await fs.rm(controllerProfilesPath);
+  await assert.rejects(
+    publishOfflineLauncher(source, path.join(temp, 'broken-controller-profiles'), 'v1.0.0'),
+    /missing an imported dependency: couch\/controller-profiles\.mjs/,
+  );
+  await fs.writeFile(controllerProfilesPath, controllerProfilesBytes);
+  const navigationPath = path.join(source, 'app/ui/controller-navigation.mjs');
+  const navigationBytes = await fs.readFile(navigationPath);
+  await fs.rm(navigationPath);
+  await assert.rejects(
+    publishOfflineLauncher(source, path.join(temp, 'broken-navigation'), 'v1.0.0'),
+    /missing an imported dependency: ui\/controller-navigation\.mjs/,
+  );
+  await fs.writeFile(navigationPath, Buffer.alloc(LAUNCHER_FILE_LIMIT + 1));
+  await assert.rejects(
+    publishOfflineLauncher(source, path.join(temp, 'oversize-navigation'), 'v1.0.0'),
+    /exceeded its file budget: ui\/controller-navigation\.mjs/,
+  );
+  await fs.writeFile(navigationPath, navigationBytes);
   const profileWriter = await fs.readFile(path.join(source, 'app/profile-writer.mjs'));
   await fs.rm(path.join(source, 'app/profile-writer.mjs'));
   await assert.rejects(

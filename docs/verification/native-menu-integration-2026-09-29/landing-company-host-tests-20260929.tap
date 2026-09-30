@@ -1,0 +1,229 @@
+TAP version 13
+# Subtest: artwork update offers explicit exact-snapshot recovery and Continue retains the original save
+    # Subtest: save the earlier presentation
+    ok 1 - save the earlier presentation
+      ---
+      duration_ms: 4227.316
+      ...
+    # Subtest: new source never silently rewrites the previous flight
+    ok 2 - new source never silently rewrites the previous flight
+      ---
+      duration_ms: 1433.937375
+      ...
+    # Subtest: read-only artwork departure explains shared progress in either language without hiding save risk
+    ok 3 - read-only artwork departure explains shared progress in either language without hiding save risk
+      ---
+      duration_ms: 2727.996916
+      ...
+    # Subtest: the same host reconstructs and resumes the exact earlier source
+    ok 4 - the same host reconstructs and resumes the exact earlier source
+      ---
+      duration_ms: 1839.879875
+      ...
+    1..4
+ok 1 - artwork update offers explicit exact-snapshot recovery and Continue retains the original save
+  ---
+  duration_ms: 10643.243958
+  ...
+# Subtest: edition chrome and retained-artwork recovery switch locale without remounting controls
+ok 2 - edition chrome and retained-artwork recovery switch locale without remounting controls
+  ---
+  duration_ms: 935.536791
+  ...
+# Subtest: edition switch retains the paused attempt and offers Stay before verified departure
+ok 3 - edition switch retains the paused attempt and offers Stay before verified departure
+  ---
+  duration_ms: 1974.955167
+  ...
+# Subtest: edition switch retains the paused attempt and offers Stay before quota departure
+ok 4 - edition switch retains the paused attempt and offers Stay before quota departure
+  ---
+  duration_ms: 1566.657125
+  ...
+# Subtest: edition switch retains the paused attempt and offers Stay before occupied departure
+ok 5 - edition switch retains the paused attempt and offers Stay before occupied departure
+  ---
+  duration_ms: 2140.780625
+  ...
+# Subtest: edition switch cancellation retires pending retention and cannot navigate after a late completion
+ok 6 - edition switch cancellation retires pending retention and cannot navigate after a late completion
+  ---
+  duration_ms: 1250.349375
+  ...
+# Subtest: edition switch permits only declared destinations and does not prompt when no flight exists
+ok 7 - edition switch permits only declared destinations and does not prompt when no flight exists
+  ---
+  duration_ms: 436.052166
+  ...
+# Subtest: edition runs the complete Solo host with canonical rules, settings and mission library
+ok 8 - edition runs the complete Solo host with canonical rules, settings and mission library
+  ---
+  duration_ms: 1048.170917
+  ...
+# Subtest: edition display controls retain the shared preferences without changing a paused flight or its exact receipt
+ok 9 - edition display controls retain the shared preferences without changing a paused flight or its exact receipt
+  ---
+  duration_ms: 1125.865166
+  ...
+# Subtest: edition keyboard steers through actual launch and settings focus without accepting a held menu key
+ok 10 - edition keyboard steers through actual launch and settings focus without accepting a held menu key
+  ---
+  duration_ms: 1525.582625
+  ...
+# Subtest: edition keyboard recovers after window blur and an unobserved keyup
+ok 11 - edition keyboard recovers after window blur and an unobserved keyup
+  ---
+  duration_ms: 1388.077417
+  ...
+# Subtest: edition keyboard recovers after visibility change without blur and an unobserved keyup
+ok 12 - edition keyboard recovers after visibility change without blur and an unobserved keyup
+  ---
+  duration_ms: 1929.249875
+  ...
+# Subtest: edition Continue preserves a matching receipt and rejects a same-ID changed palette without overwriting recovery
+    # Subtest: save the accepted appearance
+    ok 1 - save the accepted appearance
+      ---
+      duration_ms: 1181.465458
+      ...
+    # Subtest: matching edition resumes
+    ok 2 - matching edition resumes
+      ---
+      duration_ms: 1050.829917
+      ...
+    # Subtest: palette
+    ok 3 - palette
+      ---
+      duration_ms: 578.815375
+      ...
+    # Subtest: missing receipt
+    ok 4 - missing receipt
+      ---
+      duration_ms: 776.874333
+      ...
+    1..4
+ok 13 - edition Continue preserves a matching receipt and rejects a same-ID changed palette without overwriting recovery
+  ---
+  duration_ms: 3588.86275
+  ...
+# Subtest: edition pause keeps canonical Skip confirmation and Watch first cut actions reachable
+ok 14 - edition pause keeps canonical Skip confirmation and Watch first cut actions reachable
+  ---
+  duration_ms: 2066.830541
+  ...
+# Subtest: edition First Flight uses shared course rules and returns to its own company
+ok 15 - edition First Flight uses shared course rules and returns to its own company
+  ---
+  duration_ms: 541.55775
+  ...
+# Subtest: edition controller practice reconstructs only its selected mission without shared Playground storage
+ok 16 - edition controller practice reconstructs only its selected mission without shared Playground storage
+  ---
+  duration_ms: 726.187334
+  ...
+# Subtest: official DroneAid wordmark belongs only to the aggregate landing and keeps a text fallback
+    # Subtest: droneaid
+    ok 1 - droneaid
+      ---
+      duration_ms: 7370.9095
+      ...
+    # Subtest: droneaid-nl-workshop-lights
+    ok 2 - droneaid-nl-workshop-lights
+      ---
+      duration_ms: 1133.777542
+      ...
+    1..2
+ok 17 - official DroneAid wordmark belongs only to the aggregate landing and keeps a text fallback
+  ---
+  duration_ms: 8505.026417
+  ...
+# Subtest: every declared edition boots and starts through the canonical Solo host
+    # Subtest: coupa-all
+    ok 1 - coupa-all
+      ---
+      duration_ms: 2989.286
+      ...
+    # Subtest: coupa-adventure
+    ok 2 - coupa-adventure
+      ---
+      duration_ms: 1671.617708
+      ...
+    # Subtest: coupa-culture
+    ok 3 - coupa-culture
+      ---
+      duration_ms: 1835.080791
+      ...
+    # Subtest: coupa-foundations
+    ok 4 - coupa-foundations
+      ---
+      duration_ms: 1751.152625
+      ...
+    # Subtest: coupa-operations
+    ok 5 - coupa-operations
+      ---
+      duration_ms: 1978.602333
+      ...
+    # Subtest: coupa-developers
+    ok 6 - coupa-developers
+      ---
+      duration_ms: 2218.239958
+      ...
+    # Subtest: droneaid-community
+    ok 7 - droneaid-community
+      ---
+      duration_ms: 1238.611125
+      ...
+    # Subtest: droneaid-nl-community
+    ok 8 - droneaid-nl-community
+      ---
+      duration_ms: 2904.593792
+      ...
+    # Subtest: droneaid-nl-workshop-lights
+    ok 9 - droneaid-nl-workshop-lights
+      ---
+      duration_ms: 1400.51125
+      ...
+    # Subtest: droneaid-nl-parts-in-motion
+    ok 10 - droneaid-nl-parts-in-motion
+      ---
+      duration_ms: 1394.863084
+      ...
+    # Subtest: droneaid-nl-makers-together
+    ok 11 - droneaid-nl-makers-together
+      ---
+      duration_ms: 1478.130375
+      ...
+    # Subtest: droneaid-nl-careful-handoff
+    ok 12 - droneaid-nl-careful-handoff
+      ---
+      duration_ms: 2027.14375
+      ...
+    # Subtest: droneaid-nl-signals-of-support
+    ok 13 - droneaid-nl-signals-of-support
+      ---
+      duration_ms: 1549.035542
+      ...
+    # Subtest: droneaid-nl-shared-horizon
+    ok 14 - droneaid-nl-shared-horizon
+      ---
+      duration_ms: 1665.846625
+      ...
+    1..14
+ok 18 - every declared edition boots and starts through the canonical Solo host
+  ---
+  duration_ms: 26105.104916
+  ...
+# Subtest: same-origin installed creator campaign cannot inject missions into a selected edition
+ok 19 - same-origin installed creator campaign cannot inject missions into a selected edition
+  ---
+  duration_ms: 1579.06175
+  ...
+1..19
+# tests 43
+# suites 0
+# pass 43
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 80351.774666
