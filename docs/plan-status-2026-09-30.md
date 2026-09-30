@@ -1,6 +1,39 @@
 # Source reconciliation and remaining delivery — 30 September 2026
 
-## Latest reconciliation — 16:30 UTC
+## Current review — 18:49 UTC
+
+Start with the [detailed completed/remaining programme](plan-review-2026-09-30.md).
+It explains each remaining item, its benefit, the effect of postponement,
+acceptance, dependencies and effort range. **A → B → C** remains the order, with
+necessary C6 alongside, wider cohorts/tools and C7/UX6 later, and **C2 last**.
+Production-art review stays deferred; source fixes can continue independently.
+
+- **Public delivery:** the continuous-main root advertises v0.142.4. Deployment
+  and game metadata agree on `09a43d83351af276f184293ed3c72261575ed8bc`;
+  Pages run `36759567741` succeeded. This review checked metadata, not fresh whole
+  gameplay or all deployed bytes. Latest immutable release remains v0.142.3.
+- **Integrated source:** all 24 actor batches in PR761, Team downed guidance in
+  PR828, and later bounded input/Guide/audio/offline corrections are on main.
+  PR853 merged at `09a43d833`; PR854 compact landing merged at `60407a7ce` and its
+  newer Pages run was still active. Merged is not independently publicly accepted.
+- **Pushed/held:** PR868 at `4e54771316c817b2ad831ad47e47627966861644` carries exact
+  fpv38/50 Team import restoration, the Sentry projectile explanation and FPV104
+  coverage refresh. Its exact candidate has capacity/fingerprint findings; see
+  the detailed review. These are not asserted against every later main build.
+- **Art candidates:** all seven V6 bodies and the workshop/Poltava/Synevyr cohort
+  have real preparation/comparison tools and retained originals. They are not
+  production-selected replacements. Do not repeat completed tools as new work.
+- **Remaining acceptance:** actor/rig adoption and states; encounter combinations
+  and fairness; first art cohort; necessary creator/community workflow; cumulative
+  content/device/offline/performance checks; finally the human comparison.
+- **Validation:** automated suites are `WAIVED_SKIPPED_NOT_PASSED`; source,
+  provenance, localization, build/capacity and asset checks remain required.
+
+The review branch is documentation-only, based on `60407a7ce`. PR868 and all
+runtime/assets/version files remain unchanged by this review. The older snapshots
+below retain their original observations; they are not the current queue.
+
+## Earlier reconciliation — 16:30 UTC
 
 Baseline refreshed to main `908bc6b08d1999edafa79d1581d2bab9395285b7`.
 The owned actor checkout was clean at detached `20622ef66`, already an ancestor
