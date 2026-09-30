@@ -179,6 +179,21 @@ async function editionSwitchHost(t, { occupied = false, start = true } = {}) {
   const f = await editionProviderFixture();
   const catalog = structuredClone(f.catalog);
   catalog.editions.push({ ...catalog.editions[0], id: 'sample-other', name: 'Other audience' });
+  catalog.brands.push({ ...catalog.brands[0], id: 'another-company', name: 'Another company' });
+  catalog.campaigns.push({
+    ...catalog.campaigns[0],
+    id: 'another-campaign',
+    brandId: 'another-company',
+    sourcePath: 'game/content/another-company/project.json',
+  });
+  catalog.editions.push({
+    ...catalog.editions[0],
+    id: 'sample-foreign',
+    name: 'Another community',
+    brandId: 'another-company',
+    campaignIds: ['another-campaign'],
+    entryCampaignId: 'another-campaign',
+  });
   for (const path of ['game/editions/catalog.json', 'edition-catalog.json'])
     f.files.set(path, catalog);
   const page = await soloPage(t, {
@@ -354,12 +369,21 @@ test('edition switch cancellation retires pending retention and cannot navigate 
   assert.deepEqual(page.errors, []);
 });
 
-test('edition switch permits only declared destinations and does not prompt when no flight exists', async (t) => {
+test('edition switch permits only its company destinations and does not prompt when no flight exists', async (t) => {
   const page = await editionSwitchHost(t, { start: false }),
     origin = page.win.location.href,
     picker = page.$('edition-select');
   openEditionSettings(page, 'content');
-  for (const id of ['sample-public', 'omitted-audience', 'https://foreign.test/']) {
+  assert.deepEqual(
+    [...picker.options].map((option) => option.value),
+    ['sample-public', 'sample-other'],
+  );
+  for (const id of [
+    'sample-public',
+    'sample-foreign',
+    'omitted-audience',
+    'https://foreign.test/',
+  ]) {
     picker.value = id;
     await picker.onchange();
     assert.equal(picker.value, 'sample-public');
@@ -370,6 +394,53 @@ test('edition switch permits only declared destinations and does not prompt when
   await picker.onchange();
   assert.equal(page.win.location.href, 'http://localhost/game/index.html?edition=sample-other');
   assert.equal(page.$('mode-leave-dialog').open, false);
+  assert.deepEqual(page.errors, []);
+});
+
+test('a forged cross-company selection cannot save, replace or leave the current attempt', async (t) => {
+  const page = await editionSwitchHost(t);
+  page.$('shell-menu').click();
+  openEditionSettings(page, 'content');
+  const before = authoritativeCheckpoint(page.rendered.run);
+  const origin = page.win.location.href;
+  const key = 'revealline.suspended.journey-sample-public.v1.solo-v2';
+  const saved = page.storage.getItem(key);
+  const picker = page.$('edition-select');
+  picker.value = 'sample-foreign';
+  assert.equal(await picker.onchange(), false);
+  assert.equal(picker.value, 'sample-public');
+  assert.equal(page.$('mode-leave-dialog').open, false);
+  assert.equal(page.win.location.href, origin);
+  assert.equal(page.storage.getItem(key), saved);
+  assert.equal(
+    page.storage.getItem('revealline.suspended.journey-sample-foreign.v1.solo-v2'),
+    null,
+  );
+  assert.deepEqual(authoritativeCheckpoint(page.rendered.run), before);
+  assert.deepEqual(page.errors, []);
+});
+
+test('retained edition chrome does not borrow a newly adopted logo outside its saved asset closure', async (t) => {
+  const f = await retainedEditionFixture({ originalArtwork: true });
+  const currentLogo = f.replacePicture('new-company-logo');
+  f.catalog.brands[0].logoAssetId = currentLogo.id;
+  f.catalog.brands[0].assetIds = [currentLogo.id];
+  const requests = [];
+  const page = await soloPage(t, {
+    search: `?edition=sample-public&presentation=${f.descriptor.id}`,
+    titleScreen: true,
+    journeyIndexedDB: managedIndexedDB().indexedDB,
+    pictures: { Image: PNGImage },
+    fetchResponse(url) {
+      requests.push(String(url));
+      return f.fetcher(url);
+    },
+  });
+  assert.equal(page.doc.body.dataset.editionId, 'sample-public');
+  assert.equal(page.$('edition-presentation-select').value, f.descriptor.id);
+  assert.ok(!requests.some((url) => url.endsWith(currentLogo.path)));
+  for (const image of page.doc.querySelectorAll('img'))
+    assert.ok(!String(image.src).includes('new-company-logo'));
   assert.deepEqual(page.errors, []);
 });
 
