@@ -1,8 +1,20 @@
 # Polished journeys and real-radio flight: delivery ledger
 
+> **2026-09-30 continuation:** Phases 2–4 and the twelve-drill Phase 6 framework
+> are implemented. The review-controls follow-up fixes focused-control pause,
+> delivers actual 0.5× replay, and binds runtime/retention diagnostics to frozen
+> artifacts. See [current batch and remaining priorities](verification/fpv-review-controls-20260930.md).
+> Earlier branch, PR and evidence references below are historical, not the current
+> release queue or final-head qualification. Human/device evidence remains deferred.
+
 This supersedes claims that the assisted overhead gym completes the immersive
 flight-simulator phase. The historical `civilian-flight` / `assisted-gym.v1` stays
 unchanged. New first-person flight belongs to the separate `civilian-fpv` package.
+
+For the current source status and remaining release work, see the
+[30 September FPV offline continuation](verification/fpv-offline-navigation-20260930.md).
+The older PR/queue references below are retained delivery history. PR #822 has
+merged; this continuation starts from refreshed main and uses a new bounded input.
 
 ## Order and compatibility
 

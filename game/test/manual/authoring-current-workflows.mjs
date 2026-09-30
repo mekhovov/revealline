@@ -1,6 +1,10 @@
 // Current qualification cases; legacy cases in the parent runner remain attributed
 // to their historical receipts. Every edit below uses the real controller owner.
 import { preparedTitleCurrent } from './prepared-title-current-workflow.mjs';
+import {
+  nativeLandingDefaultCurrent,
+  nativeLandingDroneAidCurrent,
+} from './native-landing-whitelist-workflow.mjs';
 import { importThemeBundle } from '../../presentation/bundle.mjs';
 import { validateScenario } from '../../content.mjs';
 import { validateEnemyCatalogDraft } from '../../enemy-catalog.mjs';
@@ -21,6 +25,7 @@ import { countercurrentGalleryCurrent } from './countercurrent-gallery-current-w
 import { fpvEnemyGalleryCurrent } from './fpv-enemy-gallery-current-workflow.mjs';
 import { fpvRoleGalleryCurrent } from './fpv-role-gallery-current-workflow.mjs';
 import { reserveCatalogCurrent } from './reserve-catalog-current-workflow.mjs';
+import { ukraineRoleGalleryCurrent } from './authoring-current-ukraine-role-workflow.mjs';
 import {
   creatorGuideDocumentsCurrent,
   creatorGuidePackDownloadCurrent,
@@ -47,8 +52,11 @@ const value = (p, css) => p.doc.querySelector(css).value;
 
 export const currentAuthoringCases = {
   preparedTitleCurrent,
+  nativeLandingDefaultCurrent,
+  nativeLandingDroneAidCurrent,
   fpvRoleGalleryCurrent,
   reserveCatalogCurrent,
+  ukraineRoleGalleryCurrent,
   fpvEnemyGalleryCurrent,
   countercurrentGalleryCurrent,
   creatorGuideDocumentsCurrent,

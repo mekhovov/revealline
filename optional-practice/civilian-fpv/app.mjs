@@ -46,10 +46,18 @@ export function mountFlightApp({
   if (gameReturn && $('game-return')) {
     $('game-return').href = gameReturn;
     $('game-return').hidden = false;
-    // The containing game provides the offline cache for bundled practice.
-    $('install-offline').hidden = true;
-    $('remove-offline').hidden = true;
   }
+  const offlineAvailable =
+    /^https?:$/.test(new URL(win.location.href).protocol) &&
+    win.isSecureContext !== false &&
+    !!win.navigator?.serviceWorker;
+  let offlineBusy = false;
+  const refreshOfflineControls = () => {
+    for (const id of ['install-offline', 'remove-offline'])
+      $(id).disabled = !offlineAvailable || offlineBusy;
+    $('offline-unavailable').hidden = offlineAvailable;
+  };
+  refreshOfflineControls();
   const requestedLocale = new URL(win.location.href).searchParams.get('lang');
   let locale = ['en', 'uk'].includes(requestedLocale) ? requestedLocale : getLocale(),
     selected = 0,
@@ -65,6 +73,7 @@ export function mountFlightApp({
     lastProof = null,
     authoringCourse = null,
     replay = null,
+    replayRate = 1,
     setup = null,
     frameId = null,
     lastTime = null,
@@ -149,6 +158,8 @@ export function mountFlightApp({
     lastTime = null;
     lastExecutionTime = null;
     replay = null;
+    if (doc.activeElement === $('replay-rate')) $('viewport').focus();
+    $('replay-controls').hidden = true;
     terminalHandled = false;
     message = null;
     selected = index;
@@ -310,6 +321,8 @@ export function mountFlightApp({
     const playback = createFlight({ course: courses[index], mode, response: proof.response });
     playback.arm();
     replay = { proof, kind, flight: playback, at: 0, paused: false };
+    $('replay-controls').hidden = false;
+    $('replay-rate').value = String(replayRate);
     $('mode').value = mode;
     $('complete').hidden = true;
     $('try').hidden = false;
@@ -475,7 +488,9 @@ export function mountFlightApp({
       const active = replay
         ? !replay.paused && replay.at < replay.proof.frames.length
         : flight.snapshot().status === 'active';
-      if (active && delta <= 250) accumulator += Math.max(0, delta);
+      // Slow replay changes wall-clock scheduling, not the input order or model step.
+      // Every recorded command still advances the fixed-step model exactly once.
+      if (active && delta <= 250) accumulator += Math.max(0, delta) * (replay ? replayRate : 1);
       while (active && accumulator >= 1000 / FLIGHT_HZ) {
         accumulator -= 1000 / FLIGHT_HZ;
         if (replay) {
@@ -531,6 +546,20 @@ export function mountFlightApp({
       paint(true);
     });
   listen($('pause'), 'click', () => pause());
+  listen($('replay-rate'), 'change', () => {
+    const value = Number($('replay-rate').value);
+    if (!replay || ![0.5, 1].includes(value)) {
+      $('replay-rate').value = String(replayRate);
+      return;
+    }
+    replayRate = value;
+    // Do not apply a newly selected rate to elapsed time before this change.
+    // A paused review stays paused; changing speed never acquires live input.
+    accumulator = 0;
+    lastTime = null;
+    lastExecutionTime = null;
+    paint(true);
+  });
   listen($('reset'), 'click', () => reset());
   listen($('retry'), 'click', () => reset(selected, mode, null));
   listen($('try'), 'click', () => reset(selected, mode, null));
@@ -665,7 +694,12 @@ export function mountFlightApp({
     ['remove-offline', removePracticeOffline],
   ])
     listen($(id), 'click', async () => {
+      if (!offlineAvailable || offlineBusy || disposed || suspended) return;
       pause();
+      offlineBusy = true;
+      refreshOfflineControls();
+      $('transfer-status').textContent =
+        c()[id === 'install-offline' ? 'offlinePreparing' : 'offlineRemoving'];
       try {
         let storage;
         try {
@@ -684,6 +718,9 @@ export function mountFlightApp({
             c()[id === 'install-offline' ? 'offlineReady' : 'offlineRemoved'];
       } catch (error) {
         if (!disposed) $('transfer-status').textContent = error.message;
+      } finally {
+        offlineBusy = false;
+        if (!disposed) refreshOfflineControls();
       }
     });
   reset();
