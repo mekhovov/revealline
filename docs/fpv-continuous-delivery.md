@@ -221,3 +221,25 @@ passed with zero page errors. The 75-file package is 12,306,578 bytes, SHA-256
 `f33c04cf3a4a63953bebf0914046c841e3fa4f1602912f7e943c9c2931dbf2cb`.
 Garage is the next content slice. Optional local-ghost development continues in
 its isolated sparse worktree; merge only its completed and verified feature.
+
+### First protected merge and Container publication
+
+PRs #885, #887, #888 and #890 merged through protected native request
+`809d5f63-5f6f-426d-a950-9be08a730d92` at
+`ff1f6d1a9b4d38dc77605c0a2156a1a27747901a`. Pages run 36788512997 is running;
+public launch has not yet been verified. GitHub automatically rebased the
+remaining native layers: #892 `bae5e00d0d63`, #894 `89511c7bc384`, #895
+`b8b6640904b3`. Local copies adopted those remote heads and Container was rebased
+above Stadium with its feature bytes unchanged.
+
+Container Yard is published as [PR #896](https://github.com/mekhovov/revealline/pull/896)
+and appended to native stack #889. Further merge requests are temporarily held
+while a confirmed reimport defect receives an immediate focused correction:
+identical reimport can erase a locally authored obstacle; reordered spawn markers
+can move the course spawn; semantic gate and actor edits can be silently omitted.
+The browser reproduction is retained at
+`/tmp/fpv-reimport-data-loss-20261001/reproduction.json`. Installed packs and saved
+proofs are not edited by the reproduction. Prioritize transactional draft
+preservation and explicit unsupported-change diagnostics before the full staged
+reimport review UI. Ghost development continues separately; Garage follows this
+correction. No unit coverage is added in this feature-first phase.
