@@ -73,8 +73,8 @@
       },
       "delivery": {
         "path": "authoring/library/soundtrack-batches/runner2088-game-mix-20260930/delivery.json",
-        "bytes": 408,
-        "sha256": "a6726a640610e408383146d554fa2a709eebf1be6939741d6fe342ea6bcc3915"
+        "bytes": 906,
+        "sha256": "fd8e0e16092ea6667b1052b7b95d6724c016a94659f2434550c75547e0f2fb20"
       }
     }
   ]
