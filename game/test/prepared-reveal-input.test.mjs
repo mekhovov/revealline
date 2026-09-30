@@ -332,6 +332,102 @@ test('manifest modal only accepts its fixed source and restores exact opener aft
   assert.equal(f.doc.activeElement === f.origin, true);
 });
 
+async function pendingManifestRetry(t) {
+  const wait = deferred();
+  let count = 0,
+    signal;
+  const f = manifestFixture(t, {
+    readText: (options) => {
+      if (++count === 1) return Promise.resolve(manifestBytes.toString());
+      signal = options.signal;
+      return wait.promise;
+    },
+  });
+  f.open();
+  await settle();
+  const retry = f.$('prepared-reveal-manifest-retry'),
+    back = f.$('prepared-reveal-manifest-back');
+  f.host.navigation.engage();
+  retry.focus();
+  f.host.navigation.beginConfirm();
+  f.host.navigation.commitConfirm();
+  assert.equal(f.dialog.dataset.state, 'loading');
+  assert.equal(retry.disabled, true);
+  assert.equal(back.disabled, false);
+  assert.equal(f.doc.activeElement === back, true);
+  // Poll the actual shared navigator while Retry is ineligible. Its fallback
+  // must not replace the route's explicit, cancelable pending focus owner.
+  for (let i = 0; i < 4; i++) f.host.navigation.handle({});
+  assert.equal(f.doc.activeElement === back, true);
+  return { ...f, retry, back, wait, signal };
+}
+
+for (const outcome of ['success', 'failure', 'timeout'])
+  test(
+    'owned manifest Retry returns focus after ' + outcome + ' and neutral polling',
+    async (t) => {
+      const f = await pendingManifestRetry(t);
+      if (outcome === 'success') f.wait.resolve(manifestBytes.toString());
+      if (outcome === 'failure') f.wait.reject(new Error('unavailable'));
+      if (outcome === 'timeout') {
+        f.deadline();
+        assert.equal(f.signal.aborted, true);
+        f.wait.resolve('late timeout response');
+      }
+      await settle();
+      assert.equal(f.dialog.dataset.state, outcome === 'success' ? 'ready' : 'error');
+      assert.equal(f.retry.disabled, false);
+      assert.equal(f.doc.activeElement === f.retry, true);
+      const text = f.$('prepared-reveal-manifest-region').querySelector('pre');
+      assert.equal(
+        text?.textContent ?? null,
+        outcome === 'success' ? manifestBytes.toString() : null,
+      );
+    },
+  );
+
+test('manifest Retry does not reclaim Back after an intervening modal focus choice', async (t) => {
+  const f = await pendingManifestRetry(t),
+    newer = f.doc.createElement('button');
+  f.dialog.append(newer);
+  newer.focus();
+  f.back.focus();
+  f.wait.resolve(manifestBytes.toString());
+  await settle();
+  assert.equal(f.dialog.dataset.state, 'ready');
+  assert.equal(f.doc.activeElement === f.back, true);
+});
+
+for (const event of ['back', 'blur', 'hidden', 'modal'])
+  test(
+    'pending manifest Retry ' + event + ' revokes captured focus and ignores late completion',
+    async (t) => {
+      const f = await pendingManifestRetry(t);
+      if (event === 'back') {
+        f.host.navigation.handle({ back: true });
+        assert.equal(f.dialog.open, false);
+        assert.equal(f.doc.activeElement === f.origin, true);
+      }
+      if (event === 'blur') f.win.emit('blur');
+      if (event === 'hidden') {
+        f.doc.hidden = true;
+        f.doc.emit('visibilitychange');
+      }
+      if (event === 'modal') {
+        const modal = f.doc.createElement('dialog');
+        f.doc.body.append(modal);
+        modal.showModal();
+        f.observe();
+      }
+      assert.equal(f.signal.aborted, true);
+      const focus = f.doc.activeElement;
+      f.wait.resolve(manifestBytes.toString());
+      await settle();
+      assert.equal(f.doc.activeElement === focus, true);
+      assert.equal(f.$('prepared-reveal-manifest-region').querySelector('pre'), null);
+    },
+  );
+
 for (const event of ['cancel', 'blur', 'hidden', 'pagehide', 'newer-focus', 'modal', 'timeout'])
   test('pending manifest ' + event + ' cannot publish late or steal a newer owner', async (t) => {
     const wait = deferred();
