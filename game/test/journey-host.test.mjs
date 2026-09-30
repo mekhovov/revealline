@@ -297,7 +297,7 @@ for (const cancel of ['button', 'Escape', 'new chooser'])
     p.$('journey-search').emit('input');
     p.$('journey-cards').children[0].click();
     await settle(() => !!resolveDownload);
-    assert.equal(p.$('flight-preparation-cancel').hidden, false);
+    assert.equal(p.$('flight-preparation-cancel').hidden, true);
     if (cancel === 'button') p.$('flight-preparation-cancel').click();
     else if (cancel === 'Escape') {
       p.key('Escape');
