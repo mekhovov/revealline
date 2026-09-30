@@ -1,5 +1,11 @@
 # RevealLine delivery plan
 
+> Retained excerpt after an ownership migration. Historical totals and verification statements describe the original scope; this excerpt is not a current release qualification. Original bytes and removed material are preserved separately.
+
+> **Current whole-product status:** [completed and remaining delivery](delivery-status.md).
+> Use that dated rollup for current priorities, release status and acceptance limits.
+> The older checkpoints below retain their historical scope.
+
 > **Current status:** use the [29 September register](plan-status-2026-09-29.md)
 > for completed source work, remaining implementation and evidence limits.
 > Dated versions and queues below retain their historical scope; source work
