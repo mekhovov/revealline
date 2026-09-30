@@ -6,6 +6,7 @@ import {
   CURATED_PLAYLISTS,
 } from './world-catalogue.mjs';
 import { FLIGHT_COURSES } from './catalogue.mjs';
+import { FLIGHT_DEMONSTRATIONS } from './demonstrations.mjs';
 import { createFlight, createFlightRecorder, replayFlightCooperatively } from './model.mjs';
 import {
   initWorldRuntime,
@@ -57,6 +58,17 @@ import { mountDroneHangar } from './world-hangar.mjs';
 import { mountActorEditor } from './world-actor-editor.mjs';
 
 const COPY_EN = {
+  firstFlight: 'YOUR FIRST FLIGHT',
+  firstFlightTitle: 'Watch a hover. Then try it yourself.',
+  firstFlightHelp:
+    'Start with the Academy: raise throttle gently, hold inside the marker, then land. Self-level helps you stay upright; Acro keeps the angle you set.',
+  watchFirst: 'Watch first flight',
+  tryFirst: 'Try first flight',
+  demoCoverage:
+    '24 recorded examples cover the 12 Academy challenges in both modes. Examples for the new worlds are still in production.',
+  watchDemo: 'Watch demonstration',
+  playbackSpeed: 'Playback speed',
+  flyThis: 'Fly this challenge',
   inspectDrone: 'Inspect drone',
   hangarHelp: 'Drag to rotate. Scroll to zoom. Every appearance uses the same flight handling.',
   explore: 'Explore',
@@ -151,6 +163,17 @@ const COPY_EN = {
   keys: 'W/S pitch · A/D roll · Q/E yaw · ↑/↓ throttle · P pause · Space fire',
 };
 const COPY_UK = {
+  firstFlight: 'ВАШ ПЕРШИЙ ПОЛІТ',
+  firstFlightTitle: 'Подивіться зависання. Потім спробуйте самі.',
+  firstFlightHelp:
+    'Почніть з Академії: плавно додайте газ, утримуйте дрон у маркері та сідайте. Самовирівнювання допомагає тримати горизонт; Acro зберігає заданий нахил.',
+  watchFirst: 'Переглянути перший політ',
+  tryFirst: 'Спробувати перший політ',
+  demoCoverage:
+    '24 записані приклади охоплюють 12 завдань Академії в обох режимах. Приклади для нових світів ще готуються.',
+  watchDemo: 'Переглянути демонстрацію',
+  playbackSpeed: 'Швидкість відтворення',
+  flyThis: 'Виконати це завдання',
   explore: 'Дослідження',
   playlists: 'Мої добірки',
   creator: 'Створення',
@@ -551,7 +574,9 @@ export function mountWorldApp({
     radioSetup = null,
     response = { ...DEFAULT_RESPONSE },
     recovery = null,
-    replayProof = null;
+    replayProof = null,
+    replayKind = 'recording',
+    replayRate = 1;
   const sectors = createSectorTracker();
   let storage;
   try {
@@ -601,6 +626,35 @@ export function mountWorldApp({
   const localized = (value) =>
     typeof value === 'string' ? value : (value?.[locale] ?? value?.en ?? '');
   const label = (entry) => entry.course.locales[locale].title;
+  const demonstrationCache = new WeakMap();
+  function demonstrationFor(entry, mode) {
+    if (!entry?.legacy) return null;
+    const cache = demonstrationCache.get(entry.course) ?? new Map();
+    if (cache.has(mode)) return cache.get(mode);
+    const proof = FLIGHT_DEMONSTRATIONS.find(
+      (candidate) => candidate.course === entry.id && candidate.mode === mode,
+    );
+    if (!proof || proof.format !== 'FlightAttempt.v1' || proof.session !== 'demonstration')
+      return null;
+    const { identity } = createFlight({ course: entry.course, mode, response: proof.response });
+    const match = Object.entries(identity).every(([key, value]) => proof[key] === value)
+      ? proof
+      : null;
+    cache.set(mode, match);
+    demonstrationCache.set(entry.course, cache);
+    return match;
+  }
+  function watchDemonstration(entry, mode = $('flight-mode').value) {
+    const proof = demonstrationFor(entry, mode);
+    if (!proof)
+      throw new Error(
+        txt(
+          'No demonstration matches this challenge revision.',
+          'Немає демонстрації для цієї версії завдання.',
+        ),
+      );
+    return startFlight(entry, { preview: true, replayProof: proof, demonstration: true });
+  }
   const stepName = (step) => {
     const names = {
       hold: ['Hold position', 'Утримуйте позицію'],
@@ -810,6 +864,8 @@ export function mountWorldApp({
           preview,
           playlist: playingPlaylist,
           index: playlistIndex,
+          replayProof,
+          demonstration: replayKind === 'demonstration',
         }).catch(reportError);
     },
   });
@@ -948,6 +1004,18 @@ export function mountWorldApp({
             `${localized(ACTIVITY_NAMES[entry.activity])} · ${COPY_UK[entry.difficulty] && locale === 'uk' ? COPY_UK[entry.difficulty] : entry.difficulty} · ${entry.duration ?? 3} ${txt('min', 'хв')}`,
           ),
         );
+        if (demonstrationFor(entry, 'self-level') && demonstrationFor(entry, 'acro')) {
+          const watch = button(
+            txt('Watch example', 'Переглянути приклад'),
+            () => watchDemonstration(entry),
+            'watch-example',
+          );
+          watch.setAttribute(
+            'aria-label',
+            `${txt('Watch demonstration', 'Переглянути демонстрацію')}: ${label(entry)}`,
+          );
+          info.append(watch);
+        }
         const fly = button(txt('Fly', 'Летіти'), () => startFlight(entry));
         fly.setAttribute('aria-label', `${txt('Fly', 'Летіти')}: ${label(entry)}`);
         const add = button(
@@ -1599,8 +1667,12 @@ export function mountWorldApp({
     pausing = false;
     if (current) {
       $('flight-status').textContent = txt(
-        'Paused. Arm deliberately to continue.',
-        'Пауза. Натисніть «Увімкнути», щоб продовжити.',
+        replayProof
+          ? 'Playback paused. Resume to continue.'
+          : 'Paused. Arm deliberately to continue.',
+        replayProof
+          ? 'Відтворення на паузі. Натисніть «Продовжити».'
+          : 'Пауза. Натисніть «Увімкнути», щоб продовжити.',
       );
       void saveRecovery().catch(reportError);
     }
@@ -1612,8 +1684,17 @@ export function mountWorldApp({
     $('flight-objective').textContent = terminal(state)
       ? txt('Flight ended', 'Політ завершено')
       : `${Math.min(state.step + 1, state.total ?? current.course.steps[$('flight-mode').value].length)}/${current.course.steps[$('flight-mode').value].length} · ${target ? stepName(target) : state.status}${state.hold ? ` · ${state.hold}/${target?.ticks ?? 0}` : ''}`;
-    $('world-arm').disabled = !sceneReady || terminal(state);
+    $('world-arm').disabled = !sceneReady || terminal(state) || (Boolean(replayProof) && finished);
+    $('world-arm').textContent = replayProof
+      ? txt('Resume playback', 'Продовжити перегляд')
+      : txt('Arm / resume', 'Увімкнути / продовжити');
+    $('world-retry').textContent = replayProof
+      ? txt('Restart playback', 'Переглянути спочатку')
+      : txt('Retry', 'Ще раз');
+    $('world-watch-demo').hidden =
+      Boolean(replayProof) || !demonstrationFor(current, $('flight-mode').value);
     $('world-fire').hidden =
+      Boolean(replayProof) ||
       current.legacy ||
       !current.course.actors.some(
         (a) => a.type !== 'hazard' && (a.role ?? 'hostile') === 'hostile',
@@ -1623,6 +1704,10 @@ export function mountWorldApp({
   }
   async function finishFlight(token) {
     if (finished || token !== flightToken) return;
+    if (replayProof) {
+      finishPlayback();
+      return;
+    }
     finished = true;
     input.enable(false);
     fire = false;
@@ -1729,6 +1814,40 @@ export function mountWorldApp({
       throw error;
     }
   }
+  function finishPlayback() {
+    finished = true;
+    input.enable(false);
+    fire = false;
+    audio.pause();
+    $('result-panel').hidden = false;
+    $('result-panel').replaceChildren(
+      el(
+        'h2',
+        replayKind === 'demonstration'
+          ? txt('Demonstration complete', 'Демонстрацію завершено')
+          : txt('Playback ended', 'Відтворення завершено'),
+      ),
+      el(
+        'p',
+        txt(
+          'Watching does not change your completion, medals or playlist progress.',
+          'Перегляд не змінює ваші результати, медалі чи поступ у добірці.',
+        ),
+      ),
+      button(txt('Fly this challenge', 'Виконати це завдання'), () => startFlight(current)),
+      button(txt('Watch again', 'Переглянути ще раз'), () =>
+        startFlight(current, {
+          preview: true,
+          replayProof,
+          demonstration: replayKind === 'demonstration',
+        }),
+      ),
+    );
+    $('flight-status').textContent = txt(
+      'Playback ended. Fly the challenge when you are ready.',
+      'Відтворення завершено. Спробуйте завдання, коли будете готові.',
+    );
+  }
   function frame(now) {
     if (disposed) return;
     raf = win.requestAnimationFrame(frame);
@@ -1770,7 +1889,7 @@ export function mountWorldApp({
       }
     }
     if (flight.snapshot().status === 'active') {
-      accumulator += elapsed;
+      accumulator += elapsed * (replayProof ? replayRate : 1);
       while (accumulator >= 20 && flight.snapshot().status === 'active') {
         accumulator -= 20;
         let controls =
@@ -1779,10 +1898,7 @@ export function mountWorldApp({
           const row = replayProof.frames[flight.snapshot().ticks];
           if (!row) {
             pauseFlight(false);
-            $('flight-status').textContent = txt(
-              'Recording playback ended.',
-              'Відтворення запису завершено.',
-            );
+            finishPlayback();
             break;
           }
           controls = Object.fromEntries(
@@ -1830,22 +1946,35 @@ export function mountWorldApp({
     flight?.dispose?.();
     flight = null;
     current = entry;
-    preview = options.preview ?? false;
+    preview = Boolean(options.replayProof) || (options.preview ?? false);
     playingPlaylist = options.playlist ?? null;
     playlistIndex = options.index ?? 0;
     finished = false;
     sceneReady = false;
     $('world-arm').disabled = true;
-    replayProof = options.replayProof ?? null;
+    replayProof = options.replayProof ? clone(options.replayProof) : null;
+    replayKind = options.demonstration ? 'demonstration' : 'recording';
+    $('world-replay-controls').hidden = !replayProof;
+    $('world-replay-label').textContent =
+      replayKind === 'demonstration'
+        ? txt('ACADEMY DEMONSTRATION', 'ДЕМОНСТРАЦІЯ АКАДЕМІЇ')
+        : txt('RECORDED FLIGHT', 'ЗАПИСАНИЙ ПОЛІТ');
+    $('world-replay-rate').value = String(replayRate);
+    $('flight-mode').disabled = Boolean(replayProof) && replayKind !== 'demonstration';
+    $('flight-source').disabled = Boolean(replayProof);
+    $('radio-setup-button').disabled = Boolean(replayProof);
+    $('world-touch').hidden = Boolean(replayProof) || $('flight-source').value !== 'touch';
     sectors.reset();
     fire = false;
     lastTime = null;
     accumulator = 0;
     $('result-panel').hidden = true;
     $('flight-title').textContent = label(entry);
-    $('flight-collection').textContent = preview
-      ? txt('AUTHORING PREVIEW', 'АВТОРСЬКИЙ ПЕРЕГЛЯД')
-      : localized(WORLD_THEMES.find((t) => t.id === entry.theme)?.title) || entry.world;
+    $('flight-collection').textContent = replayProof
+      ? $('world-replay-label').textContent
+      : preview
+        ? txt('AUTHORING PREVIEW', 'АВТОРСЬКИЙ ПЕРЕГЛЯД')
+        : localized(WORLD_THEMES.find((t) => t.id === entry.theme)?.title) || entry.world;
     $('flight-brief').textContent = entry.course.locales[locale].brief;
     $('flight-status').textContent = txt('Preparing scene…', 'Підготовка сцени…');
     if (!$('flight-dialog').open) $('flight-dialog').showModal();
@@ -1869,7 +1998,25 @@ export function mountWorldApp({
       );
     if (!entry.legacy) await initWorldRuntime();
     if (token !== flightToken) return;
-    if (replayProof) $('flight-mode').value = replayProof.mode;
+    if (replayProof) {
+      const proof = replayProof;
+      $('flight-status').textContent = txt('Verifying recording…', 'Перевірка запису…');
+      const checked = entry.legacy
+        ? await replayFlightCooperatively(entry.course, proof)
+        : await replayWorldFlight(entry.course, proof);
+      if (token !== flightToken) return;
+      if (
+        replayKind === 'demonstration' &&
+        (!demonstrationFor(entry, proof.mode) || checked.state.status !== 'complete')
+      )
+        throw new Error(
+          txt(
+            'The demonstration did not reproduce a completed challenge.',
+            'Демонстрація не відтворила виконане завдання.',
+          ),
+        );
+      $('flight-mode').value = proof.mode;
+    }
     if (options.recover) {
       const recovered = await recoverWorldFlight(entry.course, options.recover);
       if (token !== flightToken) {
@@ -1886,7 +2033,13 @@ export function mountWorldApp({
         response: replayProof?.response ?? response,
       });
       recorder = (entry.legacy ? createFlightRecorder : createWorldRecorder)(flight, {
-        session: preview ? 'authoring' : 'practice',
+        session: replayProof
+          ? replayKind === 'demonstration'
+            ? 'demonstration'
+            : 'replay'
+          : preview
+            ? 'authoring'
+            : 'practice',
       });
     }
     renderer.setCourse(entry.course, $('flight-mode').value);
@@ -1927,8 +2080,12 @@ export function mountWorldApp({
       input.enable(false);
       flight.arm();
       $('flight-status').textContent = txt(
-        'Playing verified recording · no rewards.',
-        'Відтворення перевіреного запису · без нагород.',
+        replayKind === 'demonstration'
+          ? 'Watch throttle, hold and landing. Pause or slow playback to study the flight.'
+          : 'Playing verified recording · no rewards.',
+        replayKind === 'demonstration'
+          ? 'Стежте за газом, зависанням і посадкою. Зупиніть або сповільніть перегляд, щоб роздивитися політ.'
+          : 'Відтворення перевіреного запису · без нагород.',
       );
     }
   }
@@ -2247,23 +2404,51 @@ export function mountWorldApp({
     );
   });
   on($('world-arm'), 'click', () => {
-    if (!sceneReady || !flight || terminal(flight.snapshot())) return;
+    if (!sceneReady || !flight || terminal(flight.snapshot()) || (replayProof && finished)) return;
     if (!replayProof && $('flight-source').value === 'radio' && !radio.requestArm())
       throw new Error(`${txt('Radio is not ready', 'Пульт не готовий')}: ${radio.status().reason}`);
-    input.enable(true);
+    input.enable(!replayProof);
     void audio.resume().catch(reportError);
     fire = false;
     lastTime = null;
     flight.arm();
-    $('flight-status').textContent = preview
-      ? txt('Preview: completion does not earn rewards.', 'Перегляд: виконання не дає нагород.')
-      : txt('Flight active.', 'Політ триває.');
+    $('flight-status').textContent = replayProof
+      ? txt('Playback active · no rewards.', 'Відтворення триває · без нагород.')
+      : preview
+        ? txt('Preview: completion does not earn rewards.', 'Перегляд: виконання не дає нагород.')
+        : txt('Flight active.', 'Політ триває.');
     $('world-viewport').focus();
   });
   on($('world-pause'), 'click', () => pauseFlight());
   on($('world-retry'), 'click', () =>
-    startFlight(current, { preview, playlist: playingPlaylist, index: playlistIndex }),
+    startFlight(current, {
+      preview,
+      playlist: playingPlaylist,
+      index: playlistIndex,
+      replayProof,
+      demonstration: replayKind === 'demonstration',
+    }),
   );
+  on($('world-watch-demo'), 'click', () => current && watchDemonstration(current));
+  on($('watch-first-flight'), 'click', () =>
+    watchDemonstration(
+      catalogue.find((entry) => entry.legacy && entry.id === 'flight-01'),
+      $('first-flight-mode').value,
+    ),
+  );
+  on($('try-first-flight'), 'click', () => {
+    $('flight-mode').value = $('first-flight-mode').value;
+    savePreferences();
+    return startFlight(catalogue.find((entry) => entry.legacy && entry.id === 'flight-01'));
+  });
+  on($('fly-after-replay'), 'click', () => current && startFlight(current));
+  on($('world-replay-rate'), 'change', () => {
+    const selected = Number($('world-replay-rate').value);
+    if (![0.5, 1].includes(selected)) return;
+    replayRate = selected;
+    lastTime = null;
+    accumulator = 0;
+  });
   on($('world-next'), 'click', () => {
     if (playingPlaylist) return flySequence(playingPlaylist, playlistIndex + 1);
   });
@@ -2274,7 +2459,7 @@ export function mountWorldApp({
   });
   on($('export-flight'), 'click', async () => {
     if (recorder && current) {
-      const data = { course: current.course, proof: recorder.export() },
+      const data = { course: current.course, proof: replayProof ?? recorder.export() },
         record = {
           id: dataIdentity(data),
           ...data,
@@ -2287,11 +2472,17 @@ export function mountWorldApp({
     }
   });
   on($('flight-source'), 'change', () => {
+    if (replayProof) return;
     pauseFlight();
     input.select($('flight-source').value);
     $('world-touch').hidden = $('flight-source').value !== 'touch';
   });
   on($('flight-mode'), 'change', () => {
+    if (replayProof) {
+      if (replayKind === 'demonstration') return watchDemonstration(current);
+      $('flight-mode').value = replayProof.mode;
+      return;
+    }
     if (current)
       return startFlight(current, { preview, playlist: playingPlaylist, index: playlistIndex });
   });
@@ -2299,7 +2490,7 @@ export function mountWorldApp({
   on($('drone-look'), 'change', () => renderer?.setDrone?.($('drone-look').value));
   on($('world-fire'), 'pointerdown', (e) => {
     e.preventDefault();
-    if (flight?.snapshot().status === 'active') {
+    if (!replayProof && flight?.snapshot().status === 'active') {
       fireReleaseRequired = false;
       fire = true;
       $('world-fire').setPointerCapture?.(e.pointerId);
@@ -2319,7 +2510,13 @@ export function mountWorldApp({
       return;
     if (e.code === 'Space') {
       e.preventDefault();
-      if (!e.repeat && !fireReleaseRequired && flight?.snapshot().status === 'active') fire = true;
+      if (
+        !replayProof &&
+        !e.repeat &&
+        !fireReleaseRequired &&
+        flight?.snapshot().status === 'active'
+      )
+        fire = true;
     }
     if (e.code === 'KeyP') {
       e.preventDefault();
@@ -2333,6 +2530,7 @@ export function mountWorldApp({
     }
   });
   on($('radio-setup-button'), 'click', () => {
+    if (replayProof) return;
     pauseFlight();
     radioSetup?.dispose();
     radioSetup = mountRadioSetup({
@@ -2408,6 +2606,15 @@ export function mountWorldApp({
     snapshot: () => ({
       course: current?.id,
       state: flight?.snapshot(),
+      replay: replayProof
+        ? {
+            kind: replayKind,
+            mode: replayProof.mode,
+            rate: replayRate,
+            frames: replayProof.frames.length,
+            finished,
+          }
+        : null,
       records: clone(records),
       catalogue: catalogue.length,
     }),
