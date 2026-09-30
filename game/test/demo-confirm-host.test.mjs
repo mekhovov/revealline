@@ -50,8 +50,6 @@ async function deckDemo(t, phase = 'watching') {
   page.$('demo-dialog').addEventListener('close', () => exits++);
   async function open() {
     frame(1500);
-    page.$('shell-options').click();
-    page.$('settings-tab-extras').click();
     page.$('shell-demo').focus();
     await page.open();
     if (phase === 'practice') {
@@ -73,6 +71,62 @@ async function deckDemo(t, phase = 'watching') {
   return { page, pad, elapse, frame, hold, open, exits: () => exits };
 }
 
+for (const phase of ['watching', 'practice']) {
+  test(`${phase} Demo Back commits a pure Gamepad tap or five-second hold only on release`, async (t) => {
+    const h = await deckDemo(t, phase),
+      { page, frame, hold } = h;
+    for (const duration of [40, 5000]) {
+      await h.open();
+      const before = h.exits();
+      hold(true);
+      frame();
+      assert.equal(page.$('demo-dialog').open, true, 'A-down cannot invoke Back');
+      assert.equal(h.exits(), before);
+      assert.equal(page.$('demo-back').getAttribute('data-controller-pressed'), 'true');
+      h.elapse(duration);
+      frame();
+      assert.equal(page.$('demo-dialog').open, true, 'held A keeps Back pending');
+      assert.equal(h.exits(), before);
+      hold(false);
+      frame();
+      assert.equal(page.$('demo-dialog').open, false, 'A-up invokes the captured Back');
+      assert.equal(h.exits(), before + 1);
+      frame();
+      frame(1500);
+      assert.equal(page.$('demo-dialog').open, false);
+      assert.equal(h.exits(), before + 1, 'neutral frames cannot repeat the release commit');
+    }
+    assert.deepEqual(page.errors, []);
+  });
+
+  test(`${phase} Demo Back release does not send a simultaneous UI edge into Home`, async (t) => {
+    const h = await deckDemo(t, phase),
+      { page, pad, frame, hold } = h;
+    for (const secondary of [1, 13]) {
+      await h.open();
+      const before = h.exits();
+      hold(true);
+      frame();
+      assert.equal(page.$('demo-dialog').open, true);
+      hold(false);
+      pad.buttons[secondary] = { pressed: true, value: 1 };
+      frame();
+      assert.equal(h.exits(), before + 1);
+      assert.equal(page.$('demo-dialog').open, false);
+      assert.equal(page.$('shell-home').open, true, 'the old Demo frame cannot dismiss Home');
+      assert.equal(
+        page.doc.activeElement,
+        page.$('shell-options'),
+        'the old Demo direction cannot move the restored Home focus',
+      );
+      pad.buttons[secondary] = { pressed: false, value: 0 };
+      frame();
+      assert.equal(h.exits(), before + 1);
+    }
+    assert.deepEqual(page.errors, []);
+  });
+}
+
 for (const phase of ['watching', 'practice'])
   for (const order of ['gamepad-first', 'native-before-RAF'])
     test(`${phase} Demo Back uses one release commit for ${order} Enter/Space echoes`, async (t) => {
@@ -86,11 +140,7 @@ for (const phase of ['watching', 'practice'])
           hold(true);
           if (order === 'gamepad-first') frame();
           assert.equal(nativeKey(back, 'keydown', key).defaultPrevented, true);
-          assert.equal(
-            page.$('demo-dialog').open,
-            true,
-            `Back cannot run at A-down\n${page.$('controller-confirm-trace').querySelector('pre').textContent}`,
-          );
+          assert.equal(page.$('demo-dialog').open, true, 'Back cannot run at A-down');
           assert.equal(h.exits(), before);
           elapse(duration);
           if (order === 'gamepad-first' || duration === 5000) frame();
@@ -102,20 +152,19 @@ for (const phase of ['watching', 'practice'])
           frame();
           assert.equal(page.$('demo-dialog').open, false);
           assert.equal(h.exits(), before + 1);
-          const launcher = page.doc.activeElement;
-          assert.equal(launcher, page.$('shell-demo'), 'focus returns to the Settings launcher');
-          assert.equal(page.$('settings-dialog').open, true);
-          assert.equal(nativeClick(launcher).defaultPrevented, true);
+          const home = page.doc.activeElement;
+          assert.equal(page.$('shell-home').contains(home), true, 'focus returns inside Home');
+          assert.equal(nativeClick(home).defaultPrevented, true);
           frame();
           assert.equal(page.$('demo-dialog').open, false, 'release click cannot reopen Demo');
-          assert.equal(page.$('settings-dialog').open, true, 'release click preserves Settings');
+          assert.equal(page.$('settings-dialog').open, false, 'release click cannot open Settings');
           assert.equal(h.exits(), before + 1);
         }
       assert.deepEqual(page.errors, []);
     });
 
 for (const phase of ['watching', 'practice'])
-  test(`native-first ${phase} Demo Back stays the winner after Settings restores and A is held for five seconds`, async (t) => {
+  test(`native-first ${phase} Demo Back stays the winner after Home restores and A is held for five seconds`, async (t) => {
     const h = await deckDemo(t, phase),
       { page, hold, elapse, frame } = h;
     for (const key of ['Enter', ' ']) {
@@ -136,23 +185,24 @@ for (const phase of ['watching', 'practice'])
       elapse(5000);
       frame();
       hold(false);
-      const launcher = page.$('shell-demo');
-      assert.equal(nativeKey(launcher, 'keydown', key, { repeat: true }).defaultPrevented, true);
-      assert.equal(nativeKey(launcher, 'keyup', key).defaultPrevented, true);
-      assert.equal(nativeClick(launcher).defaultPrevented, true);
+      const home = page.$('shell-demo');
+      assert.equal(nativeKey(home, 'keydown', key, { repeat: true }).defaultPrevented, true);
+      assert.equal(nativeKey(home, 'keyup', key).defaultPrevented, true);
+      assert.equal(nativeClick(home).defaultPrevented, true);
       await Promise.resolve();
       frame();
       assert.equal(
         page.$('demo-dialog').open,
         false,
-        'later controller release cannot reopen Demo',
+        'later controller release cannot reopen Home',
       );
       assert.equal(h.exits(), before + 1);
       frame(1500);
-      const audioTab = page.$('settings-tab-audio');
-      audioTab.focus();
-      assert.equal(nativeClick(audioTab).defaultPrevented, false);
-      assert.equal(audioTab.getAttribute('aria-selected'), 'true', 'a later native gesture works');
+      const sound = page.$('shell-sound'),
+        original = sound.getAttribute('aria-pressed');
+      sound.focus();
+      assert.equal(nativeClick(sound).defaultPrevented, false);
+      assert.notEqual(sound.getAttribute('aria-pressed'), original, 'a later native gesture works');
     }
     assert.deepEqual(page.errors, []);
   });
@@ -204,6 +254,6 @@ test('touch-derived Demo Back uses the same Confirm owner and native-only touch 
   frame();
   assert.equal(h.exits(), 2);
   assert.equal(page.$('demo-dialog').open, false);
-  assert.equal(page.$('settings-dialog').open, true);
+  assert.equal(page.$('settings-dialog').open, false);
   assert.deepEqual(page.errors, []);
 });
