@@ -45,5 +45,7 @@
     "Finish build inspection and current package/offline qualification",
     "Sustained human listening and physical-device qualification (deferred)",
     "Canonical release review/publication"
-  ]
+  ],
+  "catalogValidation": "passed: 11832 messages, 8813 references",
+  "packageValidation": "Not completed. Inspection stopped after disk-full/dependency disruption; no distribution or offline-cache pass claimed."
 }
