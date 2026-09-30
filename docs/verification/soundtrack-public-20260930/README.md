@@ -92,7 +92,27 @@ entries are dependencies, not product source. The historical combined tip remain
 at remote `codex/preserved-combined-native-spatial-audio-20260930`, exactly
 `1c70bc3a92cc6e36247badb80d17e9371b40c46d`.
 
-The new runner2088 derivative is separate archive
+The runner2088 derivative is separate archive
 [PR #65](https://github.com/mekhovov/revealline-soundtracks/pull/65), not part of
-these six public game admissions. Its recipe, original source evidence, independent
-measurements and review-only status are retained in that PR.
+these six game admissions. It merged at `4c3bda6a8f796373f4840aa84a84e78ae65c8882`;
+[Pages 36745624857](https://github.com/mekhovov/revealline-soundtracks/actions/runs/36745624857)
+passed. At 16:43:41 UTC the complete public derivative matched 3,887,378 bytes
+and SHA-256 `528e7ebe15c91bc686ab9cdfadb4085ebd64b907f795282f7f9c817a46c672ba`.
+The original still matched 3,884,999 bytes and its prior `9924c616…cef9` hash.
+The separate admission inventory returned 322 bytes/hash
+`16e36e2316a0b9685bcae326f03c30191823a86064f3e94d9b3aab08129ee6e8`;
+Range returned 206, bytes 0-15/3887378 and CORS `*`.
+
+The review page showed 65 held recordings and the new technical-derivative
+collection. Clicking its Play button advanced HTML media time to 8.100208 seconds,
+duration 97.123265, readyState 4, paused false, error null. `runner-review.jpg`
+captures the review UI. Playback was then paused. This is a transport observation,
+not human listening approval. Total archive recordings are now 261; the normal
+public view remains 196. Exact derivative approval remains pending in game PR #855.
+
+Attempt 1 of archive run 36744975785 failed when Pages staging could not read the
+draft release. `archive65-staging-attempt1.txt` preserves its failed log. Following
+independent licence/hash/decode review, the exact audio volume was published
+without replacing any asset; same-head attempt 2 passed and the normal main
+workflow deployed. The draft-volume visibility limitation should remain visible
+for subsequent intake operations; no CI permission was expanded.
