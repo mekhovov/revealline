@@ -2891,5 +2891,10 @@
   "studio.artwork.verifyingFile": "Verifying retained files before preparing the selected download…",
   "studio.artwork.fileReady": "Exact file {{filename}} prepared from {{id}}, collection revision {{revision}}. Keep the .rlart packet for full provenance.",
   "studio.artwork.fileFailed": "Selected file was not prepared: {{message}}",
-  "studio.artwork.fileExtension": "The declared filename must use its image format's extension: .png, .jpg, .jpeg or .webp. The packet and file bytes are unchanged."
+  "studio.artwork.fileExtension": "The declared filename must use its image format's extension: .png, .jpg, .jpeg or .webp. The packet and file bytes are unchanged.",
+  "creatorGuide.documentLoading": "Loading document…",
+  "creatorGuide.documentReady": "Document verified · {{bytes}} bytes",
+  "creatorGuide.documentUnavailable": "This document is unavailable or differs from the declared file. Return to the guide or retry.",
+  "creatorGuide.documentCancelled": "Document loading cancelled. Retry when ready.",
+  "creatorGuide.documentNote": "Original document language is preserved. Embedded links and examples are displayed as text."
 }
