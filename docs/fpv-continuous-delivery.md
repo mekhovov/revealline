@@ -14,7 +14,7 @@ import/export and publication verification remain part of every applicable item.
 | Woodland demonstrations                          | `codex/fpv-woodland-demonstrations`, [PR #888](https://github.com/mekhovov/revealline/pull/888)  | Completed; native stack layer 3                                                      | Eight challenges × two modes; all 16 actual recordings complete in Node and Chromium without contacts; route-facing presentation reviewed        |
 | Courtyard demonstrations                         | `codex/fpv-courtyard-demonstrations`, [PR #890](https://github.com/mekhovov/revealline/pull/890) | Completed; native stack layer 4                                                      | Eight challenges × two modes; all 16 recordings complete without contacts; offline, localization and route-facing playback verified              |
 | Live sector timing and personal-best comparisons | `codex/fpv-sector-deltas`, [PR #892](https://github.com/mekhovov/revealline/pull/892)            | Completed; native stack layer 5                                                      | Tick-accurate sector timing, replay-verified compatible reference frozen per attempt, interrupted-flight restoration and readable EN/UK feedback |
-| Warehouse racing demonstrations                  | `codex/fpv-warehouse-demonstrations`                                                             | Completed and verified; ready for its own PR above sector timing                     | 16 new demonstrations, all previous 56 proofs unchanged, final browser/offline/EN-UK walkthroughs; 72 available examples                         |
+| Warehouse racing demonstrations                  | `codex/fpv-warehouse-demonstrations`, [PR #894](https://github.com/mekhovov/revealline/pull/894) | Completed; native stack layer 6                                                      | 16 new demonstrations, all previous 56 proofs unchanged, final browser/offline/EN-UK walkthroughs; 72 available examples                         |
 | Remaining new-world demonstrations               | Stadium, container yard, garage; separate coherent PRs                                           | Recordings prepared; browser/integration and target-visibility qualification pending | Exact recordings and reproducible generators retained in ignored local preparation output; do not publish before final checks                    |
 | World/drone presentation and player tuning       | Subsequent bounded feature PRs                                                                   | Queued                                                                               | Improve remaining art/animation/readability and mode-specific thresholds using actual player observations; keep flight handling unchanged        |
 | Final qualification                              | Final phase                                                                                      | Deferred                                                                             | Additional unit coverage, full compatibility/failure matrix, named physical-device performance and human content acceptance                      |
@@ -26,7 +26,7 @@ challenge definitions do not represent 60 fully polished, human-qualified levels
 ## Publication procedure
 
 The FPV PRs are now linked as **native GitHub stack #889**, rooted on `main`.
-The existing layers are #885 → #887 → #888 → #890 → #892. New dependent items append above the
+The existing layers are #885 → #887 → #888 → #890 → #892 → #894. New dependent items append above the
 current open top; keep each feature's reviewed diff separate. The owner explicitly
 requested stacked PRs on 1 October 2026.
 
@@ -146,3 +146,11 @@ intercept targets too small for a clear teaching example at the spawn-distance
 firing position. Improve the recorded approach or target presentation and inspect
 it again before publishing operations examples; completion hashes alone do not
 clear this visual gate.
+
+Warehouse is published as [PR #894](https://github.com/mekhovov/revealline/pull/894)
+and appended above #892 in native stack #889. Its first feature commit is
+`87753e6a8`; this delivery-log update triggers checks on its current published
+head after joining the native stack. Stadium is the next development branch.
+Required checks, protected merge and verified public launch remain separate from
+feature completion. Main has strict status protection and no configured GitHub
+merge queue; use the protected asynchronous native-stack merger and never bypass.
