@@ -35,6 +35,9 @@ lobby Extras otherwise. The corrected native-focus departure regression passes.
   were reconciled to accepted main, then 4 passed with 25 unselected in
   315.93775 ms. Terminal gameplay and display-state cases passed in the original
   cohort; do not sum these overlapping counts.
+- After merging accepted #836/#838 main, the restored trail-guidance cohort
+  passed 10 with zero failures/skips in 2799.714209 ms, including real imported
+  v6/v7 Hunter Help, pause, reading and Back in both languages.
 
 The accepted main painter was loaded independently in memory with current
 dependencies. Standard 362px complete command streams match this composition:
@@ -52,9 +55,16 @@ corrected to the actual flat keys, without a catalog rebuild.
 
 ## Still required before adoption
 
-Reconcile the latest accepted main, run the newly restored trail-guidance cases
-with #838 present, finish source/host/CSS and recipe-input review, authenticate
-current hosted source/admission/capacity gates, and merge normally. The Team
+Main `7d4779d3fefe3673e2270546b4f1c41848b8c2fa` was merged normally into this
+preparation. Its 17 non-generated changed paths match byte-for-byte, and all
+24112 main locale leaves survive except the same two reviewed compact labels.
+The generated catalog was rebuilt from merged raw sources; its bootstrap first
+refused conflict markers, and a stage-2 restoration initially hit a buffer limit.
+Both tooling failures preceded a successful complete build. No raw source was
+discarded, and the generated content registry remains unchanged.
+
+Finish source/host/CSS and recipe-input review, authenticate current hosted
+source/admission/capacity gates, and merge normally. The Team
 recipe declares coop-view and coop-actor-layout as inputs; their source changes
 must remain explicit. No producer/compiler or blind fingerprint refresh was
 performed; accepted production/compiled assets are unchanged.
