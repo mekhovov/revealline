@@ -8,6 +8,7 @@
     <script src="../../game/i18n/bootstrap.mjs"></script>
 
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="revealline-reference-home" content="../../game/studio/" />
     <title data-i18n="tools:createLevelsAndCampaignsRevealLine">
       Create levels and campaigns · FPV / LINE
     </title>
@@ -46,353 +47,509 @@
         no account is needed. Start with a small example, then make it yours.
       </p>
       <nav class="contents" aria-label="On this page" data-i18n-aria-label="tools:onThisPage">
-        <a href="#automatic" data-i18n="tools:creatorGuide.pictureToCampaign"
+        <a
+          id="creator-guide-contents-automatic"
+          href="#automatic"
+          data-i18n="tools:creatorGuide.pictureToCampaign"
           >Picture to campaign</a
         >
-        <a href="#try" data-i18n="tools:tryTheExample">Try the example</a>
-        <a href="#picture" data-i18n="tools:makeAnImageLevel">Make an image level</a>
-        <a href="#campaign" data-i18n="tools:buildACampaign">Build a campaign</a>
-        <a href="#recover" data-i18n="tools:recoverYourWork">Recover your work</a>
+        <a
+          id="creator-guide-contents-meaning"
+          href="#meaning"
+          data-i18n="tools:fourPiecesOfACollection"
+          >Four pieces of a collection</a
+        >
+        <a id="creator-guide-contents-try" href="#try" data-i18n="tools:tryTheExample"
+          >Try the example</a
+        >
+        <a id="creator-guide-contents-picture" href="#picture" data-i18n="tools:makeAnImageLevel"
+          >Make an image level</a
+        >
+        <a id="creator-guide-contents-campaign" href="#campaign" data-i18n="tools:buildACampaign"
+          >Build a campaign</a
+        >
+        <a id="creator-guide-contents-recover" href="#recover" data-i18n="tools:recoverYourWork"
+          >Recover your work</a
+        >
+        <a id="creator-guide-contents-more" href="#more" data-i18n="tools:detailedDocumentation"
+          >Detailed documentation</a
+        >
       </nav>
       <section aria-labelledby="automatic">
-        <h2 id="automatic" data-i18n="tools:creatorGuide.automatic.title">
+        <h2
+          id="automatic"
+          data-authoring-target="creator-guide-read-automatic"
+          data-i18n="tools:creatorGuide.automatic.title"
+        >
           Create a campaign from pictures or videos
         </h2>
-        <ol>
-          <li data-i18n-rich="tools:creatorGuide.automatic.openCreator">
-            Open
+        <div class="creator-guide-reading-tools">
+          <button id="creator-guide-read-automatic" type="button">Read and scroll</button>
+          <button id="creator-guide-read-automatic-done" type="button" disabled>Back</button>
+        </div>
+        <div
+          id="creator-guide-automatic-region"
+          class="creator-guide-reading-region"
+          role="region"
+          aria-labelledby="automatic"
+          tabindex="-1"
+          data-game-reading
+        >
+          <ol>
+            <li data-i18n-rich="tools:creatorGuide.automatic.openCreator">
+              Open
+              <a
+                href="../../game/creator/"
+                data-i18n="tools:creatorGuide.pictureCampaignCreator"
+                data-i18n-slot="slot0"
+                >Picture campaign creator</a
+              >
+              and select one or many pictures, videos, or both.
+            </li>
+            <li data-i18n="tools:creatorGuide.automatic.nameCollection">
+              Name your collection. For video, review filename pairing suggestions, poster frames
+              and the optional playback range.
+            </li>
+            <li data-i18n-rich="tools:creatorGuide.automatic.generateAndReview">
+              Choose
+              <strong data-i18n="interface:creator.generateAndReview" data-i18n-slot="slot0"
+                >Generate and review</strong
+              >, then check every picture, generated map, enemy, obstacle and route result.
+            </li>
+            <li data-i18n-rich="tools:creatorGuide.automatic.approveResult">
+              Approve the exact result, then
+              <strong data-i18n="interface:creator.installCampaign" data-i18n-slot="slot0"
+                >Install campaign</strong
+              >
+              or
+              <strong data-i18n="interface:creator.downloadPack" data-i18n-slot="slot1"
+                >Download .rlpack</strong
+              >.
+            </li>
+            <li data-i18n="tools:creatorGuide.automatic.playInstalled">
+              Play the installed Custom mission. A legal win earns its picture; unfinished attempts
+              can resume after reload.
+            </li>
+          </ol>
+          <p>
+            <a href="image-campaign-guide.md" data-i18n="tools:creatorGuide.docs.imageCampaign"
+              >Complete walkthrough, source backups and troubleshooting</a
+            >
+            ·
+            <a href="phase1-acceptance.md" data-i18n="tools:creatorGuide.docs.phase1Acceptance"
+              >Phase 1 implementation and release acceptance</a
+            >
+            ·
             <a
-              href="../../game/creator/"
-              data-i18n="tools:creatorGuide.pictureCampaignCreator"
-              data-i18n-slot="slot0"
-              >Picture campaign creator</a
+              href="batch-image-campaign-guide.md"
+              data-i18n="tools:creatorGuide.docs.batchCampaign"
+              >Batch campaign candidate walkthrough</a
             >
-            and select one or many pictures, videos, or both.
-          </li>
-          <li data-i18n="tools:creatorGuide.automatic.nameCollection">
-            Name your collection. For video, review filename pairing suggestions, poster frames and
-            the optional playback range.
-          </li>
-          <li data-i18n-rich="tools:creatorGuide.automatic.generateAndReview">
-            Choose
-            <strong data-i18n="interface:creator.generateAndReview" data-i18n-slot="slot0"
-              >Generate and review</strong
-            >, then check every picture, generated map, enemy, obstacle and route result.
-          </li>
-          <li data-i18n-rich="tools:creatorGuide.automatic.approveResult">
-            Approve the exact result, then
-            <strong data-i18n="interface:creator.installCampaign" data-i18n-slot="slot0"
-              >Install campaign</strong
+            ·
+            <a href="phase2-acceptance.md" data-i18n="tools:creatorGuide.docs.phase2Acceptance"
+              >Phase 2 open acceptance gates</a
             >
-            or
-            <strong data-i18n="interface:creator.downloadPack" data-i18n-slot="slot1"
-              >Download .rlpack</strong
-            >.
-          </li>
-          <li data-i18n="tools:creatorGuide.automatic.playInstalled">
-            Play the installed Custom mission. A legal win earns its picture; unfinished attempts
-            can resume after reload.
-          </li>
-        </ol>
-        <p>
-          <a href="image-campaign-guide.md" data-i18n="tools:creatorGuide.docs.imageCampaign"
-            >Complete walkthrough, source backups and troubleshooting</a
-          >
-          ·
-          <a href="phase1-acceptance.md" data-i18n="tools:creatorGuide.docs.phase1Acceptance"
-            >Phase 1 implementation and release acceptance</a
-          >
-          ·
-          <a href="batch-image-campaign-guide.md" data-i18n="tools:creatorGuide.docs.batchCampaign"
-            >Batch campaign candidate walkthrough</a
-          >
-          ·
-          <a href="phase2-acceptance.md" data-i18n="tools:creatorGuide.docs.phase2Acceptance"
-            >Phase 2 open acceptance gates</a
-          >
-        </p>
-        <p data-i18n="tools:creatorGuide.automatic.manualToolsAvailable">
-          The manual tools and examples below remain available for existing expansion projects.
-        </p>
+          </p>
+          <p data-i18n="tools:creatorGuide.automatic.manualToolsAvailable">
+            The manual tools and examples below remain available for existing expansion projects.
+          </p>
+        </div>
       </section>
       <section aria-labelledby="meaning">
-        <h2 id="meaning" data-i18n="tools:fourPiecesOfACollection">Four pieces of a collection</h2>
-        <dl class="concepts">
-          <div>
-            <dt data-i18n="tools:map">Map</dt>
-            <dd data-i18n="tools:theBoardWallsTerrainAndStartingPlaces">
-              The board: walls, terrain and starting places.
-            </dd>
-          </div>
-          <div>
-            <dt data-i18n="tools:mission">Mission</dt>
-            <dd data-i18n="tools:aMapWithActorsObjectivesRulesAndAPicture">
-              A map with actors, objectives, rules and a picture.
-            </dd>
-          </div>
-          <div>
-            <dt data-i18n="tools:campaign">Campaign</dt>
-            <dd data-i18n="tools:missionsArrangedInTheOrderYouWantToPlay">
-              Missions arranged in the order you want to play.
-            </dd>
-          </div>
-          <div>
-            <dt data-i18n="tools:pack">Pack</dt>
-            <dd data-i18n="tools:campaignsAndTheFilesTheyNeedReadyToTransfer">
-              Campaigns and the files they need, ready to transfer.
-            </dd>
-          </div>
-        </dl>
+        <h2
+          id="meaning"
+          data-authoring-target="creator-guide-read-meaning"
+          data-i18n="tools:fourPiecesOfACollection"
+        >
+          Four pieces of a collection
+        </h2>
+        <div class="creator-guide-reading-tools">
+          <button id="creator-guide-read-meaning" type="button">Read and scroll</button>
+          <button id="creator-guide-read-meaning-done" type="button" disabled>Back</button>
+        </div>
+        <div
+          id="creator-guide-meaning-region"
+          class="creator-guide-reading-region"
+          role="region"
+          aria-labelledby="meaning"
+          tabindex="-1"
+          data-game-reading
+        >
+          <dl class="concepts">
+            <div>
+              <dt data-i18n="tools:map">Map</dt>
+              <dd data-i18n="tools:theBoardWallsTerrainAndStartingPlaces">
+                The board: walls, terrain and starting places.
+              </dd>
+            </div>
+            <div>
+              <dt data-i18n="tools:mission">Mission</dt>
+              <dd data-i18n="tools:aMapWithActorsObjectivesRulesAndAPicture">
+                A map with actors, objectives, rules and a picture.
+              </dd>
+            </div>
+            <div>
+              <dt data-i18n="tools:campaign">Campaign</dt>
+              <dd data-i18n="tools:missionsArrangedInTheOrderYouWantToPlay">
+                Missions arranged in the order you want to play.
+              </dd>
+            </div>
+            <div>
+              <dt data-i18n="tools:pack">Pack</dt>
+              <dd data-i18n="tools:campaignsAndTheFilesTheyNeedReadyToTransfer">
+                Campaigns and the files they need, ready to transfer.
+              </dd>
+            </div>
+          </dl>
+        </div>
       </section>
       <section aria-labelledby="try">
-        <h2 id="try" data-i18n="tools:1TryAReadyToInstallCampaign">
+        <h2
+          id="try"
+          data-authoring-target="creator-guide-read-try"
+          data-i18n="tools:1TryAReadyToInstallCampaign"
+        >
           1. Try a ready-to-install campaign
         </h2>
-        <p>
-          <a
-            class="action"
-            href="examples/two-crossings.expansion.json"
-            download
-            data-i18n="tools:downloadTwoCrossings"
-          >
-            Download Two crossings
-          </a>
-        </p>
-        <p data-i18n="tools:twoDeliberatelyEasyMapsProceduralSceneryNoEnemiesOrPersonal">
-          Two deliberately easy maps, procedural scenery, no enemies or personal data.
-        </p>
-        <ol>
-          <li data-i18n="tools:checkThatTheJsonFileIsInYourBrowserS">
-            Check that the JSON file is in your browser's downloads.
-          </li>
-          <li data-i18n-rich="tools:openTheThenChooseThatDownloadAndWaitForValidation">
-            Open the
-            <a href="../../game/?journey=legacy" data-i18n="tools:packPlayer" data-i18n-slot="slot0"
-              >pack player</a
-            >, then
-            <strong
-              data-i18n="tools:settingsGameDataInstalledChaptersInstallAPackFile"
-              data-i18n-slot="slot1"
-              >Settings → Game data → Installed chapters → Install a pack file</strong
-            >. Choose that download and wait for validation.
-          </li>
-          <li data-i18n-rich="tools:chooseInTheInstalledCardThenTheLinkAboveOpens">
-            Choose
-            <strong data-i18n="tools:playCreatorGuideTwoCrossings" data-i18n-slot="slot0"
-              >Play Creator guide · two crossings</strong
+        <div class="creator-guide-reading-tools">
+          <button id="creator-guide-read-try" type="button">Read and scroll</button>
+          <button id="creator-guide-read-try-done" type="button" disabled>Back</button>
+        </div>
+        <div
+          id="creator-guide-try-region"
+          class="creator-guide-reading-region"
+          role="region"
+          aria-labelledby="try"
+          tabindex="-1"
+          data-game-reading
+        >
+          <p>
+            <a
+              class="action"
+              href="examples/two-crossings.expansion.json"
+              download
+              data-i18n="tools:downloadTwoCrossings"
             >
-            in the installed card, then
-            <strong data-i18n="tools:startMission" data-i18n-slot="slot1">Start mission</strong>.
-            The link above opens the existing expansion player.
-          </li>
-          <li data-i18n-rich="tools:startAndSteerDownToTheOppositeBoundaryAfterThe">
-            Start and steer down to the opposite boundary. After the win, inspect the picture,
-            choose <strong data-i18n="common:actions.next" data-i18n-slot="slot0">Next</strong>, and
-            try <strong data-i18n="common:actions.retry" data-i18n-slot="slot1">Retry</strong> on
-            Second crossing.
-          </li>
-          <li data-i18n="tools:reloadToCheckInstallationAndProgressKeepTheDownloadedPack">
-            Reload to check installation and progress. Keep the downloaded pack for recovery.
-          </li>
-        </ol>
+              Download Two crossings
+            </a>
+          </p>
+          <p data-i18n="tools:twoDeliberatelyEasyMapsProceduralSceneryNoEnemiesOrPersonal">
+            Two deliberately easy maps, procedural scenery, no enemies or personal data.
+          </p>
+          <ol>
+            <li data-i18n="tools:checkThatTheJsonFileIsInYourBrowserS">
+              Check that the JSON file is in your browser's downloads.
+            </li>
+            <li data-i18n-rich="tools:openTheThenChooseThatDownloadAndWaitForValidation">
+              Open the
+              <a
+                href="../../game/?journey=legacy"
+                data-i18n="tools:packPlayer"
+                data-i18n-slot="slot0"
+                >pack player</a
+              >, then
+              <strong
+                data-i18n="tools:settingsGameDataInstalledChaptersInstallAPackFile"
+                data-i18n-slot="slot1"
+                >Settings → Game data → Installed chapters → Install a pack file</strong
+              >. Choose that download and wait for validation.
+            </li>
+            <li data-i18n-rich="tools:chooseInTheInstalledCardThenTheLinkAboveOpens">
+              Choose
+              <strong data-i18n="tools:playCreatorGuideTwoCrossings" data-i18n-slot="slot0"
+                >Play Creator guide · two crossings</strong
+              >
+              in the installed card, then
+              <strong data-i18n="tools:startMission" data-i18n-slot="slot1">Start mission</strong>.
+              The link above opens the existing expansion player.
+            </li>
+            <li data-i18n-rich="tools:startAndSteerDownToTheOppositeBoundaryAfterThe">
+              Start and steer down to the opposite boundary. After the win, inspect the picture,
+              choose <strong data-i18n="common:actions.next" data-i18n-slot="slot0">Next</strong>,
+              and try
+              <strong data-i18n="common:actions.retry" data-i18n-slot="slot1">Retry</strong> on
+              Second crossing.
+            </li>
+            <li data-i18n="tools:reloadToCheckInstallationAndProgressKeepTheDownloadedPack">
+              Reload to check installation and progress. Keep the downloaded pack for recovery.
+            </li>
+          </ol>
+        </div>
       </section>
       <section aria-labelledby="picture">
-        <h2 id="picture" data-i18n="tools:2MakeALevelWithYourPicture">
+        <h2
+          id="picture"
+          data-authoring-target="creator-guide-read-picture"
+          data-i18n="tools:2MakeALevelWithYourPicture"
+        >
           2. Make a level with your picture
         </h2>
-        <ol>
-          <li data-i18n-rich="tools:openStartWithAnIncludedMapOrEnterAAnd">
-            Open
-            <a href="../../game/playground/" data-i18n="tools:playground2" data-i18n-slot="slot0"
-              >Playground</a
-            >. Start with an included map, or enter a
-            <strong data-i18n="tools:generatorSeed" data-i18n-slot="slot1">Generator seed</strong>
-            and choose
-            <strong data-i18n="tools:generateMap" data-i18n-slot="slot2">Generate map</strong>.
-          </li>
-          <li data-i18n-rich="tools:setToChooseTheBackgroundFitThenSelectYourImage">
-            Set <strong data-i18n="tools:role" data-i18n-slot="slot0">Role</strong> to
-            <strong data-i18n="tools:revealBackground" data-i18n-slot="slot1"
-              >Reveal background</strong
-            >, choose the background fit, then
-            <strong data-i18n="tools:choosePngJpegWebp" data-i18n-slot="slot2"
-              >Choose PNG / JPEG / WebP</strong
-            >. Select your image and review it.
-          </li>
-          <li data-i18n-rich="tools:optionallyPaintTheMapOrAdjustItsCoverageTargetRestores">
-            Optionally paint the map or adjust its coverage target.
-            <strong data-i18n="tools:undo" data-i18n-slot="slot0">Undo</strong> restores the
-            previous edit. The picture is a reveal reward; it does not determine the walls.
-          </li>
-          <li data-i18n-rich="tools:chooseFinishALegalWinAndTestPauseResumeAnd">
-            Choose
-            <strong data-i18n="tools:playConfiguration2" data-i18n-slot="slot0"
-              >Play configuration</strong
-            >. Finish a legal win and test Pause, Resume and Retry. This preview is practice, so it
-            does not award campaign progress.
-          </li>
-          <li data-i18n-rich="tools:expandAndChooseCheckTheActualDownloadedFileThenInstall">
-            Expand
-            <strong data-i18n="tools:completePackJson" data-i18n-slot="slot0"
-              >Complete pack JSON</strong
-            >
-            and choose
-            <strong data-i18n="tools:exportMapAsExpansion" data-i18n-slot="slot1"
-              >Export map as expansion</strong
-            >. Check the actual downloaded file, then install it using the steps above.
-          </li>
-          <li data-i18n="tools:sendTheExpansionFileToAFriendTheyInstallTheir">
-            Send the expansion file to a friend. They install their own copy the same way.
-          </li>
-        </ol>
-        <aside data-i18n="tools:theCurrentPlaygroundEmbedsTheImageYouSupplyItDoes">
-          The current Playground embeds the image you supply. It does not promise metadata removal.
-          Use a picture you intend to share. Share the expansion, not a complete player backup
-          containing progress and other installed content.
-        </aside>
+        <div class="creator-guide-reading-tools">
+          <button id="creator-guide-read-picture" type="button">Read and scroll</button>
+          <button id="creator-guide-read-picture-done" type="button" disabled>Back</button>
+        </div>
+        <div
+          id="creator-guide-picture-region"
+          class="creator-guide-reading-region"
+          role="region"
+          aria-labelledby="picture"
+          tabindex="-1"
+          data-game-reading
+        >
+          <ol>
+            <li data-i18n-rich="tools:openStartWithAnIncludedMapOrEnterAAnd">
+              Open
+              <a href="../../game/playground/" data-i18n="tools:playground2" data-i18n-slot="slot0"
+                >Playground</a
+              >. Start with an included map, or enter a
+              <strong data-i18n="tools:generatorSeed" data-i18n-slot="slot1">Generator seed</strong>
+              and choose
+              <strong data-i18n="tools:generateMap" data-i18n-slot="slot2">Generate map</strong>.
+            </li>
+            <li data-i18n-rich="tools:setToChooseTheBackgroundFitThenSelectYourImage">
+              Set <strong data-i18n="tools:role" data-i18n-slot="slot0">Role</strong> to
+              <strong data-i18n="tools:revealBackground" data-i18n-slot="slot1"
+                >Reveal background</strong
+              >, choose the background fit, then
+              <strong data-i18n="tools:choosePngJpegWebp" data-i18n-slot="slot2"
+                >Choose PNG / JPEG / WebP</strong
+              >. Select your image and review it.
+            </li>
+            <li data-i18n-rich="tools:optionallyPaintTheMapOrAdjustItsCoverageTargetRestores">
+              Optionally paint the map or adjust its coverage target.
+              <strong data-i18n="tools:undo" data-i18n-slot="slot0">Undo</strong> restores the
+              previous edit. The picture is a reveal reward; it does not determine the walls.
+            </li>
+            <li data-i18n-rich="tools:chooseFinishALegalWinAndTestPauseResumeAnd">
+              Choose
+              <strong data-i18n="tools:playConfiguration2" data-i18n-slot="slot0"
+                >Play configuration</strong
+              >. Finish a legal win and test Pause, Resume and Retry. This preview is practice, so
+              it does not award campaign progress.
+            </li>
+            <li data-i18n-rich="tools:expandAndChooseCheckTheActualDownloadedFileThenInstall">
+              Expand
+              <strong data-i18n="tools:completePackJson" data-i18n-slot="slot0"
+                >Complete pack JSON</strong
+              >
+              and choose
+              <strong data-i18n="tools:exportMapAsExpansion" data-i18n-slot="slot1"
+                >Export map as expansion</strong
+              >. Check the actual downloaded file, then install it using the steps above.
+            </li>
+            <li data-i18n="tools:sendTheExpansionFileToAFriendTheyInstallTheir">
+              Send the expansion file to a friend. They install their own copy the same way.
+            </li>
+          </ol>
+          <aside data-i18n="tools:theCurrentPlaygroundEmbedsTheImageYouSupplyItDoes">
+            The current Playground embeds the image you supply. It does not promise metadata
+            removal. Use a picture you intend to share. Share the expansion, not a complete player
+            backup containing progress and other installed content.
+          </aside>
+        </div>
       </section>
       <section aria-labelledby="campaign">
-        <h2 id="campaign" data-i18n="tools:3BuildAnEditableCampaign">
+        <h2
+          id="campaign"
+          data-authoring-target="creator-guide-read-campaign"
+          data-i18n="tools:3BuildAnEditableCampaign"
+        >
           3. Build an editable campaign
         </h2>
-        <p>
-          <a
-            class="action"
-            href="example-project.json"
-            download
-            data-i18n="tools:downloadStudioExample"
-            >Download Studio example</a
-          >
-          <a href="../../game/studio/" data-i18n="tools:openContentStudio">Open Content Studio</a>
-        </p>
-        <ol>
-          <li data-i18n-rich="tools:chooseSelectTheExampleAndReviewItBeforeExportExisting">
-            Choose
-            <strong data-i18n="common:editor.inspectImport" data-i18n-slot="slot0"
-              >Inspect import</strong
-            >, select the example and review it before
-            <strong data-i18n="common:editor.applyInspectedSource" data-i18n-slot="slot1"
-              >Apply inspected source</strong
-            >. Export existing work before reusing its ID.
-          </li>
-          <li data-i18n-rich="tools:forYourOwnCollectionUseAUniqueAndInspectAnd">
-            For your own collection, use a unique
-            <strong data-i18n="common:editor.localProjectId" data-i18n-slot="slot0"
-              >Local project ID</strong
+        <div class="creator-guide-reading-tools">
+          <button id="creator-guide-read-campaign" type="button">Read and scroll</button>
+          <button id="creator-guide-read-campaign-done" type="button" disabled>Back</button>
+        </div>
+        <div
+          id="creator-guide-campaign-region"
+          class="creator-guide-reading-region"
+          role="region"
+          aria-labelledby="campaign"
+          tabindex="-1"
+          data-game-reading
+        >
+          <p>
+            <a
+              class="action"
+              href="example-project.json"
+              download
+              data-i18n="tools:downloadStudioExample"
+              >Download Studio example</a
             >
-            and
-            <strong data-i18n="common:editor.newProject" data-i18n-slot="slot1">New project</strong
-            >. Inspect and apply the starter.
-          </li>
-          <li data-i18n-rich="tools:openToCreateNameAndOrderYourCollectionUseAfter">
-            Open
-            <strong data-i18n="common:editor.organizeContent" data-i18n-slot="slot0"
-              >Organize missions, campaigns &amp; packs</strong
+            <a href="../../game/studio/" data-i18n="tools:openContentStudio">Open Content Studio</a>
+          </p>
+          <ol>
+            <li data-i18n-rich="tools:chooseSelectTheExampleAndReviewItBeforeExportExisting">
+              Choose
+              <strong data-i18n="common:editor.inspectImport" data-i18n-slot="slot0"
+                >Inspect import</strong
+              >, select the example and review it before
+              <strong data-i18n="common:editor.applyInspectedSource" data-i18n-slot="slot1"
+                >Apply inspected source</strong
+              >. Export existing work before reusing its ID.
+            </li>
+            <li data-i18n-rich="tools:forYourOwnCollectionUseAUniqueAndInspectAnd">
+              For your own collection, use a unique
+              <strong data-i18n="common:editor.localProjectId" data-i18n-slot="slot0"
+                >Local project ID</strong
+              >
+              and
+              <strong data-i18n="common:editor.newProject" data-i18n-slot="slot1"
+                >New project</strong
+              >. Inspect and apply the starter.
+            </li>
+            <li data-i18n-rich="tools:openToCreateNameAndOrderYourCollectionUseAfter">
+              Open
+              <strong data-i18n="common:editor.organizeContent" data-i18n-slot="slot0"
+                >Organize missions, campaigns &amp; packs</strong
+              >
+              to create, name and order your collection. Use
+              <strong data-i18n="common:editor.applyStructure" data-i18n-slot="slot1"
+                >Validate &amp; apply structure</strong
+              >
+              after edits.
+            </li>
+            <li data-i18n-rich="tools:editOneMissionAtATimeUseAndTestEvery">
+              Edit one mission at a time. Use
+              <strong data-i18n="tools:playExactSoloPreviewStartMission" data-i18n-slot="slot0"
+                >Play exact Solo preview → Start mission</strong
+              >
+              and test every difficulty you plan to offer.
+            </li>
+            <li data-i18n-rich="tools:andReloadToCheckRecoveryAnotherCreatorCanInspectAnd">
+              <strong data-i18n="common:editor.saveCheckpoint" data-i18n-slot="slot0"
+                >Save checkpoint / retry</strong
+              >,
+              <strong data-i18n="common:actions.exportBackup" data-i18n-slot="slot1"
+                >Export backup</strong
+              >
+              and reload to check recovery. Another creator can inspect and apply that source file.
+            </li>
+          </ol>
+          <aside data-i18n-rich="tools:studioExportsEditableProjectSourceItDoesNotYetInstall">
+            <strong data-i18n="tools:currentBoundary" data-i18n-slot="slot0"
+              >Current boundary:</strong
             >
-            to create, name and order your collection. Use
-            <strong data-i18n="common:editor.applyStructure" data-i18n-slot="slot1"
-              >Validate &amp; apply structure</strong
-            >
-            after edits.
-          </li>
-          <li data-i18n-rich="tools:editOneMissionAtATimeUseAndTestEvery">
-            Edit one mission at a time. Use
-            <strong data-i18n="tools:playExactSoloPreviewStartMission" data-i18n-slot="slot0"
-              >Play exact Solo preview → Start mission</strong
-            >
-            and test every difficulty you plan to offer.
-          </li>
-          <li data-i18n-rich="tools:andReloadToCheckRecoveryAnotherCreatorCanInspectAnd">
-            <strong data-i18n="common:editor.saveCheckpoint" data-i18n-slot="slot0"
-              >Save checkpoint / retry</strong
-            >,
-            <strong data-i18n="common:actions.exportBackup" data-i18n-slot="slot1"
-              >Export backup</strong
-            >
-            and reload to check recovery. Another creator can inspect and apply that source file.
-          </li>
-        </ol>
-        <aside data-i18n-rich="tools:studioExportsEditableProjectSourceItDoesNotYetInstall">
-          <strong data-i18n="tools:currentBoundary" data-i18n-slot="slot0"
-            >Current boundary:</strong
-          >
-          Studio exports editable project source; its JSON is not directly installable as a modern
-          Custom campaign. Use the picture campaign creator to generate, review, install or download
-          supported image/video <code data-i18n-slot="slot1">.rlpack</code> campaigns. Playground
-          remains the legacy expansion path.
-        </aside>
-        <p data-i18n="tools:aReferencePictureInTheStudioMapEditorIsAn">
-          A reference picture in the Studio map editor is an overlay, not an automatically bound
-          reward. Themes, retained pictures and video stories have their own workshops and exports.
-          A story playback range keeps the complete video; it does not trim the shared file.
-        </p>
+            Studio exports editable project source; its JSON is not directly installable as a modern
+            Custom campaign. Use the picture campaign creator to generate, review, install or
+            download supported image/video <code data-i18n-slot="slot1">.rlpack</code> campaigns.
+            Playground remains the legacy expansion path.
+          </aside>
+          <p data-i18n="tools:aReferencePictureInTheStudioMapEditorIsAn">
+            A reference picture in the Studio map editor is an overlay, not an automatically bound
+            reward. Themes, retained pictures and video stories have their own workshops and
+            exports. A story playback range keeps the complete video; it does not trim the shared
+            file.
+          </p>
+        </div>
       </section>
       <section aria-labelledby="recover">
-        <h2 id="recover" data-i18n="tools:4KeepARecoveryCopy">4. Keep a recovery copy</h2>
-        <ul>
-          <li data-i18n="tools:keepExactContentEditionsPrivateOriginalsAndPersonalSavesSeparately">
-            Keep exact content editions, private originals and personal saves separately.
-          </li>
-          <li data-i18n="tools:ifSavingFailsOrAnotherTabHasNewerWorkKeep">
-            If saving fails or another tab has newer work, keep the page open and export your
-            unsaved snapshot before deliberately reconciling it with the saved version.
-          </li>
-          <li data-i18n="tools:toRestoreAStudioCheckpointInspectItFirstApplyIt">
-            To restore a Studio checkpoint, inspect it first, apply it, then save a new checkpoint.
-            Earlier history remains intact.
-          </li>
-          <li data-i18n="tools:downloadRequestedMeansYouMustCheckTheActualFileTest">
-            “Download requested” means you must check the actual file. Test importing it in a
-            separate browser profile before relying on it.
-          </li>
-        </ul>
-        <p data-i18n="tools:installationIsLocalSharingAFileDoesNotPublishIt">
-          Installation is local. Sharing a file does not publish it on the game's website. The
-          repository includes the community upload and catalog service, but public listing requires
-          an operator to deploy and configure it; the static site alone is not a live backend.
-        </p>
+        <h2
+          id="recover"
+          data-authoring-target="creator-guide-read-recover"
+          data-i18n="tools:4KeepARecoveryCopy"
+        >
+          4. Keep a recovery copy
+        </h2>
+        <div class="creator-guide-reading-tools">
+          <button id="creator-guide-read-recover" type="button">Read and scroll</button>
+          <button id="creator-guide-read-recover-done" type="button" disabled>Back</button>
+        </div>
+        <div
+          id="creator-guide-recover-region"
+          class="creator-guide-reading-region"
+          role="region"
+          aria-labelledby="recover"
+          tabindex="-1"
+          data-game-reading
+        >
+          <ul>
+            <li
+              data-i18n="tools:keepExactContentEditionsPrivateOriginalsAndPersonalSavesSeparately"
+            >
+              Keep exact content editions, private originals and personal saves separately.
+            </li>
+            <li data-i18n="tools:ifSavingFailsOrAnotherTabHasNewerWorkKeep">
+              If saving fails or another tab has newer work, keep the page open and export your
+              unsaved snapshot before deliberately reconciling it with the saved version.
+            </li>
+            <li data-i18n="tools:toRestoreAStudioCheckpointInspectItFirstApplyIt">
+              To restore a Studio checkpoint, inspect it first, apply it, then save a new
+              checkpoint. Earlier history remains intact.
+            </li>
+            <li data-i18n="tools:downloadRequestedMeansYouMustCheckTheActualFileTest">
+              “Download requested” means you must check the actual file. Test importing it in a
+              separate browser profile before relying on it.
+            </li>
+          </ul>
+          <p data-i18n="tools:installationIsLocalSharingAFileDoesNotPublishIt">
+            Installation is local. Sharing a file does not publish it on the game's website. The
+            repository includes the community upload and catalog service, but public listing
+            requires an operator to deploy and configure it; the static site alone is not a live
+            backend.
+          </p>
+        </div>
       </section>
       <section aria-labelledby="more">
-        <h2 id="more" data-i18n="tools:detailedDocumentation">Detailed documentation</h2>
-        <ul>
-          <li>
-            <a href="creator-guide.md" data-i18n="tools:completeWalkthroughAndTroubleshooting"
-              >Complete walkthrough and troubleshooting</a
-            >
-          </li>
-          <li>
-            <a href="framework-reference.md" data-i18n="tools:frameworkFormatsAndLimits"
-              >Framework, formats and limits</a
-            >
-          </li>
-          <li>
-            <a href="media-editor-guide.md" data-i18n="tools:creatorGuide.docs.mediaEditor"
-              >Optional video range and frame editor guide</a
-            >
-          </li>
-          <li>
-            <a href="maintainer-guide.md" data-i18n="tools:maintainerPublishingGuide"
-              >Maintainer publishing guide</a
-            >
-          </li>
-          <li>
-            <a href="README.md" data-i18n="tools:presentationCheckpointsAndTeamTestExport"
-              >Presentation, checkpoints and Team test export</a
-            >
-          </li>
-          <li>
-            <a
-              href="delivery-plan.md"
-              data-i18n="tools:automaticCreationAndCommunityStoreDeliveryPlan"
-              >Automatic creation and community store delivery plan</a
-            >
-          </li>
-        </ul>
+        <h2
+          id="more"
+          data-authoring-target="creator-guide-read-more"
+          data-i18n="tools:detailedDocumentation"
+        >
+          Detailed documentation
+        </h2>
+        <div class="creator-guide-reading-tools">
+          <button id="creator-guide-read-more" type="button">Read and scroll</button>
+          <button id="creator-guide-read-more-done" type="button" disabled>Back</button>
+        </div>
+        <div
+          id="creator-guide-more-region"
+          class="creator-guide-reading-region"
+          role="region"
+          aria-labelledby="more"
+          tabindex="-1"
+          data-game-reading
+        >
+          <ul>
+            <li>
+              <a href="creator-guide.md" data-i18n="tools:completeWalkthroughAndTroubleshooting"
+                >Complete walkthrough and troubleshooting</a
+              >
+            </li>
+            <li>
+              <a href="framework-reference.md" data-i18n="tools:frameworkFormatsAndLimits"
+                >Framework, formats and limits</a
+              >
+            </li>
+            <li>
+              <a href="media-editor-guide.md" data-i18n="tools:creatorGuide.docs.mediaEditor"
+                >Optional video range and frame editor guide</a
+              >
+            </li>
+            <li>
+              <a href="maintainer-guide.md" data-i18n="tools:maintainerPublishingGuide"
+                >Maintainer publishing guide</a
+              >
+            </li>
+            <li>
+              <a href="README.md" data-i18n="tools:presentationCheckpointsAndTeamTestExport"
+                >Presentation, checkpoints and Team test export</a
+              >
+            </li>
+            <li>
+              <a
+                href="delivery-plan.md"
+                data-i18n="tools:automaticCreationAndCommunityStoreDeliveryPlan"
+                >Automatic creation and community store delivery plan</a
+              >
+            </li>
+          </ul>
+        </div>
       </section>
     </main>
     <footer data-i18n="tools:revealLineLocalCreationKeepYourExportedOriginals">
       FPV / LINE · Local creation · Keep your exported originals
     </footer>
-    <script type="module" src="../../game/ui/authoring-reference-entry.mjs"></script>
+    <script type="module" src="creator-guide.mjs"></script>
   </body>
 </html>
