@@ -63,6 +63,12 @@ function fullscreenOwner(doc, retired, allowInstallHelp) {
     for (const [button, registrations] of buttons) {
       button.hidden = state.hidden;
       button.setAttribute('aria-label', state.label);
+      if (button.hasAttribute?.('data-fullscreen-label'))
+        button.textContent = offersInstallHelp
+          ? t('interface:fullScreenHelp')
+          : doc.fullscreenElement
+            ? t('interface:exitFullScreen')
+            : t('interface:fullScreen');
       if (state.pressed === null) button.removeAttribute('aria-pressed');
       else button.setAttribute('aria-pressed', state.pressed);
       button.title = state.message;

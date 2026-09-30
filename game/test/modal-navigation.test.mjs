@@ -431,6 +431,29 @@ function controllerPad(h, t) {
   return { frame, set, pulse };
 }
 
+function openSettingsWorkshop(h) {
+  h.$('shell-options').focus();
+  h.$('shell-options').click();
+  h.$('settings-tab-extras').focus();
+  h.$('settings-tab-extras').click();
+  h.$('shell-workshop').focus();
+  h.$('shell-workshop').click();
+}
+
+async function closeWorkshopAndSettings(h, pad) {
+  pad.pulse(1);
+  await Promise.resolve();
+  assert.equal(h.$('shell-workshop-dialog').open, false);
+  assert.equal(h.$('settings-dialog').open, true);
+  assert.equal(h.doc.activeElement.id, 'shell-workshop');
+  pad.frame();
+  pad.pulse(1);
+  await Promise.resolve();
+  assert.equal(h.$('settings-dialog').open, false);
+  assert.equal(h.$('shell-home').open, true);
+  assert.equal(h.doc.activeElement.id, 'shell-options');
+}
+
 test('actual native keyboard/pointer handoff retains controller owner but suppresses its held menu repeat until neutral', async (t) => {
   nativeDialogs(t);
   const h = await soloPage(t, { titleScreen: true }),
@@ -728,8 +751,7 @@ test('title Workshop Field Guide returns through its visible openers after Back,
     pad = controllerPad(h, t);
   h.win.crypto = globalThis.crypto;
   for (const exit of ['controller', 'escape', 'practice']) {
-    h.$('shell-workshop').focus();
-    h.$('shell-workshop').click();
+    openSettingsWorkshop(h);
     assert.equal(h.$('shell-workshop-dialog').open, true);
     assert.ok(h.$('shell-guide').getClientRects().length);
     h.$('shell-guide').focus();
@@ -759,11 +781,7 @@ test('title Workshop Field Guide returns through its visible openers after Back,
     // Escape/practice close outside the controller sample. Adopt the returned
     // Workshop scope with neutral controls before a separate Back press.
     pad.frame();
-    pad.pulse(1);
-    await Promise.resolve();
-    assert.equal(h.$('shell-workshop-dialog').open, false);
-    assert.equal(h.$('shell-home').open, true);
-    assert.equal(h.doc.activeElement.id, 'shell-workshop');
+    await closeWorkshopAndSettings(h, pad);
     assert.equal(h.rendered.run.tick, 0, 'Leaving Workshop never starts the campaign');
     pad.frame();
   }
@@ -781,8 +799,7 @@ test('Main menu Workshop Field Guide returns through both menus over an unchange
   pad.frame();
   h.$('overlay-menu').click();
   assert.equal(h.$('shell-home').open, true);
-  h.$('shell-workshop').focus();
-  h.$('shell-workshop').click();
+  openSettingsWorkshop(h);
   assert.equal(h.$('shell-workshop-dialog').open, true);
   assert.ok(h.$('shell-guide').getClientRects().length);
   h.$('shell-guide').focus();
@@ -800,11 +817,7 @@ test('Main menu Workshop Field Guide returns through both menus over an unchange
   assert.equal(h.$('shell-home').open, true);
   assert.equal(h.$('shell-workshop-dialog').open, true);
   assert.equal(h.doc.activeElement.id, 'shell-guide');
-  pad.pulse(1);
-  await Promise.resolve();
-  assert.equal(h.$('shell-workshop-dialog').open, false);
-  assert.equal(h.$('shell-home').open, true);
-  assert.equal(h.doc.activeElement.id, 'shell-workshop');
+  await closeWorkshopAndSettings(h, pad);
   assert.deepEqual(structuredClone(h.rendered.run), checkpoint);
   pad.pulse(1);
   await Promise.resolve();
@@ -1135,8 +1148,7 @@ for (const origin of ['title', 'paused flight'])
       assert.equal(h.rendered.run.player.cutting, true);
     }
     for (const exit of ['button', 'escape', 'controller']) {
-      h.$('shell-workshop').focus();
-      h.$('shell-workshop').click();
+      openSettingsWorkshop(h);
       h.$('shell-library').focus();
       h.$('shell-library').click();
       pad.frame();
@@ -1156,11 +1168,7 @@ for (const origin of ['title', 'paused flight'])
       assert.equal(h.doc.activeElement.id, 'shell-library');
       assert.deepEqual(authoritativeCheckpoint(h.rendered.run), checkpoint);
       assert.deepEqual([...h.storage.map], stored);
-      pad.pulse(1);
-      await Promise.resolve();
-      assert.equal(h.$('shell-workshop-dialog').open, false);
-      assert.equal(h.$('shell-home').open, true);
-      assert.equal(h.doc.activeElement.id, 'shell-workshop');
+      await closeWorkshopAndSettings(h, pad);
       assert.deepEqual(authoritativeCheckpoint(h.rendered.run), checkpoint);
       assert.deepEqual([...h.storage.map], stored);
       pad.frame();
