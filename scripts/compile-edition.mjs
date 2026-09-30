@@ -473,7 +473,7 @@ export async function compileEdition({
     'Engine inventory must contain unique relative paths.',
   );
   // An edition home follows edition identity, independent of gameplay theme.
-  // Keep its scene and the default fallback; unrelated home artwork otherwise
+  // Its own scene is also the fallback; unrelated home artwork otherwise
   // consumes several MiB of the deliberately bounded offline package.
   const menuResources = editionMenuSceneResources(editionIds);
   enginePaths = projectEditionMenuResourcePaths(enginePaths, editionIds);
