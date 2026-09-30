@@ -1,5 +1,6 @@
 export const COPY = {
   en: {
+    worlds: 'World Studio',
     notebook: 'Flight notebook',
     studio: 'Course Studio',
     authoring: 'Authoring preview · cannot earn',
@@ -108,6 +109,7 @@ export const COPY = {
     ready: 'Radio ready to arm.',
   },
   uk: {
+    worlds: 'Студія світів',
     notebook: 'Польотний записник',
     studio: 'Студія вправ',
     authoring: 'Авторський перегляд · без винагород',
