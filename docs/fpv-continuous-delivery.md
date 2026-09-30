@@ -154,3 +154,31 @@ head after joining the native stack. Stadium is the next development branch.
 Required checks, protected merge and verified public launch remain separate from
 feature completion. Main has strict status protection and no configured GitHub
 merge queue; use the protected asynchronous native-stack merger and never bypass.
+
+### Next base change
+
+All five refreshed source gates passed again, but main advanced during their run
+to `135210d560c1` through PR #884. Warehouse's published head `15ffc0ec5d47`
+started its required gate. Preserve those results as historical evidence, commit
+the active Stadium increment, then coordinate the next refresh rather than
+mutating branches underneath development. This is base contention, not a failed
+FPV functional check. No FPV merge or public availability has been confirmed.
+
+### Stadium handoff
+
+Stadium adds 16 completed demonstrations in Self-level and Acro. The catalogue
+now exposes 88 examples across 44 challenges, preserving all 72 previous proof
+hashes. Exact generator reproduction, all final-build browser replays, six
+FPV/chase route inspections, playback controls, record isolation, offline
+completion and Ukrainian mobile layout passed with zero page errors. The package
+contains 75 files / 11,679,377 bytes, SHA-256
+`402dd39dce98416cca534a46c7df97cfd66bf8b5e55733bf26ba4cb636f8e813`.
+
+Main subsequently advanced to `7e252ba98388ed8be9a7f50efb15ed036a7862d2` through
+PR #891. The inspected main changes do not touch FPV runtime, content, build
+configuration or package policy. Publish this feature and refresh all seven
+native layers together, then require fresh checks. Further operations content
+work can continue independently in scratch files during the coordinated refresh.
+Unit coverage remains in the final phase; functional verification continues for
+every increment. These are development examples, with physical-device and
+unfamiliar-player qualification still outstanding.
