@@ -1,0 +1,490 @@
+{
+  "format": "xonix-pack.v6",
+  "id": "neon-spirals-reference",
+  "version": "1.0.0",
+  "name": "Neon Spirals",
+  "description": "Nested red spiral corridors sit inside broken outer hazard bands and split central spines. Four pink ring bouncers begin at the upper-left, lower-center and paired right-inner positions. Two cyan patrols start opposite one another on the lower side rails. Red terrain is lethal until captured; there are no cyan walls or interior safe islands. Start at bottom center, route around the red bands, and reconnect to the perimeter to reveal 75%.",
+  "engine": "xonix-core.v6",
+  "dependencies": [],
+  "metadata": {
+    "author": "RevealLine",
+    "license": "Project content",
+    "rightsStatus": "Tile layout traced from a user-supplied screenshot. Original procedural sprites and existing retro reveal art; no source image pixels or music embedded."
+  },
+  "themes": [
+    {
+      "id": "retro",
+      "name": "1994 Forever",
+      "subtitle": "One more credit",
+      "family": "retro",
+      "player": "retro-craft",
+      "enemyShape": "orb",
+      "patrolShape": "spark",
+      "bossShape": "core",
+      "scene": "arcade",
+      "labels": {
+        "objective": "Cartridge",
+        "supply": "Dock",
+        "enemy": "Glitch",
+        "boss": "Mainframe",
+        "currency": "Score",
+        "ability": "Power-up"
+      },
+      "palette": {
+        "ink": "#242a41",
+        "paper": "#eee8df",
+        "muted": "#aaa1b1",
+        "accent": "#efeb68",
+        "safe": "#39c7e8",
+        "danger": "#e02862",
+        "field": "#000000",
+        "grid": "#101020",
+        "sky": "#e49c95",
+        "land": "#565270"
+      },
+      "classBodies": {
+        "scout": "retro-craft",
+        "bomber": "retro-craft",
+        "carrier": "retro-craft",
+        "interceptor": "retro-craft",
+        "fiber": "retro-craft",
+        "impact": "retro-craft",
+        "trapper": "retro-craft"
+      }
+    }
+  ],
+  "classRecipes": [
+    {
+      "id": "scout",
+      "label": "FPV Scout",
+      "description": "A nimble FPV quad. Scan shows enemy direction hints for four seconds; it never captures territory or slows an enemy.",
+      "primitive": "scan",
+      "capacity": 0,
+      "cooldown": 6,
+      "duration": 4,
+      "radius": 48,
+      "revision": "1"
+    }
+  ],
+  "campaigns": [
+    {
+      "version": "xonix-campaign.v1",
+      "id": "neon-spirals",
+      "revision": "1",
+      "title": "Neon Spirals",
+      "themeId": "retro",
+      "classIds": [
+        "scout"
+      ],
+      "levels": [
+        {
+          "version": "xonix-level.v5",
+          "id": "neon-spirals-reference",
+          "revision": "1",
+          "name": "Neon Spirals",
+          "width": 72,
+          "height": 36,
+          "encounter": null,
+          "spawn": {
+            "x": 36.5,
+            "y": 35.5
+          },
+          "goal": {
+            "coverage": 0.75
+          },
+          "walls": [],
+          "foundations": [],
+          "objectives": [],
+          "supplies": [],
+          "signalZones": [],
+          "hangars": [],
+          "classic": {
+            "version": "classic.v1",
+            "terrain": [
+              {
+                "id": "hazard-1",
+                "kind": "lethal",
+                "x": 3,
+                "y": 3,
+                "w": 22,
+                "h": 3
+              },
+              {
+                "id": "hazard-2",
+                "kind": "lethal",
+                "x": 28,
+                "y": 3,
+                "w": 16,
+                "h": 3
+              },
+              {
+                "id": "hazard-3",
+                "kind": "lethal",
+                "x": 47,
+                "y": 3,
+                "w": 22,
+                "h": 3
+              },
+              {
+                "id": "hazard-4",
+                "kind": "lethal",
+                "x": 3,
+                "y": 6,
+                "w": 3,
+                "h": 11
+              },
+              {
+                "id": "hazard-5",
+                "kind": "lethal",
+                "x": 34,
+                "y": 6,
+                "w": 4,
+                "h": 11
+              },
+              {
+                "id": "hazard-6",
+                "kind": "lethal",
+                "x": 66,
+                "y": 6,
+                "w": 3,
+                "h": 11
+              },
+              {
+                "id": "hazard-7",
+                "kind": "lethal",
+                "x": 8,
+                "y": 8,
+                "w": 13,
+                "h": 3
+              },
+              {
+                "id": "hazard-8",
+                "kind": "lethal",
+                "x": 23,
+                "y": 8,
+                "w": 9,
+                "h": 3
+              },
+              {
+                "id": "hazard-9",
+                "kind": "lethal",
+                "x": 40,
+                "y": 8,
+                "w": 2,
+                "h": 17
+              },
+              {
+                "id": "hazard-10",
+                "kind": "lethal",
+                "x": 44,
+                "y": 8,
+                "w": 5,
+                "h": 3
+              },
+              {
+                "id": "hazard-11",
+                "kind": "lethal",
+                "x": 51,
+                "y": 8,
+                "w": 13,
+                "h": 3
+              },
+              {
+                "id": "hazard-12",
+                "kind": "lethal",
+                "x": 8,
+                "y": 11,
+                "w": 3,
+                "h": 10
+              },
+              {
+                "id": "hazard-13",
+                "kind": "lethal",
+                "x": 30,
+                "y": 11,
+                "w": 2,
+                "h": 17
+              },
+              {
+                "id": "hazard-14",
+                "kind": "lethal",
+                "x": 44,
+                "y": 11,
+                "w": 3,
+                "h": 10
+              },
+              {
+                "id": "hazard-15",
+                "kind": "lethal",
+                "x": 61,
+                "y": 11,
+                "w": 3,
+                "h": 2
+              },
+              {
+                "id": "hazard-16",
+                "kind": "lethal",
+                "x": 13,
+                "y": 13,
+                "w": 3,
+                "h": 8
+              },
+              {
+                "id": "hazard-17",
+                "kind": "lethal",
+                "x": 18,
+                "y": 13,
+                "w": 10,
+                "h": 2
+              },
+              {
+                "id": "hazard-18",
+                "kind": "lethal",
+                "x": 49,
+                "y": 13,
+                "w": 10,
+                "h": 2
+              },
+              {
+                "id": "hazard-19",
+                "kind": "lethal",
+                "x": 25,
+                "y": 15,
+                "w": 3,
+                "h": 10
+              },
+              {
+                "id": "hazard-20",
+                "kind": "lethal",
+                "x": 49,
+                "y": 15,
+                "w": 2,
+                "h": 4
+              },
+              {
+                "id": "hazard-21",
+                "kind": "lethal",
+                "x": 56,
+                "y": 15,
+                "w": 3,
+                "h": 8
+              },
+              {
+                "id": "hazard-22",
+                "kind": "lethal",
+                "x": 61,
+                "y": 15,
+                "w": 3,
+                "h": 10
+              },
+              {
+                "id": "hazard-23",
+                "kind": "lethal",
+                "x": 21,
+                "y": 17,
+                "w": 2,
+                "h": 4
+              },
+              {
+                "id": "hazard-24",
+                "kind": "lethal",
+                "x": 3,
+                "y": 19,
+                "w": 3,
+                "h": 11
+              },
+              {
+                "id": "hazard-25",
+                "kind": "lethal",
+                "x": 34,
+                "y": 19,
+                "w": 4,
+                "h": 11
+              },
+              {
+                "id": "hazard-26",
+                "kind": "lethal",
+                "x": 66,
+                "y": 19,
+                "w": 3,
+                "h": 11
+              },
+              {
+                "id": "hazard-27",
+                "kind": "lethal",
+                "x": 13,
+                "y": 21,
+                "w": 10,
+                "h": 2
+              },
+              {
+                "id": "hazard-28",
+                "kind": "lethal",
+                "x": 44,
+                "y": 21,
+                "w": 10,
+                "h": 2
+              },
+              {
+                "id": "hazard-29",
+                "kind": "lethal",
+                "x": 8,
+                "y": 23,
+                "w": 3,
+                "h": 2
+              },
+              {
+                "id": "hazard-30",
+                "kind": "lethal",
+                "x": 8,
+                "y": 25,
+                "w": 13,
+                "h": 3
+              },
+              {
+                "id": "hazard-31",
+                "kind": "lethal",
+                "x": 23,
+                "y": 25,
+                "w": 5,
+                "h": 3
+              },
+              {
+                "id": "hazard-32",
+                "kind": "lethal",
+                "x": 40,
+                "y": 25,
+                "w": 9,
+                "h": 3
+              },
+              {
+                "id": "hazard-33",
+                "kind": "lethal",
+                "x": 51,
+                "y": 25,
+                "w": 13,
+                "h": 3
+              },
+              {
+                "id": "hazard-34",
+                "kind": "lethal",
+                "x": 3,
+                "y": 30,
+                "w": 22,
+                "h": 3
+              },
+              {
+                "id": "hazard-35",
+                "kind": "lethal",
+                "x": 28,
+                "y": 30,
+                "w": 16,
+                "h": 3
+              },
+              {
+                "id": "hazard-36",
+                "kind": "lethal",
+                "x": 47,
+                "y": 30,
+                "w": 22,
+                "h": 3
+              }
+            ],
+            "powerups": [],
+            "arcadeActions": {
+              "version": "arcade-actions.v1"
+            }
+          },
+          "enemies": [
+            {
+              "id": "pink-upper-left",
+              "type": "bouncer",
+              "x": 9.250259605399792,
+              "y": 3.680497925311203,
+              "vx": -1.7,
+              "vy": 4,
+              "radius": 0.4
+            },
+            {
+              "id": "pink-right-inner-upper",
+              "type": "bouncer",
+              "x": 56.78920041536864,
+              "y": 17.11825726141079,
+              "vx": 4,
+              "vy": -1.7,
+              "radius": 0.4
+            },
+            {
+              "id": "pink-right-inner-lower",
+              "type": "bouncer",
+              "x": 57.188992731048806,
+              "y": 19.410788381742737,
+              "vx": 4.1,
+              "vy": 1.2,
+              "radius": 0.4
+            },
+            {
+              "id": "pink-lower-center",
+              "type": "bouncer",
+              "x": 33.85565939771547,
+              "y": 30.80290456431535,
+              "vx": -3.1,
+              "vy": 3,
+              "radius": 0.4
+            },
+            {
+              "id": "cyan-left-lower",
+              "type": "border-patrol",
+              "x": 0.5,
+              "y": 22.25,
+              "speed": 4.5,
+              "clockwise": false,
+              "radius": 0.35
+            },
+            {
+              "id": "cyan-right-lower",
+              "type": "border-patrol",
+              "x": 71.5,
+              "y": 22.25,
+              "speed": 4.5,
+              "clockwise": true,
+              "radius": 0.35
+            }
+          ],
+          "rules": {
+            "lives": 3,
+            "moveSpeed": 10,
+            "respawnSeconds": 0.7,
+            "graceSeconds": 0.8,
+            "timeLimitSeconds": 0,
+            "stopOnCapture": true
+          },
+          "metadata": {
+            "description": "Nested red spiral corridors sit inside broken outer hazard bands and split central spines. Four pink ring bouncers begin at the upper-left, lower-center and paired right-inner positions. Two cyan patrols start opposite one another on the lower side rails. Red terrain is lethal until captured; there are no cyan walls or interior safe islands. Start at bottom center, route around the red bands, and reconnect to the perimeter to reveal 75%."
+          }
+        }
+      ]
+    }
+  ],
+  "visualOverrides": {
+    "enemy": {
+      "name": "Spirals enemy",
+      "dataUrl": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAm0lEQVR42u3X3Q2AIAwEYCZ0NydwHDdxDXytCdAeVHsmJeHR3Ifhpy3lb6MeZ5Xz2vbH/CR0BHDHjMI1wBKiFWb9dhkyG6xBXMLRTQgjeuHoHughXMORU6AiZsLRUzBEtABauAUgw0wAZPUoQCJcVm8FqH8hAQlIQDgg/CKiuorDHqPw55iiIKEoycKLUoqynKIxoWnNKJrTN8cN4qLIax/CjnoAAAAASUVORK5CYII="
+    },
+    "patrol": {
+      "name": "Spirals patrol",
+      "dataUrl": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAbklEQVR42mNgIBG4P3n/Hx9moDUYdcCoA+jmAFwGkuoAsh2Gy1BSHEBxyGAzgFgHUC1a0A0ixgFUTxOELKVLjqCZ5eT6jlp41AGjDhh1wMA7YMALokFfFA9oZTSg1fGAN0gGvEk22ioedcCIcQAA6l0yW47rJ5YAAAAASUVORK5CYII="
+    },
+    "player": {
+      "name": "Spirals player",
+      "dataUrl": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAYklEQVR42u2WWwoAEBQFrdP+yxp8kV8lj/s66kz5nilcUiKE/EwtuY0VKg+JmOWuESu5S8RObhpxKjeJuJWrRrzKVSKkcnFEeED4FkAcQohrCDGIIEYxxGME8RxDfEgIIVp0LrhEMwepglQAAAAASUVORK5CYII="
+    },
+    "lethalTerrain": {
+      "name": "Spirals lethalTerrain",
+      "dataUrl": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAbUlEQVR42u2WQQ4AEAwEPce7vNxPiIsTgra6kZ17dyqiFQIhZEGOqbhmtGJJgLS+B9yESGrFQWrym0B1+UmwmXxHYC5fiZ7JR8Ln8lkTLlMS5vRu9w/xAiBmAMQUhNgDEJtQtQmIDwnCt46Qv6lSX/qpet2+5AAAAABJRU5ErkJggg=="
+    }
+  },
+  "levelVisuals": [],
+  "music": [],
+  "masteries": []
+}
