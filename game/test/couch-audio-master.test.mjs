@@ -513,7 +513,8 @@ for (const mode of ['Versus', 'Team'])
       assert.deepEqual(record(saved), { muted: true, volume: 0.4 });
     } else assert.equal(warning, '');
 
-    enter(page, `${prefix}-${team ? 'settings-close' : 'options-back'}`);
+    if (team) enter(page, 'coop-settings-close');
+    else enter(page, 'race-settings-tab-extras');
     enter(page, `${prefix}-${team ? 'help-toggle' : 'help'}`);
     const entry = control('help-read'),
       region = control('help-reading'),
@@ -543,7 +544,8 @@ for (const mode of ['Versus', 'Team'])
     assert.equal(done.disabled, true);
     assert.equal(region.scrollTop, 80);
     enter(page, `${prefix}-${team ? 'help-toggle' : 'help-back'}`);
-    enter(page, `${prefix}-${team ? 'settings-open' : 'options'}`);
+    if (team) enter(page, 'coop-settings-open');
+    else enter(page, 'race-settings-tab-audio');
     frames(30);
     assert.deepEqual(state(), attempt);
     assert.equal(saved.getItem(AUDIO_PREFERENCES_KEY), preferenceBytes);
@@ -689,7 +691,11 @@ for (const mode of ['Team', 'Versus']) {
       const credit = page.$(`${prefix}-music-${suffix}`);
       assert.ok(credit, 'The real Couch page provides menu and arena credits.');
       assert.equal(credit.hidden, true);
-      assert.equal(credit.closest('[data-couch-music],dialog'), null);
+      assert.equal(credit.closest('[data-couch-music]'), null);
+      assert.equal(
+        credit.closest('dialog')?.id ?? null,
+        mode === 'Team' && suffix === 'menu-now-playing' ? 'coop-options' : null,
+      );
     }
     assert.equal(a.media.plays, 0);
     assert.equal(a.contexts(), 0);
@@ -707,6 +713,7 @@ for (const mode of ['Team', 'Versus']) {
       page.doc.hidden = false;
       page.doc.emit('visibilitychange');
       if (mode === 'Versus') page.frame();
+      else page.tick();
     };
     hide();
     assert.equal(a.media.paused, true);
@@ -763,8 +770,8 @@ for (const mode of ['Team', 'Versus']) {
       frame();
       frame();
     };
-    const reach = (id) => {
-      for (let n = 0; n < 45 && page.doc.activeElement.id !== id; n++) button(13);
+    const reach = (id, direction = 13) => {
+      for (let n = 0; n < 45 && page.doc.activeElement.id !== id; n++) button(direction);
       assert.equal(page.doc.activeElement.id, id);
     };
     await settleUntil(() => page.$(`${prefix}-music-status`)?.dataset.state === 'ready');
@@ -773,8 +780,9 @@ for (const mode of ['Team', 'Versus']) {
     button(0);
     reach(mode === 'Team' ? 'coop-settings-open' : 'race-options');
     button(0);
-    reach(`${prefix}-settings-tab-audio`);
+    reach(`${prefix}-settings-tab-audio`, 12);
     button(0);
+    button(15); // Leave the vertical category rail for its audio controls.
     reach(`${prefix}-music-library`);
     button(0);
     await settleUntil(
@@ -997,11 +1005,11 @@ test('Versus menu music source is reachable with Tab and controller without star
   });
   await settleUntil(() => page.$('race-music-status')?.dataset.state === 'ready');
   page.join(0);
+  page.frame(1500); // Let the controller Confirm echo window expire before keyboard input.
   enter(page, 'race-options');
   enter(page, 'race-settings-tab-audio');
   enter(page, 'race-music-play');
   await settleUntil(() => !a.media.paused && !page.$('race-music-menu-now-playing').hidden);
-  enter(page, 'race-options-back');
   const credit = page.$('race-music-menu-now-playing'),
     link = credit.querySelector('a'),
     before = page.checkpoint();
@@ -1011,8 +1019,10 @@ test('Versus menu music source is reachable with Tab and controller without star
   assert.equal(link.tabIndex, 0);
   assert.equal(link.closest('[hidden],[inert],[aria-hidden="true"]'), null);
   assert.equal(link.closest('#race-music-now-playing, #race-music-menu-now-playing'), credit);
-  assert.ok(page.$('race-main').querySelectorAll('button,a[href],select,input').includes(link));
-  page.focus('race-help');
+  assert.ok(
+    page.$('race-options-panel').querySelectorAll('button,a[href],select,input').includes(link),
+  );
+  page.focus('race-settings-tab-audio');
   for (let n = 0; n < 30 && page.doc.activeElement !== link; n++) key(page, 'Tab');
   assert.equal(
     page.doc.activeElement,
@@ -1023,16 +1033,19 @@ test('Versus menu music source is reachable with Tab and controller without star
   link.addEventListener('click', () => {
     activations++;
   });
-  page.focus('race-help');
+  page.focus('race-settings-tab-audio');
+  page.pulse(0, 0);
+  page.pulse(0, 15); // Enter the Audio panel from the category rail.
   for (let n = 0; n < 30 && page.doc.activeElement !== link; n++) page.pulse(0, 13);
   assert.equal(page.doc.activeElement, link, 'D-pad navigation includes the same source link.');
   page.pulse(0, 0);
   assert.equal(activations, 1, 'Controller confirm activates the source, not Start.');
   assert.equal(page.state(), 'ready');
   assert.deepEqual(page.checkpoint(), before);
-  enter(page, 'race-quick-sound');
+  page.frame(1500);
+  enter(page, 'race-audio');
   assert.equal(credit.hidden, true);
-  page.focus('race-help');
+  page.focus('race-settings-tab-audio');
   key(page, 'Tab');
   assert.notEqual(page.doc.activeElement, link, 'Muted credits leave the navigation order.');
 });
