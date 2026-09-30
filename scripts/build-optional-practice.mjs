@@ -125,7 +125,7 @@ export function buildBundledOptionalPractice(entries, { packageId = 'civilian-fp
     icons = new Map(
       offlineIcons([192, 512])
         .filter((entry) => entry.name.endsWith('.png'))
-        .map((entry) => [policy.root + entry.name, entry.bytes]),
+        .map((entry) => [entry.name, entry.bytes]),
     );
   requireValid(installWorker, 'Optional package worker is not registered');
   const allowed = new Set([

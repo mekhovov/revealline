@@ -76,10 +76,7 @@ test('bundled FPV pins final default bytes and has its own bounded cache outside
     rebuilt.entries.find((entry) => entry.name === workerName),
   );
   assert.ok(core.files.every((file) => !file.path.startsWith('optional-practice/')));
-  for (const name of [
-    workerName,
-    ...[192, 512].map((size) => `${policy.root}icons/icon-${size}.png`),
-  ]) {
+  for (const name of [workerName]) {
     const bytes = first.find((entry) => entry.name === name).bytes;
     assert.ok(practice.files.includes(name));
     assert.equal(
@@ -87,6 +84,26 @@ test('bundled FPV pins final default bytes and has its own bounded cache outside
       createHash('sha256').update(bytes).digest('hex'),
     );
   }
+  for (const size of [192, 512]) {
+    const name = `icons/icon-${size}.png`,
+      bytes = first.find((entry) => entry.name === name).bytes,
+      pin = rebuilt.files.find((file) => file.path === name);
+    assert.equal(pin.sha256, createHash('sha256').update(bytes).digest('hex'));
+    assert.ok(worker.bytes.includes(Buffer.from(`../../${name}`)));
+    assert.equal(first.filter((entry) => entry.name === name).length, 1);
+    assert.ok(!first.some((entry) => entry.name === policy.root + name));
+  }
+  assert.throws(
+    () =>
+      buildBundledOptionalPractice(
+        finalInputs.map((entry) =>
+          entry.name === 'icons/icon-192.png'
+            ? { ...entry, bytes: Buffer.from('changed') }
+            : entry,
+        ),
+      ),
+    /Bundled optional icon differs/,
+  );
   assert.ok(rebuilt.files.length + 1 <= policy.limits.files);
   assert.ok(
     rebuilt.files.reduce((total, file) => total + file.bytes, worker.bytes.length) <=
@@ -100,7 +117,7 @@ test('bundled FPV pins final default bytes and has its own bounded cache outside
   }
   assert.match(
     first.find((entry) => entry.name === policy.entry).bytes.toString(),
-    /href="\.\/icons\/icon-192\.png"/,
+    /href="\.\.\/\.\.\/icons\/icon-192\.png"/,
   );
   assert.deepEqual(
     first.find((entry) => entry.name === 'game/i18n/catalogs.mjs').bytes,
