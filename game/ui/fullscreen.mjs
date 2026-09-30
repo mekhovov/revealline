@@ -15,18 +15,18 @@ const owners = new WeakMap();
 export function attachFullscreen(
   button,
   doc = globalThis.document,
-  { onState = null, escapeRoot = null } = {},
+  { onState = null, escapeRoot = null, allowInstallHelp = true } = {},
 ) {
   if (!button) return () => {};
   let owner = owners.get(doc);
   if (!owner) {
-    owner = fullscreenOwner(doc, () => owners.delete(doc));
+    owner = fullscreenOwner(doc, () => owners.delete(doc), allowInstallHelp);
     owners.set(doc, owner);
   }
   return owner.attach(button, onState, escapeRoot);
 }
 
-function fullscreenOwner(doc, retired) {
+function fullscreenOwner(doc, retired, allowInstallHelp) {
   let active = true,
     pending = false,
     denied = false,
@@ -44,7 +44,7 @@ function fullscreenOwner(doc, retired) {
   const supported = !!doc.fullscreenEnabled && !!doc.documentElement?.requestFullscreen;
   const installDialog = doc.getElementById?.('ios-home-screen-dialog');
   const offersInstallHelp =
-    !supported && !iosStandalone && iosBrowser(navigator) && !!installDialog;
+    allowInstallHelp && !supported && !iosStandalone && iosBrowser(navigator) && !!installDialog;
   const sync = () => {
     if (!active) return;
     const immersive = !!doc.fullscreenElement || !!displayMode?.matches || iosStandalone;
@@ -63,6 +63,12 @@ function fullscreenOwner(doc, retired) {
     for (const [button, registrations] of buttons) {
       button.hidden = state.hidden;
       button.setAttribute('aria-label', state.label);
+      if (button.hasAttribute?.('data-fullscreen-label'))
+        button.textContent = offersInstallHelp
+          ? t('interface:fullScreenHelp')
+          : doc.fullscreenElement
+            ? t('interface:exitFullScreen')
+            : t('interface:fullScreen');
       if (state.pressed === null) button.removeAttribute('aria-pressed');
       else button.setAttribute('aria-pressed', state.pressed);
       button.title = state.message;
