@@ -347,7 +347,7 @@ test('cancelled source discovery cannot return a late catalogue whose fetch igno
   await settleDemoLoading();
 });
 
-test('frozen runtime variants are selected only after strict verification of the identical pinned input trace', async () => {
+test('frozen variants stay strict and reviewed routes qualify only an enemy checkpoint difference', async () => {
   const catalog = await json('../demo-data/catalog.json');
   const clip = catalog.clips[0];
   const candidates = await Promise.all(
@@ -415,7 +415,26 @@ test('frozen runtime variants are selected only after strict verification of the
     WorkerClass: null,
     fetch: fetcher,
   });
-  await assert.rejects(unsupported.create({}), { name: 'ReplayVerificationError' });
+  const adapted = await unsupported.create({});
+  const adaptedRecording = adapted.exportRecording();
+  assert.notEqual(adaptedRecording.checkpoint.hash, foreign.replay.checkpoint.hash);
+  assert.deepEqual(adaptedRecording.checkpoint, verifyReplay(foreign.replay).actual.checkpoint);
+  assert.deepEqual(adaptedRecording.summary, foreign.replay.summary);
+  assert.equal(adapted.info.recordedStatus, 'won');
+  adapted.dispose();
+
+  const unsafe = structuredClone(foreign.replay);
+  unsafe.summary.lives--;
+  const [rejected] = await loadDemoSources({
+    entries,
+    library: emptyLibrary,
+    WorkerClass: null,
+    fetch: async (url) =>
+      url.href.endsWith(foreign.url.slice(2))
+        ? { ok: true, text: async () => JSON.stringify(unsafe) }
+        : fetcher(url),
+  });
+  await assert.rejects(rejected.create({}), { name: 'ReplayVerificationError' });
 });
 
 test('the ordinary game build includes every dynamic demo asset and Worker module', async () => {
