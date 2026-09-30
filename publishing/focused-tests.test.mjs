@@ -14,6 +14,38 @@ import {
 const directory = path.dirname(fileURLToPath(import.meta.url));
 const manifest = JSON.parse(await readFile(path.join(directory, 'focused-test-map.json'), 'utf8'));
 
+test('the real company package script exposes all tests to exact focused deduplication', async () => {
+  const { scripts } = JSON.parse(await readFile(path.join(directory, '../package.json'), 'utf8'));
+  const prefix = 'node --test ';
+  assert.ok(scripts['company:test'].startsWith(prefix));
+  const patterns = scripts['company:test'].slice(prefix.length).trim().split(/\s+/u);
+  assert.ok(patterns.every((pattern) => /^[a-z0-9_./*-]+\.mjs$/iu.test(pattern)));
+  const showcase = 'game/test/showcase-studio-playthrough.test.mjs';
+  assert.ok(patterns.includes(showcase));
+  assert.equal(scripts['company:showcase:test'], prefix + showcase);
+  const commands = [
+    { id: 'company', command: 'npm', args: ['run', 'company:test'] },
+    { id: 'showcase', command: 'node', args: ['--test', showcase] },
+    { id: 'unrelated', command: 'node', args: ['--test', 'game/test/unrelated.test.mjs'] },
+  ];
+  // Complete synthetic glob inventory: no file execution is claimed here.
+  const execution = focusedCommandExecutionPlan(commands, {
+    packageScripts: scripts,
+    repositoryFiles: patterns.map((pattern) => pattern.replaceAll('*', 'example')),
+    shellSemantics: 'posix',
+  });
+  assert.deepEqual(execution.diagnostics, []);
+  assert.deepEqual(
+    execution.commands.map(({ id }) => id),
+    ['company', 'unrelated'],
+  );
+  assert.deepEqual(
+    execution.deduplicated.map(({ testFile }) => testFile),
+    [showcase],
+  );
+  assert.equal(execution.packageCoverage[0].tests.length, new Set(patterns).size);
+});
+
 test('ownership inventory changes select route coverage and artwork screening regressions', () => {
   const plan = focusedTestPlan(
     ['scripts/content-inventory.mjs', 'game/content-design/content-lifecycle.mjs'],
@@ -27,6 +59,23 @@ test('ownership inventory changes select route coverage and artwork screening re
   );
   assert.ok(plan.commands[0].args.includes('game/test/content-lifecycle.test.mjs'));
   assert.ok(plan.commands[0].args.includes('game/test/artwork-screening.test.mjs'));
+});
+
+test('combined company screening selects exact-copy, ownership and strict-review regressions', () => {
+  const plan = focusedTestPlan(['scripts/company-artwork-screening.mjs'], manifest);
+  assert.deepEqual(plan.categories, ['content-inventory']);
+  assert.deepEqual(plan.unknownRuntime, []);
+  assert.ok(plan.commands[0].args.includes('scripts/test-company-artwork-screening.mjs'));
+});
+
+test('company ownership reports select retained identity and profile preservation checks', () => {
+  const plan = focusedTestPlan(['scripts/company-content-inventory.mjs'], manifest);
+  assert.ok(plan.categories.includes('company-content-inventory'));
+  assert.deepEqual(plan.unknownRuntime, []);
+  const command = plan.commands.find(({ id }) => id === 'company-content-inventory');
+  assert.ok(command.args.includes('scripts/test-company-content-inventory.mjs'));
+  assert.ok(command.args.includes('game/test/edition-retained-presentation.test.mjs'));
+  assert.ok(command.args.includes('game/test/edition-profile-compatibility.test.mjs'));
 });
 
 test('published size reports select metadata integrity and cache-owner measurement checks', () => {
@@ -655,4 +704,18 @@ test('neutral pilot recording changes select real engine replay and source parit
   assert.deepEqual(plan.categories, ['neutral-pilot-evidence']);
   assert.deepEqual(plan.unknownRuntime, []);
   assert.ok(plan.commands[0].args.includes('game/test/neutral-pilot-session.test.mjs'));
+});
+
+test('Journey star sidecars select previous-release storage and backup compatibility checks', () => {
+  for (const file of [
+    'game/journey/stars.mjs',
+    'game/journey/profile.mjs',
+    'game/mission-library/creator-source.mjs',
+  ]) {
+    const plan = focusedTestPlan([file], manifest);
+    assert.ok(plan.categories.includes('journey-star-compatibility'));
+    const command = plan.commands.find(({ id }) => id === 'journey-star-compatibility');
+    assert.ok(command.args.includes('game/test/journey-stars.test.mjs'));
+    assert.ok(command.args.includes('game/test/journey-backup.test.mjs'));
+  }
 });

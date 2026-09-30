@@ -1,0 +1,378 @@
+[
+  {
+    "brief": "Use the worked example, then reconcile a different fictional booklet delivery. Commit a board that tells the next volunteer what is actually here.",
+    "campaignId": "social-drone-community-connections",
+    "fields": [
+      {
+        "expected": "12",
+        "explanation": "Count the two observed boxes: 7 + 5 = 12. An expected quantity is not a receipt.",
+        "id": "received",
+        "label": "Received",
+        "options": [
+          { "label": "20", "value": "20" },
+          { "label": "12", "value": "12" },
+          { "label": "7", "value": "7" }
+        ]
+      },
+      {
+        "expected": "8",
+        "explanation": "Subtract the observed 12 from the expected 20. Eight remain unreceived.",
+        "id": "missing",
+        "label": "Still missing",
+        "options": [
+          { "label": "8", "value": "8" },
+          { "label": "0", "value": "0" },
+          { "label": "15", "value": "15" }
+        ]
+      },
+      {
+        "expected": "partial",
+        "explanation": "The board should preserve the difference between received and expected so the next person does not promise unavailable copies.",
+        "id": "status",
+        "label": "Public board status",
+        "options": [
+          { "label": "All 20 ready", "value": "ready" },
+          { "label": "12 received; 8 still expected", "value": "partial" }
+        ]
+      }
+    ],
+    "fixtureRevision": "1",
+    "format": "revealline-learning-lesson.v1",
+    "id": "social-drone-community-connections-02-lesson",
+    "kind": "practice",
+    "locales": {
+      "uk": {
+        "brief": "Розгляньте приклад, а потім звірте іншу вигадану доставку буклетів. Підтвердьте дошку, яка показує наступному волонтеру фактичну наявність.",
+        "fields": [
+          {
+            "explanation": "Порахуйте дві наявні коробки: 7 + 5 = 12. Очікувана кількість не є отриманою.",
+            "id": "received",
+            "label": "Отримано",
+            "options": [
+              { "label": "20", "value": "20" },
+              { "label": "12", "value": "12" },
+              { "label": "7", "value": "7" }
+            ]
+          },
+          {
+            "explanation": "Від очікуваних 20 відніміть наявні 12. Вісім ще не отримано.",
+            "id": "missing",
+            "label": "Ще бракує",
+            "options": [
+              { "label": "8", "value": "8" },
+              { "label": "0", "value": "0" },
+              { "label": "15", "value": "15" }
+            ]
+          },
+          {
+            "explanation": "Дошка має розрізняти отримане й очікуване, щоб наступна людина не обіцяла відсутні примірники.",
+            "id": "status",
+            "label": "Стан на дошці",
+            "options": [
+              { "label": "Усі 20 готові", "value": "ready" },
+              { "label": "12 отримано; ще 8 очікуємо", "value": "partial" }
+            ]
+          }
+        ],
+        "notice": "Оригінальна навчальна вправа без таймера. Джерела пояснюють поняття; це не звіт про справжній захід спільноти й не підтвердження практичної кваліфікації.",
+        "records": [
+          {
+            "id": "example",
+            "lines": [
+              "Очікували 12, нарахували 8. Дошка повідомляє: «8 отримано; 4 бракує», бо 12 − 8 = 4."
+            ],
+            "title": "Розібраний приклад"
+          },
+          {
+            "id": "delivery",
+            "lines": [
+              "Для цього столу очікують 20 буклетів. У коробці A — 7, у B — 5. Обидві перераховано; інших коробок не доставлено."
+            ],
+            "title": "Нова доставка"
+          }
+        ],
+        "role": "Учасник виставки",
+        "success": "Дошку оновлено: 12 отримано, 8 бракує. Наступний волонтер бачить фактичний підрахунок, а не припущення про доставку.",
+        "title": "Оновіть дошку обліку"
+      }
+    },
+    "missionId": "social-drone-community-connections-02",
+    "notice": "An original untimed learning fixture. Sources explain the concepts; this is not an account of a real community event or a practical qualification.",
+    "records": [
+      {
+        "id": "example",
+        "lines": [
+          "Expected 12; counted 8. The board reads “8 received; 4 missing”, because 12 − 8 = 4."
+        ],
+        "title": "Worked example"
+      },
+      {
+        "id": "delivery",
+        "lines": [
+          "This table expects 20 booklets. Box A contains 7 and box B contains 5. Both have been counted; no other box has arrived."
+        ],
+        "title": "Your new delivery"
+      }
+    ],
+    "revision": "1",
+    "role": "Exhibit participant",
+    "sourceReviewedAt": "2026-09-28",
+    "sources": [
+      {
+        "title": "W3C WAI — Writing for Web Accessibility",
+        "url": "https://www.w3.org/WAI/tips/writing/"
+      }
+    ],
+    "success": "Board updated: 12 received, 8 missing. The next volunteer can act on an observed count rather than an assumed delivery.",
+    "title": "Update the count board"
+  },
+  {
+    "brief": "Transfer the earlier idea of an accurate handoff to a new library invitation. Choose only directions and arrangements confirmed in the record.",
+    "campaignId": "social-drone-community-connections",
+    "fields": [
+      {
+        "expected": "landmark",
+        "explanation": "Use the confirmed room and landmark; keep colour only as an additional cue if verified.",
+        "id": "where",
+        "label": "Where",
+        "options": [
+          { "label": "Find the green door", "value": "colour" },
+          { "label": "Reading Room, ground floor, beside the main desk", "value": "landmark" }
+        ]
+      },
+      {
+        "expected": "confirmed",
+        "explanation": "The supplied record confirms Saturday at 14:00. Do not replace it with a vague time.",
+        "id": "when",
+        "label": "When",
+        "options": [
+          { "label": "Sometime this weekend", "value": "vague" },
+          { "label": "Saturday, 14:00", "value": "confirmed" }
+        ]
+      },
+      {
+        "expected": "ask",
+        "explanation": "An inviting message must not invent facilities. Mark the missing information and seek confirmation.",
+        "id": "access",
+        "label": "Access information",
+        "options": [
+          { "label": "Step-free access guaranteed", "value": "promise" },
+          { "label": "Access details need confirmation from the venue", "value": "ask" }
+        ]
+      }
+    ],
+    "fixtureRevision": "1",
+    "format": "revealline-learning-lesson.v1",
+    "id": "social-drone-community-connections-04-lesson",
+    "kind": "practice",
+    "locales": {
+      "uk": {
+        "brief": "Перенесіть ідею точної передачі відомостей у нове бібліотечне запрошення. Оберіть лише підтверджені в записі вказівки й домовленості.",
+        "fields": [
+          {
+            "explanation": "Використайте підтверджені назву й орієнтир; колір може бути лише додатковою перевіреною підказкою.",
+            "id": "where",
+            "label": "Де",
+            "options": [
+              { "label": "Знайдіть зелені двері", "value": "colour" },
+              { "label": "Читальна зала, перший поверх, біля головної стійки", "value": "landmark" }
+            ]
+          },
+          {
+            "explanation": "Запис підтверджує суботу, 14:00. Не замінюйте це нечітким часом.",
+            "id": "when",
+            "label": "Коли",
+            "options": [
+              { "label": "Якось на вихідних", "value": "vague" },
+              { "label": "Субота, 14:00", "value": "confirmed" }
+            ]
+          },
+          {
+            "explanation": "Привітне повідомлення не має вигадувати зручності. Позначте прогалину й попросіть підтвердження.",
+            "id": "access",
+            "label": "Відомості про доступ",
+            "options": [
+              { "label": "Безсходинковий доступ гарантовано", "value": "promise" },
+              { "label": "Деталі доступу треба уточнити в закладу", "value": "ask" }
+            ]
+          }
+        ],
+        "notice": "Оригінальна навчальна вправа без таймера. Джерела пояснюють поняття; це не звіт про справжній захід спільноти й не підтвердження практичної кваліфікації.",
+        "records": [
+          {
+            "id": "example",
+            "lines": [
+              "«Біля зелених дверей» залежить від кольору. Назва кімнати й орієнтир роблять вказівку кориснішою."
+            ],
+            "title": "Попередній приклад"
+          },
+          {
+            "id": "event",
+            "lines": [
+              "Вигаданий захід: субота, 14:00, читальна зала на першому поверсі біля головної стійки. Можна спостерігати або ставити запитання. Відомостей про безсходинковий доступ немає."
+            ],
+            "title": "Підтверджені домовленості"
+          }
+        ],
+        "role": "Учасник виставки",
+        "success": "Запрошення містить точні місце й час та чесно позначену прогалину щодо доступу. Невирішене питання видно, а не перетворено на хибну обіцянку.",
+        "title": "Зробіть запрошення зрозумілим"
+      }
+    },
+    "missionId": "social-drone-community-connections-04",
+    "notice": "An original untimed learning fixture. Sources explain the concepts; this is not an account of a real community event or a practical qualification.",
+    "records": [
+      {
+        "id": "example",
+        "lines": [
+          "“At the green door” relies on one colour cue. A room name and nearby landmark make that instruction more useful."
+        ],
+        "title": "Earlier example"
+      },
+      {
+        "id": "event",
+        "lines": [
+          "The fictional event is Saturday at 14:00, Reading Room, ground floor beside the main desk. Visitors may watch or ask questions. No step-free access information has been supplied."
+        ],
+        "title": "Confirmed arrangements"
+      }
+    ],
+    "revision": "1",
+    "role": "Exhibit participant",
+    "sourceReviewedAt": "2026-09-28",
+    "sources": [
+      {
+        "title": "W3C WAI — Writing for Web Accessibility",
+        "url": "https://www.w3.org/WAI/tips/writing/"
+      }
+    ],
+    "success": "Invitation prepared with a precise place and time, and an honest gap for access information. The unresolved item is visible instead of becoming a false promise.",
+    "title": "Make the invitation usable"
+  },
+  {
+    "brief": "Combine counting, correction and handoff in a new fictional noticeboard. The old board is already visible; prepare its replacement from the evidence.",
+    "campaignId": "social-drone-community-connections",
+    "fields": [
+      {
+        "expected": "accurate",
+        "explanation": "Eight plus two is ten. The unreceived two must remain separate; a check tomorrow is not a delivery promise.",
+        "id": "notice",
+        "label": "Replacement notice",
+        "options": [
+          { "label": "12 available now", "value": "all" },
+          { "label": "10 available; 2 still expected, date unconfirmed", "value": "accurate" }
+        ]
+      },
+      {
+        "expected": "accepted",
+        "explanation": "An agreed owner and a concrete check make the handoff actionable. A suggested name is not acceptance.",
+        "id": "owner",
+        "label": "Next action",
+        "options": [
+          { "label": "Taras will deliver tomorrow", "value": "proposed" },
+          { "label": "Marta checks tomorrow and updates this board", "value": "accepted" }
+        ]
+      },
+      {
+        "expected": "replace",
+        "explanation": "Replace the inaccurate notice where readers encounter it. A private note leaves the public claim wrong.",
+        "id": "publish",
+        "label": "Where to correct",
+        "options": [
+          { "label": "Keep the old board; save a private note", "value": "private" },
+          { "label": "Replace the old public notice with this update", "value": "replace" }
+        ]
+      }
+    ],
+    "fixtureRevision": "1",
+    "format": "revealline-learning-lesson.v1",
+    "id": "social-drone-community-connections-06-lesson",
+    "kind": "practice",
+    "locales": {
+      "uk": {
+        "brief": "Поєднайте підрахунок, виправлення й передачу справ у новій вигаданій дошці. Старе оголошення вже висить; підготуйте заміну за доказами.",
+        "fields": [
+          {
+            "explanation": "Вісім плюс два — десять. Ще не отримані два лишаються окремо; завтрашня перевірка не є обіцянкою доставки.",
+            "id": "notice",
+            "label": "Нове оголошення",
+            "options": [
+              { "label": "12 уже в наявності", "value": "all" },
+              {
+                "label": "10 у наявності; ще 2 очікуємо, дату не підтверджено",
+                "value": "accurate"
+              }
+            ]
+          },
+          {
+            "explanation": "Узгоджений відповідальний і конкретна перевірка роблять передачу дієвою. Запропоноване ім’я не означає згоди.",
+            "id": "owner",
+            "label": "Наступна дія",
+            "options": [
+              { "label": "Тарас доставить завтра", "value": "proposed" },
+              { "label": "Марта перевіряє завтра й оновлює цю дошку", "value": "accepted" }
+            ]
+          },
+          {
+            "explanation": "Замініть неточне оголошення там, де його читають. Приватна нотатка не виправить публічного твердження.",
+            "id": "publish",
+            "label": "Де виправити",
+            "options": [
+              { "label": "Лишити стару дошку; зберегти приватну нотатку", "value": "private" },
+              { "label": "Замінити старе публічне оголошення цим оновленням", "value": "replace" }
+            ]
+          }
+        ],
+        "notice": "Оригінальна навчальна вправа без таймера. Джерела пояснюють поняття; це не звіт про справжній захід спільноти й не підтвердження практичної кваліфікації.",
+        "records": [
+          {
+            "id": "count",
+            "lines": [
+              "Старе оголошення каже: «12 у наявності». Спочатку надійшло вісім, потім нарахували ще два. Два обіцяні примірники ще не прибули."
+            ],
+            "title": "Запис доставки"
+          },
+          {
+            "id": "handoff",
+            "lines": [
+              "Марта погодилася завтра перевірити решту доставки й оновити цю саму дошку. Тараса запропонували відповідальним, але він не погоджувався. Дату доставки не підтверджено."
+            ],
+            "title": "Узгоджена наступна дія"
+          }
+        ],
+        "role": "Учасник виставки",
+        "success": "Дошка повідомляє про 10 наявних і 2 неотримані примірники. Видно узгоджену перевірку Марти й чітку заміну неточного оголошення.",
+        "title": "Оприлюдніть точне оновлення"
+      }
+    },
+    "missionId": "social-drone-community-connections-06",
+    "notice": "An original untimed learning fixture. Sources explain the concepts; this is not an account of a real community event or a practical qualification.",
+    "records": [
+      {
+        "id": "count",
+        "lines": [
+          "The old notice says “12 available”. Eight arrived first, then two more were counted. Two promised copies have not arrived."
+        ],
+        "title": "Delivery log"
+      },
+      {
+        "id": "handoff",
+        "lines": [
+          "Marta agreed to check the remaining delivery tomorrow and update this same board. Taras was suggested as an owner but has not agreed. Nothing confirms a delivery date."
+        ],
+        "title": "Accepted next action"
+      }
+    ],
+    "revision": "1",
+    "role": "Exhibit participant",
+    "sourceReviewedAt": "2026-09-28",
+    "sources": [
+      {
+        "title": "W3C WAI — Writing for Web Accessibility",
+        "url": "https://www.w3.org/WAI/tips/writing/"
+      }
+    ],
+    "success": "The board now reports 10 available and 2 unreceived. Marta’s agreed check is visible, and the inaccurate notice has a clear replacement.",
+    "title": "Publish an honest update"
+  }
+]

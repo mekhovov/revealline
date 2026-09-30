@@ -31,29 +31,41 @@ test('release source title, package, lock and build versions must match exactly'
   );
 });
 
-test('next release waits until the previous stable selector and public bytes agree', () => {
+test('next release waits until the exact protected main bytes are public', () => {
   const configuration = { deploymentEnabled: true, currentVersion: 'v0.111.0' };
   const pages = [[release('v0.110.1'), release('v0.111.0')]];
-  const rootRelease = {
-    version: 'v0.111.0',
+  const deployment = {
+    format: 'revealline-main-deployment.v1',
+    channel: 'main',
     sourceRevision: 'a'.repeat(40),
-    play: 'releases/v0.111.0/site/game/',
+    buildVersion: `main-${'a'.repeat(12)}`,
+    play: 'game/',
   };
   const buildInfo = {
-    version: 'v0.111.0',
+    version: deployment.buildVersion,
     sourceRevision: 'a'.repeat(40),
     entry: 'game/index.html',
   };
-  assert.deepEqual(verifyPublicBoundary({ configuration, pages, rootRelease, buildInfo }), {
-    latest: 'v0.111.0',
-    sourceRevision: 'a'.repeat(40),
-  });
+  assert.deepEqual(
+    verifyPublicBoundary({
+      configuration,
+      pages,
+      deployment,
+      buildInfo,
+      expectedMainSha: 'a'.repeat(40),
+    }),
+    {
+      latest: 'v0.111.0',
+      sourceRevision: 'a'.repeat(40),
+      buildVersion: `main-${'a'.repeat(12)}`,
+    },
+  );
   assert.throws(
     () =>
       verifyPublicBoundary({
         configuration: { ...configuration, currentVersion: 'v0.110.1' },
         pages,
-        rootRelease: { ...rootRelease, version: 'v0.110.1' },
+        deployment,
         buildInfo: { ...buildInfo, version: 'v0.110.1' },
       }),
     /not the latest/,
@@ -63,20 +75,31 @@ test('next release waits until the previous stable selector and public bytes agr
       verifyPublicBoundary({
         configuration,
         pages,
-        rootRelease: { ...rootRelease, version: 'v0.110.1' },
+        deployment: { ...deployment, channel: 'stable' },
         buildInfo,
       }),
-    /Public root/,
+    /continuous-main deployment/,
   );
   assert.throws(
     () =>
       verifyPublicBoundary({
         configuration,
         pages,
-        rootRelease,
+        deployment,
         buildInfo: { ...buildInfo, sourceRevision: 'b'.repeat(40) },
       }),
-    /Public game bytes/,
+    /continuous-main deployment marker/,
+  );
+  assert.throws(
+    () =>
+      verifyPublicBoundary({
+        configuration,
+        pages,
+        deployment,
+        buildInfo,
+        expectedMainSha: 'b'.repeat(40),
+      }),
+    /does not match protected base/,
   );
 });
 

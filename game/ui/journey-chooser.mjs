@@ -20,6 +20,7 @@ export function attachJourneyChooser({
   getCurrentId,
   supportedModes,
   availableCollectionsOnly,
+  goalPreferenceOptions,
   description,
 }) {
   if (library) {
@@ -35,6 +36,7 @@ export function attachJourneyChooser({
       getCurrentId,
       supportedModes,
       availableCollectionsOnly,
+      goalPreferenceOptions,
       description,
     });
     if (profile) {

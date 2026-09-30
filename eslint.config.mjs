@@ -18,6 +18,7 @@ export default [
   {
     files: [
       'game/**/*.mjs',
+      'optional-practice/**/*.mjs',
       'intake/**/*.mjs',
       'scripts/**/*.mjs',
       'site/**/*.mjs',
@@ -33,7 +34,7 @@ export default [
     },
   },
   {
-    files: ['game/**/*.mjs', 'site/**/*.mjs'],
+    files: ['game/**/*.mjs', 'site/**/*.mjs', 'optional-practice/**/*.mjs'],
     ignores: ['game/core/**', 'game/test/**'],
     languageOptions: { globals: globals.browser },
   },

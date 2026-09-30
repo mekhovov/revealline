@@ -9,12 +9,20 @@ import {
   editionRelativePath,
   freezeEdition,
   resolveEditionSelection,
+  resolveEditionAssets,
   validateEditionRuntimeCatalog,
 } from '../../game/editions/model.mjs';
 import {
   validateEditionCampaignProject,
   validateEditionLessonBundle,
+  validateEditionRewardBundle,
 } from '../../game/editions/project.mjs';
+import {
+  validateCampaignLocalization,
+  verifyCampaignLocalization,
+} from '../../game/editions/localization.mjs';
+import { validateCompletionRewards } from '../../game/rewards/model.mjs';
+import { mergeEditionProjects } from '../../game/editions/bootstrap.mjs';
 import { hashPresentationBytes } from '../../game/presentation/bundle.mjs';
 import { validateRetainedPresentation } from '../../game/editions/retained-presentation.mjs';
 import { projectEditionThemeSelection } from '../../game/editions/selected-presentation.mjs';
@@ -65,6 +73,8 @@ export function declaredJSONPaths(catalog) {
       ...catalog.campaigns.flatMap((campaign) => [
         campaign.sourcePath,
         ...(campaign.lessonPath ? [campaign.lessonPath] : []),
+        ...(campaign.rewardPath ? [campaign.rewardPath] : []),
+        ...(campaign.localizationPath ? [campaign.localizationPath] : []),
       ]),
       ...catalog.editions.flatMap((edition) => [
         ...Object.values(edition.boot ?? {}),
@@ -110,6 +120,40 @@ export function validateStudioData(path, input, catalog, files = new Map()) {
     const project = files.get(lessonCampaign.sourcePath);
     if (project) validateEditionLessonBundle(lessons, project);
     return lessons;
+  }
+  const rewardCampaign = catalog.campaigns.find((entry) => entry.rewardPath === path);
+  const localizationCampaign = catalog.campaigns.find((entry) => entry.localizationPath === path);
+  if (localizationCampaign) {
+    const project = files.get(localizationCampaign.sourcePath);
+    required(project, 'Load the exact campaign before validating its localization.');
+    return validateCampaignLocalization(data, project, localizationCampaign);
+  }
+  if (rewardCampaign) {
+    const rewards = validateCompletionRewards(data);
+    const project = files.get(rewardCampaign.sourcePath);
+    required(project, 'Load the exact campaign before validating its rewards.');
+    for (const edition of catalog.editions.filter((edition) =>
+      edition.campaignIds.includes(rewardCampaign.id),
+    )) {
+      const selection = resolveEditionSelection(catalog, { editionId: edition.id });
+      validateEditionRewardBundle(rewards, project, {
+        descriptor: rewardCampaign,
+        assets: resolveEditionAssets(catalog, { editionId: edition.id }),
+        editionId: edition.id,
+        presets: files.get(edition.boot?.presets),
+        themes: files.get(edition.boot?.themes)?.themes ?? [],
+        lessons: selection.campaigns.flatMap((campaign) =>
+          campaign.lessonPath ? (files.get(campaign.lessonPath) ?? []) : [],
+        ),
+        editionProject: rewards.some((reward) => reward.scope.kind === 'edition')
+          ? mergeEditionProjects(
+              selection,
+              selection.campaigns.map((campaign) => files.get(campaign.sourcePath)),
+            )
+          : undefined,
+      });
+    }
+    return rewards;
   }
   if (catalog.editions.some((edition) => edition.boot?.themes === path)) {
     required(
@@ -182,12 +226,32 @@ export function validateStudioDraft(input) {
       themes: files.get(edition.boot.themes),
       presets: files.get(edition.boot.presets),
     });
+    validateCompletionRewards(
+      catalog.campaigns
+        .filter((campaign) => edition.campaignIds.includes(campaign.id) && campaign.rewardPath)
+        .flatMap((campaign) => files.get(campaign.rewardPath)),
+    );
   }
   return { catalog, files };
 }
 /** Immutable retained JSON travels as exact text, separate from editable source. */
 export async function validateStudioHistory(catalog, files, { editionId = null, signal } = {}) {
   const retained = [];
+  for (const campaign of catalog.campaigns.filter(
+    (item) =>
+      item.localizationPath &&
+      (!editionId ||
+        catalog.editions.some(
+          (edition) => edition.id === editionId && edition.campaignIds.includes(item.id),
+        )),
+  )) {
+    signal?.throwIfAborted();
+    await verifyCampaignLocalization(
+      files.get(campaign.localizationPath),
+      files.get(campaign.sourcePath),
+      campaign,
+    );
+  }
   for (const edition of catalog.editions.filter((item) => !editionId || item.id === editionId)) {
     for (const descriptor of edition.presentationHistory ?? []) {
       signal?.throwIfAborted();
@@ -221,6 +285,11 @@ export function validateStudioReport(input) {
         (key) => Number.isSafeInteger(report.summary[key]) && report.summary[key] >= 0,
       ),
     'Invalid compiler summary.',
+  );
+  required(
+    report.summary.rewards === undefined ||
+      (Number.isSafeInteger(report.summary.rewards) && report.summary.rewards >= 0),
+    'Invalid compiler reward summary.',
   );
   required(
     Array.isArray(report.admittedPaths) &&
@@ -275,6 +344,7 @@ export function studioPreviewURL(report, baseURL) {
       !url.hash,
     'Preview must use this server’s origin.',
   );
+  url.searchParams.set('studio-preview', '1');
   return url;
 }
 export function studioSelection(catalog, editionId) {
@@ -321,4 +391,20 @@ export function assertMatchingStudioSelection(draft, built, editionId, files = n
       'The compiled preview differs from this applied draft. Compile and import a fresh report.',
     );
   return b;
+}
+
+/** Presentation-only catalog edit. Omission preserves legacy descriptor output;
+ * all editions containing this campaign receive an explicit new pack revision. */
+export function withStudioCampaignHero(source, campaignId, heroAssetId) {
+  const catalog = structuredClone(validateEditionRuntimeCatalog(source));
+  const campaign = catalog.campaigns.find((item) => item.id === campaignId);
+  required(campaign, 'Choose a registered campaign for artwork.');
+  if (heroAssetId === undefined || heroAssetId === null || heroAssetId === '')
+    delete campaign.heroAssetId;
+  else campaign.heroAssetId = heroAssetId;
+  const checked = validateEditionRuntimeCatalog(catalog);
+  if (canonicalJSON(checked) === canonicalJSON(source)) return checked;
+  for (const edition of catalog.editions.filter((item) => item.campaignIds.includes(campaignId)))
+    edition.revision++;
+  return validateEditionRuntimeCatalog(catalog);
 }

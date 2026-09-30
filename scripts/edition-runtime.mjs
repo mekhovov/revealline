@@ -111,10 +111,14 @@ export const EDITION_RUNTIME_RESOURCES = Object.freeze({
   'game/company-entry.mjs': ['game/index.html'],
   'game/index.html': EDITION_RUNTIME_PAGES,
   'game/app.mjs': ['game/content/scenarios/line-impact-demo.json'],
-  'game/ui/native-menus.mjs': ['game/ui/native-menu.css'],
-  'game/ui/controller-field-editor.mjs': ['game/ui/controller-field-editor.css'],
   'game/ui/soundtrack-panel.mjs': ['game/ui/soundtrack-panel.css'],
   'game/ui/install-offline-panel.mjs': ['game/ui/install-offline-panel.css'],
+  'game/vendor/qrcodegen-1.8.0.mjs': [
+    'game/vendor/QRCODEGEN-LICENSE.txt',
+    'game/vendor/qrcodegen-1.8.0.json',
+  ],
+  'game/ui/native-menus.mjs': ['game/ui/native-menu.css'],
+  'game/ui/controller-field-editor.mjs': ['game/ui/controller-field-editor.css'],
   'game/ui/brand-identity.mjs': ['game/ui/art/identity/fpv-line/wordmark.png'],
   'game/ui/menu-scenes.mjs': [
     'game/ui/menu-scenes.css',
