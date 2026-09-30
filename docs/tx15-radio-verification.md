@@ -2,7 +2,7 @@
 
 This document records the physical source-browser session on 29 September.
 For merged-source status and remaining native/publication boundaries, see the
-[current radio delivery checkpoint](radio-integration-review.md#current-delivery-checkpoint--30-september-2026).
+[current radio delivery plan](controller-radio-plan.md).
 
 The user confirmed flight works in the local optional civilian FPV simulator at port 8777 after calibration. The browser reports TX15 Joystick (Vendor 1209, Product 4f54), eight axes and 24 buttons. This is a source-checkout browser result, not packaged/mobile/other-transport qualification.
 

@@ -1,0 +1,81 @@
+{
+  "verifiedAt": "2026-09-30T18:47:24.901913+00:00",
+  "scope": "Read-only status and exact published metadata check; no new listening, browser, device or offline qualification.",
+  "gameSource": "09a43d83351af276f184293ed3c72261575ed8bc",
+  "archiveSource": "9cc5274ad0675d1411a12c16bb83ede3546889e3",
+  "release": {
+    "format": "revealline-main-deployment.v1",
+    "channel": "main",
+    "sourceRevision": "09a43d83351af276f184293ed3c72261575ed8bc",
+    "sourceCommittedAt": "2026-09-30T20:34:25+02:00",
+    "buildVersion": "main-09a43d83351a",
+    "play": "game/",
+    "releases": "https://github.com/mekhovov/revealline/releases"
+  },
+  "observations": {
+    "gameRelease": {
+      "url": "https://mekhovov.github.io/revealline/release.json",
+      "httpStatus": 200,
+      "bytes": 308,
+      "sha256": "9860bf0a5fed10f5bdd93d05668e3a89cf647cb7ea0ab677050fd6998f67412a"
+    },
+    "gameCatalogue": {
+      "url": "https://mekhovov.github.io/revealline/game/content/soundtrack-catalogue.json",
+      "httpStatus": 200,
+      "bytes": 139446,
+      "sha256": "d785175d3bbf1979715745eeb2d80210a095c84173a55de1b30f079701c53794",
+      "matchesAcceptedSource": true
+    },
+    "gameCatalogueModule": {
+      "url": "https://mekhovov.github.io/revealline/game/content/soundtrack-catalogue.mjs",
+      "httpStatus": 200,
+      "bytes": 148255,
+      "sha256": "5fa28b6718f0b1963a4b45ca7cb476b077d617a4e891297516538d9e91c3bcb6",
+      "matchesAcceptedSource": true
+    },
+    "archiveCatalogue": {
+      "url": "https://mekhovov.github.io/revealline-soundtracks/catalogue.json",
+      "httpStatus": 200,
+      "bytes": 561012,
+      "sha256": "c746c7da0940684186f5c3277396b47c5c14868f865b4e4656fa432177cf2019",
+      "matchesAcceptedSource": true
+    },
+    "archiveManifest": {
+      "url": "https://mekhovov.github.io/revealline-soundtracks/deployment-manifest.json",
+      "httpStatus": 200,
+      "bytes": 50310,
+      "sha256": "4af676141f188273710d1451921635577e01e4efc44d95e77d1133219769db9c",
+      "matchesAcceptedSource": true
+    },
+    "externalInventory": {
+      "url": "https://mekhovov.github.io/revealline-soundtracks/external-deliveries.json",
+      "httpStatus": 200,
+      "bytes": 78,
+      "sha256": "1b5f88f924218eb92e05d3dd51adc2dde4917aeebea6ef5c421bc78cd3ad8220",
+      "matchesAcceptedSource": true
+    }
+  },
+  "counts": {
+    "trustedGameRecordings": 77,
+    "archiveRecordings": 261,
+    "publicRecordings": 196,
+    "reviewOnlyRecordings": 65,
+    "externalRecordings": 0,
+    "pagesManifestFiles": 245,
+    "pagesManifestAudioFiles": 203
+  },
+  "capacity": {
+    "pagesPayloadBytes": 924661311,
+    "pagesGuardBytes": 996147200,
+    "pagesRemainingBytes": 71485889,
+    "archiveTrackLimit": 512,
+    "paginationPlanningThreshold": 450
+  },
+  "evidence": {
+    "gamePages": "https://github.com/mekhovov/revealline/actions/runs/36759567741",
+    "archivePages": "https://github.com/mekhovov/revealline-soundtracks/actions/runs/36750444819",
+    "pendingMetalPreparationPR": "https://github.com/mekhovov/revealline/pull/864",
+    "pendingMetalPreparationMerge": "144cbdd8a7143c8b8ece1c878f01a1a0c56bec2d",
+    "sharedDeferredVerification": "https://github.com/mekhovov/revealline/issues/813"
+  }
+}
