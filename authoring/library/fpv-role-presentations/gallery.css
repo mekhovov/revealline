@@ -76,6 +76,8 @@ canvas {
   outline-offset: 2px;
 }
 small {
+  display: block;
+  margin: 6px 0;
   color: #c1d1df;
   overflow-wrap: anywhere;
 }
