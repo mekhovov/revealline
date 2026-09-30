@@ -63,11 +63,27 @@ refused conflict markers, and a stage-2 restoration initially hit a buffer limit
 Both tooling failures preceded a successful complete build. No raw source was
 discarded, and the generated content registry remains unchanged.
 
-Finish source/host/CSS and recipe-input review, authenticate current hosted
-source/admission/capacity gates, and merge normally. The Team
-recipe declares coop-view and coop-actor-layout as inputs; their source changes
-must remain explicit. No producer/compiler or blind fingerprint refresh was
-performed; accepted production/compiled assets are unchanged.
+The scoped source/host/CSS review is complete: finite cue packing preserves
+current contact geometry; overflow reading pauses the same attempt, uses a
+generation guard and presents current state without mutating gameplay. Native
+Pause/Results keep the journey-switch action reachable. Responsive changes are
+Team-scoped and retain the newer Solo/native fullscreen rules. This is a source
+review, not browser or physical-device acceptance.
+
+All 34 declared Team recipe inputs were independently hashed against accepted
+main. Only coop-view and coop-actor-layout differ. Their ordered source
+fingerprint changes from
+`6bd54a896ea1688793cd5582c8ac2ca2111fcc7f8109b38a346f30cb8779d3ca` to
+`1d906a6cf6bc5e7ae7fab7fb9f8c5ef194675566b4748f1800a0a0f289181808`.
+This reopens producer/equipment provenance qualification; it is not a refreshed
+approval. Accepted production, compiled assets, producer and historical review
+records are unchanged. No producer/compiler or blind fingerprint refresh was
+performed. Source-level testing deployment and reproducible release provenance
+remain distinct, as in the existing deferred follow-up work.
+
+Changed JavaScript passed ESLint after the current-main reconciliation. Fresh
+hosted source/admission/capacity gates remain required before normal merge;
+the prior main payload had only 172340 bytes before deployment metadata.
 
 No aggregate local before/after execution identity pair, browser pixels,
 physical controller, listening, complete donor approval or full-suite pass is
