@@ -540,3 +540,58 @@ test('queued close from an older view cannot clear a newly opened decoded source
   assert.equal(h.blobs.size, 1);
   assert.equal(h.doc.activeElement, h.$('reveal-source-close'));
 });
+
+test('first source open and another source immediately own their visible and accessible titles', async (t) => {
+  const h = fixture(t);
+  h.open();
+  assert.equal(h.$('reveal-source-title').textContent, 'Recorded audit');
+  assert.equal(
+    h.$('reveal-read-source').getAttribute('aria-label'),
+    'Read and scroll: Recorded audit',
+  );
+  h.viewer.close();
+  h.open('image');
+  assert.equal(h.$('reveal-source-title').textContent, 'Recorded picture');
+  assert.equal(
+    h.$('reveal-read-source').getAttribute('aria-label'),
+    'Read and scroll: Recorded picture',
+  );
+  await settle();
+  assert.equal(h.doc.activeElement, h.$('reveal-source-close'));
+});
+
+test('live source-title producers update EN/UK names without replacing text or reader ownership', async (t) => {
+  const list = sources.map((source) => ({
+    ...source,
+    title: () => (getLocale() === 'uk' ? `Джерело ${source.id}` : `Source ${source.id}`),
+  }));
+  const h = fixture(t, { list });
+  h.open();
+  const deadline = Date.now() + 5000;
+  while (h.$('reveal-source-dialog').dataset.state === 'loading') {
+    assert.ok(Date.now() < deadline, 'The source should finish its bounded test load');
+    await settle();
+  }
+  h.$('reveal-read-source').focus();
+  h.key('Enter');
+  const region = h.$('reveal-source-region'),
+    pre = region.querySelector('pre');
+  for (const locale of ['uk', 'en']) {
+    setLocale(locale, { persist: false });
+    h.tick();
+    const title = list[0].title();
+    assert.equal(h.$('reveal-source-title').textContent, title);
+    assert.ok(h.$('reveal-read-source').getAttribute('aria-label').endsWith(`: ${title}`));
+    assert.equal(h.host.navigation.readingState()?.label, title);
+    assert.equal(h.host.navigation.readingState()?.regionId, region.id);
+    assert.equal(h.doc.activeElement, region);
+    assert.equal(region.querySelector('pre'), pre);
+    assert.equal(pre.textContent, text);
+  }
+  h.key('Escape');
+  h.key('Escape');
+  setLocale('uk', { persist: false });
+  h.open('image');
+  assert.equal(h.$('reveal-source-title').textContent, 'Джерело image');
+  assert.ok(h.$('reveal-read-source').getAttribute('aria-label').endsWith(': Джерело image'));
+});

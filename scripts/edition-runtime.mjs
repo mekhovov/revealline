@@ -61,7 +61,7 @@ function sceneAssets(scene) {
 
 export function editionMenuSceneResources(editionIds) {
   const scenes = [
-    MENU_SCENES.fpv,
+    ...(editionIds.length === 1 ? [] : [MENU_SCENES.fpv]),
     ...editionIds.map((editionId) => resolveMenuScene({ editionId })),
   ];
   return [...new Set(scenes.flatMap(sceneAssets)), 'game/ui/art/menu-scenes/provenance.json'];
@@ -79,8 +79,9 @@ export function projectEditionMenuResourcePaths(paths, editionIds) {
   );
 }
 
-// Project only the public profile lookup. Preserve original scene data and
-// resolver code, including timing, fallback behavior and source provenance.
+// A standalone edition uses its own unchanged scene for fallback too. The
+// shared/default and multi-edition builds retain the neutral FPV fallback.
+// Preserve original scene data, animation timing and source provenance.
 export function projectEditionMenuScenes(bytes, editionIds) {
   const source = new TextDecoder('utf-8', { fatal: true }).decode(bytes);
   const tree = parse(source, { ecmaVersion: 'latest', sourceType: 'module' });
@@ -90,15 +91,15 @@ export function projectEditionMenuScenes(bytes, editionIds) {
   if (!declaration?.init) throw new Error('Menu scene catalog lacks its explicit profile lookup.');
   if (!compositions?.init)
     throw new Error('Menu scene catalog lacks its explicit composition lookup.');
-  const ids = [
-    ...new Set(['fpv', ...editionIds.map((editionId) => resolveMenuScene({ editionId }).id)]),
-  ];
+  const selectedIds = editionIds.map((editionId) => resolveMenuScene({ editionId }).id);
+  const fallbackId = editionIds.length === 1 ? selectedIds[0] : 'fpv';
+  const ids = [...new Set([fallbackId, ...selectedIds])];
   const { start, end } = declaration.init;
   const edits = [
     {
       start,
       end,
-      text: `Object.freeze(Object.fromEntries(Object.entries(${source.slice(start, end)}).filter(([id]) => ${JSON.stringify(ids)}.includes(id))))`,
+      text: `((scenes) => Object.freeze({...Object.fromEntries(Object.entries(scenes).filter(([id]) => ${JSON.stringify(ids)}.includes(id))), fpv: scenes[${JSON.stringify(fallbackId)}]}))(${source.slice(start, end)})`,
     },
     { start: compositions.init.start, end: compositions.init.end, text: 'Object.freeze({})' },
   ];

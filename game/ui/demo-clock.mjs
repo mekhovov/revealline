@@ -1,6 +1,7 @@
 const MAX_DEBT_SECONDS = 2;
 const MAX_SLICE_SECONDS = 0.25;
 const MAX_BURST_SLICES = 8;
+const FRAME_DEADLINE_MS = 250;
 const advancing = (phase) => phase === 'playing' || phase === 'complete';
 
 /**
@@ -36,10 +37,15 @@ export function attachDemoClock({
     burstSlices = 0,
     channel = null;
 
+  function cancelTicket(ticket) {
+    if (ticket?.kind === 'frame') {
+      cancelFrame?.(ticket.handle);
+      clearTimer(ticket.watchdog);
+    } else if (ticket?.kind === 'timer') clearTimer(ticket.handle);
+  }
   function cancel() {
     generation++;
-    if (scheduled?.kind === 'frame') cancelFrame?.(scheduled.handle);
-    else if (scheduled?.kind === 'timer') clearTimer(scheduled.handle);
+    cancelTicket(scheduled);
     scheduled = null;
   }
   function rebase() {
@@ -62,14 +68,19 @@ export function attachDemoClock({
     } else if (!catchUp && !doc?.hidden && requestFrame) {
       ticket.kind = 'frame';
       ticket.handle = requestFrame(() => wake(ticket));
+      // A visible, unfocused document can stop receiving RAF without becoming
+      // hidden. Race one bounded fallback against this same wake, not a second
+      // clock: whichever callback arrives first retires both handles.
+      ticket.watchdog = setTimer(() => wake(ticket, true), FRAME_DEADLINE_MS);
     } else {
       ticket.kind = 'timer';
       ticket.handle = setTimer(() => wake(ticket), catchUp ? 0 : doc?.hidden ? 50 : 16);
     }
   }
-  function wake(ticket) {
+  function wake(ticket, recovered = false) {
     if (disposed || !running || frozen || scheduled !== ticket || generation !== ticket.generation)
       return;
+    cancelTicket(ticket);
     scheduled = null;
     const sampled = now();
     const stamp = Number.isFinite(sampled)
@@ -98,7 +109,8 @@ export function attachDemoClock({
     const seconds = Math.min(MAX_SLICE_SECONDS, debt, budget);
     let advanced = false;
     if (advancing(state.phase) && seconds > 0) {
-      const fresh = !ticket.catchUp && elapsed <= MAX_SLICE_SECONDS && debt <= MAX_SLICE_SECONDS;
+      const fresh =
+        !recovered && !ticket.catchUp && elapsed <= MAX_SLICE_SECONDS && debt <= MAX_SLICE_SECONDS;
       debt = Math.max(0, debt - seconds);
       burstSlices++;
       advance(seconds, { fresh });
