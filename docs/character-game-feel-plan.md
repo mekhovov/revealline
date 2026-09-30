@@ -4,13 +4,16 @@ Approved priority updated 29 September 2026: **A → B → C → remaining work*
 A is current characters and reliable play; B is optional encounter variety; C is
 one finished Ukrainian/FPV artwork cohort. Required authoring/verification travels
 with each feature; additional editions and broad tools follow. C2's formal human
-benchmark remains last. See the [current register](plan-status-2026-09-29.md) for
+benchmark remains last. See the [current register](plan-status-2026-09-30.md) for
 completed work, exact source status, blockers and remaining effort ranges.
 
 ## Latest instruction: defer production review
 
 The user deferred production review on 29 September. Continue A/B/C source
-implementation in parallel, keeping focused correctness and integrity checks.
+implementation in parallel, keeping required correctness and integrity checks.
+The [30 September temporary test policy](focused-test-waiver-20260930.md) governs
+suite execution; waived checks are not passes and do not waive runtime/build
+defects, exact source identity, capacity or asset integrity.
 Production/cultural/device/human approval remains deferred rather than passed;
 no candidate is silently adopted. The immediate batch adds dense Team cue
 reading, current-mission encounter lessons and retained-parent artwork comparison.
@@ -29,13 +32,20 @@ focused results and remaining scope.
 
 ## Batch policy and current delivery state
 
-Keep compatible work in draft [PR761](https://github.com/mekhovov/revealline/pull/761)
-with bounded commits and feature evidence. The canonical publisher owns main
-reconciliation, version allocation, immutable publication and public acceptance.
-Independent source work can continue while it qualifies; do not delay a verified
-release subset for unrelated unfinished production. PR761 is a **v0.150.0 scheduled
-input**, not delivered work; its source version is unbumped and production
-admission remains pending. Preserve every historical record and original.
+Actor [PR761](https://github.com/mekhovov/revealline/pull/761) merged at
+`d896b5a6da81c4ac0445e1afc2a4cfde76803436` and is included in the observed
+30 September main (refreshed through `451b82dc13dc8a8545ff964ffb724d3d756ac62a`). Its old local
+`478a2b23dc7998afa35464c10b59eb0d10ce54e5` is already an ancestor of main;
+do not replay it or force-push it over the newer remote actor branch.
+Use a fresh bounded successor for genuinely missing behavior. The canonical
+publisher owns integration, version allocation, immutable publication and public
+acceptance. Independent development continues while that lane qualifies.
+Merged source does not establish production-art or public acceptance. Preserve
+every historical record and original.
+
+The paragraphs below preserve earlier source/queue observations. The current
+register controls scheduling; old main tips and conflict warnings are not current
+instructions to rebase or republish those historical branches.
 
 Pre-batch PR761 head is `626cafc7d252375a8cc928e094aff74bb0c5456a`, adding
 32 focused Effects20 reader checks to the retained batch15 evidence. Latest main

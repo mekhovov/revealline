@@ -133,11 +133,15 @@ async function readyRetry(t, policy = 'immediate') {
     await settle(() => waiting);
     ticks(p, 30);
     retained();
-    assert.equal(p.$('retry-button').disabled, true);
-    assert.equal(p.$('flight-preparation-cancel').hidden, false);
-    assert.equal(p.doc.activeElement.id, 'flight-preparation-cancel');
+    assert.equal(p.$('retry-button').disabled, false);
+    assert.equal(p.$('retry-button').getAttribute('aria-disabled'), 'true');
+    assert.equal(p.$('flight-preparation-cancel').hidden, true);
+    assert.equal(p.doc.activeElement.id, 'retry-button');
     assert.equal(p.$('flight-preparation-status').dataset.state, 'busy');
-    assert.match(p.$('flight-preparation-status').textContent, new RegExp(campaign.levels[0].name));
+    assert.match(
+      p.$('flight-preparation-status').textContent,
+      /Opening this flight’s original picture…/,
+    );
     return gate;
   };
   return { p, before, retained, begin, diagnostics, gate: await begin() };

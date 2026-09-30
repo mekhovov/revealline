@@ -63,10 +63,16 @@ function harness({ hidden = false, frames = true, messages = true, advance, stat
     elapse(ms) {
       time += ms;
     },
-    wake(ms = 16) {
+    wake(ms = 16, kind) {
       time += ms;
-      assert.equal(tasks.size, 1, 'Exactly one ordinary wake owns the clock.');
-      const [id, task] = tasks.entries().next().value;
+      assert.ok(tasks.size >= 1 && tasks.size <= 2, 'Only one ordinary wake owns the clock.');
+      assert.ok([...tasks.values()].filter((task) => task.kind === 'frame').length <= 1);
+      assert.ok([...tasks.values()].filter((task) => task.kind === 'timer').length <= 1);
+      const selected = kind
+        ? [...tasks].find(([, task]) => task.kind === kind)
+        : tasks.entries().next().value;
+      assert.ok(selected, `A pending ${kind ?? 'ordinary'} wake is required.`);
+      const [id, task] = selected;
       tasks.delete(id);
       task.fn();
       return task;
@@ -87,6 +93,7 @@ test('visible spectator clock ignores focus, keeps one owner and emits fresh ord
   h.clock.start();
   h.clock.start();
   assert.equal(h.tasks.values().next().value.kind, 'frame');
+  assert.equal(h.tasks.size, 2, 'The same visible wake also owns a bounded timer fallback.');
   h.wake(16);
   assert.deepEqual(h.advances, [{ seconds: 0.016, fresh: true }]);
   assert.equal(h.paints.length, 1);
@@ -94,6 +101,110 @@ test('visible spectator clock ignores focus, keeps one owner and emits fresh ord
   h.clock.destroy();
   assert.equal(h.tasks.size, 0);
 });
+
+test('withheld visible RAF cannot stop spectator simulation, recap rotation, audio or painting', () => {
+  let simulation = 0,
+    sceneTime = 0,
+    scenes = 0;
+  const h = harness({
+    advance: (seconds, _meta, state) => {
+      simulation += seconds;
+      sceneTime += seconds;
+      if (state.phase === 'playing' && sceneTime >= 2) {
+        sceneTime = 0;
+        state.phase = 'complete';
+      } else if (state.phase === 'complete' && sceneTime >= 0.5) {
+        sceneTime = 0;
+        scenes++;
+        state.phase = 'playing';
+      }
+    },
+  });
+  h.clock.start();
+  const staleFrame = [...h.tasks.values()].find((task) => task.kind === 'frame').fn;
+  assert.equal(h.doc.hidden, false);
+  assert.equal(h.doc.hasFocus(), false);
+  // Deliver timers alone for longer than the historical apparent stall. This
+  // reproduces the scheduling boundary, not its unproven physical cause.
+  for (let elapsed = 0; elapsed < 160000; elapsed += 250) h.wake(250, 'timer');
+  assert.equal(simulation, 160);
+  assert.equal(scenes, 64);
+  assert.equal(h.audio, 640);
+  assert.equal(h.paints.length, 640);
+  assert.ok(h.advances.every(({ seconds, fresh }) => seconds === 0.25 && !fresh));
+  staleFrame();
+  assert.equal(h.advances.length, 640, 'A delayed RAF cannot replay the admitted elapsed time.');
+  h.wake(16, 'frame');
+  assert.deepEqual(h.advances.at(-1), { seconds: 0.016, fresh: true });
+  h.clock.destroy();
+  assert.equal(h.tasks.size, 0);
+});
+
+for (const winner of ['frame', 'timer']) {
+  test(`${winner} wins the visible wake once and retires its queued sibling`, () => {
+    const h = harness();
+    h.clock.start();
+    const stale = [...h.tasks.values()].find((task) => task.kind !== winner).fn;
+    h.wake(winner === 'frame' ? 16 : 250, winner);
+    const before = { advances: h.advances.length, paints: h.paints.length, audio: h.audio };
+    stale();
+    assert.deepEqual(
+      { advances: h.advances.length, paints: h.paints.length, audio: h.audio },
+      before,
+    );
+    assert.equal(h.tasks.size, 2, 'Only the next visible wake remains.');
+    h.clock.destroy();
+    assert.equal(h.tasks.size, 0);
+  });
+}
+
+test('visible timer recovery preserves explicit pause and pumps audio without stale effects', () => {
+  const h = harness();
+  h.clock.start();
+  h.wake(250, 'timer');
+  assert.equal(h.advances[0].fresh, false, 'Recovery cannot trigger a burst of old game effects.');
+  h.playback.phase = 'paused';
+  h.clock.reset();
+  for (let wake = 0; wake < 4; wake++) h.wake(1000, 'timer');
+  assert.equal(h.advances.length, 1);
+  assert.equal(h.audio, 5);
+  assert.equal(h.paints.length, 5);
+  h.playback.phase = 'playing';
+  h.clock.reset();
+  h.wake(16, 'frame');
+  assert.deepEqual(h.advances.at(-1), { seconds: 0.016, fresh: true });
+  h.clock.destroy();
+  assert.equal(h.tasks.size, 0);
+});
+
+for (const boundary of ['reset', 'visibilitychange', 'freeze', 'stop', 'destroy']) {
+  test(`${boundary} invalidates both pending visible callbacks`, () => {
+    const h = harness();
+    h.clock.start();
+    const stale = [...h.tasks.values()].map((task) => task.fn);
+    h.elapse(60000);
+    if (boundary === 'visibilitychange') {
+      h.doc.hidden = true;
+      h.doc.dispatchEvent(new Event(boundary));
+    } else h.clock[boundary]();
+    for (const callback of stale) callback();
+    assert.equal(h.advances.length, 0);
+    assert.equal(h.audio, 0);
+    assert.equal(h.paints.length, 0);
+    assert.equal(h.tasks.size, boundary === 'reset' ? 2 : boundary === 'visibilitychange' ? 1 : 0);
+    if (boundary === 'visibilitychange') {
+      h.wake(50);
+      assert.equal(h.paints.length, 0, 'The fallback cannot paint after the page becomes hidden.');
+      assert.deepEqual(h.advances, [{ seconds: 0.05, fresh: true }]);
+    } else if (boundary === 'freeze') {
+      h.clock.resume();
+      h.wake(16, 'frame');
+      assert.deepEqual(h.advances, [{ seconds: 0.016, fresh: true }]);
+    }
+    h.clock.destroy();
+    assert.equal(h.tasks.size, 0);
+  });
+}
 
 for (const delay of [1000, 60000]) {
   test(`${delay}ms hidden delay admits at most two seconds with one quarter-second per task`, () => {

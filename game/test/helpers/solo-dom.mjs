@@ -175,6 +175,7 @@ export async function soloPage(
     parentWindow,
     pictures,
     waitForPictures = true,
+    animationFrames = false,
     initialReadyTimeoutMs = 5000,
     browserSetup,
     readPads = () => [],
@@ -378,6 +379,11 @@ export async function soloPage(
       },
     },
   };
+  if (animationFrames) {
+    win.performance = { now: () => now };
+    win.requestAnimationFrame = globals.requestAnimationFrame;
+    win.cancelAnimationFrame = globals.cancelAnimationFrame;
+  }
   // Presentation bytes, manifests and header/hash validation remain real. Only
   // browser codecs are modeled, as they are unavailable in the Node DOM host.
   if (typeof globalThis.createImageBitmap !== 'function')
@@ -516,9 +522,15 @@ export async function soloPage(
     () => !!doc.body.dataset.editionId || $('builtin-packs').children.length > 0,
     'Bundled pack index must finish loading.',
   );
-  function frame(ms = 1000 / 120) {
+  function frame(ms = 1000 / 120, { dispatchAnimationFrames = true } = {}) {
     now += ms;
     scene.update(now, ms);
+    if (animationFrames && dispatchAnimationFrames && !doc.hidden) {
+      for (const [id, callback] of [...frames]) {
+        if (!frames.delete(id)) continue;
+        callback(now);
+      }
+    }
   }
   if (waitForPictures)
     await initialReady(
