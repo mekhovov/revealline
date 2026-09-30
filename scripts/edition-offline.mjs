@@ -135,6 +135,16 @@ export async function buildEditionOfflineFiles({
     if (result.has(path)) throw new Error(`Generated offline path already exists: ${path}`);
     result.set(path, bytes);
   };
+  // These remain available from the root hosted site. Company-edition ZIPs do
+  // not duplicate optional practice or Demo-only bodies that are not required
+  // for edition boot, persistence, or the core offline experience.
+  for (const path of [...result.keys()])
+    if (
+      path.startsWith('optional-practice/') ||
+      (path.startsWith('game/demo-data/') && path.endsWith('.replay.json')) ||
+      path === 'game/ui/art/menu-scenes/droneaid-main-background.webp'
+    )
+      result.delete(path);
   const icons = selectedIcons.map((path, index) => {
     const extension = path.split('.').at(-1).toLowerCase();
     const type = {

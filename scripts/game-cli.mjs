@@ -616,6 +616,11 @@ export async function addOfflineEntries(
   const excluded = new Set([
     ...optional,
     ...excludedBodyPaths,
+    // Optional practice remains hosted and directly testable, but it is a
+    // separately loaded experience rather than part of the mandatory game boot.
+    ...entries
+      .filter((entry) => entry.name.startsWith('optional-practice/'))
+      .map((entry) => entry.name),
     // Demo recordings and the large landing photograph remain published for
     // online playback, but they are optional bodies rather than core offline boot.
     // Excluding only their bodies preserves URLs, provenance and on-demand tests
