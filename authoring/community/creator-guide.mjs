@@ -2,11 +2,14 @@ import { mountAuthoringReference } from '../../game/ui/authoring-reference.mjs';
 import { authoringLabel, authoringText } from '../../game/ui/authoring-copy.mjs';
 import { localizedAttribute, localizedText, t } from '../../game/i18n/index.mjs';
 import { setMenuIcon } from '../../game/ui/native-menu-icons.mjs';
+import { CREATOR_GUIDE_DOCUMENTS } from './creator-guide-documents.mjs';
+import { mountCreatorGuideDocumentViewer } from './creator-guide-document-viewer.mjs';
 
 const owners = new WeakMap();
 
 /** The guide adds section destinations to the existing reference/input owner.
- * Links, downloads and the whole-page reader keep their existing contracts. */
+ * Document links stay inside the guide; downloads and the whole-page reader
+ * retain their existing contracts. */
 export function mountCreatorGuide({
   document: doc = globalThis.document,
   window: win = doc.defaultView,
@@ -14,6 +17,30 @@ export function mountCreatorGuide({
   if (owners.has(doc)) return owners.get(doc);
   const host = mountAuthoringReference({ document: doc, window: win });
   const cleanups = [];
+  const viewer = mountCreatorGuideDocumentViewer({
+    document: doc,
+    window: win,
+    navigation: host.navigation,
+    sources: CREATOR_GUIDE_DOCUMENTS,
+  });
+  for (const source of CREATOR_GUIDE_DOCUMENTS) {
+    const href = source.path.slice('authoring/community/'.length);
+    for (const link of doc.querySelectorAll(`main a[href="${href}"]`)) {
+      const originalId = link.id;
+      link.id = `creator-guide-document-${source.id}`;
+      const open = (event) => {
+        if (event.ctrlKey || event.metaKey || event.shiftKey || event.altKey) return;
+        event.preventDefault();
+        viewer.open(source.id, link);
+      };
+      link.addEventListener('click', open);
+      cleanups.push(() => {
+        link.removeEventListener('click', open);
+        link.id = originalId;
+      });
+    }
+  }
+  cleanups.push(() => viewer.destroy());
   for (const heading of doc.querySelectorAll('main h2[data-authoring-target]')) {
     const id = heading.id,
       entry = doc.getElementById(`creator-guide-read-${id}`),
