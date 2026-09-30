@@ -216,3 +216,67 @@ test('blur during pending watch source loading preserves adoption and continuous
     globalThis.fetch = previousFetch;
   }
 });
+
+test('withheld visible RAF recovers real replay completion and rotation while preserving explicit pause and the ordinary save', async (t) => {
+  const page = await demoPage(t),
+    ordinary = page.rendered.run,
+    original = authoritativeCheckpoint(ordinary),
+    saves = stored(page),
+    originalFetch = globalThis.fetch;
+  let recordingReads = 0;
+  globalThis.fetch = async (url, options) => {
+    if (url?.pathname?.endsWith('/demo-data/first-signal-left.replay.json')) recordingReads++;
+    return originalFetch(url, options);
+  };
+  try {
+    await page.open();
+    const watched = page.demoFrame.run;
+    focused(page, false);
+    assert.equal(page.doc.hidden, false);
+    page.$('demo-watch-pause').click();
+    const paused = authoritativeCheckpoint(watched);
+    page.frame(60000, { dispatchAnimationFrames: false });
+    await delay(300);
+    assert.deepEqual(authoritativeCheckpoint(watched), paused);
+    assert.equal(page.demoFrame.options.paused, true);
+    page.$('demo-watch-pause').click();
+
+    // Model a visible/unfocused browser that runs timers but withholds every
+    // requested animation frame. The production clock owns all replay ticks.
+    for (let wakes = 0; recordingReads < 2; wakes++) {
+      assert.ok(wakes < 30, 'The real replay and four-second recap must rotate.');
+      page.frame(2000, { dispatchAnimationFrames: false });
+      await delay(300);
+    }
+    assert.equal(watched.status, 'won');
+    const recording = JSON.parse(
+      await readFile(new URL('../demo-data/first-signal-left.replay.json', import.meta.url)),
+    );
+    const reference = await prepareReplayPlayer(recording);
+    try {
+      reference.play();
+      while (reference.state.status === 'running') reference.advance(0.25);
+      assert.deepEqual(authoritativeCheckpoint(watched), authoritativeCheckpoint(reference.state));
+    } finally {
+      reference.dispose();
+    }
+    await settle(() => !page.$('demo-fresh').disabled);
+    page.frame(250, { dispatchAnimationFrames: false });
+    await delay(300);
+    assert.notEqual(page.demoFrame.run, watched);
+    assert.ok(page.demoFrame.run.tick > 0, 'The next replay also advances without a RAF.');
+    assert.deepEqual(authoritativeCheckpoint(ordinary), original);
+    assert.deepEqual(stored(page), saves);
+    assert.deepEqual(page.errors, []);
+
+    const retired = page.demoFrame.run,
+      retiredCheckpoint = authoritativeCheckpoint(retired);
+    page.$('demo-back').click();
+    page.frame(1000, { dispatchAnimationFrames: false });
+    await delay(300);
+    assert.deepEqual(authoritativeCheckpoint(retired), retiredCheckpoint);
+    assert.deepEqual(authoritativeCheckpoint(ordinary), original);
+  } finally {
+    globalThis.fetch = originalFetch;
+  }
+});
