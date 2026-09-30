@@ -100,19 +100,26 @@ export async function publishOfflineLauncher(source, output, version) {
   if (update !== undefined) {
     // A historical missing updater is allowed. Once supplied, its bridge is
     // required: do not publish a new update control whose destination is absent.
-    const bridge = await fs.readFile(path.join(source, 'game-update.html'));
-    if (!update.includes('<base href="../game/" />') || Buffer.byteLength(update) > FILE_LIMIT)
-      throw new Error('Frozen updater has an invalid candidate base or file budget.');
-    if (bridge.length > FILE_LIMIT)
-      throw new Error('Frozen update bridge exceeded its file budget.');
-    await fs.writeFile(
-      path.join(output, 'app/update.html'),
-      update.replace(
-        '<base href="../game/" />',
-        `<base href="../releases/${version}/site/game/" />`,
-      ),
-    );
-    await fs.writeFile(path.join(output, 'game-update.html'), bridge);
+    const marker = /(<meta name="revealline-update" content=')([^']+)(' \/>)/;
+    if (!marker.test(update) || /<base\b/i.test(update) || Buffer.byteLength(update) > FILE_LIMIT)
+      throw new Error('Frozen updater has an invalid candidate marker or file budget.');
+    const publishedUpdate = update
+      .replace(/\b(href|src)=(["'])\.\.\/game\//g, `$1=$2../releases/${version}/site/game/`)
+      .replace(marker, (_match, before, value, after) => {
+        const context = JSON.parse(value);
+        if (context.format !== 'revealline-app-update.v1' || context.scope !== '../')
+          throw new Error('Frozen updater candidate differs from its own edition.');
+        return (
+          before + JSON.stringify({ ...context, scope: `../releases/${version}/site/` }) + after
+        );
+      });
+    await fs.writeFile(path.join(output, 'app/update.html'), publishedUpdate);
+    for (const file of ['app/update.mjs', 'game-update.html', 'game-update.mjs']) {
+      const bytes = await fs.readFile(path.join(source, file));
+      if (bytes.length > FILE_LIMIT)
+        throw new Error('Frozen update dependency exceeded its file budget: ' + file);
+      await fs.writeFile(path.join(output, file), bytes);
+    }
   }
   let sourceRevision;
   try {
