@@ -144,6 +144,7 @@ async function teamPage(t, store, { systemReduced = false } = {}) {
     media,
     geometry: () => calls.map(({ method, args }) => ({ method, args })),
     fonts: () => calls.filter((c) => c.method === 'fillText').map((c) => c.font),
+    labels: () => calls.filter((call) => call.method === 'fillText'),
   };
 }
 
@@ -227,16 +228,33 @@ test('Solo to Team to Versus and back restores one display record without Couch 
     page.$('coop-pause').click();
     page.tick();
     const geometry = page.geometry(),
+      labels = page.labels(),
       clock = page.$('coop-clock').textContent;
     page.$('coop-settings-open').click();
     page.$('coop-settings-tab-accessibility').click();
     page.$('coop-settings-tab-accessibility').focus();
     for (const id of ['coop-text-face', 'coop-text-size', 'coop-reduced']) reaches(page, id);
     change(page, 'coop-text-face', 'pixel');
-    change(page, 'coop-text-size', 'standard');
     page.tick(120);
     assert.deepEqual(page.geometry(), geometry);
     assert.ok(page.fonts().some((font) => font.includes(page.artwork.snapshot.fonts.numeric)));
+    change(page, 'coop-text-size', 'standard');
+    page.tick(120);
+    assert.notDeepEqual(page.geometry(), geometry, 'Large changes canvas label geometry');
+    const images = (commands) => commands.filter((command) => command.method === 'drawImage');
+    assert.deepEqual(
+      images(page.geometry()),
+      images(geometry),
+      'The accepted picture and actor frames stay exact',
+    );
+    for (const id of ['1', '2']) {
+      const size = (values) =>
+        Number(values.find((call) => call.args[0] === id).font.match(/([\d.]+)px/)[1]);
+      assert.ok(
+        Math.abs(size(labels) - size(page.labels()) * (4 / 3)) < 1e-9,
+        'The real host forwards Large to player numerals',
+      );
+    }
     assert.equal(page.$('coop-clock').textContent, clock);
     assert.equal(page.$('coop-overlay-title').textContent, 'Both players paused');
     assert.equal(store.getItem(profileKey), profile);
