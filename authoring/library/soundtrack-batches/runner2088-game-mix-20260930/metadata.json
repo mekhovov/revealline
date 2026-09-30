@@ -1,0 +1,84 @@
+{
+  "format": "revealline-soundtrack-batch-metadata.v1",
+  "id": "runner2088-game-mix-20260930",
+  "catalogue": {
+    "format": "revealline-soundtrack-catalogue.v2",
+    "edition": "originals-1",
+    "tracks": [
+      {
+        "format": "revealline-audio-track.v1",
+        "id": "builtin.catalog.wekont.runner2088-game-mix",
+        "kind": "mp3",
+        "title": "runner2088 (Game mix)",
+        "artist": "wekont",
+        "asset": {
+          "sha256": "528e7ebe15c91bc686ab9cdfadb4085ebd64b907f795282f7f9c817a46c672ba",
+          "bytes": 3887378,
+          "mime": "audio/mpeg",
+          "mpegVersion": "1",
+          "sampleRate": 44100,
+          "channels": 2,
+          "frames": 3720,
+          "durationSeconds": 97.17551020408163
+        },
+        "rights": {
+          "kind": "licensed",
+          "credit": "runner2088 by wekont. CC BY 4.0: https://creativecommons.org/licenses/by/4.0/. Source: https://freemusicarchive.org/music/wekont/single/runner2088mp3/. Game mix: -1.6 dB gain and 320 kb/s MP3 re-encode; original preserved.",
+          "license": "CC BY 4.0 International",
+          "source": "https://freemusicarchive.org/music/wekont/single/runner2088mp3/"
+        },
+        "edition": "originals-1",
+        "path": "objects/528e7ebe15c91bc686ab9cdfadb4085ebd64b907f795282f7f9c817a46c672ba.mp3",
+        "tags": {
+          "genres": ["synth90s"],
+          "role": "gameplay",
+          "energy": 5,
+          "themes": ["racing", "arcade", "retro"]
+        },
+        "archiveId": "runner2088-game-mix-20260930",
+        "policy": {
+          "id": "builtin.catalog.wekont.runner2088-game-mix",
+          "sha256": "528e7ebe15c91bc686ab9cdfadb4085ebd64b907f795282f7f9c817a46c672ba",
+          "webPlayback": "allowed",
+          "offlineCache": "allowed",
+          "redistribute": "allowed",
+          "modify": "allowed",
+          "gameplayVideo": "unknown",
+          "contentId": "unknown"
+        },
+        "fileName": "runner2088-game-mix.mp3",
+        "websites": [
+          {
+            "label": "Creator source and recording license",
+            "url": "https://freemusicarchive.org/music/wekont/single/runner2088mp3/"
+          },
+          {
+            "label": "CC BY 4.0 International",
+            "url": "https://creativecommons.org/licenses/by/4.0/"
+          },
+          {
+            "label": "Technical derivative and preserved original",
+            "url": "https://github.com/mekhovov/revealline-soundtracks/pull/65"
+          }
+        ]
+      }
+    ]
+  },
+  "archive": {
+    "id": "runner2088-game-mix-20260930",
+    "baseURL": "https://mekhovov.github.io/revealline-soundtracks/",
+    "inventorySha256": "16e36e2316a0b9685bcae326f03c30191823a86064f3e94d9b3aab08129ee6e8",
+    "inventoryPath": "admissions/runner2088-game-mix-20260930.json"
+  },
+  "collections": [
+    {
+      "id": "builtin.album.runner2088-game-mix",
+      "title": "Synthwave — runner2088 Game mix",
+      "description": "Technical derivative of runner2088; trusted admission remains pending an exact derivative approval basis.",
+      "genre": "synth90s",
+      "trackIds": ["builtin.catalog.wekont.runner2088-game-mix"],
+      "order": "shuffle",
+      "repeat": "all"
+    }
+  ]
+}
