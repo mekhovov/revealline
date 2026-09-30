@@ -2005,7 +2005,7 @@ try {
             upgradeSoundtrackLibrary(snapshot.library),
             catalogue.tracks,
           );
-          soundtrackPlayer.setLibrary(soundtrackLibrary);
+          soundtrackPlayer.setLibrary(soundtrackLibrary, { publicStyles: snapshot.publicStyles });
           if (
             usesOpeningThemeDefault(soundtrackLibrary, {
               fresh: snapshot.generation === 0,
