@@ -2,7 +2,7 @@
 
 ## Scope, source and delivery
 
-This successor PR prepares regression coverage for four complete routes observed
+[PR860](https://github.com/mekhovov/revealline/pull/860) prepares regression coverage for four complete routes observed
 through bounded, in-memory authoring probes. Its source base is main
 `5e23fa8a62accf7a719cca5dd45c0702b52d37a5` on
 `codex/levels-preset-routes-20260930`, in the existing v0.150.0 release intake.
@@ -180,8 +180,8 @@ document neither renews acceptance of that release nor claims v0.150.0 is live.
 
 ## Remaining work
 
-1. Review and submit this successor PR with its explicit waiver status, preserving
-   the exact observations and old goldens through the existing publisher's train.
+1. Deliver the reviewed, pushed PR860 with its explicit waiver status through
+   the existing publisher's train. Hosted gates and immutable publication remain open.
 2. Complete bounded Expert Cooling/Switchback authoring or report unresolved
    cases. Do not treat a first return or safe unfinished route as a full clear.
 3. Fill missing full-route steering/seed combinations, especially Standard Grid
