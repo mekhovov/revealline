@@ -1,6 +1,16 @@
 # Native menus: plan status and release batches
 
-## September 30 checkpoint
+## September 30 — Countercurrent reference gallery
+
+Runtime `7080b238d` on `codex/countercurrent-gallery-input` adds four stable world destinations and thirteen owned, pinned source readers to the Countercurrent gallery. It is a separate follow-up to frozen Guide PR #827 at `55cf072b0`; the Guide branch has not been changed. **38/38 final viewer/gallery tests**, a separate **62/62 reference/domain/inventory cohort**, the fresh committed-source **4/4 virtual-controller journey**, and portrait native keyboard checks pass. All twelve displayed originals match their recorded bytes/hash and fully decode. Read, Retry, Fit/Actual Size, two-axis movement and two-step Back retain the existing input owner. See the [gallery evidence](verification/countercurrent-gallery-input-2026-09-30.md).
+
+The **31,692,501 original artwork bytes remain unchanged and excluded from distribution**. This source-served, read-only gallery has no Save/import/export or artwork approval. The historical whole-folder receipt expected an older 5,120-byte index; its mismatch with the pre-batch 5,518-byte presentation is explicitly retained. **18/18 fresh sequential in-memory edition compiles** pass at the runtime commit, including the four newer catalog entries. Largest output is **66,796,056 bytes**, leaving **312,808 bytes** under 64 MiB. These results establish compilation, not installed-offline or physical-device acceptance.
+
+Next bounded reference route: **FPV enemy presentation** at `/authoring/library/fpv-enemy-presentations/index.html`, followed by the other pending reference/support workflows in the inventory. Keep all global acceptance gates open, including native embedded-preview routing, browser sample installation, controlled network faults, Company aggregate/compiled review, specialized media workflows, full Ukrainian coverage, physical devices, true zoom, forced colors and installed offline. Release allocation and main reconciliation remain with Releases; no publication is implied by this batch.
+
+Guide PR #827 at `55cf072b0` has current focused/release-ready, edition candidate, default-capacity and optional-practice success. Earlier cancelled/skipped jobs remain separate. The prior delivery audit is closed only at its recorded owner checkpoints; this is not a new repository-wide cleanliness claim. The older ledger below retains its source and publication cutoffs.
+
+## Earlier September 30 checkpoints
 
 Latest follow-up: parent #815 is current through main `4d9d702375` at coordinator head `593ad3157`. Document runtime `928bbfd31` adds ten exact, literal Markdown readers without leaving the Guide. **87/87 overlapping final focused checks**, localization **11,830 / 8,813**, a fresh **3/3 virtual-pad document journey**, native keyboard traversal of all ten at **390 × 844**, and four actual JSON downloads validated through production pass. Two live label defects were found and fixed. Package/source admission matches **82 pins** and keeps all Guide assets optional; no materialized build or installed-offline acceptance. See the [document reader evidence](verification/creator-guide-documents-input-2026-09-30.md). This closes the direct Guide document handoffs within that coverage, while browser sample installation, physical devices and broader recovery gates remain separate.
 
