@@ -11,6 +11,10 @@ export const PUBLIC_SOUNDTRACK_STYLE_IDS = Object.freeze([
   'fpv',
 ]);
 
+export const DEFAULT_PUBLIC_SOUNDTRACK_STYLE_IDS = Object.freeze(
+  PUBLIC_SOUNDTRACK_STYLE_IDS.filter((style) => !['ukrainian', 'fpv'].includes(style)),
+);
+
 const match = (tags, expression) => tags.some((tag) => expression.test(tag));
 
 export function publicSoundtrackStyles(tags = []) {
