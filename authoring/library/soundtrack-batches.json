@@ -1,7 +1,47 @@
 {
   "format": "revealline-reviewed-soundtrack-batches.v1",
   "batches": [
-    { "id": "core-retro-20260924", "status": "pending" },
-    { "id": "core-metal-20260924", "status": "pending" }
+    {
+      "id": "core-retro-20260924",
+      "status": "pending"
+    },
+    {
+      "id": "core-metal-20260924",
+      "status": "pending"
+    },
+    {
+      "id": "approved-synth-metal-20260930",
+      "status": "owner-approved",
+      "metadata": {
+        "path": "authoring/library/soundtrack-batches/approved-synth-metal-20260930/metadata.json",
+        "bytes": 14560,
+        "sha256": "514191f71f0b6682a531474edd4e81b1047794514bffe9e5405fc337252f59a3"
+      },
+      "inventory": {
+        "path": "authoring/library/soundtrack-batches/approved-synth-metal-20260930/inventory.json",
+        "bytes": 1607,
+        "sha256": "64f0e2ac28718af710fc20702519dfa171fe4020a56037242795027c8f1d5caa"
+      },
+      "rights": {
+        "path": "authoring/library/soundtrack-batches/approved-synth-metal-20260930/rights.json",
+        "bytes": 6148,
+        "sha256": "633bc9850d18f316427afd0ce387ff8a7461fbf0e16c6732357c72e78ab5a14a"
+      },
+      "technical": {
+        "path": "authoring/library/soundtrack-batches/approved-synth-metal-20260930/technical.json",
+        "bytes": 3519,
+        "sha256": "d7d30bb0587ea1706c9dd7049b354b63520f7302463be911b91490d03d35e481"
+      },
+      "review": {
+        "path": "authoring/library/soundtrack-batches/approved-synth-metal-20260930/review.json",
+        "bytes": 1730,
+        "sha256": "7dd48b209b2da516dae06e833df217baa4feb3e328a122b5b1ddca497e62f2ae"
+      },
+      "delivery": {
+        "path": "authoring/library/soundtrack-batches/approved-synth-metal-20260930/delivery.json",
+        "bytes": 3328,
+        "sha256": "b66b67f6bb7f1e02beacbb2a880d780bf5eea7a88deb5911ff535fd314b38770"
+      }
+    }
   ]
 }
