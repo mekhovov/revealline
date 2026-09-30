@@ -5,7 +5,12 @@ import { tmpdir } from 'node:os';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { createHash, webcrypto } from 'node:crypto';
-import { buildOptionalPractice, OPTIONAL_PRACTICE_ROOT } from './build-optional-practice.mjs';
+import {
+  buildOptionalPractice,
+  OPTIONAL_PRACTICE_ROOT,
+  OPTIONAL_PRACTICE_LIMITS,
+} from './build-optional-practice.mjs';
+import { ICON_MASTER } from './brand-icons.mjs';
 import { readBuildConfig } from './game-cli.mjs';
 import { installPracticeWorker } from '../optional-practice/civilian-flight/worker-template.mjs';
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
@@ -27,7 +32,14 @@ test('optional practice archives are reproducible, admitted completely and absen
   assert.ok(
     first.manifest.files.every((file) => !/game\/content\/|editions\/|authoring\//.test(file.path)),
   );
-  assert.ok(first.manifest.files.reduce((sum, file) => sum + file.bytes, 0) < 256 * 1024);
+  // Enforce the production budget over the complete output, including its manifest.
+  assert.deepEqual(first.manifest.limits, OPTIONAL_PRACTICE_LIMITS);
+  assert.ok(first.entries.length <= OPTIONAL_PRACTICE_LIMITS.files);
+  assert.ok(
+    first.entries.reduce((sum, entry) => sum + entry.bytes.length, 0) <=
+      OPTIONAL_PRACTICE_LIMITS.bytes,
+  );
+  assert.ok(!entries.has(ICON_MASTER), 'The full-size icon master is build tooling only');
   const core = await readBuildConfig(root);
   assert.ok(
     core.include.every(
