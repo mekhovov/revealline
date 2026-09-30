@@ -36,13 +36,36 @@ Metal priorities remain queued behind this scoped separation.
 
 ### Phase 1 — remove unlicensed recordings from the main experience
 
-**In progress; not yet deployed.** Audit of canonical source `9cc5274` finds
-**73 unknown-licence recordings / 207,941,311 audio bytes**, all currently in the
+**Archive deployed and verified; game hardening PR remains queued.** Audit of canonical source `9cc5274` found
+**73 unknown-licence recordings / 207,941,311 audio bytes**, all formerly in the
 normal public list. There are no additional missing-licence rows in this snapshot.
-The resulting licensed catalogue will contain **188 recordings: 123 normal-public
+The deployed licensed catalogue contains **188 recordings: 123 normal-public
 and 65 existing review-only**. The trusted game catalogue's 77 records are unaffected.
 The [pre-change preservation inventory](verification/soundtrack-unlicensed-exclusion-20261001.json)
 binds every excluded ID to its exact audio hash, size, source and unchanged licence.
+
+[Archive PR #68](https://github.com/mekhovov/revealline-soundtracks/pull/68)
+merged as `592364a67277744f795af787fc46b31e003fe02c`.
+[Automatic Pages deployment 36789509051](https://github.com/mekhovov/revealline-soundtracks/actions/runs/36789509051)
+passed after independent review and 76 passing archive tests. Direct public checks
+confirm all 73 excluded Pages MP3s return 404; all 70 licensed installer endpoints
+retain their exact expected sizes, and 41 public metadata files match the staged
+hashes. The `.nojekyll` deployment control is deliberately recorded separately:
+it is staged but GitHub Pages returns 404 for that control file. Normal and review
+links cannot select the removed recordings; licensed Drama playback advanced.
+
+The currently public game refreshes from 196 to 123 eligible archive recordings;
+TRENCH ORDERLY search returns zero. Existing style filters showed 121 of those 123.
+This dynamic feed change is live independently of the game-code PR.
+[Game PR #897](https://github.com/mekhovov/revealline/pull/897) adds defensive
+missing/unknown-licence filtering and prevents removed fetched entries from starting
+or resuming from stale queues. Its 335 focused tests pass. It is not yet deployed:
+`release-ready` is held because no release slot is assigned, and existing aggregate
+Field Kit/Team production drift remains disclosed rather than overwritten. The sole
+publisher has been notified. Refresh/reload previously open clients to replace their
+old catalogue; an already-playing stream is not forcibly interrupted by a refresh.
+See [public acceptance](verification/unlicensed-soundtrack-game-20261001/public-acceptance.json)
+and [independent archive review](verification/unlicensed-soundtrack-game-20261001/archive-independent-review.json).
 
 - Exclude unknown/missing licence records from the deployed catalogue, public
   search/playlists, direct track selection and review views, not only default shuffle.
@@ -59,14 +82,17 @@ binds every excluded ID to its exact audio hash, size, source and unchanged lice
 - Create scoped archive and game PRs with regression coverage and independent
   review, then record actual deployment/public acceptance separately.
 
-**Estimate:** one working day for implementation, regression checks and both PRs;
-CI and the sole game publisher's queue are additional. The decisive checks are
+**Remaining:** game PR release scheduling and post-deployment checks; no honest
+calendar ETA until the sole publisher allocates the slot. Archive implementation,
+regressions and deployment are complete. Allow roughly half a day for game release
+follow-through once the production/queue disposition is settled. The decisive checks are
 no excluded rows in the deployed JSON, no excluded Pages objects or legacy alias
 bypass, safe game filtering, and intact licensed playback/installer metadata.
 
 ### Phase 2 — separate FPV archive and explicitly added music sources
 
-**Next, after phase-1 PRs are prepared.** The requested destination is
+**Next; both phase-1 PRs are prepared and the archive exclusion is live.**
+No FPV repository or configurable source implementation is claimed yet. The requested destination is
 `mekhovov/revealline-soundtracks-fpv` with Pages at
 `https://mekhovov.github.io/revealline-soundtracks-fpv/`. The repository did not
 exist at this audit. Preserve all 73 original recording identities, bytes,
