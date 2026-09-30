@@ -187,6 +187,7 @@
     "optional-practice/civilian-fpv/math.mjs",
     "optional-practice/civilian-fpv/rotation-table.mjs",
     "optional-practice/civilian-fpv/model.mjs",
+    "optional-practice/civilian-fpv/flight-sectors.mjs",
     "optional-practice/civilian-fpv/catalogue.mjs",
     "optional-practice/civilian-fpv/demonstrations.mjs",
     "optional-practice/civilian-fpv/attempts.mjs",
