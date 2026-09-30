@@ -106,12 +106,16 @@ document.querySelectorAll('[data-studio-startup-disabled]').forEach((control) =>
   control.disabled = false;
   control.removeAttribute('data-studio-startup-disabled');
 });
-let operationFocus = null;
+let operationFocus = null,
+  invalidOperationFocus = null;
 const operations = createStudioOperations({
   target: $('studio-status'),
   cancelButton: $('cancel-studio-operation'),
   setBusy(value) {
-    if (value) operationFocus = document.activeElement;
+    if (value) {
+      operationFocus = document.activeElement;
+      invalidOperationFocus = null;
+    }
     // Escape and preview observation controls stay outside these mutation regions.
     document
       .querySelectorAll(
@@ -125,13 +129,16 @@ const operations = createStudioOperations({
     // Preserve the ordinary return owner on errors; only a consumed Stage
     // advances to the next available authoring action.
     const returnTarget =
-      operationFocus === $('stage-asset') && operationFocus.disabled
+      invalidOperationFocus ||
+      (operationFocus === $('stage-asset') && operationFocus.disabled
         ? $('save-workspace')
-        : operationFocus;
+        : operationFocus);
     if (
       !value &&
       document.hasFocus() &&
-      [document.body, $('cancel-studio-operation')].includes(document.activeElement) &&
+      [document.body, $('cancel-studio-operation'), operationFocus].includes(
+        document.activeElement,
+      ) &&
       returnTarget?.isConnected &&
       !returnTarget.disabled
     )
@@ -903,7 +910,9 @@ async function validatePending(geometryOnly = false, task) {
   if (!geometryOnly) {
     for (const id of ['asset-creator', 'asset-source', 'asset-license'])
       if (!$(id).value.trim()) {
-        $(id).focus();
+        // The operation has made this panel inert. Defer the correction target
+        // until unlock, which also checks foreground and current focus ownership.
+        invalidOperationFocus = $(id);
         throw new Error(t('tools:enterTheActualCreatorSourceAndLicenseRightsStatement'));
       }
     asset.description = $('asset-description').value.trim() || currentSlot().label;

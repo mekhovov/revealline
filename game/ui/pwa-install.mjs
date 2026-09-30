@@ -46,7 +46,7 @@ export function installInstructions(navigatorRef = globalThis.navigator) {
       steps: [
         'Tap Share in Safari.',
         'Choose Add to Home Screen, enable Open as Web App if offered, then tap Add.',
-        'Open the new Reveal Line icon, then choose your offline download inside the app.',
+        'Open the new FPV / LINE icon, then choose your offline download inside the app.',
       ],
       note: 'Safari and the Home Screen app have separate game storage. Download inside the app you will use. Export and import a complete backup to bring your browser progress.',
     };
@@ -55,7 +55,7 @@ export function installInstructions(navigatorRef = globalThis.navigator) {
       platform: 'safari-desktop',
       steps: [
         'Open Safari’s File menu.',
-        'Choose Add to Dock, then open Reveal Line from the Dock.',
+        'Choose Add to Dock, then open FPV / LINE from the Dock.',
       ],
       note: 'Installing the icon and downloading game content are separate. Your download choice is verified automatically.',
     };

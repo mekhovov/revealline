@@ -1,0 +1,167 @@
+{
+  "verifiedAt": "2026-09-28T23:43:39.831Z",
+  "sourceCapturedAt": "2026-09-28T23:32:22.550Z",
+  "root": "/Users/oleksandr.mekhovov/work/my_projects/go_test",
+  "out": "/private/tmp/revealline-menu-motion-20260929",
+  "version": "0.142.1",
+  "sourceRevision": null,
+  "files": 1860,
+  "totalBytes": 750453406,
+  "manifestSha256": "c438157e53bd55334cbd9bb7def50984e0800bce3e8fb3d9e8b099f9fe2abbfd",
+  "distributionSha256": "e1411e0e75048cb37ba2be69abdead721636fed42eae6245a8c9ffc4243c53b9",
+  "sourceFilesBefore": 1712,
+  "sourceFilesAfter": 1712,
+  "sourceChanges": [
+    {
+      "path": "game/app.mjs",
+      "before": "58d01e47173d0e7498b84cde38fbc2decd3fa40ad57058307038d7c31d11682e",
+      "after": "11b0656462299e023de77f8e88f8111afed3d655e1708f563b666a084392ebc1"
+    },
+    {
+      "path": "game/company-player.mjs",
+      "before": "dbe1ffae7f75be30b5b5bac99eb80ed0e7c86462a2ac3a192a2469b856bc670f",
+      "after": "83806be2bf2046e73c68331afb35fdb267549f2586d475d9a1e095ec66be1fe9"
+    },
+    {
+      "path": "game/ui/signal-reception.mjs",
+      "before": "b1465ac9a3a59d82223e45df72aab00bc2e81d8333c6f6a538eb7d5fe849bfcb",
+      "after": "aec1eac4cd1a65761cc79a3086e4789f4c1686dae66e750a18b45fdb57335fbd"
+    }
+  ],
+  "sourceRemoved": [],
+  "sourceAdded": [],
+  "packageSourceDifferences": [
+    "game/assets/field-kit/icons/review.html",
+    "game/assets/field-kit/sprites/review.html",
+    "game/community/index.html",
+    "game/community/moderation.html",
+    "game/company.html",
+    "game/content-design/route-loader.mjs",
+    "game/controller-lab/index.html",
+    "game/couch/index.html",
+    "game/couch/relay-rescue.html",
+    "game/creator/index.html",
+    "game/creator/player.html",
+    "game/creator/team.html",
+    "game/downloads.html",
+    "game/index.html",
+    "game/playground/index.html",
+    "game/presentation/combat-review.html",
+    "game/presentation/journey-actor-review.html",
+    "game/profile-recovery.html",
+    "game/replay-theater/index.html",
+    "game/studio/index.html",
+    "site/about.html"
+  ],
+  "watchedAgreement": [
+    {
+      "path": "game/ui/controller-navigation.mjs",
+      "before": "d38e7253b4d1b756728816b45aaf871ba30afada681e247c63f9e718ffa84ada",
+      "after": "d38e7253b4d1b756728816b45aaf871ba30afada681e247c63f9e718ffa84ada",
+      "package": "d38e7253b4d1b756728816b45aaf871ba30afada681e247c63f9e718ffa84ada",
+      "unchanged": true,
+      "packaged": true
+    },
+    {
+      "path": "game/ui/controller-router.mjs",
+      "before": "9ada0fdd7de817c75a174fb2bb6b93579f44247706c0f80db431723bc2728cbd",
+      "after": "9ada0fdd7de817c75a174fb2bb6b93579f44247706c0f80db431723bc2728cbd",
+      "package": "9ada0fdd7de817c75a174fb2bb6b93579f44247706c0f80db431723bc2728cbd",
+      "unchanged": true,
+      "packaged": true
+    },
+    {
+      "path": "game/ui/fullscreen.mjs",
+      "before": "3dae2a62b993fadd4305de3a9cb58448722429b096e43c4d06fb97331a9fe93b",
+      "after": "3dae2a62b993fadd4305de3a9cb58448722429b096e43c4d06fb97331a9fe93b",
+      "package": "3dae2a62b993fadd4305de3a9cb58448722429b096e43c4d06fb97331a9fe93b",
+      "unchanged": true,
+      "packaged": true
+    },
+    {
+      "path": "game/ui/game-shell.css",
+      "before": "0cb26b492d50dbd132b7cc287e9ef80b4092293df14cd36b86016a7b6daa19c5",
+      "after": "0cb26b492d50dbd132b7cc287e9ef80b4092293df14cd36b86016a7b6daa19c5",
+      "package": "0cb26b492d50dbd132b7cc287e9ef80b4092293df14cd36b86016a7b6daa19c5",
+      "unchanged": true,
+      "packaged": true
+    },
+    {
+      "path": "game/ui/game-shell.mjs",
+      "before": "b7f0e69678efd27baf03e3e6805e01c195b8a809e299b92b590d8849c4307234",
+      "after": "b7f0e69678efd27baf03e3e6805e01c195b8a809e299b92b590d8849c4307234",
+      "package": "b7f0e69678efd27baf03e3e6805e01c195b8a809e299b92b590d8849c4307234",
+      "unchanged": true,
+      "packaged": true
+    },
+    {
+      "path": "game/ui/menu-scene-catalog.mjs",
+      "before": "ba1491e9acda553281a3ab2c1c6070c627c28023a71d8d2264d2820642e97afd",
+      "after": "ba1491e9acda553281a3ab2c1c6070c627c28023a71d8d2264d2820642e97afd",
+      "package": "ba1491e9acda553281a3ab2c1c6070c627c28023a71d8d2264d2820642e97afd",
+      "unchanged": true,
+      "packaged": true
+    },
+    {
+      "path": "game/ui/menu-scenes.css",
+      "before": "16ea0da97f46044aeb03f9e760e700c624bf6600c741f6babc8150ce5f3243e9",
+      "after": "16ea0da97f46044aeb03f9e760e700c624bf6600c741f6babc8150ce5f3243e9",
+      "package": "16ea0da97f46044aeb03f9e760e700c624bf6600c741f6babc8150ce5f3243e9",
+      "unchanged": true,
+      "packaged": true
+    },
+    {
+      "path": "game/ui/menu-scenes.mjs",
+      "before": "1d04796be3acf93a2a3571f4c6e45f781044540422fa1a5b98d140ecae7f85a3",
+      "after": "1d04796be3acf93a2a3571f4c6e45f781044540422fa1a5b98d140ecae7f85a3",
+      "package": "1d04796be3acf93a2a3571f4c6e45f781044540422fa1a5b98d140ecae7f85a3",
+      "unchanged": true,
+      "packaged": true
+    },
+    {
+      "path": "game/ui/native-menu-icons.mjs",
+      "before": "31a2831f7aeba3363fe39a969c4f624d8574c6d6324e78f74596de6cde4aaa86",
+      "after": "31a2831f7aeba3363fe39a969c4f624d8574c6d6324e78f74596de6cde4aaa86",
+      "package": "31a2831f7aeba3363fe39a969c4f624d8574c6d6324e78f74596de6cde4aaa86",
+      "unchanged": true,
+      "packaged": true
+    },
+    {
+      "path": "game/ui/native-menu.css",
+      "before": "71dd5cfb8224c9cafc762e091ea4cf9152be83295fc63c93794d0c5c51a20a74",
+      "after": "71dd5cfb8224c9cafc762e091ea4cf9152be83295fc63c93794d0c5c51a20a74",
+      "package": "71dd5cfb8224c9cafc762e091ea4cf9152be83295fc63c93794d0c5c51a20a74",
+      "unchanged": true,
+      "packaged": true
+    },
+    {
+      "path": "game/ui/native-menus.mjs",
+      "before": "264bac95b468a3e9aaf7c482aaf60d0e0e88c05344f75f72ebba0e989ffe001b",
+      "after": "264bac95b468a3e9aaf7c482aaf60d0e0e88c05344f75f72ebba0e989ffe001b",
+      "package": "264bac95b468a3e9aaf7c482aaf60d0e0e88c05344f75f72ebba0e989ffe001b",
+      "unchanged": true,
+      "packaged": true
+    }
+  ],
+  "versionBindings": ["game/index.html", "game/couch/index.html"],
+  "invalidFiles": [],
+  "packagedSourceFiles": 1707,
+  "packagedSourceMatches": 1686,
+  "httpChecks": [
+    {
+      "url": "http://127.0.0.1:8978/game/",
+      "status": 200,
+      "bytes": 156409
+    },
+    {
+      "url": "http://127.0.0.1:8978/game/ui/menu-scenes.mjs",
+      "status": 200,
+      "bytes": 11231
+    },
+    {
+      "url": "http://127.0.0.1:8978/game/ui/fullscreen.mjs",
+      "status": 200,
+      "bytes": 7392
+    }
+  ]
+}

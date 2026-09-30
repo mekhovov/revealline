@@ -1373,12 +1373,14 @@ export function attachLibraryPanel(api) {
   const examples = createOperationStatus(exampleStatus);
   const examplesLease = examples.begin({ message: t('interface:loadingExamplePacks') });
   const exampleIndex =
-    api.examplePackIndex === undefined
-      ? fetch('content/packs/index.json').then((r) => {
-          if (!r.ok) throw new Error(t('interface:examplePacksCouldNotLoad'));
-          return r.json();
-        })
-      : Promise.resolve(api.examplePackIndex);
+    api.examplePackIndex !== undefined
+      ? Promise.resolve(api.examplePackIndex)
+      : api.examplePacks === false
+        ? Promise.resolve({ packs: [] })
+        : fetch('content/packs/index.json').then((r) => {
+            if (!r.ok) throw new Error(t('interface:examplePacksCouldNotLoad'));
+            return r.json();
+          });
   exampleIndex
     .then((index) => {
       examplesLease.finish({ message: '' });

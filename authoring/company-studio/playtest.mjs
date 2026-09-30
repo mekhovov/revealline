@@ -3,16 +3,53 @@ import {
   companyPlaytestTask,
 } from '../../game/company-campaigns/playtest-fixtures.mjs';
 import { mountCompanyWorkbench } from '../../game/company-campaigns/workbench.mjs';
+import { attachCompanyReader } from './reading.mjs';
 
 const $ = (id) => document.getElementById(id);
 const select = $('practice-select');
 const container = $('practice-workbench');
 let workbench = null;
+let readers = [];
+const foreground = () => !document.hidden && document.hasFocus?.() !== false;
+function clearReaders() {
+  for (const reader of readers) reader?.destroy();
+  readers = [];
+}
+function refreshPracticeReaders() {
+  clearReaders();
+  const feedback = container.querySelector('[data-feedback]');
+  const ownedFeedback = feedback && document.activeElement === feedback && foreground();
+  const add = (id, region, label) => {
+    const reader = attachCompanyReader({ document, id, region, label });
+    if (reader) readers.push(reader);
+    return reader;
+  };
+  add(
+    'company-read-practice',
+    container.querySelector('.company-workbench-brief'),
+    'Practice brief',
+  );
+  for (const [index, card] of [
+    ...container.querySelectorAll('.company-workbench-record'),
+  ].entries()) {
+    const paragraphs = [...card.querySelectorAll('p')];
+    if (!paragraphs.length) continue;
+    const region = document.createElement('div');
+    region.append(...paragraphs);
+    card.append(region);
+    add(`company-read-evidence-${index}`, region, `Practice evidence ${index + 1}`);
+  }
+  if (feedback?.textContent.trim()) {
+    const reader = add('company-read-feedback', feedback, 'Practice feedback');
+    if (ownedFeedback) reader?.entry.focus();
+  }
+}
 const fixture = () => COMPANY_PLAYTEST_FIXTURES.find((row) => row.id === select.value);
 const status = (text) => {
   $('status').textContent = text;
 };
 function clearPractice({ focus = false } = {}) {
+  clearReaders();
   workbench?.destroy();
   workbench = null;
   container.hidden = true;
@@ -38,6 +75,7 @@ function openPractice() {
     lesson: selected.lesson,
     onChange(attempt) {
       labelPracticeControls();
+      refreshPracticeReaders();
       if (attempt.status === 'complete')
         status(
           'Local practice complete. Explain your reasoning to the facilitator. No result was stored and no campaign was changed.',
@@ -57,9 +95,8 @@ function openPractice() {
   status(
     'Practice opened with blank answers. Explain your first choice before committing; the facilitator records observations separately.',
   );
-  const title = container.querySelector('h2');
-  title.tabIndex = -1;
-  title.focus();
+  refreshPracticeReaders();
+  if (foreground()) $('company-read-practice')?.focus();
 }
 for (const row of COMPANY_PLAYTEST_FIXTURES) {
   const option = document.createElement('option');
@@ -96,7 +133,7 @@ $('export-task').addEventListener('click', () => {
   link.download = `${selected.id}-task.json`;
   link.click();
   setTimeout(() => URL.revokeObjectURL(url), 1000);
-  status('Exported task cards only. No answers, feedback or results are included.');
+  status('Task-card download requested. No answers, feedback or results are included.');
 });
 const requested = new URL(window.location.href).searchParams.get('task');
 if (COMPANY_PLAYTEST_FIXTURES.some((row) => row.id === requested)) {

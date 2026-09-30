@@ -2,6 +2,20 @@
 const editionPattern = /^[a-z][a-z0-9]*(?:-[a-z0-9]+)*$/;
 const versionPattern = /^v?(0|[1-9]\d{0,4})\.(0|[1-9]\d{0,4})\.(0|[1-9]\d{0,4})$/;
 
+// Public addresses may change; stored profiles, content pins and installed app
+// IDs keep the original edition identity. This is an alias, never a new edition.
+const publicSlugs = Object.freeze({ 'droneaid-nl-community': 'droneaid' });
+
+export function editionIdentityId(selector) {
+  validateEditionId(selector);
+  return Object.keys(publicSlugs).find((id) => publicSlugs[id] === selector) ?? selector;
+}
+
+export function editionPublicSlug(editionId) {
+  validateEditionId(editionId);
+  return publicSlugs[editionId] ?? editionId;
+}
+
 export function validateEditionId(editionId) {
   if (typeof editionId !== 'string' || editionId.length > 64 || !editionPattern.test(editionId))
     throw new TypeError('Invalid edition identity.');
@@ -12,7 +26,7 @@ export function editionIdFromLocation(locationRef = globalThis.location) {
   if (!locationRef?.href) return undefined;
   const path = new URL(locationRef.href).pathname;
   const match = /\/editions\/([^/]+)\//.exec(path);
-  return match ? validateEditionId(match[1]) : undefined;
+  return match ? editionIdentityId(match[1]) : undefined;
 }
 
 export function resolveEditionContext({ editionId, version } = {}) {
@@ -68,8 +82,12 @@ export function editionAppIdentity({ editionId, basePath = '/' } = {}) {
   validateEditionId(editionId);
   if (typeof basePath !== 'string' || !/^\/(?:[A-Za-z0-9_-]+\/)*$/.test(basePath))
     throw new TypeError('Edition base path must be an absolute directory path.');
-  const root = `${basePath}editions/${editionId}/`;
-  return Object.freeze({ id: root, start_url: `${root}app/`, scope: root });
+  const root = `${basePath}editions/${editionPublicSlug(editionId)}/`;
+  return Object.freeze({
+    id: `${basePath}editions/${editionId}/`,
+    start_url: `${root}app/`,
+    scope: root,
+  });
 }
 
 /** A launcher may select only a retained immutable release of its own edition.
@@ -95,16 +113,25 @@ export function validateCompanyInstallationReference(
     throw new TypeError('Edition installation identity differs.');
   const base = new URL(baseURL),
     scope = new URL(value.scope, base);
+  const root =
+    typeof editionRoot === 'string'
+      ? /^(\/(?:[A-Za-z0-9_-]+\/)*)editions\/([^/]+)\/$/.exec(editionRoot)
+      : null;
+  const aliases = [editionId, editionPublicSlug(editionId)];
   if (
-    typeof editionRoot !== 'string' ||
-    !new RegExp(`^/(?:[A-Za-z0-9_-]+/)*editions/${editionId}/$`).test(editionRoot) ||
+    !root ||
+    !aliases.includes(root[2]) ||
     !/^https?:$/.test(base.protocol) ||
     scope.origin !== base.origin ||
     scope.username ||
     scope.password ||
     scope.search ||
     scope.hash ||
-    scope.pathname !== `${editionRoot}releases/v${value.version.replace(/^v/, '')}/site/`
+    !aliases.some(
+      (slug) =>
+        scope.pathname ===
+        `${root[1]}editions/${slug}/releases/v${value.version.replace(/^v/, '')}/site/`,
+    )
   )
     throw new TypeError('Install from the matching published edition address.');
   return Object.freeze({

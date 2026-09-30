@@ -182,6 +182,11 @@
   padding-top: 0;
   border: 0;
 }
+.playground-section-heading {
+  margin: 0;
+  font: inherit;
+  letter-spacing: inherit;
+}
 .viewport-buttons {
   display: flex;
   gap: 6px;

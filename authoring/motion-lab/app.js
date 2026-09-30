@@ -39,6 +39,7 @@ import {
 import { paintAbilityStage } from './render-ability.mjs';
 import { describeAbilityLabels } from './ability-labels.mjs';
 import { derivePngStill, PNG_PREVIEW_MAX_BYTES } from './png-preview.mjs';
+import { registerAuthoringEditor } from '../../game/ui/authoring-editors.mjs';
 
 const number = (value, places) =>
   formatNumber(value, { minimumFractionDigits: places, maximumFractionDigits: places });
@@ -934,6 +935,15 @@ function mountMotionLab() {
       if (background) URL.revokeObjectURL(background.url);
       background = null;
       $('background-file').value = '';
+      // Clear removes its own availability. Hand back only its current,
+      // foreground focus before disabling it; a pointer's other owner stays put.
+      if (
+        !disposed &&
+        !document.hidden &&
+        document.hasFocus() &&
+        document.activeElement === $('clear-background')
+      )
+        $('background-file').focus();
       $('clear-background').disabled = true;
       backgroundMessage(localizedMessage('tools:motionLab.previewCleared'), 'cancelled');
       render();
@@ -1735,6 +1745,62 @@ function mountMotionLab() {
   }
 
   function setupControls() {
+    registerAuthoringEditor($('arena'), {
+      enter() {
+        if (!state || disposed) return false;
+        autoplay = false;
+        $('autoplay').checked = false;
+        clearHeld();
+        resume();
+        $('arena').focus();
+        return true;
+      },
+      isCurrent: () => !!state && !disposed,
+      focus: () => $('arena').focus(),
+      handle(command) {
+        if (command.back || command.menu) return 'cancel';
+        if (command.direction) {
+          steering.release('controller-preview');
+          manualStart('controller-preview', command.direction);
+        }
+        if (command.confirm) abilityCommand('act');
+        readouts();
+      },
+      exit() {
+        clearHeld();
+        pause();
+      },
+    });
+    for (const [id, setter] of [
+      [
+        'boost',
+        (value) => {
+          pointerBoost = value;
+        },
+      ],
+      [
+        'slow',
+        (value) => {
+          pointerSlow = value;
+        },
+      ],
+    ])
+      registerAuthoringEditor($(id), {
+        enter() {
+          if (paused) return false;
+          setter(true);
+          readouts();
+          return true;
+        },
+        isCurrent: () => !paused && !disposed,
+        handle(command) {
+          if (command.confirm || command.back || command.menu) return 'done';
+        },
+        exit() {
+          setter(false);
+          readouts();
+        },
+      });
     $('turn-policy').value = motion.turnPolicy || 'immediate';
     listen($('turn-policy'), 'change', (event) => {
       motion.turnPolicy = event.target.value;
@@ -1854,6 +1920,13 @@ function mountMotionLab() {
       resume();
     });
     for (const button of document.querySelectorAll('[data-direction]')) {
+      // Shared controller Confirm activates the semantic button with a click.
+      // A discrete direction keeps travel intent without inventing a held key.
+      listen(button, 'click', () => {
+        const source = `click-${button.dataset.direction}`;
+        manualStart(source, button.dataset.direction);
+        steering.release(source);
+      });
       setHeldPointer(
         button,
         (id) => manualStart(`pointer-${id}`, button.dataset.direction),
@@ -1930,17 +2003,25 @@ function mountMotionLab() {
       });
     }
     listen(window, 'keydown', (event) => {
+      // Form/menu navigation and already-consumed input never steer the study.
+      // Explicit direction/hold/action buttons own their handlers above.
+      if (
+        event.defaultPrevented ||
+        event.ctrlKey ||
+        event.metaKey ||
+        event.altKey ||
+        disposed ||
+        document.hidden ||
+        document.hasFocus() === false ||
+        document.activeElement !== canvas ||
+        event.target !== canvas
+      )
+        return;
       if (event.code === 'Escape') {
         pause();
         return;
       }
-      if (event.target.closest('input,select,textarea,button,[contenteditable=true]')) return;
-      if (
-        ['KeyE', 'KeyR'].includes(event.code) &&
-        !event.ctrlKey &&
-        !event.metaKey &&
-        !event.altKey
-      ) {
+      if (['KeyE', 'KeyR'].includes(event.code)) {
         event.preventDefault();
         if (!event.repeat) abilityCommand(event.code === 'KeyE' ? 'act' : 'pickup');
         return;

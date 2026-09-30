@@ -1,5 +1,95 @@
 import path from 'node:path';
 import { parse } from 'acorn';
+import {
+  MENU_SCENES,
+  MENU_SCENE_COMPOSITIONS,
+  resolveMenuScene,
+} from '../game/ui/menu-scene-catalog.mjs';
+
+export const DEFAULT_GAME_WORDMARK = 'game/ui/art/identity/fpv-line/wordmark.png';
+
+/** Standalone company chrome already uses its selected brand. Keep the shared
+ * helper's image fallback local to that same approved logo instead of shipping
+ * an otherwise unused default-game wordmark. Source/default-game bytes stay put. */
+export function projectEditionBrandIdentity(bytes, logoPath) {
+  if (!/^game\/[A-Za-z0-9_.\/-]+$/.test(logoPath) || logoPath.split('/').includes('..'))
+    throw new Error('Edition branding needs an approved local logo path.');
+  const source = new TextDecoder('utf-8', { fatal: true }).decode(bytes);
+  const tree = parse(source, { ecmaVersion: 'latest', sourceType: 'module' });
+  const declarations = tree.body.flatMap((node) => (node.declaration ?? node).declarations ?? []);
+  const declaration = declarations.find((node) => node.id?.name === 'GAME_WORDMARK_URL');
+  const url = declaration?.init?.object;
+  const literal = url?.arguments?.[0];
+  if (
+    declaration?.init?.type !== 'MemberExpression' ||
+    declaration.init.property?.name !== 'href' ||
+    url?.type !== 'NewExpression' ||
+    url.callee?.name !== 'URL' ||
+    literal?.type !== 'Literal' ||
+    literal.value !== './art/identity/fpv-line/wordmark.png'
+  )
+    throw new Error('Unknown shared brand image fallback.');
+  const relative = path.posix.relative('game/ui', logoPath);
+  const target = relative.startsWith('.') ? relative : './' + relative;
+  return Buffer.from(
+    source.slice(0, literal.start) + JSON.stringify(target) + source.slice(literal.end),
+  );
+}
+
+function sceneAssets(scene) {
+  return [scene.landscape, scene.portrait, scene.wordmark]
+    .filter(Boolean)
+    .map((asset) => `game/ui/${asset.slice(2)}`);
+}
+
+export function editionMenuSceneResources(editionIds) {
+  const scenes = [
+    MENU_SCENES.fpv,
+    ...editionIds.map((editionId) => resolveMenuScene({ editionId })),
+  ];
+  return [...new Set(scenes.flatMap(sceneAssets)), 'game/ui/art/menu-scenes/provenance.json'];
+}
+
+/** Keep selected scene originals in any admitted image format. The receiver
+ * atlas is shared presentation, not artwork belonging to one scene. */
+export function projectEditionMenuResourcePaths(paths, editionIds) {
+  const selected = new Set(editionMenuSceneResources(editionIds));
+  return paths.filter(
+    (name) =>
+      !/^game\/ui\/art\/menu-scenes\/[^/]+\.(?:webp|png|svg)$/.test(name) ||
+      name === 'game/ui/art/menu-scenes/analog-noise-atlas.png' ||
+      selected.has(name),
+  );
+}
+
+// Project only the public profile lookup. Preserve original scene data and
+// resolver code, including timing, fallback behavior and source provenance.
+export function projectEditionMenuScenes(bytes, editionIds) {
+  const source = new TextDecoder('utf-8', { fatal: true }).decode(bytes);
+  const tree = parse(source, { ecmaVersion: 'latest', sourceType: 'module' });
+  const declarations = tree.body.flatMap((node) => (node.declaration ?? node).declarations ?? []);
+  const declaration = declarations.find((node) => node.id?.name === 'MENU_SCENES');
+  const compositions = declarations.find((node) => node.id?.name === 'MENU_SCENE_COMPOSITIONS');
+  if (!declaration?.init) throw new Error('Menu scene catalog lacks its explicit profile lookup.');
+  if (!compositions?.init)
+    throw new Error('Menu scene catalog lacks its explicit composition lookup.');
+  const ids = [
+    ...new Set(['fpv', ...editionIds.map((editionId) => resolveMenuScene({ editionId }).id)]),
+  ];
+  const { start, end } = declaration.init;
+  const edits = [
+    {
+      start,
+      end,
+      text: `Object.freeze(Object.fromEntries(Object.entries(${source.slice(start, end)}).filter(([id]) => ${JSON.stringify(ids)}.includes(id))))`,
+    },
+    { start: compositions.init.start, end: compositions.init.end, text: 'Object.freeze({})' },
+  ];
+  let projected = source;
+  for (const edit of edits.sort((a, b) => b.start - a.start))
+    projected = projected.slice(0, edit.start) + edit.text + projected.slice(edit.end);
+  return Buffer.from(projected);
+}
 
 // These are release-owned adapters, not content-supplied scripts. Original
 // historical registries never enter either the player or selected-source ZIP.
@@ -26,6 +116,28 @@ export const EDITION_RUNTIME_RESOURCES = Object.freeze({
   'game/vendor/qrcodegen-1.8.0.mjs': [
     'game/vendor/QRCODEGEN-LICENSE.txt',
     'game/vendor/qrcodegen-1.8.0.json',
+  ],
+  'game/ui/native-menus.mjs': ['game/ui/native-menu.css'],
+  'game/ui/controller-field-editor.mjs': ['game/ui/controller-field-editor.css'],
+  'game/ui/brand-identity.mjs': ['game/ui/art/identity/fpv-line/wordmark.png'],
+  'game/ui/menu-scenes.mjs': [
+    'game/ui/menu-scenes.css',
+    'game/ui/art/menu-scenes/analog-noise-atlas.png',
+  ],
+  'game/ui/page-input-host.mjs': ['game/ui/authoring-input.css'],
+  'game/ui/authoring-sources.mjs': [
+    'game/ui/authoring-input.css',
+    'authoring/shared/samples/dawn-signal.png',
+    'authoring/shared/samples/dawn-signal.mp4',
+    'authoring/still-media/examples/dawn-signal/Dawn-Signal-originals.rlmedia',
+    'authoring/still-media/examples/dawn-signal/Dawn-Signal-stories.rlstory',
+  ],
+  'game/ui/menu-scene-catalog.mjs': [
+    ...new Set(Object.values(MENU_SCENES).flatMap(sceneAssets)),
+    ...Object.values(MENU_SCENE_COMPOSITIONS).flatMap((modes) =>
+      Object.values(modes).flatMap(sceneAssets),
+    ),
+    'game/ui/art/menu-scenes/provenance.json',
   ],
   'game/content/soundtrack-catalogue.mjs': [
     'game/audio/soundtracks/d4147214e221be28f19d6c6c38afc8d3cf0289a0dc6ac579b26574a0c571bc58.mp3',

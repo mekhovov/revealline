@@ -102,6 +102,65 @@ function styleFixture() {
   };
 }
 
+test('native landing skips only the two legacy title backdrops while other screens still load', async () => {
+  const folder = new URL('../presentation/compiled/', import.meta.url);
+  const manifest = JSON.parse(await fs.readFile(new URL('runtime.json', folder), 'utf8'));
+  const byHash = new Map(
+    Object.values(manifest.resolved.assets)
+      .filter((asset) => asset.file)
+      .map((asset) => [asset.file.sha256, asset.file]),
+  );
+  const seen = new Set();
+  let nativeLanding = true;
+  const host = createPresentationHost({
+    baseURL,
+    document: {
+      querySelector: (selector) => (selector === '.native-landing' && nativeLanding ? {} : null),
+    },
+    fetch: async (url) => {
+      const file = url.slice(baseURL.length);
+      seen.add(file);
+      return new Response(
+        file === 'runtime.json'
+          ? JSON.stringify(manifest)
+          : await fs.readFile(new URL(file, folder)),
+      );
+    },
+    decodeImage: async (blob) => {
+      const hash = await hashPresentationBytes(new Uint8Array(await blob.arrayBuffer()));
+      const file = byHash.get(hash);
+      return { width: file.width, height: file.height, close() {} };
+    },
+    createObjectURL: () => 'blob:test',
+    revokeObjectURL() {},
+    fontFactory: () => ({ load: async () => {} }),
+  });
+  const snapshot = await host.load();
+  for (const id of ['screen.title.background', 'screen.title.portrait']) {
+    const asset = manifest.resolved.assets[id];
+    assert.ok(asset, id);
+    assert.equal(snapshot.image(id), null);
+    assert.equal(seen.has(manifest.urls[asset.file.sha256]), false);
+  }
+  assert.ok(snapshot.image('player.scout.compact'));
+  // A different screen may intentionally reuse one title image; its binding
+  // still loads. The optimization filters slots rather than banning hashes.
+  manifest.resolved.assets['screen.settings.background'] = structuredClone(
+    manifest.resolved.assets['screen.title.background'],
+  );
+  manifest.resolved.bindings['screen.settings.background'] = structuredClone(
+    manifest.resolved.bindings['screen.title.background'],
+  );
+  const replacement = await host.load();
+  assert.ok(replacement.image('screen.settings.background'));
+  assert.equal(replacement.image('screen.title.background'), null);
+  nativeLanding = false;
+  const classic = await host.load();
+  assert.ok(classic.image('screen.title.background'));
+  assert.ok(classic.image('screen.title.portrait'));
+  host.close();
+});
+
 test('the host accepts actual deterministic compiler output and no authoring history or arbitrary URLs', async () => {
   const f = await fixture();
   assert.deepEqual(validateCompiledPresentation(f.manifest), f.manifest);

@@ -3,6 +3,7 @@ import path from 'node:path';
 
 const FILE_LIMIT = 128 * 1024;
 const OPTIONAL_CLOSURE = [
+  ['navigation.css', 'index.html', 'navigation.css'],
   ['edition-context.mjs', 'installed-app.mjs', './edition-context.mjs'],
   ['profile-writer.mjs', 'installed-app.mjs', './profile-writer.mjs'],
   ['i18n/index.mjs', 'app.mjs', './i18n/index.mjs'],
@@ -10,6 +11,38 @@ const OPTIONAL_CLOSURE = [
   ['i18n/catalogs.mjs', 'i18n/index.mjs', './catalogs.mjs'],
   ['i18n/style.css', 'index.html', 'i18n/style.css'],
   ['vendor/i18next-26.4.2.min.js', 'i18n/index.mjs', '../vendor/i18next-26.4.2.min.js'],
+  ['ui/launcher-navigation.mjs', 'app.mjs', './ui/launcher-navigation.mjs'],
+  ['ui/controller-navigation.mjs', 'ui/launcher-navigation.mjs', './controller-navigation.mjs'],
+  [
+    'ui/controller-confirm-guard.mjs',
+    'ui/launcher-navigation.mjs',
+    './controller-confirm-guard.mjs',
+  ],
+  [
+    'ui/controller-confirm-lifecycle.mjs',
+    'ui/launcher-navigation.mjs',
+    './controller-confirm-lifecycle.mjs',
+  ],
+  ['ui/controller-router.mjs', 'ui/launcher-navigation.mjs', './controller-router.mjs'],
+  ['couch/controller-profiles.mjs', 'ui/controller-router.mjs', '../couch/controller-profiles.mjs'],
+  ['ui/menu-navigation-groups.mjs', 'ui/controller-navigation.mjs', './menu-navigation-groups.mjs'],
+  [
+    'ui/controller-field-editor.mjs',
+    'ui/controller-navigation.mjs',
+    './controller-field-editor.mjs',
+  ],
+  [
+    'ui/controller-field-editor.css',
+    'ui/controller-field-editor.mjs',
+    './controller-field-editor.css',
+  ],
+  ['ui/settings-panels.mjs', 'ui/controller-navigation.mjs', './settings-panels.mjs'],
+  ['ui/controller-text-draft.mjs', 'ui/controller-field-editor.mjs', './controller-text-draft.mjs'],
+  ['controller-bindings.mjs', 'ui/controller-router.mjs', '../controller-bindings.mjs'],
+  ['controller-boost.mjs', 'ui/controller-router.mjs', '../controller-boost.mjs'],
+  ['i18n/content.mjs', 'ui/controller-navigation.mjs', '../i18n/content.mjs'],
+  ['data-json.mjs', 'i18n/content.mjs', '../data-json.mjs'],
+  ['i18n/content-registry.mjs', 'i18n/content.mjs', './content-registry.mjs'],
 ];
 
 /** Copy the frozen, small launcher only. Never duplicate a gameplay or soundtrack body. */

@@ -37,8 +37,8 @@ test('the same Team mode choices belong to the lobby and active pause panel, nev
   assert.equal(modes.parentNode, f.$('coop-lobby-modes'));
   assert.equal(modes.hidden, false);
   const current = modes.querySelector('[aria-current="page"]');
-  assert.equal(current.tagName, 'SPAN');
-  assert.equal(current.getAttribute('tabindex'), null);
+  assert.equal(current.tagName, 'BUTTON');
+  assert.equal(current.tabIndex, 0, 'The current mode remains reachable by native keyboard focus.');
   assert.equal(current.getAttribute('href'), null);
   assert.equal(solo.getAttribute('href'), '../?journey=legacy');
   assert.equal(versus.getAttribute('href'), './?journey=legacy');
@@ -59,6 +59,13 @@ test('the same Team mode choices belong to the lobby and active pause panel, nev
   tabToTeamAction(f, 'coop-solo');
   f.tap('Tab');
   assert.equal(f.doc.activeElement, versus, 'visible mode order is keyboard order');
+  f.tap('Tab');
+  assert.equal(f.doc.activeElement, current, 'Keyboard traversal also reaches the current mode.');
+  f.tap('Enter');
+  assert.equal(f.$('coop-overlay').hidden, false);
+  assert.equal(f.$('coop-discard-dialog').open, false);
+  assert.equal(f.visits.length, 0, 'Confirming the current mode does not depart or resume.');
+  tabToTeamAction(f, 'coop-versus');
   f.tap('Enter');
   assert.equal(f.$('coop-discard-dialog').open, true);
   f.tap('Escape');
@@ -216,39 +223,39 @@ test('lobby keyboard navigation reaches Race and accessibility controls while ex
   }
   assert.ok(seen.has('coop-touch'), 'Controls category exposes touch settings');
   assert.equal(seen.has('coop-level'), false, 'The dialog excludes the lobby');
-  f.$('coop-settings-tab-display').click();
-  f.$('coop-settings-tab-display').focus();
+  f.$('coop-settings-tab-accessibility').click();
+  f.$('coop-settings-tab-accessibility').focus();
   for (let index = 0; index < 20; index++) {
     f.press('Tab');
     seen.add(f.doc.activeElement.id);
   }
-  assert.ok(seen.has('coop-reduced'), 'Display category exposes reduced effects');
+  assert.ok(seen.has('coop-reduced'), 'Accessibility category exposes reduced effects');
+  f.$('coop-settings-tab-gameplay').click();
+  f.$('coop-settings-tab-gameplay').focus();
+  const gameplay = new Set();
+  for (let index = 0; index < 30; index++) {
+    f.press('Tab');
+    gameplay.add(f.doc.activeElement.id);
+  }
+  assert.ok(gameplay.has('coop-optional-setup-toggle'));
+  assert.ok(gameplay.has('coop-level'), 'Gameplay exposes legacy arena selection.');
+  assert.ok(gameplay.has('coop-experiment'), 'Gameplay exposes Team play-style tuning.');
   f.$('coop-settings-close').click();
   for (let index = 0; index < 30; index++) {
     f.press('Tab');
     assert.equal(f.doc.activeElement.closest('.race-pad'), null);
     seen.add(f.doc.activeElement.id);
   }
-  for (const id of ['coop-optional-setup-toggle', 'coop-start'])
+  for (const id of ['coop-settings-open', 'coop-start'])
     assert.ok(seen.has(id), `Lobby Tab must reach ${id}.`);
   assert.equal(
     seen.has('coop-level'),
     false,
     'Arena selection stays out of quick-start Tab order.',
   );
-  assert.equal(seen.has('coop-experiment'), false, 'Optional Team tuning stays collapsed.');
-  f.disclose('coop-optional-setup');
-  for (let index = 0; index < 20; index++) {
-    f.press('Tab');
-    seen.add(f.doc.activeElement.id);
-  }
-  assert.ok(seen.has('coop-level'), 'Opening Team options exposes legacy arena selection.');
-  assert.ok(seen.has('coop-experiment'), 'Opening Team options exposes play-style tuning.');
+  assert.equal(seen.has('coop-experiment'), false, 'Optional Team tuning stays in Settings.');
   let left = 0;
   f.$('coop-race').onclick = () => left++;
-  f.press('Escape');
-  assert.equal(f.$('coop-optional-setup').open, false, 'Back closes optional Team tuning first.');
-  assert.equal(left, 0, 'Closing Team options stays in the lobby.');
   f.press('Escape');
   assert.equal(left, 1, 'Lobby Back returns through its code-owned prior-mode destination.');
   f.$('coop-start').click();
@@ -1344,7 +1351,18 @@ for (const [id, path] of modePanelLinks)
     };
     f.tick(2);
     button(0); // South adoption/release has no departure action.
-    for (let i = 0; i < 20 && f.doc.activeElement.id !== id; i++) button(13);
+    for (let i = 0; i < 20 && f.doc.activeElement.id !== 'coop-solo'; i++) button(13);
+    assert.equal(f.doc.activeElement.id, 'coop-solo', 'Down reaches the horizontal mode group.');
+    button(15); // D-pad Right moves between the visible mode choices.
+    assert.equal(f.doc.activeElement.id, 'coop-versus');
+    button(15);
+    assert.equal(f.doc.activeElement.id, 'team-current-mode');
+    button(0);
+    assert.equal(f.$('coop-discard-dialog').open, false);
+    assert.equal(f.$('coop-overlay').hidden, false);
+    assert.equal(f.visits.length, 0, 'Confirming the current mode cannot depart or resume.');
+    button(14);
+    if (id === 'coop-solo') button(14);
     assert.equal(f.doc.activeElement.id, id);
     unchangedPaused(f, before);
     button(0);

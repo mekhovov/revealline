@@ -73,6 +73,15 @@ export const FIELD_KIT_RETAINED_RADIO_PREDECESSOR102 = Object.freeze({
   originalPath: 'game/presentation/compiled/runtime.json',
 });
 
+// The accepted radio canonical103 remains distinct from discovery103.
+export const FIELD_KIT_RETAINED_NATIVE_PREDECESSOR103 = Object.freeze({
+  path: "authoring/library/fpv-field-kit/retained/runtime.7acb0bb2793781d0d5bbb774eeda05f38bfa30dcf71dc6a600a652bb7718f589.json",
+  sha256: "7acb0bb2793781d0d5bbb774eeda05f38bfa30dcf71dc6a600a652bb7718f589",
+  bytes: 1075486,
+  commit: '1b99d2ea791074ff79f6be9b8176594b0733874f',
+  originalPath: 'game/presentation/compiled/runtime.json',
+});
+
 /** Construct explicit compiler history from immutable authoring input and the
  * ledger's hash-addressed originals. Never consult the current output directory. */
 async function readPinnedOutput({ read, assets }, pin, revision) {
@@ -142,6 +151,7 @@ export async function readFieldKitRetainedOutput(options) {
     [FIELD_KIT_RETAINED_DISCOVERY103, 103],
     [FIELD_KIT_RETAINED_MAIN101, 101],
     [FIELD_KIT_RETAINED_RADIO_PREDECESSOR102, 102],
+    [FIELD_KIT_RETAINED_NATIVE_PREDECESSOR103, 103],
   ])
     previous = await retainPresentationOutput(
       await readPinnedOutput(options, pin, revision),

@@ -1,4 +1,6 @@
 import fs from 'node:fs/promises';
+import { fileURLToPath } from 'node:url';
+import { buildLauncherNavigationFiles } from './offline-launcher.mjs';
 import { createHash } from 'node:crypto';
 import { editionAppIdentity, validateEditionId } from '../game/edition-context.mjs';
 import { inspectImageDataUrl } from '../game/content.mjs';
@@ -199,20 +201,26 @@ export async function buildEditionOfflineFiles({
   put(
     'app/index.html',
     Buffer.from(
-      `<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="${colors.ink}"><link rel="manifest" href="./manifest.webmanifest"><title>${htmlText(name)} · Installation</title><style>${fontCSS}:root{color-scheme:light;font-family:${fontPath ? '"Company Brand",' : ''}system-ui,sans-serif;color:${colors.ink};background:${colors.paper}}body{margin:0;padding:clamp(1.5rem,6vw,5rem)}main{max-width:44rem;margin:auto}img{max-width:5rem;max-height:5rem}h1{font-size:clamp(2rem,7vw,4rem);line-height:1.1}a,button{display:block;margin:1rem 0;padding:.8rem 1rem;border:2px solid ${colors.accent};border-radius:.6rem;color:${colors.ink};background:${colors.paper};font:inherit;text-decoration:underline;cursor:pointer}[hidden]{display:none}a:focus-visible,button:focus-visible{outline:3px solid ${colors.accent};outline-offset:3px}</style><main>${icons.length ? `<img src="${icons.at(-1).src}" alt="">` : ''}<h1 id="name">${htmlText(name)}</h1><p id="status">Your previous edition stays available.</p><a id="play" hidden>Open installed game</a><button id="check">Check available edition</button><a id="prepare" hidden>Open game to prepare offline</a><a id="previous" hidden>Open previous edition</a></main><script type="module" src="./app.mjs"></script></html>`,
+      `<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="${colors.ink}"><link rel="manifest" href="./manifest.webmanifest"><link rel="stylesheet" href="./navigation.css"><title>${htmlText(name)} · Installation</title><style>${fontCSS}:root{--launcher-focus:${colors.ink};color-scheme:light;font-family:${fontPath ? '"Company Brand",' : ''}system-ui,sans-serif;color:${colors.ink};background:${colors.paper}}body{margin:0;padding:clamp(1.5rem,6vw,5rem)}main{max-width:44rem;margin:auto}img{max-width:5rem;max-height:5rem}h1{font-size:clamp(2rem,7vw,4rem);line-height:1.1}a,button{display:block;margin:1rem 0;padding:.8rem 1rem;border:2px solid ${colors.accent};border-radius:.6rem;color:${colors.ink};background:${colors.paper};font:inherit;text-decoration:underline;cursor:pointer}[hidden]{display:none}a:focus-visible,button:focus-visible{outline:3px solid ${colors.accent};outline-offset:3px}</style><body class="offline-launcher"><main>${icons.length ? `<img src="${icons.at(-1).src}" alt="">` : ''}<h1 id="name">${htmlText(name)}</h1><p id="status">Your previous edition stays available.</p><a id="play" hidden>Open installed game</a><button id="check">Check available edition</button><a id="prepare" hidden>Open game to prepare offline</a><a id="previous" hidden>Open previous edition</a></main><script type="module" src="./app.mjs"></script></body></html>`,
     ),
   );
   put(
     'app/app.mjs',
     Buffer.from(`import { validateCompanyInstallationReference } from './edition-context.mjs';
+import { attachLauncherNavigation } from './ui/launcher-navigation.mjs';
 const ID=${scriptJSON(editionId)}, ROOT=${scriptJSON(identity.scope)}, NAME=${scriptJSON(name)}, KEY='revealline.company-installed.'+ID+'.v1';
 const $=id=>document.getElementById(id); $('name').textContent=NAME;
+attachLauncherNavigation();
 const validate=value=>validateCompanyInstallationReference(value,{editionId:ID,baseURL:location.href,editionRoot:ROOT});
 try{const state=JSON.parse(localStorage.getItem(KEY)||'{}');if(state.active){const a=validate(state.active);$('play').href=new URL(a.entry,a.scope);$('play').hidden=false;}if(state.previous){const p=validate(state.previous);$('previous').href=new URL(p.entry,p.scope);$('previous').hidden=false;}}catch(error){$('status').textContent=error.message;}
 $('check').onclick=async()=>{try{const response=await fetch('./current.json',{cache:'no-store'});if(!response.ok)throw new Error('Update check unavailable.');const candidate=validate(await response.json());$('prepare').href=new URL(candidate.entry,candidate.scope);$('prepare').hidden=false;$('status').textContent='Open this edition and choose Prepare offline. Existing progress is preserved.';}catch(error){$('status').textContent=error.message;}};
 // The game records a verified edition only after explicit preparation succeeds.
 navigator.serviceWorker?.register('./service-worker.js',{scope:'./',updateViaCache:'none'}).catch(error=>{$('status').textContent=error.message;});\n`),
   );
+  for (const [path, bytes] of await buildLauncherNavigationFiles(
+    fileURLToPath(new URL('..', import.meta.url)),
+  ))
+    put('app/' + path, bytes);
   const contextSource = await fs.readFile(new URL('../game/edition-context.mjs', import.meta.url));
   put('app/edition-context.mjs', contextSource);
   if (!result.has('game/edition-context.mjs')) put('game/edition-context.mjs', contextSource);

@@ -1,16 +1,28 @@
-> Retained historical excerpt after an ownership migration. Exact originals are preserved separately. This excerpt is not the original complete record or a release qualification.
-
 # Company Studio
 
 Serve the repository and open `/authoring/company-studio/`. The seven steps edit the same data formats used by the edition compiler: identity, artwork roles, actors and atmosphere, campaigns, learning, preview, and delivery.
 
 The browser keeps changes in memory. JSON editor buffers survive step and campaign changes; apply them before export. Export creates a complete `revealline-company-source-draft.v1` packet containing the catalog and every declared JSON source. Declared retained presentations are immutable recovery data: their draft entries keep the original JSON text in `data`, including whitespace. They have no editable mission/lesson panel. Import, export and preview verify their registered byte count, SHA-256, receipt and selected audience; missing or changed originals are rejected. Binary media remains in the source workspace. Asset Studio prepares original media; the source catalog records its exact bytes, SHA-256, ownership dependencies and publication decision.
 
+Source export and import use an in-app operation dialog with a reachable **Cancel** action. Cancel or Back keeps the current applied draft and unapplied editor/form changes. A pending read cannot publish after the selected edition, campaign, forms or JSON buffers change, a newer operation takes over, or the page loses foreground ownership. Imports validate all required source data before offering **Replace current draft**; this confirmation defaults to Cancel and is valid only for the captured draft state.
+
+**Reopen last exported draft** retains the most recent validated source packet in memory in this tab. It revalidates that packet and asks for the same explicit replacement confirmation. Reopen restores the exported edition and source, including immutable retained JSON, but it is not persistent Save: a reload or new tab loses the retained packet. The page reports a download request; confirming an actual file was saved remains the browser/OS boundary.
+
+Each setup step and its Sections entry focuses a reachable local control. Explicit **Read** / **Done reading** controls expose long artwork provenance, compiler commands and imported report text to keyboard/controller scrolling. Back returns to the exact Read action. Reading a report does not verify its artifact or approve its content.
+
+The separate `playtest.html` route uses a neutral bridge-notice example in the shared workbench with local reading controls for the task brief, inspected evidence and feedback. Open and Restart focus the task's Read action; a commit focuses its feedback Read action. Restart and Close clear answers. Task-card export contains the public exercise only, not answers, feedback, saved results or campaign progress. This local practice is separate from the compiled whole-game preview below.
+
 Import the packet into a new directory and compile an edition:
 
+```sh
+node scripts/company-studio.mjs import-draft --file droneaid-nl-workshop-lights-draft.json --workspace .cache/community-source
+node scripts/company-studio.mjs validate --workspace .cache/community-source --edition droneaid-nl-workshop-lights
+node scripts/company-studio.mjs preview --workspace .cache/community-source --edition droneaid-nl-workshop-lights --out dist/company-previews/community-preview
+```
 
 The CLI copies only approved media whose actual bytes match the catalog. Use `--media-root PATH` when the original assets are in another source workspace.
 
+Import the new v2 `dist/company-previews/community-preview.report.json` in step 06. Regenerate older reports with the current CLI. The report pins `edition-build.json`; the Studio checks that manifest, every admitted file’s byte count and SHA-256, and the compiled catalog and selected JSON against the applied draft before opening the full Solo game. The compiler’s ordinary theme projection is applied to both views, so focused editions omit unrelated campaign themes while edits to selected themes remain detectable. Only selected current media, exact media required by declared retained presentations, and the repository’s declared shared engine assets are admitted. Historical-only originals count in the report’s media totals and are not incorrectly labelled excluded. Changed report totals, exclusions, files, edition identity, invented review approval or an external preview URL are rejected. The “Source reference” link always opens the saved repository game and is explicitly separate from the draft preview. Preview output must use a visible directory: the development server intentionally does not serve `.cache` or other hidden directories.
 
 An imported report remains visibly unverified until the artifact check succeeds. Verification reads at most six files concurrently, limits a file to 64 MiB and the complete artifact to 256 MiB, and cancels after one minute or when the applied draft/report changes. This establishes consistency of local files, not an independent publisher signature or human approval. The report lists admitted files, excluded companies/editions/campaigns/assets, and checks still requiring review. Schema validation does not prove a new route is playable or that a lesson is factually correct. Route proofs, visual/accessibility checks and human playtesting remain release evidence; the studio does not publish a release.
 

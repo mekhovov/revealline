@@ -7,6 +7,7 @@ import {
 } from '../i18n/index.mjs';
 globalThis.RevealLineToolLaunch?.attached();
 import { createOperationStatus } from '../ui/operation-status.mjs';
+import { createGridEditorAdapter, registerAuthoringEditor } from '../ui/authoring-editors.mjs';
 import { geometryForLevel } from '../core/geometry.mjs';
 import { paintEditorMap, editorCellFromPointer } from './board-view.mjs';
 import { renderMapDiagnostics } from './map-diagnostics.mjs';
@@ -1237,6 +1238,26 @@ try {
     if (cell) paintAt(cell.x, cell.y);
   });
   $('paint-cell').onclick = () => paintAt(Number($('paint-x').value), Number($('paint-y').value));
+  registerAuthoringEditor(
+    $('map-editor'),
+    createGridEditorAdapter({
+      element: $('map-editor'),
+      dimensions: () => [Number($('paint-x').max) + 1, Number($('paint-y').max) + 1],
+      position: () => [Number($('paint-x').value), Number($('paint-y').value)],
+      move: ([x, y]) => {
+        $('paint-x').value = x;
+        $('paint-y').value = y;
+      },
+      apply: () => paintAt(Number($('paint-x').value), Number($('paint-y').value)),
+      changed: () => {
+        $('map-editor').setAttribute(
+          'aria-label',
+          `${t('tools:mapEditedPlayConfigurationToTestTheActualBehavior')} X ${$('paint-x').value}, Y ${$('paint-y').value}`,
+        );
+      },
+    }),
+    { keyboard: true },
+  );
   $('undo-button').onclick = () => {
     const undo = $('undo-button'),
       ownedFocus = document.activeElement === undo,

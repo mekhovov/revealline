@@ -2332,8 +2332,8 @@
       "heroAssetId": "droneaid-nl-workshop-lights-01-reveal-v2",
       "iconAssetId": "droneaid-nl-icon-512",
       "id": "droneaid-nl",
-      "logoAssetId": "droneaid-nl-logo",
-      "name": "DroneAid Netherlands",
+      "logoAssetId": "droneaid-nl-propeller",
+      "name": "DroneAid",
       "publication": "public",
       "revision": 2,
       "sources": [
@@ -3105,7 +3105,7 @@
       "modes": [
         "solo"
       ],
-      "name": "Social Drone UA",
+      "name": "Social Drone UA / LINE",
       "presentationHistory": [
         {
           "bytes": 176323,
@@ -3174,7 +3174,7 @@
       "modes": [
         "solo"
       ],
-      "name": "Victory Drones",
+      "name": "Victory Drones / LINE",
       "presentationHistory": [
         {
           "bytes": 169999,
@@ -3235,7 +3235,7 @@
       "modes": [
         "solo"
       ],
-      "name": "Ukraine: Living Culture",
+      "name": "Ukraine: Living Culture / LINE",
       "presentationHistory": [
         {
           "bytes": 599212,
@@ -3310,7 +3310,7 @@
       "modes": [
         "solo"
       ],
-      "name": "FPV Learning",
+      "name": "FPV Learning / LINE",
       "presentationHistory": [
         {
           "bytes": 734363,
@@ -3384,7 +3384,7 @@
       "modes": [
         "solo"
       ],
-      "name": "Community Relay",
+      "name": "Community Relay / LINE",
       "publication": "public",
       "revision": 1
     },
@@ -3413,7 +3413,7 @@
       "modes": [
         "solo"
       ],
-      "name": "DroneAid Netherlands",
+      "name": "DroneAid / LINE",
       "presentationHistory": [
         {
           "bytes": 118479,
@@ -3463,7 +3463,7 @@
       "modes": [
         "solo"
       ],
-      "name": "Workshop Lights",
+      "name": "Workshop Lights / LINE",
       "presentationHistory": [
         {
           "bytes": 29573,
@@ -3507,7 +3507,7 @@
       "modes": [
         "solo"
       ],
-      "name": "Parts in Motion",
+      "name": "Parts in Motion / LINE",
       "presentationHistory": [
         {
           "bytes": 33974,
@@ -3551,7 +3551,7 @@
       "modes": [
         "solo"
       ],
-      "name": "Makers Together",
+      "name": "Makers Together / LINE",
       "presentationHistory": [
         {
           "bytes": 34640,
@@ -3589,7 +3589,7 @@
       "modes": [
         "solo"
       ],
-      "name": "The Careful Handoff",
+      "name": "The Careful Handoff / LINE",
       "presentationHistory": [
         {
           "bytes": 35799,
@@ -3627,7 +3627,7 @@
       "modes": [
         "solo"
       ],
-      "name": "Signals of Support",
+      "name": "Signals of Support / LINE",
       "presentationHistory": [
         {
           "bytes": 37264,
@@ -3665,7 +3665,7 @@
       "modes": [
         "solo"
       ],
-      "name": "Shared Horizon",
+      "name": "Shared Horizon / LINE",
       "presentationHistory": [
         {
           "bytes": 37998,

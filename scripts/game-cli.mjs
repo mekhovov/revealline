@@ -2,7 +2,6 @@
 import { validateLocalization } from './localization.mjs';
 /** Local browser-game tooling, including catalog validation for localized builds. */
 import { createHash } from 'node:crypto';
-import { deflateSync } from 'node:zlib';
 import { createServer } from 'node:http';
 import { createReadStream } from 'node:fs';
 import * as fs from 'node:fs/promises';
@@ -16,6 +15,7 @@ import {
   validateNavigationCatalogs,
 } from './pack-indexes.mjs';
 import { SOUNDTRACK_BUNDLED_ASSETS } from '../game/content/soundtrack-catalogue.mjs';
+import { generatedBrandIcons } from './brand-icons.mjs';
 
 export const PROJECT_ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const MARKER = '.xonix-build.json';
@@ -424,7 +424,7 @@ function publicPage(title, body, fieldKit = false, compiled = false, localized =
     ? '<link rel="stylesheet" href="./game/ui/field-kit-compiled.css"><script type="module" src="./game/presentation/page-entry.mjs"></script>'
     : '';
   const content = fieldKit ? body.replaceAll('<h1', '<h1 class="field-kit-display"') : body;
-  return `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="color-scheme" content="dark"><title data-i18n="${titles[title]}">${html(title)} · Reveal Line</title><style>body{margin:0;background:#091324;color:#edf2e8;font:17px/1.7 system-ui}main{max-width:760px;margin:8vh auto;padding:24px}a{color:#7fdbeb}h1{font-size:clamp(32px,6vw,58px);line-height:1.1}nav{display:flex;gap:16px;flex-wrap:wrap;margin:32px 0}nav a{padding:10px 16px;border:1px solid #456071;border-radius:8px;text-decoration:none}small{color:#adc1ca}code{overflow-wrap:anywhere}li{margin:12px 0}</style>${localization}${styles}${presentation}</head><body${fieldKit ? ' class="field-kit field-kit-support"' : ''}><main>${localized ? '<div data-language-control></div><noscript><p lang="en">Enable JavaScript to switch languages.</p><p lang="uk">Увімкніть JavaScript, щоб змінити мову.</p></noscript>' : ''}${content}</main></body></html>\n`;
+  return `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="color-scheme" content="dark"><title data-i18n="${titles[title]}">${html(title)} · FPV / LINE</title><style>body{margin:0;background:#091324;color:#edf2e8;font:17px/1.7 system-ui}main{max-width:760px;margin:8vh auto;padding:24px}a{color:#7fdbeb}h1{font-size:clamp(32px,6vw,58px);line-height:1.1}nav{display:flex;gap:16px;flex-wrap:wrap;margin:32px 0}nav a{padding:10px 16px;border:1px solid #456071;border-radius:8px;text-decoration:none}small{color:#adc1ca}code{overflow-wrap:anywhere}li{margin:12px 0}</style>${localization}${styles}${presentation}</head><body${fieldKit ? ' class="field-kit field-kit-support"' : ''}><main>${localized ? '<div data-language-control></div><noscript><p lang="en">Enable JavaScript to switch languages.</p><p lang="uk">Увімкніть JavaScript, щоб змінити мову.</p></noscript>' : ''}${content}</main></body></html>\n`;
 }
 export function addPublicEntries(entries, info) {
   const displayVersion = info.version.startsWith('v') ? info.version : `v${info.version}`;
@@ -476,17 +476,19 @@ export function addPublicEntries(entries, info) {
       bytes: Buffer.from(
         makePage(
           'Play',
-          `<small>REVEAL LINE · ${html(info.version)}</small><h1 data-i18n-rich="website:page.tagline">Clear a path.<br data-i18n-slot="lineBreak">Reveal a world.</h1><p data-i18n="website:page.introduction">Close a line through changing worlds, collect the pictures you uncover and try a new route. Play with keys, touch or a compatible controller.</p><nav>${links.join('')}</nav><p><a href="./privacy.html" data-i18n="website:page.privacyLink">Privacy and local storage</a> · <a href="./credits.html" data-i18n="website:creditsAndNotices">Credits and notices</a></p>${info.sourceRevision ? `<small data-i18n-rich="website:page.savedSource">Saved source <code data-i18n-slot="revision">${html(info.sourceRevision)}</code></small>` : '<small data-i18n="website:page.developmentBuild">Development distribution — source revision not recorded.</small>'}`,
+          `<small>FPV / LINE · ${html(info.version)}</small><h1 data-i18n-rich="website:page.tagline">Clear a path.<br data-i18n-slot="lineBreak">Reveal a world.</h1><p data-i18n="website:page.introduction">Close a line through changing worlds, collect the pictures you uncover and try a new route. Play with keys, touch or a compatible controller.</p><nav>${links.join('')}</nav><p><a href="./privacy.html" data-i18n="website:page.privacyLink">Privacy and local storage</a> · <a href="./credits.html" data-i18n="website:creditsAndNotices">Credits and notices</a></p>${info.sourceRevision ? `<small data-i18n-rich="website:page.savedSource">Saved source <code data-i18n-slot="revision">${html(info.sourceRevision)}</code></small>` : '<small data-i18n="website:page.developmentBuild">Development distribution — source revision not recorded.</small>'}`,
           fieldKit,
           compiled,
         ),
       ),
     });
-  const game = entries.find((entry) => entry.name === 'game/index.html');
-  if (game)
-    game.bytes = Buffer.from(
-      game.bytes.toString().replaceAll('__REVEALLINE_VERSION__', html(displayVersion)),
-    );
+  for (const name of ['game/index.html', 'game/couch/index.html', 'game/couch/relay-rescue.html']) {
+    const game = entries.find((entry) => entry.name === name);
+    if (game)
+      game.bytes = Buffer.from(
+        game.bytes.toString().replaceAll('__REVEALLINE_VERSION__', () => html(displayVersion)),
+      );
+  }
   entries.push({
     name: 'privacy.html',
     bytes: Buffer.from(
@@ -503,7 +505,7 @@ export function addPublicEntries(entries, info) {
     bytes: Buffer.from(
       makePage(
         'Credits and notices',
-        '<p><a href="./" data-i18n="website:gameHome">← Game home</a></p><h1 data-i18n="website:creditsAndNotices">Credits and notices</h1><p data-i18n="website:revealLineIsAnOriginalTerritoryCaptureGameInspiredBy">Reveal Line is an original territory-capture game inspired by the Xonix/Qix tradition. Reference games informed design research; their proprietary music, pictures, code and logos are not bundled as game assets.</p><p data-i18n-rich="website:theIncludedPhaserEngineRetainsItsSlot0BuiltInMusic">The included Phaser engine retains its <a data-i18n-slot="slot0" href="./game/vendor/PHASER-LICENSE.md" data-i18n="website:mitLicenseAndCopyrightNotice">MIT license and copyright notice</a>. Built-in music uses original procedural score recipes. Uploaded MP3s retain their author-supplied metadata and source records.</p><p data-i18n="website:theWorldsBackgroundsAndCharacterRigsAreChangeableFpvGameplay">The worlds, backgrounds and character rigs are changeable. FPV gameplay is a fictional arcade abstraction. The business-spend theme is a design concept and does not claim endorsement or actual business-product functionality.</p><p data-i18n="website:theTelegramEmojiCollectionResearchedForInspirationIsNotIncluded">The Telegram emoji collection researched for inspiration is not included as imported artwork. A pack author must supply appropriate attribution and rights for every asset they distribute; importing a file is not a redistribution license.</p>' +
+        '<p><a href="./" data-i18n="website:gameHome">← Game home</a></p><h1 data-i18n="website:creditsAndNotices">Credits and notices</h1><p data-i18n="website:revealLineIsAnOriginalTerritoryCaptureGameInspiredBy">FPV / LINE is an original territory-capture game inspired by the Xonix/Qix tradition. Reference games informed design research; their proprietary music, pictures, code and logos are not bundled as game assets.</p><p data-i18n-rich="website:theIncludedPhaserEngineRetainsItsSlot0BuiltInMusic">The included Phaser engine retains its <a data-i18n-slot="slot0" href="./game/vendor/PHASER-LICENSE.md" data-i18n="website:mitLicenseAndCopyrightNotice">MIT license and copyright notice</a>. Built-in music uses original procedural score recipes. Uploaded MP3s retain their author-supplied metadata and source records.</p><p data-i18n="website:theWorldsBackgroundsAndCharacterRigsAreChangeableFpvGameplay">The worlds, backgrounds and character rigs are changeable. FPV gameplay is a fictional arcade abstraction. The business-spend theme is a design concept and does not claim endorsement or actual business-product functionality.</p><p data-i18n="website:theTelegramEmojiCollectionResearchedForInspirationIsNotIncluded">The Telegram emoji collection researched for inspiration is not included as imported artwork. A pack author must supply appropriate attribution and rights for every asset they distribute; importing a file is not a redistribution license.</p>' +
           (has('game/vendor/MEDIABUNNY-LICENSE.txt') && has('game/vendor/mediabunny-1.59.1.json')
             ? '<p data-i18n-rich="website:page.mediabunnyNotice">The optional local video trimmer uses pinned Mediabunny 1.59.1 under its <a data-i18n-slot="license" data-i18n="website:page.mplLicense" href="./game/vendor/MEDIABUNNY-LICENSE.txt">MPL-2.0 license</a>; its <a data-i18n-slot="source" data-i18n="website:page.sourceChecksumRecord" href="./game/vendor/mediabunny-1.59.1.json">source and checksum record</a> is included.</p>'
             : '') +
@@ -520,6 +522,9 @@ export function addPublicEntries(entries, info) {
             : '') +
           (localized && has('game/vendor/LZ-STRING-LICENSE.txt')
             ? '<p data-i18n-rich="website:page.catalogCompressionNotice">Translation catalogs use lz-string by pieroxy under its <a href="./game/vendor/LZ-STRING-LICENSE.txt" data-i18n-slot="license" data-i18n="website:page.license">MIT license</a>.</p>'
+            : '') +
+          (has('game/ui/fonts/departure-mono/provenance.json')
+            ? '<p data-i18n-rich="website:page.menuFontNotice">Menu pixel type: Departure Mono 1.500 by Helena Zhang, self-hosted with full English and Ukrainian glyph coverage. <a data-i18n-slot="license" href="./game/ui/fonts/departure-mono/LICENSE">SIL Open Font License 1.1</a>; <a data-i18n-slot="source" href="./game/ui/fonts/departure-mono/provenance.json">source and checksum record</a>.</p>'
             : '') +
           (has('game/ui/fonts/field-kit/provenance.json')
             ? '<p data-i18n-rich="website:page.fontNotices">Pixel display type: Tiny5 by the Tiny5 Project Authors and designer Stefan Schmidt (<a data-i18n-slot="slot0" href="./game/ui/fonts/OFL.txt">OFL 1.1</a>), self-hosted and unmodified with Cyrillic and Ukrainian glyph coverage; <a data-i18n-slot="slot1" href="./game/ui/fonts/provenance.json" data-i18n="website:page.fontSource">source and checksum record</a>. Supporting display type: Handjet by the Handjet Project Authors (<a data-i18n-slot="slot2" href="./game/ui/fonts/field-kit/Handjet-OFL.txt">OFL 1.1</a>), instantiated at weight 600, element shape 2 and element grid 1. Interface type: Exo 2 by the Exo 2 Project Authors (<a data-i18n-slot="slot3" href="./game/ui/fonts/field-kit/Exo2-OFL.txt">OFL 1.1</a>), retaining weights 400–600. Numeric type: IBM Plex Mono by IBM Corp. (<a data-i18n-slot="slot4" href="./game/ui/fonts/field-kit/IBMPlexMono-OFL.txt">OFL 1.1</a>), weight 500. The supporting WOFF2 files retain full English and Ukrainian letter coverage. <a data-i18n-slot="slot5" href="./game/ui/fonts/field-kit/provenance.json" data-i18n="website:page.supportingFontSources">Supporting-font source versions, build recipe and file checksums</a>.</p>'
@@ -541,70 +546,9 @@ export function addPublicEntries(entries, info) {
   });
 }
 
-/** Original pixel emblem. Fixed integer geometry; no source images are modified. */
+/** Install assets derive from the generated FPV / LINE master without redrawing it. */
 export function offlineIcons(sizes = [180, 192, 512]) {
-  if (
-    !Array.isArray(sizes) ||
-    sizes.length > 16 ||
-    sizes.some((size) => !Number.isSafeInteger(size) || size < 16 || size > 4096)
-  )
-    throw new Error('Icon sizes must be integers between 16 and 4096 pixels.');
-  const palette = ['#091324', '#203852', '#53c7e8', '#f1cd6f', '#eef4df'];
-  const grid = Array.from({ length: 32 }, () => Array(32).fill(0));
-  const box = (x, y, w, h, c) => {
-    for (let j = y; j < y + h; j++) for (let i = x; i < x + w; i++) grid[j][i] = c;
-  };
-  box(6, 6, 20, 20, 1);
-  box(8, 8, 16, 16, 0);
-  box(8, 8, 8, 16, 2);
-  box(16, 8, 8, 7, 1);
-  box(16, 8, 2, 16, 4);
-  box(16, 22, 8, 2, 4);
-  box(22, 15, 2, 9, 4);
-  box(21, 12, 4, 4, 3);
-  box(22, 11, 2, 6, 3);
-  box(20, 13, 6, 2, 3);
-  const rectangles = [];
-  for (let y = 0; y < 32; y++)
-    for (let x = 0; x < 32; x++)
-      if (grid[y][x])
-        rectangles.push(
-          `<rect x="${x}" y="${y}" width="1" height="1" fill="${palette[grid[y][x]]}"/>`,
-        );
-  const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" shape-rendering="crispEdges"><rect width="32" height="32" fill="${palette[0]}"/>${rectangles.join('')}</svg>\n`;
-  const chunk = (kind, data) => {
-    const type = Buffer.from(kind),
-      header = Buffer.alloc(4),
-      sum = Buffer.alloc(4);
-    header.writeUInt32BE(data.length);
-    sum.writeUInt32BE(crc32(Buffer.concat([type, data])));
-    return Buffer.concat([header, type, data, sum]);
-  };
-  const png = (size) => {
-    const header = Buffer.alloc(13);
-    header.writeUInt32BE(size, 0);
-    header.writeUInt32BE(size, 4);
-    header[8] = 8;
-    header[9] = 2;
-    const rows = Buffer.alloc((size * 3 + 1) * size);
-    for (let y = 0; y < size; y++)
-      for (let x = 0; x < size; x++) {
-        const color = palette[grid[Math.floor((y * 32) / size)][Math.floor((x * 32) / size)]];
-        const offset = y * (size * 3 + 1) + 1 + x * 3;
-        for (let c = 0; c < 3; c++)
-          rows[offset + c] = parseInt(color.slice(1 + c * 2, 3 + c * 2), 16);
-      }
-    return Buffer.concat([
-      Buffer.from([137, 80, 78, 71, 13, 10, 26, 10]),
-      chunk('IHDR', header),
-      chunk('IDAT', deflateSync(rows, { level: 9 })),
-      chunk('IEND', Buffer.alloc(0)),
-    ]);
-  };
-  return [
-    { name: 'icons/icon.svg', bytes: Buffer.from(svg) },
-    ...sizes.map((size) => ({ name: `icons/icon-${size}.png`, bytes: png(size) })),
-  ];
+  return generatedBrandIcons(sizes);
 }
 
 /** Adds a content-addressed offline app only when this source has its explicit UI helper. */
@@ -631,6 +575,14 @@ export async function addOfflineEntries(
   entries.push(...offlineIcons());
   const { addOfflineLauncher } = await import('./offline-launcher.mjs');
   await addOfflineLauncher(root, entries, info.version);
+  for (const entry of entries.filter((item) => item.name.endsWith('.html'))) {
+    const source = entry.bytes.toString();
+    if (/<link\b[^>]*\brel=(["'])(?:icon|shortcut icon)\1/i.test(source)) continue;
+    const relativeRoot = path.posix.relative(path.posix.dirname(entry.name), '.') || '.';
+    const favicon = `<link rel="icon" type="image/png" sizes="192x192" href="${relativeRoot}/icons/icon-192.png">`;
+    if (source.includes('</head>'))
+      entry.bytes = Buffer.from(source.replace('</head>', `${favicon}</head>`));
+  }
   const optional = new Set([...(buildConfig.optionalOffline ?? []), ...optionalDownloads]);
   const optionalPacks = entries
     .filter((entry) => optional.has(entry.name))
@@ -640,8 +592,8 @@ export async function addOfflineEntries(
     });
   const manifest = {
     id: './',
-    name: 'Reveal Line',
-    short_name: 'Reveal Line',
+    name: 'FPV / LINE',
+    short_name: 'FPV / LINE',
     description: 'A territory-capture arcade game with interchangeable worlds and characters.',
     start_url: './game/',
     scope: './',
@@ -657,7 +609,7 @@ export async function addOfflineEntries(
     icons: [
       { src: './icons/icon-192.png', sizes: '192x192', type: 'image/png', purpose: 'any maskable' },
       { src: './icons/icon-512.png', sizes: '512x512', type: 'image/png', purpose: 'any maskable' },
-      { src: './icons/icon.svg', sizes: 'any', type: 'image/svg+xml', purpose: 'any' },
+      { src: './icons/icon.svg', sizes: '64x64', type: 'image/svg+xml', purpose: 'any' },
     ],
   };
   entries.push({ name: 'manifest.webmanifest', bytes: Buffer.from(json(manifest)) });
