@@ -16,6 +16,7 @@ import {
 } from './pack-indexes.mjs';
 import { SOUNDTRACK_BUNDLED_ASSETS } from '../game/content/soundtrack-catalogue.mjs';
 import { generatedBrandIcons } from './brand-icons.mjs';
+import { isOptionalSpatialAudioBody } from './offline-core-closure.mjs';
 
 export const PROJECT_ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const MARKER = '.xonix-build.json';
@@ -509,6 +510,9 @@ export function addPublicEntries(entries, info) {
           (has('game/vendor/MEDIABUNNY-LICENSE.txt') && has('game/vendor/mediabunny-1.59.1.json')
             ? '<p data-i18n-rich="website:page.mediabunnyNotice">The optional local video trimmer uses pinned Mediabunny 1.59.1 under its <a data-i18n-slot="license" data-i18n="website:page.mplLicense" href="./game/vendor/MEDIABUNNY-LICENSE.txt">MPL-2.0 license</a>; its <a data-i18n-slot="source" data-i18n="website:page.sourceChecksumRecord" href="./game/vendor/mediabunny-1.59.1.json">source and checksum record</a> is included.</p>'
             : '') +
+          (has('game/audio/effects/licenses.html')
+            ? '<p><a href="./game/audio/effects/licenses.html" data-i18n="website:page.effectsCredits">Sound effects credits and source</a></p>'
+            : '') +
           (localized
             ? '<p data-i18n-rich="website:page.i18nextNotice">Localization uses i18next under its <a href="./game/vendor/I18NEXT-LICENSE.txt" data-i18n-slot="slot0" data-i18n="website:page.license">MIT license</a>.</p>'
             : '') +
@@ -628,11 +632,13 @@ export async function addOfflineEntries(
     ...entries
       .filter(
         (entry) =>
-          (entry.name.startsWith('game/demo-data/') &&
-            entry.name.endsWith('.replay.json')) ||
+          (entry.name.startsWith('game/demo-data/') && entry.name.endsWith('.replay.json')) ||
           entry.name === 'game/ui/art/menu-scenes/droneaid-main-background.webp',
       )
       .map((entry) => entry.name),
+    // Recorded spatial effects stay hosted for online play and exact optional
+    // download, but are not charged to every installation's 64 MiB core.
+    ...entries.filter((entry) => isOptionalSpatialAudioBody(entry.name)).map((entry) => entry.name),
     ...(optionalArtwork?.files.map((file) => file.path) ?? []),
     // Recorded music is an optional enhancement. Keep even locally shipped
     // recordings out of the bounded gameplay cache so procedural music and

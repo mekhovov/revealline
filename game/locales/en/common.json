@@ -222,5 +222,11 @@
   "preferences.enemyRemainsHint": "Show defeated optional enemies where supported. Warnings, shots and brief hit effects stay visible.",
   "preferences.retryEncounterSave": "Retry saving",
   "preferences.encounterSessionOnly": "Enemy remains changed for this session; saving is disabled here.",
-  "preferences.encounterSaveFailed": "Enemy remains changed for this session. The choice could not be saved; existing settings are preserved."
+  "preferences.encounterSaveFailed": "Enemy remains changed for this session. The choice could not be saved; existing settings are preserved.",
+  "menuSounds": "Menu sounds",
+  "menuVolume": "Menu volume",
+  "radioSounds": "FPV radio announcements",
+  "radioVolume": "Radio volume",
+  "movementSounds": "Movement sounds",
+  "movementVolume": "Movement volume"
 }
