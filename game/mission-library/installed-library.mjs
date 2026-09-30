@@ -4,6 +4,7 @@ import { createMissionLibrary, LIBRARY_MODES } from './library.mjs';
 import { classicLibrarySources } from './classic-source.mjs';
 import { customLibrarySources } from './custom-source.mjs';
 import { preparedPackIdentity, verifyIndexedInstalledPack } from './pack-identity.mjs';
+import { isIncludedBundledMission } from './included-bundled-pack.mjs';
 
 /** Shared installed-content registry. Metadata never installs, fetches or decodes
  * anything. Host adapters still own runtime validation and atomic picture adoption.
@@ -139,7 +140,11 @@ export async function createInstalledMissionLibrary({
     }
     return pack
       ? { state: 'ready' }
-      : { state: 'download', bytes: row.download?.bytes ?? row.sourceFile.bytes };
+      : {
+          state: 'download',
+          bytes: row.download?.bytes ?? row.sourceFile.bytes,
+          ...(isIncludedBundledMission(row) ? { included: true } : {}),
+        };
   }
   const classicSources = classicLibrarySources(index, {
     availability: classicAvailability,

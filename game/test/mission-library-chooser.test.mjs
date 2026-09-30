@@ -789,6 +789,19 @@ test('mission cards expose structured current, completion and availability state
   chooser.destroy();
 });
 
+test('included bundled missions prepare on activation without a download badge', () => {
+  const source = owner({
+    entries: [row('included')],
+    availability: () => ({ state: 'download', bytes: 2048, included: true }),
+  });
+  const { $, chooser } = setup([source]);
+  const card = $('journey-cards').children[0];
+  assert.equal(card.dataset.availabilityState, 'included');
+  assert.equal(card.querySelector('.journey-card-action').hidden, true);
+  assert.equal(card.querySelector('.journey-card-action').textContent, '');
+  chooser.destroy();
+});
+
 test('unknown star grades preserve owner edition warnings and unavailable picture explanations', () => {
   const warning =
     'Earlier edition cleared on standard · no clear recorded for this selected edition';
