@@ -320,6 +320,39 @@ export async function buildOfflineContent(entries, excluded, version) {
       sha256: digest(entry.bytes),
       kind: 'gameplay',
     }));
+  // Hosted extras are not shared runtime dependencies. Keep them selectable
+  // without charging every starter/chapter download for their optional bodies.
+  const extraPaths = new Set();
+  for (const [id, title, matches] of [
+    ['practice', 'Optional flight practice', (name) => name.startsWith('optional-practice/')],
+    [
+      'demo',
+      'Optional Demo recordings',
+      (name) => name.startsWith('game/demo-data/') && name.endsWith('.replay.json'),
+    ],
+    [
+      'menu-art',
+      'Optional landing artwork',
+      (name) => name === 'game/ui/art/menu-scenes/droneaid-main-background.webp',
+    ],
+  ]) {
+    const owned = files.filter((file) => matches(file.path)).map((file) => file.path);
+    if (!owned.length) continue;
+    owned.forEach((name) => extraPaths.add(name));
+    groups.push({
+      id: `extras:${id}`,
+      title,
+      kind: 'gameplay',
+      category: 'extra',
+      current: false,
+      modes: [],
+      requires: [
+        'shared',
+        ...groups.filter((group) => group.category === 'mode').map((group) => group.id),
+      ],
+      files: owned,
+    });
+  }
   const assigned = new Set(groups.flatMap((group) => group.files));
   const unownedArtwork = files.filter(
     (file) => file.path.startsWith('game/content-design/assets/') && !assigned.has(file.path),
@@ -353,6 +386,7 @@ export async function buildOfflineContent(entries, excluded, version) {
           !authoredSnapshotPaths.has(file.path) &&
           !file.path.startsWith('game/content-design/assets/') &&
           !toolingPaths.has(file.path) &&
+          !extraPaths.has(file.path) &&
           !modePaths.has(file.path) &&
           ![...routeSnapshots.values()].includes(file.path),
       )
