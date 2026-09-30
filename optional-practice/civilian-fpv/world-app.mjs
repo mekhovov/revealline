@@ -7,6 +7,7 @@ import {
 } from './world-catalogue.mjs';
 import { FLIGHT_COURSES } from './catalogue.mjs';
 import { FLIGHT_DEMONSTRATIONS } from './demonstrations.mjs';
+import { WORLD_DEMONSTRATIONS } from './world-demonstrations.mjs';
 import { createFlight, createFlightRecorder, replayFlightCooperatively } from './model.mjs';
 import {
   initWorldRuntime,
@@ -15,12 +16,14 @@ import {
   replayWorldFlight,
   recoverWorldFlight,
   validateWorldCourse,
+  WORLD_FLIGHT_MODEL,
 } from './world-model.mjs';
+import { WORLD_COLLISION_BACKEND } from './world-collision.mjs';
 import { createFlightRenderer } from './renderer.mjs';
 import { createFlightInput } from './input.mjs';
 import { createRadioRuntime } from './radio-runtime.mjs';
 import { mountRadioSetup } from './radio-setup.mjs';
-import { DEFAULT_RESPONSE, createFlightProfileStore } from './radio-profile.mjs';
+import { DEFAULT_RESPONSE, createFlightProfileStore, responseIdentity } from './radio-profile.mjs';
 import { createFlightNotebook } from './notebook.mjs';
 import {
   createPlaylistStore,
@@ -65,7 +68,7 @@ const COPY_EN = {
   watchFirst: 'Watch first flight',
   tryFirst: 'Try first flight',
   demoCoverage:
-    '24 recorded examples cover the 12 Academy challenges in both modes. Examples for the new worlds are still in production.',
+    '40 recorded examples cover all 20 Academy and Woodland Park challenges in both modes. Examples for the remaining worlds are still in production.',
   watchDemo: 'Watch demonstration',
   playbackSpeed: 'Playback speed',
   flyThis: 'Fly this challenge',
@@ -170,7 +173,7 @@ const COPY_UK = {
   watchFirst: 'Переглянути перший політ',
   tryFirst: 'Спробувати перший політ',
   demoCoverage:
-    '24 записані приклади охоплюють 12 завдань Академії в обох режимах. Приклади для нових світів ще готуються.',
+    '40 записаних прикладів охоплюють усі 20 завдань Академії та Лісопарку в обох режимах. Приклади для решти світів ще готуються.',
   watchDemo: 'Переглянути демонстрацію',
   playbackSpeed: 'Швидкість відтворення',
   flyThis: 'Виконати це завдання',
@@ -628,9 +631,30 @@ export function mountWorldApp({
   const label = (entry) => entry.course.locales[locale].title;
   const demonstrationCache = new WeakMap();
   function demonstrationFor(entry, mode) {
-    if (!entry?.legacy) return null;
+    if (!entry) return null;
     const cache = demonstrationCache.get(entry.course) ?? new Map();
     if (cache.has(mode)) return cache.get(mode);
+    if (!entry.legacy) {
+      const candidate = WORLD_DEMONSTRATIONS.find(
+        (item) => item.proof.course === entry.id && item.proof.mode === mode,
+      );
+      const proof = candidate?.proof;
+      // Catalogue availability must not initialize a physics world. The full
+      // normalized source fingerprint binds this data to the exact revision;
+      // replayWorldFlight checks every v2 identity and final state before play.
+      const match =
+        proof?.format === 'FlightAttempt.v2' &&
+        proof.session === 'demonstration' &&
+        proof.model === WORLD_FLIGHT_MODEL &&
+        proof.backend === WORLD_COLLISION_BACKEND &&
+        proof.responseIdentity === responseIdentity(proof.response) &&
+        candidate.sourceIdentity === dataIdentity(validateWorldCourse(entry.course))
+          ? proof
+          : null;
+      cache.set(mode, match);
+      demonstrationCache.set(entry.course, cache);
+      return match;
+    }
     const proof = FLIGHT_DEMONSTRATIONS.find(
       (candidate) => candidate.course === entry.id && candidate.mode === mode,
     );
@@ -1957,7 +1981,9 @@ export function mountWorldApp({
     $('world-replay-controls').hidden = !replayProof;
     $('world-replay-label').textContent =
       replayKind === 'demonstration'
-        ? txt('ACADEMY DEMONSTRATION', 'ДЕМОНСТРАЦІЯ АКАДЕМІЇ')
+        ? entry.legacy
+          ? txt('ACADEMY DEMONSTRATION', 'ДЕМОНСТРАЦІЯ АКАДЕМІЇ')
+          : txt('WORLD DEMONSTRATION', 'ДЕМОНСТРАЦІЯ СВІТУ')
         : txt('RECORDED FLIGHT', 'ЗАПИСАНИЙ ПОЛІТ');
     $('world-replay-rate').value = String(replayRate);
     $('flight-mode').disabled = Boolean(replayProof) && replayKind !== 'demonstration';
@@ -2081,10 +2107,10 @@ export function mountWorldApp({
       flight.arm();
       $('flight-status').textContent = txt(
         replayKind === 'demonstration'
-          ? 'Watch throttle, hold and landing. Pause or slow playback to study the flight.'
+          ? 'Follow the route, turns and landing. Pause or slow playback to study the flight.'
           : 'Playing verified recording · no rewards.',
         replayKind === 'demonstration'
-          ? 'Стежте за газом, зависанням і посадкою. Зупиніть або сповільніть перегляд, щоб роздивитися політ.'
+          ? 'Стежте за маршрутом, поворотами та посадкою. Зупиніть або сповільніть перегляд, щоб роздивитися політ.'
           : 'Відтворення перевіреного запису · без нагород.',
       );
     }
