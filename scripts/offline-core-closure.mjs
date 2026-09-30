@@ -10,7 +10,10 @@ const PLAY_ENTRIES = [
   'credits.html',
   'privacy.html',
 ];
-const MODE_ENTRIES = { versus: ['game/couch/index.html'], team: ['game/couch/relay-rescue.html'] };
+const MODE_ENTRIES = {
+  versus: ['game/couch/index.html'],
+  team: ['game/couch/relay-rescue.html'],
+};
 // These are conditional source-v1 library adapters. Published Solo navigation
 // has exact metadata views and never executes their imports.
 const PUBLISHED_SOLO_BOUNDARIES = new Set([
@@ -58,6 +61,12 @@ export function selectOfflineCore(entries, excluded, { mode = 'solo' } = {}) {
     if (
       byPath.has(name) &&
       !excluded.has(name) &&
+      // Decorative backdrops tolerate an offline miss (the menu keeps its CSS
+      // gradient). The master is only used to produce the shipped install icons.
+      // Keep all originals in the distribution/optional tooling package, not in
+      // every player's 64 MiB startup cache. Never exclude code, fonts or icons.
+      !/^game\/ui\/art\/menu-scenes\/[a-z0-9][a-z0-9-]*\.(?:png|webp)$/.test(name) &&
+      name !== 'game/ui/art/identity/fpv-line/icon-master.png' &&
       !retained.has(name) &&
       !(mode === 'solo' && PUBLISHED_SOLO_BOUNDARIES.has(name))
     ) {
@@ -109,7 +118,10 @@ export function selectOfflineCore(entries, excluded, { mode = 'solo' } = {}) {
     const reference = (value) =>
       targets(value, name, byPath).forEach((target) => add(target, name));
     if ((name.endsWith('.mjs') || name.endsWith('.js')) && !name.includes('/vendor/')) {
-      const ast = parseModule(source, { ecmaVersion: 'latest', sourceType: 'module' });
+      const ast = parseModule(source, {
+        ecmaVersion: 'latest',
+        sourceType: 'module',
+      });
       // Literal imports plus registered JSON/asset paths used by fetch helpers.
       walk(ast, (node) => {
         if (node.type === 'Literal') reference(node.value);
