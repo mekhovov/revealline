@@ -1,5 +1,9 @@
 // Current qualification cases; legacy cases in the parent runner remain attributed
 // to their historical receipts. Every edit below uses the real controller owner.
+import {
+  nativeLandingDefaultCurrent,
+  nativeLandingDroneAidCurrent,
+} from './native-landing-whitelist-workflow.mjs';
 import { importThemeBundle } from '../../presentation/bundle.mjs';
 import { validateScenario } from '../../content.mjs';
 import { validateEnemyCatalogDraft } from '../../enemy-catalog.mjs';
@@ -46,6 +50,8 @@ async function fingerprint(blob) {
 const value = (p, css) => p.doc.querySelector(css).value;
 
 export const currentAuthoringCases = {
+  nativeLandingDefaultCurrent,
+  nativeLandingDroneAidCurrent,
   fpvRoleGalleryCurrent,
   reserveCatalogCurrent,
   ukraineRoleGalleryCurrent,
