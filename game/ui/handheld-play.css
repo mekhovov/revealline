@@ -165,7 +165,7 @@
     gap: 4px 8px;
     max-inline-size: none;
     block-size: 100dvh;
-    grid-template-rows: calc(44px + var(--handheld-music-space, 0px)) minmax(0, 1fr);
+    grid-template-rows: auto auto minmax(min-content, 1fr) auto;
     padding-block: env(safe-area-inset-top) env(safe-area-inset-bottom);
   }
   body.field-kit.playing:has(#coop-overlay[hidden]) :is(#coop-play, #coop-controls) {
@@ -177,6 +177,8 @@
     place-items: center;
     min-inline-size: 0;
     min-block-size: 0;
+    /* Controls set this row's minimum; the bitmap fits the remaining slot. */
+    contain: size;
   }
   body.field-kit.playing:has(#coop-overlay[hidden]) .coop-board-slot > .arena-wrap {
     display: contents;
@@ -193,13 +195,15 @@
   body.field-kit.playing:has(#coop-overlay[hidden]) .hud {
     grid-column: 1 / -1;
     grid-row: 1;
-    margin-inline-end: 60px;
-    height: 44px;
-    align-items: center;
+    margin-inline-end: 96px;
+    height: auto;
+    grid-template-columns: minmax(0, 1fr) max-content minmax(0, 1fr);
+    grid-template-areas: 'one team two';
+    align-items: start;
   }
   body.field-kit.playing:has(#coop-overlay[hidden]) .hud :is(.identity, .team-status) {
     display: flex;
-    flex-wrap: nowrap;
+    flex-wrap: wrap;
     gap: 5px;
     align-items: center;
     font-size: var(--handheld-label);
@@ -219,7 +223,7 @@
   }
   body.field-kit.playing:has(#coop-overlay[hidden]) .coop-board-slot,
   body.field-kit.playing:has(#coop-overlay[hidden]) .control-card {
-    grid-row: 2;
+    grid-row: 3;
   }
   body.field-kit.playing:has(#coop-overlay[hidden]) .control-card h2 {
     display: none;
@@ -236,10 +240,9 @@
     z-index: 12;
   }
   body.field-kit.playing:has(#coop-overlay[hidden]) #coop-message {
-    position: fixed;
-    bottom: env(safe-area-inset-bottom);
-    left: 25%;
-    right: 25%;
+    position: static;
+    grid-column: 1 / -1;
+    grid-row: 4;
     font-size: var(--handheld-label);
     max-height: 2.5em;
     overflow: auto;
@@ -423,7 +426,7 @@
   }
   body.field-kit.playing:has(#coop-overlay[hidden]):has(#coop-objective[data-kind='stronghold'])
     #coop-app {
-    grid-template-rows: calc(44px + var(--handheld-music-space, 0px)) auto minmax(0, 1fr);
+    grid-template-rows: auto auto minmax(min-content, 1fr) auto;
   }
   body.field-kit.playing:has(#coop-overlay[hidden]) #coop-objective[data-kind='stronghold'] {
     display: block;
@@ -441,11 +444,12 @@
 /* Keep seat labels in the compact strip without the desktop absolute badges. */
 @media (max-width: 1024px) and (orientation: landscape) and (max-height: 600px) {
   body.field-kit.playing:has(#coop-overlay[hidden]) .hud .identity {
-    display: grid;
-    grid-template-columns: 28px minmax(0, 1fr);
-    grid-template-rows: repeat(2, auto);
+    display: flex;
+    flex-wrap: wrap;
     gap: 0 4px;
     line-height: 1.1;
+    justify-self: stretch;
+    align-content: start;
   }
   body.field-kit.playing:has(#coop-overlay[hidden]) .hud .player-number {
     position: static;
@@ -458,16 +462,24 @@
     font-size: 14px;
   }
   body.field-kit.playing:has(#coop-overlay[hidden]) .hud .identity > span:not(.player-number) {
-    grid-column: 2;
     margin: 0;
+    min-inline-size: 0;
+    max-inline-size: 100%;
+    overflow-wrap: anywhere;
+    white-space: normal;
   }
   body.field-kit.playing:has(#coop-overlay[hidden]) .hud .team-status {
     flex-direction: column;
-    gap: 0;
+    flex-wrap: nowrap;
+    min-inline-size: 84px;
+    min-block-size: 44px;
+    padding-inline-end: 0;
+    justify-content: center;
+    gap: 0 8px;
     line-height: 1.1;
   }
-  /* Floating controls use the lower corners. The arena reserves their width
-     below so neither player has to steer through a control overlay. */
+  /* Controls occupy the same measured grid row as the board. Wrapped labels
+     contribute their real height; neither seat floats over HUD or objectives. */
   body.field-kit.playing:has(#coop-overlay[hidden]) #coop-app {
     grid-template-columns: minmax(0, 1fr);
   }
@@ -475,16 +487,14 @@
     grid-column: 1 / -1;
   }
   body.field-kit.playing:has(#coop-overlay[hidden]) .control-card {
-    position: fixed;
-    bottom: max(12px, env(safe-area-inset-bottom));
-    left: max(12px, env(safe-area-inset-left));
-    z-index: 9;
+    position: static;
     width: max-content;
+    max-inline-size: 100%;
+    align-self: center;
     pointer-events: none;
   }
   body.field-kit.playing:has(#coop-overlay[hidden]) .control-card:last-child {
-    left: auto;
-    right: max(12px, env(safe-area-inset-right));
+    justify-self: end;
   }
   body.field-kit.playing:has(#coop-overlay[hidden]) .control-card .race-pad {
     pointer-events: auto;
@@ -495,18 +505,17 @@
    complete wide board. Critical rescue/Support state remains visible. */
 @media (max-width: 680px) and (orientation: portrait) {
   body.field-kit.playing:has(#coop-overlay[hidden]) #coop-app {
-    padding: max(48px, calc(48px + env(safe-area-inset-top))) max(4px, env(safe-area-inset-right))
+    padding: env(safe-area-inset-top) max(4px, env(safe-area-inset-right))
       max(4px, env(safe-area-inset-bottom)) max(4px, env(safe-area-inset-left));
     min-height: 100dvh;
   }
   body.field-kit.playing:has(#coop-overlay[hidden]) .hud {
-    position: fixed;
-    inset: env(safe-area-inset-top) max(48px, calc(48px + env(safe-area-inset-right))) auto
-      max(4px, env(safe-area-inset-left));
-    height: 44px;
+    position: static;
+    height: auto;
+    grid-row: 1;
     display: grid;
-    grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
-    grid-template-areas: 'one team two';
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-areas: 'team team' 'one two';
     gap: 4px;
     align-items: center;
     border: 0;
@@ -521,9 +530,12 @@
   body.field-kit.playing:has(#coop-overlay[hidden]) .hud > .team-status {
     grid-area: team;
     display: flex;
-    flex-direction: column;
-    gap: 0;
-    padding: 0;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    min-block-size: 44px;
+    gap: 0 8px;
+    padding: 0 96px 0 0;
     border: 0;
     font-size: var(--handheld-label);
   }
@@ -547,12 +559,16 @@
   }
   body.field-kit.playing:has(#coop-overlay[hidden]) .hud .identity > span:not(.player-number) {
     margin: 0;
+    min-inline-size: 0;
+    overflow-wrap: anywhere;
     font-size: 0;
     grid-column: 2;
   }
-  body.field-kit.playing:has(#coop-overlay[hidden]) .hud .identity > .charge-state {
-    grid-column: 1 / -1 !important;
-    white-space: nowrap;
+  body.field-kit.playing:has(#coop-overlay[hidden]) .hud .identity > span.charge-state {
+    grid-column: 1 / -1;
+    min-inline-size: 0;
+    overflow-wrap: anywhere;
+    white-space: normal;
   }
   body.field-kit.playing:has(#coop-overlay[hidden]) .hud [data-compact]::after {
     content: attr(data-compact) / '';
@@ -622,22 +638,6 @@
       192px,
       calc((100dvw - 12px - env(safe-area-inset-left) - env(safe-area-inset-right)) / 2)
     );
-  }
-}
-
-@media (max-width: 680px) and (orientation: portrait) {
-  body.field-kit.playing[data-text-size='large']:has(#coop-overlay[hidden]) #coop-app {
-    padding-top: calc(78px + env(safe-area-inset-top));
-  }
-  body.field-kit.playing[data-text-size='large']:has(#coop-overlay[hidden]) .hud {
-    height: 74px;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    grid-template-areas: 'team team' 'one two';
-  }
-  body.field-kit.playing[data-text-size='large']:has(#coop-overlay[hidden]) .hud > .team-status {
-    flex-direction: row;
-    gap: 8px;
-    justify-content: center;
   }
 }
 
@@ -731,7 +731,7 @@
   body.field-kit.playing:has(#coop-overlay[hidden]) #coop-app {
     display: grid;
     grid-template-columns: minmax(0, 1fr);
-    grid-template-rows: 44px minmax(0, 1fr) auto auto;
+    grid-template-rows: auto minmax(0, 1fr) auto auto;
     gap: 4px;
     height: 100dvh;
     min-height: 0;
@@ -739,7 +739,7 @@
       max(4px, env(safe-area-inset-bottom)) max(4px, env(safe-area-inset-left));
   }
   body.field-kit.playing[data-text-size='large']:has(#coop-overlay[hidden]) #coop-app {
-    grid-template-rows: 74px minmax(0, 1fr) auto auto;
+    grid-template-rows: auto minmax(0, 1fr) auto auto;
     padding-top: env(safe-area-inset-top);
   }
   body.field-kit.playing:has(#coop-overlay[hidden]) #coop-play {
@@ -779,13 +779,13 @@
   }
   body.field-kit.playing:has(#coop-overlay[hidden]):has(#coop-objective[data-kind='stronghold'])
     #coop-app {
-    grid-template-rows: 44px auto minmax(0, 1fr) auto auto;
+    grid-template-rows: auto auto minmax(0, 1fr) auto auto;
   }
   body.field-kit.playing[data-text-size='large']:has(#coop-overlay[hidden]):has(
       #coop-objective[data-kind='stronghold']
     )
     #coop-app {
-    grid-template-rows: 74px auto minmax(0, 1fr) auto auto;
+    grid-template-rows: auto auto minmax(0, 1fr) auto auto;
   }
   body.field-kit.playing:has(#coop-overlay[hidden]) #coop-objective[data-kind='stronghold'] {
     grid-row: 2;
@@ -984,81 +984,91 @@ body.field-kit.race-focus .race-equipment:not(:has(button:not([hidden]))) {
   }
 }
 
-/* Team captions keep a full-width reading strip below the shared arena and
-   both thumbs. The preferred pad size fits the remaining height; small screens
-   keep at least 44px direction targets instead of covering Pause or Support. */
+/* Team chrome uses its measured grid height. Keep preferred pads where they
+   fit; short screens use the 132px floor (44px per direction). If long authored
+   text exhausts the viewport, normal overflow preserves every control and fact. */
 @media (max-width: 1024px) and (orientation: landscape) and (max-height: 600px) {
   body.field-kit.playing:has(#coop-overlay[hidden]) {
-    --team-message-space: calc(var(--handheld-label) * 2.5 + 8px);
-    --team-pad-size: min(156px, var(--team-pad-limit));
-    --team-pad-limit: max(
-      132px,
-      calc(
-        100dvh - env(safe-area-inset-top) - env(safe-area-inset-bottom) - 140px -
-          var(--team-message-space) - var(--handheld-music-space, 0px) -
-          var(--team-music-objective-space, 0px)
-      )
-    );
+    --team-pad-size: 156px;
+    --team-control-width: var(--team-pad-size);
   }
   body.field-kit.playing:has(#coop-overlay[hidden]):has(.race-pad[data-touch-size='large']) {
-    --team-pad-size: min(192px, var(--team-pad-limit));
+    --team-pad-size: 192px;
   }
-  /* A controller may hide only one seat. Retire the older fixed-width grid
-     in that case too, keeping the board stable as input devices change. */
-  body.field-kit.playing:has(#coop-overlay[hidden])
-    #coop-app:has(.control-card[data-touch-visible='false']) {
-    grid-template-columns: minmax(0, 1fr);
+  body.field-kit.playing[data-coop-touch='visible']:has(#coop-overlay[hidden]) #coop-app {
+    grid-template-columns: var(--team-control-width) minmax(0, 1fr) var(--team-control-width);
   }
-  body.field-kit.playing:has(#coop-overlay[hidden])
-    #coop-app:has(.control-card[data-touch-visible='false'])
+  body.field-kit.playing[data-coop-touch='visible']:has(#coop-overlay[hidden]) .coop-board-slot {
+    grid-column: 2;
+  }
+  body.field-kit.playing[data-coop-touch='visible']:has(#coop-overlay[hidden])
+    #coop-app:has(.control-card:first-child[data-touch-visible='false']) {
+    grid-template-columns: minmax(0, 1fr) var(--team-control-width);
+  }
+  body.field-kit.playing[data-coop-touch='visible']:has(#coop-overlay[hidden])
+    #coop-app:has(.control-card:first-child[data-touch-visible='false'])
     .coop-board-slot {
-    grid-column: 1 / -1;
+    grid-column: 1;
+  }
+  body.field-kit.playing[data-coop-touch='visible']:has(#coop-overlay[hidden])
+    #coop-app:has(.control-card:first-child[data-touch-visible='false'])
+    .control-card:last-child {
+    grid-column: 2;
+  }
+  body.field-kit.playing[data-coop-touch='visible']:has(#coop-overlay[hidden])
+    #coop-app:has(.control-card:last-child[data-touch-visible='false']) {
+    grid-template-columns: var(--team-control-width) minmax(0, 1fr);
   }
   body.field-kit.playing:has(#coop-overlay[hidden]) .coop-board-slot {
-    padding-inline: 2px;
-    padding-bottom: calc(var(--team-message-space) + 8px);
+    padding: 2px;
   }
-  body.field-kit.playing:has(#coop-overlay[hidden]):has(
-      .control-card:first-child[data-touch-visible='true']
-    )
-    .coop-board-slot {
-    padding-left: calc(var(--team-pad-size) + 8px);
-  }
-  body.field-kit.playing:has(#coop-overlay[hidden]):has(
-      .control-card:last-child[data-touch-visible='true']
-    )
-    .coop-board-slot {
-    padding-right: calc(var(--team-pad-size) + 8px);
-  }
-  body.field-kit.playing:has(#coop-overlay[hidden]) .control-card {
-    bottom: calc(var(--team-message-space) + 12px + env(safe-area-inset-bottom));
-  }
-  body.field-kit.playing:has(#coop-overlay[hidden]) .race-pad {
-    --touch-size: var(--team-pad-size);
-    grid-template-columns: minmax(44px, 1fr) minmax(70px, 1fr);
-  }
+  body.field-kit.playing:has(#coop-overlay[hidden]) .race-pad,
   body.field-kit.playing:has(#coop-overlay[hidden]) .race-pad[data-touch-size='large'] {
     --touch-size: var(--team-pad-size);
+    width: var(--team-control-width);
+    grid-template-columns: repeat(2, minmax(44px, 1fr));
+  }
+  body.field-kit.playing:has(#coop-overlay[hidden]) .race-pad :is(.touch-surface, .race-cross) {
+    justify-self: center;
   }
   body.field-kit.playing:has(#coop-overlay[hidden]) #coop-message {
-    left: max(12px, env(safe-area-inset-left));
-    right: max(12px, env(safe-area-inset-right));
-    bottom: env(safe-area-inset-bottom);
-    height: var(--team-message-space);
-    max-height: var(--team-message-space);
+    height: auto;
+    max-height: 2.5em;
     margin: 0;
-    padding-block: 4px;
+    padding: 0;
     line-height: 1.25;
     overflow: auto;
     scrollbar-width: thin;
-    z-index: 10;
   }
 }
-@media (max-width: 1024px) and (orientation: landscape) and (max-height: 600px) {
+@media (max-width: 680px) and (orientation: portrait),
+  (max-width: 1024px) and (orientation: landscape) and (max-height: 600px) {
+  /* Only an admitted compact overflow adds a readable action beneath the
+     complete board. It uses the center slot, never either seat's controls. */
+  body.field-kit.playing:has(#coop-overlay[hidden])
+    .coop-board-slot:has(#coop-cue-overflow:not([hidden])) {
+    display: grid;
+    grid-template-rows: minmax(0, 1fr) auto;
+    row-gap: 4px;
+  }
+  body.field-kit.playing:has(#coop-overlay[hidden]) #coop-cue-overflow {
+    grid-column: 1;
+    grid-row: 2;
+    align-self: end;
+  }
   body.field-kit.playing:has(#coop-overlay[hidden]) .race-pad > button[data-action] {
+    min-inline-size: 44px;
+    min-block-size: 44px;
+    height: auto;
+    max-inline-size: 100%;
+    white-space: normal;
+    overflow-wrap: anywhere;
     font-size: var(--handheld-label);
     line-height: 1.1;
-    padding-inline: 0;
+    padding: 2px;
+  }
+  body.field-kit.playing:has(#coop-overlay[hidden]) .race-pad > button[data-action]::before {
+    display: none;
   }
 }
 
@@ -1104,20 +1114,13 @@ body.field-kit.race-focus .race-equipment:not(:has(button:not([hidden]))) {
     padding-inline: 6px;
   }
 }
-/* A short stronghold keeps its mandatory objective above both thumbs. Text
-   labels identify actions here; decorative icons return when height permits. */
+/* Short landscape reserves 44px direction cells before larger pad preference.
+   The wider action row keeps Large localized labels from costing a third line. */
 @media (max-width: 1024px) and (orientation: landscape) and (max-height: 350px) {
-  body.field-kit.playing:has(#coop-overlay[hidden]):has(#coop-objective[data-kind='stronghold'])
-    .race-pad
-    > button[data-action] {
-    height: 44px;
-    min-height: 44px;
-    padding: 0;
-  }
-  body.field-kit.playing:has(#coop-overlay[hidden]):has(#coop-objective[data-kind='stronghold'])
-    .race-pad
-    > button[data-action]::before {
-    display: none;
+  body.field-kit.playing:has(#coop-overlay[hidden]),
+  body.field-kit.playing:has(#coop-overlay[hidden]):has(.race-pad[data-touch-size='large']) {
+    --team-pad-size: 132px;
+    --team-control-width: 156px;
   }
 }
 
@@ -1485,10 +1488,15 @@ body.field-kit.race-focus .race-equipment:not(:has(button:not([hidden]))) {
   body.field-kit.playing:has(#coop-overlay[hidden]) .race-pad,
   body.field-kit.playing:has(#coop-overlay[hidden]) .race-pad[data-touch-size='large'] {
     --touch-size: 132px;
-    grid-template-columns: minmax(44px, 1fr) minmax(70px, 1fr);
+    --team-control-width: min(156px, 100%);
+    width: var(--team-control-width);
+    grid-template-columns: repeat(2, minmax(44px, 1fr));
+  }
+  body.field-kit.playing:has(#coop-overlay[hidden]) .race-pad :is(.touch-surface, .race-cross) {
+    justify-self: center;
   }
   body.field-kit.playing:has(#coop-overlay[hidden]) .race-pad > button[data-action] {
-    height: 44px;
+    height: auto;
     min-height: 44px;
     padding: 0;
     font-size: var(--handheld-label);
@@ -1658,17 +1666,10 @@ body.field-kit.race-focus .race-equipment:not(:has(button:not([hidden]))) {
   body.field-kit.game-shell[data-flight-state='running'] .telemetry {
     right: calc(var(--safe-right) + 152px);
   }
-  body.field-kit.playing:has(#coop-overlay[hidden]) .hud {
-    margin-inline-end: 96px;
-  }
 }
 @media (max-width: 680px) and (orientation: portrait) {
   body.field-kit.game-shell[data-flight-state='running'] .telemetry {
     right: calc(var(--safe-right) + 96px);
-  }
-  body.field-kit.playing:has(#coop-overlay[hidden]) .hud {
-    right: max(96px, calc(96px + env(safe-area-inset-right)));
-    margin-inline-end: 0;
   }
 }
 
