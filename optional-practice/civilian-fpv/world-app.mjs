@@ -2974,7 +2974,10 @@ export function mountWorldApp({
     closeRadio();
   });
   on(win, 'gamepadconnected', () => restoreRadio());
-  on(win, 'gamepaddisconnected', (e) => radio.disconnect(e.gamepad.index));
+  on(win, 'gamepaddisconnected', (e) => {
+    if (!replayProof && $('flight-source').value === 'radio')
+      radio.disconnect(e.gamepad.index);
+  });
   on(win, 'focus', () => restoreRadio());
   on(win, 'pagehide', () => pauseFlight());
   const ready = (async () => {
