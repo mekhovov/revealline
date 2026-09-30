@@ -15,7 +15,10 @@ import/export and publication verification remain part of every applicable item.
 | Courtyard demonstrations                         | `codex/fpv-courtyard-demonstrations`, [PR #890](https://github.com/mekhovov/revealline/pull/890) | Completed; native stack layer 4                                                      | Eight challenges × two modes; all 16 recordings complete without contacts; offline, localization and route-facing playback verified              |
 | Live sector timing and personal-best comparisons | `codex/fpv-sector-deltas`, [PR #892](https://github.com/mekhovov/revealline/pull/892)            | Completed; native stack layer 5                                                      | Tick-accurate sector timing, replay-verified compatible reference frozen per attempt, interrupted-flight restoration and readable EN/UK feedback |
 | Warehouse racing demonstrations                  | `codex/fpv-warehouse-demonstrations`, [PR #894](https://github.com/mekhovov/revealline/pull/894) | Completed; native stack layer 6                                                      | 16 new demonstrations, all previous 56 proofs unchanged, final browser/offline/EN-UK walkthroughs; 72 available examples                         |
-| Remaining new-world demonstrations               | Stadium, container yard, garage; separate coherent PRs                                           | Recordings prepared; browser/integration and target-visibility qualification pending | Exact recordings and reproducible generators retained in ignored local preparation output; do not publish before final checks                    |
+| Racing Stadium demonstrations                    | `codex/fpv-stadium-demonstrations`, [PR #895](https://github.com/mekhovov/revealline/pull/895) | Completed; native stack layer 7 | 16 new demonstrations, 72 earlier proof hashes preserved; final browser/offline/EN-UK verification; 88 available examples |
+| Remaining new-world demonstrations               | Container yard and garage; separate coherent PRs                                           | Recordings prepared; browser/integration and target-visibility qualification pending | Exact recordings and reproducible generators retained in ignored local preparation output; do not publish before final checks                    |
+| Animated local personal-best ghost | `codex/fpv-local-ghost`, isolated sparse worktree `/tmp/fpv-local-ghost-20261001` | In progress in parallel | Optional presentation driven by the same exact replay-verified frozen reference as sector timing; tick-aligned pause/retry/recovery; no physics or scoring changes |
+| Reimport review before applying external edits | Subsequent creator feature PR | Queued after ghost | Preview additions/changes/deletions and explicit override decisions before applying source changes; preserve stable route IDs and draft state |
 | World/drone presentation and player tuning       | Subsequent bounded feature PRs                                                                   | Queued                                                                               | Improve remaining art/animation/readability and mode-specific thresholds using actual player observations; keep flight handling unchanged        |
 | Final qualification                              | Final phase                                                                                      | Deferred                                                                             | Additional unit coverage, full compatibility/failure matrix, named physical-device performance and human content acceptance                      |
 
@@ -26,7 +29,7 @@ challenge definitions do not represent 60 fully polished, human-qualified levels
 ## Publication procedure
 
 The FPV PRs are now linked as **native GitHub stack #889**, rooted on `main`.
-The existing layers are #885 → #887 → #888 → #890 → #892 → #894. New dependent items append above the
+The existing layers are #885 → #887 → #888 → #890 → #892 → #894 → #895. New dependent items append above the
 current open top; keep each feature's reviewed diff separate. The owner explicitly
 requested stacked PRs on 1 October 2026.
 
@@ -182,3 +185,39 @@ work can continue independently in scratch files during the coordinated refresh.
 Unit coverage remains in the final phase; functional verification continues for
 every increment. These are development examples, with physical-device and
 unfamiliar-player qualification still outstanding.
+
+### Third coordinated refresh
+
+Stadium is published as [PR #895](https://github.com/mekhovov/revealline/pull/895).
+All seven layers were refreshed onto main
+`7e252ba98388ed8be9a7f50efb15ed036a7862d2` using recovery refs and an atomic
+push with explicit captured remote-head leases. FPV source, content, dependencies
+and assets remained unchanged. Stadium rebuilt to the same package SHA-256
+`402dd39dce98416cca534a46c7df97cfd66bf8b5e55733bf26ba4cb636f8e813`.
+
+- #885: `9a20c7a3bbd9b67723b2dff36fc2ac2351fe53f5`
+- #887: `158183810ab7cc48c0995d1f3f188dcd79773976`
+- #888: `b8a59bb6f1e40d45e85f829f34264d8e2e807cd5`
+- #890: `be13e586b0c5bef8f4f9a81dcc55dbc45294ddae`
+- #892: `dfa4ecf19e202af1afe855a68bd2fd33342969b1`
+- #894: `fbb42ca776c0f0f1c9479a24b365a6629721004a`
+- #895: `80b68e7f86f62631b74661631d96b5c71b4a4907`
+
+Fresh source gates and protected publication are being followed independently of
+`codex/fpv-container-demonstrations`, the next local feature branch. Close-range
+operations example preparation stays in scratch files until reproducible and
+visually qualified. No public FPV launch is claimed at this checkpoint.
+
+### Container Yard handoff
+
+Container Yard is complete and ready for its focused PR above Stadium. It adds
+16 reproduced demonstrations with real close approaches and pulse actions,
+raising coverage to 104 examples across 52 challenges. All 88 earlier proof
+hashes remain unchanged. Actual incoming fire produces honest 85–100 health
+outcomes; every example completes without contacts and every player pulse hits.
+Final Chromium replays, pre-fire FPV/chase visibility, playback controls, record
+isolation, hazard views, Ukrainian mobile layout and offline orientation/combat
+passed with zero page errors. The 75-file package is 12,306,578 bytes, SHA-256
+`f33c04cf3a4a63953bebf0914046c841e3fa4f1602912f7e943c9c2931dbf2cb`.
+Garage is the next content slice. Optional local-ghost development continues in
+its isolated sparse worktree; merge only its completed and verified feature.
