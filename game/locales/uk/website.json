@@ -280,6 +280,6 @@
   "page.qrNotice": "Автономні QR-винагороди використовують генератор QR-кодів Project Nayuki 1.8.0 за [[license]]. Додано [[source]].",
   "page.menuFontNotice": "Піксельний шрифт меню: Departure Mono 1.500 від Helena Zhang, розміщений локально з повною підтримкою англійських та українських літер. [[license]]; [[source]].",
   "page.effectsCredits": "Авторство звукових ефектів та джерела",
-  "neonReferencePack": "Неонові арени",
-  "neonReferenceDescription": "Чотири неонові арени: Канали, Перехрестя, Серця та Лабіринт."
+  "neonReferencePack": "Neon Reference Pack",
+  "neonReferenceDescription": "Four neon arenas: Channels, Crossroads, Hearts and Labyrinth."
 }

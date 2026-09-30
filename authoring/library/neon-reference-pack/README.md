@@ -35,3 +35,8 @@ speeds, lives and coverage goals are authored defaults because still images do
 not establish them. See each level's README for specific projection choices.
 Tests cover source reproduction, import, discovery, opening captures and replay.
 Full-clear balance, device qualification and public deployment are unverified.
+
+Ukrainian localization is deferred. Neon entries currently display English in both
+locales; matching placeholder keys preserve the existing catalog contract. Further
+unit-test work is deferred in favor of level creation and delivery. Previously
+completed checks are retained as evidence.
