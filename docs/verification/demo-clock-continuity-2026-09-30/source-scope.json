@@ -1,0 +1,56 @@
+{
+  "base": "451b82dc13dc8a8545ff964ffb724d3d756ac62a",
+  "scope": "Named verification paths only; not a complete source or distributable inventory.",
+  "files": [
+    {
+      "path": "game/ui/demo-clock.mjs",
+      "bytes": 6254,
+      "sha256": "10a516cc6ba8b99cf6ba27ec3f5d3b9a7a66781e0effe17d2940cadf32c6da87"
+    },
+    {
+      "path": "game/ui/demo-host.mjs",
+      "bytes": 25114,
+      "sha256": "259ae76bc58ee538ac5bdbbac32d57aa831486bbeb635ac838f3a12479e07d6a"
+    },
+    {
+      "path": "game/demo-director.mjs",
+      "bytes": 7405,
+      "sha256": "7a56e0ea15fcde19d2130262d2ff59637faeaaf505047151a64a5adcf053aa69"
+    },
+    {
+      "path": "game/demo-sources.mjs",
+      "bytes": 3718,
+      "sha256": "5660d6aab183d5e0951898457875081c74b3e8be06dc9f7f241cf05fd0e531df"
+    },
+    {
+      "path": "game/mission-library/handoff.mjs",
+      "bytes": 10373,
+      "sha256": "a9d86fc25d27c36d9f0680a3100a7064e65798d6073fadbabc8d7acf117d0b39"
+    },
+    {
+      "path": "game/test/demo-clock.test.mjs",
+      "bytes": 13369,
+      "sha256": "724c8c679a81db201e4ce7388d7bd81f7787a503e1fea390d2dee8cec0dfd0fa"
+    },
+    {
+      "path": "game/test/demo-background.test.mjs",
+      "bytes": 10812,
+      "sha256": "69c26407d61d8575b95fb4f9ab35a091c8696e47f2854051f90380d682743401"
+    },
+    {
+      "path": "game/test/demo-sources.test.mjs",
+      "bytes": 19839,
+      "sha256": "6a8eb72dd53e2e5f38e886a795d6d1735fcc80d2e5bf097486ae0db1e3c80b6c"
+    },
+    {
+      "path": "game/test/helpers/solo-dom.mjs",
+      "bytes": 18919,
+      "sha256": "c79c30c4d7e19fd0ea5bac92b3a9f1fa2752511e2cd18793ec272e4c2bd86a32"
+    },
+    {
+      "path": "game/test/helpers/demo-host-fixture.mjs",
+      "bytes": 4297,
+      "sha256": "81328e9341cab312744f14e0fed690acff857f7fe4745a85800015d84987596a"
+    }
+  ]
+}

@@ -444,7 +444,7 @@ for (const kind of ['versus', 'team'])
     const before = checkpoint(h);
     h.$('shell-featured').focus();
     const starting = press(h, 'Enter');
-    assert.equal(h.$('shell-flight-cancel').hidden, false);
+    assert.equal(h.$('shell-flight-cancel').hidden, true);
     await request(h, kind);
     assert.equal(globalThis.location.href, gameURL + destinations[kind]);
     const chosen = h.doc.activeElement;
@@ -494,7 +494,7 @@ for (const kind of ['versus', 'team'])
       h.$('shell-continue').focus();
       const pending = press(h, 'Enter');
       await settle(() => decodes >= 2);
-      assert.equal(h.$('shell-flight-cancel').hidden, false);
+      assert.equal(h.$('shell-flight-cancel').hidden, true);
       await request(h, kind);
       // The real restore owns sessionBusy until its asynchronous finally runs.
       assert.equal(globalThis.location.href, homeURL);
@@ -549,7 +549,7 @@ for (const kind of ['versus', 'team'])
       h.$('shell-continue').focus();
       const pending = press(h, 'Enter');
       await settle(() => decodes >= 2);
-      assert.equal(h.$('shell-flight-cancel').hidden, false);
+      assert.equal(h.$('shell-flight-cancel').hidden, true);
       assert.equal(h.doc.activeElement.id, 'shell-continue');
       const cancel = new Event('cancel', { cancelable: true });
       h.$('shell-home').dispatchEvent(cancel);

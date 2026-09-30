@@ -1,0 +1,77 @@
+diff --git a/authoring/enemy-catalog/index.html b/authoring/enemy-catalog/index.html
+index d5751e85e9b6dd13b1a4b973aad3ec5ae367c252..2cb629e504a51e3f432aa96e3715a2efc01710fd 100644
+--- a/authoring/enemy-catalog/index.html
++++ b/authoring/enemy-catalog/index.html
+@@ -13,6 +13,21 @@
+     <script type="module" src="../../game/presentation/page-entry.mjs"></script>
+     <link rel="stylesheet" href="../../game/ui/operation-status.css" />
+     <style>
++      .catalog-host-actions {
++        display: flex;
++        flex-wrap: wrap;
++        align-items: center;
++        gap: 16px;
++      }
++      .catalog-host-actions > :is(button, a) {
++        box-sizing: border-box;
++        display: inline-flex;
++        align-items: center;
++        min-block-size: 44px;
++        min-inline-size: 44px;
++        max-inline-size: 100%;
++        white-space: normal;
++      }
+       #catalog-host-status + .button {
+         box-sizing: border-box;
+         padding-block: 0;
+@@ -30,19 +45,11 @@
+       Preview every registered role, prepare future generator choices and try a separate practice
+       map.
+     </p>
+-    <button id="open-catalog" disabled type="button">Open workshop</button>
+-    <a
+-      href="../../game/playground/"
+-      style="display: inline-flex; align-items: center; min-height: 44px"
+-      >Level playground</a
+-    >
+-    <a
+-      id="return-game"
+-      class="button"
+-      href="../../game/"
+-      style="display: inline-flex; align-items: center; min-height: 44px"
+-      >Return to game</a
+-    >
++    <div class="catalog-host-actions">
++      <button id="open-catalog" disabled type="button">Open workshop</button>
++      <a href="../../game/playground/">Level playground</a>
++      <a id="return-game" class="button" href="../../game/">Return to game</a>
++    </div>
+     <p id="catalog-host-status" class="operation-status" data-state="busy">
+       <span class="operation-status-signal" aria-hidden="true"><i></i><i></i><i></i></span
+       ><span class="operation-status-label" role="status">Loading registered themes…</span>
+diff --git a/authoring/skills/xonix-runtime-maintainer/SKILL.md b/authoring/skills/xonix-runtime-maintainer/SKILL.md
+index 8f12347634abd992ec2116f1919880f5c4c1d332..358af6bcf5ff50a72ea84225d6aa6aeaee5caa4d 100644
+--- a/authoring/skills/xonix-runtime-maintainer/SKILL.md
++++ b/authoring/skills/xonix-runtime-maintainer/SKILL.md
+@@ -367,6 +367,8 @@ Keep standalone Enemy workshop departure a static same-edition `../../game/` lin
+ 
+ For untouched Enemy startup auto-open, pass the enabled Open workshop button as the dialog's explicit return target; BODY is not a useful invoker. Keep ordinary callers bound to their actual invoker. Restore only on an actual foreground close that still owns focus, and recheck after native close callbacks: repeated Back, reopened dialogs, newer focus and child practice must not inherit a retired close's authority. Test Escape and modal Back from Presentation, the returned Open action, then forward page traversal to Level playground and Return to game without storage writes. Keep the loading-intent lease and practice bridge unchanged; finite DOM/default-action tests do not establish painted focus, native modal Tab or physical-controller acceptance.
+ 
++Keep the Enemy page's Open workshop, Level playground and Return to game actions in one wrapping group with unchanged DOM order, at least 44px targets and a gap that clears the shared 7px outward focus paint on both axes. Do not repair a wrapped neighbor covering the restored opener by changing close ownership, shrinking text or hiding the ring. Inspect startup Role → Presentation → Escape and forward keyboard traversal in Theme/Plain, Standard/Large, 320/390 portrait and 844 landscape. Record source-preview layout separately from exact public delivery; a local spacing correction closes no parent phase.
++
+ Preserve the actual dialog hierarchy: Main menu stays beneath Settings or Collection; Workshop stays beneath Field Guide, with its menu parent retained. Let the existing modal stack restore that exact opener on Close, Escape or controller Back. An already-open Main menu remains the return screen even while its underlying flight is paused; a direct flight opener returns to that paused flight. Nested practice returns to the guide first. Preserve Settings → Music Studio → Close studio → Settings, transaction cancellation and neutral input gates. On a first Studio read, disabling the initially focused Close button can move browser focus to the document; restore it after the read only if that disabling displaced focus and no later focus choice or dialog exit superseded it. Remember the initial target before the read rather than requiring immediate BODY focus: native blur may arrive later. Exercise both immediate and deferred disabled blur during read success/failure separately from cached reopening; never steal focus after a user choice, close or disposal. Explicit Replay or mission/appearance selection closes the appropriate parent dialogs; simply inspecting Collection or its picture retains its entry screen. Read [Collection return behavior](../../../docs/collection-title-return.md). Regression prompt: “Open title Settings and Music Studio, return twice; then open Field Guide, enter and leave practice, and close the guide. Repeat from a real paused cut. Verify the original screen/focus, exact saved state and explicit Resume.” Inspect both keyboard and modeled controller paths, then native browser focus and compact illustration clipping separately. The browser milestone still needs complete source gates and packaged/native-browser/public qualification; source or preview success grants no gate waiver. Full physical-device comfort and supported-device qualification remain P7, with no certification inferred here.
+ 
+ The Field Guide keeps the canonical theme catalog captured before the active pack narrows the flight theme list. Restore an FPV-only pack before bootstrap, then exercise all four Guide names, palettes and practice handoffs. Do not repair the Guide by changing the live run theme, removing available themes or inventing fallback palettes.
+diff --git a/docs/enemy-catalog.md b/docs/enemy-catalog.md
+index a4de23ab452d4bed19e3384249cdaa55cf67c8e1..6b7e5c4b6dddebea1daf1926a6c04ded2d45d803 100644
+--- a/docs/enemy-catalog.md
++++ b/docs/enemy-catalog.md
+@@ -16,6 +16,8 @@ An untouched foreground visit opens the workshop automatically when registered t
+ 
+ Back and Escape inside the catalog still close its dialog; they do not navigate away. When an untouched visit opened the catalog automatically, closing returns focus to the now-enabled Open workshop button, so forward page traversal can continue to Level playground and Return to game. Explicit opening retains its actual invoker. Only the current foreground close owns that restoration: an already closed panel, a reopened dialog, a newer close-listener focus choice or a child practice owner must not revive an earlier return target. The practice iframe retains its existing input and scoped Return to workshop bridge. The page's shared controller navigation can select Return to game after successful startup and once the dialog is closed; before startup completes or after it fails, the link remains an ordinary keyboard/pointer action.
+ 
++The three page actions wrap as a group in that same DOM order, with a 16px gap in both directions and targets at least 44px wide and tall. The gap reserves space for the shared focus ring, which extends 7px beyond a control; a link on the next row must not paint over the restored Open workshop outline. Text can wrap inside a target without reducing the selected text size. Check the real painted result after startup Role → Tab to Presentation → Escape, then forward Tab through both links, in Theme and Plain with Standard and Large text at 320/390 portrait and 844 landscape. Modeled host checks preserve behavior and order; they do not establish the native layout, physical input or public acceptance.
++
+ Maintenance prompt: “Hold the real theme request, focus Return to game, then succeed; verify readiness and neutral controller frames retain that focus without opening a modal. Repeat with an untouched visit, existing Return focus, keyboard/pointer intent and leave/return during loading. Then hold and fail the request and verify Return to game is still a usable same-edition link without running authoring handlers. On an untouched ready visit, close through Escape and Back, verify Open workshop owns focus, then traverse forward to Level playground and Return to game. Repeat Back after choosing Return and preserve that newer focus. With an explicitly opened workshop, close through Back, reach the link by keyboard and modeled controller, and verify activation neither applies the draft nor writes player progress. Keep modal and practice input ownership intact. Check target size, focus visibility and actual navigation in portrait/short landscape separately from DOM tests.”
+ 
+ ## Role contracts and art bindings

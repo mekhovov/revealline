@@ -149,7 +149,6 @@ export function prepareNativeMenus({
   if (mode === 'solo') {
     actions = root.querySelector('.home-actions');
     for (const id of ['shell-play-options', 'gameplay-tuning']) moveId(id, panels.gameplay);
-    for (const id of ['shell-gallery', 'shell-library']) moveId(id, panels.data);
     for (const id of [
       'shell-offline',
       'shell-offline-status',
@@ -160,19 +159,9 @@ export function prepareNativeMenus({
       moveId(id, panels.content);
     move($('storage-retention-button')?.closest('section'), panels.content);
     moveId('shell-controller-lab', panels.controls);
-    moveId('shell-fullscreen', panels.display);
     moveId('shell-music', panels.audio);
     moveId('shell-worlds', panels.content);
-    for (const id of [
-      'shell-demo',
-      'demo-availability',
-      'shell-help',
-      'shell-guide',
-      'shell-replay-theater',
-      'shell-release-explorer',
-      'shell-workshop',
-      'creator-tools',
-    ])
+    for (const id of ['shell-demo', 'demo-availability', 'shell-workshop'])
       moveId(id, panels.extras);
     move(settings.querySelector('.demo-settings'), panels.extras);
     move(doc.querySelector('.more-destinations a[href*="about.html"]'), panels.extras);
@@ -261,13 +250,17 @@ export function prepareNativeMenus({
   utilities.dataset.menuLayout = 'horizontal';
   utilities.dataset.menuEdgeExit = 'true';
   utilities.dataset.menuScope = 'landing';
-  const landingFullscreen = make('button', 'native-menu-fullscreen');
-  landingFullscreen.id = `${mode}-landing-fullscreen`;
-  landingFullscreen.type = 'button';
-  utilities.append(landingFullscreen);
+  const landingFullscreen =
+    mode === 'solo' ? $('shell-fullscreen') : make('button', 'native-menu-fullscreen');
+  if (mode !== 'solo') {
+    landingFullscreen.id = `${mode}-landing-fullscreen`;
+    landingFullscreen.type = 'button';
+    utilities.append(landingFullscreen);
+  }
   if (actions) actions.parentNode.insertBefore(utilities, actions.nextSibling);
   else root.append(utilities);
-  const settingsFullscreen = mode === 'solo' ? $('shell-fullscreen') : make('button');
+  if (mode === 'solo') utilities.hidden = true;
+  const settingsFullscreen = mode === 'solo' ? null : make('button');
   if (settingsFullscreen) {
     if (!settingsFullscreen.id) settingsFullscreen.id = `${prefix}-fullscreen`;
     settingsFullscreen.type = 'button';
@@ -293,12 +286,13 @@ export function prepareNativeMenus({
     parent.append(feedback);
     listeners.push(
       attachFullscreen(button, doc, {
+        allowInstallHelp: mode !== 'solo',
         escapeRoot: button === landingFullscreen ? root : null,
         onState: ({ label, message, hidden }) => {
-          button.textContent = label;
+          if (!button.hasAttribute('data-fullscreen-label')) button.textContent = label;
           feedback.textContent = message;
           feedback.hidden = !message;
-          if (button === landingFullscreen) utilities.hidden = hidden;
+          if (button === landingFullscreen && mode !== 'solo') utilities.hidden = hidden;
         },
       }),
     );
