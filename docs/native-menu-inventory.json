@@ -572,8 +572,9 @@
     {
       "name": "FPV role presentation",
       "route": "/authoring/library/fpv-role-presentations/index.html",
-      "verification": "pending exact-candidate browser qualification; historical observations do not establish current acceptance",
-      "historicalVerification": "browser mount verified; shared keyboard and virtual-controller reader/navigation; physical controller not tested"
+      "verification": "At runtime a3547f368 and layout follow-up a803186bb, the gallery has seven stable canvas readers, three pinned literal-document readers and owned cancelable source loading. Preview animation stops while paused, reduced, hidden, blurred or covered by a modal; unchanged 360x190 CSS canvases preserve the 1x study. The scoped cohort passes 84/84, including two inventory cases; a separate unchanged-main Couch host test remains 8/9 and is reported to Releases. First complete virtual input passes 4/4, covering all sizing/arena combinations, selectors, canceled choices, exact source reading, UK/EN and Return. Native keys at 390x844 reach all seven bounded canvases and all three documents, every selector option, toggles and controlled delayed Cancel/503/Retry without a pointer reset. Full native and final layout repeat have separately attributed receipts. Original art, rigs, renderer and documents remain unchanged; only the seven pre-existing original images are packaged, while gallery chrome remains source-only. Fresh 18/18 in-memory edition compiles pass at a3547f368 with 210,597-byte minimum headroom; layout-only attribution preserves that compile cutoff. Physical controllers, native builds, offline, performance, full shared Ukrainian status and publication remain open.",
+      "historicalVerification": "browser mount verified; shared keyboard and virtual-controller reader/navigation; physical controller not tested",
+      "evidence": "docs/verification/fpv-role-gallery-input-2026-09-30.md"
     },
     {
       "name": "Reserve illustration catalog",
