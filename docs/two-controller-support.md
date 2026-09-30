@@ -6,7 +6,7 @@ Connect each controller to the operating system using USB, Bluetooth or its rece
 
 While Ready or paused, release all mapped controls, then press a face button or Menu on a standard controller to join Player 1. Do the same on the other controller for Player 2. Joining consumes that gesture; release before choosing Start. Simultaneous joins use browser index order. Settings → Controls → Two controllers provides explicit assignment, swap, release and menu-owner controls.
 
-Each controller drives only its assigned player. One player owns shared menus; either player's Pause button can pause and take the menu. A third unassigned controller cannot control menus or pause the game by disconnecting. A lost controller pauses play without moving its partner's seat. Rejoin deliberately and select Resume. Release held controls after focus loss, mapping changes or resume. Refreshing or changing game modes requires joining again.
+Each controller drives only its assigned player. One player owns shared menus; either player's Pause button can pause and take the menu. A third unassigned controller cannot control menus or pause the game by disconnecting. A lost controller pauses play without moving its partner's seat. Rejoin deliberately and select Resume. Release held controls after focus loss, mapping changes or resume. Standard controllers rejoin after refresh or a mode change. Applied radio setups restore only when their saved device identities are unambiguous and their mapped controls are released.
 
 Standard controls retain the existing layout: D-pad/left stick to move, South for Ability/Support, West for Supply, right shoulder for held Boost, Menu for Pause. Keyboard layouts, pointer actions and touch controls remain available. Partially mapped controllers retain Auto touch on touch-capable devices; Always/Show and Off still override it. Solo bindings and Boost Toggle are independent.
 
@@ -32,7 +32,7 @@ Regular Solo now exposes **Settings → Controls → Radios and custom joysticks
 
 Solo uses `revealline.solo-radio-profiles.v1`, a separate store of the same bounded channel-recipe schema. The last applied radio setup now restores after reload/reconnection when its device identity is unambiguous. Mapped controls must return to neutral before input is accepted. Recipe imports still require explicit verification/application. Entering capture suppresses radio navigation; focus loss, closing settings or changing context cancels unfinished capture. The router retains its normal release, disconnect and Boost reset behavior.
 
-This is separate from the optional civilian FPV simulator's four-axis calibration, full-range throttle and arming flow. Test that source from its own checkout; it is not included in this branch's distribution.
+The FPV flight simulator is bundled with the regular game and is also available as an optional standalone package. Its four-axis calibration, full-range throttle, arming flow and proof identities remain separate from regular Solo radio setup.
 
 ## Profiles and recovery
 
