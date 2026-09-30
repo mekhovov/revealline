@@ -66,23 +66,39 @@ export function verifySourceVersion({
   return `v${version}`;
 }
 
-export function verifyPublicBoundary({ configuration, pages, rootRelease, buildInfo }) {
+export function verifyPublicBoundary({
+  configuration,
+  pages,
+  deployment,
+  buildInfo,
+  expectedMainSha = null,
+}) {
   const { latest } = releaseDecision({ configuration, pages });
   if (!VERSION.test(configuration.currentVersion))
     throw new Error('The reviewed selector has an invalid current version.');
   if (
-    rootRelease?.version !== latest ||
-    rootRelease?.play !== `releases/${latest}/site/game/` ||
-    !/^[a-f0-9]{40}$/.test(rootRelease?.sourceRevision || '')
+    deployment?.format !== 'revealline-main-deployment.v1' ||
+    deployment?.channel !== 'main' ||
+    deployment?.play !== 'game/' ||
+    !/^[a-f0-9]{40}$/.test(deployment?.sourceRevision || '') ||
+    !/^main-[a-f0-9]{12}$/.test(deployment?.buildVersion || '')
   )
-    throw new Error(`Public root does not expose the accepted ${latest} release.`);
+    throw new Error('Public root does not expose a valid continuous-main deployment.');
+  if (expectedMainSha !== null && deployment.sourceRevision !== expectedMainSha)
+    throw new Error(
+      `Public main deployment ${deployment.sourceRevision} does not match protected base ${expectedMainSha}.`,
+    );
   if (
-    buildInfo?.version !== latest ||
-    buildInfo?.sourceRevision !== rootRelease.sourceRevision ||
+    buildInfo?.version !== deployment.buildVersion ||
+    buildInfo?.sourceRevision !== deployment.sourceRevision ||
     buildInfo?.entry !== 'game/index.html'
   )
-    throw new Error(`Public game bytes do not match the accepted ${latest} release.`);
-  return { latest, sourceRevision: rootRelease.sourceRevision };
+    throw new Error('Public game bytes do not match the continuous-main deployment marker.');
+  return {
+    latest,
+    sourceRevision: deployment.sourceRevision,
+    buildVersion: deployment.buildVersion,
+  };
 }
 
 async function fetchPublicJSON(url) {
@@ -130,16 +146,16 @@ async function verifyPublic() {
   const cacheKey = encodeURIComponent(
     `${process.env.GITHUB_RUN_ID || 'local'}-${process.env.GITHUB_RUN_ATTEMPT || '0'}-${Date.now()}`,
   );
-  const rootRelease = await fetchPublicJSON(`${base}/release.json?boundary=${cacheKey}`);
-  const version = configuration.currentVersion;
-  const buildInfo = await fetchPublicJSON(
-    `${base}/releases/${version}/site/game/build-info.json?boundary=${cacheKey}`,
+  const deployment = await fetchPublicJSON(
+    `${base}/main-deployment.json?boundary=${cacheKey}`,
   );
+  const buildInfo = await fetchPublicJSON(`${base}/game/build-info.json?boundary=${cacheKey}`);
   const boundary = verifyPublicBoundary({
     configuration,
     pages: publishedReleasePages(),
-    rootRelease,
+    deployment,
     buildInfo,
+    expectedMainSha: process.env.PR_BASE_SHA || null,
   });
   const requested = verifyNextReleaseTitle(process.env.PR_TITLE, boundary.latest);
   return {

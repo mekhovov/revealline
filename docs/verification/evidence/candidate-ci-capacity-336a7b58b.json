@@ -1,0 +1,580 @@
+{
+  "format": "revealline-local-ci-capacity-summary.v1",
+  "observedAt": "2026-09-29T03:36:12.746Z",
+  "sourceRevision": "336a7b58b9a614da61e701fca7626b948ba9ec11",
+  "sourceTree": "4d696c2461e59e30360965dad98a66c3b19940f7",
+  "version": "v0.142.3",
+  "publicEligible": false,
+  "promotable": false,
+  "run": {
+    "id": 36515375259,
+    "url": "https://github.com/mekhovov/revealline/actions/runs/36515375259",
+    "conclusion": "success",
+    "candidateJob": 109236361592,
+    "optionalJob": 109236361737
+  },
+  "tests": {
+    "company": [
+      {
+        "tests": 1131,
+        "pass": 1131,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "duration_ms": 707693.128447
+      },
+      {
+        "tests": 16,
+        "pass": 16,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "duration_ms": 145.444401
+      },
+      {
+        "tests": 54,
+        "pass": 54,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "duration_ms": 22009.383262
+      },
+      {
+        "tests": 45,
+        "pass": 45,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "duration_ms": 3987.142813
+      },
+      {
+        "tests": 122,
+        "pass": 122,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "duration_ms": 5087.573768
+      },
+      {
+        "tests": 83,
+        "pass": 83,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "duration_ms": 873.928979
+      }
+    ],
+    "optional": [
+      {
+        "tests": 179,
+        "pass": 179,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "duration_ms": 23363.130487
+      }
+    ]
+  },
+  "logs": [
+    {
+      "path": "company-ci.log",
+      "bytes": 587161,
+      "sha256": "931cc3f203b2af3d566f89187cfa7d2968cdf8b4d9f19ec4afca3295e558ff01"
+    },
+    {
+      "path": "optional-flight-ci.log",
+      "bytes": 94272,
+      "sha256": "a548306af31e0f7dff121a982c8071e33359affb501afc70ad32436a0a228bdc"
+    }
+  ],
+  "capacityArtifact": {
+    "id": 11011646827,
+    "original": {
+      "path": "edition-capacity-ci.zip",
+      "bytes": 587130,
+      "sha256": "2c62bac8f70ed7d93148f4af500be9109a040e9273dd5380254262ea5dac09e9"
+    },
+    "githubDigestVerified": true,
+    "metadataFiles": 22,
+    "metadataBytes": 1545799,
+    "metadataValidatedBy": "editionCapacityPacket + createEditionCapacityReport",
+    "originalEditionArchiveBodiesDownloaded": false,
+    "descriptors": [
+      {
+        "path": "editions.json",
+        "bytes": 18568,
+        "sha256": "2b10c4dcc20b992db54d0c79ac7b5e5dc5c29ba96c20326bc789f18d51a685cf"
+      },
+      {
+        "path": "candidate-verification.json",
+        "bytes": 13692,
+        "sha256": "fa4f0650d3adac51cce7c16f02ef858ff4282e0ad9a7260df19d5bb29ece77c0"
+      },
+      {
+        "path": "capacity-inventory.json",
+        "bytes": 11094,
+        "sha256": "3ecf1980b857deed4068a750554e4d7f73c59465f849aac957e5f2bf9b5c6d15"
+      },
+      {
+        "path": "manifest-coupa-adventure.json",
+        "bytes": 79980,
+        "sha256": "6d230f05a182828cb3a59c7fa7270647197e0d87a12c0d886198f9fa57c277a4"
+      },
+      {
+        "path": "manifest-coupa-all.json",
+        "bytes": 85530,
+        "sha256": "e8260b4670cc349f9458fa9312266f0f1b262597eae998c09dc4084352432d06"
+      },
+      {
+        "path": "manifest-coupa-culture.json",
+        "bytes": 79795,
+        "sha256": "11e19eb7d2d65ee16776c3fd7a3c80c234ab46ee91feb3fd73ac373a10dba0da"
+      },
+      {
+        "path": "manifest-coupa-developers.json",
+        "bytes": 79969,
+        "sha256": "f5737b7f19fc5425778de32bf891edff69262ad5c2571a3197a4cff6b60a524d"
+      },
+      {
+        "path": "manifest-coupa-foundations.json",
+        "bytes": 80299,
+        "sha256": "9757c4e3399037f0110fe54c826aaf7399efd7a08f297cb32f5c063ffb097da6"
+      },
+      {
+        "path": "manifest-coupa-operations.json",
+        "bytes": 79988,
+        "sha256": "f38d144c17f6667a863a1b8f7bd3fab415d47d5b56cc69d051694900b1e1504a"
+      },
+      {
+        "path": "manifest-droneaid-community.json",
+        "bytes": 78884,
+        "sha256": "3213336e4d9f2a39f26c71ef6dfa6eb8e5570905734dc43c57e3ffdf73e95c5f"
+      },
+      {
+        "path": "manifest-droneaid-nl-careful-handoff.json",
+        "bytes": 80945,
+        "sha256": "163c781f72c85a4cbbc19b6ecc7aa5f41028b1ff034ccb6ce25c1697be7eca69"
+      },
+      {
+        "path": "manifest-droneaid-nl-community.json",
+        "bytes": 93122,
+        "sha256": "793ca1b537a8eb1e12da61898ed994fc1e720f2343d4b535486dcd3583e6b9b2"
+      },
+      {
+        "path": "manifest-droneaid-nl-makers-together.json",
+        "bytes": 80939,
+        "sha256": "94b3607d8de6bd506bb81cf0ad9e9a2a7be7c80cc4e340aed258f08e7c94221e"
+      },
+      {
+        "path": "manifest-droneaid-nl-parts-in-motion.json",
+        "bytes": 81287,
+        "sha256": "a9bfc00fbe707b5f01e7c4ecc9607bbf16ecb8d4764d73e1c42b375b6b4664ed"
+      },
+      {
+        "path": "manifest-droneaid-nl-shared-horizon.json",
+        "bytes": 80923,
+        "sha256": "68fbfa9211952283cb6e7dde3bc076f9c461da48ca378453f084f6d31e970358"
+      },
+      {
+        "path": "manifest-droneaid-nl-signals-of-support.json",
+        "bytes": 81011,
+        "sha256": "dabd0870eea9ab3198b967b74a8d63f4774cd04243f86e6abfcd057914c5ea04"
+      },
+      {
+        "path": "manifest-droneaid-nl-workshop-lights.json",
+        "bytes": 80926,
+        "sha256": "99739627dcbfb5a711f524032b6e4a3d3f69c64dadb7d376f14ef4ef7a008ce0"
+      },
+      {
+        "path": "manifest-fpv-learning.json",
+        "bytes": 93740,
+        "sha256": "7f14abc677f7da8240db48f2762bc0f46a192af61098efcf801c57d3981e06cc"
+      },
+      {
+        "path": "manifest-social-drone-ua.json",
+        "bytes": 83003,
+        "sha256": "c55575af6ae80f1a3542378579767c37194a38084f05e57979c9dc9ce9957ae0"
+      },
+      {
+        "path": "manifest-ukraine-culture.json",
+        "bytes": 89964,
+        "sha256": "7a0a6602eeb45db82fafbb3b3ea664f036f1feaf887e142478373495d61e31ef"
+      },
+      {
+        "path": "manifest-victory-drones.json",
+        "bytes": 81728,
+        "sha256": "3308bb6aacd0908594123b34df3a96387dd1531cbf87f7f93e0ec033bdf12b4f"
+      },
+      {
+        "path": "checksums.json",
+        "bytes": 10412,
+        "sha256": "07c20d228f8965221c6a469d09bc0a17f65eb3126e64664a5e1c0856ca153a83"
+      }
+    ]
+  },
+  "candidate": {
+    "reproducibleBuilds": 2,
+    "sourceEligibility": {
+      "assets": 294,
+      "files": 20688,
+      "format": "revealline-public-source-eligibility.v1",
+      "status": "verified"
+    },
+    "admission": {
+      "editions": [
+        {
+          "distributionSha256": "33517a03163eb98f4afe023fbca634c1c79015b30c97748967fb5f2beee7bad7",
+          "files": 604,
+          "id": "coupa-adventure",
+          "sourceArchiveSha256": "a888b5d6d798c1500d98fb864a76437f0a67fb16c6b35b41863a3a3b7fdb7307",
+          "totalBytes": 26009266
+        },
+        {
+          "distributionSha256": "b6dcc9a698e355a91ad49bf23e763ab236d5bc8417b5208c20b58cd54ba8646a",
+          "files": 639,
+          "id": "coupa-all",
+          "sourceArchiveSha256": "d61ff4252d9a7d1c9fcf6eea324d320d2d78ad039d808b16779780127744c65a",
+          "totalBytes": 60403517
+        },
+        {
+          "distributionSha256": "27b89908e118288ff06e97a6c51fda4ac7dd74071973cf5f93ea1e8039324800",
+          "files": 603,
+          "id": "coupa-culture",
+          "sourceArchiveSha256": "857ec9862c8fe848816a32bb0b92038f272f62fa2b2d52790c0604852bf3a7cf",
+          "totalBytes": 24734032
+        },
+        {
+          "distributionSha256": "edbd840d63166b5e4d3700098ac32ece1ef09ca7b069d369478dc024d072a8c2",
+          "files": 604,
+          "id": "coupa-developers",
+          "sourceArchiveSha256": "c13cca53c30d1a0f5706e7eb92c65d1f39e66ccc013a59871f316a271c5ad0ad",
+          "totalBytes": 27877646
+        },
+        {
+          "distributionSha256": "dbeabe5127338c178c9f3f6733a12ce28930aa6d1c99976f8736ae8c5c8ad35a",
+          "files": 606,
+          "id": "coupa-foundations",
+          "sourceArchiveSha256": "697be6a2dfa91c6c51cc07ea5e7f3a8a79bf5cc3df9958cdeb6df99aa614834c",
+          "totalBytes": 27200350
+        },
+        {
+          "distributionSha256": "a4068ecf2a7a699ad4b326ed41492d111f919d5db7655297b78c8f3754ab0db9",
+          "files": 604,
+          "id": "coupa-operations",
+          "sourceArchiveSha256": "f19220147dbab507ec040044f5a20f0e1b7ddd222cf53f626cc90a89d7c069a1",
+          "totalBytes": 26258963
+        },
+        {
+          "distributionSha256": "e185388fee7eb4d9aeb7888f07d111f65adf4db685caa9a908121e91760a20b0",
+          "files": 597,
+          "id": "droneaid-community",
+          "sourceArchiveSha256": "04f2a0cb64198d796fe28266c4d6fe37f66ce0f669ab10d35592bd15458a4f55",
+          "totalBytes": 25585754
+        },
+        {
+          "distributionSha256": "73c89dd810abe6f471fc7bbc5d147ded2242f3b424d1ec1cc0b3320e114ffef4",
+          "files": 607,
+          "id": "droneaid-nl-careful-handoff",
+          "sourceArchiveSha256": "76aaca4bc16ad68400c2da7005f3ad5d52ead9927b281708dd88ca823d79a8a7",
+          "totalBytes": 27830760
+        },
+        {
+          "distributionSha256": "d0f9dbd3fa9519577faa1ca0338a3cc2f9abd874b9689e114fb76a0ba9d8f477",
+          "files": 674,
+          "id": "droneaid-nl-community",
+          "sourceArchiveSha256": "01e831f9c7de3cecd1d4279d42ed4c8db02f75a9d4d4e9b95430f8ee494e8c70",
+          "totalBytes": 64862943
+        },
+        {
+          "distributionSha256": "df720e3a9b90ee9460ef550a0438d70c02021a27dad7093691b54b941d7bf59f",
+          "files": 607,
+          "id": "droneaid-nl-makers-together",
+          "sourceArchiveSha256": "954526206a0e70458931e404e1b338681bc497c5a7f377316fe9366d454cc8c0",
+          "totalBytes": 27698536
+        },
+        {
+          "distributionSha256": "3ba4493b40631d605ea888812fd50c86f4649fa53d5a0d81e2cce5ad4675f6a9",
+          "files": 609,
+          "id": "droneaid-nl-parts-in-motion",
+          "sourceArchiveSha256": "8a640091f5b1be261433ca64ed5b57d227e24269fd8f85302e558b830a26c2ec",
+          "totalBytes": 28210226
+        },
+        {
+          "distributionSha256": "8719d99c5a345d754e3252e2d83e606944654447f06d206cb2c68f1c1b5b2771",
+          "files": 607,
+          "id": "droneaid-nl-shared-horizon",
+          "sourceArchiveSha256": "3a546eb0de398440e48f3bca53df3921032449e77a6f7df6ff4b0420ff20116c",
+          "totalBytes": 28033068
+        },
+        {
+          "distributionSha256": "e7311debd8eb8365feee434fea1f8cc6e679ac5b30b1d09da9ab3f1ec3cf1d7c",
+          "files": 607,
+          "id": "droneaid-nl-signals-of-support",
+          "sourceArchiveSha256": "13c1b9ca0800770529dc0e6f105a12e612ecb2ed3cc47bfb17b9c616691727e2",
+          "totalBytes": 27846671
+        },
+        {
+          "distributionSha256": "bad5b7179ca585c4878690a5927807e1ffae02ac2bc9b7f221ec8283b90f3651",
+          "files": 607,
+          "id": "droneaid-nl-workshop-lights",
+          "sourceArchiveSha256": "252362a8193de91c3330d1e9af78221c9df08fb1922aa6bdf1e4076421757e13",
+          "totalBytes": 26516728
+        },
+        {
+          "distributionSha256": "2b2abba196f216f34969984fa8b8cf192fd7019ac1d02dee515a83eaba1ba47d",
+          "files": 687,
+          "id": "fpv-learning",
+          "sourceArchiveSha256": "36cea664f68bee58a2af4f6dbea7d91ccb81557e44c68714540181bb9f8e2821",
+          "totalBytes": 33107962
+        },
+        {
+          "distributionSha256": "d0857877e5d52cf66ffb04b0d8d7fe8d04cdb585c8b87f5484816ce5fe777258",
+          "files": 619,
+          "id": "social-drone-ua",
+          "sourceArchiveSha256": "e2cadd4adcc68e34440393c2287fdf4a1161f24c2f4583720ed93d000d1d9cd3",
+          "totalBytes": 25313285
+        },
+        {
+          "distributionSha256": "96c28fdbbb0d9664f8fa929dc2116a6419492e99bee0aed6ddded9e54c8409a6",
+          "files": 662,
+          "id": "ukraine-culture",
+          "sourceArchiveSha256": "39107226b7268429b79e4aff62879c5d48092c99a03f20d436dd3049dd8745d0",
+          "totalBytes": 41995279
+        },
+        {
+          "distributionSha256": "521dfd2c226804d7df65b859e71f8f93e3c46a377e69a6b870cacc86aa8b4397",
+          "files": 611,
+          "id": "victory-drones",
+          "sourceArchiveSha256": "217ebb64c8e6f3ea4bcaf8ad2152c390faff313dca796d71c0b32d0c651d6f7f",
+          "totalBytes": 21588365
+        }
+      ],
+      "format": "revealline-editions-admission.v1",
+      "publicEligible": false,
+      "sourceRevision": "336a7b58b9a614da61e701fca7626b948ba9ec11",
+      "sourceTree": "4d696c2461e59e30360965dad98a66c3b19940f7",
+      "status": "verified-candidate-members",
+      "version": "v0.142.3",
+      "zipMembersVerified": true
+    },
+    "scope": "Edition ZIP member admission is the successful CI receipt; local metadata verification did not re-download all edition archives."
+  },
+  "optionalArtifact": {
+    "id": 11011290032,
+    "original": {
+      "path": "optional-flight-ci.zip",
+      "bytes": 1302670,
+      "sha256": "a8d10995f2b87810e7663ff442b9b2bf377f4f1cc792804898d396ae2232965a"
+    },
+    "githubDigestVerified": true,
+    "originalArchiveMembersReverifiedLocally": true,
+    "admission": {
+      "format": "revealline-optional-package-admission.v1",
+      "version": "v0.142.3",
+      "sourceRevision": "336a7b58b9a614da61e701fca7626b948ba9ec11",
+      "sourceTree": "4d696c2461e59e30360965dad98a66c3b19940f7",
+      "packages": [
+        {
+          "id": "civilian-flight",
+          "revision": "e2894fa337681dffb11b751946e77c02518c3c4471ccb704b34642db2fe986ec",
+          "files": 29,
+          "bytes": 179026
+        },
+        {
+          "id": "civilian-fpv",
+          "revision": "088b6fe3dd58f617d755d9475b80099affcbdd0f6e60decf022b73352089fe43",
+          "files": 50,
+          "bytes": 2748526
+        }
+      ],
+      "zipMembersVerified": true,
+      "publicEligible": false
+    },
+    "verification": {
+      "admission": {
+        "format": "revealline-optional-package-admission.v1",
+        "packages": [
+          {
+            "bytes": 179026,
+            "files": 29,
+            "id": "civilian-flight",
+            "revision": "e2894fa337681dffb11b751946e77c02518c3c4471ccb704b34642db2fe986ec"
+          },
+          {
+            "bytes": 2748526,
+            "files": 50,
+            "id": "civilian-fpv",
+            "revision": "088b6fe3dd58f617d755d9475b80099affcbdd0f6e60decf022b73352089fe43"
+          }
+        ],
+        "publicEligible": false,
+        "sourceRevision": "336a7b58b9a614da61e701fca7626b948ba9ec11",
+        "sourceTree": "4d696c2461e59e30360965dad98a66c3b19940f7",
+        "version": "v0.142.3",
+        "zipMembersVerified": true
+      },
+      "committedInputsVerified": true,
+      "envelopeSha256": "64fcc9906508c00145e2710df2dacfc9df06393602faaaf1fd70b81b30eb4857",
+      "format": "revealline-optional-package-candidate-verification.v1",
+      "note": "Artifact admission does not qualify installed identity, device behavior or human learning. Review gates remain pending.",
+      "publicEligible": false,
+      "reproducibleBuilds": 2,
+      "sourceRevision": "336a7b58b9a614da61e701fca7626b948ba9ec11",
+      "sourceTree": "4d696c2461e59e30360965dad98a66c3b19940f7",
+      "version": "v0.142.3"
+    },
+    "descriptors": [
+      {
+        "path": "distribution-optional-civilian-flight.zip",
+        "bytes": 183178,
+        "sha256": "d4d2a01667dad22b99a319071ed4f00a8b8d098f201b0ccbd7132cbdba887ffc"
+      },
+      {
+        "path": "distribution-optional-civilian-fpv.zip",
+        "bytes": 2755824,
+        "sha256": "15bc04ac8bd0c8071715becf22a2390e29315554291f09cb8edfd357e51e2b9e"
+      },
+      {
+        "path": "manifest-optional-civilian-flight.json",
+        "bytes": 5631,
+        "sha256": "3d2c9ecdce425d15820c0ffbbdd4ab51d150f3f33506596dfd6d1c2dd853697e"
+      },
+      {
+        "path": "manifest-optional-civilian-fpv.json",
+        "bytes": 9242,
+        "sha256": "7616b99b8663e981faad710a33cfad8d7164ec8c775f898492ceccfbea99ab75"
+      },
+      {
+        "path": "optional-candidate-verification.json",
+        "bytes": 1015,
+        "sha256": "068d0b02620951cef188065051f0f6db63e1c120701db6c7819d03e0f7e448e4"
+      },
+      {
+        "path": "optional-checksums.json",
+        "bytes": 1580,
+        "sha256": "ee05d4d87549a0889905165bac2b7bed87f7a7f4a072d2003931fddf3d008415"
+      },
+      {
+        "path": "optional-package-review.json",
+        "bytes": 1997,
+        "sha256": "e70ed0181268357d4e82e6cb8c9a9eb37bc021987fb07d68f0a87511851214a4"
+      },
+      {
+        "path": "optional-packages.json",
+        "bytes": 1830,
+        "sha256": "64fcc9906508c00145e2710df2dacfc9df06393602faaaf1fd70b81b30eb4857"
+      },
+      {
+        "path": "source-inventory-optional-civilian-flight.json",
+        "bytes": 8686,
+        "sha256": "fbcd6bfd125c73283ff21aafa86a346a7d821218284e6cc21889c23c6bfa9191"
+      },
+      {
+        "path": "source-inventory-optional-civilian-fpv.json",
+        "bytes": 15182,
+        "sha256": "0ef1e193019d348e6bb4aceaae683c6f4e7430462885a7c5dfc97eef6dd75d15"
+      },
+      {
+        "path": "source-optional-civilian-flight.zip",
+        "bytes": 195018,
+        "sha256": "bb7b12424d9e1ed65a0837b649977c393585458a63f01d76a4fef89ee9cf2297"
+      },
+      {
+        "path": "source-optional-civilian-fpv.zip",
+        "bytes": 2770522,
+        "sha256": "a7b6c813db154591ff24a3d7c17b4aa51ad9eaa751fa273a65c9033af3f8f3c1"
+      }
+    ]
+  },
+  "hosting": {
+    "editionComponentsBytes": 574560137,
+    "completeHostedOutput": false,
+    "missing": [
+      "Exact future default artifact and generated root routes",
+      "Previously retained edition versions and launcher ownership",
+      "Selected-edition hub including download-only links",
+      "Optional packages, launchers and any other hosted files"
+    ]
+  },
+  "cohortPlanning": [
+    {
+      "id": "six",
+      "editionIds": [
+        "coupa-all",
+        "droneaid-nl-community",
+        "social-drone-ua",
+        "victory-drones",
+        "ukraine-culture",
+        "fpv-learning"
+      ],
+      "knownEditionOriginalBytes": 495915319,
+      "knownCombinedAdditiveBytes": 501860432,
+      "additiveLimitBytes": 950000000,
+      "unproducedReviewEvidenceAndExistingDraftBytes": null,
+      "completeBudget": false,
+      "qualifiedFit": false,
+      "basis": "Selected envelopes are serialization projections only; originals remain bound to the complete eighteen-edition candidate."
+    },
+    {
+      "id": "remaining-twelve",
+      "editionIds": [
+        "coupa-adventure",
+        "coupa-culture",
+        "coupa-developers",
+        "coupa-foundations",
+        "coupa-operations",
+        "droneaid-community",
+        "droneaid-nl-careful-handoff",
+        "droneaid-nl-makers-together",
+        "droneaid-nl-parts-in-motion",
+        "droneaid-nl-shared-horizon",
+        "droneaid-nl-signals-of-support",
+        "droneaid-nl-workshop-lights"
+      ],
+      "knownEditionOriginalBytes": 649003057,
+      "knownCombinedAdditiveBytes": 654948170,
+      "additiveLimitBytes": 950000000,
+      "unproducedReviewEvidenceAndExistingDraftBytes": null,
+      "completeBudget": false,
+      "qualifiedFit": false,
+      "basis": "Selected envelopes are serialization projections only; originals remain bound to the complete eighteen-edition candidate."
+    },
+    {
+      "id": "all-eighteen",
+      "editionIds": [
+        "coupa-adventure",
+        "coupa-all",
+        "coupa-culture",
+        "coupa-developers",
+        "coupa-foundations",
+        "coupa-operations",
+        "droneaid-community",
+        "droneaid-nl-careful-handoff",
+        "droneaid-nl-community",
+        "droneaid-nl-makers-together",
+        "droneaid-nl-parts-in-motion",
+        "droneaid-nl-shared-horizon",
+        "droneaid-nl-signals-of-support",
+        "droneaid-nl-workshop-lights",
+        "fpv-learning",
+        "social-drone-ua",
+        "ukraine-culture",
+        "victory-drones"
+      ],
+      "knownEditionOriginalBytes": 1144918190,
+      "knownCombinedAdditiveBytes": 1150863303,
+      "additiveLimitBytes": 950000000,
+      "unproducedReviewEvidenceAndExistingDraftBytes": null,
+      "completeBudget": false,
+      "qualifiedFit": false,
+      "basis": "Selected envelopes are serialization projections only; originals remain bound to the complete eighteen-edition candidate."
+    }
+  ],
+  "limitations": [
+    "Exact336a7b58b candidate only; subsequent Firefox correction needs newly frozen qualification.",
+    "Private candidates retain existing package version; no published release assets replaced or added.",
+    "All eighteen known additive originals exceed950MB before reviews/evidence; selected cohorts need coordinator-owned frozen builds.",
+    "Complete default/hosted output, final performance/retention and publication/rollback remain separate.",
+    "Human learning, artwork and physical radio/device evidence remains deferred."
+  ]
+}

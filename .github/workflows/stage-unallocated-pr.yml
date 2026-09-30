@@ -14,44 +14,9 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  sync-target-title:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Mirror the explicit release milestone in the PR title
-        uses: actions/github-script@ed597411d8f924073f98dfc5c65a23a2325f34cd # v8.0.0
-        with:
-          script: |
-            const pull = context.payload.pull_request;
-            const targetPrefix = /^\[Target v\d+\.\d+\.\d+(?: input)?\]\s*/;
-            const releasePrefix = /^Release v\d+\.\d+\.\d+\b/;
-            const milestone = pull.milestone?.title ?? '';
-            const version = milestone.match(/^v(\d+\.\d+\.\d+)(?:\b|\s|—|-)/)?.[1] ?? null;
-            const baseTitle = pull.title.replace(targetPrefix, '').trim();
-            const input = pull.labels.some(({ name }) => name === 'release-aggregate-input');
-            const expectedTitle = releasePrefix.test(pull.title)
-              ? pull.title
-              : version
-                ? `[Target v${version}${input ? ' input' : ''}] ${baseTitle}`
-                : baseTitle;
-
-            if (expectedTitle === pull.title) {
-              core.notice('Target title already matches the explicit milestone.');
-              return;
-            }
-
-            await github.rest.pulls.update({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              pull_number: pull.number,
-              title: expectedTitle,
-            });
-
-            if (version) {
-              core.notice(`Synchronized PR title with target v${version}.`);
-            } else {
-              core.notice('Removed Target prefix because no version milestone is assigned.');
-            }
-
+  # PR titles are user-owned admission metadata. Automated renaming races the
+  # source preflight snapshot and can invalidate an otherwise merge-ready PR.
+  # Milestones and release-hold enforcement remain independent of title syncing.
   stage:
     # A release title or an explicit version milestone allocates a product
     # slot. Bounded maintenance paths are admitted without spending that slot;

@@ -28,6 +28,61 @@ test('many short array values use their serialized bytes without charging index 
   assert.throws(() => boundedJSON(value, { maxBytes: maxBytes - 1 }), /byte budget/);
 });
 
+test('repeated scalar byte accounting remains exact across cache saturation and Unicode escapes', () => {
+  const text = 'Повторення 😀 " \\ \n \ud800',
+    value = [
+      ...Array.from({ length: 1100 }, (_, index) => ({ [`field-${index}`]: `text-${index}` })),
+      ...Array.from({ length: 40 }, () => ({ text, [text]: text, long: text.repeat(40) })),
+    ];
+  const maxBytes = bytes(value);
+  assert.deepEqual(boundedJSON(value, { maxBytes }), value);
+  assert.deepEqual(boundedJSON(JSON.stringify(value), { maxBytes }), value);
+  assert.throws(() => boundedJSON(value, { maxBytes: maxBytes - 1 }), /byte budget/);
+  assert.throws(() => boundedJSON(value, { maxString: text.length - 1 }), /string exceeds/);
+});
+
+test('repeated text never gives mutable or caller-frozen objects validation authority', () => {
+  const value = { text: 'repeated', rows: [{ text: 'repeated' }, { text: 'repeated' }] },
+    accepted = boundedJSON(value);
+  value.rows[1].text = 'mutated 😀';
+  assert.equal(accepted.rows[1].text, 'repeated');
+  assert.equal(boundedJSON(value).rows[1].text, 'mutated 😀');
+  let invoked = 0;
+  Object.defineProperty(value.rows[1], 'text', {
+    enumerable: true,
+    get() {
+      invoked++;
+      return 'repeated';
+    },
+  });
+  Object.freeze(value.rows[1]);
+  assert.throws(() => boundedJSON(value), /accessors and hidden fields/);
+  assert.equal(invoked, 0);
+  value.rows[1] = { text: 'repeated', extra: value };
+  assert.throws(() => boundedJSON(value), /cycles/);
+});
+
+test('repeated field names do not require per-field UTF-8 encoding', (context) => {
+  const NativeEncoder = globalThis.TextEncoder;
+  let encodings = 0;
+  globalThis.TextEncoder = class extends NativeEncoder {
+    encode(value) {
+      encodings++;
+      return super.encode(value);
+    }
+  };
+  context.after(() => {
+    globalThis.TextEncoder = NativeEncoder;
+  });
+  const value = Array.from({ length: 1000 }, () => ({
+    title: 'A repeated title 😀',
+    locale: 'uk',
+    ready: true,
+  }));
+  assert.deepEqual(boundedJSON(value, { maxBytes: bytes(value) }), value);
+  assert(encodings < 50, 'Repeated short scalar encodings should not grow with record count.');
+});
+
 test('the default 4 MiB ceiling still accepts exactly the limit and rejects one byte over', () => {
   const limit = 4 * 1024 * 1024;
   const value = { payload: 'x'.repeat(limit - bytes({ payload: '' })) };

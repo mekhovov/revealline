@@ -8,12 +8,16 @@ import { createHash } from 'node:crypto';
 import { spawnSync } from 'node:child_process';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import { generatePackCatalogs } from './generate-pack-catalogs.mjs';
+import { buildOfflineContent, buildOfflineInventory } from './offline-content.mjs';
+import { downloadFiles } from '../game/download-catalogue.mjs';
+import { LAUNCHER_CATALOG_KEYS } from './offline-launcher.mjs';
 import {
   buildProject,
   collectBuildFiles,
   crc32,
   createZip,
   generateLevel,
+  inspectBuildProject,
   parseArguments,
   PUBLIC_SECURITY_HEADERS,
   readBuildConfig,
@@ -352,6 +356,77 @@ test('build is byte-reproducible and each manifest checksum covers exact output 
   assert.equal(
     await fs.readFile(path.join(root, 'game/core.mjs'), 'utf8'),
     'export const value = 3;\n',
+  );
+});
+
+test('manifest-only inspection shares exact build preparation without site or ZIP writes', async (t) => {
+  const { root, out, directory } = await fixture(t);
+  const before = await fs.readdir(directory);
+  const sourceRevision = 'a'.repeat(40);
+  const inspection = await inspectBuildProject({ root, sourceRevision, out });
+  assert.deepEqual(await fs.readdir(directory), before);
+  assert.equal(inspection.publicEligible, false);
+  assert.equal(inspection.promotable, false);
+  assert.equal(inspection.completeHostedOutput, false);
+  assert.equal(inspection.sourceRevision, sourceRevision);
+  assert.equal('entries' in inspection, false);
+  await buildProject({ root, out, sourceRevision });
+  const bytes = await fs.readFile(path.join(out, 'manifest.json'));
+  assert.deepEqual(inspection.manifest, JSON.parse(bytes));
+  assert.equal(inspection.manifestDescriptor.sha256, hash(bytes));
+  assert.equal(inspection.manifestDescriptor.bytes, bytes.length);
+  assert.equal(
+    inspection.payloadBytesIncludingManifest,
+    inspection.manifest.totalBytes + bytes.length,
+  );
+  assert.equal(
+    await fs.readFile(path.join(root, 'game/core.mjs'), 'utf8'),
+    'export const value = 3;\n',
+  );
+});
+
+test('manifest-only inspection retains the ordinary reference and malformed-input gates', async (t) => {
+  const { root, directory } = await fixture(t);
+  await fs.writeFile(path.join(root, 'game/app.mjs'), 'import "./missing.mjs";');
+  await assert.rejects(inspectBuildProject({ root }), /Missing distribution references/);
+  await fs.writeFile(path.join(root, 'game/app.mjs'), 'import "unbundled-package";');
+  await assert.rejects(inspectBuildProject({ root }), /bare import/);
+  await fs.writeFile(path.join(root, 'game/app.mjs'), 'export {};');
+  await fs.writeFile(path.join(root, 'game/invalid.json'), '{');
+  await assert.rejects(inspectBuildProject({ root }), SyntaxError);
+  assert.deepEqual(await fs.readdir(directory), ['project']);
+});
+
+test('an existing authoring dependency must be explicitly admitted without its neighboring originals', async (t) => {
+  const { root, out } = await fixture(t);
+  const model = 'authoring/company-studio/model.mjs';
+  await fs.mkdir(path.join(root, 'authoring/company-studio'), { recursive: true });
+  await fs.writeFile(path.join(root, model), 'export const draft = {};\n');
+  await fs.writeFile(
+    path.join(root, 'authoring/company-studio/unselected-original.txt'),
+    'Not admitted',
+  );
+  await fs.writeFile(
+    path.join(root, 'game/app.mjs'),
+    'import { draft } from "../authoring/company-studio/model.mjs"; export { draft };\n',
+  );
+  await assert.rejects(inspectBuildProject({ root }), /Missing distribution references/);
+  await assert.rejects(buildProject({ root, out }), /Missing distribution references/);
+  const config = await readBuildConfig(root);
+  config.include.push(model);
+  await fs.writeFile(path.join(root, 'game/build-config.json'), JSON.stringify(config));
+  const inspected = await inspectBuildProject({ root });
+  await buildProject({ root, out });
+  const actual = JSON.parse(await fs.readFile(path.join(out, 'manifest.json'), 'utf8'));
+  assert.deepEqual(inspected.manifest, actual);
+  assert.ok(actual.files.some((entry) => entry.path === model));
+  assert.equal(
+    actual.files.some((entry) => entry.path.endsWith('unselected-original.txt')),
+    false,
+  );
+  await assert.rejects(
+    fs.access(path.join(out, 'authoring/company-studio/unselected-original.txt')),
+    /ENOENT/,
   );
 });
 
@@ -699,6 +774,10 @@ test('packaged offline builds generate scoped metadata, generated brand icons, c
   const first = await buildProject({ root, out });
   const second = await buildProject({ root, out: path.join(directory, 'second') });
   assert.equal(first.sha256, second.sha256);
+  const inspected = await inspectBuildProject({ root });
+  const actualManifestBytes = await fs.readFile(path.join(out, 'manifest.json'));
+  assert.deepEqual(inspected.manifest, JSON.parse(actualManifestBytes));
+  assert.equal(inspected.manifestDescriptor.sha256, hash(actualManifestBytes));
   const cache = JSON.parse(await fs.readFile(path.join(out, 'offline-cache.json'), 'utf8'));
   const manifest = JSON.parse(await fs.readFile(path.join(out, 'manifest.webmanifest'), 'utf8'));
   assert.equal(manifest.start_url, './game/');
@@ -780,6 +859,94 @@ test('offline source sentinel requires its template and does not silently emit a
   const { root, out } = await fixture(t);
   await fs.writeFile(path.join(root, 'game/offline.mjs'), 'export {};');
   await assert.rejects(buildProject({ root, out }), /ENOENT/);
+});
+
+test('compact offline catalogue and inventory preserve reader results, source text and integrity', async (t) => {
+  const { root, out } = await fixture(t);
+  const sources = {
+    'game/offline.mjs': 'export {};',
+    'game/installed-app.mjs': 'export {};',
+    'game/offline/service-worker.template.js': 'const CONFIG = __XONIX_OFFLINE_CONFIG__;',
+    'game/offline/app-worker.template.js': 'const CONFIG = __REVEALLINE_LAUNCHER_CONFIG__;',
+    'game/offline/app.html': '<html><head></head><body>Installer</body></html>',
+    'game/offline/app.mjs': 'export {};',
+    'game/downloads.css': 'body { color: navy; }',
+    'game/edition-context.mjs': 'export {};',
+    'game/profile-writer.mjs': 'export {};',
+    'game/i18n/index.mjs': 'export {};',
+    'game/i18n/bootstrap.mjs': 'export {};',
+    'game/i18n/style.css': 'body { color: navy; }',
+    'game/vendor/i18next-26.4.2.min.js': 'globalThis.fixture = true;',
+    'game/historical-original.json': '{"title":"Retained  original\\nОригінал","revision":1}',
+  };
+  for (const language of ['en', 'uk'])
+    for (const [namespace, keys] of Object.entries(LAUNCHER_CATALOG_KEYS))
+      sources[`game/locales/${language}/${namespace}.json`] = JSON.stringify(
+        Object.fromEntries(keys.map((key) => [key, `${language}: ${key}  unchanged\ntext`])),
+      );
+  for (const [name, source] of Object.entries(sources)) {
+    await fs.mkdir(path.dirname(path.join(root, name)), { recursive: true });
+    await fs.writeFile(path.join(root, name), source);
+  }
+  await buildProject({ root, out });
+  const manifest = JSON.parse(await fs.readFile(path.join(out, 'manifest.json')));
+  const inventoryBytes = await fs.readFile(path.join(out, 'offline-inventory.json'));
+  const catalogueBytes = await fs.readFile(path.join(out, 'offline-content.json'));
+  const catalogue = JSON.parse(catalogueBytes);
+  const cache = JSON.parse(await fs.readFile(path.join(out, 'offline-cache.json')));
+  const entries = await Promise.all(
+    manifest.files
+      .filter((file) => file.path !== 'offline-inventory.json')
+      .map(async (file) => ({
+        name: file.path,
+        bytes: await fs.readFile(path.join(out, file.path)),
+      })),
+  );
+  const expected = buildOfflineInventory(entries, catalogue, cache.files);
+  const expectedCatalogue = await buildOfflineContent(entries, new Set(), manifest.version);
+  assert.deepEqual(catalogue, expectedCatalogue);
+  assert.ok(
+    catalogueBytes.length < Buffer.byteLength(`${JSON.stringify(expectedCatalogue, null, 2)}\n`),
+  );
+  const selectedGroups = catalogue.groups.map((group) => group.id);
+  assert.ok(selectedGroups.length > 0);
+  assert.deepEqual(
+    downloadFiles(catalogue, selectedGroups),
+    downloadFiles(expectedCatalogue, selectedGroups),
+  );
+  const catalogueDescriptor = {
+    path: 'offline-content.json',
+    bytes: catalogueBytes.length,
+    sha256: hash(catalogueBytes),
+  };
+  assert.deepEqual(
+    manifest.files.find((file) => file.path === catalogueDescriptor.path),
+    catalogueDescriptor,
+  );
+  assert.deepEqual(
+    cache.files.find((file) => file.path === catalogueDescriptor.path),
+    catalogueDescriptor,
+  );
+  const inventory = JSON.parse(inventoryBytes);
+  // The build sorts output only after inventory generation. Its record order
+  // remains immaterial, while every descriptor, group and size must survive.
+  const normalize = (value) => ({
+    ...value,
+    files: value.files.slice().sort((a, b) => a.path.localeCompare(b.path)),
+  });
+  assert.deepEqual(normalize(inventory), normalize(expected));
+  assert.ok(inventoryBytes.length < Buffer.byteLength(`${JSON.stringify(expected, null, 2)}\n`));
+  assert.deepEqual(
+    manifest.files.find((file) => file.path === 'offline-inventory.json'),
+    { path: 'offline-inventory.json', bytes: inventoryBytes.length, sha256: hash(inventoryBytes) },
+  );
+  for (const [name, source] of Object.entries(sources)) {
+    if (name.startsWith('game/offline/')) continue;
+    assert.equal(await fs.readFile(path.join(out, name), 'utf8'), source, name);
+    const record = inventory.files.find((file) => file.path === name);
+    assert.equal(record?.bytes, Buffer.byteLength(source), name);
+    assert.equal(record?.sha256, hash(Buffer.from(source)), name);
+  }
 });
 
 test('public package has local entry, accurate storage notices and enforced preview headers without changing source serving', async (t) => {

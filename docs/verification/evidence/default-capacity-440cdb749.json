@@ -1,0 +1,442 @@
+{
+  "format": "revealline-default-capacity-observation.v1",
+  "sourceRevision": "440cdb749179837fba358a0d46d94d1ab18e6afe",
+  "sourceTree": "4bd5e63f6d66fddd354cce8ac66c3c838ebf5653",
+  "version": "0.142.2",
+  "publicEligible": false,
+  "promotable": false,
+  "completeHostedOutput": false,
+  "report": {
+    "path": ".cache/phase7-440cdb749/default-capacity.json",
+    "bytes": 425562,
+    "sha256": "1981141877a1d07b1a8939f7d971bf252a3ac092e31dc2a78b439945bf3b9d98"
+  },
+  "manifest": {
+    "path": "manifest.json",
+    "bytes": 402023,
+    "sha256": "954b4815b70800253ce137bc5bfd5c8106fecfc4ce79494b97ac5fda13496c99"
+  },
+  "defaultPreparation": {
+    "files": 2177,
+    "contentBytes": 799537169,
+    "payloadBytesIncludingManifest": 799939192,
+    "contentHeadroomTo800000000": 462831,
+    "payloadHeadroomTo800000000": 60808,
+    "normalPreparationPassed": true,
+    "includedInputs": {
+      "format": "revealline-default-build-inputs.v1",
+      "sourceRevision": "440cdb749179837fba358a0d46d94d1ab18e6afe",
+      "sourceTree": "4bd5e63f6d66fddd354cce8ac66c3c838ebf5653",
+      "files": 2038,
+      "bytes": 587749308,
+      "note": "Included originals only; transitive producer inputs are checked by normal build preparation."
+    },
+    "availableCommittedSources": {
+      "files": 5125,
+      "bytes": 844216331,
+      "absentTrackedFiles": 15495,
+      "inventorySha256": "88d2031f56e467396dce643a33ab6ba79a52841369d15ab9035f40fc6ee21d21"
+    },
+    "sourceEligibility": {
+      "status": "verified",
+      "format": "revealline-public-source-eligibility.v1",
+      "files": 5137,
+      "assets": 294
+    },
+    "includedInputsVerified": true,
+    "availableCommittedSourcesVerified": true,
+    "reproducibleBuilds": 0
+  },
+  "comparison": {
+    "priorSourceRevision": "9105025316c21bfe749ea8617dbb2220fd2b5530",
+    "priorReport": {
+      "path": ".cache/phase7-910502531/default-capacity.json",
+      "bytes": 425562,
+      "sha256": "54e581832cccff78fd87ab38e6b35878f6c98f9193dcb8da92634e719f367121"
+    },
+    "addedPaths": [],
+    "removedPaths": [],
+    "identicalFiles": 2153,
+    "changedFiles": [
+      {
+        "path": "game/assets/field-kit/icons/review.html",
+        "before": {
+          "path": "game/assets/field-kit/icons/review.html",
+          "bytes": 31283,
+          "sha256": "2dbba28831d63ab47fe08765c05aec1583a994d5b53b383dac993c65a4a81c54"
+        },
+        "after": {
+          "path": "game/assets/field-kit/icons/review.html",
+          "bytes": 31283,
+          "sha256": "556ceb284ec4646e33176a8d687ecd5b25b4e88abfe5c5efb052cc51a8635850"
+        }
+      },
+      {
+        "path": "game/assets/field-kit/sprites/review.html",
+        "before": {
+          "path": "game/assets/field-kit/sprites/review.html",
+          "bytes": 222189,
+          "sha256": "e792af4337a08a95c4a82304aea4f87bbf93e515661c8046c06ff6d412a961fb"
+        },
+        "after": {
+          "path": "game/assets/field-kit/sprites/review.html",
+          "bytes": 222189,
+          "sha256": "66bcab6f7806c9a26c18ce24091399a8017ec49cd348905dc91a6b182dd2696d"
+        }
+      },
+      {
+        "path": "game/build-info.json",
+        "before": {
+          "path": "game/build-info.json",
+          "bytes": 143,
+          "sha256": "8a9fbbe2cae4106b1d6c64e15ee5479852e9aed3cad6cc9c7236d15ed1b255a8"
+        },
+        "after": {
+          "path": "game/build-info.json",
+          "bytes": 143,
+          "sha256": "dedad1b0bd35af0056f463a3de4a994d3e0df07df5be1be406135fb963092aa8"
+        }
+      },
+      {
+        "path": "game/community/index.html",
+        "before": {
+          "path": "game/community/index.html",
+          "bytes": 35559,
+          "sha256": "d13232b960c893e09cc5f734310cf9a74701a4ff72815dacab7ecb8e108410ea"
+        },
+        "after": {
+          "path": "game/community/index.html",
+          "bytes": 35559,
+          "sha256": "003fec6bbb536a88aa959cac73d89e886b6c6a42e60def0bd202231cd912768a"
+        }
+      },
+      {
+        "path": "game/community/moderation.html",
+        "before": {
+          "path": "game/community/moderation.html",
+          "bytes": 31323,
+          "sha256": "6e727d2984c1972af7adc2a12051b76eeb3db109ec23e83ba693d8b5bddb6514"
+        },
+        "after": {
+          "path": "game/community/moderation.html",
+          "bytes": 31323,
+          "sha256": "80d6df1c60a4fd31a827f0b3b5fea6a55ffdc40daa8a4488321105af925bdb85"
+        }
+      },
+      {
+        "path": "game/company.html",
+        "before": {
+          "path": "game/company.html",
+          "bytes": 28863,
+          "sha256": "2ff1ba72628a31c6a6ebc76e96878a19d13d5a46f1853ab248dd38efbd109591"
+        },
+        "after": {
+          "path": "game/company.html",
+          "bytes": 28863,
+          "sha256": "2a4beabb9cf5d5e1af033644f81bf47d15845d17385bdc04445c09a93debedc8"
+        }
+      },
+      {
+        "path": "game/controller-lab/index.html",
+        "before": {
+          "path": "game/controller-lab/index.html",
+          "bytes": 48828,
+          "sha256": "3c832c3914d8e639fed559e8095c2c29c28e6516850d0956b0249c787672d737"
+        },
+        "after": {
+          "path": "game/controller-lab/index.html",
+          "bytes": 48828,
+          "sha256": "84d150039ffd80f4053572a35fcb370d03ac4c9e1db2f1870f6b1b089664631a"
+        }
+      },
+      {
+        "path": "game/couch/index.html",
+        "before": {
+          "path": "game/couch/index.html",
+          "bytes": 69448,
+          "sha256": "53be260222aac8b91ceb66aef2d4a25268aac685501f63c304e30a5f7ee09cb7"
+        },
+        "after": {
+          "path": "game/couch/index.html",
+          "bytes": 69448,
+          "sha256": "55a6923721787ab89c005098f454b31f3468dee766eea0738d3bc8ce6bcf842e"
+        }
+      },
+      {
+        "path": "game/couch/relay-rescue.html",
+        "before": {
+          "path": "game/couch/relay-rescue.html",
+          "bytes": 78989,
+          "sha256": "4540342df4f9cd16880c20fd254e075b283cf7a9d20ff5bdb9b4cd1808195d8e"
+        },
+        "after": {
+          "path": "game/couch/relay-rescue.html",
+          "bytes": 78989,
+          "sha256": "e305476bf7c3d1afcf82899dace746d737e8b53597af08e340d9f129cbecdef5"
+        }
+      },
+      {
+        "path": "game/creator/index.html",
+        "before": {
+          "path": "game/creator/index.html",
+          "bytes": 41345,
+          "sha256": "c5fe99f21ab59efc66aa6196f51ed4395d50adc67b9ae0d391ecadee93db8ce4"
+        },
+        "after": {
+          "path": "game/creator/index.html",
+          "bytes": 41345,
+          "sha256": "5daec2c54eb9306f10adc5f403be741bc67eac0b827b5a6d98b9c7b3c0a4035d"
+        }
+      },
+      {
+        "path": "game/creator/player.html",
+        "before": {
+          "path": "game/creator/player.html",
+          "bytes": 33767,
+          "sha256": "17edb7d751b31ddbf8ed85b7a29212f4fa87d87fca97cb46c392e0cfabf75149"
+        },
+        "after": {
+          "path": "game/creator/player.html",
+          "bytes": 33767,
+          "sha256": "60241338f2625d2f044dbfce6760783c2137257899a3fc43c4faa2701c61b14d"
+        }
+      },
+      {
+        "path": "game/creator/team.html",
+        "before": {
+          "path": "game/creator/team.html",
+          "bytes": 33858,
+          "sha256": "9a4807baf0aa41cf4aebfdc2630621430f9206a4ef3beed2ae661b48ef4485eb"
+        },
+        "after": {
+          "path": "game/creator/team.html",
+          "bytes": 33858,
+          "sha256": "e78074707dfbc2a592571ff804902f370fa33c6a71e57a4dceaf5ab0dbbb7754"
+        }
+      },
+      {
+        "path": "game/downloads.html",
+        "before": {
+          "path": "game/downloads.html",
+          "bytes": 35501,
+          "sha256": "3e1c99462389e0f5be4aec3498d6d38a20bc9cf5747f95c2a5d8e5eb779a1fed"
+        },
+        "after": {
+          "path": "game/downloads.html",
+          "bytes": 35501,
+          "sha256": "cbcbed0328ee23afa69531309f59eeccd86111a30046cc1568caf6b3dc127aa9"
+        }
+      },
+      {
+        "path": "game/index.html",
+        "before": {
+          "path": "game/index.html",
+          "bytes": 150016,
+          "sha256": "1a1711944c4734934c1bd0a4ac82efa7748fd867fb1b3908c1b79d1aada1e050"
+        },
+        "after": {
+          "path": "game/index.html",
+          "bytes": 150016,
+          "sha256": "57f565a8bad87949ef5135ac5fe072d1f59bd6dcb6b23339b37d8435dd29c815"
+        }
+      },
+      {
+        "path": "game/playground/index.html",
+        "before": {
+          "path": "game/playground/index.html",
+          "bytes": 66261,
+          "sha256": "c0d4a5d9240d3bae110c89f4e38930cf3b73a9971432aaf7925f346ecfc853f2"
+        },
+        "after": {
+          "path": "game/playground/index.html",
+          "bytes": 66261,
+          "sha256": "859280bf3f92d1f3a1a62bf3b636f08651ed0311490c1356a6fbf78991046639"
+        }
+      },
+      {
+        "path": "game/presentation/combat-review.html",
+        "before": {
+          "path": "game/presentation/combat-review.html",
+          "bytes": 31875,
+          "sha256": "b5bfd557ed357a8a85ff6f6d1247032974e2ebbc5c7303c4ff0e4127a43f584a"
+        },
+        "after": {
+          "path": "game/presentation/combat-review.html",
+          "bytes": 31875,
+          "sha256": "92504bac83254b9d68ac56e75576a3bc5966dbaae6f33d5934fd130937ba81c0"
+        }
+      },
+      {
+        "path": "game/presentation/journey-actor-review.html",
+        "before": {
+          "path": "game/presentation/journey-actor-review.html",
+          "bytes": 30597,
+          "sha256": "b598f58d2a1df1fc5c7bfea605870d75668fd1dd8ec4827542042ec29966ba22"
+        },
+        "after": {
+          "path": "game/presentation/journey-actor-review.html",
+          "bytes": 30597,
+          "sha256": "2be517622b0b5810403e636f843ed5b3d743d2197b90814d76872081304b24c4"
+        }
+      },
+      {
+        "path": "game/profile-recovery.html",
+        "before": {
+          "path": "game/profile-recovery.html",
+          "bytes": 33434,
+          "sha256": "bb6c4323ab9f515f43bcc94e0a1524066f96f80eecf42f8883581dce7a35d5f5"
+        },
+        "after": {
+          "path": "game/profile-recovery.html",
+          "bytes": 33434,
+          "sha256": "e715ee7cd2d7e11d5a2e013bedb9e1bcd0d479fbd7b1134d420d517c0de3ec95"
+        }
+      },
+      {
+        "path": "game/replay-theater/index.html",
+        "before": {
+          "path": "game/replay-theater/index.html",
+          "bytes": 41606,
+          "sha256": "0596df9db2afa20791715f2c0eeebc144370b5c7bc337b398894b92b7e5a0984"
+        },
+        "after": {
+          "path": "game/replay-theater/index.html",
+          "bytes": 41606,
+          "sha256": "7e063f5fa5726a8b3b9a0d52f59bbc9a65f61badac01be49e84c8364b49d4075"
+        }
+      },
+      {
+        "path": "game/studio/index.html",
+        "before": {
+          "path": "game/studio/index.html",
+          "bytes": 179687,
+          "sha256": "bb3b00c8e8d7bcc9b0b44193d2b41cde26c40d5a62cbd6a859581c437b346096"
+        },
+        "after": {
+          "path": "game/studio/index.html",
+          "bytes": 179687,
+          "sha256": "ce33d5b3ffc056e3e7e0d9597f0b117b4c0e44982435b882daa2aaad00f730bf"
+        }
+      },
+      {
+        "path": "offline-cache.json",
+        "before": {
+          "path": "offline-cache.json",
+          "bytes": 480572,
+          "sha256": "21dfe87533d7e660c1bcebfc754a1418fbe6a73159ebc7215a0964429090baa2"
+        },
+        "after": {
+          "path": "offline-cache.json",
+          "bytes": 480572,
+          "sha256": "e6afd33e9c26c91f0fe220052de03c392d054af7cb903a03a4651b061329b410"
+        }
+      },
+      {
+        "path": "offline-content.json",
+        "before": {
+          "path": "offline-content.json",
+          "bytes": 7248535,
+          "sha256": "a13f0c9b3c6f3499dd920b72b8637391bc9b40ce37b80de37ae4a19e6d63a283"
+        },
+        "after": {
+          "path": "offline-content.json",
+          "bytes": 7248535,
+          "sha256": "e25e0e81dcbcebf3a9cb04b1332219f02c34911434f5862834e78303bf7421b1"
+        }
+      },
+      {
+        "path": "offline-inventory.json",
+        "before": {
+          "path": "offline-inventory.json",
+          "bytes": 4102558,
+          "sha256": "770fbb4a72240597fa95b8cc8f0e2a5aa73d2db1931b30920e16c1ea597a3a3a"
+        },
+        "after": {
+          "path": "offline-inventory.json",
+          "bytes": 3047050,
+          "sha256": "da1b9264320594487eb790c78053ab91540bde2fe54b83550d5bb76fbaf81ecc"
+        }
+      },
+      {
+        "path": "service-worker.js",
+        "before": {
+          "path": "service-worker.js",
+          "bytes": 405500,
+          "sha256": "ca83dd03741517bc4aad533984172cb8912ade61ca0b8e7cf1b3864cb4bb5feb"
+        },
+        "after": {
+          "path": "service-worker.js",
+          "bytes": 405500,
+          "sha256": "03bbc4e9bda5ccf749ee7010a67f17a7033bf1c54337a5b1a497c187313af4fa"
+        }
+      }
+    ],
+    "contentBytesSaved": 1055508,
+    "inventoryByteSavings": 1055508,
+    "interpretation": "The path set is unchanged. Every changed file other than compact offline-inventory.json is build-info, an HTML build-ID injection, or derived offline catalogue/cache/worker provenance. The serialization regression separately proves complete parsed inventory equivalence using the existing builder authority; no source assets or retained revisions were deleted."
+  },
+  "archiveSizeProjection": {
+    "method": "Run the existing deterministic STORE createZip writer with the exact inspected file names plus manifest.json and zero-byte bodies, then add inspected original payload lengths. Header sizes do not depend on CRC or body content; this is a byte-size projection, not an archive build, hash, extraction, or reproducibility check.",
+    "entries": 2178,
+    "headerAndFilenameBytes": 378300,
+    "projectedZipBytes": 800317492,
+    "limitBytes": 800000000,
+    "exceedsLimitBy": 317492,
+    "archiveAdmissionPerformed": false,
+    "archiveGateSatisfied": false
+  },
+  "optional": {
+    "receipt": {
+      "path": ".cache/phase7-440cdb749/downloaded-optional-admission.json",
+      "bytes": 1095,
+      "sha256": "3c5ce42e765430d1ea68e11b96feb86cbd92b61c2887f9bf105b2b6e14fa114b"
+    },
+    "artifact": {
+      "id": 11003212872,
+      "runId": 36496111065,
+      "bytes": 1301839,
+      "sha256": "eba091e33c18a162aba890805be1e4b438bb0b72142f2c7c02935c98817671e6",
+      "githubDigestVerified": true
+    },
+    "downloadedMembersByteEqual": true,
+    "files": 12,
+    "expandedBytes": 5947761,
+    "envelope": {
+      "bytes": 1830,
+      "sha256": "325f68082e89f349611cf8be42df69e45b85532615cbeda3b03c4962e9ce70e0"
+    },
+    "admission": {
+      "format": "revealline-optional-package-admission.v1",
+      "version": "v0.142.2",
+      "sourceRevision": "440cdb749179837fba358a0d46d94d1ab18e6afe",
+      "sourceTree": "4bd5e63f6d66fddd354cce8ac66c3c838ebf5653",
+      "packages": [
+        {
+          "id": "civilian-flight",
+          "revision": "e4d081fb4a26a8e2d73da55aa3fd25891f7ab467b052ce25d5cf0775db0a53d3",
+          "files": 29,
+          "bytes": 178540
+        },
+        {
+          "id": "civilian-fpv",
+          "revision": "849e90db563cb7b88e524de71ef47334636bcd0a34f6dad2a74c2270205d9d74",
+          "files": 50,
+          "bytes": 2748040
+        }
+      ],
+      "zipMembersVerified": true,
+      "publicEligible": false
+    }
+  },
+  "missingComponents": [
+    "Pages root routes and publication metadata",
+    "Hosted edition versions, stable launchers and company hub",
+    "Hosted optional packages, launchers and any other generated files"
+  ],
+  "limitations": [
+    "Default ZIP and expanded site were not written. No default archive admission or reproducible build claim is made.",
+    "Prepared content fits the content-total bound, but the current STORE archive projects above the separate 800,000,000-byte transfer/archive cap.",
+    "Current all-edition candidate metadata, retained hosted releases, edition/optional hubs and root publication overhead are not composed here. No 950,000,000-byte whole-site admission is claimed.",
+    "Human and physical-device qualification, version allocation, release promotion and public deployment are outside this observation."
+  ]
+}

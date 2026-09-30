@@ -1,0 +1,38 @@
+{
+  "artifact": {
+    "id": 11004552187,
+    "runId": 36498701748,
+    "bytes": 1302660,
+    "sha256": "30aea6ee6e5abcc4f4c6a02f749654352867c90f6b663b0ddcdf372eab7ca567",
+    "githubDigestVerified": true
+  },
+  "downloadedMembersByteEqual": true,
+  "files": 12,
+  "expandedBytes": 5949705,
+  "envelope": {
+    "bytes": 1830,
+    "sha256": "d49b7043a4a5a800e1775b66d3a7cf1db3cedc29a0d5b630fff24a4f3cd2681b"
+  },
+  "admission": {
+    "format": "revealline-optional-package-admission.v1",
+    "version": "v0.142.2",
+    "sourceRevision": "83706c9924e3972b106966a9bfffe542d1fde5e3",
+    "sourceTree": "b8d5f16792a15e457d7ef7844bbbcff1e3fb1d1c",
+    "packages": [
+      {
+        "id": "civilian-flight",
+        "revision": "5c933c0c582baf18b4d3b385762b04eef887d1e3157e64eaec236da75c113010",
+        "files": 29,
+        "bytes": 179026
+      },
+      {
+        "id": "civilian-fpv",
+        "revision": "eafcc49fbb2283fb926a29df9e6db5da484f9e6131beeaf0036c80397c96d11f",
+        "files": 50,
+        "bytes": 2748526
+      }
+    ],
+    "zipMembersVerified": true,
+    "publicEligible": false
+  }
+}

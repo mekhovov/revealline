@@ -1,5 +1,6 @@
 import { mountToolReturnLinks } from '../ui/workshop-return.mjs';
 import test from 'node:test';
+import { createHash } from 'node:crypto';
 import assert from 'node:assert/strict';
 import { readFile, mkdir, mkdtemp, symlink, stat, rm } from 'node:fs/promises';
 import path from 'node:path';
@@ -707,6 +708,54 @@ test('classic video workshop exposes loading immediately after its title', async
   assert.ok(html.indexOf('id="video-poster-status"') < html.indexOf('Inspect your own video'));
 });
 
+test('Picture Workshop prepares exact complete clip plus captured poster and clears both handoff URLs on source change', async (t) => {
+  const original = await readFile(
+    new URL('./fixtures/video/owned-poster-fixture.mp4', import.meta.url),
+  );
+  const sha = (value) => createHash('sha256').update(value).digest('hex');
+  const h = await setup(t, {
+    openSource: async () => ({
+      original: new Blob([original]),
+      info: {
+        mime: 'video/mp4',
+        width: 640,
+        height: 360,
+        durationSeconds: 6,
+        bytes: original.length,
+        sha256: sha(original),
+      },
+      async capture(time) {
+        const p = poster(time);
+        p.asset.sha256 = sha(bytes);
+        p.capture.sourceSha256 = sha(original);
+        return p;
+      },
+      dispose() {},
+    }),
+  });
+  await h.inspect();
+  h.$('time').value = '2';
+  await h.$('capture').onclick();
+  h.$('playback-start').value = '1';
+  h.$('playback-end').value = '3';
+  await h.$('apply-range').onclick();
+  const prepare = h.doc.querySelector('[data-video-export-action="prepare"]');
+  assert.equal(await prepare.onclick(), true);
+  const clip = h.doc.querySelector('[data-video-export-file="video"]'),
+    picture = h.doc.querySelector('[data-video-export-file="poster"]');
+  assert.deepEqual(
+    Buffer.from(await h.urls.get(clip.href).arrayBuffer()),
+    original,
+    'Logical playback range must not be represented as an exported physical trim.',
+  );
+  assert.deepEqual(Buffer.from(await h.urls.get(picture.href).arrayBuffer()), bytes);
+  assert.equal(h.urls.size, 3);
+  await h.inspect();
+  assert.equal(h.urls.size, 0);
+  assert.equal(clip.hidden, true);
+  assert.equal(picture.hidden, true);
+});
+
 test('Video Poster native Confirm is captured before a frame and cannot clear the newly captured result', async (t) => {
   const h = await setup(t);
   await h.inspect();
@@ -908,3 +957,56 @@ for (const outcome of ['unsupported', 'failure']) {
     assert.equal(h.$('trim-download').hidden, true);
   });
 }
+
+test('recovered Video Poster handoff rejects hidden ownership and permits explicit visible retry', async (t) => {
+  const original = await readFile(
+    new URL('./fixtures/video/owned-poster-fixture.mp4', import.meta.url),
+  );
+  const sha = (value) => createHash('sha256').update(value).digest('hex');
+  const h = await setup(t, {
+    openSource: async () => ({
+      original: new Blob([original]),
+      info: {
+        mime: 'video/mp4',
+        width: 640,
+        height: 360,
+        durationSeconds: 6,
+        bytes: original.length,
+        sha256: sha(original),
+      },
+      async capture(time) {
+        const p = poster(time);
+        p.asset.sha256 = sha(bytes);
+        p.capture.sourceSha256 = sha(original);
+        return p;
+      },
+      dispose() {},
+    }),
+  });
+  await h.inspect();
+  h.$('time').value = '2';
+  await h.$('capture').onclick();
+  const prepare = h.doc.querySelector('[data-video-export-action="prepare"]');
+  const clip = h.doc.querySelector('[data-video-export-file="video"]');
+  const picture = h.doc.querySelector('[data-video-export-file="poster"]');
+  h.doc.hidden = true;
+  h.doc.emit('visibilitychange');
+  assert.equal(
+    await prepare.onclick(),
+    false,
+    'Hidden ownership must not prepare new download URLs.',
+  );
+  assert.equal(h.urls.size, 1, 'Only the prior captured poster preview remains.');
+  assert.equal(clip.hidden, true);
+  assert.equal(picture.hidden, true);
+  h.doc.hidden = false;
+  h.doc.emit('visibilitychange');
+  assert.equal(await prepare.onclick(), true, 'An explicit visible retry remains supported.');
+  assert.deepEqual(Buffer.from(await h.urls.get(clip.href).arrayBuffer()), original);
+  assert.deepEqual(Buffer.from(await h.urls.get(picture.href).arrayBuffer()), bytes);
+  assert.equal(h.urls.size, 3);
+  const retainedPrepare = prepare.onclick;
+  h.host.dispose();
+  assert.equal(await retainedPrepare(), false, 'Disposed ownership cannot publish a new export.');
+  assert.equal(h.urls.size, 0);
+});

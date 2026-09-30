@@ -139,6 +139,10 @@ export function editContentStructure(source, input) {
           'Generated duplicate ID already exists; choose another new stable ID.',
         );
         const copy = { ...structuredClone(item), id: copyId, revision: 'draft-1' };
+        // Reward scopes belong to the original identities. A copied journey
+        // needs new explicit promises; pacing and exhibit style may be reused.
+        if (itemKind === 'mission') delete copy.design.rewardRef;
+        if (itemKind === 'campaign' && copy.discovery) delete copy.discovery.finaleRewardRef;
         if (root) {
           copy.name = name;
           delete copy.archived;
