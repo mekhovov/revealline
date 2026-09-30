@@ -292,6 +292,11 @@
           <option value="low" data-i18n="performance">Performance</option>
           <option value="high" data-i18n="quality">Quality</option>
         </select>
+        <select id="flight-stick-display" aria-label="Stick display">
+          <option value="compact" data-i18n="compactSticks">Compact sticks</option>
+          <option value="expanded" data-i18n="expandedSticks">Expanded sticks</option>
+          <option value="setup" data-i18n="setupSticks">Sticks in setup only</option>
+        </select>
       </div>
       <div id="world-replay-controls" class="replay-controls" hidden>
         <strong id="world-replay-label"></strong>
@@ -316,8 +321,12 @@
           <p id="flight-status" role="status"></p>
         </div>
         <div id="world-touch" class="world-touch" hidden>
-          <div id="world-left-stick" class="touch-stick"><i></i></div>
-          <div id="world-right-stick" class="touch-stick"><i></i></div>
+          <div id="world-left-stick" class="touch-stick">
+            <i aria-hidden="true"></i><span id="world-left-label"></span>
+          </div>
+          <div id="world-right-stick" class="touch-stick">
+            <i aria-hidden="true"></i><span id="world-right-label"></span>
+          </div>
         </div>
         <div id="result-panel" class="result-panel" hidden></div>
       </section>
@@ -332,6 +341,7 @@
         </div>
       </section>
       <footer>
+        <p id="world-input-status" class="world-input-status" role="status"></p>
         <div class="button-row">
           <button id="world-arm" class="primary" data-i18n="arm">Arm / resume</button
           ><button id="world-pause" data-i18n="pause">Pause</button
@@ -346,7 +356,9 @@
           ><label data-i18n="tilt">Camera tilt</label
           ><input id="world-tilt" type="range" min="0" max="35" value="10" />
         </div>
-        <p data-i18n="keys">W/S pitch · A/D roll · Q/E yaw · ↑/↓ throttle · P pause · Space fire</p>
+        <p id="world-keys-hint" data-i18n="keys">
+          W/S pitch · A/D roll · Q/E yaw · ↑/↓ throttle · P pause · Space fire
+        </p>
       </footer>
     </dialog>
     <dialog id="drone-hangar">

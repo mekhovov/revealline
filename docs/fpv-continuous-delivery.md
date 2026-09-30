@@ -100,3 +100,53 @@ on its own branch while the completed layers qualify. Warehouse and stadium
 recordings are prepared independently; their integration, final package and
 browser/offline qualification belong in separate PRs. Native stack membership is
 not a merge or deployment confirmation.
+PR #885 is open at `882c96622a9c52cb93bf94f642aba1ae4fb926c4`;
+[required source run 36783706645](https://github.com/mekhovov/revealline/actions/runs/36783706645)
+is pending. It has no review/label holds and is mergeable once its current gate
+passes. Main was `c30135d80abe79c9fef88b67c8629c0725db58cc` at this checkpoint.
+Two safe expected-head updates incorporated intervening main commits. Leave the
+current CI running; do not repeatedly restart it for unchanged status. Re-read
+the actual remote state before any merge.
+
+The former predecessor-only chain is now native stack **#889**. The earlier
+head/run checkpoint above is historical; always read current stack heads before
+acting. No FPV live deployment has been verified yet. Development continues
+independently while the native layers qualify.
+
+## Radio priority and current delivery state — 1 October
+
+The checkpoints above are historical. PRs #885, #887, #888 and #890 have now
+merged through protected native request `809d5f63-5f6f-426d-a950-9be08a730d92`,
+producing main `ff1f6d1a9b4d38dc77605c0a2156a1a27747901a`. Native stack #889
+still contains #892 (sector timing), #894 (Warehouse), #895 (Stadium) and #896
+(Container Yard). Inspect current remote heads before further publication.
+
+The user's immediate radio issue takes priority. Branch `codex/fpv-radio-worlds`
+restores verified radios in both FPV runtimes, provides visible calibrated sticks,
+preserves pause/reconnect pickup and offers compact/expanded/setup-only displays
+in World Studio. The owner confirmed physical TX15 flight. Functional browser
+verification covers all 60 challenges in both modes and alternate entry points;
+see `fpv-radio-worlds.md` and its verification receipt. Publish this focused fix
+independently of the pending demonstration stack.
+
+Public FPV availability remains blocked: Pages run 36788512997 exceeded the
+950,000,000-byte guard by 7,359,524 bytes. The preceding site had only 30,248 bytes
+of headroom. Preserve the guard and all retained player content; investigate a
+reviewed lossless packaging change rather than dropping assets or raising limits.
+Local playtest availability and an open/merged PR are not public deployment.
+The read-only size audit in `/tmp/fpv-pages-size-audit.json` identified a viable
+follow-up: bounded, versioned gzip transport for retained JSON packs, with separate
+transport/canonical hashes and unchanged decoded identities. Eight large core
+packs save 23,181,525 bytes in byte-exact round trips. Loaders, downloads and
+offline metadata need coordinated implementation and verification; do not replace
+existing JSON bodies with gzip bytes or delete retained packs.
+
+Further content-stack merges remain held for a confirmed creator reimport defect:
+identical reimport can erase a local obstacle, reordered spawn anchors can move
+the spawn and semantic actor/gate edits can be omitted. After radio publication,
+prioritize transactional draft preservation and explicit diagnostics, then the
+prepared Garage demonstrations and verified local ghost. Reproduction and staged
+feature handoffs are retained in `/tmp/fpv-reimport-data-loss-20261001/`,
+`/tmp/fpv-operations-readable-20261001/garage/` and the sparse worktree
+`/tmp/fpv-local-ghost-20261001` (commit `a4bff27e3429d1da9a24a6f2772baf6c7ec80836`).
+Do not discard these unpublished artifacts or disturb active agent work.
