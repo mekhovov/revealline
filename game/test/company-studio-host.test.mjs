@@ -776,3 +776,83 @@ test('completed practice controller navigation skips inherited disabled fields a
   assert.equal(h.doc.activeElement.id, 'company-read-practice');
   assert.equal(h.$('practice-workbench').querySelector('fieldset').disabled, false);
 });
+
+test('actual Company cached-page return retains the same unstaged guided lesson fields', async (t) => {
+  const h = await fixture(t);
+  h.doc.querySelector('[data-step="4"]').click();
+  await h.click('create-learning');
+  const root = h.doc.querySelector('[data-lesson-editor]'),
+    field = h.doc.querySelector('[data-lesson-field="brief"]');
+  assert.ok(field);
+  field.value = 'Keep this guided draft without staging or exporting it.';
+  field.focus();
+  const source = h.$('learning-json').value;
+  for (let visit = 0; visit < 2; visit++) {
+    h.win.emit('pagehide', { persisted: true });
+    h.win.emit('pageshow', { persisted: true });
+    await settle();
+    assert.equal(h.doc.querySelector('[data-lesson-editor]'), root);
+    assert.equal(h.doc.querySelector('[data-lesson-field="brief"]'), field);
+    assert.equal(field.value, 'Keep this guided draft without staging or exporting it.');
+    assert.equal(h.$('learning-json').value, source);
+    assert.equal(h.downloads.length, 0);
+  }
+  h.win.emit('pagehide', { persisted: false });
+  assert.equal(h.doc.querySelector('[data-lesson-editor]'), null);
+});
+
+for (const persisted of [true, false])
+  for (const outcome of ['success', 'failure'])
+    test(`Company ${persisted ? 'cached' : 'terminal'} departure fences late preview ${outcome}`, async (t) => {
+      const h = await fixture(t);
+      h.doc.querySelector('[data-step="5"]').click();
+      await h.importFile(
+        'import-report',
+        JSON.stringify({
+          format: REPORT_FORMAT,
+          editionId: 'acme-public',
+          brandId: 'acme',
+          name: 'Acme',
+          summary: {
+            campaigns: 1,
+            missions: 1,
+            lessons: 0,
+            assets: 0,
+            runtimeFiles: 20,
+            runtimeBytes: 1000,
+          },
+          admittedPaths: ['game/company.html'],
+          excluded: { editionIds: [], brandIds: [], campaignIds: [], assetIds: [] },
+          checks: STUDIO_REPORT_CHECKS,
+          artifact: { path: 'edition-build.json', bytes: 123, sha256: '1'.repeat(64) },
+          previewURL: '/dist/company-previews/acme/game/company.html',
+        }),
+      );
+      const pending = deferred(),
+        path = h.packet.catalog.editions[0].boot.classes;
+      let signal;
+      h.setFetch((source, options) => {
+        if (source !== path) return null;
+        signal = options.signal;
+        return pending.promise;
+      });
+      await h.click('open-preview');
+      assert.ok(signal, 'The real preview reached a held source read.');
+      assert.equal(signal.aborted, false);
+      h.win.emit('pagehide', { persisted });
+      assert.equal(signal.aborted, true);
+      if (persisted) h.win.emit('pageshow', { persisted: true });
+      h.edit('brand-name', 'Current unsaved identity');
+      const status = h.$('status').textContent,
+        note = h.$('preview-note').textContent,
+        source = h.$('catalog-json').value;
+      if (outcome === 'success') pending.resolve(new Response(h.workspace.files.get(path)));
+      else pending.reject(new Error('Late failed preview after departure'));
+      await settle();
+      assert.equal(h.$('status').textContent, status);
+      assert.equal(h.$('preview-note').textContent, note);
+      assert.equal(h.$('preview-frame').getAttribute('src'), null);
+      assert.equal(h.$('brand-name').value, 'Current unsaved identity');
+      assert.equal(h.$('catalog-json').value, source);
+      assert.equal(h.downloads.length, 0);
+    });

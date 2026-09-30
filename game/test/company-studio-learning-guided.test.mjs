@@ -363,3 +363,44 @@ test('guided atlas changes objective, source and application feedback while pres
   editor.dispose();
   assert.equal(container.children.length, 0);
 });
+
+test('lesson suspension preserves unstaged fields and resumes only by explicit action', () => {
+  const { workspace, campaign, project, lesson } = fixture(),
+    { document, container } = surface();
+  const selected = createStudioLessonSidecar(workspace.catalog, campaign.id).catalog.campaigns[0];
+  const editor = createLessonEditor({
+    container,
+    getCampaign: () => selected,
+    getProject: () => project,
+    getLessons: () => [lesson],
+    setLessons: () => assert.fail('Suspension and previews must not stage or save source.'),
+  });
+  editor.sync();
+  const action = (name) => container.querySelector(`[data-lesson-action="${name}"]`),
+    field = container.querySelector('[data-lesson-field="brief"]'),
+    root = container.querySelector('[data-lesson-editor]');
+  field.value = 'An unstaged objective that must survive cached-page return.';
+  action('partial').click();
+  container.querySelector('[data-control="inspect-new-situation"]').click();
+  const decision = container.querySelector('[data-control="field-decision"]');
+  decision.value = 'supported';
+  decision.emit('change');
+  field.focus();
+  editor.suspend();
+  editor.suspend();
+  assert.equal(container.querySelector('[data-lesson-editor]'), root);
+  assert.equal(container.querySelector('[data-lesson-field="brief"]'), field);
+  assert.equal(field.value, 'An unstaged objective that must survive cached-page return.');
+  assert.equal(document.activeElement, field);
+  assert.equal(container.querySelector('[data-control="commit"]'), null);
+  action('resume').click();
+  assert.equal(container.querySelector('[data-control="field-decision"]').value, 'supported');
+  assert.equal(
+    container.querySelector('[data-control="inspect-new-situation"]').getAttribute('aria-expanded'),
+    'true',
+  );
+  editor.dispose();
+  editor.suspend();
+  editor.sync();
+  assert.equal(container.children.length, 0, 'Terminal disposal cannot be revived.');
+});
