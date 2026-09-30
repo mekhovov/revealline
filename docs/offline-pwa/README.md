@@ -5,6 +5,12 @@ Install & offline play is an optional menu action. See
 [online play and optional preparation](../optional-offline-play.md) for the
 updated behavior; the implementation and release details below are historical.
 
+For current completion status and priorities, use the
+[reviewed offline/content plan](../content-offline/PLAN-REVIEW-2026-09-30.md).
+The manual Verify / Use this edition sequence below records the original
+implementation. Current optional preparation verifies and prepares automatically
+after the player confirms the download; ordinary mission entry never starts it.
+
 Implementation branch: `codex/offline-pwa`, based on freshly fetched `origin/main`
 `23e6129782e08ed826686f137a0989e5f154732a` (0.131.0 source line). The existing
 `codex/fpv-redesign` checkout and its uncommitted work were preserved.
