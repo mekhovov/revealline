@@ -9835,6 +9835,7 @@ try {
             warning(
               {
                 'self-contact': t('interface:yourLineCrossedItselfChooseANewRoute'),
+                'combat-projectile': t('interface:failure.combatProjectile'),
                 'mission-timeout': t('interface:theMissionClockRanOutTryAFasterRoute'),
                 'cut-timeout': t('interface:yourLiveLineStayedOpenTooLongMakeAShorter'),
                 'cable-limit': t('interface:yourCableBudgetRanOutCloseAShorterLine'),

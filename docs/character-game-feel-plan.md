@@ -20,6 +20,12 @@ reading, current-mission encounter lessons and retained-parent artwork compariso
 Necessary C6 support travels with C; broad tooling and C2 remain later.
 The current register supersedes historical status paragraphs below.
 
+The 30 September successor refreshes current coverage to FPV104, corrects the
+ordinary Sentry projectile-loss explanation, and prepares exact fpv38/50 Team
+import restoration. These are bounded A/B compatibility and feedback changes,
+not new production-art adoption. See the register for queued menu/authoring owner
+work and the separate remaining C7/device and C2/human qualification.
+
 The next bounded [batch24](verification/actor-batch-24/README.md) qualifies real
 Solo save/Continue during an active enemy-freeze interval and real Sentry
 projectile contact/nonterminal recovery. These close distinct host boundaries;
