@@ -4,6 +4,10 @@ import {
   preparedRevealCurrent,
   preparedRevealDocumentsCurrent,
 } from './prepared-reveal-current-workflow.mjs';
+import {
+  nativeLandingDefaultCurrent,
+  nativeLandingDroneAidCurrent,
+} from './native-landing-whitelist-workflow.mjs';
 import { importThemeBundle } from '../../presentation/bundle.mjs';
 import { validateScenario } from '../../content.mjs';
 import { validateEnemyCatalogDraft } from '../../enemy-catalog.mjs';
@@ -49,6 +53,8 @@ async function fingerprint(blob) {
 const value = (p, css) => p.doc.querySelector(css).value;
 
 export const currentAuthoringCases = {
+  nativeLandingDefaultCurrent,
+  nativeLandingDroneAidCurrent,
   preparedRevealCurrent,
   preparedRevealDocumentsCurrent,
   fpvRoleGalleryCurrent,
