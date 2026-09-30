@@ -22,7 +22,16 @@ const html = parse(
     'utf8',
   ),
 );
-function fixture(t, { available = true, storage, ...factories } = {}) {
+function fixture(
+  t,
+  {
+    available = true,
+    storage,
+    url = 'https://example.test/optional-practice/civilian-fpv/?lang=en',
+    serviceWorker,
+    ...factories
+  } = {},
+) {
   const doc = new Document(),
     win = new Events(),
     frames = new Map(),
@@ -50,8 +59,8 @@ function fixture(t, { available = true, storage, ...factories } = {}) {
     disposed = false,
     pads = [];
   Object.assign(win, {
-    location: new URL('https://example.test/optional-practice/civilian-fpv/?lang=en'),
-    navigator: { getGamepads: () => pads },
+    location: new URL(url),
+    navigator: { getGamepads: () => pads, ...(serviceWorker ? { serviceWorker } : {}) },
     requestAnimationFrame: (fn) => {
       frames.set(++id, fn);
       return id;
@@ -775,6 +784,87 @@ test('cached radio restore requires a fresh arm edge and matching control pickup
   assert.equal(f.view.snapshot().lastInput.throttle, 600);
 });
 
+test('game return keeps scoped offline controls available and serializes preparation/removal', async (t) => {
+  const base = 'https://example.test/optional-practice/civilian-fpv/',
+    registrations = [],
+    removed = [];
+  let complete,
+    unregisters = 0;
+  const registration = {
+    scope: base,
+    active: { state: 'activated' },
+    unregister: async () => {
+      unregisters++;
+    },
+  };
+  const f = fixture(t, {
+    url: base + 'index.html?lang=en&game-return=%2Fgame%2Findex.html',
+    notebookFactory: null,
+    studioFactory: null,
+    serviceWorker: {
+      register: (url, options) => {
+        registrations.push({ url: String(url), scope: options.scope });
+        return new Promise((resolve) => (complete = () => resolve(registration)));
+      },
+      getRegistration: async () => registration,
+    },
+  });
+  const ownedCache = 'revealline.optional.package.v1:/optional-practice/civilian-fpv/:exact';
+  f.win.caches = {
+    keys: async () => [ownedCache, 'main-game', 'another-installation'],
+    delete: async (key) => removed.push(key),
+  };
+  assert.equal(f.$('game-return').hidden, false);
+  assert.equal(f.$('install-offline').hidden, false);
+  assert.equal(f.$('install-offline').disabled, false);
+  f.$('arm').click();
+  f.$('install-offline').click();
+  assert.equal(f.view.snapshot().status, 'paused');
+  assert.equal(f.$('install-offline').disabled, true);
+  assert.equal(f.$('remove-offline').disabled, true);
+  f.$('install-offline').click();
+  f.$('remove-offline').click();
+  assert.deepEqual(registrations, [{ url: base + 'worker.js', scope: new URL(base).pathname }]);
+  assert.equal(unregisters, 0);
+  assert.deepEqual(removed, []);
+  complete();
+  await new Promise((resolve) => setImmediate(resolve));
+  assert.equal(f.$('transfer-status').textContent, 'This exact optional package is ready offline.');
+  assert.equal(f.$('install-offline').disabled, false);
+  assert.equal(f.view.snapshot().status, 'paused');
+  f.$('remove-offline').click();
+  await new Promise((resolve) => setImmediate(resolve));
+  assert.equal(unregisters, 1);
+  assert.deepEqual(removed, [ownedCache]);
+  assert.equal(f.$('remove-offline').disabled, false);
+});
+
+test('unavailable offline capability stays explanatory and a failed prepare never reports ready', async (t) => {
+  for (const options of [
+    {},
+    { url: 'file:///optional-practice/civilian-fpv/index.html', serviceWorker: {} },
+  ]) {
+    const f = fixture(t, { notebookFactory: null, studioFactory: null, ...options });
+    assert.equal(f.$('install-offline').disabled, true);
+    assert.equal(f.$('remove-offline').disabled, true);
+    assert.equal(f.$('offline-unavailable').hidden, false);
+  }
+  const f = fixture(t, {
+    notebookFactory: null,
+    studioFactory: null,
+    serviceWorker: {
+      register: async () => {
+        throw new Error('Offline package unavailable');
+      },
+    },
+  });
+  f.$('install-offline').click();
+  await new Promise((resolve) => setImmediate(resolve));
+  assert.equal(f.$('transfer-status').textContent, 'Offline package unavailable');
+  assert.equal(f.$('install-offline').disabled, false);
+  assert.equal(f.$('remove-offline').disabled, false);
+});
+
 test('ordinary unload disposes permanently and a late pageshow cannot revive it', (t) => {
   const f = fixture(t, { notebookFactory: null, studioFactory: null });
   f.$('arm').click();
@@ -867,4 +957,89 @@ test('TX15 default does not match an unrelated joystick', (t) => {
   f.tick();
   assert.equal(f.view.radio.status().profile, null);
   assert.equal(f.view.snapshot().status, 'disarmed');
+});
+
+test('camera focus preserves global pause for keyboard, touch and radio owners without resuming held input', (t) => {
+  for (const owner of ['keyboard', 'touch', 'radio']) {
+    for (const code of ['KeyP', 'Escape']) {
+      const f = fixture(t);
+      f.$('input-source').value = owner;
+      f.$('input-source').emit('change');
+      if (owner === 'radio') {
+        const pad = {
+          id: 'Pause fixture USB',
+          index: 0,
+          connected: true,
+          mapping: '',
+          axes: [0, 0, 0, -1],
+          buttons: [],
+        };
+        f.setPads([pad]);
+        f.view.radio.select(0);
+        f.view.radio.setProfile(radioProfile(pad));
+        f.view.radio.verify();
+      }
+      assert.equal(f.view.arm(), true);
+      f.tick(3);
+      f.$('camera').focus();
+      const event = f.win.emit('keydown', { code, target: f.doc.activeElement });
+      assert.equal(event.defaultPrevented, true, `${owner}: ${code}`);
+      assert.equal(f.view.snapshot().status, 'paused');
+      const paused = f.view.snapshot();
+      f.tick(4);
+      assert.deepEqual(f.view.snapshot(), paused);
+      f.key('KeyW');
+      assert.deepEqual(f.view.snapshot(), paused, 'movement cannot unpause');
+    }
+  }
+});
+
+test('pause shortcuts release local controls but preserve text, dialogs and modified browser keys', () => {
+  const doc = new Document(),
+    win = new Events(),
+    reasons = [];
+  const input = createFlightInput({
+    window: win,
+    document: doc,
+    onPause: (reason) => reasons.push(reason),
+  });
+  try {
+    for (const tag of ['button', 'a', 'select', 'input']) {
+      const target = doc.createElement(tag);
+      if (tag === 'input') target.type = 'range';
+      doc.body.append(target);
+      input.select('keyboard');
+      input.enable(true);
+      win.emit('keydown', { code: 'KeyW', target: doc.body });
+      win.emit('keydown', { code: 'ArrowUp', target: doc.body });
+      assert(input.sample(0.05).throttle > 0);
+      assert.equal(win.emit('keydown', { code: 'KeyP', target }).defaultPrevented, true);
+      assert.deepEqual(input.sample(0.05), { roll: 0, pitch: 0, yaw: 0, throttle: 0 });
+      input.enable(true);
+      assert.deepEqual(input.sample(0.05), { roll: 0, pitch: 0, yaw: 0, throttle: 0 });
+    }
+    assert.equal(reasons.length, 4);
+    const text = doc.createElement('input'),
+      textarea = doc.createElement('textarea'),
+      rich = doc.createElement('div');
+    text.type = 'text';
+    rich.isContentEditable = true;
+    for (const target of [text, textarea, rich])
+      for (const code of ['KeyP', 'Escape'])
+        assert.equal(win.emit('keydown', { code, target }).defaultPrevented, false);
+    for (const modifier of ['ctrlKey', 'metaKey', 'altKey', 'repeat', 'isComposing'])
+      assert.equal(
+        win.emit('keydown', { code: 'KeyP', target: doc.body, [modifier]: true }).defaultPrevented,
+        false,
+      );
+    const dialog = doc.createElement('dialog'),
+      close = doc.createElement('button');
+    dialog.append(close);
+    doc.body.append(dialog);
+    dialog.showModal();
+    assert.equal(win.emit('keydown', { code: 'Escape', target: close }).defaultPrevented, false);
+    assert.equal(reasons.length, 4, 'native dismissal and text input must not invoke pause');
+  } finally {
+    input.dispose();
+  }
 });

@@ -1912,7 +1912,7 @@ try {
       quickMusicControls = attachQuickMusicControls({
         document,
         prefix: 'solo',
-        after: [$('shell-continue')],
+        // The landing owns passive song metadata; transport lives in Audio.
         settingsRoot: $('settings-panel-audio'),
         snapshot: () => soundtrackPlayer?.snapshot(),
         getMaster: () => audioMaster.snapshot(),
@@ -10879,11 +10879,13 @@ try {
     prepareCollectionProgress();
     libraryPanel.populateGallery();
     localizedText($('collection-back'), () =>
-      $('shell-home').open
-        ? t('interface:backToMenu')
-        : $('shell-missions').open
-          ? t('interface:backToMissions2')
-          : t('interface:backToTheField'),
+      opener?.closest('#settings-dialog')
+        ? t('interface:backToSettings')
+        : $('shell-home').open
+          ? t('interface:backToMenu')
+          : $('shell-missions').open
+            ? t('interface:backToMissions2')
+            : t('interface:backToTheField'),
     );
     // Pausing may focus Resume; native return belongs to this entry control.
     if (

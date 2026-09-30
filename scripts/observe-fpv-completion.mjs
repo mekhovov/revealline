@@ -1,12 +1,15 @@
 import assert from 'node:assert/strict';
-import { readFile, writeFile, mkdir, mkdtemp, rm, stat, realpath } from 'node:fs/promises';
+import { readFile, writeFile, mkdir, mkdtemp, rm } from 'node:fs/promises';
 import path from 'node:path';
 import { tmpdir } from 'node:os';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import { createHash } from 'node:crypto';
-import { readEditionZip } from '../publishing/edition-zip.mjs';
-import { validateOptionalPackageAdmission } from '../publishing/optional-package-admission.mjs';
 import { startServer, PREVIEW_SECURITY_HEADERS } from './game-cli.mjs';
+import {
+  loadFPVObservationArtifact,
+  fpvObservationDeadline as deadline,
+  closeFPVObservationResources,
+} from './fpv-observation-artifact.mjs';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const SHA = /^[a-f0-9]{64}$/;
@@ -83,56 +86,13 @@ export function validateFPVCompletionPlan(input) {
   return plan;
 }
 
-/** Admission verifies every original envelope member, including source/evidence.
- * Only the selected runtime ZIP is extracted. This never grants publication. */
-export async function loadFPVCompletionArtifact(planInput, { base = process.cwd() } = {}) {
-  const plan = validateFPVCompletionPlan(planInput);
-  const root = await realpath(path.resolve(base, plan.bundle));
-  const read = async (name, limit) => {
-    const file = await realpath(path.join(root, name));
-    if (!file.startsWith(root + path.sep) || (await stat(file)).size > limit)
-      throw new Error('Optional artifact escapes its root or exceeds its bound.');
-    return readFile(file);
-  };
-  const envelopeBytes = await read('optional-packages.json', 1024 * 1024);
-  if (digest(envelopeBytes) !== plan.envelopeSha256)
-    throw new Error('Envelope differs from the observation plan.');
-  const envelope = JSON.parse(envelopeBytes);
-  if (envelope.sourceRevision !== plan.sourceRevision || envelope.sourceTree !== plan.sourceTree)
-    throw new Error('Envelope source differs from the observation plan.');
-  const originals = new Map();
-  await validateOptionalPackageAdmission(envelope, {
-    read: async (descriptor) => {
-      if (!originals.has(descriptor.path))
-        originals.set(descriptor.path, await read(descriptor.path, descriptor.bytes));
-      return originals.get(descriptor.path);
-    },
-  });
-  const selected = envelope.packages.find((item) => item.id === 'civilian-fpv');
-  if (!selected || selected.revision !== plan.packageRevision)
-    throw new Error('The exact civilian-fpv package is absent.');
-  const files = readEditionZip(originals.get(selected.distribution.path));
-  return {
-    files,
-    binding: {
-      sourceRevision: envelope.sourceRevision,
-      sourceTree: envelope.sourceTree,
-      version: envelope.version,
-      envelope: pin('optional-packages.json', envelopeBytes),
-      package: selected,
-      members: [...files].map(([name, bytes]) => pin(name, bytes)),
-    },
-  };
-}
-
-function deadline(promise, milliseconds, label) {
-  let timer;
-  return Promise.race([
-    promise,
-    new Promise((_, reject) => {
-      timer = setTimeout(() => reject(new Error(`${label} timed out.`)), milliseconds);
-    }),
-  ]).finally(() => clearTimeout(timer));
+/** Preserve the completion-specific public API while sharing artifact admission. */
+export async function loadFPVCompletionArtifact(planInput, options = {}) {
+  const { files, binding } = await loadFPVObservationArtifact(
+    validateFPVCompletionPlan(planInput),
+    options,
+  );
+  return { files, binding };
 }
 
 /** A bounded partial is diagnostic evidence, never a complete JSON trace.
@@ -325,16 +285,7 @@ export async function finishFPVCompletionProcedure({ attempt, passive, trace, fu
 }
 
 export async function closeFPVCompletionResources(operations) {
-  const outcomes = [];
-  for (const [name, close] of operations) {
-    try {
-      await deadline(Promise.resolve().then(close), 10_000, `Cleanup ${name}`);
-      outcomes.push({ name, closed: true });
-    } catch (error) {
-      outcomes.push({ name, closed: false, error: failure(error) });
-    }
-  }
-  return { completed: outcomes.every((item) => item.closed), operations: outcomes };
+  return closeFPVObservationResources(operations);
 }
 
 const WRAPPER = String.raw`
@@ -465,6 +416,7 @@ export async function observeFPVCompletion({ planFile, playwrightModule, output 
     report.instrumentation = [];
     for (const name of [
       'scripts/observe-fpv-completion.mjs',
+      'scripts/fpv-observation-artifact.mjs',
       'scripts/game-cli.mjs',
       'publishing/edition-zip.mjs',
       'publishing/optional-package-admission.mjs',

@@ -4,7 +4,7 @@ This change applies to active source and generated packages. Archived release sn
 
 ## Landing contract
 
-Normal landing screens contain the title (edition identity where applicable), a truthful Start/Continue action, Select Mission, Settings, Sound, supported mode names/icons, passive soundtrack information and release version. A compact Fullscreen utility below the main actions was added at the user’s request on 29 September 2026. It is mirrored in Display & Language, retains a 44px target and uses the shared icon/focus style. Loading, cancellation and save recovery are temporary exceptions. The selected mode is a focusable button that does nothing when activated; other modes retain their guarded links.
+Normal landing screens contain the title (edition identity where applicable), a truthful Start/Continue action, Select Mission, Settings, Sound, supported mode names/icons, passive soundtrack information and release version. Fullscreen was added at the user’s request on 29 September 2026. Solo retains its existing landing control; Versus and Team expose a landing utility mirrored in Display & Language. These controls retain a 44px target and the shared icon/focus style. Loading, cancellation and save recovery are temporary exceptions. The selected mode is a focusable button that does nothing when activated; other modes retain their guarded links. Isolated lesson menus retain their own Help, sound and checked Return controls rather than exposing campaign destinations.
 
 English mode names are Solo, Versus, Team; Ukrainian names are Соло, Дуель, Команда. Unsupported edition modes are hidden. A mode switch does not start a match. Existing multiplayer readiness and assignment controls retain their host behavior.
 
@@ -37,9 +37,11 @@ The complete edition table is in `docs/native-menu-inventory.json`, generated fr
 | Accessibility         | Plain/pixel type, standard/large text, reduced effects, animated backgrounds                                              |
 | Progress & Collection | Collection, pictures, player library, local scores, saves, backup, profile/artwork recovery                               |
 | Content & Offline     | Worlds, editions, community content, installed packs, downloads, installation, storage retention                          |
-| Help & Extras         | Instructions, field guide, demo, Replay Theater, credits, releases, creator-tool launcher                                 |
+| Help & Extras         | Instructions, FPV simulator, Flight practice, field guide, demo, Replay Theater, credits, releases, creator-tool launcher |
 
 Edition pickers live in Content & Offline; original-art recovery lives in Progress & Collection; edition sources/about live in Help & Extras. The language picker has one visible home. Runtime music transport is rendered in Audio; landing song metadata is passive. Existing Apply/Cancel behavior remains owned by each original control. Demo entry closes its Settings parent temporarily and restores the same section when leaving without a gameplay handoff.
+
+The September 30 landing correction moves the real Collection, Help and practice controls into those sections, preserving their handlers and exact nested Back targets. Soundtrack initialization cannot append transport to a prepared native landing. Pause transport and optional music shortcuts still use the existing audio owner. See the [current restoration evidence](verification/landing-whitelist-restoration-2026-09-30.md); local qualification is separate from the pending public correction.
 
 The installed Custom Solo player exposes four populated sections: Gameplay, Display & Language (including its accessibility preferences), Progress & Collection and Help & Extras. Its runtime has no audio owner, so it has no inactive sound/track controls. It preserves its verified runtime and saves, supports in-pack mission selection with replacement confirmation, and hands qualified Versus content to the ordinary multiplayer host.
 

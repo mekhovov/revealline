@@ -868,17 +868,22 @@ test('Solo Audio exposes full current credits while compact Pause remains an ord
   assert.deepEqual(page.errors, []);
 });
 
-test('main-menu music Play/Pause stays out of Pause while its Next song uses the shared transport', async (t) => {
+test('Settings Audio Play/Pause stays out of landing and Pause while Pause Next uses the shared transport', async (t) => {
   const { page } = await setup(t);
   await waitFor(() => !!musicMedia(page).src, 'Original prepared for first menu gesture');
-  const menu = page.$('solo-quick-music-0-toggle'),
+  const menu = page.$('solo-quick-music-settings-toggle'),
     next = page.$('overlay-next-song'),
     master = page.storage.getItem(AUDIO_PREFERENCES_KEY);
-  assert(menu && next, 'Pause reuses the main transport through its compact action');
+  assert(menu && next, 'Settings Audio and Pause reuse the current transport');
+  assert.equal(menu.closest('[role="tabpanel"]')?.id, 'settings-panel-audio');
+  assert.equal(page.$('shell-home').querySelector('.quick-music-controls'), null);
+  page.$('settings-button').click();
+  page.$('settings-tab-audio').click();
   assert.equal(page.$('solo-quick-music-1-toggle'), null, 'Pause has no music Play/Pause action');
   menu.click();
   assert.equal(musicMedia(page).paused, false, 'Play begins in the click task');
-  await waitFor(() => menu.textContent === 'Pause music', 'Menu control shows playing');
+  await waitFor(() => menu.textContent === 'Pause music', 'Audio control shows playing');
+  page.$('settings-dialog').close();
   await startFlight(page);
   page.key('ArrowDown');
   page.key('ArrowDown', false);
@@ -888,11 +893,15 @@ test('main-menu music Play/Pause stays out of Pause while its Next song uses the
   page.frame(0);
   assert.equal(page.rendered.paused, true);
   assert.equal(next.disabled, false);
+  page.$('overlay-settings').click();
+  page.$('settings-tab-audio').click();
   menu.click();
+  page.$('settings-dialog').close();
   assert.equal(musicMedia(page).paused, true);
   next.click();
   await waitFor(
-    () => page.$('solo-quick-music-0').textContent.includes(BUILTIN_SOUNDTRACK_TRACKS[0].title),
+    () =>
+      page.$('solo-quick-music-settings').textContent.includes(BUILTIN_SOUNDTRACK_TRACKS[0].title),
     'Paused Next selects the next recording',
   );
   ticks(page, 2);
@@ -914,10 +923,12 @@ for (const gesture of ['keyboard', 'pointer']) {
     media.play = async () => {
       throw Object.assign(new Error('Gesture refused'), { name: 'NotAllowedError' });
     };
-    const button = page.$('solo-quick-music-0-toggle');
+    const button = page.$('solo-quick-music-settings-toggle');
+    page.$('settings-button').click();
+    page.$('settings-tab-audio').click();
     button.click();
     await waitFor(
-      () => page.$('solo-quick-music-0').textContent.includes('Choose Play music to retry'),
+      () => page.$('solo-quick-music-settings').textContent.includes('Choose Play music to retry'),
       'Rejected playback is visible',
     );
     media.play = originalPlay;
