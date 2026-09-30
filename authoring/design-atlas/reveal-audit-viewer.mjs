@@ -39,7 +39,7 @@ export function mountRevealAuditViewer({ document: doc, window: win, navigation,
     return node;
   };
   const back = button('reveal-source-close', () => t('common:actions.back'), 'back');
-  const retry = button('reveal-source-retry', () => t('tools:retryLoadingStudy'));
+  const retry = button('reveal-source-retry', () => t('common:actions.retry'));
   const read = button('reveal-read-source', () => authoringText('readPage'), 'missions');
   const fit = button('reveal-source-fit', () => t('tools:revealSourceFit'));
   const actual = button('reveal-source-actual', () => t('tools:revealSourceActualSize'));
@@ -298,7 +298,8 @@ export function mountRevealAuditViewer({ document: doc, window: win, navigation,
     origin = opener;
     dialog.dataset.kind = next.kind;
     dialog.dataset.path = next.path;
-    title.textContent = label();
+    localizedText(title, label);
+    localizedAttribute(read, 'aria-label', () => `${authoringText('readPage')}: ${label()}`);
     if (!dialog.open) dialog.showModal();
     back.focus();
     void prepare();

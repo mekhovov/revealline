@@ -16,6 +16,7 @@ import { viewportCurrent } from './viewport-current-workflow.mjs';
 import { revealAuditCurrent } from './reveal-audit-current-workflow.mjs';
 import { revealAuditSourcesCurrent } from './reveal-audit-source-current-workflow.mjs';
 import { creatorGuideCurrent } from './creator-guide-current-workflow.mjs';
+import { countercurrentGalleryCurrent } from './countercurrent-gallery-current-workflow.mjs';
 import {
   creatorGuideDocumentsCurrent,
   creatorGuidePackDownloadCurrent,
@@ -41,6 +42,7 @@ async function fingerprint(blob) {
 const value = (p, css) => p.doc.querySelector(css).value;
 
 export const currentAuthoringCases = {
+  countercurrentGalleryCurrent,
   creatorGuideDocumentsCurrent,
   creatorGuidePackDownloadCurrent,
   creatorGuideProjectDownloadCurrent,
