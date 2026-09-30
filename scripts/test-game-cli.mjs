@@ -792,8 +792,13 @@ test('packaged offline builds generate scoped metadata, generated brand icons, c
   const inspected = await inspectBuildProject({ root });
   const actualManifestBytes = await fs.readFile(path.join(out, 'manifest.json'));
   assert.deepEqual(inspected.manifest, JSON.parse(actualManifestBytes));
+  assert.equal(actualManifestBytes.toString(), `${JSON.stringify(inspected.manifest)}\n`);
   assert.equal(inspected.manifestDescriptor.sha256, hash(actualManifestBytes));
   const cache = JSON.parse(await fs.readFile(path.join(out, 'offline-cache.json'), 'utf8'));
+  assert.equal(
+    await fs.readFile(path.join(out, 'offline-cache.json'), 'utf8'),
+    `${JSON.stringify(cache)}\n`,
+  );
   const manifest = JSON.parse(await fs.readFile(path.join(out, 'manifest.webmanifest'), 'utf8'));
   assert.equal(manifest.start_url, './game/');
   assert.equal(manifest.scope, './');
@@ -1094,6 +1099,11 @@ async function optionalPackFixture(t) {
 }
 test('optional indexed pack keeps exact shipped and ZIP bytes while core cache excludes only the declared source', async (t) => {
   const { root, out, directory } = await optionalPackFixture(t);
+  await fs.mkdir(path.join(root, 'game/communities/coupa'), { recursive: true });
+  await fs.writeFile(
+    path.join(root, 'game/communities/coupa/index.html'),
+    '<!doctype html><html data-community-entry="loading"><head></head><body>Opening community</body></html>',
+  );
   const result = await buildProject({ root, out });
   const again = await buildProject({ root, out: path.join(directory, 'same') });
   assert.equal(result.sha256, again.sha256);
@@ -1113,6 +1123,11 @@ test('optional indexed pack keeps exact shipped and ZIP bytes while core cache e
   ]);
   const page = await fs.readFile(path.join(out, 'game/index.html'), 'utf8');
   assert.match(page, /optionalPacks/);
+  const shell = await fs.readFile(path.join(out, 'game/communities/coupa/index.html'), 'utf8');
+  assert.doesNotMatch(shell, /optionalPacks|optionalArtwork/);
+  assert.match(shell, /revealline-offline/);
+  assert.match(shell, new RegExp(cache.buildId));
+  assert.ok(cache.files.some((file) => file.path === 'game/communities/coupa/index.html'));
   const zip = await fs.readFile(path.join(out, 'distribution.zip'));
   assert.ok(zip.includes(original), 'Stored ZIP entry retains exact optional pack payload.');
   const omitted = manifest.files
