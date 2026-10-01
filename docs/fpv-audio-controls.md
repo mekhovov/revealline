@@ -59,3 +59,11 @@ The Ukrainian screenshot is retained locally at `/tmp/fpv-audio-controls-uk.jpg`
 These checks demonstrate UI behavior and persistent cross-view preferences; they
 do not establish audible perception, acoustic quality or physical hardware
 performance. No listening or hardware acceptance is claimed.
+
+Frozen integrated candidate `ce2ce289565a007764c58c1063551ce8fc3563f0` passed
+all three optional-package admissions, committed-input verification, two
+byte-identical builds and ZIP-member checks. See the
+[package receipt](evidence/fpv-audio-package-20261001.json). Academy remains
+62 runtime / 64 source files and World Studio 94 / 96 under unchanged limits.
+The final integrated browser demonstration reached its completion message with
+no console errors, and watching it left school progress at 0 / 14.
