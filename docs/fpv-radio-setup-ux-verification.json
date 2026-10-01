@@ -1,0 +1,1121 @@
+{
+  "format": "FPVRadioSetupUXVerification.v1",
+  "verifiedDate": "2026-10-01",
+  "qualification": "development-playtest",
+  "releaseQualified": false,
+  "method": "Functional Chromium browser probes with a controlled Gamepad API, rendered desktop/mobile inspection, build closure validation, ESLint, formatting and diff checks. No new unit coverage.",
+  "hardware": "The connected physical TX15 was detected and the shared screen was inspected. This change did not perform a new physical-radio guided calibration; flight and edge-case receipts below use controlled gamepad input. Prior owner-confirmed physical flight belongs to PR #899.",
+  "builds": {
+    "worlds": {
+      "format": "FPVPlaytestBuild.v1",
+      "entry": "optional-practice/fpv-worlds/index.html",
+      "files": 78,
+      "bytes": 10232013,
+      "zipSha256": "d0615fa3f3929f8a979c3fb0945b2b1ac13093ee7d55b90a1c497c2be60a3faf",
+      "qualification": "development-playtest",
+      "unitTests": "deferred-to-final-phase",
+      "releaseQualified": false
+    },
+    "stadium": {
+      "format": "FPVPlaytestBuild.v1",
+      "entry": "optional-practice/fpv-worlds/index.html",
+      "files": 79,
+      "bytes": 11742376,
+      "zipSha256": "7eaf181a223727d4071ccd26a9a909e046a9ab9c045326b790760cac622e805a",
+      "qualification": "development-playtest",
+      "unitTests": "deferred-to-final-phase",
+      "releaseQualified": false
+    },
+    "academy": {
+      "package": "civilian-fpv",
+      "files": 56,
+      "bytes": 3183167,
+      "zipSha256": "ce361d15947a221d31b1d7a3770483e3a308e9b4a8daf752bc48fcb3a6ab1920",
+      "qualification": "development-playtest"
+    }
+  },
+  "behavioralCandidate": {
+    "zipSha256": "b82bf4f595281c7f31e709124be8c4feb3bc0b52c680982ec5748a4320dfde44",
+    "note": "32 named radio scenarios passed on this candidate; legacy quick return used the source Academy URL. Later fixes removed an overlapping mobile sticky action bar, compacted layout/copy and stopped competing advanced capture modes when entering the guide. The parent PR also isolated USB disconnect events from non-radio input and demonstrations. Targeted verification for these changes and exact final package smoke follow below.",
+    "suites": [
+      {
+        "path": "/tmp/fpv-radio-setup-ux-browser-20261001.json",
+        "status": "passed",
+        "url": "http://127.0.0.1:8789/dist/fpv-radio-setup-playtest/optional-practice/fpv-worlds/index.html",
+        "legacyUrl": "http://127.0.0.1:8789/optional-practice/civilian-fpv/index.html",
+        "cases": [
+          "knownQuick",
+          "knownReturned",
+          "knownCancel",
+          "immersiveSetup",
+          "shortTravel",
+          "ambiguous",
+          "guidedCheck",
+          "savedCustom",
+          "guidedLift",
+          "guidedDirections",
+          "interruption",
+          "setupReconnect",
+          "reloaded",
+          "legacyQuick",
+          "legacyReturn"
+        ],
+        "errors": [],
+        "rawReceiptSha256": "7c234e953fd802effcbeaf82dff01779bcc984d980c97d9a268a288a4ff7d41e"
+      },
+      {
+        "path": "/tmp/fpv-radio-setup-ux-edges-20261001.json",
+        "status": "passed",
+        "url": "http://127.0.0.1:8789/dist/fpv-radio-setup-playtest/optional-practice/fpv-worlds/index.html",
+        "legacyUrl": null,
+        "cases": [
+          "enQuick",
+          "enAdvanced",
+          "ukQuick",
+          "ukAdvanced",
+          "springCheck",
+          "sessionOnly",
+          "savedSessionProfile",
+          "springLift"
+        ],
+        "errors": [],
+        "rawReceiptSha256": "e31132e790c54cb53a7f7847e5f0735eaf7c64b9e047f450f1b51658bad98906"
+      },
+      {
+        "path": "/tmp/fpv-radio-setup-ux-final-20261001.json",
+        "status": "passed",
+        "url": "http://127.0.0.1:8789/dist/fpv-radio-setup-playtest/optional-practice/fpv-worlds/index.html",
+        "legacyUrl": null,
+        "cases": [
+          "desktop",
+          "preservedCheck",
+          "preservedSwitches",
+          "conflictCheck",
+          "conflictSwitches",
+          "changedDevice",
+          "offline",
+          "offlineLift",
+          "offlineImmersive"
+        ],
+        "errors": [],
+        "rawReceiptSha256": "6a83e04a5e038bb5a84d7c23775b908c4afdba728cb2edd3777753b84aee1f0e"
+      }
+    ]
+  },
+  "finalPackages": {
+    "worlds": {
+      "url": "http://127.0.0.1:8789/dist/fpv-radio-setup-playtest/optional-practice/fpv-worlds/index.html",
+      "date": "2026-09-30T23:40:56.825Z",
+      "views": [
+        {
+          "locale": "uk",
+          "viewport": {
+            "width": 390,
+            "height": 844
+          },
+          "geometry": {
+            "dialogWidth": 350,
+            "dialogScroll": 350,
+            "bodyScroll": 390,
+            "viewport": 390,
+            "checkboxTop": 694.59375,
+            "checkboxBottom": 742.59375,
+            "buttonTop": 762.59375,
+            "buttonBottom": 804.59375,
+            "height": 844,
+            "checkboxReachable": true
+          },
+          "lift": 212,
+          "throttle": 850,
+          "records": 0,
+          "immersivePausedTick": 21
+        }
+      ],
+      "errors": [],
+      "status": "passed"
+    },
+    "stadium": {
+      "url": "http://127.0.0.1:8789/dist/fpv-stadium-demo-playtest/optional-practice/fpv-worlds/index.html",
+      "date": "2026-09-30T23:40:56.823Z",
+      "views": [
+        {
+          "locale": "uk",
+          "viewport": {
+            "width": 390,
+            "height": 844
+          },
+          "geometry": {
+            "dialogWidth": 350,
+            "dialogScroll": 350,
+            "bodyScroll": 390,
+            "viewport": 390,
+            "checkboxTop": 694.59375,
+            "checkboxBottom": 742.59375,
+            "buttonTop": 762.59375,
+            "buttonBottom": 804.59375,
+            "height": 844,
+            "checkboxReachable": true
+          },
+          "lift": 212,
+          "throttle": 850,
+          "records": 0,
+          "immersivePausedTick": 21
+        }
+      ],
+      "errors": [],
+      "status": "passed"
+    }
+  },
+  "fullscreen": {
+    "note": "Shared fullscreen behavior was checked in both hosts, native and rejected/unsupported fallback, secondary-dialog Escape precedence, catalogue v2, demonstration, creator, checkpoint, playlist, EN/UK, portrait and landscape. Final package smoke rechecked enter, Setup/save and exit with frozen paused ticks.",
+    "cases": {
+      "cases": [
+        {
+          "label": "v2 catalogue",
+          "active": {
+            "status": "active",
+            "course": "woodland-01",
+            "replay": null,
+            "immersive": {
+              "active": true,
+              "mode": "native",
+              "toolsOpen": false
+            }
+          },
+          "paused": {
+            "status": "paused",
+            "open": true,
+            "fullscreen": false,
+            "immersive": {
+              "active": false,
+              "mode": "none",
+              "toolsOpen": false
+            },
+            "canvas": {
+              "x": 58,
+              "y": 161,
+              "width": 1164,
+              "height": 464,
+              "top": 161,
+              "right": 1222,
+              "bottom": 625,
+              "left": 58
+            }
+          }
+        },
+        {
+          "label": "Academy demonstration",
+          "active": {
+            "status": "active",
+            "course": "flight-01",
+            "replay": {
+              "kind": "demonstration",
+              "mode": "self-level",
+              "rate": 1,
+              "frames": 239,
+              "finished": false
+            },
+            "immersive": {
+              "active": true,
+              "mode": "native",
+              "toolsOpen": false
+            }
+          },
+          "paused": {
+            "status": "paused",
+            "open": true,
+            "fullscreen": false,
+            "immersive": {
+              "active": false,
+              "mode": "none",
+              "toolsOpen": false
+            },
+            "canvas": {
+              "x": 58,
+              "y": 244,
+              "width": 1164,
+              "height": 464,
+              "top": 244,
+              "right": 1222,
+              "bottom": 708,
+              "left": 58
+            }
+          }
+        },
+        {
+          "label": "creator preview",
+          "active": {
+            "status": "active",
+            "course": "custom-muoqjevx-wces9",
+            "replay": null,
+            "immersive": {
+              "active": true,
+              "mode": "native",
+              "toolsOpen": false
+            }
+          },
+          "paused": {
+            "status": "paused",
+            "open": true,
+            "fullscreen": false,
+            "immersive": {
+              "active": false,
+              "mode": "none",
+              "toolsOpen": false
+            },
+            "canvas": {
+              "x": 58,
+              "y": 161,
+              "width": 1164,
+              "height": 464,
+              "top": 161,
+              "right": 1222,
+              "bottom": 625,
+              "left": 58
+            }
+          }
+        },
+        {
+          "label": "Acro checkpoint practice public runtime entry",
+          "active": {
+            "status": "active",
+            "course": "woodland-01",
+            "replay": null,
+            "immersive": {
+              "active": true,
+              "mode": "native",
+              "toolsOpen": false
+            }
+          },
+          "paused": {
+            "status": "paused",
+            "open": true,
+            "fullscreen": false,
+            "immersive": {
+              "active": false,
+              "mode": "none",
+              "toolsOpen": false
+            },
+            "canvas": {
+              "x": 58,
+              "y": 161,
+              "width": 1164,
+              "height": 464,
+              "top": 161,
+              "right": 1222,
+              "bottom": 625,
+              "left": 58
+            }
+          }
+        },
+        {
+          "label": "user playlist",
+          "active": {
+            "status": "active",
+            "course": "flight-01",
+            "replay": null,
+            "immersive": {
+              "active": true,
+              "mode": "native",
+              "toolsOpen": false
+            }
+          },
+          "paused": {
+            "status": "paused",
+            "open": true,
+            "fullscreen": false,
+            "immersive": {
+              "active": false,
+              "mode": "none",
+              "toolsOpen": false
+            },
+            "canvas": {
+              "x": 58,
+              "y": 161,
+              "width": 1164,
+              "height": 464,
+              "top": 161,
+              "right": 1222,
+              "bottom": 625,
+              "left": 58
+            }
+          }
+        }
+      ],
+      "uk": {
+        "overflow": false,
+        "buttons": [
+          {
+            "text": "Налаштувати пульт",
+            "visible": true,
+            "rect": {
+              "x": 163.625,
+              "y": 4,
+              "width": 134.03125,
+              "height": 36,
+              "top": 4,
+              "right": 297.65625,
+              "bottom": 40,
+              "left": 163.625
+            }
+          },
+          {
+            "text": "Керування",
+            "visible": true,
+            "rect": {
+              "x": 301.65625,
+              "y": 4,
+              "width": 82.34375,
+              "height": 36,
+              "top": 4,
+              "right": 384,
+              "bottom": 40,
+              "left": 301.65625
+            }
+          },
+          {
+            "text": "Вийти з повного екрана",
+            "visible": true,
+            "rect": {
+              "x": 222.25,
+              "y": 44,
+              "width": 161.75,
+              "height": 36,
+              "top": 44,
+              "right": 384,
+              "bottom": 80,
+              "left": 222.25
+            }
+          }
+        ]
+      },
+      "landscape": {
+        "canvas": {
+          "x": 0,
+          "y": 35,
+          "width": 844,
+          "height": 288,
+          "top": 35,
+          "right": 844,
+          "bottom": 323,
+          "left": 0
+        },
+        "exit": {
+          "x": 621.890625,
+          "y": 2,
+          "width": 212.109375,
+          "height": 30,
+          "top": 2,
+          "right": 834,
+          "bottom": 32,
+          "left": 621.890625
+        }
+      },
+      "errors": []
+    },
+    "academyFlight": {
+      "active": {
+        "height": "Height 0.5 m",
+        "power": "Throttle — lift power 78%",
+        "status": "Practice in progress"
+      },
+      "exit": {
+        "status": "Paused. Controls are neutral. Resume explicitly.",
+        "height": "Height 0.6 m",
+        "fullscreen": false
+      },
+      "after": "Height 0.6 m",
+      "demo": {
+        "replay": true,
+        "status": "Verified example · observation only",
+        "power": "Throttle — lift power 47%"
+      },
+      "pausedDemo": "Paused. Controls are neutral. Resume explicitly.",
+      "locale": "Вийти з повного екрана",
+      "errors": []
+    }
+  },
+  "checks": {
+    "lint": "passed",
+    "formatting": "passed",
+    "diffWhitespace": "passed",
+    "coreAcademyPolicy": "56 files and 3,183,167 expanded bytes; within 64-file / 8 MiB policy",
+    "unitCoverage": "deferred-to-final-phase",
+    "publicDeployment": "pending protected merge and separately tracked site-size repair"
+  },
+  "remaining": [
+    "Physical guided-calibration acceptance on additional radios and sustained baseline-device performance are not asserted.",
+    "Public deployment is not verified by local playtest receipts."
+  ],
+  "parent": "PR #899 at dc85a3bda02147a572bcd716d914b806994adb56",
+  "captureTransitions": {
+    "note": "Source browser verification of axis identification, travel recording and switch capture followed by a complete guided calibration, saving and return to flight.",
+    "rawReceiptSha256": "4f993a272355d2dd3ca2a2895d49b07f6500d9014f9842030c646fc042f0200f",
+    "cases": [
+      {
+        "scenario": "axis",
+        "status": "passed",
+        "errors": [],
+        "after": {
+          "setupOpen": false,
+          "source": "radio",
+          "flightStatus": "disarmed",
+          "verified": true
+        },
+        "savedChannels": {
+          "pitch": {
+            "axis": 1,
+            "center": 0,
+            "deadZone": 0.02,
+            "invert": false,
+            "max": 1,
+            "min": -1
+          },
+          "roll": {
+            "axis": 0,
+            "center": 0,
+            "deadZone": 0.02,
+            "invert": false,
+            "max": 1,
+            "min": -1
+          },
+          "throttle": {
+            "axis": 2,
+            "center": null,
+            "deadZone": 0,
+            "invert": false,
+            "max": 1,
+            "min": -1
+          },
+          "yaw": {
+            "axis": 3,
+            "center": 0,
+            "deadZone": 0.02,
+            "invert": false,
+            "max": 1,
+            "min": -1
+          }
+        }
+      },
+      {
+        "scenario": "travel",
+        "status": "passed",
+        "errors": [],
+        "after": {
+          "setupOpen": false,
+          "source": "radio",
+          "flightStatus": "disarmed",
+          "verified": true
+        },
+        "savedChannels": {
+          "pitch": {
+            "axis": 1,
+            "center": 0,
+            "deadZone": 0.02,
+            "invert": false,
+            "max": 1,
+            "min": -1
+          },
+          "roll": {
+            "axis": 0,
+            "center": 0,
+            "deadZone": 0.02,
+            "invert": false,
+            "max": 1,
+            "min": -1
+          },
+          "throttle": {
+            "axis": 2,
+            "center": null,
+            "deadZone": 0,
+            "invert": false,
+            "max": 1,
+            "min": -1
+          },
+          "yaw": {
+            "axis": 3,
+            "center": 0,
+            "deadZone": 0.02,
+            "invert": false,
+            "max": 1,
+            "min": -1
+          }
+        }
+      },
+      {
+        "scenario": "switch",
+        "status": "passed",
+        "errors": [],
+        "after": {
+          "setupOpen": false,
+          "source": "radio",
+          "flightStatus": "disarmed",
+          "verified": true
+        },
+        "savedChannels": {
+          "pitch": {
+            "axis": 1,
+            "center": 0,
+            "deadZone": 0.02,
+            "invert": false,
+            "max": 1,
+            "min": -1
+          },
+          "roll": {
+            "axis": 0,
+            "center": 0,
+            "deadZone": 0.02,
+            "invert": false,
+            "max": 1,
+            "min": -1
+          },
+          "throttle": {
+            "axis": 2,
+            "center": null,
+            "deadZone": 0,
+            "invert": false,
+            "max": 1,
+            "min": -1
+          },
+          "yaw": {
+            "axis": 3,
+            "center": 0,
+            "deadZone": 0.02,
+            "invert": false,
+            "max": 1,
+            "min": -1
+          }
+        }
+      }
+    ]
+  },
+  "previousPackageSmoke": {
+    "worlds": {
+      "url": "http://127.0.0.1:8789/dist/fpv-radio-setup-playtest/optional-practice/fpv-worlds/index.html",
+      "date": "2026-09-30T23:36:24.735Z",
+      "views": [
+        {
+          "locale": "en",
+          "viewport": {
+            "width": 1280,
+            "height": 900
+          },
+          "geometry": {
+            "dialogWidth": 848,
+            "dialogScroll": 848,
+            "bodyScroll": 1280,
+            "viewport": 1280,
+            "checkboxTop": 513.75,
+            "checkboxBottom": 561.75,
+            "buttonTop": 579.75,
+            "buttonBottom": 621.75,
+            "height": 900,
+            "checkboxReachable": true
+          },
+          "lift": 151,
+          "throttle": 850,
+          "records": 0,
+          "immersivePausedTick": 21
+        },
+        {
+          "locale": "en",
+          "viewport": {
+            "width": 390,
+            "height": 844
+          },
+          "geometry": {
+            "dialogWidth": 350,
+            "dialogScroll": 350,
+            "bodyScroll": 390,
+            "viewport": 390,
+            "checkboxTop": 655.078125,
+            "checkboxBottom": 703.078125,
+            "buttonTop": 723.078125,
+            "buttonBottom": 765.078125,
+            "height": 844,
+            "checkboxReachable": true
+          },
+          "lift": 284,
+          "throttle": 850,
+          "records": 0,
+          "immersivePausedTick": 28
+        },
+        {
+          "locale": "uk",
+          "viewport": {
+            "width": 390,
+            "height": 844
+          },
+          "geometry": {
+            "dialogWidth": 350,
+            "dialogScroll": 350,
+            "bodyScroll": 390,
+            "viewport": 390,
+            "checkboxTop": 694.59375,
+            "checkboxBottom": 742.59375,
+            "buttonTop": 762.59375,
+            "buttonBottom": 804.59375,
+            "height": 844,
+            "checkboxReachable": true
+          },
+          "lift": 247,
+          "throttle": 850,
+          "records": 0,
+          "immersivePausedTick": 31
+        }
+      ],
+      "errors": [],
+      "status": "passed"
+    },
+    "stadium": {
+      "url": "http://127.0.0.1:8789/dist/fpv-stadium-demo-playtest/optional-practice/fpv-worlds/index.html",
+      "date": "2026-09-30T23:36:24.744Z",
+      "views": [
+        {
+          "locale": "en",
+          "viewport": {
+            "width": 1280,
+            "height": 900
+          },
+          "geometry": {
+            "dialogWidth": 848,
+            "dialogScroll": 848,
+            "bodyScroll": 1280,
+            "viewport": 1280,
+            "checkboxTop": 513.75,
+            "checkboxBottom": 561.75,
+            "buttonTop": 579.75,
+            "buttonBottom": 621.75,
+            "height": 900,
+            "checkboxReachable": true
+          },
+          "lift": 151,
+          "throttle": 850,
+          "records": 0,
+          "immersivePausedTick": 22
+        },
+        {
+          "locale": "en",
+          "viewport": {
+            "width": 390,
+            "height": 844
+          },
+          "geometry": {
+            "dialogWidth": 350,
+            "dialogScroll": 350,
+            "bodyScroll": 390,
+            "viewport": 390,
+            "checkboxTop": 655.078125,
+            "checkboxBottom": 703.078125,
+            "buttonTop": 723.078125,
+            "buttonBottom": 765.078125,
+            "height": 844,
+            "checkboxReachable": true
+          },
+          "lift": 247,
+          "throttle": 850,
+          "records": 0,
+          "immersivePausedTick": 34
+        },
+        {
+          "locale": "uk",
+          "viewport": {
+            "width": 390,
+            "height": 844
+          },
+          "geometry": {
+            "dialogWidth": 350,
+            "dialogScroll": 350,
+            "bodyScroll": 390,
+            "viewport": 390,
+            "checkboxTop": 694.59375,
+            "checkboxBottom": 742.59375,
+            "buttonTop": 762.59375,
+            "buttonBottom": 804.59375,
+            "height": 844,
+            "checkboxReachable": true
+          },
+          "lift": 180,
+          "throttle": 850,
+          "records": 0,
+          "immersivePausedTick": 27
+        }
+      ],
+      "errors": [],
+      "status": "passed"
+    }
+  },
+  "disconnectIsolation": {
+    "date": "2026-09-30T23:40:56.823Z",
+    "cases": [
+      {
+        "build": "fpv-radio-setup-playtest",
+        "kind": "keyboard",
+        "before": {
+          "ticks": 95,
+          "status": "active",
+          "position": {
+            "x": 0,
+            "y": 104,
+            "z": 18000
+          },
+          "input": {
+            "roll": 0,
+            "pitch": 0,
+            "yaw": 0,
+            "throttle": 651,
+            "actions": 0
+          },
+          "radio": {
+            "active": false,
+            "frozen": true,
+            "verified": true,
+            "reason": "paused",
+            "selected": {
+              "index": 0,
+              "key": "{\"axes\":8,\"buttons\":24,\"id\":\"TX15 Joystick (Vendor: 1209 Product: 4f54)\",\"mapping\":\"\"}"
+            },
+            "pickup": null,
+            "profile": "{\"channels\":{\"pitch\":{\"axis\":1,\"center\":0.004,\"deadZone\":0.02,\"invert\":false,\"max\":1,\"min\":-1},\"roll\":{\"axis\":0,\"center\":0.004,\"deadZone\":0.02,\"invert\":false,\"max\":1,\"min\":-1},\"throttle\":{\"axis\":2,\"center\":null,\"deadZone\":0,\"invert\":false,\"max\":1,\"min\":-1},\"yaw\":{\"axis\":3,\"center\":0.004,\"deadZone\":0.02,\"invert\":false,\"max\":1,\"min\":-0.996}},\"device\":{\"axes\":8,\"buttons\":24,\"id\":\"TX15 Joystick (Vendor: 1209 Product: 4f54)\",\"mapping\":\"\"},\"format\":\"RadioProfile.v2\",\"id\":\"tx15-usb-mode2\",\"name\":\"RadioMaster TX15 — tested USB Mode 2\",\"stickMode\":2,\"switches\":{\"arm\":{\"axis\":4,\"off\":-1,\"on\":1},\"pause\":null,\"reset\":{\"button\":1,\"invert\":false,\"threshold\":0.5}},\"throttleStyle\":\"full-travel\",\"verified\":true}",
+            "connectionLost": false,
+            "editing": false,
+            "profileDirty": false,
+            "armSwitchBound": true
+          },
+          "replay": null,
+          "source": "keyboard",
+          "display": {
+            "source": "keyboard",
+            "style": "compact"
+          },
+          "records": 0
+        },
+        "after": {
+          "ticks": 115,
+          "status": "active",
+          "position": {
+            "x": 0,
+            "y": 590,
+            "z": 18000
+          },
+          "input": {
+            "roll": 0,
+            "pitch": 0,
+            "yaw": 0,
+            "throttle": 651,
+            "actions": 0
+          },
+          "radio": {
+            "active": false,
+            "frozen": true,
+            "verified": true,
+            "reason": "paused",
+            "selected": {
+              "index": 0,
+              "key": "{\"axes\":8,\"buttons\":24,\"id\":\"TX15 Joystick (Vendor: 1209 Product: 4f54)\",\"mapping\":\"\"}"
+            },
+            "pickup": null,
+            "profile": "{\"channels\":{\"pitch\":{\"axis\":1,\"center\":0.004,\"deadZone\":0.02,\"invert\":false,\"max\":1,\"min\":-1},\"roll\":{\"axis\":0,\"center\":0.004,\"deadZone\":0.02,\"invert\":false,\"max\":1,\"min\":-1},\"throttle\":{\"axis\":2,\"center\":null,\"deadZone\":0,\"invert\":false,\"max\":1,\"min\":-1},\"yaw\":{\"axis\":3,\"center\":0.004,\"deadZone\":0.02,\"invert\":false,\"max\":1,\"min\":-0.996}},\"device\":{\"axes\":8,\"buttons\":24,\"id\":\"TX15 Joystick (Vendor: 1209 Product: 4f54)\",\"mapping\":\"\"},\"format\":\"RadioProfile.v2\",\"id\":\"tx15-usb-mode2\",\"name\":\"RadioMaster TX15 — tested USB Mode 2\",\"stickMode\":2,\"switches\":{\"arm\":{\"axis\":4,\"off\":-1,\"on\":1},\"pause\":null,\"reset\":{\"button\":1,\"invert\":false,\"threshold\":0.5}},\"throttleStyle\":\"full-travel\",\"verified\":true}",
+            "connectionLost": false,
+            "editing": false,
+            "profileDirty": false,
+            "armSwitchBound": true
+          },
+          "replay": null,
+          "source": "keyboard",
+          "display": {
+            "source": "keyboard",
+            "style": "compact"
+          },
+          "records": 0
+        }
+      },
+      {
+        "build": "fpv-radio-setup-playtest",
+        "kind": "demonstration",
+        "before": {
+          "ticks": 16,
+          "status": "active",
+          "position": {
+            "x": 0,
+            "y": 232,
+            "z": 0
+          },
+          "input": {
+            "roll": 0,
+            "pitch": 0,
+            "yaw": 0,
+            "throttle": 634
+          },
+          "radio": {
+            "active": false,
+            "frozen": true,
+            "verified": true,
+            "reason": "reset",
+            "selected": {
+              "index": 0,
+              "key": "{\"axes\":8,\"buttons\":24,\"id\":\"TX15 Joystick (Vendor: 1209 Product: 4f54)\",\"mapping\":\"\"}"
+            },
+            "pickup": null,
+            "profile": "{\"channels\":{\"pitch\":{\"axis\":1,\"center\":0.004,\"deadZone\":0.02,\"invert\":false,\"max\":1,\"min\":-1},\"roll\":{\"axis\":0,\"center\":0.004,\"deadZone\":0.02,\"invert\":false,\"max\":1,\"min\":-1},\"throttle\":{\"axis\":2,\"center\":null,\"deadZone\":0,\"invert\":false,\"max\":1,\"min\":-1},\"yaw\":{\"axis\":3,\"center\":0.004,\"deadZone\":0.02,\"invert\":false,\"max\":1,\"min\":-0.996}},\"device\":{\"axes\":8,\"buttons\":24,\"id\":\"TX15 Joystick (Vendor: 1209 Product: 4f54)\",\"mapping\":\"\"},\"format\":\"RadioProfile.v2\",\"id\":\"tx15-usb-mode2\",\"name\":\"RadioMaster TX15 — tested USB Mode 2\",\"stickMode\":2,\"switches\":{\"arm\":{\"axis\":4,\"off\":-1,\"on\":1},\"pause\":null,\"reset\":{\"button\":1,\"invert\":false,\"threshold\":0.5}},\"throttleStyle\":\"full-travel\",\"verified\":true}",
+            "connectionLost": false,
+            "editing": false,
+            "profileDirty": false,
+            "armSwitchBound": true
+          },
+          "replay": {
+            "kind": "demonstration",
+            "mode": "self-level",
+            "rate": 1,
+            "frames": 239,
+            "finished": false
+          },
+          "source": "radio",
+          "display": {
+            "source": "recording",
+            "style": "compact"
+          },
+          "records": 0
+        },
+        "after": {
+          "ticks": 36,
+          "status": "active",
+          "position": {
+            "x": 0,
+            "y": 805,
+            "z": 0
+          },
+          "input": {
+            "roll": 0,
+            "pitch": 0,
+            "yaw": 0,
+            "throttle": 494
+          },
+          "radio": {
+            "active": false,
+            "frozen": true,
+            "verified": true,
+            "reason": "reset",
+            "selected": {
+              "index": 0,
+              "key": "{\"axes\":8,\"buttons\":24,\"id\":\"TX15 Joystick (Vendor: 1209 Product: 4f54)\",\"mapping\":\"\"}"
+            },
+            "pickup": null,
+            "profile": "{\"channels\":{\"pitch\":{\"axis\":1,\"center\":0.004,\"deadZone\":0.02,\"invert\":false,\"max\":1,\"min\":-1},\"roll\":{\"axis\":0,\"center\":0.004,\"deadZone\":0.02,\"invert\":false,\"max\":1,\"min\":-1},\"throttle\":{\"axis\":2,\"center\":null,\"deadZone\":0,\"invert\":false,\"max\":1,\"min\":-1},\"yaw\":{\"axis\":3,\"center\":0.004,\"deadZone\":0.02,\"invert\":false,\"max\":1,\"min\":-0.996}},\"device\":{\"axes\":8,\"buttons\":24,\"id\":\"TX15 Joystick (Vendor: 1209 Product: 4f54)\",\"mapping\":\"\"},\"format\":\"RadioProfile.v2\",\"id\":\"tx15-usb-mode2\",\"name\":\"RadioMaster TX15 — tested USB Mode 2\",\"stickMode\":2,\"switches\":{\"arm\":{\"axis\":4,\"off\":-1,\"on\":1},\"pause\":null,\"reset\":{\"button\":1,\"invert\":false,\"threshold\":0.5}},\"throttleStyle\":\"full-travel\",\"verified\":true}",
+            "connectionLost": false,
+            "editing": false,
+            "profileDirty": false,
+            "armSwitchBound": true
+          },
+          "replay": {
+            "kind": "demonstration",
+            "mode": "self-level",
+            "rate": 1,
+            "frames": 239,
+            "finished": false
+          },
+          "source": "radio",
+          "display": {
+            "source": "recording",
+            "style": "compact"
+          },
+          "records": 0
+        },
+        "exact": {
+          "frame": [0, 0, 0, 494],
+          "input": {
+            "roll": 0,
+            "pitch": 0,
+            "yaw": 0,
+            "throttle": 494
+          }
+        }
+      },
+      {
+        "build": "fpv-stadium-demo-playtest",
+        "kind": "keyboard",
+        "before": {
+          "ticks": 93,
+          "status": "active",
+          "position": {
+            "x": 0,
+            "y": 104,
+            "z": 18000
+          },
+          "input": {
+            "roll": 0,
+            "pitch": 0,
+            "yaw": 0,
+            "throttle": 651,
+            "actions": 0
+          },
+          "radio": {
+            "active": false,
+            "frozen": true,
+            "verified": true,
+            "reason": "paused",
+            "selected": {
+              "index": 0,
+              "key": "{\"axes\":8,\"buttons\":24,\"id\":\"TX15 Joystick (Vendor: 1209 Product: 4f54)\",\"mapping\":\"\"}"
+            },
+            "pickup": null,
+            "profile": "{\"channels\":{\"pitch\":{\"axis\":1,\"center\":0.004,\"deadZone\":0.02,\"invert\":false,\"max\":1,\"min\":-1},\"roll\":{\"axis\":0,\"center\":0.004,\"deadZone\":0.02,\"invert\":false,\"max\":1,\"min\":-1},\"throttle\":{\"axis\":2,\"center\":null,\"deadZone\":0,\"invert\":false,\"max\":1,\"min\":-1},\"yaw\":{\"axis\":3,\"center\":0.004,\"deadZone\":0.02,\"invert\":false,\"max\":1,\"min\":-0.996}},\"device\":{\"axes\":8,\"buttons\":24,\"id\":\"TX15 Joystick (Vendor: 1209 Product: 4f54)\",\"mapping\":\"\"},\"format\":\"RadioProfile.v2\",\"id\":\"tx15-usb-mode2\",\"name\":\"RadioMaster TX15 — tested USB Mode 2\",\"stickMode\":2,\"switches\":{\"arm\":{\"axis\":4,\"off\":-1,\"on\":1},\"pause\":null,\"reset\":{\"button\":1,\"invert\":false,\"threshold\":0.5}},\"throttleStyle\":\"full-travel\",\"verified\":true}",
+            "connectionLost": false,
+            "editing": false,
+            "profileDirty": false,
+            "armSwitchBound": true
+          },
+          "replay": null,
+          "source": "keyboard",
+          "display": {
+            "source": "keyboard",
+            "style": "compact"
+          },
+          "records": 0
+        },
+        "after": {
+          "ticks": 113,
+          "status": "active",
+          "position": {
+            "x": 0,
+            "y": 590,
+            "z": 18000
+          },
+          "input": {
+            "roll": 0,
+            "pitch": 0,
+            "yaw": 0,
+            "throttle": 651,
+            "actions": 0
+          },
+          "radio": {
+            "active": false,
+            "frozen": true,
+            "verified": true,
+            "reason": "paused",
+            "selected": {
+              "index": 0,
+              "key": "{\"axes\":8,\"buttons\":24,\"id\":\"TX15 Joystick (Vendor: 1209 Product: 4f54)\",\"mapping\":\"\"}"
+            },
+            "pickup": null,
+            "profile": "{\"channels\":{\"pitch\":{\"axis\":1,\"center\":0.004,\"deadZone\":0.02,\"invert\":false,\"max\":1,\"min\":-1},\"roll\":{\"axis\":0,\"center\":0.004,\"deadZone\":0.02,\"invert\":false,\"max\":1,\"min\":-1},\"throttle\":{\"axis\":2,\"center\":null,\"deadZone\":0,\"invert\":false,\"max\":1,\"min\":-1},\"yaw\":{\"axis\":3,\"center\":0.004,\"deadZone\":0.02,\"invert\":false,\"max\":1,\"min\":-0.996}},\"device\":{\"axes\":8,\"buttons\":24,\"id\":\"TX15 Joystick (Vendor: 1209 Product: 4f54)\",\"mapping\":\"\"},\"format\":\"RadioProfile.v2\",\"id\":\"tx15-usb-mode2\",\"name\":\"RadioMaster TX15 — tested USB Mode 2\",\"stickMode\":2,\"switches\":{\"arm\":{\"axis\":4,\"off\":-1,\"on\":1},\"pause\":null,\"reset\":{\"button\":1,\"invert\":false,\"threshold\":0.5}},\"throttleStyle\":\"full-travel\",\"verified\":true}",
+            "connectionLost": false,
+            "editing": false,
+            "profileDirty": false,
+            "armSwitchBound": true
+          },
+          "replay": null,
+          "source": "keyboard",
+          "display": {
+            "source": "keyboard",
+            "style": "compact"
+          },
+          "records": 0
+        }
+      },
+      {
+        "build": "fpv-stadium-demo-playtest",
+        "kind": "demonstration",
+        "before": {
+          "ticks": 16,
+          "status": "active",
+          "position": {
+            "x": 0,
+            "y": 232,
+            "z": 0
+          },
+          "input": {
+            "roll": 0,
+            "pitch": 0,
+            "yaw": 0,
+            "throttle": 634
+          },
+          "radio": {
+            "active": false,
+            "frozen": true,
+            "verified": true,
+            "reason": "reset",
+            "selected": {
+              "index": 0,
+              "key": "{\"axes\":8,\"buttons\":24,\"id\":\"TX15 Joystick (Vendor: 1209 Product: 4f54)\",\"mapping\":\"\"}"
+            },
+            "pickup": null,
+            "profile": "{\"channels\":{\"pitch\":{\"axis\":1,\"center\":0.004,\"deadZone\":0.02,\"invert\":false,\"max\":1,\"min\":-1},\"roll\":{\"axis\":0,\"center\":0.004,\"deadZone\":0.02,\"invert\":false,\"max\":1,\"min\":-1},\"throttle\":{\"axis\":2,\"center\":null,\"deadZone\":0,\"invert\":false,\"max\":1,\"min\":-1},\"yaw\":{\"axis\":3,\"center\":0.004,\"deadZone\":0.02,\"invert\":false,\"max\":1,\"min\":-0.996}},\"device\":{\"axes\":8,\"buttons\":24,\"id\":\"TX15 Joystick (Vendor: 1209 Product: 4f54)\",\"mapping\":\"\"},\"format\":\"RadioProfile.v2\",\"id\":\"tx15-usb-mode2\",\"name\":\"RadioMaster TX15 — tested USB Mode 2\",\"stickMode\":2,\"switches\":{\"arm\":{\"axis\":4,\"off\":-1,\"on\":1},\"pause\":null,\"reset\":{\"button\":1,\"invert\":false,\"threshold\":0.5}},\"throttleStyle\":\"full-travel\",\"verified\":true}",
+            "connectionLost": false,
+            "editing": false,
+            "profileDirty": false,
+            "armSwitchBound": true
+          },
+          "replay": {
+            "kind": "demonstration",
+            "mode": "self-level",
+            "rate": 1,
+            "frames": 239,
+            "finished": false
+          },
+          "source": "radio",
+          "display": {
+            "source": "recording",
+            "style": "compact"
+          },
+          "records": 0
+        },
+        "after": {
+          "ticks": 36,
+          "status": "active",
+          "position": {
+            "x": 0,
+            "y": 805,
+            "z": 0
+          },
+          "input": {
+            "roll": 0,
+            "pitch": 0,
+            "yaw": 0,
+            "throttle": 494
+          },
+          "radio": {
+            "active": false,
+            "frozen": true,
+            "verified": true,
+            "reason": "reset",
+            "selected": {
+              "index": 0,
+              "key": "{\"axes\":8,\"buttons\":24,\"id\":\"TX15 Joystick (Vendor: 1209 Product: 4f54)\",\"mapping\":\"\"}"
+            },
+            "pickup": null,
+            "profile": "{\"channels\":{\"pitch\":{\"axis\":1,\"center\":0.004,\"deadZone\":0.02,\"invert\":false,\"max\":1,\"min\":-1},\"roll\":{\"axis\":0,\"center\":0.004,\"deadZone\":0.02,\"invert\":false,\"max\":1,\"min\":-1},\"throttle\":{\"axis\":2,\"center\":null,\"deadZone\":0,\"invert\":false,\"max\":1,\"min\":-1},\"yaw\":{\"axis\":3,\"center\":0.004,\"deadZone\":0.02,\"invert\":false,\"max\":1,\"min\":-0.996}},\"device\":{\"axes\":8,\"buttons\":24,\"id\":\"TX15 Joystick (Vendor: 1209 Product: 4f54)\",\"mapping\":\"\"},\"format\":\"RadioProfile.v2\",\"id\":\"tx15-usb-mode2\",\"name\":\"RadioMaster TX15 — tested USB Mode 2\",\"stickMode\":2,\"switches\":{\"arm\":{\"axis\":4,\"off\":-1,\"on\":1},\"pause\":null,\"reset\":{\"button\":1,\"invert\":false,\"threshold\":0.5}},\"throttleStyle\":\"full-travel\",\"verified\":true}",
+            "connectionLost": false,
+            "editing": false,
+            "profileDirty": false,
+            "armSwitchBound": true
+          },
+          "replay": {
+            "kind": "demonstration",
+            "mode": "self-level",
+            "rate": 1,
+            "frames": 239,
+            "finished": false
+          },
+          "source": "radio",
+          "display": {
+            "source": "recording",
+            "style": "compact"
+          },
+          "records": 0
+        },
+        "exact": {
+          "frame": [0, 0, 0, 494],
+          "input": {
+            "roll": 0,
+            "pitch": 0,
+            "yaw": 0,
+            "throttle": 494
+          }
+        }
+      }
+    ],
+    "errors": [],
+    "status": "passed"
+  }
+}
