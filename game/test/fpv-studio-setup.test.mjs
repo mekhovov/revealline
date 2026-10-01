@@ -210,6 +210,10 @@ test('Radio setup import, explicit verification and save retain switch threshold
     switches: { arm: { button: 0, threshold: 0.75, invert: true }, pause: null, reset: null },
   };
   const runtime = {
+    beginSetup() {},
+    endSetup() {},
+    editProfile() {},
+    status: () => ({ profileDirty: true }),
     devices: () => ({ status: 'available', devices: [{ ...pad, axes: 4, buttons: 2 }] }),
     raw: () => (missing ? null : pad),
     select: (id) => {
@@ -243,14 +247,14 @@ test('Radio setup import, explicit verification and save retain switch threshold
   assert.deepEqual(saved.switches, profile.switches);
   missing = true;
   assert.doesNotThrow(() => device.emit('change'));
-  assert.match(f.container.querySelector('[role="status"]').textContent, /Choose a device/);
+  assert.match(f.container.querySelector('.radio-feedback').textContent, /Choose a device/);
   f.click('Save verified profile');
-  assert.match(f.container.querySelector('[role="status"]').textContent, /incomplete/);
+  assert.match(f.container.querySelector('.radio-feedback').textContent, /incomplete/);
   missing = false;
   device.emit('change');
   f.click('Record full travel');
   f.click('I checked the animated sticks and their direction');
-  assert.match(f.container.querySelector('[role="status"]').textContent, /incomplete/);
+  assert.match(f.container.querySelector('.radio-feedback').textContent, /incomplete/);
 });
 
 test('Acro notebook review chooses only evidence satisfying its mode rule', async (t) => {

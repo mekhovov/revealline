@@ -86,6 +86,15 @@ jobs:
           rm "$RUNNER_TEMP/main-pages/distribution.zip" \
             "$RUNNER_TEMP/main-pages/distribution.zip.sha256"
 
+      - name: Stage independently reviewed practice packages and explicit catalogue
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          node scripts/publish-optional-packages.mjs stage-pages \
+            --repository mekhovov/revealline --base-path /revealline/ \
+            --selector publishing/pages-controller/optional-packages.json \
+            --out "$RUNNER_TEMP/main-pages"
+
       - name: Add explicit rolling-channel metadata
         env:
           BUILD_VERSION: ${{ steps.identity.outputs.build_version }}
@@ -200,6 +209,16 @@ jobs:
     needs: [build, deploy]
     runs-on: ubuntu-latest
     steps:
+      - name: Check out the exact deployed practice selector
+        uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+        with:
+          ref: ${{ github.sha }}
+          persist-credentials: false
+      - name: Set up public verification runtime
+        uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v5
+        with:
+          node-version: 22.22.2
+          package-manager-cache: false
       - name: Verify the public root identifies the exact main revision
         env:
           BUILD_VERSION: ${{ needs.build.outputs.build_version }}
@@ -247,6 +266,11 @@ jobs:
           ) throw new Error('Public game build does not match the protected main deployment.');
           console.log(JSON.stringify({ root, ...expected }));
           NODE
+
+      - name: Verify catalogue, stable launchers and every selected practice dependency
+        env:
+          PUBLIC_ROOT: ${{ needs.deploy.outputs.page_url }}
+        run: node scripts/verify-practice-site.mjs "$PUBLIC_ROOT"
 
       - name: Record the rolling production boundary
         run: |

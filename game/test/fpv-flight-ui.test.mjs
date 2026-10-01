@@ -15,6 +15,7 @@ import {
 } from '../../optional-practice/civilian-fpv/radio-profile.mjs';
 import { mountFlightNotebook } from '../../optional-practice/civilian-fpv/notebook.mjs';
 import { Document, Events } from './helpers/couch-dom.mjs';
+import { waitFor } from './helpers/wait-for.mjs';
 
 const html = parse(
   await readFile(
@@ -67,6 +68,12 @@ function fixture(
     },
     cancelAnimationFrame: (key) => frames.delete(key),
     matchMedia: () => ({ matches: false }),
+    // Fullscreen observes the native setup button. These flight-domain tests
+    // do not synthesize attribute mutations; provide its browser lifecycle API.
+    MutationObserver: class {
+      observe() {}
+      disconnect() {}
+    },
     setTimeout: (fn) => fn(),
     URL: { createObjectURL: () => 'blob:flight-test', revokeObjectURL() {} },
   });
@@ -789,10 +796,20 @@ test('game return keeps scoped offline controls available and serializes prepara
     registrations = [],
     removed = [];
   let complete,
+    installed = false,
     unregisters = 0;
   const registration = {
     scope: base,
-    active: { state: 'activated' },
+    active: {
+      state: 'activated',
+      scriptURL: base + 'worker.js',
+      addEventListener() {},
+      removeEventListener() {},
+      postMessage(data, ports) {
+        if (data.type === 'practice-status')
+          ports[0].postMessage({ type: 'practice-status', ready: true, scope: base });
+      },
+    },
     unregister: async () => {
       unregisters++;
     },
@@ -804,9 +821,15 @@ test('game return keeps scoped offline controls available and serializes prepara
     serviceWorker: {
       register: (url, options) => {
         registrations.push({ url: String(url), scope: options.scope });
-        return new Promise((resolve) => (complete = () => resolve(registration)));
+        return new Promise(
+          (resolve) =>
+            (complete = () => {
+              installed = true;
+              resolve(registration);
+            }),
+        );
       },
-      getRegistration: async () => registration,
+      getRegistration: async () => (installed ? registration : null),
     },
   });
   const ownedCache = 'revealline.optional.package.v1:/optional-practice/civilian-fpv/:exact';
@@ -824,11 +847,12 @@ test('game return keeps scoped offline controls available and serializes prepara
   assert.equal(f.$('remove-offline').disabled, true);
   f.$('install-offline').click();
   f.$('remove-offline').click();
+  await waitFor(() => registrations.length === 1);
   assert.deepEqual(registrations, [{ url: base + 'worker.js', scope: new URL(base).pathname }]);
   assert.equal(unregisters, 0);
   assert.deepEqual(removed, []);
   complete();
-  await new Promise((resolve) => setImmediate(resolve));
+  await waitFor(() => !f.$('install-offline').disabled);
   assert.equal(f.$('transfer-status').textContent, 'This exact optional package is ready offline.');
   assert.equal(f.$('install-offline').disabled, false);
   assert.equal(f.view.snapshot().status, 'paused');

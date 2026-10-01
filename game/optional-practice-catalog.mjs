@@ -65,7 +65,7 @@ export function validateOptionalPracticeCatalog(input, indexURL) {
  * This never fetches a package, registers a worker or opens player storage. */
 export async function loadOptionalPracticeCatalog(
   indexURL,
-  { fetcher = globalThis.fetch, signal } = {},
+  { fetcher = globalThis.fetch, signal, missingIsEmpty = true } = {},
 ) {
   const response = await fetcher(indexURL, {
     signal,
@@ -73,7 +73,7 @@ export async function loadOptionalPracticeCatalog(
     credentials: 'omit',
     redirect: 'error',
   });
-  if (response.status === 404) return [];
+  if (response.status === 404 && missingIsEmpty) return [];
   required(response.ok, 'Optional practice catalog is unavailable.');
   const advertised = response.headers?.get('content-length');
   required(!advertised || Number(advertised) <= 16384, 'Optional practice catalog is too large.');
