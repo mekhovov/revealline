@@ -397,6 +397,7 @@ jobs:
           sparse-checkout: |
             publishing/fastline-release-objects.mjs
             publishing/fastline-release-publisher.mjs
+            package.json
             publishing/edition-promotion.mjs
             publishing/optional-package-promotion.mjs
             publishing/optional-package-admission.mjs
