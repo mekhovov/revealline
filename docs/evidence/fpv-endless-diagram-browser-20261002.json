@@ -1,0 +1,123 @@
+{
+  "format": "fpv-immersive-diagram-browser.v1",
+  "createdAt": "2026-10-01T23:22:50.187Z",
+  "url": "http://127.0.0.1:8789/dist/fpv-immersive-diagram-verification/index.html",
+  "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/154.0.0.0 Safari/537.36",
+  "passed": true,
+  "checks": [
+    {
+      "name": "640×360 stage, centered larger drone, independent horizon and far grid",
+      "passed": true,
+      "span": 118.08000000000004
+    },
+    {
+      "name": "1200 full-attitude/height poses remain inside stage and portrait center",
+      "passed": true,
+      "poses": 1200,
+      "bounds": {
+        "x0": 216.6,
+        "x1": 423.4,
+        "y0": 48.12,
+        "y1": 340.73
+      }
+    },
+    {
+      "name": "Both grid bands remain bounded through every15° heading",
+      "passed": true,
+      "headings": 24
+    },
+    {
+      "name": "Actual right position moves fixed world grid oppositely",
+      "passed": true,
+      "before": [320, 230],
+      "after": [308, 230]
+    },
+    {
+      "name": "Actual left position moves fixed world grid oppositely",
+      "passed": true,
+      "before": [320, 230],
+      "after": [332, 230]
+    },
+    {
+      "name": "Actual forward position moves fixed world grid oppositely",
+      "passed": true,
+      "before": [320, 230],
+      "after": [320, 235.03052375088427]
+    },
+    {
+      "name": "Actual backward position moves fixed world grid oppositely",
+      "passed": true,
+      "before": [320, 230],
+      "after": [320, 225.41032199459755]
+    },
+    {
+      "name": "World grid does not integrate velocity separately",
+      "passed": true
+    },
+    {
+      "name": "Actual height raises drone, reduces shadow and labels measured metres",
+      "passed": true
+    },
+    {
+      "name": "Arbitrary start heading stays zero-turn; world yaw and inversion remain truthful",
+      "passed": true
+    },
+    {
+      "name": "Wide/inline switching preserves exact inline geometry and motor state",
+      "passed": true
+    },
+    {
+      "name": "Compact HUD retains220×160 and hidden practice bands",
+      "passed": true
+    },
+    {
+      "name": "Actual browser layout 1000×460 retains central airframe",
+      "passed": true,
+      "body": {
+        "width": 199.0011749267578,
+        "height": 188.70213317871094
+      },
+      "stage": {
+        "width": 937.1181030273438,
+        "height": 460.0000305175781
+      }
+    },
+    {
+      "name": "Actual browser layout 667×300 retains central airframe",
+      "passed": true,
+      "body": {
+        "width": 129.7833251953125,
+        "height": 123.06668090820312
+      },
+      "stage": {
+        "width": 666.99658203125,
+        "height": 300
+      }
+    },
+    {
+      "name": "Actual browser layout 360×540 retains central airframe",
+      "passed": true,
+      "body": {
+        "width": 136.27252197265625,
+        "height": 129.219970703125
+      },
+      "stage": {
+        "width": 360.0000305175781,
+        "height": 540
+      }
+    },
+    {
+      "name": "Disposal removes all owned SVG including new ground bands",
+      "passed": true
+    }
+  ],
+  "inputs": {
+    "optional-practice/civilian-fpv/sim-presentation.mjs": "e04a1036637f956448c5cf38199d8bed770f0fbdf17d08eb46e39884b5121e97",
+    "optional-practice/civilian-fpv/style.css": "eb388f40541cf1fb0ffc48f01e31cc77d3031ffbd46eee422d2bf841a9209fce",
+    "optional-practice/civilian-fpv/math.mjs": "555c8b6ea170b46992133507d2a3d867f06185bca060239cab7db9c9b87f9f98"
+  },
+  "limits": [
+    "Presentation-only fixture, not full app or native fullscreen workflow",
+    "No physical radio or performance qualification"
+  ]
+}
