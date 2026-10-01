@@ -578,8 +578,8 @@ export async function addOfflineEntries(
   if (!template.includes('__XONIX_OFFLINE_CONFIG__'))
     fail('Offline worker template has no configuration marker');
   entries.push(...offlineIcons());
-  const { addOfflineLauncher } = await import('./offline-launcher.mjs');
-  await addOfflineLauncher(root, entries, info.version);
+  const { addOfflineLauncher, addOfflineUpdater } = await import('./offline-launcher.mjs');
+  await addOfflineLauncher(root, entries, info.version, { sourceRevision: info.sourceRevision });
   for (const entry of entries.filter((item) => item.name.endsWith('.html'))) {
     const source = entry.bytes.toString();
     if (/<link\b[^>]*\brel=(["'])(?:icon|shortcut icon)\1/i.test(source)) continue;
@@ -700,6 +700,17 @@ export async function addOfflineEntries(
     finalizeOfflineContent(entries, contentCatalogue);
     contentEntry.bytes = catalogueBytes();
   };
+  // Pages only display the optional-artwork summary. Keep the full integrity
+  // descriptor in the worker/catalogue instead of repeating every file hash in
+  // each HTML document; all originals and build-time checks remain unchanged.
+  const optionalArtworkSummary = optionalArtwork
+    ? {
+        name: optionalArtwork.name,
+        availability: optionalArtwork.availability,
+        count: optionalArtwork.count,
+        bytes: optionalArtwork.bytes,
+      }
+    : null;
   const placeholder = '0'.repeat(64),
     injected = [];
   for (const entry of entries.filter(
@@ -722,7 +733,9 @@ export async function addOfflineEntries(
       // installer runs. Keep its scoped launch metadata, not seven redundant
       // copies of the host's optional-download descriptors.
       ...(!communityShell && optionalPacks.length ? { optionalPacks } : {}),
-      ...(!communityShell && optionalArtwork ? { optionalArtwork } : {}),
+      ...(!communityShell && optionalArtworkSummary
+        ? { optionalArtwork: optionalArtworkSummary }
+        : {}),
     };
     const appMode = source.includes('name="apple-mobile-web-app-capable"')
       ? ''
@@ -792,6 +805,7 @@ export async function addOfflineEntries(
     name: 'service-worker.js',
     bytes: Buffer.from(template.replace('__XONIX_OFFLINE_CONFIG__', JSON.stringify(config))),
   });
+  addOfflineUpdater(entries, info, buildId);
   if (entries.some((entry) => entry.name === 'game/installed-app.mjs')) {
     const { buildOfflineInventory } = await import('./offline-content.mjs');
     entries.push({

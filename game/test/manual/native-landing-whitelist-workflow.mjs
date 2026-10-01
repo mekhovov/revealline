@@ -208,6 +208,22 @@ const workflow = (edition) => async (p) => {
     initial,
   );
 
+  await category('content');
+  const contentActions = ['#solo-communities', '#game-check-updates'];
+  for (const selector of contentActions) {
+    assert(
+      $('#settings-panel-content').contains($(selector)),
+      `${selector} escaped Content & Offline.`,
+    );
+    await navigate(selector);
+  }
+  await closeSettings();
+  p.record(
+    'Communities and Check for updates are controller reachable in Content & Offline without opening either destination or adding landing actions',
+    '#shell-title',
+    { actions: contentActions },
+  );
+
   await category('audio');
   const transport = ['previous', 'toggle', 'next'].map(
     (action) => `#solo-quick-music-settings-${action}`,
