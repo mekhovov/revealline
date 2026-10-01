@@ -1,5 +1,7 @@
 import {
   WORLD_CATALOGUE,
+  BEGINNER_LESSONS,
+  BEGINNER_CATALOGUE,
   WORLD_THEMES,
   FLIGHT_WORLDS,
   ACTIVITY_NAMES,
@@ -19,7 +21,7 @@ import {
   WORLD_FLIGHT_MODEL,
 } from './world-model.mjs';
 import { WORLD_COLLISION_BACKEND } from './world-collision.mjs';
-import { createFlightRenderer } from './world-renderer.mjs';
+import { mountBeginnerCoach } from './beginner-coach.mjs';
 import { createFlightInput } from './input.mjs';
 import { createRadioRuntime } from './radio-runtime.mjs';
 import { restoreVerifiedRadio } from './radio-session.mjs';
@@ -65,11 +67,27 @@ import {
   checkpointPractice,
 } from './world-progress.mjs';
 import { splitCourseDefinition, compileContentProject } from './content-definitions.mjs';
-import { builtinWorldScene } from './world-assets.mjs';
+import { builtinWorldScene, createFlightRenderer } from './world-assets.mjs';
 import { mountDroneHangar } from './world-hangar.mjs';
 import { mountActorEditor } from './world-actor-editor.mjs';
 
 const COPY_EN = {
+  learn: 'Learn to fly',
+  beginLearning: 'Start Flight School',
+  schoolEyebrow: 'FLIGHT SCHOOL · FROM ZERO TO YOUR FIRST ROUTE',
+  schoolTitle: 'Every pilot starts here.',
+  schoolIntro:
+    'One control at a time. See the movement, understand the drone, then try it for yourself.',
+  schoolReassurance: 'No experience needed. No locked lessons. Repeat anything, at your own pace.',
+  schoolLift: '01 · Lift',
+  schoolControl: '02 · Control',
+  schoolExplore: '03 · Explore',
+  schoolSee: 'See the control',
+  schoolUnderstand: 'Watch the response',
+  schoolTry: 'Fly it yourself',
+  schoolAfterTitle: 'Your next adventure is waiting.',
+  schoolAfterHelp: 'Use what you learned in Academy drills, open exploration and your first races.',
+
   settings: 'Settings',
   startFlying: 'Start flying',
   chooseWorld: 'Choose a world',
@@ -100,9 +118,9 @@ const COPY_EN = {
   reducedMotion: 'Reduced motion',
   settingsPaused: 'Changing settings keeps your flight paused. Resume when you are ready.',
   firstFlight: 'YOUR FIRST FLIGHT',
-  firstFlightTitle: 'Watch a hover. Then try it yourself.',
+  firstFlightTitle: 'Never flown before? Start right here.',
   firstFlightHelp:
-    'Start with the Academy: raise throttle gently, hold inside the marker, then land. Self-level helps you stay upright; Acro keeps the angle you set.',
+    'Learn one control at a time in Flight School. Animated sticks, clear drone diagrams and 14 gentle lessons take you from your first lift to your first route.',
   watchFirst: 'Watch first flight',
   tryFirst: 'Try first flight',
   demoCoverage:
@@ -207,6 +225,22 @@ const COPY_EN = {
   keys: 'W/S pitch · A/D roll · Q/E yaw · ↑/↓ throttle · P pause · Space fire',
 };
 const COPY_UK = {
+  learn: 'Навчитися літати',
+  beginLearning: 'Почати льотну школу',
+  schoolEyebrow: 'ЛЬОТНА ШКОЛА · ВІД НУЛЯ ДО ПЕРШОГО МАРШРУТУ',
+  schoolTitle: 'Тут починається ваш політ.',
+  schoolIntro: 'Один рух за раз. Подивіться на стіки, зрозумійте реакцію дрона й спробуйте самі.',
+  schoolReassurance: 'Досвід не потрібен. Усі уроки відкриті. Повторюйте будь-що у своєму темпі.',
+  schoolLift: '01 · Зліт',
+  schoolControl: '02 · Керування',
+  schoolExplore: '03 · Відкриття',
+  schoolSee: 'Роздивіться керування',
+  schoolUnderstand: 'Зрозумійте реакцію',
+  schoolTry: 'Спробуйте в польоті',
+  schoolAfterTitle: 'Наступна пригода вже чекає.',
+  schoolAfterHelp:
+    'Використайте нові навички у вправах академії, дослідженні світів і перших перегонах.',
+
   settings: 'Налаштування',
   startFlying: 'Почати політ',
   chooseWorld: 'Виберіть світ',
@@ -237,9 +271,9 @@ const COPY_UK = {
   reducedMotion: 'Менше руху',
   settingsPaused: 'Зміна налаштувань залишає політ на паузі. Продовжте, коли будете готові.',
   firstFlight: 'ВАШ ПЕРШИЙ ПОЛІТ',
-  firstFlightTitle: 'Подивіться зависання. Потім спробуйте самі.',
+  firstFlightTitle: 'Ще не літали? Почніть тут.',
   firstFlightHelp:
-    'Почніть з Академії: плавно додайте газ, утримуйте дрон у маркері та сідайте. Самовирівнювання допомагає тримати горизонт; Acro зберігає заданий нахил.',
+    'Вивчайте по одному руху в льотній школі. Анімовані стіки, наочні схеми дрона та 14 спокійних уроків проведуть від першого зльоту до першого маршруту.',
   watchFirst: 'Переглянути перший політ',
   tryFirst: 'Спробувати перший політ',
   demoCoverage:
@@ -611,7 +645,7 @@ export function mountWorldApp({
   });
   let locale = 'en',
     theme = 'all',
-    catalogue = [...WORLD_CATALOGUE],
+    catalogue = [...WORLD_CATALOGUE, ...BEGINNER_CATALOGUE],
     installed = [],
     revisions = [],
     records = [],
@@ -658,7 +692,10 @@ export function mountWorldApp({
     sectorReferenceStatus = 'none',
     sectorLookup = null;
     lastRadioDiscovery = -Infinity;
-  let selectedWorld = null;
+  const learningById = new Map(BEGINNER_LESSONS.map((lesson) => [lesson.id, lesson]));
+  const sessionLearningComplete = new Set();
+  let selectedWorld = null,
+    learningPreferences = null;
   const sectors = createSectorTracker();
   let storage;
   try {
@@ -701,7 +738,11 @@ export function mountWorldApp({
     try {
       storage?.setItem(
         'revealline.fpv.world-settings.v1',
-        JSON.stringify(Object.fromEntries(preferenceIds.map((id) => [id, $(id).value]))),
+        JSON.stringify(
+          Object.fromEntries(
+            preferenceIds.map((id) => [id, learningPreferences?.[id] ?? $(id).value]),
+          ),
+        ),
       );
     } catch (error) {
       reportError(error);
@@ -887,7 +928,7 @@ export function mountWorldApp({
     win.setTimeout(() => win.URL.revokeObjectURL(url), 30000);
   }
   function showTab(id, focus = true) {
-    if (!['explore', 'playlists', 'creator', 'packs'].includes(id)) return;
+    if (!['explore', 'learn', 'playlists', 'creator', 'packs'].includes(id)) return;
     for (const panel of doc.querySelectorAll('.tab-panel')) panel.hidden = panel.id !== id;
     for (const b of doc.querySelectorAll('[data-tab]')) {
       b.classList.toggle('selected', b.dataset.tab === id);
@@ -1002,6 +1043,32 @@ export function mountWorldApp({
         }).catch(reportError);
     },
   });
+  const beginnerCoach = mountBeginnerCoach({
+    root: $('beginner-coach'),
+    window: win,
+    locale: () => locale,
+    onStart: () => $('world-arm').click(),
+    onPause: () => pauseFlight(),
+    onRetry: () => $('world-retry').click(),
+    onNext: () => nextLearningFlight(),
+    onExit: async () => {
+      await closeFlight();
+      showTab('learn');
+    },
+    onRadio: () => $('radio-setup-button').click(),
+  });
+  function nextLearningFlight() {
+    const index = BEGINNER_CATALOGUE.findIndex((entry) => entry.id === current?.id);
+    if (index >= 0 && index + 1 < BEGINNER_CATALOGUE.length)
+      return startFlight(BEGINNER_CATALOGUE[index + 1]);
+    return closeFlight().then(() => showTab('learn'));
+  }
+  function restoreLearningPreferences() {
+    if (!learningPreferences) return;
+    for (const [id, value] of Object.entries(learningPreferences)) $(id).value = value;
+    learningPreferences = null;
+    paintLoadout();
+  }
   function restoreRadio() {
     if (replayProof || $('flight-source').value !== 'radio' || $('world-radio-dialog').open) return;
     // Read the current saved profile: Setup and another simulator page may have
@@ -1123,6 +1190,18 @@ export function mountWorldApp({
     if (status.textContent !== text) status.textContent = text;
     status.dataset.source = source;
     monitor.dataset.source = source;
+    if (current?.beginner)
+      beginnerCoach.update({
+        state,
+        source,
+        stickMode: radioPreview?.stickMode ?? 2,
+        monitor: source === 'radio' && unavailable ? neutralFlightInput() : controls,
+        monitorAvailable: !(source === 'radio' && unavailable),
+        mode: $('flight-mode').value,
+        reducedMotion:
+          $('sim-motion').value === 'reduced' ||
+          Boolean(win.matchMedia?.('(prefers-reduced-motion: reduce)').matches),
+      });
     $('world-keys-hint').textContent =
       source === 'radio'
         ? txt(
@@ -1172,15 +1251,105 @@ export function mountWorldApp({
           (r) =>
             r.status === 'verified' &&
             r.diagnostic === 'complete' &&
-            r.proof.session === 'practice',
+            r.proof.session === 'practice' &&
+            (!learningById.has(r.course.id) || learningById.get(r.course.id).mode === r.proof.mode),
         )
         .map((r) => `${r.packIdentity}:${r.course.id}`),
     );
+    for (const key of sessionLearningComplete) complete.add(key);
     for (const attempt of notebook.snapshot().attempts) {
       const entry = catalogue.find((e) => e.legacy && e.id === attempt.course);
       if (entry) complete.add(keyOf(entry));
     }
     return complete;
+  }
+  function renderSchool() {
+    const complete = completedKeys();
+    const done = BEGINNER_CATALOGUE.filter((entry) => complete.has(keyOf(entry)));
+    const core = done.filter((entry) => learningById.get(entry.id).mode === 'self-level').length;
+    const acro = done.length - core;
+    $('school-progress-title').textContent = txt(
+      `${done.length} of 14 lessons complete`,
+      `Виконано ${done.length} із 14 уроків`,
+    );
+    $('school-progress-copy').textContent = txt(
+      `${core}/12 fundamentals · ${acro}/2 Acro introductions`,
+      `${core}/12 основ · ${acro}/2 вступних уроків Acro`,
+    );
+    $('school-progress').value = done.length;
+    $('school-progress').setAttribute(
+      'aria-label',
+      txt('Flight School progress', 'Поступ у льотній школі'),
+    );
+    const next =
+      BEGINNER_CATALOGUE.find((entry) => !complete.has(keyOf(entry))) ?? BEGINNER_CATALOGUE[0];
+    $('school-continue').textContent =
+      done.length === 0
+        ? txt('Begin lesson 01', 'Почати урок 01')
+        : done.length === 14
+          ? txt('Fly the course again', 'Пройти курс знову')
+          : txt(`Continue · ${label(next)}`, `Продовжити · ${label(next)}`);
+    $('school-lessons').replaceChildren();
+    const groups = [
+      [0, 4, 'Find your feet. Then leave the ground.', 'Відчуйте керування. Потім злітайте.'],
+      [4, 8, 'Make the drone go where you want.', 'Скеруйте дрон туди, куди потрібно.'],
+      [8, 12, 'Connect the moves. Find your line.', 'Поєднайте рухи. Знайдіть свій маршрут.'],
+      [12, 14, 'Curious about Acro?', 'Хочете спробувати Acro?'],
+    ];
+    for (const [from, to, en, uk] of groups) {
+      const group = el('section', undefined, 'school-chapter');
+      const title = el('div', undefined, 'school-chapter-heading');
+      title.append(
+        el('span', `${String(from + 1).padStart(2, '0')}—${String(to).padStart(2, '0')}`),
+        el('h2', txt(en, uk)),
+      );
+      if (from === 12)
+        title.append(el('small', txt('Optional next step', 'Необов’язковий наступний крок')));
+      group.append(title);
+      const grid = el('div', undefined, 'school-lesson-grid');
+      for (const entry of BEGINNER_CATALOGUE.slice(from, to)) {
+        const lesson = learningById.get(entry.id),
+          index = BEGINNER_CATALOGUE.indexOf(entry);
+        const card = el('article', undefined, 'school-lesson-card');
+        card.dataset.lesson = entry.id;
+        card.classList.toggle('is-complete', complete.has(keyOf(entry)));
+        const head = el('div', undefined, 'school-card-head');
+        head.append(
+          el('span', String(index + 1).padStart(2, '0'), 'school-lesson-number'),
+          el(
+            'span',
+            complete.has(keyOf(entry))
+              ? txt('✓ Completed', '✓ Виконано')
+              : lesson.mode === 'acro'
+                ? 'ACRO'
+                : txt('SELF-LEVEL', 'САМОВИРІВНЮВАННЯ'),
+            'school-lesson-status',
+          ),
+        );
+        card.append(head, el('h3', localized(lesson.title)), el('p', localized(lesson.summary)));
+        const meta = el(
+          'small',
+          txt(
+            `${lesson.steps.length} guided steps · about ${lesson.duration} min`,
+            `${lesson.steps.length} кроків із підказками · близько ${lesson.duration} хв`,
+          ),
+        );
+        const start = button(
+          complete.has(keyOf(entry))
+            ? txt('Fly it again', 'Повторити урок')
+            : txt('Start lesson', 'Почати урок'),
+          () => startFlight(entry),
+          index === BEGINNER_CATALOGUE.indexOf(next) ? 'primary' : '',
+        );
+        start.dataset.simIcon = 'play';
+        start.setAttribute('aria-label', `${start.textContent}: ${localized(lesson.title)}`);
+        card.append(meta, start);
+        grid.append(card);
+      }
+      group.append(grid);
+      $('school-lessons').append(group);
+    }
+    presentation.refresh($('learn'));
   }
   function renderFilters() {
     if ($('creator-theme'))
@@ -1213,6 +1382,7 @@ export function mountWorldApp({
     if (template) $('creator-template').value = template;
   }
   function renderCatalogue() {
+    renderSchool();
     const complete = completedKeys(),
       search = $('search').value.trim().toLocaleLowerCase(),
       activity = $('activity-filter').value,
@@ -1386,7 +1556,13 @@ export function mountWorldApp({
             acro: [{ type: 'survive', ticks: 36000 }],
           };
           return startFlight(
-            { ...group[0], id: course.id, course: validateWorldCourse(course), legacy: false },
+            {
+              ...group[0],
+              id: course.id,
+              course: validateWorldCourse(course),
+              legacy: false,
+              beginner: undefined,
+            },
             { preview: true },
           );
         }),
@@ -1709,7 +1885,7 @@ export function mountWorldApp({
     if (worldStore) {
       installed = await worldStore.list();
       revisions = await worldStore.list({ includeRevisions: true });
-      catalogue = [...WORLD_CATALOGUE];
+      catalogue = [...WORLD_CATALOGUE, ...BEGINNER_CATALOGUE];
       for (const record of revisions) {
         try {
           for (const source of record.project.courses) {
@@ -1733,8 +1909,30 @@ export function mountWorldApp({
     renderPlaylist();
     renderPacks();
   }
+  async function resumeInterruptedFlight() {
+    if (!recovery) return;
+    const entry = catalogue.find(
+      (e) => e.id === recovery.course.id && e.packIdentity === recovery.packIdentity,
+    );
+    if (!entry)
+      throw new Error(
+        txt(
+          'Install the exact world pack before recovering this flight.',
+          'Для відновлення встановіть точний пакунок світу.',
+        ),
+      );
+    await startFlight(entry, { preview: recovery.preview, recover: recovery.proof });
+  }
   function renderPacks() {
     $('recovery-banner')?.remove();
+    const savedLesson = recovery && learningById.get(recovery.course.id);
+    $('school-recover').hidden = !savedLesson;
+    $('school-recover').textContent = savedLesson
+      ? txt(
+          `Resume saved lesson · ${localized(savedLesson.title)}`,
+          `Відновити урок · ${localized(savedLesson.title)}`,
+        )
+      : '';
     $('installed-packs').replaceChildren();
     for (const record of installed) {
       const row = el('div', undefined, 'proof-row');
@@ -1822,23 +2020,10 @@ export function mountWorldApp({
       );
       banner.id = 'recovery-banner';
       $('explore').prepend(banner);
-      const b = button(txt('Resume interrupted flight', 'Відновити перерваний політ'), async () => {
-        const entry = catalogue.find(
-          (e) => e.id === recovery.course.id && e.packIdentity === recovery.packIdentity,
-        );
-        if (!entry)
-          throw new Error(
-            txt(
-              'Install the exact world pack before recovering this flight.',
-              'Для відновлення встановіть точний пакунок світу.',
-            ),
-          );
-        await startFlight(entry, {
-          preview: recovery.preview,
-          recover: recovery.proof,
-          sectorReferenceId: recovery.sectorReferenceId,
-        });
-      });
+      const b = button(
+        txt('Resume interrupted flight', 'Відновити перерваний політ'),
+        resumeInterruptedFlight,
+      );
       b.id = 'resume-flight';
       $('proof-records').prepend(b);
     }
@@ -2205,7 +2390,9 @@ export function mountWorldApp({
       el(
         'h2',
         state.status === 'complete'
-          ? txt('Challenge complete', 'Завдання виконано')
+          ? entry.beginner
+            ? txt('Lesson complete', 'Урок виконано')
+            : txt('Challenge complete', 'Завдання виконано')
           : txt('Flight ended', 'Політ завершено'),
       ),
       el('p', txt('Checking recording…', 'Перевірка запису…')),
@@ -2241,13 +2428,29 @@ export function mountWorldApp({
         await recordStore.saveSession(null);
         recovery = null;
       }
+      if (
+        !isPreview &&
+        entry.beginner &&
+        state.status === 'complete' &&
+        proof.session === 'practice' &&
+        proof.mode === learningById.get(entry.beginner)?.mode
+      )
+        sessionLearningComplete.add(keyOf(entry));
       await refreshStorage();
       if (token !== flightToken) return;
+      if (entry.beginner)
+        beginnerCoach.complete({
+          verified: !isPreview && state.status === 'complete',
+          nextAvailable:
+            BEGINNER_CATALOGUE.findIndex((e) => e.id === entry.id) < BEGINNER_CATALOGUE.length - 1,
+        });
       $('result-panel').replaceChildren(
         el(
           'h2',
           state.status === 'complete'
-            ? txt('Challenge complete', 'Завдання виконано')
+            ? entry.beginner
+              ? txt('Lesson complete', 'Урок виконано')
+              : txt('Challenge complete', 'Завдання виконано')
             : txt('Flight ended', 'Політ завершено'),
         ),
         el(
@@ -2264,12 +2467,13 @@ export function mountWorldApp({
           `${(state.ticks / 50).toFixed(2)} s · ${state.contacts ?? 0} ${txt('contacts', 'контактів')}`,
         ),
       );
-      $('result-panel').append(
-        el(
-          'p',
-          `${resultSummary.medal ? `${txt('Medal', 'Медаль')}: ${resultSummary.medal} · ` : ''}${txt('Score', 'Бали')}: ${resultSummary.score}${resultSummary.accuracy === null ? '' : ` · ${Math.round(resultSummary.accuracy * 100)}%`}`,
-        ),
-      );
+      if (!entry.beginner)
+        $('result-panel').append(
+          el(
+            'p',
+            `${resultSummary.medal ? `${txt('Medal', 'Медаль')}: ${resultSummary.medal} · ` : ''}${txt('Score', 'Бали')}: ${resultSummary.score}${resultSummary.accuracy === null ? '' : ` · ${Math.round(resultSummary.accuracy * 100)}%`}`,
+          ),
+        );
       if (resultSummary.sectors.length)
         $('result-panel').append(splitSummary(resultSummary.sectors, completedReference));
       const lostSector = completedReference
@@ -2310,7 +2514,42 @@ export function mountWorldApp({
         resultActions.append(
           button(txt('Next flight', 'Наступний політ'), () => $('world-next').click(), 'primary'),
         );
-      resultActions.append(button(txt('Back to lobby', 'До меню'), () => closeFlight()));
+      if (entry.beginner && state.status === 'complete' && !isPreview)
+        resultActions.append(
+          button(
+            BEGINNER_CATALOGUE.at(-1).id === entry.id
+              ? txt('Return to your course', 'Повернутися до курсу')
+              : txt('Next lesson', 'Наступний урок'),
+            () => nextLearningFlight(),
+            'primary',
+          ),
+        );
+      if (
+        entry.beginner &&
+        state.status === 'complete' &&
+        BEGINNER_CATALOGUE.findIndex((e) => e.id === entry.id) >= 11
+      )
+        resultActions.append(
+          button(
+            txt('Explore more worlds', 'Досліджувати інші світи'),
+            async () => {
+              await closeFlight();
+              showTab('explore');
+            },
+            'primary',
+          ),
+        );
+      resultActions.append(
+        button(
+          entry.beginner
+            ? txt('Back to Flight School', 'До льотної школи')
+            : txt('Back to lobby', 'До меню'),
+          async () => {
+            await closeFlight();
+            if (entry.beginner) showTab('learn');
+          },
+        ),
+      );
       $('result-panel').append(resultActions);
       presentation.resume();
       $('result-panel').append(
@@ -2402,7 +2641,8 @@ export function mountWorldApp({
       (!doc.hasFocus || doc.hasFocus()) &&
       !doc.querySelector('dialog[open]:not(#flight-dialog)') &&
       $('flight-dialog').dataset.optionsOpen !== 'true' &&
-      $('flight-dialog').dataset.immersiveControls !== 'true'
+      $('flight-dialog').dataset.immersiveControls !== 'true' &&
+      !beginnerCoach.blocksArm()
     ) {
       radio.poll();
       if (radio.status().active && flight) {
@@ -2479,6 +2719,23 @@ export function mountWorldApp({
     flight?.dispose?.();
     flight = null;
     current = entry;
+    const learning = learningById.get(entry.beginner);
+    if (learning) {
+      learningPreferences ??= {
+        'flight-mode': $('flight-mode').value,
+        'flight-camera': $('flight-camera').value,
+      };
+      $('flight-mode').value = options.replayProof?.mode ?? options.recover?.mode ?? learning.mode;
+      $('flight-camera').value = learning.camera;
+      beginnerCoach.open(learning, {
+        practice: Boolean(options.recover),
+        replay: Boolean(options.replayProof),
+      });
+    } else {
+      beginnerCoach.close();
+      restoreLearningPreferences();
+    }
+    $('flight-dialog').classList.toggle('learning-flight', Boolean(learning));
     preview = Boolean(options.replayProof) || (options.preview ?? false);
     playingPlaylist = options.playlist ?? null;
     playlistIndex = options.index ?? 0;
@@ -2495,7 +2752,8 @@ export function mountWorldApp({
           : txt('WORLD DEMONSTRATION', 'ДЕМОНСТРАЦІЯ СВІТУ')
         : txt('RECORDED FLIGHT', 'ЗАПИСАНИЙ ПОЛІТ');
     $('world-replay-rate').value = String(replayRate);
-    $('flight-mode').disabled = Boolean(replayProof) && replayKind !== 'demonstration';
+    $('flight-mode').disabled =
+      Boolean(learning) || (Boolean(replayProof) && replayKind !== 'demonstration');
     $('flight-source').disabled = Boolean(replayProof);
     $('radio-setup-button').disabled = Boolean(replayProof);
     $('world-touch').hidden = Boolean(replayProof) || $('flight-source').value !== 'touch';
@@ -2518,7 +2776,9 @@ export function mountWorldApp({
       ? $('world-replay-label').textContent
       : preview
         ? txt('AUTHORING PREVIEW', 'АВТОРСЬКИЙ ПЕРЕГЛЯД')
-        : localized(WORLD_THEMES.find((t) => t.id === entry.theme)?.title) || entry.world;
+        : learning
+          ? txt('FLIGHT SCHOOL', 'ЛЬОТНА ШКОЛА')
+          : localized(WORLD_THEMES.find((t) => t.id === entry.theme)?.title) || entry.world;
     $('flight-brief').textContent = entry.course.locales[locale].brief;
     $('flight-status').textContent = txt('Preparing scene…', 'Підготовка сцени…');
     paintLoadout();
@@ -2669,7 +2929,11 @@ export function mountWorldApp({
     if (token !== flightToken || disposed) return;
     flight?.dispose?.();
     flight = null;
+    const closedLesson = current?.beginner;
     current = null;
+    beginnerCoach.close();
+    restoreLearningPreferences();
+    $('flight-dialog').classList.remove('learning-flight');
     $('flight-dialog').close();
     replayProof = null;
     $('flight-mode').disabled =
@@ -2678,7 +2942,12 @@ export function mountWorldApp({
         false;
     presentation.resume();
     renderCatalogue();
-    $('world-grid').querySelector('[aria-pressed="true"]')?.focus({ preventScroll: true });
+    if (closedLesson) {
+      showTab('learn');
+      $('school-lessons')
+        .querySelector(`[data-lesson="${closedLesson}"] button`)
+        ?.focus({ preventScroll: true });
+    } else $('world-grid').querySelector('[aria-pressed="true"]')?.focus({ preventScroll: true });
     renderPacks();
   }
   async function restoreProofs(file) {
@@ -2739,6 +3008,19 @@ export function mountWorldApp({
   on($('sim-motion'), 'change', applyAppearance);
   on($('lobby-sound'), 'click', () => soundButton.click());
   on($('lobby-radio'), 'click', () => $('radio-setup-button').click());
+  on($('begin-learning'), 'click', () => showTab('learn'));
+  on($('school-recover'), 'click', resumeInterruptedFlight);
+  on($('school-radio'), 'click', () => $('radio-setup-button').click());
+  on($('school-worlds'), 'click', () => {
+    showTab('explore');
+    $('world-picker-title').scrollIntoView({ block: 'start' });
+  });
+  on($('school-continue'), 'click', () => {
+    const complete = completedKeys();
+    return startFlight(
+      BEGINNER_CATALOGUE.find((entry) => !complete.has(keyOf(entry))) ?? BEGINNER_CATALOGUE[0],
+    );
+  });
   on($('hero-fly'), 'click', () => {
     const complete = completedKeys();
     const entry =
@@ -3039,6 +3321,10 @@ export function mountWorldApp({
   });
   on($('world-arm'), 'click', () => {
     if (doc.querySelector('dialog[open]:not(#flight-dialog)')) return;
+    if (beginnerCoach.blocksArm()) {
+      beginnerCoach.showGuide();
+      return;
+    }
     $('flight-dialog').dataset.optionsOpen = 'false';
     $('flight-options').setAttribute('aria-expanded', 'false');
     immersive.closeControls();
@@ -3300,6 +3586,9 @@ export function mountWorldApp({
       },
       records: clone(records),
       catalogue: catalogue.length,
+      learning: current?.beginner
+        ? { lesson: current.beginner, guideOpen: beginnerCoach.blocksArm() }
+        : null,
       radio: radio.status(),
       immersive: immersive.snapshot(),
       inputDisplay: {
@@ -3327,6 +3616,7 @@ export function mountWorldApp({
       actorEditor?.dispose();
       audio.dispose();
       presentation.dispose();
+      beginnerCoach.dispose();
       spatialEditor?.dispose();
       await notebook.close();
       recordStore?.close();
