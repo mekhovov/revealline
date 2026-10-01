@@ -11,13 +11,22 @@ Base: `4b2bdff33` on `origin/main`. Integrated SIM-owned startup correction `c3f
 ## Automated evidence
 
 - `npm run practice:test`: **215 passed, 0 failed**. Covers flight/replay behavior, package isolation, worker verification, cancellation, removal, catalogue compatibility and the new directory tests. Updated existing test doubles for current fullscreen/radio interfaces; no assertions were removed to conceal SIM failures.
+- Focused directory/admission/promotion/bundle/publisher suite: **33 passed, 0 failed**, including the temporary fourth-package recipe and draft upload/download verification fixtures.
 - Localization check: **12,023 messages, 7,862 references**, English and Ukrainian, passed.
 - ESLint on every changed/new JavaScript module: passed with zero warnings. `git diff --check`: passed.
 - All three real packages passed development preflight and the hosted-file verifier over HTTP with the repository server's restrictive CSP. Every immutable file and stable launcher copy was compared with its byte/hash pin.
 - The temporary fourth-package fixture checks registration, generated four-card catalogue, stable launcher route, artifact admission, update, rollback and retirement. Its synthetic review is fixture data only, never public-release evidence. The fixture does not represent a human-completed flight in a fourth app.
 - Negative tests cover malformed/foreign catalogue routes, missing translations/description fields, oversized details, stale catalogue fallback, missing workers/dependencies, changed archive bytes, source closure and package limits. Missing public catalogue is a release error.
 
-The final committed-source candidate command and its generated verification report are the authority for reproducibility and release hashes. Development-preview hashes below are not release approvals.
+Clean committed-source candidate: `708a7bccea917f3dec69b203cd9bf96e7ffef60d`, tree `218b17f6cc07dd9a0033187742038dde93d7ef04`. All three artifacts were built twice, byte-compared and independently admitted; committed inputs and ZIP members were verified. Output: `.cache/flight-practice-candidate-708a7bcce/optional-candidate-verification.json`. Envelope SHA-256: `b6575f2dab5106882aff7ddd9602f6436a9d217c020fbf1b9dc0f4e83e8ac188`. **`publicEligible: false`**: the generated review template remains pending.
+
+| Package         | Distribution ZIP bytes | Distribution ZIP SHA-256                                           |
+| --------------- | ---------------------: | ------------------------------------------------------------------ |
+| civilian-flight |                550,354 | `627b75df0fe693fe615514721dfd3769d9a88d6a2ebe05d9ce873444409f65a1` |
+| civilian-fpv    |              4,060,295 | `329db6eabf223dc22fd0651f4e1b8c32209e705293642293101b40a418954f9f` |
+| fpv-worlds      |             12,363,180 | `4cc188c93a464fd6c706c345cbb44d62c4505ca45acbbd47498292e609d67598` |
+
+The committed-source candidate report is the authority for reproducibility and release hashes. Development-preview hashes below are not release approvals. This report's follow-up documentation commit is not the candidate source commit.
 
 ## Browser evidence
 
@@ -25,7 +34,7 @@ Environment: macOS ARM64, Chrome 154.0.8037.93, agent-browser isolated profile, 
 
 - Opened all three applications. Gym starts; Flight Studio arms, pauses and resets in self-level and Acro; World Studio's first-flight entry arms, pauses and retries after the integrated startup fix. Beginner proof completion is covered by automated fixtures, not claimed as a human learning test.
 - English/Ukrainian catalogue cards and launcher routes preserve the selected language; the direct Play intent opens the application's start screen without an availability confirmation or automatic arming.
-- All three prepared copies opened with browser networking disabled in development preview. Gym additionally passed closing all site tabs and reopening its stable launcher offline. The final candidate still needs the complete fresh-profile/closed-tabs/installed-app matrix on supported physical browsers.
+- All three prepared copies opened with browser networking disabled in development preview. A second clean browser session downloaded each package, closed every site tab (leaving only `about:blank`), disabled networking, then opened each stable launcher: all reported **Ready offline** and **Open prepared practice** reached the respective app. Between apps the only tab returned to `about:blank`. The final candidate still needs the installed-app/OS-restart matrix on supported physical browsers.
 - Directory was inspected at 390 CSS pixels without horizontal overflow. CSS `zoom: 2` and reduced-motion emulation were exercised; actual browser 200% zoom and assistive-technology use remain separate qualification tasks.
 - Player HTML guide loaded in Ukrainian under the repository CSP. Real app screenshots are checked in as each package's `preview.png`; their source/provenance is in each README. A long manual is not required before playing: cards and launchers link to the maintained in-app first-flight guidance.
 
