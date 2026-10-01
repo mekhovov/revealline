@@ -6,6 +6,17 @@ To change a built-in album without starting paused music, expand **Offline album
 
 For a custom sequence, expand **Create playlists**, clone an album, add or remove songs, choose ordered or shuffled playback and a repeat mode, then save. You can mix catalogue songs with your own MP3 uploads. Now Playing shows the audible song, artist, original filename and creator/license websites.
 
+### Visit a song's creator
+
+In editions containing the creator-link follow-up in PR #903, select **Creator
+source ↗** beside the current title/artist in Audio, Pause, the music library or
+Demo. The song credit in the main-menu footer is itself a link. These links open
+the supplied creator page in a new tab and do not start, retry or resume music.
+Uploaded originals use their saved source metadata, including during audition;
+missing creator metadata leaves plain credits rather than an invented link.
+Licence and cultural-provenance links remain separate from creator attribution.
+This feature is implemented in the draft PR, not yet claimed publicly released.
+
 ## Additional music sources
 
 In a game edition containing the optional-source feature, open **Settings → Audio →

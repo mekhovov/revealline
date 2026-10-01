@@ -23,6 +23,8 @@ import { FIXED_DT } from '../coop/core.mjs';
 import { memoryIndexedDB, fixture, structuralProbe } from './helpers/soundtrack-fixtures.mjs';
 import { createManagedMediaStore } from '../managed-media-store.mjs';
 import { prepareSoundtrackLibrary } from '../soundtrack-bundle.mjs';
+import { resolveOnlineSoundtrackCatalogue } from '../online-soundtrack-catalogue.mjs';
+import { publicCatalogueFixture } from './helpers/soundtrack-public-catalogue.mjs';
 
 const teamHTML = await readFile(new URL('../couch/relay-rescue.html', import.meta.url), 'utf8');
 let sequence = 0;
@@ -896,11 +898,16 @@ test('Couch music credits follow audible MP3 metadata without live position anno
       'Now playing: <b>Actual title</b> · Original artist',
     );
     assert.equal(node.children[1].textContent, 'File: original-file.mp3');
-    assert.equal(node.children[2].getAttribute('href'), 'https://composer.example/music?album=1');
-    assert.equal(node.children[2].textContent, 'Source: composer.example');
-    assert.equal(node.children[2].getAttribute('rel'), 'noopener noreferrer');
-    assert.equal(node.children[2].getAttribute('target'), '_blank');
+    const link = node.children[2].querySelector('a');
+    assert.equal(link.getAttribute('href'), 'https://composer.example/music?album=1');
+    assert.match(link.textContent, /Creator source/);
+    assert.equal(link.getAttribute('rel'), 'noopener noreferrer');
+    assert.equal(link.getAttribute('target'), '_blank');
   }
+  assert.equal(
+    doc.getElementById('credits-music-status-source').querySelector('a').getAttribute('href'),
+    'https://composer.example/music?album=1',
+  );
   const titleNode = mounts[0].children[0];
   let writes = 0;
   const originalText = titleNode.textContent;
@@ -933,6 +940,10 @@ test('Couch music credits follow audible MP3 metadata without live position anno
   host.session.setVolume(0.5);
   host.session.pause();
   assert.ok(mounts.every((node) => node.hidden));
+  const pausedPlays = a.media.plays;
+  doc.getElementById('credits-music-status-source').querySelector('a').click();
+  assert.equal(a.media.paused, true);
+  assert.equal(a.media.plays, pausedPlays, 'creator links do not restart paused music');
   for (const unsafe of [
     'javascript:alert(1)',
     'https://name:password@example.test/music',
@@ -942,7 +953,8 @@ test('Couch music credits follow audible MP3 metadata without live position anno
     assert.equal(mounts[0].children[0].textContent, 'Now playing: Next title · Original artist');
     assert.equal(mounts[0].children[1].textContent, 'Original filename not recorded');
     assert.equal(mounts[0].children[2].hidden, true);
-    assert.equal(mounts[0].children[2].getAttribute('href'), null, 'Old safe link is removed.');
+    assert.equal(mounts[0].children[2].querySelector('a'), null, 'Old safe link is removed.');
+    assert.equal(doc.getElementById('credits-music-status-source').querySelector('a'), null);
   }
   host.session.pause();
   const catalogueLibrary = structuredClone(upgradeSoundtrackLibrary(imported.library));
@@ -968,7 +980,28 @@ test('Couch music credits follow audible MP3 metadata without live position anno
   await host.player.prepare();
   await host.session.play();
   assert.equal(mounts[0].children[1].textContent, 'File: composer-master.mp3');
-  assert.equal(mounts[0].children[2].getAttribute('href'), 'https://artist.example/album');
+  assert.equal(
+    mounts[0].children[2].querySelector('a').getAttribute('href'),
+    'https://artist.example/album',
+  );
+  const remote = resolveOnlineSoundtrackCatalogue(publicCatalogueFixture()).tracks[0];
+  await host.player.playRemotePlaylist([remote]);
+  for (const node of mounts) {
+    assert.equal(node.hidden, false, 'remote recordings expose the same live credits');
+    assert.equal(
+      node.children[2].querySelector('a').getAttribute('href'),
+      'https://artists.example/1',
+    );
+    assert.equal(
+      node.children[2].querySelectorAll('a').length,
+      1,
+      'licence URLs are not creator links',
+    );
+  }
+  assert.equal(
+    doc.getElementById('credits-music-status-source').querySelector('a').getAttribute('href'),
+    'https://artists.example/1',
+  );
   host.dispose();
   master.setMuted(true);
   assert.ok(mounts.every((node) => node.hidden && node.children.length === 0));

@@ -6,6 +6,10 @@ import { fieldKitRecipeSources } from '../../scripts/produce-field-kit-theme.mjs
 for (const dependency of [
   'game/online-soundtrack-sources.mjs',
   'game/online-soundtrack-source-store.mjs',
+  'game/ui/music-credits.mjs',
+  'game/ui/music-credit.mjs',
+  'game/ui/demo-audio.mjs',
+  'game/ui/quick-music-controls.css',
 ])
   test(`${dependency} changes the audio review fingerprint without changing other groups`, async () => {
     const cache = new Map();

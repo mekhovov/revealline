@@ -4970,3 +4970,24 @@ for (const leaveOnBody of [false, true])
     assert.equal(app.node('source-enabled-0').checked, false);
     assert.equal(app.doc.activeElement, leaveOnBody ? app.doc.body : app.node('play'));
   });
+
+test('audition creator follows the playing original rather than a different editor selection', async (t) => {
+  const initial = await fixture();
+  const library = structuredClone(initial.library);
+  library.tracks[0].rights.source = 'https://original-artist.example/song';
+  initial.prepared = await prepareSoundtrackLibrary(library, initial.assets, {
+    probeMedia: structuralProbe,
+  });
+  const app = await setup(t, { initial });
+  app.choose('tracks', initial.track.id);
+  await app.click('audition-track');
+  const links = () => app.node('audition-sources').querySelectorAll('a');
+  assert.equal(links()[0].getAttribute('href'), 'https://original-artist.example/song');
+  assert.equal(links()[0].getAttribute('target'), '_blank');
+  assert.equal(links()[0].getAttribute('rel'), 'noopener noreferrer');
+  app.choose('tracks', BUILTIN_SOUNDTRACK_TRACKS[0].id);
+  assert.equal(links()[0].getAttribute('href'), 'https://original-artist.example/song');
+  await app.click('stop-audition');
+  assert.equal(links().length, 0);
+  assert.equal(app.node('audition-sources').hidden, true);
+});
