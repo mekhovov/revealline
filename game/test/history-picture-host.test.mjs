@@ -191,6 +191,24 @@ test('an unfinished new original offers reload and export without another downlo
   assert.equal(memory.allPuts.length, writes);
   const recoveryMessage = page.$('flight-preparation-status').textContent;
   page.$('picture-export-data').focus();
+  const escape = page.doc.activeElement.emit('keydown', {
+    key: 'Escape',
+    code: 'Escape',
+    repeat: false,
+  });
+  page.doc.activeElement.emit('keyup', { key: 'Escape', code: 'Escape' });
+  assert.equal(escape.defaultPrevented, true, 'Back reaches actual controller navigation.');
+  assert.equal(page.doc.activeElement, page.$('start-button'));
+  assert.equal(
+    page.$('picture-export-data').hidden,
+    false,
+    'Settled recovery has no pending launch owner.',
+  );
+  assert.equal(page.$('picture-reload').hidden, false);
+  assert.equal(page.$('flight-preparation-status').textContent, recoveryMessage);
+  assert.deepEqual(authoritativeCheckpoint(page.rendered.run), checkpoint);
+  assert.deepEqual(page.storage.map, storage);
+  page.$('picture-export-data').focus();
   page.$('picture-export-data').click();
   assert.equal(page.$('library-dialog').open, true);
   assert.equal(page.$('library-saves').hidden, false);

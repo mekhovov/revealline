@@ -270,6 +270,150 @@ test('cancelling picture preparation restores keyboard focus before native hidin
   assert.equal(p.doc.activeElement, p.$('start-button'));
 });
 
+// Deliver through the mounted navigation listeners and the actual pad router.
+// DOM, decoding and standard pad samples are modeled; no native layout claim.
+function backInput(page, mode, pad) {
+  if (mode === 'keyboard') {
+    const target = page.doc.activeElement;
+    const event = target.emit('keydown', { key: 'Escape', code: 'Escape', repeat: false });
+    target.emit('keyup', { key: 'Escape', code: 'Escape' });
+    assert.equal(event.defaultPrevented, true, 'The actual menu route handles Escape.');
+  } else {
+    pad.buttons[1] = { pressed: true, value: 1 };
+    page.frame(16);
+    pad.buttons[1] = { pressed: false, value: 0 };
+    page.frame(16);
+  }
+}
+function standardPad() {
+  return {
+    index: 0,
+    id: 'Pending picture Back',
+    connected: true,
+    mapping: 'standard',
+    axes: [0, 0, 0, 0],
+    buttons: Array.from({ length: 17 }, () => ({ pressed: false, value: 0 })),
+  };
+}
+function joinPad(page, pad) {
+  page.frame(16);
+  pad.buttons[13] = { pressed: true, value: 1 };
+  page.frame(16);
+  pad.buttons[13] = { pressed: false, value: 0 };
+  page.frame(16);
+}
+for (const launch of ['start', 'retry', 'restart'])
+  for (const mode of ['keyboard', 'controller'])
+    test(`${mode} Back cancels pending picture ${launch} without late resume`, async (t) => {
+      const f = await setup(t),
+        gate = deferred(),
+        pad = standardPad();
+      t.after(() => gate.resolve());
+      let hold = launch === 'start',
+        heldDecodes = 0;
+      class HeldPicture extends Picture {
+        decode() {
+          if (!hold) return Promise.resolve();
+          heldDecodes++;
+          return gate.promise;
+        }
+      }
+      const p = await pageFor(t, f, {
+        pictures: { Image: HeldPicture },
+        waitForPictures: launch !== 'start',
+        readPads: () => [pad],
+      });
+      joinPad(p, pad);
+      if (launch !== 'start') {
+        p.$('start-button').click();
+        p.key('ArrowDown');
+        if (launch === 'retry') {
+          for (let i = 0; i < 900 && p.rendered.run.status !== 'won'; i++) p.frame();
+          p.key('ArrowDown', false);
+          assert.equal(p.rendered.run.status, 'won');
+          await settle(
+            () =>
+              !p.$('skip-celebration').hidden ||
+              !p.$('show-result').hidden ||
+              !p.$('retry-button').hidden,
+          );
+          if (!p.$('skip-celebration').hidden) p.$('skip-celebration').click();
+          if (!p.$('show-result').hidden) p.$('show-result').click();
+          assert.equal(p.$('retry-button').hidden, false, 'Retry belongs to the settled results.');
+          hold = true;
+          p.$('retry-button').click();
+        } else {
+          ticks(p, 13);
+          p.key('ArrowDown', false);
+          p.$('pause-button').click();
+          assert.equal(verifyReplay(JSON.parse(p.storage.getItem(sessionKey)).replay).match, true);
+          hold = true;
+          p.$('overlay-restart').click();
+          assert.equal(p.$('restart-dialog').open, true);
+          p.$('restart-confirm').click();
+        }
+      } else p.$('start-button').click();
+      try {
+        // Victory display and Retry may overlap; this gate holds every decode.
+        await settle(() => heldDecodes > 0);
+      } catch (error) {
+        error.message += ` ${JSON.stringify({ heldDecodes, state: p.doc.body.dataset.flightState, picture: p.doc.body.dataset.pictureState, preparation: p.$('flight-preparation-status').dataset.state, text: p.$('flight-preparation-status').textContent, errors: p.errors.map(String) })}`;
+        throw error;
+      }
+      // Render the newly prepared run and release the router's input-reset latch.
+      p.frame(0);
+      assert.equal(p.$('flight-preparation-status').dataset.state, 'busy');
+      const before = authoritativeCheckpoint(p.rendered.run),
+        saved = p.storage.getItem(sessionKey),
+        library = p.storage.getItem('revealline.library.dev.v1'),
+        selected = [p.$('pack-select').value, p.$('level-select').value, p.$('theme-select').value],
+        media = await f.store.read();
+      p.$('flight-preparation-cancel').focus();
+      backInput(p, mode, pad);
+      assert.equal(p.$('flight-preparation-status').dataset.state, 'cancelled');
+      assert.equal(p.$('flight-preparation-cancel').hidden, true);
+      assert.equal(p.doc.activeElement, p.$('start-button'));
+      if (mode === 'keyboard') gate.resolve();
+      else gate.reject(new Error('Late decoder failure after Back'));
+      await new Promise((resolve) => setTimeout(resolve, 10));
+      ticks(p, 30);
+      assert.notEqual(p.doc.body.dataset.flightState, 'running');
+      assert.equal(p.$('flight-preparation-status').dataset.state, 'cancelled');
+      assert.deepEqual(authoritativeCheckpoint(p.rendered.run), before);
+      assert.equal(p.storage.getItem(sessionKey), saved);
+      assert.equal(p.storage.getItem('revealline.library.dev.v1'), library);
+      assert.deepEqual(
+        [p.$('pack-select').value, p.$('level-select').value, p.$('theme-select').value],
+        selected,
+      );
+      const after = await f.store.read();
+      assert.deepEqual(after.document, media.document);
+      assert.deepEqual(
+        after.assets.map(({ sha256 }) => sha256),
+        media.assets.map(({ sha256 }) => sha256),
+      );
+      assert.equal(p.doc.activeElement, p.$('start-button'));
+      assert.deepEqual(p.errors, []);
+    });
+
+for (const mode of ['keyboard', 'controller'])
+  test(`${mode} Back on an ordinary ready picture keeps the existing ready behavior`, async (t) => {
+    const f = await setup(t),
+      pad = standardPad(),
+      p = await pageFor(t, f, { readPads: () => [pad] });
+    joinPad(p, pad);
+    const before = authoritativeCheckpoint(p.rendered.run),
+      state = p.$('flight-preparation-status').dataset.state;
+    p.$('start-button').focus();
+    backInput(p, mode, pad);
+    ticks(p, 5);
+    assert.deepEqual(authoritativeCheckpoint(p.rendered.run), before);
+    assert.notEqual(p.doc.body.dataset.flightState, 'running');
+    assert.equal(p.$('flight-preparation-status').dataset.state, state);
+    assert.equal(p.doc.activeElement, p.$('start-button'));
+    assert.deepEqual(p.errors, []);
+  });
+
 test('old v2 saved flight remains legacy even when a current managed assignment exists', async (t) => {
   const f = await setup(t),
     p = await pageFor(t, f);
