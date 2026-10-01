@@ -1102,6 +1102,7 @@ export function mountWorldApp({
         }).catch(reportError);
     },
   });
+  let practiceOwnsFullscreen = false;
   const beginnerCoach = mountBeginnerCoach({
     root: $('beginner-coach'),
     window: win,
@@ -1119,6 +1120,15 @@ export function mountWorldApp({
     },
     onRadio: () => $('radio-setup-button').click(),
     onFullscreen: () => immersive.toggle(),
+    onPracticeView: async (enabled) => {
+      if (enabled) {
+        practiceOwnsFullscreen = !immersive.active();
+        if (practiceOwnsFullscreen) await immersive.enter();
+      } else if (practiceOwnsFullscreen) {
+        practiceOwnsFullscreen = false;
+        await immersive.exit({ focus: false });
+      }
+    },
   });
   function nextLearningFlight() {
     const next = nextLearningEntry(current);
