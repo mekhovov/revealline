@@ -20,8 +20,9 @@
     "optional-practice/civilian-fpv/world-style.css": "342f1856b6aa5e0ef122091aa7c4f2592261a60ea697231315b44f07b00d5a1f",
     "optional-practice/fpv-worlds/README.md": "4ffa0ea14d09b2c48abe516a1d8b3d49683fbd6f729335380d5121f93e6ec0c4",
     "optional-practice/fpv-worlds/index.html": "2782b1edc53f7c4afa0557721bf4eb2b5f54b3e28f26e8c7e2a60370bf91f7ba",
-    "publishing/optional-package-policy.mjs": "5956119fd6a2b66f2541623ba4d6ea36742f0a7b251c9ec639bb6ecdd845c518",
-    "scripts/refresh-fpv-presentation-assets.mjs": "c30c94c7219b91ae258f0627ea38fad2123a9a4b682731058663a5b9cb0e5136"
+    "publishing/optional-package-policy.mjs": "461d70f723ea4d3755db582976b7fd8007619067a0514ac68d14cc1183f46cf7",
+    "scripts/refresh-fpv-presentation-assets.mjs": "c30c94c7219b91ae258f0627ea38fad2123a9a4b682731058663a5b9cb0e5136",
+    "publishing/optional-package-admission.mjs": "7732d8382b68431744b51f63570877e61784ea686aff49b43ea7b390957023e3"
   },
   "worldStudio": {
     "format": "FPVNativeUIFunctionalVerification.v1",
@@ -370,7 +371,61 @@
     "No new hands-on physical-radio calibration acceptance is claimed.",
     "Result actions used a short authoring-preview fixture; no production medal calibration claim.",
     "Desktop and mobile-sized Chrome views do not establish Safari, physical mobile-device or hardware performance qualification.",
-    "Source-candidate bindings are synthetic local structural fixtures, not release artifacts.",
-    "Public deployment remains unverified and depends on protected checks plus the separately tracked site-size repair."
-  ]
+    "Public deployment remains unverified and depends on protected checks plus the separately tracked site-size repair.",
+    "Earlier structural probes used synthetic bindings. Final frozen candidate admission uses exact committed inputs at the recorded revision; this does not confer public release eligibility."
+  ],
+  "frozenCandidateAdmission": {
+    "candidate": "/tmp/fpv-native-ui-final-candidate-20261001",
+    "version": "v0.142.4",
+    "sourceRevision": "8d34dc14064369e3913346a6da2d4e6a7a678d49",
+    "sourceTree": "3ba0d6e0f3c042f9069b590a4a3f3f17afda995a",
+    "envelopeSha256": "eb129906b9b03fdd3623c3b7019e8d20dd7daad45418561a7278bf866cd83d21",
+    "reproducibleBuilds": 2,
+    "committedInputsVerified": true,
+    "zipMembersVerified": true,
+    "admission": "passed",
+    "publicEligible": false,
+    "cleanCommittedCheckout": true,
+    "packages": [
+      {
+        "id": "civilian-flight",
+        "revision": "c4fe68fc319f3b66bb5fea82186cdb0088c4af495b8a4c4ab67451e75e11547f",
+        "runtimeFiles": 29,
+        "runtimeBytes": 404021,
+        "sourceFiles": 31,
+        "sourceBytes": 415525,
+        "limits": {
+          "files": 64,
+          "bytes": 8388608
+        },
+        "withinLimits": true
+      },
+      {
+        "id": "civilian-fpv",
+        "revision": "b6f550c39568955173b0e64d04e6c5155cc9a61413f52dfe5c3dfe21266f119c",
+        "runtimeFiles": 62,
+        "runtimeBytes": 3781828,
+        "sourceFiles": 64,
+        "sourceBytes": 3798596,
+        "limits": {
+          "files": 64,
+          "bytes": 8388608
+        },
+        "withinLimits": true
+      },
+      {
+        "id": "fpv-worlds",
+        "revision": "a00c22eda34bc67b0c72df61841723f8bfb4855cbc999cc4b844a8a23890f34b",
+        "runtimeFiles": 93,
+        "runtimeBytes": 12081345,
+        "sourceFiles": 95,
+        "sourceBytes": 12102828,
+        "limits": {
+          "files": 96,
+          "bytes": 16777216
+        },
+        "withinLimits": true
+      }
+    ]
+  }
 }
