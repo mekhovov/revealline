@@ -68,8 +68,10 @@ import { splitCourseDefinition, compileContentProject } from './content-definiti
 import { builtinWorldScene } from './world-assets.mjs';
 import { mountDroneHangar } from './world-hangar.mjs';
 import { mountActorEditor } from './world-actor-editor.mjs';
+import { fpvReturnURL } from '../../game/fpv-entry.mjs';
 
 const COPY_EN = {
+  backToGame: 'Back to FPV / LINE',
   settings: 'Settings',
   startFlying: 'Start flying',
   chooseWorld: 'Choose a world',
@@ -207,6 +209,7 @@ const COPY_EN = {
   keys: 'W/S pitch · A/D roll · Q/E yaw · ↑/↓ throttle · P pause · Space fire',
 };
 const COPY_UK = {
+  backToGame: 'Повернутися до FPV / LINE',
   settings: 'Налаштування',
   startFlying: 'Почати політ',
   chooseWorld: 'Виберіть світ',
@@ -602,6 +605,16 @@ export function mountWorldApp({
   const $ = (id) => doc.getElementById(id),
     listeners = [],
     translatedNodes = [];
+  // The containing PWA supplies a validated return route; standalone SIM keeps its own shell.
+  const returnURL = fpvReturnURL(win.location.href);
+  if (returnURL && $('sim-settings')) {
+    const back = doc.createElement('a');
+    back.id = 'sim-game-return';
+    back.href = returnURL;
+    back.dataset.i18n = 'backToGame';
+    back.textContent = COPY_EN.backToGame;
+    $('sim-settings').append(back);
+  }
   doc.querySelectorAll('[data-i18n]').forEach((n) => {
     translatedNodes.push({ node: n, key: n.dataset.i18n, fallback: n.textContent });
     // The host's translator owns its own data-i18n namespace. Studio strings
@@ -657,7 +670,7 @@ export function mountWorldApp({
     sectorReferenceId = null,
     sectorReferenceStatus = 'none',
     sectorLookup = null;
-    lastRadioDiscovery = -Infinity;
+  let lastRadioDiscovery = -Infinity;
   let selectedWorld = null;
   const sectors = createSectorTracker();
   let storage;

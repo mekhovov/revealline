@@ -9,11 +9,10 @@ export function currentGameplayGroups(catalogue) {
 }
 export function gameplaySelection(catalogue, { all = false, selected = [] } = {}) {
   const choices = new Set(['base', ...selected]);
-  return (
-    all
-      ? currentGameplayGroups(catalogue)
-      : catalogue.groups.filter((group) => group.kind === 'gameplay' && choices.has(group.id))
-  ).map((group) => group.id);
+  if (all) currentGameplayGroups(catalogue).forEach((group) => choices.add(group.id));
+  return catalogue.groups
+    .filter((group) => group.kind === 'gameplay' && choices.has(group.id))
+    .map((group) => group.id);
 }
 export function offlineReadinessCode(catalogue, ids) {
   const selected = new Set(ids);

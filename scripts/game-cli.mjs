@@ -643,9 +643,17 @@ export async function addOfflineEntries(
   // The bundled simulator owns a separate opt-in cache. Its HTML and shared
   // modules are final here; later offline-marker injection changes game HTML only.
   const { buildBundledOptionalPractice } = await import('./build-optional-practice.mjs');
+  const bundledPackages = [];
   for (const packageId of ['civilian-fpv', 'fpv-worlds']) {
     const bundledPractice = buildBundledOptionalPractice(entries, { packageId });
-    if (bundledPractice) entries.push(...bundledPractice.entries);
+    if (bundledPractice) {
+      entries.push(...bundledPractice.entries);
+      bundledPackages.push({
+        packageId,
+        files: bundledPractice.files,
+        workerPath: `optional-practice/${packageId}/worker.js`,
+      });
+    }
   }
   const optional = new Set([...(buildConfig.optionalOffline ?? []), ...optionalDownloads]);
   const optionalPacks = entries
@@ -716,7 +724,9 @@ export async function addOfflineEntries(
       if (mission.packId && !isIncludedBundledMission(mission))
         excluded.add(mission.sourceFile.path);
   const { buildOfflineContent } = await import('./offline-content.mjs');
-  const contentCatalogue = await buildOfflineContent(entries, excluded, info.version);
+  const contentCatalogue = await buildOfflineContent(entries, excluded, info.version, {
+    bundledPackages,
+  });
   const publishedOptionalArtwork = applyPublicationProfile(
     entries,
     contentCatalogue,
@@ -852,7 +862,7 @@ export async function addOfflineEntries(
   }
 }
 
-async function prepareBuildProject({
+export async function prepareBuildProject({
   root = PROJECT_ROOT,
   out = null,
   version,
