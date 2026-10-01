@@ -191,7 +191,7 @@ export const OPTIONAL_PACKAGE_POLICIES = Object.freeze({
         'vendor/addons/utils/SkeletonUtils.js',
         'vendor/addons/provenance.json',
         'world-app.mjs',
-        'world-renderer.mjs',
+        'beginner-coach.mjs',
         'world-demonstrations.mjs',
         'world-assets.mjs',
         'world-hangar.mjs',
