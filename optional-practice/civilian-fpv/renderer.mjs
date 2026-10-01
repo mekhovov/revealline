@@ -32,7 +32,7 @@ const QUALITIES = Object.freeze({
     ratio: 2,
     shadows: true,
     shadowSize: 2048,
-    shadowType: THREE.PCFSoftShadowMap,
+    shadowType: THREE.PCFShadowMap,
     exposure: 1.13,
     ambient: 1.12,
     key: 1.08,
