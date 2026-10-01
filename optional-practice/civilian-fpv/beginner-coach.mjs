@@ -62,7 +62,7 @@ export function mountBeginnerCoach({
     })[axis] ?? axis;
   const directionName = (axis) =>
     ({
-      throttle: t('↑ more lift · ↓ less lift', '↑ більше тяги · ↓ менше тяги'),
+      throttle: t('↑ more thrust · ↓ less thrust', '↑ більше тяги · ↓ менше тяги'),
       yaw: t('← turn left · turn right →', '← поворот ліворуч · праворуч →'),
       pitch: t('↑ nose forward · ↓ nose back', '↑ ніс уперед · ↓ ніс назад'),
       roll: t('← tilt left · tilt right →', '← нахил ліворуч · праворуч →'),
@@ -70,8 +70,8 @@ export function mountBeginnerCoach({
   const axisExplanation = (axis) =>
     ({
       throttle: t(
-        'All four motors work harder together. More thrust makes you rise; less lets gravity bring you down. Throttle controls thrust, not height.',
-        'Усі чотири мотори разом працюють сильніше. Більша тяга піднімає дрон; менша дозволяє силі тяжіння опускати його. Газ керує тягою, а не висотою.',
+        'All four motors increase thrust along the drone’s own upward axis. While upright, more thrust usually accelerates you upward. Tilt and momentum determine whether you climb, descend or drift. Throttle controls thrust, not height.',
+        'Усі чотири мотори збільшують тягу вздовж власної осі дрона вгору. У горизонтальному положенні більша тяга зазвичай прискорює вгору. Нахил та інерція визначають, чи ви набираєте висоту, спускаєтеся або дрейфуєте. Газ керує тягою, а не висотою.',
       ),
       yaw: t(
         'Turn the nose left or right while keeping the drone level. Yaw changes where you face; it does not move you sideways.',

@@ -36,8 +36,11 @@ all content qualification or release readiness.
 
 The primary Acro course has 71 guided steps. The exported `ACRO_LESSON_ORDER` is the recommended sequence; stable IDs are not
 display numbers. `SELF_LEVEL_LESSON_ORDER` identifies the optional original 12.
-The host should choose FPV and Gentle while flying a recommended Acro lesson,
-then restore the player's previous camera, mode and response on exit. Existing
+The player app chooses FPV and Gentle while flying a recommended Acro lesson,
+then restores the player's previous camera, mode and response on exit. The main
+progress bar, Continue and Next lesson actions use this 14-lesson sequence. The
+original 12 self-level lessons appear in a separate collapsed optional section,
+with their own completion count and Next sequence. Existing
 lesson metadata remains intact to avoid silently changing historical content.
 All newly authored lessons default to Acro/FPV and have EN/UK step instructions,
 explanations and tips. The coach identifies the selected learning track, shows
@@ -101,8 +104,10 @@ actual course advancement drive the feedback; the guide never declares an
 objective passed because an animation finished.
 
 Lessons temporarily choose their teaching mode and starting camera. The player's
-previous mode and camera preferences are restored when leaving the course, and
-controller calibration and the existing response profile are preserved. School
+previous mode, camera and response preferences are restored when leaving the
+course. Gentle response applies during lessons; controller calibration is
+preserved. Saving a new response in radio setup updates the preference restored
+on exit while the active lesson keeps Gentle response. School
 completion requires a verified practice recording in that lesson's recommended
 mode and exact content revision. Replays, demonstrations and editor previews do
 not earn completion. Without persistent storage, the current session can still
@@ -157,8 +162,15 @@ contacts and full health using the unmodified Gentle profile.
 hash, exact pack identities, proof hashes and final-state identities.
 [The complete recorded commands](evidence/fpv-acro-school-demonstrations-20261001.json)
 are retained so this evidence is replayable after local scratch files are gone.
-These are demonstration sessions and cannot earn player completion. They are
-offline authoring evidence, separate from installation in the player demo browser.
+These are demonstration sessions and cannot earn player completion. All 14 are
+also installed in the existing `world-demonstrations.mjs` dependency and exposed
+by each primary lesson's Watch demonstration action. Playback defaults to half
+speed, with quarter-, half- and normal-speed choices. Recorded controls are
+labelled separately from the coach's illustrative example; live input cannot
+change the recording. Playback uses the actual course and physics, verifies the
+complete proof before showing it, and never grants lesson progress. Use
+`--install-demonstrations` with the qualification command to regenerate the
+installed additive rows without replacing the existing world demonstrations.
 The original physics receipt remains unchanged. Pilot completion times do not
 estimate a beginner's learning time; unfamiliar-player and physical-radio
 acceptance remain separate required observations.
