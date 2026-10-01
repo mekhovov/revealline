@@ -38,6 +38,7 @@ export function createBeginnerPreview(mode = 'acro') {
   };
   return createFlight({
     mode,
+    unscoredPractice: true,
     response: DEFAULT_RESPONSE,
     course: {
       format: 'FlightCourse.v1',
@@ -57,7 +58,7 @@ export function createBeginnerPreview(mode = 'acro') {
         },
       },
       spawn: { x: 0, y: 0, z: 0 },
-      bounds: { min: { x: -30000, y: 0, z: -30000 }, max: { x: 30000, y: 30000, z: 30000 } },
+      bounds: { min: { x: -80000, y: 0, z: -80000 }, max: { x: 80000, y: 80000, z: 80000 } },
       obstacles: [],
       steps: { 'self-level': [target], acro: [target] },
     },
@@ -76,6 +77,7 @@ export function mountBeginnerCoach({
   onExit = () => {},
   onRadio = () => {},
   onFullscreen = () => {},
+  onPracticeView = () => {},
 }) {
   const doc = root.ownerDocument;
   let lesson = null,
@@ -102,6 +104,10 @@ export function mountBeginnerCoach({
     radioBaseline = null,
     radioIntentTicks = 0,
     exampleLoops = 0,
+    labImmersive = false,
+    practiceNativeSeen = false,
+    practiceViewRevision = 0,
+    previewActivityRevision = 0,
     diagram = null,
     viewReleases = [];
   const labKeys = new Set(),
@@ -242,6 +248,7 @@ export function mountBeginnerCoach({
     labInput = neutralFlightInput();
   }
   function pausePreview(reason = 'stopped') {
+    ++previewActivityRevision;
     autoPreviewPending = false;
     labRunning = false;
     labReason = reason;
@@ -269,6 +276,7 @@ export function mountBeginnerCoach({
   function takeControls(source, { focus = false } = {}) {
     if (stage !== 'guide' || disposed) return;
     if (labMode !== 'try' || labSource !== source) {
+      ++previewActivityRevision;
       const throttle = labInput.throttle;
       clearLabInput();
       labMode = 'try';
@@ -364,12 +372,10 @@ export function mountBeginnerCoach({
         labInput = neutralFlightInput();
         continue;
       }
-      if (
-        (labMode === 'try' && state.ticks >= 60 * FLIGHT_HZ) ||
-        state.contacts > 0 ||
-        state.status !== 'active'
-      ) {
-        pausePreview(state.contacts ? 'boundary' : 'finished');
+      // The unscored lab has no attempt timer. Ground and boundary contacts
+      // resolve normally without interrupting the player's controls.
+      if (state.status !== 'active') {
+        pausePreview('finished');
         break;
       }
     }
@@ -388,6 +394,7 @@ export function mountBeginnerCoach({
       if (focus) refs.labFocus?.focus({ preventScroll: true });
       return;
     }
+    ++previewActivityRevision;
     labRunning = true;
     labFlight.arm();
     labLastTime = null;
@@ -515,6 +522,7 @@ export function mountBeginnerCoach({
       detailScale: 1.5,
       followHeading: true,
       environmentMotion: true,
+      immersivePractice: labImmersive,
       reducedMotion: Boolean(snapshot.reducedMotion),
       controls: input,
       locale: lang(),
@@ -554,8 +562,8 @@ export function mountBeginnerCoach({
                 'ПРИКЛАД · навчальний темп 0,2× · справжні команди до краю · повтор із початкової позиції',
               )
           : t(
-              'YOUR CONTROLS · separate preview · real lesson stays paused',
-              'ВАШЕ КЕРУВАННЯ · окремий перегляд · урок залишається на паузі',
+              'YOUR CONTROLS · no time limit · real lesson stays paused',
+              'ВАШЕ КЕРУВАННЯ · без обмеження часу · урок залишається на паузі',
             )
         : labReason === 'radio'
           ? t(
@@ -805,6 +813,7 @@ export function mountBeginnerCoach({
     root.hidden = false;
     root.classList.add('beginner-coach');
     root.dataset.stage = stage;
+    root.dataset.labImmersive = String(labImmersive && stage === 'guide');
     root.dataset.reducedMotion = String(Boolean(snapshot.reducedMotion));
     root.setAttribute('aria-label', t('Your flight coach', 'Ваш інструктор польоту'));
     const step = displayedStep(),
@@ -932,7 +941,7 @@ export function mountBeginnerCoach({
       }
       refs.labSourceHint = node('p', 'coach-lab-source-hint');
       card.append(refs.labSourceHint);
-      const visuals = node('div', 'coach-visuals'),
+      const visuals = node('div', 'coach-visuals coach-grid'),
         controller = node('section', 'coach-controller coach-radio-chassis');
       const requestedMode = labRadioAvailable()
         ? (snapshot.radioStickMode ?? snapshot.stickMode)
@@ -977,7 +986,7 @@ export function mountBeginnerCoach({
       touchControls.append(node('summary', '', t('Touch buttons', 'Сенсорні кнопки')), makeDpad());
       controller.append(touchControls);
       visuals.append(controller);
-      const behavior = node('section', 'coach-behavior');
+      const behavior = node('section', 'coach-behavior coach-drone');
       behavior.append(
         node('h3', '', t('WHAT THE DRONE DOES', 'ЩО РОБИТЬ ДРОН')),
         makeDrone(step),
@@ -989,9 +998,15 @@ export function mountBeginnerCoach({
       );
       visuals.append(behavior);
       card.append(visuals);
-      const labActions = node('div', 'coach-lab-actions');
+      const labActions = node('div', 'coach-lab-actions coach-lab-toolbar');
       refs.labPlay = button('lab-play', '');
       labActions.append(
+        button(
+          'lab-immersive',
+          labImmersive
+            ? t('Back to lesson', 'До пояснення')
+            : t('Fullscreen practice', 'Повноекранна практика'),
+        ),
         refs.labPlay,
         button('lab-reset', t('Reset controls', 'Скинути керування')),
         button('lab-replay', t('Replay example', 'Повторити приклад')),
@@ -999,8 +1014,8 @@ export function mountBeginnerCoach({
       refs.labStatus = node('p', 'coach-lab-status');
       refs.labStatus.setAttribute('role', 'status');
       refs.labStatus.setAttribute('aria-live', 'polite');
+      card.insertBefore(labActions, visuals);
       card.append(
-        labActions,
         refs.labStatus,
         node(
           'p',
@@ -1116,6 +1131,64 @@ export function mountBeginnerCoach({
     if (refs.hold)
       refs.hold.style.width = `${clamp((state?.hold ?? 0) / (criterion()?.ticks || 1), 0, 1) * 100}%`;
   }
+  function setPracticeView(enabled, { resume = true } = {}) {
+    if (enabled && (!lesson || stage !== 'guide' || disposed)) return;
+    if (enabled === labImmersive) return;
+    const owner = ++practiceViewRevision;
+    const wasRunning = labRunning;
+    const throttle = labInput.throttle;
+    labImmersive = enabled;
+    practiceNativeSeen = enabled && Boolean(doc.fullscreenElement);
+    pausePreview();
+    if (!disposed && lesson && stage === 'guide') {
+      render();
+      // Rendering replaces the clicked button. Keep focus inside the lab before
+      // the host captures its return target for the asynchronous transition.
+      root.querySelector('[data-coach-action="lab-immersive"]')?.focus({ preventScroll: true });
+    } else root.dataset.labImmersive = 'false';
+    // Request native fullscreen in the original gesture; the host preserves a
+    // fullscreen session that the player opened before entering this view.
+    const transition = onPracticeView(enabled);
+    const activity = previewActivityRevision;
+    Promise.resolve(transition)
+      .then(() => {
+        if (
+          disposed ||
+          owner !== practiceViewRevision ||
+          stage !== 'guide' ||
+          activity !== previewActivityRevision
+        )
+          return;
+        practiceNativeSeen = enabled && Boolean(doc.fullscreenElement);
+        const focused =
+          !doc.hidden && (!doc.hasFocus || doc.hasFocus()) && root.contains(doc.activeElement);
+        if (enabled && resume && wasRunning && focused && labReason === 'stopped') {
+          // A presentation-only transition releases rotation keys but preserves
+          // manual throttle. It never resumes or arms the actual lesson.
+          labInput.throttle = throttle;
+          labTouch.throttle = throttle;
+          playPreview();
+        } else
+          root.querySelector('[data-coach-action="lab-immersive"]')?.focus({ preventScroll: true });
+      })
+      .catch(() => {
+        if (
+          disposed ||
+          owner !== practiceViewRevision ||
+          stage !== 'guide' ||
+          activity !== previewActivityRevision
+        )
+          return;
+        // The full-window practice layout remains usable when native fullscreen
+        // is unavailable. No rejected request can resume input by itself.
+        pausePreview();
+      });
+  }
+  function practiceFullscreenChanged() {
+    if (!labImmersive) return;
+    if (doc.fullscreenElement) practiceNativeSeen = true;
+    else if (practiceNativeSeen) setPracticeView(false, { resume: false });
+  }
   function showGuide() {
     if (!lesson || disposed || stage === 'complete') return;
     onPause();
@@ -1133,10 +1206,13 @@ export function mountBeginnerCoach({
     const action = event.target.closest?.('[data-coach-action]')?.dataset.coachAction;
     if (!action || !lesson || disposed) return;
     if (action === 'start') {
+      setPracticeView(false, { resume: false });
       pausePreview();
       stage = 'live';
       render();
       onStart();
+    } else if (action === 'lab-immersive') {
+      setPracticeView(!labImmersive);
     } else if (action === 'lab-replay') {
       labMode = 'example';
       exampleLoops = 0;
@@ -1148,10 +1224,12 @@ export function mountBeginnerCoach({
       if (labRunning) pausePreview();
       else playPreview();
     } else if (action === 'lab-reset') {
+      const wasRunning = labRunning;
       labMode = 'try';
       resetPreview();
       rememberRadioBaseline();
       paint();
+      if (wasRunning) playPreview();
     } else if (action === 'fullscreen') {
       pausePreview();
       onFullscreen();
@@ -1163,6 +1241,7 @@ export function mountBeginnerCoach({
     } else if (action === 'retry') onRetry();
     else if (action === 'next') onNext();
     else if (action === 'exit') {
+      setPracticeView(false, { resume: false });
       pausePreview();
       onPause();
       onExit();
@@ -1186,10 +1265,11 @@ export function mountBeginnerCoach({
     }
     if (stage !== 'guide' || disposed || !root.contains(event.target)) return;
     if (event.code === 'Escape') {
-      if (!labRunning) return;
+      if (!labRunning && !labImmersive) return;
       event.preventDefault();
       event.stopImmediatePropagation();
-      pausePreview();
+      if (labRunning) pausePreview();
+      else setPracticeView(false, { resume: false });
       return;
     }
     if (
@@ -1243,11 +1323,13 @@ export function mountBeginnerCoach({
   win.addEventListener('keyup', keyUp, true);
   win.addEventListener('blur', loseFocus);
   doc.addEventListener('visibilitychange', visibility);
+  doc.addEventListener('fullscreenchange', practiceFullscreenChanged);
   root.addEventListener('focusout', leaveLab);
   root.addEventListener('click', click);
   root.hidden = true;
   return {
     open(value, options = {}) {
+      setPracticeView(false, { resume: false });
       if (disposed) return;
       pausePreview();
       lesson = value;
@@ -1310,6 +1392,7 @@ export function mountBeginnerCoach({
       controls: { ...labInput },
       teachingPace: labMode === 'example' ? EXAMPLE_PACE : 1,
       exampleLoops,
+      immersive: labImmersive,
     }),
     showGuide,
     complete({ verified, nextAvailable: hasNext = false } = {}) {
@@ -1320,6 +1403,7 @@ export function mountBeginnerCoach({
       render();
     },
     close() {
+      setPracticeView(false, { resume: false });
       pausePreview();
       releaseView();
       stage = 'closed';
@@ -1329,6 +1413,7 @@ export function mountBeginnerCoach({
       root.hidden = true;
     },
     dispose() {
+      setPracticeView(false, { resume: false });
       pausePreview();
       releaseView();
       disposed = true;
@@ -1336,6 +1421,7 @@ export function mountBeginnerCoach({
       win.removeEventListener('keyup', keyUp, true);
       win.removeEventListener('blur', loseFocus);
       doc.removeEventListener('visibilitychange', visibility);
+      doc.removeEventListener('fullscreenchange', practiceFullscreenChanged);
       root.removeEventListener('focusout', leaveLab);
       root.removeEventListener('click', click);
       root.replaceChildren();

@@ -618,3 +618,52 @@ external pending gates, not new live-availability claims. Do not repeatedly poll
 unchanged checks. Next independent work remains the approved R4/R5 art foundation
 and R6 demonstrations/ghost/practice flow; read live stack membership before any
 coordinated refresh and preserve the creator-data and original-content holds.
+
+## Continuous lab practice and dedicated fullscreen — 2 October 2026
+
+Current branch `codex/fpv-endless-practice` starts at #932's exact remote head
+`6cebb1eaac5a7d1fe4788a153260751bfa1c5e29`. Parent source/admission/candidate
+checks passed; it remains open in native #902. Open membership is still
+#905 → #907 → #923 → #924 → #925 → #926 → #929 → #932. Existing holds remain.
+
+Implemented the player's latest request as a focused child: manual lab flight
+no longer stops at contact, after one minute, or at the underlying 12-minute
+scored-attempt cap. Only the isolated unscored runtime bypasses expiry; it cannot
+create proof bytes. Scored flight identities, physics, expiry, rewards and
+recording limits are unchanged. The lab volume is ±80 m horizontally / 0–80 m
+vertically. Reset during active practice continues immediately.
+
+Fullscreen practice centres the enlarged rear-follow schematic, adds wider
+ground/horizon, moves gimbals to lower corners and hides verbose explanations.
+EN/UK controls, native fullscreen and a full-window fallback remain available.
+Back restores the inline guide paused, preserves pre-existing app fullscreen,
+and leaves the real lesson untouched. Async completion cannot override a newer
+pause, focus change, session or disposal. See `fpv-endless-practice.md`.
+
+Functional qualification on the frozen candidate inputs before package build:
+
+- 14 actual-browser coach checks, including 39,100 simulated ticks / 782 seconds,
+  ceiling/ground contacts, reset, mode transitions, disconnection, focus loss,
+  delayed fullscreen rejection, explicit pause ownership and disposal.
+- 19 production-host browser checks with controlled TX15-shaped Gamepad input
+  and keyboard events: source ownership, fullscreen isolation, normal flight
+  state preservation and actual keyboard takeoff after preview.
+- 27 model checks: both modes exceed 13 minutes only when unscored; default
+  expiry/identity/snapshots match parent and all 24 original proofs replay.
+- All 14 primary Acro demonstrations complete and independently replay with
+  zero contacts and full health.
+- 16 actual-browser shared diagram checks including 1,200 quaternion poses,
+  movement/height signs, expanded ground and unchanged compact/inline output.
+- Desktop, portrait and short landscape inspected; final Ukrainian portrait
+  390×844 has no document horizontal overflow, complete drone, corner controls
+  and visible Back/Pause/Reset/Replay. Native permission denial was explicitly
+  simulated in an ignored fixture; fallback works. A cropped peripheral height
+  label was hidden on narrow screens; telemetry retains actual height.
+- Targeted syntax, ESLint, formatting and diff checks pass. No new unit coverage,
+  physical-radio, novice-player or sustained hardware performance claim.
+
+Receipts: `docs/evidence/fpv-endless-*-20261002.json`. Next: committed-input
+package admission, rebuild/launch the reviewed-player URL, and publish a focused
+native #902 child of #932. Preserve #928, #922, #889, graphics WIP and Garage/ghost
+handoffs. The R4/R5 art and R6 demonstration/practice backlog and R7 deferred unit
+and human/device qualification remain independent next work. No public-live claim.
