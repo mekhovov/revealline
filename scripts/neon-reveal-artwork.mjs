@@ -21,7 +21,7 @@ export async function neonRevealBackground(id, title) {
       author: 'Reveal Line · AI-assisted original artwork',
       license: 'Original project artwork',
       rightsStatus:
-        'Original AI-generated project illustration; source and effective prompt retained separately.',
+        'Original AI-generated project illustration; delivery image and effective prompt recorded in the artwork manifest.',
     },
   };
 }

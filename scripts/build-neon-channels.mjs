@@ -1,3 +1,4 @@
+import { neonRevealBackground } from './neon-reveal-artwork.mjs';
 import assert from 'node:assert/strict';
 import { readFile, writeFile, mkdir } from 'node:fs/promises';
 import { validateScenario } from '../game/content.mjs';
@@ -182,6 +183,7 @@ export async function buildNeonChannels() {
   const visualOverrides = Object.fromEntries(
     ['enemy', 'eroder', 'patrol', 'player', 'slowTerrain'].map((role) => [role, sprite(role)]),
   );
+  visualOverrides.background = await neonRevealBackground('channels', level.name);
   const scenario = {
     format: 'xonix-playground.v6',
     level,
@@ -198,7 +200,7 @@ export async function buildNeonChannels() {
     engine: 'xonix-core.v6',
     id: 'neon-channels-reference',
     name: 'Neon Channels',
-    version: '1.0.0',
+    version: '1.1.0',
     description: level.metadata.description,
     themes: [theme],
     music: [],
@@ -207,7 +209,7 @@ export async function buildNeonChannels() {
       author: 'RevealLine',
       license: 'Project content',
       rightsStatus:
-        'Geometry reconstructed from a user-supplied reference. Existing procedural theme; no source artwork or music embedded.',
+        'Geometry reconstructed from user-supplied references, with original sprites and AI-assisted reveal illustrations. No source screenshot artwork or music embedded.',
     },
     campaigns: [
       {

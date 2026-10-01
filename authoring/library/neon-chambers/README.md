@@ -7,4 +7,4 @@ The explicit 91 × 45 source mask traces the three stepped chamber outlines, nes
 
 Six yellow bouncers match the upper-left, upper-center, two central-box, lower-center and far lower-right starting positions. Four cyan border patrols start at the four positions along the top rail. The player starts at bottom center. Enemy motion follows visible trail directions using existing Classic behaviors; exact speeds cannot be measured from a still. Defaults: three lives, 75% reveal target, no timer.
 
-Custom reveal art and Ukrainian translation are deferred. Existing retro artwork and procedural placeholder sprites are used. No unit tests or full-clear qualification are included.
+Original reveal artwork is included alongside the original pixel sprites. Ukrainian translation remains deferred. No unit tests or full-clear qualification are included.

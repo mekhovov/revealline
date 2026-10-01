@@ -53,15 +53,15 @@ export async function buildNeonReferencePack() {
   const pack = {
     ...sources[0].pack,
     id: 'neon-reference-pack',
-    version: '1.0.0',
+    version: '1.1.0',
     name: 'Neon Reference Pack',
     description:
-      'Sixteen screenshot-based Arcade levels: Channels, Crossroads, Hearts, Labyrinth, Arrows, Chambers, Crossgrid, Switchback, Spirals, Crossfire, Pinwheels, Wavebands, Conduit, Switchyards, Spines and Prism. Custom reveal images are planned; these levels currently use the existing procedural retro artwork.',
+      'Sixteen screenshot-based Arcade levels: Channels, Crossroads, Hearts, Labyrinth, Arrows, Chambers, Crossgrid, Switchback, Spirals, Crossfire, Pinwheels, Wavebands, Conduit, Switchyards, Spines and Prism. Each level reveals its own original neon illustration.',
     metadata: {
       author: 'RevealLine',
       license: 'Project content',
       rightsStatus:
-        'User-supplied layout references with original procedural placeholder sprites. Custom reveal images are deferred; no source screenshot artwork or music embedded.',
+        'User-supplied layout references with original sprites and AI-assisted reveal illustrations. No source screenshot artwork or music embedded.',
     },
     visualOverrides: {},
     levelVisuals: sources.map(({ scenario }, index) => ({
@@ -95,5 +95,5 @@ if (process.argv[1] && new URL(process.argv[1], 'file:').href === import.meta.ur
       parser: 'json',
     }),
   );
-  console.log('Neon Reference Pack: 16 valid levels; reveal images deferred.');
+  console.log('Neon Reference Pack: 16 valid levels; original reveal images included.');
 }

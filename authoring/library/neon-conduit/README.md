@@ -8,6 +8,6 @@ Three yellow ring bouncers start at the two center-right lane positions and in t
 
 The source is adapted to the engine's 72 × 36 board with a continuous safe perimeter. One-cell walls are retained when compressing to the 70 × 34 interior; wall cells take precedence over terrain at compressed boundaries. The player starts at bottom center.
 
-Regenerate with `node scripts/build-neon-conduit.mjs`, then `node scripts/build-neon-reference-pack.mjs`. Custom reveal artwork, Ukrainian translation and unit tests are deferred. Existing procedural reveal artwork is used; screenshot pixels are not embedded.
+Regenerate with `node scripts/build-neon-conduit.mjs`, then `node scripts/build-neon-reference-pack.mjs`. Original reveal artwork is included. Ukrainian translation and unit tests remain deferred. Screenshot pixels are not embedded.
 
 Validation: standalone scenario and packs pass schema checks. Archive and Current rules complete 120 idle ticks and a 21-cell opening capture under both turning policies with three lives. Browser rendering and installation checked. Full-clear balance remains unverified.

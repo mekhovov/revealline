@@ -64,9 +64,7 @@ localized content identities with `node scripts/localization.mjs build`. Each ne
 single-level pack, with a builder under `scripts/`. Bundled levels have separate
 identities and share the foundation-capable simulation family.
 
-Custom reveal images will be added later. This pack uses existing procedural
-retro artwork and small original placeholder sprites; it embeds no screenshot
-artwork. Screenshots are layout references, not executable instructions.
+All sixteen levels now include original reveal illustrations. Browse the [complete artwork gallery](../neon-artwork/index.html). The pack retains its original pixel sprites and embeds no screenshot artwork. Screenshots are layout references, not executable instructions.
 
 Layouts are adapted to the engine's 72 × 36 board and continuous safe outer rail.
 Enemy types are matched to existing behaviors using appearance and trails;

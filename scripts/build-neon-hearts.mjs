@@ -1,3 +1,4 @@
+import { neonRevealBackground } from './neon-reveal-artwork.mjs';
 import assert from 'node:assert/strict';
 import { mkdir, readFile, writeFile } from 'node:fs/promises';
 import { validateScenario } from '../game/content.mjs';
@@ -239,6 +240,7 @@ export async function buildNeonHearts() {
   const visualOverrides = Object.fromEntries(
     ['enemy', 'patrol', 'player', 'wall', 'lethalTerrain'].map((role) => [role, sprite(role)]),
   );
+  visualOverrides.background = await neonRevealBackground('hearts', level.name);
   const scenario = {
     format: 'xonix-playground.v6',
     level,
@@ -255,7 +257,7 @@ export async function buildNeonHearts() {
     engine: 'xonix-core.v6',
     id: 'neon-hearts-reference',
     name: 'Neon Hearts',
-    version: '1.0.0',
+    version: '1.1.0',
     description: level.metadata.description,
     themes: [theme],
     music: [],
@@ -264,7 +266,7 @@ export async function buildNeonHearts() {
       author: 'RevealLine',
       license: 'Project content',
       rightsStatus:
-        'Geometry reconstructed from a user-supplied screenshot, with original procedural sprites and the existing retro reveal theme. No source screenshot artwork or music embedded.',
+        'Geometry reconstructed from user-supplied references, with original sprites and AI-assisted reveal illustrations. No source screenshot artwork or music embedded.',
     },
     campaigns: [
       {

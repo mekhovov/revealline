@@ -1,3 +1,4 @@
+import { neonRevealBackground } from './neon-reveal-artwork.mjs';
 import assert from 'node:assert/strict';
 import { mkdir, readFile, writeFile } from 'node:fs/promises';
 import { validateScenario } from '../game/content.mjs';
@@ -188,6 +189,7 @@ export async function buildNeonSwitchback() {
   const visualOverrides = Object.fromEntries(
     ['enemy', 'patrol', 'player', 'wall', 'lethalTerrain'].map((role) => [role, sprite(role)]),
   );
+  visualOverrides.background = await neonRevealBackground('switchback', level.name);
   const scenario = {
     format: 'xonix-playground.v6',
     level,
@@ -204,7 +206,7 @@ export async function buildNeonSwitchback() {
     engine: 'xonix-core.v6',
     id: 'neon-switchback-reference',
     name: 'Neon Switchback',
-    version: '1.0.0',
+    version: '1.1.0',
     description: level.metadata.description,
     themes: [theme],
     music: [],
@@ -213,7 +215,7 @@ export async function buildNeonSwitchback() {
       author: 'RevealLine',
       license: 'Project content',
       rightsStatus:
-        'Tile layout traced from a user-supplied screenshot. Original procedural sprites and existing retro reveal art; no source image pixels or music embedded.',
+        'Geometry reconstructed from user-supplied references, with original sprites and AI-assisted reveal illustrations. No source screenshot artwork or music embedded.',
     },
     campaigns: [
       {
