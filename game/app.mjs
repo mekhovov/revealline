@@ -1477,6 +1477,12 @@ try {
     }
     const scope = controllerScope();
     if (courseBlocked()) return;
+    if (pictureResume !== null && preparationOperation?.cancel === cancelPictureStart) {
+      // Back cancels only this launch owner, after any native modal has handled it.
+      $('flight-preparation-cancel').click();
+      $('start-button').focus({ preventScroll: true });
+      return;
+    }
     if (scope === 'paused') resume();
     else if (scope === 'celebration' || scope === 'defeat-presentation')
       $('skip-celebration').click();
