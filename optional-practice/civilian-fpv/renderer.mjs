@@ -20,6 +20,8 @@ export function createFlightRenderer({
   window: win = globalThis.window,
   onContextLost = () => {},
   reducedMotion = false,
+  loadGLTF = null,
+  loadTransformControls = null,
 }) {
   let renderer;
   try {
@@ -787,7 +789,8 @@ export function createFlightRenderer({
         )
           throw new Error('World preview contains an unprovided external resource');
       }
-    const { GLTFLoader } = await import('./vendor/addons/loaders/GLTFLoader.js');
+    if (!loadGLTF) throw new Error('Imported worlds require the World Studio renderer.');
+    const { GLTFLoader } = await loadGLTF();
     signal?.throwIfAborted();
     const urls = new Map(rows.map(([path, blob]) => [path, URL.createObjectURL(blob)]));
     const manager = new THREE.LoadingManager();
@@ -934,7 +937,9 @@ export function createFlightRenderer({
     selectEditor(editorSelection, false);
   }
   async function createEditor(callbacks = {}) {
-    const { TransformControls } = await import('./vendor/addons/controls/TransformControls.js');
+    if (!loadTransformControls)
+      throw new Error('World editing requires the World Studio renderer.');
+    const { TransformControls } = await loadTransformControls();
     if (disposed) throw new Error('Editor was disposed while loading');
     editorCallbacks = callbacks;
     if (!editor) {
@@ -1021,7 +1026,9 @@ export function createFlightRenderer({
     if (!['translate', 'rotate', 'scale'].includes(editMode))
       throw new TypeError('Invalid transform mode');
     const generation = sceneGeneration;
-    const { TransformControls } = await import('./vendor/addons/controls/TransformControls.js');
+    if (!loadTransformControls)
+      throw new Error('World editing requires the World Studio renderer.');
+    const { TransformControls } = await loadTransformControls();
     if (disposed || generation !== sceneGeneration) throw new Error('World preview changed');
     let object = null;
     imported.traverse((item) => {

@@ -19,7 +19,7 @@ import {
   WORLD_FLIGHT_MODEL,
 } from './world-model.mjs';
 import { WORLD_COLLISION_BACKEND } from './world-collision.mjs';
-import { createFlightRenderer } from './renderer.mjs';
+import { createFlightRenderer } from './world-renderer.mjs';
 import { createFlightInput } from './input.mjs';
 import { createRadioRuntime } from './radio-runtime.mjs';
 import { restoreVerifiedRadio } from './radio-session.mjs';
