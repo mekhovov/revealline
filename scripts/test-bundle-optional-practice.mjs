@@ -11,6 +11,33 @@ import { ICON_MASTER } from './brand-icons.mjs';
 import { optionalFPVSourceFixture } from '../publishing/optional-package-source-fixture.mjs';
 const root = new URL('../', import.meta.url).pathname;
 
+test('sparse publication checkouts include the full admitted directory import closure', async () => {
+  for (const [workflow, entry] of [
+    ['publish-frozen-pages.yml', 'publishing/pages-controller/publish.mjs'],
+    ['fastline-release.yml', 'publishing/fastline-release-publisher.mjs'],
+  ]) {
+    const source = await readFile(path.join(root, '.github/workflows', workflow), 'utf8');
+    const blocks = [
+      ...source.matchAll(/sparse-checkout: \|\n([\s\S]*?)\n\s*sparse-checkout-cone-mode:/g),
+    ];
+    const block = blocks.find((match) =>
+      match[1].includes('publishing/optional-package-promotion.mjs'),
+    );
+    assert.ok(block, workflow + ' has its publishing checkout');
+    const paths = block[1]
+      .trim()
+      .split('\n')
+      .map((line) => line.trim().replace(/^\//, ''));
+    for (const name of (await toolClosure(entry)).keys())
+      assert.ok(
+        paths.some(
+          (selected) => selected === name || (selected.endsWith('/') && name.startsWith(selected)),
+        ),
+        workflow + ' misses ' + name,
+      );
+  }
+});
+
 test('maintainer recipe adds a temporary fourth app, launches, updates, rolls back and retires it without publication', async (t) => {
   const fixture = await mkdtemp(path.join(tmpdir(), 'practice-fourth-app-'));
   t.after(() => rm(fixture, { recursive: true, force: true }));
