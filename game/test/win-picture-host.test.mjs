@@ -85,6 +85,17 @@ async function win(t, { reduced = false, readPads, beforeFrame } = {}) {
 for (const reduced of [false, true])
   test(`${reduced ? 'reduced' : 'full'} effects: a legal win keeps its full picture after the celebration finishes`, async (t) => {
     const { page, surface } = await win(t, { reduced });
+    assert.equal(
+      page.doc.body.dataset.winPicture,
+      'revealing',
+      'The final capture retains its board position.',
+    );
+    for (let i = 0; i < 18; i++) page.frame(100);
+    assert.equal(
+      page.doc.body.dataset.winPicture,
+      'revealing',
+      'Full and reduced effects both leave time to enjoy the win.',
+    );
     const run = page.rendered.run;
     const checkpoint = authoritativeCheckpoint(run);
     const earned = page.storage.getItem('revealline.library.dev.v1');

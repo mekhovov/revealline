@@ -574,16 +574,12 @@ summary {
   padding: 12px;
   background: #101923ed;
 }
-@keyframes earned-picture-settle {
-  from {
-    transform: scale(1.012);
-  }
-  to {
-    transform: scale(1);
-  }
+/* Arrival is shared with the game and demo; keep the poster under the video. */
+.creator-player[data-earned-view='on'] .victory-story video {
+  position: absolute;
+  inset: 0;
 }
-@media (prefers-reduced-motion: no-preference) {
-  .creator-player[data-earned-view='on']:not([data-effects='reduced']) #earned-picture {
-    animation: earned-picture-settle 1.2s ease-out both;
-  }
+.creator-player[data-earned-view='on'] .story-controls,
+.creator-player[data-earned-view='on'] .story-notice {
+  z-index: 1;
 }

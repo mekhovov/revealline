@@ -1,3 +1,8 @@
+import {
+  REWARD_BOARD_SECONDS,
+  advanceRewardAge,
+  animateRewardArrival,
+} from './ui/reward-arrival.mjs';
 import { loadCompanyStartup } from './ui/company-startup.mjs';
 import { createStudioPreviewSession } from './studio-preview-session.mjs';
 import { editionDepartureDestinationAllowed } from './editions/departure-destination.mjs';
@@ -1062,6 +1067,7 @@ try {
     journeyBestResult = null,
     journeyPerformanceActive = true,
     celebrationActive = false,
+    winRevealAge = 0,
     defeatActive = false,
     defeatPaused = false,
     defeatRemaining = 0,
@@ -7411,6 +7417,7 @@ try {
       finishDefeatPresentation();
       return;
     }
+    winRevealAge = REWARD_BOARD_SECONDS;
     painter.skipCelebration?.();
     enjoyCompletedPicture();
   };
@@ -9622,12 +9629,26 @@ try {
     );
     document.body.dataset.pictureState = flightPictures?.ready(theme.id) ? 'ready' : 'pending';
     const enjoyingPicture = run.status === 'won' && $('game-overlay').hidden;
-    document.body.dataset.winPicture = enjoyingPicture
-      ? celebrationActive
-        ? 'celebrating'
-        : 'settled'
+    const previousPicturePhase = document.body.dataset.winPicture;
+    const phase = enjoyingPicture
+      ? celebrationActive && winRevealAge < REWARD_BOARD_SECONDS
+        ? 'revealing'
+        : celebrationActive
+          ? 'celebrating'
+          : 'settled'
       : 'off';
-    show('win-picture-caption', enjoyingPicture);
+    const arrival =
+      previousPicturePhase === 'revealing' && ['celebrating', 'settled'].includes(phase)
+        ? $('game-canvas').getBoundingClientRect()
+        : null;
+    document.body.dataset.winPicture = phase;
+    if (arrival)
+      animateRewardArrival(
+        $('game-canvas'),
+        arrival,
+        displayPreferences.snapshot().effectiveReducedEffects,
+      );
+    show('win-picture-caption', enjoyingPicture && phase !== 'revealing');
     document.body.dataset.flightState =
       defeatActive || celebrationActive || (run.status === 'won' && !$('show-result').hidden)
         ? 'picture'
@@ -10465,6 +10486,7 @@ try {
             seed,
             reduced: displayPreferences.snapshot().effectiveReducedEffects,
           });
+          winRevealAge = 0;
           celebrationActive = true;
           show('game-overlay', false);
           show('skip-celebration', true);
@@ -10496,7 +10518,17 @@ try {
       pendingAction = false;
       pendingPickup = false;
     }
-    if (celebrationActive && !painter.celebrationStatus?.active) {
+    if (celebrationActive)
+      winRevealAge = advanceRewardAge(
+        winRevealAge,
+        elapsed,
+        document.hidden || !document.hasFocus() || dialogOpen(),
+      );
+    if (
+      celebrationActive &&
+      winRevealAge >= REWARD_BOARD_SECONDS &&
+      !painter.celebrationStatus?.active
+    ) {
       enjoyCompletedPicture();
     }
     sound.feedback(!paused && started, theme, run, {
@@ -12549,6 +12581,7 @@ try {
   demoHost = attachDemoHost({
     presets,
     audio: demoAudio,
+    audioMaster,
     getContext: () => ({
       entries: executionEntries(),
       library,

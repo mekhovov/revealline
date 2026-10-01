@@ -69,6 +69,7 @@ export function createVictoryStoryPresentation({
   muted = false,
   reducedMotion = false,
   autoplay = false,
+  cinematicTransition = false,
   timeoutMs = VICTORY_STORY_LIMITS.timeoutMs,
   onChange = () => {},
   signal,
@@ -203,11 +204,22 @@ export function createVictoryStoryPresentation({
     if (disposed) return;
     // Native browsers can blur an active control immediately when it is hidden
     // or disabled. Remember ownership before updating its availability.
+    const previousState = element.dataset.state;
     element.dataset.state = state;
     const focused = document.activeElement;
     const showing = state === 'playing' || state === 'paused' || state === 'starting';
-    posterElement.hidden = showing;
-    if (media) media.hidden = !showing;
+    // Keep the exact poster underneath until a decoded video actually plays.
+    posterElement.hidden = cinematicTransition ? false : showing;
+    if (media) {
+      media.hidden = cinematicTransition ? !['playing', 'paused'].includes(state) : !showing;
+      if (
+        cinematicTransition &&
+        state === 'playing' &&
+        previousState !== 'playing' &&
+        !reducedMotion
+      )
+        media.animate?.([{ opacity: 0 }, { opacity: 1 }], { duration: 650, easing: 'ease-out' });
+    }
     buttons.play.hidden = hasPlayed && state === 'poster';
     localizedText(buttons.play, () =>
       state === 'paused' ? t('interface:resumeStory') : t('common:actions.playback'),

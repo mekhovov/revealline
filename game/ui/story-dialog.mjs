@@ -172,6 +172,7 @@ export function createStoryDialog({
         ...initial,
         audioMaster,
         autoplay,
+        cinematicTransition: immersive,
         onChange(snapshot) {
           if (!current()) return;
           neutralize();

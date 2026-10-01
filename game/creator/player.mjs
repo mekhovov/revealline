@@ -1,9 +1,10 @@
 import {
-  createCelebration,
-  advanceCelebration,
-  celebrationFrame,
-  drawCelebration,
-} from '../ui/celebration.mjs';
+  REWARD_BOARD_SECONDS,
+  REWARD_STORY_SECONDS,
+  advanceRewardAge,
+  animateRewardArrival,
+} from '../ui/reward-arrival.mjs';
+import { advanceCelebration, celebrationFrame, drawCelebration } from '../ui/celebration.mjs';
 import { createCreatorStore, loadInstalledCreatorBundle } from './installed.mjs';
 import {
   createCreatorRuntime,
@@ -57,6 +58,8 @@ let runtime,
   pictureSha256,
   storyPlayer,
   earnedCelebration,
+  pendingReward = null,
+  presentingReward = false,
   startMissionId = null,
   nextMissionId = null,
   activationEpoch = 0;
@@ -68,6 +71,7 @@ const playerMenu = attachCreatorPlayerMenu({
     ready: !!runtime,
     paused,
     ended,
+    presenting: presentingReward,
     savedRaw,
     pack,
     attempt: runtime?.current(),
@@ -223,6 +227,7 @@ async function showEarned(preferredMissionId = null) {
   }
   $('earned-picture').src = pictureURL;
   $('earned-picture').alt = picture.alt;
+  await $('earned-picture').decode?.();
   if ($('earned-picture').parentElement !== $('creator-story-stage'))
     $('creator-story-stage').replaceChildren($('earned-picture'));
   localizedText($('earned-caption'), () =>
@@ -246,6 +251,8 @@ function setEarnedView(active) {
   document.querySelector('.touch-controls').inert = active;
 }
 async function adoptDisplay(attempt, running, epoch) {
+  pendingReward = null;
+  presentingReward = false;
   setEarnedView(false);
   storyPlayer?.reset();
   painter.setLevel(attempt.run.level, { seed: attempt.run.seed });
@@ -280,6 +287,7 @@ async function adoptDisplay(attempt, running, epoch) {
   }
 }
 async function finish() {
+  presentingReward = runtime.current().run.status === 'won';
   ended = true;
   paused = true;
   busy = true;
@@ -312,20 +320,12 @@ async function finish() {
         ),
       );
       if (earned) {
-        setEarnedView(true);
-        earnedCelebration = createCelebration({
-          levelId: missionId,
-          seed: runtime.current().run.seed,
-          reduced: document.body.dataset.effects === 'reduced',
-        });
-        $('earned-continue').focus({ preventScroll: true });
-        void storyPlayer.show({
-          receipt,
-          posterElement: earned.posterElement,
-          posterAsset: earned.posterAsset,
-        });
+        $('earned').hidden = true;
+        pendingReward = { run: runtime.current().run, age: 0, receipt, earned, expanded: false };
       }
     } catch (error) {
+      presentingReward = false;
+      pendingReward = null;
       fail(error);
     }
   } else status(localizedMessage('interface:creator.tryAnotherCrossing'));
@@ -373,6 +373,38 @@ function frame(time) {
       persistAttempt();
     }
   }
+  if (pendingReward) {
+    const reward = pendingReward;
+    if (reward.run !== attempt.run) pendingReward = null;
+    else {
+      reward.age = advanceRewardAge(
+        reward.age,
+        dt,
+        document.hidden || !document.hasFocus() || !!document.querySelector('dialog[open]'),
+      );
+      if (!reward.expanded && reward.age >= REWARD_BOARD_SECONDS) {
+        const from = $('board').getBoundingClientRect();
+        reward.expanded = true;
+        $('earned').hidden = false;
+        setEarnedView(true);
+        earnedCelebration = { ...painter.celebration };
+        animateRewardArrival(
+          $('earned-picture'),
+          from,
+          document.body.dataset.effects === 'reduced',
+        );
+        $('earned-continue').focus({ preventScroll: true });
+      }
+      if (reward.age >= REWARD_STORY_SECONDS) {
+        pendingReward = null;
+        void storyPlayer.show({
+          receipt: reward.receipt,
+          posterElement: reward.earned.posterElement,
+          posterAsset: reward.earned.posterAsset,
+        });
+      }
+    }
+  }
   if (document.body.dataset.earnedView === 'on') {
     const canvas = $('earned-confetti');
     if (canvas.width !== window.innerWidth) canvas.width = window.innerWidth;
@@ -395,6 +427,8 @@ function frame(time) {
   }
   painter.draw($('board').getContext('2d'), attempt.run, dt, {
     paused,
+    celebrationPaused:
+      document.hidden || !document.hasFocus() || !!document.querySelector('dialog[open]'),
     reduced: document.body.dataset.effects === 'reduced',
     fullReveal: attempt.run.status === 'won',
     backdrop: attempt.picture,
@@ -436,8 +470,11 @@ $('pause').onclick = () => {
   else pause();
 };
 $('earned-continue').onclick = () => {
+  pendingReward = null;
+  presentingReward = false;
   storyPlayer?.reset();
   setEarnedView(false);
+  updateControls();
   $('next').focus({ preventScroll: true });
 };
 $('next').onclick = () => {

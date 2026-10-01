@@ -304,3 +304,59 @@
     margin: 0;
   }
 }
+
+/* The won board keeps its position first, then becomes the earned-media stage. */
+#demo-dialog[data-reward='expanded'] .demo-board {
+  position: absolute;
+  inset: 0;
+  border: 0;
+}
+#demo-dialog[data-reward='expanded'] .demo-header {
+  z-index: 2;
+  align-self: start;
+  background: #101a28cc;
+  border-radius: 12px;
+  padding: 8px;
+}
+#demo-dialog[data-reward='expanded'] .demo-panel {
+  z-index: 2;
+  align-self: end;
+  max-height: 45vh;
+  background: #101a28dd;
+  border-radius: 12px;
+  padding: 12px;
+}
+.demo-reward-story,
+.demo-reward-story .victory-story {
+  position: absolute;
+  inset: 0;
+}
+.demo-reward-story > canvas,
+.demo-reward-story video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+.demo-reward-story .story-controls {
+  position: absolute;
+  z-index: 1;
+  bottom: 16px;
+  left: 16px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  max-width: calc(100% - 32px);
+  padding: 8px;
+  background: #101a28ed;
+  border-radius: 12px;
+}
+.demo-reward-story .story-description,
+.demo-reward-story .story-notice {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+}

@@ -245,8 +245,8 @@ export function attachCreatorPlayerMenu({
     if (disposed) return;
     const state = getState(),
       running = state.ready && !state.paused && !state.ended;
-    home.hidden = running;
-    $('creator-game').hidden = !running && !state.ended;
+    home.hidden = running || !!state.presenting;
+    $('creator-game').hidden = !running && !state.ended && !state.presenting;
     const earnedParent = state.ended ? $('creator-game') : $('creator-panel-data');
     if ($('earned').parentNode !== earnedParent) earnedParent.append($('earned'));
     doc.body.dataset.creatorPlayerState = state.busy

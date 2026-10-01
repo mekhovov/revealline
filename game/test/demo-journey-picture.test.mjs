@@ -117,7 +117,6 @@ test('the retained first-earned original survives a later legitimate win and ano
     runId: 'later-standard-run',
     gameplayId: 'later-exact-gameplay',
     difficulty: 'standard',
-    bestStars: 3,
   };
   const picture = await resolveDemoJourneyPicture(f.request);
   assert.equal(picture.pictureVisibility, 'clear');
