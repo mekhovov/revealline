@@ -23,7 +23,36 @@
   },
   "limitations": [
     "Instrumented graph verification is not an acoustic listening assessment or actual browser autoplay qualification.",
-    "Actual browser UI verification is performed separately. Physical hardware sound quality is unmeasured.",
+    "Actual browser UI and cross-view persistence observations are recorded separately below. Physical hardware sound quality is unmeasured.",
     "No new unit-test suite added; additional unit coverage remains deferred."
-  ]
+  ],
+  "browserObservations": {
+    "featureHead": "34da5274f",
+    "observer": "parent agent using approved browser controls",
+    "sourceURL": "http://127.0.0.1:8791/optional-practice/fpv-worlds/index.html",
+    "checks": {
+      "oneSettingsMasterControl": true,
+      "enAndUkThreeAccessibleSliders": true,
+      "settingsMixerFitsScrollingPanel": true,
+      "persistedAfterReload": {
+        "interface": 99,
+        "motor": 0,
+        "ambience": 99
+      },
+      "worldInterfaceHomeZeroObservedInAcademy": true,
+      "academyInterfaceEndHundredObservedInWorldStudio": true,
+      "masterMutedThroughout": true,
+      "allVolumesRestoredToHundred": true,
+      "browserErrors": 0,
+      "browserWarnings": 0
+    },
+    "localScreenshot": {
+      "path": "/tmp/fpv-audio-controls-uk.jpg",
+      "retention": "Local verification artifact; not a bundled application asset",
+      "sha256": "bfb382fded413355140e64330c9b5a4549d6540aa80982e1d31cd4d7482436ea"
+    },
+    "limitations": [
+      "No audible perception, acoustic quality or physical hardware qualification is claimed."
+    ]
+  }
 }
