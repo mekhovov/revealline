@@ -19,7 +19,7 @@ export async function buildWorldsPlaytest({
   const entry = 'optional-practice/fpv-worlds/index.html';
   await writeFile(
     path.join(out, 'index.html'),
-    '<!doctype html><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>FPV Worlds playtest</title><style>body{font:20px system-ui;background:#102329;color:#eff8eb;padding:10vw}a{color:#c8ed96}</style><h1>FPV World Studio</h1><p>60 challenges · 8 worlds · Your own routes</p><p><a href="./' +
+    '<!doctype html><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>FPV Worlds playtest</title><style>body{font:20px system-ui;background:#102329;color:#eff8eb;padding:10vw}a{color:#c8ed96}</style><h1>FPV World Studio</h1><p>14 beginner lessons · 60 world challenges · 8 worlds · Your own routes</p><p><a href="./' +
       entry +
       '">Open the playtest</a></p><p><a href="./fpv-worlds-playtest.zip">Download the portable package</a></p><p>Serve this folder over localhost or HTTPS. Use World packs → Prepare simulator offline to install this exact build.</p>\n',
   );
