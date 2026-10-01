@@ -20,7 +20,7 @@ import { createRadioRuntime } from './radio-runtime.mjs';
 import { restoreVerifiedRadio } from './radio-session.mjs';
 import { mountRadioSetup } from './radio-setup.mjs';
 import { mountFlightFullscreen } from './flight-fullscreen.mjs';
-import { mountSimPresentation } from './sim-presentation.mjs';
+import { mountSimPresentation, mountDroneResponse } from './sim-presentation.mjs';
 import { createFlightInput } from './input.mjs';
 import { createFlightRenderer } from './renderer.mjs';
 import { COPY } from './copy.mjs';
@@ -154,6 +154,12 @@ export function mountFlightApp({
     ],
     stickDisplay: ['Live sticks', 'Стіки керування'],
     compact: ['Compact', 'Компактні'],
+    droneResponse: ['Drone response', 'Реакція дрона'],
+    learning: ['Learning', 'Навчальна'],
+    off: ['Off', 'Вимкнено'],
+    guideScale: ['Guide text', 'Текст схеми'],
+    standard: ['Standard', 'Стандартний'],
+    large: ['Large', 'Збільшений'],
     expanded: ['Expanded', 'Збільшені'],
     done: ['Done', 'Готово'],
     keyboardGuide: ['Keyboard controls', 'Клавіатура'],
@@ -184,10 +190,36 @@ export function mountFlightApp({
     onSoundChange: updateSoundLabel,
   });
   updateSoundLabel(presentation.soundEnabled());
+  const droneResponse = mountDroneResponse({
+    root: $('academy-drone-response'),
+    window: win,
+    onHide: () => {
+      $('academy-drone-guide').value = 'off';
+      saveGuidePreferences();
+      paint(true);
+    },
+  });
+  const saveGuidePreferences = () => {
+    try {
+      win.localStorage?.setItem(
+        'revealline.fpv.academy-guide.v1',
+        JSON.stringify({
+          display: $('academy-drone-guide').value,
+          scale: $('academy-guide-scale').value,
+        }),
+      );
+    } catch {
+      /* The guide is usable without storage. */
+    }
+  };
   try {
     const saved = win.localStorage?.getItem('revealline.fpv.academy-sticks.v1');
     if (['compact', 'expanded'].includes(saved) && $('academy-stick-display'))
       $('academy-stick-display').value = saved;
+    const guide = JSON.parse(win.localStorage?.getItem('revealline.fpv.academy-guide.v1') ?? '{}');
+    if (['compact', 'learning', 'off'].includes(guide.display))
+      $('academy-drone-guide').value = guide.display;
+    if (['standard', 'large'].includes(guide.scale)) $('academy-guide-scale').value = guide.scale;
   } catch {
     /* Display preferences remain available for this session. */
   }
@@ -519,6 +551,16 @@ export function mountFlightApp({
         : Object.fromEntries(FLIGHT_CONTROLS.map((key) => [key, values[key] / 1000])),
       stickMode = radioPreview?.stickMode ?? 2,
       layout = STICK_LAYOUTS[stickMode];
+    droneResponse.update({
+      state,
+      controls: monitor ?? neutralFlightInput(),
+      source: replay ? 'recording' : input.owner(),
+      unavailable: !replay && input.owner() === 'radio' && !radioPreview?.controls,
+      locale,
+      mode,
+      display: $('academy-drone-guide').value,
+      scale: $('academy-guide-scale').value,
+    });
     $('sticks').setAttribute(
       'aria-label',
       `${locale === 'uk' ? 'Органи керування' : 'Flight controls'} · Mode ${stickMode}`,
@@ -706,6 +748,11 @@ export function mountFlightApp({
     await presentation.setSoundEnabled(!presentation.soundEnabled());
     updateSoundLabel(presentation.soundEnabled());
   });
+  for (const id of ['academy-drone-guide', 'academy-guide-scale'])
+    listen($(id), 'change', () => {
+      saveGuidePreferences();
+      paint(true);
+    });
   listen($('arm'), 'click', arm);
   listen(win, 'blur', () => {
     focused = false;
@@ -930,6 +977,7 @@ export function mountFlightApp({
       renderer.dispose();
       immersive.dispose();
       presentation.dispose();
+      droneResponse.dispose();
       for (const remove of listeners) remove();
       for (const button of courseButtons) {
         button.onclick = null;

@@ -495,8 +495,16 @@
         <label
           ><span data-i18n="droneGuideLabel">Drone response</span
           ><select id="flight-drone-guide" aria-label="Drone response">
-            <option value="on" data-i18n="droneGuideOn">Schematic on</option>
+            <option value="compact" data-i18n="droneGuideOn">Compact</option>
+            <option value="learning" data-i18n="droneGuideLearning">Learning</option>
             <option value="off" data-i18n="droneGuideOff">Off</option>
+          </select></label
+        >
+        <label
+          ><span data-i18n="guideScale">Guide text</span
+          ><select id="flight-guide-scale">
+            <option value="standard" data-i18n="guideStandard">Standard</option>
+            <option value="large" data-i18n="guideLarge">Large</option>
           </select></label
         >
         <div class="camera-settings">
@@ -537,64 +545,7 @@
             <i aria-hidden="true"></i><span id="world-right-label"></span>
           </div>
         </div>
-        <aside id="flight-drone-response" class="flight-drone-response" aria-live="polite" hidden>
-          <div class="drone-response-heading">
-            <span data-i18n="droneGuideLabel">Drone response</span>
-            <button id="hide-drone-response" type="button" aria-label="Hide drone response">
-              ×
-            </button>
-          </div>
-          <svg
-            viewBox="0 0 180 116"
-            role="img"
-            aria-label="Schematic drone orientation and movement"
-          >
-            <defs>
-              <marker
-                id="drone-response-arrow"
-                viewBox="0 0 8 8"
-                refX="7"
-                refY="4"
-                markerWidth="5"
-                markerHeight="5"
-                orient="auto"
-              >
-                <path d="M0 0L8 4L0 8Z" />
-              </marker>
-            </defs>
-            <g class="response-altitude" aria-hidden="true">
-              <path d="M17 18V98" />
-              <path d="M12 22H22M12 94H22" />
-              <rect id="drone-response-altitude" x="11" y="88" width="12" height="7" rx="1" />
-            </g>
-            <g class="response-attitude" aria-hidden="true">
-              <rect x="40" y="14" width="126" height="84" rx="2" />
-              <g id="drone-response-horizon">
-                <path class="response-horizon" d="M38 57H168" />
-                <path class="response-horizon-ticks" d="M64 53V61M90 53V61M116 53V61M142 53V61" />
-              </g>
-              <g id="drone-response-plan" transform="translate(103 57)">
-                <path
-                  class="response-motion"
-                  id="drone-response-motion"
-                  d="M0 0V-28"
-                  marker-end="url(#drone-response-arrow)"
-                />
-                <path class="response-arm" d="M-25-19L25 19M25-19L-25 19" />
-                <circle class="response-motor" cx="-27" cy="-21" r="8" />
-                <circle class="response-motor" cx="27" cy="-21" r="8" />
-                <circle class="response-motor" cx="-27" cy="21" r="8" />
-                <circle class="response-motor" cx="27" cy="21" r="8" />
-                <rect class="response-body" x="-11" y="-18" width="22" height="36" rx="4" />
-                <path class="response-nose" d="M0-31L-6-20H6Z" />
-              </g>
-              <path class="response-level" d="M97 57H109M103 51V63" />
-            </g>
-          </svg>
-          <div class="drone-response-readout">
-            <strong id="drone-response-command"></strong><span id="drone-response-data"></span>
-          </div>
-        </aside>
+        <aside id="flight-drone-response" hidden></aside>
         <aside id="beginner-coach" hidden></aside>
         <div id="result-panel" class="result-panel" hidden></div>
       </section>
