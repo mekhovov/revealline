@@ -34,3 +34,12 @@ hashes and observed outcomes. This is not an acoustic listening assessment or
 actual browser autoplay qualification. Browser checks, package admission and
 physical sound-quality assessment are separate; additional unit coverage remains
 deferred to the final phase.
+
+Browser observations on the local source page (1 October 2026, parent-agent
+verification) confirmed the three English-labelled sliders and usable settings
+scrolling. Keyboard changes persisted after reload: interface 99%, motors 0%,
+ambience 99%; the master remained Sound off. Review found a duplicate master
+control in Settings because the existing flight sound button moves into that
+panel. The extra button was removed, preserving the existing shared control.
+These observations do not claim acoustic quality, physical sound measurement or
+Ukrainian browser acceptance.
