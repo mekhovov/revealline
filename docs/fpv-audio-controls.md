@@ -25,7 +25,7 @@ Setting interface volume to zero also stops existing short cues and prevents new
 cue voices. All added gain buses disconnect on disposal. No runtime dependency,
 asset, package limit or flight-model value was added or changed.
 
-Run `node scripts/qualify-fpv-audio-mix.mjs --output docs/evidence/fpv-audio-mix-20261001.json`
+Run `node scripts/qualify-fpv-audio-mix.mjs --output /tmp/fpv-audio-mix-candidate.json`
 for the functional graph qualification. It exercises production sound modules,
 rendered slider callbacks, source-to-bus routing, parameter changes, persistence,
 mute, pause, focus loss and disposal through an instrumented Web Audio boundary.
@@ -34,6 +34,13 @@ hashes and observed outcomes. This is not an acoustic listening assessment or
 actual browser autoplay qualification. Browser checks, package admission and
 physical sound-quality assessment are separate; additional unit coverage remains
 deferred to the final phase.
+
+The graph qualification was repeated after integrating the final graphics and
+Acro teaching branches; the receipt's source hashes bind that combined candidate.
+The integrated root browser also verified three settings sliders, one master
+mute, motor zero surviving reload, restoration to 100%, and successful shader
+preparation and start of the first Acro demonstration. Regenerate graph receipts
+separately from the committed human-readable browser observations.
 
 Browser verification of final feature head `34da5274f` on the local source page
 (1 October 2026, parent-agent verification) confirmed:
