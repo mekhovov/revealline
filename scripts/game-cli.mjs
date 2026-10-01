@@ -568,24 +568,6 @@ export function applyPublicationProfile(entries, catalogue, profile, optionalArt
   );
   if (!omittedGroups.length || !omittedPaths.size)
     fail('Main Pages profile found no exclusive unused authoring artwork to omit.');
-  // The rolling Pages channel is a playable product surface, not a co-hosted
-  // archive of authoring sources. Keep authoring-library originals in Git and
-  // complete release packages, but omit them from this bounded deployment.
-  const authoringLibraryPaths = new Set(
-    entries.filter((entry) => entry.name.startsWith('authoring/library/')).map((entry) => entry.name),
-  );
-  if (!authoringLibraryPaths.size)
-    fail('Main Pages profile found no authoring library to keep outside the rolling deployment.');
-  const runtimeReferences = entries.filter(
-    (entry) =>
-      /^(game|site|optional-practice)\//.test(entry.name) &&
-      entry.bytes.toString('utf8').includes('authoring/library/'),
-  );
-  if (runtimeReferences.length)
-    fail(
-      `Main Pages profile cannot omit authoring library referenced by runtime: ${runtimeReferences.map((entry) => entry.name).join(', ')}`,
-    );
-  for (const path of authoringLibraryPaths) omittedPaths.add(path);
   const retainedGroupIDs = new Set(retainedGroups.map((group) => group.id));
   if (catalogue.missions.some((mission) => mission.groups.some((id) => !retainedGroupIDs.has(id))))
     fail('Main Pages profile would orphan a mission download group.');
