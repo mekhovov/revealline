@@ -20,6 +20,7 @@ import { createRadioRuntime } from './radio-runtime.mjs';
 import { restoreVerifiedRadio } from './radio-session.mjs';
 import { mountRadioSetup } from './radio-setup.mjs';
 import { mountFlightFullscreen } from './flight-fullscreen.mjs';
+import { mountSimPresentation } from './sim-presentation.mjs';
 import { createFlightInput } from './input.mjs';
 import { createFlightRenderer } from './renderer.mjs';
 import { COPY } from './copy.mjs';
@@ -44,17 +45,23 @@ export function mountFlightApp({
     target.addEventListener(type, handler);
     listeners.push(() => target.removeEventListener(type, handler));
   };
-  if ($('worlds-button'))
-    $('worlds-button').hidden =
-      !fpvReturnURL(win.location.href) &&
-      !['localhost', '127.0.0.1', '[::1]'].includes(new URL(win.location.href).hostname);
-  if ($('worlds-button'))
-    listen($('worlds-button'), 'click', () => {
-      const target = new URL('../fpv-worlds/index.html', win.location.href);
-      const language = $('language')?.value;
-      if (language) target.searchParams.set('lang', language);
+  const pageURL = new URL(win.location.href);
+  // The source server hosts both simulators. A standalone Academy package does
+  // not contain World Studio; its explicit game-return link remains the exit.
+  const sourceWorlds =
+    ['localhost', '127.0.0.1', '[::1]'].includes(pageURL.hostname) &&
+    pageURL.pathname === '/optional-practice/civilian-fpv/index.html';
+  if ($('worlds-button') && sourceWorlds) {
+    const target = new URL('../fpv-worlds/index.html', pageURL);
+    $('worlds-button').href = target.href;
+    $('worlds-button').hidden = false;
+    listen($('worlds-button'), 'click', (event) => {
+      event.preventDefault();
+      pause();
+      target.searchParams.set('lang', $('language').value);
       win.location.href = target.href;
     });
+  }
   const gameReturn = fpvReturnURL(win.location.href);
   if (gameReturn && $('game-return')) {
     $('game-return').href = gameReturn;
@@ -129,7 +136,61 @@ export function mountFlightApp({
     'notebook-dialog',
     'studio-dialog',
   ];
-  const modalOpen = () => dialogIds.some((id) => $(id).open);
+  const modalOpen = () =>
+    dialogIds.some((id) => $(id).open) || Boolean($('academy-flight-options')?.open);
+  const shellCopy = {
+    academyBrand: ['SIM · ACADEMY', 'SIM · АКАДЕМІЯ'],
+    worlds: ['World Studio', 'Студія світів'],
+    drills: ['Drills', 'Вправи'],
+    notebook: ['Notebook', 'Записник'],
+    help: ['Flight guide', 'Довідник польоту'],
+    controls: ['Controls', 'Керування'],
+    radioSetup: ['Radio setup', 'Налаштувати пульт'],
+    flightOptions: ['Flight options', 'Параметри польоту'],
+    viewAndSound: ['View & sound', 'Вигляд і звук'],
+    optionsPause: [
+      'Your flight pauses while you adjust the view.',
+      'Поки ви змінюєте вигляд, політ на паузі.',
+    ],
+    stickDisplay: ['Live sticks', 'Стіки керування'],
+    compact: ['Compact', 'Компактні'],
+    expanded: ['Expanded', 'Збільшені'],
+    done: ['Done', 'Готово'],
+    keyboardGuide: ['Keyboard controls', 'Клавіатура'],
+    touchGuide: ['Touch controls', 'Сенсорне керування'],
+    flyingBasics: ['Flying basics', 'Основи польоту'],
+    yourFlights: ['Your flights', 'Ваші польоти'],
+    workshopAndOffline: ['Workshop & offline', 'Майстерня й автономний запуск'],
+    aboutModel: ['About this training model', 'Про навчальну модель'],
+  };
+  const updateSoundLabel = (enabled) => {
+    const button = $('academy-sound');
+    if (!button) return;
+    button.textContent =
+      locale === 'uk'
+        ? enabled
+          ? 'Звуки меню увімкнено'
+          : 'Звуки меню вимкнено'
+        : enabled
+          ? 'Menu sound on'
+          : 'Menu sound off';
+    button.setAttribute('aria-pressed', String(enabled));
+  };
+  const presentation = mountSimPresentation({
+    root: doc,
+    window: win,
+    enabled: false,
+    preferenceKey: 'revealline.fpv.academy-menu-sound.v1',
+    onSoundChange: updateSoundLabel,
+  });
+  updateSoundLabel(presentation.soundEnabled());
+  try {
+    const saved = win.localStorage?.getItem('revealline.fpv.academy-sticks.v1');
+    if (['compact', 'expanded'].includes(saved) && $('academy-stick-display'))
+      $('academy-stick-display').value = saved;
+  } catch {
+    /* Display preferences remain available for this session. */
+  }
   const inputAvailable = () => focused && doc.visibilityState !== 'hidden';
   const input = createFlightInput({
     window: win,
@@ -232,6 +293,7 @@ export function mountFlightApp({
       reviewAbort
     )
       return false;
+    immersive.closeControls();
     if (replay) {
       replay.paused = false;
       replay.flight.arm();
@@ -298,6 +360,7 @@ export function mountFlightApp({
         },
       });
     }
+    if ($('academy-flight-options')) $('academy-flight-options').open = false;
     $(id).showModal();
   }
   const copyProof = (inputProof) =>
@@ -378,8 +441,20 @@ export function mountFlightApp({
     $('language').value = locale;
     $('radio-setup-title').textContent = locale === 'uk' ? 'Налаштування пульта' : 'Radio setup';
     immersive.refresh();
+    for (const node of doc.querySelectorAll('[data-sim-copy]')) {
+      const values = shellCopy[node.dataset.simCopy];
+      if (values) node.textContent = values[locale === 'uk' ? 1 : 0];
+    }
+    presentation.refresh();
+    updateSoundLabel(presentation.soundEnabled());
     for (const node of doc.querySelectorAll('[data-copy]'))
       if (c()[node.dataset.copy]) node.textContent = c()[node.dataset.copy];
+    $('mode').options[0].textContent = locale === 'uk' ? 'Самовирівнювання' : 'Self-level';
+    $('mode').options[1].textContent = 'Acro';
+    $('academy-navigation')?.setAttribute(
+      'aria-label',
+      locale === 'uk' ? 'Розділи симулятора' : 'Simulator navigation',
+    );
     for (const button of courseButtons) button.onclick = null;
     courseButtons = courses.map((course, index) => {
       const button = doc.createElement('button'),
@@ -454,7 +529,10 @@ export function mountFlightApp({
         vertical = layout[i * 2 + 1],
         y = monitor ? (vertical === 'throttle' ? monitor.throttle * 2 - 1 : monitor[vertical]) : 0;
       dot.hidden = !monitor;
-      dot.style.transform = `translate(${(monitor?.[horizontal] ?? 0) * 22}px, ${-y * 22}px)`;
+      const expanded = $('academy-stick-display')?.value === 'expanded';
+      $('sticks').classList.toggle('expanded-sticks', expanded);
+      const radius = expanded ? 34 : 22;
+      dot.style.transform = `translate(${(monitor?.[horizontal] ?? 0) * radius}px, ${-y * radius}px)`;
     }
     if (input.owner() === 'touch') {
       $('touch-throttle').value = String(Math.round(values.throttle / 10));
@@ -528,7 +606,14 @@ export function mountFlightApp({
     // A queued rAF can carry a pre-stall timestamp. Check the actual callback
     // gap too, before accepting another input or advancing the fixed-step model.
     if (delta > 250 || executionDelta > 250) pause('focusLost');
-    if (!reviewAbort && inputAvailable() && !modalOpen() && renderer.available && !graphicsLost) {
+    if (
+      !reviewAbort &&
+      inputAvailable() &&
+      !modalOpen() &&
+      !immersive.snapshot().toolsOpen &&
+      renderer.available &&
+      !graphicsLost
+    ) {
       let radioInput = neutralFlightInput();
       if (!replay && input.owner() === 'radio') {
         if (!radio.status().active && now - lastRadioDiscovery >= 500) {
@@ -585,17 +670,58 @@ export function mountFlightApp({
   listen($('touch-throttle'), 'input', () =>
     input.throttle(Number($('touch-throttle').value) / 100),
   );
+  listen($('academy-flight-options'), 'toggle', () => {
+    if ($('academy-flight-options').open) pause();
+  });
+  const closeOptionsOnEscape = (event) => {
+    if (
+      event.key !== 'Escape' ||
+      !$('academy-flight-options').open ||
+      dialogIds.some((id) => $(id).open)
+    )
+      return;
+    event.preventDefault();
+    event.stopImmediatePropagation();
+    $('academy-flight-options').open = false;
+    $('academy-flight-options').querySelector('summary').focus();
+  };
+  doc.addEventListener('keydown', closeOptionsOnEscape, true);
+  listeners.push(() => doc.removeEventListener('keydown', closeOptionsOnEscape, true));
+  listen($('academy-close-options'), 'click', () => {
+    $('academy-flight-options').open = false;
+    $('academy-flight-options').querySelector('summary').focus();
+  });
+  listen($('academy-stick-display'), 'change', () => {
+    try {
+      win.localStorage?.setItem(
+        'revealline.fpv.academy-sticks.v1',
+        $('academy-stick-display').value,
+      );
+    } catch {
+      /* Display changes do not depend on storage availability. */
+    }
+    paint(true);
+  });
+  listen($('academy-sound'), 'click', async () => {
+    await presentation.setSoundEnabled(!presentation.soundEnabled());
+    updateSoundLabel(presentation.soundEnabled());
+  });
   listen($('arm'), 'click', arm);
   listen(win, 'blur', () => {
     focused = false;
+    presentation.pause();
     pause('focusLost');
   });
   listen(win, 'focus', () => {
     focused = true;
+    presentation.resume();
     if (!replay && !modalOpen()) restoreRadio();
   });
   listen(doc, 'visibilitychange', () => {
-    if (doc.visibilityState === 'hidden') pause('focusLost');
+    if (doc.visibilityState === 'hidden') {
+      presentation.pause();
+      pause('focusLost');
+    } else presentation.resume();
   });
   for (const id of ['camera', 'camera-help'])
     listen($(id), 'change', () => {
@@ -803,6 +929,7 @@ export function mountFlightApp({
       input.dispose();
       renderer.dispose();
       immersive.dispose();
+      presentation.dispose();
       for (const remove of listeners) remove();
       for (const button of courseButtons) {
         button.onclick = null;
@@ -819,6 +946,7 @@ export function mountFlightApp({
     // History caching retains this exact attempt and its resources, but releases
     // live input. Restoring the page must never resume or arm it automatically.
     suspended = true;
+    presentation.pause();
     focused = false;
     pause('focusLost');
     if (frameId !== null) win.cancelAnimationFrame(frameId);
@@ -827,6 +955,7 @@ export function mountFlightApp({
   listen(win, 'pageshow', (event) => {
     if (!event.persisted || disposed || !suspended) return;
     suspended = false;
+    presentation.resume();
     focused = typeof doc.hasFocus === 'function' ? doc.hasFocus() : true;
     lastTime = null;
     lastExecutionTime = null;
