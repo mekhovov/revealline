@@ -81,10 +81,10 @@ legacy green surfaces. Prioritize these R1/R3 corrections before further art.
 | Input and shell   | Larger labelled gimbals, main-game navy/amber/cyan tokens, keyboard/controller/radio menu navigation, fullscreen throughout menus/lessons/flight.          | 1–2 working days, parallel    | Every menu and nested dialog, select/range controls, neutral/release gates, EN/UK, mobile, fullscreen fallback. |
 | Publication       | Frozen package admission, committed-input/replay checks and packaged-browser acceptance; focused PR in native stack 902.                                   | After each verified increment | User playtest URL rebuilt; no claim of physical-radio or novice acceptance without observation.                 |
 
-The diagram remains an observer. A fixed camera behind the initial heading does
-not lock the drone's physics or hide Acro inversion; actual yaw can turn the nose
-toward the viewer. The amber front marker and start-heading reference explain
-that change. The lab advances only a separate unscored simulation; it never
+The diagram remains an observer. Its camera follows heading to keep the view
+behind the drone without locking physics or hiding Acro inversion. The amber
+front marker and rotating ground/start-heading reference distinguish yaw from
+bank. Near vertical, retain the last usable camera heading. The lab advances only a separate unscored simulation; it never
 arms or changes the paused lesson. Native fullscreen may require a pointer or
 keyboard gesture; controller activation must offer a clearly labelled full-window
 fallback when the browser rejects native fullscreen.
@@ -99,3 +99,17 @@ Research decisions:
 No additional unit coverage is introduced here. R7 and the original outstanding
 art, original demonstrations, main-game integration qualification and human/device
 acceptance remain in scope. Completion evidence belongs in the delivery log.
+
+### Implementation status — 2 October 2026
+
+The controls teaching, live controls lab, directional stick HUD, theme palette,
+SIM menu navigation and fullscreen increment is implemented in
+[#929](https://github.com/mekhovov/revealline/pull/929), following #926 in native
+stack #902. Its final refinement follows current heading to keep the camera
+behind the aircraft; real yaw stays visible against the ground reference.
+The independent Solo TX15 full-menu preset is in
+[#928](https://github.com/mekhovov/revealline/pull/928). See the latest delivery
+checkpoint and feature notes for qualification and exact publication heads.
+Existing holds, CI, protected merging and public deployment remain separate gates.
+Physical radio, unfamiliar-player and sustained hardware acceptance remain open.
+The R4–R7 art, original demonstration and qualification backlog is unchanged.

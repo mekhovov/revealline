@@ -446,6 +446,7 @@ export function mountBeginnerCoach({
     diagram?.update({
       state,
       detailScale: 1.5,
+      followHeading: true,
       controls: input,
       locale: lang(),
       unavailable: labMode === 'try' && labSource === 'radio' && !labRadioAvailable(),
@@ -576,8 +577,8 @@ export function mountBeginnerCoach({
     drawing.setAttribute(
       'aria-label',
       t(
-        'Drone seen from behind, nose facing away. Amber front and thrust; cyan actual movement.',
-        'Дрон ззаду, ніс спрямований від вас. Жовте — перед і тяга; блакитне — фактичний рух.',
+        'Rear view follows the drone’s heading; ground arrow shows the starting direction. Amber front and thrust; cyan actual movement. Full tilt and inversion remain visible.',
+        'Вигляд ззаду стежить за курсом дрона; стрілка на землі показує початковий напрямок. Жовте — перед і тяга; блакитне — фактичний рух. Нахил і переворот залишаються видимими.',
       ),
     );
     drawing.tabIndex = 0;
