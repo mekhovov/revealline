@@ -67,9 +67,48 @@ unchanged 96-file / 16-MiB policy. Its receipt is
 The unbound browser playtest has 87 files / 11,972,265 bytes; ZIP SHA-256 is
 `ef17da8be4d24d38a029bb157f5371006e47079d5e3b242ff0a4bfc6a104eae0`.
 
-The all-package qualification also identified an existing Academy source-count
-overflow: 63 runtime / 65 source files against its 64-file limit. Civilian Flight
-is 29 / 31 against 64. The coordinated package correction must pass before
-claiming all three packages admitted; no policy or retained source/license file
-was removed here. Actual browser startup, cancel/apply/focus and public deployment
-remain separate acceptance checks owned by the coordinating task.
+The first all-package attempt identified an existing Academy source-count
+overflow. The separately reviewed package correction, cherry-picked as
+`b79c04f18`, removes an unused presentation export and scopes the image wordmark
+to World Studio, which actually displays it. No file/byte allowance or required
+license was changed. Final all-package qualification at
+`b79c04f18486e29317e46a8ed0c6392d1cd4ab25` / tree
+`63bcb9a93266030e829078f2127fd76b3a123da9` passes two byte-identical builds,
+committed-input verification, admission and ZIP-member verification for all three:
+
+| Package         | Runtime / source files | Runtime bytes |
+| --------------- | ---------------------: | ------------: |
+| Civilian Flight |                29 / 31 |       404,021 |
+| FPV Academy     |                62 / 64 |     3,299,552 |
+| World Studio    |                94 / 96 |    12,106,613 |
+
+Final frozen receipt:
+`/tmp/fpv-reimport-all-admission-b79c04f18/optional-candidate-verification.json`.
+
+## Actual browser and exported-data verification
+
+The coordinating task used its actual in-app browser against localhost port 8792. The repaired main entry starts normally. Importing the local editable ZIP
+opens the authored project; identical reimport shows its review; Cancel retains
+the draft and the same source file can be chosen again. A changed source previews
+the three changed semantic IDs; Apply visibly updates the actor to health 80 and
+position x = −6 m. The browser exported a real editable ZIP despite its automation
+download-event timeout.
+
+Independent archive inspection reopened that browser-written 8,589-byte file at
+`/Users/oleksandr.mekhovov/Downloads/reimport-yard.zip`. Its SHA-256 is
+`9792a349506266cb7d8756f3170ef85711fafa1a67561b1012e81d8568d41f0e`.
+The original local wall is byte-for-byte intact; spawn stays (0, 0, 12 m); both
+flight modes have the updated 6 m gate width and −1 direction; actor health is
+80 and position is (−6, 3, 0 m). The complete runtime course matches the expected
+reimport candidate, identity `2e1a143094a18f30`.
+
+The Ukrainian removed-source preview lists spawn-a, gate-a, actor-a and wall-a
+with explicit retained-content diagnostics. Focus starts on **Залишити поточну
+чернетку**; Escape dismisses the review with the current draft retained. The
+browser reported no console errors. A generic pre-existing importer warning
+still appears in English in that Ukrainian view; this is recorded separately
+from the localized reimport controls and preservation diagnostics.
+
+These are local functional/browser and package checks. Public deployment,
+physical-controller performance, novice acceptance and additional unit coverage
+are not claimed by this receipt.
