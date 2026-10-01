@@ -7,6 +7,7 @@
     <link rel="manifest" href="./app.webmanifest" />
     <title>FPV · World Studio</title>
     <link rel="stylesheet" href="../civilian-fpv/world-style.css" />
+    <link rel="stylesheet" href="../civilian-fpv/flight-fullscreen.css" />
     <script type="module" src="../civilian-fpv/world-app.mjs"></script>
   </head>
   <body>
@@ -267,7 +268,10 @@
     <dialog id="flight-dialog" class="flight-dialog">
       <header>
         <div><small id="flight-collection"></small><strong id="flight-title"></strong></div>
-        <button id="leave-flight" data-i18n="close">Close</button>
+        <div class="button-row">
+          <button id="world-fullscreen" type="button">Fullscreen</button>
+          <button id="leave-flight" data-i18n="close">Close</button>
+        </div>
       </header>
       <div class="flight-controls">
         <select id="flight-mode" aria-label="Flight mode">
@@ -373,7 +377,7 @@
     </dialog>
     <dialog id="world-radio-dialog">
       <header>
-        <h2 data-i18n="setup">Controller setup</h2>
+        <h2 id="world-radio-title">Radio setup</h2>
         <button id="close-radio" data-i18n="close">Close</button>
       </header>
       <div id="world-radio-setup"></div>
