@@ -188,6 +188,7 @@
     "optional-practice/civilian-fpv/radio-guide.mjs",
     "optional-practice/civilian-fpv/flight-fullscreen.mjs",
     "optional-practice/civilian-fpv/flight-fullscreen.css",
+    "optional-practice/civilian-fpv/sim-presentation.mjs",
     "optional-practice/civilian-fpv/math.mjs",
     "optional-practice/civilian-fpv/rotation-table.mjs",
     "optional-practice/civilian-fpv/model.mjs",

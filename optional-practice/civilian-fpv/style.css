@@ -1,3 +1,4 @@
+@import url('../../game/ui/field-kit-tokens.css');
 :root {
   color-scheme: dark;
   font-family: ui-sans-serif, system-ui, sans-serif;
@@ -1031,4 +1032,642 @@ body.touch-mode #sticks {
 }
 #game-return[hidden] {
   display: none;
+}
+
+/* Shared FPV / LINE presentation. Fonts, icons and cues are supplied by the
+   bounded sim-presentation adapter from the main game's exact source assets. */
+body.field-kit {
+  --accent: var(--fk-amber);
+  --ink: var(--fk-text);
+  --muted: var(--fk-muted);
+  --line: var(--fk-line);
+  --panel: var(--fk-panel);
+  --bg: var(--fk-bg);
+  background: var(--fk-bg);
+  color: var(--fk-text);
+  font-family: var(--fk-font-ui);
+  font-size: 15px;
+  line-height: 1.5;
+  scrollbar-color: var(--fk-line) var(--fk-bg);
+}
+.field-kit :is(button, input, select, textarea, summary) {
+  font-family: var(--fk-font-ui);
+}
+.field-kit :is(button, .file-button, input, select, textarea) {
+  border-radius: 3px;
+  border-color: var(--fk-control-line);
+  background-color: var(--fk-panel-raised);
+  color: var(--fk-text);
+}
+.field-kit :is(button, .file-button) {
+  min-height: 44px;
+  font-size: 14px;
+  font-weight: 600;
+  transition:
+    background-color var(--fk-motion-fast),
+    border-color var(--fk-motion-fast);
+}
+.field-kit :is(button, .file-button):hover:not(:disabled) {
+  background-color: #253746;
+  border-color: var(--fk-cyan);
+}
+.field-kit .primary {
+  background: var(--fk-amber);
+  border-color: var(--fk-amber);
+  color: var(--fk-bg);
+}
+.field-kit .primary:hover:not(:disabled) {
+  background: #ffdb98;
+  border-color: #ffdb98;
+}
+.field-kit :is(button, a, input, select, textarea, summary):focus-visible {
+  outline: 2px solid var(--fk-cyan);
+  outline-offset: 4px;
+}
+.field-kit :is(h1, h2, h3) {
+  color: var(--fk-text);
+}
+.field-kit dialog {
+  background: var(--fk-panel);
+  color: var(--fk-text);
+  border: 1px solid var(--fk-line);
+  border-radius: 5px;
+  box-shadow: 0 24px 100px #0009;
+}
+.field-kit dialog::backdrop {
+  background: #03060ddd;
+}
+.field-kit dialog > header {
+  background: transparent;
+  border-bottom: 1px solid var(--fk-line);
+  padding-bottom: 16px;
+}
+.field-kit [data-menu-icon]::before {
+  content: '';
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  flex: 0 0 16px;
+  vertical-align: -2px;
+  margin-right: 10px;
+  background: currentColor;
+  mask: var(--native-menu-icon) center / contain no-repeat;
+  -webkit-mask: var(--native-menu-icon) center / contain no-repeat;
+}
+.field-kit .eyebrow {
+  color: var(--fk-cyan);
+  font-family: var(--fk-font-mono);
+  font-size: 11px;
+  letter-spacing: 0.14em;
+}
+.field-kit .radio-device-card,
+.field-kit .radio-monitor {
+  background: #0c1720;
+  border-color: var(--fk-line);
+  border-radius: 4px;
+}
+.field-kit .radio-setup {
+  color: var(--fk-text);
+}
+.field-kit .radio-step,
+.field-kit .radio-extra {
+  border-color: var(--fk-line);
+}
+.field-kit .radio-stick {
+  background: var(--fk-panel-raised);
+}
+.field-kit .radio-guide-heading h2 {
+  font-family: var(--fk-font-display);
+  font-weight: 400;
+}
+.field-kit .radio-primary {
+  background: var(--fk-amber);
+  color: var(--fk-bg);
+  border-color: var(--fk-amber);
+}
+.field-kit .radio-primary:hover:not(:disabled) {
+  background: #ffdb98;
+}
+.field-kit .flight-immersive-bar {
+  background: var(--fk-panel);
+  border-color: var(--fk-line);
+}
+.field-kit .flight-immersive-bar button {
+  min-height: 36px;
+}
+.field-kit [hidden] {
+  display: none !important;
+}
+@media (prefers-reduced-motion: reduce) {
+  .field-kit * {
+    scroll-behavior: auto !important;
+  }
+}
+.field-kit[data-effects='reduced'] * {
+  animation: none !important;
+  transition: none !important;
+  scroll-behavior: auto !important;
+}
+/* Academy shares the SIM shell; these rules only arrange its existing flight host. */
+.sim-academy #flight-app {
+  background: var(--fk-bg, #071527);
+  min-height: 600px;
+}
+.sim-academy .flight-header {
+  gap: 24px;
+  padding: 15px 24px;
+  background: var(--fk-bg, #071527);
+}
+.sim-academy .brand strong {
+  font-family: 'Reveal Line Pixel', monospace;
+  font-size: 21px;
+  font-weight: 400;
+  letter-spacing: -0.7px;
+  color: var(--fk-text, #f6f3e8);
+}
+.sim-academy .brand small {
+  margin-top: 4px;
+  font-family: 'Field Kit Mono', monospace;
+  letter-spacing: 2px;
+  font-size: 10px;
+  color: var(--fk-amber, #ffd64a);
+}
+.sim-academy .flight-header nav {
+  gap: 5px;
+}
+.sim-academy .flight-header nav > :is(button, a) {
+  display: inline-flex;
+  align-items: center;
+  min-height: 39px;
+  padding: 8px 10px;
+  text-decoration: none;
+  border: 1px solid transparent;
+  background: transparent;
+  color: var(--fk-muted, #a8b8cc);
+  font-size: 12px;
+}
+.sim-academy .flight-header nav > :is(button, a):hover {
+  color: var(--fk-text, #f6f3e8);
+  border-color: var(--fk-line, #33485e);
+  background: var(--fk-panel, #10243e);
+}
+.sim-academy .flight-header #language {
+  width: 65px;
+  font-size: 12px;
+}
+.sim-academy .flight-toolbar {
+  position: relative;
+  z-index: 10;
+  display: flex;
+  gap: 18px;
+  padding: 10px 24px;
+  background: var(--fk-panel, #10243e);
+  align-items: end;
+  flex-wrap: wrap;
+}
+.sim-academy .academy-input-controls {
+  display: flex;
+  gap: 10px;
+  align-items: end;
+}
+.sim-academy .academy-input-controls label {
+  margin: 0;
+  min-width: 0;
+  gap: 5px;
+}
+.sim-academy .flight-toolbar label:last-child {
+  margin-left: 0;
+}
+.sim-academy .academy-input-controls :is(button, select),
+.sim-academy .transport button {
+  min-height: 39px;
+  font-size: 12px;
+}
+.sim-academy .academy-input-controls #mode {
+  max-width: 180px;
+}
+.sim-academy .academy-input-controls #input-source {
+  max-width: 158px;
+}
+.sim-academy .transport {
+  gap: 6px;
+}
+.sim-academy .academy-options {
+  margin: 0 0 0 auto;
+}
+.sim-academy .academy-options > summary {
+  display: flex;
+  align-items: center;
+  min-height: 39px;
+  padding: 9px 11px;
+  border: 1px solid var(--fk-line, #33485e);
+  color: var(--fk-text, #f6f3e8);
+  background: var(--fk-bg, #071527);
+  font-size: 12px;
+  cursor: pointer;
+  list-style: none;
+}
+.sim-academy .academy-options > summary::-webkit-details-marker {
+  display: none;
+}
+.sim-academy .academy-options[open] > summary {
+  border-color: var(--fk-amber, #ffd64a);
+}
+.sim-academy .academy-options-panel {
+  position: absolute;
+  right: 20px;
+  top: calc(100% + 8px);
+  width: min(430px, calc(100vw - 32px));
+  max-height: min(460px, 70dvh);
+  overflow: auto;
+  border: 1px solid var(--fk-line, #58718a);
+  border-top: 3px solid var(--fk-amber, #ffd64a);
+  padding: 21px;
+  background: var(--fk-panel, #10243e);
+  box-shadow: 0 18px 48px #0008;
+}
+.sim-academy .academy-options-panel h2 {
+  margin: 0 0 8px;
+  font-size: 19px;
+}
+.sim-academy .academy-options-panel p {
+  margin: 0 0 18px;
+  color: var(--fk-muted, #a8b8cc);
+  font-size: 12px;
+}
+.sim-academy .academy-settings-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+.sim-academy .academy-settings-grid label {
+  margin: 0;
+}
+.sim-academy .academy-settings-grid input {
+  width: 100%;
+  min-width: 0;
+}
+.sim-academy #academy-close-options {
+  float: right;
+}
+.sim-academy .scene-heading {
+  top: 22px;
+  left: 24px;
+  max-width: 490px;
+}
+.sim-academy .scene-heading #course-number {
+  font-family: 'Field Kit Mono', monospace;
+  color: #ffe28a;
+  font-size: 11px;
+}
+.sim-academy .scene-heading h1 {
+  font-size: clamp(22px, 2.4vw, 34px);
+  margin: 9px 0;
+}
+.sim-academy .scene-heading #brief {
+  font-size: 13px;
+  line-height: 1.5;
+}
+.sim-academy .telemetry {
+  right: 24px;
+  padding: 12px 15px;
+  border-left: 2px solid var(--fk-amber, #ffd64a);
+  background: #071527ba;
+  font-family: 'Field Kit Mono', monospace;
+  font-size: 11px;
+}
+.sim-academy .coaching {
+  bottom: 18px;
+  border: 1px solid #a8b8cc40;
+  border-radius: 2px;
+  background: #071527e8;
+  width: min(680px, calc(100% - 32px));
+}
+.sim-academy .coaching #target {
+  color: #f6f3e8;
+}
+.sim-academy .coaching #status {
+  color: #bed0e0;
+  font-size: 12px;
+}
+.sim-academy #sticks {
+  left: 24px;
+  bottom: 128px;
+  gap: 14px;
+}
+.sim-academy #sticks.expanded-sticks > div {
+  width: 84px;
+  height: 84px;
+}
+.sim-academy #complete {
+  border-radius: 3px;
+  background: #071527f5;
+  border-color: var(--fk-amber, #ffd64a);
+}
+.sim-academy .academy-footer {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 10px 24px;
+  background: var(--fk-bg, #071527);
+}
+.sim-academy .academy-footer-actions {
+  display: flex;
+  gap: 8px;
+}
+.sim-academy .academy-footer button {
+  min-height: 38px;
+  font-size: 12px;
+}
+.sim-academy .academy-key-guide {
+  margin: 0;
+  max-width: 68%;
+  font-size: 12px;
+}
+.sim-academy .academy-key-guide summary {
+  color: var(--fk-muted, #a8b8cc);
+  cursor: pointer;
+}
+.sim-academy .academy-key-guide p {
+  font-size: 12px;
+  line-height: 1.6;
+}
+.sim-academy .academy-guide {
+  width: min(820px, 94vw);
+}
+.sim-academy .academy-guide-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 28px;
+}
+.sim-academy .academy-guide-grid > section {
+  min-width: 0;
+}
+.sim-academy .academy-guide h3 {
+  margin: 0 0 14px;
+  color: var(--fk-amber, #ffd64a);
+  font-size: 15px;
+}
+.sim-academy .academy-guide p {
+  color: var(--fk-muted, #a8b8cc);
+  font-size: 13px;
+  line-height: 1.65;
+}
+.sim-academy .academy-guide details {
+  margin: 18px 0;
+}
+.sim-academy .academy-guide summary {
+  font-size: 13px;
+  cursor: pointer;
+}
+.sim-academy .academy-guide :is(button, .file-label) {
+  margin-bottom: 10px;
+}
+.sim-academy .course-list button {
+  text-align: left;
+  border-radius: 3px;
+}
+.sim-academy .course-list button:focus-visible {
+  border-color: var(--fk-amber, #ffd64a);
+}
+html[data-fpv-immersive='academy'] .sim-academy .flight-toolbar {
+  overflow: visible;
+}
+html[data-fpv-immersive='academy'] .sim-academy .academy-options-panel {
+  top: calc(100% + 2px);
+}
+html[data-fpv-immersive='academy']
+  .sim-academy
+  [data-immersive-controls='true']
+  .academy-input-controls {
+  display: flex;
+}
+html[data-fpv-immersive='academy'] .sim-academy [data-immersive-controls='true'] .academy-options {
+  display: block;
+}
+@media (max-width: 900px) {
+  .sim-academy .flight-header {
+    padding: 12px 16px;
+    gap: 15px;
+    flex-wrap: wrap;
+  }
+  .sim-academy .flight-header nav {
+    flex: 1;
+  }
+  .sim-academy .flight-toolbar {
+    padding: 10px 16px;
+    gap: 10px;
+  }
+}
+@media (max-width: 620px) {
+  .sim-academy .flight-header {
+    gap: 8px;
+  }
+  .sim-academy .brand {
+    width: 100%;
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+  }
+  .sim-academy .brand strong {
+    font-size: 19px;
+  }
+  .sim-academy .brand small {
+    font-size: 9px;
+  }
+  .sim-academy .flight-header nav {
+    width: 100%;
+    gap: 2px;
+  }
+  .sim-academy .flight-header nav > :is(button, a) {
+    font-size: 11px;
+    padding: 7px;
+    min-height: 35px;
+  }
+  .sim-academy .flight-header nav [data-sim-icon]::before {
+    display: none;
+  }
+  .sim-academy .flight-toolbar {
+    gap: 9px;
+    padding: 9px 12px;
+  }
+  .sim-academy .academy-input-controls {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr auto;
+    gap: 7px;
+  }
+  .sim-academy .academy-input-controls label > span {
+    font-size: 10px;
+  }
+  .sim-academy .academy-input-controls :is(button, select) {
+    font-size: 11px;
+    padding: 7px;
+    width: 100%;
+    max-width: none !important;
+  }
+  .sim-academy #setup {
+    max-width: 117px !important;
+  }
+  .sim-academy #setup::before {
+    display: none;
+  }
+  .sim-academy .transport {
+    gap: 5px;
+    flex: 1;
+  }
+  .sim-academy .transport button {
+    font-size: 11px;
+    padding: 7px;
+    min-height: 36px;
+  }
+  .sim-academy .transport button::before {
+    display: none;
+  }
+  .sim-academy .academy-options > summary {
+    padding: 8px;
+    min-height: 36px;
+    font-size: 11px;
+  }
+  .sim-academy .academy-options > summary::before {
+    display: none;
+  }
+  .sim-academy .academy-options-panel {
+    right: 12px;
+    width: calc(100vw - 24px);
+  }
+  .sim-academy .scene-heading {
+    top: 14px;
+    left: 14px;
+    right: 120px;
+    max-width: none;
+  }
+  .sim-academy .scene-heading h1 {
+    font-size: 21px;
+  }
+  .sim-academy .scene-heading #course-number {
+    font-size: 9px;
+  }
+  .sim-academy .scene-heading #brief {
+    font-size: 11px;
+  }
+  .sim-academy .telemetry {
+    top: 14px;
+    right: 12px;
+    font-size: 9px;
+    padding: 8px;
+  }
+  .sim-academy .coaching {
+    bottom: 12px;
+    padding: 8px 10px;
+  }
+  .sim-academy .coaching p {
+    font-size: 11px;
+  }
+  .sim-academy .coaching #status {
+    font-size: 10px;
+  }
+  .sim-academy #sticks {
+    left: 14px;
+    bottom: 148px;
+  }
+  .sim-academy .academy-footer {
+    padding: 8px 12px;
+    gap: 8px;
+  }
+  .sim-academy .academy-footer button {
+    font-size: 11px;
+    padding: 7px 9px;
+  }
+  .sim-academy .academy-key-guide {
+    max-width: 50%;
+    font-size: 11px;
+  }
+  .sim-academy .academy-guide-grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+}
+@media (max-height: 500px) and (orientation: landscape) {
+  .sim-academy #flight-app {
+    min-height: 100svh;
+  }
+  .sim-academy .flight-header {
+    padding-block: 7px;
+  }
+  .sim-academy .flight-toolbar {
+    padding-block: 5px;
+  }
+  .sim-academy .academy-options-panel {
+    max-height: 65dvh;
+  }
+}
+
+/* Preserve labelled controls after the legacy mobile simplification rules. */
+.sim-academy .brand small {
+  display: block;
+}
+.sim-academy .flight-toolbar label:last-child {
+  display: grid;
+}
+.sim-academy .flight-toolbar label > span {
+  display: block;
+  position: static;
+  width: auto;
+  height: auto;
+  clip-path: none;
+  overflow: visible;
+}
+.sim-academy .transport {
+  order: 0;
+  width: auto;
+}
+@media (max-height: 500px) and (orientation: landscape) {
+  .sim-academy .academy-options-panel {
+    position: fixed;
+    top: 52px;
+    bottom: 12px;
+    right: 16px;
+    height: auto;
+    max-height: none;
+  }
+  html[data-fpv-immersive='academy'] .sim-academy .academy-options-panel {
+    top: 52px;
+  }
+}
+@media (max-width: 620px) {
+  .sim-academy .flight-header {
+    position: relative;
+  }
+  .sim-academy .brand small {
+    margin-right: 72px;
+    letter-spacing: 1px;
+  }
+  .sim-academy .flight-header #language {
+    position: absolute;
+    top: 9px;
+    right: 12px;
+    min-height: 33px;
+  }
+  .sim-academy .flight-header nav #fullscreen {
+    font-size: 0;
+    min-width: 34px;
+    padding: 8px;
+    margin-left: auto;
+  }
+  .sim-academy .flight-header nav #fullscreen::before {
+    display: block;
+    margin: 0;
+    width: 16px;
+    height: 16px;
+  }
+}
+.field-kit input[type='range'] {
+  accent-color: var(--fk-cyan);
+}
+.field-kit input[type='checkbox'] {
+  accent-color: var(--fk-amber);
 }

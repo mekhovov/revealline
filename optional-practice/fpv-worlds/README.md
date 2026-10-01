@@ -67,3 +67,22 @@ unfamiliar-player and medal tuning, external asset curation/art polish, measured
 desktop/mobile performance budgets, controller/browser qualification, broader
 creator usability studies and the final content/backup/recovery acceptance matrix.
 Refer to [implementation status](../../docs/fpv-worlds-implementation.md).
+
+## Shared game interface assets
+
+The simulator's game shell uses the main game's Field Kit tokens and semantic
+icons, Exo 2 and Departure Mono fonts, FPV / LINE wordmark and three short menu
+cues. Shared font notices, selected sound sources and the exact-byte refresh
+command accompany the bundled `../civilian-fpv/README.md`. The original main-game
+font and sound bytes are embedded in `sim-presentation.mjs` to preserve the
+legacy package's source-file limit.
+
+The home screen additionally reuses the main game's original FPV hangar artwork:
+`game/ui/art/menu-scenes/fpv.webp` (514,190 bytes; SHA-256
+`19f43cb1602e59a692d416d36d715e664765eecc24784b3b3e6516651c53df45`) and
+`fpv-portrait.webp` (482,136 bytes; SHA-256
+`3d651795fa7623b0200fadaed05a1127109a9c9c6cbd44d183a92a8e12c2ee24`).
+These are lossless WebP preparations of the project's original generated
+landscape and portrait hangar art; source and processing records are retained in
+`game/ui/art/menu-scenes/provenance.json`. Art is decorative and never changes
+flight visibility, collision, objective geometry or replay behavior.
