@@ -1380,137 +1380,18 @@ html:not([data-fpv-immersive])
   font-family: var(--fk-font-mono);
   font-size: 12px;
 }
-.sim-worlds .flight-drone-response {
-  position: absolute;
-  z-index: 5;
-  top: 61px;
-  right: 16px;
-  width: 180px;
-  box-sizing: border-box;
-  padding: 8px 9px 7px;
-  color: #dceae4;
-  background: #071116d9;
-  border: 1px solid #5c7475;
-  border-top: 2px solid var(--fk-cyan);
-  box-shadow: 0 10px 30px #0005;
-  font-family: var(--fk-font-mono);
-  pointer-events: none;
+.sim-worlds .learning-flight:has(.beginner-coach[data-stage='guide']) .sim-drone-response,
+.sim-worlds #world-viewport:has(.result-panel:not([hidden])) .sim-drone-response {
+  visibility: hidden;
 }
-.sim-worlds .drone-response-heading {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 5px;
-  color: var(--fk-cyan);
-  font-size: 9px;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
+.sim-worlds .learning-flight:has(.beginner-coach[data-stage='live']) .sim-drone-response {
+  top: auto;
+  bottom: 154px;
 }
-.sim-worlds .drone-response-heading button {
-  width: 18px;
-  min-height: 18px;
-  padding: 0;
-  border: 0;
-  background: transparent;
-  color: #9eaaa7;
-  font: 18px/14px var(--fk-font-mono);
-  opacity: 0.7;
-  pointer-events: auto;
-}
-.sim-worlds .drone-response-heading button:hover,
-.sim-worlds .drone-response-heading button:focus-visible {
-  color: var(--fk-amber);
-  opacity: 1;
-}
-.sim-worlds .flight-drone-response svg {
-  display: block;
-  width: 100%;
-  height: auto;
-}
-.sim-worlds .response-altitude {
-  stroke: #829391;
-  stroke-width: 1;
-  fill: none;
-}
-.sim-worlds .response-altitude rect {
-  fill: var(--fk-amber);
-  stroke: none;
-  transition: y 120ms linear;
-}
-.sim-worlds .response-attitude rect {
-  fill: #0c2024;
-  stroke: #3f5a5e;
-  stroke-width: 1;
-}
-.sim-worlds .response-horizon {
-  stroke: #76979a;
-  stroke-width: 1;
-}
-.sim-worlds .response-horizon-ticks {
-  stroke: #607c7d;
-  stroke-width: 1;
-}
-.sim-worlds .response-arm {
-  stroke: #dceae4;
-  stroke-width: 4;
-  stroke-linecap: round;
-}
-.sim-worlds .response-motor {
-  fill: #152e31;
-  stroke: #87b9b3;
-  stroke-width: 1.4;
-}
-.sim-worlds .response-body {
-  fill: #c7dad4;
-  stroke: #effaf2;
-  stroke-width: 1;
-}
-.sim-worlds .response-nose {
-  fill: var(--fk-amber);
-}
-.sim-worlds .response-level {
-  stroke: var(--fk-cyan);
-  stroke-width: 1.5;
-}
-.sim-worlds .response-motion {
-  fill: none;
-  stroke: var(--fk-amber);
-  stroke-width: 1.5;
-  opacity: 0.08;
-  transition: opacity 120ms linear;
-}
-.sim-worlds .response-motion.is-moving {
-  opacity: 1;
-}
-.sim-worlds .response-motion path {
-  fill: var(--fk-amber);
-}
-.sim-worlds .flight-drone-response[data-command='pitch'] .response-nose,
-.sim-worlds .flight-drone-response[data-command='roll'] .response-arm,
-.sim-worlds .flight-drone-response[data-command='yaw'] .response-body,
-.sim-worlds .flight-drone-response[data-command='throttle'] .response-altitude rect {
-  filter: drop-shadow(0 0 3px var(--fk-amber));
-}
-.sim-worlds .drone-response-readout {
-  display: grid;
-  gap: 3px;
-  margin-top: 5px;
-  line-height: 1.35;
-}
-.sim-worlds .drone-response-readout strong {
-  color: #ecf6e8;
-  font-size: 9px;
-  font-weight: 600;
-}
-.sim-worlds .drone-response-readout span {
-  color: #aebfba;
-  font-size: 8px;
-}
-.sim-worlds .flight-drone-response.input-unavailable {
-  opacity: 0.52;
-}
-.sim-worlds .learning-flight:has(.beginner-coach:not([hidden])) .flight-drone-response {
-  display: none;
+@media (max-width: 600px), (max-height: 560px) {
+  .sim-worlds .learning-flight:has(.beginner-coach[data-stage='live']) .sim-drone-response {
+    bottom: 118px;
+  }
 }
 .sim-worlds .flight-brief p {
   background: #070b12ad;
@@ -3216,33 +3097,6 @@ html:not([data-fpv-immersive])
   color: var(--coach-muted);
   font-size: 24px;
   line-height: 1;
-}
-@media (max-width: 620px) {
-  .sim-worlds .flight-drone-response {
-    top: 42px;
-    right: 7px;
-    width: 146px;
-    padding: 6px 7px;
-  }
-  .sim-worlds .drone-response-heading {
-    font-size: 8px;
-  }
-  .sim-worlds .drone-response-readout strong {
-    font-size: 8px;
-  }
-  .sim-worlds .drone-response-readout span {
-    font-size: 7px;
-  }
-}
-@media (max-height: 560px) and (orientation: landscape) {
-  .sim-worlds .flight-drone-response {
-    top: 44px;
-    right: 8px;
-    width: 136px;
-  }
-  .sim-worlds .drone-response-readout {
-    display: none;
-  }
 }
 .sim-worlds .flight-dialog .coach-heading > div {
   flex: 1;

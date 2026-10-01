@@ -5,6 +5,239 @@ const fontOwners = new WeakMap();
 const cueNames = new Set(['focus', 'confirm', 'cancel']);
 const now = (win) => win.performance?.now?.() ?? Date.now();
 
+/** Read-only view: quaternion geometry and measured motion, never flight input. */
+export function mountDroneResponse({ root, window: win = globalThis.window, onHide = () => {} }) {
+  const doc = root.ownerDocument;
+  const ns = 'http://www.w3.org/2000/svg';
+  const node = (tag, className) => {
+    const value = doc.createElement(tag);
+    if (className) value.className = className;
+    return value;
+  };
+  const svg = (tag, attributes = {}) => {
+    const value = doc.createElementNS(ns, tag);
+    for (const [key, item] of Object.entries(attributes)) value.setAttribute(key, String(item));
+    return value;
+  };
+  const set = (element, value) => {
+    if (element.textContent !== value) element.textContent = value;
+  };
+  root.classList.add('sim-drone-response');
+  root.removeAttribute('aria-live');
+  const heading = node('div', 'sim-response-heading');
+  const title = node('strong');
+  const close = node('button', 'sim-response-close');
+  close.type = 'button';
+  close.textContent = '×';
+  heading.append(title, close);
+  const drawing = svg('svg', { viewBox: '0 0 220 142', 'aria-hidden': 'true' });
+  const ground = svg('path', {
+    d: 'M24 105L104 71L196 110L116 140ZM64 88L156 128M70 125L150 91',
+    class: 'sim-response-ground',
+  });
+  const north = svg('text', { x: 176, y: 95, class: 'sim-response-north' });
+  const shadow = svg('ellipse', { cx: 110, cy: 105, rx: 28, ry: 9, class: 'sim-response-shadow' });
+  const drift = svg('path', { class: 'sim-response-drift' });
+  const airframe = svg('g', { class: 'sim-response-airframe' });
+  const arms = svg('path', { class: 'sim-response-arms' });
+  const body = svg('path', { class: 'sim-response-body' });
+  const nose = svg('path', { class: 'sim-response-nose' });
+  const motors = Array.from({ length: 4 }, () =>
+    svg('ellipse', { rx: 7, ry: 4, class: 'sim-response-motor' }),
+  );
+  const thrust = svg('path', { class: 'sim-response-thrust' });
+  airframe.append(arms, ...motors, body, nose, thrust);
+  drawing.append(ground, north, shadow, drift, airframe);
+  const viewLabel = node('p', 'sim-response-view');
+  const inputLabel = node('p', 'sim-response-input');
+  const motion = node('p', 'sim-response-motion');
+  const detail = node('p', 'sim-response-detail');
+  const status = node('p', 'sim-response-status');
+  status.setAttribute('role', 'status');
+  status.setAttribute('aria-live', 'polite');
+  root.replaceChildren(heading, drawing, viewLabel, inputLabel, motion, detail, status);
+  let disposed = false,
+    previousState = '',
+    candidateState = '',
+    candidateSince = 0;
+  const hide = () => onHide();
+  close.addEventListener('click', hide);
+  root.hidden = true;
+  return {
+    update({
+      state,
+      controls = {},
+      source = 'keyboard',
+      unavailable = false,
+      locale = 'en',
+      display = 'compact',
+      scale = 'standard',
+      mode = 'self-level',
+      guideOpen = false,
+    } = {}) {
+      if (disposed) return;
+      root.hidden = !state || display === 'off';
+      if (root.hidden) return;
+      const t = (en, uk) => (locale === 'uk' ? uk : en);
+      const finite = (value) => (Number.isFinite(value) ? value : 0);
+      const clamp = (value, min, max) => Math.min(max, Math.max(min, finite(value)));
+      const orientation = state.orientation ?? [0, 0, 0, 1000000];
+      const length = Math.hypot(...orientation) || 1;
+      const [x, y, z, w] = orientation.map((value) => finite(value) / length);
+      const rotate = ([a, b, c]) => [
+        (1 - 2 * (y * y + z * z)) * a + 2 * (x * y - z * w) * b + 2 * (x * z + y * w) * c,
+        2 * (x * y + z * w) * a + (1 - 2 * (x * x + z * z)) * b + 2 * (y * z - x * w) * c,
+        2 * (x * z - y * w) * a + 2 * (y * z + x * w) * b + (1 - 2 * (x * x + y * y)) * c,
+      ];
+      const project = ([a, b, c], floor = false) => [
+        110 + (a - c) * 29,
+        (floor ? 106 : 63) + (a + c) * 12 - b * 31,
+      ];
+      const point = (v) =>
+        project(rotate(v))
+          .map((n) => n.toFixed(2))
+          .join(' ');
+      const corners = [
+        [-0.82, 0, -0.82],
+        [0.82, 0, -0.82],
+        [-0.82, 0, 0.82],
+        [0.82, 0, 0.82],
+      ];
+      arms.setAttribute(
+        'd',
+        `M${point(corners[0])}L${point(corners[3])}M${point(corners[1])}L${point(corners[2])}`,
+      );
+      motors.forEach((motor, index) => {
+        const position = project(rotate(corners[index]));
+        motor.setAttribute('cx', position[0].toFixed(2));
+        motor.setAttribute('cy', position[1].toFixed(2));
+      });
+      body.setAttribute(
+        'd',
+        `M${point([-0.25, 0, -0.43])}L${point([0.25, 0, -0.43])}L${point([0.25, 0, 0.43])}L${point([-0.25, 0, 0.43])}Z`,
+      );
+      nose.setAttribute(
+        'd',
+        `M${point([-0.22, 0.04, -0.45])}L${point([0, 0.04, -0.76])}L${point([0.22, 0.04, -0.45])}Z`,
+      );
+      const up = rotate([0, 1, 0]);
+      const inverted = up[1] < 0;
+      const thrustValue = clamp(controls.throttle, 0, 1);
+      const thrustEnd = 0.38 + thrustValue * 0.75;
+      thrust.setAttribute(
+        'd',
+        `M${point([0, 0, 0])}L${point([0, thrustEnd, 0])}M${point([-0.1, thrustEnd - 0.15, 0])}L${point([0, thrustEnd, 0])}L${point([0.1, thrustEnd - 0.15, 0])}`,
+      );
+      thrust.style.opacity = unavailable ? '0' : String(0.25 + thrustValue * 0.75);
+      const vx = finite(state.velocity?.x) / 1000,
+        vy = finite(state.velocity?.y) / 1000,
+        vz = finite(state.velocity?.z) / 1000;
+      const speed = Math.hypot(vx, vz);
+      const direction = speed > 0.05 ? [vx / speed, 0, vz / speed] : [0, 0, 0];
+      const distance = Math.min(1.6, speed / 4);
+      const end = project(
+        direction.map((n) => n * distance),
+        true,
+      );
+      const dx = end[0] - 110,
+        dy = end[1] - 106,
+        arrowLength = Math.hypot(dx, dy) || 1;
+      const ax = dx / arrowLength,
+        ay = dy / arrowLength;
+      drift.setAttribute(
+        'd',
+        `M110 106L${end[0]} ${end[1]}M${end[0] - ax * 7 - ay * 4} ${end[1] - ay * 7 + ax * 4}L${end[0]} ${end[1]}L${end[0] - ax * 7 + ay * 4} ${end[1] - ay * 7 - ax * 4}`,
+      );
+      drift.style.opacity = speed > 0.05 ? '1' : '0';
+      const angular = ['pitch', 'roll', 'yaw'].filter(
+        (key) => Math.abs(finite(controls[key])) >= 0.08,
+      );
+      const axisNames = {
+        pitch: t('pitch', 'тангаж'),
+        roll: t('roll', 'крен'),
+        yaw: t('yaw', 'рискання'),
+      };
+      const command = angular.length
+        ? angular.map((key) => `${axisNames[key]} ${Math.round(controls[key] * 100)}%`).join(' · ')
+        : t('Rotation sticks centred', 'Стіки обертання в центрі');
+      const phase = guideOpen ? 'guide' : state.status;
+      const phaseText = unavailable
+        ? t('Radio unavailable', 'Пульт недоступний')
+        : phase === 'active'
+          ? ''
+          : ['paused', 'guide'].includes(phase)
+            ? t('Paused · actual pose retained', 'Пауза · фактичне положення')
+            : phase === 'ready' || phase === 'disarmed'
+              ? t('Motors off', 'Мотори вимкнено')
+              : t('Flight ended', 'Політ завершено');
+      const travel =
+        vy > 0.08
+          ? t('climbing', 'набір висоти')
+          : vy < -0.08
+            ? t('descending', 'зниження')
+            : t('vertical speed near zero', 'вертикальна швидкість близька до нуля');
+      root.dataset.display = display === 'learning' ? 'learning' : 'compact';
+      root.dataset.scale = scale === 'large' ? 'large' : 'standard';
+      root.dataset.inverted = String(inverted);
+      root.dataset.source = source;
+      root.dataset.phase = phase;
+      root.classList.toggle('input-unavailable', unavailable);
+      set(title, t('Drone response', 'Реакція дрона'));
+      close.setAttribute('aria-label', t('Hide drone response', 'Приховати реакцію дрона'));
+      set(north, t('N', 'Пн'));
+      set(
+        viewLabel,
+        `${inverted ? t('INVERTED · ', 'ДОГОРИ ДНОМ · ') : ''}${t('Ground fixed · amber nose', 'Земля нерухома · ніс жовтий')}`,
+      );
+      set(
+        inputLabel,
+        unavailable
+          ? t('Input unavailable', 'Сигнал недоступний')
+          : `${source === 'recording' ? t('Recorded', 'Запис') : t('Input', 'Сигнал')}: ${t('thrust', 'тяга')} ${Math.round(thrustValue * 100)}%`,
+      );
+      set(
+        motion,
+        `${(finite(state.position?.y) / 1000).toFixed(1)} ${t('m', 'м')} · ${vy >= 0 ? '+' : ''}${vy.toFixed(1)} ${t('m/s vertical', 'м/с вертикально')} · ${speed.toFixed(1)} ${t('m/s drift', 'м/с дрейф')}`,
+      );
+      set(
+        detail,
+        `${command}. ${t('Thrust follows the amber arrow; cyan shows actual travel.', 'Тяга спрямована за жовтою стрілкою; блакитна показує фактичний рух.')} ${mode === 'acro' ? t('Acro: centred sticks stop requested rotation, not tilt or drift.', 'Acro: центр стіків припиняє задане обертання, а не нахил чи дрейф.') : t('Self-level levels attitude; it does not hold height or position.', 'Самовирівнювання вирівнює дрон, але не утримує висоту чи позицію.')}`,
+      );
+      root.setAttribute(
+        'aria-label',
+        `${t('Drone response', 'Реакція дрона')}. ${phaseText} ${inverted ? t('Inverted.', 'Догори дном.') : ''} ${travel}. ${motion.textContent}`,
+      );
+      // Announce only stable discrete state changes; numeric telemetry is readable on demand.
+      const meaningful = `${locale}|${phase}|${unavailable}|${inverted}`;
+      const time = now(win);
+      if (candidateState !== meaningful) {
+        candidateState = meaningful;
+        candidateSince = time;
+      }
+      if (meaningful !== previousState && time - candidateSince >= 650) {
+        previousState = meaningful;
+        set(
+          status,
+          [
+            phaseText,
+            inverted
+              ? t('Drone inverted', 'Дрон догори дном')
+              : t('Drone upright', 'Дрон у прямому положенні'),
+          ]
+            .filter(Boolean)
+            .join(' · '),
+        );
+      }
+    },
+    dispose() {
+      disposed = true;
+      close.removeEventListener('click', hide);
+      root.replaceChildren();
+      root.hidden = true;
+    },
+  };
+}
+
 function bytesOf(asset, win) {
   const raw = win.atob(asset.base64);
   return Uint8Array.from(raw, (character) => character.charCodeAt(0)).buffer;
