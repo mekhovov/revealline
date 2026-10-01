@@ -17,7 +17,7 @@ exact speed cannot be inferred from a still. The yellow player starts at bottom
 center. Authored defaults are three lives, 75% coverage and no timer.
 
 Existing retro reveal art and original procedural sprites are temporary.
-Custom reveal images are deferred. No screenshot pixels are embedded.
+Original reveal artwork is included. No screenshot pixels are embedded.
 Verification covers schema validation, reproducible output, legal opening
 captures and deterministic replay in both turning modes. Full-clear balance
 and device qualification remain unverified.

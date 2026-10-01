@@ -17,6 +17,5 @@ inside the playable field. The player starts at bottom center. Speeds follow
 visible trail directions using existing behaviors; they cannot be measured from
 a still. Defaults: three lives, 75% reveal target, no timer.
 
-Custom reveal art and Ukrainian translation are deferred. Existing retro artwork
-and procedural placeholder sprites are used. Schema/import and browser checks
+Original reveal artwork is included alongside the original pixel sprites. Ukrainian translation remains deferred. Schema/import and browser checks
 are performed during creation; no unit tests or full-clear qualification are added.

@@ -1,3 +1,4 @@
+import { neonRevealBackground } from './neon-reveal-artwork.mjs';
 import assert from 'node:assert/strict';
 import { mkdir, readFile, writeFile } from 'node:fs/promises';
 import { validateScenario } from '../game/content.mjs';
@@ -168,6 +169,7 @@ export async function buildNeonCrossroads() {
   const visualOverrides = Object.fromEntries(
     ['enemy', 'eroder', 'patrol', 'player', 'wall'].map((role) => [role, sprite(role)]),
   );
+  visualOverrides.background = await neonRevealBackground('crossroads', level.name);
   const scenario = {
     format: 'xonix-playground.v5',
     level,
@@ -182,7 +184,7 @@ export async function buildNeonCrossroads() {
     ...base,
     id: 'neon-crossroads-reference',
     name: 'Neon Crossroads',
-    version: '1.0.0',
+    version: '1.1.0',
     description: level.metadata.description,
     themes: [theme],
     music: [],

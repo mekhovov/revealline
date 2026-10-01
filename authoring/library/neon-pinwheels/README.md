@@ -6,6 +6,6 @@ All red tiles are lethal until captured. There are no interior walls or safe fou
 
 Four pink bouncers start at the upper-left ring, middle-right ring, lower-left field and lower-right ring. Two cyan patrols start opposite each other on the upper side rails. The yellow player starts at bottom center. Enemy motion is approximated from visible trails with existing behaviors.
 
-Goal: 75%, three lives. Source pixels are not embedded. Custom reveal artwork, Ukrainian translation and unit tests remain deferred. Regenerate with `node scripts/build-neon-pinwheels.mjs` then `node scripts/build-neon-reference-pack.mjs`.
+Goal: 75%, three lives. Source pixels are not embedded. Original reveal artwork is included. Ukrainian translation and unit tests remain deferred. Regenerate with `node scripts/build-neon-pinwheels.mjs` then `node scripts/build-neon-reference-pack.mjs`.
 
 Validation: scenario and pack schemas pass. Archive and Current rules each survive 120 idle ticks and complete a compact four-cell opening capture with three lives under immediate and buffered turning. Browser geometry and enemy placement were reviewed. Full-clear balancing remains unverified.

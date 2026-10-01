@@ -1,3 +1,4 @@
+import { neonRevealBackground } from './neon-reveal-artwork.mjs';
 import assert from 'node:assert/strict';
 import { mkdir, writeFile } from 'node:fs/promises';
 import { buildNeonChambers } from './build-neon-chambers.mjs';
@@ -381,6 +382,9 @@ export async function buildNeonMosaic() {
     buildNeonChannels(),
     buildNeonArrows(),
   ]);
+  const backgrounds = await Promise.all(
+    MOSAIC_DESIGNS.map((design) => neonRevealBackground(design.id, `Neon ${design.title}`)),
+  );
   return MOSAIC_DESIGNS.map((design, index) => {
     const { cells, lower } = designCells(design, index),
       scenario = structuredClone(channels.scenario);
@@ -392,6 +396,7 @@ export async function buildNeonMosaic() {
     };
     for (const [role, visual] of Object.entries(scenario.visualOverrides))
       visual.name = `Mosaic ${role}`;
+    scenario.visualOverrides.background = backgrounds[index];
     const terrain = [
       ...rectangles(cells, 'B').map((r) => ({ kind: 'slow', ...r })),
       ...rectangles(cells, 'X').map((r) => ({ kind: 'lethal', ...r })),
@@ -503,7 +508,7 @@ if (process.argv[1] && new URL(process.argv[1], 'file:').href === import.meta.ur
     .join('\n');
   await writeFile(
     new URL('index.html', root),
-    `<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Neon Words & Symbols · RevealLine</title><style>:root{color-scheme:dark;font:16px/1.5 system-ui;background:#070b14;color:#dce9fa}body{max-width:1440px;margin:40px auto;padding:24px}h1{font-size:38px;color:#8bebff;margin:0}p{max-width:850px;color:#abbdd5}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(340px,1fr));gap:24px}article{background:#0e1728;border:1px solid #22364e;padding:14px;border-radius:12px}img{display:block;width:100%;height:auto}a{color:#99dcff;text-decoration:none}article span{display:block;font-size:20px;margin:12px 0}button{color:#08111b;background:#8bebff;border:0;padding:10px 16px;border-radius:6px;cursor:pointer;font:inherit;font-weight:600}.download{margin-left:14px;font-size:13px}#status{min-height:24px;color:#fff283}</style><h1>Neon Words & Symbols</h1><p>${sources.length} playable tile designs. Blue slows your craft; red is lethal until captured. Every arena has distinct terrain, side refuges, passages and enemy starts, plus varied lower routes. The main words and motifs remain intact. Cyan blocks are walls; filled islands are safe return surfaces. The long horizontal bars have been removed.</p><p>Included in Neon Words &amp; Symbols, levels #291–${290 + sources.length}. Reveal artwork and Ukrainian translation are deferred.</p><p id="status" role="status"></p><main class="grid">${cards}</main><script type="module" src="launch.mjs"></script></html>`,
+    `<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Neon Words & Symbols · RevealLine</title><style>:root{color-scheme:dark;font:16px/1.5 system-ui;background:#070b14;color:#dce9fa}body{max-width:1440px;margin:40px auto;padding:24px}h1{font-size:38px;color:#8bebff;margin:0}p{max-width:850px;color:#abbdd5}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(340px,1fr));gap:24px}article{background:#0e1728;border:1px solid #22364e;padding:14px;border-radius:12px}img{display:block;width:100%;height:auto}a{color:#99dcff;text-decoration:none}article span{display:block;font-size:20px;margin:12px 0}button{color:#08111b;background:#8bebff;border:0;padding:10px 16px;border-radius:6px;cursor:pointer;font:inherit;font-weight:600}.download{margin-left:14px;font-size:13px}#status{min-height:24px;color:#fff283}</style><h1>Neon Words & Symbols</h1><p>${sources.length} playable tile designs. Blue slows your craft; red is lethal until captured. Every arena has distinct terrain, side refuges, passages and enemy starts, plus varied lower routes. The main words and motifs remain intact. Cyan blocks are walls; filled islands are safe return surfaces. The long horizontal bars have been removed.</p><p>Included in Neon Words &amp; Symbols, levels #291–${290 + sources.length}. Every arena has original reveal artwork. Ukrainian translation is deferred.</p><p id="status" role="status"></p><main class="grid">${cards}</main><script type="module" src="launch.mjs"></script></html>`,
   );
   const mini = sources
     .map((source, i) => {

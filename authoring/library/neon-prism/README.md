@@ -6,6 +6,6 @@ Blue tiles slow the player; red tiles are lethal until captured. There are no cy
 
 Five pink ring bouncers begin at the upper central notch, upper-right field, right diagonal border, lower-left diagonal border and lower-left field. Four cyan border patrols start at two top positions and opposite positions on the upper side rails. Actor centers follow the picture. Types use existing behaviors; ring artwork introduces no extra mechanics. Speeds and directions follow visible trails where possible and otherwise use authored defaults, as do three lives and a 75% goal. The player starts at bottom center.
 
-Regenerate with `node scripts/build-neon-prism.mjs`, then `node scripts/build-neon-reference-pack.mjs`. Custom reveal artwork, Ukrainian translation and unit tests are deferred. Existing procedural reveal artwork is used; screenshot pixels are not embedded.
+Regenerate with `node scripts/build-neon-prism.mjs`, then `node scripts/build-neon-reference-pack.mjs`. Original reveal artwork is included. Ukrainian translation and unit tests remain deferred. Screenshot pixels are not embedded.
 
 Validation: standalone scenario and packs pass schema checks. Archive and Current rules complete 120 idle ticks and an eight-cell opening capture under both turning policies with three lives. Browser rendering and installation checked. Full-clear balance remains unverified.

@@ -53,7 +53,7 @@ Yellow bouncers vary from three to five. Two outer cyan patrols start at distinc
 
 The linked museum, UNESCO, instrument-maker and pysanka references are recorded with design applications in [references.json](references.json). These are original low-resolution interpretations, not copied works, official emblems or exact regional embroidery patterns. Botanical and animal forms also occur in other cultures. The Ornek level is explicitly identified as Crimean Tatar. Game terrain colours preserve mechanical meaning instead of attempting to reproduce ceramic glazes or textile colours. Bird levels are original stork/swallow silhouettes within the broader documented bird-motif tradition.
 
-Custom reveal artwork and Ukrainian translation are deferred. These are playable tile mosaics, not newly generated background images.
+All 38 arenas include original reveal illustrations matched to their words or symbols. Browse the [complete artwork gallery](../neon-artwork/index.html). Ukrainian translation remains deferred.
 
 ## Rebuild and review
 

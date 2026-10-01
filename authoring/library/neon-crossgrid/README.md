@@ -6,7 +6,7 @@ Six yellow ring-shaped field enemies start in two three-enemy groups: upper-righ
 
 Yellow enemies use existing reflecting bouncer behavior with an original ring-and-core sprite. A still image cannot establish whether the source rings represent a separate ability, armor or an effect, so no undocumented ability is invented. Speeds/directions are authored approximations based on visible trails. Collision radius remains within the engine's supported range, so the large source halos are represented as sprite rings rather than expanded collision circles.
 
-Cyan walls block movement and do not close cuts. Red cross terrain is lethal until captured. Goal: 75%, three lives. Source imagery is not embedded; custom reveal images and Ukrainian translation remain deferred.
+Cyan walls block movement and do not close cuts. Red cross terrain is lethal until captured. Goal: 75%, three lives. Source imagery is not embedded; original reveal artwork is included. Ukrainian translation remains deferred.
 
 Run `node scripts/build-neon-crossgrid.mjs`, then `node scripts/build-neon-reference-pack.mjs`. The standalone practice launcher supports immediate and buffered turning. Bundled in **Neon Reference Pack** as its seventh map, permanent level #329; **Neon Words & Symbols** remains separate.
 

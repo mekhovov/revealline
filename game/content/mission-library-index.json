@@ -1351,14 +1351,14 @@
       "difficultiesByMode": { "solo": ["standard", "gentle"], "versus": ["standard"] },
       "sourceFile": {
         "path": "game/content/packs/neon-reference-pack.json",
-        "bytes": 257922,
-        "sha256": "6fd875a4656cd3a89a5714a706589a9f1089dea65c4ab68a3735eb47e422ec31"
+        "bytes": 6926782,
+        "sha256": "db538114566ef54a464093b9425f2119662fa0678441b5d0fef495387ee7b14a"
       },
       "packIdentity": {
-        "bytes": 171110,
-        "sha256": "c9a6b905c867fb10d553dc06909117e429ae11777533e1ceb0845705b40ce317"
+        "bytes": 6837602,
+        "sha256": "77a4fe0e6c9a5636ecc9dc0448990ea5e6866c1e8b20473fe635831a15d68f6f"
       },
-      "packVersion": "1.0.0"
+      "packVersion": "1.1.0"
     },
     {
       "id": "classic/bundled/neon-reference-pack/neon-reference%2F1%2F55dd5cab27bf8f95/neon-crossroads-pack/1",
@@ -1393,14 +1393,14 @@
       "difficultiesByMode": { "solo": ["standard", "gentle"], "versus": ["standard"] },
       "sourceFile": {
         "path": "game/content/packs/neon-reference-pack.json",
-        "bytes": 257922,
-        "sha256": "6fd875a4656cd3a89a5714a706589a9f1089dea65c4ab68a3735eb47e422ec31"
+        "bytes": 6926782,
+        "sha256": "db538114566ef54a464093b9425f2119662fa0678441b5d0fef495387ee7b14a"
       },
       "packIdentity": {
-        "bytes": 171110,
-        "sha256": "c9a6b905c867fb10d553dc06909117e429ae11777533e1ceb0845705b40ce317"
+        "bytes": 6837602,
+        "sha256": "77a4fe0e6c9a5636ecc9dc0448990ea5e6866c1e8b20473fe635831a15d68f6f"
       },
-      "packVersion": "1.0.0"
+      "packVersion": "1.1.0"
     },
     {
       "id": "classic/bundled/neon-reference-pack/neon-reference%2F1%2F55dd5cab27bf8f95/neon-hearts-pack/1",
@@ -1434,14 +1434,14 @@
       "difficultiesByMode": { "solo": ["standard", "gentle"], "versus": ["standard"] },
       "sourceFile": {
         "path": "game/content/packs/neon-reference-pack.json",
-        "bytes": 257922,
-        "sha256": "6fd875a4656cd3a89a5714a706589a9f1089dea65c4ab68a3735eb47e422ec31"
+        "bytes": 6926782,
+        "sha256": "db538114566ef54a464093b9425f2119662fa0678441b5d0fef495387ee7b14a"
       },
       "packIdentity": {
-        "bytes": 171110,
-        "sha256": "c9a6b905c867fb10d553dc06909117e429ae11777533e1ceb0845705b40ce317"
+        "bytes": 6837602,
+        "sha256": "77a4fe0e6c9a5636ecc9dc0448990ea5e6866c1e8b20473fe635831a15d68f6f"
       },
-      "packVersion": "1.0.0"
+      "packVersion": "1.1.0"
     },
     {
       "id": "classic/bundled/neon-reference-pack/neon-reference%2F1%2F55dd5cab27bf8f95/neon-labyrinth-pack/1",
@@ -1475,14 +1475,14 @@
       "difficultiesByMode": { "solo": ["standard", "gentle"], "versus": ["standard"] },
       "sourceFile": {
         "path": "game/content/packs/neon-reference-pack.json",
-        "bytes": 257922,
-        "sha256": "6fd875a4656cd3a89a5714a706589a9f1089dea65c4ab68a3735eb47e422ec31"
+        "bytes": 6926782,
+        "sha256": "db538114566ef54a464093b9425f2119662fa0678441b5d0fef495387ee7b14a"
       },
       "packIdentity": {
-        "bytes": 171110,
-        "sha256": "c9a6b905c867fb10d553dc06909117e429ae11777533e1ceb0845705b40ce317"
+        "bytes": 6837602,
+        "sha256": "77a4fe0e6c9a5636ecc9dc0448990ea5e6866c1e8b20473fe635831a15d68f6f"
       },
-      "packVersion": "1.0.0"
+      "packVersion": "1.1.0"
     },
     {
       "id": "classic/bundled/neon-reference-pack/neon-reference%2F1%2F55dd5cab27bf8f95/neon-arrows-pack/1",
@@ -1516,14 +1516,14 @@
       "difficultiesByMode": { "solo": ["standard", "gentle"], "versus": ["standard"] },
       "sourceFile": {
         "path": "game/content/packs/neon-reference-pack.json",
-        "bytes": 257922,
-        "sha256": "6fd875a4656cd3a89a5714a706589a9f1089dea65c4ab68a3735eb47e422ec31"
+        "bytes": 6926782,
+        "sha256": "db538114566ef54a464093b9425f2119662fa0678441b5d0fef495387ee7b14a"
       },
       "packIdentity": {
-        "bytes": 171110,
-        "sha256": "c9a6b905c867fb10d553dc06909117e429ae11777533e1ceb0845705b40ce317"
+        "bytes": 6837602,
+        "sha256": "77a4fe0e6c9a5636ecc9dc0448990ea5e6866c1e8b20473fe635831a15d68f6f"
       },
-      "packVersion": "1.0.0"
+      "packVersion": "1.1.0"
     },
     {
       "id": "classic/bundled/neon-reference-pack/neon-reference%2F1%2F55dd5cab27bf8f95/neon-chambers-pack/1",
@@ -1557,14 +1557,14 @@
       "difficultiesByMode": { "solo": ["standard", "gentle"], "versus": ["standard"] },
       "sourceFile": {
         "path": "game/content/packs/neon-reference-pack.json",
-        "bytes": 257922,
-        "sha256": "6fd875a4656cd3a89a5714a706589a9f1089dea65c4ab68a3735eb47e422ec31"
+        "bytes": 6926782,
+        "sha256": "db538114566ef54a464093b9425f2119662fa0678441b5d0fef495387ee7b14a"
       },
       "packIdentity": {
-        "bytes": 171110,
-        "sha256": "c9a6b905c867fb10d553dc06909117e429ae11777533e1ceb0845705b40ce317"
+        "bytes": 6837602,
+        "sha256": "77a4fe0e6c9a5636ecc9dc0448990ea5e6866c1e8b20473fe635831a15d68f6f"
       },
-      "packVersion": "1.0.0"
+      "packVersion": "1.1.0"
     },
     {
       "id": "classic/bundled/neon-reference-pack/neon-reference%2F1%2F55dd5cab27bf8f95/neon-crossgrid-pack/1",
@@ -1598,14 +1598,14 @@
       "difficultiesByMode": { "solo": ["standard", "gentle"], "versus": ["standard"] },
       "sourceFile": {
         "path": "game/content/packs/neon-reference-pack.json",
-        "bytes": 257922,
-        "sha256": "6fd875a4656cd3a89a5714a706589a9f1089dea65c4ab68a3735eb47e422ec31"
+        "bytes": 6926782,
+        "sha256": "db538114566ef54a464093b9425f2119662fa0678441b5d0fef495387ee7b14a"
       },
       "packIdentity": {
-        "bytes": 171110,
-        "sha256": "c9a6b905c867fb10d553dc06909117e429ae11777533e1ceb0845705b40ce317"
+        "bytes": 6837602,
+        "sha256": "77a4fe0e6c9a5636ecc9dc0448990ea5e6866c1e8b20473fe635831a15d68f6f"
       },
-      "packVersion": "1.0.0"
+      "packVersion": "1.1.0"
     },
     {
       "id": "classic/bundled/neon-reference-pack/neon-reference%2F1%2F55dd5cab27bf8f95/neon-switchback-pack/1",
@@ -1639,14 +1639,14 @@
       "difficultiesByMode": { "solo": ["standard", "gentle"], "versus": ["standard"] },
       "sourceFile": {
         "path": "game/content/packs/neon-reference-pack.json",
-        "bytes": 257922,
-        "sha256": "6fd875a4656cd3a89a5714a706589a9f1089dea65c4ab68a3735eb47e422ec31"
+        "bytes": 6926782,
+        "sha256": "db538114566ef54a464093b9425f2119662fa0678441b5d0fef495387ee7b14a"
       },
       "packIdentity": {
-        "bytes": 171110,
-        "sha256": "c9a6b905c867fb10d553dc06909117e429ae11777533e1ceb0845705b40ce317"
+        "bytes": 6837602,
+        "sha256": "77a4fe0e6c9a5636ecc9dc0448990ea5e6866c1e8b20473fe635831a15d68f6f"
       },
-      "packVersion": "1.0.0"
+      "packVersion": "1.1.0"
     },
     {
       "id": "classic/bundled/neon-reference-pack/neon-reference%2F1%2F55dd5cab27bf8f95/neon-spirals-pack/1",
@@ -1680,14 +1680,14 @@
       "difficultiesByMode": { "solo": ["standard", "gentle"], "versus": ["standard"] },
       "sourceFile": {
         "path": "game/content/packs/neon-reference-pack.json",
-        "bytes": 257922,
-        "sha256": "6fd875a4656cd3a89a5714a706589a9f1089dea65c4ab68a3735eb47e422ec31"
+        "bytes": 6926782,
+        "sha256": "db538114566ef54a464093b9425f2119662fa0678441b5d0fef495387ee7b14a"
       },
       "packIdentity": {
-        "bytes": 171110,
-        "sha256": "c9a6b905c867fb10d553dc06909117e429ae11777533e1ceb0845705b40ce317"
+        "bytes": 6837602,
+        "sha256": "77a4fe0e6c9a5636ecc9dc0448990ea5e6866c1e8b20473fe635831a15d68f6f"
       },
-      "packVersion": "1.0.0"
+      "packVersion": "1.1.0"
     },
     {
       "id": "classic/bundled/neon-reference-pack/neon-reference%2F1%2F55dd5cab27bf8f95/neon-crossfire-pack/1",
@@ -1721,14 +1721,14 @@
       "difficultiesByMode": { "solo": ["standard", "gentle"], "versus": ["standard"] },
       "sourceFile": {
         "path": "game/content/packs/neon-reference-pack.json",
-        "bytes": 257922,
-        "sha256": "6fd875a4656cd3a89a5714a706589a9f1089dea65c4ab68a3735eb47e422ec31"
+        "bytes": 6926782,
+        "sha256": "db538114566ef54a464093b9425f2119662fa0678441b5d0fef495387ee7b14a"
       },
       "packIdentity": {
-        "bytes": 171110,
-        "sha256": "c9a6b905c867fb10d553dc06909117e429ae11777533e1ceb0845705b40ce317"
+        "bytes": 6837602,
+        "sha256": "77a4fe0e6c9a5636ecc9dc0448990ea5e6866c1e8b20473fe635831a15d68f6f"
       },
-      "packVersion": "1.0.0"
+      "packVersion": "1.1.0"
     },
     {
       "id": "classic/bundled/neon-reference-pack/neon-reference%2F1%2F55dd5cab27bf8f95/neon-pinwheels-pack/1",
@@ -1762,14 +1762,14 @@
       "difficultiesByMode": { "solo": ["standard", "gentle"], "versus": ["standard"] },
       "sourceFile": {
         "path": "game/content/packs/neon-reference-pack.json",
-        "bytes": 257922,
-        "sha256": "6fd875a4656cd3a89a5714a706589a9f1089dea65c4ab68a3735eb47e422ec31"
+        "bytes": 6926782,
+        "sha256": "db538114566ef54a464093b9425f2119662fa0678441b5d0fef495387ee7b14a"
       },
       "packIdentity": {
-        "bytes": 171110,
-        "sha256": "c9a6b905c867fb10d553dc06909117e429ae11777533e1ceb0845705b40ce317"
+        "bytes": 6837602,
+        "sha256": "77a4fe0e6c9a5636ecc9dc0448990ea5e6866c1e8b20473fe635831a15d68f6f"
       },
-      "packVersion": "1.0.0"
+      "packVersion": "1.1.0"
     },
     {
       "id": "classic/bundled/neon-reference-pack/neon-reference%2F1%2F55dd5cab27bf8f95/neon-wavebands-pack/1",
@@ -1804,14 +1804,14 @@
       "difficultiesByMode": { "solo": ["standard", "gentle"], "versus": ["standard"] },
       "sourceFile": {
         "path": "game/content/packs/neon-reference-pack.json",
-        "bytes": 257922,
-        "sha256": "6fd875a4656cd3a89a5714a706589a9f1089dea65c4ab68a3735eb47e422ec31"
+        "bytes": 6926782,
+        "sha256": "db538114566ef54a464093b9425f2119662fa0678441b5d0fef495387ee7b14a"
       },
       "packIdentity": {
-        "bytes": 171110,
-        "sha256": "c9a6b905c867fb10d553dc06909117e429ae11777533e1ceb0845705b40ce317"
+        "bytes": 6837602,
+        "sha256": "77a4fe0e6c9a5636ecc9dc0448990ea5e6866c1e8b20473fe635831a15d68f6f"
       },
-      "packVersion": "1.0.0"
+      "packVersion": "1.1.0"
     },
     {
       "id": "classic/bundled/neon-reference-pack/neon-reference%2F1%2F55dd5cab27bf8f95/neon-conduit-pack/1",
@@ -1845,14 +1845,14 @@
       "difficultiesByMode": { "solo": ["standard", "gentle"], "versus": ["standard"] },
       "sourceFile": {
         "path": "game/content/packs/neon-reference-pack.json",
-        "bytes": 257922,
-        "sha256": "6fd875a4656cd3a89a5714a706589a9f1089dea65c4ab68a3735eb47e422ec31"
+        "bytes": 6926782,
+        "sha256": "db538114566ef54a464093b9425f2119662fa0678441b5d0fef495387ee7b14a"
       },
       "packIdentity": {
-        "bytes": 171110,
-        "sha256": "c9a6b905c867fb10d553dc06909117e429ae11777533e1ceb0845705b40ce317"
+        "bytes": 6837602,
+        "sha256": "77a4fe0e6c9a5636ecc9dc0448990ea5e6866c1e8b20473fe635831a15d68f6f"
       },
-      "packVersion": "1.0.0"
+      "packVersion": "1.1.0"
     },
     {
       "id": "classic/bundled/neon-reference-pack/neon-reference%2F1%2F55dd5cab27bf8f95/neon-switchyards-pack/1",
@@ -1886,14 +1886,14 @@
       "difficultiesByMode": { "solo": ["standard", "gentle"], "versus": ["standard"] },
       "sourceFile": {
         "path": "game/content/packs/neon-reference-pack.json",
-        "bytes": 257922,
-        "sha256": "6fd875a4656cd3a89a5714a706589a9f1089dea65c4ab68a3735eb47e422ec31"
+        "bytes": 6926782,
+        "sha256": "db538114566ef54a464093b9425f2119662fa0678441b5d0fef495387ee7b14a"
       },
       "packIdentity": {
-        "bytes": 171110,
-        "sha256": "c9a6b905c867fb10d553dc06909117e429ae11777533e1ceb0845705b40ce317"
+        "bytes": 6837602,
+        "sha256": "77a4fe0e6c9a5636ecc9dc0448990ea5e6866c1e8b20473fe635831a15d68f6f"
       },
-      "packVersion": "1.0.0"
+      "packVersion": "1.1.0"
     },
     {
       "id": "classic/bundled/neon-reference-pack/neon-reference%2F1%2F55dd5cab27bf8f95/neon-spines-pack/1",
@@ -1927,14 +1927,14 @@
       "difficultiesByMode": { "solo": ["standard", "gentle"], "versus": ["standard"] },
       "sourceFile": {
         "path": "game/content/packs/neon-reference-pack.json",
-        "bytes": 257922,
-        "sha256": "6fd875a4656cd3a89a5714a706589a9f1089dea65c4ab68a3735eb47e422ec31"
+        "bytes": 6926782,
+        "sha256": "db538114566ef54a464093b9425f2119662fa0678441b5d0fef495387ee7b14a"
       },
       "packIdentity": {
-        "bytes": 171110,
-        "sha256": "c9a6b905c867fb10d553dc06909117e429ae11777533e1ceb0845705b40ce317"
+        "bytes": 6837602,
+        "sha256": "77a4fe0e6c9a5636ecc9dc0448990ea5e6866c1e8b20473fe635831a15d68f6f"
       },
-      "packVersion": "1.0.0"
+      "packVersion": "1.1.0"
     },
     {
       "id": "classic/bundled/neon-reference-pack/neon-reference%2F1%2F55dd5cab27bf8f95/neon-prism-pack/1",
@@ -1968,14 +1968,14 @@
       "difficultiesByMode": { "solo": ["standard", "gentle"], "versus": ["standard"] },
       "sourceFile": {
         "path": "game/content/packs/neon-reference-pack.json",
-        "bytes": 257922,
-        "sha256": "6fd875a4656cd3a89a5714a706589a9f1089dea65c4ab68a3735eb47e422ec31"
+        "bytes": 6926782,
+        "sha256": "db538114566ef54a464093b9425f2119662fa0678441b5d0fef495387ee7b14a"
       },
       "packIdentity": {
-        "bytes": 171110,
-        "sha256": "c9a6b905c867fb10d553dc06909117e429ae11777533e1ceb0845705b40ce317"
+        "bytes": 6837602,
+        "sha256": "77a4fe0e6c9a5636ecc9dc0448990ea5e6866c1e8b20473fe635831a15d68f6f"
       },
-      "packVersion": "1.0.0"
+      "packVersion": "1.1.0"
     },
     {
       "id": "classic/bundled/neon-mosaic-pack/neon-mosaic%2F1%2F6195cab2099aacc9/neon-fpv-pack/1",
@@ -2010,14 +2010,14 @@
       "difficultiesByMode": { "solo": ["standard", "gentle"], "versus": ["standard"] },
       "sourceFile": {
         "path": "game/content/packs/neon-mosaic-pack.json",
-        "bytes": 580176,
-        "sha256": "8653b45a17273d447e0a5cab4370b8f273b74d1fdbd02d4206f3e3202b8e669f"
+        "bytes": 15620883,
+        "sha256": "d5e18470a3e7f1146c4a31afdaaf7cc41f4565dbba8ed1c7de61a408ffd41177"
       },
       "packIdentity": {
-        "bytes": 379220,
-        "sha256": "345674d27b1de48a323ce188ad09fda908d9cfdbfde680788c0dabadc13dcc4b"
+        "bytes": 15414303,
+        "sha256": "2f89fcfeb91f998f95e8cc2861d14381df1a8cd083fd3ed1b8e6083b5c375dbe"
       },
-      "packVersion": "1.0.0"
+      "packVersion": "1.1.0"
     },
     {
       "id": "classic/bundled/neon-mosaic-pack/neon-mosaic%2F1%2F6195cab2099aacc9/neon-ukraine-pack/1",
@@ -2052,14 +2052,14 @@
       "difficultiesByMode": { "solo": ["standard", "gentle"], "versus": ["standard"] },
       "sourceFile": {
         "path": "game/content/packs/neon-mosaic-pack.json",
-        "bytes": 580176,
-        "sha256": "8653b45a17273d447e0a5cab4370b8f273b74d1fdbd02d4206f3e3202b8e669f"
+        "bytes": 15620883,
+        "sha256": "d5e18470a3e7f1146c4a31afdaaf7cc41f4565dbba8ed1c7de61a408ffd41177"
       },
       "packIdentity": {
-        "bytes": 379220,
-        "sha256": "345674d27b1de48a323ce188ad09fda908d9cfdbfde680788c0dabadc13dcc4b"
+        "bytes": 15414303,
+        "sha256": "2f89fcfeb91f998f95e8cc2861d14381df1a8cd083fd3ed1b8e6083b5c375dbe"
       },
-      "packVersion": "1.0.0"
+      "packVersion": "1.1.0"
     },
     {
       "id": "classic/bundled/neon-mosaic-pack/neon-mosaic%2F1%2F6195cab2099aacc9/neon-drone-aid-pack/1",
@@ -2094,14 +2094,14 @@
       "difficultiesByMode": { "solo": ["standard", "gentle"], "versus": ["standard"] },
       "sourceFile": {
         "path": "game/content/packs/neon-mosaic-pack.json",
-        "bytes": 580176,
-        "sha256": "8653b45a17273d447e0a5cab4370b8f273b74d1fdbd02d4206f3e3202b8e669f"
+        "bytes": 15620883,
+        "sha256": "d5e18470a3e7f1146c4a31afdaaf7cc41f4565dbba8ed1c7de61a408ffd41177"
       },
       "packIdentity": {
-        "bytes": 379220,
-        "sha256": "345674d27b1de48a323ce188ad09fda908d9cfdbfde680788c0dabadc13dcc4b"
+        "bytes": 15414303,
+        "sha256": "2f89fcfeb91f998f95e8cc2861d14381df1a8cd083fd3ed1b8e6083b5c375dbe"
       },
-      "packVersion": "1.0.0"
+      "packVersion": "1.1.0"
     },
     {
       "id": "classic/bundled/neon-mosaic-pack/neon-mosaic%2F1%2F6195cab2099aacc9/neon-coupa-pack/1",
@@ -2136,14 +2136,14 @@
       "difficultiesByMode": { "solo": ["standard", "gentle"], "versus": ["standard"] },
       "sourceFile": {
         "path": "game/content/packs/neon-mosaic-pack.json",
-        "bytes": 580176,
-        "sha256": "8653b45a17273d447e0a5cab4370b8f273b74d1fdbd02d4206f3e3202b8e669f"
+        "bytes": 15620883,
+        "sha256": "d5e18470a3e7f1146c4a31afdaaf7cc41f4565dbba8ed1c7de61a408ffd41177"
       },
       "packIdentity": {
-        "bytes": 379220,
-        "sha256": "345674d27b1de48a323ce188ad09fda908d9cfdbfde680788c0dabadc13dcc4b"
+        "bytes": 15414303,
+        "sha256": "2f89fcfeb91f998f95e8cc2861d14381df1a8cd083fd3ed1b8e6083b5c375dbe"
       },
-      "packVersion": "1.0.0"
+      "packVersion": "1.1.0"
     },
     {
       "id": "classic/bundled/neon-mosaic-pack/neon-mosaic%2F1%2F6195cab2099aacc9/neon-social-drone-pack/1",
@@ -2178,14 +2178,14 @@
       "difficultiesByMode": { "solo": ["standard", "gentle"], "versus": ["standard"] },
       "sourceFile": {
         "path": "game/content/packs/neon-mosaic-pack.json",
-        "bytes": 580176,
-        "sha256": "8653b45a17273d447e0a5cab4370b8f273b74d1fdbd02d4206f3e3202b8e669f"
+        "bytes": 15620883,
+        "sha256": "d5e18470a3e7f1146c4a31afdaaf7cc41f4565dbba8ed1c7de61a408ffd41177"
       },
       "packIdentity": {
-        "bytes": 379220,
-        "sha256": "345674d27b1de48a323ce188ad09fda908d9cfdbfde680788c0dabadc13dcc4b"
+        "bytes": 15414303,
+        "sha256": "2f89fcfeb91f998f95e8cc2861d14381df1a8cd083fd3ed1b8e6083b5c375dbe"
       },
-      "packVersion": "1.0.0"
+      "packVersion": "1.1.0"
     },
     {
       "id": "classic/bundled/neon-mosaic-pack/neon-mosaic%2F1%2F6195cab2099aacc9/neon-sdua-pack/1",
@@ -2220,14 +2220,14 @@
       "difficultiesByMode": { "solo": ["standard", "gentle"], "versus": ["standard"] },
       "sourceFile": {
         "path": "game/content/packs/neon-mosaic-pack.json",
-        "bytes": 580176,
-        "sha256": "8653b45a17273d447e0a5cab4370b8f273b74d1fdbd02d4206f3e3202b8e669f"
+        "bytes": 15620883,
+        "sha256": "d5e18470a3e7f1146c4a31afdaaf7cc41f4565dbba8ed1c7de61a408ffd41177"
       },
       "packIdentity": {
-        "bytes": 379220,
-        "sha256": "345674d27b1de48a323ce188ad09fda908d9cfdbfde680788c0dabadc13dcc4b"
+        "bytes": 15414303,
+        "sha256": "2f89fcfeb91f998f95e8cc2861d14381df1a8cd083fd3ed1b8e6083b5c375dbe"
       },
-      "packVersion": "1.0.0"
+      "packVersion": "1.1.0"
     },
     {
       "id": "classic/bundled/neon-mosaic-pack/neon-mosaic%2F1%2F6195cab2099aacc9/neon-victory-drones-pack/1",
@@ -2262,14 +2262,14 @@
       "difficultiesByMode": { "solo": ["standard", "gentle"], "versus": ["standard"] },
       "sourceFile": {
         "path": "game/content/packs/neon-mosaic-pack.json",
-        "bytes": 580176,
-        "sha256": "8653b45a17273d447e0a5cab4370b8f273b74d1fdbd02d4206f3e3202b8e669f"
+        "bytes": 15620883,
+        "sha256": "d5e18470a3e7f1146c4a31afdaaf7cc41f4565dbba8ed1c7de61a408ffd41177"
       },
       "packIdentity": {
-        "bytes": 379220,
-        "sha256": "345674d27b1de48a323ce188ad09fda908d9cfdbfde680788c0dabadc13dcc4b"
+        "bytes": 15414303,
+        "sha256": "2f89fcfeb91f998f95e8cc2861d14381df1a8cd083fd3ed1b8e6083b5c375dbe"
       },
-      "packVersion": "1.0.0"
+      "packVersion": "1.1.0"
     },
     {
       "id": "classic/bundled/neon-mosaic-pack/neon-mosaic%2F1%2F6195cab2099aacc9/neon-vd-pack/1",
@@ -2304,14 +2304,14 @@
       "difficultiesByMode": { "solo": ["standard", "gentle"], "versus": ["standard"] },
       "sourceFile": {
         "path": "game/content/packs/neon-mosaic-pack.json",
-        "bytes": 580176,
-        "sha256": "8653b45a17273d447e0a5cab4370b8f273b74d1fdbd02d4206f3e3202b8e669f"
+        "bytes": 15620883,
+        "sha256": "d5e18470a3e7f1146c4a31afdaaf7cc41f4565dbba8ed1c7de61a408ffd41177"
       },
       "packIdentity": {
-        "bytes": 379220,
-        "sha256": "345674d27b1de48a323ce188ad09fda908d9cfdbfde680788c0dabadc13dcc4b"
+        "bytes": 15414303,
+        "sha256": "2f89fcfeb91f998f95e8cc2861d14381df1a8cd083fd3ed1b8e6083b5c375dbe"
       },
-      "packVersion": "1.0.0"
+      "packVersion": "1.1.0"
     },
     {
       "id": "classic/bundled/neon-mosaic-pack/neon-mosaic%2F1%2F6195cab2099aacc9/neon-fpv-line-pack/1",
@@ -2346,14 +2346,14 @@
       "difficultiesByMode": { "solo": ["standard", "gentle"], "versus": ["standard"] },
       "sourceFile": {
         "path": "game/content/packs/neon-mosaic-pack.json",
-        "bytes": 580176,
-        "sha256": "8653b45a17273d447e0a5cab4370b8f273b74d1fdbd02d4206f3e3202b8e669f"
+        "bytes": 15620883,
+        "sha256": "d5e18470a3e7f1146c4a31afdaaf7cc41f4565dbba8ed1c7de61a408ffd41177"
       },
       "packIdentity": {
-        "bytes": 379220,
-        "sha256": "345674d27b1de48a323ce188ad09fda908d9cfdbfde680788c0dabadc13dcc4b"
+        "bytes": 15414303,
+        "sha256": "2f89fcfeb91f998f95e8cc2861d14381df1a8cd083fd3ed1b8e6083b5c375dbe"
       },
-      "packVersion": "1.0.0"
+      "packVersion": "1.1.0"
     },
     {
       "id": "classic/bundled/neon-mosaic-pack/neon-mosaic%2F1%2F6195cab2099aacc9/neon-reveal-pack/1",
@@ -2388,14 +2388,14 @@
       "difficultiesByMode": { "solo": ["standard", "gentle"], "versus": ["standard"] },
       "sourceFile": {
         "path": "game/content/packs/neon-mosaic-pack.json",
-        "bytes": 580176,
-        "sha256": "8653b45a17273d447e0a5cab4370b8f273b74d1fdbd02d4206f3e3202b8e669f"
+        "bytes": 15620883,
+        "sha256": "d5e18470a3e7f1146c4a31afdaaf7cc41f4565dbba8ed1c7de61a408ffd41177"
       },
       "packIdentity": {
-        "bytes": 379220,
-        "sha256": "345674d27b1de48a323ce188ad09fda908d9cfdbfde680788c0dabadc13dcc4b"
+        "bytes": 15414303,
+        "sha256": "2f89fcfeb91f998f95e8cc2861d14381df1a8cd083fd3ed1b8e6083b5c375dbe"
       },
-      "packVersion": "1.0.0"
+      "packVersion": "1.1.0"
     },
     {
       "id": "classic/bundled/neon-mosaic-pack/neon-mosaic%2F1%2F6195cab2099aacc9/neon-fly-free-pack/1",
@@ -2430,14 +2430,14 @@
       "difficultiesByMode": { "solo": ["standard", "gentle"], "versus": ["standard"] },
       "sourceFile": {
         "path": "game/content/packs/neon-mosaic-pack.json",
-        "bytes": 580176,
-        "sha256": "8653b45a17273d447e0a5cab4370b8f273b74d1fdbd02d4206f3e3202b8e669f"
+        "bytes": 15620883,
+        "sha256": "d5e18470a3e7f1146c4a31afdaaf7cc41f4565dbba8ed1c7de61a408ffd41177"
       },
       "packIdentity": {
-        "bytes": 379220,
-        "sha256": "345674d27b1de48a323ce188ad09fda908d9cfdbfde680788c0dabadc13dcc4b"
+        "bytes": 15414303,
+        "sha256": "2f89fcfeb91f998f95e8cc2861d14381df1a8cd083fd3ed1b8e6083b5c375dbe"
       },
-      "packVersion": "1.0.0"
+      "packVersion": "1.1.0"
     },
     {
       "id": "classic/bundled/neon-mosaic-pack/neon-mosaic%2F1%2F6195cab2099aacc9/neon-fpv-drone-pack/1",
@@ -2472,14 +2472,14 @@
       "difficultiesByMode": { "solo": ["standard", "gentle"], "versus": ["standard"] },
       "sourceFile": {
         "path": "game/content/packs/neon-mosaic-pack.json",
-        "bytes": 580176,
-        "sha256": "8653b45a17273d447e0a5cab4370b8f273b74d1fdbd02d4206f3e3202b8e669f"
+        "bytes": 15620883,
+        "sha256": "d5e18470a3e7f1146c4a31afdaaf7cc41f4565dbba8ed1c7de61a408ffd41177"
       },
       "packIdentity": {
-        "bytes": 379220,
-        "sha256": "345674d27b1de48a323ce188ad09fda908d9cfdbfde680788c0dabadc13dcc4b"
+        "bytes": 15414303,
+        "sha256": "2f89fcfeb91f998f95e8cc2861d14381df1a8cd083fd3ed1b8e6083b5c375dbe"
       },
-      "packVersion": "1.0.0"
+      "packVersion": "1.1.0"
     },
     {
       "id": "classic/bundled/neon-mosaic-pack/neon-mosaic%2F1%2F6195cab2099aacc9/neon-tryzub-pack/1",
@@ -2514,14 +2514,14 @@
       "difficultiesByMode": { "solo": ["standard", "gentle"], "versus": ["standard"] },
       "sourceFile": {
         "path": "game/content/packs/neon-mosaic-pack.json",
-        "bytes": 580176,
-        "sha256": "8653b45a17273d447e0a5cab4370b8f273b74d1fdbd02d4206f3e3202b8e669f"
+        "bytes": 15620883,
+        "sha256": "d5e18470a3e7f1146c4a31afdaaf7cc41f4565dbba8ed1c7de61a408ffd41177"
       },
       "packIdentity": {
-        "bytes": 379220,
-        "sha256": "345674d27b1de48a323ce188ad09fda908d9cfdbfde680788c0dabadc13dcc4b"
+        "bytes": 15414303,
+        "sha256": "2f89fcfeb91f998f95e8cc2861d14381df1a8cd083fd3ed1b8e6083b5c375dbe"
       },
-      "packVersion": "1.0.0"
+      "packVersion": "1.1.0"
     },
     {
       "id": "classic/bundled/neon-mosaic-pack/neon-mosaic%2F1%2F6195cab2099aacc9/neon-vyshyvanka-pack/1",
@@ -2556,14 +2556,14 @@
       "difficultiesByMode": { "solo": ["standard", "gentle"], "versus": ["standard"] },
       "sourceFile": {
         "path": "game/content/packs/neon-mosaic-pack.json",
-        "bytes": 580176,
-        "sha256": "8653b45a17273d447e0a5cab4370b8f273b74d1fdbd02d4206f3e3202b8e669f"
+        "bytes": 15620883,
+        "sha256": "d5e18470a3e7f1146c4a31afdaaf7cc41f4565dbba8ed1c7de61a408ffd41177"
       },
       "packIdentity": {
-        "bytes": 379220,
-        "sha256": "345674d27b1de48a323ce188ad09fda908d9cfdbfde680788c0dabadc13dcc4b"
+        "bytes": 15414303,
+        "sha256": "2f89fcfeb91f998f95e8cc2861d14381df1a8cd083fd3ed1b8e6083b5c375dbe"
       },
-      "packVersion": "1.0.0"
+      "packVersion": "1.1.0"
     },
     {
       "id": "classic/bundled/neon-mosaic-pack/neon-mosaic%2F1%2F6195cab2099aacc9/neon-ruzha-pack/1",
@@ -2598,14 +2598,14 @@
       "difficultiesByMode": { "solo": ["standard", "gentle"], "versus": ["standard"] },
       "sourceFile": {
         "path": "game/content/packs/neon-mosaic-pack.json",
-        "bytes": 580176,
-        "sha256": "8653b45a17273d447e0a5cab4370b8f273b74d1fdbd02d4206f3e3202b8e669f"
+        "bytes": 15620883,
+        "sha256": "d5e18470a3e7f1146c4a31afdaaf7cc41f4565dbba8ed1c7de61a408ffd41177"
       },
       "packIdentity": {
-        "bytes": 379220,
-        "sha256": "345674d27b1de48a323ce188ad09fda908d9cfdbfde680788c0dabadc13dcc4b"
+        "bytes": 15414303,
+        "sha256": "2f89fcfeb91f998f95e8cc2861d14381df1a8cd083fd3ed1b8e6083b5c375dbe"
       },
-      "packVersion": "1.0.0"
+      "packVersion": "1.1.0"
     },
     {
       "id": "classic/bundled/neon-mosaic-pack/neon-mosaic%2F1%2F6195cab2099aacc9/neon-kalyna-pack/1",
@@ -2640,14 +2640,14 @@
       "difficultiesByMode": { "solo": ["standard", "gentle"], "versus": ["standard"] },
       "sourceFile": {
         "path": "game/content/packs/neon-mosaic-pack.json",
-        "bytes": 580176,
-        "sha256": "8653b45a17273d447e0a5cab4370b8f273b74d1fdbd02d4206f3e3202b8e669f"
+        "bytes": 15620883,
+        "sha256": "d5e18470a3e7f1146c4a31afdaaf7cc41f4565dbba8ed1c7de61a408ffd41177"
       },
       "packIdentity": {
-        "bytes": 379220,
-        "sha256": "345674d27b1de48a323ce188ad09fda908d9cfdbfde680788c0dabadc13dcc4b"
+        "bytes": 15414303,
+        "sha256": "2f89fcfeb91f998f95e8cc2861d14381df1a8cd083fd3ed1b8e6083b5c375dbe"
       },
-      "packVersion": "1.0.0"
+      "packVersion": "1.1.0"
     },
     {
       "id": "classic/bundled/neon-mosaic-pack/neon-mosaic%2F1%2F6195cab2099aacc9/neon-tree-of-life-pack/1",
@@ -2682,14 +2682,14 @@
       "difficultiesByMode": { "solo": ["standard", "gentle"], "versus": ["standard"] },
       "sourceFile": {
         "path": "game/content/packs/neon-mosaic-pack.json",
-        "bytes": 580176,
-        "sha256": "8653b45a17273d447e0a5cab4370b8f273b74d1fdbd02d4206f3e3202b8e669f"
+        "bytes": 15620883,
+        "sha256": "d5e18470a3e7f1146c4a31afdaaf7cc41f4565dbba8ed1c7de61a408ffd41177"
       },
       "packIdentity": {
-        "bytes": 379220,
-        "sha256": "345674d27b1de48a323ce188ad09fda908d9cfdbfde680788c0dabadc13dcc4b"
+        "bytes": 15414303,
+        "sha256": "2f89fcfeb91f998f95e8cc2861d14381df1a8cd083fd3ed1b8e6083b5c375dbe"
       },
-      "packVersion": "1.0.0"
+      "packVersion": "1.1.0"
     },
     {
       "id": "classic/bundled/neon-mosaic-pack/neon-mosaic%2F1%2F6195cab2099aacc9/neon-pysanka-pack/1",
@@ -2724,14 +2724,14 @@
       "difficultiesByMode": { "solo": ["standard", "gentle"], "versus": ["standard"] },
       "sourceFile": {
         "path": "game/content/packs/neon-mosaic-pack.json",
-        "bytes": 580176,
-        "sha256": "8653b45a17273d447e0a5cab4370b8f273b74d1fdbd02d4206f3e3202b8e669f"
+        "bytes": 15620883,
+        "sha256": "d5e18470a3e7f1146c4a31afdaaf7cc41f4565dbba8ed1c7de61a408ffd41177"
       },
       "packIdentity": {
-        "bytes": 379220,
-        "sha256": "345674d27b1de48a323ce188ad09fda908d9cfdbfde680788c0dabadc13dcc4b"
+        "bytes": 15414303,
+        "sha256": "2f89fcfeb91f998f95e8cc2861d14381df1a8cd083fd3ed1b8e6083b5c375dbe"
       },
-      "packVersion": "1.0.0"
+      "packVersion": "1.1.0"
     },
     {
       "id": "classic/bundled/neon-mosaic-pack/neon-mosaic%2F1%2F6195cab2099aacc9/neon-barvinok-pack/1",
@@ -2766,14 +2766,14 @@
       "difficultiesByMode": { "solo": ["standard", "gentle"], "versus": ["standard"] },
       "sourceFile": {
         "path": "game/content/packs/neon-mosaic-pack.json",
-        "bytes": 580176,
-        "sha256": "8653b45a17273d447e0a5cab4370b8f273b74d1fdbd02d4206f3e3202b8e669f"
+        "bytes": 15620883,
+        "sha256": "d5e18470a3e7f1146c4a31afdaaf7cc41f4565dbba8ed1c7de61a408ffd41177"
       },
       "packIdentity": {
-        "bytes": 379220,
-        "sha256": "345674d27b1de48a323ce188ad09fda908d9cfdbfde680788c0dabadc13dcc4b"
+        "bytes": 15414303,
+        "sha256": "2f89fcfeb91f998f95e8cc2861d14381df1a8cd083fd3ed1b8e6083b5c375dbe"
       },
-      "packVersion": "1.0.0"
+      "packVersion": "1.1.0"
     },
     {
       "id": "classic/bundled/neon-mosaic-pack/neon-mosaic%2F1%2F6195cab2099aacc9/neon-wheat-pack/1",
@@ -2808,14 +2808,14 @@
       "difficultiesByMode": { "solo": ["standard", "gentle"], "versus": ["standard"] },
       "sourceFile": {
         "path": "game/content/packs/neon-mosaic-pack.json",
-        "bytes": 580176,
-        "sha256": "8653b45a17273d447e0a5cab4370b8f273b74d1fdbd02d4206f3e3202b8e669f"
+        "bytes": 15620883,
+        "sha256": "d5e18470a3e7f1146c4a31afdaaf7cc41f4565dbba8ed1c7de61a408ffd41177"
       },
       "packIdentity": {
-        "bytes": 379220,
-        "sha256": "345674d27b1de48a323ce188ad09fda908d9cfdbfde680788c0dabadc13dcc4b"
+        "bytes": 15414303,
+        "sha256": "2f89fcfeb91f998f95e8cc2861d14381df1a8cd083fd3ed1b8e6083b5c375dbe"
       },
-      "packVersion": "1.0.0"
+      "packVersion": "1.1.0"
     },
     {
       "id": "classic/bundled/neon-mosaic-pack/neon-mosaic%2F1%2F6195cab2099aacc9/neon-vinok-pack/1",
@@ -2850,14 +2850,14 @@
       "difficultiesByMode": { "solo": ["standard", "gentle"], "versus": ["standard"] },
       "sourceFile": {
         "path": "game/content/packs/neon-mosaic-pack.json",
-        "bytes": 580176,
-        "sha256": "8653b45a17273d447e0a5cab4370b8f273b74d1fdbd02d4206f3e3202b8e669f"
+        "bytes": 15620883,
+        "sha256": "d5e18470a3e7f1146c4a31afdaaf7cc41f4565dbba8ed1c7de61a408ffd41177"
       },
       "packIdentity": {
-        "bytes": 379220,
-        "sha256": "345674d27b1de48a323ce188ad09fda908d9cfdbfde680788c0dabadc13dcc4b"
+        "bytes": 15414303,
+        "sha256": "2f89fcfeb91f998f95e8cc2861d14381df1a8cd083fd3ed1b8e6083b5c375dbe"
       },
-      "packVersion": "1.0.0"
+      "packVersion": "1.1.0"
     },
     {
       "id": "classic/bundled/neon-mosaic-pack/neon-mosaic%2F1%2F6195cab2099aacc9/neon-didukh-pack/1",
@@ -2892,14 +2892,14 @@
       "difficultiesByMode": { "solo": ["standard", "gentle"], "versus": ["standard"] },
       "sourceFile": {
         "path": "game/content/packs/neon-mosaic-pack.json",
-        "bytes": 580176,
-        "sha256": "8653b45a17273d447e0a5cab4370b8f273b74d1fdbd02d4206f3e3202b8e669f"
+        "bytes": 15620883,
+        "sha256": "d5e18470a3e7f1146c4a31afdaaf7cc41f4565dbba8ed1c7de61a408ffd41177"
       },
       "packIdentity": {
-        "bytes": 379220,
-        "sha256": "345674d27b1de48a323ce188ad09fda908d9cfdbfde680788c0dabadc13dcc4b"
+        "bytes": 15414303,
+        "sha256": "2f89fcfeb91f998f95e8cc2861d14381df1a8cd083fd3ed1b8e6083b5c375dbe"
       },
-      "packVersion": "1.0.0"
+      "packVersion": "1.1.0"
     },
     {
       "id": "classic/bundled/neon-mosaic-pack/neon-mosaic%2F1%2F6195cab2099aacc9/neon-rushnyk-pack/1",
@@ -2934,14 +2934,14 @@
       "difficultiesByMode": { "solo": ["standard", "gentle"], "versus": ["standard"] },
       "sourceFile": {
         "path": "game/content/packs/neon-mosaic-pack.json",
-        "bytes": 580176,
-        "sha256": "8653b45a17273d447e0a5cab4370b8f273b74d1fdbd02d4206f3e3202b8e669f"
+        "bytes": 15620883,
+        "sha256": "d5e18470a3e7f1146c4a31afdaaf7cc41f4565dbba8ed1c7de61a408ffd41177"
       },
       "packIdentity": {
-        "bytes": 379220,
-        "sha256": "345674d27b1de48a323ce188ad09fda908d9cfdbfde680788c0dabadc13dcc4b"
+        "bytes": 15414303,
+        "sha256": "2f89fcfeb91f998f95e8cc2861d14381df1a8cd083fd3ed1b8e6083b5c375dbe"
       },
-      "packVersion": "1.0.0"
+      "packVersion": "1.1.0"
     },
     {
       "id": "classic/bundled/neon-mosaic-pack/neon-mosaic%2F1%2F6195cab2099aacc9/neon-bandura-pack/1",
@@ -2976,14 +2976,14 @@
       "difficultiesByMode": { "solo": ["standard", "gentle"], "versus": ["standard"] },
       "sourceFile": {
         "path": "game/content/packs/neon-mosaic-pack.json",
-        "bytes": 580176,
-        "sha256": "8653b45a17273d447e0a5cab4370b8f273b74d1fdbd02d4206f3e3202b8e669f"
+        "bytes": 15620883,
+        "sha256": "d5e18470a3e7f1146c4a31afdaaf7cc41f4565dbba8ed1c7de61a408ffd41177"
       },
       "packIdentity": {
-        "bytes": 379220,
-        "sha256": "345674d27b1de48a323ce188ad09fda908d9cfdbfde680788c0dabadc13dcc4b"
+        "bytes": 15414303,
+        "sha256": "2f89fcfeb91f998f95e8cc2861d14381df1a8cd083fd3ed1b8e6083b5c375dbe"
       },
-      "packVersion": "1.0.0"
+      "packVersion": "1.1.0"
     },
     {
       "id": "classic/bundled/neon-mosaic-pack/neon-mosaic%2F1%2F6195cab2099aacc9/neon-trembita-pack/1",
@@ -3018,14 +3018,14 @@
       "difficultiesByMode": { "solo": ["standard", "gentle"], "versus": ["standard"] },
       "sourceFile": {
         "path": "game/content/packs/neon-mosaic-pack.json",
-        "bytes": 580176,
-        "sha256": "8653b45a17273d447e0a5cab4370b8f273b74d1fdbd02d4206f3e3202b8e669f"
+        "bytes": 15620883,
+        "sha256": "d5e18470a3e7f1146c4a31afdaaf7cc41f4565dbba8ed1c7de61a408ffd41177"
       },
       "packIdentity": {
-        "bytes": 379220,
-        "sha256": "345674d27b1de48a323ce188ad09fda908d9cfdbfde680788c0dabadc13dcc4b"
+        "bytes": 15414303,
+        "sha256": "2f89fcfeb91f998f95e8cc2861d14381df1a8cd083fd3ed1b8e6083b5c375dbe"
       },
-      "packVersion": "1.0.0"
+      "packVersion": "1.1.0"
     },
     {
       "id": "classic/bundled/neon-mosaic-pack/neon-mosaic%2F1%2F6195cab2099aacc9/neon-tsymbaly-pack/1",
@@ -3060,14 +3060,14 @@
       "difficultiesByMode": { "solo": ["standard", "gentle"], "versus": ["standard"] },
       "sourceFile": {
         "path": "game/content/packs/neon-mosaic-pack.json",
-        "bytes": 580176,
-        "sha256": "8653b45a17273d447e0a5cab4370b8f273b74d1fdbd02d4206f3e3202b8e669f"
+        "bytes": 15620883,
+        "sha256": "d5e18470a3e7f1146c4a31afdaaf7cc41f4565dbba8ed1c7de61a408ffd41177"
       },
       "packIdentity": {
-        "bytes": 379220,
-        "sha256": "345674d27b1de48a323ce188ad09fda908d9cfdbfde680788c0dabadc13dcc4b"
+        "bytes": 15414303,
+        "sha256": "2f89fcfeb91f998f95e8cc2861d14381df1a8cd083fd3ed1b8e6083b5c375dbe"
       },
-      "packVersion": "1.0.0"
+      "packVersion": "1.1.0"
     },
     {
       "id": "classic/bundled/neon-mosaic-pack/neon-mosaic%2F1%2F6195cab2099aacc9/neon-kosiv-pitcher-pack/1",
@@ -3102,14 +3102,14 @@
       "difficultiesByMode": { "solo": ["standard", "gentle"], "versus": ["standard"] },
       "sourceFile": {
         "path": "game/content/packs/neon-mosaic-pack.json",
-        "bytes": 580176,
-        "sha256": "8653b45a17273d447e0a5cab4370b8f273b74d1fdbd02d4206f3e3202b8e669f"
+        "bytes": 15620883,
+        "sha256": "d5e18470a3e7f1146c4a31afdaaf7cc41f4565dbba8ed1c7de61a408ffd41177"
       },
       "packIdentity": {
-        "bytes": 379220,
-        "sha256": "345674d27b1de48a323ce188ad09fda908d9cfdbfde680788c0dabadc13dcc4b"
+        "bytes": 15414303,
+        "sha256": "2f89fcfeb91f998f95e8cc2861d14381df1a8cd083fd3ed1b8e6083b5c375dbe"
       },
-      "packVersion": "1.0.0"
+      "packVersion": "1.1.0"
     },
     {
       "id": "classic/bundled/neon-mosaic-pack/neon-mosaic%2F1%2F6195cab2099aacc9/neon-opishnia-ram-pack/1",
@@ -3144,14 +3144,14 @@
       "difficultiesByMode": { "solo": ["standard", "gentle"], "versus": ["standard"] },
       "sourceFile": {
         "path": "game/content/packs/neon-mosaic-pack.json",
-        "bytes": 580176,
-        "sha256": "8653b45a17273d447e0a5cab4370b8f273b74d1fdbd02d4206f3e3202b8e669f"
+        "bytes": 15620883,
+        "sha256": "d5e18470a3e7f1146c4a31afdaaf7cc41f4565dbba8ed1c7de61a408ffd41177"
       },
       "packIdentity": {
-        "bytes": 379220,
-        "sha256": "345674d27b1de48a323ce188ad09fda908d9cfdbfde680788c0dabadc13dcc4b"
+        "bytes": 15414303,
+        "sha256": "2f89fcfeb91f998f95e8cc2861d14381df1a8cd083fd3ed1b8e6083b5c375dbe"
       },
-      "packVersion": "1.0.0"
+      "packVersion": "1.1.0"
     },
     {
       "id": "classic/bundled/neon-mosaic-pack/neon-mosaic%2F1%2F6195cab2099aacc9/neon-petrykivka-pack/1",
@@ -3186,14 +3186,14 @@
       "difficultiesByMode": { "solo": ["standard", "gentle"], "versus": ["standard"] },
       "sourceFile": {
         "path": "game/content/packs/neon-mosaic-pack.json",
-        "bytes": 580176,
-        "sha256": "8653b45a17273d447e0a5cab4370b8f273b74d1fdbd02d4206f3e3202b8e669f"
+        "bytes": 15620883,
+        "sha256": "d5e18470a3e7f1146c4a31afdaaf7cc41f4565dbba8ed1c7de61a408ffd41177"
       },
       "packIdentity": {
-        "bytes": 379220,
-        "sha256": "345674d27b1de48a323ce188ad09fda908d9cfdbfde680788c0dabadc13dcc4b"
+        "bytes": 15414303,
+        "sha256": "2f89fcfeb91f998f95e8cc2861d14381df1a8cd083fd3ed1b8e6083b5c375dbe"
       },
-      "packVersion": "1.0.0"
+      "packVersion": "1.1.0"
     },
     {
       "id": "classic/bundled/neon-mosaic-pack/neon-mosaic%2F1%2F6195cab2099aacc9/neon-oak-pack/1",
@@ -3228,14 +3228,14 @@
       "difficultiesByMode": { "solo": ["standard", "gentle"], "versus": ["standard"] },
       "sourceFile": {
         "path": "game/content/packs/neon-mosaic-pack.json",
-        "bytes": 580176,
-        "sha256": "8653b45a17273d447e0a5cab4370b8f273b74d1fdbd02d4206f3e3202b8e669f"
+        "bytes": 15620883,
+        "sha256": "d5e18470a3e7f1146c4a31afdaaf7cc41f4565dbba8ed1c7de61a408ffd41177"
       },
       "packIdentity": {
-        "bytes": 379220,
-        "sha256": "345674d27b1de48a323ce188ad09fda908d9cfdbfde680788c0dabadc13dcc4b"
+        "bytes": 15414303,
+        "sha256": "2f89fcfeb91f998f95e8cc2861d14381df1a8cd083fd3ed1b8e6083b5c375dbe"
       },
-      "packVersion": "1.0.0"
+      "packVersion": "1.1.0"
     },
     {
       "id": "classic/bundled/neon-mosaic-pack/neon-mosaic%2F1%2F6195cab2099aacc9/neon-stork-pack/1",
@@ -3270,14 +3270,14 @@
       "difficultiesByMode": { "solo": ["standard", "gentle"], "versus": ["standard"] },
       "sourceFile": {
         "path": "game/content/packs/neon-mosaic-pack.json",
-        "bytes": 580176,
-        "sha256": "8653b45a17273d447e0a5cab4370b8f273b74d1fdbd02d4206f3e3202b8e669f"
+        "bytes": 15620883,
+        "sha256": "d5e18470a3e7f1146c4a31afdaaf7cc41f4565dbba8ed1c7de61a408ffd41177"
       },
       "packIdentity": {
-        "bytes": 379220,
-        "sha256": "345674d27b1de48a323ce188ad09fda908d9cfdbfde680788c0dabadc13dcc4b"
+        "bytes": 15414303,
+        "sha256": "2f89fcfeb91f998f95e8cc2861d14381df1a8cd083fd3ed1b8e6083b5c375dbe"
       },
-      "packVersion": "1.0.0"
+      "packVersion": "1.1.0"
     },
     {
       "id": "classic/bundled/neon-mosaic-pack/neon-mosaic%2F1%2F6195cab2099aacc9/neon-swallow-pack/1",
@@ -3312,14 +3312,14 @@
       "difficultiesByMode": { "solo": ["standard", "gentle"], "versus": ["standard"] },
       "sourceFile": {
         "path": "game/content/packs/neon-mosaic-pack.json",
-        "bytes": 580176,
-        "sha256": "8653b45a17273d447e0a5cab4370b8f273b74d1fdbd02d4206f3e3202b8e669f"
+        "bytes": 15620883,
+        "sha256": "d5e18470a3e7f1146c4a31afdaaf7cc41f4565dbba8ed1c7de61a408ffd41177"
       },
       "packIdentity": {
-        "bytes": 379220,
-        "sha256": "345674d27b1de48a323ce188ad09fda908d9cfdbfde680788c0dabadc13dcc4b"
+        "bytes": 15414303,
+        "sha256": "2f89fcfeb91f998f95e8cc2861d14381df1a8cd083fd3ed1b8e6083b5c375dbe"
       },
-      "packVersion": "1.0.0"
+      "packVersion": "1.1.0"
     },
     {
       "id": "classic/bundled/neon-mosaic-pack/neon-mosaic%2F1%2F6195cab2099aacc9/neon-horse-pack/1",
@@ -3354,14 +3354,14 @@
       "difficultiesByMode": { "solo": ["standard", "gentle"], "versus": ["standard"] },
       "sourceFile": {
         "path": "game/content/packs/neon-mosaic-pack.json",
-        "bytes": 580176,
-        "sha256": "8653b45a17273d447e0a5cab4370b8f273b74d1fdbd02d4206f3e3202b8e669f"
+        "bytes": 15620883,
+        "sha256": "d5e18470a3e7f1146c4a31afdaaf7cc41f4565dbba8ed1c7de61a408ffd41177"
       },
       "packIdentity": {
-        "bytes": 379220,
-        "sha256": "345674d27b1de48a323ce188ad09fda908d9cfdbfde680788c0dabadc13dcc4b"
+        "bytes": 15414303,
+        "sha256": "2f89fcfeb91f998f95e8cc2861d14381df1a8cd083fd3ed1b8e6083b5c375dbe"
       },
-      "packVersion": "1.0.0"
+      "packVersion": "1.1.0"
     },
     {
       "id": "classic/bundled/neon-mosaic-pack/neon-mosaic%2F1%2F6195cab2099aacc9/neon-deer-pack/1",
@@ -3396,14 +3396,14 @@
       "difficultiesByMode": { "solo": ["standard", "gentle"], "versus": ["standard"] },
       "sourceFile": {
         "path": "game/content/packs/neon-mosaic-pack.json",
-        "bytes": 580176,
-        "sha256": "8653b45a17273d447e0a5cab4370b8f273b74d1fdbd02d4206f3e3202b8e669f"
+        "bytes": 15620883,
+        "sha256": "d5e18470a3e7f1146c4a31afdaaf7cc41f4565dbba8ed1c7de61a408ffd41177"
       },
       "packIdentity": {
-        "bytes": 379220,
-        "sha256": "345674d27b1de48a323ce188ad09fda908d9cfdbfde680788c0dabadc13dcc4b"
+        "bytes": 15414303,
+        "sha256": "2f89fcfeb91f998f95e8cc2861d14381df1a8cd083fd3ed1b8e6083b5c375dbe"
       },
-      "packVersion": "1.0.0"
+      "packVersion": "1.1.0"
     },
     {
       "id": "classic/bundled/neon-mosaic-pack/neon-mosaic%2F1%2F6195cab2099aacc9/neon-fish-pack/1",
@@ -3438,14 +3438,14 @@
       "difficultiesByMode": { "solo": ["standard", "gentle"], "versus": ["standard"] },
       "sourceFile": {
         "path": "game/content/packs/neon-mosaic-pack.json",
-        "bytes": 580176,
-        "sha256": "8653b45a17273d447e0a5cab4370b8f273b74d1fdbd02d4206f3e3202b8e669f"
+        "bytes": 15620883,
+        "sha256": "d5e18470a3e7f1146c4a31afdaaf7cc41f4565dbba8ed1c7de61a408ffd41177"
       },
       "packIdentity": {
-        "bytes": 379220,
-        "sha256": "345674d27b1de48a323ce188ad09fda908d9cfdbfde680788c0dabadc13dcc4b"
+        "bytes": 15414303,
+        "sha256": "2f89fcfeb91f998f95e8cc2861d14381df1a8cd083fd3ed1b8e6083b5c375dbe"
       },
-      "packVersion": "1.0.0"
+      "packVersion": "1.1.0"
     },
     {
       "id": "classic/bundled/neon-mosaic-pack/neon-mosaic%2F1%2F6195cab2099aacc9/neon-berehynia-pack/1",
@@ -3480,14 +3480,14 @@
       "difficultiesByMode": { "solo": ["standard", "gentle"], "versus": ["standard"] },
       "sourceFile": {
         "path": "game/content/packs/neon-mosaic-pack.json",
-        "bytes": 580176,
-        "sha256": "8653b45a17273d447e0a5cab4370b8f273b74d1fdbd02d4206f3e3202b8e669f"
+        "bytes": 15620883,
+        "sha256": "d5e18470a3e7f1146c4a31afdaaf7cc41f4565dbba8ed1c7de61a408ffd41177"
       },
       "packIdentity": {
-        "bytes": 379220,
-        "sha256": "345674d27b1de48a323ce188ad09fda908d9cfdbfde680788c0dabadc13dcc4b"
+        "bytes": 15414303,
+        "sha256": "2f89fcfeb91f998f95e8cc2861d14381df1a8cd083fd3ed1b8e6083b5c375dbe"
       },
-      "packVersion": "1.0.0"
+      "packVersion": "1.1.0"
     },
     {
       "id": "classic/bundled/neon-mosaic-pack/neon-mosaic%2F1%2F6195cab2099aacc9/neon-bezkonechnyk-pack/1",
@@ -3522,14 +3522,14 @@
       "difficultiesByMode": { "solo": ["standard", "gentle"], "versus": ["standard"] },
       "sourceFile": {
         "path": "game/content/packs/neon-mosaic-pack.json",
-        "bytes": 580176,
-        "sha256": "8653b45a17273d447e0a5cab4370b8f273b74d1fdbd02d4206f3e3202b8e669f"
+        "bytes": 15620883,
+        "sha256": "d5e18470a3e7f1146c4a31afdaaf7cc41f4565dbba8ed1c7de61a408ffd41177"
       },
       "packIdentity": {
-        "bytes": 379220,
-        "sha256": "345674d27b1de48a323ce188ad09fda908d9cfdbfde680788c0dabadc13dcc4b"
+        "bytes": 15414303,
+        "sha256": "2f89fcfeb91f998f95e8cc2861d14381df1a8cd083fd3ed1b8e6083b5c375dbe"
       },
-      "packVersion": "1.0.0"
+      "packVersion": "1.1.0"
     },
     {
       "id": "classic/bundled/neon-mosaic-pack/neon-mosaic%2F1%2F6195cab2099aacc9/neon-ornek-tulip-pack/1",
@@ -3564,14 +3564,14 @@
       "difficultiesByMode": { "solo": ["standard", "gentle"], "versus": ["standard"] },
       "sourceFile": {
         "path": "game/content/packs/neon-mosaic-pack.json",
-        "bytes": 580176,
-        "sha256": "8653b45a17273d447e0a5cab4370b8f273b74d1fdbd02d4206f3e3202b8e669f"
+        "bytes": 15620883,
+        "sha256": "d5e18470a3e7f1146c4a31afdaaf7cc41f4565dbba8ed1c7de61a408ffd41177"
       },
       "packIdentity": {
-        "bytes": 379220,
-        "sha256": "345674d27b1de48a323ce188ad09fda908d9cfdbfde680788c0dabadc13dcc4b"
+        "bytes": 15414303,
+        "sha256": "2f89fcfeb91f998f95e8cc2861d14381df1a8cd083fd3ed1b8e6083b5c375dbe"
       },
-      "packVersion": "1.0.0"
+      "packVersion": "1.1.0"
     },
     {
       "id": "classic/archived/fpv-arcade-r4/fpv-first-light-r4%2F4%2F0295a1eae3e180ec/orchard-window/4",

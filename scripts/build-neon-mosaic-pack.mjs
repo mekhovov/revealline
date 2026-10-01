@@ -16,15 +16,15 @@ export async function buildNeonMosaicPack() {
   const pack = {
     ...sources[0].pack,
     id: 'neon-mosaic-pack',
-    version: '1.0.0',
+    version: '1.1.0',
     name: 'Neon Words & Symbols',
     description:
-      '38 neon word and symbol levels: eleven word designs and twenty-seven cultural and FPV symbols. Each arena has distinctive terrain, passages, refuges and enemies. Custom reveal images are planned; existing procedural retro artwork is used for now.',
+      '38 neon word and symbol levels: eleven word designs and twenty-seven cultural and FPV symbols. Each arena has distinctive terrain, passages, refuges and enemies, with its own original reveal illustration.',
     metadata: {
       author: 'RevealLine',
       license: 'Project content',
       rightsStatus:
-        'User-supplied layout references with original procedural placeholder sprites. Custom reveal images are deferred; no source screenshot artwork or music embedded.',
+        'User-supplied layout references with original sprites and AI-assisted reveal illustrations. No source screenshot artwork or music embedded.',
     },
     visualOverrides: {},
     levelVisuals: sources.map(({ scenario }, index) => ({
@@ -58,5 +58,5 @@ if (process.argv[1] && new URL(process.argv[1], 'file:').href === import.meta.ur
       parser: 'json',
     }),
   );
-  console.log('Neon Words & Symbols: 38 valid levels; reveal images deferred.');
+  console.log('Neon Words & Symbols: 38 valid levels; original reveal images included.');
 }

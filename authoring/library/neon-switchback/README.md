@@ -6,6 +6,6 @@ The source is projected into the 70 × 34 interior of the supported 72 × 36 boa
 
 Six pink ringed bouncers begin at the screenshot’s upper-left, two left-middle, lower-left and two upper-right positions. Four cyan patrols begin at the top of the divider, middle-left, middle-right and lower-right perimeter. The player starts at bottom center. Speeds and directions are approximated from trails. Rings use an original pink sprite and existing bouncer behavior; a still screenshot cannot establish a separate armor or ability mechanic.
 
-Goal: 75%, three lives. Custom reveal artwork and Ukrainian translation remain deferred. Source screenshot pixels are not embedded. Regenerate with `node scripts/build-neon-switchback.mjs`, then `node scripts/build-neon-reference-pack.mjs`.
+Goal: 75%, three lives. Original reveal artwork is included. Ukrainian translation and unit tests remain deferred. Source screenshot pixels are not embedded. Regenerate with `node scripts/build-neon-switchback.mjs`, then `node scripts/build-neon-reference-pack.mjs`.
 
 Validation: scenario and pack schemas pass. Archive and Current rules each initialize and survive 120 idle ticks in immediate and buffered turning. An opening route from bottom center to the safe bridge closes a 192-cell capture with all three lives in both turn policies. Browser geometry and enemy placements were reviewed. Unit tests and full-clear balancing remain deferred.
