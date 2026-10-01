@@ -117,6 +117,9 @@ export function createFlightRenderer({
     pathLine = null,
     droneVisual = null,
     sceneGeneration = 0,
+    presentationGeneration = 0,
+    rotorTick = null,
+    rotorPhase = 0,
     importGeneration = 0,
     importedMixer = null,
     importedClips = [],
@@ -165,12 +168,14 @@ export function createFlightRenderer({
     const shapes = new Set(),
       paints = new Set(),
       textures = new Set(),
-      skeletons = new Set();
+      skeletons = new Set(),
+      instances = new Set();
     const roots = [group, ...(group.userData.auxiliaryRoots ?? [])];
     for (const root of roots)
       root.traverse((item) => {
         if (item.geometry) shapes.add(item.geometry);
         if (item.skeleton) skeletons.add(item.skeleton);
+        if (item.isInstancedMesh) instances.add(item);
         for (const paint of [
           ...(Array.isArray(item.material) ? item.material : [item.material]),
           ...(item.userData?.ownedMaterials ?? []),
@@ -185,6 +190,9 @@ export function createFlightRenderer({
       value.dispose();
     }
     for (const value of skeletons) value.dispose();
+    // Instance attributes are released by the mesh's own dispose event, not by
+    // disposing its shared BufferGeometry or material.
+    for (const value of instances) value.dispose();
     for (const value of shapes) {
       value.dispose();
       geometry.delete(value);
@@ -251,6 +259,7 @@ export function createFlightRenderer({
   function setQuality(value) {
     if (!QUALITIES[value]) throw new TypeError('Unknown flight quality');
     const changed = value !== quality;
+    if (changed) presentationGeneration++;
     quality = value;
     const selected = QUALITIES[value];
     renderer.setPixelRatio(Math.min(win.devicePixelRatio || 1, selected.ratio));
@@ -285,10 +294,13 @@ export function createFlightRenderer({
   function setDrone(value) {
     if (!['racer', 'pixel', 'utility'].includes(value))
       throw new TypeError('Unknown drone appearance');
+    presentationGeneration++;
     droneKind = value;
     releaseGroup(aircraft);
     droneVisual = buildDroneVisual({ parent: aircraft, mesh, material, box, kind: value, quality });
     if (cosmeticColor) droneVisual.tint.color.set(cosmeticColor);
+    for (const [index, rotor] of droneVisual.rotors.entries())
+      rotor.rotation.y = rotorPhase * (index === 0 || index === 3 ? -1 : 1);
     setSurfaceQuality(materials, quality, renderer.capabilities.getMaxAnisotropy());
   }
   function lineVolume(step, index) {
@@ -424,6 +436,9 @@ export function createFlightRenderer({
   function setCourse(value, selectedMode = 'self-level') {
     if (disposed) return;
     sceneGeneration++;
+    presentationGeneration++;
+    rotorTick = null;
+    rotorPhase = 0;
     editor?.detach();
     course = value;
     mode = selectedMode;
@@ -661,7 +676,7 @@ export function createFlightRenderer({
       const p = actor.position;
       row.group.position.set(p.x / 1000, p.y / 1000, p.z / 1000);
       let movement = 0;
-      if (row.lastPosition && row.lastTick !== state.ticks) {
+      if (row.lastPosition && row.lastTick !== null && state.ticks > row.lastTick) {
         const dx = p.x - row.lastPosition.x,
           dz = p.z - row.lastPosition.z;
         if (Math.abs(dx) + Math.abs(dz) > 1) row.group.rotation.y = Math.atan2(-dx, -dz);
@@ -671,7 +686,9 @@ export function createFlightRenderer({
         if (row.lastTick !== null && state.ticks < row.lastTick) row.distance = 0;
         row.distance += movement;
         if (!reducedMotion) {
-          for (const rotor of row.animated.rotors) rotor.rotation.y = state.ticks * 0.64;
+          for (const [index, rotor] of row.animated.rotors.entries())
+            rotor.rotation.y =
+              ((state.ticks * 0.64) % (Math.PI * 2)) * (index === 0 || index === 3 ? -1 : 1);
           for (const wheel of row.animated.wheels)
             wheel.rotation.x = row.distance / Math.max(0.02, row.radius * 0.25);
           for (const limb of row.animated.limbs)
@@ -742,12 +759,16 @@ export function createFlightRenderer({
     aircraft.quaternion.copy(rotation);
     aircraft.scale.setScalar((course.rules?.droneRadius ?? 220) / 220);
     aircraft.visible = view !== 'fpv';
-    if (!reducedMotion && state.status === 'active')
-      for (const [index, rotor] of droneVisual.rotors.entries())
-        rotor.rotation.y =
-          state.ticks *
-          (0.12 + Math.max(0, Math.min(1, (state.lastInput?.throttle ?? 0) / 1000)) * 0.74) *
-          (index % 2 ? 1 : -1);
+    // Integrate only elapsed simulation ticks. Changing throttle changes angular
+    // speed without reinterpreting the entire flight's already elapsed phase.
+    if (rotorTick === null || state.ticks < rotorTick) rotorPhase = 0;
+    else if (!reducedMotion && state.ticks > rotorTick) {
+      const rate = 0.12 + Math.max(0, Math.min(1, (state.lastInput?.throttle ?? 0) / 1000)) * 0.74;
+      rotorPhase = (rotorPhase + (state.ticks - rotorTick) * rate) % (Math.PI * 2);
+    }
+    rotorTick = state.ticks;
+    for (const [index, rotor] of droneVisual.rotors.entries())
+      rotor.rotation.y = rotorPhase * (index === 0 || index === 3 ? -1 : 1);
     if (view === 'fpv') {
       camera.position.copy(position);
       camera.quaternion
@@ -956,6 +977,7 @@ export function createFlightRenderer({
         sceneryFallback.visible = false;
       imported.userData.auxiliaryRoots = result.scenes.filter((item) => item !== result.scene);
       register(result.scene);
+      presentationGeneration++;
       for (const item of imported.userData.auxiliaryRoots) register(item);
       importedClips = result.animations;
       if (importedClips.length) {
@@ -1202,12 +1224,30 @@ export function createFlightRenderer({
     setPath,
     loadScene,
     async prepare({ signal } = {}) {
-      const generation = sceneGeneration;
+      const generation = sceneGeneration,
+        presentation = presentationGeneration;
       signal?.throwIfAborted();
-      if (disposed || !course) return false;
+      if (disposed || !course || renderer.getContext().isContextLost()) return false;
       await renderer.compileAsync(scene, camera);
       signal?.throwIfAborted();
-      return !disposed && generation === sceneGeneration;
+      if (
+        disposed ||
+        generation !== sceneGeneration ||
+        presentation !== presentationGeneration ||
+        renderer.getContext().isContextLost()
+      )
+        return false;
+      // compileAsync waits for completion; it does not reject failed shader links.
+      const gl = renderer.getContext();
+      if (
+        renderer.info.programs.some(
+          (program) => gl.getProgramParameter(program.program, gl.LINK_STATUS) === false,
+        )
+      )
+        throw new Error(
+          'The graphics driver could not compile this scene. Try Performance graphics.',
+        );
+      return true;
     },
     attachTransform,
     createEditor,
