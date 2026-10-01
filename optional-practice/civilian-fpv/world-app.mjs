@@ -22,8 +22,15 @@ import { WORLD_COLLISION_BACKEND } from './world-collision.mjs';
 import { createFlightRenderer } from './renderer.mjs';
 import { createFlightInput } from './input.mjs';
 import { createRadioRuntime } from './radio-runtime.mjs';
+import { restoreVerifiedRadio } from './radio-session.mjs';
 import { mountRadioSetup } from './radio-setup.mjs';
-import { DEFAULT_RESPONSE, createFlightProfileStore, responseIdentity } from './radio-profile.mjs';
+import {
+  DEFAULT_RESPONSE,
+  createFlightProfileStore,
+  responseIdentity,
+  STICK_LAYOUTS,
+  neutralFlightInput,
+} from './radio-profile.mjs';
 import { createFlightNotebook } from './notebook.mjs';
 import {
   createPlaylistStore,
@@ -156,6 +163,9 @@ const COPY_EN = {
   balanced: 'Balanced',
   performance: 'Performance',
   quality: 'Quality',
+  compactSticks: 'Compact sticks',
+  expandedSticks: 'Expanded sticks',
+  setupSticks: 'Sticks in setup only',
   arm: 'Arm / resume',
   pause: 'Pause',
   retry: 'Retry',
@@ -255,6 +265,9 @@ const COPY_UK = {
   balanced: 'Збалансовано',
   performance: 'Швидкодія',
   quality: 'Якість',
+  compactSticks: 'Компактні стіки',
+  expandedSticks: 'Великі стіки',
+  setupSticks: 'Стіки лише в налаштуваннях',
   arm: 'Увімкнути / продовжити',
   pause: 'Пауза',
   retry: 'Ще раз',
@@ -601,6 +614,7 @@ export function mountWorldApp({
     'flight-camera',
     'drone-look',
     'flight-quality',
+    'flight-stick-display',
     'world-fov',
     'world-tilt',
   ];
@@ -897,6 +911,151 @@ export function mountWorldApp({
         }).catch(reportError);
     },
   });
+  function restoreRadio() {
+    if (replayProof || $('flight-source').value !== 'radio' || $('world-radio-dialog').open) return;
+    // Read the current saved profile: Setup and another simulator page may have
+    // saved it through their own store instance since this page was mounted.
+    restoreVerifiedRadio(radio, createFlightProfileStore({ storage }));
+  }
+  function radioHelp(reason) {
+    const messages = {
+      unavailable: [
+        'This browser cannot read USB gamepads. Try a browser with Gamepad support.',
+        'Цей браузер не читає USB-пульти. Спробуйте браузер із підтримкою Gamepad.',
+      ],
+      'select-device': [
+        'Move a radio stick to detect it, or open Setup to select a device.',
+        'Рухніть стік пульта для виявлення або виберіть пристрій у налаштуваннях.',
+      ],
+      'mapping-incomplete': [
+        'Open Setup to map and verify this radio.',
+        'Відкрийте налаштування, призначте та перевірте канали пульта.',
+      ],
+      'verify-controls': [
+        'Finish verifying the controls in Setup.',
+        'Завершіть перевірку керування в налаштуваннях.',
+      ],
+      'device-lost': [
+        'Radio disconnected. Reconnect, then deliberately arm again.',
+        'Пульт від’єднано. Під’єднайте його та свідомо увімкніть знову.',
+      ],
+      'invalid-sample': [
+        'Radio input is invalid. Check the device and calibration in Setup.',
+        'Некоректний сигнал пульта. Перевірте пристрій і калібрування в налаштуваннях.',
+      ],
+      'arm-switch-off': [
+        'Move the arm switch ON to start.',
+        'Перемкніть озброєння в УВІМК, щоб почати.',
+      ],
+      'arm-off-first': [
+        'Move the arm switch OFF, then ON.',
+        'Перемкніть озброєння у ВИМК, а потім в УВІМК.',
+      ],
+      'throttle-high': ['Lower throttle before arming.', 'Перед увімкненням опустіть газ.'],
+      'centre-controls': [
+        'Centre roll, pitch and yaw before arming.',
+        'Перед увімкненням центруйте крен, тангаж і рискання.',
+      ],
+      'pickup-controls': [
+        'Match the paused stick positions, then arm again.',
+        'Поверніть стіки в положення на момент паузи, потім увімкніть знову.',
+      ],
+      ready: [
+        'Ready. Use the arm switch, or Arm / resume if no switch is assigned.',
+        'Готово. Використайте перемикач або кнопку «Увімкнути», якщо перемикач не призначено.',
+      ],
+      active: ['Radio active.', 'Пульт керує польотом.'],
+    };
+    return txt(...(messages[reason] ?? messages.ready));
+  }
+  function paintInput(state) {
+    const source = replayProof ? 'recording' : $('flight-source').value,
+      touchActive = source === 'touch',
+      display = $('flight-stick-display').value,
+      monitor = $('world-touch'),
+      radioPreview = source === 'radio' ? radio.preview() : null,
+      unavailable = source === 'radio' && !radioPreview?.controls,
+      controls =
+        source === 'radio'
+          ? (radioPreview?.controls ?? neutralFlightInput())
+          : Object.fromEntries(
+              ['roll', 'pitch', 'yaw', 'throttle'].map((k) => [
+                k,
+                (state?.lastInput?.[k] ?? 0) / 1000,
+              ]),
+            ),
+      layout = STICK_LAYOUTS[radioPreview?.stickMode ?? 2];
+    monitor.hidden = display === 'setup' && !touchActive;
+    monitor.classList.toggle('touch-active', touchActive);
+    monitor.classList.toggle('compact-sticks', display === 'compact' && !touchActive);
+    monitor.classList.toggle('input-unavailable', unavailable);
+    const controlName = (key) =>
+      ({
+        roll: txt('Roll', 'Крен'),
+        pitch: txt('Pitch', 'Тангаж'),
+        yaw: txt('Yaw', 'Рискання'),
+        throttle: txt('Throttle', 'Газ'),
+      })[key];
+    for (const [index, side] of ['left', 'right'].entries()) {
+      const node = $(`world-${side}-stick`),
+        horizontal = layout[index * 2],
+        vertical = layout[index * 2 + 1],
+        x = controls[horizontal],
+        y = vertical === 'throttle' ? controls[vertical] * 2 - 1 : controls[vertical],
+        radius = node.clientWidth * 0.34;
+      node.querySelector('i').style.transform = `translate(${x * radius}px, ${-y * radius}px)`;
+      node.setAttribute(
+        'aria-label',
+        `${controlName(horizontal)} ${Math.round(x * 100)}%, ${controlName(vertical)} ${Math.round(controls[vertical] * 100)}%`,
+      );
+      $(`world-${side}-label`).textContent =
+        `${controlName(horizontal)} / ${controlName(vertical)}`;
+    }
+    const status = $('world-input-status');
+    const text =
+      source === 'radio'
+        ? `${txt('USB radio', 'USB-пульт')} · ${radioHelp(radio.status().reason)}`
+        : source === 'recording'
+          ? txt(
+              'Recorded controls · live input does not affect playback.',
+              'Записане керування · живий сигнал не змінює відтворення.',
+            )
+          : source === 'touch'
+            ? txt(
+                'Touch controls · left: yaw/throttle, right: roll/pitch.',
+                'Сенсорне керування · ліворуч: рискання/газ, праворуч: крен/тангаж.',
+              )
+            : txt(
+                'Keyboard · W/S pitch · A/D roll · Q/E yaw · ↑/↓ throttle.',
+                'Клавіатура · W/S тангаж · A/D крен · Q/E рискання · ↑/↓ газ.',
+              );
+    if (status.textContent !== text) status.textContent = text;
+    status.dataset.source = source;
+    monitor.dataset.source = source;
+    $('world-keys-hint').textContent =
+      source === 'radio'
+        ? txt(
+            'Radio sticks control flight · P pauses · Space or Fire shoots.',
+            'Стіки пульта керують польотом · P — пауза · Пробіл або «Вогонь» — постріл.',
+          )
+        : source === 'touch'
+          ? txt(
+              'Drag the sticks to fly · use Pause and Fire below.',
+              'Рухайте стіки для польоту · кнопки «Пауза» та «Вогонь» — нижче.',
+            )
+          : source === 'recording'
+            ? txt(
+                'The sticks show recorded commands. Pause, slow down or switch views to study them.',
+                'Стіки показують записані команди. Зупиняйте, сповільнюйте або змінюйте камеру, щоб їх роздивитися.',
+              )
+            : locale === 'uk'
+              ? COPY_UK.keys
+              : COPY_EN.keys;
+    $('flight-stick-display').setAttribute(
+      'aria-label',
+      txt('Stick display', 'Відображення стіків'),
+    );
+  }
   const hangar = mountDroneHangar({
     button: $('inspect-drone'),
     dialog: $('drone-hangar'),
@@ -2050,6 +2209,15 @@ export function mountWorldApp({
   }
   function advanceFrame(now) {
     if (!flight || !$('flight-dialog').open) return;
+    if (
+      !replayProof &&
+      $('flight-source').value === 'radio' &&
+      !radio.status().verified &&
+      now - lastRadioDiscovery > 1000
+    ) {
+      lastRadioDiscovery = now;
+      restoreRadio();
+    }
     const elapsed = lastTime === null ? 0 : now - lastTime;
     lastTime = now;
     if (elapsed > 250) {
@@ -2127,6 +2295,7 @@ export function mountWorldApp({
       $('aim-reticle').hidden = !aim.visible;
     }
     updateHUD(state);
+    paintInput(state);
     if (terminal(state)) void finishFlight(flightToken).catch(reportError);
   }
   async function startFlight(entry, options = {}) {
@@ -2138,6 +2307,7 @@ export function mountWorldApp({
     await saveRecovery();
     await ready;
     if (disposed || token !== flightToken) return;
+    radio.reset({ notify: false });
     flight?.dispose?.();
     flight = null;
     current = entry;
@@ -2234,6 +2404,15 @@ export function mountWorldApp({
       flight = recovered.flight;
       recorder = recovered.recorder;
       sectors.reset(recovered.sectors);
+      radio.reset({
+        notify: false,
+        pickup: Object.fromEntries(
+          ['roll', 'pitch', 'yaw', 'throttle'].map((k) => [
+            k,
+            (flight.snapshot().lastInput[k] ?? 0) / 1000,
+          ]),
+        ),
+      });
       $('flight-mode').value = options.recover.mode;
     } else {
       flight = (entry.legacy ? createFlight : createWorldFlight)({
@@ -2293,6 +2472,8 @@ export function mountWorldApp({
       'Готово. Виберіть керування та натисніть «Увімкнути».',
     );
     input.select($('flight-source').value);
+    restoreRadio();
+    paintInput(flight.snapshot());
     updateHUD(flight.snapshot());
     $('world-viewport').focus();
     if (replayProof) {
@@ -2627,8 +2808,15 @@ export function mountWorldApp({
   });
   on($('world-arm'), 'click', () => {
     if (!sceneReady || !flight || terminal(flight.snapshot()) || (replayProof && finished)) return;
-    if (!replayProof && $('flight-source').value === 'radio' && !radio.requestArm())
-      throw new Error(`${txt('Radio is not ready', 'Пульт не готовий')}: ${radio.status().reason}`);
+    if (!replayProof && $('flight-source').value === 'radio') {
+      restoreRadio();
+      radio.poll();
+      if (!radio.status().active && !radio.requestArm()) {
+        paintInput(flight.snapshot());
+        $('flight-status').textContent = radioHelp(radio.status().reason);
+        return;
+      }
+    }
     input.enable(!replayProof);
     void audio.resume().catch(reportError);
     fire = false;
@@ -2697,7 +2885,8 @@ export function mountWorldApp({
     if (replayProof) return;
     pauseFlight();
     input.select($('flight-source').value);
-    $('world-touch').hidden = $('flight-source').value !== 'touch';
+    restoreRadio();
+    paintInput(flight?.snapshot());
   });
   on($('flight-mode'), 'change', () => {
     if (replayProof) {
@@ -2708,6 +2897,7 @@ export function mountWorldApp({
     if (current)
       return startFlight(current, { preview, playlist: playingPlaylist, index: playlistIndex });
   });
+  on($('flight-stick-display'), 'change', () => paintInput(flight?.snapshot()));
   on($('flight-quality'), 'change', () => renderer?.setQuality?.($('flight-quality').value));
   on($('drone-look'), 'change', () => renderer?.setDrone?.($('drone-look').value));
   on($('world-fire'), 'pointerdown', (e) => {
@@ -2783,6 +2973,12 @@ export function mountWorldApp({
     e.preventDefault();
     closeRadio();
   });
+  on(win, 'gamepadconnected', () => restoreRadio());
+  on(win, 'gamepaddisconnected', (e) => {
+    if (!replayProof && $('flight-source').value === 'radio')
+      radio.disconnect(e.gamepad.index);
+  });
+  on(win, 'focus', () => restoreRadio());
   on(win, 'pagehide', () => pauseFlight());
   const ready = (async () => {
     const results = await Promise.allSettled([
@@ -2815,7 +3011,7 @@ export function mountWorldApp({
   })();
   for (const id of preferenceIds) on($(id), 'change', savePreferences);
   paintLanguage();
-  $('world-touch').hidden = $('flight-source').value !== 'touch';
+  paintInput(null);
   renderFilters();
   renderCatalogue();
   renderPlaylist();
@@ -2846,6 +3042,11 @@ export function mountWorldApp({
       },
       records: clone(records),
       catalogue: catalogue.length,
+      radio: radio.status(),
+      inputDisplay: {
+        source: $('world-touch').dataset.source,
+        style: $('flight-stick-display').value,
+      },
     }),
     async dispose() {
       if (disposed) return;
