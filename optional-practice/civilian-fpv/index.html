@@ -95,16 +95,18 @@
                 <input id="camera-tilt" type="range" min="0" max="35" value="10" />
               </label>
               <label
-                ><span data-sim-copy="droneResponse">Drone response</span>
-                <select id="academy-drone-guide">
+                ><span id="academy-drone-guide-label" data-sim-copy="droneResponse"
+                  >Drone response</span
+                >
+                <select id="academy-drone-guide" aria-labelledby="academy-drone-guide-label">
                   <option value="compact" data-sim-copy="compact">Compact</option>
                   <option value="learning" data-sim-copy="learning">Learning</option>
                   <option value="off" data-sim-copy="off">Off</option>
                 </select>
               </label>
               <label
-                ><span data-sim-copy="guideScale">Guide text</span>
-                <select id="academy-guide-scale">
+                ><span id="academy-guide-scale-label" data-sim-copy="guideScale">Guide text</span>
+                <select id="academy-guide-scale" aria-labelledby="academy-guide-scale-label">
                   <option value="standard" data-sim-copy="standard">Standard</option>
                   <option value="large" data-sim-copy="large">Large</option>
                 </select>
