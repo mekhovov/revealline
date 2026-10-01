@@ -53,3 +53,29 @@ falling shower. Pixel distances stay equal on both axes on portrait and wide
 surfaces. A minimum size keeps ribbons readable on phones. Reduced effects,
 pause, deterministic presentation seeds, clipping and the clear final picture
 remain unchanged. This is an aesthetic choice, not a measured retention claim.
+
+## Reveal, appreciate, expand (2026-10-02)
+
+The completed board now holds its original position for 2.4 seconds, including
+the existing 0.85-second cover dissolve. That leaves about 1.55 seconds to see
+the fully opened picture before its container changes. It expands into the media
+view over 650 ms with a gentle ease-out, calculated from the actual contained
+picture bounds so portrait screens do not stretch the art. Video is admitted
+only after 3.8 seconds; the retained poster stays beneath a 650 ms video dissolve
+and remains visible while playback starts or is refused. Image-only rewards use
+the same arrival and remain until Continue.
+
+[Material's transition codelab](https://codelabs.developers.google.com/codelabs/material-motion-android)
+informs keeping the same visual subject through a container change. We use that
+continuity rather than a decorative wipe that hides the earned image.
+[Game Accessibility Guidelines](https://gameaccessibilityguidelines.com/provide-an-option-to-turn-off-hide-background-movement/)
+and [Xbox XAG 117](https://learn.microsoft.com/en-us/gaming/accessibility/xbox-accessibility-guidelines/117)
+inform preserving reduced-motion and autoplay controls. Reduced effects retain
+the appreciation hold but omit expansion motion and automatic video playback.
+
+Demo uses the same reveal, center confetti, arrival and movie dissolve. Only an
+exact previously earned story receipt matching its clear picture can supply a
+video. Hide pictures conceals even earned images and prevents video acquisition;
+unearned artwork remains concealed after a demo win. Movie audio follows demo
+Game sounds and the audio master. The recap waits for playing video, then leaves
+its poster briefly before rotating. Demo still makes no progress/award writes.

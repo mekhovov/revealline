@@ -1021,3 +1021,24 @@ test('blocked earned autoplay leaves the exact poster and an explicit Play retry
   assert.equal(await f.player.play(), true);
   assert.equal(f.video.playCalls, 2);
 });
+
+test('cinematic arrival keeps the exact poster through starting and fades only decoded playback', async (t) => {
+  const f = await setup(t, { autoplay: true, cinematicTransition: true });
+  const started = deferred();
+  f.video.playResult = () => started.promise;
+  const animations = [];
+  f.video.animate = (...args) => animations.push(args);
+  f.ready();
+  assert.equal(f.player.snapshot().state, 'starting');
+  assert.equal(f.poster.hidden, false);
+  assert.equal(f.video.hidden, true);
+  started.resolve();
+  await new Promise((resolve) => setImmediate(resolve));
+  assert.equal(f.player.snapshot().state, 'playing');
+  assert.equal(f.poster.hidden, false);
+  assert.equal(f.video.hidden, false);
+  assert.equal(animations.length, 1);
+  f.video.at(f.descriptor.segment.endSeconds);
+  assert.equal(f.poster.hidden, false);
+  assert.equal(f.video.hidden, true);
+});

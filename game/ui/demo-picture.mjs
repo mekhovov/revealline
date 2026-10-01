@@ -1,3 +1,4 @@
+import { resolveStoryReceipts } from '../story-receipts.mjs';
 import { canonicalJSON } from '../data-json.mjs';
 import { campaignKey } from '../library.mjs';
 import { createExecutionCatalog } from '../campaign-contexts.mjs';
@@ -28,10 +29,11 @@ export async function resolveDemoPicture({
   acquire,
 } = {}) {
   let backdrop = null;
-  const result = (pictureVisibility = 'blurred', artSeed = null) => {
+  const result = (pictureVisibility = 'blurred', artSeed = null, storyPin = null) => {
     let disposed = false;
     return Object.freeze({
       pictureVisibility,
+      storyPin,
       backdrop,
       artSeed,
       dispose() {
@@ -79,7 +81,8 @@ export async function resolveDemoPicture({
     // an explicit current choice still needs its own matching earned receipt.
     const useEarnedOriginal = !currentPin && pin.kind === 'legacy';
     let earnedPicture = false,
-      artSeed = null;
+      artSeed = null,
+      storyPin = null;
     for (const item of library?.gallery ?? []) {
       if (item.levelId !== level.id || item.themeId !== theme.id) continue;
       try {
@@ -105,6 +108,14 @@ export async function resolveDemoPicture({
         if (useEarnedOriginal || canonicalJSON(earnedPin) === canonicalJSON(pin)) {
           pin = snapshotPictureChoice(earnedPin);
           earnedPicture = true;
+          const story = library.storyReceipts?.find((row) => row.galleryKey === item.key);
+          if (story && earned.receipt) {
+            try {
+              storyPin = resolveStoryReceipts([story], [earned.receipt], [item])[0].storyPin;
+            } catch {
+              storyPin = null;
+            }
+          }
           artSeed = pin.kind === 'legacy' ? earned.item.seed : null;
           break;
         }
@@ -127,7 +138,7 @@ export async function resolveDemoPicture({
         return result();
       }
     }
-    return result(earnedPicture ? 'clear' : 'blurred', artSeed);
+    return result(earnedPicture ? 'clear' : 'blurred', artSeed, storyPin);
   } catch (error) {
     backdrop?.release?.();
     backdrop = null;

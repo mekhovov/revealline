@@ -70,6 +70,7 @@ export function createCreatorVictoryStoryHost({
         document,
         ...presentationOptions,
         autoplay: true,
+        cinematicTransition: true,
         ...options,
         onChange: report,
       });
