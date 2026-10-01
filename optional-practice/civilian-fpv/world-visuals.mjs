@@ -117,6 +117,9 @@ function resizeSurface(surface, size, anisotropy) {
   if (surface.size !== size) {
     const maps = surfacePixels(surface.kind, surface.color, surface.seed, size, surface.pixel);
     surface.textures.forEach((texture, index) => {
+      // WebGL2 texture storage is immutable. Preserve material references, but
+      // release its GPU allocation before changing width/height on a preset swap.
+      if (surface.size) texture.dispose();
       texture.image = { data: maps[index], width: size, height: size };
       texture.needsUpdate = true;
     });
