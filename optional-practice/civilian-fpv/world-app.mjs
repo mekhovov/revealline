@@ -920,9 +920,6 @@ export function mountWorldApp({
     $('lobby-sound').setAttribute('aria-label', soundButton.textContent);
     $('lobby-sound').setAttribute('aria-pressed', String(audio.enabled()));
     $('lobby-sound').dataset.simIcon = soundButton.dataset.simIcon;
-    $('settings-sound').textContent = soundButton.textContent;
-    $('settings-sound').setAttribute('aria-pressed', String(audio.enabled()));
-    $('settings-sound').dataset.simIcon = soundButton.dataset.simIcon;
     presentation.refresh();
   }
   updateSoundLabel();
@@ -3154,7 +3151,6 @@ export function mountWorldApp({
   on($('sim-text-face'), 'change', applyAppearance);
   on($('sim-motion'), 'change', applyAppearance);
   on($('lobby-sound'), 'click', () => soundButton.click());
-  on($('settings-sound'), 'click', () => soundButton.click());
   on($('lobby-radio'), 'click', () => $('radio-setup-button').click());
   on($('begin-learning'), 'click', () => showTab('learn'));
   on($('school-recover'), 'click', resumeInterruptedFlight);
