@@ -1,7 +1,8 @@
 // Classic script so a downloaded file can explain how to launch even when ES
 // modules are blocked. Only the current origin's game is entered automatically.
-(() => {
+(async () => {
   const host = globalThis;
+  await host.RevealLineAccess?.ready;
   const fallback = {
     'errors:thisIsADownloadedCopyChoosePlayOnlineOrStart':
       'This is a downloaded copy. Choose Play online, or start a local server to play this copy.',
