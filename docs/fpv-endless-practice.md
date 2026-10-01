@@ -73,7 +73,9 @@ The implementation checkpoint includes:
   unchanged compact/inline behavior.
 
 These are functional verification results, not newly added unit-test coverage.
-Frozen package qualification remains pending at this documentation checkpoint. Exact receipts, publication heads and subsequent
+All three optional packages passed committed-input admission, ZIP verification
+and two byte-identical builds. The rebuilt player URL was opened and its
+fullscreen practice, keyboard takeover and active Reset verified. Exact receipts, publication heads and subsequent
 qualification belong in the delivery log. Nothing here claims public live
 availability, physical-radio acceptance, unfamiliar-player acceptance or measured
 hardware performance. Additional unit coverage remains in R7.
