@@ -107,3 +107,11 @@ is an onboarding reference. [Fullscreen API guidance](https://developer.mozilla.
 informed the user-activation fallback. None establishes physical acceptance of
 this implementation. Remaining art, original demonstrations, targeted practice
 and human/device qualification remain in the delivery log.
+
+Frozen source `183690e94f5035fbcdd2c03c6001930c039aa182` passed all three package
+admissions, committed-input verification, two byte-identical builds and ZIP-member
+validation. The [package receipt](evidence/fpv-controls-package-20261002.json)
+records Academy at 62 runtime files / 3,376,652 bytes and World Studio at 94 runtime
+files / 12,579,377 bytes; source inventories remain 64 and 96 respectively. Package
+limits and physics identities are unchanged. This artifact admission is not a
+release-readiness or public-deployment assertion.
