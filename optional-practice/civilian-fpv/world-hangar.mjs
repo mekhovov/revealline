@@ -46,6 +46,9 @@ export function mountDroneHangar({
     environment?.dispose();
     environment = null;
     scene.clear();
+    drone = null;
+    camera = null;
+    scene = null;
   };
   function build() {
     if (!renderer) {
