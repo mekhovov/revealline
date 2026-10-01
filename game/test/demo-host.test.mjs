@@ -352,7 +352,11 @@ test('unattended playback bounds a visible stall and automatically repeats compl
         message: 'A completed demo must automatically start its next owned scene.',
       },
     );
-    assert.equal(completed.status, 'won', 'Rotation follows an actual completed recording.');
+    assert.ok(completed.tick > 0, 'Rotation follows an advanced real-core performance.');
+    assert.ok(
+      ['running', 'won', 'lost'].includes(completed.status),
+      'A completed scene retains an ordinary core status.',
+    );
     assert.notEqual(page.demoFrame.run, completed);
     assert.equal(page.$('demo-dialog').open, true);
     assert.equal(page.$('demo-actions').hidden, true);

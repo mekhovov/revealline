@@ -1,6 +1,6 @@
 /** Explicit opt-in package admission. New packages need a reviewed policy entry;
  * an uploaded archive cannot widen its own executable dependency allowance. */
-export const OPTIONAL_PACKAGE_POLICIES = Object.freeze({
+const BASE_OPTIONAL_PACKAGE_POLICIES = Object.freeze({
   'civilian-flight': Object.freeze({
     root: 'optional-practice/civilian-flight/',
     entry: 'optional-practice/civilian-flight/index.html',
@@ -47,6 +47,8 @@ export const OPTIONAL_PACKAGE_POLICIES = Object.freeze({
       'index.html',
       'app.mjs',
       'renderer.mjs',
+      'world-visuals.mjs',
+      'world-themes.mjs',
       'input.mjs',
       'copy.mjs',
       'style.css',
@@ -55,10 +57,16 @@ export const OPTIONAL_PACKAGE_POLICIES = Object.freeze({
       'radio-controls.mjs',
       'radio-profile.mjs',
       'radio-runtime.mjs',
+      'radio-session.mjs',
       'radio-setup.mjs',
+      'radio-guide.mjs',
+      'flight-fullscreen.mjs',
+      'flight-fullscreen.css',
+      'sim-presentation.mjs',
       'math.mjs',
       'rotation-table.mjs',
       'model.mjs',
+      'flight-sectors.mjs',
       'catalogue.mjs',
       'demonstrations.mjs',
       'attempts.mjs',
@@ -73,6 +81,9 @@ export const OPTIONAL_PACKAGE_POLICIES = Object.freeze({
       'optional-practice/install-context.mjs',
       'game/data-json.mjs',
       'game/fpv-entry.mjs',
+      'game/ui/field-kit-tokens.css',
+      'game/ui/native-menu-icons.mjs',
+      'game/ui/art/identity/fpv-line/wordmark.png',
       'game/key-bindings.mjs',
       'game/i18n/index.mjs',
       'game/i18n/bootstrap.mjs',
@@ -118,6 +129,18 @@ export const OPTIONAL_PACKAGE_POLICIES = Object.freeze({
     ]),
     licenses: Object.freeze([
       {
+        dependency: 'Exo 2 and Departure Mono UI fonts',
+        version: 'Exo 2 2.010 / Departure Mono 1.500',
+        license: 'OFL-1.1',
+        path: 'optional-practice/civilian-fpv/README.md',
+      },
+      {
+        dependency: 'Kenney Interface Sounds and UI Audio selected cues',
+        version: 'RevealLine prepared bank 2026-09-29',
+        license: 'CC0-1.0',
+        path: 'optional-practice/civilian-fpv/README.md',
+      },
+      {
         dependency: 'i18next',
         version: '26.4.2',
         license: 'MIT',
@@ -135,6 +158,124 @@ export const OPTIONAL_PACKAGE_POLICIES = Object.freeze({
     ]),
   }),
 });
+
+// The legacy 8 MiB / 64-file package stays independent. The world runtime is a
+// separately selected application with its own explicit executable closure.
+const legacyFPV = BASE_OPTIONAL_PACKAGE_POLICIES['civilian-fpv'];
+export const OPTIONAL_PACKAGE_POLICIES = Object.freeze({
+  ...BASE_OPTIONAL_PACKAGE_POLICIES,
+  'fpv-worlds': Object.freeze({
+    ...legacyFPV,
+    root: 'optional-practice/fpv-worlds/',
+    entry: 'optional-practice/fpv-worlds/index.html',
+    limits: Object.freeze({ files: 96, bytes: 16 * 1024 * 1024 }),
+    localFiles: Object.freeze([
+      'index.html',
+      'app.webmanifest',
+      'README.md',
+      'SCENERY-LICENSES.txt',
+      'scenery-provenance.json',
+    ]),
+    sharedFiles: Object.freeze([
+      ...legacyFPV.localFiles
+        .filter((name) => !['index.html', 'app.mjs', 'app.webmanifest', 'README.md'].includes(name))
+        .map((name) => legacyFPV.root + name),
+      ...legacyFPV.sharedFiles,
+      'optional-practice/civilian-fpv/README.md',
+      'game/ui/art/menu-scenes/fpv.webp',
+      'game/ui/art/menu-scenes/fpv-portrait.webp',
+      ...[
+        'vendor/addons/loaders/GLTFLoader.js',
+        'vendor/addons/controls/TransformControls.js',
+        'vendor/addons/utils/BufferGeometryUtils.js',
+        'vendor/addons/utils/SkeletonUtils.js',
+        'vendor/addons/provenance.json',
+        'world-app.mjs',
+        'world-renderer.mjs',
+        'world-demonstrations.mjs',
+        'world-assets.mjs',
+        'world-hangar.mjs',
+        'world-actor-editor.mjs',
+        'world-editor.mjs',
+        'world-audio.mjs',
+        'world-progress.mjs',
+        'content-definitions.mjs',
+        'world-catalogue.mjs',
+        'world-collision.mjs',
+        'world-model.mjs',
+        'world-content.mjs',
+        'world-store.mjs',
+        'world-records.mjs',
+        'world-style.css',
+        'world-zip.mjs',
+        'playlists.mjs',
+        'vendor/rapier/rapier.mjs',
+        'vendor/rapier/LICENSE',
+        'vendor/rapier/provenance.json',
+      ].map((name) => legacyFPV.root + name),
+    ]),
+    vendorPins: Object.freeze([
+      ...legacyFPV.vendorPins,
+      Object.freeze({
+        path: 'optional-practice/civilian-fpv/vendor/addons/loaders/GLTFLoader.js',
+        bytes: 117586,
+        sha256: '03952cb129d558f92b8e6c757fbf7c1f718b3126c4d34f264d574b40ea36054f',
+      }),
+      Object.freeze({
+        path: 'optional-practice/civilian-fpv/vendor/addons/controls/TransformControls.js',
+        bytes: 51722,
+        sha256: '10f6d3e4c108dff62110f61a76749f9a1826c9781df9c3eb4ca0b5d9d2f5c4a8',
+      }),
+      Object.freeze({
+        path: 'optional-practice/civilian-fpv/vendor/addons/utils/BufferGeometryUtils.js',
+        bytes: 37728,
+        sha256: '259085a7dac89e0840393a9347c77123fbc4206ec2146bf0c29ffc72e14a2800',
+      }),
+      Object.freeze({
+        path: 'optional-practice/civilian-fpv/vendor/addons/utils/SkeletonUtils.js',
+        bytes: 11551,
+        sha256: '28017bf37d0ecb0c4be6048db759ff14df729a562464830b064d4cc239c5af17',
+      }),
+      {
+        path: 'optional-practice/civilian-fpv/vendor/rapier/rapier.mjs',
+        bytes: 4340292,
+        sha256: '02dc6a4e2fffc013bab08fbb44fa68f501d8303615e9afe4c7d89ad4eedda0d0',
+      },
+      {
+        path: 'optional-practice/civilian-fpv/vendor/rapier/LICENSE',
+        bytes: 11343,
+        sha256: '4c05555705e3efde601fb1252ae48f1d63992af8a8fb8947745b7fa834e8f519',
+      },
+    ]),
+    licenses: Object.freeze([
+      ...legacyFPV.licenses,
+      {
+        dependency: 'Kenney Retro Urban Kit',
+        version: '2021-03-20',
+        license: 'CC0-1.0',
+        path: 'optional-practice/fpv-worlds/SCENERY-LICENSES.txt',
+        source: 'https://opengameart.org/content/retro-urban-kit',
+      },
+      {
+        dependency: 'Kenney City Kit Industrial',
+        version: '2.0',
+        license: 'CC0-1.0',
+        path: 'optional-practice/fpv-worlds/SCENERY-LICENSES.txt',
+        source: 'https://kenney.nl/assets/city-kit-industrial',
+      },
+      {
+        dependency: '@dimforge/rapier3d-compat',
+        version: '0.21.0',
+        license: 'Apache-2.0',
+        path: 'optional-practice/civilian-fpv/vendor/rapier/LICENSE',
+        source: 'https://registry.npmjs.org/@dimforge/rapier3d-compat/-/rapier3d-compat-0.21.0.tgz',
+        integrity:
+          'sha512-tCl1HPGwOhn5aCQbgqWbOH+Nx/5fnr3IPAnzQuR7zIhC/raqi2yxC6LhvZqjdI2El5hQgY5RDAwDrAjAi2FdPA==',
+      },
+    ]),
+  }),
+});
+
 export function optionalRuntimePaths(policy, { launcher = false } = {}) {
   return [
     ...(launcher

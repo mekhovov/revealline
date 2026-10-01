@@ -1,0 +1,45 @@
+{
+  "sourceCommit": "06fe0afbe5a3b8b28714454b8d12b01ff7d85a42",
+  "baseMain": "e39b4197a75441d74c35299c8545d8bdfd0a7c61",
+  "pullRequest": 858,
+  "tests": {
+    "passed": 167,
+    "failed": 0,
+    "skipped": 0,
+    "evidence": "offline-ready-tests.tap"
+  },
+  "regression": {
+    "failedRequestsBefore": 120,
+    "failedRequestsAfter": 1,
+    "renderFrames": 120,
+    "cooldownMilliseconds": 5000,
+    "explicitActivationRetriesImmediately": true,
+    "failureKinds": ["http", "network", "decode", "truncated"],
+    "staleEventsReplayed": false
+  },
+  "build": "offline-ready-build.json",
+  "nativeBrowser": {
+    "freshOrigin": "http://127.0.0.1:8895/",
+    "selected": ["Solo Starter", "Optional spatial sound effects"],
+    "downloadSizeMiB": 89.3,
+    "localServerStopped": true,
+    "curlExitCodeAfterStop": 7,
+    "reloadedGame": true,
+    "firstMissionVictoryCoverage": 34.3,
+    "nextMissionLoaded": true,
+    "secondMissionPartialCoverage": 34.3,
+    "damageRespawnObserved": true,
+    "pauseResumeObserved": true,
+    "movementPreferenceToggledOffOn": true,
+    "nativeKeySteeringPreservedExplicitMasterUnmute": true,
+    "consoleWarningsErrors": 0,
+    "cacheVerification": "offline-ready-cache.json",
+    "scope": "Origin server unavailable, not airplane mode. Recorded music downloads not installed; built-in procedural music remained available. No subjective listening, decoded-output measurement or physical-device claim."
+  },
+  "remaining": [
+    "Sustained listening with music, speakers and headphones (deferred)",
+    "Physical-device qualification (deferred)",
+    "Canonical immutable release qualification and public acceptance"
+  ],
+  "releaseMilestone": "v0.150.0 \u2014 Unified native experience"
+}

@@ -1,0 +1,246 @@
+TAP version 13
+# Subtest: demo routes the same full event batch and run context as ordinary gameplay
+ok 1 - demo routes the same full event batch and run context as ordinary gameplay
+  ---
+  duration_ms: 0.922667
+  ...
+# Subtest: mounted demo uses an earned release original without a durable assignment and never earns practice rewards
+    # Subtest: ordinary Ready materializes the release still without an assignment
+    ok 1 - ordinary Ready materializes the release still without an assignment
+      ---
+      duration_ms: 830.772334
+      ...
+    # Subtest: standard host: earned original stays clear during takeover and completed playback
+    ok 2 - standard host: earned original stays clear during takeover and completed playback
+      ---
+      duration_ms: 2962.372875
+      ...
+    # Subtest: gentle host: earned original stays clear during takeover and completed playback
+    ok 3 - gentle host: earned original stays clear during takeover and completed playback
+      ---
+      duration_ms: 2358.151667
+      ...
+    # Subtest: picture privacy replaces an earned original only inside demo and practice
+    ok 4 - picture privacy replaces an earned original only inside demo and practice
+      ---
+      duration_ms: 940.078167
+      ...
+    # Subtest: another unearned level stays obscured in fresh practice despite the existing receipt
+    ok 5 - another unearned level stays obscured in fresh practice despite the existing receipt
+      ---
+      duration_ms: 863.572833
+      ...
+    1..5
+ok 2 - mounted demo uses an earned release original without a durable assignment and never earns practice rewards
+  ---
+  duration_ms: 8043.590084
+  ...
+# Subtest: idle countdown counts only contiguous eligible foreground frames
+ok 3 - idle countdown counts only contiguous eligible foreground frames
+  ---
+  duration_ms: 0.514459
+  ...
+# Subtest: reduced-motion default is manual; malformed preferences fail safely
+ok 4 - reduced-motion default is manual; malformed preferences fail safely
+  ---
+  duration_ms: 0.310583
+  ...
+# Subtest: demo sound preference is opt-in and preserves existing v1 settings
+ok 5 - demo sound preference is opt-in and preserves existing v1 settings
+  ---
+  duration_ms: 0.071833
+  ...
+# Subtest: demo picture privacy is opt-in and survives existing v1 settings
+ok 6 - demo picture privacy is opt-in and survives existing v1 settings
+  ---
+  duration_ms: 0.060334
+  ...
+# Subtest: practice waits for fresh steering, consumes input at real ticks, and suspends long gaps
+ok 7 - practice waits for fresh steering, consumes input at real ticks, and suspends long gaps
+  ---
+  duration_ms: 5.597458
+  ...
+# Subtest: direct takeover applies its initiating action once at the first real tick without inventing steering
+ok 8 - direct takeover applies its initiating action once at the first real tick without inventing steering
+  ---
+  duration_ms: 12.419583
+  ...
+# Subtest: captions use emitted core events and maintain a six-second reading interval
+ok 9 - captions use emitted core events and maintain a six-second reading interval
+  ---
+  duration_ms: 0.258625
+  ...
+# Subtest: captions distinguish a real scan from other equipment without claiming a revealed objective
+ok 10 - captions distinguish a real scan from other equipment without claiming a revealed objective
+  ---
+  duration_ms: 0.581917
+  ...
+# Subtest: same-tick real cut and relay capture keep distinct captions in order until scene reset
+ok 11 - same-tick real cut and relay capture keep distinct captions in order until scene reset
+  ---
+  duration_ms: 6.259459
+  ...
+# Subtest: signal captions require an actual slowing or blocked-equipment event
+ok 12 - signal captions require an actual slowing or blocked-equipment event
+  ---
+  duration_ms: 1.162083
+  ...
+# Subtest: signal clearing, suppression, resistance and harmless zones never manufacture a jam caption
+ok 13 - signal clearing, suppression, resistance and harmless zones never manufacture a jam caption
+  ---
+  duration_ms: 2.669
+  ...
+# Subtest: uncovered installed level gets varied ordinary inputs, real captures and real mistakes
+ok 14 - uncovered installed level gets varied ordinary inputs, real captures and real mistakes
+  ---
+  duration_ms: 555.764333
+  ...
+# Subtest: improvised preparation respects cancellation before it owns a player
+ok 15 - improvised preparation respects cancellation before it owns a player
+  ---
+  duration_ms: 0.491792
+  ...
+# Subtest: curated wins and authored mistakes reproduce current Standard tuning across every installed base map
+ok 16 - curated wins and authored mistakes reproduce current Standard tuning across every installed base map
+  ---
+  duration_ms: 2054.585083
+  ...
+# Subtest: personal replay compatibility reconstructs tuning from installed originals and rejects admin or forged recipes
+ok 17 - personal replay compatibility reconstructs tuning from installed originals and rejects admin or forged recipes
+  ---
+  duration_ms: 31.703625
+  ...
+# Subtest: frozen browser variants preserve the exact reviewed trace and every non-enemy outcome
+ok 18 - frozen browser variants preserve the exact reviewed trace and every non-enemy outcome
+  ---
+  duration_ms: 5.541875
+  ...
+# Subtest: catalogue admits only matching installed content and local bundled replay URLs
+ok 19 - catalogue admits only matching installed content and local bundled replay URLs
+  ---
+  duration_ms: 12.821792
+  ...
+# Subtest: immediate: practice forks match all four core branches and own every mutable value
+ok 20 - immediate: practice forks match all four core branches and own every mutable value
+  ---
+  duration_ms: 414.758791
+  ...
+# Subtest: grid-center: practice forks match all four core branches and own every mutable value
+ok 21 - grid-center: practice forks match all four core branches and own every mutable value
+  ---
+  duration_ms: 384.03
+  ...
+# Subtest: practice preparation rejects stale, cancelled, terminal or altered playback and owns exports
+ok 22 - practice preparation rejects stale, cancelled, terminal or altered playback and owns exports
+  ---
+  duration_ms: 57.630375
+  ...
+# Subtest: practice forks preserve live-cut releases at exact RLE boundaries and a trailing pause
+ok 23 - practice forks preserve live-cut releases at exact RLE boundaries and a trailing pause
+  ---
+  duration_ms: 30.613625
+  ...
+# Subtest: disposing replay playback cancels pending practice and prevents an abandoned player from advancing
+ok 24 - disposing replay playback cancels pending practice and prevents an abandoned player from advancing
+  ---
+  duration_ms: 28.263625
+  ...
+# Subtest: a takeover retains both hangar loadouts, a live support field and impact recovery timing
+ok 25 - a takeover retains both hangar loadouts, a live support field and impact recovery timing
+  ---
+  duration_ms: 39.267875
+  ...
+# Subtest: immediate: staged encounter takeover preserves warning, active and transition authority
+ok 26 - immediate: staged encounter takeover preserves warning, active and transition authority
+  ---
+  duration_ms: 53.078042
+  ...
+# Subtest: grid-center: staged encounter takeover preserves warning, active and transition authority
+ok 27 - grid-center: staged encounter takeover preserves warning, active and transition authority
+  ---
+  duration_ms: 52.724417
+  ...
+# Subtest: actual installed Standard/Gentle catalogue exposes reviewed, qualified and uncovered live sources lazily
+ok 28 - actual installed Standard/Gentle catalogue exposes reviewed, qualified and uncovered live sources lazily
+  ---
+  duration_ms: 623.717042
+  ...
+# Subtest: same map IDs in separately installed themed owners do not collide
+ok 29 - same map IDs in separately installed themed owners do not collide
+  ---
+  duration_ms: 35.272166
+  ...
+# Subtest: current main Journey host adds every installed Journey level without pretending base clips belong to Journey
+ok 30 - current main Journey host adds every installed Journey level without pretending base clips belong to Journey
+  ---
+  duration_ms: 2312.905458
+  ...
+# Subtest: actual public company editions expose only their own isolated installed levels
+ok 31 - actual public company editions expose only their own isolated installed levels
+  ---
+  duration_ms: 2147.440958
+  ...
+# Subtest: missing Worker and uninstalled content filter sources without downloading or installing packs
+ok 32 - missing Worker and uninstalled content filter sources without downloading or installing packs
+  ---
+  duration_ms: 22.9195
+  ...
+# Subtest: manually kept local recordings join the catalogue without enabling automatic collection
+ok 33 - manually kept local recordings join the catalogue without enabling automatic collection
+  ---
+  duration_ms: 80.077125
+  ...
+# Subtest: uncached optional bundled replays fall back to a retained recording or stay unavailable offline
+ok 34 - uncached optional bundled replays fall back to a retained recording or stay unavailable offline
+  ---
+  duration_ms: 113.362708
+  ...
+# Subtest: scene creation rejects a valid but wrong bundled recording and respects cancellation
+ok 35 - scene creation rejects a valid but wrong bundled recording and respects cancellation
+  ---
+  duration_ms: 12.066917
+  ...
+# Subtest: cancelled source discovery cannot return a late catalogue whose fetch ignored cancellation
+ok 36 - cancelled source discovery cannot return a late catalogue whose fetch ignored cancellation
+  ---
+  duration_ms: 0.310708
+  ...
+# Subtest: frozen variants stay strict and reviewed routes qualify only an enemy checkpoint difference
+ok 37 - frozen variants stay strict and reviewed routes qualify only an enemy checkpoint difference
+  ---
+  duration_ms: 288.36725
+  ...
+# Subtest: the ordinary game build includes every dynamic demo asset and Worker module
+ok 38 - the ordinary game build includes every dynamic demo asset and Worker module
+  ---
+  duration_ms: 256.6885
+  ...
+# Subtest: a personal cache that never settles times out without discarding bundled sources
+ok 39 - a personal cache that never settles times out without discarding bundled sources
+  ---
+  duration_ms: 10.220833
+  ...
+# Subtest: a never-settling catalogue falls through to local sources and cancellation settles a hung cache
+ok 40 - a never-settling catalogue falls through to local sources and cancellation settles a hung cache
+  ---
+  duration_ms: 0.371042
+  ...
+# Subtest: demo uses the selected world character theme unless the real level pins one
+ok 41 - demo uses the selected world character theme unless the real level pins one
+  ---
+  duration_ms: 0.511208
+  ...
+# Subtest: demo theme fallback remains deterministic when an old preference is unavailable
+ok 42 - demo theme fallback remains deterministic when an old preference is unavailable
+  ---
+  duration_ms: 0.055542
+  ...
+1..42
+# tests 47
+# suites 0
+# pass 47
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 18813.968041

@@ -1,0 +1,42 @@
+{
+  "format": "revealline-historical-preparation-retention.v1",
+  "scope": "Exact-byte inert historical source retention; no current execution or approval",
+  "files": [
+    {
+      "archive": 30,
+      "donor": "12cd3dadf978d2e3148e4981ece5e82270d6379b",
+      "sourcePath": "publishing/utility/archive30-public-audit/binding.proposed.json",
+      "path": "docs/verification/recovery/archive30-31-preparation/archive30/binding.proposed.json.txt",
+      "gitBlob": "93cb7856a1c0818d2c91c0af1431786b43c97958",
+      "bytes": 855,
+      "sha256": "80e3cce235c77caf3916e49ce266f5e57b3a7353ae91c55685d496f0ea4e9fda"
+    },
+    {
+      "archive": 30,
+      "donor": "12cd3dadf978d2e3148e4981ece5e82270d6379b",
+      "sourcePath": "publishing/utility/archive30-public-audit/test_hosted_run.py",
+      "path": "docs/verification/recovery/archive30-31-preparation/archive30/test_hosted_run.py.txt",
+      "gitBlob": "b8525639065d89364c33ec964419cd00c984ecdd",
+      "bytes": 2326,
+      "sha256": "ab8406f2e3fcd246a693875846e45b1df63ddc06cf1102f4b5f521caffc15320"
+    },
+    {
+      "archive": 31,
+      "donor": "a1c735741db7c4f01e5837e662d24f68c2357ca1",
+      "sourcePath": "publishing/utility/archive31-public-audit/binding.proposed.json",
+      "path": "docs/verification/recovery/archive30-31-preparation/archive31/binding.proposed.json.txt",
+      "gitBlob": "1e3dae48443d461c1957317d92e3d9e12617529a",
+      "bytes": 855,
+      "sha256": "cad022e0ac67b519d92d4081ad0959dbcb70d13788e2508ae0b78ceae9bc135a"
+    },
+    {
+      "archive": 31,
+      "donor": "a1c735741db7c4f01e5837e662d24f68c2357ca1",
+      "sourcePath": "publishing/utility/archive31-public-audit/test_hosted_run.py",
+      "path": "docs/verification/recovery/archive30-31-preparation/archive31/test_hosted_run.py.txt",
+      "gitBlob": "802a6bee770e7303ac86e9870703873b8313fbf7",
+      "bytes": 2326,
+      "sha256": "762b1c44e7bc9353141e2a3f5c5b32b59ceb8ea25875fbed75dafa88de78467a"
+    }
+  ]
+}

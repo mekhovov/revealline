@@ -1,0 +1,65 @@
+{
+  "status": "development; not ready",
+  "cssSha256": "9b304d57b87a4c66394e3eff43238baf5d6605755f4b6202b6f85cb99905627c",
+  "source": "6c51b7e9bda575ac9e7e329784a3db0edfa8ddbd",
+  "deadSelectorRemoved": true,
+  "landscape": {
+    "viewport": [
+      521,
+      300
+    ],
+    "preferences": "Large/Plain, controls Always, left large D-pad",
+    "arena": {
+      "x": 228,
+      "y": 146.34375,
+      "width": 285,
+      "height": 142.5
+    },
+    "documentWidth": 521,
+    "pointerCommand": "Move down button, released",
+    "result": {
+      "coverage": 50,
+      "score": 11900,
+      "lives": 3,
+      "message": "Line secured. 50.0% revealed. 15 slow-field cells neutralized by this capture. Tap a direction to fly again."
+    }
+  },
+  "portraitIssue": {
+    "viewport": [
+      320,
+      568
+    ],
+    "arena": {
+      "x": 49,
+      "y": 234.28125,
+      "width": 222,
+      "height": 110
+    },
+    "upButton": {
+      "x": 88,
+      "y": 352,
+      "width": 64,
+      "height": 64
+    },
+    "caption": {
+      "x": 48,
+      "y": 349.28125,
+      "width": 224,
+      "height": 50
+    },
+    "overlap": true,
+    "baselineNote": "New candidate rules are landscape-scoped; source portrait geometry still requires correction. No separately observed baseline portrait check claimed."
+  },
+  "remaining": [
+    "Fix portrait caption/large D-pad overlap in an independently verified change",
+    "First-flight and active warning layouts",
+    "High-score, long-clock and increased-life examples",
+    "Complete source/integration qualification",
+    "Physical-device input qualification"
+  ],
+  "cleanup": {
+    "viewportReset": true,
+    "testTabClosed": true,
+    "serverStopped": true
+  }
+}
