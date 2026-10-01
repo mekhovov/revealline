@@ -1,5 +1,9 @@
 # RevealLine: detailed delivery history
 
+> **Current whole-product status:** [completed and remaining delivery](delivery-status.md).
+> Use that dated rollup for current priorities, release status and acceptance limits.
+> The older checkpoints below retain their historical scope.
+
 > **Current status and execution order:** use the
 > [30 September source reconciliation and remaining delivery plan](plan-status-2026-09-30.md).
 > It separates merged source, the publisher's pending queue, retained local work

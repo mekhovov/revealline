@@ -1,10 +1,10 @@
-> Retained historical excerpt after an ownership migration. Exact originals are preserved separately. This excerpt is not the original complete record or a release qualification.
-
 # Native menu implementation
 
 This change applies to active source and generated packages. Archived release snapshots stay unchanged. The shared presentation moves existing DOM controls and keeps gameplay, route guards, storage and multiplayer ownership in their existing hosts. It does not migrate saves or create a second gameplay controller.
 
 ## Landing contract
+
+This is the approved target, not blanket published acceptance. The September 30 public check found extra landing actions; [correction #854](https://github.com/mekhovov/revealline/pull/854) merged during this review; deployment and public requalification remain open at the [current roadmap](native-menu-roadmap.md) cutoff.
 
 Normal landing screens contain the title (edition identity where applicable), a truthful Start/Continue action, Select Mission, Settings, Sound, supported mode names/icons, passive soundtrack information and release version. Fullscreen was added at the user’s request on 29 September 2026. Solo retains its existing landing control; Versus and Team expose a landing utility mirrored in Display & Language. These controls retain a 44px target and the shared icon/focus style. Loading, cancellation and save recovery are temporary exceptions. The selected mode is a focusable button that does nothing when activated; other modes retain their guarded links. Isolated lesson menus retain their own Help, sound and checked Return controls rather than exposing campaign destinations.
 
@@ -19,10 +19,10 @@ Fullscreen has one browser-state owner per document, so the landing and Settings
 | Host             | Current route                                   | Additional supported entry                           | Mode                           | Branding / scene                                    |
 | ---------------- | ----------------------------------------------- | ---------------------------------------------------- | ------------------------------ | --------------------------------------------------- |
 | Solo             | `/game/`                                        | `?journey=legacy`, mission-library/custom handoffs   | Solo                           | FPV / LINE; selected theme or FPV fallback          |
-| Versus           | `/game/couch/`                                  | `?journey=legacy`, supported imported Versus content | Versus                         | FPV / LINE; distinct FPV opposing-drone composition |
-| Team             | `/game/couch/relay-rescue.html`                 | `?journey=legacy`, Team creator/import handoffs      | Team                           | FPV / LINE; distinct FPV linked-drone composition   |
+| Versus           | `/game/couch/`                                  | `?journey=legacy`, supported imported Versus content | Versus                         | FPV / LINE; opposing-player composition for each base world |
+| Team             | `/game/couch/relay-rescue.html`                 | `?journey=legacy`, Team creator/import handoffs      | Team                           | FPV / LINE; team composition for each base world   |
 | Custom Solo      | `/game/creator/player.html?edition=<stable-id>` | Installed picture-campaign player                    | Solo; qualified Versus handoff | Campaign identity; approved FPV fallback            |
-| Company editions | `/game/?edition=<slug>`                         | `/editions/<slug>/app/`; legacy company launcher     | Solo only                      | Edition title/logo; explicit edition scene          |
+| Company editions | `/game/?edition=<slug>`                         | `/editions/<slug>/app/`; legacy company launcher     | Solo only                      | Edition title/logo; original 14 mapped scenes, four newer FPV fallbacks          |
 
 Current title and logo behavior is documented in [FPV / LINE branding](fpv-line-branding.md); DroneAid uses the public slug `droneaid` while retaining its saved internal identity.
 
@@ -65,10 +65,13 @@ See `menu-scenes.md` for all 18 profiles, composition source/provenance, active 
 
 ## Delivery status
 
+Shared landing/Settings, typography/icons/branding, 18 scene profiles and authoring adapters exist, but the seven phases' exit criteria remain incomplete. Current scope is **18 Solo-only editions, 16 active tool routes and 16 reference routes**. Demo recording is now present in main with shared authoring input; its current 16-clip workflow needs fresh qualification. The actual Community directory still needs the shared controller owner; historical Community store/moderation evidence does not qualify the new directory or friendly-entry handoffs.
 
-Use the [phase and release-batch ledger](native-menu-plan-status.md) for the current item-level status and next work. Historical screenshots and export receipts remain useful evidence for their recorded snapshot, not proof for a later PR head.
+All four base worlds have distinct Versus/Team compositions in both orientations. Four newer editions still use the FPV fallback. Ambient regional motion is implemented; the original plan's richer separated layers/sprite actors and independent Solo portrait artwork remain creative deliverables. Current motion still needs representative mobile frame-time, memory and comfort evidence. Do not regenerate accepted art merely because an older checklist calls it pending.
 
-Phase 7 local web/edition/native staging and verification results are recorded in the evidence report. Physical-controller, mobile performance, native Xcode/device and published-build acceptance must remain separate from local browser and modeled-input evidence. Release snapshots and public selectors remain under the established release coordinator.
+Use the [current roadmap](native-menu-roadmap.md) for priorities and completion criteria, the [inventory](native-menu-inventory.json) for routes, and the [historical evidence ledger](native-menu-plan-status.md) for recorded workflows. Earlier screenshots and export receipts qualify their recorded snapshots, not every later PR head. The roadmap separates real implementation gaps from browser/tooling limitations and from physical-device/public acceptance.
+
+Source compiles now cover all 18 editions at dated revisions; they do not establish installed-offline, native Xcode/device or published acceptance. Release integration and allocation remain with the established coordinator. The approved public landing correction and player safety/accessibility/device gates take priority over further historical reference-gallery work; all original scope remains tracked.
 
 ## Verification levels
 

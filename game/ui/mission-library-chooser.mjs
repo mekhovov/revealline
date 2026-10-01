@@ -210,6 +210,7 @@ export function attachMissionLibraryChooser({
     destroyed = false,
     restoringCardFocus = false,
     resizeFrame = null,
+    resizeAnchor = null,
     viewportAnchor = null,
     message = '';
   let goal = null;
@@ -749,7 +750,9 @@ export function attachMissionLibraryChooser({
       card.completion = library.completion(row, modeFilter.value);
       card.button.dataset.campaignKey = row.campaignKey;
       card.button.dataset.campaignStart = String(previousCampaign !== row.campaignKey);
-      card.button.dataset.availabilityState = availability.state;
+      card.button.dataset.availabilityState = availability.included
+        ? 'included'
+        : availability.state;
       card.button.dataset.pictureState = card.completion?.state ?? 'unfinished';
       card.button.dataset.current = String(row.id === getCurrentId());
       card.campaignHeading.hidden = previousCampaign === row.campaignKey;
@@ -763,7 +766,7 @@ export function attachMissionLibraryChooser({
       );
       card.progress.hidden = !card.progress.textContent;
       localizedText(card.action, () =>
-        availability.state === 'ready'
+        availability.state === 'ready' || availability.included
           ? ''
           : availability.state === 'download'
             ? `${t('interface:downloadPlay')} · ${sizeLabel(availability.bytes)}`
@@ -776,7 +779,7 @@ export function attachMissionLibraryChooser({
                   { reason: availability.reason },
                 ),
       );
-      card.action.hidden = availability.state === 'ready';
+      card.action.hidden = availability.state === 'ready' || availability.included;
       localizedAttribute(card.button, 'aria-label', () => {
         const progressLabel =
           progressState.state === 'completed'
@@ -936,27 +939,44 @@ export function attachMissionLibraryChooser({
     observer?.disconnect();
     for (const card of cards.values()) hidePreview(card);
   }
-  function cancelResizeScroll() {
+  function cancelResizeScroll({ retainAnchor = false } = {}) {
     if (resizeFrame !== null) view.cancelAnimationFrame?.(resizeFrame);
     resizeFrame = null;
+    if (!retainAnchor) resizeAnchor = null;
   }
   function preserveViewportAnchor() {
-    cancelResizeScroll();
-    if (destroyed || !dialog.open || doc.hidden || doc.hasFocus?.() === false) return;
-    if (!viewportAnchor) captureViewportAnchor();
-    const anchor = viewportAnchor && { ...viewportAnchor };
+    const eligible = !destroyed && dialog.open && !doc.hidden && doc.hasFocus?.() !== false;
+    cancelResizeScroll({ retainAnchor: eligible });
+    if (!eligible) return;
+    if (!resizeAnchor) {
+      if (!viewportAnchor) captureViewportAnchor();
+      resizeAnchor = viewportAnchor && { ...viewportAnchor };
+    }
+    const anchor = resizeAnchor && { ...resizeAnchor };
     if (!anchor) return;
     const ticket = visit;
     const restore = () => {
       resizeFrame = null;
-      if (destroyed || ticket !== visit || !dialog.open || doc.hidden || doc.hasFocus?.() === false)
+      if (
+        destroyed ||
+        ticket !== visit ||
+        !dialog.open ||
+        doc.hidden ||
+        doc.hasFocus?.() === false
+      ) {
+        resizeAnchor = null;
         return;
+      }
       const target = currentSelectionButton(anchor.id);
-      if (!target) return;
+      if (!target) {
+        resizeAnchor = null;
+        return;
+      }
       const bounds = list.getBoundingClientRect();
       const delta = target.getBoundingClientRect().top - bounds.top - anchor.offset;
       if (Number.isFinite(delta) && Math.abs(delta) >= 1) list.scrollTop += delta;
       viewportAnchor = anchor;
+      resizeAnchor = null;
     };
     if (view.requestAnimationFrame) resizeFrame = view.requestAnimationFrame(restore);
     else restore();

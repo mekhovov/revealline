@@ -5,6 +5,7 @@ import {
 } from './installed-app.mjs';
 import { localizedText, t } from './i18n/index.mjs';
 import { attachLauncherNavigation } from './ui/launcher-navigation.mjs';
+import { editionIdFromLocation } from './edition-context.mjs';
 const $ = (id) => document.getElementById(id);
 attachLauncherNavigation();
 localizedText($('status'), () => t('interface:launcher.opening'));
@@ -43,7 +44,7 @@ async function check() {
     const active = readInstalledState().active;
     localizedText($('edition'), () =>
       t(
-        active?.scope === candidate.scope
+        active?.scope === candidate.scope && active?.buildId && active.buildId === candidate.buildId
           ? 'interface:launcher.editionSelected'
           : 'interface:launcher.editionAvailable',
         { version: candidate.version },
@@ -60,7 +61,16 @@ async function check() {
     $('updates').disabled = false;
   }
 }
-$('updates').onclick = check;
+$('updates').onclick = () => {
+  // Branded launchers manage their own published edition and may not expose the
+  // default game's update surface. Keep their existing explicit check route.
+  if (editionIdFromLocation(location) !== undefined) return check();
+  // A refresh of the selected game can keep serving its cached build. The
+  // explicit updater runs under the narrow launcher and identifies fresh bytes.
+  const destination = new URL('update.html', location.href);
+  destination.searchParams.set('check', String(Date.now()));
+  location.assign(destination.href);
+};
 try {
   const state = readInstalledState();
   if (state.active) {

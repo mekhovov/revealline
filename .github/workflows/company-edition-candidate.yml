@@ -42,7 +42,9 @@ concurrency:
 jobs:
   default-capacity:
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    # A full-source checkout took 9m04s in run 36770088880; leave bounded
+    # time for the unchanged dependency/capacity inspection and receipt upload.
+    timeout-minutes: 20
     steps:
       - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
         with:

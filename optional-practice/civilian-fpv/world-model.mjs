@@ -1,0 +1,985 @@
+import {
+  boundedJSON,
+  canonicalJSON,
+  dataIdentity,
+  exactKeys,
+  required,
+  stableId,
+} from '../../game/data-json.mjs';
+import {
+  DEFAULT_RESPONSE,
+  FLIGHT_CONTROLS,
+  responseCurve,
+  responseIdentity,
+  validateFlightResponse,
+} from './radio-profile.mjs';
+import {
+  Q,
+  attitude,
+  atan2,
+  clamp,
+  integrateOrientation,
+  isqrt,
+  mul,
+  rotate,
+  roundDiv,
+} from './math.mjs';
+import { crossesGate, quantizeFlightInput } from './model.mjs';
+import { createSectorTracker } from './flight-sectors.mjs';
+import { validateThemeProfile } from './world-themes.mjs';
+import {
+  createWorldCollision,
+  initWorldRuntime,
+  WORLD_COLLISION_BACKEND,
+} from './world-collision.mjs';
+
+export { initWorldRuntime };
+export const WORLD_FLIGHT_MODEL = 'civilian-world-fixed.v2';
+export const WORLD_FLIGHT_HZ = 50;
+export const WORLD_ACTION_FIRE = 1;
+export const WORLD_MAX_TICKS = 36000;
+export const WORLD_ACTOR_TYPES = Object.freeze(['drone', 'patrol', 'sentry', 'vehicle', 'hazard']);
+export const WORLD_RULES = Object.freeze({
+  seed: 1,
+  maxTicks: WORLD_MAX_TICKS,
+  droneRadius: 220,
+  playerHealth: 100,
+  collisionDamage: 0,
+  playerDamage: 25,
+  fireCooldown: 8,
+  projectileSpeed: 20000,
+  projectileTicks: 150,
+});
+const AXES = ['x', 'y', 'z'];
+const MODES = ['self-level', 'acro'];
+const SESSION = ['practice', 'demonstration', 'authoring', 'replay'];
+const COMMANDS = [...FLIGHT_CONTROLS, 'actions'];
+const int = (n, a, b) => Number.isSafeInteger(n) && n >= a && n <= b;
+const clone = (x) => structuredClone(x);
+const sorted = (items) => [...items].sort((a, b) => (a.id < b.id ? -1 : a.id > b.id ? 1 : 0));
+const length = (v) => isqrt(AXES.reduce((n, k) => n + v[k] * v[k], 0));
+const sub = (a, b) => Object.fromEntries(AXES.map((k) => [k, a[k] - b[k]]));
+const vector = (v, label = 'position') => {
+  exactKeys(v, AXES, label);
+  required(
+    AXES.every((k) => int(v[k], -100000, 100000)),
+    `${label} must use integer millimetres within ±100 m`,
+  );
+};
+const volume = (value) => {
+  vector(value.min);
+  vector(value.max);
+  required(
+    AXES.every((k) => value.min[k] < value.max[k]),
+    'Empty volume',
+  );
+};
+const within = (p, bounds) => AXES.every((k) => p[k] >= bounds.min[k] && p[k] <= bounds.max[k]);
+const actorLift = (actor) =>
+  ['patrol', 'sentry'].includes(actor.type) ? actor.height / 2 : actor.radius;
+const actorCentre = (actor) => ({ ...actor.position, y: actor.position.y + actorLift(actor) });
+
+/** Source data is bounded, plain, script-free and normalized before identity or
+ * collision creation. Visual themes/localized text do not own gameplay rules. */
+export function validateWorldCourse(input) {
+  const c = boundedJSON(input, {
+    maxBytes: 4 * 1024 * 1024,
+    maxNodes: 200000,
+    maxArray: 60000,
+    maxDepth: 12,
+  });
+  exactKeys(
+    c,
+    [
+      'format',
+      'id',
+      'revision',
+      'environment',
+      'locales',
+      'spawn',
+      'bounds',
+      'obstacles',
+      'steps',
+      'world',
+      'actors',
+      'rules',
+      'conditions',
+    ],
+    'world course',
+  );
+  required(
+    c.format === 'FlightCourse.v2' &&
+      stableId(c.id) &&
+      stableId(c.revision) &&
+      stableId(c.environment),
+    'Unsupported world course',
+  );
+  exactKeys(c.locales, ['en', 'uk'], 'course locales');
+  for (const lang of ['en', 'uk']) {
+    exactKeys(c.locales[lang], ['title', 'brief', 'lesson'], 'course text');
+    required(
+      ['title', 'brief', 'lesson'].every(
+        (k) =>
+          typeof c.locales[lang][k] === 'string' &&
+          c.locales[lang][k].length > 0 &&
+          c.locales[lang][k].length <= 2048,
+      ),
+      'Bilingual course text required',
+    );
+  }
+  exactKeys(c.world, ['id', 'theme', 'style', 'themeProfile'], 'world presentation');
+  required(
+    ['id', 'theme', 'style'].every((k) => stableId(c.world[k])),
+    'World, theme and style IDs required',
+  );
+  if (c.world.themeProfile !== undefined)
+    c.world.themeProfile = validateThemeProfile(c.world.themeProfile);
+  vector(c.spawn, 'spawn');
+  exactKeys(c.bounds, ['min', 'max'], 'bounds');
+  volume(c.bounds);
+  required(
+    AXES.every((k) => c.bounds.max[k] - c.bounds.min[k] >= 1000) && within(c.spawn, c.bounds),
+    'Invalid world bounds or spawn',
+  );
+  c.rules ??= {};
+  exactKeys(c.rules, Object.keys(WORLD_RULES), 'world rules');
+  c.rules = { ...WORLD_RULES, ...c.rules };
+  const ranges = {
+    seed: [1, 4294967295],
+    maxTicks: [1, WORLD_MAX_TICKS],
+    droneRadius: [100, 500],
+    playerHealth: [1, 1000],
+    collisionDamage: [0, 1000],
+    playerDamage: [1, 1000],
+    fireCooldown: [2, 1000],
+    projectileSpeed: [1000, 60000],
+    projectileTicks: [1, 1000],
+  };
+  for (const [key, range] of Object.entries(ranges))
+    required(int(c.rules[key], ...range), `Invalid rule ${key}`);
+  c.conditions ??= { profile: 'clear', revision: 'r1' };
+  exactKeys(c.conditions, ['profile', 'revision'], 'visibility conditions');
+  required(
+    stableId(c.conditions.profile) && stableId(c.conditions.revision),
+    'Versioned visibility profile required',
+  );
+  required(Array.isArray(c.obstacles) && c.obstacles.length <= 256, 'At most 256 static obstacles');
+  const ids = new Set();
+  let triangles = 0;
+  for (const o of c.obstacles) {
+    required(stableId(o.id) && !ids.has(o.id), 'Unique obstacle IDs required');
+    ids.add(o.id);
+    if (o.type === 'trimesh') {
+      exactKeys(o, ['id', 'type', 'vertices', 'indices'], 'static triangle mesh');
+      required(
+        Array.isArray(o.vertices) &&
+          o.vertices.length >= 9 &&
+          o.vertices.length <= 30000 &&
+          o.vertices.length % 3 === 0 &&
+          o.vertices.every((n) => int(n, -100000, 100000)),
+        'Invalid triangle vertices',
+      );
+      required(
+        Array.isArray(o.indices) &&
+          o.indices.length >= 3 &&
+          o.indices.length % 3 === 0 &&
+          o.indices.every((n) => int(n, 0, o.vertices.length / 3 - 1)),
+        'Invalid triangle indices',
+      );
+      triangles += o.indices.length / 3;
+      for (let i = 0; i < o.indices.length; i += 3) {
+        const p = o.indices
+          .slice(i, i + 3)
+          .map((index) => o.vertices.slice(index * 3, index * 3 + 3));
+        const a = p[1].map((n, k) => n - p[0][k]);
+        const b = p[2].map((n, k) => n - p[0][k]);
+        required(
+          a[1] * b[2] !== a[2] * b[1] || a[2] * b[0] !== a[0] * b[2] || a[0] * b[1] !== a[1] * b[0],
+          'Degenerate collision triangle',
+        );
+      }
+    } else {
+      exactKeys(o, ['id', 'min', 'max', 'rotation'], 'rotated box');
+      volume(o);
+      if (o.rotation)
+        required(
+          Array.isArray(o.rotation) &&
+            o.rotation.length === 4 &&
+            o.rotation.every((n) => Number.isFinite(n) && Math.abs(n) <= 1) &&
+            Math.abs(o.rotation.reduce((n, x) => n + x * x, 0) - 1) < 0.00001,
+          'Rotation must be a normalized xyzw quaternion',
+        );
+    }
+  }
+  required(triangles <= 20000, 'Collision triangle budget exceeded');
+  c.actors ??= [];
+  required(Array.isArray(c.actors) && c.actors.length <= 20, 'Actor budget exceeded');
+  const actorIds = new Set();
+  let combat = 0;
+  let hazards = 0;
+  c.actors = c.actors.map((value) => {
+    exactKeys(
+      value,
+      [
+        'id',
+        'type',
+        'role',
+        'position',
+        'path',
+        'speed',
+        'radius',
+        'height',
+        'health',
+        'fireEveryTicks',
+        'damage',
+        'projectileSpeed',
+        'range',
+      ],
+      'actor',
+    );
+    required(
+      stableId(value.id) &&
+        !actorIds.has(value.id) &&
+        !ids.has(value.id) &&
+        WORLD_ACTOR_TYPES.includes(value.type),
+      'Unique supported actor required',
+    );
+    required(
+      value.type === 'hazard'
+        ? value.role === undefined
+        : ['hostile', 'rival', 'civilian'].includes(value.role ?? 'hostile'),
+      'Actors need a supported role; hazards do not use combat roles',
+    );
+    actorIds.add(value.id);
+    vector(value.position);
+    required(within(value.position, c.bounds), 'Actor spawn outside bounds');
+    const radius =
+      value.radius ?? (value.type === 'vehicle' ? 900 : value.type === 'hazard' ? 500 : 300);
+    const a = {
+      ...value,
+      ...(value.type === 'hazard' ? {} : { role: value.role ?? 'hostile' }),
+      path: value.path ?? [],
+      speed: value.speed ?? (value.path?.length ? 1500 : 0),
+      radius,
+      height: value.height ?? (['patrol', 'sentry'].includes(value.type) ? 1800 : radius * 2),
+      health: value.health ?? 50,
+      fireEveryTicks: value.fireEveryTicks ?? (value.type === 'hazard' ? 0 : 100),
+      damage: value.damage ?? 10,
+      projectileSpeed: value.projectileSpeed ?? 8000,
+      range: value.range ?? 20000,
+    };
+    required(
+      int(a.radius, 100, 2000) &&
+        int(a.height, ['patrol', 'sentry'].includes(a.type) ? a.radius * 2 : 100, 5000) &&
+        a.height % 2 === 0 &&
+        int(a.health, 1, 1000) &&
+        int(a.speed, 0, 15000) &&
+        int(a.fireEveryTicks, 0, 5000) &&
+        (a.fireEveryTicks === 0 || a.fireEveryTicks >= 10) &&
+        int(a.damage, 0, 1000) &&
+        int(a.projectileSpeed, 1000, 60000) &&
+        int(a.range, 100, 100000),
+      'Invalid actor settings',
+    );
+    required(Array.isArray(a.path) && a.path.length <= 64, 'Actor path budget exceeded');
+    for (const p of a.path) {
+      vector(p, 'waypoint');
+      required(within(p, c.bounds), 'Waypoint outside bounds');
+    }
+    if (['patrol', 'sentry', 'vehicle'].includes(a.type)) {
+      const route = [a.position, ...a.path, ...(a.path.length > 1 ? [a.path[0]] : [])];
+      for (let i = 1; i < route.length; i++) {
+        const d = sub(route[i], route[i - 1]);
+        required(
+          Math.abs(d.y) <= Math.floor(isqrt(d.x * d.x + d.z * d.z) * 0.57735) + 200,
+          'Ground path exceeds 30-degree slope or 0.2 m step',
+        );
+      }
+    }
+    if (a.type === 'hazard') hazards++;
+    else combat++;
+    return a;
+  });
+  required(combat <= 12 && hazards <= 8, 'At most twelve combat actors and eight hazards');
+  exactKeys(c.steps, MODES, 'mode criteria');
+  for (const mode of MODES) {
+    required(
+      Array.isArray(c.steps[mode]) && c.steps[mode].length >= 1 && c.steps[mode].length <= 64,
+      'Ordered mission criteria required',
+    );
+    for (const step of c.steps[mode]) {
+      if (step.type === 'gate') {
+        exactKeys(
+          step,
+          ['type', 'axis', 'at', 'direction', 'minSide', 'maxSide', 'minY', 'maxY'],
+          'gate',
+        );
+        required(
+          ['x', 'z'].includes(step.axis) &&
+            [-1, 1].includes(step.direction) &&
+            ['at', 'minSide', 'maxSide', 'minY', 'maxY'].every((k) =>
+              int(step[k], -100000, 100000),
+            ) &&
+            step.minSide < step.maxSide &&
+            step.minY < step.maxY,
+          'Invalid gate',
+        );
+      } else if (step.type === 'eliminate') {
+        exactKeys(step, ['type', 'targets'], 'combat objective');
+        required(
+          Array.isArray(step.targets) &&
+            step.targets.length > 0 &&
+            step.targets.length <= 12 &&
+            new Set(step.targets).size === step.targets.length &&
+            step.targets.every((id) => c.actors.some((a) => a.id === id && a.role === 'hostile')),
+          'Combat objective needs existing hostile targets',
+        );
+      } else if (step.type === 'survive') {
+        exactKeys(step, ['type', 'ticks'], 'survival objective');
+        required(int(step.ticks, 1, c.rules.maxTicks), 'Invalid survival duration');
+      } else {
+        exactKeys(
+          step,
+          [
+            'type',
+            'min',
+            'max',
+            'ticks',
+            'maxSpeed',
+            'maxTilt',
+            'minTilt',
+            'centred',
+            'heading',
+            'surface',
+          ],
+          'hold objective',
+        );
+        required(['hold', 'land'].includes(step.type), 'Unsupported objective');
+        volume(step);
+        required(
+          int(step.ticks, 1, 5000) &&
+            int(step.maxSpeed, 0, 60000) &&
+            int(step.maxTilt, 0, 18000) &&
+            int(step.minTilt, 0, step.maxTilt) &&
+            typeof step.centred === 'boolean' &&
+            (step.heading === null || int(step.heading, -18000, 18000)),
+          'Invalid hold objective',
+        );
+        if (step.surface !== undefined)
+          required(
+            step.type === 'land' && (step.surface === '$floor' || ids.has(step.surface)),
+            'Landing surface does not exist',
+          );
+      }
+    }
+  }
+  return c;
+}
+
+export function quantizeWorldInput(input) {
+  exactKeys(input, COMMANDS, 'world controls');
+  const controls = Object.fromEntries(FLIGHT_CONTROLS.map((k) => [k, input[k]]));
+  required(int(input.actions ?? 0, 0, WORLD_ACTION_FIRE), 'Unsupported world action bits');
+  return { ...quantizeFlightInput(controls), actions: input.actions ?? 0 };
+}
+function validateCommand(input) {
+  exactKeys(input, COMMANDS, 'recorded world controls');
+  required(
+    FLIGHT_CONTROLS.every((k) => int(input[k], k === 'throttle' ? 0 : -1000, 1000)) &&
+      int(input.actions ?? 0, 0, WORLD_ACTION_FIRE),
+    'Invalid recorded world controls',
+  );
+  return { ...input, actions: input.actions ?? 0 };
+}
+function relativeTilt(orientation, surfaceNormal) {
+  const up = attitude(orientation).up;
+  const dot = clamp(
+    roundDiv(
+      AXES.reduce((n, k) => n + up[k] * surfaceNormal[k], 0),
+      Q,
+    ),
+    -Q,
+    Q,
+  );
+  return Math.abs(atan2(isqrt(Math.max(0, Q * Q - dot * dot)), dot));
+}
+
+/** v2 keeps v1's integer force/attitude integration, replacing only collision,
+ * objectives and actor rules. Legacy model.mjs and its replay format are untouched. */
+export function createWorldFlight({ course, mode = 'self-level', response = DEFAULT_RESPONSE }) {
+  const source = validateWorldCourse(course);
+  const rates = validateFlightResponse(response);
+  required(MODES.includes(mode), 'Unsupported flight mode');
+  const rules = source.rules;
+  const gameplay = { ...source };
+  delete gameplay.locales;
+  delete gameplay.environment;
+  delete gameplay.world;
+  const identity = Object.freeze({
+    model: WORLD_FLIGHT_MODEL,
+    backend: WORLD_COLLISION_BACKEND,
+    course: source.id,
+    courseIdentity: dataIdentity(gameplay),
+    worldIdentity: dataIdentity({
+      id: source.world.id,
+      bounds: source.bounds,
+      obstacles: source.obstacles,
+    }),
+    mode,
+    responseIdentity: responseIdentity(rates),
+    rulesIdentity: dataIdentity(rules),
+    conditionsIdentity: dataIdentity(source.conditions),
+  });
+  let collision;
+  let state;
+  let disposed = false;
+  const descriptors = new Map(source.actors.map((a) => [a.id, a]));
+  const assertLive = () => {
+    if (disposed) throw new Error('World flight has been disposed');
+  };
+  const snapshot = () => {
+    assertLive();
+    return {
+      ...clone(state),
+      total: source.steps[mode].length,
+      target: clone(source.steps[mode][state.step] ?? null),
+      attitude: attitude(state.orientation),
+      maxHealth: rules.playerHealth,
+    };
+  };
+  function random() {
+    let n = state.rng;
+    n ^= n << 13;
+    n ^= n >>> 17;
+    n ^= n << 5;
+    state.rng = n >>> 0;
+    return state.rng;
+  }
+  function reset() {
+    assertLive();
+    collision?.dispose();
+    collision = createWorldCollision(source);
+    try {
+      required(
+        collision.clearSpawn(source.spawn, rules.droneRadius),
+        'Drone spawn overlaps solid geometry',
+      );
+      state = {
+        ticks: 0,
+        status: 'disarmed',
+        position: { ...source.spawn },
+        velocity: { x: 0, y: 0, z: 0 },
+        orientation: [0, 0, 0, Q],
+        angular: { roll: 0, pitch: 0, yaw: 0 },
+        step: 0,
+        hold: 0,
+        contacts: 0,
+        landingSpeed: 0,
+        landingTilt: 0,
+        lastInput: { roll: 0, pitch: 0, yaw: 0, throttle: 0, actions: 0 },
+        heightRange: { min: source.spawn.y, max: source.spawn.y },
+        health: rules.playerHealth,
+        grounded: false,
+        support: null,
+        cooldown: 0,
+        contactCooldown: 0,
+        rng: rules.seed,
+        nextProjectileId: 1,
+        projectiles: [],
+        actors: [],
+        events: [],
+        shots: 0,
+        hits: 0,
+      };
+      for (const a of sorted(source.actors)) {
+        const actor = {
+          id: a.id,
+          type: a.type,
+          ...(a.role ? { role: a.role } : {}),
+          position: { ...a.position },
+          radius: a.radius,
+          height: a.height,
+          health: a.health,
+          maxHealth: a.health,
+          status: 'active',
+          pathIndex: 0,
+          cooldown:
+            a.role === 'hostile' && a.fireEveryTicks ? 1 + (random() % a.fireEveryTicks) : 0,
+          blocked: false,
+        };
+        collision.addActor(actor);
+        required(
+          collision.clearActorSpawn(actor),
+          `Actor ${actor.id} spawn overlaps solid geometry`,
+        );
+        state.actors.push(actor);
+      }
+      const ground = collision.support(state.position, rules.droneRadius, 5);
+      state.grounded = !!ground && Math.abs(ground.y - state.position.y) <= 5;
+      state.support = state.grounded ? ground : null;
+    } catch (error) {
+      collision.dispose();
+      throw error;
+    }
+    return snapshot();
+  }
+  reset();
+  function moveActors() {
+    const motions = [];
+    for (const actor of state.actors) {
+      if (actor.status !== 'active') continue;
+      const a = descriptors.get(actor.id);
+      const from = { ...actor.position };
+      actor.blocked = false;
+      if (a.path.length && a.speed) {
+        let target = a.path[actor.pathIndex];
+        let difference = sub(target, actor.position);
+        let distance = length(difference);
+        if (distance <= 30) {
+          actor.pathIndex = (actor.pathIndex + 1) % a.path.length;
+          target = a.path[actor.pathIndex];
+          difference = sub(target, actor.position);
+          distance = length(difference);
+        }
+        if (distance > 30) {
+          const travel = Math.min(distance, Math.max(1, roundDiv(a.speed, WORLD_FLIGHT_HZ)));
+          const delta = Object.fromEntries(
+            AXES.map((k) => [k, roundDiv(difference[k] * travel, distance)]),
+          );
+          const moved = ['patrol', 'sentry', 'vehicle'].includes(a.type)
+            ? collision.moveGroundActor(actor, delta)
+            : collision.moveSphere(actor.position, delta, actor.radius);
+          actor.position = moved.position;
+          const actual = sub(actor.position, from);
+          const progress = AXES.reduce((n, k) => n + actual[k] * delta[k], 0);
+          actor.blocked =
+            !!moved.blocked || progress < Math.max(1, Math.floor((travel * travel) / 10));
+        }
+      }
+      collision.placeActor(actor);
+      motions.push({ id: actor.id, from, to: { ...actor.position } });
+    }
+    return motions;
+  }
+  function launch(owner, position, direction, speed, damage) {
+    if (state.projectiles.length >= 64) return false;
+    const distance = length(direction);
+    if (!distance) return false;
+    state.projectiles.push({
+      id: state.nextProjectileId++,
+      owner,
+      position: { ...position },
+      velocity: Object.fromEntries(AXES.map((k) => [k, roundDiv(direction[k] * speed, distance)])),
+      damage,
+      ttl: rules.projectileTicks,
+    });
+    state.events.push({ type: 'fire', actor: owner });
+    return true;
+  }
+  function weapons(command, motions, before) {
+    const playerCentre = { ...state.position, y: state.position.y + rules.droneRadius };
+    if (state.cooldown > 0) state.cooldown--;
+    if (command.actions & WORLD_ACTION_FIRE && state.cooldown === 0) {
+      const direction = rotate(state.orientation, { x: 0, y: 0, z: -Q });
+      if (launch('player', playerCentre, direction, rules.projectileSpeed, rules.playerDamage))
+        state.shots++;
+      state.cooldown = rules.fireCooldown;
+    }
+    for (const actor of state.actors) {
+      if (actor.status !== 'active' || actor.role !== 'hostile') continue;
+      const a = descriptors.get(actor.id);
+      if (!a.fireEveryTicks) continue;
+      if (actor.cooldown > 0) actor.cooldown--;
+      const origin = actorCentre(actor);
+      const direction = sub(playerCentre, origin);
+      if (
+        actor.cooldown === 0 &&
+        length(direction) <= a.range &&
+        collision.visible(origin, playerCentre)
+      ) {
+        launch(actor.id, origin, direction, a.projectileSpeed, a.damage);
+        actor.cooldown = a.fireEveryTicks;
+      }
+    }
+    const live = [];
+    for (const p of state.projectiles) {
+      const next = Object.fromEntries(
+        AXES.map((k) => [k, p.position[k] + roundDiv(p.velocity[k], WORLD_FLIGHT_HZ)]),
+      );
+      const candidates = motions.filter(
+        (m) =>
+          m.id !== p.owner &&
+          state.actors.some(
+            (a) =>
+              a.id === m.id &&
+              a.status === 'active' &&
+              (a.role === 'hostile' || a.type === 'hazard'),
+          ),
+      );
+      const hit = collision.castPulse(
+        p.position,
+        next,
+        candidates,
+        p.owner === 'player'
+          ? null
+          : { from: before, to: state.position, radius: rules.droneRadius },
+      );
+      if (hit) {
+        if (hit.id === '$player') state.health = Math.max(0, state.health - p.damage);
+        else {
+          const actor = state.actors.find((a) => a.id === hit.id);
+          if (actor?.role === 'hostile') {
+            // Enemy pulses are blocked by allies, but cannot farm player objectives.
+            if (p.owner === 'player') {
+              actor.health = Math.max(0, actor.health - p.damage);
+              state.hits++;
+              if (!actor.health) {
+                actor.status = 'defeated';
+                state.events.push({ type: 'defeat', actor: actor.id });
+              }
+            }
+          }
+        }
+        state.events.push({ type: 'impact', actor: hit.id });
+      } else if (--p.ttl > 0 && within(next, source.bounds)) live.push({ ...p, position: next });
+    }
+    state.projectiles = live;
+  }
+  function evaluate(before, command) {
+    const target = source.steps[mode][state.step];
+    let accepted = false;
+    if (target.type === 'gate') accepted = crossesGate(before, state.position, target);
+    else if (target.type === 'eliminate')
+      accepted = target.targets.every(
+        (id) => state.actors.find((a) => a.id === id).status === 'defeated',
+      );
+    else if (target.type === 'survive') accepted = ++state.hold >= target.ticks;
+    else {
+      const angles = attitude(state.orientation);
+      const tilt =
+        target.type === 'land' && state.support
+          ? relativeTilt(state.orientation, state.support.normal)
+          : Math.max(Math.abs(angles.roll), Math.abs(angles.pitch));
+      const heading =
+        target.heading === null
+          ? 0
+          : Math.abs(((angles.yaw - target.heading + 54000) % 36000) - 18000);
+      const inside =
+        within(state.position, target) &&
+        length(state.velocity) <= target.maxSpeed &&
+        tilt <= target.maxTilt &&
+        tilt >= target.minTilt &&
+        heading <= 1500 &&
+        (!target.centred || ['pitch', 'roll', 'yaw'].every((k) => Math.abs(command[k]) <= 50)) &&
+        (target.type !== 'land' ||
+          (state.grounded &&
+            command.throttle <= 100 &&
+            state.landingSpeed <= target.maxSpeed &&
+            state.landingTilt <= target.maxTilt &&
+            (!target.surface || state.support?.id === target.surface)));
+      state.hold = inside ? state.hold + 1 : 0;
+      accepted = state.hold >= target.ticks;
+    }
+    if (accepted) {
+      state.events.push({ type: 'objective', index: state.step });
+      state.step++;
+      state.hold = 0;
+      if (state.step === source.steps[mode].length) state.status = 'complete';
+    }
+  }
+  function step(input, { quantized = false } = {}) {
+    assertLive();
+    const command = quantized ? validateCommand(input) : quantizeWorldInput(input);
+    if (state.status !== 'active') return snapshot();
+    if (state.ticks >= rules.maxTicks) {
+      state.status = 'expired';
+      return snapshot();
+    }
+    state.events = [];
+    const before = { ...state.position };
+    const wasGrounded = state.grounded;
+    const motions = moveActors();
+    const angles = attitude(state.orientation);
+    for (const key of ['roll', 'pitch', 'yaw']) {
+      const shaped = responseCurve(command[key], rates.expo);
+      const desired =
+        mode === 'self-level' && key !== 'yaw'
+          ? clamp(
+              (roundDiv(shaped * rates.maxTilt * 100, 1000) - angles[key]) * 4,
+              -rates.maxRate * 100,
+              rates.maxRate * 100,
+            )
+          : roundDiv(shaped * rates.maxRate * 100, 1000);
+      const difference = desired - state.angular[key];
+      state.angular[key] += difference
+        ? Math.sign(difference) * Math.max(1, Math.abs(roundDiv(difference, rates.responseTicks)))
+        : 0;
+    }
+    state.orientation = integrateOrientation(state.orientation, state.angular, WORLD_FLIGHT_HZ);
+    const nextAngles = attitude(state.orientation);
+    const thrust = roundDiv(command.throttle * 19620, 1000);
+    const delta = {};
+    for (const k of AXES) {
+      const acceleration = mul(nextAngles.up[k], thrust) - (k === 'y' ? 9810 : 0);
+      state.velocity[k] = clamp(
+        roundDiv(state.velocity[k] * 995, 1000) + roundDiv(acceleration, WORLD_FLIGHT_HZ),
+        -30000,
+        30000,
+      );
+      delta[k] = roundDiv(state.velocity[k], WORLD_FLIGHT_HZ);
+    }
+    const impactSpeed = length(state.velocity);
+    const moved = collision.moveSphere(before, delta, rules.droneRadius, motions);
+    state.position = moved.position;
+    if (state.contactCooldown > 0) state.contactCooldown--;
+    for (const hit of moved.contacts) {
+      const into = roundDiv(
+        AXES.reduce((n, k) => n + state.velocity[k] * hit.normal[k], 0),
+        Q,
+      );
+      if (hit.moving) state.velocity = { x: 0, y: 0, z: 0 };
+      else if (into < 0)
+        for (const k of AXES) state.velocity[k] -= roundDiv(hit.normal[k] * into, Q);
+      const hard = hit.moving || hit.normal.y < 866025 || impactSpeed > 1500;
+      if (hard) {
+        state.contacts++;
+        if (state.contactCooldown === 0) {
+          const actor = descriptors.get(hit.id);
+          const damage =
+            actor?.type === 'hazard'
+              ? actor.damage
+              : actor && actor.role !== 'hostile'
+                ? 0
+                : rules.collisionDamage;
+          state.health = Math.max(0, state.health - damage);
+          state.contactCooldown = 20;
+        }
+      }
+    }
+    for (const k of AXES) {
+      const n = clamp(state.position[k], source.bounds.min[k], source.bounds.max[k]);
+      if (n !== state.position[k]) {
+        state.position[k] = n;
+        state.velocity[k] = 0;
+        state.contacts++;
+      }
+    }
+    const ground = collision.support(state.position, rules.droneRadius, 60);
+    state.grounded =
+      !!ground &&
+      state.velocity.y <= 0 &&
+      state.position.y - ground.y <= 6 &&
+      state.position.y >= ground.y - 6;
+    state.support = state.grounded ? ground : null;
+    if (state.grounded) {
+      state.position.y = Math.max(state.position.y, ground.y);
+      if (!wasGrounded) {
+        state.landingSpeed = impactSpeed;
+        state.landingTilt = relativeTilt(state.orientation, ground.normal);
+      }
+      state.velocity.y = 0;
+      state.velocity.x = roundDiv(state.velocity.x * 700, 1000);
+      state.velocity.z = roundDiv(state.velocity.z * 700, 1000);
+    }
+    weapons(command, motions, before);
+    state.ticks++;
+    state.lastInput = { ...command };
+    state.heightRange.min = Math.min(state.heightRange.min, state.position.y);
+    state.heightRange.max = Math.max(state.heightRange.max, state.position.y);
+    if (state.health === 0) state.status = 'failed';
+    else evaluate(before, command);
+    if (state.status === 'active' && state.ticks >= rules.maxTicks) state.status = 'expired';
+    return snapshot();
+  }
+  return {
+    identity,
+    course: () => clone(source),
+    response: () => ({ ...rates }),
+    snapshot,
+    step,
+    reset,
+    arm() {
+      assertLive();
+      if (['disarmed', 'paused'].includes(state.status)) state.status = 'active';
+    },
+    pause() {
+      assertLive();
+      if (state.status === 'active') state.status = 'paused';
+    },
+    dispose() {
+      if (!disposed) {
+        disposed = true;
+        collision.dispose();
+      }
+    },
+  };
+}
+
+export const exportWorldCourse = (course) => canonicalJSON(validateWorldCourse(course));
+export function worldStateIdentity(snapshot) {
+  const state = { ...snapshot };
+  delete state.attitude;
+  delete state.target;
+  delete state.total;
+  delete state.maxHealth;
+  if (['disarmed', 'paused'].includes(state.status)) state.status = 'active';
+  return dataIdentity(state);
+}
+export function createWorldRecorder(flight, { session = 'practice', prefix = [] } = {}) {
+  required(SESSION.includes(session), 'Invalid world session');
+  const frames = prefix.map((f) => [...f]);
+  required(
+    frames.length === flight.snapshot().ticks,
+    'Recorder must start at the current verified tick',
+  );
+  return {
+    record(input, { quantized = false } = {}) {
+      const state = flight.snapshot();
+      required(
+        frames.length < WORLD_MAX_TICKS && state.ticks === frames.length + 1,
+        'Record exactly once after each consumed flight tick',
+      );
+      const command =
+        input === undefined
+          ? state.lastInput
+          : quantized
+            ? validateCommand(input)
+            : quantizeWorldInput(input);
+      required(
+        COMMANDS.every((k) => command[k] === state.lastInput[k]),
+        'Record the exact command consumed by the flight',
+      );
+      frames.push(COMMANDS.map((k) => state.lastInput[k]));
+    },
+    ticks: () => frames.length,
+    export() {
+      required(
+        flight.snapshot().ticks === frames.length,
+        'Unrecorded flight ticks cannot be exported',
+      );
+      return {
+        format: 'FlightAttempt.v2',
+        session,
+        ...flight.identity,
+        response: flight.response(),
+        frames: frames.map((f) => [...f]),
+        finalStateIdentity: worldStateIdentity(flight.snapshot()),
+      };
+    },
+  };
+}
+async function replayInternal(
+  course,
+  input,
+  {
+    sampleEvery = 0,
+    includeSectors = false,
+    signal,
+    yieldControl = () => new Promise((resolve) => setTimeout(resolve, 0)),
+    retain = false,
+  } = {},
+) {
+  signal?.throwIfAborted();
+  await initWorldRuntime();
+  signal?.throwIfAborted();
+  required(int(sampleEvery, 0, WORLD_MAX_TICKS), 'Invalid replay sample interval');
+  required(typeof includeSectors === 'boolean', 'Invalid replay sector option');
+  const proof = boundedJSON(input, {
+    maxBytes: 2 * 1024 * 1024,
+    maxNodes: WORLD_MAX_TICKS * 7 + 1000,
+    maxArray: WORLD_MAX_TICKS,
+    maxDepth: 10,
+  });
+  exactKeys(
+    proof,
+    [
+      'format',
+      'session',
+      'model',
+      'backend',
+      'course',
+      'courseIdentity',
+      'worldIdentity',
+      'mode',
+      'responseIdentity',
+      'rulesIdentity',
+      'conditionsIdentity',
+      'response',
+      'frames',
+      'finalStateIdentity',
+    ],
+    'world proof',
+  );
+  required(
+    proof.format === 'FlightAttempt.v2' &&
+      SESSION.includes(proof.session) &&
+      Array.isArray(proof.frames) &&
+      proof.frames.length <= WORLD_MAX_TICKS &&
+      typeof proof.finalStateIdentity === 'string',
+    'Invalid world proof',
+  );
+  const flight = createWorldFlight({ course, mode: proof.mode, response: proof.response });
+  let keep = false;
+  try {
+    required(
+      Object.entries(flight.identity).every(([k, v]) => proof[k] === v),
+      'Exact world, runtime, mode, response, rules and conditions required',
+    );
+    flight.arm();
+    const path = [];
+    const sectors = includeSectors ? createSectorTracker() : null;
+    for (let i = 0; i < proof.frames.length; i++) {
+      if (i % 200 === 0) {
+        signal?.throwIfAborted();
+        await yieldControl();
+        signal?.throwIfAborted();
+      }
+      const frame = proof.frames[i];
+      required(Array.isArray(frame) && frame.length === 5, 'Five recorded controls required');
+      required(flight.snapshot().status === 'active', 'Proof continues after terminal state');
+      const state = flight.step(Object.fromEntries(COMMANDS.map((k, j) => [k, frame[j]])), {
+        quantized: true,
+      });
+      sectors?.consume(state);
+      if (sampleEvery && (i % sampleEvery === 0 || state.status !== 'active'))
+        path.push({
+          tick: state.ticks,
+          position: state.position,
+          orientation: state.orientation,
+          input: state.lastInput,
+        });
+    }
+    signal?.throwIfAborted();
+    required(
+      worldStateIdentity(flight.snapshot()) === proof.finalStateIdentity,
+      'World replay state does not match recorded evidence',
+    );
+    if (retain) {
+      required(flight.snapshot().status === 'active', 'Only unfinished attempts can be recovered');
+      flight.pause();
+      const recorder = createWorldRecorder(flight, {
+        session: proof.session,
+        prefix: proof.frames,
+      });
+      keep = true;
+      return {
+        flight,
+        recorder,
+        state: flight.snapshot(),
+        ...(sectors ? { sectors: sectors.snapshot() } : {}),
+      };
+    }
+    return {
+      identity: flight.identity,
+      state: flight.snapshot(),
+      path,
+      ...(sectors ? { sectors: sectors.snapshot() } : {}),
+    };
+  } finally {
+    if (!keep) flight.dispose();
+  }
+}
+export const replayWorldFlight = (course, proof, options = {}) =>
+  replayInternal(course, proof, options);
+export const recoverWorldFlight = (course, proof, options = {}) =>
+  replayInternal(course, proof, { ...options, retain: true });
