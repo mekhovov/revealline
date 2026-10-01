@@ -1,3 +1,4 @@
+import { analyzeRouteCoverage, ROUTE_COVERAGE } from './coverage.mjs';
 import { exactKeys, required, stableId } from '../data-json.mjs';
 import { ARCADE_ACTIONS_VERSION } from './arcade-actions.mjs';
 import { validateEnemyPressure } from './enemy-pressure.mjs';
@@ -39,6 +40,7 @@ export function resolveClassicDefinition(level, foundationGeometry = null) {
       'enemyPressure',
       'timedBonuses',
       'combatPatrols',
+      'coverage',
     ],
     'classic',
   );
@@ -221,5 +223,24 @@ export function resolveClassicDefinition(level, foundationGeometry = null) {
       ['id', 'x', 'y', 'w', 'h', 'speedFactor', 'disableBoost', 'lockAbility'],
       'signal zone',
     );
+  if (Object.hasOwn(value, 'coverage')) {
+    has(value.coverage, ['version'], 'coverage policy');
+    required(value.coverage.version === ROUTE_COVERAGE, 'unsupported coverage policy');
+    required(
+      ['xonix-level.v4', 'xonix-level.v5'].includes(level.version),
+      'route coverage requires a classic level without relay gates',
+    );
+    const budget = analyzeRouteCoverage(level, foundationGeometry?.cells);
+    required(
+      budget.total > 0,
+      'No reachable safe-to-safe cuts: open a route or add a safe return island.',
+    );
+    for (const objective of level.objectives ?? [])
+      required(
+        !objective.required ||
+          budget.eligible[Math.floor(objective.y) * width + Math.floor(objective.x)],
+        'Required objectives must be on reachable capture routes.',
+      );
+  }
   return value;
 }

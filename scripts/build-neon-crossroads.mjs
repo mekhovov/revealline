@@ -63,7 +63,7 @@ export async function buildNeonCrossroads() {
   const level = {
     version: 'xonix-level.v4',
     id: 'neon-crossroads-reference',
-    revision: '1',
+    revision: '2',
     name: 'Neon Crossroads',
     width: 72,
     height: 36,
@@ -81,6 +81,7 @@ export async function buildNeonCrossroads() {
     hangars: [],
     classic: {
       version: 'classic.v1',
+      coverage: { version: 'reachable-routes.v1' },
       terrain: [],
       powerups: [],
       arcadeActions: { version: 'arcade-actions.v1' },
@@ -199,7 +200,7 @@ export async function buildNeonCrossroads() {
       {
         version: 'xonix-campaign.v1',
         id: 'neon-crossroads',
-        revision: '1',
+        revision: '2',
         title: 'Neon Crossroads',
         themeId: 'retro',
         classIds: ['scout'],

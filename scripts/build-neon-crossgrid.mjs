@@ -129,7 +129,7 @@ export async function buildNeonCrossgrid() {
   const level = {
     version: 'xonix-level.v4',
     id: 'neon-crossgrid-reference',
-    revision: '1',
+    revision: '2',
     name: 'Neon Crossgrid',
     width: 72,
     height: 36,
@@ -143,6 +143,7 @@ export async function buildNeonCrossgrid() {
     hangars: [],
     classic: {
       version: 'classic.v1',
+      coverage: { version: 'reachable-routes.v1' },
       terrain,
       powerups: [],
       arcadeActions: { version: 'arcade-actions.v1' },
@@ -210,7 +211,7 @@ export async function buildNeonCrossgrid() {
       {
         version: 'xonix-campaign.v1',
         id: 'neon-crossgrid',
-        revision: '1',
+        revision: '2',
         title: 'Neon Crossgrid',
         themeId: 'retro',
         classIds: ['scout'],

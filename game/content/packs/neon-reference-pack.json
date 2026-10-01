@@ -1,7 +1,7 @@
 {
   "format": "xonix-pack.v6",
   "id": "neon-reference-pack",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "name": "Neon Reference Pack",
   "description": "Sixteen screenshot-based Arcade levels: Channels, Crossroads, Hearts, Labyrinth, Arrows, Chambers, Crossgrid, Switchback, Spirals, Crossfire, Pinwheels, Wavebands, Conduit, Switchyards, Spines and Prism. Each level reveals its own original neon illustration.",
   "engine": "xonix-core.v6",
@@ -70,7 +70,7 @@
     {
       "version": "xonix-campaign.v1",
       "id": "neon-reference",
-      "revision": "1",
+      "revision": "2",
       "title": "Neon Reference Pack",
       "themeId": "retro",
       "classIds": ["scout"],
@@ -78,7 +78,7 @@
         {
           "version": "xonix-level.v5",
           "id": "neon-channels-pack",
-          "revision": "1",
+          "revision": "2",
           "name": "Neon Channels",
           "width": 72,
           "height": 36,
@@ -114,6 +114,7 @@
           "hangars": [],
           "classic": {
             "version": "classic.v1",
+            "coverage": { "version": "reachable-routes.v1" },
             "terrain": [
               { "id": "north-west", "kind": "slow", "x": 5, "y": 5, "w": 14, "h": 4 },
               { "id": "west-column", "kind": "slow", "x": 5, "y": 13, "w": 4, "h": 18 },
@@ -203,7 +204,7 @@
         {
           "version": "xonix-level.v5",
           "id": "neon-crossroads-pack",
-          "revision": "1",
+          "revision": "2",
           "name": "Neon Crossroads",
           "width": 72,
           "height": 36,
@@ -221,6 +222,7 @@
           "hangars": [],
           "classic": {
             "version": "classic.v1",
+            "coverage": { "version": "reachable-routes.v1" },
             "terrain": [],
             "powerups": [],
             "arcadeActions": { "version": "arcade-actions.v1" }
@@ -333,7 +335,7 @@
         {
           "version": "xonix-level.v5",
           "id": "neon-hearts-pack",
-          "revision": "1",
+          "revision": "2",
           "name": "Neon Hearts",
           "width": 72,
           "height": 36,
@@ -397,6 +399,7 @@
           "hangars": [],
           "classic": {
             "version": "classic.v1",
+            "coverage": { "version": "reachable-routes.v1" },
             "terrain": [
               { "id": "heart-hazard-1", "kind": "lethal", "x": 12, "y": 11, "w": 1, "h": 1 },
               { "id": "heart-hazard-2", "kind": "lethal", "x": 15, "y": 11, "w": 1, "h": 1 },
@@ -555,7 +558,7 @@
         {
           "version": "xonix-level.v5",
           "id": "neon-labyrinth-pack",
-          "revision": "1",
+          "revision": "2",
           "name": "Neon Labyrinth",
           "width": 72,
           "height": 36,
@@ -607,6 +610,7 @@
           "hangars": [],
           "classic": {
             "version": "classic.v1",
+            "coverage": { "version": "reachable-routes.v1" },
             "terrain": [
               { "id": "hazard-1", "kind": "lethal", "x": 4, "y": 2, "w": 2, "h": 2 },
               { "id": "hazard-2", "kind": "lethal", "x": 13, "y": 2, "w": 4, "h": 1 },
@@ -788,7 +792,7 @@
         {
           "version": "xonix-level.v5",
           "id": "neon-arrows-pack",
-          "revision": "1",
+          "revision": "2",
           "name": "Neon Arrows",
           "width": 72,
           "height": 36,
@@ -817,6 +821,7 @@
           "hangars": [],
           "classic": {
             "version": "classic.v1",
+            "coverage": { "version": "reachable-routes.v1" },
             "terrain": [
               { "id": "hazard-1", "kind": "lethal", "x": 12, "y": 1, "w": 1, "h": 1 },
               { "id": "hazard-2", "kind": "lethal", "x": 31, "y": 1, "w": 1, "h": 1 },
@@ -1098,7 +1103,7 @@
         {
           "version": "xonix-level.v5",
           "id": "neon-chambers-pack",
-          "revision": "1",
+          "revision": "2",
           "name": "Neon Chambers",
           "width": 72,
           "height": 36,
@@ -1197,6 +1202,7 @@
           "hangars": [],
           "classic": {
             "version": "classic.v1",
+            "coverage": { "version": "reachable-routes.v1" },
             "terrain": [],
             "powerups": [],
             "arcadeActions": { "version": "arcade-actions.v1" }
@@ -1309,7 +1315,7 @@
         {
           "version": "xonix-level.v5",
           "id": "neon-crossgrid-pack",
-          "revision": "1",
+          "revision": "2",
           "name": "Neon Crossgrid",
           "width": 72,
           "height": 36,
@@ -1363,6 +1369,7 @@
           "hangars": [],
           "classic": {
             "version": "classic.v1",
+            "coverage": { "version": "reachable-routes.v1" },
             "terrain": [
               { "id": "hazard-1", "kind": "lethal", "x": 6, "y": 3, "w": 2, "h": 3 },
               { "id": "hazard-2", "kind": "lethal", "x": 18, "y": 3, "w": 2, "h": 3 },
@@ -1530,7 +1537,7 @@
         {
           "version": "xonix-level.v5",
           "id": "neon-switchback-pack",
-          "revision": "1",
+          "revision": "2",
           "name": "Neon Switchback",
           "width": 72,
           "height": 36,
@@ -1550,6 +1557,7 @@
           "hangars": [],
           "classic": {
             "version": "classic.v1",
+            "coverage": { "version": "reachable-routes.v1" },
             "terrain": [
               { "id": "hazard-1", "kind": "lethal", "x": 28, "y": 1, "w": 6, "h": 2 },
               { "id": "hazard-2", "kind": "lethal", "x": 38, "y": 1, "w": 6, "h": 2 },
@@ -1772,7 +1780,7 @@
         {
           "version": "xonix-level.v5",
           "id": "neon-spirals-pack",
-          "revision": "1",
+          "revision": "2",
           "name": "Neon Spirals",
           "width": 72,
           "height": 36,
@@ -1787,6 +1795,7 @@
           "hangars": [],
           "classic": {
             "version": "classic.v1",
+            "coverage": { "version": "reachable-routes.v1" },
             "terrain": [
               { "id": "hazard-1", "kind": "lethal", "x": 3, "y": 3, "w": 22, "h": 3 },
               { "id": "hazard-2", "kind": "lethal", "x": 28, "y": 3, "w": 16, "h": 3 },
@@ -1899,7 +1908,7 @@
         {
           "version": "xonix-level.v5",
           "id": "neon-crossfire-pack",
-          "revision": "1",
+          "revision": "2",
           "name": "Neon Crossfire",
           "width": 72,
           "height": 36,
@@ -1958,6 +1967,7 @@
           "hangars": [],
           "classic": {
             "version": "classic.v1",
+            "coverage": { "version": "reachable-routes.v1" },
             "terrain": [
               { "id": "hazard-1", "kind": "lethal", "x": 2, "y": 2, "w": 6, "h": 3 },
               { "id": "hazard-2", "kind": "lethal", "x": 28, "y": 2, "w": 6, "h": 1 },
@@ -2141,7 +2151,7 @@
         {
           "version": "xonix-level.v5",
           "id": "neon-pinwheels-pack",
-          "revision": "1",
+          "revision": "2",
           "name": "Neon Pinwheels",
           "width": 72,
           "height": 36,
@@ -2156,6 +2166,7 @@
           "hangars": [],
           "classic": {
             "version": "classic.v1",
+            "coverage": { "version": "reachable-routes.v1" },
             "terrain": [
               { "id": "hazard-1", "kind": "lethal", "x": 16, "y": 1, "w": 5, "h": 1 },
               { "id": "hazard-2", "kind": "lethal", "x": 27, "y": 1, "w": 5, "h": 1 },
@@ -2444,7 +2455,7 @@
         {
           "version": "xonix-level.v5",
           "id": "neon-wavebands-pack",
-          "revision": "1",
+          "revision": "2",
           "name": "Neon Wavebands",
           "width": 72,
           "height": 36,
@@ -2459,6 +2470,7 @@
           "hangars": [],
           "classic": {
             "version": "classic.v1",
+            "coverage": { "version": "reachable-routes.v1" },
             "terrain": [
               { "id": "hazard-1", "kind": "lethal", "x": 2, "y": 1, "w": 2, "h": 1 },
               { "id": "hazard-2", "kind": "lethal", "x": 6, "y": 1, "w": 2, "h": 1 },
@@ -2961,7 +2973,7 @@
         {
           "version": "xonix-level.v5",
           "id": "neon-conduit-pack",
-          "revision": "1",
+          "revision": "2",
           "name": "Neon Conduit",
           "width": 72,
           "height": 36,
@@ -3001,6 +3013,7 @@
           "hangars": [],
           "classic": {
             "version": "classic.v1",
+            "coverage": { "version": "reachable-routes.v1" },
             "terrain": [
               { "id": "hazard-1", "kind": "lethal", "x": 3, "y": 10, "w": 6, "h": 6 },
               { "id": "hazard-2", "kind": "lethal", "x": 13, "y": 10, "w": 6, "h": 6 },
@@ -3104,7 +3117,7 @@
         {
           "version": "xonix-level.v5",
           "id": "neon-switchyards-pack",
-          "revision": "1",
+          "revision": "2",
           "name": "Neon Switchyards",
           "width": 72,
           "height": 36,
@@ -3139,6 +3152,7 @@
           "hangars": [],
           "classic": {
             "version": "classic.v1",
+            "coverage": { "version": "reachable-routes.v1" },
             "terrain": [
               { "id": "hazard-1", "kind": "lethal", "x": 12, "y": 2, "w": 1, "h": 9 },
               { "id": "hazard-2", "kind": "lethal", "x": 24, "y": 2, "w": 1, "h": 9 },
@@ -3319,7 +3333,7 @@
         {
           "version": "xonix-level.v5",
           "id": "neon-spines-pack",
-          "revision": "1",
+          "revision": "2",
           "name": "Neon Spines",
           "width": 72,
           "height": 36,
@@ -3351,6 +3365,7 @@
           "hangars": [],
           "classic": {
             "version": "classic.v1",
+            "coverage": { "version": "reachable-routes.v1" },
             "terrain": [
               { "id": "hazard-1", "kind": "lethal", "x": 12, "y": 2, "w": 1, "h": 15 },
               { "id": "hazard-2", "kind": "lethal", "x": 24, "y": 2, "w": 1, "h": 15 },
@@ -3483,7 +3498,7 @@
         {
           "version": "xonix-level.v5",
           "id": "neon-prism-pack",
-          "revision": "1",
+          "revision": "2",
           "name": "Neon Prism",
           "width": 72,
           "height": 36,
@@ -3498,6 +3513,7 @@
           "hangars": [],
           "classic": {
             "version": "classic.v1",
+            "coverage": { "version": "reachable-routes.v1" },
             "terrain": [
               { "id": "hazard-1", "kind": "lethal", "x": 18, "y": 1, "w": 2, "h": 1 },
               { "id": "hazard-2", "kind": "lethal", "x": 33, "y": 1, "w": 1, "h": 1 },

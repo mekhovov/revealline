@@ -411,6 +411,7 @@ export async function buildNeonMosaic() {
       foundations: rectangles(cells, 'S'),
       classic: {
         version: 'classic.v1',
+        coverage: { version: 'reachable-routes.v1' },
         terrain,
         powerups: [],
         arcadeActions: { version: 'arcade-actions.v1' },
@@ -454,7 +455,7 @@ export async function buildNeonMosaic() {
         {
           version: 'xonix-campaign.v1',
           id: `neon-${design.id}`,
-          revision: '1',
+          revision: '2',
           title: level.name,
           themeId: 'retro',
           classIds: ['scout'],

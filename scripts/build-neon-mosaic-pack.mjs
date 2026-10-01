@@ -16,7 +16,7 @@ export async function buildNeonMosaicPack() {
   const pack = {
     ...sources[0].pack,
     id: 'neon-mosaic-pack',
-    version: '1.1.0',
+    version: '1.2.0',
     name: 'Neon Words & Symbols',
     description:
       '38 neon word and symbol levels: eleven word designs and twenty-seven cultural and FPV symbols. Each arena has distinctive terrain, passages, refuges and enemies, with its own original reveal illustration.',
@@ -35,7 +35,7 @@ export async function buildNeonMosaicPack() {
       {
         version: 'xonix-campaign.v1',
         id: 'neon-mosaic',
-        revision: '1',
+        revision: '2',
         title: 'Neon Words & Symbols',
         themeId: 'retro',
         classIds: ['scout'],

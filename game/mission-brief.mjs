@@ -48,7 +48,9 @@ export function missionBriefing(
           count: required,
           objective: required === 1 ? label : plural,
         })
-      : t('gameplay:brief.coverage', { coverage });
+      : t(level.classic?.coverage ? 'gameplay:brief.routeCoverage' : 'gameplay:brief.coverage', {
+          coverage,
+        });
   const rules = level.rules || {};
   const limits = [
     rules.timeLimitSeconds > 0 ? t('gameplay:deadlineS', { value1: rules.timeLimitSeconds }) : '',

@@ -1,7 +1,7 @@
 {
   "format": "xonix-pack.v6",
   "id": "neon-mosaic-pack",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "name": "Neon Words & Symbols",
   "description": "38 neon word and symbol levels: eleven word designs and twenty-seven cultural and FPV symbols. Each arena has distinctive terrain, passages, refuges and enemies, with its own original reveal illustration.",
   "engine": "xonix-core.v6",
@@ -70,7 +70,7 @@
     {
       "version": "xonix-campaign.v1",
       "id": "neon-mosaic",
-      "revision": "1",
+      "revision": "2",
       "title": "Neon Words & Symbols",
       "themeId": "retro",
       "classIds": ["scout"],
@@ -78,7 +78,7 @@
         {
           "version": "xonix-level.v5",
           "id": "neon-fpv-pack",
-          "revision": "1",
+          "revision": "2",
           "name": "Neon FPV",
           "width": 72,
           "height": 36,
@@ -106,6 +106,7 @@
           "hangars": [],
           "classic": {
             "version": "classic.v1",
+            "coverage": { "version": "reachable-routes.v1" },
             "terrain": [
               { "id": "mosaic-1", "kind": "slow", "x": 10, "y": 4, "w": 9, "h": 2 },
               { "id": "mosaic-2", "kind": "slow", "x": 49, "y": 5, "w": 9, "h": 1 },
@@ -285,7 +286,7 @@
         {
           "version": "xonix-level.v5",
           "id": "neon-ukraine-pack",
-          "revision": "1",
+          "revision": "2",
           "name": "Neon UKRAINE",
           "width": 72,
           "height": 36,
@@ -312,6 +313,7 @@
           "hangars": [],
           "classic": {
             "version": "classic.v1",
+            "coverage": { "version": "reachable-routes.v1" },
             "terrain": [
               { "id": "mosaic-1", "kind": "slow", "x": 8, "y": 4, "w": 22, "h": 4 },
               { "id": "mosaic-2", "kind": "slow", "x": 42, "y": 5, "w": 22, "h": 3 },
@@ -517,7 +519,7 @@
         {
           "version": "xonix-level.v5",
           "id": "neon-drone-aid-pack",
-          "revision": "1",
+          "revision": "2",
           "name": "Neon DRONE AID",
           "width": 72,
           "height": 36,
@@ -544,6 +546,7 @@
           "hangars": [],
           "classic": {
             "version": "classic.v1",
+            "coverage": { "version": "reachable-routes.v1" },
             "terrain": [
               { "id": "mosaic-1", "kind": "slow", "x": 9, "y": 4, "w": 9, "h": 1 },
               { "id": "mosaic-2", "kind": "slow", "x": 15, "y": 5, "w": 3, "h": 1 },
@@ -744,7 +747,7 @@
         {
           "version": "xonix-level.v5",
           "id": "neon-coupa-pack",
-          "revision": "1",
+          "revision": "2",
           "name": "Neon COUPA",
           "width": 72,
           "height": 36,
@@ -776,6 +779,7 @@
           "hangars": [],
           "classic": {
             "version": "classic.v1",
+            "coverage": { "version": "reachable-routes.v1" },
             "terrain": [
               { "id": "mosaic-1", "kind": "slow", "x": 55, "y": 6, "w": 3, "h": 2 },
               { "id": "mosaic-2", "kind": "slow", "x": 7, "y": 8, "w": 1, "h": 3 },
@@ -909,7 +913,7 @@
         {
           "version": "xonix-level.v5",
           "id": "neon-social-drone-pack",
-          "revision": "1",
+          "revision": "2",
           "name": "Neon SOCIAL DRONE",
           "width": 72,
           "height": 36,
@@ -938,6 +942,7 @@
           "hangars": [],
           "classic": {
             "version": "classic.v1",
+            "coverage": { "version": "reachable-routes.v1" },
             "terrain": [
               { "id": "mosaic-1", "kind": "slow", "x": 8, "y": 4, "w": 11, "h": 1 },
               { "id": "mosaic-2", "kind": "slow", "x": 26, "y": 4, "w": 11, "h": 1 },
@@ -1164,7 +1169,7 @@
         {
           "version": "xonix-level.v5",
           "id": "neon-sdua-pack",
-          "revision": "1",
+          "revision": "2",
           "name": "Neon SDUA",
           "width": 72,
           "height": 36,
@@ -1193,6 +1198,7 @@
           "hangars": [],
           "classic": {
             "version": "classic.v1",
+            "coverage": { "version": "reachable-routes.v1" },
             "terrain": [
               { "id": "mosaic-1", "kind": "slow", "x": 11, "y": 3, "w": 48, "h": 3 },
               { "id": "mosaic-2", "kind": "slow", "x": 11, "y": 6, "w": 2, "h": 1 },
@@ -1390,7 +1396,7 @@
         {
           "version": "xonix-level.v5",
           "id": "neon-victory-drones-pack",
-          "revision": "1",
+          "revision": "2",
           "name": "Neon VICTORY DRONES",
           "width": 72,
           "height": 36,
@@ -1423,6 +1429,7 @@
           "hangars": [],
           "classic": {
             "version": "classic.v1",
+            "coverage": { "version": "reachable-routes.v1" },
             "terrain": [
               { "id": "mosaic-1", "kind": "slow", "x": 6, "y": 3, "w": 8, "h": 2 },
               { "id": "mosaic-2", "kind": "slow", "x": 36, "y": 3, "w": 8, "h": 2 },
@@ -1675,7 +1682,7 @@
         {
           "version": "xonix-level.v5",
           "id": "neon-vd-pack",
-          "revision": "1",
+          "revision": "2",
           "name": "Neon VD",
           "width": 72,
           "height": 36,
@@ -1709,6 +1716,7 @@
           "hangars": [],
           "classic": {
             "version": "classic.v1",
+            "coverage": { "version": "reachable-routes.v1" },
             "terrain": [
               { "id": "mosaic-1", "kind": "slow", "x": 7, "y": 3, "w": 12, "h": 20 },
               { "id": "mosaic-2", "kind": "slow", "x": 53, "y": 3, "w": 12, "h": 20 },
@@ -1872,7 +1880,7 @@
         {
           "version": "xonix-level.v5",
           "id": "neon-fpv-line-pack",
-          "revision": "1",
+          "revision": "2",
           "name": "Neon FPV LINE",
           "width": 72,
           "height": 36,
@@ -1917,6 +1925,7 @@
           "hangars": [],
           "classic": {
             "version": "classic.v1",
+            "coverage": { "version": "reachable-routes.v1" },
             "terrain": [
               { "id": "mosaic-1", "kind": "slow", "x": 10, "y": 8, "w": 4, "h": 12 },
               { "id": "mosaic-2", "kind": "slow", "x": 14, "y": 8, "w": 2, "h": 7 },
@@ -2128,7 +2137,7 @@
         {
           "version": "xonix-level.v5",
           "id": "neon-reveal-pack",
-          "revision": "1",
+          "revision": "2",
           "name": "Neon REVEAL",
           "width": 72,
           "height": 36,
@@ -2156,6 +2165,7 @@
           "hangars": [],
           "classic": {
             "version": "classic.v1",
+            "coverage": { "version": "reachable-routes.v1" },
             "terrain": [
               { "id": "mosaic-1", "kind": "slow", "x": 8, "y": 3, "w": 22, "h": 5 },
               { "id": "mosaic-2", "kind": "slow", "x": 42, "y": 5, "w": 22, "h": 3 },
@@ -2342,7 +2352,7 @@
         {
           "version": "xonix-level.v5",
           "id": "neon-fly-free-pack",
-          "revision": "1",
+          "revision": "2",
           "name": "Neon FLY FREE",
           "width": 72,
           "height": 36,
@@ -2376,6 +2386,7 @@
           "hangars": [],
           "classic": {
             "version": "classic.v1",
+            "coverage": { "version": "reachable-routes.v1" },
             "terrain": [
               { "id": "mosaic-1", "kind": "slow", "x": 9, "y": 3, "w": 9, "h": 2 },
               { "id": "mosaic-2", "kind": "slow", "x": 9, "y": 5, "w": 8, "h": 4 },
@@ -2590,7 +2601,7 @@
         {
           "version": "xonix-level.v5",
           "id": "neon-fpv-drone-pack",
-          "revision": "1",
+          "revision": "2",
           "name": "Neon FPV Drone",
           "width": 72,
           "height": 36,
@@ -2619,6 +2630,7 @@
           "hangars": [],
           "classic": {
             "version": "classic.v1",
+            "coverage": { "version": "reachable-routes.v1" },
             "terrain": [
               { "id": "mosaic-1", "kind": "slow", "x": 7, "y": 4, "w": 5, "h": 3 },
               { "id": "mosaic-2", "kind": "slow", "x": 39, "y": 5, "w": 3, "h": 1 },
@@ -2866,7 +2878,7 @@
         {
           "version": "xonix-level.v5",
           "id": "neon-tryzub-pack",
-          "revision": "1",
+          "revision": "2",
           "name": "Neon Ukrainian Trident",
           "width": 72,
           "height": 36,
@@ -2896,6 +2908,7 @@
           "hangars": [],
           "classic": {
             "version": "classic.v1",
+            "coverage": { "version": "reachable-routes.v1" },
             "terrain": [
               { "id": "mosaic-1", "kind": "slow", "x": 8, "y": 3, "w": 11, "h": 7 },
               { "id": "mosaic-2", "kind": "slow", "x": 26, "y": 3, "w": 10, "h": 1 },
@@ -3074,7 +3087,7 @@
         {
           "version": "xonix-level.v5",
           "id": "neon-vyshyvanka-pack",
-          "revision": "1",
+          "revision": "2",
           "name": "Neon Vyshyvanka Diamonds",
           "width": 72,
           "height": 36,
@@ -3102,6 +3115,7 @@
           "hangars": [],
           "classic": {
             "version": "classic.v1",
+            "coverage": { "version": "reachable-routes.v1" },
             "terrain": [
               { "id": "mosaic-1", "kind": "slow", "x": 11, "y": 4, "w": 48, "h": 2 },
               { "id": "mosaic-2", "kind": "slow", "x": 11, "y": 6, "w": 6, "h": 1 },
@@ -3425,7 +3439,7 @@
         {
           "version": "xonix-level.v5",
           "id": "neon-ruzha-pack",
-          "revision": "1",
+          "revision": "2",
           "name": "Neon Eight-Point Ruzha",
           "width": 72,
           "height": 36,
@@ -3454,6 +3468,7 @@
           "hangars": [],
           "classic": {
             "version": "classic.v1",
+            "coverage": { "version": "reachable-routes.v1" },
             "terrain": [
               { "id": "mosaic-1", "kind": "slow", "x": 6, "y": 4, "w": 8, "h": 7 },
               { "id": "mosaic-2", "kind": "slow", "x": 36, "y": 4, "w": 2, "h": 2 },
@@ -3660,7 +3675,7 @@
         {
           "version": "xonix-level.v5",
           "id": "neon-kalyna-pack",
-          "revision": "1",
+          "revision": "2",
           "name": "Neon Kalyna",
           "width": 72,
           "height": 36,
@@ -3688,6 +3703,7 @@
           "hangars": [],
           "classic": {
             "version": "classic.v1",
+            "coverage": { "version": "reachable-routes.v1" },
             "terrain": [
               { "id": "mosaic-1", "kind": "slow", "x": 7, "y": 3, "w": 12, "h": 20 },
               { "id": "mosaic-2", "kind": "slow", "x": 53, "y": 3, "w": 12, "h": 20 },
@@ -3906,7 +3922,7 @@
         {
           "version": "xonix-level.v5",
           "id": "neon-tree-of-life-pack",
-          "revision": "1",
+          "revision": "2",
           "name": "Neon Tree of Life",
           "width": 72,
           "height": 36,
@@ -3940,6 +3956,7 @@
           "hangars": [],
           "classic": {
             "version": "classic.v1",
+            "coverage": { "version": "reachable-routes.v1" },
             "terrain": [
               { "id": "mosaic-1", "kind": "slow", "x": 7, "y": 30, "w": 9, "h": 1 },
               { "id": "mosaic-2", "kind": "slow", "x": 7, "y": 31, "w": 2, "h": 2 },
@@ -4220,7 +4237,7 @@
         {
           "version": "xonix-level.v5",
           "id": "neon-pysanka-pack",
-          "revision": "1",
+          "revision": "2",
           "name": "Neon Pysanka",
           "width": 72,
           "height": 36,
@@ -4255,6 +4272,7 @@
           "hangars": [],
           "classic": {
             "version": "classic.v1",
+            "coverage": { "version": "reachable-routes.v1" },
             "terrain": [
               { "id": "mosaic-1", "kind": "slow", "x": 8, "y": 3, "w": 17, "h": 20 },
               { "id": "mosaic-2", "kind": "slow", "x": 25, "y": 3, "w": 1, "h": 11 },
@@ -4527,7 +4545,7 @@
         {
           "version": "xonix-level.v5",
           "id": "neon-barvinok-pack",
-          "revision": "1",
+          "revision": "2",
           "name": "Neon Barvinok",
           "width": 72,
           "height": 36,
@@ -4555,6 +4573,7 @@
           "hangars": [],
           "classic": {
             "version": "classic.v1",
+            "coverage": { "version": "reachable-routes.v1" },
             "terrain": [
               { "id": "mosaic-1", "kind": "slow", "x": 9, "y": 4, "w": 9, "h": 5 },
               { "id": "mosaic-2", "kind": "slow", "x": 19, "y": 6, "w": 3, "h": 6 },
@@ -4807,7 +4826,7 @@
         {
           "version": "xonix-level.v5",
           "id": "neon-wheat-pack",
-          "revision": "1",
+          "revision": "2",
           "name": "Neon Wheat Sheaf",
           "width": 72,
           "height": 36,
@@ -4841,6 +4860,7 @@
           "hangars": [],
           "classic": {
             "version": "classic.v1",
+            "coverage": { "version": "reachable-routes.v1" },
             "terrain": [
               { "id": "mosaic-1", "kind": "slow", "x": 7, "y": 4, "w": 5, "h": 5 },
               { "id": "mosaic-2", "kind": "slow", "x": 8, "y": 29, "w": 2, "h": 2 },
@@ -5059,7 +5079,7 @@
         {
           "version": "xonix-level.v5",
           "id": "neon-vinok-pack",
-          "revision": "1",
+          "revision": "2",
           "name": "Neon Vinok",
           "width": 72,
           "height": 36,
@@ -5087,6 +5107,7 @@
           "hangars": [],
           "classic": {
             "version": "classic.v1",
+            "coverage": { "version": "reachable-routes.v1" },
             "terrain": [
               { "id": "mosaic-1", "kind": "slow", "x": 8, "y": 3, "w": 11, "h": 7 },
               { "id": "mosaic-2", "kind": "slow", "x": 15, "y": 15, "w": 4, "h": 8 },
@@ -5318,7 +5339,7 @@
         {
           "version": "xonix-level.v5",
           "id": "neon-didukh-pack",
-          "revision": "1",
+          "revision": "2",
           "name": "Neon Didukh",
           "width": 72,
           "height": 36,
@@ -5361,6 +5382,7 @@
           "hangars": [],
           "classic": {
             "version": "classic.v1",
+            "coverage": { "version": "reachable-routes.v1" },
             "terrain": [
               { "id": "mosaic-1", "kind": "slow", "x": 11, "y": 3, "w": 22, "h": 4 },
               { "id": "mosaic-2", "kind": "slow", "x": 11, "y": 10, "w": 7, "h": 9 },
@@ -5609,7 +5631,7 @@
         {
           "version": "xonix-level.v5",
           "id": "neon-rushnyk-pack",
-          "revision": "1",
+          "revision": "2",
           "name": "Neon Rushnyk",
           "width": 72,
           "height": 36,
@@ -5638,6 +5660,7 @@
           "hangars": [],
           "classic": {
             "version": "classic.v1",
+            "coverage": { "version": "reachable-routes.v1" },
             "terrain": [
               { "id": "mosaic-1", "kind": "slow", "x": 6, "y": 4, "w": 8, "h": 7 },
               { "id": "mosaic-2", "kind": "slow", "x": 9, "y": 24, "w": 1, "h": 9 },
@@ -5848,7 +5871,7 @@
         {
           "version": "xonix-level.v5",
           "id": "neon-bandura-pack",
-          "revision": "1",
+          "revision": "2",
           "name": "Neon Bandura",
           "width": 72,
           "height": 36,
@@ -5883,6 +5906,7 @@
           "hangars": [],
           "classic": {
             "version": "classic.v1",
+            "coverage": { "version": "reachable-routes.v1" },
             "terrain": [
               { "id": "mosaic-1", "kind": "slow", "x": 6, "y": 25, "w": 2, "h": 3 },
               { "id": "mosaic-2", "kind": "slow", "x": 6, "y": 29, "w": 9, "h": 4 },
@@ -6148,7 +6172,7 @@
         {
           "version": "xonix-level.v5",
           "id": "neon-trembita-pack",
-          "revision": "1",
+          "revision": "2",
           "name": "Neon Trembita",
           "width": 72,
           "height": 36,
@@ -6178,6 +6202,7 @@
           "hangars": [],
           "classic": {
             "version": "classic.v1",
+            "coverage": { "version": "reachable-routes.v1" },
             "terrain": [
               { "id": "mosaic-1", "kind": "slow", "x": 36, "y": 5, "w": 9, "h": 7 },
               { "id": "mosaic-2", "kind": "slow", "x": 10, "y": 6, "w": 7, "h": 2 },
@@ -6365,7 +6390,7 @@
         {
           "version": "xonix-level.v5",
           "id": "neon-tsymbaly-pack",
-          "revision": "1",
+          "revision": "2",
           "name": "Neon Tsymbaly",
           "width": 72,
           "height": 36,
@@ -6394,6 +6419,7 @@
           "hangars": [],
           "classic": {
             "version": "classic.v1",
+            "coverage": { "version": "reachable-routes.v1" },
             "terrain": [
               { "id": "mosaic-1", "kind": "slow", "x": 8, "y": 3, "w": 22, "h": 1 },
               { "id": "mosaic-2", "kind": "slow", "x": 8, "y": 4, "w": 16, "h": 1 },
@@ -6621,7 +6647,7 @@
         {
           "version": "xonix-level.v5",
           "id": "neon-kosiv-pitcher-pack",
-          "revision": "1",
+          "revision": "2",
           "name": "Neon Kosiv Pitcher",
           "width": 72,
           "height": 36,
@@ -6666,6 +6692,7 @@
           "hangars": [],
           "classic": {
             "version": "classic.v1",
+            "coverage": { "version": "reachable-routes.v1" },
             "terrain": [
               { "id": "mosaic-1", "kind": "slow", "x": 9, "y": 3, "w": 9, "h": 6 },
               { "id": "mosaic-2", "kind": "slow", "x": 19, "y": 6, "w": 9, "h": 6 },
@@ -6889,7 +6916,7 @@
         {
           "version": "xonix-level.v5",
           "id": "neon-opishnia-ram-pack",
-          "revision": "1",
+          "revision": "2",
           "name": "Neon Opishnia Ram",
           "width": 72,
           "height": 36,
@@ -6917,6 +6944,7 @@
           "hangars": [],
           "classic": {
             "version": "classic.v1",
+            "coverage": { "version": "reachable-routes.v1" },
             "terrain": [
               { "id": "mosaic-1", "kind": "slow", "x": 47, "y": 4, "w": 5, "h": 1 },
               { "id": "mosaic-2", "kind": "slow", "x": 49, "y": 5, "w": 3, "h": 2 },
@@ -7090,7 +7118,7 @@
         {
           "version": "xonix-level.v5",
           "id": "neon-petrykivka-pack",
-          "revision": "1",
+          "revision": "2",
           "name": "Neon Petrykivka Flower",
           "width": 72,
           "height": 36,
@@ -7118,6 +7146,7 @@
           "hangars": [],
           "classic": {
             "version": "classic.v1",
+            "coverage": { "version": "reachable-routes.v1" },
             "terrain": [
               { "id": "mosaic-1", "kind": "slow", "x": 8, "y": 4, "w": 11, "h": 6 },
               { "id": "mosaic-2", "kind": "slow", "x": 26, "y": 4, "w": 11, "h": 1 },
@@ -7328,7 +7357,7 @@
         {
           "version": "xonix-level.v5",
           "id": "neon-oak-pack",
-          "revision": "1",
+          "revision": "2",
           "name": "Neon Oak and Acorns",
           "width": 72,
           "height": 36,
@@ -7360,6 +7389,7 @@
           "hangars": [],
           "classic": {
             "version": "classic.v1",
+            "coverage": { "version": "reachable-routes.v1" },
             "terrain": [
               { "id": "mosaic-1", "kind": "slow", "x": 11, "y": 3, "w": 17, "h": 1 },
               { "id": "mosaic-2", "kind": "slow", "x": 29, "y": 3, "w": 30, "h": 2 },
@@ -7616,7 +7646,7 @@
         {
           "version": "xonix-level.v5",
           "id": "neon-stork-pack",
-          "revision": "1",
+          "revision": "2",
           "name": "Neon Stork",
           "width": 72,
           "height": 36,
@@ -7646,6 +7676,7 @@
           "hangars": [],
           "classic": {
             "version": "classic.v1",
+            "coverage": { "version": "reachable-routes.v1" },
             "terrain": [
               { "id": "mosaic-1", "kind": "slow", "x": 6, "y": 3, "w": 8, "h": 8 },
               { "id": "mosaic-2", "kind": "slow", "x": 36, "y": 3, "w": 5, "h": 8 },
@@ -7822,7 +7853,7 @@
         {
           "version": "xonix-level.v5",
           "id": "neon-swallow-pack",
-          "revision": "1",
+          "revision": "2",
           "name": "Neon Swallow",
           "width": 72,
           "height": 36,
@@ -7851,6 +7882,7 @@
           "hangars": [],
           "classic": {
             "version": "classic.v1",
+            "coverage": { "version": "reachable-routes.v1" },
             "terrain": [
               { "id": "mosaic-1", "kind": "slow", "x": 5, "y": 25, "w": 13, "h": 3 },
               { "id": "mosaic-2", "kind": "slow", "x": 5, "y": 28, "w": 2, "h": 3 },
@@ -8091,7 +8123,7 @@
         {
           "version": "xonix-level.v5",
           "id": "neon-horse-pack",
-          "revision": "1",
+          "revision": "2",
           "name": "Neon Pysanka Horse",
           "width": 72,
           "height": 36,
@@ -8119,6 +8151,7 @@
           "hangars": [],
           "classic": {
             "version": "classic.v1",
+            "coverage": { "version": "reachable-routes.v1" },
             "terrain": [
               { "id": "mosaic-1", "kind": "slow", "x": 49, "y": 5, "w": 9, "h": 5 },
               { "id": "mosaic-2", "kind": "slow", "x": 23, "y": 6, "w": 9, "h": 4 },
@@ -8336,7 +8369,7 @@
         {
           "version": "xonix-level.v5",
           "id": "neon-deer-pack",
-          "revision": "1",
+          "revision": "2",
           "name": "Neon Pysanka Deer",
           "width": 72,
           "height": 36,
@@ -8366,6 +8399,7 @@
           "hangars": [],
           "classic": {
             "version": "classic.v1",
+            "coverage": { "version": "reachable-routes.v1" },
             "terrain": [
               { "id": "mosaic-1", "kind": "slow", "x": 8, "y": 4, "w": 10, "h": 19 },
               { "id": "mosaic-2", "kind": "slow", "x": 8, "y": 25, "w": 20, "h": 4 },
@@ -8591,7 +8625,7 @@
         {
           "version": "xonix-level.v5",
           "id": "neon-fish-pack",
-          "revision": "1",
+          "revision": "2",
           "name": "Neon Pysanka Fish",
           "width": 72,
           "height": 36,
@@ -8622,6 +8656,7 @@
           "hangars": [],
           "classic": {
             "version": "classic.v1",
+            "coverage": { "version": "reachable-routes.v1" },
             "terrain": [
               { "id": "mosaic-1", "kind": "slow", "x": 6, "y": 27, "w": 2, "h": 3 },
               { "id": "mosaic-2", "kind": "slow", "x": 7, "y": 30, "w": 4, "h": 1 },
@@ -8853,7 +8888,7 @@
         {
           "version": "xonix-level.v5",
           "id": "neon-berehynia-pack",
-          "revision": "1",
+          "revision": "2",
           "name": "Neon Berehynia Motif",
           "width": 72,
           "height": 36,
@@ -8882,6 +8917,7 @@
           "hangars": [],
           "classic": {
             "version": "classic.v1",
+            "coverage": { "version": "reachable-routes.v1" },
             "terrain": [
               { "id": "mosaic-1", "kind": "slow", "x": 23, "y": 5, "w": 5, "h": 1 },
               { "id": "mosaic-2", "kind": "slow", "x": 39, "y": 7, "w": 2, "h": 4 },
@@ -9059,7 +9095,7 @@
         {
           "version": "xonix-level.v5",
           "id": "neon-bezkonechnyk-pack",
-          "revision": "1",
+          "revision": "2",
           "name": "Neon Bezkonechnyk",
           "width": 72,
           "height": 36,
@@ -9087,6 +9123,7 @@
           "hangars": [],
           "classic": {
             "version": "classic.v1",
+            "coverage": { "version": "reachable-routes.v1" },
             "terrain": [
               { "id": "mosaic-1", "kind": "slow", "x": 8, "y": 4, "w": 11, "h": 4 },
               { "id": "mosaic-2", "kind": "slow", "x": 26, "y": 4, "w": 11, "h": 4 },
@@ -9265,7 +9302,7 @@
         {
           "version": "xonix-level.v5",
           "id": "neon-ornek-tulip-pack",
-          "revision": "1",
+          "revision": "2",
           "name": "Neon Crimean Tatar Ornek Tulip",
           "width": 72,
           "height": 36,
@@ -9296,6 +9333,7 @@
           "hangars": [],
           "classic": {
             "version": "classic.v1",
+            "coverage": { "version": "reachable-routes.v1" },
             "terrain": [
               { "id": "mosaic-1", "kind": "slow", "x": 11, "y": 3, "w": 25, "h": 2 },
               { "id": "mosaic-2", "kind": "slow", "x": 37, "y": 3, "w": 22, "h": 1 },

@@ -126,7 +126,7 @@ export async function buildNeonLabyrinth() {
   const level = {
     version: 'xonix-level.v4',
     id: 'neon-labyrinth-reference',
-    revision: '1',
+    revision: '2',
     name: 'Neon Labyrinth',
     width: 72,
     height: 36,
@@ -140,6 +140,7 @@ export async function buildNeonLabyrinth() {
     hangars: [],
     classic: {
       version: 'classic.v1',
+      coverage: { version: 'reachable-routes.v1' },
       terrain,
       powerups: [],
       arcadeActions: { version: 'arcade-actions.v1' },
@@ -211,7 +212,7 @@ export async function buildNeonLabyrinth() {
       {
         version: 'xonix-campaign.v1',
         id: 'neon-labyrinth',
-        revision: '1',
+        revision: '2',
         title: 'Neon Labyrinth',
         themeId: 'retro',
         classIds: ['scout'],

@@ -137,7 +137,7 @@ export async function buildNeonWavebands() {
   const level = {
     version: 'xonix-level.v5',
     id: 'neon-wavebands-reference',
-    revision: '1',
+    revision: '2',
     name: 'Neon Wavebands',
     width: 72,
     height: 36,
@@ -152,6 +152,7 @@ export async function buildNeonWavebands() {
     hangars: [],
     classic: {
       version: 'classic.v1',
+      coverage: { version: 'reachable-routes.v1' },
       terrain,
       powerups: [],
       arcadeActions: { version: 'arcade-actions.v1' },
@@ -224,7 +225,7 @@ export async function buildNeonWavebands() {
       {
         version: 'xonix-campaign.v1',
         id: 'neon-wavebands',
-        revision: '1',
+        revision: '2',
         title: 'Neon Wavebands',
         themeId: 'retro',
         classIds: ['scout'],

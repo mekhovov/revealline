@@ -184,7 +184,7 @@ export async function buildNeonHearts() {
   const level = {
     version: 'xonix-level.v5',
     id: 'neon-hearts-reference',
-    revision: '1',
+    revision: '2',
     name: 'Neon Hearts',
     width: 72,
     height: 36,
@@ -199,6 +199,7 @@ export async function buildNeonHearts() {
     hangars: [],
     classic: {
       version: 'classic.v1',
+      coverage: { version: 'reachable-routes.v1' },
       terrain,
       powerups: [],
       arcadeActions: { version: 'arcade-actions.v1' },
@@ -272,7 +273,7 @@ export async function buildNeonHearts() {
       {
         version: 'xonix-campaign.v1',
         id: 'neon-hearts',
-        revision: '1',
+        revision: '2',
         title: 'Neon Hearts',
         themeId: 'retro',
         classIds: ['scout'],

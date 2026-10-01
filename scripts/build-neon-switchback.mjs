@@ -137,7 +137,7 @@ export async function buildNeonSwitchback() {
   const level = {
     version: 'xonix-level.v5',
     id: 'neon-switchback-reference',
-    revision: '1',
+    revision: '2',
     name: 'Neon Switchback',
     width: 72,
     height: 36,
@@ -152,6 +152,7 @@ export async function buildNeonSwitchback() {
     hangars: [],
     classic: {
       version: 'classic.v1',
+      coverage: { version: 'reachable-routes.v1' },
       terrain,
       powerups: [],
       arcadeActions: { version: 'arcade-actions.v1' },
@@ -221,7 +222,7 @@ export async function buildNeonSwitchback() {
       {
         version: 'xonix-campaign.v1',
         id: 'neon-switchback',
-        revision: '1',
+        revision: '2',
         title: 'Neon Switchback',
         themeId: 'retro',
         classIds: ['scout'],

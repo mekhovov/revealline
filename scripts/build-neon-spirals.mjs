@@ -119,7 +119,7 @@ export async function buildNeonSpirals() {
   const level = {
     version: 'xonix-level.v5',
     id: 'neon-spirals-reference',
-    revision: '1',
+    revision: '2',
     name: 'Neon Spirals',
     width: 72,
     height: 36,
@@ -134,6 +134,7 @@ export async function buildNeonSpirals() {
     hangars: [],
     classic: {
       version: 'classic.v1',
+      coverage: { version: 'reachable-routes.v1' },
       terrain,
       powerups: [],
       arcadeActions: { version: 'arcade-actions.v1' },
@@ -201,7 +202,7 @@ export async function buildNeonSpirals() {
       {
         version: 'xonix-campaign.v1',
         id: 'neon-spirals',
-        revision: '1',
+        revision: '2',
         title: 'Neon Spirals',
         themeId: 'retro',
         classIds: ['scout'],
