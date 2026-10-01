@@ -5,6 +5,129 @@ const fontOwners = new WeakMap();
 const cueNames = new Set(['focus', 'confirm', 'cancel']);
 const now = (win) => win.performance?.now?.() ?? Date.now();
 
+const AUDIO_MIX_KEY = 'revealline.fpv.audio-mix.v1';
+const AUDIO_CHANNELS = ['interface', 'motor', 'ambience'];
+const audioVolume = (value) =>
+  typeof value === 'number' && Number.isFinite(value) ? Math.min(1, Math.max(0, value)) : 1;
+
+/** Shared mix only. Master mute and browser audio activation remain host-owned. */
+export function createSimAudioMix({ storage } = {}) {
+  let values = { interface: 1, motor: 1, ambience: 1 };
+  let localOnly = !storage;
+  const refresh = () => {
+    if (localOnly) return { ...values };
+    try {
+      const raw = storage?.getItem(AUDIO_MIX_KEY);
+      if (raw && raw.length <= 512) {
+        const saved = JSON.parse(raw);
+        if (saved?.format === 'SimAudioMix.v1')
+          values = Object.fromEntries(AUDIO_CHANNELS.map((key) => [key, audioVolume(saved[key])]));
+      } else if (raw === null) values = { interface: 1, motor: 1, ambience: 1 };
+    } catch {
+      localOnly = true;
+      // Retain the current visit's mix when browser storage is unavailable.
+    }
+    return { ...values };
+  };
+  refresh();
+  return {
+    snapshot: () => ({ ...values }),
+    refresh,
+    set(channel, value) {
+      if (!AUDIO_CHANNELS.includes(channel)) throw new TypeError('Unknown simulator audio channel');
+      refresh();
+      values[channel] = audioVolume(value);
+      try {
+        storage?.setItem(AUDIO_MIX_KEY, JSON.stringify({ format: 'SimAudioMix.v1', ...values }));
+      } catch {
+        localOnly = true;
+        // Sliders work for this visit even without persistent preferences.
+      }
+      return { ...values };
+    },
+  };
+}
+
+/** Accessible shared sliders; changing a mix never creates or resumes audio. */
+export function mountSimAudioControls({
+  root,
+  window: win = globalThis.window,
+  locale = () => 'en',
+  channels = AUDIO_CHANNELS,
+  onChange = () => {},
+} = {}) {
+  const doc = root.ownerDocument;
+  let storage;
+  try {
+    storage = win.localStorage;
+  } catch {
+    // Preferences are optional; sound controls remain usable.
+  }
+  const mix = createSimAudioMix({ storage });
+  const controls = [];
+  const names = {
+    interface: ['Interface & feedback', 'Інтерфейс і сигнали'],
+    motor: ['Drone motors', 'Мотори дрона'],
+    ambience: ['Environment & wind', 'Оточення та вітер'],
+  };
+  for (const channel of channels) {
+    if (!AUDIO_CHANNELS.includes(channel)) continue;
+    const label = doc.createElement('label');
+    const name = doc.createElement('span');
+    const slider = doc.createElement('input');
+    const output = doc.createElement('output');
+    name.id = `${root.id}-${channel}-label`;
+    slider.id = `${root.id}-${channel}`;
+    slider.type = 'range';
+    slider.min = '0';
+    slider.max = '100';
+    slider.step = '1';
+    slider.setAttribute('aria-labelledby', name.id);
+    output.setAttribute('for', slider.id);
+    // Native slider announces values. Do not add a second live region per tick.
+    output.setAttribute('aria-hidden', 'true');
+    label.append(name, slider, output);
+    root.append(label);
+    const input = () => {
+      mix.set(channel, Number(slider.value) / 100);
+      apply();
+    };
+    slider.addEventListener('input', input);
+    controls.push({ channel, name, slider, output, input });
+  }
+  function apply() {
+    const values = mix.snapshot();
+    for (const control of controls) {
+      const percent = Math.round(values[control.channel] * 100);
+      control.name.textContent = names[control.channel][locale() === 'uk' ? 1 : 0];
+      control.slider.value = String(percent);
+      control.slider.setAttribute('aria-valuetext', `${percent}%`);
+      control.output.textContent = `${percent}%`;
+    }
+    onChange(values);
+  }
+  const refresh = () => {
+    mix.refresh();
+    apply();
+  };
+  const changed = (event) => {
+    if (event.key === AUDIO_MIX_KEY || event.key === null) refresh();
+  };
+  win.addEventListener('storage', changed);
+  win.addEventListener('focus', refresh);
+  apply();
+  return {
+    refresh,
+    snapshot: mix.snapshot,
+    dispose() {
+      win.removeEventListener('storage', changed);
+      win.removeEventListener('focus', refresh);
+      for (const { slider, input } of controls) slider.removeEventListener('input', input);
+      root.replaceChildren();
+    },
+  };
+}
+
 /** Read-only view: quaternion geometry and measured motion, never flight input. */
 export function mountDroneResponse({ root, window: win = globalThis.window, onHide = () => {} }) {
   const doc = root.ownerDocument;
@@ -292,11 +415,13 @@ export function mountSimPresentation({
   enabled = false,
   preferenceKey = null,
   onSoundChange = () => {},
+  volume = 1,
 } = {}) {
   const doc = root?.nodeType === 9 ? root : root?.ownerDocument;
   if (!doc || !win) throw new TypeError('Simulator presentation requires a document.');
   const releaseFonts = acquireFonts(doc, win);
   let selected = Boolean(enabled);
+  let level = audioVolume(volume);
   if (preferenceKey) {
     try {
       const stored = win.localStorage?.getItem(preferenceKey);
@@ -353,7 +478,7 @@ export function mountSimPresentation({
     try {
       candidate = new AudioContext({ latencyHint: 'interactive' });
       master = candidate.createGain();
-      master.gain.value = 0.3;
+      master.gain.value = 0.3 * level;
       master.connect(candidate.destination);
       context = candidate;
       const epoch = generation;
@@ -377,7 +502,7 @@ export function mountSimPresentation({
   }
 
   function play(name) {
-    if (!cueNames.has(name) || !active() || context?.state !== 'running') return;
+    if (!cueNames.has(name) || !level || !active() || context?.state !== 'running') return;
     const buffer = buffers.get(name);
     const time = now(win);
     if (!buffer || voices.size >= 4 || time - lastCueAt < 80) return;
@@ -480,6 +605,15 @@ export function mountSimPresentation({
   return Object.freeze({
     refresh,
     soundEnabled: () => selected,
+    volume: () => level,
+    setVolume(value) {
+      if (disposed) return;
+      level = audioVolume(value);
+      if (!master || context.state === 'closed') return;
+      master.gain.cancelScheduledValues(context.currentTime);
+      master.gain.setTargetAtTime(0.3 * level, context.currentTime, 0.025);
+      if (!level) stopVoices();
+    },
     async setSoundEnabled(value) {
       if (disposed) return false;
       selected = Boolean(value);
