@@ -1,5 +1,3 @@
-> Retained historical excerpt after an ownership migration. Exact originals are preserved separately. This excerpt is not the original complete record or a release qualification.
-
 # SIM and community downloads
 
 > Retained excerpt after an ownership migration. Historical totals and verification statements describe the original scope; this excerpt is not a current release qualification. Original bytes and removed material are preserved separately.
@@ -95,11 +93,17 @@ expose preparation from community Settings. Final production-profile build
 qualification is recorded below; the earlier screenshots are not evidence of
 those subsequent edits or a deployed release.
 
-Retained [browser build and request log](evidence/sim-community-20261002/browser-build-and-requests.log),
-[verified download state](evidence/sim-community-20261002/downloads-ready.jpg),
-[SIM desktop](evidence/sim-community-20261002/sim-offline.jpg),
-[SIM phone viewport](evidence/sim-community-20261002/sim-phone-offline.jpg),
-[DroneAid mission](evidence/sim-community-20261002/droneaid-offline.jpg).
+
+The final `main-pages` production-profile build passed on the rebased source:
+build ID `dc7d5ce1c459541438502969ef5d334efa0d9e3b00ce68f32b0779297ea011a5`,
+**950,112,942 payload bytes**, **65,083,999 core bytes**. See the
+[generated inventory](evidence/sim-community-20261002/main-pages-inventory.json).
+The core remains below 64 MiB. The payload exceeds main's 950,000,000-byte warning
+threshold by 112,942 bytes, but remains below the 975,000,000-byte hard limit
+adopted by main in PR #931. This branch changes neither limit. Controller files,
+final assembled Pages capacity and immutable-release admission still require
+their normal release checks. The fresh-origin browser verification of the final
+community Settings link reached the password screen and remains pending unlock.
 
 Physical iPhone/iPad, Android, desktop installed-icon, gamepad/radio, background
 resume, storage eviction and full journey completion remain unqualified here.
