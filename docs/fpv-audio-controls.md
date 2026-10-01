@@ -35,11 +35,20 @@ actual browser autoplay qualification. Browser checks, package admission and
 physical sound-quality assessment are separate; additional unit coverage remains
 deferred to the final phase.
 
-Browser observations on the local source page (1 October 2026, parent-agent
-verification) confirmed the three English-labelled sliders and usable settings
-scrolling. Keyboard changes persisted after reload: interface 99%, motors 0%,
-ambience 99%; the master remained Sound off. Review found a duplicate master
-control in Settings because the existing flight sound button moves into that
-panel. The extra button was removed, preserving the existing shared control.
-These observations do not claim acoustic quality, physical sound measurement or
-Ukrainian browser acceptance.
+Browser verification of final feature head `34da5274f` on the local source page
+(1 October 2026, parent-agent verification) confirmed:
+
+- Settings contains exactly one master sound control and three accessible sliders
+  in both English and Ukrainian. The mixer fits within the scrolling panel.
+- Interface 99%, motors 0% and ambience 99% survived reload while master sound
+  remained off.
+- Setting World Studio's interface slider to 0% with Home appeared as 0% in
+  Academy Flight options. Setting Academy's interface slider to 100% with End
+  appeared as 100% in World Studio. Master sound stayed muted throughout.
+- All sliders were restored to 100% after verification. Browser logs contained no
+  errors or warnings.
+
+The Ukrainian screenshot is retained locally at `/tmp/fpv-audio-controls-uk.jpg`.
+These checks demonstrate UI behavior and persistent cross-view preferences; they
+do not establish audible perception, acoustic quality or physical hardware
+performance. No listening or hardware acceptance is claimed.
