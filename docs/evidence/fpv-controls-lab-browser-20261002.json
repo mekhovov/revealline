@@ -55,53 +55,29 @@
         {
           "mode": 1,
           "axes": [
-            [
-              "Pitch",
-              "Yaw"
-            ],
-            [
-              "Throttle",
-              "Roll"
-            ]
+            ["Pitch", "Yaw"],
+            ["Throttle", "Roll"]
           ]
         },
         {
           "mode": 2,
           "axes": [
-            [
-              "Throttle",
-              "Yaw"
-            ],
-            [
-              "Pitch",
-              "Roll"
-            ]
+            ["Throttle", "Yaw"],
+            ["Pitch", "Roll"]
           ]
         },
         {
           "mode": 3,
           "axes": [
-            [
-              "Pitch",
-              "Roll"
-            ],
-            [
-              "Throttle",
-              "Yaw"
-            ]
+            ["Pitch", "Roll"],
+            ["Throttle", "Yaw"]
           ]
         },
         {
           "mode": 4,
           "axes": [
-            [
-              "Throttle",
-              "Roll"
-            ],
-            [
-              "Pitch",
-              "Yaw"
-            ]
+            ["Throttle", "Roll"],
+            ["Pitch", "Yaw"]
           ]
         }
       ]

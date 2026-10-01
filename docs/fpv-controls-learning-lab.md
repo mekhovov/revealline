@@ -120,3 +120,14 @@ records Academy at 62 runtime files / 3,376,652 bytes and World Studio at 94 run
 files / 12,579,377 bytes; source inventories remain 64 and 96 respectively. Package
 limits and physics identities are unchanged. This artifact admission is not a
 release-readiness or public-deployment assertion.
+
+The final heading-follow refinement supersedes that initial candidate. Source
+`1b03e39d1bd9d0a6a15e196135f9edfda5aa4c7a` also passed all three admissions,
+committed-input checks, two identical builds and ZIP validation; see the
+[final package receipt](evidence/fpv-controls-follow-package-20261002.json).
+The controls-lab browser verification was repeated after this refinement and all
+15 checks passed. The final player package renders the new following-view labels
+and yaw reference. Published implementation is [PR #929](https://github.com/mekhovov/revealline/pull/929)
+in native stack #902; the independent main-game preset is
+[PR #928](https://github.com/mekhovov/revealline/pull/928). Publication is not public
+live availability; existing holds and required checks remain in effect.
