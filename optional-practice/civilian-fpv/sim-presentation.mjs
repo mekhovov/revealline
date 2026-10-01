@@ -128,8 +128,8 @@ export function mountSimAudioControls({
   };
 }
 
-/** Shared rear observer. The reference removes only the initial heading, never
- * current yaw, pitch or roll. Rendering cannot mutate the supplied flight state. */
+/** Shared observer. Following heading moves the camera, never the drone's full
+ * quaternion or its pitch/roll. Rendering cannot mutate supplied flight state. */
 export function mountDroneDiagram({ root }) {
   const doc = root.ownerDocument;
   const svg = (tag, attributes = {}) => {
@@ -184,7 +184,8 @@ export function mountDroneDiagram({ root }) {
   airframe.append(lowerArms, arms, ...sides, body, ...motors, struts, rear, nose, thrust);
   drawing.append(ground, reference, shadow, drift, airframe, frontLeader, frontLabel, rearLabel);
   root.append(drawing);
-  let disposed = false;
+  let disposed = false,
+    lastHeading = null;
   const finite = (value) => (Number.isFinite(value) ? value : 0);
   const rotation = (orientation) => {
     const values =
@@ -207,6 +208,7 @@ export function mountDroneDiagram({ root }) {
       unavailable = false,
       referenceOrientation,
       detailScale = 1,
+      followHeading = false,
     } = {}) {
       if (disposed || !state) return;
       const rotate = rotation(state.orientation);
@@ -215,10 +217,21 @@ export function mountDroneDiagram({ root }) {
         Math.hypot(initialForward[0], initialForward[2]) > 0.0001
           ? Math.atan2(initialForward[0], -initialForward[2])
           : 0;
-      const cosine = Math.cos(referenceHeading),
-        sine = Math.sin(referenceHeading);
+      const forward = rotate([0, 0, -1]);
+      // A vertical nose has no horizontal heading. Keep the last valid camera
+      // heading through this small singular region instead of spinning it.
+      if (Math.hypot(forward[0], forward[2]) > 0.04)
+        lastHeading = Math.atan2(forward[0], -forward[2]);
+      const cameraHeading = followHeading ? (lastHeading ?? referenceHeading) : referenceHeading;
+      const headingDelta = Math.atan2(
+        Math.sin(cameraHeading - referenceHeading),
+        Math.cos(cameraHeading - referenceHeading),
+      );
+      const cosine = Math.cos(cameraHeading),
+        sine = Math.sin(cameraHeading);
       const relative = ([x, y, z]) => [cosine * x + sine * z, y, -sine * x + cosine * z];
-      // The observer is behind (+Z) and slightly above the initial nose (-Z).
+      // The observer is behind (+Z) and slightly above the nose (-Z). Following
+      // heading keeps that rear view through turns without levelling the body.
       // Perspective makes the rear motor pair visibly nearer; height and depth
       // remain independent, so pitch cannot read as a flat icon being squashed.
       const projectView = ([x, y, z], floor = false) => {
@@ -231,7 +244,21 @@ export function mountDroneDiagram({ root }) {
       const pair = (value) => value.map((number) => number.toFixed(2)).join(' ');
       const path = (points, close = false) => `M${points.map(pair).join('L')}${close ? 'Z' : ''}`;
       const bodyPath = (points, close = false) => path(points.map(bodyPoint), close);
-      const floorPoint = (value) => projectView(value, true);
+      const initialCosine = Math.cos(referenceHeading),
+        initialSine = Math.sin(referenceHeading);
+      // The ground arrow stays aligned to the starting world heading while the
+      // camera follows the nose; its rotation makes yaw visible independently.
+      const floorPoint = ([x, y, z]) =>
+        followHeading
+          ? project(
+              [
+                (initialCosine * x - initialSine * z) * 0.55,
+                y,
+                (initialSine * x + initialCosine * z) * 0.55,
+              ],
+              true,
+            )
+          : projectView([x, y, z], true);
       ground.setAttribute(
         'd',
         [
@@ -340,7 +367,13 @@ export function mountDroneDiagram({ root }) {
         inverted = up[1] < 0;
       drawing.dataset.inverted = String(inverted);
       drawing.dataset.referenceHeading = String((referenceHeading * 180) / Math.PI);
-      reference.textContent = locale === 'uk' ? 'Початковий напрямок ↑' : 'Start heading ↑';
+      drawing.dataset.cameraHeading = String((cameraHeading * 180) / Math.PI);
+      const headingDegrees = Math.round((headingDelta * 180) / Math.PI);
+      reference.textContent = followHeading
+        ? `${locale === 'uk' ? 'Поворот від старту' : 'Turn from start'} ${headingDegrees > 0 ? '+' : ''}${headingDegrees}°`
+        : locale === 'uk'
+          ? 'Початковий напрямок ↑'
+          : 'Start heading ↑';
       const throttle = Math.min(1, Math.max(0, finite(controls.throttle)));
       const thrustEnd = 0.38 + throttle * 0.75;
       thrust.setAttribute(
@@ -382,6 +415,8 @@ export function mountDroneDiagram({ root }) {
       return {
         inverted,
         referenceHeading,
+        cameraHeading,
+        headingDelta,
         front,
         rear: back,
         left: bodyPoint([-0.82, 0, 0]),
@@ -456,6 +491,7 @@ export function mountDroneResponse({ root, window: win = globalThis.window, onHi
         locale,
         unavailable,
         referenceOrientation,
+        followHeading: true,
       });
       const thrustValue = clamp(controls.throttle, 0, 1);
       const vx = finite(state.velocity?.x) / 1000,
@@ -499,7 +535,7 @@ export function mountDroneResponse({ root, window: win = globalThis.window, onHi
       close.setAttribute('aria-label', t('Hide drone response', 'Приховати реакцію дрона'));
       set(
         viewLabel,
-        `${inverted ? t('INVERTED · ', 'ДОГОРИ ДНОМ · ') : ''}${t('Rear view · start heading fixed · amber front', 'Вигляд ззаду · початковий напрямок фіксований · перед жовтий')}`,
+        `${inverted ? t('INVERTED · ', 'ДОГОРИ ДНОМ · ') : ''}${t('Rear view · camera follows heading · amber front', 'Вигляд ззаду · камера стежить за курсом · перед жовтий')}`,
       );
       set(
         inputLabel,

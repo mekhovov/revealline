@@ -9,14 +9,14 @@
     {
       "name": "Held keyboard ↑ lifts separate preview",
       "data": {
-        "height": 417,
+        "height": 450,
         "throttle": 0.6790000000000005
       }
     },
     {
       "name": "Right roll is independent and Acro tilt persists after keyup",
       "data": {
-        "roll": 1299,
+        "roll": 1113,
         "pitch": 0
       }
     },
@@ -55,29 +55,53 @@
         {
           "mode": 1,
           "axes": [
-            ["Pitch", "Yaw"],
-            ["Throttle", "Roll"]
+            [
+              "Pitch",
+              "Yaw"
+            ],
+            [
+              "Throttle",
+              "Roll"
+            ]
           ]
         },
         {
           "mode": 2,
           "axes": [
-            ["Throttle", "Yaw"],
-            ["Pitch", "Roll"]
+            [
+              "Throttle",
+              "Yaw"
+            ],
+            [
+              "Pitch",
+              "Roll"
+            ]
           ]
         },
         {
           "mode": 3,
           "axes": [
-            ["Pitch", "Roll"],
-            ["Throttle", "Yaw"]
+            [
+              "Pitch",
+              "Roll"
+            ],
+            [
+              "Throttle",
+              "Yaw"
+            ]
           ]
         },
         {
           "mode": 4,
           "axes": [
-            ["Throttle", "Roll"],
-            ["Pitch", "Yaw"]
+            [
+              "Throttle",
+              "Roll"
+            ],
+            [
+              "Pitch",
+              "Yaw"
+            ]
           ]
         }
       ]

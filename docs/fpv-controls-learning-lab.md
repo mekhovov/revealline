@@ -1,13 +1,14 @@
 # Rear-view teaching and live controls lab
 
 The lesson guide, World Studio and Academy now share a drone diagram viewed
-from behind its starting heading. Amber identifies the front; cyan identifies
+from behind its current heading. Amber identifies the front; cyan identifies
 measured movement. Perspective, motor struts and body depth make forward/back
 pitch distinct from left/right bank. Right roll lowers the right side from this
 reference. The diagram uses the actual quaternion, including inverted Acro;
-centring a stick never invents levelling. Yaw can turn the nose toward the viewer
-because the reference camera stays fixed. The starting-heading marker explains
-that change. The actual FPV/chase renderer already uses −Z forward and a chase
+centring a stick never invents levelling. The camera follows yaw, so a turn does not swap the player's apparent left and
+right. The ground/start-heading reference rotates to show that turn. Near a
+vertical nose direction, the camera retains its last usable heading; the full
+quaternion still displays the real tilt and inversion. The actual FPV/chase renderer already uses −Z forward and a chase
 camera behind the aircraft; its orientation and flight physics were not changed.
 
 ## Try controls before flying
@@ -77,10 +78,14 @@ input events. Their checked receipts are committed separately from this narrativ
 - [Menus, 19 checks](evidence/fpv-controls-menu-browser-20261002.json): real DOM
   navigation and fields, standard gamepad, calibrated radio, release/hold gates,
   context changes, calibration ownership and disconnect handling.
-- [Rear diagram, 15 browser checks](evidence/fpv-controls-rear-browser-20261002.json):
+- [Initial rear diagram, 15 browser checks](evidence/fpv-controls-rear-browser-20261002.json):
   pitch/roll signs, yaw, inversion, heading reference, simulation signs, world
   drift and disposal. The earlier [geometry receipt](evidence/fpv-controls-rear-20261001.json)
   records the numerical projection checks.
+- [Final heading-follow diagram, 27 browser checks](evidence/fpv-controls-follow-browser-20261002.json):
+  original sign checks plus rear view through quarter/half turns, the same local
+  pitch/roll response at each heading, full inversion, near-vertical camera
+  stability, rotated ground/drift and ground bounds at every 15-degree turn.
 
 The rebuilt player package launched at the existing reviewed-player URL.
 Desktop and 390×844 mobile layouts were inspected; the narrow lesson stacks
