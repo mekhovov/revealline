@@ -249,3 +249,13 @@ covered lesson launch, EN/UK layouts, compact views, input layouts, guide arm
 safety, persistence and proof-backed progress. Unit coverage is deferred to the
 final phase. This does not claim novice-player acceptance, physical-radio
 acceptance on the final build, hardware qualification or public deployment.
+
+### Drone response overlay — 1 October
+
+[PR #907](https://github.com/mekhovov/revealline/pull/907),
+`codex/fpv-drone-response-overlay`, follows #905 in native stack #902. It adds
+an optional compact airframe schematic beside the live-stick display. It shows
+current heading, roll/pitch horizon, altitude, speed and horizontal motion, and
+names the dominant control response. This keeps FPV-camera flying legible
+without adding a persistent tutorial. Players can turn it off in Flight options
+or use its close control; that preference persists.
