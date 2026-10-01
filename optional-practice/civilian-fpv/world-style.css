@@ -1385,12 +1385,15 @@ html:not([data-fpv-immersive])
   visibility: hidden;
 }
 .sim-worlds .learning-flight:has(.beginner-coach[data-stage='live']) .sim-drone-response {
-  top: auto;
-  bottom: 154px;
+  top: 52px;
+  bottom: auto;
+  max-height: calc(100% - 206px);
+  overflow: auto;
+  pointer-events: auto;
 }
 @media (max-width: 600px), (max-height: 560px) {
   .sim-worlds .learning-flight:has(.beginner-coach[data-stage='live']) .sim-drone-response {
-    bottom: 118px;
+    max-height: calc(100% - 170px);
   }
 }
 .sim-worlds .flight-brief p {
@@ -3100,4 +3103,30 @@ html:not([data-fpv-immersive])
 }
 .sim-worlds .flight-dialog .coach-heading > div {
   flex: 1;
+}
+@media (max-width: 600px) and (orientation: portrait) {
+  /* Keep the objective above, the attitude beside the flight, and sticks below. */
+  .sim-worlds .learning-flight .beginner-coach[data-stage='live'] {
+    max-height: 108px;
+  }
+  .sim-worlds
+    .learning-flight
+    .beginner-coach[data-stage='live']
+    :is(.coach-eyebrow, .coach-progress, .coach-instruction, .coach-live-hint) {
+    display: none;
+  }
+  .sim-worlds .learning-flight .beginner-coach[data-stage='live'] .coach-heading {
+    margin-bottom: 4px;
+  }
+  .sim-worlds .learning-flight .beginner-coach[data-stage='live'] .coach-target {
+    font-size: 12px;
+    margin: 0;
+  }
+  .sim-worlds .learning-flight:has(.beginner-coach[data-stage='live']) .sim-drone-response {
+    top: 124px;
+    max-height: calc(100% - 244px);
+  }
+  .sim-worlds .learning-flight .sim-drone-response svg {
+    max-height: 68px;
+  }
 }
