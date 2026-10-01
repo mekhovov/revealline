@@ -455,3 +455,29 @@ Next concrete work:
    limits and qualify a named-device benchmark. Complete R6 demonstrations,
    compatible ghosts and targeted practice. R7 retains new unit coverage and
    human/device acceptance. Never substitute controlled-input checks for those.
+
+### Frozen controls candidate
+
+Source `183690e94f5035fbcdd2c03c6001930c039aa182` passed all three admissions,
+committed inputs, two byte-identical builds and ZIP-member checks in
+`/tmp/fpv-controls-final-20261002`. The committed receipt is
+`docs/evidence/fpv-controls-package-20261002.json`. Academy is 62 runtime/64 source
+files and World Studio 94/96 under unchanged limits. The following evidence-only
+commit leaves all runtime inputs unchanged.
+
+The reviewed-player build is refreshed at the user's existing URL:
+`http://127.0.0.1:8789/dist/fpv-reviewed-player-playtest/optional-practice/fpv-worlds/index.html#learn`.
+Its 87 files total 12,444,906 bytes; ZIP SHA-256
+`b758497d615673cc05930909d5f9caf8cb103a95ad42e4d667f4363a52481f38`.
+The actual packaged browser launched the final lesson, correctly disabled real
+arming during its guide, ran the pitch example and exited root fullscreen with
+Escape. Academy's nested radio Back preserved fullscreen and root Escape exited
+it. Browser console errors were absent. Local screenshots are retained at
+`/tmp/fpv-controls-lab-final-20261002.png` and
+`/tmp/fpv-controls-lab-mobile.jpg`.
+
+#928's first observed CI snapshot contains an optional-practice failure and a
+release-ready failure. Independent investigation is running in its dedicated
+worktree; do not claim check completion or merge eligibility from its successful
+component verification alone. The FPV frozen candidate above has passed its own
+package admission independently.
