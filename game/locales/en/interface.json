@@ -5681,5 +5681,8 @@
   "winPictureComplete": "Beautifully done.",
   "winPictureEnjoy": "The whole picture is yours.",
   "winPictureContinue": "Continue →",
-  "winPictureContinueLabel": "Continue to results"
+  "winPictureContinueLabel": "Continue to results",
+  "creator.socialDroneExampleHelp": "Try a complete video-reward level, then edit it to learn how posters and victory clips work.",
+  "creator.socialDroneExampleOpen": "Open Social Drone video example",
+  "creator.socialDroneExampleUnavailable": "The Social Drone example could not be loaded. Try again."
 }

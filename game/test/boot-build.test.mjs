@@ -63,13 +63,13 @@ test('the actual game has a static dark guard before resources and a single caug
   assert.ok(firstStyle > 0 && firstStyle < firstResource);
   assert.match(
     html.slice(firstStyle, html.indexOf('</style>', firstStyle)),
-    /body\s*>\s*:not\(#boot-screen\):not\(script\)[\s\S]*?display:\s*none\s*!important/,
+    /body\s*>\s*:not\(#boot-screen\):not\(#access-gate\):not\(script\)[\s\S]*?display:\s*none\s*!important/,
   );
   assert.match(html, /<section\b[^>]*id="boot-screen"/);
   assert.match(html, /<noscript\s*>[\s\S]*?JavaScript is disabled/);
   assert.match(html, /<script src="boot.mjs" defer><\/script>/);
   assert.match(html, /<script id="boot-phaser" src="vendor\/phaser-4.2.1.min.js" defer><\/script>/);
-  assert.doesNotMatch(html, /<link\b[^>]*\shref="[^\"]+\.css"/);
+  assert.doesNotMatch(html, /<link\b[^>]*\shref="(?!access-gate\.css")[^\"]+\.css"/);
   assert.match(html, /data-boot-href="ui\/operation-status.css"/);
   assert.match(html, /data-boot-href="ui\/handheld-play.css"/);
   assert.match(html, /data-boot-href="ui\/quick-music-controls.css"/);
@@ -128,6 +128,7 @@ test('build rewrites native root paths, preserves extras and includes boot bytes
   // this verifies packaging and offline bytes, not rendered/native gameplay.
   await copy('game/index.html');
   for (const name of [
+    'game/access-gate.mjs',
     'game/boot.mjs',
     'game/boot.css',
     ...playerPresentationFiles,

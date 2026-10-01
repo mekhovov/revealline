@@ -983,3 +983,41 @@ test('Ukrainian-first story controls and accepted notices switch without changin
     setLocale(previous, { persist: false });
   }
 });
+
+test('earned video starts once after its exact poster is ready, then stays available for replay', async (t) => {
+  const f = await setup(t, { autoplay: true });
+  f.ready();
+  await Promise.resolve();
+  await Promise.resolve();
+  assert.equal(f.video.playCalls, 1);
+  assert.equal(f.player.snapshot().state, 'playing');
+  f.video.at(f.descriptor.segment.endSeconds);
+  assert.equal(f.player.snapshot().state, 'poster');
+  assert.equal(f.poster.hidden, false);
+  assert.equal(f.video.playCalls, 1);
+});
+
+test('reduced motion and background cancellation prevent automatic earned-video playback', async (t) => {
+  const reduced = await setup(t, { autoplay: true, reducedMotion: true });
+  reduced.ready();
+  assert.equal(reduced.video.playCalls, 0);
+  assert.equal(reduced.poster.hidden, false);
+  const blurred = await setup(t, { autoplay: true });
+  blurred.win.emit('blur');
+  blurred.ready();
+  assert.equal(blurred.video.playCalls, 0);
+});
+
+test('blocked earned autoplay leaves the exact poster and an explicit Play retry', async (t) => {
+  const f = await setup(t, { autoplay: true });
+  f.video.playResult = () =>
+    Promise.reject(new DOMException('Activation required', 'NotAllowedError'));
+  f.ready();
+  await new Promise((resolve) => setImmediate(resolve));
+  assert.equal(f.player.snapshot().state, 'blocked');
+  assert.equal(f.poster.hidden, false);
+  assert.equal(f.video.playCalls, 1);
+  f.video.playResult = () => Promise.resolve();
+  assert.equal(await f.player.play(), true);
+  assert.equal(f.video.playCalls, 2);
+});
