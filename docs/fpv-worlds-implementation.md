@@ -126,7 +126,12 @@ and memory on named desktop/mobile reference devices. The 60/30 fps targets are
 targets until those measurements exist. No hardware baseline or ETA is inferred
 from a fast local browser walkthrough.
 
-The original 22–26 working-week production estimate remains a planning baseline
+The approved October continuation and remaining 8–10-week workstream are recorded
+in [`fpv-reviewed-delivery-plan.md`](fpv-reviewed-delivery-plan.md). The estimates
+there replace the old remaining-work baseline. Its R7 keeps additional unit
+coverage last while requiring functional verification in every phase.
+
+The original 22–26 working-week production estimate remains a historical baseline
 for two developers, an environment artist and regular QA. This implementation
 accelerates the functional workstream; it does not erase content-production and
 human qualification work or establish a new completion date.
