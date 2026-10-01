@@ -4,10 +4,10 @@ const clamp = (v, a, b) => Math.min(b, Math.max(a, v)),
   TAU = Math.PI * 2;
 const ease = (v) => 1 - (1 - clamp(v, 0, 1)) ** 3;
 export const CELEBRATION_SECONDS = 3.8;
-const PAPER_COUNT = 72;
-const GLINT_COUNT = 8;
+const PAPER_COUNT = 104;
+const GLINT_COUNT = 16;
 // Keep the family IDs stable for existing presentation consumers. Each now
-// selects a paper palette; no family draws equipment, smoke or explosions.
+// selects a paper palette; the firework-like bloom uses paper and stars only.
 const CONFETTI_TONES = {
   'signal-clear': ['accent', 'safe', 'paper', 'danger', 'accent', 'safe'],
   'stitch-bloom': ['accent', 'danger', 'paper', 'safe', 'danger', 'accent'],
@@ -71,48 +71,48 @@ export function celebrationFrame(state) {
     particles = [];
   if (!finished && !state.reduced) {
     const tones = CONFETTI_TONES[state.kind] || CONFETTI_TONES['signal-clear'];
+    // Three finite pops from the picture's center. Analytic drag gives a quick
+    // launch and a floating finish, without integrating or consuming run RNG.
     for (let index = 0; index < PAPER_COUNT; index++) {
       const random = (channel) => sample(state.seed, index, channel),
-        age = time - random(0) * 0.55;
+        wave = index < 52 ? 0 : index < 84 ? 1 : 2,
+        age = time - 0.08 - wave * 0.24 - random(0) * 0.07;
       if (age < 0) continue;
       const phase = random(1) * TAU,
         depth = random(2),
-        flutter = 1.8 + random(3) * 1.8,
-        y = 0.04 - random(4) * 0.19 + age * (0.19 + depth * 0.1) + age * age * 0.014;
-      if (y < -0.025 || y > 1.04) continue;
+        angle = index * 2.399963229728653 + (random(3) - 0.5) * 0.4,
+        speed = (0.85 + depth * 0.8) * (1 - wave * 0.12),
+        distance = (speed * (1 - Math.exp(-2.5 * age))) / 2.5,
+        flutter = (1 - Math.exp(-3 * age)) * 0.014,
+        life = clamp(age / 0.08, 0, 1);
       particles.push({
         shape: 'paper',
-        x: clamp(
-          0.035 + random(5) * 0.93 + Math.sin(age * flutter + phase) * (0.012 + depth * 0.016),
-          0.015,
-          0.985,
-        ),
-        y,
-        size: 4.2 + depth * 3.6,
-        aspect: index % 5 === 0 ? 1.7 : 0.48 + random(6) * 0.38,
-        rotation: phase + Math.sin(age * 1.7 + phase) * 0.6 + age * (random(7) - 0.5) * 1.6,
-        flip: 0.18 + Math.abs(Math.cos(phase + age * flutter)) * 0.82,
-        alpha: ease(age / 0.22) * fade * (0.62 + depth * 0.32),
+        x: 0.5 + Math.cos(angle) * distance + Math.sin(age * 5 + phase) * flutter,
+        y: 0.5 + Math.sin(angle) * distance + 0.012 * age * age,
+        size: (5 + depth * 4.4) * ease(life),
+        aspect: index % 6 === 0 ? 2.25 : 0.48 + random(6) * 0.46,
+        rotation: angle + age * (2.2 + random(7) * 4) * (index % 2 ? 1 : -1),
+        flip: 0.18 + Math.abs(Math.cos(phase + age * (3 + depth * 3))) * 0.82,
+        alpha: ease(life) * fade * (0.76 + depth * 0.24),
         tone: tones[index % tones.length],
       });
     }
-    // A few soft, single-bloom glints sit near the picture edges. They do not
-    // strobe, spread out from an impact, or obscure the picture's focal area.
+    // Sparse stars lead the bloom outwards. One smooth glow per star, no flash
+    // or repeated twinkling, so the earned image quickly regains the center.
     for (let index = 0; index < GLINT_COUNT; index++) {
-      const age = time - 0.2 - index * 0.13,
-        life = 0.9;
+      const age = time - 0.1 - (index % 2) * 0.24,
+        life = 1.05;
       if (age < 0 || age > life) continue;
-      const bloom = Math.sin((age / life) * Math.PI);
+      const angle = (index / GLINT_COUNT) * TAU + sample(state.seed, index, 9) * 0.2,
+        distance = 0.52 * (1 - Math.exp(-3.8 * age)),
+        bloom = Math.sin((age / life) * Math.PI);
       particles.push({
         shape: 'glint',
-        x:
-          index % 2
-            ? 0.93 - sample(state.seed, index, 9) * 0.07
-            : 0.07 + sample(state.seed, index, 9) * 0.07,
-        y: 0.16 + sample(state.seed, index, 10) * 0.56,
-        size: 2 + bloom * 3,
-        rotation: Math.PI / 8,
-        alpha: bloom * 0.55,
+        x: 0.5 + Math.cos(angle) * distance,
+        y: 0.5 + Math.sin(angle) * distance,
+        size: 2 + bloom * 3.5,
+        rotation: angle + age * 0.4,
+        alpha: bloom * 0.75,
         tone: index % 3 ? 'paper' : 'accent',
       });
     }
@@ -133,9 +133,11 @@ export function celebrationFrame(state) {
 }
 export function drawCelebration(ctx, frame, palette, width = 768, height = 576) {
   if (!frame.active) return;
-  const scale = Math.min(width / 768, height / 576);
+  const span = Math.min(width, height),
+    scale = Math.max(0.75, Math.min(width / 768, height / 576));
   ctx.save();
-  // The curtain belongs entirely to the board, including in a letterboxed view.
+  // Use equal pixel distances on both axes: a circular burst stays circular
+  // on a wide board or a portrait video viewport. Clip at the owning surface.
   ctx.beginPath();
   ctx.rect(0, 0, width, height);
   ctx.clip();
@@ -145,7 +147,7 @@ export function drawCelebration(ctx, frame, palette, width = 768, height = 576) 
     ctx.save();
     ctx.globalAlpha = clamp(p.alpha, 0, 1);
     ctx.fillStyle = palette[p.tone] || palette.accent;
-    ctx.translate(p.x * width, p.y * height);
+    ctx.translate(width / 2 + (p.x - 0.5) * span, height / 2 + (p.y - 0.5) * span);
     ctx.rotate(p.rotation);
     if (p.shape === 'paper') {
       ctx.scale(p.flip, 1);
