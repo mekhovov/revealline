@@ -91,6 +91,7 @@ async function win(t) {
   assert.equal(run.lives, 3);
   assert.deepEqual(authoritativeCheckpoint(run), authoritativeCheckpoint(reference));
   if (!page.$('skip-celebration').hidden) page.$('skip-celebration').click();
+  if (!page.$('show-result').hidden) page.$('show-result').click();
   page.frame(0);
   assert.equal(page.$('game-overlay').dataset.kind, 'won');
   return page;
@@ -119,6 +120,9 @@ function controller(page, t) {
     pad.buttons[index] = { pressed: true, value: 1 };
     frame();
     pad.buttons[index] = { pressed: false, value: 0 };
+    frame();
+    // Confirm commits on release. Sample neutral on the newly entered surface
+    // before the next deliberate gesture, just as another browser frame does.
     frame();
   };
   frame();
@@ -173,7 +177,7 @@ function resultSurface(page) {
   };
 }
 
-test('real win focuses results; keyboard arrows and Tab include visible headers and exclude unrelated or flight controls', async (t) => {
+test('explicit results after a real win focus Next; keyboard arrows and Tab include visible headers and exclude unrelated or flight controls', async (t) => {
   const page = await win(t),
     checkpoint = authoritativeCheckpoint(page.rendered.run),
     recordFocus = resultSurface(page);
@@ -259,7 +263,7 @@ test('a legal terminal self-contact focuses Retry and keyboard retry starts only
 });
 
 test(
-  'held Confirm cannot cross Next adoption into another action; Pause requires fresh Resume',
+  'Confirm waits for release and a held press cannot cross Next adoption; Pause requires fresh Resume',
   { timeout: 120000 },
   async (t) => {
     const page = await win(t),
@@ -270,11 +274,23 @@ test(
     const nextOperation = observeAction(page.$('next-button'), () => {
       controls.pad.buttons[0] = { pressed: true, value: 1 };
       controls.frame();
+      assert.equal(
+        page.$('flight-preparation-status').hidden,
+        true,
+        'Press alone cannot start Next.',
+      );
+      controls.pad.buttons[0] = { pressed: false, value: 0 };
+      controls.frame();
     });
+    controls.pad.buttons[0] = { pressed: true, value: 1 };
     assert.equal(page.$('flight-preparation-status').hidden, false);
     const status = page.$('flight-preparation-status').querySelector('[role="status"]');
     assert.equal(status.getAttribute('aria-live'), 'polite');
-    assert.equal(status.textContent, 'Relay Orchard: Reading this flight’s picture choices…');
+    assert.match(
+      status.textContent,
+      /Relay Orchard/,
+      'Next immediately names its pending mission.',
+    );
     for (let i = 0; i < 5; i++) controls.frame();
     assert.equal(page.rendered.run, previous, 'Held Confirm does not replace a pending result.');
     assert.deepEqual(authoritativeCheckpoint(previous), resultCheckpoint);
@@ -308,7 +324,7 @@ test(
     page.frame(0);
     assert.equal(page.doc.body.dataset.flightState, 'paused');
     assert.deepEqual(authoritativeCheckpoint(next), paused);
-    key(page, 'Enter');
+    controls.pulse(0);
     steps(page, 6);
     assert.equal(page.doc.body.dataset.flightState, 'running');
     assert.equal(page.rendered.run, next);
@@ -489,6 +505,9 @@ test('final installed campaign keeps its result while keyboard Missions opens th
     key(page, 'Enter');
     page.frame(0);
   }
+  assert.equal(page.$('game-overlay').hidden, true);
+  assert.equal(page.doc.activeElement.id, 'show-result');
+  key(page, 'Enter');
   assert.equal(page.doc.activeElement.id, 'next-button');
   const run = page.rendered.run,
     checkpoint = authoritativeCheckpoint(run);

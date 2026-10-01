@@ -7407,11 +7407,22 @@ try {
       return;
     }
     painter.skipCelebration?.();
+    enjoyCompletedPicture();
+  };
+  function enjoyCompletedPicture() {
+    if (run?.status !== 'won') return;
+    const returnFocus =
+      !dialogOpen() &&
+      (document.activeElement === $('skip-celebration') ||
+        document.activeElement === document.body ||
+        document.activeElement === $('game-canvas'));
     celebrationActive = false;
     show('skip-celebration', false);
     show('game-overlay', false);
     show('show-result', true);
-  };
+    refreshHUD();
+    if (returnFocus) $('show-result').focus({ preventScroll: true });
+  }
   function focusPauseToolReturn(id) {
     const target = $(id);
     if (controllerScope() === 'paused' && availableFocusTarget(target))
@@ -9594,6 +9605,13 @@ try {
             : t('interface:tacticalEdition'),
     );
     document.body.dataset.pictureState = flightPictures?.ready(theme.id) ? 'ready' : 'pending';
+    const enjoyingPicture = run.status === 'won' && $('game-overlay').hidden;
+    document.body.dataset.winPicture = enjoyingPicture
+      ? celebrationActive
+        ? 'celebrating'
+        : 'settled'
+      : 'off';
+    show('win-picture-caption', enjoyingPicture);
     document.body.dataset.flightState =
       defeatActive || celebrationActive || (run.status === 'won' && !$('show-result').hidden)
         ? 'picture'
@@ -10435,17 +10453,13 @@ try {
           show('game-overlay', false);
           show('skip-celebration', true);
           show('show-result', false);
+          $('skip-celebration').focus({ preventScroll: true });
           warning(
             journeyRewardFailure ||
               localizedMessage('interface:pictureUnlockedAWholeWorldFromOneBraveLine'),
             null,
             'host.won',
           );
-          if (journeyEnabled && journeyMission() && !practice) {
-            celebrationActive = false;
-            show('skip-celebration', false);
-            overlay('won');
-          }
         } else {
           defeatActive = true;
           defeatPaused = false;
@@ -10467,9 +10481,7 @@ try {
       pendingPickup = false;
     }
     if (celebrationActive && !painter.celebrationStatus?.active) {
-      celebrationActive = false;
-      show('skip-celebration', false);
-      overlay('won');
+      enjoyCompletedPicture();
     }
     sound.feedback(!paused && started, theme, run, {
       bodyId: flightActorLease?.pin().style === 'fpv' ? `fpv-${run.activeClassId}` : bodyId,
@@ -10740,14 +10752,15 @@ try {
   $('view-picture').onclick = () => {
     if (run.status !== 'won') return;
     cancelResultAttempt();
-    show('game-overlay', false);
-    show('show-result', true);
+    enjoyCompletedPicture();
     $('show-result').focus({ preventScroll: true });
   };
   $('show-result').onclick = () => {
     if (run.status === 'won') {
+      const returningToResults = $('game-overlay').dataset.kind === 'won';
       overlay('won');
-      $('view-picture').focus({ preventScroll: true });
+      (returningToResults ? $('view-picture') : controllerFocus()).focus({ preventScroll: true });
+      refreshHUD();
     }
   };
   $('next-button').onclick = () => {
@@ -11201,7 +11214,7 @@ try {
           showGrid: scenario?.presentation?.showGrid || library.preferences.showGrid,
           showCombatScrap: practiceRemains ?? encounterDisplay.snapshot().showRemains,
           backdrop: flightPictures?.current(),
-          celebrationPaused: document.hidden || dialogOpen(),
+          celebrationPaused: document.hidden || !document.hasFocus() || dialogOpen(),
           defeatEffectsRunning: defeatEffectsRunning(),
           signalReception:
             run.status === 'won'
