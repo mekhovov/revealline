@@ -1448,7 +1448,9 @@ try {
   localizedText(victoryStoryButton, () => t('interface:victoryStory'));
   victoryStoryButton.hidden = true;
   document.querySelector('.overlay-actions').append(victoryStoryButton);
-  victoryStoryButton.onclick = () => {
+  let presentedVictoryRun = null;
+  victoryStoryButton.onclick = () => openVictoryStory();
+  function openVictoryStory({ autoplay = false } = {}) {
     if (practice || run.status !== 'won' || completionWarning) return;
     cancelResultAttempt();
     const notify = flightInformation.captureWarning('host.story', { allowTerminal: true });
@@ -1466,20 +1468,23 @@ try {
       const size = boardPaintSizeForLevel(run.level),
         args = { theme, level: run.level, seed, image: backdrop.image, fit: backdrop.fit, ...size };
       void storyDialog
-        .open({
-          pin,
-          title: run.level.name,
-          drawPoster(canvas) {
-            canvas.width = size.width;
-            canvas.height = size.height;
-            new BoardPainter(presets).drawGallery(canvas.getContext('2d'), args);
+        .open(
+          {
+            pin,
+            title: run.level.name,
+            drawPoster(canvas) {
+              canvas.width = size.width;
+              canvas.height = size.height;
+              new BoardPainter(presets).drawGallery(canvas.getContext('2d'), args);
+            },
           },
-        })
+          { immersive: true, autoplay },
+        )
         .catch((error) => notify(error.message));
     } catch (error) {
       notify(error.message);
     }
-  };
+  }
   const legacyPictureButton = document.createElement('button');
   legacyPictureButton.id = 'picture-use-legacy';
   localizedText(legacyPictureButton, () => t('interface:useOriginalPackArtwork'));
@@ -7422,6 +7427,17 @@ try {
     show('show-result', true);
     refreshHUD();
     if (returnFocus) $('show-result').focus({ preventScroll: true });
+    if (
+      presentedVictoryRun !== run &&
+      !practice &&
+      !completionWarning &&
+      !dialogOpen() &&
+      flightPictures?.pins() &&
+      storyPinForTheme(flightPictures.pins(), theme.id)
+    ) {
+      presentedVictoryRun = run;
+      openVictoryStory({ autoplay: true });
+    }
   }
   function focusPauseToolReturn(id) {
     const target = $(id);

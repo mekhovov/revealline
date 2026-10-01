@@ -1,3 +1,9 @@
+import {
+  createCelebration,
+  advanceCelebration,
+  celebrationFrame,
+  drawCelebration,
+} from '../ui/celebration.mjs';
 import { createCreatorStore, loadInstalledCreatorBundle } from './installed.mjs';
 import {
   createCreatorRuntime,
@@ -50,6 +56,7 @@ let runtime,
   pictureURL,
   pictureSha256,
   storyPlayer,
+  earnedCelebration,
   startMissionId = null,
   nextMissionId = null,
   activationEpoch = 0;
@@ -92,14 +99,23 @@ menu = attachCreatorPlayerNavigation({
       ? 'creator-busy'
       : !runtime
         ? 'creator-error'
-        : ended
-          ? 'creator-result'
-          : paused
-            ? 'creator-menu'
-            : 'flight',
-  getDefaultFocus: () => playerMenu.primary(),
-  getRoot: () => playerMenu.root(),
-  onBack: () => playerMenu.back(),
+        : document.body.dataset.earnedView === 'on'
+          ? 'creator-earned-media'
+          : ended
+            ? 'creator-result'
+            : paused
+              ? 'creator-menu'
+              : 'flight',
+  getDefaultFocus: () =>
+    document.body.dataset.earnedView === 'on' ? $('earned-continue') : playerMenu.primary(),
+  getRoot: () => (document.body.dataset.earnedView === 'on' ? $('earned') : playerMenu.root()),
+  onBack: () => {
+    if (document.body.dataset.earnedView === 'on') {
+      $('earned-continue').click();
+      return true;
+    }
+    return playerMenu.back();
+  },
 });
 function persistAttempt() {
   const attempt = runtime?.current();
@@ -223,7 +239,14 @@ async function showEarned(preferredMissionId = null) {
     posterElement: $('earned-picture'),
   });
 }
+function setEarnedView(active) {
+  document.body.dataset.earnedView = active ? 'on' : 'off';
+  $('creator-home').inert = active;
+  $('arena').inert = active;
+  document.querySelector('.touch-controls').inert = active;
+}
 async function adoptDisplay(attempt, running, epoch) {
+  setEarnedView(false);
   storyPlayer?.reset();
   painter.setLevel(attempt.run.level, { seed: attempt.run.seed });
   await painter.setLook(attempt.theme, 'neutral-marker');
@@ -288,12 +311,20 @@ async function finish() {
             : 'interface:creator.backToMyCreationsAction',
         ),
       );
-      if (earned)
+      if (earned) {
+        setEarnedView(true);
+        earnedCelebration = createCelebration({
+          levelId: missionId,
+          seed: runtime.current().run.seed,
+          reduced: document.body.dataset.effects === 'reduced',
+        });
+        $('earned-continue').focus({ preventScroll: true });
         void storyPlayer.show({
           receipt,
           posterElement: earned.posterElement,
           posterAsset: earned.posterAsset,
         });
+      }
     } catch (error) {
       fail(error);
     }
@@ -342,6 +373,26 @@ function frame(time) {
       persistAttempt();
     }
   }
+  if (document.body.dataset.earnedView === 'on') {
+    const canvas = $('earned-confetti');
+    if (canvas.width !== window.innerWidth) canvas.width = window.innerWidth;
+    if (canvas.height !== window.innerHeight) canvas.height = window.innerHeight;
+    earnedCelebration = advanceCelebration(earnedCelebration, dt, {
+      paused: document.hidden || !document.hasFocus(),
+      reduced: document.body.dataset.effects === 'reduced',
+    });
+    const rewardFrame = celebrationFrame(earnedCelebration);
+    canvas.hidden = !rewardFrame.active;
+    const context = canvas.getContext('2d');
+    if (rewardFrame.active) context.clearRect(0, 0, canvas.width, canvas.height);
+    drawCelebration(
+      context,
+      rewardFrame,
+      { accent: '#75dfdd', safe: '#b8e9a2', paper: '#fff1c9', danger: '#d6b0ff' },
+      canvas.width,
+      canvas.height,
+    );
+  }
   painter.draw($('board').getContext('2d'), attempt.run, dt, {
     paused,
     reduced: document.body.dataset.effects === 'reduced',
@@ -383,6 +434,11 @@ $('retry').onclick = () =>
 $('pause').onclick = () => {
   if (paused) setRunning();
   else pause();
+};
+$('earned-continue').onclick = () => {
+  storyPlayer?.reset();
+  setEarnedView(false);
+  $('next').focus({ preventScroll: true });
 };
 $('next').onclick = () => {
   if (!nextMissionId) return void (location.href = './#installed');
@@ -501,6 +557,11 @@ try {
     runtime,
     host: createCreatorVictoryStoryHost({
       document,
+      presentationOptions: {
+        get reducedMotion() {
+          return document.body.dataset.effects === 'reduced';
+        },
+      },
       nodes: {
         surface: $('earned'),
         stage: $('creator-story-stage'),

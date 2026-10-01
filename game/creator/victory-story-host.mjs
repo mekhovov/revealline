@@ -69,6 +69,7 @@ export function createCreatorVictoryStoryHost({
         prepared,
         document,
         ...presentationOptions,
+        autoplay: true,
         ...options,
         onChange: report,
       });
