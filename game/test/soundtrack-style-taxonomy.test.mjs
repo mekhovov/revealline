@@ -1,6 +1,7 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
 import {
+  DEFAULT_PUBLIC_SOUNDTRACK_STYLE_IDS,
   PUBLIC_SOUNDTRACK_STYLE_IDS,
   localGenresForPublicStyles,
   publicSoundtrackStyles,
@@ -19,6 +20,16 @@ test('public music styles use the player-first order with Ukrainian families las
     'other',
     'ukrainian',
     'fpv',
+  ]);
+  assert.deepEqual(DEFAULT_PUBLIC_SOUNDTRACK_STYLE_IDS, [
+    'synth',
+    'metal',
+    'chiptune',
+    'rock',
+    'electronic',
+    'ambient',
+    'fusion',
+    'other',
   ]);
 });
 

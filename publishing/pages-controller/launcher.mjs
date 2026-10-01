@@ -89,9 +89,53 @@ export async function publishOfflineLauncher(source, output, version) {
     await fs.mkdir(path.dirname(target), { recursive: true });
     await fs.writeFile(target, bytes);
   }
+  // Historical launchers did not include an update surface. New ones share the
+  // exact frozen download document while staying under the narrow app worker.
+  let update;
+  try {
+    update = await fs.readFile(path.join(source, 'app/update.html'), 'utf8');
+  } catch (error) {
+    if (error.code !== 'ENOENT') throw error;
+  }
+  if (update !== undefined) {
+    // A historical missing updater is allowed. Once supplied, its bridge is
+    // required: do not publish a new update control whose destination is absent.
+    const marker = /(<meta name="revealline-update" content=')([^']+)(' \/>)/;
+    if (!marker.test(update) || /<base\b/i.test(update) || Buffer.byteLength(update) > FILE_LIMIT)
+      throw new Error('Frozen updater has an invalid candidate marker or file budget.');
+    const publishedUpdate = update
+      .replace(/\b(href|src)=(["'])\.\.\/game\//g, `$1=$2../releases/${version}/site/game/`)
+      .replace(marker, (_match, before, value, after) => {
+        const context = JSON.parse(value);
+        if (context.format !== 'revealline-app-update.v1' || context.scope !== '../')
+          throw new Error('Frozen updater candidate differs from its own edition.');
+        return (
+          before + JSON.stringify({ ...context, scope: `../releases/${version}/site/` }) + after
+        );
+      });
+    await fs.writeFile(path.join(output, 'app/update.html'), publishedUpdate);
+    for (const file of ['app/update.mjs', 'game-update.html', 'game-update.mjs']) {
+      const bytes = await fs.readFile(path.join(source, file));
+      if (bytes.length > FILE_LIMIT)
+        throw new Error('Frozen update dependency exceeded its file budget: ' + file);
+      await fs.writeFile(path.join(output, file), bytes);
+    }
+  }
+  let sourceRevision;
+  try {
+    sourceRevision = JSON.parse(
+      await fs.readFile(path.join(source, 'app/current.json'), 'utf8'),
+    ).sourceRevision;
+  } catch (error) {
+    if (error.code !== 'ENOENT') throw error;
+  }
   await fs.writeFile(
     path.join(output, 'app/current.json'),
-    JSON.stringify({ version, scope: '../releases/' + version + '/site/' }),
+    JSON.stringify({
+      version,
+      scope: '../releases/' + version + '/site/',
+      ...(sourceRevision ? { sourceRevision } : {}),
+    }),
   );
   return true;
 }

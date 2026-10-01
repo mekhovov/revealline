@@ -199,6 +199,7 @@ test('trusted inline bundled Download becomes Play on the same Classic row witho
   const f = await fixture(t);
   const row = chapter(f.library).at(-1);
   assert.equal(f.library.availability(row, 'solo').state, 'download');
+  assert.equal(f.library.availability(row, 'solo').included, true);
   f.values.set('revealline.library.dev.v1', 'existing progress');
   assert.deepEqual(await f.library.prepare(row, { mode: 'solo' }), { state: 'ready' });
   assert.equal(f.library.find(row.id), row);

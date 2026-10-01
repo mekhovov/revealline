@@ -93,3 +93,47 @@ export function communityHref(href, { brandId, editionId }) {
   if (editionId !== route.editionId) target.searchParams.set('edition', editionId);
   return target;
 }
+
+/** The chooser stays inside the same installed or frozen game, with an explicit
+ * return destination because a standalone app has no browser Back button. */
+export function communityDirectoryURL(href, resourceURL = import.meta.url) {
+  const target = new URL('communities/', resourceURL);
+  const back = communityDirectoryReturnURL(href, target);
+  target.searchParams.set('return', back.href);
+  return target;
+}
+
+/** Only game entry points in this release may be used as the return link. */
+export function communityDirectoryReturnURL(value, directoryURL) {
+  const game = new URL('../', directoryURL);
+  try {
+    const target = new URL(value, game);
+    if (
+      target.origin !== game.origin ||
+      target.username ||
+      target.password ||
+      !target.pathname.startsWith(game.pathname)
+    )
+      return game;
+    const relative = target.pathname.slice(game.pathname.length);
+    if (
+      [
+        '',
+        'index.html',
+        'company.html',
+        'couch/',
+        'couch/index.html',
+        'couch/relay-rescue.html',
+      ].includes(relative)
+    )
+      return target;
+    const route = communityRouteFromURL(target);
+    if (route?.gamePath === game.pathname) {
+      communityEntryURL(target);
+      return target;
+    }
+  } catch {
+    // A malformed or unrelated address must not strand players outside the app.
+  }
+  return game;
+}

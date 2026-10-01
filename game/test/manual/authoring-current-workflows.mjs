@@ -2,6 +2,11 @@
 // to their historical receipts. Every edit below uses the real controller owner.
 import { ukraineWideCurrent } from './ukraine-wide-current-workflow.mjs';
 import {
+  preparedRevealCurrent,
+  preparedRevealDocumentsCurrent,
+} from './prepared-reveal-current-workflow.mjs';
+import { preparedTitleCurrent } from './prepared-title-current-workflow.mjs';
+import {
   nativeLandingDefaultCurrent,
   nativeLandingDroneAidCurrent,
 } from './native-landing-whitelist-workflow.mjs';
@@ -51,6 +56,9 @@ async function fingerprint(blob) {
 const value = (p, css) => p.doc.querySelector(css).value;
 
 export const currentAuthoringCases = {
+  preparedRevealCurrent,
+  preparedRevealDocumentsCurrent,
+  preparedTitleCurrent,
   ukraineWideCurrent,
   nativeLandingDefaultCurrent,
   nativeLandingDroneAidCurrent,

@@ -7,6 +7,8 @@ import {
   communityEntryURL,
   communityHref,
   gameDocumentURL,
+  communityDirectoryURL,
+  communityDirectoryReturnURL,
 } from '../community-routes.mjs';
 import { mountEditionNavigation } from '../ui/edition-navigation.mjs';
 
@@ -16,6 +18,45 @@ const roots = [
   'https://owner.github.io/revealline/releases/v0.142.3/site/',
   'file:///downloaded-game/',
 ];
+
+test('installed game menus reach communities and return to the same mode or company without changing releases', () => {
+  for (const root of roots) {
+    const resource = `${root}game/community-routes.mjs`;
+    for (const entry of [
+      'game/',
+      'game/index.html?journey=legacy',
+      'game/index.html?edition=coupa-culture&presentation=retained',
+      'game/couch/index.html?mode=versus',
+      'game/couch/relay-rescue.html?campaign=first',
+      'game/communities/coupa/?edition=coupa-culture',
+      'game/communities/droneaid/',
+    ]) {
+      const source = `${root}${entry}`;
+      const directory = communityDirectoryURL(source, resource);
+      assert.equal(directory.pathname, new URL(`${root}game/communities/`).pathname);
+      assert.equal(directory.origin, new URL(source).origin);
+      assert.equal(
+        communityDirectoryReturnURL(directory.searchParams.get('return'), directory).href,
+        source,
+      );
+    }
+  }
+});
+
+test('community Back rejects foreign origins, releases, tools and invalid company selectors', () => {
+  const directory = 'https://example.test/revealline/releases/v0.142.3/site/game/communities/';
+  const game = new URL('../', directory).href;
+  for (const source of [
+    'https://outside.test/game/',
+    'https://name:secret@example.test/revealline/releases/v0.142.3/site/game/',
+    '/revealline/game/',
+    '/revealline/releases/v0.142.3/site/game/playground/',
+    './coupa/?edition=droneaid-community',
+    './unknown/',
+    'javascript:alert(1)',
+  ])
+    assert.equal(communityDirectoryReturnURL(new URL(source, directory), directory).href, game);
+});
 
 test('friendly community manifest covers every public brand and edition without merging identities', async () => {
   const catalog = JSON.parse(await readFile(new URL('../editions/catalog.json', import.meta.url)));
