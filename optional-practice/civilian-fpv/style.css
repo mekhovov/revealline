@@ -138,6 +138,12 @@
 .sim-academy #viewport:has(#complete:not([hidden])) .sim-drone-response {
   visibility: hidden;
 }
+.sim-academy .sim-drone-response {
+  top: 148px;
+  max-height: calc(100% - 164px);
+  overflow: auto;
+  pointer-events: auto;
+}
 @media (max-width: 600px) {
   .field-kit .sim-drone-response {
     width: 174px;
