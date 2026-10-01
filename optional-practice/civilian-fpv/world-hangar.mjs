@@ -18,7 +18,7 @@ export function mountDroneHangar({
     frame = 0,
     disposed = false,
     drag = null,
-    angle = -0.5,
+    angle = 2.6,
     elevation = 0.35,
     distance = 0.7;
   const listeners = [];
@@ -116,7 +116,7 @@ export function mountDroneHangar({
   function open() {
     if (disposed || dialog.open) return;
     onOpen();
-    angle = -0.5;
+    angle = 2.6;
     elevation = 0.35;
     distance = 0.7;
     build();
