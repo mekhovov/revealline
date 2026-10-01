@@ -132,7 +132,7 @@ export async function buildNeonPrism() {
   const level = {
     version: 'xonix-level.v5',
     id: 'neon-prism-reference',
-    revision: '1',
+    revision: '2',
     name: 'Neon Prism',
     width: 72,
     height: 36,
@@ -147,6 +147,7 @@ export async function buildNeonPrism() {
     hangars: [],
     classic: {
       version: 'classic.v1',
+      coverage: { version: 'reachable-routes.v1' },
       terrain,
       powerups: [],
       arcadeActions: { version: 'arcade-actions.v1' },
@@ -219,7 +220,7 @@ export async function buildNeonPrism() {
       {
         version: 'xonix-campaign.v1',
         id: 'neon-prism',
-        revision: '1',
+        revision: '2',
         title: 'Neon Prism',
         themeId: 'retro',
         classIds: ['scout'],

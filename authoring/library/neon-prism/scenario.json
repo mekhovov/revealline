@@ -3,7 +3,7 @@
   "level": {
     "version": "xonix-level.v5",
     "id": "neon-prism-reference",
-    "revision": "1",
+    "revision": "2",
     "name": "Neon Prism",
     "width": 72,
     "height": 36,
@@ -23,6 +23,9 @@
     "hangars": [],
     "classic": {
       "version": "classic.v1",
+      "coverage": {
+        "version": "reachable-routes.v1"
+      },
       "terrain": [
         {
           "id": "hazard-1",

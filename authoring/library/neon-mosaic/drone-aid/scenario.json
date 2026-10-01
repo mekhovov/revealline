@@ -3,7 +3,7 @@
   "level": {
     "version": "xonix-level.v5",
     "id": "neon-drone-aid-reference",
-    "revision": "1",
+    "revision": "2",
     "name": "Neon DRONE AID",
     "width": 72,
     "height": 36,
@@ -90,6 +90,9 @@
     "hangars": [],
     "classic": {
       "version": "classic.v1",
+      "coverage": {
+        "version": "reachable-routes.v1"
+      },
       "terrain": [
         {
           "id": "mosaic-1",

@@ -115,7 +115,7 @@ export async function buildNeonChambers() {
   const level = {
     version: 'xonix-level.v4',
     id: 'neon-chambers-reference',
-    revision: '1',
+    revision: '2',
     name: 'Neon Chambers',
     width: 72,
     height: 36,
@@ -129,6 +129,7 @@ export async function buildNeonChambers() {
     hangars: [],
     classic: {
       version: 'classic.v1',
+      coverage: { version: 'reachable-routes.v1' },
       terrain: [],
       powerups: [],
       arcadeActions: { version: 'arcade-actions.v1' },
@@ -196,7 +197,7 @@ export async function buildNeonChambers() {
       {
         version: 'xonix-campaign.v1',
         id: 'neon-chambers',
-        revision: '1',
+        revision: '2',
         title: 'Neon Chambers',
         themeId: 'retro',
         classIds: ['scout'],

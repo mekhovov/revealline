@@ -108,7 +108,7 @@ export async function buildNeonChannels() {
   const level = {
     version: 'xonix-level.v5',
     id: 'neon-channels-reference',
-    revision: '1',
+    revision: '2',
     name: 'Neon Channels',
     width: 72,
     height: 36,
@@ -123,6 +123,7 @@ export async function buildNeonChannels() {
     hangars: [],
     classic: {
       version: 'classic.v1',
+      coverage: { version: 'reachable-routes.v1' },
       terrain,
       powerups: [],
       arcadeActions: { version: 'arcade-actions.v1' },
@@ -215,7 +216,7 @@ export async function buildNeonChannels() {
       {
         version: 'xonix-campaign.v1',
         id: 'neon-channels',
-        revision: '1',
+        revision: '2',
         title: 'Neon Channels',
         themeId: 'retro',
         classIds: ['scout'],

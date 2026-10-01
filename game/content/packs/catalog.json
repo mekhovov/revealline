@@ -208,7 +208,7 @@
       "campaigns": [
         {
           "id": "neon-reference",
-          "revision": "1",
+          "revision": "2",
           "title": "Neon Reference Pack",
           "levels": [
             {
@@ -286,7 +286,7 @@
       "campaigns": [
         {
           "id": "neon-mosaic",
-          "revision": "1",
+          "revision": "2",
           "title": "Neon Words & Symbols",
           "levels": [
             {

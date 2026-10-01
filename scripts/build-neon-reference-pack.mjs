@@ -53,7 +53,7 @@ export async function buildNeonReferencePack() {
   const pack = {
     ...sources[0].pack,
     id: 'neon-reference-pack',
-    version: '1.1.0',
+    version: '1.2.0',
     name: 'Neon Reference Pack',
     description:
       'Sixteen screenshot-based Arcade levels: Channels, Crossroads, Hearts, Labyrinth, Arrows, Chambers, Crossgrid, Switchback, Spirals, Crossfire, Pinwheels, Wavebands, Conduit, Switchyards, Spines and Prism. Each level reveals its own original neon illustration.',
@@ -72,7 +72,7 @@ export async function buildNeonReferencePack() {
       {
         version: 'xonix-campaign.v1',
         id: 'neon-reference',
-        revision: '1',
+        revision: '2',
         title: 'Neon Reference Pack',
         themeId: 'retro',
         classIds: ['scout'],

@@ -119,7 +119,7 @@ export async function buildNeonPinwheels() {
   const level = {
     version: 'xonix-level.v5',
     id: 'neon-pinwheels-reference',
-    revision: '1',
+    revision: '2',
     name: 'Neon Pinwheels',
     width: 72,
     height: 36,
@@ -134,6 +134,7 @@ export async function buildNeonPinwheels() {
     hangars: [],
     classic: {
       version: 'classic.v1',
+      coverage: { version: 'reachable-routes.v1' },
       terrain,
       powerups: [],
       arcadeActions: { version: 'arcade-actions.v1' },
@@ -201,7 +202,7 @@ export async function buildNeonPinwheels() {
       {
         version: 'xonix-campaign.v1',
         id: 'neon-pinwheels',
-        revision: '1',
+        revision: '2',
         title: 'Neon Pinwheels',
         themeId: 'retro',
         classIds: ['scout'],

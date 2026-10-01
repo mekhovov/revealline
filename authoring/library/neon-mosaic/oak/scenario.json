@@ -3,7 +3,7 @@
   "level": {
     "version": "xonix-level.v5",
     "id": "neon-oak-reference",
-    "revision": "1",
+    "revision": "2",
     "name": "Neon Oak and Acorns",
     "width": 72,
     "height": 36,
@@ -127,6 +127,9 @@
     "hangars": [],
     "classic": {
       "version": "classic.v1",
+      "coverage": {
+        "version": "reachable-routes.v1"
+      },
       "terrain": [
         {
           "id": "mosaic-1",

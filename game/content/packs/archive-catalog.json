@@ -11,18 +11,9 @@
           "revision": "4",
           "title": "FPV Front · First Light Arcade R4",
           "levels": [
-            {
-              "id": "orchard-window",
-              "name": "Orchard Window"
-            },
-            {
-              "id": "split-courtyard",
-              "name": "Split Courtyard"
-            },
-            {
-              "id": "night-signal",
-              "name": "Night Signal"
-            }
+            { "id": "orchard-window", "name": "Orchard Window" },
+            { "id": "split-courtyard", "name": "Split Courtyard" },
+            { "id": "night-signal", "name": "Night Signal" }
           ]
         }
       ]
@@ -37,18 +28,9 @@
           "revision": "3",
           "title": "FPV Front · First Light R3",
           "levels": [
-            {
-              "id": "orchard-window",
-              "name": "Orchard Window"
-            },
-            {
-              "id": "split-courtyard",
-              "name": "Split Courtyard"
-            },
-            {
-              "id": "night-signal",
-              "name": "Night Signal"
-            }
+            { "id": "orchard-window", "name": "Orchard Window" },
+            { "id": "split-courtyard", "name": "Split Courtyard" },
+            { "id": "night-signal", "name": "Night Signal" }
           ]
         }
       ]
@@ -63,18 +45,9 @@
           "revision": "2",
           "title": "FPV Front · First Light R2",
           "levels": [
-            {
-              "id": "orchard-window",
-              "name": "Orchard Window"
-            },
-            {
-              "id": "split-courtyard",
-              "name": "Split Courtyard"
-            },
-            {
-              "id": "night-signal",
-              "name": "Night Signal"
-            }
+            { "id": "orchard-window", "name": "Orchard Window" },
+            { "id": "split-courtyard", "name": "Split Courtyard" },
+            { "id": "night-signal", "name": "Night Signal" }
           ]
         }
       ]
@@ -89,18 +62,9 @@
           "revision": "1",
           "title": "FPV Front · First Light",
           "levels": [
-            {
-              "id": "orchard-window",
-              "name": "Orchard Window"
-            },
-            {
-              "id": "split-courtyard",
-              "name": "Split Courtyard"
-            },
-            {
-              "id": "night-signal",
-              "name": "Night Signal"
-            }
+            { "id": "orchard-window", "name": "Orchard Window" },
+            { "id": "split-courtyard", "name": "Split Courtyard" },
+            { "id": "night-signal", "name": "Night Signal" }
           ]
         }
       ]

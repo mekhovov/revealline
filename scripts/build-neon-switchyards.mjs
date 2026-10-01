@@ -131,7 +131,7 @@ export async function buildNeonSwitchyards() {
   const level = {
     version: 'xonix-level.v5',
     id: 'neon-switchyards-reference',
-    revision: '1',
+    revision: '2',
     name: 'Neon Switchyards',
     width: 72,
     height: 36,
@@ -146,6 +146,7 @@ export async function buildNeonSwitchyards() {
     hangars: [],
     classic: {
       version: 'classic.v1',
+      coverage: { version: 'reachable-routes.v1' },
       terrain,
       powerups: [],
       arcadeActions: { version: 'arcade-actions.v1' },
@@ -216,7 +217,7 @@ export async function buildNeonSwitchyards() {
       {
         version: 'xonix-campaign.v1',
         id: 'neon-switchyards',
-        revision: '1',
+        revision: '2',
         title: 'Neon Switchyards',
         themeId: 'retro',
         classIds: ['scout'],

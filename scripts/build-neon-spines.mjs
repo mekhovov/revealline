@@ -131,7 +131,7 @@ export async function buildNeonSpines() {
   const level = {
     version: 'xonix-level.v5',
     id: 'neon-spines-reference',
-    revision: '1',
+    revision: '2',
     name: 'Neon Spines',
     width: 72,
     height: 36,
@@ -146,6 +146,7 @@ export async function buildNeonSpines() {
     hangars: [],
     classic: {
       version: 'classic.v1',
+      coverage: { version: 'reachable-routes.v1' },
       terrain,
       powerups: [],
       arcadeActions: { version: 'arcade-actions.v1' },
@@ -216,7 +217,7 @@ export async function buildNeonSpines() {
       {
         version: 'xonix-campaign.v1',
         id: 'neon-spines',
-        revision: '1',
+        revision: '2',
         title: 'Neon Spines',
         themeId: 'retro',
         classIds: ['scout'],

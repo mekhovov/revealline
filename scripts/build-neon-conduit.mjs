@@ -133,7 +133,7 @@ export async function buildNeonConduit() {
   const level = {
     version: 'xonix-level.v5',
     id: 'neon-conduit-reference',
-    revision: '1',
+    revision: '2',
     name: 'Neon Conduit',
     width: 72,
     height: 36,
@@ -148,6 +148,7 @@ export async function buildNeonConduit() {
     hangars: [],
     classic: {
       version: 'classic.v1',
+      coverage: { version: 'reachable-routes.v1' },
       terrain,
       powerups: [],
       arcadeActions: { version: 'arcade-actions.v1' },
@@ -204,7 +205,7 @@ export async function buildNeonConduit() {
       {
         version: 'xonix-campaign.v1',
         id: 'neon-conduit',
-        revision: '1',
+        revision: '2',
         title: 'Neon Conduit',
         themeId: 'retro',
         classIds: ['scout'],

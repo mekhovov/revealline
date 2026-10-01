@@ -70,7 +70,7 @@
     {
       "version": "xonix-campaign.v1",
       "id": "neon-chambers",
-      "revision": "1",
+      "revision": "2",
       "title": "Neon Chambers",
       "themeId": "retro",
       "classIds": [
@@ -80,7 +80,7 @@
         {
           "version": "xonix-level.v4",
           "id": "neon-chambers-reference",
-          "revision": "1",
+          "revision": "2",
           "name": "Neon Chambers",
           "width": 72,
           "height": 36,
@@ -604,6 +604,9 @@
           "hangars": [],
           "classic": {
             "version": "classic.v1",
+            "coverage": {
+              "version": "reachable-routes.v1"
+            },
             "terrain": [],
             "powerups": [],
             "arcadeActions": {

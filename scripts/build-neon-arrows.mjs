@@ -126,7 +126,7 @@ export async function buildNeonArrows() {
   const level = {
     version: 'xonix-level.v4',
     id: 'neon-arrows-reference',
-    revision: '1',
+    revision: '2',
     name: 'Neon Arrows',
     width: 72,
     height: 36,
@@ -140,6 +140,7 @@ export async function buildNeonArrows() {
     hangars: [],
     classic: {
       version: 'classic.v1',
+      coverage: { version: 'reachable-routes.v1' },
       terrain,
       powerups: [],
       arcadeActions: { version: 'arcade-actions.v1' },
@@ -207,7 +208,7 @@ export async function buildNeonArrows() {
       {
         version: 'xonix-campaign.v1',
         id: 'neon-arrows',
-        revision: '1',
+        revision: '2',
         title: 'Neon Arrows',
         themeId: 'retro',
         classIds: ['scout'],
