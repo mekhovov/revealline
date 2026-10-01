@@ -175,8 +175,25 @@ The original physics receipt remains unchanged. Pilot completion times do not
 estimate a beginner's learning time; unfamiliar-player and physical-radio
 acceptance remain separate required observations.
 
-Public delivery is tracked in [PR #905](https://github.com/mekhovov/revealline/pull/905),
-which follows PR #904 in protected native stack #902. Exact-head checks and
+## Player-flow verification
+
+Actual browser verification covered the 14 ordered Acro cards and collapsed
+12-lesson self-level collection, first-lesson entry with Acro/FPV, the installed
+first demonstration completing at 7.2 simulated seconds, explicit Pause and
+quarter-speed selection. Watching left primary progress at 0/14. The recorded
+stick display and lesson labels identified observation-only controls. Starting
+and leaving a lesson restored a deliberately selected Chase camera and Self-level
+mode. The controls explorer and paused explanations remained available.
+
+Frozen candidate `0f9d19b8a4e03dedd9ff43d7a54052f5dcf0a50e` passed all three
+optional-package admissions, committed-input verification and two byte-identical
+builds. The subsequent parent-stack rebase preserved every FPV source byte.
+The full 14 installed recordings also passed independent runtime replay; these
+checks do not substitute for five first-time player sessions or physical radios.
+
+The original school is tracked in [PR #905](https://github.com/mekhovov/revealline/pull/905).
+The Acro-first follow-up uses `codex/fpv-acro-first-school` above the shared guide
+in native stack #902. Exact-head checks and
 deployment verification remain required as described in
 [continuous delivery](fpv-continuous-delivery.md). A local playtest or
 successful physics replay is not evidence of a live public release.
