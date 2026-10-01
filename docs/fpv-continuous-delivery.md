@@ -598,3 +598,23 @@ checkpoint/evidence-only commits do not change the frozen runtime. Continue
 independent R4/R5 art and R6 demonstration/ghost/practice delivery while external
 checks run. Keep existing holds, #922 reimport navigation integration and the
 R7 deferred unit/human/device qualification backlog intact.
+
+### Motion-teaching publication
+
+[PR #932](https://github.com/mekhovov/revealline/pull/932) is published from
+`codex/fpv-motion-teaching`, attached to this chat, and appended with the native
+stack API to #902 after #929. Live open order at append:
+#905 → #907 → #923 → #924 → #925 → #926 → #929 → #932.
+No rebase, manual retarget, hold removal, merge bypass or release-authority
+change was used. The frozen runtime remains `cbed6e7e8`; the next commits only
+record qualification and publication. The PR retains milestone
+`v0.150.0 — Unified native experience`.
+
+Source and rebuilt reviewed-player URL are available for local testing. The
+player's prior USB-radio preference was restored after touch layout inspection;
+the final guide remains open. A compact touch-flight screenshot is also saved at
+`/tmp/fpv-motion-flight-final.png`. Public merge/deployment and exact-head CI are
+external pending gates, not new live-availability claims. Do not repeatedly poll
+unchanged checks. Next independent work remains the approved R4/R5 art foundation
+and R6 demonstrations/ghost/practice flow; read live stack membership before any
+coordinated refresh and preserve the creator-data and original-content holds.
