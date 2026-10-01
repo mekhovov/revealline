@@ -6,6 +6,21 @@ import { ACRO_LESSON_ORDER, SELF_LEVEL_LESSON_ORDER } from './world-catalogue.mj
 const SVG_NS = 'http://www.w3.org/2000/svg';
 const AXES = ['throttle', 'yaw', 'pitch', 'roll'];
 const clamp = (n, a = -1, b = 1) => Math.max(a, Math.min(b, Number.isFinite(n) ? n : 0));
+const EXAMPLE_PACE = 0.2;
+const EXAMPLE_TICKS = 150;
+
+/** Full travel is the real command, shown at one-fifth speed, never enlarged UI input. */
+export function beginnerExampleCommand(ticks, axis = 'throttle') {
+  const input = neutralFlightInput();
+  input.throttle = ticks < 25 ? 1 : 0.5;
+  if (axis === 'throttle') input.throttle = ticks < 25 ? 1 : ticks >= 50 && ticks < 82 ? 0 : 0.5;
+  else {
+    const selected = ['roll', 'pitch', 'yaw'].includes(axis) ? axis : 'pitch';
+    if ((ticks >= 25 && ticks < 35) || (ticks >= 115 && ticks < 125)) input[selected] = 1;
+    if ((ticks >= 55 && ticks < 65) || (ticks >= 85 && ticks < 95)) input[selected] = -1;
+  }
+  return input;
+}
 
 /** A separate, unscored teaching sandbox using the unchanged flight integrator.
  * It never receives the host flight or a recorder and cannot award completion. */
@@ -83,6 +98,10 @@ export function mountBeginnerCoach({
     labFrameId = null,
     labLastTime = null,
     labAccumulator = 0,
+    autoPreviewPending = false,
+    radioBaseline = null,
+    radioIntentTicks = 0,
+    exampleLoops = 0,
     diagram = null,
     viewReleases = [];
   const labKeys = new Set(),
@@ -223,6 +242,7 @@ export function mountBeginnerCoach({
     labInput = neutralFlightInput();
   }
   function pausePreview(reason = 'stopped') {
+    autoPreviewPending = false;
     labRunning = false;
     labReason = reason;
     labFlight?.pause();
@@ -238,23 +258,52 @@ export function mountBeginnerCoach({
     labFlight = createBeginnerPreview(mode());
     paintLab();
   }
-  function exampleInput(ticks) {
-    const seconds = ticks / FLIGHT_HZ;
-    const input = neutralFlightInput();
-    input.throttle = seconds < 1.5 ? 0.62 : 0.5;
-    const axis = displayedStep()?.axis;
-    if (axis === 'throttle')
-      input.throttle = seconds < 1.5 ? 0.62 : seconds < 3 ? 0.5 : seconds < 4.5 ? 0.39 : 0.54;
-    else if (seconds >= 1.8 && seconds < (mode() === 'acro' ? 2.45 : 3.2)) {
-      const selected = ['roll', 'pitch', 'yaw'].includes(axis) ? axis : 'pitch';
-      input[selected] =
-        (selected === 'yaw' ? 0.11 : mode() === 'acro' ? 0.07 : 0.25) *
-        (displayedStep()?.direction ?? 1);
+  function rememberRadioBaseline() {
+    const value = labRadioInput();
+    radioBaseline =
+      labRadioAvailable() && ['roll', 'pitch', 'yaw'].every((axis) => Math.abs(value[axis]) < 0.08)
+        ? value
+        : null;
+    radioIntentTicks = 0;
+  }
+  function takeControls(source, { focus = false } = {}) {
+    if (stage !== 'guide' || disposed) return;
+    if (labMode !== 'try' || labSource !== source) {
+      const throttle = labInput.throttle;
+      clearLabInput();
+      labMode = 'try';
+      labSource = source;
+      // Keyboard and touch take over the current preview without dropping its
+      // throttle. Radio uses its actual calibrated value, never this handoff.
+      labInput.throttle = throttle;
+      labTouch.throttle = throttle;
+      rememberRadioBaseline();
+      paint();
     }
-    return input;
+    playPreview({ focus });
+  }
+  function observeRadio() {
+    if (!labRadioAvailable()) {
+      radioBaseline = null;
+      radioIntentTicks = 0;
+      if (labRunning && labMode === 'try' && labSource === 'radio') pausePreview('radio');
+      return;
+    }
+    if (labMode !== 'example') return;
+    if (!radioBaseline) {
+      rememberRadioBaseline();
+      return;
+    }
+    // Resting throttle is part of the baseline. A held off-centre stick at
+    // connect, normal sensor noise, or reconnect cannot seize the example.
+    const value = labRadioInput();
+    const moved = AXES.some((axis) => Math.abs(value[axis] - radioBaseline[axis]) > 0.18);
+    radioIntentTicks = labRunning && moved ? radioIntentTicks + 1 : 0;
+    if (radioIntentTicks >= 2) takeControls('radio');
   }
   function previewCommand() {
-    if (labMode === 'example') return exampleInput(labFlight.snapshot().ticks);
+    if (labMode === 'example')
+      return beginnerExampleCommand(labFlight.snapshot().ticks, displayedStep()?.axis);
     if (labSource === 'radio') return labRadioInput();
     if (labSource === 'touch') {
       labTouch.throttle = clamp(
@@ -297,14 +346,26 @@ export function mountBeginnerCoach({
       pausePreview('stall');
       return;
     }
-    labAccumulator += Math.max(0, elapsed);
+    labAccumulator += Math.max(0, elapsed) * (labMode === 'example' ? EXAMPLE_PACE : 1);
     while (labAccumulator >= 1000 / FLIGHT_HZ) {
       labAccumulator -= 1000 / FLIGHT_HZ;
       labInput = previewCommand();
       labFlight.step(labInput);
       const state = labFlight.snapshot();
+      if (labMode === 'example' && state.ticks >= EXAMPLE_TICKS) {
+        exampleLoops++;
+        if (snapshot.reducedMotion) {
+          pausePreview('finished');
+          break;
+        }
+        // Each labelled example repeats from the same safe starting pose.
+        labFlight = createBeginnerPreview(mode());
+        labFlight.arm();
+        labInput = neutralFlightInput();
+        continue;
+      }
       if (
-        state.ticks >= (labMode === 'example' ? 8 : 60) * FLIGHT_HZ ||
+        (labMode === 'try' && state.ticks >= 60 * FLIGHT_HZ) ||
         state.contacts > 0 ||
         state.status !== 'active'
       ) {
@@ -323,6 +384,10 @@ export function mountBeginnerCoach({
       return;
     }
     labReason = '';
+    if (labRunning) {
+      if (focus) refs.labFocus?.focus({ preventScroll: true });
+      return;
+    }
     labRunning = true;
     labFlight.arm();
     labLastTime = null;
@@ -349,7 +414,8 @@ export function mountBeginnerCoach({
       labTouch[vertical] = vertical === 'throttle' ? (verticalValue + 1) / 2 : verticalValue;
       event.preventDefault();
     };
-    const release = () => {
+    const release = (event) => {
+      if (event && event.pointerId !== pointer) return;
       const previous = pointer;
       pointer = null;
       if (previous !== null) {
@@ -363,8 +429,8 @@ export function mountBeginnerCoach({
       for (const axis of [horizontal, vertical]) if (axis !== 'throttle') labTouch[axis] = 0;
     };
     const down = (event) => {
-      if (labMode !== 'try' || labSource !== 'touch' || stage !== 'guide') return;
-      if (!labRunning) playPreview();
+      if (stage !== 'guide' || pointer !== null) return;
+      takeControls('touch', { focus: true });
       pointer = event.pointerId;
       drawing.setPointerCapture(pointer);
       move(event);
@@ -410,10 +476,11 @@ export function mountBeginnerCoach({
         };
         control.setAttribute('aria-label', directions[axis][direction < 0 ? 0 : 1]);
         const down = (event) => {
-          if (labMode !== 'try' || labSource !== 'touch') return;
+          if (stage !== 'guide') return;
           if (event.type === 'keydown' && ![' ', 'Enter'].includes(event.key)) return;
+          if (event.repeat && !labRunning) return;
           event.preventDefault();
-          if (!labRunning) playPreview({ focus: event.type !== 'keydown' });
+          takeControls('touch', { focus: event.type !== 'keydown' });
           if (event.pointerId !== undefined) control.setPointerCapture(event.pointerId);
           if (axis === 'throttle') {
             touchThrottleDirection = direction;
@@ -447,23 +514,45 @@ export function mountBeginnerCoach({
       state,
       detailScale: 1.5,
       followHeading: true,
+      environmentMotion: true,
+      reducedMotion: Boolean(snapshot.reducedMotion),
       controls: input,
       locale: lang(),
       unavailable: labMode === 'try' && labSource === 'radio' && !labRadioAvailable(),
     });
     if (refs.labPlay)
       refs.labPlay.textContent = labRunning
-        ? t('Stop preview', 'Зупинити перегляд')
+        ? t('Pause preview', 'Пауза перегляду')
         : labMode === 'example'
           ? t('Play example', 'Показати приклад')
           : t('Resume controls', 'Продовжити керування');
+    if (refs.labSourceHint) {
+      const source = {
+        keyboard: t('Keyboard', 'Клавіатура'),
+        touch: t('Touch controls', 'Дотикове керування'),
+        radio: t('Radio / controller', 'Пульт / контролер'),
+      }[labSource];
+      const text =
+        labMode === 'example'
+          ? t(
+              'Move a stick, drag a gimbal or use the keyboard to take control. Esc pauses so you can browse.',
+              'Рухайте стіком, перетягніть джойстик або натисніть клавішу, щоб керувати. Esc — пауза для навігації.',
+            )
+          : `${source} · ${t('live input at normal speed · replay the example whenever you want', 'ваш сигнал зі звичайною швидкістю · приклад можна повторити будь-коли')}`;
+      if (refs.labSourceHint.textContent !== text) refs.labSourceHint.textContent = text;
+    }
     if (refs.labStatus) {
       const text = labRunning
         ? labMode === 'example'
-          ? t(
-              'EXAMPLE · real physics · hollow dots are example commands',
-              'ПРИКЛАД · справжня фізика · порожні крапки — команди прикладу',
-            )
+          ? snapshot.reducedMotion
+            ? t(
+                'EXAMPLE · 0.2× teaching pace · real full-travel commands · one pass',
+                'ПРИКЛАД · навчальний темп 0,2× · справжні команди до краю · один показ',
+              )
+            : t(
+                'EXAMPLE · 0.2× teaching pace · real full-travel commands · loops from the starting pose',
+                'ПРИКЛАД · навчальний темп 0,2× · справжні команди до краю · повтор із початкової позиції',
+              )
           : t(
               'YOUR CONTROLS · separate preview · real lesson stays paused',
               'ВАШЕ КЕРУВАННЯ · окремий перегляд · урок залишається на паузі',
@@ -484,8 +573,8 @@ export function mountBeginnerCoach({
                   'Перегляд завершено. Скиньте або повторіть; поступ не зараховано.',
                 )
               : t(
-                  'PREVIEW STOPPED · press Play / Resume to try; the lesson stays paused',
-                  'ПЕРЕГЛЯД ЗУПИНЕНО · натисніть показ / продовжити; урок залишається на паузі',
+                  'PREVIEW PAUSED · Play / Resume opens controls; the real lesson stays paused',
+                  'ПЕРЕГЛЯД НА ПАУЗІ · показ / продовжити відкриває керування; справжній урок на паузі',
                 );
       if (refs.labStatus.textContent !== text) refs.labStatus.textContent = text;
     }
@@ -841,38 +930,13 @@ export function mountBeginnerCoach({
         }
         card.append(picker);
       }
-      const labModes = node('div', 'coach-lab-mode');
-      labModes.setAttribute('role', 'group');
-      labModes.setAttribute('aria-label', t('Controls lab mode', 'Режим майданчика керування'));
-      for (const [value, en, uk] of [
-        ['example', 'Example', 'Приклад'],
-        ['try', 'Try controls', 'Спробувати керування'],
-      ]) {
-        const choice = button(`lab-${value}`, t(en, uk));
-        choice.setAttribute('aria-pressed', String(labMode === value));
-        labModes.append(choice);
-      }
-      card.append(labModes);
-      const sources = node('div', 'coach-lab-sources');
-      sources.setAttribute('role', 'group');
-      sources.setAttribute('aria-label', t('Preview controls', 'Керування переглядом'));
-      for (const [value, en, uk] of [
-        ['keyboard', 'Keyboard', 'Клавіатура'],
-        ['touch', 'Touch / D-pad', 'Дотик / кнопки'],
-        ['radio', 'Radio / controller', 'Пульт / контролер'],
-      ]) {
-        const choice = button(`source-${value}`, t(en, uk));
-        choice.setAttribute('aria-pressed', String(labSource === value));
-        choice.disabled = labMode !== 'try';
-        sources.append(choice);
-      }
-      card.append(sources);
+      refs.labSourceHint = node('p', 'coach-lab-source-hint');
+      card.append(refs.labSourceHint);
       const visuals = node('div', 'coach-visuals'),
         controller = node('section', 'coach-controller coach-radio-chassis');
-      const requestedMode =
-        labSource === 'radio'
-          ? (snapshot.radioStickMode ?? snapshot.stickMode)
-          : snapshot.stickMode;
+      const requestedMode = labRadioAvailable()
+        ? (snapshot.radioStickMode ?? snapshot.stickMode)
+        : snapshot.stickMode;
       const stickMode = STICK_LAYOUTS[requestedMode] ? requestedMode : 2;
       controller.append(
         node(
@@ -904,12 +968,14 @@ export function mountBeginnerCoach({
           'p',
           'coach-example-note',
           t(
-            'Example uses hollow dots. Try controls uses solid dots and the same flight physics. The real lesson stays paused.',
-            'Приклад показує порожні крапки. Ваше керування — суцільні крапки й ту саму фізику. Справжній урок залишається на паузі.',
+            'Full travel shown slowly. Use small corrections in flight. Hollow dots show the example; solid dots show your actual input at normal speed.',
+            'Повний хід показано повільно. У польоті коригуйте малими рухами. Порожні крапки — приклад; суцільні — ваш справжній сигнал зі звичайною швидкістю.',
           ),
         ),
       );
-      if (labMode === 'try' && labSource === 'touch') controller.append(makeDpad());
+      const touchControls = node('details', 'coach-lab-touch-controls');
+      touchControls.append(node('summary', '', t('Touch buttons', 'Сенсорні кнопки')), makeDpad());
+      controller.append(touchControls);
       visuals.append(controller);
       const behavior = node('section', 'coach-behavior');
       behavior.append(
@@ -925,7 +991,11 @@ export function mountBeginnerCoach({
       card.append(visuals);
       const labActions = node('div', 'coach-lab-actions');
       refs.labPlay = button('lab-play', '');
-      labActions.append(refs.labPlay, button('lab-reset', t('Reset preview', 'Скинути перегляд')));
+      labActions.append(
+        refs.labPlay,
+        button('lab-reset', t('Reset controls', 'Скинути керування')),
+        button('lab-replay', t('Replay example', 'Повторити приклад')),
+      );
       refs.labStatus = node('p', 'coach-lab-status');
       refs.labStatus.setAttribute('role', 'status');
       refs.labStatus.setAttribute('aria-live', 'polite');
@@ -936,8 +1006,8 @@ export function mountBeginnerCoach({
           'p',
           'coach-lab-help',
           t(
-            'Try controls: focus the drone, then use W/S, A/D, Q/E and ↑/↓. Shift is gentle; throttle stays set. Escape stops the preview. Touch: drag the gimbals or hold the buttons.',
-            'Ваше керування: виберіть схему дрона, потім W/S, A/D, Q/E та ↑/↓. Shift — плавно; газ зберігається. Escape зупиняє перегляд. Дотик: рухайте стіки або утримуйте кнопки.',
+            'Focus the drone and use W/S, A/D, Q/E and ↑/↓, or move a calibrated radio stick. Drag either gimbal or open Touch buttons. Shift is gentle; throttle stays set. Esc pauses for menu navigation. Replay example returns to the lesson’s demonstration.',
+            'Виберіть схему дрона й натискайте W/S, A/D, Q/E та ↑/↓ або рухайте каліброваним стіком пульта. Перетягніть джойстик або відкрийте сенсорні кнопки. Shift — плавно; газ зберігається. Esc — пауза для меню. «Повторити приклад» повертає демонстрацію уроку.',
           ),
         ),
       );
@@ -1020,8 +1090,8 @@ export function mountBeginnerCoach({
                 'Немає сигналу вибраного пульта. Відкрийте налаштування та продовжте перегляд.',
               )
           : t(
-              'Choose Try controls to use keyboard, touch or a controller. Preview results never count toward the lesson.',
-              'Виберіть «Спробувати керування» для клавіатури, дотику чи пульта. Результати перегляду не зараховуються до уроку.',
+              'Use the keyboard, touch a gimbal or move a calibrated controller to take over. Preview results never count toward the lesson.',
+              'Скористайтеся клавіатурою, торкніться джойстика або рухайте каліброваним пультом, щоб керувати. Результати перегляду не зараховуються до уроку.',
             );
     for (const stick of stage === 'guide' ? [] : refs.sticks) {
       const x = input[stick.h],
@@ -1052,8 +1122,11 @@ export function mountBeginnerCoach({
     stage = 'guide';
     labMode = 'example';
     resetPreview();
+    radioBaseline = null;
+    radioIntentTicks = 0;
     viewedStep = activeStep();
     render();
+    autoPreviewPending = !snapshot.reducedMotion;
     root.querySelector('[data-coach-action="start"]')?.focus({ preventScroll: true });
   }
   function click(event) {
@@ -1064,25 +1137,21 @@ export function mountBeginnerCoach({
       stage = 'live';
       render();
       onStart();
-    } else if (action === 'lab-example' || action === 'lab-try') {
-      labMode = action === 'lab-try' ? 'try' : 'example';
+    } else if (action === 'lab-replay') {
+      labMode = 'example';
+      exampleLoops = 0;
       resetPreview();
+      rememberRadioBaseline();
       render();
       playPreview();
     } else if (action === 'lab-play') {
       if (labRunning) pausePreview();
       else playPreview();
     } else if (action === 'lab-reset') {
+      labMode = 'try';
       resetPreview();
+      rememberRadioBaseline();
       paint();
-    } else if (
-      action.startsWith('source-') &&
-      ['keyboard', 'touch', 'radio'].includes(action.slice(7))
-    ) {
-      labSource = action.slice(7);
-      resetPreview();
-      render();
-      playPreview();
     } else if (action === 'fullscreen') {
       pausePreview();
       onFullscreen();
@@ -1101,11 +1170,12 @@ export function mountBeginnerCoach({
       explored = action.slice(5);
       resetPreview();
       render();
-      if (labMode === 'example') playPreview();
+      if (labMode === 'example' && !snapshot.reducedMotion) playPreview();
     } else if (action.startsWith('step-')) {
       viewedStep = clamp(Number(action.slice(5)), 0, lesson.steps.length - 1);
       resetPreview();
       render();
+      if (labMode === 'example' && !snapshot.reducedMotion) playPreview();
     }
   }
   const keyDown = (event) => {
@@ -1114,16 +1184,15 @@ export function mountBeginnerCoach({
       event.stopImmediatePropagation();
       return;
     }
-    if (!labRunning || stage !== 'guide' || disposed || !root.contains(event.target)) return;
+    if (stage !== 'guide' || disposed || !root.contains(event.target)) return;
     if (event.code === 'Escape') {
+      if (!labRunning) return;
       event.preventDefault();
       event.stopImmediatePropagation();
       pausePreview();
       return;
     }
     if (
-      labMode !== 'try' ||
-      labSource !== 'keyboard' ||
       event.ctrlKey ||
       event.metaKey ||
       event.altKey ||
@@ -1133,12 +1202,25 @@ export function mountBeginnerCoach({
     )
       return;
     if (!movementKeys.has(event.code)) return;
+    // A held flight key can keep repeating while Explain opens. Only a fresh
+    // keydown may take ownership from an example or a different input source.
+    if (event.repeat && (labMode !== 'try' || labSource !== 'keyboard')) return;
+    // A paused guide is a menu. Only explicit focus on its drone opens a
+    // keyboard sandbox; menu arrows and held keys returning from blur stay safe.
+    if (!labRunning && (event.target !== refs.labFocus || event.repeat)) return;
+    if (event.code.startsWith('Shift') && (labMode !== 'try' || labSource !== 'keyboard')) return;
     event.preventDefault();
     event.stopImmediatePropagation();
+    takeControls('keyboard');
     labKeys.add(event.code);
+    if (event.shiftKey) labKeys.add('ShiftLeft');
   };
   const keyUp = (event) => {
     labKeys.delete(event.code);
+    if (event.code.startsWith('Shift')) {
+      labKeys.delete('ShiftLeft');
+      labKeys.delete('ShiftRight');
+    }
     blockedKeys.delete(event.code);
   };
   const loseFocus = () => {
@@ -1172,6 +1254,9 @@ export function mountBeginnerCoach({
       snapshot = {};
       labMode = 'example';
       labSource = 'keyboard';
+      radioBaseline = null;
+      radioIntentTicks = 0;
+      exampleLoops = 0;
       resetPreview();
       replay = Boolean(options.replay);
       explored = 'throttle';
@@ -1181,12 +1266,20 @@ export function mountBeginnerCoach({
       stage = options.practice || replay ? 'live' : 'guide';
       if (stage === 'guide') onPause();
       render();
+      autoPreviewPending = stage === 'guide';
     },
     update(value) {
       if (!lesson || disposed || stage === 'closed') return;
       const previousMode = mode();
+      const wasPending = autoPreviewPending;
+      const wasReduced = snapshot.reducedMotion;
       snapshot = { ...snapshot, ...value };
-      if (mode() !== previousMode) resetPreview();
+      if (mode() !== previousMode) {
+        resetPreview();
+        autoPreviewPending = wasPending;
+      }
+      if (!wasReduced && snapshot.reducedMotion && labMode === 'example' && labRunning)
+        pausePreview();
       if (labRunning && labMode === 'try' && labSource === 'radio' && !labRadioAvailable())
         pausePreview('radio');
       const key = `${lang()}|${activeStep()}|${snapshot.stickMode}|${snapshot.radioStickMode}|${snapshot.radioAvailable}|${snapshot.source}|${snapshot.monitorAvailable}|${snapshot.mode}|${Boolean(snapshot.reducedMotion)}`;
@@ -1194,6 +1287,11 @@ export function mountBeginnerCoach({
         lastRender = key;
         render();
       }
+      if (autoPreviewPending) {
+        autoPreviewPending = false;
+        if (!snapshot.reducedMotion) playPreview({ focus: false });
+      }
+      observeRadio();
       const now = win.performance?.now?.() ?? Date.now();
       if (now - lastPaint >= 80) {
         lastPaint = now;
@@ -1202,6 +1300,7 @@ export function mountBeginnerCoach({
     },
     blocksArm: () => Boolean(lesson && stage === 'guide'),
     pausePreview,
+    wantsRadioPreview: () => Boolean(lesson && stage === 'guide' && !disposed),
     previewSource: () => (stage === 'guide' && labMode === 'try' ? labSource : null),
     previewSnapshot: () => ({
       mode: labMode,
@@ -1209,6 +1308,8 @@ export function mountBeginnerCoach({
       running: labRunning,
       state: labFlight?.snapshot() ?? null,
       controls: { ...labInput },
+      teachingPace: labMode === 'example' ? EXAMPLE_PACE : 1,
+      exampleLoops,
     }),
     showGuide,
     complete({ verified, nextAvailable: hasNext = false } = {}) {

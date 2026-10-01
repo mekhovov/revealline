@@ -2022,3 +2022,213 @@ html[data-fpv-immersive='academy'] .sim-academy [data-immersive-controls='true']
     display: none;
   }
 }
+
+/* Flight instruments stay peripheral. Full explanations live in Learning. */
+.field-kit .sim-drone-response[data-display='compact'] {
+  inset: auto auto 12px 12px;
+  display: block;
+  width: 128px;
+  height: 96px;
+  max-height: none;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+  overflow: visible;
+  pointer-events: none;
+}
+.field-kit .sim-drone-response[data-display='compact'][data-scale='large'] {
+  width: 154px;
+  height: 112px;
+}
+.field-kit .sim-drone-response[data-display='compact'][data-scale='standard'] {
+  width: 128px;
+  padding: 0;
+}
+.field-kit .sim-drone-response[data-display='compact'] .sim-response-heading {
+  position: absolute;
+  inset: 0;
+  min-height: 0;
+}
+.field-kit .sim-drone-response[data-display='compact'] .sim-response-heading strong,
+.field-kit
+  .sim-drone-response[data-display='compact']
+  :is(.sim-response-view, .sim-response-input, .sim-response-motion, .sim-response-detail) {
+  display: none;
+}
+.field-kit .sim-drone-response[data-display='compact'] .sim-response-close {
+  position: absolute;
+  top: -12px;
+  right: -8px;
+  margin: 0;
+  color: var(--fk-muted);
+  font-size: 19px;
+  text-shadow: 0 1px 3px #000;
+  opacity: 0.55;
+  background: transparent;
+  box-shadow: none;
+}
+.field-kit
+  .sim-drone-response[data-display='compact']
+  .sim-response-close:is(:hover, :focus-visible) {
+  opacity: 1;
+}
+.field-kit .sim-drone-response[data-display='compact'] .sim-response-visual,
+.field-kit .sim-drone-response[data-display='compact'] svg {
+  width: 100%;
+  height: 100%;
+  max-height: none;
+}
+.field-kit .sim-drone-response[data-display='compact'] svg {
+  filter: drop-shadow(0 1px 1px #0008);
+}
+.field-kit .sim-drone-response[data-display='compact'][data-scale='standard'] svg {
+  max-height: none;
+}
+.field-kit .sim-drone-response[data-display='learning'] {
+  inset: auto auto 12px 12px;
+  display: block;
+  width: min(260px, calc(100% - 24px));
+  max-height: min(300px, calc(100% - 110px));
+  overflow: auto;
+  overscroll-behavior: contain;
+  pointer-events: auto;
+}
+.field-kit .sim-response-propeller {
+  fill: #d9edf3;
+  stroke: var(--fk-panel);
+  stroke-width: 0.6;
+}
+.field-kit .sim-response-motor-power {
+  fill: none;
+  stroke: var(--fk-cyan);
+  stroke-width: 2.2;
+  stroke-linecap: round;
+}
+.field-kit :is(.sim-response-motor-label, .sim-response-height-label, .sim-response-mix-note) {
+  fill: var(--fk-text);
+  font: 8px var(--fk-font-mono);
+  paint-order: stroke;
+  stroke: var(--fk-panel);
+  stroke-width: 2px;
+}
+.field-kit .sim-response-height-label {
+  fill: var(--fk-cyan);
+  font-size: 10px;
+}
+.field-kit .sim-response-height-line {
+  fill: none;
+  stroke: var(--fk-cyan);
+  stroke-width: 1;
+  stroke-dasharray: 3 3;
+}
+.field-kit .sim-response-mix-note {
+  fill: var(--fk-muted);
+  font-size: 7px;
+}
+.field-kit
+  .sim-drone-response[data-display='compact']
+  :is(
+    .sim-response-motor-label,
+    .sim-response-mix-note,
+    .sim-response-height-label,
+    .sim-response-north,
+    .sim-response-front-label,
+    .sim-response-rear-label,
+    .sim-response-front-leader
+  ) {
+  display: none;
+}
+.sim-academy #sticks:not(.expanded-sticks) {
+  inset: auto 12px 24px auto;
+  gap: 14px;
+  opacity: 0.85;
+  pointer-events: none;
+}
+.sim-academy #sticks:not(.expanded-sticks) > div {
+  width: 50px;
+  height: 50px;
+  box-shadow: inset 0 0 0 3px #10192366;
+  background-color: #10192366;
+}
+.sim-academy #sticks:not(.expanded-sticks) .sim-stick-direction {
+  display: none;
+}
+.sim-academy #sticks i {
+  top: 50%;
+  left: 50%;
+  margin: -4px;
+}
+.sim-academy #sticks.expanded-sticks {
+  inset: auto 56px 36px;
+  justify-content: space-between;
+  gap: 0;
+}
+.sim-academy #sticks.expanded-sticks > div {
+  width: 80px;
+  height: 80px;
+}
+.sim-academy .coaching {
+  bottom: 12px;
+  width: min(560px, calc(100% - 310px));
+  padding: 6px 10px;
+  border: 0;
+  background: #10192399;
+}
+.sim-academy #touch-controls {
+  inset: auto 14px 24px;
+}
+.sim-academy #touch-controls .touch-stick {
+  width: 108px;
+  height: 108px;
+  box-shadow: inset 0 0 0 5px #10192366;
+}
+.sim-academy #touch-controls .sim-stick-direction {
+  display: none;
+}
+.sim-academy.touch-mode .coaching,
+.sim-academy:has(#sticks.expanded-sticks) .coaching {
+  bottom: 180px;
+  width: min(560px, calc(100% - 24px));
+}
+.sim-academy.touch-mode .sim-drone-response[data-display='compact'] {
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: 76px;
+}
+.sim-academy:has(#sticks.expanded-sticks) .sim-drone-response[data-display='compact'] {
+  left: 50%;
+  transform: translateX(-50%);
+}
+.sim-academy.touch-mode .sim-drone-response[data-display='learning'] {
+  bottom: 152px;
+}
+@media (max-width: 760px) {
+  .sim-academy .coaching {
+    bottom: 122px;
+    width: calc(100% - 24px);
+    padding: 5px 8px;
+  }
+  .sim-academy .coaching p {
+    font-size: 11px;
+  }
+  .sim-academy #touch-controls .touch-stick {
+    width: 96px;
+    height: 96px;
+  }
+  .sim-academy.touch-mode .sim-drone-response[data-display='compact'] {
+    width: 112px;
+    height: 84px;
+  }
+  .sim-academy #sticks.expanded-sticks {
+    inset-inline: 46px;
+  }
+  .sim-academy #sticks.expanded-sticks > div {
+    width: 64px;
+    height: 64px;
+  }
+  .sim-academy:has(#sticks.expanded-sticks) .sim-drone-response[data-display='compact'] {
+    width: 100px;
+    height: 76px;
+  }
+}

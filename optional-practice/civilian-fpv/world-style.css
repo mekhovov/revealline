@@ -3361,3 +3361,269 @@ html:not([data-fpv-immersive])
     font-size: 9px;
   }
 }
+
+/* A small peripheral HUD leaves the route and horizon clear at every width. */
+.sim-worlds #world-viewport .sim-drone-response[data-display='compact'] {
+  inset: auto auto 12px 12px;
+  width: 128px;
+  height: 96px;
+  max-height: none;
+  overflow: visible;
+  pointer-events: none;
+}
+.sim-worlds #world-viewport .sim-drone-response[data-display='compact'][data-scale='large'] {
+  width: 154px;
+  height: 112px;
+}
+.sim-worlds #world-viewport .sim-drone-response[data-display='compact'] svg {
+  max-height: none;
+}
+.sim-worlds #world-viewport .sim-drone-response[data-display='learning'] {
+  inset: auto auto 12px 12px;
+  max-height: min(300px, calc(100% - 120px));
+}
+.sim-worlds #world-viewport .world-touch.compact-sticks {
+  inset: auto 12px 28px auto;
+  gap: 14px;
+}
+.sim-worlds #world-viewport .world-touch.compact-sticks .touch-stick {
+  width: 50px;
+  height: 50px;
+  background-color: #10192366;
+  box-shadow: inset 0 0 0 3px #10192366;
+}
+.sim-worlds #world-viewport .world-touch.compact-sticks .touch-stick i {
+  width: 8px;
+  height: 8px;
+  margin: -4px;
+}
+.sim-worlds #world-viewport .world-touch:is(.compact-sticks, .touch-active) .sim-stick-direction {
+  display: none;
+}
+.sim-worlds #world-viewport .world-touch .touch-stick > span {
+  top: calc(100% + 4px);
+  padding: 0;
+  background: transparent;
+  font-size: 10px;
+  text-shadow: 0 1px 3px #000;
+}
+.sim-worlds #world-viewport .world-touch.compact-sticks .touch-stick > span {
+  width: 60px;
+  white-space: normal;
+  text-align: center;
+  font-size: 9px;
+  line-height: 1.1;
+}
+.sim-worlds #world-viewport .world-touch:not(.compact-sticks):not(.touch-active) {
+  inset: auto 56px 40px;
+  gap: 0;
+}
+.sim-worlds #world-viewport .world-touch:not(.compact-sticks):not(.touch-active) .touch-stick {
+  width: 80px;
+  height: 80px;
+}
+.sim-worlds
+  #world-viewport
+  .world-touch:not(.compact-sticks):not(.touch-active)
+  .touch-stick
+  > span {
+  top: calc(100% + 22px);
+}
+.sim-worlds #world-viewport .world-touch.touch-active {
+  inset: auto 14px 28px;
+}
+.sim-worlds #world-viewport .world-touch.touch-active .touch-stick {
+  width: 108px;
+  height: 108px;
+}
+.sim-worlds
+  #world-viewport:has(.world-touch:not(.compact-sticks))
+  .sim-drone-response[data-display='compact'] {
+  left: 50%;
+  transform: translateX(-50%);
+}
+.sim-worlds
+  #world-viewport:has(.world-touch:not(.compact-sticks))
+  .sim-drone-response[data-display='learning'] {
+  bottom: 154px;
+  max-height: min(240px, calc(100% - 250px));
+}
+.sim-worlds #world-viewport .flight-coaching {
+  left: 50%;
+  bottom: 12px;
+  width: min(480px, calc(100% - 310px));
+  max-width: none;
+  padding: 5px 9px;
+  transform: translateX(-50%);
+  border: 0;
+  background: #10192399;
+}
+.sim-worlds #world-viewport:has(.world-touch:not(.compact-sticks)) .flight-coaching {
+  bottom: 150px;
+  width: min(480px, calc(100% - 24px));
+}
+.sim-worlds #world-viewport .beginner-coach[data-stage='live'] {
+  inset: 10px auto auto 10px;
+  width: min(420px, calc(100% - 220px));
+  max-height: none;
+  overflow: visible;
+}
+.sim-worlds #world-viewport .beginner-coach[data-stage='live'] .coach-card {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 3px 12px;
+  padding: 6px 8px 7px 10px;
+  border: 0;
+  border-left: 2px solid var(--fk-cyan);
+  background: #101923b3;
+  box-shadow: none;
+  pointer-events: none;
+}
+.sim-worlds #world-viewport .beginner-coach[data-stage='live'] .coach-heading {
+  display: contents;
+}
+.sim-worlds #world-viewport .beginner-coach[data-stage='live'] .coach-heading > div {
+  align-self: end;
+  min-width: 0;
+}
+.sim-worlds #world-viewport .beginner-coach[data-stage='live'] .coach-heading h3 {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.3;
+}
+.sim-worlds #world-viewport .beginner-coach[data-stage='live'] .coach-explain {
+  grid-column: 2;
+  grid-row: 1 / 3;
+  align-self: center;
+  min-height: 44px;
+  min-width: 44px;
+  padding: 6px 9px;
+  font-size: 12px;
+  pointer-events: auto;
+}
+.sim-worlds
+  #world-viewport
+  .beginner-coach[data-stage='live']
+  :is(.coach-eyebrow, .coach-progress, .coach-instruction, .coach-telemetry) {
+  display: none;
+}
+.sim-worlds #world-viewport .beginner-coach[data-stage='live'] .coach-target {
+  grid-column: 1;
+  margin: 0;
+  font-size: 11px;
+  line-height: 1.35;
+}
+.sim-worlds #world-viewport .beginner-coach[data-stage='live'] .coach-hold {
+  grid-column: 1 / -1;
+  margin: 3px 0 0;
+  height: 3px;
+}
+.sim-worlds #world-viewport .beginner-coach[data-stage='live'] .coach-live-hint {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+}
+.sim-worlds .flight-dialog .coach-heading .coach-exit {
+  min-width: 44px;
+  min-height: 44px;
+}
+.sim-worlds .coach-lab-source-hint {
+  color: var(--fk-muted);
+  font-size: 12px;
+  line-height: 1.5;
+}
+.sim-worlds .beginner-coach[data-stage='guide'] .coach-lab-drawing {
+  min-height: 0;
+}
+.sim-worlds .beginner-coach[data-stage='guide'] .coach-lab-drawing .sim-response-drawing {
+  width: min(100%, 396px);
+  height: auto;
+  max-height: 360px;
+}
+.sim-worlds .coach-lab-touch-controls {
+  margin-top: 10px;
+  border-top: 1px solid var(--fk-line);
+}
+.sim-worlds .coach-lab-touch-controls > summary {
+  min-height: 44px;
+  box-sizing: border-box;
+  padding: 12px 0;
+  color: var(--fk-cyan);
+  font-size: 13px;
+  cursor: pointer;
+}
+@media (max-width: 760px) {
+  .sim-worlds #world-viewport .beginner-coach[data-stage='live'] {
+    inset: 8px 8px auto;
+    width: auto;
+  }
+  .sim-worlds #world-viewport .flight-instruments {
+    inset: auto auto 8px 50%;
+    transform: translateX(-50%);
+    gap: 6px;
+    padding: 2px 5px;
+    border: 0;
+    background: #10192366;
+    font-size: 9px;
+    white-space: nowrap;
+  }
+  .sim-worlds #world-viewport .flight-coaching {
+    bottom: 154px;
+    width: calc(100% - 24px);
+  }
+  .sim-worlds #world-viewport .sim-drone-response[data-display='compact'] {
+    bottom: 36px;
+  }
+  .sim-worlds #world-viewport .world-touch.compact-sticks,
+  .sim-worlds #world-viewport .world-touch.touch-active {
+    bottom: 52px;
+  }
+  .sim-worlds #world-viewport .world-touch.touch-active .touch-stick {
+    width: 96px;
+    height: 96px;
+  }
+  .sim-worlds #world-viewport .world-touch:not(.compact-sticks):not(.touch-active) {
+    inset-inline: 46px;
+    bottom: 64px;
+  }
+  .sim-worlds #world-viewport .world-touch:not(.compact-sticks):not(.touch-active) .touch-stick {
+    width: 64px;
+    height: 64px;
+  }
+  .sim-worlds
+    #world-viewport:has(.world-touch:not(.compact-sticks):not(.touch-active))
+    .sim-drone-response[data-display='compact'] {
+    bottom: 54px;
+    width: 100px;
+    height: 76px;
+  }
+  .sim-worlds
+    #world-viewport:has(.world-touch.touch-active)
+    .sim-drone-response[data-display='compact'] {
+    bottom: 53px;
+    width: 112px;
+    height: 84px;
+  }
+  .sim-worlds #world-viewport .sim-drone-response[data-display='compact'][data-scale='large'] {
+    width: 140px;
+    height: 104px;
+  }
+}
+@media (max-width: 380px) {
+  .sim-worlds #world-viewport .world-touch.touch-active {
+    inset-inline: 10px;
+  }
+  .sim-worlds #world-viewport .world-touch.touch-active .touch-stick {
+    width: 88px;
+    height: 88px;
+  }
+  .sim-worlds
+    #world-viewport:has(.world-touch.touch-active)
+    .sim-drone-response[data-display='compact'] {
+    width: 100px;
+    height: 76px;
+  }
+}
