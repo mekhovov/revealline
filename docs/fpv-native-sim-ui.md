@@ -80,3 +80,10 @@ The original package limits remain 64 files / 8 MiB for Academy and 96 files /
 16 MiB for World Studio. Runtime and editable source closures are checked.
 Publication remains subject to exact-head protected checks, stack requirements
 and the separately tracked public site-size repair in `fpv-continuous-delivery.md`.
+
+The publication dependency repair is in parent PR #901 at `72cb7b8e42a9`.
+Besides the renderer boundary, it moves the add-on vendor pins to World Studio
+and makes admission honor each package's existing file and byte limits. The
+final frozen candidate at `8d34dc140643` passed admission for all three optional
+packages, byte-identical double builds and committed-input verification. The
+redesign is published separately as PR #904 in native stack #902.
