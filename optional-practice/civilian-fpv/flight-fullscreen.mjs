@@ -161,6 +161,10 @@ export function mountFlightFullscreen({
   return {
     active: () => active,
     refresh,
+    closeControls() {
+      toolsOpen = false;
+      if (active) paint();
+    },
     exit,
     snapshot: () => ({ active, mode: active ? (native ? 'native' : 'window') : 'none', toolsOpen }),
     dispose() {
