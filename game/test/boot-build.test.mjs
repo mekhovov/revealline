@@ -5,12 +5,14 @@ import path from 'node:path';
 import os from 'node:os';
 import { createHash } from 'node:crypto';
 import { buildProject, PUBLIC_SECURITY_HEADERS } from '../../scripts/game-cli.mjs';
+import { LAUNCHER_NAVIGATION_FILES } from '../../scripts/offline-launcher.mjs';
 import { iosHTMLPolicy, IOS_CSP, stageNative, verifySite } from '../../scripts/native-cli.mjs';
 import { loadNativeSite } from '../../platforms/desktop/resources.mjs';
 
 const sourceRoot = new URL('../', import.meta.url);
 const digest = (bytes) => createHash('sha256').update(bytes).digest('hex');
 const playerPresentationFiles = [
+  'game/ui/win-picture.css',
   'game/ui/handheld-play.css',
   'game/ui/field-kit-fonts.css',
   'game/ui/brand-identity.css',
@@ -133,6 +135,8 @@ test('build rewrites native root paths, preserves extras and includes boot bytes
     'game/offline.mjs',
     'game/offline/app.html',
     'game/offline/app-worker.template.js',
+    'game/offline/navigation.css',
+    ...LAUNCHER_NAVIGATION_FILES.map((file) => `game/${file}`),
     'game/downloads.css',
     'game/installed-app.mjs',
     'game/edition-context.mjs',
@@ -143,8 +147,14 @@ test('build rewrites native root paths, preserves extras and includes boot bytes
     'game/vendor/i18next-26.4.2.min.js',
     'game/locales/en/common.json',
     'game/locales/en/interface.json',
+    'game/locales/en/controllerEditor.json',
+    'game/locales/en/errors.json',
+    'game/locales/en/gameplay.json',
     'game/locales/uk/common.json',
     'game/locales/uk/interface.json',
+    'game/locales/uk/controllerEditor.json',
+    'game/locales/uk/errors.json',
+    'game/locales/uk/gameplay.json',
     'game/platform.mjs',
     'game/offline/service-worker.template.js',
     'site/index.html',

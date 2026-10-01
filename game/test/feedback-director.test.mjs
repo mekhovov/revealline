@@ -119,12 +119,16 @@ test('same events deduplicate within a run but not across boards; victory supers
   director.events(events, b, {}, { board: 1 });
   assert.equal(sound.voices.size, count * 2);
   director.reset();
+  const victories = [];
+  sound.event = (event) => victories.push(event);
   director.events(
     [...events, { type: 'cut.closed', tick: 1 }, { type: 'run.completed', tick: 1, status: 'won' }],
     a,
     {},
   );
-  assert.equal(sound.voices.size, 1);
+  assert.equal(sound.voices.size, 0);
+  assert.equal(victories.length, 1);
+  assert.equal(victories[0].type, 'run.completed');
 });
 test('enemy movement survives repeated render frames and stops on freeze and pause', () => {
   const { director, sound } = harness(),
