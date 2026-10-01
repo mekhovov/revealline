@@ -2,9 +2,39 @@ import * as THREE from './vendor/three.module.js';
 import { buildWorldVisuals, buildDroneVisual, themeForCourse } from './world-visuals.mjs';
 
 const QUALITIES = Object.freeze({
-  low: { ratio: 1, shadows: false, shadowSize: 512 },
-  balanced: { ratio: 1.5, shadows: true, shadowSize: 1024 },
-  high: { ratio: 2, shadows: true, shadowSize: 2048 },
+  low: {
+    ratio: 1,
+    shadows: false,
+    shadowSize: 512,
+    shadowType: THREE.BasicShadowMap,
+    exposure: 1.02,
+    ambient: 0.9,
+    key: 0.86,
+    fill: 0,
+    detail: 0,
+  },
+  balanced: {
+    ratio: 1.5,
+    shadows: true,
+    shadowSize: 1024,
+    shadowType: THREE.PCFShadowMap,
+    exposure: 1.08,
+    ambient: 1,
+    key: 1,
+    fill: 0.24,
+    detail: 1,
+  },
+  high: {
+    ratio: 2,
+    shadows: true,
+    shadowSize: 2048,
+    shadowType: THREE.PCFSoftShadowMap,
+    exposure: 1.13,
+    ambient: 1.12,
+    key: 1.08,
+    fill: 0.58,
+    detail: 2,
+  },
 });
 const MAP_LIMIT = 16 * 1024 * 1024;
 const safePath = (value) =>
@@ -36,7 +66,7 @@ export function createFlightRenderer({
   }
   renderer.outputColorSpace = THREE.SRGBColorSpace;
   renderer.toneMapping = THREE.ACESFilmicToneMapping;
-  renderer.toneMappingExposure = 1.08;
+  renderer.toneMappingExposure = QUALITIES.balanced.exposure;
   renderer.shadowMap.type = THREE.PCFShadowMap;
   const scene = new THREE.Scene(),
     camera = new THREE.PerspectiveCamera(82, 1, 0.035, 300);
@@ -51,13 +81,25 @@ export function createFlightRenderer({
   scene.add(world, goals, aircraft, actors, projectiles, imported, editHandles);
   const hemisphere = new THREE.HemisphereLight(0xe5f3ff, 0x3d504a, 2.1);
   const sunlight = new THREE.DirectionalLight(0xffefd8, 3.1);
+  const fillLight = new THREE.DirectionalLight(0x9cc7e8, 0.24);
+  const rimLight = new THREE.DirectionalLight(0xffbf87, 0);
   sunlight.position.set(-24, 36, 15);
   sunlight.castShadow = true;
   sunlight.shadow.bias = -0.0002;
   sunlight.shadow.normalBias = 0.04;
   sunlight.shadow.camera.near = 0.1;
   sunlight.shadow.camera.far = 160;
-  scene.add(hemisphere, sunlight, sunlight.target);
+  fillLight.position.set(26, 18, -20);
+  rimLight.position.set(-10, 10, -28);
+  scene.add(
+    hemisphere,
+    sunlight,
+    sunlight.target,
+    fillLight,
+    fillLight.target,
+    rimLight,
+    rimLight.target,
+  );
   let course = null,
     mode = 'self-level',
     view = 'fpv',
@@ -207,12 +249,35 @@ export function createFlightRenderer({
     const selected = QUALITIES[value];
     renderer.setPixelRatio(Math.min(win.devicePixelRatio || 1, selected.ratio));
     renderer.shadowMap.enabled = selected.shadows;
+    renderer.shadowMap.type = selected.shadowType;
+    renderer.toneMappingExposure = selected.exposure;
     sunlight.castShadow = selected.shadows;
     if (sunlight.shadow.mapSize.x !== selected.shadowSize) {
       releaseShadow();
       sunlight.shadow.mapSize.set(selected.shadowSize, selected.shadowSize);
     }
     renderer.shadowMap.needsUpdate = true;
+    const visuals = world.userData.visuals;
+    if (visuals) {
+      const baseAmbient = visuals.indoor ? 2.5 : 2.1;
+      const baseSun = visuals.indoor ? 2.0 : 3.1;
+      hemisphere.intensity = baseAmbient * selected.ambient;
+      sunlight.intensity = baseSun * selected.key;
+      fillLight.intensity = selected.fill * (visuals.indoor ? 1.4 : 1);
+      rimLight.intensity = value === 'high' ? (visuals.indoor ? 0.34 : 0.52) : 0;
+      fillLight.target.position.set(visuals.center[0], 0, visuals.center[1]);
+      rimLight.target.position.set(visuals.center[0], 1.2, visuals.center[1]);
+      if (scene.fog) {
+        scene.fog.near = visuals.indoor ? 42 : 68;
+        scene.fog.far = (visuals.indoor ? 145 : 235) * (value === 'low' ? 0.86 : value === 'high' ? 1.12 : 1);
+      }
+      const details = visuals.qualityDetails;
+      if (details) {
+        details.balanced.visible = selected.detail >= 1;
+        details.high.visible = selected.detail >= 2;
+      }
+    }
+    if (droneVisual) setDrone(droneKind);
     lastWidth = lastHeight = 0;
   }
   function setDrone(value) {
@@ -220,7 +285,7 @@ export function createFlightRenderer({
       throw new TypeError('Unknown drone appearance');
     droneKind = value;
     releaseGroup(aircraft);
-    droneVisual = buildDroneVisual({ parent: aircraft, mesh, material, box, kind: value });
+    droneVisual = buildDroneVisual({ parent: aircraft, mesh, material, box, kind: value, quality });
   }
   function lineVolume(step, index) {
     const group = new THREE.Group();
@@ -371,9 +436,12 @@ export function createFlightRenderer({
     sceneryFallback = surroundings.backdrop;
     obstacleMap = surroundings.obstacleMap;
     scene.background = new THREE.Color(surroundings.indoor ? theme.wall : theme.sky);
-    scene.fog = new THREE.Fog(theme.fog, surroundings.indoor ? 55 : 85, 210);
-    hemisphere.intensity = surroundings.indoor ? 2.5 : 2.1;
-    sunlight.intensity = surroundings.indoor ? 2.0 : 3.1;
+    scene.fog = new THREE.Fog(theme.fog, surroundings.indoor ? 42 : 68, 210);
+    world.userData.visuals = {
+      indoor: surroundings.indoor,
+      center: surroundings.center,
+      qualityDetails: surroundings.qualityDetails,
+    };
     const extent = Math.max(surroundings.width, surroundings.depth) / 2 + 5;
     Object.assign(sunlight.shadow.camera, {
       left: -extent,
@@ -384,6 +452,9 @@ export function createFlightRenderer({
     sunlight.shadow.camera.updateProjectionMatrix();
     sunlight.target.position.set(surroundings.center[0], 0, surroundings.center[1]);
     sunlight.position.set(surroundings.center[0] - 24, 36, surroundings.center[1] + 15);
+    fillLight.position.set(surroundings.center[0] + 26, 18, surroundings.center[1] - 20);
+    rimLight.position.set(surroundings.center[0] - 10, 10, surroundings.center[1] - 28);
+    setQuality(quality);
     for (const [letter, x, z] of [
       ['N', surroundings.center[0], course.bounds.min.z / 1000],
       ['S', surroundings.center[0], course.bounds.max.z / 1000],
@@ -437,6 +508,7 @@ export function createFlightRenderer({
         material,
         box,
         kind: role === 'rival' ? 'racer' : 'utility',
+        quality: quality === 'high' ? 'balanced' : 'low',
       });
       visual.tint.color.setHex(friendly ? 0x77ebe0 : 0xe6a16b);
     } else if (actor.type === 'vehicle') {
