@@ -690,7 +690,7 @@ export function mountWorldApp({
     sectorReference = null,
     sectorReferenceId = null,
     sectorReferenceStatus = 'none',
-    sectorLookup = null;
+    sectorLookup = null,
     lastRadioDiscovery = -Infinity;
   const learningById = new Map(BEGINNER_LESSONS.map((lesson) => [lesson.id, lesson]));
   const sessionLearningComplete = new Set();
