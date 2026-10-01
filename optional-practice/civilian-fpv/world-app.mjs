@@ -56,6 +56,7 @@ import { preparePracticeOffline } from './offline.mjs';
 import { dataIdentity } from '../../game/data-json.mjs';
 import { THEME_PROFILES, resolveThemeExperience } from './world-themes.mjs';
 import { mountWorldEditor } from './world-editor.mjs';
+import { mountSimPresentation } from './sim-presentation.mjs';
 import { createWorldAudio } from './world-audio.mjs';
 import {
   evaluateWorldResult,
@@ -69,6 +70,35 @@ import { mountDroneHangar } from './world-hangar.mjs';
 import { mountActorEditor } from './world-actor-editor.mjs';
 
 const COPY_EN = {
+  settings: 'Settings',
+  startFlying: 'Start flying',
+  chooseWorld: 'Choose a world',
+  connectRadio: 'Set up your radio',
+  simEdition: 'SIMULATOR EDITION',
+  allOpen: 'All open. Your pace.',
+  flightDestinations: 'FLIGHT DESTINATIONS',
+  chooseWorldHelp: 'Explore, race or test your precision.',
+  filterChallenges: 'Search & filters',
+  installedWorlds: 'Installed worlds',
+  recordedFlights: 'Recorded flights & recovery',
+  flightOptions: 'Flight options',
+  backToLobby: 'Back to lobby',
+  flightMode: 'Flight mode',
+  controlSource: 'Controls',
+  cameraLabel: 'Camera',
+  aircraftLabel: 'Aircraft',
+  graphicsLabel: 'Graphics',
+  sticksLabel: 'Live sticks',
+  radioSetup: 'Radio setup',
+  makeItYours: 'MAKE IT YOURS',
+  settingsHelp: 'Your controls and flight preferences carry across worlds and playlists.',
+  textStyle: 'Text style',
+  gameType: 'Game typography',
+  plainType: 'Plain text',
+  menuMotion: 'Menu motion',
+  systemMotion: 'Follow device preference',
+  reducedMotion: 'Reduced motion',
+  settingsPaused: 'Changing settings keeps your flight paused. Resume when you are ready.',
   firstFlight: 'YOUR FIRST FLIGHT',
   firstFlightTitle: 'Watch a hover. Then try it yourself.',
   firstFlightHelp:
@@ -82,13 +112,13 @@ const COPY_EN = {
   flyThis: 'Fly this challenge',
   inspectDrone: 'Inspect drone',
   hangarHelp: 'Drag to rotate. Scroll to zoom. Every appearance uses the same flight handling.',
-  explore: 'Explore',
+  explore: 'Fly',
   playlists: 'My playlists',
-  creator: 'Create',
-  packs: 'World packs',
-  eyebrow: 'YOUR NEXT FLIGHT',
-  heading: 'A world worth flying.',
-  intro: 'Find your line. Build a playlist. Every challenge is open.',
+  creator: 'Workshop',
+  packs: 'Library',
+  eyebrow: 'THE WORLD IS YOUR FLIGHT LINE',
+  heading: 'Find your line.',
+  intro: 'From your first hover to your next perfect lap. Pick a world and make it yours.',
   challenges: 'challenges',
   worlds: 'worlds',
   allDifficulty: 'All difficulties',
@@ -177,6 +207,35 @@ const COPY_EN = {
   keys: 'W/S pitch · A/D roll · Q/E yaw · ↑/↓ throttle · P pause · Space fire',
 };
 const COPY_UK = {
+  settings: 'Налаштування',
+  startFlying: 'Почати політ',
+  chooseWorld: 'Виберіть світ',
+  connectRadio: 'Налаштувати пульт',
+  simEdition: 'ЛЬОТНИЙ СИМУЛЯТОР',
+  allOpen: 'Усе відкрито. Ваш темп.',
+  flightDestinations: 'НАПРЯМКИ ПОЛЬОТУ',
+  chooseWorldHelp: 'Досліджуйте, змагайтеся й удосконалюйте точність.',
+  filterChallenges: 'Пошук і фільтри',
+  installedWorlds: 'Установлені світи',
+  recordedFlights: 'Записи польотів і відновлення',
+  flightOptions: 'Параметри польоту',
+  backToLobby: 'До меню',
+  flightMode: 'Режим польоту',
+  controlSource: 'Керування',
+  cameraLabel: 'Камера',
+  aircraftLabel: 'Квадрокоптер',
+  graphicsLabel: 'Графіка',
+  sticksLabel: 'Відображення стіків',
+  radioSetup: 'Налаштувати пульт',
+  makeItYours: 'НАЛАШТУЙТЕ ПІД СЕБЕ',
+  settingsHelp: 'Керування й параметри польоту зберігаються для всіх світів і добірок.',
+  textStyle: 'Стиль тексту',
+  gameType: 'Ігровий шрифт',
+  plainType: 'Звичайний шрифт',
+  menuMotion: 'Анімація меню',
+  systemMotion: 'За налаштуванням пристрою',
+  reducedMotion: 'Менше руху',
+  settingsPaused: 'Зміна налаштувань залишає політ на паузі. Продовжте, коли будете готові.',
   firstFlight: 'ВАШ ПЕРШИЙ ПОЛІТ',
   firstFlightTitle: 'Подивіться зависання. Потім спробуйте самі.',
   firstFlightHelp:
@@ -188,13 +247,13 @@ const COPY_UK = {
   watchDemo: 'Переглянути демонстрацію',
   playbackSpeed: 'Швидкість відтворення',
   flyThis: 'Виконати це завдання',
-  explore: 'Дослідження',
+  explore: 'Політ',
   playlists: 'Мої добірки',
-  creator: 'Створення',
-  packs: 'Пакунки світів',
-  eyebrow: 'ВАШ НАСТУПНИЙ ПОЛІТ',
-  heading: 'Світ, вартий польоту.',
-  intro: 'Знайдіть свій маршрут. Створіть добірку. Усі завдання відкриті.',
+  creator: 'Майстерня',
+  packs: 'Бібліотека',
+  eyebrow: 'СВІТ — ВАШ ЛЬОТНИЙ МАЙДАНЧИК',
+  heading: 'Знайдіть свій маршрут.',
+  intro: 'Від першого зависання до ідеального кола. Виберіть світ і летіть у своєму темпі.',
   challenges: 'завдань',
   worlds: 'світів',
   allDifficulty: 'Будь-яка складність',
@@ -598,6 +657,8 @@ export function mountWorldApp({
     sectorReferenceId = null,
     sectorReferenceStatus = 'none',
     sectorLookup = null;
+    lastRadioDiscovery = -Infinity;
+  let selectedWorld = null;
   const sectors = createSectorTracker();
   let storage;
   try {
@@ -618,6 +679,8 @@ export function mountWorldApp({
     'flight-stick-display',
     'world-fov',
     'world-tilt',
+    'sim-text-face',
+    'sim-motion',
   ];
   try {
     const saved = JSON.parse(storage?.getItem('revealline.fpv.world-settings.v1') ?? '{}');
@@ -747,8 +810,10 @@ export function mountWorldApp({
     return b;
   };
   const audio = createWorldAudio({ window: win, storage });
+  const presentation = mountSimPresentation({ root: doc, window: win, enabled: audio.enabled() });
   const soundButton = button('', async () => {
-    await audio.setEnabled(!audio.enabled());
+    const enabled = !audio.enabled();
+    await Promise.all([audio.setEnabled(enabled), presentation.setSoundEnabled(enabled)]);
     updateSoundLabel();
   });
   soundButton.id = 'world-sound';
@@ -758,6 +823,12 @@ export function mountWorldApp({
       ? txt('Sound on', 'Звук увімкнено')
       : txt('Sound off', 'Звук вимкнено');
     soundButton.setAttribute('aria-pressed', String(audio.enabled()));
+    soundButton.dataset.simIcon = audio.enabled() ? 'sound' : 'mute';
+    $('lobby-sound').textContent = soundButton.textContent;
+    $('lobby-sound').setAttribute('aria-label', soundButton.textContent);
+    $('lobby-sound').setAttribute('aria-pressed', String(audio.enabled()));
+    $('lobby-sound').dataset.simIcon = soundButton.dataset.simIcon;
+    presentation.refresh();
   }
   updateSoundLabel();
   const folderLabel = el('label', undefined, 'file-button'),
@@ -815,10 +886,21 @@ export function mountWorldApp({
     a.remove();
     win.setTimeout(() => win.URL.revokeObjectURL(url), 30000);
   }
-  function showTab(id) {
+  function showTab(id, focus = true) {
+    if (!['explore', 'playlists', 'creator', 'packs'].includes(id)) return;
     for (const panel of doc.querySelectorAll('.tab-panel')) panel.hidden = panel.id !== id;
-    for (const b of doc.querySelectorAll('[data-tab]'))
+    for (const b of doc.querySelectorAll('[data-tab]')) {
       b.classList.toggle('selected', b.dataset.tab === id);
+      if (b.dataset.tab === id) b.setAttribute('aria-current', 'page');
+      else b.removeAttribute('aria-current');
+    }
+    if (focus && win.location.hash !== `#${id}`) win.history.replaceState(null, '', `#${id}`);
+    if (focus) {
+      const heading = $(id).querySelector('h1');
+      heading?.setAttribute('tabindex', '-1');
+      heading?.focus({ preventScroll: true });
+      win.scrollTo(0, 0);
+    }
     if (id === 'creator') ensureSpatialEditor();
   }
   function paintLanguage() {
@@ -830,6 +912,12 @@ export function mountWorldApp({
     immersive.refresh();
     updateSoundLabel();
     ghostButton.textContent = txt('Show best line', 'Показати найкращий маршрут');
+    for (const id of ['flight-mode', 'first-flight-mode']) {
+      $(id).options[0].textContent = txt('Self-level', 'Самовирівнювання');
+      $(id).options[1].textContent = 'Acro';
+    }
+    presentation.refresh();
+    paintLoadout();
   }
   function ensureSpatialEditor() {
     if (!editor || !$('world-editor-canvas')) return;
@@ -1154,11 +1242,62 @@ export function mountWorldApp({
       if (!groups.has(entry.world)) groups.set(entry.world, []);
       groups.get(entry.world).push(entry);
     }
+    const shelf = el('div', undefined, 'world-shelf');
+    shelf.setAttribute('aria-label', txt('Choose a world', 'Виберіть світ'));
+    if (!groups.has(selectedWorld)) selectedWorld = groups.keys().next().value ?? null;
     for (const [id, group] of groups) {
+      const world = FLIGHT_WORLDS.find((w) => w.id === id);
+      const choice = button(
+        '',
+        () => {
+          selectedWorld = id;
+          renderCatalogue();
+          const restored = [...$('world-grid').querySelectorAll('[data-world]')].find(
+            (n) => n.dataset.world === id,
+          );
+          restored?.focus({ preventScroll: true });
+          if (win.innerWidth < 900)
+            $('world-grid').querySelector('.world-card')?.scrollIntoView({ block: 'start' });
+        },
+        'world-choice',
+      );
+      choice.dataset.world = id;
+      choice.setAttribute('aria-pressed', String(id === selectedWorld));
+      choice.setAttribute('aria-controls', 'selected-world-challenges');
+      const map = el('div', undefined, 'world-mini-map');
+      map.setAttribute('aria-hidden', 'true');
+      map.append(
+        routeThumbnail(
+          doc,
+          group[0].course,
+          WORLD_THEMES.find((t) => t.id === group[0].theme)?.color ?? '#78dce8',
+        ),
+      );
+      const copy = el('span', undefined, 'world-choice-copy');
+      copy.append(
+        el(
+          'strong',
+          world
+            ? localized(world.title)
+            : (installed.find((p) => p.id === group[0].projectId)?.project.title ?? id),
+        ),
+        el(
+          'small',
+          `${group.length} ${txt('flights', 'польотів')} · ${group.filter((e) => complete.has(keyOf(e))).length} ✓`,
+        ),
+      );
+      choice.append(map, copy);
+      shelf.append(choice);
+    }
+    $('world-grid').append(shelf);
+    for (const [id, group] of groups) {
+      if (id !== selectedWorld) continue;
+
       const world = FLIGHT_WORLDS.find((w) => w.id === id),
         card = el('article', undefined, 'world-card'),
         cover = el('div', undefined, 'world-cover'),
         color = WORLD_THEMES.find((t) => t.id === group[0].theme)?.color ?? '#c8eb93';
+      card.id = 'selected-world-challenges';
       cover.append(routeThumbnail(doc, group[0].course, color));
       const title = el('div', undefined, 'cover-title');
       title.append(
@@ -1254,6 +1393,7 @@ export function mountWorldApp({
       );
       $('world-grid').append(card);
     }
+    presentation.refresh();
   }
   function playlistValue() {
     const title = $('playlist-title').value.trim();
@@ -1853,6 +1993,7 @@ export function mountWorldApp({
     if (fire) fireReleaseRequired = true;
     fire = false;
     audio.pause();
+    presentation.resume();
     input.enable(false);
     input.clear();
     if (freezeRadio) radio.freeze('paused');
@@ -2008,6 +2149,11 @@ export function mountWorldApp({
     details.append(table);
     return details;
   }
+  function paintLoadout() {
+    $('flight-loadout').textContent = ['flight-mode', 'flight-source', 'flight-camera']
+      .map((id) => $(id).selectedOptions[0]?.textContent ?? '')
+      .join(' · ');
+  }
   function updateHUD(state) {
     updateSectorHUD();
     const target = current.course.steps[$('flight-mode').value][state.step];
@@ -2156,6 +2302,17 @@ export function mountWorldApp({
               ),
           ),
         );
+      const resultActions = el('div', undefined, 'button-row');
+      resultActions.append(
+        button(txt('Fly again', 'Летіти ще раз'), () => $('world-retry').click(), 'primary'),
+      );
+      if (!$('world-next').disabled)
+        resultActions.append(
+          button(txt('Next flight', 'Наступний політ'), () => $('world-next').click(), 'primary'),
+        );
+      resultActions.append(button(txt('Back to lobby', 'До меню'), () => closeFlight()));
+      $('result-panel').append(resultActions);
+      presentation.resume();
       $('result-panel').append(
         button(txt('Watch verified flight', 'Переглянути перевірений політ'), () =>
           startFlight(entry, { preview: true, replayProof: proof }),
@@ -2167,6 +2324,7 @@ export function mountWorldApp({
     }
   }
   function finishPlayback() {
+    presentation.resume();
     finished = true;
     input.enable(false);
     fire = false;
@@ -2186,7 +2344,11 @@ export function mountWorldApp({
           'Перегляд не змінює ваші результати, медалі чи поступ у добірці.',
         ),
       ),
-      button(txt('Fly this challenge', 'Виконати це завдання'), () => startFlight(current)),
+      button(
+        txt('Fly this challenge', 'Виконати це завдання'),
+        () => startFlight(current),
+        'primary',
+      ),
       button(txt('Watch again', 'Переглянути ще раз'), () =>
         startFlight(current, {
           preview: true,
@@ -2238,7 +2400,9 @@ export function mountWorldApp({
       radio.status().verified &&
       doc.visibilityState !== 'hidden' &&
       (!doc.hasFocus || doc.hasFocus()) &&
-      !doc.querySelector('dialog[open]:not(#flight-dialog)')
+      !doc.querySelector('dialog[open]:not(#flight-dialog)') &&
+      $('flight-dialog').dataset.optionsOpen !== 'true' &&
+      $('flight-dialog').dataset.immersiveControls !== 'true'
     ) {
       radio.poll();
       if (radio.status().active && flight) {
@@ -2285,6 +2449,7 @@ export function mountWorldApp({
       }
     }
     const state = flight.snapshot();
+    if (state.status === 'active') presentation.pause();
     audio.update(state, { active: state.status === 'active' });
     renderer?.draw?.(state, {
       cameraMode: $('flight-camera').value,
@@ -2356,6 +2521,7 @@ export function mountWorldApp({
         : localized(WORLD_THEMES.find((t) => t.id === entry.theme)?.title) || entry.world;
     $('flight-brief').textContent = entry.course.locales[locale].brief;
     $('flight-status').textContent = txt('Preparing scene…', 'Підготовка сцени…');
+    paintLoadout();
     if (!$('flight-dialog').open) $('flight-dialog').showModal();
     if (!renderer)
       renderer = rendererFactory({
@@ -2434,6 +2600,7 @@ export function mountWorldApp({
       });
     }
     renderer.setCourse(entry.course, $('flight-mode').value);
+    paintLoadout();
     audio.setCourse(entry.course);
     renderer.setQuality($('flight-quality').value);
     renderer.setDrone($('drone-look').value);
@@ -2504,6 +2671,14 @@ export function mountWorldApp({
     flight = null;
     current = null;
     $('flight-dialog').close();
+    replayProof = null;
+    $('flight-mode').disabled =
+      $('flight-source').disabled =
+      $('radio-setup-button').disabled =
+        false;
+    presentation.resume();
+    renderCatalogue();
+    $('world-grid').querySelector('[aria-pressed="true"]')?.focus({ preventScroll: true });
     renderPacks();
   }
   async function restoreProofs(file) {
@@ -2553,6 +2728,58 @@ export function mountWorldApp({
       ),
     );
   }
+
+  const flightControls = $('sim-flight-controls');
+  const applyAppearance = () => {
+    doc.body.dataset.textFace = $('sim-text-face').value;
+    doc.body.dataset.effects = $('sim-motion').value === 'reduced' ? 'reduced' : 'full';
+  };
+  applyAppearance();
+  on($('sim-text-face'), 'change', applyAppearance);
+  on($('sim-motion'), 'change', applyAppearance);
+  on($('lobby-sound'), 'click', () => soundButton.click());
+  on($('lobby-radio'), 'click', () => $('radio-setup-button').click());
+  on($('hero-fly'), 'click', () => {
+    const complete = completedKeys();
+    const entry =
+      catalogue.find((e) => e.legacy && !complete.has(keyOf(e))) ?? catalogue.find((e) => e.legacy);
+    if (entry) return startFlight(entry);
+  });
+  on($('hero-browse'), 'click', () => {
+    $('world-picker-title').focus({ preventScroll: true });
+    $('world-picker-title').scrollIntoView({ block: 'start' });
+  });
+  on(doc.querySelector('.wordmark'), 'click', (e) => {
+    e.preventDefault();
+    showTab('explore');
+  });
+  on(win, 'hashchange', () => showTab(win.location.hash.slice(1), false));
+  on($('flight-options'), 'click', () => {
+    pauseFlight();
+    const open = $('flight-dialog').dataset.optionsOpen !== 'true';
+    $('flight-dialog').dataset.optionsOpen = String(open);
+    $('flight-options').setAttribute('aria-expanded', String(open));
+  });
+  on($('lobby-settings'), 'click', () => {
+    pauseFlight();
+    ghostButton.hidden = true;
+    $('sim-settings-controls').append(flightControls);
+    $('sim-settings').showModal();
+  });
+  function closeSettings() {
+    ghostButton.hidden = false;
+    $('world-replay-controls').before(flightControls);
+    $('sim-settings').close();
+    pauseFlight();
+    $('lobby-settings').focus();
+  }
+  on($('close-sim-settings'), 'click', closeSettings);
+  on($('sim-settings'), 'cancel', (e) => {
+    e.preventDefault();
+    closeSettings();
+  });
+  for (const id of ['flight-mode', 'flight-source', 'flight-camera'])
+    on($(id), 'change', paintLoadout);
 
   for (const b of doc.querySelectorAll('[data-tab]')) on(b, 'click', () => showTab(b.dataset.tab));
   for (const id of ['search', 'activity-filter', 'difficulty-filter', 'completion-filter'])
@@ -2811,6 +3038,10 @@ export function mountWorldApp({
     );
   });
   on($('world-arm'), 'click', () => {
+    if (doc.querySelector('dialog[open]:not(#flight-dialog)')) return;
+    $('flight-dialog').dataset.optionsOpen = 'false';
+    $('flight-options').setAttribute('aria-expanded', 'false');
+    immersive.closeControls();
     if (!sceneReady || !flight || terminal(flight.snapshot()) || (replayProof && finished)) return;
     if (!replayProof && $('flight-source').value === 'radio') {
       restoreRadio();
@@ -2911,7 +3142,7 @@ export function mountWorldApp({
       $('flight-mode').value = replayProof.mode;
       return;
     }
-    if (current)
+    if (current && $('flight-dialog').open)
       return startFlight(current, { preview, playlist: playingPlaylist, index: playlistIndex });
   });
   on($('flight-stick-display'), 'change', () => paintInput(flight?.snapshot()));
@@ -2933,7 +3164,7 @@ export function mountWorldApp({
   on(win, 'keydown', (e) => {
     if (
       !$('flight-dialog').open ||
-      $('world-radio-dialog').open ||
+      doc.querySelector('dialog[open]:not(#flight-dialog)') ||
       /^(INPUT|SELECT|TEXTAREA|BUTTON)$/.test(e.target.tagName)
     )
       return;
@@ -2976,7 +3207,7 @@ export function mountWorldApp({
       },
       onResponse: (rates) => {
         response = rates;
-        if (current)
+        if (current && $('flight-dialog').open)
           void startFlight(current, {
             preview,
             playlist: playingPlaylist,
@@ -2991,6 +3222,9 @@ export function mountWorldApp({
     radioSetup = null;
     $('world-radio-dialog').close();
     pauseFlight();
+    if ($('sim-settings').open) $('radio-setup-button').focus();
+    else if ($('flight-dialog').open) $('world-viewport').focus();
+    else $('lobby-radio').focus();
   }
   on($('close-radio'), 'click', closeRadio);
   on($('world-radio-dialog'), 'cancel', (e) => {
@@ -3037,6 +3271,7 @@ export function mountWorldApp({
   paintInput(null);
   renderFilters();
   renderCatalogue();
+  showTab(win.location.hash.slice(1) || 'explore', false);
   renderPlaylist();
   void cloneChallenge(catalogue.find((e) => !e.legacy)).catch(reportError);
   raf = win.requestAnimationFrame(frame);
@@ -3091,6 +3326,7 @@ export function mountWorldApp({
       hangar.dispose();
       actorEditor?.dispose();
       audio.dispose();
+      presentation.dispose();
       spatialEditor?.dispose();
       await notebook.close();
       recordStore?.close();

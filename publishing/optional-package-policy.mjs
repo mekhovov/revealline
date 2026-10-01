@@ -62,6 +62,7 @@ const BASE_OPTIONAL_PACKAGE_POLICIES = Object.freeze({
       'radio-guide.mjs',
       'flight-fullscreen.mjs',
       'flight-fullscreen.css',
+      'sim-presentation.mjs',
       'math.mjs',
       'rotation-table.mjs',
       'model.mjs',
@@ -80,6 +81,9 @@ const BASE_OPTIONAL_PACKAGE_POLICIES = Object.freeze({
       'optional-practice/install-context.mjs',
       'game/data-json.mjs',
       'game/fpv-entry.mjs',
+      'game/ui/field-kit-tokens.css',
+      'game/ui/native-menu-icons.mjs',
+      'game/ui/art/identity/fpv-line/wordmark.png',
       'game/key-bindings.mjs',
       'game/i18n/index.mjs',
       'game/i18n/bootstrap.mjs',
@@ -125,6 +129,18 @@ const BASE_OPTIONAL_PACKAGE_POLICIES = Object.freeze({
     ]),
     licenses: Object.freeze([
       {
+        dependency: 'Exo 2 and Departure Mono UI fonts',
+        version: 'Exo 2 2.010 / Departure Mono 1.500',
+        license: 'OFL-1.1',
+        path: 'optional-practice/civilian-fpv/README.md',
+      },
+      {
+        dependency: 'Kenney Interface Sounds and UI Audio selected cues',
+        version: 'RevealLine prepared bank 2026-09-29',
+        license: 'CC0-1.0',
+        path: 'optional-practice/civilian-fpv/README.md',
+      },
+      {
         dependency: 'i18next',
         version: '26.4.2',
         license: 'MIT',
@@ -165,6 +181,9 @@ export const OPTIONAL_PACKAGE_POLICIES = Object.freeze({
         .filter((name) => !['index.html', 'app.mjs', 'app.webmanifest', 'README.md'].includes(name))
         .map((name) => legacyFPV.root + name),
       ...legacyFPV.sharedFiles,
+      'optional-practice/civilian-fpv/README.md',
+      'game/ui/art/menu-scenes/fpv.webp',
+      'game/ui/art/menu-scenes/fpv-portrait.webp',
       ...[
         'vendor/addons/loaders/GLTFLoader.js',
         'vendor/addons/controls/TransformControls.js',
