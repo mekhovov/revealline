@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import { readFile, writeFile } from 'node:fs/promises';
-import { createRun } from '../game/core/index.mjs';
+import { createRun, stepRun, FIXED_DT } from '../game/core/index.mjs';
 import { commitCapture } from '../game/core/capture.mjs';
 import { analyzeRouteCoverage } from '../game/core/coverage.mjs';
 import { validatePack } from '../game/packs.mjs';
@@ -72,6 +72,8 @@ for (const id of ['neon-reference-pack', 'neon-mosaic-pack']) {
     }
     assert.equal(run.coverage, 1, `${level.id}: not all budgeted cells could be captured`);
     assert.notEqual(cutsToGoal, null, `${level.id}: goal unreachable`);
+    stepRun(run, {}, FIXED_DT);
+    assert.equal(run.status, 'won', `${level.id}: terminal win was not awarded`);
     levels.push({
       id: level.id,
       reachableCells: analysis.total,
