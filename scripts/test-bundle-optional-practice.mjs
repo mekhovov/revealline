@@ -11,7 +11,7 @@ import { ICON_MASTER } from './brand-icons.mjs';
 import { optionalFPVSourceFixture } from '../publishing/optional-package-source-fixture.mjs';
 const root = new URL('../', import.meta.url).pathname;
 
-test('sparse publication checkouts include the full admitted directory import closure', async () => {
+test('sparse publication checkouts include the full admitted directory import closure', async (t) => {
   for (const [workflow, entry] of [
     ['publish-frozen-pages.yml', 'publishing/pages-controller/publish.mjs'],
     ['fastline-release.yml', 'publishing/fastline-release-publisher.mjs'],
@@ -28,13 +28,27 @@ test('sparse publication checkouts include the full admitted directory import cl
       .trim()
       .split('\n')
       .map((line) => line.trim().replace(/^\//, ''));
-    for (const name of (await toolClosure(entry)).keys())
+    assert.ok(paths.includes('package.json'), workflow + ' preserves ESM package semantics');
+    const closure = await toolClosure(entry);
+    for (const name of closure.keys())
       assert.ok(
         paths.some(
           (selected) => selected === name || (selected.endsWith('/') && name.startsWith(selected)),
         ),
         workflow + ' misses ' + name,
       );
+    const fixture = await mkdtemp(path.join(tmpdir(), 'practice-publisher-import-'));
+    t.after(() => rm(fixture, { recursive: true, force: true }));
+    closure.set('package.json', await readFile(path.join(root, 'package.json')));
+    for (const [name, bytes] of closure) {
+      await mkdir(path.dirname(path.join(fixture, name)), { recursive: true });
+      await writeFile(path.join(fixture, name), bytes);
+    }
+    execFileSync(
+      process.execPath,
+      ['--input-type=module', '-e', 'await import("./publishing/optional-package-admission.mjs")'],
+      { cwd: fixture },
+    );
   }
 });
 
