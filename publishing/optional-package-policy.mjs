@@ -49,11 +49,6 @@ const BASE_OPTIONAL_PACKAGE_POLICIES = Object.freeze({
       'renderer.mjs',
       'world-visuals.mjs',
       'world-themes.mjs',
-      'vendor/addons/loaders/GLTFLoader.js',
-      'vendor/addons/controls/TransformControls.js',
-      'vendor/addons/utils/BufferGeometryUtils.js',
-      'vendor/addons/utils/SkeletonUtils.js',
-      'vendor/addons/provenance.json',
       'input.mjs',
       'copy.mjs',
       'style.css',
@@ -62,7 +57,12 @@ const BASE_OPTIONAL_PACKAGE_POLICIES = Object.freeze({
       'radio-controls.mjs',
       'radio-profile.mjs',
       'radio-runtime.mjs',
+      'radio-session.mjs',
       'radio-setup.mjs',
+      'radio-guide.mjs',
+      'flight-fullscreen.mjs',
+      'flight-fullscreen.css',
+      'sim-presentation.mjs',
       'math.mjs',
       'rotation-table.mjs',
       'model.mjs',
@@ -81,6 +81,9 @@ const BASE_OPTIONAL_PACKAGE_POLICIES = Object.freeze({
       'optional-practice/install-context.mjs',
       'game/data-json.mjs',
       'game/fpv-entry.mjs',
+      'game/ui/field-kit-tokens.css',
+      'game/ui/native-menu-icons.mjs',
+      'game/ui/art/identity/fpv-line/wordmark.png',
       'game/key-bindings.mjs',
       'game/i18n/index.mjs',
       'game/i18n/bootstrap.mjs',
@@ -109,27 +112,6 @@ const BASE_OPTIONAL_PACKAGE_POLICIES = Object.freeze({
     // Only these reviewed bytes may include dormant native network-loader code.
     vendorPins: Object.freeze([
       Object.freeze({
-        path: 'optional-practice/civilian-fpv/vendor/addons/loaders/GLTFLoader.js',
-        bytes: 117586,
-        sha256: '03952cb129d558f92b8e6c757fbf7c1f718b3126c4d34f264d574b40ea36054f',
-      }),
-      Object.freeze({
-        path: 'optional-practice/civilian-fpv/vendor/addons/controls/TransformControls.js',
-        bytes: 51722,
-        sha256: '10f6d3e4c108dff62110f61a76749f9a1826c9781df9c3eb4ca0b5d9d2f5c4a8',
-      }),
-      Object.freeze({
-        path: 'optional-practice/civilian-fpv/vendor/addons/utils/BufferGeometryUtils.js',
-        bytes: 37728,
-        sha256: '259085a7dac89e0840393a9347c77123fbc4206ec2146bf0c29ffc72e14a2800',
-      }),
-      Object.freeze({
-        path: 'optional-practice/civilian-fpv/vendor/addons/utils/SkeletonUtils.js',
-        bytes: 11551,
-        sha256: '28017bf37d0ecb0c4be6048db759ff14df729a562464830b064d4cc239c5af17',
-      }),
-
-      Object.freeze({
         path: 'optional-practice/civilian-fpv/vendor/three.core.js',
         bytes: 1458113,
         sha256: '9edde002b066a9a05676a6127f67735b62baf399bdea529f2f7e31657da769e6',
@@ -146,6 +128,18 @@ const BASE_OPTIONAL_PACKAGE_POLICIES = Object.freeze({
       }),
     ]),
     licenses: Object.freeze([
+      {
+        dependency: 'Exo 2 and Departure Mono UI fonts',
+        version: 'Exo 2 2.010 / Departure Mono 1.500',
+        license: 'OFL-1.1',
+        path: 'optional-practice/civilian-fpv/README.md',
+      },
+      {
+        dependency: 'Kenney Interface Sounds and UI Audio selected cues',
+        version: 'RevealLine prepared bank 2026-09-29',
+        license: 'CC0-1.0',
+        path: 'optional-practice/civilian-fpv/README.md',
+      },
       {
         dependency: 'i18next',
         version: '26.4.2',
@@ -187,8 +181,17 @@ export const OPTIONAL_PACKAGE_POLICIES = Object.freeze({
         .filter((name) => !['index.html', 'app.mjs', 'app.webmanifest', 'README.md'].includes(name))
         .map((name) => legacyFPV.root + name),
       ...legacyFPV.sharedFiles,
+      'optional-practice/civilian-fpv/README.md',
+      'game/ui/art/menu-scenes/fpv.webp',
+      'game/ui/art/menu-scenes/fpv-portrait.webp',
       ...[
+        'vendor/addons/loaders/GLTFLoader.js',
+        'vendor/addons/controls/TransformControls.js',
+        'vendor/addons/utils/BufferGeometryUtils.js',
+        'vendor/addons/utils/SkeletonUtils.js',
+        'vendor/addons/provenance.json',
         'world-app.mjs',
+        'world-renderer.mjs',
         'world-demonstrations.mjs',
         'world-assets.mjs',
         'world-hangar.mjs',
@@ -213,6 +216,26 @@ export const OPTIONAL_PACKAGE_POLICIES = Object.freeze({
     ]),
     vendorPins: Object.freeze([
       ...legacyFPV.vendorPins,
+      Object.freeze({
+        path: 'optional-practice/civilian-fpv/vendor/addons/loaders/GLTFLoader.js',
+        bytes: 117586,
+        sha256: '03952cb129d558f92b8e6c757fbf7c1f718b3126c4d34f264d574b40ea36054f',
+      }),
+      Object.freeze({
+        path: 'optional-practice/civilian-fpv/vendor/addons/controls/TransformControls.js',
+        bytes: 51722,
+        sha256: '10f6d3e4c108dff62110f61a76749f9a1826c9781df9c3eb4ca0b5d9d2f5c4a8',
+      }),
+      Object.freeze({
+        path: 'optional-practice/civilian-fpv/vendor/addons/utils/BufferGeometryUtils.js',
+        bytes: 37728,
+        sha256: '259085a7dac89e0840393a9347c77123fbc4206ec2146bf0c29ffc72e14a2800',
+      }),
+      Object.freeze({
+        path: 'optional-practice/civilian-fpv/vendor/addons/utils/SkeletonUtils.js',
+        bytes: 11551,
+        sha256: '28017bf37d0ecb0c4be6048db759ff14df729a562464830b064d4cc239c5af17',
+      }),
       {
         path: 'optional-practice/civilian-fpv/vendor/rapier/rapier.mjs',
         bytes: 4340292,
