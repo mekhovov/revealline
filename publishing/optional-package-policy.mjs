@@ -66,6 +66,7 @@ const BASE_OPTIONAL_PACKAGE_POLICIES = Object.freeze({
       'math.mjs',
       'rotation-table.mjs',
       'model.mjs',
+      'flight-sectors.mjs',
       'catalogue.mjs',
       'demonstrations.mjs',
       'attempts.mjs',

@@ -25,6 +25,7 @@ import {
   roundDiv,
 } from './math.mjs';
 import { crossesGate, quantizeFlightInput } from './model.mjs';
+import { createSectorTracker } from './flight-sectors.mjs';
 import { validateThemeProfile } from './world-themes.mjs';
 import {
   createWorldCollision,
@@ -872,6 +873,7 @@ async function replayInternal(
   input,
   {
     sampleEvery = 0,
+    includeSectors = false,
     signal,
     yieldControl = () => new Promise((resolve) => setTimeout(resolve, 0)),
     retain = false,
@@ -881,6 +883,7 @@ async function replayInternal(
   await initWorldRuntime();
   signal?.throwIfAborted();
   required(int(sampleEvery, 0, WORLD_MAX_TICKS), 'Invalid replay sample interval');
+  required(typeof includeSectors === 'boolean', 'Invalid replay sector option');
   const proof = boundedJSON(input, {
     maxBytes: 2 * 1024 * 1024,
     maxNodes: WORLD_MAX_TICKS * 7 + 1000,
@@ -924,6 +927,7 @@ async function replayInternal(
     );
     flight.arm();
     const path = [];
+    const sectors = includeSectors ? createSectorTracker() : null;
     for (let i = 0; i < proof.frames.length; i++) {
       if (i % 200 === 0) {
         signal?.throwIfAborted();
@@ -936,6 +940,7 @@ async function replayInternal(
       const state = flight.step(Object.fromEntries(COMMANDS.map((k, j) => [k, frame[j]])), {
         quantized: true,
       });
+      sectors?.consume(state);
       if (sampleEvery && (i % sampleEvery === 0 || state.status !== 'active'))
         path.push({
           tick: state.ticks,
@@ -957,9 +962,19 @@ async function replayInternal(
         prefix: proof.frames,
       });
       keep = true;
-      return { flight, recorder, state: flight.snapshot() };
+      return {
+        flight,
+        recorder,
+        state: flight.snapshot(),
+        ...(sectors ? { sectors: sectors.snapshot() } : {}),
+      };
     }
-    return { identity: flight.identity, state: flight.snapshot(), path };
+    return {
+      identity: flight.identity,
+      state: flight.snapshot(),
+      path,
+      ...(sectors ? { sectors: sectors.snapshot() } : {}),
+    };
   } finally {
     if (!keep) flight.dispose();
   }

@@ -14,6 +14,7 @@ import {
   validateFlightResponse,
 } from './radio-profile.mjs';
 import { Q, attitude, clamp, integrateOrientation, isqrt, mul, roundDiv } from './math.mjs';
+import { createSectorTracker } from './flight-sectors.mjs';
 export const FLIGHT_MODEL = 'civilian-quad-fixed.v1';
 export const FLIGHT_HZ = 50;
 export const MAX_FLIGHT_TICKS = 50 * 60 * 12;
@@ -398,7 +399,8 @@ export function createFlightRecorder(flight, { session = 'practice' } = {}) {
     ticks: () => frames.length,
   };
 }
-function prepareFlightReplay(course, input, sampleEvery) {
+function prepareFlightReplay(course, input, sampleEvery, includeSectors) {
+  required(typeof includeSectors === 'boolean', 'Invalid replay sector option');
   const proof = boundedJSON(input, {
     maxBytes: 1024 * 1024,
     maxNodes: MAX_FLIGHT_TICKS * 6 + 500,
@@ -434,6 +436,7 @@ function prepareFlightReplay(course, input, sampleEvery) {
   );
   flight.arm();
   const path = [];
+  const sectors = includeSectors ? createSectorTracker() : null;
   function advance(i) {
     const frame = proof.frames[i];
     required(Array.isArray(frame) && frame.length === 4, 'Four recorded controls required');
@@ -442,6 +445,7 @@ function prepareFlightReplay(course, input, sampleEvery) {
       Object.fromEntries(FLIGHT_CONTROLS.map((key, j) => [key, frame[j]])),
       { quantized: true },
     );
+    sectors?.consume(state);
     if (sampleEvery && (i % sampleEvery === 0 || state.status === 'complete'))
       path.push({
         tick: state.ticks,
@@ -453,11 +457,16 @@ function prepareFlightReplay(course, input, sampleEvery) {
   return {
     ticks: proof.frames.length,
     advance,
-    result: () => ({ identity: flight.identity, state: flight.snapshot(), path }),
+    result: () => ({
+      identity: flight.identity,
+      state: flight.snapshot(),
+      path,
+      ...(sectors ? { sectors: sectors.snapshot() } : {}),
+    }),
   };
 }
-export function replayFlight(course, input, { sampleEvery = 0 } = {}) {
-  const replay = prepareFlightReplay(course, input, sampleEvery);
+export function replayFlight(course, input, { sampleEvery = 0, includeSectors = false } = {}) {
+  const replay = prepareFlightReplay(course, input, sampleEvery, includeSectors);
   for (let i = 0; i < replay.ticks; i++) replay.advance(i);
   return replay.result();
 }
@@ -470,12 +479,13 @@ export async function replayFlightCooperatively(
   input,
   {
     sampleEvery = 0,
+    includeSectors = false,
     signal,
     yieldControl = () => new Promise((resolve) => setTimeout(resolve, 0)),
   } = {},
 ) {
   signal?.throwIfAborted();
-  const replay = prepareFlightReplay(course, input, sampleEvery);
+  const replay = prepareFlightReplay(course, input, sampleEvery, includeSectors);
   for (let i = 0; i < replay.ticks; i++) {
     if (i % 200 === 0) {
       signal?.throwIfAborted();
