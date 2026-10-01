@@ -6,7 +6,7 @@
   --line: #344248;
   --ink: #f1f1e9;
   --muted: #a8b8b7;
-  --accent: #c8eb93;
+  --accent: var(--fk-amber);
 }
 * {
   box-sizing: border-box;
@@ -643,7 +643,7 @@ dialog header small {
   transform: translate(-50%, -50%);
   padding: 22px;
   background: #102027ed;
-  border: 1px solid #c8eb9355;
+  border: 1px solid var(--fk-amber) 55;
   border-radius: 10px;
   min-width: min(260px, calc(100% - 24px));
   max-width: calc(100% - 24px);
@@ -2085,10 +2085,10 @@ html:not([data-fpv-immersive])
 }
 /* Beginner Flight School shares the native field-kit presentation. */
 .beginner-coach {
-  --coach-ink: #e8f0ec;
-  --coach-muted: #a8bab7;
-  --coach-cyan: #74ddd3;
-  --coach-amber: #eac879;
+  --coach-ink: var(--fk-text);
+  --coach-muted: var(--fk-muted);
+  --coach-cyan: var(--fk-cyan);
+  --coach-amber: var(--fk-amber);
   position: absolute;
   z-index: 12;
   left: 16px;
@@ -2102,11 +2102,11 @@ html:not([data-fpv-immersive])
   display: none !important;
 }
 .coach-card {
-  border: 1px solid #637570;
+  border: 1px solid var(--fk-control-line);
   border-left: 3px solid var(--coach-cyan);
   border-radius: 3px;
   padding: 14px;
-  background: #101d21f7;
+  background: #101923f7;
   box-shadow: 0 12px 40px #020b1080;
   pointer-events: auto;
 }
@@ -2146,7 +2146,7 @@ html:not([data-fpv-immersive])
   min-width: 25px;
   min-height: 25px;
   padding: 2px 6px;
-  border: 1px solid #53625f;
+  border: 1px solid var(--fk-line);
   border-radius: 2px;
   color: var(--coach-muted);
   font-size: 11px;
@@ -2154,16 +2154,16 @@ html:not([data-fpv-immersive])
 .coach-step-dot[data-state='current'] {
   background: var(--coach-cyan);
   border-color: var(--coach-cyan);
-  color: #102521;
+  color: var(--fk-bg);
 }
 .coach-step-dot[data-state='done'] {
-  background: #285148;
-  border-color: #67a592;
-  color: #bce8d6;
+  background: var(--fk-panel-raised);
+  border-color: var(--fk-amber);
+  color: var(--fk-text);
 }
 .coach-instruction {
   margin: 0 0 10px;
-  color: #edf4f0;
+  color: var(--fk-text);
   font-size: 14px;
   line-height: 1.4;
 }
@@ -2178,7 +2178,7 @@ html:not([data-fpv-immersive])
   grid-template-columns: repeat(4, 1fr);
   gap: 3px;
   margin: 10px 0 6px;
-  border-top: 1px solid #425650;
+  border-top: 1px solid var(--fk-line);
   padding-top: 8px;
 }
 .coach-telemetry > div {
@@ -2197,7 +2197,7 @@ html:not([data-fpv-immersive])
 }
 .coach-hold {
   height: 3px;
-  background: #384842;
+  background: var(--fk-line);
   border-radius: 3px;
   overflow: hidden;
 }
@@ -2248,7 +2248,7 @@ html:not([data-fpv-immersive])
 }
 .coach-step-copy {
   padding: 16px 18px;
-  background: #1b302f;
+  background: var(--fk-panel-raised);
   border-left: 3px solid var(--coach-amber);
 }
 .coach-step-label {
@@ -2279,7 +2279,7 @@ html:not([data-fpv-immersive])
 .coach-axis-picker [aria-pressed='true'] {
   background: var(--coach-cyan);
   border-color: var(--coach-cyan);
-  color: #112722;
+  color: var(--fk-bg);
 }
 .coach-visuals {
   display: grid;
@@ -2297,8 +2297,8 @@ html:not([data-fpv-immersive])
 .coach-behavior {
   min-width: 0;
   padding: 18px 16px;
-  border: 1px solid #344b48;
-  background: #132522;
+  border: 1px solid var(--fk-line);
+  background: var(--fk-panel);
   border-radius: 3px;
 }
 .coach-sticks {
@@ -2326,8 +2326,8 @@ html:not([data-fpv-immersive])
   overflow: visible;
 }
 .coach-stick-rim {
-  fill: #0a191d;
-  stroke: #677b74;
+  fill: var(--fk-bg);
+  stroke: var(--fk-control-line);
   stroke-width: 2;
 }
 .coach-stick[data-highlight='true'] .coach-stick-rim {
@@ -2335,20 +2335,20 @@ html:not([data-fpv-immersive])
 }
 .coach-stick-grid {
   fill: none;
-  stroke: #334a45;
+  stroke: var(--fk-line);
   stroke-width: 1;
   stroke-dasharray: 4 5;
 }
 .coach-stick-arrows {
   fill: none;
-  stroke: #8baca1;
+  stroke: var(--fk-muted);
   stroke-width: 1.5;
   stroke-linecap: round;
   stroke-linejoin: round;
 }
 .coach-live-dot {
   fill: var(--coach-cyan);
-  stroke: #071616;
+  stroke: var(--fk-bg);
   stroke-width: 2;
 }
 .coach-target-dot {
@@ -2385,7 +2385,7 @@ html:not([data-fpv-immersive])
   display: block;
   margin-top: 9px;
   padding-top: 7px;
-  border-top: 1px solid #344b48;
+  border-top: 1px solid var(--fk-line);
   color: var(--coach-cyan);
   font-size: 10px;
   font-variant-numeric: tabular-nums;
@@ -2891,9 +2891,9 @@ html:not([data-fpv-immersive])
   inset: 12px;
   width: auto;
   padding: 0;
-  border: 1px solid #53675f;
+  border: 1px solid var(--fk-line);
   border-radius: 3px;
-  background: #0b181c;
+  background: var(--fk-bg);
   z-index: 15;
 }
 .sim-worlds .beginner-coach[data-stage='guide'] .coach-card {
@@ -2909,8 +2909,8 @@ html:not([data-fpv-immersive])
   z-index: 3;
   margin: -16px -20px 0;
   padding: 12px 20px;
-  background: #102024fa;
-  border-bottom: 1px solid #39564b;
+  background: #101923fa;
+  border-bottom: 1px solid var(--fk-line);
 }
 .sim-worlds .beginner-coach[data-stage='guide'] .coach-progress {
   margin: 10px 0;
@@ -2978,7 +2978,7 @@ html:not([data-fpv-immersive])
 .coach-notes {
   margin: 12px 0 0;
   padding: 10px 12px;
-  border: 1px solid #39564b;
+  border: 1px solid var(--fk-line);
   border-radius: 3px;
 }
 .coach-notes > summary {
@@ -3128,5 +3128,236 @@ html:not([data-fpv-immersive])
   }
   .sim-worlds .learning-flight .sim-drone-response svg {
     max-height: 68px;
+  }
+}
+
+/* Native instrument palette and live controls workbench. */
+.sim-worlds .coach-axis-picker [aria-pressed='true'],
+.sim-worlds .coach-axis-picker [aria-pressed='true']:is(:hover, :focus-visible) {
+  background: var(--fk-amber);
+  color: var(--fk-bg);
+  border-color: var(--fk-amber);
+}
+.sim-worlds .world-touch.compact-sticks {
+  right: 62px;
+  bottom: 65px;
+  gap: 92px;
+}
+.sim-worlds .world-touch .touch-stick {
+  width: 110px;
+  height: 110px;
+}
+.sim-worlds .world-touch.compact-sticks .touch-stick {
+  width: 86px;
+  height: 86px;
+}
+.sim-worlds .world-touch .touch-stick > span {
+  top: calc(100% + 22px);
+  font-size: 11px;
+}
+.sim-worlds .world-touch.touch-active {
+  inset-inline: 65px;
+}
+.sim-worlds .coach-lab-mode,
+.sim-worlds .coach-lab-sources,
+.sim-worlds .coach-lab-actions {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 12px 0;
+}
+.sim-worlds .coach-lab-mode button,
+.sim-worlds .coach-lab-sources button,
+.sim-worlds .coach-lab-actions button {
+  min-height: 44px;
+}
+.sim-worlds :is(.coach-lab-mode, .coach-lab-sources) [aria-pressed='true'] {
+  border-color: var(--fk-amber);
+  color: var(--fk-amber);
+  background: var(--fk-panel-raised);
+}
+.coach-radio-chassis {
+  border: 2px solid var(--fk-control-line);
+  border-radius: 28px 28px 50px 50px;
+  background: linear-gradient(150deg, #243443, #101923 45%, #182531);
+  padding: 16px 22px 22px;
+  box-shadow:
+    inset 0 1px #a5b2bb44,
+    0 12px 22px #0003;
+}
+.coach-radio-top {
+  display: flex;
+  justify-content: center;
+  gap: 18px;
+  color: var(--fk-amber);
+  font: 11px var(--fk-font-mono);
+  text-align: center;
+  padding: 2px 0 12px;
+}
+.coach-gimbal-wrap {
+  position: relative;
+}
+.coach-direction-up,
+.coach-direction-down,
+.coach-direction-left,
+.coach-direction-right {
+  color: var(--fk-muted);
+  font: 10px/1.2 var(--fk-font-ui);
+  text-align: center;
+}
+.coach-lab-drawing {
+  min-height: 240px;
+  display: grid;
+  place-items: center;
+}
+.sim-worlds .coach-lab-drawing .sim-response-drawing {
+  max-height: 290px;
+  width: 100%;
+}
+.coach-lab-status {
+  padding: 12px;
+  border-left: 3px solid var(--fk-amber);
+  background: var(--fk-panel-raised);
+  font-size: 13px;
+}
+.sim-worlds .beginner-coach[data-stage='guide'] .coach-behavior {
+  display: flex;
+  flex-direction: column;
+}
+.sim-worlds .beginner-coach[data-stage='guide'] .coach-stick svg {
+  max-height: 175px;
+}
+.sim-worlds .beginner-coach[data-stage='guide'] .coach-card {
+  max-width: 1200px;
+}
+@media (max-width: 600px) {
+  .sim-worlds .world-touch.compact-sticks {
+    right: 39px;
+    gap: 65px;
+    bottom: 60px;
+  }
+  .sim-worlds .world-touch.compact-sticks .touch-stick {
+    width: 66px;
+    height: 66px;
+  }
+  .sim-worlds .world-touch.touch-active {
+    inset-inline: 42px;
+  }
+  .sim-worlds .world-touch .touch-stick {
+    width: 90px;
+    height: 90px;
+  }
+  .coach-radio-chassis {
+    padding: 10px 14px 14px;
+    border-radius: 20px 20px 36px 36px;
+  }
+  .coach-lab-drawing {
+    min-height: 180px;
+  }
+}
+.coach-gimbal-wrap {
+  padding-block: 26px;
+  margin: 10px 0 14px;
+}
+.coach-gimbal-wrap > span {
+  position: absolute;
+  display: block;
+  font-size: 10px;
+  line-height: 1.15;
+  pointer-events: none;
+}
+.coach-gimbal-wrap .coach-direction-up {
+  top: 4px;
+  left: 0;
+  width: 100%;
+}
+.coach-gimbal-wrap .coach-direction-up::before {
+  content: '↑ ';
+  color: var(--fk-amber);
+}
+.coach-gimbal-wrap .coach-direction-down {
+  bottom: 4px;
+  left: 0;
+  width: 100%;
+}
+.coach-gimbal-wrap .coach-direction-down::before {
+  content: '↓ ';
+  color: var(--fk-amber);
+}
+.coach-gimbal-wrap .coach-direction-left {
+  left: -7px;
+  top: 39%;
+  width: 39px;
+  text-align: left;
+}
+.coach-gimbal-wrap .coach-direction-left::before {
+  content: '← ';
+}
+.coach-gimbal-wrap .coach-direction-right {
+  right: -7px;
+  top: 57%;
+  width: 43px;
+  text-align: right;
+}
+.coach-gimbal-wrap .coach-direction-right::after {
+  content: ' →';
+}
+.coach-stick-pad {
+  touch-action: none;
+}
+.coach-lab-dpad {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-top: 14px;
+}
+.coach-dpad-axis {
+  display: grid;
+  grid-template-columns: 1fr 44px 44px;
+  gap: 4px;
+  align-items: center;
+}
+.coach-dpad-axis strong {
+  font-size: 12px;
+}
+.sim-worlds .coach-dpad-button {
+  padding: 8px;
+  min-width: 44px;
+  min-height: 44px;
+  touch-action: none;
+}
+.coach-lab-drawing {
+  cursor: crosshair;
+  border-radius: 4px;
+}
+.coach-lab-drawing:focus-visible {
+  outline: 2px solid var(--fk-cyan);
+  outline-offset: -2px;
+}
+.sim-worlds .coach-lab-help {
+  color: var(--fk-muted);
+  font-size: 13px;
+  line-height: 1.5;
+}
+.sim-worlds .coach-lab-telemetry {
+  font: 12px/1.5 var(--fk-font-mono);
+  color: var(--fk-text);
+}
+.sim-worlds .coach-lab-drawing .sim-response-drawing {
+  width: 100%;
+  max-height: 340px;
+}
+@media (max-width: 600px) {
+  .coach-lab-dpad {
+    grid-template-columns: 1fr;
+  }
+  .coach-gimbal-wrap .coach-direction-left {
+    width: 32px;
+    font-size: 9px;
+  }
+  .coach-gimbal-wrap .coach-direction-right {
+    width: 36px;
+    font-size: 9px;
   }
 }

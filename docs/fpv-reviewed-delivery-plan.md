@@ -67,3 +67,35 @@ deployment identity and a successful simulator launch before calling work live.
 
 The execution checkpoint and current next item live in
 `fpv-continuous-delivery.md`; read its latest entry rather than historical tables.
+
+## Player feedback revision — controls lab and rear reference
+
+The 1 October screenshots expose mirrored front-view roll, side-view pitch that
+resembles roll, a separate illustration that does not follow live input, and
+legacy green surfaces. Prioritize these R1/R3 corrections before further art.
+
+| Increment         | Implementation                                                                                                                                             | Estimate                      | Verification gate                                                                                               |
+| ----------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------- | --------------------------------------------------------------------------------------------------------------- |
+| Controls teaching | One quaternion-based rear-reference diagram in lessons and both flight hosts; distinguish front/rear, pitch depth, bank, yaw and measured travel.          | 1–2 working days              | Positive/negative pitch and roll, yaw, inverted Acro, unchanged replay.                                         |
+| Live controls lab | Explicit Example / Try controls; isolated Gentle simulation, keyboard, calibrated USB radio/gamepad and touch controls; reset, stop and visible ownership. | 1–2 working days              | Real flight remains paused, no rewards/recording mutations, release on blur/menu/exit, Mode 1–4.                |
+| Input and shell   | Larger labelled gimbals, main-game navy/amber/cyan tokens, keyboard/controller/radio menu navigation, fullscreen throughout menus/lessons/flight.          | 1–2 working days, parallel    | Every menu and nested dialog, select/range controls, neutral/release gates, EN/UK, mobile, fullscreen fallback. |
+| Publication       | Frozen package admission, committed-input/replay checks and packaged-browser acceptance; focused PR in native stack 902.                                   | After each verified increment | User playtest URL rebuilt; no claim of physical-radio or novice acceptance without observation.                 |
+
+The diagram remains an observer. A fixed camera behind the initial heading does
+not lock the drone's physics or hide Acro inversion; actual yaw can turn the nose
+toward the viewer. The amber front marker and start-heading reference explain
+that change. The lab advances only a separate unscored simulation; it never
+arms or changes the paused lesson. Native fullscreen may require a pointer or
+keyboard gesture; controller activation must offer a clearly labelled full-window
+fallback when the browser rejects native fullscreen.
+
+Research decisions:
+
+- [Xbox UI navigation guidance](https://learn.microsoft.com/en-us/xbox/accessibility/xbox-accessibility-guidelines/112) supports consistent directional focus, digital-only paths, visible confirm/back hints and predictable return behavior.
+- [EdgeTX USB joystick documentation](https://manual.edgetx.org/color-radios/model-settings/model-setup/usb-joystick) describes configurable axes/buttons. Reuse normalized calibrated controls; do not hardcode TX15 channels or assume arm switches are menu buttons.
+- [Liftoff's virtual mentor](https://www.liftoff-game.com/news/virtual-mentor-reveal) is an example of guided simulator onboarding. Here, pair the explanation with immediate, clearly separated practice.
+- [MDN fullscreen documentation](https://developer.mozilla.org/en-US/docs/Web/API/Element/requestFullscreen) documents asynchronous requests and user activation requirements; preserve an explicit exit and safe pause on transitions.
+
+No additional unit coverage is introduced here. R7 and the original outstanding
+art, original demonstrations, main-game integration qualification and human/device
+acceptance remain in scope. Completion evidence belongs in the delivery log.

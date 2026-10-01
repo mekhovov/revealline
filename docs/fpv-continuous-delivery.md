@@ -396,3 +396,62 @@ The 8–10-working-week continuation estimate plus two contingency weeks remains
 a staffing-dependent planning baseline, not proof these remaining phases are
 complete. Re-estimate after the first realistic-world benchmark and novice
 sessions. Continue focused verified PRs while publication runs.
+
+## Controls feedback checkpoint — 2 October 2026
+
+Current branch: `codex/fpv-controls-learning-lab`, a new focused child of #926
+at `a76abd56f2097552f435b79d0be09c36710eeb7f`. The remote parent and live native
+stack #902 were checked again before publication: open linear membership remains
+#905 → #907 → #923 → #924 → #925 → #926. Preserve existing holds. No parent was
+rebased or retargeted in this increment. The completed UI/graphics/audio work,
+Garage handoff, #913 ghost work and #889 content stack remain intact.
+
+Implemented the user's screenshot corrections and live controls request:
+
+- Shared rear-reference quaternion diagram in lesson explanations and both SIM
+  hosts, with amber front, visible body depth, correctly signed roll and distinct
+  pitch. Full Acro/yaw and measured movement remain truthful.
+- Isolated Example / Try controls lab, schematic radio, labelled Mode 1–4
+  gimbals, keyboard/touch/D-pad/calibrated-radio input, explicit stop/reset and
+  safe input release. The paused lesson and recording remain unchanged.
+- Larger directional flight sticks; shared navy/amber/cyan surfaces; fixed
+  keyboard flight when a HUD button holds focus; truthful disabled Arm state
+  while an explanation owns input.
+- Keyboard, standard-controller and calibrated-radio paused-menu navigation,
+  release/hold gates, editable selects/sliders, capture ownership and Back.
+  Fullscreen across SIM screens, nested dialogs and lobby return; explicit
+  full-window fallback and root Escape exit.
+
+See [feature and verification notes](fpv-controls-learning-lab.md) and the updated
+[delivery plan](fpv-reviewed-delivery-plan.md). Browser receipts cover 15 lab,
+7 actual World Studio host, 19 menu and 15 rear-geometry checks. They use controlled
+input; they do not assert physical TX15, novice or hardware-performance acceptance.
+All 14 Acro proofs completed/replayed again. Final frozen package admission and
+publication identities are appended below after the source commit.
+
+The independent main-game preset is published as
+[#928](https://github.com/mekhovov/revealline/pull/928), head
+`b02a227ea0284a687448d4ea90992539384488d4`, branch `codex/tx15-full-radio-menus`,
+based on current main `937aead7287814b7886082dda9be55f295641476`. It lives in
+`/tmp/fpv-radio-menu-20261002` and does not depend on the FPV stack. An explicit
+Solo preset adds guarded yaw Confirm/Back to the established tested TX15
+mapping. Localization, syntax/lint/format, runtime and 12 actual-browser component
+checks passed. Full game entry on port 8794 stops at its existing password gate;
+full-lobby and physical-radio acceptance are not claimed. No gate was bypassed.
+
+#922 remains OPEN at `b490f26337781b9a6b827f5348620763b8b4db41` with no merge
+commit at this checkpoint. Its earlier protected asynchronous merge request is
+not proof of merging or deployment. Do not enqueue repeatedly. The new controls
+build is local/PR work, not claimed publicly live.
+
+Next concrete work:
+
+1. Finish the frozen controls candidate and append its focused PR to #902. Keep
+   its source separate from further art or course changes.
+2. During coordinated integration of #922, give its new dynamic reimport-review
+   dialog exclusive menu navigation and guarded cancel/Back ownership. This
+   modal is absent from the current branch, whose existing dialogs are handled.
+3. Continue R4/R5 art and realistic materials; retain existing provenance/package
+   limits and qualify a named-device benchmark. Complete R6 demonstrations,
+   compatible ghosts and targeted practice. R7 retains new unit coverage and
+   human/device acceptance. Never substitute controlled-input checks for those.

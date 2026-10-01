@@ -152,3 +152,27 @@ html[data-fpv-immersive] [data-immersive-controls='true'] .flight-controls {
     display: none;
   }
 }
+
+/* Application fullscreen retains the catalogue and every nested menu. */
+html[data-fpv-fullscreen]:not([data-fpv-immersive]) {
+  min-height: 100%;
+  background: var(--fk-bg);
+}
+html[data-fpv-fullscreen]:not([data-fpv-immersive]) body {
+  min-height: 100dvh;
+  margin: 0;
+}
+.field-kit .sim-screen-fullscreen {
+  min-height: 44px;
+}
+html[data-fpv-fullscreen] dialog {
+  max-height: calc(100dvh - 24px);
+}
+html[data-fpv-immersive] .flight-immersive-bar {
+  background: var(--fk-panel);
+  border-color: var(--fk-line);
+}
+html[data-fpv-immersive-scope='application'] .sim-menu-hint {
+  flex: 0 0 auto;
+  padding-inline: 12px;
+}

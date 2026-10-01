@@ -24,8 +24,9 @@ import {
   mountSimPresentation,
   mountDroneResponse,
   mountSimAudioControls,
+  paintStickDirections,
 } from './sim-presentation.mjs';
-import { createFlightInput } from './input.mjs';
+import { createFlightInput, createFlightMenuNavigation } from './input.mjs';
 import { createFlightRenderer } from './renderer.mjs';
 import { COPY } from './copy.mjs';
 import { mountFlightNotebook } from './notebook.mjs';
@@ -647,11 +648,14 @@ export function mountFlightApp({
       dot.hidden = !monitor;
       const expanded = $('academy-stick-display')?.value === 'expanded';
       $('sticks').classList.toggle('expanded-sticks', expanded);
-      const radius = expanded ? 34 : 22;
+      paintStickDirections(dot.parentElement, { horizontal, vertical, locale });
+      const radius = dot.parentElement.clientWidth * 0.3;
       dot.style.transform = `translate(${(monitor?.[horizontal] ?? 0) * radius}px, ${-y * radius}px)`;
     }
     if (input.owner() === 'touch') {
       $('touch-throttle').value = String(Math.round(values.throttle / 10));
+      paintStickDirections($('left-stick'), { horizontal: 'yaw', vertical: 'throttle', locale });
+      paintStickDirections($('right-stick'), { horizontal: 'roll', vertical: 'pitch', locale });
       $('left-stick').querySelector('i').style.transform =
         `translate(${(values.yaw / 1000) * 35}px, ${(1 - values.throttle / 500) * 35}px)`;
       $('right-stick').querySelector('i').style.transform =
@@ -714,6 +718,7 @@ export function mountFlightApp({
   }
   function frame(now) {
     if (disposed || suspended) return;
+    pollMenu(now);
     const delta = lastTime === null ? 0 : now - lastTime,
       executedAt = win.performance?.now?.() ?? now,
       executionDelta = lastExecutionTime === null ? 0 : executedAt - lastExecutionTime;
@@ -910,12 +915,84 @@ export function mountFlightApp({
   listen(win, 'gamepadconnected', () => {
     if (!replay && !modalOpen()) restoreRadio();
   });
+  const menuHint = doc.createElement('p');
+  menuHint.className = 'sim-menu-hint';
+  $('flight-app').append(menuHint);
+  const menuContext = () => {
+    const dialog = dialogIds.map($).find((node) => node.open);
+    if (dialog)
+      return {
+        root: dialog,
+        key: dialog.id,
+        blockRadio: dialog.id === 'setup-dialog',
+        blockDevices: dialog.id === 'setup-dialog' && Boolean(setup?.captureActive()),
+      };
+    if (flight.snapshot().status === 'active' && !modalOpen()) return null;
+    return { root: $('flight-app'), key: `academy:${modalOpen()}` };
+  };
+  const menuNavigation = createFlightMenuNavigation({
+    document: doc,
+    window: win,
+    locale: () => locale,
+    getContext: menuContext,
+    onHint(value) {
+      const context = menuContext();
+      menuHint.hidden = !context;
+      if (context && menuHint.parentElement !== context.root) context.root.append(menuHint);
+      if (menuHint.textContent !== value) menuHint.textContent = value;
+    },
+    onBack() {
+      const dialog = dialogIds.find((id) => $(id).open);
+      if (dialog) closeDialog(dialog);
+      else if ($('academy-flight-options').open) $('academy-flight-options').open = false;
+      else if (immersive.active()) void immersive.exit();
+      else openDialog('course-dialog');
+    },
+  });
+  function pollMenu(now) {
+    if (!menuContext()) {
+      menuNavigation.poll({ now });
+      return;
+    }
+    let gamepads = [];
+    try {
+      gamepads = win.navigator.getGamepads?.() ?? [];
+    } catch {
+      /* Menus remain usable without device access. */
+    }
+    if (now - lastRadioDiscovery > 1000 && !$('setup-dialog').open) {
+      lastRadioDiscovery = now;
+      restoreRadio();
+    }
+    const observed = radio.preview();
+    menuNavigation.poll({
+      now,
+      gamepads,
+      radio: {
+        key: radio.status().selected?.key,
+        controls: observed.controls,
+        verified: observed.verified,
+        index: radio.status().selected?.index,
+      },
+    });
+  }
+  const fullscreenButtons = [];
+  for (const dialog of dialogIds.map($)) {
+    const full = doc.createElement('button');
+    full.type = 'button';
+    full.className = 'sim-screen-fullscreen';
+    (dialog.querySelector('header') ?? dialog).append(full);
+    fullscreenButtons.push(full);
+  }
   const immersive = mountFlightFullscreen({
     document: doc,
     window: win,
     surface: $('flight-app'),
     viewport: $('viewport'),
     button: $('fullscreen'),
+    buttons: fullscreenButtons,
+    scope: 'application',
+    getFocusTarget: () => doc.activeElement,
     setupButton: $('setup'),
     kind: 'academy',
     locale: () => locale,
@@ -1050,6 +1127,8 @@ export function mountFlightApp({
       setup?.dispose();
       void notebook?.dispose();
       studio?.dispose();
+      menuNavigation.dispose();
+      menuHint.remove();
       input.dispose();
       renderer.dispose();
       immersive.dispose();
