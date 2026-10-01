@@ -182,3 +182,52 @@ publication continue asynchronously; Pages run 36790807793 also failed, so publi
 availability still requires the separately tracked site-size repair and a verified
 deployment. Preserve stack protection and coordinate any necessary linear rebase
 with current parent work, recovery refs and explicit remote-head leases.
+
+### Native simulator UI — 1 October
+
+The full UI increment is published as **PR #904**, branch
+`codex/fpv-native-sim-ui`, based on `codex/fpv-radio-setup-ux` (#901).
+Native stack **#902** now contains **#899 → #901 → #904**. It uses the main
+game's FPV / LINE identity, hangar artwork, field-kit tokens, local fonts, menu
+icons and three short interface cues through shared simulator presentation code.
+World Studio has a focused Fly/world-selection lobby, pre-flight settings,
+playlists, Workshop and Library; both hosts have clearer flight chrome,
+options, fullscreen controls and radio pause/arming behavior.
+
+Parent #901 was fast-forwarded from `bba7df8c0847` to **`72cb7b8e42a9`** to fix
+its failing optional-package job. World-only loaders and their pinned vendor
+hashes now stay outside Academy. Admission uses the selected package's existing
+64-file/8-MiB or 96-file/16-MiB policy, with unchanged ZIP framing allowance.
+The UI child was rebased on this fix; the root source and browser behavior did
+not otherwise change. Preserve parent #899's existing work and inspect fresh
+remote heads before any coordinated linear stack rebase or protected merge.
+
+The final frozen native-UI candidate at `8d34dc140643` passed all three optional
+package admissions, committed-input checks and byte-identical double builds.
+Academy is **62 runtime / 64 source files** and World Studio **93 / 95**.
+The combined Stadium package has **94 runtime / 96 source files**, meeting its
+96-file cap. Do not increase caps or drop
+required source/license files. Final receipts are committed in
+`fpv-native-sim-ui-verification.json`; UI architecture and asset sources are in
+`fpv-native-sim-ui.md`.
+
+Final local World Studio: `dist/fpv-native-ui-playtest`, SHA-256
+`ec4d82da6e89a3573f04112170660beaac9fa88ab848021a72a461e13fe53528`
+(86 files, 11,946,874 bytes). Final preserved Stadium integration:
+`dist/fpv-stadium-demo-playtest`, SHA-256
+`db55de1a0b299f2d9174107322e575e73733febb727a2756a938982b5ce12041`
+(87 files, 13,457,237 bytes), retaining all 88 demonstrations byte-for-byte.
+The source localhost URL also has the redesign. Browser verification covers
+responsive EN/UK views, controlled-radio and keyboard flight, safe nested
+settings/fullscreen, playlists, recordings/results, GLB import, actual editor
+transform dragging, offline reload and shared assets/sound. New physical-radio
+acceptance, performance qualification and new unit coverage are not claimed.
+
+At publication, the latest main Pages run remained failed (`36790807793`).
+The redesign is available locally and in an open PR, not verified public live
+content. Continue required checks and protected stack publication in the
+background while the separately tracked site-size repair and reimport data-loss
+correction receive focused increments. Preserve Garage/ghost handoffs and the
+content-stack hold described above. Do not overwrite this branch with the next
+unfinished item or repeatedly restart unchanged CI. Additional unit coverage
+remains in final qualification; functional verification continues per feature.
