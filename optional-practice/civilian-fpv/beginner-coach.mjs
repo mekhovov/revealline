@@ -1,4 +1,5 @@
 import { STICK_LAYOUTS } from './radio-profile.mjs';
+import { ACRO_LESSON_ORDER, SELF_LEVEL_LESSON_ORDER } from './world-catalogue.mjs';
 
 const SVG_NS = 'http://www.w3.org/2000/svg';
 const AXES = ['throttle', 'yaw', 'pitch', 'roll'];
@@ -76,21 +77,36 @@ export function mountBeginnerCoach({
         'Turn the nose left or right while keeping the drone level. Yaw changes where you face; it does not move you sideways.',
         'Поверніть ніс ліворуч або праворуч, зберігаючи горизонтальне положення. Рискання змінює напрям погляду, а не рухає дрон убік.',
       ),
-      pitch: t(
-        'Push forward to tip the nose down. Some thrust now points forward, so you accelerate. Pull back gently to slow down.',
-        'Штовхніть стік уперед, щоб опустити ніс. Частина тяги тепер спрямована вперед, і дрон прискорюється. Плавно потягніть назад, щоб загальмувати.',
-      ),
-      roll: t(
-        'Move sideways to bank the drone. It leans and accelerates sideways without needing to turn the nose.',
-        'Рухайте стік убік, щоб нахилити дрон. Він нахиляється та прискорюється вбік без повороту носа.',
-      ),
+      pitch:
+        mode() === 'acro'
+          ? t(
+              'A short forward input rotates the nose down. Centre to stop requesting rotation: the tilt stays. Opposite input levels you, then a small backward tilt can brake the drift.',
+              'Короткий рух уперед обертає ніс униз. Центрування припиняє команду обертання: нахил зберігається. Протилежний рух вирівнює, а малий нахил назад може загальмувати дрейф.',
+            )
+          : t(
+              'Push forward to tip the nose down. Some thrust now points forward, so you accelerate. Pull back gently to slow down.',
+              'Штовхніть стік уперед, щоб опустити ніс. Частина тяги тепер спрямована вперед, і дрон прискорюється. Плавно потягніть назад, щоб загальмувати.',
+            ),
+      roll:
+        mode() === 'acro'
+          ? t(
+              'A short sideways input rotates the bank. Centre and the bank stays; thrust carries you sideways. Counter-roll to level and then brake. Yaw turns the nose instead.',
+              'Короткий рух убік змінює крен. Після центрування крен зберігається, а тяга рухає вбік. Протилежним креном вирівняйтеся й загальмуйте. Рискання натомість повертає ніс.',
+            )
+          : t(
+              'Move sideways to bank the drone. It leans and accelerates sideways without needing to turn the nose.',
+              'Рухайте стік убік, щоб нахилити дрон. Він нахиляється та прискорюється вбік без повороту носа.',
+            ),
     })[axis];
   const activeStep = () =>
     Math.min(Math.max(0, snapshot.state?.step ?? 0), (lesson?.steps.length ?? 1) - 1);
   const currentStep = () => lesson?.steps[stage === 'guide' ? viewedStep : activeStep()];
   const mode = () => snapshot.mode ?? lesson?.mode ?? 'self-level';
   const criterion = (index = activeStep()) => lesson?.course?.steps?.[mode()]?.[index];
-  const isExploring = () => stage === 'guide' && lesson?.index === 0 && viewedStep === 0;
+  const isExploring = () =>
+    stage === 'guide' && ['beginner-01', 'beginner-15'].includes(lesson?.id) && viewedStep === 0;
+  const sequence = () => (lesson?.mode === 'acro' ? ACRO_LESSON_ORDER : SELF_LEVEL_LESSON_ORDER);
+  const lessonNumber = () => Math.max(0, sequence().indexOf(lesson?.id)) + 1;
   const displayedStep = () => {
     if (!isExploring()) return currentStep();
     return {
@@ -418,8 +434,8 @@ export function mountBeginnerCoach({
         'p',
         'coach-eyebrow',
         t(
-          `FLIGHT SCHOOL · ${String((lesson.index ?? 0) + 1).padStart(2, '0')} / 14`,
-          `ШКОЛА ПОЛЬОТІВ · ${String((lesson.index ?? 0) + 1).padStart(2, '0')} / 14`,
+          `${lesson.mode === 'acro' ? 'ACRO SCHOOL' : 'SELF-LEVEL PRACTICE'} · ${String(lessonNumber()).padStart(2, '0')} / ${sequence().length}`,
+          `${lesson.mode === 'acro' ? 'ШКОЛА ACRO' : 'САМОВИРІВНЮВАННЯ'} · ${String(lessonNumber()).padStart(2, '0')} / ${sequence().length}`,
         ),
       );
     const headingText = node('div', '');
