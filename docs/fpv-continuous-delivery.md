@@ -696,3 +696,22 @@ public deployment remain unclaimed.
 The runtime is now frozen; subsequent documentation/evidence-only commits record
 publication. Publish as native #902 child of #932. Continue independent approved
 art/content work while exact-head CI and held-stack review remain external gates.
+
+### Continuous-practice publication
+
+[PR #934](https://github.com/mekhovov/revealline/pull/934) is published from
+`codex/fpv-endless-practice`, attached to this chat, and appended to native #902
+after #932 using the stack API. The open sequence is now
+#905 → #907 → #923 → #924 → #925 → #926 → #929 → #932 → #934.
+No rebase, manual retarget, hold removal, global policy change or merge bypass
+was used. Runtime source remains `0fe2bc45a`; later commits contain only delivery
+and qualification documentation. The scheduled milestone remains
+`v0.150.0 — Unified native experience`.
+
+The rebuilt reviewed-player tab is left open in dedicated practice with keyboard
+takeover and active Reset verified. Existing USB-radio flight preference is
+preserved. Local source and packaged playtest are ready for player feedback.
+Exact-head CI, protected merge and public deployment are pending external gates;
+no public live claim is made. Do not repeatedly poll unchanged checks. Read the
+latest stack state before the next increment and continue the approved R4/R5
+art/environment and R6 demonstration/ghost/practice backlog independently.
