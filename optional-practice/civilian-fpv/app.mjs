@@ -635,6 +635,7 @@ export function mountFlightApp({
       mode,
       display: $('academy-drone-guide').value,
       scale: $('academy-guide-scale').value,
+      reducedMotion: Boolean(win.matchMedia?.('(prefers-reduced-motion: reduce)').matches),
     });
     $('sticks').setAttribute(
       'aria-label',

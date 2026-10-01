@@ -530,3 +530,46 @@ Continue independent R4/R5 art and R6 demonstration/ghost/practice work while
 publication runs. Integrate #922's dynamic reimport modal navigation during the
 coordinated main refresh, as noted above. Additional unit coverage and remaining
 human/device acceptance stay in R7.
+
+## Motion teaching feedback — 2 October 2026
+
+Development branch `codex/fpv-motion-teaching` starts from #929 at
+`00e7008d89de32400f93108c5f02894d26fd6f89`. The parent remains open and its observed
+optional-practice, candidate and release-ready checks succeeded. Native #902
+membership remains linear through #929; existing holds are preserved.
+
+Implemented this feedback as a separate increment: full-travel, both-direction
+looping examples at explicit 0.2× teaching speed; automatic deliberate
+keyboard/touch/calibrated-radio takeover; independent illustrative motor demand
+and propeller phases; true-position moving ground/height; and peripheral compact
+flight aids in World Studio and Academy. Expanded learning remains available.
+See `fpv-motion-teaching.md` for the command-mix convention and limitations.
+
+Functional evidence before packaging:
+
+- Actual browser: 15 teaching checks, including all eight mode/axis examples,
+  looping, touch/keyboard/radio ownership, reduced motion, and guide reentry with
+  held inputs. A synthetic pointer endpoint was corrected after its first
+  fractional-coordinate assertion failed; the final run passes all 15.
+- Actual browser: 25 shared diagram checks for six torque signs, all four
+  propeller outputs, phase/pause/seek/replay, ground movement, height, full
+  inversion, compact isolation and disposal.
+- Actual World Studio host: 16 checks with controlled TX15-shaped Gamepad data
+  and keyboard events. Verified profile restoration while Keyboard is selected,
+  no takeover from rest/jitter, deliberate takeover, no real-lesson mutation,
+  disconnect/reconnect pause, menu handoff, and keyboard takeoff after preview.
+- All 14 primary Acro lessons complete and independently replay with zero
+  contacts and full health. The integrator, scoring and recorded inputs are
+  unchanged.
+- Desktop, 700 px and 390 px browser layout inspection: compact diagram128×96,
+  passive gimbals50 px, touch96 px on mobile, no document horizontal overflow.
+  Mobile telemetry has its own bottom strip. Fullscreen entry/exit and explicit
+  pause remain functional. No physical device performance or user acceptance
+  inferred from browser viewport inspection.
+- Targeted ESLint, syntax and formatting checks passed. New unit coverage
+  remains deferred to R7. Receipts: `docs/evidence/fpv-motion-*-20261002.json`.
+
+Next gate: freeze committed inputs, admit all three optional packages, rebuild
+and launch the reviewed-player URL, then publish a focused native-stack child of
+#929. This checkpoint does not claim public deployment or physical-radio
+acceptance. Preserve #928, #922, #889, graphics WIP and Garage/ghost handoffs.
