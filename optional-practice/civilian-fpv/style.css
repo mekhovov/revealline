@@ -198,11 +198,11 @@
 :root {
   color-scheme: dark;
   font-family: ui-sans-serif, system-ui, sans-serif;
-  background: #112934;
-  color: #e8f4ef;
+  background: var(--fk-panel);
+  color: var(--fk-text);
   font-synthesis: none;
   --line: #47636b;
-  --accent: #dff978;
+  --accent: var(--fk-amber);
 }
 * {
   box-sizing: border-box;
@@ -219,7 +219,7 @@ button,
 select,
 input {
   color: inherit;
-  background: #183c46;
+  background: var(--fk-panel-raised);
   border: 1px solid var(--line);
   border-radius: 8px;
   min-height: 42px;
@@ -230,10 +230,10 @@ button {
   font-weight: 650;
 }
 button:hover {
-  background: #28515a;
+  background: #263a4b;
 }
 .primary {
-  color: #172f31;
+  color: var(--fk-bg);
   background: var(--accent);
   border-color: var(--accent);
 }
@@ -242,7 +242,7 @@ button:disabled {
   cursor: default;
 }
 :focus-visible {
-  outline: 3px solid #e1ff95;
+  outline: 3px solid var(--fk-cyan);
   outline-offset: 3px;
 }
 [hidden] {
@@ -426,7 +426,7 @@ footer {
   align-items: center;
   gap: 12px;
   padding: 8px 18px;
-  background: #112934;
+  background: var(--fk-panel);
 }
 footer p {
   font-size: 0.75rem;
@@ -526,15 +526,15 @@ footer button {
 dialog {
   width: min(900px, calc(100vw - 26px));
   max-height: calc(100svh - 30px);
-  border: 1px solid #769693;
+  border: 1px solid var(--fk-control-line);
   border-radius: 16px;
   padding: 20px;
-  background: #17333d;
-  color: #e8f4ef;
+  background: var(--fk-panel);
+  color: var(--fk-text);
   overflow: auto;
 }
 dialog::backdrop {
-  background: #03141bd9;
+  background: #070b12d9;
 }
 dialog header {
   display: flex;
@@ -543,7 +543,7 @@ dialog header {
   gap: 15px;
   position: sticky;
   top: -20px;
-  background: #17333d;
+  background: var(--fk-panel);
   padding-block: 12px;
   z-index: 1;
 }
@@ -584,9 +584,9 @@ dialog select {
   border: 1px dashed var(--line);
 }
 .radio-setup {
-  --radio-surface: #0f2028;
-  --radio-soft: #aec3c4;
-  --radio-line: #3b5359;
+  --radio-surface: var(--fk-bg);
+  --radio-soft: var(--fk-muted);
+  --radio-line: var(--fk-line);
   color: #edf4ec;
   text-align: left;
 }
@@ -598,7 +598,7 @@ dialog select {
     600 10px ui-monospace,
     monospace;
   letter-spacing: 0.15em;
-  color: #c8eb93;
+  color: var(--fk-amber);
   margin: 0 0 10px;
 }
 .radio-guide-heading h2 {
@@ -625,7 +625,7 @@ dialog select {
   margin: 0 0 9px;
 }
 .radio-setup .radio-connection.is-connected {
-  color: #c8eb93;
+  color: var(--fk-amber);
 }
 .radio-device-row {
   display: flex;
@@ -645,7 +645,7 @@ dialog select {
   min-height: 42px;
   padding: 9px 11px;
   color: #edf4ec;
-  background: #1d353d;
+  background: var(--fk-panel-raised);
   border: 1px solid var(--radio-line);
   border-radius: 6px;
   font: inherit;
@@ -660,7 +660,7 @@ dialog select {
   white-space: normal;
 }
 .radio-setup :is(button, input, select, summary):focus-visible {
-  outline: 2px solid #c8eb93;
+  outline: 2px solid var(--fk-amber);
   outline-offset: 3px;
 }
 .radio-steps {
@@ -676,7 +676,7 @@ dialog select {
   gap: 8px;
   align-items: center;
   color: #80989b;
-  border-top: 2px solid #3b5359;
+  border-top: 2px solid var(--fk-line);
   padding-top: 9px;
   font-size: 12px;
 }
@@ -686,7 +686,7 @@ dialog select {
     monospace;
 }
 .radio-steps .is-current {
-  border-color: #c8eb93;
+  border-color: var(--fk-amber);
   color: #edf4ec;
 }
 .radio-steps .is-done {
@@ -745,7 +745,7 @@ dialog select {
   width: 20px;
   height: 20px;
   flex: 0 0 20px;
-  accent-color: #c8eb93;
+  accent-color: var(--fk-amber);
 }
 .radio-guide-actions {
   display: flex;
@@ -753,9 +753,9 @@ dialog select {
   gap: 8px;
 }
 .radio-setup button.radio-primary {
-  background: #c8eb93;
-  color: #15221a;
-  border-color: #c8eb93;
+  background: var(--fk-amber);
+  color: var(--fk-bg);
+  border-color: var(--fk-amber);
   font-weight: 700;
   min-width: 150px;
 }
@@ -804,7 +804,7 @@ dialog select {
   width: 112px;
   height: 112px;
   flex: 0 1 112px;
-  border: 1px solid #769693;
+  border: 1px solid var(--fk-control-line);
   border-radius: 50%;
   background:
     linear-gradient(transparent calc(50% - 0.5px), #74949455 50%, transparent calc(50% + 0.5px)),
@@ -814,8 +814,8 @@ dialog select {
       #74949455 50%,
       transparent calc(50% + 0.5px)
     ),
-    #1c333b;
-  box-shadow: inset 0 0 0 9px #142a3299;
+    var(--fk-panel);
+  box-shadow: inset 0 0 0 9px #10192399;
 }
 .radio-stick span {
   position: absolute;
@@ -837,7 +837,7 @@ dialog select {
   height: 14px;
   margin: -7px;
   border-radius: 50%;
-  background: #c8eb93;
+  background: var(--fk-amber);
   pointer-events: none;
 }
 .radio-setup .radio-stick-target {
@@ -865,7 +865,7 @@ dialog select {
   font:
     11px ui-monospace,
     monospace;
-  color: #c8eb93;
+  color: var(--fk-amber);
 }
 .radio-extras {
   margin-top: 24px;
@@ -908,7 +908,7 @@ dialog select {
 .radio-setup textarea {
   width: 100%;
   min-height: 100px;
-  background: #102831;
+  background: var(--fk-panel);
   color: inherit;
 }
 .radio-setup pre {
@@ -1022,7 +1022,7 @@ dialog select {
   }
 }
 a {
-  color: #c5f391;
+  color: var(--fk-amber);
 }
 body.touch-mode #sticks {
   display: none;
@@ -1866,4 +1866,159 @@ html[data-fpv-immersive='academy'] .sim-academy [data-immersive-controls='true']
 }
 .field-kit input[type='checkbox'] {
   accent-color: var(--fk-amber);
+}
+
+/* Legible rear-reference instrument graphics shared with the controls lab. */
+.field-kit .sim-response-drawing {
+  display: block;
+  width: 100%;
+  overflow: visible;
+}
+.field-kit .sim-response-rear {
+  fill: var(--fk-cyan);
+  stroke: var(--fk-bg);
+  stroke-width: 1;
+}
+.field-kit .sim-response-front-label,
+.field-kit .sim-response-rear-label {
+  font: 8px var(--fk-font-mono);
+  fill: var(--fk-muted);
+  letter-spacing: 0.5px;
+}
+.field-kit .sim-response-front-label {
+  fill: var(--fk-amber);
+}
+.field-kit .sim-response-struts {
+  stroke: var(--fk-muted);
+  stroke-width: 2;
+}
+.field-kit .sim-drone-response {
+  background: #101923ed;
+  border-color: var(--fk-line);
+}
+.field-kit .sim-response-body {
+  fill: #647786;
+  stroke: var(--fk-text);
+}
+.field-kit .sim-response-motor {
+  fill: var(--fk-panel);
+  stroke: var(--fk-muted);
+}
+.field-kit .sim-response-ground {
+  fill: #18253180;
+  stroke: var(--fk-line);
+}
+.field-kit .sim-labelled-stick {
+  box-shadow:
+    inset 0 0 0 6px #101923cc,
+    0 2px 12px #0003;
+  background-color: #101923c9;
+  border-color: var(--fk-control-line);
+}
+.field-kit .sim-labelled-stick .sim-stick-direction {
+  position: absolute;
+  display: block;
+  color: var(--fk-text);
+  font: 9px/1.15 var(--fk-font-ui);
+  white-space: nowrap;
+  text-shadow: 0 1px 2px #000;
+  pointer-events: none;
+}
+.field-kit .sim-stick-up {
+  top: -17px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+.field-kit .sim-stick-down {
+  bottom: -17px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+.field-kit .sim-stick-left {
+  top: 42%;
+  right: calc(100% + 4px);
+}
+.field-kit .sim-stick-right {
+  top: 58%;
+  left: calc(100% + 4px);
+}
+.sim-academy #sticks {
+  gap: 78px;
+  left: 66px;
+  bottom: 144px;
+}
+.sim-academy #sticks > div {
+  width: 82px;
+  height: 82px;
+  position: relative;
+}
+.sim-academy #sticks.expanded-sticks > div {
+  width: 112px;
+  height: 112px;
+}
+.field-kit .sim-menu-hint {
+  color: var(--fk-muted);
+  font: 12px/1.4 var(--fk-font-ui);
+  margin: 8px 0;
+}
+.field-kit [data-fpv-menu-focus] {
+  outline: 3px solid var(--fk-cyan);
+  outline-offset: 3px;
+}
+@media (max-width: 600px) {
+  .sim-academy #sticks {
+    left: 44px;
+    gap: 62px;
+  }
+  .sim-academy #sticks > div {
+    width: 62px;
+    height: 62px;
+  }
+  .field-kit .sim-labelled-stick .sim-stick-direction {
+    font-size: 8px;
+  }
+}
+
+.field-kit .sim-response-lower-arms {
+  fill: none;
+  stroke: #425563;
+  stroke-width: 5;
+  stroke-linecap: round;
+}
+.field-kit .sim-response-body-side {
+  fill: #263a4b;
+  stroke: #a5b2bb;
+  stroke-width: 1;
+}
+.field-kit .sim-response-motor-front {
+  stroke: var(--fk-amber);
+}
+.field-kit .sim-response-front-leader {
+  fill: none;
+  stroke: var(--fk-amber);
+  stroke-width: 0.65;
+  stroke-dasharray: 2 2;
+}
+.field-kit .sim-response-drawing[data-inverted='true'] .sim-response-body {
+  fill: #704640;
+}
+.field-kit [data-fpv-menu-editing] {
+  outline: 3px solid var(--fk-amber);
+  outline-offset: 3px;
+}
+@media (max-width: 600px) {
+  .field-kit .sim-labelled-stick .sim-stick-direction {
+    font-size: 10px;
+  }
+  .field-kit .sim-drone-response[data-display='compact'][data-scale='standard'] {
+    width: 146px;
+    font-size: 10px;
+    padding: 5px 8px 7px;
+  }
+  .field-kit .sim-drone-response[data-display='compact'][data-scale='standard'] svg {
+    max-height: 80px;
+  }
+  .field-kit .sim-drone-response[data-display='compact'][data-scale='standard'] .sim-response-view {
+    display: none;
+  }
 }
