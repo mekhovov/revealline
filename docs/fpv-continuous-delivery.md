@@ -150,3 +150,35 @@ feature handoffs are retained in `/tmp/fpv-reimport-data-loss-20261001/`,
 `/tmp/fpv-operations-readable-20261001/garage/` and the sparse worktree
 `/tmp/fpv-local-ghost-20261001` (commit `a4bff27e3429d1da9a24a6f2772baf6c7ec80836`).
 Do not discard these unpublished artifacts or disturb active agent work.
+
+### Guided radio setup and fullscreen follow-up
+
+The owner next requested a player-friendly calibration screen and immersive flight
+in every level. Branch `codex/fpv-radio-setup-ux` is based on radio fix #899 and
+contains that focused follow-up. Known profiles open on a live confirmation;
+unknown devices get directed calibration, with advanced tools behind disclosures.
+Both simulators share native fullscreen and an explicit full-window fallback.
+See `fpv-radio-setup-ux.md` for the design references and verification receipt.
+
+Published as PR **#901** against `codex/fpv-radio-worlds`, in separate native
+stack **#902** with members **#899 → #901**. Existing content stack #889 stays
+held for reimport correction. Parent #899 received a main merge and the additional
+USB-disconnect isolation fix at `dc85a3bda021`; this feature was rebased onto that
+head without rewriting the concurrently updated parent. Refresh current heads
+before publication or any coordinated history change. Continue preserving prepared Garage
+and local-ghost work while the publication-size repair and reimport correction
+receive their own verified increments. Additional unit coverage stays in the
+final phase; functional checks remain required throughout.
+
+Final local artifacts: `dist/fpv-radio-setup-playtest` SHA-256
+`d0615fa3f3929f8a979c3fb0945b2b1ac13093ee7d55b90a1c497c2be60a3faf`
+and the preserved 88-demonstration `dist/fpv-stadium-demo-playtest` SHA-256
+`7eaf181a223727d4071ccd26a9a909e046a9ab9c045326b790760cac622e805a`.
+Known and unfamiliar radio calibration, advanced-capture transitions, fullscreen
+entry points, mobile EN/UK layouts, offline flow and non-radio disconnect isolation
+passed browser verification. See the committed verification receipt for scope and
+intermediate/final build identities. Required GitHub checks and protected stack
+publication continue asynchronously; Pages run 36790807793 also failed, so public
+availability still requires the separately tracked site-size repair and a verified
+deployment. Preserve stack protection and coordinate any necessary linear rebase
+with current parent work, recovery refs and explicit remote-head leases.

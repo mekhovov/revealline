@@ -49,11 +49,6 @@ const BASE_OPTIONAL_PACKAGE_POLICIES = Object.freeze({
       'renderer.mjs',
       'world-visuals.mjs',
       'world-themes.mjs',
-      'vendor/addons/loaders/GLTFLoader.js',
-      'vendor/addons/controls/TransformControls.js',
-      'vendor/addons/utils/BufferGeometryUtils.js',
-      'vendor/addons/utils/SkeletonUtils.js',
-      'vendor/addons/provenance.json',
       'input.mjs',
       'copy.mjs',
       'style.css',
@@ -64,6 +59,9 @@ const BASE_OPTIONAL_PACKAGE_POLICIES = Object.freeze({
       'radio-runtime.mjs',
       'radio-session.mjs',
       'radio-setup.mjs',
+      'radio-guide.mjs',
+      'flight-fullscreen.mjs',
+      'flight-fullscreen.css',
       'math.mjs',
       'rotation-table.mjs',
       'model.mjs',
@@ -109,27 +107,6 @@ const BASE_OPTIONAL_PACKAGE_POLICIES = Object.freeze({
     // Official npm tarball integrity verified before selecting these exact files.
     // Only these reviewed bytes may include dormant native network-loader code.
     vendorPins: Object.freeze([
-      Object.freeze({
-        path: 'optional-practice/civilian-fpv/vendor/addons/loaders/GLTFLoader.js',
-        bytes: 117586,
-        sha256: '03952cb129d558f92b8e6c757fbf7c1f718b3126c4d34f264d574b40ea36054f',
-      }),
-      Object.freeze({
-        path: 'optional-practice/civilian-fpv/vendor/addons/controls/TransformControls.js',
-        bytes: 51722,
-        sha256: '10f6d3e4c108dff62110f61a76749f9a1826c9781df9c3eb4ca0b5d9d2f5c4a8',
-      }),
-      Object.freeze({
-        path: 'optional-practice/civilian-fpv/vendor/addons/utils/BufferGeometryUtils.js',
-        bytes: 37728,
-        sha256: '259085a7dac89e0840393a9347c77123fbc4206ec2146bf0c29ffc72e14a2800',
-      }),
-      Object.freeze({
-        path: 'optional-practice/civilian-fpv/vendor/addons/utils/SkeletonUtils.js',
-        bytes: 11551,
-        sha256: '28017bf37d0ecb0c4be6048db759ff14df729a562464830b064d4cc239c5af17',
-      }),
-
       Object.freeze({
         path: 'optional-practice/civilian-fpv/vendor/three.core.js',
         bytes: 1458113,
@@ -189,7 +166,13 @@ export const OPTIONAL_PACKAGE_POLICIES = Object.freeze({
         .map((name) => legacyFPV.root + name),
       ...legacyFPV.sharedFiles,
       ...[
+        'vendor/addons/loaders/GLTFLoader.js',
+        'vendor/addons/controls/TransformControls.js',
+        'vendor/addons/utils/BufferGeometryUtils.js',
+        'vendor/addons/utils/SkeletonUtils.js',
+        'vendor/addons/provenance.json',
         'world-app.mjs',
+        'world-renderer.mjs',
         'world-demonstrations.mjs',
         'world-assets.mjs',
         'world-hangar.mjs',
@@ -214,6 +197,26 @@ export const OPTIONAL_PACKAGE_POLICIES = Object.freeze({
     ]),
     vendorPins: Object.freeze([
       ...legacyFPV.vendorPins,
+      Object.freeze({
+        path: 'optional-practice/civilian-fpv/vendor/addons/loaders/GLTFLoader.js',
+        bytes: 117586,
+        sha256: '03952cb129d558f92b8e6c757fbf7c1f718b3126c4d34f264d574b40ea36054f',
+      }),
+      Object.freeze({
+        path: 'optional-practice/civilian-fpv/vendor/addons/controls/TransformControls.js',
+        bytes: 51722,
+        sha256: '10f6d3e4c108dff62110f61a76749f9a1826c9781df9c3eb4ca0b5d9d2f5c4a8',
+      }),
+      Object.freeze({
+        path: 'optional-practice/civilian-fpv/vendor/addons/utils/BufferGeometryUtils.js',
+        bytes: 37728,
+        sha256: '259085a7dac89e0840393a9347c77123fbc4206ec2146bf0c29ffc72e14a2800',
+      }),
+      Object.freeze({
+        path: 'optional-practice/civilian-fpv/vendor/addons/utils/SkeletonUtils.js',
+        bytes: 11551,
+        sha256: '28017bf37d0ecb0c4be6048db759ff14df729a562464830b064d4cc239c5af17',
+      }),
       {
         path: 'optional-practice/civilian-fpv/vendor/rapier/rapier.mjs',
         bytes: 4340292,

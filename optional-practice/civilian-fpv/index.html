@@ -6,6 +6,7 @@
     <meta name="theme-color" content="#112934" />
     <title>FPV · Flight Studio</title>
     <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="flight-fullscreen.css" />
     <link rel="manifest" href="app.webmanifest" />
     <script type="module" src="app.mjs"></script>
   </head>
@@ -22,7 +23,7 @@
           <button id="courses" data-copy="courses"></button
           ><button id="notebook-button" data-copy="notebook"></button
           ><button id="setup" data-copy="setup"></button><button id="help" data-copy="help"></button
-          ><button id="fullscreen" data-copy="fullscreen"></button
+          ><button id="fullscreen" type="button"></button
           ><select id="language" aria-label="Language / Мова">
             <option value="en">English</option>
             <option value="uk">Українська</option>
@@ -136,7 +137,7 @@
     </dialog>
     <dialog id="setup-dialog">
       <header>
-        <h2 data-copy="setup"></h2>
+        <h2 id="radio-setup-title">Radio setup</h2>
         <button data-close="setup-dialog" data-copy="close"></button>
       </header>
       <div id="radio-setup"></div>
