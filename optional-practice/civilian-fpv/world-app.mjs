@@ -3560,10 +3560,10 @@ export function mountWorldApp({
   on($('flight-stick-display'), 'change', () => paintInput(flight?.snapshot()));
   on($('flight-drone-guide'), 'change', () => paintInput(flight?.snapshot()));
   on($('flight-guide-scale'), 'change', () => paintInput(flight?.snapshot()));
-  on($('flight-quality'), 'change', async () => {
+  async function changeFlightVisuals(update) {
     const ready = sceneReady || qualityPreparing;
     pauseFlight();
-    renderer?.setQuality?.($('flight-quality').value);
+    update();
     // A loading course prepares its final assets before enabling the arm control.
     if (!ready || !renderer || !flight) return;
     qualityPreparing = true;
@@ -3573,7 +3573,18 @@ export function mountWorldApp({
     updateHUD(flight.snapshot());
     $('flight-status').textContent = txt('Preparing graphics…', 'Підготовка графіки…');
     try {
-      if ((await renderer.prepare?.()) === false) return;
+      let prepared = false;
+      for (let attempt = 0; attempt < 3 && !prepared; attempt++) {
+        prepared = (await renderer.prepare?.()) !== false;
+        if (disposed || token !== flightToken || generation !== scenePreparationGeneration) return;
+      }
+      if (!prepared)
+        throw new Error(
+          txt(
+            'Graphics changed during preparation. Retry the flight.',
+            'Графіка змінилася під час підготовки. Повторіть політ.',
+          ),
+        );
       if (disposed || token !== flightToken || generation !== scenePreparationGeneration) return;
       qualityPreparing = false;
       sceneReady = true;
@@ -3588,8 +3599,13 @@ export function mountWorldApp({
         reportError(error);
       }
     }
-  });
-  on($('drone-look'), 'change', () => renderer?.setDrone?.($('drone-look').value));
+  }
+  on($('flight-quality'), 'change', () =>
+    changeFlightVisuals(() => renderer?.setQuality?.($('flight-quality').value)),
+  );
+  on($('drone-look'), 'change', () =>
+    changeFlightVisuals(() => renderer?.setDrone?.($('drone-look').value)),
+  );
   on($('world-fire'), 'pointerdown', (e) => {
     e.preventDefault();
     if (!replayProof && flight?.snapshot().status === 'active') {
