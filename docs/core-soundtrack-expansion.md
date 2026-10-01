@@ -135,6 +135,34 @@ slot are settled; no calendar ETA is promised while these remain unresolved. Phy
 This transfers the existing collection only; the skipped broader UA-FPV sourcing/
 clearance milestone and paused AI originals are not restarted.
 
+### Phase 2 follow-up — creator links beside playing-song credits
+
+**Implemented in the PR #903 branch; awaiting release qualification.** The 1 October
+request adds creator/source links wherever current song credits are shown:
+main-menu footer, compact menu/Pause/Audio controls, Solo and Couch details, Demo,
+music-library Now Playing and uploaded-original audition. Links open a new tab
+with opener protection. Clicking them cannot trigger remembered music startup,
+blocked-play retry or suspended-context recovery. Pause/mute choices are retained.
+
+Source selection prefers the creator's page, retains combined source credits, and
+keeps licence/cultural-reference URLs separate. Unsafe or missing URLs produce no
+invented author link. Anchors survive transport updates without losing keyboard
+focus; English/Ukrainian labels refresh while paused. Audition credits stay bound
+to the audible original when the editor selects another track.
+
+Independent review found and resolved two issues: licence links needed distinct
+accessible names, and creator clicks needed exclusion from trusted-start gestures.
+Direct local browser verification confirms the author URL opens in a separate tab
+while the original game remains paused/muted. Physical devices and public deployment
+remain unverified. The new helper and related credit surfaces are explicit Field Kit
+audio dependencies; historical production records and review pins are unchanged.
+Existing production-ledger and publisher-queue limitations above still apply.
+Final focused regressions pass **278/278 with no skips**, including source safety,
+focus, host gestures and audition identity. Pinned formatting, scoped lint,
+localization and diff checks pass. [Verification and retained test evidence](verification/optional-soundtrack-sources-20261001/creator-links/verification.json)
+include the initial whitelist failures and the corrected complete reruns. Temporary
+disk exhaustion blocked writes, then recovered; source/evidence were preserved.
+
 The 30 September checkpoint below is retained as history. Its counts describe the
 pre-exclusion public state and must not be presented as phase-1 delivery evidence.
 

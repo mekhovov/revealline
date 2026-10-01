@@ -1,3 +1,4 @@
+import { musicCreatorLinks, renderMusicCreatorLinks } from './music-credits.mjs';
 import { contentText } from '../i18n/content.mjs';
 import { t, localizedText, localizedAttribute, localizedMessage } from '../i18n/index.mjs';
 import { soundtrackDownloadVolumes } from '../soundtrack-download-volumes.mjs';
@@ -176,6 +177,7 @@ export function attachSoundtrackPanel({
     returnFocus = null;
   let privateCollectionPlaylistId = null;
   let auditionURL = null,
+    auditionTrack = null,
     auditionToken = 0,
     auditionController = null,
     restoreMusic = false;
@@ -1281,6 +1283,7 @@ export function attachSoundtrackPanel({
       }),
   );
   const auditionStatus = node('p', 'audition-status');
+  const auditionSources = node('div', 'audition-sources');
   const auditionFeedback = createOperationStatus(auditionStatus);
   const auditionControls = section(
     localizedMessage('interface:auditionControls'),
@@ -1327,6 +1330,7 @@ export function attachSoundtrackPanel({
     tagFields,
     row(applyTrack, deleteTrack),
     auditionStatus,
+    auditionSources,
     row(auditionButton, stopAuditionButton),
     audition,
     auditionControls,
@@ -3467,6 +3471,7 @@ export function attachSoundtrackPanel({
     auditionMaster?.setLocal({ muted: true });
     auditionController?.abort();
     auditionController = null;
+    auditionTrack = null;
     audition.pause();
     audition.removeAttribute('src');
     try {
@@ -3506,6 +3511,7 @@ export function attachSoundtrackPanel({
       isCurrent: () => !disposed && dialog.open && token === auditionToken,
     });
     auditionActivity = lease;
+    auditionTrack = track;
     auditionController = new AbortController();
     const signal = auditionController.signal;
     update();
@@ -3575,6 +3581,7 @@ export function attachSoundtrackPanel({
     if (state.playing && !audioMaster) await onAudioEnabled();
   }
   function updateAudition() {
+    renderMusicCreatorLinks(auditionSources, auditionTrack, { document: doc });
     const available = auditionURL !== null && !disposed;
     auditionControls.hidden = !available;
     toggleAudition.disabled = !available || busy;
@@ -3601,6 +3608,7 @@ export function attachSoundtrackPanel({
   }
   const sourceSignatures = new WeakMap();
   function sourceLinks(container, track) {
+    container.classList.add('music-creator-links');
     if (track?.sourceCredits?.length > 1) container.classList.add('soundtrack-source-provenance');
     const sites = [
       ...(track?.sourceCredits?.length > 1
@@ -3611,12 +3619,15 @@ export function attachSoundtrackPanel({
         : []),
       ...(track?.websites ?? []),
     ];
-    if (!sites.length && track?.rights?.source)
-      sites.push({ label: t('interface:sourceWebsite'), url: track.rights.source });
+    for (const site of musicCreatorLinks(track))
+      if (!sites.some((existing) => existing.url === site.url))
+        sites.push({ label: t('common:music.creatorSource'), url: site.url });
     const signature = JSON.stringify(sites);
     if (sourceSignatures.get(container) === signature) return;
     sourceSignatures.set(container, signature);
     container.replaceChildren();
+    const creators = new Map(musicCreatorLinks(track).map((site) => [site.url, site.label]));
+    const displayed = new Set();
     for (const site of sites) {
       let url;
       try {
@@ -3625,8 +3636,15 @@ export function attachSoundtrackPanel({
         continue;
       }
       if (!['http:', 'https:'].includes(url.protocol) || url.username || url.password) continue;
+      if (displayed.has(url.href)) continue;
+      displayed.add(url.href);
       const link = doc.createElement('a');
-      localizedText(link, () => site.label || t('interface:sourceWebsite'));
+      localizedText(link, () => site.label || t('common:music.creatorSource'));
+      localizedAttribute(link, 'aria-label', () =>
+        creators.has(url.href)
+          ? t('common:music.creatorSourceNewTab', { artist: creators.get(url.href) })
+          : t('common:music.resourceNewTab', { resource: site.label || url.hostname }),
+      );
       link.href = url.href;
       link.target = '_blank';
       link.rel = 'noopener noreferrer';

@@ -228,5 +228,8 @@
   "radioSounds": "FPV radio announcements",
   "radioVolume": "Radio volume",
   "movementSounds": "Movement sounds",
-  "movementVolume": "Movement volume"
+  "movementVolume": "Movement volume",
+  "music.creatorSource": "Creator source ↗",
+  "music.creatorSourceNewTab": "Visit {{artist}} — opens in a new tab",
+  "music.resourceNewTab": "{{resource}} — opens in a new tab"
 }
