@@ -656,7 +656,7 @@ export function mountWorldApp({
     sectorReference = null,
     sectorReferenceId = null,
     sectorReferenceStatus = 'none',
-    sectorLookup = null;
+    sectorLookup = null,
     lastRadioDiscovery = -Infinity;
   let selectedWorld = null;
   const sectors = createSectorTracker();
