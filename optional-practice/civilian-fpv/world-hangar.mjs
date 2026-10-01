@@ -1,5 +1,5 @@
 import * as THREE from './vendor/three.module.js';
-import { buildDroneVisual } from './world-visuals.mjs';
+import { buildDroneVisual, createEnvironmentLight, setSurfaceQuality } from './world-visuals.mjs';
 
 /** A close inspection view. Appearance selections never modify flight physics. */
 export function mountDroneHangar({
@@ -14,6 +14,7 @@ export function mountDroneHangar({
     scene = null,
     camera = null,
     drone = null,
+    environment = null,
     frame = 0,
     disposed = false,
     drag = null,
@@ -28,14 +29,22 @@ export function mountDroneHangar({
   const disposeScene = () => {
     if (!scene) return;
     const geometry = new Set(),
-      materials = new Set();
+      materials = new Set(),
+      textures = new Set();
     scene.traverse((object) => {
       if (object.geometry) geometry.add(object.geometry);
       for (const item of Array.isArray(object.material) ? object.material : [object.material])
         if (item) materials.add(item);
     });
     for (const g of geometry) g.dispose();
-    for (const m of materials) m.dispose();
+    for (const m of materials) {
+      for (const value of Object.values(m)) if (value?.isTexture) textures.add(value);
+      m.dispose();
+    }
+    for (const texture of textures) texture.dispose();
+    scene.environment = null;
+    environment?.dispose();
+    environment = null;
     scene.clear();
   };
   function build() {
@@ -48,6 +57,13 @@ export function mountDroneHangar({
     disposeScene();
     scene = new THREE.Scene();
     scene.background = new THREE.Color(0x14292f);
+    environment = createEnvironmentLight(renderer, {
+      sky: 0x9baebb,
+      ground: 0x253a3d,
+      indoor: true,
+    });
+    scene.environment = environment.texture;
+    scene.environmentIntensity = 0.75;
     camera = new THREE.PerspectiveCamera(45, 1, 0.01, 10);
     scene.add(new THREE.HemisphereLight(0xe1faff, 0x394346, 2.5));
     const key = new THREE.DirectionalLight(0xffffff, 4);
@@ -64,7 +80,12 @@ export function mountDroneHangar({
       parent.add(object);
       return object;
     };
-    buildDroneVisual({ parent: drone, mesh, material, kind: selector.value });
+    buildDroneVisual({ parent: drone, mesh, material, kind: selector.value, quality: 'high' });
+    const paints = new Set();
+    drone.traverse((item) => {
+      if (item.material) paints.add(item.material);
+    });
+    setSurfaceQuality(paints, 'high', renderer.capabilities.getMaxAnisotropy());
     const pad = new THREE.Mesh(
       new THREE.CylinderGeometry(0.28, 0.3, 0.025, 64),
       material(0x2c4349, { metalness: 0.4, roughness: 0.4 }),

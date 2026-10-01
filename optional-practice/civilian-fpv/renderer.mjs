@@ -1,5 +1,11 @@
 import * as THREE from './vendor/three.module.js';
-import { buildWorldVisuals, buildDroneVisual, themeForCourse } from './world-visuals.mjs';
+import {
+  buildWorldVisuals,
+  buildDroneVisual,
+  themeForCourse,
+  setSurfaceQuality,
+  createEnvironmentLight,
+} from './world-visuals.mjs';
 
 const QUALITIES = Object.freeze({
   low: {
@@ -11,7 +17,6 @@ const QUALITIES = Object.freeze({
     ambient: 0.9,
     key: 0.86,
     fill: 0,
-    detail: 0,
   },
   balanced: {
     ratio: 1.5,
@@ -22,7 +27,6 @@ const QUALITIES = Object.freeze({
     ambient: 1,
     key: 1,
     fill: 0.24,
-    detail: 1,
   },
   high: {
     ratio: 2,
@@ -33,7 +37,6 @@ const QUALITIES = Object.freeze({
     ambient: 1.12,
     key: 1.08,
     fill: 0.58,
-    detail: 2,
   },
 });
 const MAP_LIMIT = 16 * 1024 * 1024;
@@ -117,7 +120,9 @@ export function createFlightRenderer({
     importGeneration = 0,
     importedMixer = null,
     importedClips = [],
-    obstacleMap = null,
+    obstacleMaps = null,
+    environmentLight = null,
+    cosmeticColor = null,
     themeProfile = null,
     sceneryFallback = null,
     editor = null,
@@ -245,6 +250,7 @@ export function createFlightRenderer({
   }
   function setQuality(value) {
     if (!QUALITIES[value]) throw new TypeError('Unknown flight quality');
+    const changed = value !== quality;
     quality = value;
     const selected = QUALITIES[value];
     renderer.setPixelRatio(Math.min(win.devicePixelRatio || 1, selected.ratio));
@@ -267,17 +273,13 @@ export function createFlightRenderer({
       rimLight.intensity = value === 'high' ? (visuals.indoor ? 0.34 : 0.52) : 0;
       fillLight.target.position.set(visuals.center[0], 0, visuals.center[1]);
       rimLight.target.position.set(visuals.center[0], 1.2, visuals.center[1]);
-      if (scene.fog) {
-        scene.fog.near = visuals.indoor ? 42 : 68;
-        scene.fog.far = (visuals.indoor ? 145 : 235) * (value === 'low' ? 0.86 : value === 'high' ? 1.12 : 1);
-      }
-      const details = visuals.qualityDetails;
-      if (details) {
-        details.balanced.visible = selected.detail >= 1;
-        details.high.visible = selected.detail >= 2;
-      }
+      visuals.setQuality?.(value);
     }
-    if (droneVisual) setDrone(droneKind);
+    scene.environment = value === 'low' ? null : (environmentLight?.texture ?? null);
+    scene.environmentIntensity = value === 'high' ? 0.55 : 0.32;
+    if (changed && droneVisual) setDrone(droneKind);
+    setSurfaceQuality(materials, value, renderer.capabilities.getMaxAnisotropy());
+    if (changed) for (const paint of materials) paint.needsUpdate = true;
     lastWidth = lastHeight = 0;
   }
   function setDrone(value) {
@@ -286,6 +288,8 @@ export function createFlightRenderer({
     droneKind = value;
     releaseGroup(aircraft);
     droneVisual = buildDroneVisual({ parent: aircraft, mesh, material, box, kind: value, quality });
+    if (cosmeticColor) droneVisual.tint.color.set(cosmeticColor);
+    setSurfaceQuality(materials, quality, renderer.capabilities.getMaxAnisotropy());
   }
   function lineVolume(step, index) {
     const group = new THREE.Group();
@@ -369,9 +373,8 @@ export function createFlightRenderer({
   function renderObstacle(obstacle, index) {
     const theme = themeForCourse(course),
       paint = material(index % 3 ? 0xffffff : 0xffe3b9, {
-        map: obstacleMap,
-        bumpMap: obstacleMap,
-        bumpScale: 0.018,
+        ...obstacleMaps,
+        normalScale: new THREE.Vector2(0.3, 0.3),
         roughness: 0.78,
         metalness: course.environment === 'container-yard' ? 0.25 : 0.08,
       });
@@ -426,21 +429,31 @@ export function createFlightRenderer({
     mode = selectedMode;
     currentStep = -1;
     clearImported();
+    scene.environment = null;
+    environmentLight?.dispose();
+    environmentLight = null;
     for (const group of [world, goals, actors, projectiles]) releaseGroup(group);
     goalRows.length = 0;
     actorRows.clear();
     pulseRows.clear();
     const surroundings = buildWorldVisuals({ course, world, mesh, material, box });
+    register(world);
     const theme = surroundings.theme;
     themeProfile = surroundings.profile;
     sceneryFallback = surroundings.backdrop;
-    obstacleMap = surroundings.obstacleMap;
+    obstacleMaps = surroundings.obstacleMaps;
     scene.background = new THREE.Color(surroundings.indoor ? theme.wall : theme.sky);
-    scene.fog = new THREE.Fog(theme.fog, surroundings.indoor ? 42 : 68, 210);
+    // Visibility is a course property, identical across graphics presets.
+    scene.fog = new THREE.Fog(theme.fog, surroundings.indoor ? 55 : 85, 210);
+    environmentLight = createEnvironmentLight(renderer, {
+      sky: surroundings.indoor ? theme.wall : theme.sky,
+      ground: theme.ground,
+      indoor: surroundings.indoor,
+    });
     world.userData.visuals = {
       indoor: surroundings.indoor,
       center: surroundings.center,
-      qualityDetails: surroundings.qualityDetails,
+      setQuality: surroundings.setQuality,
     };
     const extent = Math.max(surroundings.width, surroundings.depth) / 2 + 5;
     Object.assign(sunlight.shadow.camera, {
@@ -466,10 +479,22 @@ export function createFlightRenderer({
     }
     (course.obstacles ?? []).forEach(renderObstacle);
     (course.steps?.[mode] ?? []).forEach(lineVolume);
+    for (const actor of (course.actors ?? []).slice(0, 20)) {
+      const row = createActor(actor);
+      if (actor.position)
+        row.group.position.set(
+          actor.position.x / 1000,
+          actor.position.y / 1000,
+          actor.position.z / 1000,
+        );
+      actorRows.set(actor.id, row);
+    }
+    setSurfaceQuality(materials, quality, renderer.capabilities.getMaxAnisotropy());
     if (editorCallbacks) refreshEditorHandles();
   }
   function createActor(actor) {
     const group = new THREE.Group();
+    const animated = { rotors: [], wheels: [], limbs: [] };
     actors.add(group);
     const radius = (actor.radius ?? 300) / 1000,
       height = (actor.height ?? 1800) / 1000;
@@ -511,6 +536,7 @@ export function createFlightRenderer({
         quality: quality === 'high' ? 'balanced' : 'low',
       });
       visual.tint.color.setHex(friendly ? 0x77ebe0 : 0xe6a16b);
+      animated.rotors = visual.rotors;
     } else if (actor.type === 'vehicle') {
       part(new THREE.BoxGeometry(radius * 1.4, radius * 0.55, radius * 1.3), armor, [
         0,
@@ -530,6 +556,7 @@ export function createFlightRenderer({
             [x * radius, radius * 0.26, z * radius],
           );
           wheel.rotation.z = Math.PI / 2;
+          animated.wheels.push(wheel);
         }
       part(
         new THREE.BoxGeometry(
@@ -568,16 +595,17 @@ export function createFlightRenderer({
         -radius * 0.53,
       ]);
       for (const side of [-1, 1]) {
-        part(new THREE.BoxGeometry(radius * 0.34, height * 0.4, radius * 0.43), dark, [
+        const leg = part(new THREE.BoxGeometry(radius * 0.34, height * 0.4, radius * 0.43), dark, [
           side * radius * 0.38,
           height * 0.24,
           0,
         ]);
-        part(new THREE.BoxGeometry(radius * 0.28, height * 0.31, radius * 0.32), armor, [
-          side * radius * 0.76,
-          height * 0.57,
-          0,
-        ]);
+        const arm = part(
+          new THREE.BoxGeometry(radius * 0.28, height * 0.31, radius * 0.32),
+          armor,
+          [side * radius * 0.76, height * 0.57, 0],
+        );
+        animated.limbs.push({ part: leg, side }, { part: arm, side: -side });
       }
       if (!friendly)
         part(new THREE.BoxGeometry(radius * 0.35, height * 0.085, radius * 1.2), threat, [
@@ -609,7 +637,16 @@ export function createFlightRenderer({
           : actor.type === 'vehicle'
             ? radius * 1.6
             : height + 0.3;
-    return { group, marker, lastPosition: null, health: actor.health ?? 1 };
+    return {
+      group,
+      marker,
+      animated,
+      lastPosition: null,
+      lastTick: null,
+      distance: 0,
+      radius,
+      health: actor.health ?? 1,
+    };
   }
   function updateActors(state) {
     const seen = new Set();
@@ -623,10 +660,25 @@ export function createFlightRenderer({
       }
       const p = actor.position;
       row.group.position.set(p.x / 1000, p.y / 1000, p.z / 1000);
-      if (row.lastPosition) {
+      let movement = 0;
+      if (row.lastPosition && row.lastTick !== state.ticks) {
         const dx = p.x - row.lastPosition.x,
           dz = p.z - row.lastPosition.z;
         if (Math.abs(dx) + Math.abs(dz) > 1) row.group.rotation.y = Math.atan2(-dx, -dz);
+        movement = Math.hypot(dx, dz) / 1000;
+      }
+      if (row.lastTick !== state.ticks) {
+        if (row.lastTick !== null && state.ticks < row.lastTick) row.distance = 0;
+        row.distance += movement;
+        if (!reducedMotion) {
+          for (const rotor of row.animated.rotors) rotor.rotation.y = state.ticks * 0.64;
+          for (const wheel of row.animated.wheels)
+            wheel.rotation.x = row.distance / Math.max(0.02, row.radius * 0.25);
+          for (const limb of row.animated.limbs)
+            limb.part.rotation.x =
+              movement > 0.0001 ? Math.sin(row.distance * 7) * 0.22 * limb.side : 0;
+        }
+        row.lastTick = state.ticks;
       }
       row.lastPosition = { ...p };
       row.group.visible = actor.status !== 'defeated';
@@ -691,7 +743,11 @@ export function createFlightRenderer({
     aircraft.scale.setScalar((course.rules?.droneRadius ?? 220) / 220);
     aircraft.visible = view !== 'fpv';
     if (!reducedMotion && state.status === 'active')
-      for (const rotor of droneVisual.rotors) rotor.rotation.y = state.ticks * 0.72;
+      for (const [index, rotor] of droneVisual.rotors.entries())
+        rotor.rotation.y =
+          state.ticks *
+          (0.12 + Math.max(0, Math.min(1, (state.lastInput?.throttle ?? 0) / 1000)) * 0.74) *
+          (index % 2 ? 1 : -1);
     if (view === 'fpv') {
       camera.position.copy(position);
       camera.quaternion
@@ -1145,6 +1201,14 @@ export function createFlightRenderer({
     setDrone,
     setPath,
     loadScene,
+    async prepare({ signal } = {}) {
+      const generation = sceneGeneration;
+      signal?.throwIfAborted();
+      if (disposed || !course) return false;
+      await renderer.compileAsync(scene, camera);
+      signal?.throwIfAborted();
+      return !disposed && generation === sceneGeneration;
+    },
     attachTransform,
     createEditor,
     draw,
@@ -1164,7 +1228,10 @@ export function createFlightRenderer({
       importedMixer.clipAction(clip).play();
     },
     setCosmetic(recipe) {
-      if (/^#[a-fA-F0-9]{6}$/.test(recipe?.color)) droneVisual.tint.color.set(recipe.color);
+      if (/^#[a-fA-F0-9]{6}$/.test(recipe?.color)) {
+        cosmeticColor = recipe.color;
+        droneVisual.tint.color.set(cosmeticColor);
+      }
     },
     resources() {
       return {
@@ -1182,6 +1249,8 @@ export function createFlightRenderer({
           textures: renderer.info.memory.textures,
           programs: renderer.info.programs?.length ?? 0,
           contextLost: renderer.getContext().isContextLost(),
+          calls: renderer.info.render.calls,
+          triangles: renderer.info.render.triangles,
         },
       };
     },
@@ -1196,6 +1265,9 @@ export function createFlightRenderer({
         editor = null;
       }
       setPath([]);
+      scene.environment = null;
+      environmentLight?.dispose();
+      environmentLight = null;
       clearImported();
       for (const group of [world, goals, aircraft, actors, projectiles, editHandles])
         releaseGroup(group);
