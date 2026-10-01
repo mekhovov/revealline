@@ -15,7 +15,7 @@ concurrency:
   cancel-in-progress: true
 
 env:
-  MAX_PUBLISHED_BYTES: 950000000
+  MAX_PUBLISHED_BYTES: 2000000000
 
 jobs:
   build:
@@ -109,7 +109,7 @@ jobs:
           fs.mkdirSync(path.join(root, 'releases'), { recursive: true });
           fs.writeFileSync(
             path.join(root, 'releases/index.html'),
-            '<!doctype html><meta charset="utf-8"><meta name="robots" content="noindex"><title>FPV / LINE releases</title><p>Immutable downloads and release notes are available on <a href="https://github.com/mekhovov/revealline/releases">GitHub Releases</a>.</p>\n',
+            '<!doctype html><meta charset="utf-8"><meta name="robots" content="noindex"><title>FPV / LINE releases</title><p>Immutable downloads and release notes are available on <a href="https://github.com/mekhovov/revealline/releases">GitHub Releases</a>.',
             { flag: 'wx' },
           );
           NODE
