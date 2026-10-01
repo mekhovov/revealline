@@ -41,16 +41,35 @@ Prepared pack: 8,442 bytes. Editable ZIP: 8,502 bytes.
 
 Verification inputs at this checkpoint:
 
-| Input | SHA-256 |
-| --- | --- |
-| `world-content.mjs` | `a37ed0ad59dedfc99cd702c15af5c6cc535564a4ca022249d3093617db1333fb` |
-| `world-app.mjs` | `c9e0ae0868d71fd5953309a5fa8df691a6d901d0dcbfc3fc0c3650af21920f20` |
-| `/tmp/fpv-reimport-functional.mjs` | `9d2d3c4bf7ea36645ea1a83300ef7bed1ffd063545067cc205c3c9302b242119` |
-| `/tmp/fpv-reimport-local.zip` | `1abcbdadaa4c3e391fc9552ed39a178b79552a49d3a75d4907e312d1c21c7ff4` |
+| Input                                   | SHA-256                                                            |
+| --------------------------------------- | ------------------------------------------------------------------ |
+| `world-content.mjs`                     | `a37ed0ad59dedfc99cd702c15af5c6cc535564a4ca022249d3093617db1333fb` |
+| `world-app.mjs`                         | `af0d182266377bff89b6944715c03f3304c1c9375d02fb0b8c7cb743ac58e6f9` |
+| `/tmp/fpv-reimport-main-functional.mjs` | `e5979caa47fc0e7762f6d3c8a6b37b848e0aa32fa13dba5d8d4364588b05d084` |
+| `/tmp/fpv-reimport-local.zip`           | `1abcbdadaa4c3e391fc9552ed39a178b79552a49d3a75d4907e312d1c21c7ff4` |
 
-JavaScript syntax and `git diff --check` passed. Scoped ESLint passes the content
-module; the app reports only three existing undeclared `lastRadioDiscovery`
-references in parent `e4c9c5db3`. The coordinating UI increment owns that fix.
-Actual browser cancel/apply/focus, package admission and final integrated lint
-remain separate acceptance checks. No new unit-test suite was added or claimed;
-additional coverage stays in the final qualification phase.
+The standalone branch is based on main
+`4b2bdff335a61104bcdfcf2bde4c9a427e21e928`. Reimport was cherry-picked as
+`7379f02d6`; separate commit `c3f5030b2` repairs the existing startup
+`ReferenceError` by declaring `lastRadioDiscovery` in the timer state list.
+All thirteen functional scenarios passed again on this main-based branch.
+JavaScript syntax, scoped ESLint for both changed modules and `git diff --check`
+passed. No new unit-test suite was added or claimed; additional coverage stays
+in the final qualification phase.
+
+Frozen World Studio qualification on
+`c3f5030b201d6b610b12d32167164803cf281a84` / tree
+`d86318ea66978dd757928da5c5757da45bc1e3f6` passed committed-input checks, two
+byte-identical builds, package admission and ZIP-member verification. The package
+has 94 runtime / 96 source files and 12,106,736 admitted runtime bytes, within the
+unchanged 96-file / 16-MiB policy. Its receipt is
+`/tmp/fpv-reimport-worlds-admission-c3f5030b2/optional-candidate-verification.json`.
+The unbound browser playtest has 87 files / 11,972,265 bytes; ZIP SHA-256 is
+`ef17da8be4d24d38a029bb157f5371006e47079d5e3b242ff0a4bfc6a104eae0`.
+
+The all-package qualification also identified an existing Academy source-count
+overflow: 63 runtime / 65 source files against its 64-file limit. Civilian Flight
+is 29 / 31 against 64. The coordinated package correction must pass before
+claiming all three packages admitted; no policy or retained source/license file
+was removed here. Actual browser startup, cancel/apply/focus and public deployment
+remain separate acceptance checks owned by the coordinating task.
