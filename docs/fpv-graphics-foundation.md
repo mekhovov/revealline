@@ -74,6 +74,16 @@ to qualify changed source bytes; update the snapshot explicitly for a new
 candidate. This is a manual functional qualification fixture, outside the
 runtime packages and deferred unit suite.
 
+Frozen candidate `5eea46503e987e9686ab77433531a9c375aeb32e` passed all three
+optional-package admissions, committed-input checks, two byte-identical builds
+and ZIP-member verification. See
+[`fpv-graphics-package-20261001.json`](evidence/fpv-graphics-package-20261001.json).
+Academy remains 62 runtime / 64 source files; World Studio remains 94 / 96.
+No package ceiling changed. The local development playtest at
+`dist/fpv-graphics-foundation-playtest` contains 87 files / 12,379,796 bytes,
+ZIP SHA-256 `8bdd6be65b803ce0bebd8377d16e977dbba093ab580d591fc4c0a45ec8e553b0`.
+Admission remains `publicEligible: false` pending the separate release gates.
+
 Player-interface checks cover World Studio preset and drone changes, safe paused
 resume, all three hangar appearances and Academy demonstration launch. A rapid
 Performance → Racer → Quality → Pixel selection sequence kept an active flight
