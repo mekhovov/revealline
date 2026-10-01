@@ -7,15 +7,16 @@ import/export and publication verification remain part of every applicable item.
 
 ## Delivery queue
 
-| Item                                       | Branch / PR                                                                                     | Current state                                                                                                           | Acceptance                                                                                                                                                                 |
-| ------------------------------------------ | ----------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| World Studio development playtest          | `codex/fpv-world-framework`, [PR #885](https://github.com/mekhovov/revealline/pull/885)         | Original feature `bce31f877d` passed its gate; updated head `882c96622a9c` incorporates newer main and is being checked | Recorded local browser/build/offline evidence in `fpv-worlds-playtest-verification.json`; verify protected merge, deployed identity and live launch                        |
-| Academy demonstrations and beginner entry  | `codex/fpv-academy-demonstrations`, [PR #887](https://github.com/mekhovov/revealline/pull/887)  | Completed and verified at `e24100c23e`; PR initially targets #885's branch                                              | 24 existing demonstrations, half-speed and replay controls; browser/offline evidence in `fpv-academy-demonstrations-verification.json`; retarget to main after #885 merges |
-| Woodland demonstrations                    | `codex/fpv-woodland-demonstrations`, [PR #888](https://github.com/mekhovov/revealline/pull/888) | Completed and verified at `352a5a4d35`; PR targets #887’s branch                                                        | Eight challenges × two modes; replay actual recordings and review route-facing presentation before publication                                                             |
-| Courtyard demonstrations                   | `codex/fpv-courtyard-demonstrations`                                                            | Queued after woodland                                                                                                   | Eight challenges × Self-level/Acro, exact replay completion and readable route-facing playback                                                                             |
-| Remaining new-world demonstrations         | Warehouse, stadium, container yard, garage; separate coherent PRs                               | Queued                                                                                                                  | Author and replay successful recordings with exact dependencies; only offer actually verified demonstrations                                                               |
-| World/drone presentation and player tuning | Subsequent bounded feature PRs                                                                  | Queued                                                                                                                  | Improve remaining art/animation/readability and mode-specific thresholds using actual player observations; keep flight handling unchanged                                  |
-| Final qualification                        | Final phase                                                                                     | Deferred                                                                                                                | Additional unit coverage, full compatibility/failure matrix, named physical-device performance and human content acceptance                                                |
+| Item                                             | Branch / PR                                                                                      | Current state                                                                                                                               | Acceptance                                                                                                                                       |
+| ------------------------------------------------ | ------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------ |
+| World Studio development playtest                | `codex/fpv-world-framework`, [PR #885](https://github.com/mekhovov/revealline/pull/885)          | Completed; native stack layer 1                                                                                                             | Recorded browser/build/offline evidence in `fpv-worlds-playtest-verification.json`; protected merge and actual deployed launch remain required   |
+| Academy demonstrations and beginner entry        | `codex/fpv-academy-demonstrations`, [PR #887](https://github.com/mekhovov/revealline/pull/887)   | Completed; native stack layer 2                                                                                                             | 24 existing demonstrations, half-speed and replay controls; browser/offline evidence in `fpv-academy-demonstrations-verification.json`           |
+| Woodland demonstrations                          | `codex/fpv-woodland-demonstrations`, [PR #888](https://github.com/mekhovov/revealline/pull/888)  | Completed; native stack layer 3                                                                                                             | Eight challenges × two modes; all 16 actual recordings complete in Node and Chromium without contacts; route-facing presentation reviewed        |
+| Courtyard demonstrations                         | `codex/fpv-courtyard-demonstrations`, [PR #890](https://github.com/mekhovov/revealline/pull/890) | Completed; native stack layer 4                                                                                                             | Eight challenges × two modes; all 16 recordings complete without contacts; offline, localization and route-facing playback verified              |
+| Live sector timing and personal-best comparisons | `codex/fpv-sector-deltas`                                                                        | In development above courtyard                                                                                                              | Tick-accurate sector timing, replay-verified compatible reference frozen per attempt, interrupted-flight restoration and readable EN/UK feedback |
+| Remaining new-world demonstrations               | Warehouse, stadium, container yard, garage; separate coherent PRs                                | Warehouse and stadium recordings prepared outside the tracked feature branch; browser/integration verification pending; later worlds queued | Author and replay successful recordings with exact dependencies; only offer actually verified demonstrations                                     |
+| World/drone presentation and player tuning       | Subsequent bounded feature PRs                                                                   | Queued                                                                                                                                      | Improve remaining art/animation/readability and mode-specific thresholds using actual player observations; keep flight handling unchanged        |
+| Final qualification                              | Final phase                                                                                      | Deferred                                                                                                                                    | Additional unit coverage, full compatibility/failure matrix, named physical-device performance and human content acceptance                      |
 
 The approved scope and production limits remain in
 [`fpv-worlds-implementation.md`](fpv-worlds-implementation.md). The current 60
@@ -24,15 +25,17 @@ challenge definitions do not represent 60 fully polished, human-qualified levels
 ## Publication procedure
 
 The FPV PRs are now linked as **native GitHub stack #889**, rooted on `main`.
-The existing layers are #885 → #887 → #888. New completed items append above the
-current top; keep each feature's reviewed diff separate. The owner explicitly
+The existing layers are #885 → #887 → #888 → #890. New dependent items append above the
+current open top; keep each feature's reviewed diff separate. The owner explicitly
 requested stacked PRs on 1 October 2026.
 
 1. Finish a coherent feature and record actual build/browser/content evidence.
    Additional unit coverage remains in the final phase. Commit only that item.
 2. Create its PR against the predecessor branch, assign the existing scheduled
    planning milestone **v0.150.0 — Unified native experience** (#57), and attach
-   it to this chat. Add it to native stack #889 through the GitHub stack API.
+   it to this chat. Add it to the current open native stack through the GitHub
+   stack API. After a stack fully merges, base the next feature on main and create
+   a new stack only when another dependent feature needs one.
 3. Start the next feature on a separate branch while all published layers run
    their required checks. Do not add unfinished work to a ready PR.
 4. Keep the native stack linear with a cascading rebase when necessary. Freeze
@@ -70,15 +73,30 @@ completed items, verified live availability, meaningful failures or needed input
 
 ## Latest delivery checkpoint
 
-PR #885 is open at `882c96622a9c52cb93bf94f642aba1ae4fb926c4`;
-[required source run 36783706645](https://github.com/mekhovov/revealline/actions/runs/36783706645)
-is pending. It has no review/label holds and is mergeable once its current gate
-passes. Main was `c30135d80abe79c9fef88b67c8629c0725db58cc` at this checkpoint.
-Two safe expected-head updates incorporated intervening main commits. Leave the
-current CI running; do not repeatedly restart it for unchanged status. Re-read
-the actual remote state before any merge.
+On 1 October, native stack #889 was cascaded onto main
+`8b7c23f837fba54c353a625ae569e994a9592952` with local recovery branches and
+an atomic push guarded by each captured remote head. The resulting FPV source
+and asset bytes match their previously verified versions. Current published
+heads at that checkpoint:
 
-The former predecessor-only chain is now native stack **#889**. The earlier
-head/run checkpoint above is historical; always read current stack heads before
-acting. No FPV live deployment has been verified yet. Development continues
-independently while the native layers qualify.
+- #885: `994fb4bd80fd336ba1889dce2479705260d378fd`
+- #887: `7b4524b87b86003d62fd73af055b7cc48ac0e0b5`
+- #888: `5052f6e1ab5235cb329a05ea16c0dea45f2da11d`
+- #890: `3ce3b98ef9b150fde0f7211a0251bb09259b5b8f`
+
+The synchronized native layers all passed their required source workflow,
+including layers whose immediate base is another feature branch. The guarded
+asynchronous merge request for the top PR was then rejected with
+`Required status check "release-ready" is expected.` Main had advanced to
+`b89a465209a1`, leaving the stack behind. Request UUID:
+`582b5a7f-ebdb-48db-8fbc-78f612811b4f`. No protection was bypassed and no PR merged.
+
+Refresh the stack together after active edits are committed, retain recovery
+refs, and require fresh checks on the updated heads. Always re-read actual heads,
+reviews and holds before another protected asynchronous merge.
+
+No FPV live deployment has been verified yet. Sector timing development continues
+on its own branch while the completed layers qualify. Warehouse and stadium
+recordings are prepared independently; their integration, final package and
+browser/offline qualification belong in separate PRs. Native stack membership is
+not a merge or deployment confirmation.
