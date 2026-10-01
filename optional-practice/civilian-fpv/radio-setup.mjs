@@ -1,5 +1,6 @@
 import { radioControlLabel, captureRadioControlSwitch } from './radio-controls.mjs';
 import { canonicalJSON } from '../../game/data-json.mjs';
+import { restoreVerifiedRadio } from './radio-session.mjs';
 import {
   DEFAULT_RESPONSE,
   FLIGHT_CONTROLS,
@@ -186,6 +187,7 @@ export function mountRadioSetup({
     /* explicit session status below */
   }
   const store = createFlightProfileStore({ storage });
+  runtime.beginSetup();
   let verified = false,
     recording = false,
     identifying = null,
@@ -227,6 +229,14 @@ export function mountRadioSetup({
   const deviceLabel = el('label', copy.device),
     select = el('select', undefined, deviceLabel);
   const refresh = () => {
+    // Discovery may first expose a USB device after this user interaction.
+    // A pristine setup can restore its verified mapping; edited fields stay owned
+    // by the user until they explicitly verify and save them.
+    if (!runtime.status().profileDirty) {
+      runtime.endSetup();
+      restoreVerifiedRadio(runtime, store);
+      runtime.beginSetup();
+    }
     const previous = select.value,
       result = runtime.devices();
     select.replaceChildren();
@@ -245,6 +255,11 @@ export function mountRadioSetup({
       option.value = String(device.index);
     }
     if ([...select.options].some((option) => option.value === previous)) select.value = previous;
+    const current = runtime.status();
+    if (!current.profileDirty && current.selected && current.profile) {
+      select.value = String(current.selected.index);
+      loadProfile(JSON.parse(current.profile), { confirmed: current.verified });
+    }
   };
   button(copy.refresh, refresh);
   const raw = el('pre', copy.raw);
@@ -307,6 +322,7 @@ export function mountRadioSetup({
             invalidate();
           } else status.textContent = copy.ambiguous;
         } else {
+          invalidate();
           if (identifying) rows[identifying.control].identify.textContent = copy.identify;
           identifying = { control, min: [...pad.axes], max: [...pad.axes] };
           identify.textContent = copy.use;
@@ -316,8 +332,9 @@ export function mountRadioSetup({
     );
     rows[control] = { axis, min, center, max, invert, deadZone, identify, legend };
   }
-  function invalidate() {
+  function invalidate(markRuntime = true) {
     verified = false;
+    if (markRuntime) runtime.editProfile();
     status.textContent = copy.incomplete;
   }
   const travelButton = button(copy.travel, () => {
@@ -502,7 +519,7 @@ export function mountRadioSetup({
       ),
     });
   }
-  function loadProfile(p) {
+  function loadProfile(p, { confirmed = false } = {}) {
     if (!p) return;
     switchCapture = null;
     for (const row of Object.values(switchRows)) row.identify.textContent = copy.captureSwitch;
@@ -528,7 +545,10 @@ export function mountRadioSetup({
       row.invert.checked = p.switches[key]?.invert ?? false;
     }
     describeControls();
-    invalidate();
+    if (confirmed) {
+      verified = true;
+      status.textContent = copy.verified;
+    } else invalidate(false);
   }
   button(copy.verify, () => {
     try {
@@ -653,7 +673,7 @@ export function mountRadioSetup({
       const result = store.import(transfer.value);
       loadProfile(store.snapshot().radio);
       loadResponse(store.snapshot().response);
-      runtime.freeze('profile-changed');
+      runtime.editProfile();
       onResponse(store.snapshot().response);
       status.textContent = `${result.saved ? copy.saved : copy.session} ${copy.incomplete}`;
     } catch (e) {
@@ -670,6 +690,12 @@ export function mountRadioSetup({
     );
   }
   listen(mode, 'change', describeControls);
+  function clearSticks() {
+    for (const stick of stickNodes) {
+      stick.dot.style.transform = 'translate(0px, 0px)';
+      stick.dot.hidden = true;
+    }
+  }
   function paint(now) {
     if (disposed) return;
     if (now - lastPaint >= 100) {
@@ -698,14 +724,17 @@ export function mountRadioSetup({
               y = vertical === 'throttle' ? input.throttle * 2 - 1 : input[vertical];
             stickNodes[i].dot.style.transform =
               `translate(${input[horizontal] * 34}px, ${-y * 34}px)`;
+            stickNodes[i].dot.hidden = false;
             stickNodes[i].label.textContent =
               `${radioControlLabel(horizontal, Number(mode.value), locale)} · ${radioControlLabel(vertical, Number(mode.value), locale)}`;
           }
         } catch {
-          /* Incomplete mapping is expected until all endpoints are captured. */
+          clearSticks();
         }
-      } else
+      } else {
         raw.textContent = runtime.devices().status === 'unavailable' ? copy.unavailable : copy.none;
+        clearSticks();
+      }
     }
     frame = win.requestAnimationFrame(paint);
   }
@@ -716,6 +745,7 @@ export function mountRadioSetup({
     store,
     dispose() {
       disposed = true;
+      runtime.endSetup();
       if (frame !== null) win.cancelAnimationFrame(frame);
       for (const remove of listeners) remove();
       container.replaceChildren();
