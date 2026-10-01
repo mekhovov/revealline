@@ -667,3 +667,32 @@ package admission, rebuild/launch the reviewed-player URL, and publish a focused
 native #902 child of #932. Preserve #928, #922, #889, graphics WIP and Garage/ghost
 handoffs. The R4/R5 art and R6 demonstration/practice backlog and R7 deferred unit
 and human/device qualification remain independent next work. No public-live claim.
+
+### Frozen continuous-practice candidate
+
+Runtime source `0fe2bc45ae41d7ccfd691623573142cb0476e6e2` passed all three
+optional-package admissions, committed-input verification, ZIP-member verification
+and two byte-identical builds. Receipt:
+`docs/evidence/fpv-endless-package-20261002.json`; envelope SHA-256
+`be2c01f3d228eb5501a2a276e875cc4068261f88ed088489702b230acf3883aa`.
+Academy remains62 runtime/64 source files; World Studio94/96. Limits unchanged.
+
+Rebuilt and launched the actual reviewed-player URL:
+`http://127.0.0.1:8789/dist/fpv-reviewed-player-playtest/optional-practice/fpv-worlds/index.html#learn`.
+ZIP:87 files /12,490,158 bytes; SHA-256
+`cca1bd53aceef4d2163561226968f1dfe9c11a1d631c8ad18c3e836c96fe4310`.
+The packaged view visibly centres the large drone over extended ground, accepts
+keyboard takeover and shows “no time limit”; Reset continues active practice.
+Browser error log is empty. Final screenshot: `/tmp/fpv-endless-practice-final.png`;
+Ukrainian mobile screenshot: `/tmp/fpv-endless-practice-mobile-uk.png`.
+
+Source-browser checks also verified that a pre-existing application fullscreen
+session survives entering/leaving dedicated practice. The inspected in-app browser
+reported `document.fullscreenElement` absent and used the full-window fallback;
+this is not a new native OS-fullscreen permission certification. Native-event
+lifecycle is covered by the controlled fixture. Hardware/radio acceptance and
+public deployment remain unclaimed.
+
+The runtime is now frozen; subsequent documentation/evidence-only commits record
+publication. Publish as native #902 child of #932. Continue independent approved
+art/content work while exact-head CI and held-stack review remain external gates.

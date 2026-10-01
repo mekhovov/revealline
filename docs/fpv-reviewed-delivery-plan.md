@@ -149,7 +149,8 @@ application fullscreen session that was already active.
 Current local evidence comprises 14 browser coach checks (including more than
 13 simulated minutes), 27 model checks including the original 24 demonstration
 proofs, replay of all 14 Acro school demonstrations and 16 browser diagram checks.
-The final production-host browser run passed 19 input/isolation checks. Frozen
-package qualification remains pending at this checkpoint; no public live, physical-radio or human acceptance is claimed.
+The final production-host browser run passed 19 input/isolation checks. All
+three optional packages passed frozen-input admission and reproducibility, and
+the rebuilt player URL was launched; no public live, physical-radio or human acceptance is claimed.
 See [FPV endless controls practice](fpv-endless-practice.md) for behavior and
 limits. R4–R7 estimates and scope, including deferred unit coverage, are unchanged.
