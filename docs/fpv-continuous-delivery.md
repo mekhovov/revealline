@@ -573,3 +573,28 @@ Next gate: freeze committed inputs, admit all three optional packages, rebuild
 and launch the reviewed-player URL, then publish a focused native-stack child of
 #929. This checkpoint does not claim public deployment or physical-radio
 acceptance. Preserve #928, #922, #889, graphics WIP and Garage/ghost handoffs.
+
+### Frozen motion-teaching candidate
+
+Runtime source `cbed6e7e8c5509e2464403c6c43dff6f2f44f683` passed all three
+optional-package admissions, committed-input verification, two byte-identical
+builds and ZIP-member verification. Receipt:
+`docs/evidence/fpv-motion-package-20261002.json`; envelope SHA-256
+`2405001ddde11227d245911a2035ab7e8f8c15b62a9b6b5d10de367b085dda80`.
+Academy remains 62 runtime/64 source files; World Studio94/96. Limits unchanged.
+
+The reviewed-player build was rebuilt and launched at
+`http://127.0.0.1:8789/dist/fpv-reviewed-player-playtest/optional-practice/fpv-worlds/index.html#learn`.
+Its ZIP contains87 files /12,473,373 bytes; SHA-256
+`8ba1156d0105987be317e9d52289227cf4f54c5f70708b4d3de55fe3aa191e05`.
+The final packaged guide visibly showed full −100% pitch, moving ground, real
+height and differentiated motor demands; keyboard takeover and Replay example
+were verified through its UI. Browser error log was empty. This is a local
+player build, not a public deployment. Screenshots were captured locally as
+`/tmp/fpv-motion-learning-final.png`.
+
+Publish this frozen increment as a native #902 child of #929; subsequent
+checkpoint/evidence-only commits do not change the frozen runtime. Continue
+independent R4/R5 art and R6 demonstration/ghost/practice delivery while external
+checks run. Keep existing holds, #922 reimport navigation integration and the
+R7 deferred unit/human/device qualification backlog intact.
