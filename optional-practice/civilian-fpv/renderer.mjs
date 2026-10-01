@@ -202,6 +202,8 @@ export function createFlightRenderer({
       materials.delete(value);
     }
     group.userData.auxiliaryRoots = [];
+    delete group.userData.ownedMaterials;
+    delete group.userData.visuals;
     group.clear();
   }
   function clearImported() {
@@ -1319,6 +1321,14 @@ export function createFlightRenderer({
       for (const value of geometry) value.dispose();
       materials.clear();
       geometry.clear();
+      goalRows.length = 0;
+      actorRows.clear();
+      pulseRows.clear();
+      droneVisual = null;
+      obstacleMaps = null;
+      sceneryFallback = null;
+      themeProfile = null;
+      course = null;
       renderer.dispose();
       renderer.forceContextLoss();
     },
