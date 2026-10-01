@@ -18,7 +18,11 @@ export async function optionalFPVSourceFixture(t) {
     files.set(template, await readFile(path.join(source, template)));
   for (const name of policy.localFiles) {
     const target = policy.root + name;
-    if (name.startsWith('vendor/')) files.set(target, await readFile(path.join(source, target)));
+    if (
+      name.startsWith('vendor/') ||
+      ['package-info.json', 'preview.png', 'guide.html'].includes(name)
+    )
+      files.set(target, await readFile(path.join(source, target)));
     else
       files.set(
         target,

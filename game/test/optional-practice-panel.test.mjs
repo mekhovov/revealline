@@ -133,20 +133,24 @@ test('shared practice entry is explicit, pauses once and never prefetches packag
   assert.equal(requests.length, 0);
   const opener = doc.getElementById('shell-optional-practice');
   opener.click();
-  await waitFor(() => doc.getElementById('optional-practice-dialog').querySelector('a'));
+  await waitFor(() => !doc.getElementById('optional-practice-refresh').disabled);
   assert.equal(pauses, 1);
-  assert.equal(requests.length, 1);
+  assert.equal(requests.length, 2);
+  assert.equal(requests[1].url, 'https://example.test/project/practice/details.json');
   assert.equal(requests[0].url, indexURL);
   assert.equal(requests[0].options.redirect, 'error');
   assert.equal(requests[0].options.credentials, 'omit');
   const dialog = doc.getElementById('optional-practice-dialog'),
-    link = dialog.querySelector('a');
-  assert.equal(link.href, 'https://example.test/project/practice/civilian-flight/app/');
+    link = dialog.querySelector('.optional-practice-packages').querySelector('a');
+  assert.equal(
+    link.href,
+    'https://example.test/project/practice/civilian-flight/app/?action=play&lang=en',
+  );
   assert.equal(link.target, '_blank');
   assert.equal(link.rel, 'noopener noreferrer');
   dialog.close();
   assert.equal(doc.activeElement, opener);
-  assert.equal(dialog.querySelector('a'), null);
+  assert.equal(dialog.querySelector('.optional-practice-packages').querySelector('a'), null);
   panel.dispose();
   assert.equal(doc.getElementById('optional-practice-dialog'), null);
 });
@@ -174,7 +178,7 @@ test('closing an in-flight optional catalog discards late results and restores i
   finish(new Response(JSON.stringify(catalog)));
   await new Promise((resolve) => setImmediate(resolve));
   assert.equal(dialog.open, false);
-  assert.equal(dialog.querySelector('a'), null);
+  assert.equal(dialog.querySelector('.optional-practice-packages').querySelector('a'), null);
   assert.equal(doc.activeElement, opener);
 });
 
@@ -203,7 +207,7 @@ test('a stalled optional catalog times out and leaves an explicit retry availabl
   const dialog = doc.getElementById('optional-practice-dialog');
   await waitFor(() => !doc.getElementById('optional-practice-refresh').disabled);
   assert.equal(dialog.open, true);
-  assert.equal(dialog.querySelector('a'), null);
+  assert.equal(dialog.querySelector('.optional-practice-packages').querySelector('a'), null);
 });
 
 test('Home and More share one public loader and restore the actual opener without resuming play', async (t) => {
@@ -228,9 +232,9 @@ test('Home and More share one public loader and restore the actual opener withou
   t.after(() => panel.dispose());
   panel.open(home);
   panel.open(home);
-  await waitFor(() => doc.getElementById('optional-practice-dialog').querySelector('a'));
+  await waitFor(() => !doc.getElementById('optional-practice-refresh').disabled);
   assert.equal(pauses, 1);
-  assert.equal(requests, 1);
+  assert.equal(requests, 2);
   assert.equal(doc.activeElement.id, 'optional-practice-close');
   doc.getElementById('optional-practice-close').click();
   assert.equal(doc.activeElement, home);
@@ -277,7 +281,7 @@ test('local gym and FPV previews stay separate and usable while the public catal
   assert.equal(preview.rel, 'noopener noreferrer');
   await waitFor(() => !doc.getElementById('optional-practice-refresh').disabled);
   assert.equal(requests, 1);
-  assert.equal(dialog.querySelectorAll('a').length, 2);
+  assert.equal(dialog.querySelectorAll('a').length, 4);
   const fpv = dialog.querySelectorAll('[data-practice-source-preview]')[1];
   assert.equal(fpv.href, 'http://127.0.0.1:8768/optional-practice/civilian-fpv/');
   assert.equal(fpv.target, '_blank');

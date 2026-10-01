@@ -162,7 +162,7 @@ const BASE_OPTIONAL_PACKAGE_POLICIES = Object.freeze({
 // The legacy 8 MiB / 64-file package stays independent. The world runtime is a
 // separately selected application with its own explicit executable closure.
 const legacyFPV = BASE_OPTIONAL_PACKAGE_POLICIES['civilian-fpv'];
-export const OPTIONAL_PACKAGE_POLICIES = Object.freeze({
+const RUNTIME_PACKAGE_POLICIES = Object.freeze({
   ...BASE_OPTIONAL_PACKAGE_POLICIES,
   'fpv-worlds': Object.freeze({
     ...legacyFPV,
@@ -276,6 +276,34 @@ export const OPTIONAL_PACKAGE_POLICIES = Object.freeze({
   }),
 });
 
+// Discovery assets are admitted source inputs, never arbitrary catalogue URLs.
+// Flight Studio needs three new lightweight files above its former 64-file bound.
+export const OPTIONAL_PACKAGE_POLICIES = Object.freeze(
+  Object.fromEntries(
+    Object.entries(RUNTIME_PACKAGE_POLICIES).map(([id, policy]) => [
+      id,
+      Object.freeze({
+        ...policy,
+        limits: Object.freeze({
+          ...policy.limits,
+          files: id === 'civilian-fpv' ? 72 : id === 'fpv-worlds' ? 104 : policy.limits.files,
+        }),
+        localFiles: Object.freeze([
+          ...policy.localFiles,
+          'package-info.json',
+          'preview.png',
+          'guide.html',
+        ]),
+        sharedFiles: Object.freeze([
+          ...policy.sharedFiles,
+          'optional-practice/guide.mjs',
+          'optional-practice/navigation.mjs',
+        ]),
+      }),
+    ]),
+  ),
+);
+
 export function optionalRuntimePaths(policy, { launcher = false } = {}) {
   return [
     ...(launcher
@@ -283,6 +311,7 @@ export function optionalRuntimePaths(policy, { launcher = false } = {}) {
           'index.html',
           'app.mjs',
           'context.mjs',
+          'navigation.mjs',
           'app.webmanifest',
           'worker.js',
           'icons/icon-192.png',
