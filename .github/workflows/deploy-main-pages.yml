@@ -15,6 +15,8 @@ concurrency:
   cancel-in-progress: true
 
 env:
+  # Keep enough headroom for GitHub Pages packaging while the repository grows.
+  # Full releases still retain the complete source and optional authoring artwork.
   MAX_PUBLISHED_BYTES: 950000000
 
 jobs:
@@ -79,7 +81,8 @@ jobs:
           node scripts/game-cli.mjs build \
             --out "$RUNNER_TEMP/main-pages" \
             --version "$GAME_VERSION" \
-            --revision "$SOURCE_SHA"
+            --revision "$SOURCE_SHA" \
+            --publication-profile main-pages
           rm "$RUNNER_TEMP/main-pages/distribution.zip" \
             "$RUNNER_TEMP/main-pages/distribution.zip.sha256"
 
@@ -109,10 +112,18 @@ jobs:
           fs.mkdirSync(path.join(root, 'releases'), { recursive: true });
           fs.writeFileSync(
             path.join(root, 'releases/index.html'),
-            '<!doctype html><meta charset="utf-8"><meta name="robots" content="noindex"><title>FPV / LINE releases</title><p>Immutable downloads and release notes are available on <a href="https://github.com/mekhovov/revealline/releases">GitHub Releases</a>.</p>\n',
+            '<!doctype html><meta charset="utf-8"><meta name="robots" content="noindex"><title>FPV / LINE releases</title><p>Immutable downloads and release notes are available on <a href="https://github.com/mekhovov/revealline/releases">github.com/mekhovov/revealline/releases</a>.',
             { flag: 'wx' },
           );
           NODE
+
+      - name: Report largest Pages files
+        run: |
+          set -euo pipefail
+          echo "## Largest files in Pages snapshot"
+          find "$RUNNER_TEMP/main-pages" -type f -printf '%s\t%p\n' \
+            | sort -nr \
+            | awk 'NR <= 50 { size=$1; name=$2; if(size>=1024*1024) printf "%6.1f MB  %s\n", size/(1024*1024), name; else printf "%6.1f KB  %s\n", size/1024, name }'
 
       - name: Enforce the Pages publication budget
         id: inventory
