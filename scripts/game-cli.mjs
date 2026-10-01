@@ -17,6 +17,7 @@ import {
 import { SOUNDTRACK_BUNDLED_ASSETS } from '../game/content/soundtrack-catalogue.mjs';
 import { generatedBrandIcons } from './brand-icons.mjs';
 import { isOptionalSpatialAudioBody } from './offline-core-closure.mjs';
+import { isIncludedBundledMission } from '../game/mission-library/included-bundled-pack.mjs';
 
 export const PROJECT_ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const MARKER = '.xonix-build.json';
@@ -556,6 +557,29 @@ export function offlineIcons(sizes = [180, 192, 512]) {
 }
 
 /** Adds a content-addressed offline app only when this source has its explicit UI helper. */
+export function applyPublicationProfile(entries, catalogue, profile, optionalArtwork) {
+  if (profile === null) return optionalArtwork;
+  if (profile !== 'main-pages') fail(`Unknown publication profile: ${profile}`);
+  const omittedGroups = catalogue.groups.filter((group) => group.id === 'tooling:artwork');
+  const retainedGroups = catalogue.groups.filter((group) => group.id !== 'tooling:artwork');
+  const retainedPaths = new Set(retainedGroups.flatMap((group) => group.files));
+  const omittedPaths = new Set(
+    omittedGroups.flatMap((group) => group.files).filter((path) => !retainedPaths.has(path)),
+  );
+  if (!omittedGroups.length || !omittedPaths.size)
+    fail('Main Pages profile found no exclusive unused authoring artwork to omit.');
+  const retainedGroupIDs = new Set(retainedGroups.map((group) => group.id));
+  if (catalogue.missions.some((mission) => mission.groups.some((id) => !retainedGroupIDs.has(id))))
+    fail('Main Pages profile would orphan a mission download group.');
+  entries.splice(0, entries.length, ...entries.filter((entry) => !omittedPaths.has(entry.name)));
+  catalogue.files = catalogue.files.filter((file) => !omittedPaths.has(file.path));
+  catalogue.groups = retainedGroups;
+  // The summary promises that every listed original is hosted. The lean rolling
+  // channel therefore omits it together with its exclusive preview-only files.
+  // Exact originals remain in Git and in full release distributions.
+  return null;
+}
+
 export async function addOfflineEntries(
   root,
   entries,
@@ -564,6 +588,7 @@ export async function addOfflineEntries(
   optionalDownloads = [],
   excludedBodyPaths = [],
   optionalArtwork = null,
+  publicationProfile = null,
 ) {
   if (!entries.some((e) => e.name === 'game/offline.mjs')) return;
   if (optionalArtwork) {
@@ -577,8 +602,8 @@ export async function addOfflineEntries(
   if (!template.includes('__XONIX_OFFLINE_CONFIG__'))
     fail('Offline worker template has no configuration marker');
   entries.push(...offlineIcons());
-  const { addOfflineLauncher } = await import('./offline-launcher.mjs');
-  await addOfflineLauncher(root, entries, info.version);
+  const { addOfflineLauncher, addOfflineUpdater } = await import('./offline-launcher.mjs');
+  await addOfflineLauncher(root, entries, info.version, { sourceRevision: info.sourceRevision });
   for (const entry of entries.filter((item) => item.name.endsWith('.html'))) {
     const source = entry.bytes.toString();
     if (/<link\b[^>]*\brel=(["'])(?:icon|shortcut icon)\1/i.test(source)) continue;
@@ -588,10 +613,12 @@ export async function addOfflineEntries(
       entry.bytes = Buffer.from(source.replace('</head>', `${favicon}</head>`));
   }
   // Project only the containing build's manifest; standalone archives keep local icons.
-  const practiceManifest = entries.find(
-    (entry) => entry.name === 'optional-practice/civilian-fpv/app.webmanifest',
-  );
-  if (practiceManifest) {
+  for (const practiceManifest of entries.filter((entry) =>
+    [
+      'optional-practice/civilian-fpv/app.webmanifest',
+      'optional-practice/fpv-worlds/app.webmanifest',
+    ].includes(entry.name),
+  )) {
     const manifest = JSON.parse(practiceManifest.bytes);
     if (
       !Array.isArray(manifest.icons) ||
@@ -613,8 +640,10 @@ export async function addOfflineEntries(
   // The bundled simulator owns a separate opt-in cache. Its HTML and shared
   // modules are final here; later offline-marker injection changes game HTML only.
   const { buildBundledOptionalPractice } = await import('./build-optional-practice.mjs');
-  const bundledPractice = buildBundledOptionalPractice(entries);
-  if (bundledPractice) entries.push(...bundledPractice.entries);
+  for (const packageId of ['civilian-fpv', 'fpv-worlds']) {
+    const bundledPractice = buildBundledOptionalPractice(entries, { packageId });
+    if (bundledPractice) entries.push(...bundledPractice.entries);
+  }
   const optional = new Set([...(buildConfig.optionalOffline ?? []), ...optionalDownloads]);
   const optionalPacks = entries
     .filter((entry) => optional.has(entry.name))
@@ -673,16 +702,24 @@ export async function addOfflineEntries(
     // essential sound effects remain the complete offline baseline.
     ...SOUNDTRACK_BUNDLED_ASSETS.map((asset) => asset.path),
   ]);
-  // Every official chapter uses the same durable store, even when its JSON is small.
-  // Otherwise opening a small chapter would consume a user-import slot.
+  // Small first-party chapter bodies are part of the mandatory offline game.
+  // Larger, optional, external and archived bodies retain explicit package
+  // ownership and download consent.
   const missionIndex = entries.find(
     (entry) => entry.name === 'game/content/mission-library-index.json',
   );
   if (missionIndex)
     for (const mission of JSON.parse(missionIndex.bytes).missions)
-      if (mission.packId) excluded.add(mission.sourceFile.path);
+      if (mission.packId && !isIncludedBundledMission(mission))
+        excluded.add(mission.sourceFile.path);
   const { buildOfflineContent } = await import('./offline-content.mjs');
   const contentCatalogue = await buildOfflineContent(entries, excluded, info.version);
+  const publishedOptionalArtwork = applyPublicationProfile(
+    entries,
+    contentCatalogue,
+    publicationProfile,
+    optionalArtwork,
+  );
   const { finalizeOfflineContent } = await import('./offline-finalize.mjs');
   // Derived catalogue data can be compact without changing any published
   // descriptor, authored string, retained revision, or download dependency.
@@ -693,6 +730,17 @@ export async function addOfflineEntries(
     finalizeOfflineContent(entries, contentCatalogue);
     contentEntry.bytes = catalogueBytes();
   };
+  // Pages only display the optional-artwork summary. Keep the full integrity
+  // descriptor in the worker/catalogue instead of repeating every file hash in
+  // each HTML document; all originals and build-time checks remain unchanged.
+  const optionalArtworkSummary = publishedOptionalArtwork
+    ? {
+        name: publishedOptionalArtwork.name,
+        availability: publishedOptionalArtwork.availability,
+        count: publishedOptionalArtwork.count,
+        bytes: publishedOptionalArtwork.bytes,
+      }
+    : null;
   const placeholder = '0'.repeat(64),
     injected = [];
   for (const entry of entries.filter(
@@ -715,7 +763,9 @@ export async function addOfflineEntries(
       // installer runs. Keep its scoped launch metadata, not seven redundant
       // copies of the host's optional-download descriptors.
       ...(!communityShell && optionalPacks.length ? { optionalPacks } : {}),
-      ...(!communityShell && optionalArtwork ? { optionalArtwork } : {}),
+      ...(!communityShell && optionalArtworkSummary
+        ? { optionalArtwork: optionalArtworkSummary }
+        : {}),
     };
     const appMode = source.includes('name="apple-mobile-web-app-capable"')
       ? ''
@@ -778,13 +828,14 @@ export async function addOfflineEntries(
       : {}),
     downloadFiles: contentCatalogue.files.filter((file) => file.kind === 'gameplay'),
     ...(optionalPacks.length ? { optionalPacks } : {}),
-    ...(optionalArtwork ? { optionalArtwork } : {}),
+    ...(publishedOptionalArtwork ? { optionalArtwork: publishedOptionalArtwork } : {}),
   };
   entries.push({ name: 'offline-cache.json', bytes: Buffer.from(`${JSON.stringify(config)}\n`) });
   entries.push({
     name: 'service-worker.js',
     bytes: Buffer.from(template.replace('__XONIX_OFFLINE_CONFIG__', JSON.stringify(config))),
   });
+  addOfflineUpdater(entries, info, buildId);
   if (entries.some((entry) => entry.name === 'game/installed-app.mjs')) {
     const { buildOfflineInventory } = await import('./offline-content.mjs');
     entries.push({
@@ -803,6 +854,7 @@ async function prepareBuildProject({
   out = null,
   version,
   sourceRevision = null,
+  publicationProfile = null,
 } = {}) {
   root = await fs.realpath(root);
   if (out !== null) out = path.resolve(out);
@@ -915,6 +967,7 @@ async function prepareBuildProject({
     optionalEntries.map((entry) => entry.name),
     [...externalEntries, ...soundtrackEntries].map((entry) => entry.name),
     optionalArtwork,
+    publicationProfile,
   );
   entries.sort((a, b) => (a.name < b.name ? -1 : a.name > b.name ? 1 : 0));
   const manifest = {
@@ -965,8 +1018,15 @@ export async function buildProject({
   out = path.join(root, 'dist'),
   version,
   sourceRevision = null,
+  publicationProfile = null,
 } = {}) {
-  const prepared = await prepareBuildProject({ root, out, version, sourceRevision });
+  const prepared = await prepareBuildProject({
+    root,
+    out,
+    version,
+    sourceRevision,
+    publicationProfile,
+  });
   ({ root, out, version, sourceRevision } = prepared);
   const { entries, manifest } = prepared;
   await fs.mkdir(path.dirname(out), { recursive: true });
@@ -1356,7 +1416,7 @@ export function parseArguments(argv) {
   const allowed = {
     help: [],
     serve: ['root', 'port', 'host'],
-    build: ['out', 'version', 'revision'],
+    build: ['out', 'version', 'revision', 'publication-profile'],
     validate: [],
     test: [],
     generate: ['seed', 'out'],
@@ -1400,6 +1460,7 @@ export async function main(argv = process.argv.slice(2)) {
           out: options.out ? path.resolve(options.out) : undefined,
           version: options.version,
           sourceRevision: options.revision ?? null,
+          publicationProfile: options['publication-profile'] ?? null,
         }),
       ),
     );

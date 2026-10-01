@@ -3,62 +3,104 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
-    <meta name="theme-color" content="#112934" />
-    <title>FPV · Flight Studio</title>
+    <meta name="theme-color" content="#071527" />
+    <title>FPV / LINE · SIM Academy</title>
     <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="flight-fullscreen.css" />
     <link rel="manifest" href="app.webmanifest" />
     <script type="module" src="app.mjs"></script>
   </head>
-  <body>
+  <body class="field-kit sim-academy">
     <main id="flight-app">
       <header class="flight-header">
         <div class="brand">
-          <strong data-copy="title">FPV · Flight Studio</strong
-          ><small data-copy="subtitle">Civilian practice</small>
+          <strong>FPV / LINE</strong>
+          <small data-sim-copy="academyBrand">SIM · ACADEMY</small>
         </div>
-        <nav aria-label="Flight tools">
-          <a id="game-return" data-copy="backToGame" hidden></a>
-          <button id="courses" data-copy="courses"></button
-          ><button id="notebook-button" data-copy="notebook"></button
-          ><button id="setup" data-copy="setup"></button><button id="help" data-copy="help"></button
-          ><button id="fullscreen" data-copy="fullscreen"></button
-          ><select id="language" aria-label="Language / Мова">
-            <option value="en">English</option>
-            <option value="uk">Українська</option>
+        <nav aria-label="Flight tools" id="academy-navigation">
+          <a id="worlds-button" hidden data-sim-icon="back" data-sim-copy="worlds">World Studio</a>
+          <a id="game-return" data-copy="backToGame" data-sim-icon="back" hidden></a>
+          <button id="courses" data-sim-copy="drills" data-sim-icon="missions">Drills</button>
+          <button id="notebook-button" data-sim-copy="notebook" data-sim-icon="collection">
+            Notebook
+          </button>
+          <button id="help" data-sim-copy="help" data-sim-icon="help">Flight guide</button>
+          <button id="fullscreen" type="button" data-sim-icon="fullscreen"></button>
+          <select id="language" aria-label="Language / Мова">
+            <option value="en">EN</option>
+            <option value="uk">УК</option>
           </select>
         </nav>
       </header>
-      <section class="flight-toolbar">
-        <label
-          ><span data-copy="mode"></span
-          ><select id="mode">
-            <option value="self-level" data-copy="self-level"></option>
-            <option value="acro" data-copy="acro"></option></select></label
-        ><label
-          ><span data-copy="source"></span
-          ><select id="input-source">
-            <option value="keyboard" data-copy="keyboard"></option>
-            <option value="touch" data-copy="touch"></option>
-            <option value="radio" data-copy="radio"></option></select
-        ></label>
-        <div class="transport">
-          <button id="arm" class="primary" data-copy="arm"></button
-          ><button id="pause" data-copy="pause"></button
-          ><button id="reset" data-copy="reset"></button>
+      <section class="flight-toolbar" aria-label="Flight controls">
+        <div class="academy-input-controls">
+          <label
+            ><span data-copy="mode"></span>
+            <select id="mode">
+              <option value="self-level" data-copy="self-level"></option>
+              <option value="acro" data-copy="acro"></option>
+            </select>
+          </label>
+          <label
+            ><span data-sim-copy="controls">Controls</span>
+            <select id="input-source">
+              <option value="keyboard" data-copy="keyboard"></option>
+              <option value="touch" data-copy="touch"></option>
+              <option value="radio" data-copy="radio"></option>
+            </select>
+          </label>
+          <button id="setup" data-sim-copy="radioSetup" data-sim-icon="controls">
+            Radio setup
+          </button>
         </div>
-        <label id="replay-controls" hidden
-          ><span data-copy="replayRate"></span
-          ><select id="replay-rate">
+        <div class="transport">
+          <button id="arm" class="primary" data-copy="arm" data-sim-icon="play"></button>
+          <button id="pause" data-copy="pause"></button>
+          <button id="reset" data-copy="reset" data-sim-icon="back"></button>
+        </div>
+        <label id="replay-controls" hidden>
+          <span data-copy="replayRate"></span>
+          <select id="replay-rate">
             <option value="1" data-copy="replayNormal"></option>
-            <option value="0.5" data-copy="replaySlow"></option></select
-        ></label>
-        <label
-          ><span data-copy="camera"></span
-          ><select id="camera">
-            <option value="fpv" data-copy="fpv"></option>
-            <option value="chase" data-copy="chase"></option>
-            <option value="overview" data-copy="overview"></option></select
-        ></label>
+            <option value="0.5" data-copy="replaySlow"></option>
+          </select>
+        </label>
+        <details id="academy-flight-options" class="academy-options">
+          <summary data-sim-copy="flightOptions" data-sim-icon="settings">Flight options</summary>
+          <div class="academy-options-panel">
+            <h2 data-sim-copy="viewAndSound">View & sound</h2>
+            <p data-sim-copy="optionsPause">Your flight pauses while you adjust the view.</p>
+            <div class="academy-settings-grid">
+              <label
+                ><span data-copy="camera"></span>
+                <select id="camera">
+                  <option value="fpv" data-copy="fpv"></option>
+                  <option value="chase" data-copy="chase"></option>
+                  <option value="overview" data-copy="overview"></option>
+                </select>
+              </label>
+              <label
+                ><span data-sim-copy="stickDisplay">Live sticks</span>
+                <select id="academy-stick-display">
+                  <option value="compact" data-sim-copy="compact">Compact</option>
+                  <option value="expanded" data-sim-copy="expanded">Expanded</option>
+                </select>
+              </label>
+              <label
+                ><span data-copy="fov"></span>
+                <input id="camera-fov" type="range" min="60" max="110" value="82" />
+              </label>
+              <label
+                ><span data-copy="tilt"></span>
+                <input id="camera-tilt" type="range" min="0" max="35" value="10" />
+              </label>
+            </div>
+            <button id="academy-sound" type="button" data-sim-icon="sound" aria-pressed="false">
+              Menu sound off
+            </button>
+            <button id="academy-close-options" type="button" data-sim-copy="done">Done</button>
+          </div>
+        </details>
       </section>
       <section
         id="viewport"
@@ -120,72 +162,92 @@
           </div>
         </div>
       </section>
-      <footer>
-        <p id="keyboard-help" data-copy="keys"></p>
-        <button id="watch" data-copy="watch"></button
-        ><button id="try" data-copy="try" hidden></button>
+      <footer class="academy-footer">
+        <details class="academy-key-guide">
+          <summary data-sim-copy="keyboardGuide">Keyboard controls</summary>
+          <p id="keyboard-help" data-copy="keys"></p>
+        </details>
+        <div class="academy-footer-actions">
+          <button id="watch" data-copy="watch" data-sim-icon="play"></button>
+          <button id="try" data-copy="try" data-sim-icon="play" hidden></button>
+        </div>
       </footer>
     </main>
     <dialog id="course-dialog">
       <header>
         <h2 data-copy="courses"></h2>
-        <button data-close="course-dialog" data-copy="close"></button>
+        <button data-close="course-dialog" data-copy="close" data-sim-icon="back"></button>
       </header>
       <div id="course-list" class="course-list"></div>
     </dialog>
     <dialog id="setup-dialog">
       <header>
-        <h2 data-copy="setup"></h2>
-        <button data-close="setup-dialog" data-copy="close"></button>
+        <h2 id="radio-setup-title">Radio setup</h2>
+        <button data-close="setup-dialog" data-copy="close" data-sim-icon="back"></button>
       </header>
       <div id="radio-setup"></div>
     </dialog>
-    <dialog id="help-dialog">
+    <dialog id="help-dialog" class="academy-guide">
       <header>
-        <h2 data-copy="help"></h2>
-        <button data-close="help-dialog" data-copy="close"></button>
+        <h2 data-sim-copy="help">Flight guide</h2>
+        <button data-close="help-dialog" data-copy="close" data-sim-icon="back"></button>
       </header>
-      <p data-copy="limitation"></p>
-      <p data-copy="keys"></p>
-      <p data-copy="touchHelp"></p>
-      <p data-copy="modeHelp"></p>
-      <p data-copy="savedReview"></p>
-      <label
-        ><span data-copy="camera"></span
-        ><select id="camera-help">
-          <option value="fpv" data-copy="fpv"></option>
-          <option value="chase" data-copy="chase"></option>
-          <option value="overview" data-copy="overview"></option></select
-      ></label>
-      <button id="studio-button" data-copy="studio"></button>
-      <button id="install-offline" data-copy="offline"></button>
-      <button id="remove-offline" data-copy="removeOffline"></button>
-      <p id="offline-unavailable" data-copy="offlineUnavailable" hidden></p>
-      <label
-        ><span data-copy="fov"></span
-        ><input id="camera-fov" type="range" min="60" max="110" value="82" /></label
-      ><label
-        ><span data-copy="tilt"></span
-        ><input id="camera-tilt" type="range" min="0" max="35" value="10" /></label
-      ><button id="export-attempt" data-copy="export"></button
-      ><label class="file-label"
-        ><span data-copy="import"></span
-        ><input id="import-attempt" type="file" accept="application/json,.json"
-      /></label>
+      <div class="academy-guide-grid">
+        <section>
+          <h3 data-sim-copy="flyingBasics">Flying basics</h3>
+          <p data-copy="modeHelp"></p>
+          <details open>
+            <summary data-sim-copy="keyboardGuide">Keyboard controls</summary>
+            <p data-copy="keys"></p>
+          </details>
+          <details>
+            <summary data-sim-copy="touchGuide">Touch controls</summary>
+            <p data-copy="touchHelp"></p>
+          </details>
+          <label
+            ><span data-copy="camera"></span>
+            <select id="camera-help">
+              <option value="fpv" data-copy="fpv"></option>
+              <option value="chase" data-copy="chase"></option>
+              <option value="overview" data-copy="overview"></option>
+            </select>
+          </label>
+        </section>
+        <section>
+          <h3 data-sim-copy="yourFlights">Your flights</h3>
+          <p data-copy="savedReview"></p>
+          <button id="export-attempt" data-copy="export" data-sim-icon="content"></button>
+          <label class="file-label">
+            <span data-copy="import"></span>
+            <input id="import-attempt" type="file" accept="application/json,.json" />
+          </label>
+          <details>
+            <summary data-sim-copy="workshopAndOffline">Workshop & offline</summary>
+            <button id="studio-button" data-copy="studio" data-sim-icon="content"></button>
+            <button id="install-offline" data-copy="offline" data-sim-icon="content"></button>
+            <button id="remove-offline" data-copy="removeOffline"></button>
+            <p id="offline-unavailable" data-copy="offlineUnavailable" hidden></p>
+          </details>
+        </section>
+      </div>
       <p id="transfer-status" role="status"></p>
-      <p><a href="README.md">Model, controls and package notes · Опис моделі</a></p>
+      <details>
+        <summary data-sim-copy="aboutModel">About this training model</summary>
+        <p data-copy="limitation"></p>
+        <p><a href="README.md">Model, controls and package notes · Опис моделі</a></p>
+      </details>
     </dialog>
     <dialog id="notebook-dialog">
       <header>
         <h2 data-copy="notebook"></h2>
-        <button data-close="notebook-dialog" data-copy="close"></button>
+        <button data-close="notebook-dialog" data-copy="close" data-sim-icon="back"></button>
       </header>
       <div id="flight-notebook"></div>
     </dialog>
     <dialog id="studio-dialog">
       <header>
         <h2 data-copy="studio"></h2>
-        <button data-close="studio-dialog" data-copy="close"></button>
+        <button data-close="studio-dialog" data-copy="close" data-sim-icon="back"></button>
       </header>
       <div id="flight-studio"></div>
     </dialog>

@@ -227,9 +227,9 @@ export async function buildDemoRecordings() {
   // previously uncovered late maps are included, plus two early mechanical
   // examples; reviewed wins remain the majority of the catalogue.
   const failureLevelIndexes = [2, 5, 7, 9, 10, 11];
-  const humanMistakes = failureLevelIndexes.map((index) => {
+  const authoredMistakes = failureLevelIndexes.map((index) => {
     const authored = campaign.levels[index];
-    const id = `human-mistake-${authored.id}`,
+    const id = `authored-mistake-${authored.id}`,
       level = applyGameplayTuning(authored, resolveGameplayTuning('standard')),
       options = {
         classId: classIds[index % classIds.length],
@@ -275,8 +275,12 @@ export async function buildDemoRecordings() {
     }
     for (let attempt = 0; attempt < attempts && run.status !== 'lost'; attempt++) {
       while (run.status === 'respawning') input();
-      input({}, 30 + ((index + attempt) % 4) * 18);
-      moveSafeX([8, 24, 40][(index + attempt) % 3]);
+      // Let the viewer first see deliberate border play. A long reposition and
+      // a second staging point make the eventual reversal read as a plausible
+      // mistake instead of an instant scripted death.
+      input({}, 120 + ((index + attempt) % 4) * 24);
+      moveSafeX(attempt % 2 ? 2 : level.width - 3);
+      moveSafeX(Math.min(level.width - 4, [8, 24, 40][(index + attempt) % 3]));
       let ticks = 0;
       while (!run.player.cutting && run.status === 'running') {
         assert.ok(ticks++ < 1200, `${id}: could not begin a mistake.`);
@@ -296,10 +300,16 @@ export async function buildDemoRecordings() {
     }
     if (!fullLoss) {
       while (run.status === 'respawning') input();
-      input({}, 90 + (index % 3) * 30);
+      input({}, 180 + (index % 3) * 30);
+      moveSafeX(index % 2 ? level.width - 4 : 3);
+      input({}, 360);
       assert.equal(run.status, 'running');
     } else assert.equal(run.status, 'lost', `${id}: the authored loss did not finish.`);
     const replay = exportReplay(recorder, run);
+    assert.ok(
+      run.time >= 12 && run.time <= 30,
+      `${id}: mistake pacing is not readable (${run.time.toFixed(3)} seconds).`,
+    );
     assert.equal(verifyReplay(replay).match, true);
     return {
       replay,
@@ -314,7 +324,7 @@ export async function buildDemoRecordings() {
       metrics: { closedCuts: 0, bends, events, failures, fullLoss },
     };
   });
-  return [...reviewedWins, ...humanMistakes];
+  return [...reviewedWins, ...authoredMistakes];
 }
 
 const fileOperations = { readFile, writeFile, mkdir, rename, unlink };

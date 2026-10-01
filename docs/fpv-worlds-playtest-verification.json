@@ -1,0 +1,64 @@
+{
+  "format": "FPVPlaytestVerification.v1",
+  "date": "2026-09-30",
+  "build": {
+    "format": "FPVPlaytestBuild.v1",
+    "entry": "optional-practice/fpv-worlds/index.html",
+    "files": 73,
+    "bytes": 8941888,
+    "zipSha256": "c7a312dad173a2f5bc900932bf97c183216736eef2e9fabc172d0ab2c4db545c",
+    "qualification": "development-playtest",
+    "unitTests": "deferred-to-final-phase",
+    "releaseQualified": false
+  },
+  "offlineObservation": {
+    "url": "http://127.0.0.1:8789/dist/fpv-worlds-playtest/optional-practice/fpv-worlds/index.html",
+    "build": {
+      "format": "FPVPlaytestBuild.v1",
+      "entry": "optional-practice/fpv-worlds/index.html",
+      "files": 73,
+      "bytes": 8941888,
+      "zipSha256": "c7a312dad173a2f5bc900932bf97c183216736eef2e9fabc172d0ab2c4db545c",
+      "qualification": "development-playtest",
+      "unitTests": "deferred-to-final-phase",
+      "releaseQualified": false
+    },
+    "prepared": {
+      "status": "Offline runtime preparation completed.",
+      "controller": true,
+      "caches": [
+        "revealline.optional.package.v1:/dist/fpv-worlds-playtest/optional-practice/fpv-worlds/:3f70c0e20214922208c6481b711a409e5401aeeb50141c576946128bf50a3807"
+      ]
+    },
+    "offlineLibrary": {
+      "worlds": 8,
+      "challenges": 60
+    },
+    "flight": {
+      "title": "Yard check-in",
+      "hud": "1.4 m \u00b7 3 m/s \u00b7 2.5 s \u00b7 \u2665 100",
+      "status": "Paused. Arm deliberately to continue."
+    },
+    "hangar": {
+      "open": true,
+      "canvas": {
+        "x": 401,
+        "y": 302.5,
+        "width": 638,
+        "height": 420
+      }
+    },
+    "errors": [],
+    "failed": []
+  },
+  "additionalWalkthroughs": [
+    "Chromium: route drag/undo/numeric edits/theme preview",
+    "Chromium: course-only install, editable ZIP round-trip, GLB import",
+    "Chromium 390x844 viewport: touch flight and all three hangar appearances",
+    "Chromium synthetic TX15 through setup UI: explicit radio off-on rearming; pause/blur remains paused with held on",
+    "Safari Technology Preview: playlist persistence, recovery, audio, actor inspector, exported flight",
+    "Actual Safari exported proof: 680-frame Node replay and SHA-256 archive round-trip"
+  ],
+  "unitCoverage": "Additional coverage and reruns deferred to final phase at user request",
+  "releaseQualified": false
+}
