@@ -138,12 +138,27 @@ export function createFlightRenderer({
     raycaster = new THREE.Raycaster();
   const materials = new Set(),
     geometry = new Set(),
+    shadowMaterials = new WeakMap(),
     goalRows = [],
     actorRows = new Map(),
     pulseRows = new Map();
   const texturesOf = (paint) => Object.values(paint ?? {}).filter((value) => value?.isTexture);
+  function ownShadowMaterial(item) {
+    if (!item.isMesh || item.customDepthMaterial || Array.isArray(item.material)) return;
+    // The pinned renderer's shared depth material can retain an old map uniform
+    // after changing to an untextured caster, re-uploading an already disposed
+    // world texture. Keep shadow uniforms within their source material's lifetime.
+    let depth = shadowMaterials.get(item.material);
+    if (!depth) {
+      depth = new THREE.MeshDepthMaterial();
+      shadowMaterials.set(item.material, depth);
+      materials.add(depth);
+    }
+    item.customDepthMaterial = depth;
+  }
   const register = (root) =>
     root.traverse((item) => {
+      ownShadowMaterial(item);
       if (item.geometry) geometry.add(item.geometry);
       for (const paint of Array.isArray(item.material) ? item.material : [item.material])
         if (paint) materials.add(paint);
@@ -156,6 +171,7 @@ export function createFlightRenderer({
   const mesh = (shape, paint, parent = world) => {
     geometry.add(shape);
     const value = new THREE.Mesh(shape, paint);
+    ownShadowMaterial(value);
     parent.add(value);
     return value;
   };
@@ -179,6 +195,8 @@ export function createFlightRenderer({
         for (const paint of [
           ...(Array.isArray(item.material) ? item.material : [item.material]),
           ...(item.userData?.ownedMaterials ?? []),
+          item.customDepthMaterial,
+          item.customDistanceMaterial,
         ])
           if (paint) {
             paints.add(paint);
