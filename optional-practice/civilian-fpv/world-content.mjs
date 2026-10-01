@@ -897,6 +897,14 @@ export function resolveProject(input) {
       validId(id) && change && typeof change === 'object' && !Array.isArray(change),
       'Invalid semantic override.',
     );
+  if (p.spawnBindings !== undefined) {
+    assert(
+      p.spawnBindings && typeof p.spawnBindings === 'object' && !Array.isArray(p.spawnBindings),
+      'Spawn bindings must be an object.',
+    );
+    for (const [courseId, anchorId] of Object.entries(p.spawnBindings))
+      assert(courses.has(courseId) && validId(anchorId), 'Invalid stable spawn binding.');
+  }
   p.provenance ??= [];
   assert(
     Array.isArray(p.provenance) && p.provenance.length <= WORLD_LIMITS.files,
@@ -963,7 +971,19 @@ export function mergeReimport(input, imported) {
     next = new Map(
       [...imported.metadata.anchors, ...imported.metadata.colliders].map((a) => [a.id, a]),
     ),
-    diagnostics = [...imported.metadata.diagnostics];
+    diagnostics = [...imported.metadata.diagnostics],
+    changes = [];
+  // Exporter node indices are not authoring identities. Reordering a scene must
+  // not turn an unchanged stable marker into a gameplay change.
+  const semantic = ({ node: _node, ...value }) => canonicalWorldJSON(value);
+  for (const [id, before] of old) {
+    const after = next.get(id);
+    if (!after) changes.push({ id, kind: before.kind, action: 'removed' });
+    else if (semantic(before) !== semantic(after))
+      changes.push({ id, kind: after.kind, action: 'changed' });
+  }
+  for (const [id, after] of next)
+    if (!old.has(id)) changes.push({ id, kind: after.kind, action: 'added' });
   for (const id of Object.keys(p.overrides)) {
     if (!next.has(id))
       diagnostics.push({
@@ -972,7 +992,7 @@ export function mergeReimport(input, imported) {
         id,
         message: 'The source removed this marker; its override is retained for review.',
       });
-    else if (old.has(id) && canonicalWorldJSON(old.get(id)) !== canonicalWorldJSON(next.get(id)))
+    else if (old.has(id) && semantic(old.get(id)) !== semantic(next.get(id)))
       diagnostics.push({
         severity: 'info',
         code: 'override-preserved',
@@ -986,7 +1006,185 @@ export function mergeReimport(input, imported) {
     colliders: imported.metadata.colliders,
   };
   p.world.sourceHash = imported.sourceHash;
-  return { project: resolveProject(p), diagnostics };
+  return { project: resolveProject(p), diagnostics, changes };
+}
+
+/** Prepare a candidate without mutating the draft. The FPV adapter supplies its
+ * normal source converters and validator, so reimport uses identical semantics
+ * to first import. Local edits win conflicts; the caller must show the report
+ * before accepting the candidate and synchronizing its content definitions. */
+export function previewReimport(input, imported, { createCourse, createCollider, validateCourse }) {
+  const prior = resolveProject(input),
+    result = mergeReimport(prior, imported),
+    next = result.project,
+    { diagnostics } = result,
+    oldWorld = compilePlayable(prior).world,
+    newWorld = compilePlayable(next).world,
+    beforeCourse = createCourse(prior),
+    afterCourse = createCourse(next),
+    anchors = (world) => new Map(world.anchors.map((anchor) => [anchor.id, anchor])),
+    beforeAnchors = anchors(oldWorld),
+    afterAnchors = anchors(newWorld),
+    modes = ['self-level', 'acro'],
+    same = (a, b) =>
+      a === undefined || b === undefined
+        ? a === b
+        : canonicalWorldJSON({ value: a }) === canonicalWorldJSON({ value: b }),
+    copy = (value) => (value === undefined ? undefined : structuredClone(value)),
+    note = (code, id, message) => diagnostics.push({ severity: 'warning', code, id, message });
+  const route = (world, course) =>
+    new Map(
+      world.anchors
+        .filter((a) => ['gate', 'checkpoint', 'landmark', 'landing'].includes(a.kind))
+        .sort((a, b) => (a.order ?? 0) - (b.order ?? 0))
+        .map((a, i) => [a.id, course.steps['self-level'][i]]),
+    );
+  const beforeRoute = route(oldWorld, beforeCourse),
+    afterRoute = route(newWorld, afterCourse);
+  // Merge semantic fields, including actor settings and gate dimensions/direction.
+  // Arrays (paths/mesh data) and a changed criterion shape are atomic values.
+  function mergeValue(local, before, after, id, field = '') {
+    if (same(local, before)) return copy(after);
+    if (same(before, after) || same(local, after)) return copy(local);
+    if ([local, before, after].every((v) => v && typeof v === 'object' && !Array.isArray(v))) {
+      if (['type', 'axis'].some((key) => before[key] !== after[key])) {
+        note(
+          'local-conflict',
+          id,
+          `${id}${field}: source shape changed; locally edited version retained.`,
+        );
+        return copy(local);
+      }
+      const merged = {};
+      for (const key of new Set([
+        ...Object.keys(local),
+        ...Object.keys(before),
+        ...Object.keys(after),
+      ])) {
+        const value = mergeValue(local[key], before[key], after[key], id, `${field}.${key}`);
+        if (value !== undefined) merged[key] = value;
+      }
+      return merged;
+    }
+    note(
+      'local-conflict',
+      id,
+      `${id}${field}: both source and local value changed; local value retained.`,
+    );
+    return copy(local);
+  }
+  function mergeRows(local, before, after, courseId, category) {
+    const previous = new Map(before.map((row) => [row.id, row])),
+      incoming = new Map(after.map((row) => [row.id, row])),
+      existing = new Set(local.map((row) => row.id));
+    const rows = local.map((row) => {
+      const old = previous.get(row.id),
+        updated = incoming.get(row.id);
+      if (!old) {
+        if (updated)
+          note(
+            'local-id-conflict',
+            row.id,
+            `${courseId}/${category}/${row.id}: added source ID conflicts with local content; local version retained.`,
+          );
+        return copy(row);
+      }
+      if (!updated) {
+        note(
+          'removed-source-retained',
+          row.id,
+          `${courseId}/${category}/${row.id}: source removed this item; authored item retained for review.`,
+        );
+        return copy(row);
+      }
+      return mergeValue(row, old, updated, `${courseId}/${category}/${row.id}`);
+    });
+    for (const row of after) {
+      if (existing.has(row.id)) continue;
+      if (previous.has(row.id)) {
+        note(
+          'local-deletion-preserved',
+          row.id,
+          `${courseId}/${category}/${row.id}: local deletion retained.`,
+        );
+      } else rows.push(copy(row));
+    }
+    return rows;
+  }
+  next.spawnBindings ??= {};
+  next.courses = prior.courses.map((source) => {
+    const course = copy(source),
+      binding =
+        prior.spawnBindings?.[course.id] ?? oldWorld.anchors.find((a) => a.kind === 'spawn')?.id;
+    if (binding) {
+      next.spawnBindings[course.id] = binding;
+      const before = beforeAnchors.get(binding),
+        after = afterAnchors.get(binding),
+        mm = (anchor) =>
+          Object.fromEntries(
+            ['x', 'y', 'z'].map((axis) => [axis, Math.round(anchor.position[axis] * 1000)]),
+          );
+      if (before?.kind === 'spawn' && after?.kind === 'spawn')
+        course.spawn = mergeValue(
+          course.spawn,
+          mm(before),
+          mm(after),
+          `${course.id}/spawn/${binding}`,
+        );
+      else
+        note(
+          'missing-spawn-binding',
+          binding,
+          `${course.id}: selected spawn ${binding} is absent or changed kind; authored spawn retained.`,
+        );
+    }
+    course.obstacles = mergeRows(
+      course.obstacles,
+      oldWorld.colliders.map(createCollider),
+      newWorld.colliders.map(createCollider),
+      course.id,
+      'collider',
+    );
+    course.actors = mergeRows(
+      course.actors,
+      beforeCourse.actors,
+      afterCourse.actors,
+      course.id,
+      'actor',
+    );
+    for (const mode of modes)
+      for (const [index, id] of (prior.routeBindings?.[course.id]?.[mode] ?? []).entries()) {
+        if (!id) continue;
+        const before = beforeRoute.get(id),
+          after = afterRoute.get(id),
+          local = course.steps[mode][index];
+        assert(local, `Dangling ${mode} route binding ${id}.`);
+        if (!before || !after) {
+          note(
+            'missing-route-binding',
+            id,
+            `${course.id}/${mode}/${id}: source marker is absent or changed kind; authored objective retained.`,
+          );
+          continue;
+        }
+        course.steps[mode][index] = mergeValue(local, before, after, `${course.id}/${mode}/${id}`);
+      }
+    return validateCourse(course);
+  });
+  const bound = new Set(
+    Object.values(prior.routeBindings ?? {}).flatMap((binding) =>
+      modes.flatMap((mode) => binding[mode] ?? []),
+    ),
+  );
+  for (const change of result.changes)
+    if (change.action === 'added' && afterRoute.has(change.id) && !bound.has(change.id))
+      diagnostics.push({
+        severity: 'info',
+        code: 'unplaced-marker',
+        id: change.id,
+        message: `${change.id}: new route marker is available; existing route order is retained.`,
+      });
+  return result;
 }
 export function resolveExperience(input, { courseId, themeId, playlistId, campaignId } = {}) {
   const p = compilePlayable(input),
