@@ -129,3 +129,27 @@ input takeover. Implement the current feedback as one focused child of #929:
 See `fpv-motion-teaching.md` for the behavior and its motor-mix limitations.
 These estimates cover the feedback refinement only; the R4–R7 art, content,
 deferred unit coverage and human/device qualification backlog is retained.
+
+### Player feedback refinement — endless practice, 2 October 2026
+
+The next focused R1/R3 increment removes automatic timeout and contact stops
+from manual controls-lab practice and adds a drone-centred fullscreen practice
+view. Estimate **1–2 working days**, including functional qualification and
+focused publication. The practice volume remains bounded to ±80 metres
+horizontally and 0–80 metres vertically; ground and boundary collision remain.
+
+Use a lab-only unscored runtime option with proof creation disabled. Normal
+attempt limits, course identities, recorded inputs and reward contracts remain
+unchanged. Retain focus/stall/disconnect pauses and explicit reset/replay.
+The dedicated view presents a larger rear-follow quaternion schematic, wider
+ground, compact corner gimbals, optional touch buttons and EN/UK controls.
+Fullscreen fallback must remain usable, and leaving practice must preserve any
+application fullscreen session that was already active.
+
+Current local evidence comprises 14 browser coach checks (including more than
+13 simulated minutes), 27 model checks including the original 24 demonstration
+proofs, replay of all 14 Acro school demonstrations and 16 browser diagram checks.
+The final production-host browser run passed 19 input/isolation checks. Frozen
+package qualification remains pending at this checkpoint; no public live, physical-radio or human acceptance is claimed.
+See [FPV endless controls practice](fpv-endless-practice.md) for behavior and
+limits. R4–R7 estimates and scope, including deferred unit coverage, are unchanged.

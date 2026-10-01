@@ -144,6 +144,8 @@ export function mountDroneDiagram({ root }) {
     focusable: 'false',
   });
   const ground = svg('path', { class: 'sim-response-ground' });
+  const groundFar = svg('path', { class: 'sim-response-ground-far' });
+  const horizon = svg('path', { class: 'sim-response-horizon' });
   const reference = svg('text', {
     x: 110,
     y: 154,
@@ -224,6 +226,8 @@ export function mountDroneDiagram({ root }) {
     thrust,
   );
   drawing.append(
+    horizon,
+    groundFar,
     ground,
     reference,
     shadow,
@@ -268,8 +272,10 @@ export function mountDroneDiagram({ root }) {
       followHeading = false,
       environmentMotion = false,
       reducedMotion = false,
+      immersivePractice = false,
     } = {}) {
       if (disposed || !state) return;
+      environmentMotion ||= immersivePractice;
       const rotate = rotation(state.orientation);
       const initialForward = rotation(referenceOrientation)([0, 0, -1]);
       const referenceHeading =
@@ -290,20 +296,26 @@ export function mountDroneDiagram({ root }) {
         sine = Math.sin(cameraHeading);
       const relative = ([x, y, z]) => [cosine * x + sine * z, y, -sine * x + cosine * z];
       const height = Math.max(0, finite(state.position?.y) / 1000);
-      const floorY = environmentMotion ? 150 : 118;
+      const centerX = immersivePractice ? 320 : 110,
+        floorY = immersivePractice ? 230 : environmentMotion ? 150 : 118,
+        projectionScale = immersivePractice ? 48 : 36;
       // Smoothly auto-frame actual height so a high flight never clips out of
       // the teaching view. This camera framing does not alter the measured m.
       const bodyY = environmentMotion ? floorY - (96 * height) / (height + 4) : 67;
-      drawing.setAttribute('viewBox', environmentMotion ? '0 0 220 200' : '0 0 220 160');
+      drawing.setAttribute(
+        'viewBox',
+        immersivePractice ? '0 0 640 360' : environmentMotion ? '0 0 220 200' : '0 0 220 160',
+      );
       drawing.dataset.environmentMotion = String(environmentMotion);
       drawing.dataset.reducedMotion = String(reducedMotion);
+      drawing.dataset.immersivePractice = String(immersivePractice);
       // The observer is behind (+Z) and slightly above the nose (-Z). Following
       // heading keeps that rear view through turns without levelling the body.
       // Perspective makes the rear motor pair visibly nearer; height and depth
       // remain independent, so pitch cannot read as a flat icon being squashed.
       const projectView = ([x, y, z], floor = false) => {
-        const scale = (36 * 5) / (5 - z * 0.9165 - y * 0.4);
-        return [110 + x * scale, (floor ? floorY : bodyY) + (z * 0.4 - y * 0.9165) * scale];
+        const scale = (projectionScale * 5) / (5 - z * 0.9165 - y * 0.4);
+        return [centerX + x * scale, (floor ? floorY : bodyY) + (z * 0.4 - y * 0.9165) * scale];
       };
       const project = (value, floor = false) => projectView(relative(value), floor);
       const bodyScale = Math.max(1, Math.min(1.5, finite(detailScale)));
@@ -361,18 +373,23 @@ export function mountDroneDiagram({ root }) {
           1000,
       };
       let groundTile = null;
+      const farPaths = [];
       if (environmentMotion) {
         // One metre tiles are anchored to the world, not integrated a second
         // time from velocity. Camera translation subtracts the actual position.
         // Clip in the ground plane before perspective to keep geometry bounded.
         const groundView = ([x, z]) =>
           relative([initialCosine * x - initialSine * z, 0, initialSine * x + initialCosine * z]);
-        const clipGround = (a, b) => {
+        const clipGround = (a, b, far = false) => {
           let lo = 0,
             hi = 1;
           for (const [axis, min, max] of [
-            [0, -2.4, 2.4],
-            [2, -2.8, 1.4],
+            [0, immersivePractice ? -12 : -2.4, immersivePractice ? 12 : 2.4],
+            [
+              2,
+              immersivePractice ? (far ? -16 : -5) : -2.8,
+              immersivePractice ? (far ? -5 : 2.4) : 1.4,
+            ],
           ]) {
             const delta = b[axis] - a[axis];
             if (Math.abs(delta) < 1e-8) {
@@ -385,12 +402,35 @@ export function mountDroneDiagram({ root }) {
               if (lo > hi) return '';
             }
           }
+          const ends = [lo, hi].map((amount) =>
+            projectView(
+              a.map((value, i) => value + (b[i] - value) * amount),
+              true,
+            ),
+          );
+          if (!immersivePractice) return path(ends);
+          // The wider world grid must stay inside the SVG at every heading.
+          // Clip the projected segment rather than squeezing world coordinates.
+          let first = 0,
+            last = 1;
+          for (const [axis, min, max] of [
+            [0, 16, 624],
+            [1, 16, 314],
+          ]) {
+            const delta = ends[1][axis] - ends[0][axis];
+            if (Math.abs(delta) < 1e-8) {
+              if (ends[0][axis] < min || ends[0][axis] > max) return '';
+            } else {
+              const from = (min - ends[0][axis]) / delta,
+                to = (max - ends[0][axis]) / delta;
+              first = Math.max(first, Math.min(from, to));
+              last = Math.min(last, Math.max(from, to));
+              if (first > last) return '';
+            }
+          }
           return path(
-            [lo, hi].map((amount) =>
-              projectView(
-                a.map((value, i) => value + (b[i] - value) * amount),
-                true,
-              ),
+            [first, last].map((amount) =>
+              ends[0].map((value, i) => value + (ends[1][i] - value) * amount),
             ),
           );
         };
@@ -408,43 +448,66 @@ export function mountDroneDiagram({ root }) {
           ),
         };
         groundPaths = [];
-        for (let line = -5; line <= 5; line++) {
-          groundPaths.push(clipGround(groundView([line - x, -6]), groundView([line - x, 6])));
-          groundPaths.push(clipGround(groundView([-6, line - z]), groundView([6, line - z])));
+        const range = immersivePractice ? 22 : 5,
+          span = immersivePractice ? 24 : 6;
+        for (let line = -range; line <= range; line++) {
+          const segments = [
+            [groundView([line - x, -span]), groundView([line - x, span])],
+            [groundView([-span, line - z]), groundView([span, line - z])],
+          ];
+          for (const [a, b] of segments) {
+            groundPaths.push(clipGround(a, b));
+            if (immersivePractice) farPaths.push(clipGround(a, b, true));
+          }
         }
       }
       ground.setAttribute('d', groundPaths.join(''));
+      groundFar.setAttribute('d', farPaths.join(''));
+      groundFar.style.display = horizon.style.display = immersivePractice ? '' : 'none';
+      const horizonY = floorY - (projectionScale * 5 * 0.4) / 0.9165;
+      horizon.setAttribute('d', immersivePractice ? `M16 ${horizonY.toFixed(2)}H624` : '');
       ground.dataset.offsetX = String(groundOffset.x);
       ground.dataset.offsetZ = String(groundOffset.z);
+      shadow.setAttribute('cx', String(centerX));
       shadow.setAttribute('cy', String(floorY));
-      shadow.setAttribute('rx', String(environmentMotion ? 30 / (1 + height / 18) : 30));
+      shadow.setAttribute(
+        'rx',
+        String(environmentMotion ? (immersivePractice ? 45 : 30) / (1 + height / 18) : 30),
+      );
+      shadow.setAttribute('ry', immersivePractice ? '12' : '8');
       shadow.style.opacity = environmentMotion ? String(0.65 / (1 + height / 8)) : '';
       heightLine.style.display =
         heightLabel.style.display =
         mixNote.style.display =
           environmentMotion ? '' : 'none';
+      const heightX = immersivePractice ? 574 : 192;
       heightLine.setAttribute(
         'd',
         path([
-          [192, bodyY],
-          [192, floorY],
+          [heightX, bodyY],
+          [heightX, floorY],
         ]) +
           path([
-            [188, bodyY],
-            [196, bodyY],
+            [heightX - 4, bodyY],
+            [heightX + 4, bodyY],
           ]) +
           path([
-            [188, floorY],
-            [196, floorY],
+            [heightX - 4, floorY],
+            [heightX + 4, floorY],
           ]),
       );
+      heightLabel.setAttribute('x', immersivePractice ? '20' : '9');
+      heightLabel.setAttribute('y', immersivePractice ? '28' : '14');
       heightLabel.textContent =
         locale === 'uk'
           ? `${height.toFixed(1)} м · авторамка висоти`
           : `${height.toFixed(1)} m · height auto-framed`;
       mixNote.textContent =
         locale === 'uk' ? 'Умовний мікс команд · не об/хв' : 'Illustrative command mix · not RPM';
-      reference.setAttribute('y', environmentMotion ? '196' : '154');
+      mixNote.setAttribute('x', String(centerX));
+      mixNote.setAttribute('y', immersivePractice ? '324' : '184');
+      reference.setAttribute('x', String(centerX));
+      reference.setAttribute('y', immersivePractice ? '345' : environmentMotion ? '196' : '154');
       const corners = [
         [-0.82, 0, -0.82],
         [0.82, 0, -0.82],
@@ -558,7 +621,9 @@ export function mountDroneDiagram({ root }) {
         motorLabels[index].setAttribute('x', label[0].toFixed(2));
         motorLabels[index].setAttribute(
           'y',
-          Math.min(environmentMotion ? 172 : 130, label[1] + 14).toFixed(2),
+          Math.min(immersivePractice ? 314 : environmentMotion ? 172 : 130, label[1] + 14).toFixed(
+            2,
+          ),
         );
         motorLabels[index].style.display = environmentMotion ? '' : 'none';
         motorLabels[index].textContent =
@@ -584,14 +649,20 @@ export function mountDroneDiagram({ root }) {
       );
       const front = bodyPoint([0, 0.12, -0.9]),
         back = bodyPoint([0, 0.12, 0.85]);
-      const labelY = Math.min(environmentMotion ? 172 : 109, Math.max(12, front[1] - 10));
+      const labelY = Math.min(
+        immersivePractice ? 314 : environmentMotion ? 172 : 109,
+        Math.max(12, front[1] - 10),
+      );
       frontLabel.setAttribute('x', front[0].toFixed(2));
       frontLabel.setAttribute('y', labelY.toFixed(2));
       frontLabel.textContent = locale === 'uk' ? 'ПЕРЕД' : 'FRONT';
       rearLabel.setAttribute('x', back[0].toFixed(2));
       rearLabel.setAttribute(
         'y',
-        Math.min(environmentMotion ? 174 : 112, Math.max(12, back[1] + 13)).toFixed(2),
+        Math.min(
+          immersivePractice ? 316 : environmentMotion ? 174 : 112,
+          Math.max(12, back[1] + 13),
+        ).toFixed(2),
       );
       rearLabel.textContent = locale === 'uk' ? 'ЗАД' : 'REAR';
       frontLeader.setAttribute('d', path([front, [front[0], labelY + 3]]));
@@ -628,14 +699,14 @@ export function mountDroneDiagram({ root }) {
         speed > 0.05 ? [(vx / speed) * distance, 0, (vz / speed) * distance] : [0, 0, 0],
         true,
       );
-      const dx = end[0] - 110,
+      const dx = end[0] - centerX,
         dy = end[1] - floorY,
         length = Math.hypot(dx, dy) || 1;
       const ax = dx / length,
         ay = dy / length;
       drift.setAttribute(
         'd',
-        path([[110, floorY], end]) +
+        path([[centerX, floorY], end]) +
           path([
             [end[0] - ax * 7 - ay * 4, end[1] - ay * 7 + ax * 4],
             end,
@@ -651,7 +722,7 @@ export function mountDroneDiagram({ root }) {
         height,
         groundOffset,
         groundTile,
-        bodyCenter: [110, bodyY],
+        bodyCenter: [centerX, bodyY],
         motorMix: motorNames.map((name, index) => ({
           name,
           power: power[index],
