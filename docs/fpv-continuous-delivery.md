@@ -965,3 +965,29 @@ passes all three optional package admissions, committed input/ZIP membership and
 two byte-identical builds. Receipt `docs/evidence/fpv-skills-package-20261002.json`.
 The reviewed-player and skills-school local builds match:87 files/13,894,752bytes,
 ZIP SHA `83b785dd5c4ad07b8615880a581597ed35926642694fc06934ce4168da3aed7f`.
+
+### 2 October — Pro/Master published, player entry refreshed
+
+Focused PR [#940](https://github.com/mekhovov/revealline/pull/940) is published
+from `codex/fpv-pro-mastery-school`, qualified receipt head
+`0ecb2469d07fd012403ebfbbd3443a5c5ec13110`, attached to this chat and appended
+through the native API to stack902 after #939. Live membership was inspected;
+all older open members/holds remain, with #938 → #939 → #940 as the new tail.
+No manual retarget, rebase, bypass or public-live claim.
+
+Launched the user's rebuilt reviewed-player URL, verified58 available lessons,
+46 primary progression and Pro/Master entries, and marked that browser tab as the
+player deliverable. Actual fullscreen orbit practice was visually inspected;
+image `/tmp/fpv-mastery-immersive-practice.png`. Player catalogue image:
+`/tmp/fpv-expanded-school-20261002.png`. The authoring code, local player builds
+and PRs are ready for player review. Protected checks/merge and public deployment
+identity plus launch remain pending separately. Do not equate local delivery
+with public availability.
+
+This request's continuous flow, larger10-inch schematic and32-lesson expansion
+are implemented and functionally verified. Next concrete authorized work: inspect
+current #925 graphics foundation and preserved radio-menu handoff before making
+changes; continue R5 hangar/meadow environment/material polish on a separate
+branch, preserving this completed school PR. Human novice sessions, fluent-UK
+review, real controllers, sustained device measurements and R7 unit coverage are
+still qualification work; do not fabricate them or block independent art work.
