@@ -239,10 +239,13 @@ main; create a new native stack only when a second dependent PR needs it.
 | G    | Further maps after feedback                                                           | 3–5 days per pair             | Distinct authored activities, verified routes and art acceptance                       |
 | H    | Final qualification and deferred unit coverage                                        | 5–10 days                     | Regression, hardware/performance and release evidence                                  |
 
-A is implemented on `codex/fpv-checkpoint-practice`; see
+A is merged in [PR #951](https://github.com/mekhovov/revealline/pull/951); see
 [section-practice behavior](fpv-checkpoint-practice.md). Publication and exact
-verification state belong in the latest delivery checkpoint. B can progress
-through controlled input/lifecycle repairs while real-device sessions are pending.
+deployment state belong in the latest delivery checkpoint. B's callback-stall
+and focused-button pause increment is implemented on `codex/fpv-world-lifecycle`;
+see [lifecycle behavior and verification](fpv-world-lifecycle.md). It freezes
+before device actions or physics and requires deliberate resume. Physical-device
+and handheld sessions remain pending; this increment does not complete all of B.
 E’s previously referenced temporary Garage handoff was absent; a reproducible
 replacement has now been regenerated separately, with integration and browser
 playback still outstanding. Do not count it as installed yet.
