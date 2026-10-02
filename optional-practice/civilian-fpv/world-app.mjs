@@ -72,6 +72,7 @@ import {
   mountDroneResponse,
   mountSimAudioControls,
   paintStickDirections,
+  mountStickTrace,
 } from './sim-presentation.mjs';
 import { createWorldAudio } from './world-audio.mjs';
 import {
@@ -1218,6 +1219,10 @@ export function mountWorldApp({
     };
     return txt(...(messages[reason] ?? messages.ready));
   }
+  const stickTraces = ['left', 'right'].map((side) =>
+    mountStickTrace($(`world-${side}-stick`), { travel: 180 * 0.34 }),
+  );
+  let stickTraceLayout = '';
   function paintInput(state) {
     const source = replayProof ? 'recording' : $('flight-source').value,
       touchActive = source === 'touch',
@@ -1235,7 +1240,14 @@ export function mountWorldApp({
                 (state?.lastInput?.[k] ?? 0) / 1000,
               ]),
             ),
-      layout = STICK_LAYOUTS[radioPreview?.stickMode ?? 2];
+      layout = STICK_LAYOUTS[radioPreview?.stickMode ?? 2],
+      traceLayout = `${flightToken}:${source}:${layout.join(':')}`,
+      reducedMotion =
+        $('sim-motion').value === 'reduced' ||
+        Boolean(win.matchMedia?.('(prefers-reduced-motion: reduce)').matches),
+      traceTime = win.performance.now();
+    if (stickTraceLayout !== traceLayout) stickTraces.forEach((trace) => trace.reset());
+    stickTraceLayout = traceLayout;
     monitor.hidden = display === 'setup' && !touchActive;
     monitor.classList.toggle('touch-active', touchActive);
     monitor.classList.toggle('compact-sticks', display === 'compact' && !touchActive);
@@ -1256,6 +1268,14 @@ export function mountWorldApp({
         radius = node.clientWidth * 0.34;
       paintStickDirections(node, { horizontal, vertical, locale });
       node.querySelector('i').style.transform = `translate(${x * radius}px, ${-y * radius}px)`;
+      stickTraces[index].update({
+        x,
+        y,
+        now: traceTime,
+        source,
+        reducedMotion,
+        available: !unavailable && !monitor.hidden && state?.status === 'active',
+      });
       node.setAttribute(
         'aria-label',
         `${controlName(horizontal)} ${Math.round(x * 100)}%, ${controlName(vertical)} ${Math.round(controls[vertical] * 100)}%`,
@@ -2496,6 +2516,7 @@ export function mountWorldApp({
   function pauseFlight(freezeRadio = true) {
     if (pausing) return;
     pausing = true;
+    stickTraces.forEach((trace) => trace.reset());
     beginnerCoach.pausePreview?.();
     if (fire) fireReleaseRequired = true;
     fire = false;
@@ -4245,6 +4266,7 @@ export function mountWorldApp({
       audio.dispose();
       presentation.dispose();
       droneResponse.dispose();
+      stickTraces.forEach((trace) => trace.dispose());
       beginnerCoach.dispose();
       spatialEditor?.dispose();
       await notebook.close();

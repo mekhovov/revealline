@@ -2106,7 +2106,8 @@ html[data-fpv-immersive='academy'] .sim-academy [data-immersive-controls='true']
 .field-kit .sim-response-motor-power {
   fill: none;
   stroke: var(--fk-cyan);
-  stroke-width: 2.2;
+  stroke-width: 1.2;
+  stroke-opacity: 0.4;
   stroke-linecap: round;
 }
 .field-kit :is(.sim-response-motor-label, .sim-response-height-label, .sim-response-mix-note) {
@@ -2234,5 +2235,55 @@ html[data-fpv-immersive='academy'] .sim-academy [data-immersive-controls='true']
   .sim-academy:has(#sticks.expanded-sticks) .sim-drone-response[data-display='compact'] {
     width: 100px;
     height: 76px;
+  }
+}
+
+/* Recent movement is a quiet observer beneath the exact current input dot. */
+.field-kit .sim-stick-trace {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  max-height: none;
+  pointer-events: none;
+  overflow: visible;
+}
+.field-kit .sim-stick-trace-history {
+  color: var(--fk-cyan);
+  pointer-events: none;
+}
+.field-kit .sim-stick-trace-history[data-source='example'] {
+  color: var(--fk-amber);
+}
+.field-kit :is(.sim-stick-trace-path, .sim-stick-trace-origin, .sim-stick-trace-arrow) {
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 1.25;
+  vector-effect: non-scaling-stroke;
+}
+.field-kit .sim-stick-trace-path {
+  stroke-opacity: 0.35;
+}
+.field-kit .sim-stick-trace-origin {
+  stroke-opacity: 0.5;
+}
+.field-kit .sim-stick-trace-arrow {
+  stroke-opacity: 0.6;
+}
+.field-kit .sim-stick-trace-history[data-source='example'] .sim-stick-trace-path {
+  stroke-dasharray: 3 4;
+}
+/* Academy touch dots use a fixed 35 px displacement at every viewport size. */
+.sim-academy .touch-stick > .sim-stick-trace {
+  inset: 50% auto auto 50%;
+  width: 180px;
+  height: 180px;
+  transform: translate(-50%, -50%);
+}
+@media (prefers-reduced-motion: reduce) {
+  .field-kit .sim-stick-trace-history {
+    display: none !important;
   }
 }
