@@ -1356,3 +1356,23 @@ Both existing reviewed-player and continuous-school paths now contain the87-file
 The separate world-adventures playtest has identical bytes. Original touch,
 self-level, Balanced and Chase settings are retained after inspection. Package
 qualification is local; protected CI/merge and public availability remain pending.
+
+### 2 October — World Adventures published
+
+[#947](https://github.com/mekhovov/revealline/pull/947) is attached to this chat
+and appended after #946 using native stack902's API. Qualification head:
+`f792630d5486b63526e5c9378fbd7f05958c633e`; frozen runtime/package candidate:
+`5daeb6b5b257f2eea689bf7a8720a9455406fded`. Current open membership starts at
+#940 and ends at #947 after #939 merged independently. Upstream #941/#942 heads
+also advanced during publication; preserve those remote changes and use the
+coordinated leased workflow if a future cascading rebase is required.
+
+Both existing player URLs are refreshed. Actual reviewed-player launch shows
+14 worlds/148 challenges and the six new collections; its catalogue is left
+open with original EN/Touch/Self-level/Balanced/Chase preferences restored.
+Screenshot: `/tmp/fpv-adventures-player-catalogue-20261002.png`. The release
+remains pending protected checks/merge/deployment; no public live claim.
+Next concrete item: integrate merged content/reimport/ghost changes without
+losing new school/control/art work, then apply the ready Themes appearance
+contract and continue landmark/art/player qualification. Preserve the Garage
+handoff and R7 unit-coverage deferral. Do not repeatedly poll unchanged CI.
