@@ -1799,3 +1799,23 @@ C2 placement hunks with its shared material bindings; do not copy full visual
 modules or introduce a competing appearance preference. After C2 publication,
 continue C3 courtyard/woodland composition and surface-scale work on a separate
 branch while required CI runs.
+
+Touch #959 subsequently merged as `1d0b359f7`. Recovery ref
+`codex/fpv-meadow-before-touch-main-20261002` preserves C2's pre-integration
+history. Only the delivery-log append conflicted; both histories were retained.
+The two unpublished C2 commits were rebased onto current main. Frozen candidate
+`1975948b32aa4c3b016cb58b987a15b1f98e5661` passes all three admissions,
+committed-input/ZIP checks, two identical builds,147 WebGL checks/45 image pairs
+and all178 replays again. Integrated receipts use `*main959*` names.
+Final local C2 playtest has92files/13,925,302bytes and ZIP SHA256
+`5dc034998be3d0c6aa7fc0f0698479bf51ccae0eb076e98f42fc9f2e53768ecc`.
+It now includes the merged touch increment and can refresh normal player URLs.
+The bounded WebGL workload has up to23 more visible draw calls due to closer
+groves; no asset-count growth, reload leak or gameplay identity change is found.
+
+C3's concrete independent candidate is courtyard street-front composition:
+assemble the existing Kenney facade/roof modules into connected three-bay
+terraces with intentional alleys, preserving model counts and exterior route
+clearance. It belongs in `scenery-runtime.template.mjs` plus its regenerated
+runtime/provenance, not in C2's visual loop or Themes' appearance contracts.
+Review source and generated ownership before edits and publish separately.

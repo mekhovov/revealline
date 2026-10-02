@@ -43,3 +43,11 @@ plateau, and registered allocations reach zero on disposal. These are bounded
 resource observations, not an FPS or latency benchmark. See the adjacent browser
 and replay receipts. Additional unit coverage remains in H/R7; physical handheld,
 novice and artist acceptance remain separate.
+
+After touch PR #959 merged, the unpublished C2 commits were rebased onto
+`1d0b359f7`, preserving the earlier candidate in a recovery ref. Integrated
+candidate `1975948b32aa4c3b016cb58b987a15b1f98e5661` passes the same 147 WebGL
+checks and 178 replays, all three package admissions, committed-input/ZIP checks
+and two reproducible builds. Source file counts remain 35/68/100 under the
+inherited 64/72/104 limits; bytes remain within 8/8/16 MiB. Final receipts use the
+`fpv-meadow-groves-*main959*` names. Public deployment is a separate gate.
