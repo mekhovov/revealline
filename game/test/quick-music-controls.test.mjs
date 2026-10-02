@@ -358,3 +358,36 @@ test('capture owners can yield exclusively to eligible quick shortcuts', () => {
   assert.equal(f.host.handlesKey({ type: 'keydown', code: 'KeyN' }), false);
   f.host.dispose();
 });
+
+test('menu, Audio and Pause credits open creator resources without running transport', () => {
+  const f = setup({ nativeLanding: true }),
+    label = f.doc.createElement('span');
+  label.setAttribute('data-landing-song', 'solo');
+  f.landing.append(label);
+  f.setState({
+    track: {
+      id: 'one',
+      title: 'One',
+      artist: 'Artist',
+      rights: { source: 'https://artist.example/song' },
+    },
+  });
+  for (const root of [label, f.$('test-quick-music-settings'), f.$('test-quick-music-0')]) {
+    const link = root.querySelector('a');
+    assert.equal(link.getAttribute('href'), 'https://artist.example/song');
+    assert.equal(link.getAttribute('target'), '_blank');
+    assert.equal(link.getAttribute('rel'), 'noopener noreferrer');
+    link.click();
+  }
+  assert.deepEqual(f.calls, []);
+  const focused = label.querySelector('a');
+  focused.focus();
+  f.host.render();
+  assert.equal(f.doc.activeElement, focused);
+  assert.equal(label.textContent, 'One · Artist');
+  f.setState({ track: { id: 'two', title: 'Upload with no source' } });
+  assert.equal(label.querySelector('a'), null);
+  assert.equal(label.textContent, 'Upload with no source');
+  assert.equal(f.$('test-quick-music-settings').querySelector('a'), null);
+  f.host.dispose();
+});

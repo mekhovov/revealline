@@ -1,0 +1,30 @@
+{
+  "archive": "/tmp/fpv-adventures-proofs-qualified.zip",
+  "archiveBytes": 493982,
+  "archiveSha256": "273a68519c195f8f0ca001ce42497a28e288cf2710cc7fcb84c120003d6a2db2",
+  "manifestSha256": "fcd36fd2e3de39bfd65a423d37b5ea53d237bd7f5b2f2b72375b5ff233a07bcb",
+  "proofBytes": 4301666,
+  "receiptSha256": "7731cc5cfa71eeecec68bc65681e93a4a767288a19e4a85a6d7496678b61370c",
+  "packIdentity": "fpv-adventures:7a780beda75af567",
+  "summary": {
+    "courses": 30,
+    "modePairs": 60,
+    "completed": 60,
+    "replayed": 60,
+    "failed": 0,
+    "clean": 54,
+    "totalTicks": 253011
+  },
+  "sources": {
+    "world-catalogue.mjs": "d901363b623193f4896100f9381c7579946796e741554f012581ebb93f9ea8a6",
+    "world-model.mjs": "78f606f2d7acc02c0cacccfcf6566996658854666b1ad453a906e2fa94ed7208",
+    "world-collision.mjs": "2899c7c84f9eae14b9a3434f585a8e873f4a1361e8f3ce4026ef27f44bdeef32",
+    "model.mjs": "9e4cd11cfdde2dd43b437069b8cb7a359a8132495db806cb5f68e8674d48aaf6",
+    "radio-profile.mjs": "f588fd5cda96ed9627a483f49ca843ace8d99a68fae42b0a4239c2cd0ab81933",
+    "math.mjs": "555c8b6ea170b46992133507d2a3d867f06185bca060239cab7db9c9b87f9f98",
+    "flight-sectors.mjs": "5b1b54bde4e578e61da7d59f4a80a86db9aafbc78b4523d2ba2b540277a0a16d",
+    "world-themes.mjs": "8331dc6931299043e14620fe312affddd382b551607db5ff6fae85f14b627bc7",
+    "vendor/rapier/rapier.mjs": "02dc6a4e2fffc013bab08fbb44fa68f501d8303615e9afe4c7d89ad4eedda0d0",
+    "qualify-fpv-adventures.mjs": "cc24b5a389bd6875b8e3361c189ecea0348a7e86da827e393423c519ae2fa646"
+  }
+}

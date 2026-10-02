@@ -291,3 +291,93 @@ test('local gym and FPV previews stay separate and usable while the public catal
   panel.open();
   assert.equal(dialog.querySelectorAll('[data-practice-source-preview]').length, 2);
 });
+
+test('SIM opens the checked bundled entry directly without an interstitial or package download', async (t) => {
+  const doc = new Document(),
+    container = doc.createElement('nav'),
+    visits = [],
+    requests = [];
+  doc.body.append(container);
+  const target =
+    'https://example.test/project/optional-practice/fpv-worlds/index.html?game-return=%2Fproject%2Fgame%2F#learn';
+  const panel = mountOptionalPracticePanel({
+    document: doc,
+    container,
+    href: 'https://example.test/project/game/',
+    bundledHref: target,
+    packageId: 'fpv-worlds',
+    preferDirect: true,
+    pause() {},
+    navigate: (url) => visits.push(url),
+    fetcher: async (url) => {
+      requests.push(url);
+      return new Response(
+        '<html data-fpv-worlds="true"><script src="../civilian-fpv/world-app.mjs"></script></html>',
+      );
+    },
+  });
+  t.after(() => panel.dispose());
+  panel.open();
+  assert.equal(panel.root(), null);
+  await waitFor(() => visits.length === 1);
+  assert.equal(panel.root(), null);
+  assert.equal(new URL(visits[0]).searchParams.get('game-return'), '/project/game/');
+  assert.equal(requests.length, 1);
+});
+
+test('unavailable SIM offers recovery without navigating or downloading, and closing cancels late entry checks', async (t) => {
+  const doc = new Document(),
+    container = doc.createElement('nav'),
+    visits = [];
+  doc.body.append(container);
+  let complete;
+  const panel = mountOptionalPracticePanel({
+    document: doc,
+    container,
+    href: 'https://example.test/project/game/',
+    bundledHref: 'https://example.test/project/optional-practice/fpv-worlds/index.html',
+    packageId: 'fpv-worlds',
+    preferDirect: true,
+    pause() {},
+    navigate: (url) => visits.push(url),
+    fetcher: async () => {
+      throw new TypeError('Network unavailable');
+    },
+  });
+  t.after(() => panel.dispose());
+  panel.open();
+  await waitFor(() => !doc.getElementById('optional-practice-refresh').disabled);
+  assert.ok(panel.root().open);
+  assert.ok(
+    panel
+      .root()
+      .querySelectorAll('a')
+      .some((link) => link.href === 'https://example.test/project/game/downloads.html'),
+  );
+  assert.deepEqual(visits, []);
+  panel.dispose();
+  const late = mountOptionalPracticePanel({
+    document: doc,
+    container,
+    href: 'https://example.test/project/game/',
+    bundledHref: 'https://example.test/project/optional-practice/fpv-worlds/index.html',
+    preferDirect: true,
+    pause() {},
+    navigate: (url) => visits.push(url),
+    fetcher: () =>
+      new Promise((resolve) => {
+        complete = resolve;
+      }),
+  });
+  t.after(() => late.dispose());
+  late.open();
+  late.close();
+  complete(
+    new Response(
+      '<html data-fpv-worlds="true"><script src="../civilian-fpv/world-app.mjs"></script></html>',
+    ),
+  );
+  await new Promise((resolve) => setImmediate(resolve));
+  assert.deepEqual(visits, []);
+  assert.equal(late.root(), null);
+});
