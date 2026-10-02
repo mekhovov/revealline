@@ -1,0 +1,7823 @@
+{
+  "baseline": "ae4624f6e",
+  "worldVisualsSha256": "c5002e802f4847f56431d832d62e0393697c2da8a37d930d77b2a554ee021a6b",
+  "rendererSha256": "84eee8822b6accda1414784a31bbca3d61f3322e8e95267271409715be8d3974",
+  "originalPixelComparisons": 68,
+  "allOriginalPixelsExact": true,
+  "all13NonwarehouseExact": true,
+  "allGeometryPositionsNormalsIndicesTransformsExact": true,
+  "resourceCountsEqual": true,
+  "warehouseExtraUVBytes": 1152,
+  "outwardLabelFaces": 96,
+  "cases": [
+    {
+      "courseId": "beginner-28",
+      "environment": "gym",
+      "theme": {
+        "sky": 11916770,
+        "fog": 12965849,
+        "ground": 5400931,
+        "wall": 3625316,
+        "accent": 11135933,
+        "warm": 15054977
+      },
+      "cycles": [
+        {
+          "quality": "low",
+          "materials": 19,
+          "geometries": 83,
+          "textures": 9,
+          "uvDelta": 0,
+          "nonWarehouseExact": true,
+          "surfaces": [
+            {
+              "kind": "hangar-concrete",
+              "size": 128,
+              "filters": [
+                [
+                  1006,
+                  1008,
+                  1
+                ],
+                [
+                  1006,
+                  1008,
+                  1
+                ],
+                [
+                  1006,
+                  1008,
+                  1
+                ]
+              ]
+            },
+            {
+              "kind": "painted-steel",
+              "size": 128,
+              "filters": [
+                [
+                  1006,
+                  1008,
+                  1
+                ],
+                [
+                  1006,
+                  1008,
+                  1
+                ],
+                [
+                  1006,
+                  1008,
+                  1
+                ]
+              ]
+            },
+            {
+              "kind": "rubber",
+              "size": 128,
+              "filters": [
+                [
+                  1006,
+                  1008,
+                  1
+                ],
+                [
+                  1006,
+                  1008,
+                  1
+                ],
+                [
+                  1006,
+                  1008,
+                  1
+                ]
+              ]
+            }
+          ]
+        },
+        {
+          "quality": "balanced",
+          "materials": 19,
+          "geometries": 83,
+          "textures": 9,
+          "uvDelta": 0,
+          "nonWarehouseExact": true,
+          "surfaces": [
+            {
+              "kind": "hangar-concrete",
+              "size": 256,
+              "filters": [
+                [
+                  1006,
+                  1008,
+                  4
+                ],
+                [
+                  1006,
+                  1008,
+                  4
+                ],
+                [
+                  1006,
+                  1008,
+                  4
+                ]
+              ]
+            },
+            {
+              "kind": "painted-steel",
+              "size": 256,
+              "filters": [
+                [
+                  1006,
+                  1008,
+                  4
+                ],
+                [
+                  1006,
+                  1008,
+                  4
+                ],
+                [
+                  1006,
+                  1008,
+                  4
+                ]
+              ]
+            },
+            {
+              "kind": "rubber",
+              "size": 256,
+              "filters": [
+                [
+                  1006,
+                  1008,
+                  4
+                ],
+                [
+                  1006,
+                  1008,
+                  4
+                ],
+                [
+                  1006,
+                  1008,
+                  4
+                ]
+              ]
+            }
+          ]
+        },
+        {
+          "quality": "high",
+          "materials": 19,
+          "geometries": 83,
+          "textures": 9,
+          "uvDelta": 0,
+          "nonWarehouseExact": true,
+          "surfaces": [
+            {
+              "kind": "hangar-concrete",
+              "size": 512,
+              "filters": [
+                [
+                  1006,
+                  1008,
+                  8
+                ],
+                [
+                  1006,
+                  1008,
+                  8
+                ],
+                [
+                  1006,
+                  1008,
+                  8
+                ]
+              ]
+            },
+            {
+              "kind": "painted-steel",
+              "size": 512,
+              "filters": [
+                [
+                  1006,
+                  1008,
+                  8
+                ],
+                [
+                  1006,
+                  1008,
+                  8
+                ],
+                [
+                  1006,
+                  1008,
+                  8
+                ]
+              ]
+            },
+            {
+              "kind": "rubber",
+              "size": 512,
+              "filters": [
+                [
+                  1006,
+                  1008,
+                  8
+                ],
+                [
+                  1006,
+                  1008,
+                  8
+                ],
+                [
+                  1006,
+                  1008,
+                  8
+                ]
+              ]
+            }
+          ]
+        },
+        {
+          "quality": "balanced",
+          "materials": 19,
+          "geometries": 83,
+          "textures": 9,
+          "uvDelta": 0,
+          "nonWarehouseExact": true,
+          "surfaces": [
+            {
+              "kind": "hangar-concrete",
+              "size": 256,
+              "filters": [
+                [
+                  1006,
+                  1008,
+                  4
+                ],
+                [
+                  1006,
+                  1008,
+                  4
+                ],
+                [
+                  1006,
+                  1008,
+                  4
+                ]
+              ]
+            },
+            {
+              "kind": "painted-steel",
+              "size": 256,
+              "filters": [
+                [
+                  1006,
+                  1008,
+                  4
+                ],
+                [
+                  1006,
+                  1008,
+                  4
+                ],
+                [
+                  1006,
+                  1008,
+                  4
+                ]
+              ]
+            },
+            {
+              "kind": "rubber",
+              "size": 256,
+              "filters": [
+                [
+                  1006,
+                  1008,
+                  4
+                ],
+                [
+                  1006,
+                  1008,
+                  4
+                ],
+                [
+                  1006,
+                  1008,
+                  4
+                ]
+              ]
+            }
+          ]
+        },
+        {
+          "quality": "low",
+          "materials": 19,
+          "geometries": 83,
+          "textures": 9,
+          "uvDelta": 0,
+          "nonWarehouseExact": true,
+          "surfaces": [
+            {
+              "kind": "hangar-concrete",
+              "size": 128,
+              "filters": [
+                [
+                  1006,
+                  1008,
+                  1
+                ],
+                [
+                  1006,
+                  1008,
+                  1
+                ],
+                [
+                  1006,
+                  1008,
+                  1
+                ]
+              ]
+            },
+            {
+              "kind": "painted-steel",
+              "size": 128,
+              "filters": [
+                [
+                  1006,
+                  1008,
+                  1
+                ],
+                [
+                  1006,
+                  1008,
+                  1
+                ],
+                [
+                  1006,
+                  1008,
+                  1
+                ]
+              ]
+            },
+            {
+              "kind": "rubber",
+              "size": 128,
+              "filters": [
+                [
+                  1006,
+                  1008,
+                  1
+                ],
+                [
+                  1006,
+                  1008,
+                  1
+                ],
+                [
+                  1006,
+                  1008,
+                  1
+                ]
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "courseId": "beginner-58",
+      "environment": "field",
+      "theme": {
+        "sky": 11916770,
+        "fog": 12965849,
+        "ground": 5400931,
+        "wall": 3625316,
+        "accent": 11135933,
+        "warm": 15054977
+      },
+      "cycles": [
+        {
+          "quality": "low",
+          "materials": 41,
+          "geometries": 95,
+          "textures": 9,
+          "uvDelta": 0,
+          "nonWarehouseExact": true,
+          "surfaces": [
+            {
+              "kind": "grass",
+              "size": 128,
+              "filters": [
+                [
+                  1006,
+                  1008,
+                  1
+                ],
+                [
+                  1006,
+                  1008,
+                  1
+                ],
+                [
+                  1006,
+                  1008,
+                  1
+                ]
+              ]
+            },
+            {
+              "kind": "wood",
+              "size": 128,
+              "filters": [
+                [
+                  1006,
+                  1008,
+                  1
+                ],
+                [
+                  1006,
+                  1008,
+                  1
+                ],
+                [
+                  1006,
+                  1008,
+                  1
+                ]
+              ]
+            },
+            {
+              "kind": "metal",
+              "size": 128,
+              "filters": [
+                [
+                  1006,
+                  1008,
+                  1
+                ],
+                [
+                  1006,
+                  1008,
+                  1
+                ],
+                [
+                  1006,
+                  1008,
+                  1
+                ]
+              ]
+            }
+          ]
+        },
+        {
+          "quality": "balanced",
+          "materials": 41,
+          "geometries": 95,
+          "textures": 9,
+          "uvDelta": 0,
+          "nonWarehouseExact": true,
+          "surfaces": [
+            {
+              "kind": "grass",
+              "size": 256,
+              "filters": [
+                [
+                  1006,
+                  1008,
+                  4
+                ],
+                [
+                  1006,
+                  1008,
+                  4
+                ],
+                [
+                  1006,
+                  1008,
+                  4
+                ]
+              ]
+            },
+            {
+              "kind": "wood",
+              "size": 256,
+              "filters": [
+                [
+                  1006,
+                  1008,
+                  4
+                ],
+                [
+                  1006,
+                  1008,
+                  4
+                ],
+                [
+                  1006,
+                  1008,
+                  4
+                ]
+              ]
+            },
+            {
+              "kind": "metal",
+              "size": 256,
+              "filters": [
+                [
+                  1006,
+                  1008,
+                  4
+                ],
+                [
+                  1006,
+                  1008,
+                  4
+                ],
+                [
+                  1006,
+                  1008,
+                  4
+                ]
+              ]
+            }
+          ]
+        },
+        {
+          "quality": "high",
+          "materials": 41,
+          "geometries": 95,
+          "textures": 9,
+          "uvDelta": 0,
+          "nonWarehouseExact": true,
+          "surfaces": [
+            {
+              "kind": "grass",
+              "size": 512,
+              "filters": [
+                [
+                  1006,
+                  1008,
+                  8
+                ],
+                [
+                  1006,
+                  1008,
+                  8
+                ],
+                [
+                  1006,
+                  1008,
+                  8
+                ]
+              ]
+            },
+            {
+              "kind": "wood",
+              "size": 512,
+              "filters": [
+                [
+                  1006,
+                  1008,
+                  8
+                ],
+                [
+                  1006,
+                  1008,
+                  8
+                ],
+                [
+                  1006,
+                  1008,
+                  8
+                ]
+              ]
+            },
+            {
+              "kind": "metal",
+              "size": 512,
+              "filters": [
+                [
+                  1006,
+                  1008,
+                  8
+                ],
+                [
+                  1006,
+                  1008,
+                  8
+                ],
+                [
+                  1006,
+                  1008,
+                  8
+                ]
+              ]
+            }
+          ]
+        },
+        {
+          "quality": "balanced",
+          "materials": 41,
+          "geometries": 95,
+          "textures": 9,
+          "uvDelta": 0,
+          "nonWarehouseExact": true,
+          "surfaces": [
+            {
+              "kind": "grass",
+              "size": 256,
+              "filters": [
+                [
+                  1006,
+                  1008,
+                  4
+                ],
+                [
+                  1006,
+                  1008,
+                  4
+                ],
+                [
+                  1006,
+                  1008,
+                  4
+                ]
+              ]
+            },
+            {
+              "kind": "wood",
+              "size": 256,
+              "filters": [
+                [
+                  1006,
+                  1008,
+                  4
+                ],
+                [
+                  1006,
+                  1008,
+                  4
+                ],
+                [
+                  1006,
+                  1008,
+                  4
+                ]
+              ]
+            },
+            {
+              "kind": "metal",
+              "size": 256,
+              "filters": [
+                [
+                  1006,
+                  1008,
+                  4
+                ],
+                [
+                  1006,
+                  1008,
+                  4
+                ],
+                [
+                  1006,
+                  1008,
+                  4
+                ]
+              ]
+            }
+          ]
+        },
+        {
+          "quality": "low",
+          "materials": 41,
+          "geometries": 95,
+          "textures": 9,
+          "uvDelta": 0,
+          "nonWarehouseExact": true,
+          "surfaces": [
+            {
+              "kind": "grass",
+              "size": 128,
+              "filters": [
+                [
+                  1006,
+                  1008,
+                  1
+                ],
+                [
+                  1006,
+                  1008,
+                  1
+                ],
+                [
+                  1006,
+                  1008,
+                  1
+                ]
+              ]
+            },
+            {
+              "kind": "wood",
+              "size": 128,
+              "filters": [
+                [
+                  1006,
+                  1008,
+                  1
+                ],
+                [
+                  1006,
+                  1008,
+                  1
+                ],
+                [
+                  1006,
+                  1008,
+                  1
+                ]
+              ]
+            },
+            {
+              "kind": "metal",
+              "size": 128,
+              "filters": [
+                [
+                  1006,
+                  1008,
+                  1
+                ],
+                [
+                  1006,
+                  1008,
+                  1
+                ],
+                [
+                  1006,
+                  1008,
+                  1
+                ]
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "courseId": "beginner-40",
+      "environment": "woodland",
+      "theme": {
+        "sky": 12244968,
+        "fog": 13097428,
+        "ground": 7242589,
+        "wall": 14996918,
+        "accent": 7322847,
+        "warm": 15847270
+      },
+      "cycles": [
+        {
+          "quality": "low",
+          "materials": 32,
+          "geometries": 154,
+          "textures": 9,
+          "uvDelta": 0,
+          "nonWarehouseExact": true,
+          "surfaces": [
+            {
+              "kind": "grass",
+              "size": 128,
+              "filters": [
+                [
+                  1006,
+                  1008,
+                  1
+                ],
+                [
+                  1006,
+                  1008,
+                  1
+                ],
+                [
+                  1006,
+                  1008,
+                  1
+                ]
+              ]
+            },
+            {
+              "kind": "wood",
+              "size": 128,
+              "filters": [
+                [
+                  1006,
+                  1008,
+                  1
+                ],
+                [
+                  1006,
+                  1008,
+                  1
+                ],
+                [
+                  1006,
+                  1008,
+                  1
+                ]
+              ]
+            },
+            {
+              "kind": "wood",
+              "size": 128,
+              "filters": [
+                [
+                  1006,
+                  1008,
+                  1
+                ],
+                [
+                  1006,
+                  1008,
+                  1
+                ],
+                [
+                  1006,
+                  1008,
+                  1
+                ]
+              ]
+            }
+          ]
+        },
+        {
+          "quality": "balanced",
+          "materials": 32,
+          "geometries": 154,
+          "textures": 9,
+          "uvDelta": 0,
+          "nonWarehouseExact": true,
+          "surfaces": [
+            {
+              "kind": "grass",
+              "size": 256,
+              "filters": [
+                [
+                  1006,
+                  1008,
+                  4
+                ],
+                [
+                  1006,
+                  1008,
+                  4
+                ],
+                [
+                  1006,
+                  1008,
+                  4
+                ]
+              ]
+            },
+            {
+              "kind": "wood",
+              "size": 256,
+              "filters": [
+                [
+                  1006,
+                  1008,
+                  4
+                ],
+                [
+                  1006,
+                  1008,
+                  4
+                ],
+                [
+                  1006,
+                  1008,
+                  4
+                ]
+              ]
+            },
+            {
+              "kind": "wood",
+              "size": 256,
+              "filters": [
+                [
+                  1006,
+                  1008,
+                  4
+                ],
+                [
+                  1006,
+                  1008,
+                  4
+                ],
+                [
+                  1006,
+                  1008,
+                  4
+                ]
+              ]
+            }
+          ]
+        },
+        {
+          "quality": "high",
+          "materials": 32,
+          "geometries": 154,
+          "textures": 9,
+          "uvDelta": 0,
+          "nonWarehouseExact": true,
+          "surfaces": [
+            {
+              "kind": "grass",
+              "size": 512,
+              "filters": [
+                [
+                  1006,
+                  1008,
+                  8
+                ],
+                [
+                  1006,
+                  1008,
+                  8
+                ],
+                [
+                  1006,
+                  1008,
+                  8
+                ]
+              ]
+            },
+            {
+              "kind": "wood",
+              "size": 512,
+              "filters": [
+                [
+                  1006,
+                  1008,
+                  8
+                ],
+                [
+                  1006,
+                  1008,
+                  8
+                ],
+                [
+                  1006,
+                  1008,
+                  8
+                ]
+              ]
+            },
+            {
+              "kind": "wood",
+              "size": 512,
+              "filters": [
+                [
+                  1006,
+                  1008,
+                  8
+                ],
+                [
+                  1006,
+                  1008,
+                  8
+                ],
+                [
+                  1006,
+                  1008,
+                  8
+                ]
+              ]
+            }
+          ]
+        },
+        {
+          "quality": "balanced",
+          "materials": 32,
+          "geometries": 154,
+          "textures": 9,
+          "uvDelta": 0,
+          "nonWarehouseExact": true,
+          "surfaces": [
+            {
+              "kind": "grass",
+              "size": 256,
+              "filters": [
+                [
+                  1006,
+                  1008,
+                  4
+                ],
+                [
+                  1006,
+                  1008,
+                  4
+                ],
+                [
+                  1006,
+                  1008,
+                  4
+                ]
+              ]
+            },
+            {
+              "kind": "wood",
+              "size": 256,
+              "filters": [
+                [
+                  1006,
+                  1008,
+                  4
+                ],
+                [
+                  1006,
+                  1008,
+                  4
+                ],
+                [
+                  1006,
+                  1008,
+                  4
+                ]
+              ]
+            },
+            {
+              "kind": "wood",
+              "size": 256,
+              "filters": [
+                [
+                  1006,
+                  1008,
+                  4
+                ],
+                [
+                  1006,
+                  1008,
+                  4
+                ],
+                [
+                  1006,
+                  1008,
+                  4
+                ]
+              ]
+            }
+          ]
+        },
+        {
+          "quality": "low",
+          "materials": 32,
+          "geometries": 154,
+          "textures": 9,
+          "uvDelta": 0,
+          "nonWarehouseExact": true,
+          "surfaces": [
+            {
+              "kind": "grass",
+              "size": 128,
+              "filters": [
+                [
+                  1006,
+                  1008,
+                  1
+                ],
+                [
+                  1006,
+                  1008,
+                  1
+                ],
+                [
+                  1006,
+                  1008,
+                  1
+                ]
+              ]
+            },
+            {
+              "kind": "wood",
+              "size": 128,
+              "filters": [
+                [
+                  1006,
+                  1008,
+                  1
+                ],
+                [
+                  1006,
+                  1008,
+                  1
+                ],
+                [
+                  1006,
+                  1008,
+                  1
+                ]
+              ]
+            },
+            {
+              "kind": "wood",
+              "size": 128,
+              "filters": [
+                [
+                  1006,
+                  1008,
+                  1
+                ],
+                [
+                  1006,
+                  1008,
+                  1
+                ],
+                [
+                  1006,
+                  1008,
+                  1
+                ]
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "courseId": "beginner-52",
+      "environment": "courtyard",
+      "theme": {
+        "sky": 12244968,
+        "fog": 13097428,
+        "ground": 7242589,
+        "wall": 14996918,
+        "accent": 7322847,
+        "warm": 15847270
+      },
+      "cycles": [
+        {
+          "quality": "low",
+          "materials": 37,
+          "geometries": 109,
+          "textures": 15,
+          "uvDelta": 0,
+          "nonWarehouseExact": true,
+          "surfaces": [
+            {
+              "kind": "paving",
+              "size": 128,
+              "filters": [
+                [
+                  1006,
+                  1008,
+                  1
+                ],
+                [
+                  1006,
+                  1008,
+                  1
+                ],
+                [
+                  1006,
+                  1008,
+                  1
+                ]
+              ]
+            },
+            {
+              "kind": "brick",
+              "size": 128,
+              "filters": [
+                [
+                  1006,
+                  1008,
+                  1
+                ],
+                [
+                  1006,
+                  1008,
+                  1
+                ],
+                [
+                  1006,
+                  1008,
+                  1
+                ]
+              ]
+            },
+            {
+              "kind": "plaster",
+              "size": 128,
+              "filters": [
+                [
+                  1006,
+                  1008,
+                  1
+                ],
+                [
+                  1006,
+                  1008,
+                  1
+                ],
+                [
+                  1006,
+                  1008,
+                  1
+                ]
+              ]
+            },
+            {
+              "kind": "brick",
+              "size": 128,
+              "filters": [
+                [
+                  1006,
+                  1008,
+                  1
+                ],
+                [
+                  1006,
+                  1008,
+                  1
+                ],
+                [
+                  1006,
+                  1008,
+                  1
+                ]
+              ]
+            },
+            {
+              "kind": "metal",
+              "size": 128,
+              "filters": [
+                [
+                  1006,
+                  1008,
+                  1
+                ],
+                [
+                  1006,
+                  1008,
+                  1
+                ],
+                [
+                  1006,
+                  1008,
+                  1
+                ]
+              ]
+            }
+          ]
+        },
+        {
+          "quality": "balanced",
+          "materials": 37,
+          "geometries": 109,
+          "textures": 15,
+          "uvDelta": 0,
+          "nonWarehouseExact": true,
+          "surfaces": [
+            {
+              "kind": "paving",
+              "size": 256,
+              "filters": [
+                [
+                  1006,
+                  1008,
+                  4
+                ],
+                [
+                  1006,
+                  1008,
+                  4
+                ],
+                [
+                  1006,
+                  1008,
+                  4
+                ]
+              ]
+            },
+            {
+              "kind": "brick",
+              "size": 256,
+              "filters": [
+                [
+                  1006,
+                  1008,
+                  4
+                ],
+                [
+                  1006,
+                  1008,
+                  4
+                ],
+                [
+                  1006,
+                  1008,
+                  4
+                ]
+              ]
+            },
+            {
+              "kind": "plaster",
+              "size": 256,
+              "filters": [
+                [
+                  1006,
+                  1008,
+                  4
+                ],
+                [
+                  1006,
+                  1008,
+                  4
+                ],
+                [
+                  1006,
+                  1008,
+                  4
+                ]
+              ]
+            },
+            {
+              "kind": "brick",
+              "size": 256,
+              "filters": [
+                [
+                  1006,
+                  1008,
+                  4
+                ],
+                [
+                  1006,
+                  1008,
+                  4
+                ],
+                [
+                  1006,
+                  1008,
+                  4
+                ]
+              ]
+            },
+            {
+              "kind": "metal",
+              "size": 256,
+              "filters": [
+                [
+                  1006,
+                  1008,
+                  4
+                ],
+                [
+                  1006,
+                  1008,
+                  4
+                ],
+                [
+                  1006,
+                  1008,
+                  4
+                ]
+              ]
+            }
+          ]
+        },
+        {
+          "quality": "high",
+          "materials": 37,
+          "geometries": 109,
+          "textures": 15,
+          "uvDelta": 0,
+          "nonWarehouseExact": true,
+          "surfaces": [
+            {
+              "kind": "paving",
+              "size": 512,
+              "filters": [
+                [
+                  1006,
+                  1008,
+                  8
+                ],
+                [
+                  1006,
+                  1008,
+                  8
+                ],
+                [
+                  1006,
+                  1008,
+                  8
+                ]
+              ]
+            },
+            {
+              "kind": "brick",
+              "size": 512,
+              "filters": [
+                [
+                  1006,
+                  1008,
+                  8
+                ],
+                [
+                  1006,
+                  1008,
+                  8
+                ],
+                [
+                  1006,
+                  1008,
+                  8
+                ]
+              ]
+            },
+            {
+              "kind": "plaster",
+              "size": 512,
+              "filters": [
+                [
+                  1006,
+                  1008,
+                  8
+                ],
+                [
+                  1006,
+                  1008,
+                  8
+                ],
+                [
+                  1006,
+                  1008,
+                  8
+                ]
+              ]
+            },
+            {
+              "kind": "brick",
+              "size": 512,
+              "filters": [
+                [
+                  1006,
+                  1008,
+                  8
+                ],
+                [
+                  1006,
+                  1008,
+                  8
+                ],
+                [
+                  1006,
+                  1008,
+                  8
+                ]
+              ]
+            },
+            {
+              "kind": "metal",
+              "size": 512,
+              "filters": [
+                [
+                  1006,
+                  1008,
+                  8
+                ],
+                [
+                  1006,
+                  1008,
+                  8
+                ],
+                [
+                  1006,
+                  1008,
+                  8
+                ]
+              ]
+            }
+          ]
+        },
+        {
+          "quality": "balanced",
+          "materials": 37,
+          "geometries": 109,
+          "textures": 15,
+          "uvDelta": 0,
+          "nonWarehouseExact": true,
+          "surfaces": [
+            {
+              "kind": "paving",
+              "size": 256,
+              "filters": [
+                [
+                  1006,
+                  1008,
+                  4
+                ],
+                [
+                  1006,
+                  1008,
+                  4
+                ],
+                [
+                  1006,
+                  1008,
+                  4
+                ]
+              ]
+            },
+            {
+              "kind": "brick",
+              "size": 256,
+              "filters": [
+                [
+                  1006,
+                  1008,
+                  4
+                ],
+                [
+                  1006,
+                  1008,
+                  4
+                ],
+                [
+                  1006,
+                  1008,
+                  4
+                ]
+              ]
+            },
+            {
+              "kind": "plaster",
+              "size": 256,
+              "filters": [
+                [
+                  1006,
+                  1008,
+                  4
+                ],
+                [
+                  1006,
+                  1008,
+                  4
+                ],
+                [
+                  1006,
+                  1008,
+                  4
+                ]
+              ]
+            },
+            {
+              "kind": "brick",
+              "size": 256,
+              "filters": [
+                [
+                  1006,
+                  1008,
+                  4
+                ],
+                [
+                  1006,
+                  1008,
+                  4
+                ],
+                [
+                  1006,
+                  1008,
+                  4
+                ]
+              ]
+            },
+            {
+              "kind": "metal",
+              "size": 256,
+              "filters": [
+                [
+                  1006,
+                  1008,
+                  4
+                ],
+                [
+                  1006,
+                  1008,
+                  4
+                ],
+                [
+                  1006,
+                  1008,
+                  4
+                ]
+              ]
+            }
+          ]
+        },
+        {
+          "quality": "low",
+          "materials": 37,
+          "geometries": 109,
+          "textures": 15,
+          "uvDelta": 0,
+          "nonWarehouseExact": true,
+          "surfaces": [
+            {
+              "kind": "paving",
+              "size": 128,
+              "filters": [
+                [
+                  1006,
+                  1008,
+                  1
+                ],
+                [
+                  1006,
+                  1008,
+                  1
+                ],
+                [
+                  1006,
+                  1008,
+                  1
+                ]
+              ]
+            },
+            {
+              "kind": "brick",
+              "size": 128,
+              "filters": [
+                [
+                  1006,
+                  1008,
+                  1
+                ],
+                [
+                  1006,
+                  1008,
+                  1
+                ],
+                [
+                  1006,
+                  1008,
+                  1
+                ]
+              ]
+            },
+            {
+              "kind": "plaster",
+              "size": 128,
+              "filters": [
+                [
+                  1006,
+                  1008,
+                  1
+                ],
+                [
+                  1006,
+                  1008,
+                  1
+                ],
+                [
+                  1006,
+                  1008,
+                  1
+                ]
+              ]
+            },
+            {
+              "kind": "brick",
+              "size": 128,
+              "filters": [
+                [
+                  1006,
+                  1008,
+                  1
+                ],
+                [
+                  1006,
+                  1008,
+                  1
+                ],
+                [
+                  1006,
+                  1008,
+                  1
+                ]
+              ]
+            },
+            {
+              "kind": "metal",
+              "size": 128,
+              "filters": [
+                [
+                  1006,
+                  1008,
+                  1
+                ],
+                [
+                  1006,
+                  1008,
+                  1
+                ],
+                [
+                  1006,
+                  1008,
+                  1
+                ]
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "courseId": "beginner-57",
+      "environment": "stadium",
+      "theme": {
+        "sky": 2306888,
+        "fog": 3425879,
+        "ground": 3358796,
+        "wall": 3425879,
+        "accent": 6743772,
+        "warm": 15838837
+      },
+      "cycles": [
+        {
+          "quality": "low",
+          "materials": 27,
+          "geometries": 33,
+          "textures": 12,
+          "uvDelta": 0,
+          "nonWarehouseExact": true,
+          "surfaces": [
+            {
+              "kind": "asphalt",
+              "size": 64,
+              "filters": [
+                [
+                  1003,
+                  1004,
+                  1
+                ],
+                [
+                  1003,
+                  1004,
+                  1
+                ],
+                [
+                  1003,
+                  1004,
+                  1
+                ]
+              ]
+            },
+            {
+              "kind": "metal",
+              "size": 64,
+              "filters": [
+                [
+                  1003,
+                  1004,
+                  1
+                ],
+                [
+                  1003,
+                  1004,
+                  1
+                ],
+                [
+                  1003,
+                  1004,
+                  1
+                ]
+              ]
+            },
+            {
+              "kind": "concrete",
+              "size": 64,
+              "filters": [
+                [
+                  1003,
+                  1004,
+                  1
+                ],
+                [
+                  1003,
+                  1004,
+                  1
+                ],
+                [
+                  1003,
+                  1004,
+                  1
+                ]
+              ]
+            },
+            {
+              "kind": "metal",
+              "size": 64,
+              "filters": [
+                [
+                  1003,
+                  1004,
+                  1
+                ],
+                [
+                  1003,
+                  1004,
+                  1
+                ],
+                [
+                  1003,
+                  1004,
+                  1
+                ]
+              ]
+            }
+          ]
+        },
+        {
+          "quality": "balanced",
+          "materials": 27,
+          "geometries": 33,
+          "textures": 12,
+          "uvDelta": 0,
+          "nonWarehouseExact": true,
+          "surfaces": [
+            {
+              "kind": "asphalt",
+              "size": 64,
+              "filters": [
+                [
+                  1003,
+                  1004,
+                  1
+                ],
+                [
+                  1003,
+                  1004,
+                  1
+                ],
+                [
+                  1003,
+                  1004,
+                  1
+                ]
+              ]
+            },
+            {
+              "kind": "metal",
+              "size": 64,
+              "filters": [
+                [
+                  1003,
+                  1004,
+                  1
+                ],
+                [
+                  1003,
+                  1004,
+                  1
+                ],
+                [
+                  1003,
+                  1004,
+                  1
+                ]
+              ]
+            },
+            {
+              "kind": "concrete",
+              "size": 64,
+              "filters": [
+                [
+                  1003,
+                  1004,
+                  1
+                ],
+                [
+                  1003,
+                  1004,
+                  1
+                ],
+                [
+                  1003,
+                  1004,
+                  1
+                ]
+              ]
+            },
+            {
+              "kind": "metal",
+              "size": 64,
+              "filters": [
+                [
+                  1003,
+                  1004,
+                  1
+                ],
+                [
+                  1003,
+                  1004,
+                  1
+                ],
+                [
+                  1003,
+                  1004,
+                  1
+                ]
+              ]
+            }
+          ]
+        },
+        {
+          "quality": "high",
+          "materials": 27,
+          "geometries": 33,
+          "textures": 12,
+          "uvDelta": 0,
+          "nonWarehouseExact": true,
+          "surfaces": [
+            {
+              "kind": "asphalt",
+              "size": 64,
+              "filters": [
+                [
+                  1003,
+                  1004,
+                  1
+                ],
+                [
+                  1003,
+                  1004,
+                  1
+                ],
+                [
+                  1003,
+                  1004,
+                  1
+                ]
+              ]
+            },
+            {
+              "kind": "metal",
+              "size": 64,
+              "filters": [
+                [
+                  1003,
+                  1004,
+                  1
+                ],
+                [
+                  1003,
+                  1004,
+                  1
+                ],
+                [
+                  1003,
+                  1004,
+                  1
+                ]
+              ]
+            },
+            {
+              "kind": "concrete",
+              "size": 64,
+              "filters": [
+                [
+                  1003,
+                  1004,
+                  1
+                ],
+                [
+                  1003,
+                  1004,
+                  1
+                ],
+                [
+                  1003,
+                  1004,
+                  1
+                ]
+              ]
+            },
+            {
+              "kind": "metal",
+              "size": 64,
+              "filters": [
+                [
+                  1003,
+                  1004,
+                  1
+                ],
+                [
+                  1003,
+                  1004,
+                  1
+                ],
+                [
+                  1003,
+                  1004,
+                  1
+                ]
+              ]
+            }
+          ]
+        },
+        {
+          "quality": "balanced",
+          "materials": 27,
+          "geometries": 33,
+          "textures": 12,
+          "uvDelta": 0,
+          "nonWarehouseExact": true,
+          "surfaces": [
+            {
+              "kind": "asphalt",
+              "size": 64,
+              "filters": [
+                [
+                  1003,
+                  1004,
+                  1
+                ],
+                [
+                  1003,
+                  1004,
+                  1
+                ],
+                [
+                  1003,
+                  1004,
+                  1
+                ]
+              ]
+            },
+            {
+              "kind": "metal",
+              "size": 64,
+              "filters": [
+                [
+                  1003,
+                  1004,
+                  1
+                ],
+                [
+                  1003,
+                  1004,
+                  1
+                ],
+                [
+                  1003,
+                  1004,
+                  1
+                ]
+              ]
+            },
+            {
+              "kind": "concrete",
+              "size": 64,
+              "filters": [
+                [
+                  1003,
+                  1004,
+                  1
+                ],
+                [
+                  1003,
+                  1004,
+                  1
+                ],
+                [
+                  1003,
+                  1004,
+                  1
+                ]
+              ]
+            },
+            {
+              "kind": "metal",
+              "size": 64,
+              "filters": [
+                [
+                  1003,
+                  1004,
+                  1
+                ],
+                [
+                  1003,
+                  1004,
+                  1
+                ],
+                [
+                  1003,
+                  1004,
+                  1
+                ]
+              ]
+            }
+          ]
+        },
+        {
+          "quality": "low",
+          "materials": 27,
+          "geometries": 33,
+          "textures": 12,
+          "uvDelta": 0,
+          "nonWarehouseExact": true,
+          "surfaces": [
+            {
+              "kind": "asphalt",
+              "size": 64,
+              "filters": [
+                [
+                  1003,
+                  1004,
+                  1
+                ],
+                [
+                  1003,
+                  1004,
+                  1
+                ],
+                [
+                  1003,
+                  1004,
+                  1
+                ]
+              ]
+            },
+            {
+              "kind": "metal",
+              "size": 64,
+              "filters": [
+                [
+                  1003,
+                  1004,
+                  1
+                ],
+                [
+                  1003,
+                  1004,
+                  1
+                ],
+                [
+                  1003,
+                  1004,
+                  1
+                ]
+              ]
+            },
+            {
+              "kind": "concrete",
+              "size": 64,
+              "filters": [
+                [
+                  1003,
+                  1004,
+                  1
+                ],
+                [
+                  1003,
+                  1004,
+                  1
+                ],
+                [
+                  1003,
+                  1004,
+                  1
+                ]
+              ]
+            },
+            {
+              "kind": "metal",
+              "size": 64,
+              "filters": [
+                [
+                  1003,
+                  1004,
+                  1
+                ],
+                [
+                  1003,
+                  1004,
+                  1
+                ],
+                [
+                  1003,
+                  1004,
+                  1
+                ]
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "courseId": "beginner-37",
+      "environment": "container-yard",
+      "theme": {
+        "sky": 12898517,
+        "fog": 11255746,
+        "ground": 6713707,
+        "wall": 5267818,
+        "accent": 9553852,
+        "warm": 15710059
+      },
+      "cycles": [
+        {
+          "quality": "low",
+          "materials": 48,
+          "geometries": 100,
+          "textures": 9,
+          "uvDelta": 0,
+          "nonWarehouseExact": true,
+          "surfaces": [
+            {
+              "kind": "asphalt",
+              "size": 128,
+              "filters": [
+                [
+                  1006,
+                  1008,
+                  1
+                ],
+                [
+                  1006,
+                  1008,
+                  1
+                ],
+                [
+                  1006,
+                  1008,
+                  1
+                ]
+              ]
+            },
+            {
+              "kind": "metal",
+              "size": 128,
+              "filters": [
+                [
+                  1006,
+                  1008,
+                  1
+                ],
+                [
+                  1006,
+                  1008,
+                  1
+                ],
+                [
+                  1006,
+                  1008,
+                  1
+                ]
+              ]
+            },
+            {
+              "kind": "metal",
+              "size": 128,
+              "filters": [
+                [
+                  1006,
+                  1008,
+                  1
+                ],
+                [
+                  1006,
+                  1008,
+                  1
+                ],
+                [
+                  1006,
+                  1008,
+                  1
+                ]
+              ]
+            }
+          ]
+        },
+        {
+          "quality": "balanced",
+          "materials": 48,
+          "geometries": 100,
+          "textures": 9,
+          "uvDelta": 0,
+          "nonWarehouseExact": true,
+          "surfaces": [
+            {
+              "kind": "asphalt",
+              "size": 256,
+              "filters": [
+                [
+                  1006,
+                  1008,
+                  4
+                ],
+                [
+                  1006,
+                  1008,
+                  4
+                ],
+                [
+                  1006,
+                  1008,
+                  4
+                ]
+              ]
+            },
+            {
+              "kind": "metal",
+              "size": 256,
+              "filters": [
+                [
+                  1006,
+                  1008,
+                  4
+                ],
+                [
+                  1006,
+                  1008,
+                  4
+                ],
+                [
+                  1006,
+                  1008,
+                  4
+                ]
+              ]
+            },
+            {
+              "kind": "metal",
+              "size": 256,
+              "filters": [
+                [
+                  1006,
+                  1008,
+                  4
+                ],
+                [
+                  1006,
+                  1008,
+                  4
+                ],
+                [
+                  1006,
+                  1008,
+                  4
+                ]
+              ]
+            }
+          ]
+        },
+        {
+          "quality": "high",
+          "materials": 48,
+          "geometries": 100,
+          "textures": 9,
+          "uvDelta": 0,
+          "nonWarehouseExact": true,
+          "surfaces": [
+            {
+              "kind": "asphalt",
+              "size": 512,
+              "filters": [
+                [
+                  1006,
+                  1008,
+                  8
+                ],
+                [
+                  1006,
+                  1008,
+                  8
+                ],
+                [
+                  1006,
+                  1008,
+                  8
+                ]
+              ]
+            },
+            {
+              "kind": "metal",
+              "size": 512,
+              "filters": [
+                [
+                  1006,
+                  1008,
+                  8
+                ],
+                [
+                  1006,
+                  1008,
+                  8
+                ],
+                [
+                  1006,
+                  1008,
+                  8
+                ]
+              ]
+            },
+            {
+              "kind": "metal",
+              "size": 512,
+              "filters": [
+                [
+                  1006,
+                  1008,
+                  8
+                ],
+                [
+                  1006,
+                  1008,
+                  8
+                ],
+                [
+                  1006,
+                  1008,
+                  8
+                ]
+              ]
+            }
+          ]
+        },
+        {
+          "quality": "balanced",
+          "materials": 48,
+          "geometries": 100,
+          "textures": 9,
+          "uvDelta": 0,
+          "nonWarehouseExact": true,
+          "surfaces": [
+            {
+              "kind": "asphalt",
+              "size": 256,
+              "filters": [
+                [
+                  1006,
+                  1008,
+                  4
+                ],
+                [
+                  1006,
+                  1008,
+                  4
+                ],
+                [
+                  1006,
+                  1008,
+                  4
+                ]
+              ]
+            },
+            {
+              "kind": "metal",
+              "size": 256,
+              "filters": [
+                [
+                  1006,
+                  1008,
+                  4
+                ],
+                [
+                  1006,
+                  1008,
+                  4
+                ],
+                [
+                  1006,
+                  1008,
+                  4
+                ]
+              ]
+            },
+            {
+              "kind": "metal",
+              "size": 256,
+              "filters": [
+                [
+                  1006,
+                  1008,
+                  4
+                ],
+                [
+                  1006,
+                  1008,
+                  4
+                ],
+                [
+                  1006,
+                  1008,
+                  4
+                ]
+              ]
+            }
+          ]
+        },
+        {
+          "quality": "low",
+          "materials": 48,
+          "geometries": 100,
+          "textures": 9,
+          "uvDelta": 0,
+          "nonWarehouseExact": true,
+          "surfaces": [
+            {
+              "kind": "asphalt",
+              "size": 128,
+              "filters": [
+                [
+                  1006,
+                  1008,
+                  1
+                ],
+                [
+                  1006,
+                  1008,
+                  1
+                ],
+                [
+                  1006,
+                  1008,
+                  1
+                ]
+              ]
+            },
+            {
+              "kind": "metal",
+              "size": 128,
+              "filters": [
+                [
+                  1006,
+                  1008,
+                  1
+                ],
+                [
+                  1006,
+                  1008,
+                  1
+                ],
+                [
+                  1006,
+                  1008,
+                  1
+                ]
+              ]
+            },
+            {
+              "kind": "metal",
+              "size": 128,
+              "filters": [
+                [
+                  1006,
+                  1008,
+                  1
+                ],
+                [
+                  1006,
+                  1008,
+                  1
+                ],
+                [
+                  1006,
+                  1008,
+                  1
+                ]
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "courseId": "beginner-41",
+      "environment": "garage",
+      "theme": {
+        "sky": 12898517,
+        "fog": 11255746,
+        "ground": 6713707,
+        "wall": 5267818,
+        "accent": 9553852,
+        "warm": 15710059
+      },
+      "cycles": [
+        {
+          "quality": "low",
+          "materials": 44,
+          "geometries": 176,
+          "textures": 9,
+          "uvDelta": 0,
+          "nonWarehouseExact": true,
+          "surfaces": [
+            {
+              "kind": "concrete",
+              "size": 128,
+              "filters": [
+                [
+                  1006,
+                  1008,
+                  1
+                ],
+                [
+                  1006,
+                  1008,
+                  1
+                ],
+                [
+                  1006,
+                  1008,
+                  1
+                ]
+              ]
+            },
+            {
+              "kind": "metal",
+              "size": 128,
+              "filters": [
+                [
+                  1006,
+                  1008,
+                  1
+                ],
+                [
+                  1006,
+                  1008,
+                  1
+                ],
+                [
+                  1006,
+                  1008,
+                  1
+                ]
+              ]
+            },
+            {
+              "kind": "concrete",
+              "size": 128,
+              "filters": [
+                [
+                  1006,
+                  1008,
+                  1
+                ],
+                [
+                  1006,
+                  1008,
+                  1
+                ],
+                [
+                  1006,
+                  1008,
+                  1
+                ]
+              ]
+            }
+          ]
+        },
+        {
+          "quality": "balanced",
+          "materials": 44,
+          "geometries": 176,
+          "textures": 9,
+          "uvDelta": 0,
+          "nonWarehouseExact": true,
+          "surfaces": [
+            {
+              "kind": "concrete",
+              "size": 256,
+              "filters": [
+                [
+                  1006,
+                  1008,
+                  4
+                ],
+                [
+                  1006,
+                  1008,
+                  4
+                ],
+                [
+                  1006,
+                  1008,
+                  4
+                ]
+              ]
+            },
+            {
+              "kind": "metal",
+              "size": 256,
+              "filters": [
+                [
+                  1006,
+                  1008,
+                  4
+                ],
+                [
+                  1006,
+                  1008,
+                  4
+                ],
+                [
+                  1006,
+                  1008,
+                  4
+                ]
+              ]
+            },
+            {
+              "kind": "concrete",
+              "size": 256,
+              "filters": [
+                [
+                  1006,
+                  1008,
+                  4
+                ],
+                [
+                  1006,
+                  1008,
+                  4
+                ],
+                [
+                  1006,
+                  1008,
+                  4
+                ]
+              ]
+            }
+          ]
+        },
+        {
+          "quality": "high",
+          "materials": 44,
+          "geometries": 176,
+          "textures": 9,
+          "uvDelta": 0,
+          "nonWarehouseExact": true,
+          "surfaces": [
+            {
+              "kind": "concrete",
+              "size": 512,
+              "filters": [
+                [
+                  1006,
+                  1008,
+                  8
+                ],
+                [
+                  1006,
+                  1008,
+                  8
+                ],
+                [
+                  1006,
+                  1008,
+                  8
+                ]
+              ]
+            },
+            {
+              "kind": "metal",
+              "size": 512,
+              "filters": [
+                [
+                  1006,
+                  1008,
+                  8
+                ],
+                [
+                  1006,
+                  1008,
+                  8
+                ],
+                [
+                  1006,
+                  1008,
+                  8
+                ]
+              ]
+            },
+            {
+              "kind": "concrete",
+              "size": 512,
+              "filters": [
+                [
+                  1006,
+                  1008,
+                  8
+                ],
+                [
+                  1006,
+                  1008,
+                  8
+                ],
+                [
+                  1006,
+                  1008,
+                  8
+                ]
+              ]
+            }
+          ]
+        },
+        {
+          "quality": "balanced",
+          "materials": 44,
+          "geometries": 176,
+          "textures": 9,
+          "uvDelta": 0,
+          "nonWarehouseExact": true,
+          "surfaces": [
+            {
+              "kind": "concrete",
+              "size": 256,
+              "filters": [
+                [
+                  1006,
+                  1008,
+                  4
+                ],
+                [
+                  1006,
+                  1008,
+                  4
+                ],
+                [
+                  1006,
+                  1008,
+                  4
+                ]
+              ]
+            },
+            {
+              "kind": "metal",
+              "size": 256,
+              "filters": [
+                [
+                  1006,
+                  1008,
+                  4
+                ],
+                [
+                  1006,
+                  1008,
+                  4
+                ],
+                [
+                  1006,
+                  1008,
+                  4
+                ]
+              ]
+            },
+            {
+              "kind": "concrete",
+              "size": 256,
+              "filters": [
+                [
+                  1006,
+                  1008,
+                  4
+                ],
+                [
+                  1006,
+                  1008,
+                  4
+                ],
+                [
+                  1006,
+                  1008,
+                  4
+                ]
+              ]
+            }
+          ]
+        },
+        {
+          "quality": "low",
+          "materials": 44,
+          "geometries": 176,
+          "textures": 9,
+          "uvDelta": 0,
+          "nonWarehouseExact": true,
+          "surfaces": [
+            {
+              "kind": "concrete",
+              "size": 128,
+              "filters": [
+                [
+                  1006,
+                  1008,
+                  1
+                ],
+                [
+                  1006,
+                  1008,
+                  1
+                ],
+                [
+                  1006,
+                  1008,
+                  1
+                ]
+              ]
+            },
+            {
+              "kind": "metal",
+              "size": 128,
+              "filters": [
+                [
+                  1006,
+                  1008,
+                  1
+                ],
+                [
+                  1006,
+                  1008,
+                  1
+                ],
+                [
+                  1006,
+                  1008,
+                  1
+                ]
+              ]
+            },
+            {
+              "kind": "concrete",
+              "size": 128,
+              "filters": [
+                [
+                  1006,
+                  1008,
+                  1
+                ],
+                [
+                  1006,
+                  1008,
+                  1
+                ],
+                [
+                  1006,
+                  1008,
+                  1
+                ]
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "courseId": "adventure-coast-05",
+      "environment": "coast",
+      "theme": {
+        "sky": 12244968,
+        "fog": 13097428,
+        "ground": 7242589,
+        "wall": 14996918,
+        "accent": 7322847,
+        "warm": 15847270
+      },
+      "cycles": [
+        {
+          "quality": "low",
+          "materials": 39,
+          "geometries": 28,
+          "textures": 12,
+          "uvDelta": 0,
+          "nonWarehouseExact": true,
+          "surfaces": [
+            {
+              "kind": "sand",
+              "size": 128,
+              "filters": [
+                [
+                  1006,
+                  1008,
+                  1
+                ],
+                [
+                  1006,
+                  1008,
+                  1
+                ],
+                [
+                  1006,
+                  1008,
+                  1
+                ]
+              ]
+            },
+            {
+              "kind": "concrete",
+              "size": 128,
+              "filters": [
+                [
+                  1006,
+                  1008,
+                  1
+                ],
+                [
+                  1006,
+                  1008,
+                  1
+                ],
+                [
+                  1006,
+                  1008,
+                  1
+                ]
+              ]
+            },
+            {
+              "kind": "concrete",
+              "size": 128,
+              "filters": [
+                [
+                  1006,
+                  1008,
+                  1
+                ],
+                [
+                  1006,
+                  1008,
+                  1
+                ],
+                [
+                  1006,
+                  1008,
+                  1
+                ]
+              ]
+            },
+            {
+              "kind": "plaster",
+              "size": 128,
+              "filters": [
+                [
+                  1006,
+                  1008,
+                  1
+                ],
+                [
+                  1006,
+                  1008,
+                  1
+                ],
+                [
+                  1006,
+                  1008,
+                  1
+                ]
+              ]
+            }
+          ]
+        },
+        {
+          "quality": "balanced",
+          "materials": 39,
+          "geometries": 28,
+          "textures": 12,
+          "uvDelta": 0,
+          "nonWarehouseExact": true,
+          "surfaces": [
+            {
+              "kind": "sand",
+              "size": 256,
+              "filters": [
+                [
+                  1006,
+                  1008,
+                  4
+                ],
+                [
+                  1006,
+                  1008,
+                  4
+                ],
+                [
+                  1006,
+                  1008,
+                  4
+                ]
+              ]
+            },
+            {
+              "kind": "concrete",
+              "size": 256,
+              "filters": [
+                [
+                  1006,
+                  1008,
+                  4
+                ],
+                [
+                  1006,
+                  1008,
+                  4
+                ],
+                [
+                  1006,
+                  1008,
+                  4
+                ]
+              ]
+            },
+            {
+              "kind": "concrete",
+              "size": 256,
+              "filters": [
+                [
+                  1006,
+                  1008,
+                  4
+                ],
+                [
+                  1006,
+                  1008,
+                  4
+                ],
+                [
+                  1006,
+                  1008,
+                  4
+                ]
+              ]
+            },
+            {
+              "kind": "plaster",
+              "size": 256,
+              "filters": [
+                [
+                  1006,
+                  1008,
+                  4
+                ],
+                [
+                  1006,
+                  1008,
+                  4
+                ],
+                [
+                  1006,
+                  1008,
+                  4
+                ]
+              ]
+            }
+          ]
+        },
+        {
+          "quality": "high",
+          "materials": 39,
+          "geometries": 28,
+          "textures": 12,
+          "uvDelta": 0,
+          "nonWarehouseExact": true,
+          "surfaces": [
+            {
+              "kind": "sand",
+              "size": 512,
+              "filters": [
+                [
+                  1006,
+                  1008,
+                  8
+                ],
+                [
+                  1006,
+                  1008,
+                  8
+                ],
+                [
+                  1006,
+                  1008,
+                  8
+                ]
+              ]
+            },
+            {
+              "kind": "concrete",
+              "size": 512,
+              "filters": [
+                [
+                  1006,
+                  1008,
+                  8
+                ],
+                [
+                  1006,
+                  1008,
+                  8
+                ],
+                [
+                  1006,
+                  1008,
+                  8
+                ]
+              ]
+            },
+            {
+              "kind": "concrete",
+              "size": 512,
+              "filters": [
+                [
+                  1006,
+                  1008,
+                  8
+                ],
+                [
+                  1006,
+                  1008,
+                  8
+                ],
+                [
+                  1006,
+                  1008,
+                  8
+                ]
+              ]
+            },
+            {
+              "kind": "plaster",
+              "size": 512,
+              "filters": [
+                [
+                  1006,
+                  1008,
+                  8
+                ],
+                [
+                  1006,
+                  1008,
+                  8
+                ],
+                [
+                  1006,
+                  1008,
+                  8
+                ]
+              ]
+            }
+          ]
+        },
+        {
+          "quality": "balanced",
+          "materials": 39,
+          "geometries": 28,
+          "textures": 12,
+          "uvDelta": 0,
+          "nonWarehouseExact": true,
+          "surfaces": [
+            {
+              "kind": "sand",
+              "size": 256,
+              "filters": [
+                [
+                  1006,
+                  1008,
+                  4
+                ],
+                [
+                  1006,
+                  1008,
+                  4
+                ],
+                [
+                  1006,
+                  1008,
+                  4
+                ]
+              ]
+            },
+            {
+              "kind": "concrete",
+              "size": 256,
+              "filters": [
+                [
+                  1006,
+                  1008,
+                  4
+                ],
+                [
+                  1006,
+                  1008,
+                  4
+                ],
+                [
+                  1006,
+                  1008,
+                  4
+                ]
+              ]
+            },
+            {
+              "kind": "concrete",
+              "size": 256,
+              "filters": [
+                [
+                  1006,
+                  1008,
+                  4
+                ],
+                [
+                  1006,
+                  1008,
+                  4
+                ],
+                [
+                  1006,
+                  1008,
+                  4
+                ]
+              ]
+            },
+            {
+              "kind": "plaster",
+              "size": 256,
+              "filters": [
+                [
+                  1006,
+                  1008,
+                  4
+                ],
+                [
+                  1006,
+                  1008,
+                  4
+                ],
+                [
+                  1006,
+                  1008,
+                  4
+                ]
+              ]
+            }
+          ]
+        },
+        {
+          "quality": "low",
+          "materials": 39,
+          "geometries": 28,
+          "textures": 12,
+          "uvDelta": 0,
+          "nonWarehouseExact": true,
+          "surfaces": [
+            {
+              "kind": "sand",
+              "size": 128,
+              "filters": [
+                [
+                  1006,
+                  1008,
+                  1
+                ],
+                [
+                  1006,
+                  1008,
+                  1
+                ],
+                [
+                  1006,
+                  1008,
+                  1
+                ]
+              ]
+            },
+            {
+              "kind": "concrete",
+              "size": 128,
+              "filters": [
+                [
+                  1006,
+                  1008,
+                  1
+                ],
+                [
+                  1006,
+                  1008,
+                  1
+                ],
+                [
+                  1006,
+                  1008,
+                  1
+                ]
+              ]
+            },
+            {
+              "kind": "concrete",
+              "size": 128,
+              "filters": [
+                [
+                  1006,
+                  1008,
+                  1
+                ],
+                [
+                  1006,
+                  1008,
+                  1
+                ],
+                [
+                  1006,
+                  1008,
+                  1
+                ]
+              ]
+            },
+            {
+              "kind": "plaster",
+              "size": 128,
+              "filters": [
+                [
+                  1006,
+                  1008,
+                  1
+                ],
+                [
+                  1006,
+                  1008,
+                  1
+                ],
+                [
+                  1006,
+                  1008,
+                  1
+                ]
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "courseId": "adventure-quarry-05",
+      "environment": "quarry",
+      "theme": {
+        "sky": 12898517,
+        "fog": 11255746,
+        "ground": 6713707,
+        "wall": 5267818,
+        "accent": 9553852,
+        "warm": 15710059
+      },
+      "cycles": [
+        {
+          "quality": "low",
+          "materials": 40,
+          "geometries": 31,
+          "textures": 12,
+          "uvDelta": 0,
+          "nonWarehouseExact": true,
+          "surfaces": [
+            {
+              "kind": "stone",
+              "size": 128,
+              "filters": [
+                [
+                  1006,
+                  1008,
+                  1
+                ],
+                [
+                  1006,
+                  1008,
+                  1
+                ],
+                [
+                  1006,
+                  1008,
+                  1
+                ]
+              ]
+            },
+            {
+              "kind": "stone",
+              "size": 128,
+              "filters": [
+                [
+                  1006,
+                  1008,
+                  1
+                ],
+                [
+                  1006,
+                  1008,
+                  1
+                ],
+                [
+                  1006,
+                  1008,
+                  1
+                ]
+              ]
+            },
+            {
+              "kind": "stone",
+              "size": 128,
+              "filters": [
+                [
+                  1006,
+                  1008,
+                  1
+                ],
+                [
+                  1006,
+                  1008,
+                  1
+                ],
+                [
+                  1006,
+                  1008,
+                  1
+                ]
+              ]
+            },
+            {
+              "kind": "metal",
+              "size": 128,
+              "filters": [
+                [
+                  1006,
+                  1008,
+                  1
+                ],
+                [
+                  1006,
+                  1008,
+                  1
+                ],
+                [
+                  1006,
+                  1008,
+                  1
+                ]
+              ]
+            }
+          ]
+        },
+        {
+          "quality": "balanced",
+          "materials": 40,
+          "geometries": 31,
+          "textures": 12,
+          "uvDelta": 0,
+          "nonWarehouseExact": true,
+          "surfaces": [
+            {
+              "kind": "stone",
+              "size": 256,
+              "filters": [
+                [
+                  1006,
+                  1008,
+                  4
+                ],
+                [
+                  1006,
+                  1008,
+                  4
+                ],
+                [
+                  1006,
+                  1008,
+                  4
+                ]
+              ]
+            },
+            {
+              "kind": "stone",
+              "size": 256,
+              "filters": [
+                [
+                  1006,
+                  1008,
+                  4
+                ],
+                [
+                  1006,
+                  1008,
+                  4
+                ],
+                [
+                  1006,
+                  1008,
+                  4
+                ]
+              ]
+            },
+            {
+              "kind": "stone",
+              "size": 256,
+              "filters": [
+                [
+                  1006,
+                  1008,
+                  4
+                ],
+                [
+                  1006,
+                  1008,
+                  4
+                ],
+                [
+                  1006,
+                  1008,
+                  4
+                ]
+              ]
+            },
+            {
+              "kind": "metal",
+              "size": 256,
+              "filters": [
+                [
+                  1006,
+                  1008,
+                  4
+                ],
+                [
+                  1006,
+                  1008,
+                  4
+                ],
+                [
+                  1006,
+                  1008,
+                  4
+                ]
+              ]
+            }
+          ]
+        },
+        {
+          "quality": "high",
+          "materials": 40,
+          "geometries": 31,
+          "textures": 12,
+          "uvDelta": 0,
+          "nonWarehouseExact": true,
+          "surfaces": [
+            {
+              "kind": "stone",
+              "size": 512,
+              "filters": [
+                [
+                  1006,
+                  1008,
+                  8
+                ],
+                [
+                  1006,
+                  1008,
+                  8
+                ],
+                [
+                  1006,
+                  1008,
+                  8
+                ]
+              ]
+            },
+            {
+              "kind": "stone",
+              "size": 512,
+              "filters": [
+                [
+                  1006,
+                  1008,
+                  8
+                ],
+                [
+                  1006,
+                  1008,
+                  8
+                ],
+                [
+                  1006,
+                  1008,
+                  8
+                ]
+              ]
+            },
+            {
+              "kind": "stone",
+              "size": 512,
+              "filters": [
+                [
+                  1006,
+                  1008,
+                  8
+                ],
+                [
+                  1006,
+                  1008,
+                  8
+                ],
+                [
+                  1006,
+                  1008,
+                  8
+                ]
+              ]
+            },
+            {
+              "kind": "metal",
+              "size": 512,
+              "filters": [
+                [
+                  1006,
+                  1008,
+                  8
+                ],
+                [
+                  1006,
+                  1008,
+                  8
+                ],
+                [
+                  1006,
+                  1008,
+                  8
+                ]
+              ]
+            }
+          ]
+        },
+        {
+          "quality": "balanced",
+          "materials": 40,
+          "geometries": 31,
+          "textures": 12,
+          "uvDelta": 0,
+          "nonWarehouseExact": true,
+          "surfaces": [
+            {
+              "kind": "stone",
+              "size": 256,
+              "filters": [
+                [
+                  1006,
+                  1008,
+                  4
+                ],
+                [
+                  1006,
+                  1008,
+                  4
+                ],
+                [
+                  1006,
+                  1008,
+                  4
+                ]
+              ]
+            },
+            {
+              "kind": "stone",
+              "size": 256,
+              "filters": [
+                [
+                  1006,
+                  1008,
+                  4
+                ],
+                [
+                  1006,
+                  1008,
+                  4
+                ],
+                [
+                  1006,
+                  1008,
+                  4
+                ]
+              ]
+            },
+            {
+              "kind": "stone",
+              "size": 256,
+              "filters": [
+                [
+                  1006,
+                  1008,
+                  4
+                ],
+                [
+                  1006,
+                  1008,
+                  4
+                ],
+                [
+                  1006,
+                  1008,
+                  4
+                ]
+              ]
+            },
+            {
+              "kind": "metal",
+              "size": 256,
+              "filters": [
+                [
+                  1006,
+                  1008,
+                  4
+                ],
+                [
+                  1006,
+                  1008,
+                  4
+                ],
+                [
+                  1006,
+                  1008,
+                  4
+                ]
+              ]
+            }
+          ]
+        },
+        {
+          "quality": "low",
+          "materials": 40,
+          "geometries": 31,
+          "textures": 12,
+          "uvDelta": 0,
+          "nonWarehouseExact": true,
+          "surfaces": [
+            {
+              "kind": "stone",
+              "size": 128,
+              "filters": [
+                [
+                  1006,
+                  1008,
+                  1
+                ],
+                [
+                  1006,
+                  1008,
+                  1
+                ],
+                [
+                  1006,
+                  1008,
+                  1
+                ]
+              ]
+            },
+            {
+              "kind": "stone",
+              "size": 128,
+              "filters": [
+                [
+                  1006,
+                  1008,
+                  1
+                ],
+                [
+                  1006,
+                  1008,
+                  1
+                ],
+                [
+                  1006,
+                  1008,
+                  1
+                ]
+              ]
+            },
+            {
+              "kind": "stone",
+              "size": 128,
+              "filters": [
+                [
+                  1006,
+                  1008,
+                  1
+                ],
+                [
+                  1006,
+                  1008,
+                  1
+                ],
+                [
+                  1006,
+                  1008,
+                  1
+                ]
+              ]
+            },
+            {
+              "kind": "metal",
+              "size": 128,
+              "filters": [
+                [
+                  1006,
+                  1008,
+                  1
+                ],
+                [
+                  1006,
+                  1008,
+                  1
+                ],
+                [
+                  1006,
+                  1008,
+                  1
+                ]
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "courseId": "adventure-rooftops-05",
+      "environment": "rooftops",
+      "theme": {
+        "sky": 2306888,
+        "fog": 3425879,
+        "ground": 3358796,
+        "wall": 3425879,
+        "accent": 6743772,
+        "warm": 15838837
+      },
+      "cycles": [
+        {
+          "quality": "low",
+          "materials": 44,
+          "geometries": 34,
+          "textures": 12,
+          "uvDelta": 0,
+          "nonWarehouseExact": true,
+          "surfaces": [
+            {
+              "kind": "asphalt",
+              "size": 64,
+              "filters": [
+                [
+                  1003,
+                  1004,
+                  1
+                ],
+                [
+                  1003,
+                  1004,
+                  1
+                ],
+                [
+                  1003,
+                  1004,
+                  1
+                ]
+              ]
+            },
+            {
+              "kind": "plaster",
+              "size": 64,
+              "filters": [
+                [
+                  1003,
+                  1004,
+                  1
+                ],
+                [
+                  1003,
+                  1004,
+                  1
+                ],
+                [
+                  1003,
+                  1004,
+                  1
+                ]
+              ]
+            },
+            {
+              "kind": "plaster",
+              "size": 64,
+              "filters": [
+                [
+                  1003,
+                  1004,
+                  1
+                ],
+                [
+                  1003,
+                  1004,
+                  1
+                ],
+                [
+                  1003,
+                  1004,
+                  1
+                ]
+              ]
+            },
+            {
+              "kind": "concrete",
+              "size": 64,
+              "filters": [
+                [
+                  1003,
+                  1004,
+                  1
+                ],
+                [
+                  1003,
+                  1004,
+                  1
+                ],
+                [
+                  1003,
+                  1004,
+                  1
+                ]
+              ]
+            }
+          ]
+        },
+        {
+          "quality": "balanced",
+          "materials": 44,
+          "geometries": 34,
+          "textures": 12,
+          "uvDelta": 0,
+          "nonWarehouseExact": true,
+          "surfaces": [
+            {
+              "kind": "asphalt",
+              "size": 64,
+              "filters": [
+                [
+                  1003,
+                  1004,
+                  1
+                ],
+                [
+                  1003,
+                  1004,
+                  1
+                ],
+                [
+                  1003,
+                  1004,
+                  1
+                ]
+              ]
+            },
+            {
+              "kind": "plaster",
+              "size": 64,
+              "filters": [
+                [
+                  1003,
+                  1004,
+                  1
+                ],
+                [
+                  1003,
+                  1004,
+                  1
+                ],
+                [
+                  1003,
+                  1004,
+                  1
+                ]
+              ]
+            },
+            {
+              "kind": "plaster",
+              "size": 64,
+              "filters": [
+                [
+                  1003,
+                  1004,
+                  1
+                ],
+                [
+                  1003,
+                  1004,
+                  1
+                ],
+                [
+                  1003,
+                  1004,
+                  1
+                ]
+              ]
+            },
+            {
+              "kind": "concrete",
+              "size": 64,
+              "filters": [
+                [
+                  1003,
+                  1004,
+                  1
+                ],
+                [
+                  1003,
+                  1004,
+                  1
+                ],
+                [
+                  1003,
+                  1004,
+                  1
+                ]
+              ]
+            }
+          ]
+        },
+        {
+          "quality": "high",
+          "materials": 44,
+          "geometries": 34,
+          "textures": 12,
+          "uvDelta": 0,
+          "nonWarehouseExact": true,
+          "surfaces": [
+            {
+              "kind": "asphalt",
+              "size": 64,
+              "filters": [
+                [
+                  1003,
+                  1004,
+                  1
+                ],
+                [
+                  1003,
+                  1004,
+                  1
+                ],
+                [
+                  1003,
+                  1004,
+                  1
+                ]
+              ]
+            },
+            {
+              "kind": "plaster",
+              "size": 64,
+              "filters": [
+                [
+                  1003,
+                  1004,
+                  1
+                ],
+                [
+                  1003,
+                  1004,
+                  1
+                ],
+                [
+                  1003,
+                  1004,
+                  1
+                ]
+              ]
+            },
+            {
+              "kind": "plaster",
+              "size": 64,
+              "filters": [
+                [
+                  1003,
+                  1004,
+                  1
+                ],
+                [
+                  1003,
+                  1004,
+                  1
+                ],
+                [
+                  1003,
+                  1004,
+                  1
+                ]
+              ]
+            },
+            {
+              "kind": "concrete",
+              "size": 64,
+              "filters": [
+                [
+                  1003,
+                  1004,
+                  1
+                ],
+                [
+                  1003,
+                  1004,
+                  1
+                ],
+                [
+                  1003,
+                  1004,
+                  1
+                ]
+              ]
+            }
+          ]
+        },
+        {
+          "quality": "balanced",
+          "materials": 44,
+          "geometries": 34,
+          "textures": 12,
+          "uvDelta": 0,
+          "nonWarehouseExact": true,
+          "surfaces": [
+            {
+              "kind": "asphalt",
+              "size": 64,
+              "filters": [
+                [
+                  1003,
+                  1004,
+                  1
+                ],
+                [
+                  1003,
+                  1004,
+                  1
+                ],
+                [
+                  1003,
+                  1004,
+                  1
+                ]
+              ]
+            },
+            {
+              "kind": "plaster",
+              "size": 64,
+              "filters": [
+                [
+                  1003,
+                  1004,
+                  1
+                ],
+                [
+                  1003,
+                  1004,
+                  1
+                ],
+                [
+                  1003,
+                  1004,
+                  1
+                ]
+              ]
+            },
+            {
+              "kind": "plaster",
+              "size": 64,
+              "filters": [
+                [
+                  1003,
+                  1004,
+                  1
+                ],
+                [
+                  1003,
+                  1004,
+                  1
+                ],
+                [
+                  1003,
+                  1004,
+                  1
+                ]
+              ]
+            },
+            {
+              "kind": "concrete",
+              "size": 64,
+              "filters": [
+                [
+                  1003,
+                  1004,
+                  1
+                ],
+                [
+                  1003,
+                  1004,
+                  1
+                ],
+                [
+                  1003,
+                  1004,
+                  1
+                ]
+              ]
+            }
+          ]
+        },
+        {
+          "quality": "low",
+          "materials": 44,
+          "geometries": 34,
+          "textures": 12,
+          "uvDelta": 0,
+          "nonWarehouseExact": true,
+          "surfaces": [
+            {
+              "kind": "asphalt",
+              "size": 64,
+              "filters": [
+                [
+                  1003,
+                  1004,
+                  1
+                ],
+                [
+                  1003,
+                  1004,
+                  1
+                ],
+                [
+                  1003,
+                  1004,
+                  1
+                ]
+              ]
+            },
+            {
+              "kind": "plaster",
+              "size": 64,
+              "filters": [
+                [
+                  1003,
+                  1004,
+                  1
+                ],
+                [
+                  1003,
+                  1004,
+                  1
+                ],
+                [
+                  1003,
+                  1004,
+                  1
+                ]
+              ]
+            },
+            {
+              "kind": "plaster",
+              "size": 64,
+              "filters": [
+                [
+                  1003,
+                  1004,
+                  1
+                ],
+                [
+                  1003,
+                  1004,
+                  1
+                ],
+                [
+                  1003,
+                  1004,
+                  1
+                ]
+              ]
+            },
+            {
+              "kind": "concrete",
+              "size": 64,
+              "filters": [
+                [
+                  1003,
+                  1004,
+                  1
+                ],
+                [
+                  1003,
+                  1004,
+                  1
+                ],
+                [
+                  1003,
+                  1004,
+                  1
+                ]
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "courseId": "adventure-orchard-05",
+      "environment": "orchard",
+      "theme": {
+        "sky": 12244968,
+        "fog": 13097428,
+        "ground": 7242589,
+        "wall": 14996918,
+        "accent": 7322847,
+        "warm": 15847270
+      },
+      "cycles": [
+        {
+          "quality": "low",
+          "materials": 93,
+          "geometries": 80,
+          "textures": 18,
+          "uvDelta": 0,
+          "nonWarehouseExact": true,
+          "surfaces": [
+            {
+              "kind": "grass",
+              "size": 128,
+              "filters": [
+                [
+                  1006,
+                  1008,
+                  1
+                ],
+                [
+                  1006,
+                  1008,
+                  1
+                ],
+                [
+                  1006,
+                  1008,
+                  1
+                ]
+              ]
+            },
+            {
+              "kind": "wood",
+              "size": 128,
+              "filters": [
+                [
+                  1006,
+                  1008,
+                  1
+                ],
+                [
+                  1006,
+                  1008,
+                  1
+                ],
+                [
+                  1006,
+                  1008,
+                  1
+                ]
+              ]
+            },
+            {
+              "kind": "wood",
+              "size": 128,
+              "filters": [
+                [
+                  1006,
+                  1008,
+                  1
+                ],
+                [
+                  1006,
+                  1008,
+                  1
+                ],
+                [
+                  1006,
+                  1008,
+                  1
+                ]
+              ]
+            },
+            {
+              "kind": "foliage",
+              "size": 128,
+              "filters": [
+                [
+                  1006,
+                  1008,
+                  1
+                ],
+                [
+                  1006,
+                  1008,
+                  1
+                ],
+                [
+                  1006,
+                  1008,
+                  1
+                ]
+              ]
+            },
+            {
+              "kind": "plaster",
+              "size": 128,
+              "filters": [
+                [
+                  1006,
+                  1008,
+                  1
+                ],
+                [
+                  1006,
+                  1008,
+                  1
+                ],
+                [
+                  1006,
+                  1008,
+                  1
+                ]
+              ]
+            },
+            {
+              "kind": "stone",
+              "size": 128,
+              "filters": [
+                [
+                  1006,
+                  1008,
+                  1
+                ],
+                [
+                  1006,
+                  1008,
+                  1
+                ],
+                [
+                  1006,
+                  1008,
+                  1
+                ]
+              ]
+            }
+          ]
+        },
+        {
+          "quality": "balanced",
+          "materials": 93,
+          "geometries": 80,
+          "textures": 18,
+          "uvDelta": 0,
+          "nonWarehouseExact": true,
+          "surfaces": [
+            {
+              "kind": "grass",
+              "size": 256,
+              "filters": [
+                [
+                  1006,
+                  1008,
+                  4
+                ],
+                [
+                  1006,
+                  1008,
+                  4
+                ],
+                [
+                  1006,
+                  1008,
+                  4
+                ]
+              ]
+            },
+            {
+              "kind": "wood",
+              "size": 256,
+              "filters": [
+                [
+                  1006,
+                  1008,
+                  4
+                ],
+                [
+                  1006,
+                  1008,
+                  4
+                ],
+                [
+                  1006,
+                  1008,
+                  4
+                ]
+              ]
+            },
+            {
+              "kind": "wood",
+              "size": 256,
+              "filters": [
+                [
+                  1006,
+                  1008,
+                  4
+                ],
+                [
+                  1006,
+                  1008,
+                  4
+                ],
+                [
+                  1006,
+                  1008,
+                  4
+                ]
+              ]
+            },
+            {
+              "kind": "foliage",
+              "size": 256,
+              "filters": [
+                [
+                  1006,
+                  1008,
+                  4
+                ],
+                [
+                  1006,
+                  1008,
+                  4
+                ],
+                [
+                  1006,
+                  1008,
+                  4
+                ]
+              ]
+            },
+            {
+              "kind": "plaster",
+              "size": 256,
+              "filters": [
+                [
+                  1006,
+                  1008,
+                  4
+                ],
+                [
+                  1006,
+                  1008,
+                  4
+                ],
+                [
+                  1006,
+                  1008,
+                  4
+                ]
+              ]
+            },
+            {
+              "kind": "stone",
+              "size": 256,
+              "filters": [
+                [
+                  1006,
+                  1008,
+                  4
+                ],
+                [
+                  1006,
+                  1008,
+                  4
+                ],
+                [
+                  1006,
+                  1008,
+                  4
+                ]
+              ]
+            }
+          ]
+        },
+        {
+          "quality": "high",
+          "materials": 93,
+          "geometries": 80,
+          "textures": 18,
+          "uvDelta": 0,
+          "nonWarehouseExact": true,
+          "surfaces": [
+            {
+              "kind": "grass",
+              "size": 512,
+              "filters": [
+                [
+                  1006,
+                  1008,
+                  8
+                ],
+                [
+                  1006,
+                  1008,
+                  8
+                ],
+                [
+                  1006,
+                  1008,
+                  8
+                ]
+              ]
+            },
+            {
+              "kind": "wood",
+              "size": 512,
+              "filters": [
+                [
+                  1006,
+                  1008,
+                  8
+                ],
+                [
+                  1006,
+                  1008,
+                  8
+                ],
+                [
+                  1006,
+                  1008,
+                  8
+                ]
+              ]
+            },
+            {
+              "kind": "wood",
+              "size": 512,
+              "filters": [
+                [
+                  1006,
+                  1008,
+                  8
+                ],
+                [
+                  1006,
+                  1008,
+                  8
+                ],
+                [
+                  1006,
+                  1008,
+                  8
+                ]
+              ]
+            },
+            {
+              "kind": "foliage",
+              "size": 512,
+              "filters": [
+                [
+                  1006,
+                  1008,
+                  8
+                ],
+                [
+                  1006,
+                  1008,
+                  8
+                ],
+                [
+                  1006,
+                  1008,
+                  8
+                ]
+              ]
+            },
+            {
+              "kind": "plaster",
+              "size": 512,
+              "filters": [
+                [
+                  1006,
+                  1008,
+                  8
+                ],
+                [
+                  1006,
+                  1008,
+                  8
+                ],
+                [
+                  1006,
+                  1008,
+                  8
+                ]
+              ]
+            },
+            {
+              "kind": "stone",
+              "size": 512,
+              "filters": [
+                [
+                  1006,
+                  1008,
+                  8
+                ],
+                [
+                  1006,
+                  1008,
+                  8
+                ],
+                [
+                  1006,
+                  1008,
+                  8
+                ]
+              ]
+            }
+          ]
+        },
+        {
+          "quality": "balanced",
+          "materials": 93,
+          "geometries": 80,
+          "textures": 18,
+          "uvDelta": 0,
+          "nonWarehouseExact": true,
+          "surfaces": [
+            {
+              "kind": "grass",
+              "size": 256,
+              "filters": [
+                [
+                  1006,
+                  1008,
+                  4
+                ],
+                [
+                  1006,
+                  1008,
+                  4
+                ],
+                [
+                  1006,
+                  1008,
+                  4
+                ]
+              ]
+            },
+            {
+              "kind": "wood",
+              "size": 256,
+              "filters": [
+                [
+                  1006,
+                  1008,
+                  4
+                ],
+                [
+                  1006,
+                  1008,
+                  4
+                ],
+                [
+                  1006,
+                  1008,
+                  4
+                ]
+              ]
+            },
+            {
+              "kind": "wood",
+              "size": 256,
+              "filters": [
+                [
+                  1006,
+                  1008,
+                  4
+                ],
+                [
+                  1006,
+                  1008,
+                  4
+                ],
+                [
+                  1006,
+                  1008,
+                  4
+                ]
+              ]
+            },
+            {
+              "kind": "foliage",
+              "size": 256,
+              "filters": [
+                [
+                  1006,
+                  1008,
+                  4
+                ],
+                [
+                  1006,
+                  1008,
+                  4
+                ],
+                [
+                  1006,
+                  1008,
+                  4
+                ]
+              ]
+            },
+            {
+              "kind": "plaster",
+              "size": 256,
+              "filters": [
+                [
+                  1006,
+                  1008,
+                  4
+                ],
+                [
+                  1006,
+                  1008,
+                  4
+                ],
+                [
+                  1006,
+                  1008,
+                  4
+                ]
+              ]
+            },
+            {
+              "kind": "stone",
+              "size": 256,
+              "filters": [
+                [
+                  1006,
+                  1008,
+                  4
+                ],
+                [
+                  1006,
+                  1008,
+                  4
+                ],
+                [
+                  1006,
+                  1008,
+                  4
+                ]
+              ]
+            }
+          ]
+        },
+        {
+          "quality": "low",
+          "materials": 93,
+          "geometries": 80,
+          "textures": 18,
+          "uvDelta": 0,
+          "nonWarehouseExact": true,
+          "surfaces": [
+            {
+              "kind": "grass",
+              "size": 128,
+              "filters": [
+                [
+                  1006,
+                  1008,
+                  1
+                ],
+                [
+                  1006,
+                  1008,
+                  1
+                ],
+                [
+                  1006,
+                  1008,
+                  1
+                ]
+              ]
+            },
+            {
+              "kind": "wood",
+              "size": 128,
+              "filters": [
+                [
+                  1006,
+                  1008,
+                  1
+                ],
+                [
+                  1006,
+                  1008,
+                  1
+                ],
+                [
+                  1006,
+                  1008,
+                  1
+                ]
+              ]
+            },
+            {
+              "kind": "wood",
+              "size": 128,
+              "filters": [
+                [
+                  1006,
+                  1008,
+                  1
+                ],
+                [
+                  1006,
+                  1008,
+                  1
+                ],
+                [
+                  1006,
+                  1008,
+                  1
+                ]
+              ]
+            },
+            {
+              "kind": "foliage",
+              "size": 128,
+              "filters": [
+                [
+                  1006,
+                  1008,
+                  1
+                ],
+                [
+                  1006,
+                  1008,
+                  1
+                ],
+                [
+                  1006,
+                  1008,
+                  1
+                ]
+              ]
+            },
+            {
+              "kind": "plaster",
+              "size": 128,
+              "filters": [
+                [
+                  1006,
+                  1008,
+                  1
+                ],
+                [
+                  1006,
+                  1008,
+                  1
+                ],
+                [
+                  1006,
+                  1008,
+                  1
+                ]
+              ]
+            },
+            {
+              "kind": "stone",
+              "size": 128,
+              "filters": [
+                [
+                  1006,
+                  1008,
+                  1
+                ],
+                [
+                  1006,
+                  1008,
+                  1
+                ],
+                [
+                  1006,
+                  1008,
+                  1
+                ]
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "courseId": "adventure-solar-farm-05",
+      "environment": "solar-farm",
+      "theme": {
+        "sky": 12898517,
+        "fog": 11255746,
+        "ground": 6713707,
+        "wall": 5267818,
+        "accent": 9553852,
+        "warm": 15710059
+      },
+      "cycles": [
+        {
+          "quality": "low",
+          "materials": 89,
+          "geometries": 79,
+          "textures": 15,
+          "uvDelta": 0,
+          "nonWarehouseExact": true,
+          "surfaces": [
+            {
+              "kind": "ballast",
+              "size": 128,
+              "filters": [
+                [
+                  1006,
+                  1008,
+                  1
+                ],
+                [
+                  1006,
+                  1008,
+                  1
+                ],
+                [
+                  1006,
+                  1008,
+                  1
+                ]
+              ]
+            },
+            {
+              "kind": "metal",
+              "size": 128,
+              "filters": [
+                [
+                  1006,
+                  1008,
+                  1
+                ],
+                [
+                  1006,
+                  1008,
+                  1
+                ],
+                [
+                  1006,
+                  1008,
+                  1
+                ]
+              ]
+            },
+            {
+              "kind": "solar",
+              "size": 128,
+              "filters": [
+                [
+                  1006,
+                  1008,
+                  1
+                ],
+                [
+                  1006,
+                  1008,
+                  1
+                ],
+                [
+                  1006,
+                  1008,
+                  1
+                ]
+              ]
+            },
+            {
+              "kind": "metal",
+              "size": 128,
+              "filters": [
+                [
+                  1006,
+                  1008,
+                  1
+                ],
+                [
+                  1006,
+                  1008,
+                  1
+                ],
+                [
+                  1006,
+                  1008,
+                  1
+                ]
+              ]
+            },
+            {
+              "kind": "concrete",
+              "size": 128,
+              "filters": [
+                [
+                  1006,
+                  1008,
+                  1
+                ],
+                [
+                  1006,
+                  1008,
+                  1
+                ],
+                [
+                  1006,
+                  1008,
+                  1
+                ]
+              ]
+            }
+          ]
+        },
+        {
+          "quality": "balanced",
+          "materials": 89,
+          "geometries": 79,
+          "textures": 15,
+          "uvDelta": 0,
+          "nonWarehouseExact": true,
+          "surfaces": [
+            {
+              "kind": "ballast",
+              "size": 256,
+              "filters": [
+                [
+                  1006,
+                  1008,
+                  4
+                ],
+                [
+                  1006,
+                  1008,
+                  4
+                ],
+                [
+                  1006,
+                  1008,
+                  4
+                ]
+              ]
+            },
+            {
+              "kind": "metal",
+              "size": 256,
+              "filters": [
+                [
+                  1006,
+                  1008,
+                  4
+                ],
+                [
+                  1006,
+                  1008,
+                  4
+                ],
+                [
+                  1006,
+                  1008,
+                  4
+                ]
+              ]
+            },
+            {
+              "kind": "solar",
+              "size": 256,
+              "filters": [
+                [
+                  1006,
+                  1008,
+                  4
+                ],
+                [
+                  1006,
+                  1008,
+                  4
+                ],
+                [
+                  1006,
+                  1008,
+                  4
+                ]
+              ]
+            },
+            {
+              "kind": "metal",
+              "size": 256,
+              "filters": [
+                [
+                  1006,
+                  1008,
+                  4
+                ],
+                [
+                  1006,
+                  1008,
+                  4
+                ],
+                [
+                  1006,
+                  1008,
+                  4
+                ]
+              ]
+            },
+            {
+              "kind": "concrete",
+              "size": 256,
+              "filters": [
+                [
+                  1006,
+                  1008,
+                  4
+                ],
+                [
+                  1006,
+                  1008,
+                  4
+                ],
+                [
+                  1006,
+                  1008,
+                  4
+                ]
+              ]
+            }
+          ]
+        },
+        {
+          "quality": "high",
+          "materials": 89,
+          "geometries": 79,
+          "textures": 15,
+          "uvDelta": 0,
+          "nonWarehouseExact": true,
+          "surfaces": [
+            {
+              "kind": "ballast",
+              "size": 512,
+              "filters": [
+                [
+                  1006,
+                  1008,
+                  8
+                ],
+                [
+                  1006,
+                  1008,
+                  8
+                ],
+                [
+                  1006,
+                  1008,
+                  8
+                ]
+              ]
+            },
+            {
+              "kind": "metal",
+              "size": 512,
+              "filters": [
+                [
+                  1006,
+                  1008,
+                  8
+                ],
+                [
+                  1006,
+                  1008,
+                  8
+                ],
+                [
+                  1006,
+                  1008,
+                  8
+                ]
+              ]
+            },
+            {
+              "kind": "solar",
+              "size": 512,
+              "filters": [
+                [
+                  1006,
+                  1008,
+                  8
+                ],
+                [
+                  1006,
+                  1008,
+                  8
+                ],
+                [
+                  1006,
+                  1008,
+                  8
+                ]
+              ]
+            },
+            {
+              "kind": "metal",
+              "size": 512,
+              "filters": [
+                [
+                  1006,
+                  1008,
+                  8
+                ],
+                [
+                  1006,
+                  1008,
+                  8
+                ],
+                [
+                  1006,
+                  1008,
+                  8
+                ]
+              ]
+            },
+            {
+              "kind": "concrete",
+              "size": 512,
+              "filters": [
+                [
+                  1006,
+                  1008,
+                  8
+                ],
+                [
+                  1006,
+                  1008,
+                  8
+                ],
+                [
+                  1006,
+                  1008,
+                  8
+                ]
+              ]
+            }
+          ]
+        },
+        {
+          "quality": "balanced",
+          "materials": 89,
+          "geometries": 79,
+          "textures": 15,
+          "uvDelta": 0,
+          "nonWarehouseExact": true,
+          "surfaces": [
+            {
+              "kind": "ballast",
+              "size": 256,
+              "filters": [
+                [
+                  1006,
+                  1008,
+                  4
+                ],
+                [
+                  1006,
+                  1008,
+                  4
+                ],
+                [
+                  1006,
+                  1008,
+                  4
+                ]
+              ]
+            },
+            {
+              "kind": "metal",
+              "size": 256,
+              "filters": [
+                [
+                  1006,
+                  1008,
+                  4
+                ],
+                [
+                  1006,
+                  1008,
+                  4
+                ],
+                [
+                  1006,
+                  1008,
+                  4
+                ]
+              ]
+            },
+            {
+              "kind": "solar",
+              "size": 256,
+              "filters": [
+                [
+                  1006,
+                  1008,
+                  4
+                ],
+                [
+                  1006,
+                  1008,
+                  4
+                ],
+                [
+                  1006,
+                  1008,
+                  4
+                ]
+              ]
+            },
+            {
+              "kind": "metal",
+              "size": 256,
+              "filters": [
+                [
+                  1006,
+                  1008,
+                  4
+                ],
+                [
+                  1006,
+                  1008,
+                  4
+                ],
+                [
+                  1006,
+                  1008,
+                  4
+                ]
+              ]
+            },
+            {
+              "kind": "concrete",
+              "size": 256,
+              "filters": [
+                [
+                  1006,
+                  1008,
+                  4
+                ],
+                [
+                  1006,
+                  1008,
+                  4
+                ],
+                [
+                  1006,
+                  1008,
+                  4
+                ]
+              ]
+            }
+          ]
+        },
+        {
+          "quality": "low",
+          "materials": 89,
+          "geometries": 79,
+          "textures": 15,
+          "uvDelta": 0,
+          "nonWarehouseExact": true,
+          "surfaces": [
+            {
+              "kind": "ballast",
+              "size": 128,
+              "filters": [
+                [
+                  1006,
+                  1008,
+                  1
+                ],
+                [
+                  1006,
+                  1008,
+                  1
+                ],
+                [
+                  1006,
+                  1008,
+                  1
+                ]
+              ]
+            },
+            {
+              "kind": "metal",
+              "size": 128,
+              "filters": [
+                [
+                  1006,
+                  1008,
+                  1
+                ],
+                [
+                  1006,
+                  1008,
+                  1
+                ],
+                [
+                  1006,
+                  1008,
+                  1
+                ]
+              ]
+            },
+            {
+              "kind": "solar",
+              "size": 128,
+              "filters": [
+                [
+                  1006,
+                  1008,
+                  1
+                ],
+                [
+                  1006,
+                  1008,
+                  1
+                ],
+                [
+                  1006,
+                  1008,
+                  1
+                ]
+              ]
+            },
+            {
+              "kind": "metal",
+              "size": 128,
+              "filters": [
+                [
+                  1006,
+                  1008,
+                  1
+                ],
+                [
+                  1006,
+                  1008,
+                  1
+                ],
+                [
+                  1006,
+                  1008,
+                  1
+                ]
+              ]
+            },
+            {
+              "kind": "concrete",
+              "size": 128,
+              "filters": [
+                [
+                  1006,
+                  1008,
+                  1
+                ],
+                [
+                  1006,
+                  1008,
+                  1
+                ],
+                [
+                  1006,
+                  1008,
+                  1
+                ]
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "courseId": "adventure-rail-depot-05",
+      "environment": "rail-depot",
+      "theme": {
+        "sky": 12898517,
+        "fog": 11255746,
+        "ground": 6713707,
+        "wall": 5267818,
+        "accent": 9553852,
+        "warm": 15710059
+      },
+      "cycles": [
+        {
+          "quality": "low",
+          "materials": 71,
+          "geometries": 60,
+          "textures": 15,
+          "uvDelta": 0,
+          "nonWarehouseExact": true,
+          "surfaces": [
+            {
+              "kind": "ballast",
+              "size": 128,
+              "filters": [
+                [
+                  1006,
+                  1008,
+                  1
+                ],
+                [
+                  1006,
+                  1008,
+                  1
+                ],
+                [
+                  1006,
+                  1008,
+                  1
+                ]
+              ]
+            },
+            {
+              "kind": "metal",
+              "size": 128,
+              "filters": [
+                [
+                  1006,
+                  1008,
+                  1
+                ],
+                [
+                  1006,
+                  1008,
+                  1
+                ],
+                [
+                  1006,
+                  1008,
+                  1
+                ]
+              ]
+            },
+            {
+              "kind": "metal",
+              "size": 128,
+              "filters": [
+                [
+                  1006,
+                  1008,
+                  1
+                ],
+                [
+                  1006,
+                  1008,
+                  1
+                ],
+                [
+                  1006,
+                  1008,
+                  1
+                ]
+              ]
+            },
+            {
+              "kind": "concrete",
+              "size": 128,
+              "filters": [
+                [
+                  1006,
+                  1008,
+                  1
+                ],
+                [
+                  1006,
+                  1008,
+                  1
+                ],
+                [
+                  1006,
+                  1008,
+                  1
+                ]
+              ]
+            },
+            {
+              "kind": "plaster",
+              "size": 128,
+              "filters": [
+                [
+                  1006,
+                  1008,
+                  1
+                ],
+                [
+                  1006,
+                  1008,
+                  1
+                ],
+                [
+                  1006,
+                  1008,
+                  1
+                ]
+              ]
+            }
+          ]
+        },
+        {
+          "quality": "balanced",
+          "materials": 71,
+          "geometries": 60,
+          "textures": 15,
+          "uvDelta": 0,
+          "nonWarehouseExact": true,
+          "surfaces": [
+            {
+              "kind": "ballast",
+              "size": 256,
+              "filters": [
+                [
+                  1006,
+                  1008,
+                  4
+                ],
+                [
+                  1006,
+                  1008,
+                  4
+                ],
+                [
+                  1006,
+                  1008,
+                  4
+                ]
+              ]
+            },
+            {
+              "kind": "metal",
+              "size": 256,
+              "filters": [
+                [
+                  1006,
+                  1008,
+                  4
+                ],
+                [
+                  1006,
+                  1008,
+                  4
+                ],
+                [
+                  1006,
+                  1008,
+                  4
+                ]
+              ]
+            },
+            {
+              "kind": "metal",
+              "size": 256,
+              "filters": [
+                [
+                  1006,
+                  1008,
+                  4
+                ],
+                [
+                  1006,
+                  1008,
+                  4
+                ],
+                [
+                  1006,
+                  1008,
+                  4
+                ]
+              ]
+            },
+            {
+              "kind": "concrete",
+              "size": 256,
+              "filters": [
+                [
+                  1006,
+                  1008,
+                  4
+                ],
+                [
+                  1006,
+                  1008,
+                  4
+                ],
+                [
+                  1006,
+                  1008,
+                  4
+                ]
+              ]
+            },
+            {
+              "kind": "plaster",
+              "size": 256,
+              "filters": [
+                [
+                  1006,
+                  1008,
+                  4
+                ],
+                [
+                  1006,
+                  1008,
+                  4
+                ],
+                [
+                  1006,
+                  1008,
+                  4
+                ]
+              ]
+            }
+          ]
+        },
+        {
+          "quality": "high",
+          "materials": 71,
+          "geometries": 60,
+          "textures": 15,
+          "uvDelta": 0,
+          "nonWarehouseExact": true,
+          "surfaces": [
+            {
+              "kind": "ballast",
+              "size": 512,
+              "filters": [
+                [
+                  1006,
+                  1008,
+                  8
+                ],
+                [
+                  1006,
+                  1008,
+                  8
+                ],
+                [
+                  1006,
+                  1008,
+                  8
+                ]
+              ]
+            },
+            {
+              "kind": "metal",
+              "size": 512,
+              "filters": [
+                [
+                  1006,
+                  1008,
+                  8
+                ],
+                [
+                  1006,
+                  1008,
+                  8
+                ],
+                [
+                  1006,
+                  1008,
+                  8
+                ]
+              ]
+            },
+            {
+              "kind": "metal",
+              "size": 512,
+              "filters": [
+                [
+                  1006,
+                  1008,
+                  8
+                ],
+                [
+                  1006,
+                  1008,
+                  8
+                ],
+                [
+                  1006,
+                  1008,
+                  8
+                ]
+              ]
+            },
+            {
+              "kind": "concrete",
+              "size": 512,
+              "filters": [
+                [
+                  1006,
+                  1008,
+                  8
+                ],
+                [
+                  1006,
+                  1008,
+                  8
+                ],
+                [
+                  1006,
+                  1008,
+                  8
+                ]
+              ]
+            },
+            {
+              "kind": "plaster",
+              "size": 512,
+              "filters": [
+                [
+                  1006,
+                  1008,
+                  8
+                ],
+                [
+                  1006,
+                  1008,
+                  8
+                ],
+                [
+                  1006,
+                  1008,
+                  8
+                ]
+              ]
+            }
+          ]
+        },
+        {
+          "quality": "balanced",
+          "materials": 71,
+          "geometries": 60,
+          "textures": 15,
+          "uvDelta": 0,
+          "nonWarehouseExact": true,
+          "surfaces": [
+            {
+              "kind": "ballast",
+              "size": 256,
+              "filters": [
+                [
+                  1006,
+                  1008,
+                  4
+                ],
+                [
+                  1006,
+                  1008,
+                  4
+                ],
+                [
+                  1006,
+                  1008,
+                  4
+                ]
+              ]
+            },
+            {
+              "kind": "metal",
+              "size": 256,
+              "filters": [
+                [
+                  1006,
+                  1008,
+                  4
+                ],
+                [
+                  1006,
+                  1008,
+                  4
+                ],
+                [
+                  1006,
+                  1008,
+                  4
+                ]
+              ]
+            },
+            {
+              "kind": "metal",
+              "size": 256,
+              "filters": [
+                [
+                  1006,
+                  1008,
+                  4
+                ],
+                [
+                  1006,
+                  1008,
+                  4
+                ],
+                [
+                  1006,
+                  1008,
+                  4
+                ]
+              ]
+            },
+            {
+              "kind": "concrete",
+              "size": 256,
+              "filters": [
+                [
+                  1006,
+                  1008,
+                  4
+                ],
+                [
+                  1006,
+                  1008,
+                  4
+                ],
+                [
+                  1006,
+                  1008,
+                  4
+                ]
+              ]
+            },
+            {
+              "kind": "plaster",
+              "size": 256,
+              "filters": [
+                [
+                  1006,
+                  1008,
+                  4
+                ],
+                [
+                  1006,
+                  1008,
+                  4
+                ],
+                [
+                  1006,
+                  1008,
+                  4
+                ]
+              ]
+            }
+          ]
+        },
+        {
+          "quality": "low",
+          "materials": 71,
+          "geometries": 60,
+          "textures": 15,
+          "uvDelta": 0,
+          "nonWarehouseExact": true,
+          "surfaces": [
+            {
+              "kind": "ballast",
+              "size": 128,
+              "filters": [
+                [
+                  1006,
+                  1008,
+                  1
+                ],
+                [
+                  1006,
+                  1008,
+                  1
+                ],
+                [
+                  1006,
+                  1008,
+                  1
+                ]
+              ]
+            },
+            {
+              "kind": "metal",
+              "size": 128,
+              "filters": [
+                [
+                  1006,
+                  1008,
+                  1
+                ],
+                [
+                  1006,
+                  1008,
+                  1
+                ],
+                [
+                  1006,
+                  1008,
+                  1
+                ]
+              ]
+            },
+            {
+              "kind": "metal",
+              "size": 128,
+              "filters": [
+                [
+                  1006,
+                  1008,
+                  1
+                ],
+                [
+                  1006,
+                  1008,
+                  1
+                ],
+                [
+                  1006,
+                  1008,
+                  1
+                ]
+              ]
+            },
+            {
+              "kind": "concrete",
+              "size": 128,
+              "filters": [
+                [
+                  1006,
+                  1008,
+                  1
+                ],
+                [
+                  1006,
+                  1008,
+                  1
+                ],
+                [
+                  1006,
+                  1008,
+                  1
+                ]
+              ]
+            },
+            {
+              "kind": "plaster",
+              "size": 128,
+              "filters": [
+                [
+                  1006,
+                  1008,
+                  1
+                ],
+                [
+                  1006,
+                  1008,
+                  1
+                ],
+                [
+                  1006,
+                  1008,
+                  1
+                ]
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "courseId": "warehouse-08",
+      "environment": "warehouse",
+      "theme": {
+        "sky": 2306888,
+        "fog": 3425879,
+        "ground": 3358796,
+        "wall": 3425879,
+        "accent": 6743772,
+        "warm": 15838837
+      },
+      "cycles": [
+        {
+          "quality": "low",
+          "materials": 43,
+          "geometries": 141,
+          "textures": 9,
+          "uvDelta": 1152,
+          "nonWarehouseExact": false,
+          "surfaces": [
+            {
+              "kind": "concrete",
+              "size": 64,
+              "filters": [
+                [
+                  1003,
+                  1004,
+                  1
+                ],
+                [
+                  1003,
+                  1004,
+                  1
+                ],
+                [
+                  1003,
+                  1004,
+                  1
+                ]
+              ]
+            },
+            {
+              "kind": "painted-steel",
+              "size": 64,
+              "filters": [
+                [
+                  1003,
+                  1004,
+                  1
+                ],
+                [
+                  1003,
+                  1004,
+                  1
+                ],
+                [
+                  1003,
+                  1004,
+                  1
+                ]
+              ]
+            },
+            {
+              "kind": "storage-steel",
+              "size": 64,
+              "filters": [
+                [
+                  1003,
+                  1004,
+                  1
+                ],
+                [
+                  1003,
+                  1004,
+                  1
+                ],
+                [
+                  1003,
+                  1004,
+                  1
+                ]
+              ]
+            }
+          ]
+        },
+        {
+          "quality": "balanced",
+          "materials": 43,
+          "geometries": 141,
+          "textures": 9,
+          "uvDelta": 1152,
+          "nonWarehouseExact": false,
+          "surfaces": [
+            {
+              "kind": "concrete",
+              "size": 64,
+              "filters": [
+                [
+                  1003,
+                  1004,
+                  1
+                ],
+                [
+                  1003,
+                  1004,
+                  1
+                ],
+                [
+                  1003,
+                  1004,
+                  1
+                ]
+              ]
+            },
+            {
+              "kind": "painted-steel",
+              "size": 64,
+              "filters": [
+                [
+                  1003,
+                  1004,
+                  1
+                ],
+                [
+                  1003,
+                  1004,
+                  1
+                ],
+                [
+                  1003,
+                  1004,
+                  1
+                ]
+              ]
+            },
+            {
+              "kind": "storage-steel",
+              "size": 64,
+              "filters": [
+                [
+                  1003,
+                  1004,
+                  1
+                ],
+                [
+                  1003,
+                  1004,
+                  1
+                ],
+                [
+                  1003,
+                  1004,
+                  1
+                ]
+              ]
+            }
+          ]
+        },
+        {
+          "quality": "high",
+          "materials": 43,
+          "geometries": 141,
+          "textures": 9,
+          "uvDelta": 1152,
+          "nonWarehouseExact": false,
+          "surfaces": [
+            {
+              "kind": "concrete",
+              "size": 64,
+              "filters": [
+                [
+                  1003,
+                  1004,
+                  1
+                ],
+                [
+                  1003,
+                  1004,
+                  1
+                ],
+                [
+                  1003,
+                  1004,
+                  1
+                ]
+              ]
+            },
+            {
+              "kind": "painted-steel",
+              "size": 64,
+              "filters": [
+                [
+                  1003,
+                  1004,
+                  1
+                ],
+                [
+                  1003,
+                  1004,
+                  1
+                ],
+                [
+                  1003,
+                  1004,
+                  1
+                ]
+              ]
+            },
+            {
+              "kind": "storage-steel",
+              "size": 64,
+              "filters": [
+                [
+                  1003,
+                  1004,
+                  1
+                ],
+                [
+                  1003,
+                  1004,
+                  1
+                ],
+                [
+                  1003,
+                  1004,
+                  1
+                ]
+              ]
+            }
+          ]
+        },
+        {
+          "quality": "balanced",
+          "materials": 43,
+          "geometries": 141,
+          "textures": 9,
+          "uvDelta": 1152,
+          "nonWarehouseExact": false,
+          "surfaces": [
+            {
+              "kind": "concrete",
+              "size": 64,
+              "filters": [
+                [
+                  1003,
+                  1004,
+                  1
+                ],
+                [
+                  1003,
+                  1004,
+                  1
+                ],
+                [
+                  1003,
+                  1004,
+                  1
+                ]
+              ]
+            },
+            {
+              "kind": "painted-steel",
+              "size": 64,
+              "filters": [
+                [
+                  1003,
+                  1004,
+                  1
+                ],
+                [
+                  1003,
+                  1004,
+                  1
+                ],
+                [
+                  1003,
+                  1004,
+                  1
+                ]
+              ]
+            },
+            {
+              "kind": "storage-steel",
+              "size": 64,
+              "filters": [
+                [
+                  1003,
+                  1004,
+                  1
+                ],
+                [
+                  1003,
+                  1004,
+                  1
+                ],
+                [
+                  1003,
+                  1004,
+                  1
+                ]
+              ]
+            }
+          ]
+        },
+        {
+          "quality": "low",
+          "materials": 43,
+          "geometries": 141,
+          "textures": 9,
+          "uvDelta": 1152,
+          "nonWarehouseExact": false,
+          "surfaces": [
+            {
+              "kind": "concrete",
+              "size": 64,
+              "filters": [
+                [
+                  1003,
+                  1004,
+                  1
+                ],
+                [
+                  1003,
+                  1004,
+                  1
+                ],
+                [
+                  1003,
+                  1004,
+                  1
+                ]
+              ]
+            },
+            {
+              "kind": "painted-steel",
+              "size": 64,
+              "filters": [
+                [
+                  1003,
+                  1004,
+                  1
+                ],
+                [
+                  1003,
+                  1004,
+                  1
+                ],
+                [
+                  1003,
+                  1004,
+                  1
+                ]
+              ]
+            },
+            {
+              "kind": "storage-steel",
+              "size": 64,
+              "filters": [
+                [
+                  1003,
+                  1004,
+                  1
+                ],
+                [
+                  1003,
+                  1004,
+                  1
+                ],
+                [
+                  1003,
+                  1004,
+                  1
+                ]
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "courseId": "warehouse-08",
+      "environment": "warehouse",
+      "theme": {
+        "sky": 11916770,
+        "fog": 12965849,
+        "ground": 5400931,
+        "wall": 3625316,
+        "accent": 11135933,
+        "warm": 15054977
+      },
+      "cycles": [
+        {
+          "quality": "low",
+          "materials": 43,
+          "geometries": 141,
+          "textures": 9,
+          "uvDelta": 1152,
+          "nonWarehouseExact": false,
+          "surfaces": [
+            {
+              "kind": "concrete",
+              "size": 128,
+              "filters": [
+                [
+                  1006,
+                  1008,
+                  1
+                ],
+                [
+                  1006,
+                  1008,
+                  1
+                ],
+                [
+                  1006,
+                  1008,
+                  1
+                ]
+              ]
+            },
+            {
+              "kind": "painted-steel",
+              "size": 128,
+              "filters": [
+                [
+                  1006,
+                  1008,
+                  1
+                ],
+                [
+                  1006,
+                  1008,
+                  1
+                ],
+                [
+                  1006,
+                  1008,
+                  1
+                ]
+              ]
+            },
+            {
+              "kind": "storage-steel",
+              "size": 128,
+              "filters": [
+                [
+                  1006,
+                  1008,
+                  1
+                ],
+                [
+                  1006,
+                  1008,
+                  1
+                ],
+                [
+                  1006,
+                  1008,
+                  1
+                ]
+              ]
+            }
+          ]
+        },
+        {
+          "quality": "balanced",
+          "materials": 43,
+          "geometries": 141,
+          "textures": 9,
+          "uvDelta": 1152,
+          "nonWarehouseExact": false,
+          "surfaces": [
+            {
+              "kind": "concrete",
+              "size": 256,
+              "filters": [
+                [
+                  1006,
+                  1008,
+                  4
+                ],
+                [
+                  1006,
+                  1008,
+                  4
+                ],
+                [
+                  1006,
+                  1008,
+                  4
+                ]
+              ]
+            },
+            {
+              "kind": "painted-steel",
+              "size": 256,
+              "filters": [
+                [
+                  1006,
+                  1008,
+                  4
+                ],
+                [
+                  1006,
+                  1008,
+                  4
+                ],
+                [
+                  1006,
+                  1008,
+                  4
+                ]
+              ]
+            },
+            {
+              "kind": "storage-steel",
+              "size": 256,
+              "filters": [
+                [
+                  1006,
+                  1008,
+                  4
+                ],
+                [
+                  1006,
+                  1008,
+                  4
+                ],
+                [
+                  1006,
+                  1008,
+                  4
+                ]
+              ]
+            }
+          ]
+        },
+        {
+          "quality": "high",
+          "materials": 43,
+          "geometries": 141,
+          "textures": 9,
+          "uvDelta": 1152,
+          "nonWarehouseExact": false,
+          "surfaces": [
+            {
+              "kind": "concrete",
+              "size": 512,
+              "filters": [
+                [
+                  1006,
+                  1008,
+                  8
+                ],
+                [
+                  1006,
+                  1008,
+                  8
+                ],
+                [
+                  1006,
+                  1008,
+                  8
+                ]
+              ]
+            },
+            {
+              "kind": "painted-steel",
+              "size": 512,
+              "filters": [
+                [
+                  1006,
+                  1008,
+                  8
+                ],
+                [
+                  1006,
+                  1008,
+                  8
+                ],
+                [
+                  1006,
+                  1008,
+                  8
+                ]
+              ]
+            },
+            {
+              "kind": "storage-steel",
+              "size": 512,
+              "filters": [
+                [
+                  1006,
+                  1008,
+                  8
+                ],
+                [
+                  1006,
+                  1008,
+                  8
+                ],
+                [
+                  1006,
+                  1008,
+                  8
+                ]
+              ]
+            }
+          ]
+        },
+        {
+          "quality": "balanced",
+          "materials": 43,
+          "geometries": 141,
+          "textures": 9,
+          "uvDelta": 1152,
+          "nonWarehouseExact": false,
+          "surfaces": [
+            {
+              "kind": "concrete",
+              "size": 256,
+              "filters": [
+                [
+                  1006,
+                  1008,
+                  4
+                ],
+                [
+                  1006,
+                  1008,
+                  4
+                ],
+                [
+                  1006,
+                  1008,
+                  4
+                ]
+              ]
+            },
+            {
+              "kind": "painted-steel",
+              "size": 256,
+              "filters": [
+                [
+                  1006,
+                  1008,
+                  4
+                ],
+                [
+                  1006,
+                  1008,
+                  4
+                ],
+                [
+                  1006,
+                  1008,
+                  4
+                ]
+              ]
+            },
+            {
+              "kind": "storage-steel",
+              "size": 256,
+              "filters": [
+                [
+                  1006,
+                  1008,
+                  4
+                ],
+                [
+                  1006,
+                  1008,
+                  4
+                ],
+                [
+                  1006,
+                  1008,
+                  4
+                ]
+              ]
+            }
+          ]
+        },
+        {
+          "quality": "low",
+          "materials": 43,
+          "geometries": 141,
+          "textures": 9,
+          "uvDelta": 1152,
+          "nonWarehouseExact": false,
+          "surfaces": [
+            {
+              "kind": "concrete",
+              "size": 128,
+              "filters": [
+                [
+                  1006,
+                  1008,
+                  1
+                ],
+                [
+                  1006,
+                  1008,
+                  1
+                ],
+                [
+                  1006,
+                  1008,
+                  1
+                ]
+              ]
+            },
+            {
+              "kind": "painted-steel",
+              "size": 128,
+              "filters": [
+                [
+                  1006,
+                  1008,
+                  1
+                ],
+                [
+                  1006,
+                  1008,
+                  1
+                ],
+                [
+                  1006,
+                  1008,
+                  1
+                ]
+              ]
+            },
+            {
+              "kind": "storage-steel",
+              "size": 128,
+              "filters": [
+                [
+                  1006,
+                  1008,
+                  1
+                ],
+                [
+                  1006,
+                  1008,
+                  1
+                ],
+                [
+                  1006,
+                  1008,
+                  1
+                ]
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "courseId": "beginner-38",
+      "environment": "warehouse",
+      "theme": {
+        "sky": 2306888,
+        "fog": 3425879,
+        "ground": 3358796,
+        "wall": 3425879,
+        "accent": 6743772,
+        "warm": 15838837
+      },
+      "cycles": [
+        {
+          "quality": "low",
+          "materials": 46,
+          "geometries": 162,
+          "textures": 9,
+          "uvDelta": 1152,
+          "nonWarehouseExact": false,
+          "surfaces": [
+            {
+              "kind": "concrete",
+              "size": 64,
+              "filters": [
+                [
+                  1003,
+                  1004,
+                  1
+                ],
+                [
+                  1003,
+                  1004,
+                  1
+                ],
+                [
+                  1003,
+                  1004,
+                  1
+                ]
+              ]
+            },
+            {
+              "kind": "painted-steel",
+              "size": 64,
+              "filters": [
+                [
+                  1003,
+                  1004,
+                  1
+                ],
+                [
+                  1003,
+                  1004,
+                  1
+                ],
+                [
+                  1003,
+                  1004,
+                  1
+                ]
+              ]
+            },
+            {
+              "kind": "storage-steel",
+              "size": 64,
+              "filters": [
+                [
+                  1003,
+                  1004,
+                  1
+                ],
+                [
+                  1003,
+                  1004,
+                  1
+                ],
+                [
+                  1003,
+                  1004,
+                  1
+                ]
+              ]
+            }
+          ]
+        },
+        {
+          "quality": "balanced",
+          "materials": 46,
+          "geometries": 162,
+          "textures": 9,
+          "uvDelta": 1152,
+          "nonWarehouseExact": false,
+          "surfaces": [
+            {
+              "kind": "concrete",
+              "size": 64,
+              "filters": [
+                [
+                  1003,
+                  1004,
+                  1
+                ],
+                [
+                  1003,
+                  1004,
+                  1
+                ],
+                [
+                  1003,
+                  1004,
+                  1
+                ]
+              ]
+            },
+            {
+              "kind": "painted-steel",
+              "size": 64,
+              "filters": [
+                [
+                  1003,
+                  1004,
+                  1
+                ],
+                [
+                  1003,
+                  1004,
+                  1
+                ],
+                [
+                  1003,
+                  1004,
+                  1
+                ]
+              ]
+            },
+            {
+              "kind": "storage-steel",
+              "size": 64,
+              "filters": [
+                [
+                  1003,
+                  1004,
+                  1
+                ],
+                [
+                  1003,
+                  1004,
+                  1
+                ],
+                [
+                  1003,
+                  1004,
+                  1
+                ]
+              ]
+            }
+          ]
+        },
+        {
+          "quality": "high",
+          "materials": 46,
+          "geometries": 162,
+          "textures": 9,
+          "uvDelta": 1152,
+          "nonWarehouseExact": false,
+          "surfaces": [
+            {
+              "kind": "concrete",
+              "size": 64,
+              "filters": [
+                [
+                  1003,
+                  1004,
+                  1
+                ],
+                [
+                  1003,
+                  1004,
+                  1
+                ],
+                [
+                  1003,
+                  1004,
+                  1
+                ]
+              ]
+            },
+            {
+              "kind": "painted-steel",
+              "size": 64,
+              "filters": [
+                [
+                  1003,
+                  1004,
+                  1
+                ],
+                [
+                  1003,
+                  1004,
+                  1
+                ],
+                [
+                  1003,
+                  1004,
+                  1
+                ]
+              ]
+            },
+            {
+              "kind": "storage-steel",
+              "size": 64,
+              "filters": [
+                [
+                  1003,
+                  1004,
+                  1
+                ],
+                [
+                  1003,
+                  1004,
+                  1
+                ],
+                [
+                  1003,
+                  1004,
+                  1
+                ]
+              ]
+            }
+          ]
+        },
+        {
+          "quality": "balanced",
+          "materials": 46,
+          "geometries": 162,
+          "textures": 9,
+          "uvDelta": 1152,
+          "nonWarehouseExact": false,
+          "surfaces": [
+            {
+              "kind": "concrete",
+              "size": 64,
+              "filters": [
+                [
+                  1003,
+                  1004,
+                  1
+                ],
+                [
+                  1003,
+                  1004,
+                  1
+                ],
+                [
+                  1003,
+                  1004,
+                  1
+                ]
+              ]
+            },
+            {
+              "kind": "painted-steel",
+              "size": 64,
+              "filters": [
+                [
+                  1003,
+                  1004,
+                  1
+                ],
+                [
+                  1003,
+                  1004,
+                  1
+                ],
+                [
+                  1003,
+                  1004,
+                  1
+                ]
+              ]
+            },
+            {
+              "kind": "storage-steel",
+              "size": 64,
+              "filters": [
+                [
+                  1003,
+                  1004,
+                  1
+                ],
+                [
+                  1003,
+                  1004,
+                  1
+                ],
+                [
+                  1003,
+                  1004,
+                  1
+                ]
+              ]
+            }
+          ]
+        },
+        {
+          "quality": "low",
+          "materials": 46,
+          "geometries": 162,
+          "textures": 9,
+          "uvDelta": 1152,
+          "nonWarehouseExact": false,
+          "surfaces": [
+            {
+              "kind": "concrete",
+              "size": 64,
+              "filters": [
+                [
+                  1003,
+                  1004,
+                  1
+                ],
+                [
+                  1003,
+                  1004,
+                  1
+                ],
+                [
+                  1003,
+                  1004,
+                  1
+                ]
+              ]
+            },
+            {
+              "kind": "painted-steel",
+              "size": 64,
+              "filters": [
+                [
+                  1003,
+                  1004,
+                  1
+                ],
+                [
+                  1003,
+                  1004,
+                  1
+                ],
+                [
+                  1003,
+                  1004,
+                  1
+                ]
+              ]
+            },
+            {
+              "kind": "storage-steel",
+              "size": 64,
+              "filters": [
+                [
+                  1003,
+                  1004,
+                  1
+                ],
+                [
+                  1003,
+                  1004,
+                  1
+                ],
+                [
+                  1003,
+                  1004,
+                  1
+                ]
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "courseId": "beginner-38",
+      "environment": "warehouse",
+      "theme": {
+        "sky": 11916770,
+        "fog": 12965849,
+        "ground": 5400931,
+        "wall": 3625316,
+        "accent": 11135933,
+        "warm": 15054977
+      },
+      "cycles": [
+        {
+          "quality": "low",
+          "materials": 46,
+          "geometries": 162,
+          "textures": 9,
+          "uvDelta": 1152,
+          "nonWarehouseExact": false,
+          "surfaces": [
+            {
+              "kind": "concrete",
+              "size": 128,
+              "filters": [
+                [
+                  1006,
+                  1008,
+                  1
+                ],
+                [
+                  1006,
+                  1008,
+                  1
+                ],
+                [
+                  1006,
+                  1008,
+                  1
+                ]
+              ]
+            },
+            {
+              "kind": "painted-steel",
+              "size": 128,
+              "filters": [
+                [
+                  1006,
+                  1008,
+                  1
+                ],
+                [
+                  1006,
+                  1008,
+                  1
+                ],
+                [
+                  1006,
+                  1008,
+                  1
+                ]
+              ]
+            },
+            {
+              "kind": "storage-steel",
+              "size": 128,
+              "filters": [
+                [
+                  1006,
+                  1008,
+                  1
+                ],
+                [
+                  1006,
+                  1008,
+                  1
+                ],
+                [
+                  1006,
+                  1008,
+                  1
+                ]
+              ]
+            }
+          ]
+        },
+        {
+          "quality": "balanced",
+          "materials": 46,
+          "geometries": 162,
+          "textures": 9,
+          "uvDelta": 1152,
+          "nonWarehouseExact": false,
+          "surfaces": [
+            {
+              "kind": "concrete",
+              "size": 256,
+              "filters": [
+                [
+                  1006,
+                  1008,
+                  4
+                ],
+                [
+                  1006,
+                  1008,
+                  4
+                ],
+                [
+                  1006,
+                  1008,
+                  4
+                ]
+              ]
+            },
+            {
+              "kind": "painted-steel",
+              "size": 256,
+              "filters": [
+                [
+                  1006,
+                  1008,
+                  4
+                ],
+                [
+                  1006,
+                  1008,
+                  4
+                ],
+                [
+                  1006,
+                  1008,
+                  4
+                ]
+              ]
+            },
+            {
+              "kind": "storage-steel",
+              "size": 256,
+              "filters": [
+                [
+                  1006,
+                  1008,
+                  4
+                ],
+                [
+                  1006,
+                  1008,
+                  4
+                ],
+                [
+                  1006,
+                  1008,
+                  4
+                ]
+              ]
+            }
+          ]
+        },
+        {
+          "quality": "high",
+          "materials": 46,
+          "geometries": 162,
+          "textures": 9,
+          "uvDelta": 1152,
+          "nonWarehouseExact": false,
+          "surfaces": [
+            {
+              "kind": "concrete",
+              "size": 512,
+              "filters": [
+                [
+                  1006,
+                  1008,
+                  8
+                ],
+                [
+                  1006,
+                  1008,
+                  8
+                ],
+                [
+                  1006,
+                  1008,
+                  8
+                ]
+              ]
+            },
+            {
+              "kind": "painted-steel",
+              "size": 512,
+              "filters": [
+                [
+                  1006,
+                  1008,
+                  8
+                ],
+                [
+                  1006,
+                  1008,
+                  8
+                ],
+                [
+                  1006,
+                  1008,
+                  8
+                ]
+              ]
+            },
+            {
+              "kind": "storage-steel",
+              "size": 512,
+              "filters": [
+                [
+                  1006,
+                  1008,
+                  8
+                ],
+                [
+                  1006,
+                  1008,
+                  8
+                ],
+                [
+                  1006,
+                  1008,
+                  8
+                ]
+              ]
+            }
+          ]
+        },
+        {
+          "quality": "balanced",
+          "materials": 46,
+          "geometries": 162,
+          "textures": 9,
+          "uvDelta": 1152,
+          "nonWarehouseExact": false,
+          "surfaces": [
+            {
+              "kind": "concrete",
+              "size": 256,
+              "filters": [
+                [
+                  1006,
+                  1008,
+                  4
+                ],
+                [
+                  1006,
+                  1008,
+                  4
+                ],
+                [
+                  1006,
+                  1008,
+                  4
+                ]
+              ]
+            },
+            {
+              "kind": "painted-steel",
+              "size": 256,
+              "filters": [
+                [
+                  1006,
+                  1008,
+                  4
+                ],
+                [
+                  1006,
+                  1008,
+                  4
+                ],
+                [
+                  1006,
+                  1008,
+                  4
+                ]
+              ]
+            },
+            {
+              "kind": "storage-steel",
+              "size": 256,
+              "filters": [
+                [
+                  1006,
+                  1008,
+                  4
+                ],
+                [
+                  1006,
+                  1008,
+                  4
+                ],
+                [
+                  1006,
+                  1008,
+                  4
+                ]
+              ]
+            }
+          ]
+        },
+        {
+          "quality": "low",
+          "materials": 46,
+          "geometries": 162,
+          "textures": 9,
+          "uvDelta": 1152,
+          "nonWarehouseExact": false,
+          "surfaces": [
+            {
+              "kind": "concrete",
+              "size": 128,
+              "filters": [
+                [
+                  1006,
+                  1008,
+                  1
+                ],
+                [
+                  1006,
+                  1008,
+                  1
+                ],
+                [
+                  1006,
+                  1008,
+                  1
+                ]
+              ]
+            },
+            {
+              "kind": "painted-steel",
+              "size": 128,
+              "filters": [
+                [
+                  1006,
+                  1008,
+                  1
+                ],
+                [
+                  1006,
+                  1008,
+                  1
+                ],
+                [
+                  1006,
+                  1008,
+                  1
+                ]
+              ]
+            },
+            {
+              "kind": "storage-steel",
+              "size": 128,
+              "filters": [
+                [
+                  1006,
+                  1008,
+                  1
+                ],
+                [
+                  1006,
+                  1008,
+                  1
+                ],
+                [
+                  1006,
+                  1008,
+                  1
+                ]
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "scope": "CPU functional qualification of actual Three.js objects and extracted production renderer helpers; no WebGL, FPS or hardware claim."
+}
