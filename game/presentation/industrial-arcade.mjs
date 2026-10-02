@@ -3,7 +3,7 @@ import { TEAM_RUNTIME_IMAGE_SLOTS } from './team-runtime-slots.mjs';
 import {
   getThemeFamily,
   getInterfaceTheme,
-  BUILTIN_THEME_FAMILIES,
+  INSTALLED_THEME_FAMILIES,
   resolveThemeFamilySelection,
 } from './theme-system.mjs';
 import { INDUSTRIAL_BUILTIN_SPRITES } from './industrial-arcade-builtins.mjs';
@@ -21,20 +21,22 @@ export const INDUSTRIAL_ARCADE_COLLECTION = Object.freeze({
     source: 'industrial-arcade.mjs: bolted enamel, brushed steel and oxidized seams',
   }),
 });
-const collections = BUILTIN_THEME_FAMILIES.filter((family) => family.arcade).map((family) =>
-  family.id === 'industrial-workshop'
-    ? Object.freeze({ ...INDUSTRIAL_ARCADE_COLLECTION, revision: 'r2' })
-    : Object.freeze({
-        ...INDUSTRIAL_ARCADE_COLLECTION,
-        id: family.id,
-        provenance: Object.freeze({
-          author: 'RevealLine',
-          license: 'project-original',
-          source: `${family.id}: semantic pixel material masks`,
+const collections = INSTALLED_THEME_FAMILIES.filter((family) => family.arcade).map((family) =>
+  family.id === 'industrial-workshop' && family.arcade.revision === 'r1'
+    ? INDUSTRIAL_ARCADE_COLLECTION
+    : family.id === 'industrial-workshop'
+      ? Object.freeze({ ...INDUSTRIAL_ARCADE_COLLECTION, revision: family.arcade.revision })
+      : Object.freeze({
+          ...INDUSTRIAL_ARCADE_COLLECTION,
+          id: family.id,
+          revision: family.arcade.revision,
+          provenance: Object.freeze({
+            author: 'RevealLine',
+            license: 'project-original',
+            source: `${family.id}: semantic pixel material masks`,
+          }),
         }),
-      }),
 );
-collections.push(INDUSTRIAL_ARCADE_COLLECTION);
 export function getArcadeCollection(id, revision) {
   return (
     collections.find((entry) => entry.id === id && (!revision || entry.revision === revision)) ??
@@ -69,11 +71,27 @@ const materialColors = {
   green: '#bed7a4',
   earth: '#777348',
 };
+function interfaceFor(collection) {
+  const family = INSTALLED_THEME_FAMILIES.find(
+    (entry) => entry.arcade?.id === collection.id && entry.arcade.revision === collection.revision,
+  );
+  if (!family) throw new TypeError('Unavailable Arcade collection revision.');
+  return getInterfaceTheme(family.interface.id, family.interface.revision);
+}
+const newFinish = (collection) =>
+  ['pocket-lcd', 'copper-observatory', 'sakura-station'].includes(collection.id) ||
+  (collection.id === 'vyshyvanka' && collection.revision === 'r2');
 function colorsFor(collection) {
   if (collection.id === 'industrial-workshop' && collection.revision === 'r1')
     return materialColors;
-  const t = getInterfaceTheme(collection.id).tokens;
-  const light = ['dnipro-porcelain', 'windows-classic', 'orchard-workshop'].includes(collection.id);
+  const t = interfaceFor(collection).tokens;
+  const light = [
+    'dnipro-porcelain',
+    'windows-classic',
+    'orchard-workshop',
+    'pocket-lcd',
+    'sakura-station',
+  ].includes(collection.id);
   return {
     ...materialColors,
     ink: light ? t.text : t.ink,
@@ -85,19 +103,20 @@ function colorsFor(collection) {
     white: t.text,
     amber: t.accent,
     earth: light ? t.line : t.panelRaised,
+    ...(newFinish(collection) ? { cyan: t.controlLine, danger: t.hazard, green: t.safe } : {}),
   };
 }
 function paletteFor(collection) {
   if (collection.id === 'industrial-workshop' && collection.revision === 'r1')
     return INDUSTRIAL_ARCADE_PALETTE;
-  const t = getInterfaceTheme(collection.id).tokens;
+  const t = interfaceFor(collection).tokens;
   return Object.freeze({
     ink: t.text,
     paper: t.ink,
     muted: t.muted,
     accent: t.accent,
-    safe: '#79bfb1',
-    danger: '#ef917e',
+    safe: newFinish(collection) ? t.safe : '#79bfb1',
+    danger: newFinish(collection) ? t.hazard : '#ef917e',
     field: t.panel,
     grid: t.line,
     sky: t.panelRaised,
@@ -173,6 +192,11 @@ export function industrialTexturePixels(
           delta = (y + Math.floor(Math.sin(x / 5))) % 6 === 0 ? -11 : 3;
         else if (recipe === 'neon-ruins')
           delta = x % 12 === 2 && y % 12 < 4 ? 23 : (x + y) % 9 === 0 ? -6 : 0;
+        else if (recipe === 'pocket-lcd') delta = (x + y) % 2 === 0 ? 3 : -3;
+        else if (recipe === 'copper-observatory')
+          delta = x % 12 === 3 && y % 12 < 5 ? 13 : y % 8 === 6 ? -8 : 0;
+        else if (recipe === 'sakura-station')
+          delta = y % 12 === 4 && (x % 12 === 3 || x % 12 === 7) ? -10 : 2;
         else if (tile && y % 8 === 6) delta = -13;
         else if (x % 8 === 2 && y % 8 === 2) delta = 19;
         else if ((x + 2 * y) % 11 === 0) delta = -7;

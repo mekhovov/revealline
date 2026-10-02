@@ -1,7 +1,7 @@
 import { t, localizedText, localizedAttribute } from '../i18n/index.mjs';
-import { BUILTIN_THEME_FAMILIES, getInterfaceTheme } from '../presentation/theme-system.mjs';
+import { BUILTIN_THEME_FAMILIES } from '../presentation/theme-system.mjs';
 
-/** One appearance choice; previews never write preferences or restart a flight. */
+/** One immediate appearance choice; the host owns atomic loads and flight boundaries. */
 export function attachThemeFamilyControls({
   document: doc,
   root,
@@ -48,67 +48,87 @@ export function attachThemeFamilyControls({
     controls.set(key, input);
     return input;
   };
-  const family = select('familyId', [
-    ['follow-game', 'followContext'],
-    ...BUILTIN_THEME_FAMILIES.map((value) => [value.id, `theme.${value.id}`]),
-  ]);
+  const family = select('familyId', []);
   const gallery = doc.createElement('div');
   gallery.className = 'theme-gallery';
   gallery.setAttribute('role', 'group');
   localizedAttribute(gallery, 'aria-label', () => t('interface:workshop.previewThemes'));
   group.append(gallery);
-  let committed = host.preferences.snapshot().familyId,
-    draft = committed;
-  const renderDraft = () => {
-    family.value = draft;
-    for (const [id, card] of cards) card.setAttribute('aria-pressed', String(id === draft));
-  };
-  for (const item of BUILTIN_THEME_FAMILIES.filter((value) => value.id !== 'legacy')) {
-    const source = getInterfaceTheme(item.interface.id, item.interface.revision),
-      button = doc.createElement('button');
-    button.type = 'button';
-    button.id = `${prefix}theme-card-${item.id}`;
-    button.className = 'theme-preview-card';
-    button.setAttribute('data-theme-preview', item.id);
-    const title = doc.createElement('strong');
-    text(title, `theme.${item.id}`);
-    const swatches = doc.createElement('span');
-    swatches.className = 'theme-preview-swatches';
-    swatches.setAttribute('aria-hidden', 'true');
-    for (const role of ['ink', 'panel', 'text', 'accent']) {
-      const chip = doc.createElement('span');
-      chip.style.setProperty('background-color', source.tokens[role]);
-      swatches.append(chip);
-    }
-    const description = doc.createElement('small');
-    text(description, `description.${item.id}`);
-    button.append(swatches, title, description);
-    gallery.append(button);
-    cards.set(item.id, button);
-    const choose = () => {
-      draft = item.id;
-      renderDraft();
-    };
-    button.addEventListener('click', choose);
-    release.push(() => button.removeEventListener('click', choose));
-  }
-  const chooseFamily = () => {
-    draft = family.value;
-    renderDraft();
-  };
+  const builtinIds = new Set(BUILTIN_THEME_FAMILIES.map((item) => item.id));
+  const choose = (id) => host.applyComplete(id);
+  const chooseFamily = () => choose(family.value);
   family.addEventListener('change', chooseFamily);
   release.push(() => family.removeEventListener('change', chooseFamily));
-  const apply = doc.createElement('button');
-  apply.type = 'button';
-  apply.id = `${prefix}theme-apply`;
-  apply.className = 'primary';
-  text(apply, 'applyComplete');
-  group.append(apply);
-  const applyChoice = () => {
-    host.applyComplete(draft);
+  const syncChoices = () => {
+    const choices = host.availableThemeChoices();
+    const known = new Set(choices.map((item) => item.id));
+    for (const [id, card] of cards) {
+      if (known.has(id)) continue;
+      card.stop();
+      card.button.remove();
+      card.option.remove();
+      cards.delete(id);
+    }
+    for (const [index, item] of choices.entries()) {
+      let card = cards.get(item.id);
+      if (!card) {
+        const option = doc.createElement('option'),
+          button = doc.createElement('button'),
+          title = doc.createElement('strong'),
+          swatches = doc.createElement('span'),
+          description = doc.createElement('small');
+        option.value = item.id;
+        button.type = 'button';
+        button.id = `${prefix}theme-card-${item.id}`;
+        button.className = 'theme-preview-card';
+        button.setAttribute('data-theme-preview', item.id);
+        swatches.className = 'theme-preview-swatches';
+        swatches.setAttribute('aria-hidden', 'true');
+        button.append(swatches, title, description);
+        const activate = () => choose(item.id);
+        button.addEventListener('click', activate);
+        card = {
+          option,
+          button,
+          title,
+          swatches,
+          description,
+          stop: () => button.removeEventListener('click', activate),
+        };
+        cards.set(item.id, card);
+      }
+      // Stable nodes preserve keyboard/controller focus through loading, status
+      // updates and accessibility changes; only changed inventories move nodes.
+      if (family.children[index] !== card.option)
+        family.insertBefore(card.option, family.children[index] ?? null);
+      if (gallery.children[index] !== card.button)
+        gallery.insertBefore(card.button, gallery.children[index] ?? null);
+      const label = () =>
+        item.id === 'follow-game'
+          ? t('interface:workshop.followContext')
+          : builtinIds.has(item.id)
+            ? t(`interface:workshop.theme.${item.id}`)
+            : `${item.family.name} · ${item.family.revision}`;
+      localizedText(card.option, label);
+      localizedText(card.title, label);
+      localizedText(card.description, () =>
+        builtinIds.has(item.id) || item.id === 'follow-game'
+          ? t(`interface:workshop.description.${item.id}`)
+          : t('interface:workshop.description.curated', { revision: item.family.revision }),
+      );
+      const tokens = item.interfaceTheme?.tokens ?? {},
+        colors = ['ink', 'panel', 'text', 'accent'].map((role) => tokens[role]);
+      if (card.colors !== JSON.stringify(colors)) {
+        card.colors = JSON.stringify(colors);
+        card.swatches.replaceChildren();
+        for (const color of colors) {
+          const chip = doc.createElement('span');
+          chip.style.setProperty('background-color', color ?? 'currentColor');
+          card.swatches.append(chip);
+        }
+      }
+    }
   };
-  apply.addEventListener('click', applyChoice);
-  release.push(() => apply.removeEventListener('click', applyChoice));
   const customization = doc.createElement('details'),
     summary = doc.createElement('summary');
   summary.id = `${prefix}theme-customize`;
@@ -171,19 +191,10 @@ export function attachThemeFamilyControls({
   if (legacyRow?.parentElement === root && root.insertBefore) root.insertBefore(group, legacyRow);
   else root.append(group);
   const render = (state) => {
-    const known = new Set(BUILTIN_THEME_FAMILIES.map((item) => item.id));
-    for (const option of [...family.options]) if (option.dataset.curatedTheme) option.remove();
-    for (const item of host.availableFamilies?.() ?? []) {
-      if (known.has(item.id)) continue;
-      const option = doc.createElement('option');
-      option.value = item.id;
-      option.dataset.curatedTheme = 'true';
-      option.textContent = `${item.name} · ${item.revision}`;
-      family.append(option);
-    }
-    if (state.familyId !== committed) draft = state.familyId;
-    committed = state.familyId;
-    renderDraft();
+    syncChoices();
+    family.value = state.familyId;
+    for (const [id, card] of cards)
+      card.button.setAttribute('aria-pressed', String(id === state.familyId));
     for (const [key, input] of controls)
       if (key !== 'familyId') {
         if (input.type === 'checkbox') input.checked = state[key];
@@ -201,6 +212,7 @@ export function attachThemeFamilyControls({
   return {
     dispose() {
       release.forEach((stop) => stop());
+      for (const card of cards.values()) card.stop();
       group.remove();
       hiddenRows.forEach(([label, hidden]) => {
         label.hidden = hidden;

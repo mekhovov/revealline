@@ -1764,6 +1764,67 @@ const collectionSources = {
       },
     ),
   },
+  'pocket-lcd': {
+    pattern: 'lcd',
+    ornament: 0x35452b,
+    paper: 0xdce7b8,
+    materials: themedMaterials(
+      {
+        steel: 0x7c8961,
+        rubber: 0x29372b,
+        copper: 0x96a475,
+        concrete: 0x9aab7e,
+        enamel: 0xbacb91,
+        timber: 0x788563,
+        grass: 0x627b4e,
+      },
+      Object.fromEntries(
+        SIM_MATERIAL_ROLES.map((role) => [role, { roughness: 0.96, metalness: 0 }]),
+      ),
+    ),
+  },
+  'copper-observatory': {
+    pattern: 'copper',
+    ornament: 0xe1a06a,
+    paper: 0xf2e6d3,
+    materials: themedMaterials(
+      {
+        steel: 0x405b60,
+        rubber: 0x202c31,
+        copper: 0xb97f52,
+        concrete: 0x718184,
+        enamel: 0x315b64,
+        timber: 0x82705c,
+        grass: 0x59776d,
+      },
+      {
+        copper: { roughness: 0.48, metalness: 0.72 },
+        steel: { roughness: 0.7, metalness: 0.4 },
+        enamel: { roughness: 0.6, metalness: 0.18 },
+      },
+    ),
+  },
+  'sakura-station': {
+    pattern: 'sakura',
+    ornament: 0xa42e48,
+    paper: 0xf8eee6,
+    materials: themedMaterials(
+      {
+        steel: 0xaaa0a2,
+        rubber: 0x493741,
+        copper: 0xab8478,
+        concrete: 0xbeb0a4,
+        enamel: 0xeddacf,
+        timber: 0x92796d,
+        grass: 0x7b9272,
+      },
+      {
+        steel: { roughness: 0.58, metalness: 0.26 },
+        enamel: { roughness: 0.4, metalness: 0.02 },
+        copper: { roughness: 0.54, metalness: 0.45 },
+      },
+    ),
+  },
 };
 export const SIM_VISUAL_COLLECTIONS = Object.freeze(
   Object.fromEntries(
@@ -1865,6 +1926,29 @@ function familySurface(pattern, role, x, y, grain) {
     }
     if (role === 'timber') shade *= u < 2 ? 0.67 : 1;
     if (role === 'rubber') shade *= x % 8 < 4 === y % 8 < 4 ? 1.04 : 0.97;
+  } else if (pattern === 'lcd') {
+    // Broad moulded housings and inset display surrounds, never simulated scanlines.
+    if (solid) {
+      shade *= edge < 3 ? 0.79 : edge < 5 ? 1.05 : 1;
+      if (role === 'enamel' && u > 11 && u < 52 && v > 15 && v < 49)
+        shade *= u < 15 || u > 48 || v < 19 || v > 45 ? 0.78 : 0.96;
+    }
+  } else if (pattern === 'copper') {
+    // Sparse engraved arcs near joins keep the centre of instrument plates quiet.
+    if (solid) {
+      shade *= edge < 2 ? 0.76 : 0.98 + surfaceMottle(x, y) * 0.035;
+      const radius = Math.hypot(u - 7, v - 7);
+      if (role === 'enamel' && u < 25 && v < 25 && radius > 13 && radius < 15) mark = 1;
+      if (role === 'copper') shade *= 0.99 + Math.sin(y * 0.098) * 0.025;
+    }
+  } else if (pattern === 'sakura') {
+    // A small four-petal corner stamp on matte ceramic; no repeated field pattern.
+    if (solid) {
+      shade *= edge < 2 ? 0.86 : 1 + Math.sin(x * 0.049) * 0.01;
+      const petalX = Math.abs(u - 12),
+        petalY = Math.abs(v - 12);
+      if (role === 'enamel' && petalX + petalY < 8 && Math.abs(petalX - petalY) > 2) mark = 1;
+    }
   } else if (pattern === 'etched') {
     if (solid) {
       shade *= edge < 3 ? 0.67 : 1;

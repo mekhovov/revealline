@@ -179,6 +179,15 @@ const RETAINED_THEME_FAMILIES = freeze([
     arcade: { id: 'industrial-workshop', revision: 'r1' },
     sim: { id: 'industrial-workshop', revision: 'r1' },
   },
+  {
+    format: 'ThemeFamily.v1',
+    id: 'vyshyvanka',
+    revision: 'r1',
+    name: 'Vyshyvanka',
+    interface: { id: 'vyshyvanka', revision: 'r1' },
+    arcade: { id: 'vyshyvanka', revision: 'r1' },
+    sim: { id: 'vyshyvanka', revision: 'r1' },
+  },
 ]);
 // Source palettes are adapted into explicit semantic pairs; ANSI slots are never game roles.
 export const derivePairedThemeTokens = (tokens) => {
@@ -207,9 +216,15 @@ const productionTheme = (
   id,
   name,
   colors,
-  { texture = true, surface = 'bevel', revision = 'r1', source = 'original-materials-v2' } = {},
+  {
+    texture = true,
+    surface = 'bevel',
+    revision = 'r1',
+    source = 'original-materials-v2',
+    focus,
+  } = {},
 ) => ({
-  ...theme(id, name, derivePairedThemeTokens(colors), texture),
+  ...theme(id, name, { ...derivePairedThemeTokens(colors), ...(focus ? { focus } : {}) }, texture),
   format: 'InterfaceTheme.v2',
   revision,
   surface,
@@ -222,13 +237,36 @@ const productionTheme = (
     dos: 'terminal',
     'orchard-workshop': 'wood',
     'neon-ruins': 'composite',
+    'pocket-lcd': 'lcd',
+    'copper-observatory': 'copper',
+    'sakura-station': 'sakura',
   }[id],
   provenance: { author: 'RevealLine', license: 'project-original', source },
 });
 const ukrainianSource = (name) =>
   `swarmshared/da1c1f3c4b985ead2b8d306c9d883cb0dbcd1521/themes/palettes/${name}.json; original game adaptation`;
+const RETAINED_PRODUCTION_INTERFACE_THEMES = freeze([
+  productionTheme(
+    'vyshyvanka',
+    'Vyshyvanka',
+    {
+      ink: '#0f0f12',
+      panel: '#1a1a20',
+      panelRaised: '#2a2a35',
+      text: '#e0dcd0',
+      muted: '#b8b4a8',
+      line: '#5d4a4a',
+      controlLine: '#cfac9d',
+      accent: '#f48686',
+      amber: '#ecc17a',
+      hazard: '#ffb099',
+      safe: '#b8d69c',
+    },
+    { source: ukrainianSource('vyshyvanka') },
+  ),
+]);
 export const BUILTIN_INTERFACE_THEMES = freeze([
-  RETAINED_INTERFACE_THEMES[0],
+  { ...RETAINED_INTERFACE_THEMES[0], revision: 'r2', name: 'Classic Field Kit' },
   productionTheme(
     'industrial-workshop',
     'Industrial Workshop',
@@ -251,19 +289,23 @@ export const BUILTIN_INTERFACE_THEMES = freeze([
     'vyshyvanka',
     'Vyshyvanka',
     {
-      ink: '#0f0f12',
-      panel: '#1a1a20',
-      panelRaised: '#2a2a35',
-      text: '#e0dcd0',
-      muted: '#b8b4a8',
-      line: '#5d4a4a',
-      controlLine: '#cfac9d',
-      accent: '#f48686',
-      amber: '#ecc17a',
-      hazard: '#ffb099',
-      safe: '#b8d69c',
+      ink: '#08090a',
+      panel: '#121314',
+      panelRaised: '#1c1d1e',
+      text: '#f3eade',
+      muted: '#c5b9ae',
+      line: '#54413d',
+      controlLine: '#867671',
+      accent: '#d3222a',
+      amber: '#deb363',
+      hazard: '#ff9c7e',
+      safe: '#aac989',
     },
-    { source: ukrainianSource('vyshyvanka') },
+    {
+      revision: 'r2',
+      focus: '#d3222a',
+      source: 'Original red-thread/near-black game adaptation; geometric textile motifs only',
+    },
   ),
   productionTheme(
     'dnipro-porcelain',
@@ -363,18 +405,65 @@ export const BUILTIN_INTERFACE_THEMES = freeze([
     hazard: '#f19bac',
     safe: '#aad99b',
   }),
+  productionTheme('pocket-lcd', 'Pocket LCD', {
+    ink: '#dce5bb',
+    panel: '#cbd7a4',
+    panelRaised: '#b9c991',
+    text: '#24321f',
+    muted: '#435236',
+    line: '#82936a',
+    controlLine: '#4a603b',
+    accent: '#324c2a',
+    amber: '#485b2f',
+    hazard: '#445327',
+    safe: '#395033',
+  }),
+  productionTheme('copper-observatory', 'Copper Observatory', {
+    ink: '#09191c',
+    panel: '#102c30',
+    panelRaised: '#1b3d41',
+    text: '#f6ead4',
+    muted: '#c7c1ac',
+    line: '#52666a',
+    controlLine: '#d99767',
+    accent: '#e0a373',
+    amber: '#e9bc76',
+    hazard: '#ffac95',
+    safe: '#aacdae',
+  }),
+  productionTheme('sakura-station', 'Sakura Station', {
+    ink: '#fbf6ef',
+    panel: '#f1e6df',
+    panelRaised: '#fffaf4',
+    text: '#352a39',
+    muted: '#685360',
+    line: '#b9a5ac',
+    controlLine: '#765567',
+    accent: '#9d304b',
+    amber: '#755414',
+    hazard: '#a2302c',
+    safe: '#346344',
+  }),
 ]);
 export const BUILTIN_THEME_FAMILIES = freeze(
   BUILTIN_INTERFACE_THEMES.map((entry) =>
     entry.id === 'legacy'
-      ? RETAINED_THEME_FAMILIES[0]
+      ? {
+          ...RETAINED_THEME_FAMILIES[0],
+          revision: entry.revision,
+          name: entry.name,
+          interface: { id: entry.id, revision: entry.revision },
+        }
       : {
           format: 'ThemeFamily.v1',
           id: entry.id,
           revision: entry.revision,
           name: entry.name,
           interface: { id: entry.id, revision: entry.revision },
-          arcade: { id: entry.id, revision: entry.id === 'industrial-workshop' ? 'r2' : 'r1' },
+          arcade: {
+            id: entry.id,
+            revision: ['industrial-workshop', 'vyshyvanka'].includes(entry.id) ? 'r2' : 'r1',
+          },
           sim: { id: entry.id, revision: 'r1' },
         },
   ),
@@ -445,9 +534,11 @@ export function getThemeFamily(id, revision) {
 }
 export function getInterfaceTheme(id, revision) {
   return (
-    [...BUILTIN_INTERFACE_THEMES, ...RETAINED_INTERFACE_THEMES].find(
-      (item) => item.id === id && (!revision || item.revision === revision),
-    ) ?? null
+    [
+      ...BUILTIN_INTERFACE_THEMES,
+      ...RETAINED_INTERFACE_THEMES,
+      ...RETAINED_PRODUCTION_INTERFACE_THEMES,
+    ].find((item) => item.id === id && (!revision || item.revision === revision)) ?? null
   );
 }
 
@@ -488,9 +579,19 @@ export function validateInterfaceTheme(input) {
     required(colorPattern.test(value.tokens[name]), `Invalid theme color: ${name}`);
   if (value.materialStyle !== undefined)
     required(
-      ['steel', 'linen', 'porcelain', 'brass', 'classic', 'terminal', 'wood', 'composite'].includes(
-        value.materialStyle,
-      ),
+      [
+        'steel',
+        'linen',
+        'porcelain',
+        'brass',
+        'classic',
+        'terminal',
+        'wood',
+        'composite',
+        'lcd',
+        'copper',
+        'sakura',
+      ].includes(value.materialStyle),
       'Invalid material style',
     );
   exactKeys(value.fonts, ['ui', 'mono', 'display'], 'theme fonts');
@@ -773,7 +874,12 @@ export function validatePresentationCoverage(resolved) {
 const canvasFontCache = new WeakMap();
 /** Interface typography is independent from arcade sprite/material selection. */
 export function canvasInterfaceFonts(resolved) {
-  if (!resolved || (resolved.interfaceId === 'legacy' && !resolved.accessibility.highContrast))
+  if (
+    !resolved ||
+    (resolved.interfaceId === 'legacy' &&
+      resolved.revision === 'r1' &&
+      !resolved.accessibility.highContrast)
+  )
     return null;
   required(
     ['ResolvedPresentation.v1', 'ResolvedPresentation.v2'].includes(resolved.format),
@@ -817,7 +923,13 @@ export function applyResolvedPresentation(element, resolved) {
     owned = presentationThemeVariables(resolved);
   const attributes = {
     interfaceTheme: resolved.interfaceId,
-    themeStyled: String(resolved.interfaceId !== 'legacy' || resolved.accessibility.highContrast),
+    // Only the original pinned adapter delegates paint to the former UI skin.
+    // Current Classic Field Kit is a complete, fixed semantic palette.
+    themeStyled: String(
+      resolved.interfaceId !== 'legacy' ||
+        resolved.revision !== 'r1' ||
+        resolved.accessibility.highContrast,
+    ),
     themeFamily: resolved.familyId,
     themeContrast: resolved.accessibility.highContrast ? 'high' : 'normal',
     themeTexture: resolved.textured ? 'on' : 'off',
@@ -1325,7 +1437,63 @@ export const SIM_COLLECTION_PALETTES = freeze({
     accent: 0x67d8ca,
     warm: 0xf17d91,
   },
+  'pocket-lcd': {
+    sky: 0xafbc91,
+    fog: 0xb8c49c,
+    ground: 0x71835d,
+    wall: 0xaebd8f,
+    accent: 0x324c2a,
+    warm: 0xd8e2b2,
+  },
+  'copper-observatory': {
+    sky: 0x647c80,
+    fog: 0x788d8b,
+    ground: 0x606960,
+    wall: 0x24464a,
+    accent: 0xe0a373,
+    warm: 0xeee0bf,
+  },
+  'sakura-station': {
+    sky: 0xd5c7ce,
+    fog: 0xe3d8d7,
+    ground: 0x7f9276,
+    wall: 0xe9dcd5,
+    accent: 0x9d304b,
+    warm: 0xdfb895,
+  },
 });
+const collectionEffectFinishes = {
+  'pocket-lcd': {
+    playerPulse: 0xd8e2b2,
+    hostilePulse: 0x324c2a,
+    ghost: 0x799261,
+    ghostEmissive: 0x34482b,
+    trail: 0x799261,
+    goalComplete: 0x607a46,
+    goalInactive: 0x819572,
+    goalGlowInactive: 0x819572,
+  },
+  'copper-observatory': {
+    playerPulse: 0xb1dbcf,
+    hostilePulse: 0xeb977a,
+    ghost: 0xa2c8c3,
+    ghostEmissive: 0x36595b,
+    trail: 0xa2c8c3,
+    goalComplete: 0xaacdae,
+    goalInactive: 0x879c9b,
+    goalGlowInactive: 0x879c9b,
+  },
+  'sakura-station': {
+    playerPulse: 0x546f5a,
+    hostilePulse: 0xa2302c,
+    ghost: 0x796185,
+    ghostEmissive: 0x44334d,
+    trail: 0x796185,
+    goalComplete: 0x346344,
+    goalInactive: 0x927d88,
+    goalGlowInactive: 0x927d88,
+  },
+};
 export const BUILTIN_SIM_VISUAL_COLLECTIONS = Object.freeze(
   Object.fromEntries(
     [
@@ -1355,6 +1523,7 @@ export const BUILTIN_SIM_VISUAL_COLLECTIONS = Object.freeze(
         materials: materialBindings(id),
         effects: {
           ...workshopEffects,
+          ...collectionEffectFinishes[id],
           goalActive: palette.accent,
           goalGlow: palette.accent,
           goalEmissive: palette.accent,

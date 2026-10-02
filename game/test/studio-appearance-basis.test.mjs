@@ -11,6 +11,7 @@ import { exportThemeBundle, importThemeBundle } from '../presentation/bundle.mjs
 import { exportRuntimeTheme, importRuntimeTheme } from '../presentation/runtime-transfer.mjs';
 import { createThemeCandidate } from '../presentation/theme-preview.mjs';
 import { getThemeFamily } from '../presentation/theme-system.mjs';
+import { installThemeHost } from '../presentation/theme-host.mjs';
 import { createStudioStore } from '../presentation/studio-store.mjs';
 import { memoryIndexedDB } from './helpers/soundtrack-fixtures.mjs';
 import { Document } from './helpers/couch-dom.mjs';
@@ -166,4 +167,57 @@ test('workbench reload shows the saved exact basis, stages changes and visibly b
   assert.ok(document.getElementById('theme-candidate-basis-status').textContent.length > 0);
   assert.equal(source.appearanceBasis.interfaceRevision, 'r999');
   workbench.dispose();
+});
+
+test('Studio chrome lists and immediately applies admitted custom themes without editing the workspace', async () => {
+  const document = new Document(),
+    window = document.defaultView;
+  const header = document.createElement('header');
+  header.className = 'studio-header';
+  document.body.append(header);
+  const source = duplicateStudioSnapshot(createDefaultThemeBundle(), {
+    id: 'community-theme',
+    name: 'Community theme',
+  });
+  const candidate = createThemeCandidate(source);
+  const before = JSON.stringify(source),
+    actions = [],
+    values = new Map();
+  const storage = {
+    getItem: (key) => values.get(key) ?? null,
+    setItem: (key, value) => values.set(key, value),
+  };
+  const host = installThemeHost({
+    document,
+    window,
+    getStorage: () => storage,
+    appearanceThemes: [candidate],
+    prepareStyles: () => Promise.resolve(),
+  });
+  await host.ready;
+  const workbench = mountThemeWorkbench({
+    document,
+    window,
+    onAction: (...args) => actions.push(args),
+  });
+  const input = document.getElementById('studio-theme-family');
+  assert.deepEqual(
+    Array.from(input.children, (option) => option.value),
+    host.availableThemeChoices().map((choice) => choice.id),
+  );
+  assert.equal(
+    Array.from(input.children).find((option) => option.value === candidate.family.id).textContent,
+    `${candidate.family.name} · ${candidate.family.revision}`,
+  );
+  input.focus();
+  input.value = candidate.family.id;
+  input.onchange();
+  await host.ready;
+  assert.equal(host.snapshot().familyId, candidate.family.id);
+  assert.equal(input.value, candidate.family.id);
+  assert.equal(document.activeElement, input);
+  assert.deepEqual(actions, [], 'Changing editor appearance is not an authoring action.');
+  assert.equal(JSON.stringify(source), before);
+  workbench.dispose();
+  host.dispose();
 });

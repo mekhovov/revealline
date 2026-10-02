@@ -369,7 +369,7 @@ test('specimen collections bind the same model roles and geometry to distinct ma
     palettes.add(collection.materials.steel.color);
     disposeSimVisualGroup(group);
   }
-  assert.equal(palettes.size, 8);
+  assert.equal(palettes.size, Object.keys(SIM_VISUAL_COLLECTIONS).length);
   assert.throws(() => getSimVisualCollection('__proto__'), /Unknown/);
   assert.throws(() => bindSimModelRole(new THREE.Group(), 'missing'), /Missing/);
   const invalid = new THREE.Group();
@@ -520,7 +520,7 @@ test('a glTF mesh-node binding covers only its own loader-identified primitives'
   disposeSimVisualGroup(root);
 });
 
-test('eight collections cover every environment with protected course data and exterior dressing', () => {
+test('all collections cover every environment with protected course data and exterior dressing', () => {
   const matrix = new THREE.Matrix4(),
     box = new THREE.Box3();
   for (const collectionId of Object.keys(SIM_VISUAL_COLLECTIONS)) {
@@ -573,5 +573,9 @@ test('family surface recipes provide distinct luminance structure beyond a globa
     assert.equal(texture.image.width, 128);
     texture.dispose();
   }
-  assert.equal(signatures.size, 8, 'all enamel recipes have a unique light/dark motif');
+  assert.equal(
+    signatures.size,
+    Object.keys(SIM_VISUAL_COLLECTIONS).length,
+    'all enamel recipes have a unique light/dark motif',
+  );
 });

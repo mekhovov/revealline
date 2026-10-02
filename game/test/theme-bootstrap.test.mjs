@@ -96,7 +96,10 @@ test('every admitted appearance paints exact paired tokens and frames before mod
         }
         assert.equal(dataset.interfaceTheme, family.id);
         assert.equal(dataset.themeTexture, resolved.textured ? 'on' : 'off');
-        assert.equal(dataset.themeStyled, String(family.id !== 'legacy' || highContrast));
+        assert.equal(
+          dataset.themeStyled,
+          String(family.id !== 'legacy' || family.interface.revision !== 'r1' || highContrast),
+        );
       }
     }
   }
@@ -114,6 +117,10 @@ test('retained and current context pins paint their exact installed revision bef
     ]) {
       const { variables, dataset } = seed({}, options);
       assert.equal(dataset.interfaceTheme, family.id);
+      assert.equal(
+        dataset.themeStyled,
+        String(family.id !== 'legacy' || family.interface.revision !== 'r1'),
+      );
       for (const [key, value] of Object.entries(expected)) {
         if (/-(default|hover|pressed|disabled|loading)-/.test(key)) continue;
         assert.equal(variables.get(key), value, `${family.id}@${family.revision}: ${key}`);
