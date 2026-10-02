@@ -524,8 +524,11 @@ footer button {
   width: 100%;
 }
 dialog {
-  width: min(900px, calc(100vw - 26px));
-  max-height: calc(100svh - 30px);
+  inset: var(--dialog-safe-top) var(--dialog-safe-right) var(--dialog-safe-bottom)
+    var(--dialog-safe-left);
+  width: min(900px, calc(var(--dialog-viewport-width) - 26px));
+  max-width: var(--dialog-viewport-width);
+  max-height: calc(var(--dialog-small-height) - 30px);
   border: 1px solid var(--fk-control-line);
   border-radius: 16px;
   padding: 20px;
@@ -1824,14 +1827,15 @@ html[data-fpv-immersive='academy'] .sim-academy [data-immersive-controls='true']
 @media (max-height: 500px) and (orientation: landscape) {
   .sim-academy .academy-options-panel {
     position: fixed;
-    top: 52px;
-    bottom: 12px;
-    right: 16px;
+    top: max(52px, env(safe-area-inset-top, 0px));
+    bottom: max(12px, env(safe-area-inset-bottom, 0px));
+    right: max(16px, env(safe-area-inset-right, 0px));
+    max-width: calc(var(--dialog-viewport-width) - 32px);
     height: auto;
     max-height: none;
   }
   html[data-fpv-immersive='academy'] .sim-academy .academy-options-panel {
-    top: 52px;
+    top: max(52px, env(safe-area-inset-top, 0px));
   }
 }
 @media (max-width: 620px) {
