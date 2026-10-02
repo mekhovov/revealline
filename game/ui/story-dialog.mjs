@@ -101,7 +101,10 @@ export function createStoryDialog({
       presentation.setPreferences(next);
     }
   }
-  async function open({ pin: source, title: label, drawPoster }, { signal } = {}) {
+  async function open(
+    { pin: source, title: label, drawPoster },
+    { signal, immersive = false, autoplay = false } = {},
+  ) {
     required(!disposed, t('interface:theStoryViewIsClosed'));
     const pin = snapshotStoryPin(source);
     required(
@@ -124,6 +127,7 @@ export function createStoryDialog({
     signal?.addEventListener('abort', abort, { once: true });
     externalCleanup = () => signal?.removeEventListener('abort', abort);
     localizedText(title, () => label);
+    dialog.classList.toggle('story-dialog--immersive', immersive);
     stage.replaceChildren(canvas);
     const lease = feedback.begin({
       message: t('interface:yourPictureIsReadyReadingOptionalStoryMetadata'),
@@ -167,6 +171,8 @@ export function createStoryDialog({
         musicDucker,
         ...initial,
         audioMaster,
+        autoplay,
+        cinematicTransition: immersive,
         onChange(snapshot) {
           if (!current()) return;
           neutralize();

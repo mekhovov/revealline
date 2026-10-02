@@ -68,6 +68,9 @@ function win(page, idle = 0) {
   for (let tick = 0; tick < MOVEMENT_TICK_BUDGET && reference.status === 'running'; tick++)
     stepRun(reference, { direction: 'down' }, FIXED_DT);
   assert.deepEqual(authoritativeCheckpoint(page.rendered.run), authoritativeCheckpoint(reference));
+  assert.equal(page.$('game-overlay').hidden, true);
+  if (!page.$('skip-celebration').hidden) page.$('skip-celebration').click();
+  page.$('show-result').click();
 }
 
 test(

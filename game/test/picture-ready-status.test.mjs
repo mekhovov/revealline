@@ -95,6 +95,7 @@ async function readyRetry(t, policy = 'immediate') {
   for (let i = 0; i < 900 && p.rendered.run.status !== 'won'; i++) p.frame();
   assert.equal(p.rendered.run.status, 'won', 'The first attempt must win through real input.');
   if (!p.$('skip-celebration').hidden) p.$('skip-celebration').click();
+  if (!p.$('show-result').hidden) p.$('show-result').click();
   p.frame(0);
   assert.equal(p.$('game-overlay').dataset.kind, 'won');
   await settle(() =>

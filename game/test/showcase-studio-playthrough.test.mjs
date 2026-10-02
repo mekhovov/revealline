@@ -364,6 +364,9 @@ test(
     });
     assert.deepEqual(saved.receipts[0].definition, f.reward);
     assert.ok(f.requests.includes(`game/${f.art.path}`));
+    assert.equal(page.$('game-overlay').hidden, true);
+    if (!page.$('skip-celebration').hidden) page.$('skip-celebration').click();
+    page.$('show-result').click();
     assert.equal(page.$('game-overlay').dataset.kind, 'won');
     assert.equal(page.$('result-picture').hidden, false);
     assert.equal(page.$('next-button').hidden, false);
