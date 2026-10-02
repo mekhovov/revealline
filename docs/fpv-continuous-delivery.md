@@ -1106,3 +1106,36 @@ fixture readiness/focus cascade; the isolated repeated Versus390 rerun passes6/6
 without production changes, and the full12 host/locale/width pass succeeds.
 A final same-window controller launch is being qualified to avoid popup permission
 requirements. Keep this work separate from the ready #942 runtime.
+
+### 2 October — fourth SIM landing destination qualified
+
+Current branch `codex/fpv-sim-mode-entry` depends on #942 head
+`23c790154dfe35f11c4c7a7b239c7c8ead61c03a`. Frozen runtime
+`e936e94f91e96286a9f6ebc28f5d91758095218e` adds the fourth shared landing
+choice after Solo / Versus / Team, bounded bundled-World availability, validated
+package fallback and same-window controller launch. The browser walkthrough
+caught a real locale mismatch; explicit EN/UK launch preferences now reach the
+World catalogue and user language changes persist in that URL.
+
+Final evidence: `docs/evidence/fpv-sim-entry-final-20261002.json`, paired EN/UK
+controller receipts and package receipt. Main build passes (2,719 files; SHA
+`2750c1df69f5fd147648a4b82065d315052679a8a83eacf0855233a2c43e0ca4`), with all15
+changed emitted runtime files matching frozen source. All3 optional packages pass
+admission, committed inputs/ZIP members and2 identical builds. The builder's
+main manifest has its normal null revision; the separate receipt records the
+clean frozen commit and exact byte comparison rather than inventing a stamp.
+
+Browser menu checks pass12/12 (3 hosts ×2 locales ×2 widths), controller-only
+launch passes2/2 EN/UK, existing targeted assertions62, functional boundaries28,
+locale scan and focused lint/format/syntax pass. Independent source review found
+no new blocker; legacy fallback links retain their separate new-window behavior.
+No new unit coverage or physical-device qualification is claimed.
+
+Both local player paths were rebuilt with87 files/13,948,767bytes, ZIP SHA
+`2c3acf4cc67c49b67a7e1bec084a6e2d8b0403cd3a8f5841b9e37eb514fc87a6`.
+The actual continuous-school player was launched at390×844; the flight view and
+paused menu were inspected. Screenshot `/tmp/fpv-handheld-player-final-20261002.png`.
+No public-live claim. Ready to publish a focused child after #942 in native
+stack902. Next independent authorized work remains R5 hangar/meadow art after
+reconciling #925 and preserved radio-menu work; keep that unfinished work off
+this completed landing PR. All upstream holds/protection and stack889 remain.
