@@ -5830,5 +5830,10 @@
   "optionalPractice.simBrowserOnly": "Відкрийте гру у веббраузері, щоб перевірити доступні пакети симулятора.",
   "optionalPractice.worldsSourcePreview": "Школа польотів і World Studio · локальний перегляд джерела · не кваліфіковано",
   "optionalPractice.simOpen": "Відкрити школу польотів і світи",
-  "optionalPractice.simReady": "World Studio доступний у цій збірці. Відкрийте симулятор, щоб грати або підготувати його вміст для роботи офлайн."
+  "optionalPractice.simReady": "World Studio доступний у цій збірці. Відкрийте симулятор, щоб грати або підготувати його вміст для роботи офлайн.",
+  "updates.startupChecking": "Перевіряємо оновлення… Можна продовжувати грати.",
+  "updates.startupDownload": "Оновити гру",
+  "updates.startupAvailable": "Доступна нова збірка. Перед оновленням переглянь розмір завантаження; твій прогрес збережеться.",
+  "updates.startupCurrent": "Гра вже має останню версію.",
+  "updates.startupUnavailable": "Не вдалося перевірити оновлення. Можна грати в завантажену гру."
 }

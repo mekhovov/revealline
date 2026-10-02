@@ -5720,5 +5720,10 @@
   "optionalPractice.simBrowserOnly": "Open this game in a web browser to check available simulator packages.",
   "optionalPractice.worldsSourcePreview": "Flight School & World Studio · local source preview · unqualified",
   "optionalPractice.simOpen": "Open Flight School & Worlds",
-  "optionalPractice.simReady": "World Studio is available in this build. Open the simulator to play or prepare its content for offline use."
+  "optionalPractice.simReady": "World Studio is available in this build. Open the simulator to play or prepare its content for offline use.",
+  "updates.startupChecking": "Checking for an update… You can keep playing.",
+  "updates.startupDownload": "Update game",
+  "updates.startupAvailable": "A new build is available. Review the download size before updating; your progress is kept.",
+  "updates.startupCurrent": "This game is up to date.",
+  "updates.startupUnavailable": "Could not check for updates. You can still play your downloaded game."
 }
