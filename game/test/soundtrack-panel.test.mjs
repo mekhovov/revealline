@@ -412,10 +412,10 @@ function onlineCatalogueFixture() {
     [
       '7'.repeat(64),
       'FPV Run',
-      'TRENCH ORDERLY',
-      'TRENCH ORDERLY',
+      'Synthetic FPV artist',
+      'Synthetic FPV artist',
       ['ФПВ', 'UA', 'rock'],
-      ['TRENCH ORDERLY', 'ФПВ'],
+      ['Synthetic FPV artist', 'ФПВ'],
     ],
   ];
   const tracks = definitions.map(
@@ -426,8 +426,8 @@ function onlineCatalogueFixture() {
       durationSeconds: 180 + index,
       tags,
       source: `https://artists.example/${index + 1}`,
-      license: index === 6 ? 'Unknown — uploader-confirmed rights' : 'CC BY 4.0 International',
-      licenseURL: index === 6 ? null : 'https://creativecommons.org/licenses/by/4.0/',
+      license: 'CC BY 4.0 International',
+      licenseURL: 'https://creativecommons.org/licenses/by/4.0/',
       credit: `${title} by ${artist}`,
       fileName: `${title}.mp3`,
       archiveId: `fixture-${index + 1}`,
@@ -444,25 +444,6 @@ function onlineCatalogueFixture() {
         sha256,
       },
       aliases: [],
-      ...(index === 6
-        ? {
-            rights: {
-              licenseId: 'UNKNOWN',
-              licenseVersion: null,
-              licenseURL: null,
-              rightsEvidenceURL: `https://artists.example/${index + 1}`,
-              attribution: `${title} by ${artist}`,
-              derivativeChangeNotice: 'Exact submitted MP3 bytes retained.',
-              permissionBasis: 'uploader-confirmed-public-redistribution-and-web-playback',
-              shareAlike: {
-                required: null,
-                deliveryLicenseId: null,
-                deliveryLicenseVersion: null,
-                deliveryLicenseURL: null,
-              },
-            },
-          }
-        : {}),
     }),
   );
   return {
@@ -2211,7 +2192,7 @@ test('public archive searches and plays any published recording through the shar
   assert.match(app.node('online-status').textContent, /7 of 7 published recordings/);
   const fpvItem = app.node(`online-play-${'7'.repeat(64)}`).parentNode;
   assert.match(fpvItem.textContent, /FPV Run/);
-  assert.match(fpvItem.textContent, /TRENCH ORDERLY/);
+  assert.match(fpvItem.textContent, /Synthetic FPV artist/);
   assert.doesNotMatch(fpvItem.textContent, /Unknown|licen[cs]e/i);
   assert.equal(fpvItem.lastElementChild.getAttribute('href'), 'https://artists.example/7');
 
@@ -2294,6 +2275,58 @@ test('public archive searches and plays any published recording through the shar
   assert.equal(app.node('online-results').children.length, 0);
   assert.equal(app.node('online-play-all').disabled, true);
   assert.match(app.node('online-status').textContent, /Recording mode excludes 7/);
+});
+
+test('public archive excludes unknown, missing-licence and review-only rows while licensed playback survives', async (t) => {
+  const catalogue = onlineCatalogueFixture();
+  catalogue.tracks[6] = {
+    ...catalogue.tracks[6],
+    title: 'Unlicensed upload',
+    license: 'Unknown — uploader-confirmed rights',
+    licenseURL: null,
+    rights: {
+      licenseId: 'UNKNOWN',
+      licenseURL: null,
+      permissionBasis: 'uploader-confirmed-public-redistribution-and-web-playback',
+    },
+  };
+  for (const [hash, title, change] of [
+    ['8'.repeat(64), 'Missing licence', { license: null }],
+    ['9'.repeat(64), 'Review-only recording', { visibility: 'review-only' }],
+  ]) {
+    catalogue.tracks.push({
+      ...catalogue.tracks[0],
+      id: `fixture-${hash[0]}`,
+      title,
+      ...change,
+      audio: { ...catalogue.tracks[0].audio, path: `objects/${hash}.mp3`, sha256: hash },
+    });
+  }
+  catalogue.counts = {
+    declaredTracks: catalogue.tracks.length,
+    uniqueRecordings: catalogue.tracks.length,
+    duplicateAliases: 0,
+    audioBytes: catalogue.tracks.reduce((sum, track) => sum + track.audio.bytes, 0),
+  };
+  const app = await setup(t, {
+    callbacks: {
+      catalogue: emptyCatalogue,
+      onlineCatalogueDownload: { fetch: async () => onlineCatalogueResponse(catalogue) },
+    },
+  });
+  await settleOnlineCatalogue(
+    () => app.node('online-results').children.length === 6,
+    'licensed catalogue results',
+  );
+  assert.doesNotMatch(
+    app.node('online-results').textContent,
+    /Unlicensed upload|Missing licence|Review-only recording/,
+  );
+  await app.click('online-styles-all');
+  await app.click('online-play-all');
+  const selected = app.calls.findLast(([name]) => name === 'remote');
+  assert.equal(selected[1].length, 6);
+  assert(selected[1].every((track) => track.rights.license === 'CC BY 4.0 International'));
 });
 
 test('Audio settings expose streamed styles and play a selected style without opening Studio', async (t) => {
@@ -4307,7 +4340,9 @@ test('saved Automatic catalogue discovery backs up without downloading unused on
   assert.equal(app.node('download-prepared').disabled, false);
   assert.match(
     app.node('backup-info').textContent,
-    /71 unused online catalogue recordings are not included/,
+    new RegExp(
+      `${SOUNDTRACK_CATALOGUE.tracks.length} unused online catalogue recordings are not included`,
+    ),
   );
   await app.click('download-prepared');
   const restored = await importSoundtrackBundle(app.downloads[0].blob, {
