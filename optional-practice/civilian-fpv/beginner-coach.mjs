@@ -1,6 +1,6 @@
 import { STICK_LAYOUTS, DEFAULT_RESPONSE, neutralFlightInput } from './radio-profile.mjs';
 import { createFlight, FLIGHT_HZ } from './model.mjs';
-import { createFlightGamepad } from './input.mjs';
+import { createFlightGamepad, touchStickValues } from './input.mjs';
 import { mountDroneDiagram, mountStickTrace, practiceSkillFeedback } from './sim-presentation.mjs';
 import {
   ACRO_LESSON_ORDER,
@@ -569,16 +569,15 @@ export function mountBeginnerCoach({
     );
   };
   const labStickMode = () => {
-    if (labMode === 'try' && labSource === 'controller') return 2;
-    const requested = labRadioAvailable()
-      ? (snapshot.radioStickMode ?? snapshot.stickMode)
-      : snapshot.stickMode;
+    if (labSource !== 'radio') return 2;
+    const requested = snapshot.radioStickMode ?? snapshot.stickMode;
     return STICK_LAYOUTS[requested] ? requested : 2;
   };
   function clearLabInput({ block = true } = {}) {
     if (block) for (const key of labKeys) blockedKeys.add(key);
     labKeys.clear();
     Object.assign(labTouch, neutralFlightInput());
+    for (const stick of refs.sticks ?? []) stick.releaseTouch?.();
     touchThrottleDirection = 0;
     labInput = neutralFlightInput();
   }
@@ -958,22 +957,32 @@ export function mountBeginnerCoach({
     diagram?.dispose();
     diagram = null;
   }
-  function bindGimbal(drawing, horizontal, vertical) {
-    let pointer = null;
+  function bindGimbal(drawing, side) {
+    let pointer = null,
+      pickup = null;
     const move = (event) => {
       if (pointer !== event.pointerId || !labRunning || labMode !== 'try' || labSource !== 'touch')
         return;
-      const rect = drawing.getBoundingClientRect();
-      if (!rect.width || !rect.height) return;
-      labTouch[horizontal] = clamp(((event.clientX - rect.left) / rect.width - 0.5) * 3);
-      const verticalValue = clamp((0.5 - (event.clientY - rect.top) / rect.height) * 3);
-      labTouch[vertical] = vertical === 'throttle' ? (verticalValue + 1) / 2 : verticalValue;
+      if (!pickup) return;
+      Object.assign(
+        labTouch,
+        touchStickValues({
+          side: side === 0 ? 'left' : 'right',
+          dx: event.clientX - pickup.x,
+          dy: pickup.y - event.clientY,
+          travel: pickup.travel,
+          throttle: pickup.throttle,
+          response: snapshot.touchResponse ?? 'precise',
+        }),
+      );
       event.preventDefault();
     };
     const release = (event) => {
       if (event && event.pointerId !== pointer) return;
       const previous = pointer;
       pointer = null;
+      pickup = null;
+      drawing.dataset.touchActive = 'false';
       if (previous !== null) {
         try {
           drawing.releasePointerCapture(previous);
@@ -981,29 +990,53 @@ export function mountBeginnerCoach({
           /* Pointer already released. */
         }
       }
-      pointer = null;
-      for (const axis of [horizontal, vertical]) if (axis !== 'throttle') labTouch[axis] = 0;
+      for (const axis of side === 0 ? ['yaw'] : ['roll', 'pitch']) labTouch[axis] = 0;
     };
     const down = (event) => {
       if (stage !== 'guide' || pointer !== null) return;
+      if (event.button !== undefined && event.button !== 0) return;
       takeControls('touch', { focus: true });
+      // Radio takeover may redraw a different stick layout. Capture on the
+      // replacement Mode 2 pad, never an element detached by that redraw.
+      if (!root.contains(drawing)) return refs.sticks?.[side]?.beginTouch(event);
+      const rect = drawing.getBoundingClientRect();
+      if (!rect.width || !rect.height) return;
+      pickup = {
+        x: event.clientX,
+        y: event.clientY,
+        travel: rect.width * 0.34,
+        throttle: labTouch.throttle,
+      };
       pointer = event.pointerId;
-      drawing.setPointerCapture(pointer);
+      try {
+        drawing.setPointerCapture(pointer);
+      } catch {
+        release();
+        pausePreview('input-lost');
+        return;
+      }
+      drawing.dataset.touchActive = 'true';
       move(event);
+    };
+    const cancel = (event) => {
+      if (event.pointerId !== pointer) return;
+      release(event);
+      pausePreview('input-lost');
     };
     drawing.addEventListener('pointerdown', down);
     drawing.addEventListener('pointermove', move);
     drawing.addEventListener('pointerup', release);
-    drawing.addEventListener('pointercancel', release);
-    drawing.addEventListener('lostpointercapture', release);
+    drawing.addEventListener('pointercancel', cancel);
+    drawing.addEventListener('lostpointercapture', cancel);
     viewReleases.push(() => {
       release();
       drawing.removeEventListener('pointerdown', down);
       drawing.removeEventListener('pointermove', move);
       drawing.removeEventListener('pointerup', release);
-      drawing.removeEventListener('pointercancel', release);
-      drawing.removeEventListener('lostpointercapture', release);
+      drawing.removeEventListener('pointercancel', cancel);
+      drawing.removeEventListener('lostpointercapture', cancel);
     });
+    return { down, release };
   }
   function makeDpad() {
     const pad = node('div', 'coach-lab-dpad');
@@ -1313,7 +1346,7 @@ export function mountBeginnerCoach({
     const live = svg('circle', { cx: 90, cy: 90, r: 6, class: 'coach-live-dot' });
     suggestion.style.animation = 'none';
     drawing.classList.add('coach-stick-pad');
-    bindGimbal(drawing, h, v);
+    const touchBinding = bindGimbal(drawing, side);
     drawing.append(suggestion, exampleInput, live);
     const labels = node('div', 'coach-stick-axes');
     for (const axis of [v, h]) {
@@ -1340,6 +1373,8 @@ export function mountBeginnerCoach({
     );
     section.append(gimbal, labels, readout);
     refs.sticks.push({
+      beginTouch: touchBinding.down,
+      releaseTouch: touchBinding.release,
       live,
       suggestion,
       exampleInput,
@@ -1561,6 +1596,22 @@ export function mountBeginnerCoach({
       );
     }
     card.append(heading);
+    if (stage === 'guide' && mode() !== lesson.mode)
+      card.append(
+        node(
+          'p',
+          'coach-pause-note',
+          snapshot.modePractice
+            ? t(
+                'Self-level practice · no score. These manoeuvres require Acro; the original objectives stay unchanged.',
+                'Практика із самовирівнюванням · без заліку. Для цих маневрів потрібен Acro; початкові цілі не змінюються.',
+              )
+            : t(
+                `Flying ${mode() === 'acro' ? 'Acro' : 'Self-level'}. These lesson notes describe ${lesson.mode === 'acro' ? 'Acro' : 'Self-level'} controls. Examples are available only for their recorded mode.`,
+                `Режим польоту: ${mode() === 'acro' ? 'Acro' : 'самовирівнювання'}. Нотатки уроку описують керування ${lesson.mode === 'acro' ? 'Acro' : 'із самовирівнюванням'}. Приклади доступні лише в записаному режимі.`,
+              ),
+        ),
+      );
     if (stage === 'complete') {
       card.append(
         node(
@@ -2065,6 +2116,10 @@ export function mountBeginnerCoach({
   const visibility = () => {
     if (doc.hidden) loseFocus();
   };
+  const resizePreview = () => {
+    if (stage === 'guide' && labRunning && labMode === 'try' && labSource === 'touch')
+      pausePreview('input-lost');
+  };
   const leaveLab = (event) => {
     if (
       stage === 'guide' &&
@@ -2077,6 +2132,7 @@ export function mountBeginnerCoach({
   win.addEventListener('keydown', keyDown, true);
   win.addEventListener('keyup', keyUp, true);
   win.addEventListener('blur', loseFocus);
+  win.addEventListener('resize', resizePreview);
   doc.addEventListener('visibilitychange', visibility);
   doc.addEventListener('fullscreenchange', practiceFullscreenChanged);
   root.addEventListener('focusout', leaveLab);
@@ -2088,7 +2144,7 @@ export function mountBeginnerCoach({
       if (disposed) return;
       pausePreview();
       lesson = value;
-      snapshot = {};
+      snapshot = { mode: options.mode ?? value.mode, modePractice: Boolean(options.modePractice) };
       lessonDemonstration = options.demonstration ?? null;
       lessonTimeline = null;
       labScope = hasLessonPreview() ? 'lesson' : 'step';
@@ -2115,6 +2171,7 @@ export function mountBeginnerCoach({
       const wasReduced = snapshot.reducedMotion;
       snapshot = { ...snapshot, ...value };
       if (mode() !== previousMode) {
+        lessonTimeline = null;
         resetPreview();
         autoPreviewPending = wasPending;
       }
@@ -2197,6 +2254,7 @@ export function mountBeginnerCoach({
       win.removeEventListener('keydown', keyDown, true);
       win.removeEventListener('keyup', keyUp, true);
       win.removeEventListener('blur', loseFocus);
+      win.removeEventListener('resize', resizePreview);
       doc.removeEventListener('visibilitychange', visibility);
       doc.removeEventListener('fullscreenchange', practiceFullscreenChanged);
       root.removeEventListener('focusout', leaveLab);

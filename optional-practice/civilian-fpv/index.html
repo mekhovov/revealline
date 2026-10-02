@@ -81,6 +81,17 @@
             <p data-sim-copy="optionsPause">Your flight pauses while you adjust the view.</p>
             <div class="academy-settings-grid">
               <label
+                ><span data-sim-copy="touchResponse">Touch response</span>
+                <select id="touch-response">
+                  <option value="precise" data-sim-copy="touchPrecise">
+                    Precise — small corrections
+                  </option>
+                  <option value="direct" data-sim-copy="touchDirect">
+                    Direct — linear response
+                  </option>
+                </select>
+              </label>
+              <label
                 ><span data-copy="camera"></span>
                 <select id="camera">
                   <option value="fpv" data-copy="fpv"></option>
@@ -198,6 +209,9 @@
               aria-label="Yaw and manual throttle"
             >
               <i></i>
+              <output id="touch-throttle-readout" class="touch-throttle-readout" aria-live="off"
+                >0%</output
+              >
             </div>
           </div>
           <label class="throttle-slider"

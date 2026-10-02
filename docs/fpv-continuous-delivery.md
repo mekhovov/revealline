@@ -1698,3 +1698,71 @@ Verify Garage's actual public launch before calling its120+58 demonstrations
 live. Resolve the independent958 pipeline, preserve any native stack rewrite,
 then continue C2 on `codex/fpv-meadow-groves`. Its starting tree includes the
 published Hangar change; no unfinished C2 runtime work is mixed into956.
+
+### 2 October — touch playability and unrestricted mode choice
+
+User-prioritized touch usability precedes C2. Branch `codex/fpv-touch-flight`
+now starts on current main `fc0eaf978` after native stack957 fully merged.
+Recovery ref `codex/fpv-touch-before-main-20261002` preserves its original base;
+main advancement had an identical tree and preserved all local feature changes.
+
+All148 catalogue levels keep the player's selected mode. Acro-only skill courses
+permit clearly labelled unscored Self-level practice, without proof/reward/recovery
+writes. Ordinary school completion names the actual mode; replay/checkpoint
+selection uses matching evidence or a safe fresh attempt. Both SIM hosts and the
+lab use relative thumb pickup, held throttle, shared Precise/Direct response,
+independent pointers and safe pause/clear on interruption or resize. Larger edge
+controls and brief labels preserve the central flight view. See
+`docs/fpv-touch-flight.md` for behavior and research.
+
+Functional browser evidence passes32/32 checks, including296 actual-host
+level/mode starts, pointer ownership/cancellation, mode/replay/checkpoint
+switching, zero paused touch display, and lab resize/capture-loss handling.
+All178 demonstrations replay unchanged (154v2+24v1;327,795 frames). Actual player
+checks cover390×844,844×390 and1280×800 layouts, EN/UK, real pointer capture in
+Academy and World, and retained54% throttle after release. Browser snapshots and
+receipts are `docs/evidence/fpv-touch-*`; controlled-fixture limitations are
+explicit. Physical iPhone, Steam Deck/native-app, radio and novice acceptance
+remain pending; no measured FPS or new unit coverage claim. Unit coverage stays
+in H/R7. Frozen package admission and focused publication follow this checkpoint.
+
+Frozen touch candidate `b4bc48365` passes all three optional package admissions,
+committed-input and ZIP-member verification, and two byte-identical builds.
+Source file counts35/68/100 remain within inherited64/72/104 limits; package
+bytes545,596/3,825,812/14,079,797 remain within8/8/16MiB. Receipt:
+`docs/evidence/fpv-touch-package-20261002.json`. Both normal local playtests are
+updated:92 runtime files/13,922,478 bytes; ZIP SHA256
+`6409a64a29bc5bc089a692009eeceff6eb265050773844e66ae85e154dbe50d9`.
+This is a local player build; protected publication/deployment remains separate.
+
+Touch usability is published and attached as
+[PR #959](https://github.com/mekhovov/revealline/pull/959),
+`codex/fpv-touch-flight`, directly against main. Old stack957 is closed; no
+manual retargeting or redundant stack was created. The updated reviewed-player
+URL launched the real school in Self-level/Touch with no application errors;
+its phone view is captured at `/tmp/fpv-touch-final-player.png`. The player is
+left paused with mode and touch-response choices available. No public-live
+claim is made for959 until deployment identity and actual public launch pass.
+Next independent approved work remains C2 meadow exterior composition on current
+main; keep that work off this ready PR. Preserve Themes955 ownership and pending
+physical-device qualification. Inspect exact remote heads before any merge.
+
+Main advanced during publication: capacity repair958 merged as `07f227f50`.
+The touch branch was linearly rebased with recovery ref
+`codex/fpv-touch-before-main958-20261002`; only the upstream soundtrack compaction
+and its evidence differ. Frozen candidate `80807bd78` again passes all three
+admissions, committed-input/ZIP verification and two identical builds. The
+final32-check browser fixture revalidates the exact unchanged62 dependency
+hashes, including host `79daf2e114f95b362da70c7cd7a7f00e7174e30150f1e8f0ced7198e0caa30b0`.
+Receipt: `docs/evidence/fpv-touch-package-main958-20261002.json`. The explicit
+remote-head lease rejected a concurrent repository-automation update safely.
+Automation had merged the same main as `3984e8185`; its tree matched our rebased
+candidate apart from these new evidence records. That remote history is retained,
+and this evidence is applied on top without a force-push. Recovery refs
+`codex/fpv-touch-local-rebased-20261002` and
+`codex/fpv-touch-automation-main958-20261002` preserve both histories.
+No new native stack is needed. Public deployment and current-head checks remain
+external pending work; keep the ready increment separate from C2.
+Preserved-history candidate `e18d14aa7` also passes all three admissions and
+reproducibility checks; the main958 receipt now names that published-history
+candidate. Runtime and browser-fixture bytes are unchanged.
