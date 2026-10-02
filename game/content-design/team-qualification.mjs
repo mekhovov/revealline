@@ -7,9 +7,13 @@ export const TEAM_MISSION_FORMATS = Object.freeze([
   'TeamMissionV4',
   'TeamMissionV5',
   'TeamMissionV6',
+  'TeamMissionV7',
 ]);
 export const teamRoleQualified = (format, role) =>
   TEAM_MISSION_FORMATS.includes(format) &&
   (role === 'field-keeper' ||
-    (['TeamMissionV3', 'TeamMissionV4', 'TeamMissionV5', 'TeamMissionV6'].includes(format) &&
-      role === 'reclaimed-roamer'));
+    (['TeamMissionV3', 'TeamMissionV4', 'TeamMissionV5', 'TeamMissionV6', 'TeamMissionV7'].includes(
+      format,
+    ) &&
+      role === 'reclaimed-roamer') ||
+    (format === 'TeamMissionV7' && ['optional-scout', 'optional-sentry'].includes(role)));

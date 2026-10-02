@@ -42,8 +42,14 @@ export function createSoloPerformanceBinding({
 }) {
   return async (record, state, { signal } = {}) => {
     signal?.throwIfAborted();
-    const mission = host?.catalog.find(record.missionId);
-    const entry = mission && host.select(mission, record.difficulty);
+    await host?.ensureProgressMission?.(record.missionId, { signal });
+    const mission =
+      host?.resolveProgressMission?.(record.missionId) ?? host?.catalog.find(record.missionId);
+    // A stored result keeps its own variant even after the menu preference or
+    // selected difficulty changes. Hunt clears never bind to ordinary mission IDs.
+    const entry = host?.selectProgress
+      ? host.selectProgress(record.missionId, record.difficulty)
+      : mission && host.select(mission, record.difficulty);
     if (entry && host.owns(entry)) {
       const level = entry.campaign.levels.find((row) => row.id === mission.levelId);
       if (matches(record, state, level, entry.classRecipes)) return true;

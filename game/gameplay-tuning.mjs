@@ -11,6 +11,8 @@ import * as historical from './gameplay-tuning-v1.mjs';
 import * as v2 from './gameplay-tuning-v2.mjs';
 import * as v3 from './gameplay-tuning-v3.mjs';
 import { COLLISION_COURSE_VERSION } from './core/field-course.mjs';
+import { CLASSES } from './core/registry.mjs';
+import { huntTargetKind } from './hunt/rules.mjs';
 
 export const GAMEPLAY_TUNING_VERSION = 'gameplay-pressure.v4';
 // The preference format is unchanged; historical recipes have separate dispatch.
@@ -313,6 +315,13 @@ function addKeepers(level, tuning, team) {
   const count = Math.min(
     6,
     (team ? 16 : 24) - level.enemies.length,
+    ...(level.classic?.hunt || level.hunt
+      ? [
+          24 -
+            level.enemies.length -
+            (team ? level.combatPatrols : level.classic.combatPatrols).actors.length,
+        ]
+      : []),
     Math.ceil(originals.length * tuning.enemyDensity),
   );
   if (!originals.length || count <= 0) return;
@@ -323,6 +332,7 @@ function addKeepers(level, tuning, team) {
   const occupied = [
     ...level.enemies,
     ...(level.classic?.combatPatrols?.actors ?? []),
+    ...(level.combatPatrols?.actors ?? []),
     ...(level.objectives ?? []),
     ...(level.classic?.powerups ?? []),
     ...(level.supplies ?? []),
@@ -493,8 +503,21 @@ function tuneGameplay(source, snapshot, vectorMagnitude) {
       ...level.encounter,
       hunterAttackSpeed: clamp((level.encounter?.hunterAttackSpeed ?? 8) * unmeasuredSpeed, 6, 14),
     };
-  for (const actor of level.classic?.combatPatrols?.actors ?? []) {
-    actor.speed = clamp(actor.speed * unmeasuredSpeed, 0.25, 8);
+  const optional = team ? level.combatPatrols : level.classic?.combatPatrols;
+  const hunt = team ? level.hunt : level.classic?.hunt;
+  for (const actor of optional?.actors ?? []) {
+    // A Hunt runner remains catchable after the explicit player-speed recipe.
+    // Existing patrols retain their historical pressure scaling and speed caps.
+    actor.speed =
+      huntTargetKind(hunt, actor.id) === 'runner'
+        ? clamp(
+            level.rules.moveSpeed *
+              (team ? 1 : Math.min(...CLASSES.map((recipe) => recipe.moveSpeedMultiplier ?? 1))) *
+              0.7,
+            0.25,
+            8,
+          )
+        : clamp(actor.speed * unmeasuredSpeed, 0.25, 8);
     if (actor.role === 'sentry') actor.shotSpeed = clamp(actor.shotSpeed * unmeasuredSpeed, 4, 12);
   }
   if (level.classic?.lineImpact)

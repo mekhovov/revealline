@@ -1838,7 +1838,7 @@
   "studio.diagnostic.disconnected": "Disconnected foundations.",
   "studio.diagnostic.remoteChamber": "No starting return surface touches this chamber; inspect enemy retention and remote fill.",
   "studio.diagnostic.singleDeparture": "Spawn {{id}} has only one departure into the field.",
-  "studio.diagnostic.combat": "Optional encounters can be tested in Solo practice. Production presentation, player preferences and human qualification are pending.",
+  "studio.diagnostic.combat": "Optional encounters can be tested in Solo practice. Human play qualification is required before publishing a candidate.",
   "studio.diagnostic.greybox": "Greybox background; artwork is not assigned.",
   "studio.diagnostic.art": "Candidate artwork has not passed visual qualification.",
   "studio.diagnostic.combatRemoval": "These optional actors start in an unretained region and may disappear at the next unrelated closure. They never retain field; confirm this is intentional.",

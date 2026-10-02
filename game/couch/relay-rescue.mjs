@@ -1,3 +1,10 @@
+import { createHuntRecords } from '../hunt/records.mjs';
+import { deriveEncounterLevel } from '../hunt/variants.mjs';
+import { ENCOUNTER_VARIANTS, createEncounterVariantPreferences } from '../hunt/preferences.mjs';
+import { attachEncounterVariantControls } from '../ui/encounter-variant-controls.mjs';
+import { attachHuntStatus } from '../ui/hunt-status.mjs';
+import { freezeDesign } from '../content-design/catalogs.mjs';
+import { journeyTeamPackEdition } from '../coop/foundations.mjs';
 import { COUCH_RESTORE_KEY } from './controller-restore.mjs';
 import { createControllerSession } from './controller-session.mjs';
 import { mountControllerSetup } from './controller-setup.mjs';
@@ -15,6 +22,7 @@ import {
 import { contentText } from '../i18n/content.mjs';
 import { coopGoalLabel, coopObjectiveLabel } from './coop-copy.mjs';
 import { attachCouchTouch } from '../ui/couch-touch.mjs';
+import { attachContextualReactions } from '../ui/contextual-reactions.mjs';
 import { attachJourneyReactions } from '../ui/journey-reactions.mjs';
 import { resultContinuationLabel } from '../ui/result-continuation.mjs';
 import { attachJourneySaveCue } from '../ui/journey-save-cue.mjs';
@@ -373,6 +381,10 @@ export function bootCoop({
     renderDisplayPreferences(state);
     reveal?.();
   });
+  const encounterPreferences = createEncounterVariantPreferences({
+    window,
+    getStorage: () => localStorage,
+  });
   const encounterDisplay = attachEncounterDisplayControls({
     document,
     window,
@@ -489,6 +501,8 @@ export function bootCoop({
   teamStoryVideo.onerror = () => skipTeamStory(() => t('interface:team.victoryStoryUnavailable'));
   $('coop-victory-story-play').onclick = () => void playTeamStory();
   $('coop-victory-story-skip').onclick = () => skipTeamStory();
+  let contextualReactions = null,
+    reactionRun = null;
   let music = null,
     musicPublished = null,
     musicSelection = null;
@@ -775,6 +789,45 @@ export function bootCoop({
   $('coop-field-details').onclick = openCueDetails;
   const selectedLevel = () =>
     pack.levels.find((level) => level.id === $('coop-level').value) || pack.levels[0];
+  const encounterChoices = new WeakMap();
+  const huntRecords = createHuntRecords({ window, getStorage: () => localStorage });
+  const encounterControls = attachEncounterVariantControls({
+    document,
+    records: huntRecords,
+    container: $('coop-encounter-variant'),
+    preferences: encounterPreferences,
+    onChange: () => setupNote(),
+    getAvailable: () => {
+      const level = selectedLevel();
+      if (!encounterChoices.has(level))
+        encounterChoices.set(
+          level,
+          ENCOUNTER_VARIANTS.filter((variant) => {
+            try {
+              return !!deriveEncounterLevel(level, variant, { mode: 'team' });
+            } catch {
+              return false;
+            }
+          }),
+        );
+      return encounterChoices.get(level);
+    },
+  });
+  const huntStatus = attachHuntStatus({
+    records: huntRecords,
+    document,
+    container: $('coop-hunt-status'),
+    mode: 'team',
+    getStorage: () => localStorage,
+  });
+  const huntResult = attachHuntStatus({
+    records: huntRecords,
+    document,
+    container: $('coop-hunt-result'),
+    mode: 'team',
+    getStorage: () => localStorage,
+    record: false,
+  });
   const selectedConfiguration = () =>
     COOP_PLAYTEST_CONFIGURATIONS.find((item) => item.id === $('coop-experiment').value) ||
     COOP_PLAYTEST_CONFIGURATIONS[0];
@@ -1318,6 +1371,18 @@ export function bootCoop({
     onClose: () => clear(),
   });
   if (music) {
+    music.sound.setDestructionPreferences?.(() => encounterDisplay.snapshot());
+    contextualReactions = attachContextualReactions({
+      sound: music.sound,
+      document,
+      window,
+      container: $('coop-contextual-reactions'),
+      resultContainer: $('coop-journey-reactions'),
+      settingsContainer: $('coop-settings-panel-audio'),
+      getStorage: () => localStorage,
+      getReduced: () => displayPreferences.snapshot().effectiveReducedEffects,
+      acquireGain: ({ factor }) => music.player.acquireGain({ factor }),
+    });
     musicPublished = attachPublishedAudio({
       sound: music.sound,
       ready: presentationPage.ready,
@@ -1327,6 +1392,12 @@ export function bootCoop({
         !acceptedPicture?.artworkSource && (acceptedPicture?.request.themeId ?? 'fpv') === 'fpv',
     });
     musicPublished.setPlayer(music.player);
+  }
+  function prepareReactionAttempt() {
+    if (run && reactionRun !== run) {
+      reactionRun = run;
+      contextualReactions?.reset(`${acceptedPicture?.request.attemptId ?? 'team'}:${generation}`);
+    }
   }
   function acceptMusic(selection, { play = false } = {}) {
     if (!music || !selection || acceptedPicture !== selection || !run || loopStopped || disposed)
@@ -1348,7 +1419,11 @@ export function bootCoop({
         });
       }
     }
-    if (play) void music.start();
+    if (play) {
+      prepareReactionAttempt();
+      contextualReactions?.resume();
+      void music.start().then(() => contextualReactions?.prepare());
+    }
   }
   function openSettings({ difficulty = false } = {}) {
     cancelNext();
@@ -1569,13 +1644,16 @@ export function bootCoop({
   }
   function overlay({ focus = true } = {}) {
     const reactionRow = acceptedPicture?.journeyRow;
-    journeyReactions.present({
+    prepareReactionAttempt();
+    const reactionContext = {
       owned: !!candidateJourney?.owns(reactionRow),
       mode: 'team',
       outcome: run?.status,
       missionId: reactionRow?.mission?.id,
       feedback: candidateJourney?.owns(reactionRow) ? reactionRow.campaignFeedback : null,
-    });
+    };
+    journeyReactions.present(reactionContext);
+    contextualReactions?.result(reactionContext);
     const show = run && !running();
     $('coop-overlay').hidden = !show;
     placeTools(Boolean(show));
@@ -1705,21 +1783,28 @@ export function bootCoop({
     localizedText($('coop-bonus-help'), () => (bonusView ? teamBonusHelp() : ''));
     painter.paint(run, {
       reduced: displayPreferences.snapshot().effectiveReducedEffects,
+      showRemains: encounterDisplay.snapshot().showRemains,
+      brutal: encounterDisplay.snapshot().brutal,
+      blood: encounterDisplay.snapshot().blood,
+      encounterLevel: attemptTuning.get(run)?.encounterLevel ?? null,
       textFace: displayPreferences.snapshot().textFace,
       textSize: displayPreferences.snapshot().textSize,
       picture: acceptedPicture?.binding ?? null,
       actorAppearance: acceptedPicture?.actorAppearance ?? null,
       pictureLevel: attemptTuning.get(run)?.pictureLevel ?? run.level,
     });
+    huntStatus.render(run);
+    huntResult.render(run);
     updateCueOverflow();
     const coverage = run.coverage * 100;
     localizedText(
       $('coop-coverage'),
       () => `${formatNumber(coverage, { minimumFractionDigits: 1, maximumFractionDigits: 1 })}%`,
     );
-    $('coop-coverage').dataset.target = run.level.goal.coverage
-      ? ` / ${Math.round(run.level.goal.coverage * 100)}%`
-      : '';
+    $('coop-coverage').dataset.target =
+      run.level.hunt?.mode !== 'hunt' && run.level.goal.coverage
+        ? ` / ${Math.round(run.level.goal.coverage * 100)}%`
+        : '';
     $('coop-progress').value = coverage;
     localizedText($('coop-reserves'), () =>
       t('gameplay:team.reserves', { count: run.team.reserves }),
@@ -1727,7 +1812,8 @@ export function bootCoop({
     localizedText($('coop-clock'), () => clock(run.time));
     const strongholds = run.strongholds.filter((item) => run.level.goal.cores?.includes(item.id));
     const stronghold = strongholds.find((item) => !item.defeated);
-    $('coop-objective').dataset.kind = stronghold ? 'stronghold' : 'coverage';
+    $('coop-objective').dataset.kind =
+      run.level.hunt?.mode === 'hunt' ? 'hunt' : stronghold ? 'stronghold' : 'coverage';
     localizedText($('coop-objective'), () => coopObjectiveLabel(run));
     const finished = run.status === 'won' || run.status === 'lost';
     const groundContext = coopGroundContext(run.level);
@@ -2608,7 +2694,9 @@ export function bootCoop({
       (skipRow && (navigation.row !== skipRow || !['paused', 'lost'].includes(run?.status)))
     )
       return;
-    const recipe = freshRecipe(structuredClone(destination), currentRecipe().options);
+    const recipe = freshRecipe(structuredClone(destination), currentRecipe().options, {
+      encounterVariant: attemptTuning.get(run)?.encounterVariant ?? 'authored',
+    });
     const nextDiscoveryRow = navigation.nextDiscoveryRow;
     const nextPack = nextDiscoveryRow?.pack ?? navigation.nextRow?.pack;
     const selection = newPictureSelection(
@@ -2712,6 +2800,10 @@ export function bootCoop({
         picture: selection.binding,
         actorAppearance: selection.actorAppearance,
         pictureLevel: attemptTuning.get(candidate).pictureLevel,
+        encounterLevel: attemptTuning.get(candidate).encounterLevel,
+        showRemains: encounterDisplay.snapshot().showRemains,
+        brutal: encounterDisplay.snapshot().brutal,
+        blood: encounterDisplay.snapshot().blood,
       });
       if (!current()) {
         if (!disposed && run === operation.run) render();
@@ -2764,9 +2856,10 @@ export function bootCoop({
         if (configuration) $('coop-experiment').value = configuration.id;
         nextStatus('');
         localizedText($('coop-stage'), () => contentText(candidate.level, 'name').toUpperCase());
-        $('coop-progress').max = candidate.level.goal.coverage
-          ? candidate.level.goal.coverage * 100
-          : 100;
+        $('coop-progress').max =
+          candidate.level.hunt?.mode !== 'hunt' && candidate.level.goal.coverage
+            ? candidate.level.goal.coverage * 100
+            : 100;
         overlay({ focus: false });
         render();
         if (!adopted(candidate)) return;
@@ -2809,7 +2902,10 @@ export function bootCoop({
           localizedText($('coop-stage'), () =>
             contentText(attemptLevel || run.level, 'name').toUpperCase(),
           );
-          $('coop-progress').max = run.level.goal.coverage ? run.level.goal.coverage * 100 : 100;
+          $('coop-progress').max =
+            run.level.hunt?.mode !== 'hunt' && run.level.goal.coverage
+              ? run.level.goal.coverage * 100
+              : 100;
           overlay({ focus: false });
         }
         throw error;
@@ -2820,6 +2916,9 @@ export function bootCoop({
       if (!adopted(candidate)) return;
       candidateProgress?.started(selection.journeyRow, candidate, {
         ...attemptTuning.get(candidate),
+        adminOverride:
+          attemptTuning.get(candidate).adminOverride ||
+          attemptTuning.get(candidate).encounterVariant !== 'authored',
         skipped: skipRow,
         picture: earnedTeamPicture(selection, selection.binding),
       });
@@ -3149,17 +3248,26 @@ export function bootCoop({
   ) {
     if (!canOpenDiscovery() || !currentDiscoveryRows().includes(row))
       throw new DOMException(t('interface:arenaSelectionIsNoLongerCurrent'), 'AbortError');
-    const recipe = freshRecipe(structuredClone(row.level), {
-      ...currentRecipe().options,
-      ...(row.journeyRow ? { difficulty: row.journeyRow.difficulty } : {}),
-      ...(restored
+    const recipe = freshRecipe(
+      structuredClone(row.level),
+      {
+        ...currentRecipe().options,
+        ...(row.journeyRow ? { difficulty: row.journeyRow.difficulty } : {}),
+        ...(restored
+          ? {
+              seed: restored.run.seed,
+              difficulty: restored.snapshot.difficulty,
+              ...restored.run.config,
+            }
+          : {}),
+      },
+      restored
         ? {
-            seed: restored.run.seed,
-            difficulty: restored.snapshot.difficulty,
-            ...restored.run.config,
+            encounterVariant: restored.snapshot.encounterVariant ?? 'authored',
+            tuning: restored.snapshot.tuning,
           }
-        : {}),
-    });
+        : null,
+    );
     const selection = newPictureSelection(
       recipe,
       row.pack,
@@ -3319,7 +3427,10 @@ export function bootCoop({
         localizedText($('coop-stage'), () =>
           contentText(attemptLevel || run.level, 'name').toUpperCase(),
         );
-        $('coop-progress').max = run.level.goal.coverage ? run.level.goal.coverage * 100 : 100;
+        $('coop-progress').max =
+          run.level.hunt?.mode !== 'hunt' && run.level.goal.coverage
+            ? run.level.goal.coverage * 100
+            : 100;
       }
       overlay({ focus: false });
     };
@@ -3356,6 +3467,9 @@ export function bootCoop({
         candidate = restored.run;
         attemptTuning.set(candidate, {
           pictureLevel: recipe.level,
+          encounterLevel: recipe.encounterLevel,
+          encounterVariant: recipe.encounterVariant,
+          encounterPack: recipe.encounterPack,
           adminOverride: false,
           gameplayId: restored.snapshot.gameplayId,
           tuning: restored.snapshot.tuning,
@@ -3410,6 +3524,10 @@ export function bootCoop({
         picture: selection.binding,
         actorAppearance: selection.actorAppearance,
         pictureLevel: attemptTuning.get(candidate).pictureLevel,
+        encounterLevel: attemptTuning.get(candidate).encounterLevel,
+        showRemains: encounterDisplay.snapshot().showRemains,
+        brutal: encounterDisplay.snapshot().brutal,
+        blood: encounterDisplay.snapshot().blood,
       });
       check();
       clear();
@@ -3444,9 +3562,10 @@ export function bootCoop({
         $('coop-menu').hidden = true;
         $('coop-play').hidden = false;
         localizedText($('coop-stage'), () => contentText(candidate.level, 'name').toUpperCase());
-        $('coop-progress').max = candidate.level.goal.coverage
-          ? candidate.level.goal.coverage * 100
-          : 100;
+        $('coop-progress').max =
+          candidate.level.hunt?.mode !== 'hunt' && candidate.level.goal.coverage
+            ? candidate.level.goal.coverage * 100
+            : 100;
         pictureUI(localizedMessage('interface:teamPictureReady'));
         overlay({ focus: false });
         render();
@@ -3482,6 +3601,9 @@ export function bootCoop({
       if (run === candidate && running() && foreground() && !disposed)
         candidateProgress?.started(selection.journeyRow, candidate, {
           ...attemptTuning.get(candidate),
+          adminOverride:
+            attemptTuning.get(candidate).adminOverride ||
+            attemptTuning.get(candidate).encounterVariant !== 'authored',
           picture: earnedTeamPicture(selection, selection.binding),
         });
       return run === candidate && running() && foreground() && !disposed;
@@ -4302,11 +4424,35 @@ export function bootCoop({
   $('coop-discovery-paused').onclick = () => discovery.open($('coop-discovery-paused'));
   $('coop-random-level').onclick = () => discovery.open($('coop-random-level'), { random: true });
 
-  function freshRecipe(level, options) {
+  function freshRecipe(level, options, accepted = null) {
+    let encounterVariant = accepted?.encounterVariant ?? encounterPreferences.snapshot().variant;
+    let encounterLevel =
+      accepted?.encounterLevel ?? deriveEncounterLevel(level, encounterVariant, { mode: 'team' });
+    // An unavailable preference stays visible in setup; unrelated historical
+    // arenas continue to use their exact authored edition. Accepted retries fail closed.
+    if (!encounterLevel) {
+      if (accepted) throw new Error('The accepted Team encounter variant is unavailable.');
+      encounterVariant = 'authored';
+      encounterLevel = level;
+    }
+    const changed = dataIdentity(encounterLevel) !== dataIdentity(level);
+    const encounterPack = changed
+      ? freezeDesign({
+          ...journeyTeamPackEdition(encounterLevel),
+          id: `team-variant-${dataIdentity(encounterLevel)}`,
+          revision: String(encounterLevel.revision),
+          name: encounterLevel.name,
+          levels: [structuredClone(encounterLevel)],
+        })
+      : null;
     return {
       level,
       options,
-      tuning: gameplayTuning.snapshot(level.journeyDifficulty ?? options.difficulty),
+      encounterLevel,
+      encounterVariant,
+      encounterPack,
+      tuning:
+        accepted?.tuning ?? gameplayTuning.snapshot(level.journeyDifficulty ?? options.difficulty),
     };
   }
   function normalGameplayIdentity(row) {
@@ -4322,10 +4468,13 @@ export function bootCoop({
     return normalGameplayIdentities.get(row);
   }
   function createTunedCoop(recipe) {
-    const level = applyGameplayTuning(recipe.level, recipe.tuning);
+    const level = applyGameplayTuning(recipe.encounterLevel ?? recipe.level, recipe.tuning);
     const next = createCoop(level, recipe.options);
     attemptTuning.set(next, {
       pictureLevel: recipe.level,
+      encounterLevel: recipe.encounterLevel ?? recipe.level,
+      encounterVariant: recipe.encounterVariant ?? 'authored',
+      encounterPack: recipe.encounterPack ?? null,
       adminOverride: recipe.tuning.adminOverride,
       gameplayId: dataIdentity({ ruleset: next.ruleset, level }),
       tuning: recipe.tuning,
@@ -4346,11 +4495,15 @@ export function bootCoop({
   }
   function currentRecipe() {
     if (run)
-      return freshRecipe(structuredClone(attemptLevel), {
-        seed: run.seed,
-        difficulty: attemptLevel.journeyDifficulty ?? gameplayPreferences.snapshot().difficulty,
-        ...run.config,
-      });
+      return freshRecipe(
+        structuredClone(attemptLevel),
+        {
+          seed: run.seed,
+          difficulty: attemptLevel.journeyDifficulty ?? gameplayPreferences.snapshot().difficulty,
+          ...run.config,
+        },
+        attemptTuning.get(run),
+      );
     const experiment = selectedConfiguration();
     const level = selectedLevel();
     return freshRecipe(level, {
@@ -4470,7 +4623,8 @@ export function bootCoop({
     $('coop-menu').hidden = true;
     $('coop-play').hidden = false;
     localizedText($('coop-stage'), () => contentText(level, 'name').toUpperCase());
-    $('coop-progress').max = level.goal.coverage ? level.goal.coverage * 100 : 100;
+    $('coop-progress').max =
+      level.hunt?.mode !== 'hunt' && level.goal.coverage ? level.goal.coverage * 100 : 100;
     const guidance = () => coopArenaGuidance(next.level, next.config);
     supportGuidance(guidance, level);
     const openingCue = contextualTeaching.opening(guidance());
@@ -4497,6 +4651,9 @@ export function bootCoop({
     if (!disposed && run === next && running() && foreground())
       candidateProgress?.started(selection.journeyRow, next, {
         ...attemptTuning.get(next),
+        adminOverride:
+          attemptTuning.get(next).adminOverride ||
+          attemptTuning.get(next).encounterVariant !== 'authored',
         picture: earnedTeamPicture(selection, binding),
       });
     if (disposed || run !== next || !running() || !foreground()) return;
@@ -4513,6 +4670,7 @@ export function bootCoop({
     if (!running()) return;
     persistInstalledTeamAttempt(run, acceptedPicture, { force: true });
     pauseCoop(run);
+    contextualReactions?.suspend();
     clear();
     overlay({ focus });
     try {
@@ -4529,6 +4687,7 @@ export function bootCoop({
     loopStopped = true;
     updateCueOverflow();
     music?.suspend();
+    contextualReactions?.suspend();
     closeEarnedPicture({ restore: false });
     cancelPicture({ restore: false });
     if (running()) pauseCoop(run);
@@ -4561,6 +4720,7 @@ export function bootCoop({
     cancelPicture({ restore: false });
     clear();
     resumeCoop(run);
+    contextualReactions?.resume();
     if (music) void music.start();
     last = null;
     overlay();
@@ -4923,6 +5083,7 @@ export function bootCoop({
     if (disposed) return;
     cancelJourneySkip();
     music?.suspend();
+    contextualReactions?.suspend();
     discovery?.cancel();
     cancelDiscoveryPreparation();
     if (settingsOwner) settingsOwner.restore = false;
@@ -4957,6 +5118,20 @@ export function bootCoop({
   window.addEventListener('focus', returned);
   document.addEventListener('visibilitychange', hidden);
   function events() {
+    prepareReactionAttempt();
+    contextualReactions?.events(run.events, {
+      mode: 'team',
+      board: 'team',
+      danger:
+        run.combatPatrols?.actors.some((actor) => actor.alive && actor.phase === 'warning') ||
+        run.combatPatrols?.projectiles.length > 0 ||
+        run.players.some((player) => player.status === 'downed') ||
+        run.enemies.some(
+          (enemy) => ['warning', 'commit'].includes(enemy.phase) || enemy.rover?.mode === 'warning',
+        ) ||
+        run.strongholds.some((stronghold) => stronghold.emitter?.phase === 'warning') ||
+        run.impacts.length > 0,
+    });
     const feedbackRow = acceptedPicture?.journeyRow;
     music?.sound.events(
       run.events,
@@ -5159,6 +5334,8 @@ export function bootCoop({
         gameplayId: tuning.gameplayId,
         presetId: setup.id,
         tuning: tuning.tuning,
+        encounterVariant: tuning.encounterVariant ?? 'authored',
+        encounterLevelIdentity: dataIdentity(tuning.encounterLevel ?? tuning.pictureLevel),
         segments: structuredClone(restored?.snapshot.segments ?? []),
         generation: restored?.generation ?? progress?.generation,
         lastQueuedTick: restored?.snapshot.checkpoint.tick ?? -1,
@@ -5186,6 +5363,8 @@ export function bootCoop({
       run: currentRun,
       tuning: record.tuning,
       segments: record.segments,
+      encounterVariant: record.encounterVariant,
+      encounterLevelIdentity: record.encounterLevelIdentity,
     });
   }
   function persistInstalledTeamAttempt(currentRun, picture, { force = false } = {}) {
@@ -5255,6 +5434,10 @@ export function bootCoop({
       record.failure
     )
       return;
+    if (record.encounterVariant !== 'authored') {
+      clearInstalledTeamAttempt(completedRun, picture);
+      return;
+    }
     const savedRun = installedAttemptSnapshot(completedRun, record);
     record.chain = record.chain.then(async () => {
       if (record.failure) return null;
@@ -5429,7 +5612,17 @@ export function bootCoop({
     $('coop-stronghold-help').hidden = !guidance().showStrongholds;
     localizedText($('coop-stronghold-title'), () => guidance().strongholdTitle);
     localizedText($('coop-stronghold-copy'), () => guidance().strongholdText);
-    localizedText($('coop-menu-goal'), () => coopGoalLabel(level));
+    let goalLevel = run?.level ?? level;
+    if (!run) {
+      try {
+        goalLevel =
+          deriveEncounterLevel(level, encounterPreferences.snapshot().variant, { mode: 'team' }) ??
+          level;
+      } catch {
+        // Unavailable prospective variants cannot prevent the authored menu opening.
+      }
+    }
+    localizedText($('coop-menu-goal'), () => coopGoalLabel(goalLevel));
     localizedText($('coop-briefing-title'), () => guidance().briefingTitle);
     localizedText($('coop-stage'), () => contentText(level, 'name').toUpperCase());
     refreshGameplayTuningNote(level, experiment);
@@ -5492,7 +5685,10 @@ export function bootCoop({
     showPackStatus();
     if (!owns()) return;
     $('coop-pack-reset').hidden = pack === COOP_STARTER_PACK;
-    if (owns()) setupNote();
+    if (owns()) {
+      setupNote();
+      encounterControls.refresh();
+    }
   }
   async function prepareImport(draft, { retry = false, origin = document.activeElement } = {}) {
     if (
@@ -5869,6 +6065,7 @@ export function bootCoop({
       arenaPreference.choose(lastBuiltInArena);
     }
     setupNote();
+    encounterControls.refresh();
     return preparePicture();
   };
   $('coop-experiment').onchange = setupNote;
@@ -6042,6 +6239,7 @@ export function bootCoop({
     presentationPage.close();
     closeAudio();
     closeDisplay();
+    contextualReactions?.dispose();
     journeyReactions.dispose();
     journeyPictures?.dispose();
     arenaPreference.dispose();
@@ -6050,6 +6248,11 @@ export function bootCoop({
     candidateProgress?.dispose();
     candidatePreferences?.dispose();
     if (!candidatePreferences) gameplayPreferences.dispose();
+    encounterControls.dispose();
+    encounterPreferences.dispose();
+    huntStatus.dispose();
+    huntResult.dispose();
+    huntRecords.dispose();
     gameplayTuningPanel?.dispose();
     gameplayTuning.dispose();
     candidatePreferenceRestoration?.dispose();
@@ -6259,6 +6462,7 @@ try {
   let candidateEntry;
   if (
     [
+      'humanoid-hunt-v1',
       'team-greybox',
       'team-originals',
       'team-pressure-originals-1',
@@ -6272,6 +6476,7 @@ try {
   ) {
     const { createTeamGreyboxEntry } = await import('../content-design/team-entry.mjs');
     candidateEntry = await createTeamGreyboxEntry({
+      huntTraining: journeyRequest === 'humanoid-hunt-v1',
       artwork: journeyRequest === 'team-originals',
       pressure: journeyRequest === 'team-pressure-originals-1',
       spatial: journeyRequest === 'team-spatial-originals-1',

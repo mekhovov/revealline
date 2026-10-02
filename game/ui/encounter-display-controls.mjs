@@ -1,3 +1,4 @@
+import { attachDestructionControls } from './destruction-controls.mjs';
 import { t, localizedText } from '../i18n/index.mjs';
 import { createEncounterDisplayPreferences } from '../encounter-display-preferences.mjs';
 
@@ -12,6 +13,14 @@ export function attachEncounterDisplayControls({
   const checkbox = doc.getElementById(`${prefix}enemy-remains`),
     status = doc.getElementById(`${prefix}enemy-remains-status`),
     retry = doc.getElementById(`${prefix}enemy-remains-retry`);
+  const destruction = attachDestructionControls({
+    document: doc,
+    window: win,
+    getStorage,
+    writable,
+    prefix,
+    container: checkbox?.closest('section') ?? checkbox?.parentElement?.parentElement,
+  });
   const preferences = createEncounterDisplayPreferences({ window: win, getStorage, writable });
   const stop = preferences.subscribe((state) => {
     if (checkbox) checkbox.checked = state.showRemains;
@@ -27,7 +36,7 @@ export function attachEncounterDisplayControls({
   retry?.addEventListener('click', save);
   let disposed = false;
   return Object.freeze({
-    snapshot: preferences.snapshot,
+    snapshot: () => Object.freeze({ ...preferences.snapshot(), ...destruction.snapshot() }),
     dispose() {
       if (disposed) return;
       disposed = true;
@@ -35,6 +44,7 @@ export function attachEncounterDisplayControls({
       retry?.removeEventListener('click', save);
       stop();
       preferences.dispose();
+      destruction.dispose();
     },
   });
 }
