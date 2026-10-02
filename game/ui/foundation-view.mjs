@@ -10,9 +10,13 @@ export function foundationCompatibleView(run) {
     const descriptor = Object.getOwnPropertyDescriptor(run, 'ruleset');
     if (!descriptor || !Object.hasOwn(descriptor, 'value')) return null;
     if (
-      !['xonix-core.v6', 'xonix-core.v7', 'xonix-core.v8', 'xonix-core.v9'].includes(
-        descriptor.value,
-      )
+      ![
+        'xonix-core.v6',
+        'xonix-core.v7',
+        'xonix-core.v8',
+        'xonix-core.v9',
+        'xonix-core.v10',
+      ].includes(descriptor.value)
     )
       return classicView(run);
     const descriptors = Object.getOwnPropertyDescriptors(run);

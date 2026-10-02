@@ -12,7 +12,9 @@ export async function loadAuthoredJourneyRoute(id, options = {}) {
   if (!isAuthoredJourneyRouteId(id)) return null;
   if (SHIPPED_ROUTE_SNAPSHOT?.id === id) return loadRouteSnapshot(SHIPPED_ROUTE_SNAPSHOT, options);
   let factories;
-  if (id === 'whole-spatial-v38') {
+  if (id === 'humanoid-hunt-v1') {
+    factories = await import('./hunt-training-candidates.mjs');
+  } else if (id === 'whole-spatial-v38') {
     factories = await import('./cooling-loop-erosion-candidates.mjs');
   } else if (id === 'whole-spatial-v37') {
     factories = await import('./pressure-corridor-triptych-candidates.mjs');

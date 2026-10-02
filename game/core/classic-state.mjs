@@ -1,6 +1,7 @@
 import { CELL } from './registry.mjs';
 import { isClassicRuleset } from './versions.mjs';
 import { createTimedBonusState } from './timed-bonuses.mjs';
+import { createHuntState } from '../hunt/rules.mjs';
 
 export const CLASSIC_MATERIAL = Object.freeze({ normal: 0, slow: 1, lethal: 2 });
 export const CLASSIC_EFFECTS = Object.freeze({
@@ -18,6 +19,7 @@ export function createClassicState(level, cells) {
         terrain[y * level.width + x] = CLASSIC_MATERIAL[area.kind];
   return {
     version: 'classic-state.v1',
+    ...(level.classic.hunt ? { hunt: createHuntState() } : {}),
     terrain,
     eligible: Uint8Array.from(cells, (cell) => Number(cell === CELL.FIELD)),
     everClaimed: new Uint8Array(cells.length),

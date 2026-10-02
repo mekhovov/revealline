@@ -1,3 +1,5 @@
+import { deriveEncounterLevel } from '../hunt/variants.mjs';
+import { ENCOUNTER_VARIANTS } from '../hunt/preferences.mjs';
 import { boundedJSON, canonicalJSON, dataIdentity, exactKeys, required } from '../data-json.mjs';
 import { COOP_PACK_MAX_BYTES } from '../coop/recipes.mjs';
 import { createManagedMediaStore, MANAGED_MEDIA_LIMITS } from '../managed-media-store.mjs';
@@ -19,7 +21,8 @@ import {
   isPreparedCreatorTeamMediaCampaign,
   creatorTeamMediaForLevel,
 } from './team-media.mjs';
-import { createCoop, startCoop, stepCoop } from '../coop/core.mjs';
+import { createCoop, releaseCoopInputs, startCoop, stepCoop } from '../coop/core.mjs';
+import { teamInputHistoryExtends } from '../coop/attempt-history.mjs';
 import {
   applyGameplayTuning,
   resolveGameplayTuning,
@@ -30,6 +33,8 @@ export const CREATOR_TEAM_DATABASE = 'revealline-creator-team-v1';
 export const CREATOR_TEAM_EDITION_FORMAT = 'revealline-installed-team-edition.v1';
 export const CREATOR_TEAM_PROGRESS_FORMAT = 'revealline-installed-team-progress.v1';
 export const CREATOR_TEAM_ATTEMPT_FORMAT = 'revealline-installed-team-attempt.v1';
+export const CREATOR_TEAM_VARIANT_ATTEMPT_FORMAT = 'revealline-installed-team-attempt.v2';
+export const CREATOR_TEAM_RELEASE_ATTEMPT_FORMAT = 'revealline-installed-team-attempt.v3';
 const DATABASE_VERSION = 1;
 const STORES = Object.freeze(['editions', 'progress', 'metadata']);
 const STATE_KEY = 'state';
@@ -153,12 +158,21 @@ export function validateInstalledTeamAttempt(source, editionId, levelId) {
       'tuning',
       'segments',
       'checkpoint',
+      ...([CREATOR_TEAM_VARIANT_ATTEMPT_FORMAT, CREATOR_TEAM_RELEASE_ATTEMPT_FORMAT].includes(
+        attempt.format,
+      )
+        ? ['encounterVariant', 'encounterLevelIdentity']
+        : []),
     ],
     'installed Team attempt',
   );
   const tuning = validateGameplayTuning(attempt.tuning);
   required(
-    attempt.format === CREATOR_TEAM_ATTEMPT_FORMAT &&
+    [
+      CREATOR_TEAM_ATTEMPT_FORMAT,
+      CREATOR_TEAM_VARIANT_ATTEMPT_FORMAT,
+      CREATOR_TEAM_RELEASE_ATTEMPT_FORMAT,
+    ].includes(attempt.format) &&
       attempt.editionId === editionId &&
       attempt.levelId === levelId &&
       text(attempt.attemptId, 160) &&
@@ -171,8 +185,25 @@ export function validateInstalledTeamAttempt(source, editionId, levelId) {
       attempt.segments.length <= MAX_ATTEMPT_SEGMENTS,
     'Installed Team attempt is damaged.',
   );
+  if (
+    [CREATOR_TEAM_VARIANT_ATTEMPT_FORMAT, CREATOR_TEAM_RELEASE_ATTEMPT_FORMAT].includes(
+      attempt.format,
+    )
+  )
+    required(
+      ENCOUNTER_VARIANTS.includes(attempt.encounterVariant) &&
+        (attempt.format === CREATOR_TEAM_RELEASE_ATTEMPT_FORMAT ||
+          attempt.encounterVariant !== 'authored') &&
+        typeof attempt.encounterLevelIdentity === 'string' &&
+        /^[a-f0-9]{16}$/.test(attempt.encounterLevelIdentity),
+      'Saved Team variant identity is damaged.',
+    );
   let ticks = 0;
   for (const segment of attempt.segments) {
+    if (attempt.format === CREATOR_TEAM_RELEASE_ATTEMPT_FORMAT && segment.release === true) {
+      exactKeys(segment, ['release'], 'installed Team input release');
+      continue;
+    }
     exactKeys(segment, ['ticks', 'commands'], 'installed Team input segment');
     required(
       Number.isSafeInteger(segment.ticks) && segment.ticks > 0,
@@ -204,17 +235,32 @@ function replayAttempt(pack, source, editionId, levelId, { terminal = false } = 
       attempt.difficulty,
       attempt.presetId,
       attempt.tuning,
+      attempt.encounterVariant ?? 'authored',
     ),
     run = configured.run;
   required(
     attempt.gameplayId === configured.gameplayId,
     'Saved Team attempt does not match the installed configuration.',
   );
-  for (const segment of attempt.segments)
+  for (const segment of attempt.segments) {
+    if (segment.release) {
+      releaseCoopInputs(run);
+      continue;
+    }
     for (let index = 0; index < segment.ticks; index++) {
       required(run.status === 'running', 'Saved Team inputs continue after the attempt ended.');
       stepCoop(run, segment.commands);
     }
+  }
+  if (
+    [CREATOR_TEAM_VARIANT_ATTEMPT_FORMAT, CREATOR_TEAM_RELEASE_ATTEMPT_FORMAT].includes(
+      attempt.format,
+    )
+  )
+    required(
+      attempt.encounterLevelIdentity === configured.encounterLevelIdentity,
+      'Saved Team variant no longer matches its exact accepted recipe.',
+    );
   const actual = checkpoint(run);
   required(
     canonicalJSON(actual) === canonicalJSON(attempt.checkpoint),
@@ -229,19 +275,30 @@ function replayAttempt(pack, source, editionId, levelId, { terminal = false } = 
   return { attempt, run };
 }
 
+function extendsSavedAttempt(completed, saved) {
+  return (
+    ['attemptId', 'gameplayId', 'difficulty', 'presetId'].every(
+      (key) => completed[key] === saved[key],
+    ) &&
+    canonicalJSON(completed.tuning) === canonicalJSON(saved.tuning) &&
+    teamInputHistoryExtends(completed.segments, saved.segments)
+  );
+}
+
 function installedTeamConfiguration(
   pack,
   levelId,
   difficulty,
   presetId,
   tuning = resolveGameplayTuning(difficulty),
+  encounterVariant = 'authored',
 ) {
   const base = createCreatorTeamAttempt(pack, levelId, difficulty, presetId),
     checkedTuning = validateGameplayTuning(tuning),
-    level = applyGameplayTuning(
-      pack.levels.find((candidate) => candidate.id === levelId),
-      checkedTuning,
-    );
+    original = pack.levels.find((candidate) => candidate.id === levelId),
+    encounterLevel = deriveEncounterLevel(original, encounterVariant, { mode: 'team' });
+  required(encounterLevel, 'Saved Team encounter variant is unavailable for this mission.');
+  const level = applyGameplayTuning(encounterLevel, checkedTuning);
   required(
     checkedTuning.difficulty === difficulty && checkedTuning.adminOverride === false,
     'Installed Team progress requires the reviewed gameplay pressure preset.',
@@ -256,6 +313,7 @@ function installedTeamConfiguration(
   return {
     run,
     gameplayId: dataIdentity({ ruleset: run.ruleset, level }),
+    encounterLevelIdentity: dataIdentity(encounterLevel),
   };
 }
 
@@ -275,9 +333,18 @@ export function createInstalledTeamAttemptSnapshot({
   run,
   tuning = resolveGameplayTuning(run?.difficulty),
   segments,
+  encounterVariant = 'authored',
+  encounterLevelIdentity,
 }) {
+  const variant = encounterVariant !== 'authored';
+  const releases = segments.some((segment) => segment.release === true);
   const source = {
-    format: CREATOR_TEAM_ATTEMPT_FORMAT,
+    format: releases
+      ? CREATOR_TEAM_RELEASE_ATTEMPT_FORMAT
+      : variant
+        ? CREATOR_TEAM_VARIANT_ATTEMPT_FORMAT
+        : CREATOR_TEAM_ATTEMPT_FORMAT,
+    ...(variant || releases ? { encounterVariant, encounterLevelIdentity } : {}),
     editionId,
     levelId: run?.level?.id,
     attemptId,
@@ -1008,6 +1075,10 @@ export function createInstalledTeamCampaignStore({
       signal,
     );
     required(installedSource !== undefined, 'This exact Team edition is no longer installed.');
+    required(
+      (attempt?.encounterVariant ?? 'authored') === 'authored',
+      'Variant attempts keep separate hunt records and cannot earn the original Team clear.',
+    );
     const inspectedEdition = await inspectEdition(installedSource, editionId);
     if (inspectedEdition.payload) {
       const media = await importCreatorTeamMediaCampaign(inspectedEdition.payload, {
@@ -1075,13 +1146,20 @@ export function createInstalledTeamCampaignStore({
               presetId,
               ...(picture ? { reward: picture } : {}),
             };
-          if (previous?.runId === runId) {
+          const duplicate = previous?.runId === runId,
+            pending = progress.attempts[levelId];
+          if (duplicate) {
             required(
               canonicalJSON(previous) === canonicalJSON(receipt),
               t('errors:creator.teamRunIdentityChanged'),
             );
-            result = structuredClone(progress);
-            return;
+            // Old Retry checkpoints could reuse their picture lease's run ID.
+            // An ordinary duplicate remains a no-op. Cleaning that historical
+            // checkpoint requires the current owner and another exact win replay.
+            if (pending?.attemptId !== runId || expectedGeneration === undefined) {
+              result = structuredClone(progress);
+              return;
+            }
           }
           if (expectedGeneration !== undefined)
             required(
@@ -1098,7 +1176,12 @@ export function createInstalledTeamCampaignStore({
               replayed.attempt.presetId === presetId,
             'Team completion differs from its exact replayed attempt.',
           );
-          progress.clears[levelId] = receipt;
+          if (duplicate)
+            required(
+              extendsSavedAttempt(replayed.attempt, pending),
+              'A newer installed Team attempt replaced this checkpoint.',
+            );
+          else progress.clears[levelId] = receipt;
           delete progress.attempts[levelId];
           progress.generation++;
           progressStore.put(progress, editionId);
