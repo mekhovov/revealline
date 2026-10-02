@@ -90,8 +90,10 @@ import {
 import { builtinWorldScene, createFlightRenderer } from './world-assets.mjs';
 import { mountDroneHangar } from './world-hangar.mjs';
 import { mountActorEditor } from './world-actor-editor.mjs';
+import { fpvWorldReturnURL } from '../../game/fpv-entry.mjs';
 
 const COPY_EN = {
+  backToGame: 'Back to game',
   learn: 'Learn to fly',
   beginLearning: 'Start Flight School',
   schoolEyebrow: 'ACRO FLIGHT SCHOOL · BUILD YOUR MASTERY',
@@ -258,6 +260,7 @@ const COPY_EN = {
   keys: 'W/S pitch · A/D roll · Q/E yaw · ↑/↓ throttle · P pause · Space fire',
 };
 const COPY_UK = {
+  backToGame: 'Назад до гри',
   learn: 'Навчитися літати',
   beginLearning: 'Почати льотну школу',
   schoolEyebrow: 'ШКОЛА ACRO · РОЗВИВАЙТЕ МАЙСТЕРНІСТЬ',
@@ -662,6 +665,13 @@ export function mountWorldApp({
   const $ = (id) => doc.getElementById(id),
     listeners = [],
     translatedNodes = [];
+  const gameReturn = fpvWorldReturnURL(win.location.href);
+  for (const id of ['sim-game-return', 'flight-game-return']) {
+    const link = $(id);
+    if (!link) continue;
+    link.hidden = !gameReturn;
+    if (gameReturn) link.href = gameReturn;
+  }
   doc.querySelectorAll('[data-i18n]').forEach((n) => {
     translatedNodes.push({ node: n, key: n.dataset.i18n, fallback: n.textContent });
     // The host's translator owns its own data-i18n namespace. Studio strings
@@ -2530,7 +2540,6 @@ export function mountWorldApp({
         createCourse: courseFromProject,
         createCollider: colliderFromAnchor,
         validateCourse: validateWorldCourse,
-
       });
       next = review.project;
       diagnostics = review.diagnostics;
@@ -4148,6 +4157,17 @@ export function mountWorldApp({
     if (playingPlaylist) return flySequence(playingPlaylist, playlistIndex + 1);
   });
   on($('leave-flight'), 'click', closeFlight);
+  for (const id of ['sim-game-return', 'flight-game-return']) {
+    if (!$(id) || !gameReturn) continue;
+    on($(id), 'click', async (event) => {
+      if (event.ctrlKey || event.metaKey || event.shiftKey || event.altKey) return;
+      event.preventDefault();
+      const token = flightToken;
+      pauseFlight();
+      await saveRecovery();
+      if (!disposed && token === flightToken) win.location.assign(gameReturn);
+    });
+  }
   on($('flight-dialog'), 'cancel', (e) => {
     e.preventDefault();
     if (flight?.snapshot().status === 'active') setFlightMenu(true);
