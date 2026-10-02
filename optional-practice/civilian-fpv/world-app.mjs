@@ -30,7 +30,7 @@ import {
 } from './world-model.mjs';
 import { WORLD_COLLISION_BACKEND } from './world-collision.mjs';
 import { mountBeginnerCoach } from './beginner-coach.mjs';
-import { createFlightInput, createFlightMenuNavigation } from './input.mjs';
+import { createFlightInput, createFlightMenuNavigation, createFlightGamepad } from './input.mjs';
 import { createRadioRuntime } from './radio-runtime.mjs';
 import { restoreVerifiedRadio } from './radio-session.mjs';
 import { mountRadioSetup } from './radio-setup.mjs';
@@ -232,6 +232,9 @@ const COPY_EN = {
   keyboard: 'Keyboard',
   touch: 'Touch',
   radio: 'USB radio',
+  controller: 'Controller / Steam Deck',
+  flightMenu: 'Menu',
+  returnToFlight: 'Back to flight',
   setup: 'Setup',
   chase: 'Chase',
   overview: 'Overview',
@@ -389,6 +392,9 @@ const COPY_UK = {
   keyboard: 'Клавіатура',
   touch: 'Дотик',
   radio: 'USB-пульт',
+  controller: 'Контролер / Steam Deck',
+  flightMenu: 'Меню',
+  returnToFlight: 'До польоту',
   setup: 'Налаштування',
   chase: 'За дроном',
   overview: 'Огляд',
@@ -758,6 +764,8 @@ export function mountWorldApp({
   ];
   try {
     const saved = JSON.parse(storage?.getItem('revealline.fpv.world-settings.v1') ?? '{}');
+    if (!saved['flight-source'] && win.matchMedia?.('(pointer: coarse)').matches)
+      $('flight-source').value = 'touch';
     if (saved['flight-drone-guide'] === 'on') saved['flight-drone-guide'] = 'compact';
     for (const id of preferenceIds)
       if (typeof saved[id] === 'string') {
@@ -1088,6 +1096,76 @@ export function mountWorldApp({
     },
   });
   const input = createFlightInput({ window: win, document: doc, onPause: () => pauseFlight() });
+  const gamepad = createFlightGamepad({ window: win, document: doc });
+  const flightMenuOpen = () => $('flight-dialog').dataset.flightMenuOpen === 'true';
+  function setFlightMenu(open) {
+    if (open) pauseFlight();
+    $('flight-dialog').dataset.flightMenuOpen = String(open);
+    if (!open) {
+      $('flight-dialog').dataset.optionsOpen = 'false';
+      $('flight-options').setAttribute('aria-expanded', 'false');
+    }
+    if (flight) updateHUD(flight.snapshot());
+    (open ? $('world-flight-close-menu') : $('world-flight-resume')).focus({ preventScroll: true });
+  }
+  const gamepadHelp = () =>
+    txt(
+      'A / Cross: arm · Y / Triangle: reset · Menu / B: pause. Left stick: yaw and throttle adjustment; centre to hold throttle. Right stick / D-pad: tilt. LB/RB: yaw · LT/RT: less/more throttle · X/Square: fire. Steam Input: use a Gamepad layout.',
+      'A / Cross: увімкнути · Y / Triangle: скинути · Menu / B: пауза. Лівий стік: поворот і зміна газу; центр утримує газ. Правий стік / D-pad: нахил. LB/RB: поворот · LT/RT: менше/більше газу · X/Square: вогонь. Steam Input: розкладка Gamepad.',
+    );
+  function gamepadScope() {
+    if (
+      !flight ||
+      !$('flight-dialog').open ||
+      replayProof ||
+      !sceneReady ||
+      beginnerCoach.blocksArm() ||
+      doc.visibilityState === 'hidden' ||
+      (doc.hasFocus && !doc.hasFocus()) ||
+      doc.querySelector('dialog[open]:not(#flight-dialog)') ||
+      flightMenuOpen() ||
+      $('flight-dialog').dataset.optionsOpen === 'true' ||
+      $('flight-dialog').dataset.immersiveControls === 'true'
+    )
+      return 'blocked';
+    if (flight.snapshot().status === 'active')
+      return $('flight-source').value === 'controller' ? 'flight' : 'blocked';
+    return ['paused', 'disarmed'].includes(flight.snapshot().status) &&
+      ($('flight-source').value !== 'radio' || !radio.status().verified)
+      ? 'ready'
+      : 'blocked';
+  }
+  function readGamepad(now, scope = gamepadScope()) {
+    let pads = [];
+    try {
+      pads = win.navigator.getGamepads?.() ?? [];
+    } catch {
+      /* Other controls remain usable. */
+    }
+    return gamepad.poll({
+      gamepads: pads,
+      now,
+      scope,
+      excludeIndex: radio.status().verified ? radio.status().selected?.index : null,
+    });
+  }
+  function pollGamepad(now) {
+    const sampled = readGamepad(now);
+    for (const action of sampled.actions) {
+      if (action === 'arm') {
+        if ($('flight-source').value !== 'controller') {
+          $('flight-source').value = 'controller';
+          input.select('controller');
+          savePreferences();
+          paintLoadout();
+        }
+        $('world-arm').click();
+      } else if (action === 'reset') {
+        setFlightMenu(false);
+        $('world-retry').click();
+      } else if (action === 'pause' || action === 'back') setFlightMenu(true);
+    }
+  }
   input.bindStick($('world-left-stick'), 'left');
   input.bindStick($('world-right-stick'), 'right');
   const radio = createRadioRuntime({
@@ -1118,7 +1196,7 @@ export function mountWorldApp({
     onNext: () => nextLearningFlight(),
     onExit: () => closeFlight(),
     onRadio: () => $('radio-setup-button').click(),
-    readRadioPreview: () => radio.preview(),
+    readRadioPreview: () => ({ ...radio.preview(), index: radio.status().selected?.index }),
     createLessonPreview: (lesson, mode, proof) =>
       createWorldFlight({
         course: lesson.course,
@@ -1234,12 +1312,14 @@ export function mountWorldApp({
       controls =
         source === 'radio'
           ? (radioPreview?.controls ?? neutralFlightInput())
-          : Object.fromEntries(
-              ['roll', 'pitch', 'yaw', 'throttle'].map((k) => [
-                k,
-                (state?.lastInput?.[k] ?? 0) / 1000,
-              ]),
-            ),
+          : source === 'controller'
+            ? gamepad.preview().controls
+            : Object.fromEntries(
+                ['roll', 'pitch', 'yaw', 'throttle'].map((k) => [
+                  k,
+                  (state?.lastInput?.[k] ?? 0) / 1000,
+                ]),
+              ),
       layout = STICK_LAYOUTS[radioPreview?.stickMode ?? 2],
       traceLayout = `${flightToken}:${source}:${layout.join(':')}`,
       reducedMotion =
@@ -1287,20 +1367,22 @@ export function mountWorldApp({
     const text =
       source === 'radio'
         ? `${txt('USB radio', 'USB-пульт')} · ${radioHelp(radio.status().reason)}`
-        : source === 'recording'
-          ? txt(
-              'Recorded controls · live input does not affect playback.',
-              'Записане керування · живий сигнал не змінює відтворення.',
-            )
-          : source === 'touch'
+        : source === 'controller'
+          ? gamepadHelp()
+          : source === 'recording'
             ? txt(
-                'Touch controls · left: yaw/throttle, right: roll/pitch.',
-                'Сенсорне керування · ліворуч: рискання/газ, праворуч: крен/тангаж.',
+                'Recorded controls · live input does not affect playback.',
+                'Записане керування · живий сигнал не змінює відтворення.',
               )
-            : txt(
-                'Keyboard · W/S pitch · A/D roll · Q/E yaw · ↑/↓ throttle.',
-                'Клавіатура · W/S тангаж · A/D крен · Q/E рискання · ↑/↓ газ.',
-              );
+            : source === 'touch'
+              ? txt(
+                  'Touch controls · left: yaw/throttle, right: roll/pitch.',
+                  'Сенсорне керування · ліворуч: рискання/газ, праворуч: крен/тангаж.',
+                )
+              : txt(
+                  'Keyboard · W/S pitch · A/D roll · Q/E yaw · ↑/↓ throttle.',
+                  'Клавіатура · W/S тангаж · A/D крен · Q/E рискання · ↑/↓ газ.',
+                );
     if (status.textContent !== text) status.textContent = text;
     status.dataset.source = source;
     monitor.dataset.source = source;
@@ -1312,19 +1394,21 @@ export function mountWorldApp({
             'Radio sticks control flight · P pauses · Space or Fire shoots.',
             'Стіки пульта керують польотом · P — пауза · Пробіл або «Вогонь» — постріл.',
           )
-        : source === 'touch'
-          ? txt(
-              'Drag the sticks to fly · use Pause and Fire below.',
-              'Рухайте стіки для польоту · кнопки «Пауза» та «Вогонь» — нижче.',
-            )
-          : source === 'recording'
+        : source === 'controller'
+          ? gamepadHelp()
+          : source === 'touch'
             ? txt(
-                'The sticks show recorded commands. Pause, slow down or switch views to study them.',
-                'Стіки показують записані команди. Зупиняйте, сповільнюйте або змінюйте камеру, щоб їх роздивитися.',
+                'Drag the sticks to fly · use Pause and Fire below.',
+                'Рухайте стіки для польоту · кнопки «Пауза» та «Вогонь» — нижче.',
               )
-            : locale === 'uk'
-              ? COPY_UK.keys
-              : COPY_EN.keys;
+            : source === 'recording'
+              ? txt(
+                  'The sticks show recorded commands. Pause, slow down or switch views to study them.',
+                  'Стіки показують записані команди. Зупиняйте, сповільнюйте або змінюйте камеру, щоб їх роздивитися.',
+                )
+              : locale === 'uk'
+                ? COPY_UK.keys
+                : COPY_EN.keys;
     $('flight-stick-display').setAttribute(
       'aria-label',
       txt('Stick display', 'Відображення стіків'),
@@ -1351,6 +1435,7 @@ export function mountWorldApp({
         monitorAvailable: !(source === 'radio' && unavailable),
         radioMonitor: radioPreview?.controls,
         radioAvailable: Boolean(radioPreview?.verified),
+        radioIndex: radio.status().selected?.index,
         radioStickMode: radioPreview?.stickMode ?? 2,
         mode: $('flight-mode').value,
         reducedMotion:
@@ -2516,6 +2601,7 @@ export function mountWorldApp({
   function pauseFlight(freezeRadio = true) {
     if (pausing) return;
     pausing = true;
+    gamepad.reset();
     stickTraces.forEach((trace) => trace.reset());
     beginnerCoach.pausePreview?.();
     if (fire) fireReleaseRequired = true;
@@ -2764,6 +2850,8 @@ export function mountWorldApp({
       .join(' · ');
   }
   function updateHUD(state) {
+    $('flight-dialog').dataset.flightState = state.status;
+    $('world-flight-identity').textContent = $('flight-title').textContent;
     updateSectorHUD();
     updateGhostHUD();
     const target = current.course.steps[$('flight-mode').value][state.step];
@@ -2792,6 +2880,9 @@ export function mountWorldApp({
       !current.course.actors.some(
         (a) => a.type !== 'hazard' && (a.role ?? 'hostile') === 'hostile',
       );
+    $('world-flight-resume').disabled = $('world-arm').disabled;
+    $('world-flight-resume').textContent = $('world-arm').textContent;
+    $('world-flight-fire').hidden = $('world-fire').hidden || $('flight-source').value !== 'touch';
     $('world-next').disabled =
       !playingPlaylist || playlistIndex + 1 >= playingPlaylist.entries.length;
   }
@@ -3037,6 +3128,7 @@ export function mountWorldApp({
     }
   }
   function advanceFrame(now) {
+    pollGamepad(now);
     pollMenu(now);
     if (!flight || !$('flight-dialog').open) return;
     if (
@@ -3067,6 +3159,7 @@ export function mountWorldApp({
       doc.visibilityState !== 'hidden' &&
       (!doc.hasFocus || doc.hasFocus()) &&
       !doc.querySelector('dialog[open]:not(#flight-dialog)') &&
+      !flightMenuOpen() &&
       $('flight-dialog').dataset.optionsOpen !== 'true' &&
       $('flight-dialog').dataset.immersiveControls !== 'true' &&
       !beginnerCoach.blocksArm()
@@ -3085,7 +3178,11 @@ export function mountWorldApp({
       while (accumulator >= 20 && flight.snapshot().status === 'active') {
         accumulator -= 20;
         let controls =
-          !replayProof && $('flight-source').value === 'radio' ? radio.poll() : input.sample(0.02);
+          !replayProof && $('flight-source').value === 'radio'
+            ? radio.poll()
+            : !replayProof && $('flight-source').value === 'controller'
+              ? gamepad.sample(0.02)
+              : input.sample(0.02);
         if (replayProof) {
           const row = replayProof.frames[flight.snapshot().ticks];
           if (!row) {
@@ -3105,7 +3202,14 @@ export function mountWorldApp({
         flight.step(
           current.legacy
             ? controls
-            : { ...controls, actions: replayProof ? replayProof.frames[before][4] : fire ? 1 : 0 },
+            : {
+                ...controls,
+                actions: replayProof
+                  ? replayProof.frames[before][4]
+                  : fire || ($('flight-source').value === 'controller' && gamepad.preview().fire)
+                    ? 1
+                    : 0,
+              },
         );
         if (flight.snapshot().ticks > before) {
           if (current.legacy) recorder.record(controls);
@@ -3142,6 +3246,7 @@ export function mountWorldApp({
   async function startFlight(entry, options = {}) {
     if (disposed) return;
     const token = ++flightToken;
+    $('flight-dialog').dataset.flightMenuOpen = 'false';
     qualityPreparing = false;
     scenePreparationGeneration++;
     abortSectorLookup();
@@ -3803,12 +3908,16 @@ export function mountWorldApp({
           ),
     );
   });
+  on($('world-flight-menu'), 'click', () => setFlightMenu(true));
+  on($('world-flight-close-menu'), 'click', () => setFlightMenu(false));
+  on($('world-flight-resume'), 'click', () => $('world-arm').click());
   on($('world-arm'), 'click', () => {
     if (doc.querySelector('dialog[open]:not(#flight-dialog)')) return;
     if (beginnerCoach.blocksArm()) {
       beginnerCoach.showGuide();
       return;
     }
+    $('flight-dialog').dataset.flightMenuOpen = 'false';
     $('flight-dialog').dataset.optionsOpen = 'false';
     $('flight-options').setAttribute('aria-expanded', 'false');
     immersive.closeControls();
@@ -3826,6 +3935,16 @@ export function mountWorldApp({
       if (!radio.status().active && !radio.requestArm()) {
         paintInput(flight.snapshot());
         $('flight-status').textContent = radioHelp(radio.status().reason);
+        return;
+      }
+    }
+    if (!replayProof && $('flight-source').value === 'controller') {
+      readGamepad(win.performance.now(), 'ready');
+      if (!gamepad.status().canArm) {
+        $('flight-status').textContent = txt(
+          'Connect a controller, then centre the sticks and release all buttons.',
+          'Під’єднайте контролер і відпустіть стіки та кнопки.',
+        );
         return;
       }
     }
@@ -3860,7 +3979,11 @@ export function mountWorldApp({
       if (beginnerCoach.previewRunning()) return null;
       if (beginnerCoach.blocksArm()) return { root: $('beginner-coach'), key: 'coach' };
       if (flight?.snapshot().status === 'active') return null;
-      return { root: $('flight-dialog'), key: `flight:${$('flight-dialog').dataset.optionsOpen}` };
+      return {
+        root: $('flight-dialog'),
+        key: `flight:${$('flight-dialog').dataset.optionsOpen}:${flightMenuOpen()}`,
+        blockDevices: gamepadScope() !== 'blocked',
+      };
     }
     return { root: doc.body, key: `lobby:${win.location.hash}` };
   }
@@ -3886,7 +4009,8 @@ export function mountWorldApp({
         $('drone-hangar').querySelector('[data-close-hangar]').click();
       else if ($('sim-settings').open) closeSettings();
       else if ($('flight-dialog').open) {
-        if ($('flight-dialog').dataset.optionsOpen === 'true') $('flight-options').click();
+        if (flightMenuOpen()) setFlightMenu(false);
+        else if ($('flight-dialog').dataset.optionsOpen === 'true') $('flight-options').click();
         else void closeFlight().catch(reportError);
       } else if (immersive.active()) void immersive.exit();
       else showTab('explore');
@@ -3983,7 +4107,9 @@ export function mountWorldApp({
   on($('leave-flight'), 'click', closeFlight);
   on($('flight-dialog'), 'cancel', (e) => {
     e.preventDefault();
-    if (immersive.active()) void immersive.exit();
+    if (flight?.snapshot().status === 'active') setFlightMenu(true);
+    else if (flightMenuOpen()) setFlightMenu(false);
+    else if (immersive.active()) void immersive.exit();
     else void closeFlight().catch(reportError);
   });
   on($('export-flight'), 'click', async () => {
@@ -4065,19 +4191,21 @@ export function mountWorldApp({
   on($('drone-look'), 'change', () =>
     changeFlightVisuals(() => renderer?.setDrone?.($('drone-look').value)),
   );
-  on($('world-fire'), 'pointerdown', (e) => {
-    e.preventDefault();
-    if (!replayProof && flight?.snapshot().status === 'active') {
-      fireReleaseRequired = false;
-      fire = true;
-      $('world-fire').setPointerCapture?.(e.pointerId);
-    }
-  });
-  for (const event of ['pointerup', 'pointercancel', 'lostpointercapture'])
-    on($('world-fire'), event, () => {
-      fire = false;
-      fireReleaseRequired = false;
+  for (const fireButton of [$('world-fire'), $('world-flight-fire')]) {
+    on(fireButton, 'pointerdown', (e) => {
+      e.preventDefault();
+      if (!replayProof && flight?.snapshot().status === 'active') {
+        fireReleaseRequired = false;
+        fire = true;
+        fireButton.setPointerCapture?.(e.pointerId);
+      }
     });
+    for (const event of ['pointerup', 'pointercancel', 'lostpointercapture'])
+      on(fireButton, event, () => {
+        fire = false;
+        fireReleaseRequired = false;
+      });
+  }
   on(win, 'keydown', (e) => {
     if (
       e.defaultPrevented ||
@@ -4099,7 +4227,7 @@ export function mountWorldApp({
     }
     if (e.code === 'KeyP') {
       e.preventDefault();
-      pauseFlight();
+      setFlightMenu(true);
     }
   });
   on(win, 'keyup', (e) => {
@@ -4252,6 +4380,7 @@ export function mountWorldApp({
       menuNavigation.dispose();
       menuHint.remove();
       input.dispose();
+      gamepad.dispose();
       radioSetup?.dispose();
       flight?.dispose?.();
       flight = null;
