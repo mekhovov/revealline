@@ -1157,3 +1157,43 @@ The actual refreshed player remains open safely paused; temporary viewport sizin
 was reset. Additional unit coverage stays in R7, physical handheld/controller
 acceptance remains unclaimed. The requested handheld/controller/landing increment
 is complete locally and published for review; keep further R5 work separate.
+
+### 2 October — lesson step input reset corrected
+
+Current branch `codex/fpv-step-input-continuity` starts from #943 head
+`41c49e73e1799486927c317e64e16431f72e1049`; no upstream edits were present or
+changed. The reported lesson09 step1→2 transition retains49.3% throttle in the
+recording, but pausePreview/paintLab replaced its presentation with0%. The coach
+now derives example input from the actual last applied command through pauses
+and explicit step selection. Manual input safety and all proof commands remain.
+
+Production-browser evidence passes120/120 cases over58 lessons,316 natural
+boundaries and316 manual seeks, including frozen SVG/readout equality, resume,
+EN/UK and keyboard/radio safety. All58 canonical final proof identities pass.
+See `docs/fpv-step-input-continuity.md` and its browser receipt. Focused lint,
+format/syntax and independent read-only review pass. Unit coverage stays in R7.
+
+The continuous-school local player is rebuilt:87 files/13,949,386bytes, ZIP SHA
+`ee5a48f780c40db728c784b5dc7d8b77cbca4ce460e584c15999fc3cd926fb40`.
+Actual turning-lesson step2 now shows49% while paused. Next: frozen optional
+package qualification, refresh reviewed-player too, and publish a focused child
+PR after #943 through native stack902. Preserve existing holds and external CI;
+no public-live or new hardware claim. Other R5–R7 work remains separate.
+
+Frozen runtime `a4df52c790e3c41449a3f0a48be235e8a9edf48d` passes all3 optional
+package admissions, committed inputs/ZIP verification and2 byte-identical builds.
+Receipt: `docs/evidence/fpv-step-boundary-package-20261002.json`. Both local player
+paths now share the87-file/13,949,386-byte build and SHA above. The actual built
+turning lesson's paused second step was inspected with49% retained; screenshot
+`/tmp/fpv-step-input-continuity-20261002.png`. Ready for focused publication.
+
+### 2 October — lesson continuity fix published
+
+[#944](https://github.com/mekhovov/revealline/pull/944) is attached to this chat
+and appended via the native API to stack902 after #943. Qualification head:
+`674d88439da2d8e012b5e900d32b611beacca778`; frozen runtime remains a4df52c7.
+No upstream member was retargeted or rebased. CI/merge/public availability remain
+external follow-up; do not infer passing gates from skipped or absent checks.
+The corrected player is left on the paused coordinated-turn lesson for review.
+Next independent work remains the reviewed R5 art backlog, with physical-device
+acceptance and R7 coverage still outstanding; preserve all older stack holds.
