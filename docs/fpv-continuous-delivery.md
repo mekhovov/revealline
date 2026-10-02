@@ -920,3 +920,9 @@ passes all three package admissions, committed inputs, ZIP membership and two
 byte-identical builds. Receipt: `docs/evidence/fpv-navigation-package-20261002.json`.
 The separate local player is87 files/13,246,555bytes with ZIP SHA-256
 `0b6459a262c90f713d97a983943895121b3967dc5a67cdb323f5aa1cff164fa4`.
+
+Navigation school published in focused PR [#939](https://github.com/mekhovov/revealline/pull/939),
+attached to this chat and appended to native stack #902 directly after #938.
+Qualified receipt head `b80425d55`; upstream review/protection holds retained.
+Next branch: `codex/fpv-pro-mastery-school`, containing only the skill criteria,
+Pro/Master lessons and required presentation/editor adapters after they qualify.
