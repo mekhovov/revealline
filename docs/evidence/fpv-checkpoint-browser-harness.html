@@ -69,18 +69,23 @@
   }
   const runtimeRoot = document.querySelector('meta[name="fixture-runtime-root"]')?.content ?? '/';
   const runtimeURL = new URL(runtimeRoot, location.href);
+  const sourceBinding = JSON.parse(
+    document.getElementById('fixture-source-binding')?.textContent ?? 'null',
+  );
   async function sourceHashes() {
-    const paths = [
-      'optional-practice/fpv-worlds/index.html',
-      ...[
-        'world-app.mjs',
-        'world-progress.mjs',
-        'world-model.mjs',
-        'input.mjs',
-        'world-catalogue.mjs',
-        'world-demonstrations.mjs',
-      ].map((x) => 'optional-practice/civilian-fpv/' + x),
-    ];
+    const paths = sourceBinding
+      ? Object.keys(sourceBinding.files)
+      : [
+          'optional-practice/fpv-worlds/index.html',
+          ...[
+            'world-app.mjs',
+            'world-progress.mjs',
+            'world-model.mjs',
+            'input.mjs',
+            'world-catalogue.mjs',
+            'world-demonstrations.mjs',
+          ].map((x) => 'optional-practice/civilian-fpv/' + x),
+        ];
     return Object.fromEntries(
       await Promise.all(
         paths.map(async (p) => {
@@ -226,6 +231,17 @@
     await record(
       'Load production HTML with isolated native storage and no physical gamepads',
       async () => {
+        must(
+          sourceBinding?.format === 'FPVCheckpointFixtureSource.v1',
+          'Regenerate fixture with a source-bound module graph',
+        );
+        eq(
+          source,
+          Object.fromEntries(
+            Object.entries(sourceBinding.files).map(([name, row]) => [name, row.sha256]),
+          ),
+          'Prepared runtime bytes changed; generate a fresh fixture',
+        );
         const loaded = new Promise((r) => $('sim').addEventListener('load', r, { once: true }));
         $('sim').src = './simulator.html?fixture=' + Date.now();
         await loaded;
@@ -757,8 +773,11 @@
     const receipt = {
       format: 'FPVCheckpointHostEvidence.v1',
       runtimeRoot,
+      sourceBinding,
+      frameTransport:
+        'Actual same-origin HTTP simulator.html with location/history preserved; no srcdoc or runtime rewrite.',
       proofGenerator:
-        'Repository source modules produce independent recorded-command fixtures; all simulator host HTML, imports and assets use runtimeRoot.',
+        'Independent fixed-step proof generation uses the same source-bound modules in a separate browser realm; production host HTML, imports and assets use runtimeRoot. Module URL hashes prevent stale HTTP cache reuse.',
       createdAt: new Date().toISOString(),
       passed: checks.every((c) => c.passed),
       checks,
