@@ -2,7 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import { selectOfflineCore } from '../../scripts/offline-core-closure.mjs';
-import { fpvLaunchURL, fpvReturnURL } from '../fpv-entry.mjs';
+import { fpvLaunchURL, fpvReturnURL, fpvWorldLaunchURL, fpvWorldReturnURL } from '../fpv-entry.mjs';
 import { OPTIONAL_PACKAGE_POLICIES } from '../../publishing/optional-package-policy.mjs';
 
 test('bundled FPV launches and returns to the exact game entry across source, hosted and native roots', () => {
@@ -59,4 +59,32 @@ test('bundled FPV renderer vendor dependencies stay in the offline core', () => 
   const entries = names.map((name) => ({ name, bytes: Buffer.from('') }));
   const result = selectOfflineCore(entries, new Set());
   for (const name of names) assert.ok(result.retained.has(name), name);
+});
+
+test('World SIM returns to the actual arcade mode, query and community without browser history', () => {
+  for (const root of [
+    'https://example.test/project/',
+    'https://example.test/project/releases/v1.2.3/site/',
+    'https://example.test/project/editions/coupa/releases/v1.2.3/site/',
+    'capacitor://localhost/',
+  ]) {
+    for (const entry of [
+      'game/',
+      'game/index.html',
+      'game/company.html',
+      'game/couch/',
+      'game/couch/relay-rescue.html',
+    ]) {
+      const source = root + entry + '?journey=horizon#menu';
+      const target = fpvWorldLaunchURL(source, 'uk');
+      assert.equal(new URL(target).hash, '#learn');
+      assert.equal(fpvWorldReturnURL(target), source);
+    }
+  }
+  const standalone =
+    'https://example.test/project/practice/fpv-worlds/releases/v1.2.3/site/optional-practice/fpv-worlds/index.html';
+  assert.equal(fpvWorldReturnURL(standalone), 'https://example.test/project/game/');
+  const foreign = new URL('https://example.test/project/optional-practice/fpv-worlds/index.html');
+  foreign.searchParams.set('game-return', 'https://evil.test/game/');
+  assert.equal(fpvWorldReturnURL(foreign.href), 'https://example.test/project/game/');
 });

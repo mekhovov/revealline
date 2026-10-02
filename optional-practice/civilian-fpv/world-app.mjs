@@ -90,7 +90,7 @@ import {
 import { builtinWorldScene, createFlightRenderer } from './world-assets.mjs';
 import { mountDroneHangar } from './world-hangar.mjs';
 import { mountActorEditor } from './world-actor-editor.mjs';
-import { fpvReturnURL } from '../../game/fpv-entry.mjs';
+import { fpvWorldReturnURL } from '../../game/fpv-entry.mjs';
 
 const COPY_EN = {
   backToGame: 'Back to FPV / LINE',
@@ -665,15 +665,12 @@ export function mountWorldApp({
   const $ = (id) => doc.getElementById(id),
     listeners = [],
     translatedNodes = [];
-  // The containing PWA supplies a validated return route; standalone SIM keeps its own shell.
-  const returnURL = fpvReturnURL(win.location.href);
-  if (returnURL && $('sim-settings')) {
-    const back = doc.createElement('a');
-    back.id = 'sim-game-return';
-    back.href = returnURL;
-    back.dataset.i18n = 'backToGame';
-    back.textContent = COPY_EN.backToGame;
-    $('sim-settings').append(back);
+  const gameReturn = fpvWorldReturnURL(win.location.href);
+  for (const id of ['sim-game-return', 'flight-game-return']) {
+    const link = $(id);
+    if (!link) continue;
+    link.hidden = !gameReturn;
+    if (gameReturn) link.href = gameReturn;
   }
   doc.querySelectorAll('[data-i18n]').forEach((n) => {
     translatedNodes.push({ node: n, key: n.dataset.i18n, fallback: n.textContent });
@@ -4297,6 +4294,17 @@ export function mountWorldApp({
     if (playingPlaylist) return flySequence(playingPlaylist, playlistIndex + 1);
   });
   on($('leave-flight'), 'click', closeFlight);
+  for (const id of ['sim-game-return', 'flight-game-return']) {
+    if (!$(id) || !gameReturn) continue;
+    on($(id), 'click', async (event) => {
+      if (event.ctrlKey || event.metaKey || event.shiftKey || event.altKey) return;
+      event.preventDefault();
+      const token = flightToken;
+      pauseFlight();
+      await saveRecovery();
+      if (!disposed && token === flightToken) win.location.assign(gameReturn);
+    });
+  }
   on($('flight-dialog'), 'cancel', (e) => {
     e.preventDefault();
     if (flight?.snapshot().status === 'active') setFlightMenu(true);

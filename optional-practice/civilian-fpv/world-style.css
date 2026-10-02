@@ -4339,3 +4339,24 @@ html:not([data-fpv-immersive])
 .sim-worlds .mission-briefing p {
   margin: 0 0 12px;
 }
+
+/* Keep the arcade exit visible on narrow installed-app headers. */
+.sim-worlds .sim-utilities {
+  flex-wrap: wrap;
+}
+.sim-worlds .sim-game-return {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  padding: 10px 14px;
+  border: 1px solid var(--fk-control-line, #647786);
+  border-radius: 3px;
+  background: var(--fk-panel-raised, #182531);
+  color: var(--fk-text, #f3f0db);
+  font: inherit;
+  text-decoration: none;
+}
+.sim-worlds .sim-game-return[hidden] {
+  display: none;
+}

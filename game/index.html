@@ -208,6 +208,21 @@
             >Play online</a
           >
         </nav>
+        <section
+          id="boot-updates"
+          hidden
+          aria-label="Game updates"
+          data-i18n-aria-label="interface:updates.title"
+        >
+          <a
+            id="boot-update-action"
+            class="launch-action"
+            href="../app/update.html"
+            data-i18n="interface:updates.check"
+            >Check for updates</a
+          >
+          <p id="boot-update-status" class="launch-status" role="status"></p>
+        </section>
         <details id="boot-local" class="launch-help">
           <summary data-i18n="interface:playingADownloadedCopy">Playing a downloaded copy?</summary>
           <p data-i18n-rich="interface:openTheFolderContainingInATerminalThenStartA">

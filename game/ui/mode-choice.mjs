@@ -61,6 +61,8 @@ export function mountModeChoices({
     ),
     packageId: 'fpv-worlds',
     idPrefix: `${current}-fpv-sim`,
+    preferDirect: true,
+    timeoutMs: 4000,
   });
   if (!panel.open) {
     simulator.disabled = true;
