@@ -1,0 +1,265 @@
+{
+  "format": "FPVAdventureArtProbe.v1",
+  "createdAt": "2026-10-02T07:06:07.842Z",
+  "passed": true,
+  "checks": [
+    {
+      "name": "coast: explicit presentation and themed floor",
+      "passed": true,
+      "batches": 6,
+      "names": [
+        "coastal-water-outside-arena",
+        "harbor-breakwater",
+        "harbor-beacon",
+        "harbor-beacon-bands",
+        "harbor-beacon-lantern",
+        "facility-secondary-paint"
+      ]
+    },
+    {
+      "name": "coast: every new solid is outside bounds, interior decoration is floor-only",
+      "passed": true,
+      "instances": 26
+    },
+    {
+      "name": "coast: reusable material roles are owned and metrically tiled",
+      "passed": true
+    },
+    {
+      "name": "coast: quality does not alter geometry or authored course",
+      "passed": true
+    },
+    {
+      "name": "coast: deterministic rebuilt scenery",
+      "passed": true
+    },
+    {
+      "name": "quarry: explicit presentation and themed floor",
+      "passed": true,
+      "batches": 4,
+      "names": [
+        "quarry-cut-terrace-0",
+        "quarry-cut-terrace-1",
+        "quarry-cut-terrace-2",
+        "facility-paint"
+      ]
+    },
+    {
+      "name": "quarry: every new solid is outside bounds, interior decoration is floor-only",
+      "passed": true,
+      "instances": 88
+    },
+    {
+      "name": "quarry: reusable material roles are owned and metrically tiled",
+      "passed": true
+    },
+    {
+      "name": "quarry: quality does not alter geometry or authored course",
+      "passed": true
+    },
+    {
+      "name": "quarry: deterministic rebuilt scenery",
+      "passed": true
+    },
+    {
+      "name": "rooftops: explicit presentation and themed floor",
+      "passed": true,
+      "batches": 5,
+      "names": [
+        "city-skyline-0",
+        "city-skyline-1",
+        "city-skyline-2",
+        "city-window-bands",
+        "floor-expansion-joints"
+      ]
+    },
+    {
+      "name": "rooftops: every new solid is outside bounds, interior decoration is floor-only",
+      "passed": true,
+      "instances": 172
+    },
+    {
+      "name": "rooftops: reusable material roles are owned and metrically tiled",
+      "passed": true
+    },
+    {
+      "name": "rooftops: quality does not alter geometry or authored course",
+      "passed": true
+    },
+    {
+      "name": "rooftops: deterministic rebuilt scenery",
+      "passed": true
+    },
+    {
+      "name": "orchard: explicit presentation and themed floor",
+      "passed": true,
+      "batches": 6,
+      "names": [
+        "orchard-peripheral-trunks",
+        "orchard-peripheral-crowns",
+        "orchard-tree-soil",
+        "orchard-farm-lane",
+        "orchard-barn",
+        "orchard-barn-roof"
+      ]
+    },
+    {
+      "name": "orchard: every new solid is outside bounds, interior decoration is floor-only",
+      "passed": true,
+      "instances": 61
+    },
+    {
+      "name": "orchard: reusable material roles are owned and metrically tiled",
+      "passed": true
+    },
+    {
+      "name": "orchard: quality does not alter geometry or authored course",
+      "passed": true
+    },
+    {
+      "name": "orchard: deterministic rebuilt scenery",
+      "passed": true
+    },
+    {
+      "name": "solar-farm: explicit presentation and themed floor",
+      "passed": true,
+      "batches": 4,
+      "names": [
+        "solar-transformer-cabinets",
+        "solar-transformer-insulators",
+        "solar-perimeter-posts",
+        "facility-secondary-paint"
+      ]
+    },
+    {
+      "name": "solar-farm: every new solid is outside bounds, interior decoration is floor-only",
+      "passed": true,
+      "instances": 52
+    },
+    {
+      "name": "solar-farm: reusable material roles are owned and metrically tiled",
+      "passed": true
+    },
+    {
+      "name": "solar-farm: quality does not alter geometry or authored course",
+      "passed": true
+    },
+    {
+      "name": "solar-farm: deterministic rebuilt scenery",
+      "passed": true
+    },
+    {
+      "name": "rail-depot: explicit presentation and themed floor",
+      "passed": true,
+      "batches": 5,
+      "names": [
+        "depot-track-sleepers",
+        "depot-track-rails",
+        "depot-outer-platforms",
+        "depot-service-hall",
+        "facility-paint"
+      ]
+    },
+    {
+      "name": "rail-depot: every new solid is outside bounds, interior decoration is floor-only",
+      "passed": true,
+      "instances": 297
+    },
+    {
+      "name": "rail-depot: reusable material roles are owned and metrically tiled",
+      "passed": true
+    },
+    {
+      "name": "rail-depot: quality does not alter geometry or authored course",
+      "passed": true
+    },
+    {
+      "name": "rail-depot: deterministic rebuilt scenery",
+      "passed": true
+    },
+    {
+      "name": "coast: actual authored world dressing is finite and respects collision volume",
+      "passed": true,
+      "course": "adventure-coast-01",
+      "batches": 6,
+      "instances": 26
+    },
+    {
+      "name": "quarry: actual authored world dressing is finite and respects collision volume",
+      "passed": true,
+      "course": "adventure-quarry-01",
+      "batches": 4,
+      "instances": 88
+    },
+    {
+      "name": "rooftops: actual authored world dressing is finite and respects collision volume",
+      "passed": true,
+      "course": "adventure-rooftops-01",
+      "batches": 5,
+      "instances": 172
+    },
+    {
+      "name": "orchard: actual authored world dressing is finite and respects collision volume",
+      "passed": true,
+      "course": "adventure-orchard-01",
+      "batches": 6,
+      "instances": 75
+    },
+    {
+      "name": "solar-farm: actual authored world dressing is finite and respects collision volume",
+      "passed": true,
+      "course": "adventure-solar-farm-01",
+      "batches": 4,
+      "instances": 52
+    },
+    {
+      "name": "rail-depot: actual authored world dressing is finite and respects collision volume",
+      "passed": true,
+      "course": "adventure-rail-depot-01",
+      "batches": 5,
+      "instances": 204
+    },
+    {
+      "name": "Legacy/custom worlds do not receive adventure obstacle overrides",
+      "passed": true
+    },
+    {
+      "name": "Detailed drone model source remains byte-identical",
+      "passed": true
+    }
+  ],
+  "samples": [
+    {
+      "environment": "coast",
+      "batches": 6,
+      "instances": 26
+    },
+    {
+      "environment": "quarry",
+      "batches": 4,
+      "instances": 88
+    },
+    {
+      "environment": "rooftops",
+      "batches": 5,
+      "instances": 172
+    },
+    {
+      "environment": "orchard",
+      "batches": 6,
+      "instances": 61
+    },
+    {
+      "environment": "solar-farm",
+      "batches": 4,
+      "instances": 52
+    },
+    {
+      "environment": "rail-depot",
+      "batches": 5,
+      "instances": 297
+    }
+  ],
+  "sourceSha256": "5c5bcfc0602c43a8f350823744843be5e839c97a69a05cce8ec502ae08ab5a51",
+  "scope": "Production Three.js scene/material construction against six explicit new-world fixtures, six actual authored course environments and nine legacy/custom IDs. No WebGL, target-device performance, authored route clearance or human art acceptance claim."
+}

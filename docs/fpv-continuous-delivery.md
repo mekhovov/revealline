@@ -1303,3 +1303,76 @@ Next concrete work: shared-theme integration after the Themes handoff is ready,
 then selected artist-authored material/landmark upgrades and named-device
 performance/readability qualification. Preserve parallel primary-checkout work,
 remaining original demonstrations/reimport holds and R7 coverage deferral.
+
+### 2 October — World Adventures implementation and qualification
+
+Current branch: `codex/fpv-world-adventures`, based on #946 at
+`bcad075c21fb0e29d0b9b673d10c4218d293f1f1`. Six original worlds and 30 authored
+challenges add coastal piers, quarry terraces, campus roofs, orchard avenues,
+solar lanes and railworks. Catalogue:14 worlds/148 challenges. Real follow and
+observation objectives use subject motion, range, relative speed, nose alignment
+and collision line of sight. New courses have a separate pack identity;
+original world/school course bytes and all four original curated playlists are
+unchanged. Full detail and research: `docs/fpv-world-adventures.md`.
+
+All60 new course/mode attempts complete with identical independent replay,
+253,011 recorded ticks and zero contacts. Evidence and deterministic raw proof
+archive are retained under docs/evidence and authoring/fpv-worlds/demonstrations.
+These authoring proofs are not yet an installed player demonstration library.
+Tracking20/20, new art38/38, retained art43/43, route/actor geometry60/60 and
+actual actor-editor10/10 checks pass. Final actual WebGL qualification and
+frozen package admission follow before publication. R7 additional unit coverage
+remains deferred. No novice acceptance, physical-radio/Steam Deck/iPhone FPS,
+sustained performance or public live availability is claimed.
+
+Reconciled upstream state: native content stack889 is fully merged/closed;
+reimport #922 and personal-best ghost #913 have merged. Earlier log holds for
+those items are historical. This dependent branch still needs coordinated
+upstream integration, preserving newer learning/radio/art work and the Garage
+handoff. Installed original proofs here remain56 plus58 school proofs; the
+original120 target is unchanged. Stack902 last inspected open membership was
+939→940→941→942→943→944→945→946. No upstream refs were rewritten. Primary
+checkout Themes/Industrial Workshop work remains untouched.
+
+Next: complete frozen admission, refresh both existing local player builds,
+publish after #946 and append through the native stack API. Then integrate the
+merged content/ghost/reimport changes and ready Themes contract, followed by
+artist-authored landmarks/materials and named-device/player acceptance. CI and
+public publication stay separate from local functionality; inspect exact remote
+heads and checks before any protected merge.
+
+Frozen candidate `5daeb6b5b257f2eea689bf7a8720a9455406fded` passes all3
+optional-package admissions, committed-input and ZIP-member verification and2
+byte-identical builds. Receipt: `docs/evidence/fpv-adventures-package-20261002.json`.
+Existing size/file limits remain unchanged. Final actual WebGL checks pass13/13
+across270 course/preset/camera combinations with current fog/framing bytes.
+Actual built coastal and rail-depot player launch, localized EN/UK catalogue and
+mission briefings were inspected. Physical-device/mobile performance is not
+inferred from desktop rendering.
+
+Both existing reviewed-player and continuous-school paths now contain the87-file,
+14,069,673-byte build, SHA
+`1ca658410ee5e3ec22acb39720a949619c463b0bddd92658f33855a49a4e7880`.
+The separate world-adventures playtest has identical bytes. Original touch,
+self-level, Balanced and Chase settings are retained after inspection. Package
+qualification is local; protected CI/merge and public availability remain pending.
+
+### 2 October — World Adventures published
+
+[#947](https://github.com/mekhovov/revealline/pull/947) is attached to this chat
+and appended after #946 using native stack902's API. Qualification head:
+`f792630d5486b63526e5c9378fbd7f05958c633e`; frozen runtime/package candidate:
+`5daeb6b5b257f2eea689bf7a8720a9455406fded`. Current open membership starts at
+#940 and ends at #947 after #939 merged independently. Upstream #941/#942 heads
+also advanced during publication; preserve those remote changes and use the
+coordinated leased workflow if a future cascading rebase is required.
+
+Both existing player URLs are refreshed. Actual reviewed-player launch shows
+14 worlds/148 challenges and the six new collections; its catalogue is left
+open with original EN/Touch/Self-level/Balanced/Chase preferences restored.
+Screenshot: `/tmp/fpv-adventures-player-catalogue-20261002.png`. The release
+remains pending protected checks/merge/deployment; no public live claim.
+Next concrete item: integrate merged content/reimport/ghost changes without
+losing new school/control/art work, then apply the ready Themes appearance
+contract and continue landmark/art/player qualification. Preserve the Garage
+handoff and R7 unit-coverage deferral. Do not repeatedly poll unchanged CI.

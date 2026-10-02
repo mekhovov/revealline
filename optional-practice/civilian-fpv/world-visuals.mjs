@@ -1,6 +1,15 @@
 import * as THREE from './vendor/three.module.js';
 import { resolveThemeProfile } from './world-themes.mjs';
 
+const ADVENTURE_SURFACES = Object.freeze({
+  coast: { floor: 'sand', color: 0xc2b38f, wall: 'concrete' },
+  quarry: { floor: 'stone', color: 0x9a8264, wall: 'stone' },
+  rooftops: { floor: 'asphalt', color: 0x414a55, wall: 'plaster' },
+  orchard: { floor: 'grass', color: 0x6e835d, wall: 'wood' },
+  'solar-farm': { floor: 'ballast', color: 0x97937a, wall: 'metal' },
+  'rail-depot': { floor: 'ballast', color: 0x777773, wall: 'metal' },
+});
+
 // Original procedural artwork. Textures are deterministic and entirely local;
 // only authored obstacle geometry is placed inside the flyable volume.
 export function themeForCourse(course) {
@@ -61,6 +70,34 @@ function surfacePixels(kind, color, seed, size, pixel) {
         shade *= 0.94 + patch + mottling * 0.08;
         relief += grain * 0.03;
         roughness = 0.87 + grain * 0.12;
+      }
+      if (kind === 'sand') {
+        shade *= 0.98 + patch + mottling * 0.025;
+        relief += mottling * 0.012;
+        roughness = 0.98;
+      }
+      if (kind === 'stone') {
+        const seam = Math.abs(Math.sin(v * tau * 3 + broad(u, v) * 0.8));
+        shade *= 0.95 + patch * 1.5 + mottling * 0.16 - (seam < 0.035 ? 0.12 : 0);
+        relief += mottling * 0.09 - (seam < 0.035 ? 0.05 : 0);
+        roughness = 0.92 + grain * 0.07;
+      }
+      if (kind === 'ballast') {
+        shade *= 0.89 + patch + mottling * 0.24 + grain * 0.2;
+        relief += mottling * 0.12;
+        roughness = 0.98;
+      }
+      if (kind === 'foliage') {
+        shade *= 0.93 + patch * 1.4 + mottling * 0.3;
+        relief += mottling * 0.045;
+        roughness = 0.95;
+      }
+      if (kind === 'solar') {
+        const bus = (u * 12) % 1 < 0.022,
+          joint = (u * 6) % 1 < 0.025 || (v * 8) % 1 < 0.025;
+        shade *= joint ? 1.9 : bus ? 1.35 : 0.89 + patch * 0.3;
+        relief = joint ? -0.025 : 0;
+        roughness = joint ? 0.52 : 0.24;
       }
       if (kind === 'plaster') {
         shade *= 0.98 + patch * 0.4 + mottling * 0.035;
@@ -231,7 +268,8 @@ export function createEnvironmentLight(
 function buildEnvironmentDressing({ course, world, material, bounds, theme, pixel }) {
   const { min, max, width, depth, cx, cz } = bounds,
     environment = course.environment,
-    natural = ['field', 'woodland'].includes(environment);
+    natural = ['field', 'woodland', 'orchard'].includes(environment),
+    adventure = ADVENTURE_SURFACES[environment];
   const group = new THREE.Group();
   group.name = 'environment-dressing';
   world.add(group);
@@ -298,7 +336,212 @@ function buildEnvironmentDressing({ course, world, material, bounds, theme, pixe
       rectangle(secondary, x + dx * size, z + dz * size, w * size, d * size);
     }
   };
-  if (!natural) {
+  if (adventure) {
+    const groundBatch = (name, rows, color, extras = {}) =>
+      batch(
+        name,
+        new THREE.PlaneGeometry(1, 1).rotateX(-Math.PI / 2),
+        rows,
+        material(color, { roughness: 1, ...extras }),
+      );
+    const exterior = (name, rows, color, geometry = new THREE.BoxGeometry(1, 1, 1), extras = {}) =>
+      batch(name, geometry, rows, material(color, { roughness: 0.86, ...extras }), true);
+    // New worlds own complete silhouettes rather than inheriting a pine ring.
+    // Every solid here is exterior; authored obstacles alone occupy flight space.
+    if (environment === 'coast') {
+      const sea = [
+        [min.x - 22, min.y + 0.002, cz, 42, 1, depth + 84],
+        [max.x + 22, min.y + 0.002, cz, 42, 1, depth + 84],
+        [cx, min.y + 0.002, min.z - 22, width + 2, 1, 42],
+        [cx, min.y + 0.002, max.z + 22, width + 2, 1, 42],
+      ];
+      // Water is scenery beyond the arena, not a fictitious traversable hazard.
+      batch(
+        'coastal-water-outside-arena',
+        new THREE.PlaneGeometry(1, 1).rotateX(-Math.PI / 2),
+        sea,
+        material(0x397986, { roughness: 0.32, metalness: 0.12 }),
+        true,
+      );
+      const breakwater = [];
+      for (let i = 0; i < 16; i++)
+        breakwater.push([
+          min.x + (width * (i + 0.5)) / 16,
+          min.y + 0.8,
+          min.z - 5,
+          width / 17,
+          1.6,
+          2.4,
+        ]);
+      exterior('harbor-breakwater', breakwater, 0x737f7d);
+      const beaconX = max.x + 7,
+        beaconZ = min.z - 7;
+      exterior(
+        'harbor-beacon',
+        [[beaconX, min.y + 6, beaconZ, 2.4, 12, 2.4]],
+        0xe4ded0,
+        new THREE.CylinderGeometry(0.36, 0.5, 1, 10),
+      );
+      exterior(
+        'harbor-beacon-bands',
+        [
+          [beaconX, min.y + 4.1, beaconZ, 2.42, 0.7, 2.42],
+          [beaconX, min.y + 8, beaconZ, 2.42, 0.7, 2.42],
+        ],
+        0xa64f40,
+        new THREE.CylinderGeometry(0.5, 0.5, 1, 10),
+      );
+      exterior(
+        'harbor-beacon-lantern',
+        [[beaconX, min.y + 12.4, beaconZ, 2.6, 0.9, 2.6]],
+        0xe6c885,
+        new THREE.CylinderGeometry(0.5, 0.5, 1, 10),
+        { emissive: 0xba8543, emissiveIntensity: 0.2 },
+      );
+      for (const side of [-1, 1])
+        rectangle(secondary, cx + side * Math.min(8, width / 5), cz, 0.06, depth - 8);
+    } else if (environment === 'quarry') {
+      const tones = [0x8b745a, 0xb29973, 0x796a59];
+      for (let tier = 0; tier < 3; tier++) {
+        const terraces = [];
+        for (let side = 0; side < 4; side++)
+          for (let i = 0; i < 5; i++) {
+            const along = (i + 0.5) / 5,
+              height = 5 + tier * 6 + ((i + side) % 3) * 1.2,
+              across = (side % 2 ? depth : width) / 5 + 0.4,
+              offset = 5 + tier * 6,
+              x = side === 1 ? max.x + offset : side === 3 ? min.x - offset : min.x + width * along,
+              z = side === 0 ? min.z - offset : side === 2 ? max.z + offset : min.z + depth * along;
+            terraces.push([
+              x,
+              min.y + height / 2,
+              z,
+              side % 2 ? 7 : across,
+              height,
+              side % 2 ? across : 7,
+            ]);
+          }
+        exterior(`quarry-cut-terrace-${tier}`, terraces, tones[tier]);
+      }
+      for (const side of [-1, 1]) {
+        const z = side < 0 ? min.z + 3 : max.z - 3;
+        for (let x = min.x + 5; x < max.x - 4; x += 8) rectangle(marks, x, z, 1.3, 0.1);
+      }
+    } else if (environment === 'rooftops') {
+      const skyline = [[], [], []],
+        windows = [];
+      for (let side = 0; side < 4; side++)
+        for (let i = 0; i < 7; i++) {
+          const height = 9 + ((i * 7 + side * 5) % 20),
+            along = (i + 0.5) / 7,
+            x = side === 1 ? max.x + 9 : side === 3 ? min.x - 9 : min.x + width * along,
+            z = side === 0 ? min.z - 9 : side === 2 ? max.z + 9 : min.z + depth * along;
+          skyline[(i + side) % 3].push([x, min.y + height / 2, z, 9, height, 9]);
+          for (let y = 3; y < height - 1; y += 3)
+            windows.push([
+              side === 1 ? x - 4.51 : side === 3 ? x + 4.51 : x,
+              min.y + y,
+              side === 0 ? z + 4.51 : side === 2 ? z - 4.51 : z,
+              side % 2 ? 0.015 : 5.8,
+              0.6,
+              side % 2 ? 5.8 : 0.015,
+            ]);
+        }
+      for (let i = 0; i < skyline.length; i++)
+        exterior(`city-skyline-${i}`, skyline[i], [0x3e4b5e, 0x5c657a, 0x6d6574][i]);
+      exterior('city-window-bands', windows, 0x6bafb4, undefined, {
+        emissive: 0x35696d,
+        emissiveIntensity: 0.15,
+      });
+      for (const side of [-1, 1])
+        rectangle(joints, side < 0 ? min.x + 2 : max.x - 2, cz, 0.15, depth - 4);
+    } else if (environment === 'orchard') {
+      const trunks = [],
+        crowns = [];
+      for (let side = 0; side < 4; side++)
+        for (let i = 0; i < 7; i++) {
+          const along = (i + 0.5) / 7,
+            x = side === 1 ? max.x + 5 : side === 3 ? min.x - 5 : min.x + width * along,
+            z = side === 0 ? min.z - 5 : side === 2 ? max.z + 5 : min.z + depth * along;
+          trunks.push([x, min.y + 1.8, z, 0.4, 3.6, 0.4]);
+          crowns.push([x, min.y + 4.1, z, 4.2, 3.8, 4.2]);
+        }
+      exterior('orchard-peripheral-trunks', trunks, 0x79634c);
+      exterior('orchard-peripheral-crowns', crowns, 0x567849, new THREE.SphereGeometry(0.5, 8, 6));
+      const soil = (course.obstacles ?? [])
+        .filter((obstacle) => /^tree-trunk-/.test(obstacle.id) && obstacle.min && obstacle.max)
+        .map((obstacle) => [
+          (obstacle.min.x + obstacle.max.x) / 2000,
+          min.y + 0.003,
+          (obstacle.min.z + obstacle.max.z) / 2000,
+          3,
+          1,
+          3,
+        ]);
+      if (soil.length) groundBatch('orchard-tree-soil', soil, 0x81745c);
+      groundBatch('orchard-farm-lane', [[cx, min.y + 0.002, cz, 4, 1, depth + 2]], 0xafa185);
+      exterior('orchard-barn', [[min.x - 9, min.y + 2.5, max.z - 8, 8, 5, 12]], 0xa18b68);
+      exterior(
+        'orchard-barn-roof',
+        [[min.x - 9, min.y + 6, max.z - 8, 11.8, 2.5, 17]],
+        0x80554a,
+        new THREE.ConeGeometry(0.5, 1, 4).rotateY(Math.PI / 4),
+      );
+    } else if (environment === 'solar-farm') {
+      const cabinets = [],
+        insulators = [],
+        poles = [];
+      for (let i = 0; i < 8; i++) {
+        const x = min.x + (width * (i + 0.5)) / 8;
+        cabinets.push([x, min.y + 1.4, min.z - 6, 3.3, 2.8, 3]);
+        for (const dx of [-0.8, 0.8])
+          insulators.push([x + dx, min.y + 3.5, min.z - 6, 0.35, 1.4, 0.35]);
+      }
+      for (const x of [min.x - 3, max.x + 3])
+        for (let z = min.z; z <= max.z; z += 10) poles.push([x, min.y + 1.2, z, 0.12, 2.4, 0.12]);
+      exterior('solar-transformer-cabinets', cabinets, 0xa3aca9);
+      exterior(
+        'solar-transformer-insulators',
+        insulators,
+        0x4d666e,
+        new THREE.CylinderGeometry(0.5, 0.5, 1, 8),
+      );
+      exterior('solar-perimeter-posts', poles, 0x7d8a88);
+      for (const side of [-1, 1]) rectangle(secondary, cx + side * 3, cz, 0.06, depth - 4);
+    } else if (environment === 'rail-depot') {
+      const trackXs = [
+        ...new Set(
+          (course.obstacles ?? [])
+            .filter((obstacle) => /^rail-car-/.test(obstacle.id) && obstacle.min && obstacle.max)
+            .map((obstacle) => (obstacle.min.x + obstacle.max.x) / 2000),
+        ),
+      ];
+      const rails = [],
+        sleepers = [];
+      for (const x of trackXs.length ? trackXs.slice(0, 8) : [cx - 24, cx, cx + 24]) {
+        for (const offset of [-0.78, 0.78])
+          rails.push([x + offset, min.y + 0.008, cz, 0.09, 1, depth + 18]);
+        for (let z = min.z - 8; z <= max.z + 8; z += 1.5)
+          sleepers.push([x, min.y + 0.003, z, 2.2, 1, 0.24]);
+      }
+      groundBatch('depot-track-sleepers', sleepers, 0x625b4e);
+      groundBatch('depot-track-rails', rails, 0xa4a6a0, { metalness: 0.55, roughness: 0.42 });
+      exterior(
+        'depot-outer-platforms',
+        [
+          [min.x - 4, min.y + 0.6, cz, 5, 1.2, depth + 12],
+          [max.x + 4, min.y + 0.6, cz, 5, 1.2, depth + 12],
+        ],
+        0x858b88,
+      );
+      exterior(
+        'depot-service-hall',
+        [[cx, min.y + 5, min.z - 12, Math.min(42, width * 0.7), 10, 14]],
+        0x68777a,
+      );
+      for (let z = min.z + 4; z < max.z; z += 8) rectangle(marks, max.x - 1.8, z, 0.12, 1.4);
+    }
+  } else if (!natural) {
     // Static facility markings convey scale, not an extra challenge route.
     const inset = Math.min(2, width * 0.08, depth * 0.08);
     for (let x = min.x + 2; x < max.x - 1; x += 6) {
@@ -385,7 +628,8 @@ function buildEnvironmentDressing({ course, world, material, bounds, theme, pixe
 export function buildWorldVisuals({ course, world, mesh, material, box }) {
   const profile = resolveThemeProfile(course),
     theme = profile.palette,
-    environment = course.environment;
+    environment = course.environment,
+    adventure = ADVENTURE_SURFACES[environment];
   const min = Object.fromEntries(Object.entries(course.bounds.min).map(([k, v]) => [k, v / 1000]));
   const max = Object.fromEntries(Object.entries(course.bounds.max).map(([k, v]) => [k, v / 1000]));
   const width = max.x - min.x,
@@ -393,7 +637,7 @@ export function buildWorldVisuals({ course, world, mesh, material, box }) {
     cx = (min.x + max.x) / 2,
     cz = (min.z + max.z) / 2;
   const indoor = ['gym', 'warehouse', 'garage'].includes(environment);
-  const natural = ['field', 'woodland'].includes(environment);
+  const natural = ['field', 'woodland', 'orchard'].includes(environment);
   const backdrop = new THREE.Group();
   backdrop.name = 'procedural-scenery-fallback';
   world.add(backdrop);
@@ -401,24 +645,27 @@ export function buildWorldVisuals({ course, world, mesh, material, box }) {
   detail.name = 'surface-detail';
   world.add(detail);
   const pixel = profile.textureFilter === 'nearest';
-  const floorKind = natural
-    ? 'grass'
-    : environment === 'courtyard'
-      ? 'paving'
-      : environment === 'container-yard' || environment === 'stadium'
-        ? 'asphalt'
-        : 'concrete';
+  const floorKind =
+    adventure?.floor ??
+    (natural
+      ? 'grass'
+      : environment === 'courtyard'
+        ? 'paving'
+        : environment === 'container-yard' || environment === 'stadium'
+          ? 'asphalt'
+          : 'concrete');
   const floorColor =
     natural || pixel
       ? new THREE.Color(theme.ground)
       : new THREE.Color(
-          environment === 'courtyard'
-            ? 0xa89c86
-            : floorKind === 'asphalt'
-              ? 0x454e54
-              : environment === 'garage'
-                ? 0x858b88
-                : 0x77807b,
+          adventure?.color ??
+            (environment === 'courtyard'
+              ? 0xa89c86
+              : floorKind === 'asphalt'
+                ? 0x454e54
+                : environment === 'garage'
+                  ? 0x858b88
+                  : 0x77807b),
         ).lerp(
           new THREE.Color(theme.ground),
           environment === 'courtyard' ? 0.08 : floorKind === 'asphalt' ? 0.1 : 0.12,
@@ -445,7 +692,7 @@ export function buildWorldVisuals({ course, world, mesh, material, box }) {
     emissiveIntensity: 0.1,
   });
   const wallMaps = surfaceMaps(
-    environment === 'courtyard' ? 'brick' : natural ? 'wood' : 'metal',
+    adventure?.wall ?? (environment === 'courtyard' ? 'brick' : natural ? 'wood' : 'metal'),
     natural ? 0x857763 : theme.wall,
     { pixel },
   );
@@ -466,6 +713,9 @@ export function buildWorldVisuals({ course, world, mesh, material, box }) {
       plaster: theme.wall,
       brick: environment === 'courtyard' ? 0xb99e83 : theme.wall,
       metal: theme.wall,
+      stone: 0xa18a6d,
+      foliage: 0x587d49,
+      solar: 0x263e5d,
     };
     if (!Object.hasOwn(colors, kind)) kind = 'concrete';
     if (!obstacleSurfaces.has(kind)) {
@@ -620,7 +870,7 @@ export function buildWorldVisuals({ course, world, mesh, material, box }) {
         structure([0.25, 13, 0.25], [x, 6.5, z]);
         structure([2.5, 0.5, 0.5], [x, 12.8, z], lampPaint);
       }
-  } else {
+  } else if (!adventure) {
     const rng = random(environment === 'woodland' ? 7947 : 997),
       count = environment === 'woodland' ? 66 : 32;
     const radius = Math.hypot(width, depth) / 2 + 10;
@@ -680,10 +930,23 @@ export function buildWorldVisuals({ course, world, mesh, material, box }) {
     profile,
     indoor,
     groundColor: floorColor,
+    fogRange: adventure ? [125, 320] : null,
     backdrop,
     obstacleMap: wallMap,
     obstacleMaps: wallMaps,
     obstacleSurface,
+    obstacleSurfaceKind(obstacle) {
+      if (!adventure) return null;
+      const id = obstacle.id ?? '';
+      if (/^(rail-gantry|rail-car|solar-hut)-/.test(id)) return 'metal';
+      if (environment === 'quarry' || /^rock-/.test(id)) return 'stone';
+      if (/^tree-canopy-/.test(id)) return 'foliage';
+      if (/^tree-trunk-|timber|crate/.test(id)) return 'wood';
+      if (/^solar-panel-/.test(id)) return 'solar';
+      if (/^building-/.test(id)) return 'plaster';
+      if (/pier|deck|tower|platform|column|ramp/.test(id)) return 'concrete';
+      return 'metal';
+    },
     center: [cx, cz],
     width,
     depth,
