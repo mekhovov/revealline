@@ -1,3 +1,4 @@
+import { createReactionVoiceCache } from '../journey/reaction-voice-cache.mjs';
 import { getLocale as currentLocale, onLocaleChange } from '../i18n/index.mjs';
 import {
   JOURNEY_REACTIONS,
@@ -255,11 +256,9 @@ export function attachContextualReactions({
     lease = null,
     generation = 0,
     captionUntil = 0,
-    decodedBytes = 0;
-  const buffers = new Map(),
-    pending = new Map(),
-    retryAfter = new Map(),
-    prepared = new Map(),
+    motion = null;
+  const cache = createReactionVoiceCache({ sound, library: voiceLibrary });
+  const prepared = new Map(),
     controls = new Map(),
     controlLabels = new Map();
   let settings = null,
@@ -280,6 +279,8 @@ export function attachContextualReactions({
     release();
   }
   function hide() {
+    motion?.cancel();
+    motion = null;
     current = null;
     panel.hidden = true;
     panel.style.display = 'none';
@@ -287,6 +288,11 @@ export function attachContextualReactions({
   }
   function cancel(reason) {
     stopSpeech();
+    if (reason === 'suspend') {
+      generation++;
+      prepared.clear();
+      void cache.cancel();
+    }
     if (reason === 'danger') return; // Preserve readable text even when its audio is interrupted.
     clearTimeout(timer);
     hide();
@@ -296,7 +302,12 @@ export function attachContextualReactions({
     const state = options.snapshot(),
       enabled = preferences.snapshot().enabled;
     sound.configureDialogue({ enabled: enabled && state.speech, volume: state.volume });
-    if (!enabled || !state.speech) stopSpeech();
+    if (!enabled || !state.speech) {
+      stopSpeech();
+      generation++;
+      prepared.clear();
+      void cache.cancel();
+    }
     if (!enabled) {
       clearTimeout(timer);
       hide();
@@ -341,57 +352,15 @@ export function attachContextualReactions({
       }
     }
   }
-  async function load(lineId, locale) {
-    const key = `${lineId}|${locale}`,
-      context = sound.context;
+  function prepare() {
     if (
-      !context ||
-      buffers.has(key) ||
-      pending.has(key) ||
       closed ||
-      Date.now() < (retryAfter.get(key) ?? 0)
+      !preferences.snapshot().enabled ||
+      !options.snapshot().speech ||
+      !sound.context ||
+      doc.hidden
     )
       return;
-    const revision = generation;
-    const request = (async () => {
-      try {
-        const recording = await voiceLibrary.resolve(lineId, locale);
-        if (!recording || closed || context !== sound.context) return;
-        const buffer = await context.decodeAudioData(recording.bytes.slice(0));
-        if (
-          !closed &&
-          context === sound.context &&
-          revision === generation &&
-          buffer.duration > 0 &&
-          buffer.duration <= 15
-        ) {
-          const bytes = buffer.length * buffer.numberOfChannels * 4;
-          if (bytes <= 12 * 1024 * 1024) {
-            while (
-              buffers.size &&
-              (decodedBytes + bytes > 12 * 1024 * 1024 || buffers.size >= 24)
-            ) {
-              const oldest = buffers.keys().next().value,
-                previous = buffers.get(oldest);
-              decodedBytes -= previous.length * previous.numberOfChannels * 4;
-              buffers.delete(oldest);
-            }
-            buffers.set(key, buffer);
-            decodedBytes += bytes;
-          }
-        }
-      } catch {
-        /* Captions remain usable when a voice cannot load. */
-      }
-    })().finally(() => {
-      pending.delete(key);
-      if (!closed && !buffers.has(key)) retryAfter.set(key, Date.now() + 30000);
-    });
-    pending.set(key, request);
-    await request;
-  }
-  function prepare() {
-    if (closed || !options.snapshot().speech || !sound.context) return;
     const locale = getLocale(),
       context = sound.context,
       revision = generation;
@@ -407,6 +376,7 @@ export function attachContextualReactions({
     // Missing recordings never enqueue or replay an already-expired reaction.
     void Promise.resolve(voiceLibrary.available?.(locale) ?? [])
       .then(async (available) => {
+        await cache.ready();
         const ids = [
           ...new Set([
             ...(voiceLibrary.originals ?? [])
@@ -421,9 +391,11 @@ export function attachContextualReactions({
             index < ids.length &&
             !closed &&
             generation === revision &&
+            getLocale() === locale &&
+            !doc.hidden &&
             sound.context === context
           )
-            await load(ids[index++], locale);
+            await cache.load(ids[index++], locale);
         };
         await Promise.all([warm(), warm()]);
       })
@@ -433,17 +405,19 @@ export function attachContextualReactions({
     if (closed || !preferences.snapshot().enabled) return;
     clearTimeout(timer);
     stopSpeech();
+    motion?.cancel();
+    motion = null;
     current = { line, terminal };
     const appearance = REACTION_PORTRAITS[line.speaker] ?? REACTION_PORTRAITS.guide;
     portrait.src = getReduced() ? appearance.idle : appearance.react;
     render();
     if (!getReduced())
-      portrait.animate?.([{ transform: 'scale(.88)' }, { transform: 'scale(1)' }], {
+      motion = portrait.animate?.([{ transform: 'scale(.88)' }, { transform: 'scale(1)' }], {
         duration: 180,
         easing: 'ease-out',
       });
     const state = options.snapshot(),
-      buffer = buffers.get(`${line.id}|${getLocale()}`);
+      buffer = cache.get(line.id, getLocale());
     if (state.speech && speak && buffer) {
       activeVoice = sound.playDialogue(buffer, {
         onended: () => {
@@ -462,7 +436,7 @@ export function attachContextualReactions({
     } else if (state.sounds && !terminal && line.family === 'capture') {
       sound.feedbackDirector?.play('confirm', { gain: 0.12, priority: 1 });
     }
-    if (!buffer) void load(line.id, getLocale());
+    if (!buffer && state.speech) void cache.load(line.id, getLocale());
     if (!terminal) {
       captionUntil = Date.now() + duration;
       timer = setTimeout(hide, duration);
@@ -529,12 +503,9 @@ export function attachContextualReactions({
     unsubOptions = options.subscribe(render);
   const unsubLibrary = voiceLibrary.subscribe(() => {
     generation++;
-    buffers.clear();
-    decodedBytes = 0;
-    retryAfter.clear();
     prepared.clear();
     stopSpeech();
-    prepare();
+    void cache.cancel({ clear: true }).then(prepare);
   });
   const unsubLocale = onLocaleChange(() => {
     stopSpeech();
@@ -550,6 +521,20 @@ export function attachContextualReactions({
     else director.resume();
   };
   doc.addEventListener('visibilitychange', visibility);
+  const reducedMedia = target?.matchMedia?.('(prefers-reduced-motion: reduce)');
+  const reducedChanged = () => {
+    if (!getReduced()) return;
+    motion?.cancel();
+    motion = null;
+    if (current)
+      portrait.src = (REACTION_PORTRAITS[current.line.speaker] ?? REACTION_PORTRAITS.guide).idle;
+  };
+  const reducedObserver = target?.MutationObserver
+    ? new target.MutationObserver(reducedChanged)
+    : null;
+  if (doc.body)
+    reducedObserver?.observe(doc.body, { attributes: true, attributeFilter: ['data-effects'] });
+  reducedMedia?.addEventListener?.('change', reducedChanged);
   const pagehide = () => director.suspend();
   target?.addEventListener?.('pagehide', pagehide);
   return Object.freeze({
@@ -557,6 +542,13 @@ export function attachContextualReactions({
     options,
     voiceLibrary,
     prepare,
+    diagnostics: () =>
+      Object.freeze({
+        cache: cache.snapshot(),
+        incidents: director.count,
+        suspended: director.suspended,
+        speaking: !!activeVoice && !activeVoice.ended,
+      }),
     events(events, context) {
       prepare();
       return director.events(events, { ...context, enabled: preferences.snapshot().enabled });
@@ -573,9 +565,7 @@ export function attachContextualReactions({
       closed = true;
       director.suspend();
       clearTimeout(timer);
-      buffers.clear();
-      decodedBytes = 0;
-      retryAfter.clear();
+      cache.dispose();
       prepared.clear();
       unsubPrefs();
       unsubOptions();
@@ -586,6 +576,8 @@ export function attachContextualReactions({
       if (ownLibrary) voiceLibrary.close();
       doc.removeEventListener('visibilitychange', visibility);
       target?.removeEventListener?.('pagehide', pagehide);
+      reducedObserver?.disconnect();
+      reducedMedia?.removeEventListener?.('change', reducedChanged);
       for (const control of controls.values()) control.onchange = null;
       settings?.remove();
       panel.remove();

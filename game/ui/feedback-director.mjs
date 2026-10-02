@@ -1,3 +1,4 @@
+import { dialogueChannel } from './dialogue-channel.mjs';
 import { playerMovementBody } from './movement-profiles.mjs';
 import { getLocale } from '../i18n/index.mjs';
 import { CELL, DIRECTIONS } from '../core/registry.mjs';
@@ -104,7 +105,12 @@ export class FeedbackDirector {
     )
       return null;
     if (ui && !s.menuSettings.enabled) return null;
-    if (radio && (!s.radioSettings?.enabled || s.radioSettings.volume === 0)) return null;
+    if (
+      radio &&
+      (!s.radioSettings?.enabled || s.radioSettings.volume === 0 || dialogueChannel.active)
+    )
+      return null;
+    if (priority >= 5 && (name === 'warning' || name === 'loss')) dialogueChannel.interrupt();
     if (
       radio &&
       [...s.voices].some((v) => v.radio || v.dialogue || (v.feedback && v.priority >= 5))
@@ -193,16 +199,23 @@ export class FeedbackDirector {
         volume.disconnect();
         panner?.disconnect();
         s.voices.delete(voice);
+        dialogueChannel.release(voice);
       },
       get ended() {
         return ended || retiring;
       },
     };
     source.onended = voice.stop;
+    if (radio) dialogueChannel.claim(voice);
     s.voices.add(voice);
     // Re-enter a periodic texture at its global phase, without an attack restart.
-    source.start(c.currentTime + delay, loop ? (c.currentTime * rate) % buffer.duration : 0);
-    if (!loop) source.stop(c.currentTime + delay + buffer.duration / rate + 0.01);
+    try {
+      source.start(c.currentTime + delay, loop ? (c.currentTime * rate) % buffer.duration : 0);
+      if (!loop) source.stop(c.currentTime + delay + buffer.duration / rate + 0.01);
+    } catch {
+      voice.stop();
+      return null;
+    }
     return voice;
   }
   events(events, run, theme = {}, options = {}) {

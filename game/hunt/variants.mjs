@@ -40,7 +40,7 @@ export function placeHuntPopulation({
       y >= 0 &&
       y < height &&
       cells[index] !== CELL.WALL &&
-      terrain[index] !== 2
+      !(cells[index] === CELL.FIELD && terrain[index] === 2)
     ) {
       reachable[index] = 1;
       queue.push(index);
@@ -58,7 +58,12 @@ export function placeHuntPopulation({
     ]) {
       if (nx < 0 || ny < 0 || nx >= width || ny >= height) continue;
       const next = ny * width + nx;
-      if (reachable[next] || cells[next] === CELL.WALL || terrain[next] === 2) continue;
+      if (
+        reachable[next] ||
+        cells[next] === CELL.WALL ||
+        (cells[next] === CELL.FIELD && terrain[next] === 2)
+      )
+        continue;
       reachable[next] = 1;
       queue.push(next);
     }
@@ -70,7 +75,8 @@ export function placeHuntPopulation({
       const point = { x: x + 0.5, y: y + 0.5 };
       if (spawns.some((spawn) => Math.hypot(point.x - spawn.x, point.y - spawn.y) < 3)) continue;
       if (occupied.some((actor) => Math.hypot(point.x - actor.x, point.y - actor.y) < 2)) continue;
-      // Keep the first encounter a short detour and spread subsequent targets.
+      // Keep the first encounter a short detour. Later picks maximize separation,
+      // so a whole Hunt population is not clustered around one easy first cut.
       const distance = Math.min(
         ...spawns.map((spawn) => Math.hypot(point.x - spawn.x, point.y - spawn.y)),
       );
@@ -80,10 +86,20 @@ export function placeHuntPopulation({
     (a, b) => Math.abs(a.distance - 8) - Math.abs(b.distance - 8) || a.y - b.y || a.x - b.x,
   );
   const chosen = [];
-  for (const spot of spots) {
-    if (chosen.some((other) => Math.hypot(other.x - spot.x, other.y - spot.y) < 5)) continue;
-    chosen.push({ x: spot.x, y: spot.y });
-    if (chosen.length >= count) break;
+  while (chosen.length < count) {
+    let best = null,
+      bestDistance = -1;
+    for (const spot of spots) {
+      const distance = chosen.length
+        ? Math.min(...chosen.map((other) => Math.hypot(other.x - spot.x, other.y - spot.y)))
+        : Infinity;
+      if (distance < 5 || distance <= bestDistance) continue;
+      best = spot;
+      bestDistance = distance;
+      if (!chosen.length) break;
+    }
+    if (!best) break;
+    chosen.push({ x: best.x, y: best.y });
   }
   return chosen;
 }
@@ -141,6 +157,7 @@ export function deriveEncounterLevel(source, variant, { mode = 'solo', count = 6
     if (!original.combatPatrols && !original.hunt) return source;
     delete original.hunt;
     delete original.combatPatrols;
+    if (!team && level.version === 'xonix-level.v9') level.version = 'xonix-level.v8';
     level.revision = revision(source, variant);
     if (team) {
       const result = validateCoopLevel(level);
@@ -187,6 +204,7 @@ export function deriveEncounterLevel(source, variant, { mode = 'solo', count = 6
     );
   level.revision = revision(source, variant);
   delete level.classic.hunt;
+  if (level.version === 'xonix-level.v9') level.version = 'xonix-level.v8';
   level.classic.combatPatrols = { version: 'combat-patrols.v1', enabled: true, actors };
   return freezeDesign(normalizedLevel(level));
 }

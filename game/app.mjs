@@ -8155,7 +8155,7 @@ try {
         status: contentText(lesson, 'instructions.0'),
       };
     }
-    return missionBriefing(scenario?.level || campaign.levels[levelIndex], {
+    return missionBriefing(run?.level ?? scenario?.level ?? campaign.levels[levelIndex], {
       brief: scenario
         ? undefined
         : (editionLocalization?.briefFor(campaign.levels[levelIndex]) ??
@@ -11980,7 +11980,7 @@ try {
         describe: ({ level }) => {
           const actual = normalizedLevel(level);
           return {
-            rules: `${Math.round(actual.goal.coverage * 100)}% coverage · ${actual.rules.lives} lives · ${actual.rules.moveSpeed} cells/s · Authored rules`,
+            rules: `${actual.classic?.hunt ? missionBriefing(actual).goal : `${Math.round(actual.goal.coverage * 100)}% coverage`} · ${actual.rules.lives} lives · ${actual.rules.moveSpeed} cells/s · Authored rules`,
           };
         },
         prepareClassic: prepareLibraryClassic,

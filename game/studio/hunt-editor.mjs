@@ -249,12 +249,14 @@ function createHuntPresentationPreview(container) {
   const controls = new Map(),
     labels = new Map();
   let frame = null,
+    revision = 0,
     disposed = false;
-  const fx = createHuntDestruction();
+  const fx = createHuntDestruction({ preview: true, onPreempt: () => hide() });
   const media = win?.matchMedia?.('(prefers-reduced-motion: reduce)');
   const reduced = () =>
     choices.reduced || media?.matches || doc.body?.dataset.effects === 'reduced';
   function stop() {
+    revision++;
     if (frame !== null) win.cancelAnimationFrame(frame);
     frame = null;
     fx.reset();
@@ -318,6 +320,7 @@ function createHuntPresentationPreview(container) {
   }
   play.onclick = () => {
     stop();
+    const currentRevision = revision;
     const ctx = canvas.getContext('2d');
     if (!ctx || !win?.requestAnimationFrame) return;
     canvas.hidden = false;
@@ -335,7 +338,7 @@ function createHuntPresentationPreview(container) {
     let began = null,
       previous = null;
     const draw = (now) => {
-      if (disposed || doc.hidden) {
+      if (disposed || doc.hidden || currentRevision !== revision) {
         hide();
         return;
       }
@@ -351,6 +354,7 @@ function createHuntPresentationPreview(container) {
         reduced: reduced(),
         sources: [{ x: 13, y: 5, direction: 'right' }],
       });
+      if (currentRevision !== revision) return;
       previous = now;
       ctx.fillStyle = '#181e25';
       ctx.fillRect(0, 0, canvas.width, canvas.height);

@@ -510,13 +510,9 @@ function tuneGameplay(source, snapshot, vectorMagnitude) {
     // Existing patrols retain their historical pressure scaling and speed caps.
     actor.speed =
       huntTargetKind(hunt, actor.id) === 'runner'
-        ? clamp(
-            level.rules.moveSpeed *
-              (team ? 1 : Math.min(...CLASSES.map((recipe) => recipe.moveSpeedMultiplier ?? 1))) *
-              0.7,
-            0.25,
-            8,
-          )
+        ? level.rules.moveSpeed *
+          (team ? 1 : Math.min(...CLASSES.map((recipe) => recipe.moveSpeedMultiplier ?? 1))) *
+          0.7
         : clamp(actor.speed * unmeasuredSpeed, 0.25, 8);
     if (actor.role === 'sentry') actor.shotSpeed = clamp(actor.shotSpeed * unmeasuredSpeed, 4, 12);
   }

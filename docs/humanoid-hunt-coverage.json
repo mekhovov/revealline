@@ -14,7 +14,7 @@
       "mode": "solo",
       "qualification": "structural",
       "humanPlay": "pending",
-      "startupMilliseconds": 1618,
+      "startupMilliseconds": 2694,
       "count": 91,
       "countsByVariant": {
         "authored": 91,
@@ -3946,7 +3946,7 @@
       "mode": "versus",
       "qualification": "structural",
       "humanPlay": "pending",
-      "startupMilliseconds": 216,
+      "startupMilliseconds": 212,
       "count": 91,
       "countsByVariant": {
         "authored": 91,
@@ -7878,7 +7878,7 @@
       "mode": "solo",
       "qualification": "structural",
       "humanPlay": "pending",
-      "startupMilliseconds": 140,
+      "startupMilliseconds": 144,
       "count": 6,
       "countsByVariant": {
         "authored": 6,
@@ -8155,7 +8155,7 @@
       "mode": "versus",
       "qualification": "structural",
       "humanPlay": "pending",
-      "startupMilliseconds": 14,
+      "startupMilliseconds": 16,
       "count": 6,
       "countsByVariant": {
         "authored": 6,

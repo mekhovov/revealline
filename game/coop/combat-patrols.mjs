@@ -12,11 +12,13 @@ import { initializeCombatPatrols } from '../core/combat-patrols.mjs';
 import { coopBonusActive } from './timed-bonuses.mjs';
 import {
   validateHuntDefinition,
+  validateHuntReachability,
   createHuntState,
   recordHuntElimination,
   huntTargetKind,
   chooseHuntRunnerHeading,
 } from '../hunt/rules.mjs';
+import { compileCoopFoundationGeometry } from './foundations.mjs';
 
 const live = (actor) => actor.alive;
 const exposed = (run, player) =>
@@ -56,12 +58,12 @@ export function validateCoopCombat(level, cells) {
   const ids = new Set(level.enemies.map((actor) => actor.id));
   validateCombatPatrols(
     {
-      version: 'xonix-level.v8',
+      version: level.hunt ? 'xonix-level.v9' : 'xonix-level.v8',
       width: level.width,
       height: level.height,
       spawn: level.spawns[0],
       enemies: level.enemies.map((actor) => ({ ...actor, type: 'bouncer' })),
-      classic: { combatPatrols: level.combatPatrols },
+      classic: { combatPatrols: level.combatPatrols, ...(level.hunt ? { hunt: level.hunt } : {}) },
     },
     {
       geometry: { cells },
@@ -75,11 +77,20 @@ export function validateCoopCombat(level, cells) {
   for (const actor of level.combatPatrols.actors)
     if (level.spawns.some((spawn) => Math.hypot(actor.x - spawn.x, actor.y - spawn.y) < 2))
       throw new TypeError('Team optional patrols need clearance from both spawns.');
-  if (level.hunt)
+  if (level.hunt) {
     validateHuntDefinition(level.hunt, level.combatPatrols.actors, {
       enabled: level.combatPatrols.enabled,
       ordinaryCount: level.enemies.length,
+      playerMoveSpeed: level.rules?.moveSpeed ?? 8,
     });
+    validateHuntReachability(level.hunt, level.combatPatrols.actors, {
+      width: level.width,
+      height: level.height,
+      cells,
+      terrain: compileCoopFoundationGeometry(level).terrain,
+      spawns: level.spawns,
+    });
+  }
 }
 
 export function initializeCoopCombat(run) {

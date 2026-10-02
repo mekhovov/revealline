@@ -1,6 +1,6 @@
 # Humanoid hunting implementation
 
-Implemented on `codex/humanoid-hunting`, based on main `f236bb71a`, in an isolated managed worktree. The primary checkout and its unrelated changes were not edited. This is a local implementation and review build, not a published release.
+Implemented on `codex/humanoid-hunting`, initially based on main `f236bb71a`, then merged with main `e48adf318` for the qualification follow-up, in an isolated managed worktree. The primary checkout and its unrelated changes were not edited. This is an implementation and review candidate, not a published release.
 
 ## Delivered behavior
 
@@ -43,6 +43,7 @@ The checked-in generated voice pilot contains 16 AAC clips: one in-play capture 
 - Accepted Hunt definitions, actor AI state, elimination IDs, objectives and scores participate in exact save/replay identities. Historical formats retain their earlier semantics.
 - Host adapters lazily compile variant editions, preserve exact ownership and scope variant progress keys separately from ordinary progress.
 - `revealline.hunt-records.v1` stores bounded records independently, merges best-score/time/mastery across concurrent tabs and preserves unsupported future data. Hunt records have their own export/import controls; existing campaign backups do not silently claim to include them.
+- Normal Team hunts now have a bounded, independently exportable unfinished-attempt slot. Continue verifies the accepted source, full input/release journal, and authoritative state before activation; another tab cannot overwrite it during asynchronous preparation. Installed Team and Hunt Continue preserve both journals.
 - Encounter and destruction preferences synchronize across tabs and restored pages, retain unsaved intent and expose retry when storage is unavailable.
 - Replay presentations and Studio previews never write Hunt records. Cosmetic preferences do not change collisions, capture, score or simulation RNG.
 - FPV simulation is outside this implementation.
@@ -61,11 +62,22 @@ The checked-in generated voice pilot contains 16 AAC clips: one in-play capture 
 
 `docs/humanoid-hunt-coverage.json` reports structural admission for 91 Solo missions, 91 Versus missions and 12 Team missions, plus the six lessons in each mode. Its `humanPlay: pending` field is intentional. Reachability/clearance/actor-budget validation is not proof that pursuit is enjoyable, a route is catchable with every input method, or a Hunt cannot be cleared too easily by one enclosure. These are review candidates until the listed acceptance work is complete.
 
+## Continuation: remaining implementation gaps closed
+
+The follow-up implements missing Team Hunt persistence, spreads generated targets over the board, enforces dry target reachability and the accepted runner speed, corrects Team/Studio humanoid markers and Hunt-only briefing, and hardens shared destruction/audio resources. The detailed evidence is split by concern:
+
+- [Gameplay and coverage](humanoid-hunt-qualification-followup.md): exact runner speed, reachability, population spread, capture snapshots and updated structural admission.
+- [Team persistence](humanoid-hunt-persistence-followup.md): command/release journals, safe Continue/Retry/discard, concurrent ownership, portable slot and partial-quota/guard-warning observations.
+- [Authoring and briefings](humanoid-hunt-authoring-followup.md): visible humanoids, actual Hunt objectives, EN/UK descriptions and the actual Solo practice host.
+- [Presentation and voice](humanoid-hunt-presentation-followup.md), with [browser observations](evidence/humanoid-hunt-presentation-observation.json): explicit desktop Canvas, silent speech decode/lifecycle and isolated recording-library round-trip measurements. The adjacent workbench allows separate manual operations; it is not a regression suite.
+
+Release gates in the phase table remain deliberate: human catchability/balance across input methods, low-end-device and two-player hardware review, voice listening approval, historical-save sampling and publication provenance are not established by compilation or these bounded observations.
+
 ## Verification evidence
 
 The repository's `publishing/test-policy.json` is waived under the existing explicit authorization. Automated suites were **WAIVED_SKIPPED_NOT_PASSED**. Focused regression files were added but not executed. Syntax, lint, localization, content validation, build and direct runtime/browser inspections are separate checks.
 
-Completed checks:
+Initial implementation checks (before the continuation):
 
 - Full ESLint passed. Changed-file syntax/formatting and whitespace checks passed.
 - EN/UK localization validation passed; content validation and presentation metadata checks passed.
@@ -79,9 +91,9 @@ The full repository formatting check reports four unchanged baseline files: `gam
 
 Still pending: automated suites while waived; exhaustive historical-save/restore scenarios; human play qualification across all classes, slower speeds and input methods; long-session/mass-elimination/low-end-device measurements; English/Ukrainian voice listening; and release publication/provenance checks. Compilation and spot checks do not substitute for these gates.
 
-## Review build
+## Initial review build
 
-Final packaging passed from clean implementation commit `72470e3b0f922e1be1ecce97ef7e59649185393d`.
+Initial packaging passed from clean implementation commit `72470e3b0f922e1be1ecce97ef7e59649185393d`.
 
 - Version: `humanoid-hunt-review`.
 - Distribution files: 2,783.
@@ -89,3 +101,13 @@ Final packaging passed from clean implementation commit `72470e3b0f922e1be1ecce9
 - Artifact inspection confirmed 16 voice clips, eight portraits, the versioned presentation catalog and the shared warning-priority module.
 - This was a development build (`sourceRevision: null` in the CLI manifest), not a release publication/provenance attestation.
 - The temporary package was removed after verification to recover disk space. The committed source, report and local preview server remain available.
+
+## Continuation verification
+
+After merging main `e48adf318`, EN/UK localization validation passed (12,103 messages and 8,921 references), full ESLint passed, and content validation passed with 2,633 inputs and valid literal references. Presentation metadata validation passed. The content validator retained the repository's deployment-only navigation warnings for app/update, diagnostics, release, privacy and credits pages.
+
+The actual Solo practice ready screen showed the six-target Hunt-only goal. Team's preserved 25-second development checkpoint restored after exact compatibility verification; the foreground browser attempt advanced to 32 seconds and paused at 38 seconds, with 0/2 targets and no browser errors. Background Continue now explains the existing foreground requirement. [Team browser evidence](evidence/humanoid-hunt-team-continue.jpg) records the paused restored attempt. Team backup export reached the platform download/share request, but the browser download observation timed out; its full UI export/import round trip is still unqualified.
+
+The desktop destruction observation held 128 particles/four envelopes across two boards, 64/two each; the competing preview yielded. Reduced effects drew no dynamic particles or envelopes. Pause retained burst ages; reset released every owner. All 16 pilot clips loaded after conservative container admission. Recording replacement, reopen, restore and bundle import retained the expected hashes in an isolated database, then removed that temporary database. These results are bounded presentation/resource observations, not full-game performance or human listening approval.
+
+Automated suites remain **WAIVED_SKIPPED_NOT_PASSED**. The final distribution ZIP was not regenerated locally: available disk space was below 1 GiB, while the earlier temporary build required about 1.8 GiB. The committed-source inventory is recorded separately after the follow-up commit; it does not replace ZIP inspection or release provenance qualification.

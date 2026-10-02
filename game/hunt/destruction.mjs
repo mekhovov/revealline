@@ -1,3 +1,4 @@
+import { huntDestructionBudget } from './destruction-budget.mjs';
 import {
   HUNT_PRESENTATION_CATALOG as catalog,
   huntActorPresentation,
@@ -15,8 +16,6 @@ const rect = (ctx, color, x, y, w, h) => {
 };
 const { edge, blood, flesh } = catalog.palette;
 const { recipes, budgets } = catalog;
-const particleLimit = budgets.pageParticles / budgets.painters;
-const envelopeLimit = budgets.pageEnvelopes / budgets.painters;
 const coatFor = (kind, accent) => {
   const actor = huntActorPresentation(kind);
   return actor?.tintWithAccent ? (accent ?? actor.palette.coat) : (actor?.palette.coat ?? accent);
@@ -159,7 +158,26 @@ function blast(ctx, burst, t, unit) {
 /** At most 64 particles/two envelopes per painter: two-board hosts stay within
  * the page-wide 128/four budget. The 24 records are cosmetic clusters per board.
  * Sources are read-only craft positions for contact direction, not gameplay RNG. */
-export function createHuntDestruction() {
+export function createHuntDestruction({
+  preview = false,
+  onPreempt = () => {},
+  budget = huntDestructionBudget,
+  now = () => globalThis.performance?.now?.() ?? Date.now(),
+} = {}) {
+  const budgetOwner = {};
+  let lease = null,
+    lastAdvance = null,
+    drawn = { particles: 0, envelopes: 0 };
+  const release = () => {
+    lease?.release();
+    lease = null;
+  };
+  const cancel = () => {
+    bursts = [];
+    release();
+    drawn = { particles: 0, envelopes: 0 };
+    onPreempt();
+  };
   let owner = null,
     seen = new Set(),
     bursts = [],
@@ -171,6 +189,9 @@ export function createHuntDestruction() {
       seen.clear();
       bursts = [];
       enabled = false;
+      lastAdvance = null;
+      release();
+      drawn = { particles: 0, envelopes: 0 };
     },
     advance(
       view,
@@ -185,30 +206,49 @@ export function createHuntDestruction() {
         sources = [],
       } = {},
     ) {
+      const time = now(),
+        stale = lastAdvance !== null && time - lastAdvance > budgets.staleFrameMs;
+      lastAdvance = time;
       if (!view || !view.valid) {
-        bursts = [];
+        cancel();
         return;
+      }
+      if (stale) {
+        seen = new Set(view.eliminations.map((m) => m.id));
+        cancel();
       }
       if (owner !== key) {
         owner = key;
         seen = new Set(view.eliminations.map((m) => m.id));
         bursts = [];
+        release();
       }
       if (concealed) {
         seen = new Set(view.eliminations.map((m) => m.id));
         bursts = [];
+        release();
         enabled = brutal;
         bloodEnabled = showBlood;
         return;
       }
-      if (!brutal || reduced || (bloodEnabled && !showBlood)) bursts = [];
+      if (!brutal || reduced || (bloodEnabled && !showBlood)) {
+        bursts = [];
+        release();
+      }
       if (!paused)
         bursts = bursts
           .map((b) => ({ ...b, age: b.age + Math.max(0, Math.min(0.1, dt || 0)) }))
           .filter((b) => b.age < huntDestructionRecipe(b.cause).life);
       const fresh = view.eliminations.filter((m) => !seen.has(m.id));
       for (const mark of fresh) seen.add(mark.id);
-      if (brutal && !reduced && !paused && enabled) {
+      if (!bursts.length) release();
+      if (brutal && !reduced && !paused && enabled && fresh.length) {
+        lease = budget.claim(budgetOwner, { preview, cancel });
+        if (!lease) {
+          enabled = brutal;
+          bloodEnabled = showBlood;
+          return;
+        }
         for (const [index, mark] of fresh.entries()) {
           const seed = hash(`${mark.id}/${mark.tick}/${mark.cause}`);
           bursts.push({
@@ -225,8 +265,22 @@ export function createHuntDestruction() {
       }
       enabled = brutal;
       bloodEnabled = showBlood;
+      if (bursts.length) lease = budget.claim(budgetOwner, { preview, cancel });
+    },
+    snapshot() {
+      return Object.freeze({
+        bursts: bursts.length,
+        newestBurstAge: bursts.at(-1)?.age ?? null,
+        ...drawn,
+        allocatedParticles: lease?.active ? lease.particles : 0,
+        allocatedEnvelopes: lease?.active ? lease.envelopes : 0,
+      });
     },
     draw(ctx, { unit = 1, color = '#79d7ce' } = {}) {
+      drawn = { particles: 0, envelopes: 0 };
+      if (!bursts.length || !lease?.active) return;
+      const particleLimit = lease.particles,
+        envelopeLimit = lease.envelopes;
       let particles = 0,
         envelopes = 0;
       ctx.save();
@@ -274,6 +328,7 @@ export function createHuntDestruction() {
         }
       }
       ctx.restore();
+      drawn = { particles, envelopes };
     },
   });
 }
