@@ -1482,3 +1482,117 @@ package admissions, ZIP/committed-input checks and two identical builds.
 Player SHA256 `f6093191d52c21e2f665fb50517272fa4dd6fb0bb50f61086d1d6ec3d3d7cc94`;
 87 runtime files /13,426,571 bytes. B can now target main directly. Its
 publication is separate from A's verified public availability.
+
+### 2 October — B merged; Garage original demonstrations ready
+
+Lifecycle PR [#952](https://github.com/mekhovov/revealline/pull/952) was published
+and attached at `2fcb3a2ce003e5d0340a9df8cad78e59b9202a5a`, then merged through
+the protected pipeline as `b278b0b67137ee8fa3441dd0196e634981137546`. Latest
+exact-head checks pass; the automatic main update only added menu-review docs.
+Both reviewed-player and continuous-school local URLs contain the qualified B
+build, SHA `f6093191d52c21e2f665fb50517272fa4dd6fb0bb50f61086d1d6ec3d3d7cc94`.
+
+The separate branch `codex/fpv-garage-demonstrations` installs the missing16
+original Garage proofs. All138 previous v2 rows and decoder bytes are retained;
+the current branch contains154 v2 +24 v1 =120 original +58 school demonstrations.
+The14-world/148-challenge catalogue and Adventure60 authoring archive are unchanged.
+The portable generator, bounded additive pack builder, provenance and compact
+archive are retained in `authoring/fpv-worlds/demonstrations`.
+
+Authoring qualification passes15/15; all154 v2 and24 v1 recordings independently
+replay. All1,331 checkpoint positions pass (768 restored /563 explicit fallbacks).
+Actual WebGL source281/281 and packaged279/279 checks each complete18 runs:
+all16 Garage examples in both modes plus retained original/school representatives.
+The checks cover exact final state, FPV/chase, speed/pause, controlled held-input
+isolation, localization and saved-record preservation. Their supplied frame
+timestamps accelerate playback; they do not measure hardware performance.
+Separate native-time Upper deck survey playback and FPV/chase approach views were
+inspected. Human art, novice and physical-device qualification remain open.
+
+During qualification, a false final-state mismatch was traced to cross-realm
+object key ordering in the verification page; both child-local and normalized
+parent hashes now match the exact proofs. Runtime physics and recordings were
+not altered to satisfy the fixture. The maintained fixture also exposes deliberate
+post-preparation resume and never auto-resumes unexpected in-flight pauses.
+
+Next: freeze and publish this increment against current main (B already merged,
+so no stack is needed yet), then continue C's shared Themes/hero-environment work.
+Do not append to closed stacks889/902 or claim the Garage build is public before
+its own protected merge, deployment identity and actual public launch.
+
+### 2 October — Garage frozen candidate; B public launch verified
+
+Garage runtime candidate `5d9411ba831800bc7f6ae763f46d9d4ea69fa8f7` is rebased
+onto merged B/main. All three optional packages pass admission, committed-input
+and ZIP checks; two builds are byte-identical. World Studio has94 admitted
+source files /13,811,694 bytes and87 player runtime files /13,677,223 bytes.
+The prepared player SHA256 is
+`47d5b732a0b4fb5a94e1579c2fdafd70d5db64b95552eb618f69e7928c194c45`.
+See `fpv-garage-package-verification.json`. This is local qualification, not
+public eligibility or a release allocation.
+
+The public deployment marker now identifies B merge
+`b278b0b67137ee8fa3441dd0196e634981137546`. The actual public World Studio
+and Lighthouse flight launched with enabled Arm/resume, visible world and no
+application errors. Public `world-app.mjs` SHA256 matches the qualified source:
+`7998ec5987f26349dab28d0870b646eed070bf3448ef42a12433743858f1912d`.
+B's lifecycle repair is now live. Screenshot: `/tmp/fpv-lifecycle-live-player-20261002.png`.
+
+Themes coordination was sent to the user-authorized Themes chat. Its active
+primary-checkout appearance and cross-tab handoff work remains separate; do not
+copy uncommitted files or edit that checkout. C will build on the published
+shared contract once its current handoff is reviewed.
+
+### 2 October — Garage published as #954; C starts separately
+
+Garage is pushed and attached as [PR #954](https://github.com/mekhovov/revealline/pull/954),
+branch `codex/fpv-garage-demonstrations`, published head
+`8df23f7ab` (frozen runtime candidate remains `5d9411ba831800bc7f6ae763f46d9d4ea69fa8f7`).
+It targets main because both preceding increments are merged. An independent
+review found no blocking issue and checked157 source/provenance/archive hashes.
+Both normal local playtest URLs now have the qualified Garage build
+`47d5b732a0b4fb5a94e1579c2fdafd70d5db64b95552eb618f69e7928c194c45`.
+No Garage public claim yet. Inspect exact remote heads/checks before protected merge.
+
+Next work begins separately on `codex/fpv-hangar-surfaces`: a bounded visual
+Hangar pass on current published SIM contracts, while the broader shared Themes
+integration remains owned by its active chat. Do not add unfinished Hangar edits
+to #954. If the Hangar PR is ready while #954 is open and remains dependent,
+create a fresh linear native stack; never revive stacks889/902.
+
+### 2 October — integrate new practice publishing without blocking C
+
+Upstream #930 (practice discovery/launcher/offline) and #953 (main-game demo
+routes) merged while Garage #954 was validating. Recovery refs
+`codex/fpv-garage-pre-integration-20261002` and
+`codex/fpv-hangar-pre-integration-20261002` preserve both local heads. Garage is
+rebased on `f236bb71a`; all upstream runtime, publication and offline changes
+are preserved. Warehouse/Stadium authoring guidance removed by #930's older
+README was restored alongside Garage; their source/recording bytes were retained
+upstream. No unrelated change was reverted.
+
+The upstream practice-discovery policy now allows72 Academy /104 World source
+files (Flight remains64), adding admitted preview/guide/navigation resources.
+These inherited caps were changed by #930, not by this SIM increment. Byte limits
+remain8/8/16MiB. Earlier64/96-file receipts remain historical evidence for their
+frozen candidates; fresh integrated package receipts are required and recorded
+separately. No release version or global release authority was changed here.
+
+C1 is implemented and retained on the separate Hangar branch: texture/UV-only
+wall panels, six-metre concrete slab alignment and subdued service strips.
+Actual browser75/75 checks cover30 image pairs, three presets, camera poses,
+exact meadow pixels, fixed geometry/rays and resource plateaus/disposal. All154
+v2 plus24 legacy recordings replay. Its active work will be rebased after Garage
+integration, preserving a linear dependency if both PRs remain open.
+
+A temporary disk-full condition was resolved by deleting only two generated
+`distribution.zip` duplicates under `/tmp/fpv-sim-entry-build-20261002` and
+`/tmp/fpv-sim-entry-qualified-20261002`; extracted builds, checksum manifests,
+source and recorded evidence remain. No user assets or checkout were removed.
+
+Integrated Garage candidate `88a407579828a2b15ed5d3d1846414d6cc9de754` passes
+all three fresh admissions under inherited #930 policies, committed-input/ZIP
+checks and two identical builds. Admitted complete source counts are35/68/100
+for Flight/Academy/World; World bytes14,064,140. Exact source runtime from the
+Garage playback receipts is unchanged; new discovery/worker helpers are inherited
+from reviewed #930. See `fpv-garage-integrated-package-verification.json`.
