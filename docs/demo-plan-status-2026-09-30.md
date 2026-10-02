@@ -1,5 +1,7 @@
 # Demo attract-mode plan status — reviewed 1 October 2026
 
+> **Historical snapshot:** this document records the 1 October 2026 review. Queue, deployment, pull-request status and recommendation statements below are dated evidence, not current instructions or current repository status.
+
 This document reconciles the original six numbered phases (Phase 0 through Phase 5) with the implementation and retained qualification evidence. **Complete** means the planned behavior exists and its automated checks pass. It does not substitute for the physical-device, audible-output or human-viewer acceptance called out below. The 1 October review also separates public-release blockers from recommended product validation and optional expansion so the remaining work can be reprioritized without reopening completed implementation.
 
 ## Executive status
