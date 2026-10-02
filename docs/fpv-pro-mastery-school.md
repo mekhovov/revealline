@@ -120,3 +120,8 @@ policies. Both `dist/fpv-skills-school-playtest` and the existing
 13,894,752bytes, ZIP SHA-256
 `83b785dd5c4ad07b8615880a581597ed35926642694fc06934ce4168da3aed7f`.
 This is a local development playtest, not release or public-deployment acceptance.
+
+Published for review in [PR #940](https://github.com/mekhovov/revealline/pull/940),
+appended to native stack902 after #939. The existing reviewed-player URL was
+launched and its58-lesson catalogue verified. Upstream holds remain; protected
+merge and public deployment are not claimed.
