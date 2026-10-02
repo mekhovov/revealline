@@ -5817,5 +5817,8 @@
   "optionalPractice.simBrowserOnly": "Відкрийте гру у веббраузері, щоб перевірити доступні пакети симулятора.",
   "optionalPractice.worldsSourcePreview": "Школа польотів і World Studio · локальний перегляд джерела · не кваліфіковано",
   "optionalPractice.simOpen": "Відкрити школу польотів і світи",
-  "optionalPractice.simReady": "World Studio доступний у цій збірці. Відкрийте симулятор, щоб грати або підготувати його вміст для роботи офлайн."
+  "optionalPractice.simReady": "World Studio доступний у цій збірці. Відкрийте симулятор, щоб грати або підготувати його вміст для роботи офлайн.",
+  "optionalPractice.simDownloads": "Встановлення й автономна гра",
+  "optionalPractice.simRetry": "Спробувати відкрити SIM знову",
+  "optionalPractice.simUnavailable": "Не вдалося відкрити SIM із цієї копії. Під’єднайся до мережі для гри онлайн або підготуй необов’язкове автономне завантаження. Основна гра залишається доступною."
 }

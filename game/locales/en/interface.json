@@ -5707,5 +5707,8 @@
   "optionalPractice.simBrowserOnly": "Open this game in a web browser to check available simulator packages.",
   "optionalPractice.worldsSourcePreview": "Flight School & World Studio · local source preview · unqualified",
   "optionalPractice.simOpen": "Open Flight School & Worlds",
-  "optionalPractice.simReady": "World Studio is available in this build. Open the simulator to play or prepare its content for offline use."
+  "optionalPractice.simReady": "World Studio is available in this build. Open the simulator to play or prepare its content for offline use.",
+  "optionalPractice.simDownloads": "Install & offline play",
+  "optionalPractice.simRetry": "Try opening SIM again",
+  "optionalPractice.simUnavailable": "SIM could not be opened from this copy. Reconnect to play online, or prepare its optional offline download. Your game remains available."
 }

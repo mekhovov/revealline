@@ -18,6 +18,8 @@ export function mountOptionalPracticePanel({
   packageId = null,
   bundledHref = null,
   idPrefix = 'optional-practice',
+  preferDirect = false,
+  navigate = (url) => (doc.defaultView ?? globalThis.window).location.assign(url),
 }) {
   const indexURL = href && optionalPracticeCatalogURL(href);
   if (!container || (!indexURL && !bundledHref)) return { dispose() {} };
@@ -50,7 +52,7 @@ export function mountOptionalPracticePanel({
   list.className = 'optional-practice-packages';
   status.setAttribute('role', 'status');
   status.setAttribute('aria-live', 'polite');
-  const retry = node('button', 'refresh'),
+  const retry = node('button', preferDirect ? 'simRetry' : 'refresh'),
     close = node('button', 'back');
   retry.id = `${idPrefix}-refresh`;
   close.id = `${idPrefix}-close`;
@@ -64,6 +66,12 @@ export function mountOptionalPracticePanel({
   content.className = 'optional-practice-content';
   heading.append(title, close);
   content.append(note, status, list);
+  if (preferDirect && bundledHref) {
+    const downloads = node('a', 'simDownloads');
+    downloads.className = 'button secondary';
+    downloads.href = new URL('../../game/downloads.html', bundledHref).href;
+    content.append(downloads);
+  }
   footer.append(retry);
   if (sourcePreviews.length) {
     const preview = node('section'),
@@ -100,6 +108,7 @@ export function mountOptionalPracticePanel({
     timeout = null;
     request = null;
     retry.disabled = false;
+    opener.removeAttribute('aria-busy');
   }
   async function bundledEntry(signal) {
     if (!bundledHref) return null;
@@ -149,7 +158,11 @@ export function mountOptionalPracticePanel({
       return null;
     return bundledHref;
   }
-  async function load() {
+  function reveal() {
+    if (!dialog.open) dialog.showModal();
+    close.focus({ preventScroll: true });
+  }
+  async function load({ direct = false } = {}) {
     cancel();
     const ticket = visit,
       controller = new AbortController();
@@ -157,6 +170,7 @@ export function mountOptionalPracticePanel({
     timeout = setTimeout(() => controller.abort(), timeoutMs);
     localizedText(status, () => tr('loading'));
     retry.disabled = true;
+    opener.setAttribute('aria-busy', 'true');
     list.replaceChildren();
     try {
       let bundled = null;
@@ -165,12 +179,19 @@ export function mountOptionalPracticePanel({
       } catch {
         /* Fall back to the separately published launcher. */
       }
-      if (disposed || ticket !== visit || !dialog.open) return;
+      if (disposed || ticket !== visit) return;
       if (bundled) {
         const row = node('li'),
           link = node('a', 'simOpen');
         const target = new URL(bundled);
         target.searchParams.set('lang', doc.documentElement.lang === 'uk' ? 'uk' : 'en');
+        if (direct) {
+          const owner = returnTo?.closest?.('dialog');
+          if (doc.hidden || returnTo?.closest?.('[hidden],[inert]') || (owner && !owner.open))
+            return;
+          navigate(target.href);
+          return;
+        }
         link.href = target.href;
         link.onclick = () => {
           target.searchParams.set('lang', doc.documentElement.lang === 'uk' ? 'uk' : 'en');
@@ -184,6 +205,7 @@ export function mountOptionalPracticePanel({
         localizedText(status, () => tr('simReady'));
         return;
       }
+      if (direct) reveal();
       if (!indexURL) throw new Error('No published package catalog is available for this host.');
       const packages = (
         await loadOptionalPracticeCatalog(indexURL, {
@@ -191,7 +213,7 @@ export function mountOptionalPracticePanel({
           signal: controller.signal,
         })
       ).filter((item) => !packageId || item.id === packageId);
-      if (disposed || ticket !== visit || !dialog.open) return;
+      if (disposed || ticket !== visit) return;
       for (const item of packages) {
         const row = node('li'),
           link = node('a');
@@ -204,19 +226,27 @@ export function mountOptionalPracticePanel({
         row.append(link, version);
         list.append(row);
       }
-      localizedText(status, () => tr(packages.length ? 'ready' : 'empty'));
+      localizedText(status, () =>
+        tr(preferDirect ? 'simUnavailable' : packages.length ? 'ready' : 'empty'),
+      );
     } catch {
-      if (!disposed && ticket === visit) localizedText(status, () => tr('unavailable'));
+      if (!disposed && ticket === visit) {
+        if (direct) reveal();
+        localizedText(status, () => tr(preferDirect ? 'simUnavailable' : 'unavailable'));
+      }
     } finally {
       if (ticket === visit) {
         clearTimeout(timeout);
         timeout = null;
+        request = null;
         if (!disposed) retry.disabled = false;
+        opener.removeAttribute('aria-busy');
       }
     }
   }
   const open = (trigger = opener) => {
     if (disposed) return;
+    if (request && !dialog.open) return;
     if (dialog.open) {
       close.focus({ preventScroll: true });
       return;
@@ -224,12 +254,11 @@ export function mountOptionalPracticePanel({
     returnTo = trigger;
     restoreOnClose = true;
     pause();
-    dialog.showModal();
-    close.focus({ preventScroll: true });
-    void load();
+    if (!preferDirect) reveal();
+    void load({ direct: preferDirect });
   };
   opener.onclick = () => open();
-  retry.onclick = () => void load();
+  retry.onclick = () => void load({ direct: preferDirect });
   close.onclick = () => dialog.close();
   const onClose = () => {
     if (dialog.open) return;
@@ -248,6 +277,10 @@ export function mountOptionalPracticePanel({
       returnTo.focus({ preventScroll: true });
   };
   dialog.addEventListener('close', onClose);
+  const onOtherAction = (event) => {
+    if (request && !dialog.open && !returnTo?.contains?.(event.target)) cancel();
+  };
+  doc.addEventListener('click', onOtherAction, true);
   return {
     open,
     root: () => (dialog.open ? dialog : null),
@@ -261,6 +294,7 @@ export function mountOptionalPracticePanel({
       disposed = true;
       cancel();
       dialog.removeEventListener('close', onClose);
+      doc.removeEventListener('click', onOtherAction, true);
       dialog.remove();
       opener.onclick = null;
       if (!existingOpener) opener.remove();
