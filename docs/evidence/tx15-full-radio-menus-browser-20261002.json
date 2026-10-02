@@ -1,0 +1,67 @@
+{
+  "format": "tx15-full-radio-menu-browser-verification.v1",
+  "createdAt": "2026-10-01T22:20:44.693Z",
+  "url": "http://127.0.0.1:8794/dist/tx15-menu-verification/index.html",
+  "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/154.0.0.0 Safari/537.36",
+  "scope": "Actual main-game setup/menu/Confirm components in browser with controlled samples; no physical-radio claim.",
+  "passed": true,
+  "checks": [
+    {
+      "name": "Solo setup exposes English opt-in for exact tested descriptor",
+      "passed": true
+    },
+    {
+      "name": "Neutral joins without activating an action",
+      "passed": true
+    },
+    {
+      "name": "Right vertical stick navigates actual DOM buttons",
+      "passed": true
+    },
+    {
+      "name": "Yaw right holds then releases exactly one guarded Confirm",
+      "passed": true
+    },
+    {
+      "name": "Yaw left invokes Back only once while held",
+      "passed": true
+    },
+    {
+      "name": "Held Confirm cannot cross a menu context change",
+      "passed": true
+    },
+    {
+      "name": "Throttle and auxiliary switches never activate menus",
+      "passed": true
+    },
+    {
+      "name": "Disconnect with held Confirm cannot activate on reconnect",
+      "passed": true
+    },
+    {
+      "name": "Ukrainian preset label and safe instructions render",
+      "passed": true
+    },
+    {
+      "name": "Shared-radio setup keeps the opt-in hidden and its old preset unchanged",
+      "passed": true
+    },
+    {
+      "name": "Unknown hardware disables the preset",
+      "passed": true
+    },
+    {
+      "name": "No browser runtime errors",
+      "passed": true
+    }
+  ],
+  "inputs": {
+    "game/couch/tx15-presets.mjs": "236e45b15810ec59e7ea3a8ec84380e863d9786482a8d448adf68c65619c30e9",
+    "game/couch/controller-setup.mjs": "9c6d6fd2cf9241fbd90ddf07ecb1bf1509fee14e42bec09670d4ec48a473fd4f",
+    "game/i18n/catalogs.mjs": "8bb09c78eab0e6ad09ec21ec2f1c5f9c3d18057bf590d882625f05e1c5b5a34d",
+    "game/ui/controller-router.mjs": "8eea596e02b762b3924cd8052091d66e59d77825efe918aa0673c58c5c1f5fb9",
+    "game/ui/controller-navigation.mjs": "a136883ba62a47c239005a8202743ebf8e46c9d443e92f63a374099907ccd203",
+    "game/ui/controller-confirm-lifecycle.mjs": "c4e7fc257ad7eae85e1130ef3d9a54c64d7de214b357829db834682191d894b6"
+  },
+  "errors": []
+}
