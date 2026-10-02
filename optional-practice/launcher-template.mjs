@@ -37,6 +37,22 @@ export function installOptionalLauncher(
   }
   const validate = (value) =>
     validateOptionalInstallationReference(value, { packageId, root, baseURL: location.href });
+  const launchURL = (value) => {
+    const target = new URL(value.entry, value.scope),
+      query = new URL(location.href).searchParams,
+      family = query.get('appearanceFamily'),
+      revision = query.get('appearanceRevision');
+    if (
+      query.getAll('appearanceFamily').length === 1 &&
+      query.getAll('appearanceRevision').length === 1 &&
+      /^[a-z][a-z0-9-]{0,63}$/.test(family ?? '') &&
+      /^r[1-9][0-9]{0,8}$/.test(revision ?? '')
+    ) {
+      target.searchParams.set('appearanceFamily', family);
+      target.searchParams.set('appearanceRevision', revision);
+    }
+    return target.href;
+  };
   try {
     const state = JSON.parse(
       localStorage.getItem(optionalInstallationKey(packageId, root)) ?? '{}',
@@ -47,7 +63,7 @@ export function installOptionalLauncher(
     ])
       if (state[key]) {
         const value = validate(state[key]);
-        $(element).href = new URL(value.entry, value.scope).href;
+        $(element).href = launchURL(value);
         $(element).hidden = false;
       }
   } catch {
@@ -110,7 +126,7 @@ export function installOptionalLauncher(
         offset += chunk.byteLength;
       }
       const value = validate(JSON.parse(new TextDecoder('utf-8', { fatal: true }).decode(bytes)));
-      $('prepare').href = new URL(value.entry, value.scope).href;
+      $('prepare').href = launchURL(value);
       $('prepare').hidden = false;
       $('status').textContent = copy[locale].ready;
     } catch {

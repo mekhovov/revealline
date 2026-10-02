@@ -2,6 +2,7 @@ import { createHash } from 'node:crypto';
 import { isDeepStrictEqual } from 'node:util';
 import { inspectEditionZip } from './edition-zip.mjs';
 import { validateEditionId } from '../game/edition-context.mjs';
+import { validateCuratedAppearanceInventory } from '../game/presentation/theme-system.mjs';
 
 const SHA = /^[a-f0-9]{64}$/;
 const COMMIT = /^[a-f0-9]{40,64}$/;
@@ -148,6 +149,7 @@ const json = (bytes) => JSON.parse(new TextDecoder('utf-8', { fatal: true }).dec
  * executable campaign/compiler code into the trusted sparse publisher. The
  * compiler additionally validates each old campaign and presentation receipt. */
 export function editionPublicationAssets(catalog, files) {
+  validateCuratedAppearanceInventory(catalog, { selectedOnly: true });
   if (
     !Array.isArray(catalog?.assets) ||
     !Array.isArray(catalog.editions) ||
@@ -194,6 +196,7 @@ export function editionPublicationAssets(catalog, files) {
       const snapshot = json(bytes),
         old = snapshot.catalog,
         retained = old?.editions?.[0];
+      validateCuratedAppearanceInventory(old, { selectedOnly: true });
       const sameList = (left, right) =>
         Array.isArray(left) &&
         Array.isArray(right) &&
@@ -204,7 +207,11 @@ export function editionPublicationAssets(catalog, files) {
         snapshot.format !== 'revealline-edition-presentation.v1' ||
         snapshot.editionId !== edition.id ||
         snapshot.authoredPresentationSha256 !== descriptor.id ||
-        old?.format !== 'revealline-edition-catalog.v1' ||
+        ![
+          'revealline-edition-catalog.v1',
+          'revealline-edition-catalog.v2',
+          'revealline-edition-catalog.v3',
+        ].includes(old?.format) ||
         old.publication !== 'public' ||
         old.defaultEditionId !== edition.id ||
         old.editions?.length !== 1 ||

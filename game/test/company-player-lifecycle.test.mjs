@@ -186,6 +186,8 @@ test('company pagehide uses real preference teardown APIs and preserves a cached
     frame: 123,
     cancelAnimationFrame: (id) => calls.push(`cancel-${id}`),
     input: { destroy: () => calls.push('input') },
+    painter: { dispose: () => calls.push('painter') },
+    themeHost: { dispose: () => calls.push('theme-host') },
     current: { picture: { release: () => calls.push('picture') } },
     host: { preparer: { dispose: () => calls.push('preparer') } },
   };
@@ -222,6 +224,8 @@ test('company pagehide uses real preference teardown APIs and preserves a cached
     'picture',
     'preparer',
     'menu-audio',
+    'painter',
+    'theme-host',
   ]);
 });
 

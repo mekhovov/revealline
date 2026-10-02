@@ -4,6 +4,7 @@ import {
   loadOptionalPracticeCatalog,
 } from '../optional-practice-catalog.mjs';
 import { optionalPracticeSourcePreviews } from '../optional-practice-preview.mjs';
+import { appearanceLaunchURL } from '../fpv-entry.mjs';
 
 /** A shared explicit exit to an independently installed optional package. No
  * package content, progress store or simulation is admitted to the core game. */
@@ -14,6 +15,7 @@ export function mountOptionalPracticePanel({
   href,
   fetcher,
   timeoutMs = 10000,
+  getAppearanceDefault = () => null,
 }) {
   const indexURL = href && optionalPracticeCatalogURL(href);
   if (!container || !indexURL) return { dispose() {} };
@@ -66,7 +68,12 @@ export function mountOptionalPracticePanel({
     for (const item of sourcePreviews) {
       const row = node('li'),
         link = node('a', item.titleKey);
-      link.href = item.url;
+      link.href = appearanceLaunchURL(item.url, getAppearanceDefault(), { transfer: false });
+      link.onclick = () => {
+        link.href = appearanceLaunchURL(item.url, getAppearanceDefault(), {
+          window: doc.defaultView,
+        });
+      };
       link.target = '_blank';
       link.rel = 'noopener noreferrer';
       link.setAttribute('data-practice-source-preview', item.id);
@@ -111,7 +118,12 @@ export function mountOptionalPracticePanel({
         const row = node('li'),
           link = node('a');
         link.textContent = item.name;
-        link.href = item.url;
+        link.href = appearanceLaunchURL(item.url, getAppearanceDefault(), { transfer: false });
+        link.onclick = () => {
+          link.href = appearanceLaunchURL(item.url, getAppearanceDefault(), {
+            window: doc.defaultView,
+          });
+        };
         link.target = '_blank';
         link.rel = 'noopener noreferrer';
         const version = node('small');

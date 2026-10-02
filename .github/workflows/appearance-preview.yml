@@ -1,0 +1,186 @@
+name: Appearance preview
+
+on:
+  pull_request:
+    paths:
+      - '.github/workflows/appearance-preview.yml'
+      - 'docs/appearance-preview-testing.md'
+      - 'game/presentation/**'
+      - 'game/ui/theme-*'
+      - 'game/ui/menu-controls.css'
+      - 'game/ui/industrial-workshop.css'
+      - 'game/ui/field-kit*.css'
+      - 'game/ui/edition-tool-provider.mjs'
+      - 'game/editions/model.mjs'
+      - 'game/editions/retained-presentation.mjs'
+      - 'game/fpv-entry.mjs'
+      - 'authoring/asset-studio/**'
+      - 'authoring/company-studio/model.mjs'
+      - 'authoring/company-studio/studio.mjs'
+      - 'optional-practice/civilian-fpv/sim-presentation.mjs'
+      - 'optional-practice/civilian-fpv/world-themes.mjs'
+      - 'optional-practice/civilian-fpv/world-visuals.mjs'
+      - 'optional-practice/civilian-fpv/world-editor.mjs'
+      - 'optional-practice/civilian-fpv/renderer.mjs'
+      - 'scripts/compile-edition.mjs'
+      - 'scripts/refresh-theme-bootstrap.mjs'
+      - 'game/test/theme-*.test.mjs'
+      - 'game/test/unified-appearance.test.mjs'
+      - 'game/test/industrial-arcade.test.mjs'
+      - 'game/test/community-appearance.test.mjs'
+      - 'game/test/curated-community-theme*.test.mjs'
+      - 'game/test/edition-appearance-host.test.mjs'
+      - 'game/test/fpv-appearance.test.mjs'
+      - 'game/test/fpv-theme-family-controls.test.mjs'
+      - 'game/test/fpv-world-appearance-ui.test.mjs'
+      - 'game/test/fpv-world-editor-appearance.test.mjs'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: appearance-preview-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+jobs:
+  preview:
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    env:
+      PREVIEW_HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+      PREVIEW_PR: ${{ github.event.pull_request.number }}
+      PREVIEW_RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+      # This requested preview cohort is explicit; the global release-suite waiver is unchanged.
+      APPEARANCE_TEST_FILES: >-
+        game/test/theme-system.test.mjs
+        game/test/unified-appearance.test.mjs
+        game/test/theme-bootstrap.test.mjs
+        game/test/theme-preview.test.mjs
+        game/test/industrial-arcade.test.mjs
+        game/test/theme-family-host.test.mjs
+        game/test/theme-notices.test.mjs
+        game/test/community-appearance.test.mjs
+        game/test/curated-community-theme.test.mjs
+        game/test/curated-community-theme-host.test.mjs
+        game/test/edition-appearance-host.test.mjs
+        game/test/edition-retained-presentation.test.mjs
+        game/test/company-studio-ui.test.mjs
+        game/test/fpv-appearance.test.mjs
+        game/test/fpv-theme-family-controls.test.mjs
+        game/test/fpv-world-appearance-ui.test.mjs
+        game/test/fpv-world-editor-appearance.test.mjs
+        game/test/optional-installation.test.mjs
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+          persist-credentials: false
+      - uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v5
+        with:
+          node-version: '22.13.1'
+          package-manager-cache: false
+      - name: Verify the exact PR head
+        shell: bash
+        run: |
+          test "$(git rev-parse HEAD)" = "$PREVIEW_HEAD_SHA"
+          mkdir -p .cache/appearance-preview
+      - run: npm ci
+      - name: Install pinned SIM test dependencies
+        run: npm ci --prefix authoring/fpv-worlds --ignore-scripts
+      - name: Run focused appearance and curated-community checks
+        id: focused
+        shell: bash
+        run: |
+          set -euo pipefail
+          read -r -a test_files <<< "$APPEARANCE_TEST_FILES"
+          node --test --test-concurrency=1 "${test_files[@]}" | tee .cache/appearance-preview/focused-tests.tap
+      - name: Build the full game and separate Worlds playtest
+        shell: bash
+        run: |
+          set -euo pipefail
+          node scripts/game-cli.mjs build --out .cache/appearance-game --revision "$PREVIEW_HEAD_SHA" > .cache/appearance-preview/main-build.json
+          node scripts/build-fpv-worlds-playtest.mjs --out .cache/appearance-worlds > .cache/appearance-preview/world-build.json
+          cp .cache/appearance-game/distribution.zip .cache/appearance-preview/distribution.zip
+          cp .cache/appearance-worlds/fpv-worlds-playtest.zip .cache/appearance-preview/fpv-worlds-playtest.zip
+          cp docs/appearance-preview-testing.md .cache/appearance-preview/README.md
+      - name: Bind checksums and test results to the tested source
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$(git rev-parse HEAD)" = "$PREVIEW_HEAD_SHA"
+          test -z "$(git status --porcelain --untracked-files=no)"
+          node --input-type=module <<'NODE'
+          import { readFile, writeFile } from 'node:fs/promises';
+          import { createHash } from 'node:crypto';
+          import { execFileSync } from 'node:child_process';
+          const root = '.cache/appearance-preview/';
+          const head = process.env.PREVIEW_HEAD_SHA;
+          if (!/^[a-f0-9]{40}$/.test(head)) throw new Error('An exact PR head is required.');
+          const main = JSON.parse(await readFile(root + 'main-build.json', 'utf8'));
+          const world = JSON.parse(await readFile(root + 'world-build.json', 'utf8'));
+          const rows = [];
+          for (const [path, expected] of [
+            ['distribution.zip', main.sha256],
+            ['fpv-worlds-playtest.zip', world.zipSha256],
+          ]) {
+            const bytes = await readFile(root + path);
+            const sha256 = createHash('sha256').update(bytes).digest('hex');
+            if (sha256 !== expected) throw new Error(`Builder checksum mismatch: ${path}`);
+            rows.push({ path, bytes: bytes.length, sha256 });
+          }
+          if (main.sourceRevision !== head) throw new Error('Game source revision mismatch.');
+          await writeFile(root + 'preview-identity.json', JSON.stringify({
+            format: 'AppearancePreview.v1',
+            sourceRevision: head,
+            sourceTree: execFileSync('git', ['rev-parse', 'HEAD^{tree}'], { encoding: 'utf8' }).trim(),
+            pullRequest: Number(process.env.PREVIEW_PR),
+            workflowRun: process.env.PREVIEW_RUN_URL,
+            node: process.version,
+            focusedTests: {
+              result: 'passed',
+              command: 'node --test --test-concurrency=1',
+              files: process.env.APPEARANCE_TEST_FILES.trim().split(/\s+/),
+              output: 'focused-tests.tap',
+            },
+            artifacts: rows,
+            qualification: 'development-preview',
+            deployed: false,
+            releaseQualified: false,
+          }, null, 2) + '\n');
+          const names = [...rows.map(row => row.path), 'main-build.json', 'world-build.json',
+            'preview-identity.json', 'focused-tests.tap', 'README.md'];
+          const checksums = [];
+          for (const name of names.sort()) {
+            const bytes = await readFile(root + name);
+            checksums.push(`${createHash('sha256').update(bytes).digest('hex')}  ${name}`);
+          }
+          await writeFile(root + 'SHA256SUMS', checksums.join('\n') + '\n');
+          NODE
+      - name: Upload playable preview archives and receipts
+        uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6
+        with:
+          name: appearance-preview-pr-${{ github.event.pull_request.number }}-${{ github.event.pull_request.head.sha }}
+          path: .cache/appearance-preview/
+          if-no-files-found: error
+          compression-level: 0
+          retention-days: 7
+      - name: Retain failed focused-check diagnostics
+        if: ${{ failure() && steps.focused.outcome == 'failure' }}
+        uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6
+        with:
+          name: appearance-preview-failed-tests-${{ github.event.pull_request.head.sha }}
+          path: .cache/appearance-preview/focused-tests.tap
+          if-no-files-found: error
+          retention-days: 7
+      - name: Report preview scope
+        env:
+          FOCUSED_RESULT: ${{ steps.focused.outcome }}
+        if: ${{ always() }}
+        shell: bash
+        run: |
+          {
+            echo "### Appearance preview: $PREVIEW_HEAD_SHA"
+            echo "Focused appearance checks: $FOCUSED_RESULT. The explicit cohort is listed in this workflow."
+            echo 'Successful runs attach two playable ZIPs, SHA256SUMS, source identity, focused test output and a local testing guide. Failed runs are not qualified previews.'
+            echo 'Nothing is deployed. This does not change the global automated-suite waiver or claim full-suite, production artwork, password-gated browser, offline-installation or physical-device acceptance.'
+          } >> "$GITHUB_STEP_SUMMARY"

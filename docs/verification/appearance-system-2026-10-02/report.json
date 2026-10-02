@@ -1,0 +1,52 @@
+{
+  "recordedAt": "2026-10-02T13:46:13.360757+00:00",
+  "browser": "Installed headless Google Chrome via Playwright, desktop1280\u00d7960 / narrow390\u00d7844, ephemeral profiles",
+  "results": {
+    "startupAndOfflinePublisher": 10,
+    "legacySurfaceAndAccessRegression": 44,
+    "themeFamiliesApplied": 8,
+    "minimumPrimaryAndSelectedContrast": 6.891894923639162,
+    "industrialResumeContrast": 9.548591777635444,
+    "publicAndToolRoutes": 11,
+    "routePageErrors": 0,
+    "routeHorizontalOverflows": 0,
+    "coldGateFamilies": [
+      "industrial-workshop",
+      "windows-classic",
+      "dos"
+    ],
+    "coldGateRuntimeHostStarted": false,
+    "coldGateImplicitPreferenceWrites": 0,
+    "finalStartupBackdropAndOfflineSuite": 49,
+    "menuBackdropFamilies": 8,
+    "menuBackdropPageErrors": 0,
+    "menuBackdropSourceIdentityPreserved": true,
+    "firstPaintInstalledRevisionPins": true,
+    "startupCommunityLifecycleFocused": 60,
+    "blockedSeedStaticSafetyGuard": true,
+    "publicLauncherAccessResumeExactURL": true
+  },
+  "sourceSha256": {
+    "game/presentation/industrial-workshop.css": "fd4135764eb762b80bcd329986301dc8298ca4a5ac10dc94263876ecacd959b0",
+    "game/presentation/theme-bootstrap.mjs": "69bd96e8a33ea529c2ec269190eb882e868f571ada354913421b0c54e90b3095",
+    "game/presentation/theme-entry.mjs": "905594b9e9f0022dc4eb7eca498bb1bb8c8f8adec17fa3557866545670c747ac",
+    "game/ui/field-kit-compiled.css": "4b39271f1a42df583ec76381320f67ccc3473ca76ff8b295e072ae5e2b05c246",
+    "game/test/theme-bootstrap.test.mjs": "6eb3ba731b7cdd5b436f73fd0e5c4f068cc59389f65e30fbd4f79220a49952fb",
+    "scripts/refresh-theme-bootstrap.mjs": "891233e70201979039adf6f5f1b31e8e4cbf340e2e13552f7ba978beaa4e0263",
+    "scripts/offline-launcher.mjs": "61848b04e5c27dec54b527f90e736af1e232ef0c5a7638f524ae340eb136fae3",
+    "publishing/pages-controller/launcher.mjs": "ec06c595b15e2b1b1e2e6fdb1aeb0f88afbf02265e10e3e72540d89e4a9d4f62",
+    "game/ui/menu-scenes.mjs": "8fff5115cce096448022ed74728544a0047a69ea83da00f7b6bdbfe9e80565f5",
+    "game/test/menu-scenes.test.mjs": "9cf0c47c54f8a248249b2c4ee1df59f5b83930cc644d91aaa1348b113114910f",
+    "game/index.html": "bdb13845277803f2d8d0b2111063a2d1ed4dea94ebece463f5403e8d06c3bf28",
+    "site/index.html": "57a319b0aa6bef8f3210c26279e845b9d3bc5ba48873fae0ca8ddb2b3a41b718",
+    "site/launch.mjs": "26f2e8769a27deaaf9014450bbedb70c90aa77390cc1f7b9304eb7a28f51dacc",
+    "game/test/boot.test.mjs": "c5a1d69daaf093dc904b046c627461e38796a2058122c0aab5deb79e0b2c458c",
+    "game/test/boot-build.test.mjs": "2a6cf6fad846e3dedef6fb712cde68978c2b7471be07f0dd23476329eab78688"
+  },
+  "preservedSourcePreviews": [
+    "Asset Studio selected-workspace and source asset specimens",
+    "Design Atlas historical mockups and authored color swatches",
+    "Website instructional pixel illustrations"
+  ],
+  "scope": "Interface paint, semantic component states and first-paint bootstrap. Canvas source art, media, simulation state, proof identities and immutable compiled release104 are not modified by this change."
+}
