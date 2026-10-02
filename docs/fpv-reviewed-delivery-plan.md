@@ -218,3 +218,35 @@ not proof that this worktree's built player includes its changes.
 The earlier 8–10 week remaining-release estimate is not a measurement of work
 already elapsed. Re-estimate after coordinated integration and the first physical
 handheld/novice session; no reduced release ETA is claimed from authored counts.
+
+## Approved item-by-item continuation — 2 October 2026
+
+This sequence supersedes the earlier dependency and next-item summaries. The
+owner approved implementation after the status review. Current main includes
+all of closed native stacks #889 and #902, reimport #922, ghosts #913, World
+Adventures #947 and offline SIM integration #933. No coordinated integration of
+those already-merged features remains. Start independent increments on current
+main; create a new native stack only when a second dependent PR needs it.
+
+| Item | Priority and scope                                                                    | Working estimate              | Completion gate                                                                        |
+| ---- | ------------------------------------------------------------------------------------- | ----------------------------- | -------------------------------------------------------------------------------------- |
+| A    | Reliable section practice: recorded entry state, scoped UI and safe fallback          | 1–3 days                      | Every checkpoint, actual host controls/results and frozen packages                     |
+| B    | Input/device reliability: stall safety, radio/controller actions, handheld ergonomics | 2–4 days plus device sessions | Controlled browser cases plus separate actual TX15, iPhone and Steam Deck observations |
+| C    | Themes integration and one or two hero environments                                   | 3–5 days per art batch        | Shared appearance contracts, readable flight lines and measured budgets                |
+| D    | School comprehension and tuning                                                       | 3–5 days plus player sessions | Five first-time players and experienced-pilot feedback                                 |
+| E    | Remaining original demos and repeat-play flow                                         | 4–6 days                      | Garage16, original120 total, exact playback and bounded delivery                       |
+| F    | Creator usability and offline recovery                                                | 3–5 days                      | Real edit/reimport/export workflow and offline device checks                           |
+| G    | Further maps after feedback                                                           | 3–5 days per pair             | Distinct authored activities, verified routes and art acceptance                       |
+| H    | Final qualification and deferred unit coverage                                        | 5–10 days                     | Regression, hardware/performance and release evidence                                  |
+
+A is implemented on `codex/fpv-checkpoint-practice`; see
+[section-practice behavior](fpv-checkpoint-practice.md). Publication and exact
+verification state belong in the latest delivery checkpoint. B can progress
+through controlled input/lifecycle repairs while real-device sessions are pending.
+E’s previously referenced temporary Garage handoff was absent; a reproducible
+replacement has now been regenerated separately, with integration and browser
+playback still outstanding. Do not count it as installed yet.
+
+The catalogue remains 14 worlds / 148 challenges. Installed demonstrations remain
+104/120 original plus 58 school; the 60 Adventure authoring proofs are separate.
+Additional unit coverage stays in H/R7, with functional checks on every increment.
