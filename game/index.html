@@ -157,6 +157,7 @@
     <link rel="stylesheet" data-boot-href="ui/edition-play.css" />
     <link rel="stylesheet" data-boot-href="ui/menu-scenes.css" />
     <link rel="stylesheet" data-boot-href="ui/native-menu.css" />
+    <link rel="stylesheet" data-boot-href="ui/win-picture.css" />
     <link rel="icon" type="image/png" sizes="32x32" href="ui/art/identity/fpv-line/icon-32.png" />
   </head>
   <body class="field-kit">
@@ -208,6 +209,21 @@
             >Play online</a
           >
         </nav>
+        <section
+          id="boot-updates"
+          hidden
+          aria-label="Game updates"
+          data-i18n-aria-label="interface:updates.title"
+        >
+          <a
+            id="boot-update-action"
+            class="launch-action"
+            href="../app/update.html"
+            data-i18n="interface:updates.check"
+            >Check for updates</a
+          >
+          <p id="boot-update-status" class="launch-status" role="status"></p>
+        </section>
         <details id="boot-local" class="launch-help">
           <summary data-i18n="interface:playingADownloadedCopy">Playing a downloaded copy?</summary>
           <p data-i18n-rich="interface:openTheFolderContainingInATerminalThenStartA">
@@ -605,6 +621,15 @@
                         Skip mission
                       </button>
                       <button
+                        id="overlay-random-level"
+                        class="button secondary"
+                        type="button"
+                        hidden
+                        data-i18n="interface:randomLevel"
+                      >
+                        Random level
+                      </button>
+                      <button
                         id="overlay-missions"
                         class="button secondary"
                         type="button"
@@ -716,14 +741,21 @@
                 <p id="journey-reactions" class="overlay-footnote" hidden></p>
               </div>
             </div>
+            <div id="win-picture-caption" class="win-picture-caption" hidden>
+              <span class="win-picture-mark" aria-hidden="true">✦</span>
+              <strong data-i18n="interface:winPictureComplete">Beautifully done.</strong>
+              <span data-i18n="interface:winPictureEnjoy">The whole picture is yours.</span>
+            </div>
             <button
               id="show-result"
               class="picture-return"
               type="button"
               hidden
-              data-i18n="interface:results"
+              data-i18n="interface:winPictureContinue"
+              data-i18n-aria-label="interface:winPictureContinueLabel"
+              aria-label="Continue to results"
             >
-              Results ↗
+              Continue →
             </button>
             <button
               id="skip-celebration"
@@ -835,14 +867,7 @@
           </div>
           <p id="game-now-playing" class="game-now-playing micro-note" hidden>
             <span id="game-now-playing-title"></span>
-            <a
-              id="game-now-playing-source"
-              target="_blank"
-              rel="noopener noreferrer"
-              hidden
-              data-i18n="interface:artistWebsite"
-              >Artist website ↗</a
-            >
+            <span id="game-now-playing-source" hidden></span>
           </p>
           <div id="touch-indicator" aria-hidden="true" hidden><i></i></div>
           <section
@@ -2123,6 +2148,12 @@
               >Hide every demo picture behind signal noise</span
             ></label
           >
+          <label
+            ><input id="demo-show-all-pictures" type="checkbox" /><span
+              data-i18n="demo:showAllPictures"
+              >Show all demo pictures without noise</span
+            ></label
+          >
           <p class="micro-note" data-i18n="demo:localOnly">
             Recordings stay on this device. The disposable demo cache holds up to 12 recordings / 32
             MiB and is separate from saved flights.
@@ -2877,6 +2908,12 @@ No offline check yet.</pre
           </button>
         </div>
         <div id="demo-audio" data-demo-ui></div>
+        <label class="demo-picture-setting" data-demo-ui
+          ><input id="demo-show-all-pictures-live" type="checkbox" /><span
+            data-i18n="demo:showAllPictures"
+            >Show all demo pictures without noise</span
+          ></label
+        >
         <div class="demo-notes">
           <p id="demo-caption"></p>
           <p id="demo-status"></p>
@@ -3221,14 +3258,7 @@ No offline check yet.</pre
         </aside>
         <p id="shell-now-playing" class="game-now-playing micro-note" hidden>
           <span id="shell-now-playing-title"></span>
-          <a
-            id="shell-now-playing-source"
-            target="_blank"
-            rel="noopener noreferrer"
-            hidden
-            data-i18n="interface:artistWebsite2"
-            >Artist website</a
-          >
+          <span id="shell-now-playing-source" hidden></span>
         </p>
       </div>
       <p class="home-art-caption" aria-hidden="true" data-i18n-rich="interface:hangar01">

@@ -6,16 +6,16 @@ export function optionalPracticeCatalogURL(href) {
   const location = new URL(href);
   if (!['http:', 'https:'].includes(location.protocol)) return null;
   const frozen =
-    /^(.*\/)(?:editions\/[a-z][a-z0-9-]*\/)?releases\/v\d+\.\d+\.\d+\/site\/game\/(?:controller-lab\/)?[^/]*$/.exec(
+    /^(.*\/)(?:editions\/[a-z][a-z0-9-]*\/)?releases\/v\d+\.\d+\.\d+\/site\/game\/(?:(?:controller-lab|couch)\/)?[^/]*$/.exec(
       location.pathname,
     );
   // The optional edition segment must be stripped before the ordinary frozen
   // matcher, whose prefix is intentionally permissive for project hosting.
   const edition =
-    /^(.*\/)editions\/[a-z][a-z0-9-]*\/releases\/v\d+\.\d+\.\d+\/site\/game\/(?:controller-lab\/)?[^/]*$/.exec(
+    /^(.*\/)editions\/[a-z][a-z0-9-]*\/releases\/v\d+\.\d+\.\d+\/site\/game\/(?:(?:controller-lab|couch)\/)?[^/]*$/.exec(
       location.pathname,
     );
-  const source = /^(.*\/)game\/(?:controller-lab\/)?[^/]*$/.exec(location.pathname);
+  const source = /^(.*\/)game\/(?:(?:controller-lab|couch)\/)?[^/]*$/.exec(location.pathname);
   const root = edition?.[1] ?? frozen?.[1] ?? source?.[1];
   if (!root || !/^\/(?:[A-Za-z0-9_-]+\/)*$/.test(root)) return null;
   return new URL(root + 'practice/index.json', location.origin).href;
@@ -65,7 +65,7 @@ export function validateOptionalPracticeCatalog(input, indexURL) {
  * This never fetches a package, registers a worker or opens player storage. */
 export async function loadOptionalPracticeCatalog(
   indexURL,
-  { fetcher = globalThis.fetch, signal } = {},
+  { fetcher = globalThis.fetch, signal, missingIsEmpty = true } = {},
 ) {
   const response = await fetcher(indexURL, {
     signal,
@@ -73,7 +73,7 @@ export async function loadOptionalPracticeCatalog(
     credentials: 'omit',
     redirect: 'error',
   });
-  if (response.status === 404) return [];
+  if (response.status === 404 && missingIsEmpty) return [];
   required(response.ok, 'Optional practice catalog is unavailable.');
   const advertised = response.headers?.get('content-length');
   required(!advertised || Number(advertised) <= 16384, 'Optional practice catalog is too large.');

@@ -45,7 +45,7 @@ test('empty inspected inventory lists all114 retained identities without artwork
     ...defaults,
     getInventory: () => current,
   });
-  assert.equal(library.missions.length, 196);
+  assert.equal(library.missions.length, 296);
   const base = library.missions.find((row) => row.runtimeId === 'signal-12');
   assert.equal(library.availability(base).state, 'ready');
   assert.equal(library.availability(classic(library)).state, 'download');
@@ -70,7 +70,7 @@ test('exact installed edition stays Classic; callback gets only inspected metada
       return true;
     },
   });
-  assert.equal(library.missions.length, 196);
+  assert.equal(library.missions.length, 296);
   const last = recipe.campaigns[0].levels.at(-1),
     row = classic(library, last.id);
   assert.equal(
@@ -112,7 +112,7 @@ test('same-ID modified edition remains distinct Custom and old bindings become u
       return true;
     },
   });
-  assert.equal(host.library.missions.length, 199);
+  assert.equal(host.library.missions.length, 299);
   assert.match(host.library.availability(classic(host.library)).reason, /different edition/);
   const custom = host.library.missions.find((row) => row.collection === 'Custom');
   host.library.launch(custom, { pack: 'forged-runtime-owner', metadataPack: 'forged' });
@@ -121,7 +121,7 @@ test('same-ID modified edition remains distinct Custom and old bindings become u
   assert.equal(host.library.availability(custom).state, 'unavailable');
   assert.throws(() => host.library.launch(custom), /Prepare this mission/);
   await host.refreshInstalled();
-  assert.equal(host.library.missions.length, 196);
+  assert.equal(host.library.missions.length, 296);
   assert.throws(() => host.library.launch(custom), /stale/);
   assert.equal(plays, 1);
 });
@@ -189,11 +189,11 @@ test('refresh cannot register a replaced inventory, and failed snapshot classifi
   current = custom;
   replace = true;
   await assert.rejects(host.refreshInstalled(), /changed/);
-  assert.equal(host.library.missions.length, 196);
+  assert.equal(host.library.missions.length, 296);
   replace = false;
   current = custom;
   await host.refreshInstalled();
-  assert.equal(host.library.missions.length, 199);
+  assert.equal(host.library.missions.length, 299);
 });
 
 test('metadata lookalikes and omitted readiness adapters reject before registration', async () => {

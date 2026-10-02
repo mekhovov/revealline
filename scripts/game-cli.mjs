@@ -30,19 +30,14 @@ export const PUBLIC_SECURITY_HEADERS = Object.freeze({
   'Permissions-Policy': 'camera=(), microphone=(), geolocation=(), payment=(), usb=()',
   'Cache-Control': 'no-cache',
 });
-// Public Pages and the soundtrack archive share an origin. Local packaged
-// previews need only this code-admitted archive path added for verified fetches.
+// Packaged previews allow HTTPS media/catalogue requests for explicitly added
+// soundtrack sources. Script/style/native package policy remains self-only; the
+// source manager validates user-selected URLs and recording identities before use.
 export const PREVIEW_SECURITY_HEADERS = Object.freeze({
   ...PUBLIC_SECURITY_HEADERS,
   'Content-Security-Policy': PUBLIC_SECURITY_HEADERS['Content-Security-Policy']
-    .replace(
-      "connect-src 'self';",
-      "connect-src 'self' https://mekhovov.github.io/revealline-soundtracks/;",
-    )
-    .replace(
-      "media-src 'self' data: blob:;",
-      "media-src 'self' data: blob: https://github.com https://release-assets.githubusercontent.com;",
-    ),
+    .replace("connect-src 'self';", "connect-src 'self' https:;")
+    .replace("media-src 'self' data: blob:;", "media-src 'self' data: blob: https:;"),
 });
 const MIME = {
   '.html': 'text/html; charset=utf-8',
@@ -573,10 +568,7 @@ export function applyPublicationProfile(entries, catalogue, profile, optionalArt
     fail('Main Pages profile would orphan a mission download group.');
   entries.splice(0, entries.length, ...entries.filter((entry) => !omittedPaths.has(entry.name)));
   catalogue.files = catalogue.files.filter((file) => !omittedPaths.has(file.path));
-  catalogue.groups = retainedGroups.map((group) => ({
-    ...group,
-    files: group.files.filter((path) => !omittedPaths.has(path)),
-  }));
+  catalogue.groups = retainedGroups;
   // The summary promises that every listed original is hosted. The lean rolling
   // channel therefore omits it together with its exclusive preview-only files.
   // Exact originals remain in Git and in full release distributions.
@@ -643,9 +635,17 @@ export async function addOfflineEntries(
   // The bundled simulator owns a separate opt-in cache. Its HTML and shared
   // modules are final here; later offline-marker injection changes game HTML only.
   const { buildBundledOptionalPractice } = await import('./build-optional-practice.mjs');
+  const bundledPackages = [];
   for (const packageId of ['civilian-fpv', 'fpv-worlds']) {
     const bundledPractice = buildBundledOptionalPractice(entries, { packageId });
-    if (bundledPractice) entries.push(...bundledPractice.entries);
+    if (bundledPractice) {
+      entries.push(...bundledPractice.entries);
+      bundledPackages.push({
+        packageId,
+        files: bundledPractice.files,
+        workerPath: `optional-practice/${packageId}/worker.js`,
+      });
+    }
   }
   const optional = new Set([...(buildConfig.optionalOffline ?? []), ...optionalDownloads]);
   const optionalPacks = entries
@@ -716,7 +716,9 @@ export async function addOfflineEntries(
       if (mission.packId && !isIncludedBundledMission(mission))
         excluded.add(mission.sourceFile.path);
   const { buildOfflineContent } = await import('./offline-content.mjs');
-  const contentCatalogue = await buildOfflineContent(entries, excluded, info.version);
+  const contentCatalogue = await buildOfflineContent(entries, excluded, info.version, {
+    bundledPackages,
+  });
   const publishedOptionalArtwork = applyPublicationProfile(
     entries,
     contentCatalogue,
@@ -852,7 +854,7 @@ export async function addOfflineEntries(
   }
 }
 
-async function prepareBuildProject({
+export async function prepareBuildProject({
   root = PROJECT_ROOT,
   out = null,
   version,

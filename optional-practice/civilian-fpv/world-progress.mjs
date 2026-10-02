@@ -1,5 +1,11 @@
-import { dataIdentity } from '../../game/data-json.mjs';
-import { validateWorldCourse } from './world-model.mjs';
+import { boundedJSON } from '../../game/data-json.mjs';
+import {
+  createWorldFlight,
+  initWorldRuntime,
+  replayWorldFlight,
+  validateWorldCourse,
+  WORLD_MAX_TICKS,
+} from './world-model.mjs';
 export { createSectorTracker } from './flight-sectors.mjs';
 
 const centre = (step) =>
@@ -99,25 +105,111 @@ export function compatibleGhost(record, flightIdentity) {
   ].every((key) => a[key] === b[key]);
 }
 
-/** A checkpoint is a new unscored authoring session, never a shortened scored proof. */
+/** Legacy callers receive the safe, complete original course. A geometric
+ * checkpoint cannot reconstruct entry velocity, attitude, actors or skill state. */
 export function checkpointPractice(input, mode, index) {
   const c = validateWorldCourse(input);
+  if (!['self-level', 'acro'].includes(mode)) throw new TypeError('Unsupported flight mode.');
   if (!Number.isInteger(index) || index < 0 || index >= c.steps[mode].length)
     throw new TypeError('Unknown checkpoint.');
-  const target = c.steps[mode][index],
-    previous = centre(c.steps[mode][Math.max(0, index - 1)]);
-  c.id = `${c.id.slice(0, 55)}-practice-${index}`;
-  c.revision = `p-${dataIdentity({ mode, index }).slice(-12)}`;
-  for (const lang of ['en', 'uk'])
-    c.locales[lang].title =
-      `${c.locales[lang].title} · ${lang === 'uk' ? 'тренування' : 'practice'}`;
-  // Keep the known-safe original spawn when no prior spatial checkpoint exists.
-  if (index > 0 && previous)
-    c.spawn = {
-      x: Math.round(previous.x),
-      y: Math.max(300, Math.round(previous.y)),
-      z: Math.round(previous.z),
+  return c;
+}
+
+/** Reconstruct a checkpoint through recorded commands, never a saved pose.
+ * Both selected-objective and safe full-route fallback flights reject recorders.
+ * The caller owns disposal and must require explicit arming with fresh input. */
+export async function prepareCheckpointPractice(
+  input,
+  mode,
+  index,
+  {
+    proof = null,
+    response,
+    signal,
+    yieldControl = () => new Promise((resolve) => setTimeout(resolve, 0)),
+  } = {},
+) {
+  const course = checkpointPractice(input, mode, index);
+  signal?.throwIfAborted();
+  await initWorldRuntime();
+  signal?.throwIfAborted();
+  let checkedProof = null,
+    startTick = 0,
+    reason = 'missing-proof';
+  if (proof !== null && proof !== undefined) {
+    try {
+      // Retain our own bounded copy across cooperative yields. Reusing the
+      // caller's mutable frames after verification would invalidate provenance.
+      const candidate = boundedJSON(proof, {
+        maxBytes: 2 * 1024 * 1024,
+        maxNodes: WORLD_MAX_TICKS * 7 + 1000,
+        maxArray: WORLD_MAX_TICKS,
+        maxDepth: 10,
+      });
+      if (candidate.mode !== mode) reason = 'incompatible-proof';
+      else {
+        const checked = await replayWorldFlight(course, candidate, {
+          includeSectors: true,
+          signal,
+          yieldControl,
+        });
+        const boundary = index === 0 ? 0 : checked.sectors[index - 1]?.endTick;
+        if (boundary === undefined || checked.state.step < index) reason = 'unreached-checkpoint';
+        else {
+          checkedProof = candidate;
+          startTick = boundary;
+          reason = null;
+        }
+      }
+    } catch (error) {
+      signal?.throwIfAborted();
+      if (error?.name === 'AbortError') throw error;
+      reason = 'invalid-proof';
+    }
+  }
+  signal?.throwIfAborted();
+  const startStep = checkedProof ? index : 0,
+    stopStep = checkedProof ? index + 1 : course.steps[mode].length,
+    flight = createWorldFlight({
+      course,
+      mode,
+      response: checkedProof?.response ?? response,
+      unscoredPractice: true,
+      practiceEndStep: stopStep,
+    });
+  try {
+    flight.arm();
+    for (let tick = 0; tick < startTick; tick++) {
+      if (tick % 200 === 0) {
+        signal?.throwIfAborted();
+        await yieldControl();
+        signal?.throwIfAborted();
+      }
+      const [roll, pitch, yaw, throttle, actions] = checkedProof.frames[tick];
+      flight.step({ roll, pitch, yaw, throttle, actions }, { quantized: true });
+    }
+    signal?.throwIfAborted();
+    if (flight.snapshot().step !== startStep || flight.snapshot().status !== 'active')
+      throw new Error('Verified checkpoint did not reconstruct its entry state');
+    flight.pause();
+    const state = flight.snapshot();
+    return {
+      flight,
+      kind: checkedProof ? 'checkpoint' : 'full-attempt',
+      reason,
+      requestedIndex: index,
+      index: startStep,
+      goalCount: stopStep - startStep,
+      stopStep,
+      startTick,
+      mode,
+      response: flight.response(),
+      pickup: Object.fromEntries(
+        ['roll', 'pitch', 'yaw', 'throttle'].map((key) => [key, state.lastInput[key] / 1000]),
+      ),
     };
-  c.steps = { 'self-level': [structuredClone(target)], acro: [structuredClone(target)] };
-  return validateWorldCourse(c);
+  } catch (error) {
+    flight.dispose();
+    throw error;
+  }
 }

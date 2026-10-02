@@ -92,7 +92,7 @@ test('an unexpected runtime import fails closed before a package can be publishe
   await assert.rejects(buildOptionalPractice(fixture), /not admitted: game\/app.mjs/);
 });
 
-function workerFixture({ corrupt = false, quota = false, existing = false } = {}) {
+function workerFixture({ corrupt = false, quota = false, existing = false, stalled = false } = {}) {
   const base = 'https://example.test/one/optional-practice/civilian-flight/';
   const own = `revealline.optional.civilian-flight.v1:${new URL(base).pathname}:`;
   const other =
@@ -131,11 +131,16 @@ function workerFixture({ corrupt = false, quota = false, existing = false } = {}
             if (quota && ++puts === 2) throw new Error('Quota');
             stores.get(name).set(url, response);
           },
-          match: async (url) => stores.get(name).get(url),
+          match: async (url) => stores.get(name).get(url)?.clone(),
         };
       },
     },
-    fetch: async () => new Response(corrupt ? 'wrong' : bytes),
+    fetch: async (_url, { signal }) =>
+      stalled
+        ? new Promise((_resolve, reject) =>
+            signal.addEventListener('abort', () => reject(new Error('Cancelled')), { once: true }),
+          )
+        : new Response(corrupt ? 'wrong' : bytes),
     skipWaiting: async () => {
       activation++;
     },
@@ -151,15 +156,58 @@ function workerFixture({ corrupt = false, quota = false, existing = false } = {}
     });
     return result;
   };
-  return { stores, own, other, deleted, run, activation: () => activation };
+  return { base, listeners, stores, own, other, deleted, run, activation: () => activation };
 }
+test('worker reports progress, validates cached dependencies and detects eviction', async () => {
+  const f = workerFixture(),
+    progress = [];
+  f.listeners.get('message')({
+    data: { type: 'practice-progress' },
+    ports: [{ postMessage: (data) => progress.push(data) }],
+  });
+  await f.run('install');
+  assert(progress.some((item) => item.phase === 'verifying'));
+  assert.equal(progress.at(-1).phase, 'ready');
+  assert.equal(progress.at(-1).downloaded, progress.at(-1).total);
+  const ready = async () => {
+    let result, pending;
+    f.listeners.get('message')({
+      data: { type: 'practice-status' },
+      ports: [
+        {
+          postMessage: (data) => {
+            result = data;
+          },
+        },
+      ],
+      waitUntil: (value) => {
+        pending = value;
+      },
+    });
+    await pending;
+    return result.ready;
+  };
+  assert.equal(await ready(), true);
+  f.stores.get(f.own + 'new').delete(f.base + 'app.mjs');
+  assert.equal(await ready(), false);
+});
+test('cancel discards only the incomplete version and keeps previous and foreign caches', async () => {
+  const f = workerFixture({ stalled: true });
+  const pending = f.run('install');
+  await new Promise((resolve) => setImmediate(resolve));
+  f.listeners.get('message')({ data: { type: 'practice-cancel' }, ports: [] });
+  await assert.rejects(pending, /Cancelled/);
+  assert(!f.stores.has(f.own + 'new'));
+  assert(f.stores.has(f.own + 'old'));
+  assert(f.stores.has(f.other));
+});
 test('optional worker verifies every byte before activation and only replaces its own scope cache', async () => {
   const fixture = workerFixture();
   await fixture.run('install');
-  assert.equal(fixture.activation(), 1);
+  assert.equal(fixture.activation(), 0, 'A worker never forcibly replaces an active session');
   assert.equal(fixture.stores.get(fixture.own + 'new').size, 2);
   await fixture.run('activate');
-  assert.deepEqual(fixture.deleted, [fixture.own + 'old']);
+  assert.deepEqual(fixture.deleted, [], 'Keep one previous cache in this exact scope');
   assert.ok(fixture.stores.has(fixture.other));
   assert.ok(fixture.stores.has('game-core'));
 });

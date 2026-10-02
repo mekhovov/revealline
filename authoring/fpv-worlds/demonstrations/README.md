@@ -74,3 +74,73 @@ Runtime availability checks the normalized source fingerprint, model/backend
 pins and response identity. Starting playback performs full v2 replay validation,
 including rules, conditions and final-state identity. A changed course revision
 does not silently reuse a stale recording.
+
+## Container Yard operations examples
+
+```sh
+node authoring/fpv-worlds/demonstrations/generate-container-yard.mjs \
+  container-yard-01,container-yard-02,container-yard-03,container-yard-04,container-yard-05,container-yard-06,container-yard-07,container-yard-08 \
+  /tmp/fpv-container-yard-recordings
+```
+
+This separate generator also supports the Yard's fictional pulse encounters. It
+flies toward explicit approach points, settles, leads moving targets and records
+real quantized fire commands. Opponents remain active; their incoming projectiles
+can reduce shields. The recordings finish at 85–100 health with zero contacts,
+and every fired player pulse hits. No authored course, actor, scoring or physics
+settings are changed. `container-yard-provenance.json` retains per-shot ranges,
+incoming fire, damage and landing observations as well as exact artifact hashes.
+The six noncombat recordings preserve their earlier prepared bytes; ten combat
+recordings use the closer, visually reviewed approaches.
+
+## Garage examples
+
+The portable Garage authoring tool generates the eight existing courses in both
+flight modes. It requires an explicit **new directory**; it never overwrites an
+existing output directory, including an empty one.
+
+```sh
+node authoring/fpv-worlds/demonstrations/generate-garage.mjs \
+  --out /tmp/fpv-garage-recordings
+
+node authoring/fpv-worlds/demonstrations/append-packed.mjs \
+  --recordings /tmp/fpv-garage-recordings \
+  --out /tmp/fpv-garage-world-demonstrations.mjs
+```
+
+Run from the repository root, or pass `--root /absolute/repository` to either tool.
+An optional `--ids garage-02,garage-08` selects a subset for generation while
+retaining both modes. The generator pins the eight normalized course identities,
+uses the existing Adventure authoring pilot with an ordinary yaw command toward
+noncombat route legs, records the actual 50 Hz commands and independently replays
+every result. `garage-provenance.json` records the portable generator hash,
+source-module hashes, unchanged per-artifact hashes and exact proof identities.
+The compact `garage-recordings.zip` contains all 16 original course/proof files,
+the portable generator and its completed report.
+
+`append-packed.mjs` is an **offline candidate builder**, not an in-place runtime
+installer. It reads a bounded successful generation report, verifies artifact
+hashes and exact current course identities, independently replays every addition,
+and losslessly packs the five integer command channels. It rejects duplicate
+course/mode keys already in the registry or within the supplied batch. Existing
+packed rows, decoder and exports retain their original bytes. The output module
+and its `.report.json` receipt must be new files. The registry, input artifacts and
+runtime hashes are checked again before writing; changed inputs abort preparation.
+Use the resulting module in a reviewed repository change, then repeat full replay,
+package admission and actual packaged-browser qualification before publication.
+Do not use the older Acro-school `--install-demonstrations` marker-based option
+against the packed registry.
+
+The approved Garage recordings use Gentle response (240 degrees/s maximum rate,
+30% expo, 8 response ticks), complete with **zero contacts and 85–100 health**, and
+preserve all course, collider, actor, scoring and physics definitions. Positive
+shield loss in combat is intentional and disclosed; this batch does not require
+full health. Some final player pulses are still travelling when the final target
+is defeated (10–12 shots for 4–8 hits). Landing speed is approximately 1.14 m/s,
+within the unchanged authored criterion. These are functional recordings, not
+claims of perfect scores, novice teaching acceptance or physical-device testing.
+
+Adding Garage 16 completes the original **120 demonstrations**; the 58 school
+examples are separate. The 60 Adventure recordings remain a separate authoring
+archive until their own player-delivery increment. None of these recordings adds
+new challenges or changes the 148-challenge/14-world catalogue.

@@ -1,5 +1,7 @@
 # Source reconciliation and remaining delivery — 30 September 2026
 
+> **Historical review — 1 October:** use the [plain-language remaining work and priority choices](plan-priorities-2026-10-01.md). It updates merged/public/queued status, explains benefits and deferral costs, and distinguishes the proposed core-game-first refinement from the still-approved A → B → C order. The dated record below is preserved history.
+
 ## Current review — 18:49 UTC
 
 Start with the [detailed completed/remaining programme](plan-review-2026-09-30.md).
@@ -32,6 +34,74 @@ Production-art review stays deferred; source fixes can continue independently.
 The review branch is documentation-only, based on `60407a7ce`. PR868 and all
 runtime/assets/version files remain unchanged by this review. The older snapshots
 below retain their original observations; they are not the current queue.
+
+## Historical actor and recovery checkpoint — 30 September
+
+This checkpoint supersedes the older queue snapshot below. The independent
+successor began on main `e39b4197a75441d74c35299c8545d8bdfd0a7c61` and
+rebased onto `4174ec00a2bf79714c1023754b90e053ac70ce67` after PR852/855.
+The only conflict was this register; both chronological records are preserved. The single publisher owns further integration and release admission.
+
+**Completed source:** the 24 actor batches, Team downed-player Resume guidance,
+Discovery draft recovery and current audio integration are on main. The fresh
+C3 inspection found shared rotors/direction, paused and reduced-effects clocks,
+actual Team freeze handling and locked hunter headings already present; it did
+not justify another speculative renderer change. Whole-roster visual acceptance
+has not been inferred from that source review.
+
+**Prepared in this successor:** ordinary Sentry projectile loss now uses the
+existing localized projectile explanation instead of saying the line was caught.
+The original legal-route assertion retains lives, checkpoint, event and replay
+requirements. The current actor/disposition reports are regenerated for FPV104;
+91 Solo / 91 Versus / 12 Team owners and every mission/artwork identity remain
+unchanged, and the stale saved-inventory mismatch is gone. Tests are not executed
+under the active waiver; independent source/metadata review found no new issue.
+
+**Prepared and reviewed:** issue824's fpv38/50 Team envelope restoration now
+owns the exact historical theme and picture throughout preview, preparation,
+painter, audio, Retry and disposal. Both original manifests reuse 124 existing
+exact dependencies; their 1,946,423 bytes form an optional historical Team
+download, with paired EN/UK labels. Browser interaction restored both formats
+and started both arena types. Review also corrected lobby/rollback audio
+handoffs. Newer ambiguous revision lineages still require a separate exact
+identity decision; they are not authorized by a revision range.
+
+**Open aggregate gate:** source and generated metadata validation pass, but the
+full production-generator check reports a stale revision ledger. That check is
+not waived or marked passed. The publisher must reconcile current source
+fingerprints, any required reviewed successors and byte reproduction before
+public acceptance. See the [bounded verification record](verification/actor-recovery-20260930/README.md).
+
+**Scheduled input:** [PR868](https://github.com/mekhovov/revealline/pull/868)
+is pushed and held for milestone57. Its committed-source build completed at
+`deb4a4e97`, but the 951,900,757-byte default payload exceeds Pages capacity by
+1,900,757 bytes before publication metadata. Both DroneAid edition checks fit
+their budgets. Do not admit this batch until capacity and stale production
+fingerprints are reconciled. Two unchanged-base formatting failures also remain
+explicit aggregate corrections. All release-relevant owned edits are on GitHub;
+this is source readiness work, not a newly published version.
+
+**Integrated follow-up:** PR852 (Enemy workshop focus and preserved Still Media
+assertions) merged as `4174ec00a2bf79714c1023754b90e053ac70ce67`.
+
+**Queued owner work:** PR853 (FPV offline launch), PR854 (compact landing), PR856 (Demo
+pacing), PR846/857 (role-gallery input/lifecycle; PR846 reconciled to main at `187d38bc`) and PR858 (failed optional audio
+download bounds) were open at this checkpoint. All target milestone57. PR855's
+soundtrack evidence merged. These are owner-scoped inputs, not seven new phases;
+none is a reason to replay older dirty worktrees or to start a competing publisher.
+
+| Order                | Remaining item                                                 | Why it remains / next boundary                                                                                                                                                         |
+| -------------------- | -------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| A / C3               | Actor/native-flow corrections and exact retained appearance    | Finish the Team restoration slice and current menu/input owner batches; review actual actor states and pixels separately. No new production artwork is adopted by a compatibility fix. |
+| B / C4               | Optional encounter recovery and counterplay qualification      | Deliver the projectile explanation, preserve original simulation/replays, then assess remaining difficulty/combination behavior under the restored test policy and human review.       |
+| C / C5 + required C6 | First Ukrainian/FPV cohort and its authoring pipeline          | Source candidates and editing/provenance support exist. Production/cultural review remains deferred by the user; broader community production follows the first approved cohort.       |
+| C7 / UX6             | Whole-content, offline, accessibility, performance and devices | Current-entry metadata is refreshed, but historical/installed/imported coverage, measured budgets and physical inputs remain separate evidence.                                        |
+| C2 last              | Formal playable comparison and player sessions                 | Existing tools remain usable; no recruited participants, consented sessions or retention conclusions are claimed.                                                                      |
+
+The bounded recovery/source work proceeds while publication is occupied. A public
+ETA depends on the publisher's required source/build/admission and deployed-byte
+checks; merged source, preserved proposals and waived tests are not public
+acceptance. The historical snapshots below remain evidence of their own dates.
 
 ## Earlier reconciliation — 16:30 UTC
 

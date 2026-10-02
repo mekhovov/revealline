@@ -145,13 +145,17 @@ test('hidden playback completes a real recorded level, retains its recap and ado
     await page.open();
     assert.equal(recordingReads, 1);
     const painted = page.demoFrame,
-      watched = painted.run;
+      watched = painted.run,
+      firstLevel = page.$('demo-level').textContent;
     focused(page, false);
     hidden(page, true);
     // Each wake admits at most2s and yields its quarter-second slices. The
     // document is hidden throughout: the fixture dispatches no animation frame.
-    for (let wakes = 0; recordingReads < 2; wakes++) {
-      assert.ok(wakes < 30, 'A real recording and its recap must rotate in bounded admitted time.');
+    for (let wakes = 0; page.$('demo-level').textContent === firstLevel; wakes++) {
+      assert.ok(
+        wakes < 34,
+        `A real recording and its recap must rotate: ${watched.status}, tick ${watched.tick}, errors ${JSON.stringify(page.errors)}`,
+      );
       page.frame(2000);
       await delay(90);
     }
@@ -230,7 +234,8 @@ test('withheld visible RAF recovers real replay completion and rotation while pr
   };
   try {
     await page.open();
-    const watched = page.demoFrame.run;
+    const watched = page.demoFrame.run,
+      firstLevel = page.$('demo-level').textContent;
     focused(page, false);
     assert.equal(page.doc.hidden, false);
     page.$('demo-watch-pause').click();
@@ -243,8 +248,11 @@ test('withheld visible RAF recovers real replay completion and rotation while pr
 
     // Model a visible/unfocused browser that runs timers but withholds every
     // requested animation frame. The production clock owns all replay ticks.
-    for (let wakes = 0; recordingReads < 2; wakes++) {
-      assert.ok(wakes < 30, 'The real replay and four-second recap must rotate.');
+    for (let wakes = 0; page.$('demo-level').textContent === firstLevel; wakes++) {
+      assert.ok(
+        wakes < 34,
+        `The replay and recap must rotate: ${watched.status}, tick ${watched.tick}, errors ${JSON.stringify(page.errors)}`,
+      );
       page.frame(2000, { dispatchAnimationFrames: false });
       await delay(300);
     }
@@ -264,7 +272,7 @@ test('withheld visible RAF recovers real replay completion and rotation while pr
     page.frame(250, { dispatchAnimationFrames: false });
     await delay(300);
     assert.notEqual(page.demoFrame.run, watched);
-    assert.ok(page.demoFrame.run.tick > 0, 'The next replay also advances without a RAF.');
+    assert.ok(page.demoFrame.run.tick > 0, 'The next demonstration also advances without a RAF.');
     assert.deepEqual(authoritativeCheckpoint(ordinary), original);
     assert.deepEqual(stored(page), saves);
     assert.deepEqual(page.errors, []);

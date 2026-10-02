@@ -258,5 +258,8 @@
   "radioSounds": "Радіоповідомлення FPV",
   "radioVolume": "Гучність радіо",
   "movementSounds": "Звуки руху",
-  "movementVolume": "Гучність руху"
+  "movementVolume": "Гучність руху",
+  "music.creatorSource": "Сторінка автора ↗",
+  "music.creatorSourceNewTab": "Відвідати {{artist}} — відкриється в новій вкладці",
+  "music.resourceNewTab": "{{resource}} — відкриється в новій вкладці"
 }
