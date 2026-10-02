@@ -20,7 +20,11 @@ import { createRadioRuntime } from './radio-runtime.mjs';
 import { restoreVerifiedRadio } from './radio-session.mjs';
 import { mountRadioSetup } from './radio-setup.mjs';
 import { mountFlightFullscreen } from './flight-fullscreen.mjs';
-import { mountSimPresentation, mountDroneResponse } from './sim-presentation.mjs';
+import {
+  mountSimPresentation,
+  mountDroneResponse,
+  mountSimAudioControls,
+} from './sim-presentation.mjs';
 import { createFlightInput } from './input.mjs';
 import { createFlightRenderer } from './renderer.mjs';
 import { COPY } from './copy.mjs';
@@ -157,6 +161,10 @@ export function mountFlightApp({
     radioSetup: ['Radio setup', 'Налаштувати пульт'],
     flightOptions: ['Flight options', 'Параметри польоту'],
     viewAndSound: ['View & sound', 'Вигляд і звук'],
+    audioMixHelp: [
+      'Volume is shared with World Studio. Muting keeps your chosen level.',
+      'Гучність спільна зі Студією світів. Вимкнення звуку зберігає вибраний рівень.',
+    ],
     optionsPause: [
       'Your flight pauses while you adjust the view.',
       'Поки ви змінюєте вигляд, політ на паузі.',
@@ -197,6 +205,13 @@ export function mountFlightApp({
     enabled: false,
     preferenceKey: 'revealline.fpv.academy-menu-sound.v1',
     onSoundChange: updateSoundLabel,
+  });
+  const audioControls = mountSimAudioControls({
+    root: $('academy-audio-mix'),
+    window: win,
+    locale: () => locale,
+    channels: ['interface'],
+    onChange: (levels) => presentation.setVolume(levels.interface),
   });
   updateSoundLabel(presentation.soundEnabled());
   const droneResponse = mountDroneResponse({
@@ -537,6 +552,7 @@ export function mountFlightApp({
     }
     presentation.refresh();
     updateSoundLabel(presentation.soundEnabled());
+    audioControls.refresh();
     for (const node of doc.querySelectorAll('[data-copy]'))
       if (c()[node.dataset.copy]) node.textContent = c()[node.dataset.copy];
     $('mode').options[0].textContent = locale === 'uk' ? 'Самовирівнювання' : 'Self-level';
@@ -1037,6 +1053,7 @@ export function mountFlightApp({
       input.dispose();
       renderer.dispose();
       immersive.dispose();
+      audioControls.dispose();
       presentation.dispose();
       droneResponse.dispose();
       for (const remove of listeners) remove();
