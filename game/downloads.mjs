@@ -23,6 +23,7 @@ import { createManagedMediaStore } from './managed-media-store.mjs';
 import { SOUNDTRACK_CATALOGUE, SOUNDTRACK_ARCHIVES } from './content/soundtrack-catalogue.mjs';
 import {
   installedAppURL,
+  validateInstalledEdition,
   readInstalledState,
   stageInstalledEdition,
   activateInstalledEdition,
@@ -503,6 +504,9 @@ $('download-game').onclick = () => {
 };
 function downloadApprovedGame(approval) {
   return run(async (signal) => {
+    // Reject an unusable installation before transferring bytes, not after a
+    // completed download. Activation still repeats validation under its locks.
+    installationCandidate(approval.ids, approval.all);
     playing.clear();
     activity?.postMessage({ probe: true });
     if (activity) await new Promise((resolve) => setTimeout(resolve, 100));
@@ -643,6 +647,15 @@ $('retain').onclick = async () => {
     localizedText($('retention-status'), () => errorText(error));
   }
 };
+function installationCandidate(ids, all) {
+  return validateInstalledEdition({
+    version: catalogue.version,
+    buildId: available.buildId,
+    scope: baseURL,
+    selection: ids,
+    allGameplay: all,
+  });
+}
 async function selectEdition({
   ids = gameIDs(),
   all = $('all-game').checked,
@@ -652,13 +665,7 @@ async function selectEdition({
   return finishOfflineSelection({
     signal,
     activate: async () => {
-      const candidate = {
-        version: catalogue.version,
-        buildId: available.buildId,
-        scope: baseURL,
-        selection: ids,
-        allGameplay: all,
-      };
+      const candidate = installationCandidate(ids, all);
       await stageInstalledEdition(candidate);
       signal.throwIfAborted();
       const result = embedded

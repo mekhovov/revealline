@@ -8,6 +8,7 @@ import { classifyContent } from '../game/content-design/content-lifecycle.mjs';
 import { addAuthoredRuntimeSnapshots } from './authored-runtime-snapshots.mjs';
 import { isOptionalSpatialAudioBody, selectOfflineCore } from './offline-core-closure.mjs';
 import { downloadFiles } from '../game/download-catalogue.mjs';
+import { validateInstalledSelection } from '../game/installed-app.mjs';
 import { buildOfflineDestinations, buildNavigationBootstraps } from './offline-destinations.mjs';
 import { readFileSync } from 'node:fs';
 
@@ -469,6 +470,11 @@ export async function buildOfflineContent(entries, excluded, version) {
     }
     if (offset !== entry.bytes.length) throw new Error('Official media bundle has trailing bytes.');
   }
+  // Every selectable gameplay package must fit the installed-state contract,
+  // including archives/tools that a player can opt into individually.
+  validateInstalledSelection(
+    groups.filter((group) => group.kind === 'gameplay').map((group) => group.id),
+  );
   return {
     format: snapshots ? 'revealline-offline-content.v2' : 'revealline-offline-content.v1',
     version,
