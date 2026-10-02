@@ -1,0 +1,208 @@
+<!doctype html>
+<html lang="en">
+  <meta charset="utf-8" /><meta
+    name="viewport"
+    content="width=device-width,initial-scale=1"
+  /><title>FPV actor renderer verification</title
+  ><style>
+    body {
+      margin: 16px;
+      background: #10202e;
+      color: #dfebed;
+      font: 14px system-ui;
+    }
+    canvas {
+      width: 960px;
+      max-width: 100%;
+      height: 540px;
+      display: block;
+    }
+    button {
+      padding: 12px;
+    }
+    pre {
+      white-space: pre-wrap;
+    }</style
+  ><button id="run">Verify actor tiers and projectile lifetime</button>
+  <p>
+    Actual WebGL renderer with controlled presentation snapshots; no physics or hardware performance
+    acceptance.
+  </p>
+  <canvas id="canvas"></canvas>
+  <pre id="result">Ready</pre>
+  <script type="module">
+    import { createFlightRenderer } from '/optional-practice/civilian-fpv/world-assets.mjs';
+    import { WORLD_CATALOGUE } from '/optional-practice/civilian-fpv/world-catalogue.mjs';
+    const canvas = document.querySelector('#canvas'),
+      out = document.querySelector('#result');
+    const frame = () => new Promise(requestAnimationFrame),
+      assert = (v, m) => {
+        if (!v) throw Error(m);
+      };
+    document.querySelector('#run').onclick = async () => {
+      const checks = [],
+        samples = [];
+      let renderer;
+      try {
+        const original = WORLD_CATALOGUE.find(
+            (e) => e.course.environment === 'container-yard',
+          ).course,
+          course = structuredClone(original),
+          sourceBefore = JSON.stringify(original);
+        course.actors = Array.from({ length: 20 }, (_, i) => {
+          const type = i >= 12 ? 'hazard' : ['drone', 'vehicle', 'patrol', 'sentry'][i % 4],
+            position = { x: -15000 + (i % 5) * 6500, y: 0, z: -14000 + Math.floor(i / 5) * 6500 };
+          return {
+            id: 'presentation-' + i,
+            type,
+            role: i % 3 === 0 ? 'civilian' : 'hostile',
+            position,
+            radius: type === 'vehicle' ? 900 : 400,
+            height: 1800,
+            health: 100,
+            speed: 1800,
+            path: [
+              { ...position, z: position.z - 4000 },
+              { ...position, z: position.z + 4000 },
+            ],
+          };
+        });
+        const state = {
+          ticks: 50,
+          step: 0,
+          position: { ...course.spawn },
+          orientation: [0, 0, 0, 1000000],
+          lastInput: { throttle: 450 },
+          actors: course.actors.map((a) => ({
+            ...a,
+            pathIndex: 0,
+            status: 'active',
+            blocked: false,
+            maxHealth: 100,
+          })),
+          projectiles: [],
+        };
+        renderer = createFlightRenderer({ canvas });
+        assert(renderer.available, 'WebGL unavailable');
+        renderer.setCourse(course);
+        await renderer.prepare();
+        const draw = async () => {
+          const before = JSON.stringify(state);
+          renderer.draw(state, { cameraMode: 'overview' });
+          await frame();
+          renderer.draw(state, { cameraMode: 'overview' });
+          assert(
+            JSON.stringify(state) === before,
+            'Renderer mutated supplied presentation snapshot',
+          );
+          const r = renderer.resources();
+          samples.push(r);
+          assert(!r.renderer.contextLost, 'Unexpected lost context');
+          return r;
+        };
+        for (const quality of ['low', 'balanced', 'high', 'low', 'high']) {
+          renderer.setQuality(quality);
+          await renderer.prepare();
+          const r = await draw();
+          assert(r.presentation.actors.length === 20, 'Actor set changed across graphics tier');
+          assert(
+            r.presentation.actors.every((a) => a.quality === quality),
+            'Existing actor kept old quality',
+          );
+          checks.push({
+            name: 'All actors rebuild for ' + quality,
+            pass: true,
+            calls: r.renderer.calls,
+          });
+        }
+        const beforePose = JSON.stringify(renderer.resources().presentation.actors);
+        await draw();
+        assert(
+          JSON.stringify(renderer.resources().presentation.actors) === beforePose,
+          'Repeated same-tick draw changed pose',
+        );
+        checks.push({ name: 'Repeated same-tick presentation stays stable', pass: true });
+        const pulseSamples = [];
+        for (let round = 0; round < 5; round++) {
+          state.ticks += 50;
+          state.projectiles = Array.from({ length: 64 }, (_, i) => ({
+            id: 'r' + round + '-' + i,
+            owner: i % 2 ? 'player' : 'enemy',
+            position: { x: -8000 + (i % 8) * 2000, y: 1000, z: -8000 + Math.floor(i / 8) * 2000 },
+          }));
+          let r = await draw();
+          assert(
+            r.presentation.projectileBatches === 2 && r.presentation.activeProjectiles === 64,
+            'Projectile pool mismatch',
+          );
+          state.projectiles = [];
+          r = await draw();
+          assert(
+            r.presentation.activeProjectiles === 0,
+            'Empty projectile snapshot retained visible pulses',
+          );
+          pulseSamples.push(r.registered);
+        }
+        assert(
+          pulseSamples.every((s) => JSON.stringify(s) === JSON.stringify(pulseSamples[0])),
+          'Projectile turnover grew registered resources',
+        );
+        checks.push({
+          name: 'Five complete 64-projectile turnover cycles retain fixed resources',
+          pass: true,
+        });
+        state.ticks = 50;
+        await draw();
+        assert(
+          JSON.stringify(renderer.resources().presentation.actors) === beforePose,
+          'Replay seek changed actor direction/presentation',
+        );
+        checks.push({
+          name: 'Backward tick seek restores the same authored direction',
+          pass: true,
+        });
+        renderer.setCourse(original);
+        await renderer.prepare();
+        const r = renderer.resources();
+        assert(
+          r.presentation.projectileBatches === 0 && r.presentation.activeProjectiles === 0,
+          'Course replacement retained projectile pools',
+        );
+        assert(JSON.stringify(original) === sourceBefore, 'Renderer modified authored course');
+        checks.push({
+          name: 'Course replacement clears pools and preserves authored input',
+          pass: true,
+        });
+        renderer.dispose();
+        const end = renderer.resources();
+        assert(
+          end.registered.geometries === 0 &&
+            end.registered.materials === 0 &&
+            end.registered.textures === 0,
+          'Disposal retained registered scene resources',
+        );
+        checks.push({ name: 'Disposal releases all registered resources', pass: true });
+      } catch (error) {
+        checks.push({
+          name: 'Functional run',
+          pass: false,
+          error: error.message,
+          stack: error.stack,
+        });
+      } finally {
+        renderer?.dispose();
+        const receipt = {
+          complete: true,
+          passed: checks.filter((c) => c.pass).length,
+          total: checks.length,
+          qualification:
+            'Actual WebGL with controlled renderer snapshots; not physical frame-time or authoritative physics acceptance.',
+          checks,
+          samples,
+        };
+        window.__FPV_ACTOR_RENDERER_RESULT = receipt;
+        out.textContent = JSON.stringify(receipt, null, 2);
+      }
+    };
+  </script>
+</html>

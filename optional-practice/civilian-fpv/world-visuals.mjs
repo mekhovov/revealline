@@ -20,6 +20,26 @@ function surfacePixels(kind, color, seed, size, pixel) {
     properties = new Uint8Array(size * size * 4),
     rng = random(seed),
     base = new THREE.Color(color);
+  const noise = (cells) => {
+    const values = Float32Array.from({ length: cells * cells }, () => rng());
+    return (u, v) => {
+      const x = u * cells,
+        y = v * cells,
+        ix = Math.floor(x),
+        iy = Math.floor(y),
+        sx = x - ix,
+        sy = y - iy,
+        tx = sx * sx * (3 - 2 * sx),
+        ty = sy * sy * (3 - 2 * sy),
+        at = (dx, dy) => values[((iy + dy) % cells) * cells + ((ix + dx) % cells)];
+      return (
+        (at(0, 0) * (1 - tx) + at(1, 0) * tx) * (1 - ty) +
+        (at(0, 1) * (1 - tx) + at(1, 1) * tx) * ty
+      );
+    };
+  };
+  const broad = noise(5),
+    fine = noise(19);
   for (let y = 0; y < size; y++)
     for (let x = 0; x < size; x++) {
       const u = x / size,
@@ -29,12 +49,31 @@ function surfacePixels(kind, color, seed, size, pixel) {
       let shade = 0.91 + grain * 0.16,
         relief = grain * 0.025,
         roughness = 0.86;
-      const patch = Math.sin(tau * u) * Math.sin(tau * v * 2) * 0.06;
+      const patch = (broad(u, v) - 0.5) * 0.16,
+        mottling = fine(u, v) - 0.5;
       if (kind === 'concrete') {
         const joint = (u * 2) % 1 < 0.007 || (v * 2) % 1 < 0.007;
-        shade *= joint ? 0.64 : 1 + patch - (grain < 0.03 ? 0.16 : 0);
-        relief += joint ? -0.13 : patch * 0.3;
+        shade *= joint ? 0.8 : 1 + patch + mottling * 0.05 - (grain < 0.015 ? 0.1 : 0);
+        relief += joint ? -0.075 : patch * 0.1;
         roughness = 0.76 + grain * 0.2;
+      }
+      if (kind === 'asphalt') {
+        shade *= 0.94 + patch + mottling * 0.08;
+        relief += grain * 0.03;
+        roughness = 0.87 + grain * 0.12;
+      }
+      if (kind === 'plaster') {
+        shade *= 0.98 + patch * 0.4 + mottling * 0.035;
+        relief += mottling * 0.02;
+        roughness = 0.87 + grain * 0.1;
+      }
+      if (kind === 'paving') {
+        const row = Math.floor(v * 6),
+          column = Math.floor(u * 6 + (row % 2) * 0.5),
+          joint = (v * 6) % 1 < 0.025 || (u * 6 + (row % 2) * 0.5) % 1 < 0.025;
+        shade *= joint ? 0.75 : 0.93 + Math.sin(row * 17 + column * 31) * 0.045 + patch;
+        relief += joint ? -0.055 : mottling * 0.02;
+        roughness = 0.86 + grain * 0.12;
       }
       if (kind === 'metal') {
         const corrugation = Math.cos(u * tau * 8);
@@ -50,13 +89,15 @@ function surfacePixels(kind, color, seed, size, pixel) {
       }
       if (kind === 'wood') {
         const vein = Math.sin(u * tau * 32 + Math.sin(v * tau * 2) * 2);
-        shade *= 0.88 + vein * 0.1 + patch;
-        relief += vein * 0.045;
+        shade *= 0.93 + vein * 0.055 + patch + mottling * 0.08;
+        relief += vein * 0.025;
         roughness = 0.67 + grain * 0.17;
       }
       if (kind === 'grass') {
-        shade *= 0.85 + patch * 2 + Math.sin((u * 37 + v * 19) * tau) * 0.1;
-        relief += grain * 0.1;
+        // Isotropic patches and fine blades: no regular diagonal stripes or
+        // high-frequency sine pattern that aliases into bands during flight.
+        shade *= 0.97 + patch * 1.4 + mottling * 0.14;
+        relief += mottling * 0.035 + grain * 0.018;
         roughness = 0.98;
       }
       if (kind === 'carbon') {
@@ -184,6 +225,163 @@ export function createEnvironmentLight(
     }
   }
 }
+
+/** Persistent, non-gameplay dressing. Paint is flush with the floor; solid
+ * silhouettes stay outside the entire flight volume, including larger lessons. */
+function buildEnvironmentDressing({ course, world, material, bounds, theme, pixel }) {
+  const { min, max, width, depth, cx, cz } = bounds,
+    environment = course.environment,
+    natural = ['field', 'woodland'].includes(environment);
+  const group = new THREE.Group();
+  group.name = 'environment-dressing';
+  world.add(group);
+  const batch = (name, geometry, rows, paint, solid = false) => {
+    if (!rows.length) {
+      geometry.dispose();
+      return;
+    }
+    const instances = new THREE.InstancedMesh(geometry, paint, rows.length),
+      transform = new THREE.Matrix4(),
+      orientation = new THREE.Quaternion(),
+      position = new THREE.Vector3(),
+      scale = new THREE.Vector3();
+    instances.name = name;
+    instances.userData.presentationOnly = true;
+    instances.userData.outsideFlightBounds = solid;
+    rows.forEach(([x, y, z, sx, sy, sz], index) => {
+      if (
+        solid &&
+        !(x + sx / 2 < min.x || x - sx / 2 > max.x || z + sz / 2 < min.z || z - sz / 2 > max.z)
+      )
+        throw new Error('Decorative scenery overlaps the flight volume');
+      transform.compose(position.set(x, y, z), orientation, scale.set(sx, sy, sz));
+      instances.setMatrixAt(index, transform);
+    });
+    instances.instanceMatrix.needsUpdate = true;
+    instances.computeBoundingSphere();
+    instances.receiveShadow = true;
+    // Exterior dressing does not cast new shadows across gameplay sight lines.
+    instances.castShadow = false;
+    group.add(instances);
+  };
+  const marks = [],
+    secondary = [],
+    joints = [];
+  const rectangle = (rows, x, z, w, d) => rows.push([x, min.y + 0.018, z, w, 1, d]);
+  const outline = (rows, x, z, w, d, thickness = 0.06) => {
+    for (const side of [-1, 1]) {
+      rectangle(rows, x, z + (side * d) / 2, w, thickness);
+      rectangle(rows, x + (side * w) / 2, z, thickness, d);
+    }
+  };
+  const paint = (color, opacity = 0.62) =>
+    material(color, {
+      roughness: 0.96,
+      transparent: true,
+      opacity,
+      depthWrite: false,
+      polygonOffset: true,
+      polygonOffsetFactor: -1,
+    });
+  const digit = (value, x, z, size = 1) => {
+    const segments = ['abcedf', 'bc', 'abged', 'abgcd', 'fgbc'];
+    for (const segment of segments[value] ?? '') {
+      const [dx, dz, w, d] = {
+        a: [0, -0.5, 0.55, 0.065],
+        b: [0.275, -0.25, 0.065, 0.48],
+        c: [0.275, 0.25, 0.065, 0.48],
+        d: [0, 0.5, 0.55, 0.065],
+        e: [-0.275, 0.25, 0.065, 0.48],
+        f: [-0.275, -0.25, 0.065, 0.48],
+        g: [0, 0, 0.55, 0.065],
+      }[segment];
+      rectangle(secondary, x + dx * size, z + dz * size, w * size, d * size);
+    }
+  };
+  if (!natural) {
+    // Static facility markings convey scale, not an extra challenge route.
+    const inset = Math.min(2, width * 0.08, depth * 0.08);
+    for (let x = min.x + 2; x < max.x - 1; x += 6) {
+      rectangle(marks, x, min.z + inset, 1.15, 0.055);
+      rectangle(marks, x, max.z - inset, 1.15, 0.055);
+    }
+    if (environment === 'gym' || environment === 'garage') {
+      for (let x = min.x + 6; x < max.x; x += 6) rectangle(joints, x, cz, 0.022, depth);
+      for (let z = min.z + 6; z < max.z; z += 6) rectangle(joints, cx, z, width, 0.022);
+    }
+    if (environment === 'gym') {
+      for (const side of [-1, 1]) {
+        const x = side < 0 ? min.x + 2.2 : max.x - 2.2;
+        for (let z = min.z + 4; z < max.z - 3; z += 7) outline(secondary, x, z, 2.2, 3.4, 0.05);
+      }
+      for (let i = 1; i <= 4; i++) digit(i, min.x + (width * i) / 5, max.z - 1.15, 0.75);
+    } else if (environment === 'courtyard') {
+      // A narrow paved border remains ground-level around the open courtyard.
+      for (const side of [-1, 1]) {
+        rectangle(secondary, cx, side < 0 ? min.z + 0.6 : max.z - 0.6, width, 0.08);
+        rectangle(secondary, side < 0 ? min.x + 0.6 : max.x - 0.6, cz, 0.08, depth);
+      }
+    } else if (environment === 'warehouse' || environment === 'container-yard') {
+      for (const side of [-1, 1]) {
+        const x = side < 0 ? min.x + 3 : max.x - 3;
+        for (let z = min.z + 4; z < max.z - 3; z += 9) {
+          outline(marks, x, z, 3.5, 5.4, 0.075);
+          rectangle(secondary, x, z + 1.5, 0.65, 0.14);
+        }
+      }
+    } else if (environment === 'stadium') {
+      for (const inset of [1.4, 3.2, 5])
+        outline(secondary, cx, cz, Math.max(2, width - inset * 2), Math.max(2, depth - inset * 2));
+      for (let i = 0; i < 16; i++)
+        rectangle(i % 2 ? secondary : marks, cx - 4 + i * 0.5, max.z + 0.75, 0.5, 0.5);
+    } else if (environment === 'garage') {
+      for (const side of [-1, 1]) {
+        const x = side < 0 ? min.x + 2.4 : max.x - 2.4;
+        for (let z = min.z + 3; z < max.z - 3; z += 5.5) outline(secondary, x, z, 3.1, 4.6, 0.06);
+      }
+      for (let i = 1; i <= 4; i++) digit(i, max.x - 2.4, min.z + (depth * i) / 5, 0.8);
+    }
+  } else {
+    const trail = material(0x8b886d, { roughness: 1 });
+    batch(
+      'peripheral-walking-verge',
+      new THREE.PlaneGeometry(1, 1).rotateX(-Math.PI / 2),
+      [
+        [cx, min.y + 0.002, min.z - 2, width + 7, 1, 1.1],
+        [max.x + 2, min.y + 0.002, cz, 1.1, 1, depth + 7],
+      ],
+      trail,
+      true,
+    );
+    const hills = [],
+      rng = random(environment === 'field' ? 1049 : 2781);
+    for (let i = 0; i < 14; i++) {
+      const side = i % 4,
+        along = (i + 0.5) / 14,
+        span = 15 + rng() * 10,
+        height = 3 + rng() * 3,
+        x = side === 1 ? max.x + 28 : side === 3 ? min.x - 28 : min.x + width * along,
+        z = side === 0 ? min.z - 28 : side === 2 ? max.z + 28 : min.z + depth * along;
+      hills.push([x, min.y - height * 0.16, z, span, height, span]);
+    }
+    batch(
+      'distant-landscape',
+      new THREE.SphereGeometry(0.5, pixel ? 7 : 12, pixel ? 4 : 6),
+      hills,
+      material(new THREE.Color(theme.ground).lerp(new THREE.Color(theme.fog), 0.12)),
+      true,
+    );
+  }
+  for (const [name, rows, color, opacity] of [
+    ['facility-paint', marks, theme.warm, 0.58],
+    ['facility-secondary-paint', secondary, pixel ? theme.accent : 0xd9d9ca, 0.45],
+    ['floor-expansion-joints', joints, 0x293832, 0.22],
+  ])
+    if (rows.length)
+      batch(name, new THREE.PlaneGeometry(1, 1).rotateX(-Math.PI / 2), rows, paint(color, opacity));
+  return group;
+}
+
 export function buildWorldVisuals({ course, world, mesh, material, box }) {
   const profile = resolveThemeProfile(course),
     theme = profile.palette,
@@ -203,13 +401,40 @@ export function buildWorldVisuals({ course, world, mesh, material, box }) {
   detail.name = 'surface-detail';
   world.add(detail);
   const pixel = profile.textureFilter === 'nearest';
-  const floorMaps = surfaceMaps(natural ? 'grass' : 'concrete', theme.ground, { pixel });
+  const floorKind = natural
+    ? 'grass'
+    : environment === 'courtyard'
+      ? 'paving'
+      : environment === 'container-yard' || environment === 'stadium'
+        ? 'asphalt'
+        : 'concrete';
+  const floorColor =
+    natural || pixel
+      ? new THREE.Color(theme.ground)
+      : new THREE.Color(
+          environment === 'courtyard'
+            ? 0xa89c86
+            : floorKind === 'asphalt'
+              ? 0x454e54
+              : environment === 'garage'
+                ? 0x858b88
+                : 0x77807b,
+        ).lerp(
+          new THREE.Color(theme.ground),
+          environment === 'courtyard' ? 0.08 : floorKind === 'asphalt' ? 0.1 : 0.12,
+        );
+  const floorMaps = surfaceMaps(floorKind, floorColor, { pixel });
   // Repeat in metres across the entire ground, including its outer apron.
+  const floorTile = natural ? 12 : environment === 'courtyard' ? 4 : 6;
   for (const texture of new Set(Object.values(floorMaps)))
-    texture.repeat.set((width + 100) / 4, (depth + 100) / 4);
+    texture.repeat.set((width + 100) / floorTile, (depth + 100) / floorTile);
   const ground = mesh(
     new THREE.PlaneGeometry(width + 100, depth + 100),
-    material(0xffffff, { ...floorMaps, normalScale: new THREE.Vector2(0.35, 0.35), roughness: 1 }),
+    material(0xffffff, {
+      ...floorMaps,
+      normalScale: new THREE.Vector2(natural ? 0.18 : 0.3, natural ? 0.18 : 0.3),
+      roughness: 1,
+    }),
   );
   ground.rotation.x = -Math.PI / 2;
   ground.position.set(cx, min.y - 0.01, cz);
@@ -233,6 +458,25 @@ export function buildWorldVisuals({ course, world, mesh, material, box }) {
     metalness: indoor ? 0.18 : 0.05,
   });
   world.userData.ownedMaterials = [accent, walls];
+  const obstacleSurfaces = new Map();
+  const obstacleSurface = (kind = 'concrete') => {
+    const colors = {
+      wood: 0x85725a,
+      concrete: 0x929790,
+      plaster: theme.wall,
+      brick: environment === 'courtyard' ? 0xb99e83 : theme.wall,
+      metal: theme.wall,
+    };
+    if (!Object.hasOwn(colors, kind)) kind = 'concrete';
+    if (!obstacleSurfaces.has(kind)) {
+      const maps = surfaceMaps(kind, colors[kind], { pixel });
+      // A shared owner stays under world even when callers make no obstacle
+      // mesh, and never shares texture lifetime with independently removed actors.
+      world.userData.ownedMaterials.push(material(0xffffff, maps));
+      obstacleSurfaces.set(kind, maps);
+    }
+    return obstacleSurfaces.get(kind);
+  };
   const structure = (size, at, paint = walls) => {
     const value = mesh(new THREE.BoxGeometry(...size), paint, indoor ? world : backdrop);
     value.position.set(...at);
@@ -288,6 +532,10 @@ export function buildWorldVisuals({ course, world, mesh, material, box }) {
       emissiveIntensity: pixel ? 0.7 : 1.1,
       roughness: 0.38,
     });
+    const windowPaint = material(0xa8d5df, {
+      emissive: 0x749fab,
+      emissiveIntensity: 0.35,
+    });
     for (let z = min.z + 4; z < max.z; z += 12)
       for (const x of [min.x + width * 0.25, min.x + width * 0.75]) {
         structure([3.6, 0.15, 0.35], [x, max.y + 0.04, z], hardware);
@@ -296,11 +544,7 @@ export function buildWorldVisuals({ course, world, mesh, material, box }) {
     for (const z of [min.z + 0.012, max.z - 0.012]) {
       structure([width, 0.35, 0.015], [cx, 1.6, z], accent);
       for (let x = min.x + 3; x < max.x - 2; x += 7)
-        structure(
-          [3, 1.4, 0.015],
-          [x, max.y * 0.7, z],
-          material(0xa8d5df, { emissive: 0x749fab, emissiveIntensity: 0.35 }),
-        );
+        structure([3, 1.4, 0.015], [x, max.y * 0.7, z], windowPaint);
     }
     if (environment === 'garage') {
       for (let x = min.x + 3; x < max.x; x += 5) {
@@ -310,6 +554,10 @@ export function buildWorldVisuals({ course, world, mesh, material, box }) {
       }
     }
   } else if (environment === 'courtyard') {
+    const roofPaint = material(theme.warm),
+      plinthPaint = material(0x9b9587),
+      trimPaint = material(0xf0e5cb),
+      windowPaint = material(0x698493, { metalness: 0.45, roughness: 0.3 });
     for (let i = 0; i < 12; i++) {
       const side = i % 4,
         along = Math.floor(i / 4),
@@ -318,15 +566,15 @@ export function buildWorldVisuals({ course, world, mesh, material, box }) {
       const z =
         side >= 2 ? (side === 2 ? min.z - 5 : max.z + 5) : min.z + (depth * (along + 0.5)) / 3;
       structure([6, height, 6], [x, height / 2, z]);
-      structure([6.4, 0.25, 6.4], [x, height + 0.12, z], material(theme.warm));
+      structure([6.4, 0.25, 6.4], [x, height + 0.12, z], roofPaint);
       // Cornices and plinths give buildings scale without changing flyable gaps.
-      structure([6.12, 0.24, 6.12], [x, 0.22, z], material(0x9b9587));
-      structure([6.1, 0.18, 6.1], [x, height - 0.6, z], material(0xf0e5cb));
+      structure([6.12, 0.24, 6.12], [x, 0.22, z], plinthPaint);
+      structure([6.1, 0.18, 6.1], [x, height - 0.6, z], trimPaint);
       for (let floor = 2; floor < height; floor += 2.5) {
         const pane = structure(
           [4.4, 1.1, 0.015],
           [x, floor, z + (z < cz ? 3.01 : -3.01)],
-          material(0x698493, { metalness: 0.45, roughness: 0.3 }),
+          windowPaint,
         );
         if (side < 2) {
           pane.rotation.y = Math.PI / 2;
@@ -335,17 +583,17 @@ export function buildWorldVisuals({ course, world, mesh, material, box }) {
       }
     }
   } else if (environment === 'container-yard') {
+    const containerPaints = [
+      material(0xffe0b0, { map: wallMap, metalness: 0.2 }),
+      material(0xffffff, { map: wallMap, metalness: 0.2 }),
+    ];
     for (let i = 0; i < 18; i++) {
       const side = i % 4,
         slot = Math.floor(i / 4);
       const x = side < 2 ? (side ? max.x + 4 : min.x - 4) : min.x + 5 + (slot * (width - 10)) / 4;
       const z =
         side >= 2 ? (side === 2 ? min.z - 4 : max.z + 4) : min.z + 5 + (slot * (depth - 10)) / 4;
-      const container = structure(
-        [5, 2.7, 2.6],
-        [x, 1.35, z],
-        material(i % 3 ? 0xffffff : 0xffe0b0, { map: wallMap, metalness: 0.2 }),
-      );
+      const container = structure([5, 2.7, 2.6], [x, 1.35, z], containerPaints[i % 3 ? 1 : 0]);
       container.rotation.y = side < 2 ? Math.PI / 2 : 0;
       for (const edge of [-1, 1]) {
         const rail = structure([5.06, 0.1, 0.1], [x, 2.6, z + edge * 1.3], hardware);
@@ -360,23 +608,17 @@ export function buildWorldVisuals({ course, world, mesh, material, box }) {
       }
     }
   } else if (environment === 'stadium') {
+    const seatPaints = [material(theme.wall), material(theme.accent)],
+      lampPaint = material(0xfff2c9, { emissive: 0xffefd4, emissiveIntensity: 1.3 });
     for (const side of [-1, 1])
       for (let tier = 0; tier < 4; tier++) {
         const z = side < 0 ? min.z - 3 - tier * 2 : max.z + 3 + tier * 2;
-        structure(
-          [width + 8, 0.6, 1.5],
-          [cx, 0.5 + tier * 1.2, z],
-          material(tier % 2 ? theme.accent : theme.wall),
-        );
+        structure([width + 8, 0.6, 1.5], [cx, 0.5 + tier * 1.2, z], seatPaints[tier % 2]);
       }
     for (const x of [min.x - 3, max.x + 3])
       for (const z of [min.z - 3, max.z + 3]) {
         structure([0.25, 13, 0.25], [x, 6.5, z]);
-        structure(
-          [2.5, 0.5, 0.5],
-          [x, 12.8, z],
-          material(0xfff2c9, { emissive: 0xffefd4, emissiveIntensity: 1.3 }),
-        );
+        structure([2.5, 0.5, 0.5], [x, 12.8, z], lampPaint);
       }
   } else {
     const rng = random(environment === 'woodland' ? 7947 : 997),
@@ -404,6 +646,14 @@ export function buildWorldVisuals({ course, world, mesh, material, box }) {
       crown.castShadow = true;
     }
   }
+  buildEnvironmentDressing({
+    course,
+    world,
+    material,
+    bounds: { min, max, width, depth, cx, cz },
+    theme,
+    pixel,
+  });
   // Thin painted boundary markings are wayfinding, not physical barriers.
   for (const z of [min.z, max.z]) box([width, 0.012, 0.06], [cx, 0.012, z], theme.warm);
   for (const x of [min.x, max.x]) box([0.06, 0.012, depth], [x, 0.012, cz], theme.warm);
@@ -429,9 +679,11 @@ export function buildWorldVisuals({ course, world, mesh, material, box }) {
     theme,
     profile,
     indoor,
+    groundColor: floorColor,
     backdrop,
     obstacleMap: wallMap,
     obstacleMaps: wallMaps,
+    obstacleSurface,
     center: [cx, cz],
     width,
     depth,

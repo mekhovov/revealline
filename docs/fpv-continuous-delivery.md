@@ -1245,3 +1245,61 @@ no upstream member was retargeted and no existing hold was lifted. Next: inspect
 exact PR heads/checks before permitted protected publication, obtain physical
 Arm/Reset acceptance, and continue the independent R5 art backlog. Preserve R7
 unit-coverage deferral and all prior learning/content acceptance limitations.
+
+### 2 October — eight-world environment art increment
+
+Current feature branch: `codex/fpv-environment-art-pass`, based on #945 at
+b49979e17. Runtime commit b1bea780a improves all eight world surfaces and
+composition, uses theme appearance slots, enriches moving actor models and
+preserves exact collision/physics/course identities. Repeated trusted static
+scenery uses spatial GPU batches; creator scene hierarchies remain intact.
+Projectile rendering has bounded pools and actor detail follows quality changes.
+
+Final actual-WebGL comparison passes10/10 checks/432 renderer configurations;
+actor quality, replay pose and projectile lifetime pass10/10; shared geometry
+and material probes pass43/43. Six GLBs have zero core-validator errors/warnings;
+the validator's unsupported instancing extension is separately exercised by the
+pinned loader in actual WebGL. Syntax/lint/format pass. Extra unit coverage stays
+in R7. No physical-device FPS or human art acceptance is claimed.
+
+Both existing local player paths now contain the87-file/14,018,764-byte build,
+SHA8ed4759ee6c6e215fc189c701a682631a6a89293d6ebb35249f19dc05f64ff0a.
+Details and research: `docs/fpv-environment-art-pass.md`. Primary checkout's
+parallel Industrial Workshop/Themes work remains preserved; a user-authorized
+coordination request was sent and its semantic material/session contract read.
+Do not replace its renderer/material files wholesale during integration.
+
+Next: qualify frozen packages, complete packaged-player inspection, publish a
+focused child of #945 in native stack902. Last inspected open stack begins at
+#934 and ends at #945; #932 has merged. Do not retarget/rebase upstream members
+or infer passing checks from #945's empty current check list. Afterwards continue
+shared-theme integration and artist/device acceptance, preserving R7 deferral
+and earlier course/reimport/content holds.
+
+Frozen candidate bd77622f775eb6abb6c6bd23634e28740b7356ba passes all3
+optional-package admissions, committed-input/ZIP-member verification and2
+byte-identical builds; receipt `docs/evidence/fpv-environment-package-20261002.json`.
+Package limits remain unchanged. Actual built Courtyard welcome demonstration
+completed its existing24.1s recording without awarding player progress. Quality
+and camera changes prepare successfully and leave playback safely paused; the
+updated paving, facades and animated civilian appear in the built player.
+Screenshot `/tmp/fpv-environment-quality-player-20261002.png`. No new radio,
+physical-device or sustained-FPS acceptance is claimed.
+
+### 2 October — environment art published
+
+[#946](https://github.com/mekhovov/revealline/pull/946) is attached to this chat
+and appended after #945 through native stack902's API. Qualification head was
+d556c1f2b; frozen package candidate stays bd77622f7, with runtime b1bea780a.
+The stack now starts at #935 after #934 merged independently. No upstream refs
+were rewritten and no existing holds were lifted. PR checks, protected merging
+and public deployment remain external follow-up; no public availability claim.
+
+The user-authorized Themes handoff was sent with the focused PR, runtime commit,
+material/appearance ownership boundaries and exact integration document. Both
+local player URLs remain refreshed. The packaged courtyard demo is left safely
+paused with the player's original Balanced/Chase preferences restored.
+Next concrete work: shared-theme integration after the Themes handoff is ready,
+then selected artist-authored material/landmark upgrades and named-device
+performance/readability qualification. Preserve parallel primary-checkout work,
+remaining original demonstrations/reimport holds and R7 coverage deferral.
