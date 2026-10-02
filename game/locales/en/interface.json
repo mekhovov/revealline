@@ -5727,5 +5727,12 @@
   "optionalPractice.simDownloads": "Install & offline play",
   "optionalPractice.simRetry": "Try opening SIM again",
   "optionalPractice.simUnavailable": "SIM could not be opened from this copy. Reconnect to play online, or prepare its optional offline download. Your game remains available.",
+  "winPictureComplete": "Beautifully done.",
+  "winPictureEnjoy": "The whole picture is yours.",
+  "winPictureContinue": "Continue →",
+  "winPictureContinueLabel": "Continue to results",
+  "creator.socialDroneExampleHelp": "Try a complete video-reward level, then edit it to learn how posters and victory clips work.",
+  "creator.socialDroneExampleOpen": "Open Social Drone video example",
+  "creator.socialDroneExampleUnavailable": "The Social Drone example could not be loaded. Try again.",
   "worldIdsCommaSeparated": "Worlds (comma separated: retro, fpv, ukraine)"
 }
