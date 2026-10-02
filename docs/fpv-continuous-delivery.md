@@ -873,3 +873,13 @@ distribution ZIPs from five older `/tmp/fpv-*-final-20261002` candidates, reclai
 164,540,751bytes. All manifests, hashes, source inventories, admission receipts,
 source trees and player builds were retained. No player content or unrelated
 work was removed. Public deployment is not claimed by this local verification.
+
+### Frozen continuous-lab package
+
+Runtime `b102350083203ac6f0f612b80c0e09eb085816ae` passes all three package
+admissions, committed-input and ZIP-member checks, and two byte-identical builds;
+receipt `docs/evidence/fpv-continuous-package-20261002.json`. File caps remain
+unchanged. The actual rebuilt local player is87 files /12,680,675bytes,
+ZIP SHA-256 `bf4312b51e84a447a5a04d1394eee9d3487336c938af998621b3d2f5a838d307`.
+The reviewed-player URL is rebuilt from the same frozen runtime. Public merge
+and deployment remain separate protected gates.
