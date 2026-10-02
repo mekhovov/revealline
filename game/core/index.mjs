@@ -1,4 +1,5 @@
 import { huntSummary, validateHuntDefinition } from '../hunt/rules.mjs';
+import { analyzeRouteCoverage } from './coverage.mjs';
 import { clearLineImpacts } from './line-impact.mjs';
 import {
   CELL,

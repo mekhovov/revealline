@@ -41,6 +41,7 @@ export function resolveClassicDefinition(level, foundationGeometry = null) {
       'enemyPressure',
       'timedBonuses',
       'combatPatrols',
+      'coverage',
       ...(level.version === 'xonix-level.v9' ? ['hunt'] : []),
     ],
     'classic',

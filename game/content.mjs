@@ -131,12 +131,13 @@ function checkJSON(value, path = 'content') {
     ancestors.add(item);
     const descriptors = Object.getOwnPropertyDescriptors(item),
       names = Object.keys(descriptors);
-    if (Array.isArray(item) && item.length > 256) {
-      errors.push(contentError('arrayBudget', { path: where }));
+    const arrayLimit = where === 'content.level.classic.terrain' ? 512 : 256;
+    if (Array.isArray(item) && item.length > arrayLimit) {
+      errors.push(contentError('arrayBudget', { path: where, limit: arrayLimit }));
       ancestors.delete(item);
       return;
     }
-    if (names.length > 257) {
+    if (names.length > (Array.isArray(item) ? arrayLimit + 1 : 257)) {
       errors.push(contentError('fieldBudget', { path: where }));
       ancestors.delete(item);
       return;
