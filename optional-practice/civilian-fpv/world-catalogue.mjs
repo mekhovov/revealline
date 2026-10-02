@@ -2567,7 +2567,1523 @@ const NEW_ACRO_LESSONS = Object.freeze([
     8,
   ),
 ]);
-export const BEGINNER_LESSONS = Object.freeze([...ORIGINAL_BEGINNER_LESSONS, ...NEW_ACRO_LESSONS]);
+// Additional precision and navigation lessons. Existing course definitions above
+// remain byte-identical; these lessons have their own compiled content identity.
+const masteryHold = (x, y, z, options = {}) => ({
+  ...hold(x, y, z, 50, 1800),
+  maxSpeed: 1800,
+  maxTilt: 2000,
+  ...options,
+});
+const masteryStage = (
+  objective,
+  title,
+  instruction,
+  axis = 'mixed',
+  motion = 'hover',
+  direction = 1,
+) =>
+  acroStage(
+    objective,
+    title,
+    instruction,
+    objective.type === 'gate'
+      ? [
+          'Read the next opening before turning. A level horizon does not remove existing drift; leave room to brake after the crossing.',
+          'Помічайте наступний отвір до повороту. Рівний горизонт не прибирає набраний рух; залишайте місце для гальмування після воріт.',
+        ]
+      : [
+          'Settle inside the highlighted space. Position, speed and orientation are separate: correct the drift, then level before making the next small adjustment.',
+          'Стабілізуйтеся в підсвіченій зоні. Позиція, швидкість та орієнтація різні: погасіть дрейф, потім вирівняйтеся перед наступною малою поправкою.',
+        ],
+    axis,
+    motion,
+    direction,
+  );
+const masteryGate = (axis, at, side, direction, y, title, instruction, width = 5) =>
+  masteryStage(
+    Object.fromEntries(
+      Object.entries(gate(axis, at, side, direction, y, width)).map(([key, value]) => [
+        key,
+        typeof value === 'number' ? Math.round(value) : value,
+      ]),
+    ),
+    title,
+    instruction,
+    'mixed',
+    'route',
+    1,
+  );
+const masterySettle = (x, y, z, title, instruction, options = {}) =>
+  masteryStage(masteryHold(x, y, z, options), title, instruction);
+const masteryLift = (x, y, z, title = ['Lift into clear space', 'Підніміться у вільний простір']) =>
+  masteryStage(
+    masteryHold(x, y, z),
+    title,
+    [
+      `With rotation controls centred, raise thrust gently toward ${y} m. Reduce the climb before the marked height and settle above the pad.`,
+      `Утримуючи стіки обертання по центру, плавно додайте тягу до ${y} м. Сповільніть підйом до позначеної висоти й стабілізуйтеся над майданчиком.`,
+    ],
+    'throttle',
+    'lift',
+  );
+const masteryLand = (
+  x,
+  z,
+  y = 0,
+  surface = '$floor',
+  title = ['Finish with a soft landing', 'Завершіть м’якою посадкою'],
+) => [
+  { ...masteryHold(x, y, z, { ticks: 30, maxSpeed: 1200, maxTilt: 1500 }), type: 'land', surface },
+  schoolNote(
+    title,
+    [
+      `Brake above the marked ${y > 0 ? 'raised platform' : 'pad'}, level the drone, and descend gently. Bring throttle fully down after contact.`,
+      `Загальмуйте над позначен${y > 0 ? 'ою піднятою платформою' : 'им майданчиком'}, вирівняйте дрон і плавно спустіться. Після торкання повністю приберіть газ.`,
+    ],
+    [
+      'The checkpoint checks the actual support surface and the touchdown speed and tilt. Passing above the pad is not a landing.',
+      'Перевірка враховує опорну поверхню, швидкість і нахил під час торкання. Проліт над майданчиком не є посадкою.',
+    ],
+    'throttle',
+    'land',
+    0.44,
+    [
+      'If you arrive too quickly, climb into clear space and make another approach. Stop the drift before descending.',
+      'Якщо наблизилися надто швидко, підніміться у вільний простір і зайдіть ще раз. Погасіть дрейф до спуску.',
+    ],
+    -1,
+  ),
+];
+const masteryLesson = (
+  index,
+  {
+    title,
+    summary,
+    concept,
+    environment,
+    tier,
+    tags,
+    duration = 6,
+    obstacles = [],
+    spawn = p(0, 0, 0),
+  },
+  stages,
+) => {
+  const lesson = schoolLesson(
+    index,
+    { title, summary, concept, chapter: tier, mode: 'acro', camera: 'fpv', duration },
+    stages,
+  );
+  const world = FLIGHT_WORLDS.find((entry) => entry.id === environment);
+  return Object.freeze({
+    ...lesson,
+    tier,
+    skillTags: tags,
+    recommendedPrerequisites: [
+      index === 26 ? 'beginner-26' : `beginner-${String(index).padStart(2, '0')}`,
+    ],
+    course: {
+      ...lesson.course,
+      environment,
+      spawn,
+      bounds: { min: p(-44, 0, -44), max: p(44, 20, 44) },
+      world: { id: world.id, theme: world.theme, style: world.style },
+      obstacles: [...worldObstacles(environment), ...obstacles],
+    },
+  });
+};
+const MASTERY_LESSONS = Object.freeze([
+  masteryLesson(
+    26,
+    {
+      title: ['Braking marks', 'Орієнтири гальмування'],
+      environment: 'field',
+      tier: 'experienced',
+      tags: ['braking', 'momentum', 'precision'],
+      summary: [
+        'Choose where to brake on northbound and eastbound approaches, then land.',
+        'Виберіть момент гальмування на підходах на північ і схід, потім виконайте посадку.',
+      ],
+      concept: [
+        'Counter-tilt slows your motion. Centring the stick stops commanding rotation; it does not erase momentum.',
+        'Зворотний нахил сповільнює рух. Центрування стіка припиняє команду обертатися, але не прибирає інерцію.',
+      ],
+    },
+    [
+      masteryLift(0, 3, 0),
+      masteryGate(
+        'z',
+        -8,
+        0,
+        -1,
+        3,
+        ['First approach', 'Перший підхід'],
+        [
+          'Fly north through the gate and prepare to brake toward the box beyond it.',
+          'Летіть на північ крізь ворота й готуйтеся гальмувати до зони за ними.',
+        ],
+      ),
+      masterySettle(
+        0,
+        3,
+        -14,
+        ['Brake before the box', 'Гальмуйте до зони'],
+        [
+          'Tilt back briefly, then level as speed falls. Settle inside the outlined box.',
+          'Коротко нахиліться назад, потім вирівняйтеся зі зменшенням швидкості. Стабілізуйтеся в позначеній зоні.',
+        ],
+      ),
+      masteryGate(
+        'x',
+        8,
+        -14,
+        1,
+        3,
+        ['Turn into the second approach', 'Поверніть на другий підхід'],
+        [
+          'Turn east and pass the gate. The next stop is close, so start braking early.',
+          'Поверніть на схід і пройдіть ворота. Наступна зупинка близько, тому гальмуйте завчасно.',
+        ],
+      ),
+      masterySettle(
+        14,
+        3,
+        -14,
+        ['Catch the second stop', 'Зупиніться вдруге'],
+        [
+          'Stop over the second marker without chasing it back and forth.',
+          'Зупиніться над другою позначкою без постійного переліту вперед і назад.',
+        ],
+      ),
+      masteryGate(
+        'z',
+        -6,
+        14,
+        1,
+        3,
+        ['Return toward the pad', 'Поверніться до майданчика'],
+        [
+          'Face south, cross the return gate and leave room to stop.',
+          'Спрямуйте ніс на південь, пройдіть зворотні ворота й залиште місце для зупинки.',
+        ],
+      ),
+      masteryLand(14, 0),
+    ],
+  ),
+  masteryLesson(
+    27,
+    {
+      title: ['Altitude staircase', 'Сходинки висоти'],
+      environment: 'gym',
+      tier: 'experienced',
+      tags: ['throttle', 'height', 'precision'],
+      summary: [
+        'Visit four offset height stations while controlling climb and descent.',
+        'Відвідайте чотири зміщені висотні цілі, контролюючи підйом і спуск.',
+      ],
+      concept: [
+        'Throttle changes thrust, not height directly. Begin slowing each climb or descent before its target.',
+        'Газ змінює тягу, а не висоту безпосередньо. Сповільнюйте кожен підйом чи спуск до цільової висоти.',
+      ],
+    },
+    [
+      masteryLift(0, 3, 0),
+      masterySettle(
+        0,
+        6,
+        -8,
+        ['Rise to the second step', 'Підніміться на другу сходинку'],
+        [
+          'Move north and climb to 6 m. Ease thrust before reaching the upper target.',
+          'Рухайтеся на північ і підніміться до 6 м. Зменште тягу до верхньої цілі.',
+        ],
+        { ticks: 40, maxSpeed: 2000 },
+      ),
+      masterySettle(
+        8,
+        4,
+        -8,
+        ['Descend while crossing', 'Спускайтеся під час переходу'],
+        [
+          'Move right toward the 4 m target. Catch the downward motion before settling.',
+          'Рухайтеся праворуч до цілі 4 м. Зупиніть спуск перед стабілізацією.',
+        ],
+        { ticks: 40, maxSpeed: 2000 },
+      ),
+      masterySettle(
+        8,
+        2,
+        0,
+        ['Low final step', 'Низька остання сходинка'],
+        [
+          'Return south and settle at 2 m with room above the ground.',
+          'Поверніться на південь і стабілізуйтеся на 2 м із запасом над землею.',
+        ],
+        { ticks: 40, maxSpeed: 2000 },
+      ),
+      masteryLand(8, 0),
+    ],
+  ),
+  masteryLesson(
+    28,
+    {
+      title: ['Compass cross', 'Хрест за орієнтирами'],
+      environment: 'field',
+      tier: 'experienced',
+      tags: ['heading', 'lateral', 'precision'],
+      summary: [
+        'Visit four stations while pointing north, then turn south and land.',
+        'Відвідайте чотири цілі з носом на північ, потім поверніть на південь і виконайте посадку.',
+      ],
+      concept: [
+        'Heading and travel are different. Pitch and roll move the drone relative to its current nose direction.',
+        'Курс і напрям руху різні. Тангаж і крен переміщують дрон відносно поточного напрямку носа.',
+      ],
+    },
+    [
+      masteryLift(0, 3, 0),
+      ...[
+        [
+          8,
+          0,
+          ['East station', 'Східна ціль'],
+          [
+            'Slide right while keeping the nose north. Brake before the marker.',
+            'Змістіться праворуч, тримаючи ніс на північ. Загальмуйте до позначки.',
+          ],
+        ],
+        [
+          0,
+          -8,
+          ['North station', 'Північна ціль'],
+          [
+            'Move toward the northern target and settle without changing heading.',
+            'Перейдіть до північної цілі й зупиніться без зміни курсу.',
+          ],
+        ],
+        [
+          -8,
+          0,
+          ['West station', 'Західна ціль'],
+          [
+            'Move left toward the western target; keep watching the north heading marker.',
+            'Перейдіть ліворуч до західної цілі; стежте за позначкою північного курсу.',
+          ],
+        ],
+        [
+          0,
+          8,
+          ['South station', 'Південна ціль'],
+          [
+            'Translate backward toward the southern target while still facing north.',
+            'Перемістіться назад до південної цілі, залишаючи ніс на північ.',
+          ],
+        ],
+      ].map(([x, z, title, instruction]) =>
+        masterySettle(x, 3, z, title, instruction, { heading: 0 }),
+      ),
+      masterySettle(
+        0,
+        3,
+        8,
+        ['Now turn the nose', 'Тепер поверніть ніс'],
+        [
+          'Turn to face south without leaving the target. Compare the heading arrow with the drift arrow.',
+          'Поверніть ніс на південь, не виходячи з цілі. Порівняйте стрілки курсу й дрейфу.',
+        ],
+        { heading: 18000 },
+      ),
+      masteryLand(0, 8),
+    ],
+  ),
+  masteryLesson(
+    29,
+    {
+      title: ['Backward return', 'Повернення заднім ходом'],
+      environment: 'field',
+      tier: 'experienced',
+      tags: ['heading', 'backward', 'braking'],
+      summary: [
+        'Fly out, stop, then return backward with the nose still facing outward.',
+        'Відлетіть, зупиніться й поверніться заднім ходом із носом у початковому напрямку.',
+      ],
+      concept: [
+        'A backward translation comes from thrust and attitude. It is not the same as turning the nose around.',
+        'Рух назад виникає через тягу й нахил. Це не те саме, що розвернути ніс.',
+      ],
+    },
+    [
+      masteryLift(0, 3, 0),
+      masteryGate(
+        'z',
+        -9,
+        0,
+        -1,
+        3,
+        ['Outbound marker', 'Позначка відльоту'],
+        [
+          'Fly north through the gate and reduce your forward speed.',
+          'Пролетіть на північ крізь ворота та зменште швидкість.',
+        ],
+      ),
+      masterySettle(
+        0,
+        3,
+        -14,
+        ['Stop facing outward', 'Зупиніться носом назовні'],
+        [
+          'Keep facing north and stop at the far station.',
+          'Залиште ніс на північ і зупиніться біля дальньої цілі.',
+        ],
+        { heading: 0 },
+      ),
+      masterySettle(
+        4,
+        3,
+        -7,
+        ['Back and slightly right', 'Назад і трохи праворуч'],
+        [
+          'Use a small nose-up tilt to start moving backward, with a little right roll toward the offset target. Keep facing north.',
+          'Малим нахилом носа вгору почніть рух назад і додайте трохи правого крену до зміщеної цілі. Тримайте ніс на північ.',
+        ],
+        { heading: 0 },
+      ),
+      masterySettle(
+        0,
+        3,
+        0,
+        ['Backward home', 'Заднім ходом додому'],
+        [
+          'Return over the home pad without a yaw turnaround, then brake the backward drift.',
+          'Поверніться над стартовим майданчиком без розвороту за курсом, потім погасіть рух назад.',
+        ],
+        { heading: 0 },
+      ),
+      masteryLand(0, 0),
+    ],
+  ),
+  masteryLesson(
+    30,
+    {
+      title: ['S-turn handover', 'Зміна повороту на S-маршруті'],
+      environment: 'woodland',
+      tier: 'experienced',
+      tags: ['turning', 'look-ahead', 'route'],
+      summary: [
+        'Link bends of different spacing through a woodland clearing.',
+        'З’єднайте повороти з різними проміжками на лісовій галявині.',
+      ],
+      concept: [
+        'Unwind the old bank as the new direction opens. Look ahead before adding the opposite roll and yaw.',
+        'Прибирайте попередній крен, коли відкривається новий напрямок. Дивіться вперед перед протилежними креном і поворотом.',
+      ],
+    },
+    [
+      masteryLift(0, 3, 0),
+      masteryGate(
+        'z',
+        -7,
+        0,
+        -1,
+        3,
+        ['Enter the clearing', 'Увійдіть на галявину'],
+        [
+          'Cross the first opening and look toward the gate on your right.',
+          'Пройдіть перший отвір і подивіться на ворота праворуч.',
+        ],
+      ),
+      masteryGate(
+        'x',
+        8,
+        -12,
+        1,
+        3,
+        ['Open the right bend', 'Розкрийте правий поворот'],
+        [
+          'Turn right smoothly into the eastern gate; begin unwinding as it comes into line.',
+          'Плавно поверніть праворуч у східні ворота; прибирайте крен під час вирівнювання.',
+        ],
+      ),
+      masteryGate(
+        'z',
+        -20,
+        12,
+        -1,
+        3,
+        ['Change to a left bend', 'Перейдіть у лівий поворот'],
+        [
+          'Change direction toward the northern opening with a small opposite bank.',
+          'Змініть напрямок до північного отвору з малим протилежним креном.',
+        ],
+      ),
+      masteryGate(
+        'x',
+        3,
+        -25,
+        -1,
+        3,
+        ['Return across the clearing', 'Поверніться через галявину'],
+        [
+          'Turn left across the clearing and leave room beyond the gate.',
+          'Поверніть ліворуч через галявину й залиште простір за воротами.',
+        ],
+      ),
+      masteryGate(
+        'z',
+        -17,
+        -7,
+        1,
+        3,
+        ['Southern exit', 'Південний вихід'],
+        [
+          'Round the last bend toward the south-facing gate, clear of the trees.',
+          'Обігніть останній поворот до південних воріт, оминаючи дерева.',
+        ],
+      ),
+      masterySettle(
+        -7,
+        3,
+        -10,
+        ['Calm exit', 'Спокійний вихід'],
+        [
+          'Brake into the final box before descending.',
+          'Загальмуйте в останній зоні перед спуском.',
+        ],
+      ),
+      masteryLand(-7, -10),
+    ],
+  ),
+  masteryLesson(
+    31,
+    {
+      title: ['Wide corner, tight exit', 'Широкий поворот, вузький вихід'],
+      environment: 'stadium',
+      tier: 'experienced',
+      tags: ['cornering', 'alignment', 'race'],
+      summary: [
+        'Use a broad first corner to line up a narrow second exit.',
+        'Використайте широкий перший поворот, щоб вирівнятися перед вузьким виходом.',
+      ],
+      concept: [
+        'The useful line is the one that prepares the next opening. Turn early enough to finish alignment before a narrow gate.',
+        'Корисна траєкторія готує наступний отвір. Починайте поворот так, щоб вирівнятися до вузьких воріт.',
+      ],
+    },
+    [
+      masteryLift(0, 3, 0),
+      masteryGate(
+        'z',
+        -8,
+        0,
+        -1,
+        3,
+        ['Approach the corner', 'Підійдіть до повороту'],
+        [
+          'Pass the approach gate with space to begin turning right.',
+          'Пройдіть початкові ворота із запасом для правого повороту.',
+        ],
+      ),
+      masteryGate(
+        'x',
+        7,
+        -16,
+        1,
+        3,
+        ['Broad right entry', 'Широкий правий вхід'],
+        [
+          'Sweep right through the wide gate while looking toward its exit.',
+          'Пройдіть широкий правий поворот, дивлячись на вихід.',
+        ],
+        7,
+      ),
+      masteryGate(
+        'x',
+        17,
+        -18,
+        1,
+        3,
+        ['Finish the wide corner', 'Завершіть широкий поворот'],
+        [
+          'Reduce the bank as the second eastern gate lines up.',
+          'Зменште крен, коли вирівняється другий східний отвір.',
+        ],
+        6,
+      ),
+      masteryGate(
+        'z',
+        -11,
+        20,
+        1,
+        3,
+        ['Short change of direction', 'Коротка зміна напрямку'],
+        [
+          'Turn south before reaching the next gate. Avoid carrying too much speed into the short turn.',
+          'Поверніть на південь до наступних воріт. Не входьте в короткий поворот надто швидко.',
+        ],
+      ),
+      masteryGate(
+        'x',
+        12,
+        -5,
+        -1,
+        3,
+        ['Line up the exit', 'Вирівняйтеся на вихід'],
+        [
+          'Turn west and establish the line to the small opening.',
+          'Поверніть на захід і займіть траєкторію до малого отвору.',
+        ],
+        4,
+      ),
+      masteryGate(
+        'x',
+        4,
+        -5,
+        -1,
+        3,
+        ['Narrow final gate', 'Вузькі останні ворота'],
+        [
+          'Make only small corrections through the narrow exit, then brake.',
+          'Робіть лише малі поправки у вузькому виході, потім гальмуйте.',
+        ],
+        3,
+      ),
+      masteryLand(-3, -5),
+    ],
+  ),
+  masteryLesson(
+    32,
+    {
+      title: ['Three landing approaches', 'Три заходи на посадку'],
+      environment: 'courtyard',
+      tier: 'experienced',
+      tags: ['landing', 'braking', 'heading'],
+      summary: [
+        'Land at three pads using a straight, sideways and diagonal approach.',
+        'Сядьте на три майданчики з прямого, бічного та діагонального заходів.',
+      ],
+      concept: [
+        'A soft landing begins before the pad. Remove horizontal drift first, then control the descent.',
+        'М’яка посадка починається до майданчика. Спершу погасіть горизонтальний рух, потім керуйте спуском.',
+      ],
+    },
+    [
+      masteryLift(0, 3, 0),
+      masteryGate(
+        'z',
+        -7,
+        0,
+        -1,
+        3,
+        ['Straight approach', 'Прямий захід'],
+        [
+          'Cross the northern gate and brake above the first pad.',
+          'Пройдіть північні ворота й загальмуйте над першим майданчиком.',
+        ],
+      ),
+      masteryLand(0, -12, 0, '$floor', ['First touchdown', 'Перше торкання']),
+      masteryLift(0, 3, -12, ['Lift for the side approach', 'Злетіть для бічного заходу']),
+      masterySettle(
+        10,
+        3,
+        -12,
+        ['Side approach, same heading', 'Бічний захід із тим самим курсом'],
+        [
+          'Keep the nose north while moving right to the second pad. Brake and settle before landing.',
+          'Тримайте ніс на північ і рухайтеся праворуч до другого майданчика. Загальмуйте й стабілізуйтеся до посадки.',
+        ],
+        { heading: 0 },
+      ),
+      masteryLand(10, -12, 0, '$floor', ['Second touchdown', 'Друге торкання']),
+      masteryLift(10, 3, -12, ['Lift for the diagonal', 'Злетіть для діагоналі']),
+      masterySettle(
+        0,
+        3,
+        0,
+        ['Diagonal return', 'Діагональне повернення'],
+        [
+          'Return diagonally toward the first launch pad and settle before the last descent.',
+          'Поверніться по діагоналі до стартового майданчика й стабілізуйтеся перед останнім спуском.',
+        ],
+      ),
+      masteryLand(0, 0),
+    ],
+  ),
+  masteryLesson(
+    33,
+    {
+      title: ['Landmark rally', 'Маршрут за орієнтирами'],
+      environment: 'woodland',
+      tier: 'experienced',
+      tags: ['navigation', 'heading', 'capstone'],
+      duration: 8,
+      summary: [
+        'Fly a complete clearing route with two deliberate heading checks.',
+        'Пройдіть повний маршрут галявиною з двома свідомими перевірками курсу.',
+      ],
+      concept: [
+        'Choose a visible reference for each leg. Check the next direction while the drone is settled, then resume.',
+        'Вибирайте видимий орієнтир для кожної ділянки. Перевіряйте наступний напрямок після стабілізації, потім продовжуйте.',
+      ],
+    },
+    [
+      masteryLift(0, 3, 0),
+      masteryGate(
+        'z',
+        -8,
+        0,
+        -1,
+        3,
+        ['Northern clearing', 'Північна галявина'],
+        ['Pass the first gate toward the clearing.', 'Пройдіть перші ворота до галявини.'],
+      ),
+      masteryGate(
+        'x',
+        8,
+        -16,
+        1,
+        3,
+        ['Eastern link', 'Східний перехід'],
+        [
+          'Turn east into the opening between the landmarks.',
+          'Поверніть на схід в отвір між орієнтирами.',
+        ],
+      ),
+      masterySettle(
+        15,
+        3,
+        -16,
+        ['Look south before leaving', 'Подивіться на південь перед відльотом'],
+        [
+          'Settle and point south to identify your next route.',
+          'Стабілізуйтеся й поверніть ніс на південь, щоб визначити наступну ділянку.',
+        ],
+        { heading: 18000 },
+      ),
+      masteryGate(
+        'z',
+        -5,
+        12,
+        1,
+        3,
+        ['Along the tree line', 'Уздовж дерев'],
+        [
+          'Fly south through the gate, keeping clear of the tree to the east.',
+          'Пролетіть на південь крізь ворота, не наближаючись до дерева на сході.',
+        ],
+      ),
+      masteryGate(
+        'x',
+        4,
+        6,
+        -1,
+        3,
+        ['Western link', 'Західний перехід'],
+        [
+          'Turn west across the open southern edge.',
+          'Поверніть на захід уздовж відкритого південного краю.',
+        ],
+      ),
+      masterySettle(
+        -8,
+        3,
+        6,
+        ['Find north again', 'Знову знайдіть північ'],
+        [
+          'Stop and face north before the final part.',
+          'Зупиніться й поверніть ніс на північ перед останньою частиною.',
+        ],
+        { heading: 0 },
+      ),
+      masteryGate(
+        'z',
+        -3,
+        -8,
+        -1,
+        3,
+        ['Return toward home', 'Поверніться до старту'],
+        [
+          'Cross the northern gate on the last short leg.',
+          'Пройдіть північні ворота на останній короткій ділянці.',
+        ],
+      ),
+      masteryGate(
+        'x',
+        -1,
+        -10,
+        1,
+        3,
+        ['Final crosswise line', 'Остання поперечна лінія'],
+        [
+          'Turn east through the last gate and prepare the final landing.',
+          'Поверніть на схід крізь останні ворота й підготуйте останню посадку.',
+        ],
+      ),
+      masteryLand(7, -10),
+    ],
+  ),
+  masteryLesson(
+    34,
+    {
+      title: ['Slalom rhythm', 'Ритм слалому'],
+      environment: 'stadium',
+      tier: 'advanced',
+      tags: ['slalom', 'look-ahead', 'race'],
+      summary: [
+        'Weave through five openings with uneven spacing, then stop in the braking bay.',
+        'Пройдіть п’ять нерівномірно розташованих отворів і зупиніться в зоні гальмування.',
+      ],
+      concept: [
+        'Look one gate ahead and vary the turn with the spacing. A rhythm is useful; identical stick timing is not always correct.',
+        'Дивіться на одні ворота вперед і змінюйте поворот відповідно до відстані. Ритм корисний, але однаковий час роботи стіками підходить не завжди.',
+      ],
+    },
+    [
+      masteryLift(0, 3, 0),
+      ...[
+        [-6, -4],
+        [-11, 4],
+        [-17, -4],
+        [-23, 4],
+        [-28, 0],
+      ].map(([z, x], index) =>
+        masteryGate(
+          'z',
+          z,
+          x,
+          -1,
+          3,
+          [`Slalom gate ${index + 1}`, `Ворота слалому ${index + 1}`],
+          [
+            index === 4
+              ? 'Aim for the central opening and look ahead to the braking bay beyond it.'
+              : `Aim for the ${x > 0 ? 'right' : x < 0 ? 'left' : 'central'} opening and start reading the following gap before this crossing.`,
+            index === 4
+              ? 'Спрямуйтеся до центрального отвору й заздалегідь знайдіть зону гальмування за ним.'
+              : `Спрямуйтеся до ${x > 0 ? 'правого' : x < 0 ? 'лівого' : 'центрального'} отвору й помічайте наступний до проходження цього.`,
+          ],
+          4,
+        ),
+      ),
+      masterySettle(
+        0,
+        3,
+        -31.5,
+        ['Brake beyond the slalom', 'Загальмуйте після слалому'],
+        [
+          'Straighten the route and settle beyond the last gate.',
+          'Вирівняйте траєкторію й стабілізуйтеся за останніми воротами.',
+        ],
+      ),
+      masteryLand(0, -31.5),
+    ],
+  ),
+  masteryLesson(
+    35,
+    {
+      title: ['High–low ribbon', 'Висока й низька траєкторія'],
+      environment: 'warehouse',
+      tier: 'advanced',
+      tags: ['height', 'clearance', 'route'],
+      summary: [
+        'Climb over a stack, descend under a beam and leave through a side opening.',
+        'Підніміться над стосом, спустіться під балку й вийдіть крізь бічний отвір.',
+      ],
+      concept: [
+        'Read overhead and lower clearance together. Plan the height change before arriving at an obstacle.',
+        'Оцінюйте просвіт зверху й знизу разом. Плануйте зміну висоти до перешкоди.',
+      ],
+      obstacles: [
+        box('school-low-stack', 0, -10, 7, 2, 2.5),
+        { id: 'school-overhead-beam', min: p(-5, 5, -21), max: p(5, 7, -19) },
+      ],
+    },
+    [
+      masteryLift(0, 4, 0),
+      masteryGate(
+        'z',
+        -6,
+        0,
+        -1,
+        6,
+        ['Climb before the stack', 'Наберіть висоту до стосу'],
+        [
+          'Climb into the high gate before reaching the low stack.',
+          'Підніміться у високі ворота до наближення до низького стосу.',
+        ],
+      ),
+      masteryGate(
+        'z',
+        -13,
+        0,
+        -1,
+        6,
+        ['Clear the stack', 'Пройдіть над стосом'],
+        [
+          'Stay above the stack until the second high gate is crossed.',
+          'Залишайтеся над стосом до проходження других високих воріт.',
+        ],
+      ),
+      masterySettle(
+        0,
+        3,
+        -16,
+        ['Prepare the low opening', 'Підготуйтеся до низького отвору'],
+        [
+          'Descend and settle before the overhead beam.',
+          'Спустіться й стабілізуйтеся перед верхньою балкою.',
+        ],
+      ),
+      masteryGate(
+        'z',
+        -23,
+        0,
+        -1,
+        2.5,
+        ['Under the beam', 'Під балкою'],
+        [
+          'Pass beneath the beam without climbing early.',
+          'Пройдіть під балкою без передчасного підйому.',
+        ],
+      ),
+      masteryGate(
+        'x',
+        8,
+        -27,
+        1,
+        3,
+        ['Side exit', 'Бічний вихід'],
+        ['Turn east toward the open side exit.', 'Поверніть на схід до вільного бічного виходу.'],
+      ),
+      masteryGate(
+        'z',
+        -18,
+        13,
+        1,
+        5,
+        ['Rise on the return', 'Підніміться на поверненні'],
+        [
+          'Climb gently while returning south outside the beam.',
+          'Плавно наберіть висоту, повертаючись на південь збоку від балки.',
+        ],
+      ),
+      masteryGate(
+        'z',
+        -8,
+        13,
+        1,
+        3,
+        ['Lower toward the finish', 'Знизьтеся до фінішу'],
+        [
+          'Descend toward the last gate with room to brake.',
+          'Спустіться до останніх воріт із запасом для гальмування.',
+        ],
+      ),
+      masteryLand(13, 0),
+    ],
+  ),
+  masteryLesson(
+    36,
+    {
+      title: ['Platform approach', 'Захід на платформу'],
+      environment: 'container-yard',
+      tier: 'advanced',
+      tags: ['landing', 'height', 'platform'],
+      summary: [
+        'Land on two physical platforms, then return to the ground.',
+        'Сядьте на дві фізичні платформи, потім поверніться на землю.',
+      ],
+      concept: [
+        'A raised pad has an edge and a real support surface. Arrive above it, remove horizontal drift, then descend.',
+        'Піднятий майданчик має край і справжню опорну поверхню. Станьте над ним, погасіть горизонтальний рух, потім спускайтеся.',
+      ],
+      obstacles: [
+        box('school-platform-low', 0, -10, 7, 7, 2),
+        box('school-platform-high', 12, -20, 7, 7, 4),
+      ],
+    },
+    [
+      masteryLift(0, 5, 0),
+      masterySettle(
+        0,
+        4,
+        -10,
+        ['Settle above the low platform', 'Стабілізуйтеся над низькою платформою'],
+        [
+          'Approach above the low platform and stop before descending.',
+          'Підійдіть над низькою платформою й зупиніться до спуску.',
+        ],
+      ),
+      masteryLand(0, -10, 2, 'school-platform-low', [
+        'Land on the low platform',
+        'Сядьте на низьку платформу',
+      ]),
+      masteryLift(0, 7, -10, ['Climb clear of the edge', 'Підніміться над краєм']),
+      masterySettle(
+        12,
+        6,
+        -20,
+        ['Prepare the high platform', 'Підготуйтеся до високої платформи'],
+        [
+          'Cross above the higher platform, brake and keep clear of its edges.',
+          'Перейдіть над вищою платформою, загальмуйте й тримайтеся подалі від країв.',
+        ],
+      ),
+      masteryLand(12, -20, 4, 'school-platform-high', [
+        'Land on the high platform',
+        'Сядьте на високу платформу',
+      ]),
+      masteryLift(12, 7, -20, ['Lift before returning', 'Злетіть перед поверненням']),
+      masterySettle(
+        12,
+        3,
+        -4,
+        ['Ground approach', 'Захід до землі'],
+        [
+          'Move beyond both platforms before descending toward the ground pad.',
+          'Відійдіть від обох платформ перед спуском до наземного майданчика.',
+        ],
+      ),
+      masteryLand(12, -4),
+    ],
+  ),
+  masteryLesson(
+    37,
+    {
+      title: ['Corridor turnaround', 'Розворот у коридорі'],
+      environment: 'warehouse',
+      tier: 'advanced',
+      tags: ['heading', 'clearance', 'braking'],
+      summary: [
+        'Fly an outbound aisle, turn in the wider bay and return through a neighbouring aisle.',
+        'Пройдіть коридор, розверніться в широкій зоні та поверніться сусіднім проходом.',
+      ],
+      concept: [
+        'Use the wide bay to slow and turn. A yaw turnaround changes the nose, not the momentum from the previous leg.',
+        'У широкій зоні сповільніться й поверніться. Розворот за курсом змінює ніс, а не рух попередньої ділянки.',
+      ],
+      obstacles: [box('school-aisle-divider', 6, -13, 2, 20, 5)],
+    },
+    [
+      masteryLift(0, 3, 0),
+      ...[-7, -15, -24].map((z, i) =>
+        masteryGate(
+          'z',
+          z,
+          0,
+          -1,
+          3,
+          [`Outbound aisle ${i + 1}`, `Прямий прохід ${i + 1}`],
+          [
+            'Keep a small tilt through the aisle and leave room for the far turning bay.',
+            'Тримайте малий нахил у проході й залишайте запас для дальньої зони розвороту.',
+          ],
+          4,
+        ),
+      ),
+      masterySettle(
+        12,
+        3,
+        -29,
+        ['Turn in the open bay', 'Розверніться у відкритій зоні'],
+        [
+          'Move around the end of the divider, stop in the wide bay and face south.',
+          'Обійдіть кінець перегородки, зупиніться в широкій зоні й поверніть ніс на південь.',
+        ],
+        { heading: 18000 },
+      ),
+      ...[-22, -13, -5].map((z, i) =>
+        masteryGate(
+          'z',
+          z,
+          12,
+          1,
+          3,
+          [`Return aisle ${i + 1}`, `Зворотний прохід ${i + 1}`],
+          [
+            'Return south through the next gate while keeping away from the divider.',
+            'Повертайтеся на південь крізь наступні ворота, тримаючись подалі від перегородки.',
+          ],
+          4,
+        ),
+      ),
+      masteryLand(12, 2),
+    ],
+  ),
+  masteryLesson(
+    38,
+    {
+      title: ['Over, around, under', 'Зверху, навколо, знизу'],
+      environment: 'courtyard',
+      tier: 'advanced',
+      tags: ['route-planning', 'height', 'clearance'],
+      summary: [
+        'Cross a low wall, round its end and return beneath a broad arch.',
+        'Перетніть низьку стіну, обігніть її край і поверніться під широкою аркою.',
+      ],
+      concept: [
+        'Inspect the shape of an obstacle, not just the next marker. A route can ask for different clearances on its outward and return legs.',
+        'Оцінюйте форму перешкоди, а не лише наступну позначку. На прямій і зворотній ділянках можуть бути різні просвіти.',
+      ],
+      obstacles: [
+        box('school-cross-wall', 0, -10, 12, 2, 3),
+        box('school-end-wall', 7, -16, 2, 12, 3),
+        { id: 'school-arch', min: p(9, 5, -9), max: p(17, 7, -7) },
+      ],
+    },
+    [
+      masteryLift(0, 5.5, 0),
+      masteryGate(
+        'z',
+        -6,
+        0,
+        -1,
+        5.5,
+        ['Approach above the wall', 'Підійдіть над стіною'],
+        ['Gain clearance before the first wall.', 'Наберіть запас висоти до першої стіни.'],
+      ),
+      masteryGate(
+        'z',
+        -14,
+        0,
+        -1,
+        5.5,
+        ['Cross over', 'Пройдіть зверху'],
+        [
+          'Keep enough height until the wall is behind you.',
+          'Тримайте достатню висоту, доки стіна не залишиться позаду.',
+        ],
+      ),
+      masteryGate(
+        'z',
+        -25,
+        0,
+        -1,
+        4,
+        ['Reach the open end', 'Досягніть відкритого краю'],
+        [
+          'Follow the inside of the route toward the open end.',
+          'Рухайтеся внутрішньою частиною маршруту до відкритого краю.',
+        ],
+      ),
+      masteryGate(
+        'x',
+        11,
+        -27,
+        1,
+        4,
+        ['Go around', 'Обійдіть збоку'],
+        [
+          'Round the far end toward the eastern lane.',
+          'Обігніть дальній край до східного проходу.',
+        ],
+      ),
+      masteryGate(
+        'z',
+        -18,
+        13,
+        1,
+        3,
+        ['Return on the other side', 'Поверніться іншим боком'],
+        [
+          'Fly south outside the wall and prepare to slow before the arch.',
+          'Летіть на південь із зовнішнього боку стіни й готуйтеся сповільнитися до арки.',
+        ],
+      ),
+      masterySettle(
+        13,
+        2.5,
+        -13,
+        ['Prepare to go under', 'Підготуйтеся пройти знизу'],
+        [
+          'Settle below the arch height before moving forward again.',
+          'Стабілізуйтеся нижче арки перед подальшим рухом.',
+        ],
+      ),
+      masteryGate(
+        'z',
+        -5,
+        13,
+        1,
+        2.5,
+        ['Pass under the arch', 'Пройдіть під аркою'],
+        [
+          'Pass below the beam and stay low until it is behind you.',
+          'Пройдіть під балкою й залишайтеся низько, доки вона не буде позаду.',
+        ],
+      ),
+      masteryGate(
+        'x',
+        6,
+        0,
+        -1,
+        3,
+        ['Final return', 'Останнє повернення'],
+        [
+          'Turn west toward the landing pad after leaving the arch.',
+          'Після арки поверніть на захід до посадкового майданчика.',
+        ],
+      ),
+      masteryLand(0, 0),
+    ],
+  ),
+  masteryLesson(
+    39,
+    {
+      title: ['Read the landmarks', 'Читайте орієнтири'],
+      environment: 'woodland',
+      tier: 'advanced',
+      tags: ['navigation', 'observation', 'heading'],
+      summary: [
+        'Use distinct tree groups and open spaces to choose each next route leg.',
+        'Використовуйте різні групи дерев і відкриті місця для вибору наступної ділянки.',
+      ],
+      concept: [
+        'A landmark gives context to a gate. Pause to recognize the next opening rather than following an arrow without reading the scene.',
+        'Орієнтир допомагає зрозуміти ворота. Зупиніться, щоб упізнати наступний отвір, замість сліпого руху за стрілкою.',
+      ],
+    },
+    [
+      masteryLift(0, 3, 0),
+      masterySettle(
+        0,
+        3,
+        0,
+        ['Find the eastern clearing', 'Знайдіть східну галявину'],
+        [
+          'Face east and identify the first gate before moving.',
+          'Поверніть ніс на схід і знайдіть перші ворота до початку руху.',
+        ],
+        { heading: 9000 },
+      ),
+      masteryGate(
+        'x',
+        9,
+        0,
+        1,
+        3,
+        ['Eastern landmark', 'Східний орієнтир'],
+        [
+          'Cross east into the open space beside the tree line.',
+          'Пройдіть на схід у відкритий простір біля дерев.',
+        ],
+      ),
+      masteryGate(
+        'z',
+        -12,
+        10,
+        -1,
+        3,
+        ['Open northern lane', 'Відкритий північний прохід'],
+        [
+          'Turn north through the gap west of the tall eastern tree.',
+          'Поверніть на північ в отвір із західного боку високого східного дерева.',
+        ],
+      ),
+      masterySettle(
+        10,
+        3,
+        -20,
+        ['Read the western opening', 'Оцініть західний отвір'],
+        [
+          'Stop, face west and identify the clear route between tree groups.',
+          'Зупиніться, поверніть ніс на захід і знайдіть вільний шлях між групами дерев.',
+        ],
+        { heading: -9000 },
+      ),
+      masteryGate(
+        'x',
+        0,
+        -20,
+        -1,
+        3,
+        ['Cross the open middle', 'Перетніть відкриту середину'],
+        [
+          'Fly west through the central opening without cutting toward the northern tree.',
+          'Летіть на захід крізь центральний отвір, не зрізаючи до північного дерева.',
+        ],
+      ),
+      masteryGate(
+        'z',
+        -8,
+        -8,
+        1,
+        3,
+        ['Southern clearing', 'Південна галявина'],
+        [
+          'Turn south inside the western trees and cross the next gate.',
+          'Поверніть на південь із внутрішнього боку західних дерев і пройдіть наступні ворота.',
+        ],
+      ),
+      masteryGate(
+        'x',
+        -1,
+        0,
+        1,
+        3,
+        ['Recognize home', 'Упізнайте фініш'],
+        [
+          'Find the last eastern opening and brake toward the home pad.',
+          'Знайдіть останній східний отвір і загальмуйте до фінішного майданчика.',
+        ],
+      ),
+      masteryLand(6, 0),
+    ],
+  ),
+  masteryLesson(
+    40,
+    {
+      title: ['Between floors', 'Між поверхами'],
+      environment: 'garage',
+      tier: 'advanced',
+      tags: ['multi-level', 'landing', 'clearance'],
+      duration: 8,
+      summary: [
+        'Use a clear opening to reach a deck, land on it, then return through another route.',
+        'Підніміться на перекриття через вільний отвір, сядьте й поверніться іншим шляхом.',
+      ],
+      concept: [
+        'Height alone does not identify a floor. Read the support surface, open edge and overhead clearance together.',
+        'Самої висоти недостатньо для визначення поверху. Оцінюйте опорну поверхню, відкритий край і верхній просвіт разом.',
+      ],
+      obstacles: [{ id: 'school-upper-deck', min: p(-7, 4.7, -22), max: p(7, 5, -10) }],
+    },
+    [
+      masteryLift(0, 3, 0),
+      masteryGate(
+        'x',
+        10,
+        -4,
+        1,
+        3,
+        ['Go around the deck edge', 'Обійдіть край перекриття'],
+        [
+          'Move east beside the deck before climbing; do not rise beneath the slab.',
+          'Перейдіть на схід збоку від перекриття до підйому; не піднімайтеся під плитою.',
+        ],
+      ),
+      masterySettle(
+        12,
+        7,
+        -10,
+        ['Climb outside the slab', 'Підніміться збоку від плити'],
+        [
+          'Climb in open air beside the deck and settle above its top.',
+          'Підніміться у вільному просторі збоку від перекриття й стабілізуйтеся вище нього.',
+        ],
+      ),
+      masteryGate(
+        'x',
+        7,
+        -16,
+        -1,
+        7,
+        ['Enter the upper floor', 'Увійдіть на верхній поверх'],
+        [
+          'Move west above the deck edge toward its landing area.',
+          'Перейдіть на захід над краєм перекриття до посадкової зони.',
+        ],
+      ),
+      masteryLand(0, -16, 5, 'school-upper-deck', [
+        'Land on the upper deck',
+        'Сядьте на верхнє перекриття',
+      ]),
+      masteryLift(0, 8, -16, ['Lift above the upper floor', 'Злетіть над верхнім поверхом']),
+      masteryGate(
+        'x',
+        -10,
+        -16,
+        -1,
+        8,
+        ['Leave through the other side', 'Вийдіть іншим боком'],
+        [
+          'Move west clear of the deck before descending.',
+          'Відійдіть на захід від перекриття до спуску.',
+        ],
+      ),
+      masterySettle(
+        -12,
+        3,
+        -16,
+        ['Descend beside the slab', 'Спустіться збоку від плити'],
+        [
+          'Descend in the open western lane, clear of the upper floor.',
+          'Спустіться у відкритому західному проході, подалі від верхнього поверху.',
+        ],
+      ),
+      masteryGate(
+        'z',
+        -7,
+        -12,
+        1,
+        3,
+        ['Lower return lane', 'Нижній зворотний прохід'],
+        ['Fly south along the lower lane.', 'Летіть на південь нижнім проходом.'],
+      ),
+      masteryGate(
+        'x',
+        -5,
+        2,
+        1,
+        3,
+        ['Finish across the open floor', 'Завершіть через відкриту підлогу'],
+        [
+          'Turn east across the open ground floor and prepare to land.',
+          'Поверніть на схід через відкритий нижній поверх і готуйтеся до посадки.',
+        ],
+      ),
+      masteryLand(2, 2),
+    ],
+  ),
+  masteryLesson(
+    41,
+    {
+      title: ['Precision pilot route', 'Маршрут точного пілотування'],
+      environment: 'stadium',
+      tier: 'advanced',
+      tags: ['capstone', 'slalom', 'height', 'landing'],
+      duration: 9,
+      summary: [
+        'Link a slalom, changing heights, a stop box and a raised landing in one flight.',
+        'З’єднайте слалом, зміну висоти, зону зупинки й підняту посадку в одному польоті.',
+      ],
+      concept: [
+        'Good precision comes from preparing the next task. Finish each movement with enough space and speed control for the following one.',
+        'Точність залежить від підготовки наступного завдання. Завершуйте кожен маневр із запасом простору й контрольованою швидкістю.',
+      ],
+      obstacles: [box('school-finish-platform', 15, 7, 7, 7, 2)],
+    },
+    [
+      masteryLift(0, 3, 0),
+      masteryGate(
+        'z',
+        -7,
+        -4,
+        -1,
+        3,
+        ['First slalom opening', 'Перший отвір слалому'],
+        [
+          'Move left toward the first opening and read the next gate.',
+          'Змістіться ліворуч до першого отвору й помічайте наступні ворота.',
+        ],
+        4,
+      ),
+      masteryGate(
+        'z',
+        -14,
+        4,
+        -1,
+        3,
+        ['Second slalom opening', 'Другий отвір слалому'],
+        [
+          'Change the bank and cross toward the right opening.',
+          'Змініть крен і перейдіть до правого отвору.',
+        ],
+        4,
+      ),
+      masteryGate(
+        'z',
+        -22,
+        -3,
+        -1,
+        3,
+        ['Third slalom opening', 'Третій отвір слалому'],
+        [
+          'Unwind the previous turn and reach the third gate.',
+          'Приберіть попередній крен і досягніть третіх воріт.',
+        ],
+        4,
+      ),
+      masterySettle(
+        -3,
+        3,
+        -28,
+        ['Stop before the high section', 'Зупиніться до високої ділянки'],
+        [
+          'Brake into the box and prepare the climbing turn.',
+          'Загальмуйте в зоні й підготуйте поворот із набором висоти.',
+        ],
+      ),
+      masteryGate(
+        'x',
+        6,
+        -28,
+        1,
+        6,
+        ['High crossing', 'Високий прохід'],
+        [
+          'Turn east and climb through the high gate.',
+          'Поверніть на схід і підніміться крізь високі ворота.',
+        ],
+      ),
+      masteryGate(
+        'x',
+        16,
+        -28,
+        1,
+        4,
+        ['Controlled lowering', 'Контрольоване зниження'],
+        [
+          'Begin descending before the next opening; keep room to level.',
+          'Почніть спуск до наступного отвору; залиште місце для вирівнювання.',
+        ],
+      ),
+      masteryGate(
+        'z',
+        -17,
+        20,
+        1,
+        3,
+        ['Southbound line', 'Лінія на південь'],
+        [
+          'Turn south into the lower gate and reduce the bank.',
+          'Поверніть на південь у нижні ворота й зменште крен.',
+        ],
+      ),
+      masteryGate(
+        'z',
+        -7,
+        20,
+        1,
+        3,
+        ['Straight return', 'Пряме повернення'],
+        [
+          'Keep a readable straight line through the return gate.',
+          'Тримайте чітку пряму траєкторію крізь зворотні ворота.',
+        ],
+      ),
+      masteryGate(
+        'x',
+        15,
+        0,
+        -1,
+        4,
+        ['Platform alignment', 'Вирівнювання на платформу'],
+        [
+          'Turn toward the platform approach and begin braking.',
+          'Поверніть на захід у ворота заходу до платформи й почніть гальмувати.',
+        ],
+      ),
+      masterySettle(
+        15,
+        4,
+        7,
+        ['Settle over the finish', 'Стабілізуйтеся над фінішем'],
+        [
+          'Move above the final platform and remove all drift before descending.',
+          'Перейдіть над останньою платформою й погасіть дрейф перед спуском.',
+        ],
+      ),
+      masteryLand(15, 7, 2, 'school-finish-platform'),
+    ],
+  ),
+]);
+
+export const BEGINNER_LESSONS = Object.freeze([
+  ...ORIGINAL_BEGINNER_LESSONS,
+  ...NEW_ACRO_LESSONS,
+  ...MASTERY_LESSONS,
+]);
 export const ACRO_LESSON_ORDER = Object.freeze(
   [15, 16, 13, 17, 14, 18, 19, 20, 21, 22, 23, 24, 25, 26].map(
     (n) => `beginner-${String(n).padStart(2, '0')}`,
@@ -2576,6 +4092,18 @@ export const ACRO_LESSON_ORDER = Object.freeze(
 export const SELF_LEVEL_LESSON_ORDER = Object.freeze(
   ORIGINAL_BEGINNER_LESSONS.slice(0, 12).map((lesson) => lesson.id),
 );
+export const EXPERIENCED_LESSON_ORDER = Object.freeze(
+  MASTERY_LESSONS.filter((lesson) => lesson.tier === 'experienced').map((lesson) => lesson.id),
+);
+export const ADVANCED_LESSON_ORDER = Object.freeze(
+  MASTERY_LESSONS.filter((lesson) => lesson.tier === 'advanced').map((lesson) => lesson.id),
+);
+export const PRIMARY_LESSON_ORDER = Object.freeze([
+  ...ACRO_LESSON_ORDER,
+  ...EXPERIENCED_LESSON_ORDER,
+  ...ADVANCED_LESSON_ORDER,
+]);
+const MASTERY_IDENTITY = `fpv-navigation-school:${dataIdentity(MASTERY_LESSONS.map((lesson) => lesson.course))}`;
 const ACRO_IDENTITY = `fpv-acro-school:${dataIdentity(NEW_ACRO_LESSONS.map((lesson) => lesson.course))}`;
 export const BEGINNER_CATALOGUE = Object.freeze(
   BEGINNER_LESSONS.map((lesson) => ({
@@ -2583,11 +4111,18 @@ export const BEGINNER_CATALOGUE = Object.freeze(
     beginner: lesson.id,
     course: lesson.course,
     world: lesson.course.environment,
-    theme: 'academy',
+    theme: lesson.course.world.theme,
     activity: 'academy',
-    difficulty: 'beginner',
+    difficulty:
+      lesson.tier === 'advanced'
+        ? 'advanced'
+        : lesson.tier === 'experienced'
+          ? 'intermediate'
+          : 'beginner',
+    ...(lesson.tier ? { tier: lesson.tier, skillTags: lesson.skillTags } : {}),
     duration: lesson.duration,
-    packIdentity: lesson.index < 14 ? BEGINNER_IDENTITY : ACRO_IDENTITY,
+    packIdentity:
+      lesson.index < 14 ? BEGINNER_IDENTITY : lesson.index < 26 ? ACRO_IDENTITY : MASTERY_IDENTITY,
     legacy: false,
   })),
 );
