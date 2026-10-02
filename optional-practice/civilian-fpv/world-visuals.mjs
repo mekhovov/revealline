@@ -6,6 +6,7 @@ import {
   resolveSimThemeProfile,
 } from './world-themes.mjs';
 import { boundedJSON, exactKeys, required, stableId } from '../../game/data-json.mjs';
+import { contrastRatio } from '../../game/presentation/theme-system.mjs';
 
 const ADVENTURE_SURFACES = Object.freeze({
   coast: { floor: 'sand', color: 0xc2b38f, wall: 'concrete' },
@@ -27,6 +28,41 @@ export function simCollectionIdForProfile(profile) {
     revision: profile?.revision ?? 'r1',
   });
   return collection.id === 'authored' ? null : collection.id;
+}
+
+/** Runtime cue legibility, independent of pinned model/material asset revisions. */
+export function simObjectiveLabelStyle(profile) {
+  if (!simCollectionIdForProfile(profile)) return null;
+  const background = `#${profile.palette.wall.toString(16).padStart(6, '0')}`;
+  const colors = ['#f1f9e8', '#101820'];
+  let foreground = colors.reduce((best, color) =>
+    contrastRatio(color, background) > contrastRatio(best, background) ? color : best,
+  );
+  if (contrastRatio(foreground, background) < 4.5)
+    foreground =
+      contrastRatio('#ffffff', background) > contrastRatio('#000000', background)
+        ? '#ffffff'
+        : '#000000';
+  return { background, foreground };
+}
+
+/** Only the active cue grows; its original lower edge stays fixed above the opening. */
+export function simObjectiveLabelLayout({
+  baseSize,
+  active,
+  viewDepth,
+  projectionY,
+  viewportHeight,
+}) {
+  const base = Number.isFinite(baseSize) && baseSize > 0 ? baseSize : 0.72;
+  const valid = [viewDepth, projectionY, viewportHeight].every(
+    (value) => Number.isFinite(value) && value > 0,
+  );
+  const size =
+    active && valid
+      ? Math.max(base, Math.min(base * 2, (18 * 2 * viewDepth) / (projectionY * viewportHeight)))
+      : base;
+  return { size, centerY: base / (2 * size) };
 }
 function random(seed) {
   let value = seed >>> 0;

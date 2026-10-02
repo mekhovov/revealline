@@ -15,6 +15,8 @@ import {
   simCollectionIdForProfile,
   setSurfaceQuality,
   createEnvironmentLight,
+  simObjectiveLabelStyle,
+  simObjectiveLabelLayout,
 } from './world-visuals.mjs';
 
 const QUALITIES = Object.freeze({
@@ -175,6 +177,7 @@ export function createFlightRenderer({
     cameraTiltRotation = new THREE.Quaternion(),
     cameraTiltAxis = new THREE.Vector3(1, 0, 0),
     pulseTransform = new THREE.Matrix4();
+  const labelPosition = new THREE.Vector3();
   const texturesOf = (paint) => Object.values(paint ?? {}).filter((value) => value?.isTexture);
   function ownShadowMaterial(item) {
     if (!item.isMesh || item.customDepthMaterial || Array.isArray(item.material)) return;
@@ -283,23 +286,26 @@ export function createFlightRenderer({
       sunlight.shadow[key] = null;
     }
   }
-  function label(text, color, parent, size = 0.8) {
+  function label(text, color, parent, size = 0.8, objective = false) {
     const surface = canvas.ownerDocument.createElement('canvas');
     surface.width = 128;
     surface.height = 128;
     const context = surface.getContext('2d');
     if (!context) return null;
-    context.fillStyle = themeProfile
-      ? `#${themeProfile.palette.wall.toString(16).padStart(6, '0')}`
-      : '#132b39';
+    const legibility = objective ? simObjectiveLabelStyle(themeProfile) : null;
+    context.fillStyle =
+      legibility?.background ??
+      (themeProfile ? `#${themeProfile.palette.wall.toString(16).padStart(6, '0')}` : '#132b39');
     context.beginPath();
     context.arc(64, 64, 59, 0, Math.PI * 2);
     context.fill();
     context.lineWidth = 6;
     context.strokeStyle = color;
     context.stroke();
-    context.fillStyle = '#f1f9e8';
-    context.font = `700 ${text.length > 2 ? 32 : 66}px sans-serif`;
+    context.fillStyle = legibility?.foreground ?? '#f1f9e8';
+    context.font = legibility
+      ? `800 ${text.length > 2 ? 38 : 76}px sans-serif`
+      : `700 ${text.length > 2 ? 32 : 66}px sans-serif`;
     context.textAlign = 'center';
     context.textBaseline = 'middle';
     context.fillText(text, 64, 68);
@@ -308,12 +314,14 @@ export function createFlightRenderer({
     const paint = new THREE.SpriteMaterial({
       map: texture,
       transparent: true,
+      depthTest: true,
       depthWrite: false,
       toneMapped: false,
     });
     materials.add(paint);
     const sprite = new THREE.Sprite(paint);
     sprite.scale.set(size, size, 1);
+    if (legibility) sprite.userData.objectiveLabelBaseSize = size;
     parent.add(sprite);
     return sprite;
   }
@@ -424,7 +432,7 @@ export function createFlightRenderer({
       group.add(marker);
       const light = material(0xffca76, { transparent: true, opacity: 1 });
       group.userData.ownedMaterials = [light];
-      const badge = label(String(index + 1).padStart(2, '0'), '#ffca76', group, 0.48);
+      const badge = label(String(index + 1).padStart(2, '0'), '#ffca76', group, 0.48, true);
       if (badge) badge.position.y = 0.92;
       group.visible = false;
       goalRows.push({ group, paint, light, marker, badge, index, actorId: step.actorId });
@@ -543,6 +551,7 @@ export function createFlightRenderer({
       `#${effectPalette.goalBadge.toString(16).padStart(6, '0')}`,
       group,
       0.72,
+      true,
     );
     if (badge) badge.position.set(0, size[1] / 2 + 0.5, 0);
     const row = { group, paint, light, marker, badge, index };
@@ -1511,6 +1520,23 @@ export function createFlightRenderer({
         subject.position.z / 1000,
       );
       row.group.quaternion.copy(camera.quaternion);
+    }
+    // Use the current lens and CSS viewport, independently of graphics pixel ratio.
+    // The authored/legacy path keeps its original texture, size and visibility.
+    camera.updateMatrixWorld();
+    for (const row of goalRows) {
+      const baseSize = row.badge?.userData.objectiveLabelBaseSize;
+      if (!baseSize) continue;
+      row.badge.getWorldPosition(labelPosition).applyMatrix4(camera.matrixWorldInverse);
+      const layout = simObjectiveLabelLayout({
+        baseSize,
+        active: row.index === state.step,
+        viewDepth: -labelPosition.z,
+        projectionY: camera.projectionMatrix.elements[5],
+        viewportHeight: rect.height,
+      });
+      row.badge.scale.set(layout.size, layout.size, 1);
+      row.badge.center.set(0.5, layout.centerY);
     }
     if (view === 'editor') {
       aircraft.visible = false;
