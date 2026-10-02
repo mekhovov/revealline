@@ -1,0 +1,290 @@
+body {
+  margin: 0;
+  padding: clamp(16px, 4vw, 48px);
+  background: #070b12;
+  color: #f3f0db;
+}
+main {
+  max-width: 1500px;
+  margin: auto;
+}
+h1 {
+  font:
+    600 clamp(44px, 7vw, 76px) / 1 'Field Kit Display',
+    sans-serif;
+}
+p {
+  max-width: 90ch;
+  line-height: 1.6;
+}
+a,
+summary {
+  color: #78dce8;
+}
+#inventory {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr));
+  gap: 20px;
+}
+article {
+  padding: 20px;
+  border: 1px solid #425563;
+  background: #101923;
+  min-width: 0;
+}
+article h2 {
+  font:
+    500 15px/1.5 'Field Kit Mono',
+    monospace;
+  overflow-wrap: anywhere;
+}
+.preview {
+  display: grid;
+  place-items: center;
+  min-height: 184px;
+  background: #070b12;
+  overflow: auto;
+}
+img {
+  image-rendering: pixelated;
+}
+.preview img {
+  width: 240px;
+  max-width: none;
+}
+.native {
+  overflow: auto;
+  max-height: 640px;
+  background: #070b12;
+}
+.native img {
+  max-width: none;
+  display: block;
+}
+.meta {
+  font:
+    500 12px/1.6 'Field Kit Mono',
+    monospace;
+  color: #a5b2bb;
+  overflow-wrap: anywhere;
+}
+summary {
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+code {
+  font:
+    500 12px/1.6 'Field Kit Mono',
+    monospace;
+  overflow-wrap: anywhere;
+}
+.status {
+  color: #f4bf62;
+}
+
+header {
+  max-width: 1500px;
+  margin: auto;
+  scroll-margin-top: 5rem;
+}
+button,
+select,
+summary,
+a {
+  min-height: 44px;
+}
+button,
+select {
+  font: inherit;
+  max-width: 100%;
+}
+button {
+  padding: 8px 12px;
+}
+.load-controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+article {
+  max-width: 100%;
+}
+.preview {
+  height: 210px;
+  min-height: 0;
+  display: block;
+  max-width: 100%;
+}
+.preview img {
+  display: block;
+  width: 240px !important;
+  height: auto;
+  max-width: none !important;
+  margin: 0 auto;
+}
+.native {
+  max-height: 400px;
+  overscroll-behavior: contain;
+}
+.native img {
+  max-width: none !important;
+  max-height: none;
+}
+.prepared-provenance {
+  max-height: 350px;
+  overflow: auto;
+  overscroll-behavior: contain;
+}
+.prepared-provenance pre {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  font:
+    14px/1.5 'Field Kit Mono',
+    monospace;
+}
+.prepared-reader {
+  display: block;
+  margin: 8px 0;
+}
+[data-prepared-reveal-reading] {
+  outline: 3px solid #ffd659;
+  outline-offset: 2px;
+}
+a:focus-visible,
+button:focus-visible,
+summary:focus-visible {
+  outline: 3px solid #ffd659;
+  outline-offset: 3px;
+}
+.reveal-source-dialog {
+  box-sizing: border-box;
+  width: min(1100px, calc(100vw - 24px));
+  max-height: calc(100svh - 24px);
+  padding: clamp(12px, 3vw, 28px);
+  overflow: auto;
+  color: #f3f0db;
+  background: #101923;
+  border: 2px solid #78dce8;
+}
+.reveal-source-dialog::backdrop {
+  background: rgb(0 0 0 / 75%);
+}
+.reveal-source-dialog h2 {
+  margin: 0 0 12px;
+  font-size: clamp(22px, 4vw, 32px);
+}
+.reveal-source-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 12px 0;
+}
+#reveal-source-region {
+  max-height: min(60svh, 640px);
+  min-height: 44px;
+  overflow: auto;
+  overscroll-behavior: contain;
+  background: #070b12;
+  border: 1px solid #425563;
+}
+#reveal-source-region pre {
+  padding: 12px;
+  margin: 0;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  font:
+    16px/1.6 'Field Kit Mono',
+    monospace;
+}
+#reveal-source-region img {
+  display: block;
+  max-width: 100%;
+  max-height: min(calc(60svh - 2px), 638px);
+  height: auto;
+  margin-inline: auto;
+  image-rendering: pixelated;
+}
+#reveal-source-region img[data-size='actual'] {
+  width: auto;
+  height: auto;
+  max-width: none;
+  max-height: none;
+}
+#reveal-source-status {
+  overflow-wrap: anywhere;
+}
+#reveal-source-region:focus-visible {
+  outline: 3px solid #78dce8;
+  outline-offset: 2px;
+}
+@media (forced-colors: active) {
+  .reveal-source-dialog,
+  #reveal-source-region {
+    border-color: CanvasText;
+    color: CanvasText;
+    background: Canvas;
+  }
+  #reveal-source-region:focus-visible {
+    outline-color: Highlight;
+  }
+}
+.prepared-reveal-manifest-dialog {
+  box-sizing: border-box;
+  width: min(1100px, calc(100vw - 24px));
+  max-height: calc(100svh - 24px);
+  padding: clamp(12px, 3vw, 28px);
+  overflow: auto;
+  color: #f3f0db;
+  background: #101923;
+  border: 2px solid #78dce8;
+}
+.prepared-reveal-manifest-dialog::backdrop {
+  background: rgb(0 0 0 / 75%);
+}
+.prepared-reveal-manifest-dialog h2 {
+  margin: 0 0 12px;
+  font-size: clamp(22px, 4vw, 32px);
+}
+.prepared-reveal-manifest-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 12px 0;
+}
+#prepared-reveal-manifest-region {
+  max-height: min(60svh, 640px);
+  min-height: 44px;
+  overflow: auto;
+  overscroll-behavior: contain;
+  background: #070b12;
+  border: 1px solid #425563;
+}
+#prepared-reveal-manifest-region pre {
+  padding: 12px;
+  margin: 0;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  font:
+    16px/1.6 'Field Kit Mono',
+    monospace;
+}
+#prepared-reveal-manifest-status {
+  overflow-wrap: anywhere;
+}
+#prepared-reveal-manifest-region:focus-visible {
+  outline: 3px solid #78dce8;
+  outline-offset: 2px;
+}
+@media (forced-colors: active) {
+  .prepared-reveal-manifest-dialog,
+  #prepared-reveal-manifest-region {
+    border-color: CanvasText;
+    color: CanvasText;
+    background: Canvas;
+  }
+  #prepared-reveal-manifest-region:focus-visible {
+    outline-color: Highlight;
+  }
+}

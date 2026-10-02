@@ -9,6 +9,31 @@ export function fpvLaunchURL(href, locale = 'en') {
   return target.href;
 }
 
+/** Fixed same-build World Studio destination; callers check its availability. */
+export function fpvWorldLaunchURL(href, locale = 'en') {
+  let game;
+  try {
+    game = new URL(href);
+  } catch {
+    return null;
+  }
+  if (
+    !['http:', 'https:', 'file:', 'capacitor:'].includes(game.protocol) ||
+    game.username ||
+    game.password
+  )
+    return null;
+  const match =
+    /^(.*\/)game\/(?:(?:index|company)\.html|couch\/(?:index\.html|relay-rescue\.html)?)?$/.exec(
+      game.pathname,
+    );
+  if (!match) return null;
+  const target = new URL(match[1] + 'optional-practice/fpv-worlds/index.html', game);
+  target.searchParams.set('lang', locale === 'uk' ? 'uk' : 'en');
+  target.hash = 'learn';
+  return target.href;
+}
+
 export function fpvReturnURL(href) {
   const current = new URL(href);
   const value = current.searchParams.get('game-return');

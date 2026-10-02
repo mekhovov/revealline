@@ -1,0 +1,60 @@
+{
+  "sourceRevision": "ecdad00869fd5c4f58c204f9e57623221fd360e0",
+  "version": "0.142.4",
+  "totalBytes": 949085521,
+  "files": 2669,
+  "gameplayBuildId": "9266cde6b154cd91ffa3e563cfdedcaf9e2fe363b0f07645ef231c0ce6136e2d",
+  "updaterFiles": [
+    {
+      "name": "app/update.html",
+      "bytes": 1337,
+      "sha256": "f4c9ae2d601dc4d53bdc397a3d19c6c39bd6add99f090efd0fe0d0ba7be6acf3"
+    },
+    {
+      "name": "app/update.mjs",
+      "bytes": 6923,
+      "sha256": "5c533372b6d81a01bb98ba9f0649229376a970901586c831bf7f193754405496"
+    },
+    {
+      "name": "game-update.html",
+      "bytes": 867,
+      "sha256": "0fca8e154300840112092f1db1095408557c84c5df9c3bb0b985ed44aee35c60"
+    },
+    {
+      "name": "game-update.mjs",
+      "bytes": 4334,
+      "sha256": "a648f20a4cf89e2715975fcb075f32cf0a0105633632d0c64d50ac4e2e98bf03"
+    },
+    {
+      "name": "game/game-updates.mjs",
+      "bytes": 4276,
+      "sha256": "5240d25a09fdc27b0b422ad0b43321b54679db4307d9f6f1bb5c93b6788c37ca"
+    },
+    {
+      "name": "game/communities/directory.mjs",
+      "bytes": 722,
+      "sha256": "57211ed2112afbebf69182820c250556075a8f3e93f95ad161ed398f9b425f59"
+    }
+  ],
+  "sourceSuites": "WAIVED_SKIPPED_NOT_PASSED",
+  "frozenLauncherPublication": "passed",
+  "manifestBytes": 398883,
+  "payloadBytesIncludingManifest": 949484404,
+  "manifestSha256": "e96fac5e887b35d7050570bb3db693f452113b8ea9b51c317810d13772d10841",
+  "physicalIOS": "not qualified",
+  "browserEvidence": "Codex in-app browser; exact browser engine/version not recorded",
+  "finalUpdate": {
+    "fromBuild": "8bcdae80",
+    "toBuild": "9266cde6",
+    "entry": "Settings \u2192 Content & Offline \u2192 Check for updates",
+    "downloadedSoundtracks": 0,
+    "retainedFlightLives": 3,
+    "pausedAfterOfflineResume": "1:00",
+    "networkFailure": "game origin server stopped; direct HTTP connection refused",
+    "limits": [
+      "not a browser-process restart",
+      "not all outbound origins blocked",
+      "same URL and same version; cross-version migration not exercised"
+    ]
+  }
+}

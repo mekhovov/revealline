@@ -18,6 +18,9 @@ import {
   attitude,
   atan2,
   clamp,
+  cos,
+  sin,
+  multiplyQuaternion,
   integrateOrientation,
   isqrt,
   mul,
@@ -25,6 +28,7 @@ import {
   roundDiv,
 } from './math.mjs';
 import { crossesGate, quantizeFlightInput } from './model.mjs';
+import { createSectorTracker } from './flight-sectors.mjs';
 import { validateThemeProfile } from './world-themes.mjs';
 import {
   createWorldCollision,
@@ -76,7 +80,378 @@ const volume = (value) => {
 const within = (p, bounds) => AXES.every((k) => p[k] >= bounds.min[k] && p[k] <= bounds.max[k]);
 const actorLift = (actor) =>
   ['patrol', 'sentry'].includes(actor.type) ? actor.height / 2 : actor.radius;
-const actorCentre = (actor) => ({ ...actor.position, y: actor.position.y + actorLift(actor) });
+const actorCentre = (actor) => ({
+  ...actor.position,
+  y: actor.position.y + actorLift(actor),
+});
+
+// Versioned, data-only skill criteria. These helpers never change flight physics.
+const SKILL_TYPES = new Set(['rotation-v1', 'attitude-v1', 'path-v1', 'crossing-v1']);
+const SKILL_AXES = ['pitch', 'yaw', 'roll'];
+export function worldCourseRequiresAcro(course) {
+  return MODES.some((mode) => course.steps?.[mode]?.some((step) => SKILL_TYPES.has(step.type)));
+}
+const skillRotationKeys = ['axis', 'direction', 'angle', 'maxReverse', 'maxOther', 'tolerance'];
+function validateSkillRotation(s) {
+  required(
+    SKILL_AXES.includes(s.axis) && [-1, 1].includes(s.direction),
+    'Invalid skill rotation axis/direction',
+  );
+  required(
+    int(s.angle, 9000, 72000) && s.angle % 9000 === 0,
+    'Skill rotation needs quarter-turn increments',
+  );
+  required(
+    int(s.maxReverse, 0, 9000) && int(s.maxOther, 0, 72000) && int(s.tolerance, 300, 3000),
+    'Invalid skill rotation tolerances',
+  );
+}
+function validateSkillTarget(s) {
+  const common = ['type', 'min', 'max', 'maxTicks'];
+  volume(s);
+  required(
+    s.min.y >= 500 && int(s.maxTicks, 1, 5000),
+    'Skill needs airborne clearance and bounded duration',
+  );
+  if (s.type === 'rotation-v1') {
+    exactKeys(
+      s,
+      [...common, ...skillRotationKeys, 'entryUp', 'settleTicks', 'maxAngular'],
+      'rotation-v1',
+    );
+    validateSkillRotation(s);
+    required(
+      ['upright', 'inverted', 'any'].includes(s.entryUp) &&
+        int(s.settleTicks, 1, 250) &&
+        s.settleTicks <= s.maxTicks &&
+        int(s.maxAngular, 100, 9000),
+      'Invalid rotation entry/recovery',
+    );
+  } else if (s.type === 'attitude-v1') {
+    exactKeys(s, [...common, 'up', 'tolerance', 'ticks', 'maxAngular', 'maxSpeed'], 'attitude-v1');
+    required(
+      ['upright', 'inverted'].includes(s.up) &&
+        int(s.tolerance, 300, 4500) &&
+        int(s.ticks, 1, 250) &&
+        s.ticks <= s.maxTicks &&
+        int(s.maxAngular, 0, 9000) &&
+        int(s.maxSpeed, 0, 60000),
+      'Invalid attitude dwell',
+    );
+  } else if (s.type === 'path-v1') {
+    exactKeys(
+      s,
+      [
+        ...common,
+        'plane',
+        'center',
+        'entryUp',
+        'entryBearing',
+        'entryTolerance',
+        'maxAngular',
+        'radiusMin',
+        'radiusMax',
+        'direction',
+        'sweep',
+        'maxReverse',
+        'noseToward',
+        'headingTolerance',
+        'axialMin',
+        'axialMax',
+        'axialTolerance',
+        'coupled',
+      ],
+      'path-v1',
+    );
+    vector(s.center, 'path center');
+    required(
+      ['upright', 'inverted', 'any'].includes(s.entryUp) &&
+        (s.entryBearing === null || int(s.entryBearing, -18000, 18000)) &&
+        int(s.entryTolerance, 300, 3000) &&
+        int(s.maxAngular, 100, 9000),
+      'Invalid path entry pose/bearing',
+    );
+    required(
+      ['xy', 'xz', 'yz'].includes(s.plane) &&
+        int(s.radiusMin, 1000, 50000) &&
+        int(s.radiusMax, s.radiusMin + 100, 100000),
+      'Invalid path plane/radius',
+    );
+    required(
+      [-1, 1].includes(s.direction) &&
+        int(s.sweep, 18000, 72000) &&
+        s.sweep % 9000 === 0 &&
+        int(s.maxReverse, 0, 9000),
+      'Invalid path winding',
+    );
+    required(
+      typeof s.noseToward === 'boolean' &&
+        (!s.noseToward || s.plane === 'xz') &&
+        int(s.headingTolerance, 0, 9000),
+      'Invalid landmark heading',
+    );
+    required(
+      int(s.axialMin, -50000, 50000) &&
+        int(s.axialMax, s.axialMin, 50000) &&
+        int(s.axialTolerance, 0, 10000),
+      'Invalid axial path progress',
+    );
+    if (s.coupled !== null) {
+      exactKeys(s.coupled, [...skillRotationKeys, 'phaseTolerance'], 'coupled rotation');
+      validateSkillRotation(s.coupled);
+      required(int(s.coupled.phaseTolerance, 1000, 9000), 'Invalid coupling phase tolerance');
+    }
+  } else if (s.type === 'crossing-v1') {
+    exactKeys(
+      s,
+      [
+        ...common,
+        'axis',
+        'at',
+        'direction',
+        'minA',
+        'maxA',
+        'minB',
+        'maxB',
+        'minSpeed',
+        'forwardTolerance',
+      ],
+      'crossing-v1',
+    );
+    required(
+      AXES.includes(s.axis) &&
+        [-1, 1].includes(s.direction) &&
+        ['at', 'minA', 'maxA', 'minB', 'maxB'].every((k) => int(s[k], -100000, 100000)) &&
+        s.minA < s.maxA &&
+        s.minB < s.maxB &&
+        int(s.minSpeed, 0, 30000) &&
+        int(s.forwardTolerance, 0, 9000),
+      'Invalid skill crossing',
+    );
+  }
+}
+const skillAngularLow = (s, max) => SKILL_AXES.every((k) => Math.abs(s.angular[k]) <= max);
+const skillUp = (q, pose, tolerance) =>
+  pose === 'any' ||
+  rotate(q, { x: 0, y: Q, z: 0 }).y * (pose === 'upright' ? 1 : -1) >= cos(tolerance);
+function skillPose(q, entry, axis, angle, tolerance) {
+  const r = [0, 0, 0, cos(-roundDiv(angle, 2))];
+  r[SKILL_AXES.indexOf(axis)] = sin(-roundDiv(angle, 2));
+  const expected = multiplyQuaternion(entry, r);
+  return Math.abs(q.reduce((n, v, i) => n + v * expected[i], 0)) >= cos(roundDiv(tolerance, 2)) * Q;
+}
+function skillRotationProgress(progress, spec, state, entry) {
+  const increments = Object.fromEntries(
+    SKILL_AXES.map((k) => [k, 2 * roundDiv(state.angular[k], WORLD_FLIGHT_HZ * 2)]),
+  );
+  const signed = increments[spec.axis] * spec.direction;
+  progress.angle += signed;
+  progress.reverse += Math.max(0, -signed);
+  progress.other += SKILL_AXES.reduce(
+    (n, k) => n + (k === spec.axis ? 0 : Math.abs(increments[k])),
+    0,
+  );
+  if (progress.reverse > spec.maxReverse || progress.other > spec.maxOther)
+    return 'rotation-purity';
+  const next = Math.min(spec.angle, (progress.checkpoint + 1) * 9000);
+  if (progress.angle > next + spec.tolerance && progress.checkpoint < spec.angle / 9000)
+    return 'missed-attitude';
+  if (
+    progress.checkpoint < spec.angle / 9000 &&
+    progress.angle >= next - spec.tolerance &&
+    skillPose(state.orientation, entry, spec.axis, next * spec.direction, spec.tolerance)
+  )
+    progress.checkpoint++;
+  return null;
+}
+function skillPathSample(spec, state) {
+  const axes = [...spec.plane],
+    a = state.position[axes[0]] - spec.center[axes[0]],
+    b = state.position[axes[1]] - spec.center[axes[1]],
+    radius = isqrt(a * a + b * b);
+  if (radius < spec.radiusMin || radius > spec.radiusMax) return null;
+  if (spec.noseToward) {
+    const forward = rotate(state.orientation, { x: 0, y: 0, z: -Q }),
+      horizontal = isqrt(forward.x * forward.x + forward.z * forward.z),
+      dx = spec.center.x - state.position.x,
+      dz = spec.center.z - state.position.z;
+    if (
+      horizontal < Q / 4 ||
+      forward.x * dx + forward.z * dz < mul(horizontal, cos(spec.headingTolerance)) * radius
+    )
+      return null;
+  }
+  return { a, b, bearing: atan2(b, a) };
+}
+function skillSweptRadius(a, b, radius) {
+  const dx = b.a - a.a,
+    dy = b.b - a.b,
+    distance = dx * dx + dy * dy;
+  const amount = distance ? clamp(roundDiv(-(a.a * dx + a.b * dy) * Q, distance), 0, Q) : 0;
+  const x = a.a + mul(dx, amount),
+    y = a.b + mul(dy, amount);
+  return x * x + y * y >= radius * radius;
+}
+function skillCrossed(a, b, target) {
+  if (
+    (a[target.axis] - target.at) * target.direction >= 0 ||
+    (b[target.axis] - target.at) * target.direction < 0
+  )
+    return false;
+  let den = b[target.axis] - a[target.axis],
+    num = target.at - a[target.axis];
+  if (den < 0) {
+    den = -den;
+    num = -num;
+  }
+  return AXES.filter((k) => k !== target.axis).every((k, i) => {
+    const value = a[k] * den + (b[k] - a[k]) * num;
+    return value >= target[i ? 'minB' : 'minA'] * den && value <= target[i ? 'maxB' : 'maxA'] * den;
+  });
+}
+function evaluateSkillTarget(target, state, before) {
+  const empty = (reason) => ({ index: state.step, status: 'entry', reason });
+  if (!state.skill || state.skill.index !== state.step) state.skill = empty('enter-zone');
+  const reset = (reason) => {
+    state.skill = empty(reason);
+    return false;
+  };
+  if (state.contacts !== before.contacts || state.grounded || before.grounded)
+    return reset('airborne-clearance');
+  if (!within(state.position, target) || !within(before.position, target))
+    return reset('outside-zone');
+  if (state.skill.status === 'entry') {
+    if (
+      target.type === 'rotation-v1' &&
+      (!skillUp(before.orientation, target.entryUp, target.tolerance) ||
+        !skillAngularLow(before, target.maxAngular))
+    )
+      return false;
+    const sample = target.type === 'path-v1' ? skillPathSample(target, before) : null;
+    if (target.type === 'path-v1') {
+      if (
+        !sample ||
+        !skillUp(before.orientation, target.entryUp, target.entryTolerance) ||
+        !skillAngularLow(before, target.maxAngular)
+      ) {
+        state.skill.reason = 'entry-attitude';
+        return false;
+      }
+      if (
+        target.entryBearing !== null &&
+        Math.abs(((sample.bearing - target.entryBearing + 54000) % 36000) - 18000) >
+          target.entryTolerance
+      ) {
+        state.skill.reason = 'entry-bearing';
+        return false;
+      }
+    }
+    state.skill = {
+      index: state.step,
+      status: 'active',
+      reason: null,
+      ticks: 0,
+      dwell: 0,
+      entry: [...before.orientation],
+      startAxis:
+        target.type === 'path-v1'
+          ? before.position[AXES.find((axis) => !target.plane.includes(axis))]
+          : before.position.y,
+      rotation: { angle: 0, reverse: 0, other: 0, checkpoint: 0 },
+      path: { winding: 0, reverse: 0, checkpoint: 0, sample },
+    };
+  }
+  const progress = state.skill;
+  if (++progress.ticks > target.maxTicks) return reset('time-window');
+  let accepted = false;
+  if (target.type === 'rotation-v1') {
+    const failure = skillRotationProgress(progress.rotation, target, state, progress.entry);
+    if (failure) return reset(failure);
+    const recovered =
+      progress.rotation.checkpoint === target.angle / 9000 &&
+      Math.abs(progress.rotation.angle - target.angle) <= target.tolerance &&
+      skillPose(
+        state.orientation,
+        progress.entry,
+        target.axis,
+        target.angle * target.direction,
+        target.tolerance,
+      ) &&
+      skillAngularLow(state, target.maxAngular);
+    progress.dwell = recovered ? progress.dwell + 1 : 0;
+    accepted = progress.dwell >= target.settleTicks;
+  } else if (target.type === 'attitude-v1') {
+    const valid =
+      skillUp(state.orientation, target.up, target.tolerance) &&
+      skillAngularLow(state, target.maxAngular) &&
+      length(state.velocity) <= target.maxSpeed;
+    progress.dwell = valid ? progress.dwell + 1 : 0;
+    accepted = progress.dwell >= target.ticks;
+  } else if (target.type === 'path-v1') {
+    // The fixed integrator advances at most about 1.04 m per tick. A larger
+    // discontinuity must not become winding credit or overflow swept products.
+    if (length(sub(state.position, before.position)) > 2000) return reset('ambiguous-path');
+    const sample = skillPathSample(target, state),
+      previous = progress.path.sample;
+    if (!sample || !skillSweptRadius(previous, sample, target.radiusMin))
+      return reset('path-envelope');
+    const delta =
+      (((sample.bearing - previous.bearing + 54000) % 36000) - 18000) * target.direction;
+    if (Math.abs(delta) > 9000) return reset('ambiguous-path');
+    progress.path.winding += delta;
+    progress.path.reverse += Math.max(0, -delta);
+    progress.path.sample = sample;
+    if (progress.path.reverse > target.maxReverse) return reset('path-direction');
+    if (progress.path.winding >= (progress.path.checkpoint + 1) * 9000) progress.path.checkpoint++;
+    const winding = clamp(progress.path.winding, 0, target.sweep),
+      axial =
+        state.position[AXES.find((axis) => !target.plane.includes(axis))] - progress.startAxis;
+    if (target.axialMin || target.axialMax) {
+      const low = roundDiv(target.axialMin * winding, target.sweep) - target.axialTolerance,
+        high = roundDiv(target.axialMax * winding, target.sweep) + target.axialTolerance;
+      if (axial < low || axial > high) return reset('path-axial-progress');
+    }
+    if (target.coupled) {
+      const failure = skillRotationProgress(
+        progress.rotation,
+        target.coupled,
+        state,
+        progress.entry,
+      );
+      if (failure) return reset(failure);
+      if (
+        Math.abs(
+          progress.rotation.angle * target.sweep - progress.path.winding * target.coupled.angle,
+        ) >
+        target.coupled.phaseTolerance * target.sweep
+      )
+        return reset('rotation-path-phase');
+    }
+    accepted =
+      progress.path.winding >= target.sweep &&
+      progress.path.checkpoint >= target.sweep / 9000 &&
+      (!(target.axialMin || target.axialMax) ||
+        (axial >= target.axialMin && axial <= target.axialMax)) &&
+      (!target.coupled ||
+        (progress.rotation.checkpoint === target.coupled.angle / 9000 &&
+          Math.abs(progress.rotation.angle - target.coupled.angle) <= target.coupled.tolerance &&
+          skillPose(
+            state.orientation,
+            progress.entry,
+            target.coupled.axis,
+            target.coupled.angle * target.coupled.direction,
+            target.coupled.tolerance,
+          )));
+  } else {
+    const forward = rotate(state.orientation, { x: 0, y: 0, z: -Q });
+    accepted =
+      skillCrossed(before.position, state.position, target) &&
+      state.velocity[target.axis] * target.direction >= target.minSpeed &&
+      forward[target.axis] * target.direction >= cos(target.forwardTolerance);
+  }
+  if (accepted) progress.status = 'complete';
+  return accepted;
+}
 
 /** Source data is bounded, plain, script-free and normalized before identity or
  * collision creation. Visual themes/localized text do not own gameplay rules. */
@@ -307,7 +682,41 @@ export function validateWorldCourse(input) {
       'Ordered mission criteria required',
     );
     for (const step of c.steps[mode]) {
-      if (step.type === 'gate') {
+      if (SKILL_TYPES.has(step.type)) {
+        validateSkillTarget(step);
+      } else if (step.type === 'actor-track-v1') {
+        exactKeys(
+          step,
+          [
+            'type',
+            'actorId',
+            'minDistance',
+            'maxDistance',
+            'maxRelativeSpeed',
+            'maxTilt',
+            'ticks',
+            'viewAngle',
+            'minTargetTravel',
+          ],
+          'actor tracking objective',
+        );
+        const subject = c.actors.find((actor) => actor.id === step.actorId);
+        required(subject && subject.type !== 'hazard', 'Tracking needs an existing subject');
+        required(
+          int(step.minDistance, 100, 100000) &&
+            int(step.maxDistance, step.minDistance + 100, 100000) &&
+            int(step.maxRelativeSpeed, 0, 60000) &&
+            int(step.maxTilt, 0, 9000) &&
+            int(step.ticks, 1, Math.min(5000, c.rules.maxTicks)) &&
+            int(step.viewAngle, 100, 9000) &&
+            int(step.minTargetTravel, 0, 1500000),
+          'Invalid actor tracking limits',
+        );
+        required(
+          step.minTargetTravel === 0 || (subject.speed > 0 && subject.path.length > 1),
+          'Following needs a moving subject route',
+        );
+      } else if (step.type === 'gate') {
         exactKeys(
           step,
           ['type', 'axis', 'at', 'direction', 'minSide', 'maxSide', 'minY', 'maxY'],
@@ -405,10 +814,23 @@ function relativeTilt(orientation, surfaceNormal) {
 
 /** v2 keeps v1's integer force/attitude integration, replacing only collision,
  * objectives and actor rules. Legacy model.mjs and its replay format are untouched. */
-export function createWorldFlight({ course, mode = 'self-level', response = DEFAULT_RESPONSE }) {
+// Practice is an in-memory host policy, never part of a portable scored proof.
+const unscoredWorldFlights = new WeakSet();
+export function createWorldFlight({
+  course,
+  mode = 'self-level',
+  response = DEFAULT_RESPONSE,
+  unscoredPractice = false,
+}) {
+  required(typeof unscoredPractice === 'boolean', 'Invalid world practice policy');
   const source = validateWorldCourse(course);
   const rates = validateFlightResponse(response);
   required(MODES.includes(mode), 'Unsupported flight mode');
+  const hasSkills = worldCourseRequiresAcro(source);
+  const hasActorTracking = MODES.some((mode) =>
+    source.steps[mode].some((step) => step.type === 'actor-track-v1'),
+  );
+  required(!hasSkills || mode === 'acro', 'Skill courses require Acro mode');
   const rules = source.rules;
   const gameplay = { ...source };
   delete gameplay.locales;
@@ -489,6 +911,10 @@ export function createWorldFlight({ course, mode = 'self-level', response = DEFA
         events: [],
         shots: 0,
         hits: 0,
+        ...(hasSkills ? { skill: { index: 0, status: 'entry', reason: 'enter-zone' } } : {}),
+        ...(hasActorTracking
+          ? { actorTrack: { index: 0, status: 'acquire', reason: 'acquire-subject', travel: 0 } }
+          : {}),
       };
       for (const a of sorted(source.actors)) {
         const actor = {
@@ -576,7 +1002,10 @@ export function createWorldFlight({ course, mode = 'self-level', response = DEFA
     return true;
   }
   function weapons(command, motions, before) {
-    const playerCentre = { ...state.position, y: state.position.y + rules.droneRadius };
+    const playerCentre = {
+      ...state.position,
+      y: state.position.y + rules.droneRadius,
+    };
     if (state.cooldown > 0) state.cooldown--;
     if (command.actions & WORLD_ACTION_FIRE && state.cooldown === 0) {
       const direction = rotate(state.orientation, { x: 0, y: 0, z: -Q });
@@ -644,10 +1073,60 @@ export function createWorldFlight({ course, mode = 'self-level', response = DEFA
     }
     state.projectiles = live;
   }
-  function evaluate(before, command) {
+  function evaluateActorTrack(target, motions) {
+    const empty = (reason) => ({ index: state.step, status: 'acquire', reason, travel: 0 });
+    if (state.actorTrack.index !== state.step) state.actorTrack = empty('acquire-subject');
+    const reset = (reason) => {
+      state.hold = 0;
+      state.actorTrack = empty(reason);
+      return false;
+    };
+    const actor = state.actors.find((value) => value.id === target.actorId);
+    if (!actor || actor.status !== 'active') return reset('subject-unavailable');
+    if (state.grounded) return reset('airborne-clearance');
+    const from = { ...state.position, y: state.position.y + rules.droneRadius },
+      to = actorCentre(actor),
+      difference = sub(to, from),
+      distance = length(difference);
+    if (distance < target.minDistance || distance > target.maxDistance)
+      return reset('subject-range');
+    const motion = motions.find((value) => value.id === actor.id),
+      movement = motion ? sub(motion.to, motion.from) : { x: 0, y: 0, z: 0 },
+      relative = Object.fromEntries(
+        AXES.map((axis) => [axis, state.velocity[axis] - movement[axis] * WORLD_FLIGHT_HZ]),
+      ),
+      relativeSpeed = length(relative);
+    if (relativeSpeed > target.maxRelativeSpeed) return reset('relative-speed');
+    if (relativeTilt(state.orientation, { x: 0, y: Q, z: 0 }) > target.maxTilt)
+      return reset('airframe-tilt');
+    const forward = rotate(state.orientation, { x: 0, y: 0, z: -Q });
+    // A body-relative cone is independent of camera mode, camera tilt and graphics.
+    // Dot products stay within safe integer range; no squared products are used.
+    if (
+      AXES.reduce((sum, axis) => sum + forward[axis] * difference[axis], 0) <
+      distance * cos(target.viewAngle)
+    )
+      return reset('nose-alignment');
+    if (!collision.visible(from, to)) return reset('subject-occluded');
+    state.hold++;
+    state.actorTrack.travel += length(movement);
+    const accepted =
+      state.hold >= target.ticks && state.actorTrack.travel >= target.minTargetTravel;
+    Object.assign(state.actorTrack, {
+      status: accepted ? 'complete' : 'tracking',
+      reason: state.hold >= target.ticks && !accepted ? 'subject-travel' : null,
+      distance,
+      relativeSpeed,
+    });
+    return accepted;
+  }
+  function evaluate(before, command, skillBefore, motions) {
     const target = source.steps[mode][state.step];
+    if (!target) return; // Completed lab routes remain available for free practice.
     let accepted = false;
-    if (target.type === 'gate') accepted = crossesGate(before, state.position, target);
+    if (SKILL_TYPES.has(target.type)) accepted = evaluateSkillTarget(target, state, skillBefore);
+    else if (target.type === 'actor-track-v1') accepted = evaluateActorTrack(target, motions);
+    else if (target.type === 'gate') accepted = crossesGate(before, state.position, target);
     else if (target.type === 'eliminate')
       accepted = target.targets.every(
         (id) => state.actors.find((a) => a.id === id).status === 'defeated',
@@ -683,19 +1162,28 @@ export function createWorldFlight({ course, mode = 'self-level', response = DEFA
       state.events.push({ type: 'objective', index: state.step });
       state.step++;
       state.hold = 0;
-      if (state.step === source.steps[mode].length) state.status = 'complete';
+      if (!unscoredPractice && state.step === source.steps[mode].length) state.status = 'complete';
     }
   }
   function step(input, { quantized = false } = {}) {
     assertLive();
     const command = quantized ? validateCommand(input) : quantizeWorldInput(input);
     if (state.status !== 'active') return snapshot();
-    if (state.ticks >= rules.maxTicks) {
+    if (!unscoredPractice && state.ticks >= rules.maxTicks) {
       state.status = 'expired';
       return snapshot();
     }
     state.events = [];
     const before = { ...state.position };
+    const skillBefore = hasSkills
+      ? {
+          position: before,
+          orientation: [...state.orientation],
+          angular: { ...state.angular },
+          grounded: state.grounded,
+          contacts: state.contacts,
+        }
+      : null;
     const wasGrounded = state.grounded;
     const motions = moveActors();
     const angles = attitude(state.orientation);
@@ -786,11 +1274,12 @@ export function createWorldFlight({ course, mode = 'self-level', response = DEFA
     state.heightRange.min = Math.min(state.heightRange.min, state.position.y);
     state.heightRange.max = Math.max(state.heightRange.max, state.position.y);
     if (state.health === 0) state.status = 'failed';
-    else evaluate(before, command);
-    if (state.status === 'active' && state.ticks >= rules.maxTicks) state.status = 'expired';
+    else evaluate(before, command, skillBefore, motions);
+    if (!unscoredPractice && state.status === 'active' && state.ticks >= rules.maxTicks)
+      state.status = 'expired';
     return snapshot();
   }
-  return {
+  const flight = {
     identity,
     course: () => clone(source),
     response: () => ({ ...rates }),
@@ -812,6 +1301,8 @@ export function createWorldFlight({ course, mode = 'self-level', response = DEFA
       }
     },
   };
+  if (unscoredPractice) unscoredWorldFlights.add(flight);
+  return flight;
 }
 
 export const exportWorldCourse = (course) => canonicalJSON(validateWorldCourse(course));
@@ -825,6 +1316,7 @@ export function worldStateIdentity(snapshot) {
   return dataIdentity(state);
 }
 export function createWorldRecorder(flight, { session = 'practice', prefix = [] } = {}) {
+  required(!unscoredWorldFlights.has(flight), 'Unscored learning practice cannot create proofs');
   required(SESSION.includes(session), 'Invalid world session');
   const frames = prefix.map((f) => [...f]);
   required(
@@ -872,6 +1364,7 @@ async function replayInternal(
   input,
   {
     sampleEvery = 0,
+    includeSectors = false,
     signal,
     yieldControl = () => new Promise((resolve) => setTimeout(resolve, 0)),
     retain = false,
@@ -881,6 +1374,7 @@ async function replayInternal(
   await initWorldRuntime();
   signal?.throwIfAborted();
   required(int(sampleEvery, 0, WORLD_MAX_TICKS), 'Invalid replay sample interval');
+  required(typeof includeSectors === 'boolean', 'Invalid replay sector option');
   const proof = boundedJSON(input, {
     maxBytes: 2 * 1024 * 1024,
     maxNodes: WORLD_MAX_TICKS * 7 + 1000,
@@ -915,7 +1409,11 @@ async function replayInternal(
       typeof proof.finalStateIdentity === 'string',
     'Invalid world proof',
   );
-  const flight = createWorldFlight({ course, mode: proof.mode, response: proof.response });
+  const flight = createWorldFlight({
+    course,
+    mode: proof.mode,
+    response: proof.response,
+  });
   let keep = false;
   try {
     required(
@@ -924,6 +1422,7 @@ async function replayInternal(
     );
     flight.arm();
     const path = [];
+    const sectors = includeSectors ? createSectorTracker() : null;
     for (let i = 0; i < proof.frames.length; i++) {
       if (i % 200 === 0) {
         signal?.throwIfAborted();
@@ -936,6 +1435,7 @@ async function replayInternal(
       const state = flight.step(Object.fromEntries(COMMANDS.map((k, j) => [k, frame[j]])), {
         quantized: true,
       });
+      sectors?.consume(state);
       if (sampleEvery && (i % sampleEvery === 0 || state.status !== 'active'))
         path.push({
           tick: state.ticks,
@@ -957,9 +1457,19 @@ async function replayInternal(
         prefix: proof.frames,
       });
       keep = true;
-      return { flight, recorder, state: flight.snapshot() };
+      return {
+        flight,
+        recorder,
+        state: flight.snapshot(),
+        ...(sectors ? { sectors: sectors.snapshot() } : {}),
+      };
     }
-    return { identity: flight.identity, state: flight.snapshot(), path };
+    return {
+      identity: flight.identity,
+      state: flight.snapshot(),
+      path,
+      ...(sectors ? { sectors: sectors.snapshot() } : {}),
+    };
   } finally {
     if (!keep) flight.dispose();
   }
