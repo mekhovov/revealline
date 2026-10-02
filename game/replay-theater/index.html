@@ -190,6 +190,8 @@
           <span id="tick-readout" data-i18n="interface:tick00">Tick 0 / 0</span
           ><span id="time-readout" data-i18n="interface:000000S">0.00 / 0.00 s</span>
         </div>
+        <div id="replay-hunt-feedback"></div>
+        <p id="replay-journey-reactions" hidden></p>
         <p
           id="run-readout"
           data-i18n="interface:theOriginalRulesAndControllerInputsDetermineEveryTick"
@@ -255,17 +257,15 @@
           <details class="import-panel">
             <summary data-i18n="interface:importYourOwnReplay">Import your own replay</summary>
             <p data-i18n-rich="interface:chooseAOrOrJsonFileOrPasteOneBelow">
-              Choose a <code data-i18n-slot="slot0">xonix-replay.v3</code>,
-              <code data-i18n-slot="slot1">xonix-replay.v4</code> or
-              <code data-i18n-slot="slot2">xonix-replay.v5</code> or
-              <code data-i18n-slot="slot3">xonix-replay.v6</code> JSON file, or paste one below.
-              Version 4 supports staged encounters; version 5 supports 72 × 36 boards with optional
-              encounters; version 6 supports Classic rules. Versions 7–10 retain foundations,
-              relays, directional fields and Sentinel encounters. A
-              <code>revealline-replay-presentation.v1</code> file also preserves recorded Solo FPV
-              actors. The replay remains limited to 32 MiB / 30 recorded minutes, plus at most 12
-              KiB of appearance metadata. Verified inputs demonstrate reproducibility, not player
-              identity or an authentic performance.
+              Choose a JSON replay from <code data-i18n-slot="slot0">xonix-replay.v3</code> through
+              <code data-i18n-slot="slot1">xonix-replay.v11</code>, or paste one below. Versions
+              4–10 retain staged encounters, wide boards, Classic rules, foundations, relays,
+              directional fields and Sentinel encounters; version 11 includes Hunt. A
+              <code data-i18n-slot="slot2">revealline-replay-presentation.v1</code> or
+              <code data-i18n-slot="slot3">revealline-replay-presentation.v2</code> presentation
+              file also carries recorded appearance. Maximum 32 MiB / 30 recorded minutes, plus at
+              most 12 KiB of appearance metadata. Verified inputs demonstrate reproducibility, not
+              player identity or an authentic performance.
             </p>
             <label for="replay-file" data-i18n="interface:replayFile">Replay file</label>
             <input id="replay-file" type="file" accept=".json,application/json" />
@@ -285,7 +285,7 @@
             </button>
           </details>
         </section>
-        <section class="panel" aria-labelledby="look-heading">
+        <section id="replay-presentation-settings" class="panel" aria-labelledby="look-heading">
           <h2 id="look-heading" data-i18n="interface:aDifferentAtmosphere">
             A different atmosphere.
           </h2>
@@ -295,13 +295,44 @@
             ><input id="grid" type="checkbox" />
             <span data-i18n="interface:showGrid">Show grid</span></label
           >
+          <label class="check"
+            ><input id="replay-enemy-remains" type="checkbox" /><span
+              data-i18n="common:preferences.enemyRemains"
+              >Show enemy remains</span
+            ></label
+          >
+          <p id="replay-enemy-remains-status" role="status" hidden></p>
+          <button
+            id="replay-enemy-remains-retry"
+            type="button"
+            data-i18n="common:preferences.retryEncounterSave"
+            hidden
+          >
+            Retry saving
+          </button>
+          <label class="check"
+            ><input id="replay-journey-reactions-enabled" type="checkbox" /><span
+              data-i18n="interface:characterReactions"
+              >Character reactions</span
+            ></label
+          >
+          <p id="replay-journey-reactions-status" role="status" hidden></p>
+          <button
+            id="replay-journey-reactions-retry"
+            type="button"
+            data-i18n="common:preferences.retryEncounterSave"
+            hidden
+          >
+            Retry saving
+          </button>
           <p
             class="quiet"
             data-i18n="interface:themesChangeThePreviewSceneAndRawReplayActorsRecorded"
           >
             Themes change the preview scene and raw replay actors. Recorded FPV actors stay pinned.
             The imported route, class abilities and result stay exactly as recorded. Original
-            pictures, music and interface are not restored. This theater is silent.
+            pictures, music and interface are not restored. Sound and reactions follow your current
+            preferences; they do not change the verified recording.
           </p>
         </section>
         <p

@@ -3,6 +3,7 @@ import { ARCADE_ACTIONS_VERSION } from './arcade-actions.mjs';
 import { validateEnemyPressure } from './enemy-pressure.mjs';
 import { validateTimedBonuses } from './timed-bonuses.mjs';
 import { validateCombatPatrols } from './combat-definition.mjs';
+import { validateHuntDefinition } from '../hunt/rules.mjs';
 
 export const CLASSIC_ENEMY_TYPES = Object.freeze([
   'bouncer',
@@ -39,6 +40,7 @@ export function resolveClassicDefinition(level, foundationGeometry = null) {
       'enemyPressure',
       'timedBonuses',
       'combatPatrols',
+      ...(level.version === 'xonix-level.v9' ? ['hunt'] : []),
     ],
     'classic',
   );
@@ -152,6 +154,13 @@ export function resolveClassicDefinition(level, foundationGeometry = null) {
     geometry: foundationGeometry,
   });
   validateCombatPatrols(level, { identity, walls, terrain, geometry: foundationGeometry });
+  if (level.version === 'xonix-level.v9') {
+    required(Object.hasOwn(value, 'hunt'), 'Hunt successor levels require explicit hunt rules.');
+    validateHuntDefinition(value.hunt, value.combatPatrols?.actors, {
+      ordinaryCount: level.enemies?.length ?? 0,
+      enabled: value.combatPatrols?.enabled === true,
+    });
+  }
   for (const item of level.objectives ?? [])
     required(
       terrain[Math.floor(item.y) * width + Math.floor(item.x)] !== 2,

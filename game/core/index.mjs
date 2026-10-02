@@ -1,3 +1,4 @@
+import { huntSummary } from '../hunt/rules.mjs';
 import { clearLineImpacts } from './line-impact.mjs';
 import {
   CELL,
@@ -88,6 +89,7 @@ export function createRun(
     'xonix-level.v6',
     'xonix-level.v7',
     'xonix-level.v8',
+    'xonix-level.v9',
   ].includes(level.version)
     ? foundationGeometry(level)
     : null;
@@ -182,6 +184,7 @@ export function createRun(
       'xonix-level.v6',
       'xonix-level.v7',
       'xonix-level.v8',
+      'xonix-level.v9',
     ].includes(level.version)
   )
     state.encounter = level.encounter === null ? null : createEncounter(level.encounter);
@@ -190,7 +193,9 @@ export function createRun(
       version: 'foundation-state.v1',
       permanent: Uint8Array.from(foundations.permanent),
     };
-  if (['xonix-level.v6', 'xonix-level.v7', 'xonix-level.v8'].includes(level.version))
+  if (
+    ['xonix-level.v6', 'xonix-level.v7', 'xonix-level.v8', 'xonix-level.v9'].includes(level.version)
+  )
     state.relay = createRelayState(level, foundations);
   if (
     [
@@ -199,6 +204,7 @@ export function createRun(
       'xonix-level.v6',
       'xonix-level.v7',
       'xonix-level.v8',
+      'xonix-level.v9',
     ].includes(level.version)
   ) {
     state.classic = createClassicState(level, cells);
@@ -512,6 +518,9 @@ export function getSummary(state) {
     lives: state.lives,
     ...(state.classic ? { livesLost: state.classic.livesLost } : {}),
     score: state.score,
+    ...(state.classic?.hunt
+      ? { hunt: huntSummary(state.level.classic.hunt, state.classic.hunt) }
+      : {}),
     coverage: state.coverage,
     claimedCount: state.claimedCount,
     totalClaimable: state.totalClaimable,

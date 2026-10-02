@@ -119,6 +119,8 @@ import { syncStudioDifficulty } from './difficulty-view.mjs';
 import { createTeamTestPack, createTeamCampaignTestPack } from '../content-design/team-export.mjs';
 import { createActorEditor } from './actor-editor.mjs';
 import { createCombatEditor } from './combat-editor.mjs';
+import { createHuntEditor } from './hunt-editor.mjs';
+import { createReactionVoiceEditor } from './reaction-voice-editor.mjs';
 import { createGeometryEditor } from './geometry-editor.mjs';
 import { createBonusEditor } from './bonus-editor.mjs';
 import { createTimedBonusEditor } from './timed-bonus-editor.mjs';
@@ -240,6 +242,21 @@ const combatEditor = createCombatEditor({
     queueSave();
     return true;
   },
+});
+const huntEditor = createHuntEditor({
+  container: $('hunt-editor-mount'),
+  getSource: () => session.current(),
+  getMission: currentMission,
+  apply: (candidate, retry) => {
+    if (!discardSource(retry)) return false;
+    session.replace(candidate);
+    render();
+    queueSave();
+    return true;
+  },
+});
+const reactionVoiceEditor = createReactionVoiceEditor({
+  container: $('reaction-voice-editor-mount'),
 });
 const geometryEditor = createGeometryEditor({
   document,
@@ -437,6 +454,7 @@ function inspectBoard(trailCells = []) {
   acceptanceInspector.sync();
   actorEditor.sync();
   combatEditor.sync();
+  huntEditor.sync();
   geometryEditor.sync();
   bonusEditor.sync();
   timedBonusEditor.sync();
@@ -1380,8 +1398,11 @@ window.addEventListener('pagehide', (event) => {
   // Retire without moving focus, before any asynchronous completion can revive it.
   retirePreview();
   discoveryEditor.suspend();
+  reactionVoiceEditor.suspend();
   if (!event.persisted) {
     discoveryEditor.dispose();
+    reactionVoiceEditor.dispose();
+    huntEditor.dispose();
     sourceDiscard.destroy();
     stopSpatialReviews();
     stopGameplayTuning();

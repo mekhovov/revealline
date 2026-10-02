@@ -36,9 +36,13 @@ function fields(value, keys, label) {
 export function validateCombatPatrols(level, { identity, walls, geometry }) {
   if (!Object.hasOwn(level.classic, 'combatPatrols')) return;
   required(
-    ['xonix-level.v5', 'xonix-level.v6', 'xonix-level.v7', 'xonix-level.v8'].includes(
-      level.version,
-    ),
+    [
+      'xonix-level.v5',
+      'xonix-level.v6',
+      'xonix-level.v7',
+      'xonix-level.v8',
+      'xonix-level.v9',
+    ].includes(level.version),
     'combat patrols require foundation-aware classic levels v5..v8',
   );
   const definition = level.classic.combatPatrols;

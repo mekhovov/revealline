@@ -19,6 +19,7 @@ export function paintEditorMap(canvas, current) {
     'xonix-level.v6',
     'xonix-level.v7',
     'xonix-level.v8',
+    'xonix-level.v9',
   ].includes(current.level.version)
     ? createRun(current.level, { ...current.settings, classRecipes: current.classRecipes })
     : null;

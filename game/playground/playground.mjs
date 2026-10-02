@@ -319,6 +319,7 @@ function sync() {
     'xonix-playground.v7',
     'xonix-playground.v8',
     'xonix-playground.v9',
+    'xonix-playground.v10',
   ].includes(current.format);
   $('mastery-json').value = definition ? JSON.stringify(definition, null, 2) : '';
   localizedText($('mastery-readout'), () =>
@@ -519,6 +520,7 @@ function drawAssets() {
     'xonix-playground.v7',
     'xonix-playground.v8',
     'xonix-playground.v9',
+    'xonix-playground.v10',
   ].includes(current.format)
     ? [...VISUAL_ROLES, ...CLASSIC_VISUAL_ROLES]
     : VISUAL_ROLES;
@@ -854,19 +856,21 @@ try {
   const recipes = await fetch('../content/classes.json').then((r) => r.json());
   current = {
     format:
-      campaign.levels[0].version === 'xonix-level.v8'
-        ? 'xonix-playground.v9'
-        : campaign.levels[0].version === 'xonix-level.v7'
-          ? 'xonix-playground.v8'
-          : campaign.levels[0].version === 'xonix-level.v6'
-            ? 'xonix-playground.v7'
-            : campaign.levels[0].version === 'xonix-level.v5'
-              ? 'xonix-playground.v6'
-              : campaign.levels[0].version === 'xonix-level.v4'
-                ? 'xonix-playground.v5'
-                : campaign.levels[0].version === 'xonix-level.v3'
-                  ? 'xonix-playground.v4'
-                  : 'xonix-playground.v1',
+      campaign.levels[0].version === 'xonix-level.v9'
+        ? 'xonix-playground.v10'
+        : campaign.levels[0].version === 'xonix-level.v8'
+          ? 'xonix-playground.v9'
+          : campaign.levels[0].version === 'xonix-level.v7'
+            ? 'xonix-playground.v8'
+            : campaign.levels[0].version === 'xonix-level.v6'
+              ? 'xonix-playground.v7'
+              : campaign.levels[0].version === 'xonix-level.v5'
+                ? 'xonix-playground.v6'
+                : campaign.levels[0].version === 'xonix-level.v4'
+                  ? 'xonix-playground.v5'
+                  : campaign.levels[0].version === 'xonix-level.v3'
+                    ? 'xonix-playground.v4'
+                    : 'xonix-playground.v1',
     ...([
       'xonix-level.v3',
       'xonix-level.v4',
@@ -874,6 +878,7 @@ try {
       'xonix-level.v6',
       'xonix-level.v7',
       'xonix-level.v8',
+      'xonix-level.v9',
     ].includes(campaign.levels[0].version)
       ? { masteryDefinition: null }
       : {}),
@@ -1176,6 +1181,7 @@ try {
           'xonix-playground.v7',
           'xonix-playground.v8',
           'xonix-playground.v9',
+          'xonix-playground.v10',
         ].includes(current.format)
           ? {
               format: 'xonix-playground.v2',

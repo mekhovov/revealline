@@ -16,7 +16,10 @@ import {
 } from './pack-indexes.mjs';
 import { SOUNDTRACK_BUNDLED_ASSETS } from '../game/content/soundtrack-catalogue.mjs';
 import { generatedBrandIcons } from './brand-icons.mjs';
-import { isOptionalSpatialAudioBody } from './offline-core-closure.mjs';
+import {
+  isOptionalSpatialAudioBody,
+  isOptionalReactionVoiceBody,
+} from './offline-core-closure.mjs';
 import { isIncludedBundledMission } from '../game/mission-library/included-bundled-pack.mjs';
 
 export const PROJECT_ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
@@ -55,6 +58,7 @@ const MIME = {
   '.mp3': 'audio/mpeg',
   '.ogg': 'audio/ogg',
   '.wav': 'audio/wav',
+  '.m4a': 'audio/mp4',
   '.ttf': 'font/ttf',
   '.woff2': 'font/woff2',
   '.txt': 'text/plain; charset=utf-8',
@@ -232,6 +236,28 @@ export async function collectBuildFiles(root = PROJECT_ROOT, config) {
   if (!files.has(config.entry)) fail(`Build include does not contain entry ${config.entry}`);
   for (const name of config.optionalOffline ?? [])
     if (!files.has(name)) fail(`optionalOffline pack is not shipped: ${name}`);
+  if (files.has('game/audio/reactions/pilot.mjs')) {
+    const { REACTION_VOICE_PILOT: voices } = await import(
+      pathToFileURL(path.join(root, 'game/audio/reactions/pilot.mjs')).href
+    );
+    if (!Array.isArray(voices) || voices.length > 256) fail('Invalid reaction voice manifest');
+    const ids = new Set();
+    for (const voice of voices) {
+      if (
+        !['en', 'uk'].includes(voice.locale) ||
+        typeof voice.lineId !== 'string' ||
+        !/^[a-z0-9][a-z0-9-]*-(?:en|uk)\.m4a$/.test(voice.file)
+      )
+        fail('Invalid reaction voice entry');
+      const id = `${voice.lineId}|${voice.locale}`,
+        name = `game/audio/reactions/${voice.file}`;
+      if (ids.has(id) || !files.has(name)) fail(`Missing or duplicate reaction voice: ${id}`);
+      ids.add(id);
+      const bytes = await fs.readFile(await noSymlinkPath(root, name));
+      if (bytes.length !== voice.bytes || sha256(bytes) !== voice.sha256)
+        fail(`Reaction voice differs from its manifest: ${id}`);
+    }
+  }
   if (
     [
       'manifest.json',
@@ -699,6 +725,9 @@ export async function addOfflineEntries(
     // Recorded spatial effects stay hosted for online play and exact optional
     // download, but are not charged to every installation's 64 MiB core.
     ...entries.filter((entry) => isOptionalSpatialAudioBody(entry.name)).map((entry) => entry.name),
+    ...entries
+      .filter((entry) => isOptionalReactionVoiceBody(entry.name))
+      .map((entry) => entry.name),
     ...(optionalArtwork?.files.map((file) => file.path) ?? []),
     // Recorded music is an optional enhancement. Keep even locally shipped
     // recordings out of the bounded gameplay cache so procedural music and

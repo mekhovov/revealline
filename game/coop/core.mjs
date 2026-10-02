@@ -9,6 +9,8 @@ import {
   COOP_BONUS_LEVEL_VERSION,
   COOP_IMPACT_LEVEL_VERSION,
   COOP_SPECIALIST_LEVEL_VERSION,
+  COOP_HUNT_LEVEL_VERSION,
+  hasTeamHunting,
   hasTeamRoamers,
   hasTeamTerrain,
   hasTeamLineImpacts,
@@ -61,6 +63,19 @@ import {
   useSupport,
   strongholdIndex,
 } from './threats.mjs';
+
+import {
+  validateCoopCombat,
+  initializeCoopCombat,
+  captureCoopCombat,
+  beginCoopCombatTick,
+  updateCoopCombat,
+  planCoopCombat,
+  advanceCoopCombat,
+  hitCoopCombatProjectile,
+  eliminateCoopCombat,
+} from './combat-patrols.mjs';
+import { huntObjectiveSatisfied, huntSummary } from '../hunt/rules.mjs';
 
 export const COOP_RULESET = 'revealline-coop.v3';
 export const COOP_LEVEL_VERSION = 'revealline-coop-level.v1';
@@ -138,6 +153,8 @@ export function validateCoopLevel(level) {
       'timedBonuses',
       'lineImpact',
       'supportRoles',
+      'combatPatrols',
+      'hunt',
     ])
   )
     return {
@@ -153,6 +170,7 @@ export function validateCoopLevel(level) {
       COOP_BONUS_LEVEL_VERSION,
       COOP_IMPACT_LEVEL_VERSION,
       COOP_SPECIALIST_LEVEL_VERSION,
+      COOP_HUNT_LEVEL_VERSION,
     ].includes(level.version),
     'Unsupported co-op level version.',
   );
@@ -168,9 +186,12 @@ export function validateCoopLevel(level) {
     'Terrain requires an explicit Team terrain edition and a terrain array.',
   );
   check(
-    [COOP_BONUS_LEVEL_VERSION, COOP_IMPACT_LEVEL_VERSION, COOP_SPECIALIST_LEVEL_VERSION].includes(
-      level.version,
-    ) || !Object.hasOwn(level, 'timedBonuses'),
+    [
+      COOP_BONUS_LEVEL_VERSION,
+      COOP_IMPACT_LEVEL_VERSION,
+      COOP_SPECIALIST_LEVEL_VERSION,
+      COOP_HUNT_LEVEL_VERSION,
+    ].includes(level.version) || !Object.hasOwn(level, 'timedBonuses'),
     'Timed bonuses require the explicit Team bonus edition.',
   );
   check(
@@ -179,9 +200,12 @@ export function validateCoopLevel(level) {
     'Timed bonuses must be an enumerable data field, never silently omitted by copying.',
   );
   check(
-    ![COOP_BONUS_LEVEL_VERSION, COOP_IMPACT_LEVEL_VERSION, COOP_SPECIALIST_LEVEL_VERSION].includes(
-      level.version,
-    ) ||
+    ![
+      COOP_BONUS_LEVEL_VERSION,
+      COOP_IMPACT_LEVEL_VERSION,
+      COOP_SPECIALIST_LEVEL_VERSION,
+      COOP_HUNT_LEVEL_VERSION,
+    ].includes(level.version) ||
       (!Object.hasOwn(level, 'strongholds') &&
         !Object.hasOwn(level, 'encounter') &&
         keys(level.goal, ['coverage']) &&
@@ -204,6 +228,16 @@ export function validateCoopLevel(level) {
           level.supportRoles.every((role) => ['interceptor', 'disruptor'].includes(role))
       : !Object.hasOwn(level, 'supportRoles'),
     'Specialist Team missions require one Interceptor and one Disruptor in seat order.',
+  );
+  check(
+    hasTeamHunting(level)
+      ? (!Object.hasOwn(level, 'combatPatrols') ||
+          keys(level.combatPatrols, ['version', 'enabled', 'actors'])) &&
+          (!Object.hasOwn(level, 'hunt') ||
+            (Object.hasOwn(level, 'combatPatrols') &&
+              keys(level.hunt, ['version', 'mode', 'quota', 'targets'])))
+      : !Object.hasOwn(level, 'combatPatrols') && !Object.hasOwn(level, 'hunt'),
+    'Humanoid hunting requires an explicit Team hunt edition and its exact population.',
   );
   check(level.width === 72 && level.height === 36, 'Co-op boards must be 72 × 36.');
   check(
@@ -341,8 +375,16 @@ export function validateCoopLevel(level) {
   let cells;
   try {
     cells = buildGrid(level);
-    if ([COOP_BONUS_LEVEL_VERSION, COOP_IMPACT_LEVEL_VERSION].includes(level.version))
+    if (
+      [
+        COOP_BONUS_LEVEL_VERSION,
+        COOP_IMPACT_LEVEL_VERSION,
+        COOP_SPECIALIST_LEVEL_VERSION,
+        COOP_HUNT_LEVEL_VERSION,
+      ].includes(level.version)
+    )
       validateCoopTimedBonuses(level, compileCoopFoundationGeometry(level));
+    if (hasTeamHunting(level) && level.combatPatrols) validateCoopCombat(level, cells);
   } catch (error) {
     return { valid: false, errors: [`Invalid shared Team foundations: ${error.message}`] };
   }
@@ -491,6 +533,7 @@ export function createCoop(
     needsNeutral: [false, false],
   };
   initializeThreats(run);
+  initializeCoopCombat(run);
   if (hasTeamRoamers(owned)) initializeCoopRoamers(run);
   run.headsTouching = headsTouch(run);
   return run;
@@ -589,6 +632,7 @@ function movement(run, commands, stopped) {
 function knockDown(run, player, cause, commands, enemy = null) {
   if (player.status !== 'active') return;
   player.status = 'downed';
+  if (run.hunt) run.huntDowns++;
   clearCoopPlayerBonus(run, player);
   player.downedUntil =
     run.time +
@@ -754,11 +798,12 @@ function finishFreeRescues(run, commands, stopped) {
 }
 
 function goalReached(run) {
-  return Object.hasOwn(run.level.goal, 'coverage')
+  const ordinary = Object.hasOwn(run.level.goal, 'coverage')
     ? run.coverage + EPS >= run.level.goal.coverage
     : run.level.goal.cores.every((id) =>
         run.strongholds.some((stronghold) => stronghold.id === id && stronghold.defeated),
       );
+  return huntObjectiveSatisfied(run.level.hunt, run.hunt, ordinary);
 }
 
 function completeRecoveryAndGoal(run, commands, stopped) {
@@ -874,6 +919,10 @@ function capture(run, closers, commands, stopped, joint = false) {
   }
   run.claimedCount += secured.size;
   run.coverage = run.claimedCount / run.totalClaimable;
+  captureCoopCombat(
+    run,
+    closers.map((player) => player.id),
+  );
   for (const enemy of run.enemies)
     if (
       enemy.active !== false &&
@@ -1014,6 +1063,7 @@ export function stepCoop(run, commands, dt = FIXED_DT) {
   const tickEnd = (run.tick + 1) * FIXED_DT;
   run.time = tickStart;
   updateCoopTimedBonuses(run);
+  beginCoopCombatTick(run);
   const stopped = new Set();
   updateThreatClocks(run, emit, {
     suppressImpacts: coopBonusActive(run, 'enemy-freeze'),
@@ -1055,6 +1105,7 @@ export function stepCoop(run, commands, dt = FIXED_DT) {
     const contacts = hazards(run, velocities, horizon, actors);
     const bonusContacts = planCoopBonusContacts(run, velocities, horizon);
     const impactPlans = planImpacts(run, velocities, horizon);
+    const combatPlans = planCoopCombat(run, velocities, horizon);
     if (!headsTouch(run)) run.headsTouching = false;
     const meeting = run.headsTouching
       ? null
@@ -1074,7 +1125,16 @@ export function stepCoop(run, commands, dt = FIXED_DT) {
       ...run.players.filter((player) => player.rescue).map((player) => player.rescue.startedAt + 1),
     ];
     let elapsed = horizon;
-    for (const event of [...transitions, ...obstacles, ...walls, ...contacts, ...bonusContacts])
+    for (const event of [
+      ...transitions,
+      ...obstacles,
+      ...walls,
+      ...contacts,
+      ...bonusContacts,
+      ...combatPlans.contacts,
+      ...combatPlans.patrols,
+      ...combatPlans.shots,
+    ])
       if (event) elapsed = Math.min(elapsed, event.time);
     for (const plan of impactPlans) elapsed = Math.min(elapsed, plan.waypointAt, plan.contactAt);
     if (meetingTime !== null) elapsed = Math.min(elapsed, meetingTime);
@@ -1090,6 +1150,7 @@ export function stepCoop(run, commands, dt = FIXED_DT) {
       enemy.x += actors[index].vx * elapsed;
       enemy.y += actors[index].vy * elapsed;
     }
+    advanceCoopCombat(run, combatPlans, elapsed);
     const expiredImpacts = advanceImpacts(impactPlans, elapsed);
     run.time += elapsed;
     if (expiredImpacts.length) {
@@ -1211,6 +1272,22 @@ export function stepCoop(run, commands, dt = FIXED_DT) {
       )
         impactHits.set(impact.id, impact);
     }
+    const combatContacts = [
+      ...combatPlans.contacts.filter((contact) => due(contact.time)),
+      ...planCoopCombat(run, velocities, 0).contacts,
+    ];
+    // A shot belongs to one contact. Fatal events resolve before any touching kill, per seat.
+    for (const contact of combatContacts)
+      if (contact.cause === 'combat-projectile') {
+        const player = run.players[contact.player];
+        if (
+          player.status === 'active' &&
+          player.cutting &&
+          player.graceUntil <= run.time + EPS &&
+          hitCoopCombatProjectile(run, contact.body)
+        )
+          knockDown(run, player, 'combat-projectile', commands, contact.body.actorId);
+      }
     const deferredImpactHits = [];
     for (const impact of impactHits.values()) {
       if (impact.version === 'team-line-impact.v2') {
@@ -1228,6 +1305,9 @@ export function stepCoop(run, commands, dt = FIXED_DT) {
         if (walls[i].rover) reflectCoopRoamer(run.enemies[i], walls[i]);
         else reflectEnemy(run.enemies[i], walls[i].normals, run.seed);
       }
+    const huntFatalSeats = new Set(
+      run.players.filter((player) => player.status !== 'active').map((player) => player.id),
+    );
     const newMeeting = meetingTime !== null && due(meetingTime);
     if (newMeeting) run.headsTouching = true;
     const joint =
@@ -1248,6 +1328,21 @@ export function stepCoop(run, commands, dt = FIXED_DT) {
         knockDown(run, player, 'line-impact', commands, impact.owner);
       run.impacts = run.impacts.filter((candidate) => candidate.id !== impact.id);
     }
+    // Capture retains its elimination cause; a downed seat cannot receive a ram.
+    // Another surviving seat can finish the same target in this instant.
+    for (const actor of combatPlans.patrols.map((plan) => plan.body)) {
+      const players = combatContacts
+        .filter(
+          (contact) =>
+            contact.cause === 'ram' &&
+            contact.body === actor &&
+            !huntFatalSeats.has(contact.player) &&
+            run.players[contact.player].status === 'active',
+        )
+        .map((contact) => contact.player);
+      if (players.length && actor.alive) eliminateCoopCombat(run, actor, 'ram', players);
+    }
+    updateCoopCombat(run);
     if (run.roverActorTick !== undefined) updateCoopRoamers(run, emit);
     completeRecoveryAndGoal(run, commands, stopped);
   }
@@ -1271,6 +1366,7 @@ export function getCoopSummary(run) {
     coverage: run.coverage,
     goal: run.level.goal.coverage ?? null,
     requiredCores: [...(run.level.goal.cores || [])],
+    ...(run.hunt ? { hunt: huntSummary(run.level.hunt, run.hunt) } : {}),
     strongholds: run.strongholds.map((stronghold) => ({
       id: stronghold.id,
       shielded: stronghold.shielded,

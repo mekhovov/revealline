@@ -17,6 +17,7 @@ export function attachJourneyReactions({
     retry = $('-retry');
   const preferences = createReactionPreferences({
     window: eventTarget,
+    getLocale,
     ...(getStorage ? { getStorage } : {}),
   });
   let current = null,
@@ -25,12 +26,15 @@ export function attachJourneyReactions({
     if (disposed) return;
     const choice = preferences.snapshot();
     if (control.checked !== choice.enabled) control.checked = choice.enabled;
-    if (status.textContent !== choice.error) localizedText(status, () => choice.error);
+    if (status.textContent !== choice.error)
+      localizedText(status, () => preferences.snapshot().error);
     status.hidden = choice.durable;
     retry.hidden = choice.durable;
     caption.hidden = !choice.enabled || !journeyResultReaction(current);
     const copy = () => {
       const reaction = choice.enabled && journeyResultReaction(current, getLocale());
+      if (reaction?.speaker) caption.dataset.reactionSpeaker = reaction.speaker;
+      else delete caption.dataset.reactionSpeaker;
       return reaction
         ? reaction.name
           ? `${reaction.name} — ${reaction.text}`

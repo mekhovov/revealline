@@ -31,12 +31,14 @@ const PUBLISHED_SOLO_BOUNDARIES = new Set([
  * missing pack degrades to the feedback director's existing silent fallback. */
 export const isOptionalSpatialAudioBody = (name) =>
   /^game\/audio\/effects\/[a-z0-9][a-z0-9-]*\.wav$/i.test(name);
+export const isOptionalReactionVoiceBody = (name) =>
+  /^game\/audio\/reactions\/[a-z0-9][a-z0-9-]*-(?:en|uk)\.m4a$/i.test(name);
 
 /** Resolve local file references, never external addresses or speculative URLs. */
 function targets(value, owner, byPath) {
   if (typeof value !== 'string' || /^(?:[a-z]+:|\/|#)/i.test(value)) return [];
   const clean = value.split(/[?#]/)[0];
-  if (!/\.(?:m?js|json|css|html|png|webp|jpe?g|svg|woff2?|ttf|wav)$/i.test(clean)) return [];
+  if (!/\.(?:m?js|json|css|html|png|webp|jpe?g|svg|woff2?|ttf|wav|m4a)$/i.test(clean)) return [];
   return [
     ...new Set([
       path.posix.normalize(path.posix.join(path.posix.dirname(owner), clean)),
