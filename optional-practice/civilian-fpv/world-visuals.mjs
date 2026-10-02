@@ -59,6 +59,38 @@ function surfacePixels(kind, color, seed, size, pixel) {
     '111100110001110',
     '011100110101010',
   ];
+  const woodlandSurface = kind === 'bark' || kind === 'forest-floor',
+    earth = woodlandSurface ? new THREE.Color(0x695946).lerp(base, 0.3) : null,
+    moss = woodlandSurface ? new THREE.Color(0x576747).lerp(base, 0.3) : null,
+    pale = woodlandSurface ? new THREE.Color(0x92917b).lerp(base, 0.3) : null,
+    leaf = kind === 'forest-floor' ? new THREE.Color(0x82735a).lerp(base, 0.3) : null;
+  const branchScars = [
+    [0.23, 0.32],
+    [0.71, 0.69],
+  ];
+  const leafGrid = 18,
+    leafRandom = random(seed ^ 0x6a09e667),
+    leaves =
+      kind === 'forest-floor'
+        ? Array.from({ length: leafGrid * leafGrid }, (_, index) => {
+            const angle = leafRandom() * Math.PI * 2,
+              u = ((index % leafGrid) + 0.5) / leafGrid,
+              v = (Math.floor(index / leafGrid) + 0.5) / leafGrid,
+              // Litter gathers in irregular soil patches, with calm open moss
+              // between them; a uniform scatter becomes distracting at flight height.
+              density = Math.max(0, Math.min(0.6, (broad(u, v) - 0.38) * 2.2));
+            return {
+              x: 0.28 + leafRandom() * 0.44,
+              y: 0.28 + leafRandom() * 0.44,
+              cosine: Math.cos(angle),
+              sine: Math.sin(angle),
+              length: 0.14 + leafRandom() * 0.14,
+              width: 0.06 + leafRandom() * 0.055,
+              visible: leafRandom() < density,
+              shade: 0.94 + leafRandom() * 0.08,
+            };
+          })
+        : null;
   for (let y = 0; y < size; y++)
     for (let x = 0; x < size; x++) {
       const u = x / size,
@@ -67,7 +99,10 @@ function surfacePixels(kind, color, seed, size, pixel) {
         tau = Math.PI * 2;
       let shade = 0.91 + grain * 0.16,
         relief = grain * 0.025,
-        roughness = 0.86;
+        roughness = 0.86,
+        red = base.r,
+        green = base.g,
+        blue = base.b;
       const patch = (broad(u, v) - 0.5) * 0.16,
         mottling = fine(u, v) - 0.5;
       if (kind === 'concrete') {
@@ -213,6 +248,60 @@ function surfacePixels(kind, color, seed, size, pixel) {
         relief += vein * 0.025;
         roughness = 0.67 + grain * 0.17;
       }
+      if (kind === 'bark') {
+        // Coarse broken plates replace sawn-wood striping. V spans the entire
+        // standing trunk, so root moss and branch scars never repeat up its height.
+        const warp = Math.sin(v * tau * 3) * 0.17 + Math.sin(v * tau * 7) * 0.07 + mottling * 0.22,
+          plate = u * 7 + warp,
+          column = Math.floor(plate),
+          across = plate - column,
+          seam = Math.min(across, 1 - across),
+          fissure = Math.max(0, 1 - seam / 0.085),
+          rowPhase = v * 17 + column * 0.618 + broad(u, v) * 0.4,
+          row = rowPhase - Math.floor(rowPhase),
+          split = Math.max(0, 1 - row / 0.06) * (0.35 + broad(u, v) * 0.4),
+          root = Math.max(0, 1 - v / (0.11 + broad(u, v) * 0.09)),
+          lichen = Math.max(0, (broad((u + 0.23) % 1, v) - 0.58) * 1.8);
+        let scar = 0;
+        for (const [atU, atV] of branchScars) {
+          const du = Math.min(Math.abs(u - atU), 1 - Math.abs(u - atU)) / 0.12,
+            dv = (v - atV) / 0.035,
+            radius = Math.hypot(du, dv);
+          if (radius < 1.3) scar += (1 - radius / 1.3) * (0.55 + Math.sin(radius * 13) * 0.2);
+        }
+        shade = 0.92 + patch * 1.1 + mottling * 0.11 - fissure * 0.25 - split * 0.09 - scar * 0.17;
+        relief = mottling * 0.07 - fissure * 0.22 - split * 0.065 - scar * 0.08;
+        roughness = 0.88 + grain * 0.08;
+        const mossMix = root * (0.28 + broad(u, v) * 0.4),
+          lichenMix = Math.min(0.2, lichen) * (1 - root);
+        red = base.r + (moss.r - base.r) * mossMix + (pale.r - base.r) * lichenMix;
+        green = base.g + (moss.g - base.g) * mossMix + (pale.g - base.g) * lichenMix;
+        blue = base.b + (moss.b - base.b) * mossMix + (pale.b - base.b) * lichenMix;
+      }
+      if (kind === 'forest-floor') {
+        // Six-metre, seamless ground tile: broad moss/soil areas remain calm at
+        // flight speed; scattered leaves supply close-range scale without geometry.
+        const earthMix = Math.max(0, Math.min(1, (broad(u, v) - 0.28) * 2.2)),
+          cellX = Math.floor(u * leafGrid),
+          cellY = Math.floor(v * leafGrid),
+          detail = leaves[cellY * leafGrid + cellX],
+          dx = u * leafGrid - cellX - detail.x,
+          dy = v * leafGrid - cellY - detail.y,
+          along = (dx * detail.cosine + dy * detail.sine) / detail.length,
+          across = (-dx * detail.sine + dy * detail.cosine) / detail.width,
+          outline = along * along + across * across,
+          leafMix = detail.visible ? Math.max(0, Math.min(1, (1 - outline) * 8)) * 0.42 : 0,
+          vein = Math.max(0, 1 - Math.abs(across) / 0.12) * leafMix;
+        red = moss.r + (earth.r - moss.r) * earthMix;
+        green = moss.g + (earth.g - moss.g) * earthMix;
+        blue = moss.b + (earth.b - moss.b) * earthMix;
+        red += (leaf.r * detail.shade - red) * leafMix;
+        green += (leaf.g * detail.shade - green) * leafMix;
+        blue += (leaf.b * detail.shade - blue) * leafMix;
+        shade = 0.94 + patch * 0.85 + mottling * 0.07 - vein * 0.045;
+        relief = mottling * 0.025 + leafMix * 0.028 - vein * 0.009;
+        roughness = 0.9 + grain * 0.08;
+      }
       if (kind === 'grass') {
         // Isotropic patches and fine blades: no regular diagonal stripes or
         // high-frequency sine pattern that aliases into bands during flight.
@@ -228,9 +317,9 @@ function surfacePixels(kind, color, seed, size, pixel) {
       }
       if (pixel) shade = Math.round(shade * 6) / 6;
       const at = (y * size + x) * 4;
-      data[at] = Math.min(255, base.r * 255 * shade);
-      data[at + 1] = Math.min(255, base.g * 255 * shade);
-      data[at + 2] = Math.min(255, base.b * 255 * shade);
+      data[at] = Math.min(255, red * 255 * shade);
+      data[at + 1] = Math.min(255, green * 255 * shade);
+      data[at + 2] = Math.min(255, blue * 255 * shade);
       data[at + 3] = 255;
       height[y * size + x] = relief;
       properties[at] = Math.round(255 * (relief < -0.08 ? 0.86 : 1));
@@ -238,13 +327,16 @@ function surfacePixels(kind, color, seed, size, pixel) {
       properties[at + 2] = kind === 'metal' ? 170 : 0;
       properties[at + 3] = 255;
     }
+  const reliefScale = woodlandSurface ? size / 64 : 2;
   for (let y = 0; y < size; y++)
     for (let x = 0; x < size; x++) {
       const at = (y * size + x) * 4;
       const dx =
-        (height[y * size + ((x + 1) % size)] - height[y * size + ((x + size - 1) % size)]) * 2;
+        (height[y * size + ((x + 1) % size)] - height[y * size + ((x + size - 1) % size)]) *
+        reliefScale;
       const dy =
-        (height[((y + 1) % size) * size + x] - height[((y + size - 1) % size) * size + x]) * 2;
+        (height[((y + 1) % size) * size + x] - height[((y + size - 1) % size) * size + x]) *
+        reliefScale;
       const length = Math.hypot(dx, dy, 1);
       normal[at] = Math.round(127.5 * (1 - dx / length));
       normal[at + 1] = Math.round(127.5 * (1 - dy / length));
@@ -266,6 +358,8 @@ function surfaceMaps(kind, color, { pixel = false, seed = 971 } = {}) {
     texture.userData.surface = surface;
     if (kind === 'storage-steel')
       texture.name = `warehouse-storage-steel-${['albedo', 'normal', 'orm'][index]}`;
+    if (kind === 'bark' || kind === 'forest-floor')
+      texture.name = `woodland-${kind}-${['albedo', 'normal', 'orm'][index]}`;
     return texture;
   });
   resizeSurface(surface, pixel ? 64 : 256, 1);
@@ -737,13 +831,15 @@ export function buildWorldVisuals({ course, world, mesh, material, box }) {
     adventure?.floor ??
     (hangar
       ? 'hangar-concrete'
-      : natural
-        ? 'grass'
-        : environment === 'courtyard'
-          ? 'paving'
-          : environment === 'container-yard' || environment === 'stadium'
-            ? 'asphalt'
-            : 'concrete');
+      : environment === 'woodland'
+        ? 'forest-floor'
+        : natural
+          ? 'grass'
+          : environment === 'courtyard'
+            ? 'paving'
+            : environment === 'container-yard' || environment === 'stadium'
+              ? 'asphalt'
+              : 'concrete');
   const floorColor =
     natural || pixel
       ? new THREE.Color(theme.ground)
@@ -762,7 +858,8 @@ export function buildWorldVisuals({ course, world, mesh, material, box }) {
         );
   const floorMaps = surfaceMaps(floorKind, floorColor, { pixel });
   // Repeat in metres across the entire ground, including its outer apron.
-  const floorTile = natural ? 12 : environment === 'courtyard' ? 4 : 6;
+  const floorTile =
+    environment === 'woodland' ? 6 : natural ? 12 : environment === 'courtyard' ? 4 : 6;
   for (const texture of new Set(Object.values(floorMaps)))
     texture.repeat.set(
       hangar ? 1 : (width + 100) / floorTile,
@@ -826,6 +923,7 @@ export function buildWorldVisuals({ course, world, mesh, material, box }) {
   const obstacleSurface = (kind = 'concrete') => {
     const colors = {
       wood: 0x85725a,
+      bark: 0x78614d,
       concrete: 0x929790,
       plaster: theme.wall,
       brick: environment === 'courtyard' ? 0xb99e83 : theme.wall,
@@ -1167,6 +1265,14 @@ export function buildWorldVisuals({ course, world, mesh, material, box }) {
         obstacle.max
       )
         return 'storage-steel';
+      if (
+        environment === 'woodland' &&
+        /^tree-\d+$/.test(id) &&
+        !obstacle.type &&
+        obstacle.min &&
+        obstacle.max
+      )
+        return 'bark';
       if (!adventure) return null;
       if (/^(rail-gantry|rail-car|solar-hut)-/.test(id)) return 'metal';
       if (environment === 'quarry' || /^rock-/.test(id)) return 'stone';
