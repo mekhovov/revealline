@@ -1285,3 +1285,21 @@ and camera changes prepare successfully and leave playback safely paused; the
 updated paving, facades and animated civilian appear in the built player.
 Screenshot `/tmp/fpv-environment-quality-player-20261002.png`. No new radio,
 physical-device or sustained-FPS acceptance is claimed.
+
+### 2 October — environment art published
+
+[#946](https://github.com/mekhovov/revealline/pull/946) is attached to this chat
+and appended after #945 through native stack902's API. Qualification head was
+d556c1f2b; frozen package candidate stays bd77622f7, with runtime b1bea780a.
+The stack now starts at #935 after #934 merged independently. No upstream refs
+were rewritten and no existing holds were lifted. PR checks, protected merging
+and public deployment remain external follow-up; no public availability claim.
+
+The user-authorized Themes handoff was sent with the focused PR, runtime commit,
+material/appearance ownership boundaries and exact integration document. Both
+local player URLs remain refreshed. The packaged courtyard demo is left safely
+paused with the player's original Balanced/Chase preferences restored.
+Next concrete work: shared-theme integration after the Themes handoff is ready,
+then selected artist-authored material/landmark upgrades and named-device
+performance/readability qualification. Preserve parallel primary-checkout work,
+remaining original demonstrations/reimport holds and R7 coverage deferral.
