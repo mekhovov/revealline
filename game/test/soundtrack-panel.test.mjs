@@ -5,6 +5,7 @@ import { createHash } from 'node:crypto';
 import { setLocale } from '../i18n/index.mjs';
 import { attachSoundtrackPanel } from '../ui/soundtrack-panel.mjs';
 import { ONLINE_SOUNDTRACK_CATALOGUE_URL } from '../online-soundtrack-catalogue.mjs';
+import { createOnlineSoundtrackSourceStore } from '../online-soundtrack-source-store.mjs';
 import { createAudioMaster } from '../ui/audio-master.mjs';
 import {
   SOUNDTRACK_BUNDLED_ASSETS,
@@ -228,6 +229,8 @@ async function setup(
     callbacks = {},
     open = true,
     settings = false,
+    sources = false,
+    sourceStore: overrideSourceStore,
   } = {},
 ) {
   const doc = {
@@ -253,6 +256,9 @@ async function setup(
         soundtrackCatalogue: !!callbacks.catalogue,
       });
   if (initial) await store.commit(initial.prepared, { expectedGeneration: 0 });
+  const sourceStore =
+    overrideSourceStore ??
+    (sources ? createOnlineSoundtrackSourceStore({ indexedDB: db.indexedDB }) : null);
   const calls = [],
     notices = [],
     downloads = [],
@@ -351,6 +357,7 @@ async function setup(
       },
     },
     settingsRoot,
+    onlineSourceStore: sourceStore,
     ...callbacks,
   });
   const node = (id) => {
@@ -366,6 +373,7 @@ async function setup(
   t.after(() => {
     panel.dispose();
     store.close?.();
+    sourceStore?.close?.();
   });
   if (open) await panel.open();
   return {
@@ -384,6 +392,7 @@ async function setup(
     urls,
     revoked,
     settingsRoot,
+    sourceStore,
   };
 }
 const file = (name = 'Neon sky.mp3', value = silenceBytes) =>
@@ -4417,4 +4426,568 @@ test('legacy music libraries retain a visible playlist playback choice without a
   app.choose('selection', 'builtin.all');
   await app.click('use-selection');
   assert.equal((await app.store.read()).library.selection.playlistId, 'builtin.all');
+});
+
+function sourceCatalogueFixture({ custom = false } = {}) {
+  const catalogue = onlineCatalogueFixture();
+  catalogue.tracks = custom ? [catalogue.tracks[6]] : catalogue.tracks.slice(0, 2);
+  if (custom) {
+    catalogue.archive = { id: 'community-fixture', baseURL: 'https://music.example.net/' };
+    catalogue.tracks[0].audio.path = `objects/${catalogue.tracks[0].audio.sha256}.mp3`;
+  }
+  catalogue.counts = {
+    declaredTracks: catalogue.tracks.length,
+    uniqueRecordings: catalogue.tracks.length,
+    duplicateAliases: 0,
+    audioBytes: catalogue.tracks.reduce((sum, track) => sum + track.audio.bytes, 0),
+  };
+  return catalogue;
+}
+const customSourceURL = 'https://music.example.net/catalogue.json';
+function sourceFetch(requests, { failCustom = false } = {}) {
+  return async (url) => {
+    requests.push(url);
+    if (url === customSourceURL && failCustom) return new Response('offline', { status: 503 });
+    return onlineCatalogueResponse(
+      sourceCatalogueFixture({ custom: url === customSourceURL }),
+      url,
+    );
+  };
+}
+
+test('source controls add, mix, disable and remove feeds while preserving dormant styles and local state', async (t) => {
+  const requests = [];
+  const app = await setup(t, {
+    initial: await fixture('source-preferences'),
+    settings: true,
+    sources: true,
+    callbacks: {
+      catalogue: emptyCatalogue,
+      onlineCatalogueDownload: { fetch: sourceFetch(requests) },
+    },
+  });
+  await settleOnlineCatalogue(
+    () => app.node('online-results').children.length === 2 && !app.node('source-add').disabled,
+    'the default source',
+  );
+  assert.deepEqual(requests, [ONLINE_SOUNDTRACK_CATALOGUE_URL]);
+  assert.equal(app.node('settings-style-fpv').parentNode.hidden, true);
+  const before = await app.store.read();
+  const transport = structuredClone(app.state);
+  app.node('source-url').value = 'https://music.example.net/';
+  await app.click('source-add');
+  assert.equal(app.node('online-results').children.length, 3);
+  assert.equal(app.node('settings-style-fpv').parentNode.hidden, false);
+  assert.equal(app.node('settings-style-fpv').checked, false);
+  assert.match(app.node('source-list').textContent, /Recordings: 2/);
+  assert.match(app.node('source-list').textContent, /Recordings: 1/);
+  assert.deepEqual(await app.store.read(), before, 'source changes do not commit music drafts');
+  assert.deepEqual(app.state, transport, 'adding sources does not play, pause or change volume');
+  assert.equal(
+    app.calls.some(([name]) => ['remote', 'play', 'volume'].includes(name)),
+    false,
+  );
+
+  app.node('source-enabled-0').checked = false;
+  await app.node('source-enabled-0').onchange();
+  assert.equal(app.node('online-results').children.length, 1);
+  assert.match(app.node('online-results').textContent, /FPV Run/);
+  assert.equal(
+    app.node('online-collection').children.some((option) => option.value === 'Synth collection'),
+    false,
+  );
+  app.node('online-mix-library').checked = false;
+  await app.click('online-play-all');
+  assert.equal(app.calls.findLast(([name]) => name === 'remote')[2].mixWithLibrary, false);
+
+  await app.click('settings-styles-none');
+  app.node('settings-style-fpv').checked = true;
+  app.node('settings-style-fpv').onchange();
+  await app.click('settings-play-styles');
+  assert.deepEqual((await app.store.read()).publicStyles, ['fpv']);
+  app.node('source-enabled-1').checked = false;
+  await app.node('source-enabled-1').onchange();
+  assert.equal(app.node('settings-style-fpv').parentNode.hidden, true);
+  assert.equal(app.node('online-results').children.length, 0);
+  assert.deepEqual((await app.store.read()).publicStyles, ['fpv']);
+  const count = requests.length;
+  await app.click('settings-styles-none');
+  app.node('settings-style-synth').checked = true;
+  app.node('settings-style-synth').onchange();
+  await app.click('settings-play-styles');
+  assert.equal(requests.length, count, 'local fallback cannot enable or fetch a disabled source');
+  assert.equal(app.calls.at(-1)[0], 'play');
+  assert.deepEqual(
+    (await app.store.read()).publicStyles,
+    ['synth', 'fpv'],
+    'dormant style remains saved',
+  );
+  assert.match(app.node('settings-style-status').textContent, /game and uploaded music/);
+  app.node('source-enabled-1').checked = true;
+  await app.node('source-enabled-1').onchange();
+  assert.equal(app.node('settings-style-fpv').parentNode.hidden, false);
+  assert.equal(app.node('settings-style-fpv').checked, true);
+  await app.click('source-remove-1');
+  assert.equal(app.node('source-list').children.length, 1);
+  assert.equal(app.node('settings-style-fpv').parentNode.hidden, true);
+  assert.deepEqual((await app.sourceStore.read()).sources, [
+    { url: ONLINE_SOUNDTRACK_CATALOGUE_URL, enabled: false },
+  ]);
+});
+
+test('saved custom-only source choices reload without a main request and are reachable from Audio settings', async (t) => {
+  const requests = [];
+  const callbacks = {
+    catalogue: emptyCatalogue,
+    onlineCatalogueDownload: { fetch: sourceFetch(requests) },
+  };
+  const first = await setup(t, { settings: true, sources: true, callbacks });
+  await settleOnlineCatalogue(
+    () => !first.node('source-add').disabled && first.node('online-results').children.length === 2,
+    'initial source preferences',
+  );
+  first.node('source-url').value = customSourceURL;
+  await first.click('source-add');
+  first.node('source-enabled-0').checked = false;
+  await first.node('source-enabled-0').onchange();
+  first.panel.dispose();
+  requests.length = 0;
+  const reopened = await setup(t, {
+    open: false,
+    settings: true,
+    sourceStore: first.sourceStore,
+    store: first.store,
+    callbacks,
+  });
+  await settleOnlineCatalogue(
+    () => reopened.node('online-results').children.length === 1,
+    'persisted custom source',
+  );
+  assert.deepEqual(requests, [customSourceURL]);
+  assert.equal(reopened.node('source-enabled-0').checked, false);
+  assert.equal(reopened.node('source-enabled-1').checked, true);
+  assert.equal(reopened.panel.isOpen(), false);
+  await reopened.click('settings-music-sources');
+  assert.equal(reopened.panel.isOpen(), true);
+  assert.equal(
+    reopened.node('advanced-music-sources-toggle').getAttribute('aria-expanded'),
+    'true',
+  );
+  assert.equal(reopened.doc.activeElement, reopened.node('source-url'));
+  assert.equal(
+    reopened.calls.some(([name]) => ['play', 'remote', 'volume'].includes(name)),
+    false,
+  );
+});
+
+test('a failed optional feed keeps main results and local playback available without changing audio', async (t) => {
+  const requests = [];
+  const app = await setup(t, {
+    settings: true,
+    sources: true,
+    callbacks: {
+      catalogue: emptyCatalogue,
+      onlineCatalogueDownload: { fetch: sourceFetch(requests, { failCustom: true }) },
+    },
+  });
+  await settleOnlineCatalogue(
+    () => app.node('online-results').children.length === 2 && !app.node('source-add').disabled,
+    'main catalogue',
+  );
+  const state = structuredClone(app.state);
+  app.node('source-url').value = customSourceURL;
+  await app.click('source-add');
+  assert.equal(app.node('online-results').children.length, 2);
+  assert.match(app.node('source-list').textContent, /Could not load this source/);
+  assert.equal(app.node('settings-style-fpv').parentNode.hidden, true);
+  assert.deepEqual(app.state, state);
+  await app.click('play');
+  assert(app.calls.some(([name]) => name === 'play'));
+  await app.click('online-play-all');
+  assert.deepEqual(
+    app.calls.findLast(([name]) => name === 'remote')[1].map((track) => track.title),
+    ['Night Circuit', 'Iron Pulse'],
+  );
+});
+
+test('source save failure does not request the new host or alter the active source choice', async (t) => {
+  const requests = [];
+  const sources = [{ url: ONLINE_SOUNDTRACK_CATALOGUE_URL, enabled: true }];
+  const sourceStore = {
+    read: async () => ({ generation: 0, sources }),
+    commit: async () => {
+      throw new Error('Source preference transaction failed');
+    },
+  };
+  const app = await setup(t, {
+    sourceStore,
+    callbacks: {
+      catalogue: emptyCatalogue,
+      onlineCatalogueDownload: { fetch: sourceFetch(requests) },
+    },
+  });
+  await settleOnlineCatalogue(
+    () => app.node('online-results').children.length === 2 && !app.node('source-add').disabled,
+    'main source',
+  );
+  app.node('source-url').value = customSourceURL;
+  await app.click('source-add');
+  assert.deepEqual(requests, [ONLINE_SOUNDTRACK_CATALOGUE_URL]);
+  assert.match(app.node('source-status').textContent, /Source preference transaction failed/);
+  assert.equal(app.node('source-list').children.length, 1);
+  assert.equal(app.node('source-url').value, customSourceURL);
+  assert.equal(app.node('online-results').children.length, 2);
+});
+
+test('a loading source can be disabled and its late response cannot restore rows or styles', async (t) => {
+  let releaseCustom,
+    aborted = false;
+  const app = await setup(t, {
+    sources: true,
+    settings: true,
+    callbacks: {
+      catalogue: emptyCatalogue,
+      onlineCatalogueDownload: {
+        fetch: async (url, options) => {
+          if (url !== customSourceURL)
+            return onlineCatalogueResponse(sourceCatalogueFixture(), url);
+          options.signal.addEventListener('abort', () => {
+            aborted = true;
+          });
+          return new Promise((resolve) => {
+            releaseCustom = () =>
+              resolve(onlineCatalogueResponse(sourceCatalogueFixture({ custom: true }), url));
+          });
+        },
+      },
+    },
+  });
+  await settleOnlineCatalogue(
+    () => !app.node('source-add').disabled && app.node('online-results').children.length === 2,
+    'main source',
+  );
+  app.node('source-url').value = customSourceURL;
+  const adding = app.click('source-add');
+  await settleOnlineCatalogue(
+    () => releaseCustom && !app.node('source-enabled-1').disabled,
+    'cancellable source controls',
+  );
+  app.node('source-enabled-1').checked = false;
+  await app.node('source-enabled-1').onchange();
+  assert.equal(aborted, true);
+  releaseCustom();
+  await adding;
+  assert.equal(app.node('online-results').children.length, 2);
+  assert.equal(app.node('settings-style-fpv').parentNode.hidden, true);
+  assert.equal(app.node('source-enabled-1').checked, false);
+});
+
+test('optional unknown-licence rows disclose their status and cannot enter Recording mode', async (t) => {
+  const custom = sourceCatalogueFixture({ custom: true });
+  const track = custom.tracks[0];
+  track.license = 'Unknown — uploader-confirmed rights';
+  track.licenseURL = null;
+  track.rights = {
+    licenseId: 'UNKNOWN',
+    licenseVersion: null,
+    licenseURL: null,
+    rightsEvidenceURL: track.source,
+    attribution: track.credit,
+    derivativeChangeNotice: 'Original supplied recording; no audio changes.',
+    permissionBasis: 'uploader-confirmed-public-redistribution-and-web-playback',
+    shareAlike: {
+      required: null,
+      deliveryLicenseId: null,
+      deliveryLicenseVersion: null,
+      deliveryLicenseURL: null,
+    },
+  };
+  const app = await setup(t, {
+    sources: true,
+    callbacks: {
+      catalogue: emptyCatalogue,
+      onlineCatalogueDownload: {
+        fetch: async (url) =>
+          onlineCatalogueResponse(url === customSourceURL ? custom : sourceCatalogueFixture(), url),
+      },
+    },
+  });
+  await settleOnlineCatalogue(
+    () => !app.node('source-add').disabled && app.node('online-results').children.length === 2,
+    'known-licensed main source',
+  );
+  app.node('source-url').value = customSourceURL;
+  await app.click('source-add');
+  assert.equal(app.node('online-results').children.length, 3);
+  assert.match(
+    app.node('online-results').textContent,
+    /Unknown licence · excluded from Recording mode/,
+  );
+  const item = app.node(`online-play-${track.audio.sha256}`).parentNode;
+  assert.match(item.textContent, /FPV Run.*Synthetic FPV artist/);
+  assert.equal(item.lastElementChild.getAttribute('href'), track.source);
+  await app.click(`online-play-${track.audio.sha256}`);
+  const played = app.calls.findLast(([name]) => name === 'remote');
+  assert.equal(played[2].startTrackId, `online.${track.audio.sha256}`);
+  assert.equal(played[1].find((item) => item.sha256 === track.audio.sha256).rights.kind, 'unknown');
+  app.node('recording-mode').checked = true;
+  await app.click('apply-listening');
+  assert.equal(app.node('online-results').children.length, 0);
+  assert.match(app.node('online-status').textContent, /Recording mode excludes 3/);
+});
+
+test('refresh adopts a newer atomic source choice so a generation conflict can be retried', async (t) => {
+  const requests = [];
+  const app = await setup(t, {
+    sources: true,
+    callbacks: {
+      catalogue: emptyCatalogue,
+      onlineCatalogueDownload: { fetch: sourceFetch(requests) },
+    },
+  });
+  await settleOnlineCatalogue(
+    () => !app.node('source-add').disabled && app.node('online-results').children.length === 2,
+    'source preferences',
+  );
+  await app.sourceStore.commit([{ url: ONLINE_SOUNDTRACK_CATALOGUE_URL, enabled: false }], {
+    expectedGeneration: 0,
+  });
+  app.node('source-url').value = customSourceURL;
+  await app.click('source-add');
+  assert.equal(app.node('source-list').children.length, 1);
+  assert.deepEqual(requests, [ONLINE_SOUNDTRACK_CATALOGUE_URL]);
+  await app.click('online-reload');
+  assert.equal(app.node('source-enabled-0').checked, false);
+  assert.equal(app.node('online-results').children.length, 0);
+  await app.click('source-add');
+  assert.equal(app.node('source-list').children.length, 2);
+  assert.equal(app.node('online-results').children.length, 1);
+  assert.deepEqual((await app.sourceStore.read()).sources, [
+    { url: ONLINE_SOUNDTRACK_CATALOGUE_URL, enabled: false },
+    { url: customSourceURL, enabled: true },
+  ]);
+});
+
+test('disabling a source during the offline media probe cannot stage stale licensed metadata', async (t) => {
+  const audio = new Uint8Array(silenceBytes);
+  const sha256 = createHash('sha256').update(audio).digest('hex');
+  const catalogue = sourceCatalogueFixture();
+  const audioURL = `https://audio.example.net/objects/${sha256}.mp3`;
+  catalogue.tracks[0].audio = {
+    path: audioURL,
+    bytes: audio.byteLength,
+    sha256,
+    delivery: {
+      type: 'external-url',
+      verifiedAt: '2026-10-01T00:00:00Z',
+      rangeRequests: true,
+      cors: true,
+    },
+  };
+  catalogue.counts.audioBytes = catalogue.tracks.reduce((sum, track) => sum + track.audio.bytes, 0);
+  let finishProbe;
+  const app = await setup(t, {
+    sources: true,
+    probeMedia: async (blob) => {
+      await new Promise((resolve) => {
+        finishProbe = resolve;
+      });
+      return structuralProbe(blob);
+    },
+    callbacks: {
+      catalogue: emptyCatalogue,
+      onlineCatalogueDownload: {
+        fetch: async (url) =>
+          url === ONLINE_SOUNDTRACK_CATALOGUE_URL
+            ? onlineCatalogueResponse(catalogue)
+            : {
+                status: 200,
+                redirected: false,
+                url,
+                headers: { get: () => String(audio.byteLength) },
+                body: new Response(audio).body,
+              },
+      },
+    },
+  });
+  await settleOnlineCatalogue(
+    () => app.doc.nodes.has(`soundtrack-online-install-${sha256}`),
+    'offline install',
+  );
+  const saved = await app.store.read();
+  const installing = app.click(`online-install-${sha256}`);
+  await settleOnlineCatalogue(() => finishProbe, 'the pending media probe');
+  app.node('source-enabled-0').checked = false;
+  await app.node('source-enabled-0').onchange();
+  finishProbe();
+  assert.equal(await installing, false);
+  assert.match(app.node('status').textContent, /Recording downloads are unavailable/);
+  assert.deepEqual(await app.store.read(), saved);
+  assert.equal(app.node('save').disabled, true);
+  assert.equal(app.node('online-results').children.length, 0);
+});
+
+test('deduplicated source credits remain visible and searchable in results and now playing', async (t) => {
+  const primary = sourceCatalogueFixture(),
+    custom = sourceCatalogueFixture({ custom: true }),
+    recording = primary.tracks[0];
+  custom.tracks = [
+    {
+      ...recording,
+      title: 'Alternate recording title',
+      artist: 'Second credited artist',
+      credit: 'Exact second-source attribution',
+      source: 'https://second-artist.example.net/recording',
+      tags: ['ФПВ'],
+      collection: 'Second collection',
+      collections: ['Second collection'],
+      audio: { ...recording.audio, path: `objects/${recording.audio.sha256}.mp3` },
+    },
+  ];
+  custom.counts = {
+    declaredTracks: 1,
+    uniqueRecordings: 1,
+    duplicateAliases: 0,
+    audioBytes: recording.audio.bytes,
+  };
+  const app = await setup(t, {
+    sources: true,
+    settings: true,
+    callbacks: {
+      catalogue: emptyCatalogue,
+      onlineCatalogueDownload: {
+        fetch: async (url) =>
+          onlineCatalogueResponse(url === customSourceURL ? custom : primary, url),
+      },
+    },
+  });
+  await settleOnlineCatalogue(
+    () => !app.node('source-add').disabled && app.node('online-results').children.length === 2,
+    'main source',
+  );
+  app.node('source-url').value = customSourceURL;
+  await app.click('source-add');
+  assert.equal(
+    app.node('online-results').children.length,
+    2,
+    'matching hashes remain one recording',
+  );
+  assert.equal(app.node('settings-style-fpv').parentNode.hidden, false);
+  app.node('online-search').value = 'Second credited artist';
+  app.node('online-search').oninput();
+  assert.equal(app.node('online-results').children.length, 1);
+  const result = app.node('online-results');
+  assert.match(result.textContent, /Night Circuit by Signal Artist/);
+  assert.match(result.textContent, /Exact second-source attribution/);
+  assert.match(result.textContent, /CC BY 4.0 International/);
+  assert(result.querySelectorAll('a').some((link) => link.href === custom.tracks[0].source));
+  await app.click(`online-play-${recording.audio.sha256}`);
+  app.panel.update();
+  assert.match(app.node('now-sources').textContent, /Night Circuit by Signal Artist/);
+  assert.match(app.node('now-sources').textContent, /Exact second-source attribution/);
+  assert(
+    app
+      .node('now-sources')
+      .querySelectorAll('a')
+      .some((link) => link.href === recording.licenseURL),
+  );
+});
+
+function simulateNativeSourceDetachment(app) {
+  const list = app.node('source-list'),
+    replace = list.replaceChildren.bind(list);
+  list.replaceChildren = (...children) => {
+    if (list.contains(app.doc.activeElement)) app.doc.activeElement.blur();
+    for (const element of list.querySelectorAll('input, button')) element.isConnected = false;
+    replace(...children);
+  };
+}
+
+test('source refreshes preserve focused URL control roles and removal uses the adjacent source', async (t) => {
+  const app = await setup(t, {
+    sources: true,
+    callbacks: {
+      catalogue: emptyCatalogue,
+      onlineCatalogueDownload: { fetch: sourceFetch([]) },
+    },
+  });
+  await settleOnlineCatalogue(() => !app.node('source-add').disabled, 'source preferences');
+  simulateNativeSourceDetachment(app);
+  await app.click('advanced-music-sources-toggle');
+  app.node('source-url').value = customSourceURL;
+  app.node('source-add').focus();
+  await app.click('source-add');
+  assert.equal(app.doc.activeElement, app.node('source-add'));
+  const oldCheckbox = app.node('source-enabled-1');
+  oldCheckbox.focus();
+  oldCheckbox.checked = false;
+  await oldCheckbox.onchange();
+  assert.equal(oldCheckbox.isConnected, false, 'the old source row was detached');
+  assert.equal(app.doc.activeElement, app.node('source-enabled-1'));
+  assert.equal(app.doc.activeElement.checked, false);
+  await app.click('online-reload');
+  assert.equal(app.doc.activeElement, app.node('source-enabled-1'));
+  app.node('source-remove-1').focus();
+  await app.click('source-remove-1');
+  assert.equal(app.node('source-list').children.length, 1);
+  assert.equal(app.doc.activeElement, app.node('source-enabled-0'));
+});
+
+for (const leaveOnBody of [false, true])
+  test(`source save does not reclaim focus after the user moves${leaveOnBody ? ' and then leaves focus on the body' : ''}`, async (t) => {
+    const sourceStore = createOnlineSoundtrackSourceStore({
+      indexedDB: memoryIndexedDB().indexedDB,
+    });
+    let finishCommit;
+    const app = await setup(t, {
+      sourceStore: {
+        read: (...args) => sourceStore.read(...args),
+        commit: async (...args) => {
+          await new Promise((resolve) => {
+            finishCommit = resolve;
+          });
+          return sourceStore.commit(...args);
+        },
+        close: () => sourceStore.close(),
+      },
+      callbacks: {
+        catalogue: emptyCatalogue,
+        onlineCatalogueDownload: { fetch: sourceFetch([]) },
+      },
+    });
+    await settleOnlineCatalogue(() => !app.node('source-add').disabled, 'source preferences');
+    simulateNativeSourceDetachment(app);
+    await app.click('advanced-music-sources-toggle');
+    app.node('source-enabled-0').focus();
+    app.node('source-enabled-0').checked = false;
+    const changing = app.node('source-enabled-0').onchange();
+    await settleOnlineCatalogue(() => finishCommit, 'pending source save');
+    assert.equal(app.doc.activeElement, app.doc.body);
+    app.node('play').focus();
+    if (leaveOnBody) app.node('play').blur();
+    finishCommit();
+    await changing;
+    assert.equal(app.node('source-enabled-0').checked, false);
+    assert.equal(app.doc.activeElement, leaveOnBody ? app.doc.body : app.node('play'));
+  });
+
+test('audition creator follows the playing original rather than a different editor selection', async (t) => {
+  const initial = await fixture();
+  const library = structuredClone(initial.library);
+  library.tracks[0].rights.source = 'https://original-artist.example/song';
+  initial.prepared = await prepareSoundtrackLibrary(library, initial.assets, {
+    probeMedia: structuralProbe,
+  });
+  const app = await setup(t, { initial });
+  app.choose('tracks', initial.track.id);
+  await app.click('audition-track');
+  const links = () => app.node('audition-sources').querySelectorAll('a');
+  assert.equal(links()[0].getAttribute('href'), 'https://original-artist.example/song');
+  assert.equal(links()[0].getAttribute('target'), '_blank');
+  assert.equal(links()[0].getAttribute('rel'), 'noopener noreferrer');
+  app.choose('tracks', BUILTIN_SOUNDTRACK_TRACKS[0].id);
+  assert.equal(links()[0].getAttribute('href'), 'https://original-artist.example/song');
+  await app.click('stop-audition');
+  assert.equal(links().length, 0);
+  assert.equal(app.node('audition-sources').hidden, true);
 });

@@ -1032,14 +1032,11 @@ test('public package has local entry, accurate storage notices and enforced prev
       .split(';')
       .find((value) => value.trim().startsWith('connect-src'))
       .trim(),
-    "connect-src 'self' https://mekhovov.github.io/revealline-soundtracks/",
-    'Local preview fetches may reach only the code-admitted soundtrack archive path.',
+    "connect-src 'self' https:",
+    'Optional sources require HTTPS catalogue access in packaged previews; the manager gates user-selected sources.',
   );
   assert.match(PUBLIC_SECURITY_HEADERS['Content-Security-Policy'], /connect-src 'self';/);
-  assert.match(
-    release.headers['content-security-policy'],
-    /media-src 'self' data: blob: https:\/\/github\.com https:\/\/release-assets\.githubusercontent\.com/,
-  );
+  assert.match(release.headers['content-security-policy'], /media-src 'self' data: blob: https:;/);
   assert.equal(release.headers['referrer-policy'], 'no-referrer');
   assert.equal(release.headers['cache-control'], 'no-cache');
   const entry = await getRaw(releaseServer.url, '/');
