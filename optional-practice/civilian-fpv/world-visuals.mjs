@@ -953,12 +953,96 @@ export function buildWorldVisuals({ course, world, mesh, material, box }) {
     const radius = Math.hypot(width, depth) / 2 + 10;
     const leaves = [material(0x496b50), material(0x345749), material(0x7c905d)],
       bark = material(0x63554a);
+    // Meadow groves frame a clearing instead of repeating a circular tree fence.
+    // Unequal groups and staggered depth leave broad openings. Their spread is
+    // capped in metres so larger school arenas retain recognizable silhouettes.
+    const groveSlots =
+      environment === 'field'
+        ? [
+            {
+              side: 'north',
+              anchor: min.x + width * 0.12,
+              span: Math.min(28, Math.max(18, width * 0.45)),
+              offsets: [
+                [-0.42, 9],
+                [-0.1, 11],
+                [0.05, 0],
+                [0.35, 1],
+                [0.22, 16],
+                [-0.22, 3],
+                [-0.3, 18],
+                [-0.47, 1],
+                [0.48, 6],
+                [0.43, 17],
+                [0.05, 8],
+                [-0.49, 15],
+                [0.04, 23],
+              ],
+            },
+            {
+              side: 'east',
+              anchor: min.z + depth * 0.22,
+              span: Math.min(24, Math.max(16, depth * 0.35)),
+              offsets: [
+                [-0.4, 5],
+                [-0.05, 8],
+                [0.2, 2],
+                [0.32, 14],
+                [-0.3, 16],
+                [0.44, 7],
+                [0.05, 18],
+                [-0.5, 0],
+                [0, 0],
+              ],
+            },
+            {
+              side: 'west',
+              anchor: min.z + depth * 0.8,
+              span: Math.min(22, Math.max(14, depth * 0.28)),
+              offsets: [
+                [-0.45, 1],
+                [-0.12, 0],
+                [0.17, 8],
+                [0.45, 1],
+                [-0.3, 12],
+                [0.37, 14],
+                [0, 17],
+              ],
+            },
+            {
+              side: 'south',
+              anchor: min.x + width * 0.76,
+              span: Math.min(14, Math.max(10, width * 0.16)),
+              offsets: [
+                [-0.45, 6],
+                [0.05, 12],
+                [0.5, 0],
+              ],
+            },
+          ].flatMap(({ side, anchor, span, offsets }) =>
+            offsets.map(([along, outward]) => ({ side, along: anchor + along * span, outward })),
+          )
+        : null;
     for (let i = 0; i < count; i++) {
       const angle = (i / count) * Math.PI * 2,
         r = radius + rng() * 24,
         height = 5 + rng() * 7;
-      const x = cx + Math.cos(angle) * r,
+      let x = cx + Math.cos(angle) * r,
         z = cz + Math.sin(angle) * r;
+      if (groveSlots) {
+        const slot = groveSlots[i],
+          // Preserve both random draws, every tree height and all geometry.
+          // The full crown stays at least ten metres outside one bounds face;
+          // the extra tenth also covers geometry attribute float rounding.
+          offset = 10.1 + height * 0.3 + slot.outward;
+        if (slot.side === 'north' || slot.side === 'south') {
+          x = slot.along;
+          z = slot.side === 'north' ? min.z - offset : max.z + offset;
+        } else {
+          x = slot.side === 'west' ? min.x - offset : max.x + offset;
+          z = slot.along;
+        }
+      }
       const trunk = mesh(new THREE.CylinderGeometry(0.14, 0.24, height * 0.7, 6), bark, backdrop);
       trunk.position.set(x, height * 0.35, z);
       trunk.castShadow = true;
