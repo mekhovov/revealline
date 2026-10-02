@@ -1222,6 +1222,39 @@ try {
     writable: () =>
       !practice && !courseSession && !courseEntry && persistenceReady && writer.writable,
   });
+  if (runtimeContent) menuStyle.themeHost.setThemes(runtimeContent.appearanceThemes);
+  function currentAppearanceDefault(entry = activeEntry) {
+    if (!runtimeContent) return null;
+    // Difficulty projections have their own execution identity. Only an owned
+    // edition entry may supply its canonical campaign identity to this provider.
+    const campaignId = candidateHost?.owns(entry)
+      ? entry.campaignId
+      : (entry.baseCampaign ?? entry.campaign).id;
+    return runtimeContent.selection.campaigns.some((item) => item.id === campaignId)
+      ? runtimeContent.appearanceDefaultFor(campaignId)
+      : runtimeContent.appearanceDefault;
+  }
+  let appliedAppearanceDefault;
+  const appearanceDefaultKey = (pin) => (pin ? `${pin.familyId}@${pin.revision}` : '');
+  async function prepareAppearanceDefault(entry) {
+    if (!runtimeContent) return null;
+    const pin = currentAppearanceDefault(entry);
+    if (appearanceDefaultKey(pin) === appliedAppearanceDefault) return null;
+    return {
+      key: appearanceDefaultKey(pin),
+      token: await menuStyle.themeHost.prepareDefault(pin),
+    };
+  }
+  function refreshAppearanceDefault() {
+    const pin = currentAppearanceDefault();
+    const key = appearanceDefaultKey(pin);
+    if (key === appliedAppearanceDefault) return;
+    appliedAppearanceDefault = key;
+    // This supplies context only; the shared host preserves the player's global
+    // choice. Refresh after adoption, never while a replacement is still loading.
+    menuStyle.themeHost.setDefault(pin);
+  }
+  refreshAppearanceDefault();
   const sound = new Soundscape({ persistentMusic: true, audioMaster });
   // The shared authority owns master attenuation; local music and effects keep their faders.
   sound.configure({ master: 1 });
@@ -2132,6 +2165,8 @@ try {
       show('asset-warning', !!copy);
     },
   });
+  painter.setArcadeProvider(() => menuStyle.themeHost.effectivePreferences());
+  painter.setInterfaceProvider(() => menuStyle.themeHost.snapshot());
   const titleCharacter = mountTitleCharacter({
     container: $('shell-home')?.querySelector('.home-content'),
     getCharacter: () => ({
@@ -4448,6 +4483,8 @@ try {
         onStatus: request.onStatus,
       });
       assertCurrent();
+      const appearance = await prepareAppearanceDefault(entry);
+      assertCurrent();
       const preparedAttempt = {
         kind: 'world-play',
         ticket,
@@ -4459,6 +4496,7 @@ try {
         runId: nextRunId,
         recorder: nextRecorder,
         pictures: ticket.pictures,
+        appearance,
       };
       const adopted = prepare({ preparedAttempt });
       if (!adopted)
@@ -5918,6 +5956,7 @@ try {
     const selection = currentSelection({ levelId });
     levelIndex = selection.levelIndex;
     campaignOverview = !practice && selection.overview;
+    refreshAppearanceDefault();
     if (!classRegistry.some((c) => c.id === classId)) classId = classRegistry[0].id;
     theme = entry.themes.find((t) => t.id === (themeId || campaign.themeId)) || entry.themes[0];
     bodyId = theme.player;
@@ -6614,7 +6653,7 @@ try {
       adoptFlightActors(stagedActors);
       stagedActors = null;
       setTheme();
-      painter.setLevel?.(run.level, { seed });
+      painter.setLevel?.(run.level, { seed, arcadeCollection: null });
       updateLoadout();
       overlay('pause');
       refreshHUD();
@@ -8906,6 +8945,9 @@ try {
         if (!resultAttemptCurrent(ticket))
           throw new DOMException(t('interface:preparationCancelled'), 'AbortError');
       }
+      const appearance = await prepareAppearanceDefault(entry);
+      if (!resultAttemptCurrent(ticket))
+        throw new DOMException(t('interface:preparationCancelled'), 'AbortError');
       const preparedPictures = ticket.pictures;
       const adopted = prepare({
         preparedAttempt: {
@@ -8917,6 +8959,7 @@ try {
           run: nextRun,
           runId: nextRunId,
           recorder: nextRecorder,
+          appearance,
         },
       });
       // Disposal, renderer and focus callbacks may hand control to another surface.
@@ -9035,6 +9078,12 @@ try {
       cancelPictureStart();
       storyDialog.close();
     }
+    if (preparedAttempt?.appearance) {
+      // Preload without changing the active flight. Acceptance is synchronous
+      // here so the new BoardPainter captures the same accepted family as DOM.
+      if (!preparedAttempt.appearance.token.commit()) return false;
+      appliedAppearanceDefault = preparedAttempt.appearance.key;
+    }
     const retainedPins = retainAttemptAppearance && flightPictures?.pins();
     const retainedPictures =
       retainAttemptAppearance && flightPictures
@@ -9095,6 +9144,7 @@ try {
       progress = progressFor(library, campaign);
       levelIndex = preparedAttempt.levelIndex;
       campaignOverview = false;
+      refreshAppearanceDefault();
       theme = preparedAttempt.theme;
       if (preparedAttempt.kind === 'world-play') {
         $('theme-select').replaceChildren(
@@ -12338,6 +12388,12 @@ try {
     };
   }
   gameShell = attachGameShell({
+    getAppearanceDefault: () => {
+      const pin = currentAppearanceDefault();
+      return pin && runtimeContent?.appearanceThemes.length
+        ? { ...pin, appearanceThemes: runtimeContent.appearanceThemes }
+        : pin;
+    },
     keyboardNavigation: false, // The shared controller adapter also owns menu keys.
     training: courseSession,
     practiceReturn: $('controller-practice-return') || $('enemy-workshop-return'),

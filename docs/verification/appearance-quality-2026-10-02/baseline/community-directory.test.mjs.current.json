@@ -1,0 +1,23 @@
+{
+  "file": "game/test/community-directory.test.mjs",
+  "kind": "current",
+  "command": [
+    "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/20.19.5/bin/node",
+    "--test",
+    "--test-concurrency=1",
+    "game/test/community-directory.test.mjs"
+  ],
+  "cwd": "/Users/oleksandr.mekhovov/work/my_projects/go_test",
+  "exitCode": 0,
+  "timedOut": false,
+  "seconds": 0.1,
+  "failures": [],
+  "summary": [
+    "# tests 8",
+    "# pass 8",
+    "# fail 0",
+    "# cancelled 0",
+    "# skipped 0",
+    "# duration_ms 75.896084"
+  ]
+}

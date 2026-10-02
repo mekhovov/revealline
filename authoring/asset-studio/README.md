@@ -1,5 +1,35 @@
 # Asset Studio artwork candidates
 
+The **Theme library and specimens** workbench keeps independent theme workspaces.
+**New industrial theme** starts from a flattened snapshot of the verified current
+release, preserving original asset bytes and provenance without copying its full
+editing history. **Duplicate** instead snapshots the selected workspace. Import
+can preserve a workspace identity, duplicate it, or explicitly replace it while
+keeping a recoverable prior workspace.
+
+The normal `.rltheme` export retains editable workspace history and source files.
+The separate `.rlruntime` export contains one selected compiled Presentation,
+an independently identified `ThemeFamily.v1` and `InterfaceTheme.v1` candidate,
+and its exact built-in SIM collection descriptor. Workspace color tokens drive
+the candidate interface; SIM model/material/effect bindings refer to procedural
+resources supplied by the installed engine. The export does not claim to bundle
+those resources or install an arbitrary player theme. Its `RLRUN2` envelope has a
+SHA-256 integrity check and exact asset hashes; the reader also accepts older
+Presentation-only `RLRUN1` files without inventing cross-domain bindings. These
+checks detect changed bytes, not authorship or approval.
+
+**Compare industrial arcade art** uses the current workspace's exact selected
+asset bytes in both real Team renderers. Only recognized built-in artwork receives
+the Industrial appearance adapter; custom uploads remain authored. Editing or
+switching workspaces closes the comparison until it is explicitly opened again.
+
+Save staged edits before **SIM World Studio**. The same-tab calibration preview
+receives a bounded, single-use candidate through session storage, valid for 30
+minutes. It shows the candidate interface and canonical built-in SIM collection;
+it does not change player preferences, flight proofs or world geometry. Reloading
+the preview consumes no second payload; reopen it from Asset Studio to review
+that candidate again.
+
 Open [Asset Studio](index.html) over HTTP and use **Artwork collections · source
 candidates** to import collection JSON together with every named image, or one
 previously exported `.rlart` packet. This separate authoring draft does not change

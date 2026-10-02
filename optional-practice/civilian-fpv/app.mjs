@@ -1,5 +1,4 @@
 import { fpvReturnURL } from '../../game/fpv-entry.mjs';
-import { boundedJSON, canonicalJSON } from '../../game/data-json.mjs';
 import { getLocale, setLocale } from '../../game/i18n/index.mjs';
 import {
   createFlight,
@@ -20,13 +19,19 @@ import { createRadioRuntime } from './radio-runtime.mjs';
 import { restoreVerifiedRadio } from './radio-session.mjs';
 import { mountRadioSetup } from './radio-setup.mjs';
 import { mountFlightFullscreen } from './flight-fullscreen.mjs';
-import { mountSimPresentation } from './sim-presentation.mjs';
+import { mountSimPresentation, mountSimAppearanceControls } from './sim-presentation.mjs';
 import { createFlightInput } from './input.mjs';
 import { createFlightRenderer } from './renderer.mjs';
 import { COPY } from './copy.mjs';
 import { mountFlightNotebook } from './notebook.mjs';
 import { mountFlightStudio } from './studio.mjs';
 import { preparePracticeOffline, removePracticeOffline } from './offline.mjs';
+import {
+  academyRecording,
+  createSimAppearanceSession,
+  playableSimAppearance,
+  readAcademyRecording,
+} from './world-themes.mjs';
 
 export function mountFlightApp({
   document: doc = globalThis.document,
@@ -91,6 +96,7 @@ export function mountFlightApp({
   let flight,
     recorder,
     lastProof = null,
+    lastPresentation = null,
     authoringCourse = null,
     replay = null,
     replayRate = 1,
@@ -235,6 +241,20 @@ export function mountFlightApp({
       $('fallback').textContent = c().contextLost;
     },
   });
+  const appearanceSession = createSimAppearanceSession();
+  const appearanceControls = mountSimAppearanceControls({
+    document: doc,
+    window: win,
+    container: $('camera').closest('div'),
+    locale: () => locale,
+    pending: () => appearanceSession.pending(),
+    accepted: () => appearanceSession.current(),
+    onChange(appearance) {
+      if (!appearanceSession.select(appearance) || !flight || replay) return;
+      renderer.setPresentation?.(appearance);
+      renderer.setCourse?.(flight.course(), mode);
+    },
+  });
   function reset(index = selected, nextMode = mode, previewCourse = authoringCourse) {
     const nextFlight = createFlight({
       course: previewCourse ?? courses[index],
@@ -265,7 +285,10 @@ export function mountFlightApp({
     $('try').hidden = !authoringCourse;
     $('arm').disabled = !renderer.available || graphicsLost;
     $('watch').disabled = !renderer.available || graphicsLost || !!authoringCourse;
+    const acceptedAppearance = appearanceSession.begin(appearanceControls.resolve().appearance);
+    renderer.setPresentation?.(acceptedAppearance);
     renderer.setCourse?.(flight.course(), mode);
+    appearanceControls.refresh();
     renderer.setPath?.([]);
     paint(true);
   }
@@ -316,6 +339,7 @@ export function mountFlightApp({
     }
     input.enable(true);
     flight.arm();
+    appearanceSession.arm(flight.snapshot().status);
     accumulator = 0;
     lastTime = null;
     lastExecutionTime = null;
@@ -363,17 +387,11 @@ export function mountFlightApp({
     if ($('academy-flight-options')) $('academy-flight-options').open = false;
     $(id).showModal();
   }
-  const copyProof = (inputProof) =>
-    boundedJSON(inputProof, {
-      maxBytes: 1024 * 1024,
-      maxNodes: 216500,
-      maxArray: 36000,
-      maxDepth: 8,
-    });
+  const copyProof = (inputProof) => readAcademyRecording(inputProof);
   function review(inputProof, kind = 'review') {
     // Copy caller-owned data before the first asynchronous boundary.
-    const proof = copyProof(inputProof);
-    return startReview(() => proof, kind);
+    const recording = copyProof(inputProof);
+    return startReview(() => academyRecording(recording.proof, recording.presentation), kind);
   }
   function startReview(readProof, kind = 'review', closeAfter = null) {
     if (disposed || !renderer.available || graphicsLost) throw new Error(c().fallback);
@@ -388,7 +406,8 @@ export function mountFlightApp({
         const raw = await readProof();
         controller.signal.throwIfAborted();
         // Objects arrive only through review(), which already owns its clone.
-        const proof = typeof raw === 'string' ? copyProof(raw) : raw;
+        const recording = copyProof(raw);
+        const proof = recording.proof;
         const index = courses.findIndex((course) => course.id === proof.course);
         if (index < 0) throw new TypeError(c().invalid);
         const checked = await replayFlightCooperatively(courses[index], proof, {
@@ -400,7 +419,7 @@ export function mountFlightApp({
         if (disposed || owner !== epoch) return null;
         reviewAbort = null;
         if (closeAfter) closeDialog(closeAfter);
-        showReview(proof, kind, index, checked);
+        showReview(proof, kind, index, checked, recording.presentation);
         return checked;
       } catch (error) {
         if (controller.signal.aborted || disposed || owner !== epoch) return null;
@@ -416,13 +435,21 @@ export function mountFlightApp({
     pendingReview = operation.catch(() => {});
     return operation;
   }
-  function showReview(proof, kind, index, checked) {
+  function showReview(proof, kind, index, checked, savedPresentation = null) {
     selected = index;
     mode = proof.mode;
     authoringCourse = null;
     const playback = createFlight({ course: courses[index], mode, response: proof.response });
     playback.arm();
-    replay = { proof, kind, flight: playback, at: 0, paused: false };
+    const acceptedPresentation = savedPresentation ?? { collectionId: 'authored', revision: 'r1' };
+    replay = {
+      proof,
+      kind,
+      flight: playback,
+      at: 0,
+      paused: false,
+      presentation: acceptedPresentation,
+    };
     $('replay-controls').hidden = false;
     $('replay-rate').value = String(replayRate);
     $('mode').value = mode;
@@ -432,7 +459,16 @@ export function mountFlightApp({
     accumulator = 0;
     lastTime = null;
     lastExecutionTime = null;
+    const appearance = appearanceSession.begin(acceptedPresentation, { retained: true });
+    const playable = playableSimAppearance(appearance);
+    renderer.setPresentation?.(playable.appearance);
     renderer.setCourse?.(courses[index], mode);
+    if (playable.fallbackReason)
+      message =
+        locale === 'uk'
+          ? 'Оформлення запису недоступне; використано авторське оформлення.'
+          : 'Recorded appearance unavailable; using the authored appearance.';
+    appearanceControls.refresh();
     renderer.setPath?.(checked.path);
     paint(true);
   }
@@ -446,6 +482,7 @@ export function mountFlightApp({
       if (values) node.textContent = values[locale === 'uk' ? 1 : 0];
     }
     presentation.refresh();
+    appearanceControls.refresh();
     updateSoundLabel(presentation.soundEnabled());
     for (const node of doc.querySelectorAll('[data-copy]'))
       if (c()[node.dataset.copy]) node.textContent = c()[node.dataset.copy];
@@ -564,6 +601,7 @@ export function mountFlightApp({
     radio.freeze('paused');
     message = null;
     lastProof = recorder.export();
+    lastPresentation = appearanceSession.current();
     if (state.status !== 'complete') return;
     $('complete-title').textContent = currentCourse().locales[locale].title;
     $('lesson').textContent = currentCourse().locales[locale].lesson;
@@ -578,10 +616,12 @@ export function mountFlightApp({
     // Notebook admission already replays cooperatively. Retain this exact win
     // independently of the next visible run; Next/Retry need not wait for it.
     const admission = notebook?.accept
-      ? Promise.resolve(notebook.accept(delivery.attempt)).then((verification) => ({
-          ...delivery,
-          verification,
-        }))
+      ? Promise.resolve(notebook.accept(delivery.attempt, { presentation: lastPresentation })).then(
+          (verification) => ({
+            ...delivery,
+            verification,
+          }),
+        )
       : replayFlightCooperatively(delivery.course, delivery.attempt).then((result) => {
           if (result.state.status !== 'complete') throw new Error('Completion did not replay.');
           return { ...delivery, result };
@@ -625,6 +665,7 @@ export function mountFlightApp({
           message = radio.status().reason === 'ready' ? 'radioReady' : radio.status().reason;
         if (radio.status().active && ['paused', 'disarmed'].includes(flight.snapshot().status)) {
           flight.arm();
+          appearanceSession.arm(flight.snapshot().status);
           input.enable(true);
           message = null;
         }
@@ -807,13 +848,14 @@ export function mountFlightApp({
     if (proof) void review(proof, 'demonstration').catch(() => {});
   });
   listen($('review'), 'click', () => {
-    if (lastProof) void review(lastProof).catch(() => {});
+    if (lastProof) void review(academyRecording(lastProof, lastPresentation)).catch(() => {});
   });
   listen($('export-attempt'), 'click', () => {
     pause();
     const proof = replay?.proof ?? recorder.export();
+    const recording = academyRecording(proof, replay?.presentation ?? appearanceSession.current());
     const url = win.URL.createObjectURL(
-        new Blob([JSON.stringify(proof)], { type: 'application/json' }),
+        new Blob([JSON.stringify(recording)], { type: 'application/json' }),
       ),
       link = doc.createElement('a');
     link.href = url;
@@ -825,7 +867,8 @@ export function mountFlightApp({
     const file = $('import-attempt').files?.[0];
     if (!file) return;
     try {
-      if (file.size > 1024 * 1024) throw new Error('Flight proof exceeds 1 MiB.');
+      if (file.size > 1024 * 1024 + 2048)
+        throw new Error('Flight recording exceeds its size limit.');
       const checked = await startReview(() => file.text(), 'review', 'help-dialog');
       if (checked && !disposed) $('transfer-status').textContent = c().imported;
     } catch (error) {
@@ -856,6 +899,14 @@ export function mountFlightApp({
       }
     },
   });
+  void Promise.resolve(notebook?.ready)
+    .then(() => {
+      if (!disposed)
+        appearanceControls.preferences.adoptExisting(
+          Boolean(notebook?.snapshot?.().attempts?.length),
+        );
+    })
+    .catch(() => {});
   studio = studioFactory?.({
     container: $('flight-studio'),
     courses,
@@ -917,6 +968,12 @@ export function mountFlightApp({
     },
     snapshot: () => flight.snapshot(),
     exportAttempt: () => recorder.export(),
+    exportRecording: () => academyRecording(recorder.export(), appearanceSession.current()),
+    appearance: () => ({
+      ...appearanceControls.resolve(),
+      accepted: appearanceSession.current(),
+      pending: appearanceSession.pending(),
+    }),
     dispose() {
       if (disposed) return;
       pause();
@@ -930,6 +987,7 @@ export function mountFlightApp({
       renderer.dispose();
       immersive.dispose();
       presentation.dispose();
+      appearanceControls.dispose();
       for (const remove of listeners) remove();
       for (const button of courseButtons) {
         button.onclick = null;

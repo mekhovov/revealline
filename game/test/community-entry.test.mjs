@@ -226,7 +226,14 @@ for (const route of COMMUNITY_ROUTES)
       'utf8',
     );
     const document = parsed(source);
-    assert.equal(document.querySelector('script').getAttribute('src'), '../entry.mjs');
+    assert.equal(
+      document.querySelector('script[src="../entry.mjs"]').getAttribute('type'),
+      'module',
+    );
+    assert.equal(
+      document.querySelector('script').getAttribute('src'),
+      '../../presentation/theme-bootstrap.mjs',
+    );
     const fallback = new URL(
       document.querySelector('#community-fallback').getAttribute('href'),
       before,

@@ -2,6 +2,13 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
+    <script src="../../game/presentation/theme-bootstrap.mjs" data-theme-density="studio" data-theme-follow-context="true"></script>
+    <link
+      rel="stylesheet"
+      href="../../game/presentation/industrial-workshop.css"
+      data-industrial-workshop
+    />
+    <script type="module" src="../../game/presentation/theme-entry.mjs"></script>
 
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title data-i18n="tools:fieldKitFpvRevealSourceAudit">
@@ -11,200 +18,202 @@
     <link rel="stylesheet" href="../../game/ui/field-kit-tokens.css" />
     <link rel="stylesheet" href="../../game/ui/field-kit-components.css" />
     <style>
-      body {
-        margin: 0;
-        padding: clamp(16px, 4vw, 56px);
-        background: #070b12;
-        color: #f3f0db;
-      }
-      main {
-        max-width: 1440px;
-        margin: auto;
-      }
-      h1 {
-        font:
-          600 clamp(44px, 7vw, 80px) / 1 'Field Kit Display',
-          sans-serif;
-        margin: 0.3em 0;
-      }
-      h2 {
-        margin-top: 40px;
-      }
-      p {
-        max-width: 85ch;
-        line-height: 1.6;
-      }
-      a {
-        color: #78dce8;
-      }
-      .eyebrow,
-      .meta {
-        color: #a5b2bb;
-        font:
-          500 13px/1.6 'Field Kit Mono',
-          monospace;
-      }
-      .grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(min(100%, 380px), 1fr));
-        gap: 24px;
-      }
-      article {
-        min-width: 0;
-        padding: 16px;
-        border: 1px solid #425563;
-        background: #101923;
-      }
-      article h3 {
-        margin: 12px 0;
-      }
-      .image {
-        width: 100%;
-        aspect-ratio: 2;
-        display: flex;
-        align-items: center;
-        background: #070b12;
-      }
-      .image img,
-      .image canvas {
-        width: 100%;
-        height: 100%;
-        object-fit: contain;
-        image-rendering: pixelated;
-      }
-      .procedure .image {
-        aspect-ratio: 4/3;
-      }
-      .tag {
-        display: inline-block;
-        color: #f4bf62;
-        font:
-          500 13px 'Field Kit Mono',
-          monospace;
-      }
-      summary {
-        cursor: pointer;
-        min-height: 44px;
-        display: flex;
-        align-items: center;
-        color: #78dce8;
-      }
-      .owners {
-        padding-left: 18px;
-      }
-      .owners li {
-        margin: 16px 0;
-        overflow-wrap: anywhere;
-        font-size: 14px;
-      }
-      code {
-        font-family: 'Field Kit Mono', monospace;
-        font-size: 12px;
-        overflow-wrap: anywhere;
-      }
-      button {
-        cursor: pointer;
-        min-height: 44px;
-      }
-      .reveal-load-actions,
-      .reveal-reading-tools {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 12px;
-        margin: 12px 0;
-      }
-      .reveal-reading-region {
-        max-height: min(70svh, 720px);
-        overflow: auto;
-        overscroll-behavior: contain;
-      }
-      .owners.reveal-reading-region {
-        max-height: min(50svh, 420px);
-      }
-      .reveal-reading-region:focus-visible {
-        outline: 3px solid #78dce8;
-        outline-offset: 3px;
-      }
-      .reveal-reading-tools button[aria-pressed='true'] {
-        border: 3px double currentColor;
-      }
-      #status[data-error='true'] {
-        color: #f07879;
-      }
-      .preview-note {
-        border-left: 3px solid #f4bf62;
-        padding-left: 16px;
-      }
-      .reveal-source-dialog {
-        box-sizing: border-box;
-        width: min(1100px, calc(100vw - 24px));
-        max-height: calc(100svh - 24px);
-        padding: clamp(12px, 3vw, 28px);
-        overflow: auto;
-        color: #f3f0db;
-        background: #101923;
-        border: 2px solid #78dce8;
-      }
-      .reveal-source-dialog::backdrop {
-        background: rgb(0 0 0 / 75%);
-      }
-      .reveal-source-dialog h2 {
-        margin: 0 0 12px;
-        font-size: clamp(22px, 4vw, 32px);
-      }
-      .reveal-source-actions {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 8px;
-        margin: 12px 0;
-      }
-      #reveal-source-region {
-        max-height: min(60svh, 640px);
-        min-height: 44px;
-        overflow: auto;
-        overscroll-behavior: contain;
-        background: #070b12;
-        border: 1px solid #425563;
-      }
-      #reveal-source-region pre {
-        padding: 12px;
-        margin: 0;
-        white-space: pre-wrap;
-        overflow-wrap: anywhere;
-        font:
-          16px/1.6 'Field Kit Mono',
-          monospace;
-      }
-      #reveal-source-region img {
-        display: block;
-        max-width: 100%;
-        max-height: min(calc(60svh - 2px), 638px);
-        height: auto;
-        margin-inline: auto;
-        image-rendering: pixelated;
-      }
-      #reveal-source-region img[data-size='actual'] {
-        width: auto;
-        height: auto;
-        max-width: none;
-        max-height: none;
-      }
-      #reveal-source-status {
-        overflow-wrap: anywhere;
-      }
-      #reveal-source-region:focus-visible {
-        outline: 3px solid #78dce8;
-        outline-offset: 2px;
-      }
-      @media (forced-colors: active) {
-        .reveal-source-dialog,
+      @layer legacy {
+        body {
+          margin: 0;
+          padding: clamp(16px, 4vw, 56px);
+          background: #070b12;
+          color: #f3f0db;
+        }
+        main {
+          max-width: 1440px;
+          margin: auto;
+        }
+        h1 {
+          font:
+            600 clamp(44px, 7vw, 80px) / 1 'Field Kit Display',
+            sans-serif;
+          margin: 0.3em 0;
+        }
+        h2 {
+          margin-top: 40px;
+        }
+        p {
+          max-width: 85ch;
+          line-height: 1.6;
+        }
+        a {
+          color: #78dce8;
+        }
+        .eyebrow,
+        .meta {
+          color: #a5b2bb;
+          font:
+            500 13px/1.6 'Field Kit Mono',
+            monospace;
+        }
+        .grid {
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(min(100%, 380px), 1fr));
+          gap: 24px;
+        }
+        article {
+          min-width: 0;
+          padding: 16px;
+          border: 1px solid #425563;
+          background: #101923;
+        }
+        article h3 {
+          margin: 12px 0;
+        }
+        .image {
+          width: 100%;
+          aspect-ratio: 2;
+          display: flex;
+          align-items: center;
+          background: #070b12;
+        }
+        .image img,
+        .image canvas {
+          width: 100%;
+          height: 100%;
+          object-fit: contain;
+          image-rendering: pixelated;
+        }
+        .procedure .image {
+          aspect-ratio: 4/3;
+        }
+        .tag {
+          display: inline-block;
+          color: #f4bf62;
+          font:
+            500 13px 'Field Kit Mono',
+            monospace;
+        }
+        summary {
+          cursor: pointer;
+          min-height: 44px;
+          display: flex;
+          align-items: center;
+          color: #78dce8;
+        }
+        .owners {
+          padding-left: 18px;
+        }
+        .owners li {
+          margin: 16px 0;
+          overflow-wrap: anywhere;
+          font-size: 14px;
+        }
+        code {
+          font-family: 'Field Kit Mono', monospace;
+          font-size: 12px;
+          overflow-wrap: anywhere;
+        }
+        button {
+          cursor: pointer;
+          min-height: 44px;
+        }
+        .reveal-load-actions,
+        .reveal-reading-tools {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 12px;
+          margin: 12px 0;
+        }
+        .reveal-reading-region {
+          max-height: min(70svh, 720px);
+          overflow: auto;
+          overscroll-behavior: contain;
+        }
+        .owners.reveal-reading-region {
+          max-height: min(50svh, 420px);
+        }
+        .reveal-reading-region:focus-visible {
+          outline: 3px solid #78dce8;
+          outline-offset: 3px;
+        }
+        .reveal-reading-tools button[aria-pressed='true'] {
+          border: 3px double currentColor;
+        }
+        #status[data-error='true'] {
+          color: #f07879;
+        }
+        .preview-note {
+          border-left: 3px solid #f4bf62;
+          padding-left: 16px;
+        }
+        .reveal-source-dialog {
+          box-sizing: border-box;
+          width: min(1100px, calc(100vw - 24px));
+          max-height: calc(100svh - 24px);
+          padding: clamp(12px, 3vw, 28px);
+          overflow: auto;
+          color: #f3f0db;
+          background: #101923;
+          border: 2px solid #78dce8;
+        }
+        .reveal-source-dialog::backdrop {
+          background: rgb(0 0 0 / 75%);
+        }
+        .reveal-source-dialog h2 {
+          margin: 0 0 12px;
+          font-size: clamp(22px, 4vw, 32px);
+        }
+        .reveal-source-actions {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 8px;
+          margin: 12px 0;
+        }
         #reveal-source-region {
-          border-color: CanvasText;
-          color: CanvasText;
-          background: Canvas;
+          max-height: min(60svh, 640px);
+          min-height: 44px;
+          overflow: auto;
+          overscroll-behavior: contain;
+          background: #070b12;
+          border: 1px solid #425563;
+        }
+        #reveal-source-region pre {
+          padding: 12px;
+          margin: 0;
+          white-space: pre-wrap;
+          overflow-wrap: anywhere;
+          font:
+            16px/1.6 'Field Kit Mono',
+            monospace;
+        }
+        #reveal-source-region img {
+          display: block;
+          max-width: 100%;
+          max-height: min(calc(60svh - 2px), 638px);
+          height: auto;
+          margin-inline: auto;
+          image-rendering: pixelated;
+        }
+        #reveal-source-region img[data-size='actual'] {
+          width: auto;
+          height: auto;
+          max-width: none;
+          max-height: none;
+        }
+        #reveal-source-status {
+          overflow-wrap: anywhere;
         }
         #reveal-source-region:focus-visible {
-          outline-color: Highlight;
+          outline: 3px solid #78dce8;
+          outline-offset: 2px;
+        }
+        @media (forced-colors: active) {
+          .reveal-source-dialog,
+          #reveal-source-region {
+            border-color: CanvasText;
+            color: CanvasText;
+            background: Canvas;
+          }
+          #reveal-source-region:focus-visible {
+            outline-color: Highlight;
+          }
         }
       }
     </style>

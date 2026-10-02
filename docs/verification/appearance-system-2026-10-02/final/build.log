@@ -1,0 +1,11 @@
+
+> revealline@0.142.4 build
+> node scripts/game-cli.mjs build
+
+{
+  "out": "/Users/oleksandr.mekhovov/work/my_projects/go_test/dist",
+  "version": "0.142.4",
+  "files": 2748,
+  "sha256": "ae4107ff78af22fa8af1e13bc76e860a6861320290cb78c266e7a77c67cacb34",
+  "sourceRevision": null
+}

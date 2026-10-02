@@ -5,6 +5,40 @@ import { canonicalJSON, required } from '../data-json.mjs';
 
 const reference = (record) => ({ id: record.id, revision: record.revision });
 const same = (a, b) => a.id === b.id && a.revision === b.revision;
+/** A new theme starts from the visible snapshot, not the source theme ledger.
+ * Exact asset revisions and their derivative parents retain their provenance. */
+export function duplicateStudioSnapshot(source, { id, name, tokens = {} } = {}) {
+  const document = validateThemeBundle(source);
+  const presentation = resolvePresentation(document);
+  const key = (record) => `${record.id}@${record.revision}`;
+  const assets = new Map(document.assets.map((asset) => [key(asset), asset]));
+  const retained = new Set();
+  function keep(target) {
+    if (!target || retained.has(key(target))) return;
+    retained.add(key(target));
+    keep(assets.get(key(target)).provenance.parent);
+  }
+  Object.values(presentation.bindings).forEach(keep);
+  const theme = {
+    format: FORMATS.theme,
+    id,
+    revision: 1,
+    name,
+    parent: null,
+    tokens: { ...presentation.tokens, ...tokens },
+    bindings: presentation.bindings,
+  };
+  return validateThemeBundle({
+    format: FORMATS.bundle,
+    id,
+    revision: 1,
+    slots: document.slots,
+    assets: document.assets.filter((asset) => retained.has(key(asset))),
+    themes: [theme],
+    collections: [],
+    selection: { base: reference(theme), theme: reference(theme), collection: null },
+  });
+}
 /** History belongs to exact slot bindings, not asset naming conventions.
  * Retain derivative sources for download, but only previously valid bindings
  * can be rebound. A large original is not necessarily a prepared slot asset. */
@@ -194,11 +228,11 @@ export function generateAssetPrompt(slot, resolved, action = 'variation') {
     music = slot.id === 'audio.music',
     name = slot.id.replaceAll('.', '-');
   const mediumBrief = audio
-    ? `Create original ${music ? 'instrumental Field Kit music: a restrained synth/chiptune loop with clear loop boundaries, no vocals and room for game cues' : 'short Field Kit interface/game feedback: restrained electronic oscillator tones, a clean envelope and a distinct contour appropriate to ' + slot.label}. Keep the existing mute, volume and user-activation behavior. ${music ? 'Return a seamless 4–16-bar loop in Ogg Vorbis or MP3 and retain a lossless WAV source.' : 'Return a mono 48 kHz, 16-bit PCM WAV cue no longer than one second, without leading silence or clicks.'} Keep peaks below clipping, state the measured duration and loudness, and stay within ${slot.budget.maxBytes} bytes. Sound must never be the only indication of a game event. Visual palette tokens below identify this collection; they are not audio parameters.`
+    ? `Create original ${music ? `instrumental ${resolved.theme.name} music: a restrained synth/chiptune loop with clear loop boundaries, no vocals and room for game cues` : `short ${resolved.theme.name} interface/game feedback: restrained electronic oscillator tones, a clean envelope and a distinct contour appropriate to ${slot.label}`}. Keep the existing mute, volume and user-activation behavior. ${music ? 'Return a seamless 4–16-bar loop in Ogg Vorbis or MP3 and retain a lossless WAV source.' : 'Return a mono 48 kHz, 16-bit PCM WAV cue no longer than one second, without leading silence or clicks.'} Keep peaks below clipping, state the measured duration and loudness, and stay within ${slot.budget.maxBytes} bytes. Sound must never be the only indication of a game event. Visual palette tokens below identify this collection; they are not audio parameters.`
     : font
       ? `Prepare a readable licensed font for ${slot.label}, retaining its source and license notices. Return a real WOFF2 font, not lettering in an image. Verify the actual shipped binary covers English and Ukrainian, including Ґґ Єє Іі Її, punctuation, digits and ʼ ’. Preserve the role's approved weights/axes and fit; test the Standard/Large interface, 200% browser zoom, І l 1, О O 0, 01:24 and 85%. Numeric roles require equal-width digits. Report cmap coverage, metrics and file size within ${slot.budget.maxBytes} bytes.`
       : recipeOnly
-        ? `Prepare a bounded code or metadata change for the existing registered recipe ${asset.recipe.id} used by ${slot.label}. Preserve the FPV Field Kit palette and deliberate square pixel clusters. This slot accepts recipe metadata only and has no image upload. Use only supported theme tokens, or the locked rotor anchors on related player body assets where applicable. Recipe metadata contains only its registered id; do not invent parameters or claim that metadata alone changes renderer behavior. Changes to procedural behavior belong in the registered source implementation. A new recipe requires implementation and review before registration or adoption. Preserve event meaning, collision geometry, input behavior, pause and reduced-motion behavior.`
+        ? `Prepare a bounded code or metadata change for the existing registered recipe ${asset.recipe.id} used by ${slot.label}. Preserve the ${resolved.theme.name} palette and deliberate square pixel clusters. This slot accepts recipe metadata only and has no image upload. Use only supported theme tokens, or the locked rotor anchors on related player body assets where applicable. Recipe metadata contains only its registered id; do not invent parameters or claim that metadata alone changes renderer behavior. Changes to procedural behavior belong in the registered source implementation. A new recipe requires implementation and review before registration or adoption. Preserve event meaning, collision geometry, input behavior, pause and reduced-motion behavior.`
         : slot.prompt;
   const output = audio
     ? `Return the retained source and prepared ${name}.${music ? 'ogg (or mp3)' : 'wav'}, full prompt, creator/license and measured codec, channel, sample-rate, duration, peak and byte-budget validation. Audition the cue alongside existing music and verify the explicit Stop/mute paths.`

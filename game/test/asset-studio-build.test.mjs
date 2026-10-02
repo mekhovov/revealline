@@ -9,11 +9,14 @@ test('the release allowlist includes the Studio and its complete static module g
   const root = fileURLToPath(new URL('../../', import.meta.url));
   const config = await readBuildConfig(root);
   const files = new Set(await collectBuildFiles(root, config));
-  const pending = ['authoring/asset-studio/studio.mjs'];
+  // The candidate preview is opened by a navigation URL, not a static import.
+  // Include its graph explicitly so a source-only link cannot pass this check.
+  const pending = ['authoring/asset-studio/studio.mjs', 'authoring/fpv-worlds/calibration.mjs'];
   const seen = new Set();
   for (const entry of [
     'authoring/asset-studio/index.html',
     'authoring/asset-studio/studio.css',
+    'authoring/fpv-worlds/calibration.html',
     'docs/asset-studio.md',
     'docs/presentation-system.md',
     'game/ui/field-kit-fonts.css',

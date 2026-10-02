@@ -1,0 +1,67 @@
+{
+  "build": {
+    "out": "/Users/oleksandr.mekhovov/work/my_projects/go_test/dist",
+    "version": "0.142.4",
+    "files": 2749,
+    "sha256": "62f8638e1ea0587c791b45539b0a748839bbd1362d60a2f673134a8e83b4e6c1",
+    "sourceRevision": null
+  },
+  "comparison": "byte-identical source and built runtime files",
+  "files": [
+    {
+      "file": "game/presentation/theme-system.mjs",
+      "bytes": 54564,
+      "sha256": "6b8ac8069e5250da52f1dd6ab0cda889ac123e12941bb92f58f701343ef8282c"
+    },
+    {
+      "file": "game/presentation/theme-host.mjs",
+      "bytes": 14610,
+      "sha256": "11046f162e16c1d56a5790c984501e799544716f072a5fcff299343a336d930a"
+    },
+    {
+      "file": "game/presentation/theme-entry.mjs",
+      "bytes": 1051,
+      "sha256": "b0286a411581dabbdc40cb50a51a0ab00ce549f2e693d47b89bb4edf5510179c"
+    },
+    {
+      "file": "game/presentation/theme-bootstrap.mjs",
+      "bytes": 70960,
+      "sha256": "3ad0570d1df96093c8b75c20967f427b93cfaa7e7b2a189211604d4d55a0e0ef"
+    },
+    {
+      "file": "game/presentation/industrial-workshop.css",
+      "bytes": 33521,
+      "sha256": "c8d65795739ee729eb1aa339609f24f86f174304b545759f4cd621e6623d55ee"
+    },
+    {
+      "file": "game/ui/theme-family-controls.mjs",
+      "bytes": 7726,
+      "sha256": "f2d9c687d02f8dc8f8bd57bc10bc66515851552929a3602f8abaa243db603d8e"
+    },
+    {
+      "file": "game/fpv-entry.mjs",
+      "bytes": 3490,
+      "sha256": "77a9e382ae9acd3d4e2d0af08cdbb8359fbe20a2261c640fe58ea43c72763ab6"
+    },
+    {
+      "file": "optional-practice/civilian-fpv/sim-presentation.mjs",
+      "bytes": 313010,
+      "sha256": "30e236e3b57ac21681ff24ee5745ac6f4c0efeb7446bb28ec2c065da431adf8b"
+    },
+    {
+      "file": "authoring/company-studio/model.mjs",
+      "bytes": 20094,
+      "sha256": "e0ab5c52de216f7834ea52ecbadcbcb4e86dd365d3d2ee68131b988a6ce8cf7a"
+    },
+    {
+      "file": "authoring/company-studio/studio.mjs",
+      "bytes": 57597,
+      "sha256": "b0bc3c06b6c289e456388c5d2e65317df088a839f9c7f6bdf785a8f53266888e"
+    },
+    {
+      "file": "authoring/asset-studio/studio.mjs",
+      "bytes": 59411,
+      "sha256": "6730546034e281bcd4305b8a6bca4ad495b7b3d9e4358dc06ad8cb8d086387c1"
+    }
+  ]
+}

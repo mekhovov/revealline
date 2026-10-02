@@ -50,6 +50,10 @@ function fixture(t, locale = 'en') {
     },
     cancelAnimationFrame: (id) => frames.delete(id),
     matchMedia: () => ({ matches: false }),
+    MutationObserver: class {
+      observe() {}
+      disconnect() {}
+    },
   });
   const app = mountFlightApp({
     document: doc,

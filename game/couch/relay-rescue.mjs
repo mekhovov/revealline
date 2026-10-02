@@ -402,6 +402,8 @@ export function bootCoop({
     menuStyle.dispose();
   };
   const painter = createCoopPainter($('coop-canvas'));
+  painter.setArcadeProvider(() => menuStyle.themeHost.effectivePreferences());
+  painter.setInterfaceProvider(() => menuStyle.themeHost.snapshot());
   const presentationPage = mountPresentationPage({ document, window });
   presentationPage.bindPainter(painter);
   void presentationPage.ready.then((snapshot) => {
@@ -4311,6 +4313,7 @@ export function bootCoop({
   function createTunedCoop(recipe) {
     const level = applyGameplayTuning(recipe.level, recipe.tuning);
     const next = createCoop(level, recipe.options);
+    painter.captureArcadeCollection(next);
     attemptTuning.set(next, {
       pictureLevel: recipe.level,
       adminOverride: recipe.tuning.adminOverride,
@@ -6025,6 +6028,7 @@ export function bootCoop({
     packArtworkSource = null;
     localDiscoveryPack = null;
     presentationPage.close();
+    painter.dispose();
     closeAudio();
     closeDisplay();
     journeyReactions.dispose();

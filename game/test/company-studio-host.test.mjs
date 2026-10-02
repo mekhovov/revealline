@@ -14,6 +14,10 @@ import {
   validateStudioHistory,
 } from '../../authoring/company-studio/model.mjs';
 import { mountAuthoringInputHost } from '../ui/authoring-input-host.mjs';
+import { getLocale, setLocale, t as translate } from '../i18n/index.mjs';
+import { createDefaultThemeBundle } from '../presentation/catalog.mjs';
+import { reviseStudioTheme } from '../presentation/studio-session.mjs';
+import { createThemeCandidate, saveThemePreview } from '../presentation/theme-preview.mjs';
 import {
   COMPANY_PLAYTEST_FIXTURES,
   companyPlaytestTask,
@@ -66,7 +70,7 @@ function effectivelyDisabled(node) {
 
 // Load the production entry and real markup. Only browser I/O, time and finite
 // DOM geometry are supplied here; no Studio callbacks are extracted or replaced.
-async function fixture(t, { controller = false, practice = false } = {}) {
+async function fixture(t, { controller = false, practice = false, candidate, query = '' } = {}) {
   const doc = new Document(),
     win = doc.defaultView;
   doc.parentNode = win;
@@ -80,6 +84,17 @@ async function fixture(t, { controller = false, practice = false } = {}) {
     timerSerial = 0,
     now = 1000;
   let fetchOverride = null;
+  const previewStorage = new Map(),
+    previewId = '10000000-0000-4000-8000-000000000001',
+    sessionStorage = {
+      getItem: (key) => previewStorage.get(key) ?? null,
+      setItem: (key, value) => previewStorage.set(key, value),
+      removeItem: (key) => previewStorage.delete(key),
+    };
+  if (candidate) {
+    saveThemePreview(sessionStorage, candidate, { id: previewId });
+    query = `?appearanceCandidate=${previewId}`;
+  }
   const pad = {
     id: 'Company Studio host test pad',
     index: 0,
@@ -91,8 +106,9 @@ async function fixture(t, { controller = false, practice = false } = {}) {
   };
   Object.assign(win, {
     location: new URL(
-      `https://company.example/authoring/company-studio/${practice ? 'playtest.html' : ''}`,
+      `https://company.example/authoring/company-studio/${practice ? 'playtest.html' : ''}${query}`,
     ),
+    sessionStorage,
     performance: { now: () => now },
     MutationObserver: class {
       constructor(callback) {
@@ -243,7 +259,7 @@ async function fixture(t, { controller = false, practice = false } = {}) {
   );
   await settle();
   const $ = (id) => doc.getElementById(id);
-  if (!practice) assert.match($('status').textContent, /Registered source loaded/);
+  if (!practice && !query) assert.match($('status').textContent, /Registered source loaded/);
   if (controller) inputHost = mountAuthoringInputHost({ document: doc, window: win });
   function focus(id) {
     const node = $(id);
@@ -303,11 +319,152 @@ async function fixture(t, { controller = false, practice = false } = {}) {
     downloads,
     blobs,
     timers,
+    previewStorage,
     setFetch: (fn) => {
       fetchOverride = fn;
     },
   };
 }
+
+test('Company appearance translates live without changing staged choices, focus or catalog JSON', async (context) => {
+  const previousLocale = getLocale();
+  context.after(() => setLocale(previousLocale, { persist: false }));
+  setLocale('en', { persist: false });
+  const h = await fixture(context),
+    select = h.$('appearance-default-community'),
+    caption = select.parentElement.querySelector('span'),
+    original = h.$('catalog-json').value;
+  select.value = 'vyshyvanka@r1';
+  select.focus();
+  assert.equal(select.getAttribute('aria-labelledby'), caption.id);
+  for (const locale of ['uk', 'en', 'uk']) {
+    setLocale(locale, { persist: false });
+    assert.equal(h.$('appearance-default-community'), select);
+    assert.equal(select.value, 'vyshyvanka@r1');
+    assert.equal(h.doc.activeElement, select);
+    assert.equal(h.$('catalog-json').value, original);
+    assert.equal(
+      caption.textContent,
+      translate('tools:studio.appearance.community.label', { name: 'Acme' }),
+    );
+    assert.equal(
+      h.$('community-appearance-heading').textContent,
+      translate('tools:studio.appearance.title'),
+    );
+    assert.match(
+      h.$('community-appearance-heading').textContent,
+      locale === 'uk' ? /[А-ЯІЇЄҐа-яіїєґ]/ : /^Default appearance$/,
+    );
+    assert.equal(
+      h.$('apply-appearance-community').textContent,
+      translate('tools:studio.appearance.community.apply'),
+    );
+    assert.equal(
+      select.options.find((option) => option.value === 'vyshyvanka@r1').textContent,
+      translate('tools:studio.appearance.retained', {
+        name: translate('interface:workshop.theme.vyshyvanka'),
+        revision: 'r1',
+      }),
+    );
+  }
+  await h.click('apply-appearance-community');
+  assert.equal(h.doc.activeElement.id, 'apply-appearance-community');
+  const applied = h.$('catalog-json').value;
+  assert.deepEqual(JSON.parse(applied).brands[0].appearanceDefault, {
+    familyId: 'vyshyvanka',
+    revision: 'r1',
+  });
+  setLocale('en', { persist: false });
+  assert.equal(h.$('catalog-json').value, applied);
+  assert.equal(h.$('status').textContent, translate('tools:studio.appearance.community.applied'));
+});
+
+test('Company appearance validation remains translated while unapplied JSON stays untouched', async (context) => {
+  const previousLocale = getLocale();
+  context.after(() => setLocale(previousLocale, { persist: false }));
+  setLocale('en', { persist: false });
+  const h = await fixture(context);
+  h.edit('catalog-json', '{keep my pending catalog');
+  h.$('appearance-default-community').value = 'dnipro-porcelain@r1';
+  await h.click('apply-appearance-community');
+  for (const locale of ['uk', 'en']) {
+    setLocale(locale, { persist: false });
+    assert.equal(h.$('status').dataset.error, 'true');
+    assert.equal(h.$('status').textContent, translate('tools:studio.appearance.pendingCatalog'));
+    assert.equal(h.$('catalog-json').value, '{keep my pending catalog');
+    assert.equal(h.doc.activeElement.id, 'apply-appearance-community');
+  }
+});
+
+test('controller Confirm applies the selected Company appearance and retains the semantic action focus', async (context) => {
+  const h = await fixture(context, { controller: true });
+  h.doc.querySelector('[data-step="2"]').focus();
+  await h.pulse(0);
+  h.$('appearance-default-campaign').value = 'dnipro-porcelain@r1';
+  h.focus('apply-appearance-campaign');
+  await h.pulse(0);
+  assert.equal(h.doc.activeElement.id, 'apply-appearance-campaign');
+  const catalog = JSON.parse(h.$('catalog-json').value);
+  assert.deepEqual(catalog.campaigns[0].appearanceDefault, {
+    familyId: 'dnipro-porcelain',
+    revision: 'r1',
+  });
+  h.tick();
+  assert.equal(h.doc.activeElement.id, 'apply-appearance-campaign');
+});
+
+test('Studio candidate handoff is reviewed before registration and exports only after explicit Apply', async (context) => {
+  const candidate = createThemeCandidate(
+      reviseStudioTheme(createDefaultThemeBundle(), { tokens: { panel: '#263133' } }),
+      { familyId: 'industrial-workshop' },
+    ),
+    h = await fixture(context, { candidate }),
+    original = h.$('catalog-json').value,
+    selectedPin = `${candidate.family.id}@${candidate.family.revision}`;
+  assert.equal(h.previewStorage.size, 0, 'The one-use transfer is consumed.');
+  assert.deepEqual(JSON.parse(original), h.packet.catalog);
+  assert.equal(h.$('appearance-default-community').value, selectedPin);
+  assert.equal(h.$('appearance-default-campaign').value, selectedPin);
+  assert.match(h.$('community-appearance-candidate').textContent, /installed Arcade/);
+  await h.click('export-draft');
+  const before = validateStudioDraft(await h.blobs.get(h.downloads[0].href).text());
+  assert.deepEqual(before.catalog, h.packet.catalog, 'Review does not register or assign.');
+  await h.click('apply-appearance-community');
+  assert.equal(h.doc.activeElement.id, 'apply-appearance-community');
+  assert.match(h.$('community-appearance-candidate').textContent, /^Included Studio theme:/);
+  await h.click('export-draft');
+  const after = validateStudioDraft(await h.blobs.get(h.downloads[1].href).text());
+  assert.deepEqual(after.catalog.brands[0].appearanceDefault, {
+    familyId: candidate.family.id,
+    revision: candidate.family.revision,
+  });
+  assert.deepEqual(after.catalog.appearanceThemes, [candidate]);
+  assert.equal(after.files.size, before.files.size);
+  assert.equal(
+    h.$('appearance-default-campaign').options.filter((option) => option.value === selectedPin)
+      .length,
+    1,
+  );
+});
+
+test('unavailable one-use Studio candidate leaves the source draft usable and reports a localized recovery', async (context) => {
+  const previousLocale = getLocale();
+  context.after(() => setLocale(previousLocale, { persist: false }));
+  const h = await fixture(context, {
+    query: '?appearanceCandidate=10000000-0000-4000-8000-000000000001',
+  });
+  for (const locale of ['uk', 'en']) {
+    setLocale(locale, { persist: false });
+    assert.equal(
+      h.$('status').textContent,
+      translate('tools:studio.appearance.handoffUnavailable'),
+    );
+    assert.equal(h.$('status').dataset.error, 'true');
+    assert.deepEqual(JSON.parse(h.$('catalog-json').value), h.packet.catalog);
+  }
+  await h.click('export-draft');
+  assert.equal(h.downloads.length, 1);
+});
 
 test('actual Company Studio exports a valid complete source packet and explicitly reopens it', async (t) => {
   const h = await fixture(t);

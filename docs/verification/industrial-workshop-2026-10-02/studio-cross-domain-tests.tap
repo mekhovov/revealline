@@ -1,0 +1,100 @@
+TAP version 13
+# Subtest: the release allowlist includes the Studio and its complete static module graph
+ok 1 - the release allowlist includes the Studio and its complete static module graph
+  ---
+  duration_ms: 3564.368375
+  ...
+# Subtest: compact runtime preserves selected revisions/provenance while pruning authoring and unbound files
+ok 2 - compact runtime preserves selected revisions/provenance while pruning authoring and unbound files
+  ---
+  duration_ms: 1983.2785
+  ...
+# Subtest: RLRUN1 files remain readable without inventing missing cross-domain descriptors
+ok 3 - RLRUN1 files remain readable without inventing missing cross-domain descriptors
+  ---
+  duration_ms: 1292.740042
+  ...
+# Subtest: v2 verifies the envelope checksum and binds candidate identity/tokens/SIM to the selected snapshot
+ok 4 - v2 verifies the envelope checksum and binds candidate identity/tokens/SIM to the selected snapshot
+  ---
+  duration_ms: 1732.548583
+  ...
+# Subtest: runtime reader rejects tampered, truncated and trailing bytes before exposing a snapshot
+ok 5 - runtime reader rejects tampered, truncated and trailing bytes before exposing a snapshot
+  ---
+  duration_ms: 1252.524083
+  ...
+# Subtest: runtime snapshots retain collection identity and the resolved binding priority
+ok 6 - runtime snapshots retain collection identity and the resolved binding priority
+  ---
+  duration_ms: 945.883875
+  ...
+# Subtest: duplicate flattens selected appearance without carrying theme history
+ok 7 - duplicate flattens selected appearance without carrying theme history
+  ---
+  duration_ms: 875.516042
+  ...
+# Subtest: workspace migration is atomic, idempotent and leaves the legacy recovery copy
+ok 8 - workspace migration is atomic, idempotent and leaves the legacy recovery copy
+  ---
+  duration_ms: 2490.724959
+  ...
+# Subtest: independent workspaces reject identity collisions and stale saves without growing each other
+ok 9 - independent workspaces reject identity collisions and stale saves without growing each other
+  ---
+  duration_ms: 2566.713917
+  ...
+# Subtest: failed independent workspace creation publishes neither entry nor bytes
+ok 10 - failed independent workspace creation publishes neither entry nor bytes
+  ---
+  duration_ms: 256.890834
+  ...
+# Subtest: explicit replacement preserves imported identity and a recoverable prior generation
+ok 11 - explicit replacement preserves imported identity and a recoverable prior generation
+  ---
+  duration_ms: 1643.114583
+  ...
+# Subtest: inspection reports exact role provenance and token contrast without claiming visual approval
+ok 12 - inspection reports exact role provenance and token contrast without claiming visual approval
+  ---
+  duration_ms: 308.019125
+  ...
+# Subtest: maximum-length identities migrate and replace into bounded loadable recovery IDs
+ok 13 - maximum-length identities migrate and replace into bounded loadable recovery IDs
+  ---
+  duration_ms: 2233.089125
+  ...
+# Subtest: snapshot drops unbound historical assets while preserving derivative provenance
+ok 14 - snapshot drops unbound historical assets while preserving derivative provenance
+  ---
+  duration_ms: 539.597292
+  ...
+# Subtest: candidate preview and runtime interface derive the same source tokens with separate immutable identities
+ok 15 - candidate preview and runtime interface derive the same source tokens with separate immutable identities
+  ---
+  duration_ms: 999.837209
+  ...
+# Subtest: one bounded same-tab payload hands off the candidate once without touching player preferences
+ok 16 - one bounded same-tab payload hands off the candidate once without touching player preferences
+  ---
+  duration_ms: 218.017458
+  ...
+# Subtest: malformed, oversized, expired and substituted resource payloads fail closed and are consumed
+ok 17 - malformed, oversized, expired and substituted resource payloads fail closed and are consumed
+  ---
+  duration_ms: 163.279
+  ...
+# Subtest: failed handoff preserves the previous usable candidate
+ok 18 - failed handoff preserves the previous usable candidate
+  ---
+  duration_ms: 181.261584
+  ...
+1..18
+# tests 18
+# suites 0
+# pass 18
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 11363.115333

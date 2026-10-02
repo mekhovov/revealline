@@ -5,6 +5,11 @@ import {
   exactKeys,
   required,
 } from '../../game/data-json.mjs';
+import { validateSimAppearance } from './world-themes.mjs';
+
+export function worldRecordIdentity({ course, proof, presentation }) {
+  return dataIdentity({ course, proof, ...(presentation ? { presentation } : {}) });
+}
 
 export const WORLD_RECORD_LIMITS = Object.freeze({
   records: 512,
@@ -36,6 +41,7 @@ function archiveRecord(input) {
       'savedAt',
       'byteLength',
       'pinned',
+      'presentation',
     ],
     'flight record',
   );
@@ -48,10 +54,14 @@ function archiveRecord(input) {
       !Array.isArray(record.proof),
     'Recording needs course and proof data',
   );
-  required(
-    record.id === dataIdentity({ course: record.course, proof: record.proof }),
-    'Recording identity does not match its data',
-  );
+  if (record.presentation !== undefined) {
+    required(
+      record.proof.format === 'FlightAttempt.v1',
+      'World appearance belongs in its course snapshot',
+    );
+    record.presentation = validateSimAppearance(record.presentation);
+  }
+  required(record.id === worldRecordIdentity(record), 'Recording identity does not match its data');
   required(
     STATUSES.includes(record.status) &&
       typeof record.diagnostic === 'string' &&
@@ -117,13 +127,24 @@ export async function openWorldRecords(indexedDB = globalThis.indexedDB) {
       diagnostic = '',
       packIdentity = '',
       pinned,
+      presentation,
     }) {
       required(STATUSES.includes(status), 'Unknown verification state');
       required(
         typeof packIdentity === 'string' && packIdentity.length <= 160,
         'Invalid recording pack identity',
       );
-      const clean = boundedJSON({ course, proof }, RECORD_SHAPE);
+      if (presentation !== undefined) {
+        required(
+          proof.format === 'FlightAttempt.v1',
+          'World appearance belongs in its course snapshot',
+        );
+        presentation = validateSimAppearance(presentation);
+      }
+      const clean = boundedJSON(
+        { course, proof, ...(presentation ? { presentation } : {}) },
+        RECORD_SHAPE,
+      );
       const record = {
         id: dataIdentity(clean),
         ...clean,
@@ -290,7 +311,13 @@ export async function exportProofParts(records) {
   const archiveId = await archiveHash(await Promise.all(parts.map(archiveHash)));
   return Promise.all(
     parts.map(async (part) => {
-      const payload = { ...part, format: 'FPVProofArchive.v2', archiveId };
+      const payload = {
+        ...part,
+        format: records.some((record) => record.presentation)
+          ? 'FPVProofArchive.v3'
+          : 'FPVProofArchive.v2',
+        archiveId,
+      };
       return { ...payload, sha256: await archiveHash(payload) };
     }),
   );
@@ -309,7 +336,7 @@ export async function importProofPart(input) {
     'proof archive part',
   );
   required(
-    value.format === 'FPVProofArchive.v2' &&
+    ['FPVProofArchive.v2', 'FPVProofArchive.v3'].includes(value.format) &&
       /^[a-f0-9]{64}$/.test(value.archiveId) &&
       /^[a-f0-9]{64}$/.test(value.sha256),
     'Invalid proof archive identity',
