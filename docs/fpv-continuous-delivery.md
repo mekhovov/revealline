@@ -2053,3 +2053,27 @@ UV/surface changes beneath Themes #955's material factories. B actual TX15,
 iPhone and Steam Deck, D unfamiliar-player sessions, F creator/device-offline,
 feedback-led G maps and H/R7 deferred unit coverage remain open. No new physical
 acceptance, sustained FPS or complete production-art claim is made.
+
+
+C5 is published and attached as [#966](https://github.com/mekhovov/revealline/pull/966).
+Initial published head was `a276d9715a4322821357a3aebea7cfbc3bfef131`; Hunt #962
+then merged to main. Candidate `065026f0d3b30e23d168feb2b0d3b50811331b1d`
+incorporates main `adfa2d799` and passes all three frozen optional admissions,
+committed inputs/ZIP members and reproducibility. Only generated package
+manifests/worker identities differ from the browser-qualified candidate; all
+other members match exactly (see main962 binding receipt). Source/package
+rendering evidence remains applicable; installed/offline identity acceptance is
+not inferred. Fresh CI/reviews are pending. The initial preflight/optional jobs
+passed while candidate/capacity/focused ran, and release-ready was failed in a
+superseded cancelled run. Preserve required gates; no public C5 claim.
+
+C6 read-only scope is now defined: `stadium-01…08` and
+`beginner-32/35/42/45/57` use 76×70×18, 88×88×20 or150×150×100m bounds.
+Refine the two5×8×48m solid stands and14×10×2m board with restrained concrete
+panels/section bands and a fixed non-emissive venue/checker emblem. The existing
+procedural seats are hidden after normal GLB load, so changing those alone would
+not address the player view. Preserve the pavilion, floor markings, all route
+cues, geometry, alpha and scoring rules. Beginner42's metal landing platform
+must share a plain board-atlas region to avoid another texture pool. No C6
+production changes are mixed into #966. Keep ready Warehouse isolated while the
+Stadium branch develops. Themes received exact runtime hashes and ownership.
