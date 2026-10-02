@@ -19,6 +19,31 @@ New preview artifacts supersede earlier ones when the PR head changes. Earlier
 screenshots, package sizes and local build hashes in this directory remain
 historical receipts; they are not acceptance evidence for a later PR build.
 
+## Integrated verification
+
+The source is integrated with main at `89e25c726`. Local checks use Node 20.19.5;
+the PR preview pins Node 22.13.1 and records its exact head and source tree.
+
+- Exact 28-file PR preview cohort: **235 passed**, no skips or failures
+  ([receipt](publication/appearance-preview.json), [TAP](publication/appearance-preview.tap)).
+- Standard practice: **224 passed**, no skips or failures ([TAP](main-integration/practice.tap)).
+- Explicit World/appearance: **62 passed**; Academy UI/replay/setup: **41 passed**
+  ([SIM review](main-integration/sim-review.md)).
+- Navigation/menu integration: **56 passed** ([TAP](publication/navigation.tap)).
+- Latest main demo integration: **59 passed** ([TAP](publication/demo.tap)).
+- Sparse publisher boot: **2 passed**, with isolated actual workflow dependencies
+  ([TAP](publication/sparse-publishers.tap)).
+- Whole-repository ESLint, content/localization validation, presentation metadata validation,
+  generated theme bootstrap and byte-identical embedded SIM assets passed.
+
+These suites overlap and should not be added into a unique-test total. Earlier
+full-suite failure classifications are retained as historical evidence; no
+full-suite pass is claimed. Current-main package limits remain unchanged at
+Academy 72 files / 8 MiB and World 104 files / 16 MiB, including source archives. Final admitted Academy uses 67 runtime / 69 source
+files (4,095,466 / 4,123,721 bytes); World uses 99 / 101 files
+(14,106,740 / 14,139,819 bytes).
+[Package closure receipt](publication/package-bounds.json).
+
 ## Scope delivered
 
 - One coordinated Appearance control, accessible semantic foreground/background

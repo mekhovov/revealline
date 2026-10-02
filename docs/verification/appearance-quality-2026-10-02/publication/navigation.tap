@@ -1,0 +1,291 @@
+TAP version 13
+# Subtest: ordinary running frames retain the Pause label node between pointer edges
+ok 1 - ordinary running frames retain the Pause label node between pointer edges
+  ---
+  duration_ms: 2023.166583
+  ...
+# Subtest: Couch return reveal cannot outlive a focus callback's other-focus
+ok 2 - Couch return reveal cannot outlive a focus callback's other-focus
+  ---
+  duration_ms: 1741.816958
+  ...
+# Subtest: Couch return reveal cannot outlive a focus callback's new-screen
+ok 3 - Couch return reveal cannot outlive a focus callback's new-screen
+  ---
+  duration_ms: 1700.793375
+  ...
+# Subtest: Couch return reveal cannot outlive a focus callback's background
+ok 4 - Couch return reveal cannot outlive a focus callback's background
+  ---
+  duration_ms: 1718.661792
+  ...
+# Subtest: Couch return reveal cannot outlive a focus callback's hidden
+ok 5 - Couch return reveal cannot outlive a focus callback's hidden
+  ---
+  duration_ms: 1677.575666
+  ...
+# Subtest: Couch return reveal cannot outlive a focus callback's destroyed
+ok 6 - Couch return reveal cannot outlive a focus callback's destroyed
+  ---
+  duration_ms: 1691.119459
+  ...
+# Subtest: Couch return reveal cannot outlive a focus callback's detached
+ok 7 - Couch return reveal cannot outlive a focus callback's detached
+  ---
+  duration_ms: 1663.674583
+  ...
+# Subtest: Couch main Back reveals the same already-focused action without activating it
+ok 8 - Couch main Back reveals the same already-focused action without activating it
+  ---
+  duration_ms: 1769.946958
+  ...
+# Subtest: lobby, setup and children use reachable native controls and Back restores the actual opener
+ok 9 - lobby, setup and children use reachable native controls and Back restores the actual opener
+  ---
+  duration_ms: 2727.164125
+  ...
+# Subtest: Versus Extras keeps secondary destinations reachable by keyboard and controller
+ok 10 - Versus Extras keeps secondary destinations reachable by keyboard and controller
+  ---
+  duration_ms: 2583.167917
+  ...
+# Subtest: Versus More exposes native touch targets without changing Start focus
+ok 11 - Versus More exposes native touch targets without changing Start focus
+  ---
+  duration_ms: 2466.641792
+  ...
+# Subtest: Versus More departures retain the paused match until a separate decision
+ok 12 - Versus More departures retain the paused match until a separate decision
+  ---
+  duration_ms: 2644.3555
+  ...
+# Subtest: an embedded Couch route stays loading until its actual setup is prepared
+ok 13 - an embedded Couch route stays loading until its actual setup is prepared
+  ---
+  duration_ms: 1795.433709
+  ...
+# Subtest: pause children and cancelled new match preserve two different continuations; reset is explicit
+ok 14 - pause children and cancelled new match preserve two different continuations; reset is explicit
+  ---
+  duration_ms: 3643.18625
+  ...
+# Subtest: per-seat Auto expands on touch and defers collapse until pause without changing movement
+ok 15 - per-seat Auto expands on touch and defers collapse until pause without changing movement
+  ---
+  duration_ms: 1749.949209
+  ...
+# Subtest: Always supports independent pointer players; Off wins over coarse and later touch
+ok 16 - Always supports independent pointer players; Off wins over coarse and later touch
+  ---
+  duration_ms: 1715.241458
+  ...
+# Subtest: authored Arcade removes equipment controls and hints; Tactical reflects the equipped recipe
+ok 17 - authored Arcade removes equipment controls and hints; Tactical reflects the equipped recipe
+  ---
+  duration_ms: 1651.862042
+  ...
+# Subtest: controller setup/help and repeated keyboard Confirm cannot leak through the flight boundary
+ok 18 - controller setup/help and repeated keyboard Confirm cannot leak through the flight boundary
+  ---
+  duration_ms: 2729.478083
+  ...
+# Subtest: markup keeps touch crosses outside both arenas and uses separate screen roots
+ok 19 - markup keeps touch crosses outside both arenas and uses separate screen roots
+  ---
+  duration_ms: 0.807667
+  ...
+# Subtest: controller can read and scroll Help without starting; Back exits reading then the child
+ok 20 - controller can read and scroll Help without starting; Back exits reading then the child
+  ---
+  duration_ms: 1883.727667
+  ...
+# Subtest: a real finished draw exposes both frozen boards, Results returns without a new round
+ok 21 - a real finished draw exposes both frozen boards, Results returns without a new round
+  ---
+  duration_ms: 2916.422459
+  ...
+# Subtest: an old held controller cannot reclaim a seat from accepted touch across pause and resume
+ok 22 - an old held controller cannot reclaim a seat from accepted touch across pause and resume
+  ---
+  duration_ms: 1824.644666
+  ...
+# Subtest: blocked pad input and held keyboard repeats never replace newer touch modality
+ok 23 - blocked pad input and held keyboard repeats never replace newer touch modality
+  ---
+  duration_ms: 1987.228375
+  ...
+# Subtest: accepted-input observer is optional and observer failures cannot reject or replay commands
+ok 24 - accepted-input observer is optional and observer failures cannot reject or replay commands
+  ---
+  duration_ms: 2.970334
+  ...
+# Subtest: Couch timed clock retains accessible meaning in its compact display
+ok 25 - Couch timed clock retains accessible meaning in its compact display
+  ---
+  duration_ms: 1701.821833
+  ...
+# Subtest: only explicit known Journey editions produce fixed Solo/Versus links, never Team or arbitrary URLs
+ok 26 - only explicit known Journey editions produce fixed Solo/Versus links, never Team or arbitrary URLs
+  ---
+  duration_ms: 0.699667
+  ...
+# Subtest: authored Solo Title and Missions links retain the edition for ordinary and modified activation
+ok 27 - authored Solo Title and Missions links retain the edition for ordinary and modified activation
+  ---
+  duration_ms: 937.698417
+  ...
+# Subtest: unfinished authored Solo departure verifies its scoped save; Stay preserves the cut, Leave keeps its edition
+ok 28 - unfinished authored Solo departure verifies its scoped save; Stay preserves the cut, Leave keeps its edition
+  ---
+  duration_ms: 1752.74725
+  ...
+# Subtest: actual authored Versus advertises its Solo edition and preserves explicit discard/Stay semantics
+ok 29 - actual authored Versus advertises its Solo edition and preserves explicit discard/Stay semantics
+  ---
+  duration_ms: 618.738416
+  ...
+# Subtest: returning to authored Solo opens Title and Continue restores the verified cut without auto-play
+    # Subtest: depart
+    ok 1 - depart
+      ---
+      duration_ms: 1529.632625
+      ...
+    # Subtest: return and deliberately Continue
+    ok 2 - return and deliberately Continue
+      ---
+      duration_ms: 1179.811583
+      ...
+    1..2
+ok 30 - returning to authored Solo opens Title and Continue restores the verified cut without auto-play
+  ---
+  duration_ms: 2709.853375
+  ...
+# Subtest: authored departure reports refused saving truthfully and still requires deliberate Leave
+ok 31 - authored departure reports refused saving truthfully and still requires deliberate Leave
+  ---
+  duration_ms: 1305.375292
+  ...
+# Subtest: authored owns its native Solo mode link without changing the frozen route
+ok 32 - authored owns its native Solo mode link without changing the frozen route
+  ---
+  duration_ms: 696.133959
+  ...
+# Subtest: whole-originals owns its native Solo mode link without changing the frozen route
+ok 33 - whole-originals owns its native Solo mode link without changing the frozen route
+  ---
+  duration_ms: 1869.069583
+  ...
+# Subtest: whole-originals-v2 owns its native Solo mode link without changing the frozen route
+ok 34 - whole-originals-v2 owns its native Solo mode link without changing the frozen route
+  ---
+  duration_ms: 1816.205166
+  ...
+# Subtest: whole-originals-v3 owns its native Solo mode link without changing the frozen route
+ok 35 - whole-originals-v3 owns its native Solo mode link without changing the frozen route
+  ---
+  duration_ms: 1941.627792
+  ...
+# Subtest: whole-originals-v4 owns its native Solo mode link without changing the frozen route
+ok 36 - whole-originals-v4 owns its native Solo mode link without changing the frozen route
+  ---
+  duration_ms: 2055.580583
+  ...
+# Subtest: the Legacy-backed Journey preview does not acquire authored navigation authority
+ok 37 - the Legacy-backed Journey preview does not acquire authored navigation authority
+  ---
+  duration_ms: 723.949167
+  ...
+# Subtest: actual Solo title waits for committed Missions and keeps the real chooser focus
+ok 38 - actual Solo title waits for committed Missions and keeps the real chooser focus
+  ---
+  duration_ms: 5803.207208
+  ...
+# Subtest: actual Versus ready setup retunes while Settings, Start and Pause do not
+ok 39 - actual Versus ready setup retunes while Settings, Start and Pause do not
+  ---
+  duration_ms: 1826.219542
+  ...
+# Subtest: explicit committed navigation paints only one inert decorative layer and never owns input or focus
+ok 40 - explicit committed navigation paints only one inert decorative layer and never owns input or focus
+  ---
+  duration_ms: 2.792083
+  ...
+# Subtest: rapid navigation cancels the old burst without restarting or queueing another
+ok 41 - rapid navigation cancels the old burst without restarting or queueing another
+  ---
+  duration_ms: 0.71625
+  ...
+# Subtest: hidden cancels a live burst, clears timers and never replays it on return
+ok 42 - hidden cancels a live burst, clears timers and never replays it on return
+  ---
+  duration_ms: 0.438167
+  ...
+# Subtest: reduced cancels a live burst, clears timers and never replays it on return
+ok 43 - reduced cancels a live burst, clears timers and never replays it on return
+  ---
+  duration_ms: 0.168208
+  ...
+# Subtest: preference cancels a live burst, clears timers and never replays it on return
+ok 44 - preference cancels a live burst, clears timers and never replays it on return
+  ---
+  duration_ms: 0.250334
+  ...
+# Subtest: context cancels a live burst, clears timers and never replays it on return
+ok 45 - context cancels a live burst, clears timers and never replays it on return
+  ---
+  duration_ms: 0.199
+  ...
+# Subtest: pagehide cancels a live burst, clears timers and never replays it on return
+ok 46 - pagehide cancels a live burst, clears timers and never replays it on return
+  ---
+  duration_ms: 0.231417
+  ...
+# Subtest: detached cancels a live burst, clears timers and never replays it on return
+ok 47 - detached cancels a live burst, clears timers and never replays it on return
+  ---
+  duration_ms: 0.283875
+  ...
+# Subtest: settings, dialogs, focus and controls do not opt into navigation decoration
+ok 48 - settings, dialogs, focus and controls do not opt into navigation decoration
+  ---
+  duration_ms: 0.296875
+  ...
+# Subtest: a legacy mission dialog used for reading is outside retune navigation
+ok 49 - a legacy mission dialog used for reading is outside retune navigation
+  ---
+  duration_ms: 0.279041
+  ...
+# Subtest: a replacement picker releases old layers and a covering dialog cancels the active one
+ok 50 - a replacement picker releases old layers and a covering dialog cancels the active one
+  ---
+  duration_ms: 0.69375
+  ...
+# Subtest: solo: actual chooser commits only open and Back, never filters or recovery
+ok 51 - solo: actual chooser commits only open and Back, never filters or recovery
+  ---
+  duration_ms: 17.457541
+  ...
+# Subtest: versus: actual chooser commits only open and Back, never filters or recovery
+ok 52 - versus: actual chooser commits only open and Back, never filters or recovery
+  ---
+  duration_ms: 6.433167
+  ...
+# Subtest: team: actual chooser commits only open and Back, never filters or recovery
+ok 53 - team: actual chooser commits only open and Back, never filters or recovery
+  ---
+  duration_ms: 10.286875
+  ...
+# Subtest: the stylesheet reuses stepped local noise below content without transforms or filters
+ok 54 - the stylesheet reuses stepped local noise below content without transforms or filters
+  ---
+  duration_ms: 7.143708
+  ...
+1..54
+# tests 56
+# suites 0
+# pass 56
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 54630.317125
