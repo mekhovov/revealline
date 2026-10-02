@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Hunt presentation review workbench</title>
+  <style>
+    body {
+      font:
+        16px system-ui,
+        sans-serif;
+      max-width: 1100px;
+      margin: 2rem auto;
+      padding: 0 1rem;
+      color: #e7edf4;
+      background: #141b23;
+    }
+    button {
+      font: inherit;
+      padding: 0.7rem;
+      margin: 0.3rem;
+      border: 1px solid #8096ac;
+      border-radius: 0.25rem;
+      cursor: pointer;
+    }
+    button:disabled {
+      opacity: 0.55;
+    }
+    canvas {
+      width: 100%;
+      height: auto;
+      background: #202c36;
+      image-rendering: pixelated;
+    }
+    pre {
+      white-space: pre-wrap;
+      overflow-wrap: anywhere;
+      background: #202c36;
+      padding: 1rem;
+    }
+    label {
+      display: block;
+      margin: 1rem 0;
+    }
+    h1 {
+      font-size: 1.8rem;
+    }
+  </style>
+  <h1>Hunt presentation review workbench</h1>
+  <p>
+    Manual desktop measurements. Each button runs one bounded operation. These are synthetic
+    presentation/resource observations, not an automated regression suite, low-end device
+    qualification, or human listening approval. No operation starts on page load.
+  </p>
+  <p>
+    The voice operations use silent audio output. Recording persistence uses a uniquely named
+    disposable database, removed afterwards. Production preferences and recording databases are
+    never written.
+  </p>
+  <label
+    ><input id="graphic" type="checkbox" /> Show graphic body fragments and blood during the
+    destruction measurement</label
+  >
+  <div>
+    <button id="measure-destruction">Measure two-board destruction (180 frames)</button>
+    <button id="measure-reduced">Measure reduced effects (180 frames)</button>
+    <button id="inspect-pilot">Inspect pilot decode and interruption (silent)</button>
+    <button id="inspect-persistence">Inspect isolated recording persistence</button>
+    <button id="cancel" disabled>Cancel current operation</button>
+  </div>
+  <p id="status" role="status">Choose an operation.</p>
+  <canvas
+    id="scene"
+    width="960"
+    height="320"
+    aria-label="Synthetic two-board presentation workload"
+  ></canvas>
+  <pre id="report">No measurements yet.</pre>
+  <script type="module" src="./humanoid-hunt-presentation-workbench.mjs"></script>
+</html>

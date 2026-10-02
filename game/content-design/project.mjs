@@ -1,3 +1,5 @@
+import { prepareHuntLevel } from '../hunt/level.mjs';
+import { huntTargetKind, HUNT_RUNNER_TURN_TICKS } from '../hunt/rules.mjs';
 import { boundedJSON, exactKeys, required, stableId, dataIdentity } from '../data-json.mjs';
 import { normalizedLevel } from '../core/level.mjs';
 import { CLASSES, rosterHash } from '../core/registry.mjs';
@@ -208,6 +210,7 @@ export function compileContentProject(source) {
         'bonuses',
         'timedBonuses',
         'combat',
+        'hunt',
         'coverage',
         'timeLimitSeconds',
         'design',
@@ -263,14 +266,19 @@ export function compileContentProject(source) {
         'Mission combat requires a registered optional-combat actor catalogue.',
       );
       required(
-        !mission.modes.includes('team'),
-        'Optional combat is not qualified for Team, even when disabled.',
+        !mission.modes.includes('team') || mission.team?.format === 'TeamMissionV7',
+        'Optional combat requires the explicitly qualified Team hunt edition.',
       );
     }
     required(
       !combatActors.length || Object.hasOwn(mission, 'combat'),
       'Optional actors require an explicit mission combat setting.',
     );
+    if (Object.hasOwn(mission, 'hunt'))
+      required(
+        mission.combat?.enabled === true,
+        'Hunting requires an explicit enabled combat population.',
+      );
     unique(mission.objectives, 'objectives', 40);
     unique(mission.bonuses, 'bonuses', 64);
     if (relays) {
@@ -389,7 +397,7 @@ export function resolveMission(project, id, { mode = 'solo', difficulty = 'stand
   const sentinel = mission.format === 'MissionDesignV4';
   const directional = mission.format === 'MissionDesignV3' || sentinel;
   const relays = mission.format === 'MissionDesignV2' || directional;
-  const level = normalizedLevel({
+  let level = normalizedLevel({
     version: sentinel
       ? 'xonix-level.v8'
       : directional
@@ -454,9 +462,24 @@ export function resolveMission(project, id, { mode = 'solo', difficulty = 'stand
             combatPatrols: {
               version: 'combat-patrols.v1',
               enabled: mission.combat.enabled,
-              actors: combatActors.map((actor) =>
-                compileActor(actor, difficulty, project.actors.id, project.difficulty.id),
-              ),
+              actors: combatActors.map((actor) => {
+                const compiled = compileActor(
+                  actor,
+                  difficulty,
+                  project.actors.id,
+                  project.difficulty.id,
+                );
+                return huntTargetKind(mission.hunt, actor.id) === 'runner'
+                  ? {
+                      ...compiled,
+                      turnTicks: HUNT_RUNNER_TURN_TICKS,
+                      speed:
+                        policy.rules.moveSpeed *
+                        Math.min(...CLASSES.map((recipe) => recipe.moveSpeedMultiplier ?? 1)) *
+                        0.7,
+                    }
+                  : compiled;
+              }),
             },
           }
         : {}),
@@ -484,6 +507,13 @@ export function resolveMission(project, id, { mode = 'solo', difficulty = 'stand
       timeLimitSeconds: preset.failingDeadline ? mission.timeLimitSeconds : 0,
     },
   });
+  if (mission.hunt)
+    level = prepareHuntLevel(level, {
+      id: mission.id,
+      revision: mission.revision,
+      actors: level.classic.combatPatrols.actors,
+      hunt: mission.hunt,
+    });
   const { name: _name, id: _id, revision: _revision, ...simulation } = level;
   const topology = inspectMissionTopology(level, map.geometry);
   const simulationIdentity = dataIdentity({
@@ -522,7 +552,7 @@ export function resolveMission(project, id, { mode = 'solo', difficulty = 'stand
               severity: 'warning',
               code: 'candidate-combat-not-presentation-qualified',
               message:
-                'Optional encounters can be tested in Solo practice. Production presentation, player preferences and human qualification are pending.',
+                'Optional encounters can be tested in Solo practice. Human play qualification is required before publishing a candidate.',
             },
           ]
         : []),

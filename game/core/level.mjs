@@ -269,7 +269,8 @@ export function validateLevel(level) {
       level && typeof level === 'object' ? Object.getOwnPropertyDescriptor(level, 'version') : null;
     if (version && !Object.hasOwn(version, 'value'))
       return { valid: false, errors: ['level version must be own data'] };
-    const sentinel = version?.value === 'xonix-level.v8';
+    const hunt = version?.value === 'xonix-level.v9';
+    const sentinel = version?.value === 'xonix-level.v8' || hunt;
     const directional = version?.value === 'xonix-level.v7' || sentinel;
     const relays = version?.value === 'xonix-level.v6' || directional;
     const foundations = version?.value === 'xonix-level.v5' || relays;
@@ -388,6 +389,7 @@ export function normalizedLevel(level) {
       'xonix-level.v6',
       'xonix-level.v7',
       'xonix-level.v8',
+      'xonix-level.v9',
     ].includes(Object.getOwnPropertyDescriptor(level ?? {}, 'version')?.value)
   )
     level = boundedJSON(level, {
@@ -410,6 +412,7 @@ export function normalizedLevel(level) {
       'xonix-level.v6',
       'xonix-level.v7',
       'xonix-level.v8',
+      'xonix-level.v9',
     ].includes(level.version)
   )
     for (const item of [

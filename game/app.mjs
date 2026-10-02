@@ -1,3 +1,10 @@
+import { createEncounterVariantPreferences } from './hunt/preferences.mjs';
+import { attachEncounterVariantControls } from './ui/encounter-variant-controls.mjs';
+import { attachHuntStatus } from './ui/hunt-status.mjs';
+import { createHuntRecords } from './hunt/records.mjs';
+import { huntText } from './hunt/copy.mjs';
+import { attachContextualReactions } from './ui/contextual-reactions.mjs';
+import { soloReactionDanger } from './ui/reaction-danger.mjs';
 import {
   REWARD_BOARD_SECONDS,
   advanceRewardAge,
@@ -577,11 +584,22 @@ try {
           return installOfflinePanel.requestPackage(request);
         },
       });
+  const encounterChoices = createEncounterVariantPreferences({
+    window,
+    getStorage: () => localStorage,
+    writable: () => !practiceSession,
+  });
+  let encounterVariantControls = null,
+    contextualReactions = null,
+    huntRecords = null,
+    huntStatus = null,
+    huntResultStatus = null;
   const authoredRoute =
     !practiceSession && (runtimeContent?.route ?? (await loadAuthoredJourneyRoute(journeyRequest)));
   const authoredJourney = !!authoredRoute;
   const candidateHost = authoredJourney
     ? await createSoloRouteHost(authoredRoute, {
+        getEncounterVariant: () => encounterChoices.snapshot().variant,
         themes:
           runtimeContent?.themes ??
           (authoredJourneyUsesActorMaterials(authoredRoute.id)
@@ -1100,7 +1118,14 @@ try {
     backupBusy = false,
     flightDetails = null;
   const worldPlayIntents = new WeakMap();
-  const journeyReactions = attachJourneyReactions();
+  const resultReactions = attachJourneyReactions();
+  const journeyReactions = {
+    ...resultReactions,
+    present(context) {
+      resultReactions.present(context);
+      contextualReactions?.result(context);
+    },
+  };
   const flightInformation = attachFlightInformation({
     element: $('run-message'),
     getState: () => ({ started, paused }),
@@ -1230,6 +1255,28 @@ try {
       !practice && !courseSession && !courseEntry && persistenceReady && writer.writable,
   });
   const sound = new Soundscape({ persistentMusic: true, audioMaster });
+  sound.setDestructionPreferences?.(() => encounterDisplay.snapshot());
+  contextualReactions = attachContextualReactions({
+    sound,
+    container: $('hunt-feedback'),
+    resultContainer: $('journey-reactions'),
+    settingsContainer: $('settings-panel-audio'),
+    getReduced: () => displayPreferences.snapshot().effectiveReducedEffects,
+    acquireGain: ({ factor }) => soundtrackPlayer?.acquireGain({ factor }) ?? (() => {}),
+  });
+  huntRecords = createHuntRecords();
+  huntStatus = attachHuntStatus({
+    container: $('hunt-feedback'),
+    mode: 'solo',
+    records: huntRecords,
+    record: !practiceSession,
+  });
+  huntResultStatus = attachHuntStatus({
+    container: $('journey-reactions').parentElement,
+    mode: 'solo',
+    records: huntRecords,
+    record: false,
+  });
   // The shared authority owns master attenuation; local music and effects keep their faders.
   sound.configure({ master: 1 });
   const compactCredit = attachMusicCredit({
@@ -1825,7 +1872,10 @@ try {
     if (music !== undefined) soundtrackPlayer.setVolume(music);
   }
   async function activateAudio({ explicit = false } = {}) {
-    if (!soundtrackPlayer) return sound.enable();
+    if (!soundtrackPlayer) {
+      contextualReactions?.resume();
+      return sound.enable().then(() => contextualReactions?.prepare());
+    }
     if (soundtrackSuspended) {
       soundtrackSuspended = false;
       // Keep this synchronous with the tap/click that resumed the game. Safari
@@ -1836,7 +1886,8 @@ try {
     }
     if (explicit || !soundtrackPlayer.snapshot().track) return soundtrackPlayer.play();
     // Ordinary Resume enables effects but keeps an intentional music-only Pause.
-    return sound.enable();
+    contextualReactions?.resume();
+    return sound.enable().then(() => contextualReactions?.prepare());
   }
   function setMasterMuted(muted) {
     audioPreferences.setMuted(muted);
@@ -1852,6 +1903,7 @@ try {
     return { ok: !warning, warning };
   }
   function suspendAudio() {
+    contextualReactions?.suspend();
     soundtrackSuspended = true;
     if (soundtrackPlayer) soundtrackPlayer.suspend();
     else sound.suspend();
@@ -2935,7 +2987,6 @@ try {
       const capabilities = arcadeActionCapabilities(run.level),
         acceptedLevel = structuredClone(run.level),
         acceptedTheme = structuredClone(theme),
-        coverage = run.level.goal.coverage * 100,
         stopOnCapture = run.rules.stopOnCapture,
         actions = [],
         acceptedKeys = resolveKeyBindings(library.preferences.keyboardBindings),
@@ -2982,12 +3033,9 @@ try {
       return {
         mission: () => contentText(acceptedLevel, 'name'),
         goal: () =>
-          t('interface:flightDetails.reveal', {
-            coverage: formatNumber(coverage, {
-              minimumFractionDigits: 1,
-              maximumFractionDigits: 1,
-            }),
-          }),
+          missionBriefing(acceptedLevel, {
+            objectiveLabel: contentText(acceptedTheme, 'labels.objective'),
+          }).goal,
         steering: () =>
           `${t('interface:flightDetails.steering')}${stopOnCapture ? ' ' + t('interface:closingACutStopsYourCraftChooseAFreshDirection') : ''}`,
         objectiveLabel: () => contentText(acceptedTheme, 'labels.objective'),
@@ -3118,6 +3166,12 @@ try {
       displayRestoration.dispose();
       displayPreferences.dispose();
       encounterDisplay.dispose();
+      encounterVariantControls?.dispose();
+      encounterChoices.dispose();
+      contextualReactions?.dispose();
+      huntStatus?.dispose();
+      huntResultStatus?.dispose();
+      huntRecords?.dispose();
       menuStyle.dispose();
       audioPreferences.dispose();
       audioMaster.dispose();
@@ -5238,7 +5292,7 @@ try {
     // Candidate editions are owned by their shared compiler, not the installed
     // Legacy pack catalog. Preserve that authority when restoring a saved preset.
     if (candidateHost?.owns(entry))
-      return candidateHost.select(candidateHost.mission(entry, 0), mode);
+      return candidateHost.select(candidateHost.mission(entry, 0), mode, { selection: entry });
     const baseKey = entry.baseCampaignKey || campaignKey(entry.campaign);
     if (entry.classicRulesSourceCampaignKey) {
       const authored = entry.sourcePackId
@@ -5594,7 +5648,15 @@ try {
   function journeyDestination() {
     const state = journeyProfile?.snapshot();
     const current = state && journeyCatalog.find(state.cursors.solo);
-    return current && Object.hasOwn(state.clears.solo, current.id)
+    const selected =
+      current && candidateHost?.select(current, journeyPreferences.snapshot().difficulty);
+    const receiptId = selected
+      ? (candidateHost.progressMission?.(
+          selected,
+          selected.campaign.levels.findIndex((level) => level.id === current.levelId),
+        )?.id ?? current.id)
+      : current?.id;
+    return current && Object.hasOwn(state.clears.solo, receiptId)
       ? nextJourneyMission(current.id) || current
       : current || (candidateHost ? journeyCatalog.missions[0] : null);
   }
@@ -6631,7 +6693,7 @@ try {
       adoptFlightActors(stagedActors);
       stagedActors = null;
       setTheme();
-      painter.setLevel?.(run.level, { seed });
+      painter.setLevel?.(run.level, { seed: run.seed });
       updateLoadout();
       overlay('pause');
       refreshHUD();
@@ -7354,6 +7416,23 @@ try {
     if (!started && !sessionBusy && !contentSwitchBusy && !backupBusy) prepare();
     else refreshDifficulty();
   };
+  if (candidateHost)
+    encounterVariantControls = attachEncounterVariantControls({
+      container:
+        $('menu-difficulty').closest('label')?.parentElement ?? $('settings-panel-display'),
+      preferences: encounterChoices,
+      records: huntRecords,
+      getAvailable: () => candidateHost.availableVariants?.(journeyMission()) ?? ['authored'],
+      onChange: () => {
+        cancelResultAttempt();
+        cancelSkipForContentChange();
+        cancelWorldAttempt();
+        cancelTitleFlight();
+        clearInput();
+        if (!started && !sessionBusy && !contentSwitchBusy && !backupBusy) prepare();
+        else refreshDifficulty();
+      },
+    });
   gameplayTuningPanel = mountGameplayTuning({
     root: $('gameplay-tuning'),
     controller: gameplayTuning,
@@ -8074,7 +8153,7 @@ try {
         status: contentText(lesson, 'instructions.0'),
       };
     }
-    return missionBriefing(scenario?.level || campaign.levels[levelIndex], {
+    return missionBriefing(run?.level ?? scenario?.level ?? campaign.levels[levelIndex], {
       brief: scenario
         ? undefined
         : (editionLocalization?.briefFor(campaign.levels[levelIndex]) ??
@@ -8841,7 +8920,9 @@ try {
         if (!destinationEntry)
           throw new Error(t('interface:thisMissionIsUnavailableInTheCurrentEdition'));
       }
+      const retainHunt = kind === 'retry' && !!ticket.run.level.classic?.hunt;
       const entry =
+          (retainHunt ? ticket.entry : null) ||
           destinationEntry ||
           (candidateHost?.owns(activeEntry)
             ? candidateHost.select(journeyMission(), journeyPreferences.snapshot().difficulty)
@@ -8853,12 +8934,21 @@ try {
             ? theme
             : entry.themes.find((item) => item.id === (level.themeId || entry.campaign.themeId)) ||
               entry.themes[0],
-        nextClassId = candidateHost?.owns(entry)
-          ? 'scout'
-          : entry.classRecipes.some((item) => item.id === classId)
-            ? classId
-            : entry.classRecipes[0].id,
-        options = { seed, turnPolicy, classId: nextClassId, classRecipes: entry.classRecipes };
+        nextClassId = retainHunt
+          ? ticket.run.classId
+          : candidateHost?.owns(entry)
+            ? 'scout'
+            : entry.classRecipes.some((item) => item.id === classId)
+              ? classId
+              : entry.classRecipes[0].id,
+        options = retainHunt
+          ? {
+              seed: ticket.run.seed,
+              turnPolicy: ticket.run.turnPolicy,
+              classId: ticket.run.classId,
+              classRecipes: ticket.run.classRecipes,
+            }
+          : { seed, turnPolicy, classId: nextClassId, classRecipes: entry.classRecipes };
       const ownedFocus = document.activeElement === ticket.button;
       ticket.feedback.update({
         status: 'preparing',
@@ -8883,6 +8973,7 @@ try {
           {
             missionId: candidateHost.mission(entry, destinationIndex).id,
             difficulty: entry.difficulty,
+            executionKey: entry.executionKey,
             seed,
             turnPolicy,
           },
@@ -8899,12 +8990,14 @@ try {
         candidateHost.preparer.take(candidateAttempt);
         ticket.candidatePicture = candidateAttempt.picture;
       }
-      const nextRun =
-          candidateAttempt?.run ??
-          createRun(applyGameplayTuning(level, nextGameplayTuning(entry)), options),
+      const nextRun = retainHunt
+          ? createRun(ticket.run.level, options)
+          : (candidateAttempt?.run ??
+            createRun(applyGameplayTuning(level, nextGameplayTuning(entry)), options)),
         nextRunId = crypto.randomUUID?.() || `${Date.now()}-${Math.random()}`,
-        nextRecorder =
-          candidateAttempt?.recorder ?? createRecorder(nextRun.level, options, buildVersion);
+        nextRecorder = retainHunt
+          ? createRecorder(nextRun.level, options, buildVersion)
+          : (candidateAttempt?.recorder ?? createRecorder(nextRun.level, options, buildVersion));
       const pins =
         kind === 'retry' && !candidateAttempt && !ticket.owner.legacy
           ? retryFlightPresentationPins(ticket.owner.pins(), {
@@ -9049,6 +9142,7 @@ try {
     retainAttemptAppearance = false,
   } = {}) {
     if (practiceRenderFailure.failed) return false;
+    const retainedHunt = retainAttemptAppearance && run?.level.classic?.hunt ? run : null;
     if (courseEntry || (courseSession && ['leaving', 'ended'].includes(coursePhase))) return;
     if (preparedAttempt) {
       const current = () =>
@@ -9080,7 +9174,7 @@ try {
       if (courseSession) coursePhase = 'ready';
       if (!restoreAdoption) {
         cancelRestore();
-        applyNextDifficulty(difficulty);
+        if (!retainedHunt) applyNextDifficulty(difficulty);
       }
       cancelPictureStart();
       storyDialog.close();
@@ -9183,16 +9277,30 @@ try {
     run =
       preparedAttempt?.run ||
       createRun(
-        scenario || practice || courseSession || restoreAdoption
-          ? scenario?.level || campaign.levels[levelIndex]
-          : applyGameplayTuning(campaign.levels[levelIndex], nextGameplayTuning()),
-        {
-          seed,
-          turnPolicy,
-          classId,
-          classRecipes: scenario?.classRecipes || classRegistry,
-        },
+        retainedHunt?.level ??
+          (scenario || practice || courseSession || restoreAdoption
+            ? scenario?.level || campaign.levels[levelIndex]
+            : applyGameplayTuning(campaign.levels[levelIndex], nextGameplayTuning())),
+        retainedHunt
+          ? {
+              seed: retainedHunt.seed,
+              turnPolicy: retainedHunt.turnPolicy,
+              classId: retainedHunt.classId,
+              classRecipes: retainedHunt.classRecipes,
+            }
+          : {
+              seed,
+              turnPolicy,
+              classId,
+              classRecipes: scenario?.classRecipes || classRegistry,
+            },
       );
+    if (retainedHunt || (preparedAttempt?.ticket.kind === 'retry' && run.level.classic?.hunt)) {
+      seed = run.seed;
+      turnPolicy = run.turnPolicy;
+      classId = run.classId;
+      classRegistry = run.classRecipes;
+    }
     runId = preparedAttempt?.runId || crypto.randomUUID?.() || `${Date.now()}-${Math.random()}`;
     const informationOwner = flightInformation.adopt(run, runId);
     courseObserver = null;
@@ -9279,7 +9387,7 @@ try {
       }
     }
     if (scenario?.music) assignMusic(scenario.music);
-    painter.setLevel?.(run.level, { seed });
+    painter.setLevel?.(run.level, { seed: run.seed });
     setTheme();
     started = false;
     paused = true;
@@ -9289,7 +9397,12 @@ try {
       preparedAttempt?.recorder ||
       createRecorder(
         run.level,
-        { seed, turnPolicy, classId, classRecipes: scenario?.classRecipes || classRegistry },
+        {
+          seed: run.seed,
+          turnPolicy: run.turnPolicy,
+          classId: run.classId,
+          classRecipes: run.classRecipes,
+        },
         buildVersion,
       );
     $('export-replay').disabled = !!replayDownload;
@@ -9611,6 +9724,9 @@ try {
     refreshHUD();
   }
   function refreshHUD() {
+    huntStatus?.render(run);
+    huntResultStatus?.render(run);
+    encounterVariantControls?.refresh();
     if (practiceRenderFailure.failed) return;
     profileRecovery?.refresh();
     refreshJourneySkip();
@@ -9678,19 +9794,30 @@ try {
     $('coverage').innerHTML = `${(run.coverage * 100).toFixed(1)}<small>%</small>`;
     $('coverage').setAttribute('aria-valuenow', (run.coverage * 100).toFixed(1));
     localizedAttribute($('coverage'), 'aria-valuetext', () =>
-      t('gameplay:hud.coverageValue', {
-        coverage: formatNumber(run.coverage * 100, { maximumFractionDigits: 1 }),
-        target: Math.round(run.level.goal.coverage * 100),
-      }),
+      t(
+        run.level.classic?.hunt?.mode === 'hunt'
+          ? 'gameplay:hud.huntCoverageValue'
+          : 'gameplay:hud.coverageValue',
+        {
+          coverage: formatNumber(run.coverage * 100, { maximumFractionDigits: 1 }),
+          target: Math.round(run.level.goal.coverage * 100),
+          kills: run.classic?.hunt?.kills ?? 0,
+          total: run.level.classic?.hunt?.targets.length ?? 0,
+        },
+      ),
     );
     $('coverage-bar').style.width = `${run.coverage * 100}%`;
     $('goal-marker').style.left = `${run.level.goal.coverage * 100}%`;
+    $('goal-marker').hidden = run.level.classic?.hunt?.mode === 'hunt';
     localizedText($('target'), () =>
-      t('gameplay:target', { value1: Math.round(run.level.goal.coverage * 100) }),
+      run.level.classic?.hunt?.mode === 'hunt'
+        ? `${huntText('targets')}: ${run.classic.hunt.kills}/${run.level.classic.hunt.quota}`
+        : t('gameplay:target', { value1: Math.round(run.level.goal.coverage * 100) }),
     );
-    $('coverage').dataset.target = Number.isFinite(run.level.goal.coverage)
-      ? ` / ${Math.round(run.level.goal.coverage * 100)}%`
-      : '';
+    $('coverage').dataset.target =
+      run.level.classic?.hunt?.mode !== 'hunt' && Number.isFinite(run.level.goal.coverage)
+        ? ` / ${Math.round(run.level.goal.coverage * 100)}%`
+        : '';
     localizedText($('lives'), () =>
       run.lives > 3 ? `◆ ×${run.lives}` : '◆ '.repeat(run.lives).trim() || '—',
     );
@@ -9713,9 +9840,17 @@ try {
           ? t('interface:targetReached')
           : run.status === 'lost'
             ? t('interface:retryWhenYouAreReady')
-            : required.length
-              ? `${contentText(theme, 'labels.objective')}: ${done.length} / ${required.length}`
-              : t('interface:closeALineToRevealThePicture'),
+            : run.level.classic?.hunt
+              ? huntText(
+                  run.level.classic.hunt.mode === 'hunt'
+                    ? 'huntGoal'
+                    : run.level.classic.hunt.mode === 'capture-quota'
+                      ? 'quotaGoal'
+                      : 'bonusGoal',
+                )
+              : required.length
+                ? `${contentText(theme, 'labels.objective')}: ${done.length} / ${required.length}`
+                : t('interface:closeALineToRevealThePicture'),
     );
     localizedText($('flight-state'), () =>
       campaignOverview
@@ -9734,9 +9869,13 @@ try {
                     ? run.player.speed === 0
                       ? t('interface:lineExposedChooseATurn')
                       : t('interface:liveLineExposed')
-                    : ['xonix-core.v6', 'xonix-core.v7', 'xonix-core.v8', 'xonix-core.v9'].includes(
-                          run.ruleset,
-                        )
+                    : [
+                          'xonix-core.v6',
+                          'xonix-core.v7',
+                          'xonix-core.v8',
+                          'xonix-core.v9',
+                          'xonix-core.v10',
+                        ].includes(run.ruleset)
                       ? t('interface:reclaimedGround')
                       : t('interface:safeGround'),
     );
@@ -9815,6 +9954,13 @@ try {
     flightDetails?.reconcile();
   }
   function eventFeedback(events) {
+    contextualReactions?.events(events, {
+      attemptId: runId,
+      mode: 'solo',
+      board: 0,
+      encounter: !!run?.level?.classic?.hunt,
+      danger: soloReactionDanger(run),
+    });
     const ticket = flightInformation.begin(run, events);
     // capture.stopped follows cells.claimed in the same accepted closure. Keep
     // the rule explanation when adding the fresh-steering cue; do not replace it.
@@ -9899,9 +10045,13 @@ try {
           )
             warning(
               t(
-                ['xonix-core.v6', 'xonix-core.v7', 'xonix-core.v8', 'xonix-core.v9'].includes(
-                  run.ruleset,
-                )
+                [
+                  'xonix-core.v6',
+                  'xonix-core.v7',
+                  'xonix-core.v8',
+                  'xonix-core.v9',
+                  'xonix-core.v10',
+                ].includes(run.ruleset)
                   ? 'gameplay:liveLineExposedReachReclaimedGroundToSecureIt'
                   : 'gameplay:liveLineExposedReachSafeGroundToSecureIt',
               ),
@@ -9921,9 +10071,13 @@ try {
           if (event.type === 'lineImpact.seeded')
             warning(
               t(
-                ['xonix-core.v6', 'xonix-core.v7', 'xonix-core.v8', 'xonix-core.v9'].includes(
-                  run.ruleset,
-                )
+                [
+                  'xonix-core.v6',
+                  'xonix-core.v7',
+                  'xonix-core.v8',
+                  'xonix-core.v9',
+                  'xonix-core.v10',
+                ].includes(run.ruleset)
                   ? 'gameplay:lineStruckReachReclaimedGroundBeforeTheTravellingSparkCatches'
                   : 'interface:lineStruckReachSafeGroundBeforeTheTravellingSparkCatches',
               ),
@@ -10300,7 +10454,10 @@ try {
         refreshCourse();
         if (run.status === 'won' && !practice && !recoverGameplayTuning(run.level)?.adminOverride) {
           void retainDemoRun(false);
-          const mission = journeyEnabled && !scenario && journeyMission();
+          const mission =
+            journeyEnabled &&
+            !scenario &&
+            (candidateHost?.progressMission?.(activeEntry, levelIndex) ?? journeyMission());
           if (mission) {
             const acceptedPicture = flightPictures?.current();
             const completion = {
@@ -10368,7 +10525,8 @@ try {
             !recordingStopped &&
             !recoverGameplayTuning(run.level)?.adminOverride
           ) {
-            const acceptedMission = journeyMission();
+            const acceptedMission =
+              candidateHost?.progressMission?.(activeEntry, levelIndex) ?? journeyMission();
             const acceptedRun = run,
               acceptedRunId = runId;
             const acceptedClear =
@@ -11282,6 +11440,8 @@ try {
           fullReveal: run.status === 'won',
           showGrid: scenario?.presentation?.showGrid || library.preferences.showGrid,
           showCombatScrap: practiceRemains ?? encounterDisplay.snapshot().showRemains,
+          brutal: encounterDisplay.snapshot().brutal,
+          blood: encounterDisplay.snapshot().blood,
           backdrop: flightPictures?.current(),
           celebrationPaused: document.hidden || !document.hasFocus() || dialogOpen(),
           defeatEffectsRunning: defeatEffectsRunning(),
@@ -11825,7 +11985,7 @@ try {
         describe: ({ level }) => {
           const actual = normalizedLevel(level);
           return {
-            rules: `${Math.round(actual.goal.coverage * 100)}% coverage · ${actual.rules.lives} lives · ${actual.rules.moveSpeed} cells/s · Authored rules`,
+            rules: `${actual.classic?.hunt ? missionBriefing(actual).goal : `${Math.round(actual.goal.coverage * 100)}% coverage`} · ${actual.rules.lives} lives · ${actual.rules.moveSpeed} cells/s · Authored rules`,
           };
         },
         prepareClassic: prepareLibraryClassic,
