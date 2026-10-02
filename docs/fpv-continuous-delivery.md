@@ -1596,3 +1596,105 @@ checks and two identical builds. Admitted complete source counts are35/68/100
 for Flight/Academy/World; World bytes14,064,140. Exact source runtime from the
 Garage playback receipts is unchanged; new discovery/worker helpers are inherited
 from reviewed #930. See `fpv-garage-integrated-package-verification.json`.
+
+
+### 2 October — C1 integrated qualification and inherited edition-size gate
+
+C1 candidate `294c9abe89e04cfb60b9e463dc88400832bace33` passes75/75 actual
+browser checks again after integrating #930/#953. All178 installed proofs
+replay. All three optional packages pass committed-input admission/ZIP checks
+and two identical builds:35/68/100 files, World14,067,328 bytes. A separate
+origin-unavailable browser check reopens the prepared launcher, reports Ready
+offline and launches the Hangar with enabled Arm/resume and no application
+errors. Physical devices and sustained performance remain unqualified.
+See `fpv-hangar-surfaces.md` and its evidence receipts.
+
+Garage #954 remains open at `59f20aaf0923a68b2c11f55e80641756bc9c83bd`.
+Its exact-head optional-practice and release-ready checks pass, but candidate
+run37034459099 fails the whole-edition guard:820 files/67,116,517 bytes,
+7,653 bytes above64MiB. Do not merge or increase the guard. Next publication
+step is a bounded lossless reduction followed by exact-head requalification,
+then a fresh native stack if C1 still depends on open #954. C1 stays separate.
+
+
+### 2 October — fresh native stack957, Garage954 → Hangar956
+
+The first C increment is published and attached as
+[PR #956](https://github.com/mekhovov/revealline/pull/956),
+`codex/fpv-hangar-surfaces`, following Garage #954 in new native **stack957**.
+Old stacks889/902 stay closed. GitHub concurrently merged newer main #908/#917
+into the root. Recovery refs `codex/fpv-garage-pre-stack957-20261002` and
+`codex/fpv-hangar-pre-stack957-20261002` preserve both original heads.
+A cascading rebase onto `2f009d335` restored linearity; the Garage tree is
+byte-identical to the remote merge tree, and the Hangar only adds those upstream
+changes. Atomic push used explicit remote-head leases for both branches.
+Root head `61b761f36da9fc014d4c9d087d868e4d7ebfd8ef`; Hangar frozen candidate
+`9134e9e210356ae4187fcde55337167e215ffabb` passes all three admissions again,
+committed-input/ZIP checks and two identical builds. See stack957 package receipt.
+
+The failed edition is `droneaid-nl-community`; its engine closure contains no
+optional-practice files. Current main independently reproduces the excess, so
+this is an inherited publication blocker, not additional Garage/ Hangar content.
+A bounded lossless soundtrack-metadata compaction is being assessed separately;
+retain all media, exported data, budgets and publication authority.
+C2 candidate after this checkpoint: redistribute the existing meadow tree line
+into irregular exterior groves without increasing geometry/resources, pending
+visual readability checks. Broader Themes integration remains separate.
+
+
+### 2 October — capacity repair958 published; next art branch prepared
+
+The independent main-edition capacity repair is published and attached as
+[PR #958](https://github.com/mekhovov/revealline/pull/958),
+`codex/compact-soundtrack-metadata`, candidate `d31ea2225`. Generated soundtrack
+metadata saves33,560 bytes with exact unchanged values/order/strings across all
+four exports. Two regenerations match. All18 production editions compile in
+memory under unchanged guards; the largest is67,093,802 bytes,15,062 below64MiB.
+The existing test cohort remains12pass/17fail on both baseline and candidate;
+identical failure names and archive-fixture causes are recorded, not called a
+suite pass. Frozen archive/CI qualification and protected merge remain pending.
+This fix is independent of native stack957 and must not be merged into feature
+branches by hand before checking current remote/main state.
+
+Native stack957 remains Garage #954 → Hangar #956. After958 merges, reconcile
+exact remote heads and apply a coordinated linear rebase with recovery refs and
+explicit leases; preserve new main and #955 Themes work. Requalify changed
+package inputs, inspect checks/reviews/holds, then use protected stack merge.
+No Garage/Hangar public availability is claimed until deployment identity and
+actual launch pass. A/B remain previously verified live.
+
+Both ordinary local player URLs now contain the same qualified Hangar build:
+92 runtime files/13,910,009 bytes, ZIP SHA256
+`e71a5313cd6111fd49f214eb5a28206eacddeb3bc8e65cad047d185c8f6076d8`.
+The reviewed-player URL launches Lift and land with visible refined surfaces
+and enabled Arm/resume; screenshot `/tmp/fpv-hangar-final-player-20261002.png`.
+
+Themes draft #955 is now published; its shared appearance ownership and
+remaining qualification are preserved. A concise authorized handoff identifies
+our gym-only change to `world-visuals.mjs`; do not replace either branch's full
+module during integration. Next independent implementation branch is
+`codex/fpv-meadow-groves`, created from the latest Hangar head without runtime
+changes yet. Implement C2's same-count exterior tree composition and verify
+readability/unchanged gameplay; publish as a new dependent PR only when complete.
+Physical TX15/iPhone/Steam Deck, novice/art acceptance and measured FPS remain
+open. Additional unit coverage stays in H/R7.
+
+
+### Latest handoff — Garage merged; preserve native child rewrite
+
+Repository automation merged Garage #954 as
+`09b40cdfa996056b4c6fb4ddbf96077676da53e0` at17:07 UTC. GitHub natively
+rebased the Hangar child to `49aaf950224963dd77e2d0eeb495180824d00435` and
+retargeted it to main; this task did not manually retarget or dissolve a stack.
+Its tree is identical to our previously published `45337fe75`.
+`codex/fpv-hangar-before-native-rebase-20261002` preserves the local head;
+only the unpublished delivery-note commit was replayed over GitHub's child.
+Stack957 now has merged954 and open956. The independent capacity repair958
+continues separately. Latest observed Hangar checks are running; no merge was
+requested by this task while checks were incomplete.
+
+Next heartbeat: inspect current heads/stack957/reviews/holds and public marker.
+Verify Garage's actual public launch before calling its120+58 demonstrations
+live. Resolve the independent958 pipeline, preserve any native stack rewrite,
+then continue C2 on `codex/fpv-meadow-groves`. Its starting tree includes the
+published Hangar change; no unfinished C2 runtime work is mixed into956.

@@ -1,0 +1,171 @@
+{
+  "passed": true,
+  "upstream": "fc0eaf978",
+  "course": "flight-01",
+  "authoredExactAcrossQualities": true,
+  "themeQualityCases": 24,
+  "results": [
+    {
+      "kind": "authored",
+      "quality": "low",
+      "meshes": 55,
+      "disposed": 87
+    },
+    {
+      "kind": "industrial-workshop",
+      "quality": "low",
+      "serviceStrips": 2,
+      "disposed": 89
+    },
+    {
+      "kind": "vyshyvanka",
+      "quality": "low",
+      "serviceStrips": 2,
+      "disposed": 89
+    },
+    {
+      "kind": "dnipro-porcelain",
+      "quality": "low",
+      "serviceStrips": 2,
+      "disposed": 89
+    },
+    {
+      "kind": "tryzub",
+      "quality": "low",
+      "serviceStrips": 2,
+      "disposed": 89
+    },
+    {
+      "kind": "windows-classic",
+      "quality": "low",
+      "serviceStrips": 2,
+      "disposed": 89
+    },
+    {
+      "kind": "dos",
+      "quality": "low",
+      "serviceStrips": 2,
+      "disposed": 89
+    },
+    {
+      "kind": "orchard-workshop",
+      "quality": "low",
+      "serviceStrips": 2,
+      "disposed": 89
+    },
+    {
+      "kind": "neon-ruins",
+      "quality": "low",
+      "serviceStrips": 2,
+      "disposed": 89
+    },
+    {
+      "kind": "authored",
+      "quality": "balanced",
+      "meshes": 55,
+      "disposed": 87
+    },
+    {
+      "kind": "industrial-workshop",
+      "quality": "balanced",
+      "serviceStrips": 2,
+      "disposed": 89
+    },
+    {
+      "kind": "vyshyvanka",
+      "quality": "balanced",
+      "serviceStrips": 2,
+      "disposed": 89
+    },
+    {
+      "kind": "dnipro-porcelain",
+      "quality": "balanced",
+      "serviceStrips": 2,
+      "disposed": 89
+    },
+    {
+      "kind": "tryzub",
+      "quality": "balanced",
+      "serviceStrips": 2,
+      "disposed": 89
+    },
+    {
+      "kind": "windows-classic",
+      "quality": "balanced",
+      "serviceStrips": 2,
+      "disposed": 89
+    },
+    {
+      "kind": "dos",
+      "quality": "balanced",
+      "serviceStrips": 2,
+      "disposed": 89
+    },
+    {
+      "kind": "orchard-workshop",
+      "quality": "balanced",
+      "serviceStrips": 2,
+      "disposed": 89
+    },
+    {
+      "kind": "neon-ruins",
+      "quality": "balanced",
+      "serviceStrips": 2,
+      "disposed": 89
+    },
+    {
+      "kind": "authored",
+      "quality": "high",
+      "meshes": 55,
+      "disposed": 87
+    },
+    {
+      "kind": "industrial-workshop",
+      "quality": "high",
+      "serviceStrips": 2,
+      "disposed": 89
+    },
+    {
+      "kind": "vyshyvanka",
+      "quality": "high",
+      "serviceStrips": 2,
+      "disposed": 89
+    },
+    {
+      "kind": "dnipro-porcelain",
+      "quality": "high",
+      "serviceStrips": 2,
+      "disposed": 89
+    },
+    {
+      "kind": "tryzub",
+      "quality": "high",
+      "serviceStrips": 2,
+      "disposed": 89
+    },
+    {
+      "kind": "windows-classic",
+      "quality": "high",
+      "serviceStrips": 2,
+      "disposed": 89
+    },
+    {
+      "kind": "dos",
+      "quality": "high",
+      "serviceStrips": 2,
+      "disposed": 89
+    },
+    {
+      "kind": "orchard-workshop",
+      "quality": "high",
+      "serviceStrips": 2,
+      "disposed": 89
+    },
+    {
+      "kind": "neon-ruins",
+      "quality": "high",
+      "serviceStrips": 2,
+      "disposed": 89
+    }
+  ]
+}
