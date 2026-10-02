@@ -19,6 +19,11 @@ main {
   max-width: 860px;
   margin: auto;
 }
+/* The enclosing game dialog already fits the device safe area. The iframe
+   keeps normal reading space without reserving the phone insets a second time. */
+body[data-embedded='true'] {
+  padding: 24px 20px 32px;
+}
 h1 {
   font-size: clamp(2rem, 5vw, 3rem);
 }
