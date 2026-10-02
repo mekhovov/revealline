@@ -1119,6 +1119,7 @@ export function mountWorldApp({
       showTab('learn');
     },
     onRadio: () => $('radio-setup-button').click(),
+    readRadioPreview: () => radio.preview(),
     onFullscreen: () => immersive.toggle(),
     onPracticeView: async (enabled) => {
       if (enabled) {
@@ -1274,21 +1275,7 @@ export function mountWorldApp({
     status.dataset.source = source;
     monitor.dataset.source = source;
     paintDroneResponse(state, controls, { source, unavailable });
-    if (current?.beginner)
-      beginnerCoach.update({
-        state,
-        source,
-        stickMode: radioPreview?.stickMode ?? 2,
-        monitor: source === 'radio' && unavailable ? neutralFlightInput() : controls,
-        monitorAvailable: !(source === 'radio' && unavailable),
-        radioMonitor: radioPreview?.controls,
-        radioAvailable: Boolean(radioPreview?.verified),
-        radioStickMode: radioPreview?.stickMode ?? 2,
-        mode: $('flight-mode').value,
-        reducedMotion:
-          $('sim-motion').value === 'reduced' ||
-          Boolean(win.matchMedia?.('(prefers-reduced-motion: reduce)').matches),
-      });
+    paintCoach(state, radioPreview);
     $('world-keys-hint').textContent =
       source === 'radio'
         ? txt(
@@ -1312,6 +1299,34 @@ export function mountWorldApp({
       'aria-label',
       txt('Stick display', 'Відображення стіків'),
     );
+  }
+  function paintCoach(state, radioPreview = radio.preview()) {
+    const source = replayProof ? 'recording' : $('flight-source').value;
+    const unavailable = source === 'radio' && !radioPreview?.controls;
+    const controls =
+      source === 'radio'
+        ? radioPreview?.controls
+        : Object.fromEntries(
+            ['roll', 'pitch', 'yaw', 'throttle'].map((key) => [
+              key,
+              (state?.lastInput?.[key] ?? 0) / 1000,
+            ]),
+          );
+    if (current?.beginner)
+      beginnerCoach.update({
+        state,
+        source,
+        stickMode: radioPreview?.stickMode ?? 2,
+        monitor: source === 'radio' && unavailable ? neutralFlightInput() : controls,
+        monitorAvailable: !(source === 'radio' && unavailable),
+        radioMonitor: radioPreview?.controls,
+        radioAvailable: Boolean(radioPreview?.verified),
+        radioStickMode: radioPreview?.stickMode ?? 2,
+        mode: $('flight-mode').value,
+        reducedMotion:
+          $('sim-motion').value === 'reduced' ||
+          Boolean(win.matchMedia?.('(prefers-reduced-motion: reduce)').matches),
+      });
   }
   function paintDroneResponse(state, controls, { source, unavailable }) {
     droneResponse.update({
@@ -3012,6 +3027,12 @@ export function mountWorldApp({
       }
     }
     const state = flight.snapshot();
+    if (beginnerCoach.blocksArm() && state.status !== 'active') {
+      // The opaque guide owns the screen. Keep controller/lifecycle sampling
+      // current without rendering a covered WebGL scene and hidden flight HUD.
+      paintCoach(state);
+      return;
+    }
     if (state.status === 'active') presentation.pause();
     audio.update(state, { active: state.status === 'active' });
     renderer?.draw?.(state, {
@@ -3734,7 +3755,7 @@ export function mountWorldApp({
         blockDevices: secondary.id === 'world-radio-dialog' && Boolean(radioSetup?.captureActive()),
       };
     if ($('flight-dialog').open) {
-      if (beginnerCoach.previewSnapshot?.()?.running) return null;
+      if (beginnerCoach.previewRunning()) return null;
       if (beginnerCoach.blocksArm()) return { root: $('beginner-coach'), key: 'coach' };
       if (flight?.snapshot().status === 'active') return null;
       return { root: $('flight-dialog'), key: `flight:${$('flight-dialog').dataset.optionsOpen}` };
