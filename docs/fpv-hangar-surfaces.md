@@ -66,6 +66,12 @@ builds. Source counts35/68/100 and bytes545,596 /3,819,355 /14,067,328 remain
 within the inherited #930 caps64/72/104 and8/8/16MiB. No guard or release
 version is changed. See `evidence/fpv-hangar-surfaces-package.json`.
 
-Publication remains a separate gate. Parent Garage #954's whole-edition
+Published as [PR #956](https://github.com/mekhovov/revealline/pull/956) in native
+stack957 after Garage #954. Publication remains a separate gate. Parent Garage #954's whole-edition
 candidate currently exceeds the64MiB site guard by7,653 bytes; preserve the
 guard and all content while repairing its transport before merging this child.
+
+After newer main #908/#917 integration, linear candidate
+`9134e9e210356ae4187fcde55337167e215ffabb` repeats all package checks; see
+`evidence/fpv-hangar-surfaces-stack957-package.json`. The inherited failing
+edition has no optional-practice files; the SIM does not cause its size excess.
