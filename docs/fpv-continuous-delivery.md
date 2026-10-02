@@ -1482,3 +1482,40 @@ package admissions, ZIP/committed-input checks and two identical builds.
 Player SHA256 `f6093191d52c21e2f665fb50517272fa4dd6fb0bb50f61086d1d6ec3d3d7cc94`;
 87 runtime files /13,426,571 bytes. B can now target main directly. Its
 publication is separate from A's verified public availability.
+
+### 2 October — B merged; Garage original demonstrations ready
+
+Lifecycle PR [#952](https://github.com/mekhovov/revealline/pull/952) was published
+and attached at `2fcb3a2ce003e5d0340a9df8cad78e59b9202a5a`, then merged through
+the protected pipeline as `b278b0b67137ee8fa3441dd0196e634981137546`. Latest
+exact-head checks pass; the automatic main update only added menu-review docs.
+Both reviewed-player and continuous-school local URLs contain the qualified B
+build, SHA `f6093191d52c21e2f665fb50517272fa4dd6fb0bb50f61086d1d6ec3d3d7cc94`.
+
+The separate branch `codex/fpv-garage-demonstrations` installs the missing16
+original Garage proofs. All138 previous v2 rows and decoder bytes are retained;
+the current branch contains154 v2 +24 v1 =120 original +58 school demonstrations.
+The14-world/148-challenge catalogue and Adventure60 authoring archive are unchanged.
+The portable generator, bounded additive pack builder, provenance and compact
+archive are retained in `authoring/fpv-worlds/demonstrations`.
+
+Authoring qualification passes15/15; all154 v2 and24 v1 recordings independently
+replay. All1,331 checkpoint positions pass (768 restored /563 explicit fallbacks).
+Actual WebGL source281/281 and packaged279/279 checks each complete18 runs:
+all16 Garage examples in both modes plus retained original/school representatives.
+The checks cover exact final state, FPV/chase, speed/pause, controlled held-input
+isolation, localization and saved-record preservation. Their supplied frame
+timestamps accelerate playback; they do not measure hardware performance.
+Separate native-time Upper deck survey playback and FPV/chase approach views were
+inspected. Human art, novice and physical-device qualification remain open.
+
+During qualification, a false final-state mismatch was traced to cross-realm
+object key ordering in the verification page; both child-local and normalized
+parent hashes now match the exact proofs. Runtime physics and recordings were
+not altered to satisfy the fixture. The maintained fixture also exposes deliberate
+post-preparation resume and never auto-resumes unexpected in-flight pauses.
+
+Next: freeze and publish this increment against current main (B already merged,
+so no stack is needed yet), then continue C's shared Themes/hero-environment work.
+Do not append to closed stacks889/902 or claim the Garage build is public before
+its own protected merge, deployment identity and actual public launch.
