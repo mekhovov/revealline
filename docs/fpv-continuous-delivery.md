@@ -890,3 +890,39 @@ and deployment remain separate protected gates.
 - Attached to this chat and appended through the native API to stack #902 directly after #935. Upstream holds and protections remain; this is review publication, not verified public deployment.
 - The user’s `dist/fpv-reviewed-player-playtest` local entry and `dist/fpv-continuous-school-playtest` contain the qualified package recorded above.
 - Next independent increment: 16 distinct Experienced/Advanced navigation and precision lessons, tier navigation and exact replay demonstrations, on `codex/fpv-navigation-school`. Pro/Master criterion extensions remain separate until their authored demonstrations qualify.
+
+### 2 October — navigation school qualification
+
+On `codex/fpv-navigation-school`, added16 authored Experienced/Advanced lessons,
+137 new steps and16 complete recordings. School42/259; primary Acro30 plus12
+optional self-level; full catalogue102. Corrected route/description discrepancies
+found in review, regenerated only the new content identities/proof envelopes and
+verified original26 identities and all prior recording bytes remain unchanged.
+Final new pack: `fpv-navigation-school:5c31fce0b5a82b98`.
+
+Model evidence:16/16 complete, zero contacts/full health, independent exact replay
+and byte-identical regeneration by the maintained pilot. Browser evidence87/87
+continuous lesson checks and12/12 production tier/menu checks, including exact
+revision progress, Continue beyond beginner, EN/UK and fullscreen isolation. A
+real duplicate tab-focus call was removed; the subsequent iframe-only history
+failure was corrected in the ignored verification harness using a real URL.
+No production history behavior was bypassed. Final observed max open42.6ms / seek
+40.2ms are local operation samples, not physical latency or target-device targets.
+
+The first16 new navigation lessons are ready for a focused package/PR. The next16
+Pro/Master drafts remain separate and held for criterion-envelope tightening and
+host/editor/renderer qualification. No unit coverage or human acceptance claim.
+A further12 reproducible audio/graphics candidate ZIPs were removed to reclaim
+65,264,954bytes; all manifests, source, proofs and evidence remain preserved.
+
+Frozen navigation runtime `7240eda1bd2c57416fffbf0f2e4f73e6996ed0ec`
+passes all three package admissions, committed inputs, ZIP membership and two
+byte-identical builds. Receipt: `docs/evidence/fpv-navigation-package-20261002.json`.
+The separate local player is87 files/13,246,555bytes with ZIP SHA-256
+`0b6459a262c90f713d97a983943895121b3967dc5a67cdb323f5aa1cff164fa4`.
+
+Navigation school published in focused PR [#939](https://github.com/mekhovov/revealline/pull/939),
+attached to this chat and appended to native stack #902 directly after #938.
+Qualified receipt head `b80425d55`; upstream review/protection holds retained.
+Next branch: `codex/fpv-pro-mastery-school`, containing only the skill criteria,
+Pro/Master lessons and required presentation/editor adapters after they qualify.
