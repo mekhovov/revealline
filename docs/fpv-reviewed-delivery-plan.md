@@ -242,11 +242,13 @@ main; create a new native stack only when a second dependent PR needs it.
 A is merged in [PR #951](https://github.com/mekhovov/revealline/pull/951); see
 [section-practice behavior](fpv-checkpoint-practice.md). Publication and exact
 deployment state belong in the latest delivery checkpoint. B's callback-stall
-and focused-button pause increment is implemented on `codex/fpv-world-lifecycle`;
+and focused-button pause increment is merged and publicly verified as
+[PR #952](https://github.com/mekhovov/revealline/pull/952);
 see [lifecycle behavior and verification](fpv-world-lifecycle.md). It freezes
 before device actions or physics and requires deliberate resume. Physical-device
 and handheld sessions remain pending; this increment does not complete all of B.
-E's Garage increment is installed locally on `codex/fpv-garage-demonstrations`,
+E's Garage increment is published in
+[PR #954](https://github.com/mekhovov/revealline/pull/954),
 with source and packaged playback qualification complete. See
 [Garage demonstrations](fpv-garage-demonstrations.md). Its focused PR and public
 deployment remain separate gates in the delivery log. The approved C art/Themes
