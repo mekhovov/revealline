@@ -1,0 +1,603 @@
+{
+  "format": "AppearanceContinuationChecks.v1",
+  "startedAt": "2026-10-02T21:15:38.955504+00:00",
+  "baseRevision": "a4b7c9d64e2253da06f00f205559063563b5047a",
+  "workingTreeModified": true,
+  "sourceInputs": [
+    {
+      "path": ".github/workflows/appearance-preview.yml",
+      "bytes": 11832,
+      "sha256": "fdc40bf26db066d7ce6625269c467884971a848ae3aba6ce6483140cc0852342"
+    },
+    {
+      "path": "authoring/fpv-worlds/industrial-markings/generate.mjs",
+      "bytes": 16093,
+      "sha256": "03cd57169f35c1dcc5333e281d272012abb92055c0d060316a44a62bdfb0db81"
+    },
+    {
+      "path": "authoring/fpv-worlds/industrial-markings/index.html",
+      "bytes": 4281,
+      "sha256": "b234cc9f08773bf74f16be6b15cbfdb2186524d95532528be9444c6027b83318"
+    },
+    {
+      "path": "authoring/fpv-worlds/industrial-markings/r1/manifest.json",
+      "bytes": 4892,
+      "sha256": "8fc06c15121a4085e0c86612fabccb211037af0dea04f3d8b74e179999aa6b3b"
+    },
+    {
+      "path": "authoring/fpv-worlds/industrial-markings/r1/markings.glb",
+      "bytes": 8152,
+      "sha256": "57da4671dbb4c3a2aafb96785eb1bf83d14719106279e6fd0f9720800f9a5bf2"
+    },
+    {
+      "path": "authoring/fpv-worlds/industrial-markings/r1/markings.png",
+      "bytes": 981,
+      "sha256": "ca090b130e686168dedab0350a177a038c41038a3d6bdbf96fe2afb6c756c473"
+    },
+    {
+      "path": "authoring/fpv-worlds/industrial-markings/r1/source.json",
+      "bytes": 679,
+      "sha256": "a5f142f8665fe15a918062e2057206204253d655c00bb52e6339b38ff08f83da"
+    },
+    {
+      "path": "authoring/fpv-worlds/industrial-markings/viewer.mjs",
+      "bytes": 7467,
+      "sha256": "08c485c812c9d08806baabae5a9d8add3eb1fc0e34c2ed93482c061aaecb8113"
+    },
+    {
+      "path": "authoring/fpv-worlds/package-lock.json",
+      "bytes": 26330,
+      "sha256": "9c9acded2d86889e2822e293d28c940994646744874ba45b873f9a2d50d58b03"
+    },
+    {
+      "path": "authoring/library/neon-arrows/index.html",
+      "bytes": 2528,
+      "sha256": "97cd1e3114f12cbede7fb571d9b617ce42cb780f81aaf6f81676a9c6c71c59c4"
+    },
+    {
+      "path": "authoring/library/neon-artwork/index.html",
+      "bytes": 19611,
+      "sha256": "a1eed0408373dc88cde98acd1c60806241995d90da62e90626f8a1d99025bd8d"
+    },
+    {
+      "path": "authoring/library/neon-chambers/index.html",
+      "bytes": 2519,
+      "sha256": "fe18ba013e2212e4faa23a7c072c6147507d3f1a307c86da995cfebf41e55118"
+    },
+    {
+      "path": "authoring/library/neon-channels/index.html",
+      "bytes": 2391,
+      "sha256": "1cea118eff371fcba0305a285c7d795fedd99f497cf1d69313cc3ab8d469f5a6"
+    },
+    {
+      "path": "authoring/library/neon-conduit/index.html",
+      "bytes": 2670,
+      "sha256": "491cfba8b2cf34b3d6adbafd833ee1432b4f1b87f51644a0252c65acb899ba3b"
+    },
+    {
+      "path": "authoring/library/neon-crossfire/index.html",
+      "bytes": 2628,
+      "sha256": "9b1dd5ca534f41fdd3e0e63d8d105ae64452e09cbcce3394dc60c7cbba73f19d"
+    },
+    {
+      "path": "authoring/library/neon-crossgrid/index.html",
+      "bytes": 2620,
+      "sha256": "af86e968f57e2275a65764f5d1797c5384303e044f872055341852e8a4b2c1bc"
+    },
+    {
+      "path": "authoring/library/neon-crossroads/index.html",
+      "bytes": 2392,
+      "sha256": "5b8c41e40f2b3dc87013173e2a64f5648d9a2d0ae2014a9568a05fbaaab14ec2"
+    },
+    {
+      "path": "authoring/library/neon-hearts/index.html",
+      "bytes": 2464,
+      "sha256": "8ff6e6b6775ab17fdbd504e9f633d2e3e3dfafbb9a2c83a2e277af4c3fc3d892"
+    },
+    {
+      "path": "authoring/library/neon-labyrinth/index.html",
+      "bytes": 2559,
+      "sha256": "493cabb832ee0bd124cf5ea5d24f986ac2d186d814b71c1a303901dfcf03f138"
+    },
+    {
+      "path": "authoring/library/neon-mosaic/index.html",
+      "bytes": 13515,
+      "sha256": "6a38aaed38cc777edc2286fb1c1a1434c78b1bcd9e30a3ef9147ae4b0cb060fc"
+    },
+    {
+      "path": "authoring/library/neon-pinwheels/index.html",
+      "bytes": 2576,
+      "sha256": "086faaa04953e0ca209f522d7a878802244e9a8119c86254a6ae0c1aba1bc8b1"
+    },
+    {
+      "path": "authoring/library/neon-prism/index.html",
+      "bytes": 2656,
+      "sha256": "81ad442e3150bccdfe5743340b82b5e1c753bb76365e57a08311234bd5e38356"
+    },
+    {
+      "path": "authoring/library/neon-spines/index.html",
+      "bytes": 2676,
+      "sha256": "7a846ef90a7500319e789aabb9c32b9eee40eded122ac9284a20fc83f948e92b"
+    },
+    {
+      "path": "authoring/library/neon-spirals/index.html",
+      "bytes": 2573,
+      "sha256": "ee88983bae7fcbc0fe01757ea5b933a7ad222f988a428a34ef37b433d58fa345"
+    },
+    {
+      "path": "authoring/library/neon-switchback/index.html",
+      "bytes": 2645,
+      "sha256": "ecc209d7fdcb63bf7b25699b1e960d5d7add6e0e37dd81af6255ad88dd55f535"
+    },
+    {
+      "path": "authoring/library/neon-switchyards/index.html",
+      "bytes": 2662,
+      "sha256": "c4d3052c87d131a5bd6ed5f625a87ca5324f0ece09ea5d38be9dfc1c67fa3b10"
+    },
+    {
+      "path": "authoring/library/neon-wavebands/index.html",
+      "bytes": 2643,
+      "sha256": "9986300c0a5ec400fef21e383a3f15d93a49720d07fcf2057061dcb7f77113ef"
+    },
+    {
+      "path": "game/presentation/industrial-workshop.css",
+      "bytes": 38377,
+      "sha256": "1095f06e464bc0a43d798da954f3e520a090d4d25b8067ceae0fdb17556de1f6"
+    },
+    {
+      "path": "game/test/asset-studio-host-loading.test.mjs",
+      "bytes": 65287,
+      "sha256": "2e0700b81757b7b576f6b2e460885651e09b7d621856a6fa7c5f14da66908cf9"
+    },
+    {
+      "path": "game/test/community-appearance.test.mjs",
+      "bytes": 13164,
+      "sha256": "4375a407d3f21752bcabddd9ae04a785a07bafdf2aeac857181f2953f6c8fae0"
+    },
+    {
+      "path": "game/test/company-studio-preview.test.mjs",
+      "bytes": 18127,
+      "sha256": "3568a753e07b537a26780e635d653715398b6e3a52b2bdb42da0ccb5a93d7687"
+    },
+    {
+      "path": "game/test/company-studio-ui.test.mjs",
+      "bytes": 12489,
+      "sha256": "8f2860422364662fed10d3159b0e1dc11b642a373a1b0f5f56e0ac514109dd6d"
+    },
+    {
+      "path": "game/test/creator-player-menu.test.mjs",
+      "bytes": 15946,
+      "sha256": "b3ad0fe2b54fdd61bce2e18e5cf586a749edd0868bcf6745467259ff86152b16"
+    },
+    {
+      "path": "game/test/creator-player-victory-story.test.mjs",
+      "bytes": 5888,
+      "sha256": "539735101fbedc44fdfa1a1f523dda71729e86486a990b623a4283a9bee0efce"
+    },
+    {
+      "path": "game/test/curated-community-theme-host.test.mjs",
+      "bytes": 10637,
+      "sha256": "34ddf44895162ee3cc70972744db7c8f4dd102bd27c8c67557f347505ad26897"
+    },
+    {
+      "path": "game/test/curated-community-theme.test.mjs",
+      "bytes": 25355,
+      "sha256": "85aa389f2ebc570a8b3d5128cce90e04c466bd79f5cbed4a16d862475cc25d04"
+    },
+    {
+      "path": "game/test/demo-reward.test.mjs",
+      "bytes": 3352,
+      "sha256": "b8d1b1385820fb89ff3f6a63248c90471658bfab62fdb5fab2329ff558d884b8"
+    },
+    {
+      "path": "game/test/edition-appearance-host.test.mjs",
+      "bytes": 7964,
+      "sha256": "cdfa488ff6fd6c90187aa520c8fe4932d686898b1931c9ecee744e36d4f9911b"
+    },
+    {
+      "path": "game/test/edition-retained-presentation.test.mjs",
+      "bytes": 7792,
+      "sha256": "3425b03415dadb4c175da559dd4a27a6f6ab349dcb5dafe40f76d5988859d1ce"
+    },
+    {
+      "path": "game/test/edition-runtime.test.mjs",
+      "bytes": 26755,
+      "sha256": "0484e74cfb2172a9f0136e87409663e80bbc5e6671e188bb58208c2c52e5ee08"
+    },
+    {
+      "path": "game/test/editions.test.mjs",
+      "bytes": 56772,
+      "sha256": "f24e2390189ed29b1f7782a24c5d26bdd9bc91a43e054e3cf73830ffb25ad7aa"
+    },
+    {
+      "path": "game/test/fpv-acceptance-workflow.test.mjs",
+      "bytes": 12285,
+      "sha256": "660459457ec900da1f579aec09661508c0dc246c8bcc1041865b83b405d031bb"
+    },
+    {
+      "path": "game/test/fpv-appearance.test.mjs",
+      "bytes": 11943,
+      "sha256": "d6342a7960a24a6835405446f8273d3b577d36b9a2df6ed499272e19bcfb6f67"
+    },
+    {
+      "path": "game/test/fpv-flight-ui.test.mjs",
+      "bytes": 41176,
+      "sha256": "ed3292b375f5f520759ae146db0e0649ba47c90daa5a0d3441cde78dc3c1fc59"
+    },
+    {
+      "path": "game/test/fpv-objective-labels.test.mjs",
+      "bytes": 9049,
+      "sha256": "282c3eebbabccb653f2ed02fa9c534a454a57acb7bff296a983d93a2e040c75e"
+    },
+    {
+      "path": "game/test/fpv-replay-rate.test.mjs",
+      "bytes": 7877,
+      "sha256": "5eff545e5c2c3e6b2202575d3b0a073361a6d8577d3bbcec7b49d11487b6d08b"
+    },
+    {
+      "path": "game/test/fpv-studio-setup.test.mjs",
+      "bytes": 13412,
+      "sha256": "3e084aba95e6efa3fd865eebdd7d5925f5da8ff28debcd2cfab575b370a55196"
+    },
+    {
+      "path": "game/test/fpv-theme-family-controls.test.mjs",
+      "bytes": 6583,
+      "sha256": "8e417d04aff7a5f49492a31b1d2727b158db82a6dc76f2fbec285bf1e964740c"
+    },
+    {
+      "path": "game/test/fpv-workshop-visuals.test.mjs",
+      "bytes": 24671,
+      "sha256": "593d42d6f1a208f0592dad3eb31ce42e5e90925151b95a15c09b535a818d94ff"
+    },
+    {
+      "path": "game/test/fpv-world-appearance-ui.test.mjs",
+      "bytes": 11792,
+      "sha256": "33ffc8e07ab7cda67c9ecb894d124fd59503ba2013d636bfe86cf98892996b77"
+    },
+    {
+      "path": "game/test/fpv-world-content.test.mjs",
+      "bytes": 8960,
+      "sha256": "ed1e781afad082a68d503132a36cbe03379cda3f622e63057880560b10973977"
+    },
+    {
+      "path": "game/test/fpv-world-editor-appearance.test.mjs",
+      "bytes": 2087,
+      "sha256": "41d73dafac6d222ad12f7d4040d2f4ba512d92e0fc63be9e0bde4e121a8b12c8"
+    },
+    {
+      "path": "game/test/fpv-world-runtime.test.mjs",
+      "bytes": 14576,
+      "sha256": "27e858091c696e1dc30bf5c57867e1488ab4a7a0185e2d53c19222ffc7ad83be"
+    },
+    {
+      "path": "game/test/industrial-arcade.test.mjs",
+      "bytes": 7426,
+      "sha256": "5c5bb5fed01f01687dd4e83e40106eceddcdbc6e91f712d6714432f6875a2a55"
+    },
+    {
+      "path": "game/test/menu-audio-localization.test.mjs",
+      "bytes": 1504,
+      "sha256": "ba57e8b2f35ff562db5999b493a90f1ffb2c5b0c633b4144dbe774c299e61198"
+    },
+    {
+      "path": "game/test/mode-choice-appearance.test.mjs",
+      "bytes": 7236,
+      "sha256": "55481ba76bc9a8fd737d5825060e2293f9672dce7edd9efdbadb665ea159394b"
+    },
+    {
+      "path": "game/test/operation-status.test.mjs",
+      "bytes": 6464,
+      "sha256": "66ae54af63dc9c0422eaccce8a1b822cd29f8324cf87f9173ddd39fd111ebede"
+    },
+    {
+      "path": "game/test/optional-installation.test.mjs",
+      "bytes": 10822,
+      "sha256": "003d4197beea8df1bf6d086cf38e8db994dc18e684c92230481fd175ecb55676"
+    },
+    {
+      "path": "game/test/optional-practice-panel.test.mjs",
+      "bytes": 15085,
+      "sha256": "e5efa9f3ca8013a71f788af85ca5a0a88fed1dca0659c5c8e84ffb041b48abdc"
+    },
+    {
+      "path": "game/test/story-dialog.test.mjs",
+      "bytes": 14657,
+      "sha256": "d5e720318cab8cb208cf7d98715cac2ecae6d7d2bd4d4d4cb990359196da03c5"
+    },
+    {
+      "path": "game/test/studio-appearance-basis.test.mjs",
+      "bytes": 7054,
+      "sha256": "253e9f7f8aaaefdcf65edc32997ed43c709f03766db72ddb007035c18e8390d2"
+    },
+    {
+      "path": "game/test/theme-bootstrap.test.mjs",
+      "bytes": 13147,
+      "sha256": "e3f1ebbdfd4a10b175980b428600141e6e1dd2303e16959e31d38d1ad4048486"
+    },
+    {
+      "path": "game/test/theme-family-host.test.mjs",
+      "bytes": 3833,
+      "sha256": "ed0991dc391dd58a170611f30b99ba24bf56421daddc28faec9f34a93b594e9a"
+    },
+    {
+      "path": "game/test/theme-notices.test.mjs",
+      "bytes": 4323,
+      "sha256": "c90cd6f497ac21db720b4c8c6527b1b6ba89cfb42f316b08bfd19d9a069f2425"
+    },
+    {
+      "path": "game/test/theme-preview.test.mjs",
+      "bytes": 7344,
+      "sha256": "a6d213a8fa6ea0a7084a0803eddeea3420b61d96114d34e63a35825edd74d185"
+    },
+    {
+      "path": "game/test/theme-system.test.mjs",
+      "bytes": 10335,
+      "sha256": "c9c2d3a9b9dcf6d3c5ff1cc0b6335a8f67e678f07dcbfafcb7f9ef9d7803e9e4"
+    },
+    {
+      "path": "game/test/unified-appearance.test.mjs",
+      "bytes": 18562,
+      "sha256": "0ee5bf14aab20ceb90c3425512cc1f4327dfe8127a284d99fb53f3493df526c9"
+    },
+    {
+      "path": "game/test/win-picture-host.test.mjs",
+      "bytes": 7614,
+      "sha256": "52c81966230aceffcae41704765cf4f5b722271189816e80e8dddfeb7e2439e5"
+    },
+    {
+      "path": "game/ui/story-dialog.mjs",
+      "bytes": 8858,
+      "sha256": "30640f60dbb23529eb3a4cbbaa7fb6ae821d98d11180400926b57585b65bc8d0"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/renderer.mjs",
+      "bytes": 83554,
+      "sha256": "472c099e8eb12f20f5857860360d0679e4b13dd1bc010ebbe5b76a91f0773110"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/sim-presentation.mjs",
+      "bytes": 391091,
+      "sha256": "7b2bd6a6527cd3e9d6b8402fdba257367f0683e28670fba47952aafca4eb9bf0"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/world-visuals.mjs",
+      "bytes": 81625,
+      "sha256": "5ac75be04e4fd10d30aaa2d9557ad3cf9216622d417a9d64370e2edd3155fdaf"
+    },
+    {
+      "path": "package-lock.json",
+      "bytes": 39733,
+      "sha256": "ae3380e25da0f00f7c7e60bc1eed2439504e6c861f171a80d5790a0612efb6c5"
+    },
+    {
+      "path": "scripts/build-neon-artwork-gallery.mjs",
+      "bytes": 3551,
+      "sha256": "6479d298d21ba0c28068f28e2ea2ad9103e6dddd627cc47e5dd4d534974fbca9"
+    },
+    {
+      "path": "scripts/build-neon-mosaic.mjs",
+      "bytes": 22122,
+      "sha256": "42f5f4b9399de88fbbc9f69a8c63d1d32ccb5fe6e877a5eabd4b7f91c630065d"
+    },
+    {
+      "path": "scripts/test-curated-appearance-package.mjs",
+      "bytes": 556,
+      "sha256": "a972759637982bfa7d0f9a1628f94b25ed0c2e23aac9a9eca37f67ad4028fe05"
+    },
+    {
+      "path": "scripts/test-industrial-marking-kit.mjs",
+      "bytes": 9514,
+      "sha256": "e636c039e1b9c7b830b7cfd7a498339d4eaa961b400dd6277a072cfdb8dfabc0"
+    },
+    {
+      "path": "scripts/test-optional-fpv-package.mjs",
+      "bytes": 16857,
+      "sha256": "aa3d5467cb2b5400fd82fd5a4c250bd9aaf792e867be36d27ee09fdaa32cefbf"
+    },
+    {
+      "path": "scripts/test-sparse-publisher-imports.mjs",
+      "bytes": 4764,
+      "sha256": "e66a0cad9ff2a29e0f69a652b169c05d929609552ce70739d4dabf78c46523c6"
+    }
+  ],
+  "testFiles": [
+    "game/test/theme-system.test.mjs",
+    "game/test/unified-appearance.test.mjs",
+    "game/test/theme-bootstrap.test.mjs",
+    "game/test/story-dialog.test.mjs",
+    "game/test/operation-status.test.mjs",
+    "game/test/creator-player-menu.test.mjs",
+    "game/test/creator-player-victory-story.test.mjs",
+    "game/test/theme-preview.test.mjs",
+    "game/test/industrial-arcade.test.mjs",
+    "game/test/theme-family-host.test.mjs",
+    "game/test/theme-notices.test.mjs",
+    "game/test/community-appearance.test.mjs",
+    "game/test/curated-community-theme.test.mjs",
+    "game/test/curated-community-theme-host.test.mjs",
+    "game/test/edition-appearance-host.test.mjs",
+    "game/test/edition-retained-presentation.test.mjs",
+    "game/test/edition-runtime.test.mjs",
+    "game/test/editions.test.mjs",
+    "game/test/menu-audio-localization.test.mjs",
+    "game/test/fpv-acceptance-workflow.test.mjs",
+    "game/test/win-picture-host.test.mjs",
+    "game/test/demo-reward.test.mjs",
+    "game/test/company-studio-ui.test.mjs",
+    "game/test/company-studio-preview.test.mjs",
+    "game/test/studio-appearance-basis.test.mjs",
+    "game/test/asset-studio-host-loading.test.mjs",
+    "scripts/test-curated-appearance-package.mjs",
+    "game/test/fpv-appearance.test.mjs",
+    "game/test/fpv-theme-family-controls.test.mjs",
+    "game/test/fpv-world-appearance-ui.test.mjs",
+    "game/test/fpv-world-editor-appearance.test.mjs",
+    "game/test/optional-installation.test.mjs",
+    "game/test/optional-practice-panel.test.mjs",
+    "game/test/mode-choice-appearance.test.mjs",
+    "game/test/fpv-world-runtime.test.mjs",
+    "game/test/fpv-world-content.test.mjs",
+    "game/test/fpv-workshop-visuals.test.mjs",
+    "game/test/fpv-objective-labels.test.mjs",
+    "scripts/test-industrial-marking-kit.mjs",
+    "game/test/fpv-flight-ui.test.mjs",
+    "game/test/fpv-replay-rate.test.mjs",
+    "game/test/fpv-studio-setup.test.mjs",
+    "scripts/test-optional-fpv-package.mjs",
+    "scripts/test-sparse-publisher-imports.mjs"
+  ],
+  "node": "v20.19.5",
+  "commands": [
+    {
+      "name": "shared-sim-generation",
+      "command": [
+        "node",
+        "scripts/refresh-fpv-presentation-assets.mjs",
+        "--check"
+      ],
+      "exitCode": 0,
+      "seconds": 0.309,
+      "output": "shared-sim-generation.log"
+    },
+    {
+      "name": "theme-bootstrap-generation",
+      "command": [
+        "node",
+        "scripts/refresh-theme-bootstrap.mjs",
+        "--check"
+      ],
+      "exitCode": 0,
+      "seconds": 0.64,
+      "output": "theme-bootstrap-generation.log"
+    },
+    {
+      "name": "industrial-marking-generation",
+      "command": [
+        "node",
+        "authoring/fpv-worlds/industrial-markings/generate.mjs",
+        "--check"
+      ],
+      "exitCode": 0,
+      "seconds": 0.362,
+      "output": "industrial-marking-generation.log"
+    },
+    {
+      "name": "focused-tests",
+      "command": [
+        "node",
+        "--test",
+        "--test-concurrency=1",
+        "game/test/theme-system.test.mjs",
+        "game/test/unified-appearance.test.mjs",
+        "game/test/theme-bootstrap.test.mjs",
+        "game/test/story-dialog.test.mjs",
+        "game/test/operation-status.test.mjs",
+        "game/test/creator-player-menu.test.mjs",
+        "game/test/creator-player-victory-story.test.mjs",
+        "game/test/theme-preview.test.mjs",
+        "game/test/industrial-arcade.test.mjs",
+        "game/test/theme-family-host.test.mjs",
+        "game/test/theme-notices.test.mjs",
+        "game/test/community-appearance.test.mjs",
+        "game/test/curated-community-theme.test.mjs",
+        "game/test/curated-community-theme-host.test.mjs",
+        "game/test/edition-appearance-host.test.mjs",
+        "game/test/edition-retained-presentation.test.mjs",
+        "game/test/edition-runtime.test.mjs",
+        "game/test/editions.test.mjs",
+        "game/test/menu-audio-localization.test.mjs",
+        "game/test/fpv-acceptance-workflow.test.mjs",
+        "game/test/win-picture-host.test.mjs",
+        "game/test/demo-reward.test.mjs",
+        "game/test/company-studio-ui.test.mjs",
+        "game/test/company-studio-preview.test.mjs",
+        "game/test/studio-appearance-basis.test.mjs",
+        "game/test/asset-studio-host-loading.test.mjs",
+        "scripts/test-curated-appearance-package.mjs",
+        "game/test/fpv-appearance.test.mjs",
+        "game/test/fpv-theme-family-controls.test.mjs",
+        "game/test/fpv-world-appearance-ui.test.mjs",
+        "game/test/fpv-world-editor-appearance.test.mjs",
+        "game/test/optional-installation.test.mjs",
+        "game/test/optional-practice-panel.test.mjs",
+        "game/test/mode-choice-appearance.test.mjs",
+        "game/test/fpv-world-runtime.test.mjs",
+        "game/test/fpv-world-content.test.mjs",
+        "game/test/fpv-workshop-visuals.test.mjs",
+        "game/test/fpv-objective-labels.test.mjs",
+        "scripts/test-industrial-marking-kit.mjs",
+        "game/test/fpv-flight-ui.test.mjs",
+        "game/test/fpv-replay-rate.test.mjs",
+        "game/test/fpv-studio-setup.test.mjs",
+        "scripts/test-optional-fpv-package.mjs",
+        "scripts/test-sparse-publisher-imports.mjs"
+      ],
+      "exitCode": 0,
+      "seconds": 245.698,
+      "output": "focused-tests.tap"
+    },
+    {
+      "name": "targeted-lint",
+      "command": [
+        "node",
+        "node_modules/eslint/bin/eslint.js",
+        "authoring/fpv-worlds/industrial-markings/generate.mjs",
+        "authoring/fpv-worlds/industrial-markings/viewer.mjs",
+        "game/test/fpv-objective-labels.test.mjs",
+        "game/test/story-dialog.test.mjs",
+        "game/test/theme-bootstrap.test.mjs",
+        "game/ui/story-dialog.mjs",
+        "optional-practice/civilian-fpv/renderer.mjs",
+        "optional-practice/civilian-fpv/sim-presentation.mjs",
+        "optional-practice/civilian-fpv/world-visuals.mjs",
+        "scripts/build-neon-artwork-gallery.mjs",
+        "scripts/build-neon-mosaic.mjs",
+        "scripts/test-industrial-marking-kit.mjs",
+        "--max-warnings",
+        "0"
+      ],
+      "exitCode": 0,
+      "seconds": 0.958,
+      "output": "targeted-lint.log"
+    },
+    {
+      "name": "targeted-format",
+      "command": [
+        "node",
+        "node_modules/prettier/bin/prettier.cjs",
+        "--check",
+        ".github/workflows/appearance-preview.yml",
+        "authoring/fpv-worlds/industrial-markings/generate.mjs",
+        "authoring/fpv-worlds/industrial-markings/viewer.mjs",
+        "game/presentation/industrial-workshop.css",
+        "game/test/fpv-objective-labels.test.mjs",
+        "game/test/story-dialog.test.mjs",
+        "game/test/theme-bootstrap.test.mjs",
+        "game/ui/story-dialog.mjs",
+        "optional-practice/civilian-fpv/renderer.mjs",
+        "optional-practice/civilian-fpv/sim-presentation.mjs",
+        "optional-practice/civilian-fpv/world-visuals.mjs",
+        "scripts/build-neon-artwork-gallery.mjs",
+        "scripts/build-neon-mosaic.mjs",
+        "scripts/test-industrial-marking-kit.mjs"
+      ],
+      "exitCode": 0,
+      "seconds": 1.047,
+      "output": "targeted-format.log"
+    }
+  ],
+  "buildsRun": false,
+  "physicalDeviceQualified": false,
+  "testSummary": {
+    "tests": 364,
+    "suites": 0,
+    "pass": 364,
+    "fail": 0,
+    "cancelled": 0,
+    "skipped": 0,
+    "todo": 0
+  },
+  "sourceInputsUnchanged": false,
+  "completedAt": "2026-10-02T21:19:48.293641+00:00",
+  "result": "source-changed-during-run"
+}

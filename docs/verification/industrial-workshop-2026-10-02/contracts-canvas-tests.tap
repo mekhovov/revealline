@@ -1,0 +1,275 @@
+TAP version 13
+# Subtest: industrial Team art keeps exact picture identity and freezes per new run
+ok 1 - industrial Team art keeps exact picture identity and freezes per new run
+  ---
+  duration_ms: 57.023084
+  ...
+# Subtest: legacy callers retain procedural painting and restoring the page snapshot restores that look
+ok 2 - legacy callers retain procedural painting and restoring the page snapshot restores that look
+  ---
+  duration_ms: 57.510917
+  ...
+# Subtest: the prepared original is drawn once with nearest sampling and only claimed land exposes it
+ok 3 - the prepared original is drawn once with nearest sampling and only claimed land exposes it
+  ---
+  duration_ms: 17.549
+  ...
+# Subtest: an explicit procedural binding uses the selected palette without pretending an image exists
+ok 4 - an explicit procedural binding uses the selected palette without pretending an image exists
+  ---
+  duration_ms: 10.197042
+  ...
+# Subtest: Team terrain uses shared non-color symbols only on unclaimed ground, including reduced effects
+ok 5 - Team terrain uses shared non-color symbols only on unclaimed ground, including reduced effects
+  ---
+  duration_ms: 56.882542
+  ...
+# Subtest: Team reclaimed roamers retain tracked silhouettes and distinct state labels through pause and reduced effects
+ok 6 - Team reclaimed roamers retain tracked silhouettes and distinct state labels through pause and reduced effects
+  ---
+  duration_ms: 59.084375
+  ...
+# Subtest: wrong arena, stale presentation, cropped dimensions and non-nearest bindings refuse before drawing
+ok 7 - wrong arena, stale presentation, cropped dimensions and non-nearest bindings refuse before drawing
+  ---
+  duration_ms: 14.533875
+  ...
+# Subtest: snapshot validation is atomic and plain text keeps its existing system-font roles
+ok 8 - snapshot validation is atomic and plain text keeps its existing system-font roles
+  ---
+  duration_ms: 24.697625
+  ...
+# Subtest: existing Team non-trail cues and geometry remain above the picture in reduced paused paint
+ok 9 - existing Team non-trail cues and geometry remain above the picture in reduced paused paint
+  ---
+  duration_ms: 64.278
+  ...
+# Subtest: motion scale affects only optional pulse while paused repetition and real simulation remain identical
+ok 10 - motion scale affects only optional pulse while paused repetition and real simulation remain identical
+  ---
+  duration_ms: 283.439834
+  ...
+# Subtest: drawing errors restore the borrowed canvas state without closing the supplied image
+ok 11 - drawing errors restore the borrowed canvas state without closing the supplied image
+  ---
+  duration_ms: 1.279458
+  ...
+# Subtest: the existing page lease applies/restores the Team snapshot without overriding a newer owner
+ok 12 - the existing page lease applies/restores the Team snapshot without overriding a newer owner
+  ---
+  duration_ms: 0.674125
+  ...
+# Subtest: Team interface typography updates without replacing authored artwork, pictures or run state
+ok 13 - Team interface typography updates without replacing authored artwork, pictures or run state
+  ---
+  duration_ms: 20.743791
+  ...
+# Subtest: collection capability requires explicit opt-in and a registered matching family
+ok 14 - collection capability requires explicit opt-in and a registered matching family
+  ---
+  duration_ms: 0.746875
+  ...
+# Subtest: native industrial texture is deterministic and keeps every alpha pixel of every sprite
+ok 15 - native industrial texture is deterministic and keeps every alpha pixel of every sprite
+  ---
+  duration_ms: 95.869042
+  ...
+# Subtest: material treatment adds bounded surface detail while rejecting giant inputs
+ok 16 - material treatment adds bounded surface detail while rejecting giant inputs
+  ---
+  duration_ms: 0.825625
+  ...
+# Subtest: adapter caches prepared pixels, preserves exact geometry/source and owns only its derived canvases
+ok 17 - adapter caches prepared pixels, preserves exact geometry/source and owns only its derived canvases
+  ---
+  duration_ms: 0.70175
+  ...
+# Subtest: uploaded/custom hashes and failed Canvas reads retain original artwork
+ok 18 - uploaded/custom hashes and failed Canvas reads retain original artwork
+  ---
+  duration_ms: 0.227708
+  ...
+# Subtest: Solo freezes selection at a new level and preserves source presentation identity
+ok 19 - Solo freezes selection at a new level and preserves source presentation identity
+  ---
+  duration_ms: 0.426375
+  ...
+# Subtest: every current published builtin sprite is pinned without importing its manifest at runtime
+ok 20 - every current published builtin sprite is pinned without importing its manifest at runtime
+  ---
+  duration_ms: 7.263083
+  ...
+# Subtest: compiled bodies adopt normalized pivots and bitmap dimensions without changing presets, source art or authority
+ok 21 - compiled bodies adopt normalized pivots and bitmap dimensions without changing presets, source art or authority
+  ---
+  duration_ms: 392.599167
+  ...
+# Subtest: compiled player sprites size their visible body and rotor sweep instead of transparent padding
+ok 22 - compiled player sprites size their visible body and rotor sweep instead of transparent padding
+  ---
+  duration_ms: 577.54125
+  ...
+# Subtest: phone and microtile presentations choose compact art; explicit player and enemy overrides retain priority
+ok 23 - phone and microtile presentations choose compact art; explicit player and enemy overrides retain priority
+  ---
+  duration_ms: 312.526833
+  ...
+# Subtest: compiled enemy bodies skip legacy image loads while explicit skins retain the original body path
+ok 24 - compiled enemy bodies skip legacy image loads while explicit skins retain the original body path
+  ---
+  duration_ms: 176.121792
+  ...
+# Subtest: current non-FPV worlds retain their original canvas art while the interface can use Field Kit
+ok 25 - current non-FPV worlds retain their original canvas art while the interface can use Field Kit
+  ---
+  duration_ms: 142.283792
+  ...
+# Subtest: an explicit prepared FPV actor view changes actors without replacing the authored world
+ok 26 - an explicit prepared FPV actor view changes actors without replacing the authored world
+  ---
+  duration_ms: 223.79975
+  ...
+# Subtest: the explicit actor view respects custom player and enemy bodies
+ok 27 - the explicit actor view respects custom player and enemy bodies
+  ---
+  duration_ms: 143.525084
+  ...
+# Subtest: FPV actor choice maps every active class without rewriting the authored body or class
+ok 28 - FPV actor choice maps every active class without rewriting the authored body or class
+  ---
+  duration_ms: 1082.250875
+  ...
+# Subtest: campaign and historical actor paths remain identical; unprepared explicit FPV fails before paint
+ok 29 - campaign and historical actor paths remain identical; unprepared explicit FPV fails before paint
+  ---
+  duration_ms: 287.750916
+  ...
+# Subtest: actor preparation errors translate without advancing or painting the flight
+ok 30 - actor preparation errors translate without advancing or painting the flight
+  ---
+  duration_ms: 153.696958
+  ...
+# Subtest: published motion settings scale cosmetic clocks and zero motion keeps functional effect timing
+ok 31 - published motion settings scale cosmetic clocks and zero motion keeps functional effect timing
+  ---
+  duration_ms: 429.431709
+  ...
+# Subtest: enemy cropped-frame geometry positions the art and rotors while retaining the existing contact marker
+ok 32 - enemy cropped-frame geometry positions the art and rotors while retaining the existing contact marker
+  ---
+  duration_ms: 1.321583
+  ...
+# Subtest: terrain, supplies and objectives honor visual pivots while retaining cell and contact coordinates
+ok 33 - terrain, supplies and objectives honor visual pivots while retaining cell and contact coordinates
+  ---
+  duration_ms: 135.815542
+  ...
+# Subtest: classic terrain and contact pickups share pivot placement while their material and contact cues stay fixed
+ok 34 - classic terrain and contact pickups share pivot placement while their material and contact cues stay fixed
+  ---
+  duration_ms: 0.555042
+  ...
+# Subtest: compiled enemy defaults own their images while explicit original skins and manual uploads keep priority
+ok 35 - compiled enemy defaults own their images while explicit original skins and manual uploads keep priority
+  ---
+  duration_ms: 142.456875
+  ...
+# Subtest: compiled player selection keeps each class body and leaves unknown or other-world bodies unchanged
+ok 36 - compiled player selection keeps each class body and leaves unknown or other-world bodies unchanged
+  ---
+  duration_ms: 148.191708
+  ...
+# Subtest: Plain canvas text uses the selected system pair and switching back restores compiled fonts without authority changes
+ok 37 - Plain canvas text uses the selected system pair and switching back restores compiled fonts without authority changes
+  ---
+  duration_ms: 127.669459
+  ...
+# Subtest: cosmetic look status starts before image completion and an obsolete look cannot replace newer feedback
+ok 38 - cosmetic look status starts before image completion and an obsolete look cannot replace newer feedback
+  ---
+  duration_ms: 3.084667
+  ...
+# Subtest: interface font switching keeps the authored sprite and presentation lease
+ok 39 - interface font switching keeps the authored sprite and presentation lease
+  ---
+  duration_ms: 132.389458
+  ...
+# Subtest: arcade specimen prepares exact selected workspace tokens and custom artwork through runtime host
+ok 40 - arcade specimen prepares exact selected workspace tokens and custom artwork through runtime host
+  ---
+  duration_ms: 1228.183042
+  ...
+# Subtest: arcade specimen refuses missing or changed source bytes instead of substituting published art
+ok 41 - arcade specimen refuses missing or changed source bytes instead of substituting published art
+  ---
+  duration_ms: 578.3035
+  ...
+# Subtest: all production and future specimen interfaces validate and meet text contrast
+ok 42 - all production and future specimen interfaces validate and meet text contrast
+  ---
+  duration_ms: 70.676833
+  ...
+# Subtest: accessibility wins over theme and compact density, while selection/focus remain independent
+ok 43 - accessibility wins over theme and compact density, while selection/focus remain independent
+  ---
+  duration_ms: 10.122334
+  ...
+# Subtest: ornaments Off removes frame wear and interface sampling never chooses SIM nearest filtering
+ok 44 - ornaments Off removes frame wear and interface sampling never chooses SIM nearest filtering
+  ---
+  duration_ms: 2.969834
+  ...
+# Subtest: interface validation rejects executable styles, unknown fields and missing provenance
+ok 45 - interface validation rejects executable styles, unknown fields and missing provenance
+  ---
+  duration_ms: 3.644
+  ...
+# Subtest: DOM application keeps controls and focus, restores only its owned styles
+ok 46 - DOM application keeps controls and focus, restores only its owned styles
+  ---
+  duration_ms: 1.465959
+  ...
+# Subtest: new theme preferences preserve defaults and do not touch legacy state on read
+ok 47 - new theme preferences preserve defaults and do not touch legacy state on read
+  ---
+  duration_ms: 0.698958
+  ...
+# Subtest: failed/session-only saving retains local intent instead of stale cross-tab state
+ok 48 - failed/session-only saving retains local intent instead of stale cross-tab state
+  ---
+  duration_ms: 0.204209
+  ...
+# Subtest: theme host applies only latest prepared selection and a failed load retains the accepted presentation
+ok 49 - theme host applies only latest prepared selection and a failed load retains the accepted presentation
+  ---
+  duration_ms: 6.064625
+  ...
+# Subtest: theme host recovers from stylesheet failure without applying a partial theme
+ok 50 - theme host recovers from stylesheet failure without applying a partial theme
+  ---
+  duration_ms: 2.538917
+  ...
+# Subtest: family documents pin independent revisions and reject mutable or unexpected references
+ok 51 - family documents pin independent revisions and reject mutable or unexpected references
+  ---
+  duration_ms: 1.456583
+  ...
+# Subtest: DOS uses a mono stack before the Plain accessibility override
+ok 52 - DOS uses a mono stack before the Plain accessibility override
+  ---
+  duration_ms: 14.895708
+  ...
+# Subtest: Canvas consumes interface fonts independently from authored arcade artwork
+ok 53 - Canvas consumes interface fonts independently from authored arcade artwork
+  ---
+  duration_ms: 1.541375
+  ...
+1..53
+# tests 53
+# suites 0
+# pass 53
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 6243.414292

@@ -491,6 +491,19 @@ function svgBoard({ cells, scenario }, width = 720, height = 360) {
   return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 72 36" width="${width}" height="${height}"><rect width="72" height="36" fill="#050911"/><rect x=".5" y=".5" width="71" height="35" fill="none" stroke="#397598" stroke-width=".16"/>${tiles.join('')}<path d="M36.5 34.9l.5.6-.5.5-.5-.5z" fill="#fff283"/></svg>`;
 }
 
+export function buildNeonMosaicGallery(sources) {
+  const cards = sources
+    .map(
+      ({ design }, i) =>
+        `<article data-ui-surface="panel"><a href="?level=${design.id}"><img src="${design.id}/preview.svg" alt="${design.title} level layout"/><span>${i + 1}. ${design.title}</span></a><button type="button" data-level="${design.id}">Play ${design.title}</button><a class="download" href="${design.id}/scenario.json" download>Editable level</a></article>`,
+    )
+    .join('\n');
+  return `<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Neon Words & Symbols · RevealLine</title><script src="../../../game/presentation/theme-bootstrap.mjs" data-theme-density="studio" data-theme-follow-context="true"></script>
+<link rel="stylesheet" href="../../../game/presentation/industrial-workshop.css" data-industrial-workshop>
+<script type="module" src="../../../game/presentation/theme-entry.mjs"></script>
+<style>@layer legacy {:root{color-scheme:dark;font:16px/1.5 system-ui;background:#070b14;color:#dce9fa}body{max-width:1440px;margin:40px auto;padding:24px}h1{font-size:38px;color:#8bebff;margin:0}p{max-width:850px;color:#abbdd5}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,340px),1fr));gap:24px}article{background:#0e1728;border:1px solid #22364e;padding:14px;border-radius:12px}img{display:block;width:100%;height:auto}a{color:#99dcff;text-decoration:none}article span{display:block;font-size:20px;margin:12px 0}button{color:#08111b;background:#8bebff;border:0;padding:10px 16px;border-radius:6px;cursor:pointer;font:inherit;font-weight:600}.download{margin-left:14px;font-size:13px}#status{min-height:24px;color:#fff283}}</style><h1>Neon Words & Symbols</h1><p>${sources.length} playable tile designs. Blue slows your craft; red is lethal until captured. Every arena has distinct terrain, side refuges, passages and enemy starts, plus varied lower routes. The main words and motifs remain intact. Cyan blocks are walls; filled islands are safe return surfaces. The long horizontal bars have been removed.</p><p>Included in Neon Words &amp; Symbols, levels #291–${290 + sources.length}. Every arena has original reveal artwork. Ukrainian translation is deferred.</p><p id="status" role="status"></p><main class="grid">${cards}</main><script type="module" src="launch.mjs"></script></html>`;
+}
+
 if (process.argv[1] && new URL(process.argv[1], 'file:').href === import.meta.url) {
   const sources = await buildNeonMosaic();
   await mkdir(root, { recursive: true });
@@ -501,16 +514,7 @@ if (process.argv[1] && new URL(process.argv[1], 'file:').href === import.meta.ur
     await writeFile(new URL('preview.svg', dir), svgBoard(source));
   }
   await writeFile(new URL('designs.json', root), JSON.stringify(MOSAIC_DESIGNS, null, 2) + '\n');
-  const cards = sources
-    .map(
-      ({ design }, i) =>
-        `<article><a href="?level=${design.id}"><img src="${design.id}/preview.svg" alt="${design.title} level layout"/><span>${i + 1}. ${design.title}</span></a><button type="button" data-level="${design.id}">Play ${design.title}</button><a class="download" href="${design.id}/scenario.json" download>Editable level</a></article>`,
-    )
-    .join('\n');
-  await writeFile(
-    new URL('index.html', root),
-    `<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Neon Words & Symbols · RevealLine</title><style>:root{color-scheme:dark;font:16px/1.5 system-ui;background:#070b14;color:#dce9fa}body{max-width:1440px;margin:40px auto;padding:24px}h1{font-size:38px;color:#8bebff;margin:0}p{max-width:850px;color:#abbdd5}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(340px,1fr));gap:24px}article{background:#0e1728;border:1px solid #22364e;padding:14px;border-radius:12px}img{display:block;width:100%;height:auto}a{color:#99dcff;text-decoration:none}article span{display:block;font-size:20px;margin:12px 0}button{color:#08111b;background:#8bebff;border:0;padding:10px 16px;border-radius:6px;cursor:pointer;font:inherit;font-weight:600}.download{margin-left:14px;font-size:13px}#status{min-height:24px;color:#fff283}</style><h1>Neon Words & Symbols</h1><p>${sources.length} playable tile designs. Blue slows your craft; red is lethal until captured. Every arena has distinct terrain, side refuges, passages and enemy starts, plus varied lower routes. The main words and motifs remain intact. Cyan blocks are walls; filled islands are safe return surfaces. The long horizontal bars have been removed.</p><p>Included in Neon Words &amp; Symbols, levels #291–${290 + sources.length}. Every arena has original reveal artwork. Ukrainian translation is deferred.</p><p id="status" role="status"></p><main class="grid">${cards}</main><script type="module" src="launch.mjs"></script></html>`,
-  );
+  await writeFile(new URL('index.html', root), buildNeonMosaicGallery(sources));
   const mini = sources
     .map((source, i) => {
       const x = (i % 3) * 740,

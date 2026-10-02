@@ -1,0 +1,460 @@
+TAP version 13
+# Subtest: the release allowlist includes the Studio and its complete static module graph
+ok 1 - the release allowlist includes the Studio and its complete static module graph
+  ---
+  duration_ms: 4563.201333
+  ...
+# Subtest: mount applies stored preferences without writing or replacing the existing interface
+ok 2 - mount applies stored preferences without writing or replacing the existing interface
+  ---
+  duration_ms: 6.426542
+  ...
+# Subtest: three explicit controls use the shared record and preserve unrelated authoring state
+ok 3 - three explicit controls use the shared record and preserve unrelated authoring state
+  ---
+  duration_ms: 2.642083
+  ...
+# Subtest: valid external preferences update in place while stale and malformed events cannot replace them
+ok 4 - valid external preferences update in place while stale and malformed events cannot replace them
+  ---
+  duration_ms: 7.424958
+  ...
+# Subtest: malformed initial storage keeps readable defaults without a read-time repair write
+ok 5 - malformed initial storage keeps readable defaults without a read-time repair write
+  ---
+  duration_ms: 0.869666
+  ...
+# Subtest: denied storage leaves explicit session preferences usable with a visible save warning
+ok 6 - denied storage leaves explicit session preferences usable with a visible save warning
+  ---
+  duration_ms: 5.680833
+  ...
+# Subtest: a failed preference write preserves unsaved local intent against later remote changes
+ok 7 - a failed preference write preserves unsaved local intent against later remote changes
+  ---
+  duration_ms: 0.985208
+  ...
+# Subtest: live system reduction changes effective preview policy without changing player intent or writing
+ok 8 - live system reduction changes effective preview policy without changing player intent or writing
+  ---
+  duration_ms: 1.099416
+  ...
+# Subtest: disposal removes control and authority observers and makes late changes inert
+ok 9 - disposal removes control and authority observers and makes late changes inert
+  ---
+  duration_ms: 1.011666
+  ...
+# Subtest: an invalid control value gives recovery feedback and restores the current choice without a write
+ok 10 - an invalid control value gives recovery feedback and restores the current choice without a write
+  ---
+  duration_ms: 1.011209
+  ...
+# Subtest: live reduction pauses preview frames and resumes a retained Playing choice without a time jump
+ok 11 - live reduction pauses preview frames and resumes a retained Playing choice without a time jump
+  ---
+  duration_ms: 2.426125
+  ...
+# Subtest: Paused inspection remains paused through both cap transitions and redraws essential state
+ok 12 - Paused inspection remains paused through both cap transitions and redraws essential state
+  ---
+  duration_ms: 1.73
+  ...
+# Subtest: local Reduced inspection keeps its own cap when shared reduction is released
+ok 13 - local Reduced inspection keeps its own cap when shared reduction is released
+  ---
+  duration_ms: 0.384292
+  ...
+# Subtest: text-only preference updates preserve the pending frame and animation clock
+ok 14 - text-only preference updates preserve the pending frame and animation clock
+  ---
+  duration_ms: 0.497166
+  ...
+# Subtest: retiring a preview cancels its frame, removes its observer and fences an already queued callback
+ok 15 - retiring a preview cancels its frame, removes its observer and fences an already queued callback
+  ---
+  duration_ms: 0.133042
+  ...
+# Subtest: an already retired owner never subscribes or paints
+ok 16 - an already retired owner never subscribes or paints
+  ---
+  duration_ms: 0.091291
+  ...
+# Subtest: standalone callers observe live system reduction and release the media listener on cleanup
+ok 17 - standalone callers observe live system reduction and release the media listener on cleanup
+  ---
+  duration_ms: 0.15925
+  ...
+# Subtest: a synchronous initial draw can retire its owner without leaving the just-created subscription
+ok 18 - a synchronous initial draw can retire its owner without leaving the just-created subscription
+  ---
+  duration_ms: 0.084458
+  ...
+# Subtest: a cap change during drawing cannot queue an obsolete frame alongside its replacement
+ok 19 - a cap change during drawing cannot queue an obsolete frame alongside its replacement
+  ---
+  duration_ms: 0.325542
+  ...
+# Subtest: unavailable system-query capability retains local playback and its cleanup
+ok 20 - unavailable system-query capability retains local playback and its cleanup
+  ---
+  duration_ms: 0.19225
+  ...
+# Subtest: a queued callback from before a cap transition cannot replace or consume the resumed frame
+ok 21 - a queued callback from before a cap transition cannot replace or consume the resumed frame
+  ---
+  duration_ms: 0.172875
+  ...
+# Subtest: a preview starting under an effective cap never queues animation until that cap is released
+ok 22 - a preview starting under an effective cap never queues animation until that cap is released
+  ---
+  duration_ms: 0.092041
+  ...
+# Subtest: industrial Team art keeps exact picture identity and freezes per new run
+ok 23 - industrial Team art keeps exact picture identity and freezes per new run
+  ---
+  duration_ms: 123.583333
+  ...
+# Subtest: legacy callers retain procedural painting and restoring the page snapshot restores that look
+ok 24 - legacy callers retain procedural painting and restoring the page snapshot restores that look
+  ---
+  duration_ms: 105.135583
+  ...
+# Subtest: the prepared original is drawn once with nearest sampling and only claimed land exposes it
+ok 25 - the prepared original is drawn once with nearest sampling and only claimed land exposes it
+  ---
+  duration_ms: 103.302875
+  ...
+# Subtest: an explicit procedural binding uses the selected palette without pretending an image exists
+ok 26 - an explicit procedural binding uses the selected palette without pretending an image exists
+  ---
+  duration_ms: 12.366208
+  ...
+# Subtest: Team terrain uses shared non-color symbols only on unclaimed ground, including reduced effects
+ok 27 - Team terrain uses shared non-color symbols only on unclaimed ground, including reduced effects
+  ---
+  duration_ms: 232.915792
+  ...
+# Subtest: Team reclaimed roamers retain tracked silhouettes and distinct state labels through pause and reduced effects
+ok 28 - Team reclaimed roamers retain tracked silhouettes and distinct state labels through pause and reduced effects
+  ---
+  duration_ms: 106.269333
+  ...
+# Subtest: wrong arena, stale presentation, cropped dimensions and non-nearest bindings refuse before drawing
+ok 29 - wrong arena, stale presentation, cropped dimensions and non-nearest bindings refuse before drawing
+  ---
+  duration_ms: 3.117
+  ...
+# Subtest: snapshot validation is atomic and plain text keeps its existing system-font roles
+ok 30 - snapshot validation is atomic and plain text keeps its existing system-font roles
+  ---
+  duration_ms: 12.115459
+  ...
+# Subtest: existing Team non-trail cues and geometry remain above the picture in reduced paused paint
+ok 31 - existing Team non-trail cues and geometry remain above the picture in reduced paused paint
+  ---
+  duration_ms: 35.110042
+  ...
+# Subtest: motion scale affects only optional pulse while paused repetition and real simulation remain identical
+ok 32 - motion scale affects only optional pulse while paused repetition and real simulation remain identical
+  ---
+  duration_ms: 332.418167
+  ...
+# Subtest: drawing errors restore the borrowed canvas state without closing the supplied image
+ok 33 - drawing errors restore the borrowed canvas state without closing the supplied image
+  ---
+  duration_ms: 1.115625
+  ...
+# Subtest: the existing page lease applies/restores the Team snapshot without overriding a newer owner
+ok 34 - the existing page lease applies/restores the Team snapshot without overriding a newer owner
+  ---
+  duration_ms: 8.3395
+  ...
+# Subtest: Team interface typography updates without replacing authored artwork, pictures or run state
+ok 35 - Team interface typography updates without replacing authored artwork, pictures or run state
+  ---
+  duration_ms: 9.394916
+  ...
+# Subtest: collection capability requires explicit opt-in and a registered matching family
+ok 36 - collection capability requires explicit opt-in and a registered matching family
+  ---
+  duration_ms: 0.664208
+  ...
+# Subtest: native industrial texture is deterministic and keeps every alpha pixel of every sprite
+ok 37 - native industrial texture is deterministic and keeps every alpha pixel of every sprite
+  ---
+  duration_ms: 201.196667
+  ...
+# Subtest: material treatment adds bounded surface detail while rejecting giant inputs
+ok 38 - material treatment adds bounded surface detail while rejecting giant inputs
+  ---
+  duration_ms: 1.124958
+  ...
+# Subtest: adapter caches prepared pixels, preserves exact geometry/source and owns only its derived canvases
+ok 39 - adapter caches prepared pixels, preserves exact geometry/source and owns only its derived canvases
+  ---
+  duration_ms: 1.588667
+  ...
+# Subtest: uploaded/custom hashes and failed Canvas reads retain original artwork
+ok 40 - uploaded/custom hashes and failed Canvas reads retain original artwork
+  ---
+  duration_ms: 0.358167
+  ...
+# Subtest: Solo freezes selection at a new level and preserves source presentation identity
+ok 41 - Solo freezes selection at a new level and preserves source presentation identity
+  ---
+  duration_ms: 0.993292
+  ...
+# Subtest: every current published builtin sprite is pinned without importing its manifest at runtime
+ok 42 - every current published builtin sprite is pinned without importing its manifest at runtime
+  ---
+  duration_ms: 6.911708
+  ...
+# Subtest: compiled bodies adopt normalized pivots and bitmap dimensions without changing presets, source art or authority
+ok 43 - compiled bodies adopt normalized pivots and bitmap dimensions without changing presets, source art or authority
+  ---
+  duration_ms: 932.789833
+  ...
+# Subtest: compiled player sprites size their visible body and rotor sweep instead of transparent padding
+ok 44 - compiled player sprites size their visible body and rotor sweep instead of transparent padding
+  ---
+  duration_ms: 578.106708
+  ...
+# Subtest: phone and microtile presentations choose compact art; explicit player and enemy overrides retain priority
+ok 45 - phone and microtile presentations choose compact art; explicit player and enemy overrides retain priority
+  ---
+  duration_ms: 410.220667
+  ...
+# Subtest: compiled enemy bodies skip legacy image loads while explicit skins retain the original body path
+ok 46 - compiled enemy bodies skip legacy image loads while explicit skins retain the original body path
+  ---
+  duration_ms: 451.083417
+  ...
+# Subtest: current non-FPV worlds retain their original canvas art while the interface can use Field Kit
+ok 47 - current non-FPV worlds retain their original canvas art while the interface can use Field Kit
+  ---
+  duration_ms: 417.168
+  ...
+# Subtest: an explicit prepared FPV actor view changes actors without replacing the authored world
+ok 48 - an explicit prepared FPV actor view changes actors without replacing the authored world
+  ---
+  duration_ms: 297.015917
+  ...
+# Subtest: the explicit actor view respects custom player and enemy bodies
+ok 49 - the explicit actor view respects custom player and enemy bodies
+  ---
+  duration_ms: 290.7155
+  ...
+# Subtest: FPV actor choice maps every active class without rewriting the authored body or class
+ok 50 - FPV actor choice maps every active class without rewriting the authored body or class
+  ---
+  duration_ms: 2030.625
+  ...
+# Subtest: campaign and historical actor paths remain identical; unprepared explicit FPV fails before paint
+ok 51 - campaign and historical actor paths remain identical; unprepared explicit FPV fails before paint
+  ---
+  duration_ms: 694.616792
+  ...
+# Subtest: actor preparation errors translate without advancing or painting the flight
+ok 52 - actor preparation errors translate without advancing or painting the flight
+  ---
+  duration_ms: 258.562208
+  ...
+# Subtest: published motion settings scale cosmetic clocks and zero motion keeps functional effect timing
+ok 53 - published motion settings scale cosmetic clocks and zero motion keeps functional effect timing
+  ---
+  duration_ms: 815.103542
+  ...
+# Subtest: enemy cropped-frame geometry positions the art and rotors while retaining the existing contact marker
+ok 54 - enemy cropped-frame geometry positions the art and rotors while retaining the existing contact marker
+  ---
+  duration_ms: 1.04275
+  ...
+# Subtest: terrain, supplies and objectives honor visual pivots while retaining cell and contact coordinates
+ok 55 - terrain, supplies and objectives honor visual pivots while retaining cell and contact coordinates
+  ---
+  duration_ms: 381.713833
+  ...
+# Subtest: classic terrain and contact pickups share pivot placement while their material and contact cues stay fixed
+ok 56 - classic terrain and contact pickups share pivot placement while their material and contact cues stay fixed
+  ---
+  duration_ms: 0.9065
+  ...
+# Subtest: compiled enemy defaults own their images while explicit original skins and manual uploads keep priority
+ok 57 - compiled enemy defaults own their images while explicit original skins and manual uploads keep priority
+  ---
+  duration_ms: 320.687458
+  ...
+# Subtest: compiled player selection keeps each class body and leaves unknown or other-world bodies unchanged
+ok 58 - compiled player selection keeps each class body and leaves unknown or other-world bodies unchanged
+  ---
+  duration_ms: 205.628375
+  ...
+# Subtest: Plain canvas text uses the selected system pair and switching back restores compiled fonts without authority changes
+ok 59 - Plain canvas text uses the selected system pair and switching back restores compiled fonts without authority changes
+  ---
+  duration_ms: 245.067833
+  ...
+# Subtest: cosmetic look status starts before image completion and an obsolete look cannot replace newer feedback
+ok 60 - cosmetic look status starts before image completion and an obsolete look cannot replace newer feedback
+  ---
+  duration_ms: 4.371375
+  ...
+# Subtest: interface font switching keeps the authored sprite and presentation lease
+ok 61 - interface font switching keeps the authored sprite and presentation lease
+  ---
+  duration_ms: 209.913791
+  ...
+# Subtest: studio revisions preserve prior theme records and apply explicit token changes
+ok 62 - studio revisions preserve prior theme records and apply explicit token changes
+  ---
+  duration_ms: 1424.114208
+  ...
+# Subtest: a complete required collection can retain separate compact edit revisions
+ok 63 - a complete required collection can retain separate compact edit revisions
+  ---
+  duration_ms: 1280.708917
+  ...
+# Subtest: collection replacement rejects incomplete members and missing dependencies atomically
+ok 64 - collection replacement rejects incomplete members and missing dependencies atomically
+  ---
+  duration_ms: 723.697708
+  ...
+# Subtest: studio database compare-and-swap rejects stale tabs and preserves data on write failure
+ok 65 - studio database compare-and-swap rejects stale tabs and preserves data on write failure
+  ---
+  duration_ms: 1985.422125
+  ...
+# Subtest: generated prompts carry real slot, theme, states and release limitations
+ok 66 - generated prompts carry real slot, theme, states and release limitations
+  ---
+  duration_ms: 222.998375
+  ...
+# Subtest: audio and font briefs request the actual output medium and preserve the immutable slot document
+ok 67 - audio and font briefs request the actual output medium and preserve the immutable slot document
+  ---
+  duration_ms: 448.642375
+  ...
+# Subtest: all recipe-only slots produce actionable code or metadata briefs for variation, edit and collection
+ok 68 - all recipe-only slots produce actionable code or metadata briefs for variation, edit and collection
+  ---
+  duration_ms: 329.001208
+  ...
+# Subtest: edit briefs retain actual custom geometry and the production palette contract
+ok 69 - edit briefs retain actual custom geometry and the production palette contract
+  ---
+  duration_ms: 648.869709
+  ...
+# Subtest: saved lineage allows a batch of staged actions and reset, but refuses rewritten history
+ok 70 - saved lineage allows a batch of staged actions and reset, but refuses rewritten history
+  ---
+  duration_ms: 5900.033708
+  ...
+# Subtest: two independent studio tabs serialize compare-and-swap without dropping the winning save
+ok 71 - two independent studio tabs serialize compare-and-swap without dropping the winning save
+  ---
+  duration_ms: 1255.401709
+  ...
+# Subtest: a failed save of new bytes and invalid geometry both retain the saved workspace
+ok 72 - a failed save of new bytes and invalid geometry both retain the saved workspace
+  ---
+  duration_ms: 1267.197042
+  ...
+# Subtest: imports reserve unoccupied asset and collection identities and retain derivative links
+ok 73 - imports reserve unoccupied asset and collection identities and retain derivative links
+  ---
+  duration_ms: 800.262042
+  ...
+# Subtest: self-imports retain every revision without duplicating history; conflicting parents stay isolated
+ok 74 - self-imports retain every revision without duplicating history; conflicting parents stay isolated
+  ---
+  duration_ms: 926.162291
+  ...
+# Subtest: incompatible imported slots fail atomically and replaced collections retain history
+ok 75 - incompatible imported slots fail atomically and replaced collections retain history
+  ---
+  duration_ms: 1024.816917
+  ...
+# Subtest: closing a pending open rejects its caller promptly and closes a late database
+ok 76 - closing a pending open rejects its caller promptly and closes a late database
+  ---
+  duration_ms: 1.437792
+  ...
+# Subtest: closing before a pending upgrade aborts that upgrade without creating a workspace
+ok 77 - closing before a pending upgrade aborts that upgrade without creating a workspace
+  ---
+  duration_ms: 1.180417
+  ...
+# Subtest: a blocked open that succeeds late cannot invalidate the newer studio connection
+ok 78 - a blocked open that succeeds late cannot invalidate the newer studio connection
+  ---
+  duration_ms: 0.910166
+  ...
+# Subtest: a retired database close callback does not detach a newer owned handle
+ok 79 - a retired database close callback does not detach a newer owned handle
+  ---
+  duration_ms: 1.32375
+  ...
+# Subtest: compact runtime preserves selected revisions/provenance while pruning authoring and unbound files
+ok 80 - compact runtime preserves selected revisions/provenance while pruning authoring and unbound files
+  ---
+  duration_ms: 3049.449084
+  ...
+# Subtest: runtime reader rejects tampered, truncated and trailing bytes before exposing a snapshot
+ok 81 - runtime reader rejects tampered, truncated and trailing bytes before exposing a snapshot
+  ---
+  duration_ms: 1203.938917
+  ...
+# Subtest: runtime snapshots retain collection identity and the resolved binding priority
+ok 82 - runtime snapshots retain collection identity and the resolved binding priority
+  ---
+  duration_ms: 1570.080625
+  ...
+# Subtest: duplicate flattens selected appearance without carrying theme history
+ok 83 - duplicate flattens selected appearance without carrying theme history
+  ---
+  duration_ms: 2041.377416
+  ...
+# Subtest: workspace migration is atomic, idempotent and leaves the legacy recovery copy
+ok 84 - workspace migration is atomic, idempotent and leaves the legacy recovery copy
+  ---
+  duration_ms: 3784.810625
+  ...
+# Subtest: independent workspaces reject identity collisions and stale saves without growing each other
+ok 85 - independent workspaces reject identity collisions and stale saves without growing each other
+  ---
+  duration_ms: 3289.152
+  ...
+# Subtest: failed independent workspace creation publishes neither entry nor bytes
+ok 86 - failed independent workspace creation publishes neither entry nor bytes
+  ---
+  duration_ms: 284.294375
+  ...
+# Subtest: explicit replacement preserves imported identity and a recoverable prior generation
+ok 87 - explicit replacement preserves imported identity and a recoverable prior generation
+  ---
+  duration_ms: 1943.967
+  ...
+# Subtest: inspection reports exact role provenance and token contrast without claiming visual approval
+ok 88 - inspection reports exact role provenance and token contrast without claiming visual approval
+  ---
+  duration_ms: 252.781875
+  ...
+# Subtest: maximum-length identities migrate and replace into bounded loadable recovery IDs
+ok 89 - maximum-length identities migrate and replace into bounded loadable recovery IDs
+  ---
+  duration_ms: 2315.298833
+  ...
+# Subtest: snapshot drops unbound historical assets while preserving derivative provenance
+ok 90 - snapshot drops unbound historical assets while preserving derivative provenance
+  ---
+  duration_ms: 476.196208
+  ...
+1..90
+# tests 90
+# suites 0
+# pass 90
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 19721.057291

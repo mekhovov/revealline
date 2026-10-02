@@ -65,10 +65,19 @@ import { importEditableZip } from './world-zip.mjs';
 import { openWorldStore } from './world-store.mjs';
 import { preparePracticeOffline } from './offline.mjs';
 import { dataIdentity } from '../../game/data-json.mjs';
-import { THEME_PROFILES, resolveThemeExperience } from './world-themes.mjs';
+import {
+  THEME_PROFILES,
+  resolveThemeExperience,
+  resolveSimThemeProfile,
+  snapshotSimThemeProfile,
+  recordedSimAppearance,
+  createSimAppearanceSession,
+  playableSimAppearance,
+} from './world-themes.mjs';
 import { mountWorldEditor } from './world-editor.mjs';
 import {
   mountSimPresentation,
+  mountSimAppearanceControls,
   mountDroneResponse,
   mountSimAudioControls,
   paintStickDirections,
@@ -195,7 +204,7 @@ const COPY_EN = {
   creatorTitle: 'From an idea to a flight.',
   creatorHelp:
     'Start with a challenge, change its route, then test your own version. Import a GLB world\n          to go further.',
-  themePreview: 'Theme preview',
+  themePreview: 'Authored theme',
   snap: 'Snap',
   resetView: 'Reset view',
   editorHint: 'Select a route marker, drag its arrows; drag empty space to orbit, scroll to zoom.',
@@ -426,7 +435,7 @@ const COPY_UK = {
   exportProof: 'Експорт запису',
   tilt: 'Нахил камери',
   keys: 'W/S тангаж · A/D крен · Q/E поворот · ↑/↓ газ · P пауза · Пробіл вогонь',
-  themePreview: 'Тема оформлення',
+  themePreview: 'Авторська тема',
   snap: 'Прив’язка',
   resetView: 'Скинути огляд',
   editorHint:
@@ -611,10 +620,24 @@ export function courseFromProject(project) {
   });
 }
 
-export function routeThumbnail(document, course, color = '#a2dfcf') {
+export function routeThumbnail(document, course, presentation = {}) {
+  const profile = resolveSimThemeProfile(course, presentation),
+    palette = profile.palette,
+    color = (value, shade = 1) =>
+      `#${[16, 8, 0]
+        .map((shift) =>
+          Math.round(((value >> shift) & 255) * shade)
+            .toString(16)
+            .padStart(2, '0'),
+        )
+        .join('')}`,
+    accent = color(palette.accent);
   const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
   svg.setAttribute('viewBox', '0 0 320 190');
   svg.setAttribute('aria-hidden', 'true');
+  svg.setAttribute('data-sim-profile', profile.id);
+  svg.setAttribute('data-sim-revision', profile.revision);
+  svg.style.backgroundColor = color(palette.ground, 0.3);
   const add = (tag, attrs) => {
     const n = document.createElementNS(svg.namespaceURI, tag);
     for (const [k, v] of Object.entries(attrs)) n.setAttribute(k, String(v));
@@ -625,8 +648,10 @@ export function routeThumbnail(document, course, color = '#a2dfcf') {
     max = course.bounds.max,
     px = (x) => 18 + ((x - min.x) / (max.x - min.x)) * 284,
     pz = (z) => 15 + ((z - min.z) / (max.z - min.z)) * 145;
-  for (let x = 20; x < 320; x += 25) add('path', { d: `M ${x} 0 V 190`, stroke: '#ffffff0d' });
-  for (let z = 15; z < 190; z += 25) add('path', { d: `M 0 ${z} H 320`, stroke: '#ffffff0d' });
+  add('rect', { width: 320, height: 190, fill: color(palette.ground, 0.3) });
+  const grid = { stroke: color(palette.fog), 'stroke-opacity': 0.12 };
+  for (let x = 20; x < 320; x += 25) add('path', { d: `M ${x} 0 V 190`, ...grid });
+  for (let z = 15; z < 190; z += 25) add('path', { d: `M 0 ${z} H 320`, ...grid });
   for (const o of course.obstacles) {
     const x = o.min?.x ?? Math.min(...o.vertices.filter((_, i) => i % 3 === 0)),
       z = o.min?.z ?? Math.min(...o.vertices.filter((_, i) => i % 3 === 2));
@@ -637,15 +662,16 @@ export function routeThumbnail(document, course, color = '#a2dfcf') {
       y: pz(z),
       width: Math.max(2, px(mx) - px(x)),
       height: Math.max(2, pz(mz) - pz(z)),
-      fill: '#0e242c',
-      stroke: '#ffffff25',
+      fill: color(palette.wall, 0.65),
+      stroke: color(palette.fog),
+      'stroke-opacity': 0.3,
       rx: 2,
     });
   }
   const points = [course.spawn, ...course.steps['self-level'].map(criterionCentre).filter(Boolean)];
   add('path', {
     d: points.map((p, i) => `${i ? 'L' : 'M'} ${px(p.x)} ${pz(p.z)}`).join(' '),
-    stroke: color,
+    stroke: accent,
     'stroke-width': 2.5,
     fill: 'none',
     'stroke-dasharray': '5 4',
@@ -655,8 +681,8 @@ export function routeThumbnail(document, course, color = '#a2dfcf') {
       cx: px(p.x),
       cy: pz(p.z),
       r: i ? 3.5 : 5,
-      fill: i ? color : '#ffffff',
-      stroke: '#193d38',
+      fill: color(i ? palette.accent : palette.warm),
+      stroke: color(palette.ground, 0.3),
       'stroke-width': 2,
     }),
   );
@@ -944,6 +970,31 @@ export function mountWorldApp({
   };
   const audio = createWorldAudio({ window: win, storage });
   const presentation = mountSimPresentation({ root: doc, window: win, enabled: audio.enabled() });
+  const appearanceSession = createSimAppearanceSession();
+  let appearanceReady = false;
+  const appearanceControls = mountSimAppearanceControls({
+    document: doc,
+    window: win,
+    container: $('sim-flight-controls'),
+    locale: () => locale,
+    drone: () => $('drone-look').value,
+    pending: () => appearanceSession.pending(),
+    accepted: () => appearanceSession.current(),
+    onChange(appearance) {
+      if (appearanceReady) {
+        renderCatalogue();
+        refreshEditorScene();
+      }
+      if (!appearanceSession.select(appearance) || !current || replayProof) return;
+      void startFlight(current, {
+        preview,
+        playlist: playingPlaylist,
+        index: playlistIndex,
+        preserveFocus: true,
+      }).catch(reportError);
+    },
+  });
+  appearanceReady = true;
   const audioControls = mountSimAudioControls({
     root: $('sim-audio-mix'),
     window: win,
@@ -1047,6 +1098,7 @@ export function mountWorldApp({
     if (id === 'creator') ensureSpatialEditor();
   }
   function paintLanguage() {
+    appearanceControls.refresh();
     doc.documentElement.lang = locale;
     for (const { node, key, fallback } of translatedNodes)
       node.textContent =
@@ -1071,6 +1123,7 @@ export function mountWorldApp({
         window: win,
         course: editor,
         mode: 'self-level',
+        getPresentation: () => appearanceControls.resolve().appearance,
         onError: reportError,
         onSelect(ref) {
           editorSelection = ref;
@@ -1098,6 +1151,19 @@ export function mountWorldApp({
   function refreshEditorScene() {
     if (!spatialEditor || !editor) return;
     spatialEditor.setCourse(editor);
+    const profile = resolveSimThemeProfile(editor, appearanceControls.resolve().appearance);
+    let status = $('editor-appearance-status');
+    if (!status) {
+      status = el('p', undefined, 'hint');
+      status.id = 'editor-appearance-status';
+      status.setAttribute('role', 'status');
+      $('world-editor-canvas').after(status);
+    }
+    status.textContent = `${txt('Preview appearance', 'Оформлення перегляду')}: ${localized(profile.title)}.`;
+    $('creator-theme').title = txt(
+      'Used when World appearance is set to Authored appearance in Settings.',
+      'Використовується, коли в налаштуваннях оформлення світу вибрано «Авторське оформлення».',
+    );
     spatialEditor.select(editorSelection ?? { kind: 'criterion', index: editorIndex });
     const model =
       (editingProject?.world.modelAsset
@@ -1519,6 +1585,9 @@ export function mountWorldApp({
     selector: $('drone-look'),
     onOpen: () => pauseFlight(),
     window: win,
+    getPresentation: () => appearanceControls.resolve().appearance,
+    getCourse: () => current?.sourceCourse ?? current?.course ?? {},
+    getQuality: () => $('flight-quality').value,
   });
   const actorContainer = el('section');
   actorContainer.id = 'world-actor-editor';
@@ -1839,13 +1908,13 @@ export function mountWorldApp({
       choice.setAttribute('aria-controls', 'selected-world-challenges');
       const map = el('div', undefined, 'world-mini-map');
       map.setAttribute('aria-hidden', 'true');
-      map.append(
-        routeThumbnail(
-          doc,
-          group[0].course,
-          WORLD_THEMES.find((t) => t.id === group[0].theme)?.color ?? '#78dce8',
-        ),
+      const thumbnail = routeThumbnail(
+        doc,
+        group[0].course,
+        appearanceControls.resolve().appearance,
       );
+      map.style.background = thumbnail.style.backgroundColor;
+      map.append(thumbnail);
       const copy = el('span', undefined, 'world-choice-copy');
       copy.append(
         el(
@@ -1868,10 +1937,15 @@ export function mountWorldApp({
 
       const world = FLIGHT_WORLDS.find((w) => w.id === id),
         card = el('article', undefined, 'world-card'),
-        cover = el('div', undefined, 'world-cover'),
-        color = WORLD_THEMES.find((t) => t.id === group[0].theme)?.color ?? '#c8eb93';
+        cover = el('div', undefined, 'world-cover');
       card.id = 'selected-world-challenges';
-      cover.append(routeThumbnail(doc, group[0].course, color));
+      const thumbnail = routeThumbnail(
+        doc,
+        group[0].course,
+        appearanceControls.resolve().appearance,
+      );
+      cover.style.background = thumbnail.style.backgroundColor;
+      cover.append(thumbnail);
       const title = el('div', undefined, 'cover-title');
       title.append(
         el(
@@ -2324,12 +2398,16 @@ export function mountWorldApp({
           'Для відновлення встановіть точний пакунок світу.',
         ),
       );
-    await startFlight(entry, {
-      preview: recovery.preview,
-      recover: recovery.proof,
-      sectorReferenceId: recovery.sectorReferenceId,
-      ghostEnabled: recovery.ghostEnabled,
-    });
+    await startFlight(
+      { ...entry, course: recovery.course },
+      {
+        preview: recovery.preview,
+        recover: recovery.proof,
+        sectorReferenceId: recovery.sectorReferenceId,
+        ghostEnabled: recovery.ghostEnabled,
+        presentation: recovery.presentation,
+      },
+    );
   }
   function renderPacks() {
     $('recovery-banner')?.remove();
@@ -2652,6 +2730,7 @@ export function mountWorldApp({
       preview,
       sectorReferenceId,
       ghostEnabled,
+      ...(current.legacy ? { presentation: appearanceSession.current() } : {}),
     };
     await recordStore.saveSession(saved);
     recovery = saved;
@@ -3073,7 +3152,7 @@ export function mountWorldApp({
       if (verified.state.status !== state.status || verified.state.ticks !== state.ticks)
         throw new Error('Recording does not reproduce this result.');
       if (!isPreview && proof.session === 'practice' && entry.legacy && state.status === 'complete')
-        await notebook.accept(proof);
+        await notebook.accept(proof, { presentation: entry.presentation });
       if (!isPreview && recordStore)
         await recordStore.put({
           course: entry.course,
@@ -3081,6 +3160,7 @@ export function mountWorldApp({
           status: 'verified',
           diagnostic: state.status,
           packIdentity: entry.packIdentity,
+          ...(entry.legacy ? { presentation: entry.presentation } : {}),
         });
       if (!isPreview && state.status === 'complete' && completedPlaylist) {
         try {
@@ -3326,6 +3406,7 @@ export function mountWorldApp({
       if (radio.status().active && flight) {
         input.enable(true);
         flight.arm();
+        appearanceSession.arm(flight.snapshot().status);
         fire = false;
         accumulator = 0;
         $('flight-status').textContent = txt('Flight active.', 'Політ триває.');
@@ -3428,6 +3509,32 @@ export function mountWorldApp({
     await saveRecovery();
     await ready;
     if (disposed || token !== flightToken) return;
+    const retained = Boolean(options.recover || options.replayProof);
+    const sourceCourse = retained
+      ? entry.course
+      : entry.appearanceCourse === entry.course
+        ? entry.sourceCourse
+        : entry.course;
+    const selectedAppearance = retained
+      ? (options.presentation ?? entry.presentation ?? recordedSimAppearance(sourceCourse))
+      : appearanceControls.resolve().appearance;
+    const acceptedAppearance = appearanceSession.begin(selectedAppearance, { retained });
+    const playableAppearance = playableSimAppearance(acceptedAppearance);
+    if (!entry.legacy && !retained) {
+      const themeProfile = snapshotSimThemeProfile(sourceCourse, playableAppearance.appearance);
+      if (acceptedAppearance.drone) themeProfile.drone = acceptedAppearance.drone;
+      const preparedCourse = {
+        ...sourceCourse,
+        world: { ...sourceCourse.world, themeProfile, theme: themeProfile.id },
+      };
+      entry = {
+        ...entry,
+        sourceCourse,
+        course: preparedCourse,
+        appearanceCourse: preparedCourse,
+      };
+    } else entry = { ...entry, sourceCourse, appearanceCourse: entry.course };
+    if (entry.legacy) entry.presentation = acceptedAppearance;
     // The guide creates its isolated lesson simulation before the flight view.
     if (!entry.legacy) await initWorldRuntime();
     if (disposed || token !== flightToken) return;
@@ -3648,11 +3755,18 @@ export function mountWorldApp({
                 : 'practice',
           });
     }
+    renderer.setPresentation?.(playableAppearance.appearance);
     renderer.setCourse(entry.course, $('flight-mode').value);
     paintLoadout();
     audio.setCourse(entry.course);
     renderer.setQuality($('flight-quality').value);
-    renderer.setDrone($('drone-look').value);
+    renderer.setDrone(
+      playableAppearance.fallbackReason && !entry.legacy
+        ? resolveSimThemeProfile(entry.course, playableAppearance.appearance).drone
+        : (acceptedAppearance.drone ??
+            entry.course.world?.themeProfile?.drone ??
+            $('drone-look').value),
+    );
     let model = null;
     if (entry.projectId) {
       const pack =
@@ -3712,12 +3826,15 @@ export function mountWorldApp({
           'Ready. Choose your controls, then arm.',
           'Готово. Виберіть керування та натисніть «Увімкнути».',
         );
+    appearanceControls.refresh();
     input.select($('flight-source').value);
     restoreRadio();
     paintInput(flight.snapshot());
     updateHUD(flight.snapshot());
-    if (beginnerCoach.blocksArm()) beginnerCoach.focusPreview();
-    else $('world-viewport').focus();
+    if (!options.preserveFocus) {
+      if (beginnerCoach.blocksArm()) beginnerCoach.focusPreview();
+      else $('world-viewport').focus();
+    }
     if (replayProof && !options.paused) {
       input.enable(false);
       flight.arm();
@@ -3730,6 +3847,15 @@ export function mountWorldApp({
           : 'Відтворення перевіреного запису · без нагород.',
       );
     }
+    if (playableAppearance.fallbackReason)
+      $('flight-status').textContent += ` ${txt(
+        entry.course.world?.themeProfile?.authoredFallback
+          ? 'Recorded appearance unavailable. Using the saved authored appearance; the flight proof is unchanged.'
+          : 'Recorded appearance unavailable. Using the authored environment appearance; the flight proof is unchanged.',
+        entry.course.world?.themeProfile?.authoredFallback
+          ? 'Оформлення запису недоступне. Використано збережене авторське оформлення; запис польоту не змінено.'
+          : 'Оформлення запису недоступне. Використано авторське оформлення середовища; запис польоту не змінено.',
+      )}`;
   }
   async function closeFlight() {
     const token = ++flightToken;
@@ -3808,6 +3934,7 @@ export function mountWorldApp({
         status: verification,
         diagnostic,
         pinned: saved.pinned ?? false,
+        ...(saved.presentation ? { presentation: saved.presentation } : {}),
       });
     }
     await refreshStorage();
@@ -4207,6 +4334,7 @@ export function mountWorldApp({
     lastTime = null;
     lastExecutionTime = win.performance?.now?.() ?? null;
     flight.arm();
+    appearanceSession.arm(flight.snapshot().status);
     $('flight-status').textContent = replayProof
       ? txt('Playback active · no rewards.', 'Відтворення триває · без нагород.')
       : checkpointSession
@@ -4386,7 +4514,11 @@ export function mountWorldApp({
   });
   on($('export-flight'), 'click', async () => {
     if (recorder && current) {
-      const data = { course: current.course, proof: replayProof ?? recorder.export() },
+      const data = {
+          course: current.course,
+          proof: replayProof ?? recorder.export(),
+          ...(current.legacy ? { presentation: appearanceSession.current() } : {}),
+        },
         record = {
           id: dataIdentity(data),
           ...data,
@@ -4498,9 +4630,7 @@ export function mountWorldApp({
   on($('flight-quality'), 'change', () =>
     changeFlightVisuals(() => renderer?.setQuality?.($('flight-quality').value)),
   );
-  on($('drone-look'), 'change', () =>
-    changeFlightVisuals(() => renderer?.setDrone?.($('drone-look').value)),
-  );
+  on($('drone-look'), 'change', () => appearanceControls.changed());
   for (const fireButton of [$('world-fire'), $('world-flight-fire')]) {
     on(fireButton, 'pointerdown', (e) => {
       e.preventDefault();
@@ -4617,6 +4747,9 @@ export function mountWorldApp({
     } else reportError(results[1].reason);
     if (results[2].status === 'rejected') reportError(results[2].reason);
     await refreshStorage();
+    appearanceControls.preferences.adoptExisting(
+      Boolean(records.length || installed.length || notebook.snapshot().attempts.length),
+    );
     $('storage-status').textContent =
       worldStore && recordStore
         ? txt(
@@ -4643,6 +4776,11 @@ export function mountWorldApp({
     pause: pauseFlight,
     snapshot: () => ({
       course: current?.id,
+      appearance: {
+        ...appearanceControls.resolve(),
+        accepted: appearanceSession.current(),
+        pending: appearanceSession.pending(),
+      },
       state: flight?.snapshot(),
       replay: replayProof
         ? {
@@ -4667,6 +4805,7 @@ export function mountWorldApp({
         presentation: renderer?.ghostSnapshot?.() ?? null,
         resources: renderer?.resources?.() ?? null,
       },
+      editorPresentation: spatialEditor?.resources?.().presentation ?? null,
       checkpointPractice: checkpointSession ? clone(checkpointSession) : null,
       modePractice,
       records: clone(records),
@@ -4708,6 +4847,7 @@ export function mountWorldApp({
       ghostEnabled = false;
       renderer?.dispose();
       hangar.dispose();
+      appearanceControls.dispose();
       actorEditor?.dispose();
       audioControls.dispose();
       audio.dispose();

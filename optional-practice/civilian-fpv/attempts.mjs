@@ -1,6 +1,7 @@
 import { boundedJSON, canonicalJSON, exactKeys, required } from '../../game/data-json.mjs';
 import { createProfileRecordBackend } from '../../game/profile-storage.mjs';
 import { replayFlightCooperatively } from './model.mjs';
+import { academyRecording, readAcademyRecording, validateSimAppearance } from './world-themes.mjs';
 export const FLIGHT_EDITION_ID = 'civilian-fpv';
 const PREFIX = 'practice-civilian-fpv:';
 const HASH = /^[a-f0-9]{64}$/;
@@ -26,8 +27,17 @@ const validateRecord = (input) => {
     maxArray: 36000,
     maxDepth: 10,
   });
-  exactKeys(value, ['format', 'proof'], 'stored flight proof');
-  required(value.format === 'StoredFlightAttempt.v1', 'Unsupported stored flight proof');
+  exactKeys(value, ['format', 'proof', 'presentation'], 'stored flight proof');
+  required(
+    ['StoredFlightAttempt.v1', 'StoredFlightAttempt.v2'].includes(value.format),
+    'Unsupported stored flight proof',
+  );
+  if (value.presentation !== undefined)
+    value.presentation = validateSimAppearance(value.presentation);
+  required(
+    value.format !== 'StoredFlightAttempt.v2' || value.presentation,
+    'Missing stored appearance',
+  );
   return value;
 };
 export async function verifyFlightAttempt(
@@ -130,7 +140,13 @@ export function createFlightAttemptStore({
               canonicalJSON(current.proof) === canonicalJSON(value.proof),
               'Conflicting exact flight proof',
             );
-          return { format: 'StoredFlightAttempt.v1', proof: value.proof };
+          return value.presentation
+            ? {
+                format: 'StoredFlightAttempt.v2',
+                proof: value.proof,
+                presentation: value.presentation,
+              }
+            : { format: 'StoredFlightAttempt.v1', proof: value.proof };
         },
         { signal },
       ),
@@ -206,14 +222,19 @@ export function createFlightAttemptStore({
         const stored = await recordBackend(hash, (backend) => backend.read({ signal }));
         required(stored, 'Saved flight proof missing');
         const verified = await verify(courses, stored.proof, { signal });
+        if (stored.presentation) verified.presentation = stored.presentation;
         signal.throwIfAborted();
         required(verified.hash === hash, 'Saved proof digest differs');
         required(
           accepted.has(hash) || accepted.size < 128,
           'Flight archive capacity reached; keep this export',
         );
-        accepted.set(hash, verified);
-        durable.add(hash);
+        // Re-reading a valid older disk snapshot must not discard a session
+        // appearance whose replacement write failed. Retry owns that intent.
+        if (!accepted.has(hash) || durable.has(hash)) {
+          accepted.set(hash, verified);
+          durable.add(hash);
+        }
         recoveryErrors.delete(hash);
       } catch (failure) {
         signal.throwIfAborted();
@@ -225,15 +246,22 @@ export function createFlightAttemptStore({
   };
   return {
     load: (options) => enqueue(hydrate, options),
-    accept: (input, options) =>
-      enqueue(async (signal) => {
-        const value = await verify(courses, input, { signal });
+    accept: async (input, options) => {
+      // Own both proof and cosmetics before queuing verification. Callers may
+      // change their preview selection while an earlier admission is pending.
+      const recording = readAcademyRecording(input);
+      const sourcePresentation = options?.presentation ?? recording.presentation;
+      const presentation = sourcePresentation && validateSimAppearance(sourcePresentation);
+      return enqueue(async (signal) => {
+        const value = await verify(courses, recording.proof, { signal });
+        if (presentation) value.presentation = presentation;
         signal.throwIfAborted();
         required(
           accepted.has(value.hash) || accepted.size < 128,
           'Flight archive capacity reached; keep this export',
         );
         accepted.set(value.hash, value);
+        durable.delete(value.hash);
         try {
           await persist(value, signal);
           error = null;
@@ -243,7 +271,8 @@ export function createFlightAttemptStore({
         }
         report();
         return { ...structuredClone(value), saved: durable.has(value.hash) };
-      }, options),
+      }, options);
+    },
     records: () => [...accepted.values()].map((value) => ({ ...value.record })),
     durableRecords: () =>
       [...accepted.values()]
@@ -257,11 +286,19 @@ export function createFlightAttemptStore({
         saved: durable.has(value.hash),
       })),
     proof: (hash) => (accepted.has(hash) ? structuredClone(accepted.get(hash).proof) : null),
+    recording: (hash) =>
+      accepted.has(hash)
+        ? academyRecording(accepted.get(hash).proof, accepted.get(hash).presentation)
+        : null,
     status: report,
     export: () => ({
-      format: 'FlightProofBackup.v1',
+      format: [...accepted.values()].some((value) => value.presentation)
+        ? 'FlightProofBackup.v2'
+        : 'FlightProofBackup.v1',
       packageId: FLIGHT_EDITION_ID,
-      attempts: [...accepted.values()].map((value) => structuredClone(value.proof)),
+      attempts: [...accepted.values()].map((value) =>
+        academyRecording(value.proof, value.presentation),
+      ),
     }),
     import: (input, options) =>
       enqueue(async (signal) => {
@@ -273,7 +310,7 @@ export function createFlightAttemptStore({
         });
         exactKeys(value, ['format', 'packageId', 'attempts'], 'flight proof backup');
         required(
-          value.format === 'FlightProofBackup.v1' &&
+          ['FlightProofBackup.v1', 'FlightProofBackup.v2'].includes(value.format) &&
             value.packageId === FLIGHT_EDITION_ID &&
             Array.isArray(value.attempts) &&
             value.attempts.length <= 128,
@@ -281,9 +318,16 @@ export function createFlightAttemptStore({
         );
         // Verify the entire transfer before changing either memory or disk.
         const candidates = [];
-        for (const proof of value.attempts) {
+        for (const input of value.attempts) {
           signal.throwIfAborted();
-          candidates.push(await verify(courses, proof, { signal }));
+          const recording = readAcademyRecording(input);
+          required(
+            value.format !== 'FlightProofBackup.v1' || !recording.presentation,
+            'Unexpected appearance in legacy backup',
+          );
+          const verified = await verify(courses, recording.proof, { signal });
+          if (recording.presentation) verified.presentation = recording.presentation;
+          candidates.push(verified);
         }
         signal.throwIfAborted();
         required(
@@ -293,6 +337,7 @@ export function createFlightAttemptStore({
         for (const candidate of candidates) {
           signal.throwIfAborted();
           accepted.set(candidate.hash, candidate);
+          durable.delete(candidate.hash);
           try {
             await persist(candidate, signal);
             error = null;

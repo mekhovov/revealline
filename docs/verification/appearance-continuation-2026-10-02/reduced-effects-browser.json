@@ -1,0 +1,221 @@
+{
+  "before": {
+    "buttons": [
+      {
+        "label": "Solo",
+        "property": "box-shadow, outline-color",
+        "transition": "0.1s, 0.1s"
+      },
+      {
+        "label": "FPV SIM",
+        "property": "box-shadow, outline-color",
+        "transition": "0.1s, 0.1s"
+      },
+      {
+        "label": "Continue\n            →",
+        "property": "box-shadow, outline-color",
+        "transition": "0.1s, 0.1s"
+      },
+      {
+        "label": "Select Mission",
+        "property": "box-shadow, outline-color",
+        "transition": "0.1s, 0.1s"
+      },
+      {
+        "label": "Settings",
+        "property": "box-shadow, outline-color",
+        "transition": "0.1s, 0.1s"
+      },
+      {
+        "label": "Full screen",
+        "property": "box-shadow, outline-color",
+        "transition": "0.1s, 0.1s"
+      },
+      {
+        "label": "Sound: off",
+        "property": "box-shadow, outline-color",
+        "transition": "0.1s, 0.1s"
+      }
+    ],
+    "links": [],
+    "motion": "full"
+  },
+  "after": {
+    "controls": [
+      {
+        "label": "!",
+        "property": "none",
+        "tag": "BUTTON",
+        "transition": "0s"
+      },
+      {
+        "label": "Missions",
+        "property": "none",
+        "tag": "BUTTON",
+        "transition": "0s"
+      },
+      {
+        "label": "Collection",
+        "property": "none",
+        "tag": "BUTTON",
+        "transition": "0s"
+      },
+      {
+        "label": "Settings",
+        "property": "none",
+        "tag": "BUTTON",
+        "transition": "0s"
+      },
+      {
+        "label": "Load saved flight →",
+        "property": "none",
+        "tag": "BUTTON",
+        "transition": "0s"
+      },
+      {
+        "label": "Start mission ↗",
+        "property": "none",
+        "tag": "BUTTON",
+        "transition": "0s"
+      },
+      {
+        "label": "Learn by playing",
+        "property": "none",
+        "tag": "BUTTON",
+        "transition": "0s"
+      },
+      {
+        "label": "Mission brief",
+        "property": "none",
+        "tag": "BUTTON",
+        "transition": "0s"
+      },
+      {
+        "label": "Home",
+        "property": "none",
+        "tag": "BUTTON",
+        "transition": "0s"
+      },
+      {
+        "label": "Back",
+        "property": "none",
+        "tag": "BUTTON",
+        "transition": "0s"
+      },
+      {
+        "label": "Gameplay",
+        "property": "none",
+        "tag": "BUTTON",
+        "transition": "0s"
+      },
+      {
+        "label": "Controls",
+        "property": "none",
+        "tag": "BUTTON",
+        "transition": "0s"
+      },
+      {
+        "label": "Audio",
+        "property": "none",
+        "tag": "BUTTON",
+        "transition": "0s"
+      },
+      {
+        "label": "Display & Language",
+        "property": "none",
+        "tag": "BUTTON",
+        "transition": "0s"
+      },
+      {
+        "label": "Accessibility",
+        "property": "none",
+        "tag": "BUTTON",
+        "transition": "0s"
+      },
+      {
+        "label": "Progress & Collection",
+        "property": "none",
+        "tag": "BUTTON",
+        "transition": "0s"
+      },
+      {
+        "label": "Content & Offline",
+        "property": "none",
+        "tag": "BUTTON",
+        "transition": "0s"
+      },
+      {
+        "label": "Help & Extras",
+        "property": "none",
+        "tag": "BUTTON",
+        "transition": "0s"
+      },
+      {
+        "label": "Solo",
+        "property": "none",
+        "tag": "BUTTON",
+        "transition": "0s"
+      },
+      {
+        "label": "Versus",
+        "property": "none",
+        "tag": "A",
+        "transition": "0s"
+      },
+      {
+        "label": "Team",
+        "property": "none",
+        "tag": "A",
+        "transition": "0s"
+      },
+      {
+        "label": "FPV SIM",
+        "property": "none",
+        "tag": "BUTTON",
+        "transition": "0s"
+      },
+      {
+        "label": "Continue\n            →",
+        "property": "none",
+        "tag": "BUTTON",
+        "transition": "0s"
+      },
+      {
+        "label": "Select Mission",
+        "property": "none",
+        "tag": "BUTTON",
+        "transition": "0s"
+      },
+      {
+        "label": "Settings",
+        "property": "none",
+        "tag": "BUTTON",
+        "transition": "0s"
+      },
+      {
+        "label": "Full screen",
+        "property": "none",
+        "tag": "BUTTON",
+        "transition": "0s"
+      },
+      {
+        "label": "Sound: off",
+        "property": "none",
+        "tag": "BUTTON",
+        "transition": "0s"
+      },
+      {
+        "label": "Carol of the Bells (Metal Version) · Alexander Nakarada",
+        "property": "none",
+        "tag": "A",
+        "transition": "0s"
+      }
+    ],
+    "focused": "<input id=\"settings-reduced-effects\" type=\"checkbox\">",
+    "motion": "reduced",
+    "viewport": [
+      1280,
+      720
+    ]
+  }
+}

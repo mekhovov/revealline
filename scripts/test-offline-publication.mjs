@@ -14,6 +14,7 @@ import {
   LAUNCHER_CATALOG_KEYS,
   LAUNCHER_FILE_LIMIT,
   LAUNCHER_NAVIGATION_FILES,
+  LAUNCHER_APPEARANCE_FILES,
 } from './offline-launcher.mjs';
 import { publishOfflineLauncher } from '../publishing/pages-controller/launcher.mjs';
 import { validateEditionCodeClosure } from './compile-edition.mjs';
@@ -148,6 +149,7 @@ test('publisher copies only the frozen lightweight launcher and points at the im
     'i18n/style.css',
     'vendor/i18next-26.4.2.min.js',
     ...LAUNCHER_NAVIGATION_FILES,
+    ...LAUNCHER_APPEARANCE_FILES,
     'i18n/content-registry.mjs',
     'navigation.css',
   ];
@@ -213,7 +215,10 @@ test('publisher copies only the frozen lightweight launcher and points at the im
     }
   }
   await collect(path.join(output, 'app'));
-  assert.equal(published.size, 17 + LAUNCHER_NAVIGATION_FILES.length + 2);
+  assert.equal(
+    published.size,
+    17 + LAUNCHER_NAVIGATION_FILES.length + LAUNCHER_APPEARANCE_FILES.length + 2,
+  );
   validateEditionCodeClosure(published);
   const controllerProfilesPath = path.join(source, 'app/couch/controller-profiles.mjs');
   const controllerProfilesBytes = await fs.readFile(controllerProfilesPath);

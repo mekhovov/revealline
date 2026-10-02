@@ -1,0 +1,136 @@
+{
+  "date": "2026-10-02T21:57:08.782174+00:00",
+  "node": "v20.19.5",
+  "files": [
+    "game/test/theme-system.test.mjs",
+    "game/test/unified-appearance.test.mjs",
+    "game/test/theme-bootstrap.test.mjs",
+    "game/test/story-dialog.test.mjs",
+    "game/test/operation-status.test.mjs",
+    "game/test/replay-theater-navigation.test.mjs",
+    "game/test/replay-theater-display-host.test.mjs",
+    "game/test/replay-theater-actor-appearance.test.mjs",
+    "game/test/creator-player-menu.test.mjs",
+    "game/test/creator-player-victory-story.test.mjs",
+    "game/test/theme-preview.test.mjs",
+    "game/test/industrial-arcade.test.mjs",
+    "game/test/theme-family-host.test.mjs",
+    "game/test/theme-notices.test.mjs",
+    "game/test/community-appearance.test.mjs",
+    "game/test/curated-community-theme.test.mjs",
+    "game/test/curated-community-theme-host.test.mjs",
+    "game/test/edition-appearance-host.test.mjs",
+    "game/test/edition-retained-presentation.test.mjs",
+    "game/test/edition-runtime.test.mjs",
+    "game/test/editions.test.mjs",
+    "game/test/menu-audio-localization.test.mjs",
+    "game/test/fpv-acceptance-workflow.test.mjs",
+    "game/test/win-picture-host.test.mjs",
+    "game/test/demo-reward.test.mjs",
+    "game/test/company-studio-ui.test.mjs",
+    "game/test/company-studio-preview.test.mjs",
+    "game/test/studio-appearance-basis.test.mjs",
+    "game/test/asset-studio-host-loading.test.mjs",
+    "scripts/test-curated-appearance-package.mjs",
+    "game/test/fpv-appearance.test.mjs",
+    "game/test/fpv-theme-family-controls.test.mjs",
+    "game/test/fpv-world-appearance-ui.test.mjs",
+    "game/test/fpv-world-editor-appearance.test.mjs",
+    "game/test/optional-installation.test.mjs",
+    "game/test/optional-practice-panel.test.mjs",
+    "game/test/mode-choice-appearance.test.mjs",
+    "game/test/fpv-world-runtime.test.mjs",
+    "game/test/fpv-world-content.test.mjs",
+    "game/test/fpv-workshop-visuals.test.mjs",
+    "game/test/fpv-objective-labels.test.mjs",
+    "game/test/fpv-world-textures.test.mjs",
+    "scripts/test-world-texture-acceptance.mjs",
+    "scripts/test-industrial-marking-kit.mjs",
+    "game/test/fpv-flight-ui.test.mjs",
+    "game/test/fpv-replay-rate.test.mjs",
+    "game/test/fpv-studio-setup.test.mjs",
+    "scripts/test-optional-fpv-package.mjs",
+    "scripts/test-sparse-publisher-imports.mjs"
+  ],
+  "exitCode": 0,
+  "output": "focused-tests.tap",
+  "command": "node --test --test-concurrency=1",
+  "source": [
+    {
+      "path": ".github/workflows/appearance-preview.yml",
+      "sha256": "dbfb70309557cd0c710aa34ddafd99b6a77ee826e451d9f32041c80527da1be3"
+    },
+    {
+      "path": "authoring/fpv-worlds/industrial-markings/README.md",
+      "sha256": "2c262188f7757565ac844e59c1e4c652f09e2c3adbd91a4f7a1f73053f605b09"
+    },
+    {
+      "path": "authoring/fpv-worlds/industrial-markings/loader.mjs",
+      "sha256": "b51a70cf0e2759643e87e9c02846e213bc7699a1a8a697fe743aec2025e6bc76"
+    },
+    {
+      "path": "authoring/fpv-worlds/industrial-markings/runtime.html",
+      "sha256": "4d6dc97915463da5f30ae8e2b0c4cd089e6c4c65acbf49bc1c829c4b87182091"
+    },
+    {
+      "path": "authoring/fpv-worlds/industrial-markings/runtime.mjs",
+      "sha256": "19607d6db5ebfff8e0cb7d5937f2b1088a9276bb7dc0eb877f32d4753851a694"
+    },
+    {
+      "path": "game/i18n/catalogs.mjs",
+      "sha256": "90a8b1041bcce75a4c3f82e4522f4d2eacd860b78b7e257cb3f3f3e86109a6c7"
+    },
+    {
+      "path": "game/locales/en/interface.json",
+      "sha256": "fc475a576405bae93e4c187f228597e4bac9814efe19f9340f5e17c38a9cf0f6"
+    },
+    {
+      "path": "game/locales/uk/interface.json",
+      "sha256": "8c1360e929e91fc6402920dd6694c05957a9f9a8fc5b026704b2126e8c3ba8f7"
+    },
+    {
+      "path": "game/replay-theater/app.mjs",
+      "sha256": "c1b271b5c6e60a3be39df91e82802cc4f8889e165077f0e9312dbd4a3764e124"
+    },
+    {
+      "path": "game/replay-theater/index.html",
+      "sha256": "c64cfeccedff1003e8d5e18842e2c02e420f2ec165af5027d805ea0aaf2098af"
+    },
+    {
+      "path": "game/replay-theater/navigation.mjs",
+      "sha256": "76398878f3377bed57354409558b87f25f3e246b6fed48c178bf1c92b400f969"
+    },
+    {
+      "path": "game/test/fpv-objective-labels.test.mjs",
+      "sha256": "b3a8c6e0f1ae56995a33e2ba8972f9ca0007d623b5d6065d526b032cf8119cc0"
+    },
+    {
+      "path": "game/test/fpv-world-textures.test.mjs",
+      "sha256": "796a8bcf7c34257425796a944577779864c28c91bd16be4f1b48dc92380225cc"
+    },
+    {
+      "path": "game/test/replay-theater-display-host.test.mjs",
+      "sha256": "3ad1041ab38716f787b041f81945444ce945d210ca2ab015522e0c231504979b"
+    },
+    {
+      "path": "game/test/replay-theater-navigation.test.mjs",
+      "sha256": "5d71a9b0ed599ae49814f09081c3789c3e651afda413de5eba7854d957e1c3d3"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/renderer.mjs",
+      "sha256": "962fccf75830d65f418201202b5939a8e4973bb5c73601518360025d4df971b5"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/world-visuals.mjs",
+      "sha256": "6b37edb3e5e5ce05d6296ece84fdab7a03b49dbab5400c330690b4632a789e17"
+    },
+    {
+      "path": "scripts/prepare-world-texture-acceptance.mjs",
+      "sha256": "bd9c1fa0471e6cad05a802c1da72fc25d3f892c6cefc2b98b83bdf35c5b62c0c"
+    },
+    {
+      "path": "scripts/test-world-texture-acceptance.mjs",
+      "sha256": "6e43cdc9c183632afa34d97a191c43c5733b2925735d8bca1868a03ae76a92ec"
+    }
+  ]
+}

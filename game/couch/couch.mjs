@@ -808,6 +808,10 @@ try {
   for (const c of registry)
     $('race-class').append(localizedOption(() => contentText(c, 'label'), c.id));
   const painters = [new BoardPainter(presets), new BoardPainter(presets)];
+  for (const painter of painters) {
+    painter.setArcadeProvider(() => menuStyle.themeHost.effectivePreferences());
+    painter.setInterfaceProvider(() => menuStyle.themeHost.snapshot());
+  }
   const foundationCaptions = new WeakMap();
   for (const painter of painters) presentationPage.bindPainter(painter);
   const sound = (pageSound = new Soundscape({
@@ -4011,6 +4015,12 @@ try {
     'race-journey-reactions-retry',
     'race-text-face',
     'race-text-size',
+    'race-theme-customize',
+    'race-theme-ornaments',
+    'race-theme-familyId',
+    'race-theme-arcadeArt',
+    'race-theme-highContrast',
+    'race-theme-opaqueHud',
     'race-menu-palette',
     'race-menu-ornaments',
     'race-audio',
@@ -4066,6 +4076,8 @@ try {
         !!element.closest('#race-music-now-playing, #race-music-menu-now-playing')) ||
       element.hasAttribute('data-language-select') ||
       menuIds.has(element.id) ||
+      (element.matches('button[data-theme-preview]') &&
+        !!element.closest('[data-theme-controls]')) ||
       !!element.closest(
         '#journey-chooser, #journey-backup, #race-gameplay-tuning, [data-journey-mode-pictures], .multiplayer-controllers',
       ),

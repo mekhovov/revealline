@@ -1,3 +1,8 @@
+import {
+  resolveEditionAppearanceDefault,
+  resolveEditionAppearanceThemes,
+} from './editions/model.mjs';
+import { installThemeHost } from './presentation/theme-host.mjs';
 import { attachPublishedAudio } from './ui/published-audio.mjs';
 import { loadEditionBootstrap } from './editions/bootstrap.mjs';
 import { verifyEditionAssets } from './editions/assets.mjs';
@@ -234,11 +239,23 @@ async function main() {
       if (message) report(message, true);
     },
   });
+  const themeHost = installThemeHost({
+    document,
+    window,
+    displayPreferences,
+    appearanceDefault: resolveEditionAppearanceDefault(selection),
+    appearanceThemes: resolveEditionAppearanceThemes(catalog, {
+      editionIds: [selection.edition.id],
+    }),
+    getStorage: () => storage,
+  });
+  await themeHost.ready;
   displayPreferences.subscribe((value) => {
     preferences.reduced = value.effectiveReducedEffects;
     $('reduced-motion').checked = value.effectiveReducedEffects;
     document.documentElement.dataset.reducedMotion = String(value.effectiveReducedEffects);
     document.documentElement.dataset.textSize = value.textSize;
+    document.body.dataset.textFace = value.textFace;
   });
   $('show-grid').checked = preferences.grid;
   $('difficulty').value = preferences.difficulty;
@@ -261,6 +278,8 @@ async function main() {
       if (message) report(message, true);
     },
   });
+  painter.setArcadeProvider(() => themeHost.effectivePreferences());
+  painter.setInterfaceProvider(() => themeHost.snapshot());
   const audioMaster = createAudioMaster();
   const audioPreferences = createAudioPreferences({
     audioMaster,
@@ -496,7 +515,12 @@ async function main() {
           if (message) report(message, true);
         },
       });
-      staged.setLevel(run.level, { seed: run.seed });
+      staged.setArcadeProvider(() => themeHost.effectivePreferences());
+      staged.setInterfaceProvider(() => themeHost.snapshot());
+      staged.setLevel(run.level, {
+        seed: run.seed,
+        ...(restored ? { arcadeCollection: null } : {}),
+      });
       await staged.setLook(attempt.theme, attempt.theme.player, attempt.visualOverrides);
       if (staged.lookWarning) throw new Error(staged.lookWarning);
       if (ticket !== generation) {
@@ -1123,7 +1147,10 @@ async function main() {
         showGrid: preferences.grid,
         fullReveal: current.run.status === 'won',
         displayCSSWidth: canvas.clientWidth,
-        textFace: 'plain',
+        textFace:
+          (themeHost.snapshot()?.familyId ?? 'legacy') === 'legacy'
+            ? 'plain'
+            : displayPreferences.snapshot().textFace,
       });
       sound.feedback(isPlaying(), current.theme, current.run);
       sound.update(isPlaying(), current.theme, current.run);
@@ -1151,6 +1178,8 @@ async function main() {
     host.preparer.dispose();
     menuAudio.close();
     sound.dispose?.();
+    painter.dispose();
+    themeHost.dispose();
     displayPreferences.dispose();
     touchPreferences.destroy();
     audioPreferences.dispose();

@@ -305,6 +305,7 @@ test('SIM opens the checked bundled entry directly without an interstitial or pa
     container,
     href: 'https://example.test/project/game/',
     bundledHref: target,
+    getAppearanceDefault: () => ({ familyId: 'dnipro', revision: 'r1' }),
     packageId: 'fpv-worlds',
     preferDirect: true,
     pause() {},
@@ -322,6 +323,9 @@ test('SIM opens the checked bundled entry directly without an interstitial or pa
   await waitFor(() => visits.length === 1);
   assert.equal(panel.root(), null);
   assert.equal(new URL(visits[0]).searchParams.get('game-return'), '/project/game/');
+  assert.equal(new URL(visits[0]).searchParams.get('appearanceFamily'), 'dnipro');
+  assert.equal(new URL(visits[0]).searchParams.get('appearanceRevision'), 'r1');
+  assert.equal(new URL(visits[0]).hash, '#learn');
   assert.equal(requests.length, 1);
 });
 
@@ -380,4 +384,31 @@ test('unavailable SIM offers recovery without navigating or downloading, and clo
   await new Promise((resolve) => setImmediate(resolve));
   assert.deepEqual(visits, []);
   assert.equal(late.root(), null);
+});
+
+test('installed practice links retain launch intent and refresh the appearance pin on activation', async (t) => {
+  const doc = new Document(),
+    container = doc.createElement('nav');
+  doc.body.append(container);
+  let pin = { familyId: 'industrial-workshop', revision: 'r1' };
+  const panel = mountOptionalPracticePanel({
+    document: doc,
+    container,
+    href: 'https://example.test/project/game/',
+    pause() {},
+    getAppearanceDefault: () => pin,
+    fetcher: async () => new Response(JSON.stringify(catalog)),
+  });
+  t.after(() => panel.dispose());
+  panel.open();
+  await waitFor(() => !doc.getElementById('optional-practice-refresh').disabled);
+  const link = panel.root().querySelector('.optional-practice-packages').querySelector('a');
+  assert.equal(new URL(link.href).searchParams.get('appearanceFamily'), pin.familyId);
+  pin = { familyId: 'dnipro', revision: 'r1' };
+  link.click();
+  const target = new URL(link.href);
+  assert.equal(target.searchParams.get('appearanceFamily'), pin.familyId);
+  assert.equal(target.searchParams.get('action'), 'play');
+  assert.equal(target.searchParams.get('lang'), 'en');
+  assert.equal(link.rel, 'noopener noreferrer');
 });

@@ -8,6 +8,12 @@ import {
 import { assetStudioErrorMessage } from './error-copy.mjs';
 import { mountRewardAssetExport } from '../../game/studio/reward-asset-export.mjs';
 import { createStudioDownload } from './download.mjs';
+import { exportRuntimeTheme } from '../../game/presentation/runtime-transfer.mjs';
+import {
+  createThemeCandidate,
+  saveThemePreview,
+  unsupportedThemeAssignmentSlots,
+} from '../../game/presentation/theme-preview.mjs';
 import { isTeamPreviewScenarioAvailable } from './team-preview-fixture.mjs';
 import {
   addTeamPresentationSlots,
@@ -18,6 +24,7 @@ import { createDefaultThemeBundle } from '../../game/presentation/catalog.mjs';
 import {
   FORMATS,
   LIMITS,
+  TOKEN_DEFAULTS,
   resolvePresentation,
   validateThemeBundle,
   presentationCoverage,
@@ -31,11 +38,13 @@ import {
 } from '../../game/presentation/bundle.mjs';
 import {
   reviseStudioTheme,
+  setStudioAppearanceBasis,
   replaceStudioCollection,
   adoptStudioBundle,
   generateAssetPrompt,
   nextAssetRevision,
   studioSlotHistory,
+  duplicateStudioSnapshot,
 } from '../../game/presentation/studio-session.mjs';
 import { createStudioStore } from '../../game/presentation/studio-store.mjs';
 import { loadPublishedStudio } from '../../game/presentation/published-studio.mjs';
@@ -54,6 +63,8 @@ import { attachStudioAuditionLifecycle } from './audition-lifecycle.mjs';
 import { createStudioViewMemory, resolveStudioView } from './view-memory.mjs';
 import { mountStudioRotorControls } from './rotor-controls.mjs';
 import { mountArtworkCollectionPanel } from './artwork-panel.mjs';
+import { mountThemeWorkbench } from './theme-workbench.mjs';
+import { getInterfaceTheme, getThemeFamily } from '../../game/presentation/theme-system.mjs';
 mountArtworkCollectionPanel({ document, window });
 const $ = (id) => document.getElementById(id);
 const node = (tag, value = '', className = '', hostRole = null) => {
@@ -69,6 +80,9 @@ let working = { document: createDefaultThemeBundle(), assets: new Map() },
   saved = working,
   generation = 0,
   storageReady = false;
+let workspaceLibrary = { entries: [] },
+  activeWorkspaceId = null,
+  themeWorkbench = null;
 let assetHandoffExport = null;
 let selected = working.document.slots[0].id,
   pending = null,
@@ -122,7 +136,7 @@ const operations = createStudioOperations({
     // Escape and preview observation controls stay outside these mutation regions.
     document
       .querySelectorAll(
-        '.workspace-actions,.workspace-state,.inventory,#replacement-panel,#sprite-panel,#token-form,#asset-history,#review-panel',
+        '.workspace-actions,.workspace-state,.theme-library-controls,.inventory,#replacement-panel,#sprite-panel,#token-form,#asset-history,#review-panel',
       )
       .forEach((el) => {
         el.inert = value;
@@ -155,6 +169,7 @@ const interfacePreferences = mountInterfacePreferences({
   window,
   getStorage: () => localStorage,
 });
+themeWorkbench = mountThemeWorkbench({ document, window, onAction: workspaceAction });
 const studioGuide = mountStudioGuide({ document });
 const audioMaster = createAudioMaster();
 const audioPreferences = createAudioPreferences({
@@ -331,6 +346,13 @@ function refresh() {
   refreshInspector();
   refreshTokens();
   updateCollectionCount();
+  themeWorkbench?.update({
+    library: workspaceLibrary,
+    activeId: activeWorkspaceId,
+    document: working.document,
+    assets: working.assets,
+    selected,
+  });
 }
 function refreshInspector() {
   assetHandoffExport?.reset();
@@ -1321,7 +1343,7 @@ $('save-workspace').onclick = () =>
     if (!storageReady)
       throw new Error(t('tools:localStorageHasNotLoadedSuccessfullyExportYourWorkThen'));
     task.commit();
-    const result = await store.save(working.document, working.assets, {
+    const result = await store.saveWorkspace(activeWorkspaceId, working.document, working.assets, {
       expectedGeneration: generation,
     });
     task.check();
@@ -1365,17 +1387,29 @@ $('import-workspace').onchange = () => {
 async function loadWorkspace(task) {
   requireSettled();
   if (working !== saved) throw new Error(t('tools:exportOrSaveTheStagedWorkspaceOrResetToSaved'));
-  const result = await store.load();
+  workspaceLibrary = await store.migrateLegacyWorkspace();
+  task.check();
+  const workspaceId = activeWorkspaceId ?? workspaceLibrary.activeId;
+  const result = workspaceId ? await store.loadWorkspace(workspaceId) : null;
   task.check();
   if (!result)
     task.update(t('tools:loadingAndVerifyingTheCurrentReleaseCollection'), 'downloading');
   const published = result ? null : await loadPublishedStudio({ signal: task.signal });
   task.check();
-  storageReady = true;
-  generation = result?.generation || 0;
-  working = result
+  let accepted = result
     ? { document: result.document, assets: result.assets }
     : (published ?? { document: createDefaultThemeBundle(), assets: new Map() });
+  if (!result) {
+    task.commit();
+    accepted = await store.createWorkspace(accepted.document, accepted.assets);
+    task.check();
+    workspaceLibrary = await store.listWorkspaces();
+    task.check();
+  }
+  storageReady = true;
+  generation = result?.generation ?? accepted.generation;
+  activeWorkspaceId = workspaceId ?? accepted.id;
+  working = { document: accepted.document, assets: accepted.assets };
   saved = working;
   undo = [];
   redo = [];
@@ -1391,6 +1425,189 @@ async function loadWorkspace(task) {
         ? t('tools:currentReleaseAssetsLoadedChangesStayInThisLocalStudio')
         : t('tools:sourceRegistryLoadedACompiledReleaseCollectionIsNotPresent'),
   );
+}
+function requireSavedWorkspace() {
+  requireSettled();
+  if (working !== saved) throw new Error(t('tools:exportOrSaveTheStagedWorkspaceOrResetToSaved'));
+}
+function acceptWorkspace(record, id) {
+  previewGeneration++;
+  for (const target of ['current-preview', 'draft-preview']) $(target).previewCleanup?.();
+  generation = record.generation;
+  activeWorkspaceId = id;
+  working = { document: record.document, assets: record.assets };
+  saved = working;
+  undo = [];
+  redo = [];
+  collectionSlots.clear();
+  sprite.reset();
+  refresh();
+  rememberView();
+}
+function workspaceAction(action, options = {}) {
+  if (action === 'set-basis') {
+    operation(t('tools:studio.themes.preparing'), () => {
+      requireSettled();
+      stage(
+        setStudioAppearanceBasis(working.document, options),
+        working.assets,
+        t('tools:studio.themes.basisStaged'),
+      );
+    });
+    return;
+  }
+  if (action === 'configure-defaults') {
+    operation(t('tools:studio.themes.preparing'), async (task) => {
+      requireSavedWorkspace();
+      const source = working.document;
+      const published = await loadPublishedStudio({ signal: task.signal });
+      task.check();
+      const unsupported = unsupportedThemeAssignmentSlots(
+        source,
+        published?.document ?? createDefaultThemeBundle(),
+      );
+      if (unsupported.length)
+        throw new Error(
+          t('tools:studio.themes.assignmentUnsupported', {
+            slots: unsupported.slice(0, 5).join(', '),
+          }),
+        );
+      await verifyThemeAssets(source, working.assets, { signal: task.signal });
+      task.check();
+      const candidate = createThemeCandidate(source, options);
+      const id = saveThemePreview(window.sessionStorage, candidate);
+      const target = new URL('../company-studio/', import.meta.url);
+      target.searchParams.set('appearanceCandidate', id);
+      window.location.assign(target.href);
+    });
+    return;
+  }
+  if (action === 'preview-sim') {
+    operation(t('tools:studio.themes.preparing'), () => {
+      // The preview leaves this tab. Preserve staged pixel edits and unsaved
+      // workspace history before handing off only the bounded candidate data.
+      requireSavedWorkspace();
+      const id = saveThemePreview(
+        window.sessionStorage,
+        createThemeCandidate(working.document, options),
+      );
+      const target = new URL('../fpv-worlds/calibration.html', import.meta.url);
+      target.searchParams.set('themePreview', id);
+      window.location.assign(target.href);
+    });
+    return;
+  }
+  if (action === 'export-runtime') {
+    operation(t('tools:verifyingOriginalBytesForExport'), async (task) => {
+      requireSettled();
+      const source = working.document;
+      const bundle = await exportRuntimeTheme(source, working.assets, {
+        signal: task.signal,
+        familyId: options.familyId,
+        familyRevision: options.familyRevision,
+        interfaceId: options.interfaceId,
+        interfaceRevision: options.interfaceRevision,
+      });
+      task.check();
+      download(bundle, `revealline-${source.id}-r${source.revision}.rlruntime`);
+      status(t('tools:studio.themes.runtimeExported'), 'success');
+    });
+    return;
+  }
+  if (action === 'preview') {
+    $('preview-mode').value = 'context';
+    refreshPreviews();
+    $('draft-preview').scrollIntoView({ block: 'center' });
+    return;
+  }
+  operation(t('tools:studio.themes.preparing'), async (task) => {
+    requireSettled();
+    if (!storageReady)
+      throw new Error(t('tools:localStorageHasNotLoadedSuccessfullyExportYourWorkThen'));
+    if (action !== 'duplicate') requireSavedWorkspace();
+    const identity = () => `theme-${globalThis.crypto.randomUUID()}`;
+    let record, id;
+    if (action === 'select') {
+      id = options.id;
+      record = await store.loadWorkspace(id);
+      task.check();
+      if (!record) throw new Error(t('tools:studio.themes.unavailable'));
+      task.commit();
+      workspaceLibrary = await store.selectWorkspace(id);
+    } else {
+      let source, assets;
+      if (action === 'import') {
+        const incoming = await importThemeBundle(options.file, { signal: task.signal });
+        task.check();
+        source = incoming.document;
+        assets = incoming.assets;
+        if (options.mode === 'duplicate')
+          source = duplicateStudioSnapshot(source, {
+            id: identity(),
+            name: options.name || resolvePresentation(source).theme.name,
+          });
+      } else if (action === 'duplicate') {
+        source = duplicateStudioSnapshot(working.document, { id: identity(), name: options.name });
+        assets = working.assets;
+      } else {
+        task.update(t('tools:loadingAndVerifyingTheCurrentReleaseCollection'), 'downloading');
+        const published = await loadPublishedStudio({ signal: task.signal });
+        task.check();
+        const family = getThemeFamily(
+          options.familyId ?? 'industrial-workshop',
+          options.familyRevision,
+        );
+        if (!family) throw new Error(t('tools:studio.themes.basisUnavailable'));
+        const tokens = getInterfaceTheme(family.interface.id, family.interface.revision).tokens;
+        const shared = Object.fromEntries(
+          Object.entries(tokens).filter(([name]) => Object.hasOwn(TOKEN_DEFAULTS, name)),
+        );
+        source = duplicateStudioSnapshot(published?.document ?? createDefaultThemeBundle(), {
+          id: identity(),
+          name: options.name,
+          tokens: { ...shared, amber: tokens.accent, success: tokens.safe },
+          appearanceBasis: {
+            familyId: family.id,
+            familyRevision: family.revision,
+            interfaceId: family.interface.id,
+            interfaceRevision: family.interface.revision,
+          },
+        });
+        assets = published?.assets ?? new Map();
+      }
+      // Snapshot duplication retains only selected assets and provenance parents.
+      const hashes = new Set(
+        source.assets.filter((asset) => asset.file).map((asset) => asset.file.sha256),
+      );
+      const retainedAssets = new Map([...assets].filter(([hash]) => hashes.has(hash)));
+      const verified = await verifyThemeAssets(source, retainedAssets, { signal: task.signal });
+      task.check();
+      if (action === 'import' && options.mode === 'replace') {
+        const library = await store.listWorkspaces();
+        task.check();
+        const entry = library.entries.find(
+          (item) => item.documentId === source.id && !item.recovery,
+        );
+        if (!entry) throw new Error(t('tools:studio.themes.noMatchingWorkspace'));
+        id = entry.id;
+        const prior = await store.loadWorkspace(id);
+        task.check();
+        task.commit();
+        record = await store.replaceWorkspace(id, source, verified, {
+          expectedGeneration: prior.generation,
+        });
+      } else {
+        task.commit();
+        record = await store.createWorkspace(source, verified);
+        id = record.id;
+      }
+      task.check();
+      workspaceLibrary = await store.listWorkspaces();
+    }
+    task.check();
+    acceptWorkspace(record, id);
+    status(t('tools:studio.themes.ready'), 'success');
+  });
 }
 $('reload-workspace').onclick = () =>
   operation(t('tools:loadingSavedStudioWorkspace'), loadWorkspace);
@@ -1428,6 +1645,8 @@ window.addEventListener('pagehide', (event) => {
     auditionLifecycle.dispose();
     studioGuide.dispose();
     interfacePreferences.dispose();
+    themeWorkbench?.dispose();
+    void store.close();
     stopMasterView();
     audioRestoration.dispose();
     audioPreferences.dispose();

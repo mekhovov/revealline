@@ -1,0 +1,23 @@
+{
+  "errors": [],
+  "initial": "Current release assets loaded. Changes stay in this local studio.",
+  "created": "Independent theme workspace ready. Other themes and player saves are unchanged.",
+  "runtime": {
+    "filename": "revealline-theme-dcb8df1c-35e2-4763-82bc-e44ef203d0bd-r2.rlruntime",
+    "candidateFormat": "ThemeCandidate.v2",
+    "basis": {
+      "familyId": "dnipro-porcelain",
+      "familyRevision": "r1",
+      "interfaceId": "dnipro-porcelain",
+      "interfaceRevision": "r1"
+    },
+    "panel": "#eef5ff",
+    "source": {
+      "id": "theme-dcb8df1c-35e2-4763-82bc-e44ef203d0bd",
+      "revision": 2
+    }
+  },
+  "arcade": "35 native sprite comparisons · original on the left, selected family on the right. Both boards use the same initial state. Pixel geometry and source pictures stay unchanged; this is a visual specimen, not a recorded playtest. · Porcelain browser verification · theme-dcb8df1c-35e2-4763-82bc-e44ef203d0bd@2Authored arcade appearanceDnipro Porcelainplayer.scout.compactplayer.scout.detailedplayer.bomber.compactplayer.bomber.detailedplayer.carrier.compactplayer.carrier.detailedplayer.interceptor.compactplayer.interceptor.detailedplayer.fiber.compactplayer.fiber.detailedplayer.impact.compactplayer.impact.detailedplayer.trapper.compactplayer.trapper.detailedenemy.bouncerenemy.border-patrolenemy.contour-patrolenemy.claimed-roverenemy.eroderenemy.lane-bossenemy.relay-sentinelterrain.wallterrain.slowterrain.lethalpickup.objectivepickup.supplypickup.lifepickup.speedpickup.slowpickup.freezeteam.anchor.availableteam.anchor.capturedteam.core.shieldedteam.core.exposedteam.core.secured",
+  "simURL": "http://127.0.0.1:8768/authoring/fpv-worlds/calibration.html?themePreview=09ba9cf2-bade-4325-ae2a-ade95b4a5069",
+  "preferences": []
+}

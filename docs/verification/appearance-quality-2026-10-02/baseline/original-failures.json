@@ -1,0 +1,818 @@
+{
+  "source": "docs/verification/appearance-system-2026-10-02/final/exploratory-full-suite.log.gz",
+  "incomplete": true,
+  "failures": [
+    {
+      "test": "Studio owns the inspector and synchronizes it when the applied board selection changes",
+      "number": 125,
+      "depth": 0,
+      "location": "game/test/acceptance-inspector.test.mjs:212:1",
+      "error": "|-"
+    },
+    {
+      "test": "native preview metadata statuses do not adopt procedural playback captions on master edits",
+      "number": 482,
+      "depth": 0,
+      "location": "game/test/asset-studio-audio-master.test.mjs:473:1",
+      "error": "|-"
+    },
+    {
+      "test": "sequential same-file role expansion widens the one face while both previews remain current",
+      "number": 507,
+      "depth": 0,
+      "location": "game/test/asset-studio-font-cache.test.mjs:442:1",
+      "error": "|-"
+    },
+    {
+      "test": "same-file widening during pending bytes serves both current surfaces",
+      "number": 508,
+      "depth": 0,
+      "location": "game/test/asset-studio-font-cache.test.mjs:459:3",
+      "error": "|-"
+    },
+    {
+      "test": "same-file widening during pending load serves both current surfaces",
+      "number": 509,
+      "depth": 0,
+      "location": "game/test/asset-studio-font-cache.test.mjs:459:3",
+      "error": "|-"
+    },
+    {
+      "test": "a later narrow snapshot cannot shrink a face still serving a wider current surface",
+      "number": 510,
+      "depth": 0,
+      "location": "game/test/asset-studio-font-cache.test.mjs:479:1",
+      "error": "|-"
+    },
+    {
+      "test": "cancel narrow consumer during shared bytes; late success respects both owners",
+      "number": 511,
+      "depth": 0,
+      "location": "game/test/asset-studio-font-cache.test.mjs:497:7",
+      "error": "|-"
+    },
+    {
+      "test": "cancel narrow consumer during shared bytes; late failure respects both owners",
+      "number": 512,
+      "depth": 0,
+      "location": "game/test/asset-studio-font-cache.test.mjs:497:7",
+      "error": "|-"
+    },
+    {
+      "test": "cancel wide consumer during shared bytes; late success respects both owners",
+      "number": 513,
+      "depth": 0,
+      "location": "game/test/asset-studio-font-cache.test.mjs:497:7",
+      "error": "|-"
+    },
+    {
+      "test": "cancel wide consumer during shared bytes; late failure respects both owners",
+      "number": 514,
+      "depth": 0,
+      "location": "game/test/asset-studio-font-cache.test.mjs:497:7",
+      "error": "|-"
+    },
+    {
+      "test": "cancel narrow consumer during shared load; late success respects both owners",
+      "number": 515,
+      "depth": 0,
+      "location": "game/test/asset-studio-font-cache.test.mjs:497:7",
+      "error": "|-"
+    },
+    {
+      "test": "cancel narrow consumer during shared load; late failure respects both owners",
+      "number": 516,
+      "depth": 0,
+      "location": "game/test/asset-studio-font-cache.test.mjs:497:7",
+      "error": "|-"
+    },
+    {
+      "test": "cancel wide consumer during shared load; late success respects both owners",
+      "number": 517,
+      "depth": 0,
+      "location": "game/test/asset-studio-font-cache.test.mjs:497:7",
+      "error": "|-"
+    },
+    {
+      "test": "cancel wide consumer during shared load; late failure respects both owners",
+      "number": 518,
+      "depth": 0,
+      "location": "game/test/asset-studio-font-cache.test.mjs:497:7",
+      "error": "|-"
+    },
+    {
+      "test": "a failed shared FontFace.load can retry without cache reset and register one successful face",
+      "number": 519,
+      "depth": 0,
+      "location": "game/test/asset-studio-font-cache.test.mjs:540:1",
+      "error": "|-"
+    },
+    {
+      "test": "a rejected weight setter preserves the loaded narrow face and permits a real widening Retry",
+      "number": 520,
+      "depth": 0,
+      "location": "game/test/asset-studio-font-cache.test.mjs:565:1",
+      "error": "|-"
+    },
+    {
+      "test": "repeated equal and narrower role requests reuse the loaded face without another byte read or load",
+      "number": 521,
+      "depth": 0,
+      "location": "game/test/asset-studio-font-cache.test.mjs:604:1",
+      "error": "|-"
+    },
+    {
+      "test": "actual Studio handlers show startup/read/encode stages, cancel a late upload, and save exact source bytes in Studio storage only",
+      "number": 548,
+      "depth": 0,
+      "location": "game/test/asset-studio-host-loading.test.mjs:68:1",
+      "error": "\"Cannot read properties of null (reading 'assets')\""
+    },
+    {
+      "test": "whole-spatial-v34: native boot escape matches ready destinations before any host modules load",
+      "number": 866,
+      "depth": 0,
+      "location": "game/test/authored-mode-bootstrap.test.mjs:26:3",
+      "error": "|-"
+    },
+    {
+      "test": "whole-spatial-v35: native boot escape matches ready destinations before any host modules load",
+      "number": 867,
+      "depth": 0,
+      "location": "game/test/authored-mode-bootstrap.test.mjs:26:3",
+      "error": "|-"
+    },
+    {
+      "test": "whole-spatial-v36: native boot escape matches ready destinations before any host modules load",
+      "number": 868,
+      "depth": 0,
+      "location": "game/test/authored-mode-bootstrap.test.mjs:26:3",
+      "error": "|-"
+    },
+    {
+      "test": "whole-spatial-v37: native boot escape matches ready destinations before any host modules load",
+      "number": 869,
+      "depth": 0,
+      "location": "game/test/authored-mode-bootstrap.test.mjs:26:3",
+      "error": "|-"
+    },
+    {
+      "test": "whole-spatial-v38: native boot escape matches ready destinations before any host modules load",
+      "number": 870,
+      "depth": 0,
+      "location": "game/test/authored-mode-bootstrap.test.mjs:26:3",
+      "error": "|-"
+    },
+    {
+      "test": "opening: ready Solo opens the corresponding Versus library without save/hint conversion",
+      "number": 876,
+      "depth": 0,
+      "location": "game/test/authored-mode-entry-host.test.mjs:123:3",
+      "error": "|-"
+    },
+    {
+      "test": "opening: ready Versus keeps authored Solo entry and explicitly separates Team",
+      "number": 877,
+      "depth": 0,
+      "location": "game/test/authored-mode-entry-host.test.mjs:143:3",
+      "error": "|-"
+    },
+    {
+      "test": "authored: ready Solo opens the corresponding Versus library without save/hint conversion",
+      "number": 878,
+      "depth": 0,
+      "location": "game/test/authored-mode-entry-host.test.mjs:123:3",
+      "error": "|-"
+    },
+    {
+      "test": "authored: ready Versus keeps authored Solo entry and explicitly separates Team",
+      "number": 879,
+      "depth": 0,
+      "location": "game/test/authored-mode-entry-host.test.mjs:143:3",
+      "error": "|-"
+    },
+    {
+      "test": "the actual game has a static dark guard before resources and a single caught module entry",
+      "number": 1018,
+      "depth": 0,
+      "location": "game/test/boot-build.test.mjs:56:1",
+      "error": "|-"
+    },
+    {
+      "test": "build rewrites native root paths, preserves extras and includes boot bytes in reproducible offline inventory",
+      "number": 1020,
+      "depth": 0,
+      "location": "game/test/boot-build.test.mjs:98:1",
+      "error": "|-"
+    },
+    {
+      "test": "downloaded file shows usable native launch options without importing or redirecting",
+      "number": 1023,
+      "depth": 0,
+      "location": "game/test/boot.test.mjs:155:1",
+      "error": "|-"
+    },
+    {
+      "test": "early renderer or stylesheet errors retain inert controls and close partially opened dialogs",
+      "number": 1024,
+      "depth": 0,
+      "location": "game/test/boot.test.mjs:174:1",
+      "error": "|-"
+    },
+    {
+      "test": "missing renderer does not expose legacy controls or request an app startup",
+      "number": 1025,
+      "depth": 0,
+      "location": "game/test/boot.test.mjs:190:1",
+      "error": "|-"
+    },
+    {
+      "test": "cached and delayed styles both finish before app initialization is admitted",
+      "number": 1028,
+      "depth": 0,
+      "location": "game/test/boot.test.mjs:233:1",
+      "error": "|-"
+    },
+    {
+      "test": "resolved legacy app cannot substitute hidden status for the ready handshake",
+      "number": 1029,
+      "depth": 0,
+      "location": "game/test/boot.test.mjs:260:1",
+      "error": "'the actual inline guard conceals failed gameplay even if an older app removed inert'"
+    },
+    {
+      "test": "boot keyboard and controller navigation requires fresh input and yields after pointer use",
+      "number": 1033,
+      "depth": 0,
+      "location": "game/test/boot.test.mjs:375:1",
+      "error": "|-"
+    },
+    {
+      "test": "public root enters the native game within source, Pages and frozen prefixes with exact queries",
+      "number": 1034,
+      "depth": 0,
+      "location": "game/test/boot.test.mjs:405:1",
+      "error": "|-"
+    },
+    {
+      "test": "file launch and a cross-origin script never automatically leave the current document",
+      "number": 1035,
+      "depth": 0,
+      "location": "game/test/boot.test.mjs:432:1",
+      "error": "|-"
+    },
+    {
+      "test": "two optional successors preserve current geometry, actors, goals, pictures, order and untouched introduction",
+      "number": 1217,
+      "depth": 0,
+      "location": "game/test/border-timed-detour-pair.test.mjs:73:1",
+      "error": "|-"
+    },
+    {
+      "test": "public company directory can display and navigate without a community backend",
+      "number": 1768,
+      "depth": 0,
+      "location": "game/test/community-directory.test.mjs:17:1",
+      "error": "|-"
+    },
+    {
+      "test": "social-drone-ua loads the one shared document without changing its visible URL",
+      "number": 1779,
+      "depth": 0,
+      "location": "game/test/community-entry.test.mjs:203:3",
+      "error": "|-"
+    },
+    {
+      "test": "victory-drones loads the one shared document without changing its visible URL",
+      "number": 1780,
+      "depth": 0,
+      "location": "game/test/community-entry.test.mjs:203:3",
+      "error": "|-"
+    },
+    {
+      "test": "ukraine-culture loads the one shared document without changing its visible URL",
+      "number": 1781,
+      "depth": 0,
+      "location": "game/test/community-entry.test.mjs:203:3",
+      "error": "|-"
+    },
+    {
+      "test": "fpv-learning loads the one shared document without changing its visible URL",
+      "number": 1782,
+      "depth": 0,
+      "location": "game/test/community-entry.test.mjs:203:3",
+      "error": "|-"
+    },
+    {
+      "test": "coupa loads the one shared document without changing its visible URL",
+      "number": 1783,
+      "depth": 0,
+      "location": "game/test/community-entry.test.mjs:203:3",
+      "error": "|-"
+    },
+    {
+      "test": "droneaid loads the one shared document without changing its visible URL",
+      "number": 1784,
+      "depth": 0,
+      "location": "game/test/community-entry.test.mjs:203:3",
+      "error": "|-"
+    },
+    {
+      "test": "droneaid-community loads the one shared document without changing its visible URL",
+      "number": 1785,
+      "depth": 0,
+      "location": "game/test/community-entry.test.mjs:203:3",
+      "error": "|-"
+    },
+    {
+      "test": "startup dialog owns keyboard/pad input without declaring boot ready",
+      "number": 1855,
+      "depth": 0,
+      "location": "game/test/company-boot-input.test.mjs:109:1",
+      "error": "'neutral then fresh input returns to boot owner'"
+    },
+    {
+      "test": "nested input ownership and boot failure retain fail-closed cleanup",
+      "number": 1856,
+      "depth": 0,
+      "location": "game/test/company-boot-input.test.mjs:143:1",
+      "error": "|-"
+    },
+    {
+      "test": "company pagehide uses real preference teardown APIs and preserves a cached page until final navigation",
+      "number": 1950,
+      "depth": 0,
+      "location": "game/test/company-player-lifecycle.test.mjs:152:1",
+      "error": "|-"
+    },
+    {
+      "test": "leaving preview cancels verification and a late completion cannot mount an offscreen game",
+      "number": 2113,
+      "depth": 0,
+      "location": "game/test/company-studio-ui.test.mjs:268:1",
+      "error": "'Missing expected rejection.'"
+    },
+    {
+      "test": "repeated forced Pause keeps the chosen menu action after Settings closes",
+      "number": 3175,
+      "depth": 0,
+      "location": "game/test/controller-practice-pause-host.test.mjs:134:1",
+      "error": "|-"
+    },
+    {
+      "test": "a reset during completed local import UI keeps ownership over the older success tail",
+      "number": 3637,
+      "depth": 0,
+      "location": "game/test/coop-custom-artwork-host.test.mjs:556:3",
+      "error": "|-"
+    },
+    {
+      "test": "a fresh first visit shows and starts the exact First Connection without creating a bookmark",
+      "number": 3696,
+      "depth": 0,
+      "location": "game/test/coop-entry-memory.test.mjs:60:1",
+      "error": "|-"
+    },
+    {
+      "test": "BFCache and Settings retain this attempt when another tab changes the bookmark",
+      "number": 3708,
+      "depth": 0,
+      "location": "game/test/coop-entry-memory.test.mjs:184:1",
+      "error": "|-"
+    },
+    {
+      "test": "same-value pointerdown  retains visible First Connection without manufacturing a change",
+      "number": 3709,
+      "depth": 0,
+      "location": "game/test/coop-entry-memory.test.mjs:218:3",
+      "error": "|-"
+    },
+    {
+      "test": "same-value click  retains visible First Connection without manufacturing a change",
+      "number": 3710,
+      "depth": 0,
+      "location": "game/test/coop-entry-memory.test.mjs:218:3",
+      "error": "|-"
+    },
+    {
+      "test": "same-value keydown Enter retains visible First Connection without manufacturing a change",
+      "number": 3711,
+      "depth": 0,
+      "location": "game/test/coop-entry-memory.test.mjs:218:3",
+      "error": "|-"
+    },
+    {
+      "test": "same-value keydown f retains visible First Connection without manufacturing a change",
+      "number": 3712,
+      "depth": 0,
+      "location": "game/test/coop-entry-memory.test.mjs:218:3",
+      "error": "|-"
+    },
+    {
+      "test": "same-value keydown F4 retains visible First Connection without manufacturing a change",
+      "number": 3713,
+      "depth": 0,
+      "location": "game/test/coop-entry-memory.test.mjs:218:3",
+      "error": "|-"
+    },
+    {
+      "test": "failed Start after a claim-only selection leaves the existing bookmark unchanged",
+      "number": 3715,
+      "depth": 0,
+      "location": "game/test/coop-entry-memory.test.mjs:266:1",
+      "error": "|-"
+    },
+    {
+      "test": "starting an imported pack after claiming the built-in selector never saves imported identity",
+      "number": 3716,
+      "depth": 0,
+      "location": "game/test/coop-entry-memory.test.mjs:284:1",
+      "error": "|-"
+    },
+    {
+      "test": "hidden while an imported image loads retires its authority",
+      "number": 3836,
+      "depth": 0,
+      "location": "game/test/coop-import-artwork-host.test.mjs:130:3",
+      "error": "|-"
+    },
+    {
+      "test": "imported Next hidden retains earned Results until another deliberate action",
+      "number": 3848,
+      "depth": 0,
+      "location": "game/test/coop-import-next.test.mjs:135:3",
+      "error": "'Observable Team condition did not settle. Next arena cancelled. Your result and picture are still here.'"
+    },
+    {
+      "test": "relay-yard ready lobby hides the picture centre until an earned win",
+      "number": 3923,
+      "depth": 0,
+      "location": "game/test/coop-lobby-preview.test.mjs:186:3",
+      "error": "|-"
+    },
+    {
+      "test": "first-connection ready lobby hides the picture centre until an earned win",
+      "number": 3924,
+      "depth": 0,
+      "location": "game/test/coop-lobby-preview.test.mjs:186:3",
+      "error": "|-"
+    },
+    {
+      "test": "held artwork completes behind Settings without reclaiming its selector or starting an arena",
+      "number": 3926,
+      "depth": 0,
+      "location": "game/test/coop-lobby-preview.test.mjs:232:1",
+      "error": "|-"
+    },
+    {
+      "test": "required original decode failure shows no lobby art and Retry prepares the same exact slot",
+      "number": 3929,
+      "depth": 0,
+      "location": "game/test/coop-lobby-preview.test.mjs:336:1",
+      "error": "'Observable Team condition did not settle. Team picture unavailable. Retry picture or choose another arena.'"
+    },
+    {
+      "test": "historical import prepares shared artwork, loss keeps preview outside Results, and reset restores exact starter art",
+      "number": 3931,
+      "depth": 0,
+      "location": "game/test/coop-lobby-preview.test.mjs:385:1",
+      "error": "|-"
+    },
+    {
+      "test": "earned First Connection victory keeps preview in the hidden lobby and Change setup reuses its exact lease",
+      "number": 3936,
+      "depth": 0,
+      "location": "game/test/coop-lobby-preview.test.mjs:507:1",
+      "error": "|-"
+    },
+    {
+      "test": "preview-only failure does not move Retry into play or Pause, and focused keyboard Retry returns to enabled Start",
+      "number": 3937,
+      "depth": 0,
+      "location": "game/test/coop-lobby-preview.test.mjs:528:1",
+      "error": "|-"
+    },
+    {
+      "test": "required read failure clears preview while a rejected starter import preserves the accepted arena",
+      "number": 3938,
+      "depth": 0,
+      "location": "game/test/coop-lobby-preview.test.mjs:573:1",
+      "error": "'Observable Team condition did not settle. Team picture unavailable. Retry picture or choose another arena.'"
+    },
+    {
+      "test": "Settings close and queued older close cannot enable Browse over pending artwork or a reopened visit",
+      "number": 3940,
+      "depth": 0,
+      "location": "game/test/coop-lobby-preview.test.mjs:673:1",
+      "error": "|-"
+    },
+    {
+      "test": "Back cancels the initial actual picture read; late bytes cannot ready the arena and explicit Retry retains the exact identity",
+      "number": 4059,
+      "depth": 0,
+      "location": "game/test/coop-picture-host.test.mjs:92:1",
+      "error": "|-"
+    },
+    {
+      "test": "Cancel during decode releases only that image; its late decode cannot replace or release a newer Retry",
+      "number": 4060,
+      "depth": 0,
+      "location": "game/test/coop-picture-host.test.mjs:120:1",
+      "error": "|-"
+    },
+    {
+      "test": "blur retires preparation and cannot revive Start or focus after returning",
+      "number": 4062,
+      "depth": 0,
+      "location": "game/test/coop-picture-host.test.mjs:166:3",
+      "error": "'Observable Team condition did not settle. Picture loading cancelled. Retry picture when you are ready.'"
+    },
+    {
+      "test": "hidden retires preparation and cannot revive Start or focus after returning",
+      "number": 4063,
+      "depth": 0,
+      "location": "game/test/coop-picture-host.test.mjs:166:3",
+      "error": "'Observable Team condition did not settle. Picture loading cancelled. Retry picture when you are ready.'"
+    },
+    {
+      "test": "pagehide retires preparation and cannot revive Start or focus after returning",
+      "number": 4064,
+      "depth": 0,
+      "location": "game/test/coop-picture-host.test.mjs:166:3",
+      "error": "'Observable Team condition did not settle. Picture loading cancelled. Retry picture when you are ready.'"
+    },
+    {
+      "test": "required decode failure exposes Retry with no procedural fallback or automatic start",
+      "number": 4068,
+      "depth": 0,
+      "location": "game/test/coop-picture-host.test.mjs:240:1",
+      "error": "|-"
+    },
+    {
+      "test": "paused menu/display edits retain HUD continuity and the accepted picture with only shared preference reads/writes",
+      "number": 4073,
+      "depth": 0,
+      "location": "game/test/coop-picture-host.test.mjs:380:1",
+      "error": "|-"
+    },
+    {
+      "test": "picture waiting and checked mode departure have separate owners with reachable Cancel and fixed links",
+      "number": 4074,
+      "depth": 0,
+      "location": "game/test/coop-picture-host.test.mjs:445:1",
+      "error": "|-"
+    },
+    {
+      "test": "failed picture \u2192 Retry \u2192 pending Cancel is visible at 844\u00d7390 without starting a flight",
+      "number": 4076,
+      "depth": 0,
+      "location": "game/test/coop-picture-recovery-focus.test.mjs:64:3",
+      "error": "|-"
+    },
+    {
+      "test": "failed picture \u2192 Retry \u2192 pending Cancel is visible at 390\u00d7844 without starting a flight",
+      "number": 4077,
+      "depth": 0,
+      "location": "game/test/coop-picture-recovery-focus.test.mjs:64:3",
+      "error": "|-"
+    },
+    {
+      "test": "visible recovery controls retain their viewport and explicit Cancel reveals only its own Retry",
+      "number": 4078,
+      "depth": 0,
+      "location": "game/test/coop-picture-recovery-focus.test.mjs:110:1",
+      "error": "|-"
+    },
+    {
+      "test": "a failed picture can be replaced by a different arena through the real selector",
+      "number": 4079,
+      "depth": 0,
+      "location": "game/test/coop-picture-recovery-focus.test.mjs:137:1",
+      "error": "|-"
+    },
+    {
+      "test": "direct Retry reveal respects newer focus-then-body inside its focus callback",
+      "number": 4082,
+      "depth": 0,
+      "location": "game/test/coop-picture-recovery-focus.test.mjs:188:3",
+      "error": "|-"
+    },
+    {
+      "test": "direct Retry reveal respects newer settings inside its focus callback",
+      "number": 4083,
+      "depth": 0,
+      "location": "game/test/coop-picture-recovery-focus.test.mjs:188:3",
+      "error": "|-"
+    },
+    {
+      "test": "direct Retry reveal respects newer blur-return inside its focus callback",
+      "number": 4084,
+      "depth": 0,
+      "location": "game/test/coop-picture-recovery-focus.test.mjs:188:3",
+      "error": "|-"
+    },
+    {
+      "test": "direct Retry reveal respects newer hidden-return inside its focus callback",
+      "number": 4085,
+      "depth": 0,
+      "location": "game/test/coop-picture-recovery-focus.test.mjs:188:3",
+      "error": "|-"
+    },
+    {
+      "test": "direct Retry reveal respects newer pagehide inside its focus callback",
+      "number": 4086,
+      "depth": 0,
+      "location": "game/test/coop-picture-recovery-focus.test.mjs:188:3",
+      "error": "|-"
+    },
+    {
+      "test": "direct Retry reveal respects newer pointer-intent inside its focus callback",
+      "number": 4087,
+      "depth": 0,
+      "location": "game/test/coop-picture-recovery-focus.test.mjs:188:3",
+      "error": "|-"
+    },
+    {
+      "test": "direct Retry reveal respects newer key-intent inside its focus callback",
+      "number": 4088,
+      "depth": 0,
+      "location": "game/test/coop-picture-recovery-focus.test.mjs:188:3",
+      "error": "|-"
+    },
+    {
+      "test": "same-scope arena replacement during Retry geometry retires the old direct handoff",
+      "number": 4089,
+      "depth": 0,
+      "location": "game/test/coop-picture-recovery-focus.test.mjs:223:1",
+      "error": "'Observable Team condition did not settle. '"
+    },
+    {
+      "test": "a pending reveal exception cannot prevent the real picture read or later recovery",
+      "number": 4090,
+      "depth": 0,
+      "location": "game/test/coop-picture-recovery-focus.test.mjs:251:1",
+      "error": "'Observable Team condition did not settle. '"
+    },
+    {
+      "test": "a completion reveal exception leaves explicit Retry usable",
+      "number": 4091,
+      "depth": 0,
+      "location": "game/test/coop-picture-recovery-focus.test.mjs:276:1",
+      "error": "|-"
+    },
+    {
+      "test": "newer focus during pending Cancel remains authoritative even after returning to BODY",
+      "number": 4092,
+      "depth": 0,
+      "location": "game/test/coop-picture-recovery-focus.test.mjs:295:1",
+      "error": "'Observable Team condition did not settle. '"
+    },
+    {
+      "test": "a fresh Retry retires all temporary focus observers after either terminal outcome",
+      "number": 4093,
+      "depth": 0,
+      "location": "game/test/coop-picture-recovery-focus.test.mjs:327:1",
+      "error": "'Observable Team condition did not settle. '"
+    },
+    {
+      "test": "first-connection: explicit Retry recovers a failed release presentation without replacing selection or automatically starting",
+      "number": 4150,
+      "depth": 0,
+      "location": "game/test/coop-presentation-bootstrap-retry.test.mjs:69:3",
+      "error": "|-"
+    },
+    {
+      "test": "relay-yard: explicit Retry recovers a failed release presentation without replacing selection or automatically starting",
+      "number": 4151,
+      "depth": 0,
+      "location": "game/test/coop-presentation-bootstrap-retry.test.mjs:69:3",
+      "error": "|-"
+    },
+    {
+      "test": "cancelling a held presentation Retry fences late readiness; a fresh Retry prepares the same arena without automatic Start",
+      "number": 4152,
+      "depth": 0,
+      "location": "game/test/coop-presentation-bootstrap-retry.test.mjs:127:1",
+      "error": "|-"
+    },
+    {
+      "test": "another failed bootstrap Retry remains actionable and a later explicit Retry recovers without a background retry loop",
+      "number": 4153,
+      "depth": 0,
+      "location": "game/test/coop-presentation-bootstrap-retry.test.mjs:179:1",
+      "error": "|-"
+    },
+    {
+      "test": "recovered presentation leaves explicit Neon Arcade UI skin independent while unsupported Team artwork stays blocked",
+      "number": 4154,
+      "depth": 0,
+      "location": "game/test/coop-presentation-bootstrap-retry.test.mjs:209:1",
+      "error": "|-"
+    },
+    {
+      "test": "lobby read failure keeps every status player-facing and logs the original exception",
+      "number": 4242,
+      "depth": 0,
+      "location": "game/test/coop-recovery-copy.test.mjs:148:3",
+      "error": "|-"
+    },
+    {
+      "test": "lobby decode failure keeps every status player-facing and logs the original exception",
+      "number": 4243,
+      "depth": 0,
+      "location": "game/test/coop-recovery-copy.test.mjs:148:3",
+      "error": "|-"
+    },
+    {
+      "test": "a controller selects Team Settings and paused quick sound without resuming",
+      "number": 4409,
+      "depth": 0,
+      "location": "game/test/coop-shared-settings.test.mjs:185:1",
+      "error": "|-"
+    },
+    {
+      "test": "a newer focus choice during native Settings opening wins over the default category focus",
+      "number": 4418,
+      "depth": 0,
+      "location": "game/test/coop-shared-settings.test.mjs:385:1",
+      "error": "|-"
+    },
+    {
+      "test": "ordinary post-ready selection supplies the gameplay and artwork reference",
+      "number": 1,
+      "depth": 4,
+      "location": "game/test/coop-startup-selection.test.mjs:62:11",
+      "error": "|-"
+    },
+    {
+      "test": "pre-attachment First Connection and Expert survive boot and exact preparation",
+      "number": 2,
+      "depth": 4,
+      "location": "game/test/coop-startup-selection.test.mjs:72:11",
+      "error": "|-"
+    },
+    {
+      "test": "native setup chosen before module attachment matches the ordinary Expert First Connection flight",
+      "number": 4421,
+      "depth": 0,
+      "location": "game/test/coop-startup-selection.test.mjs:60:1",
+      "error": "'2 subtests failed'"
+    },
+    {
+      "test": "queryless Team adopts the early Expert preset before preparing its owned original and retains it on Retry",
+      "number": 4433,
+      "depth": 0,
+      "location": "game/test/coop-startup-selection.test.mjs:237:1",
+      "error": "'Observable Team condition did not settle. Team picture unavailable. Retry picture or choose another arena.'"
+    },
+    {
+      "test": "a complete snapshot without a wall keeps flat backing and a missing reader fails closed",
+      "number": 4452,
+      "depth": 0,
+      "location": "game/test/coop-terrain-trail.test.mjs:366:1",
+      "error": "'Missing expected exception.'"
+    },
+    {
+      "test": "Couch main All missions and Back retain the ready boards and restore the exact keyboard opener",
+      "number": 4647,
+      "depth": 0,
+      "location": "game/test/couch-catalogue-host.test.mjs:63:33",
+      "error": "'The real All missions chooser must expose the exact indexed chapter mission.'"
+    },
+    {
+      "test": "failed catalogue download retains the accepted ready race, artwork and results",
+      "number": 4648,
+      "depth": 0,
+      "location": "game/test/couch-catalogue-host.test.mjs:63:33",
+      "error": "'The real All missions chooser must expose the exact indexed chapter mission.'"
+    },
+    {
+      "test": "failed catalogue download retains the accepted paused race, artwork and results",
+      "number": 4649,
+      "depth": 0,
+      "location": "game/test/couch-catalogue-host.test.mjs:63:33",
+      "error": "'The real All missions chooser must expose the exact indexed chapter mission.'"
+    },
+    {
+      "test": "failed catalogue download retains the accepted finished race, artwork and results",
+      "number": 4650,
+      "depth": 0,
+      "location": "game/test/couch-catalogue-host.test.mjs:63:33",
+      "error": "'The real All missions chooser must expose the exact indexed chapter mission.'"
+    },
+    {
+      "test": "Back fences a late transport completion without replacing the paused race",
+      "number": 4651,
+      "depth": 0,
+      "location": "game/test/couch-catalogue-host.test.mjs:63:33",
+      "error": "'The real All missions chooser must expose the exact indexed chapter mission.'"
+    },
+    {
+      "test": "new focus fences a late transport completion without replacing the paused race",
+      "number": 4652,
+      "depth": 0,
+      "location": "game/test/couch-catalogue-host.test.mjs:63:33",
+      "error": "'The real All missions chooser must expose the exact indexed chapter mission.'"
+    }
+  ]
+}

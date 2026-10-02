@@ -1,0 +1,190 @@
+TAP version 13
+# Subtest: SIM preferences preserve existing authored choices, new installs follow game, and missing collections retain intent
+ok 1 - SIM preferences preserve existing authored choices, new installs follow game, and missing collections retain intent
+  ---
+  duration_ms: 1.902166
+  ...
+# Subtest: first successful arm freezes accepted appearance until a new attempt, even after disarming
+ok 2 - first successful arm freezes accepted appearance until a new attempt, even after disarming
+  ---
+  duration_ms: 0.756375
+  ...
+# Subtest: recording metadata is bounded, portable and independent of Academy proof/reward identity
+ok 3 - recording metadata is bounded, portable and independent of Academy proof/reward identity
+  ---
+  duration_ms: 59.258625
+  ...
+# Subtest: replacing cosmetic metadata owns queued inputs and retries a failed save of an existing proof
+ok 4 - replacing cosmetic metadata owns queued inputs and retries a failed save of an existing proof
+  ---
+  duration_ms: 55.4835
+  ...
+# Subtest: World snapshots preserve gameplay identities while their existing record IDs distinguish appearance
+ok 5 - World snapshots preserve gameplay identities while their existing record IDs distinguish appearance
+  ---
+  duration_ms: 82.448208
+  ...
+# Subtest: World pinned profile owns one bounded authored fallback while legacy profiles keep exact appearance
+ok 6 - World pinned profile owns one bounded authored fallback while legacy profiles keep exact appearance
+  ---
+  duration_ms: 3.63225
+  ...
+# Subtest: World archive keeps legacy records and round-trips Academy appearance with separate record IDs
+ok 7 - World archive keeps legacy records and round-trips Academy appearance with separate record IDs
+  ---
+  duration_ms: 658.728958
+  ...
+# Subtest: World archive preserves the versioned profile fallback inside its unchanged course/proof record
+ok 8 - World archive preserves the versioned profile fallback inside its unchanged course/proof record
+  ---
+  duration_ms: 20.267417
+  ...
+# Subtest: SIM admits only a bounded complete cosmetic context pair from optional launcher URLs
+ok 9 - SIM admits only a bounded complete cosmetic context pair from optional launcher URLs
+  ---
+  duration_ms: 2.646208
+  ...
+# Subtest: SIM follows context or personal family, preserves independent overrides, and complete apply resets them
+ok 10 - SIM follows context or personal family, preserves independent overrides, and complete apply resets them
+  ---
+  duration_ms: 23.611292
+  ...
+# Subtest: injected context precedes launcher pin and unavailable revisions remain visible in host diagnostics
+ok 11 - injected context precedes launcher pin and unavailable revisions remain visible in host diagnostics
+  ---
+  duration_ms: 4.162208
+  ...
+# Subtest: all production family collection pins round-trip through World and Academy presentation metadata
+ok 12 - all production family collection pins round-trip through World and Academy presentation metadata
+  ---
+  duration_ms: 9.897125
+  ...
+# Subtest: complete apply from another tab updates SIM intent while preserving the armed appearance
+ok 13 - complete apply from another tab updates SIM intent while preserving the armed appearance
+  ---
+  duration_ms: 13.451459
+  ...
+# Subtest: optional SIM re-exports the same shared offline collection authority
+ok 14 - optional SIM re-exports the same shared offline collection authority
+  ---
+  duration_ms: 0.58475
+  ...
+# Subtest: versioned SIM collection descriptors are bounded immutable role-complete data with safe fallback
+ok 15 - versioned SIM collection descriptors are bounded immutable role-complete data with safe fallback
+  ---
+  duration_ms: 4.673375
+  ...
+# Subtest: collection effect palettes are immutable semantic cues with exact-revision fallback
+ok 16 - collection effect palettes are immutable semantic cues with exact-revision fallback
+  ---
+  duration_ms: 0.616959
+  ...
+# Subtest: SIM appearance resolution preserves authored profiles and never mutates course data
+ok 17 - SIM appearance resolution preserves authored profiles and never mutates course data
+  ---
+  duration_ms: 9.353375
+  ...
+# Subtest: industrial textures are deterministic local sRGB art with quality-capped world filtering
+ok 18 - industrial textures are deterministic local sRGB art with quality-capped world filtering
+  ---
+  duration_ms: 4.877833
+  ...
+# Subtest: bevel calibration normals are bounded deterministic linear tangent-space data
+ok 19 - bevel calibration normals are bounded deterministic linear tangent-space data
+  ---
+  duration_ms: 12.461583
+  ...
+# Subtest: all built-in environments have industrial materials without moving world geometry
+ok 20 - all built-in environments have industrial materials without moving world geometry
+  ---
+  duration_ms: 580.289458
+  ...
+# Subtest: flight and hangar share industrial models, preserving explicit drone kind and exterior bounds
+ok 21 - flight and hangar share industrial models, preserving explicit drone kind and exterior bounds
+  ---
+  duration_ms: 48.995
+  ...
+# Subtest: container detail batches retain all fittings outside flight bounds without per-container draws
+ok 22 - container detail batches retain all fittings outside flight bounds without per-container draws
+  ---
+  duration_ms: 4.186167
+  ...
+# Subtest: specimen collections bind the same model roles and geometry to distinct material palettes
+ok 23 - specimen collections bind the same model roles and geometry to distinct material palettes
+  ---
+  duration_ms: 110.788792
+  ...
+# Subtest: calibration disposal releases shared resources exactly once
+ok 24 - calibration disposal releases shared resources exactly once
+  ---
+  duration_ms: 4.996083
+  ...
+# Subtest: imported mesh material bindings are opt-in, bounded and revision-specific
+ok 25 - imported mesh material bindings are opt-in, bounded and revision-specific
+  ---
+  duration_ms: 1.862917
+  ...
+# Subtest: transparent imports require explicit replacement approval and non-mesh bindings do not inherit
+ok 26 - transparent imports require explicit replacement approval and non-mesh bindings do not inherit
+  ---
+  duration_ms: 1.1825
+  ...
+# Subtest: a glTF mesh-node binding covers only its own loader-identified primitives
+ok 27 - a glTF mesh-node binding covers only its own loader-identified primitives
+  ---
+  duration_ms: 0.778333
+  ...
+# Subtest: eight collections cover every environment with protected course data and exterior dressing
+ok 28 - eight collections cover every environment with protected course data and exterior dressing
+  ---
+  duration_ms: 539.192041
+  ...
+# Subtest: family surface recipes provide distinct luminance structure beyond a global tint
+ok 29 - family surface recipes provide distinct luminance structure beyond a global tint
+  ---
+  duration_ms: 15.777209
+  ...
+# Subtest: World app prepares a pinned appearance and queues drone/theme changes after arming
+ok 30 - World app prepares a pinned appearance and queues drone/theme changes after arming
+  ---
+  duration_ms: 511.473209
+  ...
+# Subtest: World route thumbnails share selected palettes without modifying source geometry or authored scene references
+ok 31 - World route thumbnails share selected palettes without modifying source geometry or authored scene references
+  ---
+  duration_ms: 82.435709
+  ...
+# Subtest: World recovery retains its saved theme and drone while new appearance choices remain queued
+ok 32 - World recovery retains its saved theme and drone while new appearance choices remain queued
+  ---
+  duration_ms: 447.034583
+  ...
+# Subtest: World replay visibly falls back from an unavailable pinned revision (legacy environment) without changing its record
+ok 33 - World replay visibly falls back from an unavailable pinned revision (legacy environment) without changing its record
+  ---
+  duration_ms: 165.820375
+  ...
+# Subtest: World replay visibly falls back from an unavailable pinned revision (saved authored profile) without changing its record
+ok 34 - World replay visibly falls back from an unavailable pinned revision (saved authored profile) without changing its record
+  ---
+  duration_ms: 156.113625
+  ...
+# Subtest: World pre-arm appearance refresh keeps focus on the control the player is using
+ok 35 - World pre-arm appearance refresh keeps focus on the control the player is using
+  ---
+  duration_ms: 193.550375
+  ...
+# Subtest: spatial editor applies current presentation before every course build without changing authored source or scene bytes
+ok 36 - spatial editor applies current presentation before every course build without changing authored source or scene bytes
+  ---
+  duration_ms: 2.420083
+  ...
+1..36
+# tests 36
+# suites 0
+# pass 36
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 2115.505916

@@ -3,6 +3,22 @@ import path from 'node:path';
 
 const FILE_LIMIT = 128 * 1024;
 const OPTIONAL_CLOSURE = [
+  // A current seed requires its frozen CSS/font closure; older launchers do not.
+  ...[
+    'presentation/theme-bootstrap.mjs',
+    'presentation/industrial-workshop.css',
+    'ui/field-kit-fonts.css',
+    'ui/brand-identity.css',
+    'ui/art/identity/fpv-line/icon-192.png',
+    'ui/fonts/departure-mono/DepartureMono-Regular.woff2',
+    'ui/fonts/departure-mono/LICENSE',
+    'ui/fonts/field-kit/exo2-ui-400-600.woff2',
+    'ui/fonts/field-kit/handjet-display-600.woff2',
+    'ui/fonts/field-kit/ibm-plex-mono-500.woff2',
+    'ui/fonts/field-kit/Exo2-OFL.txt',
+    'ui/fonts/field-kit/Handjet-OFL.txt',
+    'ui/fonts/field-kit/IBMPlexMono-OFL.txt',
+  ].map((file) => [file, 'index.html', 'presentation/theme-bootstrap.mjs']),
   ['navigation.css', 'index.html', 'navigation.css'],
   ['edition-context.mjs', 'installed-app.mjs', './edition-context.mjs'],
   ['profile-writer.mjs', 'installed-app.mjs', './profile-writer.mjs'],

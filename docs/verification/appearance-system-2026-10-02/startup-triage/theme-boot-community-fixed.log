@@ -1,0 +1,312 @@
+TAP version 13
+# Subtest: the actual game has a static dark guard before resources and a single caught module entry
+ok 1 - the actual game has a static dark guard before resources and a single caught module entry
+  ---
+  duration_ms: 3.088
+  ...
+# Subtest: native wrapper CSP precedes bootstrap and permits the existing external-script/inline-style design
+ok 2 - native wrapper CSP precedes bootstrap and permits the existing external-script/inline-style design
+  ---
+  duration_ms: 4.239958
+  ...
+# Subtest: build rewrites native root paths, preserves extras and includes boot bytes in reproducible offline inventory
+ok 3 - build rewrites native root paths, preserves extras and includes boot bytes in reproducible offline inventory
+  ---
+  duration_ms: 3405.230416
+  ...
+# Subtest: downloaded file shows usable native launch options without importing or redirecting
+ok 4 - downloaded file shows usable native launch options without importing or redirecting
+  ---
+  duration_ms: 2.674375
+  ...
+# Subtest: early renderer or stylesheet errors retain inert controls and close partially opened dialogs
+ok 5 - early renderer or stylesheet errors retain inert controls and close partially opened dialogs
+  ---
+  duration_ms: 2.543
+  ...
+# Subtest: missing renderer does not expose legacy controls or request an app startup
+ok 6 - missing renderer does not expose legacy controls or request an app startup
+  ---
+  duration_ms: 0.504542
+  ...
+# Subtest: app import rejection has an actual caught promise path and stays concealed
+ok 7 - app import rejection has an actual caught promise path and stays concealed
+  ---
+  duration_ms: 4.853333
+  ...
+# Subtest: delayed required styles keep the static launch active and report an actionable failure
+ok 8 - delayed required styles keep the static launch active and report an actionable failure
+  ---
+  duration_ms: 2.476333
+  ...
+# (node:36180) ExperimentalWarning: vm.USE_MAIN_CONTEXT_DEFAULT_LOADER is an experimental feature and might change at any time
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: cached and delayed styles both finish before app initialization is admitted
+ok 9 - cached and delayed styles both finish before app initialization is admitted
+  ---
+  duration_ms: 5.432084
+  ...
+# Subtest: resolved legacy app cannot substitute hidden status for the ready handshake
+ok 10 - resolved legacy app cannot substitute hidden status for the ready handshake
+  ---
+  duration_ms: 6.163833
+  ...
+# Subtest: pending top-level await keeps loading and real ready succeeds before import completion
+ok 11 - pending top-level await keeps loading and real ready succeeds before import completion
+  ---
+  duration_ms: 8.666125
+  ...
+# Subtest: rejected real app import restores its hidden status and retains the import error
+ok 12 - rejected real app import restores its hidden status and retains the import error
+  ---
+  duration_ms: 5.67025
+  ...
+# Subtest: only successful ready reveals the game and shuts down boot scheduling/listeners
+ok 13 - only successful ready reveals the game and shuts down boot scheduling/listeners
+  ---
+  duration_ms: 1.404667
+  ...
+# Subtest: boot keyboard and controller navigation requires fresh input and yields after pointer use
+ok 14 - boot keyboard and controller navigation requires fresh input and yields after pointer use
+  ---
+  duration_ms: 1.427708
+  ...
+# Subtest: public root enters the native game within source, Pages and frozen prefixes with exact queries
+ok 15 - public root enters the native game within source, Pages and frozen prefixes with exact queries
+  ---
+  duration_ms: 1.064958
+  ...
+# Subtest: public launcher retains its own script URL while access remains pending
+ok 16 - public launcher retains its own script URL while access remains pending
+  ---
+  duration_ms: 0.301542
+  ...
+# Subtest: file launch and a cross-origin script never automatically leave the current document
+ok 17 - file launch and a cross-origin script never automatically leave the current document
+  ---
+  duration_ms: 0.581417
+  ...
+# Subtest: static launch markup survives disabled JS and excludes decorative fake controls
+ok 18 - static launch markup survives disabled JS and excludes decorative fake controls
+  ---
+  duration_ms: 1.692583
+  ...
+# Subtest: public company directory can display and navigate without a community backend
+ok 19 - public company directory can display and navigate without a community backend
+  ---
+  duration_ms: 9.013958
+  ...
+# Subtest: directory exposes the main game and every public brand through relative clean routes
+ok 20 - directory exposes the main game and every public brand through relative clean routes
+  ---
+  duration_ms: 5.319
+  ...
+# Subtest: DroneAid collections share one community card without losing either entry point
+ok 21 - DroneAid collections share one community card without losing either entry point
+  ---
+  duration_ms: 3.564417
+  ...
+# Subtest: old directory bookmarks preserve query and hash while forwarding to the plural path
+ok 22 - old directory bookmarks preserve query and hash while forwarding to the plural path
+  ---
+  duration_ms: 2.05875
+  ...
+# Subtest: the separate community store retains its service configuration and existing account/catalog host
+ok 23 - the separate community store retains its service configuration and existing account/catalog host
+  ---
+  duration_ms: 2.605417
+  ...
+# Subtest: creator and moderator return links retain the separate service marketplace
+ok 24 - creator and moderator return links retain the separate service marketplace
+  ---
+  duration_ms: 3.467416
+  ...
+# Subtest: static directory resources and preserved store entry are covered by the source distribution
+ok 25 - static directory resources and preserved store entry are covered by the source distribution
+  ---
+  duration_ms: 9.794916
+  ...
+# Subtest: Pages aliases retain both entry routes and preserve frozen directory/store bytes
+ok 26 - Pages aliases retain both entry routes and preserve frozen directory/store bytes
+  ---
+  duration_ms: 12.674708
+  ...
+# Subtest: the real shared host rebases every resource while keeping empty and fragment links local
+ok 27 - the real shared host rebases every resource while keeping empty and fragment links local
+  ---
+  duration_ms: 73.381833
+  ...
+# Subtest: relative CSS, srcset, posters and offline metadata keep the shared host resource scope
+ok 28 - relative CSS, srcset, posters and offline metadata keep the shared host resource scope
+  ---
+  duration_ms: 1.877583
+  ...
+# Subtest: unrelated HTML, base overrides and foreign offline scopes fail before a host is serialized
+ok 29 - unrelated HTML, base overrides and foreign offline scopes fail before a host is serialized
+  ---
+  duration_ms: 1.5245
+  ...
+# Subtest: social-drone-ua loads the one shared document without changing its visible URL
+ok 30 - social-drone-ua loads the one shared document without changing its visible URL
+  ---
+  duration_ms: 4.9365
+  ...
+# Subtest: victory-drones loads the one shared document without changing its visible URL
+ok 31 - victory-drones loads the one shared document without changing its visible URL
+  ---
+  duration_ms: 2.781208
+  ...
+# Subtest: ukraine-culture loads the one shared document without changing its visible URL
+ok 32 - ukraine-culture loads the one shared document without changing its visible URL
+  ---
+  duration_ms: 0.977792
+  ...
+# Subtest: fpv-learning loads the one shared document without changing its visible URL
+ok 33 - fpv-learning loads the one shared document without changing its visible URL
+  ---
+  duration_ms: 0.988792
+  ...
+# Subtest: coupa loads the one shared document without changing its visible URL
+ok 34 - coupa loads the one shared document without changing its visible URL
+  ---
+  duration_ms: 1.108834
+  ...
+# Subtest: droneaid loads the one shared document without changing its visible URL
+ok 35 - droneaid loads the one shared document without changing its visible URL
+  ---
+  duration_ms: 1.4705
+  ...
+# Subtest: droneaid-community loads the one shared document without changing its visible URL
+ok 36 - droneaid-community loads the one shared document without changing its visible URL
+  ---
+  duration_ms: 1.247916
+  ...
+# Subtest: a foreign edition query cannot fetch or write a host and retains only its own fallback
+ok 37 - a foreign edition query cannot fetch or write a host and retains only its own fallback
+  ---
+  duration_ms: 0.265125
+  ...
+# Subtest: foreign response preserves the readable entry and never writes returned content
+ok 38 - foreign response preserves the readable entry and never writes returned content
+  ---
+  duration_ms: 0.335125
+  ...
+# Subtest: same-origin wrong document preserves the readable entry and never writes returned content
+ok 39 - same-origin wrong document preserves the readable entry and never writes returned content
+  ---
+  duration_ms: 0.179584
+  ...
+# Subtest: redirect preserves the readable entry and never writes returned content
+ok 40 - redirect preserves the readable entry and never writes returned content
+  ---
+  duration_ms: 0.219917
+  ...
+# Subtest: non-HTML preserves the readable entry and never writes returned content
+ok 41 - non-HTML preserves the readable entry and never writes returned content
+  ---
+  duration_ms: 0.112
+  ...
+# Subtest: HTTP failure preserves the readable entry and never writes returned content
+ok 42 - HTTP failure preserves the readable entry and never writes returned content
+  ---
+  duration_ms: 0.125916
+  ...
+# Subtest: unrelated HTML preserves the readable entry and never writes returned content
+ok 43 - unrelated HTML preserves the readable entry and never writes returned content
+  ---
+  duration_ms: 0.248458
+  ...
+# Subtest: a pagehide during fetch prevents late document replacement and retires its listener
+ok 44 - a pagehide during fetch prevents late document replacement and retires its listener
+  ---
+  duration_ms: 0.695208
+  ...
+# Subtest: a stalled fetch expires into the same readable recovery page without document writes
+ok 45 - a stalled fetch expires into the same readable recovery page without document writes
+  ---
+  duration_ms: 1.366917
+  ...
+# Subtest: startup dialog owns keyboard/pad input without declaring boot ready
+ok 46 - startup dialog owns keyboard/pad input without declaring boot ready
+  ---
+  duration_ms: 2.818708
+  ...
+# Subtest: nested input ownership and boot failure retain fail-closed cleanup
+ok 47 - nested input ownership and boot failure retain fail-closed cleanup
+  ---
+  duration_ms: 1.319458
+  ...
+# Subtest: company notices retain a live message producer in the page and open dialog
+ok 48 - company notices retain a live message producer in the page and open dialog
+  ---
+  duration_ms: 1.208167
+  ...
+# Subtest: company player leaves only technical tokens outside the localization catalogs
+ok 49 - company player leaves only technical tokens outside the localization catalogs
+  ---
+  duration_ms: 29.954625
+  ...
+# Subtest: the company host keeps multiple read-only wins in exported progress without writing another tab’s store
+ok 50 - the company host keeps multiple read-only wins in exported progress without writing another tab’s store
+  ---
+  duration_ms: 5.48375
+  ...
+# Subtest: company pagehide uses real preference teardown APIs and preserves a cached page until final navigation
+ok 51 - company pagehide uses real preference teardown APIs and preserves a cached page until final navigation
+  ---
+  duration_ms: 2.303875
+  ...
+# Subtest: Home retires a staged mission and ignores its late abort or response without replacing the current run
+ok 52 - Home retires a staged mission and ignores its late abort or response without replacing the current run
+  ---
+  duration_ms: 2.84875
+  ...
+# Subtest: an active mission preparation still surfaces a real failure when Home did not cancel it
+ok 53 - an active mission preparation still surfaces a real failure when Home did not cancel it
+  ---
+  duration_ms: 0.783375
+  ...
+# Subtest: first-paint seed is generated from the exact admitted registry and shared migration parser
+ok 54 - first-paint seed is generated from the exact admitted registry and shared migration parser
+  ---
+  duration_ms: 85.60275
+  ...
+# Subtest: every admitted appearance paints exact paired tokens and frames before module execution
+ok 55 - every admitted appearance paints exact paired tokens and frames before module execution
+  ---
+  duration_ms: 40.955667
+  ...
+# Subtest: retained and current context pins paint their exact installed revision before runtime
+ok 56 - retained and current context pins paint their exact installed revision before runtime
+  ---
+  duration_ms: 14.380709
+  ...
+# Subtest: read-only startup matches runtime migration for new, existing, damaged and unavailable preferences
+ok 57 - read-only startup matches runtime migration for new, existing, damaged and unavailable preferences
+  ---
+  duration_ms: 2.41925
+  ...
+# Subtest: first-paint density, motion, legibility and cosmetic context use bounded canonical choices
+ok 58 - first-paint density, motion, legibility and cosmetic context use bounded canonical choices
+  ---
+  duration_ms: 1.903833
+  ...
+# Subtest: every production game, authoring and site entry seeds appearance before other scripts and styles
+ok 59 - every production game, authoring and site entry seeds appearance before other scripts and styles
+  ---
+  duration_ms: 86.336708
+  ...
+# Subtest: profile-owned players seed appearance without acquiring an auxiliary host lease
+ok 60 - profile-owned players seed appearance without acquiring an auxiliary host lease
+  ---
+  duration_ms: 1.370833
+  ...
+1..60
+# tests 60
+# suites 0
+# pass 60
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 3639.82825

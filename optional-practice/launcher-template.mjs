@@ -84,6 +84,17 @@ export function installOptionalLauncher(
   const entryURL = (value) => {
     const url = new URL(value.entry, value.scope);
     url.searchParams.set('lang', locale);
+    const family = query.get('appearanceFamily'),
+      revision = query.get('appearanceRevision');
+    if (
+      query.getAll('appearanceFamily').length === 1 &&
+      query.getAll('appearanceRevision').length === 1 &&
+      /^[a-z][a-z0-9-]{0,63}$/.test(family ?? '') &&
+      /^r[1-9][0-9]{0,8}$/.test(revision ?? '')
+    ) {
+      url.searchParams.set('appearanceFamily', family);
+      url.searchParams.set('appearanceRevision', revision);
+    }
     return url.href;
   };
   function render() {

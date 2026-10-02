@@ -1,5 +1,11 @@
 import * as THREE from './vendor/three.module.js';
 import { buildDroneVisual, createEnvironmentLight, setSurfaceQuality } from './world-visuals.mjs';
+import { resolveSimThemeProfile } from './world-themes.mjs';
+import {
+  createWorkshopMaterials,
+  disposeSimVisualGroup,
+  simCollectionIdForProfile,
+} from './world-visuals.mjs';
 
 /** A close inspection view. Appearance selections never modify flight physics. */
 export function mountDroneHangar({
@@ -8,6 +14,9 @@ export function mountDroneHangar({
   canvas,
   selector,
   onOpen = () => {},
+  getPresentation = () => ({}),
+  getCourse = () => ({}),
+  getQuality = () => 'balanced',
   window: win = globalThis.window,
 } = {}) {
   let renderer = null,
@@ -28,24 +37,10 @@ export function mountDroneHangar({
   };
   const disposeScene = () => {
     if (!scene) return;
-    const geometry = new Set(),
-      materials = new Set(),
-      textures = new Set();
-    scene.traverse((object) => {
-      if (object.geometry) geometry.add(object.geometry);
-      for (const item of Array.isArray(object.material) ? object.material : [object.material])
-        if (item) materials.add(item);
-    });
-    for (const g of geometry) g.dispose();
-    for (const m of materials) {
-      for (const value of Object.values(m)) if (value?.isTexture) textures.add(value);
-      m.dispose();
-    }
-    for (const texture of textures) texture.dispose();
+    disposeSimVisualGroup(scene);
     scene.environment = null;
     environment?.dispose();
     environment = null;
-    scene.clear();
     drone = null;
     camera = null;
     scene = null;
@@ -56,10 +51,15 @@ export function mountDroneHangar({
       renderer.setPixelRatio(Math.min(2, win.devicePixelRatio ?? 1));
       renderer.outputColorSpace = THREE.SRGBColorSpace;
       renderer.toneMapping = THREE.ACESFilmicToneMapping;
+      renderer.toneMappingExposure = 1.08;
     }
     disposeScene();
     scene = new THREE.Scene();
-    scene.background = new THREE.Color(0x14292f);
+    const profile = resolveSimThemeProfile(getCourse(), getPresentation()),
+      collectionId = simCollectionIdForProfile(profile),
+      quality = getQuality(),
+      maxAnisotropy = renderer.capabilities.getMaxAnisotropy();
+    scene.background = new THREE.Color(collectionId ? profile.palette.wall : 0x14292f);
     environment = createEnvironmentLight(renderer, {
       sky: 0x9baebb,
       ground: 0x253a3d,
@@ -72,7 +72,7 @@ export function mountDroneHangar({
     const key = new THREE.DirectionalLight(0xffffff, 4);
     key.position.set(-1, 2, -2);
     scene.add(key);
-    const rim = new THREE.DirectionalLight(0x8be1c4, 3);
+    const rim = new THREE.DirectionalLight(collectionId ? profile.palette.warm : 0x8be1c4, 3);
     rim.position.set(1, 0, 1);
     scene.add(rim);
     drone = new THREE.Group();
@@ -83,15 +83,26 @@ export function mountDroneHangar({
       parent.add(object);
       return object;
     };
-    buildDroneVisual({ parent: drone, mesh, material, kind: selector.value, quality: 'high' });
+    buildDroneVisual({
+      parent: drone,
+      mesh,
+      material,
+      kind: selector.value,
+      profile,
+      quality,
+      maxAnisotropy,
+    });
+    const kit = collectionId
+      ? createWorkshopMaterials({ material, quality, maxAnisotropy, collectionId })
+      : null;
     const paints = new Set();
     drone.traverse((item) => {
       if (item.material) paints.add(item.material);
     });
-    setSurfaceQuality(paints, 'high', renderer.capabilities.getMaxAnisotropy());
+    setSurfaceQuality(paints, quality, maxAnisotropy);
     const pad = new THREE.Mesh(
       new THREE.CylinderGeometry(0.28, 0.3, 0.025, 64),
-      material(0x2c4349, { metalness: 0.4, roughness: 0.4 }),
+      kit ? kit.paint('concrete') : material(0x2c4349, { metalness: 0.4, roughness: 0.4 }),
     );
     pad.position.y = -0.065;
     scene.add(pad);

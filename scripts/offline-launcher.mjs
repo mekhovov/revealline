@@ -4,6 +4,23 @@ import { createHash } from 'node:crypto';
 import { editionAppIdentity } from '../game/edition-context.mjs';
 
 export const LAUNCHER_FILE_LIMIT = 128 * 1024;
+// The stable launcher needs the read-only first-paint seed and its exact CSS/font
+// closure, not the application theme host, preferences writer or content model.
+export const LAUNCHER_APPEARANCE_FILES = Object.freeze([
+  'presentation/theme-bootstrap.mjs',
+  'presentation/industrial-workshop.css',
+  'ui/field-kit-fonts.css',
+  'ui/brand-identity.css',
+  'ui/art/identity/fpv-line/icon-192.png',
+  'ui/fonts/departure-mono/DepartureMono-Regular.woff2',
+  'ui/fonts/departure-mono/LICENSE',
+  'ui/fonts/field-kit/exo2-ui-400-600.woff2',
+  'ui/fonts/field-kit/handjet-display-600.woff2',
+  'ui/fonts/field-kit/ibm-plex-mono-500.woff2',
+  'ui/fonts/field-kit/Exo2-OFL.txt',
+  'ui/fonts/field-kit/Handjet-OFL.txt',
+  'ui/fonts/field-kit/IBMPlexMono-OFL.txt',
+]);
 // Deliberately finite shared menu closure. No gameplay content, art, soundtrack
 // or complete content localization registry belongs in the stable launcher.
 export const LAUNCHER_NAVIGATION_FILES = Object.freeze([
@@ -305,7 +322,22 @@ export async function addOfflineLauncher(root, entries, version, options = {}) {
     ['edition-context.mjs', 'game/edition-context.mjs'],
     ['profile-writer.mjs', 'game/profile-writer.mjs'],
   ])
-    add(target, await fs.readFile(path.join(root, source)));
+    add(
+      target,
+      target === 'index.html'
+        ? Buffer.from(
+            (await fs.readFile(path.join(root, source), 'utf8')).replaceAll(
+              '../presentation/',
+              './presentation/',
+            ),
+          )
+        : await fs.readFile(path.join(root, source)),
+    );
+  if (
+    launcher.find((entry) => entry.name === 'app/index.html').bytes.includes('theme-bootstrap.mjs')
+  )
+    for (const file of LAUNCHER_APPEARANCE_FILES)
+      add(file, await fs.readFile(path.join(root, 'game', file)));
   for (const [file, bytes] of await buildLauncherNavigationFiles(root)) add(file, bytes);
   for (const size of [180, 192, 512])
     add(
