@@ -1,5 +1,7 @@
 # Reveal Line: completed work and remaining programme
 
+> **Historical review — 1 October:** use the [plain-language remaining work and priority choices](plan-priorities-2026-10-01.md). It updates merged/public/queued status, explains benefits and deferral costs, and distinguishes the proposed core-game-first refinement from the still-approved A → B → C order. The dated record below is preserved history.
+
 Reviewed 30 September 2026, 18:49 UTC. This is the current explanation and priority
 map for the character/game-feel and player-first plans. Earlier dated batch
 records remain evidence, not today's task list. The [daily register](plan-status-2026-09-30.md)

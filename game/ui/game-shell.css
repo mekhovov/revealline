@@ -65,7 +65,7 @@ dialog {
   border: 1px solid #425e78;
   border-radius: 2px;
   box-shadow: 0 20px 100px #000c;
-  max-height: calc(100dvh - 24px);
+  max-height: calc(var(--dialog-viewport-height, 100dvh) - 24px);
 }
 dialog::backdrop {
   background: #030710e8;
@@ -410,7 +410,7 @@ dialog textarea {
   text-shadow: 0 0 24px #72f0da;
 }
 .shell-missions {
-  width: min(940px, calc(100vw - 24px));
+  width: min(940px, calc(var(--dialog-viewport-width, 100vw) - 24px));
   padding: 24px;
 }
 .shell-dialog-heading {

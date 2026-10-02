@@ -103,10 +103,17 @@ p {
   min-height: 48px;
 }
 dialog {
+  inset: env(safe-area-inset-top, 0px) env(safe-area-inset-right, 0px)
+    env(safe-area-inset-bottom, 0px) env(safe-area-inset-left, 0px);
   color: inherit;
   background: #10231f;
-  width: min(50rem, calc(100vw - 1rem));
-  max-height: calc(100dvh - 1rem);
+  width: min(
+    50rem,
+    calc(100vw - env(safe-area-inset-left, 0px) - env(safe-area-inset-right, 0px) - 1rem)
+  );
+  max-height: calc(
+    100dvh - env(safe-area-inset-top, 0px) - env(safe-area-inset-bottom, 0px) - 1rem
+  );
   overflow: auto;
   border: 1px solid #a5bdaa;
   border-radius: 0.5rem;

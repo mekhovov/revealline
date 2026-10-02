@@ -99,6 +99,7 @@ async function setup(
     emptyMusic = false,
     fetchResponse,
     publicStyles,
+    creatorSource,
   } = {},
 ) {
   const original = await fixture(),
@@ -106,6 +107,11 @@ async function setup(
     store = createSoundtrackStore({ indexedDB: db.indexedDB, soundtrackCatalogue: !!publicStyles });
   const library = {
     ...original.library,
+    tracks: original.library.tracks.map((track) =>
+      creatorSource === undefined
+        ? track
+        : { ...track, rights: { ...track.rights, source: creatorSource } },
+    ),
     playlists: [
       {
         ...original.library.playlists[0],
@@ -311,6 +317,97 @@ test('Settings music text follows master immediately and remains coherent after 
     assert.deepEqual({ src: media.src, time: media.currentTime, plays: media.plays }, before);
     assert.equal(media.paused, false);
   }
+  assert.deepEqual(page.errors, []);
+});
+
+test('Solo playing banners and Audio summary expose creator links and clear them on a sourceless track', async (t) => {
+  const creatorSource = 'https://composer.example/album';
+  const { page } = await setup(t, { creatorSource });
+  page.$('settings-button').click();
+  page.$('settings-tab-audio').click();
+  await page.$('music-preview').onclick();
+  page.$('settings-master-mute').click();
+  const media = musicMedia(page),
+    mounts = ['game-now-playing-source', 'shell-now-playing-source', 'soundtrack-summary-source'];
+  assert.equal(media.paused, false);
+  assert.equal(media.muted, false);
+  for (const id of mounts) {
+    const link = page.$(id).querySelector('a');
+    assert.ok(link, id);
+    assert.equal(link.getAttribute('href'), creatorSource, id);
+    assert.equal(link.getAttribute('target'), '_blank', id);
+    assert.equal(link.getAttribute('rel'), 'noopener noreferrer', id);
+  }
+  const bannerLink = page.$('game-now-playing-source').querySelector('a');
+  media.emit('timeupdate');
+  assert.equal(page.$('game-now-playing-source').querySelector('a'), bannerLink);
+  await openStudio(page);
+  await page.$('soundtrack-pause').onclick();
+  const plays = media.plays;
+  page.$('soundtrack-summary-source').querySelector('a').click();
+  assert.equal(media.paused, true);
+  assert.equal(media.plays, plays, 'opening credits cannot restart paused music');
+  await page.$('soundtrack-next').onclick();
+  for (const id of mounts)
+    assert.equal(page.$(id).querySelector('a'), null, `${id} must remove the previous creator URL`);
+  assert.deepEqual(page.errors, []);
+});
+
+test('trusted Solo creator-link gestures cannot start, retry or restore music', async (t) => {
+  const { page } = await setup(t, {
+    creatorSource: 'https://composer.example/trusted-gesture',
+    audioPreferences: { musicEnabled: true },
+  });
+  const media = musicMedia(page);
+  await waitFor(() => !!media.src, 'The remembered recording is prepared');
+  // Landing labels sit outside both the Audio section and quick-control roots.
+  const landing = page.doc.createElement('span');
+  landing.setAttribute('data-landing-song', '');
+  page.doc.body.append(landing);
+  media.emit('timeupdate');
+  page.$('settings-button').click();
+  page.$('settings-tab-audio').click();
+  let attempts = 0,
+    rejectPlay = true;
+  const play = media.play.bind(media);
+  media.play = async () => {
+    attempts++;
+    if (rejectPlay) throw new DOMException('Gesture refused', 'NotAllowedError');
+    return play();
+  };
+  const creatorGestures = () => {
+    const link = landing.querySelector('a');
+    assert.ok(link?.closest('.music-creator-links'));
+    assert.equal(landing.parentNode, page.doc.body);
+    const nested = page.doc.createElement('span');
+    link.append(nested);
+    link.focus();
+    for (const type of ['pointerdown', 'touchstart', 'keydown', 'click'])
+      nested.emit(type, { isTrusted: true, key: 'Enter', code: 'Enter' });
+  };
+  creatorGestures();
+  assert.equal(attempts, 0, 'creator navigation is not a first menu playback gesture');
+  await page.$('music-preview').onclick();
+  await waitFor(
+    () => page.$('solo-quick-music-settings').textContent.includes('Choose Play music to retry'),
+    'Explicit playback reaches the blocked state',
+  );
+  assert.equal(attempts, 1);
+  rejectPlay = false;
+  creatorGestures();
+  assert.equal(attempts, 1, 'creator navigation cannot consume a blocked-playback retry');
+  assert.equal(media.paused, true);
+  page.doc.body.emit('pointerdown', { isTrusted: true });
+  await waitFor(() => !media.paused, 'An ordinary trusted gesture still retries listening');
+  page.win.emit('blur');
+  assert.equal(media.paused, true);
+  const beforeRestore = attempts;
+  creatorGestures();
+  assert.equal(attempts, beforeRestore, 'creator navigation cannot restore suspended music');
+  assert.equal(media.paused, true);
+  page.doc.body.emit('pointerdown', { isTrusted: true });
+  await waitFor(() => !media.paused, 'An ordinary trusted gesture still restores listening');
+  assert.equal(media.muted, false);
   assert.deepEqual(page.errors, []);
 });
 

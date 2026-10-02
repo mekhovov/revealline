@@ -1,0 +1,201 @@
+{
+  "format": "FPVRadioActionsBrowserEvidence.v1",
+  "createdAt": "2026-10-02T05:20:26.065Z",
+  "passed": true,
+  "checks": [
+    {
+      "name": "One physical Arm switch with mutually exclusive USB position buttons captures automatically",
+      "passed": true,
+      "milliseconds": 941,
+      "detail": {
+        "binding": {
+          "button": 1,
+          "threshold": 0.5,
+          "invert": false
+        }
+      }
+    },
+    {
+      "name": "Separate axis Arm keeps measured OFF/ON positions and survives save/reopen",
+      "passed": true,
+      "milliseconds": 1103,
+      "detail": {
+        "binding": {
+          "axis": 4,
+          "off": -1,
+          "on": 1
+        }
+      }
+    },
+    {
+      "name": "Momentary Reset press/hold/release captures without resetting flight",
+      "passed": true,
+      "milliseconds": 788,
+      "detail": {
+        "binding": {
+          "button": 5,
+          "threshold": 0.5,
+          "invert": false
+        }
+      }
+    },
+    {
+      "name": "Aliased inverse position of an existing action cannot silently create a conflict",
+      "passed": true,
+      "milliseconds": 938
+    },
+    {
+      "name": "Noisy resting axes and buttons do not create an Arm assignment",
+      "passed": true,
+      "milliseconds": 925
+    },
+    {
+      "name": "Cancel an unfinished switch capture without changing prior binding",
+      "passed": true,
+      "milliseconds": 819
+    },
+    {
+      "name": "Disconnect abandons capture and reconnect with ON held does not finish or arm",
+      "passed": true,
+      "milliseconds": 1059
+    },
+    {
+      "name": "Changing capture target cancels the previous action",
+      "passed": true,
+      "milliseconds": 1130
+    },
+    {
+      "name": "Imported verified:true profile persists as locally unverified after remount",
+      "passed": true,
+      "milliseconds": 423
+    },
+    {
+      "name": "Disposal during capture releases RAF and removes the mounted UI",
+      "passed": true,
+      "milliseconds": 748
+    },
+    {
+      "name": "Whole automatic guide: four axes, Arm pair, Reset, yaw confirmation and save without intermediate clicks",
+      "passed": true,
+      "milliseconds": 19490,
+      "detail": {
+        "clicks": 1,
+        "visited": [
+          {
+            "index": 0,
+            "axis": 2,
+            "phase": "positive"
+          },
+          {
+            "index": 1,
+            "axis": 3,
+            "phase": "positive"
+          },
+          {
+            "index": 2,
+            "axis": 1,
+            "phase": "positive"
+          },
+          {
+            "index": 3,
+            "axis": 0,
+            "phase": "positive"
+          },
+          {
+            "phase": "arm"
+          },
+          {
+            "phase": "reset"
+          },
+          {
+            "phase": "check"
+          }
+        ],
+        "channels": {
+          "roll": {
+            "axis": 0,
+            "min": -1,
+            "max": 1,
+            "center": 0.004,
+            "invert": false,
+            "deadZone": 0.02
+          },
+          "pitch": {
+            "axis": 1,
+            "min": -1,
+            "max": 1,
+            "center": 0.004,
+            "invert": false,
+            "deadZone": 0.02
+          },
+          "yaw": {
+            "axis": 3,
+            "min": -1,
+            "max": 1,
+            "center": 0.004,
+            "invert": false,
+            "deadZone": 0.02
+          },
+          "throttle": {
+            "axis": 2,
+            "min": -1,
+            "max": 1,
+            "center": null,
+            "invert": false,
+            "deadZone": 0
+          }
+        },
+        "switches": {
+          "arm": {
+            "button": 1,
+            "threshold": 0.5,
+            "invert": false
+          },
+          "pause": null,
+          "reset": {
+            "button": 5,
+            "threshold": 0.5,
+            "invert": false
+          }
+        }
+      }
+    },
+    {
+      "name": "Invalid existing action field fails safely and corrected capture still receives RAF",
+      "passed": true,
+      "milliseconds": 1774
+    },
+    {
+      "name": "Malformed capture sample is terminal until a new detector is explicitly created",
+      "passed": true,
+      "milliseconds": 0,
+      "detail": {
+        "terminalState": "error"
+      }
+    },
+    {
+      "name": "Delayed setup-file read cannot overwrite newer capture intent",
+      "passed": true,
+      "milliseconds": 679
+    },
+    {
+      "name": "Delayed file read after disposal leaves storage untouched",
+      "passed": true,
+      "milliseconds": 319
+    },
+    {
+      "name": "No uncaught browser errors during mounted checks",
+      "passed": true,
+      "milliseconds": 0
+    }
+  ],
+  "sources": {
+    "radio-setup.mjs": "d4c091a8539221e71e39a12436af45a681a21e13f5468b8b4ecccd1b4c05e7d6",
+    "radio-controls.mjs": "ec81c8b2d7cfe8586a7b73ef0887972019c7c1c39e64e6f32ea0d39437d7d4fb",
+    "radio-guide.mjs": "52685411b2099492a1bb26ffed12911c2a006fae971229a08147c0ddfd81a2b1",
+    "radio-profile.mjs": "f588fd5cda96ed9627a483f49ca843ace8d99a68fae42b0a4239c2cd0ab81933",
+    "radio-runtime.mjs": "3d908c7f6f1295fddacb952fadfc327206153248dbf5222ef31677eb4ff8f71b",
+    "radio-session.mjs": "98fdd029f1deb9eb6b51f2ae2f8fb5c441e2b3a7a2aca520a7e9ce5e267e80ef"
+  },
+  "scope": "Actual production mounted radio setup and runtime. Controlled Gamepad samples, real animation frames and waits, disposable memory storage. No physical USB transmitter, human acceptance or new unit-test coverage claim."
+}

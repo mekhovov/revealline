@@ -1,0 +1,113 @@
+{
+  "format": "FPVControlsLabBrowserEvidence.v1",
+  "status": "passed",
+  "checks": [
+    {
+      "name": "Initial guide stopped, live arm blocked",
+      "data": true
+    },
+    {
+      "name": "Held keyboard ↑ lifts separate preview",
+      "data": {
+        "height": 450,
+        "throttle": 0.6790000000000005
+      }
+    },
+    {
+      "name": "Right roll is independent and Acro tilt persists after keyup",
+      "data": {
+        "roll": 1113,
+        "pitch": 0
+      }
+    },
+    {
+      "name": "Real host remains paused and unchanged; preview earns no lesson progress",
+      "data": true
+    },
+    {
+      "name": "Escape stops without background catchup",
+      "data": true
+    },
+    {
+      "name": "Start clears preview and holds movement release barrier",
+      "data": {
+        "explicitStartCallbacks": 1
+      }
+    },
+    {
+      "name": "Controlled touch gimbal changes throttle; release keeps chosen throttle",
+      "data": true
+    },
+    {
+      "name": "Controlled D-pad right roll rotates preview",
+      "data": true
+    },
+    {
+      "name": "Controlled normalized radio input works while host source is keyboard",
+      "data": {
+        "pitch": 581,
+        "hostSource": "keyboard"
+      }
+    },
+    {
+      "name": "Mode 1–4 calibrated gimbal axis layouts",
+      "data": [
+        {
+          "mode": 1,
+          "axes": [
+            ["Pitch", "Yaw"],
+            ["Throttle", "Roll"]
+          ]
+        },
+        {
+          "mode": 2,
+          "axes": [
+            ["Throttle", "Yaw"],
+            ["Pitch", "Roll"]
+          ]
+        },
+        {
+          "mode": 3,
+          "axes": [
+            ["Pitch", "Roll"],
+            ["Throttle", "Yaw"]
+          ]
+        },
+        {
+          "mode": 4,
+          "axes": [
+            ["Throttle", "Roll"],
+            ["Pitch", "Yaw"]
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Radio disconnect stops; reconnect requires deliberate resume",
+      "data": true
+    },
+    {
+      "name": "Immediate fullscreen callback",
+      "data": {
+        "calls": 1
+      }
+    },
+    {
+      "name": "Ukrainian mode, source and fullscreen labels present",
+      "data": true
+    },
+    {
+      "name": "Focus loss cancels preview",
+      "data": true
+    },
+    {
+      "name": "Disposal clears UI and stops simulation",
+      "data": true
+    }
+  ],
+  "limitations": [
+    "Controlled browser keyboard/touch/radio samples are not physical hardware acceptance. Pointer capture is stubbed for synthetic touch events only.",
+    "Host is an independent paused real flight object; this harness does not execute the full World Studio score or controller lifecycle. Root player-page checks are separate.",
+    "Fullscreen callback verified here; actual browser fullscreen request is verified on the player page."
+  ]
+}
