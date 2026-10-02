@@ -1233,3 +1233,15 @@ existing saved calibration without rewriting it. The desktop/mobile switch
 cards and opaque scrolling header were inspected; no new hardware acceptance.
 Stack902's current open members begin at #932 and end at #944. Publication is
 ready as its next dependent member; upstream holds are preserved.
+
+### 2 October — guided radio setup published
+
+[#945](https://github.com/mekhovov/revealline/pull/945) is attached to this chat
+and appended after #944 through native stack902's API. Qualification commit:
+`6ed8c3b56817f826c2767ed86b3f21d531c3f79a`; frozen runtime stays bb16ba61e.
+Both local playtests are current and the reviewed-player radio setup is left
+open. CI, protected merging and public deployment remain external follow-up;
+no upstream member was retargeted and no existing hold was lifted. Next: inspect
+exact PR heads/checks before permitted protected publication, obtain physical
+Arm/Reset acceptance, and continue the independent R5 art backlog. Preserve R7
+unit-coverage deferral and all prior learning/content acceptance limitations.
