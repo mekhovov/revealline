@@ -1,0 +1,11 @@
+{
+  "format": "FPVWarehousePlayerEvidence.v1",
+  "createdAt": "2026-10-02T22:25:40.818Z",
+  "url": "http://127.0.0.1:8789/dist/fpv-warehouse-surfaces-playtest/optional-practice/fpv-worlds/index.html",
+  "playback": "\n  - paragraph: Moving freight\n  - button \"Menu\"\n  - generic: +\n  - generic: 0.0 m · 0 m/s · 52.0 s · ♥ 100\n  - strong: Flight ended\n  - status: Playback ended. Fly the challenge when you are ready.\n  - generic \"Yaw 0%, Throttle 0%\":\n  - generic \"Roll 0%, Pitch 0%\":\n  - heading \"Demonstration complete\" [level=2]\n  - paragraph: Watching does not change your completion, medals or playlist progress.\n  - button \"Fly this challenge\"\n  - button \"Watch again\"",
+  "consoleErrors": [],
+  "limitations": [
+    "Actual browser demonstration; no physical radio/mobile/Steam Deck or sustained performance acceptance."
+  ],
+  "ready": "\n  - paragraph: Moving freight\n  - button \"Menu\"\n  - button \"Arm / resume\"\n  - generic: +\n  - generic: 0.0 m · 0 m/s · 0.0 s · ♥ 100\n  - strong: 1/4 · Hold position\n  - status: Ready. Choose your controls, then arm.\n  - generic \"Yaw 0%, Throttle 0%\":\n    - generic: Yaw / Throttle\n    - status: 0% · held\n  - generic \"Roll 0%, Pitch 0%\":\n    - generic: Roll / Pitch"
+}

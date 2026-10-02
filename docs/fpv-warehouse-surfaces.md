@@ -75,3 +75,25 @@ replay receipt is still bound by exact input hashes, not claimed as a fresh reru
 Final production SHA256: renderer `2e0896fa2b5acc3b71a05b729e277b48f16aaa57b43b960c12406d495de88346`;
 world visuals `02eb4dc0c156316bf7634fad51d61365e48e4a5dac81ad62a032b1efc2e0172d`.
 Frozen package and publication evidence follow separately.
+
+## Frozen package and player
+
+Candidate `16a45583d98d9461f7f5d10b97dfe4f85c967e9f` passes all three optional
+package admissions, committed-input and ZIP-member verification, and two
+byte-identical builds. [Package receipt](evidence/fpv-warehouse-surfaces-package.json):
+Academy35files/545,596bytes; FPV68files/3,840,015bytes;
+World Studio100files/14,094,801bytes, within unchanged guards.
+[Packaged WebGL](evidence/fpv-warehouse-surfaces-browser-package.json) independently
+passes307 checks/159 image pairs with no captured console errors.
+
+[Actual player](evidence/fpv-warehouse-surfaces-player.json) completes Moving
+freight at52.0s with health100 and no captured errors, then opens a fresh
+attempt ready/paused at zero throttle. The dedicated Warehouse, normal reviewed
+player and continuous-school playtests include C4+C5 and use92files/13,937,482bytes;
+ZIP SHA256 `74b5128681f8cc3905f5dee518ec22734e183aa1b1814b07cb60f669eff9d793`.
+These localhost builds are available for feedback; publication is separate.
+
+Two package attempts hit local disk exhaustion before output creation. Removing
+superseded task-generated verification snapshots and a redundant old SIM-entry
+build restored space; source, handoffs, qualified archives and user playtests
+were preserved. The subsequent frozen package and browser qualification passed.

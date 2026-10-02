@@ -2004,3 +2004,52 @@ Keep C5 on a separate branch and out of ready #964. B physical TX15/iPhone/Steam
 Deck acceptance, D novice/experienced sessions, F creator/device-offline work,
 feedback-led G map growth and H/R7 unit coverage remain open. Catalogue counts
 remain 148 challenges / 14 worlds; visuals do not create extra levels.
+
+
+### C5 Warehouse ready checkpoint — 3 October 2026
+
+Main now contains capacity #963 (`ae4624f6e`) and Woodland #964
+(`fe6ff1b7a2585aa969b945d5fcb7699aa6b04460`). The independent Warehouse branch is
+`codex/fpv-warehouse-surfaces`, based on current main. Additive merge conflicts in
+surface constants, UV helpers and semantic dispatch were resolved preserving
+both C4 and C5; an independent CPU comparison confirms Warehouse stayed exact
+and all13 other environments including Woodland remain unchanged.
+
+C5 refines existing closed storage blocks with painted steel panels and six
+quiet bay numbers, and scales shell UVs in metres. School stacks/beams/dividers
+use plain regions of the same atlas. No new mesh, material or texture is
+allocated, and physical geometry/collision is exact. Label UVs add1,152bytes.
+No apparent shelf openings are painted into solid colliders. Catalogue remains
+148challenges/14worlds/178original-and-school demonstrations.
+
+Final runtime hashes: renderer
+`2e0896fa2b5acc3b71a05b729e277b48f16aaa57b43b960c12406d495de88346`; visuals
+`02eb4dc0c156316bf7634fad51d61365e48e4a5dac81ad62a032b1efc2e0172d`.
+Source and packaged actual WebGL each pass307checks/159image pairs. CPU passes76
+prior texture outputs,85preset cycles and96label-face orientation assertions.
+All18 Warehouse demonstrations replay over44,168ticks, without contacts or
+blocked actors. The prior178-proof results remain bound to exact inputs, not a
+new broad rerun. Actual Moving freight playback finishes52.0s/health100; the
+player is left ready atzero throttle with no captured errors.
+
+Frozen candidate `16a45583d98d9461f7f5d10b97dfe4f85c967e9f` passes allthree
+optional admissions, committed-input/ZIP validation and two identical builds.
+World Studio is100files/14,094,801bytes. Dedicated/normal reviewed/continuous
+school local playtests use92files/13,937,482bytes and ZIP
+`74b5128681f8cc3905f5dee518ec22734e183aa1b1814b07cb60f669eff9d793`.
+Evidence is linked from `docs/fpv-warehouse-surfaces.md`. Two initial package
+attempts exhausted local disk; obsolete task-generated snapshots and a redundant
+old SIM-entry build were removed, then qualification passed. No user assets,
+handoffs, limits or release authority changed.
+
+Publish this focused independent PR against main. No native stack is needed.
+Do not claim C4/C5 public availability from this checkpoint: public marker and
+actual public launch still need verification. Required CI/reviews remain their
+own gates; do not bypass or repeatedly poll unchanged external checks.
+
+**Next concrete item: C6 Stadium** static event-display and stand surfaces, then
+Container yard/Garage. Never invent live scoreboard results. Coordinate narrow
+UV/surface changes beneath Themes #955's material factories. B actual TX15,
+iPhone and Steam Deck, D unfamiliar-player sessions, F creator/device-offline,
+feedback-led G maps and H/R7 deferred unit coverage remain open. No new physical
+acceptance, sustained FPS or complete production-art claim is made.
