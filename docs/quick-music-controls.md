@@ -1,12 +1,12 @@
 # Quick music controls
 
-Music can be controlled without opening Settings or the Music Studio.
+Music transport lives in **Settings → Audio**. The normal landing keeps only passive song information and Sound on/off.
 
 - **B** plays or pauses music.
 - **N** selects the next song.
-- The main menu and pause menu have **Play music / Pause music** and **Next song** buttons, plus the current song title and artist.
-- Touch players can pause the game and tap either music button.
-- Controller players can open Pause, navigate with the D-pad or stick, and confirm normally. Resume remains the initial pause-menu action.
+- **Settings → Audio** has **Previous**, **Play music / Pause music** and **Next song**, plus the current song title and artist.
+- Solo's compact Pause keeps **Next song**; open Settings from Pause for the full transport. Resume remains the initial pause-menu action.
+- Keyboard, touch and controller players reach the same Audio controls. Late music initialization does not add new actions to the landing.
 
 Music Pause does not pause a flight or mute its sound effects. Next while music is paused changes the selected song and leaves music paused. Existing mute and volume settings remain unchanged. If browser permission blocks playback, choose Play music to retry.
 

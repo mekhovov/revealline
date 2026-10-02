@@ -1,0 +1,114 @@
+{
+  "format": "revealline-soundtrack-batch-rights.v1",
+  "batchId": "metal-next-20260930",
+  "tracks": [
+    {
+      "id": "builtin.catalog.davidkbd.solar-storm",
+      "sha256": "f970376312c518988ce53f963432c2bd86b039655a80ca0118a33bf2a3515fec",
+      "bytes": 7234081,
+      "license": "CC BY 4.0 International",
+      "licenseURL": "https://creativecommons.org/licenses/by/4.0/",
+      "sourceURL": "https://davidkbd.itch.io/interstellar-vol2-edm-metal-music-pack",
+      "credit": "Solar Storm by David KBD. CC BY 4.0: https://creativecommons.org/licenses/by/4.0/. Source: https://davidkbd.itch.io/interstellar-vol2-edm-metal-music-pack. Changes: normalized 256 kb/s MP3 from native OGG.",
+      "reviewedBy": "Codex retained source/licence verification",
+      "reviewedAt": "2026-09-30T17:07:21.772Z",
+      "evidence": {
+        "path": "authoring/library/soundtrack-batches/metal-next-20260930/retained/67990cbef61d37d4641f894ce02b1dcc05501a49226b74a8c5d09a01363de4f8.json",
+        "bytes": 1726,
+        "sha256": "67990cbef61d37d4641f894ce02b1dcc05501a49226b74a8c5d09a01363de4f8"
+      },
+      "contentId": "unknown",
+      "contentIdEvidence": null
+    },
+    {
+      "id": "builtin.catalog.davidkbd.galactic-battle",
+      "sha256": "263567383813e1cfa75952436e1eb9cbfa2556a73d60499da0cccb0a5f0c3343",
+      "bytes": 7243276,
+      "license": "CC BY 4.0 International",
+      "licenseURL": "https://creativecommons.org/licenses/by/4.0/",
+      "sourceURL": "https://davidkbd.itch.io/interstellar-vol2-edm-metal-music-pack",
+      "credit": "Galactic Battle by David KBD. CC BY 4.0: https://creativecommons.org/licenses/by/4.0/. Source: https://davidkbd.itch.io/interstellar-vol2-edm-metal-music-pack. Changes: normalized 256 kb/s MP3 from native OGG.",
+      "reviewedBy": "Codex retained source/licence verification",
+      "reviewedAt": "2026-09-30T17:07:21.772Z",
+      "evidence": {
+        "path": "authoring/library/soundtrack-batches/metal-next-20260930/retained/c35f267fc52d4e272a1b32a54b1fb6ed19b5296bcb07a15dc5d8b96292de8652.json",
+        "bytes": 1742,
+        "sha256": "c35f267fc52d4e272a1b32a54b1fb6ed19b5296bcb07a15dc5d8b96292de8652"
+      },
+      "contentId": "unknown",
+      "contentIdEvidence": null
+    },
+    {
+      "id": "builtin.catalog.davidkbd.orbital-assault",
+      "sha256": "89c01c9f646c48bd6a1656bfa45a4b5af28a766b1d5f155f104a7902f628b5d9",
+      "bytes": 5954290,
+      "license": "CC BY 4.0 International",
+      "licenseURL": "https://creativecommons.org/licenses/by/4.0/",
+      "sourceURL": "https://davidkbd.itch.io/interstellar-vol2-edm-metal-music-pack",
+      "credit": "Orbital Assault by David KBD. CC BY 4.0: https://creativecommons.org/licenses/by/4.0/. Source: https://davidkbd.itch.io/interstellar-vol2-edm-metal-music-pack. Changes: normalized 256 kb/s MP3 from native OGG.",
+      "reviewedBy": "Codex retained source/licence verification",
+      "reviewedAt": "2026-09-30T17:07:21.772Z",
+      "evidence": {
+        "path": "authoring/library/soundtrack-batches/metal-next-20260930/retained/6faa4fdc9f6e7bc2261560b8be4411623dab4aa3c5a5a62285643ab9e10a5c18.json",
+        "bytes": 1742,
+        "sha256": "6faa4fdc9f6e7bc2261560b8be4411623dab4aa3c5a5a62285643ab9e10a5c18"
+      },
+      "contentId": "unknown",
+      "contentIdEvidence": null
+    },
+    {
+      "id": "builtin.catalog.davidkbd.mutilations-melody",
+      "sha256": "00bcd6d67615f6dfa51cd1e03361a3fc8de7a742aec1ca9336ed56bfe231228c",
+      "bytes": 4264899,
+      "license": "CC BY 4.0 International",
+      "licenseURL": "https://creativecommons.org/licenses/by/4.0/",
+      "sourceURL": "https://davidkbd.itch.io/purgatory-vol-3-extreme-metal-music-pack",
+      "credit": "Mutilation's Melody by David KBD. CC BY 4.0: https://creativecommons.org/licenses/by/4.0/. Source: https://davidkbd.itch.io/purgatory-vol-3-extreme-metal-music-pack. Changes: normalized 256 kb/s MP3 from native OGG.",
+      "reviewedBy": "Codex retained source/licence verification",
+      "reviewedAt": "2026-09-30T17:07:21.772Z",
+      "evidence": {
+        "path": "authoring/library/soundtrack-batches/metal-next-20260930/retained/145e9fdc29031e34edb8003268e9cdab931cbb2c5b1c0caf23f392c60acd13d3.json",
+        "bytes": 1721,
+        "sha256": "145e9fdc29031e34edb8003268e9cdab931cbb2c5b1c0caf23f392c60acd13d3"
+      },
+      "contentId": "unknown",
+      "contentIdEvidence": null
+    },
+    {
+      "id": "builtin.catalog.davidkbd.bone-grinders-ballad",
+      "sha256": "e8c8670b02b6322c19e37ac993a7713a631af93a0bb997a0ef9c1e75c926ea04",
+      "bytes": 4015795,
+      "license": "CC BY 4.0 International",
+      "licenseURL": "https://creativecommons.org/licenses/by/4.0/",
+      "sourceURL": "https://davidkbd.itch.io/purgatory-vol-3-extreme-metal-music-pack",
+      "credit": "Bone Grinder's Ballad by David KBD. CC BY 4.0: https://creativecommons.org/licenses/by/4.0/. Source: https://davidkbd.itch.io/purgatory-vol-3-extreme-metal-music-pack. Changes: normalized 256 kb/s MP3 from native OGG.",
+      "reviewedBy": "Codex retained source/licence verification",
+      "reviewedAt": "2026-09-30T17:07:21.772Z",
+      "evidence": {
+        "path": "authoring/library/soundtrack-batches/metal-next-20260930/retained/06a79d16e23cade73c00ebecdfc63a7d71b750f531fa934ebc9e5a4319c4a56a.json",
+        "bytes": 1729,
+        "sha256": "06a79d16e23cade73c00ebecdfc63a7d71b750f531fa934ebc9e5a4319c4a56a"
+      },
+      "contentId": "unknown",
+      "contentIdEvidence": null
+    },
+    {
+      "id": "builtin.catalog.davidkbd.city-limits-crash",
+      "sha256": "7cc21044e1c8b23b9e71af8bf5a9d143ca8de8b6e8898fe930bc78811493a442",
+      "bytes": 3330342,
+      "license": "CC BY 4.0 International",
+      "licenseURL": "https://creativecommons.org/licenses/by/4.0/",
+      "sourceURL": "https://davidkbd.itch.io/reckless-vol-2-punk-metal-music-pack",
+      "credit": "City Limits Crash by David KBD. CC BY 4.0: https://creativecommons.org/licenses/by/4.0/. Source: https://davidkbd.itch.io/reckless-vol-2-punk-metal-music-pack. Changes: normalized 256 kb/s MP3 from native OGG.",
+      "reviewedBy": "Codex retained source/licence verification",
+      "reviewedAt": "2026-09-30T17:07:21.772Z",
+      "evidence": {
+        "path": "authoring/library/soundtrack-batches/metal-next-20260930/retained/7928ed5130d2a95fc45248d68fe36992e149c914c168352e3b86f930db59cdd8.json",
+        "bytes": 1709,
+        "sha256": "7928ed5130d2a95fc45248d68fe36992e149c914c168352e3b86f930db59cdd8"
+      },
+      "contentId": "unknown",
+      "contentIdEvidence": null
+    }
+  ]
+}

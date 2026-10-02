@@ -1,11 +1,81 @@
 # Levels: current-main restoration and remaining plan — 30 September 2026
 
+> **Current detailed review:** [completed work, remaining items, priorities and explanations](levels-plan-review-2026-09-30.md).
+> PR820, PR829 and PR860 are merged; the observed continuous Pages build includes
+> main `09a43d833`. The named release, default-content promotion and final balance
+> acceptance remain separate. The checkpoint and queue below are preserved history.
+
+## Current checkpoint: preset-route authoring
+
+This section supersedes the delivery and queue statements in the historical
+snapshot below. The owned successor branch is
+`codex/levels-preset-routes-20260930`, rebased onto main
+`5e23fa8a62accf7a719cca5dd45c0702b52d37a5`.
+
+### Completed source and recorded evidence
+
+- [PR820](https://github.com/mekhovov/revealline/pull/820) is merged as
+  `00f4fc7750`: the v38 Cooling loop restoration, registry/archive/Studio access
+  and six original complete-route strategies are now on main. The earlier
+  missing-integration finding below is historical, not a current blocker.
+- [PR829](https://github.com/mekhovov/revealline/pull/829) is merged as
+  `b77fe6a9d2`: three additional Standard routes extend seed/steering coverage.
+  Their [recorded checks](verification/pressure-corridor-expanded-routes-2026-09-30.md)
+  predate the new focused-suite waiver; they have not been rerun for this batch.
+- Four further complete legal routes were observed during bounded authoring:
+  Gentle Cooling loop and Switchback with immediate steering, plus Gentle and
+  Expert Pressure ladder with Grid steering, all at seed 1. See the
+  [preset receipts and limitations](verification/pressure-corridor-preset-routes-2026-09-30.md).
+  These are observed Solo clears, not four passed regression tests.
+
+### Current successor and delivery limits
+
+[PR860](https://github.com/mekhovov/revealline/pull/860) adds only a new route fixture, its regression assertions and
+documentation to the existing **v0.150.0** intake. Historical recipes/goldens,
+geometry, enemies, rules, assets and player data are untouched. Solo/Versus still
+defaults to **v25**; candidate qualification does not promote v38 by itself.
+
+Under the [temporary policy](focused-test-waiver-20260930.md), automated suites,
+including the newly authored focused, replay and actual-Versus assertions, are
+**WAIVED_SKIPPED_NOT_PASSED**. A bounded Pressure authoring probe observed replay
+agreement, but that is not execution of the new regression cohort or paired
+Versus coverage. Source, validation, build, provenance, release integrity and
+public startup requirements remain separate; this lane does not waive them.
+
+Merge is not publication. The coordinator's fresh GitHub metadata check still
+lists **v0.142.3**, published 29 September at 01:34:19 UTC. This is not a claim
+that v0.150.0 or these route changes are publicly accepted. The publisher owns the
+remaining frozen-build/Pages delivery. No production, physical-device or human
+play verification is added by these authoring probes.
+
+### Remaining work and effort ranges
+
+| Priority | Remaining item                                                | Why it remains / next bounded result                                                                                                                                                                                                             | Indicative effort                                                                   |
+| -------- | ------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ----------------------------------------------------------------------------------- |
+| 1        | Deliver PR860 through the existing release train              | Source reviewed, committed and pushed; milestone 57/v0.150.0 assigned. Hosted checks, integration and immutable publication remain publisher-owned.                                                                                              | Source preparation complete; publication ETA depends on hosted gates and the queue. |
+| 2        | Expert Cooling loop and Switchback                            | Neither bounded pass established a full clear. Cooling's latest partial route remained running at tick 2850 with 230 cells and no loss; this is not completion. Investigate legal approaches, not map or golden changes merely to force success. | 2–6 hours per bounded authoring pass; stop and report unresolved cases.             |
+| 3        | Missing full-route controls and seeds                         | First-return matrices are not complete clears. Standard Grid remains open for Cooling/Switchback; Gentle/Expert opposite steering and additional seeds remain incomplete.                                                                        | 1–3 working days in small evidence batches, re-estimated after each batch.          |
+| 4        | Current-edition mastery, cleanup and useful erosion decisions | Descriptive goals are not implemented awards. Review early objective completion, long safe travel and whether repairs or alternative returns create meaningful choices.                                                                          | 1–2 working days of review; any product correction gets its own bounded estimate.   |
+| 5        | Next cultural/spatial and Team batches                        | Continue distinct Ukrainian ornament route decisions and complementary Team captures, preserving previous editions. These four receipts do not qualify other missions.                                                                           | 2–4 working days per small reviewed batch; assets only where necessary.             |
+| 6        | Original P13–P15 qualification                                | Whole-Journey pacing, accessibility/performance and human/device acceptance remain open. Automated feasibility cannot establish fairness, readability or enjoyment.                                                                              | Separate 2–4-day technical workstreams plus tester/device availability.             |
+
+These are effort ranges, not publication promises. Expert's faster extra keeper
+and shorter lane windows are real differences; unsuccessful copied timings do
+not establish impossibility. No new blanket speed increase, compulsory bonus,
+mastery award or default promotion is included in this test/documentation batch.
+
+## Historical restoration and morning queue snapshot
+
+Everything below retains the earlier observations and receipts for auditability.
+Its then-current main, open PRs, integration tasks and release metadata are not a
+live queue. Use the current checkpoint above for the superseding source status.
+
 Follow-on implementation: [three additional complete routes](verification/pressure-corridor-expanded-routes-2026-09-30.md)
 extend seed and steering coverage on a separate successor branch, rebased onto
 main `4d9d7023`. PR820 remains the unchanged, release-targeted restoration input.
 The additional evidence does not complete all-preset or human qualification.
 
-## Current delivery, not historical PR status
+## Historical delivery snapshot
 
 Latest accepted main inspected for this batch is
 `451b82dc13dc8a8545ff964ffb724d3d756ac62a` (#816). The shared primary checkout

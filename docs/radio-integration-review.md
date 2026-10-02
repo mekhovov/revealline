@@ -1,6 +1,10 @@
 # Radio integration review
 
-## Current delivery checkpoint — 30 September 2026
+For current phase status, priorities and acceptance criteria, use the
+[controller, radio and FPV delivery plan](controller-radio-plan.md).
+The checkpoints below preserve historical evidence and do not qualify later merges.
+
+## Historical delivery checkpoint — 30 September 2026
 
 Reviewed main: `908bc6b08`. The controller/radio and bundled FPV implementation
 entered main through [PR #797](https://github.com/mekhovov/revealline/pull/797);
@@ -15,6 +19,12 @@ page has an explicit head, and the current `iosHTMLPolicy` staging transform
 accepts both that page and `optional-practice/civilian-fpv/index.html`. This
 source-policy validation does not certify a complete staged distribution,
 Xcode compilation, native launch or physical controller access in WKWebView.
+
+The subsequent [native staging checkpoint](verification/radio-native-staging-20260930.md)
+closes another explicit-head problem in sound credits and completes a current
+web build. Full native staging is now blocked by the existing 768 MiB inventory
+limit; [issue #865](https://github.com/mekhovov/revealline/issues/865) owns that
+capacity decision. It is not a native runtime or device pass.
 
 ### Remaining boundaries
 

@@ -13,6 +13,8 @@ import { PRACTICE_COPY } from './copy.mjs';
 import { preparePracticeOffline, removePracticeOffline } from './offline.mjs';
 
 export function mountCivilianPractice({ document: doc, window: win }) {
+  const launchLocale = win.location?.href && new URL(win.location.href).searchParams.get('lang');
+  if (launchLocale === 'en' || launchLocale === 'uk') setLocale(launchLocale);
   const $ = (id) => doc.getElementById(id);
   const tr = (key) => (PRACTICE_COPY[getLocale()] ?? PRACTICE_COPY.en)[key];
   let catalogue = validatePracticeCatalogue(CIVILIAN_PRACTICE_CATALOGUE),

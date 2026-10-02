@@ -21,6 +21,7 @@ import { inspectPackLibraryMetadata, PACK_LIBRARY_VERSION } from '../packs.mjs';
 import { createCouchChapterInstaller } from '../couch/couch-chapter-install.mjs';
 import { loadOptionalCatalog } from '../optional-chapters.mjs';
 import { createSpatialNextEditionSources } from './spatial-next-editions.mjs';
+import { isIncludedBundledMission } from './included-bundled-pack.mjs';
 
 /** Read-only remote browsing, with deliberate verified chapter preparation.
  * Compiler-qualified Journey and inspected installed metadata grant an exact
@@ -348,7 +349,11 @@ async function installedSources({
               };
         return pack
           ? { state: 'ready' }
-          : { state: 'download', bytes: row.download?.bytes ?? row.sourceFile.bytes };
+          : {
+              state: 'download',
+              bytes: row.download?.bytes ?? row.sourceFile.bytes,
+              ...(isIncludedBundledMission(row) ? { included: true } : {}),
+            };
       },
       availabilityCustom() {
         return state().ready

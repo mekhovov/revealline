@@ -1,0 +1,793 @@
+<!doctype html>
+<html lang="en">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>FPV graphics verification</title>
+  <style>
+    :root {
+      color-scheme: dark;
+      font: 16px system-ui;
+      background: #071527;
+      color: #e3efe9;
+    }
+    body {
+      margin: 24px;
+      max-width: 1180px;
+    }
+    h1 {
+      font-size: 24px;
+    }
+    p {
+      max-width: 85ch;
+      line-height: 1.5;
+    }
+    button,
+    select {
+      font: inherit;
+      min-height: 44px;
+      padding: 8px 16px;
+      color: inherit;
+      background: #15334b;
+      border: 1px solid #639591;
+      border-radius: 8px;
+    }
+    button:disabled {
+      opacity: 0.5;
+    }
+    label {
+      display: inline-flex;
+      gap: 8px;
+      align-items: center;
+      margin: 4px 12px 4px 0;
+    }
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin: 16px 0;
+    }
+    #viewport {
+      width: min(960px, 100%);
+      height: 480px;
+      background: #102030;
+      border: 1px solid #466;
+    }
+    canvas {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+    #status {
+      min-height: 2em;
+      color: #c6e9a8;
+    }
+    pre {
+      padding: 16px;
+      background: #0b1e32;
+      overflow: auto;
+      max-height: 650px;
+      font: 12px/1.45 monospace;
+      white-space: pre-wrap;
+    }
+    details {
+      margin: 16px 0;
+    }
+    small {
+      color: #a6bcc6;
+    }
+  </style>
+  <h1>FPV graphics verification</h1>
+  <p>
+    Uses the actual simulator renderer, imported scenery and physics snapshots. Checks all eight
+    worlds, three graphics presets and FPV/chase/overview views over three rounds. Resource counts
+    measure renderer-owned objects, not GPU memory bytes, frame rate or hardware suitability.
+  </p>
+  <p><small id="binding"></small></p>
+  <div class="actions">
+    <button id="run">Run checks</button><button id="download" disabled>Download receipt</button>
+  </div>
+  <div>
+    <label
+      >World
+      <select id="world"></select
+    ></label>
+    <label
+      >Quality
+      <select id="quality">
+        <option value="low">Performance</option>
+        <option value="balanced" selected>Balanced</option>
+        <option value="high">Quality</option>
+      </select></label
+    >
+    <label
+      >View
+      <select id="view">
+        <option value="overview">Overview</option>
+        <option value="chase">Chase</option>
+        <option value="fpv">FPV</option>
+      </select></label
+    >
+    <label
+      >Drone
+      <select id="drone">
+        <option>racer</option>
+        <option>pixel</option>
+        <option>utility</option>
+      </select></label
+    >
+    <button id="preview">Render selected</button>
+  </div>
+  <p id="status" role="status">Ready. Leave this tab visible while checks run.</p>
+  <div id="viewport"><canvas id="canvas" aria-label="Actual FPV renderer output"></canvas></div>
+  <details open>
+    <summary>Verification receipt</summary>
+    <pre id="receipt">No checks run.</pre>
+  </details>
+  <script type="module">
+    const SOURCE = {
+      sourceHead: '9fe9b3dde238fa47f52bc97a1929da439c1f2a46',
+      sourceTree: 'ef23ab6180ecde596a796778ad5f51cb4eeb2ac7',
+      sourceFiles: {
+        '/optional-practice/civilian-fpv/renderer.mjs':
+          'a4f0276368c2638cc10e3367799ef84bdcd3981c1fd23415c343d6c2162ffc4f',
+        '/optional-practice/civilian-fpv/world-visuals.mjs':
+          'f1c01a79752f6beff10a94c85adcd0e89231cccf661314b2524dc37f2a5f7f83',
+        '/optional-practice/civilian-fpv/world-assets.mjs':
+          '4c1bfa79263bf08aa3f0c6809035d28e2b8c43a80b3bfa437ebbdffd7aa44f0f',
+        '/optional-practice/civilian-fpv/world-catalogue.mjs':
+          '1e722ace5004b1fd3afbbd34e3c38b0c8b2800c225e419204f7dbb55ce51717c',
+        '/optional-practice/civilian-fpv/catalogue.mjs':
+          '98338353d17eb585414538c9905040752fd5cd6699c48b17fa1706832b750997',
+        '/optional-practice/civilian-fpv/model.mjs':
+          'c8c562a61ecab4c1d6fdc60ec3ddc72a011b8a9a0c4c629450095103b0a976af',
+        '/optional-practice/civilian-fpv/world-model.mjs':
+          '348642a47e43f1cb621858d87d1584a7546c301230b4ac8ebf0707f29cc8b49a',
+        '/optional-practice/civilian-fpv/world-collision.mjs':
+          '2899c7c84f9eae14b9a3434f585a8e873f4a1361e8f3ce4026ef27f44bdeef32',
+        '/optional-practice/civilian-fpv/math.mjs':
+          '555c8b6ea170b46992133507d2a3d867f06185bca060239cab7db9c9b87f9f98',
+        '/optional-practice/civilian-fpv/radio-profile.mjs':
+          '75944a7c621d087618eae009b7daf3482cee4196df48f1843e540918eddb793a',
+        '/optional-practice/civilian-fpv/vendor/three.module.js':
+          '9052042d676cb0fdc1ddfefe193053f34b7ac0513a616fdac4535d49987812ea',
+        '/optional-practice/civilian-fpv/vendor/three.core.js':
+          '9edde002b066a9a05676a6127f67735b62baf399bdea529f2f7e31657da769e6',
+      },
+    };
+    const $ = (id) => document.getElementById(id);
+    const qualityNames = ['low', 'balanced', 'high'];
+    const views = ['fpv', 'chase', 'overview'];
+    const pauseFrame = () => new Promise(requestAnimationFrame);
+    const deadline = (promise, label, milliseconds = 30000) => {
+      let timer;
+      return Promise.race([
+        promise,
+        new Promise((_, reject) => {
+          timer = setTimeout(() => reject(new Error(label + ' timed out')), milliseconds);
+        }),
+      ]).finally(() => clearTimeout(timer));
+    };
+    const copy = (value) => structuredClone(value);
+    let runtime = null,
+      flight = null,
+      receipt = null,
+      busy = false,
+      modules = null;
+    const status = (text) => {
+      $('status').textContent = text;
+    };
+    const publish = () => {
+      $('receipt').textContent = JSON.stringify(receipt, null, 2);
+      $('download').disabled = !receipt;
+    };
+    const assert = (condition, message) => {
+      if (!condition) throw new Error(message);
+    };
+    function record(name, passed, details = {}) {
+      const row = { name, passed, ...details };
+      receipt.checks.push(row);
+      publish();
+      return row;
+    }
+    function resourceCounts(value) {
+      return {
+        registeredGeometries: value.registered.geometries,
+        registeredMaterials: value.registered.materials,
+        registeredTextures: value.registered.textures,
+        gpuGeometries: value.renderer.geometries,
+        gpuTextures: value.renderer.textures,
+        shaderPrograms: value.renderer.programs,
+      };
+    }
+    function disposeRuntime() {
+      flight?.dispose?.();
+      flight = null;
+      runtime?.dispose();
+      const resources = runtime?.resources();
+      runtime = null;
+      return resources;
+    }
+    function createRuntime() {
+      const canvas = document.createElement('canvas');
+      canvas.id = 'canvas';
+      canvas.setAttribute('aria-label', 'Actual FPV renderer output');
+      $('viewport').replaceChildren(canvas);
+      runtime = modules.createFlightRenderer({
+        canvas,
+        window,
+        onContextLost: () => {
+          if (receipt)
+            receipt.contextLosses.push({
+              time: new Date().toISOString(),
+              status: $('status').textContent,
+            });
+        },
+      });
+      assert(runtime.available, 'WebGL renderer unavailable');
+      return runtime;
+    }
+    function glInfo() {
+      const gl = $('canvas').getContext('webgl2');
+      return gl
+        ? {
+            version: gl.getParameter(gl.VERSION),
+            renderer: gl.getParameter(gl.RENDERER),
+            vendor: gl.getParameter(gl.VENDOR),
+            maxTextureSize: gl.getParameter(gl.MAX_TEXTURE_SIZE),
+            parallelCompile: !!gl.getExtension('KHR_parallel_shader_compile'),
+          }
+        : null;
+    }
+    function glErrors() {
+      const gl = $('canvas').getContext('webgl2'),
+        errors = [];
+      if (!gl) return ['missing-webgl2'];
+      for (let index = 0; index < 16; index++) {
+        const code = gl.getError();
+        if (code === gl.NO_ERROR) break;
+        errors.push(code);
+      }
+      return errors;
+    }
+    async function verifySources() {
+      const checked = {};
+      for (const [url, expected] of Object.entries(SOURCE.sourceFiles)) {
+        const response = await fetch(url, { cache: 'no-store' });
+        assert(response.ok, 'Missing source ' + url);
+        const data = await response.arrayBuffer();
+        const actual = Array.from(
+          new Uint8Array(await crypto.subtle.digest('SHA-256', data)),
+          (byte) => byte.toString(16).padStart(2, '0'),
+        ).join('');
+        checked[url] = actual;
+        assert(actual === expected, 'Source changed since harness snapshot: ' + url);
+      }
+      return checked;
+    }
+    async function loadModules() {
+      if (modules) return modules;
+      const root = '/optional-practice/civilian-fpv/';
+      const [assets, catalogue, model, worldModel, loader] = await Promise.all(
+        [
+          'world-assets.mjs',
+          'world-catalogue.mjs',
+          'model.mjs',
+          'world-model.mjs',
+          'vendor/addons/loaders/GLTFLoader.js',
+        ].map((name) => import(root + name)),
+      );
+      await worldModel.initWorldRuntime();
+      modules = {
+        ...assets,
+        ...catalogue,
+        createFlight: model.createFlight,
+        createWorldFlight: worldModel.createWorldFlight,
+        GLTFLoader: loader.GLTFLoader,
+      };
+      $('world').replaceChildren(
+        ...modules.FLIGHT_WORLDS.map((world) => {
+          const option = document.createElement('option');
+          option.value = world.id;
+          option.textContent = world.title.en;
+          return option;
+        }),
+      );
+      return modules;
+    }
+    function entryFor(world) {
+      // Exercise actors where that world has them, without modifying authored courses.
+      return modules.WORLD_CATALOGUE.filter((entry) => entry.world === world).sort(
+        (a, b) => (b.course.actors?.length ?? 0) - (a.course.actors?.length ?? 0),
+      )[0];
+    }
+    async function loadEntry(entry) {
+      flight?.dispose?.();
+      flight = (entry.legacy ? modules.createFlight : modules.createWorldFlight)({
+        course: entry.course,
+        mode: 'self-level',
+      });
+      runtime.setCourse(entry.course, 'self-level');
+      const model = modules.builtinWorldScene(entry.course);
+      if (model) await deadline(runtime.loadScene(model), 'Imported scene');
+      assert(
+        (await deadline(runtime.prepare(), 'Scene preparation')) === true,
+        'Scene preparation did not complete',
+      );
+      return { entry, imported: !!model, state: flight.snapshot() };
+    }
+    async function renderViews(state, requested = views) {
+      const initial = JSON.stringify(state),
+        rows = [];
+      for (const cameraMode of requested) {
+        runtime.draw(state, { cameraMode });
+        await pauseFrame();
+        runtime.draw(state, { cameraMode });
+        await pauseFrame();
+        const errors = glErrors();
+        rows.push({ view: cameraMode, resources: copy(runtime.resources()), glErrors: errors });
+        assert(errors.length === 0, 'WebGL errors in ' + cameraMode + ': ' + errors.join(','));
+      }
+      assert(JSON.stringify(state) === initial, 'Renderer modified the supplied physics snapshot');
+      assert(
+        JSON.stringify(flight.snapshot()) === initial,
+        'Presentation changed the actual physics state',
+      );
+      return rows;
+    }
+    function multiPrimitiveGLB(course) {
+      const chunks = [],
+        bufferViews = [],
+        accessors = [];
+      let offset = 0;
+      const append = (bytes) => {
+        const padded = new Uint8Array(Math.ceil(bytes.byteLength / 4) * 4);
+        padded.set(bytes);
+        chunks.push(padded);
+        const index = bufferViews.length;
+        bufferViews.push({ buffer: 0, byteOffset: offset, byteLength: bytes.byteLength });
+        offset += padded.byteLength;
+        return index;
+      };
+      const attribute = (values, type, count, min, max) => {
+        const array = new Float32Array(values);
+        const bufferView = append(new Uint8Array(array.buffer));
+        const index = accessors.length;
+        accessors.push({
+          bufferView,
+          componentType: 5126,
+          count,
+          type,
+          ...(min ? { min, max } : {}),
+        });
+        return index;
+      };
+      const normal = attribute([0, 0, 1, 0, 0, 1, 0, 0, 1], 'VEC3', 3),
+        uv = attribute([0, 0, 1, 0, 0.5, 1], 'VEC2', 3);
+      const primitives = [-2, 0, 2].map((x, material) => ({
+        attributes: {
+          POSITION: attribute(
+            [x - 0.7, 0, 0, x + 0.7, 0, 0, x, 1.4, 0],
+            'VEC3',
+            3,
+            [x - 0.7, 0, 0],
+            [x + 0.7, 1.4, 0],
+          ),
+          NORMAL: normal,
+          TEXCOORD_0: uv,
+        },
+        material,
+      }));
+      const image = document.createElement('canvas');
+      image.width = image.height = 4;
+      const ctx = image.getContext('2d');
+      ctx.fillStyle = '#b6e19c';
+      ctx.fillRect(0, 0, 4, 4);
+      ctx.clearRect(0, 0, 2, 2);
+      ctx.clearRect(2, 2, 2, 2);
+      const png = Uint8Array.from(atob(image.toDataURL('image/png').split(',')[1]), (c) =>
+        c.charCodeAt(0),
+      );
+      const imageView = append(png);
+      const json = {
+        asset: {
+          version: '2.0',
+          generator: 'FPV graphics verification: actual multi-primitive GLB',
+        },
+        scene: 0,
+        scenes: [{ nodes: [0] }],
+        nodes: [
+          {
+            name: 'Three material import',
+            mesh: 0,
+            translation: [
+              course.spawn.x / 1000,
+              course.spawn.y / 1000 + 1,
+              course.spawn.z / 1000 - 3,
+            ],
+          },
+        ],
+        meshes: [{ primitives }],
+        materials: [
+          {
+            name: 'Textured opaque',
+            doubleSided: true,
+            pbrMetallicRoughness: {
+              baseColorTexture: { index: 0 },
+              metallicFactor: 0,
+              roughnessFactor: 1,
+            },
+          },
+          {
+            name: 'Untextured',
+            doubleSided: true,
+            pbrMetallicRoughness: {
+              baseColorFactor: [0.3, 0.6, 1, 1],
+              metallicFactor: 0,
+              roughnessFactor: 1,
+            },
+          },
+          {
+            name: 'Alpha mask',
+            doubleSided: true,
+            alphaMode: 'MASK',
+            alphaCutoff: 0.5,
+            pbrMetallicRoughness: {
+              baseColorTexture: { index: 0 },
+              metallicFactor: 0,
+              roughnessFactor: 1,
+            },
+          },
+        ],
+        textures: [{ source: 0 }],
+        images: [{ bufferView: imageView, mimeType: 'image/png' }],
+        buffers: [{ byteLength: offset }],
+        bufferViews,
+        accessors,
+      };
+      const jsonBytes = new TextEncoder().encode(JSON.stringify(json)),
+        jsonLength = Math.ceil(jsonBytes.length / 4) * 4;
+      const output = new Uint8Array(12 + 8 + jsonLength + 8 + offset),
+        view = new DataView(output.buffer);
+      view.setUint32(0, 0x46546c67, true);
+      view.setUint32(4, 2, true);
+      view.setUint32(8, output.length, true);
+      view.setUint32(12, jsonLength, true);
+      view.setUint32(16, 0x4e4f534a, true);
+      output.fill(32, 20, 20 + jsonLength);
+      output.set(jsonBytes, 20);
+      view.setUint32(20 + jsonLength, offset, true);
+      view.setUint32(24 + jsonLength, 0x004e4942, true);
+      let position = 28 + jsonLength;
+      for (const chunk of chunks) {
+        output.set(chunk, position);
+        position += chunk.length;
+      }
+      return output;
+    }
+    async function checkMultiPrimitiveImport(entry) {
+      status('Additional import fixture: opaque texture, no texture, alpha mask');
+      const data = multiPrimitiveGLB(entry.course),
+        parsed = await new modules.GLTFLoader().parseAsync(data.buffer.slice(0), '');
+      const meshes = [],
+        geometries = new Set(),
+        materials = new Set(),
+        textures = new Set();
+      parsed.scene.traverse((item) => {
+        if (item.isMesh)
+          meshes.push({
+            materialArray: Array.isArray(item.material),
+            materialName: item.material.name,
+            hasMap: !!item.material.map,
+            alphaTest: item.material.alphaTest,
+          });
+        if (item.geometry) geometries.add(item.geometry);
+        for (const material of Array.isArray(item.material) ? item.material : [item.material])
+          if (material) {
+            materials.add(material);
+            for (const value of Object.values(material)) if (value?.isTexture) textures.add(value);
+          }
+      });
+      record(
+        'Actual multi-primitive GLB produces three single-material meshes',
+        meshes.length === 3 &&
+          meshes.every((row) => !row.materialArray) &&
+          meshes.some((row) => !row.hasMap) &&
+          meshes.some((row) => row.alphaTest > 0),
+        { meshMaterials: meshes, fixtureBytes: data.byteLength },
+      );
+      for (const value of textures) {
+        value.source?.data?.close?.();
+        value.dispose();
+      }
+      for (const value of materials) value.dispose();
+      for (const value of geometries) value.dispose();
+      const samples = [];
+      for (let round = 1; round <= 3; round++) {
+        status(`Multi-primitive import ${round}/3`);
+        const loaded = await loadEntry(entry);
+        await runtime.loadScene(data.slice());
+        runtime.setQuality('high');
+        assert(await runtime.prepare(), 'Multi-primitive preparation failed');
+        await renderViews(loaded.state);
+        samples.push({ round, resources: copy(runtime.resources()) });
+      }
+      record(
+        'Multi-primitive GLB resource counts plateau across replacement',
+        JSON.stringify(resourceCounts(samples[1].resources)) ===
+          JSON.stringify(resourceCounts(samples[2].resources)),
+        { samples },
+      );
+    }
+    function traceTextureAllocations() {
+      const prototype = WebGL2RenderingContext.prototype;
+      const create = prototype.createTexture,
+        remove = prototype.deleteTexture;
+      const live = new Map();
+      let serial = 0;
+      prototype.createTexture = function (...args) {
+        const value = create.apply(this, args);
+        if (value)
+          live.set(value, {
+            id: ++serial,
+            phase: $('status').textContent,
+            stack: new Error('texture allocation').stack,
+          });
+        return value;
+      };
+      prototype.deleteTexture = function (texture, ...args) {
+        live.delete(texture);
+        return remove.call(this, texture, ...args);
+      };
+      return {
+        snapshot: () => ({ totalCreated: serial, notExplicitlyDeleted: [...live.values()] }),
+        restore: () => {
+          prototype.createTexture = create;
+          prototype.deleteTexture = remove;
+        },
+      };
+    }
+    async function runChecks() {
+      if (busy) return;
+      busy = true;
+      $('run').disabled = true;
+      $('preview').disabled = true;
+      disposeRuntime();
+      receipt = {
+        format: 'fpv-graphics-browser-verification.v1',
+        ...SOURCE,
+        startedAt: new Date().toISOString(),
+        browser: {
+          userAgent: navigator.userAgent,
+          devicePixelRatio,
+          viewport: [innerWidth, innerHeight],
+        },
+        scope:
+          'Actual WebGL renderer counters and preparation lifecycle; not VRAM bytes, frame-rate, target-hardware, complete visual approval, or human training qualification.',
+        rounds: 3,
+        checks: [],
+        samples: [],
+        contextLosses: [],
+        consoleErrors: [],
+        completed: false,
+      };
+      const trace = traceTextureAllocations();
+      const originalError = console.error;
+      console.error = (...args) => {
+        receipt.consoleErrors.push(
+          args.map((value) => (typeof value === 'string' ? value : String(value))).join(' '),
+        );
+        originalError(...args);
+      };
+      publish();
+      try {
+        status('Checking source snapshot…');
+        receipt.checkedSourcesBefore = await verifySources();
+        await loadModules();
+        createRuntime();
+        receipt.webgl = glInfo();
+        const entries = modules.FLIGHT_WORLDS.map((world) => ({
+          world,
+          entry: entryFor(world.id),
+        }));
+        assert(
+          entries.length === 8 && entries.every((item) => item.entry),
+          'Expected all eight authored worlds',
+        );
+        const byKey = new Map();
+        for (let round = 1; round <= 3; round++)
+          for (const { world, entry } of entries) {
+            status(`Round ${round}/3 · ${world.title.en} · loading imported scenery…`);
+            const loaded = await loadEntry(entry);
+            const drone =
+              world.theme === 'pixel'
+                ? 'pixel'
+                : world.theme === 'operations'
+                  ? 'utility'
+                  : 'racer';
+            runtime.setDrone(drone);
+            for (const quality of qualityNames) {
+              status(`Round ${round}/3 · ${world.title.en} · ${quality} · FPV, chase, overview`);
+              runtime.setQuality(quality);
+              assert(
+                (await deadline(runtime.prepare(), 'Quality preparation')) === true,
+                'Quality preparation stale',
+              );
+              const viewResults = await renderViews(loaded.state),
+                resources = copy(runtime.resources());
+              const key = `${world.id}/${quality}/${drone}`;
+              const sample = {
+                round,
+                key,
+                world: world.id,
+                course: entry.id,
+                model: entry.legacy ? 'v1' : 'v2',
+                quality,
+                drone,
+                imported: loaded.imported,
+                views: viewResults,
+                resources,
+              };
+              receipt.samples.push(sample);
+              const group = byKey.get(key) ?? [];
+              group.push(sample);
+              byKey.set(key, group);
+              publish();
+            }
+          }
+        record(
+          'All eight worlds × three presets × three views × three rounds rendered',
+          receipt.samples.length === 72,
+          {
+            samples: receipt.samples.length,
+            renderedViewConfigurations: receipt.samples.reduce(
+              (sum, sample) => sum + sample.views.length,
+              0,
+            ),
+          },
+        );
+        const plateaus = [];
+        for (const [key, samples] of byKey) {
+          const before = resourceCounts(samples[1].resources),
+            after = resourceCounts(samples[2].resources);
+          plateaus.push({
+            key,
+            round2: before,
+            round3: after,
+            stable: JSON.stringify(before) === JSON.stringify(after),
+          });
+        }
+        record(
+          'Owned resource counts plateau between repeated rounds 2 and 3',
+          plateaus.every((row) => row.stable),
+          { comparison: plateaus },
+        );
+        await checkMultiPrimitiveImport(entries[0].entry);
+        await loadEntry(entries[0].entry);
+        runtime.setQuality('balanced');
+        await runtime.prepare();
+        let pending = runtime.prepare();
+        runtime.setQuality('high');
+        let stale = await deadline(pending, 'Stale quality preparation');
+        record('Quality replacement invalidates pending preparation', stale === false, {
+          returned: stale,
+        });
+        assert(await runtime.prepare(), 'Latest quality preparation failed');
+        pending = runtime.prepare();
+        runtime.setDrone('utility');
+        stale = await deadline(pending, 'Stale drone preparation');
+        record('Drone replacement invalidates pending preparation', stale === false, {
+          returned: stale,
+        });
+        assert(await runtime.prepare(), 'Latest drone preparation failed');
+        pending = runtime.prepare();
+        runtime.setCourse(entries[1].entry.course, 'self-level');
+        stale = await deadline(pending, 'Stale course preparation');
+        record('Course replacement invalidates pending preparation', stale === false, {
+          returned: stale,
+        });
+        await loadEntry(entries[1].entry);
+        const controller = new AbortController();
+        pending = runtime.prepare({ signal: controller.signal });
+        controller.abort();
+        let abortName = null;
+        try {
+          await deadline(pending, 'Aborted preparation');
+        } catch (error) {
+          abortName = error.name;
+        }
+        record('Aborted preparation rejects explicitly', abortName === 'AbortError', {
+          errorName: abortName,
+        });
+        await renderViews(flight.snapshot());
+        pending = runtime.prepare();
+        const owner = runtime;
+        const afterDispose = disposeRuntime();
+        stale = await deadline(pending, 'Disposed preparation');
+        await pauseFrame();
+        await pauseFrame();
+        record('Disposal invalidates pending preparation', stale === false, { returned: stale });
+        receipt.textureAllocationDiagnostics = trace.snapshot();
+        const settled = owner.resources();
+        record(
+          'Disposal releases all registered scene resources',
+          Object.values(settled.registered).every((value) => value === 0),
+          { immediate: afterDispose, settled },
+        );
+        record('Disposed renderer refuses preparation', (await owner.prepare()) === false);
+        receipt.checkedSourcesAfter = await verifySources();
+        record('Source bytes unchanged throughout run', true);
+        record('No unexpected context loss', receipt.contextLosses.length === 0, {
+          events: receipt.contextLosses,
+        });
+        record('No console errors during graphics checks', receipt.consoleErrors.length === 0, {
+          errors: receipt.consoleErrors,
+        });
+        receipt.completed = true;
+        receipt.passed = receipt.checks.every((row) => row.passed);
+        receipt.finishedAt = new Date().toISOString();
+        status(
+          receipt.passed
+            ? 'Checks passed. Download the receipt. Resource counts are not a performance qualification.'
+            : 'Checks completed with findings. Review the receipt.',
+        );
+      } catch (error) {
+        receipt.failure = { name: error.name, message: error.message, stack: error.stack };
+        receipt.passed = false;
+        receipt.finishedAt = new Date().toISOString();
+        status('Checks stopped: ' + error.message);
+        try {
+          receipt.disposalAfterFailure = disposeRuntime();
+        } catch (disposalError) {
+          receipt.disposalFailure = String(disposalError);
+        }
+      } finally {
+        receipt.textureAllocationDiagnostics ??= trace.snapshot();
+        trace.restore();
+        console.error = originalError;
+        publish();
+        busy = false;
+        $('run').disabled = false;
+        $('preview').disabled = false;
+      }
+    }
+    $('run').addEventListener('click', runChecks);
+    $('preview').addEventListener('click', async () => {
+      if (busy) return;
+      busy = true;
+      $('run').disabled = true;
+      $('preview').disabled = true;
+      try {
+        await verifySources();
+        await loadModules();
+        disposeRuntime();
+        createRuntime();
+        const loaded = await loadEntry(entryFor($('world').value));
+        runtime.setQuality($('quality').value);
+        runtime.setDrone($('drone').value);
+        assert(await runtime.prepare(), 'Preview preparation incomplete');
+        await renderViews(loaded.state, [$('view').value]);
+        status(`Rendered ${loaded.entry.id} · ${$('quality').value} · ${$('view').value}.`);
+      } catch (error) {
+        status('Preview failed: ' + error.message);
+      } finally {
+        busy = false;
+        $('run').disabled = false;
+        $('preview').disabled = false;
+      }
+    });
+    $('download').addEventListener('click', () => {
+      if (!receipt) return;
+      const url = URL.createObjectURL(
+        new Blob([JSON.stringify(receipt, null, 2) + '\n'], { type: 'application/json' }),
+      );
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = `fpv-graphics-verification-${SOURCE.sourceHead.slice(0, 9)}.json`;
+      link.click();
+      setTimeout(() => URL.revokeObjectURL(url), 1000);
+    });
+    $('binding').textContent =
+      `Source snapshot ${SOURCE.sourceHead}; 12 rendering/model input hashes checked before and after. The page does not write game progress.`;
+    await loadModules();
+  </script>
+</html>

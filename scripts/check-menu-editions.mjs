@@ -10,12 +10,13 @@ import {
   validateEditionCodeClosure,
   writeEdition,
 } from './compile-edition.mjs';
-import { resolveMenuScene } from '../game/ui/menu-scene-catalog.mjs';
+import { MENU_SCENES, resolveMenuScene } from '../game/ui/menu-scene-catalog.mjs';
 import { editionMenuSceneResources } from './edition-runtime.mjs';
 import {
   editionPublicSlug,
   validateCompanyInstallationReference,
 } from '../game/edition-context.mjs';
+import { editionOfflineOptionalPath } from './edition-offline.mjs';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const output = path.resolve(process.argv[2] ?? '/private/tmp/revealline-menu-editions-check');
@@ -71,16 +72,36 @@ for (const edition of catalog.editions) {
   const packagedScenes = await import(
     `data:text/javascript;base64,${result.files.get('game/ui/menu-scene-catalog.mjs').toString('base64')}`
   );
+  const sourceSceneIds = Object.keys(MENU_SCENES).sort();
+  const packagedSceneIds = Object.keys(packagedScenes.MENU_SCENES).sort();
+  const sourceScene = resolveMenuScene({ editionId: edition.id });
+  const packagedScene = packagedScenes.resolveMenuScene({ editionId: edition.id });
   if (
-    Object.keys(packagedScenes.MENU_SCENES).length !== 2 ||
-    packagedScenes.resolveMenuScene({ editionId: edition.id }).id !==
-      resolveMenuScene({ editionId: edition.id }).id
+    packagedSceneIds.length === 0 ||
+    !packagedSceneIds.every((id) => sourceSceneIds.includes(id)) ||
+    !packagedSceneIds.includes(sourceScene.id) ||
+    packagedScene.id !== sourceScene.id
   )
-    throw new Error(`${edition.id}: projected profile lookup differs`);
+    throw new Error(
+      `${edition.id}: projected profile lookup differs ` +
+        JSON.stringify({
+          sourceSceneIds,
+          packagedSceneIds,
+          sourceScene: sourceScene.id,
+          packagedScene: packagedScene.id,
+        }),
+    );
   const offline = JSON.parse(result.files.get('offline-cache.json'));
-  for (const name of required.filter((name) => name.startsWith('game/')).concat(scenePaths))
+  for (const name of required.filter((name) => name.startsWith('game/')))
     if (!offline.files.some((file) => file.path === name))
       throw new Error(`${edition.id}: offline inventory missing ${name}`);
+  for (const name of scenePaths) {
+    const included = offline.files.some((file) => file.path === name);
+    if (included === editionOfflineOptionalPath(name))
+      throw new Error(
+        `${edition.id}: ${name} is ${included ? 'inside' : 'missing from'} its offline boundary`,
+      );
+  }
   const definition = result.runtimeCatalog.editions[0];
   const theme = JSON.parse(result.files.get(definition.boot.themes)).themes[0];
   // The native edition home intentionally uses edition context. The brand's

@@ -3,6 +3,7 @@ import { isDeepStrictEqual } from 'node:util';
 import { editionHash, inspectEditionZip } from './edition-zip.mjs';
 import { OPTIONAL_PACKAGE_POLICIES, optionalRuntimePaths } from './optional-package-policy.mjs';
 import { validatePublicSourceEligibility } from './edition-admission.mjs';
+import { validatePracticeDescription } from '../game/optional-practice-details.mjs';
 
 const editionDescriptor = (path, bytes) => ({
   path,
@@ -29,7 +30,7 @@ const parse = (bytes) => {
     fail('Optional metadata exceeds its bounded JSON limit.');
   return JSON.parse(new TextDecoder('utf-8', { fatal: true }).decode(bytes));
 };
-function descriptor(value) {
+function descriptor(value, byteLimit = 9 * 1024 * 1024) {
   keys(value, ['path', 'bytes', 'sha256'], 'optional descriptor');
   if (
     typeof value.path !== 'string' ||
@@ -37,28 +38,28 @@ function descriptor(value) {
     !/^[A-Za-z0-9_-][A-Za-z0-9_.-]*(?:\/[A-Za-z0-9_-][A-Za-z0-9_.-]*)*$/.test(value.path) ||
     !Number.isSafeInteger(value.bytes) ||
     value.bytes < 0 ||
-    value.bytes > 9 * 1024 * 1024 ||
+    value.bytes > byteLimit ||
     !SHA.test(value.sha256)
   )
     fail('Invalid optional artifact descriptor.');
   return value;
 }
-function rows(value, expected, budget) {
-  if (!Array.isArray(value) || value.length !== expected.length || value.length > 64)
+function rows(value, expected, limits) {
+  if (!Array.isArray(value) || value.length !== expected.length || value.length > limits.files)
     fail('Optional dependency inventory is incomplete.');
   const found = new Set();
   let total = 0;
   for (const row of value) {
-    descriptor(row);
+    descriptor(row, limits.bytes);
     if (found.has(row.path) || !expected.includes(row.path))
       fail('Optional package contains an undeclared dependency.');
     found.add(row.path);
     total += row.bytes;
   }
-  if (total > budget) fail('Optional package exceeds its byte budget.');
+  if (total > limits.bytes) fail('Optional package exceeds its byte budget.');
 }
-function matches(pin, bytes) {
-  descriptor(pin);
+function matches(pin, bytes, byteLimit) {
+  descriptor(pin, byteLimit);
   if (
     !(bytes instanceof Uint8Array) ||
     bytes.length !== pin.bytes ||
@@ -123,12 +124,14 @@ export async function validateOptionalPackageAdmission(envelope, { read } = {}) 
       ['sourceInventory', 'source-inventory', 'json'],
       ['sourceArchive', 'source', 'zip'],
     ]) {
-      const pin = descriptor(item[role]);
+      // Preserve bounded ZIP framing overhead outside the package content limit.
+      const artifactLimit = policy.limits.bytes + 1024 * 1024;
+      const pin = descriptor(item[role], artifactLimit);
       if (pin.path !== `${prefix}-optional-${item.id}.${extension}` || artifacts.has(pin.path))
         fail('Unexpected optional release artifact.');
       artifacts.add(pin.path);
       loaded[role] = await read(pin);
-      matches(pin, loaded[role]);
+      matches(pin, loaded[role], artifactLimit);
     }
     const manifest = parse(loaded.manifest);
     keys(
@@ -166,12 +169,18 @@ export async function validateOptionalPackageAdmission(envelope, { read } = {}) 
       !isDeepStrictEqual(manifest.limits, policy.limits)
     )
       fail('Optional manifest does not bind its frozen package.');
-    rows(manifest.files, optionalRuntimePaths(policy, { launcher: true }), policy.limits.bytes);
+    rows(manifest.files, optionalRuntimePaths(policy, { launcher: true }), policy.limits);
     const runtime = inspectEditionZip(loaded.distribution, [
       ...manifest.files,
       editionDescriptor('optional-package.json', loaded.manifest),
     ]);
-    for (const pin of policy.vendorPins ?? []) matches(pin, runtime.get(pin.path));
+    if (
+      runtime.size > policy.limits.files ||
+      [...runtime.values()].reduce((sum, bytes) => sum + bytes.length, 0) > policy.limits.bytes
+    )
+      fail('Complete optional runtime output exceeds package limits.');
+    for (const pin of policy.vendorPins ?? [])
+      matches(pin, runtime.get(pin.path), policy.limits.bytes);
     const installation = manifest.installation;
     keys(
       installation,
@@ -201,6 +210,14 @@ export async function validateOptionalPackageAdmission(envelope, { read } = {}) 
         fail('Optional app and launcher installation identities differ.');
     }
     const inventory = parse(loaded.sourceInventory);
+    validatePracticeDescription(parse(runtime.get(policy.root + 'package-info.json')), item.id);
+    const preview = runtime.get(policy.root + 'preview.png');
+    if (
+      !preview ||
+      preview.length > 300000 ||
+      Buffer.from(preview).subarray(0, 8).toString('hex') !== '89504e470d0a1a0a'
+    )
+      fail('Invalid or oversized practice preview.');
     keys(
       inventory,
       [
@@ -241,7 +258,7 @@ export async function validateOptionalPackageAdmission(envelope, { read } = {}) 
       policy.launcherTemplate,
       ...policy.localeInputs,
     ];
-    rows(inventory.inputs, inputPaths, policy.limits.bytes);
+    rows(inventory.inputs, inputPaths, policy.limits);
     rows(
       inventory.files,
       [
@@ -249,7 +266,7 @@ export async function validateOptionalPackageAdmission(envelope, { read } = {}) 
         policy.template,
         policy.launcherTemplate,
       ],
-      policy.limits.bytes,
+      policy.limits,
     );
     const source = inspectEditionZip(loaded.sourceArchive, [
       ...inventory.files,
@@ -262,9 +279,11 @@ export async function validateOptionalPackageAdmission(envelope, { read } = {}) 
       fail('Complete optional source output exceeds package limits.');
     validatePublicSourceEligibility({ files: source });
     for (const row of manifest.files)
-      if (row.path !== policy.root + 'app.webmanifest') matches(row, source.get(row.path));
+      if (row.path !== policy.root + 'app.webmanifest')
+        matches(row, source.get(row.path), policy.limits.bytes);
     for (const row of inventory.inputs)
-      if (!policy.localeInputs.includes(row.path)) matches(row, source.get(row.path));
+      if (!policy.localeInputs.includes(row.path))
+        matches(row, source.get(row.path), policy.limits.bytes);
     const expectedProjection = [
       {
         kind: 'stable-installation-identity',
@@ -315,7 +334,7 @@ export async function validateOptionalPackageAdmission(envelope, { read } = {}) 
     if (launcherStart < 0) fail('Optional launcher template is missing its registered entry.');
     const launcherFunction = launcherTemplate.slice(launcherStart + 'export '.length).trim();
     const launcherApp = Buffer.from(
-      `import { optionalInstallationKey, validateOptionalInstallationReference } from './context.mjs';\n(${launcherFunction})(${JSON.stringify({ packageId: item.id, root: installation.id })}, { optionalInstallationKey, validateOptionalInstallationReference });\n`,
+      `import { optionalInstallationKey, validateOptionalInstallationReference, inspectOptionalOffline, prepareOptionalOffline, removeOptionalOffline } from './context.mjs';\nimport { mountPracticeNavigation } from './navigation.mjs';\n(${launcherFunction})(${JSON.stringify({ packageId: item.id, root: installation.id, description: parse(runtime.get(policy.root + 'package-info.json')) })}, { optionalInstallationKey, validateOptionalInstallationReference, inspectOptionalOffline, prepareOptionalOffline, removeOptionalOffline, mountPracticeNavigation });\n`,
     );
     if (
       !launcherFunction.endsWith('}') ||
@@ -328,6 +347,12 @@ export async function validateOptionalPackageAdmission(envelope, { read } = {}) 
       )
     )
       fail('Optional launcher context differs from the shared installation adapter.');
+    if (
+      !Buffer.from(runtime.get('launcher/navigation.mjs')).equals(
+        Buffer.from(source.get('optional-practice/navigation.mjs')),
+      )
+    )
+      fail('Optional launcher navigation differs from its admitted source.');
     for (const size of [192, 512])
       if (
         !Buffer.from(runtime.get(`launcher/icons/icon-${size}.png`)).equals(
@@ -339,6 +364,7 @@ export async function validateOptionalPackageAdmission(envelope, { read } = {}) 
       'index.html',
       'app.mjs',
       'context.mjs',
+      'navigation.mjs',
       'app.webmanifest',
       'icons/icon-192.png',
       'icons/icon-512.png',

@@ -11,9 +11,11 @@ import {
   isOptionalTeamImportManifest,
   selectOfflineCore,
 } from './offline-core-closure.mjs';
-import { downloadFiles } from '../game/download-catalogue.mjs';
+import { downloadFiles, validateDownloadCatalogue } from '../game/download-catalogue.mjs';
+import { validateInstalledSelection } from '../game/installed-app.mjs';
 import { buildOfflineDestinations, buildNavigationBootstraps } from './offline-destinations.mjs';
 import { readFileSync } from 'node:fs';
+import { addOfflineExperiences } from './offline-experiences.mjs';
 
 const contentMessages = JSON.parse(
   readFileSync(new URL('../game/locales/en/content.json', import.meta.url), 'utf8'),
@@ -42,7 +44,12 @@ export const CULTURAL_TEAM_OFFLINE_PROJECT_FACTORIES = Object.freeze(
 
 const digest = (bytes) => createHash('sha256').update(bytes).digest('hex');
 /** Built from the exact frozen bytes, never a second, independently maintained asset list. */
-export async function buildOfflineContent(entries, excluded, version) {
+export async function buildOfflineContent(
+  entries,
+  excluded,
+  version,
+  { bundledPackages = [] } = {},
+) {
   const snapshots = await addAuthoredRuntimeSnapshots(entries);
   for (const chapter of snapshots?.chapters || [])
     if (!chapter.descriptor.core) excluded.add(chapter.path);
@@ -478,6 +485,7 @@ export async function buildOfflineContent(entries, excluded, version) {
         files: tracks.map((track) => `soundtrack:${track.id}`),
       });
   }
+  addOfflineExperiences(groups, files, bundledPackages, coreGraph?.retained);
   // Stable sort preserves authored chapter order within a mode while keeping
   // historical editions and Studio packages below current playable choices.
   const groupRank = (group) =>
@@ -528,7 +536,12 @@ export async function buildOfflineContent(entries, excluded, version) {
     }
     if (offset !== entry.bytes.length) throw new Error('Official media bundle has trailing bytes.');
   }
-  return {
+  // Every selectable gameplay package must fit the installed-state contract,
+  // including archives/tools that a player can opt into individually.
+  validateInstalledSelection(
+    groups.filter((group) => group.kind === 'gameplay').map((group) => group.id),
+  );
+  return validateDownloadCatalogue({
     format: snapshots ? 'revealline-offline-content.v2' : 'revealline-offline-content.v1',
     version,
     files,
@@ -574,7 +587,7 @@ export async function buildOfflineContent(entries, excluded, version) {
     ],
     sharedPolicy:
       'The current lightweight catalogue keeps every mission visible. Original artwork belongs to its chapter; archives and soundtracks are separate optional downloads.',
-  };
+  });
 }
 
 /** Publication evidence, generated after the worker to avoid a recursive content hash. */

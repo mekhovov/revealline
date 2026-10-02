@@ -1,6 +1,50 @@
 # Together: Relay Rescue
 
-## Shared Field Kit interface follow-up
+## Current plan checkpoint — 30 September 2026
+
+**The cooperative engine and a substantial Team experience are implemented; the original six-phase programme is not fully accepted.** Current Team is larger than the original prototype, but has also changed its rules. Use the [detailed completed/remaining audit](relay-rescue-status-2026-09-30.md) for the evidence, differences and next acceptance steps. The original design below remains the reference contract, not a claim that every sentence describes today's default.
+
+This audit inspected source `09a43d83351af276f184293ed3c72261575ed8bc` and checked the subsequent main delta through `60407a7ce4b4592372e66ef1961f3aa85562cefd`; that delta does not change the co-op implementation. Source version is `0.142.4`. GitHub's latest immutable release observed during the audit is [v0.142.3](https://github.com/mekhovov/revealline/releases/tag/v0.142.3), from `b5ab06e12542f72e33c45b973ba693a5e1509c1c`. The v0.52.0 browser page is a historical release. Neither a version number nor a successful Pages workflow proves current playability or completion of this plan.
+
+| Original phase                | Current status                                                                                            | What remains before whole-phase acceptance                                                                                                                                                    |
+| ----------------------------- | --------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 1 — Baseline/specification    | Historical baseline delivered; specification now reconciled with newer editions.                          | Preserve the dated evidence; use the edition distinctions below for future changes.                                                                                                           |
+| 2 — Joint-cut prototype       | Delivered, including real enemies, shared capture, helpful partner banking and comparison configurations. | Keep those contracts in regression qualification; do not repeat prototype implementation.                                                                                                     |
+| 3 — Complete cooperation loop | Classic mechanics delivered; the user's initial play feedback was received and addressed.                 | Structured paired comparison remains unqualified; reconcile current Journey's rapid recovery and specialist roles with the intended rescue/cover decisions.                                   |
+| 4 — Campaign/replay           | Substantial successor content delivered in source, but the original scope is only partially fulfilled.    | Current default has 12 missions; original six named missions, their authored remixes, per-difficulty team records/medals, explicit backup restore and writer ownership are not all delivered. |
+| 5 — Experience/balance        | Many interface, teaching, artwork and control improvements implemented.                                   | Complete sustained two-player routes, mixed-skill/specialization feedback, readability/accessibility and physical-input qualification.                                                        |
+| 6 — Release qualification     | Historical releases and scoped acceptance exist.                                                          | Qualify the final chosen edition and exact cumulative artifact; current waived tests, remaining human/device/offline checks and plan obligations are not passes.                              |
+
+### Two rule families, with different promises
+
+| Family                       | Actual scope                                                                                                                                                                        | Boundary                                                                                                                    |
+| ---------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------- |
+| Classic Relay Rescue         | First Connection and Relay Yard; equal hybrid tools; individual/joint/full-teamwork comparisons; long rescue windows; coverage and stronghold templates.                            | These two arenas do not constitute the original six-mission campaign.                                                       |
+| Current default Team Journey | `team-cultural-specialist-originals-2`; 12 coverage missions in three four-mission arcs; versioned terrain/return routes, travelling impacts and complementary Support specialists. | Twelve missions are not six missions plus six remixes. Their faster recovery and progression contracts differ from Classic. |
+
+The current default route also exists in the immutable v0.142.3 source. Older Team editions remain explicitly addressable; preserve their content, artwork, records and rules identities.
+
+- **Recovery:** Classic retains 5/3/1 reserves and 16/12/10-second windows. Journey uses 4/2/1 reserves plus the active life and a 0.65-second automatic recovery. With a reserve available, its one-second manual rescue cannot finish first. Keep a concrete recovery-design decision open; do not describe both as the same rescue loop.
+- **Roles:** Classic permits either player to perform both Support effects. The current specialist edition assigns Interceptor and Disruptor. This is a newer complementary-role design, not completion of the original equal-tools promise. Compare its agency and mixed-skill usefulness against hybrid play without forcing equal capture percentages.
+- **Goals and enemies:** the twelve default missions use coverage goals. Classic stronghold transactions exist, but the planned later-core campaign, marked-lane Sentry and multi-sector Warden are still outstanding. Coverage cleanup remains a balance question for the successor campaign.
+- **Persistence:** classic recipe imports stay in memory; Journey stores edition-specific progress, and installed Creator Team supports resumable attempts. The original blanket no-mid-mission-save boundary does not describe all newer editions. Export and conflict handling are useful progress, but do not establish complete backup/restore or a single active progress writer.
+- **Event ordering:** the original historical contact rules remain; modern impact-v2 allows valid banking to beat an exactly simultaneous travelling-impact arrival. Earlier lethal contacts still apply. Future checks must name the tested rules identity.
+
+### Updated execution order
+
+1. **Reconcile the intended experience per edition.** Retain both playable families. Specify rescue timing, role choice, objective type, safe/claimed-ground threats and save ownership before changing a default. Keep the unfinished original six-mission/remix campaign visible unless a deliberate scope replacement is recorded.
+2. **Finish whole-mission challenge evidence.** Use current enemies and public commands to exercise both seats, the preserved hybrid and specialist editions, Gentle/Standard/Expert and representative seeds. Review easy unattended regions, Support usefulness, rescue opportunities and late coverage cleanup. First returns and rehearsed no-Support clears establish feasibility only.
+3. **Complete progression and content gaps in bounded deliveries.** Inventory exact records, restore/import, concurrency and failure recovery; close each missing contract. If retaining the original campaign, author the remaining missions/remixes and missing encounter roles with a separate 6 × 2 × 3 acceptance matrix. The existing 12 × 3 matrix is different.
+4. **Finish presentation and cumulative qualification.** Check complete cut → pressure → Support → down/rescue → win/loss → Retry/Next journeys, clear warnings, EN/UK, narrow layouts, reduced effects and device/lifecycle/offline behavior on the chosen edition.
+5. **Close the formal human acceptance debt.** The wider programme currently schedules C2 player comparison after implementation (see the [30 September delivery register](plan-status-2026-09-30.md)). Record that broader scheduling separately from the unclosed original co-op paired gates; this review neither passes those gates nor establishes that the specific co-op gate was waived. Use the user's initial feedback as real evidence, then obtain the missing structured comparison and mixed-skill/newcomer/experienced observations.
+
+Each implementation slice still needs independent review, fixes, evidence tied to its source, and related-hunk commits. Game version allocation and publication follow the existing single publisher; the old 0.44–0.48 numbers below are historical milestone targets, not new allocations. This documentation-only audit changes no game version or public build.
+
+The [30 September focused-test waiver](focused-test-waiver-20260930.md) reports deferred automated test-only commands as `WAIVED_SKIPPED_NOT_PASSED`; it does not waive source identity, validation/localization, generated-media integrity, required build/admission or `release-ready`. This audit inspected source, test definitions and historical evidence; it ran no game suite, build, browser playtest or device session.
+
+## Historical Shared Field Kit interface checkpoint — 15 September 2026
+
+The following interface observations describe their original source. The later host now consumes shared display preferences and has further layout, teaching and input work; the old Plain/Large gap below is not a current missing-feature claim. Remaining device and human limits are listed in the current audit above.
 
 The isolated follow-up to source `68abd915bd2b776359d5be79630b0ba811e1def5` uses the existing Field Kit fonts, semantic palette, control states and compiled-style hooks. It adds no presentation registry, co-op mechanics, progression, version or release. The two virtual pads are cardinal 3×3 crosses with the shared 44px target minimum, player markers and pressed feedback. The arena retains its 2:1 shape; narrower layouts can scroll rather than compressing targets below that minimum.
 
@@ -18,7 +62,7 @@ These are bounded browser viewport and keyboard observations, not physical-devic
 
 The layout follows the supplied primary guidance on contextual handheld controls, safe edges and readable targets from [Apple's handheld interface session](https://developer.apple.com/videos/play/meet-with-apple/243/), and consistent Back/confirm and focus order from [Xbox Accessibility Guideline 112](https://learn.microsoft.com/en-us/xbox/accessibility/xbox-accessibility-guidelines/112). These inform the source change; they do not replace native or paired evaluation.
 
-## Player experience
+## Original player-experience target
 
 Two equivalent craft reclaim one territory board, defeat enemy strongholds, rescue one another and finish each mission together. The mode is a new choice beside the existing couch race. It uses one shared camera, world, enemy population, clock, coverage total and result. Each player can cut, protect and rescue. Players may prefer covering or cutting without forced role rotation or equal contribution quotas.
 
@@ -26,7 +70,7 @@ The first campaign contains six authored missions on bounded 72 × 36 playground
 
 Keep existing tap steering and Boost, and add one Support action. Closing a cut stops that craft; a fresh direction starts it again. Keyboard, two gamepads, touch, and mixed input pairs must have equivalent actions, including explicit held-Support capability rather than inheriting Arcade's action suppression. Player numbers, silhouettes and distinct trail patterns supplement color. The complete active playground, both craft and attack warnings remain visible at usable scale.
 
-## Shared simulation contract
+## Original shared simulation contract
 
 Use a separate, versioned cooperative simulation and result boundary. Reuse movement, swept geometry and presentation primitives where appropriate, while retaining the solo and competitive race contracts. A cooperative run owns both players and both input samples, individual live trails and support cooldowns, shared cells and enemies, objectives, rescue state, reserves, events and deterministic progression. Rendering and storage do not mutate simulation state.
 
@@ -64,7 +108,7 @@ If one craft's recovery window expires, spend one available reserve to redeploy 
 
 Within each fixed step, advance inputs and timed effects and process swept events chronologically. At each event time, invalidate hit trails before equal-time closure; union valid closures in one bounded capture transaction; normalize trails and record new objectives; apply free recoveries and valid victory; then resolve any due downed deadlines/team redeployment once. Recompute later movement and hazards from the resulting state so a later hit cannot preempt an earlier closure. Publish events after state is coherent. Pause, visibility loss and controller disconnection freeze active timers, clear held inputs and preserve seat identity.
 
-## Campaign and presentation
+## Original campaign and presentation target
 
 Build each mission around one new cooperative decision before combining it with prior lessons:
 
@@ -83,7 +127,7 @@ The original and remix use authored, validated sockets. Preserve valid anchor/co
 
 Create separate versioned cooperative progress, difficulty records and backup records with validated content identity. Preserve solo/race saves and imported replay compatibility. Use one active writer lease for cooperative progress across tabs. Provide explicit cooperative export/import, controlled corrupt/incompatible-data errors and no silent overwrite. Retry the exact current seed/setup. Starting another mission or difficulty is a deliberate lobby action. There are no mid-mission saves, online play, AI partner, arbitrary solo-map conversion or deployment in this scope.
 
-## Phased delivery and gates
+## Original phased delivery and gates — historical version targets
 
 Each phase follows the same loop: research the specific open design question, implement the bounded change, review source and player behavior, run appropriate checks, fix findings, and rerun affected checks. Record evidence and remaining limitations. Stage only related hunks/lines, inspect the staged diff, synchronize the three game-version files, and commit the phase. Test/build the actual committed revision in a clean temporary checkout and preserve its playable artifact. A failed required gate keeps the phase open. Do not stage unrelated work or claim a gate passed from a version number alone.
 
@@ -96,7 +140,7 @@ Each phase follows the same loop: research the specific open design question, im
 | 5 / 0.48.0      | Cohesive lobby, instructions, shared HUD, sound/effects, controller/touch/keyboard parity and accessibility tuning.                                                                                      | SECOND REAL PAIRED PLAYTEST GATE with the user's pair. Check both players' agency, comprehension, recovery and voluntary replay; verify small-screen layout, pause/disconnect/resume and reduced-motion/non-color cues. |
 | 6 / 0.48.1      | Release qualification, final fixes and a reproducible frozen build with recorded checks.                                                                                                                 | Full applicable tests, content validation, lint/build checks, built-browser smoke checks, compatibility/save/lease checks and the exact qualified revision/artifact record.                                             |
 
-Real paired playtests require two humans playing together. The user's pair provides the two agreed milestone tests. Broader newcomer or expert qualification requires those actual players and is recorded separately as pending when unavailable. Scripted bots, deterministic routes and one operator driving both seats validate implementation but do not establish fun or mixed-skill usability. If a required paired gate is unavailable, report it as pending and retain a technical checkpoint; do not silently treat it as passed or expand content past the first gate.
+Real paired playtests require two humans playing together. The user's pair provides the two agreed milestone tests. Broader newcomer or expert qualification requires those actual players and is recorded separately as pending when unavailable. Scripted bots, deterministic routes and one operator driving both seats validate implementation but do not establish fun or mixed-skill usability. The original order required retaining a technical checkpoint without expanding content when the first paired gate was unavailable. Later content did expand and the wider programme now schedules formal comparison last. The current checkpoint records those facts separately; it does not establish that the original co-op gate passed or was waived.
 
 ## Review and test cases
 

@@ -27,8 +27,8 @@ Create a plan beside an already downloaded optional bundle:
 The placeholders must be replaced with independently selected exact identities.
 The bundle path is relative to the plan. `trace` accepts `none`, `timeline` or
 `cpu`; these are different instrumentation conditions and must not be pooled as
-an equivalent timing sample. The tool uses the existing optional-package
-admission and ZIP verifier; a self-consistent bundle is still not release
+an equivalent timing sample. The tool uses the shared `fpv-observation-artifact.mjs` loader and the existing
+optional-package admission and ZIP verifier; a self-consistent bundle is still not release
 approval or independent evidence of a GitHub tag.
 
 ```sh
@@ -56,7 +56,9 @@ The server uses the existing packaged-preview security headers. Those include
 explicit soundtrack origins beyond the public policy; the report records exact
 headers. This is not a deployed-origin, installed-PWA or production-cache test.
 All admitted runtime members are fetched back and hash-checked before the browser
-measurement. Tool authority hashes, observation HTML and wrapper hashes are
+measurement. The public `loadFPVCompletionArtifact` API still validates a completion
+plan; the shared loader also supports the separate runtime and retention procedures
+without relabelling them as completions. Tool authority hashes, observation HTML and wrapper hashes are
 recorded separately from the frozen runtime.
 
 ## Read the separate outcomes

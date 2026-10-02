@@ -12,7 +12,14 @@ import { fixture, structuralProbe, memoryIndexedDB } from './helpers/soundtrack-
 const recording = await fixture('menu-gesture');
 async function setup(
   t,
-  { prefix = 'coop', muted = false, volume = 0.65, ready = true, twoTracks = false } = {},
+  {
+    prefix = 'coop',
+    muted = false,
+    volume = 0.65,
+    ready = true,
+    twoTracks = false,
+    creatorSource,
+  } = {},
 ) {
   const doc = new Document(),
     audio = audioHarness(),
@@ -24,6 +31,14 @@ async function setup(
   });
   const library = {
     ...recording.library,
+    tracks: recording.library.tracks.map((track) =>
+      creatorSource === undefined
+        ? track
+        : {
+            ...track,
+            rights: { ...track.rights, source: creatorSource },
+          },
+    ),
     playlists: [
       {
         id: 'menu.test',
@@ -62,7 +77,14 @@ async function setup(
   start.id = `${prefix}-start`;
   resume.id = `${prefix}-resume`;
   doc.body.append(start, resume, pause);
+  if (creatorSource) {
+    const landing = doc.createElement('span');
+    landing.id = `${prefix}-landing-credit`;
+    landing.setAttribute('data-landing-song', '');
+    doc.body.append(landing);
+  }
   const host = attachCouchMusicHost({
+    onlineCatalogueDownload: { fetch: async () => new Response(null, { status: 503 }) },
     document: doc,
     root: doc.body,
     prefix,
@@ -138,6 +160,43 @@ test('menu activation respects mute, zero volume, hidden pages, music controls a
   assert.equal(await f.host.session.play(), true);
 });
 
+for (const prefix of ['race', 'coop'])
+  test(`${prefix}: trusted creator-link gestures do not start or retry remembered music`, async (t) => {
+    const f = await setup(t, { prefix, creatorSource: 'https://composer.example/trusted-gesture' });
+    const before = f.master.snapshot(),
+      writes = f.memory.allPuts.length;
+    const creatorGestures = () => {
+      const landing = f.doc.getElementById(`${prefix}-landing-credit`);
+      const link = landing.querySelector('a');
+      assert.ok(link?.closest('.music-creator-links'));
+      assert.equal(
+        landing.parentNode,
+        f.doc.body,
+        'landing credit is outside all audio-control scopes',
+      );
+      const nested = f.doc.createElement('span');
+      link.append(nested);
+      link.focus();
+      for (const type of ['pointerdown', 'keydown', 'click'])
+        nested.emit(type, { isTrusted: true, key: 'Enter', code: 'Enter' });
+    };
+    creatorGestures();
+    assert.equal(f.audio.media.plays, 0);
+    f.audio.media.rejectPlay = new DOMException('Gesture refused', 'NotAllowedError');
+    f.gesture();
+    await settleUntil(() => f.host.session.snapshot().needsPlayGesture);
+    await new Promise((resolve) => setImmediate(resolve));
+    assert.equal(f.audio.media.plays, 1);
+    f.audio.media.rejectPlay = null;
+    creatorGestures();
+    assert.equal(f.audio.media.plays, 1, 'creator links cannot retry blocked playback');
+    f.gesture();
+    await settleUntil(() => f.host.player.snapshot().playing);
+    assert.equal(f.audio.media.plays, 2, 'ordinary menu gestures still start playback');
+    assert.deepEqual(f.master.snapshot(), before);
+    assert.equal(f.memory.allPuts.length, writes);
+  });
+
 test('denied menu permission retries only on another trusted gesture and cannot change master intent', async (t) => {
   const f = await setup(t),
     before = f.master.snapshot();
@@ -199,7 +258,6 @@ for (const prefix of ['race', 'coop']) {
   test(`${prefix}: quick buttons and B/N preserve music-only Pause through session Start and focus`, async (t) => {
     const f = await setup(t, { prefix, twoTracks: true });
     const toggle = f.doc.getElementById(`${prefix}-quick-music-0-toggle`);
-    const pausedToggle = f.doc.getElementById(`${prefix}-quick-music-1-toggle`);
     const master = f.master.snapshot(),
       writes = f.memory.allPuts.length;
     const resume = f.doc.getElementById(`${prefix}-resume`);
@@ -210,7 +268,7 @@ for (const prefix of ['race', 'coop']) {
     toggle.click();
     assert.equal(f.audio.media.plays, 1, 'Direct activation reaches media before awaiting');
     await settleUntil(() => f.host.player.snapshot().playing);
-    pausedToggle.click();
+    toggle.click();
     assert.equal(f.host.session.snapshot().transportChoice, 'pause');
     assert.equal(await f.host.session.start(), false);
     const plays = f.audio.media.plays;

@@ -431,11 +431,19 @@ function controllerPad(h, t) {
   return { frame, set, pulse };
 }
 
+function openSettingsCategory(h, category) {
+  if (!h.$('settings-dialog').open) {
+    h.$('shell-options').focus();
+    h.$('shell-options').click();
+  }
+  h.$(`settings-tab-${category}`).focus();
+  h.$(`settings-tab-${category}`).click();
+  assert.equal(h.$('settings-dialog').open, true);
+  assert.equal(h.$(`settings-panel-${category}`).hidden, false);
+}
+
 function openSettingsWorkshop(h) {
-  h.$('shell-options').focus();
-  h.$('shell-options').click();
-  h.$('settings-tab-extras').focus();
-  h.$('settings-tab-extras').click();
+  openSettingsCategory(h, 'extras');
   h.$('shell-workshop').focus();
   h.$('shell-workshop').click();
 }
@@ -458,6 +466,7 @@ test('actual native keyboard/pointer handoff retains controller owner but suppre
   nativeDialogs(t);
   const h = await soloPage(t, { titleScreen: true }),
     pad = controllerPad(h, t);
+  openSettingsCategory(h, 'extras');
   for (const kind of ['keydown', 'pointerdown']) {
     pad.set(13, true);
     pad.frame();
@@ -880,11 +889,14 @@ function collectionBack(h) {
   return h.$('collection-back');
 }
 function openTitleCollection(h) {
+  openSettingsCategory(h, 'data');
+  assert.ok(h.$('shell-gallery').getClientRects().length, 'The real Settings entry is visible');
   h.$('shell-gallery').focus();
   h.$('shell-gallery').click();
   assert.equal(h.$('shell-home').open, true);
   assert.equal(h.$('collection-dialog').open, true);
-  assert.equal(collectionBack(h).textContent, 'Back to menu →');
+  assert.equal(h.$('settings-dialog').open, true);
+  assert.equal(collectionBack(h).textContent, 'Back to Settings');
 }
 async function openFirstPicture(h) {
   const card = h.$('gallery-grid').querySelector('button');
@@ -965,7 +977,7 @@ async function startPreparedFlight(h) {
   );
 }
 for (const exit of ['controller', 'escape', 'close button'])
-  test(`title picture ${exit} returns through Collection to its exact title opener`, async (t) => {
+  test(`title picture ${exit} returns through Collection and Settings to its exact opener`, async (t) => {
     const { page: h } = await earnedTitleCollection(t),
       pad = controllerPad(h, t);
     const checkpoint = authoritativeCheckpoint(h.rendered.run),
@@ -1002,8 +1014,13 @@ for (const exit of ['controller', 'escape', 'close button'])
     assert.equal(
       h.doc.activeElement === h.$('shell-gallery'),
       true,
-      'The title Collection opener owns focus.',
+      'The visible Settings Collection opener owns focus.',
     );
+    assert.equal(h.$('settings-dialog').open, true);
+    nativeEscape(h.$('settings-dialog'));
+    await Promise.resolve();
+    assert.equal(h.$('settings-dialog').open, false);
+    assert.equal(h.doc.activeElement.id, 'shell-options');
     assert.deepEqual(authoritativeCheckpoint(h.rendered.run), checkpoint);
     assert.deepEqual([...h.storage.map], before);
     assert.equal(h.storage.writes.length, writes);
@@ -1018,7 +1035,13 @@ test('picture Replay deliberately leaves title and Collection for the selected r
   await settle(() => h.doc.body.dataset.pictureState === 'ready');
   await Promise.resolve();
   h.frame(0);
-  for (const id of ['gallery-view-dialog', 'collection-dialog', 'shell-home', 'shell-missions'])
+  for (const id of [
+    'gallery-view-dialog',
+    'collection-dialog',
+    'settings-dialog',
+    'shell-home',
+    'shell-missions',
+  ])
     assert.equal(h.$(id).open, false, `${id} must not cover the chosen briefing`);
   assert.equal(h.doc.activeElement, h.$('start-button'));
   assert.equal(h.rendered.run.level.id, 'return-picture');
@@ -1031,7 +1054,7 @@ test('picture Replay deliberately leaves title and Collection for the selected r
   assert.deepEqual(h.errors, []);
 });
 
-test('Collection Choose appearance opens Missions setup over its retained title', async (t) => {
+test('Collection Choose appearance opens Missions setup over retained Settings and title', async (t) => {
   nativeDialogs(t);
   const h = await soloPage(t, { titleScreen: true }),
     checkpoint = authoritativeCheckpoint(h.rendered.run);
@@ -1043,19 +1066,28 @@ test('Collection Choose appearance opens Missions setup over its retained title'
   h.frame(0);
   assert.equal(h.$('collection-dialog').open, false);
   assert.equal(h.$('shell-home').open, true, 'The mission library retains its Home parent.');
+  assert.equal(
+    h.$('settings-dialog').open,
+    true,
+    'Settings retains the visible Collection opener.',
+  );
   assert.equal(h.$('journey-chooser').open, true);
   assert.equal(h.doc.activeElement, h.$('body-select'));
   assert.deepEqual(authoritativeCheckpoint(h.rendered.run), checkpoint);
   assert.deepEqual(h.errors, []);
 });
 
-test('Collection resets its return label from title to a direct paused-flight visit', async (t) => {
+test('Collection resets its return label from Settings to a direct paused-flight visit', async (t) => {
   nativeDialogs(t);
   const h = await soloPage(t, { titleScreen: true });
   openTitleCollection(h);
   collectionBack(h).click();
   await Promise.resolve();
   assert.equal(h.$('shell-home').open, true);
+  assert.equal(h.$('settings-dialog').open, true);
+  nativeEscape(h.$('settings-dialog'));
+  await Promise.resolve();
+  assert.equal(h.doc.activeElement.id, 'shell-options');
   await activateOwnedPromise(
     h.$('shell-featured'),
     'The title Start control owns its actual flight preparation.',
@@ -1186,7 +1218,7 @@ for (const origin of ['title', 'paused flight'])
   });
 
 for (const origin of ['title', 'paused flight'])
-  test(`${origin} top-level How to play returns to its exact main-menu opener`, async (t) => {
+  test(`${origin} Settings How to play returns through its exact retained openers`, async (t) => {
     nativeDialogs(t);
     const h = await soloPage(t, { titleScreen: origin === 'title' }),
       pad = controllerPad(h, t);
@@ -1200,6 +1232,8 @@ for (const origin of ['title', 'paused flight'])
       assert.equal(h.rendered.run.player.cutting, true);
     }
     for (const exit of ['button', 'escape', 'controller']) {
+      openSettingsCategory(h, 'extras');
+      assert.ok(h.$('shell-help').getClientRects().length);
       h.$('shell-help').focus();
       h.$('shell-help').click();
       pad.frame();
@@ -1217,6 +1251,12 @@ for (const origin of ['title', 'paused flight'])
       assert.equal(h.$('help-dialog').open, false);
       assert.equal(h.$('shell-home').open, true);
       assert.equal(h.doc.activeElement.id, 'shell-help');
+      assert.equal(h.$('settings-dialog').open, true);
+      pad.pulse(1);
+      await Promise.resolve();
+      assert.equal(h.$('settings-dialog').open, false);
+      assert.equal(h.$('shell-home').open, true);
+      assert.equal(h.doc.activeElement.id, 'shell-options');
       assert.deepEqual(authoritativeCheckpoint(h.rendered.run), checkpoint);
       assert.deepEqual([...h.storage.map], stored);
       pad.frame();
@@ -1409,8 +1449,11 @@ for (const context of ['Home', 'field']) {
     const h = await soloPage(t, { titleScreen: context === 'Home' });
     const checkpoint = authoritativeCheckpoint(h.rendered.run);
     const opener = h.$(context === 'Home' ? 'shell-gallery' : 'shell-collection');
-    opener.focus();
-    opener.click();
+    if (context === 'Home') openTitleCollection(h);
+    else {
+      opener.focus();
+      opener.click();
+    }
     h.$('collection-progress').querySelector('summary').click();
     h.$('collection-choose-appearance').click();
     await settle(() => h.$('journey-chooser')?.open && h.doc.activeElement === h.$('body-select'));
@@ -1420,7 +1463,8 @@ for (const context of ['Home', 'field']) {
     await Promise.resolve();
     h.frame(0);
     assert.equal(h.$('shell-home').open, context === 'Home');
-    assert.equal(h.doc.activeElement, opener);
+    assert.ok(h.doc.activeElement === opener, h.doc.activeElement?.id);
+    assert.equal(h.$('settings-dialog').open, context === 'Home');
     assert.deepEqual(authoritativeCheckpoint(h.rendered.run), checkpoint);
     assert.deepEqual(h.errors, []);
   });

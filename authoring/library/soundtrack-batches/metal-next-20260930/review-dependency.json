@@ -1,0 +1,60 @@
+{
+  "format": "revealline-soundtrack-batch-review-dependency.v1",
+  "batchId": "metal-next-20260930",
+  "status": "pending",
+  "reason": "The owner-review.v1 contract binds each admitted recording ID and hash directly to an explicit owner decision. These six exact public recordings retain listeningApproval:not-reviewed; prior blanket or direction-level approval is not silently converted into an exact-file approval.",
+  "tracks": [
+    {
+      "id": "builtin.catalog.davidkbd.solar-storm",
+      "sha256": "f970376312c518988ce53f963432c2bd86b039655a80ca0118a33bf2a3515fec",
+      "bytes": 7234081
+    },
+    {
+      "id": "builtin.catalog.davidkbd.galactic-battle",
+      "sha256": "263567383813e1cfa75952436e1eb9cbfa2556a73d60499da0cccb0a5f0c3343",
+      "bytes": 7243276
+    },
+    {
+      "id": "builtin.catalog.davidkbd.orbital-assault",
+      "sha256": "89c01c9f646c48bd6a1656bfa45a4b5af28a766b1d5f155f104a7902f628b5d9",
+      "bytes": 5954290
+    },
+    {
+      "id": "builtin.catalog.davidkbd.mutilations-melody",
+      "sha256": "00bcd6d67615f6dfa51cd1e03361a3fc8de7a742aec1ca9336ed56bfe231228c",
+      "bytes": 4264899
+    },
+    {
+      "id": "builtin.catalog.davidkbd.bone-grinders-ballad",
+      "sha256": "e8c8670b02b6322c19e37ac993a7713a631af93a0bb997a0ef9c1e75c926ea04",
+      "bytes": 4015795
+    },
+    {
+      "id": "builtin.catalog.davidkbd.city-limits-crash",
+      "sha256": "7cc21044e1c8b23b9e71af8bf5a9d143ca8de8b6e8898fe930bc78811493a442",
+      "bytes": 3330342
+    }
+  ],
+  "evidence": {
+    "path": "authoring/library/soundtrack-batches/metal-next-20260930/source-evidence.json",
+    "bytes": 28163,
+    "sha256": "5b2190174f93a1dc50c782add3c0ecc10fa4a43d1eb6ccd0a22927790a682bf9"
+  },
+  "requiredNextStep": "Record an explicit owner decision covering these exact six recordings (or an explicitly selected subset), retaining the exact IDs/hashes and all deferred listening/device checks. Publish and verify the separate admission inventory before activating the batch.",
+  "pendingChecks": [
+    "fullTrack",
+    "repeatedSession",
+    "inGameTransition",
+    "warningAudibility",
+    "mono",
+    "smallSpeakers",
+    "physicalDevice"
+  ],
+  "additionalPendingChecks": [
+    "instrumentalReview",
+    "vocalContent",
+    "explicitContentReview",
+    "sceneAndEnergyAcceptance"
+  ],
+  "runtimeAdmission": false
+}

@@ -4,8 +4,12 @@ Approved priority updated 29 September 2026: **A → B → C → remaining work*
 A is current characters and reliable play; B is optional encounter variety; C is
 one finished Ukrainian/FPV artwork cohort. Required authoring/verification travels
 with each feature; additional editions and broad tools follow. C2's formal human
-benchmark remains last. See the [current register](plan-status-2026-09-30.md) for
-completed work, exact source status, blockers and remaining effort ranges.
+benchmark remains last. The [1 October historical review and priority choices](plan-priorities-2026-10-01.md)
+for completed/remaining work, player benefits and the cost of postponement. Its
+core-game-first refinement is a recommendation for user review, not a change to
+existing deferrals. The [30 September review](plan-review-2026-09-30.md) retains
+the earlier phase inventory and conditional effort ranges. The
+[daily register](plan-status-2026-09-30.md) preserves dated integration evidence.
 
 ## Latest instruction: defer production review
 
@@ -14,11 +18,12 @@ implementation in parallel, keeping required correctness and integrity checks.
 The [30 September temporary test policy](focused-test-waiver-20260930.md) governs
 suite execution; waived checks are not passes and do not waive runtime/build
 defects, exact source identity, capacity or asset integrity.
-Production/cultural/device/human approval remains deferred rather than passed;
-no candidate is silently adopted. The immediate batch adds dense Team cue
-reading, current-mission encounter lessons and retained-parent artwork comparison.
-Necessary C6 support travels with C; broad tooling and C2 remain later.
-The current register supersedes historical status paragraphs below.
+Production/cultural review remains deferred rather than passed; device and human
+qualification are still outstanding. No candidate is silently adopted. Dense Team
+cue reading, current-mission encounter lessons and retained-parent artwork
+comparison are already integrated through PR761. Required C6 support travels with
+A/B/C; broad tooling and C2 remain later. The current explanation and daily register
+supersede historical status paragraphs below.
 
 The 30 September successor refreshes current coverage to FPV104, corrects the
 ordinary Sentry projectile-loss explanation, and prepares exact fpv38/50 Team
@@ -26,15 +31,15 @@ import restoration. These are bounded A/B compatibility and feedback changes,
 not new production-art adoption. See the register for queued menu/authoring owner
 work and the separate remaining C7/device and C2/human qualification.
 
-The next bounded [batch24](verification/actor-batch-24/README.md) qualifies real
+The integrated [batch24](verification/actor-batch-24/README.md) records real
 Solo save/Continue during an active enemy-freeze interval and real Sentry
 projectile contact/nonterminal recovery. These close distinct host boundaries;
 they do not add or rebalance missions. It also corrects raw floating-point score
 labels through the selected locale, preserving exact saves and replays. Historical
 story-focus and continuation candidates have newer successors; do not replay
 them wholesale. Production/native artwork adoption remains deferred, and one
-publisher retains the integrated release. See the current register for final
-focused results and remaining scope.
+publisher retains release ownership. Historical focused results belong to their
+recorded sources; the active waiver does not convert them into fresh passes.
 
 ## Batch policy and current delivery state
 
@@ -85,7 +90,7 @@ visual/build checks and public delivery are open. A3's narrow Ukrainian Team
 layout correction proceeds in PR757 in parallel; no competing publisher or
 version is introduced.
 
-## Implemented and awaiting integration
+## Historical implementation checkpoints before integration
 
 **28 September proportion revision:** the user's actual-size review rejected the first declared-rig propellers as too small. Prior motion checks remain evidence of animation only. C1 delivery now requires the [larger-propeller comparison and reference review](drone-reference-review.md), including smaller hubs and slimmer bodies; do not release the old visual result as accepted. All 22 newly supplied examples have been inspected and 24 additional official references located. The user selected the generated 16-machine roster as the desired visual direction. Preserve that richer appearance while preparing separate native bodies and correctly handed moving parts; concept approval does not establish runtime readiness.
 
@@ -370,9 +375,9 @@ C2 needs two short rounds with at least three newcomers and three experienced pl
 
 Use this bounded multi-phase PR as one compatible publisher input. Preserve separate feature evidence and reversible commits inside it; unfinished subfeatures stay explicitly unaccepted. Keep one publisher. That owner adopts exact provenance and preserved historical metadata, assigns the next version, qualifies the integrated source, freezes and publishes immutable bytes, admits the selector, verifies Pages and ordinary play, then marks the batch accepted. Long suites waived by the committed temporary policy remain explicitly waived; focused checks and failed gates stay visible. Unrelated workspace work, original artwork and published releases remain intact.
 
-## Latest delivery checkpoint
+## Historical delivery checkpoint — 29 September
 
-Use the [29 September completed/remaining register](plan-status-2026-09-29.md) for current queue state and effort ranges. Batch 12 adds rule-derived optional-encounter teaching, Team recovery-pose correction, inspection-only travel response, and a separate native Poltava board candidate. These bounded slices do not close whole phases. The approved order above is now A → B → C → remaining work, with C2 last.
+The [29 September register](plan-status-2026-09-29.md) preserves this checkpoint. Use the [30 September review](plan-review-2026-09-30.md) for current status and effort ranges. Batch 12 adds rule-derived optional-encounter teaching, Team recovery-pose correction, inspection-only travel response, and a separate native Poltava board candidate. These bounded slices do not close whole phases. The approved order above is now A → B → C → remaining work, with C2 last.
 
 Batch15 extends that existing comparison to all seven native V6 craft with real
 retained class setup and exact authenticated images. Authored Arcade restrictions

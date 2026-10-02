@@ -1,3 +1,10 @@
+import {
+  REWARD_BOARD_SECONDS,
+  REWARD_STORY_SECONDS,
+  advanceRewardAge,
+  animateRewardArrival,
+} from '../ui/reward-arrival.mjs';
+import { advanceCelebration, celebrationFrame, drawCelebration } from '../ui/celebration.mjs';
 import { createCreatorStore, loadInstalledCreatorBundle } from './installed.mjs';
 import {
   createCreatorRuntime,
@@ -50,6 +57,9 @@ let runtime,
   pictureURL,
   pictureSha256,
   storyPlayer,
+  earnedCelebration,
+  pendingReward = null,
+  presentingReward = false,
   startMissionId = null,
   nextMissionId = null,
   activationEpoch = 0;
@@ -61,6 +71,7 @@ const playerMenu = attachCreatorPlayerMenu({
     ready: !!runtime,
     paused,
     ended,
+    presenting: presentingReward,
     savedRaw,
     pack,
     attempt: runtime?.current(),
@@ -92,14 +103,23 @@ menu = attachCreatorPlayerNavigation({
       ? 'creator-busy'
       : !runtime
         ? 'creator-error'
-        : ended
-          ? 'creator-result'
-          : paused
-            ? 'creator-menu'
-            : 'flight',
-  getDefaultFocus: () => playerMenu.primary(),
-  getRoot: () => playerMenu.root(),
-  onBack: () => playerMenu.back(),
+        : document.body.dataset.earnedView === 'on'
+          ? 'creator-earned-media'
+          : ended
+            ? 'creator-result'
+            : paused
+              ? 'creator-menu'
+              : 'flight',
+  getDefaultFocus: () =>
+    document.body.dataset.earnedView === 'on' ? $('earned-continue') : playerMenu.primary(),
+  getRoot: () => (document.body.dataset.earnedView === 'on' ? $('earned') : playerMenu.root()),
+  onBack: () => {
+    if (document.body.dataset.earnedView === 'on') {
+      $('earned-continue').click();
+      return true;
+    }
+    return playerMenu.back();
+  },
 });
 function persistAttempt() {
   const attempt = runtime?.current();
@@ -207,6 +227,7 @@ async function showEarned(preferredMissionId = null) {
   }
   $('earned-picture').src = pictureURL;
   $('earned-picture').alt = picture.alt;
+  await $('earned-picture').decode?.();
   if ($('earned-picture').parentElement !== $('creator-story-stage'))
     $('creator-story-stage').replaceChildren($('earned-picture'));
   localizedText($('earned-caption'), () =>
@@ -223,7 +244,16 @@ async function showEarned(preferredMissionId = null) {
     posterElement: $('earned-picture'),
   });
 }
+function setEarnedView(active) {
+  document.body.dataset.earnedView = active ? 'on' : 'off';
+  $('creator-home').inert = active;
+  $('arena').inert = active;
+  document.querySelector('.touch-controls').inert = active;
+}
 async function adoptDisplay(attempt, running, epoch) {
+  pendingReward = null;
+  presentingReward = false;
+  setEarnedView(false);
   storyPlayer?.reset();
   painter.setLevel(attempt.run.level, { seed: attempt.run.seed });
   await painter.setLook(attempt.theme, 'neutral-marker');
@@ -257,6 +287,7 @@ async function adoptDisplay(attempt, running, epoch) {
   }
 }
 async function finish() {
+  presentingReward = runtime.current().run.status === 'won';
   ended = true;
   paused = true;
   busy = true;
@@ -288,13 +319,13 @@ async function finish() {
             : 'interface:creator.backToMyCreationsAction',
         ),
       );
-      if (earned)
-        void storyPlayer.show({
-          receipt,
-          posterElement: earned.posterElement,
-          posterAsset: earned.posterAsset,
-        });
+      if (earned) {
+        $('earned').hidden = true;
+        pendingReward = { run: runtime.current().run, age: 0, receipt, earned, expanded: false };
+      }
     } catch (error) {
+      presentingReward = false;
+      pendingReward = null;
       fail(error);
     }
   } else status(localizedMessage('interface:creator.tryAnotherCrossing'));
@@ -342,8 +373,62 @@ function frame(time) {
       persistAttempt();
     }
   }
+  if (pendingReward) {
+    const reward = pendingReward;
+    if (reward.run !== attempt.run) pendingReward = null;
+    else {
+      reward.age = advanceRewardAge(
+        reward.age,
+        dt,
+        document.hidden || !document.hasFocus() || !!document.querySelector('dialog[open]'),
+      );
+      if (!reward.expanded && reward.age >= REWARD_BOARD_SECONDS) {
+        const from = $('board').getBoundingClientRect();
+        reward.expanded = true;
+        $('earned').hidden = false;
+        setEarnedView(true);
+        earnedCelebration = { ...painter.celebration };
+        animateRewardArrival(
+          $('earned-picture'),
+          from,
+          document.body.dataset.effects === 'reduced',
+        );
+        $('earned-continue').focus({ preventScroll: true });
+      }
+      if (reward.age >= REWARD_STORY_SECONDS) {
+        pendingReward = null;
+        void storyPlayer.show({
+          receipt: reward.receipt,
+          posterElement: reward.earned.posterElement,
+          posterAsset: reward.earned.posterAsset,
+        });
+      }
+    }
+  }
+  if (document.body.dataset.earnedView === 'on') {
+    const canvas = $('earned-confetti');
+    if (canvas.width !== window.innerWidth) canvas.width = window.innerWidth;
+    if (canvas.height !== window.innerHeight) canvas.height = window.innerHeight;
+    earnedCelebration = advanceCelebration(earnedCelebration, dt, {
+      paused: document.hidden || !document.hasFocus(),
+      reduced: document.body.dataset.effects === 'reduced',
+    });
+    const rewardFrame = celebrationFrame(earnedCelebration);
+    canvas.hidden = !rewardFrame.active;
+    const context = canvas.getContext('2d');
+    if (rewardFrame.active) context.clearRect(0, 0, canvas.width, canvas.height);
+    drawCelebration(
+      context,
+      rewardFrame,
+      { accent: '#75dfdd', safe: '#b8e9a2', paper: '#fff1c9', danger: '#d6b0ff' },
+      canvas.width,
+      canvas.height,
+    );
+  }
   painter.draw($('board').getContext('2d'), attempt.run, dt, {
     paused,
+    celebrationPaused:
+      document.hidden || !document.hasFocus() || !!document.querySelector('dialog[open]'),
     reduced: document.body.dataset.effects === 'reduced',
     fullReveal: attempt.run.status === 'won',
     backdrop: attempt.picture,
@@ -383,6 +468,14 @@ $('retry').onclick = () =>
 $('pause').onclick = () => {
   if (paused) setRunning();
   else pause();
+};
+$('earned-continue').onclick = () => {
+  pendingReward = null;
+  presentingReward = false;
+  storyPlayer?.reset();
+  setEarnedView(false);
+  updateControls();
+  $('next').focus({ preventScroll: true });
 };
 $('next').onclick = () => {
   if (!nextMissionId) return void (location.href = './#installed');
@@ -501,6 +594,11 @@ try {
     runtime,
     host: createCreatorVictoryStoryHost({
       document,
+      presentationOptions: {
+        get reducedMotion() {
+          return document.body.dataset.effects === 'reduced';
+        },
+      },
       nodes: {
         surface: $('earned'),
         stage: $('creator-story-stage'),

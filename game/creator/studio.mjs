@@ -15,6 +15,7 @@ import {
 } from './installed.mjs';
 import {
   prepareCreatorSource,
+  creatorBundleAssets,
   exportCreatorSource,
   importCreatorSource,
   createCreatorDraftBackend,
@@ -143,7 +144,7 @@ refreshDefaultFields();
 
 function controls() {
   $('edits').hidden = !content || batchMode || mediaMode;
-  $('generate').disabled = busy || mediaMode || (!sourceFile && !content);
+  $('generate').disabled = busy || (!sourceFile && !content);
   $('approve').disabled = busy || !prepared;
   $('approve').hidden = batchMode && !!approval;
   $('install').disabled = busy || !installReview?.enoughManagedSpace;
@@ -151,7 +152,7 @@ function controls() {
   $('backup').disabled = busy || !content;
   $('save').disabled = busy || !content;
   $('cancel').hidden = !busy;
-  for (const key of ['image', 'import']) $(key).disabled = busy;
+  for (const key of ['image', 'import', 'social-drone-example']) $(key).disabled = busy;
   for (const key of ['advanced', 'load-advanced', 'regenerate']) $(key).disabled = busy || !content;
   for (const key of [
     'name',
@@ -161,7 +162,7 @@ function controls() {
     'picture-credit',
     'license',
   ])
-    $(key).disabled = busy || mediaMode;
+    $(key).disabled = busy;
   $('fit').disabled = busy || mediaMode || (!!content && !sourceFile);
 }
 
@@ -372,6 +373,7 @@ const mediaReview = createCreatorMediaReviewController({
       batchMode = false;
       mediaMode = true;
       sourceFile = image = null;
+      fillLabels();
       await saveDraft();
       showReview(prepared);
       status(
@@ -413,7 +415,7 @@ function fillLabels() {
   $('license').value = content.credits.license;
 }
 function currentAssets() {
-  if (mediaSource) return mediaSource.sourceAssets;
+  if (mediaSource) return creatorBundleAssets(mediaSource.sourceAssets);
   if (batchSource) return batchSource.sourceAssets;
   const all = [
     ...(image
@@ -898,7 +900,7 @@ async function openSource(source) {
   fillLabels();
   invalidate();
   if (mediaMode) {
-    prepared = await prepareCreatorBundle(content, source.assets);
+    prepared = await prepareCreatorBundle(content, currentAssets());
     showReview(prepared);
   }
   status(localizedMessage('interface:creator.sourceDraftRestored'));
@@ -1075,6 +1077,18 @@ $('backup').onclick = async () => {
 $('save').onclick = () => {
   void saveDraft().catch(fail);
 };
+$('social-drone-example').onclick = () =>
+  operation(
+    async (signal) => {
+      const response = await fetch(
+        new URL('./examples/social-drone-sky-watch.rlpack', import.meta.url),
+        { signal },
+      );
+      if (!response.ok) throw new Error(t('interface:creator.socialDroneExampleUnavailable'));
+      await openPrepared(await importCreatorBundle(await response.blob(), { signal }));
+    },
+    { opener: $('social-drone-example') },
+  );
 $('import').onchange = () =>
   operation(
     async (signal) => {

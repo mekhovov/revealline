@@ -12,6 +12,7 @@ function setup({
   active = () => true,
   conflicts = () => false,
   couch = false,
+  nativeLanding = false,
 } = {}) {
   const doc = new Document(),
     win = new Events(),
@@ -29,7 +30,15 @@ function setup({
     menu.id = 'race-start';
     settings.setAttribute('data-couch-music', 'race');
   }
-  doc.body.append(menu, resume, settings);
+  const landing = doc.createElement('section');
+  if (nativeLanding) {
+    landing.className = 'native-landing';
+    const actions = doc.createElement('nav');
+    menu.id = 'late-host-primary';
+    actions.append(menu);
+    landing.append(actions);
+    doc.body.append(landing, resume, settings);
+  } else doc.body.append(menu, resume, settings);
   let state = {
     desired: false,
     playing: false,
@@ -89,6 +98,8 @@ function setup({
     host,
     menu,
     resume,
+    settings,
+    landing,
     state: () => state,
     setState: (value) => {
       state = { ...state, ...value };
@@ -161,6 +172,49 @@ test('couch Audio keeps its full transport without an extra landing transport', 
   f.key('KeyN');
   assert.deepEqual(f.calls, ['play', 'next']);
   f.host.dispose();
+});
+
+test('late transport mounting keeps native landings passive while Audio and Pause remain usable', () => {
+  const f = setup({ nativeLanding: true }),
+    label = f.doc.createElement('span');
+  label.setAttribute('data-landing-song', 'solo');
+  f.landing.append(label);
+  f.host.render();
+  assert.equal(f.landing.querySelectorAll('button').length, 1, 'Only the host action remains.');
+  assert.equal(f.landing.querySelector('.quick-music-controls'), null);
+  assert.equal(f.settings.querySelectorAll('.quick-music-settings-transport').length, 1);
+  assert.deepEqual(
+    [...f.$('test-quick-music-settings').querySelectorAll('button')].map((node) => node.id),
+    [
+      'test-quick-music-settings-previous',
+      'test-quick-music-settings-toggle',
+      'test-quick-music-settings-next',
+    ],
+  );
+  assert.equal(
+    f.resume.parentNode.children[f.resume.parentNode.children.indexOf(f.resume) + 1].id,
+    'test-quick-music-0',
+    'The non-landing Pause anchor retains its shared transport.',
+  );
+  assert.equal(label.textContent, 'One · Artist');
+  assert.deepEqual(f.calls, [], 'Mounting and metadata do not start music.');
+  f.$('test-quick-music-settings-toggle').click();
+  assert.deepEqual(f.calls, ['play']);
+  assert.equal(f.$('test-quick-music-0-toggle').textContent, 'Pause music');
+  f.resume.focus();
+  f.$('test-quick-music-0-toggle').click();
+  f.$('test-quick-music-settings-next').click();
+  assert.deepEqual(f.calls, ['play', 'pause', 'next']);
+  assert.equal(f.doc.activeElement, f.resume);
+  assert.equal(label.textContent, 'Two');
+  f.$('test-quick-music-settings-previous').click();
+  assert.equal(label.textContent, 'One · Artist');
+  assert.equal(f.state().desired, false, 'Changing tracks preserves paused intent.');
+  assert.equal(f.landing.querySelector('.quick-music-controls'), null);
+  f.host.dispose();
+  assert.equal(f.settings.querySelector('.quick-music-controls'), null);
+  assert.equal(f.$('test-quick-music-0'), null);
+  assert.equal(f.menu.parentNode.closest('.native-landing'), f.landing);
 });
 
 test('passive landing metadata clears a stale song when no recording is selected', () => {
@@ -302,5 +356,38 @@ test('capture owners can yield exclusively to eligible quick shortcuts', () => {
   conflicts = false;
   f.$('test-music-shortcuts').click();
   assert.equal(f.host.handlesKey({ type: 'keydown', code: 'KeyN' }), false);
+  f.host.dispose();
+});
+
+test('menu, Audio and Pause credits open creator resources without running transport', () => {
+  const f = setup({ nativeLanding: true }),
+    label = f.doc.createElement('span');
+  label.setAttribute('data-landing-song', 'solo');
+  f.landing.append(label);
+  f.setState({
+    track: {
+      id: 'one',
+      title: 'One',
+      artist: 'Artist',
+      rights: { source: 'https://artist.example/song' },
+    },
+  });
+  for (const root of [label, f.$('test-quick-music-settings'), f.$('test-quick-music-0')]) {
+    const link = root.querySelector('a');
+    assert.equal(link.getAttribute('href'), 'https://artist.example/song');
+    assert.equal(link.getAttribute('target'), '_blank');
+    assert.equal(link.getAttribute('rel'), 'noopener noreferrer');
+    link.click();
+  }
+  assert.deepEqual(f.calls, []);
+  const focused = label.querySelector('a');
+  focused.focus();
+  f.host.render();
+  assert.equal(f.doc.activeElement, focused);
+  assert.equal(label.textContent, 'One · Artist');
+  f.setState({ track: { id: 'two', title: 'Upload with no source' } });
+  assert.equal(label.querySelector('a'), null);
+  assert.equal(label.textContent, 'Upload with no source');
+  assert.equal(f.$('test-quick-music-settings').querySelector('a'), null);
   f.host.dispose();
 });

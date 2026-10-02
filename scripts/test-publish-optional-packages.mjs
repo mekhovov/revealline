@@ -7,6 +7,40 @@ import { spawnSync } from 'node:child_process';
 import { createHash } from 'node:crypto';
 import { optionalPackageFixture } from '../publishing/optional-package-fixture.mjs';
 const cli = new URL('publish-optional-packages.mjs', import.meta.url).pathname;
+test('main Pages staging emits an explicit empty catalogue without GitHub and refuses replacement', async (t) => {
+  const directory = await fs.mkdtemp(path.join(os.tmpdir(), 'practice-main-pages-'));
+  t.after(() => fs.rm(directory, { recursive: true, force: true }));
+  const output = path.join(directory, 'site'),
+    selector = path.join(directory, 'selector.json');
+  await fs.mkdir(output);
+  await fs.writeFile(
+    selector,
+    JSON.stringify({ format: 'revealline-optional-package-publication.v1', releases: [] }),
+  );
+  const run = () =>
+    spawnSync(
+      process.execPath,
+      [
+        cli,
+        'stage-pages',
+        '--out',
+        output,
+        '--selector',
+        selector,
+        '--repository',
+        'mekhovov/revealline',
+        '--base-path',
+        '/revealline/',
+      ],
+      { encoding: 'utf8' },
+    );
+  const first = run();
+  assert.equal(first.status, 0, first.stderr);
+  const bytes = await fs.readFile(path.join(output, 'practice/index.json'));
+  assert.deepEqual(JSON.parse(bytes).packages, []);
+  assert.notEqual(run().status, 0);
+  assert.deepEqual(await fs.readFile(path.join(output, 'practice/index.json')), bytes);
+});
 async function fixture(t) {
   const directory = await fs.mkdtemp(path.join(os.tmpdir(), 'optional-delivery-test-'));
   t.after(() => fs.rm(directory, { recursive: true, force: true }));

@@ -235,6 +235,8 @@ test('failed fresh Next keeps the result, Retry keeps FPV, and successful Next a
       'A legal opening cut must really clear the mission.',
     );
     assert.equal(checkpoint(page).hash, 'd8b55c21a6756634');
+    if (!page.$('skip-celebration').hidden) page.$('skip-celebration').click();
+    page.$('show-result').click();
   }
   await win();
   const result = page.rendered.run,
