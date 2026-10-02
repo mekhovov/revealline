@@ -37,7 +37,7 @@ const custom = (library) => library.missions.find((row) => row.collection === 'C
 test('empty installed library lists every Classic without fetching, and base is exact-key ready', async () => {
   const current = emptyPackLibrary();
   const { library } = await createInstalledMissionLibrary({ ...defaults, getPacks: () => current });
-  assert.equal(library.missions.length, 196);
+  assert.equal(library.missions.length, 296);
   const base = library.missions.find((row) => row.runtimeId === 'signal-12');
   assert.equal(library.availability(base).state, 'ready');
   assert.equal(library.progress(base, 'solo'), '');

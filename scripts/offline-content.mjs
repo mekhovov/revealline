@@ -6,10 +6,16 @@ import { soundtrackRights } from '../game/soundtrack.mjs';
 import { authoredPackageId } from '../game/content-design/offline-packages.mjs';
 import { classifyContent } from '../game/content-design/content-lifecycle.mjs';
 import { addAuthoredRuntimeSnapshots } from './authored-runtime-snapshots.mjs';
-import { isOptionalSpatialAudioBody, selectOfflineCore } from './offline-core-closure.mjs';
-import { downloadFiles } from '../game/download-catalogue.mjs';
+import {
+  isOptionalSpatialAudioBody,
+  isOptionalTeamImportManifest,
+  selectOfflineCore,
+} from './offline-core-closure.mjs';
+import { downloadFiles, validateDownloadCatalogue } from '../game/download-catalogue.mjs';
+import { validateInstalledSelection } from '../game/installed-app.mjs';
 import { buildOfflineDestinations, buildNavigationBootstraps } from './offline-destinations.mjs';
 import { readFileSync } from 'node:fs';
+import { addOfflineExperiences } from './offline-experiences.mjs';
 
 const contentMessages = JSON.parse(
   readFileSync(new URL('../game/locales/en/content.json', import.meta.url), 'utf8'),
@@ -38,13 +44,44 @@ export const CULTURAL_TEAM_OFFLINE_PROJECT_FACTORIES = Object.freeze(
 
 const digest = (bytes) => createHash('sha256').update(bytes).digest('hex');
 /** Built from the exact frozen bytes, never a second, independently maintained asset list. */
-export async function buildOfflineContent(entries, excluded, version) {
+export async function buildOfflineContent(
+  entries,
+  excluded,
+  version,
+  { bundledPackages = [] } = {},
+) {
   const snapshots = await addAuthoredRuntimeSnapshots(entries);
   for (const chapter of snapshots?.chapters || [])
     if (!chapter.descriptor.core) excluded.add(chapter.path);
   for (const item of snapshots?.routes || [])
     excluded.add(`game/content-design/${item.descriptor.path}`);
   const byPath = new Map(entries.map((entry) => [entry.name, entry]));
+  const teamImportManifests = entries.filter((entry) => isOptionalTeamImportManifest(entry.name));
+  const teamImportAssets = new Set();
+  for (const entry of teamImportManifests) {
+    if (
+      entries.filter((item) => item.name === entry.name).length !== 1 ||
+      entry.name !== `game/presentation/compiled/runtime.${digest(entry.bytes)}.json`
+    )
+      throw new Error('Older Team import theme differs from its exact shipped manifest.');
+    const manifest = JSON.parse(entry.bytes);
+    for (const asset of Object.values(manifest.resolved.assets)) {
+      if (!asset.file) continue;
+      const relative = manifest.urls[asset.file.sha256];
+      if (!/^\.\/assets\/[a-f0-9]{64}\.(?:png|woff2)$/.test(relative))
+        throw new Error('Older Team import theme has an unsupported asset dependency.');
+      const name = `game/presentation/compiled/${relative.slice(2)}`;
+      const body = byPath.get(name);
+      if (
+        entries.filter((item) => item.name === name).length !== 1 ||
+        body?.bytes.length !== asset.file.bytes ||
+        digest(body.bytes) !== asset.file.sha256
+      )
+        throw new Error(`Older Team import theme has no exact shipped asset: ${name}`);
+      teamImportAssets.add(name);
+    }
+    excluded.add(entry.name);
+  }
   const parse = (name, fallback) =>
     byPath.has(name) ? JSON.parse(byPath.get(name).bytes) : fallback;
   const classicIndex = parse('game/content/mission-library-index.json', { missions: [] });
@@ -298,7 +335,11 @@ export async function buildOfflineContent(entries, excluded, version) {
         files,
       });
     }
-  const toolingPaths = new Set((coreGraph?.optional || []).filter((path) => !modePaths.has(path)));
+  const toolingPaths = new Set(
+    (coreGraph?.optional || []).filter(
+      (path) => !modePaths.has(path) && !isOptionalTeamImportManifest(path),
+    ),
+  );
   if (toolingPaths.size) {
     for (const name of toolingPaths) excluded.add(name);
     groups.push({
@@ -323,6 +364,23 @@ export async function buildOfflineContent(entries, excluded, version) {
   // Hosted extras are not shared runtime dependencies. Keep them selectable
   // without charging every starter/chapter download for their optional bodies.
   const extraPaths = new Set();
+  if (teamImportManifests.length) {
+    const owned = teamImportManifests.map((entry) => entry.name);
+    owned.forEach((name) => extraPaths.add(name));
+    groups.push({
+      id: 'archive:team-import-themes',
+      title: 'Older Team import themes',
+      kind: 'gameplay',
+      category: 'archive',
+      current: false,
+      modes: ['team'],
+      requires: [
+        'shared',
+        ...(groups.some((group) => group.id === 'runtime:team') ? ['runtime:team'] : []),
+      ],
+      files: owned,
+    });
+  }
   for (const [id, title, matches] of [
     ['practice', 'Optional flight practice', (name) => name.startsWith('optional-practice/')],
     [
@@ -390,6 +448,14 @@ export async function buildOfflineContent(entries, excluded, version) {
       )
       .map((file) => file.path),
   });
+  const teamRuntimeFiles = new Set(
+    groups
+      .filter((group) => ['shared', 'runtime:team'].includes(group.id))
+      .flatMap((group) => group.files),
+  );
+  for (const name of teamImportAssets)
+    if (excluded.has(name) && !teamRuntimeFiles.has(name))
+      throw new Error(`Older Team import asset is outside its offline dependencies: ${name}`);
   if (snapshots)
     groups.unshift({
       id: 'base',
@@ -419,6 +485,7 @@ export async function buildOfflineContent(entries, excluded, version) {
         files: tracks.map((track) => `soundtrack:${track.id}`),
       });
   }
+  addOfflineExperiences(groups, files, bundledPackages, coreGraph?.retained);
   // Stable sort preserves authored chapter order within a mode while keeping
   // historical editions and Studio packages below current playable choices.
   const groupRank = (group) =>
@@ -469,7 +536,12 @@ export async function buildOfflineContent(entries, excluded, version) {
     }
     if (offset !== entry.bytes.length) throw new Error('Official media bundle has trailing bytes.');
   }
-  return {
+  // Every selectable gameplay package must fit the installed-state contract,
+  // including archives/tools that a player can opt into individually.
+  validateInstalledSelection(
+    groups.filter((group) => group.kind === 'gameplay').map((group) => group.id),
+  );
+  return validateDownloadCatalogue({
     format: snapshots ? 'revealline-offline-content.v2' : 'revealline-offline-content.v1',
     version,
     files,
@@ -515,7 +587,7 @@ export async function buildOfflineContent(entries, excluded, version) {
     ],
     sharedPolicy:
       'The current lightweight catalogue keeps every mission visible. Original artwork belongs to its chapter; archives and soundtracks are separate optional downloads.',
-  };
+  });
 }
 
 /** Publication evidence, generated after the worker to avoid a recursive content hash. */

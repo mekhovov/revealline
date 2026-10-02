@@ -224,13 +224,13 @@ async function running(p, id) {
   }
 }
 
-test('Classic Solo mounts all139 Journey and196 retained Classic missions', async (t) => {
+test('Classic Solo mounts all 139 Journey and 296 retained Classic missions', async (t) => {
   const p = await soloPage(t, { titleScreen: true });
   await open(p);
   assert.equal(p.$('journey-lifecycle').value, 'current');
-  assert.equal(p.$('journey-cards').children.length, 190);
+  assert.equal(p.$('journey-cards').children.length, 240);
   showAllLifecycles(p);
-  assert.equal(p.$('journey-cards').children.length, 335);
+  assert.equal(p.$('journey-cards').children.length, 435);
   assert.equal(p.$('journey-collection').value, '');
   const cards = [...p.$('journey-cards').children];
   assert.match(cards[0].textContent, /Journey/);
@@ -238,7 +238,7 @@ test('Classic Solo mounts all139 Journey and196 retained Classic missions', asyn
   assert.equal(
     cards.filter((card) => card.querySelector('.journey-card-tags').textContent.includes('Classic'))
       .length,
-    196,
+    296,
   );
   assertReadyCard(
     cards.find((card) => card.dataset.missionId === lateBase.id),
@@ -503,7 +503,7 @@ test('default Journey mounts335 missions and hands the exact Classic selection t
   const p = await journeyPage(t);
   await open(p);
   showAllLifecycles(p);
-  assert.equal(p.$('journey-cards').children.length, 335);
+  assert.equal(p.$('journey-cards').children.length, 435);
   [...p.$('journey-cards').children].find((card) => card.dataset.missionId === lateBase.id).click();
   await settle(() => globalThis.location.href.includes('library-mission='));
   const destination = new URL(globalThis.location.href);
@@ -538,7 +538,7 @@ test('Solo mode filter exposes the same qualified Journey identities in Versus w
     cards.map((card) => card.dataset.missionId),
     original,
   );
-  assert.equal(new Set(original).size, 335);
+  assert.equal(new Set(original).size, 435);
   const target = cards[1];
   assert.match(target.textContent, /Journey.*Band 1\/12/);
   assertReadyCard(target);

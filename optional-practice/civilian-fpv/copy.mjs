@@ -26,6 +26,7 @@ export const COPY = {
     keyboard: 'Keyboard',
     touch: 'Touch · Mode 2',
     radio: 'USB radio',
+    controller: 'Controller / Steam Deck',
     mode: 'Flight mode',
     'self-level': 'Self-level · manual throttle',
     acro: 'Acro · manual throttle',
@@ -66,7 +67,7 @@ export const COPY = {
       'A fictional civilian training model with simplified dynamics, collision and aircraft response. It does not reproduce a particular aircraft or certify real flight proficiency. No real wiring, radio frequencies or aircraft setup are taught here.',
     keys: 'W / S: pitch forward / back · A / D: roll left / right · Q / E: yaw · ↑ / ↓: adjust manual throttle · Shift: smaller adjustments · P: pause. Release the throttle keys to keep that throttle position. Centre sticks do not stop momentum or hold altitude.',
     touchHelp:
-      'Mode 2 illustration: left stick left/right turns (yaw), up/down adjusts lift power (throttle); right stick left/right tilts sideways (roll), up/down tilts forward/back (pitch). Throttle stays at the selected position on release. Losing focus or a pointer pauses and clears controls.',
+      'Mode 2: touch either stick, then drag. Touching down never jumps the controls. Left: yaw and throttle; right: roll and pitch. Release to centre rotation and keep throttle, then touch again to continue from that power. Precise response makes small corrections easier; full travel still gives full control. Self-level is a useful starting mode. Losing focus or a pointer pauses and clears controls.',
     modeHelp:
       'Self-level requests a tilt angle and returns toward level with centred pitch/roll. Acro requests an angular rate and retains orientation with centred sticks. Both use manual throttle; neither holds position or altitude.',
     hold: 'Enter the lit volume and settle',
@@ -90,8 +91,8 @@ export const COPY = {
     import: 'Import a recorded flight',
     invalid: 'This recorded flight does not match an available course.',
     inputLabel: 'Live controls · Mode 2 display',
-    leftStick: 'Left stick: yaw — left/right · throttle — up/down',
-    rightStick: 'Right stick: roll — left/right · pitch — up/down',
+    leftStick: 'Yaw / throttle',
+    rightStick: 'Roll / pitch',
     labels: 'Instrument display',
     reduce: 'Reduced motion',
     radioReady: 'Radio verified. Use its arm control or Arm / resume.',
@@ -135,6 +136,7 @@ export const COPY = {
     keyboard: 'Клавіатура',
     touch: 'Дотик · Mode 2',
     radio: 'USB-пульт',
+    controller: 'Контролер / Steam Deck',
     mode: 'Режим польоту',
     'self-level': 'Самовирівнювання · ручний газ',
     acro: 'Acro · ручний газ',
@@ -175,7 +177,7 @@ export const COPY = {
       'Вигадана цивільна навчальна модель зі спрощеною динамікою, зіткненнями та реакцією апарата. Вона не відтворює конкретний апарат і не засвідчує вміння реального польоту. Тут немає навчання реальних з’єднань, радіочастот чи налаштування апарата.',
     keys: 'W / S: тангаж уперед / назад · A / D: крен ліворуч / праворуч · Q / E: рискання · ↑ / ↓: змінити ручний газ · Shift: менші корекції · P: пауза. Відпускання клавіш газу зберігає його положення. Центр стіків не зупиняє імпульс і не тримає висоту.',
     touchHelp:
-      'Схема Mode 2: лівий стік — рискання / газ, правий — крен / тангаж. Після відпускання газ лишається у вибраному положенні. Втрата фокуса чи вказівника ставить паузу й скидає керування.',
+      'Mode 2: торкніться стіка й перетягніть. Дотик не змінює керування стрибком. Лівий — рискання й газ; правий — крен і тангаж. Відпустіть, щоб центрувати обертання й зберегти газ, потім торкніться знову для подальшої зміни тяги. Точна чутливість полегшує малі корекції; повний хід зберігає повне керування. Починати зручно із самовирівнювання. Втрата фокуса чи вказівника ставить паузу й скидає керування.',
     modeHelp:
       'Самовирівнювання задає кут нахилу й повертає до горизонту з центрованими тангажем і креном. Acro задає кутову швидкість і зберігає орієнтацію з центрованими стіками. Обидва режими мають ручний газ; жоден не тримає положення чи висоту.',
     hold: 'Увійдіть у підсвічений об’єм і стабілізуйте рух',

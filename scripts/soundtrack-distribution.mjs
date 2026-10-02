@@ -305,7 +305,9 @@ export function soundtrackCatalogueModule(
   collections = [],
   bundled = [],
 ) {
-  return `// Generated from pinned soundtrack publication metadata; listening status stays in source evidence.\nexport const SOUNDTRACK_CATALOGUE = ${JSON.stringify(catalogue, null, 2)};\nexport const SOUNDTRACK_ARCHIVES = ${JSON.stringify(archives)};\nexport const SOUNDTRACK_COLLECTIONS = ${JSON.stringify(collections)};\nexport const SOUNDTRACK_BUNDLED_ASSETS = ${JSON.stringify(bundled)};\n`;
+  // Keep generated data compact without changing its ordered values or strings.
+  // Declaration-level directives make normal regeneration/formatting byte-stable.
+  return `// Generated from pinned soundtrack publication metadata; listening status stays in source evidence.\n// prettier-ignore\nexport const SOUNDTRACK_CATALOGUE = ${JSON.stringify(catalogue)};\n// prettier-ignore\nexport const SOUNDTRACK_ARCHIVES = ${JSON.stringify(archives)};\n// prettier-ignore\nexport const SOUNDTRACK_COLLECTIONS = ${JSON.stringify(collections)};\n// prettier-ignore\nexport const SOUNDTRACK_BUNDLED_ASSETS = ${JSON.stringify(bundled)};\n`;
 }
 export async function writePublishedSoundtrackMetadata(root) {
   const { format, resolveConfig } = await import('prettier');

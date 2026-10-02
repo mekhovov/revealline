@@ -200,6 +200,11 @@ test('Sentry detour: real shot causes one nonterminal loss, paused recovery, fre
   assert.equal(run.lives, 2);
   assert.equal(run.classic.livesLost, 1);
   assert.equal(run.failureCause, 'combat-projectile');
+  assert.equal(
+    page.$('run-message').textContent,
+    'A sentry shot hit your character.',
+    'Nonterminal recovery explains the projectile hit rather than a caught trail.',
+  );
   assert.equal(authoritativeCheckpoint(run).hash, '796497074ce1bc30');
   const [impact, removed, failure] = run.events;
   assert.deepEqual(

@@ -483,6 +483,15 @@ Use the [five difficulty workflows](../../prompts/round-30-gentle-difficulty.md)
 
 For the retained v0.14 [retry explanation](../../../docs/retry-feedback.md), use `game/ui/retry-view.mjs` only when the actual run is lost. A retained `failureCause` also exists during recovery and can survive a win; mission timeout can replace it without `player.failed`. Preserve the seven finite causes, own-data projection and unknown fallback. Do not infer an actor or add failure metadata to core, replay, sessions or portable profiles. Explicit Retry retains `prepare()`→`resume()`, starting one fresh attempt with the selected starting equipment and cleared live inputs, without changing preferences or earlier collection records. Loss and reading/Done/Back must not grant rewards or start another attempt.
 
+For current optional Sentry recovery, distinguish `combat-projectile` body contact
+from caught-trail feedback on the actual `player.failed` event. Reuse
+`interface:failure.combatProjectile` for ordinary life loss as well as terminal
+Retry advice; the terminal-only `retryExplanation` projection does not cover a
+surviving player. Keep the legal-route fixture's checkpoint, lives, events and
+partial replay assertions intact when checking the visible `run-message`. Do not
+change simulation metadata to repair a caption. Apply the current test waiver
+honestly: added assertions are unexecuted until separately qualified.
+
 Keep both advice and the reset consequence in the named overlay reader. `#retry-consequence` is hidden/emptied on every other overlay; the compact-hidden footer must not be its sole carrier. Replace stale nonterminal territory-retention captions on terminal loss, preserving independent save warnings. Reusable QA prompt: “Reach an actual contact loss and a staged lane loss in both steering modes through normal input. At 320×640 and short landscape, read the cause and reset note, exit with remapped Back without retrying, then activate Try again once. Verify fresh initial equipment and neutral input, no loss award, retained earlier pictures, and no lost explanation on a later win. Preserve existing checkpoint oracles and report browser evidence separately from physical-device or human-comprehension claims.”
 
 ## Flight target layout and geometry
@@ -1439,6 +1448,16 @@ entry file on disk is not a completed regression. Preserve every original case.
 ## Immutable retained production runtime input
 
 When a fixed visual policy outlives its current compiled runtime, retain the original raw runtime as an explicit code-owned authoring input. Follow [Retained Field Kit production](../../../docs/field-kit-retained-production.md) and its [prompt](../../prompts/field-kit-retained-production.md). Pin provenance, path, byte count and hash; validate compiled schema and every lazy dependency against the immutable production ledger. Pass verified explicit history to the compiler, never incidental output-directory contents. Skip hash-named retained runtime files in the generator and broad Prettier commands, keeping ordinary runtime.json checked; rebuild the ownership inventory afterward. Refuse missing or corrupt history before adoption. Preserve all existing records and originals; exact input retention does not advance fresh policy, inherit recipe approval or establish native/offline/public acceptance.
+
+For fpv38/50 `.rlteam` restoration, follow [Historical Team imports](../../../docs/team-retained-imports.md)
+and its [prompt](../../prompts/team-retained-imports.md). The envelope metadata hash
+is not a theme-runtime hash. Admit the exact code-owned association only, using
+the authenticated live owner. Stage historical picture/painter/audio together,
+restore the old painter after temporary validation, and preserve the old attempt
+on failure/cancellation. Keep the two manifests in their explicit optional Team
+download; do not increase the core cache budget or exclude any existing retained
+dependency. Old themes deliberately use their original fallback roles. Newer
+ambiguous revision lineages require another contract, not a wider numeric range.
 
 ## Preparation live status follows the Resume owner
 

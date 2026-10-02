@@ -1,3 +1,8 @@
+import {
+  REWARD_BOARD_SECONDS,
+  advanceRewardAge,
+  animateRewardArrival,
+} from './ui/reward-arrival.mjs';
 import { loadCompanyStartup } from './ui/company-startup.mjs';
 import { createStudioPreviewSession } from './studio-preview-session.mjs';
 import { editionDepartureDestinationAllowed } from './editions/departure-destination.mjs';
@@ -40,6 +45,7 @@ import {
   prepareFreshSoloVisualTheme,
 } from './presentation/fresh-visual-theme.mjs';
 import { attachMusicCredit } from './ui/music-credit.mjs';
+import { renderMusicCreatorLinks } from './ui/music-credits.mjs';
 import { soundtrackErrorText } from './ui/soundtrack-error-copy.mjs';
 import { createTouchPreferences } from './touch-preferences.mjs';
 import { createCharacterPresentations } from './character-presentations.mjs';
@@ -1062,6 +1068,7 @@ try {
     journeyBestResult = null,
     journeyPerformanceActive = true,
     celebrationActive = false,
+    winRevealAge = 0,
     defeatActive = false,
     defeatPaused = false,
     defeatRemaining = 0,
@@ -1244,10 +1251,6 @@ try {
       !audioMaster.snapshot().muted &&
       audioMaster.snapshot().volume > 0 &&
       musicPreviewState.volume > 0;
-    let source;
-    try {
-      source = new URL(track?.websites?.[0]?.url ?? track?.rights?.source);
-    } catch {}
     for (const prefix of ['game-now-playing', 'shell-now-playing']) {
       const playing = $(prefix);
       playing.hidden = !audible || !track || track.kind === 'synth';
@@ -1257,14 +1260,10 @@ try {
       localizedAttribute(playing, 'title', () =>
         track?.fileName ? t('interface:soundtrack.originalFile', { file: track.fileName }) : '',
       );
-      const website = $(`${prefix}-source`);
-      website.hidden =
-        !source ||
-        !['https:', 'http:'].includes(source.protocol) ||
-        !!source.username ||
-        !!source.password;
-      if (!website.hidden) website.href = source.href;
-      else website.removeAttribute('href');
+      renderMusicCreatorLinks($(`${prefix}-source`), track, {
+        document,
+        label: () => t('common:music.creatorSource'),
+      });
     }
     localizedText($('music-preview'), () =>
       ['blocked', 'error'].includes(musicPreviewState.status)
@@ -1448,7 +1447,9 @@ try {
   localizedText(victoryStoryButton, () => t('interface:victoryStory'));
   victoryStoryButton.hidden = true;
   document.querySelector('.overlay-actions').append(victoryStoryButton);
-  victoryStoryButton.onclick = () => {
+  let presentedVictoryRun = null;
+  victoryStoryButton.onclick = () => openVictoryStory();
+  function openVictoryStory({ autoplay = false } = {}) {
     if (practice || run.status !== 'won' || completionWarning) return;
     cancelResultAttempt();
     const notify = flightInformation.captureWarning('host.story', { allowTerminal: true });
@@ -1466,20 +1467,23 @@ try {
       const size = boardPaintSizeForLevel(run.level),
         args = { theme, level: run.level, seed, image: backdrop.image, fit: backdrop.fit, ...size };
       void storyDialog
-        .open({
-          pin,
-          title: run.level.name,
-          drawPoster(canvas) {
-            canvas.width = size.width;
-            canvas.height = size.height;
-            new BoardPainter(presets).drawGallery(canvas.getContext('2d'), args);
+        .open(
+          {
+            pin,
+            title: run.level.name,
+            drawPoster(canvas) {
+              canvas.width = size.width;
+              canvas.height = size.height;
+              new BoardPainter(presets).drawGallery(canvas.getContext('2d'), args);
+            },
           },
-        })
+          { immersive: true, autoplay },
+        )
         .catch((error) => notify(error.message));
     } catch (error) {
       notify(error.message);
     }
-  };
+  }
   const legacyPictureButton = document.createElement('button');
   legacyPictureButton.id = 'picture-use-legacy';
   localizedText(legacyPictureButton, () => t('interface:useOriginalPackArtwork'));
@@ -1853,12 +1857,20 @@ try {
     else sound.suspend();
   }
   const soundtrackFeedback = createOperationStatus($('soundtrack-summary'));
+  const soundtrackSummarySources = document.createElement('span');
+  soundtrackSummarySources.id = 'soundtrack-summary-source';
+  $('soundtrack-summary').after(soundtrackSummarySources);
+  renderMusicCreatorLinks(soundtrackSummarySources, null, { document });
   let soundtrackLoading = true,
     soundtrackOperation = soundtrackFeedback.begin({
       message: t('interface:loadingMusicLibrary'),
       stage: 'reading',
     });
-  function soundtrackStatus(message, preparation = null) {
+  function soundtrackStatus(message, preparation = null, track = null) {
+    renderMusicCreatorLinks(soundtrackSummarySources, track, {
+      document,
+      label: () => t('common:music.creatorSource'),
+    });
     if (preparation) {
       if (!soundtrackOperation) soundtrackOperation = soundtrackFeedback.begin(preparation);
       else soundtrackOperation.update(preparation);
@@ -1907,6 +1919,7 @@ try {
                     ? `${state.track.title} · ${state.status}`
                     : t('interface:chooseAPlaylistOrImportMp3Songs')),
             state.preparation,
+            playbackMessage || state.preparation?.message ? null : state.track,
           );
         },
       });
@@ -2085,6 +2098,7 @@ try {
   let compiledPresentationWarning = '';
   function startRememberedMenuMusic(event) {
     if (
+      event.target?.closest?.('.music-creator-links') ||
       !event.isTrusted ||
       soundtrackMenuGesture ||
       !soundtrackPlayer ||
@@ -3097,6 +3111,9 @@ try {
       stopActorView();
       actorPreferences.dispose();
       compactCredit.dispose();
+      soundtrackSummarySources.remove();
+      for (const prefix of ['game-now-playing', 'shell-now-playing'])
+        renderMusicCreatorLinks($(`${prefix}-source`), null, { document });
       audioRestoration.dispose();
       displayRestoration.dispose();
       displayPreferences.dispose();
@@ -7406,12 +7423,35 @@ try {
       finishDefeatPresentation();
       return;
     }
+    winRevealAge = REWARD_BOARD_SECONDS;
     painter.skipCelebration?.();
+    enjoyCompletedPicture();
+  };
+  function enjoyCompletedPicture() {
+    if (run?.status !== 'won') return;
+    const returnFocus =
+      !dialogOpen() &&
+      (document.activeElement === $('skip-celebration') ||
+        document.activeElement === document.body ||
+        document.activeElement === $('game-canvas'));
     celebrationActive = false;
     show('skip-celebration', false);
     show('game-overlay', false);
     show('show-result', true);
-  };
+    refreshHUD();
+    if (returnFocus) $('show-result').focus({ preventScroll: true });
+    if (
+      presentedVictoryRun !== run &&
+      !practice &&
+      !completionWarning &&
+      !dialogOpen() &&
+      flightPictures?.pins() &&
+      storyPinForTheme(flightPictures.pins(), theme.id)
+    ) {
+      presentedVictoryRun = run;
+      openVictoryStory({ autoplay: true });
+    }
+  }
   function focusPauseToolReturn(id) {
     const target = $(id);
     if (controllerScope() === 'paused' && availableFocusTarget(target))
@@ -7507,6 +7547,15 @@ try {
       'settings-offline',
     ])
       if ($(id)) $(id).hidden = true;
+    // Public communities share the containing game's download catalogue. Keep
+    // preparation explicit and leave this host before changing installation state.
+    const community = communityRouteFromURL(location.href);
+    if (community && !previewSession && $('settings-offline')) {
+      const target = new URL('./downloads.html', import.meta.url);
+      target.searchParams.set('community', community.slug);
+      $('settings-offline').href = target.href;
+      $('settings-offline').hidden = false;
+    }
   }
   window.addEventListener('pagehide', (event) => {
     if (!event.persisted) {
@@ -8125,6 +8174,7 @@ try {
     show('retry-button', kind === 'won' || kind === 'lost');
     show('start-button', kind === 'ready' || kind === 'pause');
     show('overlay-restart', kind === 'pause');
+    show('overlay-random-level', kind === 'pause' && !practiceSession);
     show('overlay-missions', kind === 'pause');
     show('overlay-settings', kind === 'pause');
     show('overlay-sound', kind === 'pause');
@@ -9594,6 +9644,27 @@ try {
             : t('interface:tacticalEdition'),
     );
     document.body.dataset.pictureState = flightPictures?.ready(theme.id) ? 'ready' : 'pending';
+    const enjoyingPicture = run.status === 'won' && $('game-overlay').hidden;
+    const previousPicturePhase = document.body.dataset.winPicture;
+    const phase = enjoyingPicture
+      ? celebrationActive && winRevealAge < REWARD_BOARD_SECONDS
+        ? 'revealing'
+        : celebrationActive
+          ? 'celebrating'
+          : 'settled'
+      : 'off';
+    const arrival =
+      previousPicturePhase === 'revealing' && ['celebrating', 'settled'].includes(phase)
+        ? $('game-canvas').getBoundingClientRect()
+        : null;
+    document.body.dataset.winPicture = phase;
+    if (arrival)
+      animateRewardArrival(
+        $('game-canvas'),
+        arrival,
+        displayPreferences.snapshot().effectiveReducedEffects,
+      );
+    show('win-picture-caption', enjoyingPicture && phase !== 'revealing');
     document.body.dataset.flightState =
       defeatActive || celebrationActive || (run.status === 'won' && !$('show-result').hidden)
         ? 'picture'
@@ -9839,6 +9910,7 @@ try {
             warning(
               {
                 'self-contact': t('interface:yourLineCrossedItselfChooseANewRoute'),
+                'combat-projectile': t('interface:failure.combatProjectile'),
                 'mission-timeout': t('interface:theMissionClockRanOutTryAFasterRoute'),
                 'cut-timeout': t('interface:yourLiveLineStayedOpenTooLongMakeAShorter'),
                 'cable-limit': t('interface:yourCableBudgetRanOutCloseAShorterLine'),
@@ -10431,21 +10503,18 @@ try {
             seed,
             reduced: displayPreferences.snapshot().effectiveReducedEffects,
           });
+          winRevealAge = 0;
           celebrationActive = true;
           show('game-overlay', false);
           show('skip-celebration', true);
           show('show-result', false);
+          $('skip-celebration').focus({ preventScroll: true });
           warning(
             journeyRewardFailure ||
               localizedMessage('interface:pictureUnlockedAWholeWorldFromOneBraveLine'),
             null,
             'host.won',
           );
-          if (journeyEnabled && journeyMission() && !practice) {
-            celebrationActive = false;
-            show('skip-celebration', false);
-            overlay('won');
-          }
         } else {
           defeatActive = true;
           defeatPaused = false;
@@ -10466,10 +10535,18 @@ try {
       pendingAction = false;
       pendingPickup = false;
     }
-    if (celebrationActive && !painter.celebrationStatus?.active) {
-      celebrationActive = false;
-      show('skip-celebration', false);
-      overlay('won');
+    if (celebrationActive)
+      winRevealAge = advanceRewardAge(
+        winRevealAge,
+        elapsed,
+        document.hidden || !document.hasFocus() || dialogOpen(),
+      );
+    if (
+      celebrationActive &&
+      winRevealAge >= REWARD_BOARD_SECONDS &&
+      !painter.celebrationStatus?.active
+    ) {
+      enjoyCompletedPicture();
     }
     sound.feedback(!paused && started, theme, run, {
       bodyId: flightActorLease?.pin().style === 'fpv' ? `fpv-${run.activeClassId}` : bodyId,
@@ -10620,6 +10697,9 @@ try {
     mission?.focus();
     mission?.scrollIntoView({ block: 'nearest', behavior: 'auto' });
   };
+  $('overlay-random-level').onclick = () => {
+    if (!practiceSession) void openUnifiedMissions($('overlay-random-level'), { random: true });
+  };
   $('pause-button').onclick = () => pause();
   const restartDialog = $('restart-dialog');
   const restartCopy = $('restart-dialog-copy').textContent;
@@ -10740,14 +10820,15 @@ try {
   $('view-picture').onclick = () => {
     if (run.status !== 'won') return;
     cancelResultAttempt();
-    show('game-overlay', false);
-    show('show-result', true);
+    enjoyCompletedPicture();
     $('show-result').focus({ preventScroll: true });
   };
   $('show-result').onclick = () => {
     if (run.status === 'won') {
+      const returningToResults = $('game-overlay').dataset.kind === 'won';
       overlay('won');
-      $('view-picture').focus({ preventScroll: true });
+      (returningToResults ? $('view-picture') : controllerFocus()).focus({ preventScroll: true });
+      refreshHUD();
     }
   };
   $('next-button').onclick = () => {
@@ -11071,6 +11152,7 @@ try {
   }
   const restoreAudioOnGesture = (event) => {
     if (
+      event.target?.closest?.('.music-creator-links') ||
       demoHost?.containsAudio(event.target) ||
       quickMusicControls?.contains(event.target) ||
       quickMusicControls?.handlesKey(event) ||
@@ -11201,7 +11283,7 @@ try {
           showGrid: scenario?.presentation?.showGrid || library.preferences.showGrid,
           showCombatScrap: practiceRemains ?? encounterDisplay.snapshot().showRemains,
           backdrop: flightPictures?.current(),
-          celebrationPaused: document.hidden || dialogOpen(),
+          celebrationPaused: document.hidden || !document.hasFocus() || dialogOpen(),
           defeatEffectsRunning: defeatEffectsRunning(),
           signalReception:
             run.status === 'won'
@@ -12027,6 +12109,10 @@ try {
       )
         return;
       unifiedChooser.open(opener, options);
+      if (options?.random) {
+        unifiedChooser.playRandom({ resetFilters: true });
+        return;
+      }
       if (options?.focusSetup) {
         const setup = $('mission-picker-setup');
         const control = $(options.focusSetup);
@@ -12520,6 +12606,7 @@ try {
   demoHost = attachDemoHost({
     presets,
     audio: demoAudio,
+    audioMaster,
     getContext: () => ({
       entries: executionEntries(),
       library,

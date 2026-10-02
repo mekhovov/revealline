@@ -376,6 +376,7 @@ export class BoardPainter {
       feedbackComparison = null,
       pictureVisibility = 'clear',
       demoTransition = 0,
+      pictureInterference = true,
       signalReception = 'off',
       signalEffectsRunning = false,
     } = {},
@@ -571,18 +572,31 @@ export class BoardPainter {
         ? Math.max(0, Math.min(1, demoTransition)) * 0.35
         : 0;
     const picture = this.jammerPictureFilter.select(protectedPicture, {
-      strength: Math.max(
-        transitionStrength,
-        pictureVisibility === 'clear'
-          ? jammerPictureStrength(state, { fullReveal }) * (reduced ? 0.65 : 1)
-          : 0,
-      ),
+      // A demo can explicitly preview its validated artwork without reception
+      // noise. Gameplay signals, territory masks and actors remain unchanged.
+      strength: pictureInterference
+        ? Math.max(
+            transitionStrength,
+            pictureVisibility === 'clear'
+              ? jammerPictureStrength(state, { fullReveal }) * (reduced ? 0.65 : 1)
+              : 0,
+          )
+        : 0,
       time: this.time,
       animate: !reduced,
     });
     const fit = backdrop?.image ? backdrop.fit : this.overrides.background?.fit || 'cover';
     ctx.fillStyle = p.field;
     ctx.fillRect(0, 0, W, H);
+    // A tiny arrival ease gives the earned artwork a gentle landing. It ends
+    // at its exact original fit; reduced effects and the settled picture never zoom.
+    const pictureScale = fullReveal && !reduced ? finale.pictureScale || 1 : 1;
+    ctx.save();
+    if (pictureScale !== 1) {
+      ctx.translate(W / 2, H / 2);
+      ctx.scale(pictureScale, pictureScale);
+      ctx.translate(-W / 2, -H / 2);
+    }
     if (picture && fit === 'contain') {
       const r = Math.min(W / picture.width, H / picture.height);
       ctx.drawImage(
@@ -602,6 +616,7 @@ export class BoardPainter {
         picture.height * r,
       );
     }
+    ctx.restore();
     if (!fullReveal || revealAlpha > 0) {
       ctx.fillStyle = this.theme.coverColor ?? '#000000';
       ctx.globalAlpha = revealAlpha;
@@ -623,7 +638,7 @@ export class BoardPainter {
     // terrain, live cuts and actors below remain sharp from the first tick.
     if (reception.kind === 'acquire') this.signalReception.draw(ctx, W, H, reception);
     drawClassicTerrain(ctx, classic, p, images);
-    if (combat) drawCombatScrap(ctx, combat, p, combatOptions);
+    if (combat && !fullReveal) drawCombatScrap(ctx, combat, p, combatOptions);
     // Reveal decoration belongs below current hazards, actors and live cuts.
     // An old capture pulse must never wash over a newly opened live line.
     if (!fullReveal && captureAccent)
