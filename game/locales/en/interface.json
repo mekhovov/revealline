@@ -5725,5 +5725,8 @@
   "updates.startupDownload": "Update game",
   "updates.startupAvailable": "A new build is available. Review the download size before updating; your progress is kept.",
   "updates.startupCurrent": "This game is up to date.",
-  "updates.startupUnavailable": "Could not check for updates. You can still play your downloaded game."
+  "updates.startupUnavailable": "Could not check for updates. You can still play your downloaded game.",
+  "optionalPractice.simDownloads": "Install & offline play",
+  "optionalPractice.simRetry": "Try opening SIM again",
+  "optionalPractice.simUnavailable": "SIM could not be opened from this copy. Reconnect to play online, or prepare its optional offline download. Your game remains available."
 }
