@@ -119,55 +119,16 @@
       async function load(source) {
         await disposeActive();
         const loadToken = prefix + source + ':' + ++loadId;
-        progress('Fetch ' + source + ' host HTML');
-        const raw = await (
-          await fetch(candidateURL('optional-practice/fpv-worlds/index.html'), {
-            cache: 'no-store',
-          })
-        ).text();
-        sources['world-index.html'] = await hash(raw);
-        const candidate = new URL(
-          baseline ? './world-app.before.served.mjs' : './world-app.candidate.served.mjs',
-          location.href,
-        ).href;
-        const setup = `
-      window.fixtureLoadToken=${JSON.stringify(loadToken)};
-      history.replaceState=()=>{};history.pushState=()=>{};
-      window.fixtureErrors=[];addEventListener('error',e=>fixtureErrors.push(e.message));addEventListener('unhandledrejection',e=>fixtureErrors.push(String(e.reason)));
-      const memory=new Map([['revealline.fpv.world-settings.v1',JSON.stringify({'world-language':'en','flight-source':${JSON.stringify(source)},'sim-motion':'reduced','flight-quality':'performance'})]]);
-      window.fixtureStorage={getItem:k=>memory.get(k)??null,setItem:(k,v)=>memory.set(k,String(v)),removeItem:k=>memory.delete(k)};
-      Object.defineProperty(window,'localStorage',{value:fixtureStorage});Object.defineProperty(window,'indexedDB',{value:parent.fixtureDB});
-      window.controlledRadio={id:'TX15 Joystick (Vendor: 1209 Product: 4f54)',index:0,mapping:'',connected:${source === 'radio'},axes:[.004,.004,-1,.004,-1,0,0,0],buttons:Array.from({length:24},()=>({pressed:false,touched:false,value:0})),timestamp:0};
-      window.controlledPad={id:'Controlled standard gamepad',index:1,mapping:'standard',connected:${source === 'controller'},axes:[0,0,0,0],buttons:Array.from({length:17},()=>({pressed:false,touched:false,value:0})),timestamp:0};
-      Object.defineProperty(navigator,'getGamepads',{value:()=>[controlledRadio.connected?controlledRadio:null,controlledPad.connected?controlledPad:null]});
-      let nextId=1;const callbacks=new Map();
-      window.requestAnimationFrame=cb=>{const id=nextId++;callbacks.set(id,cb);return id};window.cancelAnimationFrame=id=>callbacks.delete(id);
-      window.fixtureRAF={lastStamp:null,lastExecution:null,deliver(stamp=performance.now()){this.lastStamp=stamp;this.lastExecution=performance.now();const pending=[...callbacks.entries()];callbacks.clear();for(const[,cb]of pending)cb(stamp);return pending.length},pending:()=>callbacks.size};
-    `;
-        const boot = `
-      import{mountWorldApp}from${JSON.stringify(candidate)};
-      import{WORLD_CATALOGUE}from${JSON.stringify(candidateURL('optional-practice/civilian-fpv/world-catalogue.mjs'))};
-      import{defaultRadioProfile,createFlightProfileStore,DEFAULT_RESPONSE}from${JSON.stringify(candidateURL('optional-practice/civilian-fpv/radio-profile.mjs'))};
-      if(${source === 'radio'})createFlightProfileStore({storage:fixtureStorage}).save({format:'FlightProfiles.v1',radio:defaultRadioProfile(),response:DEFAULT_RESPONSE});
-      window.fixtureEntry=WORLD_CATALOGUE.find(e=>e.id==='garage-06');
-      const rendererFactory=()=>({available:true,ready:Promise.resolve(),setCourse(){},setQuality(){},setDrone(){},setPath(){},setGhost(){},loadScene:async()=>{},prepare:async()=>true,draw(s){window.fixtureRenderedTick=s.ticks},aimScreen:()=>null,dispose(){}});
-      window.fixtureApp=mountWorldApp({rendererFactory});
-    `;
+        progress('Load ' + source + ' real HTTP host page');
+        const player = new URL('./player.html', location.href);
+        player.searchParams.set('source', source);
+        player.searchParams.set('variant', baseline ? 'baseline' : 'candidate');
+        player.searchParams.set('token', loadToken);
         const loaded = new Promise((resolve) =>
           frame.addEventListener('load', resolve, { once: true }),
         );
-        frame.srcdoc = raw
-          .replace('data-fpv-worlds="true"', 'data-fpv-worlds="fixture"')
-          .replace(/<script\b[^>]*src="[^\"]*world-app\.mjs"[^>]*><\/script>/, '')
-          .replace(
-            '<head>',
-            '<head><base href="' +
-              candidateURL('optional-practice/fpv-worlds/') +
-              '"><script>' +
-              setup +
-              '<\/script>',
-          )
-          .replace('</body>', '<script type="module">' + boot + '<\/script></body>');
+        frame.removeAttribute('srcdoc');
+        frame.src = player.href;
         await bounded(loaded, 'Load fresh ' + source + ' iframe document', 20000);
         progress('Mount fresh ' + source + ' host');
         await until(
@@ -582,13 +543,14 @@
           passed: !failure && checks.every((c) => c.passed),
           baseline: manifest?.baseline,
           candidateBase: manifest?.candidateBase,
+          sourceBase: manifest?.sourceBase,
           sources,
           wallGaps,
           phases,
           cleanup,
           checks,
           limitations: [
-            'Real production host/physics with renderer lifecycle stub; no GPU rendering or visual-quality qualification.',
+            'Real HTTP host document and frozen production module dependency tree; renderer lifecycle stub, no GPU rendering or visual-quality qualification. CSS/artwork remain on the original candidate base.',
             'Controlled DOM input and Gamepad samples, not physical radio/controller/touch acceptance.',
             'Real unmodified callback wall clock; requestAnimationFrame scheduling is controlled to reproduce a queued stale timestamp.',
             'Synthetic Space dispatch verifies event ownership only; browser-native trusted activation needs manual spot-check.',
