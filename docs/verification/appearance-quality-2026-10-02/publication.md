@@ -44,6 +44,30 @@ files (4,095,466 / 4,123,721 bytes); World uses 99 / 101 files
 (14,106,740 / 14,139,819 bytes).
 [Package closure receipt](publication/package-bounds.json).
 
+## Community capacity follow-up
+
+The first PR build produced the full game and Worlds preview successfully. The
+separate 18-community candidate build found one oversized edition:
+`droneaid-nl-community`, at 67,409,811 bytes against its unchanged 64 MiB limit.
+
+The compiler now removes indentation only outside runtime engine JavaScript
+tokens and comments, using the existing Acorn parser. It preserves raw literals,
+template text, regular expressions, comments and every line terminator. Vendor
+code and authored campaign/media inputs stay byte-identical. Projection occurs
+before offline inventories and final hashes, with original/output provenance.
+
+The initial repaired edition is 66,665,104 bytes (830 files), saving 744,707 bytes
+and leaving 443,760 bytes of headroom. Two builds reproduce exactly; ZIP admission,
+77 media originals and current/four retained presentation identities pass. The
+runtime suite passes 15 tests and compiler/admission/localization/raster checks
+pass 40; independent adversarial lexical review found no blocking issue.
+[Capacity receipt](publication/edition-capacity-fix.json),
+[runtime checks](publication/edition-runtime-indent.tap),
+[compiler checks](publication/edition-capacity-tests.tap).
+
+The preview workflow now includes the two compiler/runtime suites as well as its
+initial appearance cohort. Later artifacts record their actual test list and head.
+
 ## Scope delivered
 
 - One coordinated Appearance control, accessible semantic foreground/background

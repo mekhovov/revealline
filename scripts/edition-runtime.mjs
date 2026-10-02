@@ -242,3 +242,31 @@ export function projectEditionRuntimeImports(name, bytes) {
     output = output.slice(0, edit.start) + edit.text + output.slice(edit.end);
   return Buffer.from(output);
 }
+
+/** Compact only engine indentation, without rewriting executable tokens. Acorn
+ * protects comments and every literal (including multiline template contents);
+ * keeping every line terminator also preserves automatic semicolon insertion.
+ * Authored data/media and third-party vendor sources remain byte-for-byte. */
+export function projectEditionRuntimeIndentation(name, bytes) {
+  if (!/^game\/.*\.(?:mjs|js)$/.test(name) || name.startsWith('game/vendor/')) return bytes;
+  const source = new TextDecoder('utf-8', { fatal: true }).decode(bytes);
+  const protectedRanges = [];
+  parse(source, {
+    ecmaVersion: 'latest',
+    sourceType: 'module',
+    allowHashBang: true,
+    onToken: ({ start, end }) => protectedRanges.push({ start, end }),
+    onComment: (_block, _text, start, end) => protectedRanges.push({ start, end }),
+  });
+  protectedRanges.sort((a, b) => a.start - b.start);
+  const compactGap = (gap) => gap.replace(/(\r\n|[\n\r\u2028\u2029])[ \t]+/g, '$1');
+  const output = [];
+  let offset = 0;
+  for (const { start, end } of protectedRanges) {
+    const gap = compactGap(source.slice(offset, start));
+    output.push(offset === 0 ? gap.replace(/^[ \t]+/, '') : gap, source.slice(start, end));
+    offset = end;
+  }
+  output.push(compactGap(source.slice(offset)));
+  return Buffer.from(output.join(''));
+}

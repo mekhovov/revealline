@@ -4,6 +4,7 @@ import fs from 'node:fs/promises';
 import os from 'node:os';
 import path from 'node:path';
 import { createHash } from 'node:crypto';
+import { parse } from 'acorn';
 import { projectEditionGuideScenario } from '../editions/selected-presentation.mjs';
 import { createCompanyTheme } from '../company-campaigns/brands.mjs';
 import { validateScenario } from '../content.mjs';
@@ -17,6 +18,7 @@ import {
   EDITION_RUNTIME_RESOURCES,
   editionDemoResources,
   projectEditionRuntimeImports,
+  projectEditionRuntimeIndentation,
   validateEditionHostRequests,
   editionMenuSceneResources,
   projectEditionMenuResourcePaths,
@@ -33,6 +35,79 @@ const droneAidLandingFiles = [
   'game/ui/art/menu-scenes/droneaid-main-background.webp',
   'game/ui/art/menu-scenes/droneaid-wordmark-light.svg',
 ];
+
+function lexicalSignature(source) {
+  const tokens = [],
+    comments = [];
+  parse(source, {
+    ecmaVersion: 'latest',
+    sourceType: 'module',
+    allowHashBang: true,
+    locations: true,
+    onToken: ({ type, start, end, loc }) =>
+      tokens.push([type.label, source.slice(start, end), loc.start.line, loc.end.line]),
+    onComment: (block, _text, start, end, from, to) =>
+      comments.push([block, source.slice(start, end), from.line, to.line]),
+  });
+  return { tokens, comments, lineBreaks: source.match(/\r\n|[\n\r\u2028\u2029]/g) ?? [] };
+}
+
+test('runtime indentation preserves executable tokens, comments, line breaks and literal values', async () => {
+  const source = [
+    '#!/usr/bin/env node',
+    '  // Copyright stays exact, including   spaces.',
+    '  export const template = String.raw`first',
+    '    literal indentation ${(() => {',
+    '      return "nested";',
+    '    })()}',
+    '    last`;',
+    '  export const pattern = /[ \\t]+/g;',
+    '  /* multiline comment',
+    '     indentation remains exact */',
+    '  const quoted = "escaped\\\n    string";',
+    '  function lineReturn() {',
+    '    return',
+    '      9;',
+    '  }',
+    '  let a = 2, b = 3;',
+    '  a',
+    '    ++b;',
+    '  export const observed = { template, quoted, asi: lineReturn(), a, b };',
+    '  //# sourceURL=retained-runtime-fixture.mjs',
+    '',
+  ].join('\r\n');
+  const projected = projectEditionRuntimeIndentation('game/runtime.mjs', bytes(source));
+  assert.ok(projected.length < Buffer.byteLength(source));
+  assert.deepEqual(lexicalSignature(projected.toString()), lexicalSignature(source));
+  const load = (text) =>
+    import(`data:text/javascript;base64,${Buffer.from(text).toString('base64')}`);
+  const before = await load(source),
+    after = await load(projected);
+  assert.deepEqual(after.observed, before.observed);
+  assert.equal(after.observed.asi, undefined);
+  assert.equal(after.pattern.source, before.pattern.source);
+  assert.deepEqual(projectEditionRuntimeIndentation('game/runtime.mjs', projected), projected);
+  for (const name of ['game/vendor/library.js', 'authoring/tool.mjs', 'game/content/project.json'])
+    assert.deepEqual(projectEditionRuntimeIndentation(name, bytes(source)), bytes(source), name);
+});
+
+test('all admitted engine JavaScript retains lexical and line-termination parity when compacted', async () => {
+  const engine = await collectEditionEngineFiles({
+    root: fileURLToPath(new URL('../../', import.meta.url)),
+  });
+  let savedBytes = 0;
+  for (const [name, original] of engine) {
+    const projected = projectEditionRuntimeIndentation(name, original);
+    savedBytes += original.length - projected.length;
+    if (projected.equals(original)) continue;
+    assert.deepEqual(
+      lexicalSignature(projected.toString()),
+      lexicalSignature(original.toString()),
+      name,
+    );
+  }
+  assert.ok(savedBytes > 300947, 'Runtime-only compaction recovers the observed edition overrun');
+});
 test('standalone branding projects only the image fallback to an approved selected logo', async () => {
   const original = await fs.readFile(new URL('../ui/brand-identity.mjs', import.meta.url));
   const catalog = JSON.parse(
@@ -166,18 +241,21 @@ test('standalone and public offline menus retain every dynamically attached pane
       `Missing dynamically attached offline stylesheet: ${name}`,
     );
 });
-test('actual landing closure retains executable dependencies and preserves optional artwork', async () => {
+test('actual company host closure retains explicit Demo dependencies and preserves optional artwork', async () => {
   const files = await collectEditionEngineFiles({
     root: fileURLToPath(new URL('../../', import.meta.url)),
-    entries: ['game/ui/menu-scenes.mjs', 'game/ui/native-menus.mjs'],
+    entries: ['game/company.html'],
   });
   const catalog = JSON.parse(files.get('game/demo-data/catalog.json'));
   const recordings = catalog.clips.flatMap(({ replayURL, replayVariants = [] }) =>
     [replayURL, ...replayVariants].map((relative) => `game/${relative.slice(2)}`),
   );
-  assert.equal(catalog.clips.length, 10);
-  assert.equal(recordings.length, 20);
-  assert.equal(new Set(recordings).size, 20);
+  assert.deepEqual(
+    catalog,
+    JSON.parse(await fs.readFile(new URL('../demo-data/catalog.json', import.meta.url))),
+  );
+  assert.ok(catalog.clips.length > 0);
+  assert.equal(new Set(recordings).size, recordings.length);
   const required = [
     ...['fpv', 'ukraine', 'retro', 'coupa'].flatMap((world) =>
       ['versus', 'versus-portrait', 'team', 'team-portrait'].map(
@@ -204,7 +282,8 @@ test('actual landing closure retains executable dependencies and preserves optio
     'game/ui/art/menu-scenes/analog-noise-atlas.png',
     ...droneAidLandingFiles,
   ];
-  for (const name of required) assert.ok(files.has(name), `Missing edition dependency: ${name}`);
+  for (const name of [...required, ...recordings])
+    assert.ok(files.has(name), `Missing edition dependency: ${name}`);
   validateEditionCodeClosure(
     new Map([...files].map(([name, source]) => [name, projectEditionRuntimeImports(name, source)])),
   );
@@ -214,7 +293,7 @@ test('actual landing closure retains executable dependencies and preserves optio
   publicFiles.set(
     'game/index.html',
     bytes(
-      '<link rel="stylesheet" data-boot-href="ui/menu-scenes.css"><link rel="stylesheet" data-boot-href="ui/native-menu.css"><script src="ui/native-menus.mjs"></script>',
+      '<link rel="stylesheet" data-boot-href="ui/menu-scenes.css"><link rel="stylesheet" data-boot-href="ui/native-menu.css"><script src="app.mjs"></script><script src="ui/native-menus.mjs"></script>',
     ),
   );
   const selected = selectOfflineCore(
@@ -223,7 +302,12 @@ test('actual landing closure retains executable dependencies and preserves optio
   );
   const optional = new Set(selected.optional);
   for (const name of required) {
-    if (/\.(?:png|webp)$/.test(name)) {
+    if (name === 'game/demo-data/variant-provenance.json') {
+      assert.ok(
+        optional.has(name),
+        'Recording provenance remains packaged without a runtime fetch',
+      );
+    } else if (/\.(?:png|webp)$/.test(name)) {
       assert.ok(!selected.retained.has(name), `Decorative raster entered startup cache: ${name}`);
       assert.ok(optional.has(name), `Missing optional menu artwork: ${name}`);
       assert.deepEqual(publicFiles.get(name), files.get(name), `Menu artwork changed: ${name}`);
