@@ -242,14 +242,33 @@ main; create a new native stack only when a second dependent PR needs it.
 A is merged in [PR #951](https://github.com/mekhovov/revealline/pull/951); see
 [section-practice behavior](fpv-checkpoint-practice.md). Publication and exact
 deployment state belong in the latest delivery checkpoint. B's callback-stall
-and focused-button pause increment is implemented on `codex/fpv-world-lifecycle`;
+and focused-button pause increment is merged and publicly verified as
+[PR #952](https://github.com/mekhovov/revealline/pull/952);
 see [lifecycle behavior and verification](fpv-world-lifecycle.md). It freezes
 before device actions or physics and requires deliberate resume. Physical-device
 and handheld sessions remain pending; this increment does not complete all of B.
-E’s previously referenced temporary Garage handoff was absent; a reproducible
-replacement has now been regenerated separately, with integration and browser
-playback still outstanding. Do not count it as installed yet.
+E's Garage increment is published in
+[PR #954](https://github.com/mekhovov/revealline/pull/954),
+with source and packaged playback qualification complete. See
+[Garage demonstrations](fpv-garage-demonstrations.md). Its focused PR and public
+deployment remain separate gates in the delivery log. The approved C art/Themes
+work can proceed while physical-device and unfamiliar-player sessions are pending.
 
-The catalogue remains 14 worlds / 148 challenges. Installed demonstrations remain
-104/120 original plus 58 school; the 60 Adventure authoring proofs are separate.
+The catalogue remains 14 worlds / 148 challenges. This branch installs
+120/120 original plus 58 school demonstrations; the 60 Adventure authoring proofs
+are separate. Main/public counts remain at 104 originals until this increment merges.
 Additional unit coverage stays in H/R7, with functional checks on every increment.
+
+
+### Approved A–H continuation checkpoint — 2 October
+
+A's checkpoint practice (#951) and B's lifecycle/keyboard-pause repair (#952)
+are merged and their public player launches are verified. E's Garage16
+increment (#954) completes the120 original demonstration set plus58 school
+proofs; it is published but held by a whole-edition size-check failure.
+C1's Hangar surface/UV refinement is complete and locally qualified, awaiting
+focused publication behind E. Broader C art/shared Themes integration, B actual
+hardware qualification, D player sessions, F creator workflow, G feedback-led
+map growth and H deferred unit/regression/device work remain. The current
+package file caps inherited from #930 are64/72/104; byte caps remain8/8/16MiB.
+Follow the latest delivery log for exact heads and publication evidence.
