@@ -93,7 +93,7 @@ import { mountActorEditor } from './world-actor-editor.mjs';
 import { fpvWorldReturnURL } from '../../game/fpv-entry.mjs';
 
 const COPY_EN = {
-  backToGame: 'Back to game',
+  backToGame: 'Back to FPV / LINE',
   learn: 'Learn to fly',
   beginLearning: 'Start Flight School',
   schoolEyebrow: 'ACRO FLIGHT SCHOOL · BUILD YOUR MASTERY',
@@ -260,7 +260,7 @@ const COPY_EN = {
   keys: 'W/S pitch · A/D roll · Q/E yaw · ↑/↓ throttle · P pause · Space fire',
 };
 const COPY_UK = {
-  backToGame: 'Назад до гри',
+  backToGame: 'Повернутися до FPV / LINE',
   learn: 'Навчитися літати',
   beginLearning: 'Почати льотну школу',
   schoolEyebrow: 'ШКОЛА ACRO · РОЗВИВАЙТЕ МАЙСТЕРНІСТЬ',
