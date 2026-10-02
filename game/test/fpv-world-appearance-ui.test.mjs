@@ -67,6 +67,7 @@ function fixture(t) {
   for (const child of body.childNodes) copy(child, doc.body);
   Object.assign(win, {
     location: new URL('https://example.test/optional-practice/fpv-worlds/index.html'),
+    performance: { now: () => 0 },
     navigator: { getGamepads: () => [] },
     localStorage: {
       getItem: (key) => storage.get(key) ?? null,

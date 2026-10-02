@@ -809,8 +809,9 @@ export function bootCoop({
         })
       : null;
   const modeChoices = $('coop-mode-actions');
-  mountModeChoices({
+  const modeNavigation = mountModeChoices({
     root: modeChoices,
+    pause: () => pause({ focus: false }),
     current: 'team',
     actions: { solo: $('coop-solo'), versus: $('coop-versus') },
   });
@@ -888,6 +889,10 @@ export function bootCoop({
     showTouch();
   }
   function back() {
+    if (modeNavigation.simulatorRoot()) {
+      modeNavigation.closeSimulator();
+      return;
+    }
     if (installOfflinePanel?.isOpen()) {
       installOfflinePanel.close();
       return;
@@ -976,7 +981,9 @@ export function bootCoop({
   for (const id of ['coop-offline-main', 'coop-offline'])
     if ($(id)) $(id).onclick = () => installOfflinePanel?.open();
   const scope = () =>
-    installOfflinePanel?.isOpen()
+    modeNavigation.simulatorRoot()
+      ? 'coop-fpv-sim'
+      : installOfflinePanel?.isOpen()
       ? 'coop-install-offline'
       : music?.root()
         ? 'coop-music-library'
@@ -996,7 +1003,9 @@ export function bootCoop({
                       ? `coop-${run.status}`
                       : 'coop-lobby';
   const primary = () =>
-    installOfflinePanel?.isOpen()
+    modeNavigation.simulatorRoot()
+      ? modeNavigation.simulatorPrimary()
+      : installOfflinePanel?.isOpen()
       ? $('install-offline-downloads')
       : music?.root()
         ? music.primary()
@@ -1129,6 +1138,7 @@ export function bootCoop({
     getRoot: () => {
       if (installOfflinePanel?.frameFocused()) return null;
       const modal =
+        modeNavigation.simulatorRoot() ||
         installOfflinePanel?.root() ||
         music?.root() ||
         journeyPictures?.root() ||
@@ -1159,6 +1169,7 @@ export function bootCoop({
     onBack: back,
     onMenu: () => {
       if (
+        modeNavigation.simulatorRoot() ||
         installOfflinePanel?.isOpen() ||
         music?.root() ||
         journeyPictures?.root() ||
@@ -2978,7 +2989,7 @@ export function bootCoop({
     );
   }
   function discoveryControls() {
-    for (const id of ['coop-discovery-open', 'coop-discovery-paused']) {
+    for (const id of ['coop-discovery-open', 'coop-discovery-paused', 'coop-random-level']) {
       const button = $(id);
       if (button) button.disabled = !canOpenDiscovery();
     }
@@ -4216,7 +4227,7 @@ export function bootCoop({
   discovery = {
     isOpen: () => Boolean($('journey-chooser')?.open),
     primary: () => libraryChooser?.primary() ?? $('coop-discovery-open'),
-    async open(opener) {
+    async open(opener, { random = false } = {}) {
       if (!canOpenDiscovery()) return;
       libraryOpening?.dispose();
       const opening = trackMissionLibraryOpening({ document });
@@ -4230,6 +4241,7 @@ export function bootCoop({
         mountTeamLibrary();
         ++libraryOtherModesVisit;
         libraryChooser.open(opener);
+        if (random && libraryChooser.playRandom({ resetFilters: true })) return;
         libraryPreview.refresh();
         if (installedTeamStorageError)
           libraryStatus(
@@ -4290,6 +4302,7 @@ export function bootCoop({
   };
   $('coop-discovery-open').onclick = () => discovery.open($('coop-discovery-open'));
   $('coop-discovery-paused').onclick = () => discovery.open($('coop-discovery-paused'));
+  $('coop-random-level').onclick = () => discovery.open($('coop-random-level'), { random: true });
 
   function freshRecipe(level, options) {
     return {
@@ -5980,6 +5993,7 @@ export function bootCoop({
     if (disposed) return;
     $('coop-field-details').onclick = null;
     installOfflinePanel?.dispose();
+    modeNavigation.dispose();
     stopActorView();
     actorPreferences.dispose();
     $('coop-actor-style').onchange = null;
@@ -5988,6 +6002,7 @@ export function bootCoop({
     cancelDiscoveryPreparation();
     $('coop-discovery-open').onclick = null;
     $('coop-discovery-paused').onclick = null;
+    $('coop-random-level').onclick = null;
     $('coop-home-paused').onclick = null;
     cancelNext({ announce: false });
     $('coop-next').onclick = null;

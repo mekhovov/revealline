@@ -1,9 +1,38 @@
 import { t, localizedText, localizedAttribute } from '../i18n/index.mjs';
 import { setMenuIcon } from './native-menu-icons.mjs';
+import { mountOptionalPracticePanel } from './optional-practice-panel.mjs';
+import { fpvWorldLaunchURL } from '../fpv-entry.mjs';
+import { loadAcceptedAppearance } from '../presentation/theme-system.mjs';
 const MODES = Object.freeze([['solo'], ['versus'], ['team']]);
 
+function contextualAppearance(document) {
+  let accepted = null;
+  try {
+    accepted = loadAcceptedAppearance((document.defaultView ?? globalThis).sessionStorage);
+  } catch {
+    /* Denied storage still permits an explicit compiled appearance pin. */
+  }
+  const data = document.documentElement.dataset;
+  const compiled =
+    /^[a-z][a-z0-9-]{0,63}$/.test(data.appearanceFamily ?? '') &&
+    /^r[1-9][0-9]{0,8}$/.test(data.appearanceRevision ?? '')
+      ? { familyId: data.appearanceFamily, revision: data.appearanceRevision }
+      : null;
+  const pin =
+    compiled ??
+    (accepted ? { familyId: accepted.family.id, revision: accepted.family.revision } : null);
+  return pin ? { ...pin, appearanceThemes: accepted ? [accepted] : [] } : null;
+}
+
 /** Shared presentation only. Existing anchors keep their hrefs and listeners. */
-export function mountModeChoices({ root, current, actions, separateTeam = false }) {
+export function mountModeChoices({
+  root,
+  current,
+  actions,
+  separateTeam = false,
+  pause = () => {},
+  getAppearanceDefault = () => contextualAppearance(root.ownerDocument),
+}) {
   if (!root || !MODES.some(([id]) => id === current))
     throw new Error(t('interface:aGameModeAndItsVisibleNavigationContainerAreRequired'));
   const document = root.ownerDocument;
@@ -31,5 +60,44 @@ export function mountModeChoices({ root, current, actions, separateTeam = false 
   root.dataset.menuLayout = 'horizontal';
   root.dataset.menuScope = 'modes';
   localizedAttribute(root, 'aria-label', () => t('common:game.mode'));
-  root.replaceChildren(...choices);
+  // A simulator destination is not an arcade ruleset or Journey mode.
+  const simulator = document.createElement('button');
+  simulator.type = 'button';
+  simulator.id = `${current}-fpv-sim`;
+  simulator.dataset.simulatorEntry = 'true';
+  const simulatorLabel = document.createElement('strong');
+  localizedText(simulatorLabel, () => t('interface:nativeMenu.fpvSim'));
+  simulator.append(simulatorLabel);
+  setMenuIcon(simulator, 'simulator');
+  root.replaceChildren(...choices, simulator);
+  const panel = mountOptionalPracticePanel({
+    document,
+    getAppearanceDefault,
+    container: root,
+    opener: simulator,
+    pause,
+    href: document.defaultView?.location?.href ?? globalThis.location?.href,
+    bundledHref: fpvWorldLaunchURL(
+      document.defaultView?.location?.href ?? globalThis.location?.href,
+      document.documentElement.lang,
+    ),
+    packageId: 'fpv-worlds',
+    idPrefix: `${current}-fpv-sim`,
+    preferDirect: true,
+    timeoutMs: 4000,
+  });
+  if (!panel.open) {
+    simulator.disabled = true;
+    localizedAttribute(simulator, 'title', () => t('interface:optionalPractice.simBrowserOnly'));
+  }
+  return {
+    openSimulator: panel.open,
+    simulatorRoot: () => panel.root?.() ?? null,
+    simulatorPrimary: () => panel.primary?.() ?? simulator,
+    closeSimulator: () => panel.close?.(),
+    dispose() {
+      panel.dispose();
+      simulator.remove();
+    },
+  };
 }

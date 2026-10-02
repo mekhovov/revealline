@@ -1,5 +1,10 @@
 # Unified appearance: quality-first implementation follow-up
 
+> This is the pre-integration quality receipt. For the published PR, current-main
+> integration checks and downloadable previews, use the
+> [publication report](publication.md). Counts, package caps and build hashes below
+> describe the earlier local snapshot, not the later PR build.
+
 This continues the user-approved quality-first order from the
 [plan review](../../unified-appearance-plan-review-2026-10-02.md). Industrial remains
 the new-profile fallback; existing preferences and explicit personal choices are

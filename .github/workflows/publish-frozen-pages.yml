@@ -41,6 +41,7 @@ jobs:
           fetch-depth: 0
           show-progress: false
           sparse-checkout: |
+            /package.json
             /.github/workflows/deploy-pages.yml
             /.github/workflows/publish-frozen-pages.yml
             /.github/workflows/qualify-release-source.yml
@@ -49,6 +50,14 @@ jobs:
             /publishing/optional-package-promotion.mjs
             /publishing/optional-package-admission.mjs
             /publishing/optional-package-policy.mjs
+            /publishing/practice-directory.mjs
+            /optional-practice/navigation.mjs
+            /game/optional-practice-details.mjs
+            /game/data-json.mjs
+            /game/i18n/index.mjs
+            /game/i18n/catalogs.mjs
+            /game/i18n/bootstrap.mjs
+            /game/vendor/i18next-26.4.2.min.js
             /publishing/edition-admission.mjs
             /publishing/edition-zip.mjs
             /game/edition-context.mjs

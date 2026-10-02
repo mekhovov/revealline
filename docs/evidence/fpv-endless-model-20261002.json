@@ -1,0 +1,224 @@
+{
+  "format": "FPVUnscoredFlightQualification.v1",
+  "createdAt": "2026-10-01T23:16:27.066Z",
+  "passed": true,
+  "sourceSHA256": "9e4cd11cfdde2dd43b437069b8cb7a359a8132495db806cb5f68e8674d48aaf6",
+  "baseline": "git HEAD:optional-practice/civilian-fpv/model.mjs",
+  "checks": [
+    {
+      "name": "acro continuous unscored flight past13minutes",
+      "passed": true,
+      "ticks": 39051,
+      "seconds": 781.02,
+      "heightRange": {
+        "min": 0,
+        "max": 10000
+      },
+      "contacts": 9,
+      "defaultExpiry": {
+        "integratedTicks": 36000,
+        "status": "expired",
+        "trigger": "Next step after36000 integrated ticks, unchanged from HEAD"
+      },
+      "defaultSnapshotsIdentical": true,
+      "defaultIdentityUnchanged": true,
+      "recorderBlockedForAllSessions": true,
+      "defaultRecorderCapUnchanged": true,
+      "pauseResumePreserved": true
+    },
+    {
+      "name": "self-level continuous unscored flight past13minutes",
+      "passed": true,
+      "ticks": 39051,
+      "seconds": 781.02,
+      "heightRange": {
+        "min": 0,
+        "max": 10000
+      },
+      "contacts": 9,
+      "defaultExpiry": {
+        "integratedTicks": 36000,
+        "status": "expired",
+        "trigger": "Next step after36000 integrated ticks, unchanged from HEAD"
+      },
+      "defaultSnapshotsIdentical": true,
+      "defaultIdentityUnchanged": true,
+      "recorderBlockedForAllSessions": true,
+      "defaultRecorderCapUnchanged": true,
+      "pauseResumePreserved": true
+    },
+    {
+      "name": "Explicit boolean practice opt-in validated",
+      "passed": true
+    },
+    {
+      "name": "flight-01 self-level original demonstration",
+      "passed": true,
+      "ticks": 239,
+      "contacts": 0,
+      "resultIdenticalToHEAD": true
+    },
+    {
+      "name": "flight-01 acro original demonstration",
+      "passed": true,
+      "ticks": 239,
+      "contacts": 0,
+      "resultIdenticalToHEAD": true
+    },
+    {
+      "name": "flight-02 self-level original demonstration",
+      "passed": true,
+      "ticks": 383,
+      "contacts": 0,
+      "resultIdenticalToHEAD": true
+    },
+    {
+      "name": "flight-02 acro original demonstration",
+      "passed": true,
+      "ticks": 383,
+      "contacts": 0,
+      "resultIdenticalToHEAD": true
+    },
+    {
+      "name": "flight-03 self-level original demonstration",
+      "passed": true,
+      "ticks": 433,
+      "contacts": 0,
+      "resultIdenticalToHEAD": true
+    },
+    {
+      "name": "flight-03 acro original demonstration",
+      "passed": true,
+      "ticks": 433,
+      "contacts": 0,
+      "resultIdenticalToHEAD": true
+    },
+    {
+      "name": "flight-04 self-level original demonstration",
+      "passed": true,
+      "ticks": 433,
+      "contacts": 0,
+      "resultIdenticalToHEAD": true
+    },
+    {
+      "name": "flight-04 acro original demonstration",
+      "passed": true,
+      "ticks": 433,
+      "contacts": 0,
+      "resultIdenticalToHEAD": true
+    },
+    {
+      "name": "flight-05 self-level original demonstration",
+      "passed": true,
+      "ticks": 435,
+      "contacts": 0,
+      "resultIdenticalToHEAD": true
+    },
+    {
+      "name": "flight-05 acro original demonstration",
+      "passed": true,
+      "ticks": 435,
+      "contacts": 0,
+      "resultIdenticalToHEAD": true
+    },
+    {
+      "name": "flight-06 self-level original demonstration",
+      "passed": true,
+      "ticks": 899,
+      "contacts": 0,
+      "resultIdenticalToHEAD": true
+    },
+    {
+      "name": "flight-06 acro original demonstration",
+      "passed": true,
+      "ticks": 900,
+      "contacts": 0,
+      "resultIdenticalToHEAD": true
+    },
+    {
+      "name": "flight-07 self-level original demonstration",
+      "passed": true,
+      "ticks": 498,
+      "contacts": 0,
+      "resultIdenticalToHEAD": true
+    },
+    {
+      "name": "flight-07 acro original demonstration",
+      "passed": true,
+      "ticks": 488,
+      "contacts": 0,
+      "resultIdenticalToHEAD": true
+    },
+    {
+      "name": "flight-08 self-level original demonstration",
+      "passed": true,
+      "ticks": 491,
+      "contacts": 0,
+      "resultIdenticalToHEAD": true
+    },
+    {
+      "name": "flight-08 acro original demonstration",
+      "passed": true,
+      "ticks": 491,
+      "contacts": 0,
+      "resultIdenticalToHEAD": true
+    },
+    {
+      "name": "flight-09 self-level original demonstration",
+      "passed": true,
+      "ticks": 638,
+      "contacts": 0,
+      "resultIdenticalToHEAD": true
+    },
+    {
+      "name": "flight-09 acro original demonstration",
+      "passed": true,
+      "ticks": 638,
+      "contacts": 0,
+      "resultIdenticalToHEAD": true
+    },
+    {
+      "name": "flight-10 self-level original demonstration",
+      "passed": true,
+      "ticks": 610,
+      "contacts": 0,
+      "resultIdenticalToHEAD": true
+    },
+    {
+      "name": "flight-10 acro original demonstration",
+      "passed": true,
+      "ticks": 610,
+      "contacts": 0,
+      "resultIdenticalToHEAD": true
+    },
+    {
+      "name": "flight-11 self-level original demonstration",
+      "passed": true,
+      "ticks": 1243,
+      "contacts": 0,
+      "resultIdenticalToHEAD": true
+    },
+    {
+      "name": "flight-11 acro original demonstration",
+      "passed": true,
+      "ticks": 1243,
+      "contacts": 0,
+      "resultIdenticalToHEAD": true
+    },
+    {
+      "name": "flight-12 self-level original demonstration",
+      "passed": true,
+      "ticks": 1126,
+      "contacts": 0,
+      "resultIdenticalToHEAD": true
+    },
+    {
+      "name": "flight-12 acro original demonstration",
+      "passed": true,
+      "ticks": 1126,
+      "contacts": 0,
+      "resultIdenticalToHEAD": true
+    }
+  ],
+  "scope": "Production model exercised with uninterrupted simulated ticks and all24 original proofs; no added unit suite, browser acceptance, hardware performance or player acceptance claim."
+}

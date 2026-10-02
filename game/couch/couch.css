@@ -679,8 +679,8 @@
 
   /* The replacement decision preserves both boards behind the shared browser. */
   .race-chapter-replace {
-    width: min(34rem, calc(100vw - 32px));
-    max-height: calc(100dvh - 32px);
+    width: min(34rem, calc(var(--dialog-viewport-width) - 32px));
+    max-height: calc(var(--dialog-viewport-height) - 32px);
     box-sizing: border-box;
     overflow: auto;
     border: var(--fk-border-width) solid var(--fk-line);

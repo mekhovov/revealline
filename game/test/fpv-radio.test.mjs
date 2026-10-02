@@ -227,7 +227,7 @@ test('profiles have validated export/import and failed writes are visible sessio
   assert.equal(store.save({ ...store.snapshot(), radio: profile() }).saved, true);
   const restored = createFlightProfileStore({ storage });
   assert.equal(restored.export(), store.export());
-  assert.deepEqual([...data.keys()], ['revealline.flight-profiles.v1']);
+  assert.deepEqual([...data.keys()], ['revealline.flight-profiles.v1.library.v2']);
   const failed = createFlightProfileStore({
     storage: {
       setItem() {

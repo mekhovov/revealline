@@ -1,4 +1,3 @@
-import { fpvLaunchURL } from '../fpv-entry.mjs';
 import { localizedText, t } from '../i18n/index.mjs';
 import { attachModalNavigation } from './modal-navigation.mjs';
 import { attachFieldKitSurfaces } from './field-kit-surfaces.mjs';
@@ -65,20 +64,7 @@ export function attachGameShell({
       })
     : null;
   const homeFPV = $('shell-home-fpv');
-  if (homeFPV && !isolated) {
-    homeFPV.hidden = false;
-    homeFPV.onclick = () => {
-      const win = doc.defaultView ?? globalThis.window;
-      const target = fpvLaunchURL(
-        win.location.href,
-        doc.documentElement.lang,
-        getAppearanceDefault(),
-      );
-      if (!target) return;
-      pause();
-      win.location.assign(target);
-    };
-  }
+
   const homePractice = $('shell-home-practice');
   if (homePractice && optionalPractice?.open) {
     homePractice.hidden = false;
@@ -583,14 +569,21 @@ export function attachGameShell({
   };
   home.addEventListener('click', leaveFeatured, true);
   const titleModes = $('shell-title-modes');
+  let modeChoices = null;
   if (titleModes) {
-    mountModeChoices({
+    modeChoices = mountModeChoices({
       root: titleModes,
       current: 'solo',
+      getAppearanceDefault,
+      pause,
       separateTeam,
       actions: { versus: $('shell-title-versus'), team: $('shell-title-team') },
     });
     titleModes.hidden = isolated || !onModeDeparture;
+    if (homeFPV && !isolated && modeChoices.openSimulator) {
+      homeFPV.hidden = false;
+      homeFPV.onclick = () => modeChoices.openSimulator(homeFPV);
+    }
     for (const kind of ['versus', 'team']) {
       const opener = $(`shell-title-${kind}`);
       opener.onclick = (event) => {
@@ -827,6 +820,7 @@ export function attachGameShell({
       modalNavigation?.destroy();
       surfaces.destroy();
       optionalPractice?.dispose();
+      modeChoices?.dispose();
       if (homeFPV) {
         homeFPV.onclick = null;
         homeFPV.hidden = true;

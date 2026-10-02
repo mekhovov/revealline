@@ -1,7 +1,7 @@
 /* Legacy layout and paint share one cascade layer. Theme recipes own opt-in appearance. */
 @layer legacy {
   .story-dialog {
-    max-width: min(960px, calc(100vw - 24px));
+    max-width: min(960px, calc(var(--dialog-viewport-width, 100vw) - 24px));
     padding: clamp(16px, 3vw, 24px);
     font-family: var(--pixel-font);
   }

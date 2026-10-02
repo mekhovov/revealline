@@ -207,4 +207,11 @@
       grid-template-columns: 1fr;
     }
   }
+  .community-download {
+    display: inline-block;
+    padding: 12px 0;
+    min-height: 44px;
+    color: inherit;
+    text-underline-offset: 4px;
+  }
 }

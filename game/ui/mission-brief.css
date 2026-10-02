@@ -4,9 +4,9 @@
   .game-shell #shell-missions[open][data-view='brief'] {
     display: flex;
     flex-direction: column;
-    width: min(900px, 100vw);
-    height: 100dvh;
-    max-height: 100dvh;
+    width: min(900px, var(--dialog-viewport-width, 100vw));
+    height: var(--dialog-viewport-height, 100dvh);
+    max-height: var(--dialog-viewport-height, 100dvh);
     padding: clamp(16px, 3vw, 32px);
     overflow-y: auto;
   }

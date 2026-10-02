@@ -21,6 +21,11 @@
     max-width: 860px;
     margin: auto;
   }
+  /* The enclosing game dialog already fits the device safe area. The iframe
+   keeps normal reading space without reserving the phone insets a second time. */
+  body[data-embedded='true'] {
+    padding: 24px 20px 32px;
+  }
   h1 {
     font-size: clamp(2rem, 5vw, 3rem);
   }
@@ -89,6 +94,22 @@
   }
   .album h3 {
     margin: 0 0 8px;
+  }
+  .experience {
+    padding: 12px 0;
+    border-bottom: 1px solid #29415b;
+  }
+  .experience label {
+    font-weight: 600;
+  }
+  .experience p {
+    margin: 0 0 4px 32px;
+  }
+  .experience a {
+    display: inline-block;
+    min-height: 44px;
+    padding: 10px 0;
+    margin-left: 32px;
   }
   progress {
     width: 100%;

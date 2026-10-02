@@ -52,8 +52,8 @@
     color: #eef3df;
     background: #0a141e;
     border: 3px solid #9addff;
-    width: min(920px, calc(100vw - 32px));
-    max-height: calc(100dvh - 32px);
+    width: min(920px, calc(var(--dialog-viewport-width, 100vw) - 32px));
+    max-height: calc(var(--dialog-viewport-height, 100dvh) - 32px);
     overflow: auto;
     box-sizing: border-box;
     padding: 20px;

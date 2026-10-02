@@ -1,14 +1,16 @@
+@import url('./optional-practice-panel.css');
+
 /* Legacy layout and paint share one cascade layer. Theme recipes own opt-in appearance. */
 @layer legacy {
   .field-kit .game-mode-choice {
     display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-columns: repeat(4, minmax(0, 1fr));
     gap: var(--fk-space-2, 8px);
     margin: 0 0 var(--fk-space-6, 24px);
   }
 
-  .field-kit .game-mode-choice > :is(a, [aria-current]),
-  .field-kit #couch-app .game-mode-choice > :is(a, [aria-current]) {
+  .field-kit .game-mode-choice > :is(a, button),
+  .field-kit #couch-app .game-mode-choice > :is(a, button) {
     display: flex;
     min-width: 0;
     min-height: var(--fk-target-size, 44px);
@@ -33,10 +35,10 @@
     box-shadow: inset 0 -4px var(--fk-accent, #f4bf62);
   }
 
-  .field-kit .game-mode-choice > a:hover,
-  .field-kit .game-mode-choice > a:focus-visible,
-  .field-kit #couch-app .game-mode-choice > a:hover,
-  .field-kit #couch-app .game-mode-choice > a:focus-visible {
+  .field-kit .game-mode-choice > :is(a, button):hover,
+  .field-kit .game-mode-choice > :is(a, button):focus-visible,
+  .field-kit #couch-app .game-mode-choice > :is(a, button):hover,
+  .field-kit #couch-app .game-mode-choice > :is(a, button):focus-visible {
     background: var(--fk-panel-raised, #182531);
     border-color: var(--fk-focus, #78dce8);
   }
@@ -49,5 +51,11 @@
 
   .field-kit .game-mode-choice[hidden] {
     display: none;
+  }
+
+  @media (max-width: 480px) {
+    .field-kit .game-mode-choice {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
   }
 }

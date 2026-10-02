@@ -17,15 +17,1615 @@ import {
   saveAppearanceContext,
 } from '../../game/presentation/theme-system.mjs';
 
-/** Presentation only: shared game fonts, icons and short menu cues. No simulation input. */
-export const SIM_WORDMARK_URL = new URL(
-  '../../game/ui/art/identity/fpv-line/wordmark.png',
-  import.meta.url,
-).href;
+/** Read-only teaching feedback from the runtime's matching criterion state. */
+export function practiceSkillFeedback(target, state, locale = 'en') {
+  if (!['rotation-v1', 'attitude-v1', 'path-v1', 'crossing-v1'].includes(target?.type)) return null;
+  const t = (en, uk) => (locale === 'uk' ? uk : en);
+  const clamp = (value) => Math.max(0, Math.min(1, Number.isFinite(value) ? value : 0));
+  const deg = (value) => Math.round((value ?? 0) / 100);
+  const m = (value) => ((value ?? 0) / 1000).toFixed(1);
+  const seconds = (ticks) => ((ticks ?? 0) / 50).toFixed(1);
+  const skill = state?.skill && state.skill.index === state.step ? state.skill : null;
+  const active = skill?.status === 'active' || skill?.status === 'complete';
+  const height = `${m(target.min.y)}–${m(target.max.y)}`;
+  const pose = (up) =>
+    up === 'inverted'
+      ? t('inverted', 'догори дном')
+      : up === 'upright'
+        ? t('upright', 'рівно')
+        : t('at the shown entry attitude', 'у показаному положенні входу');
+  const rotationName = (spec) =>
+    spec.axis === 'roll'
+      ? spec.direction > 0
+        ? t('Roll right', 'Крен праворуч')
+        : t('Roll left', 'Крен ліворуч')
+      : spec.axis === 'pitch'
+        ? spec.direction > 0
+          ? t('Pitch forward', 'Тангаж уперед')
+          : t('Pitch back', 'Тангаж назад')
+        : spec.direction > 0
+          ? t('Yaw right', 'Курс праворуч')
+          : t('Yaw left', 'Курс ліворуч');
+  const direction = (axis, sign) =>
+    axis === 'y'
+      ? sign > 0
+        ? t('up', 'угору')
+        : t('down', 'униз')
+      : axis === 'x'
+        ? sign > 0
+          ? t('east', 'на схід')
+          : t('west', 'на захід')
+        : sign > 0
+          ? t('south', 'на південь')
+          : t('north', 'на північ');
+  let label,
+    objective,
+    detail,
+    progress = 0;
+  let hint = t(
+    'Stay airborne inside the marked zone and follow the demonstrated sequence.',
+    'Залишайтеся в повітрі в позначеній зоні та виконуйте показану послідовність.',
+  );
+  if (target.type === 'rotation-v1') {
+    label = `${rotationName(target)} ${deg(target.angle)}°`;
+    objective = t(
+      `${label}. Enter ${pose(target.entryUp)} at ${height} m. Complete the whole rotation, then stop rotating for ${seconds(target.settleTicks)} s.`,
+      `${label}. Почніть ${pose(target.entryUp)} на ${height} м. Виконайте весь оберт, потім зупиніть обертання на ${seconds(target.settleTicks)} с.`,
+    );
+    const amount = Math.max(0, skill?.rotation?.angle ?? 0);
+    detail = `${deg(amount)}° / ${deg(target.angle)}° · ${t('steady', 'стабільно')} ${seconds(skill?.dwell)} / ${seconds(target.settleTicks)} ${t('s', 'с')}`;
+    progress = active
+      ? 0.9 *
+          Math.min(
+            clamp(amount / target.angle),
+            clamp((skill?.rotation?.checkpoint ?? 0) / (target.angle / 9000)),
+          ) +
+        0.1 * clamp((skill?.dwell ?? 0) / target.settleTicks)
+      : 0;
+    hint =
+      skill?.status === 'entry'
+        ? t(
+            `Return to the zone ${pose(target.entryUp)} and stop rotating before trying again.`,
+            `Поверніться в зону ${pose(target.entryUp)} й зупиніть обертання перед повтором.`,
+          )
+        : (skill?.rotation?.checkpoint ?? 0) >= target.angle / 9000
+          ? t(
+              'The rotation is traced. Ease the rotation stick toward centre and settle at the exit attitude.',
+              'Оберт пройдено. Поверніть стік обертання до центру й стабілізуйте положення виходу.',
+            )
+          : t(
+              'Follow the complete rotation. A matching final view alone does not count.',
+              'Виконайте повний оберт. Самого схожого вигляду наприкінці недостатньо.',
+            );
+  } else if (target.type === 'attitude-v1') {
+    label =
+      target.up === 'inverted'
+        ? t('Inverted recognition', 'Перевернуте положення')
+        : t('Upright recovery', 'Рівне положення');
+    objective = t(
+      `Remain ${pose(target.up)} at ${height} m for ${seconds(target.ticks)} s, with rotation settled.`,
+      `Залишайтеся ${pose(target.up)} на ${height} м протягом ${seconds(target.ticks)} с без обертання.`,
+    );
+    detail = `${seconds(skill?.dwell)} / ${seconds(target.ticks)} ${t('s steady', 'с стабільно')}`;
+    progress = active ? clamp((skill?.dwell ?? 0) / target.ticks) : 0;
+    hint =
+      target.up === 'inverted'
+        ? t(
+            'This is a brief inverted falling phase, not inverted hover. Keep recovery height available.',
+            'Це коротка фаза падіння догори дном, а не перевернуте зависання. Залишайте висоту для відновлення.',
+          )
+        : t(
+            'Settle the rotation and slow the drift inside the zone.',
+            'Зупиніть обертання й уповільніть дрейф у зоні.',
+          );
+  } else if (target.type === 'path-v1') {
+    label =
+      target.plane === 'xz'
+        ? t('Orbit path', 'Орбітальна траєкторія')
+        : t('Loop path', 'Траєкторія петлі');
+    objective = t(
+      `${label}: ${deg(target.sweep)}° in the marked direction, ${m(target.radiusMin)}–${m(target.radiusMax)} m from the centre; stay at ${height} m.`,
+      `${label}: ${deg(target.sweep)}° у позначеному напрямку, ${m(target.radiusMin)}–${m(target.radiusMax)} м від центра; висота ${height} м.`,
+    );
+    if (target.entryBearing !== null)
+      objective += t(' Begin at the marked entry.', ' Почніть у позначеному вході.');
+    if (target.noseToward)
+      objective += t(' Keep the nose toward the landmark.', ' Тримайте ніс до орієнтира.');
+    if (target.coupled)
+      objective += ` ${rotationName(target.coupled)} ${deg(target.coupled.angle)}° ${t('along the path.', 'уздовж траєкторії.')}`;
+    const winding = Math.max(0, skill?.path?.winding ?? 0);
+    progress = active
+      ? Math.min(
+          clamp(winding / target.sweep),
+          clamp((skill?.path?.checkpoint ?? 0) / (target.sweep / 9000)),
+        )
+      : 0;
+    detail = `${deg(winding)}° / ${deg(target.sweep)}° ${t('path', 'траєкторії')}`;
+    if (target.coupled) {
+      detail += ` · ${deg(skill?.rotation?.angle)}° / ${deg(target.coupled.angle)}° ${t('body', 'корпусу')}`;
+      progress = Math.min(progress, clamp((skill?.rotation?.angle ?? 0) / target.coupled.angle));
+    }
+    if (target.axialMin || target.axialMax) {
+      const axis = ['x', 'y', 'z'].find((value) => !target.plane.includes(value));
+      const sign = target.axialMax <= 0 ? -1 : 1;
+      const low = sign < 0 ? -target.axialMax : target.axialMin;
+      const high = sign < 0 ? -target.axialMin : target.axialMax;
+      const travel = active ? ((state?.position?.[axis] ?? 0) - skill.startAxis) * sign : 0;
+      const travelLabel = direction(axis, sign);
+      objective += t(
+        ` Gain ${m(low)}–${m(high)} m ${travelLabel} gradually through the path.`,
+        ` Поступово пройдіть ${m(low)}–${m(high)} м ${travelLabel} вздовж траєкторії.`,
+      );
+      detail += ` · ${m(travel)} ${t('m', 'м')} ${travelLabel}`;
+    }
+    hint = t(
+      'Keep the path, nose direction and body rotation together. Return to the entry if progress resets.',
+      'Поєднуйте траєкторію, напрямок носа й оберт корпусу. Якщо поступ скинувся, поверніться до входу.',
+    );
+  } else {
+    label = t(
+      `Cross ${direction(target.axis, target.direction)}`,
+      `Перетніть ${direction(target.axis, target.direction)}`,
+    );
+    const location =
+      target.axis === 'y'
+        ? t(`at ${m(target.at)} m height`, `на висоті ${m(target.at)} м`)
+        : t('through the marked plane', 'крізь позначену площину');
+    const nose =
+      target.forwardTolerance === 9000
+        ? t('without pointing the nose against travel', 'не спрямовуючи ніс проти руху')
+        : t(
+            `with the nose within ${deg(target.forwardTolerance)}° of travel`,
+            `з носом у межах ${deg(target.forwardTolerance)}° від напрямку руху`,
+          );
+    objective = t(
+      `${label} ${location}, ${nose}, at least ${m(target.minSpeed)} m/s. Stay inside the marked opening.`,
+      `${label} ${location}, ${nose}, щонайменше ${m(target.minSpeed)} м/с. Залишайтеся в позначеному отворі.`,
+    );
+    const remaining = ((target.at ?? 0) - (state?.position?.[target.axis] ?? 0)) * target.direction;
+    detail =
+      remaining >= 0
+        ? t(`${m(remaining)} m to the plane`, `${m(remaining)} м до площини`)
+        : t('Return to the approach side to retry', 'Поверніться на бік заходу для повтору');
+    hint =
+      target.forwardTolerance === 9000
+        ? t(
+            'Cross from the approach side in the shown direction. A level nose is allowed; do not point it against travel.',
+            'Перетніть із боку заходу у вказаному напрямку. Ніс може бути горизонтальним; не спрямовуйте його проти руху.',
+          )
+        : t(
+            'Cross from the approach side with both travel and nose in the shown direction. Falling in another attitude does not qualify.',
+            'Перетніть із боку заходу: рух і ніс мають бути у вказаному напрямку. Падіння в іншому положенні не зараховується.',
+          );
+  }
+  const reasons = {
+    'enter-zone': t(
+      'Enter the marked airborne zone to begin.',
+      'Увійдіть у позначену зону в повітрі.',
+    ),
+    'airborne-clearance': t(
+      'Ground or obstacle contact interrupted the movement. Recover into clear air before retrying.',
+      'Контакт із землею чи перешкодою перервав маневр. Відновіть політ у вільному просторі перед повтором.',
+    ),
+    'outside-zone': t(
+      'You left the practice zone. Return to its entry before retrying.',
+      'Ви вийшли з навчальної зони. Поверніться до входу перед повтором.',
+    ),
+    'entry-attitude': t(
+      `Start ${pose(target.entryUp)} with rotation settled, inside the marked path band.`,
+      `Почніть ${pose(target.entryUp)} без обертання, у позначеній смузі траєкторії.`,
+    ),
+    'entry-bearing': t(
+      'Return to the marked starting point on the path.',
+      'Поверніться до позначеної початкової точки траєкторії.',
+    ),
+    'time-window': t(
+      'This attempt took too long. Return to the entry and try the sequence again.',
+      'Спроба тривала надто довго. Поверніться до входу й повторіть послідовність.',
+    ),
+    'rotation-purity': t(
+      'Too much reverse or cross-axis rotation. Settle at the entry and follow the shown rotation axis.',
+      'Забагато зворотного обертання чи руху іншими осями. Стабілізуйтеся на вході й обертайтеся навколо показаної осі.',
+    ),
+    'missed-attitude': t(
+      'A required intermediate attitude was missed. Return to the entry and follow the full rotation.',
+      'Пропущено потрібне проміжне положення. Поверніться до входу й виконайте повний оберт.',
+    ),
+    'path-envelope': t(
+      'Keep the marked distance from the centre and the requested nose direction. Re-enter at the starting point.',
+      'Тримайте позначену відстань від центра й потрібний напрямок носа. Почніть знову з точки входу.',
+    ),
+    'path-direction': t(
+      'The path reversed too far. Return to the entry and follow the marked direction.',
+      'Траєкторія надто змінилася у зворотний бік. Поверніться до входу й рухайтеся в позначеному напрямку.',
+    ),
+    'path-axial-progress': t(
+      'Travel along the route must develop with the turn. Re-enter and combine both movements.',
+      'Рух уздовж маршруту має зростати разом із поворотом. Почніть знову й поєднайте обидва рухи.',
+    ),
+    'rotation-path-phase': t(
+      'Body rotation and path drifted apart. Re-enter and coordinate them through the whole movement.',
+      'Оберт корпусу й траєкторія розійшлися. Почніть знову й узгоджуйте їх протягом усього маневру.',
+    ),
+    'ambiguous-path': t(
+      'The path could not be followed continuously. Return to the entry to begin again.',
+      'Не вдалося простежити безперервну траєкторію. Поверніться до входу для повтору.',
+    ),
+  };
+  if (skill?.reason && reasons[skill.reason]) hint = reasons[skill.reason];
+  if (skill?.status === 'complete') progress = 1;
+  else progress = Math.min(0.99, progress);
+  return {
+    label,
+    objective,
+    detail,
+    hint,
+    progress,
+    status: skill?.status ?? 'entry',
+    reason: skill?.reason ?? null,
+  };
+}
 
+/** Presentation only: shared game fonts, icons and short menu cues. No simulation input. */
 const fontOwners = new WeakMap();
 const cueNames = new Set(['focus', 'confirm', 'cancel']);
 const now = (win) => win.performance?.now?.() ?? Date.now();
+
+const AUDIO_MIX_KEY = 'revealline.fpv.audio-mix.v1';
+const AUDIO_CHANNELS = ['interface', 'motor', 'ambience'];
+const audioVolume = (value) =>
+  typeof value === 'number' && Number.isFinite(value) ? Math.min(1, Math.max(0, value)) : 1;
+
+/** Shared mix only. Master mute and browser audio activation remain host-owned. */
+export function createSimAudioMix({ storage } = {}) {
+  let values = { interface: 1, motor: 1, ambience: 1 };
+  let localOnly = !storage;
+  const refresh = () => {
+    if (localOnly) return { ...values };
+    try {
+      const raw = storage?.getItem(AUDIO_MIX_KEY);
+      if (raw && raw.length <= 512) {
+        const saved = JSON.parse(raw);
+        if (saved?.format === 'SimAudioMix.v1')
+          values = Object.fromEntries(AUDIO_CHANNELS.map((key) => [key, audioVolume(saved[key])]));
+      } else if (raw === null) values = { interface: 1, motor: 1, ambience: 1 };
+    } catch {
+      localOnly = true;
+      // Retain the current visit's mix when browser storage is unavailable.
+    }
+    return { ...values };
+  };
+  refresh();
+  return {
+    snapshot: () => ({ ...values }),
+    refresh,
+    set(channel, value) {
+      if (!AUDIO_CHANNELS.includes(channel)) throw new TypeError('Unknown simulator audio channel');
+      refresh();
+      values[channel] = audioVolume(value);
+      try {
+        storage?.setItem(AUDIO_MIX_KEY, JSON.stringify({ format: 'SimAudioMix.v1', ...values }));
+      } catch {
+        localOnly = true;
+        // Sliders work for this visit even without persistent preferences.
+      }
+      return { ...values };
+    },
+  };
+}
+
+/** Accessible shared sliders; changing a mix never creates or resumes audio. */
+export function mountSimAudioControls({
+  root,
+  window: win = globalThis.window,
+  locale = () => 'en',
+  channels = AUDIO_CHANNELS,
+  onChange = () => {},
+} = {}) {
+  const doc = root.ownerDocument;
+  let storage;
+  try {
+    storage = win.localStorage;
+  } catch {
+    // Preferences are optional; sound controls remain usable.
+  }
+  const mix = createSimAudioMix({ storage });
+  const controls = [];
+  const names = {
+    interface: ['Interface & feedback', 'Інтерфейс і сигнали'],
+    motor: ['Drone motors', 'Мотори дрона'],
+    ambience: ['Environment & wind', 'Оточення та вітер'],
+  };
+  for (const channel of channels) {
+    if (!AUDIO_CHANNELS.includes(channel)) continue;
+    const label = doc.createElement('label');
+    const name = doc.createElement('span');
+    const slider = doc.createElement('input');
+    const output = doc.createElement('output');
+    name.id = `${root.id}-${channel}-label`;
+    slider.id = `${root.id}-${channel}`;
+    slider.type = 'range';
+    slider.min = '0';
+    slider.max = '100';
+    slider.step = '1';
+    slider.setAttribute('aria-labelledby', name.id);
+    output.setAttribute('for', slider.id);
+    // Native slider announces values. Do not add a second live region per tick.
+    output.setAttribute('aria-hidden', 'true');
+    label.append(name, slider, output);
+    root.append(label);
+    const input = () => {
+      mix.set(channel, Number(slider.value) / 100);
+      apply();
+    };
+    slider.addEventListener('input', input);
+    controls.push({ channel, name, slider, output, input });
+  }
+  function apply() {
+    const values = mix.snapshot();
+    for (const control of controls) {
+      const percent = Math.round(values[control.channel] * 100);
+      control.name.textContent = names[control.channel][locale() === 'uk' ? 1 : 0];
+      control.slider.value = String(percent);
+      control.slider.setAttribute('aria-valuetext', `${percent}%`);
+      control.output.textContent = `${percent}%`;
+    }
+    onChange(values);
+  }
+  const refresh = () => {
+    mix.refresh();
+    apply();
+  };
+  const changed = (event) => {
+    if (event.key === AUDIO_MIX_KEY || event.key === null) refresh();
+  };
+  win.addEventListener('storage', changed);
+  win.addEventListener('focus', refresh);
+  apply();
+  return {
+    refresh,
+    snapshot: mix.snapshot,
+    dispose() {
+      win.removeEventListener('storage', changed);
+      win.removeEventListener('focus', refresh);
+      for (const { slider, input } of controls) slider.removeEventListener('input', input);
+      root.replaceChildren();
+    },
+  };
+}
+
+/** Shared observer. Following heading moves the camera, never the drone's full
+ * quaternion or its pitch/roll. Rendering cannot mutate supplied flight state. */
+export function mountDroneDiagram({ root }) {
+  const doc = root.ownerDocument;
+  const attributes = new WeakMap();
+  const attr = (element, name, value) => {
+    let values = attributes.get(element);
+    if (!values) attributes.set(element, (values = new Map()));
+    const text = String(value);
+    if (values.get(name) === text) return;
+    values.set(name, text);
+    element.setAttribute(name, text);
+  };
+  const style = (element, name, value) => {
+    if (element.style[name] !== value) element.style[name] = value;
+  };
+  const data = (element, name, value) => {
+    const text = String(value);
+    if (element.dataset[name] !== text) element.dataset[name] = text;
+  };
+  const text = (element, value) => {
+    if (element.textContent !== value) element.textContent = value;
+  };
+  const svg = (tag, attributes = {}) => {
+    const element = doc.createElementNS('http://www.w3.org/2000/svg', tag);
+    for (const [key, value] of Object.entries(attributes)) attr(element, key, value);
+    return element;
+  };
+  const drawing = svg('svg', {
+    viewBox: '0 0 220 160',
+    class: 'sim-response-drawing',
+    'aria-hidden': 'true',
+    focusable: 'false',
+  });
+  const ground = svg('path', { class: 'sim-response-ground' });
+  const groundFar = svg('path', { class: 'sim-response-ground-far' });
+  const horizon = svg('path', { class: 'sim-response-horizon' });
+  const reference = svg('text', {
+    x: 110,
+    y: 154,
+    'text-anchor': 'middle',
+    class: 'sim-response-north',
+  });
+  const shadow = svg('ellipse', {
+    cx: 110,
+    cy: 118,
+    rx: 30,
+    ry: 8,
+    class: 'sim-response-shadow',
+  });
+  const drift = svg('path', { class: 'sim-response-drift' });
+  const heightLine = svg('path', { class: 'sim-response-height-line' });
+  const heightLabel = svg('text', { x: 9, y: 14, class: 'sim-response-height-label' });
+  const mixNote = svg('text', {
+    x: 110,
+    y: 184,
+    'text-anchor': 'middle',
+    class: 'sim-response-mix-note',
+  });
+  const airframe = svg('g', { class: 'sim-response-airframe' });
+  const lowerArms = svg('path', { class: 'sim-response-lower-arms' });
+  const arms = svg('path', { class: 'sim-response-arms' });
+  const sides = Array.from({ length: 4 }, () => svg('path', { class: 'sim-response-body-side' }));
+  const body = svg('path', { class: 'sim-response-body' });
+  const nose = svg('path', { class: 'sim-response-nose' });
+  const rear = svg('path', { class: 'sim-response-rear' });
+  // Props-in Quad X, viewed from above: FL/RR clockwise, FR/RL anticlockwise.
+  // This is a teaching mix of commands, not simulated motor RPM or ESC output.
+  const motorNames = ['front-left', 'front-right', 'rear-left', 'rear-right'];
+  const yawMix = [-1, 1, 1, -1];
+  const propellers = motorNames.map((name, index) =>
+    svg('path', {
+      class: 'sim-response-propeller',
+      'data-motor': name,
+      'data-rotation': yawMix[index] > 0 ? 'ccw' : 'cw',
+    }),
+  );
+  const motorPower = motorNames.map((name) =>
+    svg('path', { class: 'sim-response-motor-power', 'data-motor': name }),
+  );
+  const motorLabels = motorNames.map((name) =>
+    svg('text', {
+      class: 'sim-response-motor-label',
+      'data-motor': name,
+      'text-anchor': 'middle',
+    }),
+  );
+  const struts = svg('path', { class: 'sim-response-struts' });
+  const thrust = svg('path', { class: 'sim-response-thrust' });
+  const frontLeader = svg('path', { class: 'sim-response-front-leader' });
+  const frontLabel = svg('text', {
+    'text-anchor': 'middle',
+    class: 'sim-response-front-label',
+  });
+  const rearLabel = svg('text', {
+    'text-anchor': 'middle',
+    class: 'sim-response-rear-label',
+  });
+  const targetCue = svg('g', { class: 'sim-response-practice-target' });
+  const targetOutline = svg('path', {
+    class: 'sim-response-target-outline',
+    fill: 'none',
+    stroke: 'var(--fk-amber, #ffd27c)',
+    'stroke-width': 1.5,
+    'stroke-dasharray': '4 3',
+  });
+  const targetMarker = svg('path', {
+    class: 'sim-response-target-marker',
+    fill: 'none',
+    stroke: 'var(--fk-amber, #ffd27c)',
+    'stroke-width': 2,
+    'stroke-linecap': 'round',
+    'stroke-linejoin': 'round',
+  });
+  const targetLabel = svg('text', {
+    class: 'sim-response-target-label',
+    'text-anchor': 'middle',
+    fill: 'var(--fk-amber, #ffd27c)',
+    stroke: 'var(--fk-panel, #101923)',
+    'stroke-width': 3,
+    'paint-order': 'stroke',
+    'font-family': 'var(--fk-font-mono, monospace)',
+  });
+  const targetProgress = svg('path', {
+    class: 'sim-response-target-progress',
+    fill: 'none',
+    stroke: 'var(--fk-amber, #ffd27c)',
+    'stroke-width': 2,
+    'stroke-linecap': 'round',
+  });
+  targetCue.append(targetOutline, targetMarker, targetLabel, targetProgress);
+  airframe.append(
+    lowerArms,
+    arms,
+    ...sides,
+    body,
+    struts,
+    ...motorPower,
+    ...propellers,
+    rear,
+    nose,
+    thrust,
+  );
+  drawing.append(
+    horizon,
+    groundFar,
+    ground,
+    reference,
+    shadow,
+    heightLine,
+    drift,
+    airframe,
+    targetCue,
+    frontLeader,
+    frontLabel,
+    rearLabel,
+    ...motorLabels,
+    heightLabel,
+    mixNote,
+  );
+  root.append(drawing);
+  let disposed = false,
+    lastHeading = null,
+    lastTick = null,
+    lastUpdateKey = '',
+    lastPoseKey = '',
+    lastGroundKey = '',
+    lastThrustKey = '',
+    lastDriftKey = '',
+    lastResult,
+    cachedGroundTile = null;
+  const phases = [0, 0, 0, 0],
+    previousPower = [0, 0, 0, 0],
+    drawnPhases = [NaN, NaN, NaN, NaN];
+  // Generic 10-inch True-X proportions: 254 mm props / 420 mm diagonal.
+  // Reduce the motor span as the props grow to preserve the observer's fit.
+  // These visual dimensions never enter the flight or collision model.
+  const motorOffset = 0.58,
+    propRadius = (motorOffset * Math.SQRT2 * 254) / 420,
+    powerRadius = propRadius + 0.025;
+  const corners = [
+    [-motorOffset, 0, -motorOffset],
+    [motorOffset, 0, -motorOffset],
+    [-motorOffset, 0, motorOffset],
+    [motorOffset, 0, motorOffset],
+  ];
+  const finite = (value) => (Number.isFinite(value) ? value : 0);
+  const rotation = (orientation) => {
+    const values =
+      Array.isArray(orientation) && orientation.length === 4
+        ? orientation.map(finite)
+        : [0, 0, 0, 1];
+    const length = Math.hypot(...values);
+    const [x, y, z, w] = length ? values.map((value) => value / length) : [0, 0, 0, 1];
+    const xx = 1 - 2 * (y * y + z * z),
+      xy = 2 * (x * y - z * w),
+      xz = 2 * (x * z + y * w),
+      yx = 2 * (x * y + z * w),
+      yy = 1 - 2 * (x * x + z * z),
+      yz = 2 * (y * z - x * w),
+      zx = 2 * (x * z - y * w),
+      zy = 2 * (y * z + x * w),
+      zz = 1 - 2 * (x * x + y * y);
+    return ([a, b, c]) => [
+      xx * a + xy * b + xz * c,
+      yx * a + yy * b + yz * c,
+      zx * a + zy * b + zz * c,
+    ];
+  };
+  return {
+    update({
+      state,
+      controls = {},
+      locale = 'en',
+      unavailable = false,
+      referenceOrientation,
+      detailScale = 1,
+      followHeading = false,
+      environmentMotion = false,
+      reducedMotion = false,
+      immersivePractice = false,
+      showMotorDetails = false,
+      practiceTarget = null,
+    } = {}) {
+      if (disposed || !state) return;
+      environmentMotion ||= immersivePractice;
+      const updateKey = [
+        state.ticks,
+        ...(state.orientation ?? []),
+        ...(referenceOrientation ?? []),
+        state.position?.x,
+        state.position?.y,
+        state.position?.z,
+        state.velocity?.x,
+        state.velocity?.z,
+        controls.throttle,
+        controls.roll,
+        controls.pitch,
+        controls.yaw,
+        locale,
+        unavailable,
+        detailScale,
+        followHeading,
+        environmentMotion,
+        reducedMotion,
+        immersivePractice,
+        showMotorDetails,
+        practiceTarget?.type,
+        practiceTarget?.axis,
+        practiceTarget?.at,
+        practiceTarget?.minSide,
+        practiceTarget?.maxSide,
+        practiceTarget?.minY,
+        practiceTarget?.maxY,
+        practiceTarget?.direction,
+        practiceTarget?.angle,
+        practiceTarget?.up,
+        practiceTarget?.entryUp,
+        practiceTarget?.entryBearing,
+        practiceTarget?.ticks,
+        practiceTarget?.settleTicks,
+        practiceTarget?.plane,
+        practiceTarget?.sweep,
+        practiceTarget?.radiusMin,
+        practiceTarget?.radiusMax,
+        practiceTarget?.noseToward,
+        practiceTarget?.axialMin,
+        practiceTarget?.axialMax,
+        practiceTarget?.minA,
+        practiceTarget?.maxA,
+        practiceTarget?.minB,
+        practiceTarget?.maxB,
+        practiceTarget?.coupled?.axis,
+        practiceTarget?.coupled?.direction,
+        practiceTarget?.coupled?.angle,
+        state.step,
+        state.skill?.index,
+        state.skill?.status,
+        state.skill?.reason,
+        state.skill?.rotation?.angle,
+        state.skill?.rotation?.checkpoint,
+        state.skill?.path?.winding,
+        state.skill?.path?.checkpoint,
+        state.skill?.dwell,
+        state.skill?.startAxis,
+        ...['x', 'y', 'z'].map((axis) => practiceTarget?.center?.[axis]),
+        ...['x', 'y', 'z'].flatMap((axis) => [
+          practiceTarget?.min?.[axis],
+          practiceTarget?.max?.[axis],
+        ]),
+      ].join('|');
+      // Hosts may paint more often than the fixed simulation clock. Repeated
+      // samples perform no SVG work; changed attitude/position is never delayed.
+      if (updateKey === lastUpdateKey) return lastResult;
+      const rotate = rotation(state.orientation);
+      const initialForward = rotation(referenceOrientation)([0, 0, -1]);
+      const referenceHeading =
+        Math.hypot(initialForward[0], initialForward[2]) > 0.0001
+          ? Math.atan2(initialForward[0], -initialForward[2])
+          : 0;
+      const forward = rotate([0, 0, -1]);
+      // A vertical nose has no horizontal heading. Keep the last valid camera
+      // heading through this small singular region instead of spinning it.
+      if (Math.hypot(forward[0], forward[2]) > 0.04)
+        lastHeading = Math.atan2(forward[0], -forward[2]);
+      const cameraHeading = followHeading ? (lastHeading ?? referenceHeading) : referenceHeading;
+      const headingDelta = Math.atan2(
+        Math.sin(cameraHeading - referenceHeading),
+        Math.cos(cameraHeading - referenceHeading),
+      );
+      const cosine = Math.cos(cameraHeading),
+        sine = Math.sin(cameraHeading);
+      const relative = ([x, y, z]) => [cosine * x + sine * z, y, -sine * x + cosine * z];
+      const height = Math.max(0, finite(state.position?.y) / 1000);
+      const centerX = immersivePractice ? 320 : 110,
+        floorY = immersivePractice ? 230 : environmentMotion ? 150 : 118,
+        projectionScale = immersivePractice ? 48 : 36;
+      // Smoothly auto-frame actual height so a high flight never clips out of
+      // the teaching view. This camera framing does not alter the measured m.
+      const bodyY = environmentMotion ? floorY - (96 * height) / (height + 4) : 67;
+      attr(
+        drawing,
+        'viewBox',
+        immersivePractice ? '0 0 640 360' : environmentMotion ? '0 0 220 200' : '0 0 220 160',
+      );
+      data(drawing, 'environmentMotion', String(environmentMotion));
+      data(drawing, 'reducedMotion', String(reducedMotion));
+      data(drawing, 'immersivePractice', String(immersivePractice));
+      // The observer is behind (+Z) and slightly above the nose (-Z). Following
+      // heading keeps that rear view through turns without levelling the body.
+      // Perspective makes the rear motor pair visibly nearer; height and depth
+      // remain independent, so pitch cannot read as a flat icon being squashed.
+      const projectView = ([x, y, z], floor = false) => {
+        const scale = (projectionScale * 5) / (5 - z * 0.9165 - y * 0.4);
+        return [centerX + x * scale, (floor ? floorY : bodyY) + (z * 0.4 - y * 0.9165) * scale];
+      };
+      const project = (value, floor = false) => projectView(relative(value), floor);
+      const bodyScale = Math.max(1, Math.min(1.5, finite(detailScale)));
+      const bodyPoint = (value) => project(rotate(value.map((n) => n * bodyScale)));
+      const pair = (value) => value.map((number) => number.toFixed(2)).join(' ');
+      const path = (points, close = false) => `M${points.map(pair).join('L')}${close ? 'Z' : ''}`;
+      const bodyPath = (points, close = false) => path(points.map(bodyPoint), close);
+      const initialCosine = Math.cos(referenceHeading),
+        initialSine = Math.sin(referenceHeading);
+      // The ground arrow stays aligned to the starting world heading while the
+      // camera follows the nose; its rotation makes yaw visible independently.
+      const floorPoint = ([x, y, z]) =>
+        followHeading
+          ? project(
+              [
+                (initialCosine * x - initialSine * z) * 0.55,
+                y,
+                (initialSine * x + initialCosine * z) * 0.55,
+              ],
+              true,
+            )
+          : projectView([x, y, z], true);
+      const groundOffset = {
+        x:
+          (initialCosine * finite(state.position?.x) + initialSine * finite(state.position?.z)) /
+          1000,
+        z:
+          (-initialSine * finite(state.position?.x) + initialCosine * finite(state.position?.z)) /
+          1000,
+      };
+      const groundKey = [
+        cameraHeading,
+        referenceHeading,
+        environmentMotion ? groundOffset.x : 0,
+        environmentMotion ? groundOffset.z : 0,
+        followHeading,
+        environmentMotion,
+        immersivePractice,
+      ].join('|');
+      let groundTile = cachedGroundTile;
+      if (groundKey !== lastGroundKey) {
+        let groundPaths = [
+          path(
+            [
+              [-1.65, 0, -1.6],
+              [1.65, 0, -1.6],
+              [1.65, 0, 1.5],
+              [-1.65, 0, 1.5],
+            ].map(floorPoint),
+            true,
+          ),
+          path(
+            [
+              [-1.65, 0, 0],
+              [1.65, 0, 0],
+            ].map(floorPoint),
+          ),
+          path(
+            [
+              [0, 0, 1.5],
+              [0, 0, -1.6],
+              [-0.13, 0, -1.25],
+              [0, 0, -1.6],
+              [0.13, 0, -1.25],
+            ].map(floorPoint),
+          ),
+        ];
+        groundTile = null;
+        const farPaths = [];
+        if (environmentMotion) {
+          // One metre tiles are anchored to the world, not integrated a second
+          // time from velocity. Camera translation subtracts the actual position.
+          // Clip in the ground plane before perspective to keep geometry bounded.
+          const groundView = ([x, z]) =>
+            relative([initialCosine * x - initialSine * z, 0, initialSine * x + initialCosine * z]);
+          const clipGround = (a, b, far = false) => {
+            let lo = 0,
+              hi = 1;
+            for (const [axis, min, max] of [
+              [0, immersivePractice ? -12 : -2.4, immersivePractice ? 12 : 2.4],
+              [
+                2,
+                immersivePractice ? (far ? -16 : -5) : -2.8,
+                immersivePractice ? (far ? -5 : 2.4) : 1.4,
+              ],
+            ]) {
+              const delta = b[axis] - a[axis];
+              if (Math.abs(delta) < 1e-8) {
+                if (a[axis] < min || a[axis] > max) return '';
+              } else {
+                const from = (min - a[axis]) / delta,
+                  to = (max - a[axis]) / delta;
+                lo = Math.max(lo, Math.min(from, to));
+                hi = Math.min(hi, Math.max(from, to));
+                if (lo > hi) return '';
+              }
+            }
+            const ends = [lo, hi].map((amount) =>
+              projectView(
+                a.map((value, i) => value + (b[i] - value) * amount),
+                true,
+              ),
+            );
+            if (!immersivePractice) return path(ends);
+            // The wider world grid must stay inside the SVG at every heading.
+            // Clip the projected segment rather than squeezing world coordinates.
+            let first = 0,
+              last = 1;
+            for (const [axis, min, max] of [
+              [0, 16, 624],
+              [1, 16, 314],
+            ]) {
+              const delta = ends[1][axis] - ends[0][axis];
+              if (Math.abs(delta) < 1e-8) {
+                if (ends[0][axis] < min || ends[0][axis] > max) return '';
+              } else {
+                const from = (min - ends[0][axis]) / delta,
+                  to = (max - ends[0][axis]) / delta;
+                first = Math.max(first, Math.min(from, to));
+                last = Math.min(last, Math.max(from, to));
+                if (first > last) return '';
+              }
+            }
+            return path(
+              [first, last].map((amount) =>
+                ends[0].map((value, i) => value + (ends[1][i] - value) * amount),
+              ),
+            );
+          };
+          const x = groundOffset.x - Math.floor(groundOffset.x),
+            z = groundOffset.z - Math.floor(groundOffset.z);
+          groundTile = {
+            x: Math.round(groundOffset.x),
+            z: Math.round(groundOffset.z),
+            screen: projectView(
+              groundView([
+                Math.round(groundOffset.x) - groundOffset.x,
+                Math.round(groundOffset.z) - groundOffset.z,
+              ]),
+              true,
+            ),
+          };
+          groundPaths = [];
+          const range = immersivePractice ? 22 : 5,
+            span = immersivePractice ? 24 : 6;
+          for (let line = -range; line <= range; line++) {
+            const segments = [
+              [groundView([line - x, -span]), groundView([line - x, span])],
+              [groundView([-span, line - z]), groundView([span, line - z])],
+            ];
+            for (const [a, b] of segments) {
+              groundPaths.push(clipGround(a, b));
+              if (immersivePractice) farPaths.push(clipGround(a, b, true));
+            }
+          }
+        }
+        attr(ground, 'd', groundPaths.join(''));
+        attr(groundFar, 'd', farPaths.join(''));
+        style(groundFar, 'display', immersivePractice ? '' : 'none');
+        style(horizon, 'display', immersivePractice ? '' : 'none');
+        const horizonY = floorY - (projectionScale * 5 * 0.4) / 0.9165;
+        attr(horizon, 'd', immersivePractice ? `M16 ${horizonY.toFixed(2)}H624` : '');
+        lastGroundKey = groundKey;
+        cachedGroundTile = groundTile;
+      }
+      data(ground, 'offsetX', String(groundOffset.x));
+      data(ground, 'offsetZ', String(groundOffset.z));
+      attr(shadow, 'cx', String(centerX));
+      attr(shadow, 'cy', String(floorY));
+      attr(
+        shadow,
+        'rx',
+        String(environmentMotion ? (immersivePractice ? 45 : 30) / (1 + height / 18) : 30),
+      );
+      attr(shadow, 'ry', immersivePractice ? '12' : '8');
+      style(shadow, 'opacity', environmentMotion ? String(0.65 / (1 + height / 8)) : '');
+      for (const element of [heightLine, heightLabel, mixNote])
+        style(element, 'display', environmentMotion ? '' : 'none');
+      const heightX = immersivePractice ? 574 : 192;
+      attr(
+        heightLine,
+        'd',
+        path([
+          [heightX, bodyY],
+          [heightX, floorY],
+        ]) +
+          path([
+            [heightX - 4, bodyY],
+            [heightX + 4, bodyY],
+          ]) +
+          path([
+            [heightX - 4, floorY],
+            [heightX + 4, floorY],
+          ]),
+      );
+      attr(heightLabel, 'x', immersivePractice ? '20' : '9');
+      attr(heightLabel, 'y', immersivePractice ? '28' : '14');
+      text(
+        heightLabel,
+        locale === 'uk'
+          ? `${height.toFixed(1)} м · авторамка висоти`
+          : `${height.toFixed(1)} m · height auto-framed`,
+      );
+      text(
+        mixNote,
+        locale === 'uk' ? 'Умовний мікс команд · не об/хв' : 'Illustrative command mix · not RPM',
+      );
+      attr(mixNote, 'x', String(centerX));
+      attr(mixNote, 'y', immersivePractice ? '324' : '184');
+      attr(reference, 'x', String(centerX));
+      attr(reference, 'y', immersivePractice ? '345' : environmentMotion ? '196' : '154');
+      let targetResult = null;
+      const target = practiceTarget;
+      const skillFeedback = practiceSkillFeedback(target, state, locale);
+      let bounds = null;
+      if (target?.type === 'gate' && ['x', 'z'].includes(target.axis)) {
+        const side = target.axis === 'x' ? 'z' : 'x';
+        bounds = {
+          min: { [target.axis]: target.at, [side]: target.minSide, y: target.minY },
+          max: { [target.axis]: target.at, [side]: target.maxSide, y: target.maxY },
+        };
+      } else if (target?.type === 'crossing-v1') {
+        const [a, b] = ['x', 'y', 'z'].filter((axis) => axis !== target.axis);
+        bounds = {
+          min: { [target.axis]: target.at, [a]: target.minA, [b]: target.minB },
+          max: { [target.axis]: target.at, [a]: target.maxA, [b]: target.maxB },
+        };
+      } else if (['hold', 'land'].includes(target?.type) || skillFeedback) bounds = target;
+      const validBounds =
+        bounds &&
+        ['x', 'y', 'z'].every(
+          (axis) =>
+            Number.isFinite(bounds.min?.[axis]) &&
+            Number.isFinite(bounds.max?.[axis]) &&
+            bounds.min[axis] <= bounds.max[axis],
+        );
+      style(targetCue, 'display', validBounds ? '' : 'none');
+      if (validBounds) {
+        const center = Object.fromEntries(
+          ['x', 'y', 'z'].map((axis) => [
+            axis,
+            (target.type === 'land' && axis === 'y'
+              ? bounds.min.y
+              : (bounds.min[axis] + bounds.max[axis]) / 2) / 1000,
+          ]),
+        );
+        if (target.type === 'path-v1') {
+          for (const axis of target.plane) center[axis] = target.center[axis] / 1000;
+          const normal = ['x', 'y', 'z'].find((axis) => !target.plane.includes(axis));
+          center[normal] =
+            Math.max(
+              bounds.min[normal],
+              Math.min(bounds.max[normal], finite(state.position?.[normal])),
+            ) / 1000;
+        }
+        const targetView = (point) => {
+          const [x, , z] = relative([
+            point.x - finite(state.position?.x) / 1000,
+            0,
+            point.z - finite(state.position?.z) / 1000,
+          ]);
+          const depth = 5 - z * 0.9165;
+          const scale = (projectionScale * 5) / Math.max(0.35, depth);
+          const altitude = Math.max(0, point.y);
+          // Use the same explicit height auto-framing as the observer. A target
+          // at the drone's position/height projects onto its body centre.
+          const framedHeight = environmentMotion
+            ? (96 * altitude) / (altitude + 4)
+            : floorY - bodyY + (altitude - height) * projectionScale;
+          return {
+            point: [
+              centerX + x * scale,
+              floorY + z * 0.4 * scale - framedHeight * (scale / projectionScale),
+            ],
+            direction: [x, z * 0.4 - (altitude - height)],
+            depth,
+          };
+        };
+        const minX = 18,
+          maxX = immersivePractice ? 622 : 202,
+          minY = 30,
+          maxY = immersivePractice ? 298 : environmentMotion ? 163 : 123;
+        const inside = (view) =>
+          view.depth > 0.35 &&
+          view.point[0] >= minX &&
+          view.point[0] <= maxX &&
+          view.point[1] >= minY &&
+          view.point[1] <= maxY;
+        const view = targetView(center);
+        const offscreen = !inside(view);
+        let screen = view.point;
+        let direction =
+          view.depth > 0.35 ? [screen[0] - centerX, screen[1] - bodyY] : view.direction;
+        if (Math.hypot(...direction) < 1e-6) direction = [0, -1];
+        if (offscreen) {
+          const originY = Math.max(minY, Math.min(maxY, bodyY));
+          const reach = Math.min(
+            direction[0]
+              ? (direction[0] > 0 ? maxX - centerX : minX - centerX) / direction[0]
+              : Infinity,
+            direction[1]
+              ? (direction[1] > 0 ? maxY - originY : minY - originY) / direction[1]
+              : Infinity,
+          );
+          screen = [centerX + direction[0] * reach, originY + direction[1] * reach];
+        }
+        const [x, y] = screen;
+        if (offscreen) {
+          const length = Math.hypot(...direction),
+            dx = direction[0] / length,
+            dy = direction[1] / length;
+          attr(
+            targetMarker,
+            'd',
+            path([
+              [x - dx * 11 - dy * 5, y - dy * 11 + dx * 5],
+              screen,
+              [x - dx * 11 + dy * 5, y - dy * 11 - dx * 5],
+            ]),
+          );
+        } else
+          attr(
+            targetMarker,
+            'd',
+            path([
+              [x - 5, y],
+              [x + 5, y],
+            ]) +
+              path([
+                [x, y - 5],
+                [x, y + 5],
+              ]),
+          );
+        // Draw actual target extents only when the entire outline is in view;
+        // distant/near-plane volumes use the bounded centre/direction cue.
+        let corners =
+          target.type === 'gate'
+            ? [
+                { x: bounds.min.x, y: bounds.min.y, z: bounds.min.z },
+                { x: bounds.max.x, y: bounds.min.y, z: bounds.max.z },
+                { x: bounds.max.x, y: bounds.max.y, z: bounds.max.z },
+                { x: bounds.min.x, y: bounds.max.y, z: bounds.min.z },
+              ].map((point) =>
+                Object.fromEntries(
+                  Object.entries(point).map(([axis, value]) => [axis, value / 1000]),
+                ),
+              )
+            : [
+                { x: bounds.min.x / 1000, y: center.y, z: bounds.min.z / 1000 },
+                { x: bounds.max.x / 1000, y: center.y, z: bounds.min.z / 1000 },
+                { x: bounds.max.x / 1000, y: center.y, z: bounds.max.z / 1000 },
+                { x: bounds.min.x / 1000, y: center.y, z: bounds.max.z / 1000 },
+              ];
+        if (target.type === 'crossing-v1') {
+          const [a, b] = ['x', 'y', 'z'].filter((axis) => axis !== target.axis);
+          corners = [
+            [target.minA, target.minB],
+            [target.maxA, target.minB],
+            [target.maxA, target.maxB],
+            [target.minA, target.maxB],
+          ].map(([av, bv]) => ({
+            [target.axis]: target.at / 1000,
+            [a]: av / 1000,
+            [b]: bv / 1000,
+          }));
+        } else if (target.type === 'path-v1') {
+          const [a, b] = [...target.plane];
+          const normal = ['x', 'y', 'z'].find((axis) => !target.plane.includes(axis));
+          const radius = (target.radiusMin + target.radiusMax) / 2000;
+          const start = ((target.entryBearing ?? 0) * Math.PI) / 18000;
+          const sweep = (Math.min(36000, target.sweep) * Math.PI) / 18000;
+          // A diagram slice of the real path band; the world renderer supplies
+          // its full corridor. Use the actual normal-axis location, not a fake pose.
+          corners = Array.from({ length: 25 }, (_, index) => {
+            const angle = start + (target.direction * sweep * index) / 24;
+            return {
+              [a]: target.center[a] / 1000 + Math.cos(angle) * radius,
+              [b]: target.center[b] / 1000 + Math.sin(angle) * radius,
+              [normal]:
+                Math.max(
+                  bounds.min[normal],
+                  Math.min(bounds.max[normal], finite(state.position?.[normal])),
+                ) / 1000,
+            };
+          });
+        }
+        const outline = corners.map(targetView);
+        attr(
+          targetOutline,
+          'd',
+          !offscreen && outline.every(inside)
+            ? path(
+                outline.map((point) => point.point),
+                target.type !== 'path-v1' || target.sweep >= 36000,
+              )
+            : '',
+        );
+        if (target.type === 'path-v1' && !offscreen && outline.slice(0, 3).every(inside)) {
+          const start = outline[0].point,
+            end = outline[2].point;
+          const length = Math.hypot(end[0] - start[0], end[1] - start[1]);
+          if (length > 0.01) {
+            const dx = (end[0] - start[0]) / length,
+              dy = (end[1] - start[1]) / length;
+            attr(
+              targetMarker,
+              'd',
+              path([
+                [end[0] - dx * 8 - dy * 4, end[1] - dy * 8 + dx * 4],
+                end,
+                [end[0] - dx * 8 + dy * 4, end[1] - dy * 8 - dx * 4],
+              ]),
+            );
+          }
+        }
+        const distance = Math.hypot(
+          center.x - finite(state.position?.x) / 1000,
+          center.y - finite(state.position?.y) / 1000,
+          center.z - finite(state.position?.z) / 1000,
+        );
+        const name =
+          locale === 'uk'
+            ? target.type === 'gate'
+              ? 'Брама'
+              : target.type === 'land'
+                ? 'Посадка'
+                : 'Ціль'
+            : target.type === 'gate'
+              ? 'Gate'
+              : target.type === 'land'
+                ? 'Land'
+                : 'Goal';
+        const unit = locale === 'uk' ? 'м' : 'm';
+        text(
+          targetLabel,
+          skillFeedback
+            ? `${skillFeedback.label} · ${Math.floor(skillFeedback.progress * 100)}% · ↑${(bounds.min.y / 1000).toFixed(1)}–${(bounds.max.y / 1000).toFixed(1)}${unit}`
+            : `${name} ${distance.toFixed(1)}${unit} · ↑${(bounds.min.y / 1000).toFixed(1)}–${(bounds.max.y / 1000).toFixed(1)}${unit}`,
+        );
+        // Keep instructions in the quiet header. Only the target marker moves:
+        // following it with text would obscure the drone and FRONT annotation.
+        attr(targetLabel, 'x', centerX);
+        attr(targetLabel, 'y', immersivePractice ? 44 : 30);
+        attr(targetLabel, 'font-size', immersivePractice ? 11 : 8);
+        style(targetProgress, 'display', skillFeedback ? '' : 'none');
+        if (skillFeedback) {
+          const barY = immersivePractice ? 50 : 35;
+          attr(
+            targetProgress,
+            'd',
+            path([
+              [centerX - 40, barY],
+              [centerX - 40 + 80 * skillFeedback.progress, barY],
+            ]),
+          );
+        }
+        data(targetCue, 'offscreen', offscreen);
+        data(targetCue, 'type', target.type);
+        targetResult = {
+          type: target.type,
+          center,
+          screen,
+          distance,
+          offscreen,
+          ...(skillFeedback ? { skill: skillFeedback } : {}),
+        };
+      }
+      const poseKey = [
+        ...(state.orientation ?? []),
+        cameraHeading,
+        bodyY,
+        bodyScale,
+        immersivePractice,
+        environmentMotion,
+      ].join('|');
+      const poseChanged = poseKey !== lastPoseKey;
+      if (poseChanged) {
+        const crosses = (height) =>
+          bodyPath([corners[0], corners[3]].map(([x, , z]) => [x, height, z])) +
+          bodyPath([corners[1], corners[2]].map(([x, , z]) => [x, height, z]));
+        attr(arms, 'd', crosses(-0.025));
+        attr(lowerArms, 'd', crosses(-0.06));
+        attr(
+          struts,
+          'd',
+          corners
+            .map(([x, , z]) =>
+              bodyPath([
+                [x, -0.06, z],
+                [x, 0.11, z],
+              ]),
+            )
+            .join(''),
+        );
+        const chassis = [
+          [-0.1, 0.08, -0.5],
+          [0.1, 0.08, -0.5],
+          [0.1, 0.08, 0.5],
+          [-0.1, 0.08, 0.5],
+        ];
+        sides.forEach((side, index) => {
+          const a = chassis[index],
+            b = chassis[(index + 1) % 4];
+          attr(side, 'd', bodyPath([a, b, [b[0], -0.06, b[2]], [a[0], -0.06, a[2]]], true));
+        });
+        attr(body, 'd', bodyPath(chassis, true));
+      }
+      const throttle = Math.min(1, Math.max(0, finite(controls.throttle)));
+      const axis = (name) => Math.max(-1, Math.min(1, finite(controls[name])));
+      const power = corners.map(([x, , z], index) =>
+        unavailable || throttle === 0
+          ? 0
+          : Math.max(
+              0,
+              Math.min(
+                1,
+                throttle +
+                  0.22 *
+                    (-Math.sign(x) * axis('roll') +
+                      Math.sign(z) * axis('pitch') +
+                      yawMix[index] * axis('yaw')),
+              ),
+            ),
+      );
+      const powerChanged = power.map((value, index) => value !== previousPower[index]);
+      const tick = Number.isSafeInteger(state.ticks) ? state.ticks : 0;
+      const delta = lastTick === null ? 0 : tick - lastTick;
+      if (delta < 0) phases.fill(0);
+      // Integrate display phase, not tick × the latest output. No phase jump
+      // when a command changes, no wall-clock drift while paused, and no long
+      // catch-up animation after a seek/stall. 50 Hz is the simulation clock.
+      // Max 1.5 illustrative revolutions/s keeps a three-blade step below half
+      // its repeated shape (60 degrees), even at a 100ms display interval.
+      // This deliberately readable animation is not physical motor speed.
+      if (!reducedMotion && delta > 0 && delta <= 5)
+        phases.forEach((phase, index) => {
+          const average = (power[index] + previousPower[index]) / 2;
+          const advance = (delta / 50) * average * 2 * Math.PI * 1.5 * -yawMix[index];
+          phases[index] = (((phase + advance) % (2 * Math.PI)) + 2 * Math.PI) % (2 * Math.PI);
+        });
+      lastTick = tick;
+      previousPower.splice(0, 4, ...power);
+      propellers.forEach((propeller, index) => {
+        const center = corners[index];
+        const rotorPoint = (angle, radius) => [
+          center[0] + Math.cos(angle) * radius,
+          0.115,
+          center[2] + Math.sin(angle) * radius,
+        ];
+        if (poseChanged || phases[index] !== drawnPhases[index]) {
+          attr(
+            propeller,
+            'd',
+            Array.from({ length: 3 }, (_, blade) => {
+              const angle = phases[index] + (blade * Math.PI * 2) / 3;
+              return bodyPath(
+                [
+                  rotorPoint(angle - 0.55, 0.035),
+                  rotorPoint(angle - 0.18, propRadius * 0.52),
+                  rotorPoint(angle - 0.025, propRadius),
+                  rotorPoint(angle + 0.025, propRadius),
+                  rotorPoint(angle + 0.18, propRadius * 0.52),
+                  rotorPoint(angle + 0.55, 0.035),
+                ],
+                true,
+              );
+            }).join(''),
+          );
+          drawnPhases[index] = phases[index];
+        }
+        data(propellers[index], 'power', power[index].toFixed(4));
+        data(propellers[index], 'phase', phases[index].toFixed(6));
+        style(propellers[index], 'opacity', String(0.45 + power[index] * 0.55));
+        if (poseChanged || powerChanged[index])
+          attr(
+            motorPower[index],
+            'd',
+            bodyPath(
+              Array.from({ length: 21 }, (_, part) =>
+                rotorPoint(-Math.PI / 2 + (Math.PI * 2 * power[index] * part) / 20, powerRadius),
+              ),
+            ),
+          );
+        style(motorPower[index], 'opacity', power[index] ? '1' : '0');
+        style(motorLabels[index], 'display', showMotorDetails && environmentMotion ? '' : 'none');
+        if (showMotorDetails && environmentMotion) {
+          const label = bodyPoint([center[0], 0.08, center[2]]);
+          attr(motorLabels[index], 'x', label[0].toFixed(2));
+          attr(
+            motorLabels[index],
+            'y',
+            Math.min(
+              immersivePractice ? 314 : environmentMotion ? 172 : 130,
+              label[1] + 14,
+            ).toFixed(2),
+          );
+
+          text(
+            motorLabels[index],
+            `${yawMix[index] > 0 ? '↺' : '↻'} ${Math.round(power[index] * 100)}%`,
+          );
+        }
+      });
+      if (poseChanged) {
+        attr(
+          nose,
+          'd',
+          bodyPath(
+            [
+              [-0.1, 0.1, -0.5],
+              [0, 0.1, -0.64],
+              [0.1, 0.1, -0.5],
+            ],
+            true,
+          ),
+        );
+        attr(
+          rear,
+          'd',
+          bodyPath([
+            [-0.1, 0.1, 0.51],
+            [0.1, 0.1, 0.51],
+          ]),
+        );
+      }
+      const front = bodyPoint([0, 0.1, -0.72]),
+        back = bodyPoint([0, 0.1, 0.7]);
+      const labelY = Math.min(
+        immersivePractice ? 314 : environmentMotion ? 172 : 109,
+        Math.max(12, front[1] - 10),
+      );
+      attr(frontLabel, 'x', front[0].toFixed(2));
+      attr(frontLabel, 'y', labelY.toFixed(2));
+      text(frontLabel, locale === 'uk' ? 'ПЕРЕД' : 'FRONT');
+      attr(rearLabel, 'x', back[0].toFixed(2));
+      attr(
+        rearLabel,
+        'y',
+        Math.min(
+          immersivePractice ? 316 : environmentMotion ? 174 : 112,
+          Math.max(12, back[1] + 13),
+        ).toFixed(2),
+      );
+      text(rearLabel, locale === 'uk' ? 'ЗАД' : 'REAR');
+      attr(frontLeader, 'd', path([front, [front[0], labelY + 3]]));
+      const up = rotate([0, 1, 0]),
+        inverted = up[1] < 0;
+      data(drawing, 'inverted', String(inverted));
+      data(drawing, 'referenceHeading', String((referenceHeading * 180) / Math.PI));
+      data(drawing, 'cameraHeading', String((cameraHeading * 180) / Math.PI));
+      const headingDegrees = Math.round((headingDelta * 180) / Math.PI);
+      text(
+        reference,
+        followHeading
+          ? `${locale === 'uk' ? 'Поворот від старту' : 'Turn from start'} ${headingDegrees > 0 ? '+' : ''}${headingDegrees}°`
+          : locale === 'uk'
+            ? 'Початковий напрямок ↑'
+            : 'Start heading ↑',
+      );
+      const thrustKey = `${poseKey}|${throttle}`;
+      if (thrustKey !== lastThrustKey) {
+        const thrustEnd = 0.38 + throttle * 0.75;
+        attr(
+          thrust,
+          'd',
+          bodyPath([
+            [0, 0, 0],
+            [0, thrustEnd, 0],
+          ]) +
+            bodyPath([
+              [-0.1, thrustEnd - 0.15, 0],
+              [0, thrustEnd, 0],
+              [0.1, thrustEnd - 0.15, 0],
+            ]),
+        );
+        lastThrustKey = thrustKey;
+      }
+      style(thrust, 'opacity', unavailable ? '0' : String(0.25 + throttle * 0.75));
+      const vx = finite(state.velocity?.x) / 1000,
+        vz = finite(state.velocity?.z) / 1000;
+      const driftKey = `${groundKey}|${vx}|${vz}`;
+      if (driftKey !== lastDriftKey) {
+        const speed = Math.hypot(vx, vz),
+          distance = Math.min(1.6, speed / 4);
+        const end = project(
+          speed > 0.05 ? [(vx / speed) * distance, 0, (vz / speed) * distance] : [0, 0, 0],
+          true,
+        );
+        const dx = end[0] - centerX,
+          dy = end[1] - floorY,
+          length = Math.hypot(dx, dy) || 1;
+        const ax = dx / length,
+          ay = dy / length;
+        attr(
+          drift,
+          'd',
+          path([[centerX, floorY], end]) +
+            path([
+              [end[0] - ax * 7 - ay * 4, end[1] - ay * 7 + ax * 4],
+              end,
+              [end[0] - ax * 7 + ay * 4, end[1] - ay * 7 - ax * 4],
+            ]),
+        );
+        style(drift, 'opacity', speed > 0.05 ? '1' : '0');
+        lastDriftKey = driftKey;
+      }
+      lastUpdateKey = updateKey;
+      lastPoseKey = poseKey;
+      lastResult = {
+        inverted,
+        referenceHeading,
+        cameraHeading,
+        headingDelta,
+        height,
+        groundOffset,
+        groundTile,
+        bodyCenter: [centerX, bodyY],
+        motorMix: motorNames.map((name, index) => ({
+          name,
+          power: power[index],
+          phase: phases[index],
+          rotation: yawMix[index] > 0 ? 'ccw' : 'cw',
+        })),
+        front,
+        rear: back,
+        left: bodyPoint([-motorOffset, 0, 0]),
+        right: bodyPoint([motorOffset, 0, 0]),
+        practiceTarget: targetResult,
+      };
+      return lastResult;
+    },
+    dispose() {
+      disposed = true;
+      drawing.remove();
+    },
+  };
+}
+
+/** Read-only view: quaternion geometry and measured motion, never flight input. */
+export function mountDroneResponse({ root, window: win = globalThis.window, onHide = () => {} }) {
+  const doc = root.ownerDocument;
+  const node = (tag, className) => {
+    const value = doc.createElement(tag);
+    if (className) value.className = className;
+    return value;
+  };
+  const set = (element, value) => {
+    if (element.textContent !== value) element.textContent = value;
+  };
+  root.classList.add('sim-drone-response');
+  root.removeAttribute('aria-live');
+  const heading = node('div', 'sim-response-heading');
+  const title = node('strong');
+  const close = node('button', 'sim-response-close');
+  close.type = 'button';
+  close.textContent = '×';
+  heading.append(title, close);
+  const drawing = node('div', 'sim-response-visual');
+  const diagram = mountDroneDiagram({ root: drawing });
+  const viewLabel = node('p', 'sim-response-view');
+  const inputLabel = node('p', 'sim-response-input');
+  const motion = node('p', 'sim-response-motion');
+  const detail = node('p', 'sim-response-detail');
+  const status = node('p', 'sim-response-status');
+  status.setAttribute('role', 'status');
+  status.setAttribute('aria-live', 'polite');
+  root.replaceChildren(heading, drawing, viewLabel, inputLabel, motion, detail, status);
+  let disposed = false,
+    previousState = '',
+    candidateState = '',
+    candidateSince = 0;
+  const hide = () => onHide();
+  close.addEventListener('click', hide);
+  root.hidden = true;
+  return {
+    update({
+      state,
+      controls = {},
+      source = 'keyboard',
+      unavailable = false,
+      locale = 'en',
+      display = 'compact',
+      scale = 'standard',
+      mode = 'self-level',
+      guideOpen = false,
+      referenceOrientation,
+      reducedMotion = false,
+    } = {}) {
+      if (disposed) return;
+      root.hidden = !state || display === 'off';
+      if (root.hidden) return;
+      const t = (en, uk) => (locale === 'uk' ? uk : en);
+      const finite = (value) => (Number.isFinite(value) ? value : 0);
+      const clamp = (value, min, max) => Math.min(max, Math.max(min, finite(value)));
+      const { inverted } = diagram.update({
+        state,
+        controls,
+        locale,
+        unavailable,
+        referenceOrientation,
+        reducedMotion,
+        followHeading: true,
+        detailScale: display === 'compact' ? 1.4 : 1,
+      });
+      const thrustValue = clamp(controls.throttle, 0, 1);
+      const vx = finite(state.velocity?.x) / 1000,
+        vy = finite(state.velocity?.y) / 1000,
+        vz = finite(state.velocity?.z) / 1000;
+      const speed = Math.hypot(vx, vz);
+      const angular = ['pitch', 'roll', 'yaw'].filter(
+        (key) => Math.abs(finite(controls[key])) >= 0.08,
+      );
+      const axisNames = {
+        pitch: t('pitch', 'тангаж'),
+        roll: t('roll', 'крен'),
+        yaw: t('yaw', 'рискання'),
+      };
+      const command = angular.length
+        ? angular.map((key) => `${axisNames[key]} ${Math.round(controls[key] * 100)}%`).join(' · ')
+        : t('Rotation sticks centred', 'Стіки обертання в центрі');
+      const phase = guideOpen ? 'guide' : state.status;
+      const phaseText = unavailable
+        ? t('Radio unavailable', 'Пульт недоступний')
+        : phase === 'active'
+          ? ''
+          : ['paused', 'guide'].includes(phase)
+            ? t('Paused · actual pose retained', 'Пауза · фактичне положення')
+            : phase === 'ready' || phase === 'disarmed'
+              ? t('Motors off', 'Мотори вимкнено')
+              : t('Flight ended', 'Політ завершено');
+      const travel =
+        vy > 0.08
+          ? t('climbing', 'набір висоти')
+          : vy < -0.08
+            ? t('descending', 'зниження')
+            : t('vertical speed near zero', 'вертикальна швидкість близька до нуля');
+      root.dataset.display = display === 'learning' ? 'learning' : 'compact';
+      root.dataset.scale = scale === 'large' ? 'large' : 'standard';
+      root.dataset.inverted = String(inverted);
+      root.dataset.source = source;
+      root.dataset.phase = phase;
+      root.classList.toggle('input-unavailable', unavailable);
+      set(title, t('Drone response', 'Реакція дрона'));
+      close.setAttribute('aria-label', t('Hide drone response', 'Приховати реакцію дрона'));
+      set(
+        viewLabel,
+        `${inverted ? t('INVERTED · ', 'ДОГОРИ ДНОМ · ') : ''}${t('Rear view · camera follows heading · amber front', 'Вигляд ззаду · камера стежить за курсом · перед жовтий')}`,
+      );
+      set(
+        inputLabel,
+        unavailable
+          ? t('Input unavailable', 'Сигнал недоступний')
+          : `${source === 'recording' ? t('Recorded', 'Запис') : t('Input', 'Сигнал')}: ${t('thrust', 'тяга')} ${Math.round(thrustValue * 100)}%`,
+      );
+      set(
+        motion,
+        `${(finite(state.position?.y) / 1000).toFixed(1)} ${t('m', 'м')} · ${vy >= 0 ? '+' : ''}${vy.toFixed(1)} ${t('m/s vertical', 'м/с вертикально')} · ${speed.toFixed(1)} ${t('m/s drift', 'м/с дрейф')}`,
+      );
+      set(
+        detail,
+        `${command}. ${t('Thrust follows the amber arrow; cyan shows actual travel.', 'Тяга спрямована за жовтою стрілкою; блакитна показує фактичний рух.')} ${mode === 'acro' ? t('Acro: centred sticks stop requested rotation, not tilt or drift.', 'Acro: центр стіків припиняє задане обертання, а не нахил чи дрейф.') : t('Self-level levels attitude; it does not hold height or position.', 'Самовирівнювання вирівнює дрон, але не утримує висоту чи позицію.')}`,
+      );
+      root.setAttribute(
+        'aria-label',
+        `${t('Drone response', 'Реакція дрона')}. ${phaseText} ${inverted ? t('Inverted.', 'Догори дном.') : ''} ${travel}. ${motion.textContent}`,
+      );
+      // Announce only stable discrete state changes; numeric telemetry is readable on demand.
+      const meaningful = `${locale}|${phase}|${unavailable}|${inverted}`;
+      const time = now(win);
+      if (candidateState !== meaningful) {
+        candidateState = meaningful;
+        candidateSince = time;
+      }
+      if (meaningful !== previousState && time - candidateSince >= 650) {
+        previousState = meaningful;
+        set(
+          status,
+          [
+            phaseText,
+            inverted
+              ? t('Drone inverted', 'Дрон догори дном')
+              : t('Drone upright', 'Дрон у прямому положенні'),
+          ]
+            .filter(Boolean)
+            .join(' · '),
+        );
+      }
+    },
+    dispose() {
+      disposed = true;
+      close.removeEventListener('click', hide);
+      diagram.dispose();
+      root.replaceChildren();
+      root.hidden = true;
+    },
+  };
+}
 
 function bytesOf(asset, win) {
   const raw = win.atob(asset.base64);
@@ -434,11 +2034,13 @@ export function mountSimPresentation({
   enabled = false,
   preferenceKey = null,
   onSoundChange = () => {},
+  volume = 1,
 } = {}) {
   const doc = root?.nodeType === 9 ? root : root?.ownerDocument;
   if (!doc || !win) throw new TypeError('Simulator presentation requires a document.');
   const releaseFonts = acquireFonts(doc, win);
   let selected = Boolean(enabled);
+  let level = audioVolume(volume);
   if (preferenceKey) {
     try {
       const stored = win.localStorage?.getItem(preferenceKey);
@@ -495,7 +2097,7 @@ export function mountSimPresentation({
     try {
       candidate = new AudioContext({ latencyHint: 'interactive' });
       master = candidate.createGain();
-      master.gain.value = 0.3;
+      master.gain.value = 0.3 * level;
       master.connect(candidate.destination);
       context = candidate;
       const epoch = generation;
@@ -519,7 +2121,7 @@ export function mountSimPresentation({
   }
 
   function play(name) {
-    if (!cueNames.has(name) || !active() || context?.state !== 'running') return;
+    if (!cueNames.has(name) || !level || !active() || context?.state !== 'running') return;
     const buffer = buffers.get(name);
     const time = now(win);
     if (!buffer || voices.size >= 4 || time - lastCueAt < 80) return;
@@ -622,6 +2224,15 @@ export function mountSimPresentation({
   return Object.freeze({
     refresh,
     soundEnabled: () => selected,
+    volume: () => level,
+    setVolume(value) {
+      if (disposed) return;
+      level = audioVolume(value);
+      if (!master || context.state === 'closed') return;
+      master.gain.cancelScheduledValues(context.currentTime);
+      master.gain.setTargetAtTime(0.3 * level, context.currentTime, 0.025);
+      if (!level) stopVoices();
+    },
     async setSoundEnabled(value) {
       if (disposed) return false;
       selected = Boolean(value);
@@ -730,5 +2341,179 @@ const SHARED_ASSETS = {
 };
 // Exact shared material sheet; fonts are acquired from the embedded source assets.
 // prettier-ignore
-const SHARED_THEME_CSS = "/* Shared appearance recipes. Existing screen layout is in @layer legacy so\n   component paint has one authority, independent of a screen's ID selectors.\n   The aliases below are the migration boundary for existing semantic classes;\n   new components should use data-ui-surface / data-ui-action / data-ui-tone. */\n[data-theme-styled='true'] {\n  color-scheme: var(--iw-color-scheme, dark);\n  color: var(--iw-text);\n  background: var(--iw-ink);\n  font-family: var(--iw-font-ui);\n  --ui-shadow: color-mix(in srgb, var(--iw-ink) 78%, black);\n  --ui-hover: color-mix(in srgb, var(--iw-panel-raised) 90%, var(--iw-text));\n  --ui-disabled: var(--iw-muted);\n  --ui-control-border: var(--iw-control-line);\n}\n/* Rebind older semantic variables on their owning scope. Authored image, video,\n   Canvas and 3D assets remain in their own renderer; none are filtered/recolored. */\n[data-theme-styled='true'],\n[data-theme-styled='true']\n  :where(\n    body,\n    .field-kit,\n    dialog,\n    .race-screen,\n    .race-shell,\n    .overlay-card,\n    .native-landing,\n    .native-settings,\n    [data-ui-surface]\n  ) {\n  --fk-bg: var(--iw-ink);\n  --fk-panel: var(--iw-panel);\n  --fk-panel-raised: var(--iw-panel-raised);\n  --fk-text: var(--iw-text);\n  --fk-muted: var(--iw-muted);\n  --fk-line: var(--iw-line);\n  --fk-control-line: var(--iw-control-line);\n  --fk-cyan: var(--iw-accent);\n  --fk-amber: var(--iw-amber);\n  --fk-hazard: var(--iw-hazard);\n  --fk-success: var(--iw-safe);\n  --fk-accent: var(--iw-accent);\n  --fk-on-accent: var(--iw-on-accent, var(--iw-ink));\n  --fk-focus: var(--iw-focus, var(--iw-control-line));\n  --fk-font-ui: var(--iw-font-ui);\n  --fk-font-pixel: var(--iw-font-ui);\n  --fk-font-mono: var(--iw-font-mono);\n  --fk-font-display: var(--iw-font-display);\n  --fk-text-body: var(--iw-text-size);\n  --fk-text-control: var(--iw-text-size);\n  --fk-text-secondary: max(14px, calc(var(--iw-text-size) - 2px));\n  --fk-target-size: var(--iw-target);\n  --rl-menu-skin-bg: var(--iw-ink);\n  --rl-menu-skin-panel: var(--iw-panel);\n  --rl-menu-skin-panel-raised: var(--iw-panel-raised);\n  --rl-menu-skin-text: var(--iw-text);\n  --rl-menu-skin-muted: var(--iw-muted);\n  --rl-menu-skin-line: var(--iw-line);\n  --rl-menu-skin-control-line: var(--iw-control-line);\n  --rl-menu-skin-cyan: var(--iw-accent);\n  --rl-menu-skin-amber: var(--iw-amber);\n  --rl-menu-skin-hazard: var(--iw-hazard);\n  --rl-menu-skin-decorative: var(--iw-line);\n  --native-ink: var(--iw-ink);\n  --native-panel: var(--iw-panel);\n  --native-surface: var(--iw-panel-raised);\n  --paper: var(--iw-ink);\n  --ink: var(--iw-text);\n  --bg: var(--iw-ink);\n  --panel: var(--iw-panel);\n  --panel-raised: var(--iw-panel-raised);\n  --text: var(--iw-text);\n  --muted: var(--iw-muted);\n  --line: var(--iw-line);\n  --accent: var(--iw-accent);\n  --safe: var(--iw-safe);\n  --danger: var(--iw-hazard);\n  --sky: var(--iw-accent);\n  --sun: var(--iw-amber);\n  --mint: var(--iw-safe);\n}\n[data-theme-styled='true']\n  :where(\n    body,\n    .access-gate,\n    .launch-screen,\n    .native-landing,\n    .native-mission-library,\n    .race-screen,\n    .race-shell,\n    #coop-menu,\n    [data-ui-surface='page']\n  ) {\n  color: var(--iw-text);\n  background: var(--iw-ink);\n  font-family: var(--iw-font-ui);\n  color-scheme: inherit;\n}\n[data-theme-styled='true']\n  :where(p, li, dd, dt, label, legend, summary, h1, h2, h3, h4, h5, h6, strong, b, em, span) {\n  color: inherit;\n  text-shadow: none;\n}\n[data-theme-styled='true'] :where(h1, .display-heading, .native-game-title) {\n  color: var(--iw-text);\n  font-family: var(--iw-font-display);\n  letter-spacing: 0.02em;\n}\n[data-theme-styled='true'] :where(h2, h3, h4, legend, label, summary) {\n  font-family: var(--iw-font-ui);\n}\n[data-theme-styled='true'] :where(a) {\n  color: var(--iw-link, var(--iw-accent));\n  text-underline-offset: 0.2em;\n}\n[data-theme-styled='true']\n  :where(\n    .micro-note,\n    .muted,\n    small,\n    .help,\n    .description,\n    .quiet,\n    .smallprint,\n    .race-footnote,\n    .race-menu-status,\n    .soundtrack-advanced-description,\n    .native-menu-footer,\n    .sidebar-note,\n    [data-ui-tone='muted']\n  ) {\n  color: var(--iw-muted);\n}\n[data-theme-styled='true']\n  :where(.eyebrow, .launch-kicker, .access-gate-eyebrow, [data-ui-tone='accent']) {\n  color: var(--iw-accent);\n}\n[data-theme-styled='true'] :where(kbd, code, pre, .telemetry, .hud-value, .metric-value) {\n  font-family: var(--iw-font-mono);\n}\n\n/* Surface roles share the material, foreground, frame and shadow as one recipe. */\n[data-theme-styled='true']\n  :where(\n    dialog,\n    .overlay-card,\n    .panel,\n    .field-kit-panel,\n    .inspection-card,\n    .mission-detail,\n    .settings-group,\n    .inspector,\n    .tool-panel,\n    .editor-panel,\n    .launch-card,\n    .access-gate-card,\n    .hud-card,\n    .sim-panel,\n    .workshop-card,\n    .iw-panel,\n    .studio-panel,\n    .sidebar,\n    .creator-inspector,\n    .controller-settings-section,\n    .settings-section,\n    .settings-card,\n    .info-card,\n    .choice-card,\n    .mission-card,\n    .campaign-card,\n    .library-card,\n    .community-card,\n    .candidate-entry,\n    .version-control,\n    .pack-instructions,\n    .content-card,\n    .pack-card,\n    .profile-card,\n    .recovery-card,\n    .download-card,\n    .story-card,\n    .flight-dialog,\n    .soundtrack-section,\n    .soundtrack-now-card,\n    .soundtrack-listen-card,\n    .soundtrack-online-card,\n    .soundtrack-settings-style-card,\n    .optional-world-card,\n    .team-level-card,\n    .team-review-card,\n    .creator-media-card,\n    .creator-mission-review-card,\n    .batch-card,\n    .watch,\n    [role='tooltip'],\n    [data-component='panel'],\n    [data-ui-surface='panel'],\n    [data-ui-surface='dialog']\n  ) {\n  color: var(--iw-text);\n  font-family: var(--iw-font-ui);\n  background: var(--iw-panel);\n  border: 2px solid var(--iw-line);\n  border-image: var(--iw-material-panel, none) 6 fill / 6px / 0 repeat;\n  border-radius: 0;\n  box-shadow:\n    0 2px 0 var(--ui-shadow),\n    0 8px 18px #0002;\n}\n[data-theme-styled='true']\n  :where(\n    .masthead,\n    .shell-bar,\n    body > header,\n    .toolbar,\n    .studio-toolbar,\n    .authoring-input-rail,\n    .authoring-section-menu,\n    .sim-toolbar,\n    .hud,\n    .telemetry,\n    .workspace-bar,\n    .studio-header,\n    .flight-controls,\n    .settings-heading,\n    .dialog-header,\n    .dialog-footer,\n    .field-kit-settings-tabs,\n    .soundtrack-footer,\n    #soundtrack-operation,\n    .optional-worlds-top,\n    .race-heading,\n    .reading-toolbar,\n    .shell-dialog-heading,\n    [data-ui-surface='toolbar']\n  ) {\n  color: var(--iw-text);\n  background: var(--iw-panel);\n  border-color: var(--iw-line);\n  border-image: none;\n  text-shadow: none;\n}\n[data-theme-styled='true']\n  :where(\n    fieldset,\n    details,\n    .drop,\n    .drop-zone,\n    .setting-row,\n    .settings-row,\n    .settings-preset,\n    .device-card,\n    .controller-card,\n    .controller-mapping,\n    .range-field,\n    .settings-metric,\n    .settings-note,\n    .settings-warning,\n    .mission-brief,\n    .enemy-guide,\n    .soundtrack-choice,\n    .soundtrack-advanced,\n    .soundtrack-online-results,\n    .checkpoint,\n    .encounter-cue,\n    .seat,\n    .control-card,\n    .batch-card-media,\n    .creator-media-poster,\n    .creator-poster-option,\n    #mission-brief-reading,\n    [data-ui-surface='inset']\n  ) {\n  color: var(--iw-text);\n  background: var(--iw-ink);\n  border-color: var(--iw-line);\n  border-image: none;\n  border-radius: 0;\n}\n[data-theme-styled='true'] :where(table, .asset-grid, .inventory-grid, [data-ui-surface='table']) {\n  color: var(--iw-text);\n  background: var(--iw-panel);\n}\n[data-theme-styled='true'] :where(th, td, hr) {\n  color: inherit;\n  border-color: var(--iw-line);\n}\n[data-theme-styled='true'] :where(th, thead) {\n  background: var(--iw-panel-raised);\n}\n[data-theme-styled='true']\n  :where(tr[aria-selected='true'], [data-ui-surface='slot'][aria-selected='true']) {\n  color: var(--iw-on-selection, var(--iw-text));\n  background: var(--iw-selection, var(--iw-panel-raised));\n  box-shadow: inset 3px 0 var(--iw-focus, var(--iw-accent));\n}\n\n/* Each action chooses paired local roles; one painter handles every state. */\n[data-theme-styled='true']\n  :where(\n    button,\n    .button,\n    .button-link,\n    #profile-recovery-root a,\n    .action,\n    .community-entry,\n    [role='button'],\n    [data-ui-action],\n    .launch-action,\n    .file-button,\n    .native-menu-actions > a,\n    .game-mode-choice > a\n  ) {\n  --ui-action-fill: var(--iw-button-default-background, var(--iw-panel-raised));\n  --ui-action-ink: var(--iw-button-default-foreground, var(--iw-text));\n  --ui-action-hover-fill: var(--iw-button-hover-background, var(--iw-panel-raised));\n  --ui-action-hover-ink: var(--iw-button-hover-foreground, var(--iw-text));\n  --ui-action-pressed-fill: var(--iw-button-pressed-background, var(--iw-selection));\n  --ui-action-pressed-ink: var(--iw-button-pressed-foreground, var(--iw-on-selection));\n  --ui-action-frame: var(--iw-material-raised, none);\n  --ui-action-edge: var(--iw-control-line);\n  color: var(--ui-action-ink);\n  background: var(--ui-action-fill);\n  border: 2px solid var(--ui-action-edge);\n  border-image: var(--ui-action-frame) 6 fill / 6px / 0 repeat;\n  border-radius: 0;\n  min-height: var(--iw-target);\n  box-sizing: border-box;\n  padding: 8px 14px;\n  font-family: var(--iw-font-ui);\n  font-size: var(--iw-text-size);\n  font-weight: 600;\n  line-height: 1.35;\n  text-shadow: none;\n  text-decoration: none;\n  box-shadow: 0 2px 0 var(--ui-shadow);\n  cursor: pointer;\n}\n[data-theme-styled='true']\n  :where(\n    .primary,\n    .primary-action,\n    .field-kit-primary,\n    .race-primary,\n    .soundtrack-primary-action,\n    .community-entry,\n    [data-ui-action='primary']\n  ) {\n  --ui-action-fill: var(--iw-primary-default-background, var(--iw-accent));\n  --ui-action-ink: var(--iw-primary-default-foreground, var(--iw-on-accent, var(--iw-ink)));\n  --ui-action-hover-fill: var(--iw-primary-hover-background, var(--iw-accent));\n  --ui-action-hover-ink: var(--iw-primary-hover-foreground, var(--iw-on-accent, var(--iw-ink)));\n  --ui-action-pressed-fill: var(--iw-primary-pressed-background, var(--iw-selection));\n  --ui-action-pressed-ink: var(--iw-primary-pressed-foreground, var(--iw-on-selection));\n  --ui-action-frame: var(--iw-material-primary, none);\n  --ui-action-edge: var(--iw-accent);\n}\n[data-theme-styled='true'] :where(.danger, .danger-action, [data-ui-action='danger']) {\n  --ui-action-fill: var(--iw-danger-default-background, var(--iw-hazard));\n  --ui-action-ink: var(--iw-danger-default-foreground, var(--iw-on-hazard));\n  --ui-action-hover-fill: var(--iw-danger-hover-background, var(--iw-hazard));\n  --ui-action-hover-ink: var(--iw-danger-hover-foreground, var(--iw-on-hazard));\n  --ui-action-pressed-fill: var(--iw-danger-pressed-background, var(--iw-selection));\n  --ui-action-pressed-ink: var(--iw-danger-pressed-foreground, var(--iw-on-selection));\n  --ui-action-frame: none;\n  --ui-action-edge: var(--iw-hazard);\n}\n[data-theme-styled='true']\n  :where(\n    button,\n    .button,\n    .button-link,\n    #profile-recovery-root a,\n    .action,\n    .community-entry,\n    [role='button'],\n    [data-ui-action],\n    .launch-action,\n    .file-button,\n    .native-menu-actions > a,\n    .game-mode-choice > a\n  ):is(:hover, [data-state='hover']):not(:disabled, [aria-disabled='true']) {\n  border-image-slice: 6;\n  background: var(--ui-action-hover-fill);\n  color: var(--ui-action-hover-ink);\n  box-shadow:\n    inset 0 0 0 1px var(--ui-action-edge),\n    0 2px 0 var(--ui-shadow);\n}\n[data-theme-styled='true']\n  :where(\n    button,\n    .button,\n    .button-link,\n    #profile-recovery-root a,\n    .action,\n    .community-entry,\n    [role='button'],\n    [data-ui-action],\n    .launch-action,\n    .file-button,\n    .native-menu-actions > a,\n    .game-mode-choice > a\n  ):is(:active, [data-state='pressed']):not(:disabled, [aria-disabled='true']) {\n  border-image-slice: 6;\n  background: var(--ui-action-pressed-fill);\n  color: var(--ui-action-pressed-ink);\n  box-shadow: inset 0 2px 3px #0005;\n}\n[data-theme-styled='true']\n  :where(button, .button, [role='button'], a, [role='tab']):is(\n    [aria-pressed='true'],\n    [aria-selected='true'],\n    [aria-current]:not([aria-current='false']),\n    .selected,\n    .active-tab\n  ) {\n  --ui-action-fill: var(--iw-selection, var(--iw-panel-raised));\n  --ui-action-ink: var(--iw-on-selection, var(--iw-text));\n  --ui-action-frame: none;\n  color: var(--ui-action-ink);\n  background: var(--ui-action-fill);\n  border-color: var(--iw-focus, var(--iw-accent));\n  border-image: none;\n  box-shadow: inset 3px 0 var(--iw-focus, var(--iw-accent));\n  text-decoration-thickness: 2px;\n}\n[data-theme-styled='true']\n  :where(button, input, select, textarea, .button, [role='button']):is(\n    :disabled,\n    [aria-disabled='true']\n  ) {\n  color: var(--iw-muted);\n  background: var(--iw-panel);\n  border-color: var(--iw-line);\n  border-style: dashed;\n  border-image: none;\n  opacity: 1;\n  cursor: not-allowed;\n  box-shadow: none;\n}\n[data-theme-styled='true']\n  :where(button, .button, [role='button'])\n  :where(span, strong, em, small) {\n  color: inherit;\n}\n\n/* Native value controls retain browser semantics and keyboard operation. */\n[data-theme-styled='true'] :where(input, select, textarea) {\n  color: var(--iw-input-text, var(--iw-text));\n  background: var(--iw-input, var(--iw-ink));\n  border: 2px solid var(--iw-control-line);\n  border-image: none;\n  border-radius: 0;\n  font-family: var(--iw-font-ui);\n  font-size: var(--iw-text-size);\n  accent-color: var(--iw-accent);\n  box-shadow: inset 0 1px 2px #0003;\n}\n[data-theme-styled='true']\n  :where(\n    select,\n    textarea,\n    input:not([type='checkbox'], [type='radio'], [type='range'], [type='color'])\n  ) {\n  min-height: var(--iw-target);\n  box-sizing: border-box;\n  padding: 6px 10px;\n}\n[data-theme-styled='true'] :where(input, textarea)::placeholder {\n  color: var(--iw-muted);\n  opacity: 1;\n}\n[data-theme-styled='true'] :where(option, optgroup) {\n  color: var(--iw-input-text, var(--iw-text));\n  background: var(--iw-input, var(--iw-ink));\n}\n[data-theme-styled='true'] :where(input[type='checkbox'], input[type='radio']) {\n  appearance: none;\n  display: inline-grid;\n  place-content: center;\n  inline-size: 22px;\n  block-size: 22px;\n  min-inline-size: 22px;\n  min-block-size: 22px;\n  flex: 0 0 22px;\n  padding: 0;\n  vertical-align: middle;\n  background: var(--iw-ink);\n  border: 2px solid var(--iw-control-line);\n  border-image: none;\n  box-shadow: none;\n}\n[data-theme-styled='true'] input[type='radio'] {\n  border-radius: 50%;\n}\n[data-theme-styled='true'] :where(input[type='checkbox'], input[type='radio'])::before {\n  content: '';\n  display: block;\n  width: 12px;\n  height: 12px;\n  background: var(--iw-on-accent, var(--iw-ink));\n  transform: scale(0);\n  clip-path: polygon(0 43%, 17% 26%, 40% 51%, 83% 4%, 100% 20%, 41% 87%);\n}\n[data-theme-styled='true'] input[type='radio']::before {\n  width: 10px;\n  height: 10px;\n  border-radius: 50%;\n  clip-path: none;\n}\n[data-theme-styled='true'] :where(input[type='checkbox'], input[type='radio']):checked {\n  background: var(--iw-accent);\n  border-color: var(--iw-accent);\n  outline: none;\n  box-shadow: none;\n}\n[data-theme-styled='true'] :where(input[type='checkbox'], input[type='radio']):checked::before {\n  transform: scale(1);\n}\n[data-theme-styled='true'] input[type='checkbox']:indeterminate::before {\n  transform: scale(1);\n  clip-path: inset(40% 0);\n  background: var(--iw-accent);\n}\n[data-theme-styled='true'] label:has(> input:is([type='checkbox'], [type='radio'])) {\n  min-height: var(--iw-target);\n  align-items: center;\n  cursor: pointer;\n}\n[data-theme-styled='true'] input[type='range'] {\n  appearance: none;\n  min-height: var(--iw-target);\n  padding: 0;\n  background: transparent;\n  border: 0;\n  box-shadow: none;\n  cursor: pointer;\n}\n[data-theme-styled='true'] input[type='range']::-webkit-slider-runnable-track {\n  height: 6px;\n  border: 1px solid var(--iw-control-line);\n  background: var(--iw-ink);\n  border-radius: 0;\n}\n[data-theme-styled='true'] input[type='range']::-moz-range-track {\n  height: 4px;\n  border: 1px solid var(--iw-control-line);\n  background: var(--iw-ink);\n  border-radius: 0;\n}\n[data-theme-styled='true'] input[type='range']::-webkit-slider-thumb {\n  appearance: none;\n  width: 24px;\n  height: 24px;\n  margin-top: -10px;\n  background: var(--iw-accent);\n  border: 2px solid var(--iw-on-accent, var(--iw-ink));\n  border-radius: 0;\n  box-shadow: 0 0 0 1px var(--iw-control-line);\n}\n[data-theme-styled='true'] input[type='range']::-moz-range-thumb {\n  width: 20px;\n  height: 20px;\n  background: var(--iw-accent);\n  border: 2px solid var(--iw-on-accent, var(--iw-ink));\n  border-radius: 0;\n  box-shadow: 0 0 0 1px var(--iw-control-line);\n}\n[data-theme-styled='true'] input[type='range']:disabled {\n  cursor: not-allowed;\n  opacity: 0.65;\n}\n[data-theme-styled='true'] :where(progress, meter) {\n  accent-color: var(--iw-accent);\n  color: var(--iw-accent);\n  background: var(--iw-ink);\n  border: 1px solid var(--iw-control-line);\n  border-image: none;\n  border-radius: 0;\n}\n[data-theme-styled='true'] progress::-webkit-progress-bar {\n  background: var(--iw-ink);\n}\n[data-theme-styled='true'] progress::-webkit-progress-value {\n  background: var(--iw-accent);\n}\n[data-theme-styled='true'] progress::-moz-progress-bar {\n  background: var(--iw-accent);\n}\n[data-theme-styled='true'] :where(*) {\n  scrollbar-color: var(--iw-control-line) var(--iw-ink);\n}\n[data-theme-styled='true'] ::-webkit-scrollbar-thumb {\n  background: var(--iw-control-line);\n  border: 2px solid var(--iw-ink);\n}\n[data-theme-styled='true'] ::-webkit-scrollbar-track {\n  background: var(--iw-ink);\n}\n\n/* Compiled icon silhouettes are reusable geometry, never a fixed cyan pigment. */\n[data-theme-styled='true'] [data-presentation-icon]:not([data-menu-icon])::before {\n  color: inherit;\n  content: '';\n  display: inline-block;\n  inline-size: 24px;\n  block-size: 24px;\n  flex: 0 0 24px;\n  background: currentColor;\n  mask: var(--fk-current-icon, linear-gradient(transparent, transparent)) center / contain no-repeat;\n  -webkit-mask: var(--fk-current-icon, linear-gradient(transparent, transparent)) center / contain\n    no-repeat;\n  clip-path: none;\n  image-rendering: pixelated;\n}\n[data-theme-styled='true']\n  :where([data-presentation-control], [data-presentation-hud], [data-presentation-reward])::before {\n  background: currentColor;\n  color: inherit;\n  mask: var(--fk-current-glyph, linear-gradient(transparent, transparent)) center / contain\n    no-repeat;\n  -webkit-mask: var(--fk-current-glyph, linear-gradient(transparent, transparent)) center / contain\n    no-repeat;\n}\n[data-theme-styled='true'] :where([data-menu-icon])::before {\n  background: currentColor;\n  mask: var(--native-menu-icon, linear-gradient(transparent, transparent)) center / contain\n    no-repeat;\n  -webkit-mask: var(--native-menu-icon, linear-gradient(transparent, transparent)) center / contain\n    no-repeat;\n}\n[data-theme-styled='true'] :where(.meter > span, .launch-signal i) {\n  background: var(--iw-accent);\n}\n[data-theme-styled='true'] :where(.meter, [role='progressbar']) {\n  color: var(--iw-text);\n  background: var(--iw-ink);\n  border-color: var(--iw-control-line);\n  border-image: none;\n}\n\n/* Focus and state cues retain a shape in every palette. */\n[data-theme-styled='true'] :is(:focus-visible, .controller-focus, [data-state='focus']) {\n  outline: 3px solid var(--iw-focus, var(--iw-control-line));\n  outline-offset: 3px;\n  scroll-margin: 12px;\n}\n[data-theme-styled='true'] :where([aria-invalid='true'], .error, [data-ui-tone='danger']) {\n  color: var(--iw-hazard);\n  border-color: var(--iw-hazard);\n  border-image: none;\n}\n[data-theme-styled='true'] :where([data-ui-tone='success'], .success) {\n  color: var(--iw-safe);\n}\n[data-theme-styled='true'] :where([data-ui-tone='warning'], .warning) {\n  color: var(--iw-amber);\n}\n[data-theme-styled='true'] ::selection {\n  color: var(--iw-on-selection, var(--iw-ink));\n  background: var(--iw-selection, var(--iw-accent));\n}\n[data-theme-styled='true'] :where(dialog)::backdrop {\n  background: color-mix(in srgb, var(--iw-ink) 78%, transparent);\n}\n\n/* Source art stays intact; only its reading veil follows the interface. */\n[data-theme-styled='true'] .menu-scene::after {\n  background:\n    linear-gradient(\n      90deg,\n      color-mix(in srgb, var(--iw-ink) 94%, transparent),\n      color-mix(in srgb, var(--iw-ink) 75%, transparent) 28%,\n      color-mix(in srgb, var(--iw-ink) 22%, transparent) 63%,\n      transparent\n    ),\n    linear-gradient(0deg, color-mix(in srgb, var(--iw-ink) 65%, transparent), transparent 30%);\n}\n[data-theme-styled='true'] .menu-scene {\n  --scene-ink: var(--iw-ink);\n  --scene-accent: var(--iw-panel-raised);\n}\n[data-theme-styled='true'] :where(.menu-ornament, .menu-scene-decoration) {\n  color: var(--iw-line);\n}\n[data-theme-texture='off'] :where(.menu-ornament, .menu-scene-decoration, .menu-retune-layer) {\n  display: none;\n}\n[data-theme-surface='flat']\n  :where(\n    button,\n    .button,\n    .action,\n    .community-entry,\n    [role='button'],\n    [data-ui-action],\n    dialog,\n    .panel,\n    .field-kit-panel,\n    .iw-panel,\n    [data-component='panel'],\n    [data-ui-surface]\n  ) {\n  border-image: none;\n  box-shadow: none;\n}\n[data-theme-hud='opaque']\n  :where(\n    .hud,\n    .hud-card,\n    .hud-panel,\n    .telemetry,\n    .sim-hud,\n    .flight-hud,\n    .flight-instruments,\n    .flight-coaching,\n    .flight-brief p,\n    .scene-heading,\n    #hud,\n    [data-hud]\n  ) {\n  background: var(--iw-ink);\n  color: var(--iw-text);\n  text-shadow: none;\n  backdrop-filter: none;\n  opacity: 1;\n}\n[data-theme-motion='reduced']\n  :where(.menu-ornament, .edition-propeller, .theme-decoration, .menu-scene-decoration) {\n  animation: none;\n  transition: none;\n  transform: none;\n}\n[data-theme-motion='reduced'] .menu-retune-layer {\n  display: none;\n}\n[data-theme-text-size='large']:not([data-interface-theme='legacy'])\n  :where(p, label, button, select, input, textarea, .micro-note) {\n  font-size: max(18px, 1em);\n}\n\n.theme-family-controls {\n  display: grid;\n  gap: 12px;\n  margin-block: 16px;\n  padding-block: 12px;\n  border-block: 1px solid var(--fk-line, #737c69);\n}\n.theme-family-controls label {\n  display: flex;\n  flex-wrap: wrap;\n  align-items: center;\n  gap: 8px;\n  justify-content: space-between;\n}\n.theme-family-controls label:has(> input[type='checkbox']) {\n  justify-content: flex-start;\n  min-height: var(--iw-target, 44px);\n}\n.theme-family-controls select {\n  max-width: 100%;\n}\n.theme-family-controls [role='status']:empty {\n  display: none;\n}\n.sim-appearance-controls {\n  grid-column: 1 / -1;\n  display: flex;\n  flex-wrap: wrap;\n  align-items: center;\n  gap: 8px 16px;\n  min-width: 0;\n  max-width: 100%;\n}\n.sim-appearance-controls label {\n  display: grid;\n  gap: 6px;\n  min-width: 0;\n  max-width: 100%;\n}\n.sim-appearance-controls select {\n  min-width: 0;\n  max-width: 100%;\n}\n.sim-appearance-controls [role='status'] {\n  flex-basis: 100%;\n}\n.sim-worlds .flight-controls > .sim-appearance-controls {\n  flex: 1 0 100%;\n  box-sizing: border-box;\n  margin-inline: 0;\n}\n[data-theme-styled='true'] .sim-worlds .flight-dialog > header {\n  z-index: 10;\n  background: var(--iw-panel);\n  box-shadow: 0 0 0 8px var(--iw-panel);\n}\n@media (pointer: coarse) {\n  [data-theme-density='studio'] {\n    --iw-target: 44px;\n  }\n}\n@media (orientation: portrait) {\n  [data-theme-styled='true'] .menu-scene::after {\n    background: linear-gradient(\n      0deg,\n      color-mix(in srgb, var(--iw-ink) 94%, transparent),\n      color-mix(in srgb, var(--iw-ink) 73%, transparent) 35%,\n      color-mix(in srgb, var(--iw-ink) 23%, transparent) 80%\n    );\n  }\n}\n@media (forced-colors: active) {\n  [data-theme-styled='true']\n    :where(button, .button, input, select, textarea, dialog, .panel, [data-ui-surface]) {\n    border-image: none;\n    box-shadow: none;\n    border-color: ButtonText;\n    forced-color-adjust: auto;\n  }\n  [data-theme-styled='true'] :where(input[type='checkbox'], input[type='radio']) {\n    appearance: auto;\n  }\n  [data-theme-styled='true'] :where(input[type='checkbox'], input[type='radio'])::before {\n    display: none;\n  }\n  [data-theme-styled='true'] :is(:focus-visible, .controller-focus) {\n    outline-color: Highlight;\n  }\n}\n\n/* A filled raster swaps atomically. Interpolating its label separately can\n   briefly create dark-on-dark text while a selected tab changes state. */\n[data-theme-styled='true']\n  :where(button, .button, [role='button'], .native-menu-actions > a, .game-mode-choice > a) {\n  transition:\n    box-shadow 100ms ease,\n    outline-color 100ms ease;\n}\n[data-theme-styled='true'] label:has(> input:is([type='checkbox'], [type='radio'])) {\n  color: var(--iw-text);\n  background-color: var(--iw-panel-raised);\n  border-color: var(--iw-line);\n  border-image: none;\n  border-radius: 0;\n}\n.theme-gallery {\n  display: grid;\n  grid-template-columns: repeat(2, minmax(0, 1fr));\n  gap: 12px;\n}\n.theme-gallery .theme-preview-card {\n  display: grid;\n  grid-template-columns: 1fr;\n  gap: 8px;\n  align-content: start;\n  min-width: 0;\n  text-align: left;\n  padding: 12px;\n}\n.theme-preview-swatches {\n  display: flex;\n  gap: 4px;\n}\n.theme-preview-swatches span {\n  display: block;\n  width: 24px;\n  height: 24px;\n  border: 1px solid currentColor;\n}\n.theme-preview-card small {\n  font-size: 14px;\n  font-weight: 400;\n  line-height: 1.45;\n  opacity: 0.9;\n}\n.theme-gallery .theme-preview-card[aria-pressed='true'] {\n  outline: 2px solid var(--iw-focus, var(--fk-focus));\n  outline-offset: 2px;\n}\n.theme-preview-card[aria-pressed='true'] strong::after {\n  content: ' ✓';\n}\n.theme-accessibility {\n  display: flex;\n  flex-wrap: wrap;\n  gap: 8px 20px;\n}\n.theme-family-controls > details {\n  padding: 12px;\n}\n.theme-family-controls > details > summary {\n  min-height: var(--iw-target, 44px);\n  cursor: pointer;\n}\n@media (max-width: 600px) {\n  .theme-gallery {\n    grid-template-columns: 1fr;\n  }\n}\n@media (prefers-reduced-motion: reduce) {\n  [data-theme-styled='true'] :where(button, .button, [role='button']) {\n    transition: none;\n  }\n}\n\n[data-theme-styled='true'] [data-ui-surface='section-title'] {\n  color: var(--iw-muted);\n  background: var(--iw-ink);\n  border-color: var(--iw-line);\n  border-image: none;\n}\n\n/* Status, badges and callouts are shared reading surfaces, including tools. */\n[data-theme-styled='true']\n  :where(\n    [role='status'],\n    [role='alert'],\n    .operation-status,\n    .callout,\n    .notice,\n    .pill,\n    .chip,\n    .status,\n    .skip-link,\n    pre\n  ) {\n  color: var(--iw-text);\n  background-color: var(--iw-panel);\n  border-color: var(--iw-line);\n  border-image: none;\n  border-radius: 0;\n}\n[data-theme-styled='true']\n  :where(.status-ready, [role='status'].success, [data-ui-tone='success']) {\n  color: var(--iw-safe);\n}\n[data-theme-styled='true']\n  :where(.status-building, [role='status'].warning, [data-ui-tone='warning']) {\n  color: var(--iw-amber);\n}\n[data-theme-styled='true']\n  :where(\n    [role='alert'],\n    [role='status'].error,\n    [role='status'][data-error='true'],\n    [data-ui-tone='danger']\n  ) {\n  color: var(--iw-hazard);\n}\n[data-theme-styled='true'] :where([role='status'][data-error='true'], [role='status'].error) {\n  border-inline-start: 3px solid var(--iw-hazard);\n  padding-inline-start: 0.75rem;\n}\n\n/* Deep dialogs and tool results are part of the same interface. Never leave a\n   legacy navy/teal well behind a newly resolved light-theme text color. */\n[data-theme-styled='true'] :where(.soundtrack-quick-status, .race-start-cue strong) {\n  color: var(--iw-on-accent);\n  background: var(--iw-accent);\n  border-color: var(--iw-accent);\n  border-image: none;\n}\n[data-theme-styled='true'] .journey-card-action {\n  color: var(--iw-on-accent);\n  background: var(--iw-accent);\n  border-color: var(--iw-accent);\n  font-size: 0.75rem;\n}\n[data-theme-styled='true'] .soundtrack-now-card::after {\n  background: var(--iw-accent);\n}\n[data-theme-styled='true'] .soundtrack-advanced-summary::after {\n  color: inherit;\n}\n[data-theme-styled='true'] .soundtrack-online-track {\n  border-color: var(--iw-line);\n}\n[data-theme-styled='true'] .soundtrack-online-track:is(:hover, :focus-within) {\n  color: var(--iw-text);\n  background: var(--iw-panel-raised);\n}\n[data-theme-styled='true'] :where(.soundtrack-online-style, .creator-poster-option):focus-within {\n  outline: 3px solid var(--iw-focus);\n  outline-offset: 2px;\n}\n[data-theme-styled='true'] :where(.batch-card-error, .creator-media-card-error) {\n  border-color: var(--iw-hazard);\n  border-image: none;\n}\n[data-theme-styled='true'] :where(.batch-card-preparing, .optional-world-current) {\n  outline: 2px solid var(--iw-focus);\n  outline-offset: 2px;\n}\n[data-theme-styled='true']\n  :where(\n    .asset-row.selected,\n    .candidate-entry.selected,\n    [aria-selected='true'],\n    [aria-pressed='true']\n  )\n  :where(.muted, .micro-note, small) {\n  color: inherit;\n}\n[data-theme-styled='true'] input[type='file']::file-selector-button {\n  color: var(--iw-text);\n  background: var(--iw-panel-raised);\n  border: 1px solid var(--iw-control-line);\n  border-radius: 0;\n  padding: 6px 10px;\n  margin-inline-end: 10px;\n  font: inherit;\n  cursor: pointer;\n}\n/* Reading state belongs to the message, not a permanent empty painted bar. */\n[data-theme-styled='true'] :where([role='status'], [role='alert']):empty {\n  background: transparent;\n}\n[data-theme-styled='true'] label:has(> input:is([type='checkbox'], [type='radio'])) {\n  padding: 6px 10px;\n  box-sizing: border-box;\n  gap: 10px;\n}\n[data-theme-styled='true'] :where(.soundtrack-dialog, .optional-worlds-dialog) .micro-note {\n  font-size: var(--fk-text-secondary);\n}\n/* Session transport is one control group. Its volume label must not run into\n   the last button when a long translation or enlarged text wraps the row. */\n[data-theme-styled='true'] [data-couch-music] {\n  display: flex;\n  flex-wrap: wrap;\n  gap: 10px;\n  align-items: center;\n}\n[data-theme-styled='true'] [data-couch-music] > :where(h3, p, label, input, section, details) {\n  flex: 1 0 100%;\n  min-width: 0;\n  max-width: 100%;\n  box-sizing: border-box;\n}\n[data-theme-styled='true'] [data-couch-music] > :where(h3, p) {\n  margin-block: 8px;\n}\n[data-theme-styled='true'] [data-couch-music] > label {\n  margin-top: 8px;\n}\n[data-theme-styled='true'] #soundtrack-now-sources {\n  display: flex;\n  flex-wrap: wrap;\n  gap: 8px 16px;\n  margin-block: 12px;\n}\n[data-theme-styled='true'] :where(.page-head, .masthead) > a + a {\n  margin-inline-start: 12px;\n}\n\n[data-theme-styled='true'] :where(.asset-row.selected, .candidate-entry.selected) {\n  color: var(--iw-on-selection);\n  background: var(--iw-selection);\n  border-color: var(--iw-focus);\n  box-shadow: inset 3px 0 var(--iw-focus);\n}\n\n/* Only the application-owned menu backdrop changes with the interface. Authored\n   campaign/edition scenery and logos are separate content and remain visible. */\n[data-theme-styled='true'] .menu-scene[data-backdrop='interface'] {\n  background: var(--iw-ink);\n}\n[data-theme-styled='true']\n  .menu-scene[data-backdrop='interface']\n  > :where(.menu-scene-art-plane, .menu-scene-signal) {\n  display: none;\n}\n[data-theme-styled='true'] .menu-scene[data-backdrop='interface']::before {\n  content: '';\n  position: absolute;\n  inset: 0;\n  pointer-events: none;\n  background-image: var(--ui-scene-motif, none);\n  background-size: var(--ui-scene-motif-size, 48px 48px);\n  background-position: right top;\n  opacity: 0.3;\n}\n[data-theme-material='linen'] {\n  --ui-scene-motif: url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='64' height='64' shape-rendering='crispEdges'%3E%3Cg fill='none' stroke='%23f48686' stroke-width='2'%3E%3Cpath d='M32 10l22 22-22 22L10 32zM24 24l16 16m0-16L24 40'/%3E%3C/g%3E%3Cpath fill='%23e1ddcf' d='M0 0h2v2H0zm62 0h2v2h-2zM0 62h2v2H0zm62 0h2v2h-2z'/%3E%3C/svg%3E\");\n  --ui-scene-motif-size: 64px 64px;\n}\n[data-theme-material='porcelain'] {\n  --ui-scene-motif: url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='96'%3E%3Cg fill='none' stroke='%230057b7'%3E%3Cpath d='M-30 24q30-28 60 0t60 0t60 0M-30 72q30-28 60 0t60 0t60 0'/%3E%3Cpath d='M60 30q-12 10 0 20q12-10 0-20m0 20v8'/%3E%3C/g%3E%3C/svg%3E\");\n  --ui-scene-motif-size: 120px 96px;\n}\n[data-theme-material='brass'] {\n  --ui-scene-motif:\n    repeating-linear-gradient(90deg, transparent 0 95px, var(--iw-line) 95px 96px),\n    repeating-linear-gradient(0deg, transparent 0 95px, var(--iw-line) 95px 96px);\n  --ui-scene-motif-size: 96px 96px;\n}\n[data-theme-material='wood'] {\n  --ui-scene-motif:\n    repeating-linear-gradient(\n      0deg,\n      transparent 0 7px,\n      var(--iw-line) 7px 8px,\n      transparent 8px 62px,\n      var(--iw-line) 62px 64px\n    ),\n    repeating-linear-gradient(90deg, transparent 0 191px, var(--iw-line) 191px 192px);\n  --ui-scene-motif-size: 192px 64px;\n}\n[data-theme-material='composite'] {\n  --ui-scene-motif:\n    linear-gradient(30deg, transparent 0 48%, var(--iw-accent) 49% 50%, transparent 51%),\n    linear-gradient(150deg, transparent 0 48%, var(--iw-line) 49% 50%, transparent 51%);\n  --ui-scene-motif-size: 96px 64px;\n}\n[data-theme-material='classic'],\n[data-theme-material='terminal'] {\n  --ui-scene-motif: none;\n}\n[data-theme-material='classic'] .menu-scene[data-backdrop='interface']::after,\n[data-theme-material='terminal'] .menu-scene[data-backdrop='interface']::after {\n  background: none;\n}\n[data-theme-texture='off'] .menu-scene[data-backdrop='interface']::before {\n  background-image: none;\n}\n";
+const SHARED_THEME_CSS = "/* Shared appearance recipes. Existing screen layout is in @layer legacy so\n   component paint has one authority, independent of a screen's ID selectors.\n   The aliases below are the migration boundary for existing semantic classes;\n   new components should use data-ui-surface / data-ui-action / data-ui-tone. */\n[data-theme-styled='true'] {\n  color-scheme: var(--iw-color-scheme, dark);\n  color: var(--iw-text);\n  background: var(--iw-ink);\n  font-family: var(--iw-font-ui);\n  --ui-shadow: color-mix(in srgb, var(--iw-ink) 78%, black);\n  --ui-hover: color-mix(in srgb, var(--iw-panel-raised) 90%, var(--iw-text));\n  --ui-disabled: var(--iw-muted);\n  --ui-control-border: var(--iw-control-line);\n}\n/* Rebind older semantic variables on their owning scope. Authored image, video,\n   Canvas and 3D assets remain in their own renderer; none are filtered/recolored. */\n[data-theme-styled='true'],\n[data-theme-styled='true']\n  :where(\n    body,\n    .field-kit,\n    dialog,\n    .race-screen,\n    .race-shell,\n    .overlay-card,\n    .native-landing,\n    .native-settings,\n    [data-ui-surface]\n  ) {\n  --fk-bg: var(--iw-ink);\n  --fk-panel: var(--iw-panel);\n  --fk-panel-raised: var(--iw-panel-raised);\n  --fk-text: var(--iw-text);\n  --fk-muted: var(--iw-muted);\n  --fk-line: var(--iw-line);\n  --fk-control-line: var(--iw-control-line);\n  --fk-cyan: var(--iw-accent);\n  --fk-amber: var(--iw-amber);\n  --fk-hazard: var(--iw-hazard);\n  --fk-success: var(--iw-safe);\n  --fk-accent: var(--iw-accent);\n  --fk-on-accent: var(--iw-on-accent, var(--iw-ink));\n  --fk-focus: var(--iw-focus, var(--iw-control-line));\n  --fk-font-ui: var(--iw-font-ui);\n  --fk-font-pixel: var(--iw-font-ui);\n  --fk-font-mono: var(--iw-font-mono);\n  --fk-font-display: var(--iw-font-display);\n  --fk-text-body: var(--iw-text-size);\n  --fk-text-control: var(--iw-text-size);\n  --fk-text-secondary: max(14px, calc(var(--iw-text-size) - 2px));\n  --fk-target-size: var(--iw-target);\n  --rl-menu-skin-bg: var(--iw-ink);\n  --rl-menu-skin-panel: var(--iw-panel);\n  --rl-menu-skin-panel-raised: var(--iw-panel-raised);\n  --rl-menu-skin-text: var(--iw-text);\n  --rl-menu-skin-muted: var(--iw-muted);\n  --rl-menu-skin-line: var(--iw-line);\n  --rl-menu-skin-control-line: var(--iw-control-line);\n  --rl-menu-skin-cyan: var(--iw-accent);\n  --rl-menu-skin-amber: var(--iw-amber);\n  --rl-menu-skin-hazard: var(--iw-hazard);\n  --rl-menu-skin-decorative: var(--iw-line);\n  --native-ink: var(--iw-ink);\n  --native-panel: var(--iw-panel);\n  --native-surface: var(--iw-panel-raised);\n  --paper: var(--iw-ink);\n  --ink: var(--iw-text);\n  --bg: var(--iw-ink);\n  --panel: var(--iw-panel);\n  --panel-raised: var(--iw-panel-raised);\n  --text: var(--iw-text);\n  --muted: var(--iw-muted);\n  --line: var(--iw-line);\n  --accent: var(--iw-accent);\n  --safe: var(--iw-safe);\n  --danger: var(--iw-hazard);\n  --sky: var(--iw-accent);\n  --sun: var(--iw-amber);\n  --mint: var(--iw-safe);\n}\n[data-theme-styled='true']\n  :where(\n    body,\n    .access-gate,\n    .launch-screen,\n    .native-landing,\n    .native-mission-library,\n    .race-screen,\n    .race-shell,\n    #coop-menu,\n    [data-ui-surface='page']\n  ) {\n  color: var(--iw-text);\n  background: var(--iw-ink);\n  font-family: var(--iw-font-ui);\n  color-scheme: inherit;\n}\n[data-theme-styled='true']\n  :where(p, li, dd, dt, label, legend, summary, h1, h2, h3, h4, h5, h6, strong, b, em, span) {\n  color: inherit;\n  text-shadow: none;\n}\n[data-theme-styled='true'] :where(h1, .display-heading, .native-game-title) {\n  color: var(--iw-text);\n  font-family: var(--iw-font-display);\n  letter-spacing: 0.02em;\n}\n[data-theme-styled='true'] :where(h2, h3, h4, legend, label, summary) {\n  font-family: var(--iw-font-ui);\n}\n[data-theme-styled='true'] :where(a) {\n  color: var(--iw-link, var(--iw-accent));\n  text-underline-offset: 0.2em;\n}\n[data-theme-styled='true']\n  :where(\n    .micro-note,\n    .muted,\n    small,\n    .help,\n    .description,\n    .quiet,\n    .smallprint,\n    .race-footnote,\n    .race-menu-status,\n    .soundtrack-advanced-description,\n    .native-menu-footer,\n    .sidebar-note,\n    [data-ui-tone='muted']\n  ) {\n  color: var(--iw-muted);\n}\n[data-theme-styled='true']\n  :where(.eyebrow, .launch-kicker, .access-gate-eyebrow, [data-ui-tone='accent']) {\n  color: var(--iw-accent);\n}\n[data-theme-styled='true'] :where(kbd, code, pre, .telemetry, .hud-value, .metric-value) {\n  font-family: var(--iw-font-mono);\n}\n\n/* Surface roles share the material, foreground, frame and shadow as one recipe. */\n[data-theme-styled='true']\n  :where(\n    dialog,\n    .overlay-card,\n    .panel,\n    .field-kit-panel,\n    .inspection-card,\n    .mission-detail,\n    .settings-group,\n    .inspector,\n    .tool-panel,\n    .editor-panel,\n    .launch-card,\n    .access-gate-card,\n    .hud-card,\n    .sim-panel,\n    .workshop-card,\n    .iw-panel,\n    .studio-panel,\n    .sidebar,\n    .creator-inspector,\n    .controller-settings-section,\n    .settings-section,\n    .settings-card,\n    .info-card,\n    .choice-card,\n    .mission-card,\n    .campaign-card,\n    .library-card,\n    .community-card,\n    .candidate-entry,\n    .version-control,\n    .pack-instructions,\n    .content-card,\n    .pack-card,\n    .profile-card,\n    .recovery-card,\n    .download-card,\n    .story-card,\n    .flight-dialog,\n    .soundtrack-section,\n    .soundtrack-now-card,\n    .soundtrack-listen-card,\n    .soundtrack-online-card,\n    .soundtrack-settings-style-card,\n    .soundtrack-source-row,\n    .first-flight-card,\n    .school-lesson-card,\n    .school-after,\n    .coach-card,\n    .result-panel,\n    .sim-academy #complete,\n    .sim-academy #fallback,\n    .optional-world-card,\n    .team-level-card,\n    .team-review-card,\n    .creator-media-card,\n    .creator-mission-review-card,\n    .batch-card,\n    .watch,\n    [role='tooltip'],\n    [data-component='panel'],\n    [data-ui-surface='panel'],\n    [data-ui-surface='dialog']\n  ) {\n  color: var(--iw-text);\n  font-family: var(--iw-font-ui);\n  background: var(--iw-panel);\n  border: 2px solid var(--iw-line);\n  border-image: var(--iw-material-panel, none) 6 fill / 6px / 0 repeat;\n  border-radius: 0;\n  box-shadow:\n    0 2px 0 var(--ui-shadow),\n    0 8px 18px #0002;\n}\n[data-theme-styled='true']\n  :where(\n    .masthead,\n    .shell-bar,\n    body > header,\n    .toolbar,\n    .studio-toolbar,\n    .authoring-input-rail,\n    .authoring-section-menu,\n    .sim-toolbar,\n    .hud,\n    .telemetry,\n    .workspace-bar,\n    .studio-header,\n    .flight-controls,\n    .flight-immersive-bar,\n    .sim-drone-response,\n    .flight-instruments,\n    .flight-coaching,\n    .coaching,\n    .sim-menu-hint,\n    .coach-heading,\n    .coach-lab-toolbar,\n    .coach-lab-telemetry,\n    .coach-drone-figure figcaption,\n    .handheld-flight-identity,\n    .sim-worlds #flight-objective,\n    .sim-worlds .flight-brief p,\n    .beginner-coach[data-stage='live'] :is(.coach-target, .coach-explain),\n    .settings-heading,\n    .dialog-header,\n    .dialog-footer,\n    .field-kit-settings-tabs,\n    .soundtrack-footer,\n    #soundtrack-operation,\n    .optional-worlds-top,\n    .race-heading,\n    .reading-toolbar,\n    .shell-dialog-heading,\n    [data-ui-surface='toolbar']\n  ) {\n  color: var(--iw-text);\n  background: var(--iw-panel);\n  border-color: var(--iw-line);\n  border-image: none;\n  text-shadow: none;\n}\n[data-theme-styled='true']\n  :where(\n    fieldset,\n    details,\n    .drop,\n    .drop-zone,\n    .setting-row,\n    .settings-row,\n    .settings-preset,\n    .device-card,\n    .controller-card,\n    .controller-mapping,\n    .range-field,\n    .settings-metric,\n    .settings-note,\n    .settings-warning,\n    .mission-brief,\n    .enemy-guide,\n    .soundtrack-choice,\n    .soundtrack-advanced,\n    .soundtrack-online-results,\n    .school-flight-map,\n    .replay-controls,\n    .radio-device-card,\n    .radio-monitor,\n    .coach-tip,\n    .checkpoint,\n    .encounter-cue,\n    .seat,\n    .control-card,\n    .batch-card-media,\n    .creator-media-poster,\n    .creator-poster-option,\n    #mission-brief-reading,\n    [data-ui-surface='inset']\n  ) {\n  color: var(--iw-text);\n  background: var(--iw-ink);\n  border-color: var(--iw-line);\n  border-image: none;\n  border-radius: 0;\n}\n[data-theme-styled='true'] :where(table, .asset-grid, .inventory-grid, [data-ui-surface='table']) {\n  color: var(--iw-text);\n  background: var(--iw-panel);\n}\n[data-theme-styled='true'] :where(th, td, hr) {\n  color: inherit;\n  border-color: var(--iw-line);\n}\n[data-theme-styled='true'] :where(th, thead) {\n  background: var(--iw-panel-raised);\n}\n[data-theme-styled='true']\n  :where(tr[aria-selected='true'], [data-ui-surface='slot'][aria-selected='true']) {\n  color: var(--iw-on-selection, var(--iw-text));\n  background: var(--iw-selection, var(--iw-panel-raised));\n  box-shadow: inset 3px 0 var(--iw-focus, var(--iw-accent));\n}\n\n/* Each action chooses paired local roles; one painter handles every state. */\n[data-theme-styled='true']\n  :where(\n    button,\n    .button,\n    .button-link,\n    #profile-recovery-root a,\n    .action,\n    .community-entry,\n    [role='button'],\n    [data-ui-action],\n    .launch-action,\n    .file-button,\n    .native-menu-actions > a,\n    .game-mode-choice > a\n  ) {\n  --ui-action-fill: var(--iw-button-default-background, var(--iw-panel-raised));\n  --ui-action-ink: var(--iw-button-default-foreground, var(--iw-text));\n  --ui-action-hover-fill: var(--iw-button-hover-background, var(--iw-panel-raised));\n  --ui-action-hover-ink: var(--iw-button-hover-foreground, var(--iw-text));\n  --ui-action-pressed-fill: var(--iw-button-pressed-background, var(--iw-selection));\n  --ui-action-pressed-ink: var(--iw-button-pressed-foreground, var(--iw-on-selection));\n  --ui-action-frame: var(--iw-material-raised, none);\n  --ui-action-edge: var(--iw-control-line);\n  color: var(--ui-action-ink);\n  background: var(--ui-action-fill);\n  border: 2px solid var(--ui-action-edge);\n  border-image: var(--ui-action-frame) 6 fill / 6px / 0 repeat;\n  border-radius: 0;\n  min-height: var(--iw-target);\n  box-sizing: border-box;\n  padding: 8px 14px;\n  font-family: var(--iw-font-ui);\n  font-size: var(--iw-text-size);\n  font-weight: 600;\n  line-height: 1.35;\n  text-shadow: none;\n  text-decoration: none;\n  box-shadow: 0 2px 0 var(--ui-shadow);\n  cursor: pointer;\n}\n[data-theme-styled='true']\n  :where(\n    .primary,\n    .primary-action,\n    .field-kit-primary,\n    .race-primary,\n    .soundtrack-primary-action,\n    .community-entry,\n    [data-ui-action='primary']\n  ) {\n  --ui-action-fill: var(--iw-primary-default-background, var(--iw-accent));\n  --ui-action-ink: var(--iw-primary-default-foreground, var(--iw-on-accent, var(--iw-ink)));\n  --ui-action-hover-fill: var(--iw-primary-hover-background, var(--iw-accent));\n  --ui-action-hover-ink: var(--iw-primary-hover-foreground, var(--iw-on-accent, var(--iw-ink)));\n  --ui-action-pressed-fill: var(--iw-primary-pressed-background, var(--iw-selection));\n  --ui-action-pressed-ink: var(--iw-primary-pressed-foreground, var(--iw-on-selection));\n  --ui-action-frame: var(--iw-material-primary, none);\n  --ui-action-edge: var(--iw-accent);\n}\n[data-theme-styled='true'] :where(.danger, .danger-action, [data-ui-action='danger']) {\n  --ui-action-fill: var(--iw-danger-default-background, var(--iw-hazard));\n  --ui-action-ink: var(--iw-danger-default-foreground, var(--iw-on-hazard));\n  --ui-action-hover-fill: var(--iw-danger-hover-background, var(--iw-hazard));\n  --ui-action-hover-ink: var(--iw-danger-hover-foreground, var(--iw-on-hazard));\n  --ui-action-pressed-fill: var(--iw-danger-pressed-background, var(--iw-selection));\n  --ui-action-pressed-ink: var(--iw-danger-pressed-foreground, var(--iw-on-selection));\n  --ui-action-frame: none;\n  --ui-action-edge: var(--iw-hazard);\n}\n[data-theme-styled='true']\n  :where(\n    button,\n    .button,\n    .button-link,\n    #profile-recovery-root a,\n    .action,\n    .community-entry,\n    [role='button'],\n    [data-ui-action],\n    .launch-action,\n    .file-button,\n    .native-menu-actions > a,\n    .game-mode-choice > a\n  ):is(:hover, [data-state='hover']):not(:disabled, [aria-disabled='true']) {\n  border-image-slice: 6;\n  background: var(--ui-action-hover-fill);\n  color: var(--ui-action-hover-ink);\n  box-shadow:\n    inset 0 0 0 1px var(--ui-action-edge),\n    0 2px 0 var(--ui-shadow);\n}\n[data-theme-styled='true']\n  :where(\n    button,\n    .button,\n    .button-link,\n    #profile-recovery-root a,\n    .action,\n    .community-entry,\n    [role='button'],\n    [data-ui-action],\n    .launch-action,\n    .file-button,\n    .native-menu-actions > a,\n    .game-mode-choice > a\n  ):is(:active, [data-state='pressed']):not(:disabled, [aria-disabled='true']) {\n  border-image-slice: 6;\n  background: var(--ui-action-pressed-fill);\n  color: var(--ui-action-pressed-ink);\n  box-shadow: inset 0 2px 3px #0005;\n}\n[data-theme-styled='true']\n  :where(button, .button, [role='button'], a, [role='tab']):is(\n    [aria-pressed='true'],\n    [aria-selected='true'],\n    [aria-current]:not([aria-current='false']),\n    .selected,\n    .active-tab\n  ) {\n  --ui-action-fill: var(--iw-selection, var(--iw-panel-raised));\n  --ui-action-ink: var(--iw-on-selection, var(--iw-text));\n  --ui-action-frame: none;\n  color: var(--ui-action-ink);\n  background: var(--ui-action-fill);\n  border-color: var(--iw-focus, var(--iw-accent));\n  border-image: none;\n  box-shadow: inset 3px 0 var(--iw-focus, var(--iw-accent));\n  text-decoration-thickness: 2px;\n}\n[data-theme-styled='true']\n  :where(button, input, select, textarea, .button, [role='button']):is(\n    :disabled,\n    [aria-disabled='true']\n  ) {\n  color: var(--iw-muted);\n  background: var(--iw-panel);\n  border-color: var(--iw-line);\n  border-style: dashed;\n  border-image: none;\n  opacity: 1;\n  cursor: not-allowed;\n  box-shadow: none;\n}\n[data-theme-styled='true']\n  :where(button, .button, [role='button'])\n  :where(span, strong, em, small) {\n  color: inherit;\n}\n\n/* Native value controls retain browser semantics and keyboard operation. */\n[data-theme-styled='true'] :where(input, select, textarea) {\n  color: var(--iw-input-text, var(--iw-text));\n  background: var(--iw-input, var(--iw-ink));\n  border: 2px solid var(--iw-control-line);\n  border-image: none;\n  border-radius: 0;\n  font-family: var(--iw-font-ui);\n  font-size: var(--iw-text-size);\n  accent-color: var(--iw-accent);\n  box-shadow: inset 0 1px 2px #0003;\n}\n[data-theme-styled='true']\n  :where(\n    select,\n    textarea,\n    input:not([type='checkbox'], [type='radio'], [type='range'], [type='color'])\n  ) {\n  min-height: var(--iw-target);\n  box-sizing: border-box;\n  padding: 6px 10px;\n}\n[data-theme-styled='true'] :where(input, textarea)::placeholder {\n  color: var(--iw-muted);\n  opacity: 1;\n}\n[data-theme-styled='true'] :where(option, optgroup) {\n  color: var(--iw-input-text, var(--iw-text));\n  background: var(--iw-input, var(--iw-ink));\n}\n[data-theme-styled='true'] :where(input[type='checkbox'], input[type='radio']) {\n  appearance: none;\n  display: inline-grid;\n  place-content: center;\n  inline-size: 22px;\n  block-size: 22px;\n  min-inline-size: 22px;\n  min-block-size: 22px;\n  flex: 0 0 22px;\n  padding: 0;\n  vertical-align: middle;\n  background: var(--iw-ink);\n  border: 2px solid var(--iw-control-line);\n  border-image: none;\n  box-shadow: none;\n}\n[data-theme-styled='true'] input[type='radio'] {\n  border-radius: 50%;\n}\n[data-theme-styled='true'] :where(input[type='checkbox'], input[type='radio'])::before {\n  content: '';\n  display: block;\n  width: 12px;\n  height: 12px;\n  background: var(--iw-on-accent, var(--iw-ink));\n  transform: scale(0);\n  clip-path: polygon(0 43%, 17% 26%, 40% 51%, 83% 4%, 100% 20%, 41% 87%);\n}\n[data-theme-styled='true'] input[type='radio']::before {\n  width: 10px;\n  height: 10px;\n  border-radius: 50%;\n  clip-path: none;\n}\n[data-theme-styled='true'] :where(input[type='checkbox'], input[type='radio']):checked {\n  background: var(--iw-accent);\n  border-color: var(--iw-accent);\n  outline: none;\n  box-shadow: none;\n}\n[data-theme-styled='true'] :where(input[type='checkbox'], input[type='radio']):checked::before {\n  transform: scale(1);\n}\n[data-theme-styled='true'] input[type='checkbox']:indeterminate::before {\n  transform: scale(1);\n  clip-path: inset(40% 0);\n  background: var(--iw-accent);\n}\n[data-theme-styled='true'] label:has(> input:is([type='checkbox'], [type='radio'])) {\n  min-height: var(--iw-target);\n  align-items: center;\n  cursor: pointer;\n}\n[data-theme-styled='true'] input[type='range'] {\n  appearance: none;\n  min-height: var(--iw-target);\n  padding: 0;\n  background: transparent;\n  border: 0;\n  box-shadow: none;\n  cursor: pointer;\n}\n[data-theme-styled='true'] input[type='range']::-webkit-slider-runnable-track {\n  height: 6px;\n  border: 1px solid var(--iw-control-line);\n  background: var(--iw-ink);\n  border-radius: 0;\n}\n[data-theme-styled='true'] input[type='range']::-moz-range-track {\n  height: 4px;\n  border: 1px solid var(--iw-control-line);\n  background: var(--iw-ink);\n  border-radius: 0;\n}\n[data-theme-styled='true'] input[type='range']::-webkit-slider-thumb {\n  appearance: none;\n  width: 24px;\n  height: 24px;\n  margin-top: -10px;\n  background: var(--iw-accent);\n  border: 2px solid var(--iw-on-accent, var(--iw-ink));\n  border-radius: 0;\n  box-shadow: 0 0 0 1px var(--iw-control-line);\n}\n[data-theme-styled='true'] input[type='range']::-moz-range-thumb {\n  width: 20px;\n  height: 20px;\n  background: var(--iw-accent);\n  border: 2px solid var(--iw-on-accent, var(--iw-ink));\n  border-radius: 0;\n  box-shadow: 0 0 0 1px var(--iw-control-line);\n}\n[data-theme-styled='true'] input[type='range']:disabled {\n  cursor: not-allowed;\n  opacity: 0.65;\n}\n[data-theme-styled='true'] :where(progress, meter) {\n  accent-color: var(--iw-accent);\n  color: var(--iw-accent);\n  background: var(--iw-ink);\n  border: 1px solid var(--iw-control-line);\n  border-image: none;\n  border-radius: 0;\n}\n[data-theme-styled='true'] progress::-webkit-progress-bar {\n  background: var(--iw-ink);\n}\n[data-theme-styled='true'] progress::-webkit-progress-value {\n  background: var(--iw-accent);\n}\n[data-theme-styled='true'] progress::-moz-progress-bar {\n  background: var(--iw-accent);\n}\n[data-theme-styled='true'] :where(*) {\n  scrollbar-color: var(--iw-control-line) var(--iw-ink);\n}\n[data-theme-styled='true'] ::-webkit-scrollbar-thumb {\n  background: var(--iw-control-line);\n  border: 2px solid var(--iw-ink);\n}\n[data-theme-styled='true'] ::-webkit-scrollbar-track {\n  background: var(--iw-ink);\n}\n\n/* Compiled icon silhouettes are reusable geometry, never a fixed cyan pigment. */\n[data-theme-styled='true'] [data-presentation-icon]:not([data-menu-icon])::before {\n  color: inherit;\n  content: '';\n  display: inline-block;\n  inline-size: 24px;\n  block-size: 24px;\n  flex: 0 0 24px;\n  background: currentColor;\n  mask: var(--fk-current-icon, linear-gradient(transparent, transparent)) center / contain no-repeat;\n  -webkit-mask: var(--fk-current-icon, linear-gradient(transparent, transparent)) center / contain\n    no-repeat;\n  clip-path: none;\n  image-rendering: pixelated;\n}\n[data-theme-styled='true']\n  :where([data-presentation-control], [data-presentation-hud], [data-presentation-reward])::before {\n  background: currentColor;\n  color: inherit;\n  mask: var(--fk-current-glyph, linear-gradient(transparent, transparent)) center / contain\n    no-repeat;\n  -webkit-mask: var(--fk-current-glyph, linear-gradient(transparent, transparent)) center / contain\n    no-repeat;\n}\n[data-theme-styled='true'] :where([data-menu-icon])::before {\n  background: currentColor;\n  mask: var(--native-menu-icon, linear-gradient(transparent, transparent)) center / contain\n    no-repeat;\n  -webkit-mask: var(--native-menu-icon, linear-gradient(transparent, transparent)) center / contain\n    no-repeat;\n}\n[data-theme-styled='true'] :where(.meter > span, .launch-signal i) {\n  background: var(--iw-accent);\n}\n[data-theme-styled='true'] :where(.meter, [role='progressbar']) {\n  color: var(--iw-text);\n  background: var(--iw-ink);\n  border-color: var(--iw-control-line);\n  border-image: none;\n}\n\n/* Focus and state cues retain a shape in every palette. */\n[data-theme-styled='true'] :is(:focus-visible, .controller-focus, [data-state='focus']) {\n  outline: 3px solid var(--iw-focus, var(--iw-control-line));\n  outline-offset: 3px;\n  scroll-margin: 12px;\n}\n[data-theme-styled='true'] :where([aria-invalid='true'], .error, [data-ui-tone='danger']) {\n  color: var(--iw-hazard);\n  border-color: var(--iw-hazard);\n  border-image: none;\n}\n[data-theme-styled='true'] :where([data-ui-tone='success'], .success) {\n  color: var(--iw-safe);\n}\n[data-theme-styled='true'] :where([data-ui-tone='warning'], .warning) {\n  color: var(--iw-amber);\n}\n[data-theme-styled='true'] ::selection {\n  color: var(--iw-on-selection, var(--iw-ink));\n  background: var(--iw-selection, var(--iw-accent));\n}\n[data-theme-styled='true'] :where(dialog)::backdrop {\n  background: color-mix(in srgb, var(--iw-ink) 78%, transparent);\n}\n\n/* Source art stays intact; only its reading veil follows the interface. */\n[data-theme-styled='true'] .menu-scene::after {\n  background:\n    linear-gradient(\n      90deg,\n      color-mix(in srgb, var(--iw-ink) 94%, transparent),\n      color-mix(in srgb, var(--iw-ink) 75%, transparent) 28%,\n      color-mix(in srgb, var(--iw-ink) 22%, transparent) 63%,\n      transparent\n    ),\n    linear-gradient(0deg, color-mix(in srgb, var(--iw-ink) 65%, transparent), transparent 30%);\n}\n[data-theme-styled='true'] .menu-scene {\n  --scene-ink: var(--iw-ink);\n  --scene-accent: var(--iw-panel-raised);\n}\n[data-theme-styled='true'] :where(.menu-ornament, .menu-scene-decoration) {\n  color: var(--iw-line);\n}\n[data-theme-texture='off'] :where(.menu-ornament, .menu-scene-decoration, .menu-retune-layer) {\n  display: none;\n}\n[data-theme-surface='flat']\n  :where(\n    button,\n    .button,\n    .action,\n    .community-entry,\n    [role='button'],\n    [data-ui-action],\n    dialog,\n    .panel,\n    .field-kit-panel,\n    .iw-panel,\n    [data-component='panel'],\n    [data-ui-surface]\n  ) {\n  border-image: none;\n  box-shadow: none;\n}\n[data-theme-hud='opaque']\n  :where(\n    .hud,\n    .hud-card,\n    .hud-panel,\n    .telemetry,\n    .sim-hud,\n    .flight-hud,\n    .flight-instruments,\n    .flight-coaching,\n    .flight-brief p,\n    .scene-heading,\n    #hud,\n    [data-hud]\n  ) {\n  background: var(--iw-ink);\n  color: var(--iw-text);\n  text-shadow: none;\n  backdrop-filter: none;\n  opacity: 1;\n}\n[data-theme-motion='reduced']\n  :where(.menu-ornament, .edition-propeller, .theme-decoration, .menu-scene-decoration) {\n  animation: none;\n  transition: none;\n  transform: none;\n}\n[data-theme-motion='reduced'] .menu-retune-layer {\n  display: none;\n}\n[data-theme-text-size='large']:not([data-interface-theme='legacy'])\n  :where(p, label, button, select, input, textarea, .micro-note) {\n  font-size: max(18px, 1em);\n}\n\n.theme-family-controls {\n  display: grid;\n  gap: 12px;\n  margin-block: 16px;\n  padding-block: 12px;\n  border-block: 1px solid var(--fk-line, #737c69);\n}\n.theme-family-controls label {\n  display: flex;\n  flex-wrap: wrap;\n  align-items: center;\n  gap: 8px;\n  justify-content: space-between;\n}\n.theme-family-controls label:has(> input[type='checkbox']) {\n  justify-content: flex-start;\n  min-height: var(--iw-target, 44px);\n}\n.theme-family-controls select {\n  max-width: 100%;\n}\n.theme-family-controls [role='status']:empty {\n  display: none;\n}\n.sim-appearance-controls {\n  grid-column: 1 / -1;\n  display: flex;\n  flex-wrap: wrap;\n  align-items: center;\n  gap: 8px 16px;\n  min-width: 0;\n  max-width: 100%;\n}\n.sim-appearance-controls label {\n  display: grid;\n  gap: 6px;\n  min-width: 0;\n  max-width: 100%;\n}\n.sim-appearance-controls select {\n  min-width: 0;\n  max-width: 100%;\n}\n.sim-appearance-controls [role='status'] {\n  flex-basis: 100%;\n}\n.sim-worlds .flight-controls > .sim-appearance-controls {\n  flex: 1 0 100%;\n  box-sizing: border-box;\n  margin-inline: 0;\n}\n[data-theme-styled='true'] .sim-worlds .flight-dialog > header {\n  z-index: 10;\n  background: var(--iw-panel);\n  box-shadow: 0 0 0 8px var(--iw-panel);\n}\n@media (pointer: coarse) {\n  [data-theme-density='studio'] {\n    --iw-target: 44px;\n  }\n}\n@media (orientation: portrait) {\n  [data-theme-styled='true'] .menu-scene::after {\n    background: linear-gradient(\n      0deg,\n      color-mix(in srgb, var(--iw-ink) 94%, transparent),\n      color-mix(in srgb, var(--iw-ink) 73%, transparent) 35%,\n      color-mix(in srgb, var(--iw-ink) 23%, transparent) 80%\n    );\n  }\n}\n@media (forced-colors: active) {\n  [data-theme-styled='true']\n    :where(button, .button, input, select, textarea, dialog, .panel, [data-ui-surface]) {\n    border-image: none;\n    box-shadow: none;\n    border-color: ButtonText;\n    forced-color-adjust: auto;\n  }\n  [data-theme-styled='true'] :where(input[type='checkbox'], input[type='radio']) {\n    appearance: auto;\n  }\n  [data-theme-styled='true'] :where(input[type='checkbox'], input[type='radio'])::before {\n    display: none;\n  }\n  [data-theme-styled='true'] :is(:focus-visible, .controller-focus) {\n    outline-color: Highlight;\n  }\n}\n\n/* A filled raster swaps atomically. Interpolating its label separately can\n   briefly create dark-on-dark text while a selected tab changes state. */\n[data-theme-styled='true']\n  :where(button, .button, [role='button'], .native-menu-actions > a, .game-mode-choice > a) {\n  transition:\n    box-shadow 100ms ease,\n    outline-color 100ms ease;\n}\n[data-theme-styled='true'] label:has(> input:is([type='checkbox'], [type='radio'])) {\n  color: var(--iw-text);\n  background-color: var(--iw-panel-raised);\n  border-color: var(--iw-line);\n  border-image: none;\n  border-radius: 0;\n}\n.theme-gallery {\n  display: grid;\n  grid-template-columns: repeat(2, minmax(0, 1fr));\n  gap: 12px;\n}\n.theme-gallery .theme-preview-card {\n  display: grid;\n  grid-template-columns: 1fr;\n  gap: 8px;\n  align-content: start;\n  min-width: 0;\n  text-align: left;\n  padding: 12px;\n}\n.theme-preview-swatches {\n  display: flex;\n  gap: 4px;\n}\n.theme-preview-swatches span {\n  display: block;\n  width: 24px;\n  height: 24px;\n  border: 1px solid currentColor;\n}\n.theme-preview-card small {\n  font-size: 14px;\n  font-weight: 400;\n  line-height: 1.45;\n  opacity: 0.9;\n}\n.theme-gallery .theme-preview-card[aria-pressed='true'] {\n  outline: 2px solid var(--iw-focus, var(--fk-focus));\n  outline-offset: 2px;\n}\n.theme-preview-card[aria-pressed='true'] strong::after {\n  content: ' ✓';\n}\n.theme-accessibility {\n  display: flex;\n  flex-wrap: wrap;\n  gap: 8px 20px;\n}\n.theme-family-controls > details {\n  padding: 12px;\n}\n.theme-family-controls > details > summary {\n  min-height: var(--iw-target, 44px);\n  cursor: pointer;\n}\n@media (max-width: 600px) {\n  .theme-gallery {\n    grid-template-columns: 1fr;\n  }\n}\n@media (prefers-reduced-motion: reduce) {\n  [data-theme-styled='true'] :where(button, .button, [role='button']) {\n    transition: none;\n  }\n}\n\n[data-theme-styled='true'] [data-ui-surface='section-title'] {\n  color: var(--iw-muted);\n  background: var(--iw-ink);\n  border-color: var(--iw-line);\n  border-image: none;\n}\n\n/* Status, badges and callouts are shared reading surfaces, including tools. */\n[data-theme-styled='true']\n  :where(\n    [role='status'],\n    [role='alert'],\n    .operation-status,\n    .callout,\n    .notice,\n    .pill,\n    .chip,\n    .status,\n    .skip-link,\n    pre\n  ) {\n  color: var(--iw-text);\n  background-color: var(--iw-panel);\n  border-color: var(--iw-line);\n  border-image: none;\n  border-radius: 0;\n}\n[data-theme-styled='true']\n  :where(.status-ready, [role='status'].success, [data-ui-tone='success']) {\n  color: var(--iw-safe);\n}\n[data-theme-styled='true']\n  :where(.status-building, [role='status'].warning, [data-ui-tone='warning']) {\n  color: var(--iw-amber);\n}\n[data-theme-styled='true']\n  :where(\n    [role='alert'],\n    [role='status'].error,\n    [role='status'][data-error='true'],\n    [data-ui-tone='danger']\n  ) {\n  color: var(--iw-hazard);\n}\n[data-theme-styled='true'] :where([role='status'][data-error='true'], [role='status'].error) {\n  border-inline-start: 3px solid var(--iw-hazard);\n  padding-inline-start: 0.75rem;\n}\n\n/* Deep dialogs and tool results are part of the same interface. Never leave a\n   legacy navy/teal well behind a newly resolved light-theme text color. */\n[data-theme-styled='true'] :where(.soundtrack-quick-status, .race-start-cue strong) {\n  color: var(--iw-on-accent);\n  background: var(--iw-accent);\n  border-color: var(--iw-accent);\n  border-image: none;\n}\n[data-theme-styled='true'] .journey-card-action {\n  color: var(--iw-on-accent);\n  background: var(--iw-accent);\n  border-color: var(--iw-accent);\n  font-size: 0.75rem;\n}\n[data-theme-styled='true'] .soundtrack-now-card::after {\n  background: var(--iw-accent);\n}\n[data-theme-styled='true'] .soundtrack-advanced-summary::after {\n  color: inherit;\n}\n[data-theme-styled='true'] .soundtrack-online-track {\n  border-color: var(--iw-line);\n}\n[data-theme-styled='true'] .soundtrack-online-track:is(:hover, :focus-within) {\n  color: var(--iw-text);\n  background: var(--iw-panel-raised);\n}\n[data-theme-styled='true'] :where(.soundtrack-online-style, .creator-poster-option):focus-within {\n  outline: 3px solid var(--iw-focus);\n  outline-offset: 2px;\n}\n[data-theme-styled='true'] :where(.batch-card-error, .creator-media-card-error) {\n  border-color: var(--iw-hazard);\n  border-image: none;\n}\n[data-theme-styled='true'] :where(.batch-card-preparing, .optional-world-current) {\n  outline: 2px solid var(--iw-focus);\n  outline-offset: 2px;\n}\n[data-theme-styled='true']\n  :where(\n    .asset-row.selected,\n    .candidate-entry.selected,\n    [aria-selected='true'],\n    [aria-pressed='true']\n  )\n  :where(.muted, .micro-note, small) {\n  color: inherit;\n}\n[data-theme-styled='true'] input[type='file']::file-selector-button {\n  color: var(--iw-text);\n  background: var(--iw-panel-raised);\n  border: 1px solid var(--iw-control-line);\n  border-radius: 0;\n  padding: 6px 10px;\n  margin-inline-end: 10px;\n  font: inherit;\n  cursor: pointer;\n}\n/* Reading state belongs to the message, not a permanent empty painted bar. */\n[data-theme-styled='true'] :where([role='status'], [role='alert']):empty {\n  background: transparent;\n}\n[data-theme-styled='true'] label:has(> input:is([type='checkbox'], [type='radio'])) {\n  padding: 6px 10px;\n  box-sizing: border-box;\n  gap: 10px;\n}\n[data-theme-styled='true'] :where(.soundtrack-dialog, .optional-worlds-dialog) .micro-note {\n  font-size: var(--fk-text-secondary);\n}\n/* Session transport is one control group. Its volume label must not run into\n   the last button when a long translation or enlarged text wraps the row. */\n[data-theme-styled='true'] [data-couch-music] {\n  display: flex;\n  flex-wrap: wrap;\n  gap: 10px;\n  align-items: center;\n}\n[data-theme-styled='true'] [data-couch-music] > :where(h3, p, label, input, section, details) {\n  flex: 1 0 100%;\n  min-width: 0;\n  max-width: 100%;\n  box-sizing: border-box;\n}\n[data-theme-styled='true'] [data-couch-music] > :where(h3, p) {\n  margin-block: 8px;\n}\n[data-theme-styled='true'] [data-couch-music] > label {\n  margin-top: 8px;\n}\n[data-theme-styled='true'] #soundtrack-now-sources {\n  display: flex;\n  flex-wrap: wrap;\n  gap: 8px 16px;\n  margin-block: 12px;\n}\n[data-theme-styled='true'] :where(.page-head, .masthead) > a + a {\n  margin-inline-start: 12px;\n}\n\n[data-theme-styled='true'] :where(.asset-row.selected, .candidate-entry.selected) {\n  color: var(--iw-on-selection);\n  background: var(--iw-selection);\n  border-color: var(--iw-focus);\n  box-shadow: inset 3px 0 var(--iw-focus);\n}\n\n/* Only the application-owned menu backdrop changes with the interface. Authored\n   campaign/edition scenery and logos are separate content and remain visible. */\n[data-theme-styled='true'] .menu-scene[data-backdrop='interface'] {\n  background: var(--iw-ink);\n}\n[data-theme-styled='true']\n  .menu-scene[data-backdrop='interface']\n  > :where(.menu-scene-art-plane, .menu-scene-signal) {\n  display: none;\n}\n[data-theme-styled='true'] .menu-scene[data-backdrop='interface']::before {\n  content: '';\n  position: absolute;\n  inset: 0;\n  pointer-events: none;\n  background-image: var(--ui-scene-motif, none);\n  background-size: var(--ui-scene-motif-size, 48px 48px);\n  background-position: right top;\n  opacity: 0.3;\n}\n[data-theme-material='linen'] {\n  --ui-scene-motif: url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='64' height='64' shape-rendering='crispEdges'%3E%3Cg fill='none' stroke='%23f48686' stroke-width='2'%3E%3Cpath d='M32 10l22 22-22 22L10 32zM24 24l16 16m0-16L24 40'/%3E%3C/g%3E%3Cpath fill='%23e1ddcf' d='M0 0h2v2H0zm62 0h2v2h-2zM0 62h2v2H0zm62 0h2v2h-2z'/%3E%3C/svg%3E\");\n  --ui-scene-motif-size: 64px 64px;\n}\n[data-theme-material='porcelain'] {\n  --ui-scene-motif: url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='96'%3E%3Cg fill='none' stroke='%230057b7'%3E%3Cpath d='M-30 24q30-28 60 0t60 0t60 0M-30 72q30-28 60 0t60 0t60 0'/%3E%3Cpath d='M60 30q-12 10 0 20q12-10 0-20m0 20v8'/%3E%3C/g%3E%3C/svg%3E\");\n  --ui-scene-motif-size: 120px 96px;\n}\n[data-theme-material='brass'] {\n  --ui-scene-motif:\n    repeating-linear-gradient(90deg, transparent 0 95px, var(--iw-line) 95px 96px),\n    repeating-linear-gradient(0deg, transparent 0 95px, var(--iw-line) 95px 96px);\n  --ui-scene-motif-size: 96px 96px;\n}\n[data-theme-material='wood'] {\n  --ui-scene-motif:\n    repeating-linear-gradient(\n      0deg,\n      transparent 0 7px,\n      var(--iw-line) 7px 8px,\n      transparent 8px 62px,\n      var(--iw-line) 62px 64px\n    ),\n    repeating-linear-gradient(90deg, transparent 0 191px, var(--iw-line) 191px 192px);\n  --ui-scene-motif-size: 192px 64px;\n}\n[data-theme-material='composite'] {\n  --ui-scene-motif:\n    linear-gradient(30deg, transparent 0 48%, var(--iw-accent) 49% 50%, transparent 51%),\n    linear-gradient(150deg, transparent 0 48%, var(--iw-line) 49% 50%, transparent 51%);\n  --ui-scene-motif-size: 96px 64px;\n}\n[data-theme-material='classic'],\n[data-theme-material='terminal'] {\n  --ui-scene-motif: none;\n}\n[data-theme-material='classic'] .menu-scene[data-backdrop='interface']::after,\n[data-theme-material='terminal'] .menu-scene[data-backdrop='interface']::after {\n  background: none;\n}\n[data-theme-texture='off'] .menu-scene[data-backdrop='interface']::before {\n  background-image: none;\n}\n";
 // END SHARED SIM ASSETS
+
+/** Observer-only, bounded input history. Coordinates stay normalized and current dots stay host-owned. */
+export function mountStickTrace(element, { center = 90, travel = 60 } = {}) {
+  const ns = 'http://www.w3.org/2000/svg',
+    doc = element.ownerDocument,
+    ownedSVG = element.namespaceURI !== ns,
+    make = (name, attributes) => {
+      const node = doc.createElementNS(ns, name);
+      for (const [key, value] of Object.entries(attributes)) node.setAttribute(key, String(value));
+      return node;
+    },
+    canvas = ownedSVG
+      ? make('svg', {
+          class: 'sim-stick-trace',
+          viewBox: `0 0 ${center * 2} ${center * 2}`,
+          'aria-hidden': 'true',
+          focusable: 'false',
+        })
+      : element,
+    group = make('g', { class: 'sim-stick-trace-history', 'aria-hidden': 'true' }),
+    line = make('polyline', { class: 'sim-stick-trace-path', fill: 'none' }),
+    origin = make('circle', { class: 'sim-stick-trace-origin', r: 2.8, fill: 'none' }),
+    arrow = make('path', { class: 'sim-stick-trace-arrow', fill: 'none' });
+  group.style.pointerEvents = 'none';
+  group.append(line, origin, arrow);
+  canvas.append(group);
+  if (ownedSVG) element.insertBefore(canvas, element.querySelector('i') ?? element.firstChild);
+  let history = [],
+    previous = null,
+    directionPoint = null,
+    tangent = null,
+    previousSource = null,
+    lastMotion = 0,
+    disposed = false;
+  const attr = (node, key, value) => {
+    const text = String(value);
+    if (node.getAttribute(key) !== text) node.setAttribute(key, text);
+  };
+  const reset = () => {
+    history = [];
+    previous = null;
+    directionPoint = null;
+    tangent = null;
+    previousSource = null;
+    group.style.display = 'none';
+    attr(line, 'points', '');
+    attr(arrow, 'd', '');
+  };
+  reset();
+  return {
+    update({ x, y, now, source = 'live', reducedMotion = false, available = true }) {
+      if (disposed) return;
+      if (!available || reducedMotion || ![x, y, now].every(Number.isFinite)) {
+        reset();
+        return;
+      }
+      if (source !== previousSource || (previous && now < previous.time)) reset();
+      previousSource = source;
+      attr(
+        group,
+        'data-source',
+        source === 'example' || String(source).startsWith('example:') ? 'example' : source,
+      );
+      const point = {
+        x: Math.max(-1, Math.min(1, x)),
+        y: Math.max(-1, Math.min(1, y)),
+        time: now,
+      };
+      history = history.filter((sample) => now - sample.time <= 450);
+      if (!directionPoint) {
+        directionPoint = point;
+        lastMotion = now;
+      } else if (Math.hypot(point.x - directionPoint.x, point.y - directionPoint.y) > 0.002) {
+        const nextTangent = { x: point.x - directionPoint.x, y: directionPoint.y - point.y };
+        // Preserve a real reversal even when it falls between regular history samples.
+        if (
+          tangent &&
+          tangent.x * nextTangent.x + tangent.y * nextTangent.y < 0 &&
+          now - directionPoint.time <= 450 &&
+          history.at(-1) !== directionPoint
+        )
+          history.push(directionPoint);
+        tangent = nextTangent;
+        directionPoint = point;
+        lastMotion = now;
+      }
+      previous = point;
+      const last = history.at(-1);
+      // Sample every 40 ms plus reversals; the unsmoothed current endpoint is always included.
+      if (
+        !last ||
+        (now - last.time >= 40 && Math.hypot(point.x - last.x, point.y - last.y) > 0.002)
+      )
+        history.push(point);
+      if (history.length > 11) history.splice(0, history.length - 11);
+      const points = [...history];
+      if (points.at(-1) !== point) points.push(point);
+      const distance = points
+        .slice(1)
+        .reduce(
+          (sum, sample, index) =>
+            sum + Math.hypot(sample.x - points[index].x, sample.y - points[index].y),
+          0,
+        );
+      if (distance < 0.025 || now - lastMotion >= 450) {
+        group.style.display = 'none';
+        attr(line, 'points', '');
+        attr(arrow, 'd', '');
+        return;
+      }
+      const projected = points.map((sample) => ({
+        x: center + sample.x * travel,
+        y: center - sample.y * travel,
+      }));
+      attr(
+        line,
+        'points',
+        projected.map((sample) => `${sample.x.toFixed(2)},${sample.y.toFixed(2)}`).join(' '),
+      );
+      attr(origin, 'cx', projected[0].x.toFixed(2));
+      attr(origin, 'cy', projected[0].y.toFixed(2));
+      const end = projected.at(-1);
+      if (tangent) {
+        // This is a direction cue, not additional travel: keep it separate from the exact dot.
+        const length = Math.hypot(tangent.x, tangent.y),
+          dx = tangent.x / length,
+          dy = tangent.y / length,
+          tip = { x: end.x - dx * 8, y: end.y - dy * 8 };
+        attr(
+          arrow,
+          'd',
+          `M ${(tip.x - dx * 5 - dy * 3).toFixed(2)} ${(tip.y - dy * 5 + dx * 3).toFixed(2)} L ${tip.x.toFixed(2)} ${tip.y.toFixed(2)} L ${(tip.x - dx * 5 + dy * 3).toFixed(2)} ${(tip.y - dy * 5 - dx * 3).toFixed(2)}`,
+        );
+      } else attr(arrow, 'd', '');
+      group.style.display = '';
+      group.style.opacity = String(Math.min(1, (450 - (now - lastMotion)) / 200));
+    },
+    reset,
+    dispose() {
+      if (disposed) return;
+      reset();
+      disposed = true;
+      (ownedSVG ? canvas : group).remove();
+    },
+  };
+}
+
+/** Static axis legends share calibrated Mode 1–4 layout; never generate input. */
+export function paintStickDirections(element, { horizontal, vertical, locale = 'en' }) {
+  const key = `${horizontal}:${vertical}:${locale}`;
+  if (element.dataset.stickLegend === key) return;
+  element.dataset.stickLegend = key;
+  element.classList.add('sim-labelled-stick');
+  for (const old of element.querySelectorAll('.sim-stick-direction')) old.remove();
+  const uk = locale === 'uk';
+  const labels = {
+    throttle: uk ? ['Тяга +', 'Тяга −'] : ['Thrust +', 'Thrust −'],
+    pitch: uk ? ['Ніс униз', 'Ніс угору'] : ['Nose down', 'Nose up'],
+    yaw: uk ? ['Поворот ←', '→ Поворот'] : ['Turn ←', '→ Turn'],
+    roll: uk ? ['Крен ←', '→ Крен'] : ['Bank ←', '→ Bank'],
+  };
+  for (const [direction, text] of [
+    ['up', `↑ ${labels[vertical][0]}`],
+    ['down', `↓ ${labels[vertical][1]}`],
+    ['left', labels[horizontal][0]],
+    ['right', labels[horizontal][1]],
+  ]) {
+    const label = element.ownerDocument.createElement('b');
+    label.className = `sim-stick-direction sim-stick-${direction}`;
+    label.textContent = text;
+    label.setAttribute('aria-hidden', 'true');
+    element.append(label);
+  }
+}

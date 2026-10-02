@@ -11,17 +11,20 @@ on:
       - 'game/ui/industrial-workshop.css'
       - 'game/ui/field-kit*.css'
       - 'game/ui/edition-tool-provider.mjs'
+      - 'game/ui/optional-practice-panel.mjs'
+      - 'game/ui/mode-choice.mjs'
       - 'game/editions/model.mjs'
       - 'game/editions/retained-presentation.mjs'
       - 'game/fpv-entry.mjs'
       - 'authoring/asset-studio/**'
       - 'authoring/company-studio/model.mjs'
       - 'authoring/company-studio/studio.mjs'
-      - 'optional-practice/civilian-fpv/sim-presentation.mjs'
-      - 'optional-practice/civilian-fpv/world-themes.mjs'
-      - 'optional-practice/civilian-fpv/world-visuals.mjs'
-      - 'optional-practice/civilian-fpv/world-editor.mjs'
-      - 'optional-practice/civilian-fpv/renderer.mjs'
+      - 'optional-practice/civilian-fpv/*.mjs'
+      - 'optional-practice/civilian-fpv/*.css'
+      - 'optional-practice/civilian-fpv/index.html'
+      - 'optional-practice/fpv-worlds/index.html'
+      - 'optional-practice/launcher-template.mjs'
+      - 'publishing/optional-package-policy.mjs'
       - 'scripts/compile-edition.mjs'
       - 'scripts/refresh-theme-bootstrap.mjs'
       - 'game/test/theme-*.test.mjs'
@@ -30,10 +33,11 @@ on:
       - 'game/test/community-appearance.test.mjs'
       - 'game/test/curated-community-theme*.test.mjs'
       - 'game/test/edition-appearance-host.test.mjs'
-      - 'game/test/fpv-appearance.test.mjs'
-      - 'game/test/fpv-theme-family-controls.test.mjs'
-      - 'game/test/fpv-world-appearance-ui.test.mjs'
-      - 'game/test/fpv-world-editor-appearance.test.mjs'
+      - 'game/test/fpv-*.test.mjs'
+      - 'game/test/optional-practice-panel.test.mjs'
+      - 'game/test/mode-choice-appearance.test.mjs'
+      - 'scripts/test-optional-fpv-package.mjs'
+      - 'scripts/test-sparse-publisher-imports.mjs'
 
 permissions:
   contents: read
@@ -70,6 +74,16 @@ jobs:
         game/test/fpv-world-appearance-ui.test.mjs
         game/test/fpv-world-editor-appearance.test.mjs
         game/test/optional-installation.test.mjs
+        game/test/optional-practice-panel.test.mjs
+        game/test/mode-choice-appearance.test.mjs
+        game/test/fpv-world-runtime.test.mjs
+        game/test/fpv-world-content.test.mjs
+        game/test/fpv-workshop-visuals.test.mjs
+        game/test/fpv-flight-ui.test.mjs
+        game/test/fpv-replay-rate.test.mjs
+        game/test/fpv-studio-setup.test.mjs
+        scripts/test-optional-fpv-package.mjs
+        scripts/test-sparse-publisher-imports.mjs
     steps:
       - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
         with:
@@ -87,7 +101,7 @@ jobs:
       - run: npm ci
       - name: Install pinned SIM test dependencies
         run: npm ci --prefix authoring/fpv-worlds --ignore-scripts
-      - name: Run focused appearance and curated-community checks
+      - name: Run focused appearance, SIM and curated-community checks
         id: focused
         shell: bash
         run: |

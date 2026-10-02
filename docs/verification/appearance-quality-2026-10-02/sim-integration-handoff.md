@@ -1,11 +1,13 @@
 # SIM integration handoff
 
-Primary checkout: `/Users/oleksandr.mekhovov/work/my_projects/go_test`.
-Branch: `codex/fpv-personal-best-ghost`.
-Base HEAD: `f4545d68a9be0ada4b7a8ad1327c9c02e25214a1`.
-The appearance work remains **uncommitted in this working tree**. This task has no
-attached PR and has created no PR, commit or published release. Do not treat that
-HEAD as containing the appearance implementation.
+Publication branch: `codex/unified-appearance-20261002`, integrated with main at
+`d4b284819`. The earlier `codex/fpv-personal-best-ghost` PR #913 is already merged;
+it does not contain this appearance implementation. Use the new appearance PR
+and its exact-head preview artifact described in the [publication report](publication.md).
+
+Integration checkout:
+`/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/appearance-publish-20261002`.
+The original checkout and its unrelated local planning changes are preserved.
 
 The stable consumer contracts currently live in:
 
@@ -26,16 +28,17 @@ The stable consumer contracts currently live in:
   curated launch resolution and controls. `game/fpv-entry.mjs` owns launch transfer.
 
 Avoid wholesale replacement of those files or `renderer.mjs` / `world-renderer.mjs`:
-the working tree contains integrated appearance, recording, sampling and disposal
+the appearance branch contains integrated appearance, recording, sampling and disposal
 changes. Coordinate narrow renderer/material edits against the actual working-tree
 content. Preserve colliders, gate openings, target positions, sightlines, camera,
 flight inputs/physics, scores and proof identity. Retain low/balanced/high sampling
 and quality parity; no global nearest-filter override for SIM surfaces.
 
-Fresh caps: Academy **62 runtime / 64 source files**, 4,073,954 / 4,091,461 bytes;
-World **93 runtime / 95 source files**, 14,516,910 / 14,539,132 bytes. Policies remain
-64 files / 8 MiB and 96 files / 16 MiB respectively. Academy source has no spare
-file slot. Plan new art within these closures rather than raising limits.
+Current main's package policy permits Academy **72 files / 8 MiB** and World
+**104 files / 16 MiB**, including source packages. The appearance integration
+preserves these upstream limits; it does not increase them. Earlier 64/96-file
+receipts describe the pre-integration baseline. Use the current publication report
+and PR artifact receipts for measured closure sizes.
 
 After shared CSS/font changes, run `node scripts/refresh-fpv-presentation-assets.mjs`
 and its `--check` form. After first-paint changes, refresh/check

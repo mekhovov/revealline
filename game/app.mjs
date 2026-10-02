@@ -40,6 +40,7 @@ import {
   prepareFreshSoloVisualTheme,
 } from './presentation/fresh-visual-theme.mjs';
 import { attachMusicCredit } from './ui/music-credit.mjs';
+import { renderMusicCreatorLinks } from './ui/music-credits.mjs';
 import { soundtrackErrorText } from './ui/soundtrack-error-copy.mjs';
 import { createTouchPreferences } from './touch-preferences.mjs';
 import { createCharacterPresentations } from './character-presentations.mjs';
@@ -1277,10 +1278,6 @@ try {
       !audioMaster.snapshot().muted &&
       audioMaster.snapshot().volume > 0 &&
       musicPreviewState.volume > 0;
-    let source;
-    try {
-      source = new URL(track?.websites?.[0]?.url ?? track?.rights?.source);
-    } catch {}
     for (const prefix of ['game-now-playing', 'shell-now-playing']) {
       const playing = $(prefix);
       playing.hidden = !audible || !track || track.kind === 'synth';
@@ -1290,14 +1287,10 @@ try {
       localizedAttribute(playing, 'title', () =>
         track?.fileName ? t('interface:soundtrack.originalFile', { file: track.fileName }) : '',
       );
-      const website = $(`${prefix}-source`);
-      website.hidden =
-        !source ||
-        !['https:', 'http:'].includes(source.protocol) ||
-        !!source.username ||
-        !!source.password;
-      if (!website.hidden) website.href = source.href;
-      else website.removeAttribute('href');
+      renderMusicCreatorLinks($(`${prefix}-source`), track, {
+        document,
+        label: () => t('common:music.creatorSource'),
+      });
     }
     localizedText($('music-preview'), () =>
       ['blocked', 'error'].includes(musicPreviewState.status)
@@ -1886,12 +1879,20 @@ try {
     else sound.suspend();
   }
   const soundtrackFeedback = createOperationStatus($('soundtrack-summary'));
+  const soundtrackSummarySources = document.createElement('span');
+  soundtrackSummarySources.id = 'soundtrack-summary-source';
+  $('soundtrack-summary').after(soundtrackSummarySources);
+  renderMusicCreatorLinks(soundtrackSummarySources, null, { document });
   let soundtrackLoading = true,
     soundtrackOperation = soundtrackFeedback.begin({
       message: t('interface:loadingMusicLibrary'),
       stage: 'reading',
     });
-  function soundtrackStatus(message, preparation = null) {
+  function soundtrackStatus(message, preparation = null, track = null) {
+    renderMusicCreatorLinks(soundtrackSummarySources, track, {
+      document,
+      label: () => t('common:music.creatorSource'),
+    });
     if (preparation) {
       if (!soundtrackOperation) soundtrackOperation = soundtrackFeedback.begin(preparation);
       else soundtrackOperation.update(preparation);
@@ -1940,6 +1941,7 @@ try {
                     ? `${state.track.title} · ${state.status}`
                     : t('interface:chooseAPlaylistOrImportMp3Songs')),
             state.preparation,
+            playbackMessage || state.preparation?.message ? null : state.track,
           );
         },
       });
@@ -2118,6 +2120,7 @@ try {
   let compiledPresentationWarning = '';
   function startRememberedMenuMusic(event) {
     if (
+      event.target?.closest?.('.music-creator-links') ||
       !event.isTrusted ||
       soundtrackMenuGesture ||
       !soundtrackPlayer ||
@@ -3132,6 +3135,9 @@ try {
       stopActorView();
       actorPreferences.dispose();
       compactCredit.dispose();
+      soundtrackSummarySources.remove();
+      for (const prefix of ['game-now-playing', 'shell-now-playing'])
+        renderMusicCreatorLinks($(`${prefix}-source`), null, { document });
       audioRestoration.dispose();
       displayRestoration.dispose();
       displayPreferences.dispose();
@@ -7546,6 +7552,15 @@ try {
       'settings-offline',
     ])
       if ($(id)) $(id).hidden = true;
+    // Public communities share the containing game's download catalogue. Keep
+    // preparation explicit and leave this host before changing installation state.
+    const community = communityRouteFromURL(location.href);
+    if (community && !previewSession && $('settings-offline')) {
+      const target = new URL('./downloads.html', import.meta.url);
+      target.searchParams.set('community', community.slug);
+      $('settings-offline').href = target.href;
+      $('settings-offline').hidden = false;
+    }
   }
   window.addEventListener('pagehide', (event) => {
     if (!event.persisted) {
@@ -8164,6 +8179,7 @@ try {
     show('retry-button', kind === 'won' || kind === 'lost');
     show('start-button', kind === 'ready' || kind === 'pause');
     show('overlay-restart', kind === 'pause');
+    show('overlay-random-level', kind === 'pause' && !practiceSession);
     show('overlay-missions', kind === 'pause');
     show('overlay-settings', kind === 'pause');
     show('overlay-sound', kind === 'pause');
@@ -10670,6 +10686,9 @@ try {
     mission?.focus();
     mission?.scrollIntoView({ block: 'nearest', behavior: 'auto' });
   };
+  $('overlay-random-level').onclick = () => {
+    if (!practiceSession) void openUnifiedMissions($('overlay-random-level'), { random: true });
+  };
   $('pause-button').onclick = () => pause();
   const restartDialog = $('restart-dialog');
   const restartCopy = $('restart-dialog-copy').textContent;
@@ -11121,6 +11140,7 @@ try {
   }
   const restoreAudioOnGesture = (event) => {
     if (
+      event.target?.closest?.('.music-creator-links') ||
       demoHost?.containsAudio(event.target) ||
       quickMusicControls?.contains(event.target) ||
       quickMusicControls?.handlesKey(event) ||
@@ -12077,6 +12097,10 @@ try {
       )
         return;
       unifiedChooser.open(opener, options);
+      if (options?.random) {
+        unifiedChooser.playRandom({ resetFilters: true });
+        return;
+      }
       if (options?.focusSetup) {
         const setup = $('mission-picker-setup');
         const control = $(options.focusSetup);
