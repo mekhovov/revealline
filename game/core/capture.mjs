@@ -1,3 +1,4 @@
+import { coverageCellCount } from './coverage.mjs';
 import { CELL } from './registry.mjs';
 import { EPS, capsuleTime, pointAt } from './geometry.mjs';
 import { ownershipSpans, cellIndex } from './movement.mjs';
@@ -152,7 +153,7 @@ function captureCells(state, releaseSeed, closeCut) {
         secured.push(i);
       }
     }
-  state.claimedCount += secured.length;
+  state.claimedCount += coverageCellCount(state, secured);
   state.coverage = state.claimedCount / state.totalClaimable;
   state.score +=
     (state.classic ? classicClaim(state, secured) : secured.length) * state.rules.pointsPerCell;

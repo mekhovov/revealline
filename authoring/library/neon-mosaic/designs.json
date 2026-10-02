@@ -1,0 +1,246 @@
+[
+  {
+    "id": "fpv",
+    "title": "FPV",
+    "lines": [
+      "FPV"
+    ]
+  },
+  {
+    "id": "ukraine",
+    "title": "UKRAINE",
+    "lines": [
+      "UKRAINE"
+    ]
+  },
+  {
+    "id": "drone-aid",
+    "title": "DRONE AID",
+    "lines": [
+      "DRONE",
+      "AID"
+    ]
+  },
+  {
+    "id": "coupa",
+    "title": "COUPA",
+    "lines": [
+      "COUPA"
+    ]
+  },
+  {
+    "id": "social-drone",
+    "title": "SOCIAL DRONE",
+    "lines": [
+      "SOCIAL",
+      "DRONE"
+    ]
+  },
+  {
+    "id": "sdua",
+    "title": "SDUA",
+    "lines": [
+      "SDUA"
+    ]
+  },
+  {
+    "id": "victory-drones",
+    "title": "VICTORY DRONES",
+    "lines": [
+      "VICTORY",
+      "DRONES"
+    ]
+  },
+  {
+    "id": "vd",
+    "title": "VD",
+    "lines": [
+      "VD"
+    ]
+  },
+  {
+    "id": "fpv-line",
+    "title": "FPV LINE",
+    "lines": [
+      "FPV",
+      "LINE"
+    ]
+  },
+  {
+    "id": "reveal",
+    "title": "REVEAL",
+    "lines": [
+      "REVEAL"
+    ]
+  },
+  {
+    "id": "fly-free",
+    "title": "FLY FREE",
+    "lines": [
+      "FLY",
+      "FREE"
+    ]
+  },
+  {
+    "id": "fpv-drone",
+    "title": "FPV Drone",
+    "symbol": "drone",
+    "motif": "a quadrotor silhouette with four circular rotors, a squashed-X frame, a camera and central fuselage"
+  },
+  {
+    "id": "tryzub",
+    "title": "Ukrainian Trident",
+    "symbol": "tryzub",
+    "motif": "a stylized Ukrainian tryzub with a central spear and interwoven side prongs"
+  },
+  {
+    "id": "vyshyvanka",
+    "title": "Vyshyvanka Diamonds",
+    "symbol": "diamonds",
+    "motif": "a vyshyvanka-inspired sequence of embroidered diamonds with cross-shaped centers"
+  },
+  {
+    "id": "ruzha",
+    "title": "Eight-Point Ruzha",
+    "symbol": "ruzha",
+    "motif": "an eight-point geometric rosette inspired by Ukrainian embroidery"
+  },
+  {
+    "id": "kalyna",
+    "title": "Kalyna",
+    "symbol": "kalyna",
+    "motif": "a kalyna branch with clustered berries and paired leaves"
+  },
+  {
+    "id": "tree-of-life",
+    "title": "Tree of Life",
+    "symbol": "tree",
+    "motif": "a branching tree-of-life motif inspired by Ukrainian embroidery"
+  },
+  {
+    "id": "pysanka",
+    "title": "Pysanka",
+    "symbol": "pysanka",
+    "motif": "a closed pysanka egg outline with a central diamond and staggered ornamental stitches"
+  },
+  {
+    "id": "barvinok",
+    "title": "Barvinok",
+    "motif": "five-petal periwinkle flowers on a curling branch",
+    "symbol": "barvinok"
+  },
+  {
+    "id": "wheat",
+    "title": "Wheat Sheaf",
+    "motif": "three grain ears with paired kernels and a tied stalk",
+    "symbol": "wheat"
+  },
+  {
+    "id": "vinok",
+    "title": "Vinok",
+    "motif": "a floral wreath with flowing ribbons",
+    "symbol": "vinok"
+  },
+  {
+    "id": "didukh",
+    "title": "Didukh",
+    "motif": "a branched harvest sheaf tied above a spreading base",
+    "symbol": "didukh"
+  },
+  {
+    "id": "rushnyk",
+    "title": "Rushnyk",
+    "motif": "a hanging ritual textile with geometric embroidery and fringed ends",
+    "symbol": "rushnyk"
+  },
+  {
+    "id": "bandura",
+    "title": "Bandura",
+    "motif": "an asymmetric bandura body, neck and fan of strings",
+    "symbol": "bandura"
+  },
+  {
+    "id": "trembita",
+    "title": "Trembita",
+    "motif": "a long tapered Carpathian horn with a flared bell",
+    "symbol": "trembita"
+  },
+  {
+    "id": "tsymbaly",
+    "title": "Tsymbaly",
+    "motif": "a trapezoidal hammered dulcimer with strings and paired beaters",
+    "symbol": "tsymbaly"
+  },
+  {
+    "id": "kosiv-pitcher",
+    "title": "Kosiv Pitcher",
+    "motif": "a handled ceramic pitcher with a floral ornament inspired by Kosiv",
+    "symbol": "kosiv-pitcher"
+  },
+  {
+    "id": "opishnia-ram",
+    "title": "Opishnia Ram",
+    "motif": "a ceramic ram silhouette with a large curled horn inspired by Opishne toys",
+    "symbol": "opishnia-ram"
+  },
+  {
+    "id": "petrykivka",
+    "title": "Petrykivka Flower",
+    "motif": "a fan-petalled flower with a curved stem and paired leaves",
+    "symbol": "petrykivka"
+  },
+  {
+    "id": "oak",
+    "title": "Oak and Acorns",
+    "motif": "lobed oak leaves and two capped acorns",
+    "symbol": "oak"
+  },
+  {
+    "id": "stork",
+    "title": "Stork",
+    "motif": "a long-legged bird in profile with a pointed beak",
+    "symbol": "stork"
+  },
+  {
+    "id": "swallow",
+    "title": "Swallow",
+    "motif": "a flying bird with swept wings and a forked tail",
+    "symbol": "swallow"
+  },
+  {
+    "id": "horse",
+    "title": "Pysanka Horse",
+    "motif": "a prancing horse in profile with mane and flowing tail",
+    "symbol": "horse"
+  },
+  {
+    "id": "deer",
+    "title": "Pysanka Deer",
+    "motif": "a deer in profile with branching antlers",
+    "symbol": "deer"
+  },
+  {
+    "id": "fish",
+    "title": "Pysanka Fish",
+    "motif": "a fish in profile with fins, scales and a split tail",
+    "symbol": "fish"
+  },
+  {
+    "id": "berehynia",
+    "title": "Berehynia Motif",
+    "motif": "a geometric raised-arm figure inspired by pysanka motifs",
+    "symbol": "berehynia"
+  },
+  {
+    "id": "bezkonechnyk",
+    "title": "Bezkonechnyk",
+    "motif": "a continuous closed meander inspired by pysanka eternity bands",
+    "symbol": "bezkonechnyk"
+  },
+  {
+    "id": "ornek-tulip",
+    "title": "Crimean Tatar Ornek Tulip",
+    "motif": "a tulip with curling paired leaves inspired by Crimean Tatar Ornek",
+    "symbol": "ornek-tulip"
+  }
+]
