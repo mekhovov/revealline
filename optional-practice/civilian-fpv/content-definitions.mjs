@@ -29,6 +29,92 @@ function header(value, format) {
 }
 const modes = ['self-level', 'acro'];
 
+const spatialTypes = new Set([
+  'hold',
+  'land',
+  'gate',
+  'rotation-v1',
+  'attitude-v1',
+  'path-v1',
+  'crossing-v1',
+]);
+const skillTypes = new Set(['rotation-v1', 'attitude-v1', 'path-v1', 'crossing-v1']);
+const axes = ['x', 'y', 'z'];
+
+/** Spatial editing is translation-only. Unknown criteria never become movable
+ * merely by carrying min/max fields. Runtime validation owns parameter ranges. */
+export function criterionPosition(step) {
+  if (!spatialTypes.has(step?.type)) return null;
+  if (step.min && step.max)
+    return Object.fromEntries(axes.map((k) => [k, Math.round((step.min[k] + step.max[k]) / 2)]));
+  if (step.type === 'gate')
+    return {
+      x: step.axis === 'x' ? step.at : Math.round((step.minSide + step.maxSide) / 2),
+      y: Math.round((step.minY + step.maxY) / 2),
+      z: step.axis === 'z' ? step.at : Math.round((step.minSide + step.maxSide) / 2),
+    };
+  return null;
+}
+
+/** Translate every world-coordinate field together, preserving authored rules,
+ * local rotation axes, entry bearing, radius, tolerances and relative axial travel. */
+export function translateCriterion(input, delta) {
+  check(
+    criterionPosition(input),
+    'This objective cannot be translated; edit its parameters in JSON.',
+  );
+  check(
+    axes.every((k) => Number.isSafeInteger(delta?.[k])),
+    'Coordinates must be finite millimetres.',
+  );
+  const out = clone(input);
+  const shift = (object, key, axis = key) => {
+    check(
+      Number.isSafeInteger(object[key]) && Number.isSafeInteger(object[key] + delta[axis]),
+      'Invalid translated coordinate.',
+    );
+    object[key] += delta[axis];
+  };
+  if (out.min && out.max)
+    for (const axis of axes) {
+      shift(out.min, axis);
+      shift(out.max, axis);
+    }
+  if (out.type === 'path-v1') for (const axis of axes) shift(out.center, axis);
+  if (out.type === 'crossing-v1') {
+    check(axes.includes(out.axis), 'Invalid crossing axis.');
+    const [a, b] = axes.filter((k) => k !== out.axis);
+    shift(out, 'at', out.axis);
+    for (const key of ['minA', 'maxA']) shift(out, key, a);
+    for (const key of ['minB', 'maxB']) shift(out, key, b);
+  } else if (out.type === 'gate') {
+    check(['x', 'z'].includes(out.axis), 'Invalid gate axis.');
+    shift(out, 'at', out.axis);
+    for (const key of ['minSide', 'maxSide']) shift(out, key, out.axis === 'x' ? 'z' : 'x');
+    for (const key of ['minY', 'maxY']) shift(out, key, 'y');
+  }
+  return out;
+}
+
+/** World-axis path/crossing schemas do not support arbitrary source rotation or
+ * scaling. Reject a partial transform before replacing an existing editor draft. */
+export function assertCriterionAnchorTranslation(step, before, after) {
+  if (!skillTypes.has(step?.type) || (!before?.matrix && !after?.matrix)) return;
+  check(
+    Array.isArray(before?.matrix) &&
+      before.matrix.length === 16 &&
+      Array.isArray(after?.matrix) &&
+      after.matrix.length === 16 &&
+      [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 15].every(
+        (i) =>
+          Number.isFinite(before.matrix[i]) &&
+          Number.isFinite(after.matrix[i]) &&
+          Math.abs(before.matrix[i] - after.matrix[i]) < 0.000001,
+      ),
+    'Skill anchor rotation or scale changed. Only translation is supported; retain the source orientation or explicitly revise the objective in JSON.',
+  );
+}
+
 /** Split an existing runtime course into independently reusable authored layers. */
 export function splitCourseDefinition(input, { layoutId, challengeId } = {}) {
   const c = validateWorldCourse(input),
@@ -177,20 +263,8 @@ export function mergeLayoutAnchors(input, { previous = [], next = [], overrides 
     const delta = Object.fromEntries(
       ['x', 'y', 'z'].map((k) => [k, Math.round((current.position[k] - old.position[k]) * 1000)]),
     );
-    const c = target.criterion;
-    if (c.min && c.max)
-      for (const k of ['x', 'y', 'z']) {
-        c.min[k] += delta[k];
-        c.max[k] += delta[k];
-      }
-    else if (c.type === 'gate') {
-      c.at += delta[c.axis];
-      const side = c.axis === 'x' ? 'z' : 'x';
-      c.minSide += delta[side];
-      c.maxSide += delta[side];
-      c.minY += delta.y;
-      c.maxY += delta.y;
-    }
+    assertCriterionAnchorTranslation(target.criterion, old, current);
+    target.criterion = translateCriterion(target.criterion, delta);
     diagnostics.push({ severity: 'info', code: 'anchor-updated', objectiveId, anchorId });
   }
   return { layout, diagnostics };

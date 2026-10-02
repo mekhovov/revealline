@@ -1,0 +1,46 @@
+{
+  "format": "fpv-hangar-surfaces-offline-origin-check.v1",
+  "candidate": "294c9abe89e04cfb60b9e463dc88400832bace33",
+  "date": "2026-10-02",
+  "browser": "Codex in-app browser, Chromium 154",
+  "scope": "Development preview origin unavailable after verified download; no claim of physical iPhone/PWA or OS-wide offline acceptance.",
+  "origin": "http://127.0.0.1:8877",
+  "checks": [
+    {
+      "name": "Directory exposes three optional practices",
+      "passed": true
+    },
+    {
+      "name": "World Studio download completes with Ready offline and prepared entry link",
+      "passed": true
+    },
+    {
+      "name": "Server stopped and origin separately confirmed unreachable",
+      "passed": true
+    },
+    {
+      "name": "Stable launcher opens again and reports Ready offline",
+      "passed": true
+    },
+    {
+      "name": "Open prepared practice loads 148 challenges and 14 worlds",
+      "passed": true
+    },
+    {
+      "name": "Training Hangar Lift and land renders and Arm/resume becomes enabled",
+      "passed": true
+    },
+    {
+      "name": "No application console errors",
+      "passed": true
+    }
+  ],
+  "screenshot": "/tmp/fpv-hangar-offline-player-20261002.png",
+  "notVerified": [
+    "Cancellation during download",
+    "Physical devices",
+    "Sustained frame times",
+    "Public deployment",
+    "OS-wide offline"
+  ]
+}

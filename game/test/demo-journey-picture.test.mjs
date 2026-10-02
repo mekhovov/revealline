@@ -99,6 +99,7 @@ test('an exact earned Journey original is clear, owns the actual candidate image
   const before = JSON.stringify({ entry, profile: f.profile, pictures: f.pictures });
   const picture = await resolveDemoJourneyPicture(f.request);
   assert.equal(picture.pictureVisibility, 'clear');
+  assert.equal(picture.previewAvailable, true);
   assert.equal(picture.artSeed, null);
   assert.equal(picture.backdrop.kind, 'candidate-picture');
   assert.equal(picture.backdrop.image, f.images[0]);
@@ -197,6 +198,11 @@ test('missing, malformed, foreign and wrong-mode receipts retain the current ima
     const before = JSON.stringify({ profile: f.profile, pictures: f.pictures });
     const picture = await resolveDemoJourneyPicture(f.request);
     assert.equal(picture.pictureVisibility, 'blurred', change.toString());
+    assert.equal(
+      picture.previewAvailable,
+      true,
+      'Valid current art can be previewed without earning or repairing a receipt.',
+    );
     assert.deepEqual(picture.backdrop.assetRevision, asset);
     assert.deepEqual(f.requested, [asset], 'The ledger never chooses the displayed original.');
     assert.equal(JSON.stringify({ profile: f.profile, pictures: f.pictures }), before);
@@ -278,6 +284,7 @@ test('unowned entries, changed levels, foreign mission context and unavailable b
     }
     const picture = await resolveDemoJourneyPicture(f.request);
     assert.equal(picture.pictureVisibility, 'blurred', kind);
+    assert.equal(picture.previewAvailable, false, kind);
     assert.equal(picture.backdrop, null);
     assert.equal(f.requested.length, 0);
     picture.dispose();
@@ -293,10 +300,12 @@ test('acquisition failures and bindings owned by another display never become cl
     },
   });
   assert.equal(failed.pictureVisibility, 'blurred');
+  assert.equal(failed.previewAvailable, false);
   assert.equal(failed.backdrop, null);
   const binding = await f.request.acquire(asset, {});
   claimCandidatePicture(asset, binding);
   const borrowed = await resolveDemoJourneyPicture({ ...f.request, acquire: async () => binding });
+  assert.equal(borrowed.previewAvailable, false);
   assert.equal(borrowed.backdrop, null);
   assert.equal(f.images[0].closed, 0, 'A different display keeps its claimed original.');
   binding.release();
@@ -312,6 +321,7 @@ test('acquisition failures and bindings owned by another display never become cl
   });
   assert.equal(forged.backdrop, null);
   assert.equal(forged.pictureVisibility, 'blurred');
+  assert.equal(forged.previewAvailable, false);
   assert.equal(forgedRelease, 0, 'Unbranded objects never acquire display ownership.');
 });
 
