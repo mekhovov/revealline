@@ -16,6 +16,8 @@ import {
 import { editionJSON, editionDescriptor } from '../publishing/edition-candidate.mjs';
 import { editionHash } from '../publishing/edition-zip.mjs';
 import { OPTIONAL_PACKAGE_POLICIES } from '../publishing/optional-package-policy.mjs';
+import { practicePreflight } from './practice-preflight.mjs';
+import { verifyPracticeSite } from './verify-practice-site.mjs';
 
 const runnerRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 
@@ -156,27 +158,68 @@ export async function bundleOptionalPractice({
   };
 }
 if (process.argv[1] && import.meta.url === pathToFileURL(path.resolve(process.argv[1])).href) {
-  const args = process.argv.slice(2),
-    options = {},
-    seen = new Set();
-  for (let index = 0; index < args.length; index += 2) {
-    const flag = args[index],
-      value = args[index + 1];
-    if (!['--out', '--base-path', '--packages'].includes(flag) || !value || seen.has(flag))
-      throw new Error('Invalid optional bundle arguments.');
-    seen.add(flag);
-    if (flag === '--out') options.out = value;
-    if (flag === '--base-path') options.basePath = value;
-    if (flag === '--packages') options.packageIds = value.split(',');
-  }
-  if (!options.out)
-    throw new Error(
-      'Usage: node scripts/bundle-optional-practice.mjs --out NEW_DIRECTORY [--base-path /revealline/] [--packages civilian-flight,civilian-fpv]',
+  if (process.argv.length === 3 && process.argv[2] === '--list') {
+    console.log(
+      JSON.stringify(
+        Object.entries(OPTIONAL_PACKAGE_POLICIES).map(([id, policy]) => ({
+          id,
+          entry: policy.entry,
+          limits: policy.limits,
+        })),
+        null,
+        2,
+      ),
     );
-  bundleOptionalPractice(options)
-    .then((result) => process.stdout.write(JSON.stringify(result, null, 2) + '\n'))
-    .catch((error) => {
-      process.stderr.write(`${error.message}\n`);
-      process.exitCode = 1;
+  } else if (process.argv.length === 4 && process.argv[2] === '--verify-site') {
+    const selector = JSON.parse(
+      await fs.readFile(
+        path.join(runnerRoot, 'publishing/pages-controller/optional-packages.json'),
+        'utf8',
+      ),
+    );
+    console.log(
+      JSON.stringify(
+        await verifyPracticeSite({
+          baseURL: process.argv[3],
+          expectedIds: selector.releases.flatMap((release) => release.activePackageIds),
+        }),
+        null,
+        2,
+      ),
+    );
+  } else if (
+    (process.argv.length === 3 && process.argv[2] === '--preflight') ||
+    (process.argv.length === 4 && process.argv[2] === '--preview')
+  ) {
+    const result = await practicePreflight({
+      root: runnerRoot,
+      preview: process.argv[2] === '--preview' ? process.argv[3] : undefined,
     });
+    console.log(JSON.stringify(result, null, 2));
+    if (result.packages.some((item) => !item.readyToBundle)) process.exitCode = 1;
+  } else {
+    const args = process.argv.slice(2),
+      options = {},
+      seen = new Set();
+    for (let index = 0; index < args.length; index += 2) {
+      const flag = args[index],
+        value = args[index + 1];
+      if (!['--out', '--base-path', '--packages'].includes(flag) || !value || seen.has(flag))
+        throw new Error('Invalid optional bundle arguments.');
+      seen.add(flag);
+      if (flag === '--out') options.out = value;
+      if (flag === '--base-path') options.basePath = value;
+      if (flag === '--packages') options.packageIds = value.split(',');
+    }
+    if (!options.out)
+      throw new Error(
+        'Usage: node scripts/bundle-optional-practice.mjs --out NEW_DIRECTORY [--base-path /revealline/] [--packages civilian-flight,civilian-fpv]',
+      );
+    bundleOptionalPractice(options)
+      .then((result) => process.stdout.write(JSON.stringify(result, null, 2) + '\n'))
+      .catch((error) => {
+        process.stderr.write(`${error.message}\n`);
+        process.exitCode = 1;
+      });
+  }
 }
