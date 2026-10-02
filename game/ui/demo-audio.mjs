@@ -1,22 +1,7 @@
 import { SOUNDTRACK_MODES } from '../soundtrack.mjs';
 import { onLocaleChange, t } from '../i18n/index.mjs';
 import { musicStatusLabel } from './music-credit.mjs';
-
-function sourceWebsite(track) {
-  for (const value of [
-    ...(Array.isArray(track?.websites) ? track.websites.map((site) => site?.url) : []),
-    track?.rights?.source,
-  ]) {
-    try {
-      const url = new URL(value);
-      if (['https:', 'http:'].includes(url.protocol) && !url.username && !url.password)
-        return url.href;
-    } catch {
-      // Older credits can contain plain text instead of a website.
-    }
-  }
-  return null;
-}
+import { musicCreatorLinks, renderMusicCreatorLinks } from './music-credits.mjs';
 
 /** A view over the host's shared audio transport; owns no shortcuts, player or settings. */
 export function attachDemoAudio({
@@ -41,7 +26,7 @@ export function attachDemoAudio({
     credit = node('div', 'credit', 'demo-audio-credit'),
     title = node('span', 'title'),
     artist = node('span', 'artist'),
-    source = node('a', 'source'),
+    source = node('span', 'source'),
     settings = node('details', 'settings', 'demo-audio-settings'),
     summary = node('summary', 'options'),
     status = node('p', 'status', 'demo-audio-status');
@@ -81,8 +66,6 @@ export function attachDemoAudio({
     musicOnly = option(sounds.control, 'music'),
     musicAndGame = option(sounds.control, 'game');
   settings.insertBefore(playStyle, sounds.control.parentElement);
-  source.setAttribute('target', '_blank');
-  source.setAttribute('rel', 'noopener noreferrer');
   root.setAttribute('data-demo-ui', '');
   root.setAttribute('role', 'group');
   status.setAttribute('role', 'status');
@@ -142,11 +125,8 @@ export function attachDemoAudio({
     style.control.disabled = playStyle.disabled = !playbackAvailable || !audio?.selectStyle;
     title.textContent = snapshot?.track?.title || t('interface:noTrackSelected');
     artist.textContent = snapshot?.track?.artist || t('interface:artistNotRecorded');
-    const url = sourceWebsite(snapshot?.track);
-    source.textContent = t('demo:audio.source');
-    source.hidden = !url;
-    if (url) source.setAttribute('href', url);
-    else source.removeAttribute('href');
+    renderMusicCreatorLinks(source, snapshot?.track, { document: doc });
+    source.hidden = musicCreatorLinks(snapshot?.track).length === 0;
     status.textContent = !playbackAvailable
       ? t('demo:audio.unavailable')
       : warning

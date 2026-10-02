@@ -1,0 +1,129 @@
+{
+  "format": "FPVSceneryValidation.v1",
+  "date": "2026-10-02",
+  "sourceSha256": "b246c3e05acb0050786a187267a6766ad9ab009a75525b93af7098ed8b18125a",
+  "tool": "gltf-validator 2.0.0-dev.3.10",
+  "limits": "Validator does not support EXT_mesh_gpu_instancing; pinned-loader browser checks required.",
+  "rows": [
+    {
+      "environment": "woodland",
+      "bytes": 884724,
+      "sha256": "ad3b790349f062d51aa16b7fec098c76ed55fa8435fb1fd3ddc833b32dcba763",
+      "nodes": 124,
+      "batching": {
+        "sourceMeshes": 52,
+        "batches": 4,
+        "instances": 12,
+        "unbatched": 40,
+        "spatialGroups": 4
+      },
+      "errors": 0,
+      "warnings": 0,
+      "notices": [
+        "UNSUPPORTED_EXTENSION",
+        "UNUSED_MESH_TANGENT",
+        "UNUSED_OBJECT"
+      ]
+    },
+    {
+      "environment": "courtyard",
+      "bytes": 900152,
+      "sha256": "633e7618afc4e7a3f2d0bb5dfeb49397bfa96fc118f0d151cbf88cdd9e22fcfa",
+      "nodes": 80,
+      "batching": {
+        "sourceMeshes": 139,
+        "batches": 20,
+        "instances": 119,
+        "unbatched": 20,
+        "spatialGroups": 4
+      },
+      "errors": 0,
+      "warnings": 0,
+      "notices": [
+        "UNSUPPORTED_EXTENSION",
+        "UNUSED_MESH_TANGENT",
+        "UNUSED_OBJECT"
+      ]
+    },
+    {
+      "environment": "warehouse",
+      "bytes": 876668,
+      "sha256": "1162d45c73334db7d632d61371a11340b25a3a2b2f2f4f244848991ec414ac60",
+      "nodes": 51,
+      "batching": {
+        "sourceMeshes": 57,
+        "batches": 6,
+        "instances": 42,
+        "unbatched": 15,
+        "spatialGroups": 4
+      },
+      "errors": 0,
+      "warnings": 0,
+      "notices": [
+        "UNSUPPORTED_EXTENSION",
+        "UNUSED_MESH_TANGENT",
+        "UNUSED_OBJECT"
+      ]
+    },
+    {
+      "environment": "stadium",
+      "bytes": 865844,
+      "sha256": "56a00d69f772e181dc9289ff7485f43f7a151f65c14454909b6557c97b737e67",
+      "nodes": 5,
+      "batching": {
+        "sourceMeshes": 38,
+        "batches": 5,
+        "instances": 38,
+        "unbatched": 0,
+        "spatialGroups": 4
+      },
+      "errors": 0,
+      "warnings": 0,
+      "notices": [
+        "UNSUPPORTED_EXTENSION",
+        "UNUSED_MESH_TANGENT",
+        "UNUSED_OBJECT"
+      ]
+    },
+    {
+      "environment": "container-yard",
+      "bytes": 884200,
+      "sha256": "910af4a0aa0dc5c1ee8a0a55f5aa8e0865182e400bba1d01a37d63099d78a476",
+      "nodes": 76,
+      "batching": {
+        "sourceMeshes": 58,
+        "batches": 10,
+        "instances": 36,
+        "unbatched": 22,
+        "spatialGroups": 4
+      },
+      "errors": 0,
+      "warnings": 0,
+      "notices": [
+        "UNSUPPORTED_EXTENSION",
+        "UNUSED_MESH_TANGENT",
+        "UNUSED_OBJECT"
+      ]
+    },
+    {
+      "environment": "garage",
+      "bytes": 862484,
+      "sha256": "719d040bd64a9e728e22623e4fe65f1ac36978f3e8fd9e83015fec806fc43bce",
+      "nodes": 30,
+      "batching": {
+        "sourceMeshes": 10,
+        "batches": 0,
+        "instances": 0,
+        "unbatched": 10,
+        "spatialGroups": 4
+      },
+      "errors": 0,
+      "warnings": 0,
+      "notices": [
+        "UNUSED_MESH_TANGENT",
+        "UNUSED_OBJECT"
+      ]
+    }
+  ],
+  "sourceFormattingOnlyChange": "Generated library literal wrapped; generated GLB bytes unchanged."
+}
