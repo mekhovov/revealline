@@ -55,11 +55,11 @@ function dense(value, max) {
 const finite = (value, min, max) => Number.isFinite(value) && value >= min && value <= max;
 const integer = (value, min = 0, max = Number.MAX_SAFE_INTEGER) =>
   Number.isSafeInteger(value) && finite(value, min, max);
-function point(value) {
+function point(value, width = 72) {
   const x = own(value, 'x'),
     y = own(value, 'y');
   check(
-    finite(x, 0, 72) && finite(y, 0, 36),
+    finite(x, 0, width) && finite(y, 0, 36),
     t('interface:combatPositionMustBeFiniteAndOnTheBoard'),
   );
   return { x, y };
@@ -95,15 +95,16 @@ const typedLength = Object.getOwnPropertyDescriptor(
 function geometry(run) {
   const source = own(run, 'cells');
   check(
-    Object.getPrototypeOf(source) === Uint8Array.prototype && typedLength.call(source) === 2592,
+    Object.getPrototypeOf(source) === Uint8Array.prototype &&
+      typedLength.call(source) === own(run, 'width') * own(run, 'height'),
   );
-  const cells = new Uint8Array(2592);
+  const cells = new Uint8Array(own(run, 'width') * own(run, 'height'));
   for (let i = 0; i < cells.length; i++) {
     const value = own(source, String(i));
     check(integer(value, CELL.FIELD, CELL.WALL));
     cells[i] = value;
   }
-  return { width: 72, height: 36, cells };
+  return { width: own(run, 'width'), height: 36, cells };
 }
 function effect(state, kind, tick) {
   const value = record(own(own(state, 'effects'), kind));
@@ -112,8 +113,8 @@ function effect(state, kind, tick) {
   check(integer(from) && integer(until, from));
   return tick >= from && tick < until;
 }
-function recipes(definition, hunt) {
-  const values = dense(own(definition, 'actors'), 24),
+function recipes(definition, hunt, maximum = 24) {
+  const values = dense(own(definition, 'actors'), maximum),
     result = new Map();
   let sentries = 0;
   for (const source of values) {
@@ -124,7 +125,11 @@ function recipes(definition, hunt) {
     check(
       !result.has(key) &&
         ['scout', 'sentry'].includes(role) &&
-        finite(speed, 0.25, huntTargetKind(hunt, key) === 'runner' ? HUNT_MAX_RUNNER_SPEED : 8),
+        finite(
+          speed,
+          0.25,
+          huntTargetKind(hunt, key) === 'runner' ? (maximum > 24 ? 21 : HUNT_MAX_RUNNER_SPEED) : 8,
+        ),
     );
     const recipe = { id: key, role, speed };
     if (role === 'sentry') {
@@ -151,7 +156,9 @@ export function combatView(run) {
   try {
     if (run === null || run === undefined) return null;
     const level = own(run, 'level');
-    const classicDefinition = level === undefined ? undefined : own(level, 'classic');
+    const extension = level === undefined ? undefined : own(level, 'runningEnemies');
+    const classicDefinition =
+      extension ?? (level === undefined ? undefined : own(level, 'classic'));
     const definition =
       classicDefinition === undefined ? undefined : own(classicDefinition, 'combatPatrols');
     if (definition === undefined) return null;
@@ -166,6 +173,7 @@ export function combatView(run) {
       'xonix-core.v8': 'xonix-level.v7',
       'xonix-core.v9': 'xonix-level.v8',
       'xonix-core.v10': 'xonix-level.v9',
+      'xonix-core.v11': 'xonix-level.v10',
     };
     const ruleset = own(run, 'ruleset');
     check(
@@ -174,31 +182,46 @@ export function combatView(run) {
         pairs[ruleset] === own(level, 'version'),
       t('interface:unsupportedCombatPresentationSchemaPair'),
     );
+    const supplemental = ruleset === 'xonix-core.v11';
+    const baseVersion = supplemental ? own(extension, 'baseVersion') : own(level, 'version');
+    if (supplemental)
+      check(
+        own(extension, 'version') === 'running-enemies.v1' &&
+          /^xonix-level\.v[1-8]$/.test(baseVersion),
+      );
+    const legacyOwner = supplemental && /^xonix-level\.v[1-3]$/.test(baseVersion);
+    const width =
+      supplemental && ['xonix-level.v1', 'xonix-level.v2'].includes(baseVersion) ? 48 : 72;
+    const maximum = supplemental ? 30 : 24;
     check(
-      own(run, 'width') === 72 &&
+      own(run, 'width') === width &&
         own(run, 'height') === 36 &&
-        own(level, 'width') === 72 &&
+        own(level, 'width') === width &&
         own(level, 'height') === 36,
     );
     const tick = own(run, 'tick'),
       status = own(run, 'status');
-    const state = own(run, 'classic'),
+    const state = own(run, legacyOwner ? 'runningEnemies' : 'classic'),
       actorTick = own(state, 'actorTick');
     check(
-      own(state, 'version') === 'classic-state.v1' && integer(tick) && integer(actorTick, 0, tick),
+      own(state, 'version') === (legacyOwner ? 'running-enemy-state.v1' : 'classic-state.v1') &&
+        integer(tick) &&
+        integer(actorTick, 0, tick),
     );
     check(['running', 'respawning', 'won', 'lost'].includes(status));
-    const frozen = effect(state, 'enemy-freeze', tick),
-      slow = effect(state, 'enemy-slow', tick);
+    const frozen = legacyOwner ? false : effect(state, 'enemy-freeze', tick),
+      slow = legacyOwner ? false : effect(state, 'enemy-slow', tick);
     const hunt =
-      ruleset === 'xonix-core.v10'
-        ? validateHuntDefinition(own(classicDefinition, 'hunt'), own(definition, 'actors'))
+      ruleset === 'xonix-core.v10' || supplemental
+        ? validateHuntDefinition(own(classicDefinition, 'hunt'), own(definition, 'actors'), {
+            supplemental,
+          })
         : null;
-    const definitions = recipes(definition, hunt),
+    const definitions = recipes(definition, hunt, maximum),
       domain = geometry(run);
     const combat = record(own(state, 'combatPatrols'));
     check(own(combat, 'version') === 'combat-patrol-state.v1');
-    const sourceActors = dense(own(combat, 'actors'), 24);
+    const sourceActors = dense(own(combat, 'actors'), maximum);
     check(sourceActors.length === definitions.size);
     const actors = [],
       byId = new Map();
@@ -217,7 +240,7 @@ export function combatView(run) {
             : ['cooldown', 'warning', 'recovery'].includes(phase)
           : phase === 'eliminated',
       );
-      const position = point(source),
+      const position = point(source, width),
         motion = velocity(source, recipe.speed);
       check(own(source, 'radius') === COMBAT_RADIUS);
       if (alive) check(fitsClassicDomain(domain, position, COMBAT_RADIUS, CELL.FIELD));
@@ -234,7 +257,7 @@ export function combatView(run) {
             integer(warningUntil, actorTick + 1, actorTick + recipe.warningTicks) &&
               recoveryUntil === null,
           );
-          aim = point(record(target));
+          aim = point(record(target), width);
           warningTotal = recipe.warningTicks;
           warningTicks = warningUntil - actorTick;
           const dx = aim.x - position.x,
@@ -292,20 +315,20 @@ export function combatView(run) {
         recipe = definitions.get(actorId);
       check(!projectileIds.has(key) && owner?.alive && owner.role === 'sentry');
       projectileIds.add(key);
-      const position = point(source),
+      const position = point(source, width),
         motion = velocity(source, recipe.shotSpeed);
       check(integer(own(source, 'expiresAtTick'), actorTick + 1, actorTick + recipe.shotLifeTicks));
       check(fitsClassicDomain(domain, position, COMBAT_SHOT_RADIUS, CELL.FIELD));
       return { id: key, actorId, ...position, ...motion, radius: COMBAT_SHOT_RADIUS };
     });
     const eliminatedIds = new Set();
-    const eliminations = dense(own(combat, 'eliminations'), 24).map((source) => {
+    const eliminations = dense(own(combat, 'eliminations'), maximum).map((source) => {
       record(source);
       const key = id(source),
         actor = byId.get(key),
         cause = own(source, 'cause'),
         at = own(source, 'tick');
-      const position = point(source);
+      const position = point(source, width);
       check(
         actor &&
           !actor.alive &&

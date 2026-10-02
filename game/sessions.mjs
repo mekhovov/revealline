@@ -12,6 +12,7 @@ import {
 import { boundedJSON, exactKeys, stableId, required } from './data-json.mjs';
 import { resolveMasteryDefinition } from './mastery.mjs';
 import { matchRecordedGameplayTuning, recoverGameplayTuning } from './gameplay-tuning.mjs';
+import { prepareRunningEnemyLevel, runningEnemyBaseLevel } from './hunt/running-enemies.mjs';
 import { snapshotSessionVisualPin } from './session-visual-pin.mjs';
 import { snapshotSessionActorPin } from './session-actor-pin.mjs';
 import { ACTOR_APPEARANCE_PIN_BYTES } from './presentation/actor-appearance-pin.mjs';
@@ -208,9 +209,12 @@ export function suspendSession({
   const pictures =
     presentationPins === undefined ? undefined : snapshotFlightPresentationPins(presentationPins);
   const tuning = recoverGameplayTuning(run.level);
+  const projected = !!(tuning || run.level.runningEnemies);
   let pictureRevision = run.level.revision;
-  if (presentationLevel && tuning) {
-    const matched = matchRecordedGameplayTuning(presentationLevel, run.level);
+  if (presentationLevel && projected) {
+    const matched = tuning
+      ? matchRecordedGameplayTuning(presentationLevel, run.level, { classes: run.classRecipes })
+      : prepareRunningEnemyLevel(presentationLevel, { classes: run.classRecipes });
     required(matched, 'Tuned picture source differs from this flight.');
     const expected = createRun(matched, {
       classId: run.classId,
@@ -222,7 +226,7 @@ export function suspendSession({
     );
     pictureRevision = presentationLevel.revision;
   }
-  if (pictures !== undefined && tuning)
+  if (pictures !== undefined && projected)
     required(presentationLevel, 'Tuned pictures require their authored presentation level.');
   if (pictures !== undefined)
     required(
@@ -243,7 +247,7 @@ export function suspendSession({
           campaignKey,
           themeId,
           simulationLevel: run.level,
-          presentationLevel: tuning ? presentationLevel : run.level,
+          presentationLevel: projected ? presentationLevel : run.level,
         });
   let actors;
   if (actorAppearancePin !== undefined) {
@@ -253,7 +257,7 @@ export function suspendSession({
       campaignKey,
       themeId,
       simulationLevel: run.level,
-      presentationLevel: tuning ? presentationLevel : run.level,
+      presentationLevel: projected ? presentationLevel : run.level,
     });
   }
   if (intent === undefined) {
@@ -305,7 +309,9 @@ export async function restoreSession(
   const installed = boundedJSON(campaign);
   const versions = versionsForCampaign(installed);
   required(
-    session.replay.ruleset === versions.ruleset,
+    session.replay.ruleset === versions.ruleset ||
+      (session.replay.level.version === 'xonix-level.v10' &&
+        runningEnemyBaseLevel(session.replay.level).version === versions.levelVersion),
     'Saved attempt and installed campaign simulation versions differ.',
   );
   const mastery =
