@@ -5554,6 +5554,8 @@
   "multiplayerControllers.soloUnmapped": "Configure to use in Solo",
   "multiplayerControllers.soloSeparateProfiles": "Solo radio mappings are stored separately from multiplayer profiles, standard gamepad bindings and FPV calibration.",
   "multiplayerControllers.tx15Right": "TX15: movement — right stick up/down/left/right",
+  "multiplayerControllers.tx15Menus": "TX15 full radio menus (Solo)",
+  "multiplayerControllers.tx15MenusApplied": "TX15 full radio menus applied. Centre roll, pitch and yaw first. Right stick moves through menus; left stick right confirms, left goes back. Return yaw to centre between actions. Throttle and switches are ignored. Flight actions still use keyboard/touch or Configure. This preset is for the tested TX15 USB Mode 2 layout only; calibrate other layouts in Configure.",
   "multiplayerControllers.tx15Shared": "Share TX15: P1 left stick, P2 right stick",
   "multiplayerControllers.tx15Applied": "TX15 movement applied. Centre the right stick; actions remain on keyboard/touch or can be mapped in Configure.",
   "multiplayerControllers.tx15SplitApplied": "P1: left stick up/down/left/right. P2: right stick up/down/left/right. Centre BOTH sticks, including the non-centring left vertical stick. Actions remain on keyboard/touch; Configure each player for separate switches.",

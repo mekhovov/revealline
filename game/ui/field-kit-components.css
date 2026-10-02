@@ -154,6 +154,13 @@ body.field-kit.game-shell,
   backdrop-filter: none;
 }
 
+/* Fullscreen surfaces with internal safe padding own their explicit inset: 0.
+   Keep this default low-specificity so those owners are not padded twice. */
+:where(dialog:not(.shell-home)) {
+  inset: var(--dialog-safe-top) var(--dialog-safe-right) var(--dialog-safe-bottom)
+    var(--dialog-safe-left);
+}
+
 .field-kit :is(button, .button, summary, select, input, textarea),
 .field-kit.game-shell dialog :is(button, .button, summary, select, input, textarea),
 .field-kit.game-shell .shell-bar button,
