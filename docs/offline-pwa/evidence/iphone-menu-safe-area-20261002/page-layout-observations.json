@@ -1,0 +1,230 @@
+[
+  {
+    "mode": "solo",
+    "surface": "help-dialog",
+    "insets": [59, 0, 34, 0],
+    "viewport": [393, 852],
+    "frame": {
+      "x": 8,
+      "y": 59,
+      "width": 377,
+      "height": 759
+    },
+    "back": {
+      "x": 301.9921875,
+      "y": 69,
+      "width": 71.0078125,
+      "height": 44
+    },
+    "frameScroll": [759, 759]
+  },
+  {
+    "mode": "solo",
+    "surface": "collection-dialog",
+    "insets": [0, 59, 21, 59],
+    "viewport": [852, 393],
+    "frame": {
+      "x": 75,
+      "y": 0,
+      "width": 702,
+      "height": 372
+    },
+    "back": {
+      "x": 690.40625,
+      "y": 10,
+      "width": 72.59375,
+      "height": 44
+    },
+    "frameScroll": [545, 372]
+  },
+  {
+    "mode": "solo",
+    "surface": "shell-missions",
+    "insets": [0, 59, 21, 59],
+    "viewport": [852, 393],
+    "frame": {
+      "x": 59,
+      "y": 0,
+      "width": 734,
+      "height": 372
+    },
+    "back": {
+      "x": 557.3515625,
+      "y": 35.5546875,
+      "width": 71.0078125,
+      "height": 44
+    },
+    "frameScroll": [379, 372]
+  },
+  {
+    "mode": "team",
+    "surface": "coop-discovery-dialog",
+    "insets": [0, 59, 21, 59],
+    "viewport": [852, 393],
+    "frame": {
+      "x": 71,
+      "y": 27.203125,
+      "width": 710,
+      "height": 317.59375
+    },
+    "back": {
+      "x": 687.9921875,
+      "y": 49.203125,
+      "width": 71.0078125,
+      "height": 44
+    },
+    "frameScroll": [314, 314]
+  },
+  {
+    "mode": "worlds",
+    "surface": "sim-settings",
+    "insets": [0, 59, 21, 59],
+    "viewport": [852, 393],
+    "frame": {
+      "x": 59,
+      "y": 11,
+      "width": 734,
+      "height": 350
+    },
+    "back": {
+      "x": 676.7421875,
+      "y": 63.75,
+      "width": 89.2578125,
+      "height": 44
+    },
+    "frameScroll": [348, 348]
+  },
+  {
+    "mode": "solo",
+    "surface": "journey-chooser",
+    "insets": [0, 59, 21, 59],
+    "viewport": [852, 393],
+    "frame": {
+      "x": 59,
+      "y": 0,
+      "width": 734,
+      "height": 372
+    },
+    "back": {
+      "x": 66.1953125,
+      "y": 254.015625,
+      "width": 235.6015625,
+      "height": 44
+    },
+    "frameScroll": [372, 372]
+  },
+  {
+    "mode": "solo",
+    "surface": "install-offline-dialog",
+    "insets": [59, 0, 34, 0],
+    "viewport": [393, 852],
+    "frame": {
+      "x": 12,
+      "y": 59,
+      "width": 369,
+      "height": 735
+    },
+    "back": {
+      "x": 29,
+      "y": 128,
+      "width": 71.0078125,
+      "height": 44
+    },
+    "frameScroll": [733, 733]
+  },
+  {
+    "mode": "solo",
+    "surface": "install-offline-dialog",
+    "insets": [0, 59, 21, 59],
+    "viewport": [852, 393],
+    "frame": {
+      "x": 71,
+      "y": 0,
+      "width": 710,
+      "height": 348
+    },
+    "back": {
+      "x": 692.9921875,
+      "y": 13,
+      "width": 71.0078125,
+      "height": 44
+    },
+    "frameScroll": [346, 346]
+  },
+  {
+    "mode": "sim",
+    "surface": "help-dialog",
+    "insets": [59, 0, 34, 0],
+    "viewport": [393, 852],
+    "frame": {
+      "x": 11.7890625,
+      "y": 142.953125,
+      "width": 369.4140625,
+      "height": 591.09375
+    },
+    "back": {
+      "x": 276.5546875,
+      "y": 175.953125,
+      "width": 83.6484375,
+      "height": 44
+    },
+    "frameScroll": [589, 589]
+  },
+  {
+    "mode": "solo",
+    "surface": "profile-recovery-dialog",
+    "insets": [59, 0, 34, 0],
+    "viewport": [393, 852],
+    "frame": {
+      "x": 16,
+      "y": 59,
+      "width": 361,
+      "height": 727
+    },
+    "back": {
+      "x": 32,
+      "y": 75,
+      "width": 69.8046875,
+      "height": 49.796875
+    },
+    "frameScroll": [1444, 727]
+  },
+  {
+    "mode": "solo",
+    "surface": "collection-dialog",
+    "insets": [0, 0, 0, 0],
+    "viewport": [1280, 720],
+    "frame": {
+      "x": 120,
+      "y": 0,
+      "width": 1040,
+      "height": 720
+    },
+    "back": {
+      "x": 1074.9921875,
+      "y": 10,
+      "width": 71.0078125,
+      "height": 44
+    },
+    "frameScroll": [720, 720]
+  },
+  {
+    "mode": "solo",
+    "surface": "help-dialog",
+    "insets": [0, 0, 0, 0],
+    "viewport": [393, 852],
+    "frame": {
+      "x": 8,
+      "y": 0,
+      "width": 377,
+      "height": 852
+    },
+    "back": {
+      "x": 301.9921875,
+      "y": 10,
+      "width": 71.0078125,
+      "height": 44
+    },
+    "frameScroll": [852, 852]
+  }
+]

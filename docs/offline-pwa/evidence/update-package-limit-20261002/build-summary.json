@@ -1,0 +1,54 @@
+{
+  "format": "revealline-default-build-inspection.v1",
+  "version": "0.142.4",
+  "sourceRevision": null,
+  "publicEligible": false,
+  "promotable": false,
+  "completeHostedOutput": false,
+  "publicationAssessment": "not-performed",
+  "payloadBytesIncludingManifest": 959396959,
+  "manifestDescriptor": {
+    "path": "manifest.json",
+    "bytes": 406485,
+    "sha256": "46ba10971c28f3deef1927ca629b4f274168e3718961122799960dcdbfbfbc75"
+  },
+  "missingComponents": [
+    "Pages root routes and publication metadata",
+    "Hosted edition versions, stable launchers and company hub",
+    "Hosted optional packages, launchers and any other generated files"
+  ],
+  "baseMain": "b3215dfde8b95cc2b5360cb7243706880e5b277e",
+  "files": 2719,
+  "changedRuntimeAssets": [
+    {
+      "path": "game/download-catalogue.mjs",
+      "bytes": 5101,
+      "sha256": "ea47c830901de0db5121657f9f1700386e1e263bb7527665a74b21fbf73f776c"
+    },
+    {
+      "path": "game/downloads.mjs",
+      "bytes": 34176,
+      "sha256": "873cb5e7ef9fafab29eae08808ca35e854cb343ec486d7bdcf18096976c39335"
+    },
+    {
+      "path": "game/game-updates.mjs",
+      "bytes": 4319,
+      "sha256": "86cfd96b794bce491f88e2988165a1bb6689ca3c411cc00556ec38823e1f1cf1"
+    },
+    {
+      "path": "game/installed-app.mjs",
+      "bytes": 18389,
+      "sha256": "f34762e34ef088640fc521347632029d826b076c9a3cbb855acab3aa75d4793c"
+    },
+    {
+      "path": "game/official-downloads.mjs",
+      "bytes": 17982,
+      "sha256": "777563cccc42e7f41f36d3848012f93d6fdf48687e672fc30191624f5a42927e"
+    },
+    {
+      "path": "game/offline-download-session.mjs",
+      "bytes": 7073,
+      "sha256": "410d68e0ea31750d5cdcc62d3b17e2f34caf893d860361528ae76ba077880459"
+    }
+  ]
+}
