@@ -69,7 +69,7 @@ Completed checks:
 
 - Full ESLint passed. Changed-file syntax/formatting and whitespace checks passed.
 - EN/UK localization validation passed; content validation and presentation metadata checks passed.
-- A local distribution build passed; final build identity is recorded below after the final presentation fixes.
+- A local distribution build passed; final build identity is recorded below.
 - Direct runtime inspection covered safe-edge contact versus projectile eligibility, once-only Team contact after another seat's fatal event, derived catchability speeds/actor budgets, Team specialist source preservation, records merge/storage recovery, and exact Hunt save/replay state.
 - A 960-tick first-lesson recording reached one contact and one enclosure elimination, 150 Hunt points, and an exact replay checkpoint match (`ea06211245bddcfc`). Browser Replay playback independently reached that same final state and explicitly reported no progress awarded.
 - Browser checks exercised the actual Solo host through Studio's practice iframe, paired Versus Hunt boards, Team lessons, Studio quota inspection/apply, isolated pixel destruction preview and Replay import/playback. These paths produced no browser errors during inspection.
@@ -81,4 +81,11 @@ Still pending: automated suites while waived; exhaustive historical-save/restore
 
 ## Review build
 
-Final build metadata pending final packaging.
+Final packaging passed from clean implementation commit `72470e3b0f922e1be1ecce97ef7e59649185393d`.
+
+- Version: `humanoid-hunt-review`.
+- Distribution files: 2,783.
+- ZIP SHA-256: `a7ce9785d520d9510e5905330a6b5634fa4796f1aeab5a21ada5048298cd0c11`.
+- Artifact inspection confirmed 16 voice clips, eight portraits, the versioned presentation catalog and the shared warning-priority module.
+- This was a development build (`sourceRevision: null` in the CLI manifest), not a release publication/provenance attestation.
+- The temporary package was removed after verification to recover disk space. The committed source, report and local preview server remain available.
