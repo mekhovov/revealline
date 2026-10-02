@@ -311,6 +311,7 @@ async function win(p) {
     }),
   );
   if (!p.$('skip-celebration').hidden) p.$('skip-celebration').click();
+  p.$('show-result').click();
   await settle(() =>
     [...p.$('missions').children].every((b) => b.dataset.pictureState !== 'loading'),
   );

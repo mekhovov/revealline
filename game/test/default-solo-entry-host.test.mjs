@@ -216,6 +216,9 @@ test('ordinary Solo entry separates 186 current and 141 archived missions withou
     p.key('ArrowDown', false);
     p.frame(0);
     assert.equal(p.rendered.run.status, 'won');
+    assert.equal(p.$('game-overlay').hidden, true);
+    if (!p.$('skip-celebration').hidden) p.$('skip-celebration').click();
+    p.$('show-result').click();
   };
   complete();
   assert.match(p.$('overlay-copy').textContent, /Journey mission complete/);

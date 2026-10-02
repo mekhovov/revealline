@@ -1,3 +1,5 @@
+import { STORY_PIN_FORMAT } from '../story-bindings.mjs';
+import { STORY_RECEIPT_FORMAT } from '../story-receipts.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
@@ -1009,4 +1011,42 @@ test('disposing a painter clears its blur cache and rejects late setLook asset a
   assert.equal(painter.background, null);
   assert.equal(painter.image, null);
   assert.deepEqual(painter.images, {});
+});
+
+test('demo offers only the story receipt for its exact already-earned picture', async () => {
+  const f = await earnedPictureFixture();
+  try {
+    const pin = {
+      format: STORY_PIN_FORMAT,
+      picturePin: f.receipt.presentationPin,
+      id: 'earned-demo-story',
+      revision: 1,
+      descriptorSha256: 'a'.repeat(64),
+      sourceSha256: 'b'.repeat(64),
+    };
+    const row = {
+      format: STORY_RECEIPT_FORMAT,
+      galleryKey: f.item.key,
+      earnedRunId: f.receipt.earnedRunId,
+      storyPin: pin,
+    };
+    f.profile.storyReceipts = [row];
+    const visible = await resolveDemoPicture(request(f));
+    assert.equal(visible.pictureVisibility, 'clear');
+    assert.deepEqual(visible.storyPin, pin);
+    visible.dispose();
+    f.profile.storyReceipts = [{ ...row, earnedRunId: 'another-run' }];
+    const mismatch = await resolveDemoPicture(request(f));
+    assert.equal(mismatch.pictureVisibility, 'clear');
+    assert.equal(mismatch.storyPin, null);
+    mismatch.dispose();
+    f.profile.gallery = [];
+    const unearned = await resolveDemoPicture(request(f));
+    assert.equal(unearned.pictureVisibility, 'blurred');
+    assert.equal(unearned.storyPin, null);
+    unearned.dispose();
+  } finally {
+    f.store.close();
+    f.manager.close();
+  }
 });
