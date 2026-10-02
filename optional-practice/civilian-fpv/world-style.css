@@ -459,7 +459,7 @@ dialog {
   background: var(--bg);
   border: 1px solid var(--line);
   border-radius: 12px;
-  max-height: 96vh;
+  max-height: min(96vh, var(--dialog-viewport-height));
 }
 dialog::backdrop {
   background: #030b11d9;
@@ -481,9 +481,9 @@ dialog header small {
   margin-bottom: 5px;
 }
 .flight-dialog {
-  width: min(1200px, 98vw);
+  width: min(1200px, 98vw, var(--dialog-viewport-width));
   padding: 17px;
-  max-width: 98vw;
+  max-width: min(98vw, var(--dialog-viewport-width));
 }
 .flight-controls {
   display: flex;
@@ -870,7 +870,7 @@ dialog header small {
 }
 .sim-skip {
   position: fixed;
-  left: 16px;
+  left: max(16px, env(safe-area-inset-left, 0px));
   top: -100px;
   z-index: 10000;
   padding: 12px;
@@ -878,7 +878,7 @@ dialog header small {
   color: var(--fk-bg);
 }
 .sim-skip:focus {
-  top: 12px;
+  top: max(12px, env(safe-area-inset-top, 0px));
 }
 .sim-worlds .studio-header {
   height: 92px;
@@ -1301,9 +1301,9 @@ dialog header small {
 .sim-worlds #studio-status:not(:empty) {
   position: fixed;
   z-index: 100;
-  bottom: 18px;
-  right: 24px;
-  max-width: min(520px, calc(100vw - 48px));
+  bottom: max(18px, env(safe-area-inset-bottom, 0px));
+  right: max(24px, env(safe-area-inset-right, 0px));
+  max-width: min(520px, calc(var(--dialog-viewport-width) - 48px));
   padding: 14px 20px;
   border: 1px solid var(--fk-cyan);
   background: #101923f5;
@@ -1765,7 +1765,7 @@ html:not([data-fpv-immersive])
 }
 .sim-worlds .studio-header {
   position: sticky;
-  top: 0;
+  top: env(safe-area-inset-top, 0px);
   z-index: 30;
   background: var(--fk-bg);
 }
