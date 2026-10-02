@@ -897,13 +897,24 @@ const schoolLanding = (x, z) => ({
   type: 'land',
   surface: '$floor',
 });
-const schoolNote = (title, instruction, why, axis, motion, target, tip, direction = 1) => ({
+const schoolNote = (
+  title,
+  instruction,
+  why,
+  axis,
+  motion,
+  target,
+  tip,
+  direction = 1,
+  lateralDirection,
+) => ({
   title: text(...title),
   instruction: text(...instruction),
   why: text(...why),
   axis,
   motion,
   direction,
+  ...(lateralDirection === undefined ? {} : { lateralDirection }),
   target,
   tip: text(...tip),
 });
@@ -1387,7 +1398,7 @@ const ORIGINAL_BEGINNER_LESSONS = Object.freeze([
             'Нахиленому дрону може знадобитися більша загальна тяга для тієї самої підйомної сили. Підказка газу — орієнтир, а не автопілот.',
           ],
           'mixed',
-          'route',
+          'lift',
           0.55,
           [
             'Look ahead at the destination and glance at height; do not stare only at the sticks.',
@@ -1407,8 +1418,8 @@ const ORIGINAL_BEGINNER_LESSONS = Object.freeze([
             'Stopping a descent needs upward acceleration before the ground arrives, just as braking forward motion needs opposite tilt.',
             'Для припинення спуску потрібне прискорення вгору ще до землі, так само як для гальмування вперед потрібен протилежний нахил.',
           ],
-          'throttle',
-          'hover',
+          'mixed',
+          'lift',
           0.48,
           [
             'If the downward arrow grows, add a little throttle before you get too low.',
@@ -1608,6 +1619,8 @@ const ORIGINAL_BEGINNER_LESSONS = Object.freeze([
             'Missed it? Slow down, return to the approach side, and try again. There is no race timer to beat.',
             'Промахнулися? Сповільніться, поверніться на бік підходу та спробуйте ще раз. Тут не потрібно обганяти таймер.',
           ],
+          1,
+          [0, 1, -1][index],
         ),
       ]),
       schoolLand(-2, -22),
@@ -1866,23 +1879,43 @@ const ORIGINAL_BEGINNER_LESSONS = Object.freeze([
 // Keep the original fourteen course bytes and pack identity available forever:
 // old playlists, progress and recordings must survive this additive curriculum.
 const BEGINNER_IDENTITY = `fpv-beginner:${dataIdentity(ORIGINAL_BEGINNER_LESSONS.map((lesson) => lesson.course))}`;
-const acroNote = (title, instruction, why, axis = 'mixed', motion = 'acro', direction = 1) =>
+const acroNote = (
+  title,
+  instruction,
+  why,
+  axis = 'mixed',
+  motion = 'acro',
+  direction = 1,
+  target = axis === 'throttle' ? 0.54 : 0.12,
+  lateralDirection,
+) =>
   schoolNote(
     title,
     instruction,
     why,
     axis,
     motion,
-    axis === 'throttle' ? 0.54 : 0.12,
+    target,
     [
       'Make a brief, small correction, centre the rotation controls, and check the horizon and drift before correcting again. Shift makes keyboard input gentler.',
       'Зробіть коротку малу поправку, центруйте осі обертання й перевірте горизонт та дрейф перед наступною поправкою. Shift пом’якшує керування клавіатурою.',
     ],
     direction,
+    lateralDirection,
   );
-const acroStage = (objective, title, instruction, why, axis, motion, direction) => [
+const acroStage = (
   objective,
-  acroNote(title, instruction, why, axis, motion, direction),
+  title,
+  instruction,
+  why,
+  axis,
+  motion,
+  direction,
+  target,
+  lateralDirection,
+) => [
+  objective,
+  acroNote(title, instruction, why, axis, motion, direction, target, lateralDirection),
 ];
 const acroLesson = (index, title, summary, concept, stages, duration = 5) =>
   schoolLesson(
@@ -1916,6 +1949,8 @@ const NEW_ACRO_LESSONS = Object.freeze([
         ],
         'throttle',
         'hover',
+        1,
+        0,
       ),
       schoolLift(1.4),
       schoolLand(),
@@ -2012,8 +2047,9 @@ const NEW_ACRO_LESSONS = Object.freeze([
           'The checkpoint needs a low tilt and low speed together. Centring alone cannot satisfy both after a drift.',
           'Перевірка потребує водночас малого нахилу й малої швидкості. Після дрейфу самого центрування недостатньо.',
         ],
-        'mixed',
-        'hover',
+        'pitch',
+        'brake',
+        -1,
       ),
       schoolLand(),
     ],
@@ -2147,6 +2183,7 @@ const NEW_ACRO_LESSONS = Object.freeze([
           ],
           'mixed',
           'lift',
+          y === 4 ? 1 : -1,
         ),
       ),
       acroStage(
@@ -2160,8 +2197,9 @@ const NEW_ACRO_LESSONS = Object.freeze([
           'Level thrust points upward again. Leaving the extra throttle in place starts an unwanted climb.',
           'Після вирівнювання тяга знову спрямована вгору. Зайвий газ почне небажаний підйом.',
         ],
-        'mixed',
+        'pitch',
         'brake',
+        -1,
       ),
       schoolLand(0, -20),
     ],
@@ -2206,8 +2244,8 @@ const NEW_ACRO_LESSONS = Object.freeze([
             'The checkpoint checks heading as well as position. Nose direction and path direction must be managed together.',
             'Перевірка оцінює курс разом із позицією. Напрям носа й траєкторію потрібно узгоджувати.',
           ],
-          'mixed',
-          'turn',
+          i === 0 ? 'pitch' : 'mixed',
+          i === 0 ? 'pitch' : 'turn',
           i === 2 ? -1 : 1,
         ),
       ),
@@ -2242,12 +2280,16 @@ const NEW_ACRO_LESSONS = Object.freeze([
           schoolHold(x, 3.5, z, { ticks: 15, heading, maxSpeed: 3500, maxTilt: 3000 }),
           [`Loop marker ${i + 1} of 8`, `Позначка петлі ${i + 1} з 8`],
           [
-            i === 3 || i === 7
-              ? 'Return through the centre, level briefly and face north. Prepare the opposite bank only after releasing this turn.'
-              : `Follow the ${i < 4 ? 'left' : 'right'} loop to the lit marker. Keep the nose following the curve and leave room to slow down.`,
-            i === 3 || i === 7
-              ? 'Поверніться через центр, коротко вирівняйтеся й поверніть ніс на північ. Починайте протилежний крен після завершення цього повороту.'
-              : `Прямуйте ${i < 4 ? 'лівою' : 'правою'} петлею до підсвіченої позначки. Спрямовуйте ніс уздовж кривої й залишайте місце для гальмування.`,
+            i === 7
+              ? 'Return through the centre, level and face north. Slow the drift before descending onto the landing pad.'
+              : i === 3
+                ? 'Return through the centre, level briefly and face north. Prepare the opposite bank only after releasing this turn.'
+                : `Follow the ${i < 4 ? 'left' : 'right'} loop to the lit marker. Keep the nose following the curve and leave room to slow down.`,
+            i === 7
+              ? 'Поверніться через центр, вирівняйтеся й поверніть ніс на північ. Погасіть дрейф перед спуском на посадковий майданчик.'
+              : i === 3
+                ? 'Поверніться через центр, коротко вирівняйтеся й поверніть ніс на північ. Починайте протилежний крен після завершення цього повороту.'
+                : `Прямуйте ${i < 4 ? 'лівою' : 'правою'} петлею до підсвіченої позначки. Спрямовуйте ніс уздовж кривої й залишайте місце для гальмування.`,
           ],
           [
             'A figure eight combines both turning directions. Smooth direction changes matter more than speed.',
@@ -2346,6 +2388,9 @@ const NEW_ACRO_LESSONS = Object.freeze([
           ],
           'mixed',
           'pitch',
+          1,
+          undefined,
+          [0, 1, -1][i],
         ),
       ),
       schoolLand(-2, -25),
@@ -2404,8 +2449,9 @@ const NEW_ACRO_LESSONS = Object.freeze([
           'The tighter target checks position, speed and attitude together. Take as long as needed to settle.',
           'Вужча ціль одночасно перевіряє позицію, швидкість і положення. Не поспішайте зі стабілізацією.',
         ],
-        'mixed',
+        'roll',
         'brake',
+        -1,
       ),
       [
         {
