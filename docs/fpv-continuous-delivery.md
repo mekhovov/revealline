@@ -1411,3 +1411,11 @@ Garage's previously referenced temporary handoff is absent. A fresh, repeatable
 16 complete and independently replay, zero contacts, three identical authoring
 runs. It is **not installed** until separate playback/package qualification.
 Current installed examples remain original104 + school58.
+
+A qualification is complete: source and packaged-host runs each pass17/17 with
+zero application errors. Frozen candidate `9a13a9b1ce9316d19c3ac1f572f1bc0bfc21fcbc`
+passes all three admissions, ZIP and committed-input checks and two identical
+builds. World Studio remains94 source /87 runtime files. Playtest SHA256
+`a72309c609044ed6969dab13d3bd9769a88d2ba752e4a11f182fb60ee10bf4e3`.
+The ready feature is being published independently against main; inspect its
+current PR/head and checks before merging. No new public deployment is claimed.
