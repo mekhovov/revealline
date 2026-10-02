@@ -1766,3 +1766,43 @@ external pending work; keep the ready increment separate from C2.
 Preserved-history candidate `e18d14aa7` also passes all three admissions and
 reproducibility checks; the main958 receipt now names that published-history
 candidate. Runtime and browser-fixture bytes are unchanged.
+
+### C3 courtyard continuation — 2 October 2026
+
+C2 meadow composition is published separately as
+[PR #960](https://github.com/mekhovov/revealline/pull/960), last inspected at
+`4507c4636` with required checks running. Branch `codex/fpv-meadow-groves` and its
+qualified normal player builds are preserved; no unfinished courtyard work was
+added there. C3 uses independent `codex/fpv-courtyard-terraces` from current main
+`1d0b359f75dfb48aa5729cdc619c2f93fe9ac65a`.
+
+The public marker identifies this merged touch #959 revision. Actual public SIM
+launch and Lighthouse approach succeed, exposing both flight modes and
+Precise/Direct touch response without application errors. This now verifies #959
+live; see `docs/evidence/fpv-touch-public-20261002.json`. It does not certify C2 or
+C3 publicly deployed, or new physical-device/hardware acceptance.
+
+C3 groups existing courtyard wall/roof modules into connected three-bay terraces
+with uneven alleys and setbacks. All139 placements,20 batches,119 instances and
+23-source-model library remain; only courtyard X/Z placement changes. Roof/floor
+alignment and ≥8m building clearance pass all3 actual bounds. Small creator
+sides under64m retain the old layout. Other5 prepared environments compare exactly
+across11 authored bounds/theme cases. Runtime grows801bytes; two offline source
+regenerations are identical and the embedded library hash is unchanged.
+
+Actual GLB/browser checks pass124/124 with59 image pairs, no increased sampled
+draw calls and stable reload/disposal counts. The real player completes Roofline
+survey at50.6s. Prior178-demo replay evidence remains applicable via exact equality
+of all12 bound runtime/catalogue/proof inputs; do not call this a new replay run.
+See `docs/fpv-courtyard-terraces.md` and adjacent model/browser receipts. Frozen
+packages/publication follow. Normal C2+touch player URLs stay untouched until an
+integrated C2+C3 build is qualified. Separate C3 URL is
+`dist/fpv-courtyard-terraces-playtest/optional-practice/fpv-worlds/index.html`.
+
+Themes #955 retains shared appearance/material-role ownership. C3 is a template
+placement hunk with offline-generated runtime/provenance only; preserve its
+contracts and C2 meadow visuals during integration. Broad C realistic art is not
+complete. Next work is woodland readability and shared-theme material/asset
+qualification; do not add wide decorative canopies across narrow flight gaps
+without matching authored visual/collision rules. B/D/F/G/H hardware, novice,
+creator/offline, feedback-led maps and deferred unit-coverage work remain open.

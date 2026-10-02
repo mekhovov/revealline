@@ -272,3 +272,15 @@ hardware qualification, D player sessions, F creator workflow, G feedback-led
 map growth and H deferred unit/regression/device work remain. The current
 package file caps inherited from #930 are64/72/104; byte caps remain8/8/16MiB.
 Follow the latest delivery log for exact heads and publication evidence.
+
+### C3 courtyard continuation — 2 October 2026
+
+Touch #959 is merged and its actual public launch is now verified. Meadow C2 is
+published as #960; publication is independent from the new C3 courtyard branch.
+C3 connects the existing facade modules into three-bay terraces with deliberate
+alleys, keeping all139 scenery placements and the original asset library. Actual
+GLB verification passes124 checks/59 image pairs with no increased draw calls in
+the sampled views. Frozen admission/publication follows; physical-device and art
+acceptance remain open. Authored counts stay148 challenges/14 worlds. Continue
+woodland/shared-theme asset qualification after this focused increment; preserve
+#955's appearance ownership and the deferred H/R7 unit-coverage phase.
