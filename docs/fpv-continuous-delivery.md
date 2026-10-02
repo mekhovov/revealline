@@ -1197,3 +1197,27 @@ external follow-up; do not infer passing gates from skipped or absent checks.
 The corrected player is left on the paused coordinated-turn lesson for review.
 Next independent work remains the reviewed R5 art backlog, with physical-device
 acceptance and R7 coverage still outstanding; preserve all older stack holds.
+
+### 2 October — automatic radio calibration, Arm/Reset and retained profiles
+
+Current feature branch: `codex/fpv-radio-guided-actions`, based on #944 at
+`7821ffdec87971bb9b7a8e5ea298eed925c1786b`. Live stack902 still ends at #944;
+no upstream ref was rewritten. The focused increment fixes EdgeTX paired-position
+switch detection, promotes Arm/Reset into the guided flow, and advances stable
+stick endpoints/rest positions without repeated clicks. A deliberate final
+radio gesture confirms and saves. Both shared SIM hosts receive the feature.
+
+The bounded multi-radio library preserves the original v1 key, automatically
+restores an exact uniquely connected selected mapping, and retains other radios.
+Backup/share JSON files, a saved-radio picker and removal are provided. Imports
+are local drafts; no community mapping is automatically trusted or uploaded.
+Research and player flow: `docs/fpv-radio-guided-actions.md`.
+
+Verification: actual mounted-browser checks16/16, including one initial click
+followed by the complete axis→Arm→Reset→save path; guide checks18/18; retained
+library production-module checks31/31; existing focused regressions22/22.
+Receipts: `docs/evidence/fpv-radio-{actions-browser,guide-browser,library}-20261002.json`.
+Syntax/lint/format pass; extra unit coverage remains deferred. Browser setup
+was inspected at desktop and390px with no horizontal overflow. Actual public
+release and physical radio acceptance are not claimed. Next: freeze inputs,
+qualify all optional packages, refresh both player URLs, publish after #944.
