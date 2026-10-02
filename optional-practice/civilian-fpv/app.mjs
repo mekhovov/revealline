@@ -25,6 +25,7 @@ import {
   mountDroneResponse,
   mountSimAudioControls,
   paintStickDirections,
+  mountStickTrace,
 } from './sim-presentation.mjs';
 import { createFlightInput, createFlightMenuNavigation } from './input.mjs';
 import { createFlightRenderer } from './renderer.mjs';
@@ -224,6 +225,14 @@ export function mountFlightApp({
       paint(true);
     },
   });
+  const stickTraces = ['left-dot', 'right-dot'].map((id) =>
+    mountStickTrace($(id).parentElement, { travel: 180 * 0.3 }),
+  );
+  const touchTraces = ['left-stick', 'right-stick'].map((id) =>
+    mountStickTrace($(id), { travel: 35 }),
+  );
+  const resetStickTraces = () => [...stickTraces, ...touchTraces].forEach((trace) => trace.reset());
+  let stickTraceLayout = '';
   const saveGuidePreferences = () => {
     try {
       win.localStorage?.setItem(
@@ -366,6 +375,7 @@ export function mountFlightApp({
   function pause(reason = 'paused') {
     if (disposed) return;
     pauseGeneration++;
+    resetStickTraces();
     cancelReview();
     flight?.pause();
     if (replay) replay.paused = true;
@@ -603,29 +613,19 @@ export function mountFlightApp({
       cameraFov: Number($('camera-fov').value) || 82,
       cameraTilt: Number($('camera-tilt').value) || 0,
     });
-    if (!force && now - lastHUD < 100) return;
-    lastHUD = now;
-    const course = currentCourse().locales[locale];
-    $('course-number').textContent =
-      `${authoringCourse ? c().authoring : `${String(selected + 1).padStart(2, '0')} / ${courses.length}`} · ${c()[mode]}`;
-    $('course-title').textContent = course.title;
-    $('brief').textContent = course.brief;
-    $('height').textContent = `${c().altitude} ${(state.position.y / 1000).toFixed(1)} m`;
-    $('speed').textContent =
-      `${c().speed} ${(Math.hypot(state.velocity.x, state.velocity.y, state.velocity.z) / 1000).toFixed(1)} m/s`;
-    $('power').textContent = `${c().throttle} ${Math.round(state.lastInput.throttle / 10)}%`;
-    $('contact-count').textContent = `${c().contacts} ${state.contacts}`;
-    $('target').textContent = targetText(state);
-    $('step-progress').max = state.total;
-    $('step-progress').value = state.step;
-    $('step-progress').setAttribute('aria-label', `${c().progress} ${state.step} / ${state.total}`);
     const radioPreview = !replay && input.owner() === 'radio' ? radio.preview() : null,
       values = state.lastInput,
       monitor = radioPreview
         ? radioPreview.controls
         : Object.fromEntries(FLIGHT_CONTROLS.map((key) => [key, values[key] / 1000])),
       stickMode = radioPreview?.stickMode ?? 2,
-      layout = STICK_LAYOUTS[stickMode];
+      layout = STICK_LAYOUTS[stickMode],
+      source = replay ? 'recording' : input.owner(),
+      traceLayout = `${epoch}:${source}:${layout.join(':')}`,
+      reducedMotion = Boolean(win.matchMedia?.('(prefers-reduced-motion: reduce)').matches),
+      traceTime = win.performance.now();
+    if (stickTraceLayout !== traceLayout) resetStickTraces();
+    stickTraceLayout = traceLayout;
     droneResponse.update({
       state,
       controls: monitor ?? neutralFlightInput(),
@@ -635,7 +635,7 @@ export function mountFlightApp({
       mode,
       display: $('academy-drone-guide').value,
       scale: $('academy-guide-scale').value,
-      reducedMotion: Boolean(win.matchMedia?.('(prefers-reduced-motion: reduce)').matches),
+      reducedMotion,
     });
     $('sticks').setAttribute(
       'aria-label',
@@ -652,6 +652,18 @@ export function mountFlightApp({
       paintStickDirections(dot.parentElement, { horizontal, vertical, locale });
       const radius = dot.parentElement.clientWidth * 0.3;
       dot.style.transform = `translate(${(monitor?.[horizontal] ?? 0) * radius}px, ${-y * radius}px)`;
+      stickTraces[i].update({
+        x: monitor?.[horizontal] ?? 0,
+        y,
+        now: traceTime,
+        source,
+        reducedMotion,
+        available:
+          Boolean(monitor) &&
+          !(source === 'radio' && !radioPreview?.controls) &&
+          state.status === 'active' &&
+          source !== 'touch',
+      });
     }
     if (input.owner() === 'touch') {
       $('touch-throttle').value = String(Math.round(values.throttle / 10));
@@ -661,7 +673,35 @@ export function mountFlightApp({
         `translate(${(values.yaw / 1000) * 35}px, ${(1 - values.throttle / 500) * 35}px)`;
       $('right-stick').querySelector('i').style.transform =
         `translate(${(values.roll / 1000) * 35}px, ${(-values.pitch / 1000) * 35}px)`;
-    }
+      for (const [index, pair] of [
+        [values.yaw / 1000, values.throttle / 500 - 1],
+        [values.roll / 1000, values.pitch / 1000],
+      ].entries())
+        touchTraces[index].update({
+          x: pair[0],
+          y: pair[1],
+          now: traceTime,
+          source,
+          reducedMotion,
+          available: state.status === 'active',
+        });
+    } else touchTraces.forEach((trace) => trace.reset());
+    if (!force && now - lastHUD < 100) return;
+    lastHUD = now;
+    const course = currentCourse().locales[locale];
+    $('course-number').textContent =
+      `${authoringCourse ? c().authoring : `${String(selected + 1).padStart(2, '0')} / ${courses.length}`} · ${c()[mode]}`;
+    $('course-title').textContent = course.title;
+    $('brief').textContent = course.brief;
+    $('height').textContent = `${c().altitude} ${(state.position.y / 1000).toFixed(1)} m`;
+    $('speed').textContent =
+      `${c().speed} ${(Math.hypot(state.velocity.x, state.velocity.y, state.velocity.z) / 1000).toFixed(1)} m/s`;
+    $('power').textContent = `${c().throttle} ${Math.round(state.lastInput.throttle / 10)}%`;
+    $('contact-count').textContent = `${c().contacts} ${state.contacts}`;
+    $('target').textContent = targetText(state);
+    $('step-progress').max = state.total;
+    $('step-progress').value = state.step;
+    $('step-progress').setAttribute('aria-label', `${c().progress} ${state.step} / ${state.total}`);
     say(
       reviewAbort
         ? c().verifying
@@ -1136,6 +1176,7 @@ export function mountFlightApp({
       audioControls.dispose();
       presentation.dispose();
       droneResponse.dispose();
+      [...stickTraces, ...touchTraces].forEach((trace) => trace.dispose());
       for (const remove of listeners) remove();
       for (const button of courseButtons) {
         button.onclick = null;

@@ -3967,3 +3967,20 @@ html:not([data-fpv-immersive])
     font-size: 11px;
   }
 }
+
+/* Recorded endpoints stay exact; the hollow ring is a separate motion aid. */
+.coach-example-input {
+  fill: var(--fk-amber, #ffc461);
+  stroke: var(--fk-panel, #101923);
+  stroke-width: 1.4;
+}
+.coach-legend-example-input::before {
+  background: var(--fk-amber, #ffc461);
+}
+.coach-target-dot {
+  stroke-width: 1.7;
+  opacity: 0.7;
+}
+.beginner-coach[data-reduced-motion='true'] .coach-legend-example {
+  display: none;
+}
