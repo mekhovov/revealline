@@ -1,0 +1,53 @@
+{
+  "format": "revealline-independent-review-receipt.v1",
+  "reviewedAt": "2026-09-30T23:08:11.179451+00:00",
+  "reviewer": "audit_local_soundtrack_work",
+  "repository": "mekhovov/revealline-soundtracks",
+  "pullRequest": 68,
+  "head": "7b2354fc835d6332f539602a5ad0974ca5cd1252",
+  "worktree": "/Users/oleksandr.mekhovov/.codex/worktrees/pr39-soundtrack/revealline-soundtracks",
+  "decision": "no-blocking-findings",
+  "blockers": [],
+  "scope": "Phase 1 public licensing projection, normal/review/deep-link filtering, immutable installer compatibility, unknown intake draft quarantine, and final legacy batch metadata cleanup.",
+  "performedChecks": [
+    "Verified final local HEAD exactly matches the reviewed head and tracked worktree is clean.",
+    "Read the implementation and regression diffs, including publicDocuments/buildManifest, licensing and review policies, player deep-link resolution, intake prerelease handling, and merge publisher filtering.",
+    "Independently executed publicDocuments and buildManifest in memory and checked the resulting catalogue, manifest entries and exact counts.",
+    "Scanned every manifested JSON, Markdown, HTML and JavaScript module's projected or static contents for all 73 excluded audio hashes; found none. No manifested MP3 entry has an excluded hash.",
+    "Confirmed seven legacy archive-02 obsolete CC0 records are removed using canonical allowed hashes.",
+    "Compared the restored MP3 paths against the prior manifest: all 37 correspond to known-licensed review-only records. Checked every original inventory entry has an exact manifest path, byte count and SHA-256 match.",
+    "Checked final legacy archive-02 batch projection removes only the obsolete TRENCH ORDERLY descriptor; each remaining batch count matches surviving track archiveId and totals 24.",
+    "Asserted projected legacy archive-02 catalogue is a fixed point and verified already-projected metadata follows the unchanged static batch path on repeated projection; reviewed the existing staged metadata idempotence regression.",
+    "Asserted independently rebuilt final deployment manifest equals the committed deterministic manifest. Confirmed legacy archive-01 projection remains untouched.",
+    "Reviewed verified-digest draft upload and promotion guards: unknown intake remains draft and merge publication skips volumes containing unknown recordings. No workflow permission changes were present."
+  ],
+  "measurements": {
+    "sourceRecordings": 261,
+    "excludedUnknownRecordings": 73,
+    "excludedUnknownAudioBytes": 207941311,
+    "publishedRecordings": 188,
+    "normalViewRecordings": 123,
+    "reviewOnlyRecordings": 65,
+    "legacy02ObsoleteCC0RecordsExcluded": 7,
+    "legacy02PublishedRecordings": 24,
+    "legacy02SourceBatchDescriptors": 22,
+    "legacy02PublishedBatchDescriptors": 21,
+    "preservedInstallerBindings": 70,
+    "restoredLicensedReviewOnlyObjects": 37,
+    "restoredLicensedReviewOnlyBytes": 177113813,
+    "manifestMP3Entries": 167,
+    "manifestPayloadBytes": 893584693,
+    "remainingExcludedHashMentions": 0
+  },
+  "resolvedFinding": "The earlier reviewed head retained a dead TRENCH ORDERLY legacy batch descriptor. The final head projects that descriptor out while preserving original source metadata.",
+  "reportedEvidenceNotIndependentlyRerun": [
+    "Parent/author reported 76 passing tests and source verification after the final cleanup.",
+    "Parent reported hosted full audio staging success for prior head b781710220a9a6f592b6a3fd5fcbdd3e987fc92f in run 36788536231. Final cleanup changes metadata only; a final-head hosted result is not asserted by this receipt."
+  ],
+  "limits": [
+    "No local full audio staging, MP3 download, decoding, or listening was performed by this reviewer.",
+    "No independent hosted deployment or browser smoke test is asserted.",
+    "Historical Git source and already-public immutable release assets remain preserved intentionally; this review covers their removal from deployed Pages metadata and playback surfaces, not deletion or revocation of historical release URLs.",
+    "Implementation and projection checks do not grant listening, game admission, or additional licensing approval."
+  ]
+}

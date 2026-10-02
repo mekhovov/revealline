@@ -1,6 +1,6 @@
 # RevealLine — consolidated soundtrack master plan
 
-Updated 30 September 2026. This is the durable source of truth for all soundtrack
+Updated 1 October 2026. This is the durable source of truth for all soundtrack
 work. It replaces the separate conversational plans without removing completed,
 blocked, rejected or deferred requirements. The user approved implementation of
 this consolidated plan.
@@ -27,7 +27,146 @@ passing transport test is insufficient.
 Keep historical immutable files and failed/partial evidence. Never manufacture
 reviewer names, listening approval or device results.
 
-## Current execution checkpoint — 30 September 2026, evening
+## Current priority — licence separation, 1 October 2026
+
+The user's latest direction supersedes main-archive availability of recordings
+labelled unknown, including uploader-confirmed entries. It does not change the
+licences themselves or turn a source link into licence evidence. Previous Synth/
+Metal priorities remain queued behind this scoped separation.
+
+### Phase 1 — remove unlicensed recordings from the main experience
+
+**Archive deployed and verified; game hardening PR remains queued.** Audit of canonical source `9cc5274` found
+**73 unknown-licence recordings / 207,941,311 audio bytes**, all formerly in the
+normal public list. There are no additional missing-licence rows in this snapshot.
+The deployed licensed catalogue contains **188 recordings: 123 normal-public
+and 65 existing review-only**. The trusted game catalogue's 77 records are unaffected.
+The [pre-change preservation inventory](verification/soundtrack-unlicensed-exclusion-20261001.json)
+binds every excluded ID to its exact audio hash, size, source and unchanged licence.
+
+[Archive PR #68](https://github.com/mekhovov/revealline-soundtracks/pull/68)
+merged as `592364a67277744f795af787fc46b31e003fe02c`.
+[Automatic Pages deployment 36789509051](https://github.com/mekhovov/revealline-soundtracks/actions/runs/36789509051)
+passed after independent review and 76 passing archive tests. Direct public checks
+confirm all 73 excluded Pages MP3s return 404; all 70 licensed installer endpoints
+retain their exact expected sizes, and 41 public metadata files match the staged
+hashes. The `.nojekyll` deployment control is deliberately recorded separately:
+it is staged but GitHub Pages returns 404 for that control file. Normal and review
+links cannot select the removed recordings; licensed Drama playback advanced.
+
+The currently public game refreshes from 196 to 123 eligible archive recordings;
+TRENCH ORDERLY search returns zero. Existing style filters showed 121 of those 123.
+This dynamic feed change is live independently of the game-code PR.
+[Game PR #897](https://github.com/mekhovov/revealline/pull/897) adds defensive
+missing/unknown-licence filtering and prevents removed fetched entries from starting
+or resuming from stale queues. Its 335 earlier focused tests pass; the phase-2 successor also has 316 focused plus 50 shared-storage/source tests and two dependency mutations. It is not yet deployed:
+`release-ready` is held because no release slot is assigned, and existing aggregate
+Field Kit/Team production drift remains disclosed rather than overwritten. The sole
+publisher has been notified. Refresh/reload previously open clients to replace their
+old catalogue; an already-playing stream is not forcibly interrupted by a refresh.
+See [public acceptance](verification/unlicensed-soundtrack-game-20261001/public-acceptance.json)
+and [independent archive review](verification/unlicensed-soundtrack-game-20261001/archive-independent-review.json).
+
+- Exclude unknown/missing licence records from the deployed catalogue, public
+  search/playlists, direct track selection and review views, not only default shuffle.
+- Exclude their MP3s from the main Pages payload. Project legacy metadata using
+  canonical identities/hashes: seven older TRENCH ORDERLY entries still have
+  superseded CC0 labels and must not bypass the corrected unknown status.
+- Preserve licensed legacy installer endpoints, every licensed recording identity,
+  local uploads and existing saved player data. The game filters excluded remote
+  entries without rejecting the valid remainder of a mixed catalogue.
+- Retain source/history and existing immutable GitHub Release assets for phase 2.
+  This is removal from the main site and current game, not a purge of public Git
+  history or immutable releases. A new unknown-licence intake must not silently
+  publish audio back into the main archive.
+- Create scoped archive and game PRs with regression coverage and independent
+  review, then record actual deployment/public acceptance separately.
+
+**Remaining:** game PR release scheduling and post-deployment checks; no honest
+calendar ETA until the sole publisher allocates the slot. Archive implementation,
+regressions and deployment are complete. Allow roughly half a day for game release
+follow-through once the production/queue disposition is settled. The decisive checks are
+no excluded rows in the deployed JSON, no excluded Pages objects or legacy alias
+bypass, safe game filtering, and intact licensed playback/installer metadata.
+
+### Phase 2 — separate FPV archive and explicitly added music sources
+
+**Both archive deployments are complete; game integration is pushed in draft PR #903 and awaits release qualification.** The game
+branch is rebased on accepted main `e870684598ca2767e24320573caff400eb930f46`.
+Phase-1 [game PR #897](https://github.com/mekhovov/revealline/pull/897) is now at
+`ac7d06f12da617d098c63c8c47979974631a75fb`; it remains a separate release prerequisite.
+
+| Part                            | Status / evidence                                                                                                                                                                                                                                                                                                                                                                                                 | Remaining acceptance                                                                                                                                                                                                                                                   |
+| ------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **LS2-A: separate FPV archive** | [FPV PR #1](https://github.com/mekhovov/revealline-soundtracks-fpv/pull/1) merged as `4dec2057c3e4d99cf05a2cb6f4228de05e1445bd`. [Actual-main run 36792681825](https://github.com/mekhovov/revealline-soundtracks-fpv/actions/runs/36792681825) passed staging, deployment and all 73 public SHA-256/size/range/CORS checks. 57 tests pass.                                                                       | Complete. [Exact public receipt](verification/optional-soundtrack-sources-20261001/fpv-public-verification.json).                                                                                                                                                      |
+| **LS2-B: canonical extraction** | [Main archive PR #69](https://github.com/mekhovov/revealline-soundtracks/pull/69) merged as `f791c039f75ed046d248c280a53845da24885dcc`. [Actual-main run 36792959364](https://github.com/mekhovov/revealline-soundtracks/actions/runs/36792959364) passed; 78 tests pass. All 188 licensed rows retained, all 73 transferred Pages objects return 404, all 70 installer endpoints return 200 with expected sizes. | Complete. [Public metadata/exclusion receipt](verification/optional-soundtrack-sources-20261001/main-extraction-public-verification.json); full audio hashes verified during hosted staging.                                                                           |
+| **LS2-C: opt-in game sources**  | [Game PR #903](https://github.com/mekhovov/revealline/pull/903), stacked on #897, implements a compact source selector, independent DB5 preferences, four sources including main / 512 online rows, safe per-source failure/removal and metadata/style union. Final independent code review has no outstanding findings; seven focused suites pass 316/316.                                                       | Production-ledger reconciliation, publisher scheduling and public game acceptance. [Browser evidence](verification/optional-soundtrack-sources-20261001/browser-acceptance.json), [review](verification/optional-soundtrack-sources-20261001/independent-review.json). |
+
+The destination is [RevealLine Soundtracks FPV](https://mekhovov.github.io/revealline-soundtracks-fpv/).
+All 73 IDs, exact bytes, original artist/title/source, styles/collections and unknown
+licence labels are preserved. Main source extraction removes active records, seven
+checked-in MP3s and corresponding active volume references; a pinned source-only
+receipt accounts for the transfer. Historic commits and immutable released assets
+remain preserved. This is not a history purge or relabelling of unknown as CC0.
+
+In the game, **Settings → Audio → Music sources → Add and load** explicitly authorizes
+the selected compatible HTTPS catalogue. Main remains enabled by default; FPV is
+not automatically added. Players can use the extra source alone, mix it with main,
+and include existing uploaded/bundled selections. Styles refresh from enabled feeds.
+Unknown licence entries remain unavailable for Recording mode, offline installation
+or export by virtue of this feature. Adding/disabling sources does not unmute or
+start music; removal revokes that source's queued/active recordings safely.
+
+Independent review identified and resolved tag/credit loss when exact hashes overlap,
+stale installation permission during asynchronous download/probe, shifted pending
+local preloads after source removal, and keyboard-focus loss during source refresh. Source
+URL checks do not claim browser DNS pinning or control over native media redirects.
+No v3 library schema/DB5 version change, no per-domain game patch and no automatic
+public-source authorization from imported metadata are introduced.
+
+**Release boundary:** archive work can publish independently; game publication is
+coordinated with the sole publisher and is not yet claimed live. Current local free
+space fell below the 1 GiB floor during implementation; no large local builds or
+MP3 copies are started. Hosted jobs perform complete audio staging and acceptance.
+Archive release work is complete. Allow roughly half to one working day for game
+production/release follow-through once the production-ledger disposition and publisher
+slot are settled; no calendar ETA is promised while these remain unresolved. Physical iPhone/controller checks remain explicitly unverified. The complete local validator also stops on the intentionally absent `authoring/community` sparse path; no heavy materialization was attempted below the reserve. See [check results](verification/optional-soundtrack-sources-20261001/checks.json) and [baseline/current production diagnosis](verification/optional-soundtrack-sources-20261001/production-ledger-diagnosis.json).
+
+This transfers the existing collection only; the skipped broader UA-FPV sourcing/
+clearance milestone and paused AI originals are not restarted.
+
+### Phase 2 follow-up — creator links beside playing-song credits
+
+**Implemented in the PR #903 branch; awaiting release qualification.** The 1 October
+request adds creator/source links wherever current song credits are shown:
+main-menu footer, compact menu/Pause/Audio controls, Solo and Couch details, Demo,
+music-library Now Playing and uploaded-original audition. Links open a new tab
+with opener protection. Clicking them cannot trigger remembered music startup,
+blocked-play retry or suspended-context recovery. Pause/mute choices are retained.
+
+Source selection prefers the creator's page, retains combined source credits, and
+keeps licence/cultural-reference URLs separate. Unsafe or missing URLs produce no
+invented author link. Anchors survive transport updates without losing keyboard
+focus; English/Ukrainian labels refresh while paused. Audition credits stay bound
+to the audible original when the editor selects another track.
+
+Independent review found and resolved two issues: licence links needed distinct
+accessible names, and creator clicks needed exclusion from trusted-start gestures.
+Direct local browser verification confirms the author URL opens in a separate tab
+while the original game remains paused/muted. Physical devices and public deployment
+remain unverified. The new helper and related credit surfaces are explicit Field Kit
+audio dependencies; historical production records and review pins are unchanged.
+Existing production-ledger and publisher-queue limitations above still apply.
+Final focused regressions pass **278/278 with no skips**, including source safety,
+focus, host gestures and audition identity. Pinned formatting, scoped lint,
+localization and diff checks pass. [Verification and retained test evidence](verification/optional-soundtrack-sources-20261001/creator-links/verification.json)
+include the initial whitelist failures and the corrected complete reruns. Temporary
+disk exhaustion blocked writes, then recovered; source/evidence were preserved.
+
+The 30 September checkpoint below is retained as history. Its counts describe the
+pre-exclusion public state and must not be presented as phase-1 delivery evidence.
+
+## Previous execution checkpoint — 30 September 2026, evening
 
 **M5/M6 are the active priority: Synth and Metal.** The first six-track batch is
 now merged and publicly available. [Game PR #830](https://github.com/mekhovov/revealline/pull/830)

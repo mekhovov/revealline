@@ -31,6 +31,7 @@
   let padNeutral = false;
   let padCommand = null;
   let inputOwners = 0;
+  let startupUpdates;
   function suspendInput() {
     inputOwners++;
     padNeutral = false;
@@ -48,6 +49,7 @@
   const $ = (id) => doc.getElementById(id);
 
   function stop() {
+    startupUpdates?.dispose();
     host.clearTimeout(slowTimer);
     host.cancelAnimationFrame(frame);
     host.removeEventListener('error', resourceError, true);
@@ -223,6 +225,33 @@
       state = 'file';
       renderFailure();
       return;
+    }
+    // Optional recovery action must not delay styles, rendering or offline play.
+    if (
+      $('boot-updates') &&
+      /^https?:$/.test(host.location.protocol) &&
+      (host.navigator?.standalone ||
+        host.matchMedia?.('(display-mode: standalone)').matches ||
+        host.matchMedia?.('(display-mode: fullscreen)').matches)
+    ) {
+      // Keep a plain recovery link usable even if the optional module fails.
+      const source = new URL(appURL);
+      const release = source.pathname.indexOf('/releases/');
+      const root =
+        release >= 0
+          ? source.pathname.slice(0, release + 1)
+          : source.pathname.replace(/game\/.*$/, '');
+      const community = root.includes('/editions/');
+      const update = new URL(`${root}app/${community ? '?manage' : 'update.html'}`, source.origin);
+      if (!community) update.searchParams.set('return', host.location.href);
+      $('boot-update-action').href = update.href;
+      $('boot-updates').hidden = false;
+      void import('./boot-updates.mjs')
+        .then(({ attachBootUpdates }) => {
+          if (state !== 'ready')
+            startupUpdates = attachBootUpdates({ document: doc, window: host });
+        })
+        .catch(() => {});
     }
     if (state === 'failed') {
       renderFailure();

@@ -1,0 +1,80 @@
+{
+  "complete": true,
+  "passed": 18,
+  "total": 18,
+  "qualification": "Actual production guide with real DOM and controlled clock/radio; switch adapter states are controlled, not physical capture acceptance.",
+  "results": [
+    {
+      "name": "Stable initial rest starts throttle automatically",
+      "pass": true
+    },
+    {
+      "name": "Brief endpoint does not advance",
+      "pass": true
+    },
+    {
+      "name": "Mixed stick motion rejected",
+      "pass": true
+    },
+    {
+      "name": "Sustained endpoint advances without click",
+      "pass": true
+    },
+    {
+      "name": "Return gate enables opposite endpoint",
+      "pass": true
+    },
+    {
+      "name": "Throttle calibrated and next axis begins",
+      "pass": true
+    },
+    {
+      "name": "Direct endpoint-to-endpoint skips no rest gate",
+      "pass": true
+    },
+    {
+      "name": "All four axes lead into automatic Arm detection",
+      "pass": true
+    },
+    {
+      "name": "Mapping assigns actual axes and reversed pitch",
+      "pass": true
+    },
+    {
+      "name": "Completed Arm capture starts Reset",
+      "pass": true
+    },
+    {
+      "name": "Neutral check never saves automatically",
+      "pass": true
+    },
+    {
+      "name": "Short confirm gesture does not save",
+      "pass": true
+    },
+    {
+      "name": "Holding confirm alone does not save",
+      "pass": true
+    },
+    {
+      "name": "Deliberate hold and centre saves once",
+      "pass": true
+    },
+    {
+      "name": "Saved state does not repeat save callback",
+      "pass": true
+    },
+    {
+      "name": "A sample gap resets endpoint dwell",
+      "pass": true
+    },
+    {
+      "name": "Focus loss blocks auto progress and requires restart",
+      "pass": true
+    },
+    {
+      "name": "Ukrainian instructions and prominent flight switches",
+      "pass": true
+    }
+  ]
+}

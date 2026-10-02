@@ -706,8 +706,7 @@
         "verification": "Bounded keyboard and virtual-controller donor workflow evidence recorded in PR #846; integration/source attribution and physical/offline/public acceptance remain pending at 2026-09-30 18:47 UTC. Do not label the donor implementation absent or transfer its evidence to later main without attribution.",
         "delivery": "https://github.com/mekhovov/revealline/pull/846",
         "evidenceReport": "https://github.com/mekhovov/revealline/blob/8a49d835a826e59e0cf4584a3ee9cb5066d5507f/docs/verification/ukraine-role-gallery-input-2026-09-30.md"
-      },
-      "integrationReview": "Source batch is merged into reviewed main 955c539a7 as of 2026-10-01. Original browser/artifact evidence keeps its recorded revision; no fresh physical/offline/public acceptance is inferred."
+      }
     },
     {
       "name": "Ukraine wide role variants",
@@ -719,8 +718,7 @@
         "verification": "Bounded keyboard and virtual-controller donor workflow evidence recorded in PR #857; integration/source attribution and physical/offline/public acceptance remain pending at 2026-09-30 18:47 UTC. Do not label the donor implementation absent or transfer its evidence to later main without attribution.",
         "delivery": "https://github.com/mekhovov/revealline/pull/857",
         "evidenceReport": "https://github.com/mekhovov/revealline/blob/2ab940b781c0adbc7c4da3e706271628736090f1/docs/verification/ukraine-wide-gallery-input-2026-09-30.md"
-      },
-      "integrationReview": "Source batch is merged into reviewed main 955c539a7 as of 2026-10-01. Original browser/artifact evidence keeps its recorded revision; no fresh physical/offline/public acceptance is inferred."
+      }
     },
     {
       "name": "Prepared reveal review",
@@ -734,8 +732,7 @@
         "delivery": "https://github.com/mekhovov/revealline/pull/863",
         "evidenceReport": "https://github.com/mekhovov/revealline/blob/11299ceffbb5b48d7ee4fe8658ee4e6a0a12bfdc/docs/verification/prepared-reveal-input-2026-09-30.md"
       },
-      "evidence": "docs/verification/prepared-reveal-input-2026-09-30.md",
-      "integrationReview": "PR #863 merged during the October 1 review as 4b2bdff335a61104bcdfcf2bde4c9a427e21e928. Donor workflow evidence retains its recorded revision; no fresh physical/offline/public acceptance is inferred."
+      "evidence": "docs/verification/prepared-reveal-input-2026-09-30.md"
     },
     {
       "name": "Prepared title review",
@@ -749,8 +746,7 @@
         "delivery": "https://github.com/mekhovov/revealline/pull/870",
         "evidenceReport": "https://github.com/mekhovov/revealline/blob/e778b2584cd5150cf64b347ca6e31a47bf3aca26/docs/verification/prepared-title-input-2026-09-30.md"
       },
-      "evidence": "docs/verification/prepared-title-input-2026-09-30.md",
-      "integrationReview": "Source batch is merged into reviewed main 955c539a7 as of 2026-10-01. Original browser/artifact evidence keeps its recorded revision; no fresh physical/offline/public acceptance is inferred."
+      "evidence": "docs/verification/prepared-title-input-2026-09-30.md"
     },
     {
       "name": "Runtime sprite comparison",
@@ -793,7 +789,7 @@
   "verificationNote": "Evidence entries retain their individual revisions and dates. Early observations predate FPV / LINE; later branding, workflow and package receipts have separate cutoffs. See docs/native-menu-roadmap.md for current priorities, not blanket acceptance of current main.",
   "evidenceScope": {
     "historical": "Browser and standalone-package observations below belong to the shared development snapshots recorded on 2026-09-28 and 2026-09-29, before main reconciliation. They do not qualify the current candidate.",
-    "currentCandidate": "October 1 review on main 955c539a7 reconciles implemented Community navigation and desktop updater evidence. Historical creator/edition/scene checks retain their exact revisions; current whole-build, physical/native and public acceptance remain separate. See docs/native-menu-roadmap.md and docs/native-menu-review-2026-10-01.md. Automated suites are currently waived by publishing/test-policy.json; no product tests were run for this review."
+    "currentCandidate": "Reviewed against main 09a43d833 on 2026-09-30. Dated receipts cover all four base-world mode compositions, original-14 browser layouts and meaningful creator workflows. All 18 editions compiled in memory at fa31dcc6996f5383989017f98f7ea51739924a06 (docs/verification/reserve-catalog-input-2026-09-30.md); later donor compiles retain separate attribution. These are not current aggregate, installed-offline, physical/native or published acceptance. See docs/native-menu-roadmap.md."
   },
   "deferredRoutes": [],
   "generatedRoutes": [
@@ -897,15 +893,10 @@
   },
   "currentRoadmap": "docs/native-menu-roadmap.md",
   "supportRouteReview": {
-    "sourceRevision": "955c539a757c08c534c9038500785b20e64abb36",
-    "reviewDate": "2026-10-01",
+    "sourceRevision": "09a43d83351af276f184293ed3c72261575ed8bc",
     "legacyCommunity": "/game/community/ redirects to /game/communities/.",
-    "communityDirectory": "Implemented: game/communities/directory.mjs imports attachLauncherNavigation and preserves checked return destinations. October 1 packaged-browser evidence covers Settings placement across modes and bounded directory/return journeys. Prior missing-owner statement is superseded.",
-    "communityStore": "Existing store/moderation input remains separately owned. Current physical-controller, failure/cancellation and first-installed-iPhone handoffs remain separate from desktop browser evidence.",
-    "updates": "Settings Check for updates and desktop same-URL save-preserving update/server-stopped reopening evidence exist; physical existing-iPhone first upgrade, process restart and broader target/mode installation remain unqualified.",
-    "accessGate": "New first-visit gate precedes game boot; current source has English-only strings and no shared controller owner. Include localized/controller text entry and errors in the native-menu scope; do not bypass or remove access control.",
-    "evidence": "docs/offline-pwa/updates-and-communities.md",
-    "acceptance": "Read-only source/report reconciliation; this review adds no new browser, physical-device or published acceptance."
-  },
-  "currentDecisionGuide": "docs/native-menu-review-2026-10-01.md"
+    "communityDirectory": "The actual directory has localization but no shared support/controller input owner. Implement and qualify keyboard/controller navigation, failure/fallback and exact return on the listed friendly entry routes.",
+    "communityStore": "/game/community/store.html retains support input; moderation retains authoring input. Their old evidence does not transfer to the directory.",
+    "acceptance": "Source inventory only; no new browser, physical-device or published acceptance from this review."
+  }
 }

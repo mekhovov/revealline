@@ -127,6 +127,21 @@ test('pause hierarchy uses compact side labels and a quiet full-width exit', () 
   );
 });
 
+test('pause exposes Random level beside mission continuation and routes through the shared chooser', () => {
+  assert.match(
+    markup,
+    /id="journey-skip"[\s\S]*?id="overlay-random-level"[\s\S]*?id="overlay-missions"/,
+  );
+  assert.match(
+    appSource,
+    /\$\('overlay-random-level'\)\.onclick[\s\S]*?openUnifiedMissions\(\$\('overlay-random-level'\), \{ random: true \}\)/,
+  );
+  assert.match(
+    appSource,
+    /unifiedChooser\.open\(opener, options\);[\s\S]*?options\?\.random[\s\S]*?playRandom\(\{ resetFilters: true \}\)/,
+  );
+});
+
 test('briefing and pause share one command-deck surface', () => {
   assert.match(
     surfaceCss,

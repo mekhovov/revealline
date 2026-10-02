@@ -99,8 +99,9 @@ export function createCouchShell({
     $('race-solo-return').setAttribute('href', authoredDestinations.solo);
     $('race-coop').setAttribute('href', authoredDestinations.team);
   }
-  mountModeChoices({
+  const modeChoices = mountModeChoices({
     root: $('race-mode-choices'),
+    pause: () => onTransition({ from: screen, to: screen }),
     current: 'versus',
     separateTeam: isJourney,
     actions: { solo: $('race-solo-return'), team: $('race-coop') },
@@ -121,6 +122,7 @@ export function createCouchShell({
     removers.push(() => element.removeEventListener(type, fn));
   };
   function primary() {
+    if (modeChoices.simulatorRoot()) return modeChoices.simulatorPrimary();
     if (screen === 'options' && settings.primary()) return settings.primary();
     if (screen === 'main' && $('race-start').disabled) {
       const retry = $('race-chapter-retry');
@@ -293,6 +295,10 @@ export function createCouchShell({
       commitMenuRetune($(SCREENS[previous][0]), $(SCREENS[next][0]));
   }
   function back() {
+    if (modeChoices.simulatorRoot()) {
+      modeChoices.closeSimulator();
+      return;
+    }
     departure = null;
     const more = $('race-more');
     if (more.open && actionCurrent($('race-more-toggle'))()) {
@@ -679,6 +685,7 @@ export function createCouchShell({
       departure = null;
       destroyed = true;
       settings.destroy();
+      modeChoices.dispose();
       nativeMenu?.destroy();
       for (const remove of removers) remove();
     },

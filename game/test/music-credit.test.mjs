@@ -67,7 +67,8 @@ test('missing credits, synthesis and unsafe websites have truthful non-link fall
   assert.match(f.credit.element.textContent, /Artist not recorded/);
   assert.match(f.credit.element.textContent, /Built-in synthesized music/);
   assert.match(f.credit.element.textContent, /Source website not recorded/);
-  assert.equal(f.credit.element.querySelector('a').getAttribute('href'), null);
+  assert.equal(f.credit.element.children[3].hidden, false);
+  assert.equal(f.credit.element.querySelector('a'), null);
   f.credit.render({
     track: { kind: 'mp3', title: '<img src=x>', rights: { source: 'https://artist.example' } },
   });
@@ -102,4 +103,44 @@ test('language switches refresh credits and pause captions without touching tran
   setLocale('uk', { persist: false });
   assert.equal(f.pause.getAttribute('aria-description'), 'Existing instruction');
   assert.equal(f.pause.getAttribute('data-track-caption'), null);
+});
+
+test('creator links retain focus across track ticks, exclude licence and provenance links, and clear stale credits', () => {
+  const f = setup();
+  const track = {
+    ...recording,
+    websites: [
+      { label: 'CC BY 4.0 International', url: 'https://creativecommons.org/licenses/by/4.0/' },
+      { label: 'Historical provenance', url: 'https://history.example/article' },
+      { label: 'Creator source', url: 'https://artist.example/song' },
+    ],
+    rights: { source: 'https://artist.example/song' },
+  };
+  f.credit.render({ track, playing: true, volume: 1 });
+  const link = f.credit.element.querySelector('a');
+  assert.equal(link.getAttribute('href'), 'https://artist.example/song');
+  assert.equal(link.getAttribute('target'), '_blank');
+  assert.equal(link.getAttribute('rel'), 'noopener noreferrer');
+  assert.equal(f.credit.element.querySelectorAll('a').length, 1);
+  link.focus();
+  f.credit.render({
+    track: { ...track, title: 'New title, same creator' },
+    playing: true,
+    volume: 1,
+    positionSeconds: 12,
+  });
+  assert.equal(f.credit.element.querySelector('a'), link);
+  assert.equal(f.doc.activeElement, link);
+  assert.equal(f.clicks(), 0);
+  f.credit.render({
+    track: {
+      title: 'Local original',
+      artist: 'My artist',
+      kind: 'mp3',
+      rights: { source: 'local-file.mp3' },
+    },
+  });
+  assert.equal(f.credit.element.querySelector('a'), null);
+  assert.match(f.credit.element.textContent, /Source website not recorded/);
+  f.credit.dispose();
 });

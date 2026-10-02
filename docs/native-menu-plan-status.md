@@ -1,13 +1,6 @@
 # Native menus: plan status and release batches
 
-> **Current plan:** use the [October 1 roadmap](native-menu-roadmap.md) and [plain-language decision guide](native-menu-review-2026-10-01.md). The user is reviewing priorities; recommendations are not scope cuts or approval to lift deferred review/test policies. This ledger preserves historical “Next”, branch, queue and acceptance statements at their original cutoffs.
-
-
-## October 1 — Decision-oriented plan review
-
-Source reviewed at `955c539a7`. The previous plan PR #875, landing correction #854 and galleries #846/#857/#870 are merged; #863 merged during this review as `4b2bdff33`. Community now mounts shared launcher navigation. The October 1 updater report records desktop packaged-browser updates preserving a flight and reopening with the game server stopped; the first existing-iPhone installation transition remains unqualified. The new password gate precedes game boot and needs UI localization/controller integration. These source findings supersede the former missing-Community-owner task without converting them to new physical/public acceptance.
-
-The updated decision guide separates known gaps, untested behavior and creative expansion; explains benefit and deferral impact; and proposes reliable player entry/save safety followed by one visible living-background demonstration. Advanced creator/reference breadth remains tracked. This documentation review adds no product-test, browser, physical-device or publication acceptance, and does not lift the current test waiver or deferred extended review. The September 30 roadmap is archived intact; all original scope remains unless the user explicitly revises it.
+> **Current plan:** use [the September 30 roadmap](native-menu-roadmap.md) for the current phase review, priorities, tool gaps and timestamped delivery table. This file is the historical evidence ledger. Earlier “Next”, branch, queue, count and phase-status statements apply to their recorded cutoffs, not the active work order. The current priority is the public landing correction, then integrated player safety, offline/accessibility/device acceptance, functional creator gaps and the remaining reference/creative work.
 
 ## September 30 — Restore the approved landing action list
 

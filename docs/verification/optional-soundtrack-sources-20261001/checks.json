@@ -1,0 +1,62 @@
+{
+  "scope": "Final source feature, before release allocation",
+  "base": "ac7d06f12da617d098c63c8c47979974631a75fb",
+  "checks": [
+    {
+      "command": "node --test game/test/online-soundtrack-catalogue.test.mjs game/test/online-soundtrack-source-store.test.mjs game/test/online-soundtrack-sources.test.mjs game/test/soundtrack-panel.test.mjs game/test/soundtrack-player.test.mjs game/test/couch-audio-master.test.mjs game/test/couch-menu-music.test.mjs",
+      "passed": 316,
+      "failed": 0,
+      "skipped": 0
+    },
+    {
+      "command": "node --test game/test/managed-media-store.test.mjs game/test/managed-media-connection.test.mjs game/test/soundtrack-source.test.mjs",
+      "passed": 50,
+      "failed": 0,
+      "skipped": 0
+    },
+    {
+      "command": "node --test game/test/field-kit-audio-source-dependencies.test.mjs",
+      "passed": 2,
+      "failed": 0,
+      "skipped": 0
+    },
+    {
+      "command": "node --test --test-name-pattern=\"public package has local entry\" scripts/test-game-cli.mjs",
+      "passed": 1,
+      "failed": 0,
+      "skipped": 31,
+      "scope": "Preview HTTPS catalogue/media CSP and native self-only policy retained; unrelated CLI tests explicitly not run."
+    },
+    {
+      "command": "node scripts/localization.mjs check",
+      "result": "passed"
+    },
+    {
+      "command": "node scripts/check-presentation-metadata.mjs",
+      "result": "passed",
+      "scope": "Integrity of unchanged compiled revision104; not current-source equivalence."
+    },
+    {
+      "command": "node scripts/check-field-kit-readiness.mjs",
+      "result": "passed",
+      "scope": "Existing declaration only, not qualification of new runtime."
+    },
+    {
+      "command": "node scripts/game-cli.mjs validate",
+      "result": "environment-incomplete",
+      "detail": "ENOENT authoring/community in sparse worktree. No broad sparse expansion below1GiB free-space floor."
+    },
+    {
+      "command": "node scripts/produce-field-kit-theme.mjs --check",
+      "result": "failed",
+      "detail": "Stale production revision ledger; baseline/current diagnosis in production-ledger-diagnosis.json. Historical pins not overwritten."
+    }
+  ],
+  "notClaimed": [
+    "Full repository test suite",
+    "Full local release build",
+    "Public game deployment",
+    "Physical iPhone/controller qualification",
+    "Cold server-stopped offline acceptance of final feature"
+  ]
+}
