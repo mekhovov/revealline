@@ -212,7 +212,7 @@ body.field-kit
 }
 body.field-kit :is(#shell-home, #race-main, #coop-menu).native-landing .game-mode-choice {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 8px;
   width: min(var(--native-menu-width), 100%);
   margin: 0 0 24px;
@@ -227,7 +227,7 @@ body.field-kit
   .game-mode-choice
   > :is(a, button) {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   align-items: center;
   justify-content: safe center;
   gap: 8px;
@@ -773,6 +773,11 @@ body.field-kit[data-text-size='large']
     gap: 6px;
   }
 }
+@media (max-width: 480px) {
+  body.field-kit :is(#shell-home, #race-main, #coop-menu).native-landing .game-mode-choice {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
 @media (max-width: 360px) {
   body.field-kit.game-shell #shell-home.native-landing[open],
   body.field-kit #race-main.native-landing:not([hidden]),
@@ -1007,6 +1012,11 @@ body.field-kit
   }
 }
 
+body.field-kit[data-text-size='large']
+  :is(#shell-home, #race-main, #coop-menu).native-landing
+  .game-mode-choice {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
 @media (max-width: 700px) {
   body.field-kit[data-text-size='large']
     :is(#shell-home, #race-main, #coop-menu).native-landing
