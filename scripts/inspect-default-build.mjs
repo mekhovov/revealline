@@ -159,7 +159,11 @@ export async function inspectDefaultBuild({ root = PROJECT_ROOT, out } = {}) {
   const before = await inspectDefaultBuildInputs(root);
   const availableBefore = await verifyAvailableCommittedSources(root);
   const sourceEligibility = await checkEditionSourceEligibility(root);
-  const inspection = await inspectBuildProject({ root, sourceRevision: before.sourceRevision });
+  const inspection = await inspectBuildProject({
+    root,
+    sourceRevision: before.sourceRevision,
+    publicationProfile: 'main-pages',
+  });
   const after = await inspectDefaultBuildInputs(root);
   const availableAfter = await verifyAvailableCommittedSources(root);
   const finalBinding = frozenSource(root);
@@ -179,7 +183,7 @@ export async function inspectDefaultBuild({ root = PROJECT_ROOT, out } = {}) {
     includedInputsVerified: true,
     availableCommittedSourcesVerified: true,
     reproducibleBuilds: 0,
-    note: 'One normal build preparation, without ZIP or expanded-site writes. Not frozen release, archive verification, human review or whole-site qualification.',
+    note: 'One rolling main Pages profile preparation, without ZIP or expanded-site writes. A 25 MB margin covers separately staged hosted metadata/packages; not frozen release, human review or whole-site qualification.',
   };
   const reportBytes = Buffer.from(json(report));
   await fs.writeFile(output, reportBytes, { flag: 'wx' });
