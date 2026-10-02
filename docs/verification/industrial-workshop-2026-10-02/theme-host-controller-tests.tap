@@ -1,0 +1,126 @@
+TAP version 13
+# Subtest: immediate: menu edits preserve the actual paused Solo cut, saved slot and replay
+ok 1 - immediate: menu edits preserve the actual paused Solo cut, saved slot and replay
+  ---
+  duration_ms: 4599.392542
+  ...
+# Subtest: grid-center: menu edits preserve the actual paused Solo cut, saved slot and replay
+ok 2 - grid-center: menu edits preserve the actual paused Solo cut, saved slot and replay
+  ---
+  duration_ms: 3715.419625
+  ...
+# Subtest: one separate menu record survives Solo, Team, Versus and Solo return without altering display or progress
+    # Subtest: Solo opts into FPV Field Kit rich menus from the real Settings
+    ok 1 - Solo opts into FPV Field Kit rich menus from the real Settings
+      ---
+      duration_ms: 2204.693875
+      ...
+    # Subtest: Team changes menu styling from paused Options without changing a single painter command
+    ok 2 - Team changes menu styling from paused Options without changing a single painter command
+      ---
+      duration_ms: 1904.766166
+      ...
+    # Subtest: Versus Settings opens Appearance category, paused checkpoint and exact Back opener
+    ok 3 - Versus Settings opens Appearance category, paused checkpoint and exact Back opener
+      ---
+      duration_ms: 4869.806042
+      ...
+    # Subtest: fresh Solo adopts without an implicit save or start
+    ok 4 - fresh Solo adopts without an implicit save or start
+      ---
+      duration_ms: 2095.504333
+      ...
+    1..4
+ok 3 - one separate menu record survives Solo, Team, Versus and Solo return without altering display or progress
+  ---
+  duration_ms: 11077.358583
+  ...
+# Subtest: controller editing the new native selectors changes only menu style and preserves Ready
+ok 4 - controller editing the new native selectors changes only menu style and preserves Ready
+  ---
+  duration_ms: 4470.163333
+  ...
+# Subtest: denied menu saving leaves Team local choice usable and does not replace the existing shared record
+ok 5 - denied menu saving leaves Team local choice usable and does not replace the existing shared record
+  ---
+  duration_ms: 259.86325
+  ...
+# Subtest: a real host storage notification updates menus without moving focus, resuming or accepting stale records
+ok 6 - a real host storage notification updates menus without moving focus, resuming or accepting stale records
+  ---
+  duration_ms: 3747.965666
+  ...
+# Subtest: Versus controller commits and cancels family controls without starting or replacing Ready
+ok 7 - Versus controller commits and cancels family controls without starting or replacing Ready
+  ---
+  duration_ms: 4652.327
+  ...
+# Subtest: all production and future specimen interfaces validate and meet text contrast
+ok 8 - all production and future specimen interfaces validate and meet text contrast
+  ---
+  duration_ms: 11.491708
+  ...
+# Subtest: accessibility wins over theme and compact density, while selection/focus remain independent
+ok 9 - accessibility wins over theme and compact density, while selection/focus remain independent
+  ---
+  duration_ms: 5.11275
+  ...
+# Subtest: ornaments Off removes frame wear and interface sampling never chooses SIM nearest filtering
+ok 10 - ornaments Off removes frame wear and interface sampling never chooses SIM nearest filtering
+  ---
+  duration_ms: 3.269583
+  ...
+# Subtest: interface validation rejects executable styles, unknown fields and missing provenance
+ok 11 - interface validation rejects executable styles, unknown fields and missing provenance
+  ---
+  duration_ms: 7.14675
+  ...
+# Subtest: DOM application keeps controls and focus, restores only its owned styles
+ok 12 - DOM application keeps controls and focus, restores only its owned styles
+  ---
+  duration_ms: 2.314
+  ...
+# Subtest: new theme preferences preserve defaults and do not touch legacy state on read
+ok 13 - new theme preferences preserve defaults and do not touch legacy state on read
+  ---
+  duration_ms: 1.702292
+  ...
+# Subtest: failed/session-only saving retains local intent instead of stale cross-tab state
+ok 14 - failed/session-only saving retains local intent instead of stale cross-tab state
+  ---
+  duration_ms: 0.976958
+  ...
+# Subtest: theme host applies only latest prepared selection and a failed load retains the accepted presentation
+ok 15 - theme host applies only latest prepared selection and a failed load retains the accepted presentation
+  ---
+  duration_ms: 11.958125
+  ...
+# Subtest: theme host recovers from stylesheet failure without applying a partial theme
+ok 16 - theme host recovers from stylesheet failure without applying a partial theme
+  ---
+  duration_ms: 5.233875
+  ...
+# Subtest: family documents pin independent revisions and reject mutable or unexpected references
+ok 17 - family documents pin independent revisions and reject mutable or unexpected references
+  ---
+  duration_ms: 2.778083
+  ...
+# Subtest: DOS uses a mono stack before the Plain accessibility override
+ok 18 - DOS uses a mono stack before the Plain accessibility override
+  ---
+  duration_ms: 1.223542
+  ...
+# Subtest: Canvas consumes interface fonts independently from authored arcade artwork
+ok 19 - Canvas consumes interface fonts independently from authored arcade artwork
+  ---
+  duration_ms: 5.072375
+  ...
+1..19
+# tests 23
+# suites 0
+# pass 23
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 28735.279125

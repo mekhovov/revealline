@@ -7,6 +7,41 @@
 >
   <head>
     <meta charset="utf-8" />
+    <style>
+      @layer legacy {
+        html {
+          background: #070914;
+          color-scheme: dark;
+        }
+        body {
+          margin: 0;
+          background: #070914;
+          color: #edf2ff;
+        }
+        #boot-screen {
+          min-height: 100vh;
+          box-sizing: border-box;
+          padding: 24px;
+          font:
+            18px/1.5 'Field Kit UI',
+            system-ui,
+            sans-serif;
+        }
+        #boot-screen a {
+          color: #68d9fa;
+        }
+        #boot-screen [hidden] {
+          display: none !important;
+        }
+      }
+    </style>
+    <script src="../game/presentation/theme-bootstrap.mjs" data-theme-density="player" data-theme-follow-context="true"></script>
+    <link
+      rel="stylesheet"
+      href="../game/presentation/industrial-workshop.css"
+      data-industrial-workshop
+    />
+    <script type="module" src="../game/presentation/theme-entry.mjs"></script>
 
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <meta name="theme-color" content="#070914" />
@@ -23,32 +58,7 @@
       data-i18n-content="website:revealLineFindAnOpeningMakeYourLineRevealThe"
     />
     <title data-i18n="website:revealLineLaunch">FPV / LINE · Launch</title>
-    <style>
-      html {
-        background: #070914;
-        color-scheme: dark;
-      }
-      body {
-        margin: 0;
-        background: #070914;
-        color: #edf2ff;
-      }
-      #boot-screen {
-        min-height: 100vh;
-        box-sizing: border-box;
-        padding: 24px;
-        font:
-          18px/1.5 'Field Kit UI',
-          system-ui,
-          sans-serif;
-      }
-      #boot-screen a {
-        color: #68d9fa;
-      }
-      #boot-screen [hidden] {
-        display: none !important;
-      }
-    </style>
+
     <link rel="stylesheet" href="../game/i18n/style.css" />
     <link rel="stylesheet" href="../game/access-gate.css" />
     <script src="../game/access-gate.mjs" defer></script>

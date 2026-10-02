@@ -66,7 +66,9 @@ export function attachReplayNavigation({
         ? $('play-pause')
         : !$('restart').disabled
           ? $('restart')
-          : $('load-example');
+          : !$('load-example').disabled
+            ? $('load-example')
+            : $('load-text');
   const focus = (node) => {
     node?.focus({ preventScroll: true });
     node?.scrollIntoView({ block: 'nearest', inline: 'nearest' });
@@ -122,9 +124,10 @@ export function attachReplayNavigation({
     } else {
       pause();
       focus($('return-game'));
-      hint(
-        () =>
-          `Playback paused. ${$('return-game').textContent.trim() || t('interface:return')} is focused; activate it to leave.`,
+      hint(() =>
+        t('interface:replay.returnFocused', {
+          destination: $('return-game').textContent.trim() || t('interface:return'),
+        }),
       );
     }
     router.clear();

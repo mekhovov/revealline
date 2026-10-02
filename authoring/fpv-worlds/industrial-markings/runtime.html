@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Packaged World texture inspection</title>
+    <script src="../../../game/presentation/theme-bootstrap.mjs"></script>
+    <link
+      rel="stylesheet"
+      href="../../../game/presentation/industrial-workshop.css"
+      data-industrial-workshop
+    />
+    <style>
+      @layer legacy {
+        body {
+          background: var(--iw-ink, #20272a);
+          color: var(--iw-text, #eee8da);
+          font: 16px var(--iw-font-ui, system-ui);
+          margin: 20px auto;
+          padding: 0 20px;
+          max-width: 1000px;
+        }
+        button,
+        select {
+          padding: 10px;
+          font: inherit;
+          margin: 4px;
+          color: var(--iw-text, #eee8da);
+          background: var(--iw-panel, #283234);
+          border: 1px solid var(--iw-control-line, #89999d);
+        }
+        canvas {
+          width: 100%;
+          height: 420px;
+          display: block;
+          border: 1px solid var(--iw-control-line, #89999d);
+        }
+        pre {
+          white-space: pre-wrap;
+          overflow-wrap: anywhere;
+        }
+        :focus-visible {
+          outline: 3px solid var(--iw-focus, #e4bc70);
+          outline-offset: 3px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Packaged World texture inspection</h1>
+    <p>
+      Actual packaged World renderer and spatial editor, using the retained marking GLB as a test
+      import. This isolated fixture does not install artwork, mutate courses, write preferences or
+      produce flight proofs.
+    </p>
+    <p id="status" role="status">Verifying package and source bytes…</p>
+    <label
+      >Presentation
+      <select id="collection">
+        <option value="authored">Authored</option>
+        <option value="industrial-workshop">Industrial Workshop</option>
+        <option value="dnipro-porcelain">Dnipro Porcelain</option>
+      </select></label
+    >
+    <label
+      >View
+      <select id="view">
+        <option value="gate">Gate front</option>
+        <option value="pad">Landing pad</option>
+        <option value="swatch">Neutral wedge</option>
+      </select></label
+    >
+    <button id="reload" disabled>Reload exact GLB</button>
+    <button id="corrupt" disabled>Try corrupt texture</button>
+    <button id="cancel" disabled>Cancel a pending load</button>
+    <h2>World renderer</h2>
+    <canvas id="flight" aria-label="Actual World renderer imported marking kit"></canvas>
+    <h2>Spatial editor</h2>
+    <canvas
+      id="editor"
+      tabindex="0"
+      aria-label="Actual spatial editor imported marking kit"
+    ></canvas>
+    <pre id="facts"></pre>
+    <script type="module" src="./runtime.mjs"></script>
+  </body>
+</html>

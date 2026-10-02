@@ -1,0 +1,143 @@
+TAP version 13
+# Subtest: fresh-frame picture oracle rejects missing, actor-only, wrong and duplicate backgrounds
+ok 1 - fresh-frame picture oracle rejects missing, actor-only, wrong and duplicate backgrounds # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.471042
+  ...
+# Subtest: native .rlteam new pack validates every image, previews and requires a separate Start
+ok 2 - native .rlteam new pack validates every image, previews and requires a separate Start # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.040792
+  ...
+# Subtest: native .rlteam exact starter namespace validates every image, previews and requires a separate Start
+ok 3 - native .rlteam exact starter namespace validates every image, previews and requires a separate Start # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.031584
+  ...
+# Subtest: local multi-core victory → distinct coverage artwork → Retry retains the accepted picture and recipe
+ok 4 - local multi-core victory → distinct coverage artwork → Retry retains the accepted picture and recipe # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.035209
+  ...
+# Subtest: Settings and its return retain local artwork, paused gameplay and explicit Resume
+ok 5 - Settings and its return retain local artwork, paused gameplay and explicit Resume # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.074041
+  ...
+# Subtest: reimporting identical bytes after lobby return gives the new owner a usable independent lease
+ok 6 - reimporting identical bytes after lobby return gives the new owner a usable independent lease # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.029459
+  ...
+# Subtest: failed prepared local picture retains the qualified draft for explicit Retry without requalifying it
+ok 7 - failed prepared local picture retains the qualified draft for explicit Retry without requalifying it # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.027625
+  ...
+# Subtest: Cancel during qualification fences late decode and ignores another picker event until ownership settles
+ok 8 - Cancel during qualification fences late decode and ignores another picker event until ownership settles # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.03975
+  ...
+# Subtest: a corrupt required body leaves the existing pack and picture usable without substitution
+ok 9 - a corrupt required body leaves the existing pack and picture usable without substitution # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.076208
+  ...
+# Subtest: changing another arena under the reserved starter identity rejects the whole local-art source
+ok 10 - changing another arena under the reserved starter identity rejects the whole local-art source # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.085625
+  ...
+# Subtest: reentrant Cancel then Start during tentative setup cannot start uncommitted local content
+ok 11 - reentrant Cancel then Start during tentative setup cannot start uncommitted local content # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.037542
+  ...
+# Subtest: a replacement during completed local import UI keeps ownership over the older success tail
+ok 12 - a replacement during completed local import UI keeps ownership over the older success tail # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.0305
+  ...
+# Subtest: a reset during completed local import UI keeps ownership over the older success tail
+not ok 13 - a reset during completed local import UI keeps ownership over the older success tail
+  ---
+  duration_ms: 273.577917
+  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/game/test/coop-custom-artwork-host.test.mjs:556:3'
+  failureType: 'testCodeFailure'
+  error: |-
+    older completion must not steal the newer focus intent
+    + actual - expected
+    
+    + 'coop-start'
+    - 'coop-level'
+            ^
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'coop-level'
+  actual: 'coop-start'
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/game/test/coop-custom-artwork-host.test.mjs:609:14)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: reset during tentative replacement cannot restore a retired local owner
+ok 14 - reset during tentative replacement cannot restore a retired local owner # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.403084
+  ...
+# Subtest: arena change during tentative replacement cannot restore a retired local owner
+ok 15 - arena change during tentative replacement cannot restore a retired local owner # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.03275
+  ...
+# Subtest: cancelled local Next keeps the earned result and a deliberate retry selects the pinned successor
+ok 16 - cancelled local Next keeps the earned result and a deliberate retry selects the pinned successor # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.133541
+  ...
+# Subtest: terminal departure during qualification releases the late decoder and the existing image exactly once
+ok 17 - terminal departure during qualification releases the late decoder and the existing image exactly once # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.03075
+  ...
+# Subtest: Team discovery retains an opened artwork owner across starter play and exact local return
+ok 18 - Team discovery retains an opened artwork owner across starter play and exact local return # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.018958
+  ...
+# Subtest: discovery-started local artwork keeps its earned result, ordered Next and exact Retry image
+ok 19 - discovery-started local artwork keeps its earned result, ordered Next and exact Retry image # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.021542
+  ...
+# Subtest: pack read errors preserve sentence punctuation and explicit Retry (none)
+ok 20 - pack read errors preserve sentence punctuation and explicit Retry (none) # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.017
+  ...
+# Subtest: pack read errors preserve sentence punctuation and explicit Retry (.)
+ok 21 - pack read errors preserve sentence punctuation and explicit Retry (.) # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.016542
+  ...
+# Subtest: pack read errors preserve sentence punctuation and explicit Retry (!)
+ok 22 - pack read errors preserve sentence punctuation and explicit Retry (!) # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.015375
+  ...
+# Subtest: pack read errors preserve sentence punctuation and explicit Retry (?)
+ok 23 - pack read errors preserve sentence punctuation and explicit Retry (?) # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.014292
+  ...
+1..23
+# tests 23
+# suites 0
+# pass 0
+# fail 1
+# cancelled 0
+# skipped 22
+# todo 0
+# duration_ms 8382.331625

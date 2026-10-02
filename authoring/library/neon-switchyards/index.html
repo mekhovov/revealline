@@ -3,46 +3,59 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Neon Switchyards · RevealLine</title>
+  <script
+    src="../../../game/presentation/theme-bootstrap.mjs"
+    data-theme-density="studio"
+    data-theme-follow-context="true"
+  ></script>
+  <link
+    rel="stylesheet"
+    href="../../../game/presentation/industrial-workshop.css"
+    data-industrial-workshop
+  />
+  <script type="module" src="../../../game/presentation/theme-entry.mjs"></script>
   <style>
-    :root {
-      color-scheme: dark;
-      font: 18px/1.6 system-ui;
-      background: #060911;
-      color: #e2edf5;
-    }
-    body {
-      max-width: 760px;
-      margin: 10vh auto;
-      padding: 24px;
-    }
-    h1 {
-      color: #39c7e8;
-      font-size: 2.8rem;
-      margin-bottom: 8px;
-    }
-    button,
-    select,
-    a {
-      font: inherit;
-      color: #75ddf5;
-    }
-    button,
-    select {
-      padding: 12px 20px;
-      background: #122434;
-      border: 1px solid #39c7e8;
-      border-radius: 6px;
-    }
-    button {
-      cursor: pointer;
-      margin: 20px 0;
-    }
-    label {
-      display: block;
-    }
-    small {
-      display: block;
-      color: #a3b5c9;
+    @layer legacy {
+      :root {
+        color-scheme: dark;
+        font: 18px/1.6 system-ui;
+        background: #060911;
+        color: #e2edf5;
+      }
+      body {
+        max-width: 760px;
+        margin: 10vh auto;
+        padding: 24px;
+      }
+      h1 {
+        color: #39c7e8;
+        font-size: 2.8rem;
+        margin-bottom: 8px;
+      }
+      button,
+      select,
+      a {
+        font: inherit;
+        color: #75ddf5;
+      }
+      button,
+      select {
+        padding: 12px 20px;
+        background: #122434;
+        border: 1px solid #39c7e8;
+        border-radius: 6px;
+      }
+      button {
+        cursor: pointer;
+        margin: 20px 0;
+      }
+      label {
+        display: block;
+      }
+      small {
+        display: block;
+        color: #a3b5c9;
+      }
     }
   </style>
   <h1>Neon Switchyards</h1>

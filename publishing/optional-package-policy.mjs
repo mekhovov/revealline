@@ -61,7 +61,6 @@ const BASE_OPTIONAL_PACKAGE_POLICIES = Object.freeze({
       'radio-setup.mjs',
       'radio-guide.mjs',
       'flight-fullscreen.mjs',
-      'flight-fullscreen.css',
       'sim-presentation.mjs',
       'math.mjs',
       'rotation-table.mjs',
@@ -81,7 +80,7 @@ const BASE_OPTIONAL_PACKAGE_POLICIES = Object.freeze({
       'optional-practice/install-context.mjs',
       'game/data-json.mjs',
       'game/fpv-entry.mjs',
-      'game/ui/field-kit-tokens.css',
+      'game/presentation/theme-system.mjs',
       'game/ui/native-menu-icons.mjs',
       'game/key-bindings.mjs',
       'game/i18n/index.mjs',
@@ -128,8 +127,8 @@ const BASE_OPTIONAL_PACKAGE_POLICIES = Object.freeze({
     ]),
     licenses: Object.freeze([
       {
-        dependency: 'Exo 2 and Departure Mono UI fonts',
-        version: 'Exo 2 2.010 / Departure Mono 1.500',
+        dependency: 'Exo 2, Departure Mono, IBM Plex Mono and Handjet UI fonts',
+        version: 'Exo 2 2.010 / Departure Mono 1.500 / IBM Plex Mono 2.3 / Handjet 2.003',
         license: 'OFL-1.1',
         path: 'optional-practice/civilian-fpv/README.md',
       },

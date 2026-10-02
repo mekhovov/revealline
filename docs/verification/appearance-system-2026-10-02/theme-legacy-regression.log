@@ -1,0 +1,230 @@
+TAP version 13
+# Subtest: Pages game and launch entries require the same remembered password gate
+ok 1 - Pages game and launch entries require the same remembered password gate
+  ---
+  duration_ms: 2.661083
+  ...
+# Subtest: retained Legacy setup keeps the original craft status in its modal and restores it after closing
+ok 2 - retained Legacy setup keeps the original craft status in its modal and restores it after closing
+  ---
+  duration_ms: 868.055125
+  ...
+# Subtest: direct briefing and disposal retain one craft presenter outside hidden mission content
+ok 3 - direct briefing and disposal retain one craft presenter outside hidden mission content
+  ---
+  duration_ms: 651.011042
+  ...
+# Subtest: title keeps its game destinations and quick sound; Workshop and unified Missions Back preserve an unstarted flight
+ok 4 - title keeps its game destinations and quick sound; Workshop and unified Missions Back preserve an unstarted flight
+  ---
+  duration_ms: 4232.489459
+  ...
+# Subtest: retained Legacy gallery pages reuse locks; concealed pictures have no original and selection does not launch
+ok 5 - retained Legacy gallery pages reuse locks; concealed pictures have no original and selection does not launch
+  ---
+  duration_ms: 614.898375
+  ...
+# Subtest: retained Legacy Deploy respects a pending selector and forwards one accepted Start
+ok 6 - retained Legacy Deploy respects a pending selector and forwards one accepted Start
+  ---
+  duration_ms: 576.454709
+  ...
+# Subtest: visible title Start launches directly and Continue explicitly resumes the paused flight
+ok 7 - visible title Start launches directly and Continue explicitly resumes the paused flight
+  ---
+  duration_ms: 714.776375
+  ...
+# Subtest: an accepted world change rebuilds mission thumbnails without starting the existing flight
+ok 8 - an accepted world change rebuilds mission thumbnails without starting the existing flight
+  ---
+  duration_ms: 598.545375
+  ...
+# Subtest: Missions button returns to home without resuming or changing a saved cut
+ok 9 - Missions button returns to home without resuming or changing a saved cut
+  ---
+  duration_ms: 4607.925
+  ...
+# Subtest: Missions escape returns to home without resuming or changing a saved cut
+ok 10 - Missions escape returns to home without resuming or changing a saved cut
+  ---
+  duration_ms: 4636.198083
+  ...
+# Subtest: Missions controller returns to home without resuming or changing a saved cut
+ok 11 - Missions controller returns to home without resuming or changing a saved cut
+  ---
+  duration_ms: 5368.593125
+  ...
+# Subtest: Missions button returns to flight without resuming or changing a saved cut
+ok 12 - Missions button returns to flight without resuming or changing a saved cut
+  ---
+  duration_ms: 4729.319041
+  ...
+# Subtest: Missions escape returns to flight without resuming or changing a saved cut
+ok 13 - Missions escape returns to flight without resuming or changing a saved cut
+  ---
+  duration_ms: 4846.201542
+  ...
+# Subtest: Missions controller returns to flight without resuming or changing a saved cut
+ok 14 - Missions controller returns to flight without resuming or changing a saved cut
+  ---
+  duration_ms: 7656.421708
+  ...
+# Subtest: Missions button returns to brief without resuming or changing a saved cut
+ok 15 - Missions button returns to brief without resuming or changing a saved cut
+  ---
+  duration_ms: 1223.747667
+  ...
+# Subtest: Missions escape returns to brief without resuming or changing a saved cut
+ok 16 - Missions escape returns to brief without resuming or changing a saved cut
+  ---
+  duration_ms: 1197.22375
+  ...
+# Subtest: Missions controller returns to brief without resuming or changing a saved cut
+ok 17 - Missions controller returns to brief without resuming or changing a saved cut
+  ---
+  duration_ms: 2462.240625
+  ...
+# Subtest: retained Legacy Back to flight remains an intentional exit from title Missions
+ok 18 - retained Legacy Back to flight remains an intentional exit from title Missions
+  ---
+  duration_ms: 627.913792
+  ...
+# Subtest: controller Back retains a cancellation warning when a transaction keeps its dialog open
+ok 19 - controller Back retains a cancellation warning when a transaction keeps its dialog open
+  ---
+  duration_ms: 612.6655
+  ...
+# Subtest: Settings Extras FPV simulator uses the bundled route and preserves the game return address
+ok 20 - Settings Extras FPV simulator uses the bundled route and preserves the game return address
+  ---
+  duration_ms: 561.861
+  ...
+# Subtest: all45 semantic icons cover the exact registry and native grids with binary alpha, transparent edges and at most4 colors
+ok 21 - all45 semantic icons cover the exact registry and native grids with binary alpha, transparent edges and at most4 colors
+  ---
+  duration_ms: 13.6515
+  ...
+# Subtest: direction bindings rotate exactly clockwise, back differs from undo, and redo mirrors undo
+ok 22 - direction bindings rotate exactly clockwise, back differs from undo, and redo mirrors undo
+  ---
+  duration_ms: 2.820291
+  ...
+# Subtest: award rank marks remain distinct without medal hue
+ok 23 - award rank marks remain distinct without medal hue
+  ---
+  duration_ms: 0.800792
+  ...
+# Subtest: inspection sizes stay binary and independently owned while malformed requests fail
+ok 24 - inspection sizes stay binary and independently owned while malformed requests fail
+  ---
+  duration_ms: 14.036875
+  ...
+# Subtest: Workshop destinations ship their actual authoring runtime and return paths
+ok 25 - Workshop destinations ship their actual authoring runtime and return paths
+  ---
+  duration_ms: 636.579958
+  ...
+# Subtest: settings categories keep the real controls and preferences without starting the flight
+ok 26 - settings categories keep the real controls and preferences without starting the flight
+  ---
+  duration_ms: 831.109959
+  ...
+# Subtest: leaving Controls cancels a pending physical-key capture through its native cancel action
+ok 27 - leaving Controls cancels a pending physical-key capture through its native cancel action
+  ---
+  duration_ms: 624.823833
+  ...
+# Subtest: settings tabs support arrow and end navigation without leaking the key to the game
+ok 28 - settings tabs support arrow and end navigation without leaking the key to the game
+  ---
+  duration_ms: 637.8015
+  ...
+# Subtest: data and collection shortcuts reuse the existing nested Library sections without changing saved data
+ok 29 - data and collection shortcuts reuse the existing nested Library sections without changing saved data
+  ---
+  duration_ms: 640.700334
+  ...
+# Subtest: supporting page text size remains presentation only and listeners are released
+ok 30 - supporting page text size remains presentation only and listeners are released
+  ---
+  duration_ms: 0.196708
+  ...
+# Subtest: supporting pages read the shared UI skin without writing or competing with native game controls
+ok 31 - supporting pages read the shared UI skin without writing or competing with native game controls
+  ---
+  duration_ms: 0.4465
+  ...
+# Subtest: support-skin CSS owns chrome tokens but never canvas, board geometry or hidden focus
+ok 32 - support-skin CSS owns chrome tokens but never canvas, board geometry or hidden focus
+  ---
+  duration_ms: 1.336416
+  ...
+# Subtest: edition tool chrome cannot be replaced by a saved default-game palette
+ok 33 - edition tool chrome cannot be replaced by a saved default-game palette
+  ---
+  duration_ms: 0.188667
+  ...
+# Subtest: surface copy supports regional locales and preserves native controls
+ok 34 - surface copy supports regional locales and preserves native controls
+  ---
+  duration_ms: 0.226292
+  ...
+# Subtest: native menu inventory covers every shipped edition and both launch routes
+ok 35 - native menu inventory covers every shipped edition and both launch routes
+  ---
+  duration_ms: 4.7455
+  ...
+# Subtest: every active menu destination has source or an explicit current launcher generator
+ok 36 - every active menu destination has source or an explicit current launcher generator
+  ---
+  duration_ms: 5.270584
+  ...
+# Subtest: history-restored selector follows current owner after pageshow (persisted=false)
+ok 37 - history-restored selector follows current owner after pageshow (persisted=false)
+  ---
+  duration_ms: 2.407667
+  ...
+# Subtest: history-restored selector follows current owner after pageshow (persisted=true)
+ok 38 - history-restored selector follows current owner after pageshow (persisted=true)
+  ---
+  duration_ms: 0.393709
+  ...
+# Subtest: persisted return first refreshes shared authority, then corrects late stale form state
+ok 39 - persisted return first refreshes shared authority, then corrects late stale form state
+  ---
+  duration_ms: 0.299292
+  ...
+# Subtest: history repair retains unsaved local intent and its persistence warning
+ok 40 - history repair retains unsaved local intent and its persistence warning
+  ---
+  duration_ms: 0.445625
+  ...
+# Subtest: failed display-save notices translate in place without retrying storage or touching the child
+ok 41 - failed display-save notices translate in place without retrying storage or touching the child
+  ---
+  duration_ms: 1.17025
+  ...
+# Subtest: deferred repair reads newer explicit intent instead of replaying the earlier snapshot
+ok 42 - deferred repair reads newer explicit intent instead of replaying the earlier snapshot
+  ---
+  duration_ms: 0.32775
+  ...
+# Subtest: a second pageshow replaces its pending task and a frozen departure cancels it
+ok 43 - a second pageshow replaces its pending task and a frozen departure cancels it
+  ---
+  duration_ms: 0.33525
+  ...
+# Subtest: terminal disposal cancels deferred repair and stale callbacks cannot rewrite controls
+ok 44 - terminal disposal cancels deferred repair and stale callbacks cannot rewrite controls
+  ---
+  duration_ms: 0.224416
+  ...
+1..44
+# tests 44
+# suites 0
+# pass 44
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 54671.739

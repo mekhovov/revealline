@@ -2,7 +2,27 @@ import { t, localizedText, localizedAttribute } from '../i18n/index.mjs';
 import { setMenuIcon } from './native-menu-icons.mjs';
 import { mountOptionalPracticePanel } from './optional-practice-panel.mjs';
 import { fpvWorldLaunchURL } from '../fpv-entry.mjs';
+import { loadAcceptedAppearance } from '../presentation/theme-system.mjs';
 const MODES = Object.freeze([['solo'], ['versus'], ['team']]);
+
+function contextualAppearance(document) {
+  let accepted = null;
+  try {
+    accepted = loadAcceptedAppearance((document.defaultView ?? globalThis).sessionStorage);
+  } catch {
+    /* Denied storage still permits an explicit compiled appearance pin. */
+  }
+  const data = document.documentElement.dataset;
+  const compiled =
+    /^[a-z][a-z0-9-]{0,63}$/.test(data.appearanceFamily ?? '') &&
+    /^r[1-9][0-9]{0,8}$/.test(data.appearanceRevision ?? '')
+      ? { familyId: data.appearanceFamily, revision: data.appearanceRevision }
+      : null;
+  const pin =
+    compiled ??
+    (accepted ? { familyId: accepted.family.id, revision: accepted.family.revision } : null);
+  return pin ? { ...pin, appearanceThemes: accepted ? [accepted] : [] } : null;
+}
 
 /** Shared presentation only. Existing anchors keep their hrefs and listeners. */
 export function mountModeChoices({
@@ -11,6 +31,7 @@ export function mountModeChoices({
   actions,
   separateTeam = false,
   pause = () => {},
+  getAppearanceDefault = () => contextualAppearance(root.ownerDocument),
 }) {
   if (!root || !MODES.some(([id]) => id === current))
     throw new Error(t('interface:aGameModeAndItsVisibleNavigationContainerAreRequired'));
@@ -51,6 +72,7 @@ export function mountModeChoices({
   root.replaceChildren(...choices, simulator);
   const panel = mountOptionalPracticePanel({
     document,
+    getAppearanceDefault,
     container: root,
     opener: simulator,
     pause,

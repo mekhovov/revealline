@@ -2,6 +2,9 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
+    <script src="presentation/theme-bootstrap.mjs" data-theme-density="player" data-theme-follow-context="true"></script>
+    <link rel="stylesheet" href="presentation/industrial-workshop.css" data-industrial-workshop />
+    <script type="module" src="presentation/theme-entry.mjs"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <title data-i18n="interface:downloads.title">FPV / LINE · Offline game</title>
     <link rel="stylesheet" href="downloads.css" />
@@ -22,7 +25,7 @@
         Download once, then play without an internet connection. Recorded music is optional; game
         sounds and the procedural score are included.
       </p>
-      <section aria-labelledby="updates-title">
+      <section data-ui-surface="panel" aria-labelledby="updates-title">
         <h2 id="updates-title" data-i18n="interface:updates.title">Game updates</h2>
         <p id="update-status" role="status" data-i18n="interface:updates.help">
           Check the latest published game. Review the download size before updating; your progress
@@ -40,7 +43,12 @@
           >Play updated game</a
         >
       </section>
-      <section id="destination-recovery" aria-labelledby="destination-title" hidden>
+      <section
+        data-ui-surface="panel"
+        id="destination-recovery"
+        aria-labelledby="destination-title"
+        hidden
+      >
         <h2 id="destination-title" data-i18n="interface:downloads.prepareRequestedMode">
           Prepare the requested mode
         </h2>
@@ -50,7 +58,7 @@
           Soundtracks are not required. Back to game returns to the downloaded Solo menu.
         </p>
       </section>
-      <section aria-labelledby="installation-title">
+      <section data-ui-surface="panel" aria-labelledby="installation-title">
         <h2 id="installation-title" data-i18n="interface:downloads.installHeading">
           Install FPV / LINE
         </h2>
@@ -75,7 +83,7 @@
           this browser.
         </p>
       </section>
-      <section aria-labelledby="game-title">
+      <section data-ui-surface="panel" aria-labelledby="game-title">
         <h2 id="game-title">Game for offline play</h2>
         <p id="game-status" role="status">Checking this edition…</p>
         <label id="starter-choice"
@@ -183,7 +191,7 @@
           >Open progress transfer in Classic</a
         >
       </section>
-      <section aria-labelledby="music-title">
+      <section data-ui-surface="panel" aria-labelledby="music-title">
         <h2 id="music-title" data-i18n="interface:downloads.musicHeading">Optional soundtracks</h2>
         <p id="music-status" role="status">Soundtracks: checking downloaded recordings…</p>
         <p data-i18n="interface:downloads.musicHelp">

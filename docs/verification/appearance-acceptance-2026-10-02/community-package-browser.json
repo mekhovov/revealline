@@ -1,0 +1,32 @@
+{
+  "method": "Actual CUA interaction with exact emitted packages on existing unlocked origin; no access-gate changes",
+  "north": {
+    "choice": "Follow campaign / community",
+    "family": "candidate-67ed37898477f80f",
+    "material": "porcelain",
+    "panel": "rgb(37, 49, 68)",
+    "revision": "r1",
+    "route": "/appearance-packaged-20261002/north/game/index.html"
+  },
+  "southPersonalOverride": {
+    "choice": "Tryzub",
+    "family": "tryzub",
+    "material": "brass",
+    "route": "/appearance-packaged-20261002/south/game/index.html"
+  },
+  "southFollow": {
+    "choice": "Follow campaign / community",
+    "family": "candidate-67ed37898477f80f",
+    "material": "porcelain",
+    "revision": "r1",
+    "route": "/appearance-packaged-20261002/south/game/index.html"
+  },
+  "southReload": {
+    "choice": "Follow campaign / community",
+    "family": "candidate-67ed37898477f80f",
+    "material": "porcelain",
+    "revision": "r1",
+    "route": "/appearance-packaged-20261002/south/game/index.html"
+  },
+  "serviceWorkerOfflineTested": false
+}

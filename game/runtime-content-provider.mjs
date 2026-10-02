@@ -1,7 +1,11 @@
 import { editionOfflinePackageId } from './editions/offline-package-id.mjs';
 import { loadEditionBootstrap } from './editions/bootstrap.mjs';
 import { verifyEditionAssets } from './editions/assets.mjs';
-import { resolveEditionAssets } from './editions/model.mjs';
+import {
+  resolveEditionAssets,
+  resolveEditionAppearanceDefault,
+  resolveEditionAppearanceThemes,
+} from './editions/model.mjs';
 import { editionIdentityId, editionPublicSlug, resolveEditionContext } from './edition-context.mjs';
 import {
   communityEntryURL,
@@ -197,6 +201,15 @@ export async function loadRuntimeContentProvider({
     route: Object.freeze({ ...route, sessionKey: `${route.sessionKey}.solo-v2` }),
     legacySessionKey: route.sessionKey,
     theme,
+    appearanceDefault: resolveEditionAppearanceDefault(selection),
+    appearanceThemes: resolveEditionAppearanceThemes(catalog, {
+      editionIds: [selection.edition.id],
+    }),
+    appearanceDefaultFor(campaignId = selection.campaign.id) {
+      const campaign = selection.campaigns.find((item) => item.id === campaignId);
+      required(campaign, 'This campaign is not included in the selected edition.');
+      return resolveEditionAppearanceDefault({ ...selection, campaign });
+    },
     bootstrap,
     rootURL: rootURL.href,
     themes: projected.themes.themes,

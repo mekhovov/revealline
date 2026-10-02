@@ -1,7 +1,7 @@
 import { rewardPresentationItems } from '../../game/rewards/audio-groups.mjs';
 import { mountRewardAudioGroup } from '../../game/ui/reward-audio-group.mjs';
 import { mountRewardKnowledge } from '../../game/ui/reward-knowledge.mjs';
-import { getLocale, t } from '../../game/i18n/index.mjs';
+import { getLocale, localizedText, t } from '../../game/i18n/index.mjs';
 import { createLessonEditor } from './lesson-editor.mjs';
 import { createStudioLessonSidecar, validateStudioLessonRevisions } from './lesson-authoring.mjs';
 import { mountRewardMedia } from '../../game/ui/reward-media.mjs';
@@ -20,6 +20,10 @@ import {
   studioPreviewURL,
   studioSelection,
   withStudioCampaignHero,
+  withStudioAppearanceDefault,
+  withStudioAppearanceTheme,
+  listStudioAppearanceThemes,
+  findStudioAppearanceTheme,
 } from './model.mjs';
 import { verifyStudioPreview } from './preview.mjs';
 import { readStudioJSON } from './source-reader.mjs';
@@ -38,6 +42,8 @@ import { mountDiscoveryExploration } from '../../game/ui/discovery-exploration.m
 import { loadRewardImage } from '../../game/ui/reward-image.mjs';
 import { createCompanyOperation } from './operation.mjs';
 import { attachCompanyReader } from './reading.mjs';
+import { getThemeFamily } from '../../game/presentation/theme-system.mjs';
+import { loadThemePreview } from '../../game/presentation/theme-preview.mjs';
 
 const $ = (id) => document.getElementById(id);
 const labels = [
@@ -57,8 +63,16 @@ const node = (tag, text, className) => {
   return element;
 };
 const status = (message, error = false) => {
-  $('status').textContent = message;
+  localizedText($('status'), message);
   $('status').dataset.error = String(error);
+};
+const appearanceCopy = (key, values = {}) => t(`tools:studio.appearance.${key}`, values);
+const appearanceThemeName = (family) =>
+  t(`interface:workshop.theme.${family.id}`, { defaultValue: family.name });
+const appearanceError = (key) => {
+  const error = new Error(appearanceCopy(key));
+  error.localizedMessage = () => appearanceCopy(key);
+  return error;
 };
 const guarded =
   (handler) =>
@@ -67,7 +81,7 @@ const guarded =
       await handler(...args);
     } catch (error) {
       if (error.name === 'AbortError') return;
-      status(error.message, true);
+      status(error.localizedMessage ?? error.message, true);
     }
   };
 const format = (value) => JSON.stringify(value, null, 2);
@@ -95,7 +109,8 @@ let catalog,
   previewController = null,
   missionReview = null,
   operation = null,
-  lastExport = null;
+  lastExport = null,
+  pendingAppearanceCandidate = null;
 const editorBuffers = new Map();
 let rewardPreviewExplorations = [];
 function disposeRewardPreviews() {
@@ -329,6 +344,7 @@ function renderCatalog() {
   }
   $('identity-ids').textContent =
     `Brand: ${brand.id} · Edition: ${edition.id} · Theme: ${brand.themeId}`;
+  renderAppearanceDefaults(brand);
   $('catalog-json').value = editorBuffers.get('catalog') ?? format(catalog);
   const images = catalog.assets.filter(
     (asset) => brand.assetIds.includes(asset.id) && /\.(png|jpe?g|webp|svg)$/i.test(asset.path),
@@ -410,6 +426,133 @@ function renderCatalog() {
     output = `${edition.id}-preview`;
   $('compile-commands').textContent =
     `node scripts/company-studio.mjs import-draft --file ${edition.id}-draft.json --workspace .cache/${name}\n\nnode scripts/company-studio.mjs validate --workspace .cache/${name} --edition ${edition.id}\n\nnode scripts/company-studio.mjs preview --workspace .cache/${name} --edition ${edition.id} --out dist/company-previews/${output}\n\n# Import dist/company-previews/${output}.report.json in step 06`;
+}
+function renderAppearanceDefaults(brand) {
+  let panel = $('community-appearance-defaults');
+  if (!panel) {
+    panel = node('section', undefined, 'panel');
+    panel.id = 'community-appearance-defaults';
+    panel.setAttribute('aria-labelledby', 'community-appearance-heading');
+    panel.setAttribute('aria-describedby', 'community-appearance-help');
+    $('theme-path').parentElement.before(panel);
+  }
+  const heading = node('h3'),
+    help = node('p');
+  heading.id = 'community-appearance-heading';
+  help.id = 'community-appearance-help';
+  localizedText(heading, () => appearanceCopy('title'));
+  localizedText(help, () => appearanceCopy('help'));
+  panel.replaceChildren(heading, help);
+  const availableThemes = [...listStudioAppearanceThemes(catalog)];
+  if (
+    pendingAppearanceCandidate &&
+    !availableThemes.some(
+      (family) =>
+        family.id === pendingAppearanceCandidate.family.id &&
+        family.revision === pendingAppearanceCandidate.family.revision,
+    )
+  )
+    availableThemes.push(pendingAppearanceCandidate.family);
+  if (pendingAppearanceCandidate) {
+    const note = node('p', undefined, 'note'),
+      candidate = pendingAppearanceCandidate,
+      included = !!findStudioAppearanceTheme(
+        catalog,
+        candidate.family.id,
+        candidate.family.revision,
+      );
+    note.id = 'community-appearance-candidate';
+    localizedText(note, () =>
+      appearanceCopy(included ? 'candidateIncluded' : 'candidateScope', {
+        name: candidate.family.name,
+        revision: candidate.family.revision,
+        arcade: candidate.family.arcade
+          ? `${candidate.family.arcade.id}@${candidate.family.arcade.revision}`
+          : appearanceCopy('authored'),
+        sim: candidate.family.sim
+          ? `${candidate.family.sim.id}@${candidate.family.sim.revision}`
+          : appearanceCopy('authored'),
+      }),
+    );
+    panel.append(note);
+  }
+  for (const [scope, owner] of [
+    ['community', brand],
+    ['campaign', selectedCampaign()],
+  ]) {
+    const row = node('div', undefined, 'button-row'),
+      label = node('label'),
+      caption = node('span'),
+      select = node('select');
+    localizedText(caption, () => appearanceCopy(`${scope}.label`, { name: owner.name }));
+    caption.id = `appearance-label-${scope}`;
+    label.append(caption);
+    select.id = `appearance-default-${scope}`;
+    select.setAttribute('aria-labelledby', caption.id);
+    const inherited = node('option');
+    localizedText(inherited, () => appearanceCopy(`${scope}.inherit`));
+    inherited.value = '';
+    select.append(inherited);
+    for (const family of availableThemes) {
+      const option = node('option');
+      localizedText(option, () =>
+        appearanceCopy('retained', {
+          name: appearanceThemeName(family),
+          revision: family.revision,
+        }),
+      );
+      option.value = `${family.id}@${family.revision}`;
+      select.append(option);
+    }
+    if (owner.appearanceDefault) {
+      const pin = owner.appearanceDefault,
+        value = `${pin.familyId}@${pin.revision}`;
+      if (![...select.options].some((option) => option.value === value)) {
+        const retained = findStudioAppearanceTheme(catalog, pin.familyId, pin.revision),
+          option = node('option');
+        localizedText(option, () =>
+          retained
+            ? appearanceCopy('retained', {
+                name: appearanceThemeName(retained),
+                revision: pin.revision,
+              })
+            : appearanceCopy('unavailable', { name: pin.familyId, revision: pin.revision }),
+        );
+        option.value = value;
+        select.append(option);
+      }
+      select.value = value;
+    }
+    label.append(select);
+    const apply = node('button');
+    localizedText(apply, () => appearanceCopy(`${scope}.apply`));
+    apply.type = 'button';
+    apply.id = `apply-appearance-${scope}`;
+    apply.onclick = guarded(async () => {
+      if (editorBuffers.has('catalog')) throw appearanceError('pendingCatalog');
+      const [familyId, revision] = select.value.split('@');
+      const appearanceDefault = familyId ? { familyId, revision } : null;
+      const candidate =
+        pendingAppearanceCandidate?.family.id === familyId &&
+        pendingAppearanceCandidate.family.revision === revision
+          ? pendingAppearanceCandidate
+          : null;
+      if (
+        appearanceDefault &&
+        !candidate &&
+        !findStudioAppearanceTheme(catalog, familyId, revision)
+      )
+        throw appearanceError('chooseAvailable');
+      const source = candidate ? withStudioAppearanceTheme(catalog, candidate) : catalog;
+      const next = withStudioAppearanceDefault(source, { scope, id: owner.id, appearanceDefault });
+      catalog = next;
+      changed(() => appearanceCopy(`${scope}.applied`));
+      renderCatalog();
+      $(apply.id)?.focus({ preventScroll: true });
+    });
+    row.append(label, apply);
+    panel.append(row);
+  }
 }
 async function renderDocuments() {
   disposeRewardPreviews();
@@ -1114,9 +1257,32 @@ async function main() {
   registeredRuntimeAssets = await readJSON(new URL('game/editions/runtime-assets.json', rootURL));
   catalog = registeredCatalog;
   editionId = catalog.defaultEditionId;
+  const appearanceRequest = new URL(location.href).searchParams;
+  let appearanceHandoffFailed = false;
+  if (appearanceRequest.has('appearanceCandidate')) {
+    try {
+      pendingAppearanceCandidate = loadThemePreview(
+        window.sessionStorage,
+        appearanceRequest.get('appearanceCandidate'),
+      );
+    } catch {
+      appearanceHandoffFailed = true;
+    }
+  }
   renderCatalog();
   await renderDocuments();
   status('Registered source loaded. Choose a step to shape the next edition.');
+  const requestedFamily =
+    pendingAppearanceCandidate?.family ??
+    getThemeFamily(
+      appearanceRequest.get('appearanceFamily'),
+      appearanceRequest.get('appearanceRevision') ?? undefined,
+    );
+  if (requestedFamily) {
+    for (const scope of ['community', 'campaign'])
+      $(`appearance-default-${scope}`).value = `${requestedFamily.id}@${requestedFamily.revision}`;
+    status(() => appearanceCopy('review', { name: appearanceThemeName(requestedFamily) }));
+  } else if (appearanceHandoffFailed) status(() => appearanceCopy('handoffUnavailable'), true);
   for (const button of document.querySelectorAll('[data-step]'))
     button.onclick = () => showStep(Number(button.dataset.step));
   $('previous-step').onclick = () => showStep(step - 1);
@@ -1289,7 +1455,7 @@ async function main() {
     ['company-read-report', 'report-checks', 'Unverified compiler report'],
   ])
     attachCompanyReader({ document, id, region: $(region), label });
-  showStep(0);
+  showStep(requestedFamily ? 2 : 0);
 }
 main().catch((error) => {
   status(`Could not open the studio: ${error.message}`, true);

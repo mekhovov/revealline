@@ -1,0 +1,105 @@
+{
+  "format": "AppearanceContinuationFollowup.v1",
+  "startedAt": "2026-10-02T21:20:33.389640+00:00",
+  "baseRevision": "a4b7c9d64e2253da06f00f205559063563b5047a",
+  "workingTreeModified": true,
+  "reason": "Marking viewer CSP-compatible embedded PNG loader changed during the passing aggregate cohort. This scoped follow-up covers the final frozen source.",
+  "changedDuringAggregate": [
+    "authoring/fpv-worlds/industrial-markings/viewer.mjs",
+    "scripts/test-industrial-marking-kit.mjs"
+  ],
+  "sourceInputs": [
+    {
+      "path": "authoring/fpv-worlds/industrial-markings/generate.mjs",
+      "bytes": 16093,
+      "sha256": "03cd57169f35c1dcc5333e281d272012abb92055c0d060316a44a62bdfb0db81"
+    },
+    {
+      "path": "authoring/fpv-worlds/industrial-markings/loader.mjs",
+      "bytes": 1107,
+      "sha256": "0bc0c85c4479780f2268a89d93e42fc52f052959f20ba031ac840dfcda8b2577"
+    },
+    {
+      "path": "authoring/fpv-worlds/industrial-markings/viewer.mjs",
+      "bytes": 7472,
+      "sha256": "d05e3778ab6ec0152945347cbc2b3bcf642f883516950b9e79ed27b16c606472"
+    },
+    {
+      "path": "scripts/test-industrial-marking-kit.mjs",
+      "bytes": 12158,
+      "sha256": "f24a4b2e072a20cf288942052e82ccbb52a0c8e5898e2ef93d2e8a4181aeaeac"
+    }
+  ],
+  "node": "v20.19.5",
+  "commands": [
+    {
+      "name": "marking-followup-tests",
+      "command": [
+        "node",
+        "--test",
+        "--test-concurrency=1",
+        "scripts/test-industrial-marking-kit.mjs"
+      ],
+      "exitCode": 0,
+      "seconds": 0.782,
+      "output": "marking-followup-tests.tap"
+    },
+    {
+      "name": "marking-followup-generation",
+      "command": [
+        "node",
+        "authoring/fpv-worlds/industrial-markings/generate.mjs",
+        "--check"
+      ],
+      "exitCode": 0,
+      "seconds": 0.332,
+      "output": "marking-followup-generation.log"
+    },
+    {
+      "name": "marking-followup-lint",
+      "command": [
+        "node",
+        "node_modules/eslint/bin/eslint.js",
+        "authoring/fpv-worlds/industrial-markings/loader.mjs",
+        "authoring/fpv-worlds/industrial-markings/viewer.mjs",
+        "scripts/test-industrial-marking-kit.mjs",
+        "--max-warnings",
+        "0"
+      ],
+      "exitCode": 0,
+      "seconds": 0.238,
+      "output": "marking-followup-lint.log"
+    },
+    {
+      "name": "marking-followup-format",
+      "command": [
+        "node",
+        "node_modules/prettier/bin/prettier.cjs",
+        "--check",
+        "authoring/fpv-worlds/industrial-markings/loader.mjs",
+        "authoring/fpv-worlds/industrial-markings/viewer.mjs",
+        "scripts/test-industrial-marking-kit.mjs"
+      ],
+      "exitCode": 0,
+      "seconds": 0.229,
+      "output": "marking-followup-format.log"
+    }
+  ],
+  "sourceInputsUnchanged": true,
+  "testSummary": {
+    "tests": 6,
+    "suites": 0,
+    "pass": 6,
+    "fail": 0,
+    "cancelled": 0,
+    "skipped": 0,
+    "todo": 0
+  },
+  "pinnedInstalledDependencies": {
+    "@gltf-transform/core": "4.5.1",
+    "gltf-validator": "2.0.0-dev.3.10",
+    "fake-indexeddb": "6.2.5"
+  },
+  "completedAt": "2026-10-02T21:20:34.972614+00:00",
+  "result": "passed"
+}

@@ -273,7 +273,7 @@ test('leaving preview cancels verification and a late completion cannot mount an
   const entered = new Promise((resolve) => {
     started = resolve;
   });
-  const { context, elements, timers } = previewUI({
+  const { context, elements, timers, messages } = previewUI({
     verifyStudioPreview: async () => {
       started();
       return pending;
@@ -287,8 +287,11 @@ test('leaving preview cancels verification and a late completion cannot mount an
   assert.equal(context.previewController, null);
   // Returning before the stale request finishes must not revive its ownership.
   context.showStep(5);
+  const visibleMessages = [...messages];
   finish({ url: new URL('http://localhost/preview/game/company.html'), verifiedFiles: 1 });
-  await assert.rejects(operation, (error) => error.name === 'AbortError');
+  // A superseded request is intentionally consumed; it cannot own a new error.
+  await operation;
+  assert.deepEqual(messages, visibleMessages);
   assert.equal(elements.get('preview-frame').src, undefined);
   assert.equal(elements.get('preview-frame').hidden, true);
   assert.equal(timers.size, 0);

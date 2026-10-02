@@ -1,0 +1,621 @@
+TAP version 13
+# Subtest: Studio shows the same exact acceptance report as the shared compiler for all modes and presets
+ok 1 - Studio shows the same exact acceptance report as the shared compiler for all modes and presets
+  ---
+  duration_ms: 302.013625
+  ...
+# Subtest: local import is explicit, inert and visit-only; failures cannot silently reuse old claims
+ok 2 - local import is explicit, inert and visit-only; failures cannot silently reuse old claims
+  ---
+  duration_ms: 78.602208
+  ...
+# Subtest: selection, source and preset changes clear reports and old-edition claims remain explicitly stale
+ok 3 - selection, source and preset changes clear reports and old-edition claims remain explicitly stale
+  ---
+  duration_ms: 49.336042
+  ...
+# Subtest: oversized and multiple files fail before reading; a dishonest byte size cannot bypass the parser budget
+ok 4 - oversized and multiple files fail before reading; a dishonest byte size cannot bypass the parser budget
+  ---
+  duration_ms: 12.253333
+  ...
+# Subtest: late file success or failure cannot replace a newer selection, clear action or ledger
+ok 5 - late file success or failure cannot replace a newer selection, clear action or ledger
+  ---
+  duration_ms: 225.948625
+  ...
+# Subtest: Studio owns the inspector and synchronizes it when the applied board selection changes
+ok 6 - Studio owns the inspector and synchronizes it when the applied board selection changes
+  ---
+  duration_ms: 22.604792
+  ...
+# Subtest: saved and draft native auditions share master output while keeping independent local faders and cleanup
+ok 7 - saved and draft native auditions share master output while keeping independent local faders and cleanup
+  ---
+  duration_ms: 180.661833
+  ...
+# Subtest: Stop waiting releases a pending native preview and late metadata cannot restore sound or output
+ok 8 - Stop waiting releases a pending native preview and late metadata cannot restore sound or output
+  ---
+  duration_ms: 69.002834
+  ...
+# Subtest: audio.music keeps the shared mute gate through delayed context resume and retains its local attenuation
+ok 9 - audio.music keeps the shared mute gate through delayed context resume and retains its local attenuation
+  ---
+  duration_ms: 15.908209
+  ...
+# Subtest: audio.music teardown before context readiness fences late procedural playback
+ok 10 - audio.music teardown before context readiness fences late procedural playback
+  ---
+  duration_ms: 4.455292
+  ...
+# Subtest: audio.capture keeps the shared mute gate through delayed context resume and retains its local attenuation
+ok 11 - audio.capture keeps the shared mute gate through delayed context resume and retains its local attenuation
+  ---
+  duration_ms: 3.263708
+  ...
+# Subtest: audio.capture teardown before context readiness fences late procedural playback
+ok 12 - audio.capture teardown before context readiness fences late procedural playback
+  ---
+  duration_ms: 5.665042
+  ...
+# Subtest: hidden Studio native auditions retire both previews and return requires explicit Play
+ok 13 - hidden Studio native auditions retire both previews and return requires explicit Play
+  ---
+  duration_ms: 138.417833
+  ...
+# Subtest: hidden interruption settles pending metadata and fences its late callback
+ok 14 - hidden interruption settles pending metadata and fences its late callback
+  ---
+  duration_ms: 64.523625
+  ...
+# Subtest: audition lifecycle ignores focus, non-audio slots and duplicate events, and retires its listener
+ok 15 - audition lifecycle ignores focus, non-audio slots and duplicate events, and retires its listener
+  ---
+  duration_ms: 0.186166
+  ...
+# Subtest: audio.music caption tracks only accepted playback and cannot replace idle/loading/Stop/error feedback
+ok 16 - audio.music caption tracks only accepted playback and cannot replace idle/loading/Stop/error feedback
+  ---
+  duration_ms: 5.228625
+  ...
+# Subtest: audio.capture caption tracks only accepted playback and cannot replace idle/loading/Stop/error feedback
+ok 17 - audio.capture caption tracks only accepted playback and cannot replace idle/loading/Stop/error feedback
+  ---
+  duration_ms: 3.561083
+  ...
+# Subtest: saved and draft recipe captions have independent playback ownership under one master
+ok 18 - saved and draft recipe captions have independent playback ownership under one master
+  ---
+  duration_ms: 6.05275
+  ...
+# Subtest: native preview metadata statuses do not adopt procedural playback captions on master edits
+ok 19 - native preview metadata statuses do not adopt procedural playback captions on master edits
+  ---
+  duration_ms: 121.507666
+  ...
+# Subtest: sequential same-file role expansion widens the one face while both previews remain current
+ok 20 - sequential same-file role expansion widens the one face while both previews remain current
+  ---
+  duration_ms: 515.2235
+  ...
+# Subtest: same-file widening during pending bytes serves both current surfaces
+ok 21 - same-file widening during pending bytes serves both current surfaces
+  ---
+  duration_ms: 382.132833
+  ...
+# Subtest: same-file widening during pending load serves both current surfaces
+ok 22 - same-file widening during pending load serves both current surfaces
+  ---
+  duration_ms: 347.27425
+  ...
+# Subtest: a later narrow snapshot cannot shrink a face still serving a wider current surface
+ok 23 - a later narrow snapshot cannot shrink a face still serving a wider current surface
+  ---
+  duration_ms: 405.804666
+  ...
+# Subtest: cancel narrow consumer during shared bytes; late success respects both owners
+ok 24 - cancel narrow consumer during shared bytes; late success respects both owners
+  ---
+  duration_ms: 305.305625
+  ...
+# Subtest: cancel narrow consumer during shared bytes; late failure respects both owners
+ok 25 - cancel narrow consumer during shared bytes; late failure respects both owners
+  ---
+  duration_ms: 302.843791
+  ...
+# Subtest: cancel wide consumer during shared bytes; late success respects both owners
+ok 26 - cancel wide consumer during shared bytes; late success respects both owners
+  ---
+  duration_ms: 301.781709
+  ...
+# Subtest: cancel wide consumer during shared bytes; late failure respects both owners
+ok 27 - cancel wide consumer during shared bytes; late failure respects both owners
+  ---
+  duration_ms: 308.749375
+  ...
+# Subtest: cancel narrow consumer during shared load; late success respects both owners
+ok 28 - cancel narrow consumer during shared load; late success respects both owners
+  ---
+  duration_ms: 322.920542
+  ...
+# Subtest: cancel narrow consumer during shared load; late failure respects both owners
+ok 29 - cancel narrow consumer during shared load; late failure respects both owners
+  ---
+  duration_ms: 305.589417
+  ...
+# Subtest: cancel wide consumer during shared load; late success respects both owners
+ok 30 - cancel wide consumer during shared load; late success respects both owners
+  ---
+  duration_ms: 296.219542
+  ...
+# Subtest: cancel wide consumer during shared load; late failure respects both owners
+ok 31 - cancel wide consumer during shared load; late failure respects both owners
+  ---
+  duration_ms: 294.051334
+  ...
+# Subtest: a failed shared FontFace.load can retry without cache reset and register one successful face
+ok 32 - a failed shared FontFace.load can retry without cache reset and register one successful face
+  ---
+  duration_ms: 297.294125
+  ...
+# Subtest: a rejected weight setter preserves the loaded narrow face and permits a real widening Retry
+ok 33 - a rejected weight setter preserves the loaded narrow face and permits a real widening Retry
+  ---
+  duration_ms: 305.545625
+  ...
+# Subtest: repeated equal and narrower role requests reuse the loaded face without another byte read or load
+ok 34 - repeated equal and narrower role requests reuse the loaded face without another byte read or load
+  ---
+  duration_ms: 404.284625
+  ...
+# Subtest: opening: native boot escape matches ready destinations before any host modules load
+ok 35 - opening: native boot escape matches ready destinations before any host modules load
+  ---
+  duration_ms: 3.012542
+  ...
+# Subtest: authored: native boot escape matches ready destinations before any host modules load
+ok 36 - authored: native boot escape matches ready destinations before any host modules load
+  ---
+  duration_ms: 0.826417
+  ...
+# Subtest: whole-originals: native boot escape matches ready destinations before any host modules load
+ok 37 - whole-originals: native boot escape matches ready destinations before any host modules load
+  ---
+  duration_ms: 0.680167
+  ...
+# Subtest: whole-originals-v2: native boot escape matches ready destinations before any host modules load
+ok 38 - whole-originals-v2: native boot escape matches ready destinations before any host modules load
+  ---
+  duration_ms: 0.994417
+  ...
+# Subtest: whole-originals-v3: native boot escape matches ready destinations before any host modules load
+ok 39 - whole-originals-v3: native boot escape matches ready destinations before any host modules load
+  ---
+  duration_ms: 0.563083
+  ...
+# Subtest: whole-originals-v4: native boot escape matches ready destinations before any host modules load
+ok 40 - whole-originals-v4: native boot escape matches ready destinations before any host modules load
+  ---
+  duration_ms: 0.535083
+  ...
+# Subtest: whole-spatial-v1: native boot escape matches ready destinations before any host modules load
+ok 41 - whole-spatial-v1: native boot escape matches ready destinations before any host modules load
+  ---
+  duration_ms: 0.871125
+  ...
+# Subtest: whole-spatial-v2: native boot escape matches ready destinations before any host modules load
+ok 42 - whole-spatial-v2: native boot escape matches ready destinations before any host modules load
+  ---
+  duration_ms: 0.592958
+  ...
+# Subtest: whole-spatial-v3: native boot escape matches ready destinations before any host modules load
+ok 43 - whole-spatial-v3: native boot escape matches ready destinations before any host modules load
+  ---
+  duration_ms: 0.613791
+  ...
+# Subtest: whole-spatial-v4: native boot escape matches ready destinations before any host modules load
+ok 44 - whole-spatial-v4: native boot escape matches ready destinations before any host modules load
+  ---
+  duration_ms: 0.581583
+  ...
+# Subtest: whole-spatial-v5: native boot escape matches ready destinations before any host modules load
+ok 45 - whole-spatial-v5: native boot escape matches ready destinations before any host modules load
+  ---
+  duration_ms: 1.00475
+  ...
+# Subtest: whole-spatial-v6: native boot escape matches ready destinations before any host modules load
+ok 46 - whole-spatial-v6: native boot escape matches ready destinations before any host modules load
+  ---
+  duration_ms: 0.768
+  ...
+# Subtest: whole-spatial-v7: native boot escape matches ready destinations before any host modules load
+ok 47 - whole-spatial-v7: native boot escape matches ready destinations before any host modules load
+  ---
+  duration_ms: 0.57025
+  ...
+# Subtest: whole-spatial-v8: native boot escape matches ready destinations before any host modules load
+ok 48 - whole-spatial-v8: native boot escape matches ready destinations before any host modules load
+  ---
+  duration_ms: 0.617791
+  ...
+# Subtest: whole-spatial-v9: native boot escape matches ready destinations before any host modules load
+ok 49 - whole-spatial-v9: native boot escape matches ready destinations before any host modules load
+  ---
+  duration_ms: 0.701167
+  ...
+# Subtest: whole-spatial-v10: native boot escape matches ready destinations before any host modules load
+ok 50 - whole-spatial-v10: native boot escape matches ready destinations before any host modules load
+  ---
+  duration_ms: 1.170833
+  ...
+# Subtest: whole-spatial-v11: native boot escape matches ready destinations before any host modules load
+ok 51 - whole-spatial-v11: native boot escape matches ready destinations before any host modules load
+  ---
+  duration_ms: 0.545459
+  ...
+# Subtest: whole-spatial-v12: native boot escape matches ready destinations before any host modules load
+ok 52 - whole-spatial-v12: native boot escape matches ready destinations before any host modules load
+  ---
+  duration_ms: 0.783333
+  ...
+# Subtest: whole-spatial-v13: native boot escape matches ready destinations before any host modules load
+ok 53 - whole-spatial-v13: native boot escape matches ready destinations before any host modules load
+  ---
+  duration_ms: 0.530917
+  ...
+# Subtest: whole-spatial-v14: native boot escape matches ready destinations before any host modules load
+ok 54 - whole-spatial-v14: native boot escape matches ready destinations before any host modules load
+  ---
+  duration_ms: 0.545
+  ...
+# Subtest: whole-spatial-v15: native boot escape matches ready destinations before any host modules load
+ok 55 - whole-spatial-v15: native boot escape matches ready destinations before any host modules load
+  ---
+  duration_ms: 0.506083
+  ...
+# Subtest: whole-spatial-v16: native boot escape matches ready destinations before any host modules load
+ok 56 - whole-spatial-v16: native boot escape matches ready destinations before any host modules load
+  ---
+  duration_ms: 0.928542
+  ...
+# Subtest: whole-spatial-v17: native boot escape matches ready destinations before any host modules load
+ok 57 - whole-spatial-v17: native boot escape matches ready destinations before any host modules load
+  ---
+  duration_ms: 0.528625
+  ...
+# Subtest: whole-spatial-v18: native boot escape matches ready destinations before any host modules load
+ok 58 - whole-spatial-v18: native boot escape matches ready destinations before any host modules load
+  ---
+  duration_ms: 0.55975
+  ...
+# Subtest: whole-spatial-v19: native boot escape matches ready destinations before any host modules load
+ok 59 - whole-spatial-v19: native boot escape matches ready destinations before any host modules load
+  ---
+  duration_ms: 0.499542
+  ...
+# Subtest: whole-spatial-v20: native boot escape matches ready destinations before any host modules load
+ok 60 - whole-spatial-v20: native boot escape matches ready destinations before any host modules load
+  ---
+  duration_ms: 0.543792
+  ...
+# Subtest: whole-spatial-v21: native boot escape matches ready destinations before any host modules load
+ok 61 - whole-spatial-v21: native boot escape matches ready destinations before any host modules load
+  ---
+  duration_ms: 0.496583
+  ...
+# Subtest: whole-spatial-v22: native boot escape matches ready destinations before any host modules load
+ok 62 - whole-spatial-v22: native boot escape matches ready destinations before any host modules load
+  ---
+  duration_ms: 0.491209
+  ...
+# Subtest: whole-spatial-v23: native boot escape matches ready destinations before any host modules load
+ok 63 - whole-spatial-v23: native boot escape matches ready destinations before any host modules load
+  ---
+  duration_ms: 0.508708
+  ...
+# Subtest: whole-spatial-v24: native boot escape matches ready destinations before any host modules load
+ok 64 - whole-spatial-v24: native boot escape matches ready destinations before any host modules load
+  ---
+  duration_ms: 0.50025
+  ...
+# Subtest: whole-spatial-v25: native boot escape matches ready destinations before any host modules load
+ok 65 - whole-spatial-v25: native boot escape matches ready destinations before any host modules load
+  ---
+  duration_ms: 0.523167
+  ...
+# Subtest: whole-spatial-v26: native boot escape matches ready destinations before any host modules load
+ok 66 - whole-spatial-v26: native boot escape matches ready destinations before any host modules load
+  ---
+  duration_ms: 0.567208
+  ...
+# Subtest: whole-spatial-v27: native boot escape matches ready destinations before any host modules load
+ok 67 - whole-spatial-v27: native boot escape matches ready destinations before any host modules load
+  ---
+  duration_ms: 0.929833
+  ...
+# Subtest: whole-spatial-v28: native boot escape matches ready destinations before any host modules load
+ok 68 - whole-spatial-v28: native boot escape matches ready destinations before any host modules load
+  ---
+  duration_ms: 0.542667
+  ...
+# Subtest: whole-spatial-v29: native boot escape matches ready destinations before any host modules load
+ok 69 - whole-spatial-v29: native boot escape matches ready destinations before any host modules load
+  ---
+  duration_ms: 0.559416
+  ...
+# Subtest: whole-spatial-v30: native boot escape matches ready destinations before any host modules load
+ok 70 - whole-spatial-v30: native boot escape matches ready destinations before any host modules load
+  ---
+  duration_ms: 0.500375
+  ...
+# Subtest: whole-spatial-v31: native boot escape matches ready destinations before any host modules load
+ok 71 - whole-spatial-v31: native boot escape matches ready destinations before any host modules load
+  ---
+  duration_ms: 0.498
+  ...
+# Subtest: whole-spatial-v32: native boot escape matches ready destinations before any host modules load
+ok 72 - whole-spatial-v32: native boot escape matches ready destinations before any host modules load
+  ---
+  duration_ms: 1.055417
+  ...
+# Subtest: whole-spatial-v33: native boot escape matches ready destinations before any host modules load
+ok 73 - whole-spatial-v33: native boot escape matches ready destinations before any host modules load
+  ---
+  duration_ms: 0.481666
+  ...
+# Subtest: whole-spatial-v34: native boot escape matches ready destinations before any host modules load
+ok 74 - whole-spatial-v34: native boot escape matches ready destinations before any host modules load
+  ---
+  duration_ms: 0.642875
+  ...
+# Subtest: whole-spatial-v35: native boot escape matches ready destinations before any host modules load
+ok 75 - whole-spatial-v35: native boot escape matches ready destinations before any host modules load
+  ---
+  duration_ms: 0.969625
+  ...
+# Subtest: whole-spatial-v36: native boot escape matches ready destinations before any host modules load
+ok 76 - whole-spatial-v36: native boot escape matches ready destinations before any host modules load
+  ---
+  duration_ms: 0.64375
+  ...
+# Subtest: whole-spatial-v37: native boot escape matches ready destinations before any host modules load
+ok 77 - whole-spatial-v37: native boot escape matches ready destinations before any host modules load
+  ---
+  duration_ms: 0.492625
+  ...
+# Subtest: whole-spatial-v38: native boot escape matches ready destinations before any host modules load
+ok 78 - whole-spatial-v38: native boot escape matches ready destinations before any host modules load
+  ---
+  duration_ms: 0.626167
+  ...
+# Subtest: whole-ornament-v1: native boot escape matches ready destinations before any host modules load
+ok 79 - whole-ornament-v1: native boot escape matches ready destinations before any host modules load
+  ---
+  duration_ms: 0.531583
+  ...
+# Subtest: whole-ornament-v2: native boot escape matches ready destinations before any host modules load
+ok 80 - whole-ornament-v2: native boot escape matches ready destinations before any host modules load
+  ---
+  duration_ms: 0.466375
+  ...
+# Subtest: Legacy bootstrap escapes preserve the catalogue before mode modules prepare
+ok 81 - Legacy bootstrap escapes preserve the catalogue before mode modules prepare
+  ---
+  duration_ms: 0.469417
+  ...
+# Subtest: bootstrap preserves resolved Legacy intent while rejecting untrusted destinations
+ok 82 - bootstrap preserves resolved Legacy intent while rejecting untrusted destinations
+  ---
+  duration_ms: 3.208416
+  ...
+# Subtest: Team bootstrap gives a validated authored return the same priority as the ready host
+ok 83 - Team bootstrap gives a validated authored return the same priority as the ready host
+  ---
+  duration_ms: 0.9625
+  ...
+# Subtest: opening: ready Solo opens the corresponding Versus library without save/hint conversion
+ok 84 - opening: ready Solo opens the corresponding Versus library without save/hint conversion
+  ---
+  duration_ms: 822.065625
+  ...
+# Subtest: opening: ready Versus keeps authored Solo entry and explicitly separates Team
+ok 85 - opening: ready Versus keeps authored Solo entry and explicitly separates Team
+  ---
+  duration_ms: 525.038709
+  ...
+# Subtest: authored: ready Solo opens the corresponding Versus library without save/hint conversion
+ok 86 - authored: ready Solo opens the corresponding Versus library without save/hint conversion
+  ---
+  duration_ms: 689.912584
+  ...
+# Subtest: authored: ready Versus keeps authored Solo entry and explicitly separates Team
+ok 87 - authored: ready Versus keeps authored Solo entry and explicitly separates Team
+  ---
+  duration_ms: 679.0375
+  ...
+# Subtest: unfinished Solo Stay retains the exact paused attempt; Leave uses its own verified save
+ok 88 - unfinished Solo Stay retains the exact paused attempt; Leave uses its own verified save
+  ---
+  duration_ms: 1226.934083
+  ...
+# Subtest: held Solo retention can be cancelled without a late save or departure
+ok 89 - held Solo retention can be cancelled without a late save or departure
+  ---
+  duration_ms: 1206.797833
+  ...
+# Subtest: denied Solo retention stays explicit and never claims a safe save
+ok 90 - denied Solo retention stays explicit and never claims a safe save
+  ---
+  duration_ms: 1190.897583
+  ...
+# Subtest: unfinished Versus stays paused through Stay and requires deliberate discard for Solo
+ok 91 - unfinished Versus stays paused through Stay and requires deliberate discard for Solo
+  ---
+  duration_ms: 569.903208
+  ...
+# Subtest: default Team retains bounded solo navigation and selects its new mission library
+ok 92 - default Team retains bounded solo navigation and selects its new mission library
+  ---
+  duration_ms: 1456.322667
+  ...
+# Subtest: default Team retains bounded versus navigation and selects its new mission library
+ok 93 - default Team retains bounded versus navigation and selects its new mission library
+  ---
+  duration_ms: 1458.443375
+  ...
+# Subtest: route hints reject unknown, ambiguous and competing launch owners
+ok 94 - route hints reject unknown, ambiguous and competing launch owners
+  ---
+  duration_ms: 0.158875
+  ...
+# Subtest: returning Solo retains the authored checkpoint and picture until deliberate Continue
+    # Subtest: leave the checked Solo attempt
+    ok 1 - leave the checked Solo attempt
+      ---
+      duration_ms: 1194.879167
+      ...
+    # Subtest: return to title, then Continue explicitly
+    ok 2 - return to title, then Continue explicitly
+      ---
+      duration_ms: 993.989583
+      ...
+    1..2
+ok 95 - returning Solo retains the authored checkpoint and picture until deliberate Continue
+  ---
+  duration_ms: 2189.196541
+  ...
+# Subtest: active separate Team solo return retains Stay and deliberate discard
+ok 96 - active separate Team solo return retains Stay and deliberate discard
+  ---
+  duration_ms: 1468.059583
+  ...
+# Subtest: active separate Team versus return retains Stay and deliberate discard
+ok 97 - active separate Team versus return retains Stay and deliberate discard
+  ---
+  duration_ms: 1617.921375
+  ...
+# Subtest: two optional successors preserve current geometry, actors, goals, pictures, order and untouched introduction
+ok 98 - two optional successors preserve current geometry, actors, goals, pictures, order and untouched introduction
+  ---
+  duration_ms: 1133.057333
+  ...
+# Subtest: current gp4 schedules do not scale with presets or turn styles; actual enemy pressure still does
+ok 99 - current gp4 schedules do not scale with presets or turn styles; actual enemy pressure still does
+  ---
+  duration_ms: 1115.353834
+  ...
+# Subtest: gentle: safe early returns, collection and missed-window relocation use real commands
+ok 100 - gentle: safe early returns, collection and missed-window relocation use real commands
+  ---
+  duration_ms: 606.762542
+  ...
+# Subtest: standard: safe early returns, collection and missed-window relocation use real commands
+ok 101 - standard: safe early returns, collection and missed-window relocation use real commands
+  ---
+  duration_ms: 560.356334
+  ...
+# Subtest: expert: safe early returns, collection and missed-window relocation use real commands
+ok 102 - expert: safe early returns, collection and missed-window relocation use real commands
+  ---
+  duration_ms: 547.240083
+  ...
+# Subtest: an available pickup is optional, not a promise that the same departure timing is safe in every preset
+ok 103 - an available pickup is optional, not a promise that the same departure timing is safe in every preset
+  ---
+  duration_ms: 71.510167
+  ...
+# Subtest: crossing an announced outline before appearance grants nothing; ignored schedules exhaust their finite budget
+ok 104 - crossing an announced outline before appearance grants nothing; ignored schedules exhaust their finite budget
+  ---
+  duration_ms: 273.051042
+  ...
+# Subtest: Standard paired boards receive independent schedules and equal actual collection/return histories
+ok 105 - Standard paired boards receive independent schedules and equal actual collection/return histories
+  ---
+  duration_ms: 139.171041
+  ...
+# Subtest: both Standard missions earn actual no-loss clears and exact replays without any bonus collection
+ok 106 - both Standard missions earn actual no-loss clears and exact replays without any bonus collection
+  ---
+  duration_ms: 681.035042
+  ...
+# Subtest: studio source packet roundtrips through the actual new-company CLI workspace format
+ok 107 - studio source packet roundtrips through the actual new-company CLI workspace format
+  ---
+  duration_ms: 40.469958
+  ...
+# Subtest: studio blocks missing sources, duplicate source paths and executable workspace injection
+ok 108 - studio blocks missing sources, duplicate source paths and executable workspace injection
+  ---
+  duration_ms: 12.775875
+  ...
+# Subtest: actor edits reject undeclared remote media and unbounded cosmetic motion before export
+ok 109 - actor edits reject undeclared remote media and unbounded cosmetic motion before export
+  ---
+  duration_ms: 19.209041
+  ...
+# Subtest: compiled preview must match the selected draft identity, content selection and artwork pins
+ok 110 - compiled preview must match the selected draft identity, content selection and artwork pins
+  ---
+  duration_ms: 28.501166
+  ...
+# Subtest: complete studio drafts apply the compiler gate for selected presentation and asset closure
+ok 111 - complete studio drafts apply the compiler gate for selected presentation and asset closure
+  ---
+  duration_ms: 31.722792
+  ...
+# Subtest: compiler report preserves review-required checks and only opens local company-game URLs
+ok 112 - compiler report preserves review-required checks and only opens local company-game URLs
+  ---
+  duration_ms: 0.651958
+  ...
+# Subtest: leaving preview cancels verification and a late completion cannot mount an offscreen game
+ok 113 - leaving preview cancels verification and a late completion cannot mount an offscreen game
+  ---
+  duration_ms: 1.419167
+  ...
+# Subtest: preview timeout aborts a stalled selected-source fetch before artifact verification
+ok 114 - preview timeout aborts a stalled selected-source fetch before artifact verification
+  ---
+  duration_ms: 0.906625
+  ...
+# Subtest: late source responses cannot populate an edited or cancelled draft cache
+ok 115 - late source responses cannot populate an edited or cancelled draft cache
+  ---
+  duration_ms: 9.724625
+  ...
+# Subtest: repeated forced Pause keeps the chosen menu action after Settings closes
+ok 116 - repeated forced Pause keeps the chosen menu action after Settings closes
+  ---
+  duration_ms: 1610.585583
+  ...
+# Subtest: practice controller Return commits on release through the registered parent boundary
+ok 117 - practice controller Return commits on release through the registered parent boundary
+  ---
+  duration_ms: 1253.752875
+  ...
+# Subtest: practice Return preserves stale-session rejection and the shell uses the same checked action
+ok 118 - practice Return preserves stale-session rejection and the shell uses the same checked action
+  ---
+  duration_ms: 623.051959
+  ...
+# Subtest: paused Controller practice exits both boundaries through the real app blur handler
+ok 119 - paused Controller practice exits both boundaries through the real app blur handler
+  ---
+  duration_ms: 756.691875
+  ...
+# Subtest: first iframe blur pauses a moving cut without focusing its new Resume action
+ok 120 - first iframe blur pauses a moving cut without focusing its new Resume action
+  ---
+  duration_ms: 595.965
+  ...
+1..120
+# tests 122
+# suites 0
+# pass 122
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 51721.681958

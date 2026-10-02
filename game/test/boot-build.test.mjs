@@ -5,14 +5,20 @@ import path from 'node:path';
 import os from 'node:os';
 import { createHash } from 'node:crypto';
 import { buildProject, PUBLIC_SECURITY_HEADERS } from '../../scripts/game-cli.mjs';
-import { LAUNCHER_NAVIGATION_FILES } from '../../scripts/offline-launcher.mjs';
 import { iosHTMLPolicy, IOS_CSP, stageNative, verifySite } from '../../scripts/native-cli.mjs';
 import { loadNativeSite } from '../../platforms/desktop/resources.mjs';
+import {
+  LAUNCHER_APPEARANCE_FILES,
+  LAUNCHER_NAVIGATION_FILES,
+} from '../../scripts/offline-launcher.mjs';
 
 const sourceRoot = new URL('../', import.meta.url);
 const digest = (bytes) => createHash('sha256').update(bytes).digest('hex');
 const playerPresentationFiles = [
   'game/ui/win-picture.css',
+  'game/presentation/theme-bootstrap.mjs',
+  'game/presentation/theme-entry.mjs',
+  'game/presentation/industrial-workshop.css',
   'game/ui/handheld-play.css',
   'game/ui/field-kit-fonts.css',
   'game/ui/brand-identity.css',
@@ -37,6 +43,7 @@ const playerPresentationFiles = [
   'game/ui/fonts/field-kit/IBMPlexMono-OFL.txt',
   'game/ui/fonts/field-kit/provenance.json',
   'game/ui/fonts/departure-mono/DepartureMono-Regular.woff2',
+  'game/ui/fonts/departure-mono/LICENSE',
   'game/ui/fonts/Tiny5-Regular.ttf',
   'game/ui/fonts/OFL.txt',
   'game/ui/fonts/METADATA.pb',
@@ -69,7 +76,11 @@ test('the actual game has a static dark guard before resources and a single caug
   assert.match(html, /<noscript\s*>[\s\S]*?JavaScript is disabled/);
   assert.match(html, /<script src="boot.mjs" defer><\/script>/);
   assert.match(html, /<script id="boot-phaser" src="vendor\/phaser-4.2.1.min.js" defer><\/script>/);
-  assert.doesNotMatch(html, /<link\b[^>]*\shref="(?!access-gate\.css")[^\"]+\.css"/);
+  const earlyStyles = [...html.matchAll(/<link\b[^>]*\shref="([^"]+\.css)"/g)];
+  assert.deepEqual(
+    earlyStyles.map((match) => match[1]),
+    ['presentation/industrial-workshop.css', 'access-gate.css'],
+  );
   assert.match(html, /data-boot-href="ui\/operation-status.css"/);
   assert.match(html, /data-boot-href="ui\/handheld-play.css"/);
   assert.match(html, /data-boot-href="ui\/quick-music-controls.css"/);
@@ -128,16 +139,16 @@ test('build rewrites native root paths, preserves extras and includes boot bytes
   // this verifies packaging and offline bytes, not rendered/native gameplay.
   await copy('game/index.html');
   for (const name of [
-    'game/access-gate.mjs',
     'game/boot.mjs',
+    'game/access-gate.mjs',
     'game/boot.css',
+    ...[...LAUNCHER_APPEARANCE_FILES, ...LAUNCHER_NAVIGATION_FILES].map((name) => `game/${name}`),
     ...playerPresentationFiles,
     ...ambientRuntimeFiles,
     'game/offline.mjs',
     'game/offline/app.html',
-    'game/offline/app-worker.template.js',
     'game/offline/navigation.css',
-    ...LAUNCHER_NAVIGATION_FILES.map((file) => `game/${file}`),
+    'game/offline/app-worker.template.js',
     'game/downloads.css',
     'game/installed-app.mjs',
     'game/edition-context.mjs',
@@ -148,14 +159,13 @@ test('build rewrites native root paths, preserves extras and includes boot bytes
     'game/vendor/i18next-26.4.2.min.js',
     'game/locales/en/common.json',
     'game/locales/en/interface.json',
-    'game/locales/en/controllerEditor.json',
-    'game/locales/en/errors.json',
-    'game/locales/en/gameplay.json',
     'game/locales/uk/common.json',
     'game/locales/uk/interface.json',
-    'game/locales/uk/controllerEditor.json',
-    'game/locales/uk/errors.json',
-    'game/locales/uk/gameplay.json',
+    ...['en', 'uk'].flatMap((language) =>
+      ['common', 'interface', 'gameplay', 'controllerEditor', 'errors'].map(
+        (namespace) => `game/locales/${language}/${namespace}.json`,
+      ),
+    ),
     'game/platform.mjs',
     'game/offline/service-worker.template.js',
     'site/index.html',
