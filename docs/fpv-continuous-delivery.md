@@ -1615,3 +1615,28 @@ run37034459099 fails the whole-edition guard:820 files/67,116,517 bytes,
 7,653 bytes above64MiB. Do not merge or increase the guard. Next publication
 step is a bounded lossless reduction followed by exact-head requalification,
 then a fresh native stack if C1 still depends on open #954. C1 stays separate.
+
+
+### 2 October — fresh native stack957, Garage954 → Hangar956
+
+The first C increment is published and attached as
+[PR #956](https://github.com/mekhovov/revealline/pull/956),
+`codex/fpv-hangar-surfaces`, following Garage #954 in new native **stack957**.
+Old stacks889/902 stay closed. GitHub concurrently merged newer main #908/#917
+into the root. Recovery refs `codex/fpv-garage-pre-stack957-20261002` and
+`codex/fpv-hangar-pre-stack957-20261002` preserve both original heads.
+A cascading rebase onto `2f009d335` restored linearity; the Garage tree is
+byte-identical to the remote merge tree, and the Hangar only adds those upstream
+changes. Atomic push used explicit remote-head leases for both branches.
+Root head `61b761f36da9fc014d4c9d087d868e4d7ebfd8ef`; Hangar frozen candidate
+`9134e9e210356ae4187fcde55337167e215ffabb` passes all three admissions again,
+committed-input/ZIP checks and two identical builds. See stack957 package receipt.
+
+The failed edition is `droneaid-nl-community`; its engine closure contains no
+optional-practice files. Current main independently reproduces the excess, so
+this is an inherited publication blocker, not additional Garage/ Hangar content.
+A bounded lossless soundtrack-metadata compaction is being assessed separately;
+retain all media, exported data, budgets and publication authority.
+C2 candidate after this checkpoint: redistribute the existing meadow tree line
+into irregular exterior groves without increasing geometry/resources, pending
+visual readability checks. Broader Themes integration remains separate.
