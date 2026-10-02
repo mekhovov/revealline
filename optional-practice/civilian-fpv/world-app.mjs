@@ -776,6 +776,15 @@ export function mountWorldApp({
   } catch {
     /* Invalid preferences use the visible defaults. */
   }
+  try {
+    const requestedLocale = new URL(win.location.href).searchParams.get('lang');
+    if (['en', 'uk'].includes(requestedLocale)) {
+      $('world-language').value = requestedLocale;
+      locale = requestedLocale;
+    }
+  } catch {
+    /* Embedded previews without a normal URL retain their saved locale. */
+  }
   const savePreferences = () => {
     try {
       storage?.setItem(
@@ -3477,6 +3486,15 @@ export function mountWorldApp({
   on($('world-language'), 'change', () => {
     const previousLocale = locale;
     locale = $('world-language').value;
+    try {
+      const location = new URL(win.location.href);
+      if (location.searchParams.has('lang')) {
+        location.searchParams.set('lang', locale);
+        win.history.replaceState(null, '', location.href);
+      }
+    } catch {
+      /* Language selection also works in isolated previews. */
+    }
     if (playlistDraft && $('playlist-title').value === playlistDraft.title[previousLocale])
       $('playlist-title').value = localized(playlistDraft.title);
     paintLanguage();
