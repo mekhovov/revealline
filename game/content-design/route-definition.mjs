@@ -9,6 +9,7 @@ export function createAuthoredJourneyRouteDefinition(
   id,
   {
     createOpeningCandidates,
+    createHuntTrainingCandidates,
     createBorderCandidates,
     createWholeJourneyCandidates,
     createWholeSpatialCandidates,
@@ -54,6 +55,17 @@ export function createAuthoredJourneyRouteDefinition(
   },
 ) {
   if (!isAuthoredJourneyRouteId(id)) return null;
+  if (id === 'humanoid-hunt-v1')
+    return freezeDesign({
+      id,
+      label: 'Hunt lessons · six familiar boards',
+      sessionKey: 'revealline.suspended.journey-humanoid-hunt.v1',
+      profileKey: 'journey-humanoid-hunt-v1',
+      source: createHuntTrainingCandidates({ artwork: true }),
+      corePackIds: ['journey-humanoid-hunt'],
+      optionalCampaignIds: [],
+      preserveOriginalThemes: true,
+    });
   if (id === 'whole-spatial-v38')
     return freezeDesign({
       id,

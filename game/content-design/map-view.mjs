@@ -1,3 +1,4 @@
+import { drawHumanoidPixelBody } from '../hunt/destruction.mjs';
 import { CELL } from '../core/registry.mjs';
 import { t } from '../i18n/index.mjs';
 import { captureOverlay } from './capture-overlay.mjs';
@@ -107,10 +108,18 @@ export function paintContentMap(
     const x = actor.x * size,
       y = actor.y * size,
       radius = size * 0.45;
-    ctx.fillStyle = '#ffae8e';
-    ctx.beginPath();
-    traceContentActor(ctx, contentActorMarkerType(manifest.level, actor), x, y, radius);
-    ctx.fill();
+    if (actor.huntKind) {
+      ctx.save();
+      ctx.translate(x - size / 2, y - size / 2);
+      ctx.scale(size / 16, size / 16);
+      drawHumanoidPixelBody(ctx, { kind: actor.huntKind });
+      ctx.restore();
+    } else {
+      ctx.fillStyle = '#ffae8e';
+      ctx.beginPath();
+      traceContentActor(ctx, contentActorMarkerType(manifest.level, actor), x, y, radius);
+      ctx.fill();
+    }
     if (actor.inactive) {
       ctx.strokeStyle = '#ffffff';
       ctx.beginPath();

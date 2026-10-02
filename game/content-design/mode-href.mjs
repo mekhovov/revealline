@@ -1,6 +1,7 @@
 // The explicit review routes, not arbitrary imported project IDs or URLs.
 export const AUTHORED_JOURNEY_ROUTE_IDS = Object.freeze([
   'opening',
+  'humanoid-hunt-v1',
   'authored',
   'whole-originals',
   'whole-originals-v2',

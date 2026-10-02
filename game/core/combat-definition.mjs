@@ -2,6 +2,7 @@ import { exactKeys, required, stableId } from '../data-json.mjs';
 import { CELL } from './registry.mjs';
 import { EPS } from './geometry.mjs';
 import { classicSeedsField, fitsClassicDomain } from './classic-topology.mjs';
+import { huntTargetKind, HUNT_MAX_RUNNER_SPEED } from '../hunt/rules.mjs';
 
 export const COMBAT_PATROLS_VERSION = 'combat-patrols.v1';
 export const COMBAT_RADIUS = 0.22;
@@ -36,10 +37,14 @@ function fields(value, keys, label) {
 export function validateCombatPatrols(level, { identity, walls, geometry }) {
   if (!Object.hasOwn(level.classic, 'combatPatrols')) return;
   required(
-    ['xonix-level.v5', 'xonix-level.v6', 'xonix-level.v7', 'xonix-level.v8'].includes(
-      level.version,
-    ),
-    'combat patrols require foundation-aware classic levels v5..v8',
+    [
+      'xonix-level.v5',
+      'xonix-level.v6',
+      'xonix-level.v7',
+      'xonix-level.v8',
+      'xonix-level.v9',
+    ].includes(level.version),
+    'combat patrols require foundation-aware classic levels v5..v9',
   );
   const definition = level.classic.combatPatrols;
   fields(definition, ['version', 'enabled', 'actors'], 'combat patrols');
@@ -86,7 +91,15 @@ export function validateCombatPatrols(level, { identity, walls, geometry }) {
         (actor.headingX !== 0 || actor.headingY !== 0),
       'combat patrol heading components must be -1..1 integers and not both zero',
     );
-    required(number(actor.speed, 0.25, 8), 'combat patrol speed must be 0.25..8');
+    const maximumSpeed =
+      level.version === 'xonix-level.v9' &&
+      huntTargetKind(level.classic.hunt, actor.id) === 'runner'
+        ? HUNT_MAX_RUNNER_SPEED
+        : 8;
+    required(
+      number(actor.speed, 0.25, maximumSpeed),
+      `combat patrol speed must be 0.25..${maximumSpeed}`,
+    );
     required(
       integer(actor.turnTicks, 30, 1200),
       'combat patrol turnTicks must be 30..1200 integer ticks',

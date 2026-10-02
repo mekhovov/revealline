@@ -1,3 +1,11 @@
+import { coopCombatView } from '../coop/combat-patrols.mjs';
+import {
+  createCombatPresentation,
+  drawCombatWarnings,
+  drawCombatProjectiles,
+  drawCombatScrap,
+} from '../ui/combat-presentation.mjs';
+import { createHuntDestruction } from '../hunt/destruction.mjs';
 import { t } from '../i18n/index.mjs';
 import {
   createTeamOutcomeFeedback,
@@ -120,7 +128,11 @@ export function createCoopPainter(canvas) {
     actorPresentation = null,
     actorAppearanceStyle = null;
   const outcomes = createTeamOutcomeFeedback(),
-    captures = createCoopCaptureFeedback();
+    captures = createCoopCaptureFeedback(),
+    combatPresentation = createCombatPresentation(),
+    destruction = createHuntDestruction();
+  let combatOwner = null,
+    combatTime = 0;
   let presentation = null,
     cueLayout = null,
     cueLayoutCache = null,
@@ -193,6 +205,10 @@ export function createCoopPainter(canvas) {
     run,
     {
       reduced = false,
+      showRemains = true,
+      brutal = false,
+      blood = true,
+      encounterLevel = null,
       textFace = 'pixel',
       textSize = 'standard',
       picture = null,
@@ -228,8 +244,9 @@ export function createCoopPainter(canvas) {
       // from a derived pressure recipe. Geometry and the actual simulation stay
       // owned by the run; no alternate picture edition is inferred by ID.
       if (
-        pictureLevel.id !== run.level.id ||
-        pictureLevel.version !== run.level.version ||
+        (encounterLevel
+          ? encounterLevel.id !== run.level.id || encounterLevel.version !== run.level.version
+          : pictureLevel.id !== run.level.id || pictureLevel.version !== run.level.version) ||
         pictureLevel.width !== run.width ||
         pictureLevel.height !== run.height
       )
@@ -243,7 +260,7 @@ export function createCoopPainter(canvas) {
       if (
         picture.snapshot !== presentation ||
         !presentation ||
-        picture.choice?.levelId !== run.level.id ||
+        picture.choice?.levelId !== pictureLevel.id ||
         picture.choice?.levelRevision !== pictureLevel.revision ||
         picture.fit !== 'contain' ||
         picture.sampling !== 'nearest' ||
@@ -286,6 +303,25 @@ export function createCoopPainter(canvas) {
       previousRun,
     });
     const unit = canvas.width / run.width;
+    const combat = coopCombatView(run),
+      combatOptions = {
+        screenScale: canvas.clientWidth / 1152,
+        reduced,
+        showScrap: showRemains,
+        brutal,
+        blood,
+      };
+    destruction.advance(combat, combatOwner === run ? Math.max(0, run.time - combatTime) : 0, {
+      key: run,
+      sources: run.players,
+      paused: run.status !== 'running',
+      brutal,
+      blood,
+      reduced,
+      concealed: run.status === 'won' && !!picture?.image,
+    });
+    combatOwner = run;
+    combatTime = run.time;
     const cssCell = cueScale.cell,
       compactCues = cueScale.width < 320,
       cueRequests = [],
@@ -419,6 +455,14 @@ export function createCoopPainter(canvas) {
       // Newly revealed cells illuminate below every current hazard, actor and
       // active cut, matching Solo/Versus without obscuring live danger.
       drawCoopCaptureFeedback(ctx, recentCaptures, run, palette ?? ACTOR_FALLBACK_PALETTE, reduced);
+      ctx.save();
+      ctx.scale(1 / 16, 1 / 16);
+      drawCombatScrap(ctx, combat, palette, combatOptions);
+      destruction.draw(ctx, {
+        unit: 1 / Math.max(0.25, canvas.clientWidth / 1152),
+        color: palette?.accent,
+      });
+      ctx.restore();
       drawCoopBonuses(ctx, bonuses, { screenScale: canvas.clientWidth / 1152 });
       // Launch markers are anchored landmarks, not compulsory meeting pads.
       for (const effect of run.supportEffects || [])
@@ -437,6 +481,19 @@ export function createCoopPainter(canvas) {
         for (const actor of list)
           if (actors.draw(ctx, kind, actor.id, palette ?? ACTOR_FALLBACK_PALETTE))
             bodies.add(`${kind}:${actor.id}`);
+      ctx.save();
+      ctx.scale(1 / 16, 1 / 16);
+      combatPresentation.drawActors(ctx, combat, palette, combatOptions);
+      drawCombatWarnings(ctx, combat, palette, combatOptions);
+      drawCombatProjectiles(ctx, combat, palette, combatOptions);
+      ctx.restore();
+      for (const actor of combat?.actors ?? []) {
+        if (!bonusSlowed && actor.slowUntil <= run.time) continue;
+        ctx.save();
+        ctx.translate(actor.x, actor.y);
+        drawTeamSlowed(ctx, supportFrames, palette);
+        ctx.restore();
+      }
       const clearance = (kind, id, minimum) =>
         body(kind, id)
           ? Math.max(minimum, actors.frame(kind, id).diameter / 32 + cueScale.px(9) / cssCell)

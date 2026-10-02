@@ -24,8 +24,11 @@ export function teamJourneyLibrarySource({
   // Historical readers keep authored receipt semantics unless they opt in.
   gameplayIdentity = (row) => row.simulationIdentity,
   difficulty = () => 'standard',
+  encounterVariant = () => 'authored',
   launch,
 }) {
+  const presentation = (mission) =>
+    journey.presentation?.(mission, difficulty(), { encounterVariant: encounterVariant() });
   const source = journeyLibrarySource({
     editionId,
     edition,
@@ -36,7 +39,7 @@ export function teamJourneyLibrarySource({
     catalog: journey.catalog,
     profile: progress ?? { snapshot: () => ({ clears: {}, skipped: {} }) },
     tags: (mission) => authoredJourneyMissionTags(mission, journey.manifest(mission, difficulty())),
-    card: (mission) => journey.card(mission, difficulty()),
+    card: (mission) => presentation(mission)?.card ?? journey.card(mission, difficulty()),
     launch(mission, context) {
       const row = journey.row(mission, difficulty());
       if (!row || !journey.owns(row))
@@ -46,7 +49,11 @@ export function teamJourneyLibrarySource({
   });
   return {
     ...source,
-    details: (mission) => journeyMissionDetails(journey.manifest(mission, difficulty())),
+    details: (mission) => {
+      const manifest = journey.manifest(mission, difficulty()),
+        design = presentation(mission)?.design;
+      return journeyMissionDetails(design ? { ...manifest, design } : manifest);
+    },
     progress(mission) {
       if (!progress) return '';
       const profile = progress.snapshot(),

@@ -1,3 +1,4 @@
+import { dialogueChannel } from './dialogue-channel.mjs';
 import { playerMovementBody } from './movement-profiles.mjs';
 import { getLocale } from '../i18n/index.mjs';
 import { CELL, DIRECTIONS } from '../core/registry.mjs';
@@ -104,9 +105,19 @@ export class FeedbackDirector {
     )
       return null;
     if (ui && !s.menuSettings.enabled) return null;
-    if (radio && (!s.radioSettings?.enabled || s.radioSettings.volume === 0)) return null;
-    if (radio && [...s.voices].some((v) => v.radio || (v.feedback && v.priority >= 5))) return null;
-    if (priority >= 5) for (const voice of [...s.voices]) if (voice.radio) voice.stop();
+    if (
+      radio &&
+      (!s.radioSettings?.enabled || s.radioSettings.volume === 0 || dialogueChannel.active)
+    )
+      return null;
+    if (priority >= 5 && (name === 'warning' || name === 'loss')) dialogueChannel.interrupt();
+    if (
+      radio &&
+      [...s.voices].some((v) => v.radio || v.dialogue || (v.feedback && v.priority >= 5))
+    )
+      return null;
+    if (priority >= 5)
+      for (const voice of [...s.voices]) if (voice.radio || voice.dialogue) voice.stop();
     const buffer = this.buffers.get(name);
     if (!buffer) {
       this.load(name);
@@ -188,16 +199,23 @@ export class FeedbackDirector {
         volume.disconnect();
         panner?.disconnect();
         s.voices.delete(voice);
+        dialogueChannel.release(voice);
       },
       get ended() {
         return ended || retiring;
       },
     };
     source.onended = voice.stop;
+    if (radio) dialogueChannel.claim(voice);
     s.voices.add(voice);
     // Re-enter a periodic texture at its global phase, without an attack restart.
-    source.start(c.currentTime + delay, loop ? (c.currentTime * rate) % buffer.duration : 0);
-    if (!loop) source.stop(c.currentTime + delay + buffer.duration / rate + 0.01);
+    try {
+      source.start(c.currentTime + delay, loop ? (c.currentTime * rate) % buffer.duration : 0);
+      if (!loop) source.stop(c.currentTime + delay + buffer.duration / rate + 0.01);
+    } catch {
+      voice.stop();
+      return null;
+    }
     return voice;
   }
   events(events, run, theme = {}, options = {}) {
@@ -265,13 +283,22 @@ export class FeedbackDirector {
         !(capturing && event.type === 'cut.closed') &&
         !(final && ['cut.closed', 'objective.captured', 'relay.opened'].includes(event.type))
       ) {
-        const cue = eventCue(event);
+        const destruction = event.type === 'combat.eliminated';
+        const fullDestruction =
+          (options.getDestruction?.() ?? this.sound.readDestruction?.())?.brutal === true;
+        const humanoid =
+          run.level?.hunt?.targets?.some((target) => target.id === event.id) ||
+          run.level?.classic?.hunt?.targets?.some((target) => target.id === event.id) ||
+          run.definition?.classic?.hunt?.targets?.some((target) => target.id === event.id);
+        // One material accent replaces pickup; simultaneous removals remain throttled.
+        const cue = destruction ? (humanoid ? 'contact-soft' : 'contact-metal') : eventCue(event);
         if (cue)
           this.play(cue, {
             priority: cue === 'warning' || cue === 'win' || cue === 'loss' ? 5 : 3,
             board,
             pan: cue === 'warning' ? 0 : pan,
-            rate: 1 + ((this.serial++ % 3) - 1) * 0.025,
+            gain: destruction ? (fullDestruction ? 0.55 : 0.22) : 0.55,
+            rate: destruction ? (humanoid ? 0.8 : 0.72) : 1 + ((this.serial++ % 3) - 1) * 0.025,
           });
       }
       if (!final && terrainTransitionCaption(run, event))

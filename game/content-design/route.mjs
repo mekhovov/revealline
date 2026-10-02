@@ -1,4 +1,5 @@
 import { createOpeningCandidates } from './horizon-candidates.mjs';
+import { createHuntTrainingCandidates } from './hunt-training-candidates.mjs';
 import { createBorderCandidates } from './border-candidates.mjs';
 import {
   createWholeSpatialCandidates,
@@ -52,6 +53,7 @@ export { createCandidateSequence } from './sequence.mjs';
 export function createAuthoredJourneyRoute(id) {
   return createAuthoredJourneyRouteDefinition(id, {
     createOpeningCandidates,
+    createHuntTrainingCandidates,
     createBorderCandidates,
     createWholeJourneyCandidates,
     createWholeSpatialCandidates,

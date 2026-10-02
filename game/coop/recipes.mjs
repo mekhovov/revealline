@@ -15,6 +15,9 @@ import {
   COOP_IMPACT_LEVEL_VERSION,
   COOP_IMPACT_RULESET,
   COOP_IMPACT_PACK_VERSION,
+  COOP_HUNT_LEVEL_VERSION,
+  COOP_HUNT_RULESET,
+  COOP_HUNT_PACK_VERSION,
   COOP_SPECIALIST_LEVEL_VERSION,
   COOP_SPECIALIST_RULESET,
   COOP_SPECIALIST_PACK_VERSION,
@@ -321,6 +324,7 @@ export function validateCoopPack(pack) {
   if (!keys(pack, ['version', 'ruleset', 'id', 'revision', 'name', 'levels']))
     return result(['A co-op pack must be a plain data object with supported fields.']);
   const errors = [];
+  const hunting = pack.version === COOP_HUNT_PACK_VERSION;
   const terrain = pack.version === COOP_TERRAIN_PACK_VERSION;
   const rover = pack.version === COOP_ROVER_PACK_VERSION;
   const bonus = pack.version === COOP_BONUS_PACK_VERSION;
@@ -332,24 +336,27 @@ export function validateCoopPack(pack) {
     rover ||
     bonus ||
     impact ||
-    specialist;
+    specialist ||
+    hunting;
   if (pack.version !== COOP_PACK_VERSION && !foundations)
     errors.push('Unsupported co-op pack version; solo packs are a different format.');
   if (
     pack.ruleset !==
-    (specialist
-      ? COOP_SPECIALIST_RULESET
-      : impact
-        ? COOP_IMPACT_RULESET
-        : bonus
-          ? COOP_BONUS_RULESET
-          : rover
-            ? COOP_ROVER_RULESET
-            : terrain
-              ? COOP_TERRAIN_RULESET
-              : foundations
-                ? COOP_FOUNDATION_RULESET
-                : COOP_RULESET)
+    (hunting
+      ? COOP_HUNT_RULESET
+      : specialist
+        ? COOP_SPECIALIST_RULESET
+        : impact
+          ? COOP_IMPACT_RULESET
+          : bonus
+            ? COOP_BONUS_RULESET
+            : rover
+              ? COOP_ROVER_RULESET
+              : terrain
+                ? COOP_TERRAIN_RULESET
+                : foundations
+                  ? COOP_FOUNDATION_RULESET
+                  : COOP_RULESET)
   )
     errors.push('This co-op pack requires a different ruleset.');
   const validRevision = foundations
@@ -370,19 +377,21 @@ export function validateCoopPack(pack) {
     if (
       validation.valid &&
       level.version !==
-        (specialist
-          ? COOP_SPECIALIST_LEVEL_VERSION
-          : impact
-            ? COOP_IMPACT_LEVEL_VERSION
-            : bonus
-              ? COOP_BONUS_LEVEL_VERSION
-              : rover
-                ? COOP_ROVER_LEVEL_VERSION
-                : terrain
-                  ? COOP_TERRAIN_LEVEL_VERSION
-                  : foundations
-                    ? COOP_FOUNDATION_LEVEL_VERSION
-                    : COOP_LEVEL_VERSION)
+        (hunting
+          ? COOP_HUNT_LEVEL_VERSION
+          : specialist
+            ? COOP_SPECIALIST_LEVEL_VERSION
+            : impact
+              ? COOP_IMPACT_LEVEL_VERSION
+              : bonus
+                ? COOP_BONUS_LEVEL_VERSION
+                : rover
+                  ? COOP_ROVER_LEVEL_VERSION
+                  : terrain
+                    ? COOP_TERRAIN_LEVEL_VERSION
+                    : foundations
+                      ? COOP_FOUNDATION_LEVEL_VERSION
+                      : COOP_LEVEL_VERSION)
     )
       errors.push(
         `Level ${i + 1}: ${foundations ? 'This foundation pack requires a matching Team runtime edition.' : 'This historical pack cannot contain a newer Team runtime edition.'}`,
