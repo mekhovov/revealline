@@ -1,0 +1,1378 @@
+{
+  "sourceSha256": "a724e26f05ab59d24a0fb5493eacabdd6b38690bfc0b90ddee7ae8c8117c31a1",
+  "rendererSha256": "f16d9170e59a06976f1780d0ca4e55d8c8046fcfdb5a92a313053b2c32f1d1eb",
+  "originalPixelComparisons": 68,
+  "allOriginalPixelsExact": true,
+  "worlds": [
+    {
+      "environment": "gym",
+      "cycles": [
+        {
+          "quality": "low",
+          "resources": true,
+          "exact": true,
+          "materials": 19,
+          "textures": 9,
+          "kinds": [
+            "hangar-concrete",
+            "painted-steel",
+            "rubber"
+          ],
+          "sizes": [
+            128,
+            128,
+            128
+          ]
+        },
+        {
+          "quality": "balanced",
+          "resources": true,
+          "exact": true,
+          "materials": 19,
+          "textures": 9,
+          "kinds": [
+            "hangar-concrete",
+            "painted-steel",
+            "rubber"
+          ],
+          "sizes": [
+            256,
+            256,
+            256
+          ]
+        },
+        {
+          "quality": "high",
+          "resources": true,
+          "exact": true,
+          "materials": 19,
+          "textures": 9,
+          "kinds": [
+            "hangar-concrete",
+            "painted-steel",
+            "rubber"
+          ],
+          "sizes": [
+            512,
+            512,
+            512
+          ]
+        },
+        {
+          "quality": "balanced",
+          "resources": true,
+          "exact": true,
+          "materials": 19,
+          "textures": 9,
+          "kinds": [
+            "hangar-concrete",
+            "painted-steel",
+            "rubber"
+          ],
+          "sizes": [
+            256,
+            256,
+            256
+          ]
+        },
+        {
+          "quality": "low",
+          "resources": true,
+          "exact": true,
+          "materials": 19,
+          "textures": 9,
+          "kinds": [
+            "hangar-concrete",
+            "painted-steel",
+            "rubber"
+          ],
+          "sizes": [
+            128,
+            128,
+            128
+          ]
+        }
+      ]
+    },
+    {
+      "environment": "field",
+      "cycles": [
+        {
+          "quality": "low",
+          "resources": true,
+          "exact": true,
+          "materials": 19,
+          "textures": 6,
+          "kinds": [
+            "grass",
+            "wood"
+          ],
+          "sizes": [
+            128,
+            128
+          ]
+        },
+        {
+          "quality": "balanced",
+          "resources": true,
+          "exact": true,
+          "materials": 19,
+          "textures": 6,
+          "kinds": [
+            "grass",
+            "wood"
+          ],
+          "sizes": [
+            256,
+            256
+          ]
+        },
+        {
+          "quality": "high",
+          "resources": true,
+          "exact": true,
+          "materials": 19,
+          "textures": 6,
+          "kinds": [
+            "grass",
+            "wood"
+          ],
+          "sizes": [
+            512,
+            512
+          ]
+        },
+        {
+          "quality": "balanced",
+          "resources": true,
+          "exact": true,
+          "materials": 19,
+          "textures": 6,
+          "kinds": [
+            "grass",
+            "wood"
+          ],
+          "sizes": [
+            256,
+            256
+          ]
+        },
+        {
+          "quality": "low",
+          "resources": true,
+          "exact": true,
+          "materials": 19,
+          "textures": 6,
+          "kinds": [
+            "grass",
+            "wood"
+          ],
+          "sizes": [
+            128,
+            128
+          ]
+        }
+      ]
+    },
+    {
+      "environment": "woodland",
+      "cycles": [
+        {
+          "quality": "low",
+          "resources": true,
+          "exact": false,
+          "materials": 20,
+          "textures": 9,
+          "kinds": [
+            "forest-floor",
+            "wood",
+            "bark"
+          ],
+          "sizes": [
+            128,
+            128,
+            128
+          ]
+        },
+        {
+          "quality": "balanced",
+          "resources": true,
+          "exact": false,
+          "materials": 20,
+          "textures": 9,
+          "kinds": [
+            "forest-floor",
+            "wood",
+            "bark"
+          ],
+          "sizes": [
+            256,
+            256,
+            256
+          ]
+        },
+        {
+          "quality": "high",
+          "resources": true,
+          "exact": false,
+          "materials": 20,
+          "textures": 9,
+          "kinds": [
+            "forest-floor",
+            "wood",
+            "bark"
+          ],
+          "sizes": [
+            512,
+            512,
+            512
+          ]
+        },
+        {
+          "quality": "balanced",
+          "resources": true,
+          "exact": false,
+          "materials": 20,
+          "textures": 9,
+          "kinds": [
+            "forest-floor",
+            "wood",
+            "bark"
+          ],
+          "sizes": [
+            256,
+            256,
+            256
+          ]
+        },
+        {
+          "quality": "low",
+          "resources": true,
+          "exact": false,
+          "materials": 20,
+          "textures": 9,
+          "kinds": [
+            "forest-floor",
+            "wood",
+            "bark"
+          ],
+          "sizes": [
+            128,
+            128,
+            128
+          ]
+        }
+      ]
+    },
+    {
+      "environment": "courtyard",
+      "cycles": [
+        {
+          "quality": "low",
+          "resources": true,
+          "exact": true,
+          "materials": 21,
+          "textures": 12,
+          "kinds": [
+            "paving",
+            "brick",
+            "plaster",
+            "brick"
+          ],
+          "sizes": [
+            128,
+            128,
+            128,
+            128
+          ]
+        },
+        {
+          "quality": "balanced",
+          "resources": true,
+          "exact": true,
+          "materials": 21,
+          "textures": 12,
+          "kinds": [
+            "paving",
+            "brick",
+            "plaster",
+            "brick"
+          ],
+          "sizes": [
+            256,
+            256,
+            256,
+            256
+          ]
+        },
+        {
+          "quality": "high",
+          "resources": true,
+          "exact": true,
+          "materials": 21,
+          "textures": 12,
+          "kinds": [
+            "paving",
+            "brick",
+            "plaster",
+            "brick"
+          ],
+          "sizes": [
+            512,
+            512,
+            512,
+            512
+          ]
+        },
+        {
+          "quality": "balanced",
+          "resources": true,
+          "exact": true,
+          "materials": 21,
+          "textures": 12,
+          "kinds": [
+            "paving",
+            "brick",
+            "plaster",
+            "brick"
+          ],
+          "sizes": [
+            256,
+            256,
+            256,
+            256
+          ]
+        },
+        {
+          "quality": "low",
+          "resources": true,
+          "exact": true,
+          "materials": 21,
+          "textures": 12,
+          "kinds": [
+            "paving",
+            "brick",
+            "plaster",
+            "brick"
+          ],
+          "sizes": [
+            128,
+            128,
+            128,
+            128
+          ]
+        }
+      ]
+    },
+    {
+      "environment": "warehouse",
+      "cycles": [
+        {
+          "quality": "low",
+          "resources": true,
+          "exact": true,
+          "materials": 19,
+          "textures": 9,
+          "kinds": [
+            "concrete",
+            "metal",
+            "metal"
+          ],
+          "sizes": [
+            64,
+            64,
+            64
+          ]
+        },
+        {
+          "quality": "balanced",
+          "resources": true,
+          "exact": true,
+          "materials": 19,
+          "textures": 9,
+          "kinds": [
+            "concrete",
+            "metal",
+            "metal"
+          ],
+          "sizes": [
+            64,
+            64,
+            64
+          ]
+        },
+        {
+          "quality": "high",
+          "resources": true,
+          "exact": true,
+          "materials": 19,
+          "textures": 9,
+          "kinds": [
+            "concrete",
+            "metal",
+            "metal"
+          ],
+          "sizes": [
+            64,
+            64,
+            64
+          ]
+        },
+        {
+          "quality": "balanced",
+          "resources": true,
+          "exact": true,
+          "materials": 19,
+          "textures": 9,
+          "kinds": [
+            "concrete",
+            "metal",
+            "metal"
+          ],
+          "sizes": [
+            64,
+            64,
+            64
+          ]
+        },
+        {
+          "quality": "low",
+          "resources": true,
+          "exact": true,
+          "materials": 19,
+          "textures": 9,
+          "kinds": [
+            "concrete",
+            "metal",
+            "metal"
+          ],
+          "sizes": [
+            64,
+            64,
+            64
+          ]
+        }
+      ]
+    },
+    {
+      "environment": "stadium",
+      "cycles": [
+        {
+          "quality": "low",
+          "resources": true,
+          "exact": true,
+          "materials": 20,
+          "textures": 12,
+          "kinds": [
+            "asphalt",
+            "metal",
+            "concrete",
+            "metal"
+          ],
+          "sizes": [
+            64,
+            64,
+            64,
+            64
+          ]
+        },
+        {
+          "quality": "balanced",
+          "resources": true,
+          "exact": true,
+          "materials": 20,
+          "textures": 12,
+          "kinds": [
+            "asphalt",
+            "metal",
+            "concrete",
+            "metal"
+          ],
+          "sizes": [
+            64,
+            64,
+            64,
+            64
+          ]
+        },
+        {
+          "quality": "high",
+          "resources": true,
+          "exact": true,
+          "materials": 20,
+          "textures": 12,
+          "kinds": [
+            "asphalt",
+            "metal",
+            "concrete",
+            "metal"
+          ],
+          "sizes": [
+            64,
+            64,
+            64,
+            64
+          ]
+        },
+        {
+          "quality": "balanced",
+          "resources": true,
+          "exact": true,
+          "materials": 20,
+          "textures": 12,
+          "kinds": [
+            "asphalt",
+            "metal",
+            "concrete",
+            "metal"
+          ],
+          "sizes": [
+            64,
+            64,
+            64,
+            64
+          ]
+        },
+        {
+          "quality": "low",
+          "resources": true,
+          "exact": true,
+          "materials": 20,
+          "textures": 12,
+          "kinds": [
+            "asphalt",
+            "metal",
+            "concrete",
+            "metal"
+          ],
+          "sizes": [
+            64,
+            64,
+            64,
+            64
+          ]
+        }
+      ]
+    },
+    {
+      "environment": "container-yard",
+      "cycles": [
+        {
+          "quality": "low",
+          "resources": true,
+          "exact": true,
+          "materials": 18,
+          "textures": 9,
+          "kinds": [
+            "asphalt",
+            "metal",
+            "metal"
+          ],
+          "sizes": [
+            128,
+            128,
+            128
+          ]
+        },
+        {
+          "quality": "balanced",
+          "resources": true,
+          "exact": true,
+          "materials": 18,
+          "textures": 9,
+          "kinds": [
+            "asphalt",
+            "metal",
+            "metal"
+          ],
+          "sizes": [
+            256,
+            256,
+            256
+          ]
+        },
+        {
+          "quality": "high",
+          "resources": true,
+          "exact": true,
+          "materials": 18,
+          "textures": 9,
+          "kinds": [
+            "asphalt",
+            "metal",
+            "metal"
+          ],
+          "sizes": [
+            512,
+            512,
+            512
+          ]
+        },
+        {
+          "quality": "balanced",
+          "resources": true,
+          "exact": true,
+          "materials": 18,
+          "textures": 9,
+          "kinds": [
+            "asphalt",
+            "metal",
+            "metal"
+          ],
+          "sizes": [
+            256,
+            256,
+            256
+          ]
+        },
+        {
+          "quality": "low",
+          "resources": true,
+          "exact": true,
+          "materials": 18,
+          "textures": 9,
+          "kinds": [
+            "asphalt",
+            "metal",
+            "metal"
+          ],
+          "sizes": [
+            128,
+            128,
+            128
+          ]
+        }
+      ]
+    },
+    {
+      "environment": "garage",
+      "cycles": [
+        {
+          "quality": "low",
+          "resources": true,
+          "exact": true,
+          "materials": 20,
+          "textures": 9,
+          "kinds": [
+            "concrete",
+            "metal",
+            "concrete"
+          ],
+          "sizes": [
+            128,
+            128,
+            128
+          ]
+        },
+        {
+          "quality": "balanced",
+          "resources": true,
+          "exact": true,
+          "materials": 20,
+          "textures": 9,
+          "kinds": [
+            "concrete",
+            "metal",
+            "concrete"
+          ],
+          "sizes": [
+            256,
+            256,
+            256
+          ]
+        },
+        {
+          "quality": "high",
+          "resources": true,
+          "exact": true,
+          "materials": 20,
+          "textures": 9,
+          "kinds": [
+            "concrete",
+            "metal",
+            "concrete"
+          ],
+          "sizes": [
+            512,
+            512,
+            512
+          ]
+        },
+        {
+          "quality": "balanced",
+          "resources": true,
+          "exact": true,
+          "materials": 20,
+          "textures": 9,
+          "kinds": [
+            "concrete",
+            "metal",
+            "concrete"
+          ],
+          "sizes": [
+            256,
+            256,
+            256
+          ]
+        },
+        {
+          "quality": "low",
+          "resources": true,
+          "exact": true,
+          "materials": 20,
+          "textures": 9,
+          "kinds": [
+            "concrete",
+            "metal",
+            "concrete"
+          ],
+          "sizes": [
+            128,
+            128,
+            128
+          ]
+        }
+      ]
+    },
+    {
+      "environment": "coast",
+      "cycles": [
+        {
+          "quality": "low",
+          "resources": true,
+          "exact": true,
+          "materials": 21,
+          "textures": 12,
+          "kinds": [
+            "sand",
+            "concrete",
+            "concrete",
+            "plaster"
+          ],
+          "sizes": [
+            128,
+            128,
+            128,
+            128
+          ]
+        },
+        {
+          "quality": "balanced",
+          "resources": true,
+          "exact": true,
+          "materials": 21,
+          "textures": 12,
+          "kinds": [
+            "sand",
+            "concrete",
+            "concrete",
+            "plaster"
+          ],
+          "sizes": [
+            256,
+            256,
+            256,
+            256
+          ]
+        },
+        {
+          "quality": "high",
+          "resources": true,
+          "exact": true,
+          "materials": 21,
+          "textures": 12,
+          "kinds": [
+            "sand",
+            "concrete",
+            "concrete",
+            "plaster"
+          ],
+          "sizes": [
+            512,
+            512,
+            512,
+            512
+          ]
+        },
+        {
+          "quality": "balanced",
+          "resources": true,
+          "exact": true,
+          "materials": 21,
+          "textures": 12,
+          "kinds": [
+            "sand",
+            "concrete",
+            "concrete",
+            "plaster"
+          ],
+          "sizes": [
+            256,
+            256,
+            256,
+            256
+          ]
+        },
+        {
+          "quality": "low",
+          "resources": true,
+          "exact": true,
+          "materials": 21,
+          "textures": 12,
+          "kinds": [
+            "sand",
+            "concrete",
+            "concrete",
+            "plaster"
+          ],
+          "sizes": [
+            128,
+            128,
+            128,
+            128
+          ]
+        }
+      ]
+    },
+    {
+      "environment": "quarry",
+      "cycles": [
+        {
+          "quality": "low",
+          "resources": true,
+          "exact": true,
+          "materials": 19,
+          "textures": 12,
+          "kinds": [
+            "stone",
+            "stone",
+            "stone",
+            "metal"
+          ],
+          "sizes": [
+            128,
+            128,
+            128,
+            128
+          ]
+        },
+        {
+          "quality": "balanced",
+          "resources": true,
+          "exact": true,
+          "materials": 19,
+          "textures": 12,
+          "kinds": [
+            "stone",
+            "stone",
+            "stone",
+            "metal"
+          ],
+          "sizes": [
+            256,
+            256,
+            256,
+            256
+          ]
+        },
+        {
+          "quality": "high",
+          "resources": true,
+          "exact": true,
+          "materials": 19,
+          "textures": 12,
+          "kinds": [
+            "stone",
+            "stone",
+            "stone",
+            "metal"
+          ],
+          "sizes": [
+            512,
+            512,
+            512,
+            512
+          ]
+        },
+        {
+          "quality": "balanced",
+          "resources": true,
+          "exact": true,
+          "materials": 19,
+          "textures": 12,
+          "kinds": [
+            "stone",
+            "stone",
+            "stone",
+            "metal"
+          ],
+          "sizes": [
+            256,
+            256,
+            256,
+            256
+          ]
+        },
+        {
+          "quality": "low",
+          "resources": true,
+          "exact": true,
+          "materials": 19,
+          "textures": 12,
+          "kinds": [
+            "stone",
+            "stone",
+            "stone",
+            "metal"
+          ],
+          "sizes": [
+            128,
+            128,
+            128,
+            128
+          ]
+        }
+      ]
+    },
+    {
+      "environment": "rooftops",
+      "cycles": [
+        {
+          "quality": "low",
+          "resources": true,
+          "exact": true,
+          "materials": 20,
+          "textures": 12,
+          "kinds": [
+            "asphalt",
+            "plaster",
+            "plaster",
+            "concrete"
+          ],
+          "sizes": [
+            64,
+            64,
+            64,
+            64
+          ]
+        },
+        {
+          "quality": "balanced",
+          "resources": true,
+          "exact": true,
+          "materials": 20,
+          "textures": 12,
+          "kinds": [
+            "asphalt",
+            "plaster",
+            "plaster",
+            "concrete"
+          ],
+          "sizes": [
+            64,
+            64,
+            64,
+            64
+          ]
+        },
+        {
+          "quality": "high",
+          "resources": true,
+          "exact": true,
+          "materials": 20,
+          "textures": 12,
+          "kinds": [
+            "asphalt",
+            "plaster",
+            "plaster",
+            "concrete"
+          ],
+          "sizes": [
+            64,
+            64,
+            64,
+            64
+          ]
+        },
+        {
+          "quality": "balanced",
+          "resources": true,
+          "exact": true,
+          "materials": 20,
+          "textures": 12,
+          "kinds": [
+            "asphalt",
+            "plaster",
+            "plaster",
+            "concrete"
+          ],
+          "sizes": [
+            64,
+            64,
+            64,
+            64
+          ]
+        },
+        {
+          "quality": "low",
+          "resources": true,
+          "exact": true,
+          "materials": 20,
+          "textures": 12,
+          "kinds": [
+            "asphalt",
+            "plaster",
+            "plaster",
+            "concrete"
+          ],
+          "sizes": [
+            64,
+            64,
+            64,
+            64
+          ]
+        }
+      ]
+    },
+    {
+      "environment": "orchard",
+      "cycles": [
+        {
+          "quality": "low",
+          "resources": true,
+          "exact": true,
+          "materials": 23,
+          "textures": 18,
+          "kinds": [
+            "grass",
+            "wood",
+            "wood",
+            "foliage",
+            "plaster",
+            "stone"
+          ],
+          "sizes": [
+            128,
+            128,
+            128,
+            128,
+            128,
+            128
+          ]
+        },
+        {
+          "quality": "balanced",
+          "resources": true,
+          "exact": true,
+          "materials": 23,
+          "textures": 18,
+          "kinds": [
+            "grass",
+            "wood",
+            "wood",
+            "foliage",
+            "plaster",
+            "stone"
+          ],
+          "sizes": [
+            256,
+            256,
+            256,
+            256,
+            256,
+            256
+          ]
+        },
+        {
+          "quality": "high",
+          "resources": true,
+          "exact": true,
+          "materials": 23,
+          "textures": 18,
+          "kinds": [
+            "grass",
+            "wood",
+            "wood",
+            "foliage",
+            "plaster",
+            "stone"
+          ],
+          "sizes": [
+            512,
+            512,
+            512,
+            512,
+            512,
+            512
+          ]
+        },
+        {
+          "quality": "balanced",
+          "resources": true,
+          "exact": true,
+          "materials": 23,
+          "textures": 18,
+          "kinds": [
+            "grass",
+            "wood",
+            "wood",
+            "foliage",
+            "plaster",
+            "stone"
+          ],
+          "sizes": [
+            256,
+            256,
+            256,
+            256,
+            256,
+            256
+          ]
+        },
+        {
+          "quality": "low",
+          "resources": true,
+          "exact": true,
+          "materials": 23,
+          "textures": 18,
+          "kinds": [
+            "grass",
+            "wood",
+            "wood",
+            "foliage",
+            "plaster",
+            "stone"
+          ],
+          "sizes": [
+            128,
+            128,
+            128,
+            128,
+            128,
+            128
+          ]
+        }
+      ]
+    },
+    {
+      "environment": "solar-farm",
+      "cycles": [
+        {
+          "quality": "low",
+          "resources": true,
+          "exact": true,
+          "materials": 20,
+          "textures": 15,
+          "kinds": [
+            "ballast",
+            "metal",
+            "solar",
+            "metal",
+            "concrete"
+          ],
+          "sizes": [
+            128,
+            128,
+            128,
+            128,
+            128
+          ]
+        },
+        {
+          "quality": "balanced",
+          "resources": true,
+          "exact": true,
+          "materials": 20,
+          "textures": 15,
+          "kinds": [
+            "ballast",
+            "metal",
+            "solar",
+            "metal",
+            "concrete"
+          ],
+          "sizes": [
+            256,
+            256,
+            256,
+            256,
+            256
+          ]
+        },
+        {
+          "quality": "high",
+          "resources": true,
+          "exact": true,
+          "materials": 20,
+          "textures": 15,
+          "kinds": [
+            "ballast",
+            "metal",
+            "solar",
+            "metal",
+            "concrete"
+          ],
+          "sizes": [
+            512,
+            512,
+            512,
+            512,
+            512
+          ]
+        },
+        {
+          "quality": "balanced",
+          "resources": true,
+          "exact": true,
+          "materials": 20,
+          "textures": 15,
+          "kinds": [
+            "ballast",
+            "metal",
+            "solar",
+            "metal",
+            "concrete"
+          ],
+          "sizes": [
+            256,
+            256,
+            256,
+            256,
+            256
+          ]
+        },
+        {
+          "quality": "low",
+          "resources": true,
+          "exact": true,
+          "materials": 20,
+          "textures": 15,
+          "kinds": [
+            "ballast",
+            "metal",
+            "solar",
+            "metal",
+            "concrete"
+          ],
+          "sizes": [
+            128,
+            128,
+            128,
+            128,
+            128
+          ]
+        }
+      ]
+    },
+    {
+      "environment": "rail-depot",
+      "cycles": [
+        {
+          "quality": "low",
+          "resources": true,
+          "exact": true,
+          "materials": 21,
+          "textures": 15,
+          "kinds": [
+            "ballast",
+            "metal",
+            "metal",
+            "concrete",
+            "plaster"
+          ],
+          "sizes": [
+            128,
+            128,
+            128,
+            128,
+            128
+          ]
+        },
+        {
+          "quality": "balanced",
+          "resources": true,
+          "exact": true,
+          "materials": 21,
+          "textures": 15,
+          "kinds": [
+            "ballast",
+            "metal",
+            "metal",
+            "concrete",
+            "plaster"
+          ],
+          "sizes": [
+            256,
+            256,
+            256,
+            256,
+            256
+          ]
+        },
+        {
+          "quality": "high",
+          "resources": true,
+          "exact": true,
+          "materials": 21,
+          "textures": 15,
+          "kinds": [
+            "ballast",
+            "metal",
+            "metal",
+            "concrete",
+            "plaster"
+          ],
+          "sizes": [
+            512,
+            512,
+            512,
+            512,
+            512
+          ]
+        },
+        {
+          "quality": "balanced",
+          "resources": true,
+          "exact": true,
+          "materials": 21,
+          "textures": 15,
+          "kinds": [
+            "ballast",
+            "metal",
+            "metal",
+            "concrete",
+            "plaster"
+          ],
+          "sizes": [
+            256,
+            256,
+            256,
+            256,
+            256
+          ]
+        },
+        {
+          "quality": "low",
+          "resources": true,
+          "exact": true,
+          "materials": 21,
+          "textures": 15,
+          "kinds": [
+            "ballast",
+            "metal",
+            "metal",
+            "concrete",
+            "plaster"
+          ],
+          "sizes": [
+            128,
+            128,
+            128,
+            128,
+            128
+          ]
+        }
+      ]
+    }
+  ]
+}
