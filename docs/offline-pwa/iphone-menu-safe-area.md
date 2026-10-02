@@ -1,5 +1,9 @@
 # iPhone installed-app menu header correction
 
+The subsequent [all-page audit](iphone-page-safe-area-audit.md) extends this fix
+to shared dialogs, SIM, updates and supporting pages. The build measurements below
+describe the initial Settings-only commit; follow-up evidence is recorded separately.
+
 User reports on 2026-10-02 show Settings and its Back button beneath the iOS
 status bar in portrait. Gameplay's HUD already leaves the required top space.
 

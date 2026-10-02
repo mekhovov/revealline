@@ -77,6 +77,7 @@ let controller,
   navigationRequest = null,
   panelController = new AbortController();
 const embedded = new URL(location.href).searchParams.has('embedded') && window.parent !== window;
+document.body.dataset.embedded = String(embedded);
 const panelProtocol = 'revealline.offline-panel.v1';
 const notifyHost = (action, fields = {}) => {
   if (embedded)
