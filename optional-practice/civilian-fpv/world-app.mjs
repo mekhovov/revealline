@@ -108,6 +108,9 @@ const COPY_EN = {
   aircraftLabel: 'Aircraft',
   graphicsLabel: 'Graphics',
   sticksLabel: 'Live sticks',
+  droneGuideLabel: 'Drone response',
+  droneGuideOn: 'Schematic on',
+  droneGuideOff: 'Off',
   radioSetup: 'Radio setup',
   makeItYours: 'MAKE IT YOURS',
   settingsHelp: 'Your controls and flight preferences carry across worlds and playlists.',
@@ -261,6 +264,9 @@ const COPY_UK = {
   aircraftLabel: 'Квадрокоптер',
   graphicsLabel: 'Графіка',
   sticksLabel: 'Відображення стіків',
+  droneGuideLabel: 'Реакція дрона',
+  droneGuideOn: 'Схема ввімкнена',
+  droneGuideOff: 'Вимкнено',
   radioSetup: 'Налаштувати пульт',
   makeItYours: 'НАЛАШТУЙТЕ ПІД СЕБЕ',
   settingsHelp: 'Керування й параметри польоту зберігаються для всіх світів і добірок.',
@@ -719,6 +725,7 @@ export function mountWorldApp({
     'drone-look',
     'flight-quality',
     'flight-stick-display',
+    'flight-drone-guide',
     'world-fov',
     'world-tilt',
     'sim-text-face',
@@ -1196,6 +1203,7 @@ export function mountWorldApp({
     if (status.textContent !== text) status.textContent = text;
     status.dataset.source = source;
     monitor.dataset.source = source;
+    paintDroneResponse(state, controls, { source, unavailable });
     if (current?.beginner)
       beginnerCoach.update({
         state,
@@ -1230,6 +1238,81 @@ export function mountWorldApp({
     $('flight-stick-display').setAttribute(
       'aria-label',
       txt('Stick display', 'Відображення стіків'),
+    );
+  }
+  function paintDroneResponse(state, controls, { source, unavailable }) {
+    const panel = $('flight-drone-response');
+    if (!state || $('flight-drone-guide').value === 'off') {
+      panel.hidden = true;
+      return;
+    }
+    const clamp = (value, min, max) => Math.max(min, Math.min(max, value));
+    const roll = clamp((state.attitude?.roll ?? 0) / 100, -55, 55);
+    const pitch = clamp((state.attitude?.pitch ?? 0) / 100, -35, 35);
+    const yaw = (state.attitude?.yaw ?? 0) / 100;
+    const altitude = Math.max(0, (state.position?.y ?? 0) / 1000);
+    const velocity = state.velocity ?? { x: 0, z: 0 };
+    const speed = Math.hypot(velocity.x ?? 0, velocity.y ?? 0, velocity.z ?? 0) / 1000;
+    const motion = Math.hypot(velocity.x ?? 0, velocity.z ?? 0);
+    const control = [
+      ['throttle', controls.throttle - 0.5],
+      ['yaw', controls.yaw],
+      ['pitch', controls.pitch],
+      ['roll', controls.roll],
+    ].reduce((strongest, next) => (Math.abs(next[1]) > Math.abs(strongest[1]) ? next : strongest));
+    const command =
+      altitude < 0.1 && controls.throttle < 0.12
+        ? txt('Throttle low · ready to lift', 'Газ унизу · готово до зльоту')
+        : Math.abs(control[1]) < 0.12
+          ? txt('Steady · observe the airframe', 'Стабільно · спостерігайте за дроном')
+          : control[0] === 'throttle'
+            ? control[1] > 0
+              ? txt('Throttle → climb response', 'Газ → реакція набору висоти')
+              : txt('Throttle → descend response', 'Газ → реакція зниження')
+            : control[0] === 'yaw'
+              ? control[1] > 0
+                ? txt('Yaw → nose turns right', 'Рискання → ніс праворуч')
+                : txt('Yaw → nose turns left', 'Рискання → ніс ліворуч')
+              : control[0] === 'pitch'
+                ? control[1] > 0
+                  ? txt('Pitch → nose forward', 'Тангаж → ніс уперед')
+                  : txt('Pitch → nose back', 'Тангаж → ніс назад')
+                : control[1] > 0
+                  ? txt('Roll → lean right', 'Крен → нахил праворуч')
+                  : txt('Roll → lean left', 'Крен → нахил ліворуч');
+    panel.hidden = false;
+    panel.classList.toggle('input-unavailable', unavailable);
+    panel.dataset.source = source;
+    panel.dataset.command = control[0];
+    $('drone-response-plan').setAttribute(
+      'transform',
+      `translate(103 57) rotate(${yaw.toFixed(1)})`,
+    );
+    $('drone-response-horizon').setAttribute(
+      'transform',
+      `rotate(${roll.toFixed(1)} 103 57) translate(0 ${(pitch * 0.55).toFixed(1)})`,
+    );
+    $('drone-response-altitude').setAttribute(
+      'y',
+      String((91 - clamp(altitude / 8, 0, 1) * 66).toFixed(1)),
+    );
+    const motionAngle = Math.atan2(velocity.x ?? 0, -(velocity.z ?? 0)) * (180 / Math.PI) - yaw;
+    $('drone-response-motion').setAttribute(
+      'transform',
+      `rotate(${Number.isFinite(motionAngle) ? motionAngle.toFixed(1) : 0})`,
+    );
+    $('drone-response-motion').classList.toggle('is-moving', motion > 180);
+    $('drone-response-command').textContent = command;
+    $('drone-response-data').textContent = txt(
+      `${altitude.toFixed(1)} m altitude · ${speed.toFixed(1)} m/s`,
+      `${altitude.toFixed(1)} м висота · ${speed.toFixed(1)} м/с`,
+    );
+    panel.setAttribute(
+      'aria-label',
+      txt(
+        `Drone response: ${command}. ${altitude.toFixed(1)} metres altitude, ${speed.toFixed(1)} metres per second.`,
+        `Реакція дрона: ${command}. Висота ${altitude.toFixed(1)} м, швидкість ${speed.toFixed(1)} м/с.`,
+      ),
     );
   }
   const hangar = mountDroneHangar({
@@ -3621,6 +3704,12 @@ export function mountWorldApp({
       return startFlight(current, { preview, playlist: playingPlaylist, index: playlistIndex });
   });
   on($('flight-stick-display'), 'change', () => paintInput(flight?.snapshot()));
+  on($('flight-drone-guide'), 'change', () => paintInput(flight?.snapshot()));
+  on($('hide-drone-response'), 'click', () => {
+    $('flight-drone-guide').value = 'off';
+    savePreferences();
+    paintInput(flight?.snapshot());
+  });
   on($('flight-quality'), 'change', () => renderer?.setQuality?.($('flight-quality').value));
   on($('drone-look'), 'change', () => renderer?.setDrone?.($('drone-look').value));
   on($('world-fire'), 'pointerdown', (e) => {
