@@ -1139,3 +1139,21 @@ No public-live claim. Ready to publish a focused child after #942 in native
 stack902. Next independent authorized work remains R5 hangar/meadow art after
 reconciling #925 and preserved radio-menu work; keep that unfinished work off
 this completed landing PR. All upstream holds/protection and stack889 remain.
+
+### 2 October — SIM landing PR published
+
+Focused [#943](https://github.com/mekhovov/revealline/pull/943) is attached to this
+chat and appended through the native API to stack902 after #942. Published
+qualification head is `a8913009078022b285050612299725aaa6a2e4d1`; frozen runtime
+remains e936e94 above. No member was manually retargeted, rebased or dissolved.
+The live stack API now reports #923, #924 and #925 closed and open membership
+starting at #926 through #943. Reconcile their merge identities before future
+R5 work; do not infer public deployment from closed state.
+
+#942's last exact-head snapshot at23c7901 remains OPEN/UNKNOWN with no listed
+checks. #943 CI and publication are external follow-up; neither PR is called
+merge-ready or public-live. Preserve all applicable checks, reviews and holds.
+The actual refreshed player remains open safely paused; temporary viewport sizing
+was reset. Additional unit coverage stays in R7, physical handheld/controller
+acceptance remains unclaimed. The requested handheld/controller/landing increment
+is complete locally and published for review; keep further R5 work separate.
