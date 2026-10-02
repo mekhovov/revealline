@@ -1,0 +1,160 @@
+{
+  "format": "FPVSchoolPhysicsEvidence.v1",
+  "source": {
+    "path": "optional-practice/civilian-fpv/world-catalogue.mjs",
+    "sha256": "a85413afca83981472abd2f6a5603ff36aa272e9799162dd82342c3693ffaaa4"
+  },
+  "response": {
+    "format": "FlightResponseProfile.v1",
+    "id": "gentle-v1",
+    "name": "Gentle",
+    "maxRate": 240,
+    "maxTilt": 30,
+    "expo": 30,
+    "responseTicks": 8
+  },
+  "method": "Offline pilot supplies normalized commands to the unchanged 50 Hz runtime; each exported demonstration is independently replayed against exact course and response. No state or course advancement is injected.",
+  "summary": {
+    "lessons": 12,
+    "completed": 12,
+    "independentlyReplayed": 12
+  },
+  "limitations": [
+    "Controlled-input reachability is not novice usability or physical-radio acceptance.",
+    "Unit coverage remains deferred. Public deployment and hardware performance are separate gates."
+  ],
+  "results": [
+    {
+      "id": "beginner-01",
+      "mode": "self-level",
+      "status": "complete",
+      "ticks": 360,
+      "contacts": 0,
+      "health": 100,
+      "packIdentity": "fpv-beginner:654387e76ace406c",
+      "finalStateIdentity": "9c5c44ff0f549053",
+      "proofSha256": "1dfa3d637133570494d1715767e0ac195944e3ab2626117a05df57fa6b427a4e"
+    },
+    {
+      "id": "beginner-02",
+      "mode": "self-level",
+      "status": "complete",
+      "ticks": 564,
+      "contacts": 0,
+      "health": 100,
+      "packIdentity": "fpv-beginner:654387e76ace406c",
+      "finalStateIdentity": "f79e1ebe9e9f5a3b",
+      "proofSha256": "1c142919c6b28210c6420ec914b9fc79f22b7c365458b46447460030b448e070"
+    },
+    {
+      "id": "beginner-03",
+      "mode": "self-level",
+      "status": "complete",
+      "ticks": 561,
+      "contacts": 0,
+      "health": 100,
+      "packIdentity": "fpv-beginner:654387e76ace406c",
+      "finalStateIdentity": "df7c0c7ddcbe98f8",
+      "proofSha256": "b91943fc4e9bb3a077f3aa6817db5722221b8953cb486dc7cafb67327eda3142"
+    },
+    {
+      "id": "beginner-04",
+      "mode": "self-level",
+      "status": "complete",
+      "ticks": 696,
+      "contacts": 0,
+      "health": 100,
+      "packIdentity": "fpv-beginner:654387e76ace406c",
+      "finalStateIdentity": "2b02d54e3f436aa4",
+      "proofSha256": "378c4aba12ddb3f91d8e486336e41e2250faddb2d872afda96fa8e3bdab8338d"
+    },
+    {
+      "id": "beginner-05",
+      "mode": "self-level",
+      "status": "complete",
+      "ticks": 654,
+      "contacts": 0,
+      "health": 100,
+      "packIdentity": "fpv-beginner:654387e76ace406c",
+      "finalStateIdentity": "7b57e5174cee28c4",
+      "proofSha256": "1e481713f52d6e8a1a665664be199299ab89fb14940d36841a1ee992443de66b"
+    },
+    {
+      "id": "beginner-06",
+      "mode": "self-level",
+      "status": "complete",
+      "ticks": 828,
+      "contacts": 0,
+      "health": 100,
+      "packIdentity": "fpv-beginner:654387e76ace406c",
+      "finalStateIdentity": "e2cdac9d77db8835",
+      "proofSha256": "c87489d90a58b88119e74894e01185a98e1892f7205dc8de69986990f22f04c2"
+    },
+    {
+      "id": "beginner-07",
+      "mode": "self-level",
+      "status": "complete",
+      "ticks": 948,
+      "contacts": 0,
+      "health": 100,
+      "packIdentity": "fpv-beginner:654387e76ace406c",
+      "finalStateIdentity": "52ca8f0f6d942fda",
+      "proofSha256": "d2cb0a446cc035ba9f8750679d61c363695ae73c9a68711c1be1f4388ad8d2de"
+    },
+    {
+      "id": "beginner-08",
+      "mode": "self-level",
+      "status": "complete",
+      "ticks": 830,
+      "contacts": 0,
+      "health": 100,
+      "packIdentity": "fpv-beginner:654387e76ace406c",
+      "finalStateIdentity": "502bfd5fba0dd1fa",
+      "proofSha256": "d538149fc6dc07c0fac7056265e9f54bff81eba299fef040184455c2de3b7edd"
+    },
+    {
+      "id": "beginner-09",
+      "mode": "self-level",
+      "status": "complete",
+      "ticks": 899,
+      "contacts": 0,
+      "health": 100,
+      "packIdentity": "fpv-beginner:654387e76ace406c",
+      "finalStateIdentity": "fd81a13164a8da78",
+      "proofSha256": "c69de24456bd94b1277acca5450672f3d77171ec3b8a78c0bf607cdd0571ccf0"
+    },
+    {
+      "id": "beginner-10",
+      "mode": "self-level",
+      "status": "complete",
+      "ticks": 732,
+      "contacts": 0,
+      "health": 100,
+      "packIdentity": "fpv-beginner:654387e76ace406c",
+      "finalStateIdentity": "573b969949ebedb6",
+      "proofSha256": "49a3cb8765879d7e2bbf1910c32fbc5a3d93d8a99551bd2c38060f3cdce53991"
+    },
+    {
+      "id": "beginner-11",
+      "mode": "self-level",
+      "status": "complete",
+      "ticks": 945,
+      "contacts": 0,
+      "health": 100,
+      "packIdentity": "fpv-beginner:654387e76ace406c",
+      "finalStateIdentity": "d22d2c0ed2f3769e",
+      "proofSha256": "fd65e2b183fa8a7372b663b6f4c89c8685f2befbfe7104d1a146cf2f2f26269e"
+    },
+    {
+      "id": "beginner-12",
+      "mode": "self-level",
+      "status": "complete",
+      "ticks": 1032,
+      "contacts": 0,
+      "health": 100,
+      "packIdentity": "fpv-beginner:654387e76ace406c",
+      "finalStateIdentity": "4d5e90cdbe3cccac",
+      "proofSha256": "1a5059c95014d600cc9f7283e26be9fde98475f57d98dbe682d6f4793d867b1e"
+    }
+  ]
+}

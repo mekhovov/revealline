@@ -2,16 +2,24 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <title data-i18n="interface:communityDirectory.pageTitle">Communities · FPV / LINE</title>
     <link rel="stylesheet" href="../i18n/style.css" />
     <script src="../vendor/i18next-26.4.2.min.js"></script>
     <script src="../i18n/catalogs.mjs"></script>
     <script src="../i18n/bootstrap.mjs"></script>
     <link rel="stylesheet" href="./directory.css" />
+    <script type="module" src="./directory.mjs"></script>
   </head>
   <body>
     <header class="directory-header">
+      <a
+        id="community-return"
+        class="directory-return"
+        href="../"
+        data-i18n="interface:communityDirectory.backToGame"
+        >Back to game</a
+      >
       <span class="directory-brand">FPV <span aria-hidden="true">/</span> LINE</span>
       <div data-language-control></div>
     </header>

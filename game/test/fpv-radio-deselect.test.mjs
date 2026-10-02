@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { Document } from './helpers/couch-dom.mjs';
+import { Document, Events } from './helpers/couch-dom.mjs';
 import { mountRadioSetup } from '../../optional-practice/civilian-fpv/radio-setup.mjs';
 import { createRadioRuntime } from '../../optional-practice/civilian-fpv/radio-runtime.mjs';
 import { radioDeviceIdentity } from '../../optional-practice/civilian-fpv/radio-profile.mjs';
@@ -43,20 +43,41 @@ test('selecting no radio revokes the old device and verified mapping before a la
   assert.equal(runtime.requestArm(), true);
   runtime.freeze('paused'); // The actual host pauses before opening Setup.
   const doc = new Document(),
-    container = doc.createElement('section');
+    create = doc.createElement.bind(doc);
+  // Labels expose their native text child without replacing the nested select.
+  doc.createElement = (...args) => {
+    const node = create(...args);
+    Object.defineProperty(node, 'firstChild', {
+      get: () =>
+        node._text
+          ? {
+              nodeType: 3,
+              get textContent() {
+                return node._text;
+              },
+              set textContent(value) {
+                node._text = value;
+              },
+            }
+          : (node.children[0] ?? null),
+    });
+    return node;
+  };
+  const container = doc.createElement('section');
   doc.body.append(container);
   const frames = new Map();
   let next = 0;
   const view = mountRadioSetup({
     container,
-    window: {
+    window: Object.assign(new Events(), {
+      Event,
       localStorage: null,
       requestAnimationFrame: (fn) => {
         frames.set(++next, fn);
         return next;
       },
       cancelAnimationFrame: (id) => frames.delete(id),
-    },
+    }),
     runtime,
   });
   try {

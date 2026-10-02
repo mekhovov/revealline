@@ -14,6 +14,8 @@ import {
   rememberInstalledPackages,
   prepareInstalledLauncher,
   checkInstalledLauncher,
+  MAX_INSTALLED_PACKAGES,
+  validateInstalledSelection,
 } from '../installed-app.mjs';
 const locationRef = {
   href: 'https://game.example/revealline/releases/v2.0.0/site/game/downloads.html',
@@ -56,6 +58,96 @@ function setup() {
   };
 }
 const profile = (version) => `revealline.library.release-${version}.v1`;
+const fullGameplaySelection = ['base', ...Array.from({ length: 107 }, (_, i) => `chapter:${i}`)];
+test('same-address updates activate all 108 gameplay packages and preserve progress and writer gates', async () => {
+  const h = setup();
+  h.locationRef = new URL('https://game.example/revealline/app/update.html');
+  const old = { ...a, scope: 'https://game.example/revealline/', buildId: 'a'.repeat(64) };
+  const next = {
+    ...old,
+    buildId: 'b'.repeat(64),
+    selection: fullGameplaySelection,
+    allGameplay: true,
+  };
+  h.storage.setItem(INSTALLED_STATE_KEY, JSON.stringify({ active: old }));
+  h.storage.setItem(profile(old.version), 'existing progress');
+  await stageInstalledEdition(next, h);
+  const writer = `${profile(old.version)}.writer`;
+  h.held.add(writer);
+  let prepared = 0;
+  const activate = () =>
+    activateInstalledEdition(next, {
+      ...h,
+      prepare: async () => {
+        prepared++;
+      },
+    });
+  await assert.rejects(activate(), /Close the game window/);
+  assert.equal(prepared, 0);
+  assert.deepEqual(readInstalledState(h.storage).active, old);
+  h.held.delete(writer);
+  assert.equal((await activate()).activated, true);
+  assert.equal(prepared, 1);
+  assert.deepEqual(readInstalledState(h.storage).active, next);
+  assert.equal(readInstalledState(h.storage).pending, null);
+  assert.equal(h.storage.getItem(profile(old.version)), 'existing progress');
+});
+test('adding and removing packages retain a full gameplay selection beyond the old 100-package ceiling', async () => {
+  const h = setup();
+  h.storage.setItem(
+    INSTALLED_STATE_KEY,
+    JSON.stringify({ active: { ...a, selection: fullGameplaySelection, allGameplay: true } }),
+  );
+  await rememberInstalledPackages(a.scope, ['team:later', 'base'], h);
+  assert.deepEqual(readInstalledState(h.storage).active.selection, [
+    ...fullGameplaySelection,
+    'team:later',
+  ]);
+  assert.equal(readInstalledState(h.storage).active.allGameplay, true);
+  await updateInstalledSelection(a.scope, fullGameplaySelection, h);
+  assert.deepEqual(readInstalledState(h.storage).active.selection, fullGameplaySelection);
+  assert.equal(readInstalledState(h.storage).active.allGameplay, false);
+});
+test('bounded package validation reports selection errors separately and still rejects foreign scopes', async () => {
+  const h = setup();
+  const limit = Array.from({ length: MAX_INSTALLED_PACKAGES }, (_, i) => `chapter:${i}`);
+  assert.deepEqual(validateInstalledSelection(limit), limit);
+  for (const selection of [
+    null,
+    'base',
+    [...limit, 'overflow'],
+    [''],
+    [42],
+    ['x'.repeat(201)],
+    new Array(1),
+  ]) {
+    assert.throws(
+      () => validateInstalledEdition({ ...b, selection }, locationRef),
+      /installed download selection/,
+    );
+    await assert.rejects(
+      stageInstalledEdition({ ...b, selection }, h),
+      /installed download selection/,
+    );
+    await assert.rejects(
+      updateInstalledSelection(b.scope, selection, h),
+      /installed download selection/,
+    );
+    await assert.rejects(
+      rememberInstalledPackages(b.scope, selection, h),
+      /installed download selection/,
+    );
+    assert.equal(h.storage.getItem(INSTALLED_STATE_KEY), null);
+  }
+  for (const scope of ['https://elsewhere.example/revealline/', 'https://game.example/other/'])
+    assert.throws(
+      () =>
+        validateInstalledEdition({ ...b, scope, selection: fullGameplaySelection }, locationRef),
+      /outside this app/,
+    );
+  const copied = validateInstalledSelection(fullGameplaySelection);
+  assert.notEqual(copied, fullGameplaySelection);
+});
 test('verified bookmarked packages extend only the active edition without replacing broader update choices', async () => {
   const h = setup();
   const state = {
@@ -257,4 +349,71 @@ test('rollback selects the preserved earlier profile without overwriting either 
     activateInstalledEdition(a, { ...h, restorePrevious: true }),
     /previous edition changed/,
   );
+});
+
+test('same-URL worker preparation waits for migration, recovery and profile ownership', async () => {
+  const h = setup(),
+    scope = 'https://game.example/revealline/',
+    previous = { ...a, scope },
+    candidate = { ...b, scope };
+  await activateInstalledEdition(previous, h);
+  h.storage.setItem(profile(a.version), 'saved progress');
+  await stageInstalledEdition(candidate, h);
+  let calls = 0;
+  const options = { ...h, prepare: async () => calls++ };
+  assert.equal((await activateInstalledEdition(candidate, options)).activated, false);
+  assert.equal(calls, 0, 'An unreviewed transfer must never replace the old worker.');
+  h.assets.set(`${profile(a.version)}.backup-journal`, { pending: true });
+  await assert.rejects(activateInstalledEdition(candidate, options), /recovery/);
+  assert.equal(calls, 0);
+  h.assets.clear();
+  h.held.add(`${profile(a.version)}.writer`);
+  await assert.rejects(activateInstalledEdition(candidate, options), /Close the game window/);
+  assert.equal(calls, 0);
+  assert.deepEqual(readInstalledState(h.storage).active, previous);
+});
+
+test('verified core preparation holds profile locks until activation and a failure keeps the old selection', async () => {
+  const h = setup(),
+    held = new Set();
+  await activateInstalledEdition(a, h);
+  const locks = {
+    async request(name, options, callback) {
+      held.add(name);
+      try {
+        return await (callback || options)({ name });
+      } finally {
+        held.delete(name);
+      }
+    },
+  };
+  const prepare = async () => {
+    assert.deepEqual(
+      held,
+      new Set([
+        'revealline.installed-app.switch',
+        `${profile(a.version)}.writer`,
+        `${profile(b.version)}.writer`,
+      ]),
+    );
+    assert.deepEqual(readInstalledState(h.storage).active, a);
+    await Promise.resolve();
+    assert.equal(held.size, 3);
+  };
+  await assert.rejects(
+    activateInstalledEdition(b, {
+      ...h,
+      locks,
+      prepare: async () => {
+        await prepare();
+        throw new Error('Core verification failed.');
+      },
+    }),
+    /Core verification failed/,
+  );
+  assert.deepEqual(readInstalledState(h.storage).active, a);
+  assert.equal(held.size, 0);
+  assert.equal((await activateInstalledEdition(b, { ...h, locks, prepare })).activated, true);
+  assert.deepEqual(readInstalledState(h.storage).active, b);
+  assert.equal(held.size, 0);
 });
