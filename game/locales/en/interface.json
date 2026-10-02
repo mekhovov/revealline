@@ -5780,5 +5780,11 @@
   "winPictureContinueLabel": "Continue to results",
   "creator.socialDroneExampleHelp": "Try a complete video-reward level, then edit it to learn how posters and victory clips work.",
   "creator.socialDroneExampleOpen": "Open Social Drone video example",
-  "creator.socialDroneExampleUnavailable": "The Social Drone example could not be loaded. Try again."
+  "creator.socialDroneExampleUnavailable": "The Social Drone example could not be loaded. Try again.",
+  "replay.returnFocused": "Playback paused. {{destination}} is focused; activate it to leave.",
+  "replay.phase.paused": "paused",
+  "replay.phase.playing": "playing",
+  "replay.phase.complete": "complete",
+  "replay.phase.error": "error",
+  "replay.phase.disposed": "closed"
 }

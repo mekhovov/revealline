@@ -15,6 +15,7 @@ on:
       - 'game/ui/mode-choice.mjs'
       - 'game/ui/story-dialog.mjs'
       - 'game/ui/operation-status.mjs'
+      - 'game/replay-theater/**'
       - 'game/editions/model.mjs'
       - 'game/editions/retained-presentation.mjs'
       - 'game/fpv-entry.mjs'
@@ -24,12 +25,17 @@ on:
       - 'authoring/fpv-worlds/**'
       - 'authoring/library/neon*/index.html'
       - 'scripts/prepare-sim-appearance-acceptance.mjs'
+      - 'scripts/prepare-world-texture-acceptance.mjs'
+      - 'scripts/test-world-texture-acceptance.mjs'
       - 'scripts/build-neon-artwork-gallery.mjs'
       - 'scripts/build-neon-mosaic.mjs'
       - 'scripts/refresh-fpv-presentation-assets.mjs'
       - 'scripts/test-industrial-marking-kit.mjs'
       - 'game/test/story-dialog.test.mjs'
       - 'game/test/operation-status.test.mjs'
+      - 'game/test/replay-theater-navigation.test.mjs'
+      - 'game/test/replay-theater-display-host.test.mjs'
+      - 'game/test/replay-theater-actor-appearance.test.mjs'
       - 'game/test/creator-player-menu.test.mjs'
       - 'game/test/creator-player-victory-story.test.mjs'
       - 'game/test/menu-audio-localization.test.mjs'
@@ -86,6 +92,9 @@ jobs:
         game/test/theme-bootstrap.test.mjs
         game/test/story-dialog.test.mjs
         game/test/operation-status.test.mjs
+        game/test/replay-theater-navigation.test.mjs
+        game/test/replay-theater-display-host.test.mjs
+        game/test/replay-theater-actor-appearance.test.mjs
         game/test/creator-player-menu.test.mjs
         game/test/creator-player-victory-story.test.mjs
         game/test/theme-preview.test.mjs
@@ -119,6 +128,8 @@ jobs:
         game/test/fpv-world-content.test.mjs
         game/test/fpv-workshop-visuals.test.mjs
         game/test/fpv-objective-labels.test.mjs
+        game/test/fpv-world-textures.test.mjs
+        scripts/test-world-texture-acceptance.mjs
         scripts/test-industrial-marking-kit.mjs
         game/test/fpv-flight-ui.test.mjs
         game/test/fpv-replay-rate.test.mjs

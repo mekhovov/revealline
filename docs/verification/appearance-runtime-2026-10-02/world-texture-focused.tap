@@ -1,0 +1,181 @@
+TAP version 13
+# Subtest: extracts stable semantic IDs in world coordinates and produces a self-contained GLB
+ok 1 - extracts stable semantic IDs in world coordinates and produces a self-contained GLB
+  ---
+  duration_ms: 6.395125
+  ...
+# Subtest: local glTF resource resolution repacks buffers and rejects URLs, traversal and missing resources
+ok 2 - local glTF resource resolution repacks buffers and rejects URLs, traversal and missing resources
+  ---
+  duration_ms: 1.504916
+  ...
+# Subtest: GLB length, accessor overflow, nonfinite data, node cycles and duplicate semantic IDs are rejected
+ok 3 - GLB length, accessor overflow, nonfinite data, node cycles and duplicate semantic IDs are rejected
+  ---
+  duration_ms: 1.172625
+  ...
+# Subtest: required unsupported compression is rejected explicitly
+ok 4 - required unsupported compression is rejected explicitly
+  ---
+  duration_ms: 0.330417
+  ...
+# Subtest: reimport keeps authored overrides and diagnoses removed source IDs
+ok 5 - reimport keeps authored overrides and diagnoses removed source IDs
+  ---
+  duration_ms: 2.566625
+  ...
+# Subtest: project composition resolves explicit courses, themes and playlist references
+ok 6 - project composition resolves explicit courses, themes and playlist references
+  ---
+  duration_ms: 2.161583
+  ...
+# Subtest: portable pack verifies exact hashes and rejects trailing bytes or tampering
+ok 7 - portable pack verifies exact hashes and rejects trailing bytes or tampering
+  ---
+  duration_ms: 2.615458
+  ...
+# Subtest: editable ZIP round trip verifies directory metadata, CRC and resource closure
+ok 8 - editable ZIP round trip verifies directory metadata, CRC and resource closure
+  ---
+  duration_ms: 4.419375
+  ...
+# Subtest: IndexedDB install writes metadata and all blobs; stale generation does not change either
+ok 9 - IndexedDB install writes metadata and all blobs; stale generation does not change either
+  ---
+  duration_ms: 15.028708
+  ...
+# Subtest: hash validation completes before installation; corrupt packs never open an install transaction
+ok 10 - hash validation completes before installation; corrupt packs never open an install transaction
+  ---
+  duration_ms: 1.428209
+  ...
+# Subtest: transaction abort after queuing new blobs retains the previous revision and blobs
+ok 11 - transaction abort after queuing new blobs retains the previous revision and blobs
+  ---
+  duration_ms: 3.0315
+  ...
+# Subtest: animation cannot move gameplay anchors, but bounded cosmetic object animation is accepted
+ok 12 - animation cannot move gameplay anchors, but bounded cosmetic object animation is accepted
+  ---
+  duration_ms: 0.989084
+  ...
+# Subtest: spatial editor applies current presentation before every course build without changing authored source or scene bytes
+ok 13 - spatial editor applies current presentation before every course build without changing authored source or scene bytes
+  ---
+  duration_ms: 1.547666
+  ...
+# Subtest: real GLTFLoader reproduces blocked bitmap fetch and the shared decoder preserves exact PNG/material semantics
+ok 14 - real GLTFLoader reproduces blocked bitmap fetch and the shared decoder preserves exact PNG/material semantics
+  ---
+  duration_ms: 6.953958
+  ...
+# Subtest: actual import repacks local sidecars and renderer keeps valid imported texture, rejected scene ownership and bounds atomic
+ok 15 - actual import repacks local sidecars and renderer keeps valid imported texture, rejected scene ownership and bounds atomic
+  ---
+  duration_ms: 38.640083
+  ...
+# Subtest: late image success after cancellation is released, and unprovided remote images never reach a decoder
+ok 16 - late image success after cancellation is released, and unprovided remote images never reach a decoder
+  ---
+  duration_ms: 16.809167
+  ...
+# Subtest: decoded imported art stays authored under themes and only exact explicit node bindings replace a material
+ok 17 - decoded imported art stays authored under themes and only exact explicit node bindings replace a material
+  ---
+  duration_ms: 19.110708
+  ...
+# Subtest: actual runtime loader uses the image-element path for the exact embedded PNG and distinguishes decode failures
+ok 18 - actual runtime loader uses the image-element path for the exact embedded PNG and distinguishes decode failures
+  ---
+  duration_ms: 15.527375
+  ...
+# Subtest: stored kit regenerates exactly and passes the actual Khronos standards validator
+ok 19 - stored kit regenerates exactly and passes the actual Khronos standards validator
+  ---
+  duration_ms: 47.308459
+  ...
+# Subtest: gate marks stay outside their exact aperture; pad pixels retain quiet H/orientation and alpha envelope
+ok 20 - gate marks stay outside their exact aperture; pad pixels retain quiet H/orientation and alpha envelope
+  ---
+  duration_ms: 13.983958
+  ...
+# prune: Removed types... Primitive (3)
+# Subtest: existing world preparation preserves exact marking geometry and extracts no gameplay or collision authority
+ok 21 - existing world preparation preserves exact marking geometry and extracts no gameplay or collision authority
+  ---
+  duration_ms: 93.322625
+  ...
+# Subtest: portable recoloring keeps geometry while exact missing dependencies and unsafe source metadata fail closed
+ok 22 - portable recoloring keeps geometry while exact missing dependencies and unsafe source metadata fail closed
+  ---
+  duration_ms: 18.788583
+  ...
+# Subtest: successor receipts require the exact retained predecessor and refuse changed stored output
+ok 23 - successor receipts require the exact retained predecessor and refuse changed stored output
+  ---
+  duration_ms: 33.079917
+  ...
+# Subtest: bundled FPV pins final default bytes and has its own bounded cache outside core
+ok 24 - bundled FPV pins final default bytes and has its own bounded cache outside core
+  ---
+  duration_ms: 2900.683458
+  ...
+# Subtest: bundled FPV rejects missing, unadmitted, changed-vendor and oversized dependencies
+ok 25 - bundled FPV rejects missing, unadmitted, changed-vendor and oversized dependencies
+  ---
+  duration_ms: 469.308666
+  ...
+# Subtest: actual FPV application, native notebook and installation launcher close inside unchanged runtime/source budgets
+ok 26 - actual FPV application, native notebook and installation launcher close inside unchanged runtime/source budgets
+  ---
+  duration_ms: 473.026792
+  ...
+# Subtest: explicit FPV package remains independently reproducible with complete pinned runtime and source closures
+ok 27 - explicit FPV package remains independently reproducible with complete pinned runtime and source closures
+  ---
+  duration_ms: 379.92925
+  ...
+# Subtest: vendor pins are checked before parser exemptions while application fetch and foreign imports stay forbidden
+ok 28 - vendor pins are checked before parser exemptions while application fetch and foreign imports stay forbidden
+  ---
+  duration_ms: 164.432958
+  ...
+# Subtest: rewritten archive hashes cannot replace a reviewed vendor dependency
+ok 29 - rewritten archive hashes cannot replace a reviewed vendor dependency
+  ---
+  duration_ms: 235.238875
+  ...
+# Subtest: package selection rejects unknown, duplicate and empty lists before touching frozen inputs
+ok 30 - package selection rejects unknown, duplicate and empty lists before touching frozen inputs
+  ---
+  duration_ms: 0.596917
+  ...
+# Subtest: source budget includes the final source-inventory member, not only its listed dependencies
+ok 31 - source budget includes the final source-inventory member, not only its listed dependencies
+  ---
+  duration_ms: 217.570084
+  ...
+# Subtest: generic optional worker cleanup owns only its exact package scope
+ok 32 - generic optional worker cleanup owns only its exact package scope
+  ---
+  duration_ms: 0.451292
+  ...
+# Subtest: texture inspection closes over actual bounded optional-package bytes and the retained GLB
+ok 33 - texture inspection closes over actual bounded optional-package bytes and the retained GLB
+  ---
+  duration_ms: 1685.908625
+  ...
+# Subtest: texture acceptance output names cannot escape the isolated fixture directory
+ok 34 - texture acceptance output names cannot escape the isolated fixture directory
+  ---
+  duration_ms: 0.370375
+  ...
+1..34
+# tests 34
+# suites 0
+# pass 34
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 8191.365125

@@ -5890,5 +5890,11 @@
   "winPictureContinueLabel": "Перейти до результатів",
   "creator.socialDroneExampleHelp": "Спробуйте готовий рівень із відеонагородою, а потім відредагуйте його, щоб дізнатися, як працюють зображення та відео перемоги.",
   "creator.socialDroneExampleOpen": "Відкрити відеоприклад Social Drone",
-  "creator.socialDroneExampleUnavailable": "Не вдалося завантажити приклад Social Drone. Спробуйте ще раз."
+  "creator.socialDroneExampleUnavailable": "Не вдалося завантажити приклад Social Drone. Спробуйте ще раз.",
+  "replay.returnFocused": "Відтворення призупинено. Фокус на «{{destination}}»; активуйте, щоб вийти.",
+  "replay.phase.paused": "призупинено",
+  "replay.phase.playing": "відтворення",
+  "replay.phase.complete": "завершено",
+  "replay.phase.error": "помилка",
+  "replay.phase.disposed": "закрито"
 }

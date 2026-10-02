@@ -17,6 +17,7 @@ import {
   createEnvironmentLight,
   simObjectiveLabelStyle,
   simObjectiveLabelLayout,
+  createSimGateCueFactory,
 } from './world-visuals.mjs';
 
 const QUALITIES = Object.freeze({
@@ -57,6 +58,30 @@ const safePath = (value) =>
   value.length <= 240 &&
   !/^(?:[a-z]+:|\/|\\)/i.test(value) &&
   !value.split(/[\\/]/).includes('..');
+
+/** Embedded/local world images use the existing img-src permission. The default
+ * ImageBitmapLoader fetches blob URLs and instead requires connect-src blob:.
+ * Keep the pinned GLTF parser, sampler/color-space rules and resource manager. */
+export function configureWorldGLTFLoader(loader, { onImageError = () => {} } = {}) {
+  return loader.register((parser) => ({
+    name: 'REVEALLINE_WORLD_IMAGE_ELEMENT',
+    beforeRoot() {
+      const images = new THREE.TextureLoader(parser.options.manager)
+        .setCrossOrigin(parser.options.crossOrigin)
+        .setRequestHeader(parser.options.requestHeader);
+      const load = images.load.bind(images);
+      images.load = (url, onLoad, onProgress, onError) =>
+        load(url, onLoad, onProgress, (error) => {
+          // GLTFLoader revokes embedded blob URLs on success, but not on error.
+          // Provided sidecar URLs belong to loadScene's existing finally block.
+          if (url.startsWith('blob:')) URL.revokeObjectURL(url);
+          onImageError(error);
+          onError?.(error);
+        });
+      parser.textureLoader = images;
+    },
+  }));
+}
 
 /** Presentation only. All world/actor positions are canonical millimetres.
  * Decorative structures remain outside the course; criteria are holograms. */
@@ -151,6 +176,7 @@ export function createFlightRenderer({
     themeProfile = null,
     effectPalette = resolveSimEffects(null),
     goalMaterialKit = null,
+    gateCueFactory = null,
     pendingPresentation = normalizeSimPresentation(initialPresentation),
     activePresentation = pendingPresentation,
     sceneryFallback = null,
@@ -470,6 +496,7 @@ export function createFlightRenderer({
       opacity: 0.4,
       depthWrite: false,
     });
+    let gateCue = null;
     if (step.type === 'gate') {
       const gateStyle = themeProfile?.assets?.gate ?? 'builtin:gate';
       group.userData.themeAsset = gateStyle;
@@ -538,6 +565,11 @@ export function createFlightRenderer({
           mesh,
         });
       }
+      gateCue = gateCueFactory?.({ axis: step.axis, span, height: size[1] }) ?? null;
+      if (gateCue) {
+        register(gateCue);
+        group.add(gateCue);
+      }
     }
     const marker = mesh(
       new THREE.TorusGeometry(0.35, 0.045, 6, goalMaterialKit ? 8 : 24),
@@ -554,7 +586,7 @@ export function createFlightRenderer({
       true,
     );
     if (badge) badge.position.set(0, size[1] / 2 + 0.5, 0);
-    const row = { group, paint, light, marker, badge, index };
+    const row = { group, paint, light, marker, badge, gateCue, index };
     // These are holographic instructions, never collision geometry. Their group
     // shares the criterion's zone centre, so editor translations move all parts.
     const point = (world) =>
@@ -907,6 +939,7 @@ export function createFlightRenderer({
     const theme = surroundings.theme;
     themeProfile = surroundings.profile;
     effectPalette = resolveSimEffects(themeProfile);
+    gateCueFactory = createSimGateCueFactory(themeProfile);
     goalMaterialKit = simCollectionIdForProfile(themeProfile)
       ? createWorkshopMaterials({
           collectionId: simCollectionIdForProfile(themeProfile),
@@ -1495,6 +1528,7 @@ export function createFlightRenderer({
         row.light.color.setHex(active ? effectPalette.goalActive : effectPalette.goalGlowInactive);
         row.light.opacity = active ? 0.9 : 0.17;
         row.marker.visible = active;
+        if (row.gateCue) row.gateCue.visible = active;
         if (row.badge) row.badge.material.opacity = active ? 1 : 0.35;
       }
     }
@@ -1775,15 +1809,21 @@ export function createFlightRenderer({
       if (url.startsWith('blob:') || url.startsWith('data:')) return url;
       throw new Error('World preview requested an unprovided resource');
     });
-    let result;
+    let result,
+      imageFailed = false;
     try {
-      result = await new GLTFLoader(manager).parseAsync(
+      result = await configureWorldGLTFLoader(new GLTFLoader(manager), {
+        onImageError: () => {
+          imageFailed = true;
+        },
+      }).parseAsync(
         binary
           ? bytes.buffer.slice(bytes.byteOffset, bytes.byteOffset + bytes.byteLength)
           : new TextDecoder().decode(bytes),
         '',
       );
       if (
+        imageFailed ||
         disposed ||
         generation !== sceneGeneration ||
         request !== importGeneration ||
@@ -1793,6 +1833,8 @@ export function createFlightRenderer({
         rejected.add(...result.scenes);
         releaseGroup(rejected);
         signal?.throwIfAborted();
+        if (imageFailed)
+          throw new Error('World image could not be decoded. The previous scene is unchanged.');
         throw new Error('World preview changed during loading');
       }
       clearImported();

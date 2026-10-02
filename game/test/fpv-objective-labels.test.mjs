@@ -118,9 +118,9 @@ async function rendererFixture() {
   const ast = parse(source, { ecmaVersion: 'latest', sourceType: 'module' });
   for (const item of ast.body.filter((item) => item.type === 'ImportDeclaration').reverse())
     source = source.slice(0, item.start) + source.slice(item.end);
-  source = source.replace('export function createFlightRenderer', 'function createFlightRenderer');
+  source = source.replaceAll('export function ', 'function ');
   const sprites = [];
-  let drawnCamera;
+  let drawnCamera, drawnScene;
   const canvas = {
     width: 1166,
     height: 600,
@@ -168,11 +168,13 @@ async function rendererFixture() {
       scene.updateMatrixWorld();
       camera.updateMatrixWorld();
       drawnCamera = camera;
+      drawnScene = scene;
     }
   }
   const create = vm.runInNewContext(`${source}; createFlightRenderer`, {
     ...themes,
     ...visuals,
+    structuredClone,
     THREE: {
       ...THREE,
       WebGLRenderer: Renderer,
@@ -199,7 +201,7 @@ async function rendererFixture() {
     buildDroneVisual: ({ material }) => ({ tint: material(0xffffff), rotors: [] }),
   });
   const renderer = create({ canvas, window: { devicePixelRatio: 2 } });
-  return { renderer, sprites, camera: () => drawnCamera };
+  return { renderer, sprites, camera: () => drawnCamera, scene: () => drawnScene };
 }
 
 test('real renderer path enlarges only the active themed badge with depth occlusion and authored appearance preserved', async () => {
@@ -244,4 +246,157 @@ test('real renderer path enlarges only the active themed badge with depth occlus
     assert.equal(JSON.stringify(course), before);
     renderer.dispose();
   }
+});
+
+test('active gate bracket geometry stays outside the original frame on both axes with bounded paired contrast', () => {
+  for (const collectionId of Object.keys(visuals.SIM_VISUAL_COLLECTIONS)) {
+    const create = visuals.createSimGateCueFactory(
+      themes.resolveSimThemeProfile(course, { collectionId, revision: 'r1' }),
+    );
+    const root = new THREE.Group();
+    for (const axis of ['x', 'z'])
+      for (const [span, height] of [
+        [0.2, 0.2],
+        [3, 2],
+        [18, 6],
+      ]) {
+        const cue = create({ axis, span, height });
+        root.add(cue);
+        assert.equal(cue.visible, false);
+        assert.equal(cue.children.length, 2);
+        assert.equal(cue.children[0].geometry, cue.children[1].geometry);
+        const colors = cue.children.map((item) => `#${item.material.color.getHexString()}`);
+        assert.ok(contrastRatio(...colors) >= 15, collectionId);
+        for (const batch of cue.children) {
+          assert.equal(batch.count, 8);
+          assert.equal(batch.castShadow, false);
+          assert.equal(batch.receiveShadow, false);
+          assert.equal(batch.material.isMeshBasicMaterial, true);
+          assert.equal(batch.material.depthTest, true);
+          assert.equal(batch.material.depthWrite, false);
+          assert.equal(batch.material.toneMapped, false);
+          assert.equal(batch.material.fog, true);
+          for (let i = 0; i < batch.count; i++) {
+            const transform = new THREE.Matrix4();
+            batch.getMatrixAt(i, transform);
+            const bounds = new THREE.Box3(
+              new THREE.Vector3(-0.5, -0.5, -0.5),
+              new THREE.Vector3(0.5, 0.5, 0.5),
+            ).applyMatrix4(transform);
+            const across = axis === 'z' ? 'x' : 'z',
+              depth = axis === 'z' ? 'z' : 'x',
+              x = span / 2 + 0.0225,
+              y = height / 2 + 0.0225,
+              epsilon = 1e-6;
+            assert.ok(
+              bounds.min[across] >= x - epsilon ||
+                bounds.max[across] <= -x + epsilon ||
+                bounds.min.y >= y - epsilon ||
+                bounds.max.y <= -y + epsilon,
+              'every bracket lies outside the existing frame, not just outside its centre',
+            );
+            assert.ok(bounds.min[across] >= -x - 0.12 - epsilon);
+            assert.ok(bounds.max[across] <= x + 0.12 + epsilon);
+            assert.ok(bounds.min.y >= -y - 0.12 - epsilon);
+            assert.ok(bounds.max.y <= y + 0.12 + epsilon);
+            assert.ok(bounds.min[depth] >= -0.0225 - epsilon);
+            assert.ok(bounds.max[depth] <= 0.0225 + epsilon);
+          }
+        }
+      }
+    assert.equal(
+      new Set(root.children.flatMap((cue) => cue.children.map((item) => item.geometry))).size,
+      1,
+    );
+    assert.equal(
+      new Set(root.children.flatMap((cue) => cue.children.map((item) => item.material))).size,
+      2,
+    );
+    visuals.disposeSimVisualGroup(root);
+    assert.equal(create({ axis: 'y', span: 3, height: 2 }), null);
+    assert.equal(create({ axis: 'z', span: Infinity, height: 2 }), null);
+  }
+  assert.equal(visuals.createSimGateCueFactory(themes.resolveSimThemeProfile(course)), null);
+  assert.equal(
+    visuals.createSimGateCueFactory({ id: 'dnipro-porcelain', revision: 'missing' }),
+    null,
+  );
+});
+
+test('renderer exposes only the active themed gate brackets at every quality and releases shared resources once', async () => {
+  const course = ACCEPTANCE_CASES.find((entry) => entry.id === 'warehouse').course,
+    before = JSON.stringify(course),
+    route = acceptanceRoute(course),
+    far = acceptanceFrame(course, route, 0, 'far');
+  let originalRails;
+  for (const collectionId of ['authored', ...Object.keys(visuals.SIM_VISUAL_COLLECTIONS)])
+    for (const quality of ['low', 'balanced', 'high']) {
+      const fixture = await rendererFixture(),
+        { renderer } = fixture;
+      renderer.setQuality(quality);
+      renderer.setPresentation({ collectionId, revision: 'r1' });
+      renderer.setCourse(course);
+      renderer.draw(far.state, far.options);
+      const active = fixture.sprites.find(
+        (item) =>
+          item.material.map.image.label.text === String(far.state.step + 1).padStart(2, '0'),
+      ).parent;
+      const rails = active.children
+        .filter(
+          (item) =>
+            !item.isInstancedMesh &&
+            item.geometry?.type === 'BoxGeometry' &&
+            Math.max(
+              item.geometry.parameters.width,
+              item.geometry.parameters.height,
+              item.geometry.parameters.depth,
+            ) > 0.32,
+        )
+        .map((item) => ({
+          dimensions: item.geometry.parameters,
+          position: item.position.toArray(),
+        }));
+      originalRails ??= rails;
+      assert.deepEqual(
+        rails,
+        originalRails,
+        'physical frame dimensions and positions stay original',
+      );
+      const cues = [];
+      fixture.scene().traverse((item) => {
+        if (item.name === 'active-gate-corner-cue') cues.push(item);
+      });
+      if (collectionId === 'authored') {
+        assert.equal(cues.length, 0);
+      } else {
+        assert.ok(cues.length > 1);
+        assert.equal(cues.filter((item) => item.visible).length, 1);
+        assert.equal(cues.find((item) => item.visible).parent, active);
+        const resourceOwners = new Set();
+        for (const cue of cues)
+          for (const batch of cue.children) {
+            resourceOwners.add(batch);
+            resourceOwners.add(batch.geometry);
+            resourceOwners.add(batch.material);
+            if (batch.customDepthMaterial) resourceOwners.add(batch.customDepthMaterial);
+          }
+        const disposals = new Map();
+        for (const owner of resourceOwners)
+          owner.addEventListener('dispose', () =>
+            disposals.set(owner, (disposals.get(owner) ?? 0) + 1),
+          );
+        // Returning to a non-gate step removes the marker without changing the inactive hierarchy.
+        renderer.draw({ ...far.state, step: 0 }, far.options);
+        assert.equal(cues.filter((item) => item.visible).length, 0);
+        assert.equal(active.children.find((item) => item.isLineSegments).material.opacity, 0.18);
+        renderer.setPresentation({ collectionId: 'authored' });
+        renderer.setCourse(course);
+        for (const owner of resourceOwners) assert.equal(disposals.get(owner), 1);
+        renderer.dispose();
+        for (const owner of resourceOwners) assert.equal(disposals.get(owner), 1);
+        continue;
+      }
+      renderer.dispose();
+    }
+  assert.equal(JSON.stringify(course), before);
 });
