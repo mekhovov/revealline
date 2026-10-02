@@ -914,3 +914,9 @@ Pro/Master drafts remain separate and held for criterion-envelope tightening and
 host/editor/renderer qualification. No unit coverage or human acceptance claim.
 A further12 reproducible audio/graphics candidate ZIPs were removed to reclaim
 65,264,954bytes; all manifests, source, proofs and evidence remain preserved.
+
+Frozen navigation runtime `7240eda1bd2c57416fffbf0f2e4f73e6996ed0ec`
+passes all three package admissions, committed inputs, ZIP membership and two
+byte-identical builds. Receipt: `docs/evidence/fpv-navigation-package-20261002.json`.
+The separate local player is87 files/13,246,555bytes with ZIP SHA-256
+`0b6459a262c90f713d97a983943895121b3967dc5a67cdb323f5aa1cff164fa4`.
