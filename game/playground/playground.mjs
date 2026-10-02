@@ -1,3 +1,6 @@
+import { generateSymbolLevel } from './symbol-level.mjs';
+import { textSymbolMask, imageSymbolMask } from './symbol-source.mjs';
+import { analyzeRouteCoverage, ROUTE_COVERAGE } from '../core/coverage.mjs';
 import {
   t,
   localizedMessage,
@@ -249,6 +252,25 @@ function checkPreviewReady() {
   }
 }
 status(t('tools:loadingCampaignsThemesAndClassRecipes'), false, true);
+let symbolPreview = null;
+function invalidateSymbolPreview() {
+  symbolPreview = null;
+  $('symbol-apply').disabled = true;
+  $('symbol-preview').hidden = true;
+  $('symbol-preview-status').textContent = '';
+}
+function symbolOptions() {
+  return {
+    source: $('symbol-source').value,
+    text: $('symbol-text').value,
+    title: $('symbol-title').value,
+    material: $('symbol-material').value,
+    layout: $('symbol-layout').value,
+    seed: $('seed-input').value,
+    threshold: Number($('symbol-threshold').value),
+    invert: $('symbol-invert').checked,
+  };
+}
 const remember = () => {
   editRevision++;
   history.push({ current: clone(current), catalog, activeKey, packLibrary });
@@ -299,6 +321,17 @@ async function adoptDocument(candidate, message, ticket = beginImport()) {
   }
 }
 function sync() {
+  invalidateSymbolPreview();
+  const routeSupported = ['xonix-level.v4', 'xonix-level.v5'].includes(current.level.version);
+  $('route-coverage').disabled = !routeSupported;
+  $('route-coverage').checked = !!current.level.classic?.coverage;
+  const budget = current.level.classic?.coverage ? analyzeRouteCoverage(current.level) : null;
+  localizedText($('route-coverage-status'), () =>
+    budget
+      ? t('tools:routeCoverageCounts', { count: budget.total, excluded: budget.excluded })
+      : t(routeSupported ? 'tools:routeCoverageHelp' : 'tools:routeCoverageUnsupported'),
+  );
+
   $('campaign-select').replaceChildren(
     ...catalog.map((entry) => localizedOption(() => entry.label, entry.key)),
   );
@@ -1161,6 +1194,81 @@ try {
       sync();
       status(t('tools:editRejected', { value1: error.message }), true);
     }
+  };
+  $('route-coverage').onchange = () => {
+    try {
+      const classic = { ...current.level.classic };
+      if ($('route-coverage').checked) classic.coverage = { version: ROUTE_COVERAGE };
+      else delete classic.coverage;
+      const next = editScenario(current, { level: { ...current.level, classic } });
+      remember();
+      current = next;
+      sync();
+    } catch (error) {
+      sync();
+      status(error.message, true);
+    }
+  };
+  $('symbol-generator').addEventListener('input', () => {
+    invalidateSymbolPreview();
+    $('symbol-image-fields').hidden = $('symbol-source').value !== 'image';
+    $('symbol-text-field').hidden = $('symbol-source').value !== 'text';
+  });
+  $('seed-input').addEventListener('input', invalidateSymbolPreview);
+  $('symbol-preview-button').onclick = async () => {
+    const ticket = beginImport(t('tools:symbolPreparing'));
+    const options = symbolOptions(),
+      file = $('symbol-file').files[0];
+    invalidateSymbolPreview();
+    try {
+      const mask =
+        options.source === 'image'
+          ? await imageSymbolMask(file, options)
+          : await textSymbolMask(options.text);
+      assertImportCurrent(ticket);
+      if (
+        JSON.stringify(options) !== JSON.stringify(symbolOptions()) ||
+        file !== $('symbol-file').files[0]
+      )
+        throw new Error(t('tools:symbolChanged'));
+      const level = generateSymbolLevel(mask, options);
+      const candidate = editScenario(current, {
+        format: 'xonix-playground.v6',
+        level,
+        masteryDefinition: null,
+        visualOverrides: visualsForLevelReplacement(current, 'xonix-playground.v6'),
+      });
+      paintEditorMap($('symbol-preview'), candidate);
+      $('symbol-preview').hidden = false;
+      symbolPreview = { candidate, before: JSON.stringify(current), editRevision };
+      $('symbol-apply').disabled = false;
+      const budget = analyzeRouteCoverage(level);
+      $('symbol-preview-status').textContent = t('tools:routeCoverageCounts', {
+        count: budget.total,
+        excluded: budget.excluded,
+      });
+      status(t('tools:symbolReady'));
+    } catch (error) {
+      if (importCurrent(ticket)) status(error.message, true);
+    } finally {
+      finishImport(ticket);
+    }
+  };
+  $('symbol-apply').onclick = () => {
+    if (
+      !symbolPreview ||
+      symbolPreview.editRevision !== editRevision ||
+      symbolPreview.before !== JSON.stringify(current)
+    ) {
+      invalidateSymbolPreview();
+      status(t('tools:symbolChanged'), true);
+      return;
+    }
+    const candidate = symbolPreview.candidate;
+    remember();
+    current = candidate;
+    sync();
+    status(t('tools:symbolApplied'));
   };
   $('generate-button').onclick = async () => {
     const ticket = beginImport(t('tools:generatingAndValidatingTheNewMap'));
