@@ -272,3 +272,25 @@ hardware qualification, D player sessions, F creator workflow, G feedback-led
 map growth and H deferred unit/regression/device work remain. The current
 package file caps inherited from #930 are64/72/104; byte caps remain8/8/16MiB.
 Follow the latest delivery log for exact heads and publication evidence.
+
+### C2 continuation — 2 October 2026
+
+Garage #954, Hangar #956 and capacity repair #958 are merged. Stack #957 is
+closed; neither a Garage demonstration handoff nor a stack rebase remains.
+All original 120 demonstrations plus 58 school recordings are present on main.
+The touch-flight and unrestricted mode-choice increment is published separately
+as #959; its required admission and physical-device acceptance remain separate.
+
+C2 now replaces the meadow's evenly spaced tree ring with four irregular
+exterior groves across its 43 existing challenges. It changes composition only,
+with the same geometry/material counts and at least ten metres of exterior
+clearance. The source passes 147 browser checks across 45 rendered comparisons
+and replays all 178 recordings. Detailed foliage, realistic asset production and
+named-device frame-time measurements are still required; this does not close C.
+
+Next independent art work is C3: coordinate #955's shared appearance/material
+roles, then refine courtyard/woodland flight landmarks and surface scale in a
+separate branch. Keep #959 and the completed C2 PR isolated while publication
+runs. D's novice sessions, B's real TX15/iPhone/Steam Deck acceptance, F's creator
+and device-offline qualification, feedback-led G map growth, and H's deferred
+unit coverage remain open. Authored counts remain 148 challenges and 14 worlds.

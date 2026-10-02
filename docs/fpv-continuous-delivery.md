@@ -1766,3 +1766,66 @@ external pending work; keep the ready increment separate from C2.
 Preserved-history candidate `e18d14aa7` also passes all three admissions and
 reproducibility checks; the main958 receipt now names that published-history
 candidate. Runtime and browser-fixture bytes are unchanged.
+
+### C2 meadow continuation — 2 October 2026
+
+Reconciled current main `07f227f5042364a73cbbc66cc783e40c93baea9a`:
+Garage #954, Hangar #956 and capacity repair #958 are merged. Native stack957
+is closed. The public marker identifies this main and Pages37043109731 passed;
+this continuation has not independently launched the public player, so it makes
+no new live claim. Touch/mode-choice #959 is separate at `8260a64e3`, with
+required checks still running at inspection. Preserve its completed changes and
+the normal reviewed/continuous playtest URLs; do not overwrite them with an
+independent C2 build lacking that increment.
+
+`codex/fpv-meadow-groves` advanced cleanly to current main and implements C2
+as a placement-only change. It reuses32 tree pairs in four irregular groves,
+keeps crowns at least10.1m beyond flight bounds, and preserves all geometry,
+materials, routes, objectives and actor behavior. The43 field-backed challenges
+share this scenery. Other13 environments compare exactly. Source WebGL passes
+147/147 checks and45 image pairs; all178 demonstrations replay over327,795ticks.
+Draw calls vary with newly visible scenery; no sustained FPS claim is made.
+
+The separate local C2 build is `dist/fpv-meadow-groves-playtest`:
+92runtime files/13,912,833bytes, ZIP
+`e0b3f9d031ec470689145a14894300f675c72e9526b1ab9206bd2e976d43dd51`.
+Frozen package admission and focused PR publication follow below. No new native
+stack is needed for this independent increment. Additional unit coverage stays
+in H/R7; physical device, novice and art acceptance remain open.
+
+Themes draft #955 remains owned by the Themes chat. Its latest inspected head
+`ca608cda584a44103284ba20e0a65defe0b53801` includes the Hangar fix. Integrate only
+C2 placement hunks with its shared material bindings; do not copy full visual
+modules or introduce a competing appearance preference. After C2 publication,
+continue C3 courtyard/woodland composition and surface-scale work on a separate
+branch while required CI runs.
+
+Touch #959 subsequently merged as `1d0b359f7`. Recovery ref
+`codex/fpv-meadow-before-touch-main-20261002` preserves C2's pre-integration
+history. Only the delivery-log append conflicted; both histories were retained.
+The two unpublished C2 commits were rebased onto current main. Frozen candidate
+`1975948b32aa4c3b016cb58b987a15b1f98e5661` passes all three admissions,
+committed-input/ZIP checks, two identical builds,147 WebGL checks/45 image pairs
+and all178 replays again. Integrated receipts use `*main959*` names.
+Final local C2 playtest has92files/13,925,302bytes and ZIP SHA256
+`5dc034998be3d0c6aa7fc0f0698479bf51ccae0eb076e98f42fc9f2e53768ecc`.
+It now includes the merged touch increment and can refresh normal player URLs.
+The bounded WebGL workload has up to23 more visible draw calls due to closer
+groves; no asset-count growth, reload leak or gameplay identity change is found.
+
+C3's concrete independent candidate is courtyard street-front composition:
+assemble the existing Kenney facade/roof modules into connected three-bay
+terraces with intentional alleys, preserving model counts and exterior route
+clearance. It belongs in `scenery-runtime.template.mjs` plus its regenerated
+runtime/provenance, not in C2's visual loop or Themes' appearance contracts.
+Review source and generated ownership before edits and publish separately.
+
+C2 is published and attached as [PR #960](https://github.com/mekhovov/revealline/pull/960),
+`codex/fpv-meadow-groves`, initially at `6386be8b3`, directly against main.
+The two normal local player builds now include both merged touch #959 and C2,
+with the same final ZIP identity above. Current-head CI/public deployment remain
+separate; no protected gate was bypassed and no new native stack was needed.
+Next work uses independent `codex/fpv-courtyard-terraces` from current main;
+keep unfinished C3 out of ready #960. Preserve Themes #955 and C2 placement when
+integrating branches. Do not report remaining physical-device/art qualification
+or deferred unit coverage as complete.
