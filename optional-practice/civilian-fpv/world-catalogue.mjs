@@ -995,7 +995,7 @@ const schoolLesson = (index, options, stages) => {
     steps: stages.map(([, note]) => note),
   });
 };
-export const BEGINNER_LESSONS = Object.freeze([
+const ORIGINAL_BEGINNER_LESSONS = Object.freeze([
   schoolLesson(
     0,
     {
@@ -1863,7 +1863,674 @@ export const BEGINNER_LESSONS = Object.freeze([
     ],
   ),
 ]);
-const BEGINNER_IDENTITY = `fpv-beginner:${dataIdentity(BEGINNER_LESSONS.map((lesson) => lesson.course))}`;
+// Keep the original fourteen course bytes and pack identity available forever:
+// old playlists, progress and recordings must survive this additive curriculum.
+const BEGINNER_IDENTITY = `fpv-beginner:${dataIdentity(ORIGINAL_BEGINNER_LESSONS.map((lesson) => lesson.course))}`;
+const acroNote = (title, instruction, why, axis = 'mixed', motion = 'acro', direction = 1) =>
+  schoolNote(
+    title,
+    instruction,
+    why,
+    axis,
+    motion,
+    axis === 'throttle' ? 0.54 : 0.12,
+    [
+      'Make a brief, small correction, centre the rotation controls, and check the horizon and drift before correcting again. Shift makes keyboard input gentler.',
+      'Зробіть коротку малу поправку, центруйте осі обертання й перевірте горизонт та дрейф перед наступною поправкою. Shift пом’якшує керування клавіатурою.',
+    ],
+    direction,
+  );
+const acroStage = (objective, title, instruction, why, axis, motion, direction) => [
+  objective,
+  acroNote(title, instruction, why, axis, motion, direction),
+];
+const acroLesson = (index, title, summary, concept, stages, duration = 5) =>
+  schoolLesson(
+    index,
+    { title, summary, concept, chapter: 'acro', mode: 'acro', camera: 'fpv', duration },
+    stages,
+  );
+const NEW_ACRO_LESSONS = Object.freeze([
+  acroLesson(
+    14,
+    ['Your first Acro takeoff', 'Ваш перший зліт в Acro'],
+    [
+      'Meet all four controls, arm deliberately and make a small lift.',
+      'Познайомтеся з чотирма осями, свідомо увімкніть мотори й трохи підніміться.',
+    ],
+    [
+      'Throttle sets thrust. Pitch, roll and yaw set rotation rate. Centred sticks stop commanding rotation; they do not return you to level.',
+      'Газ задає тягу. Тангаж, крен і рискання задають швидкість обертання. Центровані стіки припиняють команду обертатися, але не вирівнюють дрон.',
+    ],
+    [
+      acroStage(
+        schoolHold(0, 0, 0, { ticks: 40, maxSpeed: 500, maxTilt: 1000, centred: true }),
+        ['Ground check', 'Перевірка на землі'],
+        [
+          'Set throttle fully down, centre the other axes and arm. Keep the drone still on the pad before adding power.',
+          'Приберіть газ, центруйте решту осей і увімкніть мотори. Потримайте дрон нерухомо на майданчику перед додаванням тяги.',
+        ],
+        [
+          'Arming and adding throttle are separate actions. Inspect the live dots: they show your input, while the outlined dots illustrate an example.',
+          'Увімкнення моторів і додавання газу — різні дії. Суцільні точки показують ваші стіки, контурні — приклад.',
+        ],
+        'throttle',
+        'hover',
+      ),
+      schoolLift(1.4),
+      schoolLand(),
+    ],
+    4,
+  ),
+  acroLesson(
+    15,
+    ['Thrust, climb and descent', 'Тяга, підйом і спуск'],
+    [
+      'Visit a low target, climb to the high target and descend under control.',
+      'Відвідайте низьку ціль, підніміться до високої та керовано спустіться.',
+    ],
+    [
+      'Height is the result of thrust and momentum, not the position of the throttle stick. Reduce thrust before reaching your chosen height.',
+      'Висота залежить від тяги та інерції, а не від положення стіка газу. Зменшуйте тягу до досягнення потрібної висоти.',
+    ],
+    [
+      schoolLift(1.8),
+      acroStage(
+        schoolHold(0, 4.5, 0, { ticks: 60, maxSpeed: 1200, maxTilt: 1500 }),
+        ['Climb, then ease off', 'Підніміться й зменште газ'],
+        [
+          'Keep the horizon level. Add a little throttle to climb toward 4.5 m, then ease it back and settle inside the target.',
+          'Тримайте горизонт рівним. Трохи додайте газ до 4,5 м, потім зменште й зупиніться всередині цілі.',
+        ],
+        [
+          'At hover thrust, an existing climb takes time to slow down. Anticipate rather than chase the height marker.',
+          'На тязі зависання вже набраний підйом сповільнюється не одразу. Передбачайте рух замість погоні за позначкою.',
+        ],
+        'throttle',
+        'lift',
+      ),
+      acroStage(
+        schoolHold(0, 2, 0, { ticks: 70, maxSpeed: 1000, maxTilt: 1500 }),
+        ['Catch the descent', 'Зупиніть спуск'],
+        [
+          'Lower thrust slightly, watch your downward speed, and add a little back before reaching 2 m.',
+          'Трохи зменште тягу, стежте за швидкістю спуску й знову додайте її до досягнення 2 м.',
+        ],
+        [
+          'Cutting throttle is a fall. A controlled descent needs enough thrust to slow down before the ground.',
+          'Прибрати газ означає падати. Керований спуск потребує тяги для гальмування до землі.',
+        ],
+        'throttle',
+        'land',
+        -1,
+      ),
+      schoolLand(),
+    ],
+  ),
+  acroLesson(
+    16,
+    ['Level, then find your hover', 'Вирівняйтеся й знайдіть зависання'],
+    [
+      'Practise an intentional tilt, active levelling and a calm hover.',
+      'Відпрацюйте навмисний нахил, активне вирівнювання та спокійне зависання.',
+    ],
+    [
+      'A level horizon is attitude; staying over a marker is position. First level, then counter any remaining drift.',
+      'Рівний горизонт — це орієнтація; утримання над позначкою — це позиція. Спершу вирівняйтеся, потім погасіть решту дрейфу.',
+    ],
+    [
+      schoolLift(4),
+      acroStage(
+        schoolHold(0, 4, 0, {
+          ticks: 12,
+          minTilt: 600,
+          maxTilt: 1400,
+          maxSpeed: 9000,
+          centred: true,
+          min: p(-10, 1, -10),
+          max: p(10, 9, 10),
+        }),
+        ['Set a small tilt and release', 'Задайте малий нахил і відпустіть'],
+        [
+          'Tap pitch forward briefly. Centre all rotation controls and observe the 6–14° tilt staying.',
+          'Коротко подайте тангаж уперед. Центруйте осі обертання й помітьте збереження нахилу 6–14°.',
+        ],
+        [
+          'The stick controls rotation speed, not a target angle. Release early to avoid an excessive tilt.',
+          'Стік керує швидкістю обертання, а не потрібним кутом. Відпускайте завчасно, щоб уникнути надмірного нахилу.',
+        ],
+        'pitch',
+      ),
+      acroStage(
+        schoolHold(0, 4, 0, { ticks: 100, maxTilt: 800, maxSpeed: 800 }),
+        ['Level and stop the drift', 'Вирівняйтеся й зупиніть дрейф'],
+        [
+          'Tap opposite pitch back toward level. If you are still moving, briefly lean against that drift, then level again and hold over the pad.',
+          'Протилежним тангажем поверніться до горизонту. Якщо рух триває, коротко нахиліться проти дрейфу, знову вирівняйтеся й утримуйте позицію над майданчиком.',
+        ],
+        [
+          'The checkpoint needs a low tilt and low speed together. Centring alone cannot satisfy both after a drift.',
+          'Перевірка потребує водночас малого нахилу й малої швидкості. Після дрейфу самого центрування недостатньо.',
+        ],
+        'mixed',
+        'hover',
+      ),
+      schoolLand(),
+    ],
+  ),
+  acroLesson(
+    17,
+    ['Roll and lateral braking', 'Крен і бічне гальмування'],
+    [
+      'Move right, brake, then cross left without turning the nose.',
+      'Рухайтеся праворуч, загальмуйте й перейдіть ліворуч без повороту носа.',
+    ],
+    [
+      'Roll tilts the thrust sideways. Opposite roll first levels you, then creates a braking tilt; yaw changes heading instead.',
+      'Крен нахиляє тягу вбік. Протилежний крен спершу вирівнює, а потім створює гальмівний нахил; рискання натомість змінює курс.',
+    ],
+    [
+      schoolLift(3),
+      ...[
+        [6, 1],
+        [-6, -1],
+      ].map(([x, direction]) =>
+        acroStage(
+          schoolHold(x, 3, 0, { ticks: 70, heading: 0, maxSpeed: 1000, maxTilt: 1200 }),
+          [
+            direction > 0 ? 'Slide right and brake' : 'Slide left and brake',
+            direction > 0 ? 'Праворуч і гальмування' : 'Ліворуч і гальмування',
+          ],
+          [
+            direction > 0
+              ? 'Tap roll right and centre. Counter-roll before the right target, level as speed falls, and keep the nose facing north.'
+              : 'Tap roll left and centre. Brake before the left target with a brief right tilt, then level.',
+            direction > 0
+              ? 'Коротко подайте крен праворуч і центруйте. До правої цілі задайте протилежний крен, вирівняйтеся при сповільненні й тримайте ніс на північ.'
+              : 'Коротко подайте крен ліворуч і центруйте. До лівої цілі загальмуйте малим правим нахилом, потім вирівняйтеся.',
+          ],
+          [
+            'A stopped sideways drift needs force in the opposite direction; pointing the nose somewhere else does not brake it.',
+            'Для зупинки бічного дрейфу потрібна сила у протилежному напрямку; поворот носа його не гальмує.',
+          ],
+          'roll',
+          'roll',
+          direction,
+        ),
+      ),
+      schoolLand(-6, 0),
+    ],
+  ),
+  acroLesson(
+    18,
+    ['Yaw: heading is not travel', 'Рискання: курс — не рух'],
+    [
+      'Turn on the spot, then travel toward the new heading.',
+      'Поверніться на місці, потім рушайте за новим курсом.',
+    ],
+    [
+      'Yaw rotates the nose around the vertical axis. Travel follows tilted thrust and existing momentum, not the new heading by itself.',
+      'Рискання обертає ніс навколо вертикальної осі. Рух визначають нахилена тяга та інерція, а не новий курс сам собою.',
+    ],
+    [
+      schoolLift(3),
+      ...[9000, -9000, 0].map((heading) =>
+        acroStage(
+          schoolHold(0, 3, 0, { ticks: 55, heading, maxSpeed: 1300, maxTilt: 1500 }),
+          [
+            heading === 9000 ? 'Face east' : heading === -9000 ? 'Face west' : 'Face north again',
+            heading === 9000
+              ? 'Поверніться на схід'
+              : heading === -9000
+                ? 'Поверніться на захід'
+                : 'Знову на північ',
+          ],
+          [
+            `Keep hovering above the pad. Yaw gently toward ${heading === 9000 ? 'east' : heading === -9000 ? 'west' : 'north'} and centre before overshooting.`,
+            `Утримуйте зависання над майданчиком. Плавно поверніть ніс ${heading === 9000 ? 'на схід' : heading === -9000 ? 'на захід' : 'на північ'} й завчасно центруйте стік.`,
+          ],
+          [
+            'Watch the compass and the ground marker separately: heading can change while your position stays the same.',
+            'Стежте окремо за компасом і наземною позначкою: курс може змінюватися без зміни позиції.',
+          ],
+          'yaw',
+          'yaw',
+          heading < 0 ? -1 : 1,
+        ),
+      ),
+      acroStage(
+        schoolHold(0, 3, -7, { maxSpeed: 1100, heading: 0 }),
+        ['Now travel north', 'Тепер рушайте на північ'],
+        [
+          'Set a small forward pitch and travel to the northern target. Brake and level before landing.',
+          'Задайте малий тангаж уперед і рушайте до північної цілі. Загальмуйте й вирівняйтеся перед посадкою.',
+        ],
+        [
+          'Pitch supplies the horizontal thrust that yaw alone did not provide.',
+          'Тангаж дає горизонтальну тягу, якої не давало саме рискання.',
+        ],
+        'pitch',
+      ),
+      schoolLand(0, -7),
+    ],
+  ),
+  acroLesson(
+    19,
+    ['Keep height while tilted', 'Тримайте висоту в нахилі'],
+    [
+      'Cross two gates at different heights and settle on the far pad.',
+      'Пройдіть двоє воріт на різній висоті й сядьте на дальній майданчик.',
+    ],
+    [
+      'When tilted, some thrust points sideways. Add only the extra thrust needed for height, then reduce it as you level.',
+      'У нахилі частина тяги спрямована вбік. Додайте лише потрібну для висоти тягу й зменште її під час вирівнювання.',
+    ],
+    [
+      schoolLift(3),
+      ...[
+        [-7, 4],
+        [-15, 2.5],
+      ].map(([z, y]) =>
+        acroStage(
+          schoolGate('z', z, 0, -1, y),
+          [
+            y === 4 ? 'Climb while moving' : 'Descend while moving',
+            y === 4 ? 'Наберіть висоту в русі' : 'Знизьтеся в русі',
+          ],
+          [
+            `Use a small forward tilt. Adjust thrust to approach the ${y} m gate with a calm horizon and modest speed.`,
+            `Використайте малий нахил уперед. Скоригуйте тягу для підходу до воріт на ${y} м зі спокійним горизонтом і помірною швидкістю.`,
+          ],
+          [
+            'Changing thrust changes acceleration. Watch the target and vertical speed together, and make one small correction at a time.',
+            'Зміна тяги змінює прискорення. Стежте водночас за ціллю та вертикальною швидкістю й робіть по одній малій поправці.',
+          ],
+          'mixed',
+          'lift',
+        ),
+      ),
+      acroStage(
+        schoolHold(0, 2.5, -20, { maxSpeed: 1100 }),
+        ['Settle after the gates', 'Зупиніться після воріт'],
+        [
+          'Brake over the pad and return to level. Ease off the extra turning throttle as the drone levels.',
+          'Загальмуйте над майданчиком і вирівняйтеся. Під час вирівнювання зменште додатковий газ.',
+        ],
+        [
+          'Level thrust points upward again. Leaving the extra throttle in place starts an unwanted climb.',
+          'Після вирівнювання тяга знову спрямована вгору. Зайвий газ почне небажаний підйом.',
+        ],
+        'mixed',
+        'brake',
+      ),
+      schoolLand(0, -20),
+    ],
+  ),
+  acroLesson(
+    20,
+    ['Coordinated left and right turns', 'Узгоджені ліві та праві повороти'],
+    [
+      'Fly a wide right corner and a wide left corner with the nose following your path.',
+      'Пройдіть широкий правий і широкий лівий повороти, спрямовуючи ніс за маршрутом.',
+    ],
+    [
+      'A gentle bank bends the path; yaw points the camera along it; throttle supports the tilted drone. Reduce the bank to exit the turn.',
+      'Малий крен вигинає траєкторію; рискання спрямовує камеру вздовж неї; газ підтримує нахилений дрон. Зменшуйте крен на виході.',
+    ],
+    [
+      schoolLift(3),
+      ...[
+        [0, -7, 0],
+        [8, -10, 9000],
+        [14, -17, 0],
+      ].map(([x, z, heading], i) =>
+        acroStage(
+          schoolHold(x, 3, z, { ticks: 35, heading, maxSpeed: 2500, maxTilt: 2500 }),
+          [
+            ['Approach the corner', 'Enter the right turn', 'Exit through a left turn'][i],
+            ['Підхід до повороту', 'Правий поворот', 'Вихід лівим поворотом'][i],
+          ],
+          [
+            [
+              'Approach the first marker slowly, looking north.',
+              'Bank gently right and yaw toward east. Keep height with small throttle changes; relax the bank as you reach the target.',
+              'Bank gently left and yaw back north. Straighten the horizon as the new line opens.',
+            ][i],
+            [
+              'Повільно підійдіть до першої позначки, дивлячись на північ.',
+              'Плавно нахиліться праворуч і поверніть ніс на схід. Підтримуйте висоту малими змінами газу; зменшуйте крен біля цілі.',
+              'Плавно нахиліться ліворуч і поверніть ніс на північ. Вирівняйте горизонт, коли відкриється новий відрізок.',
+            ][i],
+          ],
+          [
+            'The checkpoint checks heading as well as position. Nose direction and path direction must be managed together.',
+            'Перевірка оцінює курс разом із позицією. Напрям носа й траєкторію потрібно узгоджувати.',
+          ],
+          'mixed',
+          'turn',
+          i === 2 ? -1 : 1,
+        ),
+      ),
+      schoolLand(14, -17),
+    ],
+    6,
+  ),
+  acroLesson(
+    21,
+    ['A gentle figure eight', 'Плавна вісімка'],
+    [
+      'Join two wide loops, changing turn direction through the centre.',
+      'Поєднайте дві широкі петлі, змінивши напрям повороту в центрі.',
+    ],
+    [
+      'Look toward the next marker. Relax one bank before beginning the opposite one, and keep space to correct.',
+      'Дивіться на наступну позначку. Послабте один крен перед протилежним і залишайте простір для поправок.',
+    ],
+    [
+      schoolLift(3.5),
+      ...[
+        [-7, -7, -9000],
+        [-14, 0, -18000],
+        [-7, 7, 9000],
+        [0, 0, 0],
+        [7, -7, 9000],
+        [14, 0, -18000],
+        [7, 7, -9000],
+        [0, 0, 0],
+      ].map(([x, z, heading], i) =>
+        acroStage(
+          schoolHold(x, 3.5, z, { ticks: 15, heading, maxSpeed: 3500, maxTilt: 3000 }),
+          [`Loop marker ${i + 1} of 8`, `Позначка петлі ${i + 1} з 8`],
+          [
+            i === 3 || i === 7
+              ? 'Return through the centre, level briefly and face north. Prepare the opposite bank only after releasing this turn.'
+              : `Follow the ${i < 4 ? 'left' : 'right'} loop to the lit marker. Keep the nose following the curve and leave room to slow down.`,
+            i === 3 || i === 7
+              ? 'Поверніться через центр, коротко вирівняйтеся й поверніть ніс на північ. Починайте протилежний крен після завершення цього повороту.'
+              : `Прямуйте ${i < 4 ? 'лівою' : 'правою'} петлею до підсвіченої позначки. Спрямовуйте ніс уздовж кривої й залишайте місце для гальмування.`,
+          ],
+          [
+            'A figure eight combines both turning directions. Smooth direction changes matter more than speed.',
+            'Вісімка поєднує обидва напрями поворотів. Плавна зміна напрямку важливіша за швидкість.',
+          ],
+          'mixed',
+          'turn',
+          i < 4 ? -1 : 1,
+        ),
+      ),
+      schoolLand(),
+    ],
+    7,
+  ),
+  acroLesson(
+    22,
+    ['Read the FPV horizon', 'Читайте горизонт у FPV'],
+    [
+      'Use the horizon, compass and two landmarks to judge attitude and movement.',
+      'За горизонтом, компасом і двома орієнтирами оцініть положення й рух.',
+    ],
+    [
+      'Camera tilt changes the view but not the drone attitude. The horizon shows lean; ground motion shows travel. Use the small drone guide when unsure.',
+      'Нахил камери змінює вигляд, але не положення дрона. Горизонт показує нахил; рух землі — переміщення. За сумніву погляньте на малу схему дрона.',
+    ],
+    [
+      schoolLift(3),
+      ...[
+        [0, -8, 0],
+        [6, -8, 0],
+        [6, -14, 0],
+      ].map(([x, z, heading], i) =>
+        acroStage(
+          schoolHold(x, 3, z, { ticks: 60, heading, maxSpeed: 1200, maxTilt: 1400 }),
+          [
+            [
+              'Approach the northern marker',
+              'Move sideways with the same view',
+              'Keep the horizon calm',
+            ][i],
+            ['Підхід до північної позначки', 'Рух убік із тим самим курсом', 'Спокійний горизонт'][
+              i
+            ],
+          ],
+          [
+            [
+              'Use a short forward pitch, then watch the ground move below you. Brake as the marker grows in the view.',
+              'Keep facing north. Use roll to move right, then counter-roll to brake over the second marker.',
+              'Move toward the far marker and settle. Compare the level horizon with the remaining ground drift before landing.',
+            ][i],
+            [
+              'Коротко подайте тангаж уперед і спостерігайте за рухом землі. Гальмуйте, коли позначка збільшується у кадрі.',
+              'Дивіться на північ. Креном рушайте праворуч, потім протилежним креном загальмуйте над другою позначкою.',
+              'Рушайте до дальньої позначки й зупиніться. Порівняйте рівний горизонт із рештою дрейфу землі перед посадкою.',
+            ][i],
+          ],
+          [
+            'A level-looking view is not proof of zero speed. Read the ground motion and the speed indicator as well.',
+            'Рівний вигляд не доводить нульову швидкість. Також читайте рух землі та показник швидкості.',
+          ],
+          i === 1 ? 'roll' : 'pitch',
+          i === 1 ? 'roll' : 'pitch',
+        ),
+      ),
+      schoolLand(6, -14),
+    ],
+  ),
+  acroLesson(
+    23,
+    ['Three gates, one smooth line', 'Троє воріт, одна плавна траєкторія'],
+    [
+      'Fly ordered gates with small lateral and height corrections.',
+      'Пройдіть ворота по порядку з малими бічними та висотними поправками.',
+    ],
+    [
+      'Prepare for the next gate before crossing the current one. Aim through the opening, not at its frame, and leave room to brake.',
+      'Готуйтеся до наступних воріт перед проходженням поточних. Цільтеся у отвір, а не раму, і залишайте місце для гальмування.',
+    ],
+    [
+      schoolLift(3),
+      ...[
+        [-6, 0, 3],
+        [-13, 3, 3.5],
+        [-21, -2, 2.5],
+      ].map(([z, x, y], i) =>
+        acroStage(
+          schoolGate('z', z, x, -1, y),
+          [`Gate ${i + 1}: look through the opening`, `Ворота ${i + 1}: дивіться крізь отвір`],
+          [
+            `Fly through the highlighted gate ${i + 1} toward north. Use small roll corrections for alignment and watch the next gate after crossing.`,
+            `Пройдіть підсвічені ворота ${i + 1} на північ. Малими поправками крену вирівнюйте траєкторію та шукайте наступні ворота після проходу.`,
+          ],
+          [
+            'Only a crossing in the indicated direction counts. Being near the gate or flying around its frame does not count.',
+            'Зараховується лише прохід у зазначеному напрямку. Наближення чи обліт рами не зараховуються.',
+          ],
+          'mixed',
+          'pitch',
+        ),
+      ),
+      schoolLand(-2, -25),
+    ],
+    6,
+  ),
+  acroLesson(
+    24,
+    ['Recover and land precisely', 'Відновіть контроль і точно сядьте'],
+    [
+      'Practise a small upset, recover your horizon and settle onto a smaller target.',
+      'Відпрацюйте малий нахил, відновіть горизонт і сядьте на меншу ціль.',
+    ],
+    [
+      'Recovery means stop adding rotation, return to level, then control drift and descent. It does not require a flip or an abrupt throttle cut.',
+      'Відновлення означає припинити нарощувати обертання, вирівнятися, а потім керувати дрейфом і спуском. Переворот чи різке вимкнення газу не потрібні.',
+    ],
+    [
+      schoolLift(4.5),
+      acroStage(
+        schoolHold(0, 4.5, 0, {
+          ticks: 12,
+          minTilt: 1000,
+          maxTilt: 2000,
+          maxSpeed: 10000,
+          centred: true,
+          min: p(-12, 1, -12),
+          max: p(12, 10, 12),
+        }),
+        ['Create a small, recoverable tilt', 'Задайте малий керований нахил'],
+        [
+          'Briefly roll right to a 10–20° bank, then centre. Keep altitude and avoid increasing the bank.',
+          'Коротко подайте крен праворуч до 10–20°, тоді центруйте. Зберігайте висоту й не збільшуйте нахил.',
+        ],
+        [
+          'This deliberate small upset gives you space to practise recovery without a surprise or a forced crash.',
+          'Цей навмисний малий нахил залишає простір для відновлення без несподіванки чи примусової аварії.',
+        ],
+        'roll',
+        'roll',
+      ),
+      acroStage(
+        schoolHold(0, 3, 0, {
+          ticks: 80,
+          maxSpeed: 700,
+          maxTilt: 700,
+          min: p(-1.2, 2.2, -1.2),
+          max: p(1.2, 3.8, 1.2),
+        }),
+        ['Level, brake, return', 'Вирівняйтеся, загальмуйте, поверніться'],
+        [
+          'Counter-roll to level, brake the drift and return above the pad. Settle inside the smaller target before descending.',
+          'Протилежним креном вирівняйтеся, загальмуйте дрейф і поверніться над майданчиком. Зупиніться всередині меншої цілі перед спуском.',
+        ],
+        [
+          'The tighter target checks position, speed and attitude together. Take as long as needed to settle.',
+          'Вужча ціль одночасно перевіряє позицію, швидкість і положення. Не поспішайте зі стабілізацією.',
+        ],
+        'mixed',
+        'brake',
+      ),
+      [
+        {
+          ...schoolLanding(0, 0),
+          min: p(-1, 0, -1),
+          max: p(1, 0.8, 1),
+          maxSpeed: 800,
+          maxTilt: 1000,
+        },
+        schoolLand()[1],
+      ],
+    ],
+    6,
+  ),
+  acroLesson(
+    25,
+    ['Your first solo Acro route', 'Ваш перший самостійний маршрут Acro'],
+    [
+      'Combine takeoff, gates, both turning directions, braking and a soft landing.',
+      'Поєднайте зліт, ворота, обидва напрями поворотів, гальмування й м’яку посадку.',
+    ],
+    [
+      'Use the skills you already practised. Read each next target, make a small input, observe the response and correct calmly.',
+      'Використайте вже відпрацьовані навички. Читайте наступну ціль, робіть малий рух, спостерігайте за реакцією й спокійно виправляйте.',
+    ],
+    [
+      schoolLift(3),
+      acroStage(
+        schoolGate('z', -7, 0, -1, 3),
+        ['The opening straight', 'Початкова пряма'],
+        [
+          'Pass north through the first gate at a comfortable pace.',
+          'У комфортному темпі пройдіть перші ворота на північ.',
+        ],
+        [
+          'Starting calmly leaves time to prepare for the turn.',
+          'Спокійний початок залишає час підготувати поворот.',
+        ],
+        'pitch',
+      ),
+      acroStage(
+        schoolHold(0, 3, -13, { ticks: 35, heading: 9000, maxSpeed: 2000 }),
+        ['Right toward the next gate', 'Праворуч до наступних воріт'],
+        [
+          'Slow down, bank gently right and point the nose east.',
+          'Сповільніться, плавно нахиліться праворуч і поверніть ніс на схід.',
+        ],
+        [
+          'Brake before a tight direction change, then rebuild speed.',
+          'Гальмуйте перед різкою зміною напрямку, потім знову набирайте швидкість.',
+        ],
+        'mixed',
+        'turn',
+      ),
+      acroStage(
+        schoolGate('x', 8, -13, 1, 3),
+        ['Cross the eastern gate', 'Пройдіть східні ворота'],
+        [
+          'Fly east through the second gate with a small forward tilt.',
+          'Пройдіть другі ворота на схід із малим нахилом уперед.',
+        ],
+        [
+          'Your pitch direction follows the nose after yawing.',
+          'Після рискання напрям тангажу слідує за носом.',
+        ],
+        'pitch',
+      ),
+      acroStage(
+        schoolHold(14, 3, -13, { ticks: 35, heading: 0, maxSpeed: 1800 }),
+        ['Left onto the final line', 'Ліворуч на фінальну пряму'],
+        [
+          'Brake, turn gently left and face north again.',
+          'Загальмуйте, плавно поверніть ліворуч і знову дивіться на північ.',
+        ],
+        [
+          'Unwind the bank as the final path opens.',
+          'Прибирайте крен, коли відкриється фінальна траєкторія.',
+        ],
+        'mixed',
+        'turn',
+        -1,
+      ),
+      acroStage(
+        schoolGate('z', -21, 14, -1, 3),
+        ['The final gate', 'Фінальні ворота'],
+        [
+          'Cross the last gate and begin braking toward the far pad.',
+          'Пройдіть останні ворота й почніть гальмувати до дальнього майданчика.',
+        ],
+        [
+          'A clean finish includes slowing down after the gate.',
+          'Акуратний фініш включає гальмування після воріт.',
+        ],
+        'mixed',
+        'pitch',
+      ),
+      acroStage(
+        schoolHold(14, 2.5, -26, { ticks: 75, maxSpeed: 1000, maxTilt: 1200 }),
+        ['Hold over home', 'Зависніть над фінішем'],
+        [
+          'Stop the drift, level the horizon and settle above the landing pad.',
+          'Зупиніть дрейф, вирівняйте горизонт і стабілізуйтеся над майданчиком.',
+        ],
+        [
+          'The landing is the last skill, not an afterthought.',
+          'Посадка — остання навичка маршруту, а не формальність.',
+        ],
+        'mixed',
+        'hover',
+      ),
+      schoolLand(14, -26),
+    ],
+    8,
+  ),
+]);
+export const BEGINNER_LESSONS = Object.freeze([...ORIGINAL_BEGINNER_LESSONS, ...NEW_ACRO_LESSONS]);
+export const ACRO_LESSON_ORDER = Object.freeze(
+  [15, 16, 13, 17, 14, 18, 19, 20, 21, 22, 23, 24, 25, 26].map(
+    (n) => `beginner-${String(n).padStart(2, '0')}`,
+  ),
+);
+export const SELF_LEVEL_LESSON_ORDER = Object.freeze(
+  ORIGINAL_BEGINNER_LESSONS.slice(0, 12).map((lesson) => lesson.id),
+);
+const ACRO_IDENTITY = `fpv-acro-school:${dataIdentity(NEW_ACRO_LESSONS.map((lesson) => lesson.course))}`;
 export const BEGINNER_CATALOGUE = Object.freeze(
   BEGINNER_LESSONS.map((lesson) => ({
     id: lesson.id,
@@ -1874,7 +2541,7 @@ export const BEGINNER_CATALOGUE = Object.freeze(
     activity: 'academy',
     difficulty: 'beginner',
     duration: lesson.duration,
-    packIdentity: BEGINNER_IDENTITY,
+    packIdentity: lesson.index < 14 ? BEGINNER_IDENTITY : ACRO_IDENTITY,
     legacy: false,
   })),
 );

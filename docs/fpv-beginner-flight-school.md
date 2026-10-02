@@ -1,18 +1,53 @@
 # FPV Flight School
 
-Flight School adds a complete beginner learning sequence to World Studio: **14
-lessons with 59 guided steps**, including 12 self-level fundamentals and two
-optional introductions to Acro. Players see a control, study an illustrated drone
-response and practise it in the existing simulator. The original 12 Academy
-drills, their demonstrations and the other 48 challenges remain unchanged. The
-combined catalogue contains 74 authored challenges across the same eight worlds.
+Flight School now contains **26 lessons with 122 guided steps**: a recommended **14-lesson Acro course**
+and the original **12 optional self-level fundamentals**. The Acro sequence reuses
+the two existing Acro lessons and adds 12 distinct tasks. Players see a control,
+study an illustrated drone response and practise it in the existing simulator.
+The original 12 Academy drills, their demonstrations and the other 48 challenges
+remain unchanged. The combined catalogue contains **86 authored challenges**
+across the same eight worlds. A definition count does not certify art polish or
+unfamiliar-player acceptance.
 
-This is a focused feature increment on `codex/fpv-beginner-flight-school`, stacked
-on the native simulator UI in PR #904. Its own PR and public deployment are
-pending at the time of this checkpoint. It does not claim completion of the
-broader P0–P8 implementation plan, all content qualification or release readiness.
+The original school is published for review in PR #905, following the native
+simulator UI in PR #904. The additive Acro curriculum is a further focused
+increment. Its integration, PR and public deployment are tracked separately;
+this document does not claim completion of the broader P0–P8 implementation plan,
+all content qualification or release readiness.
 
-## Course and player experience
+## Recommended Acro course
+
+| Sequence | Stable ID   | Skill                                                    |
+| -------: | ----------- | -------------------------------------------------------- |
+|        1 | beginner-15 | Four controls, deliberate arming and small takeoff       |
+|        2 | beginner-16 | Thrust, climb and controlled descent                     |
+|        3 | beginner-13 | Rate control: the tilt stays (original course unchanged) |
+|        4 | beginner-17 | Active levelling and low-speed hover                     |
+|        5 | beginner-14 | Straight line, braking and landing (original unchanged)  |
+|        6 | beginner-18 | Roll and lateral braking without yaw                     |
+|        7 | beginner-19 | Yaw heading versus actual travel                         |
+|        8 | beginner-20 | Height control while tilted and moving                   |
+|        9 | beginner-21 | Coordinated right and left turns                         |
+|       10 | beginner-22 | Two loops joined as a gentle figure eight                |
+|       11 | beginner-23 | FPV horizon, landmarks and remaining drift               |
+|       12 | beginner-24 | Three ordered directional gates                          |
+|       13 | beginner-25 | Deliberate small upset, recovery and precise landing     |
+|       14 | beginner-26 | Solo route with both turns, gates, braking and landing   |
+
+The primary Acro course has 71 guided steps. The exported `ACRO_LESSON_ORDER` is the recommended sequence; stable IDs are not
+display numbers. `SELF_LEVEL_LESSON_ORDER` identifies the optional original 12.
+The player app chooses FPV and Gentle while flying a recommended Acro lesson,
+then restores the player's previous camera, mode and response on exit. The main
+progress bar, Continue and Next lesson actions use this 14-lesson sequence. The
+original 12 self-level lessons appear in a separate collapsed optional section,
+with their own completion count and Next sequence. Existing
+lesson metadata remains intact to avoid silently changing historical content.
+All newly authored lessons default to Acro/FPV and have EN/UK step instructions,
+explanations and tips. The coach identifies the selected learning track, shows
+its actual sequence number and offers the control explorer in either track's
+first lesson.
+
+## Original course and player experience
 
 Every lesson is immediately available. Progress suggests a next lesson without
 locking the course, existing worlds, playlists or challenges. Players can repeat
@@ -69,8 +104,10 @@ actual course advancement drive the feedback; the guide never declares an
 objective passed because an animation finished.
 
 Lessons temporarily choose their teaching mode and starting camera. The player's
-previous mode and camera preferences are restored when leaving the course, and
-controller calibration and the existing response profile are preserved. School
+previous mode, camera and response preferences are restored when leaving the
+course. Gentle response applies during lessons; controller calibration is
+preserved. Saving a new response in radio setup updates the preference restored
+on exit while the active lesson keeps Gentle response. School
 completion requires a verified practice recording in that lesson's recommended
 mode and exact content revision. Replays, demonstrations and editor previews do
 not earn completion. Without persistent storage, the current session can still
@@ -85,11 +122,13 @@ is durable only where its verified recording can be retained.
 
 ## Implementation and evidence
 
-`world-catalogue.mjs` appends `BEGINNER_LESSONS` and `BEGINNER_CATALOGUE`. Metadata
-uses zero-based lesson indices, numeric estimated durations, stable
-`beginner-01` through `beginner-14` IDs and a distinct beginner content identity.
-The old Academy and world identities remain unchanged. The metadata's 59 coach
-steps map one-to-one to real `FlightCourse.v2` objectives. `beginner-coach.mjs`
+`world-catalogue.mjs` exports `BEGINNER_LESSONS` and `BEGINNER_CATALOGUE`. Metadata
+uses zero-based stable indices and numeric estimated durations. Original IDs
+`beginner-01` through `beginner-14` preserve their course bytes and
+`fpv-beginner:654387e76ace406c` identity. New `beginner-15` through `beginner-26`
+courses have a separate additive `fpv-acro-school` identity. The old Academy and
+world identities remain unchanged. Every coach step maps one-to-one to a real
+`FlightCourse.v2` objective. `beginner-coach.mjs`
 observes host state and input; `world-app.mjs` owns flight creation, input,
 verification, progress and recovery.
 
@@ -110,8 +149,51 @@ player observation, physical-radio acceptance on the final build, sustained
 hardware performance and broad release qualification must be reported separately
 before claiming those outcomes.
 
-Public delivery is tracked in [PR #905](https://github.com/mekhovov/revealline/pull/905),
-which follows PR #904 in protected native stack #902. Exact-head checks and
+## Additive Acro physics evidence
+
+Run `node scripts/qualify-fpv-acro-school.mjs --output docs/evidence` to reproduce
+the Acro authoring evidence. The script supplies ordinary normalized commands
+from each grounded spawn, records the actual quantized commands, and independently
+replays every completed attempt. It changes no runtime state, response constants
+or course objective while flying. All 14 primary lessons completed with zero
+contacts and full health using the unmodified Gentle profile.
+
+[The new receipt](evidence/fpv-acro-school-physics-20261001.json) binds the source
+hash, exact pack identities, proof hashes and final-state identities.
+[The complete recorded commands](evidence/fpv-acro-school-demonstrations-20261001.json)
+are retained so this evidence is replayable after local scratch files are gone.
+These are demonstration sessions and cannot earn player completion. All 14 are
+also installed in the existing `world-demonstrations.mjs` dependency and exposed
+by each primary lesson's Watch demonstration action. Playback defaults to half
+speed, with quarter-, half- and normal-speed choices. Recorded controls are
+labelled separately from the coach's illustrative example; live input cannot
+change the recording. Playback uses the actual course and physics, verifies the
+complete proof before showing it, and never grants lesson progress. Use
+`--install-demonstrations` with the qualification command to regenerate the
+installed additive rows without replacing the existing world demonstrations.
+The original physics receipt remains unchanged. Pilot completion times do not
+estimate a beginner's learning time; unfamiliar-player and physical-radio
+acceptance remain separate required observations.
+
+## Player-flow verification
+
+Actual browser verification covered the 14 ordered Acro cards and collapsed
+12-lesson self-level collection, first-lesson entry with Acro/FPV, the installed
+first demonstration completing at 7.2 simulated seconds, explicit Pause and
+quarter-speed selection. Watching left primary progress at 0/14. The recorded
+stick display and lesson labels identified observation-only controls. Starting
+and leaving a lesson restored a deliberately selected Chase camera and Self-level
+mode. The controls explorer and paused explanations remained available.
+
+Frozen candidate `0f9d19b8a4e03dedd9ff43d7a54052f5dcf0a50e` passed all three
+optional-package admissions, committed-input verification and two byte-identical
+builds. The subsequent parent-stack rebase preserved every FPV source byte.
+The full 14 installed recordings also passed independent runtime replay; these
+checks do not substitute for five first-time player sessions or physical radios.
+
+The original school is tracked in [PR #905](https://github.com/mekhovov/revealline/pull/905).
+The Acro-first follow-up uses `codex/fpv-acro-first-school` above the shared guide
+in native stack #902. Exact-head checks and
 deployment verification remain required as described in
 [continuous delivery](fpv-continuous-delivery.md). A local playtest or
 successful physics replay is not evidence of a live public release.

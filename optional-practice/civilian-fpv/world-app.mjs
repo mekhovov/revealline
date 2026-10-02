@@ -2,6 +2,8 @@ import {
   WORLD_CATALOGUE,
   BEGINNER_LESSONS,
   BEGINNER_CATALOGUE,
+  ACRO_LESSON_ORDER,
+  SELF_LEVEL_LESSON_ORDER,
   WORLD_THEMES,
   FLIGHT_WORLDS,
   ACTIVITY_NAMES,
@@ -75,11 +77,12 @@ import { mountActorEditor } from './world-actor-editor.mjs';
 const COPY_EN = {
   learn: 'Learn to fly',
   beginLearning: 'Start Flight School',
-  schoolEyebrow: 'FLIGHT SCHOOL · FROM ZERO TO YOUR FIRST ROUTE',
+  schoolEyebrow: 'ACRO FLIGHT SCHOOL · FROM ZERO TO YOUR FIRST ROUTE',
   schoolTitle: 'Every pilot starts here.',
   schoolIntro:
-    'One control at a time. See the movement, understand the drone, then try it for yourself.',
-  schoolReassurance: 'No experience needed. No locked lessons. Repeat anything, at your own pace.',
+    'Learn Acro through 14 guided flights. Watch a real demonstration, understand the controls, then fly it yourself. Self-level practice is optional below.',
+  schoolReassurance:
+    'Acro · FPV view · Gentle response. Your usual settings return when you leave. All lessons are open.',
   schoolLift: '01 · Lift',
   schoolControl: '02 · Control',
   schoolExplore: '03 · Explore',
@@ -235,10 +238,12 @@ const COPY_EN = {
 const COPY_UK = {
   learn: 'Навчитися літати',
   beginLearning: 'Почати льотну школу',
-  schoolEyebrow: 'ЛЬОТНА ШКОЛА · ВІД НУЛЯ ДО ПЕРШОГО МАРШРУТУ',
+  schoolEyebrow: 'ШКОЛА ACRO · ВІД НУЛЯ ДО ПЕРШОГО МАРШРУТУ',
   schoolTitle: 'Тут починається ваш політ.',
-  schoolIntro: 'Один рух за раз. Подивіться на стіки, зрозумійте реакцію дрона й спробуйте самі.',
-  schoolReassurance: 'Досвід не потрібен. Усі уроки відкриті. Повторюйте будь-що у своєму темпі.',
+  schoolIntro:
+    'Вивчайте Acro у 14 польотах із підказками. Перегляньте справжню демонстрацію, зрозумійте керування та спробуйте самі. Додаткові уроки самовирівнювання — нижче.',
+  schoolReassurance:
+    'Acro · вигляд FPV · плавне керування. Після виходу ваші налаштування повернуться. Усі уроки відкриті.',
   schoolLift: '01 · Зліт',
   schoolControl: '02 · Керування',
   schoolExplore: '03 · Відкриття',
@@ -712,9 +717,19 @@ export function mountWorldApp({
     sectorLookup = null,
     lastRadioDiscovery = -Infinity;
   const learningById = new Map(BEGINNER_LESSONS.map((lesson) => [lesson.id, lesson]));
+  const learningEntries = new Map(BEGINNER_CATALOGUE.map((entry) => [entry.id, entry]));
+  const primaryLearning = ACRO_LESSON_ORDER.map((id) => learningEntries.get(id));
+  const learningSequence = (entry) =>
+    learningById.get(entry?.id)?.mode === 'acro' ? ACRO_LESSON_ORDER : SELF_LEVEL_LESSON_ORDER;
+  const nextLearningEntry = (entry) => {
+    const sequence = learningSequence(entry),
+      index = sequence.indexOf(entry?.id);
+    return index < 0 ? null : learningEntries.get(sequence[index + 1]);
+  };
   const sessionLearningComplete = new Set();
   let selectedWorld = null,
-    learningPreferences = null;
+    learningPreferences = null,
+    learningResponse = null;
   const sectors = createSectorTracker();
   let storage;
   try {
@@ -1081,14 +1096,15 @@ export function mountWorldApp({
     onRadio: () => $('radio-setup-button').click(),
   });
   function nextLearningFlight() {
-    const index = BEGINNER_CATALOGUE.findIndex((entry) => entry.id === current?.id);
-    if (index >= 0 && index + 1 < BEGINNER_CATALOGUE.length)
-      return startFlight(BEGINNER_CATALOGUE[index + 1]);
+    const next = nextLearningEntry(current);
+    if (next) return startFlight(next);
     return closeFlight().then(() => showTab('learn'));
   }
   function restoreLearningPreferences() {
     if (!learningPreferences) return;
     for (const [id, value] of Object.entries(learningPreferences)) $(id).value = value;
+    if (learningResponse) response = learningResponse;
+    learningResponse = null;
     learningPreferences = null;
     paintLoadout();
   }
@@ -1311,24 +1327,24 @@ export function mountWorldApp({
   }
   function renderSchool() {
     const complete = completedKeys();
-    const done = BEGINNER_CATALOGUE.filter((entry) => complete.has(keyOf(entry)));
-    const core = done.filter((entry) => learningById.get(entry.id).mode === 'self-level').length;
-    const acro = done.length - core;
+    const done = primaryLearning.filter((entry) => complete.has(keyOf(entry)));
+    const optionalDone = SELF_LEVEL_LESSON_ORDER.filter((id) =>
+      complete.has(keyOf(learningEntries.get(id))),
+    ).length;
     $('school-progress-title').textContent = txt(
-      `${done.length} of 14 lessons complete`,
-      `Виконано ${done.length} із 14 уроків`,
+      `${done.length} of 14 Acro lessons complete`,
+      `Виконано ${done.length} із 14 уроків Acro`,
     );
     $('school-progress-copy').textContent = txt(
-      `${core}/12 fundamentals · ${acro}/2 Acro introductions`,
-      `${core}/12 основ · ${acro}/2 вступних уроків Acro`,
+      `Acro is your main course · ${optionalDone}/12 optional self-level lessons complete`,
+      `Acro — ваш основний курс · виконано ${optionalDone}/12 додаткових уроків самовирівнювання`,
     );
     $('school-progress').value = done.length;
     $('school-progress').setAttribute(
       'aria-label',
       txt('Flight School progress', 'Поступ у льотній школі'),
     );
-    const next =
-      BEGINNER_CATALOGUE.find((entry) => !complete.has(keyOf(entry))) ?? BEGINNER_CATALOGUE[0];
+    const next = primaryLearning.find((entry) => !complete.has(keyOf(entry))) ?? primaryLearning[0];
     $('school-continue').textContent =
       done.length === 0
         ? txt('Begin lesson 01', 'Почати урок 01')
@@ -1337,25 +1353,62 @@ export function mountWorldApp({
           : txt(`Continue · ${label(next)}`, `Продовжити · ${label(next)}`);
     $('school-lessons').replaceChildren();
     const groups = [
-      [0, 4, 'Find your feet. Then leave the ground.', 'Відчуйте керування. Потім злітайте.'],
-      [4, 8, 'Make the drone go where you want.', 'Скеруйте дрон туди, куди потрібно.'],
-      [8, 12, 'Connect the moves. Find your line.', 'Поєднайте рухи. Знайдіть свій маршрут.'],
-      [12, 14, 'Curious about Acro?', 'Хочете спробувати Acro?'],
+      [
+        ACRO_LESSON_ORDER.slice(0, 4),
+        'Lift, understand tilt, find your hover.',
+        'Зліт, розуміння нахилу, зависання.',
+      ],
+      [
+        ACRO_LESSON_ORDER.slice(4, 8),
+        'Direct the drift. Control your height.',
+        'Керуйте дрейфом і висотою.',
+      ],
+      [
+        ACRO_LESSON_ORDER.slice(8, 11),
+        'Join the turns. Read the FPV view.',
+        'Поєднуйте повороти. Читайте вигляд FPV.',
+      ],
+      [
+        ACRO_LESSON_ORDER.slice(11),
+        'Gates, recovery and your solo route.',
+        'Ворота, відновлення та самостійний маршрут.',
+      ],
+      [
+        SELF_LEVEL_LESSON_ORDER,
+        'Optional: practise with self-level assistance',
+        'Додатково: практика із самовирівнюванням',
+        true,
+      ],
     ];
-    for (const [from, to, en, uk] of groups) {
-      const group = el('section', undefined, 'school-chapter');
-      const title = el('div', undefined, 'school-chapter-heading');
+    for (const [ids, en, uk, optional] of groups) {
+      const group = el(optional ? 'details' : 'section', undefined, 'school-chapter');
+      group.dataset.learningTrack = optional ? 'self-level' : 'acro';
+      const title = el(optional ? 'summary' : 'div', undefined, 'school-chapter-heading');
       title.append(
-        el('span', `${String(from + 1).padStart(2, '0')}—${String(to).padStart(2, '0')}`),
+        el(
+          'span',
+          optional
+            ? '12'
+            : `${String(ACRO_LESSON_ORDER.indexOf(ids[0]) + 1).padStart(2, '0')}—${String(ACRO_LESSON_ORDER.indexOf(ids.at(-1)) + 1).padStart(2, '0')}`,
+        ),
         el('h2', txt(en, uk)),
       );
-      if (from === 12)
-        title.append(el('small', txt('Optional next step', 'Необов’язковий наступний крок')));
+      if (optional)
+        title.append(
+          el(
+            'small',
+            txt(
+              `${optionalDone}/12 complete · open lessons`,
+              `${optionalDone}/12 виконано · відкрити уроки`,
+            ),
+          ),
+        );
       group.append(title);
       const grid = el('div', undefined, 'school-lesson-grid');
-      for (const entry of BEGINNER_CATALOGUE.slice(from, to)) {
+      for (const id of ids) {
+        const entry = learningEntries.get(id);
         const lesson = learningById.get(entry.id),
-          index = BEGINNER_CATALOGUE.indexOf(entry);
+          index = learningSequence(entry).indexOf(entry.id);
         const card = el('article', undefined, 'school-lesson-card');
         card.dataset.lesson = entry.id;
         card.classList.toggle('is-complete', complete.has(keyOf(entry)));
@@ -1385,11 +1438,19 @@ export function mountWorldApp({
             ? txt('Fly it again', 'Повторити урок')
             : txt('Start lesson', 'Почати урок'),
           () => startFlight(entry),
-          index === BEGINNER_CATALOGUE.indexOf(next) ? 'primary' : '',
+          entry.id === next.id ? 'primary' : '',
         );
         start.dataset.simIcon = 'play';
         start.setAttribute('aria-label', `${start.textContent}: ${localized(lesson.title)}`);
         card.append(meta, start);
+        if (demonstrationFor(entry, lesson.mode)) {
+          const watch = button(txt('Watch demonstration', 'Переглянути демонстрацію'), () =>
+            watchDemonstration(entry, lesson.mode),
+          );
+          watch.dataset.simIcon = 'replay';
+          watch.setAttribute('aria-label', `${watch.textContent}: ${localized(lesson.title)}`);
+          card.append(watch);
+        }
         grid.append(card);
       }
       group.append(grid);
@@ -2651,8 +2712,7 @@ export function mountWorldApp({
       if (entry.beginner)
         beginnerCoach.complete({
           verified: !isPreview && state.status === 'complete',
-          nextAvailable:
-            BEGINNER_CATALOGUE.findIndex((e) => e.id === entry.id) < BEGINNER_CATALOGUE.length - 1,
+          nextAvailable: Boolean(nextLearningEntry(entry)),
         });
       $('result-panel').replaceChildren(
         el(
@@ -2727,18 +2787,14 @@ export function mountWorldApp({
       if (entry.beginner && state.status === 'complete' && !isPreview)
         resultActions.append(
           button(
-            BEGINNER_CATALOGUE.at(-1).id === entry.id
+            !nextLearningEntry(entry)
               ? txt('Return to your course', 'Повернутися до курсу')
               : txt('Next lesson', 'Наступний урок'),
             () => nextLearningFlight(),
             'primary',
           ),
         );
-      if (
-        entry.beginner &&
-        state.status === 'complete' &&
-        BEGINNER_CATALOGUE.findIndex((e) => e.id === entry.id) >= 11
-      )
+      if (entry.beginner && state.status === 'complete' && !nextLearningEntry(entry))
         resultActions.append(
           button(
             txt('Explore more worlds', 'Досліджувати інші світи'),
@@ -2936,8 +2992,10 @@ export function mountWorldApp({
         'flight-mode': $('flight-mode').value,
         'flight-camera': $('flight-camera').value,
       };
+      learningResponse ??= { ...response };
+      response = { ...DEFAULT_RESPONSE };
       $('flight-mode').value = options.replayProof?.mode ?? options.recover?.mode ?? learning.mode;
-      $('flight-camera').value = learning.camera;
+      $('flight-camera').value = learning.mode === 'acro' ? 'fpv' : learning.camera;
       beginnerCoach.open(learning, {
         practice: Boolean(options.recover),
         replay: Boolean(options.replayProof),
@@ -2955,12 +3013,18 @@ export function mountWorldApp({
     $('world-arm').disabled = true;
     replayProof = options.replayProof ? clone(options.replayProof) : null;
     replayKind = options.demonstration ? 'demonstration' : 'recording';
+    if (learning && options.demonstration) replayRate = options.playbackRate ?? 0.5;
     $('world-replay-controls').hidden = !replayProof;
     $('world-replay-label').textContent =
       replayKind === 'demonstration'
-        ? entry.legacy
-          ? txt('ACADEMY DEMONSTRATION', 'ДЕМОНСТРАЦІЯ АКАДЕМІЇ')
-          : txt('WORLD DEMONSTRATION', 'ДЕМОНСТРАЦІЯ СВІТУ')
+        ? learning
+          ? txt(
+              'LESSON DEMONSTRATION · RECORDED CONTROLS',
+              'ДЕМОНСТРАЦІЯ УРОКУ · ЗАПИСАНЕ КЕРУВАННЯ',
+            )
+          : entry.legacy
+            ? txt('ACADEMY DEMONSTRATION', 'ДЕМОНСТРАЦІЯ АКАДЕМІЇ')
+            : txt('WORLD DEMONSTRATION', 'ДЕМОНСТРАЦІЯ СВІТУ')
         : txt('RECORDED FLIGHT', 'ЗАПИСАНИЙ ПОЛІТ');
     $('world-replay-rate').value = String(replayRate);
     $('flight-mode').disabled =
@@ -3234,7 +3298,7 @@ export function mountWorldApp({
   on($('school-continue'), 'click', () => {
     const complete = completedKeys();
     return startFlight(
-      BEGINNER_CATALOGUE.find((entry) => !complete.has(keyOf(entry))) ?? BEGINNER_CATALOGUE[0],
+      primaryLearning.find((entry) => !complete.has(keyOf(entry))) ?? primaryLearning[0],
     );
   });
   on($('hero-fly'), 'click', () => {
@@ -3616,7 +3680,7 @@ export function mountWorldApp({
   on($('fly-after-replay'), 'click', () => current && startFlight(current));
   on($('world-replay-rate'), 'change', () => {
     const selected = Number($('world-replay-rate').value);
-    if (![0.5, 1].includes(selected)) return;
+    if (![0.25, 0.5, 1].includes(selected)) return;
     replayRate = selected;
     lastTime = null;
     accumulator = 0;
@@ -3723,7 +3787,8 @@ export function mountWorldApp({
         closeRadio();
       },
       onResponse: (rates) => {
-        response = rates;
+        if (learningPreferences) learningResponse = { ...rates };
+        response = learningPreferences ? { ...DEFAULT_RESPONSE } : rates;
         if (current && $('flight-dialog').open)
           void startFlight(current, {
             preview,
