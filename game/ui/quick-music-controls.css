@@ -9,8 +9,38 @@
   width: 100%;
   padding-block: 8px;
 }
-.quick-music-controls .quick-music-title {
+.quick-music-credit {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 4px 12px;
   flex: 1 1 100%;
+  min-width: 0;
+}
+.music-creator-links {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 4px 12px;
+}
+.music-creator-links[hidden] {
+  display: none;
+}
+.music-creator-links a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 24px;
+  padding-block: 2px;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  color: var(--fk-accent, var(--accent, currentColor));
+}
+.music-creator-links a:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 3px;
+}
+.quick-music-controls .quick-music-title {
+  flex: 1 1 auto;
   min-width: 0;
   overflow: hidden;
   text-overflow: ellipsis;

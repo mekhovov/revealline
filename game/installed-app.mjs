@@ -6,6 +6,21 @@ import {
 } from './edition-context.mjs';
 import { profileWriterOwns } from './profile-writer.mjs';
 export const INSTALLED_STATE_KEY = 'revealline.installed-app.v1';
+// Chapters, modes and compatibility packages share this bound. The publisher
+// validates its catalogue against it so growth cannot strand a finished download.
+export const MAX_INSTALLED_PACKAGES = 4096;
+export function validateInstalledSelection(selection) {
+  if (!Array.isArray(selection))
+    throw new Error('The installed download selection must be a list of package identities.');
+  if (selection.length > MAX_INSTALLED_PACKAGES)
+    throw new Error(
+      `The installed download selection exceeds its package limit (${MAX_INSTALLED_PACKAGES}).`,
+    );
+  for (const id of selection)
+    if (typeof id !== 'string' || !id.length || id.length > 200)
+      throw new Error('The installed download selection contains an invalid package identity.');
+  return [...selection];
+}
 export function installedAppURL(locationRef = globalThis.location) {
   const url = new URL(locationRef.href);
   const release = url.pathname.indexOf('/releases/');
@@ -56,16 +71,13 @@ export function validateInstalledEdition(value, locationRef = globalThis.locatio
   }
   if (
     !/^v?\d+\.\d+\.\d+$/.test(value.version) ||
+    (value.buildId !== undefined && !/^[a-f0-9]{64}$/.test(value.buildId)) ||
     scope.origin !== app.origin ||
     scope.username ||
     scope.password ||
     !scope.pathname.endsWith('/') ||
     scope.search ||
     scope.hash ||
-    (value.selection !== undefined &&
-      (!Array.isArray(value.selection) ||
-        value.selection.length > 100 ||
-        value.selection.some((id) => typeof id !== 'string' || id.length > 200))) ||
     !(
       sameEditionAlias ||
       scope.pathname === new URL('../', app).pathname ||
@@ -76,8 +88,9 @@ export function validateInstalledEdition(value, locationRef = globalThis.locatio
   return {
     ...(editionId === undefined ? {} : { editionId }),
     version: value.version,
+    ...(value.buildId === undefined ? {} : { buildId: value.buildId }),
     scope: scope.href,
-    selection: value.selection || [],
+    selection: validateInstalledSelection(value.selection === undefined ? [] : value.selection),
     allGameplay: Boolean(value.allGameplay),
   };
 }
@@ -184,6 +197,7 @@ export async function activateInstalledEdition(
     restorePrevious = false,
     heldWriter,
     ownsWriter = () => false,
+    prepare,
   } = {},
 ) {
   const candidate = validateInstalledEdition(value, locationRef);
@@ -233,15 +247,23 @@ export async function activateInstalledEdition(
                 'Edition downloaded. Open this edition’s Game data → Flight library → Bring progress from an earlier release. Review and copy the previous edition there, then return here to switch. An incompatible saved flight or a busy profile leaves your working edition selected.',
             };
         }
-        if (borrowed && !profileWriterOwns(heldWriter, logicalWriterKey))
-          throw new Error(
-            'The edition saving lease was released. Retry the installation selection.',
-          );
-        for (const key of borrowedProfiles)
-          if (!ownsWriter(key))
+        const requireWriters = () => {
+          if (borrowed && !profileWriterOwns(heldWriter, logicalWriterKey))
             throw new Error(
-              'The game stopped owning its save profile. Your working edition is kept.',
+              'The edition saving lease was released. Retry the installation selection.',
             );
+          for (const key of borrowedProfiles)
+            if (!ownsWriter(key))
+              throw new Error(
+                'The game stopped owning its save profile. Your working edition is kept.',
+              );
+        };
+        requireWriters();
+        // An updater may replace a worker at the same URL. Run that preparation
+        // only after migration/recovery checks, keeping both profile locks until
+        // the verified candidate becomes active. Refusal must not replace a core.
+        if (prepare) await prepare();
+        requireWriters();
         storage.setItem(
           installedStateKey(editionId),
           JSON.stringify({
@@ -294,6 +316,7 @@ export async function updateInstalledSelection(
     editionId = editionIdFromLocation(locationRef),
   } = {},
 ) {
+  selection = validateInstalledSelection(selection);
   if (!locks?.request) throw new Error('Changing installed downloads requires Web Locks.');
   await locks.request(
     editionId === undefined
@@ -324,13 +347,8 @@ export async function rememberInstalledPackages(
   } = {},
 ) {
   signal?.throwIfAborted();
-  if (
-    !Array.isArray(groups) ||
-    !groups.length ||
-    groups.length > 100 ||
-    groups.some((id) => typeof id !== 'string' || !id.length || id.length > 200)
-  )
-    throw new Error('Remembering downloads requires exact package identities.');
+  groups = validateInstalledSelection(groups);
+  if (!groups.length) throw new Error('Remembering downloads requires exact package identities.');
   if (!locks?.request) throw new Error('Changing installed downloads requires Web Locks.');
   return locks.request(
     editionId === undefined
@@ -341,9 +359,9 @@ export async function rememberInstalledPackages(
       signal?.throwIfAborted();
       const state = readInstalledState(storage, { editionId });
       if (state.active?.scope !== scope) return false;
-      const selection = [...new Set([...(state.active.selection || []), ...groups])];
-      if (selection.length > 100)
-        throw new Error('The installed download selection exceeds its package limit.');
+      const selection = validateInstalledSelection([
+        ...new Set([...(state.active.selection || []), ...groups]),
+      ]);
       storage.setItem(
         installedStateKey(editionId),
         JSON.stringify({ ...state, active: { ...state.active, selection } }),

@@ -1,0 +1,125 @@
+{
+  "format": "FPVSkillContentIntegrationEvidence.v1",
+  "createdAt": "2026-10-02T02:17:59.102Z",
+  "passed": true,
+  "checks": [
+    {
+      "name": "rotation-v1 coherent translation, exact round-trip and layered compilation",
+      "passed": true,
+      "position": {
+        "x": 1370,
+        "y": 37910,
+        "z": -3520
+      }
+    },
+    {
+      "name": "attitude-v1 coherent translation, exact round-trip and layered compilation",
+      "passed": true,
+      "position": {
+        "x": 1370,
+        "y": 37910,
+        "z": -3520
+      }
+    },
+    {
+      "name": "path-v1 coherent translation, exact round-trip and layered compilation",
+      "passed": true,
+      "position": {
+        "x": 1370,
+        "y": 37910,
+        "z": -3520
+      }
+    },
+    {
+      "name": "crossing-v1 coherent translation, exact round-trip and layered compilation",
+      "passed": true,
+      "position": {
+        "x": 1370,
+        "y": 37910,
+        "z": -3520
+      }
+    },
+    {
+      "name": "crossing aperture translation agrees for all three axes",
+      "passed": true
+    },
+    {
+      "name": "overrides and missing anchors preserve original criterion",
+      "passed": true
+    },
+    {
+      "name": "skill rotation or scale reimport rejects atomically; position-only remains supported",
+      "passed": true
+    },
+    {
+      "name": "unsupported objective and noninteger translation rejected",
+      "passed": true
+    },
+    {
+      "name": "gizmo/numeric move and reimport share the same complete transform",
+      "passed": true
+    },
+    {
+      "name": "actual Three geometry renders four skill cue types under translated zone groups",
+      "passed": true,
+      "counts": [
+        {
+          "type": "rotation-v1",
+          "geometries": 5,
+          "materials": 2,
+          "cue": "body-rotation"
+        },
+        {
+          "type": "attitude-v1",
+          "geometries": 4,
+          "materials": 2,
+          "cue": "body-up"
+        },
+        {
+          "type": "path-v1",
+          "geometries": 7,
+          "materials": 2,
+          "cue": "path-band"
+        },
+        {
+          "type": "crossing-v1",
+          "geometries": 5,
+          "materials": 2,
+          "cue": "crossing-plane"
+        }
+      ]
+    },
+    {
+      "name": "path annulus exact world center/radii for all planes and moved layout",
+      "passed": true
+    },
+    {
+      "name": "crossing outline uses actual aperture and plane for every axis",
+      "passed": true
+    },
+    {
+      "name": "rotation arrow sign agrees with actual negative body-axis integrator convention",
+      "passed": true
+    },
+    {
+      "name": "signed half-path arc has exact entry/exit and no geometry on the opposite half",
+      "passed": true,
+      "cases": 24,
+      "planes": 3,
+      "bearings": 4,
+      "directions": 2
+    }
+  ],
+  "files": {
+    "content-definitions.mjs": "e3808d22cc3dc294311533a16164aced16f342eb9d4b1b22b77d279b2e8dcbfd",
+    "world-app.mjs": "fb4315da221d0999f378ce596b2f26a3168f1a45c0d80b624bbd846abb0e517e",
+    "renderer.mjs": "b9c066ea6619222381e715fe074bf542ecd60d6e061c6528a518a5948bb21b39"
+  },
+  "limits": [
+    "Actual live content/editor/renderer source and live runtime validator; source hashes recorded.",
+    "Actual Three geometry construction, not WebGL/browser/readability or hardware acceptance.",
+    "No new unit suite; these are bounded manual functional probes.",
+    "Spatial editing supports translations only; skill source rotation/scale is explicitly rejected.",
+    "Path annulus uses authored reference center; relative axial travel remains described by criterion and zone."
+  ]
+}

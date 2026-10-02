@@ -55,6 +55,30 @@
     return new Response(blob.slice(start, end + 1), { status: 206, headers });
   }
   const PROTOCOL = 'revealline.offline-progress.v1';
+  function authorizedSource(event) {
+    if (!event.source?.url) return false;
+    let source;
+    try {
+      source = new URL(event.source.url);
+    } catch {
+      return false;
+    }
+    if (sameScope(source)) return true;
+    // The stable launcher prepares immutable editions from outside their game
+    // scope. This single document must name the exact worker/build explicitly;
+    // older same-scope callers retain their existing message compatibility.
+    const release = scope.pathname.indexOf('/releases/');
+    const root = release >= 0 ? scope.pathname.slice(0, release + 1) : scope.pathname;
+    return (
+      source.origin === scope.origin &&
+      !source.username &&
+      !source.password &&
+      source.pathname === `${root}app/update.html` &&
+      event.data?.protocol === PROTOCOL &&
+      event.data.scope === scope.href &&
+      event.data.buildId === CONFIG.buildId
+    );
+  }
   const subscribers = new Set();
   const MAX_SUBSCRIBERS = 64;
   const SUBSCRIBER_LIFETIME = 5 * 60 * 1000;
@@ -453,11 +477,7 @@
   });
   self.addEventListener('message', (event) => {
     if (event.data?.type === 'revealline.offline-pause') {
-      if (
-        event.data.buildId === CONFIG.buildId &&
-        event.source?.url &&
-        sameScope(new URL(event.source.url))
-      )
+      if (event.data.buildId === CONFIG.buildId && authorizedSource(event))
         durableController?.abort();
       return;
     }
@@ -466,7 +486,7 @@
       !event.ports?.[0]
     )
       return;
-    if (!event.source?.url || !sameScope(new URL(event.source.url))) return;
+    if (!authorizedSource(event)) return;
     const port = event.ports[0],
       request = event.data,
       streaming = request.protocol === PROTOCOL;

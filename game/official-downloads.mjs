@@ -4,7 +4,8 @@ export const DOWNLOAD_STATE_CACHE = 'revealline-official-downloads-v1';
 export const OFFICIAL_ORIGINAL_INDEX = 'revealline-official-original-index-v1';
 export const OFFICIAL_REFERENCE_MIME = 'application/x-revealline-official-reference';
 const hashPattern = /^[a-f0-9]{64}$/;
-const limit = 32 * 1024 * 1024;
+export const MAX_OFFICIAL_FILE_BYTES = 32 * 1024 * 1024;
+const limit = MAX_OFFICIAL_FILE_BYTES;
 export const officialAssetURL = (hash, origin = globalThis.location?.origin) => {
   if (!hashPattern.test(hash)) throw new Error('Invalid official asset identity.');
   return new URL(`/.revealline-official/sha256/${hash}`, origin).href;
@@ -14,7 +15,7 @@ export async function assetDigest(bytes, cryptoRef = globalThis.crypto) {
     .map((byte) => byte.toString(16).padStart(2, '0'))
     .join('');
 }
-function checkFile(file) {
+export function validateOfficialDownloadFile(file) {
   if (
     !hashPattern.test(file?.sha256) ||
     !Number.isSafeInteger(file.bytes) ||
@@ -24,6 +25,7 @@ function checkFile(file) {
     throw new Error('Invalid official download descriptor.');
   return file;
 }
+const checkFile = validateOfficialDownloadFile;
 function aborted(signal) {
   signal?.throwIfAborted();
 }
@@ -177,6 +179,7 @@ export function createOfficialDownloads({
     acquire,
     readExisting,
     selection,
+    allGameplay,
     onProgress = () => {},
   }) {
     const unique = [...new Map(files.map((file) => [checkFile(file).sha256, file])).values()];
@@ -190,6 +193,7 @@ export function createOfficialDownloads({
         hashes: unique.map((file) => file.sha256),
         complete: false,
         ...(selection ? { selection } : {}),
+        ...(typeof allGameplay === 'boolean' ? { allGameplay } : {}),
       };
       await metadata.put(stateKey(edition, group), new Response(JSON.stringify(checkpoint)));
       let report = await inspect(unique, { verify: true, signal });

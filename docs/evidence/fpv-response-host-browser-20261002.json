@@ -1,0 +1,92 @@
+{
+  "format": "FPVEndlessHostEvidence.v1",
+  "status": "passed",
+  "checks": [
+    {
+      "name": "Verified controller restored without changing keyboard flight source",
+      "data": true
+    },
+    {
+      "name": "No separate Try controls mode button",
+      "data": true
+    },
+    {
+      "name": "Real lesson arming remains unavailable inside guide",
+      "data": true
+    },
+    {
+      "name": "Resting connected radio does not steal demonstration",
+      "data": true
+    },
+    {
+      "name": "Small radio jitter does not steal demonstration",
+      "data": true
+    },
+    {
+      "name": "Deliberate radio movement automatically owns preview",
+      "data": true
+    },
+    {
+      "name": "Calibrated radio travels across the displayed gimbal",
+      "data": [
+        "Yaw 0% · Throttle 0%",
+        "Roll 80% · Pitch 0%"
+      ]
+    },
+    {
+      "name": "Manual ownership persists after centering",
+      "data": true
+    },
+    {
+      "name": "Automatic radio preview never advances or mutates real lesson",
+      "data": true
+    },
+    {
+      "name": "Ground contact does not force Resume controls",
+      "data": true
+    },
+    {
+      "name": "Fullscreen practice expands the actual schematic",
+      "data": true
+    },
+    {
+      "name": "Fullscreen practice leaves scored flight paused and identical",
+      "data": true
+    },
+    {
+      "name": "Back to lesson safely pauses manual preview",
+      "data": true
+    },
+    {
+      "name": "Disconnect visibly pauses preview",
+      "data": true
+    },
+    {
+      "name": "Reconnect cannot resume preview automatically",
+      "data": true
+    },
+    {
+      "name": "Keyboard automatically takes ownership of preview",
+      "data": true
+    },
+    {
+      "name": "Escape pauses preview for menu navigation",
+      "data": true
+    },
+    {
+      "name": "Manual keyboard preview leaves lesson state and progress untouched",
+      "data": true
+    },
+    {
+      "name": "Keyboard still lifts actual lesson drone after automatic preview",
+      "data": {
+        "height": 505,
+        "ticks": 109
+      }
+    }
+  ],
+  "limitations": [
+    "Controlled Gamepad samples and DOM key events; no physical radio acceptance.",
+    "Qualification fixture only; additional unit coverage remains deferred."
+  ]
+}
