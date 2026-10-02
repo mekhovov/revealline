@@ -809,3 +809,21 @@ The player entry is local, not publicly deployed:
 `http://127.0.0.1:8789/dist/fpv-reviewed-player-playtest/optional-practice/fpv-worlds/index.html#learn`.
 The user's prior USB-radio source and English locale are preserved. Subsequent
 commits only record delivery evidence and publication status.
+
+### Lesson-preview response publication
+
+[PR #935](https://github.com/mekhovov/revealline/pull/935) is published from
+`codex/fpv-lesson-preview-response`, attached to this chat and appended through
+the native stack #902 API after #934. Initial published head is
+`822588858dbf91a327891ad9a35919621a0bc409`; runtime remains frozen at`f1b8f65a8`.
+The open stack sequence now ends #929 → #932 → #934 → #935. No rebase, manual
+retarget, hold removal or merge bypass was used. Milestone remains
+`v0.150.0 — Unified native experience`.
+
+The actual rebuilt player tab is left on the corrected lesson9 left-turn lab;
+Replay example starts its loop and any deliberate input takes over indefinitely.
+Focus-loss pauses remain intentional. The source and packaged local player are
+available for feedback. Exact-head CI, protected stack merge and subsequent
+public deployment remain external gates; retain them for the next delivery
+checkpoint instead of repeatedly polling. Continue independent R4/R5 environment
+art and R6 remaining demonstrations/practice flow, preserving other handoffs.
