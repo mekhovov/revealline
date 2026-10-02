@@ -893,6 +893,34 @@ dialog select {
   gap: 8px 14px;
   padding: 14px;
 }
+.radio-setup [data-radio-switch] > p {
+  flex-basis: 100%;
+  margin: 0;
+  font-size: 12px;
+}
+.radio-setup [data-radio-switch] > output {
+  font:
+    600 12px ui-monospace,
+    monospace;
+  color: var(--fk-amber);
+  min-width: 3ch;
+  padding: 10px 0;
+}
+.radio-setup [data-radio-switch] > details {
+  flex-basis: 100%;
+}
+.radio-setup [data-radio-switch] > details[open] {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.radio-setup [data-radio-switch] > details > summary {
+  padding: 10px 0;
+  font-size: 12px;
+}
+.radio-device-row select {
+  max-width: 100%;
+}
 .radio-setup legend {
   font-size: 13px;
   max-width: 100%;
@@ -1297,6 +1325,9 @@ body.field-kit {
   background: transparent;
   border-bottom: 1px solid var(--fk-line);
   padding-bottom: 16px;
+}
+.field-kit :is(#setup-dialog, #world-radio-dialog) > header {
+  background: var(--fk-panel);
 }
 .field-kit [data-menu-icon]::before {
   content: '';
